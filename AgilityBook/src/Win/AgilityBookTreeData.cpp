@@ -411,6 +411,8 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				if (pDog->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
+					std::vector<CVenueFilter> venues;
+					CAgilityBookOptions::GetFilterVenue(venues);
 					ARBDog* pNewDog = m_pTree->GetDocument()->GetDogs().AddDog(pDog);
 					if (!pNewDog)
 					{
@@ -419,8 +421,11 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 					else
 					{
-						m_pTree->GetDocument()->ResetVisibility();
+						m_pTree->GetDocument()->ResetVisibility(venues, pNewDog);
+						m_pTree->SetRedraw(FALSE);
 						m_pTree->InsertDog(pNewDog, true);
+						m_pTree->SetRedraw(TRUE);
+						m_pTree->Invalidate();
 						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 					}
 				}
@@ -456,7 +461,10 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pNewRun);
+						m_pTree->SetRedraw(FALSE);
 						HTREEITEM hItem = m_pTree->InsertRun(pTrial, pNewRun, GetDataTrial()->GetHTreeItem());
+						m_pTree->SetRedraw(TRUE);
+						m_pTree->Invalidate();
 						bool bOk = true;
 						if (NULL == hItem)
 						{
@@ -507,7 +515,10 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					{
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+						m_pTree->SetRedraw(FALSE);
 						HTREEITEM hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetHTreeItem());
+						m_pTree->SetRedraw(TRUE);
+						m_pTree->Invalidate();
 						bool bOk = true;
 						if (NULL == hItem)
 						{

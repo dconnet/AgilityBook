@@ -15,9 +15,12 @@
   - Added 'Sub-name' to the Training Log.
   - Added an 'Open' button to the 'Find Links' dialog.
   - Added status icons on the run dialog links page.
-  - Added support for cut/copy/paste of calendar entries.
+  - Added full support for cut/copy/paste of dog/run/calendar/log entries.
+    Note, cut/copy is supported in the Run view, but paste is not. You can
+    copy an entry there and then paste it in the proper place in the tree.
   - When you open a file that has no dogs, you will be prompted to create one.
   - When creating a trial from a calendar entry, copy the notes too.
+  - Added the current dogs name to the status bar.
 - Bug fixes
   - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter

@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_STATUS, OnUpdatePane)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_FILTERED, OnUpdatePane)
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DOG, OnUpdatePane)
 	ON_COMMAND(ID_NEXT_TAB, OnNextTab)
 	ON_COMMAND(ID_PREV_TAB, OnPrevTab)
 	ON_WM_CLOSE()
@@ -76,6 +77,7 @@ END_MESSAGE_MAP()
 static UINT indicators[] =
 {
 	ID_SEPARATOR,           // status line indicator
+	ID_INDICATOR_DOG,
 	ID_INDICATOR_STATUS,
 	ID_INDICATOR_FILTERED,
 	ID_INDICATOR_CAPS,
@@ -170,7 +172,6 @@ void CMainFrame::SetStatusText(CString const& msg, bool bFiltered)
 	UINT nId, nStyle;
 	int cxWidth;
 	m_wndStatusBar.GetPaneInfo(index, nId, nStyle, cxWidth);
-
 	CWindowDC dc(&m_wndStatusBar);
 	CFont* pOldFont = dc.SelectObject(m_wndStatusBar.GetFont());
 	CSize sz = dc.GetTextExtent(msg);
@@ -184,6 +185,20 @@ void CMainFrame::SetStatusText(CString const& msg, bool bFiltered)
 		filtered.LoadString(ID_INDICATOR_FILTERED);
 	index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_FILTERED);
 	m_wndStatusBar.SetPaneText(index, filtered);
+}
+
+void CMainFrame::SetStatusText2(CString const& msg)
+{
+	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_DOG);
+	UINT nId, nStyle;
+	int cxWidth;
+	m_wndStatusBar.GetPaneInfo(index, nId, nStyle, cxWidth);
+	CWindowDC dc(&m_wndStatusBar);
+	CFont* pOldFont = dc.SelectObject(m_wndStatusBar.GetFont());
+	CSize sz = dc.GetTextExtent(msg);
+	dc.SelectObject(pOldFont);
+	m_wndStatusBar.SetPaneInfo(index, nId, nStyle, sz.cx);
+	m_wndStatusBar.SetPaneText(index, msg);
 }
 
 void CMainFrame::SetCurTab(int tab)

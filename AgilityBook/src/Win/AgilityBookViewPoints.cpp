@@ -151,9 +151,14 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CAgilityBookViewPoints::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
-	CString msg;
-	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (pActivateView)
+	{
+		CString msg;
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 }
 
 void CAgilityBookViewPoints::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -201,8 +206,22 @@ bool CAgilityBookViewPoints::IsFiltered() const
 
 bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 {
-	msg = "          ";
+	msg.LoadString(IDS_INDICATOR_BLANK);
 	return true;
+}
+
+bool CAgilityBookViewPoints::GetMessage2(CString& msg) const
+{
+	if (GetDocument()->GetCurrentDog())
+	{
+		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		return true;
+	}
+	else
+	{
+		msg.Empty();
+		return false;
+	}
 }
 
 // Entering this function, we know the trial is visible.
@@ -873,8 +892,13 @@ void CAgilityBookViewPoints::LoadData()
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	CString msg;
-	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (IsWindowVisible())
+	{
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();

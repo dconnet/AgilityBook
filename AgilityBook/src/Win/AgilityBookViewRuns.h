@@ -76,6 +76,7 @@ public:
 	// ICommonView interface
 	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
+	virtual bool GetMessage2(CString& msg) const;
 
 private:
 	CAgilityBookViewRunsData* GetItemData(int index) const;
@@ -134,6 +135,10 @@ protected:
 	afx_msg void OnAgilityNewTrial();
 	afx_msg void OnUpdateAgilityNewRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityNewRun();
+	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
+	afx_msg void OnEditCut();
+	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
+	afx_msg void OnEditCopy();
 	afx_msg void OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityDeleteRun();
 	afx_msg void OnViewCustomize();

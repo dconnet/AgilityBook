@@ -48,9 +48,11 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
 #include "ARBTraining.h"
+#include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "DlgTraining.h"
+#include "Element.h"
 #include "MainFrm.h"
 #include "TabView.h"
 
@@ -267,6 +269,12 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnTrainingNew)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateEditDuplicate)
 	ON_COMMAND(ID_EDIT_DUPLICATE, OnEditDuplicate)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
+	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
+	ON_COMMAND(ID_EDIT_PASTE, OnEditPaste)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_TRAINING, OnUpdateTrainingDelete)
 	ON_COMMAND(ID_AGILITY_DELETE_TRAINING, OnTrainingDelete)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
@@ -315,9 +323,14 @@ void CAgilityBookViewTraining::OnDestroy()
 void CAgilityBookViewTraining::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
-	CString msg;
-	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (pActivateView)
+	{
+		CString msg;
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 }
 
 void CAgilityBookViewTraining::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -382,6 +395,12 @@ bool CAgilityBookViewTraining::IsFiltered() const
 bool CAgilityBookViewTraining::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_TRAINING, GetListCtrl().GetItemCount());
+	return true;
+}
+
+bool CAgilityBookViewTraining::GetMessage2(CString& msg) const
+{
+	msg.LoadString(IDS_INDICATOR_BLANK);
 	return true;
 }
 
@@ -467,8 +486,13 @@ void CAgilityBookViewTraining::LoadData()
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	CString msg;
-	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (IsWindowVisible())
+	{
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 
 	SORT_TRAINING_INFO info;
 	info.pThis = this;
@@ -691,6 +715,114 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 		GetDocument()->SetModifiedFlag();
 		SetCurrentDate(training->GetDate());
 		training->Release();
+	}
+}
+
+void CAgilityBookViewTraining::OnUpdateEditCut(CCmdUI* pCmdUI)
+{
+	OnUpdateEditCopy(pCmdUI);
+}
+
+void CAgilityBookViewTraining::OnEditCut()
+{
+	OnEditCopy();
+	OnTrainingDelete();
+}
+
+void CAgilityBookViewTraining::OnUpdateEditCopy(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetSelectedCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewTraining::OnEditCopy()
+{
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
+	{
+		CString data;
+		CStringArray line;
+
+		// Take care of the header, but only if more than one line is selected.
+		if (1 < indices.size()
+		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		{
+			GetPrintLine(-1, line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		Element tree;
+		tree.SetName(CLIPDATA);
+
+		// Now all the data.
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
+			if (pData)
+				pData->GetTraining()->Save(tree);
+			CStringArray line;
+			GetPrintLine((*iter), line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog), tree, data);
+	}
+}
+
+void CAgilityBookViewTraining::OnUpdateEditPaste(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog)))
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewTraining::OnEditPaste()
+{
+	bool bLoaded = false;
+	Element tree;
+	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog), tree))
+	{
+		if (CLIPDATA == tree.GetName())
+		{
+			for (int i = 0; i < tree.GetElementCount(); ++i)
+			{
+				Element const& element = tree.GetElement(i);
+				if (element.GetName() == TREE_TRAINING)
+				{
+					ARBTraining* pLog = new ARBTraining();
+					std::string err;
+					if (pLog->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+					{
+						bLoaded = true;
+						GetDocument()->GetTraining().AddTraining(pLog);
+					}
+					pLog->Release();
+					pLog = NULL;
+				}
+			}
+		}
+	}
+	if (bLoaded)
+	{
+		GetDocument()->GetCalendar().sort();
+		LoadData();
+		GetDocument()->SetModifiedFlag();
+		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 	}
 }
 

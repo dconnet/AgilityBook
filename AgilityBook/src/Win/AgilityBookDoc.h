@@ -138,6 +138,12 @@ public:
 	void SortDates();
 	bool ImportConfiguration(bool bUseDefault);
 
+	/**
+	 * Reset the visibility of all objects.
+	 * @post All UI objects will be reset, all pointers to data objects will
+	 *       be deleted. This should not be called from any AgilityBookTreeData
+	 *       object!
+	 */
 	void ResetVisibility();
 	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog);
 	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial);

@@ -1,7 +1,4 @@
-Last Updated: 6/23/04
-
-- Add cut/copy/paste support for dogs/traininglog (arb format).
-  Add cut support for runs (in run view, already in tree).
+Last Updated: 6/24/04
 
 - Fix printing so it wraps multi-line text.
 
