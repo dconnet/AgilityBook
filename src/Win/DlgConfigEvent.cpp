@@ -38,7 +38,16 @@
  * If the file is hand-edited, it could... But just how paranoid do we get?!
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
+ * CRITICALLY IMPORTANT: Do not allow the IDC_METHODS listbox to be after its
+ * text item in the tab order. I have absolutely no idea way, but if it is
+ * there, windows will attempt to write to deleted memory. It seems windows
+ * must have a CWnd ptr cached somewhere that it continues to use after the
+ * dialog has been destroyed. I am a little worried that I may have just moved
+ * the problem, rather than solve it. BTW, ignoring the assertion seems safe.
+ * Also, it only seems to trigger (release or debug) if you are in the debugger.
+ *
  * Revision History
+ * @li 2004-04-01 DRC Fixed? the memory access fault.
  * @li 2003-12-27 DRC Added support for from/to dates for the scoring method.
  */
 
@@ -821,7 +830,7 @@ void CDlgConfigEvent::OnOK()
 	for (index = 0; index < m_ctrlMethods.GetCount(); ++index)
 	{
 		CString str;
-		ARBConfigScoring const* pScoring = reinterpret_cast<const ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(index));
+		ARBConfigScoring const* pScoring = reinterpret_cast<ARBConfigScoring const*>(m_ctrlMethods.GetItemDataPtr(index));
 		ARBDate validFrom = pScoring->GetValidFrom();
 		ARBDate validTo = pScoring->GetValidTo();
 		if (validFrom.IsValid() && validTo.IsValid()
