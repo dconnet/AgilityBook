@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-09 DRC Fixed a bug where the QQ checkbox didn't get set right.
  * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
  *                    This allows faults for things like language!
  * @li 2003-09-29 DRC Required pts were being overwriten with default values
@@ -91,7 +92,7 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue,
 	, m_pDoc(pDoc)
 	, m_pVenue(pVenue)
 	, m_pTrial(pTrial)
-	, m_pRealRun(pRun)
+	, m_pRealRun(pRealRun)
 	, m_Run(pRun)
 {
 	ASSERT(NULL != m_pTrial);
@@ -597,7 +598,8 @@ void CDlgRunScore::SetDoubleQ()
 	{
 		ARBDate date(m_Date.GetYear(), m_Date.GetMonth(), m_Date.GetDay());
 		// Get all Qs for the trial date.
-		nQs = m_pTrial->NumQs(date, m_pDoc->GetConfig(), div, level);
+		if (m_pTrial->HasQQ(date, m_pDoc->GetConfig(), div, level))
+			nQs = 2;
 		// Subtract us.
 		if (m_pRealRun->GetQ().Qualified()
 		&& m_pRealRun->GetDivision() == div

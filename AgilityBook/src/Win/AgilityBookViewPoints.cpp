@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-09 DRC Fixed problem tallying QQs when a 3rd run is present.
  * @li 2003-11-22 DRC Added more dog information into the report.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-28 DRC Added '*' to Title if it has been received.
@@ -227,7 +228,7 @@ int CAgilityBookViewPoints::DoEvents(
 				date <= pTrial->GetRuns().GetEndDate();
 				++date)
 				{
-					if (2 == pTrial->NumQs(date, GetDocument()->GetConfig(), inDiv->GetName(), inLevel->GetName()))
+					if (pTrial->HasQQ(date, GetDocument()->GetConfig(), inDiv->GetName(), inLevel->GetName()))
 					{
 						int nVisible = 0;
 						// But first, make sure all the runs are visible.
@@ -236,7 +237,15 @@ int CAgilityBookViewPoints::DoEvents(
 						++iterRun)
 						{
 							const ARBDogRun* pRun = (*iterRun);
-							if (date == pRun->GetDate()
+							// This extra test only looks at runs that are
+							// QQing. Otherwise a 3rd NA run throws things off.
+							const ARBConfigScoring* pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
+								pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+								pRun->GetEvent(),
+								pRun->GetDivision(),
+								pRun->GetLevel());
+							if (pScoring && pScoring->HasDoubleQ()
+							&& date == pRun->GetDate()
 							&& !pRun->IsFiltered())
 								++nVisible;
 						}

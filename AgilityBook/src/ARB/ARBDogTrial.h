@@ -65,7 +65,7 @@ public:
 		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
-	int NumQs(
+	bool HasQQ(
 		const ARBDate& inDate,
 		const ARBConfig& inConfig,
 		const std::string& inDiv,
