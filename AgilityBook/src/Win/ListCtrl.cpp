@@ -360,8 +360,8 @@ int CListCtrl2::GetSelection()
 	std::vector<int> indices;
 	::GetSelection(*this, indices);
 	bool bSingle = (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL));
-	if ((!bSingle && 1 == indices.size())
-	|| (bSingle && 0 < indices.size()))
+	if ((bSingle && 1 == indices.size())
+	|| (!bSingle && 0 < indices.size()))
 		return indices[0];
 	else
 		return -1;
@@ -492,8 +492,8 @@ int CListView2::GetSelection()
 	std::vector<int> indices;
 	::GetSelection(GetListCtrl(), indices);
 	bool bSingle = (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL));
-	if ((!bSingle && 1 == indices.size())
-	|| (bSingle && 0 < indices.size()))
+	if ((bSingle && 1 == indices.size())
+	|| (!bSingle && 0 < indices.size()))
 		return indices[0];
 	else
 		return -1;
