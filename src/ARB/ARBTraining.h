@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The training logbook
+ * @brief ARBTraining class.
  * @author David Connet
  *
  * Revision History
@@ -48,6 +47,9 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * The training logbook
+ */
 class ARBTraining : public ARBBase
 {
 public:
@@ -61,28 +63,47 @@ public:
 	bool operator<(const ARBDate& rhs) const;
 	bool operator>(const ARBDate& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a training entry
+	 * @pre inTree is the actual ARBTraining element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
-	bool Save(CElement& ioTree) const;
 
 	/**
-	 * Training date
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBTraining element will be created in ioTree.
+	 */
+	bool Save(CElement& ioTree) const;
+
+	/*
+	 * Getters/setters.
 	 */
 	const ARBDate& GetDate() const;
 	void SetDate(const ARBDate& inDate);
-	/**
-	 * A name (trainer, etc)
-	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
-	/**
-	 * A note...
-	 */
 	const std::string& GetNote() const;
 	void SetNote(const std::string& inNote);
 
@@ -145,6 +166,9 @@ inline void ARBTraining::SetName(const std::string& inName)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBTraining objects.
+ */
 class ARBTrainingList : public ARBVectorLoad1<ARBTraining>
 {
 public:
@@ -157,12 +181,41 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort the list by date.
+	 * @param inDescending Sort in descending or ascending order.
+	 */
 	void sort(bool inDescending = true);
 
+	/**
+	 * Get a list of all the different names in the list.
+	 * @param outNames A list of the unique training names.
+	 * @return Number of unique names.
+	 */
 	size_t GetAllNames(std::set<std::string>& outNames) const;
 
+	/**
+	 * Find a training object.
+	 * @param inTraining Object to search for.
+	 * @return Matching object.
+	 * @post The returned object is <i>not</i> reference counted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	const ARBTraining* FindTraining(const ARBTraining* inTraining) const;
 
+	/**
+	 * Add a training object to the list.
+	 * @param inTraining Object to add.
+	 * @return Returns the added object.
+	 * @post The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBTraining* AddTraining(ARBTraining* inTraining);
+
+	/**
+	 * Delete a training object.
+	 * @param inTraining Object to delete.
+	 * @return Object was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteTraining(const ARBTraining* inTraining);
 };

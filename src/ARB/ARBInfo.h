@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief General information to be tracked.
+ * @brief ARBInfo class
  * @author David Connet
  *
  * Revision History
@@ -40,6 +39,12 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * General information to be tracked.
+ *
+ * This class is contained in ARBAgilityRecordBook.
+ * Currently the only stuff here is judge info.
+ */
 class ARBInfo
 {
 public:
@@ -49,14 +54,36 @@ public:
 	ARBInfo& operator=(const ARBInfo& rhs);
 	bool operator==(const ARBInfo& rhs) const;
 	bool operator!=(const ARBInfo& rhs) const;
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 */
 	void clear();
 
+	/**
+	 * Load the info.
+	 * @pre inTree is the actual ARBInfo element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBInfo element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters.
+	 */
 	const ARBInfoJudgeList& GetJudgeInfo() const;
 	ARBInfoJudgeList& GetJudgeInfo();
 

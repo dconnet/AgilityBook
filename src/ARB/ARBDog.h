@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDog and ARBDogList classes.
  * @author David Connet
  *
  * Revision History
@@ -54,6 +53,9 @@ class ARBConfigVenue;
 class ARBVersion;
 class CElement;
 
+/**
+ * Information about a dog, titles, runs, etc.
+ */
 class ARBDog : public ARBBase
 {
 public:
@@ -63,29 +65,85 @@ public:
 	bool operator==(const ARBDog& rhs) const;
 	bool operator!=(const ARBDog& rhs) const;
 
-	virtual std::string GetGenericName() const	{return GetCallName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a dog.
+	 * @pre inTree is the actual ARBDog element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDog element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Rename a venue.
+	 * @param inOldVenue Venue name being renamed.
+	 * @param inNewVenue New venue name.
+	 * @return Number of items updated.
+	 */
 	int RenameVenue(
 		const std::string& inOldVenue,
 		const std::string& inNewVenue);
+
+	/**
+	 * Delete a venue.
+	 * @param inVenue Venue name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteVenue(const std::string& inVenue);
+
+	/**
+	 * Rename a division.
+	 * @param inVenue Venue whose division is being renamed.
+	 * @param inOldDiv Division name being renamed.
+	 * @param inNewDiv New division name.
+	 * @return Number of ARBConfigScoring items updated.
+	 */
 	int RenameDivision(
 		const ARBConfigVenue* inVenue,
 		const std::string& inOldDiv,
 		const std::string& inNewDiv);
+
+	/**
+	 * Delete a division.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inVenue Venue whose division is being renamed.
+	 * @param inDiv Division name being deleted.
+	 * @return Number of ARBConfigScoring items removed.
+	 */
 	int DeleteDivision(
 		const ARBConfig& inConfig,
 		const std::string& inVenue,
 		const std::string& inDiv);
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetCallName() const;
 	void SetCallName(const std::string& inName);
 	const ARBDate& GetDOB() const;
@@ -120,6 +178,11 @@ private:
 	ARBDogTitleList m_Titles;
 	ARBDogTrialList m_Trials;
 };
+
+inline std::string ARBDog::GetGenericName() const
+{
+	return m_CallName;
+}
 
 inline const std::string& ARBDog::GetCallName() const
 {
@@ -223,6 +286,9 @@ inline ARBDogTrialList& ARBDog::GetTrials()
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDog objects.
+ */
 class ARBDogList : public ARBVectorLoad2<ARBDog>
 {
 public:
@@ -235,19 +301,68 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Get the number of existing point objects for a dog.
+	 * @param inVenue Venue to tally.
+	 */
 	int NumExistingPointsInVenue(const std::string& inVenue) const;
+
+	/**
+	 * Get the number of registration numbers for a dog.
+	 * @param inVenue Venue to tally.
+	 */
 	int NumRegNumsInVenue(const std::string& inVenue) const;
+
+	/**
+	 * Get the number of titles for a dog.
+	 * @param inVenue Venue to tally.
+	 */
 	int NumTitlesInVenue(const std::string& inVenue) const;
+
+	/**
+	 * Get the number of trials for a dog.
+	 * @param inVenue Venue to tally.
+	 */
 	int NumTrialsInVenue(const std::string& inVenue) const;
+
+	/**
+	 * Rename a venue, rename any dependent objects.
+	 * @param inOldVenue Venue name being renamed.
+	 * @param inNewVenue New venue name.
+	 * @return Number of items changed.
+	 */
 	int RenameVenue(
 		const std::string& inOldVenue,
 		const std::string& inNewVenue);
+
+	/**
+	 * Delete a venue, remove any dependent objects.
+	 * @param inVenue Venue name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteVenue(const std::string& inVenue);
 
+	/**
+	 * Number of OtherPoint objects in use for a dog.
+	 * @param inOther Name of item to look for.
+	 */
 	int NumOtherPointsInUse(const std::string& inOther) const;
+
+	/**
+	 * Rename an OtherPoint, rename any dependent objects.
+	 * @param inOldOther OtherPoint name being renamed.
+	 * @param inNewOther New OtherPoint name.
+	 * @return Number of items changed.
+	 */
 	int RenameOtherPoints(
 		const std::string& inOldOther,
 		const std::string& inNewOther);
+
+	/**
+	 * Delete an OtherPoint, remove any dependent objects.
+	 * @param inOther OtherPoint name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteOtherPoints(const std::string& inOther);
 
 	int NumMultiHostedTrialsInDivision(
@@ -308,6 +423,20 @@ public:
 		const std::string& inVenue,
 		const std::string& inEvent);
 
+	/**
+	 * Add a dog.
+	 * @param inDog Dog to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDog* AddDog(ARBDog* inDog);
+
+	/**
+	 * Delete a dog.
+	 * @param inName Name of title to delete.
+	 * @return Whether title was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteDog(const ARBDog* inDog);
 };
