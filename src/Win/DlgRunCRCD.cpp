@@ -75,20 +75,20 @@ void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunCRCD)
-	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_VIEW, m_ctrlView);
-	DDX_Control(pDX, IDC_COPY, m_ctrlInsert);
-	DDX_Control(pDX, IDC_DESC, m_ctrlText);
-	DDX_Control(pDX, IDC_CRCD, m_ctrlCRCD);
+	DDX_Control(pDX, IDC_RUNCRCD_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_RUNCRCD_VIEW, m_ctrlView);
+	DDX_Control(pDX, IDC_RUNCRCD_COPY, m_ctrlInsert);
+	DDX_Control(pDX, IDC_RUNCRCD_DESC, m_ctrlText);
+	DDX_Control(pDX, IDC_RUNCRCD_CRCD, m_ctrlCRCD);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgRunCRCD, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunCRCD)
 	ON_WM_CTLCOLOR()
-	ON_BN_CLICKED(IDC_EDIT, OnEdit)
-	ON_BN_CLICKED(IDC_VIEW, OnView)
-	ON_BN_CLICKED(IDC_COPY, OnCopy)
+	ON_BN_CLICKED(IDC_RUNCRCD_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_RUNCRCD_VIEW, OnView)
+	ON_BN_CLICKED(IDC_RUNCRCD_COPY, OnCopy)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -193,7 +193,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 HBRUSH CDlgRunCRCD::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = NULL;
-	if (pWnd->GetDlgCtrlID() == IDC_CRCD)
+	if (pWnd->GetDlgCtrlID() == IDC_RUNCRCD_CRCD)
 		hbr = GetSysColorBrush(COLOR_WINDOW);
 	else
 		hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);

@@ -471,25 +471,25 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgAssignColumns)
-	DDX_Control(pDX, IDC_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_AVAILABLE, m_ctrlAvailable);
-	DDX_Control(pDX, IDC_COLUMNS, m_ctrlColumns);
-	DDX_Control(pDX, IDC_ADD, m_ctrlAdd);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlRemove);
-	DDX_Control(pDX, IDC_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
+	DDX_Control(pDX, IDC_ASSIGN_TYPE, m_ctrlType);
+	DDX_Control(pDX, IDC_ASSIGN_AVAILABLE, m_ctrlAvailable);
+	DDX_Control(pDX, IDC_ASSIGN_COLUMNS, m_ctrlColumns);
+	DDX_Control(pDX, IDC_ASSIGN_ADD, m_ctrlAdd);
+	DDX_Control(pDX, IDC_ASSIGN_DELETE, m_ctrlRemove);
+	DDX_Control(pDX, IDC_ASSIGN_MOVE_UP, m_ctrlUp);
+	DDX_Control(pDX, IDC_ASSIGN_MOVE_DOWN, m_ctrlDown);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDialog)
 	//{{AFX_MSG_MAP(CDlgAssignColumns)
-	ON_CBN_SELCHANGE(IDC_TYPE, OnSelchangeType)
-	ON_LBN_SELCHANGE(IDC_AVAILABLE, OnSelchangeAvailable)
-	ON_LBN_SELCHANGE(IDC_COLUMNS, OnSelchangeColumns)
-	ON_BN_CLICKED(IDC_ADD, OnAdd)
-	ON_BN_CLICKED(IDC_DELETE, OnRemove)
-	ON_BN_CLICKED(IDC_MOVE_UP, OnMoveUp)
-	ON_BN_CLICKED(IDC_MOVE_DOWN, OnMoveDown)
+	ON_CBN_SELCHANGE(IDC_ASSIGN_TYPE, OnSelchangeType)
+	ON_LBN_SELCHANGE(IDC_ASSIGN_AVAILABLE, OnSelchangeAvailable)
+	ON_LBN_SELCHANGE(IDC_ASSIGN_COLUMNS, OnSelchangeColumns)
+	ON_BN_CLICKED(IDC_ASSIGN_ADD, OnAdd)
+	ON_BN_CLICKED(IDC_ASSIGN_DELETE, OnRemove)
+	ON_BN_CLICKED(IDC_ASSIGN_MOVE_UP, OnMoveUp)
+	ON_BN_CLICKED(IDC_ASSIGN_MOVE_DOWN, OnMoveDown)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -66,9 +66,9 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitle)
-	DDX_Text(pDX, IDC_NAME, m_Name);
-	DDX_Text(pDX, IDC_LONG_NAME, m_LongName);
-	DDX_Text(pDX, IDC_DESC, m_Desc);
+	DDX_Text(pDX, IDC_CONFIG_TITLE_NAME, m_Name);
+	DDX_Text(pDX, IDC_CONFIG_TITLE_LONG_NAME, m_LongName);
+	DDX_Text(pDX, IDC_CONFIG_TITLE_DESC, m_Desc);
 	//}}AFX_DATA_MAP
 }
 
@@ -107,7 +107,7 @@ void CDlgConfigTitle::OnOK()
 	if (m_Name.IsEmpty())
 	{
 		MessageBeep(0);
-		GotoDlgCtrl(GetDlgItem(IDC_NAME));
+		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_TITLE_NAME));
 		return;
 	}
 	CDialog::OnOK();

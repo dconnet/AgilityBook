@@ -64,18 +64,18 @@ void CDlgConfigUpdate::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigUpdate)
-	DDX_Radio(pDX, IDC_UPDATE_DEFAULT, m_Update);
-	DDX_Control(pDX, IDC_FILENAME, m_ctrlFileNameEdit);
-	DDX_Text(pDX, IDC_FILENAME, m_FileName);
-	DDX_Control(pDX, IDC_NAME, m_ctrlFileName);
+	DDX_Radio(pDX, IDC_CONFIG_UPDATE_DEFAULT, m_Update);
+	DDX_Control(pDX, IDC_CONFIG_UPDATE_FILENAME, m_ctrlFileNameEdit);
+	DDX_Text(pDX, IDC_CONFIG_UPDATE_FILENAME, m_FileName);
+	DDX_Control(pDX, IDC_CONFIG_UPDATE_NAME, m_ctrlFileName);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigUpdate, CDialog)
 	//{{AFX_MSG_MAP(CDlgConfigUpdate)
-	ON_BN_CLICKED(IDC_UPDATE_DEFAULT, OnUpdateDefault)
-	ON_BN_CLICKED(IDC_UPDATE_EXISTING, OnUpdateExisting)
-	ON_BN_CLICKED(IDC_NAME, OnName)
+	ON_BN_CLICKED(IDC_CONFIG_UPDATE_DEFAULT, OnUpdateDefault)
+	ON_BN_CLICKED(IDC_CONFIG_UPDATE_EXISTING, OnUpdateExisting)
+	ON_BN_CLICKED(IDC_CONFIG_UPDATE_NAME, OnName)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

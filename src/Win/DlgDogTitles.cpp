@@ -164,22 +164,22 @@ void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogTitles)
-	DDX_Control(pDX, IDC_TITLES, m_ctrlTitles);
-	DDX_Control(pDX, IDC_TITLE_EDIT, m_ctrlTitleEdit);
-	DDX_Control(pDX, IDC_TITLE_DELETE, m_ctrlTitleDelete);
-	DDX_Control(pDX, IDC_HIDDEN, m_ctrlHidden);
+	DDX_Control(pDX, IDC_DOG_TITLE_TITLES, m_ctrlTitles);
+	DDX_Control(pDX, IDC_DOG_TITLE_EDIT, m_ctrlTitleEdit);
+	DDX_Control(pDX, IDC_DOG_TITLE_DELETE, m_ctrlTitleDelete);
+	DDX_Control(pDX, IDC_DOG_TITLE_HIDDEN, m_ctrlHidden);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgDogTitles, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogTitles)
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_TITLES, OnColumnclickTitles)
-	ON_NOTIFY(NM_DBLCLK, IDC_TITLES, OnDblclkTitles)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TITLES, OnItemchangedTitles)
-	ON_BN_CLICKED(IDC_TITLE_NEW, OnTitleNew)
-	ON_BN_CLICKED(IDC_TITLE_EDIT, OnTitleEdit)
-	ON_BN_CLICKED(IDC_TITLE_DELETE, OnTitleDelete)
-	ON_BN_CLICKED(IDC_HIDDEN, OnBnClickedHidden)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOG_TITLE_TITLES, OnColumnclickTitles)
+	ON_NOTIFY(NM_DBLCLK, IDC_DOG_TITLE_TITLES, OnDblclkTitles)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DOG_TITLE_TITLES, OnItemchangedTitles)
+	ON_BN_CLICKED(IDC_DOG_TITLE_NEW, OnTitleNew)
+	ON_BN_CLICKED(IDC_DOG_TITLE_EDIT, OnTitleEdit)
+	ON_BN_CLICKED(IDC_DOG_TITLE_DELETE, OnTitleDelete)
+	ON_BN_CLICKED(IDC_DOG_TITLE_HIDDEN, OnBnClickedHidden)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

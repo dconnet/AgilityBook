@@ -160,22 +160,22 @@ void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunReference)
-	DDX_Control(pDX, IDC_REF_RUNS, m_ctrlRefRuns);
-	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
-	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_RUNREF_REF_RUNS, m_ctrlRefRuns);
+	DDX_Control(pDX, IDC_RUNREF_NEW, m_ctrlNew);
+	DDX_Control(pDX, IDC_RUNREF_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_RUNREF_DELETE, m_ctrlDelete);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgRunReference, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunReference)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_REF_RUNS, OnGetdispinfoRefRuns)
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_REF_RUNS, OnColumnclickRefRuns)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_REF_RUNS, OnItemchangedRefRuns)
-	ON_NOTIFY(NM_DBLCLK, IDC_REF_RUNS, OnDblclkRefRuns)
-	ON_BN_CLICKED(IDC_NEW, OnRefRunNew)
-	ON_BN_CLICKED(IDC_EDIT, OnRefRunEdit)
-	ON_BN_CLICKED(IDC_DELETE, OnRefRunDelete)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_RUNREF_REF_RUNS, OnGetdispinfoRefRuns)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_RUNREF_REF_RUNS, OnColumnclickRefRuns)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RUNREF_REF_RUNS, OnItemchangedRefRuns)
+	ON_NOTIFY(NM_DBLCLK, IDC_RUNREF_REF_RUNS, OnDblclkRefRuns)
+	ON_BN_CLICKED(IDC_RUNREF_NEW, OnRefRunNew)
+	ON_BN_CLICKED(IDC_RUNREF_EDIT, OnRefRunEdit)
+	ON_BN_CLICKED(IDC_RUNREF_DELETE, OnRefRunDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

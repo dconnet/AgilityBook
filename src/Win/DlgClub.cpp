@@ -67,9 +67,9 @@ void CDlgClub::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgClub)
-	DDX_Control(pDX, IDC_CLUBS, m_ctrlClubs);
-	DDX_CBString(pDX, IDC_CLUBS, m_Club);
-	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
+	DDX_Control(pDX, IDC_CLUB_CLUBS, m_ctrlClubs);
+	DDX_CBString(pDX, IDC_CLUB_CLUBS, m_Club);
+	DDX_Control(pDX, IDC_CLUB_VENUES, m_ctrlVenues);
 	//}}AFX_DATA_MAP
 }
 

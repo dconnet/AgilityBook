@@ -61,7 +61,7 @@ void CDlgMessage::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgMessage)
-	DDX_Text(pDX, IDC_NOTES, m_Message);
+	DDX_Text(pDX, IDC_MESSAGE, m_Message);
 	//}}AFX_DATA_MAP
 }
 

@@ -95,15 +95,15 @@ void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgExistingPoints)
-	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
-	DDX_Control(pDX, IDC_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_OTHERPOINTS, m_ctrlOther);
-	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
-	DDX_Control(pDX, IDC_DIVISION, m_ctrlDivisions);
-	DDX_Control(pDX, IDC_LEVEL, m_ctrlLevels);
-	DDX_Control(pDX, IDC_EVENT, m_ctrlEvents);
-	DDX_Text(pDX, IDC_POINTS, m_Points);
-	DDX_Text(pDX, IDC_COMMENTS, m_Comments);
+	DDX_Control(pDX, IDC_EXISTING_DATE, m_ctrlDate);
+	DDX_Control(pDX, IDC_EXISTING_TYPE, m_ctrlType);
+	DDX_Control(pDX, IDC_EXISTING_OTHERPOINTS, m_ctrlOther);
+	DDX_Control(pDX, IDC_EXISTING_VENUES, m_ctrlVenues);
+	DDX_Control(pDX, IDC_EXISTING_DIVISION, m_ctrlDivisions);
+	DDX_Control(pDX, IDC_EXISTING_LEVEL, m_ctrlLevels);
+	DDX_Control(pDX, IDC_EXISTING_EVENT, m_ctrlEvents);
+	DDX_Text(pDX, IDC_EXISTING_POINTS, m_Points);
+	DDX_Text(pDX, IDC_EXISTING_COMMENTS, m_Comments);
 	//}}AFX_DATA_MAP
 	if (pDX->m_bSaveAndValidate)
 	{
@@ -115,10 +115,10 @@ void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDialog)
 	//{{AFX_MSG_MAP(CDlgExistingPoints)
-	ON_CBN_SELCHANGE(IDC_TYPE, OnSelchangeType)
-	ON_CBN_SELCHANGE(IDC_VENUES, OnSelchangeVenues)
-	ON_CBN_SELCHANGE(IDC_DIVISION, OnSelchangeDivision)
-	ON_CBN_SELCHANGE(IDC_LEVEL, OnSelchangeLevel)
+	ON_CBN_SELCHANGE(IDC_EXISTING_TYPE, OnSelchangeType)
+	ON_CBN_SELCHANGE(IDC_EXISTING_VENUES, OnSelchangeVenues)
+	ON_CBN_SELCHANGE(IDC_EXISTING_DIVISION, OnSelchangeDivision)
+	ON_CBN_SELCHANGE(IDC_EXISTING_LEVEL, OnSelchangeLevel)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -78,18 +78,18 @@ void CWizardStart::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardStart)
-	DDX_Radio(pDX, IDC_WIZARD_SPREADSHEET, m_Style);
-	DDX_Control(pDX, IDC_WIZARD_LIST, m_ctrlList);
-	DDX_Control(pDX, IDC_WIZARD_DESCRIPTION, m_ctrlDesc);
+	DDX_Radio(pDX, IDC_WIZARD_START_SPREADSHEET, m_Style);
+	DDX_Control(pDX, IDC_WIZARD_START_LIST, m_ctrlList);
+	DDX_Control(pDX, IDC_WIZARD_START_DESCRIPTION, m_ctrlDesc);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CWizardStart, CPropertyPage)
 	//{{AFX_MSG_MAP(CWizardStart)
-	ON_LBN_SELCHANGE(IDC_WIZARD_LIST, OnSelchangeExportList)
-	ON_LBN_DBLCLK(IDC_WIZARD_LIST, OnDblclkExportList)
-	ON_BN_CLICKED(IDC_WIZARD_SPREADSHEET, OnWizardStyle)
-	ON_BN_CLICKED(IDC_WIZARD_ARB, OnWizardStyle)
+	ON_LBN_SELCHANGE(IDC_WIZARD_START_LIST, OnSelchangeExportList)
+	ON_LBN_DBLCLK(IDC_WIZARD_START_LIST, OnDblclkExportList)
+	ON_BN_CLICKED(IDC_WIZARD_START_SPREADSHEET, OnWizardStyle)
+	ON_BN_CLICKED(IDC_WIZARD_START_ARB, OnWizardStyle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -74,14 +74,14 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogProperties)
-	DDX_Text(pDX, IDC_CALLNAME, m_CallName);
-	DDX_Control(pDX, IDC_DOB, m_ctrlDateDOB);
-	DDX_Control(pDX, IDC_IS_DECEASED, m_ctrlDeceased);
-	DDX_Control(pDX, IDC_DECEASED, m_ctrlDateDeceased);
-	DDX_Text(pDX, IDC_BREED, m_Breed);
-	DDX_Control(pDX, IDC_AGE_TEXT, m_ctrlAge);
-	DDX_Text(pDX, IDC_REG_NAME, m_RegName);
-	DDX_Text(pDX, IDC_NOTES, m_Notes);
+	DDX_Text(pDX, IDC_DOG_CALLNAME, m_CallName);
+	DDX_Control(pDX, IDC_DOG_DOB, m_ctrlDateDOB);
+	DDX_Control(pDX, IDC_DOG_IS_DECEASED, m_ctrlDeceased);
+	DDX_Control(pDX, IDC_DOG_DECEASED, m_ctrlDateDeceased);
+	DDX_Text(pDX, IDC_DOG_BREED, m_Breed);
+	DDX_Control(pDX, IDC_DOG_AGE_TEXT, m_ctrlAge);
+	DDX_Text(pDX, IDC_DOG_REG_NAME, m_RegName);
+	DDX_Text(pDX, IDC_DOG_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 	if (pDX->m_bSaveAndValidate)
 	{
@@ -94,7 +94,7 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 		m_Notes.TrimRight();
 		m_Notes.TrimLeft();
 
-		pDX->PrepareCtrl(IDC_CALLNAME);
+		pDX->PrepareCtrl(IDC_DOG_CALLNAME);
 		if (m_CallName.IsEmpty())
 		{
 			AfxMessageBox("Callname may not be blank.");
@@ -118,9 +118,9 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgDogProperties, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogProperties)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOB, OnDatetimechange)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DECEASED, OnDatetimechange)
-	ON_BN_CLICKED(IDC_IS_DECEASED, OnIsDeceased)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOG_DOB, OnDatetimechange)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOG_DECEASED, OnDatetimechange)
+	ON_BN_CLICKED(IDC_DOG_IS_DECEASED, OnIsDeceased)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

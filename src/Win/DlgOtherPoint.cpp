@@ -64,15 +64,15 @@ void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOtherPoint)
-	DDX_Control(pDX, IDC_OTHERPOINTS, m_ctrlOtherPoints);
-	DDX_Control(pDX, IDC_DESC, m_ctrlDesc);
-	DDX_Text(pDX, IDC_POINTS, m_Points);
+	DDX_Control(pDX, IDC_OTHER_OTHERPOINTS, m_ctrlOtherPoints);
+	DDX_Control(pDX, IDC_OTHER_DESC, m_ctrlDesc);
+	DDX_Text(pDX, IDC_OTHER_POINTS, m_Points);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDialog)
 	//{{AFX_MSG_MAP(CDlgOtherPoint)
-	ON_CBN_SELCHANGE(IDC_OTHERPOINTS, OnSelchangeOtherpoints)
+	ON_CBN_SELCHANGE(IDC_OTHER_OTHERPOINTS, OnSelchangeOtherpoints)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

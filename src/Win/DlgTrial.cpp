@@ -86,23 +86,23 @@ void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTrial)
-	DDX_CBString(pDX, IDC_LOCATION, m_Location);
-	DDX_Control(pDX, IDC_LOCATION, m_ctrlLocation);
-	DDX_Text(pDX, IDC_NOTES, m_Notes);
-	DDX_Control(pDX, IDC_CLUB_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_CLUB_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_CLUBS, m_ctrlClubs);
-	DDX_Check(pDX, IDC_VERIFIED, m_Verified);
+	DDX_CBString(pDX, IDC_TRIAL_LOCATION, m_Location);
+	DDX_Control(pDX, IDC_TRIAL_LOCATION, m_ctrlLocation);
+	DDX_Text(pDX, IDC_TRIAL_NOTES, m_Notes);
+	DDX_Control(pDX, IDC_TRIAL_CLUB_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_TRIAL_CLUB_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_TRIAL_CLUBS, m_ctrlClubs);
+	DDX_Check(pDX, IDC_TRIAL_VERIFIED, m_Verified);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgTrial, CDialog)
 	//{{AFX_MSG_MAP(CDlgTrial)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CLUBS, OnItemchangedClubs)
-	ON_NOTIFY(NM_DBLCLK, IDC_CLUBS, OnDblclkClubs)
-	ON_BN_CLICKED(IDC_CLUB_NEW, OnClubNew)
-	ON_BN_CLICKED(IDC_CLUB_EDIT, OnClubEdit)
-	ON_BN_CLICKED(IDC_CLUB_DELETE, OnClubDelete)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TRIAL_CLUBS, OnItemchangedClubs)
+	ON_NOTIFY(NM_DBLCLK, IDC_TRIAL_CLUBS, OnDblclkClubs)
+	ON_BN_CLICKED(IDC_TRIAL_CLUB_NEW, OnClubNew)
+	ON_BN_CLICKED(IDC_TRIAL_CLUB_EDIT, OnClubEdit)
+	ON_BN_CLICKED(IDC_TRIAL_CLUB_DELETE, OnClubDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -64,18 +64,18 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgInfoJudge)
-	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_JUDGE_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_JUDGE, m_ctrlJudge);
-	DDX_Control(pDX, IDC_COMMENTS, m_ctrlComment);
+	DDX_Control(pDX, IDC_JUDGE_COMMENTS, m_ctrlComment);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDialog)
 	//{{AFX_MSG_MAP(CDlgInfoJudge)
-	ON_BN_CLICKED(IDC_NEW, OnNew)
-	ON_BN_CLICKED(IDC_DELETE, OnDelete)
+	ON_BN_CLICKED(IDC_JUDGE_NEW, OnNew)
+	ON_BN_CLICKED(IDC_JUDGE_DELETE, OnDelete)
 	ON_CBN_SELCHANGE(IDC_JUDGE, OnSelchangeJudge)
-	ON_EN_KILLFOCUS(IDC_COMMENTS, OnKillfocusComments)
+	ON_EN_KILLFOCUS(IDC_JUDGE_COMMENTS, OnKillfocusComments)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

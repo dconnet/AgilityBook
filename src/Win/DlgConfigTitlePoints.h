@@ -49,7 +49,7 @@ public:
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgConfigTitlePoints)
-	enum { IDD = IDD_TITLE_POINTS };
+	enum { IDD = IDD_CONFIG_TITLE_POINTS };
 	short	m_Points;
 	short	m_Faults;
 	BOOL	m_LifeTime;

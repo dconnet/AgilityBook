@@ -72,14 +72,14 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsCalendar)
-	DDX_CBIndex(pDX, IDC_DAY_OF_WEEK, m_DayOfWeek);
-	DDX_Check(pDX, IDC_AUTO_DELETE, m_bAutoDelete);
-	DDX_Check(pDX, IDC_HIDE_OLD, m_bHideOld);
-	DDX_Text(pDX, IDC_OLD_ENTRY_DAYS, m_Days);
-	DDX_Check(pDX, IDC_HIDE_OVERLAP, m_bHideOverlapping);
-	DDX_Text(pDX, IDC_SIZE_X, m_sizeX);
+	DDX_CBIndex(pDX, IDC_OPTIONS_CAL_DAY_OF_WEEK, m_DayOfWeek);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_AUTO_DELETE, m_bAutoDelete);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_HIDE_OLD, m_bHideOld);
+	DDX_Text(pDX, IDC_OPTIONS_CAL_OLD_ENTRY_DAYS, m_Days);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_HIDE_OVERLAP, m_bHideOverlapping);
+	DDX_Text(pDX, IDC_OPTIONS_CAL_SIZE_X, m_sizeX);
 	DDV_MinMaxInt(pDX, m_sizeX, 10, 1000);
-	DDX_Text(pDX, IDC_SIZE_Y, m_sizeY);
+	DDX_Text(pDX, IDC_OPTIONS_CAL_SIZE_Y, m_sizeY);
 	DDV_MinMaxInt(pDX, m_sizeY, 10, 1000);
 	//}}AFX_DATA_MAP
 }
