@@ -421,7 +421,7 @@ bool ARBDogExistingPointsList::HasPoints(
 					if (inHasLifetime)
 					{
 						const ARBConfigScoring* pScoring = inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate());
-						if (0 < pScoring->GetTitlePoints().GetLifetimePoints(0.0))
+						if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(0.0))
 							return true;
 					}
 					else

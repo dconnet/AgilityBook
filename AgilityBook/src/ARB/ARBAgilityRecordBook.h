@@ -72,6 +72,7 @@
 #define TREE_EVENT_DESC						"Desc"
 #define TREE_SCORING						"Scoring"
 #define TREE_TITLE_POINTS					"TitlePoints"
+#define TREE_LIFETIME_POINTS				"LifeTime"
 #define TREE_FAULTTYPE						"FaultType"
 #define TREE_OTHERPTS						"OtherPts"
 #define TREE_INFO							"Info"
@@ -152,7 +153,8 @@
 #define ATTRIB_SCORING_MACHPTS				"machPts"
 #define ATTRIB_TITLE_POINTS_POINTS			"Points"
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
-#define ATTRIB_TITLE_POINTS_LIFETIME		"LifeTime"
+#define ATTRIB_LIFETIME_POINTS_POINTS		"Points"
+#define ATTRIB_LIFETIME_POINTS_FAULTS		"Faults"
 #define ATTRIB_JUDGEINFO_NAME				"Name"
 #define ATTRIB_DOG_CALLNAME					"CallName"
 #define ATTRIB_DOG_DOB						"DOB"
@@ -260,6 +262,7 @@
 
 // Used in ARBConfigTitlePoints.cpp
 #define TITLE_POINTS_NAME_FORMAT	"%hd points with %hd faults"
+#define LIFETIME_POINTS_NAME_FORMAT	"%hd lifetime points with %hd faults"
 
 // Used in ARBConfigScoring.cpp
 #define SCORE_STYLE_UNKNOWN			"Unknown"

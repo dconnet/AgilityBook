@@ -37,9 +37,10 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2004-10-06 DRC File version 10. Added 'Height' to 'ReferenceRun'
+ *                    GetAllHeights now accumulates these too. Changed
+ *                    lifetime points.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-09-23 DRC File version 9.1. Added 'Height' to 'ReferenceRun'
- *                    GetAllHeights now accumulates these too.
  * @li 2004-06-29 DRC File version 9.0. Added 'SubName' to 'Training'. Changed
  *                    structure of 'RegNum'.
  * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
@@ -88,7 +89,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(9, 1);
+	static ARBVersion const curVersion(10, 0);
 	return curVersion;
 }
 

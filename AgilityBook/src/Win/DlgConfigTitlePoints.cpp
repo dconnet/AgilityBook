@@ -31,13 +31,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgConfigTitlePoints.h"
-
-#include "ARBConfigTitlePoints.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,19 +47,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitlePoints dialog
 
-// If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgConfigTitlePoints::CDlgConfigTitlePoints(
-	ARBConfigTitlePointsList& titlePoints,
-	ARBConfigTitlePoints* pTitle,
-	CWnd* pParent)
+CDlgConfigTitlePoints::CDlgConfigTitlePoints(short inPoints, short inFaults, BOOL bLifetime, CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)
-	, m_TitlePoints(titlePoints)
-	, m_pTitle(pTitle)
+	, m_Points(inPoints)
+	, m_Faults(inFaults)
+	, m_LifeTime(bLifetime)
 {
 	//{{AFX_DATA_INIT(CDlgConfigTitlePoints)
-	m_Points = 0;
-	m_Faults = 0;
-	m_LifeTime = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -81,43 +74,3 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitlePoints message handlers
-
-BOOL CDlgConfigTitlePoints::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	if (m_pTitle)
-	{
-		m_Points = m_pTitle->GetPoints();
-		m_Faults = m_pTitle->GetFaults();
-		m_LifeTime = m_pTitle->IsLifeTimePoints() ? TRUE : FALSE;
-		UpdateData(FALSE);
-	}
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-void CDlgConfigTitlePoints::OnOK()
-{
-	if (!UpdateData(TRUE))
-		return;
-
-	if (m_pTitle)
-	{
-		m_pTitle->SetPoints(m_Points);
-		m_pTitle->SetFaults(m_Faults);
-		m_pTitle->SetLifeTimePoints(m_LifeTime ? true : false);
-		m_TitlePoints.sort();
-	}
-	else
-	{
-		// The only reason this fails is if the faults entry exists.
-		if (!m_TitlePoints.AddTitlePoints(m_Points, m_Faults, m_LifeTime ? true : false))
-		{
-			AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
-			return;
-		}
-	}
-
-	CDlgBaseDialog::OnOK();
-}

@@ -818,6 +818,12 @@
 				RelativePath="..\..\..\ARB\ARBConfigLevel.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Arb\ARBConfigLifetimePoints.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Arb\ARBConfigLifetimePoints.h">
+			</File>
+			<File
 				RelativePath="..\..\..\ARB\ARBConfigOtherPoints.cpp">
 			</File>
 			<File

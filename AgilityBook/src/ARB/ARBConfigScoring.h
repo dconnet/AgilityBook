@@ -44,6 +44,7 @@
 #include <vector>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
+#include "ARBConfigLifetimePoints.h"
 #include "ARBConfigTitlePoints.h"
 #include "ARBDate.h"
 #include "ARBVector.h"
@@ -150,6 +151,8 @@ public:
 	void SetHasMachPts(bool inBool);
 	ARBConfigTitlePointsList const& GetTitlePoints() const;
 	ARBConfigTitlePointsList& GetTitlePoints();
+	ARBConfigLifetimePointsList const& GetLifetimePoints() const;
+	ARBConfigLifetimePointsList& GetLifetimePoints();
 
 private:
 	~ARBConfigScoring();
@@ -166,6 +169,7 @@ private:
 	bool m_bDoubleQ;
 	bool m_bMachPts;
 	ARBConfigTitlePointsList m_TitlePoints;
+	ARBConfigLifetimePointsList m_LifePoints;
 };
 
 inline ARBDate const& ARBConfigScoring::GetValidFrom() const
@@ -298,6 +302,16 @@ inline ARBConfigTitlePointsList const& ARBConfigScoring::GetTitlePoints() const
 inline ARBConfigTitlePointsList& ARBConfigScoring::GetTitlePoints()
 {
 	return m_TitlePoints;
+}
+
+inline ARBConfigLifetimePointsList const& ARBConfigScoring::GetLifetimePoints() const
+{
+	return m_LifePoints;
+}
+
+inline ARBConfigLifetimePointsList& ARBConfigScoring::GetLifetimePoints()
+{
+	return m_LifePoints;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -103,6 +103,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bDoubleQ(false)
 	, m_bMachPts(false)
 	, m_TitlePoints()
+	, m_LifePoints()
 {
 }
 
@@ -120,6 +121,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
 	, m_bMachPts(rhs.m_bMachPts)
 	, m_TitlePoints(rhs.m_TitlePoints)
+	, m_LifePoints(rhs.m_LifePoints)
 {
 }
 
@@ -144,6 +146,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bDoubleQ = rhs.m_bDoubleQ;
 		m_bMachPts = rhs.m_bMachPts;
 		m_TitlePoints = rhs.m_TitlePoints;
+		m_LifePoints = rhs.m_LifePoints;
 	}
 	return *this;
 }
@@ -162,7 +165,8 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bSuperQ == rhs.m_bSuperQ
 		&& m_bDoubleQ == rhs.m_bDoubleQ
 		&& m_bMachPts == rhs.m_bMachPts
-		&& m_TitlePoints == rhs.m_TitlePoints;
+		&& m_TitlePoints == rhs.m_TitlePoints
+		&& m_LifePoints == rhs.m_LifePoints;
 }
 
 bool ARBConfigScoring::operator!=(ARBConfigScoring const& rhs) const
@@ -291,6 +295,7 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
+	bool bVer10orMore = (inVersion >= ARBVersion(10, 0));
 	if (inVersion >= ARBVersion(5,0))
 	{
 		inTree.GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
@@ -302,11 +307,20 @@ bool ARBConfigScoring::Load(
 				m_Note = element.GetValue();
 			else if (element.GetName() == TREE_TITLE_POINTS)
 			{
-				if (!m_TitlePoints.Load(element, inVersion, ioCallback))
+				if (!m_TitlePoints.Load(element, inVersion, ioCallback, m_LifePoints))
 					return false;
+			}
+			else if (element.GetName() == TREE_LIFETIME_POINTS)
+			{
+				if (bVer10orMore)
+				{
+					if (!m_LifePoints.Load(element, inVersion, ioCallback))
+						return false;
+				}
 			}
 		}
 		m_TitlePoints.sort();
+		m_LifePoints.sort();
 	}
 
 	// Migrate pre-5 files.
@@ -320,7 +334,7 @@ bool ARBConfigScoring::Load(
 		}
 		if (0 < ptsWhenClean)
 		{
-			m_TitlePoints.AddTitlePoints(ptsWhenClean, 0, false);
+			m_TitlePoints.AddTitlePoints(ptsWhenClean, 0);
 		}
 
 		short faultsAllowed = 0;
@@ -329,7 +343,7 @@ bool ARBConfigScoring::Load(
 		inTree.GetAttrib("WithFaults", ptsWhenNotClean);
 		if (0 < faultsAllowed && 0 < ptsWhenNotClean)
 		{
-			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed, false);
+			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed);
 		}
 
 		if (inVersion >= ARBVersion(3,0))
@@ -393,6 +407,8 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 	if (m_bMachPts)
 		scoring.AddAttrib(ATTRIB_SCORING_MACHPTS, m_bMachPts);
 	if (!m_TitlePoints.Save(scoring))
+		return false;
+	if (!m_LifePoints.Save(scoring))
 		return false;
 	return true;
 }

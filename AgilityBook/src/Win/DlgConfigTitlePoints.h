@@ -33,19 +33,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
 #include "DlgBaseDialog.h"
-class ARBConfigTitlePoints;
-class ARBConfigTitlePointsList;
 
 class CDlgConfigTitlePoints : public CDlgBaseDialog
 {
 public:
-	CDlgConfigTitlePoints(
-		ARBConfigTitlePointsList& titlePoints,
-		ARBConfigTitlePoints* pTitle,
-		CWnd* pParent = NULL);
+	CDlgConfigTitlePoints(short inPoints, short inFaults, BOOL bLifetime, CWnd* pParent = NULL);
+	short GetPoints() const		{return m_Points;}
+	short GetFaults() const		{return m_Faults;}
+	BOOL IsLifetime() const		{return m_LifeTime;}
 
 private:
 // Dialog Data
@@ -55,8 +54,6 @@ private:
 	short	m_Faults;
 	BOOL	m_LifeTime;
 	//}}AFX_DATA
-	ARBConfigTitlePointsList& m_TitlePoints;
-	ARBConfigTitlePoints* m_pTitle;
 
 	//{{AFX_VIRTUAL(CDlgConfigTitlePoints)
 protected:
@@ -66,8 +63,6 @@ protected:
 // Implementation
 protected:
 	//{{AFX_MSG(CDlgConfigTitlePoints)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

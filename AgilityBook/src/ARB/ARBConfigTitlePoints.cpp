@@ -44,6 +44,7 @@
 #include "ARBConfigTitlePoints.h"
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBConfigLifetimePoints.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -57,21 +58,18 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigTitlePoints::ARBConfigTitlePoints()
 	: m_Points(0)
 	, m_Faults(0)
-	, m_bLifeTime(false)
 {
 }
 
-ARBConfigTitlePoints::ARBConfigTitlePoints(short inPoints, short inFaults, bool bLifeTime)
+ARBConfigTitlePoints::ARBConfigTitlePoints(short inPoints, short inFaults)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
-	, m_bLifeTime(bLifeTime)
 {
 }
 
 ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
-	, m_bLifeTime(rhs.m_bLifeTime)
 {
 }
 
@@ -85,7 +83,6 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 	{
 		m_Points = rhs.m_Points;
 		m_Faults = rhs.m_Faults;
-		m_bLifeTime = rhs.m_bLifeTime;
 	}
 	return *this;
 }
@@ -93,8 +90,7 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
-		&& m_Faults == rhs.m_Faults
-		&& m_bLifeTime == rhs.m_bLifeTime;
+		&& m_Faults == rhs.m_Faults;
 }
 
 bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
@@ -106,8 +102,6 @@ std::string ARBConfigTitlePoints::GetGenericName() const
 {
 	char buffer[100];
 	sprintf(buffer, TITLE_POINTS_NAME_FORMAT, m_Points, m_Faults);
-	if (m_bLifeTime)
-		strcat(buffer, " #");
 	return buffer;
 }
 
@@ -120,7 +114,8 @@ size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 bool ARBConfigTitlePoints::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+	ARBErrorCallback& ioCallback,
+	ARBConfigLifetimePointsList& ioLifetimePoints)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
@@ -132,10 +127,16 @@ bool ARBConfigTitlePoints::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_POINTS_LIFETIME, m_bLifeTime))
+	if (inVersion < ARBVersion(10,0))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_LIFETIME, VALID_VALUES_BOOL));
-		return false;
+		bool bLifetime;
+		if (Element::eFound == inTree.GetAttrib("LifeTime", bLifetime))
+		{
+			if (bLifetime)
+			{
+				ioLifetimePoints.AddLifetimePoints(m_Points, m_Faults);
+			}
+		}
 	}
 	return true;
 }
@@ -145,12 +146,26 @@ bool ARBConfigTitlePoints::Save(Element& ioTree) const
 	Element& title = ioTree.AddElement(TREE_TITLE_POINTS);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults);
-	if (m_bLifeTime)
-		title.AddAttrib(ATTRIB_TITLE_POINTS_LIFETIME, m_bLifeTime);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+bool ARBConfigTitlePointsList::Load(
+	Element const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback,
+	ARBConfigLifetimePointsList& ioLifetimePoints)
+{
+	ARBConfigTitlePoints* thing = new ARBConfigTitlePoints();
+	if (!thing->Load(inTree, inVersion, ioCallback, ioLifetimePoints))
+	{
+		thing->Release();
+		return false;
+	}
+	push_back(thing);
+	return true;
+}
 
 class SortConfigTitlePoints
 {
@@ -180,22 +195,6 @@ short ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 	return 0;
 }
 
-short ARBConfigTitlePointsList::GetLifetimePoints(double inFaults) const
-{
-	// This is why we keep the list sorted!
-	for (const_iterator iter = begin(); iter != end(); ++iter)
-	{
-		if (inFaults <= static_cast<double>((*iter)->GetFaults()))
-		{
-			if ((*iter)->IsLifeTimePoints())
-				return (*iter)->GetPoints();
-			else
-				return 0;
-		}
-	}
-	return 0;
-}
-
 ARBConfigTitlePoints const* ARBConfigTitlePointsList::FindTitlePoints(short inFaults) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -206,11 +205,11 @@ ARBConfigTitlePoints const* ARBConfigTitlePointsList::FindTitlePoints(short inFa
 	return NULL;
 }
 
-ARBConfigTitlePoints* ARBConfigTitlePointsList::AddTitlePoints(short inPoints, short inFaults, bool bLifeTime)
+ARBConfigTitlePoints* ARBConfigTitlePointsList::AddTitlePoints(short inPoints, short inFaults)
 {
 	if (NULL != FindTitlePoints(inFaults))
 		return NULL;
-	ARBConfigTitlePoints* pTitle = new ARBConfigTitlePoints(inPoints, inFaults, bLifeTime);
+	ARBConfigTitlePoints* pTitle = new ARBConfigTitlePoints(inPoints, inFaults);
 	push_back(pTitle);
 	sort();
 	return pTitle;

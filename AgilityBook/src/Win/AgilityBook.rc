@@ -600,7 +600,7 @@ BEGIN
     LTEXT           "&Event Note",IDC_STATIC,7,23,21,16
     EDITTEXT        IDC_CONFIG_EVENT_DESC,30,23,200,28,ES_MULTILINE | 
                     ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_DESC
-    GROUPBOX        "Scoring Methods",IDC_STATIC,7,55,320,240
+    GROUPBOX        "Scoring Methods",IDC_STATIC,7,47,320,248
     LTEXT           "Division/Levels defined",IDC_STATIC,15,67,74,8
     LISTBOX         IDC_CONFIG_EVENT_METHODS,15,77,123,84,
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
@@ -655,26 +655,26 @@ BEGIN
                     ES_NUMBER | NOT WS_VISIBLE,0,
                     HIDC_CONFIG_EVENT_CLOSING_PTS
     CONTROL         "S&uper Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,110,257,45,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,95,257,45,10,0,
                     HIDC_CONFIG_EVENT_SUPERQ
     CONTROL         "M&ach Points?",IDC_CONFIG_EVENT_MACH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,110,269,57,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,95,269,57,10,0,
                     HIDC_CONFIG_EVENT_MACH
     CONTROL         "Double &Q?",IDC_CONFIG_EVENT_DOUBLEQ,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,110,281,49,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,95,281,49,10,0,
                     HIDC_CONFIG_EVENT_DOUBLEQ
     LTEXT           "&Method Note",IDC_STATIC,169,167,26,16
-    EDITTEXT        IDC_CONFIG_EVENT_NOTES,196,167,123,72,ES_MULTILINE | 
+    EDITTEXT        IDC_CONFIG_EVENT_NOTES,196,167,123,65,ES_MULTILINE | 
                     ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_NOTES
-    LTEXT           "Title &Points",IDC_STATIC,172,244,20,16
-    LISTBOX         IDC_CONFIG_EVENT_LIST,196,244,88,44,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,
-                    HIDC_CONFIG_EVENT_LIST
-    PUSHBUTTON      "New...",IDC_CONFIG_EVENT_TITLE_NEW,289,244,30,12,0,0,
+    LTEXT           "Title &Points",IDC_STATIC,169,235,36,8
+    LISTBOX         IDC_CONFIG_EVENT_LIST,169,244,123,51,
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP,0,HIDC_CONFIG_EVENT_LIST
+    PUSHBUTTON      "New...",IDC_CONFIG_EVENT_TITLE_NEW,297,244,30,12,0,0,
                     HIDC_CONFIG_EVENT_TITLE_NEW
-    PUSHBUTTON      "Edit...",IDC_CONFIG_EVENT_TITLE_EDIT,289,260,30,12,0,0,
+    PUSHBUTTON      "Edit...",IDC_CONFIG_EVENT_TITLE_EDIT,297,260,30,12,0,0,
                     HIDC_CONFIG_EVENT_TITLE_EDIT
-    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_TITLE_DELETE,289,276,30,12,0,0,
+    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_TITLE_DELETE,297,276,30,12,0,0,
                     HIDC_CONFIG_EVENT_TITLE_DELETE
     DEFPUSHBUTTON   "OK",IDOK,277,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,277,24,50,14
@@ -1335,7 +1335,7 @@ BEGIN
     LTEXT           "&Faults Allowed",IDC_STATIC,7,9,46,8
     EDITTEXT        IDC_CONFIG_TITLEPTS_FAULTS,57,7,40,12,ES_AUTOHSCROLL | 
                     ES_NUMBER,0,HIDC_CONFIG_TITLEPTS_FAULTS
-    LTEXT           "&Points",IDC_STATIC,7,25,20,8
+    LTEXT           "&Points Earned",IDC_STATIC,7,25,45,8
     EDITTEXT        IDC_CONFIG_TITLEPTS_POINTS,57,23,40,12,ES_AUTOHSCROLL | 
                     ES_NUMBER,0,HIDC_CONFIG_TITLEPTS_POINTS
     CONTROL         "&Accumulate Lifetime Points?",
@@ -1752,8 +1752,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,3,3,9
- PRODUCTVERSION 1,3,3,9
+ FILEVERSION 1,4,0,10
+ PRODUCTVERSION 1,4,0,10
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1770,12 +1770,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "dcon Software"
             VALUE "FileDescription", "Agility Record Book"
-            VALUE "FileVersion", "1.3.3.9"
+            VALUE "FileVersion", "1.4.0.10"
             VALUE "InternalName", "AgilityBook.exe"
             VALUE "LegalCopyright", "Copyright © 2002-2004 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
-            VALUE "ProductVersion", "1.3.3.9"
+            VALUE "ProductVersion", "1.4.0.10"
         END
     END
     BLOCK "VarFileInfo"

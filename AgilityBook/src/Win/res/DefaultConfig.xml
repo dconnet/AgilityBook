@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="9.1">
+<DefaultConfig Book="10">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2004-09-28 DRC Configuration version 6.
-               Added comment to CL1-4 titles. Accumulate lifetime LevelC points
+2004-10-06 DRC Configuration version 6.
+               CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
+               points.  Change points in Specialist to be like LevelC.
 2004-07-17 DRC Configuration version 5.
                Remove titling points from USDAA Tournament Jumper/Snooker.
                Added non-titling Performance events for Steeplechase and DAM
@@ -588,13 +589,13 @@ This "title" is just an abbreviation of the above. It is not a actual title.</Ti
 Games:
   4 Qualifying Legs of each game
   Earned under at least 2 different judges for each game.</Titles>
-				<Titles LongName="Champion Standard" Name="ChST">15 Qs</Titles>
-				<Titles LongName="Champion Colors" Name="ChCL">15 Qs</Titles>
-				<Titles LongName="Champion Wildcard" Name="ChWC">15 Qs</Titles>
-				<Titles LongName="Champion Snooker" Name="ChSN">15 Qs</Titles>
-				<Titles LongName="Champion Jackpot" Name="ChJP">15 Qs</Titles>
-				<Titles LongName="Champion FullHouse" Name="ChFH">15 Qs</Titles>
-				<Titles LongName="Champion Jumpers" Name="ChJU">15 Qs</Titles>
+				<Titles LongName="Champion Standard" Name="ChST">15 Qs earned in Level 5</Titles>
+				<Titles LongName="Champion Colors" Name="ChCL">15 Qs earned in Level 5</Titles>
+				<Titles LongName="Champion Wildcard" Name="ChWC">15 Qs earned in Level 5</Titles>
+				<Titles LongName="Champion Snooker" Name="ChSN">15 Qs earned in Level 5</Titles>
+				<Titles LongName="Champion Jackpot" Name="ChJP">15 Qs earned in Level 5</Titles>
+				<Titles LongName="Champion FullHouse" Name="ChFH">15 Qs earned in Level 5</Titles>
+				<Titles LongName="Champion Jumpers" Name="ChJU">15 Qs earned in Level 5</Titles>
 				<Titles LongName="CPE Agility Team Extraordinaire" Name="C-ATE">5000 points, 3000 by class requirements, 2000 by handler choice.
 Standard: 500 pts (20 legs)
 Colors: 300 pts (20 legs)
@@ -603,13 +604,13 @@ Jackpot: 500 pts (20 legs)
 Snooker: 500 pts (20 legs)
 FullHouse: 400 pts (20 legs)
 Jumpers: 400 pts (20 legs)</Titles>
-				<Titles LongName="Extraordinaire Standard" Name="ExST">30 Qs</Titles>
-				<Titles LongName="Extraordinaire Colors" Name="ExCL">30 Qs</Titles>
-				<Titles LongName="Extraordinaire Wildcard" Name="ExWC">30 Qs</Titles>
-				<Titles LongName="Extraordinaire Snooker" Name="ExSN">30 Qs</Titles>
-				<Titles LongName="Extraordinaire Jackpot" Name="ExJP">30 Qs</Titles>
-				<Titles LongName="Extraordinaire FullHouse" Name="ExFH">30 Qs</Titles>
-				<Titles LongName="Extraordinaire Jumpers" Name="ExJU">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Standard" Name="ExST">30 Qs earned in Level C</Titles>
+				<Titles LongName="Extraordinaire Colors" Name="ExCL">30 Qs earned in Level C</Titles>
+				<Titles LongName="Extraordinaire Wildcard" Name="ExWC">30 Qs earned in Level C</Titles>
+				<Titles LongName="Extraordinaire Snooker" Name="ExSN">30 Qs earned in Level C</Titles>
+				<Titles LongName="Extraordinaire Jackpot" Name="ExJP">30 Qs earned in Level C</Titles>
+				<Titles LongName="Extraordinaire FullHouse" Name="ExFH">30 Qs earned in Level C</Titles>
+				<Titles LongName="Extraordinaire Jumpers" Name="ExJU">30 Qs earned in Level C</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Level 1"/>
@@ -627,20 +628,39 @@ Jumpers: 400 pts (20 legs)</Titles>
 				<Titles LongName="Specialist Extraordinaire" Name="SpEx">Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
 			</Division>
 			<Event Name="Standard">
+				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
+					<Note>Faults allowed:
+1 off course
+1 bar down
+5 time faults</Note>
+					<TitlePoints Faults="0" Points="25"/>
+					<TitlePoints Faults="5" Points="20"/>
+					<TitlePoints Faults="10" Points="15"/>
+					<LifeTime Faults="0" Points="25"/>
+					<LifeTime Faults="5" Points="20"/>
+					<LifeTime Faults="10" Points="15"/>
+				</Scoring>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="25"/>
+					<TitlePoints Faults="0" Points="25"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring Division="*" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
+					<LifeTime Faults="5" Points="20"/>
+					<LifeTime Faults="10" Points="15"/>
 				</Scoring>
 				<Scoring Division="*" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
+					<LifeTime Faults="5" Points="20"/>
+					<LifeTime Faults="10" Points="15"/>
 				</Scoring>
 				<Scoring Division="*" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -648,6 +668,9 @@ Jumpers: 400 pts (20 legs)</Titles>
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
+					<LifeTime Faults="5" Points="20"/>
+					<LifeTime Faults="10" Points="15"/>
 				</Scoring>
 				<Scoring Division="*" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -655,6 +678,9 @@ Jumpers: 400 pts (20 legs)</Titles>
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
+					<LifeTime Faults="5" Points="20"/>
+					<LifeTime Faults="10" Points="15"/>
 				</Scoring>
 				<Scoring Division="*" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -662,46 +688,83 @@ Jumpers: 400 pts (20 legs)</Titles>
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
+					<LifeTime Faults="5" Points="20"/>
+					<LifeTime Faults="10" Points="15"/>
 				</Scoring>
 			</Event>
 			<Event Name="Colors">
 				<Desc>Successfully run your choice of one of the three over-lapping mini-agility courses on the same field.</Desc>
+				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
+					<Note>Faults allowed:
+4 time faults</Note>
+					<TitlePoints Faults="0" Points="15"/>
+					<TitlePoints Faults="4" Points="10"/>
+					<LifeTime Faults="0" Points="15"/>
+					<LifeTime Faults="4" Points="10"/>
+				</Scoring>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="15"/>
+					<TitlePoints Faults="0" Points="15"/>
+					<LifeTime Faults="0" Points="15"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 3 time faults</Note>
 					<TitlePoints Faults="3" Points="1"/>
+					<LifeTime Faults="0" Points="15"/>
+					<LifeTime Faults="3" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 3 time faults</Note>
 					<TitlePoints Faults="3" Points="1"/>
+					<LifeTime Faults="0" Points="15"/>
+					<LifeTime Faults="3" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 4 time faults</Note>
 					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="15"/>
+					<LifeTime Faults="4" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 4 time faults</Note>
 					<TitlePoints Faults="9" Points="1"/>
+					<LifeTime Faults="0" Points="15"/>
+					<LifeTime Faults="5" Points="10"/>
+					<LifeTime Faults="9" Points="5"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="15"/>
+					<LifeTime Faults="5" Points="10"/>
+					<LifeTime Faults="10" Points="5"/>
 				</Scoring>
 			</Event>
 			<Event Name="Wildcard">
 				<Desc>Successfully complete the course including enough "wildcards" to qualify!</Desc>
+				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
+					<Note>WildCard: 1 1pt, 2 2pt
+Faults allowed:
+1 bar down
+4 time faults</Note>
+					<TitlePoints Faults="0" Points="20"/>
+					<TitlePoints Faults="5" Points="15"/>
+					<TitlePoints Faults="9" Points="10"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="9" Points="10"/>
+				</Scoring>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt</Note>
-					<TitlePoints Faults="0" LifeTime="y" Points="20"/>
+					<TitlePoints Faults="0" Points="20"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
@@ -709,6 +772,9 @@ Faults allowed:
 1 bar down
 3 time faults</Note>
 					<TitlePoints Faults="8" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="8" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
@@ -716,6 +782,9 @@ Faults allowed:
 1 bar down
 3 time faults</Note>
 					<TitlePoints Faults="8" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="8" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
@@ -723,6 +792,9 @@ Faults allowed:
 1 bar down
 4 time faults</Note>
 					<TitlePoints Faults="9" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="9" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 2 1pt, 1 2pt
@@ -731,6 +803,9 @@ Faults allowed:
 1 bar down
 4 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 2 1pt, 1 2pt
@@ -739,48 +814,71 @@ Faults allowed:
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Snooker">
 				<Desc>To test the course planning strategies of the handler, and the dog's ability to concentrate on and execute the handlers directions.</Desc>
+				<Scoring Division="Specialist" Level="Level 3" OpeningPts="30" dropFractions="y" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="25"/>
+					<LifeTime Faults="0" Points="25"/>
+				</Scoring>
 				<Scoring Division="Standard" Level="Level C" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="25"/>
+					<TitlePoints Faults="0" Points="25"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" OpeningPts="30" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" OpeningPts="28" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 1" OpeningPts="26" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jackpot">
 				<Desc>To test the course planning strategies of the handler, and the dog's ability to work at a distance.</Desc>
+				<Scoring ClosingPts="20" Division="Specialist" Level="Level 3" OpeningPts="24" dropFractions="y" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="25"/>
+					<LifeTime Faults="0" Points="25"/>
+				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level C" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="25"/>
+					<TitlePoints Faults="0" Points="25"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level 5" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level 4" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level 3" OpeningPts="24" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level 2" OpeningPts="20" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level 1" OpeningPts="16" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
 			</Event>
 			<Event Name="FullHouse">
@@ -788,41 +886,70 @@ Faults allowed:
 3 of a kind: 3 jumps (1 pt each)
 2 of a kind: 2 "circles" (3 pts each)
 joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
+				<Scoring Division="Specialist" Level="Level 3" OpeningPts="23" dropFractions="y" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="20"/>
+					<LifeTime Faults="0" Points="20"/>
+				</Scoring>
 				<Scoring Division="Standard" Level="Level C" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="20"/>
+					<TitlePoints Faults="0" Points="20"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" OpeningPts="23" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" OpeningPts="21" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 1" OpeningPts="19" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
 				<Desc>Successfully complete course within fault limits and course time.</Desc>
+				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
+					<Note>Faults allowed:
+1 off course
+1 bar down
+5 time faults</Note>
+					<TitlePoints Faults="0" Points="20"/>
+					<TitlePoints Faults="5" Points="15"/>
+					<TitlePoints Faults="10" Points="10"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
+				</Scoring>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="20"/>
+					<TitlePoints Faults="0" Points="20"/>
+					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -830,6 +957,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -837,6 +967,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -844,6 +977,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 1 bar down
 5 time faults</Note>
 					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
 			</Event>
 		</Venue>
@@ -1028,52 +1164,65 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 			</Division>
 			<Event Name="Regular">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
-					<TitlePoints Faults="5" LifeTime="y" Points="5"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="5" Points="5"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
 				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" ValidTo="2004-12-31" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" ValidTo="2004-12-31" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" ValidTo="2004-12-31" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2004-12-31" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Tunnelers">
 				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="TouchNGo">
 				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Weavers">
 				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
 		</Venue>
@@ -1256,7 +1405,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1268,7 +1418,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1283,7 +1434,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>DAM Team: Qualifying is marked under Relay. If this run is also a titling run, enter it under your normal level.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1296,7 +1448,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1312,7 +1465,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Advanced" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1325,7 +1479,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PII" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1341,7 +1496,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>DAM Team: Qualifying is marked under Relay. If this run is also a titling run, enter it under your normal level.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Advanced" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1354,7 +1510,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1372,10 +1529,12 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="TimePlusFaults">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Advanced" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1397,12 +1556,14 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 			<Event Name="Grand Prix">
 				<Scoring Division="Championship" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" type="FaultsThenTime">
-					<TitlePoints Faults="7" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="7" Points="1"/>
+					<LifeTime Faults="7" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<Note>Effective starting in 2004</Note>
-					<TitlePoints Faults="7" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="7" Points="1"/>
+					<LifeTime Faults="7" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Steeplechase">
@@ -1411,7 +1572,8 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
-					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
 					<Note>Non-titling event - known as Leap N Chase, Fast &amp; Furious, etc.</Note>
