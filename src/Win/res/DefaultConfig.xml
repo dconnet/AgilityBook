@@ -916,10 +916,10 @@ MSA, JM, GM, SM, RM, TM</Titles>
 				<Titles LongName="Performance II Gamblers" Name="GPII"/>
 				<Titles LongName="Performance II Snooker" Name="SPII"/>
 				<Titles LongName="Performance Dog III" Name="PDIII"/>
-				<Titles LongName="Performance III Standard" Name="SAIII"/>
-				<Titles LongName="Performance III Jumper" Name="JPIII"/>
-				<Titles LongName="Performance III Gambler" Name="GPIII"/>
-				<Titles LongName="Performance III Snooker" Name="SPIII"/>
+				<Titles LongName="Performance III Standard" Name="SAPIII"/>
+				<Titles LongName="Performance III Jumper" Name="PJ"/>
+				<Titles LongName="Performance III Gambler" Name="PG"/>
+				<Titles LongName="Performance III Snooker" Name="PS"/>
 				<Titles LongName="Accomplished Performance Dog" Name="APD"/>
 				<Titles LongName="Accomplished Standard" Name="SAAP"/>
 				<Titles LongName="Accomplished Jumpers" Name="JAP"/>
