@@ -1,11 +1,13 @@
 2/16/2004: v1.0.3.8 <in development>
 - Bumped file version to 8.4:
   - Added table-in-yps flag (default is true for backwards compatibility)
+  - Added new 'Configuration/Action' verb: DeleteTitle
 - New features / Enhancements:
   - Updated doxygen comments in ARB classes.
   - Add a 5-sec table YPS computation checkbox in the runs.
 - Bug fixes
   - Creating a new document didn't clear the judge info from the previous doc.
+  - Removed 'V-ATCH',etc from ASCA configuration.
 
 2/9/2004: v1.0.2.8
 - Bumped file version to 8.3:

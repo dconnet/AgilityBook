@@ -71,6 +71,10 @@ for renaming titles.
     Venue: Venue that contains title
     OldName: Title to be renamed.
     NewName: New name.
+  'DeleteTitle': (I added ASCA titles that shouldn't be there)
+    Venue: Venue that contains title
+    OldName: Title to be removed.
+	NewName: If set, rename any existing titles, otherwise titles are deleted.
  pcdata: currently unused, defined to allow future expansion.
 -->
 <!ELEMENT Action (#PCDATA) >

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultConfig Book="8.2">
 	<Configuration>
+		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
+		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
+		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
@@ -444,9 +447,6 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="Elite Gamblers" Name="GV-E"/>
 				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GV-E-OP"/>
 				<Titles LongName="Elite Gamblers Superior Performance" Name="GV-E-SP"/>
-				<Titles LongName="Agility Trial Champion" Name="V-ATCH">RV-E plus 200 pts, GV-E plus 100 pts, JV-E plus 100 pts</Titles>
-				<Titles LongName="Outstanding Performance Agility Trial Champion" Name="V-ATCH-OP">RV-E plus 400 pts, GV-E plus 200 pts, JV-E plus 200 pts</Titles>
-				<Titles LongName="Superior Performance Agility Trial Champion" Name="V-ATCH-SP">RV-E plus 600 pts, GV-E plus 300 pts, JV-E plus 300 pts</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
