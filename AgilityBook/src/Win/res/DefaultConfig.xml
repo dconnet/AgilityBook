@@ -97,6 +97,64 @@
 				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" type="Faults100ThenTime"/>
 			</Event>
 		</Venue>
+		<Venue Name="AMBOR">
+			<Desc>http://www.amborusa.org/</Desc>
+			<Division Name="Standard">
+				<Level Name="Novice">
+					<SubLevel Name="Novice A"/>
+					<SubLevel Name="Novice B"/>
+				</Level>
+				<Level Name="Open"/>
+				<Level Name="Elite"/>
+			</Division>
+			<Division Name="Veterans">
+				<Level Name="Novice">
+					<SubLevel Name="Novice A"/>
+					<SubLevel Name="Novice B"/>
+				</Level>
+				<Level Name="Open"/>
+				<Level Name="Elite"/>
+			</Division>
+			<Division Name="Junior">
+				<Level Name="Novice">
+					<SubLevel Name="Novice A"/>
+					<SubLevel Name="Novice B"/>
+				</Level>
+				<Level Name="Open"/>
+				<Level Name="Elite"/>
+			</Division>
+			<Event Name="Regular">
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="5" Points="5"/>
+				</Scoring>
+			</Event>
+			<Event Name="Jumpers">
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+			<Event Name="Gamblers">
+				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+		</Venue>
 		<Venue Name="ASCA">
 			<Desc>http://www.asca.org/</Desc>
 			<Division Name="Standard">
@@ -326,6 +384,13 @@ Jumpers: 400 pts (20 legs)
 				<Titles Name="Jr Handler">3 qualifying legs. They may or may not be with the same dog, and may or may not be in the same level.</Titles>
 				<Titles Name="Jr Handling Champion">8 clean or 10 qualifying legs in Level 5.</Titles>
 			</Division>
+			<Division Name="Specialist">
+				<Level Name="Level 3"/>
+				<Titles Name="SpCh">Specialist Champion
+Will need to obtain a total of 750 points, which must include at least 4 legs in 4 of the 7 classes offered by CPE, handler choice.</Titles>
+				<Titles Name="SpEx">Specialist Extraordinaire
+Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
+			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="25"/>
@@ -372,23 +437,23 @@ Jumpers: 400 pts (20 legs)
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 3 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="3" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 3 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="3" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 4 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="4" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 4 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="9" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -408,21 +473,21 @@ Jumpers: 400 pts (20 legs)
 Faults allowed:
 1 bar down
 3 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="8" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
 Faults allowed:
 1 bar down
 3 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="8" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
 Faults allowed:
 1 bar down
 4 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
+					<TitlePoints Faults="9" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 2 1pt, 1 2pt
