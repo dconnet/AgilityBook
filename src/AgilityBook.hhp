@@ -1,0 +1,28 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=Help\AgilityBook.chm
+Contents file=Help\Contents.hhc
+Default Window=main
+Default topic=Help\html\Introduction.html
+Display compile progress=Yes
+Error log file=Help\AgilityBook.log
+Full text search stop list file=Help\stoplist.stp
+Full-text search=Yes
+Index file=Help\Index.hhk
+Language=0x409 English (United States)
+Title=Agility Record Book
+
+[WINDOWS]
+main="Agility Record Book","Help\Contents.hhc","Help\Index.hhk","Help\html\Introduction.html","Help\html\Introduction.html",,,,,0x62520,,0x300e,[0,0,800,600],,,,,,,0
+
+
+[FILES]
+Help\html\Introduction.html
+Help\html\Tasks.html
+Help\html\Tasks\NewDog.html
+Help\html\ProgramOverview.html
+Help\html\ProgramOverview\Menus.html
+
+[INFOTYPES]
+
