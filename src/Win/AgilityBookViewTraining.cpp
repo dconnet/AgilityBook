@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-14 DRC Re-sort items after editing an existing one.
  * @li 2003-09-21 DRC Created
  */
 
@@ -469,6 +470,8 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 		CDlgTraining dlg(pData->GetTraining(), GetDocument());
 		if (IDOK == dlg.DoModal())
 		{
+			GetDocument()->GetTraining().sort();
+			LoadData();
 			GetDocument()->SetModifiedFlag();
 			Invalidate();
 			int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
