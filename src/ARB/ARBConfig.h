@@ -77,7 +77,7 @@ public:
 		const std::string& inVenue,
 		const std::string& inTitle,
 		bool bAbbrevFirst = true) const;
-	std::string Update(int indent, const ARBConfig& inConfigNew);
+	bool Update(int indent, const ARBConfig& inConfigNew, std::string& ioInfo);
 
 	const ARBConfigActionList& GetActions() const;
 	ARBConfigActionList& GetActions();

@@ -266,7 +266,7 @@ std::string ARBConfig::GetTitleCompleteName(
 		return inTitle;
 }
 
-std::string ARBConfig::Update(int indent, const ARBConfig& inConfigNew)
+bool ARBConfig::Update(int indent, const ARBConfig& inConfigNew, std::string& ioInfo)
 {
 	char buffer[1000];
 	std::string info;
@@ -339,9 +339,11 @@ std::string ARBConfig::Update(int indent, const ARBConfig& inConfigNew)
 		{
 			if (*pVenue != *(*iterVenue))
 			{
-				++nUpdated;
-				++nChanges;
-				venueInfo += pVenue->Update(indent+1, (*iterVenue));
+				if (pVenue->Update(indent+1, (*iterVenue), venueInfo))
+				{
+					++nUpdated;
+					++nChanges;
+				}
 			}
 			else
 				++nSkipped;
@@ -363,7 +365,13 @@ std::string ARBConfig::Update(int indent, const ARBConfig& inConfigNew)
 		info += "\n";
 		info += venueInfo;
 	}
+	bool bChanges = true;
 	if (0 == nChanges)
+	{
+		bChanges = false;
 		info.erase();
-	return info;
+	}
+	else
+		ioInfo += info;
+	return bChanges;
 }

@@ -496,7 +496,9 @@ BOOL CWizardStart::OnWizardFinish()
 							}
 						}
 					}
-					msg += m_pDoc->GetConfig().Update(0, update).c_str();
+					std::string info;
+					m_pDoc->GetConfig().Update(0, update, info);
+					msg += info.c_str();
 					if (0 < msg.GetLength())
 					{
 						CDlgMessage dlg(msg, 0);

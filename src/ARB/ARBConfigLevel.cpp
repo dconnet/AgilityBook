@@ -127,11 +127,11 @@ bool ARBConfigLevel::Save(CElement& ioTree) const
 	return true;
 }
 
-std::string ARBConfigLevel::Update(int indent, const ARBConfigLevel* inLevelNew)
+bool ARBConfigLevel::Update(int indent, const ARBConfigLevel* inLevelNew, std::string& ioInfo)
 {
 	std::string info;
 	if (GetName() != inLevelNew->GetName())
-		return info;
+		return false;
 
 	std::string indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
@@ -162,9 +162,13 @@ std::string ARBConfigLevel::Update(int indent, const ARBConfigLevel* inLevelNew)
 			info += buffer;
 		}
 	}
+	bool bChanges = false;
 	if (0 < info.length())
-		info = indentName + GetName() + "\n" + info;
-	return info;
+	{
+		bChanges = true;
+		ioInfo += indentName + GetName() + "\n" + info;
+	}
+	return bChanges;
 }
 
 void ARBConfigLevel::clear()
