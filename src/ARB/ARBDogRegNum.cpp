@@ -57,6 +57,7 @@ ARBDogRegNum::ARBDogRegNum()
 	, m_Number()
 	, m_Height()
 	, m_bReceived(false)
+	, m_Note()
 {
 }
 
@@ -65,6 +66,7 @@ ARBDogRegNum::ARBDogRegNum(ARBDogRegNum const& rhs)
 	, m_Number(rhs.m_Number)
 	, m_Height(rhs.m_Height)
 	, m_bReceived(rhs.m_bReceived)
+	, m_Note(rhs.m_Note)
 {
 }
 
@@ -80,6 +82,7 @@ ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)
 		m_Number = rhs.m_Number;
 		m_Height = rhs.m_Height;
 		m_bReceived = rhs.m_bReceived;
+		m_Note = rhs.m_Note;
 	}
 	return *this;
 }
@@ -89,7 +92,8 @@ bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 	return m_Venue == rhs.m_Venue
 		&& m_Number == rhs.m_Number
 		&& m_Height == rhs.m_Height
-		&& m_bReceived == rhs.m_bReceived;
+		&& m_bReceived == rhs.m_bReceived
+		&& m_Note == rhs.m_Note;
 }
 
 bool ARBDogRegNum::operator!=(ARBDogRegNum const& rhs) const
@@ -130,8 +134,19 @@ bool ARBDogRegNum::Load(
 			return false;
 		}
 	}
-	else
+	else if (inVersion < ARBVersion(9,0))
 		m_Number = inTree.GetValue();
+	else
+	{
+		if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
+		|| 0 == m_Number.length())
+		{
+			ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER);
+			return false;
+		}
+
+		m_Note = inTree.GetValue();
+	}
 
 	inTree.GetAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 
@@ -156,11 +171,12 @@ bool ARBDogRegNum::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_REG_NUM);
 	title.AddAttrib(ATTRIB_REG_NUM_VENUE, m_Venue);
+	title.AddAttrib(ATTRIB_REG_NUM_NUMBER, m_Number);
 	if (0 < m_Height.length())
 		title.AddAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 	if (m_bReceived)
 		title.AddAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived);
-	title.SetValue(m_Number);
+	title.SetValue(m_Note);
 	return true;
 }
 

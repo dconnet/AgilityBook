@@ -203,6 +203,7 @@
 #define IDC_DOGNUM_DELETE               1141
 #define IDC_PICK_NAME                   1142
 #define IDC_TRAINING_SUBNAME            1143
+#define IDC_REGNUM_NOTE                 1149
 #define IDC_REGNUM_VENUES               1150
 #define IDC_REGNUM_REG_NUM              1151
 #define IDC_REGNUM_HEIGHT               1152

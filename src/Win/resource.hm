@@ -213,6 +213,7 @@
 #define HIDC_REFRUN_Q                   0x80e604d9    // IDD_REF_RUN
 #define HIDC_REFRUN_TIME                0x80e604db    // IDD_REF_RUN
 #define HIDC_REGNUM_HEIGHT              0x80dc0480    // IDD_REG_NUM
+#define HIDC_REGNUM_NOTE                0x80dc047d    // IDD_REG_NUM
 #define HIDC_REGNUM_RECEIVED            0x80dc0481    // IDD_REG_NUM
 #define HIDC_REGNUM_REG_NUM             0x80dc047f    // IDD_REG_NUM
 #define HIDC_REGNUM_VENUES              0x80dc047e    // IDD_REG_NUM

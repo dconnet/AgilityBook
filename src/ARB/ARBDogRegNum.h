@@ -105,6 +105,8 @@ public:
 	void SetHeight(std::string const& inHeight);
 	bool GetReceived() const;
 	void SetReceived(bool inReceived);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
 
 private:
 	~ARBDogRegNum();
@@ -112,6 +114,7 @@ private:
 	std::string m_Number;
 	std::string m_Height;
 	bool m_bReceived;
+	std::string m_Note;
 };
 
 inline std::string const& ARBDogRegNum::GetVenue() const
@@ -152,6 +155,16 @@ inline bool ARBDogRegNum::GetReceived() const
 inline void ARBDogRegNum::SetReceived(bool inReceived)
 {
 	m_bReceived = inReceived;
+}
+
+inline std::string const& ARBDogRegNum::GetNote() const
+{
+	return m_Note;
+}
+
+inline void ARBDogRegNum::SetNote(std::string const& inNote)
+{
+	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////

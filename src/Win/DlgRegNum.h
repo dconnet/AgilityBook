@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-29 DRC Added Note to regnum.
  */
 
 #include "DlgBaseDialog.h"
@@ -53,6 +54,7 @@ private:
 	CString	m_RegNum;
 	CString	m_Height;
 	BOOL	m_bReceived;
+	CString	m_Note;
 	//}}AFX_DATA
 	ARBConfig const& m_Config;
 	ARBDogRegNumList& m_RegNums;

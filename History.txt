@@ -1,6 +1,7 @@
-6/24/2004: v1.2.0.8 <in development>
-- Bumped file version to 8.7, Configuration v4:
+6/29/2004: v1.2.0.8 <in development>
+- Bumped file version to 9.0, Configuration v4:
   - Added 'SubName' to 'Training'.
+  - Moved 'RegNum' data to 'Number', data is now 'Note'
   - CPE 'CADE' changed to 'C-ATE'.
 - New features / Enhancements:
   - In the Points view, do not filter individual runs based on Qs (use all
@@ -22,6 +23,7 @@
   - When creating a trial from a calendar entry, copy the notes too.
   - Added the current dogs name to the status bar.
   - Added indicators for how the lists are sorted.
+  - Added a note to a registration number.
 - Bug fixes
   - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter
