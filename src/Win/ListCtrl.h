@@ -92,9 +92,12 @@ public:
 	size_t GetSelection(std::vector<int>& indices);
 	void SetSelection(int index, bool bEnsureVisible = false);
 	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
+	/**
+	 * Returns the data required to print/copy a line.
+	 */
+	virtual void GetPrintLine(int nItem, CStringArray& line);
 
 protected:
-	virtual void GetPrintLine(int nItem, CStringArray& line);
 	//{{AFX_VIRTUAL(CListView2)
 	protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
