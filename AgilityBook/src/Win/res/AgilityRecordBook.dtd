@@ -211,17 +211,22 @@ depends on how a venue has been defined above.
 <!ELEMENT Breed (#PCDATA) >
 <!ELEMENT Note (#PCDATA) >
 <!--
-If 'Other' is set, the information is used to compute OtherPoints. If not set,
-it is added to the normal points. Venue/etc are required for 'Other' since the
-otherpts item may be accumulating by div/level/event...
+ Type: [required items..]
+  'Other': Other Points [Other, Venue, Div, Level, Event]
+  'Run': Runs           [       Venue, Div, Level, Event]
+  'Mach': Mach points   [       Venue, Div, Level]
+  'QQ': Double Q        [       Venue, Div, Level]
+  'SQ': Super Q         [       Venue, Div, Level, Event]
 -->
-<!ELEMENT ExistingPoints EMPTY >
+<!ELEMENT ExistingPoints (#PCDATA) >
 	<!ATTLIST ExistingPoints
-		Venue CDATA #REQUIRED
-		Div CDATA #REQUIRED
-		Level CDATA #REQUIRED
-		Event CDATA #REQUIRED
+		Date CDATA #REQUIRED
+		Type CDATA #REQUIRED
 		Other CDATA #IMPLIED
+		Venue CDATA #IMPLIED
+		Div CDATA #IMPLIED
+		Level CDATA #IMPLIED
+		Event CDATA #IMPLIED
 		Pts CDATA #REQUIRED
 		>
 <!ELEMENT RegNum (#PCDATA) >

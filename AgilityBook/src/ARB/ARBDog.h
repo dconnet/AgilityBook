@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-08-18 DRC Added a deceased date.
@@ -253,6 +254,9 @@ public:
 		const ARBConfig& inConfig,
 		const std::string& inVenue,
 		const std::string& inDiv);
+	int NumExistingPointsInDivision(
+		const ARBConfigVenue* inVenue,
+		const std::string& inDiv) const;
 	int NumTitlesInDivision(
 		const ARBConfigVenue* inVenue,
 		const std::string& inDiv) const;

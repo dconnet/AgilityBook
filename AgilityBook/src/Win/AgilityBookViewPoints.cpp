@@ -193,10 +193,11 @@ bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 // Entering this function, we know the trial is visible.
 // We don't know if the individual runs are.
 int CAgilityBookViewPoints::DoEvents(
+	const ARBDog* inDog,
 	const std::vector<CVenueFilter>& venues,
 	int index,
 	const std::list<const ARBDogTrial*>& trials,
-	const ARBConfigVenue* pVenue,
+	const ARBConfigVenue* inVenue,
 	const ARBConfigDivision* inDiv,
 	const ARBConfigLevel* inLevel)
 {
@@ -205,11 +206,13 @@ int CAgilityBookViewPoints::DoEvents(
 	bool bHasMachPts = false;
 	std::set<ARBDate> QQs;
 	bool bHasDoubleQs = false;
-	for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
-	iterEvent != pVenue->GetEvents().end();
+	for (ARBConfigEventList::const_iterator iterEvent = inVenue->GetEvents().begin();
+	iterEvent != inVenue->GetEvents().end();
 	++iterEvent)
 	{
 		const ARBConfigEvent* pEvent = (*iterEvent);
+		bool bHasPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent);
+
 		// Don't tally runs that have no titling points.
 		std::vector<const ARBConfigScoring*> scoringItems;
 		if (0 == pEvent->FindAllEvents(inDiv->GetName(), inLevel->GetName(), true, scoringItems))
@@ -314,7 +317,7 @@ int CAgilityBookViewPoints::DoEvents(
 				}
 			}
 			CString str, str2;
-			if (0 < matching.size())
+			if (bHasPoints || 0 < matching.size())
 			{
 				GetListCtrl().InsertItem(index+nAdded, "");
 				int nextCol = 1;
@@ -323,6 +326,9 @@ int CAgilityBookViewPoints::DoEvents(
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
 				int nCleanQ, nNotCleanQ;
 				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
+				pts += inDog->GetExistingPoints().ExistingPoints(
+					ARBDogExistingPoints::eRuns,
+					inVenue, inDiv, inLevel, pEvent);
 				str.FormatMessage(IDS_POINTS_RUNS_JUDGES,
 					matching.size(),
 					judges.size());
@@ -350,10 +356,16 @@ int CAgilityBookViewPoints::DoEvents(
 					str += str2;
 				}
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-				str.Format("%d", pts);
+				int nExistingSQ = 0;
+				if (pScoringMethod->HasSuperQ())
+					nExistingSQ += inDog->GetExistingPoints().ExistingPoints(
+						ARBDogExistingPoints::eSQ,
+						inVenue, inDiv, inLevel, pEvent);
+				str.Format("%d", pts + nExistingSQ);
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 				if (pScoringMethod->HasSuperQ())
 				{
+					SQs += nExistingSQ;
 					str.FormatMessage(IDS_POINTS_SQS, SQs);
 					GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 				}
@@ -376,6 +388,14 @@ int CAgilityBookViewPoints::DoEvents(
 	// Information that is tallied after all a venue's events.
 	if (bHasDoubleQs)
 	{
+		machPts += inDog->GetExistingPoints().ExistingPoints(
+			ARBDogExistingPoints::eMach,
+			inVenue, inDiv, inLevel, NULL);
+		int dblQs = static_cast<int>(QQs.size());
+		dblQs += inDog->GetExistingPoints().ExistingPoints(
+			ARBDogExistingPoints::eQQ,
+			inVenue, inDiv, inLevel, NULL);
+
 		GetListCtrl().InsertItem(index+nAdded, "");
 		int nextCol = 1;
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
@@ -385,7 +405,7 @@ int CAgilityBookViewPoints::DoEvents(
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
 		CString str;
-		str.FormatMessage(IDS_POINTS_QQS, QQs.size());
+		str.FormatMessage(IDS_POINTS_QQS, dblQs);
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 		++nAdded;
 	}
@@ -567,7 +587,8 @@ void CAgilityBookViewPoints::LoadData()
 					trialsInVenue.push_back(pTrial);
 				}
 			}
-			if (0 < trialsInVenue.size())
+			if (pDog->GetExistingPoints().HasPoints(pVenue->GetName())
+			|| 0 < trialsInVenue.size())
 			{
 				if (!bHeaderInserted)
 				{
@@ -594,7 +615,7 @@ void CAgilityBookViewPoints::LoadData()
 					++iterLevel)
 					{
 						const ARBConfigLevel* pLevel = (*iterLevel);
-						i += DoEvents(venues, i, trialsInVenue, pVenue, pDiv, pLevel);
+						i += DoEvents(pDog, venues, i, trialsInVenue, pVenue, pDiv, pLevel);
 					}
 				}
 			}
@@ -648,8 +669,15 @@ void CAgilityBookViewPoints::LoadData()
 					iterExisting != pDog->GetExistingPoints().end();
 					++iterExisting)
 				{
-					//TODO
-					//runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+					if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType())
+					{
+						runs.push_back(OtherPtInfo(
+							(*iterExisting)->GetVenue(),
+							(*iterExisting)->GetDivision(),
+							(*iterExisting)->GetLevel(),
+							(*iterExisting)->GetEvent(),
+							(*iterExisting)->GetPoints()));
+					}
 				}
 
 				if (0 == runs.size())

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -419,6 +420,16 @@ int ARBDogList::NumMultiHostedTrialsInDivision(
 	return count;
 }
 
+int ARBDogList::NumExistingPointsInDivision(
+	const ARBConfigVenue* inVenue,
+	const std::string& inDiv) const
+{
+	int count = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+		count += (*iter)->GetExistingPoints().NumExistingPointsInDivision(inVenue, inDiv);
+	return count;
+}
+
 int ARBDogList::NumTitlesInDivision(
 	const ARBConfigVenue* inVenue,
 	const std::string& inDiv) const
@@ -468,7 +479,10 @@ int ARBDogList::NumLevelsInUse(
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().NumLevelsInUse(inVenue, inDiv, inLevel);
 		count += (*iter)->GetTrials().NumLevelsInUse(inVenue, inDiv, inLevel);
+	}
 	return count;
 }
 
@@ -480,7 +494,10 @@ int ARBDogList::RenameLevel(
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().RenameLevel(inVenue, inDiv, inOldLevel, inNewLevel);
 		count += (*iter)->GetTrials().RenameLevel(inVenue, inDiv, inOldLevel, inNewLevel);
+	}
 	return count;
 }
 
@@ -491,7 +508,10 @@ int ARBDogList::DeleteLevel(
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().DeleteLevel(inVenue, inDiv, inLevel);
 		count += (*iter)->GetTrials().DeleteLevel(inVenue, inDiv, inLevel);
+	}
 	return count;
 }
 
@@ -532,7 +552,10 @@ int ARBDogList::NumEventsInUse(
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().NumEventsInUse(inVenue, inEvent);
 		count += (*iter)->GetTrials().NumEventsInUse(inVenue, inEvent);
+	}
 	return count;
 }
 
@@ -543,7 +566,10 @@ int ARBDogList::RenameEvent(
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().RenameEvent(inVenue, inOldEvent, inNewEvent);
 		count += (*iter)->GetTrials().RenameEvent(inVenue, inOldEvent, inNewEvent);
+	}
 	return count;
 }
 
@@ -553,7 +579,10 @@ int ARBDogList::DeleteEvent(
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().DeleteEvent(inVenue, inEvent);
 		count += (*iter)->GetTrials().DeleteEvent(inVenue, inEvent);
+	}
 	return count;
 }
 
