@@ -92,14 +92,6 @@ Teeter 1.57
 WV(10) 3.84
 (AgilityInMotion)</Training>
 	<Configuration>
-		<Action NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PD3" OldName="PDIII" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
 		<Venue Name="AAC">
 			<Desc>http://www.aac.ca/</Desc>
 			<Division Name="Regular">
