@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-21 DRC Added ARBConfigAction items.
  * @li 2003-12-07 DRC Added Info section.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
@@ -47,6 +48,7 @@
 #define TREE_CALENDAR						"Calendar"
 #define TREE_TRAINING						"Training"
 #define TREE_CONFIG							"Configuration"
+#define TREE_ACTION							"Action"
 #define TREE_VENUE							"Venue"
 #define TREE_VENUE_DESC						"Desc"
 #define TREE_DIVISION						"Division"
@@ -102,6 +104,11 @@
 #define ATTRIB_CAL_NOTE						"Note"
 #define ATTRIB_TRAINING_DATE				"Date"
 #define ATTRIB_TRAINING_NAME				"Name"
+#define ATTRIB_ACTION_VERB					"Verb"
+	#define ACTION_VERB_RENAME_TITLE			"RenameTitle"
+#define ATTRIB_ACTION_VENUE					"Venue"
+#define ATTRIB_ACTION_OLDNAME				"OldName"
+#define ATTRIB_ACTION_NEWNAME				"NewName"
 #define ATTRIB_VENUE_NAME					"Name"
 #define ATTRIB_OTHERPTS_NAME				"Name"
 #define ATTRIB_OTHERPTS_COUNT				"Count"

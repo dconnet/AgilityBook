@@ -34,7 +34,8 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
- * @li 2004-01-05 DRC File version 8.2. Added ConfigTitles LongName.
+ * @li 2004-01-21 DRC File version 8.2. Added ConfigTitles LongName. Added
+ *                    ARBConfigAction.
  * @li 2003-12-29 DRC GetAllClubs/Locations now includes calendar entries.
  * @li 2003-12-27 DRC File version 8.1. Changed ARBConfigScoring.
  * @li 2003-12-07 DRC File version 8.0. Added Info section.
