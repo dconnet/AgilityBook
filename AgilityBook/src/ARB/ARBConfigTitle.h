@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-11 DRC Added 'Requires', moved desc to 'Desc'.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -42,6 +43,8 @@
 #include "ARBVector.h"
 class ARBVersion;
 class CElement;
+
+typedef std::vector<std::string> ARBConfigTitleRequiresList;
 
 /**
  * Title configuration.
@@ -117,12 +120,15 @@ public:
 	void SetLongName(const std::string& inName);
 	const std::string& GetDescription() const;
 	void SetDescription(const std::string& inDesc);
+	const ARBConfigTitleRequiresList& GetRequires() const;
+	ARBConfigTitleRequiresList& GetRequires();
 
 private:
 	~ARBConfigTitle();
 	std::string m_Name;
 	std::string m_LongName;
 	std::string m_Desc;
+	ARBConfigTitleRequiresList m_Requires;
 };
 
 inline std::string ARBConfigTitle::GetGenericName() const
@@ -166,6 +172,16 @@ inline const std::string& ARBConfigTitle::GetDescription() const
 inline void ARBConfigTitle::SetDescription(const std::string& inDesc)
 {
 	m_Desc = inDesc;
+}
+
+inline const ARBConfigTitleRequiresList& ARBConfigTitle::GetRequires() const
+{
+	return m_Requires;
+}
+
+inline ARBConfigTitleRequiresList& ARBConfigTitle::GetRequires()
+{
+	return m_Requires;
 }
 
 /////////////////////////////////////////////////////////////////////////////

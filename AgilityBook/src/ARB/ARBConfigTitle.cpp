@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-11 DRC Added 'Requires', moved desc to 'Desc'.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -54,6 +55,7 @@ ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
 	, m_Desc()
+	, m_Requires()
 {
 }
 
@@ -61,6 +63,7 @@ ARBConfigTitle::ARBConfigTitle(const ARBConfigTitle& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
+	, m_Requires(rhs.m_Requires)
 {
 }
 
@@ -75,6 +78,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(const ARBConfigTitle& rhs)
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
 		m_Desc = rhs.m_Desc;
+		m_Requires = rhs.m_Requires;
 	}
 	return *this;
 }
@@ -83,7 +87,8 @@ bool ARBConfigTitle::operator==(const ARBConfigTitle& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
-		&& m_Desc == rhs.m_Desc;
+		&& m_Desc == rhs.m_Desc
+		&& m_Requires == rhs.m_Requires;
 }
 
 bool ARBConfigTitle::operator!=(const ARBConfigTitle& rhs) const
@@ -96,6 +101,7 @@ void ARBConfigTitle::clear()
 	m_Name.erase();
 	m_LongName.erase();
 	m_Desc.erase();
+	m_Requires.clear();
 }
 
 size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
@@ -116,7 +122,22 @@ bool ARBConfigTitle::Load(
 		return false;
 	}
 	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
-	m_Desc = inTree.GetValue();
+	if (inVersion < ARBVersion(9,0))
+		m_Desc = inTree.GetValue();
+	else
+	{
+		for (int i = 0; i < inTree.GetElementCount(); ++i)
+		{
+			const CElement& element = inTree.GetElement(i);
+			const std::string& name = element.GetName();
+			if (name == TREE_TITLES_REQUIRES)
+			{
+				m_Requires.push_back(element.GetValue());
+			}
+			else if (name == TREE_TITLES_DESC)
+				m_Desc = element.GetValue();
+		}
+	}
 	return true;
 }
 
@@ -126,8 +147,18 @@ bool ARBConfigTitle::Save(CElement& ioTree) const
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
+	for (ARBConfigTitleRequiresList::const_iterator iter = m_Requires.begin();
+		iter != m_Requires.end();
+		++iter)
+	{
+		CElement& req = title.AddElement(TREE_TITLES_REQUIRES);
+		req.SetValue(*iter);
+	}
 	if (0 < m_Desc.length())
-		title.SetValue(m_Desc);
+	{
+		CElement& desc = title.AddElement(TREE_TITLES_DESC);
+		desc.SetValue(m_Desc);
+	}
 	return true;
 }
 
