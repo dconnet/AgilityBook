@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Added FromString().
  */
 
@@ -317,7 +318,7 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
+std::string ARBDate::GetString(DateFormat inFormat) const
 {
 	std::string date;
 	if (IsValid())
@@ -325,17 +326,29 @@ std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
 		int yr, mon, day;
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
 		char sYr[10], sMon[10], sDay[10];
-		if (inLeadingZeros)
+		switch (inFormat)
 		{
+		default:
+		case eDashMMDDYYYY:
+		case eSlashMMDDYYYY:
+		case eDashYYYYMMDD:
+		case eSlashYYYYMMDD:
+		case eDashDDMMYYYY:
+		case eSlashDDMMYYYY:
 			sprintf(sYr, "%04d", yr);
 			sprintf(sMon, "%02d", mon);
 			sprintf(sDay, "%02d", day);
-		}
-		else
-		{
+			break;
+		case eDashMDY:
+		case eSlashMDY:
+		case eDashYMD:
+		case eSlashYMD:
+		case eDashDMY:
+		case eSlashDMY:
 			sprintf(sYr, "%d", yr);
 			sprintf(sMon, "%d", mon);
 			sprintf(sDay, "%d", day);
+			break;
 		}
 		char sep = '?';
 		switch (inFormat)
@@ -343,11 +356,17 @@ std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
 		case eDashMMDDYYYY:
 		case eDashYYYYMMDD:
 		case eDashDDMMYYYY:
+		case eDashMDY:
+		case eDashYMD:
+		case eDashDMY:
 			sep = '-';
 			break;
 		case eSlashMMDDYYYY:
 		case eSlashYYYYMMDD:
 		case eSlashDDMMYYYY:
+		case eSlashMDY:
+		case eSlashYMD:
+		case eSlashDMY:
 			sep = '/';
 			break;
 		}
@@ -355,6 +374,8 @@ std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
 		{
 		case eDashMMDDYYYY:
 		case eSlashMMDDYYYY:
+		case eDashMDY:
+		case eSlashMDY:
 			date = sMon;
 			date += sep;
 			date += sDay;
@@ -363,6 +384,8 @@ std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
 			break;
 		case eDashYYYYMMDD:
 		case eSlashYYYYMMDD:
+		case eDashYMD:
+		case eSlashYMD:
 			date = sYr;
 			date += sep;
 			date += sMon;
@@ -371,6 +394,8 @@ std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
 			break;
 		case eDashDDMMYYYY:
 		case eSlashDDMMYYYY:
+		case eDashDMY:
+		case eSlashDMY:
 			date = sDay;
 			date += sep;
 			date += sMon;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -138,21 +139,21 @@ size_t ARBCalendar::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_DateStart.GetString(false, ARBDate::eDashYYYYMMDD));
+	ioStrings.insert(m_DateStart.GetString(ARBDate::eDashYMD));
 	++nItems;
 
-	ioStrings.insert(m_DateEnd.GetString(false, ARBDate::eDashYYYYMMDD));
+	ioStrings.insert(m_DateEnd.GetString(ARBDate::eDashYMD));
 	++nItems;
 
 	if (m_DateOpening.IsValid())
 	{
-		ioStrings.insert(m_DateOpening.GetString(false, ARBDate::eDashYYYYMMDD));
+		ioStrings.insert(m_DateOpening.GetString(ARBDate::eDashYMD));
 		++nItems;
 	}
 
 	if (m_DateClosing.IsValid())
 	{
-		ioStrings.insert(m_DateClosing.GetString(false, ARBDate::eDashYYYYMMDD));
+		ioStrings.insert(m_DateClosing.GetString(ARBDate::eDashYMD));
 		++nItems;
 	}
 

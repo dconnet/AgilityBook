@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-24 DRC Adding a new calendar item didn't set the icon properly.
  * @li 2003-09-08 DRC In Partners, the dog's number wasn't being saved.
@@ -118,10 +119,10 @@ CString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 	switch (iCol)
 	{
 	case 1: // Start Date
-		str = m_pCal->GetStartDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD).c_str();
 		break;
 	case 2: // End Date
-		str = m_pCal->GetEndDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD).c_str();
 		break;
 	case 3: // Location
 		str = m_pCal->GetLocation().c_str();

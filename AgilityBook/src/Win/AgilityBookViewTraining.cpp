@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -116,7 +117,7 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_LOG_DATE:
-			str = m_pTraining->GetDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str = m_pTraining->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eTraining)).c_str();
 			break;
 		case IO_LOG_NAME:
 			str = m_pTraining->GetName().c_str();

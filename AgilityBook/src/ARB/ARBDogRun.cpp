@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-03-30 DRC Added links.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -159,7 +160,7 @@ bool ARBDogRun::operator!=(ARBDogRun const& rhs) const
 
 std::string ARBDogRun::GetGenericName() const
 {
-	std::string name = m_Date.GetString(false, ARBDate::eDashYYYYMMDD);
+	std::string name = m_Date.GetString(ARBDate::eDashYMD);
 	name += " ";
 	name += m_Division;
 	name += " ";
@@ -173,7 +174,7 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(false, ARBDate::eSlashMMDDYYYY));
+	ioStrings.insert(m_Date.GetString(ARBDate::eSlashMDY));
 	++nItems;
 
 	if (0 < m_Division.length())

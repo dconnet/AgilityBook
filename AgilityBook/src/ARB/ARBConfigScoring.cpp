@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -402,12 +403,12 @@ std::string ARBConfigScoring::GetValidDateString() const
 	{
 		str += "[";
 		if (m_ValidFrom.IsValid())
-			str += m_ValidFrom.GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str += m_ValidFrom.GetString(ARBDate::eDashYMD).c_str();
 		else
 			str += "*";
 		str += "-";
 		if (m_ValidTo.IsValid())
-			str += m_ValidTo.GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str += m_ValidTo.GetString(ARBDate::eDashYMD).c_str();
 		else
 			str += "*";
 		str += "]";

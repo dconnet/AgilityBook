@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-06-06 DRC Added cut/copy/paste support.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
@@ -122,13 +123,14 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 	CString str;
 	if (m_pCal)
 	{
+		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_CAL_START_DATE:
-			str = m_pCal->GetStartDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str = m_pCal->GetStartDate().GetString(dFmt).c_str();
 			break;
 		case IO_CAL_END_DATE:
-			str = m_pCal->GetEndDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str = m_pCal->GetEndDate().GetString(dFmt).c_str();
 			break;
 		case IO_CAL_LOCATION:
 			str = m_pCal->GetLocation().c_str();
@@ -141,11 +143,11 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 			break;
 		case IO_CAL_OPENS:
 			if (m_pCal->GetOpeningDate().IsValid())
-				str = m_pCal->GetOpeningDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+				str = m_pCal->GetOpeningDate().GetString(dFmt).c_str();
 			break;
 		case IO_CAL_CLOSES:
 			if (m_pCal->GetClosingDate().IsValid())
-				str = m_pCal->GetClosingDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+				str = m_pCal->GetClosingDate().GetString(dFmt).c_str();
 			break;
 		case IO_CAL_NOTES:
 			str = m_pCal->GetNote().c_str();

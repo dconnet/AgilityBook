@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-05-10 DRC Place quotes are field on output as needed.
  * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-30 DRC Fixed a bug exporting the training log.
@@ -201,7 +202,7 @@ void CWizardExport::UpdateButtons()
 
 void CWizardExport::UpdatePreview()
 {
-	ARBDate::DateFormat format = ARBDate::eSlashMMDDYYYY;
+	ARBDate::DateFormat format = ARBDate::eSlashMDY;
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR != index)
 		format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
@@ -298,7 +299,7 @@ void CWizardExport::UpdatePreview()
 										data += PrepFieldOutput(pDog->GetCallName().c_str());
 										break;
 									case IO_RUNS_DATE:
-										data += PrepFieldOutput(pRun->GetDate().GetString(false, format).c_str());
+										data += PrepFieldOutput(pRun->GetDate().GetString(format).c_str());
 										break;
 									case IO_RUNS_VENUE:
 										{
@@ -567,10 +568,10 @@ void CWizardExport::UpdatePreview()
 					switch (columns[idx])
 					{
 					case IO_CAL_START_DATE:
-						data += PrepFieldOutput(pCal->GetStartDate().GetString(false, format).c_str());
+						data += PrepFieldOutput(pCal->GetStartDate().GetString(format).c_str());
 						break;
 					case IO_CAL_END_DATE:
-						data += PrepFieldOutput(pCal->GetEndDate().GetString(false, format).c_str());
+						data += PrepFieldOutput(pCal->GetEndDate().GetString(format).c_str());
 						break;
 					case IO_CAL_TENTATIVE:
 						if (pCal->IsTentative())
@@ -602,12 +603,12 @@ void CWizardExport::UpdatePreview()
 					case IO_CAL_OPENS:
 						date = pCal->GetOpeningDate();
 						if (date.IsValid())
-							data += PrepFieldOutput(date.GetString(false, format).c_str());
+							data += PrepFieldOutput(date.GetString(format).c_str());
 						break;
 					case IO_CAL_CLOSES:
 						date = pCal->GetClosingDate();
 						if (date.IsValid())
-							data += PrepFieldOutput(date.GetString(false, format).c_str());
+							data += PrepFieldOutput(date.GetString(format).c_str());
 						break;
 					case IO_CAL_NOTES:
 						data += PrepFieldOutput(pCal->GetNote().c_str());
@@ -644,7 +645,7 @@ void CWizardExport::UpdatePreview()
 					switch (columns[idx])
 					{
 					case IO_LOG_DATE:
-						data += PrepFieldOutput(pLog->GetDate().GetString(false, format).c_str());
+						data += PrepFieldOutput(pLog->GetDate().GetString(format).c_str());
 						break;
 					case IO_LOG_NAME:
 						data += PrepFieldOutput(pLog->GetName().c_str());
@@ -678,12 +679,12 @@ BOOL CWizardExport::OnInitDialog()
 		ARBDate::DateFormat format;
 	} const sc_Dates[] =
 	{
-		{"MM-DD-YYYY", ARBDate::eDashMMDDYYYY},
-		{"MM/DD/YYYY", ARBDate::eSlashMMDDYYYY},
-		{"YYYY-MM-DD", ARBDate::eDashYYYYMMDD},
-		{"YYYY/MM/DD", ARBDate::eSlashYYYYMMDD},
-		{"DD-MM-YYYY", ARBDate::eDashDDMMYYYY},
-		{"DD/MM/YYYY", ARBDate::eSlashDDMMYYYY},
+		{"M-D-Y", ARBDate::eDashMDY},
+		{"M/D/Y", ARBDate::eSlashMDY},
+		{"Y-M-D", ARBDate::eDashYMD},
+		{"Y/M/D", ARBDate::eSlashYMD},
+		{"D-M-Y", ARBDate::eDashDMY},
+		{"D/M/Y", ARBDate::eSlashDMY},
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-03 DRC Created.
  */
 
@@ -324,7 +325,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 		switch (pDispInfo->item.iSubItem)
 		{
 		case 0:
-			str = pData->GetDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str = pData->GetDate().GetString(ARBDate::eDashYMD).c_str();
 			break;
 		case 1: // Type
 			str = ARBDogExistingPoints::GetPointTypeName(pData->GetType()).c_str();

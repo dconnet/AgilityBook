@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
@@ -248,7 +249,7 @@ void CDlgDogTitles::ListTitles()
 		item.lParam = reinterpret_cast<LPARAM>(pTitle);
 		int nItem = m_ctrlTitles.InsertItem(&item);
 		if (pTitle->GetDate().IsValid())
-			m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str());
+			m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetDate().GetString(ARBDate::eDashYYYYMMDD).c_str());
 		else
 			m_ctrlTitles.SetItemText(nItem, 1, "<Unearned>");
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-06-02 DRC Moved ShellExecute code here.
  * @li 2004-03-05 DRC Added check-for-updates feature.
  * @li 2003-12-07 DRC When opening the last opened file fails, open a new doc.
@@ -229,7 +230,7 @@ void UpdateVersion(bool bVerbose)
 	}
 	else if (verThis < verNew)
 	{
-		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(false, ARBDate::eDashYYYYMMDD).c_str());
+		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
 		CString ver;
 		ver.FormatMessage(IDS_UPDATE_NEWER_VERSION, (LPCTSTR)verNew.GetVersionString());
 		if (IDYES == AfxMessageBox(ver, MB_ICONQUESTION | MB_YESNO))
@@ -244,7 +245,7 @@ void UpdateVersion(bool bVerbose)
 	}
 	else
 	{
-		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(false, ARBDate::eDashYYYYMMDD).c_str());
+		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
 		if (bVerbose)
 			AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
 	}

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -136,13 +137,13 @@ size_t ARBDog::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 	if (m_DOB.IsValid())
 	{
-		ioStrings.insert(m_DOB.GetString(false, ARBDate::eSlashMMDDYYYY));
+		ioStrings.insert(m_DOB.GetString(ARBDate::eSlashMDY));
 		++nItems;
 	}
 	
 	if (m_Deceased.IsValid())
 	{
-		ioStrings.insert(m_Deceased.GetString(false, ARBDate::eSlashMMDDYYYY));
+		ioStrings.insert(m_Deceased.GetString(ARBDate::eSlashMDY));
 		++nItems;
 	}
 

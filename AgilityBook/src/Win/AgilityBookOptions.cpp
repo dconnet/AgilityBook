@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Added options to remember date formats.
  * @li 2004-06-06 DRC Added additional clipboard formats.
  * @li 2004-06-01 DRC Venue filtering could allow filtered runs thru at times.
  * @li 2004-04-08 DRC Added general program options.
@@ -1173,6 +1174,32 @@ bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
 	AfxGetApp()->WriteProfileInt("Settings", "autoShowTitle", bShow ? 1 : 0);
+}
+
+ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
+{
+	CString section;
+	section.Format("dateFormat%d", (int)inItem);
+	ARBDate::DateFormat def;
+	switch (inItem)
+	{
+	default:
+	case eRunTree: def = ARBDate::eDashYYYYMMDD; break;
+	case eRunList: def = ARBDate::eSlashMDY; break;
+	case ePoints: def = ARBDate::eSlashMDY; break;
+	case eCalList: def = ARBDate::eDashYMD; break;
+	case eCalendar: def = ARBDate::eDashYMD; break;
+	case eTraining: def = ARBDate::eDashYMD; break;
+	}
+	int val = AfxGetApp()->GetProfileInt("Settings", section, (int)def);
+	return (ARBDate::DateFormat)val;
+}
+
+void CAgilityBookOptions::SetDateFormat(FormattedDate inItem, ARBDate::DateFormat inFormat)
+{
+	CString section;
+	section.Format("dateFormat%d", (int)inItem);
+	AfxGetApp()->WriteProfileInt("Settings", section, (int)inFormat);
 }
 
 /////////////////////////////////////////////////////////////////////////////

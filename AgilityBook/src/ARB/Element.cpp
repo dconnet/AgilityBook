@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces 2.2.0.
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Moved date parsing code to ARBDate::FromString.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
@@ -1139,7 +1140,7 @@ bool Element::AddAttrib(std::string const& inName, ARBVersion const& inValue)
 bool Element::AddAttrib(std::string const& inName, ARBDate const& inValue)
 {
 	if (inValue.IsValid())
-		AddAttrib(inName, inValue.GetString(false, ARBDate::eDashYYYYMMDD));
+		AddAttrib(inName, inValue.GetString(ARBDate::eDashYMD));
 	return true;
 }
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-30 DRC Implemented full column reordering.
@@ -146,7 +147,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pDog->GetCallName().c_str();
 			break;
 		case IO_RUNS_DATE:
-			str = m_pRun->GetDate().GetString(false, ARBDate::eSlashMMDDYYYY).c_str();
+			str = m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunList)).c_str();
 			break;
 		case IO_RUNS_VENUE:
 			{

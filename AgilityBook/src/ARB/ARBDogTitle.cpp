@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-26 DRC Recover from a bug where the title name was the nice name.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -106,7 +107,7 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(false, ARBDate::eDashYYYYMMDD));
+	ioStrings.insert(m_Date.GetString(ARBDate::eDashYMD));
 	++nItems;
 
 	ioStrings.insert(m_Venue);
