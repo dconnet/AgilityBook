@@ -600,7 +600,7 @@ BEGIN
     LTEXT           "&Event Note",IDC_STATIC,7,23,21,16
     EDITTEXT        IDC_CONFIG_EVENT_DESC,30,23,200,28,ES_MULTILINE | 
                     ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_DESC
-    GROUPBOX        "Scoring Methods",IDC_STATIC,7,47,320,248
+    GROUPBOX        "Scoring Methods",IDC_STATIC,7,55,320,240
     LTEXT           "Division/Levels defined",IDC_STATIC,15,67,74,8
     LISTBOX         IDC_CONFIG_EVENT_METHODS,15,77,123,84,
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
@@ -645,15 +645,13 @@ BEGIN
                     WS_TABSTOP,45,242,103,10,0,
                     HIDC_CONFIG_EVENT_DROP_FRACTIONS
     LTEXT           "Required &Opening",IDC_CONFIG_EVENT_OPENING_PTS_TEXT,15,
-                    257,29,16,NOT WS_VISIBLE
+                    257,29,16
     EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,50,257,25,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER | NOT WS_VISIBLE,0,
-                    HIDC_CONFIG_EVENT_OPENING_PTS
+                    ES_NUMBER,0,HIDC_CONFIG_EVENT_OPENING_PTS
     LTEXT           "Required &Closing",IDC_CONFIG_EVENT_CLOSING_PTS_TEXT,15,
-                    276,29,16,NOT WS_VISIBLE
+                    276,29,16
     EDITTEXT        IDC_CONFIG_EVENT_CLOSING_PTS,50,276,25,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER | NOT WS_VISIBLE,0,
-                    HIDC_CONFIG_EVENT_CLOSING_PTS
+                    ES_NUMBER,0,HIDC_CONFIG_EVENT_CLOSING_PTS
     CONTROL         "S&uper Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,95,257,45,10,0,
                     HIDC_CONFIG_EVENT_SUPERQ

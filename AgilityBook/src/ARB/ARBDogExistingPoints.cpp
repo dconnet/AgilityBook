@@ -87,6 +87,7 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 	, m_Div()
 	, m_Level()
 	, m_Event()
+	, m_SubCategory()
 	, m_Points(0)
 {
 }
@@ -100,6 +101,7 @@ ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 	, m_Div(rhs.m_Div)
 	, m_Level(rhs.m_Level)
 	, m_Event(rhs.m_Event)
+	, m_SubCategory(rhs.m_SubCategory)
 	, m_Points(rhs.m_Points)
 {
 }
@@ -120,6 +122,7 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const
 		m_Div = rhs.m_Div;
 		m_Level = rhs.m_Level;
 		m_Event = rhs.m_Event;
+		m_SubCategory = rhs.m_SubCategory;
 		m_Points = rhs.m_Points;
 	}
 	return *this;
@@ -135,6 +138,7 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 		&& m_Div == rhs.m_Div
 		&& m_Level == rhs.m_Level
 		&& m_Event == rhs.m_Event
+		&& m_SubCategory == rhs.m_SubCategory
 		&& m_Points == rhs.m_Points;
 }
 
@@ -149,7 +153,14 @@ std::string ARBDogExistingPoints::GetGenericName() const
 	if (0 < m_Other.length())
 		name = m_Other;
 	else
+	{
 		name = m_Event;
+		if (0 < m_SubCategory.length())
+		{
+			name += '/';
+			name += m_SubCategory;
+		}
+	}
 	return name;
 }
 
@@ -261,6 +272,7 @@ bool ARBDogExistingPoints::Load(
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
 			return false;
 		}
+		inTree.GetAttrib(ATTRIB_EXISTING_PTS_SUBCAT, m_SubCategory);
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
 		{
 			std::string msg(INVALID_VENUE_NAME);
@@ -315,6 +327,8 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		if (0 < m_SubCategory.length())
+			title.AddAttrib(ATTRIB_EXISTING_PTS_SUBCAT, m_SubCategory);
 		break;
 	case eRuns:
 		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_RUNS);
@@ -322,6 +336,8 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		if (0 < m_SubCategory.length())
+			title.AddAttrib(ATTRIB_EXISTING_PTS_SUBCAT, m_SubCategory);
 		break;
 	case eMach:
 		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MACH);
@@ -341,6 +357,8 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		if (0 < m_SubCategory.length())
+			title.AddAttrib(ATTRIB_EXISTING_PTS_SUBCAT, m_SubCategory);
 		break;
 	}
 	title.AddAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);

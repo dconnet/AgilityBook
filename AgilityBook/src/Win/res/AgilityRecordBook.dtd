@@ -12,9 +12,11 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2004-10-06 DRC File version 10.
+2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
-               'Scoring', removed 'LifeTime' from 'TitlePoints'.
+               'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
+               'SCT', 'SCT2' to 'ByOpenClose'. Added 'SCT' to 'ByPoints'.
+               Added 'SubCat' to 'Event', 'ExistingPoints', 'Run'.
 2004-07-03 DRC File version 9.0.
                Added 'SubName' to 'Training'
                'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
@@ -194,12 +196,13 @@ If there are no 'TitlePoints', then the class is non-titling.
 
  Integer: OpeningPts,ClosingPts,Points,Faults
 -->
-<!ELEMENT Event (Desc?, Scoring+) >
+<!ELEMENT Event (Desc?, SubCat*, Scoring+) >
 	<!ATTLIST Event
 		Name CDATA #REQUIRED
 		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
 		>
+<!ELEMENT SubCat (#PCDATA) >
 <!ELEMENT Scoring (Note?, TitlePoints*, LifeTime*) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
@@ -258,11 +261,11 @@ depends on how a venue has been defined above.
 <!ELEMENT Note (#PCDATA) >
 <!--
  Type: [required items..]
-  'Other': Other Points [Other, Venue, Div, Level, Event]
-  'Run': Runs           [       Venue, Div, Level, Event]
+  'Other': Other Points [Other, Venue, Div, Level, Event(SubCat)]
+  'Run': Runs           [       Venue, Div, Level, Event(SubCat)]
   'Mach': Mach points   [       Venue, Div, Level]
   'QQ': Double Q        [       Venue, Div, Level]
-  'SQ': Super Q         [       Venue, Div, Level, Event]
+  'SQ': Super Q         [       Venue, Div, Level, Event(SubCat)]
 -->
 <!ELEMENT ExistingPoints (#PCDATA) >
 	<!ATTLIST ExistingPoints
@@ -273,6 +276,7 @@ depends on how a venue has been defined above.
 		Div CDATA #IMPLIED
 		Level CDATA #IMPLIED
 		Event CDATA #IMPLIED
+		SubCat CDATA #IMPLIED
 		Pts CDATA #REQUIRED
 		>
 <!ELEMENT RegNum (#PCDATA) >
@@ -305,7 +309,7 @@ The 'Venue' must be defined above in a Configuration/Venue element.
 	<!ATTLIST Club Venue CDATA #REQUIRED >
 
 <!--
-The attributes 'Division' and 'Event' must be defined above in a
+The attributes 'Division', 'Event' and 'SubCat' must be defined above in a
 Configuration/Venue element. The 'Level' attribute is defined in either
 a Level or SubLevel element.
 -->
@@ -316,6 +320,7 @@ a Level or SubLevel element.
 		Level CDATA #REQUIRED
 		Height CDATA #IMPLIED
 		Event CDATA #REQUIRED
+		SubCat CDATA #IMPLIED
 		>
 
 <!ELEMENT Conditions (#PCDATA) >
@@ -343,7 +348,7 @@ These 3 elements define the major scoring mechanisms.
  ByPoints: ScoreThenTime
 
  Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points
- Decimal: Time,SCT,Yards
+ Decimal: Time,SCT,SCT2,Yards
  Boolean: hasTable
 -->
 <!ELEMENT ByTime EMPTY >
@@ -358,6 +363,8 @@ These 3 elements define the major scoring mechanisms.
 	<!ATTLIST ByOpenClose
 		CourseFaults CDATA #IMPLIED
 		Time CDATA #REQUIRED
+		SCT CDATA #IMPLIED
+		SCT2 CDATA #IMPLIED
 		NeedOpenPts CDATA #REQUIRED
 		NeedClosePts CDATA #REQUIRED
 		OpenPts CDATA #REQUIRED
@@ -367,6 +374,7 @@ These 3 elements define the major scoring mechanisms.
 	<!ATTLIST ByPoints
 		CourseFaults CDATA #IMPLIED
 		Time CDATA #REQUIRED
+		SCT CDATA #IMPLIED
 		NeedPts CDATA #REQUIRED
 		Points CDATA #REQUIRED
 		>

@@ -109,6 +109,8 @@ public:
 	void SetType(ScoringType inType, bool inRound);
 	ARBDouble GetSCT() const;
 	void SetSCT(ARBDouble inSCT);
+	ARBDouble GetSCT2() const;
+	void SetSCT2(ARBDouble inSCT);
 	double GetYards() const;
 	void SetYards(double inYards);
 	ARBDouble GetTime() const;
@@ -132,6 +134,7 @@ private:
 	ScoringType m_type;
 	bool m_bRoundTimeFaults;
 	ARBDouble m_SCT;
+	ARBDouble m_SCT2;
 	double m_Yards;
 	ARBDouble m_Time;
 	bool m_Table;
@@ -164,6 +167,16 @@ inline ARBDouble ARBDogRunScoring::GetSCT() const
 inline void ARBDogRunScoring::SetSCT(ARBDouble inSCT)
 {
 	m_SCT = inSCT;
+}
+
+inline ARBDouble ARBDogRunScoring::GetSCT2() const
+{
+	return m_SCT2;
+}
+
+inline void ARBDogRunScoring::SetSCT2(ARBDouble inSCT)
+{
+	m_SCT2 = inSCT;
 }
 
 inline double ARBDogRunScoring::GetYards() const

@@ -63,6 +63,7 @@ ARBConfigEvent::ARBConfigEvent()
 	, m_Desc()
 	, m_bTable(false)
 	, m_bHasPartner(false)
+	, m_SubCategories()
 	, m_Scoring()
 {
 }
@@ -72,6 +73,7 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	, m_Desc(rhs.m_Desc)
 	, m_bTable(rhs.m_bTable)
 	, m_bHasPartner(rhs.m_bHasPartner)
+	, m_SubCategories(rhs.m_SubCategories)
 	, m_Scoring(rhs.m_Scoring)
 {
 }
@@ -88,6 +90,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 		m_Desc = rhs.m_Desc;
 		m_bTable = rhs.m_bTable;
 		m_bHasPartner = rhs.m_bHasPartner;
+		m_SubCategories = rhs.m_SubCategories;
 		m_Scoring = rhs.m_Scoring;
 	}
 	return *this;
@@ -99,6 +102,7 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 		&& m_Desc == rhs.m_Desc
 		&& m_bTable == rhs.m_bTable
 		&& m_bHasPartner == rhs.m_bHasPartner
+		&& m_SubCategories == rhs.m_SubCategories
 		&& m_Scoring == rhs.m_Scoring;
 }
 
@@ -146,6 +150,10 @@ bool ARBConfigEvent::Load(
 		{
 			m_Desc = element.GetValue();
 		}
+		else if (element.GetName() == TREE_EVENT_SUBCAT)
+		{
+			m_SubCategories.push_back(element.GetValue());
+		}
 		else if (element.GetName() == TREE_SCORING)
 		{
 			// Ignore any errors...
@@ -169,6 +177,13 @@ bool ARBConfigEvent::Save(Element& ioTree) const
 		event.AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
 	if (m_bHasPartner)
 		event.AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
+	for (std::vector<std::string>::const_iterator iter = m_SubCategories.begin();
+		iter != m_SubCategories.end();
+		++iter)
+	{
+		Element& subcat = event.AddElement(TREE_EVENT_SUBCAT);
+		subcat.SetValue(*iter);
+	}
 	if (!m_Scoring.Save(event))
 		return false;
 	return true;
