@@ -43,7 +43,32 @@
 #include "PointsData.h"
 class ARBDate;
 class CAgilityBookDoc;
-class ScoringRunInfo;
+
+class ScoringRunInfo
+{
+public:
+	typedef enum
+	{
+		eNotScoringDetail,
+		eScoringDeleted,
+		eScoringChanged
+	} eScoringDetail;
+	ScoringRunInfo(
+		ARBDog const* inDog,
+		ARBDogTrial const* inTrial,
+		ARBDogRun const* inRun,
+		eScoringDetail inScoringDetail)
+		: m_Dog(inDog)
+		, m_Trial(inTrial)
+		, m_Run(inRun)
+		, m_ScoringDetail(inScoringDetail)
+	{
+	}
+	ARBDog const* m_Dog;
+	ARBDogTrial const* m_Trial;
+	ARBDogRun const* m_Run;
+	eScoringDetail m_ScoringDetail;
+};
 
 class CDlgListViewer : public CDlgBaseDialog
 {
