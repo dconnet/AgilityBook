@@ -54,13 +54,8 @@ private:
 	enum { IDD = IDD_WIZARD_IMPORT };
 	int		m_Row;
 	CSpinButtonCtrl	m_ctrlSpin;
-	BOOL	m_bTab;
-	BOOL	m_bSpace;
-	BOOL	m_bColon;
-	BOOL	m_bSemicolon;
-	BOOL	m_bComma;
-	BOOL	m_bOther;
-	CString	m_Delim;
+	int		m_Delim;
+	CString	m_Delimiter;
 	CStatic	m_ctrlPreviewFile;
 	CListCtrl	m_ctrlPreview;
 	//}}AFX_DATA

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-11 DRC Added options for import/export wizard.
  */
 
 #include <set>
@@ -154,6 +155,22 @@ public:
 	static void SetLastEnteredJudge(const char* inLast);
 	static CString GetLastEnteredHandler();
 	static void SetLastEnteredHandler(const char* inLast);
+	// Import/Export options
+	enum
+	{
+		eDelimTab		= 1,
+		eDelimSpace		= 2,
+		eDelimColon		= 3,
+		eDelimSemicolon	= 4,
+		eDelimComma		= 5,
+		eDelimOther		= 6
+	};
+	static int GetImportStartRow();
+	static void SetImportStartRow(int row);
+	static void GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter);
+	static void SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter);
+	static void GetImportExportColumns(bool bImport, int idxColumn, std::vector<int>& values);
+	static void SetImportExportColumns(bool bImport, int idxColumn, const std::vector<int>& values);
 	// Special clipboard formats
 	typedef enum
 	{

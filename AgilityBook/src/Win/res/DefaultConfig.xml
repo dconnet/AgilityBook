@@ -59,7 +59,7 @@
 10 Qs</Titles>
 			</Division>
 			<Event Name="Standard">
-				<Scoring Division="ISC" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" type="Faults100ThenTime">
@@ -76,7 +76,7 @@
 				</Scoring>
 			</Event>
 			<Event Name="JWW">
-				<Scoring Division="ISC" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" type="Faults100ThenTime">

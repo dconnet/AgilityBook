@@ -40,6 +40,7 @@
 #include <fstream>
 
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
 #include "Wizard.h"
 
@@ -60,15 +61,22 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc)
 	, m_pDoc(pDoc)
 {
 	//{{AFX_DATA_INIT(CWizardImport)
-	m_Row = 1;
-	m_Delim = _T(":");
-	m_bTab = TRUE;
-	m_bSpace = FALSE;
-	m_bColon = FALSE;
-	m_bSemicolon = FALSE;
-	m_bComma = FALSE;
-	m_bOther = FALSE;
+	m_Row = CAgilityBookOptions::GetImportStartRow();
+	m_Delim = -1;
+	m_Delimiter = _T(":");
 	//}}AFX_DATA_INIT
+	int delim;
+	CAgilityBookOptions::GetImportExportDelimiters(true, delim, m_Delimiter);
+	switch (delim)
+	{
+	default:
+	case CAgilityBookOptions::eDelimTab:		m_Delim = 0; break;
+	case CAgilityBookOptions::eDelimSpace:		m_Delim = 1; break;
+	case CAgilityBookOptions::eDelimColon:		m_Delim = 2; break;
+	case CAgilityBookOptions::eDelimSemicolon:	m_Delim = 3; break;
+	case CAgilityBookOptions::eDelimComma:		m_Delim = 4; break;
+	case CAgilityBookOptions::eDelimOther:		m_Delim = 5; break;
+	}
 }
 
 CWizardImport::~CWizardImport()
@@ -82,14 +90,9 @@ void CWizardImport::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_IMPORT_ROW, m_Row);
 	DDV_MinMaxInt(pDX, m_Row, 1, 100);
 	DDX_Control(pDX, IDC_IMPORT_ROW_SPIN, m_ctrlSpin);
-	DDX_Check(pDX, IDC_IMPORT_DELIM_TAB, m_bTab);
-	DDX_Check(pDX, IDC_IMPORT_DELIM_SPACE, m_bSpace);
-	DDX_Check(pDX, IDC_IMPORT_DELIM_COLON, m_bColon);
-	DDX_Check(pDX, IDC_IMPORT_DELIM_SEMI, m_bSemicolon);
-	DDX_Check(pDX, IDC_IMPORT_DELIM_COMMA, m_bComma);
-	DDX_Check(pDX, IDC_IMPORT_DELIM_OTHER, m_bOther);
-	DDX_Text(pDX, IDC_WIZARD_DELIM, m_Delim);
-	DDV_MaxChars(pDX, m_Delim, 1);
+	DDX_Radio(pDX, IDC_WIZARD_DELIM_TAB, m_Delim);
+	DDX_Text(pDX, IDC_WIZARD_DELIM, m_Delimiter);
+	DDV_MaxChars(pDX, m_Delimiter, 1);
 	DDX_Control(pDX, IDC_IMPORT_PREVIEW_FILE, m_ctrlPreviewFile);
 	DDX_Control(pDX, IDC_WIZARD_PREVIEW, m_ctrlPreview);
 	//}}AFX_DATA_MAP
@@ -101,12 +104,12 @@ BEGIN_MESSAGE_MAP(CWizardImport, CPropertyPage)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_IMPORT_ROW_SPIN, OnDeltaposImportRowSpin)
 	ON_BN_CLICKED(IDC_WIZARD_ASSIGN, OnImportAssign)
 	ON_BN_CLICKED(IDC_IMPORT_FILE, OnImportFile)
-	ON_BN_CLICKED(IDC_IMPORT_DELIM_COLON, OnImportDelim)
-	ON_BN_CLICKED(IDC_IMPORT_DELIM_COMMA, OnImportDelim)
-	ON_BN_CLICKED(IDC_IMPORT_DELIM_OTHER, OnImportDelim)
-	ON_BN_CLICKED(IDC_IMPORT_DELIM_SEMI, OnImportDelim)
-	ON_BN_CLICKED(IDC_IMPORT_DELIM_SPACE, OnImportDelim)
-	ON_BN_CLICKED(IDC_IMPORT_DELIM_TAB, OnImportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_DELIM_TAB, OnImportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_DELIM_SPACE, OnImportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_DELIM_COLON, OnImportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_DELIM_SEMI, OnImportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_DELIM_COMMA, OnImportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_DELIM_OTHER, OnImportDelim)
 	ON_EN_CHANGE(IDC_WIZARD_DELIM, OnImportDelim)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -157,6 +160,20 @@ LRESULT CWizardImport::OnWizardBack()
 
 BOOL CWizardImport::OnWizardFinish() 
 {
+	UpdateData(TRUE);
+	CAgilityBookOptions::SetImportStartRow(m_Row);
+	int delim;
+	switch (m_Delim)
+	{
+	default:
+	case 0: delim = CAgilityBookOptions::eDelimTab; break;
+	case 1: delim = CAgilityBookOptions::eDelimSpace; break;
+	case 2: delim = CAgilityBookOptions::eDelimColon; break;
+	case 3: delim = CAgilityBookOptions::eDelimSemicolon; break;
+	case 4: delim = CAgilityBookOptions::eDelimComma; break;
+	case 5: delim = CAgilityBookOptions::eDelimOther; break;
+	}
+	CAgilityBookOptions::SetImportExportDelimiters(true, delim, m_Delimiter);
 	return CPropertyPage::OnWizardFinish();
 }
 
@@ -186,7 +203,7 @@ void CWizardImport::OnImportDelim()
 void CWizardImport::OnImportAssign() 
 {
 	UpdateData(TRUE);
-	CDlgAssignColumns dlg(this);
+	CDlgAssignColumns dlg(true, this);
 	if (IDOK == dlg.DoModal())
 	{
 		UpdateButtons();
@@ -197,7 +214,7 @@ void CWizardImport::OnImportAssign()
 void CWizardImport::OnImportFile() 
 {
 	UpdateData(TRUE);
-	CString def, fname, filter;
+	CString filter;
 	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
 	CFileDialog file(TRUE, "", "", OFN_FILEMUSTEXIST, filter, this);
 	if (IDOK == file.DoModal())

@@ -36,6 +36,7 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "ListBox.h"
 class CAgilityBookDoc;
 class CWizard;
 
@@ -52,7 +53,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CWizardStart)
 	enum { IDD = IDD_WIZARD_START };
-	CListBox	m_ctrlList;
+	CListBox2	m_ctrlList;
 	CStatic	m_ctrlDesc;
 	//}}AFX_DATA
 	CWizard* m_pSheet;

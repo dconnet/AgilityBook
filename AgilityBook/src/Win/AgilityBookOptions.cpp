@@ -758,6 +758,97 @@ void CAgilityBookOptions::SetLastEnteredHandler(const char* inLast)
 	AfxGetApp()->WriteProfileString("Last", "Handler", inLast);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// Import/export options
+
+int CAgilityBookOptions::GetImportStartRow()
+{
+	int row = AfxGetApp()->GetProfileInt("Import", "row", 1);
+	if (0 > row)
+		row = 1;
+	return row;
+}
+
+void CAgilityBookOptions::SetImportStartRow(int row)
+{
+	AfxGetApp()->WriteProfileInt("Import", "row", row);
+}
+
+void CAgilityBookOptions::GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter)
+{
+	CString section;
+	if (bImport)
+		section = "Import";
+	else
+		section = "Export";
+	delim = eDelimTab;
+	delimiter.Empty();
+	delim = AfxGetApp()->GetProfileInt(section, "delim", delim);
+	delimiter = AfxGetApp()->GetProfileString(section, "delimiter", delimiter);
+	if (1 < delimiter.GetLength())
+		delimiter = delimiter.Left(1);
+}
+
+void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter)
+{
+	CString section;
+	if (bImport)
+		section = "Import";
+	else
+		section = "Export";
+	AfxGetApp()->WriteProfileInt(section, "delim", delim);
+	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
+}
+
+void CAgilityBookOptions::GetImportExportColumns(bool bImport, int idxColumn, std::vector<int>& values)
+{
+	CString section;
+	if (bImport)
+		section = "Import";
+	else
+		section = "Export";
+	values.clear();
+	CString item;
+	item.Format("col%d", idxColumn);
+	CString data = AfxGetApp()->GetProfileString(section, item, "");
+	int idx = data.Find(',');
+	while (0 <= idx)
+	{
+		int val = atol((LPCTSTR)data);
+		values.push_back(val);
+		data = data.Mid(idx+1);
+		idx = data.Find(',');
+	}
+	if (0 < data.GetLength())
+	{
+		int val = atol((LPCTSTR)data);
+		values.push_back(val);
+	}
+}
+
+void CAgilityBookOptions::SetImportExportColumns(bool bImport, int idxColumn, const std::vector<int>& values)
+{
+	CString section;
+	if (bImport)
+		section = "Import";
+	else
+		section = "Export";
+	CString item;
+	CString data;
+	for (size_t i = 0; i < values.size(); ++i)
+	{
+		item.Format("%d", values[i]);
+		if (0 < i)
+			data += ",";
+		data += item;
+	}
+	item.Format("col%d", idxColumn);
+	AfxGetApp()->WriteProfileString(section, item, data);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Special clipboard formats
+
 UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
 {
 	static bool bInitialized = false;
