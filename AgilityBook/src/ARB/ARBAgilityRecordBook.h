@@ -249,6 +249,7 @@ public:
 	 * @param inCalendar Load calendar info.
 	 * @param inTraining Load training info.
 	 * @param inConfig Load config info.
+	 * @param inInfo Load the Info (judges) info.
 	 * @param inDogs Load dog info.
 	 * @return Success
 	 */
@@ -269,6 +270,7 @@ public:
 	 * @param inCalendar Save calendar info.
 	 * @param inTraining Save training info.
 	 * @param inConfig Save config info.
+	 * @param inInfo Save the Info (judges) info.
 	 * @param inDogs Save dog info, implies inConfig.
 	 */
 	bool Save(

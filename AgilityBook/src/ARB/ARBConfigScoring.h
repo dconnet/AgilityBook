@@ -281,6 +281,7 @@ public:
 	 * @param inDivision Division name.
 	 * @param inLevel Level (NOT sublevel) name.
 	 * @param inTitlePoints Only look for events that have titling points.
+	 * @param outList List of all found events.
 	 */
 	size_t FindAllEvents(
 		const std::string& inDivision,
@@ -291,6 +292,7 @@ public:
 	/**
 	 * @param inDivision Division name.
 	 * @param inLevel Level (NOT sublevel) name.
+	 * @param inDate Date for requested scoring.
 	 */
 	const ARBConfigScoring* FindEvent(
 		const std::string& inDivision,

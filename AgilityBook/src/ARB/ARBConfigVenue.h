@@ -171,6 +171,7 @@ public:
 	 * @param inEvent Event name
 	 * @param inDivision Division name
 	 * @param inLevel True Level name (sublevel)
+	 * @param inDate Date for requested scoring.
 	 */
 	const ARBConfigScoring* FindEvent(
 		const std::string& inVenue,
