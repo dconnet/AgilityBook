@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-17 DRC Added a 'check for updates' control.
  */
 
 #include "stdafx.h"
@@ -168,6 +169,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
+	DDX_Control(pDX, IDC_ABOUT_UPDATE, m_ctrlUpdate);
 	DDX_Control(pDX, IDC_ABOUT_TEXT, m_ctrlText);
 	DDX_Control(pDX, IDC_ABOUT_LINK1, m_ctrlLink1);
 	DDX_Control(pDX, IDC_ABOUT_LINK2, m_ctrlLink2);
@@ -193,10 +195,12 @@ BOOL CAboutDlg::OnInitDialog()
 	{
 		UINT id;
 		CHyperLink* pCtrl;
+		bool bMove;
 	} idControls[] = {
-		{IDS_ABOUT_LINK1, &m_ctrlLink1},
-		{IDS_ABOUT_LINK2, &m_ctrlLink2},
-		{IDS_ABOUT_LINK3, &m_ctrlLink3}
+		{IDS_ABOUT_UPDATE, &m_ctrlUpdate, false},
+		{IDS_ABOUT_LINK1, &m_ctrlLink1, true},
+		{IDS_ABOUT_LINK2, &m_ctrlLink2, true},
+		{IDS_ABOUT_LINK3, &m_ctrlLink3, true}
 	};
 	static int nControls = sizeof(idControls) / sizeof(idControls[0]);
 	for (int i = 0; i < nControls; ++i)
@@ -281,10 +285,13 @@ BOOL CAboutDlg::OnInitDialog()
 		{
 			for (int i = 0; i < nControls; ++i)
 			{
-				idControls[i].pCtrl->GetClientRect(rect);
-				rect.OffsetRect(0, offsetY);
-				idControls[i].pCtrl->MapWindowPoints(this, rect);
-				idControls[i].pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+				if (idControls[i].bMove)
+				{
+					idControls[i].pCtrl->GetClientRect(rect);
+					rect.OffsetRect(0, offsetY);
+					idControls[i].pCtrl->MapWindowPoints(this, rect);
+					idControls[i].pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+				}
 			}
 		}
 		// And finally resize the dialog.

@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-17 DRC Added a 'check for updates' control.
  */
 
 #include "HyperLink.h"
@@ -47,6 +48,7 @@ private:
 	// Dialog Data
 	//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
+	CHyperLink	m_ctrlUpdate;
 	CStatic	m_ctrlText;
 	CHyperLink	m_ctrlLink1;
 	CHyperLink	m_ctrlLink2;
