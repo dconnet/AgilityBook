@@ -176,6 +176,75 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// Find
+
+bool CFindCalendar::Search()
+{
+	bool bFound = false;
+	int inc = 1;
+	if (!SearchDown())
+		inc = -1;
+	int index = m_pView->GetSelection();
+	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	{
+		index += inc;
+	}
+	else if (0 > index && SearchDown())
+		index = 0;
+	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
+		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	CString search = Text();
+	if (!MatchCase())
+		search.MakeLower();
+	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	{
+		CStringArray strings;
+		if (SearchAll())
+		{
+			CAgilityBookViewCalendarData* pData = m_pView->GetItemData(index);
+			if (pData)
+			{
+				strings.Add(pData->GetCalendar()->GetStartDate().GetString(false, false).c_str());
+				strings.Add(pData->GetCalendar()->GetEndDate().GetString(false, false).c_str());
+				strings.Add(pData->GetCalendar()->GetLocation().c_str());
+				strings.Add(pData->GetCalendar()->GetClub().c_str());
+				strings.Add(pData->GetCalendar()->GetVenue().c_str());
+				if (pData->GetCalendar()->GetOpeningDate().IsValid())
+					strings.Add(pData->GetCalendar()->GetOpeningDate().GetString(false, false).c_str());
+				if (pData->GetCalendar()->GetClosingDate().IsValid())
+					strings.Add(pData->GetCalendar()->GetClosingDate().GetString(false, false).c_str());
+				strings.Add(pData->GetCalendar()->GetNote().c_str());
+			}
+		}
+		else
+		{
+			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
+			for (int i = 0; i < nColumns; ++i)
+			{
+				strings.Add(m_pView->GetListCtrl().GetItemText(index, i));
+			}
+		}
+		for (int i = 0; !bFound && i < strings.GetSize(); ++i)
+		{
+			if (!MatchCase())
+				strings[i].MakeLower();
+			if (0 <= strings[i].Find(search))
+			{
+				m_pView->SetSelection(index, true);
+				bFound = true;
+			}
+		}
+	}
+	if (!bFound)
+	{
+		CString msg;
+		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		AfxMessageBox(msg, MB_ICONINFORMATION);
+	}
+	return bFound;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendarList
 
 IMPLEMENT_DYNCREATE(CAgilityBookViewCalendarList, CListView2)
@@ -191,6 +260,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
+	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
+	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_CREATEENTRY_CALENDAR, OnUpdateCalendarCreateEntry)
 	ON_COMMAND(ID_AGILITY_CREATEENTRY_CALENDAR, OnCalendarCreateEntry)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_CALENDAR, OnUpdateCalendarEdit)
@@ -203,8 +274,11 @@ END_MESSAGE_MAP()
 
 // CAgilityBookViewCalendarList construction/destruction
 
+#pragma warning (push)
+#pragma warning ( disable : 4355 )
 CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	: m_bSuppressSelect(false)
+	, m_Callback(this)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 3, 0);
 	CWinApp* app = AfxGetApp();
@@ -215,6 +289,7 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	m_imgEntered = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED));
 	m_imgEnteredTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
 }
+#pragma warning (pop)
 
 CAgilityBookViewCalendarList::~CAgilityBookViewCalendarList()
 {
@@ -569,6 +644,20 @@ void CAgilityBookViewCalendarList::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 		break;
 	}
 	*pResult = 0;
+}
+
+void CAgilityBookViewCalendarList::OnEditFind()
+{
+	CDlgFind dlg(m_Callback, this);
+	dlg.DoModal();
+}
+
+void CAgilityBookViewCalendarList::OnEditFindNext()
+{
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
 }
 
 void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)

@@ -38,12 +38,27 @@
  */
 
 #include "CommonView.h"
+#include "DlgFind.h"
 #include "ListCtrl.h"
 class CAgilityBookDoc;
+class CAgilityBookViewRuns;
 class CAgilityBookViewRunsData;
+
+class CFindRuns : public IFindCallback
+{
+public:
+	CFindRuns(CAgilityBookViewRuns* pView)
+		: m_pView(pView)
+	{
+	}
+	virtual bool Search();
+private:
+	CAgilityBookViewRuns* m_pView;
+};
 
 class CAgilityBookViewRuns : public CListView2, public ICommonView
 {
+	friend class CFindRuns;
 protected: // create from serialization only
 	CAgilityBookViewRuns();
 	DECLARE_DYNCREATE(CAgilityBookViewRuns)
@@ -81,6 +96,7 @@ public:
 
 private:
 	bool m_bSuppressSelect;
+	CFindRuns m_Callback;
 
 // Generated message map functions
 protected:
@@ -95,6 +111,8 @@ protected:
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnEditFind();
+	afx_msg void OnEditFindNext();
 	afx_msg void OnUpdateAgilityEditRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityEditRun();
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);

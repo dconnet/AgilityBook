@@ -214,6 +214,9 @@
 				RelativePath="..\..\..\Win\DlgFault.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgFind.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgFixup.cpp">
 			</File>
 			<File
@@ -411,6 +414,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgFault.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFind.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgFixup.h">

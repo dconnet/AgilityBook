@@ -33,18 +33,35 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-09-21 DRC Created
  */
 
 #include "CommonView.h"
+#include "DlgFind.h"
 #include "ListCtrl.h"
 class ARBDate;
 class ARBTraining;
 class CAgilityBookDoc;
+class CAgilityBookViewTraining;
+
+class CFindTraining : public IFindCallback
+{
+public:
+	CFindTraining(CAgilityBookViewTraining* pView)
+		: m_pView(pView)
+	{
+	}
+	virtual bool Search();
+private:
+	CAgilityBookViewTraining* m_pView;
+};
+
 
 class CAgilityBookViewTraining : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewTrainingData;
+	friend class CFindTraining;
 protected: // create from serialization only
 	CAgilityBookViewTraining();
 	DECLARE_DYNCREATE(CAgilityBookViewTraining)
@@ -79,6 +96,9 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+private:
+	CFindTraining m_Callback;
+
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CAgilityBookViewTraining)
@@ -91,6 +111,8 @@ protected:
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnEditFind();
+	afx_msg void OnEditFindNext();
 	afx_msg void OnUpdateTrainingEdit(CCmdUI* pCmdUI);
 	afx_msg void OnTrainingEdit();
 	afx_msg void OnTrainingNew();

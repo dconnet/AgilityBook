@@ -57,6 +57,7 @@
 #define IDD_WIZARD_IMPORT               182
 #define IDD_WIZARD_EXPORT               183
 #define IDD_ASSIGN_COLUMNS              184
+#define IDD_FIND                        185
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -217,6 +218,11 @@
 #define IDC_COPY                        1166
 #define IDC_DATE_VALID_FROM             1167
 #define IDC_DATE_VALID_TO               1168
+#define IDC_SEARCH_ALL                  1169
+#define IDC_SEARCH_VISIBLE              1170
+#define IDC_MATCH_CASE                  1171
+#define IDC_FIND_UP                     1172
+#define IDC_FIND_DOWN                   1173
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -421,9 +427,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        185
+#define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32810
-#define _APS_NEXT_CONTROL_VALUE         1169
+#define _APS_NEXT_CONTROL_VALUE         1174
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -1,5 +1,12 @@
-12/24/2003: v0.9.5.8: <in development>
+12/27/2003: v0.9.5.8: <in development>
+- Bumped file version to 8.1:
+  - Added 'ValidFrom' and 'ValidTo' dates to an events scoring method. This
+    allows an evolution of rules while preserving point accumulation.
 - New features / Enhancements:
+  - Updated the initial support for the new USDAA titling (using ValidFrom/To)
+    in the default configuration.
+  - Added support for evolving rules in the configuration dialog. An event
+    scoring method can be defined as being valid for a specific date range.
   - Changed how items are shown for export in the first wizard page
     (separated spreadsheet/ARB items).
   - Added more items to import/export.
@@ -7,11 +14,12 @@
     - ARB Import: Can now import TrainingLog
     - ARB Export: Can now export TrainingLog
   - Added some new accelerators:
-	- Ctrl+E: Import/Export Wizard
-	- Ctrl+F: Viewing options dialog
-	- Ctrl+J: Judge's comments dialog
+    - Ctrl+E: Import/Export Wizard
+    - Ctrl+J: Judge's comments dialog
     - Ctrl+R: Create a new run
-	- F12: Save As
+    - F7: Viewing options dialog
+    - F12: Save As
+  - Added a basic Find function. It is context sensitive to the active view.
 - Bug fixes
   - Training log didn't re-sort if you edited an item.
   - Adding a calendar entry from the List dialog didn't set the icon properly.

@@ -232,6 +232,96 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// Find
+
+bool CFindRuns::Search()
+{
+	bool bFound = false;
+	int inc = 1;
+	if (!SearchDown())
+		inc = -1;
+	int index = m_pView->GetSelection();
+	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	{
+		index += inc;
+	}
+	else if (0 > index && SearchDown())
+		index = 0;
+	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
+		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	CString search = Text();
+	if (!MatchCase())
+		search.MakeLower();
+	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	{
+		CStringArray strings;
+		if (SearchAll())
+		{
+			CAgilityBookViewRunsData* pData = m_pView->GetItemData(index);
+			if (pData)
+			{
+				strings.Add(pData->GetRun()->GetDate().GetString(false, true).c_str());
+				strings.Add(pData->GetRun()->GetDivision().c_str());
+				strings.Add(pData->GetRun()->GetLevel().c_str());
+				strings.Add(pData->GetRun()->GetHeight().c_str());
+				strings.Add(pData->GetRun()->GetConditions().c_str());
+				strings.Add(pData->GetRun()->GetEvent().c_str());
+				strings.Add(pData->GetRun()->GetJudge().c_str());
+				strings.Add(pData->GetRun()->GetHandler().c_str());
+				for (ARBDogRunPartnerList::const_iterator iterPartner = pData->GetRun()->GetPartners().begin();
+					iterPartner != pData->GetRun()->GetPartners().end();
+					++iterPartner)
+				{
+					strings.Add((*iterPartner)->GetHandler().c_str());
+					strings.Add((*iterPartner)->GetDog().c_str());
+					strings.Add((*iterPartner)->GetRegNum().c_str());
+				}
+				for (ARBDogFaultList::const_iterator iterFault = pData->GetRun()->GetFaults().begin();
+					iterFault != pData->GetRun()->GetFaults().end();
+					++iterFault)
+				{
+					strings.Add((*iterFault).c_str());
+				}
+				strings.Add(pData->GetRun()->GetNote().c_str());
+				for (ARBDogReferenceRunList::const_iterator iterRef = pData->GetRun()->GetReferenceRuns().begin();
+					iterRef != pData->GetRun()->GetReferenceRuns().end();
+					++iterRef)
+				{
+					strings.Add((*iterRef)->GetName().c_str());
+					strings.Add((*iterRef)->GetBreed().c_str());
+					strings.Add((*iterRef)->GetNote().c_str());
+				}
+			}
+		}
+		else
+		{
+			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
+			for (int i = 0; i < nColumns; ++i)
+			{
+				strings.Add(m_pView->GetListCtrl().GetItemText(index, i));
+			}
+		}
+		for (int i = 0; !bFound && i < strings.GetSize(); ++i)
+		{
+			if (!MatchCase())
+				strings[i].MakeLower();
+			if (0 <= strings[i].Find(search))
+			{
+				m_pView->SetSelection(index, true);
+				bFound = true;
+			}
+		}
+	}
+	if (!bFound)
+	{
+		CString msg;
+		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		AfxMessageBox(msg, MB_ICONINFORMATION);
+	}
+	return bFound;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRuns
 
 IMPLEMENT_DYNCREATE(CAgilityBookViewRuns, CListView2)
@@ -247,6 +337,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
+	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
+	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_RUN, OnUpdateAgilityEditRun)
 	ON_COMMAND(ID_AGILITY_EDIT_RUN, OnAgilityEditRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
@@ -262,10 +354,14 @@ END_MESSAGE_MAP()
 
 // CAgilityBookViewRuns construction/destruction
 
+#pragma warning (push)
+#pragma warning ( disable : 4355 )
 CAgilityBookViewRuns::CAgilityBookViewRuns()
 	: m_bSuppressSelect(false)
+	, m_Callback(this)
 {
 }
+#pragma warning (pop)
 
 CAgilityBookViewRuns::~CAgilityBookViewRuns()
 {
@@ -591,6 +687,20 @@ void CAgilityBookViewRuns::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 		break;
 	}
 	*pResult = 0;
+}
+
+void CAgilityBookViewRuns::OnEditFind()
+{
+	CDlgFind dlg(m_Callback, this);
+	dlg.DoModal();
+}
+
+void CAgilityBookViewRuns::OnEditFindNext()
+{
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
 }
 
 void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI) 

@@ -59,6 +59,55 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+// Find
+
+bool CFindTree::Search()
+{
+	bool bFound = false;
+	int inc = 1;
+	if (!SearchDown())
+		inc = -1;
+	AfxMessageBox("TODO: Implement find in the tree");
+	//TODO: implement tree find
+	/*
+	int index = m_pView->GetSelection();
+	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	{
+		index += inc;
+	}
+	else if (0 > index && SearchDown())
+		index = 0;
+	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
+		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	CString search = Text();
+	if (!MatchCase())
+		search.MakeLower();
+	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	{
+		int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
+		for (int i = 0; !bFound && i < nColumns; ++i)
+		{
+			CString str = m_pView->GetListCtrl().GetItemText(index, i);
+			if (!MatchCase())
+				str.MakeLower();
+			if (0 <= str.Find(search))
+			{
+				m_pView->SetSelection(index, true);
+				bFound = true;
+			}
+		}
+	}
+	*/
+	if (!bFound)
+	{
+		CString msg;
+		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		AfxMessageBox(msg, MB_ICONINFORMATION);
+	}
+	return bFound;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookTree
 
 IMPLEMENT_DYNCREATE(CAgilityBookTree, CTreeView)
@@ -76,6 +125,16 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_NOTIFY_REFLECT(TVN_KEYDOWN, OnKeydown)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_EDIT_UNDO, OnDogCmd)
+	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
+	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
+	ON_UPDATE_COMMAND_UI(ID_EXPAND, OnUpdateExpand)
+	ON_COMMAND(ID_EXPAND, OnExpand)
+	ON_UPDATE_COMMAND_UI(ID_EXPAND_ALL, OnUpdateExpandAll)
+	ON_COMMAND(ID_EXPAND_ALL, OnExpandAll)
+	ON_UPDATE_COMMAND_UI(ID_COLLAPSE, OnUpdateCollapse)
+	ON_COMMAND(ID_COLLAPSE, OnCollapse)
+	ON_UPDATE_COMMAND_UI(ID_COLLAPSE_ALL, OnUpdateCollapseAll)
+	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_EDIT_CUT, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateDogCmd)
@@ -108,14 +167,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_TRIAL, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_RUN, OnDogCmd)
-	ON_UPDATE_COMMAND_UI(ID_EXPAND, OnUpdateExpand)
-	ON_COMMAND(ID_EXPAND, OnExpand)
-	ON_UPDATE_COMMAND_UI(ID_EXPAND_ALL, OnUpdateExpandAll)
-	ON_COMMAND(ID_EXPAND_ALL, OnExpandAll)
-	ON_UPDATE_COMMAND_UI(ID_COLLAPSE, OnUpdateCollapse)
-	ON_COMMAND(ID_COLLAPSE, OnCollapse)
-	ON_UPDATE_COMMAND_UI(ID_COLLAPSE_ALL, OnUpdateCollapseAll)
-	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
@@ -124,12 +175,16 @@ END_MESSAGE_MAP()
 
 // CAgilityBookTree construction/destruction
 
+#pragma warning (push)
+#pragma warning ( disable : 4355 )
 CAgilityBookTree::CAgilityBookTree()
 	: m_bReset(false)
 	, m_bSuppressSelect(false)
+	, m_Callback(this)
 	, m_pDog(NULL)
 {
 }
+#pragma warning (pop)
 
 CAgilityBookTree::~CAgilityBookTree()
 {
@@ -725,6 +780,20 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 		}
 	}
 	return bHandled;
+}
+
+void CAgilityBookTree::OnEditFind()
+{
+	CDlgFind dlg(m_Callback, this);
+	dlg.DoModal();
+}
+
+void CAgilityBookTree::OnEditFindNext()
+{
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
 }
 
 void CAgilityBookTree::OnUpdateExpand(CCmdUI* pCmdUI)

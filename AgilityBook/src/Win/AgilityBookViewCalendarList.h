@@ -38,13 +38,28 @@
  */
 
 #include "CommonView.h"
+#include "DlgFind.h"
 #include "ListCtrl.h"
 class ARBCalendar;
 class CAgilityBookDoc;
+class CAgilityBookViewCalendarList;
+
+class CFindCalendar : public IFindCallback
+{
+public:
+	CFindCalendar(CAgilityBookViewCalendarList* pView)
+		: m_pView(pView)
+	{
+	}
+	virtual bool Search();
+private:
+	CAgilityBookViewCalendarList* m_pView;
+};
 
 class CAgilityBookViewCalendarList : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewCalendarData;
+	friend class CFindCalendar;
 protected: // create from serialization only
 	CAgilityBookViewCalendarList();
 	DECLARE_DYNCREATE(CAgilityBookViewCalendarList)
@@ -89,6 +104,7 @@ public:
 
 private:
 	bool m_bSuppressSelect;
+	CFindCalendar m_Callback;
 
 // Generated message map functions
 protected:
@@ -103,6 +119,8 @@ protected:
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnEditFind();
+	afx_msg void OnEditFindNext();
 	afx_msg void OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarCreateEntry();
 	afx_msg void OnUpdateCalendarEdit(CCmdUI* pCmdUI);
