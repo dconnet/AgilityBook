@@ -232,6 +232,9 @@
 				RelativePath="..\..\..\Win\DlgOptionsFilter.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgOptionsFonts.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.cpp">
 			</File>
 			<File
@@ -393,6 +396,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOptionsFilter.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgOptionsFonts.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.h">

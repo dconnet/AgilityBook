@@ -217,6 +217,10 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsFonts.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOtherPoint.cpp
 # End Source File
 # Begin Source File
@@ -415,6 +419,10 @@ SOURCE=..\..\..\Win\DlgOptionsCalendar.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgOptionsFilter.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsFonts.h
 # End Source File
 # Begin Source File
 

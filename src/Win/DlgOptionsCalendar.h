@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
 #include "AgilityBookOptions.h"
@@ -57,15 +58,7 @@ private:
 	BOOL	m_bHideOverlapping;
 	int		m_sizeX;
 	int		m_sizeY;
-	CStatic	m_ctrlFontDate;
-	CStatic	m_ctrlFontText;
-	CStatic	m_ctrlFont2Date;
-	CStatic	m_ctrlFont2Text;
 	//}}AFX_DATA
-	CFontInfo m_fontDateInfo[2];
-	CFontInfo m_fontTextInfo[2];
-	CFont m_fontDate[2];
-	CFont m_fontText[2];
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgOptionsCalendar)
@@ -77,10 +70,6 @@ private:
 protected:
 	//{{AFX_MSG(CDlgOptionsCalendar)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnFontDate();
-	afx_msg void OnFontText();
-	afx_msg void OnFont2Date();
-	afx_msg void OnFont2Text();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
