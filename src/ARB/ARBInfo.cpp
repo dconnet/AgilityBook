@@ -50,9 +50,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBInfo::ARBInfo()
-	: m_ClubInfo()
-	, m_JudgeInfo()
-	, m_LocationInfo()
+	: m_ClubInfo(TREE_CLUBINFO)
+	, m_JudgeInfo(TREE_JUDGEINFO)
+	, m_LocationInfo(TREE_LOCATIONINFO)
 {
 }
 

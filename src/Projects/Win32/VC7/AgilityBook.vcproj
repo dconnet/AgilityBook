@@ -953,22 +953,10 @@
 				RelativePath="..\..\..\ARB\ARBInfo.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfoClub.cpp">
+				RelativePath="..\..\..\Arb\ARBInfoItem.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfoClub.h">
-			</File>
-			<File
-				RelativePath="..\..\..\ARB\ARBInfoJudge.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\ARB\ARBInfoJudge.h">
-			</File>
-			<File
-				RelativePath="..\..\..\Arb\ARBInfoLocation.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\Arb\ARBInfoLocation.h">
+				RelativePath="..\..\..\Arb\ARBInfoItem.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBTraining.cpp">

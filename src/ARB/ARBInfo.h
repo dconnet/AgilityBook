@@ -37,9 +37,7 @@
  * @li 2003-12-07 DRC Created
  */
 
-#include "ARBInfoClub.h"
-#include "ARBInfoJudge.h"
-#include "ARBInfoLocation.h"
+#include "ARBInfoItem.h"
 class ARBErrorCallback;
 class ARBVersion;
 class Element;
@@ -89,45 +87,45 @@ public:
 	/*
 	 * Getters.
 	 */
-	ARBInfoClubList const& GetClubInfo() const;
-	ARBInfoClubList& GetClubInfo();
-	ARBInfoJudgeList const& GetJudgeInfo() const;
-	ARBInfoJudgeList& GetJudgeInfo();
-	ARBInfoLocationList const& GetLocationInfo() const;
-	ARBInfoLocationList& GetLocationInfo();
+	ARBInfoItemList const& GetClubInfo() const;
+	ARBInfoItemList& GetClubInfo();
+	ARBInfoItemList const& GetJudgeInfo() const;
+	ARBInfoItemList& GetJudgeInfo();
+	ARBInfoItemList const& GetLocationInfo() const;
+	ARBInfoItemList& GetLocationInfo();
 
 private:
-	ARBInfoClubList m_ClubInfo;
-	ARBInfoJudgeList m_JudgeInfo;
-	ARBInfoLocationList m_LocationInfo;
+	ARBInfoItemList m_ClubInfo;
+	ARBInfoItemList m_JudgeInfo;
+	ARBInfoItemList m_LocationInfo;
 };
 
-inline ARBInfoClubList const& ARBInfo::GetClubInfo() const
+inline ARBInfoItemList const& ARBInfo::GetClubInfo() const
 {
 	return m_ClubInfo;
 }
 
-inline ARBInfoClubList& ARBInfo::GetClubInfo()
+inline ARBInfoItemList& ARBInfo::GetClubInfo()
 {
 	return m_ClubInfo;
 }
 
-inline ARBInfoJudgeList const& ARBInfo::GetJudgeInfo() const
+inline ARBInfoItemList const& ARBInfo::GetJudgeInfo() const
 {
 	return m_JudgeInfo;
 }
 
-inline ARBInfoJudgeList& ARBInfo::GetJudgeInfo()
+inline ARBInfoItemList& ARBInfo::GetJudgeInfo()
 {
 	return m_JudgeInfo;
 }
 
-inline ARBInfoLocationList const& ARBInfo::GetLocationInfo() const
+inline ARBInfoItemList const& ARBInfo::GetLocationInfo() const
 {
 	return m_LocationInfo;
 }
 
-inline ARBInfoLocationList& ARBInfo::GetLocationInfo()
+inline ARBInfoItemList& ARBInfo::GetLocationInfo()
 {
 	return m_LocationInfo;
 }

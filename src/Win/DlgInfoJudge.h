@@ -38,9 +38,7 @@
 
 #include <set>
 #include <string>
-#include "ARBInfoClub.h"
-#include "ARBInfoJudge.h"
-#include "ARBInfoLocation.h"
+#include "ARBInfoItem.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -67,9 +65,27 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	eInfoType m_Type;
 	std::set<std::string> m_NamesInUse;
-	ARBInfoClubList m_InfoClub;
-	ARBInfoJudgeList m_InfoJudge;
-	ARBInfoLocationList m_InfoLocation;
+	ARBInfoItemList m_InfoOrig;
+	ARBInfoItemList m_Info;
+	class NameInfo
+	{
+	public:
+		typedef enum
+		{
+			eNotInUse,
+			eInUse,
+			eDeleted
+		} eUsage;
+		NameInfo();
+		NameInfo(std::string const& inName);
+		NameInfo(NameInfo const& rhs);
+		bool operator==(NameInfo const& rhs);
+		std::string m_Name;
+		eUsage m_eInUse;
+		bool m_bHasData;
+	};
+	std::vector<NameInfo> m_Names;
+	size_t m_nAdded;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgInfoJudge)
@@ -81,10 +97,12 @@ private:
 protected:
 	//{{AFX_MSG(CDlgInfoJudge)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnNew();
-	afx_msg void OnDelete();
+	afx_msg int OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
+	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnSelchangeName();
 	afx_msg void OnKillfocusComments();
+	afx_msg void OnNew();
+	afx_msg void OnDelete();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

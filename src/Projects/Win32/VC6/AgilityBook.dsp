@@ -1039,27 +1039,11 @@ SOURCE=..\..\..\ARB\ARBInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\ARB\ARBInfoClub.cpp
+SOURCE=..\..\..\ARB\ARBInfoItem.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\ARB\ARBInfoClub.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\ARB\ARBInfoJudge.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\ARB\ARBInfoJudge.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\ARB\ARBInfoLocation.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\ARB\ARBInfoLocation.h
+SOURCE=..\..\..\ARB\ARBInfoItem.h
 # End Source File
 # Begin Source File
 

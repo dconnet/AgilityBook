@@ -1,4 +1,4 @@
-12/10/2004: v1.4.1.10 <in development>
+12/11/2004: v1.4.1.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
@@ -8,6 +8,8 @@
     This allows USDAA Time Gamble to compute correctly.
   - Added the ability to make notes about clubs/locations similar to
     how judges notes are made.
+  - In the club/judge/location dialog, added indicators to show if an item
+    is added (not in-use) and/or has comments.
   - Flipped the order of 2 fields on the Run dialog.
   - Enable duplication of a title in the configuration.
 - Bug fixes
@@ -19,6 +21,9 @@
     filtering, also show what was earned in the filter.
   - Changes weren't saved when lifetime points in the configuration were
     modified.
+  - Adding a judge that already exists in the information dialog resulted
+    in a duplicate entry in the list. Closing the dialog and reopening it
+    would clear up the problem.
 
 10/31/2004: v1.4.0.10
 - Bumped file version to 10.0, Configuration v6:
