@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Comments about judges
+ * @brief ARBInfoJudge class.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,9 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * Comments about judges
+ */
 class ARBInfoJudge : public ARBBase
 {
 public:
@@ -55,23 +57,45 @@ public:
 	bool operator<(const ARBInfoJudge& rhs) const;
 	bool operator>(const ARBInfoJudge& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a judges entry
+	 * @pre inTree is the actual ARBInfoJudge element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
-	bool Save(CElement& ioTree) const;
 
 	/**
-	 * Judge's name
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBInfoJudge element will be created in ioTree.
+	 */
+	bool Save(CElement& ioTree) const;
+
+	/*
+	 * Getters/setters.
 	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
-	/**
-	 * A comment...
-	 */
 	const std::string& GetComment() const;
 	void SetComment(const std::string& inComment);
 
@@ -113,6 +137,9 @@ inline void ARBInfoJudge::SetComment(const std::string& inComment)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBInfoJudge objects.
+ */
 class ARBInfoJudgeList : public ARBVectorLoad1<ARBInfoJudge>
 {
 public:
@@ -125,17 +152,45 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort the list by name.
+	 * @param inDescending Sort in descending or ascending order.
+	 */
 	void sort(bool inDescending = true);
 
+	/**
+	 * Get the names of all the judges.
+	 * @param outNames All the names.
+	 * @return Number of judges in list.
+	 */
 	size_t GetAllJudges(std::set<std::string>& outNames) const;
 
+	/**
+	 * Remove entries from list that are in use but have no associated comments.
+	 * @param inNamesInUse Names of judges from runs.
+	 */
 	void CondenseContent(const std::set<std::string>& inNamesInUse);
 
+	/**
+	 * Find a judge.
+	 * @param inName Judge to find.
+	 * @return Object matching judge.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBInfoJudge* FindJudge(const std::string& inName) const;
+
 	/**
 	 * Add a new judge.
-	 * This will fail if the judge already exists or the name is empty.
+	 * @param inJudge Name of judge to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	ARBInfoJudge* AddJudge(const std::string& inJudge);
+
+	/**
+	 * Delete a judge.
+	 * @param inJudge Object to delete.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteJudge(const ARBInfoJudge* inJudge);
 };

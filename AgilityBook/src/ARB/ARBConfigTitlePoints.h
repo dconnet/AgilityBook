@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigTitlePoints and ARBConfigTitlePointsList class.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,11 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * Number of title points that can be earned based on number of faults.
+ * Some venues have a sliding scale, for instance a clean run in NADAC
+ * is worth 10 pts, a run with up to 5 faults earns 5 pts.
+ */
 class ARBConfigTitlePoints : public ARBBase
 {
 public:
@@ -54,15 +58,43 @@ public:
 	bool operator==(const ARBConfigTitlePoints& rhs) const;
 	bool operator!=(const ARBConfigTitlePoints& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a title configuration.
+	 * @pre inTree is the actual ARBConfigTitlePoints element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
-	bool Save(CElement& inTree) const;
 
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigTitlePoints element will be created in ioTree.
+	 */
+	bool Save(CElement& ioTree) const;
+
+	/*
+	 * Setters/getters.
+	 */
 	short GetPoints() const;
 	void SetPoints(short inPoints);
 	short GetFaults() const;
@@ -100,6 +132,9 @@ inline void ARBConfigTitlePoints::SetFaults(short inFaults)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigTitlePoints objects.
+ */
 class ARBConfigTitlePointsList : public ARBVectorLoad1<ARBConfigTitlePoints>
 {
 public:
@@ -112,11 +147,39 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort the title point objects by faults.
+	 */
 	void sort();
 
+	/**
+	 * Get the number of title points earned based on faults.
+	 * @param inFaults Number of faults in the run.
+	 * @return Number of titling points.
+	 */
 	short GetTitlePoints(double inFaults) const;
 
+	/**
+	 * Find a points object.
+	 * @param inFaults Number of faults to find.
+	 * @return Pointer to found object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigTitlePoints* FindTitlePoints(short inFaults) const;
+
+	/**
+	 * Add an object.
+	 * @param inPoints Number of title points.
+	 * @param inFaults Number of faults.
+	 * @return Pointer to new object, NULL if it already exists.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBConfigTitlePoints* AddTitlePoints(short inPoints, short inFaults);
+
+	/**
+	 * Delete an object.
+	 * @param inFaults Delete object with the given faults.
+	 * @return Whether object was deleted.
+	 */
 	bool DeleteTitlePoints(short inFaults);
 };

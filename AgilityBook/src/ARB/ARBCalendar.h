@@ -338,7 +338,7 @@ public:
 	 * Find a calendar entry.
 	 * @param inCal Object to search for.
 	 * @return Identical object.
-	 * @post The returned object is <i>not</i> reference counted.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 * @note Equality is tested by value, not pointer.
 	 */
 	ARBCalendar* FindCalendar(const ARBCalendar* inCal);

@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigSubLevel and ARBConfigSubLevelList class.
  * @author David Connet
  *
  * Revision History
@@ -43,6 +42,9 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * Sublevel, allows a level to be split into A/B groupings.
+ */
 class ARBConfigSubLevel : public ARBBase
 {
 public:
@@ -52,15 +54,43 @@ public:
 	bool operator==(const ARBConfigSubLevel& rhs) const;
 	bool operator!=(const ARBConfigSubLevel& rhs) const;
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a sublevel configuration.
+	 * @pre inTree is the actual ARBConfigSubLevel element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigSubLevel element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
 
@@ -68,6 +98,11 @@ private:
 	~ARBConfigSubLevel();
 	std::string m_Name;
 };
+
+inline std::string ARBConfigSubLevel::GetGenericName() const
+{
+	return m_Name;
+}
 
 inline const std::string& ARBConfigSubLevel::GetName() const
 {
@@ -81,6 +116,9 @@ inline void ARBConfigSubLevel::SetName(const std::string& inName)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigSubLevel objects.
+ */
 class ARBConfigSubLevelList : public ARBVectorLoad1<ARBConfigSubLevel>
 {
 public:
@@ -93,7 +131,25 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Find a sublevel.
+	 * @param inName Name of sublevel to find.
+	 * @return Whether name exists.
+	 */
 	bool FindSubLevel(const std::string& inName) const;
+
+	/**
+	 * Find a sublevel.
+	 * @param inName Name of sublevel to find.
+	 * @return Pointer to object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBConfigSubLevel* AddSubLevel(const std::string& inName);
+
+	/**
+	 * Delete a sublevel.
+	 * @param inName Name of sublevel to delete.
+	 * @return Whether sublevel was deleted or not.
+	 */
 	bool DeleteSubLevel(const std::string& inName);
 };

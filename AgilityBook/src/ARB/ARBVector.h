@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Base collection classes for loading/saving data.
+ * @brief Templates to simplify some vector operations.
  * @author David Connet
  *
  * Revision History
@@ -49,12 +48,13 @@ class CElement;
 #if _MSC_VER < 1300
 // VC6 has problems with std::vector::clear() type syntax.
 // And I really don't want to declaring using statements in my headers!
-using namespace std;
+using std::set;
+using std::string;
+using std::vector;
 #endif
 
 /**
- * @brief Templates to simplify some vector operations.
- * @author David Connet
+ * Base collection template for loading/saving data.
  *
  * I wanted to hide as much implementation as possible - so this template hides
  * the fact that we are actually using arrays of pointers. The only place
@@ -75,6 +75,11 @@ public:
 	{
 	}
 
+	/**
+	 * Copy constructor.
+	 * @param rhs Object being copied.
+	 * @post A deep copy of rhs.
+	 */
 	ARBVector(const ARBVector& rhs)
 	{
 		clear();
@@ -90,6 +95,11 @@ public:
 		clear();
 	}
 
+	/**
+	 * Assignment operator.
+	 * @param rhs Object being copied.
+	 * @post A deep copy of rhs.
+	 */
 	ARBVector& operator=(const ARBVector& rhs)
 	{
 		if (this != &rhs)
@@ -104,8 +114,11 @@ public:
 		return *this;
 	}
 
-	// Note, op==/op!= has a template instantiation problem.
-	// @attention: Implement op==/op!= in each derived class and call this.
+	/**
+	 * Ahh, the fun of templates...
+	 * op==/op!= has a template instantiation problem.
+	 * @attention: Implement op==/op!= in each derived class and call this.
+	 */
 	bool isEqual(const ARBVector& rhs) const
 	{
 		if (this == &rhs)
@@ -121,6 +134,11 @@ public:
 		return true;
 	}
 
+	/**
+	 * Get all the strings to search in this list.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const
 	{
 		size_t nItems = 0;
@@ -129,6 +147,10 @@ public:
 		return nItems;
 	}
 
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 * @post All content cleared, including configuration.
+	 */
 	void clear()
 	{
 		for (iterator iter = begin(); iter != end(); ++iter)
@@ -161,6 +183,12 @@ public:
 #endif
 	}
 
+	/**
+	 * Reorder a list.
+	 * @param inItem Object to be moved.
+	 * @param inMove Number of positions to move object.
+	 * @return Whether or not object was moved.
+	 */
 	bool Move(ARBThing* inItem, int inMove)
 	{
 		bool bOk = false;
@@ -191,18 +219,18 @@ public:
 	}
 
 	/**
-	 * Save the vector to an output tree (which will become XML). In
-	 * general, the vectors themselves are never stored, only the elements.
+	 * Save a document.
+	 * In general, the vectors themselves are never stored, only the elements.
 	 * (It flattens the tree a little.)
-	 * @param outTree Parent element in which data is stored. Each class will create the necessary sub-elements.
-	 * @retval true Successfully stored.
-	 * @retval false Unable to store.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBThing element will be created in ioTree.
 	 */
-	bool Save(CElement& outTree) const
+	bool Save(CElement& ioTree) const
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
-			if (!(*iter)->Save(outTree))
+			if (!(*iter)->Save(ioTree))
 				return false;
 		}
 		return true;
@@ -219,7 +247,7 @@ public:
 // ARBConfigEventList, ARBConfigScoringList, ARBDogRunList)
 
 /**
- * @brief This load method is used by several of the ARBConfig* classes.
+ * This load method is used by several of the ARBConfig* classes.
  */
 template <class ARBThing>
 class ARBVectorLoad1 : public ARBVector<ARBThing>
@@ -227,11 +255,11 @@ class ARBVectorLoad1 : public ARBVector<ARBThing>
 public:
 	/**
 	 * Load the information from XML (the tree).
-	 * @param inTree Actual data to load (not the parent as it is during Save).
-	 * @param inVersion Version of .arb file (for backwards compatibility).
-	 * @param ioErrMsg Error message on failure.
-	 * @retval true Successfully loaded.
-	 * @retval false Unable to load
+	 * @pre inTree is the actual ARBThing element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
 	 */
 	bool Load(const CElement& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
 	{
@@ -247,7 +275,7 @@ public:
 };
 
 /**
- * @brief This load method is used by several of the ARBDog* classes.
+ * This load method is used by several of the ARBDog* classes.
  */
 template <class ARBThing>
 class ARBVectorLoad2 : public ARBVector<ARBThing>
@@ -255,12 +283,12 @@ class ARBVectorLoad2 : public ARBVector<ARBThing>
 public:
 	/**
 	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual ARBThing element.
 	 * @param inConfig Configuration information to verify data to load against.
-	 * @param inTree Actual data to load (not the parent as it is during Save).
-	 * @param inVersion Version of .arb file (for backwards compatibility).
-	 * @param ioErrMsg Error message on failure.
-	 * @retval true Successfully loaded.
-	 * @retval false Unable to load (an error message is generated).
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
 	 */
 	bool Load(const ARBConfig& inConfig, const CElement& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
 	{

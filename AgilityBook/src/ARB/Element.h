@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Tree-like structure to hold XML data.
+ * @brief CElement class.
  * @author David Connet
  *
  * Revision History
@@ -46,11 +45,13 @@ class ARBDate;
 class ARBVersion;
 
 /**
+ * Tree-like structure to hold XML data.
+ *
  * Create the XML tree structure. This allows easy translation of an XML file
  * into something we can work with. Since we are using SAX to do the reading
  * of the XML, it's easier to read the data into a generic structure and
  * post-process that than it is to take the SAX events and directly create our
- * final data structure.
+ * final data structure. By using SAX, we use alot less memory than the DOM.
  *
  * Reminder, attributes are not ordered and are unique by name.
  * Elements are ordered and the same name may be repeated.
@@ -62,11 +63,14 @@ class ARBVersion;
 class CElement
 {
 public:
+	/**
+	 * Result of getting an attribute.
+	 */
 	typedef enum
 	{
-		eNotFound,
-		eInvalidValue,
-		eFound
+		eNotFound,		///< Attribute was not found.
+		eInvalidValue,	///< Attribute's value is not valid for data type.
+		eFound			///< Attribute was found.
 	} AttribLookup;
 
 	CElement();
@@ -80,6 +84,7 @@ public:
 	 * @param inLevel Indent level.
 	 */
 	void Dump(int inLevel = 0) const;
+
 	/**
 	 * Clear the name, value, attributes, and subelements (everything!).
 	 */
@@ -89,6 +94,7 @@ public:
 	 * Get the name of this element.
 	 */
 	const std::string& GetName() const;
+
 	/**
 	 * Set the name of this element.
 	 * @param inName New name for this element.
@@ -99,6 +105,7 @@ public:
 	 * Get the value of this element.
 	 */
 	const std::string& GetValue() const;
+
 	/**
 	 * Set the value of this element.
 	 * @pre GetElementCount() must be 0.
@@ -108,6 +115,7 @@ public:
 	void SetValue(const char* const inValue);
 	void SetValue(const short inValue);
 	void SetValue(const long inValue);
+
 	/**
 	 * Set the value of this element.
 	 * @pre GetElementCount() must be 0.
@@ -123,21 +131,21 @@ public:
 	 * @return Number of attributes.
 	 */
 	int GetAttribCount() const;
+
 	/**
 	 * Get the Nth attribute's name and value.
 	 * @param inIndex Index of attribute to get.
 	 * @param outName Name of the attribute.
 	 * @param outValue Value of the attribute.
-	 * @retval true outName and outValue contain valid values.
-	 * @retval false Specified attribute doesn't exist.
+	 * @return Result of lookup.
 	 */
 	AttribLookup GetNthAttrib(int inIndex, std::string& outName, std::string& outValue) const;
+
 	/**
 	 * Get the value of an attribute.
 	 * @param inName Name of attribute to get.
 	 * @param outValue Value of attribute
-	 * @retval true outValue contains a valid value.
-	 * @retval false Specified attribute doesn't exist.
+	 * @return Result of lookup.
 	 */
 	AttribLookup GetAttrib(const std::string& inName, std::string& outValue) const;
 	AttribLookup GetAttrib(const std::string& inName, ARBVersion& outValue) const;
@@ -146,10 +154,13 @@ public:
 	AttribLookup GetAttrib(const std::string& inName, short& outValue) const;
 	AttribLookup GetAttrib(const std::string& inName, long& outValue) const;
 	AttribLookup GetAttrib(const std::string& inName, double& outValue) const;
+
 	/**
 	 * Add an attribute.
 	 * @param inName Name of attribute to add.
 	 * @param inValue Value of new attribute.
+	 * @return This always returns true.
+	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(const std::string& inName, const std::string& inValue);
 	bool AddAttrib(const std::string& inName, const char* const inValue);
@@ -158,18 +169,24 @@ public:
 	bool AddAttrib(const std::string& inName, const bool inValue);
 	bool AddAttrib(const std::string& inName, const short inValue);
 	bool AddAttrib(const std::string& inName, const long inValue);
+
 	/**
 	 * Add an attribute.
 	 * @param inName Name of attribute to add.
 	 * @param inValue Value of new attribute.
 	 * @param inPrec Precision, trailing zeros are trimmed unless prec=2, then they are only trimmed if all zero.
+	 * @return This always returns true.
+	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(const std::string& inName, const double inValue, int inPrec = 2);
+
 	/**
 	 * Remove an attribute.
 	 * @param inName Attribute to remove
+	 * @return Whether or not the attribute was removed.
 	 */
 	bool RemoveAttrib(const std::string& inName);
+
 	/**
 	 * Remove all attributes.
 	 */
@@ -180,33 +197,39 @@ public:
 	 * @return The number of elements.
 	 */
 	int GetElementCount() const;
+
 	/**
 	 * Get the specified element.
 	 * @param inIndex Index of element to be obtained.
 	 * @return The element.
 	 */
 	const CElement& GetElement(int inIndex) const;
+
 	/**
 	 * Get the specified element.
 	 * @param inIndex Index of element to be obtained.
 	 * @return The element.
 	 */
 	CElement& GetElement(int inIndex);
+
 	/**
 	 * Add an element.
+	 * If inAt is less than zero or greater than the number of items,
+	 * the item will be appended.
 	 * @pre GetValue() must be empty.
 	 * @param inName Name of new element.
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
 	CElement& AddElement(const std::string& inName, int inAt = -1);
+
 	/**
 	 * Remove the specified element.
 	 * @param inIndex Index of element to be removed.
-	 * @retval true Element was removed.
-	 * @retval false Element was not removed.
+	 * @return Whether or not element was removed.
 	 */
 	bool RemoveElement(int inIndex);
+
 	/**
 	 * Remove all the elements.
 	 */
@@ -224,19 +247,19 @@ public:
 	 * Populate this element from the given buffer.
 	 * @param inData XML data to load.
 	 * @param nData Length of inData buffer.
-	 * @param ioErrMsg Output buffer for generated error messages.
-	 * @retval true File successfully loaded.
-	 * @retval false File failed to load.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg);
+
 	/**
 	 * Populate this element from the given file.
 	 * @param inFileName XML file to load.
-	 * @param ioErrMsg Output buffer for generated error messages.
-	 * @retval true File successfully loaded.
-	 * @retval false File failed to load.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXMLFile(const char* inFileName, std::string& ioErrMsg);
+
 	/**
 	 * Save this element to the given output stream.
 	 * @param outStream Stream to write tree to.
@@ -247,7 +270,8 @@ public:
 	bool SaveXML(std::ostream& outStream, const std::string* inDTD = NULL) const;
 
 private:
-	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource, std::string& ioErrMsg);
+	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource,
+		std::string& ioErrMsg);
 	typedef std::map<std::string, std::string> CAttributes;
 	std::string m_Name;
 	std::string m_Value;

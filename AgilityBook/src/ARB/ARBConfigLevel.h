@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigLevel and ARBConfigLevel classes.
  * @author David Connet
  *
  * Revision History
@@ -45,6 +44,9 @@ class ARBConfigEventList;
 class ARBVersion;
 class CElement;
 
+/**
+ * Levels within a division.
+ */
 class ARBConfigLevel : public ARBBase
 {
 public:
@@ -53,19 +55,58 @@ public:
 	ARBConfigLevel& operator=(const ARBConfigLevel& rhs);
 	bool operator==(const ARBConfigLevel& rhs) const;
 	bool operator!=(const ARBConfigLevel& rhs) const;
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 */
 	void clear();
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a level configuration.
+	 * @pre inTree is the actual ARBConfigLevel element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigLevel element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Update this configuration from inLevelNew.
+	 * @param indent Indentation level for generating messages.
+	 * @param inLevelNew Level to merge.
+	 * @param ioInfo Accumulated messages about changes that have happened.
+	 * @return Whether or not changes have occurred.
+	 */
 	bool Update(int indent, const ARBConfigLevel* inLevelNew, std::string& ioInfo);
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
 	const ARBConfigSubLevelList& GetSubLevels() const;
@@ -76,6 +117,11 @@ private:
 	std::string m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
+
+inline std::string ARBConfigLevel::GetGenericName() const
+{
+	return m_Name;
+}
 
 inline const std::string& ARBConfigLevel::GetName() const
 {
@@ -99,6 +145,9 @@ inline ARBConfigSubLevelList& ARBConfigLevel::GetSubLevels()
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigLevel objects.
+ */
 class ARBConfigLevelList : public ARBVectorLoad1<ARBConfigLevel>
 {
 public:
@@ -112,27 +161,71 @@ public:
 	}
 
 	/**
-	 * Verifies this is a valid level (not sublevel).
+	 * Verify this is a valid level (not sublevel).
 	 * Used to verify configuration stuff.
+	 * @param inName Name of level to verify.
+	 * @param inAllowWildCard Do we allow wildcards during verification?
+	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
 		const std::string& inName,
 		bool inAllowWildCard = true) const;
 
-	ARBConfigLevel* FindLevel(const std::string& inName);
 	/**
-	 * Find a level, only looks at leaf nodes
+	 * Find a level.
+	 * @param inName Name of level to find.
+	 * @return Pointer to object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
+	ARBConfigLevel* FindLevel(const std::string& inName);
+
+	/**
+	 * Find a level, only looks at leaf nodes.
 	 * (if there are sub-levels, the level name is ignored).
+	 * @param inName Name of level/sublevel to find.
+	 * @return Whether name exists.
 	 */
 	bool FindTrueLevel(const std::string& inName) const;
+
+	/**
+	 * Find a level, only looks at leaf nodes.
+	 * (if there are sub-levels, the level name is ignored).
+	 * @param inName Name of level/sublevel to find.
+	 * @return Pointer to object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigLevel* FindSubLevel(const std::string& inName) const;
+
+	/**
+	 * Add a level.
+	 * @param inName Level to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBConfigLevel* AddLevel(const std::string& inName);
+
+	/**
+	 * Add a level.
+	 * @param inLevel Level to add.
+	 * @return Pointer to object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBConfigLevel* AddLevel(ARBConfigLevel* inLevel);
+
+	/**
+	 * Delete a level.
+	 * @param inName Name of level to delete.
+	 * @param ioEvents List of events to be updated.
+	 * @return Whether level was deleted or not.
+	 */
 	bool DeleteLevel(
 		const std::string& inName,
 		ARBConfigEventList& ioEvents);
+
 	/**
-	 * Delete a sublevel
+	 * Delete a sublevel.
 	 * @param inName Name of sublevel to delete.
 	 * @param outLevelModified Level containing the deleted sublevel has been renamed.
 	 * @return Whether a sublevel was deleted.

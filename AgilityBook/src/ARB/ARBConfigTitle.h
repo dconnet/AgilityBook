@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigTitle and ARBConfigTitleList class.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,10 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * Title configuration.
+ * A title consists of a name (the abbreviation), a long name and a description.
+ */
 class ARBConfigTitle : public ARBBase
 {
 public:
@@ -52,20 +55,62 @@ public:
 	ARBConfigTitle& operator=(const ARBConfigTitle& rhs);
 	bool operator==(const ARBConfigTitle& rhs) const;
 	bool operator!=(const ARBConfigTitle& rhs) const;
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 */
 	void clear();
 
-	virtual std::string GetGenericName() const	{return GetNiceName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a title configuration.
+	 * @pre inTree is the actual ARBConfigTitle element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
-	bool Save(CElement& inTree) const;
 
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigTitle element will be created in ioTree.
+	 */
+	bool Save(CElement& ioTree) const;
+
+	/**
+	 * Get the nice (long) name.
+	 * @return the nice (long) name.
+	 */
 	const std::string& GetNiceName() const;
+
+	/**
+	 * Get the complete name (name + nicename).
+	 * @param bAbbrevFirst Name is before or after Longname.
+	 * @return The complete name.
+	 */
 	std::string GetCompleteName(bool bAbbrevFirst = true) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
 	const std::string& GetLongName() const;
@@ -79,6 +124,11 @@ private:
 	std::string m_LongName;
 	std::string m_Desc;
 };
+
+inline std::string ARBConfigTitle::GetGenericName() const
+{
+	return GetNiceName();
+}
 
 inline const std::string& ARBConfigTitle::GetNiceName() const
 {
@@ -120,6 +170,9 @@ inline void ARBConfigTitle::SetDescription(const std::string& inDesc)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigTitle objects.
+ */
 class ARBConfigTitleList : public ARBVectorLoad1<ARBConfigTitle>
 {
 public:
@@ -132,10 +185,45 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Find a title by the complete name.
+	 * This api is used to fix a problem introduced in v1.0.0.8.
+	 * @param inName Complete name of title to find.
+	 * @param bAbbrevFirst Name is before or after Longname.
+	 * @return Pointer to found object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigTitle* FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst = true) const;
+
+	/**
+	 * Find a title.
+	 * @param inName Name of title to find.
+	 * @return Pointer to found object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigTitle* FindTitle(const std::string& inName) const;
 	ARBConfigTitle* FindTitle(const std::string& inName);
+
+	/**
+	 * Add a title.
+	 * @param inName Name of title to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBConfigTitle* AddTitle(const std::string& inName);
+
+	/**
+	 * Add a title.
+	 * @param inTitle Title to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBConfigTitle* AddTitle(ARBConfigTitle* inTitle);
+
+	/**
+	 * Delete a title.
+	 * @param inName Name of title to delete.
+	 * @return Whether title was deleted.
+	 */
 	bool DeleteTitle(const std::string& inName);
 };

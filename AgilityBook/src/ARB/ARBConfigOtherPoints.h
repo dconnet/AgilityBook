@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigOtherPoints and ARBConfigOtherPointsList class.
  * @author David Connet
  *
  * Revision History
@@ -43,15 +42,21 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * A way to tally points that aren't inheritantly known.
+ */
 class ARBConfigOtherPoints : public ARBBase
 {
 public:
+	/**
+	 * How to accumulate points.
+	 */
 	typedef enum
 	{
-		eTallyAll,
-		eTallyAllByEvent,
-		eTallyLevel,
-		eTallyLevelByEvent
+		eTallyAll,			///< Accumulate all runs together.
+		eTallyAllByEvent,	///< Separate runs by event.
+		eTallyLevel,		///< Separate runs by level.
+		eTallyLevelByEvent	///< Separate runs by event and level.
 	} eOtherPointsTally;
 
 	ARBConfigOtherPoints();
@@ -59,17 +64,49 @@ public:
 	ARBConfigOtherPoints& operator=(const ARBConfigOtherPoints& rhs);
 	bool operator==(const ARBConfigOtherPoints& rhs) const;
 	bool operator!=(const ARBConfigOtherPoints& rhs) const;
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 */
 	void clear();
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load an otherpoint configuration.
+	 * @pre inTree is the actual ARBConfigOtherPoints element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigOtherPoints element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
 	const std::string& GetDescription() const;
@@ -83,6 +120,11 @@ private:
 	eOtherPointsTally m_Tally;
 	std::string m_Desc;
 };
+
+inline std::string ARBConfigOtherPoints::GetGenericName() const
+{
+	return GetName();
+}
 
 inline const std::string& ARBConfigOtherPoints::GetName() const
 {
@@ -116,6 +158,9 @@ inline void ARBConfigOtherPoints::SetTally(ARBConfigOtherPoints::eOtherPointsTal
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigOtherPoints objects.
+ */
 class ARBConfigOtherPointsList : public ARBVectorLoad1<ARBConfigOtherPoints>
 {
 public:
@@ -128,12 +173,35 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Verify the name exists.
+	 * @param inName Name to verify.
+	 * @return Whether the OtherPoints exists.
+	 */
 	bool VerifyOtherPoints(const std::string& inName) const;
 
+	/**
+	 * Find an otherpoints object.
+	 * @param inName Name of object to find.
+	 * @return Pointer to object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigOtherPoints* FindOtherPoints(const std::string& inName) const;
 	ARBConfigOtherPoints* FindOtherPoints(const std::string& inName);
 
+	/**
+	 * Add an otherpoints object.
+	 * @param inOther Name of OtherPoints to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBConfigOtherPoints* AddOtherPoints(ARBConfigOtherPoints* inOther);
 
+	/**
+	 * Delete an object.
+	 * @param inName Name of object to delete.
+	 * @return Whether the object was deleted or not.
+	 */
 	bool DeleteOtherPoints(const std::string& inName);
 };

@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigScoring and ARBConfigScoringList class.
  * @author David Connet
  *
  * Revision History
@@ -51,19 +50,29 @@ class ARBConfigEvent;
 class ARBVersion;
 class CElement;
 
+/**
+ * Scoring methods for an event.
+ */
 class ARBConfigScoring : public ARBBase
 {
 public:
+	/**
+	 * Types of scoring methods.
+	 */
 	typedef enum
 	{
-		eUnknown,
-		eFaultsThenTime,
-		eFaults100ThenTime,
-		eFaults200ThenTime,
-		eOCScoreThenTime,
-		eScoreThenTime,
-		eTimePlusFaults
+		eUnknown,			///< Unknown scoring method.
+		eFaultsThenTime,	///< By faults then time.
+		eFaults100ThenTime,	///< By faults then time (AKC).
+		eFaults200ThenTime,	///< By faults then time (UKC).
+		eOCScoreThenTime,	///< Open/Closing points then time.
+		eScoreThenTime,		///< Points then time.
+		eTimePlusFaults		///< Time plus faults.
 	} ScoringStyle;
+
+	/**
+	 * Translate the enum to a string.
+	 */
 	static std::string GetScoringStyleStr(ScoringStyle inStyle);
 
 	ARBConfigScoring();
@@ -72,16 +81,45 @@ public:
 	bool operator==(const ARBConfigScoring& rhs) const;
 	bool operator!=(const ARBConfigScoring& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a scoring configuration.
+	 * @pre inTree is the actual ARBConfigScoring element.
+	 * @param inDivisions Configurate division used for verification.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigOtherPoints element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const ARBDate& GetValidFrom() const;
 	void SetValidFrom(const ARBDate& inDate);
 	const ARBDate& GetValidTo() const;
@@ -262,9 +300,21 @@ inline ARBConfigTitlePointsList& ARBConfigScoring::GetTitlePoints()
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigScoring objects.
+ */
 class ARBConfigScoringList : public ARBVector<ARBConfigScoring>
 {
 public:
+	/**
+	 * Load a scoring configuration.
+	 * @pre inTree is the actual ARBConfigScoring element.
+	 * @param inDivisions Configurate division used for verification.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
@@ -281,10 +331,12 @@ public:
 	}
 
 	/**
-	 * @param inDivision Division name.
-	 * @param inLevel Level (NOT sublevel) name.
-	 * @param inTitlePoints Only look for events that have titling points.
-	 * @param outList List of all found events.
+	 * Find all the scoring methods that match.
+	 * @param inDivision Division event is in.
+	 * @param inLevel Level (NOT sublevel) event is in.
+	 * @param inTitlePoints Only return scoring methods that have title points.
+	 * @param outList List of scoring methods found.
+	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
 		const std::string& inDivision,
@@ -293,17 +345,32 @@ public:
 		std::vector<const ARBConfigScoring*>& outList) const;
 
 	/**
-	 * @param inDivision Division name.
-	 * @param inLevel Level (NOT sublevel) name.
+	 * Find an event.
+	 * @param inDivision Division event exists in.
+	 * @param inLevel Level (NOT sublevel) event exists in.
 	 * @param inDate Date for requested scoring.
+	 * @return Pointer to object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	const ARBConfigScoring* FindEvent(
 		const std::string& inDivision,
 		const std::string& inLevel,
 		const ARBDate& inDate) const;
+
+	/**
+	 * Verify a scoring method exists.
+	 * @param inDivision Division event is in.
+	 * @param inLevel Level event is in.
+	 * @return true if FindAllEvents() > 0.
+	 */
 	bool VerifyEvent(
 		const std::string& inDivision,
 		const std::string& inLevel) const;
 
+	/**
+	 * Create a new scoring method.
+	 * @return Pointer to a new method.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBConfigScoring* AddScoring();
 };

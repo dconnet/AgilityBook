@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigDivision and ARBConfigDivisionList class.
  * @author David Connet
  *
  * Revision History
@@ -48,6 +47,9 @@ class ARBConfigVenue;
 class ARBVersion;
 class CElement;
 
+/**
+ * Division configuration information.
+ */
 class ARBConfigDivision : public ARBBase
 {
 public:
@@ -56,19 +58,58 @@ public:
 	ARBConfigDivision& operator=(const ARBConfigDivision& rhs);
 	bool operator==(const ARBConfigDivision& rhs) const;
 	bool operator!=(const ARBConfigDivision& rhs) const;
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 */
 	void clear();
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a division configuration.
+	 * @pre inTree is the actual ARBConfigDivision element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigDivision element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
-	bool Update(int indent, const ARBConfigDivision* inDiv, std::string& ioInfo);
+	/**
+	 * Update this configuration from inDivNew.
+	 * @param indent Indentation level for generating messages.
+	 * @param inDivNew Division to merge.
+	 * @param ioInfo Accumulated messages about changes that have happened.
+	 * @return Whether or not changes have occurred.
+	 */
+	bool Update(int indent, const ARBConfigDivision* inDivNew, std::string& ioInfo);
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
 	const ARBConfigLevelList& GetLevels() const;
@@ -82,6 +123,11 @@ private:
 	ARBConfigLevelList m_Levels;
 	ARBConfigTitleList m_Titles;
 };
+
+inline std::string ARBConfigDivision::GetGenericName() const
+{
+	return m_Name;
+}
 
 inline const std::string& ARBConfigDivision::GetName() const
 {
@@ -115,11 +161,22 @@ inline ARBConfigTitleList& ARBConfigDivision::GetTitles()
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigDivision objects.
+ */
 class ARBConfigDivisionList : public ARBVector<ARBConfigDivision>
 {
 public:
+	/**
+	 * Load a division configuration.
+	 * @pre inTree is the actual ARBConfigDivision element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
-		const CElement& tree,
+		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -132,20 +189,75 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Verify a level exists.
+	 * @param inDiv Division level exists in.
+	 * @param inLevel Level to verify.
+	 * @return Level exists.
+	 */
 	bool VerifyLevel(
 		const std::string& inDiv,
 		const std::string& inLevel) const;
 
+	/**
+	 * Find the named division.
+	 * @param inDiv Division to find.
+	 * @return Object that was found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigDivision* FindDivision(const std::string& inDiv) const;
 	ARBConfigDivision* FindDivision(const std::string& inDiv);
+
+	/**
+	 * Add a division.
+	 * @param inDiv Name of division to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	ARBConfigDivision* AddDivision(const std::string& inDiv);
+
+	/**
+	 * Add a division.
+	 * @param inDiv Division to add.
+	 * @return Pointer to object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBConfigDivision* AddDivision(ARBConfigDivision* inDiv);
+
+	/**
+	 * Delete the division.
+	 * @param inDiv Name of division to delete.
+	 * @param ioEvents List of events to be updated.
+	 * @return Number of divisions deleted (0 or 1).
+	 */
 	int DeleteDivision(
 		const std::string& inDiv,
 		ARBConfigEventList& ioEvents);
 
+	/**
+	 * Find a title by the complete name.
+	 * This api is used to fix a problem introduced in v1.0.0.8.
+	 * @param inName Complete name of title to find.
+	 * @param bAbbrevFirst Name is before or after Longname.
+	 * @return Pointer to found object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigTitle* FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst = true) const;
+
+	/**
+	 * Find a title.
+	 * @param inTitle Name of title to find.
+	 * @return Pointer to found object, NULL if not found.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
 	const ARBConfigTitle* FindTitle(const std::string& inTitle) const;
 	ARBConfigTitle* FindTitle(const std::string& inTitle);
+
+	/**
+	 * Delete a title.
+	 * @param inTitle Name of title to delete.
+	 * @return Whether title was deleted.
+	 */
 	bool DeleteTitle(const std::string& inTitle);
 };
