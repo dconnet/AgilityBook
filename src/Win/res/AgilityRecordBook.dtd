@@ -3,7 +3,7 @@ An AgilityRecordBook file is made up of 2 main sections, the
 configuration area, and the dog's runs. Multiple dogs may be
 contained within a file, as this DTD defines below.
 -->
-<!ELEMENT AgilityBook (Calendar*, Configuration, Dog*) >
+<!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Dog*) >
 	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
 
 <!--
@@ -21,6 +21,15 @@ This section defines the rules for the calendar cribsheet.
 		Club CDATA #REQUIRED
 		Venue CDATA #REQUIRED
 		Entered (E|P|N) 'N'
+		>
+
+<!--
+This section defines the rules for the training log.
+-->
+<!ELEMENT Training (#PCDATA) >
+	<!ATTLIST Training
+		Date CDATA #REQUIRED
+		Name CDATA #IMPLIED
 		>
 
 <!--
