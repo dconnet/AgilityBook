@@ -232,7 +232,7 @@
 #define IDC_FIND_UP                     1172
 #define IDC_FIND_DOWN                   1173
 #define IDC_LONG_NAME                   1174
-#define IDC_TABLE_YPS                   1175
+#define IDC_TABLE                       1175
 #define IDC_VIEW                        1176
 #define IDC_HIDDEN                      1177
 #define IDC_EARNED                      1178

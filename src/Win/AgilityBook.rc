@@ -564,9 +564,11 @@ CAPTION "Event Configuration"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
-    EDITTEXT        IDC_NAME,30,7,115,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NAME,30,7,100,12,ES_AUTOHSCROLL
+    CONTROL         "Has Ta&ble?",IDC_TABLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,135,8,49,10
     CONTROL         "&Has Partners?",IDC_PARTNER,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,155,8,61,10
+                    WS_TABSTOP,190,8,61,10
     LTEXT           "&Event Note",IDC_STATIC,7,23,21,16
     EDITTEXT        IDC_DESC,30,23,200,28,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
@@ -814,8 +816,8 @@ BEGIN
     EDITTEXT        IDC_FAULTS,50,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "&Time",IDC_STATIC,27,121,16,8
     EDITTEXT        IDC_TIME,50,119,30,12,ES_AUTOHSCROLL
-    CONTROL         "Run has a Ta&ble",IDC_TABLE_YPS,"Button",
-                    BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,15,134,65,18
+    CONTROL         "Run has a Ta&ble",IDC_TABLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,136,69,10
     GROUPBOX        "By Score",IDC_STATIC,91,92,109,77
     LTEXT           "&Required Opening",IDC_OPENING_PTS_TEXT,98,105,58,8
     EDITTEXT        IDC_OPENING_PTS,166,103,25,12,ES_AUTOHSCROLL | ES_NUMBER

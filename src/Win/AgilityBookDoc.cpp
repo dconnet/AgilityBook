@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  * @li 2004-02-26 DRC Moved config update here, test doc for current config.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-10 DRC Moved import/export into a wizard.
@@ -66,6 +67,7 @@
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
+#include "DlgFixup.h"
 #include "DlgInfoJudge.h"
 #include "DlgMessage.h"
 #include "DlgOptions.h"
@@ -376,8 +378,24 @@ bool CAgilityBookDoc::ImportConfiguration()
 			}
 		}
 		std::string info;
+		bool bUpdateRuns = false;
+		if (GetConfig().GetVersion() <= 2 && update.GetVersion() == 3)
+			bUpdateRuns = true;
 		GetConfig().Update(0, update, info);
 		msg += info.c_str();
+		if (bUpdateRuns)
+		{
+			CDlgFixupTableInRuns fix;
+			fix.Commit(m_Records);
+			if (0 < fix.RunsUpdated())
+			{
+				if (0 < info.length())
+					msg += "\n\n";
+				CString tmp;
+				tmp.Format("Table setting updated in %d runs.", fix.RunsUpdated());
+				msg += tmp;
+			}
+		}
 		if (0 < msg.GetLength())
 		{
 			CDlgMessage dlg(msg, 0);

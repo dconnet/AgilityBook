@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultConfig Book="8.6">
-	<Configuration version="2">
+	<Configuration version="3">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -139,7 +139,7 @@
 				<Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
 				<Titles LongName="Master Excellent JWW Preferred" Name="MJP">10 Qs</Titles>
 			</Division>
-			<Event Name="Standard">
+			<Event Name="Standard" hasTable="y">
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
@@ -1219,7 +1219,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Titles LongName="JH - Intermediate Agility" Name="Intermediate Agility"/>
 				<Titles LongName="JH - Senior Agility" Name="Senior Agility"/>
 			</Division>
-			<Event Name="Standard">
+			<Event Name="Standard" hasTable="y">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>

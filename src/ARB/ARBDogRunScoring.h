@@ -32,7 +32,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-25 DRC Changed Table-in-YPS to hasTable.
+ * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -110,6 +110,7 @@ public:
 	void SetTime(ARBDouble inTime);
 	bool HasTable() const;
 	void SetHasTable(bool inInc);
+	bool TableNeedsConverting() const;
 	double GetTimeFaults() const;
 	short GetCourseFaults() const;
 	void SetCourseFaults(short inFaults);
@@ -129,6 +130,7 @@ private:
 	double m_Yards;
 	ARBDouble m_Time;
 	bool m_Table;
+	bool m_ConvertTable; ///< Used to update table setting when upgrading
 	short m_CourseFaults;
 	short m_NeedOpenPts;
 	short m_NeedClosePts;
@@ -186,7 +188,13 @@ inline bool ARBDogRunScoring::HasTable() const
 
 inline void ARBDogRunScoring::SetHasTable(bool inInc)
 {
-	m_Table= inInc;
+	m_Table = inInc;
+	m_ConvertTable = false;
+}
+
+inline bool ARBDogRunScoring::TableNeedsConverting() const
+{
+	return m_ConvertTable;
 }
 
 inline short ARBDogRunScoring::GetCourseFaults() const

@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
+ *                    Update didn't save desc changes if nothing else changed.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
@@ -58,6 +60,7 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigEvent::ARBConfigEvent()
 	: m_Name()
 	, m_Desc()
+	, m_bTable(false)
 	, m_bHasPartner(false)
 	, m_Scoring()
 {
@@ -66,6 +69,7 @@ ARBConfigEvent::ARBConfigEvent()
 ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Desc(rhs.m_Desc)
+	, m_bTable(rhs.m_bTable)
 	, m_bHasPartner(rhs.m_bHasPartner)
 	, m_Scoring(rhs.m_Scoring)
 {
@@ -81,6 +85,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_Desc = rhs.m_Desc;
+		m_bTable = rhs.m_bTable;
 		m_bHasPartner = rhs.m_bHasPartner;
 		m_Scoring = rhs.m_Scoring;
 	}
@@ -91,6 +96,7 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Desc == rhs.m_Desc
+		&& m_bTable == rhs.m_bTable
 		&& m_bHasPartner == rhs.m_bHasPartner
 		&& m_Scoring == rhs.m_Scoring;
 }
@@ -118,6 +124,14 @@ bool ARBConfigEvent::Load(
 		ioErrMsg += ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME);
 		return false;
 	}
+
+	// Introduced in file version 8.6.
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
+	{
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HAS_TABLE, VALID_VALUES_BOOL);
+		return false;
+	}
+
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL);
@@ -150,6 +164,8 @@ bool ARBConfigEvent::Save(Element& ioTree) const
 		desc.SetValue(m_Desc);
 	}
 	// No need to write if not set.
+	if (m_bTable)
+		event.AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
 	if (m_bHasPartner)
 		event.AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
 	if (!m_Scoring.Save(event))
@@ -167,10 +183,22 @@ bool ARBConfigEvent::Update(int indent, ARBConfigEvent const* inEventNew, std::s
 	indentBuffer = indentName + "   ";
 	indentName += "-";
 
+	bool bChanges = false;
 	if (GetDesc() != inEventNew->GetDesc())
+	{
+		bChanges = true;
 		SetDesc(inEventNew->GetDesc());
+	}
 	if (HasPartner() != inEventNew->HasPartner())
+	{
+		bChanges = true;
 		SetHasPartner(inEventNew->HasPartner());
+	}
+	if (HasTable() != inEventNew->HasTable())
+	{
+		bChanges = true;
+		SetHasTable(inEventNew->HasTable());
+	}
 	// If the order is different, we will fall into this...
 	if (GetScorings() != inEventNew->GetScorings())
 	{
@@ -225,7 +253,6 @@ bool ARBConfigEvent::Update(int indent, ARBConfigEvent const* inEventNew, std::s
 			info += buffer;
 		}
 	}
-	bool bChanges = false;
 	if (0 < info.length())
 	{
 		bChanges = true;

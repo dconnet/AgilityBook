@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */
 
 #include "stdafx.h"
@@ -115,4 +116,54 @@ void CDlgFixupRenameEvent::Commit(ARBAgilityRecordBook& book)
 void CDlgFixupDeleteEvent::Commit(ARBAgilityRecordBook& book)
 {
 	book.GetDogs().DeleteEvent(m_Venue, m_Name);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+// This fixup is only done when upgrading from Config version 2 to 3.
+void CDlgFixupTableInRuns::Commit(ARBAgilityRecordBook& book)
+{
+	for (ARBConfigVenueList::iterator iterVenue = book.GetConfig().GetVenues().begin();
+		iterVenue != book.GetConfig().GetVenues().end();
+		++iterVenue)
+	{
+		ARBConfigVenue* pVenue = *iterVenue;
+		for (ARBConfigEventList::iterator iterEvent = pVenue->GetEvents().begin();
+			iterEvent != pVenue->GetEvents().end();
+			++iterEvent)
+		{
+			ARBConfigEvent* pEvent = *iterEvent;
+			// For every event that has a table listed, fix all those runs.
+			if (pEvent->HasTable())
+			{
+				for (ARBDogList::iterator iterDog = book.GetDogs().begin();
+					iterDog != book.GetDogs().end();
+					++iterDog)
+				{
+					ARBDog* pDog = *iterDog;
+					for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+						iterTrial != pDog->GetTrials().end();
+						++iterTrial)
+					{
+						ARBDogTrial* pTrial = *iterTrial;
+						if (pTrial->GetClubs().FindVenue(pVenue->GetName()))
+						{
+							for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+								iterRun != pTrial->GetRuns().end();
+								++iterRun)
+							{
+								ARBDogRun* pRun = *iterRun;
+								if (pRun->GetEvent() == pEvent->GetName()
+								&& pRun->GetScoring().TableNeedsConverting())
+								{
+									++m_Updated;
+									pRun->GetScoring().SetHasTable(true);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-25 DRC File version 8.6. Changed Table-in-YPS to hasTable.
+ * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
@@ -60,6 +60,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 	, m_Yards(0)
 	, m_Time(0)
 	, m_Table(false)
+	, m_ConvertTable(false)
 	, m_CourseFaults(0)
 	, m_NeedOpenPts(0)
 	, m_NeedClosePts(0)
@@ -75,6 +76,7 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	, m_Yards(rhs.m_Yards)
 	, m_Time(rhs.m_Time)
 	, m_Table(rhs.m_Table)
+	, m_ConvertTable(rhs.m_Table)
 	, m_CourseFaults(rhs.m_CourseFaults)
 	, m_NeedOpenPts(rhs.m_NeedOpenPts)
 	, m_NeedClosePts(rhs.m_NeedClosePts)
@@ -153,14 +155,23 @@ bool ARBDogRunScoring::Load(
 		{
 			if (inVersion < ARBVersion(8,6))
 			{
-				// File version 8.4 and 8.5 stored whether to just the YPS.
+				// File version 8.4 and 8.5 stored whether to adjust the YPS.
 				// If false, the YPS would be adjusted - this means there was
-				// a table, so migrate that information.
+				// a table, so migrate that information. If true, we don't know
+				// if they set the value, or it's the default - so set up a
+				// conversion. This is used when merging the new configuration.
+				// If the existing config is <=2 and the new one is 3 (only),
+				// then we invoke the conversion. This is handled from the UI
+				// level.
+				m_ConvertTable = true;
 				bool bTableInYPS = true;
 				if (Element::eFound == inTree.GetAttrib("TableInYPS", bTableInYPS))
 				{
 					if (!bTableInYPS)
+					{
 						m_Table = true;
+						m_ConvertTable = false;
+					}
 				}
 			}
 			else

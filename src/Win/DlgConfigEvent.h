@@ -51,7 +51,8 @@ private:
 	//{{AFX_DATA(CDlgConfigEvent)
 	enum { IDD = IDD_CONFIG_EVENT };
 	CString m_Name;
-	BOOL m_bHasPartners;
+	BOOL	m_bHasTable;
+	BOOL	m_bHasPartners;
 	CString	m_Desc;
 	CButton m_ctrlNew;
 	CButton m_ctrlCopy;

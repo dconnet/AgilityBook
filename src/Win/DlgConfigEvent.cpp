@@ -66,6 +66,7 @@ CDlgConfigEvent::CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent,
 	, m_pEvent(pEvent)
 	, m_Scorings(pEvent->GetScorings())
 	, m_idxMethod(-1)
+	, m_bHasTable(FALSE)
 	, m_bHasPartners(FALSE)
 {
 	ASSERT(m_pVenue);
@@ -73,6 +74,7 @@ CDlgConfigEvent::CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent,
 	m_Name = m_pEvent->GetName().c_str();
 	m_Desc = m_pEvent->GetDesc().c_str();
 	m_Desc.Replace("\n", "\r\n");
+	m_bHasTable = m_pEvent->HasTable() ? TRUE : FALSE;
 	m_bHasPartners = m_pEvent->HasPartner() ? TRUE : FALSE;
 	//{{AFX_DATA_INIT(CDlgConfigEvent)
 	m_OpeningPts = 0;
@@ -89,6 +91,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigEvent)
 	DDX_Text(pDX, IDC_NAME, m_Name);
+	DDX_Check(pDX, IDC_TABLE, m_bHasTable);
 	DDX_Check(pDX, IDC_PARTNER, m_bHasPartners);
 	DDX_Text(pDX, IDC_DESC, m_Desc);
 	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
@@ -898,6 +901,7 @@ void CDlgConfigEvent::OnOK()
 	}
 	m_Desc.Replace("\r\n", "\n");
 	m_pEvent->SetDesc((LPCSTR)m_Desc);
+	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
 	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
 	m_pEvent->GetScorings() = m_Scorings;
 	CDialog::OnOK();

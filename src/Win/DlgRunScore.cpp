@@ -162,7 +162,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FAULTS, m_Faults);
 	DDX_Control(pDX, IDC_TIME, m_ctrlTime);
 	DDX_Text(pDX, IDC_TIME, m_Time);
-	DDX_Control(pDX, IDC_TABLE_YPS, m_ctrlTable);
+	DDX_Control(pDX, IDC_TABLE, m_ctrlTable);
 	DDX_Control(pDX, IDC_YARDS_TEXT, m_ctrlYardsText);
 	DDX_Control(pDX, IDC_YARDS, m_ctrlYards);
 	DDX_Text(pDX, IDC_YARDS, m_Yards);
@@ -374,7 +374,7 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_OPEN_PTS, OnKillfocusOpen)
 	ON_EN_KILLFOCUS(IDC_CLOSE_PTS, OnKillfocusClose)
 	ON_EN_KILLFOCUS(IDC_PLACE, OnKillfocusPlace)
-	ON_BN_CLICKED(IDC_TABLE_YPS, OnBnClickedTableYps)
+	ON_BN_CLICKED(IDC_TABLE, OnBnClickedTableYps)
 	ON_CBN_SELCHANGE(IDC_Q, OnSelchangeQ)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -678,7 +678,7 @@ void CDlgRunScore::SetTitlePoints()
 	m_ctrlScore.SetWindowText(strScore);
 }
 
-void CDlgRunScore::UpdateControls()
+void CDlgRunScore::UpdateControls(bool bOnEventChange)
 {
 	ARBConfigEvent const* pEvent = GetEvent();
 	std::string div, level;
@@ -772,6 +772,16 @@ void CDlgRunScore::UpdateControls()
 	}
 	m_ctrlHandler.EnableWindow(TRUE);
 
+	if (pEvent->HasTable())
+	{
+		if (bOnEventChange)
+			m_Run->GetScoring().SetHasTable(pEvent->HasTable());
+		m_ctrlTable.EnableWindow(TRUE);
+		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
+	}
+	else
+		m_ctrlTable.EnableWindow(FALSE);
+
 	switch (pScoring->GetScoringStyle())
 	{
 	default:
@@ -784,8 +794,6 @@ void CDlgRunScore::UpdateControls()
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTable.EnableWindow(TRUE);
-		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
 		m_ctrlYards.EnableWindow(TRUE);
 		m_ctrlSCT.EnableWindow(TRUE);
 		m_ctrlOpening.EnableWindow(FALSE);
@@ -801,7 +809,6 @@ void CDlgRunScore::UpdateControls()
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTable.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[0]);
@@ -827,7 +834,6 @@ void CDlgRunScore::UpdateControls()
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTable.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[1]);
@@ -1022,7 +1028,7 @@ void CDlgRunScore::OnSelchangeLevel()
 
 void CDlgRunScore::OnSelchangeEvent()
 {
-	UpdateControls();
+	UpdateControls(true);
 }
 
 void CDlgRunScore::OnPartnersEdit() 
