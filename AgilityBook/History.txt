@@ -1,4 +1,4 @@
-10/15/2004: v1.4.0.10 <in development>
+10/20/2004: v1.4.0.10 <in development>
 - Bumped file version to 10, Configuration v6:
   - Added 'Height' to 'ReferenceRun'.
   - Added 'LifeTime' to 'Scoring'.
@@ -19,6 +19,7 @@
     compute anything, they are there just for reference.
   - Added debug symbols to the installation to aid any problems that might
     be found during deployment.
+  - Do not acculumate runs marked as NA in Point totals.
 - Bug fix
   - The splash screen could cause a problem opening a file whose format is
     newer than the current program.
