@@ -31,11 +31,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-07-03 DRC Added critical sections.
  * @li 2004-05-08 DRC Added support to allow a user-specified image.
  * @li 2004-04-15 DRC Created (used vc6 splash screen component)
  */
 
 #include "stdafx.h"
+#include "afxmt.h"
 #include "resource.h"
 #include "Splash.h"
 
@@ -57,8 +59,13 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 // static stuff
 
 BOOL CSplashWnd::c_bShowSplashWnd = TRUE;
-
 CSplashWnd* CSplashWnd::c_pSplashWnd = NULL;
+
+// There are cases (that are hard to reproduce!) where the program crashes
+// while coming up - it would appear that the splash screen was being
+// simultaneouly dismissed by code and internally. By limiting access to
+// the destruction of the window, that seems to have solved the problem.
+static CCriticalSection s_Crit;
 
 void CSplashWnd::EnableSplashScreen(BOOL bEnable)
 {
@@ -67,9 +74,10 @@ void CSplashWnd::EnableSplashScreen(BOOL bEnable)
 
 void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd, bool bTimed)
 {
+	CSingleLock singleLock(&s_Crit);
+	singleLock.Lock();
 	if (!c_bShowSplashWnd || c_pSplashWnd != NULL)
 		return;
-
 	// Allocate a new splash screen, and create the window.
 	c_pSplashWnd = new CSplashWnd(bTimed);
 	if (!c_pSplashWnd->Create(pParentWnd))
@@ -80,6 +88,8 @@ void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd, bool bTimed)
 
 void CSplashWnd::HideSplashScreen()
 {
+	CSingleLock singleLock(&s_Crit);
+	singleLock.Lock();
 	if (c_pSplashWnd)
 		c_pSplashWnd->HideSplashScreenImpl();
 }
@@ -99,7 +109,10 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 		pMsg->message == WM_NCRBUTTONDOWN ||
 		pMsg->message == WM_NCMBUTTONDOWN)
 	{
-		c_pSplashWnd->HideSplashScreenImpl();
+		CSingleLock singleLock(&s_Crit);
+		singleLock.Lock();
+		if (c_pSplashWnd)
+			c_pSplashWnd->HideSplashScreenImpl();
 		return TRUE;	// message handled here
 	}
 
@@ -316,5 +329,8 @@ void CSplashWnd::OnPaint()
 void CSplashWnd::OnTimer(UINT nIDEvent)
 {
 	// Destroy the splash screen window.
-	HideSplashScreenImpl();
+	CSingleLock singleLock(&s_Crit);
+	singleLock.Lock();
+	if (c_pSplashWnd)
+		HideSplashScreenImpl();
 }
