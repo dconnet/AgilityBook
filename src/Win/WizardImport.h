@@ -88,6 +88,7 @@ protected:
 	//{{AFX_MSG(CWizardImport)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnImportKillFocus();
 	afx_msg void OnImportDelim();
 	afx_msg void OnImportAssign();
 	afx_msg void OnImportFile();

@@ -97,8 +97,8 @@ void CWizardImport::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CWizardImport, CPropertyPage)
 	//{{AFX_MSG_MAP(CWizardImport)
+	ON_EN_KILLFOCUS(IDC_IMPORT_ROW, OnImportKillFocus)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_IMPORT_ROW_SPIN, OnDeltaposImportRowSpin)
-	ON_EN_KILLFOCUS(IDC_IMPORT_ROW, OnImportDelim)
 	ON_BN_CLICKED(IDC_WIZARD_ASSIGN, OnImportAssign)
 	ON_BN_CLICKED(IDC_IMPORT_FILE, OnImportFile)
 	ON_BN_CLICKED(IDC_IMPORT_DELIM_COLON, OnImportDelim)
@@ -158,6 +158,12 @@ LRESULT CWizardImport::OnWizardBack()
 BOOL CWizardImport::OnWizardFinish() 
 {
 	return CPropertyPage::OnWizardFinish();
+}
+
+void CWizardImport::OnImportKillFocus()
+{
+	UpdateData(TRUE);
+	UpdatePreview();
 }
 
 void CWizardImport::OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult) 
