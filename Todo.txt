@@ -1,5 +1,7 @@
 Last Updated: 12/7/03
 
+- Add a find/findnext function.
+
 - Add something to the points configuration to allow for changes in rules.
   This could be something as simple as an effective date. In usage, it should
   be part of a single title point object. The dialog for editing a title point

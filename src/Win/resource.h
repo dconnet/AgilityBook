@@ -190,7 +190,6 @@
 #define IDC_DROP_FRACTIONS              1148
 #define IDC_VERIFIED                    1149
 #define IDC_IS_DECEASED                 1150
-#define IDC_ADD                         1151
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002
@@ -381,7 +380,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        181
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1152
+#define _APS_NEXT_CONTROL_VALUE         1151
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
