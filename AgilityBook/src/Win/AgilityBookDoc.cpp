@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-06-29 DRC Set filtering on runs that are in hidden trials.
  * @li 2004-04-29 DRC Use default config during auto-update (no file prompt).
  * @li 2004-03-31 DRC Only prompt to merge config if config version number is
  *                    greater (was simply checking for not-equal)
@@ -474,18 +475,15 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 {
 	bool bVisTrial = CAgilityBookOptions::IsTrialVisible(venues, pTrial);
 	pTrial->SetFiltered(!bVisTrial);
-	if (bVisTrial)
+	int nVisible = 0;
+	for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
 	{
-		int nVisible = 0;
-		for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
-		{
-			ResetVisibility(venues, pTrial, *iterRun);
-			if (!(*iterRun)->IsFiltered())
-				++nVisible;
-		}
-		if (0 == nVisible && 0 < pTrial->GetRuns().size())
-			pTrial->SetFiltered(true);
+		ResetVisibility(venues, pTrial, *iterRun);
+		if (!(*iterRun)->IsFiltered())
+			++nVisible;
 	}
+	if (0 == nVisible && 0 < pTrial->GetRuns().size())
+		pTrial->SetFiltered(true);
 }
 
 void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun)
