@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added AutoShowSplashScreen
  * @li 2004-06-16 DRC Added options to remember date formats.
  * @li 2004-06-06 DRC Added additional clipboard formats.
@@ -68,6 +69,46 @@ struct CVenueFilter
 	std::string venue;
 	std::string division;
 	std::string level;
+};
+
+class CCalendarViewFilter
+{
+	friend class CAgilityBookOptions;
+public:
+	typedef enum
+	{
+		eViewNormal = 0x1,
+		eViewOpening = 0x2,
+		eViewClosing = 0x4
+	} eViewFilter;
+	CCalendarViewFilter() : m_Filter(0) {}
+	CCalendarViewFilter(unsigned short inFilter) : m_Filter(inFilter) {}
+	bool ViewNormal() const
+	{
+		return 0 == m_Filter || eViewNormal == (m_Filter & eViewNormal);
+	}
+	bool ViewOpening() const
+	{
+		return eViewOpening == (m_Filter & eViewOpening);
+	}
+	bool ViewClosing() const
+	{
+		return eViewClosing == (m_Filter & eViewClosing);
+	}
+	void AddNormal()
+	{
+		m_Filter |= eViewNormal;
+	}
+	void AddOpening()
+	{
+		m_Filter |= eViewOpening;
+	}
+	void AddClosing()
+	{
+		m_Filter |= eViewClosing;
+	}
+private:
+	unsigned short m_Filter;
 };
 
 class CAgilityBookOptions
@@ -109,6 +150,12 @@ public:
 	static bool ViewCalendarAsList();
 	static CSize GetCalendarEntrySize();
 	static void SetCalendarEntrySize(CSize const& sz);
+	static CCalendarViewFilter FilterCalendarView();
+	static void SetFilterCalendarView(CCalendarViewFilter inFilter);
+	static COLORREF CalendarOpeningColor();
+	static void SetCalendarOpeningColor(COLORREF inColor);
+	static COLORREF CalendarClosingColor();
+	static void SetCalendarClosingColor(COLORREF inColor);
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
