@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,45 +29,62 @@
 /**
  * @file
  *
- * @brief interface of the CDlgDog class
+ * @brief interface of the CDlgExistingPoints class
  * @author David Connet
  *
  * Revision History
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * @li 2004-02-03 DRC Created
  */
 
+#include "ARBDate.h"
 class ARBConfig;
-class ARBDog;
-class CDlgDogNumbers;
-class CDlgDogPoints;
-class CDlgDogProperties;
-class CDlgDogTitles;
+class ARBDogExistingPoints;
+class ARBDogExistingPointsList;
 
-/////////////////////////////////////////////////////////////////////////////
-
-class CDlgDog : public CPropertySheet
+class CDlgExistingPoints : public CDialog
 {
-	DECLARE_DYNAMIC(CDlgDog)
 public:
-	CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgDog();
+	CDlgExistingPoints(const ARBConfig& config, ARBDogExistingPointsList& points, ARBDogExistingPoints* pExistingPoints, CWnd* pParent = NULL);
 
 private:
-	ARBConfig& m_Config;
-	ARBDog* m_pDog;
-	CDlgDogProperties* m_pageProp;
-	CDlgDogTitles* m_pageTitles;
-	CDlgDogNumbers* m_pageRegNums;
-	CDlgDogPoints* m_pagePoints;
+// Dialog Data
+	//{{AFX_DATA(CDlgExistingPoints)
+	enum { IDD = IDD_EXISTING_POINTS };
+	CDateTimeCtrl	m_ctrlDate;
+	CComboBox	m_ctrlType;
+	CComboBox	m_ctrlOther;
+	CComboBox	m_ctrlVenues;
+	CComboBox	m_ctrlDivisions;
+	CComboBox	m_ctrlLevels;
+	CComboBox	m_ctrlEvents;
+	short	m_Points;
+	CString	m_Comments;
+	//}}AFX_DATA
+	const ARBConfig& m_Config;
+	ARBDogExistingPointsList& m_PointsList;
+	ARBDogExistingPoints* m_pExistingPoints;
+	ARBDate m_Date;
 
-	//{{AFX_VIRTUAL(CDlgDog)
+	//{{AFX_VIRTUAL(CDlgExistingPoints)
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnOK();
+	void UpdateControls();
+	void ClearLevels();
+	void FillDivisions();
+	void FillLevels();
+	void FillEvents();
+	//{{AFX_MSG(CDlgExistingPoints)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnSelchangeType();
+	afx_msg void OnSelchangeVenues();
+	afx_msg void OnSelchangeDivision();
+	afx_msg void OnSelchangeLevel();
+	virtual void OnOK();
+	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

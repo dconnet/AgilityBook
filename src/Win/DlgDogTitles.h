@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgDog class
+ * @brief interface of the CDlgDogTitles class
  * @author David Connet
  *
  * Revision History
@@ -37,37 +37,52 @@
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
+#include "ARBDogTitle.h"
+#include "ColumnOrder.h"
+#include "ListCtrl.h"
 class ARBConfig;
 class ARBDog;
-class CDlgDogNumbers;
-class CDlgDogPoints;
-class CDlgDogProperties;
-class CDlgDogTitles;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDog : public CPropertySheet
+class CDlgDogTitles : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgDog)
+	friend class CDlgDog;
 public:
-	CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgDog();
+	CDlgDogTitles(ARBConfig& config, const ARBDogTitleList& titles);
 
 private:
+// Dialog Data
+	//{{AFX_DATA(CDlgDogTitles)
+	enum { IDD = IDD_DOG_TITLES };
+	CButton	m_ctrlTitleEdit;
+	CButton	m_ctrlTitleDelete;
+	CListCtrl2	m_ctrlTitles;
+	//}}AFX_DATA
 	ARBConfig& m_Config;
-	ARBDog* m_pDog;
-	CDlgDogProperties* m_pageProp;
-	CDlgDogTitles* m_pageTitles;
-	CDlgDogNumbers* m_pageRegNums;
-	CDlgDogPoints* m_pagePoints;
+	CColumnOrder m_sortTitles;
+	ARBDogTitleList m_Titles;
 
-	//{{AFX_VIRTUAL(CDlgDog)
+	//{{AFX_VIRTUAL(CDlgDogTitles)
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
+
+private:
+	void SetColumnTitleHeaders();
+	void ListTitles();
+	void UpdateButtons();
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgDogTitles)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDblclkTitles(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnTitleNew();
+	afx_msg void OnTitleEdit();
+	afx_msg void OnTitleDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

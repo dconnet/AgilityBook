@@ -50,6 +50,33 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+// static
+std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
+{
+	std::string str;
+	switch (inType)
+	{
+	case eOtherPoints:
+		str = "OtherPoints";
+		break;
+	case eRuns:
+		str = "Run";
+		break;
+	case eMach:
+		str = "MACH";
+		break;
+	case eQQ:
+		str = "Double Q";
+		break;
+	case eSQ:
+		str = "SuperQ";
+		break;
+	}
+	return str;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 ARBDogExistingPoints::ARBDogExistingPoints()
 	: m_Date()
 	, m_Comment()
@@ -676,4 +703,20 @@ ARBDogExistingPoints* ARBDogExistingPointsList::AddExistingPoints(ARBDogExisting
 		push_back(inExistingPoints);
 	}
 	return inExistingPoints;
+}
+
+bool ARBDogExistingPointsList::DeleteExistingPoints(const ARBDogExistingPoints* inExistingPoints)
+{
+	if (inExistingPoints)
+	{
+		for (iterator iter = begin(); iter != end(); ++iter)
+		{
+			if (*(*iter) == *inExistingPoints)
+			{
+				erase(iter);
+				return true;
+			}
+		}
+	}
+	return false;
 }
