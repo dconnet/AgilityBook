@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-25 DRC Existing other pts were included in all other points.
  * @li 2004-08-12 DRC Allow creating a new title.
  * @li 2004-06-23 DRC Fixed a problem when getting the Q/NQ ratio when a filter
  *                    was in place. Trials that were hidden also removed any
@@ -804,7 +805,8 @@ void CAgilityBookViewPoints::LoadData()
 					iterExisting != pDog->GetExistingPoints().end();
 					++iterExisting)
 				{
-					if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType())
+					if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType()
+					&& (*iterExisting)->GetOtherPoints() == pOther->GetName())
 					{
 						runs.push_back(OtherPtInfo(*iterExisting));
 					}
