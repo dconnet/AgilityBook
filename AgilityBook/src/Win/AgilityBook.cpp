@@ -41,6 +41,7 @@
 
 #include "stdafx.h"
 #include "AgilityBook.h"
+#include "CrashHandler.h"
 #include "MainFrm.h"
 #if _MSC_VER < 1300
 #include "htmlhelp.h"
@@ -269,6 +270,8 @@ BOOL CAgilityBookApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	SetRegistryKey(_T("dcon Software"));
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
+
+	SetUnhandledExceptionFilter(CrashHandler);
 
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;

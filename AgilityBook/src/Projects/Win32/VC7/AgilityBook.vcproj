@@ -99,6 +99,7 @@
 				WarningLevel="4"
 				WarnAsError="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4100;4127;4702"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -107,6 +108,7 @@
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../../../../lib/Win32/VC7"
+				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"/>
@@ -184,6 +186,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\ColumnOrder.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\CrashHandler.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgAssignColumns.cpp">
@@ -458,6 +463,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\CommonView.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\CrashHandler.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgAssignColumns.h">
