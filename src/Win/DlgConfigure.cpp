@@ -291,7 +291,7 @@ HTREEITEM CDlgConfigure::InsertTitle(HTREEITEM hParent, ARBConfigTitle* title)
 	CDlgConfigureData* pData = new CDlgConfigureDataTitle(this, title);
 	HTREEITEM hTitle = m_ctrlTree.InsertItem(
 		TVIF_TEXT | TVIF_PARAM,
-		title->GetName().c_str(),
+		title->GetNiceName().c_str(),
 		0, //nImage
 		0, //nSelectedImage
 		0, //nState

@@ -139,7 +139,7 @@ void CDlgTitle::OnSelchangeVenues()
 				if (0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
 				|| (m_pTitle && m_pTitle->GetName() == pTitle->GetName()))
 				{
-					int idx = m_ctrlTitles.AddString(pTitle->GetName().c_str());
+					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
 					m_ctrlTitles.SetItemDataPtr(idx, pTitle);
 					if (m_bInit && m_pTitle && m_pTitle->GetName() == pTitle->GetName())
 					{

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-05 DRC Header didn't generate properly if there were no titles.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-12-09 DRC Fixed problem tallying QQs when a 3rd run is present.
@@ -546,7 +547,20 @@ void CAgilityBookViewPoints::LoadData()
 			if (0 < trialsInVenue.size())
 			{
 				if (!bHeaderInserted)
-					GetListCtrl().InsertItem(i++, pVenue->GetName().c_str());
+				{
+					bHeaderInserted = true;
+					if (i > 0)
+						GetListCtrl().InsertItem(i++, "");
+					GetListCtrl().InsertItem(i, pVenue->GetName().c_str());
+					const ARBDogRegNum* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
+					if (pRegNum)
+					{
+						CString str;
+						str.Format("[%s]", pRegNum->GetNumber().c_str());
+						GetListCtrl().SetItemText(i, 1, str);
+					}
+					++i;
+				}
 				for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 				iterDiv != pVenue->GetDivisions().end();
 				++iterDiv)

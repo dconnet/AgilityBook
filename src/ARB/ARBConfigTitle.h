@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -53,7 +54,7 @@ public:
 	bool operator!=(const ARBConfigTitle& rhs) const;
 	void clear();
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	virtual std::string GetGenericName() const	{return GetNiceName();}
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	bool Load(
@@ -61,16 +62,30 @@ public:
 		const ARBVersion& inVersion);
 	bool Save(CElement& inTree) const;
 
+	const std::string& GetNiceName() const;
+	std::string GetCompleteName(bool bAbbrevFirst = true) const;
+
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
+	const std::string& GetLongName() const;
+	void SetLongName(const std::string& inName);
 	const std::string& GetDescription() const;
 	void SetDescription(const std::string& inDesc);
 
 private:
 	~ARBConfigTitle();
 	std::string m_Name;
+	std::string m_LongName;
 	std::string m_Desc;
 };
+
+inline const std::string& ARBConfigTitle::GetNiceName() const
+{
+	if (0 == m_LongName.length())
+		return m_Name;
+	else
+		return m_LongName;
+}
 
 inline const std::string& ARBConfigTitle::GetName() const
 {
@@ -80,6 +95,16 @@ inline const std::string& ARBConfigTitle::GetName() const
 inline void ARBConfigTitle::SetName(const std::string& inName)
 {
 	m_Name = inName;
+}
+
+inline const std::string& ARBConfigTitle::GetLongName() const
+{
+	return m_LongName;
+}
+
+inline void ARBConfigTitle::SetLongName(const std::string& inName)
+{
+	m_LongName = inName;
 }
 
 inline const std::string& ARBConfigTitle::GetDescription() const

@@ -267,14 +267,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 		event = (LPCSTR)str;
 
-		pDX->PrepareCtrl(m_ctrlHeight.GetDlgCtrlID());
-		if (m_Height.IsEmpty())
-		{
-			AfxMessageBox(IDS_SELECT_HEIGHT);
-			pDX->Fail();
-			return;
-		}
-
 		pDX->PrepareCtrl(m_ctrlJudge.GetDlgCtrlID());
 		if (m_Judge.IsEmpty())
 		{

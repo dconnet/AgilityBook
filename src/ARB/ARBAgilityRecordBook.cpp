@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2004-01-05 DRC File version 8.2. Added ConfigTitles LongName.
  * @li 2003-12-29 DRC GetAllClubs/Locations now includes calendar entries.
  * @li 2003-12-27 DRC File version 8.1. Changed ARBConfigScoring.
  * @li 2003-12-07 DRC File version 8.0. Added Info section.
@@ -73,7 +74,7 @@ const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static const ARBVersion curVersion(8, 1);
+	static const ARBVersion curVersion(8, 2);
 	return curVersion;
 }
 

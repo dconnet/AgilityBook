@@ -116,14 +116,9 @@ static const struct
 	{WIZ_IMPORT_RUNS, 
 		{
 			{
-#ifdef _DEBUG
-				PSWIZB_NEXT
-#else
-				PSWIZB_DISABLEDFINISH
-#endif
-				, IDD_WIZARD_IMPORT,
+				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Runs",
-				"Not implemented yet.\n\nImport trial and run information from a spreadsheet. Data must be in a text format."},
+				"Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."},
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 		}
 	},
@@ -140,7 +135,7 @@ static const struct
 			{
 				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Calendar",
-				"Not implemented yet.\n\nImport a calendar listing from a spreadsheet."},
+				"Import a calendar listing from a spreadsheet."},
 			{PSWIZB_FINISH, -1,
 				"Import Calendar",
 				"Import a calendar listing that was exported from Agility Record Book."}
@@ -161,7 +156,7 @@ static const struct
 			{
 				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Training Log",
-				"Not implemented yet.\n\nImport a Training Log from a spreadsheet."},
+				"Import a Training Log from a spreadsheet."},
 			{PSWIZB_FINISH, -1,
 				"Import Training Log",
 				"Import a Training Log that was exported from Agility Record Book."}

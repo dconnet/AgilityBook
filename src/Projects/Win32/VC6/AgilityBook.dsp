@@ -170,6 +170,10 @@ SOURCE=..\..\..\Win\DlgConfigOtherPoints.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgConfigTitle.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgConfigTitlePoints.cpp
 # End Source File
 # Begin Source File
@@ -420,6 +424,10 @@ SOURCE=..\..\..\Win\DlgConfigEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgConfigOtherPoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigTitle.h
 # End Source File
 # Begin Source File
 
