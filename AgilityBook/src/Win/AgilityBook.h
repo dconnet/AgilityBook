@@ -65,6 +65,8 @@ public:
 private:
 	//{{AFX_MSG(CAgilityBookApp)
 	afx_msg void OnAppAbout();
+	afx_msg void OnHelpContents();
+	afx_msg void OnHelpIndex();
 	afx_msg void OnHelpSplash();
 	afx_msg void OnHelpUpdate();
 	//}}AFX_MSG
@@ -74,5 +76,6 @@ private:
 extern CAgilityBookApp theApp;
 
 // Some global functions.
+extern void ShowContextHelp(HELPINFO* pHelpInfo);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
 extern void UpdateVersion(bool bVerbose);

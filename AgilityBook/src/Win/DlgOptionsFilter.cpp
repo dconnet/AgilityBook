@@ -91,6 +91,7 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsFilter)
+	ON_WM_HELPINFO()
 	ON_BN_CLICKED(IDC_OPTIONS_FILTER_DATES_ALL, OnViewUpdate)
 	ON_BN_CLICKED(IDC_OPTIONS_FILTER_DATES_RANGE, OnViewUpdate)
 	ON_BN_CLICKED(IDC_OPTIONS_FILTER_VENUES_ALL, OnViewUpdate)
@@ -281,6 +282,12 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 	UpdateControls();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+BOOL CDlgOptionsFilter::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	ShowContextHelp(pHelpInfo);
+	return TRUE;
 }
 
 void CDlgOptionsFilter::OnViewUpdate() 
