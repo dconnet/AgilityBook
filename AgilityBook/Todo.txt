@@ -1,11 +1,8 @@
-Last Updated: 6/15/04
+Last Updated: 6/16/04
 
 - Lifetime points need to accumulate regardless of a runs visibility.
   - No, leave them... But make sure to document this. This allows viewing
     of lifetime points by date/level/etc.
-
-- When filtering out NADAC novice, an ASCA co-sanction will keep the run
-  visible in NADAC.
 
 - Add cut/copy/paste support for dogs/traininglog (arb format).
   Add cut support for runs (in run view, already in tree).

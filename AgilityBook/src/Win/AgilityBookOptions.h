@@ -46,6 +46,7 @@
 #include <string>
 #include <vector>
 #include "ARBDate.h"
+class ARBConfigVenue;
 class ARBDogRun;
 class ARBDogTitle;
 class ARBDogTrial;
@@ -85,6 +86,11 @@ public:
 		ARBDogTrial const* pTrial);
 	static unsigned short IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRun);
+	static bool IsRunVisible(
+		std::vector<CVenueFilter> const& venues,
+		ARBConfigVenue const* pVenue,
 		ARBDogTrial const* pTrial,
 		ARBDogRun const* pRun);
 	static bool IsTrainingLogVisible(

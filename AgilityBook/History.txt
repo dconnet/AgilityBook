@@ -1,4 +1,4 @@
-6/6/2004: v1.1.1.8 <in development>
+6/16/2004: v1.2.0.8 <in development>
 - Bumped file version to 8.7, Configuration v4:
   - Added 'SubName' to 'Training'.
   - CPE 'CADE' changed to 'C-ATE'.
@@ -24,6 +24,10 @@
   - Fixed \r\n line ends in OtherPoints configuration dialog.
   - When setting filter options on runs, it is possible that some runs may
     be visible when they shouldn't.
+  - When filtering a dual-sanctioned trial, and the filtering options were
+    different, a run would end up visible in the points view when it shouldn't.
+    For instance, in an ASCA/NADAC trial, if you set filtering to hide Novice
+    runs in NADAC and not ASCA, the novice runs were still visible under NADAC.
 
 4/30/2004: v1.1.0.8
 - Bumped file version to 8.6, Configuration v3:

@@ -241,6 +241,40 @@ unsigned short CAgilityBookOptions::IsRunVisible(
 	return nVisible;
 }
 
+// This function is used in conjunction with the above. We only need to be
+// concerned with trials with more than 1 club. This is used to filter a
+// run in the points view - for instance, if you have an ASCA/NADAC trial and
+// set the filtering to hide NADAC novice runs, the asca visibility caused
+// the novice run to appear in the nadac points listing when it shouldn't.
+bool CAgilityBookOptions::IsRunVisible(
+	std::vector<CVenueFilter> const& venues,
+	ARBConfigVenue const* pVenue,
+	ARBDogTrial const* pTrial,
+	ARBDogRun const* pRun)
+{
+	if (1 >= pTrial->GetClubs().size())
+		return true;
+	bool bVisible = true;
+	if (!CAgilityBookOptions::GetViewAllVenues())
+	{
+		bVisible = false;
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+			iter != venues.end();
+			++iter)
+		{
+			if (pTrial->HasVenue(pVenue->GetName())
+			&& pVenue->GetName() == (*iter).venue
+			&& pRun->GetDivision() == (*iter).division
+			&& pRun->GetLevel() == (*iter).level)
+			{
+				bVisible = true;
+				break;
+			}
+		}
+	}
+	return bVisible;
+}
+
 bool CAgilityBookOptions::IsTrainingLogVisible(
 	std::set<std::string> const& names,
 	ARBTraining const* pTraining)
