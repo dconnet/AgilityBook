@@ -191,7 +191,7 @@ BOOL CAboutDlg::OnInitDialog()
 	}
 	m_ctrlText.SetWindowText(info);
 
-	static struct
+	struct
 	{
 		UINT id;
 		CHyperLink* pCtrl;
@@ -202,7 +202,7 @@ BOOL CAboutDlg::OnInitDialog()
 		{IDS_ABOUT_LINK2, &m_ctrlLink2, true},
 		{IDS_ABOUT_LINK3, &m_ctrlLink3, true}
 	};
-	static int nControls = sizeof(idControls) / sizeof(idControls[0]);
+	int nControls = sizeof(idControls) / sizeof(idControls[0]);
 	for (int i = 0; i < nControls; ++i)
 	{
 		name.LoadString(idControls[i].id);
