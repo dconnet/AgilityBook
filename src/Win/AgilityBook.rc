@@ -2217,6 +2217,7 @@ STRINGTABLE
 BEGIN
     IDS_BLANK_COLUMN        "<Blank Column>"
     IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
+    IDS_LIFETIME_POINTS     "LifeTime Points"
 END
 
 STRINGTABLE 

@@ -164,6 +164,13 @@ public:
 	short GetTitlePoints(double inFaults) const;
 
 	/**
+	 * Get the number of lifetime title points earned based on faults.
+	 * @param inFaults Number of faults in the run.
+	 * @return Number of lifetime titling points.
+	 */
+	short GetLifetimePoints(double inFaults) const;
+
+	/**
 	 * Find a points object.
 	 * @param inFaults Number of faults to find.
 	 * @return Pointer to found object, NULL if not found.

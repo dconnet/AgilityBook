@@ -7,10 +7,12 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-03-30 DRC File version 8.6, Configuration version 3.
+2004-04-03 DRC File version 8.6, Configuration version 3.
                Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
                Added 'Link' to 'Run'
-			   Added 'LifeTime' to 'TitlePoints'
+               Added 'LifeTime' to 'TitlePoints'
+               Updated Default Config to contain lifetime information, removed
+               USDAA LAA.
 2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.

@@ -1,4 +1,4 @@
-Last Updated: 4/1/04
+Last Updated: 4/3/04
 
 - Development issue:
   There is a problem somewhere in the Configuration dialogs. When running under
@@ -15,13 +15,8 @@ Last Updated: 4/1/04
   happens (therefore, it can't be my stuff!). Tracing into the MFC internals,
   it occurs when DestroyWindow is called on CDlgConfigVenue. One time, I
   actually got the program totally stuck when trying to release critical
-  sections. And I don't use critical sections!
-
-- Add auto-lifetime point accumulation. Currently known ones are NADAC (all
-  points at all levels) and USDAA (points from Masters std and non-std events,
-  plus GP). This is currently handled manually via OtherPoints. It would be
-  nice to include auto-top10 accumulation also. (USDAA lifetime Top10
-  accululates from 1/1/99)
+  sections. And I don't use critical sections! It does somehow seem related
+  to the ARBConfigScoring items in the Event tree.
 
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's

@@ -63,6 +63,27 @@ public:
 	virtual bool GetMessage(CString& msg) const;
 
 private:
+	struct LifeTimePoint
+	{
+		ARBDogRun const* pRun;
+		short points;
+		LifeTimePoint(
+			ARBDogRun const* inRun,
+			short inPoints)
+			: pRun(inRun)
+			, points(inPoints)
+		{
+		}
+	};
+	typedef std::list<LifeTimePoint> LifeTimePointList;
+	struct LifeTimePoints
+	{
+		ARBConfigDivision const* pDiv;
+		ARBConfigLevel const* pLevel;
+		LifeTimePointList ptList;
+	};
+	typedef std::list<LifeTimePoints> LifeTimePointsList;
+
 	int DoEvents(
 		ARBDog const* inDog,
 		std::vector<CVenueFilter> const& venues,
@@ -70,7 +91,8 @@ private:
 		std::list<ARBDogTrial const*> const& trials,
 		ARBConfigVenue const* inVenue,
 		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel);
+		ARBConfigLevel const* inLevel,
+		LifeTimePointList& inLifetime);
 	size_t FindMatchingRuns(
 		std::list<ARBDogRun const*> const& runs,
 		std::string const& div,
@@ -81,7 +103,8 @@ private:
 		std::list<ARBDogRun const*> const& runs,
 		ARBConfigScoring const* pScoringMethod,
 		int& nCleanQ,
-		int& nNotCleanQ);
+		int& nNotCleanQ,
+		LifeTimePointList& inLifetime);
 	void LoadData();
 
 protected:
