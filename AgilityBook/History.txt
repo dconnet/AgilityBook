@@ -1,4 +1,8 @@
 5/3/2004: v1.1.1.8 <in development>
+- New features / Enhancements:
+  - In the Points view, do not filter individual runs (only venues and titles).
+    This change allows us to show a qualifying percentage.
+- Bug fixes
 
 4/30/2004: v1.1.0.8
 - Bumped file version to 8.6, Configuration v3:

@@ -2210,7 +2210,7 @@ BEGIN
     IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
     IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
     IDS_POINTS_PARTNERS     ", %1!d! partners"
-    IDS_POINTS_QS           "%1!d! Qs"
+    IDS_POINTS_QS           "%1!d! Qs (%2!d!%%)"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
     IDS_POINTS_JUDGES       ", %1!d! judges"
     IDS_POINTS_SQS          "[%1!d! Q+]"
