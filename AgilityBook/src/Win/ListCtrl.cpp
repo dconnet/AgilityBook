@@ -158,80 +158,77 @@ void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 void CHeaderCtrl2::OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	// In theory, we could just adjust the column that changed. But that
+	// also affects any columns to the right. So let's just keep in simple!
+	// Over-optimizing to only do exactly what work is required is not worth it.
 	if (phdr->pitem->mask & HDI_WIDTH)
-		SetColumnTip(phdr->iItem);
+		FixTooltips();
 	*pResult = 0;
 }
 
 void CHeaderCtrl2::FixTooltips()
 {
-	if (::IsWindow(m_ToolTip.GetSafeHwnd()))
-	{
-		// Get rid of all existing tips.
-		int nCols = m_ToolTip.GetToolCount();
-		while (0 < nCols)
-		{
-			m_ToolTip.DelTool(this, nCols);
-			--nCols;
-		}
-		// Now add them back.
-		nCols = GetItemCount();
-		for (int iCol = 0; iCol < nCols; ++iCol)
-		{
-			SetColumnTip(iCol);
-		}
-	}
-}
-
-void CHeaderCtrl2::SetColumnTip(int iCol)
-{
 	if (!::IsWindow(m_ToolTip.GetSafeHwnd()))
 		return;
 
+	// Get rid of all existing tips.
+	int nCols = m_ToolTip.GetToolCount();
+	while (0 < nCols)
+	{
+		m_ToolTip.DelTool(this, nCols);
+		--nCols;
+	}
+
+	// Now add them back.
 	CClientDC dc(this);
 	CFont* pOldFont = dc.SelectObject(GetFont());
-
-	HDITEM item;
-	item.mask = HDI_TEXT | HDI_FORMAT;
-	item.pszText = fpBuffer;
-	item.cchTextMax = fBufferSize;
-	GetItem(iCol, &item);
-	while (lstrlen(fpBuffer) == fBufferSize - 1)
+	nCols = GetItemCount();
+	for (int iCol = 0; iCol < nCols; ++iCol)
 	{
-		delete [] fpBuffer;
-		fBufferSize *= 2;
-		fpBuffer = new char[fBufferSize];
+		HDITEM item;
+		item.mask = HDI_TEXT | HDI_FORMAT;
 		item.pszText = fpBuffer;
 		item.cchTextMax = fBufferSize;
-		GetItem(iCol, &item);
-	}
-	bool bDelTip = true;
-	if (fpBuffer && *fpBuffer)
-	{
-		CRect rColumn;
-		GetItemRect(iCol, rColumn);
-		CRect rAdjusted(rColumn);
-		rAdjusted.right -= GetBitmapMargin();
-		rAdjusted.right -= 12; // Deflate to allow for the padding. 6 is just an observed number on each side
-		if (item.fmt & HDF_IMAGE)
-			rAdjusted.right -= 16; // Subtract icon.
-		CRect rText(rAdjusted);
-		CString str(fpBuffer);
-		// It doesn't matter if the column is left/center/right adjusted.
-		// We only care if the text exceeds the allowed area.
-		dc.DrawText(str, rText, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
-		if (rText.Width() > rAdjusted.Width())
+		bool bDelTip = true;
+		if (GetItem(iCol, &item))
 		{
-			// A tooltip can only display 260 chars.
-			if (str.GetLength() >= 260)
-				str = "..." + str.Right(256);
-			m_ToolTip.AddTool(this, str, rColumn, iCol+1);
-			bDelTip = false;
+			// Get all the text a header may have.
+			while (lstrlen(fpBuffer) == fBufferSize - 1)
+			{
+				delete [] fpBuffer;
+				fBufferSize *= 2;
+				fpBuffer = new char[fBufferSize];
+				item.pszText = fpBuffer;
+				item.cchTextMax = fBufferSize;
+				GetItem(iCol, &item);
+			}
+			if (fpBuffer && *fpBuffer)
+			{
+				CRect rColumn;
+				GetItemRect(iCol, rColumn);
+				CRect rAdjusted(rColumn);
+				rAdjusted.right -= GetBitmapMargin();
+				rAdjusted.right -= 12; // Deflate to allow for the padding. 6 is just an observed number on each side
+				if (item.fmt & HDF_IMAGE)
+					rAdjusted.right -= 16; // Subtract icon.
+				CRect rText(rAdjusted);
+				CString str(fpBuffer);
+				// It doesn't matter if the column is left/center/right adjusted.
+				// We only care if the text exceeds the allowed area.
+				dc.DrawText(str, rText, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
+				if (rText.Width() > rAdjusted.Width())
+				{
+					// A tooltip can only display 260 chars.
+					if (str.GetLength() >= 260)
+						str = "..." + str.Right(256);
+					m_ToolTip.AddTool(this, str, rColumn, iCol+1);
+					bDelTip = false;
+				}
+			}
 		}
+		if (bDelTip)
+			m_ToolTip.DelTool(this, iCol+1);
 	}
-	if (bDelTip)
-		m_ToolTip.DelTool(this, iCol+1);
-
 	dc.SelectObject(pOldFont);
 }
 
@@ -274,7 +271,7 @@ void CHeaderCtrl2::Sort(int iCol, SortOrder eOrder)
 	else
 		item.fmt &= ~HDF_IMAGE;
 	SetItem(iCol, &item);
-	SetColumnTip(iCol);
+	FixTooltips();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -294,7 +291,8 @@ CListCtrl2::~CListCtrl2()
 {
 }
 
-void CListCtrl2::Init()
+/// Returns whether we ran the initialization.
+bool CListCtrl2::Init()
 {
 	if (!m_bInit)
 	{
@@ -303,18 +301,22 @@ void CListCtrl2::Init()
 			m_bInit = true;
 			m_SortHeader.SubclassWindow(GetHeaderCtrl()->GetSafeHwnd());
 			m_SortHeader.FixTooltips();
+			return true;
 		}
 	}
+	return false;
 }
 
 void CListCtrl2::FixTooltips()
 {
-	m_SortHeader.FixTooltips();
+	if (!Init())
+		m_SortHeader.FixTooltips();
 }
 
 int CListCtrl2::HeaderItemCount()
 {
-	return GetHeaderCtrl()->GetItemCount();
+	Init();
+	return m_SortHeader.GetItemCount();
 }
 
 CHeaderCtrl2::SortOrder CListCtrl2::HeaderSortOrder(int iCol) const
@@ -327,6 +329,30 @@ void CListCtrl2::HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder)
 {
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
+}
+
+int CListCtrl2::InsertColumn(int nCol, LVCOLUMN const* pColumn)
+{
+	int rc = CListCtrl::InsertColumn(nCol, pColumn);
+	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+int CListCtrl2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, int nWidth, int nSubItem)
+{
+	int rc = CListCtrl::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
+	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+BOOL CListCtrl2::DeleteColumn(int nCol)
+{
+	BOOL rc = CListCtrl::DeleteColumn(nCol);
+	if (rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
 }
 
 int CListCtrl2::GetSelection()
@@ -398,7 +424,7 @@ CListView2::~CListView2()
 {
 }
 
-void CListView2::Init()
+bool CListView2::Init()
 {
 	if (!m_bInit)
 	{
@@ -407,18 +433,22 @@ void CListView2::Init()
 			m_bInit = true;
 			m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
 			m_SortHeader.FixTooltips();
+			return true;
 		}
 	}
+	return false;
 }
 
 void CListView2::FixTooltips()
 {
-	m_SortHeader.FixTooltips();
+	if (!Init())
+		m_SortHeader.FixTooltips();
 }
 
 int CListView2::HeaderItemCount()
 {
-	return GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	Init();
+	return m_SortHeader.GetItemCount();
 }
 
 CHeaderCtrl2::SortOrder CListView2::HeaderSortOrder(int iCol) const
@@ -431,6 +461,30 @@ void CListView2::HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder)
 {
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
+}
+
+int CListView2::InsertColumn(int nCol, LVCOLUMN const* pColumn)
+{
+	int rc = GetListCtrl().InsertColumn(nCol, pColumn);
+	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+int CListView2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, int nWidth, int nSubItem)
+{
+	int rc = GetListCtrl().InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
+	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+BOOL CListView2::DeleteColumn(int nCol)
+{
+	BOOL rc = GetListCtrl().DeleteColumn(nCol);
+	if (rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
 }
 
 int CListView2::GetSelection()

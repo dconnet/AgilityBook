@@ -68,7 +68,6 @@ public:
 	//}}AFX_VIRTUAL
 
 protected:
-	void SetColumnTip(int iCol);
 	CImageList m_ImageList;
 	int m_sortAscending;
 	int m_sortDescending;
@@ -93,11 +92,19 @@ public:
 	virtual ~CListCtrl2();
 
 	// Header functions
-	/// This function must be called whenever columns are added/removed/sized
 	void FixTooltips();
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
 	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
+
+	/**
+	 * Override column insertion/removal so we can deal with tooltips.
+	 * Note, this must be called directly, not thru the base class.
+	 */
+	int InsertColumn(int nCol, LVCOLUMN const* pColumn);
+	int InsertColumn(int nCol, LPCTSTR lpszColumnHeading,
+		int nFormat = LVCFMT_LEFT, int nWidth = -1, int nSubItem = -1);
+	BOOL DeleteColumn(int nCol);
 
 	/**
 	 * Returns the first selected item.
@@ -115,7 +122,7 @@ public:
 	virtual void GetPrintLine(int nItem, CStringArray& line);
 
 protected:
-	void Init();
+	bool Init();
 	bool m_bInit;
 	CHeaderCtrl2 m_SortHeader;
 // Overrides
@@ -138,11 +145,20 @@ public:
 	virtual ~CListView2();
 
 	// Header functions
-	/// This function must be called whenever columns are added/removed/sized
 	void FixTooltips();
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
 	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
+
+	/**
+	 * For views, these functions should be used to insert/remove the
+	 * columns instead of calling GetListCtrl. That way we can automagically
+	 * fix the tooltips for these headers.
+	 */
+	int InsertColumn(int nCol, LVCOLUMN const* pColumn);
+	int InsertColumn(int nCol, LPCTSTR lpszColumnHeading,
+		int nFormat = LVCFMT_LEFT, int nWidth = -1, int nSubItem = -1);
+	BOOL DeleteColumn(int nCol);
 
 	/**
 	 * Returns the first selected item.
@@ -160,7 +176,7 @@ public:
 	virtual void GetPrintLine(int nItem, CStringArray& line);
 
 protected:
-	void Init();
+	bool Init();
 	bool m_bInit;
 	CHeaderCtrl2 m_SortHeader;
 	//{{AFX_VIRTUAL(CListView2)

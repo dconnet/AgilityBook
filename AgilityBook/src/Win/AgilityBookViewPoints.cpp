@@ -154,9 +154,8 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		col.fmt = LVCFMT_LEFT;
 		col.pszText = "";
 		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
+		InsertColumn(i, &col);
 	}
-	FixTooltips();
 
 	return 0;
 }

@@ -481,7 +481,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 {
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
-		GetListCtrl().DeleteColumn(0);
+		DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
 	{
 		LV_COLUMN col;
@@ -492,11 +492,10 @@ void CAgilityBookViewCalendarList::SetupColumns()
 			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
 			col.pszText = str.GetBuffer(0);
 			col.iSubItem = static_cast<int>(iCol);
-			GetListCtrl().InsertColumn(static_cast<int>(iCol), &col);
+			InsertColumn(static_cast<int>(iCol), &col);
 			str.ReleaseBuffer();
 		}
 	}
-	FixTooltips();
 }
 
 void CAgilityBookViewCalendarList::LoadData()
