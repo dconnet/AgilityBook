@@ -404,7 +404,7 @@ time_t ARBDate::GetDate() const
 	return t;
 }
 
-void ARBDate::GetDate(int& outYr, int& outMon, int& outDay)
+void ARBDate::GetDate(int& outYr, int& outMon, int& outDay) const
 {
 	SdnToGregorian(m_Julian, &outYr, &outMon, &outDay);
 }

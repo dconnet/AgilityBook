@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Configuration class.
+ * @brief ARBConfigAction class.
  * @author David Connet
  *
  * Revision History
@@ -42,6 +41,20 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * Special class that performs actions during ARBConfig::Update.
+ *
+ * This class is not created anywhere (hence, there are only getters, no
+ * setters). During document revisions, it is sometimes necessary to do
+ * additional work - hence when we create the default configuration, we
+ * must create these entries in that by hand. As of file version 8.2, the
+ * default configuration now has some entries.
+ *
+ * During the update process, all actions are run in order. The configuration
+ * is then updated.
+ *
+ * Currently, the only action supported is renaming an existing title.
+ */
 class ARBConfigAction : public ARBBase
 {
 public:
@@ -51,15 +64,44 @@ public:
 	bool operator==(const ARBConfigAction& rhs) const;
 	bool operator!=(const ARBConfigAction& rhs) const;
 
-	virtual std::string GetGenericName() const	{return GetVerb();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 * @note There are no strings to search in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a calendar entry
+	 * @pre inTree is the actual ARBConfigAction element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
-	bool Save(CElement& inTree) const;
 
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfigAction element will be created in ioTree.
+	 */
+	bool Save(CElement& ioTree) const;
+
+	/*
+	 * Getters.
+	 */
 	const std::string& GetVerb() const;
 	const std::string& GetVenue() const;
 	const std::string& GetOldName() const;
@@ -72,6 +114,11 @@ private:
 	std::string m_OldName;
 	std::string m_NewName;
 };
+
+inline std::string ARBConfigAction::GetGenericName() const
+{
+	return m_Verb;
+}
 
 inline const std::string& ARBConfigAction::GetVerb() const
 {
@@ -95,6 +142,9 @@ inline const std::string& ARBConfigAction::GetNewName() const
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBConfigAction objects.
+ */
 class ARBConfigActionList : public ARBVectorLoad1<ARBConfigAction>
 {
 public:

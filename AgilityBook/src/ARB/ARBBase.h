@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Base class for reference counting.
+ * @brief ARBBase class
  * @author David Connet
  *
  * Revision History
@@ -41,21 +40,34 @@
 #include <set>
 #include <string>
 
+/**
+ * @brief Base class for reference counting and other common functionality.
+ *
+ * The idea is to remove some of the efforts of memory management.
+ * Note, there are a number of APIs that return a non-reference counted pointer.
+ * Ideally, everything would, but that gets things rather messy for coding.
+ * I have actually played around with creating a smart pointer class to work
+ * around this. In time I might complete that work - though I may just toss it
+ * in favor of migrating to C#.
+ */
 class ARBBase
 {
 public:
+	/**
+	 * @post Reference count starts at 1.
+	 */
 	ARBBase();
 
 	/**
 	 * Add a reference to the object.
 	 */
-	virtual void AddRef();
+	void AddRef();
 
 	/**
-	 * Remove a reference
+	 * Remove a reference.
 	 * @post When the reference count goes to 0, the object will be deleted.
 	 */
-	virtual void Release();
+	void Release();
 
 	/**
 	 * Get the generic name of an object.
@@ -67,17 +79,21 @@ public:
 
 	/**
 	 * Get all the strings to search in an object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated.
 	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const = 0;
 
 	/**
 	 * Get the filtered state of this object.
+	 * @return The filtered state.
 	 */
 	virtual bool IsFiltered() const				{return m_bFiltered;}
 
 	/**
 	 * Set the filtered state of this object.
 	 * This attribute is not persistent. It is up to the UI to manage this.
+	 * @param bFiltered Filtered state of the object.
 	 */
 	virtual void SetFiltered(bool bFiltered)	{m_bFiltered = bFiltered;}
 
