@@ -17,6 +17,7 @@
     that things had changed. This was due to the order of items being different
     (which we don't care about).
   - In the Run dialog, update the YPS when the time is changed.
+  - Fixed some bugs in the configuration dialog when creating/modifying a venue.
 
 1/26/2004: v1.0.1.8
 - New features / Enhancements:

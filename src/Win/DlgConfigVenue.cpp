@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2004-02-09 DRC Fixed some bugs when creating/modifying venues.
  * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2004-01-24 DRC Created
  */
@@ -264,24 +265,18 @@ void CDlgConfigVenue::UpdateButtons()
 void CDlgConfigVenue::LoadDivisionData()
 {
 	ARBConfigDivision* pDiv = NULL;
-	int index = m_ctrlDivisions.GetSelection();
-	if (0 <= index)
-	{
-		pDiv = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index))->GetDivision();
-	}
+	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
+	if (pDivData)
+		pDiv = pDivData->GetDivision();
 	m_ctrlDivisions.DeleteAllItems();
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
 	{
-		index = m_ctrlDivisions.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlDivisions.GetItemCount(),
+		m_ctrlDivisions.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlDivisions.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
 			reinterpret_cast<LPARAM>(new CDlgConfigureDataDivision(*iterDiv)));
-		if (pDiv == *iterDiv)
-		{
-			m_ctrlDivisions.SetSelection(index);
-			m_ctrlDivisions.EnsureVisible(index, FALSE);
-		}
 	}
 	m_ctrlDivisions.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	FindCurrentDivision(pDiv, true);
 	LoadLevelData();
 	LoadTitleData();
 }
@@ -290,102 +285,76 @@ void CDlgConfigVenue::LoadLevelData()
 {
 	ARBConfigLevel* pLevel = NULL;
 	ARBConfigSubLevel* pSubLevel = NULL;
-	HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-	if (NULL != hItem)
+	CDlgConfigureDataLevel* pLevelData = GetCurrentLevelData();
+	CDlgConfigureDataSubLevel* pSubLevelData = GetCurrentSubLevelData();
+	if (pLevelData)
+		pLevel = pLevelData->GetLevel();
+	else if (pSubLevelData)
 	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlLevels.GetItemData(hItem));
-		CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
-		CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
-		if (pLevelData)
-			pLevel = pLevelData->GetLevel();
-		else if (pSubLevelData)
-		{
-			pLevel = pSubLevelData->GetLevel();
-			pSubLevel = pSubLevelData->GetSubLevel();
-		}
+		pLevel = pSubLevelData->GetLevel();
+		pSubLevel = pSubLevelData->GetSubLevel();
 	}
 	m_ctrlLevels.DeleteAllItems();
-	int idxDiv = m_ctrlDivisions.GetSelection();
-	if (0 > idxDiv)
+	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
+	if (!pDivData)
 		return;
-	CDlgConfigureDataDivision* pData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(idxDiv));
-	ASSERT(pData);
-	for (ARBConfigLevelList::iterator iterLevel = pData->GetDivision()->GetLevels().begin();
-	iterLevel != pData->GetDivision()->GetLevels().end();
+	for (ARBConfigLevelList::iterator iterLevel = pDivData->GetDivision()->GetLevels().begin();
+	iterLevel != pDivData->GetDivision()->GetLevels().end();
 	++iterLevel)
 	{
-		hItem = m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+		HTREEITEM hItem = m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 			0, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pData->GetDivision(), *iterLevel)),
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pDivData->GetDivision(), *iterLevel)),
 			TVI_ROOT, TVI_LAST);
-		if (NULL == pSubLevel && pLevel == *iterLevel)
-		{
-			m_ctrlLevels.SelectItem(hItem);
-			m_ctrlLevels.EnsureVisible(hItem);
-		}
 		if (0 < (*iterLevel)->GetSubLevels().size())
 		{
 			for (ARBConfigSubLevelList::iterator iterSubLevel = (*iterLevel)->GetSubLevels().begin(); iterSubLevel != (*iterLevel)->GetSubLevels().end(); ++iterSubLevel)
 			{
-				HTREEITEM hSub = m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+				m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pData->GetDivision(), *iterLevel, *iterSubLevel)),
+					reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pDivData->GetDivision(), *iterLevel, *iterSubLevel)),
 					hItem, TVI_LAST);
-				if (pSubLevel == *iterSubLevel)
-				{
-					m_ctrlLevels.SelectItem(hSub);
-					m_ctrlLevels.EnsureVisible(hSub);
-				}
 			}
 			m_ctrlLevels.Expand(hItem, TVE_EXPAND);
 		}
 	}
+	if (pSubLevel)
+		FindCurrentSubLevel(pSubLevel, true);
+	else if (pLevel)
+		FindCurrentLevel(pLevel, true);
 }
 
 void CDlgConfigVenue::LoadTitleData()
 {
 	ARBConfigTitle* pTitle = NULL;
-	int index = m_ctrlTitles.GetSelection();
-	if (0 <= index)
-	{
-		pTitle = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index))->GetTitle();
-	}
+	CDlgConfigureDataTitle* pTitleData = GetCurrentTitleData();
+	if (pTitleData)
+		pTitle = pTitleData->GetTitle();
 	m_ctrlTitles.DeleteAllItems();
-	int idxDiv = m_ctrlDivisions.GetSelection();
-	if (0 > idxDiv)
+	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
+	if (!pDivData)
 		return;
-	CDlgConfigureDataDivision* pData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(idxDiv));
-	ASSERT(pData);
-	for (ARBConfigTitleList::iterator iterTitle = pData->GetDivision()->GetTitles().begin();
-	iterTitle != pData->GetDivision()->GetTitles().end();
+	for (ARBConfigTitleList::iterator iterTitle = pDivData->GetDivision()->GetTitles().begin();
+	iterTitle != pDivData->GetDivision()->GetTitles().end();
 	++iterTitle)
 	{
-		index = m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlTitles.GetItemCount(),
+		m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlTitles.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataTitle(pData->GetDivision(), *iterTitle)));
-		if (pTitle == *iterTitle)
-		{
-			m_ctrlTitles.SetSelection(index);
-			m_ctrlTitles.EnsureVisible(index, FALSE);
-		}
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataTitle(pDivData->GetDivision(), *iterTitle)));
 	}
 	m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	FindCurrentTitle(pTitle, true);
 }
 
 void CDlgConfigVenue::LoadEventData()
 {
 	ARBConfigEvent* pEvent = NULL;
-	HTREEITEM hItem = m_ctrlEvents.GetSelectedItem();
-	if (NULL != hItem)
-	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlEvents.GetItemData(hItem));
-		CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(pData);
-		CDlgConfigureDataScoring* pScoringData = dynamic_cast<CDlgConfigureDataScoring*>(pData);
-		if (pEventData)
-			pEvent = pEventData->GetEvent();
-		else if (pScoringData)
-			pEvent = pScoringData->GetEvent();
-	}
+	CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
+	CDlgConfigureDataScoring* pScoringData = GetCurrentScoringData();
+	if (pEventData)
+		pEvent = pEventData->GetEvent();
+	else if (pScoringData)
+		pEvent = pScoringData->GetEvent();
 	m_ctrlEvents.DeleteAllItems();
 	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
 	{
@@ -404,24 +373,23 @@ void CDlgConfigVenue::LoadEventData()
 			}
 			m_ctrlEvents.Expand(hItem, TVE_EXPAND);
 		}
-		if (pEvent == *iterEvent)
-		{
-			m_ctrlEvents.SelectItem(hItem);
-			m_ctrlEvents.EnsureVisible(hItem);
-		}
 	}
+	FindCurrentEvent(pEvent, true);
 }
 
 int CDlgConfigVenue::FindCurrentDivision(const ARBConfigDivision* pDiv, bool bSet)
 {
 	int idxCurrent = -1;
-	for (int index = 0; index < m_ctrlDivisions.GetItemCount(); ++index)
+	if (pDiv)
 	{
-		CDlgConfigureDataDivision* pData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
-		if (pData->GetDivision() == pDiv)
+		for (int index = 0; index < m_ctrlDivisions.GetItemCount(); ++index)
 		{
-			idxCurrent = index;
-			break;
+			CDlgConfigureDataDivision* pData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
+			if (pData->GetDivision() == pDiv)
+			{
+				idxCurrent = index;
+				break;
+			}
 		}
 	}
 	if (bSet)
@@ -436,21 +404,24 @@ int CDlgConfigVenue::FindCurrentDivision(const ARBConfigDivision* pDiv, bool bSe
 HTREEITEM CDlgConfigVenue::FindCurrentLevel(const ARBConfigLevel* pLevel, bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
-	HTREEITEM hItem = m_ctrlLevels.GetRootItem();
-	while (NULL != hItem)
+	if (pLevel)
 	{
-		CDlgConfigureDataLevel* pData = reinterpret_cast<CDlgConfigureDataLevel*>(m_ctrlLevels.GetItemData(hItem));
-		if (pData->GetLevel() == pLevel)
+		HTREEITEM hItem = m_ctrlLevels.GetRootItem();
+		while (NULL != hItem)
 		{
-			hCurrent = hItem;
-			break;
+			CDlgConfigureDataLevel* pData = reinterpret_cast<CDlgConfigureDataLevel*>(m_ctrlLevels.GetItemData(hItem));
+			if (pData->GetLevel() == pLevel)
+			{
+				hCurrent = hItem;
+				break;
+			}
+			hItem = m_ctrlLevels.GetNextSiblingItem(hItem);
 		}
-		hItem = m_ctrlLevels.GetNextSiblingItem(hItem);
 	}
 	if (bSet)
 	{
 		m_ctrlLevels.SelectItem(hCurrent);
-		if (NULL != hItem)
+		if (NULL != hCurrent)
 			m_ctrlLevels.EnsureVisible(hCurrent);
 		UpdateButtons();
 	}
@@ -460,24 +431,27 @@ HTREEITEM CDlgConfigVenue::FindCurrentLevel(const ARBConfigLevel* pLevel, bool b
 HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(const ARBConfigSubLevel* pSubLevel, bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
-	HTREEITEM hItem = m_ctrlLevels.GetRootItem();
-	while (NULL == hCurrent && NULL != hItem)
+	if (pSubLevel)
 	{
-		if (m_ctrlLevels.ItemHasChildren(hItem))
+		HTREEITEM hItem = m_ctrlLevels.GetRootItem();
+		while (NULL == hCurrent && NULL != hItem)
 		{
-			HTREEITEM hChildItem = m_ctrlLevels.GetChildItem(hItem);
-			while (NULL == hCurrent && NULL != hChildItem)
+			if (m_ctrlLevels.ItemHasChildren(hItem))
 			{
-				CDlgConfigureDataSubLevel* pData = reinterpret_cast<CDlgConfigureDataSubLevel*>(m_ctrlLevels.GetItemData(hChildItem));
-				if (pData->GetSubLevel() == pSubLevel)
+				HTREEITEM hChildItem = m_ctrlLevels.GetChildItem(hItem);
+				while (NULL == hCurrent && NULL != hChildItem)
 				{
-					hCurrent = hChildItem;
-					break;
+					CDlgConfigureDataSubLevel* pData = reinterpret_cast<CDlgConfigureDataSubLevel*>(m_ctrlLevels.GetItemData(hChildItem));
+					if (pData->GetSubLevel() == pSubLevel)
+					{
+						hCurrent = hChildItem;
+						break;
+					}
+					hChildItem = m_ctrlLevels.GetNextSiblingItem(hChildItem);
 				}
-				hChildItem = m_ctrlLevels.GetNextSiblingItem(hChildItem);
 			}
+			hItem = m_ctrlLevels.GetNextSiblingItem(hItem);
 		}
-		hItem = m_ctrlLevels.GetNextSiblingItem(hItem);
 	}
 	if (bSet)
 	{
@@ -492,13 +466,16 @@ HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(const ARBConfigSubLevel* pSubLeve
 int CDlgConfigVenue::FindCurrentTitle(const ARBConfigTitle* pTitle, bool bSet)
 {
 	int idxCurrent = -1;
-	for (int index = 0; index < m_ctrlTitles.GetItemCount(); ++index)
+	if (pTitle)
 	{
-		CDlgConfigureDataTitle* pData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
-		if (pData->GetTitle() == pTitle)
+		for (int index = 0; index < m_ctrlTitles.GetItemCount(); ++index)
 		{
-			idxCurrent = index;
-			break;
+			CDlgConfigureDataTitle* pData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
+			if (pData->GetTitle() == pTitle)
+			{
+				idxCurrent = index;
+				break;
+			}
 		}
 	}
 	if (bSet)
@@ -514,16 +491,19 @@ int CDlgConfigVenue::FindCurrentTitle(const ARBConfigTitle* pTitle, bool bSet)
 HTREEITEM CDlgConfigVenue::FindCurrentEvent(const ARBConfigEvent* pEvent, bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
-	HTREEITEM hItem = m_ctrlEvents.GetRootItem();
-	while (NULL == hCurrent && NULL != hItem)
+	if (pEvent)
 	{
-		CDlgConfigureDataEvent* pData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(hItem));
-		if (pData->GetEvent() == pEvent)
+		HTREEITEM hItem = m_ctrlEvents.GetRootItem();
+		while (NULL == hCurrent && NULL != hItem)
 		{
-			hCurrent = hItem;
-			break;
+			CDlgConfigureDataEvent* pData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(hItem));
+			if (pData->GetEvent() == pEvent)
+			{
+				hCurrent = hItem;
+				break;
+			}
+			hItem = m_ctrlEvents.GetNextSiblingItem(hItem);
 		}
-		hItem = m_ctrlEvents.GetNextSiblingItem(hItem);
 	}
 	if (bSet)
 	{
@@ -648,6 +628,22 @@ void CDlgConfigVenue::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+void CDlgConfigVenue::OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
+	if (pTVDispInfo->item.mask & TVIF_TEXT)
+	{
+		CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pTVDispInfo->item.lParam);
+		if (pData)
+		{
+			CString str = pData->OnNeedText(0);
+			::lstrcpyn(pTVDispInfo->item.pszText, str, pTVDispInfo->item.cchTextMax);
+			pTVDispInfo->item.pszText[pTVDispInfo->item.cchTextMax-1] = '\0';
+		}
+	}
+	*pResult = 0;
+}
+
 void CDlgConfigVenue::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
@@ -663,22 +659,6 @@ void CDlgConfigVenue::OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult)
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMTreeView->itemOld.lParam);
 	delete pData;
 	pNMTreeView->itemOld.lParam = 0;
-	*pResult = 0;
-}
-
-void CDlgConfigVenue::OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult) 
-{
-	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
-	if (pTVDispInfo->item.mask & TVIF_TEXT)
-	{
-		CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pTVDispInfo->item.lParam);
-		if (pData)
-		{
-			CString str = pData->OnNeedText(0);
-			::lstrcpyn(pTVDispInfo->item.pszText, str, pTVDispInfo->item.cchTextMax);
-			pTVDispInfo->item.pszText[pTVDispInfo->item.cchTextMax-1] = '\0';
-		}
-	}
 	*pResult = 0;
 }
 
@@ -1367,9 +1347,11 @@ void CDlgConfigVenue::OnMoveUp()
 			if (0 < index)
 			{
 				CDlgConfigureDataDivision* pDivData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
-				m_pVenue->GetDivisions().Move(pDivData->GetDivision(), -1);
+				ARBConfigDivision* pDiv = pDivData->GetDivision();
+				m_pVenue->GetDivisions().Move(pDiv, -1);
 				LoadDivisionData();
 				UpdateButtons();
+				FindCurrentDivision(pDiv, true);
 			}
 		}
 		break;
@@ -1382,12 +1364,24 @@ void CDlgConfigVenue::OnMoveUp()
 				CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlLevels.GetItemData(hItem));
 				CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
 				CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
+				ARBConfigLevel* pLevel = NULL;
+				ARBConfigSubLevel* pSubLevel = NULL;
 				if (pLevelData)
-					pLevelData->GetDivision()->GetLevels().Move(pLevelData->GetLevel(), -1);
+				{
+					pLevel = pLevelData->GetLevel();
+					pLevelData->GetDivision()->GetLevels().Move(pLevel, -1);
+				}
 				else if (pSubLevelData)
-					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevelData->GetSubLevel(), -1);
+				{
+					pSubLevel = pSubLevelData->GetSubLevel();
+					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevel, -1);
+				}
 				LoadLevelData();
 				UpdateButtons();
+				if (pLevel)
+					FindCurrentLevel(pLevel, true);
+				else if (pSubLevel)
+					FindCurrentSubLevel(pSubLevel, true);
 			}
 		}
 		break;
@@ -1397,9 +1391,11 @@ void CDlgConfigVenue::OnMoveUp()
 			if (0 < index)
 			{
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
-				pTitleData->GetDivision()->GetTitles().Move(pTitleData->GetTitle(), -1);
+				ARBConfigTitle* pTitle = pTitleData->GetTitle();
+				pTitleData->GetDivision()->GetTitles().Move(pTitle, -1);
 				LoadTitleData();
 				UpdateButtons();
+				FindCurrentTitle(pTitle, true);
 			}
 		}
 		break;
@@ -1412,9 +1408,11 @@ void CDlgConfigVenue::OnMoveUp()
 				HTREEITEM hPrevItem = m_ctrlEvents.GetPrevSiblingItem(hItem);
 				if (NULL != hPrevItem)
 				{
-					m_pVenue->GetEvents().Move(pEventData->GetEvent(), -1);
+					ARBConfigEvent* pEvent = pEventData->GetEvent();
+					m_pVenue->GetEvents().Move(pEvent, -1);
 					LoadEventData();
 					UpdateButtons();
+					FindCurrentEvent(pEvent, true);
 				}
 			}
 		}
@@ -1432,9 +1430,11 @@ void CDlgConfigVenue::OnMoveDown()
 			if (index < m_ctrlDivisions.GetItemCount() - 1)
 			{
 				CDlgConfigureDataDivision* pDivData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
-				m_pVenue->GetDivisions().Move(pDivData->GetDivision(), 1);
+				ARBConfigDivision* pDiv = pDivData->GetDivision();
+				m_pVenue->GetDivisions().Move(pDiv, 1);
 				LoadDivisionData();
 				UpdateButtons();
+				FindCurrentDivision(pDiv, true);
 			}
 		}
 		break;
@@ -1447,12 +1447,24 @@ void CDlgConfigVenue::OnMoveDown()
 				CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlLevels.GetItemData(hItem));
 				CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
 				CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
+				ARBConfigLevel* pLevel = NULL;
+				ARBConfigSubLevel* pSubLevel = NULL;
 				if (pLevelData)
-					pLevelData->GetDivision()->GetLevels().Move(pLevelData->GetLevel(), 1);
+				{
+					pLevel = pLevelData->GetLevel();
+					pLevelData->GetDivision()->GetLevels().Move(pLevel, 1);
+				}
 				else if (pSubLevelData)
-					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevelData->GetSubLevel(), 1);
+				{
+					pSubLevel = pSubLevelData->GetSubLevel();
+					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevel, 1);
+				}
 				LoadLevelData();
 				UpdateButtons();
+				if (pLevel)
+					FindCurrentLevel(pLevel, true);
+				else if (pSubLevel)
+					FindCurrentSubLevel(pSubLevel, true);
 			}
 		}
 		break;
@@ -1462,9 +1474,11 @@ void CDlgConfigVenue::OnMoveDown()
 			if (index < m_ctrlTitles.GetItemCount() - 1)
 			{
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
-				pTitleData->GetDivision()->GetTitles().Move(pTitleData->GetTitle(), 1);
+				ARBConfigTitle* pTitle = pTitleData->GetTitle();
+				pTitleData->GetDivision()->GetTitles().Move(pTitle, 1);
 				LoadTitleData();
 				UpdateButtons();
+				FindCurrentTitle(pTitle, true);
 			}
 		}
 		break;
@@ -1477,9 +1491,11 @@ void CDlgConfigVenue::OnMoveDown()
 				HTREEITEM hNextItem = m_ctrlEvents.GetNextSiblingItem(hItem);
 				if (NULL != hNextItem)
 				{
-					m_pVenue->GetEvents().Move(pEventData->GetEvent(), 1);
+					ARBConfigEvent* pEvent = pEventData->GetEvent();
+					m_pVenue->GetEvents().Move(pEvent, 1);
 					LoadEventData();
 					UpdateButtons();
+					FindCurrentEvent(pEvent, true);
 				}
 			}
 		}
