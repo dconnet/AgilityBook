@@ -1,34 +1,5 @@
 Last Updated: 4/27/04
 
-- Development issue:
-  There is a problem somewhere in the Configuration dialogs. When running under
-  the debugger (in either release or debug), the following messages will be
-  seen (the heap block number and exception address will vary):
-    HEAP[AgilityBook.exe]: HEAP: Free Heap block 170830 modified at 170acc after it was freed
-    Unhandled exception at 0x77f75a58 in AgilityBook.exe: User breakpoint.
-  [To reproduce: Open Config dlg, dbl-click on 'USDAA'. In events, scroll up
-  to 'Snooker' and dbl-click. 'OK'. Twitch mouse over events tree. Boom. There
-  may be other ways, but this is the most consistent. This can be done in a new
-  file. The call stack looks very strange...]
-  If looks like MFC is accessing a window that no longer exists. When I comment
-  out certain sections of code, it goes away - actually, I think it just moves.
-  I have ABSOLUTELY no clue what the hell is going on. If it continues, I may
-  just scrap the whole configuration dialog setup I've got and try something
-  totally different. I tried to use SmartHeap - to no avail. This is seen in
-  both VC6 and VC7. I've commented out all of my 'delete's, but it still
-  happens. Tracing into the MFC internals, it occurs when DestroyWindow is
-  called on CDlgConfigVenue. One time, I actually got the program totally
-  stuck when trying to release critical sections. And I don't use critical
-  sections! It does somehow seem related to the ARBConfigScoring items in the
-  Event tree.
-  Update 4/20: It looks like the combination of having tooltips and having
-  textcallbacks on the scoring items is triggering things. Turning off tooltips
-  "fixes" it, changing the callback (CDlgConfigureDataScoring) to return a fixed
-  string "fixes" it (so does getting rid of the text callback). Not inserting
-  the scoring items "fixes" it. [Or does it just move it? Still don't know...]
-  Commenting out the scoring assignment in DlgConfigEvent doesn't change
-  anything.
-
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
     <http://www.bayteam.org/docs/KareysCalendar.html>

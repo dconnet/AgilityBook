@@ -540,15 +540,14 @@ BEGIN
     PUSHBUTTON      "Move &Up",IDC_MOVE_UP,285,83,45,14
     PUSHBUTTON      "Move Do&wn",IDC_MOVE_DOWN,285,99,45,14
     CTEXT           "comments",IDC_COMMENTS,185,117,145,8
-    LTEXT           "Titles",IDC_STATIC,7,125,18,8
+    LTEXT           "E&vents",IDC_STATIC,7,125,23,8
+    CONTROL         "List2",IDC_EVENT,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,135,125,144
+    LTEXT           "Titles",IDC_STATIC,140,125,18,8
     CONTROL         "List3",IDC_TITLES,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_TABSTOP,7,135,128,144
-    LTEXT           "E&vents",IDC_STATIC,140,125,23,8
-    CONTROL         "Tree2",IDC_EVENT,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
-                    TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | 
-                    WS_TABSTOP,140,135,190,144
+                    WS_BORDER | WS_TABSTOP,140,135,190,144
     PUSHBUTTON      "OK",IDOK,343,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,343,24,50,14
 END

@@ -174,18 +174,3 @@ public:
 protected:
 	ARBConfigEvent* m_Event;
 };
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CDlgConfigureDataScoring : public CDlgConfigureData
-{
-public:
-	CDlgConfigureDataScoring(ARBConfigEvent* event, ARBConfigScoring* scoring);
-	~CDlgConfigureDataScoring();
-	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigEvent* GetEvent() const		{return m_Event;}
-	ARBConfigScoring* GetScoring() const	{return m_Scoring;}
-protected:
-	ARBConfigEvent* m_Event;
-	ARBConfigScoring* m_Scoring;
-};

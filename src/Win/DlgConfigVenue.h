@@ -49,7 +49,6 @@ class CDlgConfigureData;
 class CDlgConfigureDataDivision;
 class CDlgConfigureDataEvent;
 class CDlgConfigureDataLevel;
-class CDlgConfigureDataScoring;
 class CDlgConfigureDataSubLevel;
 class CDlgConfigureDataTitle;
 class CDlgFixup;
@@ -69,8 +68,8 @@ private:
 	CEdit	m_ctrlDesc;
 	CListCtrl2	m_ctrlDivisions;
 	CTreeCtrl	m_ctrlLevels;
+	CListCtrl2	m_ctrlEvents;
 	CListCtrl2	m_ctrlTitles;
-	CTreeCtrl	m_ctrlEvents;
 	CButton	m_ctrlNew;
 	CButton	m_ctrlDelete;
 	CButton	m_ctrlEdit;
@@ -102,13 +101,12 @@ private:
 	HTREEITEM FindCurrentLevel(ARBConfigLevel const* pLevel, bool bSet);
 	HTREEITEM FindCurrentSubLevel(ARBConfigSubLevel const* pSubLevel, bool bSet);
 	int FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet);
-	HTREEITEM FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet);
+	int FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet);
 	CDlgConfigureDataDivision* GetCurrentDivisionData();
 	CDlgConfigureDataLevel* GetCurrentLevelData();
 	CDlgConfigureDataSubLevel* GetCurrentSubLevelData();
 	CDlgConfigureDataTitle* GetCurrentTitleData();
 	CDlgConfigureDataEvent* GetCurrentEventData();
-	CDlgConfigureDataScoring* GetCurrentScoringData();
 
 protected:
 	//{{AFX_MSG(CDlgConfigVenue)
@@ -120,7 +118,7 @@ protected:
 	afx_msg void OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedDivision(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSetfocusDivision(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSetfocusLevel(NMHDR* pNMHDR, LRESULT* pResult);

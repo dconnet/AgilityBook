@@ -42,6 +42,8 @@
     the CRCD image.
   - Some of the lists with sortable columns didn't properly remember their
     settings.
+  - Changed how events are handled in the configuration dialog to prevent that
+    weird memory access from happening.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:
