@@ -40,9 +40,6 @@
 
 #include <vector>
 class ARBConfig;
-class ARBConfigDivisionList;
-class ARBConfigVenue;
-class ARBDogClubList;
 class ARBVersion;
 class Element;
 
