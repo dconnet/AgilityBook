@@ -341,14 +341,14 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 280, 55
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 290, 55
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About"
 FONT 8, "MS Shell Dlg"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,175,41,SS_NOPREFIX
-    DEFPUSHBUTTON   "OK",IDOK,223,7,50,16,WS_GROUP
+    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,185,41,SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,233,7,50,16,WS_GROUP
 END
 
 IDD_NAME DIALOGEX 0, 0, 186, 46
@@ -1016,7 +1016,7 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 6
-        RIGHTMARGIN, 273
+        RIGHTMARGIN, 283
         TOPMARGIN, 7
         BOTTOMMARGIN, 48
     END
@@ -1460,7 +1460,7 @@ BEGIN
     IDS_COL_START_DATE      "Start Date"
     IDS_COL_TIME            "Time"
     IDS_COL_VENUE           "Venue"
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:\n   http://groups.yahoo.com/group/AgilityRecordBook/\nor\n   agilityrecordbook@dconsoft.com"
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable (see http://sourceforge.net/projects/agilitybook/) . We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:\n   http://groups.yahoo.com/group/AgilityRecordBook/\nor\n   agilityrecordbook@dconsoft.com"
     IDS_NEW                 "<New>"
 END
 
