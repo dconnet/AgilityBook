@@ -148,7 +148,10 @@ std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst)
 	char buffer[20];
 	buffer[0] = 0;
 	if (1 < inInstance)
-		sprintf(buffer, "-%hd", inInstance);
+	{
+		// Keep sync'd with ARBDogTitle
+		sprintf(buffer, " %hd", inInstance);
+	}
 	// Special formatting used in configuration dialogs.
 	else if (0 > inInstance && 0 < m_Multiple)
 		strcpy(buffer, "+");

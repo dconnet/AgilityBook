@@ -1136,9 +1136,7 @@ S-EAC, S-EGC, S-EJC</Titles>
 				<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility">EAC, EGC, EJC, TN-E, TG-E, WV-E</Titles>
 				<Titles LongName="Elite Versatility Certificate Outstanding Performance" Name="Outstanding Elite Versatility">O-EAC, O-EGC, O-EJC, O-TN-E, O-TG-E, O-WV-E</Titles>
 				<Titles LongName="Elite Versatility Certificate Superior Performance" Name="Superior Elite Versatility">S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
-				<Titles LongName="NADAC Agility Trial Champion" Multiple="4" Name="NATCH">230 Elite Regular points
-120 Elite Gambler points
-120 Elite Jumper points
+				<Titles LongName="NADAC Agility Trial Champion" Multiple="4" Name="NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.
 Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH">430 Elite Regular points
 220 Elite Gambler points
@@ -1146,12 +1144,7 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH">630 Elite Regular points
 320 Elite Gambler points
 320 Elite Jumper points</Titles>
-				<Titles LongName="NADAC Versatility Champion" Multiple="4" Name="Versatility NATCH">230 Elite Regular points
-120 Elite Gambler points
-120 Elite Jumper points
-130 Elite Touch N Go points
-130 Elite Tunnelers points
-130 Elite Weavers points
+				<Titles LongName="NADAC Versatility Champion" Multiple="4" Name="Versatility NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.
 Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="Outstanding Versatility NATCH">430 Elite Regular points
 220 Elite Gambler points
@@ -1206,7 +1199,7 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple Superior Performance">S-NAC-V, S-NGC-V, S-NJC-V,
 S-OAC-V, S-OGC-V, S-OJC-V,
 S-EAC-V, S-EGC-V, S-EJC-V</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran" Multiple="4" Name="V-NATCH">Multiple copies start at 4 because of the O- and S- titles.</Titles>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran" Multiple="4" Name="V-NATCH">Points are the same as NATCH.</Titles>
 				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH"/>
 				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH"/>
 			</Division>
@@ -1235,7 +1228,7 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				<Titles LongName="Elite Jumpers Certificate-Jr. Handler" Name="EJC-JH"/>
 				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-EJC-JH"/>
 				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Superior Performance" Name="S-EJC-JH"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH">Multiple copies start at 4 because of the O- and S- titles.</Titles>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH">Points are the same as NATCH.</Titles>
 				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH"/>
 				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH"/>
 			</Division>
