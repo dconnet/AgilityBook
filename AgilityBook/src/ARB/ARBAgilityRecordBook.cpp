@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-12-29 DRC GetAllClubs/Locations now includes calendar entries.
  * @li 2003-12-27 DRC File version 8.1. Changed ARBConfigScoring.
  * @li 2003-12-07 DRC File version 8.0. Added Info section.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -380,6 +381,14 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs) co
 			}
 		}
 	}
+	for (ARBCalendarList::const_iterator iterCal = m_Calendar.begin();
+		iterCal != m_Calendar.end();
+		++iterCal)
+	{
+		const ARBCalendar* pCal = *iterCal;
+		if (0 < pCal->GetClub().length())
+			outClubs.insert(pCal->GetClub());
+	}
 	return outClubs.size();
 }
 
@@ -399,6 +408,14 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLoca
 			if (0 < pTrial->GetLocation().length())
 				outLocations.insert(pTrial->GetLocation());
 		}
+	}
+	for (ARBCalendarList::const_iterator iterCal = m_Calendar.begin();
+		iterCal != m_Calendar.end();
+		++iterCal)
+	{
+		const ARBCalendar* pCal = *iterCal;
+		if (0 < pCal->GetLocation().length())
+			outLocations.insert(pCal->GetLocation());
 	}
 	return outLocations.size();
 }
