@@ -132,6 +132,7 @@ depends on how a venue has been defined above.
 	<!ATTLIST Dog
 		CallName CDATA #REQUIRED
 		DOB CDATA #IMPLIED
+		Deceased CDATA #IMPLIED
 		>
 <!ELEMENT RegisteredName (#PCDATA) >
 <!ELEMENT Breed (#PCDATA) >
