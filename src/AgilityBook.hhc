@@ -277,6 +277,10 @@
 					<param name="Name" value="Select URL">
 					<param name="Local" value="Help\html\DlgSelectUrl.html">
 					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Title">
+					<param name="Local" value="Help\html\DlgTitle.html">
+					</OBJECT>
 			</UL>
 		</UL>
 	</UL>
