@@ -140,6 +140,7 @@ depends on how a venue has been defined above.
 	<!ATTLIST RegNum
 		Venue CDATA #REQUIRED
 		Height CDATA #IMPLIED
+		isReceived (y|n) 'n'
 	>
 <!ELEMENT Title EMPTY >
 	<!ATTLIST Title

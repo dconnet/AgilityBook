@@ -54,6 +54,7 @@ ARBDogRegNum::ARBDogRegNum()
 	: m_Venue()
 	, m_Number()
 	, m_Height()
+	, m_bReceived(false)
 {
 }
 
@@ -61,6 +62,7 @@ ARBDogRegNum::ARBDogRegNum(const ARBDogRegNum& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Number(rhs.m_Number)
 	, m_Height(rhs.m_Height)
+	, m_bReceived(rhs.m_bReceived)
 {
 }
 
@@ -75,6 +77,7 @@ ARBDogRegNum& ARBDogRegNum::operator=(const ARBDogRegNum& rhs)
 		m_Venue = rhs.m_Venue;
 		m_Number = rhs.m_Number;
 		m_Height = rhs.m_Height;
+		m_bReceived = rhs.m_bReceived;
 	}
 	return *this;
 }
@@ -83,7 +86,8 @@ bool ARBDogRegNum::operator==(const ARBDogRegNum& rhs) const
 {
 	return m_Venue == rhs.m_Venue
 		&& m_Number == rhs.m_Number
-		&& m_Height == rhs.m_Height;
+		&& m_Height == rhs.m_Height
+		&& m_bReceived == rhs.m_bReceived;
 }
 
 bool ARBDogRegNum::operator!=(const ARBDogRegNum& rhs) const
@@ -122,6 +126,12 @@ bool ARBDogRegNum::Load(
 
 	inTree.GetAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
+	{
+		ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL);
+		return false;
+	}
+
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
 		std::string msg(INVALID_VENUE_NAME);
@@ -139,6 +149,8 @@ bool ARBDogRegNum::Save(CElement& ioTree) const
 	title.AddAttrib(ATTRIB_REG_NUM_VENUE, m_Venue);
 	if (0 < m_Height.length())
 		title.AddAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
+	if (m_bReceived)
+		title.AddAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived);
 	title.SetValue(m_Number);
 	return true;
 }

@@ -74,6 +74,7 @@ static const struct
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
 	{LVCFMT_LEFT, 50, IDS_COL_NUMBER},
 	{LVCFMT_LEFT, 50, IDS_COL_HEIGHT},
+	{LVCFMT_LEFT, 50, IDS_COL_RECEIVED},
 };
 static const int nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
@@ -318,6 +319,7 @@ void CDlgDog::ListRegNums()
 		int nItem = m_ctrlRegNums.InsertItem(i, pRegNum->GetVenue().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 1, pRegNum->GetNumber().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 2, pRegNum->GetHeight().c_str());
+		m_ctrlRegNums.SetItemText(nItem, 3, pRegNum->GetReceived() ? "x" : "");
 		m_ctrlRegNums.SetItemData(nItem, reinterpret_cast<LPARAM>(pRegNum));
 	}
 	for (i = 0; i < nColRegNumInfo; ++i)
