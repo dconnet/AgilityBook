@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2004-10-21 DRC When an item is inserted in the tree, the text callback
  *                    can actually occur BEFORE we set the HTREEITEM.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -259,7 +260,7 @@ static bool EditRun(
 			}
 			else
 			{
-				pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				pTrialData->GetTrial()->GetRuns().sort();
 				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pNewRun);
 				// Even though we will reset the tree, go ahead and add/select
@@ -350,7 +351,7 @@ static bool ReOrderTrial(
 				ARBDogRun* pRun = dynamic_cast<ARBDogRun*>(*iter2);
 				pTrial->GetRuns().AddRun(pRun);
 			}
-			pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTrial->GetRuns().sort();
 			CAgilityBookDoc* pDoc = pTree->GetDocument();
 			pDoc->SetModifiedFlag(TRUE);
 			pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
@@ -461,7 +462,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 					else
 					{
-						pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+						pTrial->GetRuns().sort();
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pNewRun);
 						m_pTree->SetRedraw(FALSE);
@@ -1168,8 +1169,7 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 		{
 			ARBDogRun* pRun = new ARBDogRun(*GetRun());
 			GetTrial()->GetRuns().AddRun(pRun);
-			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
-			GetTrial()->GetRuns().sort(bDescending);
+			GetTrial()->GetRuns().sort();
 			pRun->Release();
 			bModified = true;
 			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);

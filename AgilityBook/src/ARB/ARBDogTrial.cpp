@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -179,7 +180,7 @@ bool ARBDogTrial::Load(
 			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioCallback);
 		}
 	}
-	m_Runs.sort(true);
+	m_Runs.sort();
 	return true;
 }
 

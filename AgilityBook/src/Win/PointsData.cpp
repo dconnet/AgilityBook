@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
@@ -265,7 +266,7 @@ std::string PointsDataTitle::OnNeedText(size_t index) const
 			str = m_pTitle->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
 			break;
 		case 2:
-			str = m_pView->GetDocument()->GetConfig().GetTitleCompleteName(m_pTitle->GetVenue(), m_pTitle->GetName(), false);
+			str = m_pView->GetDocument()->GetConfig().GetTitleCompleteName(m_pTitle, false);
 			if (m_pTitle->GetReceived())
 				str += "*";
 			break;

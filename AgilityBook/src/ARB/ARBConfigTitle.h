@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -105,10 +106,11 @@ public:
 
 	/**
 	 * Get the complete name (name + nicename).
+	 * @param inInstance Instance of the title to allow for multiple.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @return The complete name.
 	 */
-	std::string GetCompleteName(bool bAbbrevFirst = true) const;
+	std::string GetCompleteName(short inInstance = 0, bool bAbbrevFirst = true) const;
 
 	/*
 	 * Getters/setters.
@@ -117,6 +119,8 @@ public:
 	void SetName(std::string const& inName);
 	std::string const& GetLongName() const;
 	void SetLongName(std::string const& inName);
+	bool AllowMany() const;
+	void SetAllowMany(bool inAllow);
 	std::string const& GetDescription() const;
 	void SetDescription(std::string const& inDesc);
 
@@ -124,6 +128,7 @@ private:
 	~ARBConfigTitle();
 	std::string m_Name;
 	std::string m_LongName;
+	bool m_AllowMany;
 	std::string m_Desc;
 };
 
@@ -160,6 +165,16 @@ inline void ARBConfigTitle::SetLongName(std::string const& inName)
 	m_LongName = inName;
 }
 
+inline bool ARBConfigTitle::AllowMany() const
+{
+	return m_AllowMany;
+}
+
+inline void ARBConfigTitle::SetAllowMany(bool inAllow)
+{
+	m_AllowMany = inAllow;
+}
+
 inline std::string const& ARBConfigTitle::GetDescription() const
 {
 	return m_Desc;
@@ -182,11 +197,12 @@ public:
 	 * Find a title by the complete name.
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inName Complete name of title to find.
+	 * @param inInstance Instance of the title to allow for multiple.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigTitle const* FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst = true) const;
+	ARBConfigTitle const* FindTitleCompleteName(std::string const& inName, short inInstance, bool bAbbrevFirst = true) const;
 
 	/**
 	 * Find a title.

@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2005-01-10 DRC Added 'allowMany' to 'Titles', 'instance' to 'Title'.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-11-15 DRC Added TimeFaults for T+F, ClubInfo, LocationInfo
@@ -143,6 +144,7 @@
 #define ATTRIB_LEVEL_NAME					"Name"
 #define ATTRIB_TITLES_NAME					"Name"
 #define ATTRIB_TITLES_LONGNAME				"LongName"
+#define ATTRIB_TITLES_ALLOW_MANY			"allowMany"
 #define ATTRIB_SUBLEVEL_NAME				"Name"
 #define ATTRIB_EVENT_NAME					"Name"
 #define ATTRIB_EVENT_HAS_TABLE				"hasTable"
@@ -190,6 +192,7 @@
 #define ATTRIB_TITLE_VENUE					"Venue"
 #define ATTRIB_TITLE_NAME					"Name"
 #define ATTRIB_TITLE_DATE					"Date"
+#define ATTRIB_TITLE_INSTANCE				"instance"
 #define ATTRIB_TITLE_RECEIVED				"isReceived"
 #define ATTRIB_TITLE_HIDDEN					"isHidden"
 #define ATTRIB_TRIAL_VERIFIED				"Verified"

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-12-18 DRC Don't set version number lower when merging.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-26 DRC Added version number to configuration.
@@ -46,6 +47,7 @@
 #include "ARBConfig.h"
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBDogTitle.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -277,15 +279,16 @@ std::string ARBConfig::GetTitleNiceName(
 }
 
 std::string ARBConfig::GetTitleCompleteName(
-	std::string const& inVenue,
-	std::string const& inTitle,
+	ARBDogTitle const* inTitle,
 	bool bAbbrevFirst) const
 {
-	ARBConfigTitle const* pTitle = m_Venues.FindTitle(inVenue, inTitle);
+	if (!inTitle)
+		return "";
+	ARBConfigTitle const* pTitle = m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName());
 	if (pTitle)
-		return pTitle->GetCompleteName(bAbbrevFirst);
+		return pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
 	else
-		return inTitle;
+		return inTitle->GetGenericName();
 }
 
 bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& ioInfo)

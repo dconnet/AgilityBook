@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-02 DRC Added ExistingPoints.
@@ -544,7 +545,15 @@ int ARBDogList::DeleteTitle(
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
-		count += (*iter)->GetTitles().DeleteTitle(inVenue, inTitle);
+	{
+		ARBDogTitle const* pTitle = (*iter)->GetTitles().FindTitle(inVenue, inTitle);
+		while (pTitle)
+		{
+			++count;
+			(*iter)->GetTitles().DeleteTitle(pTitle);
+			pTitle = (*iter)->GetTitles().FindTitle(inVenue, inTitle);
+		}
+	}
 	return count;
 }
 

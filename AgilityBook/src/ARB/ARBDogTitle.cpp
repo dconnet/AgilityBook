@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-26 DRC Recover from a bug where the title name was the nice name.
@@ -59,6 +60,7 @@ ARBDogTitle::ARBDogTitle()
 	: m_Date()
 	, m_Venue()
 	, m_Name()
+	, m_Instance(1)
 	, m_bReceived(false)
 	, m_bHidden(false)
 {
@@ -68,6 +70,7 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
+	, m_Instance(rhs.m_Instance)
 	, m_bReceived(rhs.m_bReceived)
 	, m_bHidden(rhs.m_bHidden)
 {
@@ -84,6 +87,7 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 		m_Date = rhs.m_Date;
 		m_Venue = rhs.m_Venue;
 		m_Name = rhs.m_Name;
+		m_Instance = rhs.m_Instance;
 		m_bReceived = rhs.m_bReceived;
 		m_bHidden = rhs.m_bHidden;
 	}
@@ -95,6 +99,7 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 	return m_Date == rhs.m_Date
 		&& m_Venue == rhs.m_Venue
 		&& m_Name == rhs.m_Name
+		&& m_Instance == rhs.m_Instance
 		&& m_bReceived == rhs.m_bReceived
 		&& m_bHidden == rhs.m_bHidden;
 }
@@ -114,7 +119,7 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 	ioStrings.insert(m_Venue);
 	++nItems;
 
-	ioStrings.insert(m_Name);
+	ioStrings.insert(GetGenericName());
 	++nItems;
 
 	return nItems;
@@ -175,6 +180,8 @@ bool ARBDogTitle::Load(
 		}
 	}
 
+	inTree.GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
+
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL));
@@ -220,9 +227,24 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	}
 	title.AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
 	title.AddAttrib(ATTRIB_TITLE_NAME, m_Name);
+	if (1 < m_Instance)
+		title.AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
 	if (m_bReceived) // Default is no.
 		title.AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
 	return true;
+}
+
+inline std::string ARBDogTitle::GetGenericName() const
+{
+	std::string name;
+	name = m_Name;
+	if (1 < m_Instance)
+	{
+		char buffer[20];
+		sprintf(buffer, "%hd", m_Instance);
+		name += buffer;
+	}
+	return name;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -234,6 +256,14 @@ public:
 	bool operator()(ARBDogTitle* one, ARBDogTitle* two) const
 	{
 		if (one->GetDate() < two->GetDate())
+			return m_bDescending;
+		else if (one->GetDate() > two->GetDate())
+			return !m_bDescending;
+		else if (one->GetVenue() < two->GetVenue())
+			return m_bDescending;
+		else if (one->GetVenue() > two->GetVenue())
+			return !m_bDescending;
+		else if (one->GetRawName() < two->GetRawName())
 			return m_bDescending;
 		else
 			return !m_bDescending;
@@ -267,10 +297,27 @@ ARBDogTitle const* ARBDogTitleList::FindTitle(
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue
-		&& (*iter)->GetName() == inTitle)
+		&& (*iter)->GetRawName() == inTitle)
 			return *iter;
 	}
 	return NULL;
+}
+
+short ARBDogTitleList::FindMaxInstance(
+	std::string const& inVenue,
+	std::string const& inTitle) const
+{
+	short inst = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetRawName() == inTitle
+		&& (*iter)->GetInstance() > inst)
+		{
+			inst = (*iter)->GetInstance();
+		}
+	}
+	return inst;
 }
 
 int ARBDogTitleList::RenameVenue(
@@ -321,7 +368,7 @@ int ARBDogTitleList::NumTitlesInDivision(
 			{
 				for (ARBConfigTitleList::const_iterator iterTitles = pDiv->GetTitles().begin(); iterTitles != pDiv->GetTitles().end(); ++iterTitles)
 				{
-					if ((*iter)->GetName() == (*iterTitles)->GetName())
+					if ((*iter)->GetRawName() == (*iterTitles)->GetName())
 						++count;
 				}
 			}
@@ -362,7 +409,7 @@ int ARBDogTitleList::DeleteDivision(
 					!bFound && iterTitles != pDiv->GetTitles().end();
 					++iterTitles)
 				{
-					if ((*iter)->GetName() == (*iterTitles)->GetName())
+					if ((*iter)->GetRawName() == (*iterTitles)->GetName())
 					{
 						++count;
 						iter = erase(iter);
@@ -384,7 +431,7 @@ int ARBDogTitleList::NumTitlesInUse(
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetVenue() == inVenue && (*iter)->GetName() == inTitle)
+		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inTitle)
 			++count;
 	}
 	return count;
@@ -398,33 +445,28 @@ int ARBDogTitleList::RenameTitle(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetVenue() == inVenue && (*iter)->GetName() == inOldTitle)
+		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inOldTitle)
 		{
 			++count;
-			(*iter)->SetName(inNewTitle);
+			(*iter)->SetName(inNewTitle, (*iter)->GetInstance());
 		}
 	}
 	return count;
 }
 
-int ARBDogTitleList::DeleteTitle(
-	std::string const& inVenue,
-	std::string const& inTitle)
+bool ARBDogTitleList::DeleteTitle(ARBDogTitle const* inTitle)
 {
-	std::string venue(inVenue);
-	std::string title(inTitle);
-	int count = 0;
-	for (iterator iter = begin(); iter != end(); )
+	if (!inTitle)
+		return false;
+	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetVenue() == venue && (*iter)->GetName() == title)
+		if (*(*iter) == *inTitle)
 		{
-			++count;
 			erase(iter);
+			return true;
 		}
-		else
-			++iter;
 	}
-	return count;
+	return false;
 }
 
 ARBDogTitle* ARBDogTitleList::AddTitle(ARBDogTitle* inTitle)

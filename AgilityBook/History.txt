@@ -1,10 +1,11 @@
-1/2/2005: v1.5.0.10 <in development>
+1/10/2005: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Renamed 'machPts' to 'speedPts'.
   - Added 'LongName' to 'Venue'.
   - Added 'SubName' to 'Event','Run','ExistingPoints'.
+  - Added 'allowMany' to 'Titles', 'instance' to 'Title'.
   - Updated AAC.
   - Added CKC and TDAA.
 - New features / Enhancements:

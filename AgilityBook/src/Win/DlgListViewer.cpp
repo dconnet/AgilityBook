@@ -1084,9 +1084,8 @@ BOOL CDlgListViewer::OnInitDialog()
 	if (m_Runs)
 	{
 		std::set<std::string> names;
-		for (std::list<RunInfo>::const_iterator iter = m_Runs->begin();
-			iter != m_Runs->end();
-			++iter)
+		std::list<RunInfo>::const_iterator iter;
+		for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
 		{
 			if ((iter->second)->GetSubName().length())
 				names.insert((iter->second)->GetSubName());
@@ -1143,9 +1142,7 @@ BOOL CDlgListViewer::OnInitDialog()
 				m_ctrlList.InsertItem(&item);
 			}
 		}
-		for (std::list<RunInfo>::const_iterator iter = m_Runs->begin();
-			iter != m_Runs->end();
-			++iter)
+		for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
 		{
 			ARBDogTrial const* pTrial = iter->first;
 			ARBDogRun const* pRun = iter->second;

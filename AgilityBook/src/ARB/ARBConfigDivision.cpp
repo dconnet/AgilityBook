@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
@@ -216,6 +217,7 @@ bool ARBConfigDivision::Update(int indent, ARBConfigDivision const* inDivNew, st
 				else
 				{
 					++nChanged;
+					pTitle->SetAllowMany((*iterTitle)->AllowMany());
 					pTitle->SetLongName((*iterTitle)->GetLongName());
 					pTitle->SetDescription((*iterTitle)->GetDescription());
 				}

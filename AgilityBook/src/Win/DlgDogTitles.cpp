@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -115,15 +116,19 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 				rc = 1;
 			break;
 		case 3: // name
-			if (pTitle1->GetName() < pTitle2->GetName())
-				rc = -1;
-			else if (pTitle1->GetName() > pTitle2->GetName())
-				rc = 1;
+			{
+				std::string n1 = pTitle1->GetGenericName();
+				std::string n2 = pTitle2->GetGenericName();
+				if (n1 < n2)
+					rc = -1;
+				else if (n1 > n2)
+					rc = 1;
+			}
 			break;
 		case 4: // nice name
 			{
-				std::string name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetName());
-				std::string name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetName());
+				std::string name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				std::string name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -254,8 +259,8 @@ void CDlgDogTitles::ListTitles()
 		else
 			m_ctrlTitles.SetItemText(nItem, 1, "<Unearned>");
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());
-		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetName().c_str());
-		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetName()).c_str());
+		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetGenericName().c_str());
+		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetRawName()).c_str());
 		++i;
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
@@ -376,7 +381,7 @@ void CDlgDogTitles::OnTitleDelete()
 	if (0 <= i)
 	{
 		ARBDogTitle const* pTitle = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
-		m_Titles.DeleteTitle(pTitle->GetVenue(), pTitle->GetName());
+		m_Titles.DeleteTitle(pTitle);
 		m_ctrlTitles.DeleteItem(i);
 	}
 }

@@ -12,12 +12,13 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-01-02 DRC File version 10.1.
+2005-01-10 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
                Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
                Added 'LongName' to 'Venue'.
                Added 'SubName' to 'Event','Run','ExistingPoints'.
+               Added 'allowMany' to 'Titles', 'instance' to 'Title'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -159,6 +160,7 @@ top-ten points. The 'Count' value is how they are accumulated
 	<!ATTLIST Titles
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
+		allowMany (y|n) 'n'
 		>
 
 <!--
@@ -318,6 +320,7 @@ depends on how a venue has been defined above.
 		Date CDATA #IMPLIED
 		Venue CDATA #REQUIRED
 		Name CDATA #REQUIRED
+		instance CDATA #IMPLIED
 		isReceived (y|n) 'n'
 		isHidden (y|n) 'n'
 	>

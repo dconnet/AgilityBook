@@ -5,9 +5,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2005-01-02 DRC Configuration version 7.
+2005-01-10 DRC Configuration version 7.
                AAC: Updated new rules. Added CKC and TDAA.
-			   Added SubNames to events.
+			   Also see comments in dtd.
 2004-10-06 DRC Configuration version 6.
                CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
                points.  Change points in Specialist to be like LevelC.
@@ -179,7 +179,7 @@ Revision History:
 				<Titles LongName="Open JWW" Name="OAJ">3 Qs</Titles>
 				<Titles LongName="Agility Excellent JWW" Name="AXJ">3 Qs</Titles>
 				<Titles LongName="Master Excellent JWW" Name="MXJ">10 Qs</Titles>
-				<Titles LongName="Master Agility Champion" Name="MACH">20 Double Qs, 750 Mach points</Titles>
+				<Titles LongName="Master Agility Champion" Name="MACH" allowMany="y">20 Double Qs, 750 Mach points</Titles>
 			</Division>
 			<Division Name="Preferred">
 				<Level Name="Novice">
@@ -192,11 +192,11 @@ Revision History:
 				<Titles LongName="Novice Agility Preferred" Name="NAP">3 Qs</Titles>
 				<Titles LongName="Open Agility Preferred" Name="OAP">3 Qs</Titles>
 				<Titles LongName="Agility Excellent Preferred" Name="AXP">3 Qs</Titles>
-				<Titles LongName="Master Agility Excellent Preferred" Name="MXP">10 Qs</Titles>
+				<Titles LongName="Master Agility Excellent Preferred" Name="MXP" allowMany="y">10 Qs</Titles>
 				<Titles LongName="Novice JWW Preferred" Name="NJP">3 Qs</Titles>
 				<Titles LongName="Open JWW Preferred" Name="OJP">3 Qs</Titles>
 				<Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
-				<Titles LongName="Master Excellent JWW Preferred" Name="MJP">10 Qs</Titles>
+				<Titles LongName="Master Excellent JWW Preferred" Name="MJP" allowMany="y">10 Qs</Titles>
 			</Division>
 			<Event Name="Standard" hasTable="y">
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">

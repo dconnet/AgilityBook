@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-08-21 DRC Added ability to import dog/trial/run/judge info.
  * @li 2004-02-26 DRC Moved configuration update logic to the doc.
@@ -429,7 +430,7 @@ BOOL CWizardStart::OnWizardFinish()
 											iter != pDog->GetTitles().end();
 											++iter)
 										{
-											ARBDogTitle const* pTitle = pExisting->GetTitles().FindTitle((*iter)->GetVenue(), (*iter)->GetName());
+											ARBDogTitle const* pTitle = pExisting->GetTitles().FindTitle((*iter)->GetVenue(), (*iter)->GetRawName());
 											if (!pTitle)
 											{
 												++countTitles;

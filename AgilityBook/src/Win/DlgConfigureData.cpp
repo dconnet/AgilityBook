@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-04-02 DRC Up the ref count to prevent problems. See comments below.
  * @li 2004-01-14 DRC Use complete title name instead of nice name. When
  *                    renaming a title and that name is in use, prompt to merge.
@@ -217,7 +218,7 @@ CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 
 CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
-	return m_Title->GetCompleteName().c_str();
+	return m_Title->GetCompleteName(-1).c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////

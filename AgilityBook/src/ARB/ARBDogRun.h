@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -473,10 +474,10 @@ public:
 		ARBErrorCallback& ioCallback);
 
 	/**
-	 * Sort the list by date.
-	 * @param inDescending Sort in descending or ascending order.
+	 * Sort the list by date in ascending order. The user interface handles
+	 * displaying different sort orders.
 	 */
-	void sort(bool inDescending);
+	void sort();
 
 	/**
 	 * Get the earliest date in the list.

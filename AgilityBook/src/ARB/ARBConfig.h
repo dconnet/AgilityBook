@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -42,6 +43,7 @@
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
+class ARBDogTitle;
 class ARBErrorCallback;
 class ARBVersion;
 class Element;
@@ -137,14 +139,12 @@ public:
 
 	/**
 	 * Convenience function to get the complete name of a title.
-	 * @param inVenue Venue that contains inTitle.
-	 * @param inTitle Name of title.
+	 * @param inTitle Title.
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
 	std::string GetTitleCompleteName(
-		std::string const& inVenue,
-		std::string const& inTitle,
+		ARBDogTitle const* inTitle,
 		bool bAbbrevFirst = true) const;
 
 	/**
