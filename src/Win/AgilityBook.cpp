@@ -105,12 +105,14 @@ void UpdateVersion(bool bVerbose)
 				buffer[nChars] = 0;
 				ver += buffer;
 			}
+			pFile->Close();
 			delete pFile;
 		}
 		session.Close();
 	}
-	catch (CInternetException*)
+	catch (CInternetException* ex)
 	{
+		ex->Delete();
 		ver.Empty();
 	}
 
