@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-16 DRC Fixed a bug in Update with Scoring.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
@@ -171,7 +172,7 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 			for (iter2 = inEventNew->GetScorings().begin(); iter2 != inEventNew->GetScorings().end(); ++iter2)
 			{
 				if ((*iter1)->GetDivision() == (*iter2)->GetDivision()
-				&& (*iter1)->GetLevel() == (*iter1)->GetLevel())
+				&& (*iter1)->GetLevel() == (*iter2)->GetLevel())
 				{
 					bFound = true;
 					if (*(*iter1) == *(*iter2))
@@ -191,7 +192,7 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 			for (iter1 = GetScorings().begin(); iter1 != GetScorings().end(); ++iter1)
 			{
 				if ((*iter1)->GetDivision() == (*iter2)->GetDivision()
-				&& (*iter1)->GetLevel() == (*iter1)->GetLevel())
+				&& (*iter1)->GetLevel() == (*iter2)->GetLevel())
 				{
 					bFound = true;
 					break;
@@ -345,15 +346,15 @@ ARBConfigEvent* ARBConfigEventList::FindEvent(const std::string& inEvent)
 	return NULL;
 }
 
-ARBConfigEvent* ARBConfigEventList::AddEvent(const ARBConfigEvent* inEvent)
+ARBConfigEvent* ARBConfigEventList::AddEvent(ARBConfigEvent* inEvent)
 {
 	if (!inEvent
 	|| 0 == inEvent->GetName().length()
 	|| FindEvent(inEvent->GetName()))
 		return NULL;
-	ARBConfigEvent* pEvent = new ARBConfigEvent(*inEvent);
-	push_back(pEvent);
-	return pEvent;
+	inEvent->AddRef();
+	push_back(inEvent);
+	return inEvent;
 }
 
 bool ARBConfigEventList::DeleteEvent(const std::string& inEvent)

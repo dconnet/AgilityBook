@@ -32,6 +32,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-09 DRC Moved fonts to new page.
+ * @li 2003-07-31 DRC Allow screen fonts for printer font selection. Also, the
+ *                    wrong font was created for the printer date font.
  */
 
 #include "stdafx.h"
@@ -79,19 +82,11 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_sizeX, 10, 1000);
 	DDX_Text(pDX, IDC_SIZE_Y, m_sizeY);
 	DDV_MinMaxInt(pDX, m_sizeY, 10, 1000);
-	DDX_Control(pDX, IDC_FONT_DATE_TEXT, m_ctrlFontDate);
-	DDX_Control(pDX, IDC_FONT_TEXT_TEXT, m_ctrlFontText);
-	DDX_Control(pDX, IDC_FONT2_DATE_TEXT, m_ctrlFont2Date);
-	DDX_Control(pDX, IDC_FONT2_TEXT_TEXT, m_ctrlFont2Text);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
-	ON_BN_CLICKED(IDC_FONT_DATE, OnFontDate)
-	ON_BN_CLICKED(IDC_FONT_TEXT, OnFontText)
-	ON_BN_CLICKED(IDC_FONT2_DATE, OnFont2Date)
-	ON_BN_CLICKED(IDC_FONT2_TEXT, OnFont2Text)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -101,63 +96,6 @@ END_MESSAGE_MAP()
 BOOL CDlgOptionsCalendar::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
-	for (int i = 0; i < 2; ++i)
-	{
-		m_fontDateInfo[i].CreateFont(m_fontDate[i]);
-		m_fontTextInfo[i].CreateFont(m_fontText[i]);
-	}
-	m_ctrlFontDate.SetFont(&(m_fontDate[0]));
-	m_ctrlFontText.SetFont(&(m_fontText[0]));
-	m_ctrlFont2Date.SetFont(&(m_fontDate[1]));
-	m_ctrlFont2Text.SetFont(&(m_fontText[1]));
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-void CDlgOptionsCalendar::OnFontDate() 
-{
-	LOGFONT logFont;
-	m_fontDate[0].GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_SCREENFONTS);
-	if (IDOK == dlg.DoModal())
-	{
-		m_fontDateInfo[0].CreateFont(dlg, m_fontDate[0]);
-		m_ctrlFontDate.SetFont(&(m_fontDate[0]));
-	}
-}
-
-void CDlgOptionsCalendar::OnFontText() 
-{
-	LOGFONT logFont;
-	m_fontText[0].GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_SCREENFONTS);
-	if (IDOK == dlg.DoModal())
-	{
-		m_fontTextInfo[0].CreateFont(dlg, m_fontText[0]);
-		m_ctrlFontText.SetFont(&(m_fontText[0]));
-	}
-}
-
-void CDlgOptionsCalendar::OnFont2Date() 
-{
-	LOGFONT logFont;
-	m_fontDate[1].GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_PRINTERFONTS);
-	if (IDOK == dlg.DoModal())
-	{
-		m_fontDateInfo[1].CreateFont(dlg, m_fontText[1]);
-		m_ctrlFontDate.SetFont(&(m_fontDate[1]));
-	}
-}
-
-void CDlgOptionsCalendar::OnFont2Text() 
-{
-	LOGFONT logFont;
-	m_fontText[1].GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_PRINTERFONTS);
-	if (IDOK == dlg.DoModal())
-	{
-		m_fontTextInfo[1].CreateFont(dlg, m_fontText[1]);
-		m_ctrlFontText.SetFont(&(m_fontText[1]));
-	}
 }

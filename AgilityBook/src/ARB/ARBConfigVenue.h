@@ -159,7 +159,7 @@ public:
 	const ARBConfigVenue* FindVenue(const std::string& inVenue) const;
 	ARBConfigVenue* FindVenue(const std::string& inVenue);
 	ARBConfigVenue* AddVenue(const std::string& inVenue);
-	ARBConfigVenue* AddVenue(const ARBConfigVenue* inVenue);
+	ARBConfigVenue* AddVenue(ARBConfigVenue* inVenue);
 	int DeleteVenue(const std::string& inVenue);
 
 	/**

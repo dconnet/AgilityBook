@@ -187,16 +187,15 @@ ARBConfigOtherPoints* ARBConfigOtherPointsList::FindOtherPoints(const std::strin
 	return NULL;
 }
 
-ARBConfigOtherPoints* ARBConfigOtherPointsList::AddOtherPoints(const ARBConfigOtherPoints* inOther)
+ARBConfigOtherPoints* ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPoints* inOther)
 {
 	// Global uniqueness must be ensured by the calling function.
-	ARBConfigOtherPoints* pOther = NULL;
 	if (inOther)
 	{
-		pOther = new ARBConfigOtherPoints(*inOther);
-		push_back(pOther);
+		inOther->AddRef();
+		push_back(inOther);
 	}
-	return pOther;
+	return inOther;
 }
 
 bool ARBConfigOtherPointsList::DeleteOtherPoints(const std::string& inName)

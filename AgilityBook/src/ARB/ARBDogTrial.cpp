@@ -637,15 +637,14 @@ int ARBDogTrialList::DeleteEvent(
 	return count;
 }
 
-ARBDogTrial* ARBDogTrialList::AddTrial(const ARBDogTrial* inTrial)
+ARBDogTrial* ARBDogTrialList::AddTrial(ARBDogTrial* inTrial)
 {
-	ARBDogTrial* pTrial = NULL;
 	if (inTrial)
 	{
-		pTrial = new ARBDogTrial(*inTrial);
-		push_back(pTrial);
+		inTrial->AddRef();
+		push_back(inTrial);
 	}
-	return pTrial;
+	return inTrial;
 }
 
 bool ARBDogTrialList::DeleteTrial(const ARBDogTrial* inTrial)

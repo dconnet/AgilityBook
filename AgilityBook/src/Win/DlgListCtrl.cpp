@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-08 DRC In Partners, the dog's number wasn't being saved.
+ * @li 2003-08-25 DRC Set listctrl selection when adding/deleting items.
  * @li 2003-07-14 DRC Fixed bug where a new faulttype didn't show up until the
  *                    run was actually saved.
  */
@@ -335,7 +337,7 @@ bool CDlgListCtrlDataPartners::OnEdit()
 void CDlgListCtrlDataPartners::Apply()
 {
 	if (0 < m_Partner->GetHandler().length() && 0 < m_Partner->GetDog().length())
-		m_pRun->GetPartners().AddPartner(m_Partner->GetHandler(), m_Partner->GetDog());
+		m_pRun->GetPartners().AddPartner(m_Partner);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -585,6 +587,8 @@ BOOL CDlgListCtrl::OnInitDialog()
 		item.lParam = reinterpret_cast<LPARAM>((*iter));
 		m_ctrlList.InsertItem(&item);
 	}
+	if (0 < i)
+		m_ctrlList.SetSelection(0);
 
 	for (i = 0; i < nCols; ++i)
 		m_ctrlList.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
@@ -683,7 +687,7 @@ void CDlgListCtrl::OnNew()
 					item.iSubItem = 0;
 					item.pszText = LPSTR_TEXTCALLBACK;
 					item.lParam = reinterpret_cast<LPARAM>(pData);
-					m_ctrlList.InsertItem(&item);
+					m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 				}
 			}
 			cal->Release();
@@ -704,7 +708,7 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
-				m_ctrlList.InsertItem(&item);
+				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 		}
 		break;
@@ -722,7 +726,7 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
-				m_ctrlList.InsertItem(&item);
+				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 			pOther->Release();
 		}
@@ -741,7 +745,7 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
-				m_ctrlList.InsertItem(&item);
+				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 			partner->Release();
 		}
@@ -770,6 +774,10 @@ void CDlgListCtrl::OnDelete()
 	if (0 <= nItem)
 	{
 		m_ctrlList.DeleteItem(nItem);
+		if (nItem == m_ctrlList.GetItemCount())
+			--nItem;
+		if (0 <= nItem)
+			m_ctrlList.SetSelection(nItem);
 		UpdateControls();
 	}
 }

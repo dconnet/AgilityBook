@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-08 DRC Changed AddPartner usage.
  */
 
 #include "ARBBase.h"
@@ -116,7 +117,5 @@ public:
 		return !isEqual(rhs);
 	}
 
-	ARBDogRunPartner* AddPartner(
-		const std::string& inHandler,
-		const std::string& inDog);
+	ARBDogRunPartner* AddPartner(ARBDogRunPartner* inPartner);
 };

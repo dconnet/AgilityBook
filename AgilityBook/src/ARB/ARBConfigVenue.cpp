@@ -377,16 +377,16 @@ ARBConfigVenue* ARBConfigVenueList::AddVenue(const std::string& inVenue)
 	return pVenue;
 }
 
-ARBConfigVenue* ARBConfigVenueList::AddVenue(const ARBConfigVenue* inVenue)
+ARBConfigVenue* ARBConfigVenueList::AddVenue(ARBConfigVenue* inVenue)
 {
 	if (!inVenue)
 		return NULL;
 	if (NULL != FindVenue(inVenue->GetName()))
 		return NULL;
-	ARBConfigVenue* pVenue = new ARBConfigVenue(*inVenue);
-	push_back(pVenue);
+	inVenue->AddRef();
+	push_back(inVenue);
 	sort();
-	return pVenue;
+	return inVenue;
 }
 
 int ARBConfigVenueList::DeleteVenue(const std::string& inVenue)

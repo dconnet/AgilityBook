@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-21 DRC Added training log.
  */
 
 #include "stdafx.h"
@@ -45,6 +46,7 @@
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
+#include "AgilityBookViewTraining.h"
 #include "MainFrm.h"
 
 #ifdef _DEBUG
@@ -120,6 +122,8 @@ void CTabView::OnInitialUpdate()
 	GetTabCtrl().InsertItem(1, str);
 	str.LoadString(IDS_CALENDAR);
 	GetTabCtrl().InsertItem(2, str);
+	str.LoadString(IDS_TRAINING);
+	GetTabCtrl().InsertItem(3, str);
 
 	CCreateContext context;
 	context.m_pCurrentDoc = GetDocument();
@@ -162,10 +166,19 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_Panes.push_back(&m_splitterCal);
 
+	CAgilityBookViewTraining* training = (CAgilityBookViewTraining*)RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject();
+	m_Panes.push_back(training);
+	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
+	dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
+		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOSORTHEADER,
+		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+	training->SendMessage(WM_INITIALUPDATE);
+
 	int nSel = AfxGetApp()->GetProfileInt("Settings", "View", 0);
 	// The usage of 'View' has changed. It was cal=1,pts=2,runs=3. (v0.2.0.3)
 	// It is now the index of the tab.
-	if (0 > nSel || nSel > 2)
+	if (0 > nSel || nSel > 3)
 		nSel = 0;
 	SetCurSel(nSel);
 }
@@ -233,6 +246,10 @@ void CTabView::SetActiveView()
 		pView = m_pLastFocusCal;
 		pCommon = dynamic_cast<ICommonView*>((CView*)m_splitterRuns.GetPane(0,0));
 		break;
+	case 3:
+		pView = (CView*)m_Panes[nIndex];
+		pCommon = dynamic_cast<ICommonView*>(pView);
+		break;
 	}
 	if (pView)
 	{
@@ -243,7 +260,7 @@ void CTabView::SetActiveView()
 	{
 		CString msg;
 		if (pCommon->GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, pCommon->IsFiltered());
 	}
 }
 

@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "StdAfx.h"
@@ -47,6 +49,7 @@ static char THIS_FILE[] = __FILE__;
 
 ARBBase::ARBBase()
 	: m_RefCount(1)
+	, m_bFiltered(false)
 {
 }
 

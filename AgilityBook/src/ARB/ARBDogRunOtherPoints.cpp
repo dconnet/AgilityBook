@@ -120,13 +120,12 @@ bool ARBDogRunOtherPoints::Save(CElement& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBDogRunOtherPoints* ARBDogRunOtherPointsList::AddOtherPoints(const ARBDogRunOtherPoints* inOther)
+ARBDogRunOtherPoints* ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPoints* inOther)
 {
-	ARBDogRunOtherPoints* pOther = NULL;
 	if (inOther)
 	{
-		pOther = new ARBDogRunOtherPoints(*inOther);
-		push_back(pOther);
+		inOther->AddRef();
+		push_back(inOther);
 	}
-	return pOther;
+	return inOther;
 }

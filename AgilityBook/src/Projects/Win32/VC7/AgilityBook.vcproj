@@ -172,6 +172,9 @@
 				RelativePath="..\..\..\Win\AgilityBookViewRuns.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\AgilityBookViewTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\CheckTreeCtrl.cpp">
 			</File>
 			<File
@@ -232,6 +235,12 @@
 				RelativePath="..\..\..\Win\DlgOptionsFilter.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgOptionsFonts.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgOptionsTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.cpp">
 			</File>
 			<File
@@ -268,7 +277,13 @@
 				RelativePath="..\..\..\Win\DlgTitle.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgTrial.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\HyperLink.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\ListBox.cpp">
@@ -335,10 +350,16 @@
 				RelativePath="..\..\..\Win\AgilityBookViewRuns.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\AgilityBookViewTraining.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\CheckTreeCtrl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\ColumnOrder.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\CommonView.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgCalendar.h">
@@ -395,6 +416,12 @@
 				RelativePath="..\..\..\Win\DlgOptionsFilter.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgOptionsFonts.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgOptionsTraining.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.h">
 			</File>
 			<File
@@ -431,7 +458,13 @@
 				RelativePath="..\..\..\Win\DlgTitle.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgTraining.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgTrial.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\HyperLink.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\ListBox.h">
@@ -665,6 +698,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBDogTrial.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Arb\ARBTraining.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Arb\ARBTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBTypes.cpp">

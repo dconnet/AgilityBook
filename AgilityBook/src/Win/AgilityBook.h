@@ -52,6 +52,7 @@ private:
 	CSingleDocTemplate* m_pDocTemplateRuns;
 	CSingleDocTemplate* m_pDocTemplatePoints;
 	CSingleDocTemplate* m_pDocTemplateCal;
+	CSingleDocTemplate* m_pDocTemplateTraining;
 
 // Overrides
 	//{{AFX_VIRTUAL(CAgilityBookApp)

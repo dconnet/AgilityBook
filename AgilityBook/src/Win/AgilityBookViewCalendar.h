@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
 #include <vector>
@@ -53,15 +54,22 @@ public:
 	CAgilityBookDoc* GetDocument() const;
 	bool SetCurrentDate(const ARBDate& date, bool bEnsureVisible);
 
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
+
 	// ICommonView interface
+	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
 
 private:
-	size_t GetEntriesOn(const ARBDate& date, std::vector<ARBCalendar*>& entries) const;
+	size_t GetEntriesOn(
+		const ARBDate& date,
+		std::vector<ARBCalendar*>& entries,
+		bool bGetAll) const;
 	void LoadData();
 	CRect GetDateRect(const ARBDate& date, bool bLogical) const;
 	void GetDateFromPoint(CPoint pt, ARBDate& date);
 	std::vector<ARBCalendar*> m_Calendar;
+	std::vector<ARBCalendar*> m_CalendarHidden;
 	ARBDate m_First;	///< First date, adjusted to Mon of that week.
 	ARBDate m_Last;		///< Last trial date.
 	int m_nWeeks;		///< Number of visible weeks (range of first/last)
@@ -89,6 +97,9 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+
+private:
+	bool m_bSuppressSelect;
 
 // Generated message map functions
 protected:

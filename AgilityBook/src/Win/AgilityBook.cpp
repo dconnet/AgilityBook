@@ -44,6 +44,7 @@
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
+#include "AgilityBookViewTraining.h"
 #include "TabView.h"
 
 #include <xercesc/util/PlatformUtils.hpp>
@@ -183,6 +184,11 @@ BOOL CAgilityBookApp::InitInstance()
 		RUNTIME_CLASS(CAgilityBookDoc),
 		RUNTIME_CLASS(CMainFrame),
 		RUNTIME_CLASS(CAgilityBookViewCalendar));
+	m_pDocTemplateTraining = new CSingleDocTemplate(
+		IDR_MAINFRAME,
+		RUNTIME_CLASS(CAgilityBookDoc),
+		RUNTIME_CLASS(CMainFrame),
+		RUNTIME_CLASS(CAgilityBookViewTraining));
 
 	// Enable DDE Execute open
 	EnableShellOpen();
@@ -233,6 +239,7 @@ int CAgilityBookApp::ExitInstance()
 	delete m_pDocTemplateRuns;
 	delete m_pDocTemplatePoints;
 	delete m_pDocTemplateCal;
+	delete m_pDocTemplateTraining;
 	XMLPlatformUtils::Terminate();
 	return CWinApp::ExitInstance();
 }

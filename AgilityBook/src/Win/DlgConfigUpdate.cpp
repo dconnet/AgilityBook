@@ -110,7 +110,7 @@ bool CDlgConfigUpdate::LoadConfig(const char* pFile)
 			AfxMessageBox(AFX_IDP_FAILED_TO_OPEN_DOC);
 			return false;
 		}
-		if (!m_Book.Load(tree, false, true, false))
+		if (!m_Book.Load(tree, false, false, true, false))
 			return false;
 	}
 	return true;

@@ -32,6 +32,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ *                    Added creating titles/trials/runs from the Run view.
+ * @li 2003-08-25 DRC Mirror the selection in the tree.
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -40,6 +46,8 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "AgilityBookTree.h"
+#include "AgilityBookTreeData.h"
 #include "ARBTypes.h"
 #include "MainFrm.h"
 
@@ -231,19 +239,29 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
+	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemchanged)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_RUN, OnUpdateAgilityEditRun)
 	ON_COMMAND(ID_AGILITY_EDIT_RUN, OnAgilityEditRun)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
+	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TRIAL, OnUpdateAgilityNewTrial)
+	ON_COMMAND(ID_AGILITY_NEW_TRIAL, OnAgilityNewTrial)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_RUN, OnUpdateAgilityNewRun)
+	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 // CAgilityBookViewRuns construction/destruction
 
 CAgilityBookViewRuns::CAgilityBookViewRuns()
+	: m_bSuppressSelect(false)
 {
 }
 
@@ -284,7 +302,7 @@ void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, 
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookViewRuns::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -312,6 +330,21 @@ CAgilityBookDoc* CAgilityBookViewRuns::GetDocument() const // non-debug version 
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// Printing
+
+void CAgilityBookViewRuns::GetPrintLine(int nItem, CStringArray& line)
+{
+	CListView2::GetPrintLine(nItem, line);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+bool CAgilityBookViewRuns::IsFiltered() const
+{
+	return CAgilityBookOptions::IsFilterEnabled();
+}
+
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 {
 	int nQs = 0;
@@ -335,12 +368,12 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 
 void CAgilityBookViewRuns::LoadData()
 {
+	m_bSuppressSelect = true;
+	
 	CWaitCursor wait;
 
-	// Remember what's selected.
-	CAgilityBookViewRunsData* pCurData = GetItemData(GetSelection());
-	if (pCurData)
-		pCurData->AddRef();
+	// Mirror the selection in the tree here.
+	ARBDogRun* pCurRun = GetDocument()->GetCurrentRun();
 
 	// Reduce flicker.
 	GetListCtrl().SetRedraw(FALSE);
@@ -352,9 +385,9 @@ void CAgilityBookViewRuns::LoadData()
 	std::vector<CVenueFilter> venues;
 	CAgilityBookOptions::GetFilterVenue(venues);
 	list<ARBDogTrial*> trials;
-	ARBDogTrial* pTrial = GetDocument()->GetCurrentTrial();
-	if (pTrial)
-		trials.push_back(pTrial);
+	ARBDogTrial* pCurTrial = GetDocument()->GetCurrentTrial();
+	if (pCurTrial)
+		trials.push_back(pCurTrial);
 	else
 	{
 		ARBDog* pDog = GetDocument()->GetCurrentDog();
@@ -365,7 +398,7 @@ void CAgilityBookViewRuns::LoadData()
 			++iter)
 			{
 				ARBDogTrial* pTrial = (*iter);
-				if (CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+				if (!pTrial->IsFiltered())
 					trials.push_back(pTrial);
 			}
 		}
@@ -382,7 +415,7 @@ void CAgilityBookViewRuns::LoadData()
 			++i, ++iterRun)
 			{
 				ARBDogRun* pRun = (*iterRun);
-				if (!CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+				if (pRun->IsFiltered())
 					continue;
 				if (pRun->GetQ().Qualified())
 					++nQs;
@@ -394,7 +427,7 @@ void CAgilityBookViewRuns::LoadData()
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				int index = GetListCtrl().InsertItem(&item);
-				if (pCurData && pCurData->GetRun() && *(pCurData->GetRun()) == *pRun)
+				if (pCurRun && *pCurRun == *pRun)
 				{
 					SetSelection(index, true);
 				}
@@ -407,15 +440,16 @@ void CAgilityBookViewRuns::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
 	// Cleanup.
-	if (pCurData)
-		pCurData->Release();
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
+
+	m_bSuppressSelect = false;
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRuns message handlers
 
 void CAgilityBookViewRuns::OnDestroy() 
@@ -490,6 +524,33 @@ void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	// I only care about the item being selected.
+	if (0 <= pNMListView->iItem
+	&& (LVIF_STATE & pNMListView->uChanged)
+	&& !(LVIS_SELECTED & pNMListView->uOldState)
+	&& (LVIS_SELECTED & pNMListView->uNewState))
+	{
+		if (!m_bSuppressSelect)
+		{
+			CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
+			if (pData)
+			{
+				CAgilityBookTreeData* pTreeData = GetDocument()->GetTreeView()->FindData(TVI_ROOT, pData->GetRun());
+				if (pTreeData)
+				{
+					GetDocument()->GetTreeView()->SuppressSelect(true);
+					GetDocument()->GetTreeView()->GetTreeCtrl().SelectItem(pTreeData->GetHTreeItem());
+					GetDocument()->GetTreeView()->SuppressSelect(false);
+				}
+			}
+		}
+	}
+	*pResult = 0;
+}
+
 void CAgilityBookViewRuns::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
@@ -541,6 +602,54 @@ void CAgilityBookViewRuns::OnAgilityEditRun()
 		GetDocument()->EditRun(pData->GetRun());
 }
 
+void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityNewTitle()
+{
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		GetDocument()->AddTitle(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityNewTrial()
+{
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		GetDocument()->AddTrial(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityNewRun()
+{
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		GetDocument()->AddRun(pData->GetRun());
+}
+
 void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
@@ -555,4 +664,58 @@ void CAgilityBookViewRuns::OnAgilityDeleteRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetItemCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnEditCopy()
+{
+	if (AfxGetMainWnd()->OpenClipboard())
+	{
+		EmptyClipboard();
+
+		CString data;
+		CStringArray line;
+
+		// Take care of the header.
+		GetPrintLine(-1, line);
+		for (int i = 0; i < line.GetSize(); ++i)
+		{
+			if (0 < i)
+				data += '\t';
+			data += line[i];
+		}
+		// Now all the data.
+		for (int index = 0; index < GetListCtrl().GetItemCount(); ++index)
+		{
+			CStringArray line;
+			GetPrintLine(index, line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		// alloc mem block & copy text in
+		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
+		if (NULL != temp)
+		{
+			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			lstrcpy(str, (LPCTSTR)data);
+			GlobalUnlock((void*)temp);
+			// send data to clipbard
+			SetClipboardData(CF_TEXT, temp);
+		}
+
+		CloseClipboard();
+	}
 }
