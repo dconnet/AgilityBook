@@ -11,6 +11,8 @@
   - When copying an item in the tree, also copy some text to the clipboard.
   - Copy the runs in the view to the clipboard in tab-separated form (ctrl+c).
     It is copied in the same format that it is printed in.
+  - Added copy/paste menu items to the Tree's context menu.
+  - When pasting a new trial or run, select the new item.
 - Bug fixes
   - A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the
     score on all runs and title points on NQ+Qs. It should only compute score
