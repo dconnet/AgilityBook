@@ -1733,8 +1733,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,3,0,9
- PRODUCTVERSION 1,3,0,9
+ FILEVERSION 1,3,1,9
+ PRODUCTVERSION 1,3,1,9
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1751,12 +1751,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "dcon Software"
             VALUE "FileDescription", "Agility Record Book"
-            VALUE "FileVersion", "1.3.0.9"
+            VALUE "FileVersion", "1.3.1.9"
             VALUE "InternalName", "AgilityBook.exe"
             VALUE "LegalCopyright", "Copyright © 2002-2004 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
-            VALUE "ProductVersion", "1.3.0.9"
+            VALUE "ProductVersion", "1.3.1.9"
         END
     END
     BLOCK "VarFileInfo"
@@ -2320,6 +2320,10 @@ BEGIN
     IDS_BUTTON_ABORT        "Abort"
     IDS_BUTTON_IGNORE       "Ignore"
     IDS_BUTTON_RETRY        "Retry"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_RUNS                "Runs"
     IDS_POINTS              "Points"
     IDS_CALENDAR            "Calendar"
@@ -2433,7 +2437,7 @@ BEGIN
     IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
     IDS_ABOUT_VERSION       "Version %1"
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
-    IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
+    IDS_HELP_UPDATE         "http://dconnet.home.comcast.net"
     IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
     IDS_ABOUT_LINK_EMAILHELP 
                             "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."

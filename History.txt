@@ -1,3 +1,9 @@
+9/12/2004: v1.3.1.9
+- Bug fix
+  - My ISP host is no longer allowing direct access to files via
+    agilityrecordbook.com since that actually forwards to another location.
+    The URL must be properly qualified (meaning it points to comcast.net)
+
 9/12/2004: v1.3.0.9
 - Bumped Configuration v5:
   - Updated USDAA configuration to remove titling points from Tournament
