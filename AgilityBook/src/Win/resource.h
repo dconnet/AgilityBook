@@ -466,6 +466,7 @@
 #define IDS_COL_TRIAL                   4053
 #define IDS_COL_SUBNAME                 4054
 #define IDS_COL_VERIFIED                4055
+#define IDS_COL_MACH                    4056
 #define IDS_BUTTON_OK                   4080
 #define IDS_BUTTON_CANCEL               4081
 #define IDS_BUTTON_YES                  4082

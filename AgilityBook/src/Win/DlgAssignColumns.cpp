@@ -71,6 +71,7 @@ Runs Available fields:
   Faults
   Reference Runs: Q, Place, Score, Time, Name, Breed, Note
   CRCD
+  MACH
 
 Calendar
   Start Date
@@ -296,6 +297,8 @@ static struct
 		IO_LOG_SUBNAME,        true,  LVCFMT_LEFT,   IDS_COL_SUBNAME, NULL},
 	{CAgilityBookOptions::eViewTree,
 		IO_TREE_TRIAL_VERIFIED, false, 0, IDS_COL_VERIFIED, NULL},
+	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+		IO_RUNS_MACH,          false, LVCFMT_LEFT,   IDS_COL_MACH, NULL},
 };
 
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
@@ -423,8 +426,8 @@ static int const idxViewRunsList[] = {
 	IO_RUNS_REQ_CLOSING,	IO_RUNS_OPENING,		IO_RUNS_CLOSING,
 	IO_RUNS_REQ_POINTS,		IO_RUNS_POINTS,			IO_RUNS_PLACE,
 	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
-	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
-	IO_RUNS_FAULTS,
+	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_MACH,
+	IO_RUNS_COMMENTS,		IO_RUNS_FAULTS,
 -1};
 static int const idxViewCalendarList[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_LOCATION,
