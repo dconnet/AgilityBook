@@ -399,337 +399,479 @@ List of judges from all your runs, plus any created here.
 Comments about the judge.
 
 .topic HIDC_JUDGE_DELETE
-Delete the selected judge. If this judge is currently in use, only the comments
-will be deleted.
+Delete the selected judge. If this judge is currently in use, only the
+comments will be deleted.
 
 .topic HIDC_JUDGE_NEW
 Create a new judge.
 
 .topic HIDC_LIST
-TODO IDD_LISTCTRL
-.topic HIDC_LIST_DELETE
-TODO IDD_LISTCTRL
-.topic HIDC_LIST_EDIT
-TODO IDD_LISTCTRL
-.topic HIDC_LIST_MOVE_DOWN
-TODO IDD_LISTCTRL
-.topic HIDC_LIST_MOVE_UP
-TODO IDD_LISTCTRL
-.topic HIDC_LIST_NEW
-TODO IDD_LISTCTRL
-.topic HIDC_LIST_TRIAL
-TODO IDD_LISTCTRL
+List of entries.
 
-.topic HIDC_MESSAGE
-TODO IDD_MESSAGE
+.topic HIDC_LIST_DELETE
+Delete the selected entry.
+
+.topic HIDC_LIST_EDIT
+Edit the selected entry.
+
+.topic HIDC_LIST_MOVE_DOWN
+Move the selected entry down.
+
+.topic HIDC_LIST_MOVE_UP
+Move the selected entry up.
+
+.topic HIDC_LIST_NEW
+Create a new entry.
+
+.topic HIDC_LIST_TRIAL
+Create a trial from the selected calendar entry. Only entries with recognized
+venues can create a trial directly.
 
 .topic HIDC_NAME
-TODO IDD_NAME
+Enter a name.
 
 .topic HIDC_OTHER_DESC
-TODO IDD_OTHER_POINT
+Description of the selected Other Points.
+
 .topic HIDC_OTHER_OTHERPOINTS
-TODO IDD_OTHER_POINT
+Select one of the configured Other Point items.
+
 .topic HIDC_OTHER_POINTS
-TODO IDD_OTHER_POINT
+Number of Other Points earned.
 
 .topic HIDC_PARTNER_CALLNAME
-TODO IDD_PARTNER
+Name of dog you partnered with.
+
 .topic HIDC_PARTNER_NAME
-TODO IDD_PARTNER
+Name of person you partnered with.
+
 .topic HIDC_PARTNER_REG_NUM
-TODO IDD_PARTNER
+Registration number of dog.
 
 .topic HIDC_REFRUN_BREED
-TODO IDD_REF_RUN
+Breed of dog.
+
 .topic HIDC_REFRUN_NAME
-TODO IDD_REF_RUN
+Name of dog.
+
 .topic HIDC_REFRUN_NOTES
-TODO IDD_REF_RUN
+General notes about run.
+
 .topic HIDC_REFRUN_PLACE
-TODO IDD_REF_RUN
+Where did this dog place? If not known, set to 0.
+
 .topic HIDC_REFRUN_POINTS
-TODO IDD_REF_RUN
+Score of run.
+
 .topic HIDC_REFRUN_Q
-TODO IDD_REF_RUN
+Qualifying status.
+
 .topic HIDC_REFRUN_TIME
-TODO IDD_REF_RUN
+Time of run.
 
 .topic HIDC_REGNUM_HEIGHT
-TODO IDD_REG_NUM
+Measured height.
+
 .topic HIDC_REGNUM_RECEIVED
-TODO IDD_REG_NUM
+Have you received a permanent height card?
+
 .topic HIDC_REGNUM_REG_NUM
-TODO IDD_REG_NUM
+Registration number of dog.
+
 .topic HIDC_REGNUM_VENUES
-TODO IDD_REG_NUM
+Select an existing venue this registration is for.
 
 .topic HIDC_REORDER_LIST
-TODO IDD_REORDER
+List of runs in trial to be reordered.
+
 .topic HIDC_REORDER_MOVE_DOWN
-TODO IDD_REORDER
+Move the selected run down.
+
 .topic HIDC_REORDER_MOVE_UP
-TODO IDD_REORDER
+Move the selected run up.
 
 .topic HIDC_RUNCOMMENT_COMMENTS
-TODO IDD_RUN_COMMENTS
+General comments about this run.
+
 .topic HIDC_RUNCOMMENT_COMMENTS_FAULTS
-TODO IDD_RUN_COMMENTS
+Add a specific fault to the list of faults.
+
 .topic HIDC_RUNCOMMENT_FAULTS_LIST
-TODO IDD_RUN_COMMENTS
+List of specific faults in this run.
 
 .topic HIDC_RUNCRCD_COPY
-TODO IDD_RUN_CRCD
+Clear the existing course, or paste the clipboard data here.
+
 .topic HIDC_RUNCRCD_CRCD
-TODO IDD_RUN_CRCD
+Preview of course.
+
 .topic HIDC_RUNCRCD_EDIT
-TODO IDD_RUN_CRCD
+Display the course in a resizeable viewing window.
+
 .topic HIDC_RUNCRCD_VIEW
-TODO IDD_RUN_CRCD
+Toggle the course view between the image and text.
 
 .topic HIDC_RUNLINK_DELETE
-TODO IDD_RUN_LINK
+Delete the selected link from this list.
+
 .topic HIDC_RUNLINK_EDIT
-TODO IDD_RUN_LINK
+Edit the path of the selected link.
+
 .topic HIDC_RUNLINK_LIST
-TODO IDD_RUN_LINK
+List of linked files.
+
 .topic HIDC_RUNLINK_NEW
-TODO IDD_RUN_LINK
+Create a new link.
+
 .topic HIDC_RUNLINK_OPEN
-TODO IDD_RUN_LINK
+Open the selected link using the associated Windows program.
 
 .topic HIDC_RUNREF_DELETE
-TODO IDD_RUN_REFERENCE
+Delete the selected reference run from this list.
+
 .topic HIDC_RUNREF_EDIT
-TODO IDD_RUN_REFERENCE
+Edit the selected reference run.
+
 .topic HIDC_RUNREF_NEW
-TODO IDD_RUN_REFERENCE
+Create a new reference run.
+
 .topic HIDC_RUNREF_REF_RUNS
-TODO IDD_RUN_REFERENCE
+List of reference runs.
 
 .topic HIDC_RUNSCORE_CLOSE_PTS
-TODO IDD_RUN_SCORE
+Number of points earned in the closing sequence.
+
 .topic HIDC_RUNSCORE_CLOSING_PTS
-TODO IDD_RUN_SCORE
+Number of points required in the closing sequence.
+
 .topic HIDC_RUNSCORE_CONDITIONS
-TODO IDD_RUN_SCORE
+Conditions of the run: weather, ground surface, etc.
+
 .topic HIDC_RUNSCORE_DATE
-TODO IDD_RUN_SCORE
+Date of this run.
+
 .topic HIDC_RUNSCORE_DIVISION
-TODO IDD_RUN_SCORE
+Division of this run.
+
 .topic HIDC_RUNSCORE_DOGS_QD
-TODO IDD_RUN_SCORE
+Number of dogs that qualified. Enter -1 if not known.
+
 .topic HIDC_RUNSCORE_EVENT
-TODO IDD_RUN_SCORE
+Type of run. This list is filled in based on data in the Division and Level
+lists. The event selected will control what fields are enabled on this dialog.
+
 .topic HIDC_RUNSCORE_FAULTS
-TODO IDD_RUN_SCORE
+Number of faults in this run.
+
 .topic HIDC_RUNSCORE_HANDLER
-TODO IDD_RUN_SCORE
+Who handled the dog? This may be blank.
+
 .topic HIDC_RUNSCORE_HEIGHT
-TODO IDD_RUN_SCORE
+Height the dog ran at. This list contains all heights previously run.
+You may enter any text you want.
+
 .topic HIDC_RUNSCORE_IN_CLASS
-TODO IDD_RUN_SCORE
+Number of dogs in this event. Enter -1 if not known.
+
 .topic HIDC_RUNSCORE_JUDGE
-TODO IDD_RUN_SCORE
+List of judges previously entered. You may enter any text you want.
+
 .topic HIDC_RUNSCORE_LEVEL
-TODO IDD_RUN_SCORE
+Level of this run.
+This list is filled in based on the data in the Division list.
+
 .topic HIDC_RUNSCORE_OPENING_PTS
-TODO IDD_RUN_SCORE
+Number of points required in the opening sequence.
+
 .topic HIDC_RUNSCORE_OPEN_PTS
-TODO IDD_RUN_SCORE
+Number of points earned in the opening sequence.
+
 .topic HIDC_RUNSCORE_OTHERPOINTS
-TODO IDD_RUN_SCORE
+Configure Other Point information here.
+
 .topic HIDC_RUNSCORE_PARTNER
-TODO IDD_RUN_SCORE
+List of partners.
+
 .topic HIDC_RUNSCORE_PARTNERS_EDIT
-TODO IDD_RUN_SCORE
+Configure Partner information.
+
 .topic HIDC_RUNSCORE_PLACE
-TODO IDD_RUN_SCORE
+Placement earned. Enter 0 if not known or doesn't apply.
+
 .topic HIDC_RUNSCORE_Q
-TODO IDD_RUN_SCORE
+Qualifying status of run.
+
 .topic HIDC_RUNSCORE_SCT
-TODO IDD_RUN_SCORE
+Standard Course Time.
+
 .topic HIDC_RUNSCORE_TABLE
-TODO IDD_RUN_SCORE
+Did this run have a table in it?
+
 .topic HIDC_RUNSCORE_TIME
-TODO IDD_RUN_SCORE
+Time of run.
+
 .topic HIDC_RUNSCORE_YARDS
-TODO IDD_RUN_SCORE
+Yardage of run. Enter 0 if not known or doesn't apply.
 
 .topic HIDC_SELECTURL_FILENAME
-TODO IDD_SELECT_URL
+Browse for a file to select.
+
 .topic HIDC_SELECTURL_NAME
-TODO IDD_SELECT_URL
+Filename or URL. Enter URLs using the "http://" notation.
 
 .topic HIDC_TITLE_DATE
-TODO IDD_TITLE
+Date title was earned.
+
 .topic HIDC_TITLE_DESC
-TODO IDD_TITLE
+Description of this title.
+
 .topic HIDC_TITLE_EARNED
-TODO IDD_TITLE
+Was this title earned? Unearned titles have no date. You may want to create
+entries for titles that cannot be earned and then hide them.
+
 .topic HIDC_TITLE_HIDDEN
-TODO IDD_TITLE
+Should this title be hidden?
+
 .topic HIDC_TITLE_RECEIVED
-TODO IDD_TITLE
+Have you received this title yet?
+
 .topic HIDC_TITLE_TITLES
-TODO IDD_TITLE
+List of titles available in the selected venue.
+
 .topic HIDC_TITLE_VENUES
-TODO IDD_TITLE
+Venue title was earned in.
 
 .topic HIDC_TRAINING_DATE
-TODO IDD_TRAINING
+Date of training log entry.
+
 .topic HIDC_TRAINING_NAME
-TODO IDD_TRAINING
+List of names previously created. You may type any text you want.
+
 .topic HIDC_TRAINING_SUBNAME
-TODO IDD_TRAINING
+List of sub-names previously created. You may type any text you want.
+
 .topic HIDC_TRAINING_NOTES
-TODO IDD_TRAINING
+Training Log entry.
 
 .topic HIDC_TRIAL_CLUBS
-TODO IDD_TRIAL
+List of clubs associated with this trial. The order of the clubs is very
+important.
+
 .topic HIDC_TRIAL_CLUB_DELETE
-TODO IDD_TRIAL
+Remove the selected club from this trial.
+
 .topic HIDC_TRIAL_CLUB_EDIT
-TODO IDD_TRIAL
+Edit the selected club.
+
 .topic HIDC_TRIAL_CLUB_NEW
-TODO IDD_TRIAL
+Create a new club to associate with this trial.
+
 .topic HIDC_TRIAL_LOCATION
-TODO IDD_TRIAL
+Where is this trial located.
+All previous locations are provided for convenience.
+
 .topic HIDC_TRIAL_NOTES
-TODO IDD_TRIAL
+General notes about the trial.
+
 .topic HIDC_TRIAL_VERIFIED
-TODO IDD_TRIAL
+Have the results of this trial been verified?
 
 .topic HIDC_OPTIONS_CAL_AUTO_DELETE
-TODO IDD_VIEW_OPTIONS_CALENDAR
+Automatically delete calendar entries that have passed.
+
 .topic HIDC_OPTIONS_CAL_DAY_OF_WEEK
-TODO IDD_VIEW_OPTIONS_CALENDAR
+Define with day of the week will be displayed as the first day in the calendar
+view.
+
 .topic HIDC_OPTIONS_CAL_HIDE_OLD
-TODO IDD_VIEW_OPTIONS_CALENDAR
+Hide calendar entries that have passed.
+
 .topic HIDC_OPTIONS_CAL_HIDE_OVERLAP
-TODO IDD_VIEW_OPTIONS_CALENDAR
+Hide calendar entries on days with multiple trials defined where you have
+entered a trial.
+
 .topic HIDC_OPTIONS_CAL_OLD_ENTRY_DAYS
-TODO IDD_VIEW_OPTIONS_CALENDAR
+An entry is defined as "past" when it is older than the specified number of
+days.
+
 .topic HIDC_OPTIONS_CAL_SIZE_X
-TODO IDD_VIEW_OPTIONS_CALENDAR
+Width of a day in the calendar view.
+
 .topic HIDC_OPTIONS_CAL_SIZE_Y
-TODO IDD_VIEW_OPTIONS_CALENDAR
+Height of a day in the calendar view.
 
 .topic HIDC_OPTIONS_FILTER_DATES_ALL
-TODO IDD_VIEW_OPTIONS_FILTER
+View all dates.
+
 .topic HIDC_OPTIONS_FILTER_DATES_RANGE
-TODO IDD_VIEW_OPTIONS_FILTER
+View only runs falling in the defined date range.
+
 .topic HIDC_OPTIONS_FILTER_DATE_END
-TODO IDD_VIEW_OPTIONS_FILTER
+View any runs before (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_FILTER_DATE_END_CHECK
-TODO IDD_VIEW_OPTIONS_FILTER
+View any runs before (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_FILTER_DATE_START
-TODO IDD_VIEW_OPTIONS_FILTER
+View any runs after (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_FILTER_DATE_START_CHECK
-TODO IDD_VIEW_OPTIONS_FILTER
+View any runs after (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_FILTER_RUNS_ALL
-TODO IDD_VIEW_OPTIONS_FILTER
+View both qualifying and non-qualifying runs.
+
 .topic HIDC_OPTIONS_FILTER_RUNS_NON_Q
-TODO IDD_VIEW_OPTIONS_FILTER
+View only non-qualifying runs.
+
 .topic HIDC_OPTIONS_FILTER_RUNS_Q
-TODO IDD_VIEW_OPTIONS_FILTER
+View only qualifying runs.
+
 .topic HIDC_OPTIONS_FILTER_VENUES
 Select the levels within each venue that you wish to view.
+
 .topic HIDC_OPTIONS_FILTER_VENUES_ALL
 View all levels in all venues.
+
 .topic HIDC_OPTIONS_FILTER_VENUES_SELECTED
-Select the levels you wish to view in the tree below.
+View only the levels selected below.
 
 .topic HIDC_OPTIONS_FONT_CAL_PRINT_DATE
-TODO IDD_VIEW_OPTIONS_FONTS
+Set the font to be used when printing the dates in the calendar.
+
 .topic HIDC_OPTIONS_FONT_CAL_PRINT_TEXT
-TODO IDD_VIEW_OPTIONS_FONTS
+Set the font to be used when printing text in the calendar.
+
 .topic HIDC_OPTIONS_FONT_CAL_VIEW_DATE
-TODO IDD_VIEW_OPTIONS_FONTS
+Set the font to be used when viewing the dates in the calendar.
+
 .topic HIDC_OPTIONS_FONT_CAL_VIEW_TEXT
-TODO IDD_VIEW_OPTIONS_FONTS
+Set the font to be used when viewing text in the calendar.
+
 .topic HIDC_OPTIONS_FONT_GENERAL_PRINT
-TODO IDD_VIEW_OPTIONS_FONTS
+Set the font to be used when printing all other text.
 
 .topic HIDC_OPTIONS_PGM_AUTOSHOW
-TODO IDD_VIEW_OPTIONS_PROGRAM
+After adding a title, automatically display the dialog containing all titles.
+
 .topic HIDC_OPTIONS_PGM_AUTO_CHECK
-TODO IDD_VIEW_OPTIONS_PROGRAM
+Automatically check every 30 days to see if a new version of the program is
+available.
+
 .topic HIDC_OPTIONS_PGM_BROWSE
-TODO IDD_VIEW_OPTIONS_PROGRAM
+Browse for a Windows .bmp file to use as the splash screen.
+
 .topic HIDC_OPTIONS_PGM_EDIT
-TODO IDD_VIEW_OPTIONS_PROGRAM
+Number of backup copies to keep. Each time you save the file, a new backup will
+be made. Setting this to 0 turns the feature off.
+
 .topic HIDC_OPTIONS_PGM_FILENAME
-TODO IDD_VIEW_OPTIONS_PROGRAM
+.BMP file to use as the splash screen. If the file does not exist or the entry
+is empty, the default splash screen will be used.
 
 .topic HIDC_OPTIONS_TRAINING_DATES_ALL
-TODO IDD_VIEW_OPTIONS_TRAINING
+View all dates.
+
 .topic HIDC_OPTIONS_TRAINING_DATES_RANGE
-TODO IDD_VIEW_OPTIONS_TRAINING
+View only log entries falling in the defined date range.
+
 .topic HIDC_OPTIONS_TRAINING_DATE_END
-TODO IDD_VIEW_OPTIONS_TRAINING
+View any entries before (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_TRAINING_DATE_END_CHECK
-TODO IDD_VIEW_OPTIONS_TRAINING
+View any entries before (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_TRAINING_DATE_START
-TODO IDD_VIEW_OPTIONS_TRAINING
+View any entries after (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_TRAINING_DATE_START_CHECK
-TODO IDD_VIEW_OPTIONS_TRAINING
+View any entries after (inclusive) the specified date.
+
 .topic HIDC_OPTIONS_TRAINING_VENUES
-TODO IDD_VIEW_OPTIONS_TRAINING
+Names in existing training log entries.
+
 .topic HIDC_OPTIONS_TRAINING_VENUES_ALL
-TODO IDD_VIEW_OPTIONS_TRAINING
+View all names.
+
 .topic HIDC_OPTIONS_TRAINING_VENUES_SELECTED
-TODO IDD_VIEW_OPTIONS_TRAINING
+View only the selected names.
 
 .topic HIDC_WIZARD_EXPORT_ASSIGN
-TODO IDD_WIZARD_EXPORT
+Configure how the exported data is aligned. When the fields/columns are
+assigned, changes will be reflected in the preview below.
+
 .topic HIDC_WIZARD_EXPORT_DATE
-TODO IDD_WIZARD_EXPORT
+Format the date will be exported in.
+
 .topic HIDC_WIZARD_EXPORT_DELIM
-TODO IDD_WIZARD_EXPORT
+The specified character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_DELIM_COLON
-TODO IDD_WIZARD_EXPORT
+A colon character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_DELIM_COMMA
-TODO IDD_WIZARD_EXPORT
+A comma character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_DELIM_OTHER
-TODO IDD_WIZARD_EXPORT
+The specified character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_DELIM_SEMI
-TODO IDD_WIZARD_EXPORT
+A semi-colon character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_DELIM_SPACE
-TODO IDD_WIZARD_EXPORT
+A space character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_DELIM_TAB
-TODO IDD_WIZARD_EXPORT
+A tab character separates the various fields.
+
 .topic HIDC_WIZARD_EXPORT_PREVIEW
-TODO IDD_WIZARD_EXPORT
+Preview of how the exported data will appear.
+Use the 'Assign Columns' button above to align.
 
 .topic HIDC_WIZARD_IMPORT_ASSIGN
-TODO IDD_WIZARD_IMPORT
+Configure how the imported data is aligned. When the fields/columns are
+assigned, changes will be reflected in the preview below.
+
 .topic HIDC_WIZARD_IMPORT_DATE
-TODO IDD_WIZARD_IMPORT
+Format the imported date is in.
+
 .topic HIDC_WIZARD_IMPORT_DELIM
-TODO IDD_WIZARD_IMPORT
+The specified character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_DELIM_COLON
-TODO IDD_WIZARD_IMPORT
+A colon character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_DELIM_COMMA
-TODO IDD_WIZARD_IMPORT
+A comma character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_DELIM_OTHER
-TODO IDD_WIZARD_IMPORT
+The specified character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_DELIM_SEMI
-TODO IDD_WIZARD_IMPORT
+A semi-colon character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_DELIM_SPACE
-TODO IDD_WIZARD_IMPORT
+A space character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_DELIM_TAB
-TODO IDD_WIZARD_IMPORT
+A tab character separates the various fields.
+
 .topic HIDC_WIZARD_IMPORT_FILE
-TODO IDD_WIZARD_IMPORT
+Select a file to import.
+
 .topic HIDC_WIZARD_IMPORT_PREVIEW
-TODO IDD_WIZARD_IMPORT
+Preview of how the imported fields are aligned. Verify the data is aligned
+properly before importing. Use the 'Assign Columns' button above to align.
+
 .topic HIDC_WIZARD_IMPORT_ROW
-TODO IDD_WIZARD_IMPORT
+Start the import at the specified row. This allows skipping of header data.
 
 .topic HIDC_WIZARD_START_ARB
-TODO IDD_WIZARD_START
+Import/export data from/to another Agility Record Book file.
+
 .topic HIDC_WIZARD_START_LIST
-TODO IDD_WIZARD_START
+Things that can be imported or exported. Selecting an item will display some
+information in the pane to the right.
+
 .topic HIDC_WIZARD_START_SPREADSHEET
-TODO IDD_WIZARD_START
+Import/export data from/to a spreadsheet.
