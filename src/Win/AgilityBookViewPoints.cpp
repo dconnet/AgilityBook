@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-28 DRC Added '*' to Title if it has been received.
  * @li 2003-10-14 DRC Fixed problem inserting other point lines.
  * @li 2003-10-13 DRC Don't tally runs that have no titling points.
  * @li 2003-08-28 DRC Completed Other Points tallying
@@ -483,7 +484,11 @@ void CAgilityBookViewPoints::LoadData()
 					}
 					GetListCtrl().InsertItem(i, "");
 					GetListCtrl().SetItemText(i, 1, pTitle->GetDate().GetString(false, false).c_str());
-					GetListCtrl().SetItemText(i, 2, pTitle->GetName().c_str());
+					CString str("");
+					if (pTitle->GetReceived())
+						str += "*";
+					str += pTitle->GetName().c_str();
+					GetListCtrl().SetItemText(i, 2, str);
 					++i;
 				}
 			}
