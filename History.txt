@@ -1,4 +1,4 @@
-1/14/2004: v0.9.6.8: In development
+1/18/2004: v0.9.6.8: In development
 - Bumped file version to 8.2:
   - Added a new "Long Name" to the titles configuration.
 - New features / Enhancements:
@@ -15,6 +15,8 @@
   - Exporting the training log for import into a spreadsheet was wrong.
   - The points view didn't generate a venue header consistently if a venue
     had no titles.
+  - When entering a run, too much validation was being done at the wrong time.
+    (This could cause a 'Please enter an event' message when changing the date)
 
 12/28/2003: v0.9.5.8
 - Bumped file version to 8.1:
