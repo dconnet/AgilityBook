@@ -347,6 +347,7 @@ void CWizardImport::UpdatePreview()
 BOOL CWizardImport::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
+	m_ctrlPreview.SetExtendedStyle(m_ctrlPreview.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlSpin.SetRange(100, 1);
 	static struct
 	{
