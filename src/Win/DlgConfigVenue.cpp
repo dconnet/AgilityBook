@@ -720,55 +720,64 @@ void CDlgConfigVenue::OnNew()
 			HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
 			CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
 			CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
+			UINT id = 0;
+			ARBConfigDivision* pDiv = NULL;
+			ARBConfigLevel* pLevel = NULL;
+			HTREEITEM hParentItem = NULL;
 			if (pLevelData)
 			{
-				while (!done)
+				id = IDS_LEVEL_NAME;
+				pDiv = pLevelData->GetDivision();
+				pLevel = pLevelData->GetLevel();
+				hParentItem = TVI_ROOT;
+				if (IDNO == AfxMessageBox("Would you like to create a Level? (Answer 'No' to create a sub-level)", MB_YESNO | MB_ICONQUESTION))
 				{
-					done = true;
-					CDlgName dlg(name.c_str(), IDS_LEVEL_NAME, this);
-					if (IDOK == dlg.DoModal())
-					{
-						name = dlg.GetName();
-						if (pLevelData->GetDivision()->GetLevels().FindTrueLevel(name))
-						{
-							done = false;
-							AfxMessageBox(IDS_NAME_IN_USE);
-							continue;
-						}
-						ARBConfigLevel* pNewLevel = pLevelData->GetDivision()->GetLevels().AddLevel(name);
-						if (pNewLevel)
-						{
-							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-								0, 0, 0, 0,
-								reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pLevelData->GetDivision(), pNewLevel)),
-								TVI_ROOT, hItem);
-							FindCurrentLevel(pNewLevel, true);
-						}
-					}
+					id = IDS_SUBLEVEL_NAME;
+					hParentItem = hItem;
 				}
 			}
 			else if (pSubLevelData)
 			{
-				while (!done)
+				id = IDS_SUBLEVEL_NAME;
+				pDiv = pSubLevelData->GetDivision();
+				pLevel = pSubLevelData->GetLevel();
+				hParentItem = m_ctrlLevels.GetParentItem(hItem);
+			}
+
+			while (!done)
+			{
+				done = true;
+				CDlgName dlg(name.c_str(), id, this);
+				if (IDOK == dlg.DoModal())
 				{
-					done = true;
-					CDlgName dlg(name.c_str(), IDS_SUBLEVEL_NAME, this);
-					if (IDOK == dlg.DoModal())
+					name = dlg.GetName();
+					if (pDiv->GetLevels().FindTrueLevel(name))
 					{
-						name = dlg.GetName();
-						if (pSubLevelData->GetDivision()->GetLevels().FindTrueLevel(name))
+						done = false;
+						AfxMessageBox(IDS_NAME_IN_USE);
+						continue;
+					}
+					if (IDS_LEVEL_NAME == id)
+					{
+						ARBConfigLevel* pNewLevel = pDiv->GetLevels().AddLevel(name);
+						if (pNewLevel)
 						{
-							done = false;
-							AfxMessageBox(IDS_NAME_IN_USE);
-							continue;
+							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+								0, 0, 0, 0,
+								reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pDiv, pNewLevel)),
+								hParentItem, hItem);
+							FindCurrentLevel(pNewLevel, true);
 						}
-						ARBConfigSubLevel* pNewSubLevel = pSubLevelData->GetLevel()->GetSubLevels().AddSubLevel(name);
+					}
+					else
+					{
+						ARBConfigSubLevel* pNewSubLevel = pLevel->GetSubLevels().AddSubLevel(name);
 						if (pNewSubLevel)
 						{
 							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 								0, 0, 0, 0,
-								reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pLevelData->GetDivision(), pSubLevelData->GetLevel(), pNewSubLevel)),
-								m_ctrlLevels.GetParentItem(hItem), hItem);
+								reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pDiv, pLevel, pNewSubLevel)),
+								hParentItem, hItem);
 							FindCurrentSubLevel(pNewSubLevel, true);
 						}
 					}
@@ -1132,7 +1141,7 @@ void CDlgConfigVenue::OnEdit()
 				while (!done)
 				{
 					done = true;
-					CDlgName dlg(name.c_str(), IDS_LEVEL_NAME, this);
+					CDlgName dlg(name.c_str(), IDS_SUBLEVEL_NAME, this);
 					if (IDOK == dlg.DoModal())
 					{
 						name = dlg.GetName();
