@@ -571,7 +571,10 @@ HTREEITEM CAgilityBookTree::InsertDog(ARBDog* pDog, bool bSelect)
 		InsertTrial((*iterTrial), hItem);
 	}
 	if (bSelect)
+	{
 		GetTreeCtrl().Select(hItem, TVGN_CARET);
+		GetTreeCtrl().EnsureVisible(hItem);
+	}
 	return hItem;
 }
 
@@ -898,6 +901,9 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 				GetDocument()->SetModifiedFlag();
 				ARBDog* pNewDog = GetDocument()->GetDogs().AddDog(dog);
 				InsertDog(pNewDog, true);
+				// For some reason, the first dog isnt' showing up.
+				if (1 == GetDocument()->GetDogs().size())
+					LoadData();
 			}
 			dog->Release();
 			bHandled = TRUE;
