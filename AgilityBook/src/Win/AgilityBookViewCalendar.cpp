@@ -306,9 +306,9 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		CFont fontDate, fontText;
 		CFontInfo fontInfo;
 		CAgilityBookOptions::GetCalendarDateFontInfo(fontInfo, pDC->IsPrinting());
-		fontInfo.CreateFont(fontDate, pDC);
+		fontInfo.CreateFont(fontDate, NULL);
 		CAgilityBookOptions::GetCalendarTextFontInfo(fontInfo, pDC->IsPrinting());
-		fontInfo.CreateFont(fontText, pDC);
+		fontInfo.CreateFont(fontText, NULL);
 		CPen pen;
 		pen.CreatePen(PS_SOLID, DAY_BORDER, GetSysColor(COLOR_WINDOWTEXT));
 		CFont* pOldFont = pDC->SelectObject(&fontDate);

@@ -97,6 +97,8 @@ public:
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
+	static void GetPrinterFontInfo(CFontInfo& info);
+	static void SetPrinterFontInfo(const CFontInfo& info);
 	// Runs/points options
 	static bool GetNewestDatesFirst();
 	static void SetNewestDatesFirst(bool bNewest);

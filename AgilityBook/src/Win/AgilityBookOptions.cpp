@@ -56,7 +56,13 @@ void CFontInfo::CreateFont(CFont& font, CDC* pDC)
 	font.DeleteObject();
 	LOGFONT logFont;
 	memset(&logFont, 0, sizeof(logFont));
-	logFont.lfHeight = size;
+	if (pDC && pDC->IsPrinting())
+	{
+		int logPixelsY = pDC->GetDeviceCaps(LOGPIXELSY);
+		logFont.lfHeight = -MulDiv(size/10, logPixelsY, 72);
+	}
+	else
+		logFont.lfHeight = size;
 	lstrcpy(logFont.lfFaceName, (LPCTSTR)name);
 	if (italic)
 		logFont.lfItalic = TRUE;
@@ -66,7 +72,10 @@ void CFontInfo::CreateFont(CFont& font, CDC* pDC)
 		logFont.lfWeight = FW_BOLD;
 	else
 		logFont.lfWeight = FW_NORMAL;
-	font.CreatePointFontIndirect(&logFont);
+	if (pDC && pDC->IsPrinting())
+		font.CreateFontIndirect(&logFont);
+	else
+		font.CreatePointFontIndirect(&logFont);
 }
 
 void CFontInfo::CreateFont(const CFontDialog& dlg, CFont& font, CDC* pDC)
@@ -302,7 +311,7 @@ void CAgilityBookOptions::SetCalendarEntrySize(const CSize& sz)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Runs options
+// Common options
 
 ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
@@ -316,6 +325,31 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 {
 	AfxGetApp()->WriteProfileInt("Common", "FirstDayOfWeek", static_cast<int>(day));
 }
+
+void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
+{
+	info.name = "Times New Roman";
+	info.size = 80;
+	info.italic = false;
+	info.bold = false;
+	CString item("PrintFontList");
+	info.name = AfxGetApp()->GetProfileString("Common", item + "Name", info.name);
+	info.size = AfxGetApp()->GetProfileInt("Common", item + "Size", info.size);
+	info.italic = (AfxGetApp()->GetProfileInt("Common", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt("Common", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetPrinterFontInfo(const CFontInfo& info)
+{
+	CString item("PrintFontList");
+	AfxGetApp()->WriteProfileString("Common", item + "Name", info.name);
+	AfxGetApp()->WriteProfileInt("Common", item + "Size", info.size);
+	AfxGetApp()->WriteProfileInt("Common", item + "Italic", info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt("Common", item + "Bold", info.bold ? 1 : 0);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Runs/points options
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {

@@ -156,6 +156,16 @@ CAgilityBookDoc* CAgilityBookViewPoints::GetDocument() const // non-debug versio
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// Printing
+
+void CAgilityBookViewPoints::GetPrintLine(int nItem, CStringArray& line)
+{
+	CListView2::GetPrintLine(nItem, line);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 {
 	msg = "          ";

@@ -82,7 +82,8 @@ private:
 		int& nNotCleanQ);
 	void LoadData();
 
-// Overrides
+protected:
+	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
 	//{{AFX_VIRTUAL(CAgilityBookViewPoints)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);

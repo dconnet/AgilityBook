@@ -312,6 +312,16 @@ CAgilityBookDoc* CAgilityBookViewRuns::GetDocument() const // non-debug version 
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// Printing
+
+void CAgilityBookViewRuns::GetPrintLine(int nItem, CStringArray& line)
+{
+	CListView2::GetPrintLine(nItem, line);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 {
 	int nQs = 0;
@@ -416,6 +426,7 @@ void CAgilityBookViewRuns::LoadData()
 	GetListCtrl().Invalidate();
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRuns message handlers
 
 void CAgilityBookViewRuns::OnDestroy() 
