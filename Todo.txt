@@ -1,6 +1,4 @@
-Last Updated: 9/27/04
-
-- Do not acculumate runs marked as NA in Point totals.
+Last Updated: 10/20/04
 
 - Add a column in runs to allow cumulative title points. Also add this to
   the score tab in the run properties.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-20 DRC Do not accumulate NA titling runs.
  * @li 2004-08-25 DRC Existing other pts were included in all other points.
  * @li 2004-08-12 DRC Allow creating a new title.
  * @li 2004-06-23 DRC Fixed a problem when getting the Q/NQ ratio when a filter
@@ -137,7 +138,7 @@ CAgilityBookViewPoints::~CAgilityBookViewPoints()
 BOOL CAgilityBookViewPoints::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// This is actually set in TabView.cpp.
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -152,7 +153,10 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	for (int i = 0; i < MAX_COLUMNS; ++i)
 	{
 		col.fmt = LVCFMT_LEFT;
-		col.pszText = "";
+		if (1 == i)
+			col.pszText = "Titling Points";
+		else
+			col.pszText = "";
 		col.iSubItem = i;
 		InsertColumn(i, &col);
 	}
@@ -407,6 +411,9 @@ int CAgilityBookViewPoints::DoEvents(
 						ASSERT(pScoring);
 						if (!pScoring) continue; // Shouldn't need it...
 						if (*pScoring != *pScoringMethod)
+							continue;
+						// Don't tally NA runs for titling events.
+						if (pRun->GetQ() == ARB_Q::eQ_NA)
 							continue;
 						matching.push_back(RunInfo(pTrial, pRun));
 						judges.insert(pRun->GetJudge());
