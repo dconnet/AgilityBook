@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-08 DRC Added support to allow a user-specified image.
  * @li 2004-04-15 DRC Created (used vc6 splash screen component)
  */
 
@@ -38,6 +39,7 @@
 #include "resource.h"
 #include "Splash.h"
 
+#include "AgilityBookOptions.h"
 #include "VersionNum.h"
 
 #ifdef _DEBUG
@@ -47,7 +49,9 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 #endif
 
 // Border (one side)
-#define BORDER	7
+#define BORDER		7
+// Logo offset
+#define LOGO_OFFSET	15
 
 /////////////////////////////////////////////////////////////////////////////
 // static stuff
@@ -128,12 +132,63 @@ END_MESSAGE_MAP()
 
 BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 {
-	if (!m_bitmap.LoadBitmap(IDB_SPLASH))
+	CBitmap splash, logo;
+	CString filename = CAgilityBookOptions::GetSplashImage();
+	if (!filename.IsEmpty())
+	{
+		HBITMAP hBm = (HBITMAP)LoadImage(NULL, filename, IMAGE_BITMAP, 0, 0,
+			LR_DEFAULTSIZE | LR_LOADFROMFILE);
+		if (hBm)
+			splash.Attach(hBm);
+		else
+			filename.Empty();
+	}
+	if (filename.IsEmpty())
+	{
+		if (!splash.LoadBitmap(IDB_SPLASH))
+			return FALSE;
+	}
+	if (!logo.LoadBitmap(IDB_LOGO))
 		return FALSE;
 
-	BITMAP bm;
-	m_bitmap.GetBitmap(&bm);
-	m_szBitmap = CSize(bm.bmWidth, bm.bmHeight);
+	BITMAP bmSplash, bmLogo;
+	splash.GetBitmap(&bmSplash);
+	logo.GetBitmap(&bmLogo);
+	m_szBitmap.cx = max(bmSplash.bmWidth, bmLogo.bmWidth+LOGO_OFFSET);
+	m_szBitmap.cy = max(bmSplash.bmHeight, bmLogo.bmHeight+LOGO_OFFSET);
+
+	// Combine the Logo ontop of the splash and save that bitmap.
+	CDC dcSrc, dcDst;
+	dcSrc.CreateCompatibleDC(NULL);
+	dcDst.CreateCompatibleDC(&dcSrc);
+	CBitmap* pOldSrc = dcSrc.SelectObject(&splash);
+	if (bmLogo.bmBitsPixel > bmSplash.bmBitsPixel)
+		dcSrc.SelectObject(&logo);
+	m_bitmap.CreateCompatibleBitmap(&dcSrc, m_szBitmap.cx, m_szBitmap.cy);
+	if (bmLogo.bmBitsPixel > bmSplash.bmBitsPixel)
+		dcSrc.SelectObject(&splash);
+	CBitmap* pOldDst = dcDst.SelectObject(&m_bitmap);
+	if (m_szBitmap.cx > bmSplash.bmWidth || m_szBitmap.cy > bmSplash.bmHeight)
+		dcDst.PatBlt(0, 0, m_szBitmap.cx, m_szBitmap.cy, WHITENESS);
+	dcDst.BitBlt(0, 0, bmSplash.bmWidth, bmSplash.bmHeight, &dcSrc, 0, 0, SRCCOPY);
+	{
+		CDC dcMask;
+		dcMask.CreateCompatibleDC(&dcSrc);
+		CBitmap bm;
+		bm.CreateBitmap(bmLogo.bmWidth, bmLogo.bmHeight, 1, 1, NULL);
+		CBitmap* pOld = dcMask.SelectObject(&bm);
+		dcSrc.SelectObject(&logo);
+		dcSrc.SetBkColor(RGB(255,255,255)); // Set transparent color to white.
+		dcMask.BitBlt(0, 0, bmLogo.bmWidth, bmLogo.bmHeight, &dcSrc, 0, 0, SRCCOPY);
+		dcDst.SetBkColor(RGB(255,255,255));
+		dcDst.SetTextColor(RGB(0,0,0));
+		dcDst.BitBlt(LOGO_OFFSET, LOGO_OFFSET, bmLogo.bmWidth+LOGO_OFFSET, bmLogo.bmHeight+LOGO_OFFSET, &dcSrc, 0, 0, SRCINVERT);
+		dcDst.BitBlt(LOGO_OFFSET, LOGO_OFFSET, bmLogo.bmWidth, bmLogo.bmHeight, &dcMask, 0, 0, SRCAND);
+		dcDst.BitBlt(LOGO_OFFSET, LOGO_OFFSET, bmLogo.bmWidth+LOGO_OFFSET, bmLogo.bmHeight+LOGO_OFFSET, &dcSrc, 0, 0, SRCINVERT);
+		dcMask.SelectObject(pOld);
+	}
+	dcSrc.SelectObject(pOldSrc);
+	dcDst.SelectObject(pOldDst);
 
 	CVersionNum ver;
 	if (ver.Valid())

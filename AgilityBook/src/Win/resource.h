@@ -2,7 +2,8 @@
 // Microsoft Developer Studio generated include file.
 // Used by AgilityBook.rc
 //
-#define IDB_SPLASH                      101
+#define IDB_LOGO                        101
+#define IDB_SPLASH                      102
 #define IDR_MAINFRAME                   128
 #define IDR_DTD_AGILITYRECORDBOOK       129
 #define IDR_XML_DEFAULT_CONFIG          130
@@ -463,6 +464,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32860
 #define _APS_NEXT_CONTROL_VALUE         1181
-#define _APS_NEXT_SYMED_VALUE           102
+#define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif
