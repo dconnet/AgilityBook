@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-22 DRC When copying, only create a header if more than 1 line
+ *                is selected (or if only one line exists).
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
 
@@ -330,15 +332,19 @@ void CListView2::OnEditCopy()
 		CString data;
 		CStringArray line;
 
-		// Take care of the header.
-		GetPrintLine(-1, line);
-		for (int i = 0; i < line.GetSize(); ++i)
+		// Take care of the header, but only if more than one line is selected.
+		if (1 < indices.size()
+		|| indices.size() == GetListCtrl().GetItemCount())
 		{
-			if (0 < i)
-				data += '\t';
-			data += line[i];
+			GetPrintLine(-1, line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
 		}
-		data += "\r\n";
 
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-22 DRC Update the view when creating or editing an entry.
  * @li 2003-11-21 DRC Enabled consistent copy and select all (old copy moved).
  * @li 2003-08-30 DRC Fixed bug when copying list to clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
@@ -622,6 +623,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 				GetDocument()->GetCalendar().sort();
 				LoadData();
 				GetDocument()->SetModifiedFlag();
+				GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 			}
 		}
 	}
@@ -639,6 +641,7 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 			GetDocument()->GetCalendar().sort();
 			LoadData();
 			GetDocument()->SetModifiedFlag();
+			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 		}
 	}
 	cal->Release();
