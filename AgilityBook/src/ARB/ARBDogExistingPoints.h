@@ -135,6 +135,8 @@ public:
 	void SetLevel(std::string const& inLevel);
 	std::string const& GetEvent() const;
 	void SetEvent(std::string const& inEvent);
+	std::string const& GetSubName() const;
+	void SetSubName(std::string const& inSubName);
 	short GetPoints() const;
 	void SetPoints(short inPoints);
 
@@ -148,6 +150,7 @@ private:
 	std::string m_Div;
 	std::string m_Level;
 	std::string m_Event;
+	std::string m_SubName;
 	short m_Points;
 };
 
@@ -229,6 +232,16 @@ inline std::string const& ARBDogExistingPoints::GetEvent() const
 inline void ARBDogExistingPoints::SetEvent(std::string const& inEvent)
 {
 	m_Event = inEvent;
+}
+
+inline std::string const& ARBDogExistingPoints::GetSubName() const
+{
+	return m_SubName;
+}
+
+inline void ARBDogExistingPoints::SetSubName(std::string const& inSubName)
+{
+	m_SubName = inSubName;
 }
 
 inline short ARBDogExistingPoints::GetPoints() const

@@ -38,8 +38,8 @@
 
 #include "ARBDate.h"
 #include "DlgBasePropertyPage.h"
-class ARBConfig;
 class ARBDog;
+class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +47,7 @@ class CDlgDogProperties : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogProperties(ARBConfig& config, ARBDog* pDog);
+	CDlgDogProperties(CAgilityBookDoc* pDoc, ARBDog* pDog);
 	~CDlgDogProperties();
 
 private:
@@ -63,7 +63,7 @@ private:
 	CString	m_RegName;
 	CString	m_Notes;
 	//}}AFX_DATA
-	ARBConfig& m_Config;
+	CAgilityBookDoc* m_pDoc;
 	ARBDog* m_pDog;
 	ARBDate m_DOB;
 	ARBDate m_Deceased;

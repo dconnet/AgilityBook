@@ -41,6 +41,7 @@
 #include "AgilityBook.h"
 #include "DlgDogTitles.h"
 
+#include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
@@ -74,7 +75,7 @@ static int const nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
 typedef struct
 {
-	CDlgDogTitles *pThis;
+	CAgilityBookDoc *pDoc;
 	CColumnOrder *pCols;
 } SORTINFO;
 
@@ -121,8 +122,8 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			break;
 		case 4: // nice name
 			{
-				std::string name1 = psi->pThis->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetName());
-				std::string name2 = psi->pThis->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetName());
+				std::string name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetName());
+				std::string name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -143,9 +144,9 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogTitles dialog
 
-CDlgDogTitles::CDlgDogTitles(ARBConfig& config, ARBDogTitleList const& titles)
+CDlgDogTitles::CDlgDogTitles(CAgilityBookDoc* pDoc, ARBDogTitleList const& titles)
 	: CDlgBasePropertyPage(CDlgDogTitles::IDD)
-	, m_Config(config)
+	, m_pDoc(pDoc)
 	, m_sortTitles("Titles")
 	, m_Titles(titles)
 {
@@ -254,13 +255,13 @@ void CDlgDogTitles::ListTitles()
 			m_ctrlTitles.SetItemText(nItem, 1, "<Unearned>");
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());
 		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetName().c_str());
-		m_ctrlTitles.SetItemText(nItem, 4, m_Config.GetTitleNiceName(pTitle->GetVenue(), pTitle->GetName()).c_str());
+		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetName()).c_str());
 		++i;
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
 		m_ctrlTitles.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	SORTINFO si;
-	si.pThis = this;
+	si.pDoc = m_pDoc;
 	si.pCols = &m_sortTitles;
 	m_ctrlTitles.SortItems(CompareTitles, reinterpret_cast<LPARAM>(&si));
 	if (pSelected)
@@ -328,7 +329,7 @@ void CDlgDogTitles::OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	SORTINFO si;
-	si.pThis = this;
+	si.pDoc = m_pDoc;
 	m_sortTitles.SetColumnOrder(pNMListView->iSubItem);
 	SetColumnTitleHeaders();
 	si.pCols = &m_sortTitles;
@@ -352,7 +353,7 @@ void CDlgDogTitles::OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogTitles::OnTitleNew()
 {
-	CDlgTitle dlg(m_Config, m_Titles, NULL, this);
+	CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, NULL, this);
 	if (IDOK == dlg.DoModal())
 		ListTitles();
 }
@@ -363,7 +364,7 @@ void CDlgDogTitles::OnTitleEdit()
 	if (0 <= i)
 	{
 		ARBDogTitle* pTitle = reinterpret_cast<ARBDogTitle*>(m_ctrlTitles.GetItemData(i));
-		CDlgTitle dlg(m_Config, m_Titles, pTitle, this);
+		CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, pTitle, this);
 		if (IDOK == dlg.DoModal())
 			ListTitles();
 	}

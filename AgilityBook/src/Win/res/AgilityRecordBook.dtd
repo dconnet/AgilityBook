@@ -17,7 +17,7 @@ Revision History:
                Added 'ClubInfo', 'LocationInfo'.
                Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
                Added 'LongName' to 'Venue'.
-               Added 'SubName' to 'Event','Run'.
+               Added 'SubName' to 'Event','Run','ExistingPoints'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -303,6 +303,7 @@ depends on how a venue has been defined above.
 		Div CDATA #IMPLIED
 		Level CDATA #IMPLIED
 		Event CDATA #IMPLIED
+		SubName CDATA #IMPLIED
 		Pts CDATA #REQUIRED
 		>
 <!ELEMENT RegNum (#PCDATA) >

@@ -40,6 +40,7 @@
 #include "AgilityBook.h"
 #include "DlgDogNumbers.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBDog.h"
 #include "DlgRegNum.h"
 
@@ -130,9 +131,9 @@ int CALLBACK CompareRegNums(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogNumbers dialog
 
-CDlgDogNumbers::CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnums)
+CDlgDogNumbers::CDlgDogNumbers(CAgilityBookDoc* pDoc, ARBDogRegNumList const& regnums)
 	: CDlgBasePropertyPage(CDlgDogNumbers::IDD)
-	, m_Config(config)
+	, m_pDoc(pDoc)
 	, m_sortRegNums("RegNums")
 	, m_RegNums(regnums)
 {
@@ -299,7 +300,7 @@ void CDlgDogNumbers::OnItemchangedRegNums(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogNumbers::OnRegNew()
 {
-	CDlgRegNum dlg(m_Config, m_RegNums, NULL, this);
+	CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, NULL, this);
 	if (IDOK == dlg.DoModal())
 		ListRegNums();
 }
@@ -310,7 +311,7 @@ void CDlgDogNumbers::OnRegEdit()
 	if (0 <= i)
 	{
 		ARBDogRegNum* pRegNum = reinterpret_cast<ARBDogRegNum*>(m_ctrlRegNums.GetItemData(i));
-		CDlgRegNum dlg(m_Config, m_RegNums, pRegNum, this);
+		CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, pRegNum, this);
 		if (IDOK == dlg.DoModal())
 			ListRegNums();
 	}

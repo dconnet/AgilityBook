@@ -40,6 +40,7 @@
 #include "AgilityBook.h"
 #include "DlgDogProp.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBDog.h"
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
@@ -53,9 +54,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogProperties dialog
 
-CDlgDogProperties::CDlgDogProperties(ARBConfig& config, ARBDog* pDog)
+CDlgDogProperties::CDlgDogProperties(CAgilityBookDoc* pDoc, ARBDog* pDog)
 	: CDlgBasePropertyPage(CDlgDogProperties::IDD)
-	, m_Config(config)
+	, m_pDoc(pDoc)
 	, m_pDog(pDog)
 	, m_DOB(pDog->GetDOB())
 	, m_Deceased(pDog->GetDeceased())

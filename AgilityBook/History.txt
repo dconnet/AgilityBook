@@ -4,7 +4,7 @@
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Renamed 'machPts' to 'speedPts'.
   - Added 'LongName' to 'Venue'.
-  - Added 'SubName' to 'Event','Run'.
+  - Added 'SubName' to 'Event','Run','ExistingPoints'.
   - Updated AAC.
   - Added CKC and TDAA.
 - New features / Enhancements:

@@ -240,6 +240,7 @@
 #define IDC_EXISTING_LEVEL              1276
 #define IDC_EXISTING_EVENT              1277
 #define IDC_EXISTING_COMMENTS           1278
+#define IDC_EXISTING_SUBNAME            1279
 #define IDC_TRIAL_LOCATION              1280
 #define IDC_TRIAL_NOTES                 1281
 #define IDC_TRIAL_CLUB_NEW              1282
@@ -534,6 +535,7 @@
 #define IDS_QQ                          5030
 #define IDS_DOUBLE_Q                    5031
 #define IDS_SPEEDPTS                    5032
+#define IDS_EXISTING_POINTS             5033
 #define IDS_ARE_YOU_SURE                5078
 #define IDS_ABOUT_VERSION               5079
 #define IDS_ABOUT_TEXT                  5080

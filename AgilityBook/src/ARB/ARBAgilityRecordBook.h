@@ -181,6 +181,7 @@
 #define ATTRIB_EXISTING_PTS_DIV				"Div"
 #define ATTRIB_EXISTING_PTS_LEVEL			"Level"
 #define ATTRIB_EXISTING_PTS_EVENT			"Event"
+#define ATTRIB_EXISTING_PTS_SUBNAME			"SubName"
 #define ATTRIB_EXISTING_PTS_POINTS			"Pts"
 #define ATTRIB_REG_NUM_VENUE				"Venue"
 #define ATTRIB_REG_NUM_NUMBER				"Number"

@@ -39,6 +39,7 @@
 #include "AgilityBook.h"
 #include "DlgExistingPoints.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
 
@@ -71,11 +72,11 @@ public:
 // CDlgExistingPoints dialog
 
 // If pExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgExistingPoints::CDlgExistingPoints(ARBConfig const& config,
+CDlgExistingPoints::CDlgExistingPoints(CAgilityBookDoc* pDoc,
 	ARBDogExistingPointsList& points,
 	ARBDogExistingPoints* pExistingPoints, CWnd* pParent)
 	: CDlgBaseDialog(CDlgExistingPoints::IDD, pParent)
-	, m_Config(config)
+	, m_pDoc(pDoc)
 	, m_PointsList(points)
 	, m_pExistingPoints(pExistingPoints)
 {
@@ -103,6 +104,8 @@ void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EXISTING_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_EXISTING_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_EXISTING_EVENT, m_ctrlEvents);
+	DDX_Control(pDX, IDC_EXISTING_SUBNAME, m_ctrlSubNames);
+	DDX_CBString(pDX, IDC_EXISTING_SUBNAME, m_SubName);
 	DDX_Text(pDX, IDC_EXISTING_POINTS, m_Points);
 	DDX_Text(pDX, IDC_EXISTING_COMMENTS, m_Comments);
 	//}}AFX_DATA_MAP
@@ -120,6 +123,7 @@ BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDlgBaseDialog)
 	ON_CBN_SELCHANGE(IDC_EXISTING_VENUES, OnSelchangeVenues)
 	ON_CBN_SELCHANGE(IDC_EXISTING_DIVISION, OnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_EXISTING_LEVEL, OnSelchangeLevel)
+	ON_CBN_SELCHANGE(IDC_EXISTING_EVENT, OnSelchangeEvent)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -141,6 +145,7 @@ void CDlgExistingPoints::UpdateControls()
 	int index = m_ctrlType.GetCurSel();
 	BOOL bEnableOther = FALSE;
 	BOOL bEnableEvent = FALSE;
+	BOOL bEnableSubName = FALSE;
 	if (CB_ERR == index)
 	{
 		GetDlgItem(IDOK)->EnableWindow(FALSE);
@@ -158,9 +163,12 @@ void CDlgExistingPoints::UpdateControls()
 		}
 		if (ARBDogExistingPoints::eOtherPoints != type)
 			bEnableOther = FALSE;
+		if (ARBDogExistingPoints::eRuns == type)
+			bEnableSubName = TRUE;
 	}
 	m_ctrlOther.EnableWindow(bEnableOther);
 	m_ctrlEvents.EnableWindow(bEnableEvent);
+	m_ctrlSubNames.EnableWindow(bEnableSubName);
 }
 
 void CDlgExistingPoints::FillDivisions()
@@ -287,7 +295,34 @@ void CDlgExistingPoints::FillEvents()
 			}
 		}
 	}
+	FillSubNames();
 	UpdateControls();
+}
+
+void CDlgExistingPoints::FillSubNames()
+{
+	m_ctrlSubNames.ResetContent();
+
+	int index = m_ctrlVenues.GetCurSel();
+	if (CB_ERR == index)
+		return;
+	ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
+
+	index = m_ctrlEvents.GetCurSel();
+	if (CB_ERR == index)
+		return;
+	ARBConfigEvent const* pEvent = reinterpret_cast<ARBConfigEvent const*>(m_ctrlEvents.GetItemDataPtr(index));
+
+	std::set<std::string> names;
+	m_pDoc->GetAllEventSubNames(pVenue->GetName(), pEvent, names);
+	for (std::set<std::string>::const_iterator iter = names.begin();
+		iter != names.end();
+		++iter)
+	{
+		index = m_ctrlSubNames.AddString(iter->c_str());
+		if (m_pExistingPoints && *iter == m_pExistingPoints->GetSubName())
+			m_ctrlSubNames.SetCurSel(index);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -312,8 +347,8 @@ BOOL CDlgExistingPoints::OnInitDialog()
 		m_ctrlType.SetItemData(index, types[i]);
 	}
 
-	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
-		iterOther != m_Config.GetOtherPoints().end();
+	for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->GetConfig().GetOtherPoints().begin();
+		iterOther != m_pDoc->GetConfig().GetOtherPoints().end();
 		++iterOther)
 	{
 		ARBConfigOtherPoints* pOther = (*iterOther);
@@ -321,8 +356,8 @@ BOOL CDlgExistingPoints::OnInitDialog()
 		m_ctrlOther.SetItemDataPtr(index, pOther);
 	}
 
-	for (ARBConfigVenueList::const_iterator iterVenue = m_Config.GetVenues().begin();
-		iterVenue != m_Config.GetVenues().end();
+	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->GetConfig().GetVenues().begin();
+		iterVenue != m_pDoc->GetConfig().GetVenues().end();
 		++iterVenue)
 	{
 		ARBConfigVenue* pVenue = (*iterVenue);
@@ -371,6 +406,11 @@ void CDlgExistingPoints::OnSelchangeDivision()
 void CDlgExistingPoints::OnSelchangeLevel() 
 {
 	FillEvents();
+}
+
+void CDlgExistingPoints::OnSelchangeEvent() 
+{
+	FillSubNames();
 }
 
 void CDlgExistingPoints::OnOK()
@@ -431,6 +471,9 @@ void CDlgExistingPoints::OnOK()
 		event = pEvent->GetName();
 	}
 
+	m_SubName.TrimRight();
+	m_SubName.TrimLeft();
+
 	m_Comments.Replace("\r\n", "\n");
 
 	if (ARBDogExistingPoints::eSpeed == type
@@ -450,6 +493,7 @@ void CDlgExistingPoints::OnOK()
 		m_pExistingPoints->SetDivision(div);
 		m_pExistingPoints->SetLevel(level);
 		m_pExistingPoints->SetEvent(event);
+		m_pExistingPoints->SetSubName((LPCSTR)m_SubName);
 		m_pExistingPoints->SetComment((LPCSTR)m_Comments);
 		m_pExistingPoints->SetPoints(m_Points);
 	}
@@ -465,6 +509,7 @@ void CDlgExistingPoints::OnOK()
 		pNewPoints->SetDivision(div);
 		pNewPoints->SetLevel(level);
 		pNewPoints->SetEvent(event);
+		pNewPoints->SetSubName((LPCSTR)m_SubName);
 		pNewPoints->SetComment((LPCSTR)m_Comments);
 		pNewPoints->SetPoints(m_Points);
 	}

@@ -40,8 +40,8 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBConfig;
 class ARBDog;
+class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +49,7 @@ class CDlgDogPoints : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogPoints(ARBConfig& config, ARBDogExistingPointsList const& points);
+	CDlgDogPoints(CAgilityBookDoc* pDoc, ARBDogExistingPointsList const& points);
 
 private:
 // Dialog Data
@@ -59,7 +59,7 @@ private:
 	CButton	m_ctrlDelete;
 	CListCtrl2	m_ctrlPoints;
 	//}}AFX_DATA
-	ARBConfig& m_Config;
+	CAgilityBookDoc* m_pDoc;
 	CColumnOrder m_sortPoints;
 	ARBDogExistingPointsList m_ExistingPoints;
 

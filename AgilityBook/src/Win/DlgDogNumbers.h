@@ -41,8 +41,8 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBConfig;
 class ARBDog;
+class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -50,7 +50,7 @@ class CDlgDogNumbers : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnums);
+	CDlgDogNumbers(CAgilityBookDoc* pDoc, ARBDogRegNumList const& regnums);
 
 private:
 // Dialog Data
@@ -60,7 +60,7 @@ private:
 	CButton	m_ctrlRegDelete;
 	CListCtrl2	m_ctrlRegNums;
 	//}}AFX_DATA
-	ARBConfig& m_Config;
+	CAgilityBookDoc* m_pDoc;
 	CColumnOrder m_sortRegNums;
 	ARBDogRegNumList m_RegNums;
 

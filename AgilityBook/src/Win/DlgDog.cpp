@@ -63,7 +63,6 @@ IMPLEMENT_DYNAMIC(CDlgDog, CDlgBaseSheet)
 CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent, UINT iSelectPage)
 	: CDlgBaseSheet(IDS_COL_DOG, pParent, iSelectPage)
 	, m_pDoc(pDoc)
-	, m_Config(pDoc->GetConfig())
 	, m_pDog(pDog)
 	, m_pageProp(NULL)
 	, m_pageTitles(NULL)
@@ -71,10 +70,10 @@ CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent, UINT iSelec
 	, m_pagePoints(NULL)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
-	m_pageProp = new CDlgDogProperties(m_Config, pDog);
-	m_pageTitles = new CDlgDogTitles(m_Config, pDog->GetTitles());
-	m_pageRegNums = new CDlgDogNumbers(m_Config, pDog->GetRegNums());
-	m_pagePoints = new CDlgDogPoints(m_Config, pDog->GetExistingPoints());
+	m_pageProp = new CDlgDogProperties(m_pDoc, pDog);
+	m_pageTitles = new CDlgDogTitles(m_pDoc, pDog->GetTitles());
+	m_pageRegNums = new CDlgDogNumbers(m_pDoc, pDog->GetRegNums());
+	m_pagePoints = new CDlgDogPoints(m_pDoc, pDog->GetExistingPoints());
 	AddPage(m_pageProp);
 	AddPage(m_pageTitles);
 	AddPage(m_pageRegNums);
