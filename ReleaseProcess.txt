@@ -2,18 +2,19 @@ Notes for releasing a new version.
 
 Files to change before release:
 - If file version has changed:
-  - Update comments in src/Win/res/AgilityRecordBook.dtd
+  - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
   - Archive Megan.arb as TestVn.n.arb and add to CVS
   - Update the version in DefaultConfig.xml
 - If configuration has changed:
-  - Same as file version changing
+  - Same as file version changing above
   - Plus: Make sure that the Update() methods have been updated!
+    If this is missed, the new data will not be merged.
 - History.txt
   Update program version and date, along with any comments.
 - Todo.txt
   Any necessary changes...
 
-Run and verify build
+Do a full rebuild and verify it.
 
 Tag CVS repository "vn_n_n_n"
 
@@ -37,9 +38,7 @@ In SourceForge, enter the File Releases section in Admin.
 
 In Yahoo
 - Remove all old files.
-- Upload all new files. (Set the send email notification on the primary file)
-  - [files/release] AgilityBook_n_n_n_n.msi [Desc: Installation program]
-                    Announce this file (option on file upload)
+- Upload all new files.
   - [files/release] History.txt
   - [files/release] Todo.txt
   - [files/release] Megan.zip [Desc: Sample file]
@@ -47,12 +46,18 @@ In Yahoo
   - [files/release/alternate] MFC6.zip, already there, shouldn't need changing
   - [files/release/alternate] SupportDLLs.zip, already there
   - [files/release/alternate] Readme.txt, already there
+  - [files/release] AgilityBook_n_n_n_n.msi [Desc: Installation program]
+                    Announce this file (option on file upload)
 - Send an email announcing it - send as a 'Special Notice' from Yahoo.
 
 Web Site:
+- Update version.txt
 - Make sure things are current (ongoing task!).
   - Update DTD
-  - Update version.txt
+
+Backup:
+- Backup development directory onto CD.
+  - Remove unnecessary files (build relics, CVS)
 
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO
