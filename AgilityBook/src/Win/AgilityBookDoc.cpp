@@ -35,6 +35,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-08-25 DRC Added GetCurrentRun().
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  */
@@ -118,6 +119,19 @@ ARBDogTrial* CAgilityBookDoc::GetCurrentTrial()
 	if (pTree && pTree->GetCurrentTreeItem())
 		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
 	return pTrial;
+}
+
+/**
+ * Return the run associated with the currently selected item in the tree.
+ */
+ARBDogRun* CAgilityBookDoc::GetCurrentRun()
+{
+	ARBDogRun* pRun = NULL;
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	if (pTree && pTree->GetCurrentTreeItem())
+		pRun = pTree->GetCurrentTreeItem()->GetRun();
+	return pRun;
 }
 
 /**
