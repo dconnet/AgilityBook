@@ -565,6 +565,7 @@
 #define IDS_BLANK_COLUMN                5168
 #define IDS_ADDED_TRAINING_ITEMS        5169
 #define IDS_LIFETIME_POINTS             5170
+#define IDS_CREATEDOG_FAILED            5171
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-06 DRC Added duplicate/cut/paste support for dogs.
  * @li 2004-05-09 DRC After adding a title, display dog property dlg.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -60,6 +61,7 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgReorder.h"
@@ -374,75 +376,14 @@ static bool AddTitle(
 		return false;
 }
 
-static bool CopyDataToClipboard(UINT clpFmt, Element const& tree, CString const& txtForm)
-{
-	if (!AfxGetMainWnd()->OpenClipboard())
-		return false;
-	if (!EmptyClipboard())
-	{
-		CloseClipboard();
-		return false;
-	}
-	std::ostringstream out;
-	tree.SaveXML(out);
-	std::string data = out.str();
-
-	// alloc mem block & copy text in
-	HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
-	if (NULL != temp)
-	{
-		LPTSTR str = (LPTSTR)GlobalLock(temp);
-		lstrcpy(str, data.c_str());
-		GlobalUnlock((void*)temp);
-		// send data to clipbard
-		SetClipboardData(clpFmt, temp);
-
-		if (!txtForm.IsEmpty())
-		{
-			temp = GlobalAlloc(GHND, txtForm.GetLength()+1);
-			if (NULL != temp)
-			{
-				LPTSTR str = (LPTSTR)GlobalLock(temp);
-				lstrcpy(str, (LPCTSTR)txtForm);
-				GlobalUnlock((void*)temp);
-				// send data to clipbard
-				SetClipboardData(CF_TEXT, temp);
-			}
-		}
-	}
-
-	CloseClipboard();
-	return true;
-}
-
-static bool GetDataFromClipboard(UINT clpFmt, Element& tree)
-{
-	bool bOk = false;
-	if (IsClipboardFormatAvailable(clpFmt))
-	{
-		if (!AfxGetMainWnd()->OpenClipboard())
-			return false;
-		tree.clear();
-		HANDLE hData = GetClipboardData(clpFmt);
-		CString data((LPCTSTR)GlobalLock(hData));
-		GlobalUnlock(hData);
-		CloseClipboard();
-		std::string err;
-		bOk = tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
-		if (!bOk && 0 < err.length())
-		{
-			AfxMessageBox(err.c_str(), MB_ICONEXCLAMATION);
-		}
-	}
-	return bOk;
-}
-
 ////////////////////////////////////////////////////////////////////////////
 
 bool CAgilityBookTreeData::CanPaste() const
 {
 	bool bEnable = false;
-	if (GetTrial()
+	if (IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog)))
+		bEnable = true;
+	else if (GetTrial()
 	&& IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun)))
 		bEnable = true;
 	else if (GetDog()
@@ -453,11 +394,43 @@ bool CAgilityBookTreeData::CanPaste() const
 
 bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
+	CWaitCursor wait;
 	bool bLoaded = false;
 	Element tree;
 	ARBDogTrial* pTrial = GetTrial();
 	ARBDog* pDog = GetDog();
-	if (pTrial
+	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog), tree))
+	{
+		if (CLIPDATA == tree.GetName())
+		{
+			ARBDog* pDog = new ARBDog();
+			if (pDog)
+			{
+				std::string err;
+				if (pDog->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				{
+					bLoaded = true;
+					ARBDog* pNewDog = m_pTree->GetDocument()->GetDogs().AddDog(pDog);
+					if (!pNewDog)
+					{
+						bLoaded = false;
+						AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
+					}
+					else
+					{
+						m_pTree->GetDocument()->ResetVisibility();
+						m_pTree->InsertDog(pNewDog, true);
+						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+					}
+				}
+				else if (0 < err.length())
+					AfxMessageBox(err.c_str(), MB_ICONWARNING);
+				pDog->Release();
+				pDog = NULL;
+			}
+		}
+	}
+	else if (pTrial
 	&& GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree))
 	{
 		if (CLIPDATA == tree.GetName())
@@ -597,6 +570,11 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 	{
 	default:
 		break;
+	case ID_EDIT_DUPLICATE:
+	case ID_EDIT_CUT:
+	case ID_EDIT_COPY:
+		bEnable = true;
+		break;
 	case ID_EDIT_PASTE:
 		bEnable = CanPaste();
 		break;
@@ -636,13 +614,40 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 
 bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 {
+	static bool bPrompt = true;
 	bool bModified = false;
 	switch (id)
 	{
 	default:
 		break;
+	case ID_EDIT_DUPLICATE:
+		if (GetDog())
+		{
+			ARBDog* pDog = new ARBDog(*GetDog());
+			m_pTree->GetDocument()->GetDogs().AddDog(pDog);
+			pDog->Release();
+			bModified = true;
+			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
+		}
+		break;
+	case ID_EDIT_CUT:
+		OnCmd(ID_EDIT_COPY, bTreeSelectionSet);
+		bPrompt = false;
+		OnCmd(ID_AGILITY_DELETE_DOG, bTreeSelectionSet);
+		bPrompt = true;
+		bModified = true;
+		break;
+	case ID_EDIT_COPY:
+		{
+			CWaitCursor wait;
+			Element tree;
+			tree.SetName(CLIPDATA);
+			GetDog()->Save(tree);
+			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog), tree, m_pTree->GetPrintLine(GetHTreeItem()));
+		}
+		break;
 	case ID_EDIT_PASTE:
-		if (DoPaste(bTreeSelectionSet)) // Currently this doesn't do anything. CanPaste said no.
+		if (DoPaste(bTreeSelectionSet))
 			bModified = true;
 		break;
 	case ID_AGILITY_EDIT_DOG:
@@ -662,7 +667,8 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 			bModified = true;
 		break;
 	case ID_AGILITY_DELETE_DOG:
-		if (IDYES == AfxMessageBox(IDS_DELETE_DOG_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
+		if (!bPrompt
+		|| IDYES == AfxMessageBox(IDS_DELETE_DOG_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
 		{
 			if (m_pTree->GetDocument()->GetDogs().DeleteDog(m_pDog))
 			{
@@ -856,9 +862,11 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 		bPrompt = false;
 		OnCmd(ID_AGILITY_DELETE_TRIAL, bTreeSelectionSet);
 		bPrompt = true;
+		bModified = true;
 		break;
 	case ID_EDIT_COPY:
 		{
+			CWaitCursor wait;
 			Element tree;
 			tree.SetName(CLIPDATA);
 			GetTrial()->Save(tree);
@@ -1119,9 +1127,11 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 		bPrompt = false;
 		OnCmd(ID_AGILITY_DELETE_RUN, bTreeSelectionSet);
 		bPrompt = true;
+		bModified = true;
 		break;
 	case ID_EDIT_COPY:
 		{
+			CWaitCursor wait;
 			Element tree;
 			tree.SetName(CLIPDATA);
 			GetRun()->Save(tree);
