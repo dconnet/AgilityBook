@@ -109,6 +109,7 @@ std::string ARBDogRegNum::GetGenericName() const
 size_t ARBDogRegNum::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	ioStrings.insert(GetGenericName());
+	ioStrings.insert(GetNote());
 	return 1;
 }
 
