@@ -1989,7 +1989,7 @@ BEGIN
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
     IDS_ABOUT_UPDATE        "Check for Updates on SourceForge\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
     IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
-    IDS_ABOUT_LINK2         "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook Help: "
+    IDS_ABOUT_LINK2         "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
     IDS_ABOUT_LINK3         "www.agilityrecordbook.com\thttp://www.agilityrecordbook.com"
 END
 

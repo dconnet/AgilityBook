@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-02 DRC Added %VERSION% keyword in hotlinks.
  * @li 2003-09-17 DRC Added a 'check for updates' control.
  */
 
@@ -215,6 +216,11 @@ BOOL CAboutDlg::OnInitDialog()
 		else
 			url = name;
 		idControls[i].pCtrl->SetWindowText(name);
+		if (0 <= (nTab = url.Find("%VERSION%")))
+		{
+			CString tmp = url.Left(nTab) + version + url.Mid(nTab+9);
+			url = tmp;
+		}
 		idControls[i].pCtrl->SetURL(url);
 	}
 

@@ -9,6 +9,7 @@
   - Added the ability to tell if the program contains an updated config. When
     you open an old file, it will prompt to merge. Once you have updated, you
     will not be prompted again, even if you modify your config.
+  - Added additional text to email message generated from hotlink in about box.
 - Bug fixes
   - Creating a new document didn't clear the judge info from the previous doc.
   - Removed 'V-ATCH',etc from ASCA configuration.
