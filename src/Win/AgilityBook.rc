@@ -1485,33 +1485,33 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Training Log"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Name",IDC_STATIC,3,4,134,155
+    GROUPBOX        "Name",IDC_STATIC,3,3,136,156
     CONTROL         "View all &names",IDC_OPTIONS_TRAINING_VENUES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,13,16,65,10,0,
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
                     HIDC_OPTIONS_TRAINING_VENUES_ALL
     CONTROL         "View &only:",IDC_OPTIONS_TRAINING_VENUES_SELECTED,
-                    "Button",BS_AUTORADIOBUTTON,13,28,48,10,0,
+                    "Button",BS_AUTORADIOBUTTON,11,28,48,10,0,
                     HIDC_OPTIONS_TRAINING_VENUES_SELECTED
     CONTROL         "Tree1",IDC_OPTIONS_TRAINING_VENUES,"SysTreeView32",
                     TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,13,
-                    42,115,110,0,HIDC_OPTIONS_TRAINING_VENUES
-    GROUPBOX        "Dates",IDC_STATIC,148,4,134,74
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
+                    42,119,110,0,HIDC_OPTIONS_TRAINING_VENUES
+    GROUPBOX        "Dates",IDC_STATIC,146,3,136,75
     CONTROL         "View all &dates",IDC_OPTIONS_TRAINING_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,156,16,59,10,0,
+                    BS_AUTORADIOBUTTON | WS_GROUP,158,16,59,10,0,
                     HIDC_OPTIONS_TRAINING_DATES_ALL
     CONTROL         "View dates in &range (inclusive):",
                     IDC_OPTIONS_TRAINING_DATES_RANGE,"Button",
-                    BS_AUTORADIOBUTTON,156,28,113,10,0,
+                    BS_AUTORADIOBUTTON,158,28,113,10,0,
                     HIDC_OPTIONS_TRAINING_DATES_RANGE
     CONTROL         "&After",IDC_OPTIONS_TRAINING_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,168,41,31,10,0,
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,170,41,31,10,0,
                     HIDC_OPTIONS_TRAINING_DATE_START_CHECK
     CONTROL         "DateTimePicker2",IDC_OPTIONS_TRAINING_DATE_START,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,40,
                     60,12,0,HIDC_OPTIONS_TRAINING_DATE_START
     CONTROL         "&Before",IDC_OPTIONS_TRAINING_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,168,56,37,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,170,56,37,10,0,
                     HIDC_OPTIONS_TRAINING_DATE_END_CHECK
     CONTROL         "DateTimePicker2",IDC_OPTIONS_TRAINING_DATE_END,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,55,
