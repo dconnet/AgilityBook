@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-07 DRC When opening the last opened file fails, open a new doc.
  */
 
 #include "stdafx.h"
@@ -197,11 +198,15 @@ BOOL CAgilityBookApp::InitInstance()
 	ParseCommandLine(cmdInfo);
 
 	// Should we open the last open file?
+	bool bOpeningLast = false;
 	if (CCommandLineInfo::FileNew == cmdInfo.m_nShellCommand)
 	{
 		CString strFile = GetProfileString("Settings", "LastFile", _T(""));
 		if (!strFile.IsEmpty())
+		{
+			bOpeningLast = true;
 			cmdInfo.ParseParam(strFile, FALSE, TRUE);
+		}
 	}
 	// If a file is being opened, verify it exists first!
 	// This catches both the case where the remembered last file (above)
@@ -221,7 +226,18 @@ BOOL CAgilityBookApp::InitInstance()
 	// Dispatch commands specified on the command line.  Will return FALSE if
 	// app was launched with /RegServer, /Register, /Unregserver or /Unregister.
 	if (!ProcessShellCommand(cmdInfo))
-		return FALSE;
+	{
+		// If the last document failed to open, just open a new file.
+		if (bOpeningLast
+		&& cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
+		{
+			cmdInfo.m_nShellCommand = CCommandLineInfo::FileNew;
+			if (!ProcessShellCommand(cmdInfo))
+				return FALSE;
+		}
+		else
+			return FALSE;
+	}
 	// The one and only window has been initialized, so show and update it
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
