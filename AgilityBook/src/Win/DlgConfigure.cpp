@@ -44,18 +44,31 @@
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
-#include "ARBConfigDivision.h"
 #include "ARBConfigVenue.h"
-#include "DlgConfigureData.h"
+#include "DlgConfigOtherPoints.h"
 #include "DlgConfigUpdate.h"
+#include "DlgConfigVenue.h"
+#include "DlgConfigureData.h"
 #include "DlgFixup.h"
 #include "DlgMessage.h"
+#include "DlgName.h"
+#include "DlgNameDesc.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+{
+	CDlgConfigureData* item1 = reinterpret_cast<CDlgConfigureData*>(lParam1);
+	CDlgConfigureData* item2 = reinterpret_cast<CDlgConfigureData*>(lParam2);
+	int iColumn = static_cast<int>(lParamSort);
+	return item1->OnNeedText(iColumn) > item2->OnNeedText(iColumn);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigure dialog
@@ -65,7 +78,7 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book)
 	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(m_Book.GetConfig())
-	, m_bReset(false)
+	, m_Action(eNone)
 {
 	ASSERT(m_pDoc);
 	//{{AFX_DATA_INIT(CDlgConfigure)
@@ -74,490 +87,226 @@ CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book)
 
 CDlgConfigure::~CDlgConfigure()
 {
+	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
+	{
+		delete (*iter);
+	}
+	m_DlgFixup.clear();
 }
 
 void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigure)
-	DDX_Control(pDX, IDC_VENUES, m_ctrlTree);
+	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
+	DDX_Control(pDX, IDC_FAULTS, m_ctrlFaults);
+	DDX_Control(pDX, IDC_OTHERPOINTS, m_ctrlOthers);
+	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
+	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_COPY, m_ctrlCopy);
+	DDX_Control(pDX, IDC_COMMENTS, m_ctrlComments);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigure, CDialog)
 	//{{AFX_MSG_MAP(CDlgConfigure)
-	ON_WM_INITMENUPOPUP()
-	ON_WM_DESTROY()
-	ON_WM_CONTEXTMENU()
-	ON_NOTIFY(TVN_DELETEITEM, IDC_VENUES, OnTvnDeleteitemVenues)
-	ON_NOTIFY(NM_RCLICK, IDC_VENUES, OnNMRclickVenues)
-	ON_NOTIFY(NM_DBLCLK, IDC_VENUES, OnDblclkVenues)
-	ON_UPDATE_COMMAND_UI(ID_CONFIG_ADD, OnUpdateConfigAdd)
-	ON_COMMAND(ID_CONFIG_ADD, OnConfigAdd)
-	ON_UPDATE_COMMAND_UI(ID_CONFIG_DUPLICATE, OnUpdateConfigDup)
-	ON_COMMAND(ID_CONFIG_DUPLICATE, OnConfigDup)
-	ON_UPDATE_COMMAND_UI(ID_CONFIG_EDIT, OnUpdateConfigEdit)
-	ON_COMMAND(ID_CONFIG_EDIT, OnConfigEdit)
-	ON_UPDATE_COMMAND_UI(ID_CONFIG_DELETE, OnUpdateConfigDelete)
-	ON_COMMAND(ID_CONFIG_DELETE, OnConfigDelete)
-	ON_UPDATE_COMMAND_UI(ID_EXPAND, OnUpdateExpand)
-	ON_COMMAND(ID_EXPAND, OnExpand)
-	ON_UPDATE_COMMAND_UI(ID_EXPAND_ALL, OnUpdateExpandAll)
-	ON_COMMAND(ID_EXPAND_ALL, OnExpandAll)
-	ON_UPDATE_COMMAND_UI(ID_COLLAPSE, OnUpdateCollapse)
-	ON_COMMAND(ID_COLLAPSE, OnCollapse)
-	ON_UPDATE_COMMAND_UI(ID_COLLAPSE_ALL, OnUpdateCollapseAll)
-	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_VENUES, OnGetdispinfo)
+	ON_NOTIFY(LVN_DELETEITEM, IDC_VENUES, OnDeleteitem)
+	ON_NOTIFY(NM_DBLCLK, IDC_VENUES, OnDblclk)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_VENUES, OnItemchanged)
+	ON_NOTIFY(NM_SETFOCUS, IDC_VENUES, OnSetfocusVenues)
+	ON_NOTIFY(NM_SETFOCUS, IDC_FAULTS, OnSetfocusFaults)
+	ON_NOTIFY(NM_SETFOCUS, IDC_OTHERPOINTS, OnSetfocusOtherpoints)
+	ON_BN_CLICKED(IDC_NEW, OnNew)
+	ON_BN_CLICKED(IDC_DELETE, OnDelete)
+	ON_BN_CLICKED(IDC_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_COPY, OnCopy)
 	ON_BN_CLICKED(IDC_UPDATE, OnUpdate)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_FAULTS, OnGetdispinfo)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_OTHERPOINTS, OnGetdispinfo)
+	ON_NOTIFY(LVN_DELETEITEM, IDC_FAULTS, OnDeleteitem)
+	ON_NOTIFY(LVN_DELETEITEM, IDC_OTHERPOINTS, OnDeleteitem)
+	ON_NOTIFY(NM_DBLCLK, IDC_FAULTS, OnDblclk)
+	ON_NOTIFY(NM_DBLCLK, IDC_OTHERPOINTS, OnDblclk)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_FAULTS, OnItemchanged)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_OTHERPOINTS, OnItemchanged)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// Helper functions to populate the tree so the OnInitDialog code can be read!
 
-HTREEITEM CDlgConfigure::InsertVenue(HTREEITEM hParent, ARBConfigVenue* venue)
+void CDlgConfigure::SetAction(eAction inAction)
 {
-	CDlgConfigureData* pData = new CDlgConfigureDataVenue(this, venue);
-	HTREEITEM hVenue = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		venue->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hVenue);
-
-	CString str;
-	str.LoadString(IDS_DIVISIONS);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eDivisions);
-	HTREEITEM hDivisions = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hVenue,
-		TVI_LAST);
-	pData->SetHTreeItem(hDivisions);
-	InsertDivisions(hDivisions, venue);
-
-	str.LoadString(IDS_EVENTS);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eEvents);
-	HTREEITEM hEvents = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hVenue,
-		TVI_LAST);
-	pData->SetHTreeItem(hEvents);
-	InsertEvents(hEvents, venue);
-
-	return hVenue;
-}
-
-HTREEITEM CDlgConfigure::InsertFaultType(HTREEITEM hParent, ARBConfigFault* fault)
-{
-	CDlgConfigureData* pData = new CDlgConfigureDataFault(this, fault);
-	HTREEITEM hFault = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		fault->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hFault);
-
-	return hFault;
-}
-
-HTREEITEM CDlgConfigure::InsertOtherPoint(HTREEITEM hParent, ARBConfigOtherPoints* other)
-{
-	CDlgConfigureData* pData = new CDlgConfigureDataOtherPoints(this, other);
-	HTREEITEM hOther = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		other->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hOther);
-
-	return hOther;
-}
-
-HTREEITEM CDlgConfigure::InsertDivision(HTREEITEM hParent, ARBConfigDivision* div)
-{
-	CDlgConfigureData* pData = new CDlgConfigureDataDivision(this, div);
-	HTREEITEM hDiv = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		div->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hDiv);
-
-	CString str;
-	str.LoadString(IDS_TITLES);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eTitles);
-	HTREEITEM hTitles = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hDiv,
-		TVI_LAST);
-	pData->SetHTreeItem(hTitles);
-	InsertTitles(hTitles, div);
-
-	str.LoadString(IDS_LEVELS);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eLevels);
-	HTREEITEM hLevels = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hDiv,
-		TVI_LAST);
-	pData->SetHTreeItem(hLevels);
-	InsertLevels(hLevels, div);
-
-	return hDiv;
-}
-
-HTREEITEM CDlgConfigure::InsertLevel(HTREEITEM hParent, ARBConfigLevel* level)
-{
-	CDlgConfigureData* pData = new CDlgConfigureDataLevel(this, level);
-	HTREEITEM hLevel = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		level->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hLevel);
-	for (ARBConfigSubLevelList::iterator iter = level->GetSubLevels().begin(); iter != level->GetSubLevels().end(); ++iter)
+	if (m_Action != inAction)
 	{
-		InsertSubLevel(hLevel, (*iter));
+		m_Action = inAction;
+		switch (m_Action)
+		{
+		default:
+			m_ctrlComments.SetWindowText("");
+			break;
+		case eVenues:
+			m_ctrlComments.SetWindowText("Buttons: Venues");
+			break;
+		case eFaults:
+			m_ctrlComments.SetWindowText("Buttons: Faults");
+			break;
+		case eOtherPoints:
+			m_ctrlComments.SetWindowText("Buttons: Other Points");
+			break;
+		}
 	}
-
-	return hLevel;
+	UpdateButtons();
 }
 
-HTREEITEM CDlgConfigure::InsertSubLevel(HTREEITEM hParent, ARBConfigSubLevel* subLevel)
+bool CDlgConfigure::GetActionData(CListCtrl2*& pCtrl, int& index, CDlgConfigureData*& pData)
 {
-	CDlgConfigureData* pData = new CDlgConfigureDataSubLevel(this, subLevel);
-	HTREEITEM hSubLevel = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		subLevel->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hSubLevel);
-	return hSubLevel;
+	bool bOk = false;
+	pCtrl = NULL;
+	index = -1;
+	pData = NULL;
+	switch (m_Action)
+	{
+	case eVenues:
+		pCtrl = &m_ctrlVenues;
+		break;
+	case eFaults:
+		pCtrl = &m_ctrlFaults;
+		break;
+	case eOtherPoints:
+		pCtrl = &m_ctrlOthers;
+		break;
+	}
+	if (pCtrl)
+	{
+		bOk = true;
+		index = pCtrl->GetSelection();
+		if (0 <= index)
+		{
+			pData = reinterpret_cast<CDlgConfigureData*>(pCtrl->GetItemData(index));
+		}
+	}
+	return bOk;
 }
 
-HTREEITEM CDlgConfigure::InsertTitle(HTREEITEM hParent, ARBConfigTitle* title)
+void CDlgConfigure::UpdateButtons()
 {
-	CDlgConfigureData* pData = new CDlgConfigureDataTitle(this, title);
-	HTREEITEM hTitle = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		title->GetCompleteName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hTitle);
-
-	return hTitle;
-}
-
-HTREEITEM CDlgConfigure::InsertEvent(HTREEITEM hParent, ARBConfigEvent* event)
-{
-	CDlgConfigureData* pData = new CDlgConfigureDataEvent(this, event);
-	HTREEITEM hEvent = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		event->GetName().c_str(),
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hEvent);
-
-	CString str;
-	str.LoadString(IDS_SCORING);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eScoring);
-	HTREEITEM hScoring = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hEvent,
-		TVI_LAST);
-	pData->SetHTreeItem(hScoring);
-	InsertScorings(hScoring, event);
-
-	return hEvent;
-}
-
-HTREEITEM CDlgConfigure::InsertScoring(HTREEITEM hParent, ARBConfigScoring* pScoring)
-{
-	CDlgConfigureData* pData = new CDlgConfigureDataScoring(this, pScoring);
-	CString str, div, level;
-	if (pScoring->GetDivision() == WILDCARD_DIVISION)
-		div.LoadString(IDS_ALL);
-	else
-		div = pScoring->GetDivision().c_str();
-	if (pScoring->GetLevel() == WILDCARD_LEVEL)
-		level.LoadString(IDS_ALL);
-	else
-		level = pScoring->GetLevel().c_str();
-	str.FormatMessage(IDS_SCORING_NAME,
-		div,
-		level,
-		pScoring->GetScoringStyleStr().c_str());
-	std::string validStr = pScoring->GetValidDateString();
-	if (0 < validStr.length())
+	BOOL bNew = FALSE;
+	BOOL bDelete = FALSE;
+	BOOL bEdit = FALSE;
+	BOOL bCopy = FALSE;
+	CListCtrl2* pCtrl;
+	int index;
+	CDlgConfigureData* pData;
+	if (GetActionData(pCtrl, index, pData))
 	{
-		str += ' ';
-		str += validStr.c_str();
+		bNew = TRUE;
+		if (pData)
+			bDelete = bEdit = bCopy = TRUE;
 	}
-	HTREEITEM hScore = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		hParent,
-		TVI_LAST);
-	pData->SetHTreeItem(hScore);
-
-	CString tmp;
-	str.Empty();
-	if (pScoring->HasSuperQ())
-	{
-		if (!str.IsEmpty())
-			str += ", ";
-		tmp.LoadString(IDS_SUPER_Q);
-		str += tmp;
-	}
-	if (pScoring->HasDoubleQ())
-	{
-		if (!str.IsEmpty())
-			str += ", ";
-		tmp.LoadString(IDS_DOUBLE_Q);
-		str += tmp;
-	}
-	if (pScoring->HasMachPts())
-	{
-		if (!str.IsEmpty())
-			str += ", ";
-		tmp.LoadString(IDS_MACHPTS);
-		str += tmp;
-	}
-	if (!str.IsEmpty())
-	{
-		pData = new CDlgConfigureData(this, CDlgConfigureData::eScoringInfo);
-		HTREEITEM hInfo = m_ctrlTree.InsertItem(
-			TVIF_TEXT | TVIF_PARAM,
-			str,
-			0, //nImage
-			0, //nSelectedImage
-			0, //nState
-			0, //nStateMask
-			reinterpret_cast<LPARAM>(pData),
-			hScore,
-			TVI_LAST);
-		pData->SetHTreeItem(hInfo);
-	}
-
-	for (ARBConfigTitlePointsList::const_iterator iter = pScoring->GetTitlePoints().begin();
-		iter != pScoring->GetTitlePoints().end();
-		++iter)
-	{
-		str.FormatMessage(IDS_CONFIG_TITLEPTS, (*iter)->GetPoints(), (*iter)->GetFaults());
-		pData = new CDlgConfigureData(this, CDlgConfigureData::eScoringInfo);
-		HTREEITEM hInfo = m_ctrlTree.InsertItem(
-			TVIF_TEXT | TVIF_PARAM,
-			str,
-			0, //nImage
-			0, //nSelectedImage
-			0, //nState
-			0, //nStateMask
-			reinterpret_cast<LPARAM>(pData),
-			hScore,
-			TVI_LAST);
-		pData->SetHTreeItem(hInfo);
-	}
-
-	return hScore;
+	m_ctrlNew.EnableWindow(bNew);
+	m_ctrlDelete.EnableWindow(bDelete);
+	m_ctrlEdit.EnableWindow(bEdit);
+	m_ctrlCopy.EnableWindow(bCopy);
 }
 
 void CDlgConfigure::LoadData()
 {
-	m_ctrlTree.DeleteAllItems();
+	m_ctrlVenues.DeleteAllItems();
+	m_ctrlFaults.DeleteAllItems();
+	m_ctrlOthers.DeleteAllItems();
 
-	CString str;
-	str.LoadString(IDS_VENUES);
-	CDlgConfigureData* pData = new CDlgConfigureData(this, CDlgConfigureData::eVenues);
-	HTREEITEM hVenues = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		TVI_ROOT,
-		TVI_LAST);
-	pData->SetHTreeItem(hVenues);
-	InsertVenues(hVenues);
-
-	str.LoadString(IDS_FAULT_TYPES);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eFaultTypes);
-	HTREEITEM hFaultTypes = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		TVI_ROOT,
-		TVI_LAST);
-	pData->SetHTreeItem(hFaultTypes);
-	InsertFaultTypes(hFaultTypes);
-
-	str.LoadString(IDS_OTHERPOINTS);
-	pData = new CDlgConfigureData(this, CDlgConfigureData::eOtherPoints);
-	HTREEITEM hOtherPoints = m_ctrlTree.InsertItem(
-		TVIF_TEXT | TVIF_PARAM,
-		str,
-		0, //nImage
-		0, //nSelectedImage
-		0, //nState
-		0, //nStateMask
-		reinterpret_cast<LPARAM>(pData),
-		TVI_ROOT,
-		TVI_LAST);
-	pData->SetHTreeItem(hOtherPoints);
-	InsertOtherPoints(hOtherPoints);
-
-	m_ctrlTree.Expand(m_ctrlTree.GetRootItem(), TVE_EXPAND);
-}
-
-void CDlgConfigure::InsertVenues(HTREEITEM hParent)
-{
-	for (ARBConfigVenueList::iterator iter = m_Config.GetVenues().begin(); iter != m_Config.GetVenues().end(); ++iter)
+	for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
 	{
-		InsertVenue(hParent, (*iter));
+		m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
+			LPSTR_TEXTCALLBACK, 0, 0, 0,
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataVenue(*iterVenue)));
 	}
-}
+	m_ctrlVenues.SortItems(CompareItems, 0);
+	m_ctrlVenues.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlVenues.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
 
-void CDlgConfigure::InsertFaultTypes(HTREEITEM hParent)
-{
-	for (ARBConfigFaultList::iterator iter = m_Config.GetFaults().begin(); iter != m_Config.GetFaults().end(); ++iter)
+	for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
 	{
-		InsertFaultType(hParent, (*iter));
+		m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
+			LPSTR_TEXTCALLBACK, 0, 0, 0,
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataFault(*iterFault)));
 	}
-}
+	m_ctrlFaults.SortItems(CompareItems, 0);
+	m_ctrlFaults.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 
-void CDlgConfigure::InsertOtherPoints(HTREEITEM hParent)
-{
-	for (ARBConfigOtherPointsList::iterator iter = m_Config.GetOtherPoints().begin(); iter != m_Config.GetOtherPoints().end(); ++iter)
+	for (ARBConfigOtherPointsList::iterator iterOther = m_Config.GetOtherPoints().begin(); iterOther != m_Config.GetOtherPoints().end(); ++iterOther)
 	{
-		InsertOtherPoint(hParent, (*iter));
+		m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
+			LPSTR_TEXTCALLBACK, 0, 0, 0,
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataOtherPoints(*iterOther)));
 	}
+	m_ctrlOthers.SortItems(CompareItems, 0);
+	m_ctrlOthers.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 }
 
-void CDlgConfigure::InsertDivisions(HTREEITEM hParent, ARBConfigVenue* venue)
+int CDlgConfigure::FindCurrentVenue(const ARBConfigVenue* pVenue, bool bSet)
 {
-	for (ARBConfigDivisionList::iterator iter = venue->GetDivisions().begin(); iter != venue->GetDivisions().end(); ++iter)
+	int idxCurrent = -1;
+	for (int index = 0; index < m_ctrlVenues.GetItemCount(); ++index)
 	{
-		InsertDivision(hParent, (*iter));
+		CDlgConfigureDataVenue* pData = reinterpret_cast<CDlgConfigureDataVenue*>(m_ctrlVenues.GetItemData(index));
+		if (pData->GetVenue() == pVenue)
+		{
+			idxCurrent = index;
+			break;
+		}
 	}
-}
-
-void CDlgConfigure::InsertLevels(HTREEITEM hParent, ARBConfigDivision* div)
-{
-	for (ARBConfigLevelList::iterator iter = div->GetLevels().begin(); iter != div->GetLevels().end(); ++iter)
+	if (bSet)
 	{
-		InsertLevel(hParent, (*iter));
+		m_ctrlVenues.SetSelection(idxCurrent);
+		if (0 < idxCurrent)
+			m_ctrlVenues.EnsureVisible(idxCurrent, FALSE);
 	}
+	return idxCurrent;
 }
 
-void CDlgConfigure::InsertTitles(HTREEITEM hParent, ARBConfigDivision* div)
+int CDlgConfigure::FindCurrentFault(const ARBConfigFault* pFault, bool bSet)
 {
-	for (ARBConfigTitleList::iterator iter = div->GetTitles().begin(); iter != div->GetTitles().end(); ++iter)
+	int idxCurrent = -1;
+	for (int index = 0; index < m_ctrlFaults.GetItemCount(); ++index)
 	{
-		InsertTitle(hParent, (*iter));
+		CDlgConfigureDataFault* pData = reinterpret_cast<CDlgConfigureDataFault*>(m_ctrlFaults.GetItemData(index));
+		if (pData->GetFault() == pFault)
+		{
+			idxCurrent = index;
+			break;
+		}
 	}
-}
-
-void CDlgConfigure::InsertEvents(HTREEITEM hParent, ARBConfigVenue* venue)
-{
-	for (ARBConfigEventList::iterator iter = venue->GetEvents().begin(); iter != venue->GetEvents().end(); ++iter)
+	if (bSet)
 	{
-		InsertEvent(hParent, (*iter));
+		m_ctrlFaults.SetSelection(idxCurrent);
+		if (0 < idxCurrent)
+			m_ctrlFaults.EnsureVisible(idxCurrent, FALSE);
 	}
+	return idxCurrent;
 }
 
-void CDlgConfigure::InsertScorings(HTREEITEM hParent, ARBConfigEvent* event)
+int CDlgConfigure::FindCurrentOtherPoints(const ARBConfigOtherPoints* pOther, bool bSet)
 {
-	for (ARBConfigScoringList::iterator iter = event->GetScorings().begin(); iter != event->GetScorings().end(); ++iter)
+	int idxCurrent = -1;
+	for (int index = 0; index < m_ctrlOthers.GetItemCount(); ++index)
 	{
-		InsertScoring(hParent, (*iter));
+		CDlgConfigureDataOtherPoints* pData = reinterpret_cast<CDlgConfigureDataOtherPoints*>(m_ctrlOthers.GetItemData(index));
+		if (pData->GetOtherPoints() == pOther)
+		{
+			idxCurrent = index;
+			break;
+		}
 	}
-}
-
-CDlgConfigureData* CDlgConfigure::GetItemData(HTREEITEM inItem)
-{
-	CDlgConfigureData* pData = NULL;
-	if (NULL != inItem)
-		pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlTree.GetItemData(inItem));
-	return pData;
+	if (bSet)
+	{
+		m_ctrlOthers.SetSelection(idxCurrent);
+		if (0 < idxCurrent)
+			m_ctrlOthers.EnsureVisible(idxCurrent, FALSE);
+	}
+	return idxCurrent;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -566,273 +315,394 @@ CDlgConfigureData* CDlgConfigure::GetItemData(HTREEITEM inItem)
 BOOL CDlgConfigure::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlVenues.InsertColumn(0, "Venues");
+	m_ctrlVenues.InsertColumn(1, "Description");
+	m_ctrlFaults.InsertColumn(0, "Faults");
+	m_ctrlOthers.InsertColumn(0, "Other Points");
 
 	LoadData();
+	SetAction(eVenues);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgConfigure::OnDestroy()
+void CDlgConfigure::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	m_ctrlTree.DeleteAllItems();
-	CDialog::OnDestroy();
-}
-
-void CDlgConfigure::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
-{
-	CDialog::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
-	CCmdUI cmdUI;
-	// (This may have changed for VC7+, but as of MFC4.2 it was required)
-	// Hack to make this code work!!!!
-	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
-	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
+	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		cmdUI.m_nIndex = n;
-		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
-		cmdUI.m_pMenu = pPopupMenu;
-		CCmdTarget* pTarget = this;
-		// Undocumented MFC cmd calls the ON_UPDATE_COMMAND_UI funcs.
-		cmdUI.DoUpdate(pTarget, FALSE);
-	}
-}
-
-void CDlgConfigure::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
-{
-	HTREEITEM hCurItem = m_ctrlTree.GetSelectedItem();
-	HTREEITEM hItem = m_ctrlTree.GetDropHilightItem();
-	m_bReset = false;
-	if (hItem)
-		m_bReset = true;
-	else
-		hItem = hCurItem;
-	CDlgConfigureData* pData = GetItemData(hItem);
-	if (!pData)
-		return;
-	if (m_bReset)
-		m_ctrlTree.SelectItem(hItem);
-	// Point is (-1,-1) on the context menu button.
-	if (0 > point.x || 0 > point.y)
-	{
-		// Adjust the menu position so it's on the selected item.
-		CRect rect;
-		m_ctrlTree.GetItemRect(hItem, &rect, FALSE);
-		point.x = rect.left + rect.Width() / 3;
-		point.y = rect.top + rect.Height() / 2;
-		ClientToScreen(&point);
-	}
-	UINT idMenu = IDR_CONFIGURE;
-	if (0 != idMenu)
-	{
-		CMenu menu;
-		menu.LoadMenu(idMenu);
-		CMenu* pMenu = menu.GetSubMenu(0);
-		ASSERT(pMenu != NULL);
-		UINT id = pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD, point.x, point.y, this);
-		// By processing the menu id ourselves, we can control the selection
-		// item. Otherwise, the menu id gets posted and arrives back to the
-		// dialog after we reset the select (in case the right click was done
-		// on an item other than the current item).
-		switch (id)
+		CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pDispInfo->item.lParam);
+		if (pData)
 		{
-		default:
-			break;
-		case ID_CONFIG_ADD:
-			OnConfigAdd();
-			break;
-		case ID_CONFIG_DUPLICATE:
-			OnConfigDup();
-			break;
-		case ID_CONFIG_EDIT:
-			OnConfigEdit();
-			break;
-		case ID_CONFIG_DELETE:
-			OnConfigDelete();
-			break;
-		case ID_EXPAND:
-			OnExpand();
-			break;
-		case ID_EXPAND_ALL:
-			OnExpandAll();
-			break;
-		case ID_COLLAPSE:
-			OnCollapse();
-			break;
-		case ID_COLLAPSE_ALL:
-			OnCollapseAll();
-			break;
+			CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}
-	}
-	if (m_bReset)
-		m_ctrlTree.SelectItem(hCurItem);
-}
-
-void CDlgConfigure::OnTvnDeleteitemVenues(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	if (pNMTreeView)
-	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(pNMTreeView->itemOld.lParam);
-		delete pData;
-		pNMTreeView->itemOld.lParam = 0;
 	}
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnNMRclickVenues(NMHDR *pNMHDR, LRESULT *pResult)
+void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	HTREEITEM hItem = m_ctrlTree.GetDropHilightItem();
-	if (NULL == hItem)
-		hItem = m_ctrlTree.GetSelectedItem();
-	if (hItem)
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMListView->lParam);
+	delete pData;
+	pNMListView->lParam = 0;
+	*pResult = 0;
+}
+
+void CDlgConfigure::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	OnEdit();
+	*pResult = 0;
+}
+
+void CDlgConfigure::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	UpdateButtons();
+	*pResult = 0;
+}
+
+void CDlgConfigure::OnSetfocusVenues(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	SetAction(eVenues);
+	*pResult = 0;
+}
+
+void CDlgConfigure::OnSetfocusFaults(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	SetAction(eFaults);
+	*pResult = 0;
+}
+
+void CDlgConfigure::OnSetfocusOtherpoints(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	SetAction(eOtherPoints);
+	*pResult = 0;
+}
+
+void CDlgConfigure::OnNew() 
+{
+	switch (m_Action)
 	{
-		// Send WM_CONTEXTMENU to self (done according to Q222905)
-		SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, GetMessagePos());
+	case eVenues:
+		{
+			ARBConfigVenue* pVenue = new ARBConfigVenue();
+			CDlgConfigVenue dlg(m_Book, m_Config, pVenue, this);
+			if (IDOK == dlg.DoModal())
+			{
+				ARBConfigVenue* pNewVenue = m_Config.GetVenues().AddVenue(pVenue);
+				if (pNewVenue)
+				{
+					dlg.GetFixups(m_DlgFixup);
+					m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
+						LPSTR_TEXTCALLBACK, 0, 0, 0,
+						reinterpret_cast<LPARAM>(new CDlgConfigureDataVenue(pNewVenue)));
+					m_ctrlVenues.SortItems(CompareItems, 0);
+					FindCurrentVenue(pNewVenue, true);
+				}
+			}
+			pVenue->Release();
+		}
+		break;
+
+	case eFaults:
+		{
+			CDlgName dlg("", IDS_FAULT_TYPE_NAME, this);
+			if (IDOK == dlg.DoModal())
+			{
+				std::string name = dlg.GetName();
+				// We could check for uniqueness, but if the user wants 2
+				// strings the same, why argue! Afterall, these strings
+				// are only "helper" items to fill in other data.
+				if (0 < name.length())
+				{
+					ARBConfigFault* pNewFault = m_Config.GetFaults().AddFault(name);
+					if (pNewFault)
+					{
+						m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlFaults.GetItemCount(),
+							LPSTR_TEXTCALLBACK, 0, 0, 0,
+							reinterpret_cast<LPARAM>(new CDlgConfigureDataFault(pNewFault)));
+						m_ctrlFaults.SortItems(CompareItems, 0);
+						FindCurrentFault(pNewFault, true);
+					}
+				}
+			}
+		}
+		break;
+
+	case eOtherPoints:
+		{
+			ARBConfigOtherPoints* pOther = new ARBConfigOtherPoints();
+			// The dialog will ensure uniqueness.
+			CDlgConfigOtherPoints dlg(m_Config, pOther, this);
+			if (IDOK == dlg.DoModal())
+			{
+				ARBConfigOtherPoints* pNewOther = m_Config.GetOtherPoints().AddOtherPoints(pOther);
+				if (pOther)
+				{
+					m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlOthers.GetItemCount(),
+						LPSTR_TEXTCALLBACK, 0, 0, 0,
+						reinterpret_cast<LPARAM>(new CDlgConfigureDataOtherPoints(pNewOther)));
+					m_ctrlOthers.SortItems(CompareItems, 0);
+					FindCurrentOtherPoints(pNewOther, true);
+				}
+			}
+			pOther->Release();
+		}
+		break;
 	}
-	// Mark message as handled and suppress default handling
-	*pResult = 1;
 }
 
-void CDlgConfigure::OnDblclkVenues(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnDelete() 
 {
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData && pData->CanEdit())
-		pData->Edit();
-	*pResult = 1;
-}
+	CListCtrl2* pCtrl;
+	int index;
+	CDlgConfigureData* pData;
+	if (!GetActionData(pCtrl, index, pData) || !pData)
+		return;
 
-void CDlgConfigure::OnUpdateConfigAdd(CCmdUI *pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		bEnable = pData->CanAdd();
-	pCmdUI->Enable(bEnable);
-}
-
-void CDlgConfigure::OnConfigAdd()
-{
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		pData->Add();
-}
-
-void CDlgConfigure::OnUpdateConfigDup(CCmdUI *pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		bEnable = pData->CanDuplicate();
-	pCmdUI->Enable(bEnable);
-}
-
-void CDlgConfigure::OnConfigDup()
-{
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		pData->Duplicate();
-}
-
-void CDlgConfigure::OnUpdateConfigEdit(CCmdUI *pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		bEnable = pData->CanEdit();
-	pCmdUI->Enable(bEnable);
-}
-
-void CDlgConfigure::OnConfigEdit()
-{
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		pData->Edit();
-}
-
-void CDlgConfigure::OnUpdateConfigDelete(CCmdUI *pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		bEnable = pData->CanDelete();
-	pCmdUI->Enable(bEnable);
-}
-
-void CDlgConfigure::OnConfigDelete()
-{
-	CDlgConfigureData* pData = GetItemData(m_ctrlTree.GetSelectedItem());
-	if (pData)
-		pData->Delete();
-}
-
-void CDlgConfigure::OnUpdateExpand(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	if (hItem && m_ctrlTree.ItemHasChildren(hItem))
+	bool bDelete = true;
+	switch (m_Action)
 	{
-		if (!(TVIS_EXPANDED & m_ctrlTree.GetItemState(hItem, TVIS_EXPANDED)))
-			bEnable = TRUE;
+	case eVenues:
+		{
+			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
+			std::string venue = pVenueData->GetVenue()->GetName();
+			int nRegNums = m_Book.GetDogs().NumRegNumsInVenue(venue);
+			int nTitles = m_Book.GetDogs().NumTitlesInVenue(venue);
+			int nTrials = m_Book.GetDogs().NumTrialsInVenue(venue);
+			if (0 < nRegNums || 0 < nTitles || 0 < nTrials)
+			{
+				CString msg;
+				msg.FormatMessage(IDS_DELETE_VENUE,
+					venue.c_str(),
+					nRegNums,
+					nTitles,
+					nTrials);
+				if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
+					bDelete = false;
+			}
+			if (bDelete)
+			{
+				// If we were able to delete it...
+				if (m_Config.GetVenues().DeleteVenue(venue))
+				{
+					// Then we commit to fixing the real data.
+					if (0 < nRegNums || 0 < nTitles || 0 < nTrials)
+						m_DlgFixup.push_back(new CDlgFixupDeleteVenue(venue));
+					pCtrl->DeleteItem(index);
+				}
+			}
+		}
+		break;
+
+	case eFaults:
+		{
+			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
+			if (m_Config.GetFaults().DeleteFault(pFaultData->GetFault()->GetName()))
+			{
+				// Then we commit to fixing the real data.
+				pCtrl->DeleteItem(index);
+				// No fixup necessary for faults.
+			}
+		}
+		break;
+
+	case eOtherPoints:
+		{
+			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
+			std::string otherPoints = pOtherData->GetOtherPoints()->GetName();
+			int nOther = m_Book.GetDogs().NumOtherPointsInUse(otherPoints);
+			if (0 < nOther)
+			{
+				CString msg;
+				msg.FormatMessage(IDS_DELETE_OTHERPOINTS,
+					otherPoints.c_str(),
+					nOther);
+				if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
+					bDelete = false;
+			}
+			if (bDelete)
+			{
+				if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
+				{
+					// Then we commit to fixing the real data.
+					if (0 < nOther)
+						m_DlgFixup.push_back(new CDlgFixupDeleteOtherPoints(otherPoints));
+					pCtrl->DeleteItem(index);
+				}
+			}
+		}
+		break;
 	}
-	pCmdUI->Enable(bEnable);
+	if (bDelete)
+		pCtrl->SortItems(CompareItems, 0);
 }
 
-void CDlgConfigure::OnExpand()
+void CDlgConfigure::OnEdit() 
 {
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	m_ctrlTree.Expand(hItem, TVE_EXPAND);
-	m_ctrlTree.EnsureVisible(hItem);
-}
+	CListCtrl2* pCtrl;
+	int index;
+	CDlgConfigureData* pData;
+	if (!GetActionData(pCtrl, index, pData) || !pData)
+		return;
 
-void CDlgConfigure::OnUpdateExpandAll(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	if (hItem && m_ctrlTree.ItemHasChildren(hItem))
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
-
-void CDlgConfigure::OnExpandAll()
-{
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	ExpandAll(m_ctrlTree, hItem, TVE_EXPAND);
-	m_ctrlTree.EnsureVisible(hItem);
-}
-
-void CDlgConfigure::OnUpdateCollapse(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	if (hItem && m_ctrlTree.ItemHasChildren(hItem))
+	switch (m_Action)
 	{
-		if ((TVIS_EXPANDED & m_ctrlTree.GetItemState(hItem, TVIS_EXPANDED)))
-			bEnable = TRUE;
+
+	case eVenues:
+		{
+			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
+			CDlgConfigVenue dlg(m_Book, m_Config, pVenueData->GetVenue(), this);
+			if (IDOK == dlg.DoModal())
+			{
+				dlg.GetFixups(m_DlgFixup);
+				m_ctrlVenues.Invalidate();
+				m_ctrlVenues.SortItems(CompareItems, 0);
+			}
+		}
+		break;
+
+	case eFaults:
+		{
+			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
+			bool done = false;
+			std::string oldName = pFaultData->GetFault()->GetName();
+			std::string name(oldName);
+			while (!done)
+			{
+				done = true;
+				CDlgName dlg(name.c_str(), IDS_FAULT_TYPE_NAME, this);
+				if (IDOK == dlg.DoModal())
+				{
+					name = dlg.GetName();
+					if (oldName != name)
+					{
+						if (m_Config.GetFaults().FindFault(name))
+						{
+							done = false;
+							AfxMessageBox(IDS_NAME_IN_USE);
+							continue;
+						}
+						pFaultData->GetFault()->SetName(name);
+						// No fixup necessary for faults.
+						m_ctrlFaults.Invalidate();
+						m_ctrlFaults.SortItems(CompareItems, 0);
+					}
+				}
+			}
+		}
+		break;
+
+	case eOtherPoints:
+		{
+			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
+			std::string oldName = pOtherData->GetOtherPoints()->GetName();
+			CDlgConfigOtherPoints dlg(m_Config, pOtherData->GetOtherPoints(), this);
+			if (IDOK == dlg.DoModal())
+			{
+				if (pOtherData->GetOtherPoints()->GetName() != oldName)
+				{
+					// Other things may have changed, but we only care about the name for fixup.
+					m_DlgFixup.push_back(new CDlgFixupRenameOtherPoints(oldName, pOtherData->GetOtherPoints()->GetName()));
+					m_ctrlOthers.Invalidate();
+					m_ctrlOthers.SortItems(CompareItems, 0);
+				}
+			}
+		}
+		break;
 	}
-	pCmdUI->Enable(bEnable);
 }
 
-void CDlgConfigure::OnCollapse()
+void CDlgConfigure::OnCopy() 
 {
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	m_ctrlTree.Expand(hItem, TVE_COLLAPSE);
-	m_ctrlTree.EnsureVisible(hItem);
-}
+	CListCtrl2* pCtrl;
+	int index;
+	CDlgConfigureData* pData;
+	if (!GetActionData(pCtrl, index, pData) || !pData)
+		return;
 
-void CDlgConfigure::OnUpdateCollapseAll(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	if (hItem && m_ctrlTree.ItemHasChildren(hItem))
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
+	int nColumns = 0;
+	CDlgConfigureData* pNewData = NULL;
+	CString copyOf;
+	copyOf.LoadString(IDS_COPYOF);
+	switch (m_Action)
+	{
+	case eVenues:
+		{
+			nColumns = 2;
+			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
+			std::string name(pVenueData->GetVenue()->GetName());
+			while (m_Config.GetVenues().FindVenue(name))
+			{
+				name = (LPCSTR)copyOf + name;
+			}
+			ARBConfigVenue* pNewVenue = m_Config.GetVenues().AddVenue(name);
+			if (pNewVenue)
+			{
+				*pNewVenue = *pVenueData->GetVenue();
+				pNewVenue->SetName(name); // Put the name back.
+				pNewData = new CDlgConfigureDataVenue(pNewVenue);
+				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
+					LPSTR_TEXTCALLBACK, 0, 0, 0,
+					reinterpret_cast<LPARAM>(pNewData));
+				pCtrl->SortItems(CompareItems, 0);
+				FindCurrentVenue(pNewVenue, true);
+			}
+		}
+		break;
 
-void CDlgConfigure::OnCollapseAll()
-{
-	HTREEITEM hItem = m_ctrlTree.GetSelectedItem();
-	ExpandAll(m_ctrlTree, hItem, TVE_COLLAPSE);
-	m_ctrlTree.EnsureVisible(hItem);
+	case eFaults:
+		{
+			nColumns = 1;
+			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
+			std::string name(pFaultData->GetFault()->GetName());
+			ARBConfigFault* pNewFault = m_Config.GetFaults().AddFault(name);
+			if (pNewFault)
+			{
+				pNewData = new CDlgConfigureDataFault(pNewFault);
+				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
+					LPSTR_TEXTCALLBACK, 0, 0, 0,
+					reinterpret_cast<LPARAM>(pNewData));
+				pCtrl->SortItems(CompareItems, 0);
+				FindCurrentFault(pNewFault, true);
+			}
+		}
+		break;
+
+	case eOtherPoints:
+		{
+			nColumns = 1;
+			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
+			std::string name(pOtherData->GetOtherPoints()->GetName());
+			while (m_Config.GetOtherPoints().FindOtherPoints(name))
+			{
+				name = (LPCSTR)copyOf + name;
+			}
+			ARBConfigOtherPoints* pOther = new ARBConfigOtherPoints(*(pOtherData->GetOtherPoints()));
+			pOther->SetName(name);
+			ARBConfigOtherPoints* pNewOther = m_Config.GetOtherPoints().AddOtherPoints(pOther);
+			pOther->Release();
+			if (pNewOther)
+			{
+				pNewData = new CDlgConfigureDataOtherPoints(pNewOther);
+				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
+					LPSTR_TEXTCALLBACK, 0, 0, 0,
+					reinterpret_cast<LPARAM>(pNewData));
+				pCtrl->SortItems(CompareItems, 0);
+				FindCurrentOtherPoints(pNewOther, true);
+			}
+		}
+		break;
+	}
+	
+	for (int i = 0; i < nColumns; ++i)
+		pCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 // Updating a configuration is mainly an additive procedure.
@@ -920,14 +790,4 @@ void CDlgConfigure::OnOK()
 		m_pDoc->UpdateAllViews(NULL, UPDATE_CONFIG);
 	}
 	CDialog::OnOK();
-}
-
-void CDlgConfigure::OnCancel()
-{
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-	{
-		delete (*iter);
-	}
-	m_DlgFixup.clear();
-	CDialog::OnCancel();
 }

@@ -190,6 +190,10 @@ SOURCE=..\..\..\Win\DlgConfigureData.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgConfigVenue.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgDog.cpp
 # End Source File
 # Begin Source File
@@ -444,6 +448,10 @@ SOURCE=..\..\..\Win\DlgConfigure.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgConfigureData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigVenue.h
 # End Source File
 # Begin Source File
 

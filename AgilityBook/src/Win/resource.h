@@ -6,7 +6,6 @@
 #define IDR_MAINFRAME                   128
 #define IDR_DTD_AGILITYRECORDBOOK       129
 #define IDR_XML_DEFAULT_CONFIG          130
-#define IDR_CONFIGURE                   131
 #define IDR_DOG                         132
 #define IDR_TRIAL                       133
 #define IDR_RUN                         134
@@ -59,6 +58,7 @@
 #define IDD_ASSIGN_COLUMNS              184
 #define IDD_FIND                        185
 #define IDD_CONFIG_TITLE                186
+#define IDD_CONFIG_VENUE                187
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -387,10 +387,6 @@
 #define IDS_ADDED_TRAINING_ITEMS        5169
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_EDIT_CONFIGURATION           32774
-#define ID_CONFIG_ADD                   32775
-#define ID_CONFIG_DUPLICATE             32776
-#define ID_CONFIG_EDIT                  32777
-#define ID_CONFIG_DELETE                32778
 #define ID_AGILITY_NEW_CALENDAR         32779
 #define ID_AGILITY_NEW_TRAINING         32780
 #define ID_AGILITY_NEW_DOG              32781
@@ -431,9 +427,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        186
+#define _APS_NEXT_RESOURCE_VALUE        190
 #define _APS_NEXT_COMMAND_VALUE         32812
-#define _APS_NEXT_CONTROL_VALUE         1175
+#define _APS_NEXT_CONTROL_VALUE         1192
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
