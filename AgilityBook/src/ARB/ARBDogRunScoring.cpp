@@ -343,5 +343,5 @@ double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
 			}
 		}
 	}
-	return timeFaults;
+	return timeFaults * inScoring->TimeFaultMultiplier();
 }

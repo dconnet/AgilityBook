@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Don't set version number lower when merging.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -395,17 +396,18 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 		info += "\n";
 		info += venueInfo;
 	}
+	// Even if there are no changes, update the version number so we don't
+	// prompt anymore.
+	if (m_Version < inConfigNew.GetVersion())
+		m_Version = inConfigNew.GetVersion();
 	bool bChanges = true;
 	if (0 == nChanges)
 	{
-		if (m_Version < inConfigNew.GetVersion())
-			m_Version = inConfigNew.GetVersion();
 		bChanges = false;
 		info.erase();
 	}
 	else
 	{
-		m_Version = inConfigNew.GetVersion();
 		ioInfo += info;
 	}
 	return bChanges;

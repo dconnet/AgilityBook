@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
  */
 
@@ -86,9 +87,12 @@ private:
 	CButton	m_ctrlTimeFaultsUnder;
 	CButton	m_ctrlTimeFaultsOver;
 	CEdit	m_ctrlNote;
-	CButton m_ctrlSuperQ;
 	CButton m_ctrlMachPts;
 	CButton m_ctrlDoubleQ;
+	CButton m_ctrlSuperQ;
+	CStatic	m_ctrlMultiplyText;
+	CEdit	m_ctrlMultiply;
+	short	m_Multiply;
 	CListBox2	m_ctrlPointsList;
 	CButton	m_ctrlPointsNew;
 	CButton	m_ctrlPointsEdit;

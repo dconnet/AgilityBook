@@ -199,6 +199,7 @@
 #define ATTRIB_SCORING_FAULTS				"CourseFaults"
 #define ATTRIB_SCORING_TIME					"Time"
 #define ATTRIB_SCORING_HAS_TABLE			"hasTable"
+#define ATTRIB_SCORING_TF_MULTIPLIER		"timeFault"
 #define ATTRIB_SCORING_SCT					"SCT"
 #define ATTRIB_SCORING_SCT2					"SCT2"
 #define ATTRIB_BY_TIME_YARDS				"Yards"

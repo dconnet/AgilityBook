@@ -151,6 +151,9 @@ Does this event have partners?
 .topic HIDC_CONFIG_EVENT_SUPERQ
 Does this scoring method have Super Qs?
 
+.topic HIDC_CONFIG_EVENT_TF_MULTIPLY
+Multiply any time faults by a weighting factor.
+
 .topic HIDC_CONFIG_EVENT_TABLE
 Could there be a table in this event?
 

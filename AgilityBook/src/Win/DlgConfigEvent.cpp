@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-12-10 DRC Changes weren't saved when lifetime pts were modified.
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
  * @li 2004-04-01 DRC Fixed? the memory access fault.
@@ -91,6 +92,7 @@ CDlgConfigEvent::CDlgConfigEvent(CAgilityBookDoc* pDoc,
 	//{{AFX_DATA_INIT(CDlgConfigEvent)
 	m_OpeningPts = 0;
 	m_ClosingPts = 0;
+	m_Multiply = 1;
 	//}}AFX_DATA_INIT
 }
 
@@ -138,9 +140,12 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_UNDER, m_ctrlTimeFaultsUnder);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_OVER, m_ctrlTimeFaultsOver);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_MACH, m_ctrlMachPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DOUBLEQ, m_ctrlDoubleQ);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT, m_ctrlMultiplyText);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_ctrlMultiply);
+	DDX_Text(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_Multiply);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS, m_ctrlPointsList);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_NEW, m_ctrlPointsNew);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_EDIT, m_ctrlPointsEdit);
@@ -280,9 +285,10 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlTimeFaultsUnder.SetCheck(0);
 		m_ctrlTimeFaultsOver.SetCheck(0);
 		m_ctrlPointsList.ResetContent();
-		m_ctrlSuperQ.SetCheck(0);
 		m_ctrlMachPts.SetCheck(0);
 		m_ctrlDoubleQ.SetCheck(0);
+		m_ctrlSuperQ.SetCheck(0);
+		m_ctrlMultiply.SetWindowText("1");
 		m_ctrlNote.SetWindowText("");
 		FillRequiredPoints();
 	}
@@ -296,9 +302,10 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlDropFractions.EnableWindow(bEnable);
 	m_ctrlTimeFaultsUnder.EnableWindow(bEnable);
 	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
-	m_ctrlSuperQ.EnableWindow(bEnable);
 	m_ctrlMachPts.EnableWindow(bEnable);
 	m_ctrlDoubleQ.EnableWindow(bEnable);
+	m_ctrlSuperQ.EnableWindow(bEnable);
+	m_ctrlMultiply.EnableWindow(bEnable);
 	m_ctrlCopy.EnableWindow(bEnable);
 	m_ctrlDelete.EnableWindow(bEnable);
 	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
@@ -429,6 +436,8 @@ void CDlgConfigEvent::FillRequiredPoints()
 		m_ctrlDropFractions.ShowWindow(SW_HIDE);
 		m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 		m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+		m_ctrlMultiplyText.ShowWindow(SW_HIDE);
+		m_ctrlMultiply.ShowWindow(SW_HIDE);
 	}
 	else
 	{
@@ -447,6 +456,8 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlDropFractions.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
+			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			break;
 		case ARBConfigScoring::eFaultsThenTime:
 		case ARBConfigScoring::eFaults100ThenTime:
@@ -458,10 +469,14 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlMultiplyText.ShowWindow(SW_SHOW);
+			m_ctrlMultiply.ShowWindow(SW_SHOW);
 			if (pScoring->DropFractions())
 				m_ctrlDropFractions.SetCheck(1);
 			else
 				m_ctrlDropFractions.SetCheck(0);
+			m_Multiply = pScoring->TimeFaultMultiplier();
+			UpdateData(FALSE);
 			break;
 		case ARBConfigScoring::eOCScoreThenTime:
 			m_ctrlPointsOpeningText.ShowWindow(SW_SHOW);
@@ -471,6 +486,8 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlDropFractions.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
+			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[0]);
 			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
 			m_ClosingPts = pScoring->GetRequiredClosingPoints();
@@ -484,6 +501,8 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlDropFractions.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
+			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[1]);
 			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
 			UpdateData(FALSE);
@@ -496,6 +515,8 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
+			m_ctrlMultiplyText.ShowWindow(SW_SHOW);
+			m_ctrlMultiply.ShowWindow(SW_SHOW);
 			if (pScoring->DropFractions())
 				m_ctrlDropFractions.SetCheck(1);
 			else
@@ -508,6 +529,8 @@ void CDlgConfigEvent::FillRequiredPoints()
 				m_ctrlTimeFaultsOver.SetCheck(1);
 			else
 				m_ctrlTimeFaultsOver.SetCheck(0);
+			m_Multiply = pScoring->TimeFaultMultiplier();
+			UpdateData(FALSE);
 			break;
 		}
 	}
@@ -602,6 +625,7 @@ bool CDlgConfigEvent::SaveControls()
 				pScoring->SetDropFractions(true);
 			else
 				pScoring->SetDropFractions(false);
+			pScoring->SetTimeFaultMultiplier(m_Multiply);
 			break;
 		case ARBConfigScoring::eOCScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
@@ -623,6 +647,7 @@ bool CDlgConfigEvent::SaveControls()
 				pScoring->SetComputeTimeFaultsOver(true);
 			else
 				pScoring->SetComputeTimeFaultsOver(false);
+			pScoring->SetTimeFaultMultiplier(m_Multiply);
 			break;
 		}
 		m_ctrlNote.GetWindowText(str);

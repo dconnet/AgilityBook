@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation on T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added VerifyEvent.
@@ -142,6 +143,8 @@ public:
 	void SetComputeTimeFaultsUnder(bool inBool); ///< Only valid for T+F
 	bool ComputeTimeFaultsOver() const; ///< Only valid for T+F
 	void SetComputeTimeFaultsOver(bool inBool); ///< Only valid for T+F
+	short TimeFaultMultiplier() const;
+	void SetTimeFaultMultiplier(short inMultiplier);
 	short GetRequiredOpeningPoints() const; ///< Only valid for point-based
 	void SetRequiredOpeningPoints(short inPoints); ///< Only valid for point-based
 	short GetRequiredClosingPoints() const; ///< Only valid for point-based
@@ -169,6 +172,7 @@ private:
 	bool m_bDropFractions;
 	bool m_bTimeFaultsUnder;
 	bool m_bTimeFaultsOver;
+	short m_TimeFaultMultiplier;
 	std::string m_Note;
 	short m_OpeningPts;
 	short m_ClosingPts;
@@ -259,6 +263,18 @@ inline bool ARBConfigScoring::ComputeTimeFaultsOver() const
 inline void ARBConfigScoring::SetComputeTimeFaultsOver(bool inBool)
 {
 	m_bTimeFaultsOver = inBool;
+}
+
+inline short ARBConfigScoring::TimeFaultMultiplier() const
+{
+	return m_TimeFaultMultiplier;
+}
+
+inline void ARBConfigScoring::SetTimeFaultMultiplier(short inMultiplier)
+{
+	m_TimeFaultMultiplier = inMultiplier;
+	if (0 >= m_TimeFaultMultiplier)
+		m_TimeFaultMultiplier = 1;
 }
 
 inline std::string const& ARBConfigScoring::GetNote() const

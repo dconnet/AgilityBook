@@ -3,6 +3,7 @@
   - Added 'underTF'/'overTF' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Updated AAC.
+  - Added CKC.
 - New features / Enhancements:
   - Added the ability to make notes about clubs/locations similar to
     how judges notes are made.
@@ -10,6 +11,8 @@
     is added (not in-use) and/or has comments.
   - Flipped the order of 2 fields on the Run dialog.
   - Enable duplication of a title in the configuration.
+  - Added opening/closing dates to calendar view.
+  - Added a time fault multiplier.
 - Bug fixes
   - Compute the score (in the run dialog) for NA runs that do not have
     titling points.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation on T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -99,6 +100,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bDropFractions(false)
 	, m_bTimeFaultsUnder(false)
 	, m_bTimeFaultsOver(false)
+	, m_TimeFaultMultiplier(1)
 	, m_Note()
 	, m_OpeningPts(0)
 	, m_ClosingPts(0)
@@ -119,6 +121,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bDropFractions(rhs.m_bDropFractions)
 	, m_bTimeFaultsUnder(rhs.m_bTimeFaultsUnder)
 	, m_bTimeFaultsOver(rhs.m_bTimeFaultsOver)
+	, m_TimeFaultMultiplier(rhs.m_TimeFaultMultiplier)
 	, m_Note(rhs.m_Note)
 	, m_OpeningPts(rhs.m_OpeningPts)
 	, m_ClosingPts(rhs.m_ClosingPts)
@@ -146,6 +149,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bDropFractions = rhs.m_bDropFractions;
 		m_bTimeFaultsUnder = rhs.m_bTimeFaultsUnder;
 		m_bTimeFaultsOver = rhs.m_bTimeFaultsOver;
+		m_TimeFaultMultiplier = rhs.m_TimeFaultMultiplier;
 		m_Note = rhs.m_Note;
 		m_OpeningPts = rhs.m_OpeningPts;
 		m_ClosingPts = rhs.m_ClosingPts;
@@ -168,6 +172,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bDropFractions == rhs.m_bDropFractions
 		&& m_bTimeFaultsUnder == rhs.m_bTimeFaultsUnder
 		&& m_bTimeFaultsOver == rhs.m_bTimeFaultsOver
+		&& m_TimeFaultMultiplier == rhs.m_TimeFaultMultiplier
 		&& m_Note == rhs.m_Note
 		&& m_OpeningPts == rhs.m_OpeningPts
 		&& m_ClosingPts == rhs.m_ClosingPts
@@ -295,6 +300,7 @@ bool ARBConfigScoring::Load(
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, VALID_VALUES_BOOL));
 		return false;
 	}
+	inTree.GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
@@ -414,6 +420,8 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
 	if (m_bTimeFaultsOver)
 		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
+	if (1 < m_TimeFaultMultiplier)
+		scoring.AddAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 	if (0 < m_Note.length())
 	{
 		Element& note = scoring.AddElement(TREE_NOTE);
