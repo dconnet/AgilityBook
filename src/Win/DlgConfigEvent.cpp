@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2004-12-10 DRC Changes weren't saved when lifetime pts were modified.
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
  * @li 2004-04-01 DRC Fixed? the memory access fault.
  * @li 2003-12-27 DRC Added support for from/to dates for the scoring method.
@@ -927,7 +928,7 @@ void CDlgConfigEvent::OnPointsEdit()
 						pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
 					else
 						pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
-					if (bLifetime)
+					if (dlg.IsLifetime())
 						pScoring->GetLifetimePoints().AddLifetimePoints(dlg.GetPoints(), dlg.GetFaults());
 					else
 						pScoring->GetTitlePoints().AddTitlePoints(dlg.GetPoints(), dlg.GetFaults());

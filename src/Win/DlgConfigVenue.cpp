@@ -56,6 +56,7 @@
  *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
+ * @li 2004-12-10 DRC Enable duplication of a title.
  * @li 2004-08-14 DRC Fixed a problem dbl-clicking when nothing was selected.
  * @li 2004-04-29 DRC Changed the way events are displayed (from tree to list).
  * @li 2004-02-09 DRC Fixed some bugs when creating/modifying venues.
@@ -244,10 +245,15 @@ void CDlgConfigVenue::UpdateButtons()
 			if (0 <= index)
 			{
 				bDelete = bEdit = TRUE;
-				if (0 < index)
-					bMoveUp = TRUE;
-				if (index < m_ctrlTitles.GetItemCount() - 1)
-					bMoveDown = TRUE;
+				CDlgConfigureDataTitle* pData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
+				if (pData)
+				{
+					bCopy = TRUE;
+					if (0 < index)
+						bMoveUp = TRUE;
+					if (index < m_ctrlTitles.GetItemCount() - 1)
+						bMoveDown = TRUE;
+				}
 			}
 		}
 		break;
@@ -1309,8 +1315,37 @@ void CDlgConfigVenue::OnCopy()
 	{
 	case eDivisions:
 	case eLevels:
-	case eTitles:
 		// We don't currently support copying these.
+		break;
+
+	case eTitles:
+		{
+			int index;
+			if (0 <= (index = m_ctrlTitles.GetSelection()))
+			{
+				// Since index is valid, I know pData will be too.
+				CDlgConfigureDataTitle* pData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
+				CString copyOf;
+				copyOf.LoadString(IDS_COPYOF);
+				std::string name(pData->GetTitle()->GetName());
+				std::string longname(pData->GetTitle()->GetLongName());
+				while (m_pVenue->GetDivisions().FindTitle(name))
+				{
+					name = (LPCSTR)copyOf + name;
+					longname = (LPCSTR)copyOf + longname;
+				}
+				ARBConfigTitle* title = new ARBConfigTitle(*(pData->GetTitle()));
+				title->SetName(name);
+				title->SetLongName(longname);
+				ARBConfigTitle* pNewTitle = pData->GetDivision()->GetTitles().AddTitle(title);
+				if (pNewTitle)
+				{
+					LoadTitleData();
+					FindCurrentTitle(pNewTitle, true);
+				}
+				title->Release();
+			}
+		}
 		break;
 
 	case eEvents:
