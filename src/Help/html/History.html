@@ -5,909 +5,967 @@
 </HEAD>
 <BODY>
 <h1>History of releases</h1>
-		<ul>
-			<li>
-				<b>4/30/2004: v1.1.0.8</b>
-				<UL>
-					<LI>
-						Bumped file version to 8.6, configuration to version 3.
-						<UL>
-							<LI>
-							Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
-							<LI>
-							Added 'Link' to 'Runs'
-							<LI>
-							Added 'LifeTime' to 'TitlePoints'
-							<LI>
-								Updated configuration with lifetime point information.</LI></UL>
-					<LI>
-						New features / Enhancements
-						<UL>
-							<LI>
-								Instead of recording whether YPS should be adjusted for each run, just record 
-								if that run has a table. A new option (under 'View') then determines how to 
-								compute it. Old files will be auto-updated when the new configuration is 
-								merged, <EM>as long as it happens during startup</EM>.
-							<LI>
-							Added Lifetime point accumulation information to USDAA and NADAC. Removed USDAA 
-							LAA from OtherPoints. Also, updated DAM and Steeplechase to accumulate LAA 
-							points from 1999 on.
-							<LI>
-							Changed 'Insert Course' to 'Paste Course' in run dialog. (For clarity)
-							<LI>
-							Added 'Links' in the run dialog and a corresponding 'Find Links' in the File 
-							menu.
-							<LI>
-							Added simple sorting to the 3 main list views: Runs, CalendarList, Training
-							<LI>
-							Create a backup file before saving. This will be named "&lt;Name of existing 
-							file&gt;.bck#" where # is a number from 1 to n (as defined below).
-							<LI>
-							Added a new page in the Options dialog for program options: number of backup 
-							files and auto-update-check.
-							<LI>
-							Added 'Duplicate' menu item for trials/runs/calendar/training entries.
-							<LI>
-							Added a splash screen at start and as a menu option. (This is a picture of 
-							Megan and me at the 2003 USDAA Nationals.)
-							<LI>
-								In multi-dog files, remember the last dog viewed when opening the file.</LI>
-							<LI>
-								When the program prompts to update the 
-                                configuration when a file opens, just merge the 
-                                default config instead of prompting.</LI></UL>
-					<LI>
-						Bug fixes
-						<UL>
-							<LI>
-							When merging configuration information via the update feature, if only the 
-							description was changed in either a venue or an event, that information did not 
-							get properly merged.
-							<LI>
-							The 'View-&gt;Show Hidden Titles' menu item was never enabled.
-							<LI>
-							Fixed an inconsistency in pasting text from the clipboard. Sometimes the text 
-							was garbled when pasting into the CRCD text box.
-							<LI>
-							The edit/delete buttons did not get enabled/disabled properly in the Reference 
-							Runs in the Runs dialog.
-							<LI>
-							If opening a file for writing fails, the error message was wrong. (It reported 
-							on the minimum required resolution.)
-							<LI>
-							If you imported a calendar listing that had a heading, but tried to parse the 
-							heading as an entry, the program faulted.
-							<LI>
-							Fixed a problem encoding/decoding binary data. This affected pasting/viewing 
-							the CRCD image.
-							<LI>
-								Some of the lists with sortable columns didn't properly remember their 
-								settings.</LI>
-							<LI>
-								Changed how events are handled in the 
-                                configuration dialog to prevent that weird 
-                                memory access from happening.</LI></UL>
-					</LI>
-				</UL>
-			<LI>
-				<B>3/21/2004: v1.0.4.8</B><ul>
-					<li>
-						Bumped file version to 8.5<ul>
-							<li>
-							Added 'isHidden' to 'Title'.
-							<li>
-								Made 'Date' optional in 'Title'.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Changed Venue configuration slightly so it looks better (Divisions and Titles 
-							headers)
-							<li>
-								Added the ability to hide a title. This allows you to hide an old title or a 
-								title that you will never earn (for instance USDAA SSA, if you are in Masters 
-								already)</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							When creating a new run in a new trial, the date did not get saved if we didn't 
-							change it. This would only occur on the first run created and only if we didn't 
-							change the date (in other words, we entered the run on the day we ran it)
-							<li>
-								In the run dialog, the text on the table-in-yps was inverted. Instead of asking 
-								if you wanted to subtract for the table, it should have been asking it you 
-								wanted to include (pretty obvious when you watched the yps change after 
-								clicking the checkbox). In addition, it did not properly initialize when the 
-								event type was changed.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>3/8/2004: v1.0.3.8</b><ul>
-					<li>
-						Bumped file version to 8.4<ul>
-							<li>
-							Added table-in-yps flag (default is true for backwards compatibility)
-							<li>
-							Added new 'Configuration/Action' verb: DeleteTitle
-							<li>
-							Added 'version' to Configuration.
-							<li>
-								Added 'CRCDMeta' to Notes.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Added 'Check for Updates' on Help menu and About box.
-							<li>
-							Added auto-check - checks for updates every 30 days (enabled/disabled under 
-							Help menu)
-							<li>
-							Add a 5-sec table YPS computation checkbox in the runs.
-							<li>
-							Added the ability to tell if the program contains an updated config. When you 
-							open an old file, it will prompt to merge. Once you have updated, you will not 
-							be prompted again, even if you modify your config.
-							<li>
-							Added additional text to email message generated from hotlink in About box.
-							<li>
-								Added MetaFile support into CRCD dialog. (When you paste a course from CleanRun 
-								Course Designer, the image will also appear now)</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Creating a new document didn't clear the judge info from the previous doc.
-							<li>
-							The OtherPoints button in the runs dialog was improperly disabled at times.
-							<li>
-							Removed 'V-ATCH',etc from ASCA configuration. (There is no veterans ATCH - an 
-							ATCH is an ATCH is an ATCH...)
-							<li>
-								Removed AMBOR Triple title abbreviations - titles are full text.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>2/9/2004: v1.0.2.8</b><ul>
-					<li>
-						Bumped file version to 8.3<ul>
-							<li>
-								Added Existing Points to dog properties.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Changed the Dog Property dialog to multiple tabs.
-							<li>
-							Added nice title names into the dog's property title page.
-							<li>
-								Updated dialog accelerators.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Updated NADAC Configuration with Novice/Open/Elite Triple Superior (mapped old 
-							'Triple Superior' to 'Novice Triple...')
-							<li>
-							Updated ASCA Configuration with ATCHs.
-							<li>
-							Updated 2 CPE titles with long names.
-							<li>
-							Fixed a number of dialogs where data could be corrupted. (Note: In dialogs when 
-							using a DDX variable after the dialog returns, be careful about modifying it - 
-							CDialog::OnOK will force the UI data back into the variable)
-							<li>
-							When updating the configuration, you could get some false-positive messages 
-							that things had changed. This was due to the order of items being different 
-							(which we don't care about).
-							<li>
-								In the Run dialog<ul>
-									<li>
-									update the YPS when the time is changed.
-									<li>
-										update controls when date changes (in case different rules are in effect)</li>
-								</ul>
-							<li>
-								Fixed some crasher bugs in the configuration dialog when creating/modifying a 
-								venue.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>1/26/2004: v1.0.1.8</b><ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							When starting the program, holding the SHIFT key down will prevent the last 
-							file from being automatically opened.
-							<li>
-								Redesigned Configuration dialog for ease-of-use.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-								Titles that were edited/created were saved with the wrong name. This caused the 
-								title to vanish after saving the file and re-opening it. [The fix will 
-								auto-correct the problem titles, if they are still in the file] (bug was 
-								introduced in 1.0.0.8.)</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>1/21/2004: v1.0.0.8</b><ul>
-					<li>
-						Bumped file version to 8.2<ul>
-							<li>
-							Added a new "Long Name" to the titles configuration.
-							<li>
-							Added 'Action' items to Configuration.
-							<li>
-								Height is no longer a required field in a run.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Began distributing an MSVC7 msi installation.
-							<li>
-							Added AAC and AMBOR configurations.
-							<li>
-							Updated USDAA configuration.
-							<li>
-							GetAllClubs/Locations now includes calendar entries.
-							<li>
-							Implemented column customizing in Tree, Runs, Calendar and TrainingLog.
-							<li>
-							Implemented importing from a spreadsheet.
-							<li>
-							The configuration and new title dialogs use the new long name (if available)
-							<li>
-							When renaming a title in the configuration and the new name already exists, ask 
-							the user if they actually want to merge the existing titles into that name. 
-							This allows us to change the name of a title non-destructively (though it 
-							requires some work on the users part to rename)
-							<li>
-								As an addition to this, added the ability to merge items when doing a 
-								configuration update.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Exporting the training log for import into a spreadsheet was wrong.
-							<li>
-							The points view didn't generate a venue header consistently if a venue had no 
-							titles.
-							<li>
-							When entering a run, too much validation was being done at the wrong time. 
-							(This could cause a 'Please enter an event' message when changing the date)
-							<li>
-								Total faults weren't updated when course faults changed.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>12/28/2003: v0.9.5.8</b><ul>
-					<li>
-						Bumped file version to 8.1<ul>
-							<li>
-								Added 'ValidFrom' and 'ValidTo' dates to an events scoring method. This allows 
-								an evolution of rules while preserving point accumulation.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Updated the initial support for the new USDAA titling (using ValidFrom/To) in 
-							the default configuration.
-							<li>
-							Added support for evolving rules in the configuration dialog. An event scoring 
-							method can be defined as being valid for a specific date range.
-							<li>
-							Changed how items are shown for export in the first wizard page (separated 
-							spreadsheet/ARB items).
-							<li>
-							Added more items to import/export.
-							<li>
-							SpreadSheet Export: Can now export Calendar/TrainingLog
-							<li>
-							ARB Import: Can now import TrainingLog
-							<li>
-							ARB Export: Can now export TrainingLog
-							<li>
-								Added some new accelerators<ul>
-									<li>
-									Ctrl+E: Import/Export Wizard
-									<li>
-									Ctrl+F: Find (Find does not work in the points or calendar view)
-									<li>
-									F3: Find Next
-									<li>
-									Shift+F3: Find Previous
-									<li>
-									Ctrl+J: Judge's comments dialog\
-									<li>
-									Ctrl+R: Create a new run
-									<li>
-									F7: Viewing options dialog
-									<li>
-										F12: Save As</li>
-								</ul>
-							<li>
-								Added a basic Find function. It is context sensitive to the active view.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Training log didn't re-sort if you edited an item.
-							<li>
-								Adding a calendar entry from the List dialog didn't set the icon properly.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>12/13/2003: v0.9.4.8</b><ul>
-					<li>
-						Bumped file version to 8.0<ul>
-							<li>
-							Modified version number for better backwards compatibility.
-							<li>
-								Added new Info section. Currently this only has comments on judges.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Expanded import/export
-							<li>
-							Cleaned up some descriptions in DefaultConfig.xml. Added Nationals support for 
-							USDAA (plus some initial changes for USDAA changes)
-							<li>
-							In Points view, added '*' to Title if it has been received. Added dog's 
-							registration number on venue line.
-							<li>
-							Support the mouse wheel for scrolling in the calendar view.
-							<li>
-							Enhanced list selection (runs, points, calendar, training log)
-							<li>
-							Support multiple selection.
-							<li>
-							Added "select all" (ctrl+a).
-							<li>
-							Enhanced copy support (ctrl+c)
-							<li>
-							Only copy selected items in lists.
-							<li>
-							Moved the copy that was in the calendar list to the calendar view. The calendar 
-							view now generates a list similar to Karey's. The calendar list now copies like 
-							the other lists do (whatever is visible in the list).
-							<li>
-							Added the ability to add comments to a judge (menu item "Edit-&gt;Judges")
-							<li>
-								Added a 'Valid From' date to an scoring configuration for an event. This is 
-								currently saved, but not used. It will be used in the future to support changes 
-								in venues (for instance, say the number of faults allowed for a given event 
-								changes from 10 to 5)</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Changed copyright notices from "(c)" to "©" (internal code, not visible)
-							<li>
-							Right-clicking on a Calendar entry sets that as the current date before popping 
-							up the context menu.
-							<li>
-							Cleaned up page scrolling in calendar view.
-							<li>
-							When creating a calendar entry, the other view didn't update properly. Also, 
-							when editing an entry in the list, the calendar view didn't update.
-							<li>
-							Fixed a crash when you tried to open a version of an ARB file that was saved 
-							with a newer version of the program. This only happened when the program 
-							auto-opened the last open file at startup.
-							<li>
-							Tallying QQs when a 3rd run is present was wrong in the Points view.
-							<li>
-								The QQ checkbox in the run dialog wasn't updating properly.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>10/15/2003: v0.9.3.7</b><ul>
-					<li>
-						Bumped file version to 7<ul>
-							<li>
-							Allow course faults on runs scored by points. For instance, a handler could be 
-							faulted for language.
-							<li>
-							Added USDAA Performance Grand Prix to the default configuration.
-							<li>
-								Added LAA Points to Other Points. Makes tracking easier.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-								Added option to not filter runs by selected trial.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							In Reference Runs, default the score to a perfect score based on venue.
-							<li>
-							If a run does not have titling points, don't show it in the point summary.
-							<li>
-								Fixed a problem displaying Other Points, things could get mixed up.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>9/29/2003: v0.9.2.6</b><ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Required points in the Runs dialog were being overwritten with default values 
-							during initialization.
-							<li>
-								Fixed possible crasher bug in the About dialog.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>9/21/2003: v0.9.1.6</b><ul>
-					<li>
-						Bumped file version to 6<ul>
-							<li>
-								Added the Training Log.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Training Log and filtering options for it.
-							<li>
-								Enhanced the 'Filtered' message to be sensitive to the current view.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							When creating a trial entry from the calendar, if you selected more than one 
-							dog at a time when creating the trial, that new trial was actually linked 
-							together for both dogs. Changes in one were reflected in the other. The "link" 
-							was fixed when the file was reloaded.
-							<li>
-							In the pairs partners dialog, the dog's number wasn't being saved.
-							<li>
-							Pasting a trial/run didn't mark the document as needing saving.
-							<li>
-							When adding/pasting a trial/run and the filtering options filtered that new 
-							item out, a message appeared saying the run wasn't added. Actually it was, it 
-							just wasn't visible. In addition, the (now) not visible run was not sorted 
-							properly when the filtered was removed.
-							<li>
-							When updating a configuration, the scoring methods could get messed up.
-							<li>
-								CRCD data could be lost if a run contained no comments or faults.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>9/3/2003: v0.9.0.5</b><ul>
-					<li>
-						- New features / Enhancements<ul>
-							<li>
-							Added a 'deceased' date to the dogs info. (This is a file version change but it 
-							is backwards compatible, so theres no need to increment the file version)
-							<li>
-							Finished implementing OtherPoints point tallying.
-							<li>
-							Optimized filtering, much faster now.
-							<li>
-							Added filtering by qualifying/non-qualifying runs.
-							<li>
-							Added a 'Filtered' item to the status bar.
-							<li>
-							Added 'New dog/title/trial' items in the r-click menu of the Runs view.
-							<li>
-							Added Print &amp; Print Preview in the Tree.
-							<li>
-							When copying an item in the tree, also copy some text to the clipboard.
-							<li>
-							Copy the runs in the view to the clipboard in tab-separated form (ctrl+c). It 
-							is copied in the same format that it is printed in.
-							<li>
-							Added copy/paste menu items to the Tree's context menu.
-							<li>
-								When pasting a new trial or run, select the new item.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the 
-							score on all runs and title points on NQ+Qs. It should only compute score on 
-							NQ+Q and title points on Qs. This only affected the run entry dialog and not 
-							the point accumulation view.
-							<li>
-							Cleaned up selection synchronization in the runs and calendar views. The trial 
-							run list selection now mirrors the tree selection.
-							<li>
-							Fixed bug where "ctrl+tab" didn't change tabs. "Shift+tab" was working.
-							<li>
-							In the calendar/faults/otherpts/partners dialog, set the selection when 
-							adding/deleting items.
-							<li>
-								Fixed bug (crashes program) when copying the calendar list to the clipboard.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>8/16/2003: v0.4.2.5</b><ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							Added printing for runs (not tree though), points and calendar list.
-							<li>
-							Removed automatic sorting of dogs - allow the user to set the ordering.
-							<li>
-							Added actual height and card received info to dog registration information.
-							<li>
-							When trying to cancel from the Run entry dialog, data verification prevented 
-							the cancel from occurring.
-							<li>
-							Added toolbar items for new dog/title/trial/run/calendar and print preview.
-							<li>
-							Added new options page for fonts, added font for printing, moved calendar fonts 
-							from calendar options page to this one.
-							<li>
-								In calendar view dialog (dbl-click, etc), show all entries for a date, even if 
-								the 'hide on entered' option is on.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-								Allow screen font selection for calendar printer items. Also the wrong font was 
-								displayed for the date on the printer.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>7/23/2003</b><ul>
-					<li>
-						Source released on <a href="http://sourceforge.net/projects/agilitybook">SourceForge.net</a>. 
-						Releases are now done on both Yahoo and SourceForge.</li>
-				</ul>
-			<li>
-				<b>7/16/2003: v0.4.1.5</b><ul>
-					<li>
-						Bumped file version to 5<ul>
-							<li>
-							Added 'Note' and 'Verified' to trials.
-							<li>
-							Changed 'Scoring' to have 'Note' and 'TitlePoints' subitems.
-							<li>
-							Added 'OpeningPts'/'ClosingPts' to event configuration.
-							<li>
-								Changed program version number to reflect file version.</li>
-						</ul>
-					<li>
-						New features / Enhancements<ul>
-							<li>
-							In Points: Changed the run totalling to be a little cleaner.
-							<li>
-							Reorganized options dialog.
-							<li>
-							Enhanced filtering to filter on divisions/levels.
-							<li>
-							Have the calendar start with the current day as the current selection.
-							<li>
-							Changed the way titling points are configured.
-							<li>
-							Changed calendar current day highlighting so you can tell when the view is 
-							active. Highlighting is based on system colors.
-							<li>
-							Automatically compute the score in the dog event dialog on both Q and NQ runs. 
-							Previously, it only computed on Qs.
-							<li>
-							When entering trial data, "remember" certain fields to make data entry easier. 
-							[Division, Level, Height, Handler, Judge]
-							<li>
-							Add opening points for gamblers/etc into configuration.
-							<li>
-							When errors are found when loading the data, the program attempts to keep 
-							going. It used to just quit and you would have no data.
-							<li>
-							Complete an "Update rules" mechanism to allow importing updated rules. This 
-							will merge changes. It will not delete entries in your configuration that are 
-							not in the new one, with one exception: Event scoring methods
-							<li>
-							Added performance pairs in USDAA (non-titling)
-							<li>
-								Added UKC.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Fixed date overlap test. If 2 date ranges only partially overlapped, the test 
-							was wrong. This resulted in calendar entries being visible when they shouldn't 
-							have been.
-							<li>
-							Copying the calendar data to the clipboard didn't insert a newline after the 
-							header.
-							<li>
-							If the viewing filter was enabled and you changed the venue of an existing 
-							trial, the trial continued to be visible even though the filter should have 
-							suppressed it.
-							<li>
-							The program didn't always prompt to save on close when something changed.
-							<li>
-							When creating new faults, they didn't show up in the list until after the run 
-							was saved.
-							<li>
-							The configuration 'Drop Fractions' setting wasn't properly applied.
-							<li>
-								If a level on a run is entered wrong (via hand-editing), that entry loaded with 
-								no warnings.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>6/15/2003: v0.3.0.2</b><ul>
-					<li>
-						Bumped file version to 4<ul>
-							<li>
-							Added item to configuration scoring methods to drop fractional time faults.
-							<li>
-								Added a description to venues and events in the configuration.</li>
-						</ul>
-					<li>
-						New features<ul>
-							<li>
-							Added CPE to default configuration.
-							<li>
-							Enable copy/paste of trials and runs.
-							<li>
-							Added filtering on multiple venues.
-							<li>
-							Tally points by level, not sublevel. Then things like NADAC Novice A/B add up 
-							in one place.
-							<li>
-								Points View: Tally Clean/Unclean Qs</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Wasn't remembering the selected view between program invokations.
-							<li>
-							NewLine wasn't handled properly in Event Configuration dialog notes.
-							<li>
-								Editing an existing configuration Title failed with the message that it already 
-								exists. (divisions/levels/faults/otherpts too)</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>6/2/2003: v0.3.0.1</b><ul>
-					<li>
-						Bumped file version to 3<ul>
-							<li>
-							Add notes to configuration events specifically for USDAA DAM jumpers and 
-							snooker - the fact the "Q" there applies towards master legs and DAM relay Q 
-							implies the team qualified overall.
-							<li>
-							Moved Fault Types in configuration from Venue to global.
-							<li>
-							Moved Other Points in the same manner.
-							<li>
-								Added 'Received' field to Title.</li>
-						</ul>
-					<li>
-						New features<ul>
-							<li>
-							Create a trial entry from a calendar entry.
-							<li>
-							Add a delay factor to auto-delete of old calendar entries. (default: 5 days)
-							<li>
-							Allow runs (in tree) and faults (in run) to be reordered. Note, sometimes it 
-							will appear reordering fails. This will be due to sorting. For instance, runs 
-							and calendar entries are sorted by date, then reordering.
-							<li>
-								Added initial configuration updating. It will add any new entries, but will not 
-								yet update existing entries.</li>
-						</ul>
-					<li>
-						Minor enhancements<ul>
-							<li>
-							Updated default USDAA config rules.
-							<li>
-							Tally the list of fault types like I do with judges. (You don't need to modify 
-							the configuration to have a new fault type show up in the selection list)
-							<li>
-							In points view, show the number of partners for Qs, not just total number of 
-							partners. When tallying the number of pairs partners, only 2-dog relays are 
-							tallied. This prevents some odd things when counting USDAA DAM tournament 
-							relays.
-							<li>
-							After creating a new dog/trial/run (via rclick menu), make that the selected 
-							item. (The wrong item was selected if you rclicked on an entry other than the 
-							current selection)
-							<li>
-							When entering a new run, the default date should be last date in the trial.
-							<li>
-							Modified calendar entry dialog to show trial opening/closing dates.
-							<li>
-							When an entry in the calendar list is selected, make calendar date in the right 
-							window pane selected too.
-							<li>
-							Added an 'edit' button to edit an existing registration num
-							<li>
-							Added an 'edit' button to edit an existing club
-							<li>
-							After inserting a trial/run in the tree, it was not properly sorted.
-							<li>
-							Add column sorting to reference runs.
-							<li>
-								Add option to reverse-sort trials and runs (newest first). This will also 
-								reverse the user re-ordering.</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							Changing the Selected dog didn't update the points view.
-							<li>
-							Points view: QQ tallied wrong (it was double counting)
-							<li>
-							When venues are not filtered, ASCA pts were incorrectly totaled.
-							<li>
-							When modifying a configuration event, when a new div/level pair was created, 
-							the 'not defined' items weren't updated.
-							<li>
-								When an event is not qualifying (as defined in the configuration), the "q" list 
-								was still available when entering a run - not really an issue since it didn't 
-								get tallied.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>4/3/2003: v0.2.0.3</b><ul>
-					<li>
-						Updated default configuration rules to include more description in titles<ul>
-							<li>
-							Changed title configuration dialog to allow editing description.
-							<li>
-								Show title description when selecting a title.</li>
-						</ul>
-					<li>
-					Allow space/return to edit in list controls (like dbl-click)
-					<li>
-					Modified partners text in run entry dialog to include handler.
-					<li>
-					Added 'RegNum' to Partner to make it easier to track different partners.
-					<li>
-					Added expand/collapse menu items to trees.
-					<li>
-					Added status info for runs, calendar.
-					<li>
-					View runs based on certain criteria (venue, dates)
-					<li>
-					Added initial points reporting.
-					<li>
-					Made 'Height' a required field during data entry to agree with the file format 
-					(and prevent file corruption)
-					<li>
-					In run entry dialog, show total faults.
-					<li>
-					Add support for bold/italic options in fonts
-					<li>
-						Bug fixes<ul>
-							<li>
-							Initial dates could end up with really odd values
-							<li>
-							Comboboxes that allow data entry do not scroll.
-							<li>
-							Sort order of titles in Dog properties didn't remember multiple column sort 
-							properly.
-							<li>
-							Calendar: Turning on the 'hide overlap' option didn't hide trials that 
-							partially overlap
-							<li>
-								Display correct title pts in time+faults runs when there are faults.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>2/23/2003: v0.2.0.2</b><ul>
-					<li>
-						Modified default rules to add USDAA's Tournament classes.<ul>
-							<li>
-								If you have an existing file, the only way to get the new default rules is to 
-								hand edit. A future enhancement is to add an automated way of doing this. 
-								Currently: Create a new empty file and save it. Copy everything between 
-								"&lt;Configuration&gt;" and "&lt;/Configuration&gt;" are replace the lines in 
-								your current file. Be careful!</li>
-						</ul>
-					<li>
-						Bug fixes<ul>
-							<li>
-							The date on a new run was occasionally 12/31/1969.
-							<li>
-							Made comboboxes for division and level wider in the RunEntry dialog.
-							<li>
-							Made the combobox for a new fault longer
-							<li>
-							Made '0' the default from score in the reference run dialog.
-							<li>
-							In the 'Other Points' dialog, made the description an edit field so it can 
-							scroll.
-							<li>
-								When modifying the configuration, the scoring methods were not updated.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>2/21/2003: v0.2.0.1</b><ul>
-					<li>
-					Updated xerces dll from 2.1.0 to 2.2.0.
-					<li>
-						ARB file version 2<ul>
-							<li>
-							Removed Calendar 'PlanOn'(y|n) attribute, replaced with 'Entered'(E|P|N).
-							<li>
-								Redid DTD on a few entries (moved attributes to elements)</li>
-						</ul>
-					<li>
-						Calendar View<ul>
-							<li>
-							Fixed problem where a new calendar entry didn't show up.
-							<li>
-							Created new view
-							<li>
-								Added options to control the view ('View'-&gt;'Options')</li>
-						</ul>
-					<li>
-						- Runs view<ul>
-							<li>
-							After editing a run entry, it was selected, but not necessarily visible.
-							<li>
-								Double clicking on a run now edits that entry.</li>
-						</ul>
-					<li>
-						Run entry dialog<ul>
-							<li>
-							Titling points (mach/doubleQ) now appear correctly.
-							<li>
-							Enable/disable buttons properly.
-							<li>
-								Double-click on reference run now edits that entry.</li>
-						</ul>
-					<li>
-						General<ul>
-							<li>
-								Fixed all multi-line edit controls to auto-wrap correctly.</li>
-						</ul>
-					</li>
-				</ul>
-			<li>
-				<b>1/22/2003: v0.1.0.1</b><ul>
-					<li>
-					Major data entry dialogs completed.
-					<li>
-						Main views on the data are still incomplete. Program options still need 
-						implementing. Lots of outstanding tidbits.</li>
-				</ul>
-			<li>
-				<b>12/31/2002: v0.0.0.2</b><ul>
-					<li>
-						Re-released v0.0.0.1 using MSVC6.</li>
-				</ul>
-			<li>
-				<b>12/28/2002: v0.0.0.1</b><ul>
-					<li>
-						First release using MSVC7.</li>
-				</ul>
-			<li>
-				<b>11/6/2002</b><ul>
-					<li>
-						<a href="http://groups.yahoo.com/group/AgilityRecordBook">Yahoo group</a> 
-                        founded. Initial solicitation for what people would like 
-                        to see in the program.</li>
-				</ul>
-			</li>
-		</ul>
-		</BODY>
+	<ul>
+		<li><b>7/3/2004: v1.2.0.8</b><ul>
+		<li>Bumped file version to 9.0, Configuration v4<ul>
+		<li>Added 'SubName' to 'Training'.</li>
+		<li>Moved 'RegNum' data to 'Number', data is now 'Note'</li>
+		<li>CPE 'CADE' changed to 'C-ATE'.</li>
+		<li>Updated NADAC Gambler configuration to handle new Gambler class.</li>
+	</ul>
+		</li>
+		<li>New features / Enhancements<ul>
+		<li>Integrated help system.</li>
+		<li>In the Points view, do not filter individual runs based on Qs 
+		(use all other filter criteria). This allows us to show a qualifying 
+		percentage.</li>
+		<li>Added the Dogs call name, registered name and current date to 
+		the top of the Points view (good when printing!).</li>
+		<li>Allow users to specify their own splash screen. Only .bmp files 
+		are supported (limited to Window's LoadImage API). Set in the 
+		Options dialog.</li>
+		<li>After adding a title, display the dog properties on title page. 
+		Change the behavior in the Options dialog to restore previous 
+		program behavior. (Too many people were having problems finding the 
+		title later.)</li>
+		<li>Added 'Sub-name' to the Training Log.</li>
+		<li>Added an 'Open' button to the 'Find Links' dialog.</li>
+		<li>Added status icons on the run dialog links page.</li>
+		<li>Added full support for cut/copy/paste of dog/run/calendar/log 
+		entries. Note, cut/copy is supported in the Run view, but paste is 
+		not. You can copy an entry there and then paste it in the proper 
+		place in the tree.</li>
+		<li>When you open a file that has no dogs, you will be prompted to 
+		create one.</li>
+		<li>When creating a trial from a calendar entry, copy the notes too.</li>
+		<li>Added the current dogs name to the status bar.</li>
+		<li>Added indicators for how the lists are sorted.</li>
+		<li>Added a note to a registration number.</li>
+	</ul>
+		</li>
+		<li>Bug fixes<ul>
+		<li>Lifetime point accumulation did not display the points for 
+		existing runs.</li>
+		<li>Quote exported data so non-tab delimiters work properly if the 
+		delimiter character is actually part of the output data. Quotes are 
+		added if needed. Also, on import, handle quotes properly. Quoting is 
+		done like Excel.</li>
+		<li>Fixed \r\n line ends in OtherPoints configuration dialog.</li>
+		<li>When setting filter options on runs, it is possible that some 
+		runs may be visible when they shouldn't.</li>
+		<li>When filtering a dual-sanctioned trial, and the filtering 
+		options were different, a run would end up visible in the points 
+		view when it shouldn't. For instance, in an ASCA/NADAC trial, if you 
+		set filtering to hide Novice runs in NADAC and not ASCA, the novice 
+		runs were still visible under NADAC.</li>
+		<li>Fixed a problem in the Points View with accumulating 
+		non-qualifying runs when the filter was set to view only qualifying 
+		or only non-qualifying.</li>
+	</ul>
+		</li>
+	</ul>
+		<li>
+			<b>4/30/2004: v1.1.0.8</b>
+			<UL>
+				<LI>
+					Bumped file version to 8.6, configuration to version 3.
+					<UL>
+						<LI>
+						Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
+						<LI>
+						Added 'Link' to 'Runs'
+						<LI>
+						Added 'LifeTime' to 'TitlePoints'
+						<LI>
+							Updated configuration with lifetime point information.</LI></UL>
+				<LI>
+					New features / Enhancements
+					<UL>
+						<LI>
+							Instead of recording whether YPS should be adjusted for each run, just record 
+							if that run has a table. A new option (under 'View') then determines how to 
+							compute it. Old files will be auto-updated when the new configuration is 
+							merged, <EM>as long as it happens during startup</EM>.
+						<LI>
+						Added Lifetime point accumulation information to USDAA and NADAC. Removed USDAA 
+						LAA from OtherPoints. Also, updated DAM and Steeplechase to accumulate LAA 
+						points from 1999 on.
+						<LI>
+						Changed 'Insert Course' to 'Paste Course' in run dialog. (For clarity)
+						<LI>
+						Added 'Links' in the run dialog and a corresponding 'Find Links' in the File 
+						menu.
+						<LI>
+						Added simple sorting to the 3 main list views: Runs, CalendarList, Training
+						<LI>
+						Create a backup file before saving. This will be named "&lt;Name of existing 
+						file&gt;.bck#" where # is a number from 1 to n (as defined below).
+						<LI>
+						Added a new page in the Options dialog for program options: number of backup 
+						files and auto-update-check.
+						<LI>
+						Added 'Duplicate' menu item for trials/runs/calendar/training entries.
+						<LI>
+						Added a splash screen at start and as a menu option. (This is a picture of 
+						Megan and me at the 2003 USDAA Nationals.)
+						<LI>
+							In multi-dog files, remember the last dog viewed when opening the file.</LI>
+						<LI>
+							When the program prompts to update the 
+							configuration when a file opens, just merge the 
+							default config instead of prompting.</LI></UL>
+				<LI>
+					Bug fixes
+					<UL>
+						<LI>
+						When merging configuration information via the update feature, if only the 
+						description was changed in either a venue or an event, that information did not 
+						get properly merged.
+						<LI>
+						The 'View-&gt;Show Hidden Titles' menu item was never enabled.
+						<LI>
+						Fixed an inconsistency in pasting text from the clipboard. Sometimes the text 
+						was garbled when pasting into the CRCD text box.
+						<LI>
+						The edit/delete buttons did not get enabled/disabled properly in the Reference 
+						Runs in the Runs dialog.
+						<LI>
+						If opening a file for writing fails, the error message was wrong. (It reported 
+						on the minimum required resolution.)
+						<LI>
+						If you imported a calendar listing that had a heading, but tried to parse the 
+						heading as an entry, the program faulted.
+						<LI>
+						Fixed a problem encoding/decoding binary data. This affected pasting/viewing 
+						the CRCD image.
+						<LI>
+							Some of the lists with sortable columns didn't properly remember their 
+							settings.</LI>
+						<LI>
+							Changed how events are handled in the 
+							configuration dialog to prevent that weird 
+							memory access from happening.</LI></UL>
+				</LI>
+			</UL>
+		<LI>
+			<B>3/21/2004: v1.0.4.8</B><ul>
+				<li>
+					Bumped file version to 8.5<ul>
+						<li>
+						Added 'isHidden' to 'Title'.
+						<li>
+							Made 'Date' optional in 'Title'.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Changed Venue configuration slightly so it looks better (Divisions and Titles 
+						headers)
+						<li>
+							Added the ability to hide a title. This allows you to hide an old title or a 
+							title that you will never earn (for instance USDAA SSA, if you are in Masters 
+							already)</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						When creating a new run in a new trial, the date did not get saved if we didn't 
+						change it. This would only occur on the first run created and only if we didn't 
+						change the date (in other words, we entered the run on the day we ran it)
+						<li>
+							In the run dialog, the text on the table-in-yps was inverted. Instead of asking 
+							if you wanted to subtract for the table, it should have been asking it you 
+							wanted to include (pretty obvious when you watched the yps change after 
+							clicking the checkbox). In addition, it did not properly initialize when the 
+							event type was changed.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>3/8/2004: v1.0.3.8</b><ul>
+				<li>
+					Bumped file version to 8.4<ul>
+						<li>
+						Added table-in-yps flag (default is true for backwards compatibility)
+						<li>
+						Added new 'Configuration/Action' verb: DeleteTitle
+						<li>
+						Added 'version' to Configuration.
+						<li>
+							Added 'CRCDMeta' to Notes.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Added 'Check for Updates' on Help menu and About box.
+						<li>
+						Added auto-check - checks for updates every 30 days (enabled/disabled under 
+						Help menu)
+						<li>
+						Add a 5-sec table YPS computation checkbox in the runs.
+						<li>
+						Added the ability to tell if the program contains an updated config. When you 
+						open an old file, it will prompt to merge. Once you have updated, you will not 
+						be prompted again, even if you modify your config.
+						<li>
+						Added additional text to email message generated from hotlink in About box.
+						<li>
+							Added MetaFile support into CRCD dialog. (When you paste a course from CleanRun 
+							Course Designer, the image will also appear now)</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Creating a new document didn't clear the judge info from the previous doc.
+						<li>
+						The OtherPoints button in the runs dialog was improperly disabled at times.
+						<li>
+						Removed 'V-ATCH',etc from ASCA configuration. (There is no veterans ATCH - an 
+						ATCH is an ATCH is an ATCH...)
+						<li>
+							Removed AMBOR Triple title abbreviations - titles are full text.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>2/9/2004: v1.0.2.8</b><ul>
+				<li>
+					Bumped file version to 8.3<ul>
+						<li>
+							Added Existing Points to dog properties.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Changed the Dog Property dialog to multiple tabs.
+						<li>
+						Added nice title names into the dog's property title page.
+						<li>
+							Updated dialog accelerators.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Updated NADAC Configuration with Novice/Open/Elite Triple Superior (mapped old 
+						'Triple Superior' to 'Novice Triple...')
+						<li>
+						Updated ASCA Configuration with ATCHs.
+						<li>
+						Updated 2 CPE titles with long names.
+						<li>
+						Fixed a number of dialogs where data could be corrupted. (Note: In dialogs when 
+						using a DDX variable after the dialog returns, be careful about modifying it - 
+						CDialog::OnOK will force the UI data back into the variable)
+						<li>
+						When updating the configuration, you could get some false-positive messages 
+						that things had changed. This was due to the order of items being different 
+						(which we don't care about).
+						<li>
+							In the Run dialog<ul>
+								<li>
+								update the YPS when the time is changed.
+								<li>
+									update controls when date changes (in case different rules are in effect)</li>
+							</ul>
+						<li>
+							Fixed some crasher bugs in the configuration dialog when creating/modifying a 
+							venue.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>1/26/2004: v1.0.1.8</b><ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						When starting the program, holding the SHIFT key down will prevent the last 
+						file from being automatically opened.
+						<li>
+							Redesigned Configuration dialog for ease-of-use.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+							Titles that were edited/created were saved with the wrong name. This caused the 
+							title to vanish after saving the file and re-opening it. [The fix will 
+							auto-correct the problem titles, if they are still in the file] (bug was 
+							introduced in 1.0.0.8.)</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>1/21/2004: v1.0.0.8</b><ul>
+				<li>
+					Bumped file version to 8.2<ul>
+						<li>
+						Added a new "Long Name" to the titles configuration.
+						<li>
+						Added 'Action' items to Configuration.
+						<li>
+							Height is no longer a required field in a run.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Began distributing an MSVC7 msi installation.
+						<li>
+						Added AAC and AMBOR configurations.
+						<li>
+						Updated USDAA configuration.
+						<li>
+						GetAllClubs/Locations now includes calendar entries.
+						<li>
+						Implemented column customizing in Tree, Runs, Calendar and TrainingLog.
+						<li>
+						Implemented importing from a spreadsheet.
+						<li>
+						The configuration and new title dialogs use the new long name (if available)
+						<li>
+						When renaming a title in the configuration and the new name already exists, ask 
+						the user if they actually want to merge the existing titles into that name. 
+						This allows us to change the name of a title non-destructively (though it 
+						requires some work on the users part to rename)
+						<li>
+							As an addition to this, added the ability to merge items when doing a 
+							configuration update.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Exporting the training log for import into a spreadsheet was wrong.
+						<li>
+						The points view didn't generate a venue header consistently if a venue had no 
+						titles.
+						<li>
+						When entering a run, too much validation was being done at the wrong time. 
+						(This could cause a 'Please enter an event' message when changing the date)
+						<li>
+							Total faults weren't updated when course faults changed.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>12/28/2003: v0.9.5.8</b><ul>
+				<li>
+					Bumped file version to 8.1<ul>
+						<li>
+							Added 'ValidFrom' and 'ValidTo' dates to an events scoring method. This allows 
+							an evolution of rules while preserving point accumulation.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Updated the initial support for the new USDAA titling (using ValidFrom/To) in 
+						the default configuration.
+						<li>
+						Added support for evolving rules in the configuration dialog. An event scoring 
+						method can be defined as being valid for a specific date range.
+						<li>
+						Changed how items are shown for export in the first wizard page (separated 
+						spreadsheet/ARB items).
+						<li>
+						Added more items to import/export.
+						<li>
+						SpreadSheet Export: Can now export Calendar/TrainingLog
+						<li>
+						ARB Import: Can now import TrainingLog
+						<li>
+						ARB Export: Can now export TrainingLog
+						<li>
+							Added some new accelerators<ul>
+								<li>
+								Ctrl+E: Import/Export Wizard
+								<li>
+								Ctrl+F: Find (Find does not work in the points or calendar view)
+								<li>
+								F3: Find Next
+								<li>
+								Shift+F3: Find Previous
+								<li>
+								Ctrl+J: Judge's comments dialog\
+								<li>
+								Ctrl+R: Create a new run
+								<li>
+								F7: Viewing options dialog
+								<li>
+									F12: Save As</li>
+							</ul>
+						<li>
+							Added a basic Find function. It is context sensitive to the active view.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Training log didn't re-sort if you edited an item.
+						<li>
+							Adding a calendar entry from the List dialog didn't set the icon properly.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>12/13/2003: v0.9.4.8</b><ul>
+				<li>
+					Bumped file version to 8.0<ul>
+						<li>
+						Modified version number for better backwards compatibility.
+						<li>
+							Added new Info section. Currently this only has comments on judges.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Expanded import/export
+						<li>
+						Cleaned up some descriptions in DefaultConfig.xml. Added Nationals support for 
+						USDAA (plus some initial changes for USDAA changes)
+						<li>
+						In Points view, added '*' to Title if it has been received. Added dog's 
+						registration number on venue line.
+						<li>
+						Support the mouse wheel for scrolling in the calendar view.
+						<li>
+						Enhanced list selection (runs, points, calendar, training log)
+						<li>
+						Support multiple selection.
+						<li>
+						Added "select all" (ctrl+a).
+						<li>
+						Enhanced copy support (ctrl+c)
+						<li>
+						Only copy selected items in lists.
+						<li>
+						Moved the copy that was in the calendar list to the calendar view. The calendar 
+						view now generates a list similar to Karey's. The calendar list now copies like 
+						the other lists do (whatever is visible in the list).
+						<li>
+						Added the ability to add comments to a judge (menu item "Edit-&gt;Judges")
+						<li>
+							Added a 'Valid From' date to an scoring configuration for an event. This is 
+							currently saved, but not used. It will be used in the future to support changes 
+							in venues (for instance, say the number of faults allowed for a given event 
+							changes from 10 to 5)</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Changed copyright notices from "(c)" to "©" (internal code, not visible)
+						<li>
+						Right-clicking on a Calendar entry sets that as the current date before popping 
+						up the context menu.
+						<li>
+						Cleaned up page scrolling in calendar view.
+						<li>
+						When creating a calendar entry, the other view didn't update properly. Also, 
+						when editing an entry in the list, the calendar view didn't update.
+						<li>
+						Fixed a crash when you tried to open a version of an ARB file that was saved 
+						with a newer version of the program. This only happened when the program 
+						auto-opened the last open file at startup.
+						<li>
+						Tallying QQs when a 3rd run is present was wrong in the Points view.
+						<li>
+							The QQ checkbox in the run dialog wasn't updating properly.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>10/15/2003: v0.9.3.7</b><ul>
+				<li>
+					Bumped file version to 7<ul>
+						<li>
+						Allow course faults on runs scored by points. For instance, a handler could be 
+						faulted for language.
+						<li>
+						Added USDAA Performance Grand Prix to the default configuration.
+						<li>
+							Added LAA Points to Other Points. Makes tracking easier.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+							Added option to not filter runs by selected trial.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						In Reference Runs, default the score to a perfect score based on venue.
+						<li>
+						If a run does not have titling points, don't show it in the point summary.
+						<li>
+							Fixed a problem displaying Other Points, things could get mixed up.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>9/29/2003: v0.9.2.6</b><ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Required points in the Runs dialog were being overwritten with default values 
+						during initialization.
+						<li>
+							Fixed possible crasher bug in the About dialog.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>9/21/2003: v0.9.1.6</b><ul>
+				<li>
+					Bumped file version to 6<ul>
+						<li>
+							Added the Training Log.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Training Log and filtering options for it.
+						<li>
+							Enhanced the 'Filtered' message to be sensitive to the current view.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						When creating a trial entry from the calendar, if you selected more than one 
+						dog at a time when creating the trial, that new trial was actually linked 
+						together for both dogs. Changes in one were reflected in the other. The "link" 
+						was fixed when the file was reloaded.
+						<li>
+						In the pairs partners dialog, the dog's number wasn't being saved.
+						<li>
+						Pasting a trial/run didn't mark the document as needing saving.
+						<li>
+						When adding/pasting a trial/run and the filtering options filtered that new 
+						item out, a message appeared saying the run wasn't added. Actually it was, it 
+						just wasn't visible. In addition, the (now) not visible run was not sorted 
+						properly when the filtered was removed.
+						<li>
+						When updating a configuration, the scoring methods could get messed up.
+						<li>
+							CRCD data could be lost if a run contained no comments or faults.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>9/3/2003: v0.9.0.5</b><ul>
+				<li>
+					- New features / Enhancements<ul>
+						<li>
+						Added a 'deceased' date to the dogs info. (This is a file version change but it 
+						is backwards compatible, so theres no need to increment the file version)
+						<li>
+						Finished implementing OtherPoints point tallying.
+						<li>
+						Optimized filtering, much faster now.
+						<li>
+						Added filtering by qualifying/non-qualifying runs.
+						<li>
+						Added a 'Filtered' item to the status bar.
+						<li>
+						Added 'New dog/title/trial' items in the r-click menu of the Runs view.
+						<li>
+						Added Print &amp; Print Preview in the Tree.
+						<li>
+						When copying an item in the tree, also copy some text to the clipboard.
+						<li>
+						Copy the runs in the view to the clipboard in tab-separated form (ctrl+c). It 
+						is copied in the same format that it is printed in.
+						<li>
+						Added copy/paste menu items to the Tree's context menu.
+						<li>
+							When pasting a new trial or run, select the new item.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the 
+						score on all runs and title points on NQ+Qs. It should only compute score on 
+						NQ+Q and title points on Qs. This only affected the run entry dialog and not 
+						the point accumulation view.
+						<li>
+						Cleaned up selection synchronization in the runs and calendar views. The trial 
+						run list selection now mirrors the tree selection.
+						<li>
+						Fixed bug where "ctrl+tab" didn't change tabs. "Shift+tab" was working.
+						<li>
+						In the calendar/faults/otherpts/partners dialog, set the selection when 
+						adding/deleting items.
+						<li>
+							Fixed bug (crashes program) when copying the calendar list to the clipboard.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>8/16/2003: v0.4.2.5</b><ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						Added printing for runs (not tree though), points and calendar list.
+						<li>
+						Removed automatic sorting of dogs - allow the user to set the ordering.
+						<li>
+						Added actual height and card received info to dog registration information.
+						<li>
+						When trying to cancel from the Run entry dialog, data verification prevented 
+						the cancel from occurring.
+						<li>
+						Added toolbar items for new dog/title/trial/run/calendar and print preview.
+						<li>
+						Added new options page for fonts, added font for printing, moved calendar fonts 
+						from calendar options page to this one.
+						<li>
+							In calendar view dialog (dbl-click, etc), show all entries for a date, even if 
+							the 'hide on entered' option is on.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+							Allow screen font selection for calendar printer items. Also the wrong font was 
+							displayed for the date on the printer.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>7/23/2003</b><ul>
+				<li>
+					Source released on <a href="http://sourceforge.net/projects/agilitybook">SourceForge.net</a>. 
+					Releases are now done on both Yahoo and SourceForge.</li>
+			</ul>
+		<li>
+			<b>7/16/2003: v0.4.1.5</b><ul>
+				<li>
+					Bumped file version to 5<ul>
+						<li>
+						Added 'Note' and 'Verified' to trials.
+						<li>
+						Changed 'Scoring' to have 'Note' and 'TitlePoints' subitems.
+						<li>
+						Added 'OpeningPts'/'ClosingPts' to event configuration.
+						<li>
+							Changed program version number to reflect file version.</li>
+					</ul>
+				<li>
+					New features / Enhancements<ul>
+						<li>
+						In Points: Changed the run totalling to be a little cleaner.
+						<li>
+						Reorganized options dialog.
+						<li>
+						Enhanced filtering to filter on divisions/levels.
+						<li>
+						Have the calendar start with the current day as the current selection.
+						<li>
+						Changed the way titling points are configured.
+						<li>
+						Changed calendar current day highlighting so you can tell when the view is 
+						active. Highlighting is based on system colors.
+						<li>
+						Automatically compute the score in the dog event dialog on both Q and NQ runs. 
+						Previously, it only computed on Qs.
+						<li>
+						When entering trial data, "remember" certain fields to make data entry easier. 
+						[Division, Level, Height, Handler, Judge]
+						<li>
+						Add opening points for gamblers/etc into configuration.
+						<li>
+						When errors are found when loading the data, the program attempts to keep 
+						going. It used to just quit and you would have no data.
+						<li>
+						Complete an "Update rules" mechanism to allow importing updated rules. This 
+						will merge changes. It will not delete entries in your configuration that are 
+						not in the new one, with one exception: Event scoring methods
+						<li>
+						Added performance pairs in USDAA (non-titling)
+						<li>
+							Added UKC.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Fixed date overlap test. If 2 date ranges only partially overlapped, the test 
+						was wrong. This resulted in calendar entries being visible when they shouldn't 
+						have been.
+						<li>
+						Copying the calendar data to the clipboard didn't insert a newline after the 
+						header.
+						<li>
+						If the viewing filter was enabled and you changed the venue of an existing 
+						trial, the trial continued to be visible even though the filter should have 
+						suppressed it.
+						<li>
+						The program didn't always prompt to save on close when something changed.
+						<li>
+						When creating new faults, they didn't show up in the list until after the run 
+						was saved.
+						<li>
+						The configuration 'Drop Fractions' setting wasn't properly applied.
+						<li>
+							If a level on a run is entered wrong (via hand-editing), that entry loaded with 
+							no warnings.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>6/15/2003: v0.3.0.2</b><ul>
+				<li>
+					Bumped file version to 4<ul>
+						<li>
+						Added item to configuration scoring methods to drop fractional time faults.
+						<li>
+							Added a description to venues and events in the configuration.</li>
+					</ul>
+				<li>
+					New features<ul>
+						<li>
+						Added CPE to default configuration.
+						<li>
+						Enable copy/paste of trials and runs.
+						<li>
+						Added filtering on multiple venues.
+						<li>
+						Tally points by level, not sublevel. Then things like NADAC Novice A/B add up 
+						in one place.
+						<li>
+							Points View: Tally Clean/Unclean Qs</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Wasn't remembering the selected view between program invokations.
+						<li>
+						NewLine wasn't handled properly in Event Configuration dialog notes.
+						<li>
+							Editing an existing configuration Title failed with the message that it already 
+							exists. (divisions/levels/faults/otherpts too)</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>6/2/2003: v0.3.0.1</b><ul>
+				<li>
+					Bumped file version to 3<ul>
+						<li>
+						Add notes to configuration events specifically for USDAA DAM jumpers and 
+						snooker - the fact the "Q" there applies towards master legs and DAM relay Q 
+						implies the team qualified overall.
+						<li>
+						Moved Fault Types in configuration from Venue to global.
+						<li>
+						Moved Other Points in the same manner.
+						<li>
+							Added 'Received' field to Title.</li>
+					</ul>
+				<li>
+					New features<ul>
+						<li>
+						Create a trial entry from a calendar entry.
+						<li>
+						Add a delay factor to auto-delete of old calendar entries. (default: 5 days)
+						<li>
+						Allow runs (in tree) and faults (in run) to be reordered. Note, sometimes it 
+						will appear reordering fails. This will be due to sorting. For instance, runs 
+						and calendar entries are sorted by date, then reordering.
+						<li>
+							Added initial configuration updating. It will add any new entries, but will not 
+							yet update existing entries.</li>
+					</ul>
+				<li>
+					Minor enhancements<ul>
+						<li>
+						Updated default USDAA config rules.
+						<li>
+						Tally the list of fault types like I do with judges. (You don't need to modify 
+						the configuration to have a new fault type show up in the selection list)
+						<li>
+						In points view, show the number of partners for Qs, not just total number of 
+						partners. When tallying the number of pairs partners, only 2-dog relays are 
+						tallied. This prevents some odd things when counting USDAA DAM tournament 
+						relays.
+						<li>
+						After creating a new dog/trial/run (via rclick menu), make that the selected 
+						item. (The wrong item was selected if you rclicked on an entry other than the 
+						current selection)
+						<li>
+						When entering a new run, the default date should be last date in the trial.
+						<li>
+						Modified calendar entry dialog to show trial opening/closing dates.
+						<li>
+						When an entry in the calendar list is selected, make calendar date in the right 
+						window pane selected too.
+						<li>
+						Added an 'edit' button to edit an existing registration num
+						<li>
+						Added an 'edit' button to edit an existing club
+						<li>
+						After inserting a trial/run in the tree, it was not properly sorted.
+						<li>
+						Add column sorting to reference runs.
+						<li>
+							Add option to reverse-sort trials and runs (newest first). This will also 
+							reverse the user re-ordering.</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						Changing the Selected dog didn't update the points view.
+						<li>
+						Points view: QQ tallied wrong (it was double counting)
+						<li>
+						When venues are not filtered, ASCA pts were incorrectly totaled.
+						<li>
+						When modifying a configuration event, when a new div/level pair was created, 
+						the 'not defined' items weren't updated.
+						<li>
+							When an event is not qualifying (as defined in the configuration), the "q" list 
+							was still available when entering a run - not really an issue since it didn't 
+							get tallied.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>4/3/2003: v0.2.0.3</b><ul>
+				<li>
+					Updated default configuration rules to include more description in titles<ul>
+						<li>
+						Changed title configuration dialog to allow editing description.
+						<li>
+							Show title description when selecting a title.</li>
+					</ul>
+				<li>
+				Allow space/return to edit in list controls (like dbl-click)
+				<li>
+				Modified partners text in run entry dialog to include handler.
+				<li>
+				Added 'RegNum' to Partner to make it easier to track different partners.
+				<li>
+				Added expand/collapse menu items to trees.
+				<li>
+				Added status info for runs, calendar.
+				<li>
+				View runs based on certain criteria (venue, dates)
+				<li>
+				Added initial points reporting.
+				<li>
+				Made 'Height' a required field during data entry to agree with the file format 
+				(and prevent file corruption)
+				<li>
+				In run entry dialog, show total faults.
+				<li>
+				Add support for bold/italic options in fonts
+				<li>
+					Bug fixes<ul>
+						<li>
+						Initial dates could end up with really odd values
+						<li>
+						Comboboxes that allow data entry do not scroll.
+						<li>
+						Sort order of titles in Dog properties didn't remember multiple column sort 
+						properly.
+						<li>
+						Calendar: Turning on the 'hide overlap' option didn't hide trials that 
+						partially overlap
+						<li>
+							Display correct title pts in time+faults runs when there are faults.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>2/23/2003: v0.2.0.2</b><ul>
+				<li>
+					Modified default rules to add USDAA's Tournament classes.<ul>
+						<li>
+							If you have an existing file, the only way to get the new default rules is to 
+							hand edit. A future enhancement is to add an automated way of doing this. 
+							Currently: Create a new empty file and save it. Copy everything between 
+							"&lt;Configuration&gt;" and "&lt;/Configuration&gt;" are replace the lines in 
+							your current file. Be careful!</li>
+					</ul>
+				<li>
+					Bug fixes<ul>
+						<li>
+						The date on a new run was occasionally 12/31/1969.
+						<li>
+						Made comboboxes for division and level wider in the RunEntry dialog.
+						<li>
+						Made the combobox for a new fault longer
+						<li>
+						Made '0' the default from score in the reference run dialog.
+						<li>
+						In the 'Other Points' dialog, made the description an edit field so it can 
+						scroll.
+						<li>
+							When modifying the configuration, the scoring methods were not updated.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>2/21/2003: v0.2.0.1</b><ul>
+				<li>
+				Updated xerces dll from 2.1.0 to 2.2.0.
+				<li>
+					ARB file version 2<ul>
+						<li>
+						Removed Calendar 'PlanOn'(y|n) attribute, replaced with 'Entered'(E|P|N).
+						<li>
+							Redid DTD on a few entries (moved attributes to elements)</li>
+					</ul>
+				<li>
+					Calendar View<ul>
+						<li>
+						Fixed problem where a new calendar entry didn't show up.
+						<li>
+						Created new view
+						<li>
+							Added options to control the view ('View'-&gt;'Options')</li>
+					</ul>
+				<li>
+					- Runs view<ul>
+						<li>
+						After editing a run entry, it was selected, but not necessarily visible.
+						<li>
+							Double clicking on a run now edits that entry.</li>
+					</ul>
+				<li>
+					Run entry dialog<ul>
+						<li>
+						Titling points (mach/doubleQ) now appear correctly.
+						<li>
+						Enable/disable buttons properly.
+						<li>
+							Double-click on reference run now edits that entry.</li>
+					</ul>
+				<li>
+					General<ul>
+						<li>
+							Fixed all multi-line edit controls to auto-wrap correctly.</li>
+					</ul>
+				</li>
+			</ul>
+		<li>
+			<b>1/22/2003: v0.1.0.1</b><ul>
+				<li>
+				Major data entry dialogs completed.
+				<li>
+					Main views on the data are still incomplete. Program options still need 
+					implementing. Lots of outstanding tidbits.</li>
+			</ul>
+		<li>
+			<b>12/31/2002: v0.0.0.2</b><ul>
+				<li>
+					Re-released v0.0.0.1 using MSVC6.</li>
+			</ul>
+		<li>
+			<b>12/28/2002: v0.0.0.1</b><ul>
+				<li>
+					First release using MSVC7.</li>
+			</ul>
+		<li>
+			<b>11/6/2002</b><ul>
+				<li>
+					<a href="http://groups.yahoo.com/group/AgilityRecordBook">Yahoo group</a> 
+					founded. Initial solicitation for what people would like 
+					to see in the program.</li>
+			</ul>
+		</li>
+	</ul>
+	</BODY>
 </HTML>

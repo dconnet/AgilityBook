@@ -1,10 +1,11 @@
-6/29/2004: v1.2.0.8 <in development>
+7/3/2004: v1.2.0.8
 - Bumped file version to 9.0, Configuration v4:
   - Added 'SubName' to 'Training'.
   - Moved 'RegNum' data to 'Number', data is now 'Note'
   - CPE 'CADE' changed to 'C-ATE'.
   - Updated NADAC Gambler configuration to handle new Gambler class.
 - New features / Enhancements:
+  - Integrated help system.
   - In the Points view, do not filter individual runs based on Qs (use all
     other filter criteria). This allows us to show a qualifying percentage.
   - Added the Dogs call name, registered name and current date to the top of
