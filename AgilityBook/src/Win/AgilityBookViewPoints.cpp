@@ -332,7 +332,7 @@ int CAgilityBookViewPoints::DoEvents(
 			ARBConfigScoring const* pScoringMethod = *iterScoring;
 			int SQs = 0;
 			int machPtsEvent = 0;
-			list<ARBDogRun const*> matching;
+			list<RunInfo> matching;
 			set<std::string> judges;
 			set<std::string> judgesQ;
 			set<std::string> partners;
@@ -395,7 +395,7 @@ int CAgilityBookViewPoints::DoEvents(
 						if (!pScoring) continue; // Shouldn't need it...
 						if (*pScoring != *pScoringMethod)
 							continue;
-						matching.push_back(pRun);
+						matching.push_back(RunInfo(pTrial, pRun));
 						judges.insert(pRun->GetJudge());
 						if (pRun->GetQ().Qualified())
 							judgesQ.insert(pRun->GetJudge());
@@ -552,26 +552,26 @@ int CAgilityBookViewPoints::DoEvents(
 }
 
 size_t CAgilityBookViewPoints::FindMatchingRuns(
-	std::list<ARBDogRun const*> const& runs,
+	std::list<RunInfo> const& runs,
 	std::string const& div,
 	std::string const& level,
 	std::string const& event,
-	std::list<ARBDogRun const*>& matching)
+	std::list<RunInfo>& matching)
 {
 	matching.clear();
-	for (list<ARBDogRun const*>::const_iterator iterRun = runs.begin();
+	for (list<RunInfo>::const_iterator iterRun = runs.begin();
 		iterRun != runs.end();
 		++iterRun)
 	{
-		ARBDogRun const* pRun = (*iterRun);
+		ARBDogRun const* pRun = iterRun->second;
 		if (pRun->GetDivision() == div && pRun->GetLevel() == level && pRun->GetEvent() == event)
-			matching.push_back(pRun);
+			matching.push_back(*iterRun);
 	}
 	return matching.size();
 }
 
 int CAgilityBookViewPoints::TallyPoints(
-	std::list<ARBDogRun const*> const& runs,
+	std::list<RunInfo> const& runs,
 	ARBConfigScoring const* pScoringMethod,
 	int& nCleanQ,
 	int& nNotCleanQ,
@@ -580,11 +580,11 @@ int CAgilityBookViewPoints::TallyPoints(
 	nCleanQ = 0;
 	nNotCleanQ = 0;
 	int score = 0;
-	for (list<ARBDogRun const*>::const_iterator iterRun = runs.begin();
+	for (list<RunInfo>::const_iterator iterRun = runs.begin();
 		iterRun != runs.end();
 		++iterRun)
 	{
-		ARBDogRun const* pRun = (*iterRun);
+		ARBDogRun const* pRun = iterRun->second;
 		if (pRun->GetQ().Qualified())
 		{
 			bool bClean = false;

@@ -55,7 +55,6 @@ CDlgOptionsProgram::CDlgOptionsProgram()
 {
 	//{{AFX_DATA_INIT(CDlgOptionsProgram)
 	m_bAutoCheck = TRUE;
-	m_bAutoCheckDoc = TRUE;
 	m_Backups = 0;
 	m_bAutoShow = TRUE;
 	m_Splash = _T("");
@@ -71,7 +70,6 @@ void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
 	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsProgram)
 	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTO_CHECK, m_bAutoCheck);
-	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTO_CHECKDOC, m_bAutoCheckDoc);
 	DDX_Text(pDX, IDC_OPTIONS_PGM_EDIT, m_Backups);
 	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTOSHOW, m_bAutoShow);
 	DDX_Text(pDX, IDC_OPTIONS_PGM_FILENAME, m_Splash);

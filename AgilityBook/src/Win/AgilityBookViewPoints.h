@@ -40,6 +40,7 @@
 #include <vector>
 #include "CommonView.h"
 #include "ListCtrl.h"
+#include "PointsData.h"
 class ARBConfigDivision;
 class ARBConfigLevel;
 class ARBConfigScoring;
@@ -48,7 +49,6 @@ class ARBDog;
 class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
-class PointsDataBase;
 struct CVenueFilter;
 
 class CAgilityBookViewPoints : public CListView2, public ICommonView
@@ -98,13 +98,13 @@ private:
 		ARBConfigLevel const* inLevel,
 		LifeTimePointList& inLifetime);
 	size_t FindMatchingRuns(
-		std::list<ARBDogRun const*> const& runs,
+		std::list<RunInfo> const& runs,
 		std::string const& div,
 		std::string const& level,
 		std::string const& event,
-		std::list<ARBDogRun const*>& matching);
+		std::list<RunInfo>& matching);
 	int TallyPoints(
-		std::list<ARBDogRun const*> const& runs,
+		std::list<RunInfo> const& runs,
 		ARBConfigScoring const* pScoringMethod,
 		int& nCleanQ,
 		int& nNotCleanQ,

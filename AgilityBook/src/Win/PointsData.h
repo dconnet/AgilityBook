@@ -50,6 +50,7 @@ class ARBDogTrial;
 class CAgilityBookViewPoints;
 
 typedef std::pair<ARBDate, ARBDogTrial const*> DoubleQdata;
+typedef std::pair<ARBDogTrial const*, ARBDogRun const*> RunInfo;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -154,7 +155,7 @@ class PointsDataEvent : public PointsDataBase
 {
 public:
 	PointsDataEvent(CAgilityBookViewPoints* pView,
-		std::list<ARBDogRun const*>& inMatching,
+		std::list<RunInfo>& inMatching,
 		std::string const& inDiv,
 		std::string const& inLevel,
 		std::string const& inEvent,
@@ -168,7 +169,7 @@ public:
 	virtual void OnDblClick() const;
 
 protected:
-	std::list<ARBDogRun const*> m_Matching;
+	std::list<RunInfo> m_Matching;
 	std::string m_Div;
 	std::string m_Level;
 	std::string m_Event;

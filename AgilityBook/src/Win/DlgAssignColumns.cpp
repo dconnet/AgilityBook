@@ -90,6 +90,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2004-08-11 DRC Added verified column to trial in tree.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-10 DRC Created
  */
@@ -293,6 +294,8 @@ static struct
 
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
 		IO_LOG_SUBNAME,        true,  LVCFMT_LEFT,   IDS_COL_SUBNAME, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_VERIFIED, false, 0, IDS_COL_VERIFIED, NULL},
 };
 
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
@@ -403,6 +406,7 @@ static int const idxViewTreeDog[] = {
 static int const idxViewTreeTrial[] = {
 	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,		IO_TREE_TRIAL_CLUB,
 	IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,	IO_TREE_TRIAL_NOTES,
+	IO_TREE_TRIAL_VERIFIED,
 -1};
 static int const idxViewTreeRun[] = {
 	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,

@@ -359,7 +359,6 @@
 #define IDC_OPTIONS_PGM_AUTOSHOW        1302
 #define IDC_OPTIONS_PGM_FILENAME        1303
 #define IDC_OPTIONS_PGM_BROWSE          1304
-#define IDC_OPTIONS_PGM_AUTO_CHECKDOC   1305
 #define IDC_REORDER_LIST                1310
 #define IDC_REORDER_MOVE_UP             1311
 #define IDC_REORDER_MOVE_DOWN           1312
@@ -457,6 +456,7 @@
 #define IDS_COL_TITLE                   4052
 #define IDS_COL_TRIAL                   4053
 #define IDS_COL_SUBNAME                 4054
+#define IDS_COL_VERIFIED                4055
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002

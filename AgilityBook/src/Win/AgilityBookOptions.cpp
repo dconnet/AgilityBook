@@ -1179,17 +1179,6 @@ void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
 	AfxGetApp()->WriteProfileInt("Settings", "autoCheck", bSet ? 1 : 0);
 }
 
-bool CAgilityBookOptions::GetAutoUpdateCheckDoc()
-{
-	int val = AfxGetApp()->GetProfileInt("Settings", "autoCheckDoc", 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetAutoUpdateCheckDoc(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt("Settings", "autoCheckDoc", bSet ? 1 : 0);
-}
-
 int CAgilityBookOptions::GetNumBackupFiles()
 {
 	return AfxGetApp()->GetProfileInt("Settings", "BackupFiles", 3);
