@@ -64,6 +64,7 @@ class CAgilityBookOptions
 {
 public:
 	// Helper functions
+	static bool IsFilterEnabled();
 	static bool IsDateVisible(const ARBDate& startDate, const ARBDate& endDate);
 	static bool IsTitleVisible(
 		const std::vector<CVenueFilter>& venues,

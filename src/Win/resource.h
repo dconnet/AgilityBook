@@ -341,6 +341,7 @@
 #define ID_REORDER                      32802
 #define ID_VIEW_SORTRUNS                32803
 #define ID_INDICATOR_STATUS             59142
+#define ID_INDICATOR_FILTERED           59143
 
 // Next default values for new objects
 // 
