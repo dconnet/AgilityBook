@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-21 DRC Added DeleteTitle.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -145,4 +146,6 @@ public:
 		ARBConfigEventList& ioEvents);
 
 	const ARBConfigTitle* FindTitle(const std::string& inTitle) const;
+	ARBConfigTitle* FindTitle(const std::string& inTitle);
+	bool DeleteTitle(const std::string& inTitle);
 };

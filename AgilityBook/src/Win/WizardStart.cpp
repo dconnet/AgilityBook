@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-21 DRC Implemented Action items in configuration update.
  * @li 2003-12-10 DRC Created
  */
 
@@ -452,7 +453,45 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					ARBConfig& update = dlg.GetConfig();
 					CString msg;
-					msg = m_pDoc->GetConfig().Update(0, update).c_str();
+					for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
+					{
+						const ARBConfigAction* action = *iterAction;
+						if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
+						{
+							// Find the venue.
+							ARBConfigVenue* venue = m_pDoc->GetConfig().GetVenues().FindVenue(action->GetVenue());
+							if (venue)
+							{
+								// Find the title we're renaming.
+								ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
+								if (oldTitle)
+								{
+									CString tmp;
+									tmp.Format("Action: Renaming title [%s] to [%s]",
+										action->GetOldName().c_str(),
+										action->GetNewName().c_str());
+									msg += tmp;
+									// If any titles are in use, create a fixup action.
+									int nTitles = m_pDoc->GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
+									if (0 < nTitles)
+									{
+										tmp.Format(", updating %d titles\n", nTitles);
+										m_pDoc->GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
+									}
+									else
+										tmp = "\n";
+									msg += tmp;
+									// If the new title exists, just delete the old. Otherwise, rename the old to new.
+									const ARBConfigTitle* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
+									if (newTitle)
+										venue->GetDivisions().DeleteTitle(action->GetOldName());
+									else
+										oldTitle->SetName(action->GetNewName());
+								}
+							}
+						}
+					}
+					msg += m_pDoc->GetConfig().Update(0, update).c_str();
 					if (0 < msg.GetLength())
 					{
 						CDlgMessage dlg(msg, 0);

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-21 DRC Added DeleteTitle.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
@@ -340,4 +341,31 @@ const ARBConfigTitle* ARBConfigDivisionList::FindTitle(const std::string& inTitl
 			return pTitle;
 	}
 	return NULL;
+}
+
+ARBConfigTitle* ARBConfigDivisionList::FindTitle(const std::string& inTitle)
+{
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		ARBConfigTitle* pTitle = (*iter)->GetTitles().FindTitle(inTitle);
+		if (pTitle)
+			return pTitle;
+	}
+	return NULL;
+}
+
+bool ARBConfigDivisionList::DeleteTitle(const std::string& inTitle)
+{
+	bool bDeleted = false;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		ARBConfigDivision* div = *iter;
+		const ARBConfigTitle* pTitle = div->GetTitles().FindTitle(inTitle);
+		if (pTitle)
+		{
+			bDeleted = div->GetTitles().DeleteTitle(inTitle);
+			break;
+		}
+	}
+	return bDeleted;
 }
