@@ -5,9 +5,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2005-01-10 DRC Configuration version 7.
+2005-01-21 DRC Configuration version 7.
                AAC: Updated new rules. Added CKC and TDAA.
                Update AKC/NADAC for recurring titles.
+               Added some long title names to CPE.
                Also see comments in dtd.
 2004-10-06 DRC Configuration version 6.
                CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
@@ -618,43 +619,43 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				<Level Name="Level 4"/>
 				<Level Name="Level 5"/>
 				<Level Name="Level C"/>
-				<Titles Name="CL1-R">2 Qualifying Legs
+				<Titles LongName="Level 1 Standard" Name="CL1-R">2 Qualifying Legs
 May be earned under 1 judge.</Titles>
-				<Titles Name="CL1-H">1 Qualifying Leg each of Colors and Wildcard
+				<Titles LongName="Level 1 Handler Games" Name="CL1-H">1 Qualifying Leg each of Colors and Wildcard
 May be earned under 1 judge.</Titles>
-				<Titles Name="CL1-S">1 Qualifying Leg each of Snooker and Jackpot
+				<Titles LongName="Level 1 Strategy Games" Name="CL1-S">1 Qualifying Leg each of Snooker and Jackpot
 May be earned under 1 judge.</Titles>
-				<Titles Name="CL1-F">1 Qualifying Leg each of FullHouse and Jumpers
+				<Titles LongName="Level 1 Fun Games" Name="CL1-F">1 Qualifying Leg each of FullHouse and Jumpers
 May be earned under 1 judge.</Titles>
 				<Titles Name="CL1">CL1-R, CL1-H, CL1-S, CL1-F
 This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
-				<Titles Name="CL2-R">2 Clean Q Legs, or 3 Qualifying Legs
+				<Titles LongName="Level 2 Standard" Name="CL2-R">2 Clean Q Legs, or 3 Qualifying Legs
 May be earned under 1 judge.</Titles>
-				<Titles Name="CL2-H">2 Qualifying Legs each of Colors and Wildcard
+				<Titles LongName="Level 2 Handler Games" Name="CL2-H">2 Qualifying Legs each of Colors and Wildcard
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL2-S">2 Qualifying Legs each of Snooker and Jackpot
+				<Titles LongName="Level 2 Strategy Games" Name="CL2-S">2 Qualifying Legs each of Snooker and Jackpot
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL2-F">2 Qualifying Legs each of FullHouse and Jumpers
+				<Titles LongName="Level 2 Fun Games" Name="CL2-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL2">CL2-R, CL2-H, CL2-S, CL2-F
 This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
-				<Titles Name="CL3-R">3 Clean Q Legs, or 4 Qualifying Legs
+				<Titles LongName="Level 3 Standard" Name="CL3-R">3 Clean Q Legs, or 4 Qualifying Legs
 May be earned under 1 judge.</Titles>
-				<Titles Name="CL3-H">2 Qualifying Legs each of Colors and Wildcard
+				<Titles LongName="Level 3 Handler Games" Name="CL3-H">2 Qualifying Legs each of Colors and Wildcard
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL3-S">2 Qualifying Legs each of Snooker and Jackpot
+				<Titles LongName="Level 3 Strategy Games" Name="CL3-S">2 Qualifying Legs each of Snooker and Jackpot
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL3-F">2 Qualifying Legs each of FullHouse and Jumpers
+				<Titles LongName="Level 3 Fun Games" Name="CL3-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL3">CL3-R, CL3-H, CL3-S, CL3-F
 This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
-				<Titles Name="CL4-R">4 Clean Q Legs, or 5 Qualifying Legs
+				<Titles LongName="Level 4 Standard" Name="CL4-R">4 Clean Q Legs, or 5 Qualifying Legs
 Earned under at least 2 different judges.</Titles>
-				<Titles Name="CL4-H">2 Qualifying Legs each of Colors and Wildcard
+				<Titles LongName="Level 4 Handler Games" Name="CL4-H">2 Qualifying Legs each of Colors and Wildcard
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL4-S">2 Qualifying Legs each of Snooker and Jackpot
+				<Titles LongName="Level 4 Strategy Games" Name="CL4-S">2 Qualifying Legs each of Snooker and Jackpot
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL4-F">2 Qualifying Legs each of FullHouse and Jumpers
+				<Titles LongName="Level 4 Fun Games" Name="CL4-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL4">CL4-R, CL4-H, CL4-S, CL4-F
 This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
