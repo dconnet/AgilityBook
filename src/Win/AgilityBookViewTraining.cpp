@@ -435,6 +435,7 @@ void CAgilityBookViewTraining::SetupColumns()
 			str.ReleaseBuffer();
 		}
 	}
+	FixTooltips();
 }
 
 void CAgilityBookViewTraining::LoadData()

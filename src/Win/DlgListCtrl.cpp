@@ -573,6 +573,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		}
 		break;
 	}
+	m_ctrlList.FixTooltips();
 	SetWindowText(caption);
 
 	int i = 0;

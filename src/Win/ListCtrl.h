@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-09 DRC Added tooltips to header control.
  * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
@@ -51,24 +52,35 @@ public:
 	CHeaderCtrl2();
 	virtual ~CHeaderCtrl2();
 
+	/// This function must be called whenever columns are added/removed/sized
+	void FixTooltips();
+
 	typedef enum { eNoSort, eAscending, eDescending } SortOrder;
 	SortOrder GetSortOrder(int iCol) const;
 	void Sort(int iCol, SortOrder eOrder);
 
-protected:
 // Overrides
 	//{{AFX_VIRTUAL(CHeaderCtrl2)
+protected:
 	virtual void PreSubclassWindow();
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
+
+protected:
+	void SetColumnTip(int iCol);
 	CImageList m_ImageList;
 	int m_sortAscending;
 	int m_sortDescending;
+	CToolTipCtrl m_ToolTip;
+	int fBufferSize;
+	char* fpBuffer;
 
-	// Generated message map functions
 protected:
 	//{{AFX_MSG(CHeaderCtrl2)
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
-
 	DECLARE_MESSAGE_MAP()
 };
 
@@ -81,6 +93,8 @@ public:
 	virtual ~CListCtrl2();
 
 	// Header functions
+	/// This function must be called whenever columns are added/removed/sized
+	void FixTooltips();
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
 	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
@@ -124,6 +138,8 @@ public:
 	virtual ~CListView2();
 
 	// Header functions
+	/// This function must be called whenever columns are added/removed/sized
+	void FixTooltips();
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
 	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);

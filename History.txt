@@ -1,4 +1,4 @@
-9/7/2004: v1.3.0.9 <in development>
+9/9/2004: v1.3.0.9 <in development>
 - Bumped Configuration v5:
   - Update USDAA configuration to remove titling points from Tournament
     Jumpers and Snooker. Tournament runs that offered titling should be
@@ -222,6 +222,7 @@
   - Updated USDAA configuration.
   - GetAllClubs/Locations now includes calendar entries.
   - Implemented column customizing in Tree, Runs, Calendar and TrainingLog.
+  - Added tooltips to headers when text is partially hidden.
   - Implemented importing from a spreadsheet.
   - Height is no longer a required field in a run.
   - The configuration and new title dialogs use the new long name (if available)

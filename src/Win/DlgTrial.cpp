@@ -161,6 +161,7 @@ BOOL CDlgTrial::OnInitDialog()
 		m_ctrlClubs.InsertColumn(i, &col);
 		str.ReleaseBuffer();
 	}
+	m_ctrlClubs.FixTooltips();
 
 	set<string> locations;
 	m_pDoc->GetAllTrialLocations(locations);

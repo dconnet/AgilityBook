@@ -321,8 +321,11 @@ BOOL CDlgConfigure::OnInitDialog()
 	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlVenues.InsertColumn(0, "Venues");
 	m_ctrlVenues.InsertColumn(1, "Description");
+	m_ctrlVenues.FixTooltips();
 	m_ctrlFaults.InsertColumn(0, "Faults");
+	m_ctrlFaults.FixTooltips();
 	m_ctrlOthers.InsertColumn(0, "Other Points");
+	m_ctrlOthers.FixTooltips();
 
 	LoadData();
 	SetAction(eVenues);

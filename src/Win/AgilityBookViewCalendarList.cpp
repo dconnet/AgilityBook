@@ -496,6 +496,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 			str.ReleaseBuffer();
 		}
 	}
+	FixTooltips();
 }
 
 void CAgilityBookViewCalendarList::LoadData()

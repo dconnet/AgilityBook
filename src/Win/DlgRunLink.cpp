@@ -169,6 +169,7 @@ BOOL CDlgRunLink::OnInitDialog()
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
 	m_ctrlLinks.InsertColumn(0, "");
+	m_ctrlLinks.FixTooltips();
 	ListFiles(NULL);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
