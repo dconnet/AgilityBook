@@ -1,4 +1,4 @@
-9/13/2004: v1.3.2.9
+9/15/2004: v1.3.2.9
 - Bug fix
   - If a trial has no clubs associated with it, attempting to upgrade the
     configuration will cause the program to crash. The work-around is to
