@@ -805,15 +805,13 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std:
 	CString section;
 	switch (eOrder)
 	{
-	default:
-		section = "Unknown";
-		break;
-	case eImport:
-		section = "Import";
-		break;
-	case eExport:
-		section = "Export";
-		break;
+	default:			section = "Unknown"; break;
+	case eRunsImport:	section = "Import"; break;
+	case eRunsExport:	section = "Export"; break;
+	case eCalImport:	section = "ImportCal"; break;
+	case eCalExport:	section = "ExportCal"; break;
+	case eLogImport:	section = "ImportLog"; break;
+	case eLogExport:	section = "ExportLog"; break;
 	}
 	values.clear();
 	CString item;
@@ -839,15 +837,13 @@ void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, int idxColumn, cons
 	CString section;
 	switch (eOrder)
 	{
-	default:
-		section = "Unknown";
-		break;
-	case eImport:
-		section = "Import";
-		break;
-	case eExport:
-		section = "Export";
-		break;
+	default:			section = "Unknown"; break;
+	case eRunsImport:	section = "Import"; break;
+	case eRunsExport:	section = "Export"; break;
+	case eCalImport:	section = "ImportCal"; break;
+	case eCalExport:	section = "ExportCal"; break;
+	case eLogImport:	section = "ImportLog"; break;
+	case eLogExport:	section = "ExportLog"; break;
 	}
 	CString item;
 	CString data;

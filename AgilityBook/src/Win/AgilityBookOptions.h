@@ -171,11 +171,20 @@ public:
 	static void SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter);
 	typedef enum
 	{
-		eImport,
-		eExport
+		eUnknown	= 0x00,
+		eRunsImport	= 0x01,
+		eRunsExport	= 0x02,
+		eCalImport	= 0x04,
+		eCalExport	= 0x08,
+		eLogImport	= 0x10,
+		eLogExport	= 0x20,
 	} ColumnOrder;
+protected:
+	friend class CDlgAssignColumns;
+	// CDlgAssignColumns has some structs for used to ensure validity.
 	static void GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& values);
 	static void SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& values);
+public:
 	// Special clipboard formats
 	typedef enum
 	{

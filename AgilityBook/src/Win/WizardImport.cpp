@@ -206,11 +206,22 @@ void CWizardImport::OnImportDelim()
 void CWizardImport::OnImportAssign() 
 {
 	UpdateData(TRUE);
-	CDlgAssignColumns dlg(CAgilityBookOptions::eImport, this);
-	if (IDOK == dlg.DoModal())
+	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
+	switch (m_pSheet->GetImportExportItem())
 	{
-		UpdateButtons();
-		UpdatePreview();
+	default: break;
+	case WIZ_EXPORT_RUNS: order = CAgilityBookOptions::eRunsImport; break;
+	case WIZ_EXPORT_CALENDAR: order = CAgilityBookOptions::eCalImport; break;
+	case WIZ_EXPORT_LOG: order = CAgilityBookOptions::eLogImport; break;
+	}
+	if (CAgilityBookOptions::eUnknown != order)
+	{
+		CDlgAssignColumns dlg(order, this);
+		if (IDOK == dlg.DoModal())
+		{
+			UpdateButtons();
+			UpdatePreview();
+		}
 	}
 }
 

@@ -113,58 +113,128 @@ static char THIS_FILE[] = __FILE__;
 
 static const struct
 {
+	WORD bValid;
 	int index;
 	const char* name;
 } sc_Types[] =
 {
-	{IO_TYPE_FAULTS_TIME, "Faults Then Time"},
-	{IO_TYPE_TIME_FAULTS, "Time Plus Faults"},
-	{IO_TYPE_OPEN_CLOSE, "Opening/Closing Points Then Time"},
-	{IO_TYPE_POINTS, "Points Then Time"}
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_TYPE_RUNS_FAULTS_TIME, "Faults Then Time"},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_TYPE_RUNS_TIME_FAULTS, "Time Plus Faults"},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_TYPE_RUNS_OPEN_CLOSE,  "Opening/Closing Points Then Time"},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_TYPE_RUNS_POINTS,      "Points Then Time"},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_TYPE_CALENDAR,         "Calendar"},
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
+		IO_TYPE_TRAINING,         "Training Log"},
 };
 
 static const struct
 {
+	WORD bValid;
 	int index;
 	bool bImportable;
 	UINT name;
 	const char* desc;
 } sc_FieldNames[] =
 {
-	{IO_REG_NAME,      true,  IDS_COL_REG_NAME, NULL},
-	{IO_CALL_NAME,     true,  IDS_COL_CALLNAME, NULL},
-	{IO_DATE,          true,  IDS_COL_DATE, NULL},
-	{IO_VENUE,         true,  IDS_COL_VENUE, NULL},
-	{IO_CLUB,          true,  IDS_COL_CLUB, NULL},
-	{IO_LOCATION,      true,  IDS_COL_LOCATION, NULL},
-	{IO_TRIAL_NOTES,   true,  IDS_COL_TRIALNOTES, NULL},
-	{IO_DIVISION,      true,  IDS_COL_DIVISION, NULL},
-	{IO_LEVEL,         true,  IDS_COL_LEVEL, NULL},
-	{IO_EVENT,         true,  IDS_COL_EVENT, NULL},
-	{IO_HEIGHT,        true,  IDS_COL_HEIGHT, NULL},
-	{IO_JUDGE,         true,  IDS_COL_JUDGE, NULL},
-	{IO_HANDLER,       true,  IDS_COL_HANDLER, NULL},
-	{IO_CONDITIONS,    true,  IDS_COL_CONDITIONS, NULL},
-	{IO_COURSE_FAULTS, true,  IDS_COL_COURSEFAULTS, NULL},
-	{IO_TIME,          true,  IDS_COL_TIME, NULL},
-	{IO_YARDS,         true,  IDS_COL_YARDS, NULL},
-	{IO_YPS,           false, IDS_COL_YPS, NULL},
-	{IO_SCT,           true,  IDS_COL_SCT, NULL},
-	{IO_TOTAL_FAULTS,  false, IDS_COL_TOTAL_FAULTS, NULL},
-	{IO_REQ_OPENING,   true,  IDS_COL_REQ_OPENING, NULL},
-	{IO_REQ_CLOSING,   true,  IDS_COL_REQ_CLOSING, NULL},
-	{IO_OPENING,       true,  IDS_COL_OPENING, NULL},
-	{IO_CLOSING,       true,  IDS_COL_CLOSING, NULL},
-	{IO_REQ_POINTS,    true,  IDS_COL_REQ_POINTS, NULL},
-	{IO_POINTS,        true,  IDS_COL_POINTS, NULL},
-	{IO_PLACE,         true,  IDS_COL_PLACE, NULL},
-	{IO_IN_CLASS,      true,  IDS_COL_IN_CLASS, NULL},
-	{IO_DOGSQD,        true,  IDS_COL_Q_D, NULL},
-	{IO_Q,             true,  IDS_COL_Q, NULL},
-	{IO_SCORE,         false, IDS_COL_SCORE, NULL},
-	{IO_TITLE_POINTS,  false, IDS_COL_TITLE_PTS, NULL},
-	{IO_COMMENTS,      true,  IDS_COL_COMMENTS, NULL},
-	{IO_FAULTS,        true,  IDS_COL_FAULTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_REG_NAME,      true,  IDS_COL_REG_NAME, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_CALL_NAME,     true,  IDS_COL_CALLNAME, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_DATE,          true,  IDS_COL_DATE, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_VENUE,         true,  IDS_COL_VENUE, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_CLUB,          true,  IDS_COL_CLUB, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_LOCATION,      true,  IDS_COL_LOCATION, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_TRIAL_NOTES,   true,  IDS_COL_TRIALNOTES, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_DIVISION,      true,  IDS_COL_DIVISION, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_LEVEL,         true,  IDS_COL_LEVEL, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_EVENT,         true,  IDS_COL_EVENT, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_HEIGHT,        true,  IDS_COL_HEIGHT, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_JUDGE,         true,  IDS_COL_JUDGE, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_HANDLER,       true,  IDS_COL_HANDLER, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_CONDITIONS,    true,  IDS_COL_CONDITIONS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_COURSE_FAULTS, true,  IDS_COL_COURSEFAULTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_TIME,          true,  IDS_COL_TIME, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_YARDS,         true,  IDS_COL_YARDS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_YPS,           false, IDS_COL_YPS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_SCT,           true,  IDS_COL_SCT, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_TOTAL_FAULTS,  false, IDS_COL_TOTAL_FAULTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_REQ_OPENING,   true,  IDS_COL_REQ_OPENING, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_REQ_CLOSING,   true,  IDS_COL_REQ_CLOSING, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_OPENING,       true,  IDS_COL_OPENING, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_CLOSING,       true,  IDS_COL_CLOSING, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_REQ_POINTS,    true,  IDS_COL_REQ_POINTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_POINTS,        true,  IDS_COL_POINTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_PLACE,         true,  IDS_COL_PLACE, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_IN_CLASS,      true,  IDS_COL_IN_CLASS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_DOGSQD,        true,  IDS_COL_Q_D, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_Q,             true,  IDS_COL_Q, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_SCORE,         false, IDS_COL_SCORE, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_TITLE_POINTS,  false, IDS_COL_TITLE_PTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_COMMENTS,      true,  IDS_COL_COMMENTS, NULL},
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
+		IO_RUNS_FAULTS,        true,  IDS_COL_FAULTS, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_START_DATE,     true,  IDS_COL_START_DATE, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_END_DATE,       true,  IDS_COL_END_DATE, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_TENTATIVE,      true,  IDS_COL_TENTATIVE, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_ENTERED,        true,  IDS_COL_ENTERED, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_LOCATION,       true,  IDS_COL_LOCATION, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_CLUB,           true,  IDS_COL_CLUB, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_VENUE,          true,  IDS_COL_VENUE, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_OPENS,          true,  IDS_COL_OPENS, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_CLOSES,         true,  IDS_COL_CLOSES, NULL},
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
+		IO_CAL_NOTES,          true,  IDS_COL_NOTES, NULL},
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
+		IO_LOG_DATE,           true,  IDS_COL_DATE, NULL},
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
+		IO_LOG_NAME,           true,  IDS_COL_NAME, NULL},
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
+		IO_LOG_NOTES,          true,  IDS_COL_NOTES, NULL},
 };
 
 CString CDlgAssignColumns::GetNameFromColumnID(int column)
@@ -175,39 +245,67 @@ CString CDlgAssignColumns::GetNameFromColumnID(int column)
 	return name;
 }
 
+bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, std::vector<int>& values)
+{
+	bool bOk = false;
+	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
+	{
+		if (sc_Types[idxColumn].bValid & eOrder)
+		{
+			bOk = true;
+			CAgilityBookOptions::GetColumnOrder(eOrder, idxColumn, values);
+		}
+	}
+	return bOk;
+}
+
+bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, const std::vector<int>& values)
+{
+	bool bOk = false;
+	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
+	{
+		if (sc_Types[idxColumn].bValid & eOrder)
+		{
+			bOk = true;
+			CAgilityBookOptions::SetColumnOrder(eOrder, idxColumn, values);
+		}
+	}
+	return bOk;
+}
+
 static const struct
 {
 	int idxName[IO_TYPE_MAX];
 } sc_Fields[] =
 {
-	{{IO_REG_NAME,      IO_REG_NAME,      IO_REG_NAME,      IO_REG_NAME}},
-	{{IO_CALL_NAME,     IO_CALL_NAME,     IO_CALL_NAME,     IO_CALL_NAME}},
-	{{IO_DATE,          IO_DATE,          IO_DATE,          IO_DATE}},
-	{{IO_VENUE,         IO_VENUE,         IO_VENUE,         IO_VENUE}},
-	{{IO_CLUB,          IO_CLUB,          IO_CLUB,          IO_CLUB}},
-	{{IO_LOCATION,      IO_LOCATION,      IO_LOCATION,      IO_LOCATION}},
-	{{IO_TRIAL_NOTES,   IO_TRIAL_NOTES,   IO_TRIAL_NOTES,   IO_TRIAL_NOTES}},
-	{{IO_DIVISION,      IO_DIVISION,      IO_DIVISION,      IO_DIVISION}},
-	{{IO_LEVEL,         IO_LEVEL,         IO_LEVEL,         IO_LEVEL}},
-	{{IO_EVENT,         IO_EVENT,         IO_EVENT,         IO_EVENT}},
-	{{IO_HEIGHT,        IO_HEIGHT,        IO_HEIGHT,        IO_HEIGHT}},
-	{{IO_JUDGE,         IO_JUDGE,         IO_JUDGE,         IO_JUDGE}},
-	{{IO_HANDLER,       IO_HANDLER,       IO_HANDLER,       IO_HANDLER}},
-	{{IO_CONDITIONS,    IO_CONDITIONS,    IO_CONDITIONS,    IO_CONDITIONS}},
-	{{IO_COURSE_FAULTS, IO_COURSE_FAULTS, IO_COURSE_FAULTS, IO_COURSE_FAULTS}},
-	{{IO_TIME,          IO_TIME,          IO_TIME,          IO_TIME}},
-	{{IO_YARDS,         IO_YARDS,         IO_REQ_OPENING,   IO_REQ_POINTS}},
-	{{IO_YPS,           IO_YPS,           IO_REQ_CLOSING,   IO_POINTS}},
-	{{IO_SCT,           IO_SCT,           IO_OPENING,       -1}},
-	{{IO_TOTAL_FAULTS,  IO_TOTAL_FAULTS,  IO_CLOSING,       -1}},
-	{{IO_PLACE,         IO_PLACE,         IO_PLACE,         IO_PLACE}},
-	{{IO_IN_CLASS,      IO_IN_CLASS,      IO_IN_CLASS,      IO_IN_CLASS}},
-	{{IO_DOGSQD,        IO_DOGSQD,        IO_DOGSQD,        IO_DOGSQD}},
-	{{IO_Q,             IO_Q,             IO_Q,             IO_Q}},
-	{{IO_SCORE,         IO_SCORE,         IO_SCORE,         IO_SCORE}},
-	{{IO_TITLE_POINTS,  IO_TITLE_POINTS,  IO_TITLE_POINTS,  IO_TITLE_POINTS}},
-	{{IO_COMMENTS,      IO_COMMENTS,      IO_COMMENTS,      IO_COMMENTS}},
-	{{IO_FAULTS,        IO_FAULTS,        IO_FAULTS,        IO_FAULTS}},
+	{{IO_RUNS_REG_NAME,      IO_RUNS_REG_NAME,      IO_RUNS_REG_NAME,      IO_RUNS_REG_NAME,      IO_CAL_START_DATE, IO_LOG_DATE}},
+	{{IO_RUNS_CALL_NAME,     IO_RUNS_CALL_NAME,     IO_RUNS_CALL_NAME,     IO_RUNS_CALL_NAME,     IO_CAL_END_DATE,   IO_LOG_NAME}},
+	{{IO_RUNS_DATE,          IO_RUNS_DATE,          IO_RUNS_DATE,          IO_RUNS_DATE,          IO_CAL_TENTATIVE,  IO_LOG_NOTES}},
+	{{IO_RUNS_VENUE,         IO_RUNS_VENUE,         IO_RUNS_VENUE,         IO_RUNS_VENUE,         IO_CAL_ENTERED,    -1}},
+	{{IO_RUNS_CLUB,          IO_RUNS_CLUB,          IO_RUNS_CLUB,          IO_RUNS_CLUB,          IO_CAL_LOCATION,   -1}},
+	{{IO_RUNS_LOCATION,      IO_RUNS_LOCATION,      IO_RUNS_LOCATION,      IO_RUNS_LOCATION,      IO_CAL_CLUB,       -1}},
+	{{IO_RUNS_TRIAL_NOTES,   IO_RUNS_TRIAL_NOTES,   IO_RUNS_TRIAL_NOTES,   IO_RUNS_TRIAL_NOTES,   IO_CAL_VENUE,      -1}},
+	{{IO_RUNS_DIVISION,      IO_RUNS_DIVISION,      IO_RUNS_DIVISION,      IO_RUNS_DIVISION,      IO_CAL_OPENS,      -1}},
+	{{IO_RUNS_LEVEL,         IO_RUNS_LEVEL,         IO_RUNS_LEVEL,         IO_RUNS_LEVEL,         IO_CAL_CLOSES,     -1}},
+	{{IO_RUNS_EVENT,         IO_RUNS_EVENT,         IO_RUNS_EVENT,         IO_RUNS_EVENT,         IO_CAL_NOTES,      -1}},
+	{{IO_RUNS_HEIGHT,        IO_RUNS_HEIGHT,        IO_RUNS_HEIGHT,        IO_RUNS_HEIGHT,        -1,                -1}},
+	{{IO_RUNS_JUDGE,         IO_RUNS_JUDGE,         IO_RUNS_JUDGE,         IO_RUNS_JUDGE,         -1,                -1}},
+	{{IO_RUNS_HANDLER,       IO_RUNS_HANDLER,       IO_RUNS_HANDLER,       IO_RUNS_HANDLER,       -1,                -1}},
+	{{IO_RUNS_CONDITIONS,    IO_RUNS_CONDITIONS,    IO_RUNS_CONDITIONS,    IO_RUNS_CONDITIONS,    -1,                -1}},
+	{{IO_RUNS_COURSE_FAULTS, IO_RUNS_COURSE_FAULTS, IO_RUNS_COURSE_FAULTS, IO_RUNS_COURSE_FAULTS, -1,                -1}},
+	{{IO_RUNS_TIME,          IO_RUNS_TIME,          IO_RUNS_TIME,          IO_RUNS_TIME,          -1,                -1}},
+	{{IO_RUNS_YARDS,         IO_RUNS_YARDS,         IO_RUNS_REQ_OPENING,   IO_RUNS_REQ_POINTS,    -1,                -1}},
+	{{IO_RUNS_YPS,           IO_RUNS_YPS,           IO_RUNS_REQ_CLOSING,   IO_RUNS_POINTS,        -1,                -1}},
+	{{IO_RUNS_SCT,           IO_RUNS_SCT,           IO_RUNS_OPENING,       -1,                    -1,                -1}},
+	{{IO_RUNS_TOTAL_FAULTS,  IO_RUNS_TOTAL_FAULTS,  IO_RUNS_CLOSING,       -1,                    -1,                -1}},
+	{{IO_RUNS_PLACE,         IO_RUNS_PLACE,         IO_RUNS_PLACE,         IO_RUNS_PLACE,         -1,                -1}},
+	{{IO_RUNS_IN_CLASS,      IO_RUNS_IN_CLASS,      IO_RUNS_IN_CLASS,      IO_RUNS_IN_CLASS,      -1,                -1}},
+	{{IO_RUNS_DOGSQD,        IO_RUNS_DOGSQD,        IO_RUNS_DOGSQD,        IO_RUNS_DOGSQD,        -1,                -1}},
+	{{IO_RUNS_Q,             IO_RUNS_Q,             IO_RUNS_Q,             IO_RUNS_Q,             -1,                -1}},
+	{{IO_RUNS_SCORE,         IO_RUNS_SCORE,         IO_RUNS_SCORE,         IO_RUNS_SCORE,         -1,                -1}},
+	{{IO_RUNS_TITLE_POINTS,  IO_RUNS_TITLE_POINTS,  IO_RUNS_TITLE_POINTS,  IO_RUNS_TITLE_POINTS,  -1,                -1}},
+	{{IO_RUNS_COMMENTS,      IO_RUNS_COMMENTS,      IO_RUNS_COMMENTS,      IO_RUNS_COMMENTS,      -1,                -1}},
+	{{IO_RUNS_FAULTS,        IO_RUNS_FAULTS,        IO_RUNS_FAULTS,        IO_RUNS_FAULTS,        -1,                -1}},
 };
 static const int sc_nFields = sizeof(sc_Fields) / sizeof(sc_Fields[0]);
 
@@ -222,13 +320,17 @@ CDlgAssignColumns::CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CW
 	//{{AFX_DATA_INIT(CDlgAssignColumns)
 	//}}AFX_DATA_INIT
 	for (int i = 0; i < IO_TYPE_MAX; ++i)
-		CAgilityBookOptions::GetColumnOrder(m_eOrder, i, m_Columns[i]);
+		GetColumnOrder(m_eOrder, i, m_Columns[i]);
 	switch (m_eOrder)
 	{
 	default:
 		break;
-	case CAgilityBookOptions::eImport:
-	case CAgilityBookOptions::eExport:
+	case CAgilityBookOptions::eRunsImport:
+	case CAgilityBookOptions::eRunsExport:
+	case CAgilityBookOptions::eCalImport:
+	case CAgilityBookOptions::eCalExport:
+	case CAgilityBookOptions::eLogImport:
+	case CAgilityBookOptions::eLogExport:
 		m_bIncludeBlank = true;
 		break;
 	}
@@ -267,7 +369,10 @@ void CDlgAssignColumns::FillColumns()
 	m_ctrlAvailable.ResetContent();
 	m_ctrlColumns.ResetContent();
 	int index = m_ctrlType.GetCurSel();
+	int idxType = -1;
 	if (CB_ERR != index)
+		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
+	if (0 <= idxType)
 	{
 		CString blank;
 		blank.LoadString(IDS_BLANK_COLUMN);
@@ -275,15 +380,15 @@ void CDlgAssignColumns::FillColumns()
 		bool bInUse[IO_MAX];
 		for (i = 0; i < IO_MAX; ++i)
 			bInUse[i] = false;
-		for (i = 0; i < m_Columns[index].size(); ++i)
+		for (i = 0; i < m_Columns[idxType].size(); ++i)
 		{
-			if (0 <= m_Columns[index][i])
+			if (0 <= m_Columns[idxType][i])
 			{
-				bInUse[m_Columns[index][i]] = true;
-				CString name = GetNameFromColumnID(m_Columns[index][i]);
+				bInUse[m_Columns[idxType][i]] = true;
+				CString name = GetNameFromColumnID(m_Columns[idxType][i]);
 				int idx = m_ctrlColumns.AddString(name);
 				if (LB_ERR != idx)
-					m_ctrlColumns.SetItemData(idx, m_Columns[index][i]);
+					m_ctrlColumns.SetItemData(idx, m_Columns[idxType][i]);
 			}
 			else
 			{
@@ -301,16 +406,20 @@ void CDlgAssignColumns::FillColumns()
 			if (LB_ERR != idx)
 				m_ctrlAvailable.SetItemData(idx, static_cast<DWORD>(-1));
 		}
+		bool bImport = (CAgilityBookOptions::eRunsImport == m_eOrder
+			|| CAgilityBookOptions::eCalImport == m_eOrder
+			|| CAgilityBookOptions::eLogImport == m_eOrder);
 		for (i = 0; i < sc_nFields; ++i)
 		{
-			if (-1 == sc_Fields[i].idxName[index]
-			|| (CAgilityBookOptions::eImport == m_eOrder && !sc_FieldNames[sc_Fields[i].idxName[index]].bImportable)
-			|| bInUse[sc_Fields[i].idxName[index]])
+			if (-1 == sc_Fields[i].idxName[idxType]
+			|| !(sc_FieldNames[sc_Fields[i].idxName[idxType]].bValid & m_eOrder)
+			|| (bImport && !sc_FieldNames[sc_Fields[i].idxName[idxType]].bImportable)
+			|| bInUse[sc_Fields[i].idxName[idxType]])
 				continue;
-			CString name = GetNameFromColumnID(sc_Fields[i].idxName[index]);
+			CString name = GetNameFromColumnID(sc_Fields[i].idxName[idxType]);
 			int idx = m_ctrlAvailable.AddString(name);
 			if (LB_ERR != idx)
-				m_ctrlAvailable.SetItemData(idx, sc_Fields[i].idxName[index]);
+				m_ctrlAvailable.SetItemData(idx, sc_Fields[i].idxName[idxType]);
 		}
 	}
 	UpdateButtons();
@@ -319,13 +428,16 @@ void CDlgAssignColumns::FillColumns()
 void CDlgAssignColumns::UpdateColumnVector()
 {
 	int index = m_ctrlType.GetCurSel();
+	int idxType = -1;
 	if (CB_ERR != index)
+		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
+	if (0 <= idxType)
 	{
-		m_Columns[index].clear();
-		m_Columns[index].reserve(m_ctrlColumns.GetCount());
+		m_Columns[idxType].clear();
+		m_Columns[idxType].reserve(m_ctrlColumns.GetCount());
 		for (int idx = 0; idx < m_ctrlColumns.GetCount(); ++idx)
 		{
-			m_Columns[index].push_back(static_cast<int>(m_ctrlColumns.GetItemData(idx)));
+			m_Columns[idxType].push_back(static_cast<int>(m_ctrlColumns.GetItemData(idx)));
 		}
 	}
 }
@@ -356,6 +468,8 @@ BOOL CDlgAssignColumns::OnInitDialog()
 	for (index = 0; index < IO_TYPE_MAX; ++index)
 	{
 		ASSERT(sc_Types[index].index == index);
+		if (!(sc_Types[index].bValid & m_eOrder))
+			continue;
 		int idx = m_ctrlType.AddString(sc_Types[index].name);
 		if (CB_ERR != idx)
 			m_ctrlType.SetItemData(idx, index);
@@ -493,6 +607,6 @@ void CDlgAssignColumns::OnMoveDown()
 void CDlgAssignColumns::OnOK() 
 {
 	for (int i = 0; i < IO_TYPE_MAX; ++i)
-		CAgilityBookOptions::SetColumnOrder(m_eOrder, i, m_Columns[i]);
+		SetColumnOrder(m_eOrder, i, m_Columns[i]);
 	CDialog::OnOK();
 }
