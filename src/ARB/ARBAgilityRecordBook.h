@@ -333,7 +333,7 @@ public:
 	 * @param pMsg Message to display to user.
 	 * @return True to continue, false to abort.
 	 */
-	virtual bool OnError(char const* pMsg)
+	virtual bool OnError(char const* const pMsg)
 	{
 		return false;
 	}

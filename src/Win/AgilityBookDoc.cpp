@@ -129,7 +129,7 @@ CErrorCallback::CErrorCallback()
 {
 }
 
-bool CErrorCallback::OnError(char const* pMsg)
+bool CErrorCallback::OnError(char const* const pMsg)
 {
 	CSplashWnd::HideSplashScreen();
 	return (IDYES == AfxMessageBox(pMsg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2));

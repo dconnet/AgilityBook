@@ -213,9 +213,7 @@ public:
 					if (offset != n)
 					{
 						bOk = true;
-						T* tmp = at(n);
-						at(n) = at(offset);
-						at(offset) = tmp;
+						std::swap(at(n), at(offset));
 						break;
 					}
 				}

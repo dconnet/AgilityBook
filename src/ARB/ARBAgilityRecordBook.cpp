@@ -74,6 +74,7 @@
 #include "StdAfx.h"
 #include "ARBAgilityRecordBook.h"
 
+#include <sstream>
 #include "ARBConfig.h"
 #include "ARBDog.h"
 #include "Element.h"
@@ -99,14 +100,11 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 
 std::string ErrorInvalidDocStructure(char const* const inMsg)
 {
-	std::string str(INVALID_DOC_STRUCTURE);
+	std::stringstream str;
+	str << INVALID_DOC_STRUCTURE;
 	if (inMsg)
-	{
-		str += ": ";
-		str += inMsg;
-		str += "\n";
-	}
-	return str;
+		str << ": " << inMsg << std::endl;
+	return str.str();
 }
 
 std::string ErrorMissingAttribute(
@@ -114,18 +112,15 @@ std::string ErrorMissingAttribute(
 	char const* const inAttrib,
 	char const* const inMsg)
 {
-	std::string str(INVALID_FILE_FORMAT);
-	str += inElement;
-	str += INVALID_FILE_MISSING_ATTRIB;
-	str += inAttrib;
-	str += "'.";
+	std::stringstream str;
+	str << INVALID_FILE_FORMAT
+		<< inElement
+		<< INVALID_FILE_MISSING_ATTRIB
+		<< inAttrib
+		<< "'.";
 	if (inMsg)
-	{
-		str += " ";
-		str += inMsg;
-		str += "\n";
-	}
-	return str;
+		str << " " << inMsg << std::endl;
+	return str.str();
 }
 
 std::string ErrorInvalidAttributeValue(
@@ -133,18 +128,15 @@ std::string ErrorInvalidAttributeValue(
 	char const* const inAttrib,
 	char const* const inMsg)
 {
-	std::string str(INVALID_FILE_FORMAT);
-	str += inElement;
-	str += INVALID_FILE_BAD_ATTRIB;
-	str += inAttrib;
-	str += "'.";
+	std::stringstream str;
+	str << INVALID_FILE_FORMAT
+		<< inElement
+		<< INVALID_FILE_BAD_ATTRIB
+		<< inAttrib
+		<< "'.";
 	if (inMsg)
-	{
-		str += " ";
-		str += inMsg;
-		str += "\n";
-	}
-	return str;
+		str << " " << inMsg << std::endl;
+	return str.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -225,6 +217,7 @@ bool ARBAgilityRecordBook::Load(
 		m_Calendar.sort();
 	}
 
+	// Load the training information.
 	if (inTraining)
 	{
 		bLoaded = true;
@@ -246,11 +239,12 @@ bool ARBAgilityRecordBook::Load(
 		bLoaded = true;
 		int i;
 		int nConfig = -1;
-		// Find a configuration and make sure there's only one.
+		// Find a configuration.
 		for (i = 0; i < inTree.GetElementCount(); ++i)
 		{
 			if (inTree.GetElement(i).GetName() == TREE_CONFIG)
 			{
+				// Make sure there's only one.
 				if (-1 != nConfig)
 				{
 					ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_CONFIG));
@@ -289,6 +283,7 @@ bool ARBAgilityRecordBook::Load(
 		}
 	}
 
+	// Load the generic information.
 	if (inInfo)
 	{
 		bLoaded = true;
