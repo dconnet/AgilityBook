@@ -281,7 +281,6 @@ static bool EditRun(
 		}
 		else
 		{
-			pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
 		}
