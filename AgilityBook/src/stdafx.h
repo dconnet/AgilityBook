@@ -92,6 +92,10 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
 
+#if _MSC_VER < 1300
+typedef DWORD DWORD_PTR;
+#endif
+
 #else
 
 // Include other platform common files here. This way we can continue to
