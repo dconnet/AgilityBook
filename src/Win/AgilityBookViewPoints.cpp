@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-27 DRC Lifetime point accumulation did not display the points
+ *                    for existing runs.
  * @li 2004-05-20 DRC Add Dogs name and current date to report. Oops, just
  *                    realized the only thing that shouldn't be filtered on
  *                    runs is the Q-status (resets the last 2 changes).
@@ -337,9 +339,16 @@ int CAgilityBookViewPoints::DoEvents(
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
 				int nCleanQ, nNotCleanQ;
 				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ, inLifetime);
-				pts += inDog->GetExistingPoints().ExistingPoints(
+				int nLifeTimePts = inDog->GetExistingPoints().ExistingPoints(
 					ARBDogExistingPoints::eRuns,
 					inVenue, inDiv, inLevel, pEvent);
+				int nExistingSQ = 0;
+				if (pScoringMethod->HasSuperQ())
+					nExistingSQ += inDog->GetExistingPoints().ExistingPoints(
+						ARBDogExistingPoints::eSQ,
+						inVenue, inDiv, inLevel, pEvent);
+				inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nLifeTimePts + nExistingSQ));
+				pts += nLifeTimePts;
 				str.FormatMessage(IDS_POINTS_RUNS_JUDGES,
 					matching.size(),
 					judges.size());
@@ -370,11 +379,7 @@ int CAgilityBookViewPoints::DoEvents(
 					str += str2;
 				}
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-				int nExistingSQ = 0;
-				if (pScoringMethod->HasSuperQ())
-					nExistingSQ += inDog->GetExistingPoints().ExistingPoints(
-						ARBDogExistingPoints::eSQ,
-						inVenue, inDiv, inLevel, pEvent);
+
 				str.Format("%d", pts + nExistingSQ);
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 				if (pScoringMethod->HasSuperQ())
@@ -480,7 +485,7 @@ int CAgilityBookViewPoints::TallyPoints(
 			short nLifetime;
 			score += pRun->GetTitlePoints(pScoringMethod, &bClean, &nLifetime);
 			if (0 < nLifetime)
-				inLifetime.push_back(LifeTimePoint(pRun, nLifetime));
+				inLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime));
 			if (bClean)
 				++nCleanQ;
 			else

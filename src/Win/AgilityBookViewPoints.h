@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-27 DRC Changed lifetime points structure to take a string.
  */
 
 #include <list>
@@ -65,12 +66,12 @@ public:
 private:
 	struct LifeTimePoint
 	{
-		ARBDogRun const* pRun;
-		short points;
+		std::string event;
+		int points;
 		LifeTimePoint(
-			ARBDogRun const* inRun,
-			short inPoints)
-			: pRun(inRun)
+			const std::string inEvent,
+			int inPoints)
+			: event(inEvent)
 			, points(inPoints)
 		{
 		}

@@ -12,6 +12,7 @@
     behavior in the Options dialog to restore previous program behavior.
     (Too many people were having problems finding the title later.)
 - Bug fixes
+  - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter
     character is actually part of the output data. Quotes are added if needed.
     Also, on import, handle quotes properly. Quoting is done like Excel.
