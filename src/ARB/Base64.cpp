@@ -36,6 +36,8 @@
  * Note: The original code wrote lines with "\r\n". We don't.
  *
  * Revision History
+ * @li 2004-04-27 DRC Decoding: Did not properly compute the data length.
+ *                    Encoding: Problem encoding 1 and 2 byte buffers.
  * @li 2004-03-06 DRC Created
  */
 
@@ -52,8 +54,17 @@ static char THIS_FILE[] = __FILE__;
 
 static unsigned int const MaxLineLength = 76;
 
-static char const base64chars[] =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static char const base64chars[64] =
+{
+	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', // 0-7
+	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', // 8
+	'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', // 16
+	'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', // 24
+	'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', // 32
+	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', // 40
+	'w', 'x', 'y', 'z', '0', '1', '2', '3', // 48
+	'4', '5', '6', '7', '8', '9', '+', '/'  // 56
+};
 
 #define SKIP '\202'
 
@@ -179,12 +190,11 @@ bool Base64::Decode(std::string const& inBuffer, char*& outBuffer, size_t& outLe
 	--count;
 	if (count % 4 != 0)
 	{
-		//we have some remaining chars, now decode them...
-		for (size_t i = 0; i < 4 - (count % 4); i++)
-		{
+		// pad out the buffer
+		for (size_t i = 0; i < 4 - (count % 4); ++i)
 			std <<= 6;
-			++outLength;
-		}
+		size_t nBits = (count % 4) * 6;
+		outLength += nBits / 8;
 		int tmp;
 		std >>= 6;
 		tmp = std;
@@ -215,6 +225,8 @@ std::string Base64::Encode(char const* inBuffer, size_t inLength)
 		char const *s = inBuffer;
 		int tmp = 0;
 		//let's step through the buffer and encode it...
+		if (inLength > 2) // A really small buffer causes problems with the logic below
+	{
 		while (count <= inLength)
 		{
 			if (count % 3 == 0 && count != 0)
@@ -255,24 +267,24 @@ std::string Base64::Encode(char const* inBuffer, size_t inLength)
 			unsigned char mid = (256 - (0 - *s)) & 0xff;
 			tmp |= mid;
 			tmp <<= 8;
-			count++;
-			s++;
+			++count;
+			++s;
 		}
+	}
 		//do we have some chars left...
 		size_t rest = (inLength - count) % 3;
 		if (rest != 0)
 		{
 			tmp = 0;
-			for (size_t i = 0; i < 3; i++)
+			for (size_t i = 0; i < 3; ++i)
 			{
 				if (i < rest)
 				{
 					unsigned char mid = (256 - (0 - *s)) & 0xff;
 					tmp |= mid;
-					tmp |= *s;
 					tmp <<= 8;
-					count++;
-					s++;
+					++count;
+					++s;
 				}
 				else
 				{
@@ -307,11 +319,12 @@ std::string Base64::Encode(char const* inBuffer, size_t inLength)
 				mid &= 0x3F;
 				*(fresult++) = base64chars[mid];
 			}
-			for (size_t c = 3; c > rest; c--)
+			for (size_t c = 3; c > rest; --c)
 			{
 				*(fresult++) = '=';
 			}
 		}
+		*(fresult++) = 0;
 	}
 	std::string result;
 	if (encoded)
