@@ -38,6 +38,18 @@
  * If the file is hand-edited, it could... But just how paranoid do we get?!
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
+ * There some internal problem what happens when editing this via a specific
+ * series of events:
+ *  Using NADAC, dbl-click on Gamblers. Then 'OK' to close. Then 'OK' to close
+ *  this. Somewhere in the final sequence, the program will die in the debugger
+ *  with a msg that the pgm has modified memory that was deleted. Sometimes
+ *  scrolling the event tree or moving the window is enough to trigger it. So
+ *  far, I have made no progress towards figuring this out. It doesn't seem to
+ *  do any harm - I can keep going. Except the one time the code ended up in
+ *  some critical section code where it was permanently stuck. The call stack
+ *  is pretty much useless in all cases. (The most common trigger is during the
+ *  this windows destruction process: OnDestroy, not dtor.)
+ *
  * Revision History
  * @li 2004-02-09 DRC Fixed some bugs when creating/modifying venues.
  * @li 2004-02-02 DRC Added ExistingPoints.
