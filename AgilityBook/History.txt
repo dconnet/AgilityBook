@@ -1,11 +1,15 @@
-09/08/2003: v1.0.0.5: <development>
+09/15/2003: v1.0.0.5: <development>
 - Bug fixes
+  - When creating a trial entry from the calendar, if you selected more than one
+    dog at a time when creating the trial, that new trial was actually linked
+    together for both dogs. Changes in one were reflected in the other. The
+    "link" was fixed when the file was reloaded.
   - In the pairs partners dialog, the dog's number wasn't being saved.
   - Pasting a trial/run didn't mark the document as needing saving.
   - When adding/pasting a trial/run and the filtering options filtered that new
     item out, a message appeared saying the run wasn't added. Actually it was,
-	it just wasn't visible. In addition, the (now) not visible run was not
-	sorted properly when the filtered was removed.
+    it just wasn't visible. In addition, the (now) not visible run was not
+    sorted properly when the filtered was removed.
 
 09/03/2003: v0.9.0.5: Release Candidate 1
 - New features / Enhancements:
