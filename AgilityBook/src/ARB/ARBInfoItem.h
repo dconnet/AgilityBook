@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2004 David Connet. All Rights Reserved.
+ * Copyright © 2003-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -28,11 +28,14 @@
 
 /**
  * @file
- * @brief ARBInfoLocation class.
+ * @brief ARBInfoItem class.
  * @author David Connet
  *
  * Revision History
- * @li 2004-11-18 DRC Created
+ * @li 2004-12-11 DRC Merged separate club/judge/location classes.
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
+ * @li 2003-12-28 DRC Added GetSearchStrings.
+ * @li 2003-12-07 DRC Created
  */
 
 #include <set>
@@ -44,18 +47,18 @@ class ARBVersion;
 class Element;
 
 /**
- * Comments about locations
+ * Comments about items
  */
-class ARBInfoLocation : public ARBBase
+class ARBInfoItem : public ARBBase
 {
 public:
-	ARBInfoLocation();
-	ARBInfoLocation(ARBInfoLocation const& rhs);
-	ARBInfoLocation& operator=(ARBInfoLocation const& rhs);
-	bool operator==(ARBInfoLocation const& rhs) const;
-	bool operator!=(ARBInfoLocation const& rhs) const;
-	bool operator<(ARBInfoLocation const& rhs) const;
-	bool operator>(ARBInfoLocation const& rhs) const;
+	ARBInfoItem();
+	ARBInfoItem(ARBInfoItem const& rhs);
+	ARBInfoItem& operator=(ARBInfoItem const& rhs);
+	bool operator==(ARBInfoItem const& rhs) const;
+	bool operator!=(ARBInfoItem const& rhs) const;
+	bool operator<(ARBInfoItem const& rhs) const;
+	bool operator>(ARBInfoItem const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -71,23 +74,33 @@ public:
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	/**
-	 * Load a locations entry
-	 * @pre inTree is the actual ARBInfoLocation element.
+	 * Load a items entry
+	 * @pre inTree is the actual ARBInfoItem element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
+	 * @param inItemName Name of collection being loaded.
 	 * @return Success
 	 */
 	bool Load(
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+		ARBErrorCallback& ioCallback,
+		std::string const& inItemName);
+
+	/**
+	 * Save a items entry
+	 * @param ioTree Parent element.
+	 * @param inItemName Name of collection being saved.
+	 */
+	bool ARBInfoItem::Save(Element& ioTree,
+		std::string const& inItemName) const;
 
 	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
 	 * @return Success
-	 * @post The ARBInfoLocation element will be created in ioTree.
+	 * @post The ARBInfoItem element will be created in ioTree.
 	 */
 	bool Save(Element& ioTree) const;
 
@@ -100,37 +113,37 @@ public:
 	void SetComment(std::string const& inComment);
 
 private:
-	~ARBInfoLocation();
+	~ARBInfoItem();
 	std::string m_Name;
 	std::string m_Comment;
 };
 
-inline bool ARBInfoLocation::operator<(ARBInfoLocation const& rhs) const
+inline bool ARBInfoItem::operator<(ARBInfoItem const& rhs) const
 {
 	return m_Name < rhs.GetName();
 }
 
-inline bool ARBInfoLocation::operator>(ARBInfoLocation const& rhs) const
+inline bool ARBInfoItem::operator>(ARBInfoItem const& rhs) const
 {
 	return m_Name > rhs.GetName();
 }
 
-inline std::string const& ARBInfoLocation::GetName() const
+inline std::string const& ARBInfoItem::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBInfoLocation::SetName(std::string const& inName)
+inline void ARBInfoItem::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBInfoLocation::GetComment() const
+inline std::string const& ARBInfoItem::GetComment() const
 {
 	return m_Comment;
 }
 
-inline void ARBInfoLocation::SetComment(std::string const& inComment)
+inline void ARBInfoItem::SetComment(std::string const& inComment)
 {
 	m_Comment = inComment;
 }
@@ -138,11 +151,39 @@ inline void ARBInfoLocation::SetComment(std::string const& inComment)
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * List of ARBInfoLocation objects.
+ * List of ARBInfoItem objects.
  */
-class ARBInfoLocationList : public ARBVectorLoad1<ARBInfoLocation>
+class ARBInfoItemList : public ARBVector<ARBInfoItem>
 {
 public:
+	/**
+	 * Construct a club/judge/location info object.
+	 * @param inItemName Name of elements to be loaded.
+	 */
+	ARBInfoItemList(std::string const& inItemName);
+	ARBInfoItemList(ARBInfoItemList const& rhs);
+	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
+
+	std::string const& GetItemName() const;
+
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual item element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback);
+
+	/**
+	 * Save a items entry
+	 * @param ioTree Parent element.
+	 */
+	bool Save(Element& ioTree) const;
+
 	/**
 	 * Sort the list by name.
 	 * @param inDescending Sort in descending or ascending order.
@@ -150,46 +191,54 @@ public:
 	void sort(bool inDescending = true);
 
 	/**
-	 * Get the names of all the locations.
+	 * Get the names of all the items.
 	 * @param outNames All the names.
-	 * @return Number of locations in list.
+	 * @return Number of items in list.
 	 */
-	size_t GetAllLocations(std::set<std::string>& outNames) const;
+	size_t GetAllItems(std::set<std::string>& outNames) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
-	 * @param inNamesInUse Names of locations from runs.
+	 * @param inNamesInUse Names of items from runs.
 	 */
 	void CondenseContent(std::set<std::string> const& inNamesInUse);
 
 	/**
-	 * Find a location.
-	 * @param inName Location to find.
-	 * @return Object matching location.
+	 * Find a item.
+	 * @param inName Item to find.
+	 * @return Object matching item.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBInfoLocation* FindLocation(std::string const& inName) const;
+	ARBInfoItem* FindItem(std::string const& inName) const;
 
 	/**
-	 * Add a new location.
-	 * @param inLocation Name of location to add.
+	 * Add a new item.
+	 * @param inItem Name of item to add.
 	 * @return Pointer to new object, NULL if name already exists or is empty.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBInfoLocation* AddLocation(std::string const& inLocation);
+	ARBInfoItem* AddItem(std::string const& inItem);
 
 	/**
-	 * Add a new location.
-	 * @param inLocation Location to add.
+	 * Add a new item.
+	 * @param inItem Item to add.
 	 * @return Pointer to new object, NULL if name already exists or is empty.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBInfoLocation* AddLocation(ARBInfoLocation* inLocation);
+	ARBInfoItem* AddItem(ARBInfoItem* inItem);
 
 	/**
-	 * Delete a location.
-	 * @param inLocation Object to delete.
+	 * Delete a item.
+	 * @param inItem Object to delete.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteLocation(ARBInfoLocation const* inLocation);
+	bool DeleteItem(ARBInfoItem const* inItem);
+
+private:
+	std::string m_ItemName;
 };
+
+inline std::string const& ARBInfoItemList::GetItemName() const
+{
+	return m_ItemName;
+}

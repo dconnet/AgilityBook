@@ -30,7 +30,13 @@
  * @brief implementation of the CDlgInfoJudge class
  * @author David Connet
  *
+ * Note, this class also deals with adding notes on Clubs and Locations,
+ * in addition to judges.
+ *
  * Revision History
+ * @li 2004-12-11 DRC Added indicators if item is added and/or has comments.
+ *                    Merged in club/location support (was in separate files
+ *                    that were added 11/18/04.
  * @li 2003-12-07 DRC Created
  */
 
@@ -38,6 +44,7 @@
 #include "AgilityBook.h"
 #include "DlgInfoJudge.h"
 
+#include <algorithm>
 #include "AgilityBookDoc.h"
 #include "DlgName.h"
 
@@ -48,28 +55,60 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+
+CDlgInfoJudge::NameInfo::NameInfo()
+	: m_Name()
+	, m_eInUse(eNotInUse)
+	, m_bHasData(false)
+{
+}
+
+CDlgInfoJudge::NameInfo::NameInfo(std::string const& inName)
+	: m_Name(inName)
+	, m_eInUse(eNotInUse)
+	, m_bHasData(false)
+{
+}
+
+CDlgInfoJudge::NameInfo::NameInfo(NameInfo const& rhs)
+	: m_Name(rhs.m_Name)
+	, m_eInUse(rhs.m_eInUse)
+	, m_bHasData(rhs.m_bHasData)
+{
+}
+
+bool CDlgInfoJudge::NameInfo::operator==(NameInfo const& rhs)
+{
+	return m_Name == rhs.m_Name;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CDlgInfoJudge dialog
 
 CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, eInfoType inType, CWnd* pParent /*=NULL*/)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Type(inType)
-	, m_InfoClub(pDoc->GetInfo().GetClubInfo())
-	, m_InfoJudge(pDoc->GetInfo().GetJudgeInfo())
-	, m_InfoLocation(pDoc->GetInfo().GetLocationInfo())
+	, m_InfoOrig("") // We don't care about setting the infoname here
+	, m_Info("") // We don't care about setting the infoname here
+	, m_nAdded(0)
 {
 	switch (m_Type)
 	{
 	case eClubInfo:
 		m_pDoc->GetAllClubNames(m_NamesInUse, false);
+		m_InfoOrig = m_pDoc->GetInfo().GetClubInfo();
 		break;
 	case eJudgeInfo:
 		m_pDoc->GetAllJudges(m_NamesInUse, false);
+		m_InfoOrig = m_pDoc->GetInfo().GetJudgeInfo();
 		break;
 	case eLocationInfo:
 		m_pDoc->GetAllTrialLocations(m_NamesInUse, false);
+		m_InfoOrig = m_pDoc->GetInfo().GetLocationInfo();
 		break;
 	}
+	m_Info = m_InfoOrig;
 	//{{AFX_DATA_INIT(CDlgInfoJudge)
 	//}}AFX_DATA_INIT
 }
@@ -86,10 +125,12 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgInfoJudge)
-	ON_BN_CLICKED(IDC_JUDGE_NEW, OnNew)
-	ON_BN_CLICKED(IDC_JUDGE_DELETE, OnDelete)
+	ON_WM_COMPAREITEM()
+	ON_WM_DRAWITEM()
 	ON_CBN_SELCHANGE(IDC_JUDGE, OnSelchangeName)
 	ON_EN_KILLFOCUS(IDC_JUDGE_COMMENTS, OnKillfocusComments)
+	ON_BN_CLICKED(IDC_JUDGE_NEW, OnNew)
+	ON_BN_CLICKED(IDC_JUDGE_DELETE, OnDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -99,48 +140,62 @@ END_MESSAGE_MAP()
 BOOL CDlgInfoJudge::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
+	ASSERT(m_ctrlNames.GetStyle() & CBS_OWNERDRAWFIXED);
 
 	CString caption;
 	std::set<std::string> names;
+	std::string select;
 	switch (m_Type)
 	{
 	case eClubInfo:
-		caption.LoadString(IDS_INFO_CLUB);
-		m_pDoc->GetAllClubNames(names);
+		{
+			caption.LoadString(IDS_INFO_CLUB);
+			m_pDoc->GetAllClubNames(names);
+			ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
+			if (pTrial)
+				select = pTrial->GetClubs().GetPrimaryClub()->GetName();
+		}
 		break;
 	case eJudgeInfo:
-		caption.LoadString(IDS_INFO_JUDGE);
-		m_pDoc->GetAllJudges(names);
+		{
+			caption.LoadString(IDS_INFO_JUDGE);
+			m_pDoc->GetAllJudges(names);
+			ARBDogRun const* pRun = m_pDoc->GetCurrentRun();
+			if (pRun)
+				select = pRun->GetJudge();
+		}
 		break;
 	case eLocationInfo:
-		caption.LoadString(IDS_INFO_LOCATION);
-		m_pDoc->GetAllTrialLocations(names);
+		{
+			caption.LoadString(IDS_INFO_LOCATION);
+			m_pDoc->GetAllTrialLocations(names);
+			ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
+			if (pTrial)
+				select = pTrial->GetLocation();
+		}
 		break;
 	}
 	SetWindowText(caption);
+	m_Names.clear();
+	m_Names.reserve(names.size());
 	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
-		m_ctrlNames.AddString((*iter).c_str());
+		NameInfo data(*iter);
+		ARBInfoItem* item = m_Info.FindItem(data.m_Name);
+		if (item && 0 < item->GetComment().length())
+			data.m_bHasData = true;
+		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_Name))
+			data.m_eInUse = NameInfo::eInUse;
+		else
+			++m_nAdded;
+		m_Names.push_back(data);
 	}
-	ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
-	ARBDogRun const* pRun = m_pDoc->GetCurrentRun();
-	int index = -1;
-	switch (m_Type)
+	for (size_t idx = 0; idx < m_Names.size(); ++idx)
 	{
-	case eClubInfo:
-		if (pTrial)
-			index = m_ctrlNames.SelectString(-1, pTrial->GetClubs().GetPrimaryClub()->GetName().c_str());
-		break;
-	case eJudgeInfo:
-		if (pRun)
-			index = m_ctrlNames.SelectString(-1, pRun->GetJudge().c_str());
-		break;
-	case eLocationInfo:
-		if (pTrial)
-			index = m_ctrlNames.SelectString(-1, pTrial->GetLocation().c_str());
-		break;
+		// Combo box is ownerdraw.
+		m_ctrlNames.AddString((LPCTSTR)idx);
 	}
-	if (-1 == index)
+	if (0 == select.length() || 0 > m_ctrlNames.SelectString(-1, select.c_str()))
 		m_ctrlNames.SetCurSel(0);
 	OnSelchangeName();
 
@@ -148,112 +203,64 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgInfoJudge::OnNew()
+int CDlgInfoJudge::OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
 {
-	CDlgName dlg("", "", this);
-	if (IDOK == dlg.DoModal())
-	{
-		switch (m_Type)
-		{
-		case eClubInfo:
-			{
-				ARBInfoClub* club = m_InfoClub.AddClub((LPCTSTR)dlg.GetName());
-				if (club)
-				{
-					m_ctrlNames.AddString(club->GetName().c_str());
-					m_ctrlComment.SetWindowText("");
-				}
-				else
-					club = m_InfoClub.FindClub((LPCTSTR)dlg.GetName());
-				if (club)
-				{
-					m_ctrlNames.SelectString(-1, club->GetName().c_str());
-					OnSelchangeName();
-				}
-			}
-			break;
-		case eJudgeInfo:
-			{
-				ARBInfoJudge* judge = m_InfoJudge.AddJudge((LPCTSTR)dlg.GetName());
-				if (judge)
-				{
-					m_ctrlNames.AddString(judge->GetName().c_str());
-					m_ctrlComment.SetWindowText("");
-				}
-				else
-					judge = m_InfoJudge.FindJudge((LPCTSTR)dlg.GetName());
-				if (judge)
-				{
-					m_ctrlNames.SelectString(-1, judge->GetName().c_str());
-					OnSelchangeName();
-				}
-			}
-			break;
-		case eLocationInfo:
-			{
-				ARBInfoLocation* location = m_InfoLocation.AddLocation((LPCTSTR)dlg.GetName());
-				if (location)
-				{
-					m_ctrlNames.AddString(location->GetName().c_str());
-					m_ctrlComment.SetWindowText("");
-				}
-				else
-					location = m_InfoLocation.FindLocation((LPCTSTR)dlg.GetName());
-				if (location)
-				{
-					m_ctrlNames.SelectString(-1, location->GetName().c_str());
-					OnSelchangeName();
-				}
-			}
-			break;
-		}
-
-	}
+	CString str1;
+	if (-1 == lpCompareItemStruct->itemID1)
+		str1 = (LPCTSTR)(lpCompareItemStruct->itemData1);
+	else
+		str1 = m_Names[lpCompareItemStruct->itemData1].m_Name.c_str();
+	CString str2 = m_Names[lpCompareItemStruct->itemData2].m_Name.c_str();
+	return str1.CollateNoCase(str2);
 }
 
-void CDlgInfoJudge::OnDelete()
+void CDlgInfoJudge::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
-	int index = m_ctrlNames.GetCurSel();
-	if (CB_ERR != index)
+	ASSERT(lpDrawItemStruct->CtlType == ODT_COMBOBOX);
+	CDC dc;
+	dc.Attach(lpDrawItemStruct->hDC);
+
+	// Save these value to restore them when done drawing.
+	COLORREF crOldTextColor = dc.GetTextColor();
+	COLORREF crOldBkColor = dc.GetBkColor();
+
+	// If this item is selected, set the background color 
+	// and the text color to appropriate values. Erase
+	// the rect by filling it with the background color.
+	if ((lpDrawItemStruct->itemAction | ODA_SELECT)
+	&& (lpDrawItemStruct->itemState & ODS_SELECTED))
 	{
-		CString name;
-		m_ctrlNames.GetLBText(index, name);
-		if (m_NamesInUse.end() == m_NamesInUse.find((LPCTSTR)name))
-		{
-			m_ctrlNames.DeleteString(index);
-			switch (m_Type)
-			{
-			case eClubInfo:
-				{
-					ARBInfoClub* club = m_InfoClub.FindClub((LPCTSTR)name);
-					if (club)
-						m_InfoClub.DeleteClub(club);
-				}
-				break;
-			case eJudgeInfo:
-				{
-					ARBInfoJudge* judge = m_InfoJudge.FindJudge((LPCTSTR)name);
-					if (judge)
-						m_InfoJudge.DeleteJudge(judge);
-				}
-				break;
-			case eLocationInfo:
-				{
-					ARBInfoLocation* location = m_InfoLocation.FindLocation((LPCTSTR)name);
-					if (location)
-						m_InfoLocation.DeleteLocation(location);
-				}
-				break;
-			}
-			if (index == m_ctrlNames.GetCount())
-				--index;
-			if (0 <= index)
-				m_ctrlNames.SetCurSel(index);
-			OnSelchangeName();
-		}
-		else
-			MessageBeep(0);
+		dc.SetTextColor(::GetSysColor(COLOR_HIGHLIGHTTEXT));
+		dc.SetBkColor(::GetSysColor(COLOR_HIGHLIGHT));
+		dc.FillSolidRect(&lpDrawItemStruct->rcItem, ::GetSysColor(COLOR_HIGHLIGHT));
 	}
+	else
+		dc.FillSolidRect(&lpDrawItemStruct->rcItem, crOldBkColor);
+
+	// Draw the text.
+	TEXTMETRIC tm;
+	dc.GetTextMetrics(&tm);
+	CRect rect(lpDrawItemStruct->rcItem);
+	if (m_Names[lpDrawItemStruct->itemData].m_bHasData)
+		dc.DrawText("*", 1, rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
+	rect.left += 3 * tm.tmAveCharWidth / 2;
+	if (0 < m_nAdded)
+	{
+		if (NameInfo::eNotInUse == m_Names[lpDrawItemStruct->itemData].m_eInUse)
+			dc.DrawText("+", 1, rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
+		rect.left += 3 * tm.tmAveCharWidth / 2;
+	}
+	rect.left += tm.tmAveCharWidth / 2;
+	dc.DrawText(m_Names[lpDrawItemStruct->itemData].m_Name.c_str(),
+		static_cast<int>(m_Names[lpDrawItemStruct->itemData].m_Name.length()),
+		rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
+
+	// Reset the background color and the text color back to their
+	// original values.
+	dc.SetTextColor(crOldTextColor);
+	dc.SetBkColor(crOldBkColor);
+
+	dc.Detach();
 }
 
 void CDlgInfoJudge::OnSelchangeName()
@@ -263,33 +270,11 @@ void CDlgInfoJudge::OnSelchangeName()
 	int index = m_ctrlNames.GetCurSel();
 	if (CB_ERR != index)
 	{
-		CString name;
-		m_ctrlNames.GetLBText(index, name);
-		switch (m_Type)
-		{
-		case eClubInfo:
-			{
-				ARBInfoClub* club = m_InfoClub.FindClub((LPCTSTR)name);
-				if (club)
-					data = club->GetComment().c_str();
-			}
-			break;
-		case eJudgeInfo:
-			{
-				ARBInfoJudge* judge = m_InfoJudge.FindJudge((LPCTSTR)name);
-				if (judge)
-					data = judge->GetComment().c_str();
-			}
-			break;
-		case eLocationInfo:
-			{
-				ARBInfoLocation* location = m_InfoLocation.FindLocation((LPCTSTR)name);
-				if (location)
-					data = location->GetComment().c_str();
-			}
-			break;
-		}
-		if (m_NamesInUse.end() == m_NamesInUse.find((LPCTSTR)name))
+		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
+		ARBInfoItem* item = m_Info.FindItem(m_Names[idx].m_Name);
+		if (item)
+			data = item->GetComment().c_str();
+		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 			bEnable = TRUE;
 	}
 	data.Replace("\n", "\r\n");
@@ -302,45 +287,85 @@ void CDlgInfoJudge::OnKillfocusComments()
 	int index = m_ctrlNames.GetCurSel();
 	if (CB_ERR != index)
 	{
-		CString name;
-		m_ctrlNames.GetLBText(index, name);
+		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
 		CString data;
 		m_ctrlComment.GetWindowText(data);
 		data.TrimRight();
 		data.Replace("\r\n", "\n");
-		switch (m_Type)
+		ARBInfoItem* item = m_Info.FindItem(m_Names[idx].m_Name);
+		if (!item)
+			item = m_Info.AddItem(m_Names[idx].m_Name);
+		if (!item)
+			return;
+		item->SetComment((LPCTSTR)data);
+		m_Names[idx].m_bHasData = (0 < data.GetLength());
+	}
+}
+
+void CDlgInfoJudge::OnNew()
+{
+	CDlgName dlg("", "", this);
+	if (IDOK == dlg.DoModal())
+	{
+		std::string name = (LPCTSTR)dlg.GetName();
+		// First, check if the item exists.
+		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
+		if (iter != m_Names.end())
 		{
-		case eClubInfo:
+			// Ok, it exists, but it may have been deleted.
+			size_t idx = iter - m_Names.begin();
+			// Added items cannot be in-use. So we're re-adding.
+			if (NameInfo::eDeleted == m_Names[idx].m_eInUse)
 			{
-				ARBInfoClub* club = m_InfoClub.FindClub((LPCTSTR)name);
-				if (!club)
-					club = m_InfoClub.AddClub((LPCTSTR)name);
-				if (!club)
-					return;
-				club->SetComment((LPCTSTR)data);
+				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
+				++m_nAdded;
+				m_ctrlNames.AddString((LPCTSTR)idx);
+				m_ctrlComment.SetWindowText("");
 			}
-			break;
-		case eJudgeInfo:
-			{
-				ARBInfoJudge* judge = m_InfoJudge.FindJudge((LPCTSTR)name);
-				if (!judge)
-					judge = m_InfoJudge.AddJudge((LPCTSTR)name);
-				if (!judge)
-					return;
-				judge->SetComment((LPCTSTR)data);
-			}
-			break;
-		case eLocationInfo:
-			{
-				ARBInfoLocation* location = m_InfoLocation.FindLocation((LPCTSTR)name);
-				if (!location)
-					location = m_InfoLocation.AddLocation((LPCTSTR)name);
-				if (!location)
-					return;
-				location->SetComment((LPCTSTR)data);
-			}
-			break;
 		}
+		else
+		{
+			// Brand new name!
+			NameInfo data(name);
+			m_Names.push_back(data);
+			size_t idx = m_Names.size() - 1;
+			++m_nAdded;
+			m_ctrlNames.AddString((LPCTSTR)idx);
+			m_ctrlComment.SetWindowText("");
+		}
+		m_ctrlNames.Invalidate();
+		// Don't bother adding anything in m_Items yet...
+		m_ctrlNames.SelectString(-1, name.c_str());
+		OnSelchangeName();
+	}
+}
+
+void CDlgInfoJudge::OnDelete()
+{
+	int index = m_ctrlNames.GetCurSel();
+	if (CB_ERR != index)
+	{
+		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
+		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
+		{
+			m_ctrlNames.DeleteString(index);
+			ARBInfoItem* item = m_Info.FindItem(m_Names[idx].m_Name);
+			if (item)
+				m_Info.DeleteItem(item);
+			if (index == m_ctrlNames.GetCount())
+				--index;
+			if (0 <= index)
+				m_ctrlNames.SetCurSel(index);
+			--m_nAdded;
+			// Do NOT remove the name from m_Names. It will mess up
+			// the indices of all the other items. But mark it
+			// so we know if it's being re-added later.
+			m_Names[idx].m_eInUse = NameInfo::eDeleted;
+			m_ctrlNames.Invalidate();
+			OnSelchangeName();
+		}
+		else
+			MessageBeep(0);
 	}
 }
 
@@ -348,38 +373,22 @@ void CDlgInfoJudge::OnOK()
 {
 	// Not bothering to call UpdateData because we aren't exchanging any
 	// data. We're using the controls directly.
-	switch (m_Type)
+	m_Info.CondenseContent(m_NamesInUse);
+	if (m_Info != m_InfoOrig)
 	{
-	case eClubInfo:
+		switch (m_Type)
 		{
-			m_InfoClub.CondenseContent(m_NamesInUse);
-			if (m_pDoc->GetInfo().GetClubInfo() != m_InfoClub)
-			{
-				m_pDoc->GetInfo().GetClubInfo() = m_InfoClub;
-				m_pDoc->SetModifiedFlag();
-			}
+		case eClubInfo:
+			m_pDoc->GetInfo().GetClubInfo() = m_Info;
+			break;
+		case eJudgeInfo:
+			m_pDoc->GetInfo().GetJudgeInfo() = m_Info;
+			break;
+		case eLocationInfo:
+			m_pDoc->GetInfo().GetLocationInfo() = m_Info;
+			break;
 		}
-		break;
-	case eJudgeInfo:
-		{
-			m_InfoJudge.CondenseContent(m_NamesInUse);
-			if (m_pDoc->GetInfo().GetJudgeInfo() != m_InfoJudge)
-			{
-				m_pDoc->GetInfo().GetJudgeInfo() = m_InfoJudge;
-				m_pDoc->SetModifiedFlag();
-			}
-		}
-		break;
-	case eLocationInfo:
-		{
-			m_InfoLocation.CondenseContent(m_NamesInUse);
-			if (m_pDoc->GetInfo().GetLocationInfo() != m_InfoLocation)
-			{
-				m_pDoc->GetInfo().GetLocationInfo() = m_InfoLocation;
-				m_pDoc->SetModifiedFlag();
-			}
-		}
-		break;
+		m_pDoc->SetModifiedFlag();
 	}
 	CDlgBaseDialog::OnOK();
 }

@@ -27,17 +27,18 @@
 /**
  * @file
  *
- * @brief Comments about judges
+ * @brief Comments about clubs, judges, and location
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-11 DRC Merged separate club/judge/location classes.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-07 DRC Created
  */
 
 #include "StdAfx.h"
-#include "ARBInfoJudge.h"
+#include "ARBInfoItem.h"
 #include <algorithm>
 
 #include "ARBAgilityRecordBook.h"
@@ -51,23 +52,23 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBInfoJudge::ARBInfoJudge()
+ARBInfoItem::ARBInfoItem()
 	: m_Name()
 	, m_Comment()
 {
 }
 
-ARBInfoJudge::ARBInfoJudge(ARBInfoJudge const& rhs)
+ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Comment(rhs.m_Comment)
 {
 }
 
-ARBInfoJudge::~ARBInfoJudge()
+ARBInfoItem::~ARBInfoItem()
 {
 }
 
-ARBInfoJudge& ARBInfoJudge::operator=(ARBInfoJudge const& rhs)
+ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -77,23 +78,23 @@ ARBInfoJudge& ARBInfoJudge::operator=(ARBInfoJudge const& rhs)
 	return *this;
 }
 
-bool ARBInfoJudge::operator==(ARBInfoJudge const& rhs) const
+bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Comment == rhs.m_Comment;
 }
 
-bool ARBInfoJudge::operator!=(ARBInfoJudge const& rhs) const
+bool ARBInfoItem::operator!=(ARBInfoItem const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-std::string ARBInfoJudge::GetGenericName() const
+std::string ARBInfoItem::GetGenericName() const
 {
 	return m_Name;
 }
 
-size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBInfoItem::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -109,35 +110,83 @@ size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
 	return nItems;
 }
 
-bool ARBInfoJudge::Load(
+bool ARBInfoItem::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+	ARBErrorCallback& ioCallback,
+	std::string const& inItemName)
 {
-	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_JUDGEINFO_NAME, m_Name))
+	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_JUDGEINFO, ATTRIB_JUDGEINFO_NAME));
+		ioCallback.LogMessage(ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME));
 		return false;
 	}
 	m_Comment = inTree.GetValue();
 	return true;
 }
 
-bool ARBInfoJudge::Save(Element& ioTree) const
+bool ARBInfoItem::Save(Element& ioTree,
+	std::string const& inItemName) const
 {
-	Element& info = ioTree.AddElement(TREE_JUDGEINFO);
-	info.AddAttrib(ATTRIB_JUDGEINFO_NAME, m_Name);
+	Element& info = ioTree.AddElement(inItemName);
+	info.AddAttrib(ATTRIB_INFO_NAME, m_Name);
 	info.SetValue(m_Comment);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-class SortInfoJudge
+ARBInfoItemList::ARBInfoItemList(std::string const& inItemName)
+	: m_ItemName(inItemName)
+{
+}
+
+ARBInfoItemList::ARBInfoItemList(ARBInfoItemList const& rhs)
+	: ARBVector<ARBInfoItem>(rhs)
+	, m_ItemName(rhs.m_ItemName)
+{
+}
+
+ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
+{
+	if (this != &rhs)
+	{
+		ARBVector<ARBInfoItem>::operator=(rhs);
+		m_ItemName = rhs.m_ItemName;
+	}
+	return *this;
+}
+
+bool ARBInfoItemList::Load(
+	Element const& inTree,
+	ARBVersion const& inVersion,
+	ARBErrorCallback& ioCallback)
+{
+	ARBInfoItem* item = new ARBInfoItem();
+	if (!item->Load(inTree, inVersion, ioCallback, m_ItemName))
+	{
+		item->Release();
+		return false;
+	}
+	push_back(item);
+	return true;
+}
+
+bool ARBInfoItemList::Save(Element& ioTree) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (!(*iter)->Save(ioTree, m_ItemName))
+			return false;
+	}
+	return true;
+}
+
+class SortInfoItem
 {
 public:
-	SortInfoJudge(bool bDescending) : m_bDescending(bDescending) {}
-	bool operator()(ARBInfoJudge* one, ARBInfoJudge* two) const
+	SortInfoItem(bool bDescending) : m_bDescending(bDescending) {}
+	bool operator()(ARBInfoItem* one, ARBInfoItem* two) const
 	{
 		if (one->GetName() < two->GetName())
 			return m_bDescending;
@@ -150,34 +199,34 @@ private:
 	bool m_bDescending;
 };
 
-void ARBInfoJudgeList::sort(bool inDescending)
+void ARBInfoItemList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortInfoJudge(inDescending));
+	std::stable_sort(begin(), end(), SortInfoItem(inDescending));
 }
 
-size_t ARBInfoJudgeList::GetAllJudges(std::set<std::string>& outNames) const
+size_t ARBInfoItemList::GetAllItems(std::set<std::string>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBInfoJudge const* info = *iter;
+		ARBInfoItem const* info = *iter;
 		outNames.insert(info->GetName());
 	}
 	return outNames.size();
 }
 
-void ARBInfoJudgeList::CondenseContent(std::set<std::string> const& inNamesInUse)
+void ARBInfoItemList::CondenseContent(std::set<std::string> const& inNamesInUse)
 {
-	// Remove any entries that have empty comments for judges that we have
+	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
 	for (iterator iter = begin(); iter != end(); )
 	{
-		ARBInfoJudge const* judge = *iter;
-		if (0 == judge->GetComment().length())
+		ARBInfoItem const* item = *iter;
+		if (0 == item->GetComment().length())
 		{
-			if (inNamesInUse.end() == inNamesInUse.find(judge->GetName()))
+			if (inNamesInUse.end() == inNamesInUse.find(item->GetName()))
 				++iter;
 			else
 				iter = erase(iter);
@@ -187,49 +236,49 @@ void ARBInfoJudgeList::CondenseContent(std::set<std::string> const& inNamesInUse
 	}
 }
 
-ARBInfoJudge* ARBInfoJudgeList::FindJudge(std::string const& inName) const
+ARBInfoItem* ARBInfoItemList::FindItem(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBInfoJudge* info = *iter;
+		ARBInfoItem* info = *iter;
 		if (info->GetName() == inName)
 			return info;
 	}
 	return NULL;
 }
 
-ARBInfoJudge* ARBInfoJudgeList::AddJudge(std::string const& inJudge)
+ARBInfoItem* ARBInfoItemList::AddItem(std::string const& inItem)
 {
-	if (NULL != FindJudge(inJudge))
+	if (NULL != FindItem(inItem))
 		return NULL;
-	ARBInfoJudge* judge = NULL;
-	if (0 < inJudge.length())
+	ARBInfoItem* item = NULL;
+	if (0 < inItem.length())
 	{
-		judge = new ARBInfoJudge();
-		judge->SetName(inJudge);
-		push_back(judge);
+		item = new ARBInfoItem();
+		item->SetName(inItem);
+		push_back(item);
 	}
-	return judge;
+	return item;
 }
 
-ARBInfoJudge* ARBInfoJudgeList::AddJudge(ARBInfoJudge* inJudge)
+ARBInfoItem* ARBInfoItemList::AddItem(ARBInfoItem* inItem)
 {
-	if (!inJudge)
+	if (!inItem)
 		return NULL;
-	if (FindJudge(inJudge->GetName()))
+	if (FindItem(inItem->GetName()))
 		return NULL;
-	inJudge->AddRef();
-	push_back(inJudge);
-	return inJudge;
+	inItem->AddRef();
+	push_back(inItem);
+	return inItem;
 }
 
-bool ARBInfoJudgeList::DeleteJudge(ARBInfoJudge const* inJudge)
+bool ARBInfoItemList::DeleteItem(ARBInfoItem const* inItem)
 {
-	if (inJudge)
+	if (inItem)
 	{
 		for (iterator iter = begin(); iter != end(); ++iter)
 		{
-			if ((*iter) && *(*iter) == *inJudge)
+			if ((*iter) && *(*iter) == *inItem)
 			{
 				erase(iter);
 				return true;

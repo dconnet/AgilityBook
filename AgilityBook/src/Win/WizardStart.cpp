@@ -465,35 +465,35 @@ BOOL CWizardStart::OnWizardFinish()
 									}
 								}
 							}
-							for (ARBInfoClubList::const_iterator iterClub = book.GetInfo().GetClubInfo().begin();
+							for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetClubInfo().begin();
 								iterClub != book.GetInfo().GetClubInfo().end();
 								++iterClub)
 							{
-								ARBInfoClub* pClub = *iterClub;
+								ARBInfoItem* pClub = *iterClub;
 								// If this fails, it already exists.
-								if (m_pDoc->GetARB().GetInfo().GetClubInfo().AddClub(pClub))
+								if (m_pDoc->GetARB().GetInfo().GetClubInfo().AddItem(pClub))
 								{
 									++countClubs;
 								}
 							}
-							for (ARBInfoJudgeList::const_iterator iterJudge = book.GetInfo().GetJudgeInfo().begin();
+							for (ARBInfoItemList::const_iterator iterJudge = book.GetInfo().GetJudgeInfo().begin();
 								iterJudge != book.GetInfo().GetJudgeInfo().end();
 								++iterJudge)
 							{
-								ARBInfoJudge* pJudge = *iterJudge;
+								ARBInfoItem* pJudge = *iterJudge;
 								// If this fails, it already exists.
-								if (m_pDoc->GetARB().GetInfo().GetJudgeInfo().AddJudge(pJudge))
+								if (m_pDoc->GetARB().GetInfo().GetJudgeInfo().AddItem(pJudge))
 								{
 									++countJudges;
 								}
 							}
-							for (ARBInfoLocationList::const_iterator iterLocation = book.GetInfo().GetLocationInfo().begin();
+							for (ARBInfoItemList::const_iterator iterLocation = book.GetInfo().GetLocationInfo().begin();
 								iterLocation != book.GetInfo().GetLocationInfo().end();
 								++iterLocation)
 							{
-								ARBInfoLocation* pLocation = *iterLocation;
+								ARBInfoItem* pLocation = *iterLocation;
 								// If this fails, it already exists.
-								if (m_pDoc->GetARB().GetInfo().GetLocationInfo().AddLocation(pLocation))
+								if (m_pDoc->GetARB().GetInfo().GetLocationInfo().AddItem(pLocation))
 								{
 									++countLocations;
 								}
