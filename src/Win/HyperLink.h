@@ -52,6 +52,7 @@
  * the tooltip fixed.
  *
  * Revision History
+ * @li 2005-04-01 DRC Made hyperlinks keyboard-capable.
  * @li 2004-03-05 DRC Made goto-url functionality visible.
  * @li 2003-08-16 DRC Modified code from Chris Maunder's original
  */
@@ -100,6 +101,7 @@ public:
 
 // Implementation
 protected:
+	void DrawFocusRect();
 	void PositionWindow();
 	void SetDefaultCursor();
 
@@ -121,11 +123,15 @@ protected:
 
 protected:
 	//{{AFX_MSG(CHyperLink)
+	afx_msg UINT OnGetDlgCode();
 	afx_msg HBRUSH CtlColor(CDC* pDC, UINT nCtlColor);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnClicked();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
