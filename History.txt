@@ -1,3 +1,5 @@
+9/16/2004: v1.3.3.9 <in development>
+
 9/15/2004: v1.3.2.9
 - Bug fix
   - If a trial has no clubs associated with it, attempting to upgrade the
