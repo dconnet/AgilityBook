@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented full column reordering.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-21 DRC Enabled copy and select all.
@@ -183,40 +184,74 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pRun->GetConditions().c_str();
 			break;
 		case IO_RUNS_COURSE_FAULTS:
-			//TODO
+			str.Format("%hd", m_pRun->GetScoring().GetCourseFaults());
 			break;
 		case IO_RUNS_TIME:
 			str = m_pRun->GetScoring().GetTime().str().c_str();
 			break;
 		case IO_RUNS_YARDS:
-			//TODO
+			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
+			&& 0.0 < m_pRun->GetScoring().GetYards())
+			{
+				str.Format("%g", m_pRun->GetScoring().GetYards());
+			}
 			break;
 		case IO_RUNS_YPS:
-			//TODO
+			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
+			&& 0.0 < m_pRun->GetScoring().GetYards() && 0.0 < m_pRun->GetScoring().GetTime())
+			{
+				str.Format("%.3f", m_pRun->GetScoring().GetYards() / m_pRun->GetScoring().GetTime());
+			}
 			break;
 		case IO_RUNS_SCT:
-			//TODO
+			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
+			&& 0.0 < m_pRun->GetScoring().GetSCT())
+			{
+				str = m_pRun->GetScoring().GetSCT().str().c_str();
+			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
-			//TODO
+			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
+			{
+				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults();
+				str.Format("%g", faults);
+			}
 			break;
 		case IO_RUNS_REQ_OPENING:
-			//TODO
+			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			{
+				str.Format("%hd", m_pRun->GetScoring().GetNeedOpenPts());
+			}
 			break;
 		case IO_RUNS_REQ_CLOSING:
-			//TODO
+			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			{
+				str.Format("%hd", m_pRun->GetScoring().GetNeedClosePts());
+			}
 			break;
 		case IO_RUNS_OPENING:
-			//TODO
+			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			{
+				str.Format("%hd", m_pRun->GetScoring().GetOpenPts());
+			}
 			break;
 		case IO_RUNS_CLOSING:
-			//TODO
+			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
+			{
+				str.Format("%hd", m_pRun->GetScoring().GetClosePts());
+			}
 			break;
 		case IO_RUNS_REQ_POINTS:
-			//TODO
+			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
+			{
+				str.Format("%hd", m_pRun->GetScoring().GetNeedOpenPts());
+			}
 			break;
 		case IO_RUNS_POINTS:
-			//TODO
+			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
+			{
+				str.Format("%hd", m_pRun->GetScoring().GetOpenPts());
+			}
 			break;
 		case IO_RUNS_PLACE:
 			val = m_pRun->GetPlace();
@@ -258,7 +293,18 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			}
 			break;
 		case IO_RUNS_SCORE:
-			//TODO
+			if (m_pRun->GetQ().Qualified()
+			|| ARB_Q::eQ_NQ == m_pRun->GetQ())
+			{
+				const ARBConfigScoring* pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					m_pRun->GetEvent(),
+					m_pRun->GetDivision(),
+					m_pRun->GetLevel(),
+					m_pRun->GetDate());
+				if (pScoring)
+					str = m_pRun->GetScore(pScoring).str().c_str();
+			}
 			break;
 		case IO_RUNS_TITLE_POINTS:
 			{
