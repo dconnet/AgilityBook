@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-22 DRC Update the list when creating an entry.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-31 DRC Cleaned up pagedown scrolling.
  * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
@@ -871,6 +872,7 @@ void CAgilityBookViewCalendar::OnCalendarEdit()
 		{
 			LoadData();
 			GetDocument()->SetModifiedFlag();
+			// DlgListCtrl calls UpdateAllViews.
 		}
 	}
 }
@@ -892,6 +894,7 @@ void CAgilityBookViewCalendar::OnCalendarNew()
 			GetDocument()->GetCalendar().sort();
 			LoadData();
 			GetDocument()->SetModifiedFlag();
+			GetDocument()->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
 		}
 	}
 	cal->Release();

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-22 DRC Added more dog information into the report.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-28 DRC Added '*' to Title if it has been received.
  * @li 2003-10-14 DRC Fixed problem inserting other point lines.
@@ -482,14 +483,21 @@ void CAgilityBookViewPoints::LoadData()
 						bHeaderInserted = true;
 						if (i > 0)
 							GetListCtrl().InsertItem(i++, "");
-						GetListCtrl().InsertItem(i++, pVenue->GetName().c_str());
+						GetListCtrl().InsertItem(i, pVenue->GetName().c_str());
+						const ARBDogRegNum* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
+						if (pRegNum)
+						{
+							CString str;
+							str.Format("[%s]", pRegNum->GetNumber().c_str());
+							GetListCtrl().SetItemText(i, 1, str);
+						}
+						++i;
 					}
 					GetListCtrl().InsertItem(i, "");
 					GetListCtrl().SetItemText(i, 1, pTitle->GetDate().GetString(false, false).c_str());
-					CString str("");
+					CString str = pTitle->GetName().c_str();
 					if (pTitle->GetReceived())
 						str += "*";
-					str += pTitle->GetName().c_str();
 					GetListCtrl().SetItemText(i, 2, str);
 					++i;
 				}

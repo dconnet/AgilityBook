@@ -1,18 +1,26 @@
-11/21/2003: v0.9.4.7: <development>
+11/22/2003: v0.9.4.7: <development>
 - New features / Enhancements:
   - Expanded import/export [config/calendar, plus DTD/XML export]
-  - Cleaned up some descriptions in DefaultConfig.xml.
+  - Cleaned up some descriptions in DefaultConfig.xml. Added Nationals support
+    for USDAA (plus some initial changes for USDAA changes)
   - In Points view, added '*' to Title if it has been received.
+    Added dog's registration number on venue line.
   - Support the mouse wheel for scrolling in the calendar view.
-  - Changed copy (ctrl+c) code to only copy selected items. Lists now support
-    multiple selection. Added select all (ctrl+a).
-  - Moved the copy that was in the calendar list to the calendar view. The
-    calendar list now copies like the other lists do.
+  - Enhanced list selection (runs, points, calendar, training log)
+    - Support multiple selection.
+    - Added "select all" (ctrl+a).
+  - Enhanced copy support (ctrl+c) 
+    - Only copy selected items in lists.
+    - Moved the copy that was in the calendar list to the calendar view. The
+      calendar view now generates a list similar to Karey's. The calendar list
+      now copies like the other lists do (whatever is visible in the list).
 - Bug fixes
-  - Changed copyright notices from "(c)" to "©"
+  - Changed copyright notices from "(c)" to "©" (internal code, not visible)
   - Right-clicking on a Calendar entry sets that as the current date before
     popping up the context menu.
   - Cleaned up page scrolling in calendar view.
+  - When creating a calendar entry, the other view didn't update properly.
+    Also, when editing an entry in the list, the calendar view didn't update.
 
 10/15/2003: v0.9.3.7: Release Candidate 4
 - Bumped file version to 7:

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-22 DRC Added FindRegNum().
  */
 
 #include "StdAfx.h"
@@ -220,6 +221,14 @@ int ARBDogRegNumList::DeleteVenue(const std::string& inVenue)
 			++iter;
 	}
 	return count;
+}
+
+const ARBDogRegNum* ARBDogRegNumList::FindRegNum(const std::string& inVenue) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+		if ((*iter)->GetVenue() == inVenue)
+			return *iter;
+	return NULL;
 }
 
 int ARBDogRegNumList::DeleteRegNum(const std::string& inVenue, const std::string& inNumber)

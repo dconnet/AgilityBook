@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-22 DRC Added FindRegNum().
  */
 
 #include <string>
@@ -139,6 +140,7 @@ public:
 		const std::string& inNewVenue);
 	int DeleteVenue(const std::string& inVenue);
 
+	const ARBDogRegNum* FindRegNum(const std::string& inVenue) const;
 	int DeleteRegNum(
 		const std::string& inVenue,
 		const std::string& inNumber);
