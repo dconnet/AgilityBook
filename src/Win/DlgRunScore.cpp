@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-01 DRC Total faults weren't being shown when there was no SCT.
  * @li 2003-08-17 DRC Title points were being computed on 'NQ' and the score was
  *                    always being computed. Fixed both.
  * @li 2003-07-14 DRC Changed 'Score' to show data on 'Q' and 'NQ'.
@@ -551,8 +552,7 @@ void CDlgRunScore::SetYPS()
 void CDlgRunScore::SetTotalFaults()
 {
 	CString total;
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType()
-	&& 0.0 < m_Time4Fault && 0.0 < m_SCT)
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
 		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults();
 		total.Format("%.3f", faults);
