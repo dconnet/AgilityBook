@@ -41,10 +41,11 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogRun.h"
-#include "DlgRunScore.h"
 #include "DlgRunComments.h"
-#include "DlgRunReference.h"
 #include "DlgRunCRCD.h"
+#include "DlgRunLink.h"
+#include "DlgRunReference.h"
+#include "DlgRunScore.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,6 +66,7 @@ CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CW
 	, m_pageComments(NULL)
 	, m_pageReference(NULL)
 	, m_pageCRCD(NULL)
+	, m_pageLink(NULL)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 
@@ -77,10 +79,12 @@ CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CW
 	m_pageComments = new CDlgRunComments(pDoc, m_Run);
 	m_pageReference = new CDlgRunReference(pDoc, pVenue, m_Run);
 	m_pageCRCD = new CDlgRunCRCD(m_Run);
+	m_pageLink = new CDlgRunLink(pDoc, m_Run);
 	AddPage(m_pageScore);
 	AddPage(m_pageComments);
 	AddPage(m_pageReference);
 	AddPage(m_pageCRCD);
+	AddPage(m_pageLink);
 }
 
 CDlgRun::~CDlgRun()
@@ -91,6 +95,7 @@ CDlgRun::~CDlgRun()
 	delete m_pageComments;
 	delete m_pageReference;
 	delete m_pageCRCD;
+	delete m_pageLink;
 }
 
 BEGIN_MESSAGE_MAP(CDlgRun, CPropertySheet)

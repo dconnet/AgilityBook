@@ -41,33 +41,35 @@
 #define IDD_RUN_COMMENTS                213
 #define IDD_RUN_REFERENCE               214
 #define IDD_RUN_CRCD                    215
-#define IDD_REF_RUN                     216
-#define IDD_PARTNER                     217
-#define IDD_OTHER_POINT                 218
-#define IDD_LISTCTRL                    219
-#define IDD_FAULT                       220
-#define IDD_VIEW_OPTIONS_CALENDAR       221
-#define IDD_VIEW_OPTIONS_FILTER         222
-#define IDD_VIEW_OPTIONS_FONTS          223
-#define IDD_VIEW_OPTIONS_TRAINING       224
-#define IDD_REORDER                     225
-#define IDD_CONFIG_UPDATE               226
-#define IDD_TITLE_POINTS                227
-#define IDD_MESSAGE                     228
-#define IDD_TRAINING                    229
-#define IDD_JUDGE_INFO                  230
-#define IDD_WIZARD_START                231
-#define IDD_WIZARD_IMPORT               232
-#define IDD_WIZARD_EXPORT               233
-#define IDD_ASSIGN_COLUMNS              234
-#define IDD_FIND                        235
-#define IDD_CONFIG_TITLE                236
-#define IDD_CONFIG_VENUE                237
-#define IDD_DOG_PROP                    238
-#define IDD_DOG_TITLES                  239
-#define IDD_DOG_NUMBERS                 240
-#define IDD_EXISTING_POINTS             241
-#define IDD_CRCD_VIEWER                 242
+#define IDD_RUN_LINK                    216
+#define IDD_REF_RUN                     217
+#define IDD_PARTNER                     218
+#define IDD_OTHER_POINT                 219
+#define IDD_LISTCTRL                    220
+#define IDD_FAULT                       221
+#define IDD_VIEW_OPTIONS_CALENDAR       222
+#define IDD_VIEW_OPTIONS_FILTER         223
+#define IDD_VIEW_OPTIONS_FONTS          224
+#define IDD_VIEW_OPTIONS_TRAINING       225
+#define IDD_REORDER                     226
+#define IDD_CONFIG_UPDATE               227
+#define IDD_TITLE_POINTS                228
+#define IDD_MESSAGE                     229
+#define IDD_TRAINING                    230
+#define IDD_JUDGE_INFO                  231
+#define IDD_WIZARD_START                232
+#define IDD_WIZARD_IMPORT               233
+#define IDD_WIZARD_EXPORT               234
+#define IDD_ASSIGN_COLUMNS              235
+#define IDD_FIND                        236
+#define IDD_CONFIG_TITLE                237
+#define IDD_CONFIG_VENUE                238
+#define IDD_DOG_PROP                    239
+#define IDD_DOG_TITLES                  240
+#define IDD_DOG_NUMBERS                 241
+#define IDD_EXISTING_POINTS             242
+#define IDD_CRCD_VIEWER                 243
+#define IDD_SELECT_URL                  244
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -236,6 +238,7 @@
 #define IDC_VIEW                        1176
 #define IDC_HIDDEN                      1177
 #define IDC_EARNED                      1178
+#define IDC_OPEN                        1179
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -448,9 +451,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        243
+#define _APS_NEXT_RESOURCE_VALUE        245
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1179
+#define _APS_NEXT_CONTROL_VALUE         1180
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

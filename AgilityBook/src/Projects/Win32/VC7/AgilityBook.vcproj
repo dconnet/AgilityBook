@@ -298,6 +298,9 @@
 				RelativePath="..\..\..\Win\DlgRunCRCD.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgRunLink.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgRunReference.cpp">
 			</File>
 			<File
@@ -305,6 +308,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgSelectDog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgSelectURL.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgTitle.cpp">
@@ -527,6 +533,9 @@
 				RelativePath="..\..\..\Win\DlgRunCRCD.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgRunLink.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgRunReference.h">
 			</File>
 			<File
@@ -534,6 +543,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgSelectDog.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgSelectURL.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgTitle.h">

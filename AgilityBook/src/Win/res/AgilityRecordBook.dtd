@@ -7,15 +7,16 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-03-26 DRC File version 8.6, Configuration version 3.
+2004-03-30 DRC File version 8.6, Configuration version 3.
                Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
+               Added 'Link' to 'Run'
 2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.
                Added versioning to configuration to allow auto-upgrades.
                Added "TableInYPS" to "ByTime"
                Added new Config/Action: DeleteTitle
-			   Added "CRCDMeta" to "Notes"
+               Added "CRCDMeta" to "Notes"
 2004-02-09 DRC File version 8.3
                Added "ExistingPoints" to "Dog"
 2004-01-21 DRC File version 8.2
@@ -288,7 +289,7 @@ The attributes 'Division' and 'Event' must be defined above in a
 Configuration/Venue element. The 'Level' attribute is defined in either
 a Level or SubLevel element.
 -->
-<!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints), Placement?, Notes?, ReferenceRun*) >
+<!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints), Placement?, Notes?, ReferenceRun*, Link*) >
 	<!ATTLIST Run
 		Date CDATA #REQUIRED
 		Division CDATA #REQUIRED
@@ -300,6 +301,7 @@ a Level or SubLevel element.
 <!ELEMENT Conditions (#PCDATA) >
 <!ELEMENT Judge (#PCDATA) >
 <!ELEMENT Handler (#PCDATA) >
+<!ELEMENT Link (#PCDATA) >
 
 <!--
 The '*' on Partner allows for 3 dogs relays, etc. This element may only be

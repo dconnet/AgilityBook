@@ -306,6 +306,10 @@ SOURCE=..\..\..\Win\DlgRunCRCD.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgRunLink.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgRunReference.cpp
 # End Source File
 # Begin Source File
@@ -315,6 +319,10 @@ SOURCE=..\..\..\Win\DlgRunScore.cpp
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgSelectDog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgSelectURL.cpp
 # End Source File
 # Begin Source File
 
@@ -595,6 +603,10 @@ SOURCE=..\..\..\Win\DlgRunCRCD.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgRunLink.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgRunReference.h
 # End Source File
 # Begin Source File
@@ -604,6 +616,10 @@ SOURCE=..\..\..\Win\DlgRunScore.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgSelectDog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgSelectURL.h
 # End Source File
 # Begin Source File
 

@@ -42,6 +42,7 @@ class CDlgRunScore;
 class CDlgRunComments;
 class CDlgRunReference;
 class CDlgRunCRCD;
+class CDlgRunLink;
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRun
@@ -61,6 +62,7 @@ private:
 	CDlgRunComments* m_pageComments;
 	CDlgRunReference* m_pageReference;
 	CDlgRunCRCD* m_pageCRCD;
+	CDlgRunLink* m_pageLink;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgRun)
