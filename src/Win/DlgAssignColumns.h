@@ -36,47 +36,67 @@
  * @li 2003-12-10 DRC Created
  */
 
-#define IO_TYPE_FAULTS_TIME	0
-#define IO_TYPE_TIME_FAULTS	1
-#define IO_TYPE_OPEN_CLOSE	2
-#define IO_TYPE_POINTS		3
-#define IO_TYPE_MAX			4
+/*
+ * If columns are added/removed, do not change these numbers. These numbers
+ * are stored in a users registry for the order. If a column is removed,
+ * then the number must be reserved.
+ */
+#define IO_TYPE_RUNS_FAULTS_TIME	0
+#define IO_TYPE_RUNS_TIME_FAULTS	1
+#define IO_TYPE_RUNS_OPEN_CLOSE		2
+#define IO_TYPE_RUNS_POINTS			3
+#define IO_TYPE_CALENDAR			4
+#define IO_TYPE_TRAINING			5
+#define IO_TYPE_MAX					6
 
-#define IO_REG_NAME			0
-#define IO_CALL_NAME		1
-#define IO_DATE				2
-#define IO_VENUE			3
-#define IO_CLUB				4
-#define IO_LOCATION			5
-#define IO_TRIAL_NOTES		6
-#define IO_DIVISION			7
-#define IO_LEVEL			8
-#define IO_EVENT			9
-#define IO_HEIGHT			10
-#define IO_JUDGE			11
-#define IO_HANDLER			12
-#define IO_CONDITIONS		13
-#define IO_COURSE_FAULTS	14
-#define IO_TIME				15
-#define IO_YARDS			16
-#define IO_YPS				17
-#define IO_SCT				18
-#define IO_TOTAL_FAULTS		19
-#define IO_REQ_OPENING		20
-#define IO_REQ_CLOSING		21
-#define IO_OPENING			22
-#define IO_CLOSING			23
-#define IO_REQ_POINTS		24
-#define IO_POINTS			25
-#define IO_PLACE			26
-#define IO_IN_CLASS			27
-#define IO_DOGSQD			28
-#define IO_Q				29
-#define IO_SCORE			30
-#define IO_TITLE_POINTS		31
-#define IO_COMMENTS			32
-#define IO_FAULTS			33
-#define IO_MAX				34
+#define IO_RUNS_REG_NAME			0
+#define IO_RUNS_CALL_NAME			1
+#define IO_RUNS_DATE				2
+#define IO_RUNS_VENUE				3
+#define IO_RUNS_CLUB				4
+#define IO_RUNS_LOCATION			5
+#define IO_RUNS_TRIAL_NOTES			6
+#define IO_RUNS_DIVISION			7
+#define IO_RUNS_LEVEL				8
+#define IO_RUNS_EVENT				9
+#define IO_RUNS_HEIGHT				10
+#define IO_RUNS_JUDGE				11
+#define IO_RUNS_HANDLER				12
+#define IO_RUNS_CONDITIONS			13
+#define IO_RUNS_COURSE_FAULTS		14
+#define IO_RUNS_TIME				15
+#define IO_RUNS_YARDS				16
+#define IO_RUNS_YPS					17
+#define IO_RUNS_SCT					18
+#define IO_RUNS_TOTAL_FAULTS		19
+#define IO_RUNS_REQ_OPENING			20
+#define IO_RUNS_REQ_CLOSING			21
+#define IO_RUNS_OPENING				22
+#define IO_RUNS_CLOSING				23
+#define IO_RUNS_REQ_POINTS			24
+#define IO_RUNS_POINTS				25
+#define IO_RUNS_PLACE				26
+#define IO_RUNS_IN_CLASS			27
+#define IO_RUNS_DOGSQD				28
+#define IO_RUNS_Q					29
+#define IO_RUNS_SCORE				30
+#define IO_RUNS_TITLE_POINTS		31
+#define IO_RUNS_COMMENTS			32
+#define IO_RUNS_FAULTS				33
+#define IO_CAL_START_DATE			34
+#define IO_CAL_END_DATE				35
+#define IO_CAL_TENTATIVE			36
+#define IO_CAL_ENTERED				37
+#define IO_CAL_LOCATION				38
+#define IO_CAL_CLUB					39
+#define IO_CAL_VENUE				40
+#define IO_CAL_OPENS				41
+#define IO_CAL_CLOSES				42
+#define IO_CAL_NOTES				43
+#define IO_LOG_DATE					44
+#define IO_LOG_NAME					45
+#define IO_LOG_NOTES				46
+#define IO_MAX						47
 
 #include <vector>
 #include "AgilityBookOptions.h"
@@ -87,6 +107,8 @@ class CDlgAssignColumns : public CDialog
 // Construction
 public:
 	static CString CDlgAssignColumns::GetNameFromColumnID(int column);
+	static bool GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, std::vector<int>& values);
+	static bool SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, const std::vector<int>& values);
 
 	CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CWnd* pParent = NULL);   // standard constructor
 

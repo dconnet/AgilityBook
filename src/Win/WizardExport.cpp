@@ -139,23 +139,36 @@ void CWizardExport::UpdateButtons()
 	if (1 == GetDelim().GetLength())
 		bOk = true;
 	BOOL bEnable = FALSE;
+	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
 	switch (m_pSheet->GetImportExportItem())
 	{
 	default:
 		break;
 	case WIZ_EXPORT_RUNS:
+		order = CAgilityBookOptions::eRunsExport;
+		break;
+	case WIZ_EXPORT_CALENDAR:
+		order = CAgilityBookOptions::eCalExport;
+		break;
+	case WIZ_EXPORT_LOG:
+		order = CAgilityBookOptions::eLogExport;
+		break;
+	}
+	if (CAgilityBookOptions::eUnknown != order)
+	{
 		bEnable = TRUE;
 		if (bOk)
 		{
 			for (int i = 0; bOk && i < IO_TYPE_MAX; ++i)
 			{
 				std::vector<int> columns;
-				CAgilityBookOptions::GetColumnOrder(CAgilityBookOptions::eExport, i, columns);
-				if (0 == columns.size())
-					bOk = false;
+				if (CDlgAssignColumns::GetColumnOrder(order, i, columns))
+				{
+					if (0 == columns.size())
+						bOk = false;
+				}
 			}
 		}
-		break;
 	}
 	m_ctrlAssign.EnableWindow(bEnable);
 	dwWiz |= (bOk ? PSWIZB_FINISH : PSWIZB_DISABLEDFINISH);
@@ -178,9 +191,11 @@ void CWizardExport::UpdatePreview()
 			int i;
 			std::vector<int> columns[IO_TYPE_MAX];
 			for (i = 0; i < IO_TYPE_MAX; ++i)
-				CAgilityBookOptions::GetColumnOrder(CAgilityBookOptions::eExport, i, columns[i]);
+				CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eRunsExport, i, columns[i]);
 			for (i = 0; i < IO_TYPE_MAX; ++i)
 			{
+				if (0 == columns[i].size())
+					continue;
 				CString data;
 				for (size_t idx = 0; idx < columns[i].size(); ++idx)
 				{
@@ -213,16 +228,16 @@ void CWizardExport::UpdatePreview()
 							case ARBConfigScoring::eFaultsThenTime:
 							case ARBConfigScoring::eFaults100ThenTime:
 							case ARBConfigScoring::eFaults200ThenTime:
-								idxType = IO_TYPE_FAULTS_TIME;
+								idxType = IO_TYPE_RUNS_FAULTS_TIME;
 								break;
 							case ARBConfigScoring::eOCScoreThenTime:
-								idxType = IO_TYPE_OPEN_CLOSE;
+								idxType = IO_TYPE_RUNS_OPEN_CLOSE;
 								break;
 							case ARBConfigScoring::eScoreThenTime:
-								idxType = IO_TYPE_POINTS;
+								idxType = IO_TYPE_RUNS_POINTS;
 								break;
 							case ARBConfigScoring::eTimePlusFaults:
-								idxType = IO_TYPE_TIME_FAULTS;
+								idxType = IO_TYPE_RUNS_TIME_FAULTS;
 								break;
 							}
 							ASSERT(-1 != idxType);
@@ -235,16 +250,16 @@ void CWizardExport::UpdatePreview()
 										data += delim;
 									switch (columns[idxType][idx])
 									{
-									case IO_REG_NAME:
+									case IO_RUNS_REG_NAME:
 										data += pDog->GetRegisteredName().c_str();
 										break;
-									case IO_CALL_NAME:
+									case IO_RUNS_CALL_NAME:
 										data += pDog->GetCallName().c_str();
 										break;
-									case IO_DATE:
+									case IO_RUNS_DATE:
 										data += pRun->GetDate().GetString(false, true).c_str();
 										break;
-									case IO_VENUE:
+									case IO_RUNS_VENUE:
 										{
 											int i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
@@ -257,7 +272,7 @@ void CWizardExport::UpdatePreview()
 											}
 										}
 										break;
-									case IO_CLUB:
+									case IO_RUNS_CLUB:
 										{
 											int i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
@@ -270,51 +285,51 @@ void CWizardExport::UpdatePreview()
 											}
 										}
 										break;
-									case IO_LOCATION:
+									case IO_RUNS_LOCATION:
 										data += pTrial->GetLocation().c_str();
 										break;
-									case IO_TRIAL_NOTES:
+									case IO_RUNS_TRIAL_NOTES:
 										data += pTrial->GetNote().c_str();
 										break;
-									case IO_DIVISION:
+									case IO_RUNS_DIVISION:
 										data += pRun->GetDivision().c_str();
 										break;
-									case IO_LEVEL:
+									case IO_RUNS_LEVEL:
 										data += pRun->GetLevel().c_str();
 										break;
-									case IO_EVENT:
+									case IO_RUNS_EVENT:
 										data += pRun->GetEvent().c_str();
 										break;
-									case IO_HEIGHT:
+									case IO_RUNS_HEIGHT:
 										data += pRun->GetHeight().c_str();
 										break;
-									case IO_JUDGE:
+									case IO_RUNS_JUDGE:
 										data += pRun->GetJudge().c_str();
 										break;
-									case IO_HANDLER:
+									case IO_RUNS_HANDLER:
 										data += pRun->GetHandler().c_str();
 										break;
-									case IO_CONDITIONS:
+									case IO_RUNS_CONDITIONS:
 										data += pRun->GetConditions().c_str();
 										break;
-									case IO_COURSE_FAULTS:
+									case IO_RUNS_COURSE_FAULTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetCourseFaults());
 											data += str;
 										}
 										break;
-									case IO_TIME:
+									case IO_RUNS_TIME:
 										data += pRun->GetScoring().GetTime().str().c_str();
 										break;
-									case IO_YARDS:
+									case IO_RUNS_YARDS:
 										{
 											CString str;
 											str.Format("%.3f", pRun->GetScoring().GetYards());
 											data += str;
 										}
 										break;
-									case IO_YPS:
+									case IO_RUNS_YPS:
 										{
 											if (ARBDogRunScoring::eTypeByTime == pRun->GetScoring().GetType()
 											&& 0 < pRun->GetScoring().GetYards() && 0.0 < pRun->GetScoring().GetTime())
@@ -325,10 +340,10 @@ void CWizardExport::UpdatePreview()
 											}
 										}
 										break;
-									case IO_SCT:
+									case IO_RUNS_SCT:
 										data += pRun->GetScoring().GetSCT().str().c_str();
 										break;
-									case IO_TOTAL_FAULTS:
+									case IO_RUNS_TOTAL_FAULTS:
 										{
 											if (ARBDogRunScoring::eTypeByTime == pRun->GetScoring().GetType())
 											{
@@ -339,49 +354,49 @@ void CWizardExport::UpdatePreview()
 											}
 										}
 										break;
-									case IO_REQ_OPENING:
+									case IO_RUNS_REQ_OPENING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
 											data += str;
 										}
 										break;
-									case IO_REQ_CLOSING:
+									case IO_RUNS_REQ_CLOSING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedClosePts());
 											data += str;
 										}
 										break;
-									case IO_OPENING:
+									case IO_RUNS_OPENING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetOpenPts());
 											data += str;
 										}
 										break;
-									case IO_CLOSING:
+									case IO_RUNS_CLOSING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetClosePts());
 											data += str;
 										}
 										break;
-									case IO_REQ_POINTS:
+									case IO_RUNS_REQ_POINTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
 											data += str;
 										}
 										break;
-									case IO_POINTS:
+									case IO_RUNS_POINTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetOpenPts());
 											data += str;
 										}
 										break;
-									case IO_PLACE:
+									case IO_RUNS_PLACE:
 										{
 											CString str;
 											short place = pRun->GetPlace();
@@ -394,7 +409,7 @@ void CWizardExport::UpdatePreview()
 											data += str;
 										}
 										break;
-									case IO_IN_CLASS:
+									case IO_RUNS_IN_CLASS:
 										{
 											CString str;
 											short inClass = pRun->GetInClass();
@@ -405,7 +420,7 @@ void CWizardExport::UpdatePreview()
 											data += str;
 										}
 										break;
-									case IO_DOGSQD:
+									case IO_RUNS_DOGSQD:
 										{
 											CString str;
 											short qd = pRun->GetDogsQd();
@@ -416,7 +431,7 @@ void CWizardExport::UpdatePreview()
 											data += str;
 										}
 										break;
-									case IO_Q:
+									case IO_RUNS_Q:
 										{
 											CString str = pRun->GetQ().str().c_str();
 											if (pRun->GetQ().Qualified())
@@ -435,14 +450,14 @@ void CWizardExport::UpdatePreview()
 											data += str;
 										}
 										break;
-									case IO_SCORE:
+									case IO_RUNS_SCORE:
 										if (pRun->GetQ().Qualified()
 										|| ARB_Q::eQ_NQ == pRun->GetQ())
 										{
 											data += pRun->GetScore(pScoring).str().c_str();
 										}
 										break;
-									case IO_TITLE_POINTS:
+									case IO_RUNS_TITLE_POINTS:
 										{
 											CString str;
 											short pts = 0;
@@ -452,10 +467,10 @@ void CWizardExport::UpdatePreview()
 											data += str;
 										}
 										break;
-									case IO_COMMENTS:
+									case IO_RUNS_COMMENTS:
 										data += pRun->GetNote().c_str();
 										break;
-									case IO_FAULTS:
+									case IO_RUNS_FAULTS:
 										{
 											int i = 0;
 											for (ARBDogFaultList::const_iterator iter = pRun->GetFaults().begin();
@@ -481,38 +496,116 @@ void CWizardExport::UpdatePreview()
 		break;
 
 	case WIZ_EXPORT_CALENDAR:
+		{
+			std::vector<int> columns;
+			CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eCalExport, IO_TYPE_CALENDAR, columns);
+			CString data;
+			for (size_t idx = 0; idx < columns.size(); ++idx)
+			{
+				if (0 < idx)
+					data += delim;
+				data += CDlgAssignColumns::GetNameFromColumnID(columns[idx]);
+			}
+			m_ctrlPreview.AddString(data);
+			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+			{
+				CString data;
+				const ARBCalendar* pCal = *iterCal;
+				for (size_t idx = 0; idx < columns.size(); ++idx)
+				{
+					ARBDate date;
+					if (0 < idx)
+						data += delim;
+					switch (columns[idx])
+					{
+					case IO_CAL_START_DATE:
+						data += pCal->GetStartDate().GetString(false, true).c_str();
+						break;
+					case IO_CAL_END_DATE:
+						data += pCal->GetEndDate().GetString(false, true).c_str();
+						break;
+					case IO_CAL_TENTATIVE:
+						if (pCal->IsTentative())
+							data += "?";
+						break;
+					case IO_CAL_ENTERED:
+						switch (pCal->GetEntered())
+						{
+						default:
+						case ARBCalendar::eNot:
+							break;
+						case ARBCalendar::eEntered:
+							data += "Entered";
+							break;
+						case ARBCalendar::ePlanning:
+							data += "Planning";
+							break;
+						}
+						break;
+					case IO_CAL_LOCATION:
+						data += pCal->GetLocation().c_str();
+						break;
+					case IO_CAL_CLUB:
+						data += pCal->GetClub().c_str();
+						break;
+					case IO_CAL_VENUE:
+						data += pCal->GetVenue().c_str();
+						break;
+					case IO_CAL_OPENS:
+						date = pCal->GetOpeningDate();
+						if (date.IsValid())
+							data += date.GetString(false, true).c_str();
+						break;
+					case IO_CAL_CLOSES:
+						date = pCal->GetClosingDate();
+						if (date.IsValid())
+							data += date.GetString(false, true).c_str();
+						break;
+					case IO_CAL_NOTES:
+						data += pCal->GetNote().c_str();
+						break;
+					}
+				}
+				data.Replace("\n", " ");
+				m_ctrlPreview.AddString(data);
+			}
+		}
+		break;
+
 	case WIZ_EXPORT_LOG:
 		{
-			CListView2* pView = NULL;
-			switch (m_pSheet->GetImportExportItem())
+			std::vector<int> columns;
+			CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eLogExport, IO_TYPE_TRAINING, columns);
+			CString data;
+			for (size_t idx = 0; idx < columns.size(); ++idx)
 			{
-			default:
-				break;
-			case WIZ_EXPORT_CALENDAR:
-				pView = m_pDoc->GetCalendarListView();
-				break;
-			case WIZ_EXPORT_LOG:
-				pView = m_pDoc->GetTrainingView();
-				break;
+				if (0 < idx)
+					data += delim;
+				data += CDlgAssignColumns::GetNameFromColumnID(columns[idx]);
 			}
-			if (pView)
+			m_ctrlPreview.AddString(data);
+			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
 			{
-				int count = pView->GetListCtrl().GetItemCount();
-				// -1 gets the header
-				for (int i = -1; i < count; ++i)
+				const ARBTraining* pLog = *iterLog;
+				for (size_t idx = 0; idx < columns.size(); ++idx)
 				{
-					CStringArray line;
-					pView->GetPrintLine(i, line);
-					CString data;
-					for (size_t idx = 0; idx < line.GetSize(); ++idx)
+					if (0 < idx)
+						data += delim;
+					switch (columns[idx])
 					{
-						if (0 < idx)
-							data += delim;
-						data += line[idx];
+					case IO_LOG_DATE:
+						data += pLog->GetDate().GetString(false, true).c_str();
+						break;
+					case IO_LOG_NAME:
+						data += pLog->GetName().c_str();
+						break;
+					case IO_LOG_NOTES:
+						data += pLog->GetNote().c_str();
+						break;
 					}
-					data.Replace("\r\n", " ");
-					m_ctrlPreview.AddString(data);
 				}
+				data.Replace("\n", " ");
+				m_ctrlPreview.AddString(data);
 			}
 		}
 		break;
@@ -591,10 +684,21 @@ void CWizardExport::OnExportDelim()
 void CWizardExport::OnExportAssign() 
 {
 	UpdateData(TRUE);
-	CDlgAssignColumns dlg(CAgilityBookOptions::eExport, this);
-	if (IDOK == dlg.DoModal())
+	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
+	switch (m_pSheet->GetImportExportItem())
 	{
-		UpdateButtons();
-		UpdatePreview();
+	default: break;
+	case WIZ_EXPORT_RUNS: order = CAgilityBookOptions::eRunsExport; break;
+	case WIZ_EXPORT_CALENDAR: order = CAgilityBookOptions::eCalExport; break;
+	case WIZ_EXPORT_LOG: order = CAgilityBookOptions::eLogExport; break;
+	}
+	if (CAgilityBookOptions::eUnknown != order)
+	{
+		CDlgAssignColumns dlg(order, this);
+		if (IDOK == dlg.DoModal())
+		{
+			UpdateButtons();
+			UpdatePreview();
+		}
 	}
 }

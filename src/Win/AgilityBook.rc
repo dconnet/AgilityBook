@@ -1765,6 +1765,8 @@ BEGIN
     IDS_COL_TITLE_PTS       "Title Points"
     IDS_COL_COMMENTS        "Comments"
     IDS_COL_FAULTS          "Faults"
+    IDS_COL_TENTATIVE       "Tentative"
+    IDS_COL_ENTERED         "Entered"
 END
 
 STRINGTABLE DISCARDABLE 

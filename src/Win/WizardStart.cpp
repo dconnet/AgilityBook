@@ -115,7 +115,13 @@ static const struct
 {
 	{WIZ_IMPORT_RUNS, 
 		{
-			{/*PSWIZB_DISABLEDFINISH*/PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			{
+#ifdef _DEBUG
+				PSWIZB_NEXT
+#else
+				PSWIZB_DISABLEDFINISH
+#endif
+				, IDD_WIZARD_IMPORT,
 				"Import Runs",
 				"Not implemented yet.\n\nImport trial and run information from a spreadsheet. Data must be in a text format."},
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
@@ -131,7 +137,13 @@ static const struct
 	},
 	{WIZ_IMPORT_CALENDAR,
 		{
-			{PSWIZB_DISABLEDFINISH/*PSWIZB_NEXT*/, IDD_WIZARD_IMPORT,
+			{
+#ifdef _DEBUG
+				PSWIZB_NEXT
+#else
+				PSWIZB_DISABLEDFINISH
+#endif
+				, IDD_WIZARD_IMPORT,
 				"Import Calendar",
 				"Not implemented yet.\n\nImport a calendar listing from a spreadsheet."},
 			{PSWIZB_FINISH, -1,
@@ -151,7 +163,13 @@ static const struct
 	},
 	{WIZ_IMPORT_LOG,
 		{
-			{PSWIZB_DISABLEDFINISH/*PSWIZB_NEXT*/, IDD_WIZARD_IMPORT,
+			{
+#ifdef _DEBUG
+				PSWIZB_NEXT
+#else
+				PSWIZB_DISABLEDFINISH
+#endif
+				, IDD_WIZARD_IMPORT,
 				"Import Training Log",
 				"Not implemented yet.\n\nImport a Training Log from a spreadsheet."},
 			{PSWIZB_FINISH, -1,
