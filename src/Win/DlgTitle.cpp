@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-26 DRC The wrong name was saved into the ARBDogTitle object.
  */
 
@@ -169,12 +170,13 @@ void CDlgTitle::OnSelchangeVenues()
 			{
 				ARBConfigTitle* pTitle = (*iterTitle);
 				// Suppress any titles we already have.
-				if (0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
-				|| (m_pTitle && m_pTitle->GetName() == pTitle->GetName()))
+				if (pTitle->AllowMany()
+				|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
+				|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 				{
 					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
 					m_ctrlTitles.SetItemDataPtr(idx, pTitle);
-					if (m_bInit && m_pTitle && m_pTitle->GetName() == pTitle->GetName())
+					if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 					{
 						m_ctrlTitles.SetCurSel(idx);
 						OnSelchangeTitles();
@@ -239,11 +241,20 @@ void CDlgTitle::OnOK()
 		bReceived = false;
 	}
 
+	short instance = 0;
+	if (pTitle->AllowMany())
+	{
+		if (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
+			instance = m_pTitle->GetInstance();
+		else
+			instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
+	}
+
 	ARBDogTitle* title = new ARBDogTitle();
 	title->SetDate(date);
 	title->SetHidden(bHidden);
 	title->SetVenue(pVenue->GetName());
-	title->SetName(pTitle->GetName());
+	title->SetName(pTitle->GetName(), instance);
 	title->SetReceived(bReceived);
 	if (m_pTitle)
 		*m_pTitle = *title;

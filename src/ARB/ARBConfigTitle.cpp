@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -54,6 +55,7 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
+	, m_AllowMany(false)
 	, m_Desc()
 {
 }
@@ -61,6 +63,7 @@ ARBConfigTitle::ARBConfigTitle()
 ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
+	, m_AllowMany(rhs.m_AllowMany)
 	, m_Desc(rhs.m_Desc)
 {
 }
@@ -75,6 +78,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
+		m_AllowMany = rhs.m_AllowMany;
 		m_Desc = rhs.m_Desc;
 	}
 	return *this;
@@ -84,6 +88,7 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
+		&& m_AllowMany == rhs.m_AllowMany
 		&& m_Desc == rhs.m_Desc;
 }
 
@@ -96,6 +101,7 @@ void ARBConfigTitle::clear()
 {
 	m_Name.erase();
 	m_LongName.erase();
+	m_AllowMany = false;
 	m_Desc.erase();
 }
 
@@ -116,7 +122,15 @@ bool ARBConfigTitle::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME));
 		return false;
 	}
+
 	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
+
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_ALLOW_MANY, m_AllowMany))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_ALLOW_MANY, VALID_VALUES_BOOL));
+		return false;
+	}
+
 	m_Desc = inTree.GetValue();
 	return true;
 }
@@ -125,6 +139,8 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_TITLES);
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
+	if (m_AllowMany)
+		title.AddAttrib(ATTRIB_TITLES_ALLOW_MANY, m_AllowMany);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	if (0 < m_Desc.length())
@@ -132,8 +148,14 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 	return true;
 }
 
-std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
+std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst) const
 {
+	char buffer[20];
+	buffer[0] = 0;
+	if (1 < inInstance)
+		sprintf(buffer, "%hd", inInstance);
+	else if (0 > inInstance && m_AllowMany)
+		strcpy(buffer, "+");
 	std::string name;
 	if (0 < m_LongName.length())
 	{
@@ -141,6 +163,8 @@ std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
 		{
 			name += "[";
 			name += m_Name;
+			if (buffer[0])
+				name += buffer;
 			name += "] ";
 		}
 		name += m_LongName;
@@ -148,21 +172,27 @@ std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
 		{
 			name += " [";
 			name += m_Name;
+			if (buffer[0])
+				name += buffer;
 			name += "]";
 		}
 	}
 	else
+	{
 		name = m_Name;
+		if (buffer[0])
+			name += buffer;
+	}
 	return name;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBConfigTitle const* ARBConfigTitleList::FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst) const
+ARBConfigTitle const* ARBConfigTitleList::FindTitleCompleteName(std::string const& inName, short inInstance, bool bAbbrevFirst) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetCompleteName(bAbbrevFirst) == inName)
+		if ((*iter)->GetCompleteName(inInstance, bAbbrevFirst) == inName)
 			return (*iter);
 	}
 	return NULL;

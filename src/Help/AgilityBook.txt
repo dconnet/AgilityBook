@@ -204,6 +204,9 @@ Description of this title.
 .topic HIDC_CONFIG_TITLE_LONG_NAME
 Long name of the title.
 
+.topic HIDC_CONFIG_TITLE_MULTIPLE
+Allow the title to be created multiple times. For instance, MACH, MACH2, etc.
+
 .topic HIDC_CONFIG_TITLE_NAME
 Title abbreviation.
 

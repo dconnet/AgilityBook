@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-13 DRC Added ability to hide titles, including unearned ones.
  *                    An unearned title has an invalid date.
@@ -109,8 +110,9 @@ public:
 	void SetDate(ARBDate const& inDate);
 	std::string const& GetVenue() const;
 	void SetVenue(std::string const& inVenue);
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
+	std::string const& GetRawName() const;
+	short GetInstance() const;
+	void SetName(std::string const& inName, short inInstance);
 	bool GetReceived() const;
 	void SetReceived(bool inReceived);
 	bool IsHidden() const;
@@ -121,14 +123,10 @@ private:
 	ARBDate m_Date;
 	std::string m_Venue;
 	std::string m_Name;
+	short m_Instance;
 	bool m_bReceived;
 	bool m_bHidden;
 };
-
-inline std::string ARBDogTitle::GetGenericName() const
-{
-	return m_Name;
-}
 
 inline ARBDate const& ARBDogTitle::GetDate() const
 {
@@ -152,14 +150,20 @@ inline void ARBDogTitle::SetVenue(std::string const& inVenue)
 	m_Venue = inVenue;
 }
 
-inline std::string const& ARBDogTitle::GetName() const
+inline std::string const& ARBDogTitle::GetRawName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogTitle::SetName(std::string const& inName)
+inline short ARBDogTitle::GetInstance() const
+{
+	return m_Instance;
+}
+
+inline void ARBDogTitle::SetName(std::string const& inName, short inInstance)
 {
 	m_Name = inName;
+	m_Instance = inInstance;
 }
 
 inline bool ARBDogTitle::GetReceived() const
@@ -213,6 +217,15 @@ public:
 	 * @param inTitle Name of title.
 	 */
 	ARBDogTitle const* FindTitle(
+		std::string const& inVenue,
+		std::string const& inTitle) const;
+
+	/**
+	 * Find the maximum instance of a title
+	 * @param inVenue Venue name.
+	 * @param inTitle Name of title.
+	 */
+	short FindMaxInstance(
 		std::string const& inVenue,
 		std::string const& inTitle) const;
 
@@ -293,13 +306,10 @@ public:
 
 	/**
 	 * Delete a title, remove any dependent objects.
-	 * @param inVenue Venue title is in.
-	 * @param inTitle Title name being deleted.
-	 * @return Number of items removed.
+	 * @param inTitle Title being deleted.
+	 * @return Was it removed?
 	 */
-	int DeleteTitle(
-		std::string const& inVenue,
-		std::string const& inTitle);
+	bool DeleteTitle(ARBDogTitle const* inTitle);
 
 	/**
 	 * Add a title.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-10-04 DRC Only compute MACH points if time and SCT are >0. Also, do
@@ -634,23 +635,21 @@ bool ARBDogRunList::Load(
 class SortRun
 {
 public:
-	SortRun(bool bDescending) : m_bDescending(bDescending) {}
+	SortRun() {}
 	bool operator()(ARBDogRun* one, ARBDogRun* two) const
 	{
 		if (one->GetDate() < two->GetDate())
-			return m_bDescending;
+			return true;
 		else
-			return !m_bDescending;
+			return false;
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBDogRunList::sort(bool inDescending)
+void ARBDogRunList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortRun(inDescending));
+	std::stable_sort(begin(), end(), SortRun());
 }
 
 ARBDate ARBDogRunList::GetStartDate() const

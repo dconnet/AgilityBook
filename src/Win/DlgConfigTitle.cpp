@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-05 DRC Created.
  */
 
@@ -47,9 +48,12 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitle dialog
 
-CDlgConfigTitle::CDlgConfigTitle(LPCTSTR name, LPCTSTR longname, LPCTSTR desc, CWnd* pParent)
+CDlgConfigTitle::CDlgConfigTitle(LPCTSTR name,
+		bool bAllowMany, LPCTSTR longname, LPCTSTR desc,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
 	, m_Name(name)
+	, m_AllowMany(bAllowMany ? TRUE : FALSE)
 	, m_LongName(longname)
 	, m_Desc(desc)
 {
@@ -67,6 +71,7 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitle)
 	DDX_Text(pDX, IDC_CONFIG_TITLE_NAME, m_Name);
+	DDX_Check(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_AllowMany);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_LONG_NAME, m_LongName);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_DESC, m_Desc);
 	//}}AFX_DATA_MAP

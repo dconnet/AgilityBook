@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-05-10 DRC Process quoted fields in input (like Excel).
  * @li 2004-04-15 DRC If imported data contained a header that we parsed as
@@ -908,7 +909,7 @@ BOOL CWizardImport::OnWizardFinish()
 						pTrial->Release();
 					}
 					pTrial->GetRuns().AddRun(pRun);
-					pTrial->GetRuns().sort(true);
+					pTrial->GetRuns().sort();
 					pRun->Release();
 					++nAdded;
 				}
