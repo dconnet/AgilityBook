@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-08-14 DRC Added ability to import dog/trial/run/judge info.
+ * @li 2004-08-21 DRC Added ability to import dog/trial/run/judge info.
  * @li 2004-02-26 DRC Moved configuration update logic to the doc.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
@@ -327,8 +327,11 @@ BOOL CWizardStart::OnWizardFinish()
 						{
 							if (0 < err.length())
 								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
-							int count = 0;
-							int countUpdated = 0;
+							int countDog = 0;
+							int countRegNums = 0;
+							int countExistingPts = 0;
+							int countTitles = 0;
+							int countTrials = 0;
 							int countJudges = 0;
 							for (ARBDogList::iterator iter = book.GetDogs().begin();
 								iter != book.GetDogs().end();
@@ -348,7 +351,7 @@ BOOL CWizardStart::OnWizardFinish()
 								}
 								if (!pExisting)
 								{
-									++count;
+									++countDog;
 									m_pDoc->GetDogs().AddDog(pDog);
 								}
 								else if (*pExisting != *pDog)
@@ -356,16 +359,42 @@ BOOL CWizardStart::OnWizardFinish()
 									// If the dog exists, only update the
 									// existing points, registration numbers,
 									// titles and trials.
-									bool bUpdated = false;
 									if (pExisting->GetRegNums() != pDog->GetRegNums())
 									{
-				AfxMessageBox("TODO: Need to merge dog registration information");
-										bUpdated = true;
+										for (ARBDogRegNumList::iterator iter = pDog->GetRegNums().begin();
+											iter != pDog->GetRegNums().end();
+											++iter)
+										{
+											if (!pExisting->GetRegNums().FindRegNum((*iter)->GetVenue()))
+											{
+												++countRegNums;
+												pExisting->GetRegNums().AddRegNum((*iter));
+											}
+										}
 									}
 									if (pExisting->GetExistingPoints() != pDog->GetExistingPoints())
 									{
-				AfxMessageBox("TODO: Need to merge dog existing points information");
-										bUpdated = true;
+										for (ARBDogExistingPointsList::iterator iter = pDog->GetExistingPoints().begin();
+											iter != pDog->GetExistingPoints().end();
+											++iter)
+										{
+											bool bFound = false;
+											for (ARBDogExistingPointsList::iterator iter2 = pExisting->GetExistingPoints().begin();
+												iter2 != pExisting->GetExistingPoints().end();
+												++iter2)
+											{
+												if (*(*iter) == *(*iter2))
+												{
+													bFound = true;
+													break;
+												}
+											}
+											if (!bFound)
+											{
+												++countExistingPts;
+												pExisting->GetExistingPoints().AddExistingPoints((*iter));
+											}
+										}
 									}
 									if (pExisting->GetTitles() != pDog->GetTitles())
 									{
@@ -376,7 +405,7 @@ BOOL CWizardStart::OnWizardFinish()
 											ARBDogTitle const* pTitle = pExisting->GetTitles().FindTitle((*iter)->GetVenue(), (*iter)->GetName());
 											if (!pTitle)
 											{
-												bUpdated = true;
+												++countTitles;
 												ARBDogTitle* pNewTitle = new ARBDogTitle(*(*iter));
 												pExisting->GetTitles().AddTitle(pNewTitle);
 												pNewTitle->Release();
@@ -385,12 +414,27 @@ BOOL CWizardStart::OnWizardFinish()
 									}
 									if (pExisting->GetTrials() != pDog->GetTrials())
 									{
-				AfxMessageBox("TODO: Need to merge dog trial information");
-										bUpdated = true;
-									}
-									if (bUpdated)
-									{
-										++countUpdated;
+										for (ARBDogTrialList::iterator iter = pDog->GetTrials().begin();
+											iter != pDog->GetTrials().end();
+											++iter)
+										{
+											bool bFound = false;
+											for (ARBDogTrialList::iterator iter2 = pExisting->GetTrials().begin();
+												iter2 != pExisting->GetTrials().end();
+												++iter2)
+											{
+												if (*(*iter) == *(*iter2))
+												{
+													bFound = true;
+													break;
+												}
+											}
+											if (!bFound)
+											{
+												++countTrials;
+												pExisting->GetTrials().AddTrial((*iter));
+											}
+										}
 									}
 								}
 							}
@@ -405,7 +449,11 @@ BOOL CWizardStart::OnWizardFinish()
 									++countJudges;
 								}
 							}
-							if (0 < count)
+							if (0 < countDog
+							|| 0 < countRegNums
+							|| 0 < countExistingPts
+							|| 0 < countTitles
+							|| 0 < countTrials)
 							{
 								m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
 								m_pDoc->SetModifiedFlag();
@@ -416,8 +464,63 @@ BOOL CWizardStart::OnWizardFinish()
 								m_pDoc->GetAllJudges(namesInUse, false);
 								m_pDoc->GetARB().GetInfo().GetJudgeInfo().CondenseContent(namesInUse);
 							}
-							CString str;
-							str.FormatMessage(IDS_ADDED_DOGS_JUDGES, count, countUpdated, countJudges);
+							//"Added %1!d! new dogs, updated %2!d! dogs and added %3!d! judges."
+							CString str("Added ");
+							bool bAdded = false;
+							if (0 < countDog)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_DOGS, countDog);
+								str += str2;
+							}
+							if (0 < countRegNums)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNums);
+								str += str2;
+							}
+							if (0 < countExistingPts)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_EXISTINGPTS, countExistingPts);
+								str += str2;
+							}
+							if (0 < countTitles)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_TITLES, countTitles);
+								str += str2;
+							}
+							if (0 < countTrials)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_TRIALS, countTrials);
+								str += str2;
+							}
+							if (0 < countJudges)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_JUDGES, countJudges);
+								str += str2;
+							}
 							AfxMessageBox(str, MB_ICONINFORMATION);
 							bOk = true;
 						}

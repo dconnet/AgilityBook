@@ -221,6 +221,15 @@ public:
 		std::string const& inNumber);
 
 	/**
+	 * Add a registration number, duplicates are allowed.
+	 * @param inRegNum Registration number object
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
+	ARBDogRegNum* AddRegNum(ARBDogRegNum* inRegNum);
+
+	/**
 	 * Delete a registration number.
 	 * @param inVenue Venue of number.
 	 * @param inNumber Registration number.
