@@ -3,6 +3,10 @@
   - When starting the program, holding the SHIFT key down will prevent the
     last file from being automatically opened.
   - Redesigned Configuration dialog for ease-of-use.
+- Bug fixes
+  - Titles that were edited/created were saved with the wrong name. This caused
+    the title to vanish after saving the file and re-opening it. [The fix will
+	auto-correct the problem titles, if they are still in the file]
 
 1/21/2004: v1.0.0.8
 - Bumped file version to 8.2:

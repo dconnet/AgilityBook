@@ -254,6 +254,18 @@ std::string ARBConfig::GetDTD()
 	return dtd;
 }
 
+std::string ARBConfig::GetTitleCompleteName(
+	const std::string& inVenue,
+	const std::string& inTitle,
+	bool bAbbrevFirst) const
+{
+	const ARBConfigTitle* pTitle = m_Venues.FindTitle(inVenue, inTitle);
+	if (pTitle)
+		return pTitle->GetCompleteName(bAbbrevFirst);
+	else
+		return inTitle;
+}
+
 std::string ARBConfig::Update(int indent, const ARBConfig& inConfigNew)
 {
 	char buffer[1000];

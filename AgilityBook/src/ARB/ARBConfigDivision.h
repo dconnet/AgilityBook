@@ -135,7 +135,6 @@ public:
 	bool VerifyLevel(
 		const std::string& inDiv,
 		const std::string& inLevel) const;
-	bool VerifyTitle(const std::string& inTitle) const;
 
 	const ARBConfigDivision* FindDivision(const std::string& inDiv) const;
 	ARBConfigDivision* FindDivision(const std::string& inDiv);
@@ -145,6 +144,7 @@ public:
 		const std::string& inDiv,
 		ARBConfigEventList& ioEvents);
 
+	const ARBConfigTitle* FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst = true) const;
 	const ARBConfigTitle* FindTitle(const std::string& inTitle) const;
 	ARBConfigTitle* FindTitle(const std::string& inTitle);
 	bool DeleteTitle(const std::string& inTitle);

@@ -132,6 +132,7 @@ public:
 		return !isEqual(rhs);
 	}
 
+	const ARBConfigTitle* FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst = true) const;
 	const ARBConfigTitle* FindTitle(const std::string& inName) const;
 	ARBConfigTitle* FindTitle(const std::string& inName);
 	ARBConfigTitle* AddTitle(const std::string& inName);
