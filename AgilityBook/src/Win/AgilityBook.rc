@@ -130,7 +130,11 @@ BEGIN
             MENUITEM "&Configuration...",           ID_FILE_IMPORT_CONFIG
             , INACTIVE
         END
-        MENUITEM "&Export...",                  ID_FILE_EXPORT, INACTIVE
+        POPUP "&Export"
+        BEGIN
+            MENUITEM "&DTD (Document Type Definition)...",ID_FILE_EXPORT_DTD
+            MENUITEM "As &XML...",                  ID_FILE_EXPORT_XML
+        END
         MENUITEM SEPARATOR
         MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
@@ -1082,8 +1086,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,3,7
- PRODUCTVERSION 0,9,3,7
+ FILEVERSION 0,9,4,7
+ PRODUCTVERSION 0,9,4,7
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1101,14 +1105,14 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
             VALUE "FileDescription", "Agility Record Book\0"
-            VALUE "FileVersion", "0.9.3.7\0"
+            VALUE "FileVersion", "0.9.4.7\0"
             VALUE "InternalName", "AgilityBook.exe\0"
             VALUE "LegalCopyright", "Copyright © 2002-2003 David Connet. All Rights Reserved.\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "Agility Record Book\0"
-            VALUE "ProductVersion", "0.9.3.7\0"
+            VALUE "ProductVersion", "0.9.4.7\0"
             VALUE "SpecialBuild", "\0"
         END
     END
@@ -1717,7 +1721,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_FILE_IMPORT_CONFIG   "Import configuration information from other sources\nImport Config"
-    ID_FILE_EXPORT          "Export data\nExport"
+    ID_FILE_EXPORT_DTD      "Export DTD\nExport DTD"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
     ID_CONFIG_ADD           "Add a configuration item\nAdd"
     ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
@@ -1756,6 +1760,7 @@ BEGIN
     ID_REORDER              "Reorder items\nReorder"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
+    ID_FILE_EXPORT_XML      "Export data as XML\nExport XML"
 END
 
 #endif    // English (U.S.) resources

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-22 DRC Added static GetDTD() method.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
@@ -207,6 +208,30 @@ void ARBConfig::Default()
 		if (0 <= config)
 			Load(tree.GetElement(config), version);
 	}
+}
+
+/* static */
+std::string ARBConfig::GetDTD()
+{
+	std::string dtd;
+#ifdef WIN32
+	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), "DTD");
+	if (hrSrc)
+	{
+		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
+		if (hRes)
+		{
+			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
+			const char* pData = reinterpret_cast<const char*>(LockResource(hRes));
+			dtd = std::string(pData, size);
+			FreeResource(hRes);
+		}
+	}
+#else
+	// @todo: Porting issues: Not currently implemented
+	dtd = "<!-- Not implemented on non-win32 platforms -->\n";
+#endif
+	return dtd;
 }
 
 std::string ARBConfig::Update(int indent, const ARBConfig& inConfigNew)

@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-10-22 DRC Added export dtd/xml menu options.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-09-15 DRC Fixed a bug where a trial created for more than one dog
  *                    at the same time actually only created one linked entry.
@@ -84,8 +85,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	//{{AFX_MSG_MAP(CAgilityBookDoc)
 	ON_UPDATE_COMMAND_UI(ID_FILE_IMPORT_CONFIG, OnUpdateFileImportConfig)
 	ON_COMMAND(ID_FILE_IMPORT_CONFIG, OnFileImportConfig)
-	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT, OnUpdateFileExport)
-	ON_COMMAND(ID_FILE_EXPORT, OnFileExport)
+	ON_COMMAND(ID_FILE_EXPORT_DTD, OnFileExportDTD)
+	ON_COMMAND(ID_FILE_EXPORT_XML, OnFileExportXML)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
@@ -696,14 +697,43 @@ corrupt the file. But there's some ideas here that may be of future use...
 }
 #endif
 
-void CAgilityBookDoc::OnUpdateFileExport(CCmdUI *pCmdUI)
+void CAgilityBookDoc::OnFileExportDTD()
 {
-	pCmdUI->Enable(FALSE);
+	CFileDialog file(FALSE, "dtd", "AgilityRecordBook.dtd", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST,
+		"DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||");
+	if (IDOK == file.DoModal())
+	{
+		CStdioFile output(file.GetFileName(), CFile::modeCreate | CFile::modeWrite | CFile::typeBinary);
+		std::string dtd = ARBConfig::GetDTD();
+		output.WriteString(dtd.c_str());
+		output.Close();
+	}
 }
 
-void CAgilityBookDoc::OnFileExport()
+void CAgilityBookDoc::OnFileExportXML()
 {
-	// @todo: Write file export code
+	CString name = GetPathName();
+	if (name.IsEmpty())
+		name = "AgilityRecordBook.xml";
+	else
+		name = name.Left(name.ReverseFind('.')) + ".xml";
+	CFileDialog file(FALSE, "xml", name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST,
+		"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||");
+	if (IDOK == file.DoModal())
+	{
+		CElement tree;
+		if (m_Records.Save(tree))
+		{
+			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+			output.exceptions(std::ios_base::badbit);
+			if (output.is_open())
+			{
+				std::string dtd = ARBConfig::GetDTD();
+				tree.SaveXML(output, &dtd);
+				output.close();
+			}
+		}
+	}
 }
 
 void CAgilityBookDoc::OnEditConfiguration()
