@@ -1134,7 +1134,7 @@ bool Element::AddAttrib(std::string const& inName, char const* const inValue)
 
 bool Element::AddAttrib(std::string const& inName, ARBVersion const& inValue)
 {
-	return AddAttrib(inName, inValue.ToString());
+	return AddAttrib(inName, inValue.str());
 }
 
 bool Element::AddAttrib(std::string const& inName, ARBDate const& inValue)

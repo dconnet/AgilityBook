@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ARBVersion::ToString() const
+std::string ARBVersion::str() const
 {
 	char buffer[100];
 	sprintf(buffer, "%hd.%hd", Major(), Minor());
