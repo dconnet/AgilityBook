@@ -196,7 +196,7 @@ BOOL CAgilityBookApp::InitInstance()
 
 	INITCOMMONCONTROLSEX icc;
 	icc.dwSize = sizeof(icc);
-	icc.dwICC = ICC_DATE_CLASSES;
+	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&icc);
 
 #if defined (_MSC_VER) && (_MSC_VER < 1300) // 1300 is VC7
