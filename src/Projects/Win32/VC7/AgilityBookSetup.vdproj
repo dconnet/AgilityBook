@@ -15,7 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_020F458C27054A47A4DD93E7121AFD35"
+        "MsmKey" = "8:_02D05272078248288E87272547EE7B58"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_123AF58EC72141E4820B875F8F87984D"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,7 +39,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_437C1CEBD25740DAA953B25685E2BF2D"
+        "MsmKey" = "8:_40792FBC2307635170D4F92A38B438B6"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,8 +57,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7698B3588ABA43D0A19EF50178829EEA"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmKey" = "8:_ACD1C59FD9044CC3B1C001268616FAE7"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,7 +69,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
+        "MsmKey" = "8:_E37DAC789EEE4304BFD7EE87972E9206"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -165,6 +171,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_40792FBC2307635170D4F92A38B438B6"
+            {
+            "SourcePath" = "8:xerces-c_2_2_0.dll"
+            "TargetName" = "8:xerces-c_2_2_0.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_5E446DC8AA924BA6B5BCC12DD868C8B9"
             {
             "SourcePath" = "8:..\\..\\..\\Help\\AgilityBook.chm"
@@ -203,26 +229,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
-            {
-            "SourcePath" = "8:xerces-c_2_2_0.dll"
-            "TargetName" = "8:xerces-c_2_2_0.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -924,7 +930,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_020F458C27054A47A4DD93E7121AFD35"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_02D05272078248288E87272547EE7B58"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -938,7 +944,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_437C1CEBD25740DAA953B25685E2BF2D"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_123AF58EC72141E4820B875F8F87984D"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -952,7 +958,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_7698B3588ABA43D0A19EF50178829EEA"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_E37DAC789EEE4304BFD7EE87972E9206"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -992,6 +998,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_ACD1C59FD9044CC3B1C001268616FAE7"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\bin\\Win32\\Vc7\\Release\\TroubleReport.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{F5C6E82B-F03A-4686-AB67-FBBD6C70ECC6}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
