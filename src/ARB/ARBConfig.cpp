@@ -63,7 +63,7 @@ ARBConfig::ARBConfig()
 {
 }
 
-ARBConfig::ARBConfig(const ARBConfig& rhs)
+ARBConfig::ARBConfig(ARBConfig const& rhs)
 	: m_Version(rhs.m_Version)
 	, m_Actions(rhs.m_Actions)
 	, m_Venues(rhs.m_Venues)
@@ -77,7 +77,7 @@ ARBConfig::~ARBConfig()
 	clear();
 }
 
-ARBConfig& ARBConfig::operator=(const ARBConfig& rhs)
+ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -90,7 +90,7 @@ ARBConfig& ARBConfig::operator=(const ARBConfig& rhs)
 	return *this;
 }
 
-bool ARBConfig::operator==(const ARBConfig& rhs) const
+bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
 	return m_Version == rhs.m_Version
 		&& m_Actions == rhs.m_Actions
@@ -99,7 +99,7 @@ bool ARBConfig::operator==(const ARBConfig& rhs) const
 		&& m_OtherPoints == rhs.m_OtherPoints;
 }
 
-bool ARBConfig::operator!=(const ARBConfig& rhs) const
+bool ARBConfig::operator!=(ARBConfig const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -118,8 +118,8 @@ void ARBConfig::clear()
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadFault(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (inTree.GetName() == TREE_FAULTTYPE
@@ -134,8 +134,8 @@ bool ARBConfig::LoadFault(
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadOtherPoints(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (inTree.GetName() == TREE_OTHERPTS
@@ -146,15 +146,15 @@ bool ARBConfig::LoadOtherPoints(
 }
 
 bool ARBConfig::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const Element& element = inTree.GetElement(i);
-		const std::string& name = element.GetName();
+		Element const& element = inTree.GetElement(i);
+		std::string const& name = element.GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -215,7 +215,7 @@ void ARBConfig::Default()
 		if (hRes)
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			const char* pData = reinterpret_cast<const char*>(LockResource(hRes));
+			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
 			bOk = tree.LoadXMLBuffer(pData, size, err);
 			FreeResource(hRes);
 		}
@@ -250,7 +250,7 @@ std::string ARBConfig::GetDTD()
 		if (hRes)
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			const char* pData = reinterpret_cast<const char*>(LockResource(hRes));
+			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
 			dtd = std::string(pData, size);
 			FreeResource(hRes);
 		}
@@ -263,10 +263,10 @@ std::string ARBConfig::GetDTD()
 }
 
 std::string ARBConfig::GetTitleNiceName(
-	const std::string& inVenue,
-	const std::string& inTitle) const
+	std::string const& inVenue,
+	std::string const& inTitle) const
 {
-	const ARBConfigTitle* pTitle = m_Venues.FindTitle(inVenue, inTitle);
+	ARBConfigTitle const* pTitle = m_Venues.FindTitle(inVenue, inTitle);
 	if (pTitle)
 		return pTitle->GetNiceName();
 	else
@@ -274,18 +274,18 @@ std::string ARBConfig::GetTitleNiceName(
 }
 
 std::string ARBConfig::GetTitleCompleteName(
-	const std::string& inVenue,
-	const std::string& inTitle,
+	std::string const& inVenue,
+	std::string const& inTitle,
 	bool bAbbrevFirst) const
 {
-	const ARBConfigTitle* pTitle = m_Venues.FindTitle(inVenue, inTitle);
+	ARBConfigTitle const* pTitle = m_Venues.FindTitle(inVenue, inTitle);
 	if (pTitle)
 		return pTitle->GetCompleteName(bAbbrevFirst);
 	else
 		return inTitle;
 }
 
-bool ARBConfig::Update(int indent, const ARBConfig& inConfigNew, std::string& ioInfo)
+bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& ioInfo)
 {
 	char buffer[1000];
 	std::string info;

@@ -41,9 +41,9 @@ class CDlgConfigTitle : public CDialog
 public:
 	CDlgConfigTitle(LPCTSTR name, LPCTSTR desc, LPCTSTR longname, CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
-	const char* GetName() const		{return (LPCSTR)m_Name;}
-	const char* GetLongName() const	{return (LPCSTR)m_LongName;}
-	const char* GetDesc() const		{return (LPCSTR)m_Desc;}
+	char const* GetName() const		{return (LPCSTR)m_Name;}
+	char const* GetLongName() const	{return (LPCSTR)m_LongName;}
+	char const* GetDesc() const		{return (LPCSTR)m_Desc;}
 
 private:
 // Dialog Data

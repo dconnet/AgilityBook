@@ -58,18 +58,18 @@ std::string ARBVersion::ToString() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct Q2Enum
+static struct Q2Enum
 {
-	const char* pQ;
+	char const* pQ;
 	ARB_Q::eQ q;
-} sc_Qs[] = {
+} const sc_Qs[] = {
 	{ARBQ_TYPE_NA, ARB_Q::eQ_NA},
 	{ARBQ_TYPE_Q,  ARB_Q::eQ_Q},
 	{ARBQ_TYPE_NQ, ARB_Q::eQ_NQ},
 	{ARBQ_TYPE_E,  ARB_Q::eQ_E},
 	{ARBQ_TYPE_SQ, ARB_Q::eQ_SuperQ}
 }; ///< This is a list of the various types of "Q"s we support.
-static const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
+static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
 std::string ARB_Q::GetValidTypes()
 {
@@ -122,8 +122,8 @@ std::string ARB_Q::str() const
 }
 
 bool ARB_Q::Load(
-	const std::string& inAttrib,
-	const ARBVersion& inVersion,
+	std::string const& inAttrib,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	for (int i = 0; i < sc_nQs; ++i)
@@ -139,7 +139,7 @@ bool ARB_Q::Load(
 	return false;
 }
 
-bool ARB_Q::Save(Element& ioTree, const char* const inAttribName) const
+bool ARB_Q::Save(Element& ioTree, char const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
@@ -173,8 +173,8 @@ std::string ARBDouble::str() const
 }
 
 bool ARBDouble::Load(
-	const std::string& inAttrib,
-	const ARBVersion& inVersion,
+	std::string const& inAttrib,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (0 < inAttrib.length())
@@ -184,7 +184,7 @@ bool ARBDouble::Load(
 	return true;
 }
 
-bool ARBDouble::Save(Element& ioTree, const char* const inAttribName) const
+bool ARBDouble::Save(Element& ioTree, char const* const inAttribName) const
 {
 	ioTree.AddAttrib(inAttribName, m_Val, m_Prec);
 	return true;

@@ -50,10 +50,10 @@ class ARBDogReferenceRun : public ARBBase
 {
 public:
 	ARBDogReferenceRun();
-	ARBDogReferenceRun(const ARBDogReferenceRun& rhs);
-	ARBDogReferenceRun& operator=(const ARBDogReferenceRun& rhs);
-	bool operator==(const ARBDogReferenceRun& rhs) const;
-	bool operator!=(const ARBDogReferenceRun& rhs) const;
+	ARBDogReferenceRun(ARBDogReferenceRun const& rhs);
+	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+	bool operator==(ARBDogReferenceRun const& rhs) const;
+	bool operator!=(ARBDogReferenceRun const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -78,9 +78,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -98,16 +98,16 @@ public:
 	void SetQ(ARB_Q inQ);
 	short GetPlace() const;
 	void SetPlace(short inPlace);
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetBreed() const;
-	void SetBreed(const std::string& inBreed);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetBreed() const;
+	void SetBreed(std::string const& inBreed);
 	ARBDouble GetTime() const;
 	void SetTime(ARBDouble inTime);
-	const std::string& GetScore() const;
-	void SetScore(const std::string& inScore);
-	const std::string& GetNote() const;
-	void SetNote(const std::string& inNote);
+	std::string const& GetScore() const;
+	void SetScore(std::string const& inScore);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
 
 private:
 	~ARBDogReferenceRun();
@@ -145,22 +145,22 @@ inline void ARBDogReferenceRun::SetPlace(short inPlace)
 	m_Place = inPlace;
 }
 
-inline const std::string& ARBDogReferenceRun::GetName() const
+inline std::string const& ARBDogReferenceRun::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogReferenceRun::SetName(const std::string& inName)
+inline void ARBDogReferenceRun::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string& ARBDogReferenceRun::GetBreed() const
+inline std::string const& ARBDogReferenceRun::GetBreed() const
 {
 	return m_Breed;
 }
 
-inline void ARBDogReferenceRun::SetBreed(const std::string& inBreed)
+inline void ARBDogReferenceRun::SetBreed(std::string const& inBreed)
 {
 	m_Breed = inBreed;
 }
@@ -175,22 +175,22 @@ inline void ARBDogReferenceRun::SetTime(ARBDouble inTime)
 	m_Time = inTime;
 }
 
-inline const std::string& ARBDogReferenceRun::GetScore() const
+inline std::string const& ARBDogReferenceRun::GetScore() const
 {
 	return m_Score;
 }
 
-inline void ARBDogReferenceRun::SetScore(const std::string& inScore)
+inline void ARBDogReferenceRun::SetScore(std::string const& inScore)
 {
 	m_Score = inScore;
 }
 
-inline const std::string& ARBDogReferenceRun::GetNote() const
+inline std::string const& ARBDogReferenceRun::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBDogReferenceRun::SetNote(const std::string& inNote)
+inline void ARBDogReferenceRun::SetNote(std::string const& inNote)
 {
 	m_Note = inNote;
 }
@@ -203,15 +203,6 @@ inline void ARBDogReferenceRun::SetNote(const std::string& inNote)
 class ARBDogReferenceRunList : public ARBVectorLoad2<ARBDogReferenceRun>
 {
 public:
-	bool operator==(const ARBDogReferenceRunList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogReferenceRunList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Add a reference run.
 	 * @param inRef Object to add.
@@ -227,5 +218,5 @@ public:
 	 * @return Whether object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteReferenceRun(const ARBDogReferenceRun* inRef);
+	bool DeleteReferenceRun(ARBDogReferenceRun const* inRef);
 };

@@ -56,10 +56,10 @@ class ARBDogRun : public ARBBase
 {
 public:
 	ARBDogRun();
-	ARBDogRun(const ARBDogRun& rhs);
-	ARBDogRun& operator=(const ARBDogRun& rhs);
-	bool operator==(const ARBDogRun& rhs) const;
-	bool operator!=(const ARBDogRun& rhs) const;
+	ARBDogRun(ARBDogRun const& rhs);
+	ARBDogRun& operator=(ARBDogRun const& rhs);
+	bool operator==(ARBDogRun const& rhs) const;
+	bool operator!=(ARBDogRun const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -85,10 +85,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const ARBDogClubList& inClubs,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		ARBDogClubList const& inClubs,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -105,7 +105,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(const std::string& inOther) const;
+	int NumOtherPointsInUse(std::string const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -114,22 +114,22 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-		const std::string& inOldName,
-		const std::string& inNewName);
+		std::string const& inOldName,
+		std::string const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inName OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(const std::string& inName);
+	int DeleteOtherPoints(std::string const& inName);
 
 	/**
 	 * Get the number of MACH points earned in this run.
 	 * @param inScoring Scoring method used.
 	 * @return Number of MACH points earned.
 	 */
-	short GetMachPoints(const ARBConfigScoring* inScoring) const;
+	short GetMachPoints(ARBConfigScoring const* inScoring) const;
 
 	/**
 	 * Get the number of title points earned in this run.
@@ -138,7 +138,7 @@ public:
 	 * @return Number of title points earned.
 	 */
 	short GetTitlePoints(
-		const ARBConfigScoring* inScoring,
+		ARBConfigScoring const* inScoring,
 		bool* outClean = NULL) const;
 
 	/**
@@ -146,30 +146,30 @@ public:
 	 * @param inScoring Scoring method used.
 	 * @return Total score for this run. The meaning of a score varies by event.
 	 */
-	ARBDouble GetScore(const ARBConfigScoring* inScoring) const;
+	ARBDouble GetScore(ARBConfigScoring const* inScoring) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	const ARBDate& GetDate() const;
-	void SetDate(const ARBDate& inDate);
-	const std::string& GetDivision() const;
-	void SetDivision(const std::string& inDiv);
-	const std::string& GetLevel() const;
-	void SetLevel(const std::string& inLevel);
-	const std::string& GetHeight() const;
-	void SetEvent(const std::string& inEvent);
-	const std::string& GetConditions() const;
-	void SetHeight(const std::string& inHeight);
-	const std::string& GetEvent() const;
-	void SetConditions(const std::string& inConditions);
-	const std::string& GetJudge() const;
-	void SetJudge(const std::string& inJudge);
-	const std::string& GetHandler() const;
-	void SetHandler(const std::string& inHandler);
-	const ARBDogRunPartnerList& GetPartners() const;
+	ARBDate const& GetDate() const;
+	void SetDate(ARBDate const& inDate);
+	std::string const& GetDivision() const;
+	void SetDivision(std::string const& inDiv);
+	std::string const& GetLevel() const;
+	void SetLevel(std::string const& inLevel);
+	std::string const& GetHeight() const;
+	void SetEvent(std::string const& inEvent);
+	std::string const& GetConditions() const;
+	void SetHeight(std::string const& inHeight);
+	std::string const& GetEvent() const;
+	void SetConditions(std::string const& inConditions);
+	std::string const& GetJudge() const;
+	void SetJudge(std::string const& inJudge);
+	std::string const& GetHandler() const;
+	void SetHandler(std::string const& inHandler);
+	ARBDogRunPartnerList const& GetPartners() const;
 	ARBDogRunPartnerList& GetPartners();
-	const ARBDogRunScoring& GetScoring() const;
+	ARBDogRunScoring const& GetScoring() const;
 	ARBDogRunScoring& GetScoring();
 	ARB_Q GetQ() const;
 	void SetQ(ARB_Q inQ);
@@ -179,17 +179,17 @@ public:
 	void SetInClass(short inInClass);
 	short GetDogsQd() const;
 	void SetDogsQd(short inDogsQd);
-	const ARBDogRunOtherPointsList& GetOtherPoints() const;
+	ARBDogRunOtherPointsList const& GetOtherPoints() const;
 	ARBDogRunOtherPointsList& GetOtherPoints();
-	const ARBDogFaultList& GetFaults() const;
+	ARBDogFaultList const& GetFaults() const;
 	ARBDogFaultList& GetFaults();
-	const std::string& GetCRCD() const;
-	void SetCRCD(const std::string& inCRCD);
-	const std::string& GetCRCDMetaFile() const;
-	void SetCRCDMetaFile(const std::string& inCRCDMeta);
-	const std::string& GetNote() const;
-	void SetNote(const std::string& inNote);
-	const ARBDogReferenceRunList& GetReferenceRuns() const;
+	std::string const& GetCRCD() const;
+	void SetCRCD(std::string const& inCRCD);
+	std::string const& GetCRCDMetaFile() const;
+	void SetCRCDMetaFile(std::string const& inCRCDMeta);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
+	ARBDogReferenceRunList const& GetReferenceRuns() const;
 	ARBDogReferenceRunList& GetReferenceRuns();
 
 private:
@@ -213,87 +213,87 @@ private:
 	ARBDogReferenceRunList m_RefRuns;
 };
 
-inline const ARBDate& ARBDogRun::GetDate() const
+inline ARBDate const& ARBDogRun::GetDate() const
 {
 	return m_Date;
 }
 
-inline void ARBDogRun::SetDate(const ARBDate& inDate)
+inline void ARBDogRun::SetDate(ARBDate const& inDate)
 {
 	m_Date = inDate;
 }
 
-inline const std::string& ARBDogRun::GetDivision() const
+inline std::string const& ARBDogRun::GetDivision() const
 {
 	return m_Division;
 }
 
-inline void ARBDogRun::SetDivision(const std::string& inDiv)
+inline void ARBDogRun::SetDivision(std::string const& inDiv)
 {
 	m_Division = inDiv;
 }
 
-inline const std::string& ARBDogRun::GetLevel() const
+inline std::string const& ARBDogRun::GetLevel() const
 {
 	return m_Level;
 }
 
-inline void ARBDogRun::SetLevel(const std::string& inLevel)
+inline void ARBDogRun::SetLevel(std::string const& inLevel)
 {
 	m_Level = inLevel;
 }
 
-inline const std::string& ARBDogRun::GetEvent() const
+inline std::string const& ARBDogRun::GetEvent() const
 {
 	return m_Event;
 }
 
-inline void ARBDogRun::SetEvent(const std::string& inEvent)
+inline void ARBDogRun::SetEvent(std::string const& inEvent)
 {
 	m_Event = inEvent;
 }
 
-inline const std::string& ARBDogRun::GetHeight() const
+inline std::string const& ARBDogRun::GetHeight() const
 {
 	return m_Height;
 }
 
-inline void ARBDogRun::SetHeight(const std::string& inHeight)
+inline void ARBDogRun::SetHeight(std::string const& inHeight)
 {
 	m_Height = inHeight;
 }
 
-inline const std::string& ARBDogRun::GetConditions() const
+inline std::string const& ARBDogRun::GetConditions() const
 {
 	return m_Conditions;
 }
 
-inline void ARBDogRun::SetConditions(const std::string& inConditions)
+inline void ARBDogRun::SetConditions(std::string const& inConditions)
 {
 	m_Conditions = inConditions;
 }
 
-inline const std::string& ARBDogRun::GetJudge() const
+inline std::string const& ARBDogRun::GetJudge() const
 {
 	return m_Judge;
 }
 
-inline void ARBDogRun::SetJudge(const std::string& inJudge)
+inline void ARBDogRun::SetJudge(std::string const& inJudge)
 {
 	m_Judge = inJudge;
 }
 
-inline const std::string& ARBDogRun::GetHandler() const
+inline std::string const& ARBDogRun::GetHandler() const
 {
 	return m_Handler;
 }
 
-inline void ARBDogRun::SetHandler(const std::string& inHandler)
+inline void ARBDogRun::SetHandler(std::string const& inHandler)
 {
 	m_Handler = inHandler;
 }
 
-inline const ARBDogRunPartnerList& ARBDogRun::GetPartners() const
+inline ARBDogRunPartnerList const& ARBDogRun::GetPartners() const
 {
 	return m_Partners;
 }
@@ -303,7 +303,7 @@ inline ARBDogRunPartnerList& ARBDogRun::GetPartners()
 	return m_Partners;
 }
 
-inline const ARBDogRunScoring& ARBDogRun::GetScoring() const
+inline ARBDogRunScoring const& ARBDogRun::GetScoring() const
 {
 	return m_Scoring;
 }
@@ -353,7 +353,7 @@ inline void ARBDogRun::SetDogsQd(short inDogsQd)
 	m_DogsQd = inDogsQd;
 }
 
-inline const ARBDogFaultList& ARBDogRun::GetFaults() const
+inline ARBDogFaultList const& ARBDogRun::GetFaults() const
 {
 	return m_Notes.GetFaults();
 }
@@ -363,37 +363,37 @@ inline ARBDogFaultList& ARBDogRun::GetFaults()
 	return m_Notes.GetFaults();
 }
 
-inline const std::string& ARBDogRun::GetCRCD() const
+inline std::string const& ARBDogRun::GetCRCD() const
 {
 	return m_Notes.GetCRCD();
 }
 
-inline void ARBDogRun::SetCRCD(const std::string& inCRCD)
+inline void ARBDogRun::SetCRCD(std::string const& inCRCD)
 {
 	m_Notes.SetCRCD(inCRCD);
 }
 
-inline const std::string& ARBDogRun::GetCRCDMetaFile() const
+inline std::string const& ARBDogRun::GetCRCDMetaFile() const
 {
 	return m_Notes.GetCRCDMetaFile();
 }
 
-inline void ARBDogRun::SetCRCDMetaFile(const std::string& inCRCDMeta)
+inline void ARBDogRun::SetCRCDMetaFile(std::string const& inCRCDMeta)
 {
 	m_Notes.SetCRCDMetaFile(inCRCDMeta);
 }
 
-inline const std::string& ARBDogRun::GetNote() const
+inline std::string const& ARBDogRun::GetNote() const
 {
 	return m_Notes.GetNote();
 }
 
-inline void ARBDogRun::SetNote(const std::string& inNote)
+inline void ARBDogRun::SetNote(std::string const& inNote)
 {
 	m_Notes.SetNote(inNote);
 }
 
-inline const ARBDogReferenceRunList& ARBDogRun::GetReferenceRuns() const
+inline ARBDogReferenceRunList const& ARBDogRun::GetReferenceRuns() const
 {
 	return m_RefRuns;
 }
@@ -403,7 +403,7 @@ inline ARBDogReferenceRunList& ARBDogRun::GetReferenceRuns()
 	return m_RefRuns;
 }
 
-inline const ARBDogRunOtherPointsList& ARBDogRun::GetOtherPoints() const
+inline ARBDogRunOtherPointsList const& ARBDogRun::GetOtherPoints() const
 {
 	return m_OtherPoints;
 }
@@ -432,20 +432,11 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const ARBDogClubList& inClubs,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		ARBDogClubList const& inClubs,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
-
-	bool operator==(const ARBDogRunList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogRunList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
 
 	/**
 	 * Sort the list by date.
@@ -478,5 +469,5 @@ public:
 	 * @return Whether run was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteRun(const ARBDogRun* inRun);
+	bool DeleteRun(ARBDogRun const* inRun);
 };

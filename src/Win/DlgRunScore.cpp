@@ -82,25 +82,25 @@ static char THIS_FILE[] = __FILE__;
 class CDlgRunDataLevel
 {
 public:
-	CDlgRunDataLevel(const ARBConfigLevel* pLevel)
+	CDlgRunDataLevel(ARBConfigLevel const* pLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(NULL)
 	{
 	}
-	CDlgRunDataLevel(const ARBConfigLevel* pLevel, const ARBConfigSubLevel* pSubLevel)
+	CDlgRunDataLevel(ARBConfigLevel const* pLevel, ARBConfigSubLevel const* pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
 	}
-	const ARBConfigLevel* m_pLevel;
-	const ARBConfigSubLevel* m_pSubLevel;
+	ARBConfigLevel const* m_pLevel;
+	ARBConfigSubLevel const* m_pSubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunScore dialog
 
-CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue,
-	const ARBDogTrial* pTrial, const ARBDogRun* pRealRun, ARBDogRun* pRun)
+CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
+	ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun)
 	: CPropertyPage(CDlgRunScore::IDD)
 	, m_pDoc(pDoc)
 	, m_pVenue(pVenue)
@@ -109,7 +109,7 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue,
 	, m_Run(pRun)
 {
 	ASSERT(NULL != m_pTrial);
-	const ARBDogClub* pClub = m_pTrial->GetClubs().GetPrimaryClub();
+	ARBDogClub const* pClub = m_pTrial->GetClubs().GetPrimaryClub();
 	ASSERT(NULL != pClub);
 	//{{AFX_DATA_INIT(CDlgRunScore)
 	m_Venue = m_pVenue->GetName().c_str();
@@ -292,7 +292,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
 		pDX->PrepareCtrl(m_ctrlEvents.GetDlgCtrlID());
-		const ARBConfigEvent* pEvent = m_pVenue->GetEvents().FindEvent(event);
+		ARBConfigEvent const* pEvent = m_pVenue->GetEvents().FindEvent(event);
 		if (!pEvent)
 		{
 			AfxMessageBox(IDS_BAD_EVENT, MB_ICONSTOP);
@@ -301,7 +301,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 
 		pDX->PrepareCtrl(m_ctrlLevels.GetDlgCtrlID());
-		const ARBConfigScoring* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
+		ARBConfigScoring const* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
 		if (!pScoring)
 		{
 			AfxMessageBox(IDS_BAD_SCORINGMETHOD, MB_ICONSTOP);
@@ -401,7 +401,7 @@ bool CDlgRunScore::GetText(CEdit* pEdit, double& val) const
 	return true;
 }
 
-const ARBConfigEvent* CDlgRunScore::GetEvent() const
+ARBConfigEvent const* CDlgRunScore::GetEvent() const
 {
 	CString str;
 	int index = m_ctrlEvents.GetCurSel();
@@ -441,19 +441,19 @@ void CDlgRunScore::FillLevels()
 	index = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != index)
 	{
-		const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivisions.GetItemDataPtr(index));
+		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(index));
 		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
 			iter != pDiv->GetLevels().end();
 			++iter)
 		{
-			const ARBConfigLevel* pLevel = (*iter);
+			ARBConfigLevel const* pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
 				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
 					iterSub != pLevel->GetSubLevels().end();
 					++iterSub)
 				{
-					const ARBConfigSubLevel* pSubLevel = (*iterSub);
+					ARBConfigSubLevel const* pSubLevel = (*iterSub);
 					CDlgRunDataLevel* pData = new CDlgRunDataLevel(pLevel, pSubLevel);
 					int idx = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
 					m_ctrlLevels.SetItemDataPtr(idx, pData);
@@ -502,7 +502,7 @@ void CDlgRunScore::FillEvents()
 	int idxDiv = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != idxDiv)
 	{
-		const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
 		int idxLevel = m_ctrlLevels.GetCurSel();
 		if (CB_ERR != idxLevel)
 		{
@@ -511,7 +511,7 @@ void CDlgRunScore::FillEvents()
 				iter != m_pVenue->GetEvents().end();
 				++iter)
 			{
-				const ARBConfigEvent* pEvent = (*iter);
+				ARBConfigEvent const* pEvent = (*iter);
 				if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Run->GetDate()))
 				{
 					int idx = m_ctrlEvents.AddString(pEvent->GetName().c_str());
@@ -527,7 +527,7 @@ void CDlgRunScore::FillEvents()
 void CDlgRunScore::SetPartnerText()
 {
 	CString partners;
-	const ARBConfigEvent* pEvent = GetEvent();
+	ARBConfigEvent const* pEvent = GetEvent();
 	if (pEvent && pEvent->HasPartner())
 	{
 		for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
@@ -634,7 +634,7 @@ void CDlgRunScore::SetTitlePoints()
 	CString strMach("0");
 	CString strTitle("0");
 	CString strScore("");
-	const ARBConfigEvent* pEvent = GetEvent();
+	ARBConfigEvent const* pEvent = GetEvent();
 	std::string div, level;
 	CString str;
 	index = m_ctrlDivisions.GetCurSel();
@@ -653,7 +653,7 @@ void CDlgRunScore::SetTitlePoints()
 	}
 	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
 	ASSERT(pLevel);
-	const ARBConfigScoring* pScoring = NULL;
+	ARBConfigScoring const* pScoring = NULL;
 	if (0 < div.length() && 0 < level.length() && pEvent)
 		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
 	if (pScoring)
@@ -680,7 +680,7 @@ void CDlgRunScore::SetTitlePoints()
 
 void CDlgRunScore::UpdateControls()
 {
-	const ARBConfigEvent* pEvent = GetEvent();
+	ARBConfigEvent const* pEvent = GetEvent();
 	std::string div, level;
 	CString str;
 	int index = m_ctrlDivisions.GetCurSel();
@@ -699,7 +699,7 @@ void CDlgRunScore::UpdateControls()
 	}
 	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
 	ASSERT(pLevel);
-	const ARBConfigScoring* pScoring = NULL;
+	ARBConfigScoring const* pScoring = NULL;
 	if (0 < div.length() && 0 < level.length() && pEvent)
 		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
 	if (!pScoring)

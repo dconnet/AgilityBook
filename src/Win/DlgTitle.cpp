@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgTitle dialog
 
 // If pTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgTitle::CDlgTitle(const ARBConfig& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent)
+CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent)
 	: CDialog(CDlgTitle::IDD, pParent)
 	, m_Config(config)
 	, m_Titles(titles)
@@ -111,7 +111,7 @@ BOOL CDlgTitle::OnInitDialog()
 	{
 		if (m_pTitle->GetDate().IsValid())
 		{
-			const ARBDate& date = m_pTitle->GetDate();
+			ARBDate const& date = m_pTitle->GetDate();
 			CTime t(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
 			m_ctrlDate.SetTime(&t);
 		}
@@ -156,7 +156,7 @@ void CDlgTitle::OnSelchangeVenues()
 	int index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != index)
 	{
-		const ARBConfigVenue* pVenue = reinterpret_cast<const ARBConfigVenue*>(m_ctrlVenues.GetItemDataPtr(index));
+		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
 		ASSERT(pVenue);
 		for (ARBConfigDivisionList::const_iterator iter = pVenue->GetDivisions().begin();
 			iter != pVenue->GetDivisions().end();
@@ -191,7 +191,7 @@ void CDlgTitle::OnSelchangeTitles()
 	CString str;
 	if (CB_ERR != index)
 	{
-		const ARBConfigTitle* pTitle = reinterpret_cast<const ARBConfigTitle*>(m_ctrlTitles.GetItemDataPtr(index));
+		ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
 		str = pTitle->GetDescription().c_str();
 	}
 	str.Replace("\n", "\r\n");
@@ -209,7 +209,7 @@ void CDlgTitle::OnOK()
 		GotoDlgCtrl(&m_ctrlVenues);
 		return;
 	}
-	const ARBConfigVenue* pVenue = reinterpret_cast<const ARBConfigVenue*>(m_ctrlVenues.GetItemDataPtr(index));
+	ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
 	ASSERT(NULL != pVenue);
 
 	index = m_ctrlTitles.GetCurSel();
@@ -218,7 +218,7 @@ void CDlgTitle::OnOK()
 		GotoDlgCtrl(&m_ctrlTitles);
 		return;
 	}
-	const ARBConfigTitle* pTitle = reinterpret_cast<const ARBConfigTitle*>(m_ctrlTitles.GetItemDataPtr(index));
+	ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
 	ASSERT(NULL != pTitle);
 
 	CString name;

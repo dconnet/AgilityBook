@@ -50,10 +50,10 @@ class ARBDogRunOtherPoints : public ARBBase
 {
 public:
 	ARBDogRunOtherPoints();
-	ARBDogRunOtherPoints(const ARBDogRunOtherPoints& rhs);
-	ARBDogRunOtherPoints& operator=(const ARBDogRunOtherPoints& rhs);
-	bool operator==(const ARBDogRunOtherPoints& rhs) const;
-	bool operator!=(const ARBDogRunOtherPoints& rhs) const;
+	ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs);
+	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
+	bool operator==(ARBDogRunOtherPoints const& rhs) const;
+	bool operator!=(ARBDogRunOtherPoints const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -78,9 +78,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -94,8 +94,8 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
 	short GetPoints() const;
 	void SetPoints(short inPts);
 
@@ -110,12 +110,12 @@ inline std::string ARBDogRunOtherPoints::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBDogRunOtherPoints::GetName() const
+inline std::string const& ARBDogRunOtherPoints::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogRunOtherPoints::SetName(const std::string& inName)
+inline void ARBDogRunOtherPoints::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
@@ -138,15 +138,6 @@ inline void ARBDogRunOtherPoints::SetPoints(short inPts)
 class ARBDogRunOtherPointsList : public ARBVectorLoad2<ARBDogRunOtherPoints>
 {
 public:
-	bool operator==(const ARBDogRunOtherPointsList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogRunOtherPointsList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Add an other point.
 	 * @param inOther OtherPoints to add.

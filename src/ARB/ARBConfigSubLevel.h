@@ -49,10 +49,10 @@ class ARBConfigSubLevel : public ARBBase
 {
 public:
 	ARBConfigSubLevel();
-	ARBConfigSubLevel(const ARBConfigSubLevel& rhs);
-	ARBConfigSubLevel& operator=(const ARBConfigSubLevel& rhs);
-	bool operator==(const ARBConfigSubLevel& rhs) const;
-	bool operator!=(const ARBConfigSubLevel& rhs) const;
+	ARBConfigSubLevel(ARBConfigSubLevel const& rhs);
+	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+	bool operator==(ARBConfigSubLevel const& rhs) const;
+	bool operator!=(ARBConfigSubLevel const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -76,8 +76,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -91,8 +91,8 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
 
 private:
 	~ARBConfigSubLevel();
@@ -104,12 +104,12 @@ inline std::string ARBConfigSubLevel::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBConfigSubLevel::GetName() const
+inline std::string const& ARBConfigSubLevel::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigSubLevel::SetName(const std::string& inName)
+inline void ARBConfigSubLevel::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
@@ -122,21 +122,12 @@ inline void ARBConfigSubLevel::SetName(const std::string& inName)
 class ARBConfigSubLevelList : public ARBVectorLoad1<ARBConfigSubLevel>
 {
 public:
-	bool operator==(const ARBConfigSubLevelList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigSubLevelList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Find a sublevel.
 	 * @param inName Name of sublevel to find.
 	 * @return Whether name exists.
 	 */
-	bool FindSubLevel(const std::string& inName) const;
+	bool FindSubLevel(std::string const& inName) const;
 
 	/**
 	 * Find a sublevel.
@@ -144,12 +135,12 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigSubLevel* AddSubLevel(const std::string& inName);
+	ARBConfigSubLevel* AddSubLevel(std::string const& inName);
 
 	/**
 	 * Delete a sublevel.
 	 * @param inName Name of sublevel to delete.
 	 * @return Whether sublevel was deleted or not.
 	 */
-	bool DeleteSubLevel(const std::string& inName);
+	bool DeleteSubLevel(std::string const& inName);
 };

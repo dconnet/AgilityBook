@@ -296,7 +296,7 @@ public:
 	 * Return the current document version. This helps make sure an older
 	 * version of the program doesn't read a newer version of the file.
 	 */
-	static const ARBVersion& GetCurrentDocVersion();
+	static ARBVersion const& GetCurrentDocVersion();
 
 	ARBAgilityRecordBook();
 	~ARBAgilityRecordBook();
@@ -321,7 +321,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
+		Element const& inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -335,7 +335,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
-	bool Load(const Element& inTree, std::string& ioErrMsg)
+	bool Load(Element const& inTree, std::string& ioErrMsg)
 	{
 		return Load(inTree, true, true, true, true, true, ioErrMsg);
 	}
@@ -414,21 +414,21 @@ public:
 	/*
 	 * Getters.
 	 */
-	const ARBCalendarList& GetCalendar() const;
+	ARBCalendarList const& GetCalendar() const;
 	ARBCalendarList& GetCalendar();
-	const ARBTrainingList& GetTraining() const;
+	ARBTrainingList const& GetTraining() const;
 	ARBTrainingList& GetTraining();
-	const ARBConfig& GetConfig() const;
+	ARBConfig const& GetConfig() const;
 	ARBConfig& GetConfig();
-	const ARBInfo& GetInfo() const;
+	ARBInfo const& GetInfo() const;
 	ARBInfo& GetInfo();
-	const ARBDogList& GetDogs() const;
+	ARBDogList const& GetDogs() const;
 	ARBDogList& GetDogs();
 
 // Intentionally not implemented!
 private:
-	ARBAgilityRecordBook(const ARBAgilityRecordBook&);
-	ARBAgilityRecordBook& operator=(const ARBAgilityRecordBook&);
+	ARBAgilityRecordBook(ARBAgilityRecordBook const&);
+	ARBAgilityRecordBook& operator=(ARBAgilityRecordBook const&);
 
 private:
 	ARBCalendarList m_Calendar;
@@ -438,7 +438,7 @@ private:
 	ARBDogList m_Dogs;
 };
 
-inline const ARBCalendarList& ARBAgilityRecordBook::GetCalendar() const
+inline ARBCalendarList const& ARBAgilityRecordBook::GetCalendar() const
 {
 	return m_Calendar;
 }
@@ -448,7 +448,7 @@ inline ARBCalendarList& ARBAgilityRecordBook::GetCalendar()
 	return m_Calendar;
 }
 
-inline const ARBTrainingList& ARBAgilityRecordBook::GetTraining() const
+inline ARBTrainingList const& ARBAgilityRecordBook::GetTraining() const
 {
 	return m_Training;
 }
@@ -458,7 +458,7 @@ inline ARBTrainingList& ARBAgilityRecordBook::GetTraining()
 	return m_Training;
 }
 
-inline const ARBConfig& ARBAgilityRecordBook::GetConfig() const
+inline ARBConfig const& ARBAgilityRecordBook::GetConfig() const
 {
 	return m_Config;
 }
@@ -468,7 +468,7 @@ inline ARBConfig& ARBAgilityRecordBook::GetConfig()
 	return m_Config;
 }
 
-inline const ARBInfo& ARBAgilityRecordBook::GetInfo() const
+inline ARBInfo const& ARBAgilityRecordBook::GetInfo() const
 {
 	return m_Info;
 }
@@ -478,7 +478,7 @@ inline ARBInfo& ARBAgilityRecordBook::GetInfo()
 	return m_Info;
 }
 
-inline const ARBDogList& ARBAgilityRecordBook::GetDogs() const
+inline ARBDogList const& ARBAgilityRecordBook::GetDogs() const
 {
 	return m_Dogs;
 }
@@ -509,7 +509,7 @@ extern bool WarningNewerDocStructure();
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern std::string ErrorInvalidDocStructure(const char* const inMsg);
+extern std::string ErrorInvalidDocStructure(char const* const inMsg);
 
 /**
  * Return an error message about a missing required attribute.
@@ -520,9 +520,9 @@ extern std::string ErrorInvalidDocStructure(const char* const inMsg);
  * @return Message with newline.
  */
 extern std::string ErrorMissingAttribute(
-	const char* const inElement,
-	const char* const inAttrib,
-	const char* const inMsg = NULL);
+	char const* const inElement,
+	char const* const inAttrib,
+	char const* const inMsg = NULL);
 
 /**
  * Return an error message about an invalid value in an attribute.
@@ -533,6 +533,6 @@ extern std::string ErrorMissingAttribute(
  * @return Message with newline.
  */
 extern std::string ErrorInvalidAttributeValue(
-	const char* const inElement,
-	const char* const inAttrib,
-	const char* const inMsg = NULL);
+	char const* const inElement,
+	char const* const inAttrib,
+	char const* const inMsg = NULL);

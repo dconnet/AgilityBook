@@ -56,12 +56,12 @@ static char THIS_FILE[] = __FILE__;
 // Overlay indices
 #define IDX_HIDDEN	1
 
-static const struct
+static struct
 {
 	int fmt;
 	int cx;
 	UINT idText;
-} colTitleInfo[] =
+} const colTitleInfo[] =
 {
 	{LVCFMT_LEFT, 10, 0},
 	{LVCFMT_LEFT, 50, IDS_COL_DATE},
@@ -69,7 +69,7 @@ static const struct
 	{LVCFMT_LEFT, 50, IDS_COL_TITLE},
 	{LVCFMT_LEFT, 50, IDS_COL_NAME},
 };
-static const int nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
+static int const nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
 typedef struct
 {
@@ -81,8 +81,8 @@ typedef struct
 
 int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 {
-	const ARBDogTitle* pTitle1 = reinterpret_cast<const ARBDogTitle*>(lParam1);
-	const ARBDogTitle* pTitle2 = reinterpret_cast<const ARBDogTitle*>(lParam2);
+	ARBDogTitle const* pTitle1 = reinterpret_cast<ARBDogTitle const*>(lParam1);
+	ARBDogTitle const* pTitle2 = reinterpret_cast<ARBDogTitle const*>(lParam2);
 	SORTINFO *psi = reinterpret_cast<SORTINFO*>(lParam3);
 	int rc = 0;
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
@@ -142,7 +142,7 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogTitles dialog
 
-CDlgDogTitles::CDlgDogTitles(ARBConfig& config, const ARBDogTitleList& titles)
+CDlgDogTitles::CDlgDogTitles(ARBConfig& config, ARBDogTitleList const& titles)
 	: CPropertyPage(CDlgDogTitles::IDD)
 	, m_Config(config)
 	, m_sortTitles("Titles")
@@ -215,17 +215,17 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 
 void CDlgDogTitles::ListTitles()
 {
-	const ARBDogTitle* pSelected = NULL;
+	ARBDogTitle const* pSelected = NULL;
 	int i = m_ctrlTitles.GetSelection();
 	if (0 <= i)
-		pSelected = reinterpret_cast<const ARBDogTitle*>(m_ctrlTitles.GetItemData(i));
+		pSelected = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
 	m_ctrlTitles.DeleteAllItems();
 	i = 0;
 	for (ARBDogTitleList::const_iterator iterTitle = m_Titles.begin();
 		iterTitle != m_Titles.end();
 		++iterTitle)
 	{
-		const ARBDogTitle* pTitle = (*iterTitle);
+		ARBDogTitle const* pTitle = (*iterTitle);
 		if (!CAgilityBookOptions::GetViewHiddenTitles()
 		&& pTitle->IsHidden())
 		{
@@ -270,7 +270,7 @@ void CDlgDogTitles::ListTitles()
 	{
 		for (i = 0; i < m_ctrlTitles.GetItemCount(); ++i)
 		{
-			const ARBDogTitle* pTitle = reinterpret_cast<const ARBDogTitle*>(m_ctrlTitles.GetItemData(i));
+			ARBDogTitle const* pTitle = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
 			if (pTitle == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlTitles.SetSelection(i, true);
@@ -376,7 +376,7 @@ void CDlgDogTitles::OnTitleDelete()
 	int i = m_ctrlTitles.GetSelection();
 	if (0 <= i)
 	{
-		const ARBDogTitle* pTitle = reinterpret_cast<const ARBDogTitle*>(m_ctrlTitles.GetItemData(i));
+		ARBDogTitle const* pTitle = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
 		m_Titles.DeleteTitle(pTitle->GetVenue(), pTitle->GetName());
 		m_ctrlTitles.DeleteItem(i);
 	}

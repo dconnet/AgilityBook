@@ -302,7 +302,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			if (m_pRun->GetQ().Qualified()
 			|| ARB_Q::eQ_NQ == m_pRun->GetQ())
 			{
-				const ARBConfigScoring* pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+				ARBConfigScoring const* pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 					m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
 					m_pRun->GetEvent(),
 					m_pRun->GetDivision(),
@@ -317,7 +317,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				short pts = 0;
 				if (m_pRun->GetQ().Qualified())
 				{
-					const ARBConfigScoring* pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					ARBConfigScoring const* pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),

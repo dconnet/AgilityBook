@@ -49,8 +49,8 @@ class CAgilityBookDoc;
 class CDlgRunScore : public CPropertyPage
 {
 public:
-	CDlgRunScore(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue,
-		const ARBDogTrial* pTrial, const ARBDogRun* pRealRun, ARBDogRun* pRun);
+	CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
+		ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun);
 	~CDlgRunScore();
 
 private:
@@ -117,9 +117,9 @@ private:
 	CButton	m_ctrlOtherPoints;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	const ARBConfigVenue* m_pVenue;
-	const ARBDogTrial* m_pTrial;
-	const ARBDogRun* m_pRealRun;
+	ARBConfigVenue const* m_pVenue;
+	ARBDogTrial const* m_pTrial;
+	ARBDogRun const* m_pRealRun;
 	ARBDogRun* m_Run;
 	// 0: Current dlg, 1: text for scoring without open/close (like snooker)
 	CString m_strOpening[2];
@@ -133,7 +133,7 @@ protected:
 private:
 	bool GetText(CEdit* pEdit, short& val) const;
 	bool GetText(CEdit* pEdit, double& val) const;
-	const ARBConfigEvent* GetEvent() const;
+	ARBConfigEvent const* GetEvent() const;
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();

@@ -76,7 +76,7 @@ ARBDogRun::ARBDogRun()
 {
 }
 
-ARBDogRun::ARBDogRun(const ARBDogRun& rhs)
+ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
@@ -101,7 +101,7 @@ ARBDogRun::~ARBDogRun()
 {
 }
 
-ARBDogRun& ARBDogRun::operator=(const ARBDogRun& rhs)
+ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -126,7 +126,7 @@ ARBDogRun& ARBDogRun::operator=(const ARBDogRun& rhs)
 	return *this;
 }
 
-bool ARBDogRun::operator==(const ARBDogRun& rhs) const
+bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Division == rhs.m_Division
@@ -147,7 +147,7 @@ bool ARBDogRun::operator==(const ARBDogRun& rhs) const
 		&& m_RefRuns == rhs.m_RefRuns;
 }
 
-bool ARBDogRun::operator!=(const ARBDogRun& rhs) const
+bool ARBDogRun::operator!=(ARBDogRun const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -225,10 +225,10 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBDogRun::Load(
-	const ARBConfig& inConfig,
-	const ARBDogClubList& inClubs,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfig const& inConfig,
+	ARBDogClubList const& inClubs,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
@@ -273,14 +273,14 @@ bool ARBDogRun::Load(
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
-	const ARBConfigScoring* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today(), ioErrMsg);
+	ARBConfigScoring const* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today(), ioErrMsg);
 	if (!pEvent)
 		return false;
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const Element& element = inTree.GetElement(i);
-		const std::string& name = element.GetName();
+		Element const& element = inTree.GetElement(i);
+		std::string const& name = element.GetName();
 		if (name == TREE_CONDITIONS)
 		{
 			m_Conditions = element.GetValue();
@@ -326,7 +326,7 @@ bool ARBDogRun::Load(
 			element.GetAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
 			for (int idx = 0; idx < element.GetElementCount(); ++idx)
 			{
-				const Element& subElement = element.GetElement(idx);
+				Element const& subElement = element.GetElement(idx);
 				if (subElement.GetName() == TREE_PLACEMENT_OTHERPOINTS)
 				{
 					m_OtherPoints.Load(inConfig, subElement, inVersion, ioErrMsg);
@@ -385,7 +385,7 @@ bool ARBDogRun::Save(Element& ioTree) const
 	return true;
 }
 
-int ARBDogRun::NumOtherPointsInUse(const std::string& inOther) const
+int ARBDogRun::NumOtherPointsInUse(std::string const& inOther) const
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::const_iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -396,7 +396,7 @@ int ARBDogRun::NumOtherPointsInUse(const std::string& inOther) const
 	return count;
 }
 
-int ARBDogRun::RenameOtherPoints(const std::string& inOldName, const std::string& inNewName)
+int ARBDogRun::RenameOtherPoints(std::string const& inOldName, std::string const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -410,7 +410,7 @@ int ARBDogRun::RenameOtherPoints(const std::string& inOldName, const std::string
 	return count;
 }
 
-int ARBDogRun::DeleteOtherPoints(const std::string& inName)
+int ARBDogRun::DeleteOtherPoints(std::string const& inName)
 {
 	std::string name(inName);
 	int count = 0;
@@ -427,7 +427,7 @@ int ARBDogRun::DeleteOtherPoints(const std::string& inName)
 	return count;
 }
 
-short ARBDogRun::GetMachPoints(const ARBConfigScoring* inScoring) const
+short ARBDogRun::GetMachPoints(ARBConfigScoring const* inScoring) const
 {
 	short pts = 0;
 	if (inScoring && inScoring->HasMachPts())
@@ -448,7 +448,7 @@ short ARBDogRun::GetMachPoints(const ARBConfigScoring* inScoring) const
 }
 
 short ARBDogRun::GetTitlePoints(
-	const ARBConfigScoring* inScoring,
+	ARBConfigScoring const* inScoring,
 	bool* outClean) const
 {
 	short pts = 0;
@@ -502,7 +502,7 @@ short ARBDogRun::GetTitlePoints(
 	return pts;
 }
 
-ARBDouble ARBDogRun::GetScore(const ARBConfigScoring* inScoring) const
+ARBDouble ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
 {
 	ARBDouble pts = 0.0;
 	switch (m_Scoring.GetType())
@@ -532,10 +532,10 @@ ARBDouble ARBDogRun::GetScore(const ARBConfigScoring* inScoring) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRunList::Load(
-	const ARBConfig& inConfig,
-	const ARBDogClubList& inClubs,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfig const& inConfig,
+	ARBDogClubList const& inClubs,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	ARBDogRun* thing = new ARBDogRun();
@@ -604,7 +604,7 @@ ARBDogRun* ARBDogRunList::AddRun(ARBDogRun* inRun)
 	return inRun;
 }
 
-bool ARBDogRunList::DeleteRun(const ARBDogRun* inRun)
+bool ARBDogRunList::DeleteRun(ARBDogRun const* inRun)
 {
 	if (inRun)
 	{

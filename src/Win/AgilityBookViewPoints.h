@@ -64,22 +64,22 @@ public:
 
 private:
 	int DoEvents(
-		const ARBDog* inDog,
-		const std::vector<CVenueFilter>& venues,
+		ARBDog const* inDog,
+		std::vector<CVenueFilter> const& venues,
 		int index,
-		const std::list<const ARBDogTrial*>& trials,
-		const ARBConfigVenue* inVenue,
-		const ARBConfigDivision* inDiv,
-		const ARBConfigLevel* inLevel);
+		std::list<ARBDogTrial const*> const& trials,
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel);
 	size_t FindMatchingRuns(
-		const std::list<const ARBDogRun*>& runs,
-		const std::string& div,
-		const std::string& level,
-		const std::string& event,
-		std::list<const ARBDogRun*>& matching);
+		std::list<ARBDogRun const*> const& runs,
+		std::string const& div,
+		std::string const& level,
+		std::string const& event,
+		std::list<ARBDogRun const*>& matching);
 	int TallyPoints(
-		const std::list<const ARBDogRun*>& runs,
-		const ARBConfigScoring* pScoringMethod,
+		std::list<ARBDogRun const*> const& runs,
+		ARBConfigScoring const* pScoringMethod,
 		int& nCleanQ,
 		int& nNotCleanQ);
 	void LoadData();

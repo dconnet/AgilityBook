@@ -52,17 +52,17 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	int fmt;
 	int cx;
 	UINT idText;
-} colInfo1[] =
+} const colInfo1[] =
 {
 	{LVCFMT_LEFT, 50, IDS_COL_CLUB},
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
 };
-static const int nColInfo1 = sizeof(colInfo1) / sizeof(colInfo1[0]);
+static int const nColInfo1 = sizeof(colInfo1) / sizeof(colInfo1[0]);
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTrial dialog
@@ -130,7 +130,7 @@ void CDlgTrial::ListClubs()
 	int i = 0;
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++i, ++iter)
 	{
-		const ARBDogClub* pClub = (*iter);
+		ARBDogClub const* pClub = (*iter);
 		int nItem = m_ctrlClubs.InsertItem(i, pClub->GetName().c_str());
 		m_ctrlClubs.SetItemText(nItem, 1, pClub->GetVenue().c_str());
 		m_ctrlClubs.SetItemData(nItem, reinterpret_cast<LPARAM>(pClub));
@@ -213,7 +213,7 @@ void CDlgTrial::OnClubDelete()
 	int index = m_ctrlClubs.GetSelection();
 	if (0 <= index)
 	{
-		const ARBDogClub* pClub = reinterpret_cast<const ARBDogClub*>(m_ctrlClubs.GetItemData(index));
+		ARBDogClub const* pClub = reinterpret_cast<ARBDogClub const*>(m_ctrlClubs.GetItemData(index));
 		m_Clubs.DeleteClub(pClub->GetName(), pClub->GetVenue());
 		m_ctrlClubs.DeleteItem(index);
 	}
@@ -269,7 +269,7 @@ void CDlgTrial::OnOK()
 			iterRun != m_pTrial->GetRuns().end();
 			++iterRun)
 			{
-				const ARBDogRun* pRun = *iterRun;
+				ARBDogRun const* pRun = *iterRun;
 				bool bFound = false;
 				for (std::set<std::string>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
 				{

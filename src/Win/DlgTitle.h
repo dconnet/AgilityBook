@@ -42,7 +42,7 @@ class ARBDogTitleList;
 class CDlgTitle : public CDialog
 {
 public:
-	CDlgTitle(const ARBConfig& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent = NULL);
+	CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -56,7 +56,7 @@ private:
 	CButton	m_ctrlReceived;
 	CEdit	m_ctrlDesc;
 	//}}AFX_DATA
-	const ARBConfig& m_Config;
+	ARBConfig const& m_Config;
 	ARBDogTitleList& m_Titles;
 	ARBDogTitle* m_pTitle;
 	bool m_bInit;

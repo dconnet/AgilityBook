@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgRegNum dialog
 
 // If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgRegNum::CDlgRegNum(const ARBConfig& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent)
+CDlgRegNum::CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent)
 	: CDialog(CDlgRegNum::IDD, pParent)
 	, m_Config(config)
 	, m_RegNums(regnums)

@@ -49,10 +49,10 @@ class ARBConfigFault : public ARBBase
 {
 public:
 	ARBConfigFault();
-	ARBConfigFault(const ARBConfigFault& rhs);
-	ARBConfigFault& operator=(const ARBConfigFault& rhs);
-	bool operator==(const ARBConfigFault& rhs) const;
-	bool operator!=(const ARBConfigFault& rhs) const;
+	ARBConfigFault(ARBConfigFault const& rhs);
+	ARBConfigFault& operator=(ARBConfigFault const& rhs);
+	bool operator==(ARBConfigFault const& rhs) const;
+	bool operator!=(ARBConfigFault const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -76,8 +76,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -91,8 +91,8 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
 
 private:
 	~ARBConfigFault();
@@ -104,12 +104,12 @@ inline std::string ARBConfigFault::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBConfigFault::GetName() const
+inline std::string const& ARBConfigFault::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigFault::SetName(const std::string& inName)
+inline void ARBConfigFault::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
@@ -122,22 +122,13 @@ inline void ARBConfigFault::SetName(const std::string& inName)
 class ARBConfigFaultList : public ARBVectorLoad1<ARBConfigFault>
 {
 public:
-	bool operator==(const ARBConfigFaultList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigFaultList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Find a fault.
 	 * @param inName Name of fault to find.
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigFault* FindFault(const std::string& inName) const;
+	ARBConfigFault const* FindFault(std::string const& inName) const;
 
 	/**
 	 * Add a fault.
@@ -146,12 +137,12 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 *       The pointer is added to the list and its ref count is incremented.
 	 */
-	ARBConfigFault* AddFault(const std::string& inName);
+	ARBConfigFault* AddFault(std::string const& inName);
 
 	/**
 	 * Delete the fault.
 	 * @param inName Name of fault to delete.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteFault(const std::string& inName);
+	bool DeleteFault(std::string const& inName);
 };

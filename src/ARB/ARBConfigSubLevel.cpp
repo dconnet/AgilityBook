@@ -54,7 +54,7 @@ ARBConfigSubLevel::ARBConfigSubLevel()
 {
 }
 
-ARBConfigSubLevel::ARBConfigSubLevel(const ARBConfigSubLevel& rhs)
+ARBConfigSubLevel::ARBConfigSubLevel(ARBConfigSubLevel const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
@@ -63,19 +63,19 @@ ARBConfigSubLevel::~ARBConfigSubLevel()
 {
 }
 
-ARBConfigSubLevel& ARBConfigSubLevel::operator=(const ARBConfigSubLevel& rhs)
+ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel const& rhs)
 {
 	if (this != &rhs)
 		m_Name = rhs.m_Name;
 	return *this;
 }
 
-bool ARBConfigSubLevel::operator==(const ARBConfigSubLevel& rhs) const
+bool ARBConfigSubLevel::operator==(ARBConfigSubLevel const& rhs) const
 {
 	return m_Name == rhs.m_Name;
 }
 
-bool ARBConfigSubLevel::operator!=(const ARBConfigSubLevel& rhs) const
+bool ARBConfigSubLevel::operator!=(ARBConfigSubLevel const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -87,8 +87,8 @@ size_t ARBConfigSubLevel::GetSearchStrings(std::set<std::string>& ioStrings) con
 }
 
 bool ARBConfigSubLevel::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name)
@@ -109,7 +109,7 @@ bool ARBConfigSubLevel::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigSubLevelList::FindSubLevel(const std::string& inName) const
+bool ARBConfigSubLevelList::FindSubLevel(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -119,7 +119,7 @@ bool ARBConfigSubLevelList::FindSubLevel(const std::string& inName) const
 	return false;
 }
 
-ARBConfigSubLevel* ARBConfigSubLevelList::AddSubLevel(const std::string& inName)
+ARBConfigSubLevel* ARBConfigSubLevelList::AddSubLevel(std::string const& inName)
 {
 	// The calling function must make sure this name is unique within the division.
 	if (0 == inName.length())
@@ -130,7 +130,7 @@ ARBConfigSubLevel* ARBConfigSubLevelList::AddSubLevel(const std::string& inName)
 	return pLevel;
 }
 
-bool ARBConfigSubLevelList::DeleteSubLevel(const std::string& inName)
+bool ARBConfigSubLevelList::DeleteSubLevel(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

@@ -108,12 +108,12 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	WORD bValid;
 	int index;
-	const char* name;
-} sc_Types[] =
+	char const* name;
+} const sc_Types[] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
 		IO_TYPE_RUNS_FAULTS_TIME,   "Faults Then Time"},
@@ -144,15 +144,15 @@ static const struct
 
 // This simply defines the fields and what those fields are valid for.
 // sc_Fields defines what fields will be shown (and the order)
-static const struct
+static struct
 {
 	WORD bValid;
 	int index;
 	bool bImportable;
 	UINT fmt; // Only applicable to eView* items
 	UINT name;
-	const char* desc;
-} sc_FieldNames[IO_MAX] =
+	char const* desc;
+} const sc_FieldNames[IO_MAX] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
 		IO_RUNS_REG_NAME,      true,  LVCFMT_LEFT,   IDS_COL_REG_NAME, NULL},
@@ -319,7 +319,7 @@ bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, 
 	return bOk;
 }
 
-bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& values)
+bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, std::vector<int> const& values)
 {
 	bool bOk = false;
 	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
@@ -333,7 +333,7 @@ bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, 
 	return bOk;
 }
 
-static const int idxRunsFaultsTime[] = {
+static int const idxRunsFaultsTime[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -345,7 +345,7 @@ static const int idxRunsFaultsTime[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,
 -1};
-static const int idxRunsTimeFaults[] = {
+static int const idxRunsTimeFaults[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -357,7 +357,7 @@ static const int idxRunsTimeFaults[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,
 -1};
-static const int idxRunsOpenClose[] = {
+static int const idxRunsOpenClose[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -369,7 +369,7 @@ static const int idxRunsOpenClose[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,
 -1};
-static const int idxRunsPoints[] = {
+static int const idxRunsPoints[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -380,28 +380,28 @@ static const int idxRunsPoints[] = {
 	IO_RUNS_Q,				IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,
 	IO_RUNS_COMMENTS,		IO_RUNS_FAULTS,
 -1};
-static const int idxCalendar[] = {
+static int const idxCalendar[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_TENTATIVE,
 	IO_CAL_ENTERED,			IO_CAL_LOCATION,		IO_CAL_CLUB,
 	IO_CAL_VENUE,			IO_CAL_OPENS,			IO_CAL_CLOSES,
 	IO_CAL_NOTES,
 -1};
-static const int idxTraining[] = {
+static int const idxTraining[] = {
 	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_NOTES,
 -1};
-static const int idxViewTreeDog[] = {
+static int const idxViewTreeDog[] = {
 	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_BREED,
 	IO_TREE_DOG_DOB,		IO_TREE_DOG_AGE,
 -1};
-static const int idxViewTreeTrial[] = {
+static int const idxViewTreeTrial[] = {
 	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,		IO_TREE_TRIAL_CLUB,
 	IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,	IO_TREE_TRIAL_NOTES,
 -1};
-static const int idxViewTreeRun[] = {
+static int const idxViewTreeRun[] = {
 	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,
 	IO_TREE_RUN_DIVISION,	IO_TREE_RUN_LEVEL,		IO_TREE_RUN_HEIGHT,
 -1};
-static const int idxViewRunsList[] = {
+static int const idxViewRunsList[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
 	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
 	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
@@ -415,16 +415,16 @@ static const int idxViewRunsList[] = {
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
 	IO_RUNS_FAULTS,
 -1};
-static const int idxViewCalendarList[] = {
+static int const idxViewCalendarList[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_LOCATION,
 	IO_CAL_CLUB,			IO_CAL_VENUE,			IO_CAL_OPENS,
 	IO_CAL_CLOSES,			IO_CAL_NOTES,
 -1};
-static const int idxViewTrainingList[] = {
+static int const idxViewTrainingList[] = {
 	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_NOTES,
 -1};
 
-static const int* sc_Fields[IO_TYPE_MAX] =
+static int const* sc_Fields[IO_TYPE_MAX] =
 {
 	idxRunsFaultsTime,
 	idxRunsTimeFaults,

@@ -193,13 +193,13 @@ bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 // Entering this function, we know the trial is visible.
 // We don't know if the individual runs are.
 int CAgilityBookViewPoints::DoEvents(
-	const ARBDog* inDog,
-	const std::vector<CVenueFilter>& venues,
+	ARBDog const* inDog,
+	std::vector<CVenueFilter> const& venues,
 	int index,
-	const std::list<const ARBDogTrial*>& trials,
-	const ARBConfigVenue* inVenue,
-	const ARBConfigDivision* inDiv,
-	const ARBConfigLevel* inLevel)
+	std::list<ARBDogTrial const*> const& trials,
+	ARBConfigVenue const* inVenue,
+	ARBConfigDivision const* inDiv,
+	ARBConfigLevel const* inLevel)
 {
 	int nAdded = 0;
 	int machPts = 0;
@@ -210,33 +210,33 @@ int CAgilityBookViewPoints::DoEvents(
 	iterEvent != inVenue->GetEvents().end();
 	++iterEvent)
 	{
-		const ARBConfigEvent* pEvent = (*iterEvent);
+		ARBConfigEvent const* pEvent = (*iterEvent);
 		bool bHasPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent);
 
 		// Don't tally runs that have no titling points.
-		std::vector<const ARBConfigScoring*> scoringItems;
+		std::vector<ARBConfigScoring const*> scoringItems;
 		if (0 == pEvent->FindAllEvents(inDiv->GetName(), inLevel->GetName(), true, scoringItems))
 			continue;
 		// Iterate across each scoring method separately. This means it is
 		// possible to have multiple lines show up for a given event. But if
 		// that happens, it means the events were scored differently.
-		for (std::vector<const ARBConfigScoring*>::iterator iterScoring = scoringItems.begin();
+		for (std::vector<ARBConfigScoring const*>::iterator iterScoring = scoringItems.begin();
 			iterScoring != scoringItems.end();
 			++iterScoring)
 		{
-			const ARBConfigScoring* pScoringMethod = *iterScoring;
+			ARBConfigScoring const* pScoringMethod = *iterScoring;
 			int SQs = 0;
 			int machPtsEvent = 0;
-			list<const ARBDogRun*> matching;
+			list<ARBDogRun const*> matching;
 			set<std::string> judges;
 			set<std::string> judgesQ;
 			set<std::string> partners;
 			set<std::string> partnersQ;
-			for (list<const ARBDogTrial*>::const_iterator iterTrial = trials.begin();
+			for (list<ARBDogTrial const*>::const_iterator iterTrial = trials.begin();
 			iterTrial != trials.end();
 			++iterTrial)
 			{
-				const ARBDogTrial* pTrial = (*iterTrial);
+				ARBDogTrial const* pTrial = (*iterTrial);
 				if (pScoringMethod->HasDoubleQ())
 				{
 					for (ARBDate date = pTrial->GetRuns().GetStartDate();
@@ -251,10 +251,10 @@ int CAgilityBookViewPoints::DoEvents(
 							iterRun != pTrial->GetRuns().end();
 							++iterRun)
 							{
-								const ARBDogRun* pRun = (*iterRun);
+								ARBDogRun const* pRun = (*iterRun);
 								// This extra test only looks at runs that are
 								// QQing. Otherwise a 3rd NA run throws things off.
-								const ARBConfigScoring* pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
+								ARBConfigScoring const* pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
 									pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
 									pRun->GetEvent(),
 									pRun->GetDivision(),
@@ -274,14 +274,14 @@ int CAgilityBookViewPoints::DoEvents(
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 				{
-					const ARBDogRun* pRun = (*iterRun);
+					ARBDogRun const* pRun = (*iterRun);
 					if (!pRun->IsFiltered())
 					{
 						if (pRun->GetDivision() != inDiv->GetName()
 						|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
 						|| pRun->GetEvent() != pEvent->GetName())
 							continue;
-						const ARBConfigScoring* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
+						ARBConfigScoring const* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
 						ASSERT(pScoring);
 						if (!pScoring) continue; // Shouldn't need it...
 						if (*pScoring != *pScoringMethod)
@@ -429,16 +429,16 @@ int CAgilityBookViewPoints::DoEvents(
 }
 
 size_t CAgilityBookViewPoints::FindMatchingRuns(
-	const std::list<const ARBDogRun*>& runs,
-	const std::string& div,
-	const std::string& level,
-	const std::string& event,
-	std::list<const ARBDogRun*>& matching)
+	std::list<ARBDogRun const*> const& runs,
+	std::string const& div,
+	std::string const& level,
+	std::string const& event,
+	std::list<ARBDogRun const*>& matching)
 {
 	matching.clear();
-	for (list<const ARBDogRun*>::const_iterator iterRun = runs.begin(); iterRun != runs.end(); ++iterRun)
+	for (list<ARBDogRun const*>::const_iterator iterRun = runs.begin(); iterRun != runs.end(); ++iterRun)
 	{
-		const ARBDogRun* pRun = (*iterRun);
+		ARBDogRun const* pRun = (*iterRun);
 		if (pRun->GetDivision() == div && pRun->GetLevel() == level && pRun->GetEvent() == event)
 			matching.push_back(pRun);
 	}
@@ -446,17 +446,17 @@ size_t CAgilityBookViewPoints::FindMatchingRuns(
 }
 
 int CAgilityBookViewPoints::TallyPoints(
-	const std::list<const ARBDogRun*>& runs,
-	const ARBConfigScoring* pScoringMethod,
+	std::list<ARBDogRun const*> const& runs,
+	ARBConfigScoring const* pScoringMethod,
 	int& nCleanQ,
 	int& nNotCleanQ)
 {
 	nCleanQ = 0;
 	nNotCleanQ = 0;
 	int score = 0;
-	for (list<const ARBDogRun*>::const_iterator iterRun = runs.begin(); iterRun != runs.end(); ++iterRun)
+	for (list<ARBDogRun const*>::const_iterator iterRun = runs.begin(); iterRun != runs.end(); ++iterRun)
 	{
-		const ARBDogRun* pRun = (*iterRun);
+		ARBDogRun const* pRun = (*iterRun);
 		if (pRun->GetQ().Qualified())
 		{
 			bool bClean = false;
@@ -476,10 +476,10 @@ int CAgilityBookViewPoints::TallyPoints(
 class OtherPtInfo
 {
 public:
-	OtherPtInfo(const std::string& venue,
-			const std::string& div,
-			const std::string& level,
-			const std::string& event,
+	OtherPtInfo(std::string const& venue,
+			std::string const& div,
+			std::string const& level,
+			std::string const& event,
 			int score)
 		: m_Venue(venue)
 		, m_Div(div)
@@ -488,10 +488,10 @@ public:
 		, m_Score(score)
 	{
 	}
-	OtherPtInfo(const ARBDogTrial* pTrial, const ARBDogRun* pRun, int score)
+	OtherPtInfo(ARBDogTrial const* pTrial, ARBDogRun const* pRun, int score)
 		: m_Score(score)
 	{
-		const ARBDogClub* pClub = NULL;
+		ARBDogClub const* pClub = NULL;
 		if (pTrial)
 			pClub = pTrial->GetClubs().GetPrimaryClub();
 		if (pClub)
@@ -524,7 +524,7 @@ void CAgilityBookViewPoints::LoadData()
 	GetListCtrl().DeleteAllItems();
 
 	// Find all visible items and sort them out by venue.
-	const ARBDog* pDog = GetDocument()->GetCurrentDog();
+	ARBDog const* pDog = GetDocument()->GetCurrentDog();
 	if (pDog)
 	{
 		std::vector<CVenueFilter> venues;
@@ -535,7 +535,7 @@ void CAgilityBookViewPoints::LoadData()
 		iterVenue != GetDocument()->GetConfig().GetVenues().end();
 		++iterVenue)
 		{
-			const ARBConfigVenue* pVenue = (*iterVenue);
+			ARBConfigVenue const* pVenue = (*iterVenue);
 			if (!CAgilityBookOptions::IsVenueVisible(venues, pVenue->GetName()))
 				continue;
 
@@ -545,7 +545,7 @@ void CAgilityBookViewPoints::LoadData()
 			iterTitle != pDog->GetTitles().end();
 			++iterTitle)
 			{
-				const ARBDogTitle* pTitle = (*iterTitle);
+				ARBDogTitle const* pTitle = (*iterTitle);
 				if (pTitle->GetVenue() == pVenue->GetName()
 				&& !pTitle->IsFiltered())
 				{
@@ -555,7 +555,7 @@ void CAgilityBookViewPoints::LoadData()
 						if (i > 0)
 							GetListCtrl().InsertItem(i++, "");
 						GetListCtrl().InsertItem(i, pVenue->GetName().c_str());
-						const ARBDogRegNum* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
+						ARBDogRegNum const* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
 						if (pRegNum)
 						{
 							CString str;
@@ -575,12 +575,12 @@ void CAgilityBookViewPoints::LoadData()
 			}
 
 			// Then the runs.
-			list<const ARBDogTrial*> trialsInVenue;
+			list<ARBDogTrial const*> trialsInVenue;
 			for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 			{
-				const ARBDogTrial* pTrial = (*iterTrial);
+				ARBDogTrial const* pTrial = (*iterTrial);
 				if (pTrial->HasVenue(pVenue->GetName())
 				&& !pTrial->IsFiltered())
 				{
@@ -596,7 +596,7 @@ void CAgilityBookViewPoints::LoadData()
 					if (i > 0)
 						GetListCtrl().InsertItem(i++, "");
 					GetListCtrl().InsertItem(i, pVenue->GetName().c_str());
-					const ARBDogRegNum* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
+					ARBDogRegNum const* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
 					if (pRegNum)
 					{
 						CString str;
@@ -609,12 +609,12 @@ void CAgilityBookViewPoints::LoadData()
 				iterDiv != pVenue->GetDivisions().end();
 				++iterDiv)
 				{
-					const ARBConfigDivision* pDiv = (*iterDiv);
+					ARBConfigDivision const* pDiv = (*iterDiv);
 					for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
 					iterLevel != pDiv->GetLevels().end();
 					++iterLevel)
 					{
-						const ARBConfigLevel* pLevel = (*iterLevel);
+						ARBConfigLevel const* pLevel = (*iterLevel);
 						i += DoEvents(pDog, venues, i, trialsInVenue, pVenue, pDiv, pLevel);
 					}
 				}
@@ -622,7 +622,7 @@ void CAgilityBookViewPoints::LoadData()
 		}
 
 		// After all that, we do 'other points'.
-		const ARBConfigOtherPointsList& other = GetDocument()->GetConfig().GetOtherPoints();
+		ARBConfigOtherPointsList const& other = GetDocument()->GetConfig().GetOtherPoints();
 		if (0 < other.size())
 		{
 			CString str;
@@ -640,21 +640,21 @@ void CAgilityBookViewPoints::LoadData()
 				iterTrial != pDog->GetTrials().end();
 				++iterTrial)
 				{
-					const ARBDogTrial* pTrial = (*iterTrial);
+					ARBDogTrial const* pTrial = (*iterTrial);
 					if (!pTrial->IsFiltered())
 					{
 						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 						iterRun != pTrial->GetRuns().end();
 						++iterRun)
 						{
-							const ARBDogRun* pRun = (*iterRun);
+							ARBDogRun const* pRun = (*iterRun);
 							if (!pRun->IsFiltered())
 							{
 								for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
 								iterOtherPts != pRun->GetOtherPoints().end();
 								++iterOtherPts)
 								{
-									const ARBDogRunOtherPoints* pOtherPts = (*iterOtherPts);
+									ARBDogRunOtherPoints const* pOtherPts = (*iterOtherPts);
 									if (pOtherPts->GetName() == pOther->GetName())
 									{
 										runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));

@@ -181,7 +181,7 @@ BOOL CAgilityBookApp::InitInstance()
 	{
 		XMLPlatformUtils::Initialize();
 	}
-    catch (const XMLException& toCatch)
+    catch (XMLException const& toCatch)
 	{
 		CString msg;
 		msg.LoadString(IDS_XERCES_ERROR);

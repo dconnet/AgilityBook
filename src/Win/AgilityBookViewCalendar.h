@@ -54,7 +54,7 @@ protected: // create from serialization only
 
 public:
 	CAgilityBookDoc* GetDocument() const;
-	bool SetCurrentDate(const ARBDate& date, bool bEnsureVisible);
+	bool SetCurrentDate(ARBDate const& date, bool bEnsureVisible);
 
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
@@ -64,11 +64,11 @@ public:
 
 private:
 	size_t GetEntriesOn(
-		const ARBDate& date,
+		ARBDate const& date,
 		std::vector<ARBCalendar*>& entries,
 		bool bGetAll) const;
 	void LoadData();
-	CRect GetDateRect(const ARBDate& date, bool bLogical) const;
+	CRect GetDateRect(ARBDate const& date, bool bLogical) const;
 	void GetDateFromPoint(CPoint pt, ARBDate& date);
 	std::vector<ARBCalendar*> m_Calendar;
 	std::vector<ARBCalendar*> m_CalendarHidden;

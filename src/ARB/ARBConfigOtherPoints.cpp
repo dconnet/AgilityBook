@@ -56,7 +56,7 @@ ARBConfigOtherPoints::ARBConfigOtherPoints()
 {
 }
 
-ARBConfigOtherPoints::ARBConfigOtherPoints(const ARBConfigOtherPoints& rhs)
+ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Tally(rhs.m_Tally)
 	, m_Desc(rhs.m_Desc)
@@ -67,7 +67,7 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
 
-ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(const ARBConfigOtherPoints& rhs)
+ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -78,14 +78,14 @@ ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(const ARBConfigOtherPoints
 	return *this;
 }
 
-bool ARBConfigOtherPoints::operator==(const ARBConfigOtherPoints& rhs) const
+bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Tally == rhs.m_Tally
 		&& m_Desc == rhs.m_Desc;
 }
 
-bool ARBConfigOtherPoints::operator!=(const ARBConfigOtherPoints& rhs) const
+bool ARBConfigOtherPoints::operator!=(ARBConfigOtherPoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -104,8 +104,8 @@ size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 }
 
 bool ARBConfigOtherPoints::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
@@ -169,7 +169,7 @@ bool ARBConfigOtherPoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigOtherPointsList::VerifyOtherPoints(const std::string& inName) const
+bool ARBConfigOtherPointsList::VerifyOtherPoints(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -179,7 +179,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(const std::string& inName) cons
 	return false;
 }
 
-const ARBConfigOtherPoints* ARBConfigOtherPointsList::FindOtherPoints(const std::string& inName) const
+ARBConfigOtherPoints const* ARBConfigOtherPointsList::FindOtherPoints(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 		if ((*iter)->GetName() == inName)
@@ -187,7 +187,7 @@ const ARBConfigOtherPoints* ARBConfigOtherPointsList::FindOtherPoints(const std:
 	return NULL;
 }
 
-ARBConfigOtherPoints* ARBConfigOtherPointsList::FindOtherPoints(const std::string& inName)
+ARBConfigOtherPoints* ARBConfigOtherPointsList::FindOtherPoints(std::string const& inName)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 		if ((*iter)->GetName() == inName)
@@ -206,7 +206,7 @@ ARBConfigOtherPoints* ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPoi
 	return inOther;
 }
 
-bool ARBConfigOtherPointsList::DeleteOtherPoints(const std::string& inName)
+bool ARBConfigOtherPointsList::DeleteOtherPoints(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

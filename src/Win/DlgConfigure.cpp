@@ -247,7 +247,7 @@ void CDlgConfigure::LoadData()
 	m_ctrlOthers.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 }
 
-int CDlgConfigure::FindCurrentVenue(const ARBConfigVenue* pVenue, bool bSet)
+int CDlgConfigure::FindCurrentVenue(ARBConfigVenue const* pVenue, bool bSet)
 {
 	int idxCurrent = -1;
 	for (int index = 0; index < m_ctrlVenues.GetItemCount(); ++index)
@@ -268,7 +268,7 @@ int CDlgConfigure::FindCurrentVenue(const ARBConfigVenue* pVenue, bool bSet)
 	return idxCurrent;
 }
 
-int CDlgConfigure::FindCurrentFault(const ARBConfigFault* pFault, bool bSet)
+int CDlgConfigure::FindCurrentFault(ARBConfigFault const* pFault, bool bSet)
 {
 	int idxCurrent = -1;
 	for (int index = 0; index < m_ctrlFaults.GetItemCount(); ++index)
@@ -289,7 +289,7 @@ int CDlgConfigure::FindCurrentFault(const ARBConfigFault* pFault, bool bSet)
 	return idxCurrent;
 }
 
-int CDlgConfigure::FindCurrentOtherPoints(const ARBConfigOtherPoints* pOther, bool bSet)
+int CDlgConfigure::FindCurrentOtherPoints(ARBConfigOtherPoints const* pOther, bool bSet)
 {
 	int idxCurrent = -1;
 	for (int index = 0; index < m_ctrlOthers.GetItemCount(); ++index)
@@ -718,7 +718,7 @@ void CDlgConfigure::OnUpdate()
 		CString msg;
 		for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
 		{
-			const ARBConfigAction* action = *iterAction;
+			ARBConfigAction const* action = *iterAction;
 			if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 			{
 				// Find the venue.
@@ -745,7 +745,7 @@ void CDlgConfigure::OnUpdate()
 							tmp = "\n";
 						msg += tmp;
 						// If the new title exists, just delete the old. Otherwise, rename the old to new.
-						const ARBConfigTitle* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
+						ARBConfigTitle const* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
 						if (newTitle)
 							venue->GetDivisions().DeleteTitle(action->GetOldName());
 						else

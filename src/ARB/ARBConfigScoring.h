@@ -76,10 +76,10 @@ public:
 	static std::string GetScoringStyleStr(ScoringStyle inStyle);
 
 	ARBConfigScoring();
-	ARBConfigScoring(const ARBConfigScoring& rhs);
-	ARBConfigScoring& operator=(const ARBConfigScoring& rhs);
-	bool operator==(const ARBConfigScoring& rhs) const;
-	bool operator!=(const ARBConfigScoring& rhs) const;
+	ARBConfigScoring(ARBConfigScoring const& rhs);
+	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+	bool operator==(ARBConfigScoring const& rhs) const;
+	bool operator!=(ARBConfigScoring const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -104,9 +104,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfigDivisionList& inDivisions,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfigDivisionList const& inDivisions,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -120,22 +120,22 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const ARBDate& GetValidFrom() const;
-	void SetValidFrom(const ARBDate& inDate);
-	const ARBDate& GetValidTo() const;
-	void SetValidTo(const ARBDate& inDate);
+	ARBDate const& GetValidFrom() const;
+	void SetValidFrom(ARBDate const& inDate);
+	ARBDate const& GetValidTo() const;
+	void SetValidTo(ARBDate const& inDate);
 	std::string GetValidDateString() const;
-	const std::string& GetDivision() const;
-	void SetDivision(const std::string& inDiv);
-	const std::string& GetLevel() const;
-	void SetLevel(const std::string& inLevel);
+	std::string const& GetDivision() const;
+	void SetDivision(std::string const& inDiv);
+	std::string const& GetLevel() const;
+	void SetLevel(std::string const& inLevel);
 	ScoringStyle GetScoringStyle() const;
 	std::string GetScoringStyleStr() const;
 	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle);
 	bool DropFractions() const;
 	void SetDropFractions(bool inBool);
-	const std::string& GetNote() const;
-	void SetNote(const std::string& inNote);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
 	short GetRequiredOpeningPoints() const;
 	void SetRequiredOpeningPoints(short inPoints);
 	short GetRequiredClosingPoints() const;
@@ -146,7 +146,7 @@ public:
 	void SetHasDoubleQ(bool inBool);
 	bool HasMachPts() const;
 	void SetHasMachPts(bool inBool);
-	const ARBConfigTitlePointsList& GetTitlePoints() const;
+	ARBConfigTitlePointsList const& GetTitlePoints() const;
 	ARBConfigTitlePointsList& GetTitlePoints();
 
 private:
@@ -166,42 +166,42 @@ private:
 	ARBConfigTitlePointsList m_TitlePoints;
 };
 
-inline const ARBDate& ARBConfigScoring::GetValidFrom() const
+inline ARBDate const& ARBConfigScoring::GetValidFrom() const
 {
 	return m_ValidFrom;
 }
 
-inline void ARBConfigScoring::SetValidFrom(const ARBDate& inDate)
+inline void ARBConfigScoring::SetValidFrom(ARBDate const& inDate)
 {
 	m_ValidFrom = inDate;
 }
 
-inline const ARBDate& ARBConfigScoring::GetValidTo() const
+inline ARBDate const& ARBConfigScoring::GetValidTo() const
 {
 	return m_ValidTo;
 }
 
-inline void ARBConfigScoring::SetValidTo(const ARBDate& inDate)
+inline void ARBConfigScoring::SetValidTo(ARBDate const& inDate)
 {
 	m_ValidTo = inDate;
 }
 
-inline const std::string& ARBConfigScoring::GetDivision() const
+inline std::string const& ARBConfigScoring::GetDivision() const
 {
 	return m_Division;
 }
 
-inline void ARBConfigScoring::SetDivision(const std::string& inDiv)
+inline void ARBConfigScoring::SetDivision(std::string const& inDiv)
 {
 	m_Division = inDiv;
 }
 
-inline const std::string& ARBConfigScoring::GetLevel() const
+inline std::string const& ARBConfigScoring::GetLevel() const
 {
 	return m_Level;
 }
 
-inline void ARBConfigScoring::SetLevel(const std::string& inLevel)
+inline void ARBConfigScoring::SetLevel(std::string const& inLevel)
 {
 	m_Level = inLevel;
 }
@@ -228,12 +228,12 @@ inline void ARBConfigScoring::SetDropFractions(bool inBool)
 	m_bDropFractions = inBool;
 }
 
-inline const std::string& ARBConfigScoring::GetNote() const
+inline std::string const& ARBConfigScoring::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBConfigScoring::SetNote(const std::string& inNote)
+inline void ARBConfigScoring::SetNote(std::string const& inNote)
 {
 	m_Note = inNote;
 }
@@ -288,7 +288,7 @@ inline void ARBConfigScoring::SetHasMachPts(bool inBool)
 	m_bMachPts = inBool;
 }
 
-inline const ARBConfigTitlePointsList& ARBConfigScoring::GetTitlePoints() const
+inline ARBConfigTitlePointsList const& ARBConfigScoring::GetTitlePoints() const
 {
 	return m_TitlePoints;
 }
@@ -316,19 +316,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfigDivisionList& inDivisions,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfigDivisionList const& inDivisions,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
-
-	bool operator==(const ARBConfigScoringList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigScoringList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
 
 	/**
 	 * Find all the scoring methods that match.
@@ -339,10 +330,10 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-		const std::string& inDivision,
-		const std::string& inLevel,
+		std::string const& inDivision,
+		std::string const& inLevel,
 		bool inTitlePoints,
-		std::vector<const ARBConfigScoring*>& outList) const;
+		std::vector<ARBConfigScoring const*>& outList) const;
 
 	/**
 	 * Find an event.
@@ -352,10 +343,10 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigScoring* FindEvent(
-		const std::string& inDivision,
-		const std::string& inLevel,
-		const ARBDate& inDate) const;
+	ARBConfigScoring const* FindEvent(
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -364,8 +355,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-		const std::string& inDivision,
-		const std::string& inLevel) const;
+		std::string const& inDivision,
+		std::string const& inLevel) const;
 
 	/**
 	 * Create a new scoring method.

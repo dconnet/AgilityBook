@@ -126,7 +126,7 @@ public:
 	void EditRun(ARBDogRun* pRun);
 	void DeleteRun(ARBDogRun* pRun);
 
-	bool CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* pTabView);
+	bool CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView);
 	void SortDates();
 	bool ImportConfiguration();
 

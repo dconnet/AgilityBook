@@ -74,12 +74,12 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
+ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static const ARBVersion curVersion(8, 5);
+	static ARBVersion const curVersion(8, 5);
 	return curVersion;
 }
 
@@ -97,7 +97,7 @@ bool WarningNewerDocStructure()
 	return IDYES == AfxMessageBox(WARNING_NEWER_DOC, MB_ICONEXCLAMATION | MB_YESNO);
 }
 
-std::string ErrorInvalidDocStructure(const char* const inMsg)
+std::string ErrorInvalidDocStructure(char const* const inMsg)
 {
 	std::string str(INVALID_DOC_STRUCTURE);
 	if (inMsg)
@@ -110,9 +110,9 @@ std::string ErrorInvalidDocStructure(const char* const inMsg)
 }
 
 std::string ErrorMissingAttribute(
-	const char* const inElement,
-	const char* const inAttrib,
-	const char* const inMsg)
+	char const* const inElement,
+	char const* const inAttrib,
+	char const* const inMsg)
 {
 	std::string str(INVALID_FILE_FORMAT);
 	str += inElement;
@@ -129,9 +129,9 @@ std::string ErrorMissingAttribute(
 }
 
 std::string ErrorInvalidAttributeValue(
-	const char* const inElement,
-	const char* const inAttrib,
-	const char* const inMsg)
+	char const* const inElement,
+	char const* const inAttrib,
+	char const* const inMsg)
 {
 	std::string str(INVALID_FILE_FORMAT);
 	str += inElement;
@@ -167,7 +167,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // @todo: Relax strictness when reading data and handle errors better.
 //  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
-	const Element& inTree,
+	Element const& inTree,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,
@@ -215,7 +215,7 @@ bool ARBAgilityRecordBook::Load(
 		bLoaded = true;
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
 		{
-			const Element& element = inTree.GetElement(i);
+			Element const& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_CALENDAR)
 			{
 				// Ignore any errors...
@@ -230,7 +230,7 @@ bool ARBAgilityRecordBook::Load(
 		bLoaded = true;
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
 		{
-			const Element& element = inTree.GetElement(i);
+			Element const& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_TRAINING)
 			{
 				// Ignore any errors...
@@ -278,7 +278,7 @@ bool ARBAgilityRecordBook::Load(
 			// Now load the rest
 			for (i = 0; i < inTree.GetElementCount(); ++i)
 			{
-				const Element& element = inTree.GetElement(i);
+				Element const& element = inTree.GetElement(i);
 				if (element.GetName() == TREE_DOG)
 				{
 					// If this fails, keep going.
@@ -363,17 +363,17 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs) co
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		const ARBDog* pDog = (*iterDog);
+		ARBDog const* pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
+			ARBDogTrial const* pTrial = (*iterTrial);
 			for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
 				iterClub != pTrial->GetClubs().end();
 				++iterClub)
 			{
-				const ARBDogClub* pClub = (*iterClub);
+				ARBDogClub const* pClub = (*iterClub);
 				if (0 < pClub->GetName().length())
 					outClubs.insert(pClub->GetName());
 			}
@@ -383,7 +383,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs) co
 		iterCal != m_Calendar.end();
 		++iterCal)
 	{
-		const ARBCalendar* pCal = *iterCal;
+		ARBCalendar const* pCal = *iterCal;
 		if (0 < pCal->GetClub().length())
 			outClubs.insert(pCal->GetClub());
 	}
@@ -397,12 +397,12 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLoca
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		const ARBDog* pDog = (*iterDog);
+		ARBDog const* pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
+			ARBDogTrial const* pTrial = (*iterTrial);
 			if (0 < pTrial->GetLocation().length())
 				outLocations.insert(pTrial->GetLocation());
 		}
@@ -411,7 +411,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLoca
 		iterCal != m_Calendar.end();
 		++iterCal)
 	{
-		const ARBCalendar* pCal = *iterCal;
+		ARBCalendar const* pCal = *iterCal;
 		if (0 < pCal->GetLocation().length())
 			outLocations.insert(pCal->GetLocation());
 	}
@@ -425,17 +425,17 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) co
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		const ARBDog* pDog = (*iterDog);
+		ARBDog const* pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
+			ARBDogTrial const* pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				const ARBDogRun* pRun = (*iterRun);
+				ARBDogRun const* pRun = (*iterRun);
 				if (0 < pRun->GetHeight().length())
 					outHeights.insert(pRun->GetHeight());
 			}
@@ -453,17 +453,17 @@ size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::string>& outJudges, bool
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		const ARBDog* pDog = (*iterDog);
+		ARBDog const* pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
+			ARBDogTrial const* pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				const ARBDogRun* pRun = (*iterRun);
+				ARBDogRun const* pRun = (*iterRun);
 				if (0 < pRun->GetJudge().length())
 					outJudges.insert(pRun->GetJudge());
 			}
@@ -479,17 +479,17 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<std::string>& outHandlers) 
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		const ARBDog* pDog = (*iterDog);
+		ARBDog const* pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
+			ARBDogTrial const* pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				const ARBDogRun* pRun = (*iterRun);
+				ARBDogRun const* pRun = (*iterRun);
 				if (0 < pRun->GetHandler().length())
 					outHandlers.insert(pRun->GetHandler());
 			}
@@ -505,7 +505,7 @@ size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<std::string>& outFaults) 
 		iterFault != m_Config.GetFaults().end();
 		++iterFault)
 	{
-		const ARBConfigFault* pFault = (*iterFault);
+		ARBConfigFault const* pFault = (*iterFault);
 		if (0 < pFault->GetName().length())
 			outFaults.insert(pFault->GetName());
 	}
@@ -513,17 +513,17 @@ size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<std::string>& outFaults) 
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		const ARBDog* pDog = (*iterDog);
+		ARBDog const* pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
+			ARBDogTrial const* pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				const ARBDogRun* pRun = (*iterRun);
+				ARBDogRun const* pRun = (*iterRun);
 				for (ARBDogFaultList::const_iterator iterDogFault = pRun->GetFaults().begin();
 					iterDogFault != pRun->GetFaults().end();
 					++iterDogFault)

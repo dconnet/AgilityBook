@@ -59,10 +59,10 @@ class ARBConfigAction : public ARBBase
 {
 public:
 	ARBConfigAction();
-	ARBConfigAction(const ARBConfigAction& rhs);
-	ARBConfigAction& operator=(const ARBConfigAction& rhs);
-	bool operator==(const ARBConfigAction& rhs) const;
-	bool operator!=(const ARBConfigAction& rhs) const;
+	ARBConfigAction(ARBConfigAction const& rhs);
+	ARBConfigAction& operator=(ARBConfigAction const& rhs);
+	bool operator==(ARBConfigAction const& rhs) const;
+	bool operator!=(ARBConfigAction const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -87,8 +87,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -102,10 +102,10 @@ public:
 	/*
 	 * Getters.
 	 */
-	const std::string& GetVerb() const;
-	const std::string& GetVenue() const;
-	const std::string& GetOldName() const;
-	const std::string& GetNewName() const;
+	std::string const& GetVerb() const;
+	std::string const& GetVenue() const;
+	std::string const& GetOldName() const;
+	std::string const& GetNewName() const;
 
 private:
 	~ARBConfigAction();
@@ -120,22 +120,22 @@ inline std::string ARBConfigAction::GetGenericName() const
 	return m_Verb;
 }
 
-inline const std::string& ARBConfigAction::GetVerb() const
+inline std::string const& ARBConfigAction::GetVerb() const
 {
 	return m_Verb;
 }
 
-inline const std::string& ARBConfigAction::GetVenue() const
+inline std::string const& ARBConfigAction::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline const std::string& ARBConfigAction::GetOldName() const
+inline std::string const& ARBConfigAction::GetOldName() const
 {
 	return m_OldName;
 }
 
-inline const std::string& ARBConfigAction::GetNewName() const
+inline std::string const& ARBConfigAction::GetNewName() const
 {
 	return m_NewName;
 }
@@ -148,12 +148,4 @@ inline const std::string& ARBConfigAction::GetNewName() const
 class ARBConfigActionList : public ARBVectorLoad1<ARBConfigAction>
 {
 public:
-	bool operator==(const ARBConfigActionList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigActionList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
 };

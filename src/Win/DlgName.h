@@ -41,7 +41,7 @@ public:
 	CDlgName(LPCTSTR name, UINT caption = 0, CWnd* pParent = NULL);
 	CDlgName(LPCTSTR name, LPCTSTR pCaption = NULL, CWnd* pParent = NULL);
 	virtual ~CDlgName();
-	const char* GetName() const	{return (LPCSTR)m_Name;}
+	char const* GetName() const	{return (LPCSTR)m_Name;}
 
 private:
 // Dialog Data

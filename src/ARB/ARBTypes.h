@@ -60,12 +60,12 @@ public:
 	{
 	}
 
-	ARBVersion(const ARBVersion& inVer)
+	ARBVersion(ARBVersion const& inVer)
 		: m_Version(inVer.m_Version)
 	{
 	}
 
-	ARBVersion& operator=(const ARBVersion& rhs)
+	ARBVersion& operator=(ARBVersion const& rhs)
 	{
 		if (this != &rhs)
 		{
@@ -73,23 +73,23 @@ public:
 		}
 		return *this;
 	}
-	bool operator==(const ARBVersion& rhs) const
+	bool operator==(ARBVersion const& rhs) const
 	{
 		return m_Version == rhs.m_Version;
 	}
-	bool operator<(const ARBVersion& rhs) const
+	bool operator<(ARBVersion const& rhs) const
 	{
 		return m_Version < rhs.m_Version;
 	}
-	bool operator<=(const ARBVersion& rhs) const
+	bool operator<=(ARBVersion const& rhs) const
 	{
 		return m_Version <= rhs.m_Version;
 	}
-	bool operator>(const ARBVersion& rhs) const
+	bool operator>(ARBVersion const& rhs) const
 	{
 		return m_Version > rhs.m_Version;
 	}
-	bool operator>=(const ARBVersion& rhs) const
+	bool operator>=(ARBVersion const& rhs) const
 	{
 		return m_Version >= rhs.m_Version;
 	}
@@ -155,24 +155,24 @@ public:
 	ARB_Q() : m_Q(eQ_NA)
 	{
 	}
-	ARB_Q(const ARB_Q& rhs) : m_Q(rhs.m_Q)
+	ARB_Q(ARB_Q const& rhs) : m_Q(rhs.m_Q)
 	{
 	}
 	~ARB_Q()
 	{
 	}
 
-	ARB_Q& operator=(const ARB_Q& rhs)
+	ARB_Q& operator=(ARB_Q const& rhs)
 	{
 		if (this != &rhs)
 			m_Q = rhs.m_Q;
 		return *this;
 	}
-	bool operator==(const ARB_Q& rhs) const
+	bool operator==(ARB_Q const& rhs) const
 	{
 		return m_Q == rhs.m_Q;
 	}
-	bool operator!=(const ARB_Q& rhs) const
+	bool operator!=(ARB_Q const& rhs) const
 	{
 		return !operator==(rhs);
 	}
@@ -203,8 +203,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const std::string& inAttrib,
-		const ARBVersion& inVersion,
+		std::string const& inAttrib,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -216,7 +216,7 @@ public:
 	 */
 	bool Save(
 		Element& ioTree,
-		const char* const inAttribName) const;
+		char const* const inAttribName) const;
 
 private:
 	eQ m_Q;
@@ -240,7 +240,7 @@ public:
 		, m_Val(rhs)
 	{
 	}
-	ARBDouble(const ARBDouble& rhs)
+	ARBDouble(ARBDouble const& rhs)
 		: m_Prec(rhs.m_Prec)
 		, m_Val(rhs.m_Val)
 	{
@@ -249,7 +249,7 @@ public:
 	{
 	}
 
-	ARBDouble& operator=(const ARBDouble& rhs)
+	ARBDouble& operator=(ARBDouble const& rhs)
 	{
 		if (this != &rhs)
 		{
@@ -258,22 +258,22 @@ public:
 		}
 		return *this;
 	}
-	ARBDouble& operator+=(const ARBDouble& rhs)
+	ARBDouble& operator+=(ARBDouble const& rhs)
 	{
 		m_Val += rhs.m_Val;
 		return *this;
 	}
-	ARBDouble& operator-=(const ARBDouble& rhs)
+	ARBDouble& operator-=(ARBDouble const& rhs)
 	{
 		m_Val -= rhs.m_Val;
 		return *this;
 	}
-	bool operator==(const ARBDouble& rhs) const
+	bool operator==(ARBDouble const& rhs) const
 	{
 		return m_Prec == rhs.m_Prec
 			&& m_Val == rhs.m_Val;
 	}
-	bool operator!=(const ARBDouble& rhs) const
+	bool operator!=(ARBDouble const& rhs) const
 	{
 		return !operator==(rhs);
 	}
@@ -296,8 +296,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const std::string& inAttrib,
-		const ARBVersion& inVersion,
+		std::string const& inAttrib,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -309,7 +309,7 @@ public:
 	 */
 	bool Save(
 		Element& ioTree,
-		const char* const inAttribName) const;
+		char const* const inAttribName) const;
 
 private:
 	int m_Prec;		///< Precision for display.

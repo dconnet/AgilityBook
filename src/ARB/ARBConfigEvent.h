@@ -53,10 +53,10 @@ class ARBConfigEvent : public ARBBase
 {
 public:
 	ARBConfigEvent();
-	ARBConfigEvent(const ARBConfigEvent& rhs);
-	ARBConfigEvent& operator=(const ARBConfigEvent& rhs);
-	bool operator==(const ARBConfigEvent& rhs) const;
-	bool operator!=(const ARBConfigEvent& rhs) const;
+	ARBConfigEvent(ARBConfigEvent const& rhs);
+	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
+	bool operator==(ARBConfigEvent const& rhs) const;
+	bool operator!=(ARBConfigEvent const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -81,9 +81,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfigDivisionList& inDivisions,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfigDivisionList const& inDivisions,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -101,7 +101,7 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, const ARBConfigEvent* inEventNew, std::string& ioInfo);
+	bool Update(int indent, ARBConfigEvent const* inEventNew, std::string& ioInfo);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -112,10 +112,10 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-		const std::string& inDivision,
-		const std::string& inLevel,
+		std::string const& inDivision,
+		std::string const& inLevel,
 		bool inTitlePoints,
-		std::vector<const ARBConfigScoring*>& outList) const;
+		std::vector<ARBConfigScoring const*>& outList) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -124,8 +124,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-		const std::string& inDivision,
-		const std::string& inLevel) const;
+		std::string const& inDivision,
+		std::string const& inLevel) const;
 
 	/**
 	 * Find an event.
@@ -135,21 +135,21 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigScoring* FindEvent(
-		const std::string& inDivision,
-		const std::string& inLevel,
-		const ARBDate& inDate) const;
+	ARBConfigScoring const* FindEvent(
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetDesc() const;
-	void SetDesc(const std::string& inDesc);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetDesc() const;
+	void SetDesc(std::string const& inDesc);
 	bool HasPartner() const;
 	void SetHasPartner(bool inHas);
-	const ARBConfigScoringList& GetScorings() const;
+	ARBConfigScoringList const& GetScorings() const;
 	ARBConfigScoringList& GetScorings();
 
 private:
@@ -165,22 +165,22 @@ inline std::string ARBConfigEvent::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBConfigEvent::GetName() const
+inline std::string const& ARBConfigEvent::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigEvent::SetName(const std::string& inName)
+inline void ARBConfigEvent::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string& ARBConfigEvent::GetDesc() const
+inline std::string const& ARBConfigEvent::GetDesc() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigEvent::SetDesc(const std::string& inDesc)
+inline void ARBConfigEvent::SetDesc(std::string const& inDesc)
 {
 	m_Desc = inDesc;
 }
@@ -195,7 +195,7 @@ inline void ARBConfigEvent::SetHasPartner(bool inHas)
 	m_bHasPartner = inHas;
 }
 
-inline const ARBConfigScoringList& ARBConfigEvent::GetScorings() const
+inline ARBConfigScoringList const& ARBConfigEvent::GetScorings() const
 {
 	return m_Scoring;
 }
@@ -223,19 +223,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfigDivisionList& inDivisions,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfigDivisionList const& inDivisions,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
-
-	bool operator==(const ARBConfigEventList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigEventList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
 
 	/**
 	 * Verify an event exists.
@@ -245,9 +236,9 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-		const std::string& inEvent,
-		const std::string& inDivision,
-		const std::string& inLevel) const;
+		std::string const& inEvent,
+		std::string const& inDivision,
+		std::string const& inLevel) const;
 
 	/**
 	 * Find an event.
@@ -258,11 +249,11 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigScoring* FindEvent(
-		const std::string& inEvent,
-		const std::string& inDivision,
-		const std::string& inLevel,
-		const ARBDate& inDate) const;
+	ARBConfigScoring const* FindEvent(
+		std::string const& inEvent,
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate) const;
 
 	/**
 	 * Rename a division.
@@ -271,15 +262,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-		const std::string& inOldDiv,
-		const std::string& inNewDiv);
+		std::string const& inOldDiv,
+		std::string const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(const std::string& inDiv);
+	int DeleteDivision(std::string const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -288,15 +279,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-		const std::string& inOldLevel,
-		const std::string& inNewLevel);
+		std::string const& inOldLevel,
+		std::string const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(const std::string& inLevel);
+	int DeleteLevel(std::string const& inLevel);
 
 	/**
 	 * Find an event.
@@ -304,8 +295,8 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigEvent* FindEvent(const std::string& inEvent) const;
-	ARBConfigEvent* FindEvent(const std::string& inEvent);
+	ARBConfigEvent const* FindEvent(std::string const& inEvent) const;
+	ARBConfigEvent* FindEvent(std::string const& inEvent);
 
 	/**
 	 * Add an event.
@@ -321,5 +312,5 @@ public:
 	 * @param inEvent Name of event to delete.
 	 * @return Whether event was deleted or not.
 	 */
-	bool DeleteEvent(const std::string& inEvent);
+	bool DeleteEvent(std::string const& inEvent);
 };

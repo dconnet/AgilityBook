@@ -94,84 +94,84 @@ static char THIS_FILE[] = __FILE__;
 // those types constants directly.
 // ---------------------------------------------------------------------------
 ///< Data: </
-static const XMLCh gEndElement[] = { chOpenAngle, chForwardSlash, chNull };
+static XMLCh const gEndElement[] = { chOpenAngle, chForwardSlash, chNull };
 ///< Data: ?>
-static const XMLCh gEndPI[] = { chQuestion, chCloseAngle, chNull };
+static XMLCh const gEndPI[] = { chQuestion, chCloseAngle, chNull };
 ///< Data: <?
-static const XMLCh gStartPI[] = { chOpenAngle, chQuestion, chNull };
+static XMLCh const gStartPI[] = { chOpenAngle, chQuestion, chNull };
 ///< Data: <?xml version="
-static const XMLCh gXMLDecl1[] =
+static XMLCh const gXMLDecl1[] =
 {
 	chOpenAngle, chQuestion, chLatin_x, chLatin_m, chLatin_l,
 	chSpace, chLatin_v, chLatin_e, chLatin_r, chLatin_s, chLatin_i,
 	chLatin_o, chLatin_n, chEqual, chDoubleQuote, chNull
 };
 ///< Data: " encoding="
-static const XMLCh gXMLDecl2[] =
+static XMLCh const gXMLDecl2[] =
 {
 	chDoubleQuote, chSpace, chLatin_e, chLatin_n, chLatin_c,
 	chLatin_o, chLatin_d, chLatin_i, chLatin_n, chLatin_g, chEqual,
 	chDoubleQuote, chNull
 };
 ///< Data: " standalone="
-static const XMLCh gXMLDecl3[] =
+static XMLCh const gXMLDecl3[] =
 {
 	chDoubleQuote, chSpace, chLatin_s, chLatin_t, chLatin_a,
 	chLatin_n, chLatin_d, chLatin_a, chLatin_l, chLatin_o,
 	chLatin_n, chLatin_e, chEqual, chDoubleQuote, chNull
 };
 ///< Data: "?>\n
-static const XMLCh gXMLDecl4[] =
+static XMLCh const gXMLDecl4[] =
 {
 	chDoubleQuote, chQuestion, chCloseAngle, chLF, chNull
 };
 ///< Data: <![CDATA[
-static const XMLCh gStartCDATA[] =
+static XMLCh const gStartCDATA[] =
 {
 	chOpenAngle, chBang, chOpenSquare, chLatin_C, chLatin_D,
 	chLatin_A, chLatin_T, chLatin_A, chOpenSquare, chNull
 };
 ///< Data: ]]>
-static const XMLCh gEndCDATA[] =
+static XMLCh const gEndCDATA[] =
 {
 	chCloseSquare, chCloseSquare, chCloseAngle, chNull
 };
 ///< Data: <!--
-static const XMLCh gStartComment[] =
+static XMLCh const gStartComment[] =
 {
 	chOpenAngle, chBang, chDash, chDash, chNull
 };
 ///< Data: -->
-static const XMLCh gEndComment[] =
+static XMLCh const gEndComment[] =
 {
 	chDash, chDash, chCloseAngle, chNull
 };
 ///< Data: <!DOCTYPE
-static const XMLCh gStartDoctype[] =
+static XMLCh const gStartDoctype[] =
 {
 	chOpenAngle, chBang, chLatin_D, chLatin_O, chLatin_C, chLatin_T,
 	chLatin_Y, chLatin_P, chLatin_E, chSpace, chNull
 };
 ///< Data: PUBLIC "
-static const XMLCh gPublic[] =
+static XMLCh const gPublic[] =
 {
 	chLatin_P, chLatin_U, chLatin_B, chLatin_L, chLatin_I,
 	chLatin_C, chSpace, chDoubleQuote, chNull
 };
 ///< Data: SYSTEM "
-static const XMLCh gSystem[] =
+static XMLCh const gSystem[] =
 {
 	chLatin_S, chLatin_Y, chLatin_S, chLatin_T, chLatin_E,
 	chLatin_M, chSpace, chDoubleQuote, chNull
 };
 ///< Data: <!ENTITY
-static const XMLCh gStartEntity[] =
+static XMLCh const gStartEntity[] =
 {
 	chOpenAngle, chBang, chLatin_E, chLatin_N, chLatin_T, chLatin_I,
 	chLatin_T, chLatin_Y, chSpace, chNull
 };
 ///< Data: NDATA "
-static const XMLCh gNotation[] =
+static XMLCh const gNotation[] =
 {
 	chLatin_N, chLatin_D, chLatin_A, chLatin_T, chLatin_A,
 	chSpace, chDoubleQuote, chNull
@@ -192,17 +192,17 @@ public:
 	{
 	}
 	/// Copy constructor
-	XMLstring(const XMLstring& str)
+	XMLstring(XMLstring const& str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
 	/// XMLCh string constructor
-	XMLstring(const XMLCh* str)
+	XMLstring(XMLCh const* str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
 	/// string->XMLCh translation constuctor
-	XMLstring(const std::string& str)
+	XMLstring(std::string const& str)
 	{
 		if (0 < str.length())
 		{
@@ -212,7 +212,7 @@ public:
 		}
 	}
 	/// char->XMLCh translation constuctor
-	XMLstring(const char* str)
+	XMLstring(char const* str)
 	{
 		if (str && *str)
 		{
@@ -226,7 +226,7 @@ public:
 	//  XMLCh*
 	//  std::string
 	//  char*
-	XMLstring& operator=(const XMLstring& str)
+	XMLstring& operator=(XMLstring const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -236,7 +236,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(const XMLCh* str)
+	XMLstring& operator=(XMLCh const* str)
 	{
 #if _MSC_VER < 1300
 		basic_string<XMLCh>::operator=(str);
@@ -245,7 +245,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(const std::string& str)
+	XMLstring& operator=(std::string const& str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -255,7 +255,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(const char* str)
+	XMLstring& operator=(char const* str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -265,7 +265,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(const XMLstring& str)
+	XMLstring& operator+=(XMLstring const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -275,7 +275,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(const XMLCh* str)
+	XMLstring& operator+=(XMLCh const* str)
 	{
 #if _MSC_VER < 1300
 		basic_string<XMLCh>::operator+=(str);
@@ -284,7 +284,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(const std::string& str)
+	XMLstring& operator+=(std::string const& str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -294,7 +294,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(const char* str)
+	XMLstring& operator+=(char const* str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -323,7 +323,7 @@ public:
 	{
 	}
 	/// Copy constructor
-	StringDOM(const StringDOM& str)
+	StringDOM(StringDOM const& str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -332,7 +332,7 @@ public:
 	{
 	}
 	/// Copy constructor
-	StringDOM(const std::string& str)
+	StringDOM(std::string const& str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -341,7 +341,7 @@ public:
 	{
 	}
 	/// char string constructor
-	StringDOM(const char* str)
+	StringDOM(char const* str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -350,7 +350,7 @@ public:
 	{
 	}
 	/// XMLCh->string translation constuctor
-	StringDOM(const XMLCh* str)
+	StringDOM(XMLCh const* str)
 	{
 		if (str && XMLString::stringLen(str))
 		{
@@ -363,7 +363,7 @@ public:
 			delete [] pStr;
 		}
 	}
-	StringDOM& operator=(const StringDOM& str)
+	StringDOM& operator=(StringDOM const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -373,7 +373,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(const std::string& str)
+	StringDOM& operator=(std::string const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator=(str);
@@ -382,7 +382,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(const char* str)
+	StringDOM& operator=(char const* str)
 	{
 #if _MSC_VER < 1300
 		string::operator=(str);
@@ -391,7 +391,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(const XMLCh* str)
+	StringDOM& operator=(XMLCh const* str)
 	{
 		StringDOM data(str);
 #if _MSC_VER < 1300
@@ -401,7 +401,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(const StringDOM& str)
+	StringDOM& operator+=(StringDOM const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -410,7 +410,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(const std::string& str)
+	StringDOM& operator+=(std::string const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -419,7 +419,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(const char* str)
+	StringDOM& operator+=(char const* str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -428,7 +428,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(const XMLCh* str)
+	StringDOM& operator+=(XMLCh const* str)
 	{
 		if (str && XMLString::stringLen(str))
 		{
@@ -478,10 +478,10 @@ public:
 	 * @param xmlStr The incoming name from SAX to transcode.
 	 * @return The transcoded string.
 	 */
-	const char* TranscodeElement(const XMLCh* const xmlStr);
+	char const* TranscodeElement(XMLCh const* const xmlStr);
 };
 
-const char* StringTranscode::TranscodeElement(const XMLCh* const xmlStr)
+char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 {
 	XMLstring str(xmlStr);
 	StringTranscode::iterator iter = find(str);
@@ -522,17 +522,17 @@ public:
 	// -----------------------------------------------------------------------
 	//  Handlers for the SAX DocumentHandler interface
 	// -----------------------------------------------------------------------
-	void startElement(const XMLCh* const uri, const XMLCh* const localname, const XMLCh* const qname, const Attributes& attrs);
-	void endElement(const XMLCh* const uri, const XMLCh* const localname, const XMLCh* const qname);
-	void characters(const XMLCh* const chars, const unsigned int length);
+	void startElement(XMLCh const* const uri, XMLCh const* const localname, XMLCh const* const qname, Attributes const& attrs);
+	void endElement(XMLCh const* const uri, XMLCh const* const localname, XMLCh const* const qname);
+	void characters(XMLCh const* const chars, unsigned int const length);
 	void resetDocument();
 
 	// -----------------------------------------------------------------------
 	//  Handlers for the SAX ErrorHandler interface
 	// -----------------------------------------------------------------------
-	void warning(const SAXParseException& exception);
-	void error(const SAXParseException& exception);
-	void fatalError(const SAXParseException& exception);
+	void warning(SAXParseException const& exception);
+	void error(SAXParseException const& exception);
+	void fatalError(SAXParseException const& exception);
 
 private:
 	Element& m_Tree; ///< Parsed XML data
@@ -546,7 +546,7 @@ private:
 	class CurrentAttrib
 	{
 	public:
-		CurrentAttrib(const std::string& name, const XMLCh* const value)
+		CurrentAttrib(std::string const& name, XMLCh const* const value)
 			: m_Name(name)
 			, m_Value(value)
 		{}
@@ -557,7 +557,7 @@ private:
 	StringTranscode m_ElementNames; ///< Reduce the number of transcodings on element names.
 };
 
-void SAXImportHandlers::startElement(const XMLCh* const /*uri*/, const XMLCh* const localname, const XMLCh* const /*qname*/, const Attributes& attrs)
+void SAXImportHandlers::startElement(XMLCh const* const /*uri*/, XMLCh const* const localname, XMLCh const* const /*qname*/, Attributes const& attrs)
 {
 	// If the name is non-zero, we're caching an element. This startElement is
 	// starting inside the current element. Since we don't allow mixing data
@@ -598,7 +598,7 @@ void SAXImportHandlers::startElement(const XMLCh* const /*uri*/, const XMLCh* co
 	}
 }
 
-void SAXImportHandlers::endElement(const XMLCh* const /*uri*/, const XMLCh* const /*localname*/, const XMLCh* const /*qname*/)
+void SAXImportHandlers::endElement(XMLCh const* const /*uri*/, XMLCh const* const /*localname*/, XMLCh const* const /*qname*/)
 {
 	// Insert the element.
 	if (0 < m_CurrentName.length())
@@ -636,7 +636,7 @@ void SAXImportHandlers::endElement(const XMLCh* const /*uri*/, const XMLCh* cons
 	m_CurrentAttribs.clear();
 }
 
-void SAXImportHandlers::characters(const XMLCh* const chars, const unsigned int length)
+void SAXImportHandlers::characters(XMLCh const* const chars, unsigned int const length)
 {
 	m_CurrentData.append(chars, length);
 }
@@ -648,7 +648,7 @@ void SAXImportHandlers::resetDocument()
 	m_FatalErrors = 0;
 }
 
-void SAXImportHandlers::warning(const SAXParseException& toCatch)
+void SAXImportHandlers::warning(SAXParseException const& toCatch)
 {
 	++m_Warnings;
 	char tmp[20];
@@ -664,7 +664,7 @@ void SAXImportHandlers::warning(const SAXParseException& toCatch)
 	m_Msg += toCatch.getMessage();
 }
 
-void SAXImportHandlers::error(const SAXParseException& toCatch)
+void SAXImportHandlers::error(SAXParseException const& toCatch)
 {
 	++m_Errors;
 	char tmp[20];
@@ -680,7 +680,7 @@ void SAXImportHandlers::error(const SAXParseException& toCatch)
 	m_Msg += toCatch.getMessage();
 }
 
-void SAXImportHandlers::fatalError(const SAXParseException& toCatch)
+void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 {
 	++m_FatalErrors;
 	char tmp[20];
@@ -717,18 +717,18 @@ public:
 	{
 	}
 	void writeChars(
-		const XMLByte* const toWrite
-		, const unsigned int count
+		XMLByte const* const toWrite
+		, unsigned int const count
 		, XMLFormatter* const /*formatter*/)
 	{
 		m_out.write((char*)toWrite, count);
 	}
 private:
 	std::ostream& m_out; ///< Output stream.
-	CXMLFormatTarget(const CXMLFormatTarget& other); ///< Unimplemented method.
+	CXMLFormatTarget(CXMLFormatTarget const& other); ///< Unimplemented method.
 };
 
-XMLFormatter& operator<< (XMLFormatter& strm, const XMLstring& s)
+XMLFormatter& operator<< (XMLFormatter& strm, XMLstring const& s)
 {
 	size_t lent = s.length();
 	if (0 < lent)
@@ -758,7 +758,7 @@ static void Indent(std::ostream& target, int indentLevel)
 	}
 }
 
-std::ostream& operator<<(std::ostream& target, const Element& toWrite)
+std::ostream& operator<<(std::ostream& target, Element const& toWrite)
 {
 	Indent(target, gIndentLevel);
 	XMLstring nodeName(toWrite.GetName().c_str());
@@ -828,13 +828,13 @@ Element::Element()
 {
 }
 
-Element::Element(const std::string& inName)
+Element::Element(std::string const& inName)
 	: m_Name(inName)
 	, m_Value("")
 {
 }
 
-Element::Element(const Element& rhs)
+Element::Element(Element const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Value(rhs.m_Value)
 {
@@ -842,7 +842,7 @@ Element::Element(const Element& rhs)
 	m_Elements = rhs.m_Elements;
 }
 
-Element& Element::operator=(const Element& rhs)
+Element& Element::operator=(Element const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -932,28 +932,28 @@ void Element::clear()
 	m_Elements.clear();
 }
 
-const std::string& Element::GetName() const
+std::string const& Element::GetName() const
 {
 	return m_Name;
 }
 
-void Element::SetName(const std::string& inName)
+void Element::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-const std::string& Element::GetValue() const
+std::string const& Element::GetValue() const
 {
 	return m_Value;
 }
 
-void Element::SetValue(const std::string& inValue)
+void Element::SetValue(std::string const& inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = inValue;
 }
 
-void Element::SetValue(const char* const inValue)
+void Element::SetValue(char const* const inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	if (inValue)
@@ -962,7 +962,7 @@ void Element::SetValue(const char* const inValue)
 		m_Value.erase();
 }
 
-void Element::SetValue(const short inValue)
+void Element::SetValue(short inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -970,7 +970,7 @@ void Element::SetValue(const short inValue)
 	m_Value = str.str();
 }
 
-void Element::SetValue(const long inValue)
+void Element::SetValue(long inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -978,7 +978,7 @@ void Element::SetValue(const long inValue)
 	m_Value = str.str();
 }
 
-void Element::SetValue(const double inValue, int inPrec)
+void Element::SetValue(double inValue, int inPrec)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = ConvertDouble(inValue, inPrec);
@@ -1007,7 +1007,7 @@ Element::AttribLookup Element::GetNthAttrib(int inIndex, std::string& outName, s
 		return eNotFound;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, std::string& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, std::string& outValue) const
 {
 	Attributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1019,7 +1019,7 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, std::string&
 		return eNotFound;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, ARBVersion& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, ARBVersion& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1043,7 +1043,7 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, ARBVersion& 
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, ARBDate& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, ARBDate& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1058,7 +1058,7 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, ARBDate& out
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, bool& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, bool& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1074,7 +1074,7 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, bool& outVal
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, short& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, short& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1088,7 +1088,7 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, short& outVa
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, long& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, long& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1102,7 +1102,7 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, long& outVal
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(const std::string& inName, double& outValue) const
+Element::AttribLookup Element::GetAttrib(std::string const& inName, double& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1116,13 +1116,13 @@ Element::AttribLookup Element::GetAttrib(const std::string& inName, double& outV
 	return rc;
 }
 
-bool Element::AddAttrib(const std::string& inName, const std::string& inValue)
+bool Element::AddAttrib(std::string const& inName, std::string const& inValue)
 {
 	m_Attribs[inName] = inValue;
 	return true;
 }
 
-bool Element::AddAttrib(const std::string& inName, const char* const inValue)
+bool Element::AddAttrib(std::string const& inName, char const* const inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = inValue;
@@ -1131,19 +1131,19 @@ bool Element::AddAttrib(const std::string& inName, const char* const inValue)
 	return true;
 }
 
-bool Element::AddAttrib(const std::string& inName, const ARBVersion& inValue)
+bool Element::AddAttrib(std::string const& inName, ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.ToString());
 }
 
-bool Element::AddAttrib(const std::string& inName, const ARBDate& inValue)
+bool Element::AddAttrib(std::string const& inName, ARBDate const& inValue)
 {
 	if (inValue.IsValid())
 		AddAttrib(inName, inValue.GetString(false, ARBDate::eDashYYYYMMDD));
 	return true;
 }
 
-bool Element::AddAttrib(const std::string& inName, const bool inValue)
+bool Element::AddAttrib(std::string const& inName, bool inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = "y";
@@ -1152,7 +1152,7 @@ bool Element::AddAttrib(const std::string& inName, const bool inValue)
 	return true;
 }
 
-bool Element::AddAttrib(const std::string& inName, const short inValue)
+bool Element::AddAttrib(std::string const& inName, short inValue)
 {
 	std::stringstream str;
 	str << inValue << std::ends;
@@ -1160,7 +1160,7 @@ bool Element::AddAttrib(const std::string& inName, const short inValue)
 	return true;
 }
 
-bool Element::AddAttrib(const std::string& inName, const long inValue)
+bool Element::AddAttrib(std::string const& inName, long inValue)
 {
 	std::stringstream str;
 	str << inValue << std::ends;
@@ -1168,13 +1168,13 @@ bool Element::AddAttrib(const std::string& inName, const long inValue)
 	return true;
 }
 
-bool Element::AddAttrib(const std::string& inName, const double inValue, int inPrec)
+bool Element::AddAttrib(std::string const& inName, double inValue, int inPrec)
 {
 	m_Attribs[inName] = ConvertDouble(inValue, inPrec);
 	return true;
 }
 
-bool Element::RemoveAttrib(const std::string& inName)
+bool Element::RemoveAttrib(std::string const& inName)
 {
 	Attributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1196,7 +1196,7 @@ int Element::GetElementCount() const
 	return static_cast<int>(m_Elements.size());
 }
 
-const Element& Element::GetElement(int inIndex) const
+Element const& Element::GetElement(int inIndex) const
 {
 	return m_Elements[inIndex];
 }
@@ -1206,7 +1206,7 @@ Element& Element::GetElement(int inIndex)
 	return m_Elements[inIndex];
 }
 
-Element& Element::AddElement(const std::string& inName, int inAt)
+Element& Element::AddElement(std::string const& inName, int inAt)
 {
 	ASSERT(0 == m_Value.length());
 	size_t index;
@@ -1244,7 +1244,7 @@ void Element::RemoveAllElements()
 	m_Elements.clear();
 }
 
-int Element::FindElement(const std::string& inName, int inStartFrom) const
+int Element::FindElement(std::string const& inName, int inStartFrom) const
 {
 	if (0 > inStartFrom)
 		inStartFrom = 0;
@@ -1257,7 +1257,7 @@ int Element::FindElement(const std::string& inName, int inStartFrom) const
 }
 
 //private
-bool Element::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource, std::string& ioErrMsg)
+bool Element::LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource, std::string& ioErrMsg)
 {
 	clear();
 	bool bOk = false;
@@ -1277,17 +1277,17 @@ bool Element::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource
 		parser->parse(inSource);
 		bOk = true;
 	}
-	catch (const DOMException& e)
+	catch (DOMException const& e)
 	{
 		eMsg += "An error occured during parsing.  Exception message: ";
 		eMsg += e.msg;
 	}
-	catch (const XMLException& e)
+	catch (XMLException const& e)
 	{
 		eMsg += "An error occured during parsing.  Exception message: ";
 		eMsg += e.getMessage();
 	}
-	catch (const SAXException& e)
+	catch (SAXException const& e)
 	{
 		eMsg += "An error occured during parsing.  Exception message: ";
 		eMsg += e.getMessage();
@@ -1305,20 +1305,20 @@ bool Element::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource
 	return bOk;
 }
 
-bool Element::LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg)
+bool Element::LoadXMLBuffer(char const* inData, unsigned int nData, std::string& ioErrMsg)
 {
-	MemBufInputSource source(reinterpret_cast<const XMLByte*>(inData), nData, "buffer");
+	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
 	return LoadXML(source, ioErrMsg);
 }
 
-bool Element::LoadXMLFile(const char* inFileName, std::string& ioErrMsg)
+bool Element::LoadXMLFile(char const* inFileName, std::string& ioErrMsg)
 {
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
 	return LoadXML(source, ioErrMsg);
 }
 
-bool Element::SaveXML(std::ostream& outOutput, const std::string* inDTD) const
+bool Element::SaveXML(std::ostream& outOutput, std::string const* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");

@@ -252,7 +252,7 @@ void CDlgRunCRCD::OnCopy()
 						LPBYTE bits = new BYTE[nSize+1];
 						GetEnhMetaFileBits(m_metaFile, nSize, bits);
 						Base64 encode;
-						std::string moreBits = encode.Encode(reinterpret_cast<const char*>(bits), nSize);
+						std::string moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
 						m_Run->SetCRCDMetaFile(moreBits);
 						delete [] bits;
 						AdjustCRCD();

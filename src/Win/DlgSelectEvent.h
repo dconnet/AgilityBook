@@ -40,10 +40,10 @@ class ARBConfigVenue;
 class CDlgSelectEvent : public CDialog
 {
 public:
-	CDlgSelectEvent(const ARBConfigVenue* pVenue, CWnd* pParent = NULL);
-	const char* GetDivision() const		{return (const char*)m_Division;}
-	const char* GetLevel() const		{return (const char*)m_Level;}
-	const char* GetEvent() const		{return (const char*)m_Event;}
+	CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent = NULL);
+	char const* GetDivision() const		{return (LPCTSTR)m_Division;}
+	char const* GetLevel() const		{return (LPCTSTR)m_Level;}
+	char const* GetEvent() const		{return (LPCTSTR)m_Event;}
 
 private:
 // Dialog Data
@@ -53,7 +53,7 @@ private:
 	CComboBox	m_ctrlLevel;
 	CComboBox	m_ctrlEvent;
 	//}}AFX_DATA
-	const ARBConfigVenue* m_pVenue;
+	ARBConfigVenue const* m_pVenue;
 	CString m_Division;
 	CString m_Level;
 	CString m_Event;

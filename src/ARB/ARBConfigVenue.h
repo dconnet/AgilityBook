@@ -53,10 +53,10 @@ class ARBConfigVenue : public ARBBase
 {
 public:
 	ARBConfigVenue();
-	ARBConfigVenue(const ARBConfigVenue& rhs);
-	ARBConfigVenue& operator=(const ARBConfigVenue& rhs);
-	bool operator==(const ARBConfigVenue& rhs) const;
-	bool operator!=(const ARBConfigVenue& rhs) const;
+	ARBConfigVenue(ARBConfigVenue const& rhs);
+	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
+	bool operator==(ARBConfigVenue const& rhs) const;
+	bool operator!=(ARBConfigVenue const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -87,8 +87,8 @@ public:
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -106,18 +106,18 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, const ARBConfigVenue* inVenueNew, std::string& ioInfo);
+	bool Update(int indent, ARBConfigVenue const* inVenueNew, std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	const std::string GetName() const;
-	void SetName(std::string inName);
-	const std::string GetDesc() const;
-	void SetDesc(std::string inDesc);
-	const ARBConfigDivisionList& GetDivisions() const;
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetDesc() const;
+	void SetDesc(std::string const& inDesc);
+	ARBConfigDivisionList const& GetDivisions() const;
 	ARBConfigDivisionList& GetDivisions();
-	const ARBConfigEventList& GetEvents() const;
+	ARBConfigEventList const& GetEvents() const;
 	ARBConfigEventList& GetEvents();
 
 private:
@@ -133,27 +133,27 @@ inline std::string ARBConfigVenue::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string ARBConfigVenue::GetName() const
+inline std::string const& ARBConfigVenue::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigVenue::SetName(std::string inName)
+inline void ARBConfigVenue::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string ARBConfigVenue::GetDesc() const
+inline std::string const& ARBConfigVenue::GetDesc() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigVenue::SetDesc(std::string inDesc)
+inline void ARBConfigVenue::SetDesc(std::string const& inDesc)
 {
 	m_Desc = inDesc;
 }
 
-inline const ARBConfigDivisionList& ARBConfigVenue::GetDivisions() const
+inline ARBConfigDivisionList const& ARBConfigVenue::GetDivisions() const
 {
 	return m_Divisions;
 }
@@ -163,7 +163,7 @@ inline ARBConfigDivisionList& ARBConfigVenue::GetDivisions()
 	return m_Divisions;
 }
 
-inline const ARBConfigEventList& ARBConfigVenue::GetEvents() const
+inline ARBConfigEventList const& ARBConfigVenue::GetEvents() const
 {
 	return m_Events;
 }
@@ -192,18 +192,9 @@ public:
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
-
-	bool operator==(const ARBConfigVenueList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigVenueList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
 
 	/**
 	 * Sort the list by name.
@@ -216,7 +207,7 @@ public:
 	 * @param inVenue Venue to verify.
 	 * @return Venue exists.
 	 */
-	bool VerifyVenue(const std::string& inVenue) const;
+	bool VerifyVenue(std::string const& inVenue) const;
 
 	/**
 	 * Verify a level exists.
@@ -226,9 +217,9 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-		const std::string& inVenue,
-		const std::string& inDivision,
-		const std::string& inLevel
+		std::string const& inVenue,
+		std::string const& inDivision,
+		std::string const& inLevel
 		) const;
 
 	/**
@@ -240,10 +231,10 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-		const std::string& inVenue,
-		const std::string& inDivision,
-		const std::string& inLevel,
-		const std::string& inEvent
+		std::string const& inVenue,
+		std::string const& inDivision,
+		std::string const& inLevel,
+		std::string const& inEvent
 		) const;
 
 	/**
@@ -255,9 +246,9 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitle* FindTitleCompleteName(
-		const std::string& inVenue,
-		const std::string& inName,
+	ARBConfigTitle const* FindTitleCompleteName(
+		std::string const& inVenue,
+		std::string const& inName,
 		bool bAbbrevFirst = true) const;
 
 	/**
@@ -267,9 +258,9 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitle* FindTitle(
-		const std::string& inVenue,
-		const std::string& inTitle) const;
+	ARBConfigTitle const* FindTitle(
+		std::string const& inVenue,
+		std::string const& inTitle) const;
 
 	/**
 	 * Find the named venue.
@@ -277,8 +268,8 @@ public:
 	 * @return Object that was found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigVenue* FindVenue(const std::string& inVenue) const;
-	ARBConfigVenue* FindVenue(const std::string& inVenue);
+	ARBConfigVenue const* FindVenue(std::string const& inVenue) const;
+	ARBConfigVenue* FindVenue(std::string const& inVenue);
 
 	/**
 	 * Add a venue.
@@ -286,7 +277,7 @@ public:
 	 * @return Pointer to new object, NULL if name already exists or is empty.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigVenue* AddVenue(const std::string& inVenue);
+	ARBConfigVenue* AddVenue(std::string const& inVenue);
 
 	/**
 	 * Add a venue.
@@ -302,7 +293,7 @@ public:
 	 * @param inVenue Name of venue to delete.
 	 * @return Number of venues deleted (0 or 1).
 	 */
-	int DeleteVenue(const std::string& inVenue);
+	int DeleteVenue(std::string const& inVenue);
 
 	/**
 	 * Find an event.
@@ -314,10 +305,10 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigScoring* FindEvent(
-		const std::string& inVenue,
-		const std::string& inEvent,
-		const std::string& inDivision,
-		const std::string& inLevel,
-		const ARBDate& inDate) const;
+	ARBConfigScoring const* FindEvent(
+		std::string const& inVenue,
+		std::string const& inEvent,
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate) const;
 };

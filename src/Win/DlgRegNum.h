@@ -42,7 +42,7 @@ class ARBDogRegNumList;
 class CDlgRegNum : public CDialog
 {
 public:
-	CDlgRegNum(const ARBConfig& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent = NULL);
+	CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -53,7 +53,7 @@ private:
 	CString	m_Height;
 	BOOL	m_bReceived;
 	//}}AFX_DATA
-	const ARBConfig& m_Config;
+	ARBConfig const& m_Config;
 	ARBDogRegNumList& m_RegNums;
 	ARBDogRegNum* m_pRegNum;
 

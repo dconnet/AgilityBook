@@ -238,7 +238,7 @@ void CAgilityBookDoc::DeleteRun(ARBDogRun* pRun)
 	}
 }
 
-bool CAgilityBookDoc::CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* pTabView)
+bool CAgilityBookDoc::CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView)
 {
 	if (!GetConfig().GetVenues().FindVenue(cal.GetVenue()))
 		return false;
@@ -297,7 +297,7 @@ bool CAgilityBookDoc::ImportConfiguration()
 		CString msg;
 		for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
 		{
-			const ARBConfigAction* action = *iterAction;
+			ARBConfigAction const* action = *iterAction;
 			if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 			{
 				// Find the venue.
@@ -324,7 +324,7 @@ bool CAgilityBookDoc::ImportConfiguration()
 							tmp = "\n";
 						msg += tmp;
 						// If the new title exists, just delete the old. Otherwise, rename the old to new.
-						const ARBConfigTitle* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
+						ARBConfigTitle const* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
 						if (newTitle)
 							venue->GetDivisions().DeleteTitle(action->GetOldName());
 						else
@@ -588,7 +588,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	std::string err;
 	Element tree;
 	// Translate the XML to a tree form.
-	if (!tree.LoadXMLFile((const char*)source, err))
+	if (!tree.LoadXMLFile((char const*)source, err))
 	{
 		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
 		CString msg;

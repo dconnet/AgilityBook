@@ -57,7 +57,7 @@ ARBConfigTitle::ARBConfigTitle()
 {
 }
 
-ARBConfigTitle::ARBConfigTitle(const ARBConfigTitle& rhs)
+ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
@@ -68,7 +68,7 @@ ARBConfigTitle::~ARBConfigTitle()
 {
 }
 
-ARBConfigTitle& ARBConfigTitle::operator=(const ARBConfigTitle& rhs)
+ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -79,14 +79,14 @@ ARBConfigTitle& ARBConfigTitle::operator=(const ARBConfigTitle& rhs)
 	return *this;
 }
 
-bool ARBConfigTitle::operator==(const ARBConfigTitle& rhs) const
+bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
 		&& m_Desc == rhs.m_Desc;
 }
 
-bool ARBConfigTitle::operator!=(const ARBConfigTitle& rhs) const
+bool ARBConfigTitle::operator!=(ARBConfigTitle const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -105,8 +105,8 @@ size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBConfigTitle::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
@@ -157,7 +157,7 @@ std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-const ARBConfigTitle* ARBConfigTitleList::FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst) const
+ARBConfigTitle const* ARBConfigTitleList::FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -167,7 +167,7 @@ const ARBConfigTitle* ARBConfigTitleList::FindTitleCompleteName(const std::strin
 	return NULL;
 }
 
-const ARBConfigTitle* ARBConfigTitleList::FindTitle(const std::string& inName) const
+ARBConfigTitle const* ARBConfigTitleList::FindTitle(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -177,7 +177,7 @@ const ARBConfigTitle* ARBConfigTitleList::FindTitle(const std::string& inName) c
 	return NULL;
 }
 
-ARBConfigTitle* ARBConfigTitleList::FindTitle(const std::string& inName)
+ARBConfigTitle* ARBConfigTitleList::FindTitle(std::string const& inName)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -187,7 +187,7 @@ ARBConfigTitle* ARBConfigTitleList::FindTitle(const std::string& inName)
 	return NULL;
 }
 
-ARBConfigTitle* ARBConfigTitleList::AddTitle(const std::string& inName)
+ARBConfigTitle* ARBConfigTitleList::AddTitle(std::string const& inName)
 {
 	if (0 == inName.length())
 		return NULL;
@@ -210,7 +210,7 @@ ARBConfigTitle* ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
 	return inTitle;
 }
 
-bool ARBConfigTitleList::DeleteTitle(const std::string& inName)
+bool ARBConfigTitleList::DeleteTitle(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

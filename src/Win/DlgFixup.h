@@ -57,7 +57,7 @@ public:
 class CDlgFixupRenameVenue : public CDlgFixup
 {
 public:
-	CDlgFixupRenameVenue(const std::string& oldName, const std::string& newName)
+	CDlgFixupRenameVenue(std::string const& oldName, std::string const& newName)
 		: m_oldName(oldName)
 		, m_newName(newName)
 	{
@@ -71,7 +71,7 @@ protected:
 class CDlgFixupDeleteVenue : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteVenue(const std::string& name)
+	CDlgFixupDeleteVenue(std::string const& name)
 		: m_Name(name)
 	{
 	}
@@ -85,7 +85,7 @@ protected:
 class CDlgFixupRenameOtherPoints : public CDlgFixup
 {
 public:
-	CDlgFixupRenameOtherPoints(const std::string& oldName, const std::string& newName)
+	CDlgFixupRenameOtherPoints(std::string const& oldName, std::string const& newName)
 		: m_oldName(oldName)
 		, m_newName(newName)
 	{
@@ -99,7 +99,7 @@ protected:
 class CDlgFixupDeleteOtherPoints : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteOtherPoints(const std::string& name)
+	CDlgFixupDeleteOtherPoints(std::string const& name)
 		: m_Name(name)
 	{
 	}
@@ -113,7 +113,7 @@ protected:
 class CDlgFixupRenameDivision : public CDlgFixup
 {
 public:
-	CDlgFixupRenameDivision(const std::string& venue, const std::string& oldName, const std::string& newName)
+	CDlgFixupRenameDivision(std::string const& venue, std::string const& oldName, std::string const& newName)
 		: m_Venue(venue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -129,7 +129,7 @@ protected:
 class CDlgFixupDeleteDivision : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteDivision(const std::string& venue, const std::string& name)
+	CDlgFixupDeleteDivision(std::string const& venue, std::string const& name)
 		: m_Venue(venue)
 		, m_Name(name)
 	{
@@ -146,10 +146,10 @@ class CDlgFixupRenameLevel : public CDlgFixup
 {
 public:
 	CDlgFixupRenameLevel(
-		const std::string& venue,
-		const std::string& div,
-		const std::string& oldName,
-		const std::string& newName)
+		std::string const& venue,
+		std::string const& div,
+		std::string const& oldName,
+		std::string const& newName)
 		: m_Venue(venue)
 		, m_Div(div)
 		, m_oldName(oldName)
@@ -168,9 +168,9 @@ class CDlgFixupDeleteLevel : public CDlgFixup
 {
 public:
 	CDlgFixupDeleteLevel(
-		const std::string& venue,
-		const std::string& div,
-		const std::string& name)
+		std::string const& venue,
+		std::string const& div,
+		std::string const& name)
 		: m_Venue(venue)
 		, m_Div(div)
 		, m_Name(name)
@@ -188,7 +188,7 @@ protected:
 class CDlgFixupRenameTitle : public CDlgFixup
 {
 public:
-	CDlgFixupRenameTitle(const std::string& venue, const std::string& oldName, const std::string& newName)
+	CDlgFixupRenameTitle(std::string const& venue, std::string const& oldName, std::string const& newName)
 		: m_Venue(venue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -204,7 +204,7 @@ protected:
 class CDlgFixupDeleteTitle : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteTitle(const std::string& venue, const std::string& name)
+	CDlgFixupDeleteTitle(std::string const& venue, std::string const& name)
 		: m_Venue(venue)
 		, m_Name(name)
 	{
@@ -220,7 +220,7 @@ protected:
 class CDlgFixupRenameEvent : public CDlgFixup
 {
 public:
-	CDlgFixupRenameEvent(const std::string& venue, const std::string& oldName, const std::string& newName)
+	CDlgFixupRenameEvent(std::string const& venue, std::string const& oldName, std::string const& newName)
 		: m_Venue(venue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -236,7 +236,7 @@ protected:
 class CDlgFixupDeleteEvent : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteEvent(const std::string& venue, const std::string& name)
+	CDlgFixupDeleteEvent(std::string const& venue, std::string const& name)
 		: m_Venue(venue)
 		, m_Name(name)
 	{

@@ -68,14 +68,14 @@ public:
 	} eEntry;
 
 	ARBCalendar();
-	ARBCalendar(const ARBCalendar& rhs);
-	ARBCalendar& operator=(const ARBCalendar& rhs);
-	bool operator==(const ARBCalendar& rhs) const;
-	bool operator!=(const ARBCalendar& rhs) const;
-	bool operator<(const ARBCalendar& rhs) const;
-	bool operator>(const ARBCalendar& rhs) const;
-	bool operator<(const ARBDate& rhs) const;
-	bool operator>(const ARBDate& rhs) const;
+	ARBCalendar(ARBCalendar const& rhs);
+	ARBCalendar& operator=(ARBCalendar const& rhs);
+	bool operator==(ARBCalendar const& rhs) const;
+	bool operator!=(ARBCalendar const& rhs) const;
+	bool operator<(ARBCalendar const& rhs) const;
+	bool operator>(ARBCalendar const& rhs) const;
+	bool operator<(ARBDate const& rhs) const;
+	bool operator>(ARBDate const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -99,8 +99,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -117,7 +117,7 @@ public:
 	 * @retval true inDate is before both entry start and end dates.
 	 * @retval false inDate is after one or both the start and end dates.
 	 */
-	bool IsBefore(const ARBDate& inDate) const;
+	bool IsBefore(ARBDate const& inDate) const;
 
 	/**
 	 * Is the given date in the range of the calendar entry?
@@ -125,7 +125,7 @@ public:
 	 * @retval true inDate is on one of the dates in the entry range.
 	 * @retval false inDate is outside the calendar entry range.
 	 */
-	bool InRange(const ARBDate& inDate) const;
+	bool InRange(ARBDate const& inDate) const;
 
 	/**
 	 * Does the range of inDate1 and inDate2 overlap this calendar entry?
@@ -135,32 +135,32 @@ public:
 	 * @retval false There is no overlap
 	 */
 	bool IsRangeOverlapped(
-		const ARBDate& inDate1,
-		const ARBDate& inDate2) const;
+		ARBDate const& inDate1,
+		ARBDate const& inDate2) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	const ARBDate& GetStartDate() const;
-	void SetStartDate(const ARBDate& inDate);
-	const ARBDate& GetEndDate() const;
-	void SetEndDate(const ARBDate& inDate);
-	const ARBDate& GetOpeningDate() const;
-	void SetOpeningDate(const ARBDate& inDate);
-	const ARBDate& GetClosingDate() const;
-	void SetClosingDate(const ARBDate& inDate);
+	ARBDate const& GetStartDate() const;
+	void SetStartDate(ARBDate const& inDate);
+	ARBDate const& GetEndDate() const;
+	void SetEndDate(ARBDate const& inDate);
+	ARBDate const& GetOpeningDate() const;
+	void SetOpeningDate(ARBDate const& inDate);
+	ARBDate const& GetClosingDate() const;
+	void SetClosingDate(ARBDate const& inDate);
 	bool IsTentative() const;
 	void SetIsTentative(bool inTentative);
-	const std::string& GetLocation() const;
-	void SetLocation(const std::string& inLocation);
-	const std::string& GetClub() const;
-	void SetClub(const std::string& inClub);
-	const std::string& GetVenue() const;
-	void SetVenue(const std::string& inVenue);
+	std::string const& GetLocation() const;
+	void SetLocation(std::string const& inLocation);
+	std::string const& GetClub() const;
+	void SetClub(std::string const& inClub);
+	std::string const& GetVenue() const;
+	void SetVenue(std::string const& inVenue);
 	eEntry GetEntered() const;
 	void SetEntered(eEntry inEnter);
-	const std::string& GetNote() const;
-	void SetNote(const std::string& inNote);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
 
 private:
 	~ARBCalendar();
@@ -176,62 +176,62 @@ private:
 	std::string m_Note;
 };
 
-inline bool ARBCalendar::operator<(const ARBCalendar& rhs) const
+inline bool ARBCalendar::operator<(ARBCalendar const& rhs) const
 {
 	return m_DateStart < rhs.GetStartDate();
 }
 
-inline bool ARBCalendar::operator>(const ARBCalendar& rhs) const
+inline bool ARBCalendar::operator>(ARBCalendar const& rhs) const
 {
 	return m_DateEnd > rhs.GetEndDate();
 }
 
-inline bool ARBCalendar::operator<(const ARBDate& rhs) const
+inline bool ARBCalendar::operator<(ARBDate const& rhs) const
 {
 	return m_DateStart < rhs;
 }
 
-inline bool ARBCalendar::operator>(const ARBDate& rhs) const
+inline bool ARBCalendar::operator>(ARBDate const& rhs) const
 {
 	return m_DateEnd > rhs;
 }
 
-inline const ARBDate& ARBCalendar::GetStartDate() const
+inline ARBDate const& ARBCalendar::GetStartDate() const
 {
 	return m_DateStart;
 }
 
-inline void ARBCalendar::SetStartDate(const ARBDate& inDate)
+inline void ARBCalendar::SetStartDate(ARBDate const& inDate)
 {
 	m_DateStart = inDate;
 }
 
-inline const ARBDate& ARBCalendar::GetEndDate() const
+inline ARBDate const& ARBCalendar::GetEndDate() const
 {
 	return m_DateEnd;
 }
 
-inline void ARBCalendar::SetEndDate(const ARBDate& inDate)
+inline void ARBCalendar::SetEndDate(ARBDate const& inDate)
 {
 	m_DateEnd = inDate;
 }
 
-inline const ARBDate& ARBCalendar::GetOpeningDate() const
+inline ARBDate const& ARBCalendar::GetOpeningDate() const
 {
 	return m_DateOpening;
 }
 
-inline void ARBCalendar::SetOpeningDate(const ARBDate& inDate)
+inline void ARBCalendar::SetOpeningDate(ARBDate const& inDate)
 {
 	m_DateOpening = inDate;
 }
 
-inline const ARBDate& ARBCalendar::GetClosingDate() const
+inline ARBDate const& ARBCalendar::GetClosingDate() const
 {
 	return m_DateClosing;
 }
 
-inline void ARBCalendar::SetClosingDate(const ARBDate& inDate)
+inline void ARBCalendar::SetClosingDate(ARBDate const& inDate)
 {
 	m_DateClosing = inDate;
 }
@@ -246,32 +246,32 @@ inline void ARBCalendar::SetIsTentative(bool inTentative)
 	m_bTentative = inTentative;
 }
 
-inline const std::string& ARBCalendar::GetLocation() const
+inline std::string const& ARBCalendar::GetLocation() const
 {
 	return m_Location;
 }
 
-inline void ARBCalendar::SetLocation(const std::string& inLocation)
+inline void ARBCalendar::SetLocation(std::string const& inLocation)
 {
 	m_Location = inLocation;
 }
 
-inline const std::string& ARBCalendar::GetClub() const
+inline std::string const& ARBCalendar::GetClub() const
 {
 	return m_Club;
 }
 
-inline void ARBCalendar::SetClub(const std::string& inClub)
+inline void ARBCalendar::SetClub(std::string const& inClub)
 {
 	m_Club = inClub;
 }
 
-inline const std::string& ARBCalendar::GetVenue() const
+inline std::string const& ARBCalendar::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBCalendar::SetVenue(const std::string& inVenue)
+inline void ARBCalendar::SetVenue(std::string const& inVenue)
 {
 	m_Venue = inVenue;
 }
@@ -286,12 +286,12 @@ inline void ARBCalendar::SetEntered(ARBCalendar::eEntry inEnter)
 	m_eEntered = inEnter;
 }
 
-inline const std::string& ARBCalendar::GetNote() const
+inline std::string const& ARBCalendar::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBCalendar::SetNote(const std::string& inNote)
+inline void ARBCalendar::SetNote(std::string const& inNote)
 {
 	m_Note = inNote;
 }
@@ -304,15 +304,6 @@ inline void ARBCalendar::SetNote(const std::string& inNote)
 class ARBCalendarList : public ARBVectorLoad1<ARBCalendar>
 {
 public:
-	bool operator==(const ARBCalendarList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBCalendarList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Sort the list by date.
 	 * @param inDescending Sort in descending or ascending order.
@@ -324,7 +315,7 @@ public:
 	 * @param outEntered Entered trials.
 	 * @return Number of entered trials.
 	 */
-	size_t GetAllEntered(std::vector<const ARBCalendar*>& outEntered) const;
+	size_t GetAllEntered(std::vector<ARBCalendar const*>& outEntered) const;
 
 	/**
 	 * Trim all calendar entries before inDate.
@@ -332,7 +323,7 @@ public:
 	 * @return Number of entries that were trimmed.
 	 * @note No dates are trimmed if inData is not valid.
 	 */
-	int TrimEntries(const ARBDate& inDate);
+	int TrimEntries(ARBDate const& inDate);
 
 	/**
 	 * Find a calendar entry.
@@ -341,7 +332,7 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	ARBCalendar* FindCalendar(const ARBCalendar* inCal);
+	ARBCalendar* FindCalendar(ARBCalendar const* inCal);
 
 	/**
 	 * Add a calendar entry to the list.
@@ -358,5 +349,5 @@ public:
 	 * @return Object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteCalendar(const ARBCalendar* inCal);
+	bool DeleteCalendar(ARBCalendar const* inCal);
 };

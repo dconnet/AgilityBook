@@ -44,7 +44,7 @@ class ARBDogExistingPointsList;
 class CDlgExistingPoints : public CDialog
 {
 public:
-	CDlgExistingPoints(const ARBConfig& config, ARBDogExistingPointsList& points, ARBDogExistingPoints* pExistingPoints, CWnd* pParent = NULL);
+	CDlgExistingPoints(ARBConfig const& config, ARBDogExistingPointsList& points, ARBDogExistingPoints* pExistingPoints, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -60,7 +60,7 @@ private:
 	short	m_Points;
 	CString	m_Comments;
 	//}}AFX_DATA
-	const ARBConfig& m_Config;
+	ARBConfig const& m_Config;
 	ARBDogExistingPointsList& m_PointsList;
 	ARBDogExistingPoints* m_pExistingPoints;
 	ARBDate m_Date;

@@ -53,10 +53,10 @@ class ARBDogRegNum : public ARBBase
 {
 public:
 	ARBDogRegNum();
-	ARBDogRegNum(const ARBDogRegNum& rhs);
-	ARBDogRegNum& operator=(const ARBDogRegNum& rhs);
-	bool operator==(const ARBDogRegNum& rhs) const;
-	bool operator!=(const ARBDogRegNum& rhs) const;
+	ARBDogRegNum(ARBDogRegNum const& rhs);
+	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+	bool operator==(ARBDogRegNum const& rhs) const;
+	bool operator!=(ARBDogRegNum const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -81,9 +81,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -97,12 +97,12 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetVenue() const;
-	void SetVenue(const std::string& inVenue);
-	const std::string& GetNumber() const;
-	void SetNumber(const std::string& inNumber);
-	const std::string& GetHeight() const;
-	void SetHeight(const std::string& inHeight);
+	std::string const& GetVenue() const;
+	void SetVenue(std::string const& inVenue);
+	std::string const& GetNumber() const;
+	void SetNumber(std::string const& inNumber);
+	std::string const& GetHeight() const;
+	void SetHeight(std::string const& inHeight);
 	bool GetReceived() const;
 	void SetReceived(bool inReceived);
 
@@ -114,32 +114,32 @@ private:
 	bool m_bReceived;
 };
 
-inline const std::string& ARBDogRegNum::GetVenue() const
+inline std::string const& ARBDogRegNum::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogRegNum::SetVenue(const std::string& inVenue)
+inline void ARBDogRegNum::SetVenue(std::string const& inVenue)
 {
 	m_Venue = inVenue;
 }
 
-inline const std::string& ARBDogRegNum::GetNumber() const
+inline std::string const& ARBDogRegNum::GetNumber() const
 {
 	return m_Number;
 }
 
-inline void ARBDogRegNum::SetNumber(const std::string& inNumber)
+inline void ARBDogRegNum::SetNumber(std::string const& inNumber)
 {
 	m_Number = inNumber;
 }
 
-inline const std::string& ARBDogRegNum::GetHeight() const
+inline std::string const& ARBDogRegNum::GetHeight() const
 {
 	return m_Height;
 }
 
-inline void ARBDogRegNum::SetHeight(const std::string& inHeight)
+inline void ARBDogRegNum::SetHeight(std::string const& inHeight)
 {
 	m_Height = inHeight;
 }
@@ -162,15 +162,6 @@ inline void ARBDogRegNum::SetReceived(bool inReceived)
 class ARBDogRegNumList : public ARBVectorLoad2<ARBDogRegNum>
 {
 public:
-	bool operator==(const ARBDogRegNumList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogRegNumList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	void sort(bool inDescending = true);
 
 	/**
@@ -178,7 +169,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of registration numbers found.
 	 */
-	int NumRegNumsInVenue(const std::string& inVenue) const;
+	int NumRegNumsInVenue(std::string const& inVenue) const;
 
 	/**
 	 * Rename a venue.
@@ -187,15 +178,15 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-		const std::string& inOldVenue,
-		const std::string& inNewVenue);
+		std::string const& inOldVenue,
+		std::string const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(const std::string& inVenue);
+	int DeleteVenue(std::string const& inVenue);
 
 	/**
 	 * Find a registration number.
@@ -203,7 +194,7 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBDogRegNum* FindRegNum(const std::string& inVenue) const;
+	ARBDogRegNum const* FindRegNum(std::string const& inVenue) const;
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -213,8 +204,8 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	ARBDogRegNum* AddRegNum(
-		const std::string& inVenue,
-		const std::string& inNumber);
+		std::string const& inVenue,
+		std::string const& inNumber);
 
 	/**
 	 * Delete a registration number.
@@ -223,6 +214,6 @@ public:
 	 * @return Number of objects deleted.
 	 */
 	int DeleteRegNum(
-		const std::string& inVenue,
-		const std::string& inNumber);
+		std::string const& inVenue,
+		std::string const& inNumber);
 };

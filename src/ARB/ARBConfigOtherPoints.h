@@ -60,10 +60,10 @@ public:
 	} eOtherPointsTally;
 
 	ARBConfigOtherPoints();
-	ARBConfigOtherPoints(const ARBConfigOtherPoints& rhs);
-	ARBConfigOtherPoints& operator=(const ARBConfigOtherPoints& rhs);
-	bool operator==(const ARBConfigOtherPoints& rhs) const;
-	bool operator!=(const ARBConfigOtherPoints& rhs) const;
+	ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs);
+	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
+	bool operator==(ARBConfigOtherPoints const& rhs) const;
+	bool operator!=(ARBConfigOtherPoints const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -92,8 +92,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -107,10 +107,10 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetDescription() const;
-	void SetDescription(const std::string& inDesc);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetDescription() const;
+	void SetDescription(std::string const& inDesc);
 	eOtherPointsTally GetTally() const;
 	void SetTally(eOtherPointsTally inTally);
 
@@ -126,22 +126,22 @@ inline std::string ARBConfigOtherPoints::GetGenericName() const
 	return GetName();
 }
 
-inline const std::string& ARBConfigOtherPoints::GetName() const
+inline std::string const& ARBConfigOtherPoints::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigOtherPoints::SetName(const std::string& inName)
+inline void ARBConfigOtherPoints::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string& ARBConfigOtherPoints::GetDescription() const
+inline std::string const& ARBConfigOtherPoints::GetDescription() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigOtherPoints::SetDescription(const std::string& inDesc)
+inline void ARBConfigOtherPoints::SetDescription(std::string const& inDesc)
 {
 	m_Desc = inDesc;
 }
@@ -164,21 +164,12 @@ inline void ARBConfigOtherPoints::SetTally(ARBConfigOtherPoints::eOtherPointsTal
 class ARBConfigOtherPointsList : public ARBVectorLoad1<ARBConfigOtherPoints>
 {
 public:
-	bool operator==(const ARBConfigOtherPointsList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigOtherPointsList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Verify the name exists.
 	 * @param inName Name to verify.
 	 * @return Whether the OtherPoints exists.
 	 */
-	bool VerifyOtherPoints(const std::string& inName) const;
+	bool VerifyOtherPoints(std::string const& inName) const;
 
 	/**
 	 * Find an otherpoints object.
@@ -186,8 +177,8 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigOtherPoints* FindOtherPoints(const std::string& inName) const;
-	ARBConfigOtherPoints* FindOtherPoints(const std::string& inName);
+	ARBConfigOtherPoints const* FindOtherPoints(std::string const& inName) const;
+	ARBConfigOtherPoints* FindOtherPoints(std::string const& inName);
 
 	/**
 	 * Add an otherpoints object.
@@ -203,5 +194,5 @@ public:
 	 * @param inName Name of object to delete.
 	 * @return Whether the object was deleted or not.
 	 */
-	bool DeleteOtherPoints(const std::string& inName);
+	bool DeleteOtherPoints(std::string const& inName);
 };

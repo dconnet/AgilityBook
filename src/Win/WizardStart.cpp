@@ -95,7 +95,7 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	// For integrity checking. See Wizard.h.
 	int index;
@@ -110,11 +110,11 @@ static const struct
 		// other: ID of dialog
 		LRESULT nextPage;
 		// Listing (NULL denotes no entry)
-		const char* item;
+		char const* item;
 		// Description shown when listing is selected.
-		const char* desc;
+		char const* desc;
 	} data[2]; // Use m_Style to index into this. 0==sheet, 1==arb
-} sc_Items[] =
+} const sc_Items[] =
 {
 	{WIZ_IMPORT_RUNS, 
 		{
@@ -208,7 +208,7 @@ static const struct
 		}
 	},
 };
-static const int sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
+static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
 void CWizardStart::UpdateList()
 {

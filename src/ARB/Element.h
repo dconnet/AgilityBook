@@ -74,9 +74,9 @@ public:
 	} AttribLookup;
 
 	Element();
-	Element(const std::string& inName);
-	Element(const Element& rhs);
-	Element& operator=(const Element& rhs);
+	Element(std::string const& inName);
+	Element(Element const& rhs);
+	Element& operator=(Element const& rhs);
 	~Element();
 
 	/**
@@ -93,28 +93,28 @@ public:
 	/**
 	 * Get the name of this element.
 	 */
-	const std::string& GetName() const;
+	std::string const& GetName() const;
 
 	/**
 	 * Set the name of this element.
 	 * @param inName New name for this element.
 	 */
-	void SetName(const std::string& inName);
+	void SetName(std::string const& inName);
 
 	/**
 	 * Get the value of this element.
 	 */
-	const std::string& GetValue() const;
+	std::string const& GetValue() const;
 
 	/**
 	 * Set the value of this element.
 	 * @pre GetElementCount() must be 0.
 	 * @param inValue New value for this element.
 	 */
-	void SetValue(const std::string& inValue);
-	void SetValue(const char* const inValue);
-	void SetValue(const short inValue);
-	void SetValue(const long inValue);
+	void SetValue(std::string const& inValue);
+	void SetValue(char const* const inValue);
+	void SetValue(short inValue);
+	void SetValue(long inValue);
 
 	/**
 	 * Set the value of this element.
@@ -122,7 +122,7 @@ public:
 	 * @param inValue New value for this element.
 	 * @param inPrec Precision, trailing zeros are trimmed unless prec=2, then they are only trimmed if all zero.
 	 */
-	void SetValue(const double inValue, int inPrec = 2);
+	void SetValue(double inValue, int inPrec = 2);
 
 	/**
 	 * The number of attributes. This should only be used when iterating over
@@ -147,13 +147,13 @@ public:
 	 * @param outValue Value of attribute
 	 * @return Result of lookup.
 	 */
-	AttribLookup GetAttrib(const std::string& inName, std::string& outValue) const;
-	AttribLookup GetAttrib(const std::string& inName, ARBVersion& outValue) const;
-	AttribLookup GetAttrib(const std::string& inName, ARBDate& outValue) const;
-	AttribLookup GetAttrib(const std::string& inName, bool& outValue) const;
-	AttribLookup GetAttrib(const std::string& inName, short& outValue) const;
-	AttribLookup GetAttrib(const std::string& inName, long& outValue) const;
-	AttribLookup GetAttrib(const std::string& inName, double& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, std::string& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, ARBVersion& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, ARBDate& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, bool& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, short& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, long& outValue) const;
+	AttribLookup GetAttrib(std::string const& inName, double& outValue) const;
 
 	/**
 	 * Add an attribute.
@@ -162,13 +162,13 @@ public:
 	 * @return This always returns true.
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
-	bool AddAttrib(const std::string& inName, const std::string& inValue);
-	bool AddAttrib(const std::string& inName, const char* const inValue);
-	bool AddAttrib(const std::string& inName, const ARBVersion& inValue);
-	bool AddAttrib(const std::string& inName, const ARBDate& inValue);
-	bool AddAttrib(const std::string& inName, const bool inValue);
-	bool AddAttrib(const std::string& inName, const short inValue);
-	bool AddAttrib(const std::string& inName, const long inValue);
+	bool AddAttrib(std::string const& inName, std::string const& inValue);
+	bool AddAttrib(std::string const& inName, char const* const inValue);
+	bool AddAttrib(std::string const& inName, ARBVersion const& inValue);
+	bool AddAttrib(std::string const& inName, ARBDate const& inValue);
+	bool AddAttrib(std::string const& inName, bool inValue);
+	bool AddAttrib(std::string const& inName, short inValue);
+	bool AddAttrib(std::string const& inName, long inValue);
 
 	/**
 	 * Add an attribute.
@@ -178,14 +178,14 @@ public:
 	 * @return This always returns true.
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
-	bool AddAttrib(const std::string& inName, const double inValue, int inPrec = 2);
+	bool AddAttrib(std::string const& inName, double inValue, int inPrec = 2);
 
 	/**
 	 * Remove an attribute.
 	 * @param inName Attribute to remove
 	 * @return Whether or not the attribute was removed.
 	 */
-	bool RemoveAttrib(const std::string& inName);
+	bool RemoveAttrib(std::string const& inName);
 
 	/**
 	 * Remove all attributes.
@@ -203,7 +203,7 @@ public:
 	 * @param inIndex Index of element to be obtained.
 	 * @return The element.
 	 */
-	const Element& GetElement(int inIndex) const;
+	Element const& GetElement(int inIndex) const;
 
 	/**
 	 * Get the specified element.
@@ -221,7 +221,7 @@ public:
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
-	Element& AddElement(const std::string& inName, int inAt = -1);
+	Element& AddElement(std::string const& inName, int inAt = -1);
 
 	/**
 	 * Remove the specified element.
@@ -241,7 +241,7 @@ public:
 	 * @param inStartFrom Start the search from this location.
 	 * @return Index of the first element to match the search.
 	 */
-	int FindElement(const std::string& inName, int inStartFrom = 0) const;
+	int FindElement(std::string const& inName, int inStartFrom = 0) const;
 
 	/**
 	 * Populate this element from the given buffer.
@@ -250,7 +250,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg);
+	bool LoadXMLBuffer(char const* inData, unsigned int nData, std::string& ioErrMsg);
 
 	/**
 	 * Populate this element from the given file.
@@ -258,7 +258,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXMLFile(const char* inFileName, std::string& ioErrMsg);
+	bool LoadXMLFile(char const* inFileName, std::string& ioErrMsg);
 
 	/**
 	 * Save this element to the given output stream.
@@ -267,10 +267,10 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(std::ostream& outStream, const std::string* inDTD = NULL) const;
+	bool SaveXML(std::ostream& outStream, std::string const* inDTD = NULL) const;
 
 private:
-	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource,
+	bool LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
 		std::string& ioErrMsg);
 	typedef std::map<std::string, std::string> Attributes;
 	std::string m_Name;

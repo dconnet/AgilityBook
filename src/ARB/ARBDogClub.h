@@ -52,10 +52,10 @@ class ARBDogClub : public ARBBase
 {
 public:
 	ARBDogClub();
-	ARBDogClub(const ARBDogClub& rhs);
-	ARBDogClub& operator=(const ARBDogClub& rhs);
-	bool operator==(const ARBDogClub& rhs) const;
-	bool operator!=(const ARBDogClub& rhs) const;
+	ARBDogClub(ARBDogClub const& rhs);
+	ARBDogClub& operator=(ARBDogClub const& rhs);
+	bool operator==(ARBDogClub const& rhs) const;
+	bool operator!=(ARBDogClub const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -80,9 +80,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -96,10 +96,10 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetVenue() const;
-	void SetVenue(const std::string& inVenue);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetVenue() const;
+	void SetVenue(std::string const& inVenue);
 
 private:
 	~ARBDogClub();
@@ -112,22 +112,22 @@ inline std::string ARBDogClub::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBDogClub::GetName() const
+inline std::string const& ARBDogClub::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogClub::SetName(const std::string& inName)
+inline void ARBDogClub::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string& ARBDogClub::GetVenue() const
+inline std::string const& ARBDogClub::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogClub::SetVenue(const std::string& inVenue)
+inline void ARBDogClub::SetVenue(std::string const& inVenue)
 {
 	m_Venue = inVenue;
 }
@@ -143,21 +143,12 @@ inline void ARBDogClub::SetVenue(const std::string& inVenue)
 class ARBDogClubList : public ARBVectorLoad2<ARBDogClub>
 {
 public:
-	bool operator==(const ARBDogClubList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogClubList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Get the primary club, used to establish rules.
 	 * @return Pointer to first club.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBDogClub* GetPrimaryClub() const;
+	ARBDogClub const* GetPrimaryClub() const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -171,12 +162,12 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigScoring* FindEvent(
-		const ARBConfig* inConfig,
-		const std::string& inEvent,
-		const std::string& inDivision,
-		const std::string& inLevel,
-		const ARBDate& inDate,
+	ARBConfigScoring const* FindEvent(
+		ARBConfig const* inConfig,
+		std::string const& inEvent,
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate,
 		std::string& ioErrMsg) const;
 
 	/**
@@ -185,7 +176,7 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBDogClub* FindVenue(const std::string& inVenue) const;
+	ARBDogClub const* FindVenue(std::string const& inVenue) const;
 
 	/**
 	 * Add a club.
@@ -195,8 +186,8 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	ARBDogClub* AddClub(
-		const std::string& inName,
-		const std::string& inVenue);
+		std::string const& inName,
+		std::string const& inVenue);
 
 	/**
 	 * Delete a club.
@@ -205,6 +196,6 @@ public:
 	 * @return Whether club was deleted.
 	 */
 	bool DeleteClub(
-		const std::string& inName,
-		const std::string& inVenue);
+		std::string const& inName,
+		std::string const& inVenue);
 };

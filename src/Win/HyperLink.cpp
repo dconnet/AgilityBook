@@ -85,7 +85,7 @@ static LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
 	return retval;
 }
 
-bool CHyperLink::GotoURL(const CString& url)
+bool CHyperLink::GotoURL(CString const& url)
 {
 	// First try ShellExecute()
 	// Use INT_PTR instead of 'int' for compatibility with VC7.
@@ -361,7 +361,7 @@ void CHyperLink::OnClicked()
 /////////////////////////////////////////////////////////////////////////////
 // CHyperLink operations
 
-void CHyperLink::SetURL(const CString& strURL)
+void CHyperLink::SetURL(CString const& strURL)
 {
 	m_strURL = strURL;
 	if (::IsWindow(GetSafeHwnd()))

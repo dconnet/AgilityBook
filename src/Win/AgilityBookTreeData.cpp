@@ -214,13 +214,13 @@ static bool EditRun(
 		pRun->AddRef();
 	else
 	{
-		const ARBDogClub* pClub = pTrialData->GetTrial()->GetClubs().GetPrimaryClub();
+		ARBDogClub const* pClub = pTrialData->GetTrial()->GetClubs().GetPrimaryClub();
 		if (!pClub)
 		{
 			AfxMessageBox(IDS_NEED_CLUB, MB_ICONEXCLAMATION);
 			return false;
 		}
-		const ARBConfigVenue* pVenue = pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue());
+		ARBConfigVenue const* pVenue = pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue());
 		if (!pVenue)
 		{
 			CString msg;
@@ -369,7 +369,7 @@ static bool AddTitle(
 		return false;
 }
 
-static bool CopyDataToClipboard(UINT clpFmt, const Element& tree, const CString& txtForm)
+static bool CopyDataToClipboard(UINT clpFmt, Element const& tree, CString const& txtForm)
 {
 	if (!AfxGetMainWnd()->OpenClipboard())
 		return false;
@@ -557,17 +557,17 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	return bLoaded;
 }
 
-const std::vector<int>& CAgilityBookTreeData::GetDogColumns() const
+std::vector<int> const& CAgilityBookTreeData::GetDogColumns() const
 {
 	return m_pTree->m_Columns[0];
 }
 
-const std::vector<int>& CAgilityBookTreeData::GetTrialColumns() const
+std::vector<int> const& CAgilityBookTreeData::GetTrialColumns() const
 {
 	return m_pTree->m_Columns[1];
 }
 
-const std::vector<int>& CAgilityBookTreeData::GetRunColumns() const
+std::vector<int> const& CAgilityBookTreeData::GetRunColumns() const
 {
 	return m_pTree->m_Columns[2];
 }
@@ -759,9 +759,9 @@ CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
 	m_pTrial->Release();
 }
 
-const ARBDog* CAgilityBookTreeDataTrial::GetDog() const
+ARBDog const* CAgilityBookTreeDataTrial::GetDog() const
 {
-	const CAgilityBookTreeDataDog* pDog = GetDataDog();
+	CAgilityBookTreeDataDog const* pDog = GetDataDog();
 	ASSERT(pDog);
 	return pDog->GetDog();
 }
@@ -773,11 +773,11 @@ ARBDog* CAgilityBookTreeDataTrial::GetDog()
 	return pDog->GetDog();
 }
 
-const CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog() const
+CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 {
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
-	const CAgilityBookTreeData* pData = reinterpret_cast<const CAgilityBookTreeData*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
-	const CAgilityBookTreeDataDog* pDog = dynamic_cast<const CAgilityBookTreeDataDog*>(pData);
+	CAgilityBookTreeData const* pData = reinterpret_cast<CAgilityBookTreeData const*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
+	CAgilityBookTreeDataDog const* pDog = dynamic_cast<CAgilityBookTreeDataDog const*>(pData);
 	ASSERT(pDog);
 	return pDog;
 }
@@ -968,16 +968,16 @@ CAgilityBookTreeDataRun::~CAgilityBookTreeDataRun()
 	m_pRun->Release();
 }
 
-const ARBDog* CAgilityBookTreeDataRun::GetDog() const
+ARBDog const* CAgilityBookTreeDataRun::GetDog() const
 {
-	const CAgilityBookTreeDataDog* pDog = GetDataDog();
+	CAgilityBookTreeDataDog const* pDog = GetDataDog();
 	ASSERT(pDog);
 	return pDog->GetDog();
 }
 
-const ARBDogTrial* CAgilityBookTreeDataRun::GetTrial() const
+ARBDogTrial const* CAgilityBookTreeDataRun::GetTrial() const
 {
-	const CAgilityBookTreeDataTrial* pTrial = GetDataTrial();
+	CAgilityBookTreeDataTrial const* pTrial = GetDataTrial();
 	ASSERT(pTrial);
 	return pTrial->GetTrial();
 }
@@ -996,20 +996,20 @@ ARBDogTrial* CAgilityBookTreeDataRun::GetTrial()
 	return pTrial->GetTrial();
 }
 
-const CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog() const
+CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 {
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
-	const CAgilityBookTreeData* pData = reinterpret_cast<const CAgilityBookTreeData*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
-	const CAgilityBookTreeDataTrial* pTrial = dynamic_cast<const CAgilityBookTreeDataTrial*>(pData);
+	CAgilityBookTreeData const* pData = reinterpret_cast<CAgilityBookTreeData const*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
+	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
 	ASSERT(pTrial);
 	return pTrial->GetDataDog();
 }
 
-const CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial() const
+CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 {
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
-	const CAgilityBookTreeData* pData = reinterpret_cast<const CAgilityBookTreeData*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
-	const CAgilityBookTreeDataTrial* pTrial = dynamic_cast<const CAgilityBookTreeDataTrial*>(pData);
+	CAgilityBookTreeData const* pData = reinterpret_cast<CAgilityBookTreeData const*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
+	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
 	ASSERT(pTrial);
 	return pTrial;
 }

@@ -98,11 +98,11 @@ private:
 	void LoadLevelData();
 	void LoadTitleData();
 	void LoadEventData();
-	int FindCurrentDivision(const ARBConfigDivision* pDiv, bool bSet);
-	HTREEITEM FindCurrentLevel(const ARBConfigLevel* pLevel, bool bSet);
-	HTREEITEM FindCurrentSubLevel(const ARBConfigSubLevel* pSubLevel, bool bSet);
-	int FindCurrentTitle(const ARBConfigTitle* pTitle, bool bSet);
-	HTREEITEM FindCurrentEvent(const ARBConfigEvent* pEvent, bool bSet);
+	int FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSet);
+	HTREEITEM FindCurrentLevel(ARBConfigLevel const* pLevel, bool bSet);
+	HTREEITEM FindCurrentSubLevel(ARBConfigSubLevel const* pSubLevel, bool bSet);
+	int FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet);
+	HTREEITEM FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet);
 	CDlgConfigureDataDivision* GetCurrentDivisionData();
 	CDlgConfigureDataLevel* GetCurrentLevelData();
 	CDlgConfigureDataSubLevel* GetCurrentSubLevelData();

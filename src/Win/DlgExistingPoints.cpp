@@ -52,25 +52,25 @@ static char THIS_FILE[] = __FILE__;
 class CDlgPointsDataLevel
 {
 public:
-	CDlgPointsDataLevel(const ARBConfigLevel* pLevel)
+	CDlgPointsDataLevel(ARBConfigLevel const* pLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(NULL)
 	{
 	}
-	CDlgPointsDataLevel(const ARBConfigLevel* pLevel, const ARBConfigSubLevel* pSubLevel)
+	CDlgPointsDataLevel(ARBConfigLevel const* pLevel, ARBConfigSubLevel const* pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
 	}
-	const ARBConfigLevel* m_pLevel;
-	const ARBConfigSubLevel* m_pSubLevel;
+	ARBConfigLevel const* m_pLevel;
+	ARBConfigSubLevel const* m_pSubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgExistingPoints dialog
 
 // If pExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgExistingPoints::CDlgExistingPoints(const ARBConfig& config,
+CDlgExistingPoints::CDlgExistingPoints(ARBConfig const& config,
 	ARBDogExistingPointsList& points,
 	ARBDogExistingPoints* pExistingPoints, CWnd* pParent)
 	: CDialog(CDlgExistingPoints::IDD, pParent)
@@ -179,7 +179,7 @@ void CDlgExistingPoints::FillDivisions()
 	int idxVenue = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != idxVenue)
 	{
-		const ARBConfigVenue* pVenue = reinterpret_cast<const ARBConfigVenue*>(m_ctrlVenues.GetItemDataPtr(idxVenue));
+		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(idxVenue));
 		for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 			iterDiv != pVenue->GetDivisions().end();
 			++iterDiv)
@@ -211,7 +211,7 @@ void CDlgExistingPoints::FillLevels()
 	int idxDiv = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != idxDiv)
 	{
-		const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
 		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
 			iter != pDiv->GetLevels().end();
 			++iter)
@@ -261,15 +261,15 @@ void CDlgExistingPoints::FillEvents()
 	int idxVenue = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != idxVenue)
 	{
-		const ARBConfigVenue* pVenue = reinterpret_cast<const ARBConfigVenue*>(m_ctrlVenues.GetItemDataPtr(idxVenue));
+		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(idxVenue));
 		int idxDiv = m_ctrlDivisions.GetCurSel();
 		if (CB_ERR != idxDiv)
 		{
-			const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+			ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
 			int idxLevel = m_ctrlLevels.GetCurSel();
 			if (CB_ERR != idxLevel)
 			{
-				const CDlgPointsDataLevel* pData = reinterpret_cast<const CDlgPointsDataLevel*>(m_ctrlLevels.GetItemDataPtr(idxLevel));
+				CDlgPointsDataLevel const* pData = reinterpret_cast<CDlgPointsDataLevel const*>(m_ctrlLevels.GetItemDataPtr(idxLevel));
 				for (ARBConfigEventList::const_iterator iter = pVenue->GetEvents().begin();
 					iter != pVenue->GetEvents().end();
 					++iter)
@@ -389,7 +389,7 @@ void CDlgExistingPoints::OnOK()
 	std::string other;
 	if (CB_ERR != index)
 	{
-		const ARBConfigOtherPoints* pOther = reinterpret_cast<const ARBConfigOtherPoints*>(m_ctrlOther.GetItemDataPtr(index));
+		ARBConfigOtherPoints const* pOther = reinterpret_cast<ARBConfigOtherPoints const*>(m_ctrlOther.GetItemDataPtr(index));
 		other = pOther->GetName();
 	}
 
@@ -399,7 +399,7 @@ void CDlgExistingPoints::OnOK()
 		GotoDlgCtrl(&m_ctrlVenues);
 		return;
 	}
-	const ARBConfigVenue* pVenue = reinterpret_cast<const ARBConfigVenue*>(m_ctrlVenues.GetItemDataPtr(index));
+	ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
 	std::string venue = pVenue->GetName();
 
 	index = m_ctrlDivisions.GetCurSel();
@@ -408,7 +408,7 @@ void CDlgExistingPoints::OnOK()
 		GotoDlgCtrl(&m_ctrlDivisions);
 		return;
 	}
-	const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivisions.GetItemDataPtr(index));
+	ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(index));
 	std::string div = pDiv->GetName();
 
 	index = m_ctrlLevels.GetCurSel();
@@ -417,7 +417,7 @@ void CDlgExistingPoints::OnOK()
 		GotoDlgCtrl(&m_ctrlLevels);
 		return;
 	}
-	const CDlgPointsDataLevel* pData = reinterpret_cast<const CDlgPointsDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
+	CDlgPointsDataLevel const* pData = reinterpret_cast<CDlgPointsDataLevel const*>(m_ctrlLevels.GetItemDataPtr(index));
 	std::string level = pData->m_pLevel->GetName();
 	if (pData->m_pSubLevel)
 		level = pData->m_pSubLevel->GetName();
@@ -426,7 +426,7 @@ void CDlgExistingPoints::OnOK()
 	std::string event;
 	if (CB_ERR != index)
 	{
-		const ARBConfigEvent* pEvent = reinterpret_cast<const ARBConfigEvent*>(m_ctrlEvents.GetItemDataPtr(index));
+		ARBConfigEvent const* pEvent = reinterpret_cast<ARBConfigEvent const*>(m_ctrlEvents.GetItemDataPtr(index));
 		event = pEvent->GetName();
 	}
 

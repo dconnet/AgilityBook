@@ -51,19 +51,19 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	int fmt;
 	int cx;
 	UINT idText;
-} colRegNumInfo[] =
+} const colRegNumInfo[] =
 {
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
 	{LVCFMT_LEFT, 50, IDS_COL_NUMBER},
 	{LVCFMT_LEFT, 50, IDS_COL_HEIGHT},
 	{LVCFMT_LEFT, 50, IDS_COL_RECEIVED},
 };
-static const int nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
+static int const nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
 typedef struct
 {
@@ -111,7 +111,7 @@ int CALLBACK CompareRegNums(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogNumbers dialog
 
-CDlgDogNumbers::CDlgDogNumbers(ARBConfig& config, const ARBDogRegNumList& regnums)
+CDlgDogNumbers::CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnums)
 	: CPropertyPage(CDlgDogNumbers::IDD)
 	, m_Config(config)
 	, m_sortRegNums("RegNums")
@@ -171,17 +171,17 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 
 void CDlgDogNumbers::ListRegNums()
 {
-	const ARBDogRegNum* pSelected = NULL;
+	ARBDogRegNum const* pSelected = NULL;
 	int i = m_ctrlRegNums.GetSelection();
 	if (0 <= i)
-		pSelected = reinterpret_cast<const ARBDogRegNum*>(m_ctrlRegNums.GetItemData(i));
+		pSelected = reinterpret_cast<ARBDogRegNum const*>(m_ctrlRegNums.GetItemData(i));
 	m_ctrlRegNums.DeleteAllItems();
 	i = 0;
 	for (ARBDogRegNumList::const_iterator iterRegNum = m_RegNums.begin();
 		iterRegNum != m_RegNums.end();
 		++i, ++iterRegNum)
 	{
-		const ARBDogRegNum* pRegNum = (*iterRegNum);
+		ARBDogRegNum const* pRegNum = (*iterRegNum);
 		int nItem = m_ctrlRegNums.InsertItem(i, pRegNum->GetVenue().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 1, pRegNum->GetNumber().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 2, pRegNum->GetHeight().c_str());
@@ -198,7 +198,7 @@ void CDlgDogNumbers::ListRegNums()
 	{
 		for (i = 0; i < m_ctrlRegNums.GetItemCount(); ++i)
 		{
-			const ARBDogRegNum* pRegNum = reinterpret_cast<const ARBDogRegNum*>(m_ctrlRegNums.GetItemData(i));
+			ARBDogRegNum const* pRegNum = reinterpret_cast<ARBDogRegNum const*>(m_ctrlRegNums.GetItemData(i));
 			if (pRegNum == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlRegNums.SetSelection(i, true);
@@ -302,7 +302,7 @@ void CDlgDogNumbers::OnRegDelete()
 	int i = m_ctrlRegNums.GetSelection();
 	if (0 <= i)
 	{
-		const ARBDogRegNum* pRegNum = reinterpret_cast<const ARBDogRegNum*>(m_ctrlRegNums.GetItemData(i));
+		ARBDogRegNum const* pRegNum = reinterpret_cast<ARBDogRegNum const*>(m_ctrlRegNums.GetItemData(i));
 		m_RegNums.DeleteRegNum(pRegNum->GetVenue(), pRegNum->GetNumber());
 		m_ctrlRegNums.DeleteItem(i);
 	}

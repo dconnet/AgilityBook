@@ -150,12 +150,13 @@ CVersionNum::CVersionNum(WORD inwLangID, WORD inwCharSet)
 	m_Valid = true;
 }
 
-// This ctor is
+// This ctor is for reading the version number from the web.
 CVersionNum::CVersionNum(CString inVer)
 	: m_Valid(false)
 {
 	m_Name.Empty();
-	static const CString idStr("ARB Version ");
+	// This is a static string in "version.txt"
+	static CString const idStr("ARB Version ");
 	if (0 == inVer.Find(idStr))
 	{
 		inVer = inVer.Mid(idStr.GetLength());
@@ -182,7 +183,7 @@ CVersionNum::CVersionNum(CString inVer)
 	}
 }
 
-bool CVersionNum::operator==(const CVersionNum& rhs) const
+bool CVersionNum::operator==(CVersionNum const& rhs) const
 {
 	return m_Version.part1 == rhs.m_Version.part1
 		&& m_Version.part2 == rhs.m_Version.part2
@@ -190,7 +191,7 @@ bool CVersionNum::operator==(const CVersionNum& rhs) const
 		&& m_Version.part4 == rhs.m_Version.part4;
 }
 
-bool CVersionNum::operator<(const CVersionNum& rhs) const
+bool CVersionNum::operator<(CVersionNum const& rhs) const
 {
 	if (m_Version.part1 < rhs.m_Version.part1
 	|| m_Version.part2 < rhs.m_Version.part2
@@ -200,7 +201,7 @@ bool CVersionNum::operator<(const CVersionNum& rhs) const
 	return false;
 }
 
-bool CVersionNum::operator>(const CVersionNum& rhs) const
+bool CVersionNum::operator>(CVersionNum const& rhs) const
 {
 	if (m_Version.part1 > rhs.m_Version.part1
 	|| m_Version.part2 > rhs.m_Version.part2

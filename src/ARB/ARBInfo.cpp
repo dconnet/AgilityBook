@@ -53,7 +53,7 @@ ARBInfo::ARBInfo()
 {
 }
 
-ARBInfo::ARBInfo(const ARBInfo& rhs)
+ARBInfo::ARBInfo(ARBInfo const& rhs)
 	: m_JudgeInfo(rhs.m_JudgeInfo)
 {
 }
@@ -63,7 +63,7 @@ ARBInfo::~ARBInfo()
 	clear();
 }
 
-ARBInfo& ARBInfo::operator=(const ARBInfo& rhs)
+ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -72,12 +72,12 @@ ARBInfo& ARBInfo::operator=(const ARBInfo& rhs)
 	return *this;
 }
 
-bool ARBInfo::operator==(const ARBInfo& rhs) const
+bool ARBInfo::operator==(ARBInfo const& rhs) const
 {
 	return m_JudgeInfo == rhs.m_JudgeInfo;
 }
 
-bool ARBInfo::operator!=(const ARBInfo& rhs) const
+bool ARBInfo::operator!=(ARBInfo const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -88,14 +88,14 @@ void ARBInfo::clear()
 }
 
 bool ARBInfo::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const Element& element = inTree.GetElement(i);
-		const std::string& name = element.GetName();
+		Element const& element = inTree.GetElement(i);
+		std::string const& name = element.GetName();
 		if (name == TREE_JUDGEINFO)
 		{
 			// Ignore any errors.

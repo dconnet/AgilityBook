@@ -55,7 +55,7 @@ ARBDogRunOtherPoints::ARBDogRunOtherPoints()
 {
 }
 
-ARBDogRunOtherPoints::ARBDogRunOtherPoints(const ARBDogRunOtherPoints& rhs)
+ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Points(rhs.m_Points)
 {
@@ -65,7 +65,7 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
 
-ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(const ARBDogRunOtherPoints& rhs)
+ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -75,13 +75,13 @@ ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(const ARBDogRunOtherPoints
 	return *this;
 }
 
-bool ARBDogRunOtherPoints::operator==(const ARBDogRunOtherPoints& rhs) const
+bool ARBDogRunOtherPoints::operator==(ARBDogRunOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Points == rhs.m_Points;
 }
 
-bool ARBDogRunOtherPoints::operator!=(const ARBDogRunOtherPoints& rhs) const
+bool ARBDogRunOtherPoints::operator!=(ARBDogRunOtherPoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -93,9 +93,9 @@ size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 }
 
 bool ARBDogRunOtherPoints::Load(
-	const ARBConfig& inConfig,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfig const& inConfig,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)

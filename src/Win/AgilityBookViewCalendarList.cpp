@@ -392,7 +392,7 @@ void CAgilityBookViewCalendarList::LoadData()
 
 	// Add items.
 	int i = 0;
-	vector<const ARBCalendar*> entered;
+	vector<ARBCalendar const*> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
@@ -408,11 +408,11 @@ void CAgilityBookViewCalendarList::LoadData()
 		if (bHide)
 		{
 			bool bSuppress = false;
-			for (vector<const ARBCalendar*>::const_iterator iterE = entered.begin();
+			for (vector<ARBCalendar const*>::const_iterator iterE = entered.begin();
 			!bSuppress && iterE != entered.end();
 			++iterE)
 			{
-				const ARBCalendar* pEntered = (*iterE);
+				ARBCalendar const* pEntered = (*iterE);
 				if (pCal != pEntered
 				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{

@@ -54,7 +54,7 @@ ARBConfigFault::ARBConfigFault()
 {
 }
 
-ARBConfigFault::ARBConfigFault(const ARBConfigFault& rhs)
+ARBConfigFault::ARBConfigFault(ARBConfigFault const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
@@ -63,19 +63,19 @@ ARBConfigFault::~ARBConfigFault()
 {
 }
 
-ARBConfigFault& ARBConfigFault::operator=(const ARBConfigFault& rhs)
+ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 {
 	if (this != &rhs)
 		m_Name = rhs.m_Name;
 	return *this;
 }
 
-bool ARBConfigFault::operator==(const ARBConfigFault& rhs) const
+bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 {
 	return m_Name == rhs.m_Name;
 }
 
-bool ARBConfigFault::operator!=(const ARBConfigFault& rhs) const
+bool ARBConfigFault::operator!=(ARBConfigFault const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -87,8 +87,8 @@ size_t ARBConfigFault::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBConfigFault::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (inVersion == ARBVersion(1,0))
@@ -114,7 +114,7 @@ bool ARBConfigFault::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-const ARBConfigFault* ARBConfigFaultList::FindFault(const std::string& inName) const
+ARBConfigFault const* ARBConfigFaultList::FindFault(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 		if ((*iter)->GetName() == inName)
@@ -122,7 +122,7 @@ const ARBConfigFault* ARBConfigFaultList::FindFault(const std::string& inName) c
 	return NULL;
 }
 
-ARBConfigFault* ARBConfigFaultList::AddFault(const std::string& inName)
+ARBConfigFault* ARBConfigFaultList::AddFault(std::string const& inName)
 {
 	if (0 == inName.length())
 		return NULL;
@@ -132,7 +132,7 @@ ARBConfigFault* ARBConfigFaultList::AddFault(const std::string& inName)
 	return pFault;
 }
 
-bool ARBConfigFaultList::DeleteFault(const std::string& inName)
+bool ARBConfigFaultList::DeleteFault(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

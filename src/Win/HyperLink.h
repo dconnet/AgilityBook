@@ -59,7 +59,7 @@
 class CHyperLink : public CStatic
 {
 public:
-	static bool GotoURL(const CString& url);
+	static bool GotoURL(CString const& url);
 	CHyperLink();
 	virtual ~CHyperLink();
 
@@ -67,7 +67,7 @@ public:
 	enum UnderLineOptions { ulHover = -1, ulNone = 0, ulAlways = 1};
 
 public:
-	void SetURL(const CString& strURL);
+	void SetURL(CString const& strURL);
 	CString GetURL() const					{return m_strURL;}
 
 	void SetColors(COLORREF crLinkColor,

@@ -48,7 +48,7 @@ class CDlgDogPoints : public CPropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogPoints(ARBConfig& config, const ARBDogExistingPointsList& points);
+	CDlgDogPoints(ARBConfig& config, ARBDogExistingPointsList const& points);
 
 private:
 // Dialog Data

@@ -50,14 +50,14 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const unsigned int MaxLineLength = 76;
+static unsigned int const MaxLineLength = 76;
 
-static const char base64chars[] =
+static char const base64chars[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 #define SKIP '\202'
 
-static const char base64map[] =
+static char const base64map[] =
 {
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
 	SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP, SKIP,
@@ -115,7 +115,7 @@ void Base64::SetBuffer(char* inBuffer)
 	}
 }
 
-bool Base64::Decode(const std::string& inBuffer, char*& outBuffer, size_t& outLength)
+bool Base64::Decode(std::string const& inBuffer, char*& outBuffer, size_t& outLength)
 {
 	outBuffer = NULL;
 	outLength = 0;
@@ -202,7 +202,7 @@ bool Base64::Decode(const std::string& inBuffer, char*& outBuffer, size_t& outLe
 	return true;
 }
 
-std::string Base64::Encode(const char* inBuffer, size_t inLength)
+std::string Base64::Encode(char const* inBuffer, size_t inLength)
 {
 	char *encoded = NULL;
 	if (inBuffer != NULL && 0 < inLength)
@@ -212,7 +212,7 @@ std::string Base64::Encode(const char* inBuffer, size_t inLength)
 		size_t count = 0;
 		size_t LineLen = 0;
 		char* fresult = encoded;
-		const char *s = inBuffer;
+		char const *s = inBuffer;
 		int tmp = 0;
 		//let's step through the buffer and encode it...
 		while (count <= inLength)

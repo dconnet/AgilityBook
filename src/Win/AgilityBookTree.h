@@ -84,10 +84,10 @@ protected: // create from serialization only
 public:
 	CAgilityBookDoc* GetDocument() const;
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBBase* pBase) const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDog* pDog) const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDogTrial* pTrial) const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDogRun* pRun) const;
+	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBBase const* pBase) const;
+	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBDog const* pDog) const;
+	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBDogTrial const* pTrial) const;
+	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBDogRun const* pRun) const;
 	HTREEITEM InsertDog(ARBDog* pDog, bool bSelect = false);
 	HTREEITEM InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent);
 	HTREEITEM InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
