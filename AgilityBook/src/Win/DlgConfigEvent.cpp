@@ -91,6 +91,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_PARTNER, m_bHasPartners);
 	DDX_Text(pDX, IDC_DESC, m_Desc);
 	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
+	DDX_Control(pDX, IDC_COPY, m_ctrlCopy);
 	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_MOVE_UP, m_ctrlUp);
 	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
@@ -122,10 +123,12 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
 	ON_BN_CLICKED(IDC_NEW, OnBnClickedNew)
+	ON_BN_CLICKED(IDC_COPY, OnBnClickedCopy)
 	ON_BN_CLICKED(IDC_DELETE, OnBnClickedDelete)
 	ON_BN_CLICKED(IDC_MOVE_UP, OnBnClickedUp)
 	ON_BN_CLICKED(IDC_MOVE_DOWN, OnBnClickedDown)
 	ON_BN_CLICKED(IDC_DATE_START, OnValidFrom)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE, OnDatetimechangeDate)
 	ON_LBN_SELCHANGE(IDC_METHODS, OnLbnSelchangeMethods)
 	ON_CBN_SELCHANGE(IDC_DIVISION, OnCbnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_LEVEL, OnCbnSelchangeLevel)
@@ -154,6 +157,13 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoring* pScoring) const
 		str += all;
 	else
 		str += pScoring->GetLevel().c_str();
+	const ARBDate& valid = pScoring->GetValidFrom();
+	if (valid.IsValid())
+	{
+		str += " [";
+		str += valid.GetString(false, false).c_str();
+		str += "]";
+	}
 	return str;
 }
 
@@ -237,6 +247,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlSuperQ.EnableWindow(bEnable);
 	m_ctrlMachPts.EnableWindow(bEnable);
 	m_ctrlDoubleQ.EnableWindow(bEnable);
+	m_ctrlCopy.EnableWindow(bEnable);
 	m_ctrlDelete.EnableWindow(bEnable);
 	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
 	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
@@ -431,6 +442,14 @@ bool CDlgConfigEvent::SaveControls()
 	{
 		CString str;
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(m_idxMethod));
+		ARBDate valid;
+		if (m_ctrlValidFrom.GetCheck())
+		{
+			CTime time;
+			m_ctrlDate.GetTime(time);
+			valid = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+		}
+		pScoring->SetValidFrom(valid);
 		if (0 == idxDiv)
 			str = WILDCARD_DIVISION;
 		else
@@ -550,6 +569,24 @@ void CDlgConfigEvent::OnBnClickedNew()
 	FillControls();
 }
 
+void CDlgConfigEvent::OnBnClickedCopy()
+{
+	UpdateData(TRUE);
+	int idxMethod = m_ctrlMethods.GetCurSel();
+	if (LB_ERR != idxMethod)
+	{
+		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		ARBConfigScoring* pNewScoring = m_Scorings.AddScoring();
+		*pNewScoring = *pScoring;
+		CString str = GetListName(pNewScoring);
+		m_idxMethod = m_ctrlMethods.AddString(str);
+		m_ctrlMethods.SetItemDataPtr(m_idxMethod, pNewScoring);
+		m_ctrlMethods.SetCurSel(m_idxMethod);
+		FillMethodList();
+		FillControls();
+	}
+}
+
 void CDlgConfigEvent::OnBnClickedDelete()
 {
 	UpdateData(TRUE);
@@ -631,6 +668,15 @@ void CDlgConfigEvent::OnValidFrom()
 	if (m_ctrlValidFrom.GetCheck())
 		bEnable = TRUE;
 	m_ctrlDate.EnableWindow(bEnable);
+	SaveControls();
+	FillMethodList();
+}
+
+void CDlgConfigEvent::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	SaveControls();
+	FillMethodList();
+	*pResult = 0;
 }
 
 void CDlgConfigEvent::OnSelchangeType() 
