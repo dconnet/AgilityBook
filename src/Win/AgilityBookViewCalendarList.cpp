@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Fixed bug when copying list to clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-07-24 DRC Calendar view didn't update when item deleted from list.
  */
@@ -579,11 +580,13 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		int index;
 		size_t maxLen[scNumColumns];
+		CString columns[scNumColumns];
 		for (index = 0; index < scNumColumns; ++index)
 		{
 			CString str;
 			str.LoadString(scColumns[index].col);
 			maxLen[index] = str.GetLength();
+			columns[index] = str;
 		}
 		for (index = 0; index < GetListCtrl().GetItemCount(); ++index)
 		{
@@ -619,14 +622,14 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 		// The header
 		CString data;
 		data.Format(" %*s-%-*s %-*s %-*s %-*s %*s-%-*s %-*s",
-			maxLen[COL_START_DATE], scColumns[COL_START_DATE].col,
-			maxLen[COL_END_DATE], scColumns[COL_END_DATE].col,
-			maxLen[COL_VENUE], scColumns[COL_VENUE].col,
-			maxLen[COL_LOCATION], scColumns[COL_LOCATION].col,
-			maxLen[COL_CLUB], scColumns[COL_CLUB].col,
-			maxLen[COL_OPENS], scColumns[COL_OPENS].col,
-			maxLen[COL_CLOSES], scColumns[COL_CLOSES].col,
-			maxLen[COL_NOTES], scColumns[COL_NOTES].col);
+			maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
+			maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
+			maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
+			maxLen[COL_LOCATION], (LPCTSTR)columns[COL_LOCATION],
+			maxLen[COL_CLUB], (LPCTSTR)columns[COL_CLUB],
+			maxLen[COL_OPENS], (LPCTSTR)columns[COL_OPENS],
+			maxLen[COL_CLOSES], (LPCTSTR)columns[COL_CLOSES],
+			maxLen[COL_NOTES], (LPCTSTR)columns[COL_NOTES]);
 		data.TrimRight();
 		data += "\r\n";
 		// The data
