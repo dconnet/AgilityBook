@@ -96,11 +96,14 @@ static bool ReadHttpFile(CString const& inURL, CString& outData)
 CUpdateInfo::CUpdateInfo()
 	: m_VersionNum("")
 	, m_VerConfig(0)
+	, m_FileName()
+	, m_InfoMsg()
 {
 }
 
 /**
  * This will read the version.txt file and cache it.
+ * In addition, it will ask to update if a newer version is found.
  * @param outData Version info from the web.
  * @param bVerbose Show error message.
  */
@@ -138,6 +141,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		}
 		return false;
 	}
+
 	// Skip the first line, that's the version.
 	int n = data.Find('\n');
 	if (0 < n)
@@ -164,6 +168,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				}
 				CSplashWnd::HideSplashScreen();
 				AfxMessageBox(msg, MB_ICONEXCLAMATION);
+				// Even tho we failed, we'll still report success.
+				// The return code is really whether we loaded the pgm verno.
 			}
 		}
 		else if (tree.GetName() == "Data")
@@ -178,21 +184,20 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			}
 		}
 	}
+
 	return true;
 }
 
 /**
  * Check the version against the web.
  */
-bool CUpdateInfo::UpdateVer()
+bool CUpdateInfo::CheckProgram()
 {
-	CVersionNum verThis; // This auto-loads the versioninfo.
-	ASSERT(verThis.Valid());
-
-	// If the version has changed, don't bother checking the config.
+	bool bNeedsUpdating = false;
 	ARBDate today = ARBDate::Today();
-	if (verThis < m_VersionNum)
+	if (IsOutOfDate())
 	{
+		bNeedsUpdating = true;
 		CSplashWnd::HideSplashScreen();
 		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
 		CString ver;
@@ -206,41 +211,30 @@ bool CUpdateInfo::UpdateVer()
 				url = url.Mid(nTab+1);
 			CHyperLink::GotoURL(url);
 		}
-		return true;
-	}
-	AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
-	return false;
-}
-
-void CUpdateInfo::UpdateVersion()
-{
-	if (ReadVersionFile(false))
-        UpdateVer();
-}
-
-void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc, bool bOnOpenDoc)
-{
-	// When called during the OnOpenDocument, we only check
-	// cached info.
-	if (!bOnOpenDoc)
-	{
-		// Only continue if we parsed the version.txt file
-		// AND the version is up-to-date.
-		if (!ReadVersionFile(true) || UpdateVer())
-			return;
 	}
 	else
-	{
-		// If we're opening a doc and we've checked the internet
-		// and there is a more current version, do not continue
-		// to check the config. This prevents loading a config that
-		// uses a newer file version.
-		CVersionNum verThis; // This auto-loads the versioninfo.
-		ASSERT(verThis.Valid());
-		if (verThis < m_VersionNum)
-			return;
-	}
+		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
+	return bNeedsUpdating;
+}
 
+/**
+ * Check the version against the web.
+ */
+bool CUpdateInfo::IsOutOfDate()
+{
+	// If we haven't parsed the internet file yet, assume we're out-of-date.
+	if (!m_VersionNum.Valid())
+		return true;
+	CVersionNum verThis; // This auto-loads the versioninfo.
+	ASSERT(verThis.Valid());
+	if (verThis < m_VersionNum)
+		return true;
+	else
+		return false;
+}
+
+void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
+{
 	// If the parse was successful, check for the posted config version.
 	bool bUpToDate = true;
 	// Cool! New config!
@@ -308,9 +302,37 @@ void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc, bool bOnOpenDoc)
 			}
 		}
 	}
-	if (bUpToDate && !bOnOpenDoc)
+	if (bUpToDate && bVerbose)
 	{
 		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
 	}
+}
+
+void CUpdateInfo::AutoUpdateProgram()
+{
+	if (ReadVersionFile(false))
+		CheckProgram();
+}
+
+void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
+{
+	// If we're opening a doc and we've checked the internet
+	// and there is a more current version, do not continue
+	// to check the config. This prevents loading a config that
+	// uses a newer file version.
+	if (IsOutOfDate())
+		return;
+	CheckConfig(pDoc, false);
+}
+
+void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc)
+{
+	// Only continue if we parsed the version.txt file
+	// AND the version is up-to-date.
+	if (!ReadVersionFile(true))
+		return;
+	if (CheckProgram())
+		return;
+	CheckConfig(pDoc, true);
 }

@@ -379,7 +379,7 @@ BOOL CAgilityBookApp::InitInstance()
 			ARBDate today = ARBDate::Today();
 			date += 30;
 			if (date < today)
-				m_UpdateInfo.UpdateVersion();
+				m_UpdateInfo.AutoUpdateProgram();
 		}
 	}
 	return TRUE;

@@ -750,7 +750,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	{
 		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		ASSERT(pApp);
-		pApp->UpdateInfo().UpdateConfiguration(this, true);
+		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
 
 	if (0 == GetDogs().size())
