@@ -38,6 +38,7 @@
  *
  * Revision History
  * @li 2004-09-23 DRC File version 9.1. Added 'Height' to 'ReferenceRun'
+ *                    GetAllHeights now accumulates these too.
  * @li 2004-06-29 DRC File version 9.0. Added 'SubName' to 'Training'. Changed
  *                    structure of 'RegNum'.
  * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
@@ -445,6 +446,14 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) co
 				ARBDogRun const* pRun = (*iterRun);
 				if (0 < pRun->GetHeight().length())
 					outHeights.insert(pRun->GetHeight());
+				for (ARBDogReferenceRunList::const_iterator iterRef = pRun->GetReferenceRuns().begin();
+					iterRef != pRun->GetReferenceRuns().end();
+					++iterRef)
+				{
+					ARBDogReferenceRun const* pRef = *iterRef;
+					if (0 < pRef->GetHeight().length())
+						outHeights.insert(pRef->GetHeight());
+				}
 			}
 		}
 	}
