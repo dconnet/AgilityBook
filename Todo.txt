@@ -1,8 +1,5 @@
 Last Updated: 8/28/03
 
-- OtherPoints point tallying is not implemented as stated.
-  Currently, it ignores the configured option and tallies by "All Events"
-
 - Add logic to the reorder dialog to know if an item can be reordered around
   an adjacent entry. (For instance, when reordering runs, reordering really
   only applies to runs on a given date. If you attempt to reorder more, the
