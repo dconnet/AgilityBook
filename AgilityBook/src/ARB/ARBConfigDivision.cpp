@@ -146,7 +146,7 @@ bool ARBConfigDivision::Save(CElement& ioTree) const
 	return true;
 }
 
-std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew)
+bool ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew, std::string& ioInfo)
 {
 	std::string info;
 
@@ -173,8 +173,8 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 					++nSkipped;
 				else
 				{
-					++nChanged;
-					info2 += pLevel->Update(indent+1, (*iterLevel));
+					if (pLevel->Update(indent+1, (*iterLevel), info2))
+						++nChanged;
 				}
 			}
 			else
@@ -234,9 +234,13 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 			info += buffer;
 		}
 	}
+	bool bChanges = false;
 	if (0 < info.length())
-		info = indentName + GetName() + "\n" + info;
-	return info;
+	{
+		bChanges = true;
+		ioInfo += indentName + GetName() + "\n" + info;
+	}
+	return bChanges;
 }
 
 /////////////////////////////////////////////////////////////////////////////

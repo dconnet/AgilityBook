@@ -156,7 +156,7 @@ bool ARBConfigEvent::Save(CElement& ioTree) const
 	return true;
 }
 
-std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
+bool ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew, std::string& ioInfo)
 {
 	std::string info;
 
@@ -224,7 +224,13 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 			info += buffer;
 		}
 	}
-	return info;
+	bool bChanges = false;
+	if (0 < info.length())
+	{
+		bChanges = true;
+		ioInfo += info;
+	}
+	return bChanges;
 }
 
 size_t ARBConfigEvent::FindAllEvents(

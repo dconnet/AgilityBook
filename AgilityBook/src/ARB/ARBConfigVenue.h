@@ -72,7 +72,7 @@ public:
 		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
-	std::string Update(int indent, const ARBConfigVenue* inVenueNew);
+	bool Update(int indent, const ARBConfigVenue* inVenueNew, std::string& ioInfo);
 
 	const std::string GetName() const;
 	void SetName(std::string inName);

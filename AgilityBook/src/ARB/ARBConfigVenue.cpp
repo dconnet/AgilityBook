@@ -193,11 +193,11 @@ bool ARBConfigVenue::Save(CElement& ioTree) const
 	return true;
 }
 
-std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
+bool ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew, std::string& ioInfo)
 {
 	std::string info;
 	if (GetName() != inVenueNew->GetName())
-		return info;
+		return false;
 
 	std::string indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
@@ -224,8 +224,8 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 					++nSkipped;
 				else
 				{
-					++nChanged;
-					info2 += pDiv->Update(indent+1, (*iterDiv));
+					if (pDiv->Update(indent+1, (*iterDiv), info2))
+						++nChanged;
 				}
 			}
 			else
@@ -266,8 +266,8 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 					++nSkipped;
 				else
 				{
-					++nChanged;
-					info2 += pEvent->Update(indent+1, (*iterEvent));
+					if (pEvent->Update(indent+1, (*iterEvent), info2))
+						++nChanged;
 				}
 			}
 			else
@@ -290,9 +290,13 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 			info += info2;
 		}
 	}
+	bool bChanges = false;
 	if (0 < info.length())
-		info = indentName + GetName() + "\n" + info;
-	return info;
+	{
+		bChanges = true;
+		ioInfo += indentName + GetName() + "\n" + info;
+	}
+	return bChanges;
 }
 
 /////////////////////////////////////////////////////////////////////////////

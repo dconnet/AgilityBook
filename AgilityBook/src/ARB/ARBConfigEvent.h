@@ -65,7 +65,7 @@ public:
 		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
-	std::string Update(int indent, const ARBConfigEvent* inEventNew);
+	bool Update(int indent, const ARBConfigEvent* inEventNew, std::string& ioInfo);
 
 	size_t FindAllEvents(
 		const std::string& inDivision,

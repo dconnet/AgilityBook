@@ -67,7 +67,7 @@ public:
 		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
-	std::string Update(int indent, const ARBConfigDivision* inDiv);
+	bool Update(int indent, const ARBConfigDivision* inDiv, std::string& ioInfo);
 
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
