@@ -320,7 +320,7 @@
 #define IDS_CREATERUN_FILTERED          5157
 #define IDS_NUM_TRAINING                5158
 #define ID_FILE_IMPORT_CONFIG           32772
-#define ID_FILE_EXPORT                  32773
+#define ID_FILE_EXPORT_DTD              32773
 #define ID_EDIT_CONFIGURATION           32774
 #define ID_CONFIG_ADD                   32775
 #define ID_CONFIG_DUPLICATE             32776
@@ -355,6 +355,7 @@
 #define ID_REORDER                      32805
 #define ID_VIEW_SORTRUNS                32806
 #define ID_VIEW_RUNS_BY_TRIAL           32807
+#define ID_FILE_EXPORT_XML              32808
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -363,7 +364,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        180
-#define _APS_NEXT_COMMAND_VALUE         32808
+#define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1151
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

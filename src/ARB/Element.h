@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
  */
 
 #include <map>
@@ -236,7 +237,7 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(std::ostream& outStream) const;
+	bool SaveXML(std::ostream& outStream, const std::string* inDTD = NULL) const;
 
 private:
 	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource);

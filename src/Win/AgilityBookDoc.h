@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-22 DRC Added export dtd/xml menu options.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
  *                    I don't have to use UpdateAllViews. Added methods to allow
@@ -158,8 +159,8 @@ protected:
 	//{{AFX_MSG(CAgilityBookDoc)
 	afx_msg void OnUpdateFileImportConfig(CCmdUI *pCmdUI);
 	afx_msg void OnFileImportConfig();
-	afx_msg void OnUpdateFileExport(CCmdUI *pCmdUI);
-	afx_msg void OnFileExport();
+	afx_msg void OnFileExportDTD();
+	afx_msg void OnFileExportXML();
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-22 DRC Added static GetDTD() method.
  */
 
 #include "ARBConfigFault.h"
@@ -64,6 +65,7 @@ public:
 		int inVersion);
 	bool Save(CElement& ioTree) const;
 	void Default();
+	static std::string GetDTD();
 
 	std::string Update(int indent, const ARBConfig& inConfigNew);
 

@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces 2.2.0.
  *
  * Revision History
+ * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
  */
 
 #include "stdafx.h"
@@ -56,6 +57,7 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
 
+#include "ARBAgilityRecordBook.h"
 #include "ARBDate.h"
 
 #if _MSC_VER < 1300
@@ -1325,12 +1327,18 @@ bool CElement::LoadXMLFile(const char* inFileName)
 	return LoadXML(source);
 }
 
-bool CElement::SaveXML(std::ostream& outOutput) const
+bool CElement::SaveXML(std::ostream& outOutput, const std::string* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");
 	CXMLFormatTarget formatTarget(outOutput);
 	outOutput << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	if (inDTD && 0 < inDTD->length())
+	{
+		outOutput << "<!DOCTYPE " << TREE_BOOK << " [\n";
+		outOutput << *inDTD;
+		outOutput << "\n]>\n";
+	}
 	gIndentLevel = 0;
 	gFormatter = new XMLFormatter(encodingName, &formatTarget,
 		XMLFormatter::NoEscapes, XMLFormatter::UnRep_CharRef);
