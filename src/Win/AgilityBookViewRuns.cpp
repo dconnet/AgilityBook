@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
@@ -424,6 +425,58 @@ int CAgilityBookViewRunsData::OnNeedIcon() const
 
 /////////////////////////////////////////////////////////////////////////////
 // List sorting
+
+CAgilityBookViewRuns::CSortColumn::CSortColumn(
+	CAgilityBookViewRuns* pParent)
+	: m_pParent(pParent)
+	, m_iCol(1)
+{
+}
+
+void CAgilityBookViewRuns::CSortColumn::Initialize()
+{
+	int realCol = IO_RUNS_DATE;
+	realCol = AfxGetApp()->GetProfileInt("Sorting", "Runs", realCol);
+	int neg = 1;
+	if (0 > realCol)
+	{
+		neg = -1;
+		realCol *= -1;
+	}
+	int col = LookupColumn(realCol);
+	if (0 > m_iCol)
+		col = LookupColumn(IO_RUNS_DATE);
+	m_iCol = col * neg;
+}
+
+void CAgilityBookViewRuns::CSortColumn::SetColumn(int iCol)
+{
+	m_iCol = iCol;
+	if (0 == iCol)
+		return;
+	int neg = 1;
+	int col = iCol;
+	if (0 > iCol)
+	{
+		neg = -1;
+		col = iCol * -1;
+	}
+	int realCol = m_pParent->m_Columns[col-1] * neg;
+	AfxGetApp()->WriteProfileInt("Sorting", "Runs", realCol);
+}
+
+int CAgilityBookViewRuns::CSortColumn::LookupColumn(int iCol) const
+{
+	size_t n = m_pParent->m_Columns.size();
+	for (size_t i = 0; i < n; ++i)
+	{
+		if (m_pParent->m_Columns[i] == iCol)
+		{
+			return static_cast<int>(i+1);
+		}
+	}
+	return -1;
+}
 
 struct SORT_RUN_INFO
 {
@@ -1077,7 +1130,7 @@ END_MESSAGE_MAP()
 CAgilityBookViewRuns::CAgilityBookViewRuns()
 	: m_bSuppressSelect(false)
 	, m_Callback(this)
-	, m_SortColumn(0)
+	, m_SortColumn(this)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
 	CWinApp* app = AfxGetApp();
@@ -1227,6 +1280,7 @@ void CAgilityBookViewRuns::SetupColumns()
 			InsertColumn(static_cast<int>(iCol), &col);
 			str.ReleaseBuffer();
 		}
+		m_SortColumn.Initialize();
 	}
 }
 
@@ -1316,20 +1370,13 @@ void CAgilityBookViewRuns::LoadData()
 
 	SORT_RUN_INFO info;
 	info.pThis = this;
-	for (i = 0; i < static_cast<int>(m_Columns.size()); ++i)
-	{
-		if (m_Columns[i] == IO_RUNS_DATE)
-		{
-			m_SortColumn = i + 1;
-			break;
-		}
-	}
-	info.nCol = m_SortColumn;
+	info.nCol = m_SortColumn.GetColumn();
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
-	if (0 == m_SortColumn)
+	if (0 == m_SortColumn.GetColumn())
 		HeaderSort(0, CHeaderCtrl2::eNoSort);
 	else
-		HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eAscending);
+		HeaderSort(abs(m_SortColumn.GetColumn()),
+			info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);
@@ -1403,16 +1450,16 @@ void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if (0 != pNMListView->iSubItem)
 	{
-		HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eNoSort);
+		HeaderSort(abs(m_SortColumn.GetColumn()), CHeaderCtrl2::eNoSort);
 		int nBackwards = 1;
-		if (m_SortColumn == pNMListView->iSubItem)
+		if (m_SortColumn.GetColumn() == pNMListView->iSubItem)
 			nBackwards = -1;
-		m_SortColumn = pNMListView->iSubItem * nBackwards;
+		m_SortColumn.SetColumn(pNMListView->iSubItem * nBackwards);
 		SORT_RUN_INFO info;
 		info.pThis = this;
-		info.nCol = m_SortColumn;
+		info.nCol = m_SortColumn.GetColumn();
 		GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
-		HeaderSort(abs(m_SortColumn),
+		HeaderSort(abs(m_SortColumn.GetColumn()),
 			nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	}
 	*pResult = 0;

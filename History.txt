@@ -1,4 +1,4 @@
-1/11/2005: v1.5.0.10 <in development>
+1/25/2005: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
@@ -27,6 +27,8 @@
     the need to modify the configuration.
   - When you view run details in the Points view, also show existing points.
   - Added the ability to create MACH-2/NATCH-4(etc) titles.
+  - Remember which field is sorted in the main views between program
+    invocation.
 - Bug fixes
   - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have
