@@ -86,6 +86,7 @@ The biggest difference in events is in how they are scored. These
 are the types of scoring recognized:
  FaultsThenTime    Accumulate faults.
  Faults100ThenTime Subtract faults from 100 and round time faults.
+ Faults200ThenTime Subtract faults from 200 and round time faults.
  OCScoreThenTime   Must have a required number of opening and closing pts.
  ScoreThenTime     Must have a required number of pts.
  TimePlusFaults    Score by adding faults and time together.
@@ -118,7 +119,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 	<!ATTLIST Scoring
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
-		type (FaultsThenTime|Faults100ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults) #REQUIRED
+		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults) #REQUIRED
 		dropFractions (y|n) 'n'
 		superQ (y|n) 'n'
 		doubleQ (y|n) 'n'
@@ -204,7 +205,7 @@ specified if the 'hasPartner' attribute on the event is true.
 
 <!--
 These 3 elements define the major scoring mechanisms.
- ByTime: FaultsThenTime, Faults100ThenTime, TimePlusFaults
+ ByTime: FaultsThenTime, Faults100ThenTime, Faults200ThenTime, TimePlusFaults
   When used by 'TimePlusFaults', SCT and Yards are not required. If
   specified, then it is assumed time faults are also tallied.
  ByOpenClose: OCScoreThenTime
