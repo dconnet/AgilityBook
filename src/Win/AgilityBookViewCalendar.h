@@ -124,6 +124,7 @@ protected:
 	afx_msg void OnUpdateAgilityCreateentryCalendar(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityCreateentryCalendar();
 	//}}AFX_MSG
+	afx_msg void OnUpdateNotHandled(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 };
 

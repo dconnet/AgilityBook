@@ -92,6 +92,9 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_CREATEENTRY_CALENDAR, OnUpdateAgilityCreateentryCalendar)
 	ON_COMMAND(ID_AGILITY_CREATEENTRY_CALENDAR, OnAgilityCreateentryCalendar)
 	//}}AFX_MSG_MAP
+	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateNotHandled)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateNotHandled)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateNotHandled)
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
@@ -951,4 +954,9 @@ void CAgilityBookViewCalendar::OnAgilityCreateentryCalendar()
 	}
 	else if (1 < entries.size())
 		OnCalendarEdit();
+}
+
+void CAgilityBookViewCalendar::OnUpdateNotHandled(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(FALSE);
 }

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-06 DRC Added additional clipboard formats.
  * @li 2004-06-01 DRC Venue filtering could allow filtered runs thru at times.
  * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
@@ -1180,18 +1181,27 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
 {
 	static bool bInitialized = false;
+	static UINT uDog = 0;
 	static UINT uTrial = 0;
 	static UINT uRun = 0;
+	static UINT uCal = 0;
+	static UINT uLog = 0;
 	if (!bInitialized)
 	{
 		bInitialized = true;
+		uDog = RegisterClipboardFormat("ARB-Dog");
 		uTrial = RegisterClipboardFormat("ARB-Trial");
 		uRun = RegisterClipboardFormat("ARB-Run");
+		uCal = RegisterClipboardFormat("ARB-Cal");
+		uLog = RegisterClipboardFormat("ARB-Log");
 	}
 	switch (fmt)
 	{
-	default:			return 0;
-	case eFormatTrial:	return uTrial;
-	case eFormatRun:	return uRun;
+	default:				return 0;
+	case eFormatDog:		return uDog;
+	case eFormatTrial:		return uTrial;
+	case eFormatRun:		return uRun;
+	case eFormatCalendar:	return uCal;
+	case eFormatLog:		return uLog;
 	}
 }

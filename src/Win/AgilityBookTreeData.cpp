@@ -803,6 +803,7 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 	default:
 		break;
 	case ID_EDIT_DUPLICATE:
+	case ID_EDIT_CUT:
 	case ID_EDIT_COPY:
 		bEnable = true;
 		break;
@@ -832,6 +833,7 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 
 bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 {
+	static bool bPrompt = true;
 	bool bModified = false;
 	switch (id)
 	{
@@ -848,6 +850,12 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 			bModified = true;
 			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
 		}
+		break;
+	case ID_EDIT_CUT:
+		OnCmd(ID_EDIT_COPY, bTreeSelectionSet);
+		bPrompt = false;
+		OnCmd(ID_AGILITY_DELETE_TRIAL, bTreeSelectionSet);
+		bPrompt = true;
 		break;
 	case ID_EDIT_COPY:
 		{
@@ -883,7 +891,8 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 			bModified = true;
 		break;
 	case ID_AGILITY_DELETE_TRIAL:
-		if (IDYES == AfxMessageBox(IDS_DELETE_TRIAL_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
+		if (!bPrompt
+		|| IDYES == AfxMessageBox(IDS_DELETE_TRIAL_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
 		{
 			if (GetDog()->GetTrials().DeleteTrial(m_pTrial))
 			{
@@ -1057,6 +1066,7 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 	default:
 		break;
 	case ID_EDIT_DUPLICATE:
+	case ID_EDIT_CUT:
 	case ID_EDIT_COPY:
 		bEnable = true;
 		break;
@@ -1086,6 +1096,7 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 
 bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 {
+	static bool bPrompt = true;
 	bool bModified = false;
 	switch (id)
 	{
@@ -1102,6 +1113,12 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 			bModified = true;
 			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
 		}
+		break;
+	case ID_EDIT_CUT:
+		OnCmd(ID_EDIT_COPY, bTreeSelectionSet);
+		bPrompt = false;
+		OnCmd(ID_AGILITY_DELETE_RUN, bTreeSelectionSet);
+		bPrompt = true;
 		break;
 	case ID_EDIT_COPY:
 		{
@@ -1137,7 +1154,8 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 			bModified = true;
 		break;
 	case ID_AGILITY_DELETE_RUN:
-		if (IDYES == AfxMessageBox(IDS_DELETE_EVENT_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
+		if (!bPrompt
+		|| IDYES == AfxMessageBox(IDS_DELETE_EVENT_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
 		{
 			if (GetTrial()->GetRuns().DeleteRun(m_pRun))
 			{
