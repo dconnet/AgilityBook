@@ -154,6 +154,10 @@ SOURCE=..\..\..\Win\ColumnOrder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\CrashHandler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgAssignColumns.cpp
 # End Source File
 # Begin Source File
@@ -499,6 +503,10 @@ SOURCE=..\..\..\Win\CommonView.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\CrashHandler.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgAssignColumns.h
 # End Source File
 # Begin Source File
@@ -748,6 +756,10 @@ SOURCE=..\..\..\Win\Splitter.h
 # Begin Source File
 
 SOURCE=..\..\..\stdafx.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\SymbolEngine.h
 # End Source File
 # Begin Source File
 
