@@ -6,8 +6,10 @@
   - Added 'LongName' to 'Venue'.
   - Added 'SubName' to 'Event','Run','ExistingPoints'.
   - Added 'Multiple' to 'Titles', 'instance' to 'Title'.
-  - Updated AAC.
   - Added CKC and TDAA.
+  - Updated AAC.
+  - Changed NADAC Gamblers to use the new SubNames feature. The individual
+    Gamblers events for Contacts/etc have been removed.
 - New features / Enhancements:
   - Added the ability to make notes about clubs/locations similar to
     how judges notes are made. Also added the ability to search them.
@@ -24,7 +26,7 @@
   - Added a SubName to an event so users can 'create' new events without
     the need to modify the configuration.
   - When you view run details in the Points view, also show existing points.
-  - Added ability to create MACH-2/NATCH-4(etc) titles.
+  - Added the ability to create MACH-2/NATCH-4(etc) titles.
 - Bug fixes
   - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have
