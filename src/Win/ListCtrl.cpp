@@ -31,8 +31,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-24 DRC Added Swap.
  * @li 2003-11-22 DRC When copying, only create a header if more than 1 line
- *                is selected (or if only one line exists).
+ *                    is selected (or if only one line exists).
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
 
@@ -82,6 +83,10 @@ static void SetSelection(CListCtrl& list, std::vector<int>& indices, bool bEnsur
 	}
 }
 
+static void Swap(CListCtrl& list, int idx1, int idx2)
+{
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CListCtrl2
 
@@ -125,6 +130,11 @@ void CListCtrl2::SetSelection(int index, bool bEnsureVisible)
 void CListCtrl2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
 {
 	::SetSelection(*this, indices, bEnsureVisible);
+}
+
+void CListCtrl2::Swap(int idx1, int idx2)
+{
+	::Swap(*this, idx1, idx2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -183,6 +193,11 @@ void CListView2::SetSelection(int index, bool bEnsureVisible)
 void CListView2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
 {
 	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
+}
+
+void CListView2::Swap(int idx1, int idx2)
+{
+	::Swap(GetListCtrl(), idx1, idx2);
 }
 
 // This allows a derived class to print a subset of columns if it wants.
