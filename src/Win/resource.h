@@ -316,6 +316,7 @@
 #define IDS_ABOUT_LINK_SOURCEFORGE      5085
 #define IDS_UPDATE_NEWER_VERSION        5086
 #define IDS_UPDATE_CURRENT              5087
+#define IDS_UPDATE_UNKNOWN              5088
 #define IDS_NEW                         5091
 #define IDS_CONFIGURE                   5092
 #define IDS_SCORING_NAME                5093
@@ -395,6 +396,7 @@
 #define IDS_BLANK_COLUMN                5168
 #define IDS_ADDED_TRAINING_ITEMS        5169
 #define ID_FILE_EXPORT_WIZARD           32772
+#define ID_FILE_AUTOCHECK               32773
 #define ID_EDIT_CONFIGURATION           32774
 #define ID_HELP_UPDATE                  32775
 #define ID_AGILITY_NEW_CALENDAR         32779

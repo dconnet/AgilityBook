@@ -150,29 +150,32 @@ CVersionNum::CVersionNum(WORD inwLangID, WORD inwCharSet)
 	m_Valid = true;
 }
 
+// This ctor is
 CVersionNum::CVersionNum(CString inVer)
+	: m_Valid(false)
 {
 	m_Name.Empty();
-	int pos = inVer.Find('.');
-	if (0 <= pos)
+	static const CString idStr("ARB Version ");
+	if (0 == inVer.Find(idStr))
 	{
-		m_Version.part1 = static_cast<WORD>(atoi((LPCTSTR)inVer));
-		inVer = inVer.Mid(pos);
+		inVer = inVer.Mid(idStr.GetLength());
 		int pos = inVer.Find('.');
 		if (0 <= pos)
 		{
-			m_Version.part2 = static_cast<WORD>(atoi((LPCTSTR)inVer));
-			inVer = inVer.Mid(pos);
+			m_Version.part1 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+			inVer = inVer.Mid(pos+1);
 			int pos = inVer.Find('.');
 			if (0 <= pos)
 			{
-				m_Version.part3 = static_cast<WORD>(atoi((LPCTSTR)inVer));
-				inVer = inVer.Mid(pos);
+				m_Version.part2 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+				inVer = inVer.Mid(pos+1);
 				int pos = inVer.Find('.');
 				if (0 <= pos)
 				{
+					m_Version.part3 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+					inVer = inVer.Mid(pos+1);
 					m_Version.part4 = static_cast<WORD>(atoi((LPCTSTR)inVer));
-					inVer = inVer.Mid(pos);
+					m_Valid = true;
 				}
 			}
 		}

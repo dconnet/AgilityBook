@@ -48,6 +48,8 @@ In Yahoo
 
 Web Site:
 - Make sure things are current (ongoing task!).
+  - Update DTD
+  - Update version.txt
 
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO

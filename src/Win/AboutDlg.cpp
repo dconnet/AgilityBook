@@ -226,11 +226,12 @@ BOOL CAboutDlg::OnInitDialog()
 		SetWindowPos(NULL, 0, 0, rect.Width(), rect.Height(), SWP_NOMOVE | SWP_NOZORDER);
 	}
 
-	return TRUE;  // return TRUE unless you set the focus to a control
+	GetDlgItem(IDOK)->SetFocus();
+	return FALSE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CAboutDlg::OnBnClickedUpdate()
 {
-	AfxGetMainWnd()->SendMessage(WM_COMMAND, ID_HELP_UPDATE);
+	UpdateVersion(true);
 }
