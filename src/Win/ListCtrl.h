@@ -33,7 +33,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-01-24 DRC Added Swap.
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
 
@@ -56,10 +55,6 @@ public:
 	size_t GetSelection(std::vector<int>& indices);
 	void SetSelection(int index, bool bEnsureVisible = false);
 	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
-	/**
-	 * Swap 2 entries
-	 */
-	void Swap(int idx1, int idx2);
 
 protected:
 // Overrides
@@ -97,10 +92,6 @@ public:
 	size_t GetSelection(std::vector<int>& indices);
 	void SetSelection(int index, bool bEnsureVisible = false);
 	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
-	/**
-	 * Swap 2 entries
-	 */
-	void Swap(int idx1, int idx2);
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
