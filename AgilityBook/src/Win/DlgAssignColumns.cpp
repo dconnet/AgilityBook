@@ -88,7 +88,6 @@ Training Log:
   Name
   Notes
 
-
  *
  * Revision History
  * @li 2003-12-10 DRC Created
@@ -105,6 +104,187 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+
+static const char* sc_Types[] =
+{
+	"Faults Then Time",
+	"Time Plus Faults",
+	"Opening/Closing Points Then Time",
+	"Points Then Time"
+};
+static const int sc_nTypes = sizeof(sc_Types) / sizeof(sc_Types[0]);
+
+static const struct
+{
+	const char* name[4];
+} sc_Fields[] =
+{
+	{{
+		"Dog's Registered Name",
+		"Dog's Registered Name",
+		"Dog's Registered Name",
+		"Dog's Registered Name"}
+	},
+	{{
+		 "Dog's Call Name",
+		 "Dog's Call Name",
+		 "Dog's Call Name",
+		 "Dog's Call Name"}
+	},
+	{{
+		 "Date",
+		 "Date",
+		 "Date",
+		 "Date"}
+	},
+	{{
+		 "Venue",
+		 "Venue",
+		 "Venue",
+		 "Venue"}
+	},
+	{{
+		 "Club",
+		 "Club",
+		 "Club",
+		 "Club"}
+	},
+	{{
+		 "Location",
+		 "Location",
+		 "Location",
+		 "Location"}
+	},
+	{{
+		 "Trial Notes",
+		 "Trial Notes",
+		 "Trial Notes",
+		 "Trial Notes"}
+	},
+	{{
+		 "Division",
+		 "Division",
+		 "Division",
+		 "Division"}
+	},
+	{{
+		 "Level",
+		 "Level",
+		 "Level",
+		 "Level"}
+	},
+	{{
+		 "Event",
+		 "Event",
+		 "Event",
+		 "Event"}
+	},
+	{{
+		 "Height",
+		 "Height",
+		 "Height",
+		 "Height"}
+	},
+	{{
+		 "Judge",
+		 "Judge",
+		 "Judge",
+		 "Judge"}
+	},
+	{{
+		 "Handler",
+		 "Handler",
+		 "Handler",
+		 "Handler"}
+	},
+	{{
+		 "Conditions",
+		 "Conditions",
+		 "Conditions",
+		 "Conditions"}
+	},
+	{{
+		 "Course Faults",
+		 "Course Faults",
+		 "Course Faults",
+		 "Course Faults"}
+	},
+	{{
+		 "Time",
+		 "Time",
+		 "Time",
+		 "Time"}
+	},
+	{{
+		 "Yards",
+		 "Yards",
+		 "Required Opening",
+		 "Required Points"}
+	},
+	{{
+		 "YPS",
+		 "YPS",
+		 "Required Closing",
+		 "Points"}
+	},
+	{{
+		 "SCT",
+		 "SCT",
+		 "Opening",
+		 NULL}
+	},
+	{{
+		 "Total Faults",
+		 "Total Faults",
+		 "Closing",
+		 NULL}
+	},
+	{{
+		 "Place/of",
+		 "Place/of",
+		 "Place/of",
+		 "Place/of"}
+	},
+	{{
+		 "DogsQd",
+		 "DogsQd",
+		 "DogsQd",
+		 "DogsQd"}
+	},
+	{{
+		 "Q?",
+		 "Q?",
+		 "Q?",
+		 "Q?"}
+	},
+	{{
+		 "Score",
+		 "Score",
+		 "Score",
+		 "Score"}
+	},
+	{{
+		 "Title Points",
+		 "Title Points",
+		 "Title Points",
+		 "Title Points"}
+	},
+	{{
+		 "Comments",
+		 "Comments",
+		 "Comments",
+		 "Comments"}
+	},
+	{{
+		 "Faults",
+		 "Faults",
+		 "Faults",
+		 "Faults"}
+	},
+};
+static const int sc_nFields = sizeof(sc_Fields) / sizeof(sc_Fields[0]);
+
+/////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
 CDlgAssignColumns::CDlgAssignColumns(CWnd* pParent /*=NULL*/)
@@ -118,6 +298,7 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgAssignColumns)
+	DDX_Control(pDX, IDC_TYPE, m_ctrlType);
 	DDX_Control(pDX, IDC_AVAILABLE, m_ctrlAvailable);
 	DDX_Control(pDX, IDC_COLUMNS, m_ctrlColumns);
 	DDX_Control(pDX, IDC_ADD, m_ctrlAdd);
@@ -127,9 +308,9 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDialog)
 	//{{AFX_MSG_MAP(CDlgAssignColumns)
+	ON_CBN_SELCHANGE(IDC_TYPE, OnSelchangeType)
 	ON_BN_CLICKED(IDC_ADD, OnAdd)
 	ON_BN_CLICKED(IDC_DELETE, OnRemove)
 	ON_BN_CLICKED(IDC_MOVE_UP, OnMoveUp)
@@ -138,6 +319,24 @@ BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
+
+void CDlgAssignColumns::FillColumns()
+{
+	m_ctrlAvailable.ResetContent();
+	m_ctrlColumns.ResetContent();
+	int index = m_ctrlType.GetCurSel();
+	if (CB_ERR != index)
+	{
+		for (int i = 0; i < sc_nFields; ++i)
+		{
+			if (NULL == sc_Fields[i].name[index])
+				continue;
+			int idx = m_ctrlAvailable.AddString(sc_Fields[i].name[index]);
+			if (LB_ERR != idx)
+				m_ctrlAvailable.SetItemData(idx, i);
+		}
+	}
+}
 
 void CDlgAssignColumns::UpdateButtons()
 {
@@ -153,8 +352,22 @@ void CDlgAssignColumns::UpdateButtons()
 BOOL CDlgAssignColumns::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
+	int index;
+	for (index = 0; index < sc_nTypes; ++index)
+	{
+		int idx = m_ctrlType.AddString(sc_Types[index]);
+		if (CB_ERR != idx)
+			m_ctrlType.SetItemData(idx, index);
+	}
+	m_ctrlType.SetCurSel(0);
+	FillColumns();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgAssignColumns::OnSelchangeType() 
+{
+	FillColumns();
 }
 
 void CDlgAssignColumns::OnAdd() 

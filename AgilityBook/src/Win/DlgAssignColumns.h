@@ -46,6 +46,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgAssignColumns)
 	enum { IDD = IDD_ASSIGN_COLUMNS };
+	CComboBox	m_ctrlType;
 	CListBox	m_ctrlAvailable;
 	CListBox	m_ctrlColumns;
 	CButton	m_ctrlAdd;
@@ -55,6 +56,7 @@ private:
 	//}}AFX_DATA
 
 private:
+	void FillColumns();
 	void UpdateButtons();
 
 // Overrides
@@ -67,6 +69,7 @@ private:
 protected:
 	//{{AFX_MSG(CDlgAssignColumns)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnSelchangeType();
 	afx_msg void OnAdd();
 	afx_msg void OnRemove();
 	afx_msg void OnMoveUp();
