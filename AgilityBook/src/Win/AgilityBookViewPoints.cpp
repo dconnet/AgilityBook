@@ -32,7 +32,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2003-08-28 DRC Started completion of other points tally: look for @todo
+ * @li 2003-08-28 DRC Completed Other Points tallying
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  * @li 2003-06-11 DRC Accumulate points based on level, not sublevel, name.
@@ -550,7 +550,6 @@ void CAgilityBookViewPoints::LoadData()
 									const ARBDogRunOtherPoints* pOtherPts = (*iterOtherPts);
 									if (pOtherPts->GetName() == pOther->GetName())
 									{
-							TRACE("%s %s %d\n", pTrial->GetLocation().c_str(), pRun->GetEvent().c_str(), pOtherPts->GetPoints());
 										runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
 									}
 								}
@@ -558,6 +557,9 @@ void CAgilityBookViewPoints::LoadData()
 						}
 					}
 				}
+
+				if (0 == runs.size())
+					continue;
 
 				GetListCtrl().InsertItem(i, "");
 				GetListCtrl().SetItemText(i, 1, pOther->GetName().c_str());
@@ -580,7 +582,6 @@ void CAgilityBookViewPoints::LoadData()
 
 				case ARBConfigOtherPoints::eTallyAllByEvent:
 					{
-						//@todo: Complete this
 						std::set<std::string> tally;
 						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 						{
@@ -588,16 +589,24 @@ void CAgilityBookViewPoints::LoadData()
 						}
 						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 						{
+							int score = 0;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
+								if ((*iter).m_pRun->GetEvent() == (*iterTally))
+									score += (*iter).m_Score;
 							}
+							++i;
+							GetListCtrl().InsertItem(i, "");
+							GetListCtrl().SetItemText(i, 2, (*iterTally).c_str());
+							CString str;
+							str.Format("%d", score);
+							GetListCtrl().SetItemText(i, 3, str);
 						}
 					}
 					break;
 
 				case ARBConfigOtherPoints::eTallyLevel:
 					{
-						//@todo: Complete this
 						std::set<std::string> tally;
 						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 						{
@@ -605,27 +614,46 @@ void CAgilityBookViewPoints::LoadData()
 						}
 						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 						{
+							int score = 0;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
+								if ((*iter).m_pRun->GetLevel() == (*iterTally))
+									score += (*iter).m_Score;
 							}
+							++i;
+							GetListCtrl().InsertItem(i, "");
+							GetListCtrl().SetItemText(i, 2, (*iterTally).c_str());
+							CString str;
+							str.Format("%d", score);
+							GetListCtrl().SetItemText(i, 3, str);
 						}
 					}
 					break;
 
 				case ARBConfigOtherPoints::eTallyLevelByEvent:
 					{
-						//@todo: Complete this
 						typedef std::pair<std::string, std::string> LevelEvent;
 						std::set<LevelEvent> tally;
 						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 						{
-							tally.insert(LevelEvent((*iter).m_pRun->GetEvent(), (*iter).m_pRun->GetLevel()));
+							tally.insert(LevelEvent((*iter).m_pRun->GetLevel(), (*iter).m_pRun->GetEvent()));
 						}
 						for (std::set<LevelEvent>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 						{
+							int score = 0;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
+								if ((*iter).m_pRun->GetLevel() == (*iterTally).first
+								&& (*iter).m_pRun->GetEvent() == (*iterTally).second)
+									score += (*iter).m_Score;
 							}
+							++i;
+							GetListCtrl().InsertItem(i, "");
+							GetListCtrl().SetItemText(i, 2, (*iterTally).first.c_str());
+							GetListCtrl().SetItemText(i, 3, (*iterTally).second.c_str());
+							CString str;
+							str.Format("%d", score);
+							GetListCtrl().SetItemText(i, 4, str);
 						}
 					}
 					break;
