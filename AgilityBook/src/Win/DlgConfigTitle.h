@@ -33,7 +33,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-05 DRC Created.
  */
 
@@ -42,23 +42,25 @@
 class CDlgConfigTitle : public CDlgBaseDialog
 {
 public:
-	CDlgConfigTitle(LPCTSTR name,
-			bool bAllowMany, LPCTSTR longname, LPCTSTR desc,
-			CWnd* pParent = NULL);
+	CDlgConfigTitle(LPCTSTR name, LPCTSTR longname,
+		LPCTSTR desc, short inMultiple,
+		CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
 	char const* GetName() const		{return (LPCSTR)m_Name;}
-	bool AllowMany() const			{return m_AllowMany ? true : false;}
 	char const* GetLongName() const	{return (LPCSTR)m_LongName;}
 	char const* GetDesc() const		{return (LPCSTR)m_Desc;}
+	short GetMultiple() const		{return m_Multiple;}
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgConfigTitle)
 	enum { IDD = IDD_CONFIG_TITLE };
 	CString m_Name;
-	BOOL m_AllowMany;
 	CString m_LongName;
 	CString m_Desc;
+	BOOL	m_AllowMany;
+	CEdit	m_ctrlMultiple;
+	short	m_Multiple;
 	//}}AFX_DATA
 
 	//{{AFX_VIRTUAL(CDlgConfigTitle)
@@ -69,6 +71,7 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgConfigTitle)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnAllowMultiple();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

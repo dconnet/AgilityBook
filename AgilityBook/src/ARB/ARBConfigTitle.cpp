@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -55,7 +55,7 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
-	, m_AllowMany(false)
+	, m_Multiple(0)
 	, m_Desc()
 {
 }
@@ -63,7 +63,7 @@ ARBConfigTitle::ARBConfigTitle()
 ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
-	, m_AllowMany(rhs.m_AllowMany)
+	, m_Multiple(rhs.m_Multiple)
 	, m_Desc(rhs.m_Desc)
 {
 }
@@ -78,7 +78,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
-		m_AllowMany = rhs.m_AllowMany;
+		m_Multiple = rhs.m_Multiple;
 		m_Desc = rhs.m_Desc;
 	}
 	return *this;
@@ -88,7 +88,7 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
-		&& m_AllowMany == rhs.m_AllowMany
+		&& m_Multiple == rhs.m_Multiple
 		&& m_Desc == rhs.m_Desc;
 }
 
@@ -101,7 +101,7 @@ void ARBConfigTitle::clear()
 {
 	m_Name.erase();
 	m_LongName.erase();
-	m_AllowMany = false;
+	m_Multiple = 0;
 	m_Desc.erase();
 }
 
@@ -124,12 +124,7 @@ bool ARBConfigTitle::Load(
 	}
 
 	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
-
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_ALLOW_MANY, m_AllowMany))
-	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_ALLOW_MANY, VALID_VALUES_BOOL));
-		return false;
-	}
+	inTree.GetAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
 
 	m_Desc = inTree.GetValue();
 	return true;
@@ -139,8 +134,8 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_TITLES);
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
-	if (m_AllowMany)
-		title.AddAttrib(ATTRIB_TITLES_ALLOW_MANY, m_AllowMany);
+	if (0 < m_Multiple)
+		title.AddAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	if (0 < m_Desc.length())
@@ -153,8 +148,9 @@ std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst)
 	char buffer[20];
 	buffer[0] = 0;
 	if (1 < inInstance)
-		sprintf(buffer, "%hd", inInstance);
-	else if (0 > inInstance && m_AllowMany)
+		sprintf(buffer, "-%hd", inInstance);
+	// Special formatting used in configuration dialogs.
+	else if (0 > inInstance && 0 < m_Multiple)
 		strcpy(buffer, "+");
 	std::string name;
 	if (0 < m_LongName.length())

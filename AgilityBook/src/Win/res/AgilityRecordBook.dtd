@@ -18,7 +18,7 @@ Revision History:
                Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
                Added 'LongName' to 'Venue'.
                Added 'SubName' to 'Event','Run','ExistingPoints'.
-               Added 'allowMany' to 'Titles', 'instance' to 'Title'.
+               Added 'Multiple' to 'Titles', 'instance' to 'Title'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -153,6 +153,9 @@ top-ten points. The 'Count' value is how they are accumulated
 <!ELEMENT Desc (#PCDATA) >
 
 <!--
+When 'Multiple' is greater than 1, a title is considered to be recurring,
+meaning it can be entered multiple times. The value in this attribute is
+used to determine the starting point for the first recurance.
 -->
 <!ELEMENT Division (Level+, Titles*) >
 	<!ATTLIST Division Name CDATA #REQUIRED >
@@ -160,7 +163,7 @@ top-ten points. The 'Count' value is how they are accumulated
 	<!ATTLIST Titles
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
-		allowMany (y|n) 'n'
+		Multiple CDATA #IMPLIED
 		>
 
 <!--

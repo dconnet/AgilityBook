@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-26 DRC Recover from a bug where the title name was the nice name.
@@ -241,7 +241,7 @@ inline std::string ARBDogTitle::GetGenericName() const
 	if (1 < m_Instance)
 	{
 		char buffer[20];
-		sprintf(buffer, "%hd", m_Instance);
+		sprintf(buffer, "-%hd", m_Instance);
 		name += buffer;
 	}
 	return name;

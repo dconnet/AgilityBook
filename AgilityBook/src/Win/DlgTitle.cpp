@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-26 DRC The wrong name was saved into the ARBDogTitle object.
  */
 
@@ -170,7 +170,7 @@ void CDlgTitle::OnSelchangeVenues()
 			{
 				ARBConfigTitle* pTitle = (*iterTitle);
 				// Suppress any titles we already have.
-				if (pTitle->AllowMany()
+				if (1 < pTitle->GetMultiple()
 				|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
 				|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 				{
@@ -242,12 +242,17 @@ void CDlgTitle::OnOK()
 	}
 
 	short instance = 0;
-	if (pTitle->AllowMany())
+	if (0 < pTitle->GetMultiple())
 	{
 		if (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 			instance = m_pTitle->GetInstance();
 		else
-			instance = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
+		{
+			instance = pTitle->GetMultiple();
+			short next = m_Titles.FindMaxInstance(pVenue->GetName(), pTitle->GetName()) + 1;
+			if (next > instance || 1 == next)
+				instance = next;
+		}
 	}
 
 	ARBDogTitle* title = new ARBDogTitle();

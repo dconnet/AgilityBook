@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-11 DRC Mark the document dirty when creating a title.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
@@ -1016,6 +1017,7 @@ void CAgilityBookViewPoints::OnAgilityNewTitle()
 	{
 		// Convenience! No duplicated code!
 		CAgilityBookTreeDataDog data(GetDocument()->GetTreeView(), pDog);
-		data.OnCmd(ID_AGILITY_NEW_TITLE, NULL);
+		if (data.OnCmd(ID_AGILITY_NEW_TITLE, NULL))
+			GetDocument()->SetModifiedFlag();
 	}
 }

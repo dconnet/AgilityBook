@@ -32,7 +32,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -119,8 +119,8 @@ public:
 	void SetName(std::string const& inName);
 	std::string const& GetLongName() const;
 	void SetLongName(std::string const& inName);
-	bool AllowMany() const;
-	void SetAllowMany(bool inAllow);
+	short GetMultiple() const;
+	void SetMultiple(short inMultiple);
 	std::string const& GetDescription() const;
 	void SetDescription(std::string const& inDesc);
 
@@ -128,7 +128,7 @@ private:
 	~ARBConfigTitle();
 	std::string m_Name;
 	std::string m_LongName;
-	bool m_AllowMany;
+	short m_Multiple;
 	std::string m_Desc;
 };
 
@@ -165,14 +165,14 @@ inline void ARBConfigTitle::SetLongName(std::string const& inName)
 	m_LongName = inName;
 }
 
-inline bool ARBConfigTitle::AllowMany() const
+inline short ARBConfigTitle::GetMultiple() const
 {
-	return m_AllowMany;
+	return m_Multiple;
 }
 
-inline void ARBConfigTitle::SetAllowMany(bool inAllow)
+inline void ARBConfigTitle::SetMultiple(short inMultiple)
 {
-	m_AllowMany = inAllow;
+	m_Multiple = inMultiple;
 }
 
 inline std::string const& ARBConfigTitle::GetDescription() const
