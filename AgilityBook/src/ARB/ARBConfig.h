@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
  */
@@ -156,6 +157,7 @@ public:
 	/*
 	 * Getters.
 	 */
+	short GetVersion() const;
 	const ARBConfigActionList& GetActions() const;
 	ARBConfigActionList& GetActions();
 	const ARBConfigVenueList& GetVenues() const;
@@ -166,11 +168,17 @@ public:
 	ARBConfigOtherPointsList& GetOtherPoints();
 
 private:
+	short m_Version;
 	ARBConfigActionList m_Actions;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;
 };
+
+inline short ARBConfig::GetVersion() const
+{
+	return m_Version;
+}
 
 inline const ARBConfigActionList& ARBConfig::GetActions() const
 {

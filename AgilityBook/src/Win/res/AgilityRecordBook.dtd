@@ -7,6 +7,10 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
+2004-02-26 DRC File version 8.4, Configuration version 2.
+               Added "TableInYPS" to "ByTime"
+               Added new Config/Action: DeleteTitle
+               Added versioning to configuration to allow auto-upgrades.
 2004-02-09 DRC File version 8.3
                Added "ExistingPoints" to "Dog"
 2004-01-21 DRC File version 8.2
@@ -59,8 +63,15 @@ This section defines the rules for the training log.
 
 <!--
 This section defines the rules of each venue.
+ 'version' is used to auto-update a data file. The program will only prompt
+ to do so - it will not do anything behind-the-back. Once a config version is
+ set, the user could still modify things. But we won't automatically prompt
+ to upgrade. The user can merge the configuration at any number of times.
 -->
 <!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
+	<!ATTLIST Configuration
+		version CDATA #IMPLIED
+		>
 
 <!--
 This is a special element that is applied to the old configuration before

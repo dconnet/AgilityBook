@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
@@ -54,7 +55,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfig::ARBConfig()
-	: m_Actions()
+	: m_Version(0)
+	, m_Actions()
 	, m_Venues()
 	, m_FaultTypes()
 	, m_OtherPoints()
@@ -62,7 +64,8 @@ ARBConfig::ARBConfig()
 }
 
 ARBConfig::ARBConfig(const ARBConfig& rhs)
-	: m_Actions(rhs.m_Actions)
+	: m_Version(rhs.m_Version)
+	, m_Actions(rhs.m_Actions)
 	, m_Venues(rhs.m_Venues)
 	, m_FaultTypes(rhs.m_FaultTypes)
 	, m_OtherPoints(rhs.m_OtherPoints)
@@ -78,6 +81,7 @@ ARBConfig& ARBConfig::operator=(const ARBConfig& rhs)
 {
 	if (this != &rhs)
 	{
+		m_Version = rhs.m_Version;
 		m_Actions = rhs.m_Actions;
 		m_Venues = rhs.m_Venues;
 		m_FaultTypes = rhs.m_FaultTypes;
@@ -88,7 +92,8 @@ ARBConfig& ARBConfig::operator=(const ARBConfig& rhs)
 
 bool ARBConfig::operator==(const ARBConfig& rhs) const
 {
-	return m_Actions == rhs.m_Actions
+	return m_Version == rhs.m_Version
+		&& m_Actions == rhs.m_Actions
 		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
@@ -101,6 +106,7 @@ bool ARBConfig::operator!=(const ARBConfig& rhs) const
 
 void ARBConfig::clear()
 {
+	m_Version = 0;
 	m_Actions.clear();
 	m_Venues.clear();
 	m_FaultTypes.clear();
@@ -144,6 +150,7 @@ bool ARBConfig::Load(
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
+	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		const CElement& element = inTree.GetElement(i);
@@ -178,6 +185,7 @@ bool ARBConfig::Load(
 bool ARBConfig::Save(CElement& ioTree) const
 {
 	CElement& config = ioTree.AddElement(TREE_CONFIG);
+	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	if (!m_Actions.Save(config))
 		return false;
 	if (!m_Venues.Save(config))
@@ -383,6 +391,9 @@ bool ARBConfig::Update(int indent, const ARBConfig& inConfigNew, std::string& io
 		info.erase();
 	}
 	else
+	{
+		m_Version = inConfigNew.GetVersion();
 		ioInfo += info;
+	}
 	return bChanges;
 }
