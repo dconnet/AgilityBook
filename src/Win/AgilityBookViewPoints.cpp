@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-11 DRC Mark the document dirty when creating a title.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-31 DRC Make F1 invoke context help.
@@ -778,22 +779,27 @@ void CAgilityBookViewPoints::LoadData()
 			}
 			if (0 < lifetime.size())
 			{
+				PointsDataLifetime* pData = new PointsDataLifetime(this, pVenue->GetName());
 				int pts = 0;
 				int ptFiltered = 0;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
 					iter != lifetime.end();
 					++iter)
 				{
+					int pts2 = 0;
+					int ptFiltered2 = 0;
 					for (LifeTimePointList::iterator iter2 = (*iter).ptList.begin();
 						iter2 != (*iter).ptList.end();
 						++iter2)
 					{
-						pts += (*iter2).points;
+						pts2 += (*iter2).points;
 						if ((*iter2).bFiltered)
-							ptFiltered += (*iter2).points;
+							ptFiltered2 += (*iter2).points;
 					}
+					pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+					pts += pts;
+					ptFiltered += ptFiltered2;
 				}
-				PointsDataLifetime* pData = new PointsDataLifetime(this, pts, ptFiltered);
 				LVITEM item;
 				item.iItem = idxInsertItem;
 				item.iSubItem = 0;
