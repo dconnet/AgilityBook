@@ -36,6 +36,8 @@
  * Revision History
  */
 
+#include "HyperLink.h"
+
 class CAboutDlg : public CDialog
 {
 public:
@@ -46,6 +48,9 @@ private:
 	//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	CStatic	m_ctrlText;
+	CHyperLink	m_ctrlLink1;
+	CHyperLink	m_ctrlLink2;
+	CHyperLink	m_ctrlLink3;
 	//}}AFX_DATA
 
 	//{{AFX_VIRTUAL(CAboutDlg)
