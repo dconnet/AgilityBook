@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-22 DRC Fixed CRNL sequences.
  */
 
 #include "stdafx.h"
@@ -72,6 +73,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(ARBConfig& config, ARBConfigOtherPo
 	ASSERT(m_pOther);
 	m_Name = m_pOther->GetName().c_str();
 	m_Desc = m_pOther->GetDescription().c_str();
+	m_Desc.Replace("\n", "\r\n");
 	//{{AFX_DATA_INIT(CDlgConfigOtherPoints)
 	//}}AFX_DATA_INIT
 }
@@ -123,6 +125,7 @@ void CDlgConfigOtherPoints::OnOK()
 	m_Name.TrimLeft();
 	m_Desc.TrimRight();
 	m_Desc.TrimLeft();
+	m_Desc.Replace("\r\n", "\n");
 	if (m_Name.IsEmpty())
 	{
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
