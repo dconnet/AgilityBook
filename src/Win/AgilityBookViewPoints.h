@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-12 DRC Allow creating a new title.
  * @li 2004-05-27 DRC Changed lifetime points structure to take a string.
  */
@@ -71,11 +72,14 @@ private:
 	{
 		std::string event;
 		int points;
+		bool bFiltered;
 		LifeTimePoint(
 			const std::string inEvent,
-			int inPoints)
+			int inPoints,
+			bool inFiltered)
 			: event(inEvent)
 			, points(inPoints)
+			, bFiltered(inFiltered)
 		{
 		}
 	};
@@ -108,8 +112,7 @@ private:
 		std::list<RunInfo> const& runs,
 		ARBConfigScoring const* pScoringMethod,
 		int& nCleanQ,
-		int& nNotCleanQ,
-		LifeTimePointList& inLifetime);
+		int& nNotCleanQ);
 	void LoadData();
 
 protected:

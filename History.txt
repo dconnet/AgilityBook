@@ -1,4 +1,4 @@
-11/26/2004: v1.4.1.10 <in development>
+12/3/2004: v1.4.1.10 <in development>
 - Bumped file version to 10.1:
   - Added 'underTF'/'overTF' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
@@ -12,6 +12,8 @@
     titling points.
   - When an event description has a newline in the configuration, the Run
     dialog shows a box instead.
+  - Lifetime points were being filtered. Always show the total, but when
+    filtering, also show what was earned in the filter.
 
 10/31/2004: v1.4.0.10
 - Bumped file version to 10.0, Configuration v6:
