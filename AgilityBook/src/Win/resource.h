@@ -64,10 +64,11 @@
 #define IDD_DOG_NUMBERS                 190
 #define IDD_EXISTING_POINTS             191
 #define IDC_ABOUT_TEXT                  1000
-#define IDC_ABOUT_UPDATE                1001
+#define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
 #define IDC_ABOUT_LINK2                 1003
 #define IDC_ABOUT_LINK3                 1004
+#define IDC_ABOUT_LINK4                 1005
 #define IDC_VENUES                      1014
 #define IDC_NAME                        1015
 #define IDC_TALLY                       1016
@@ -227,6 +228,7 @@
 #define IDC_FIND_DOWN                   1173
 #define IDC_LONG_NAME                   1174
 #define IDC_TABLE_YPS                   1175
+#define IDC_BUTTON1                     1176
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -307,10 +309,13 @@
 #define IDS_DOUBLE_Q                    5031
 #define IDS_MACHPTS                     5032
 #define IDS_ABOUT_TEXT                  5080
-#define IDS_ABOUT_UPDATE                5081
-#define IDS_ABOUT_LINK1                 5082
-#define IDS_ABOUT_LINK2                 5083
-#define IDS_ABOUT_LINK3                 5084
+#define IDS_HELP_UPDATE                 5081
+#define IDS_ABOUT_LINK_YAHOO            5082
+#define IDS_ABOUT_LINK_EMAILHELP        5083
+#define IDS_ABOUT_LINK_ARB              5084
+#define IDS_ABOUT_LINK_SOURCEFORGE      5085
+#define IDS_UPDATE_NEWER_VERSION        5086
+#define IDS_UPDATE_CURRENT              5087
 #define IDS_NEW                         5091
 #define IDS_CONFIGURE                   5092
 #define IDS_SCORING_NAME                5093
@@ -391,6 +396,7 @@
 #define IDS_ADDED_TRAINING_ITEMS        5169
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_EDIT_CONFIGURATION           32774
+#define ID_HELP_UPDATE                  32775
 #define ID_AGILITY_NEW_CALENDAR         32779
 #define ID_AGILITY_NEW_TRAINING         32780
 #define ID_AGILITY_NEW_DOG              32781
@@ -433,7 +439,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32812
-#define _APS_NEXT_CONTROL_VALUE         1176
+#define _APS_NEXT_CONTROL_VALUE         1177
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

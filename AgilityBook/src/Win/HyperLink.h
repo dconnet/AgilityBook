@@ -52,12 +52,14 @@
  * the tooltip fixed.
  *
  * Revision History
+ * @li 2004-03-05 DRC Made goto-url functionality visible.
  * @li 2003-08-16 DRC Modified code from Chris Maunder's original
  */
 
 class CHyperLink : public CStatic
 {
 public:
+	static bool GotoURL(const CString& url);
 	CHyperLink();
 	virtual ~CHyperLink();
 
@@ -98,7 +100,6 @@ public:
 
 // Implementation
 protected:
-	LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata);
 	void PositionWindow();
 	void SetDefaultCursor();
 

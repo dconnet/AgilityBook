@@ -31,10 +31,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-05 DRC Added check-for-updates feature.
  * @li 2003-12-07 DRC When opening the last opened file fails, open a new doc.
  */
 
 #include "stdafx.h"
+#include <afxinet.h>
 #include "AgilityBook.h"
 #include "MainFrm.h"
 
@@ -45,7 +47,9 @@
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
+#include "HyperLink.h"
 #include "TabView.h"
+#include "VersionNum.h"
 
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLException.hpp>
@@ -88,6 +92,7 @@ void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	//{{AFX_MSG_MAP(CAgilityBookApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+	ON_COMMAND(ID_HELP_UPDATE, OnAppUpdate)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
@@ -269,4 +274,42 @@ void CAgilityBookApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
+}
+
+void CAgilityBookApp::OnAppUpdate()
+{
+	CWaitCursor wait;
+	CString ver;
+	CString url;
+	url.LoadString(IDS_HELP_UPDATE);
+	CInternetSession session("my version");
+	CStdioFile* pFile = session.OpenURL(url);
+	if (pFile)
+	{
+		char buffer[1025];
+		UINT nChars;
+		while (0 < (nChars = pFile->Read(buffer, sizeof(buffer))))
+		{
+			buffer[nChars] = 0;
+			ver += buffer;
+		}
+		delete pFile;
+	}
+	session.Close();
+
+	CVersionNum verNew(ver);
+	CVersionNum verThis;
+	if (verThis < verNew)
+	{
+		if (IDYES == AfxMessageBox(IDS_UPDATE_NEWER_VERSION, MB_ICONQUESTION | MB_YESNO))
+		{
+			url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
+			int nTab = url.Find('\t');
+			if (0 < nTab)
+				url = url.Mid(nTab+1);
+			CHyperLink::GotoURL(url);
+		}
+	}
+	else
+		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
 }

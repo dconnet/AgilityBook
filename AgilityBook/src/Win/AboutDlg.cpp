@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-05 DRC Moved versioninfo into new class, added new links/buttons.
  * @li 2004-03-02 DRC Added %VERSION% keyword in hotlinks.
  * @li 2003-09-17 DRC Added a 'check for updates' control.
  */
@@ -39,6 +40,8 @@
 #include "AgilityBook.h"
 
 #include "AboutDlg.h"
+#include "VersionNum.h"
+#include ".\aboutdlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,115 +50,11 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-static bool GetVersionInfo(CString& name, CString& version, WORD inwLangID = 0, WORD inwCharSet = 0)
-{
-	name.Empty();
-	version.Empty();
-
-	// Get the filename and other info...
-	CString appFName;
-	LPTSTR tp = appFName.GetBuffer(MAX_PATH);
-	::GetModuleFileName(NULL, tp, MAX_PATH);
-	appFName.ReleaseBuffer();
-#ifndef _UNICODE
-	appFName.OemToAnsi();
-#endif
-
-	// Get the version information size for allocate the buffer
-	LPTSTR pAppName = appFName.GetBuffer(0);
-	DWORD fvHandle;
-	DWORD dwSize = ::GetFileVersionInfoSize(pAppName, &fvHandle);
-	if (0 == dwSize)
-	{
-		appFName.ReleaseBuffer();
-		return false;
-	}
-
-	// Allocate buffer and retrieve version information
-	BYTE* pFVData = new BYTE[dwSize];
-	if (!::GetFileVersionInfo(pAppName, fvHandle, dwSize, pFVData))
-	{
-		appFName.ReleaseBuffer();
-		return false;
-	}
-	appFName.ReleaseBuffer();
-	// Retrieve the language and character-set identifier
-	UINT nQuerySize;
-	DWORD* pTransBlock;
-	if (!::VerQueryValue(pFVData, _T("\\VarFileInfo\\Translation"), reinterpret_cast<void**>(&pTransBlock), &nQuerySize))
-	{
-		delete [] pFVData;
-		pFVData = NULL;
-		return false;
-	}
-	DWORD dwData = 0;
-	if (nQuerySize > 4 && (0 != inwLangID || 0 != inwCharSet))
-	{
-		bool bOk = false;
-		for (DWORD offset = 0; !bOk && offset < nQuerySize; offset += sizeof(DWORD))
-		{
-			dwData = pTransBlock[0];
-			if (inwLangID == LOWORD(dwData) && inwCharSet == HIWORD(dwData))
-				bOk = true;
-		}
-		if (!bOk)
-			dwData = pTransBlock[0];
-	}
-	else
-		dwData = pTransBlock[0];
-	// Swap the words so wsprintf will print the lang-codepage in
-	// the correct format.
-	//  Hi-order: IBM code page
-	//  Lo-order: Microsoft language id
-	WORD wLangID = LOWORD(dwData);
-	WORD wCodePage = HIWORD(dwData);
-
-	// Cache the fixed info.
-	VS_FIXEDFILEINFO* pffi;
-	if (!::VerQueryValue(pFVData, _T("\\"), reinterpret_cast<void**>(&pffi), &nQuerySize))
-	{
-		delete [] pFVData;
-		pFVData = NULL;
-		return false;
-	}
-	// Date didn't get set. Get the create date.
-	if (0 == pffi->dwFileDateLS && 0 == pffi->dwFileDateMS)
-	{
-		HANDLE hFile = CreateFile(appFName, GENERIC_READ, FILE_SHARE_READ, NULL,
-			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-		if (hFile)
-		{
-			FILETIME ft;
-			GetFileTime(hFile, &ft, NULL, NULL);
-			CloseHandle(hFile);
-			pffi->dwFileDateLS = ft.dwLowDateTime;
-			pffi->dwFileDateMS = ft.dwHighDateTime;
-		}
-	}
-
-	// Get the real name.
-	TCHAR subBlockName[255];
-	wsprintf(subBlockName, _T("\\StringFileInfo\\%04hx%04hx\\ProductName"), wLangID, wCodePage);
-	void* pValue = NULL;
-	UINT vSize;
-	::VerQueryValue(pFVData, subBlockName, &pValue, &vSize);
-	name = reinterpret_cast<LPCTSTR>(pValue);
-
-	version.Format(_T("%hd.%hd.%hd.%hd"),
-		HIWORD(pffi->dwProductVersionMS),
-		LOWORD(pffi->dwProductVersionMS),
-		HIWORD(pffi->dwProductVersionLS),
-		LOWORD(pffi->dwProductVersionLS));
-	delete [] pFVData;
-	return true;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
+	ON_BN_CLICKED(IDC_UPDATE, OnBnClickedUpdate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -169,11 +68,11 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
-	DDX_Control(pDX, IDC_ABOUT_UPDATE, m_ctrlUpdate);
 	DDX_Control(pDX, IDC_ABOUT_TEXT, m_ctrlText);
 	DDX_Control(pDX, IDC_ABOUT_LINK1, m_ctrlLink1);
 	DDX_Control(pDX, IDC_ABOUT_LINK2, m_ctrlLink2);
 	DDX_Control(pDX, IDC_ABOUT_LINK3, m_ctrlLink3);
+	DDX_Control(pDX, IDC_ABOUT_LINK4, m_ctrlLink4);
 	//}}AFX_DATA_MAP
 }
 
@@ -182,30 +81,42 @@ BOOL CAboutDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Generate the about text.
-	CString name, version;
+	CString version;
 	CString info(_T("?"));
-	if (GetVersionInfo(name, version))
+	CVersionNum ver;
+	if (ver.Valid())
 	{
-		SetWindowText(name);
-		info.FormatMessage(IDS_ABOUT_TEXT, (LPCTSTR)version, (LPCTSTR)name);
+		version = ver.GetVersionString();
+		SetWindowText(ver.GetName());
+		info.FormatMessage(IDS_ABOUT_TEXT, (LPCTSTR)version, (LPCTSTR)ver.GetName());
 	}
 	m_ctrlText.SetWindowText(info);
 
 	struct
 	{
-		UINT id;
-		CHyperLink* pCtrl;
-		bool bMove;
+		UINT id;			// Id of stringtable entry for url text.
+		CHyperLink* pCtrl;	// Control
+		bool bMove;			// Does this move on resize?
+	} idLinkControls[] = {
+		{IDS_ABOUT_LINK_YAHOO, &m_ctrlLink1, true},
+		{IDS_ABOUT_LINK_EMAILHELP, &m_ctrlLink2, true},
+		{IDS_ABOUT_LINK_ARB, &m_ctrlLink3, true},
+		{IDS_ABOUT_LINK_SOURCEFORGE, &m_ctrlLink4, true}
+	};
+	int nLinkControls = sizeof(idLinkControls) / sizeof(idLinkControls[0]);
+	struct
+	{
+		UINT id; // Dlgid of other controls to be moved.
 	} idControls[] = {
-		{IDS_ABOUT_UPDATE, &m_ctrlUpdate, false},
-		{IDS_ABOUT_LINK1, &m_ctrlLink1, true},
-		{IDS_ABOUT_LINK2, &m_ctrlLink2, true},
-		{IDS_ABOUT_LINK3, &m_ctrlLink3, true}
+		{IDC_ABOUT_TEXT2},
+		{IDC_UPDATE}
 	};
 	int nControls = sizeof(idControls) / sizeof(idControls[0]);
-	for (int i = 0; i < nControls; ++i)
+
+	for (int i = 0; i < nLinkControls; ++i)
 	{
-		name.LoadString(idControls[i].id);
+		CString name;
+		name.LoadString(idLinkControls[i].id);
 		CString url;
 		int nTab = name.Find('\t');
 		if (0 < nTab)
@@ -215,13 +126,13 @@ BOOL CAboutDlg::OnInitDialog()
 		}
 		else
 			url = name;
-		idControls[i].pCtrl->SetWindowText(name);
+		idLinkControls[i].pCtrl->SetWindowText(name);
 		if (0 <= (nTab = url.Find("%VERSION%")))
 		{
 			CString tmp = url.Left(nTab) + version + url.Mid(nTab+9);
 			url = tmp;
 		}
-		idControls[i].pCtrl->SetURL(url);
+		idLinkControls[i].pCtrl->SetURL(url);
 	}
 
 	// Re-size the text control and dialog as needed.
@@ -288,15 +199,24 @@ BOOL CAboutDlg::OnInitDialog()
 		// Move some other controls
 		if (0 < offsetY)
 		{
-			for (int i = 0; i < nControls; ++i)
+			int i;
+			for (i = 0; i < nLinkControls; ++i)
 			{
-				if (idControls[i].bMove)
+				if (idLinkControls[i].bMove)
 				{
-					idControls[i].pCtrl->GetClientRect(rect);
+					idLinkControls[i].pCtrl->GetClientRect(rect);
 					rect.OffsetRect(0, offsetY);
-					idControls[i].pCtrl->MapWindowPoints(this, rect);
-					idControls[i].pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+					idLinkControls[i].pCtrl->MapWindowPoints(this, rect);
+					idLinkControls[i].pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 				}
+			}
+			for (i = 0; i < nControls; ++i)
+			{
+				CWnd* pCtrl = GetDlgItem(idControls[i].id);
+				pCtrl->GetClientRect(rect);
+				rect.OffsetRect(0, offsetY);
+				pCtrl->MapWindowPoints(this, rect);
+				pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 			}
 		}
 		// And finally resize the dialog.
@@ -308,4 +228,9 @@ BOOL CAboutDlg::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CAboutDlg::OnBnClickedUpdate()
+{
+	AfxGetMainWnd()->SendMessage(WM_COMMAND, ID_HELP_UPDATE);
 }

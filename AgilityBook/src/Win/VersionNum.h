@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,42 +29,38 @@
 /**
  * @file
  *
- * @brief interface of the CAboutDlg class
+ * @brief interface of the VersionNum class
  * @author David Connet
  *
  * Revision History
- * @li 2003-09-17 DRC Added a 'check for updates' control.
+ * @li 2004-03-04 DRC Created
  */
 
-#include "HyperLink.h"
-
-class CAboutDlg : public CDialog
+class CVersionNum
 {
 public:
-	CAboutDlg();
+	typedef struct
+	{
+		WORD part1;
+		WORD part2;
+		WORD part3;
+		WORD part4;
+	} VERSION_NUMBER;
+
+	CVersionNum(WORD inwLangID = 0, WORD inwCharSet = 0);
+	explicit CVersionNum(CString inVer);
+
+	bool operator==(const CVersionNum& rhs) const;
+	bool operator<(const CVersionNum& rhs) const;
+	bool operator>(const CVersionNum& rhs) const;
+
+	bool Valid() const						{return m_Valid;}
+	CString GetName() const					{return m_Name;}
+	CString GetVersionString() const;
+	void GetVersion(VERSION_NUMBER& outVer) const; 
 
 private:
-	// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	CStatic	m_ctrlText;
-	CHyperLink	m_ctrlLink1;
-	CHyperLink	m_ctrlLink2;
-	CHyperLink	m_ctrlLink3;
-	CHyperLink	m_ctrlLink4;
-	//}}AFX_DATA
-
-	//{{AFX_VIRTUAL(CAboutDlg)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    /// DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CAboutDlg)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedUpdate();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-public:
+	bool m_Valid;
+	CString m_Name;
+	VERSION_NUMBER m_Version;
 };
