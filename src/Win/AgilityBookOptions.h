@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-16 DRC Added IsLevelVisible.
  * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
@@ -77,6 +78,10 @@ public:
 	static bool IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
 		std::string const& venue);
+	static bool IsLevelVisible(
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTrial const* pTrial,
+		std::string const& level);
 	static bool IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrial const* pTrial);

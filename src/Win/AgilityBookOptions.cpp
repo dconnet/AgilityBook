@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-16 DRC Added IsLevelVisible.
  * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
@@ -157,6 +158,41 @@ bool CAgilityBookOptions::IsVenueVisible(
 		return false;
 	}
 	return true;
+}
+
+bool CAgilityBookOptions::IsLevelVisible(
+	std::vector<CVenueFilter> const& venues,
+	ARBDogTrial const* pTrial,
+	std::string const& level)
+{
+	bool bVisible = false;
+	for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
+		iterClub != pTrial->GetClubs().end();
+		++iterClub)
+	{
+		if (IsVenueVisible(venues, (*iterClub)->GetVenue()))
+		{
+			bVisible = true;
+			break;
+		}
+	}
+	if (!bVisible)
+		return false;
+	if (!CAgilityBookOptions::GetViewAllVenues())
+	{
+		bVisible = false;
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+			iter != venues.end();
+			++iter)
+		{
+			if ((*iter).level == level)
+			{
+				bVisible = true;
+				break;
+			}
+		}
+	}
+	return bVisible;
 }
 
 bool CAgilityBookOptions::IsTrialVisible(
