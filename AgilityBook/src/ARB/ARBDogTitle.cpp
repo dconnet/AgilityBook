@@ -241,7 +241,8 @@ inline std::string ARBDogTitle::GetGenericName() const
 	if (1 < m_Instance)
 	{
 		char buffer[20];
-		sprintf(buffer, "-%hd", m_Instance);
+		// Keep sync'd with ARBConfigTitle
+		sprintf(buffer, " %hd", m_Instance);
 		name += buffer;
 	}
 	return name;
