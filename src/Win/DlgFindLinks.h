@@ -33,7 +33,8 @@
  * @author David Connet
  *
  * Revision History
- * 2004-03-31 DRC Created.
+ * @li 2004-06-02 DRC Added 'Open' button.
+ * @li 2004-03-31 DRC Created.
  */
 
 #include <afxinet.h>
@@ -61,6 +62,7 @@ private:
 	enum { IDD = IDD_FIND_LINKS };
 	CListCtrl2	m_ctrlLinks;
 	CButton	m_ctrlEdit;
+	CButton	m_ctrlOpen;
 	//}}AFX_DATA
 	CColumnOrder m_sortLinks;
 	CImageList m_ImageList;
@@ -100,6 +102,7 @@ protected:
 	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnCopy();
 	afx_msg void OnEdit();
+	afx_msg void OnOpen();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

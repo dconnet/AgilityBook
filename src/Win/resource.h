@@ -395,6 +395,7 @@
 #define IDC_FINDLINKS_LIST              1348
 #define IDC_FINDLINKS_COPY              1349
 #define IDC_FINDLINKS_EDIT              1350
+#define IDC_FINDLINKS_OPEN              1351
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002

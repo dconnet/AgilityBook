@@ -31,7 +31,8 @@
  * @author David Connet
  *
  * Revision History
- * 2004-03-31 DRC Created.
+ * @li 2004-06-02 DRC Added 'Open' button.
+ * @li 2004-03-31 DRC Created.
  */
 
 #include "stdafx.h"
@@ -140,7 +141,7 @@ int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, CWnd* pParent)
 	: CDlgBaseDialog(CDlgFindLinks::IDD, pParent)
 	, m_sortLinks("Links")
-	, m_Session("my version")
+	, m_Session("findLink")
 {
 	m_Session.EnableStatusCallback();
 	m_sortLinks.Initialize(nColLinkInfo);
@@ -191,6 +192,7 @@ void CDlgFindLinks::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CDlgFindLinks)
 	DDX_Control(pDX, IDC_FINDLINKS_LIST, m_ctrlLinks);
 	DDX_Control(pDX, IDC_FINDLINKS_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_FINDLINKS_OPEN, m_ctrlOpen);
 	//}}AFX_DATA_MAP
 }
 
@@ -202,6 +204,7 @@ BEGIN_MESSAGE_MAP(CDlgFindLinks, CDlgBaseDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_FINDLINKS_LIST, OnItemchangedList)
 	ON_BN_CLICKED(IDC_FINDLINKS_COPY, OnCopy)
 	ON_BN_CLICKED(IDC_FINDLINKS_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_FINDLINKS_OPEN, OnOpen)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -227,7 +230,10 @@ int CDlgFindLinks::GetImageIndex(std::string const& inLink)
 		catch (CFileException* ex)
 		{
 			ex->Delete();
-			img = m_imgMissing;
+			// If the session threw, try normal file access apis...
+			CFileStatus status;
+			if (CFile::GetStatus(inLink.c_str(), status))
+				img = m_imgOk;
 		}
 		catch (CInternetException* ex)
 		{
@@ -430,6 +436,16 @@ void CDlgFindLinks::OnEdit()
 				m_ctrlLinks.SetItem(&item);
 			}
 		}
+	}
+}
+
+void CDlgFindLinks::OnOpen()
+{
+	int nItem = m_ctrlLinks.GetSelection();
+	if (0 <= nItem)
+	{
+		int index = static_cast<int>(m_ctrlLinks.GetItemData(nItem));
+		RunCommand(m_Data[index].m_Link.c_str());
 	}
 }
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
  * @li 2004-03-30 DRC Created
  */
 
@@ -54,7 +55,13 @@ CDlgRunLink::CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunLink::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
+	, m_Session("runLink")
 {
+	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
+	CWinApp* app = AfxGetApp();
+	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
+	m_imgOk = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN));
+	m_imgMissing = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_TENTATIVE));
 	//{{AFX_DATA_INIT(CDlgRunLink)
 	//}}AFX_DATA_INIT
 }
@@ -100,6 +107,7 @@ void CDlgRunLink::UpdateButtons()
 
 void CDlgRunLink::ListFiles(char const* pItem)
 {
+	CWaitCursor wait;
 	m_ctrlLinks.DeleteAllItems();
 	std::set<std::string> links;
 	m_Run->GetLinks(links);
@@ -108,12 +116,48 @@ void CDlgRunLink::ListFiles(char const* pItem)
 		iter != links.end();
 		++iter)
 	{
-		int idx = m_ctrlLinks.InsertItem(i++, (*iter).c_str());
+		int idx = m_ctrlLinks.InsertItem(i++, (*iter).c_str(), GetImageIndex((*iter).c_str()));
 		if (pItem && *iter == pItem)
 			m_ctrlLinks.SetSelection(idx);
 	}
 	m_ctrlLinks.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	UpdateButtons();
+}
+
+int CDlgRunLink::GetImageIndex(std::string const& inLink)
+{
+	CWaitCursor wait;
+	int img = m_imgEmpty;
+	if (0 < inLink.length())
+	{
+		img = m_imgMissing;
+		try
+		{
+			CStdioFile* pFile = m_Session.OpenURL(inLink.c_str());
+			if (pFile)
+			{
+				img = m_imgOk;
+				pFile->Close();
+				delete pFile;
+			}
+		}
+		catch (CFileException* ex)
+		{
+			ex->Delete();
+			// If the session threw, try normal file access apis...
+			CFileStatus status;
+			if (CFile::GetStatus(inLink.c_str(), status))
+				img = m_imgOk;
+		}
+		catch (CInternetException* ex)
+		{
+			// I'm not sure how to tell if the url is bad or
+			// the connection doesn't exist...
+			ex->Delete();
+			img = m_imgMissing;
+		}
+	}
+	return img;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -123,6 +167,7 @@ BOOL CDlgRunLink::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
 	m_ctrlLinks.InsertColumn(0, "");
 	ListFiles(NULL);
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -194,57 +239,6 @@ void CDlgRunLink::OnOpen()
 	if (0 <= nItem)
 	{
 		CString name = m_ctrlLinks.GetItemText(nItem, 0);
-		INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), name, NULL, NULL, SW_SHOW));
-		if (result <= HINSTANCE_ERROR)
-		{
-			CString str;
-			switch (result)
-			{
-			case 0:
-				str = "The operating system is out of memory or resources.";
-				break;
-			case SE_ERR_PNF:
-				str = "The specified path was not found.";
-				break;
-			case SE_ERR_FNF:
-				str = "The specified file was not found.";
-				break;
-			case ERROR_BAD_FORMAT:
-				str = "The .EXE file is invalid (non-Win32 .EXE or error in .EXE image).";
-				break;
-			case SE_ERR_ACCESSDENIED:
-				str = "The operating system denied access to the specified file.";
-				break;
-			case SE_ERR_ASSOCINCOMPLETE:
-				str = "The filename association is incomplete or invalid.";
-				break;
-			case SE_ERR_DDEBUSY:
-				str = "The DDE transaction could not be completed because other DDE transactions were being processed.";
-				break;
-			case SE_ERR_DDEFAIL:
-				str = "The DDE transaction failed.";
-				break;
-			case SE_ERR_DDETIMEOUT:
-				str = "The DDE transaction could not be completed because the request timed out.";
-				break;
-			case SE_ERR_DLLNOTFOUND:
-				str = "The specified dynamic-link library was not found.";
-				break;
-			case SE_ERR_NOASSOC:
-				str = "There is no application associated with the given filename extension.";
-				break;
-			case SE_ERR_OOM:
-				str = "There was not enough memory to complete the operation.";
-				break;
-			case SE_ERR_SHARE:
-				str = "A sharing violation occurred. ";
-				break;
-			default:
-				str.Format(_T("Unknown Error (%d) occurred."), result);
-				break;
-			}
-			str = "Unable to open " + str;
-			AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
-		}
+		RunCommand(name);
 	}
 }

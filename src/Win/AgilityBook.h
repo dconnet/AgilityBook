@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-02 DRC Moved ShellExecute code here.
  */
 
 #ifndef __AFXWIN_H__
@@ -77,5 +78,6 @@ extern CAgilityBookApp theApp;
 
 // Some global functions.
 extern void ShowContextHelp(HELPINFO* pHelpInfo);
+extern void RunCommand(char const* pCmd);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
 extern void UpdateVersion(bool bVerbose);
