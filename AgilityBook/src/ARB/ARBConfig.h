@@ -32,7 +32,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-07-20 DRC Added UpdateNote.
  * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
@@ -159,7 +158,6 @@ public:
 	 * Getters.
 	 */
 	short GetVersion() const;
-	std::string const& GetUpdateNote() const;
 	ARBConfigActionList const& GetActions() const;
 	ARBConfigActionList& GetActions();
 	ARBConfigVenueList const& GetVenues() const;
@@ -171,7 +169,6 @@ public:
 
 private:
 	short m_Version;
-	std::string m_UpdateNote;
 	ARBConfigActionList m_Actions;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
@@ -181,17 +178,6 @@ private:
 inline short ARBConfig::GetVersion() const
 {
 	return m_Version;
-}
-
-/**
- * Get a note related to updating the configuration. This is used only when
- * merging a new configuration. It is not saved when the configuration is
- * written. The purpose of the note is to let the user know what has changed
- * in the configuration in case they need to update any data.
- */
-inline std::string const& ARBConfig::GetUpdateNote() const
-{
-	return m_UpdateNote;
 }
 
 inline ARBConfigActionList const& ARBConfig::GetActions() const

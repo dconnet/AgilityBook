@@ -88,6 +88,5 @@ class CAgilityBookDoc;
 extern bool ShowContextHelp(HELPINFO* pHelpInfo);
 extern void RunCommand(char const* pCmd);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
-extern bool ReadHttpFile(CString const& inURL, CStringArray& outData);
 extern void UpdateVersion();
 extern void UpdateVersion(CAgilityBookDoc* pDoc);

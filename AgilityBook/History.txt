@@ -1,6 +1,5 @@
 7/20/2004: v1.2.2.8 <in development>
-- Bumped file version to 9.1, Configuration v5:
-  - Added 'UpdateNote' to 'Configuration'.
+- Bumped Configuration v5:
   - Removed titling points from USDAA Tournament Jumper/Snooker.
 - New features / Enhancements:
   - Check for configuration updates when the user requests an update check.

@@ -12,8 +12,6 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2004-07-20 DRC File version 9.1.
-               Added 'UpdateNote' to 'Configuration'.
 2004-07-03 DRC File version 9.0.
                Added 'SubName' to 'Training'
                'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
@@ -86,7 +84,7 @@ This section defines the rules of each venue.
  set, the user could still modify things. But we won't automatically prompt
  to upgrade. The user can merge the configuration at any number of times.
 -->
-<!ELEMENT Configuration (UpdateNote?, Action*, Venue*, FaultType*, OtherPts*) >
+<!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
 	<!ATTLIST Configuration
 		version CDATA #IMPLIED
 		>

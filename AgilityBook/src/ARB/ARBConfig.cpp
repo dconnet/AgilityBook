@@ -31,7 +31,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-07-20 DRC Added a note for updating information.
  * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
@@ -177,14 +176,6 @@ bool ARBConfig::Load(
 			// Ignore any errors...
 			// This was moved here in version 3.
 			LoadOtherPoints(element, inVersion, ioErrMsg);
-		}
-		else if (name == TREE_CONFIG_UPDATE_NOTE)
-		{
-			// This is a read-only value that is only used when merging
-			// a new configuration. The text is simply displayed in the
-			// update-status dialog on completion.
-			// It is NOT copied or saved.
-			m_UpdateNote = element.GetValue();
 		}
 	}
 	m_Venues.sort();
@@ -411,11 +402,6 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	else
 	{
 		m_Version = inConfigNew.GetVersion();
-		if (0 < inConfigNew.GetUpdateNote().length())
-		{
-			ioInfo += inConfigNew.GetUpdateNote();
-			ioInfo += "\n\n";
-		}
 		ioInfo += info;
 	}
 	return bChanges;
