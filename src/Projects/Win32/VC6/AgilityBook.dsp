@@ -194,6 +194,10 @@ SOURCE=..\..\..\Win\DlgFault.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgFind.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgFixup.cpp
 # End Source File
 # Begin Source File
@@ -440,6 +444,10 @@ SOURCE=..\..\..\Win\DlgDog.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgFault.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFind.h
 # End Source File
 # Begin Source File
 

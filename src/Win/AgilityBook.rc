@@ -145,7 +145,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
         MENUITEM SEPARATOR
-        MENUITEM "&Find\tCtrl+f",               ID_EDIT_FIND
+        MENUITEM "&Find\tCtrl+F",               ID_EDIT_FIND
         MENUITEM "Find Next\tF3",               ID_EDIT_FIND_NEXT
         MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
@@ -1205,6 +1205,29 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,293,24,50,14
 END
 
+IDD_FIND DIALOG DISCARDABLE  0, 0, 215, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Find"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Fi&nd what:",IDC_STATIC,7,9,34,8
+    EDITTEXT        IDC_NAME,45,7,100,12,ES_AUTOHSCROLL
+    CONTROL         "Match &case",IDC_MATCH_CASE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,25,53,10
+    GROUPBOX        "Fields to search",IDC_STATIC,7,40,65,45
+    CONTROL         "&All",IDC_SEARCH_ALL,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,15,53,23,10
+    CONTROL         "&Visible",IDC_SEARCH_VISIBLE,"Button",
+                    BS_AUTORADIOBUTTON,15,68,36,10
+    GROUPBOX        "Direction",IDC_STATIC,80,40,65,45,WS_GROUP
+    CONTROL         "&Up",IDC_FIND_UP,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
+                    88,53,25,10
+    CONTROL         "&Down",IDC_FIND_DOWN,"Button",BS_AUTORADIOBUTTON,88,68,
+                    35,10
+    DEFPUSHBUTTON   "&Find Next",IDOK,158,7,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,158,24,50,14
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -1528,6 +1551,14 @@ BEGIN
         RIGHTMARGIN, 343
         TOPMARGIN, 7
         BOTTOMMARGIN, 258
+    END
+
+    IDD_FIND, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 85
     END
 END
 #endif    // APSTUDIO_INVOKED

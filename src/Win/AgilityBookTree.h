@@ -43,17 +43,32 @@
 
 #include <vector>
 #include "CommonView.h"
+#include "DlgFind.h"
 class ARBBase;
 class ARBDog;
 class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
+class CAgilityBookTree;
 class CAgilityBookTreeData;
 struct CTreePrintData;
 struct CVenueFilter;
 
+class CFindTree : public IFindCallback
+{
+public:
+	CFindTree(CAgilityBookTree* pView)
+		: m_pView(pView)
+	{
+	}
+	virtual bool Search();
+private:
+	CAgilityBookTree* m_pView;
+};
+
 class CAgilityBookTree : public CTreeView, public ICommonView
 {
+	friend class CFindTree;
 protected: // create from serialization only
 	CAgilityBookTree();
 	DECLARE_DYNCREATE(CAgilityBookTree)
@@ -106,6 +121,7 @@ private:
 	void PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const;
 	bool m_bReset;
 	bool m_bSuppressSelect;
+	CFindTree m_Callback;
 	ARBDog* m_pDog;
 
 // Generated message map functions
@@ -122,6 +138,8 @@ protected:
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnUpdateDogCmd(CCmdUI* pCmdUI);
 	afx_msg BOOL OnDogCmd(UINT id);
+	afx_msg void OnEditFind();
+	afx_msg void OnEditFindNext();
 	afx_msg void OnUpdateExpand(CCmdUI* pCmdUI);
 	afx_msg void OnExpand();
 	afx_msg void OnUpdateExpandAll(CCmdUI* pCmdUI);

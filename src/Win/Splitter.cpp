@@ -34,6 +34,7 @@
  */
 
 #include "stdafx.h"
+#include "AgilityBook.h"
 #include "Splitter.h"
 
 #include "AgilityBookTree.h"
