@@ -15,6 +15,7 @@
   - Changed the 'Show Newest Runs First' to sort only trials since
     sorting the runs is handled by the header in the Runs view.
 - Bug fixes
+  - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have
     titling points.
   - USDAA Time Gamble does not compute time faults.
