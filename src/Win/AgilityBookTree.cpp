@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-28 DRC Implemented Find/FindNext.
@@ -395,7 +396,11 @@ void CAgilityBookTree::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	CString strTextForHeight("Testing for height");
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	pData->nHeight = 4 * rTest.Height() / 3;
+	if (1 > pData->nHeight)
+		pData->nHeight = 1;
 	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
+	if (1 > pData->nLinesPerPage)
+		pData->nLinesPerPage = 1;
 	pData->nPages = (static_cast<int>(pData->lines.GetSize()) + 1) / pData->nLinesPerPage + 1;
 	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
 	//	pData->nLinesPerPage,

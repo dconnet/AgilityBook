@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-09-28 DRC Set the page scrolling size to 4 weeks.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -514,6 +515,8 @@ void CAgilityBookViewCalendar::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	CPrintData* pData = new CPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 	pData->nEntriesPerPage = abs(r.Height()) / (2 * DAY_BORDER + m_szEntry.cy);
+	if (1 > pData->nEntriesPerPage)
+		pData->nEntriesPerPage = 1;
 	pData->sz = CSize(r.Width(), abs(r.Height()));
 
 	int nMax = m_nWeeks / pData->nEntriesPerPage;
