@@ -298,7 +298,6 @@ BOOL CWizardStart::OnWizardFinish()
 
 		case WIZ_IMPORT_RUNS:
 			{
-				AfxMessageBox("TODO: This is still work-in-progress");
 				CString def, fname, filter;
 				def.LoadString(IDS_FILEEXT_DEF_ARB);
 				fname.LoadString(IDS_FILEEXT_FNAME_ARB);
@@ -328,30 +327,98 @@ BOOL CWizardStart::OnWizardFinish()
 						{
 							if (0 < err.length())
 								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
-							//TODO: Merge dog/trial/run and judgeinfo
 							int count = 0;
+							int countUpdated = 0;
+							int countJudges = 0;
 							for (ARBDogList::iterator iter = book.GetDogs().begin();
 								iter != book.GetDogs().end();
 								++iter)
 							{
-								//ARBDog* pDog = *iter;
-								//if (!m_pDoc->GetARB().GetCalendar().FindCalendar(cal))
-								//{
-								//	if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-								//	{
-								//		m_pDoc->GetARB().GetCalendar().AddCalendar(cal);
-								//		++count;
-								//	}
-								//}
+								ARBDog* pDog = *iter;
+								ARBDog* pExisting = NULL;
+								for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin();
+									iterDog != m_pDoc->GetDogs().end();
+									++iterDog)
+								{
+									if ((*iterDog)->GetCallName() == pDog->GetCallName())
+									{
+										pExisting = *iterDog;
+										break;
+									}
+								}
+								if (!pExisting)
+								{
+									++count;
+									m_pDoc->GetDogs().AddDog(pDog);
+								}
+								else if (*pExisting != *pDog)
+								{
+									// If the dog exists, only update the
+									// existing points, registration numbers,
+									// titles and trials.
+									bool bUpdated = false;
+									if (pExisting->GetRegNums() != pDog->GetRegNums())
+									{
+				AfxMessageBox("TODO: Need to merge dog registration information");
+										bUpdated = true;
+									}
+									if (pExisting->GetExistingPoints() != pDog->GetExistingPoints())
+									{
+				AfxMessageBox("TODO: Need to merge dog existing points information");
+										bUpdated = true;
+									}
+									if (pExisting->GetTitles() != pDog->GetTitles())
+									{
+										for (ARBDogTitleList::iterator iter = pDog->GetTitles().begin();
+											iter != pDog->GetTitles().end();
+											++iter)
+										{
+											ARBDogTitle const* pTitle = pExisting->GetTitles().FindTitle((*iter)->GetVenue(), (*iter)->GetName());
+											if (!pTitle)
+											{
+												bUpdated = true;
+												ARBDogTitle* pNewTitle = new ARBDogTitle(*(*iter));
+												pExisting->GetTitles().AddTitle(pNewTitle);
+												pNewTitle->Release();
+											}
+										}
+									}
+									if (pExisting->GetTrials() != pDog->GetTrials())
+									{
+				AfxMessageBox("TODO: Need to merge dog trial information");
+										bUpdated = true;
+									}
+									if (bUpdated)
+									{
+										++countUpdated;
+									}
+								}
+							}
+							for (ARBInfoJudgeList::const_iterator iter = book.GetInfo().GetJudgeInfo().begin();
+								iter != book.GetInfo().GetJudgeInfo().end();
+								++iter)
+							{
+								ARBInfoJudge* pJudge = *iter;
+								// If this fails, it already exists.
+								if (m_pDoc->GetARB().GetInfo().GetJudgeInfo().AddJudge(pJudge))
+								{
+									++countJudges;
+								}
 							}
 							if (0 < count)
 							{
 								m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
 								m_pDoc->SetModifiedFlag();
 							}
-							//CString str;
-							//str.FormatMessage(IDS_ADDED_CAL_ITEMS, count);
-							//AfxMessageBox(str, MB_ICONINFORMATION);
+							if (0 < countJudges)
+							{
+								std::set<std::string> namesInUse;
+								m_pDoc->GetAllJudges(namesInUse, false);
+								m_pDoc->GetARB().GetInfo().GetJudgeInfo().CondenseContent(namesInUse);
+							}
+							CString str;
+							str.FormatMessage(IDS_ADDED_DOGS_JUDGES, count, countUpdated, countJudges);
+							AfxMessageBox(str, MB_ICONINFORMATION);
 							bOk = true;
 						}
 						else if (0 < err.length())

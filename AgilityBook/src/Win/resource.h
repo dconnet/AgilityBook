@@ -574,6 +574,7 @@
 #define IDS_LIFETIME_POINTS             5170
 #define IDS_CREATEDOG_FAILED            5171
 #define IDS_INDICATOR_BLANK             5172
+#define IDS_ADDED_DOGS_JUDGES           5173
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780

@@ -179,6 +179,14 @@ public:
 	ARBInfoJudge* AddJudge(std::string const& inJudge);
 
 	/**
+	 * Add a new judge.
+	 * @param inJudge Judge to add.
+	 * @return Pointer to new object, NULL if name already exists or is empty.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 */
+	ARBInfoJudge* AddJudge(ARBInfoJudge* inJudge);
+
+	/**
 	 * Delete a judge.
 	 * @param inJudge Object to delete.
 	 * @note Equality is tested by value, not pointer.

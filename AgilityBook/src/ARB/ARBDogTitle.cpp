@@ -259,6 +259,19 @@ int ARBDogTitleList::NumTitlesInVenue(std::string const& inVenue) const
 	return count;
 }
 
+ARBDogTitle const* ARBDogTitleList::FindTitle(
+	std::string const& inVenue,
+	std::string const& inTitle) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetName() == inTitle)
+			return *iter;
+	}
+	return NULL;
+}
+
 int ARBDogTitleList::RenameVenue(
 	std::string const& inOldVenue,
 	std::string const& inNewVenue)
