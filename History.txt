@@ -1,4 +1,4 @@
-3/20/2004: v1.0.4.8 <in development>
+3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:
   - Added 'isHidden' to 'Title'.
   - Made 'Date' optional in 'Title'.
