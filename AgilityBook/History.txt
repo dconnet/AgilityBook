@@ -1,3 +1,7 @@
+7/17/2004: v1.2.2.8 <in development>
+- Bumped file Configuration v5:
+  - Remove titling points from USDAA Tournament Jumper/Snooker.
+
 7/3/2004: v1.2.1.8
 - Bug fixes
   - On some machines, the program would crash while coming up. The splash
