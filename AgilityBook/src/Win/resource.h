@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by AgilityBook.rc
 //
 #define IDB_LOGO                        101
@@ -28,7 +28,6 @@
 #define IDI_HIDDEN                      162
 #define IDD_ABOUTBOX                    200
 #define IDD_NAME                        201
-#define IDD_NAME_DESC                   202
 #define IDD_LISTCTRL                    203
 #define IDD_MESSAGE                     204
 #define IDD_FIND                        205
@@ -82,7 +81,6 @@
 #define IDC_ABOUT_LINK4                 1005
 #define IDC_ABOUT_UPDATE                1006
 #define IDC_NAME                        1010
-#define IDC_DESC                        1011
 #define IDC_LIST                        1012
 #define IDC_LIST_NEW                    1013
 #define IDC_LIST_EDIT                   1014
@@ -202,6 +200,7 @@
 #define IDC_DOGNUM_NEW                  1139
 #define IDC_DOGNUM_EDIT                 1140
 #define IDC_DOGNUM_DELETE               1141
+#define IDC_PICK_NAME                   1142
 #define IDC_REGNUM_VENUES               1150
 #define IDC_REGNUM_REG_NUM              1151
 #define IDC_REGNUM_HEIGHT               1152
@@ -293,7 +292,6 @@
 #define IDC_RUNLINK_OPEN                1239
 #define IDC_REFRUN_PLACE                1240
 #define IDC_REFRUN_Q                    1241
-#define IDC_REFRUN_POINTS               1272
 #define IDC_REFRUN_TIME                 1243
 #define IDC_REFRUN_NAME                 1244
 #define IDC_REFRUN_BREED                1245
@@ -320,6 +318,7 @@
 #define IDC_OPTIONS_CAL_SIZE_Y          1266
 #define IDC_OPTIONS_FILTER_VENUES_ALL   1270
 #define IDC_OPTIONS_FILTER_VENUES_SELECTED 1271
+#define IDC_REFRUN_POINTS               1272
 #define IDC_OPTIONS_FILTER_VENUES       1272
 #define IDC_OPTIONS_FILTER_DATES_ALL    1273
 #define IDC_OPTIONS_FILTER_DATES_RANGE  1274
@@ -329,8 +328,8 @@
 #define IDC_OPTIONS_FILTER_DATE_END     1278
 #define IDC_OPTIONS_FILTER_RUNS_ALL     1279
 #define IDC_OPTIONS_FILTER_RUNS_Q       1280
-#define IDC_OPTIONS_FILTER_RUNS_NON_Q   1281
 #define IDC_OPTIONS_FONT_CAL_PRINT_DATE_TEXT 1280
+#define IDC_OPTIONS_FILTER_RUNS_NON_Q   1281
 #define IDC_OPTIONS_FONT_CAL_PRINT_DATE 1281
 #define IDC_OPTIONS_FONT_CAL_PRINT_TEXT_TEXT 1282
 #define IDC_OPTIONS_FONT_CAL_PRINT_TEXT 1283

@@ -260,9 +260,6 @@
 				RelativePath="..\..\..\Win\DlgName.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Win\DlgNameDesc.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\Win\DlgOptions.cpp">
 			</File>
 			<File
@@ -502,9 +499,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgName.h">
-			</File>
-			<File
-				RelativePath="..\..\..\Win\DlgNameDesc.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOptions.h">
