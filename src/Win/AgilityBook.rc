@@ -1103,7 +1103,7 @@ BEGIN
             VALUE "FileDescription", "Agility Record Book\0"
             VALUE "FileVersion", "0.9.3.7\0"
             VALUE "InternalName", "AgilityBook.exe\0"
-            VALUE "LegalCopyright", "All rights reserved.\0"
+            VALUE "LegalCopyright", "Copyright © 2002-2003 David Connet. All Rights Reserved.\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
             VALUE "PrivateBuild", "\0"
