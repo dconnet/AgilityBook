@@ -1,0 +1,37 @@
+Notes for releasing a new version.
+
+Files to change before release:
+- src/Win/res/AgilityRecordBook.dtd
+  Update comments if file version changes
+- History.txt
+  Update program version and date, along with any comments.
+- Todo.txt
+  Any necessary changes...
+
+Run and verify build
+
+Tag CVS repository "v_n_n_n_n"
+
+Create the files to be distributed (make sure you archive them too)
+
+In SourceForge, enter the File Releases section in Admin.
+- At the bottom of the page, 'Add Release' to 'agilitybook' package.
+- Enter all necessary information.
+- ftp to upload.sourceforge.net, cd incoming. Set binary mode.
+- Upload all files.
+- Refresh the web page with the button in Step 2.
+- Select the files and press the button again.
+- Update all the fields in Step 3.
+- Done.
+
+In Yahoo
+- Remove all old files.
+- Upload all new files. (Set the send email notification on the primary file)
+- Send an email announcing it.
+
+Web Site:
+- Make sure things are current (ongoing task!).
+
+Final steps:
+- Update History.txt for the next version.
+- Update src/Win/AgilityBook.rc with the next version number.
