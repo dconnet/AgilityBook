@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
 
@@ -94,6 +95,10 @@ public:
 	size_t GetSelection(std::vector<int>& indices);
 	void SetSelection(int index, bool bEnsureVisible = false);
 	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
+	/**
+	 * Returns the data required to print/copy a line.
+	 */
+	virtual void GetPrintLine(int nItem, CStringArray& line);
 
 protected:
 	void Init();

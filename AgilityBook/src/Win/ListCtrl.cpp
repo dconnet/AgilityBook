@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
  * @li 2003-11-22 DRC When copying, only create a header if more than 1 line
  *                    is selected (or if only one line exists).
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
@@ -80,6 +81,27 @@ static void SetSelection(CListCtrl& list, std::vector<int>& indices, bool bEnsur
 			if (bEnsureVisible)
 				list.EnsureVisible(index, FALSE);
 		}
+	}
+}
+
+static void GetPrintLineImp(CListCtrl& list, int nItem, CStringArray& line)
+{
+	line.RemoveAll();
+	int nColumns = list.GetHeaderCtrl()->GetItemCount();
+	for (int i = 0; i < nColumns; ++i)
+	{
+		if (0 > nItem)
+		{
+			char buffer[1000];
+			HDITEM hdr;
+			hdr.mask = HDI_TEXT;
+			hdr.pszText = buffer;
+			hdr.cchTextMax = sizeof(buffer) / sizeof(char);
+			list.GetHeaderCtrl()->GetItem(i, &hdr);
+			line.Add(buffer);
+		}
+		else
+			line.Add(list.GetItemText(nItem, i));
 	}
 }
 
@@ -229,6 +251,12 @@ void CListCtrl2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
 	::SetSelection(*this, indices, bEnsureVisible);
 }
 
+// This allows a derived class to print a subset of columns if it wants.
+void CListCtrl2::GetPrintLine(int nItem, CStringArray& line)
+{
+	GetPrintLineImp(*this, nItem, line);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CListCtrl2 message handlers
 
@@ -323,23 +351,7 @@ void CListView2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
 // This allows a derived class to print a subset of columns if it wants.
 void CListView2::GetPrintLine(int nItem, CStringArray& line)
 {
-	line.RemoveAll();
-	int nColumns = GetListCtrl().GetHeaderCtrl()->GetItemCount();
-	for (int i = 0; i < nColumns; ++i)
-	{
-		if (0 > nItem)
-		{
-			char buffer[1000];
-			HDITEM hdr;
-			hdr.mask = HDI_TEXT;
-			hdr.pszText = buffer;
-			hdr.cchTextMax = sizeof(buffer) / sizeof(char);
-			GetListCtrl().GetHeaderCtrl()->GetItem(i, &hdr);
-			line.Add(buffer);
-		}
-		else
-			line.Add(GetListCtrl().GetItemText(nItem, i));
-	}
+	GetPrintLineImp(GetListCtrl(), nItem, line);
 }
 
 /////////////////////////////////////////////////////////////////////////////
