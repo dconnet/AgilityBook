@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
@@ -107,7 +108,7 @@ void ARBConfig::clear()
  */
 bool ARBConfig::LoadFault(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (inTree.GetName() == TREE_FAULTTYPE
 	&& m_FaultTypes.Load(inTree, inVersion))
@@ -122,7 +123,7 @@ bool ARBConfig::LoadFault(
  */
 bool ARBConfig::LoadOtherPoints(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (inTree.GetName() == TREE_OTHERPTS
 	&& m_OtherPoints.Load(inTree, inVersion))
@@ -133,7 +134,7 @@ bool ARBConfig::LoadOtherPoints(
 
 bool ARBConfig::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -202,7 +203,7 @@ void ARBConfig::Default()
 #endif
 	if (tree.GetName() == "DefaultConfig")
 	{
-		short version = ARBAgilityRecordBook::GetCurrentDocVersion();
+		ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 		tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
 		int config = tree.FindElement(TREE_CONFIG);
 		if (0 <= config)

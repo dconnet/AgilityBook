@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "ARBBase.h"
@@ -48,6 +49,7 @@ class ARBConfig;
 class ARBConfigScoring;
 class ARBDogClubList;
 class ARBDogTrial;
+class ARBVersion;
 class CElement;
 
 class ARBDogRun : public ARBBase
@@ -65,7 +67,7 @@ public:
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	int NumOtherPointsInUse(const std::string& inOther) const;
@@ -339,7 +341,7 @@ public:
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 
 	bool operator==(const ARBDogRunList& rhs) const
 	{

@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "ARBTypes.h"
 class ARBConfigScoring;
+class ARBVersion;
 class CElement;
 
 class ARBDogRunScoring
@@ -60,7 +62,7 @@ public:
 	bool Load(
 		const ARBConfigScoring* inEvent,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	ScoringType GetType() const;

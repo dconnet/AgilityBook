@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-21 DRC Created
  */
 
@@ -97,7 +98,7 @@ std::string ARBTraining::GetGenericName() const
 
 bool ARBTraining::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	switch (inTree.GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{

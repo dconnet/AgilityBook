@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-13 DRC Allow course faults on point runs.
  * @li 2003-09-01 DRC Fixed problem with Score and TitlePts in time+faults.
  */
@@ -164,7 +165,7 @@ bool ARBDogRun::Load(
 	const ARBConfig& inConfig,
 	const ARBDogClubList& inClubs,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
@@ -474,7 +475,7 @@ bool ARBDogRunList::Load(
 	const ARBConfig& inConfig,
 	const ARBDogClubList& inClubs,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	ARBDogRun* thing = new ARBDogRun;
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion))

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-17 DRC Save would not write data if only CRCD contained info.
  */
 
@@ -93,7 +94,7 @@ bool ARBDogNotes::operator!=(const ARBDogNotes& rhs) const
 bool ARBDogNotes::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{

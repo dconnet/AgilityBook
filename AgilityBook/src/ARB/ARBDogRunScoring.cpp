@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
  */
 
@@ -122,7 +123,7 @@ bool ARBDogRunScoring::operator!=(const ARBDogRunScoring& rhs) const
 bool ARBDogRunScoring::Load(
 	const ARBConfigScoring* inEvent,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	std::string attrib;
 

@@ -33,11 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include <string>
 #include "ARBBase.h"
 #include "ARBVector.h"
+class ARBVersion;
 class CElement;
 
 class ARBConfigTitle : public ARBBase
@@ -54,7 +56,7 @@ public:
 
 	bool Load(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& inTree) const;
 
 	const std::string& GetName() const;

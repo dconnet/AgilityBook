@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces 2.2.0.
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
  */
 
@@ -59,6 +60,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBDate.h"
+#include "ARBTypes.h"
 
 #if _MSC_VER < 1300
 using namespace std;
@@ -1016,6 +1018,30 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, std::strin
 		return eNotFound;
 }
 
+CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBVersion& outValue) const
+{
+	std::string value;
+	AttribLookup rc = GetAttrib(inName, value);
+	if (eFound == rc)
+	{
+		unsigned short major = 0;
+		unsigned short minor = 0;
+		std::string::size_type pos = value.find('.');
+		if (std::string::npos != pos)
+		{
+			major = static_cast<unsigned short>(atol(value.c_str()));
+			value = value.substr(pos+1);
+			minor = static_cast<unsigned short>(atol(value.c_str()));
+		}
+		else
+		{
+			major = static_cast<unsigned short>(atol(value.c_str()));
+		}
+		outValue = ARBVersion(major, minor);
+	}
+	return rc;
+}
+
 CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBDate& outValue) const
 {
 	std::string value;
@@ -1139,6 +1165,11 @@ bool CElement::AddAttrib(const std::string& inName, const char* const inValue)
 	else
 		m_Attribs[inName] = "";
 	return true;
+}
+
+bool CElement::AddAttrib(const std::string& inName, const ARBVersion& inValue)
+{
+	return AddAttrib(inName, inValue.ToString());
 }
 
 bool CElement::AddAttrib(const std::string& inName, const ARBDate& inValue)

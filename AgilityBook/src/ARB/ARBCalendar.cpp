@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-31 DRC Added FindCalendar.
  * @li 2003-07-09 DRC IsRangeOverlapped test was wrong. It was actually a 'is
  *                    range contained in' test.
@@ -152,7 +153,7 @@ bool ARBCalendar::IsRangeOverlapped(const ARBDate& inDate1, const ARBDate& inDat
 
 bool ARBCalendar::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	switch (inTree.GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
@@ -216,7 +217,7 @@ bool ARBCalendar::Load(
 	inTree.GetAttrib(ATTRIB_CAL_CLUB, m_Club);
 	inTree.GetAttrib(ATTRIB_CAL_VENUE, m_Venue);
 
-	if (1 == inVersion)
+	if (inVersion == ARBVersion(1,0))
 	{
 		std::string attrib;
 		if (CElement::eFound == inTree.GetAttrib("PlanOn", attrib))
@@ -227,7 +228,7 @@ bool ARBCalendar::Load(
 				m_eEntered = eNot;
 		}
 	}
-	else if (2 <= inVersion)
+	else if (inVersion >= ARBVersion(2,0))
 	{
 		std::string attrib;
 		if (CElement::eFound == inTree.GetAttrib(ATTRIB_CAL_ENTERED, attrib))

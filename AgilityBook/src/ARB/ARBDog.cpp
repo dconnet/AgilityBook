@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-08-18 DRC Added a deceased date. While this does change the format
  *                of the file, it's backwards compatible, so it doesn't warrant
  *                a file version change.
@@ -122,7 +123,7 @@ bool ARBDog::operator!=(const ARBDog& rhs) const
 bool ARBDog::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())

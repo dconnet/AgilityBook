@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
  */
 
@@ -42,6 +43,7 @@
 #include <xercesc/sax/InputSource.hpp>
 
 class ARBDate;
+class ARBVersion;
 
 /**
  * Create the XML tree structure. This allows easy translation of an XML file
@@ -138,6 +140,7 @@ public:
 	 * @retval false Specified attribute doesn't exist.
 	 */
 	AttribLookup GetAttrib(const std::string& inName, std::string& outValue) const;
+	AttribLookup GetAttrib(const std::string& inName, ARBVersion& outValue) const;
 	AttribLookup GetAttrib(const std::string& inName, ARBDate& outValue) const;
 	AttribLookup GetAttrib(const std::string& inName, bool& outValue) const;
 	AttribLookup GetAttrib(const std::string& inName, short& outValue) const;
@@ -150,6 +153,7 @@ public:
 	 */
 	bool AddAttrib(const std::string& inName, const std::string& inValue);
 	bool AddAttrib(const std::string& inName, const char* const inValue);
+	bool AddAttrib(const std::string& inName, const ARBVersion& inValue);
 	bool AddAttrib(const std::string& inName, const ARBDate& inValue);
 	bool AddAttrib(const std::string& inName, const bool inValue);
 	bool AddAttrib(const std::string& inName, const short inValue);

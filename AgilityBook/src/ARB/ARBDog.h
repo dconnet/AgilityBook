@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-08-18 DRC Added a deceased date.
  * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  */
@@ -47,6 +48,7 @@
 #include "ARBVector.h"
 class ARBConfig;
 class ARBConfigVenue;
+class ARBVersion;
 class CElement;
 
 class ARBDog : public ARBBase
@@ -63,7 +65,7 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	int RenameVenue(

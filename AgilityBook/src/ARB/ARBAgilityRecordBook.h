@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
  * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
  */
@@ -169,6 +170,7 @@
  *  There is some stuff in Element.cpp (errors due to XML parsing failures)
  */
 #define UNKNOWN_VERSION			"Unknown document version"
+#define WARNING_NEWER_DOC		"Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?"
 #define INVALID_DOC_STRUCTURE	"Invalid document structure"
 #define INVALID_FILE_FORMAT		"Invalid file format: '"
 #define INVALID_FILE_MISSING_ATTRIB	"' is missing required attribute '"
@@ -215,6 +217,7 @@
 #include "ARBDog.h"
 #include "ARBTraining.h"
 class ARBConfigOtherPoints;
+class ARBVersion;
 class CElement;
 
 class ARBAgilityRecordBook
@@ -224,7 +227,7 @@ public:
 	 * Return the current document version. This helps make sure an older
 	 * version of the program doesn't read a newer version of the file.
 	 */
-	static short GetCurrentDocVersion();
+	static const ARBVersion& GetCurrentDocVersion();
 
 	ARBAgilityRecordBook();
 	~ARBAgilityRecordBook();
@@ -364,6 +367,16 @@ inline ARBDogList& ARBAgilityRecordBook::GetDogs()
 // These error routines centralize platform dependent code.
 // On windows, this prints using AfxMessageBox.
 //
+
+/**
+ * Print a warning that the document can be read, but saving it may cause the
+ * loss of data.
+ * Prompt the user to continue (y/n)
+ * This prints WARNING_NEWER_DOC (above)
+ *
+ * @return true to continue, false to abort.
+ */
+extern bool WarningNewerDocStructure();
 
 /**
  * Print an error message about invalid document structure.
