@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-25 DRC Mirror the selection in the tree.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  */
@@ -349,10 +350,8 @@ void CAgilityBookViewRuns::LoadData()
 {
 	CWaitCursor wait;
 
-	// Remember what's selected.
-	CAgilityBookViewRunsData* pCurData = GetItemData(GetSelection());
-	if (pCurData)
-		pCurData->AddRef();
+	// Mirror the selection in the tree here.
+	ARBDogRun* pCurRun = GetDocument()->GetCurrentRun();
 
 	// Reduce flicker.
 	GetListCtrl().SetRedraw(FALSE);
@@ -364,9 +363,9 @@ void CAgilityBookViewRuns::LoadData()
 	std::vector<CVenueFilter> venues;
 	CAgilityBookOptions::GetFilterVenue(venues);
 	list<ARBDogTrial*> trials;
-	ARBDogTrial* pTrial = GetDocument()->GetCurrentTrial();
-	if (pTrial)
-		trials.push_back(pTrial);
+	ARBDogTrial* pCurTrial = GetDocument()->GetCurrentTrial();
+	if (pCurTrial)
+		trials.push_back(pCurTrial);
 	else
 	{
 		ARBDog* pDog = GetDocument()->GetCurrentDog();
@@ -406,7 +405,7 @@ void CAgilityBookViewRuns::LoadData()
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				int index = GetListCtrl().InsertItem(&item);
-				if (pCurData && pCurData->GetRun() && *(pCurData->GetRun()) == *pRun)
+				if (pCurRun && *pCurRun == *pRun)
 				{
 					SetSelection(index, true);
 				}
@@ -422,8 +421,6 @@ void CAgilityBookViewRuns::LoadData()
 		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
 
 	// Cleanup.
-	if (pCurData)
-		pCurData->Release();
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
 }
