@@ -223,15 +223,15 @@ ARBConfigLevel* ARBConfigLevelList::AddLevel(const std::string& inName)
 	return pLevel;
 }
 
-ARBConfigLevel* ARBConfigLevelList::AddLevel(const ARBConfigLevel* inLevel)
+ARBConfigLevel* ARBConfigLevelList::AddLevel(ARBConfigLevel* inLevel)
 {
 	if (!inLevel)
 		return NULL;
 	if (FindTrueLevel(inLevel->GetName()))
 		return NULL;
-	ARBConfigLevel* pLevel = new ARBConfigLevel(*inLevel);
-	push_back(pLevel);
-	return pLevel;
+	inLevel->AddRef();
+	push_back(inLevel);
+	return inLevel;
 }
 
 bool ARBConfigLevelList::DeleteLevel(const std::string& inName, ARBConfigEventList& ioEvents)

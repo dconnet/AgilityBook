@@ -345,15 +345,15 @@ ARBConfigEvent* ARBConfigEventList::FindEvent(const std::string& inEvent)
 	return NULL;
 }
 
-ARBConfigEvent* ARBConfigEventList::AddEvent(const ARBConfigEvent* inEvent)
+ARBConfigEvent* ARBConfigEventList::AddEvent(ARBConfigEvent* inEvent)
 {
 	if (!inEvent
 	|| 0 == inEvent->GetName().length()
 	|| FindEvent(inEvent->GetName()))
 		return NULL;
-	ARBConfigEvent* pEvent = new ARBConfigEvent(*inEvent);
-	push_back(pEvent);
-	return pEvent;
+	inEvent->AddRef();
+	push_back(inEvent);
+	return inEvent;
 }
 
 bool ARBConfigEventList::DeleteEvent(const std::string& inEvent)

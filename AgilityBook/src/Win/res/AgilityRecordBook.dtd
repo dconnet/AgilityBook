@@ -137,7 +137,11 @@ depends on how a venue has been defined above.
 <!ELEMENT Breed (#PCDATA) >
 <!ELEMENT Note (#PCDATA) >
 <!ELEMENT RegNum (#PCDATA) >
-	<!ATTLIST RegNum Venue CDATA #REQUIRED >
+	<!ATTLIST RegNum
+		Venue CDATA #REQUIRED
+		Height CDATA #IMPLIED
+		isReceived (y|n) 'n'
+	>
 <!ELEMENT Title EMPTY >
 	<!ATTLIST Title
 		Date CDATA #REQUIRED

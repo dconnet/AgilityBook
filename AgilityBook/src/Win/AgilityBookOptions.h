@@ -88,10 +88,6 @@ public:
 	static bool HideOverlappingCalendarEntries();
 	static void SetHideOverlappingCalendarEntries(bool bHide);
 	static bool ViewCalendarAsList();
-	static void GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting);
-	static void SetCalendarDateFontInfo(const CFontInfo& info, BOOL bPrinting);
-	static void GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting);
-	static void SetCalendarTextFontInfo(const CFontInfo& info, BOOL bPrinting);
 	static CSize GetCalendarEntrySize();
 	static void SetCalendarEntrySize(const CSize& sz);
 	// Common options
@@ -114,6 +110,13 @@ public:
 	static void SetViewAllVenues(bool bViewAll);
 	static void GetFilterVenue(std::vector<CVenueFilter>& venues);
 	static void SetFilterVenue(const std::vector<CVenueFilter>& venues);
+	// Font options
+	static void GetPrinterFontInfo(CFontInfo& info);
+	static void SetPrinterFontInfo(const CFontInfo& info);
+	static void GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting);
+	static void SetCalendarDateFontInfo(const CFontInfo& info, BOOL bPrinting);
+	static void GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting);
+	static void SetCalendarTextFontInfo(const CFontInfo& info, BOOL bPrinting);
 	// Last entered options
 	static CString GetLastEnteredDivision();
 	static void SetLastEnteredDivision(const char* inLast);

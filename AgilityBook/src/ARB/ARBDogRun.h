@@ -356,6 +356,6 @@ public:
 	ARBDate GetStartDate() const;
 	ARBDate GetEndDate() const;
 
-	ARBDogRun* AddRun(const ARBDogRun* inRun);
+	ARBDogRun* AddRun(ARBDogRun* inRun);
 	bool DeleteRun(const ARBDogRun* inRun);
 };

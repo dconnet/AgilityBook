@@ -67,10 +67,6 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	m_pageCalendar.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
 	m_pageCalendar.m_sizeX = CAgilityBookOptions::GetCalendarEntrySize().cx;
 	m_pageCalendar.m_sizeY = CAgilityBookOptions::GetCalendarEntrySize().cy;
-	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageCalendar.m_fontDateInfo[0], false);
-	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageCalendar.m_fontTextInfo[0], false);
-	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageCalendar.m_fontDateInfo[1], true);
-	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageCalendar.m_fontTextInfo[1], true);
 	// Filter
 	m_pageFilter.m_ViewDates = CAgilityBookOptions::GetViewAllDates() ? 0 : 1;
 	m_pageFilter.m_timeStart = CAgilityBookOptions::GetStartFilterDate().GetDate();
@@ -79,9 +75,16 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	m_pageFilter.m_bDateEnd = CAgilityBookOptions::GetEndFilterDateSet();
 	m_pageFilter.m_ViewVenues = CAgilityBookOptions::GetViewAllVenues() ? 0 : 1;
 	CAgilityBookOptions::GetFilterVenue(m_pageFilter.m_VenueFilter);
+	// Fonts
+	CAgilityBookOptions::GetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
+	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
+	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
+	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
+	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 
 	AddPage(&m_pageFilter);
 	AddPage(&m_pageCalendar);
+	AddPage(&m_pageFonts);
 }
 
 CDlgOptions::~CDlgOptions()
@@ -114,10 +117,6 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCalendar.m_Days);
 		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCalendar.m_bHideOverlapping ? true : false);
 		CAgilityBookOptions::SetCalendarEntrySize(CSize(m_pageCalendar.m_sizeX, m_pageCalendar.m_sizeY));
-		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageCalendar.m_fontDateInfo[0], false);
-		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageCalendar.m_fontTextInfo[0], false);
-		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageCalendar.m_fontDateInfo[1], true);
-		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageCalendar.m_fontTextInfo[1], true);
 		// Runs
 		CAgilityBookOptions::SetViewAllDates(m_pageFilter.m_ViewDates == 0);
 		CAgilityBookOptions::SetStartFilterDate(m_pageFilter.m_timeStart.GetTime());
@@ -139,6 +138,12 @@ void CDlgOptions::OnOK()
 		}
 		if (bOldNewest != CAgilityBookOptions::GetNewestDatesFirst())
 			m_pDoc->SortDates();
+		// Fonts
+		CAgilityBookOptions::SetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
+		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
+		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
+		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
+		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 		// Update
 		m_pDoc->UpdateAllViews(NULL, UPDATE_OPTIONS);
 		EndDialog(IDOK);

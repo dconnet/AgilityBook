@@ -530,15 +530,14 @@ ARBDate ARBDogRunList::GetEndDate() const
 	return date;
 }
 
-ARBDogRun* ARBDogRunList::AddRun(const ARBDogRun* inRun)
+ARBDogRun* ARBDogRunList::AddRun(ARBDogRun* inRun)
 {
-	ARBDogRun* pRun = NULL;
 	if (inRun)
 	{
-		pRun = new ARBDogRun(*inRun);
-		push_back(pRun);
+		inRun->AddRef();
+		push_back(inRun);
 	}
-	return pRun;
+	return inRun;
 }
 
 bool ARBDogRunList::DeleteRun(const ARBDogRun* inRun)

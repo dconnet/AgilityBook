@@ -106,6 +106,6 @@ public:
 	const ARBConfigTitle* FindTitle(const std::string& inName) const;
 	ARBConfigTitle* FindTitle(const std::string& inName);
 	ARBConfigTitle* AddTitle(const std::string& inName);
-	ARBConfigTitle* AddTitle(const ARBConfigTitle* inTitle);
+	ARBConfigTitle* AddTitle(ARBConfigTitle* inTitle);
 	bool DeleteTitle(const std::string& inName);
 };

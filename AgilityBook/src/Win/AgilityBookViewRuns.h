@@ -57,7 +57,8 @@ private:
 	CAgilityBookViewRunsData* GetItemData(int index) const;
 	void LoadData();
 
-// Overrides
+protected:
+	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
 	//{{AFX_VIRTUAL(CAgilityBookViewRuns)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);

@@ -56,7 +56,13 @@ void CFontInfo::CreateFont(CFont& font, CDC* pDC)
 	font.DeleteObject();
 	LOGFONT logFont;
 	memset(&logFont, 0, sizeof(logFont));
-	logFont.lfHeight = size;
+	if (pDC && pDC->IsPrinting())
+	{
+		int logPixelsY = pDC->GetDeviceCaps(LOGPIXELSY);
+		logFont.lfHeight = -MulDiv(size/10, logPixelsY, 72);
+	}
+	else
+		logFont.lfHeight = size;
 	lstrcpy(logFont.lfFaceName, (LPCTSTR)name);
 	if (italic)
 		logFont.lfItalic = TRUE;
@@ -66,7 +72,10 @@ void CFontInfo::CreateFont(CFont& font, CDC* pDC)
 		logFont.lfWeight = FW_BOLD;
 	else
 		logFont.lfWeight = FW_NORMAL;
-	font.CreatePointFontIndirect(&logFont);
+	if (pDC && pDC->IsPrinting())
+		font.CreateFontIndirect(&logFont);
+	else
+		font.CreatePointFontIndirect(&logFont);
 }
 
 void CFontInfo::CreateFont(const CFontDialog& dlg, CFont& font, CDC* pDC)
@@ -223,68 +232,6 @@ void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 	AfxGetApp()->WriteProfileInt("Calendar", "HideOverlapping", bHide ? 1 : 0);
 }
 
-void CAgilityBookOptions::GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting)
-{
-	info.name = "Times New Roman";
-	info.size = 100;
-	info.italic = false;
-	info.bold = false;
-	CString item("Font");
-	if (bPrinting)
-	{
-		item = "PrintFont";
-		info.size = 80;
-	}
-	item += "Date";
-	info.name = AfxGetApp()->GetProfileString("Calendar", item + "Name", info.name);
-	info.size = AfxGetApp()->GetProfileInt("Calendar", item + "Size", info.size);
-	info.italic = (AfxGetApp()->GetProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetCalendarDateFontInfo(const CFontInfo& info, BOOL bPrinting)
-{
-	CString item("Font");
-	if (bPrinting)
-		item = "PrintFont";
-	item += "Date";
-	AfxGetApp()->WriteProfileString("Calendar", item + "Name", info.name);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Size", info.size);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
-}
-
-void CAgilityBookOptions::GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting)
-{
-	info.name = "Times New Roman";
-	info.size = 100;
-	info.italic = false;
-	info.bold = false;
-	CString item("Font");
-	if (bPrinting)
-	{
-		item = "PrintFont";
-		info.size = 80;
-	}
-	item += "Text";
-	info.name = AfxGetApp()->GetProfileString("Calendar", item + "Name", info.name);
-	info.size = AfxGetApp()->GetProfileInt("Calendar", item + "Size", info.size);
-	info.italic = (AfxGetApp()->GetProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetCalendarTextFontInfo(const CFontInfo& info, BOOL bPrinting)
-{
-	CString item("Font");
-	if (bPrinting)
-		item = "PrintFont";
-	item += "Text";
-	AfxGetApp()->WriteProfileString("Calendar", item + "Name", info.name);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Size", info.size);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
-}
-
 CSize CAgilityBookOptions::GetCalendarEntrySize()
 {
 	CSize szInches(100, 70);
@@ -302,7 +249,7 @@ void CAgilityBookOptions::SetCalendarEntrySize(const CSize& sz)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Runs options
+// Common options
 
 ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
@@ -316,6 +263,9 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 {
 	AfxGetApp()->WriteProfileInt("Common", "FirstDayOfWeek", static_cast<int>(day));
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Runs/points options
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {
@@ -473,6 +423,96 @@ void CAgilityBookOptions::SetFilterVenue(const std::vector<CVenueFilter>& venues
 	s_venueCacheInit = true;
 	s_venueCache = venues;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Font options
+
+void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
+{
+	info.name = "Times New Roman";
+	info.size = 80;
+	info.italic = false;
+	info.bold = false;
+	CString item("PrintFontList");
+	info.name = AfxGetApp()->GetProfileString("Common", item + "Name", info.name);
+	info.size = AfxGetApp()->GetProfileInt("Common", item + "Size", info.size);
+	info.italic = (AfxGetApp()->GetProfileInt("Common", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt("Common", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetPrinterFontInfo(const CFontInfo& info)
+{
+	CString item("PrintFontList");
+	AfxGetApp()->WriteProfileString("Common", item + "Name", info.name);
+	AfxGetApp()->WriteProfileInt("Common", item + "Size", info.size);
+	AfxGetApp()->WriteProfileInt("Common", item + "Italic", info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt("Common", item + "Bold", info.bold ? 1 : 0);
+}
+
+void CAgilityBookOptions::GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting)
+{
+	info.name = "Times New Roman";
+	info.size = 100;
+	info.italic = false;
+	info.bold = false;
+	CString item("Font");
+	if (bPrinting)
+	{
+		item = "PrintFont";
+		info.size = 80;
+	}
+	item += "Date";
+	info.name = AfxGetApp()->GetProfileString("Calendar", item + "Name", info.name);
+	info.size = AfxGetApp()->GetProfileInt("Calendar", item + "Size", info.size);
+	info.italic = (AfxGetApp()->GetProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetCalendarDateFontInfo(const CFontInfo& info, BOOL bPrinting)
+{
+	CString item("Font");
+	if (bPrinting)
+		item = "PrintFont";
+	item += "Date";
+	AfxGetApp()->WriteProfileString("Calendar", item + "Name", info.name);
+	AfxGetApp()->WriteProfileInt("Calendar", item + "Size", info.size);
+	AfxGetApp()->WriteProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
+}
+
+void CAgilityBookOptions::GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting)
+{
+	info.name = "Times New Roman";
+	info.size = 100;
+	info.italic = false;
+	info.bold = false;
+	CString item("Font");
+	if (bPrinting)
+	{
+		item = "PrintFont";
+		info.size = 80;
+	}
+	item += "Text";
+	info.name = AfxGetApp()->GetProfileString("Calendar", item + "Name", info.name);
+	info.size = AfxGetApp()->GetProfileInt("Calendar", item + "Size", info.size);
+	info.italic = (AfxGetApp()->GetProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetCalendarTextFontInfo(const CFontInfo& info, BOOL bPrinting)
+{
+	CString item("Font");
+	if (bPrinting)
+		item = "PrintFont";
+	item += "Text";
+	AfxGetApp()->WriteProfileString("Calendar", item + "Name", info.name);
+	AfxGetApp()->WriteProfileInt("Calendar", item + "Size", info.size);
+	AfxGetApp()->WriteProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Last entered options
 
 CString CAgilityBookOptions::GetLastEnteredDivision()
 {

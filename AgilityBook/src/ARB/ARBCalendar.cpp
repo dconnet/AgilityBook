@@ -337,15 +337,14 @@ int ARBCalendarList::TrimEntries(const ARBDate& inDate)
 	return trimmed;
 }
 
-ARBCalendar* ARBCalendarList::AddCalendar(const ARBCalendar* inCal)
+ARBCalendar* ARBCalendarList::AddCalendar(ARBCalendar* inCal)
 {
-	ARBCalendar* pCal = NULL;
 	if (inCal)
 	{
-		pCal = new ARBCalendar(*inCal);
-		push_back(pCal);
+		inCal->AddRef();
+		push_back(inCal);
 	}
-	return pCal;
+	return inCal;
 }
 
 bool ARBCalendarList::DeleteCalendar(const ARBCalendar* inCal)

@@ -30,44 +30,55 @@
 /**
  * @file
  *
- * @brief interface of the CDlgRegNum class
+ * @brief interface of the CDlgOptionsFonts class
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-09 DRC Created, moved fonts from calendar page.
  */
 
-class ARBConfig;
-class ARBDogRegNum;
-class ARBDogRegNumList;
+#include "AgilityBookOptions.h"
 
-class CDlgRegNum : public CDialog
+class CDlgOptionsFonts : public CPropertyPage
 {
+	friend class CDlgOptions;
+	DECLARE_DYNCREATE(CDlgOptionsFonts)
 public:
-	CDlgRegNum(const ARBConfig& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent = NULL);
+	CDlgOptionsFonts();
+	~CDlgOptionsFonts();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgRegNum)
-	enum { IDD = IDD_REG_NUM };
-	CComboBox	m_ctrlVenues;
-	CString	m_RegNum;
-	CString	m_Height;
-	BOOL	m_bReceived;
+	//{{AFX_DATA(CDlgOptionsFonts)
+	enum { IDD = IDD_VIEW_OPTIONS_FONTS };
+	CStatic	m_ctrlFontGeneralPrint;
+	CStatic	m_ctrlFontCalViewDate;
+	CStatic	m_ctrlFontCalViewText;
+	CStatic	m_ctrlFontCalPrintDate;
+	CStatic	m_ctrlFontCalPrintText;
 	//}}AFX_DATA
-	const ARBConfig& m_Config;
-	ARBDogRegNumList& m_RegNums;
-	ARBDogRegNum* m_pRegNum;
+	CFontInfo m_fontGeneralPrintInfo;
+	CFontInfo m_fontDateInfo[2];
+	CFontInfo m_fontTextInfo[2];
+	CFont m_fontGeneralPrint;
+	CFont m_fontDate[2];
+	CFont m_fontText[2];
 
-	//{{AFX_VIRTUAL(CDlgRegNum)
-protected:
+// Overrides
+	//{{AFX_VIRTUAL(CDlgOptionsFonts)
+	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgRegNum)
+	//{{AFX_MSG(CDlgOptionsFonts)
 	virtual BOOL OnInitDialog();
-	virtual void OnOK();
+	afx_msg void OnFontGeneralPrint();
+	afx_msg void OnFontCalViewDate();
+	afx_msg void OnFontCalViewText();
+	afx_msg void OnFontCalPrintDate();
+	afx_msg void OnFontCalPrintText();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

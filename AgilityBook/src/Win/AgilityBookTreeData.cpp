@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-07-24 DRC Added reorder support on all items. Made dogs user-sorted.
  */
 
 #include "stdafx.h"
@@ -220,6 +221,76 @@ static bool EditRun(
 	return bOk;
 }
 
+static bool ReOrderDogs(
+	ARBDogList& dogs,
+	CAgilityBookTree* pTree)
+{
+	bool bOk = false;
+	std::vector<ARBBase*> items;
+	for (ARBDogList::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
+	{
+		ARBDog* pDog = *iter;
+		pDog->AddRef();
+		items.push_back(pDog);
+	}
+	CDlgReorder dlg(items);
+	if (IDOK == dlg.DoModal())
+	{
+		bOk = true;
+		dogs.clear();
+		for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+		{
+			ARBDog* pDog = dynamic_cast<ARBDog*>(*iter2);
+			dogs.AddDog(pDog);
+		}
+		CAgilityBookDoc* pDoc = pTree->GetDocument();
+		pDoc->SetModifiedFlag(TRUE);
+		pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
+	}
+	for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+	{
+		(*iter2)->Release();
+	}
+	return bOk;
+}
+
+static bool ReOrderTrial(
+	ARBDogTrial* pTrial,
+	CAgilityBookTree* pTree)
+{
+	bool bOk = false;
+	if (pTrial)
+	{
+		std::vector<ARBBase*> items;
+		for (ARBDogRunList::iterator iter = pTrial->GetRuns().begin(); iter != pTrial->GetRuns().end(); ++iter)
+		{
+			ARBDogRun* pRun = *iter;
+			pRun->AddRef();
+			items.push_back(pRun);
+		}
+		CDlgReorder dlg(items);
+		if (IDOK == dlg.DoModal())
+		{
+			bOk = true;
+			pTrial->GetRuns().clear();
+			for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+			{
+				ARBDogRun* pRun = dynamic_cast<ARBDogRun*>(*iter2);
+				pTrial->GetRuns().AddRun(pRun);
+			}
+			pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			CAgilityBookDoc* pDoc = pTree->GetDocument();
+			pDoc->SetModifiedFlag(TRUE);
+			pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
+		}
+		for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+		{
+			(*iter2)->Release();
+		}
+	}
+	return bOk;
+}
+
 static bool AddTitle(
 	CAgilityBookTreeDataDog* pDogData,
 	CAgilityBookTree* pTree)
@@ -365,6 +436,10 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 	case ID_AGILITY_DELETE_DOG:
 		bEnable = true;
 		break;
+	case ID_REORDER:
+		if (m_pTree && 1 < m_pTree->GetDocument()->GetDogs().size())
+			bEnable = true;
+		break;
 	case ID_EXPAND:
 		if (m_hItem && m_pTree && m_pTree->GetTreeCtrl().ItemHasChildren(m_hItem))
 		{
@@ -426,6 +501,11 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
+		break;
+
+	case ID_REORDER:
+		if (m_pTree)
+			ReOrderDogs(m_pTree->GetDocument()->GetDogs(), m_pTree);
 		break;
 
 	case ID_EXPAND:
@@ -597,35 +677,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 		}
 		break;
 	case ID_REORDER:
-		if (GetTrial())
-		{
-			ARBDogTrial* pTrial = GetTrial();
-			std::vector<ARBBase*> items;
-			for (ARBDogRunList::iterator iter = pTrial->GetRuns().begin(); iter != pTrial->GetRuns().end(); ++iter)
-			{
-				ARBDogRun* pRun = *iter;
-				pRun->AddRef();
-				items.push_back(pRun);
-			}
-			CDlgReorder dlg(items);
-			if (IDOK == dlg.DoModal())
-			{
-				pTrial->GetRuns().clear();
-				for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
-				{
-					ARBDogRun* pRun = dynamic_cast<ARBDogRun*>(*iter2);
-					pTrial->GetRuns().AddRun(pRun);
-				}
-				pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-				pDoc->SetModifiedFlag(TRUE);
-				pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
-			}
-			for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
-			{
-				(*iter2)->Release();
-			}
-		}
+		ReOrderTrial(GetTrial(), m_pTree);
 		break;
 	}
 	return bModified;
@@ -772,6 +824,10 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 	case ID_AGILITY_DELETE_RUN:
 		bEnable = true;
 		break;
+	case ID_REORDER:
+		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
+			bEnable = true;
+		break;
 	}
 	return bEnable;
 }
@@ -827,6 +883,9 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
+		break;
+	case ID_REORDER:
+		ReOrderTrial(GetTrial(), m_pTree);
 		break;
 	}
 	return bModified;

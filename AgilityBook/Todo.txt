@@ -28,7 +28,6 @@ Last Updated: 7/16/03
 - Runs
   - View
     - Additional column info? (title pts, times, etc)
-    - Print & Print Preview
 
 - Run entry dialog
   - Integrity checks (define!)
@@ -44,7 +43,6 @@ Last Updated: 7/16/03
         compared to .8 in previous 6)
       - Qs related to judges
       - fastest yps/avg (base on related events)
-    - Print & Print Preview
 
 - Calendar
   - Options

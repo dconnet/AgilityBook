@@ -112,6 +112,9 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_UPDATE_COMMAND_UI(ID_COLLAPSE_ALL, OnUpdateCollapseAll)
 	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
 	//}}AFX_MSG_MAP
+//	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+//	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+//	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 // CAgilityBookTree construction/destruction
@@ -172,6 +175,36 @@ void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		GetTreeCtrl().Select(pData->GetHTreeItem(), TVGN_CARET);
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// CAgilityBookTree printing
+
+#if 0
+BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
+{
+	// We can't set the number of pages here cause we need the DC to determine
+	// how much we can fit, so the computation is defered until BeginPrint.
+	// However, that has the side effect of not populating the print dialog
+	// with the page range correctly. For that to show up, it must be set here.
+	// So, you must first answer the chicken and egg question...
+	// Which is - disable the page selection stuff!
+	// We allow the page numbers, but as noted, the max page is not set.
+	pInfo->m_pPD->m_pd.Flags |= PD_NOSELECTION;
+	return DoPreparePrinting(pInfo);
+}
+
+void CAgilityBookTree::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
+{
+}
+
+void CAgilityBookTree::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* pInfo)
+{
+}
+
+void CAgilityBookTree::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+{
+}
+#endif
 
 #ifdef _DEBUG
 // CAgilityBookTree diagnostics

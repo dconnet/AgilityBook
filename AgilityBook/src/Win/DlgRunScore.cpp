@@ -374,6 +374,26 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+// Helper functions to avoid UpdateData. Used during KillFocus events.
+bool CDlgRunScore::GetText(CEdit* pEdit, short& val) const
+{
+	if (!pEdit)
+		return false;
+	CString str;
+	pEdit->GetWindowText(str);
+	val = static_cast<short>(atoi((LPCTSTR)str));
+	return true;
+}
+bool CDlgRunScore::GetText(CEdit* pEdit, double& val) const
+{
+	if (!pEdit)
+		return false;
+	CString str;
+	pEdit->GetWindowText(str);
+	val = strtod((LPCTSTR)str, NULL);
+	return true;
+}
+
 const ARBConfigEvent* CDlgRunScore::GetEvent() const
 {
 	CString str;
@@ -993,16 +1013,20 @@ void CDlgRunScore::OnOtherpoints()
 	dlg.DoModal();
 }
 
+// In all of the killfocus routines, do not call updatedata.
+// Clicking on the cancel button causes killfocus, which if we're
+// canceling, we obviously don't want to validate!
+
 void CDlgRunScore::OnKillfocusFaults()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlFaults, m_Faults);
 	m_Run->GetScoring().SetCourseFaults(m_Faults);
 	SetTitlePoints();
 }
 
 void CDlgRunScore::OnKillfocusTime4fault() 
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlTime4Fault, m_Time4Fault);
 	m_Run->GetScoring().SetTime(m_Time4Fault);
 	SetTotalFaults();
 	SetTitlePoints();
@@ -1010,7 +1034,7 @@ void CDlgRunScore::OnKillfocusTime4fault()
 
 void CDlgRunScore::OnKillfocusYards()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlYards, m_Yards);
 	m_Run->GetScoring().SetYards(m_Yards);
 	SetYPS();
 	SetTotalFaults();
@@ -1018,7 +1042,7 @@ void CDlgRunScore::OnKillfocusYards()
 
 void CDlgRunScore::OnKillfocusSct() 
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlSCT, m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetTotalFaults();
 	SetTitlePoints();
@@ -1026,42 +1050,42 @@ void CDlgRunScore::OnKillfocusSct()
 
 void CDlgRunScore::OnKillfocusOpening()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlOpening, m_Opening);
 	m_Run->GetScoring().SetNeedOpenPts(m_Opening);
 	SetTitlePoints();
 }
 
 void CDlgRunScore::OnKillfocusClosing()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlClosing, m_Closing);
 	m_Run->GetScoring().SetNeedClosePts(m_Closing);
 	SetTitlePoints();
 }
 
 void CDlgRunScore::OnKillfocusTime4score()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlTime4Score, m_Time4Score);
 	m_Run->GetScoring().SetTime(m_Time4Score);
 	SetTitlePoints();
 }
 
 void CDlgRunScore::OnKillfocusOpen()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlOpen, m_Open);
 	m_Run->GetScoring().SetOpenPts(m_Open);
 	SetTitlePoints();
 }
 
 void CDlgRunScore::OnKillfocusClose()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlClose, m_Close);
 	m_Run->GetScoring().SetClosePts(m_Close);
 	SetTitlePoints();
 }
 
 void CDlgRunScore::OnKillfocusPlace()
 {
-	UpdateData(TRUE);
+	GetText(&m_ctrlPlace, m_Place);
 	m_Run->SetPlace(m_Place);
 	SetTitlePoints();
 }

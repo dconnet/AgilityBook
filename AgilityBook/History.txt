@@ -1,4 +1,19 @@
-07/17/2003: v0.4.2.5 <in development>
+08/16/2003: v0.4.2.5
+- 7/23: Published source in sourceforge.net.
+- New features / Enhancements:
+  - Added printing for runs (not tree though), points and calendar list.
+  - Removed automatic sorting of dogs - allow the user to set the ordering.
+  - Added actual height and card received info to dog registration information.
+  - When trying to cancel from the Run entry dialog, data verification prevented
+    the cancel from occuring.
+  - Added toolbar items for new dog/title/trial/run/calentry and print preview.
+  - Added new options page for fonts, added font for printing, moved calendar
+    fonts from calendar options page to this one.
+  - In calendar view dialog (dbl-click,etc), show all entries for a date, even
+    if the 'hide on entered' option is on.
+- Bug fixes
+  - Allow screen font selection for calendar printer items. Also the wrong
+    font was displayed for the date on the printer.
 
 07/16/2003: v0.4.1.5
 - Bumped file version to 5:
