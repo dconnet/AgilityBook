@@ -1,21 +1,22 @@
 08/28/2003: v0.4.3.5 <in development>
 - New features / Enhancements:
-  - Added a 'deceased' date to the dogs info. (This is a file version change,
-    but it is backwards compatible, so I'm not incrementing the file version)
+  - Added a 'deceased' date to the dogs info. (This is a file version change but
+    it is backwards compatible, so theres no need to increment the file version)
+  - Finished implementing OtherPoints point tallying.
   - Optimized filtering, much faster now.
-  - The trial run list selection now mirrors the tree selection.
-  - In the calendar/faults/otherpts/partners dialog, set the selection when
-    adding/deleting items.
   - Added 'New dog/title/trial' items in the r-click menu of the Runs view.
   - Added a 'Filtered' item to the status bar.
-  - Finished implementing OtherPoints point tallying.
+  - Added Print & Print Preview in the Tree.
 - Bug fixes
   - A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the
     score on all runs and title points on NQ+Qs. It should only compute score
     on NQ+Q and title points on Qs. This only affected the run entry dialog and
     not the point accumulation view.
   - Cleaned up selection synchronization in the runs and calendar views.
+    The trial run list selection now mirrors the tree selection.
   - Fixed bug where "ctrl+tab" didn't change tabs. "Shift+tab" was working.
+  - In the calendar/faults/otherpts/partners dialog, set the selection when
+    adding/deleting items.
 
 08/16/2003: v0.4.2.5
 - 7/23: Published source in sourceforge.net.

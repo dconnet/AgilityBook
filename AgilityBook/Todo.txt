@@ -14,8 +14,6 @@ Last Updated: 8/28/03
 - Allow items (divisions/levels/etc) in config dialog to be reordered.
   (currently you have to _carefully_ hand edit the file)
 
-- Print & Print Preview in the Tree.
-
 - Allow the user to specify what data to show for a trial in the tree.
   Currently "startDate-endDate Venue: Location"
 

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-28 DRC Added printing.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -115,9 +116,9 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_UPDATE_COMMAND_UI(ID_COLLAPSE_ALL, OnUpdateCollapseAll)
 	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
 	//}}AFX_MSG_MAP
-//	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
-//	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
-//	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 // CAgilityBookTree construction/destruction
@@ -182,7 +183,16 @@ void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookTree printing
 
-#if 0
+struct CTreePrintData
+{
+	CStringArray lines;
+	CRect r;
+	int nMaxWidth;
+	int nHeight;
+	int nLinesPerPage;
+	int nPages;
+};
+
 BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// We can't set the number of pages here cause we need the DC to determine
@@ -196,18 +206,87 @@ BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
+void CAgilityBookTree::PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const
+{
+	if (TVI_ROOT != hItem)
+	{
+		CString str;
+		for (int i = 0; i < indent; ++i)
+			str += "   ";
+		str += GetTreeCtrl().GetItemText(hItem);
+		pData->lines.Add(str);
+		CRect r(0,0,0,0);
+		pDC->DrawText(str, &r, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
+		if (r.Width() > pData->nMaxWidth)
+			pData->nMaxWidth = r.Width();
+	}
+	HTREEITEM hChildItem = GetTreeCtrl().GetNextItem(hItem, TVGN_CHILD);
+	while (hChildItem)
+	{
+		PrintLine(pDC, pData, hChildItem, indent+1);
+		hChildItem = GetTreeCtrl().GetNextItem(hChildItem, TVGN_NEXT);
+	}
+}
+
+
 void CAgilityBookTree::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
+	CTreePrintData *pData = new CTreePrintData;
+	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
+
+	// Set the font
+	CFontInfo fontInfo;
+	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
+	CFont font;
+	fontInfo.CreateFont(font, pDC);
+	pDC->SelectObject(&font);
+
+	CSize szDevice(pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
+	pData->r = CRect(CPoint(0,0), szDevice);
+	pDC->DPtoLP(pData->r);
+
+	PrintLine(pDC, pData, TVI_ROOT, 0);
+
+	CRect rTest(0,0,0,0);
+	CString strTextForHeight("Testing for height");
+	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
+	pData->nHeight = 4 * rTest.Height() / 3;
+	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
+	pData->nPages = (pData->lines.GetSize() + 1) / pData->nLinesPerPage + 1;
+	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
+	//	pData->nLinesPerPage,
+	//	GetListCtrl().GetItemCount(),
+	//	pData->nPages);
+	pInfo->SetMinPage(1);
+	pInfo->SetMaxPage(pData->nPages);
 }
 
 void CAgilityBookTree::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* pInfo)
 {
+	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
+	delete pData;
 }
 
 void CAgilityBookTree::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 {
+	CFontInfo fontInfo;
+	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
+	CFont font;
+	fontInfo.CreateFont(font, pDC);
+	pDC->SelectObject(&font);
+
+	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
+
+	int nStartItem = pData->nLinesPerPage * (pInfo->m_nCurPage - 1);
+	int nMaxItem = pData->lines.GetSize();
+	for (int nItem = nStartItem; nItem < nMaxItem && nItem - nStartItem < pData->nLinesPerPage; ++nItem)
+	{
+		CRect r = pData->r;
+		r.top += (nItem - nStartItem) * pData->nHeight;
+		r.right = r.left + pData->nMaxWidth;
+		pDC->DrawText(pData->lines[nItem], r, DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
+	}
 }
-#endif
 
 #ifdef _DEBUG
 // CAgilityBookTree diagnostics
