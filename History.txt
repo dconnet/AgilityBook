@@ -1,3 +1,5 @@
+1/26/2004: v1.0.2.8 <in development>
+
 1/26/2004: v1.0.1.8
 - New features / Enhancements:
   - When starting the program, holding the SHIFT key down will prevent the

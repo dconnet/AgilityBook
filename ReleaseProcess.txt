@@ -14,10 +14,10 @@ Run and verify build
 Tag CVS repository "v_n_n_n_n"
 
 Create the files to be distributed (make sure you archive them too)
-- AgilityBook_n_n_n_nsrc.zip
-- AgilityBook_n_n_n_n.msi [vc7 install]
-- AgilityBook_n_n_n_n.zip [vc6 AgilityBook.exe]
-- Megan.zip [Megan.arb]
+- AgilityBook_n_n_n_nsrc.zip [distrib/]
+- AgilityBook_n_n_n_n.msi [distrib/Win32/vc7/]
+- AgilityBook_n_n_n_n.zip (AgilityBook.exe) [distrib/Win32/vc6/] 
+- Megan.zip [Megan.arb] - Only update on file version changes
 - Any extra readme files required
 
 In SourceForge, enter the File Releases section in Admin.
@@ -43,13 +43,13 @@ In Yahoo
   - [files/release/alternate] MFC6.zip, already there, shouldn't need changing
   - [files/release/alternate] SupportDLLs.zip, already there
   - [files/release/alternate] Readme.txt, already there
-- Send an email announcing it.
+- Send an email announcing it - send as a 'Special Notice' from Yahoo.
 
 Web Site:
 - Make sure things are current (ongoing task!).
 
 Prepare for next release:
-- Update src/Win/AgilityBook.rc VERSIONINFO
+- Update src/Win/AgilityBook.rc: VERSIONINFO
 - Update History.txt
 - Update src/Projects/Win32/VC7/AgilityBookSetup.vdproj
   - Open in VS7, select the setup project on the solutions tab, switch to
