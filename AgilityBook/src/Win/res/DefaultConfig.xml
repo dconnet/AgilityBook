@@ -54,21 +54,11 @@ Revision History:
 				<Level Name="Masters"/>
 				<Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores under 2 different judges
-[Before 1/1/2005] 3 qualifying scores under 2 different judges, plus 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
-				<Titles LongName="Starters Gamblers Dog of Canada" Name="SGDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Advanced Gamblers Dog of Canada" Name="AGDC">2 qualifying scores</Titles>
-				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">1 qualifying scores</Titles>
-				<Titles LongName="Starters Team Relay Dog of Canada" Name="STRDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Advanced Team Relay Dog of Canada" Name="ATRDC">2 qualifying scores</Titles>
-				<Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">1 qualifying scores</Titles>
-				<Titles LongName="Starters Jumpers Dog of Canada" Name="SJDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Advanced Jumpers Dog of Canada" Name="AJDC">2 qualifying scores</Titles>
-				<Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">1 qualifying score</Titles>
-				<Titles LongName="Starters Snooker Dog of Canada" Name="SSDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Advanced Snooker Dog of Canada" Name="ASDC">2 qualifying scores</Titles>
-				<Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">1 qualifying scores</Titles>
-				<Titles LongName="Steeplechase Dog of Canada" Name="SDC"/>
+				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores under 2 different judges, plus 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
+				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 			</Division>
 			<Division Name="Veteran">
