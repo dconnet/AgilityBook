@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
 #include "CommonView.h"
@@ -51,7 +52,10 @@ protected: // create from serialization only
 public:
 	CAgilityBookDoc* GetDocument() const;
 
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
+
 	// ICommonView interface
+	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
 
 private:
@@ -65,7 +69,8 @@ private:
 	int m_imgEntered;
 	int m_imgEnteredTentative;
 
-// Overrides
+protected:
+	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
 	//{{AFX_VIRTUAL(CAgilityBookViewCalendarList)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
@@ -81,6 +86,9 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+
+private:
+	bool m_bSuppressSelect;
 
 // Generated message map functions
 protected:

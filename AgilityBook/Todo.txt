@@ -1,54 +1,39 @@
-Last Updated: 7/16/03
+Last Updated: 10/14/03
 
-- Known Issues/Bugs [1-5 Hi-Low priority]
-  - [3] OtherPoints point tallying is not implemented as stated. Currently,
-    it ignores the configured option and tallies by "All Events"
-  - [5] <v0.3.0.1>
-    Add logic to the reorder dialog to know if an item can be reordered around
-    an adjacent entry. (For instance, when reordering runs, reordering really
-    only applies to runs on a given date. If you attempt to reorder more, the
-    sorting that occurs after the reordering will undo what you did.)
+- Add logic to the reorder dialog to know if an item can be reordered around
+  an adjacent entry. (For instance, when reordering runs, reordering really
+  only applies to runs on a given date. If you attempt to reorder more, the
+  sorting that occurs after the reordering will undo what you did.)
 
-- Feature requests:
-  - [3] <v0.2.0.3>
-    Rework Configuration dialog so it is easier to use.
-  - [4] <v0.3.0.1>
-    Allow items in config dialog to be reordered.
-    (currently you have to _carefully_ hand edit the file)
-  - [5] <v0.2.0.1>
-    Import/Export data formats (formats, etc)
-
-- Tree
-  - Options
-    - Allow user to specify what data to show for a trial.
-      Currently "startDate-endDate Venue: Location"
-  - View
-    - Print & Print Preview?
-
-- Runs
-  - View
-    - Additional column info? (title pts, times, etc)
-    - Print & Print Preview
-
-- Run entry dialog
-  - Integrity checks (define!)
-    - If faults entered is greated then faults allowed, and 'Q' is set, warn
-      about possible problem
-    - If 'Q' not set and total faults says it should be a Q, warn.
-    - ...
-
-- Points (rename to Reports?)
-  - View
-    - Refine what I want
-      - track faults, generate avgs in ranges (.5 refusals in last 6 months
-        compared to .8 in previous 6)
-      - Qs related to judges
-      - fastest yps/avg (base on related events)
-    - Print & Print Preview
-
-- Calendar
-  - Options
-    - Make data shown in calendar entries user selectable. [calendar]
-  - Export:
-    - Generate a listing like Karey's
+- Import/Export data formats (formats, etc)
+  - Calendar export: Generate a listing like Karey's
     <http://www.bayteam.org/docs/KareysCalendar.html>
+
+- Rework Configuration dialog so it is easier to use.
+
+- Allow items (divisions/levels/etc) in config dialog to be reordered.
+  (currently you have to _carefully_ hand edit the file)
+
+- Allow the user to specify what data to show for a trial in the tree.
+  Currently "startDate-endDate Venue: Location"
+
+- Runs: Allow the user to specify what columns to show.
+  Additional column info? (title pts, times, etc)
+
+- CalList: Allow the user to specify what columns to show.
+
+- Runs: Allow the user to specify what columns to print.
+
+- CalList: Allow the user to specify what columns to print.
+
+- Refine Points (rename to Reports?)
+  - track faults, generate avgs in ranges (.5 refusals in last 6 months
+    compared to .8 in previous 6)
+  - Qs related to judges
+  - fastest yps/avg (base on related events)
+
+- Run entry dialog integrity checks (define!)
+  - If faults entered is greated then faults allowed, and 'Q' is set, warn
+    about possible problem
+  - If 'Q' not set and total faults says it should be a Q, warn.
+  - ...

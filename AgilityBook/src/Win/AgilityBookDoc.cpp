@@ -35,6 +35,15 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
+ * @li 2003-09-15 DRC Fixed a bug where a trial created for more than one dog
+ *                    at the same time actually only created one linked entry.
+ * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
+ *                    I don't have to use UpdateAllViews. Added methods to allow
+ *                    creating titles/trials/runs from the Run view.
+ * @li 2003-08-25 DRC Added GetCurrentRun().
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -46,6 +55,8 @@
 #include "AgilityBookTree.h"
 #include "AgilityBookTreeData.h"
 #include "AgilityBookViewCalendar.h"
+#include "AgilityBookViewCalendarList.h"
+#include "AgilityBookViewTraining.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -53,6 +64,7 @@
 #include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
+#include "DlgTraining.h"
 #include "DlgTrial.h"
 #include "Element.h"
 #include "MainFrm.h"
@@ -78,9 +90,12 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
+	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
+	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -119,10 +134,62 @@ ARBDogTrial* CAgilityBookDoc::GetCurrentTrial()
 }
 
 /**
+ * Return the run associated with the currently selected item in the tree.
+ */
+ARBDogRun* CAgilityBookDoc::GetCurrentRun()
+{
+	ARBDogRun* pRun = NULL;
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	if (pTree && pTree->GetCurrentTreeItem())
+		pRun = pTree->GetCurrentTreeItem()->GetRun();
+	return pRun;
+}
+
+/**
  * Called from the Runs view. Since the run is visible in that view and visible
  * runs are controlled by the selected item in the tree, 'pData' should never
  * be NULL.
  */
+void CAgilityBookDoc::AddTitle(ARBDogRun* pSelectedRun)
+{
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	if (pData)
+	{
+		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+		if (pData->OnCmd(ID_AGILITY_NEW_TITLE, NULL))
+			SetModifiedFlag(TRUE);
+	}
+}
+
+void CAgilityBookDoc::AddTrial(ARBDogRun* pSelectedRun)
+{
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	if (pData)
+	{
+		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, NULL))
+			SetModifiedFlag(TRUE);
+	}
+}
+
+void CAgilityBookDoc::AddRun(ARBDogRun* pSelectedRun)
+{
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	if (pData)
+	{
+		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+		if (pData->OnCmd(ID_AGILITY_NEW_RUN, NULL))
+			SetModifiedFlag(TRUE);
+	}
+}
+
 void CAgilityBookDoc::EditRun(ARBDogRun* pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
@@ -166,7 +233,13 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* 
 			{
 				bCreated = true;
 				ARBDog* pDog = *iter;
-				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pTrial);
+				// If we're inserting this entry into more than one dog, we
+				// MUST make a copy. Otherwise the trial will be the same trial
+				// for both dogs and all changes will be reflected from one to
+				// the other - until you save, exit and reload the program.
+				ARBDogTrial* pCopyTrial = new ARBDogTrial(*pTrial);
+				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pCopyTrial);
+				pCopyTrial->Release();
 				SetModifiedFlag();
 				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(pNewTrial));
 			}
@@ -192,8 +265,79 @@ void CAgilityBookDoc::SortDates()
 	}
 }
 
+void CAgilityBookDoc::ResetVisibility()
+{
+	std::vector<CVenueFilter> venues;
+	CAgilityBookOptions::GetFilterVenue(venues);
+	std::set<std::string> names;
+	CAgilityBookOptions::GetTrainingFilterNames(names);
+
+	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
+	{
+		ResetVisibility(venues, *iterDogs);
+	}
+
+	for (ARBTrainingList::iterator iterTraining = GetTraining().begin(); iterTraining != GetTraining().end(); ++iterTraining)
+	{
+		ResetVisibility(names, *iterTraining);
+	}
+
+// Currently, calendar entries are not filtered.
+	//for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
+	//{
+	//	ARBCalendar* pCal = *iterCal;
+	//}
+
+	UpdateAllViews(NULL, UPDATE_OPTIONS);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog)
+{
+	for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
+		ResetVisibility(venues, *iterTrial);
+
+	for (ARBDogTitleList::iterator iterTitle = pDog->GetTitles().begin(); iterTitle != pDog->GetTitles().end(); ++iterTitle)
+		ResetVisibility(venues, *iterTitle);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial)
+{
+	bool bVisTrial = CAgilityBookOptions::IsTrialVisible(venues, pTrial);
+	pTrial->SetFiltered(!bVisTrial);
+	if (bVisTrial)
+	{
+		int nVisible = 0;
+		for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
+		{
+			ResetVisibility(venues, pTrial, *iterRun);
+			if (!(*iterRun)->IsFiltered())
+				++nVisible;
+		}
+		if (0 == nVisible && 0 < pTrial->GetRuns().size())
+			pTrial->SetFiltered(true);
+	}
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun)
+{
+	bool bVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
+	pRun->SetFiltered(!bVisRun);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle)
+{
+	bool bVisTitle = CAgilityBookOptions::IsTitleVisible(venues, pTitle);
+	pTitle->SetFiltered(!bVisTitle);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::set<std::string>& names, ARBTraining* pTraining)
+{
+	bool bVisTraining = CAgilityBookOptions::IsTrainingLogVisible(names, pTraining);
+	pTraining->SetFiltered(!bVisTraining);
+}
+
 /**
- * Internal function to get the tree view.
+ * Function to get the tree view. This is used internally and by the runs view.
  */
 CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 {
@@ -202,6 +346,40 @@ CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 	{
 		CView* pView = GetNextView(pos);
 		CAgilityBookTree* pView2 = DYNAMIC_DOWNCAST(CAgilityBookTree, pView);
+		if (pView2)
+			return pView2;
+	}
+	ASSERT(0);
+	return NULL;
+}
+
+/**
+ * Function to get the calendar list view. This is used by the calendar view.
+ */
+CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
+{
+	POSITION pos = this->GetFirstViewPosition();
+	while (NULL != pos)
+	{
+		CView* pView = GetNextView(pos);
+		CAgilityBookViewCalendarList* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewCalendarList, pView);
+		if (pView2)
+			return pView2;
+	}
+	ASSERT(0);
+	return NULL;
+}
+
+/**
+ * Function to get the calendar view. This is used by the calendar list view.
+ */
+CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
+{
+	POSITION pos = this->GetFirstViewPosition();
+	while (NULL != pos)
+	{
+		CView* pView = GetNextView(pos);
+		CAgilityBookViewCalendar* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewCalendar, pView);
 		if (pView2)
 			return pView2;
 	}
@@ -278,6 +456,8 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	}
 	SortDates();
+
+	ResetVisibility();
 
 	SetModifiedFlag(FALSE);     // start off with unmodified
 
@@ -554,11 +734,9 @@ void CAgilityBookDoc::OnAgilityNewDog()
 		{
 			CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 			pFrame->SetCurTab(0);
-			std::vector<CVenueFilter> venues;
-			CAgilityBookOptions::GetFilterVenue(venues);
 			SetModifiedFlag();
 			ARBDog* pNewDog = GetDogs().AddDog(dog);
-			pTree->InsertDog(venues, pNewDog, true);
+			pTree->InsertDog(pNewDog, true);
 		}
 	}
 	dog->Release();
@@ -593,12 +771,40 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 	cal->Release();
 }
 
+void CAgilityBookDoc::OnAgilityNewTraining()
+{
+	ARBTraining* training = new ARBTraining();
+	CDlgTraining dlg(training, this);
+	if (IDOK == dlg.DoModal())
+	{
+		CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+		pFrame->SetCurTab(3);
+		GetTraining().AddTraining(training);
+		GetTraining().sort();
+		SetModifiedFlag();
+		UpdateAllViews(NULL, UPDATE_TRAINING_VIEW);
+		POSITION pos = GetFirstViewPosition();
+		while (NULL != pos)
+		{
+			CView* pView = GetNextView(pos);
+			if (DYNAMIC_DOWNCAST(CAgilityBookViewTraining, pView))
+			{
+				reinterpret_cast<CAgilityBookViewTraining*>(pView)->SetCurrentDate(training->GetDate());
+				break;
+			}
+		}
+	}
+	training->Release();
+}
+
 void CAgilityBookDoc::OnViewOptions()
 {
 	int nPage = 0;
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	if (2 == pFrame->GetCurTab())
 		nPage = 1;
+	else if (3 == pFrame->GetCurTab())
+		nPage = 2;
 	CDlgOptions options(this, AfxGetMainWnd(), nPage);
 	options.DoModal();
 }
@@ -612,5 +818,16 @@ void CAgilityBookDoc::OnViewSortruns()
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
 	SortDates();
+	UpdateAllViews(NULL, UPDATE_OPTIONS);
+}
+
+void CAgilityBookDoc::OnUpdateViewRunsByTrial(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
+}
+
+void CAgilityBookDoc::OnViewRunsByTrial()
+{
+	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
 	UpdateAllViews(NULL, UPDATE_OPTIONS);
 }

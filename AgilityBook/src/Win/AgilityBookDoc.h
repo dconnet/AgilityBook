@@ -34,6 +34,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
+ * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
+ *                    I don't have to use UpdateAllViews. Added methods to allow
+ *                    creating titles/trials/runs from the Run view.
+ * @li 2003-08-25 DRC Added GetCurrentRun().
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include <set>
@@ -45,19 +52,23 @@ class ARBDog;
 class ARBDogList;
 class ARBDogRun;
 class ARBDogTrial;
+class ARBTraining;
 class CAgilityBookTree;
+class CAgilityBookViewCalendar;
+class CAgilityBookViewCalendarList;
 class CTabView;
+struct CVenueFilter;
 
 // UpdateAllViews() hints
-#define UPDATE_CONFIG			0x001
-#define UPDATE_CALENDAR_VIEW	0x010
-#define UPDATE_POINTS_VIEW		0x020
-#define UPDATE_RUNS_VIEW		0x040
-#define UPDATE_TREE_VIEW		0x080
-#define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
-#define UPDATE_OPTIONS			0x100
-#define UPDATE_CALENDAR_SEL		0x200
-#define UPDATE_NEW_TRIAL		0x400
+#define UPDATE_CONFIG			0x0001
+#define UPDATE_CALENDAR_VIEW	0x0010
+#define UPDATE_TRAINING_VIEW	0x0020
+#define UPDATE_POINTS_VIEW		0x0040
+#define UPDATE_RUNS_VIEW		0x0080
+#define UPDATE_TREE_VIEW		0x0100
+#define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
+#define UPDATE_OPTIONS			0x1000
+#define UPDATE_NEW_TRIAL		0x2000
 
 class CAgilityBookDoc : public CDocument
 {
@@ -69,7 +80,9 @@ public:
 	// Data
 	ARBDog* GetCurrentDog();
 	ARBDogTrial* GetCurrentTrial();
+	ARBDogRun* GetCurrentRun();
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
+	ARBTrainingList& GetTraining()			{return m_Records.GetTraining();}
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
 	size_t GetAllClubNames(std::set<std::string>& clubs) const
@@ -96,12 +109,31 @@ public:
 	{
 		return m_Records.GetAllFaultTypes(faults);
 	}
+	size_t GetAllTrainingLogNames(std::set<std::string>& outNames) const
+	{
+		return m_Records.GetTraining().GetAllNames(outNames);
+	}
+
+	// These are called from the Runs view so the tree view can do the add.
+	void AddTitle(ARBDogRun* pSelectedRun);
+	void AddTrial(ARBDogRun* pSelectedRun);
+	void AddRun(ARBDogRun* pSelectedRun);
 	void EditRun(ARBDogRun* pRun);
 	void DeleteRun(ARBDogRun* pRun);
+
 	bool CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* pTabView);
 	void SortDates();
-protected:
+
+	void ResetVisibility();
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle);
+	void ResetVisibility(std::set<std::string>& names, ARBTraining* pTraining);
+
 	CAgilityBookTree* GetTreeView() const;
+	CAgilityBookViewCalendarList* GetCalendarListView() const;
+	CAgilityBookViewCalendar* GetCalendarView() const;
 
 // Overrides
 public:
@@ -132,9 +164,12 @@ protected:
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
+	afx_msg void OnAgilityNewTraining();
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnViewSortruns();
+	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
+	afx_msg void OnViewRunsByTrial();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

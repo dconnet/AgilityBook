@@ -169,6 +169,6 @@ public:
 		return !isEqual(rhs);
 	}
 
-	ARBDogReferenceRun* AddReferenceRun(const ARBDogReferenceRun* inRef);
+	ARBDogReferenceRun* AddReferenceRun(ARBDogReferenceRun* inRef);
 	bool DeleteReferenceRun(const ARBDogReferenceRun* inRef);
 };

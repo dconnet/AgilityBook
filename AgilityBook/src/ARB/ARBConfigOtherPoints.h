@@ -129,7 +129,7 @@ public:
 	const ARBConfigOtherPoints* FindOtherPoints(const std::string& inName) const;
 	ARBConfigOtherPoints* FindOtherPoints(const std::string& inName);
 
-	ARBConfigOtherPoints* AddOtherPoints(const ARBConfigOtherPoints* inOther);
+	ARBConfigOtherPoints* AddOtherPoints(ARBConfigOtherPoints* inOther);
 
 	bool DeleteOtherPoints(const std::string& inName);
 };

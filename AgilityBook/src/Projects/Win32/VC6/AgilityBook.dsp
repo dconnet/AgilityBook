@@ -44,6 +44,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../.." /I "../../../ARB" /I "../../../Win" /I "../../../../../xml-xerces/c/src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -137,6 +138,10 @@ SOURCE=..\..\..\Win\AgilityBookViewRuns.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\AgilityBookViewTraining.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\CheckTreeCtrl.cpp
 # End Source File
 # Begin Source File
@@ -217,6 +222,14 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsFonts.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsTraining.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOtherPoint.cpp
 # End Source File
 # Begin Source File
@@ -265,7 +278,15 @@ SOURCE=..\..\..\Win\DlgTitle.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgTraining.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgTrial.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\HyperLink.cpp
 # End Source File
 # Begin Source File
 
@@ -338,11 +359,19 @@ SOURCE=..\..\..\Win\AgilityBookViewRuns.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\AgilityBookViewTraining.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\CheckTreeCtrl.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\Win\ColumnOrder.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\CommonView.h
 # End Source File
 # Begin Source File
 
@@ -418,6 +447,14 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsFonts.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsTraining.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOtherPoint.h
 # End Source File
 # Begin Source File
@@ -466,7 +503,15 @@ SOURCE=..\..\..\Win\DlgTitle.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgTraining.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\HyperLink.h
 # End Source File
 # Begin Source File
 
@@ -707,6 +752,14 @@ SOURCE=..\..\..\ARB\ARBDogTrial.cpp
 # Begin Source File
 
 SOURCE=..\..\..\ARB\ARBDogTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBTraining.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBTraining.h
 # End Source File
 # Begin Source File
 

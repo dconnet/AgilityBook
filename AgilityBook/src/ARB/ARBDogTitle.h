@@ -164,5 +164,5 @@ public:
 		const std::string& inVenue,
 		const std::string& inTitle);
 
-	ARBDogTitle* AddTitle(const ARBDogTitle* inTitle);
+	ARBDogTitle* AddTitle(ARBDogTitle* inTitle);
 };

@@ -74,12 +74,10 @@ private:
 	CEdit	m_ctrlPartner;
 	CComboBox	m_ctrlHandler;
 	CString	m_Handler;
-	CStatic	m_ctrlFaultsText;
 	CEdit	m_ctrlFaults;
 	short	m_Faults;
-	CStatic	m_ctrlTime4FaultText;
-	CEdit	m_ctrlTime4Fault;
-	double	m_Time4Fault;
+	CEdit	m_ctrlTime;
+	double	m_Time;
 	CStatic	m_ctrlYardsText;
 	CEdit	m_ctrlYards;
 	double	m_Yards;
@@ -96,9 +94,6 @@ private:
 	CStatic	m_ctrlClosingText;
 	CEdit	m_ctrlClosing;
 	short	m_Closing;
-	CStatic	m_ctrlTime4ScoreText;
-	CEdit	m_ctrlTime4Score;
-	double	m_Time4Score;
 	CStatic	m_ctrlOpenText;
 	CEdit	m_ctrlOpen;
 	short	m_Open;
@@ -135,6 +130,8 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
+	bool GetText(CEdit* pEdit, short& val) const;
+	bool GetText(CEdit* pEdit, double& val) const;
 	const ARBConfigEvent* GetEvent() const;
 	void ClearLevels();
 	void FillLevels();
@@ -158,12 +155,11 @@ protected:
 	afx_msg void OnPartnersEdit();
 	afx_msg void OnOtherpoints();
 	afx_msg void OnKillfocusFaults();
-	afx_msg void OnKillfocusTime4fault();
+	afx_msg void OnKillfocusTime();
 	afx_msg void OnKillfocusYards();
 	afx_msg void OnKillfocusSct();
 	afx_msg void OnKillfocusOpening();
 	afx_msg void OnKillfocusClosing();
-	afx_msg void OnKillfocusTime4score();
 	afx_msg void OnKillfocusOpen();
 	afx_msg void OnKillfocusClose();
 	afx_msg void OnKillfocusPlace();

@@ -746,8 +746,8 @@ void CDlgConfigureDataOtherPoints::Duplicate()
 	}
 	ARBConfigOtherPoints* other = new ARBConfigOtherPoints(*m_OtherPoints);
 	other->SetName(name);
-	CDlgConfigureDataVenue* pVenueData = GetVenueData();
-	ASSERT(pVenueData);
+//	CDlgConfigureDataVenue* pVenueData = GetVenueData();
+//	ASSERT(pVenueData);
 	ARBConfigOtherPoints* pOther = GetConfig().GetOtherPoints().AddOtherPoints(other);
 	if (pOther)
 	{

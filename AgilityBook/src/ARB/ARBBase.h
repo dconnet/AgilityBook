@@ -34,6 +34,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include <string>
@@ -42,15 +44,18 @@ class ARBBase
 {
 public:
 	ARBBase();
+
 	/**
 	 * Add a reference to the object.
 	 */
 	virtual void AddRef();
+
 	/**
 	 * Remove a reference
 	 * @post When the reference count goes to 0, the object will be deleted.
 	 */
 	virtual void Release();
+
 	/**
 	 * Get the generic name of an object.
 	 * This allows us to display a list of ARBBase objects to the user
@@ -58,10 +63,23 @@ public:
 	 * @return Name of the object.
 	 */
 	virtual std::string GetGenericName() const = 0;
+
+	/**
+	 * Get the filtered state of this object.
+	 */
+	virtual bool IsFiltered() const				{return m_bFiltered;}
+
+	/**
+	 * Set the filtered state of this object.
+	 * This attribute is not persistent. It is up to the UI to manage this.
+	 */
+	virtual void SetFiltered(bool bFiltered)	{m_bFiltered = bFiltered;}
+
 protected:
 	/**
 	 * Protect the dtor to make sure no one can delete this.
 	 */
 	virtual ~ARBBase();
 	unsigned int m_RefCount;
+	bool m_bFiltered;
 };

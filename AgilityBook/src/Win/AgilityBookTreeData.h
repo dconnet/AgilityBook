@@ -81,7 +81,7 @@ public:
 	virtual void Properties() = 0;
 
 	bool CanPaste() const;
-	bool DoPaste();
+	bool DoPaste(bool* bTreeSelectionSet);
 
 protected:
 	CAgilityBookTree* m_pTree;

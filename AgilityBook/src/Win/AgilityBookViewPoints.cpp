@@ -32,6 +32,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-14 DRC Fixed problem inserting other point lines.
+ * @li 2003-10-13 DRC Don't tally runs that have no titling points.
+ * @li 2003-08-28 DRC Completed Other Points tallying
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  * @li 2003-06-11 DRC Accumulate points based on level, not sublevel, name.
  */
 
@@ -125,7 +130,7 @@ void CAgilityBookViewPoints::OnActivateView(BOOL bActivate, CView* pActivateView
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookViewPoints::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -156,6 +161,21 @@ CAgilityBookDoc* CAgilityBookViewPoints::GetDocument() const // non-debug versio
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// Printing
+
+void CAgilityBookViewPoints::GetPrintLine(int nItem, CStringArray& line)
+{
+	CListView2::GetPrintLine(nItem, line);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+bool CAgilityBookViewPoints::IsFiltered() const
+{
+	return CAgilityBookOptions::IsFilterEnabled();
+}
+
 bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 {
 	msg = "          ";
@@ -183,7 +203,8 @@ int CAgilityBookViewPoints::DoEvents(
 	{
 		const ARBConfigEvent* pEvent = (*iterEvent);
 		const ARBConfigScoring* pScoringMethod = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName());
-		if (!pScoringMethod)
+		// Don't tally runs that have no titling points.
+		if (!pScoringMethod || 0 == pScoringMethod->GetTitlePoints().size())
 			continue;
 		int SQs = 0;
 		int machPtsEvent = 0;
@@ -213,7 +234,7 @@ int CAgilityBookViewPoints::DoEvents(
 						{
 							const ARBDogRun* pRun = (*iterRun);
 							if (date == pRun->GetDate()
-							&& CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+							&& !pRun->IsFiltered())
 								++nVisible;
 						}
 						if (2 == nVisible)
@@ -226,7 +247,7 @@ int CAgilityBookViewPoints::DoEvents(
 			++iterRun)
 			{
 				const ARBDogRun* pRun = (*iterRun);
-				if (CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+				if (!pRun->IsFiltered())
 				{
 					if (pRun->GetDivision() == inDiv->GetName()
 					&& (pRun->GetLevel() == inLevel->GetName() || inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
@@ -394,9 +415,25 @@ int CAgilityBookViewPoints::TallyPoints(
 				++nNotCleanQ;
 		}
 	}
-//@todo: need to tally SQ,Mach,QQ
 	return score;
 }
+
+/**
+ * Used to accumulate run info into a flat list.
+ */
+class OtherPtInfo
+{
+public:
+	OtherPtInfo(const ARBDogTrial* pTrial, const ARBDogRun* pRun, int score)
+		: m_pTrial(pTrial)
+		, m_pRun(pRun)
+		, m_Score(score)
+	{
+	}
+	const ARBDogTrial* m_pTrial;
+	const ARBDogRun* m_pRun;
+	int m_Score;
+};
 
 void CAgilityBookViewPoints::LoadData()
 {
@@ -436,7 +473,7 @@ void CAgilityBookViewPoints::LoadData()
 			{
 				const ARBDogTitle* pTitle = (*iterTitle);
 				if (pTitle->GetVenue() == pVenue->GetName()
-				&& CAgilityBookOptions::IsTitleVisible(venues, pTitle))
+				&& !pTitle->IsFiltered())
 				{
 					if (!bHeaderInserted)
 					{
@@ -460,7 +497,7 @@ void CAgilityBookViewPoints::LoadData()
 			{
 				const ARBDogTrial* pTrial = (*iterTrial);
 				if (pTrial->HasVenue(pVenue->GetName())
-				&& CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+				&& !pTrial->IsFiltered())
 				{
 					trialsInVenue.push_back(pTrial);
 				}
@@ -494,33 +531,25 @@ void CAgilityBookViewPoints::LoadData()
 				GetListCtrl().InsertItem(i++, "");
 			str.LoadString(IDS_OTHERPOINTS);
 			GetListCtrl().InsertItem(i++, str);
-			for (vector<ARBConfigOtherPoints*>::const_iterator iterOther = other.begin(); iterOther != other.end(); ++iterOther)
+			for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin(); iterOther != other.end(); ++iterOther)
 			{
-				int score = 0;
-				ARBConfigOtherPoints* pOther = (*iterOther);
-				// @todo: Tally properly. Currently everything is treated as eTallyAll.
-				/*pOther->GetTally() ==
-				eTallyAll,
-				eTallyAllByEvent,
-				eTallyLevel,
-				eTallyLevelByEvent
-				*/
-				GetListCtrl().InsertItem(i, "");
-				GetListCtrl().SetItemText(i, 1, pOther->GetName().c_str());
+				// First, just generate a list of runs with the needed info.
+				std::list<OtherPtInfo> runs;
 
+				ARBConfigOtherPoints* pOther = (*iterOther);
 				for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 				iterTrial != pDog->GetTrials().end();
 				++iterTrial)
 				{
 					const ARBDogTrial* pTrial = (*iterTrial);
-					if (CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+					if (!pTrial->IsFiltered())
 					{
 						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 						iterRun != pTrial->GetRuns().end();
 						++iterRun)
 						{
 							const ARBDogRun* pRun = (*iterRun);
-							if (CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+							if (!pRun->IsFiltered())
 							{
 								for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
 								iterOtherPts != pRun->GetOtherPoints().end();
@@ -528,15 +557,117 @@ void CAgilityBookViewPoints::LoadData()
 								{
 									const ARBDogRunOtherPoints* pOtherPts = (*iterOtherPts);
 									if (pOtherPts->GetName() == pOther->GetName())
-										score += pOtherPts->GetPoints();
+									{
+										runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+									}
 								}
 							}
 						}
 					}
 				}
-				CString str;
-				str.Format("%d", score);
-				GetListCtrl().SetItemText(i, 2, str);
+
+				if (0 == runs.size())
+					continue;
+
+				GetListCtrl().InsertItem(i, "");
+				GetListCtrl().SetItemText(i, 1, pOther->GetName().c_str());
+				switch (pOther->GetTally())
+				{
+				default:
+				case ARBConfigOtherPoints::eTallyAll:
+					{
+						int score = 0;
+						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							score += (*iter).m_Score;
+						}
+						CString str;
+						str.Format("%d", score);
+						GetListCtrl().SetItemText(i, 2, str);
+					}
+					break;
+
+				case ARBConfigOtherPoints::eTallyAllByEvent:
+					{
+						std::set<std::string> tally;
+						std::list<OtherPtInfo>::iterator iter;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							tally.insert((*iter).m_pRun->GetEvent());
+						}
+						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+						{
+							int score = 0;
+							for (iter = runs.begin(); iter != runs.end(); ++iter)
+							{
+								if ((*iter).m_pRun->GetEvent() == (*iterTally))
+									score += (*iter).m_Score;
+							}
+							++i;
+							GetListCtrl().InsertItem(i, "");
+							GetListCtrl().SetItemText(i, 2, (*iterTally).c_str());
+							CString str;
+							str.Format("%d", score);
+							GetListCtrl().SetItemText(i, 3, str);
+						}
+					}
+					break;
+
+				case ARBConfigOtherPoints::eTallyLevel:
+					{
+						std::set<std::string> tally;
+						std::list<OtherPtInfo>::iterator iter;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							tally.insert((*iter).m_pRun->GetLevel());
+						}
+						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+						{
+							int score = 0;
+							for (iter = runs.begin(); iter != runs.end(); ++iter)
+							{
+								if ((*iter).m_pRun->GetLevel() == (*iterTally))
+									score += (*iter).m_Score;
+							}
+							++i;
+							GetListCtrl().InsertItem(i, "");
+							GetListCtrl().SetItemText(i, 2, (*iterTally).c_str());
+							CString str;
+							str.Format("%d", score);
+							GetListCtrl().SetItemText(i, 3, str);
+						}
+					}
+					break;
+
+				case ARBConfigOtherPoints::eTallyLevelByEvent:
+					{
+						typedef std::pair<std::string, std::string> LevelEvent;
+						std::set<LevelEvent> tally;
+						std::list<OtherPtInfo>::iterator iter;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							tally.insert(LevelEvent((*iter).m_pRun->GetLevel(), (*iter).m_pRun->GetEvent()));
+						}
+						for (std::set<LevelEvent>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+						{
+							int score = 0;
+							for (iter = runs.begin(); iter != runs.end(); ++iter)
+							{
+								if ((*iter).m_pRun->GetLevel() == (*iterTally).first
+								&& (*iter).m_pRun->GetEvent() == (*iterTally).second)
+									score += (*iter).m_Score;
+							}
+							++i;
+							GetListCtrl().InsertItem(i, "");
+							GetListCtrl().SetItemText(i, 2, (*iterTally).first.c_str());
+							GetListCtrl().SetItemText(i, 3, (*iterTally).second.c_str());
+							CString str;
+							str.Format("%d", score);
+							GetListCtrl().SetItemText(i, 4, str);
+						}
+					}
+					break;
+				}
 				++i;
 			}
 		}
@@ -548,7 +679,7 @@ void CAgilityBookViewPoints::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
 	// Cleanup.
 //	if (pCurData)
