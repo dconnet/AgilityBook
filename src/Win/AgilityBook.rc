@@ -366,16 +366,17 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 290, 76
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 290, 90
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About"
 FONT 8, "MS Shell Dlg"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,185,34,SS_NOPREFIX
-    LTEXT           "Link1",IDC_ABOUT_LINK1,55,42,170,8,SS_NOPREFIX
-    LTEXT           "Link2",IDC_ABOUT_LINK2,55,51,170,8,SS_NOPREFIX
-    LTEXT           "Link3",IDC_ABOUT_LINK3,55,60,170,8,SS_NOPREFIX
+    LTEXT           "Update",IDC_ABOUT_UPDATE,40,7,170,8,SS_NOPREFIX
+    LTEXT           "Version",IDC_ABOUT_TEXT,40,21,185,34,SS_NOPREFIX
+    LTEXT           "Link1",IDC_ABOUT_LINK1,55,56,170,8,SS_NOPREFIX
+    LTEXT           "Link2",IDC_ABOUT_LINK2,55,65,170,8,SS_NOPREFIX
+    LTEXT           "Link3",IDC_ABOUT_LINK3,55,74,170,8,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,233,7,50,16,WS_GROUP
 END
 
@@ -1075,7 +1076,7 @@ BEGIN
         LEFTMARGIN, 6
         RIGHTMARGIN, 283
         TOPMARGIN, 7
-        BOTTOMMARGIN, 69
+        BOTTOMMARGIN, 83
     END
 
     IDD_NAME, DIALOG
@@ -1530,11 +1531,12 @@ BEGIN
     IDS_COL_VENUE           "Venue"
     IDS_COL_HEIGHT          "Height"
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
-    IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
+    IDS_ABOUT_UPDATE        "Check for Updates\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
     IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com?subject=AgilityBook Help: "
     IDS_ABOUT_LINK3         "Source Forge\thttp://sourceforge.net/projects/agilitybook"
     IDS_NEW                 "<New>"
@@ -1580,13 +1582,29 @@ BEGIN
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
     IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
     IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
-    IDS_CREATETRIAL_FILTERED  "Warning: The trial you have just created cannot be shown due to filter options."
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_VENUE_CONFIG_MISSING 
                             "Unable to locate configuration information for the venue '%1'."
     IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_POINTS_SQS          "[%1!d! Q+]"
+    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
+    IDS_POINTS_QQS          "%1!d! QQ"
+    IDS_POINTS_MACH         "%1!d! Mach"
+    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+    IDS_FILEEXT_DEF_ARB     "arb"
+    IDS_FILEEXT_FNAME_ARB   "*.arb"
+    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+    IDS_CREATERUN_FAILED    "Error: Failed to create run."
+    IDS_CREATETRIAL_FILTERED 
+                            "Warning: The trial you have just created cannot be shown due to filter options."
+    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1608,21 +1626,6 @@ BEGIN
     IDS_POINTS_PARTNERS     ", %1!d! partners"
     IDS_POINTS_QS           "%1!d! Qs"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "[%1!d! Q+]"
-    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
-    IDS_POINTS_QQS          "%1!d! QQ"
-    IDS_POINTS_MACH         "%1!d! Mach"
-    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
-    IDS_FILEEXT_DEF_ARB     "arb"
-    IDS_FILEEXT_FNAME_ARB   "*.arb"
-    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
-    IDS_CREATERUN_FAILED    "Error: Failed to create run."
-    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
 END
 
 STRINGTABLE DISCARDABLE 
