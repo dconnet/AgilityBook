@@ -56,7 +56,6 @@ Revision History:
 				<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores under 2 different judges
 [Before 1/1/2005] 3 qualifying scores under 2 different judges, plus 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
-				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 				<Titles LongName="Starters Gamblers Dog of Canada" Name="SGDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Advanced Gamblers Dog of Canada" Name="AGDC">2 qualifying scores</Titles>
 				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">1 qualifying scores</Titles>
@@ -69,6 +68,8 @@ Revision History:
 				<Titles LongName="Starters Snooker Dog of Canada" Name="SSDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Advanced Snooker Dog of Canada" Name="ASDC">2 qualifying scores</Titles>
 				<Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">1 qualifying scores</Titles>
+				<Titles LongName="Steeplechase Dog of Canada" Name="SDC"/>
+				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 			</Division>
 			<Division Name="Veteran">
 				<Level Name="Starters"/>
@@ -77,11 +78,11 @@ Revision History:
 				<Titles LongName="Veteran Agility Dog of Canada" Name="VADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Veteran Advanced Agility Dog of Canada" Name="VAADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Veteran Master Agility Dog of Canada" Name="VMADC">3 qualifying scores under 2 different judges, 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
-				<Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 				<Titles LongName="Veteran Masters Gamblers Dog of Canada" Name="VMGDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Veteran Masters Team Relay Dog of Canada" Name="VMTRDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Veteran Masters Jumpers Dog of Canada" Name="VMJDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Veteran Masters Snooker Dog of Canada" Name="VMSDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 			</Division>
 			<Division Name="Special">
 				<Level Name="Starters"/>
@@ -90,15 +91,16 @@ Revision History:
 				<Titles LongName="Special Agility Dog of Canada" Name="SADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Special Advanced Agility Dog of Canada" Name="SAADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Special Master Agility Dog of Canada" Name="SMADC">3 qualifying scores under 2 different judges, 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
-				<Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 				<Titles LongName="Special Masters Gamblers Dog of Canada" Name="SMGDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Special Masters Team Relay Dog of Canada" Name="SMTRDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 			</Division>
-			<Event Name="Standard">
+			<Event Name="Standard" hasTable="y">
 				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
 					<Note>E: 3 Rs or 1 wrong course or 1 NC</Note>
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Advanced" type="FaultsThenTime">
@@ -112,9 +114,11 @@ Revision History:
 			</Event>
 			<Event Name="Gamblers">
 				<Scoring Division="Veteran" Level="Masters" OpeningPts="22" ValidFrom="2005-1-1" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Masters" OpeningPts="28" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Veteran" Level="*" OpeningPts="16" ValidFrom="2005-1-1" type="OCScoreThenTime">
@@ -126,6 +130,7 @@ Revision History:
 			</Event>
 			<Event Name="Team Relay" hasPartner="y">
 				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
@@ -134,6 +139,7 @@ Revision History:
 			</Event>
 			<Event Name="Jumpers">
 				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
@@ -142,9 +148,11 @@ Revision History:
 			</Event>
 			<Event Name="Snooker">
 				<Scoring Division="Veteran" Level="Masters" OpeningPts="34" ValidFrom="2005-1-1" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Masters" OpeningPts="40" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Veteran" Level="*" OpeningPts="32" ValidFrom="2005-1-1" type="ScoreThenTime">
@@ -156,6 +164,7 @@ Revision History:
 			</Event>
 			<Event Name="Steeplechase">
 				<Scoring Division="*" Level="Masters" type="TimePlusFaults">
+					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
