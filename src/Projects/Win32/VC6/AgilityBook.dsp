@@ -415,6 +415,10 @@ SOURCE=..\..\..\Win\Wizard.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\WizardExcel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\WizardExport.cpp
 # End Source File
 # Begin Source File
@@ -752,6 +756,10 @@ SOURCE=..\..\..\Win\VersionNum.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\Wizard.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardExcel.h
 # End Source File
 # Begin Source File
 

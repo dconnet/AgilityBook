@@ -392,6 +392,9 @@
 				RelativePath="..\..\..\Win\Wizard.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\WizardExcel.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\WizardExport.cpp">
 			</File>
 			<File
@@ -649,6 +652,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\Wizard.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardExcel.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\WizardExport.h">

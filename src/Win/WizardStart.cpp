@@ -68,8 +68,10 @@ CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
 	, m_pDoc(pDoc)
 {
 	//{{AFX_DATA_INIT(CWizardStart)
-	m_Style = 0;
+	m_Style = WIZARD_RADIO_EXCEL;
 	//}}AFX_DATA_INIT
+	if (!m_pSheet->ExcelHelper().IsAvailable())
+		m_Style = WIZARD_RADIO_SPREADSHEET;
 }
 
 CWizardStart::~CWizardStart()
@@ -80,7 +82,7 @@ void CWizardStart::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardStart)
-	DDX_Radio(pDX, IDC_WIZARD_START_SPREADSHEET, m_Style);
+	DDX_Radio(pDX, IDC_WIZARD_START_EXCEL, m_Style);
 	DDX_Control(pDX, IDC_WIZARD_START_LIST, m_ctrlList);
 	DDX_Control(pDX, IDC_WIZARD_START_DESCRIPTION, m_ctrlDesc);
 	//}}AFX_DATA_MAP
@@ -90,6 +92,7 @@ BEGIN_MESSAGE_MAP(CWizardStart, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardStart)
 	ON_LBN_SELCHANGE(IDC_WIZARD_START_LIST, OnSelchangeExportList)
 	ON_LBN_DBLCLK(IDC_WIZARD_START_LIST, OnDblclkExportList)
+	ON_BN_CLICKED(IDC_WIZARD_START_EXCEL, OnWizardStyle)
 	ON_BN_CLICKED(IDC_WIZARD_START_SPREADSHEET, OnWizardStyle)
 	ON_BN_CLICKED(IDC_WIZARD_START_ARB, OnWizardStyle)
 	//}}AFX_MSG_MAP
@@ -115,112 +118,130 @@ static struct
 		char const* item;
 		// Description shown when listing is selected.
 		char const* desc;
-	} data[2]; // Use m_Style to index into this. 0==sheet, 1==arb
+	} data[3]; // Data must agree with WIZARD_RADIO_* defines.
 } const sc_Items[] =
 {
-	{WIZ_IMPORT_RUNS, 
-		{
-			{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-				"Import Trials and Runs",
-				"Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
-			},
-			{PSWIZB_FINISH, -1,
-				"Import Dogs, Trials, Runs and Judges",
-				"Import dog, trial, run and judge information from Agility Record Book."
-			}
+	{WIZ_IMPORT_RUNS, {
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			"Import Trials and Runs",
+			"Import trial and run information from Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			"Import Trials and Runs",
+			"Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+		},
+		{PSWIZB_FINISH, -1,
+			"Import Dogs, Trials, Runs and Judges",
+			"Import dog, trial, run and judge information from Agility Record Book."
+		}
 		}
 	},
-	{WIZ_EXPORT_RUNS,
-		{
-			{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-				"Export Runs",
-				"Export trial and run information so it can be imported into a spreadsheet."
-			},
-			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+	{WIZ_EXPORT_RUNS, {
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Runs",
+			"Export trial and run information to Excel."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Runs",
+			"Export trial and run information so it can be imported into a spreadsheet."
+		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 		}
 	},
-	{WIZ_IMPORT_CALENDAR,
-		{
-			{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-				"Import Calendar",
-				"Import a calendar listing from a spreadsheet."
-			},
-			{PSWIZB_FINISH, -1,
-				"Import Calendar",
-				"Import a calendar listing that was exported from Agility Record Book."
-			}
+	{WIZ_IMPORT_CALENDAR, {
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			"Import Calendar",
+			"Import a calendar listing from Excel."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			"Import Calendar",
+			"Import a calendar listing from a spreadsheet."
+		},
+		{PSWIZB_FINISH, -1,
+			"Import Calendar",
+			"Import a calendar listing that was exported from Agility Record Book."
+		}
 		}
 	},
-	{WIZ_EXPORT_CALENDAR,
-		{
-			{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-				"Export Calendar",
-				"Export your calendar listing to a spreadsheet."
-			},
-			{PSWIZB_FINISH, -1,
-				"Export Calendar",
-				"Export your calendar listing so it can be imported into Agility Record Book."
-			}
+	{WIZ_EXPORT_CALENDAR, {
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Calendar",
+			"Export your calendar listing to Excel."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Calendar",
+			"Export your calendar listing to a spreadsheet."
+		},
+		{PSWIZB_FINISH, -1,
+			"Export Calendar",
+			"Export your calendar listing so it can be imported into Agility Record Book."
+		}
 		}
 	},
-	{WIZ_IMPORT_LOG,
-		{
-			{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-				"Import Training Log",
-				"Import a Training Log from a spreadsheet."
-			},
-			{PSWIZB_FINISH, -1,
-				"Import Training Log",
-				"Import a Training Log that was exported from Agility Record Book."
-			}
+	{WIZ_IMPORT_LOG, {
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			"Import Training Log",
+			"Import a Training Log from Excel."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			"Import Training Log",
+			"Import a Training Log from a spreadsheet."
+		},
+		{PSWIZB_FINISH, -1,
+			"Import Training Log",
+			"Import a Training Log that was exported from Agility Record Book."
+		}
 		}
 	},
-	{WIZ_EXPORT_LOG,
-		{
-			{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-				"Export Training Log",
-				"Export your Training Log to a spreadsheet."
-			},
-			{PSWIZB_FINISH, -1,
-				"Export Training Log",
-				"Export your Training Log so it can be imported into Agility Record Book."
-			}
+	{WIZ_EXPORT_LOG, {
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Training Log",
+			"Export your Training Log to Excel."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Training Log",
+			"Export your Training Log to a spreadsheet."
+		},
+		{PSWIZB_FINISH, -1,
+			"Export Training Log",
+			"Export your Training Log so it can be imported into Agility Record Book."
+		}
 		}
 	},
-	{WIZ_IMPORT_CONFIGURATION,
-		{
-			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-			{PSWIZB_FINISH, -1,
-				"Import Configuration",
-				"Update your configuration to support new and/or updated venues."
-			}
+	{WIZ_IMPORT_CONFIGURATION, {
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_FINISH, -1,
+			"Import Configuration",
+			"Update your configuration to support new and/or updated venues."
+		}
 		}
 	},
-	{WIZ_EXPORT_CONFIGURATION,
-		{
-			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-			{PSWIZB_FINISH, -1,
-				"Export Configuration",
-				"Export your configuration so it can be imported into Agility Record Book."
-			}
+	{WIZ_EXPORT_CONFIGURATION, {
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_FINISH, -1,
+			"Export Configuration",
+			"Export your configuration so it can be imported into Agility Record Book."
+		}
 		}
 	},
-	{WIZ_EXPORT_DTD,
-		{
-			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-			{PSWIZB_FINISH, -1,
-				"Export DTD",
-				"Export the Document Type Definition. This data describes the XML format of the data file."
-			}
+	{WIZ_EXPORT_DTD, {
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_FINISH, -1,
+			"Export DTD",
+			"Export the Document Type Definition. This data describes the XML format of the data file."
+		}
 		}
 	},
-	{WIZ_EXPORT_XML,
-		{
-			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-			{PSWIZB_FINISH, -1,
-				"Export File as XML",
-				"Export your data file as an XML file. The DTD will be contained within this file."
-			}
+	{WIZ_EXPORT_XML, {
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_FINISH, -1,
+			"Export File as XML",
+			"Export your data file as an XML file. The DTD will be contained within this file."
+		}
 		}
 	},
 };
@@ -233,8 +254,7 @@ void CWizardStart::UpdateList()
 	{
 		ASSERT(sc_Items[i].index == i);
 		int index = LB_ERR;
-		if ((0 == m_Style && NULL != sc_Items[i].data[m_Style].item)
-		|| (1 == m_Style && NULL != sc_Items[i].data[m_Style].item))
+		if (NULL != sc_Items[i].data[m_Style].item)
 			index = m_ctrlList.AddString(sc_Items[i].data[m_Style].item);
 		if (LB_ERR != index)
 			m_ctrlList.SetItemData(index, i);
@@ -261,6 +281,8 @@ void CWizardStart::UpdateButtons()
 BOOL CWizardStart::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
+	if (!m_pSheet->ExcelHelper().IsAvailable())
+		GetDlgItem(IDC_WIZARD_START_EXCEL)->EnableWindow(FALSE);
 	UpdateList();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -280,7 +302,7 @@ LRESULT CWizardStart::OnWizardNext()
 	{
 		int data = static_cast<int>(m_ctrlList.GetItemData(index));
 		nextPage = sc_Items[data].data[m_Style].nextPage;
-		m_pSheet->SetImportExportItem(data);
+		m_pSheet->SetImportExportItem(data, m_Style);
 	}
 	return nextPage;
 }
@@ -802,7 +824,9 @@ void CWizardStart::OnSelchangeExportList()
 	CString str;
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
+	{
 		str = sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc;
+	}
 	m_ctrlDesc.SetWindowText(str);
 	UpdateButtons();
 }

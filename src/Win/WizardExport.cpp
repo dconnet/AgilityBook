@@ -122,8 +122,23 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
+{
+	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
+	switch (m_pSheet->GetImportExportItem())
+	{
+	default: break;
+	case WIZ_EXPORT_RUNS: order = CAgilityBookOptions::eRunsExport; break;
+	case WIZ_EXPORT_CALENDAR: order = CAgilityBookOptions::eCalExport; break;
+	case WIZ_EXPORT_LOG: order = CAgilityBookOptions::eLogExport; break;
+	}
+	return order;
+}
+
 CString CWizardExport::GetDelim() const
 {
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		return "";
 	CString delim;
 	switch (m_Delim)
 	{
@@ -143,7 +158,7 @@ CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
 	CString delim = GetDelim();
 	bool bAddQuotes = false;
 	CString fld(inStr);
-	if (0 <= fld.Find(delim) || 0 <= fld.Find('"'))
+	if (!delim.IsEmpty() && (0 <= fld.Find(delim) || 0 <= fld.Find('"')))
 	{
 		bAddQuotes = true;
 		if (0 <= fld.Find('"'))
@@ -160,9 +175,11 @@ CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
 void CWizardExport::UpdateButtons()
 {
 	DWORD dwWiz = PSWIZB_BACK;
-	// Some test to make sure things are ready
+	// Some tests to make sure things are ready
 	bool bOk = false;
-	if (1 == GetDelim().GetLength())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		bOk = true;
+	else if (1 == GetDelim().GetLength())
 		bOk = true;
 	BOOL bEnable = FALSE;
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
@@ -196,57 +213,150 @@ void CWizardExport::UpdateButtons()
 			}
 		}
 	}
+	int nCmdShow = SW_SHOW;
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		nCmdShow = SW_HIDE;
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_GROUP)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_TAB)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_SPACE)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_COLON)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_SEMI)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_COMMA)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_OTHER)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_EXPORT_DELIM)->ShowWindow(nCmdShow);
 	m_ctrlAssign.EnableWindow(bEnable);
 	dwWiz |= (bOk ? PSWIZB_FINISH : PSWIZB_DISABLEDFINISH);
 	m_pSheet->SetWizardButtons(dwWiz);
 }
 
+CString CWizardExport::AddPreviewData(int inLine, int inCol, CString inData)
+{
+	// TODO: Add option to allow CRs?
+	inData.Replace("\n", " ");
+	CString data;
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	{
+		if (0 == inCol)
+			m_ctrlPreview.InsertItem(inLine, inData);
+		else
+			m_ctrlPreview.SetItemText(inLine, inCol, inData);
+	}
+	else
+	{
+		if (0 < inCol)
+			data += GetDelim();
+		data += PrepFieldOutput(inData);
+	}
+	return data;
+}
+
 void CWizardExport::UpdatePreview()
 {
+	CWaitCursor wait;
+
+	// Clear existing preview data.
+	m_ctrlPreview.DeleteAllItems();
+	int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
+	int iCol;
+	for (iCol = 0; iCol < nColumnCount; ++iCol)
+		m_ctrlPreview.DeleteColumn(0);
+
+	// Get export info.
 	ARBDate::DateFormat format = ARBDate::eSlashMDY;
-	int index = m_ctrlDateFormat.GetCurSel();
-	if (CB_ERR != index)
-		format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
-	m_ctrlPreview.ResetContent();
+	int idxDateFormat = m_ctrlDateFormat.GetCurSel();
+	if (CB_ERR != idxDateFormat)
+		format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(idxDateFormat));
 	CString delim = GetDelim();
-	if (delim.IsEmpty())
-		m_ctrlPreview.AddString("No delimiter specified. Unable to preview data.");
-	else switch (m_pSheet->GetImportExportItem())
+	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+	&& delim.IsEmpty())
+	{
+		m_ctrlPreview.InsertColumn(0, "");
+		m_ctrlPreview.InsertItem(0, "No delimiter specified. Unable to preview data.");
+		m_ctrlPreview.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+		return;
+	}
+
+	// Get export columns.
+	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
+	size_t index;
+	std::vector<int> columns[IO_TYPE_MAX];
+	for (index = 0; index < IO_TYPE_MAX; ++index)
+	{
+		CDlgAssignColumns::GetColumnOrder(order, index, columns[index]);
+	}
+
+	// Now generate the header information.
+	CStringArray cols;
+	switch (m_pSheet->GetImportExportItem())
+	{
+	default:
+		break;
+	case WIZ_EXPORT_RUNS:
+		for (index = 0; index < IO_TYPE_MAX; ++index)
+		{
+			if (0 == columns[index].size())
+				continue;
+			for (iCol = 0; iCol < static_cast<int>(columns[index].size()); ++iCol)
+			{
+				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
+				if (iCol >= cols.GetSize())
+					cols.Add(str);
+				else
+				{
+					if (cols[iCol] != str && 0 < str.GetLength())
+						cols[iCol] += "/" + str;
+				}
+			}
+		}
+		break;
+	case WIZ_EXPORT_CALENDAR:
+		for (index = 0; index < columns[IO_TYPE_CALENDAR].size(); ++index)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][index]);
+			cols.Add(str);
+		}
+		break;
+	case WIZ_EXPORT_LOG:
+		for (index = 0; index < columns[IO_TYPE_TRAINING].size(); ++index)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][index]);
+			cols.Add(str);
+		}
+	}
+
+	// Now start writing the data.
+	int iLine = 0;
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	{
+		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+			m_ctrlPreview.InsertColumn(iCol, "");
+		m_ctrlPreview.InsertItem(iLine, cols[0]);
+		for (iCol = 1; iCol < cols.GetSize(); ++iCol)
+			m_ctrlPreview.SetItemText(iLine, iCol, cols[iCol]);
+		++iLine;
+	}
+	else
+	{
+		m_ctrlPreview.InsertColumn(0, "");
+		CString data;
+		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+		{
+			if (0 < iCol)
+				data += delim;
+			data += PrepFieldOutput(cols[iCol]);
+		}
+		if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+			m_ctrlPreview.InsertItem(iLine, data);
+		++iLine;
+	}
+
+	switch (m_pSheet->GetImportExportItem())
 	{
 	default:
 		break;
 
 	case WIZ_EXPORT_RUNS:
 		{
-			size_t i;
-			std::vector<int> columns[IO_TYPE_MAX];
-			for (i = 0; i < IO_TYPE_MAX; ++i)
-				CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eRunsExport, i, columns[i]);
-			CStringArray cols;
-			for (i = 0; i < IO_TYPE_MAX; ++i)
-			{
-				if (0 == columns[i].size())
-					continue;
-				for (int iCol = 0; iCol < static_cast<int>(columns[i].size()); ++iCol)
-				{
-					CString str = CDlgAssignColumns::GetNameFromColumnID(columns[i][iCol]);
-					if (iCol >= cols.GetSize())
-						cols.Add(str);
-					else
-					{
-						if (cols[iCol] != str && 0 < str.GetLength())
-							cols[iCol] += "/" + str;
-					}
-				}
-			}
-			CString data;
-			for (i = 0; i < static_cast<size_t>(cols.GetSize()); ++i)
-			{
-				if (0 < i)
-					data += delim;
-				data += PrepFieldOutput(cols[i]);
-			}
-			m_ctrlPreview.AddString(data);
 			for (ARBDogList::const_iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
 			{
 				ARBDog const* pDog = *iterDog;
@@ -289,20 +399,18 @@ void CWizardExport::UpdatePreview()
 							if (0 <= idxType)
 							{
 								CString data;
-								for (size_t idx = 0; idx < columns[idxType].size(); ++idx)
+								for (int idx = 0; idx < static_cast<int>(columns[idxType].size()); ++idx)
 								{
-									if (0 < idx)
-										data += delim;
 									switch (columns[idxType][idx])
 									{
 									case IO_RUNS_REG_NAME:
-										data += PrepFieldOutput(pDog->GetRegisteredName().c_str());
+										data += AddPreviewData(iLine, idx, pDog->GetRegisteredName().c_str());
 										break;
 									case IO_RUNS_CALL_NAME:
-										data += PrepFieldOutput(pDog->GetCallName().c_str());
+										data += AddPreviewData(iLine, idx, pDog->GetCallName().c_str());
 										break;
 									case IO_RUNS_DATE:
-										data += PrepFieldOutput(pRun->GetDate().GetString(format).c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetDate().GetString(format).c_str());
 										break;
 									case IO_RUNS_VENUE:
 										{
@@ -316,7 +424,7 @@ void CWizardExport::UpdatePreview()
 													fld += "/";
 												fld += (*iter)->GetVenue().c_str();
 											}
-											data += PrepFieldOutput(fld);
+											data += AddPreviewData(iLine, idx, fld);
 										}
 										break;
 									case IO_RUNS_CLUB:
@@ -331,51 +439,51 @@ void CWizardExport::UpdatePreview()
 													fld += "/";
 												fld += (*iter)->GetName().c_str();
 											}
-											data += PrepFieldOutput(fld);
+											data += AddPreviewData(iLine, idx, fld);
 										}
 										break;
 									case IO_RUNS_LOCATION:
-										data += PrepFieldOutput(pTrial->GetLocation().c_str());
+										data += AddPreviewData(iLine, idx, pTrial->GetLocation().c_str());
 										break;
 									case IO_RUNS_TRIAL_NOTES:
-										data += PrepFieldOutput(pTrial->GetNote().c_str());
+										data += AddPreviewData(iLine, idx, pTrial->GetNote().c_str());
 										break;
 									case IO_RUNS_DIVISION:
-										data += PrepFieldOutput(pRun->GetDivision().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetDivision().c_str());
 										break;
 									case IO_RUNS_LEVEL:
-										data += PrepFieldOutput(pRun->GetLevel().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetLevel().c_str());
 										break;
 									case IO_RUNS_EVENT:
-										data += PrepFieldOutput(pRun->GetEvent().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetEvent().c_str());
 										break;
 									case IO_RUNS_HEIGHT:
-										data += PrepFieldOutput(pRun->GetHeight().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetHeight().c_str());
 										break;
 									case IO_RUNS_JUDGE:
-										data += PrepFieldOutput(pRun->GetJudge().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetJudge().c_str());
 										break;
 									case IO_RUNS_HANDLER:
-										data += PrepFieldOutput(pRun->GetHandler().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetHandler().c_str());
 										break;
 									case IO_RUNS_CONDITIONS:
-										data += PrepFieldOutput(pRun->GetConditions().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetConditions().c_str());
 										break;
 									case IO_RUNS_COURSE_FAULTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetCourseFaults());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_TIME:
-										data += PrepFieldOutput(pRun->GetScoring().GetTime().str().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetScoring().GetTime().str().c_str());
 										break;
 									case IO_RUNS_YARDS:
 										{
 											CString str;
 											str.Format("%.3f", pRun->GetScoring().GetYards());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_YPS:
@@ -385,12 +493,12 @@ void CWizardExport::UpdatePreview()
 											{
 												CString str;
 												str.Format("%.3f", yps);
-												data += PrepFieldOutput(str);
+												data += AddPreviewData(iLine, idx, str);
 											}
 										}
 										break;
 									case IO_RUNS_SCT:
-										data += PrepFieldOutput(pRun->GetScoring().GetSCT().str().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetScoring().GetSCT().str().c_str());
 										break;
 									case IO_RUNS_TOTAL_FAULTS:
 										{
@@ -399,7 +507,7 @@ void CWizardExport::UpdatePreview()
 												CString str;
 												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults(pScoring);
 												str.Format("%.3f", faults);
-												data += PrepFieldOutput(str);
+												data += AddPreviewData(iLine, idx, str);
 											}
 										}
 										break;
@@ -407,42 +515,42 @@ void CWizardExport::UpdatePreview()
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_REQ_CLOSING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedClosePts());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_OPENING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetOpenPts());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_CLOSING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetClosePts());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_REQ_POINTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_POINTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetOpenPts());
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_PLACE:
@@ -455,7 +563,7 @@ void CWizardExport::UpdatePreview()
 												str = "-";
 											else
 												str.Format("%hd", place);
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_IN_CLASS:
@@ -466,7 +574,7 @@ void CWizardExport::UpdatePreview()
 												str = "?";
 											else
 												str.Format("%hd", inClass);
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_DOGSQD:
@@ -477,7 +585,7 @@ void CWizardExport::UpdatePreview()
 												str = "?";
 											else
 												str.Format("%hd", qd);
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_Q:
@@ -496,14 +604,14 @@ void CWizardExport::UpdatePreview()
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 													str.LoadString(IDS_SQ);
 											}
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_SCORE:
 										if (pRun->GetQ().Qualified()
 										|| ARB_Q::eQ_NQ == pRun->GetQ())
 										{
-											data += PrepFieldOutput(pRun->GetScore(pScoring).str().c_str());
+											data += AddPreviewData(iLine, idx, pRun->GetScore(pScoring).str().c_str());
 										}
 										break;
 									case IO_RUNS_TITLE_POINTS:
@@ -513,11 +621,11 @@ void CWizardExport::UpdatePreview()
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
 											str.Format("%hd", pts);
-											data += PrepFieldOutput(str);
+											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_COMMENTS:
-										data += PrepFieldOutput(pRun->GetNote().c_str());
+										data += AddPreviewData(iLine, idx, pRun->GetNote().c_str());
 										break;
 									case IO_RUNS_FAULTS:
 										{
@@ -531,14 +639,14 @@ void CWizardExport::UpdatePreview()
 													fld += "/";
 												fld += (*iter).c_str();
 											}
-											data += PrepFieldOutput(fld);
+											data += AddPreviewData(iLine, idx, fld);
 										}
 										break;
 									}
 								}
-								// TODO: Add option to allow CRs?
-								data.Replace("\n", " ");
-								m_ctrlPreview.AddString(data);
+								if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+									m_ctrlPreview.InsertItem(iLine, data);
+								++iLine;
 							}
 						}
 					}
@@ -549,36 +657,26 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_CALENDAR:
 		{
-			std::vector<int> columns;
-			CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eCalExport, IO_TYPE_CALENDAR, columns);
-			CString data;
-			for (size_t idx = 0; idx < columns.size(); ++idx)
-			{
-				if (0 < idx)
-					data += delim;
-				data += PrepFieldOutput(CDlgAssignColumns::GetNameFromColumnID(columns[idx]));
-			}
-			m_ctrlPreview.AddString(data);
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 			{
-				data.Empty();
+				CString data;
 				ARBCalendar const* pCal = *iterCal;
-				for (size_t idx = 0; idx < columns.size(); ++idx)
+				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++idx)
 				{
 					ARBDate date;
 					if (0 < idx)
 						data += delim;
-					switch (columns[idx])
+					switch (columns[IO_TYPE_CALENDAR][idx])
 					{
 					case IO_CAL_START_DATE:
-						data += PrepFieldOutput(pCal->GetStartDate().GetString(format).c_str());
+						data += AddPreviewData(iLine, idx, pCal->GetStartDate().GetString(format).c_str());
 						break;
 					case IO_CAL_END_DATE:
-						data += PrepFieldOutput(pCal->GetEndDate().GetString(format).c_str());
+						data += AddPreviewData(iLine, idx, pCal->GetEndDate().GetString(format).c_str());
 						break;
 					case IO_CAL_TENTATIVE:
 						if (pCal->IsTentative())
-							data += PrepFieldOutput("?");
+							data += AddPreviewData(iLine, idx, "?");
 						break;
 					case IO_CAL_ENTERED:
 						switch (pCal->GetEntered())
@@ -587,87 +685,79 @@ void CWizardExport::UpdatePreview()
 						case ARBCalendar::eNot:
 							break;
 						case ARBCalendar::eEntered:
-							data += PrepFieldOutput("Entered");
+							data += AddPreviewData(iLine, idx, "Entered");
 							break;
 						case ARBCalendar::ePlanning:
-							data += PrepFieldOutput("Planning");
+							data += AddPreviewData(iLine, idx, "Planning");
 							break;
 						}
 						break;
 					case IO_CAL_LOCATION:
-						data += PrepFieldOutput(pCal->GetLocation().c_str());
+						data += AddPreviewData(iLine, idx, pCal->GetLocation().c_str());
 						break;
 					case IO_CAL_CLUB:
-						data += PrepFieldOutput(pCal->GetClub().c_str());
+						data += AddPreviewData(iLine, idx, pCal->GetClub().c_str());
 						break;
 					case IO_CAL_VENUE:
-						data += PrepFieldOutput(pCal->GetVenue().c_str());
+						data += AddPreviewData(iLine, idx, pCal->GetVenue().c_str());
 						break;
 					case IO_CAL_OPENS:
 						date = pCal->GetOpeningDate();
 						if (date.IsValid())
-							data += PrepFieldOutput(date.GetString(format).c_str());
+							data += AddPreviewData(iLine, idx, date.GetString(format).c_str());
 						break;
 					case IO_CAL_CLOSES:
 						date = pCal->GetClosingDate();
 						if (date.IsValid())
-							data += PrepFieldOutput(date.GetString(format).c_str());
+							data += AddPreviewData(iLine, idx, date.GetString(format).c_str());
 						break;
 					case IO_CAL_NOTES:
-						data += PrepFieldOutput(pCal->GetNote().c_str());
+						data += AddPreviewData(iLine, idx, pCal->GetNote().c_str());
 						break;
 					}
 				}
-				// TODO: Add option to allow CRs?
-				data.Replace("\n", " ");
-				m_ctrlPreview.AddString(data);
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+					m_ctrlPreview.InsertItem(iLine, data);
+				++iLine;
 			}
 		}
 		break;
 
 	case WIZ_EXPORT_LOG:
 		{
-			std::vector<int> columns;
-			CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eLogExport, IO_TYPE_TRAINING, columns);
-			CString data;
-			for (size_t idx = 0; idx < columns.size(); ++idx)
-			{
-				if (0 < idx)
-					data += delim;
-				data += PrepFieldOutput(CDlgAssignColumns::GetNameFromColumnID(columns[idx]));
-			}
-			m_ctrlPreview.AddString(data);
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
 			{
-				data.Empty();
+				CString data;
 				ARBTraining const* pLog = *iterLog;
-				for (size_t idx = 0; idx < columns.size(); ++idx)
+				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++idx)
 				{
 					if (0 < idx)
 						data += delim;
-					switch (columns[idx])
+					switch (columns[IO_TYPE_TRAINING][idx])
 					{
 					case IO_LOG_DATE:
-						data += PrepFieldOutput(pLog->GetDate().GetString(format).c_str());
+						data += AddPreviewData(iLine, idx, pLog->GetDate().GetString(format).c_str());
 						break;
 					case IO_LOG_NAME:
-						data += PrepFieldOutput(pLog->GetName().c_str());
+						data += AddPreviewData(iLine, idx, pLog->GetName().c_str());
 						break;
 					case IO_LOG_SUBNAME:
-						data += PrepFieldOutput(pLog->GetSubName().c_str());
+						data += AddPreviewData(iLine, idx, pLog->GetSubName().c_str());
 						break;
 					case IO_LOG_NOTES:
-						data += PrepFieldOutput(pLog->GetNote().c_str());
+						data += AddPreviewData(iLine, idx, pLog->GetNote().c_str());
 						break;
 					}
 				}
-				// TODO: Add option to allow CRs?
-				data.Replace("\n", " ");
-				m_ctrlPreview.AddString(data);
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+					m_ctrlPreview.InsertItem(iLine, data);
+				++iLine;
 			}
 		}
 		break;
 	}
+	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -722,42 +812,60 @@ BOOL CWizardExport::OnWizardFinish()
 	if (CB_ERR == index)
 		return FALSE;
 	UpdatePreview();
-	int delim;
-	switch (m_Delim)
+	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
 	{
-	default:
-	case 0: delim = CAgilityBookOptions::eDelimTab; break;
-	case 1: delim = CAgilityBookOptions::eDelimSpace; break;
-	case 2: delim = CAgilityBookOptions::eDelimColon; break;
-	case 3: delim = CAgilityBookOptions::eDelimSemicolon; break;
-	case 4: delim = CAgilityBookOptions::eDelimComma; break;
-	case 5: delim = CAgilityBookOptions::eDelimOther; break;
+		int delim;
+		switch (m_Delim)
+		{
+		default:
+		case 0: delim = CAgilityBookOptions::eDelimTab; break;
+		case 1: delim = CAgilityBookOptions::eDelimSpace; break;
+		case 2: delim = CAgilityBookOptions::eDelimColon; break;
+		case 3: delim = CAgilityBookOptions::eDelimSemicolon; break;
+		case 4: delim = CAgilityBookOptions::eDelimComma; break;
+		case 5: delim = CAgilityBookOptions::eDelimOther; break;
+		}
+		CAgilityBookOptions::SetImportExportDelimiters(false, delim, m_Delimiter);
 	}
-	CAgilityBookOptions::SetImportExportDelimiters(false, delim, m_Delimiter);
 	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
 	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
-	CString filter;
-	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
-	CFileDialog file(FALSE, "", "", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
-	if (IDOK == file.DoModal())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
-		std::ofstream output(file.GetFileName(), std::ios::out);
-		output.exceptions(std::ios_base::badbit);
-		if (output.is_open())
+		int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
+		// TODO: Write data to excel
+		for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
 		{
-			for (int i = 0; i < m_ctrlPreview.GetCount(); ++i)
+			for (int iCol = 0; iCol < nColumnCount; ++iCol)
 			{
-				CString line;
-				m_ctrlPreview.GetText(i, line);
-				output << (LPCTSTR)line << std::endl;
+				CString line = m_ctrlPreview.GetItemText(i, iCol);
 			}
-			output.close();
 		}
 		return CDlgBasePropertyPage::OnWizardFinish();
 	}
 	else
-		return FALSE;
+	{
+		CString filter;
+		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
+		CFileDialog file(FALSE, "", "", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
+		if (IDOK == file.DoModal())
+		{
+			std::ofstream output(file.GetFileName(), std::ios::out);
+			output.exceptions(std::ios_base::badbit);
+			if (output.is_open())
+			{
+				for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
+				{
+					CString line = m_ctrlPreview.GetItemText(i, 0);
+					output << (LPCTSTR)line << std::endl;
+				}
+				output.close();
+			}
+			return CDlgBasePropertyPage::OnWizardFinish();
+		}
+		else
+			return FALSE;
+	}
 }
 
 void CWizardExport::OnExportDelim() 
