@@ -97,6 +97,12 @@ Training Log:
 #include "AgilityBook.h"
 #include "DlgAssignColumns.h"
 
+#include "AgilityBookOptions.h"
+
+#if _MSC_VER < 1300
+typedef DWORD DWORD_PTR;
+#endif
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -105,193 +111,117 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const char* sc_Types[] =
+static const struct
 {
-	"Faults Then Time",
-	"Time Plus Faults",
-	"Opening/Closing Points Then Time",
-	"Points Then Time"
+	int index;
+	const char* name;
+} sc_Types[] =
+{
+	{IO_TYPE_FAULTS_TIME, "Faults Then Time"},
+	{IO_TYPE_TIME_FAULTS, "Time Plus Faults"},
+	{IO_TYPE_OPEN_CLOSE, "Opening/Closing Points Then Time"},
+	{IO_TYPE_POINTS, "Points Then Time"}
 };
-static const int sc_nTypes = sizeof(sc_Types) / sizeof(sc_Types[0]);
 
 static const struct
 {
-	const char* name[4];
+	int index;
+	bool bImportable;
+	UINT name;
+	const char* desc;
+} sc_FieldNames[] =
+{
+	{IO_REG_NAME,      true,  IDS_COL_REG_NAME, NULL},
+	{IO_CALL_NAME,     true,  IDS_COL_CALLNAME, NULL},
+	{IO_DATE,          true,  IDS_COL_DATE, NULL},
+	{IO_VENUE,         true,  IDS_COL_VENUE, NULL},
+	{IO_CLUB,          true,  IDS_COL_CLUB, NULL},
+	{IO_LOCATION,      true,  IDS_COL_LOCATION, NULL},
+	{IO_TRIAL_NOTES,   true,  IDS_COL_TRIALNOTES, NULL},
+	{IO_DIVISION,      true,  IDS_COL_DIVISION, NULL},
+	{IO_LEVEL,         true,  IDS_COL_LEVEL, NULL},
+	{IO_EVENT,         true,  IDS_COL_EVENT, NULL},
+	{IO_HEIGHT,        true,  IDS_COL_HEIGHT, NULL},
+	{IO_JUDGE,         true,  IDS_COL_JUDGE, NULL},
+	{IO_HANDLER,       true,  IDS_COL_HANDLER, NULL},
+	{IO_CONDITIONS,    true,  IDS_COL_CONDITIONS, NULL},
+	{IO_COURSE_FAULTS, true,  IDS_COL_COURSEFAULTS, NULL},
+	{IO_TIME,          true,  IDS_COL_TIME, NULL},
+	{IO_YARDS,         true,  IDS_COL_YARDS, NULL},
+	{IO_YPS,           false, IDS_COL_YPS, NULL},
+	{IO_SCT,           true,  IDS_COL_SCT, NULL},
+	{IO_TOTAL_FAULTS,  false, IDS_COL_TOTAL_FAULTS, NULL},
+	{IO_REQ_OPENING,   true,  IDS_COL_REQ_OPENING, NULL},
+	{IO_REQ_CLOSING,   true,  IDS_COL_REQ_CLOSING, NULL},
+	{IO_OPENING,       true,  IDS_COL_OPENING, NULL},
+	{IO_CLOSING,       true,  IDS_COL_CLOSING, NULL},
+	{IO_REQ_POINTS,    true,  IDS_COL_REQ_POINTS, NULL},
+	{IO_POINTS,        true,  IDS_COL_POINTS, NULL},
+	{IO_PLACE,         true,  IDS_COL_PLACE, NULL},
+	{IO_IN_CLASS,      true,  IDS_COL_IN_CLASS, NULL},
+	{IO_DOGSQD,        true,  IDS_COL_Q_D, NULL},
+	{IO_Q,             true,  IDS_COL_Q, NULL},
+	{IO_SCORE,         false, IDS_COL_SCORE, NULL},
+	{IO_TITLE_POINTS,  false, IDS_COL_TITLE_PTS, NULL},
+	{IO_COMMENTS,      true,  IDS_COL_COMMENTS, NULL},
+	{IO_FAULTS,        true,  IDS_COL_FAULTS, NULL},
+};
+
+CString CDlgAssignColumns::GetNameFromColumnID(int column)
+{
+	CString name;
+	if (0 <= column && column < IO_MAX)
+		name.LoadString(sc_FieldNames[column].name);
+	return name;
+}
+
+static const struct
+{
+	int idxName[IO_TYPE_MAX];
 } sc_Fields[] =
 {
-	{{
-		"Dog's Registered Name",
-		"Dog's Registered Name",
-		"Dog's Registered Name",
-		"Dog's Registered Name"}
-	},
-	{{
-		 "Dog's Call Name",
-		 "Dog's Call Name",
-		 "Dog's Call Name",
-		 "Dog's Call Name"}
-	},
-	{{
-		 "Date",
-		 "Date",
-		 "Date",
-		 "Date"}
-	},
-	{{
-		 "Venue",
-		 "Venue",
-		 "Venue",
-		 "Venue"}
-	},
-	{{
-		 "Club",
-		 "Club",
-		 "Club",
-		 "Club"}
-	},
-	{{
-		 "Location",
-		 "Location",
-		 "Location",
-		 "Location"}
-	},
-	{{
-		 "Trial Notes",
-		 "Trial Notes",
-		 "Trial Notes",
-		 "Trial Notes"}
-	},
-	{{
-		 "Division",
-		 "Division",
-		 "Division",
-		 "Division"}
-	},
-	{{
-		 "Level",
-		 "Level",
-		 "Level",
-		 "Level"}
-	},
-	{{
-		 "Event",
-		 "Event",
-		 "Event",
-		 "Event"}
-	},
-	{{
-		 "Height",
-		 "Height",
-		 "Height",
-		 "Height"}
-	},
-	{{
-		 "Judge",
-		 "Judge",
-		 "Judge",
-		 "Judge"}
-	},
-	{{
-		 "Handler",
-		 "Handler",
-		 "Handler",
-		 "Handler"}
-	},
-	{{
-		 "Conditions",
-		 "Conditions",
-		 "Conditions",
-		 "Conditions"}
-	},
-	{{
-		 "Course Faults",
-		 "Course Faults",
-		 "Course Faults",
-		 "Course Faults"}
-	},
-	{{
-		 "Time",
-		 "Time",
-		 "Time",
-		 "Time"}
-	},
-	{{
-		 "Yards",
-		 "Yards",
-		 "Required Opening",
-		 "Required Points"}
-	},
-	{{
-		 "YPS",
-		 "YPS",
-		 "Required Closing",
-		 "Points"}
-	},
-	{{
-		 "SCT",
-		 "SCT",
-		 "Opening",
-		 NULL}
-	},
-	{{
-		 "Total Faults",
-		 "Total Faults",
-		 "Closing",
-		 NULL}
-	},
-	{{
-		 "Place/of",
-		 "Place/of",
-		 "Place/of",
-		 "Place/of"}
-	},
-	{{
-		 "DogsQd",
-		 "DogsQd",
-		 "DogsQd",
-		 "DogsQd"}
-	},
-	{{
-		 "Q?",
-		 "Q?",
-		 "Q?",
-		 "Q?"}
-	},
-	{{
-		 "Score",
-		 "Score",
-		 "Score",
-		 "Score"}
-	},
-	{{
-		 "Title Points",
-		 "Title Points",
-		 "Title Points",
-		 "Title Points"}
-	},
-	{{
-		 "Comments",
-		 "Comments",
-		 "Comments",
-		 "Comments"}
-	},
-	{{
-		 "Faults",
-		 "Faults",
-		 "Faults",
-		 "Faults"}
-	},
+	{{IO_REG_NAME,      IO_REG_NAME,      IO_REG_NAME,      IO_REG_NAME}},
+	{{IO_CALL_NAME,     IO_CALL_NAME,     IO_CALL_NAME,     IO_CALL_NAME}},
+	{{IO_DATE,          IO_DATE,          IO_DATE,          IO_DATE}},
+	{{IO_VENUE,         IO_VENUE,         IO_VENUE,         IO_VENUE}},
+	{{IO_CLUB,          IO_CLUB,          IO_CLUB,          IO_CLUB}},
+	{{IO_LOCATION,      IO_LOCATION,      IO_LOCATION,      IO_LOCATION}},
+	{{IO_TRIAL_NOTES,   IO_TRIAL_NOTES,   IO_TRIAL_NOTES,   IO_TRIAL_NOTES}},
+	{{IO_DIVISION,      IO_DIVISION,      IO_DIVISION,      IO_DIVISION}},
+	{{IO_LEVEL,         IO_LEVEL,         IO_LEVEL,         IO_LEVEL}},
+	{{IO_EVENT,         IO_EVENT,         IO_EVENT,         IO_EVENT}},
+	{{IO_HEIGHT,        IO_HEIGHT,        IO_HEIGHT,        IO_HEIGHT}},
+	{{IO_JUDGE,         IO_JUDGE,         IO_JUDGE,         IO_JUDGE}},
+	{{IO_HANDLER,       IO_HANDLER,       IO_HANDLER,       IO_HANDLER}},
+	{{IO_CONDITIONS,    IO_CONDITIONS,    IO_CONDITIONS,    IO_CONDITIONS}},
+	{{IO_COURSE_FAULTS, IO_COURSE_FAULTS, IO_COURSE_FAULTS, IO_COURSE_FAULTS}},
+	{{IO_TIME,          IO_TIME,          IO_TIME,          IO_TIME}},
+	{{IO_YARDS,         IO_YARDS,         IO_REQ_OPENING,   IO_REQ_POINTS}},
+	{{IO_YPS,           IO_YPS,           IO_REQ_CLOSING,   IO_POINTS}},
+	{{IO_SCT,           IO_SCT,           IO_OPENING,       -1}},
+	{{IO_TOTAL_FAULTS,  IO_TOTAL_FAULTS,  IO_CLOSING,       -1}},
+	{{IO_PLACE,         IO_PLACE,         IO_PLACE,         IO_PLACE}},
+	{{IO_IN_CLASS,      IO_IN_CLASS,      IO_IN_CLASS,      IO_IN_CLASS}},
+	{{IO_DOGSQD,        IO_DOGSQD,        IO_DOGSQD,        IO_DOGSQD}},
+	{{IO_Q,             IO_Q,             IO_Q,             IO_Q}},
+	{{IO_SCORE,         IO_SCORE,         IO_SCORE,         IO_SCORE}},
+	{{IO_TITLE_POINTS,  IO_TITLE_POINTS,  IO_TITLE_POINTS,  IO_TITLE_POINTS}},
+	{{IO_COMMENTS,      IO_COMMENTS,      IO_COMMENTS,      IO_COMMENTS}},
+	{{IO_FAULTS,        IO_FAULTS,        IO_FAULTS,        IO_FAULTS}},
 };
 static const int sc_nFields = sizeof(sc_Fields) / sizeof(sc_Fields[0]);
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
-CDlgAssignColumns::CDlgAssignColumns(CWnd* pParent /*=NULL*/)
+CDlgAssignColumns::CDlgAssignColumns(bool bImport, CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgAssignColumns::IDD, pParent)
+	, m_bImport(bImport)
 {
 	//{{AFX_DATA_INIT(CDlgAssignColumns)
 	//}}AFX_DATA_INIT
+	for (int i = 0; i < IO_TYPE_MAX; ++i)
+		CAgilityBookOptions::GetImportExportColumns(m_bImport, i, m_Columns[i]);
 }
 
 void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
@@ -311,6 +241,8 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDialog)
 	//{{AFX_MSG_MAP(CDlgAssignColumns)
 	ON_CBN_SELCHANGE(IDC_TYPE, OnSelchangeType)
+	ON_LBN_SELCHANGE(IDC_AVAILABLE, OnSelchangeAvailable)
+	ON_LBN_SELCHANGE(IDC_COLUMNS, OnSelchangeColumns)
 	ON_BN_CLICKED(IDC_ADD, OnAdd)
 	ON_BN_CLICKED(IDC_DELETE, OnRemove)
 	ON_BN_CLICKED(IDC_MOVE_UP, OnMoveUp)
@@ -327,23 +259,69 @@ void CDlgAssignColumns::FillColumns()
 	int index = m_ctrlType.GetCurSel();
 	if (CB_ERR != index)
 	{
-		for (int i = 0; i < sc_nFields; ++i)
+		CString blank;
+		blank.LoadString(IDS_BLANK_COLUMN);
+		size_t i;
+		bool bInUse[IO_MAX];
+		for (i = 0; i < IO_MAX; ++i)
+			bInUse[i] = false;
+		for (i = 0; i < m_Columns[index].size(); ++i)
 		{
-			if (NULL == sc_Fields[i].name[index])
+			if (0 <= m_Columns[index][i])
+			{
+				bInUse[m_Columns[index][i]] = true;
+				CString name = GetNameFromColumnID(m_Columns[index][i]);
+				int idx = m_ctrlColumns.AddString(name);
+				if (LB_ERR != idx)
+					m_ctrlColumns.SetItemData(idx, m_Columns[index][i]);
+			}
+			else
+			{
+				int idx = m_ctrlColumns.AddString(blank);
+				if (LB_ERR != idx)
+					m_ctrlColumns.SetItemData(idx, static_cast<DWORD>(-1));
+			}
+		}
+		int idx = m_ctrlAvailable.AddString(blank);
+		if (LB_ERR != idx)
+			m_ctrlAvailable.SetItemData(idx, static_cast<DWORD>(-1));
+		for (i = 0; i < sc_nFields; ++i)
+		{
+			if (-1 == sc_Fields[i].idxName[index]
+			|| (m_bImport && !sc_FieldNames[sc_Fields[i].idxName[index]].bImportable)
+			|| bInUse[sc_Fields[i].idxName[index]])
 				continue;
-			int idx = m_ctrlAvailable.AddString(sc_Fields[i].name[index]);
+			CString name = GetNameFromColumnID(sc_Fields[i].idxName[index]);
+			int idx = m_ctrlAvailable.AddString(name);
 			if (LB_ERR != idx)
-				m_ctrlAvailable.SetItemData(idx, i);
+				m_ctrlAvailable.SetItemData(idx, sc_Fields[i].idxName[index]);
+		}
+	}
+	UpdateButtons();
+}
+
+void CDlgAssignColumns::UpdateColumnVector()
+{
+	int index = m_ctrlType.GetCurSel();
+	if (CB_ERR != index)
+	{
+		m_Columns[index].clear();
+		m_Columns[index].reserve(m_ctrlColumns.GetCount());
+		for (int idx = 0; idx < m_ctrlColumns.GetCount(); ++idx)
+		{
+			m_Columns[index].push_back(static_cast<int>(m_ctrlColumns.GetItemData(idx)));
 		}
 	}
 }
 
 void CDlgAssignColumns::UpdateButtons()
 {
-	m_ctrlAdd.EnableWindow(FALSE);
-	m_ctrlRemove.EnableWindow(FALSE);
-	m_ctrlUp.EnableWindow(FALSE);
-	m_ctrlDown.EnableWindow(FALSE);
+	int idxAvail = m_ctrlAvailable.GetCurSel();
+	int idxCol = m_ctrlColumns.GetCurSel();
+	m_ctrlAdd.EnableWindow(idxAvail != LB_ERR && 0 < m_ctrlAvailable.GetCount());
+	m_ctrlRemove.EnableWindow(idxCol != LB_ERR && 0 < m_ctrlColumns.GetCount());
+	m_ctrlUp.EnableWindow(idxCol != LB_ERR && 1 < m_ctrlColumns.GetCount() && 0 != idxCol);
+	m_ctrlDown.EnableWindow(idxCol != LB_ERR && 1 < m_ctrlColumns.GetCount() && m_ctrlColumns.GetCount()-1 != idxCol);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -353,9 +331,16 @@ BOOL CDlgAssignColumns::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	int index;
-	for (index = 0; index < sc_nTypes; ++index)
+#ifdef _DEBUG
+	for (index = 0; index < IO_MAX; ++index)
 	{
-		int idx = m_ctrlType.AddString(sc_Types[index]);
+		ASSERT(sc_FieldNames[index].index == index);
+	}
+#endif
+	for (index = 0; index < IO_TYPE_MAX; ++index)
+	{
+		ASSERT(sc_Types[index].index == index);
+		int idx = m_ctrlType.AddString(sc_Types[index].name);
 		if (CB_ERR != idx)
 			m_ctrlType.SetItemData(idx, index);
 	}
@@ -370,23 +355,128 @@ void CDlgAssignColumns::OnSelchangeType()
 	FillColumns();
 }
 
+void CDlgAssignColumns::OnSelchangeAvailable() 
+{
+	UpdateButtons();
+}
+
+void CDlgAssignColumns::OnSelchangeColumns() 
+{
+	UpdateButtons();
+}
+
 void CDlgAssignColumns::OnAdd() 
 {
+	int idxAvail = m_ctrlAvailable.GetCurSel();
+	if (LB_ERR != idxAvail)
+	{
+		CString str;
+		m_ctrlAvailable.GetText(idxAvail, str);
+		DWORD_PTR dwData = m_ctrlAvailable.GetItemData(idxAvail);
+		int idxCol = m_ctrlColumns.AddString(str);
+		if (LB_ERR != idxCol)
+		{
+			m_ctrlColumns.SetItemData(idxCol, dwData);
+			m_ctrlColumns.SetCurSel(idxCol);
+			if (static_cast<int>(dwData) >= 0)
+			{
+				m_ctrlAvailable.DeleteString(idxAvail);
+				if (idxAvail == m_ctrlAvailable.GetCount())
+					--idxAvail;
+				m_ctrlAvailable.SetCurSel(idxAvail);
+			}
+		}
+		UpdateColumnVector();
+		UpdateButtons();
+	}
 }
 
 void CDlgAssignColumns::OnRemove() 
 {
+	int idxCol = m_ctrlColumns.GetCurSel();
+	if (LB_ERR != idxCol)
+	{
+		CString str;
+		m_ctrlColumns.GetText(idxCol, str);
+		DWORD_PTR dwData = m_ctrlColumns.GetItemData(idxCol);
+		if (static_cast<int>(dwData) >= 0)
+		{
+			int idxAvail = 0;
+			if (m_bImport)
+				++idxAvail; // Skip special "blank column"
+			bool bDone = false;
+			for (; idxAvail < m_ctrlAvailable.GetCount(); ++idxAvail)
+			{
+				DWORD_PTR data = m_ctrlAvailable.GetItemData(idxAvail);
+				if (dwData < data)
+				{
+					bDone = true;
+					idxAvail = m_ctrlAvailable.InsertString(idxAvail, str);
+					break;
+				}
+			}
+			if (!bDone)
+				idxAvail = m_ctrlAvailable.AddString(str);
+			m_ctrlAvailable.SetCurSel(idxAvail);
+			// Find where to insert it...
+			if (LB_ERR != idxAvail)
+			{
+				m_ctrlAvailable.SetItemData(idxAvail, dwData);
+				m_ctrlColumns.DeleteString(idxCol);
+				if (idxCol == m_ctrlColumns.GetCount())
+					--idxCol;
+				m_ctrlColumns.SetCurSel(idxCol);
+			}
+		}
+		else
+		{
+			m_ctrlColumns.DeleteString(idxCol);
+			if (idxCol == m_ctrlColumns.GetCount())
+				--idxCol;
+			m_ctrlColumns.SetCurSel(idxCol);
+		}
+		UpdateColumnVector();
+		UpdateButtons();
+	}
 }
 
 void CDlgAssignColumns::OnMoveUp() 
 {
+	int idxCol = m_ctrlColumns.GetCurSel();
+	if (LB_ERR != idxCol && 1 < m_ctrlColumns.GetCount() && 0 != idxCol)
+	{
+		CString str;
+		m_ctrlColumns.GetText(idxCol, str);
+		DWORD_PTR dwData = m_ctrlColumns.GetItemData(idxCol);
+		m_ctrlColumns.DeleteString(idxCol);
+		idxCol = m_ctrlColumns.InsertString(--idxCol, str);
+		m_ctrlColumns.SetItemData(idxCol, dwData);
+		m_ctrlColumns.SetCurSel(idxCol);
+		UpdateColumnVector();
+		UpdateButtons();
+	}
 }
 
 void CDlgAssignColumns::OnMoveDown() 
 {
+	int idxCol = m_ctrlColumns.GetCurSel();
+	if (LB_ERR != idxCol && 1 < m_ctrlColumns.GetCount() && m_ctrlColumns.GetCount() - 1 != idxCol)
+	{
+		CString str;
+		m_ctrlColumns.GetText(idxCol, str);
+		DWORD_PTR dwData = m_ctrlColumns.GetItemData(idxCol);
+		m_ctrlColumns.DeleteString(idxCol);
+		idxCol = m_ctrlColumns.InsertString(++idxCol, str);
+		m_ctrlColumns.SetItemData(idxCol, dwData);
+		m_ctrlColumns.SetCurSel(idxCol);
+		UpdateColumnVector();
+		UpdateButtons();
+	}
 }
 
 void CDlgAssignColumns::OnOK() 
 {
+	for (int i = 0; i < IO_TYPE_MAX; ++i)
+		CAgilityBookOptions::SetImportExportColumns(m_bImport, i, m_Columns[i]);
 	CDialog::OnOK();
 }

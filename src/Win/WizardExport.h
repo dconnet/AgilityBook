@@ -36,6 +36,7 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "ListBox.h"
 class CAgilityBookDoc;
 class CWizard;
 
@@ -52,13 +53,15 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CWizardExport)
 	enum { IDD = IDD_WIZARD_EXPORT };
-	CString	m_Delim;
-	CListCtrl	m_ctrlPreview;
+	int	m_Delim;
+	CString	m_Delimiter;
+	CListBox2	m_ctrlPreview;
 	//}}AFX_DATA
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
 
 private:
+	CString GetDelim() const;
 	void UpdateButtons();
 	void UpdatePreview();
 

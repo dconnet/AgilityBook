@@ -1112,19 +1112,19 @@ BEGIN
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS,99,0,11,14
     GROUPBOX        "Delimiters",IDC_STATIC,0,15,160,40
-    CONTROL         "Tab",IDC_IMPORT_DELIM_TAB,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,25,29,10
-    CONTROL         "Space",IDC_IMPORT_DELIM_SPACE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,7,37,37,10
-    CONTROL         "Colon",IDC_IMPORT_DELIM_COLON,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,45,25,34,10
-    CONTROL         "Semicolon",IDC_IMPORT_DELIM_SEMI,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,45,37,49,10
-    CONTROL         "Comma",IDC_IMPORT_DELIM_COMMA,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,95,25,39,10
-    CONTROL         "Other:",IDC_IMPORT_DELIM_OTHER,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,95,37,35,10
-    EDITTEXT        IDC_WIZARD_DELIM,130,35,20,12,ES_AUTOHSCROLL
+    CONTROL         "Tab",IDC_WIZARD_DELIM_TAB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,7,25,29,10
+    CONTROL         "Space",IDC_WIZARD_DELIM_SPACE,"Button",
+                    BS_AUTORADIOBUTTON,7,37,37,10
+    CONTROL         "Colon",IDC_WIZARD_DELIM_COLON,"Button",
+                    BS_AUTORADIOBUTTON,45,25,34,10
+    CONTROL         "Semicolon",IDC_WIZARD_DELIM_SEMI,"Button",
+                    BS_AUTORADIOBUTTON,45,37,49,10
+    CONTROL         "Comma",IDC_WIZARD_DELIM_COMMA,"Button",
+                    BS_AUTORADIOBUTTON,95,25,39,10
+    CONTROL         "Other:",IDC_WIZARD_DELIM_OTHER,"Button",
+                    BS_AUTORADIOBUTTON,95,37,35,10
+    EDITTEXT        IDC_WIZARD_DELIM,130,35,20,12,ES_AUTOHSCROLL | WS_GROUP
     PUSHBUTTON      "Assign Columns...",IDC_WIZARD_ASSIGN,173,41,70,14
     PUSHBUTTON      "File...",IDC_IMPORT_FILE,0,60,40,14
     LTEXT           "",IDC_IMPORT_PREVIEW_FILE,45,63,254,8
@@ -1138,11 +1138,24 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Export Wizard"
 FONT 8, "MS Sans Serif"
 BEGIN
-    EDITTEXT        IDC_WIZARD_DELIM,130,35,20,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Assign Columns...",IDC_WIZARD_ASSIGN,173,41,70,14
-    CONTROL         "List1",IDC_WIZARD_PREVIEW,"SysListView32",LVS_REPORT | 
-                    LVS_NOSORTHEADER | WS_DISABLED | WS_BORDER | WS_TABSTOP,
-                    0,77,299,98
+    GROUPBOX        "Delimiters",IDC_STATIC,0,0,160,40
+    CONTROL         "Tab",IDC_WIZARD_DELIM_TAB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,7,10,29,10
+    CONTROL         "Space",IDC_WIZARD_DELIM_SPACE,"Button",
+                    BS_AUTORADIOBUTTON,7,22,37,10
+    CONTROL         "Colon",IDC_WIZARD_DELIM_COLON,"Button",
+                    BS_AUTORADIOBUTTON,45,10,34,10
+    CONTROL         "Semicolon",IDC_WIZARD_DELIM_SEMI,"Button",
+                    BS_AUTORADIOBUTTON,45,22,49,10
+    CONTROL         "Comma",IDC_WIZARD_DELIM_COMMA,"Button",
+                    BS_AUTORADIOBUTTON,95,10,39,10
+    CONTROL         "Other:",IDC_WIZARD_DELIM_OTHER,"Button",
+                    BS_AUTORADIOBUTTON,95,22,35,10
+    EDITTEXT        IDC_WIZARD_DELIM,130,20,20,12,ES_AUTOHSCROLL | WS_GROUP
+    PUSHBUTTON      "Assign Columns...",IDC_WIZARD_ASSIGN,170,26,70,14
+    LTEXT           "Preview",IDC_STATIC,0,47,32,8
+    LISTBOX         IDC_WIZARD_PREVIEW,0,57,299,118,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
 END
 
 IDD_ASSIGN_COLUMNS DIALOG DISCARDABLE  0, 0, 350, 265
@@ -1720,6 +1733,27 @@ BEGIN
     IDS_COL_TIME            "Time"
     IDS_COL_VENUE           "Venue"
     IDS_COL_HEIGHT          "Height"
+    IDS_COL_REG_NAME        "Registered Name"
+    IDS_COL_CALLNAME        "Call Name"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_COL_TRIALNOTES      "Trial Notes"
+    IDS_COL_CONDITIONS      "Conditions"
+    IDS_COL_COURSEFAULTS    "Course Faults"
+    IDS_COL_YARDS           "Yards"
+    IDS_COL_YPS             "YPS"
+    IDS_COL_SCT             "SCT"
+    IDS_COL_TOTAL_FAULTS    "Total Faults"
+    IDS_COL_REQ_OPENING     "Required Opening"
+    IDS_COL_REQ_CLOSING     "Required Closing"
+    IDS_COL_OPENING         "Opening"
+    IDS_COL_CLOSING         "Closing"
+    IDS_COL_REQ_POINTS      "Required Points"
+    IDS_COL_TITLE_PTS       "Title Points"
+    IDS_COL_COMMENTS        "Comments"
+    IDS_COL_FAULTS          "Faults"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1830,6 +1864,11 @@ BEGIN
     IDS_ADDED_CAL_ITEMS     "Added %d new calendar items."
     IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
     IDS_FILE_PREVIEW        "Preview of %1."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BLANK_COLUMN        "<Blank Column>"
 END
 
 STRINGTABLE DISCARDABLE 

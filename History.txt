@@ -3,7 +3,7 @@
   Modified version number for better backwards compatibility.
   Added new Info section. Currently this only has comments on judges.
 - New features / Enhancements:
-  - Expanded import/export [config/calendar, plus DTD/XML export]
+  - Expanded import/export
   - Cleaned up some descriptions in DefaultConfig.xml. Added Nationals support
     for USDAA (plus some initial changes for USDAA changes)
   - In Points view, added '*' to Title if it has been received.

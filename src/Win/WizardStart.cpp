@@ -89,14 +89,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 
 // These must agree with the order below
-#define WIZ_IMPORT_RUNS				0
-#define WIZ_EXPORT_RUNS				1
-#define WIZ_IMPORT_CALENDAR			2
-#define WIZ_EXPORT_CALENDAR			3
-#define WIZ_IMPORT_CONFIGURATION	4
-#define WIZ_EXPORT_CONFIGURATION	5
-#define WIZ_EXPORT_DTD				6
-#define WIZ_EXPORT_XML				7
+//#define WIZ_IMPORT_RUNS				0
+#define WIZ_EXPORT_RUNS				0
+#define WIZ_IMPORT_CALENDAR			1
+#define WIZ_EXPORT_CALENDAR			2
+#define WIZ_IMPORT_CONFIGURATION	3
+#define WIZ_EXPORT_CONFIGURATION	4
+#define WIZ_EXPORT_DTD				5
+#define WIZ_EXPORT_XML				6
 
 static const struct
 {
@@ -106,7 +106,7 @@ static const struct
 	const char* desc;
 } sc_Items[] =
 {
-	{WIZ_IMPORT_RUNS, PSWIZB_NEXT, "Import Runs", "Import trial and run information from a spreadsheet. Data must be in a text format."},
+	//{WIZ_IMPORT_RUNS, PSWIZB_NEXT, "Import Runs", "Import trial and run information from a spreadsheet. Data must be in a text format."},
 	{WIZ_EXPORT_RUNS, PSWIZB_NEXT, "Export Runs", "Export trial and run information so it can be imported into a spreadsheet."},
 	{WIZ_IMPORT_CALENDAR, PSWIZB_FINISH, "Import Calendar", "Import a calendar listing that was exported from Agility Record Book."},
 	{WIZ_EXPORT_CALENDAR, PSWIZB_FINISH, "Export Calendar", "Export your calendar listing so it can be imported into another file.\n\nNote, to export the calendar to a spreadsheet, use copy/paste."},
@@ -131,7 +131,7 @@ void CWizardStart::UpdateButtons()
 	case WIZ_EXPORT_CONFIGURATION:
 	case WIZ_EXPORT_DTD:
 	case WIZ_EXPORT_XML:
-	case WIZ_IMPORT_RUNS:
+	//case WIZ_IMPORT_RUNS:
 	case WIZ_EXPORT_RUNS:
 		dwWiz |= sc_Items[index].nButton;
 		break;
@@ -175,7 +175,7 @@ LRESULT CWizardStart::OnWizardNext()
 	switch (index)
 	{
 	default: break;
-	case WIZ_IMPORT_RUNS: nextPage = IDD_WIZARD_IMPORT; break;
+	//case WIZ_IMPORT_RUNS: nextPage = IDD_WIZARD_IMPORT; break;
 	case WIZ_EXPORT_RUNS: nextPage = IDD_WIZARD_EXPORT; break;
 	}
 	return nextPage;
