@@ -37,6 +37,7 @@
  */
 
 #include "DlgBaseDialog.h"
+#include "RichEditCtrl2.h"
 class ARBCalendar;
 class CAgilityBookDoc;
 
@@ -55,12 +56,12 @@ private:
 	int		m_Entered;
 	CComboBox	m_ctrlLocation;
 	CString	m_Location;
-	CEdit	m_ctrlLocationInfo;
+	CRichEditCtrl2	m_ctrlLocationInfo;
 	CComboBox	m_ctrlVenue;
 	CString	m_Venue;
 	CComboBox	m_ctrlClub;
 	CString	m_Club;
-	CEdit	m_ctrlClubInfo;
+	CRichEditCtrl2	m_ctrlClubInfo;
 	CTime	m_dateOpens;
 	BOOL	m_bOpeningUnknown;
 	CTime	m_dateCloses;

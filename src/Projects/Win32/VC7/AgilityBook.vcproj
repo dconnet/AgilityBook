@@ -371,6 +371,9 @@
 				RelativePath="..\..\..\Win\PointsData.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\RichEditCtrl2.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\Splash.cpp">
 			</File>
 			<File
@@ -646,6 +649,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\resource.hm">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\RichEditCtrl2.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\Splash.h">

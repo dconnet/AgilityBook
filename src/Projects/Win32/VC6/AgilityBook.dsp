@@ -394,6 +394,10 @@ SOURCE=..\..\..\Win\PointsData.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\RichEditCtrl2.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\Splash.cpp
 # End Source File
 # Begin Source File
@@ -744,6 +748,10 @@ SOURCE=..\..\..\Win\PointsData.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\RichEditCtrl2.h
 # End Source File
 # Begin Source File
 
