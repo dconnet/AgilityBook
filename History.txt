@@ -1,7 +1,11 @@
-3/14/2005: v1.5.2.10 <in development>
+3/28/2005: v1.5.2.10 <in development>
+- Bumped to Configuration v8:
+  - Updated AAC titles.
 - New features / Enhancements:
   - With multiple dogs, remember which ones were last selected.
-  - Show a summary of lifetime points when double clicked in the points view.
+  - Show a summary of lifetime points when double clicked in the Points view.
+  - Cleaned up help a little (several dialogs caused an error message).
+  - Renamed the 'Find' item under 'Notes' to 'Search Notes'.
 
 2/10/2005: v1.5.1.10
 - New features / Enhancements:

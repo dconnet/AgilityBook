@@ -224,7 +224,7 @@ BEGIN
         MENUITEM "&Judges...\tCtrl+J",          ID_NOTES_JUDGES
         MENUITEM "&Locations",                  ID_NOTES_LOCATIONS
         MENUITEM SEPARATOR
-        MENUITEM "&Find...",                    ID_NOTES_SEARCH
+        MENUITEM "&Search Notes...",            ID_NOTES_SEARCH
     END
     POPUP "&View"
     BEGIN

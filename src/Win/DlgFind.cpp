@@ -83,6 +83,9 @@ END_MESSAGE_MAP()
 BOOL CDlgFind::OnInitDialog() 
 {
 	CDlgBaseDialog::OnInitDialog();
+	CString caption = m_Callback.GetCaption();
+	if (!caption.IsEmpty())
+		SetWindowText(caption);
 	if (0 < m_strName.GetLength())
 		m_ctrlFind.EnableWindow(TRUE);
 	else

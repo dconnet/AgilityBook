@@ -16,7 +16,6 @@ Title=Agility Record Book
 [WINDOWS]
 main="Agility Record Book","AgilityBook.hhc","Index.hhk","Help\html\Introduction.html","Help\html\Introduction.html",,,,,0x62520,,0x300e,[0,0,800,600],0x90000000,,,,,,0
 
-
 [FILES]
 Help\html\Contact.html
 Help\html\Copyright.html
@@ -38,6 +37,10 @@ Help\html\DlgFault.html
 Help\html\DlgFind.html
 Help\html\DlgFindLinks.html
 Help\html\DlgJudgeInfo.html
+Help\html\DlgListctrl.html
+Help\html\DlgListViewer.html
+Help\html\DlgMessages.html
+Help\html\DlgName.html
 Help\html\DlgOptionsCal.html
 Help\html\DlgOptionsFonts.html
 Help\html\DlgOptionsLog.html
@@ -103,8 +106,14 @@ HIDD_FAULT=Help\html\DlgFault.html
 HIDD_FIND_LINKS=Help\html\DlgFindLinks.html
 HIDD_FIND=Help\html\DlgFind.html
 HIDD_JUDGE_INFO=Help\html\DlgJudgeInfo.html
+HIDD_LIST_VIEWER=Help\html\DlgListViewer.html
+HIDD_LISTCTRL=Help\html\DlgListctrl.html
+HIDD_MESSAGE_BOX=Help\html\DlgMessages.html
+HIDD_MESSAGE=Help\html\DlgMessages.html
+HIDD_NAME=Help\html\DlgName.html
 HIDD_OTHER_POINT=Help\html\DlgOtherPoints.html
 HIDD_PARTNER=Help\html\DlgPartner.html
+HIDD_PROGRESS_DLG=Help\html\DlgWizardImport.html
 HIDD_REF_RUN=Help\html\DlgRefRun.html
 HIDD_REG_NUM=Help\html\DlgRegNum.html
 HIDD_REORDER=Help\html\DlgReorder.html
@@ -128,8 +137,8 @@ HIDD_WIZARD_START=Help\html\DlgWizardStart.html
 HIDR_CALENDAR=Help\html\TabCalendar.html
 HIDR_DOG=Help\html\PropDog.html
 HIDR_MAINFRAME=Help\html\Introduction.html
-HIDR_RUN=Help\html\TabRuns.html
 HIDR_POINTS=Help\html\TabPoints.html
+HIDR_RUN=Help\html\TabRuns.html
 HIDR_TRAINING=Help\html\TabLog.html
 HIDR_TRIAL=Help\html\PropTrial.html
 

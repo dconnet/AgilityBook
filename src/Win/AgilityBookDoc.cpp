@@ -1008,6 +1008,7 @@ public:
 	CFindInfo(CAgilityBookDoc* pDoc)
 		: m_pDoc(pDoc)
 	{
+		m_strCaption = "Search Notes";
 		m_bEnableSearch = false;
 		m_bSearchAll = true;
 		m_bEnableDirection = false;
