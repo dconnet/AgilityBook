@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-26 DRC Update didn't save desc changes if nothing else changed.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
@@ -206,8 +207,13 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 	indentBuffer = indentName + "   ";
 	indentName += "-";
 
+	bool bChanges = false;
 	if (GetDesc() != inVenueNew->GetDesc())
+	{
+		bChanges = true;
 		SetDesc(inVenueNew->GetDesc());
+	}
+
 	// If the order is different, we will fall into this...
 	if (GetDivisions() != inVenueNew->GetDivisions())
 	{
@@ -291,7 +297,6 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 			info += info2;
 		}
 	}
-	bool bChanges = false;
 	if (0 < info.length())
 	{
 		bChanges = true;

@@ -5,6 +5,9 @@ Files to change before release:
   - Update comments in src/Win/res/AgilityRecordBook.dtd
   - Archive Megan.arb as TestVn.n.arb and add to CVS
   - Update the version in DefaultConfig.xml
+- If configuration has changed:
+  - Same as file version changing
+  - Plus: Make sure that the Update() methods have been updated!
 - History.txt
   Update program version and date, along with any comments.
 - Todo.txt

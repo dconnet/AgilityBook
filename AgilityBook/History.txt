@@ -1,10 +1,14 @@
-3/25/2004: v1.0.5.8 <in development>
+3/26/2004: v1.0.5.8 <in development>
 - Bumped file version to 8.6:
-  - Changed 'TableInYPS' to 'hasTable'
+  - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
 - New features / Enhancements:
   - Instead of recording whether YPS should be adjusted for each run, just
     record if that run has a table. A new option (under 'View') then
-    determines how to compute it.
+    determines how to compute it. Old files will be auto-updated when the new
+	configuration is merged, as long as it happens during startup.
+- Bug fixes
+  - When updating a venue or event, if only the desc or partner changed,
+    the changes didn't happen.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:

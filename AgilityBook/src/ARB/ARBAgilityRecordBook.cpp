@@ -34,7 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
- * @li 2004-03-25 DRC File version 8.6. Changed Table-in-YPS to hasTable.
+ * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
  * @li 2004-03-13 DRC File version 8.5. Added 'isHidden' to 'Title'.
  * @li 2004-02-15 DRC Cleaned up newline in warning msg.
  * @li 2004-02-14 DRC File version 8.4. Added Table-in-YPS flag.

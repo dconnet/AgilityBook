@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-01-21 DRC Implemented Action items in configuration update.
  * @li 2004-01-14 DRC Use complete title name instead of nice name.
@@ -796,7 +797,14 @@ void CDlgConfigure::OnUpdate()
 		}
 		update.GetActions().clear();
 		std::string info;
+		bool bUpdateRuns = false;
+		if (m_Config.GetVersion() <= 2 && update.GetVersion() == 3)
+			bUpdateRuns = true;
 		m_Config.Update(0, update, info);
+		if (bUpdateRuns)
+		{
+			m_DlgFixup.push_back(new CDlgFixupTableInRuns());
+		}
 		msg += info.c_str();
 		if (0 < msg.GetLength())
 		{

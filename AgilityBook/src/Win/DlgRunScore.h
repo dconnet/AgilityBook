@@ -143,7 +143,7 @@ private:
 	void FillQ(bool bHasSuperQ);
 	void SetDoubleQ();
 	void SetTitlePoints();
-	void UpdateControls();
+	void UpdateControls(bool bOnEventChange = false);
 
 // Implementation
 protected:

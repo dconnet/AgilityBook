@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -147,6 +148,8 @@ public:
 	void SetName(std::string const& inName);
 	std::string const& GetDesc() const;
 	void SetDesc(std::string const& inDesc);
+	bool HasTable() const;
+	void SetHasTable(bool inBool);
 	bool HasPartner() const;
 	void SetHasPartner(bool inHas);
 	ARBConfigScoringList const& GetScorings() const;
@@ -156,6 +159,7 @@ private:
 	~ARBConfigEvent();
 	std::string m_Name;
 	std::string m_Desc;
+	bool m_bTable;
 	bool m_bHasPartner;
 	ARBConfigScoringList m_Scoring;
 };
@@ -183,6 +187,16 @@ inline std::string const& ARBConfigEvent::GetDesc() const
 inline void ARBConfigEvent::SetDesc(std::string const& inDesc)
 {
 	m_Desc = inDesc;
+}
+
+inline bool ARBConfigEvent::HasTable() const
+{
+	return m_bTable;
+}
+
+inline void ARBConfigEvent::SetHasTable(bool inBool)
+{
+	m_bTable = inBool;
 }
 
 inline bool ARBConfigEvent::HasPartner() const

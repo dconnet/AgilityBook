@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */
 
 #include <string>
@@ -245,4 +246,19 @@ public:
 protected:
 	std::string m_Venue;
 	std::string m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgFixupTableInRuns : public CDlgFixup
+{
+public:
+	CDlgFixupTableInRuns()
+		: m_Updated(0)
+	{
+	}
+	virtual void Commit(ARBAgilityRecordBook& book);
+	int RunsUpdated() const	{return m_Updated;}
+protected:
+	int m_Updated;
 };

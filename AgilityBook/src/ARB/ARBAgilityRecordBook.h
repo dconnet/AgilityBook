@@ -36,7 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
- * @li 2004-03-25 DRC Changed Table-in-YPS to hasTable.
+ * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-02-14 DRC Added TableInYPS in run scoring.
  * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
@@ -132,6 +132,7 @@
 #define ATTRIB_TITLES_LONGNAME				"LongName"
 #define ATTRIB_SUBLEVEL_NAME				"Name"
 #define ATTRIB_EVENT_NAME					"Name"
+#define ATTRIB_EVENT_HAS_TABLE				"hasTable"
 #define ATTRIB_EVENT_HASPARTNER				"hasPartner"
 #define ATTRIB_SCORING_VALIDFROM			"ValidFrom"
 #define ATTRIB_SCORING_VALIDTO				"ValidTo"

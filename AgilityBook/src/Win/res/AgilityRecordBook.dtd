@@ -7,8 +7,8 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-03-25 DRC File version 8.6.
-               Changed 'TableInYPS' to 'hasTable'.
+2004-03-26 DRC File version 8.6, Configuration version 3.
+               Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
 2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.
@@ -168,6 +168,9 @@ The 'superQ', 'doubleQ' and 'machPts' attributes enable built-in
 features for an event. If 'doubleQ' is enabled, the program will
 automatically determine if a double Q occurs on a given date.
 
+'hasTable' specifies that this run might have a table. This is used as the
+default when creating a run.
+
 Entries in 'TitlePoints' determines if a Q should/not be awarded. When
 data is entered in the program, the program will perform certain tests.
 If it thinks you should/not Q and you enter data differently,
@@ -193,6 +196,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		superQ (y|n) 'n'
 		doubleQ (y|n) 'n'
 		machPts (y|n) 'n'
+		hasTable (y|n) 'n'
 		OpeningPts CDATA #IMPLIED
 		ClosingPts CDATA #IMPLIED
 		>
