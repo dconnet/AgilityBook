@@ -39,6 +39,9 @@
 #include <afxinet.h>
 #include "AgilityBook.h"
 #include "MainFrm.h"
+#if _MSC_VER < 1300
+#include "htmlhelp.h"
+#endif
 
 #include "AboutDlg.h"
 #include "AgilityBookDoc.h"
@@ -72,6 +75,41 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // Some global functions.
+
+void ShowContextHelp(HELPINFO* pHelpInfo)
+{
+	HWND hwnd = NULL;
+	POINT pt = pHelpInfo->MousePos;
+	if (HELPINFO_WINDOW == pHelpInfo->iContextType)
+	{
+		hwnd = static_cast<HWND>(pHelpInfo->hItemHandle);
+		RECT r;
+		::GetWindowRect(hwnd, &r);
+		pt.x = r.left + (r.right - r.left) / 2;
+		pt.y = r.bottom;
+	}
+	HH_POPUP popup;
+	memset(&popup, 0, sizeof(HH_POPUP));
+	popup.cbStruct = sizeof(HH_POPUP);
+	popup.hinst = 0;
+	popup.idString = static_cast<UINT>(pHelpInfo->dwContextId);
+	if (pHelpInfo->dwContextId > 0)
+		popup.pszText = "";
+	else
+		popup.pszText = "No help available.";
+	popup.pt = pt;
+	popup.clrForeground = GetSysColor(COLOR_INFOTEXT);
+	popup.clrBackground = GetSysColor(COLOR_INFOBK);
+	popup.rcMargins.left = -1;
+	popup.rcMargins.top = -1;
+	popup.rcMargins.right = -1;
+	popup.rcMargins.bottom = -1;
+	popup.pszFont = "Arial, 8, ascii, , , ";
+
+	CString name(AfxGetApp()->m_pszHelpFilePath);
+	name += "::/Help/AgilityBook.txt";
+	::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
+}
 
 void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 {
@@ -155,6 +193,8 @@ void UpdateVersion(bool bVerbose)
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	//{{AFX_MSG_MAP(CAgilityBookApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+	ON_COMMAND(ID_HELP_CONTENTS, OnHelpContents)
+	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
 	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
 	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
 	//}}AFX_MSG_MAP
@@ -268,6 +308,14 @@ BOOL CAgilityBookApp::InitInstance()
 	EnableShellOpen();
 	RegisterShellFileTypes(FALSE);
 
+	// Enable Html help
+#if _MSC_VER >= 1300
+	EnableHtmlHelp();
+#endif
+	char* chmFile = _tcsdup(m_pszHelpFilePath);
+	lstrcpy(&chmFile[lstrlen(chmFile)-3], "chm");
+	m_pszHelpFilePath = chmFile;
+
 	// Should we open the last open file?
 	bool bOpeningLast = false;
 	if (CCommandLineInfo::FileNew == cmdInfo.m_nShellCommand)
@@ -339,6 +387,9 @@ BOOL CAgilityBookApp::InitInstance()
 
 int CAgilityBookApp::ExitInstance()
 {
+	// Close any open HTML Help windows
+	::HtmlHelp(NULL, NULL, HH_CLOSE_ALL, 0);
+
 	delete m_pDocTemplateTree;
 	delete m_pDocTemplateRuns;
 	delete m_pDocTemplatePoints;
@@ -354,6 +405,24 @@ void CAgilityBookApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
+}
+
+void CAgilityBookApp::OnHelpContents()
+{
+#if _MSC_VER < 1300
+	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, HH_DISPLAY_TOC, 0);
+#else
+	HtmlHelp(0, HH_DISPLAY_TOC);
+#endif
+}
+
+void CAgilityBookApp::OnHelpIndex()
+{
+#if _MSC_VER < 1300
+	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, HH_DISPLAY_INDEX, 0);
+#else
+	HtmlHelp(0, HH_DISPLAY_INDEX);
+#endif
 }
 
 void CAgilityBookApp::OnHelpSplash()

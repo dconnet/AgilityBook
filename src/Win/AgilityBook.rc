@@ -2,6 +2,11 @@
 //
 #include "resource.h"
 
+// Generated Help ID header file
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "resource.hm"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -232,10 +237,13 @@ BEGIN
     END
     POPUP "&Help"
     BEGIN
-        MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
-        MENUITEM "&Show Splash Screen...",      ID_HELP_SPLASH
+        MENUITEM "&Contents",                   ID_HELP_CONTENTS
+        MENUITEM "&Index",                      ID_HELP_INDEX
         MENUITEM SEPARATOR
         MENUITEM "Check for &Updates...",       ID_HELP_UPDATE
+        MENUITEM SEPARATOR
+        MENUITEM "S&how Splash Screen...",      ID_HELP_SPLASH
+        MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
     END
 END
 
@@ -1239,20 +1247,22 @@ BEGIN
                     ES_NUMBER
 END
 
-IDD_VIEW_OPTIONS_FILTER DIALOG  0, 0, 285, 162
+IDD_VIEW_OPTIONS_FILTER DIALOGEX 0, 0, 285, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Trial Filter"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Trials",IDC_STATIC,3,3,136,156
     CONTROL         "&View all venues",IDC_OPTIONS_FILTER_VENUES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
+                    HIDC_OPTIONS_FILTER_VENUES_ALL
     CONTROL         "View &only:",IDC_OPTIONS_FILTER_VENUES_SELECTED,"Button",
-                    BS_AUTORADIOBUTTON,11,28,48,10
+                    BS_AUTORADIOBUTTON,11,28,48,10,0,
+                    HIDC_OPTIONS_FILTER_VENUES_SELECTED
     CONTROL         "Tree1",IDC_OPTIONS_FILTER_VENUES,"SysTreeView32",
                     TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
                     TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
-                    42,119,110
+                    42,119,110,0,HIDC_OPTIONS_FILTER_VENUES
     GROUPBOX        "Dates",IDC_STATIC,146,3,136,74
     CONTROL         "View all &dates",IDC_OPTIONS_FILTER_DATES_ALL,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,158,16,59,10
@@ -2338,6 +2348,8 @@ BEGIN
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_VIEW_HIDDEN          "Show Titles that have been hidden\nHidden Titles"
     ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"
+    ID_HELP_CONTENTS        "Display the Contents tab of the help file\nContents"
+    ID_HELP_INDEX           "Display the Index tab of the help file\nIndex"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
     ID_HELP_SPLASH          "Show the initial splash screen\nSplash"
 END

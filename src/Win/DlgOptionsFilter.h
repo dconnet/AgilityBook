@@ -87,6 +87,7 @@ private:
 protected:
 	//{{AFX_MSG(CDlgOptionsFilter)
 	virtual BOOL OnInitDialog();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	afx_msg void OnViewUpdate();
 	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG

@@ -24,5 +24,12 @@ Help\html\Tasks\NewDog.html
 Help\html\ProgramOverview.html
 Help\html\ProgramOverview\Menus.html
 
+[MAP]
+#include Help\contextid.h
+
+[TEXT POPUPS]
+Help\AgilityBook.txt
+Help\AgilityBook.h
+
 [INFOTYPES]
 

@@ -4,6 +4,7 @@
 	Version="7.10"
 	Name="AgilityBook"
 	ProjectGUID="{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
+	RootNamespace="AgilityBook"
 	Keyword="MFCProj">
 	<Platforms>
 		<Platform
@@ -41,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalDependencies="version.lib htmlhelp.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../../../../lib/Win32/VC7"
@@ -52,7 +53,9 @@
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)..\..\..
+BuildHelp.bat $(ConfigurationName)"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -102,7 +105,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../../../../lib/Win32/VC7"
 				SubSystem="2"
@@ -113,7 +116,9 @@
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)..\..\..
+BuildHelp.bat $(ConfigurationName)"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -585,6 +590,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\Resource.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\resource.hm">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\Splash.h">

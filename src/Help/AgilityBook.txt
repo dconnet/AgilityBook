@@ -1,0 +1,8 @@
+.topic HIDC_OPTIONS_FILTER_VENUES
+Select the levels within each venue that you wish to view.
+
+.topic HIDC_OPTIONS_FILTER_VENUES_ALL
+View all levels in all venues.
+
+.topic HIDC_OPTIONS_FILTER_VENUES_SELECTED
+Select the levels you wish to view in the tree below.
