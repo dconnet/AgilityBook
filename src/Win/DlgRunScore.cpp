@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-29 DRC Required pts were being overwriten with default values
+ *                    during dialog initialization.
  * @li 2003-09-01 DRC Total faults weren't being shown when there was no SCT.
  * @li 2003-08-17 DRC Title points were being computed on 'NQ' and the score was
  *                    always being computed. Fixed both.
@@ -791,9 +793,9 @@ void CDlgRunScore::UpdateControls()
 	case ARBConfigScoring::eOCScoreThenTime:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
 		m_Opening = pScoring->GetRequiredOpeningPoints();
-		m_Run->GetScoring().SetNeedOpenPts(m_Opening);
 		m_Closing = pScoring->GetRequiredClosingPoints();
-		m_Run->GetScoring().SetNeedClosePts(m_Closing);
+		// Do not push these back into the run.
+		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlFaults.EnableWindow(FALSE);
 		m_ctrlTime4Fault.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
@@ -818,7 +820,8 @@ void CDlgRunScore::UpdateControls()
 	case ARBConfigScoring::eScoreThenTime:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
 		m_Opening = pScoring->GetRequiredOpeningPoints();
-		m_Run->GetScoring().SetNeedOpenPts(m_Opening);
+		// Do not push this back into the run.
+		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlFaults.EnableWindow(FALSE);
 		m_ctrlTime4Fault.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);

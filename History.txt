@@ -1,3 +1,9 @@
+09/29/2003: v0.9.2.6: Release Candidate 3
+- Bug fixes
+  - Required points in the Runs dialog were being overwriten with default
+    values during initialization.
+  - Fixed possible crasher bug in the About dialog.
+
 09/21/2003: v0.9.1.6: Release Candidate 2
 - Bumped file version to 6:
   - Added the Training Log.
