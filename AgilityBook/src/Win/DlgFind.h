@@ -43,7 +43,8 @@ class IFindCallback
 {
 public:
 	IFindCallback()
-		: m_strSearch()
+		: m_strCaption()
+		, m_strSearch()
 		, m_bMatchCase(false)
 		, m_bEnableSearch(true)
 		, m_bSearchAll(false)
@@ -52,20 +53,22 @@ public:
 	{
 	}
 
-	virtual CString const& Text() const		{return m_strSearch;}
-	virtual void Text(CString const& text)	{m_strSearch = text;}
-	virtual bool MatchCase() const			{return m_bMatchCase;}
-	virtual void MatchCase(bool bCase)		{m_bMatchCase = bCase;}
-	virtual bool EnableSearch() const		{return m_bEnableSearch;}
-	virtual bool SearchAll() const			{return m_bSearchAll;}
-	virtual void SearchAll(bool bAll)		{m_bSearchAll = bAll;}
-	virtual bool EnableDirection() const	{return m_bEnableDirection;}
-	virtual bool SearchDown() const			{return m_bDown;}
-	virtual void SearchDown(bool bDown)		{m_bDown = bDown;}
+	virtual CString const& GetCaption() const	{return m_strCaption;}
+	virtual CString const& Text() const			{return m_strSearch;}
+	virtual void Text(CString const& text)		{m_strSearch = text;}
+	virtual bool MatchCase() const				{return m_bMatchCase;}
+	virtual void MatchCase(bool bCase)			{m_bMatchCase = bCase;}
+	virtual bool EnableSearch() const			{return m_bEnableSearch;}
+	virtual bool SearchAll() const				{return m_bSearchAll;}
+	virtual void SearchAll(bool bAll)			{m_bSearchAll = bAll;}
+	virtual bool EnableDirection() const		{return m_bEnableDirection;}
+	virtual bool SearchDown() const				{return m_bDown;}
+	virtual void SearchDown(bool bDown)			{m_bDown = bDown;}
 
 	virtual bool Search(CDlgFind* pDlg) const = 0;
 
 protected:
+	CString m_strCaption;
 	CString m_strSearch;
 	bool m_bMatchCase;
 	bool m_bEnableSearch;

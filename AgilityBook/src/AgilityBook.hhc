@@ -367,6 +367,21 @@
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Lists">
+					<param name="Local" value="Help\html\DlgListctrl.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="List Viewer">
+					<param name="Local" value="Help\html\DlgListViewer.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Name">
+					<param name="Local" value="Help\html\DlgName.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Other Points">
 					<param name="Local" value="Help\html\DlgOtherPoints.html">
 					<param name="ImageNumber" value="11">
