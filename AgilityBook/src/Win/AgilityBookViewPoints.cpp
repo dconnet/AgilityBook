@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-12-09 DRC Fixed problem tallying QQs when a 3rd run is present.
  * @li 2003-11-22 DRC Added more dog information into the report.
  * @li 2003-11-21 DRC Enabled copy and select all.
@@ -206,65 +207,79 @@ int CAgilityBookViewPoints::DoEvents(
 	++iterEvent)
 	{
 		const ARBConfigEvent* pEvent = (*iterEvent);
-		const ARBConfigScoring* pScoringMethod = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName());
 		// Don't tally runs that have no titling points.
-		if (!pScoringMethod || 0 == pScoringMethod->GetTitlePoints().size())
+		std::vector<const ARBConfigScoring*> scoringItems;
+		if (0 == pEvent->FindAllEvents(inDiv->GetName(), inLevel->GetName(), true, scoringItems))
 			continue;
-		int SQs = 0;
-		int machPtsEvent = 0;
-		list<const ARBDogRun*> matching;
-		set<std::string> judges;
-		set<std::string> judgesQ;
-		set<std::string> partners;
-		set<std::string> partnersQ;
-		for (list<const ARBDogTrial*>::const_iterator iterTrial = trials.begin();
-		iterTrial != trials.end();
-		++iterTrial)
+		// Iterate across each scoring method separately. This means it is
+		// possible to have multiple lines show up for a given event. But if
+		// that happens, it means the events were scored differently.
+		for (std::vector<const ARBConfigScoring*>::iterator iterScoring = scoringItems.begin();
+			iterScoring != scoringItems.end();
+			++iterScoring)
 		{
-			const ARBDogTrial* pTrial = (*iterTrial);
-			if (pScoringMethod->HasDoubleQ())
+			const ARBConfigScoring* pScoringMethod = *iterScoring;
+			int SQs = 0;
+			int machPtsEvent = 0;
+			list<const ARBDogRun*> matching;
+			set<std::string> judges;
+			set<std::string> judgesQ;
+			set<std::string> partners;
+			set<std::string> partnersQ;
+			for (list<const ARBDogTrial*>::const_iterator iterTrial = trials.begin();
+			iterTrial != trials.end();
+			++iterTrial)
 			{
-				for (ARBDate date = pTrial->GetRuns().GetStartDate();
-				date <= pTrial->GetRuns().GetEndDate();
-				++date)
+				const ARBDogTrial* pTrial = (*iterTrial);
+				if (pScoringMethod->HasDoubleQ())
 				{
-					if (pTrial->HasQQ(date, GetDocument()->GetConfig(), inDiv->GetName(), inLevel->GetName()))
+					for (ARBDate date = pTrial->GetRuns().GetStartDate();
+					date <= pTrial->GetRuns().GetEndDate();
+					++date)
 					{
-						int nVisible = 0;
-						// But first, make sure all the runs are visible.
-						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-						iterRun != pTrial->GetRuns().end();
-						++iterRun)
+						if (pTrial->HasQQ(date, GetDocument()->GetConfig(), inDiv->GetName(), inLevel->GetName()))
 						{
-							const ARBDogRun* pRun = (*iterRun);
-							// This extra test only looks at runs that are
-							// QQing. Otherwise a 3rd NA run throws things off.
-							const ARBConfigScoring* pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
-								pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
-								pRun->GetEvent(),
-								pRun->GetDivision(),
-								pRun->GetLevel());
-							if (pScoring && pScoring->HasDoubleQ()
-							&& date == pRun->GetDate()
-							&& !pRun->IsFiltered())
-								++nVisible;
+							int nVisible = 0;
+							// But first, make sure all the runs are visible.
+							for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+							iterRun != pTrial->GetRuns().end();
+							++iterRun)
+							{
+								const ARBDogRun* pRun = (*iterRun);
+								// This extra test only looks at runs that are
+								// QQing. Otherwise a 3rd NA run throws things off.
+								const ARBConfigScoring* pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
+									pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+									pRun->GetEvent(),
+									pRun->GetDivision(),
+									pRun->GetLevel(),
+									pRun->GetDate());
+								if (pScoring && pScoring->HasDoubleQ()
+								&& date == pRun->GetDate()
+								&& !pRun->IsFiltered())
+									++nVisible;
+							}
+							if (2 == nVisible)
+								QQs.insert(date);
 						}
-						if (2 == nVisible)
-							QQs.insert(date);
 					}
 				}
-			}
-			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-			iterRun != pTrial->GetRuns().end();
-			++iterRun)
-			{
-				const ARBDogRun* pRun = (*iterRun);
-				if (!pRun->IsFiltered())
+				for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				++iterRun)
 				{
-					if (pRun->GetDivision() == inDiv->GetName()
-					&& (pRun->GetLevel() == inLevel->GetName() || inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
-					&& pRun->GetEvent() == pEvent->GetName())
+					const ARBDogRun* pRun = (*iterRun);
+					if (!pRun->IsFiltered())
 					{
+						if (pRun->GetDivision() != inDiv->GetName()
+						|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
+						|| pRun->GetEvent() != pEvent->GetName())
+							continue;
+						const ARBConfigScoring* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
+						ASSERT(pScoring);
+						if (!pScoring) continue; // Shouldn't need it...
+						if (*pScoring != *pScoringMethod)
+							continue;
 						matching.push_back(pRun);
 						judges.insert(pRun->GetJudge());
 						if (pRun->GetQ().Qualified())
@@ -295,65 +310,67 @@ int CAgilityBookViewPoints::DoEvents(
 					}
 				}
 			}
-		}
-		CString str, str2;
-		if (0 < matching.size())
-		{
-			GetListCtrl().InsertItem(index+nAdded, "");
-			int nextCol = 1;
-			GetListCtrl().SetItemText(index+nAdded, nextCol++, inDiv->GetName().c_str());
-			GetListCtrl().SetItemText(index+nAdded, nextCol++, inLevel->GetName().c_str());
-			GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
-			int nCleanQ, nNotCleanQ;
-			int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
-			str.FormatMessage(IDS_POINTS_RUNS_JUDGES,
-				matching.size(),
-				judges.size());
-			if (pEvent->HasPartner() && 0 < partners.size())
+			CString str, str2;
+			if (0 < matching.size())
 			{
-				CString str2;
-				str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
-				str += str2;
-			}
-			GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-			str.FormatMessage(IDS_POINTS_QS, nCleanQ + nNotCleanQ);
-			if (0 < nCleanQ)
-			{
-				str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
-				str += str2;
-			}
-			if (0 < judgesQ.size())
-			{
-				str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
-				str += str2;
-			}
-			if (pEvent->HasPartner() && 0 < partnersQ.size())
-			{
-				str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
-				str += str2;
-			}
-			GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-			str.Format("%d", pts);
-			GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-			if (pScoringMethod->HasSuperQ())
-			{
-				str.FormatMessage(IDS_POINTS_SQS, SQs);
-				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-			}
-			if (pScoringMethod->HasDoubleQ())
-				bHasDoubleQs = true;
-			if (pScoringMethod->HasMachPts())
-			{
-				bHasMachPts = true;
-				if (0 < machPtsEvent)
+				GetListCtrl().InsertItem(index+nAdded, "");
+				int nextCol = 1;
+				GetListCtrl().SetItemText(index+nAdded, nextCol++, inDiv->GetName().c_str());
+				GetListCtrl().SetItemText(index+nAdded, nextCol++, inLevel->GetName().c_str());
+				GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
+				int nCleanQ, nNotCleanQ;
+				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
+				str.FormatMessage(IDS_POINTS_RUNS_JUDGES,
+					matching.size(),
+					judges.size());
+				if (pEvent->HasPartner() && 0 < partners.size())
 				{
-					str.FormatMessage(IDS_POINTS_MACH_SUBTOTAL, machPtsEvent);
+					CString str2;
+					str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
+					str += str2;
+				}
+				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+				str.FormatMessage(IDS_POINTS_QS, nCleanQ + nNotCleanQ);
+				if (0 < nCleanQ)
+				{
+					str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
+					str += str2;
+				}
+				if (0 < judgesQ.size())
+				{
+					str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
+					str += str2;
+				}
+				if (pEvent->HasPartner() && 0 < partnersQ.size())
+				{
+					str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
+					str += str2;
+				}
+				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+				str.Format("%d", pts);
+				GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+				if (pScoringMethod->HasSuperQ())
+				{
+					str.FormatMessage(IDS_POINTS_SQS, SQs);
 					GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 				}
+				if (pScoringMethod->HasDoubleQ())
+					bHasDoubleQs = true;
+				if (pScoringMethod->HasMachPts())
+				{
+					bHasMachPts = true;
+					if (0 < machPtsEvent)
+					{
+						str.FormatMessage(IDS_POINTS_MACH_SUBTOTAL, machPtsEvent);
+						GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+					}
+				}
+				++nAdded;
 			}
-			++nAdded;
 		}
 	}
+
+	// Information that is tallied after all a venue's events.
 	if (bHasDoubleQs)
 	{
 		GetListCtrl().InsertItem(index+nAdded, "");

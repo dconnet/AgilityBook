@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
@@ -410,7 +411,8 @@ const ARBConfigScoring* ARBConfigVenueList::FindEvent(
 	const std::string& inVenue,
 	const std::string& inEvent,
 	const std::string& inDivision,
-	const std::string& inLevel) const
+	const std::string& inLevel,
+	const ARBDate& inDate) const
 {
 	const ARBConfigVenue* pVenue = FindVenue(inVenue);
 	if (pVenue)
@@ -424,7 +426,7 @@ const ARBConfigScoring* ARBConfigVenueList::FindEvent(
 		ASSERT(pLevel);
 		if (!pLevel)
 			return NULL;
-		return pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName());
+		return pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate);
 	}
 	return NULL;
 }

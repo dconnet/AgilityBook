@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2003-12-27 DRC Added support for from/to dates for the scoring method.
  */
 
 #include "stdafx.h"
@@ -97,8 +98,10 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
 	DDX_Control(pDX, IDC_METHODS, m_ctrlMethods);
 	DDX_Control(pDX, IDC_UNUSED, m_ctrlUnused);
-	DDX_Control(pDX, IDC_DATE_START, m_ctrlValidFrom);
-	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
+	DDX_Control(pDX, IDC_DATE_VALID_FROM, m_ctrlValidFrom);
+	DDX_Control(pDX, IDC_DATE_START, m_ctrlDateFrom);
+	DDX_Control(pDX, IDC_DATE_VALID_TO, m_ctrlValidTo);
+	DDX_Control(pDX, IDC_DATE_END, m_ctrlDateTo);
 	DDX_Control(pDX, IDC_DIVISION, m_ctrlDivision);
 	DDX_Control(pDX, IDC_LEVEL, m_ctrlLevel);
 	DDX_Control(pDX, IDC_TYPE, m_ctrlType);
@@ -127,8 +130,10 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDialog)
 	ON_BN_CLICKED(IDC_DELETE, OnBnClickedDelete)
 	ON_BN_CLICKED(IDC_MOVE_UP, OnBnClickedUp)
 	ON_BN_CLICKED(IDC_MOVE_DOWN, OnBnClickedDown)
-	ON_BN_CLICKED(IDC_DATE_START, OnValidFrom)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE, OnDatetimechangeDate)
+	ON_BN_CLICKED(IDC_DATE_VALID_FROM, OnValidFrom)
+	ON_BN_CLICKED(IDC_DATE_VALID_TO, OnValidTo)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE_START, OnDatetimechangeDate)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE_END, OnDatetimechangeDate)
 	ON_LBN_SELCHANGE(IDC_METHODS, OnLbnSelchangeMethods)
 	ON_CBN_SELCHANGE(IDC_DIVISION, OnCbnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_LEVEL, OnCbnSelchangeLevel)
@@ -157,12 +162,11 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoring* pScoring) const
 		str += all;
 	else
 		str += pScoring->GetLevel().c_str();
-	const ARBDate& valid = pScoring->GetValidFrom();
-	if (valid.IsValid())
+	std::string validStr = pScoring->GetValidDateString();
+	if (0 < validStr.length())
 	{
-		str += " [";
-		str += valid.GetString(false, false).c_str();
-		str += "]";
+		str += ' ';
+		str += validStr.c_str();
 	}
 	return str;
 }
@@ -187,7 +191,19 @@ void CDlgConfigEvent::FillControls()
 			m_ctrlValidFrom.SetCheck(0);
 			t = CTime(1990, 1, 1, 0, 0, 0);
 		}
-		m_ctrlDate.SetTime(&t);
+		m_ctrlDateFrom.SetTime(&t);
+		if (pScoring->GetValidTo().IsValid())
+		{
+			m_ctrlValidTo.SetCheck(1);
+			t = pScoring->GetValidTo().GetDate();
+		}
+		else
+		{
+			m_ctrlValidTo.SetCheck(0);
+			t = CTime(1990, 1, 1, 0, 0, 0);
+		}
+		m_ctrlDateTo.SetTime(&t);
+
 		FillDivisionList();
 		FillLevelList();
 		m_ctrlType.SetCurSel(-1);
@@ -224,9 +240,11 @@ void CDlgConfigEvent::FillControls()
 	}
 	else
 	{
-		m_ctrlValidFrom.SetCheck(0);
 		CTime t(1990, 1, 1, 0, 0, 0);
-		m_ctrlDate.SetTime(&t);
+		m_ctrlValidFrom.SetCheck(0);
+		m_ctrlDateFrom.SetTime(&t);
+		m_ctrlValidTo.SetCheck(0);
+		m_ctrlDateTo.SetTime(&t);
 		m_ctrlDivision.SetCurSel(-1);
 		m_ctrlLevel.SetCurSel(-1);
 		m_ctrlType.SetCurSel(-1);
@@ -239,7 +257,9 @@ void CDlgConfigEvent::FillControls()
 		FillRequiredPoints();
 	}
 	m_ctrlValidFrom.EnableWindow(bEnable);
-	m_ctrlDate.EnableWindow(bEnable && m_ctrlValidFrom.GetCheck());
+	m_ctrlDateFrom.EnableWindow(bEnable && m_ctrlValidFrom.GetCheck());
+	m_ctrlValidTo.EnableWindow(bEnable);
+	m_ctrlDateTo.EnableWindow(bEnable && m_ctrlValidTo.GetCheck());
 	m_ctrlDivision.EnableWindow(bEnable);
 	m_ctrlLevel.EnableWindow(bEnable);
 	m_ctrlType.EnableWindow(bEnable);
@@ -282,7 +302,7 @@ void CDlgConfigEvent::FillMethodList()
 			iterLevel != (*iterDiv)->GetLevels().end();
 			++iterLevel)
 		{
-			if (!m_Scorings.FindEvent((*iterDiv)->GetName(), ((*iterLevel)->GetName())))
+				if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
 				str = (*iterDiv)->GetName().c_str();
 				str += " / ";
@@ -446,10 +466,18 @@ bool CDlgConfigEvent::SaveControls()
 		if (m_ctrlValidFrom.GetCheck())
 		{
 			CTime time;
-			m_ctrlDate.GetTime(time);
-			valid = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+			if (GDT_VALID == m_ctrlDateFrom.GetTime(time))
+				valid = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
 		}
 		pScoring->SetValidFrom(valid);
+		valid.clear();
+		if (m_ctrlValidTo.GetCheck())
+		{
+			CTime time;
+			if (GDT_VALID == m_ctrlDateTo.GetTime(time))
+				valid = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+		}
+		pScoring->SetValidTo(valid);
 		if (0 == idxDiv)
 			str = WILDCARD_DIVISION;
 		else
@@ -667,7 +695,7 @@ void CDlgConfigEvent::OnValidFrom()
 	BOOL bEnable = FALSE;
 	if (m_ctrlValidFrom.GetCheck())
 		bEnable = TRUE;
-	m_ctrlDate.EnableWindow(bEnable);
+	m_ctrlDateFrom.EnableWindow(bEnable);
 	SaveControls();
 	FillMethodList();
 }
@@ -677,6 +705,17 @@ void CDlgConfigEvent::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult)
 	SaveControls();
 	FillMethodList();
 	*pResult = 0;
+}
+
+void CDlgConfigEvent::OnValidTo() 
+{
+	UpdateData(TRUE);
+	BOOL bEnable = FALSE;
+	if (m_ctrlValidTo.GetCheck())
+		bEnable = TRUE;
+	m_ctrlDateTo.EnableWindow(bEnable);
+	SaveControls();
+	FillMethodList();
 }
 
 void CDlgConfigEvent::OnSelchangeType() 
@@ -774,6 +813,79 @@ void CDlgConfigEvent::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_NAME));
 		return;
 	}
+	// Validate that from-to dates are okay.
+	int index;
+	for (index = 0; index < m_ctrlMethods.GetCount(); ++index)
+	{
+		CString str;
+		const ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(index));
+		ARBDate validFrom = pScoring->GetValidFrom();
+		ARBDate validTo = pScoring->GetValidTo();
+		if (validFrom.IsValid() && validTo.IsValid()
+		&& validFrom > validTo)
+		{
+			m_ctrlMethods.SetCurSel(index);
+			m_idxMethod = index;
+			FillControls();
+			AfxMessageBox("Valid From date is before the Valid To date");
+			GotoDlgCtrl(&m_ctrlDateTo);
+			return;
+		}
+	}
+	// Check if there is any overlap.
+	bool bOverlap = false;
+	{
+		ARBConfigScoringList scorings = m_Scorings;
+		while (!bOverlap && 1 < scorings.size())
+		{
+			// Extract all similar methods.
+			ARBConfigScoringList items;
+			ARBConfigScoringList::iterator iter = scorings.begin();
+			ARBConfigScoring* pScoring = items.AddScoring();
+			*pScoring = *(*iter);
+			iter = scorings.erase(scorings.begin());
+			while (iter != scorings.end())
+			{
+				ARBConfigScoring* pScoring2 = *iter;
+				if (pScoring->GetDivision() == pScoring2->GetDivision()
+				&& pScoring->GetLevel() == pScoring2->GetLevel())
+				{
+					pScoring2 = items.AddScoring();
+					*pScoring2 = *(*iter);
+					iter = scorings.erase(iter);
+				}
+				else
+					++iter;
+			}
+			// If we have more than one, check overlap.
+			while (!bOverlap && 1 < items.size())
+			{
+				iter = items.begin();
+				const ARBConfigScoring* pScoring = *iter;
+				for (++iter; !bOverlap && iter != items.end(); ++iter)
+				{
+					const ARBConfigScoring* pScoring2 = *iter;
+					if ((!pScoring->GetValidFrom().IsValid()
+					&& !pScoring2->GetValidFrom().IsValid())
+					|| (!pScoring->GetValidTo().IsValid()
+					&& !pScoring2->GetValidTo().IsValid()))
+						bOverlap = true;
+					if ((pScoring->GetValidTo().IsValid() && pScoring2->GetValidFrom().IsValid()
+					&& pScoring->GetValidTo() >= pScoring2->GetValidFrom())
+					|| (pScoring2->GetValidTo().IsValid() && pScoring->GetValidFrom().IsValid()
+					&& pScoring2->GetValidTo() >= pScoring->GetValidFrom()))
+						bOverlap = true;
+				}
+				items.erase(items.begin());
+			}
+		}
+	}
+	if (bOverlap)
+	{
+		if (IDYES != AfxMessageBox("Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?", MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+			return;
+	}
+
 	if (m_pEvent->GetName() != (LPCSTR)m_Name)
 	{
 		if (m_pVenue->GetEvents().FindEvent((LPCSTR)m_Name))

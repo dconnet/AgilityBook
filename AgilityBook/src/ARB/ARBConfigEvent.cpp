@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-16 DRC Fixed a bug in Update with Scoring.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
@@ -211,11 +212,21 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 	return info;
 }
 
+size_t ARBConfigEvent::FindAllEvents(
+	const std::string& inDivision,
+	const std::string& inLevel,
+	bool inTitlePoints,
+	std::vector<const ARBConfigScoring*>& outList) const
+{
+	return m_Scoring.FindAllEvents(inDivision, inLevel, inTitlePoints, outList);
+}
+
 const ARBConfigScoring* ARBConfigEvent::FindEvent(
 	const std::string& inDivision,
-	const std::string& inLevel) const
+	const std::string& inLevel,
+	const ARBDate& inDate) const
 {
-	return m_Scoring.FindEvent(inDivision, inLevel);
+	return m_Scoring.FindEvent(inDivision, inLevel, inDate);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -238,12 +249,13 @@ bool ARBConfigEventList::Load(
 const ARBConfigScoring* ARBConfigEventList::FindEvent(
 	const std::string& inEvent,
 	const std::string& inDivision,
-	const std::string& inLevel) const
+	const std::string& inLevel,
+	const ARBDate& inDate) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inEvent)
-			return (*iter)->FindEvent(inDivision, inLevel);
+			return (*iter)->FindEvent(inDivision, inLevel, inDate);
 	}
 	return NULL;
 }

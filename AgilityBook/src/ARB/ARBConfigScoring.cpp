@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Added ValidTo, changed ValidFrom dtd name (was 'Date').
  * @li 2003-12-11 DRC Added ValidFrom, not fully implemented yet.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-14 DRC Added open/close pts to configuration.
@@ -84,7 +85,8 @@ std::string ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 }
 
 ARBConfigScoring::ARBConfigScoring()
-	: m_ValidDate()
+	: m_ValidFrom()
+	, m_ValidTo()
 	, m_Division()
 	, m_Level()
 	, m_Style(eUnknown)
@@ -100,7 +102,8 @@ ARBConfigScoring::ARBConfigScoring()
 }
 
 ARBConfigScoring::ARBConfigScoring(const ARBConfigScoring& rhs)
-	: m_ValidDate(rhs.m_ValidDate)
+	: m_ValidFrom(rhs.m_ValidFrom)
+	, m_ValidTo(rhs.m_ValidTo)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
 	, m_Style(rhs.m_Style)
@@ -123,7 +126,8 @@ ARBConfigScoring& ARBConfigScoring::operator=(const ARBConfigScoring& rhs)
 {
 	if (this != &rhs)
 	{
-		m_ValidDate = rhs.m_ValidDate;
+		m_ValidFrom = rhs.m_ValidFrom;
+		m_ValidTo = rhs.m_ValidTo;
 		m_Division = rhs.m_Division;
 		m_Level = rhs.m_Level;
 		m_Style = rhs.m_Style;
@@ -141,7 +145,8 @@ ARBConfigScoring& ARBConfigScoring::operator=(const ARBConfigScoring& rhs)
 
 bool ARBConfigScoring::operator==(const ARBConfigScoring& rhs) const
 {
-	return m_ValidDate == rhs.m_ValidDate
+	return m_ValidFrom == rhs.m_ValidFrom
+		&& m_ValidTo == rhs.m_ValidTo
 		&& m_Division == rhs.m_Division
 		&& m_Level == rhs.m_Level
 		&& m_Style == rhs.m_Style
@@ -173,13 +178,25 @@ bool ARBConfigScoring::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DATE, m_ValidDate))
+	// Probably unnecessary since it isn't actually implemented yet!
+	if (inVersion == ARBVersion(8, 0))
+		inTree.GetAttrib("Date", m_ValidFrom);
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
 		std::string attrib;
-		inTree.GetAttrib(ATTRIB_SCORING_DATE, attrib);
+		inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DATE, msg.c_str());
+		ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str());
+		return false;
+	}
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
+	{
+		std::string attrib;
+		inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
+		std::string msg(INVALID_DATE);
+		msg += attrib;
+		ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str());
 		return false;
 	}
 
@@ -313,8 +330,10 @@ bool ARBConfigScoring::Load(
 bool ARBConfigScoring::Save(CElement& ioTree) const
 {
 	CElement& scoring = ioTree.AddElement(TREE_SCORING);
-	if (m_ValidDate.IsValid())
-		scoring.AddAttrib(ATTRIB_SCORING_DATE, m_ValidDate);
+	if (m_ValidFrom.IsValid())
+		scoring.AddAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom);
+	if (m_ValidTo.IsValid())
+		scoring.AddAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo);
 	scoring.AddAttrib(ATTRIB_SCORING_DIVISION, m_Division);
 	scoring.AddAttrib(ATTRIB_SCORING_LEVEL, m_Level);
 	switch (m_Style)
@@ -363,6 +382,26 @@ bool ARBConfigScoring::Save(CElement& ioTree) const
 	return true;
 }
 
+std::string ARBConfigScoring::GetValidDateString() const
+{
+	std::string str;
+	if (m_ValidFrom.IsValid() || m_ValidTo.IsValid())
+	{
+		str += "[";
+		if (m_ValidFrom.IsValid())
+			str += m_ValidFrom.GetString(false, false).c_str();
+		else
+			str += "*";
+		str += "-";
+		if (m_ValidTo.IsValid())
+			str += m_ValidTo.GetString(false, false).c_str();
+		else
+			str += "*";
+		str += "]";
+	}
+	return str;
+}
+
 std::string ARBConfigScoring::GetScoringStyleStr() const
 {
 	return GetScoringStyleStr(m_Style);
@@ -385,33 +424,96 @@ bool ARBConfigScoringList::Load(
 	return true;
 }
 
-const ARBConfigScoring* ARBConfigScoringList::FindEvent(
+size_t ARBConfigScoringList::FindAllEvents(
 	const std::string& inDivision,
-	const std::string& inLevel) const
+	const std::string& inLevel,
+	bool inTitlePoints,
+	std::vector<const ARBConfigScoring*>& outList) const
 {
+	outList.clear();
 	const_iterator iter;
 	for (iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == inLevel)
-			return (*iter);
+			outList.push_back(*iter);
 	}
 	// It failed, try wildcards...
-	for (iter = begin(); iter != end(); ++iter)
+	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == WILDCARD_LEVEL)
-			return (*iter);
+		{
+			outList.push_back(*iter);
+			break;
+		}
 	}
-	for (iter = begin(); iter != end(); ++iter)
+	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == inLevel)
-			return (*iter);
+		{
+			outList.push_back(*iter);
+			break;
+		}
 	}
-	for (iter = begin(); iter != end(); ++iter)
+	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == WILDCARD_LEVEL)
-			return (*iter);
+		{
+			outList.push_back(*iter);
+			break;
+		}
 	}
-	return NULL;
+
+	if (inTitlePoints)
+	{
+		std::vector<const ARBConfigScoring*>::iterator iter;
+		for (iter = outList.begin(); iter != outList.end(); )
+		{
+			if (0 < (*iter)->GetTitlePoints().size())
+				++iter;
+			else
+				iter = outList.erase(iter);
+		}
+	}
+	return outList.size();
+}
+
+const ARBConfigScoring* ARBConfigScoringList::FindEvent(
+	const std::string& inDivision,
+	const std::string& inLevel,
+	const ARBDate& inDate) const
+{
+	std::vector<const ARBConfigScoring*> items;
+	FindAllEvents(inDivision, inLevel, false, items);
+	if (0 == items.size())
+		return NULL;
+	else if (1 == items.size())
+		return *(items.begin());
+	else
+	{
+		std::vector<const ARBConfigScoring*>::iterator iter;
+		for (iter = items.begin(); iter != items.end(); )
+		{
+			const ARBConfigScoring* pScoring = *iter;
+			const ARBDate& validFrom = pScoring->GetValidFrom();
+			const ARBDate& validTo = pScoring->GetValidTo();
+			if ((validFrom.IsValid() && inDate < validFrom)
+			|| (validTo.IsValid() && inDate > validTo))
+				iter = items.erase(iter);
+			else
+				++iter;
+		}
+		if (0 == items.size())
+			return NULL;
+		else if (1 == items.size())
+			return *(items.begin());
+		else
+		{
+			// Umm, this means they have items with overlapping ranges...
+			// Which may occur when creating the methods.
+			TRACE0("Warning: Overlapping date ranges\n");
+			return *(items.begin());
+		}
+	}
 }
 
 ARBConfigScoring* ARBConfigScoringList::AddScoring()

@@ -31,6 +31,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date. Also, update the
+ *                    controls when the date changes as the scoring config may
+ *                    change.
  * @li 2003-12-09 DRC Fixed a bug where the QQ checkbox didn't get set right.
  * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
  *                    This allows faults for things like language!
@@ -209,6 +212,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		CString str;
 		std::string div, level, event;
 
+		ARBDate date(m_Date.GetYear(), m_Date.GetMonth(), m_Date.GetDay());
+
 		pDX->PrepareCtrl(m_ctrlDivisions.GetDlgCtrlID());
 		int index = m_ctrlDivisions.GetCurSel();
 		if (CB_ERR == index)
@@ -296,8 +301,9 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 			pDX->Fail();
 			return;
 		}
+
 		pDX->PrepareCtrl(m_ctrlLevels.GetDlgCtrlID());
-		const ARBConfigScoring* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName());
+		const ARBConfigScoring* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), date);
 		if (!pScoring)
 		{
 			AfxMessageBox(IDS_BAD_SCORINGMETHOD, MB_ICONSTOP);
@@ -307,7 +313,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 
 		//@todo: Add integrity checks - things like snooker score >=37? is Q set?
 
-		m_Run->SetDate(ARBDate(m_Date.GetYear(), m_Date.GetMonth(), m_Date.GetDay()));
+		m_Run->SetDate(date);
 		m_Run->SetDivision(div);
 		m_Run->SetLevel(level);
 		m_Run->SetEvent(event);
@@ -356,6 +362,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgRunScore, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunScore)
 	ON_WM_DESTROY()
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE, OnDatetimechangeDate)
 	ON_CBN_SELCHANGE(IDC_DIVISION, OnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_LEVEL, OnSelchangeLevel)
 	ON_CBN_SELCHANGE(IDC_EVENT, OnSelchangeEvent)
@@ -507,7 +514,7 @@ void CDlgRunScore::FillEvents()
 				++iter)
 			{
 				const ARBConfigEvent* pEvent = (*iter);
-				if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName()))
+				if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Run->GetDate()))
 				{
 					int idx = m_ctrlEvents.AddString(pEvent->GetName().c_str());
 					if (event == pEvent->GetName())
@@ -650,7 +657,7 @@ void CDlgRunScore::SetTitlePoints()
 	ASSERT(pLevel);
 	const ARBConfigScoring* pScoring = NULL;
 	if (0 < div.length() && 0 < level.length() && pEvent)
-		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName());
+		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
 	if (pScoring)
 	{
 		// 8/17/03: Only compute title points on Q runs.
@@ -696,7 +703,7 @@ void CDlgRunScore::UpdateControls()
 	ASSERT(pLevel);
 	const ARBConfigScoring* pScoring = NULL;
 	if (0 < div.length() && 0 < level.length() && pEvent)
-		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName());
+		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
 	if (!pScoring)
 	{
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeUnknown, false);
@@ -973,6 +980,13 @@ void CDlgRunScore::OnDestroy()
 {
 	ClearLevels();
 	CPropertyPage::OnDestroy();
+}
+
+void CDlgRunScore::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	UpdateData(TRUE);
+	UpdateControls();
+	*pResult = 0;
 }
 
 void CDlgRunScore::OnSelchangeDivision()

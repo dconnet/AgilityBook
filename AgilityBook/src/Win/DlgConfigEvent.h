@@ -61,7 +61,9 @@ private:
 	CListBox2 m_ctrlMethods;
 	CListBox2 m_ctrlUnused;
 	CButton	m_ctrlValidFrom;
-	CDateTimeCtrl	m_ctrlDate;
+	CDateTimeCtrl	m_ctrlDateFrom;
+	CButton	m_ctrlValidTo;
+	CDateTimeCtrl	m_ctrlDateTo;
 	CComboBox m_ctrlDivision;
 	CComboBox m_ctrlLevel;
 	CComboBox m_ctrlType;
@@ -110,6 +112,7 @@ protected:
 	afx_msg void OnBnClickedUp();
 	afx_msg void OnBnClickedDown();
 	afx_msg void OnValidFrom();
+	afx_msg void OnValidTo();
 	afx_msg void OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLbnSelchangeMethods();
 	afx_msg void OnCbnSelchangeDivision();

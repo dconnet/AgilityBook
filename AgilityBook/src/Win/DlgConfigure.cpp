@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed the scoring method to show the valid date range.
  * @li 2003-02-04 DRC Changed dbl-click to edit an item.
  */
 
@@ -353,6 +354,12 @@ HTREEITEM CDlgConfigure::InsertScoring(HTREEITEM hParent, ARBConfigScoring* pSco
 		div,
 		level,
 		pScoring->GetScoringStyleStr().c_str());
+	std::string validStr = pScoring->GetValidDateString();
+	if (0 < validStr.length())
+	{
+		str += ' ';
+		str += validStr.c_str();
+	}
 	HTREEITEM hScore = m_ctrlTree.InsertItem(
 		TVIF_TEXT | TVIF_PARAM,
 		str,

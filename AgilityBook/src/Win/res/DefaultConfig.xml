@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="8.0">
+<DefaultConfig Book="8.1">
 	<Configuration>
 		<Venue Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
@@ -943,13 +943,7 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="PI" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -959,16 +953,18 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 					<Note>DAM Team: Qualifying is marked under Relay. The Q here is used for individual points.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
+				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
+				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="PI" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -977,16 +973,18 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				<Scoring Division="Championship" Level="Tournament" type="OCScoreThenTime">
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
+				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
+				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="*" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
+				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
+				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PII" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="PI" type="OCScoreThenTime">
+				<Scoring Division="Performance" Level="*" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -999,7 +997,11 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				<Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="*" OpeningPts="37" type="ScoreThenTime">
+				<Scoring Division="Championship" Level="Advanced" OpeningPts="37" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
+				<Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidFrom="2004-1-1" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
@@ -1008,7 +1010,8 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				<Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" OpeningPts="37" type="ScoreThenTime">
+				<Scoring Division="Performance" Level="PI" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
+				<Scoring Division="Performance" Level="PI" OpeningPts="37" ValidFrom="2004-1-1" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -1016,6 +1019,10 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="TimePlusFaults"/>
+				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="*" type="TimePlusFaults">
@@ -1028,7 +1035,7 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 					<TitlePoints Faults="7" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime"/>
-				<Scoring Division="Performance" Level="Tournament" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<Note>Effective starting in 2004</Note>
 					<TitlePoints Faults="7" Points="1"/>
 				</Scoring>

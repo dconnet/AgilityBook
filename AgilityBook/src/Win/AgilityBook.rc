@@ -145,6 +145,9 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
         MENUITEM SEPARATOR
+        MENUITEM "&Find\tCtrl+f",               ID_EDIT_FIND
+        MENUITEM "Find Next\tF3",               ID_EDIT_FIND_NEXT
+        MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
         MENUITEM SEPARATOR
         MENUITEM "&Judges...\tCtrl+J",          ID_EDIT_JUDGES
@@ -364,7 +367,7 @@ BEGIN
     "A",            ID_EDIT_SELECT_ALL,     VIRTKEY, CONTROL, NOINVERT
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     "E",            ID_FILE_EXPORT_WIZARD,  VIRTKEY, CONTROL, NOINVERT
-    "F",            ID_VIEW_OPTIONS,        VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
     "J",            ID_EDIT_JUDGES,         VIRTKEY, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
@@ -376,8 +379,10 @@ BEGIN
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
     VK_F12,         ID_FILE_SAVE_AS,        VIRTKEY, NOINVERT
+    VK_F3,          ID_EDIT_FIND_NEXT,      VIRTKEY, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_F7,          ID_VIEW_OPTIONS,        VIRTKEY, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
@@ -505,7 +510,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,154,24,50,14
 END
 
-IDD_CONFIG_EVENT DIALOG DISCARDABLE  0, 0, 334, 287
+IDD_CONFIG_EVENT DIALOG DISCARDABLE  0, 0, 334, 302
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Event"
 FONT 8, "MS Shell Dlg"
@@ -517,7 +522,7 @@ BEGIN
     LTEXT           "Event N&ote",IDC_STATIC,7,23,21,16
     EDITTEXT        IDC_DESC,30,23,200,28,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
-    GROUPBOX        "Scoring Methods",IDC_STATIC,7,55,320,225
+    GROUPBOX        "Scoring Methods",IDC_STATIC,7,55,320,240
     LTEXT           "Division/Levels defined",IDC_STATIC,15,67,74,8
     LISTBOX         IDC_METHODS,15,77,123,84,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
@@ -529,44 +534,48 @@ BEGIN
     LTEXT           "Division/Levels not defined",IDC_STATIC,196,67,86,8
     LISTBOX         IDC_UNUSED,196,77,123,84,LBS_NOINTEGRALHEIGHT | 
                     WS_DISABLED | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
-    CONTROL         "Valid From",IDC_DATE_START,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,165,49,10
-    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+    CONTROL         "Valid From",IDC_DATE_VALID_FROM,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,165,49,10
+    CONTROL         "DateTimePicker1",IDC_DATE_START,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,66,164,60,12
-    LTEXT           "&Division",IDC_STATIC,15,182,25,8
-    COMBOBOX        IDC_DIVISION,45,180,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    CONTROL         "Valid To",IDC_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,179,49,10
+    CONTROL         "DateTimePicker1",IDC_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,66,178,60,12
+    LTEXT           "&Division",IDC_STATIC,15,197,25,8
+    COMBOBOX        IDC_DIVISION,45,195,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Level",IDC_STATIC,15,198,18,8
-    COMBOBOX        IDC_LEVEL,45,196,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Level",IDC_STATIC,15,213,18,8
+    COMBOBOX        IDC_LEVEL,45,211,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Scoring style",IDC_STATIC,15,212,26,16
-    COMBOBOX        IDC_TYPE,45,212,115,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Scoring style",IDC_STATIC,15,227,26,16
+    COMBOBOX        IDC_TYPE,45,227,115,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "D&rop time fractions for faults",IDC_DROP_FRACTIONS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,45,227,103,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,45,242,103,10
     LTEXT           "Method Note",IDC_STATIC,169,167,26,16
-    EDITTEXT        IDC_NOTES,196,167,123,56,ES_MULTILINE | ES_WANTRETURN | 
+    EDITTEXT        IDC_NOTES,196,167,123,72,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
-    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,242,29,16,NOT 
+    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,257,29,16,NOT 
                     WS_VISIBLE
-    EDITTEXT        IDC_OPENING_PTS,50,242,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
+    EDITTEXT        IDC_OPENING_PTS,50,257,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
                     NOT WS_VISIBLE
-    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,15,261,29,16,NOT 
+    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,15,276,29,16,NOT 
                     WS_VISIBLE
-    EDITTEXT        IDC_CLOSING_PTS,50,261,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
+    EDITTEXT        IDC_CLOSING_PTS,50,276,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
                     NOT WS_VISIBLE
     CONTROL         "S&uper Q?",IDC_SUPERQ,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,110,242,45,10
+                    WS_TABSTOP,110,257,45,10
     CONTROL         "&Mach Points?",IDC_MACH,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,110,254,57,10
+                    WS_TABSTOP,110,269,57,10
     CONTROL         "D&ouble Q?",IDC_DOUBLEQ,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,110,266,49,10
-    LTEXT           "Title Points",IDC_STATIC,172,229,20,16
-    LISTBOX         IDC_LIST,196,229,88,44,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP,110,281,49,10
+    LTEXT           "Title Points",IDC_STATIC,172,244,20,16
+    LISTBOX         IDC_LIST,196,244,88,44,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
                     WS_HSCROLL | WS_TABSTOP
-    PUSHBUTTON      "New...",IDC_TITLE_NEW,289,229,30,12
-    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,289,245,30,12
-    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,289,261,30,12
+    PUSHBUTTON      "New...",IDC_TITLE_NEW,289,244,30,12
+    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,289,260,30,12
+    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,289,276,30,12
     DEFPUSHBUTTON   "OK",IDOK,277,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,277,24,50,14
 END
@@ -1318,7 +1327,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 327
         TOPMARGIN, 7
-        BOTTOMMARGIN, 280
+        BOTTOMMARGIN, 295
     END
 
     IDD_DOG, DIALOG
@@ -1936,6 +1945,7 @@ BEGIN
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_EDIT_JUDGES          "Edit judge information\nJudges"
+    ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
 END
 
 #endif    // English (U.S.) resources

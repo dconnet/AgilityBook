@@ -129,7 +129,8 @@ If there are no 'TitlePoints', then the class is non-titling.
 		>
 <!ELEMENT Scoring (Note?, TitlePoints*) >
 	<!ATTLIST Scoring
-		Date CDATA #IMPLIED
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
 		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults) #REQUIRED

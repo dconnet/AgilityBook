@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -40,6 +41,7 @@
 #include "ARBVector.h"
 class ARBConfig;
 class ARBConfigScoring;
+class ARBDate;
 class ARBVersion;
 class CElement;
 
@@ -112,7 +114,8 @@ public:
 		const ARBConfig* inConfig,
 		const std::string& inEvent,
 		const std::string& inDivision,
-		const std::string& inLevel) const;
+		const std::string& inLevel,
+		const ARBDate& inDate) const;
 	const ARBDogClub* FindVenue(const std::string& inVenue) const;
 
 	ARBDogClub* AddClub(

@@ -215,6 +215,8 @@
 #define IDC_COLUMNS                     1164
 #define IDC_AVAILABLE                   1165
 #define IDC_COPY                        1166
+#define IDC_DATE_VALID_FROM             1167
+#define IDC_DATE_VALID_TO               1168
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -411,6 +413,7 @@
 #define ID_VIEW_SORTRUNS                32806
 #define ID_VIEW_RUNS_BY_TRIAL           32807
 #define ID_EDIT_JUDGES                  32808
+#define ID_EDIT_FIND_NEXT               32809
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -419,8 +422,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        185
-#define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1167
+#define _APS_NEXT_COMMAND_VALUE         32810
+#define _APS_NEXT_CONTROL_VALUE         1169
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

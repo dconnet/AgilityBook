@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
@@ -354,7 +355,8 @@ void CDlgRunReference::OnRefRunNew()
 			m_Venue->GetName(),
 			m_Run->GetEvent(),
 			m_Run->GetDivision(),
-			m_Run->GetLevel());
+			m_Run->GetLevel(),
+			m_Run->GetDate());
 		if (pScoring)
 		{
 			std::string nScore;

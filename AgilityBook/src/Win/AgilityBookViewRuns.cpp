@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
@@ -172,7 +173,8 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),
-						m_pRun->GetLevel());
+						m_pRun->GetLevel(),
+						m_pRun->GetDate());
 					if (pScoring)
 						pts = m_pRun->GetTitlePoints(pScoring);
 				}
