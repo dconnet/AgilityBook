@@ -1,7 +1,5 @@
-#pragma once
-
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,50 +27,61 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptions class
+ * @brief implementation of the CDlgOptionsProgram class
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-08 DRC Created
  */
 
-#include "DlgOptionsCalendar.h"
-#include "DlgOptionsFilter.h"
-#include "DlgOptionsFonts.h"
+#include "stdafx.h"
+#include "AgilityBook.h"
 #include "DlgOptionsProgram.h"
-#include "DlgOptionsTraining.h"
-class CAgilityBookDoc;
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
+// CDlgOptionsProgram property page
 
-class CDlgOptions : public CPropertySheet
+IMPLEMENT_DYNCREATE(CDlgOptionsProgram, CPropertyPage)
+
+CDlgOptionsProgram::CDlgOptionsProgram()
+	: CPropertyPage(CDlgOptionsProgram::IDD)
 {
-	DECLARE_DYNAMIC(CDlgOptions)
-public:
-	CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgOptions();
+	//{{AFX_DATA_INIT(CDlgOptionsProgram)
+	m_bAutoCheck = TRUE;
+	m_Backups = 0;
+	//}}AFX_DATA_INIT
+}
 
-// Attributes
-public:
-	CAgilityBookDoc* m_pDoc;
-	CDlgOptionsCalendar m_pageCalendar;
-	CDlgOptionsFilter m_pageFilter;
-	CDlgOptionsFonts m_pageFonts;
-	CDlgOptionsTraining m_pageTraining;
-	CDlgOptionsProgram m_pageProgram;
+CDlgOptionsProgram::~CDlgOptionsProgram()
+{
+}
 
-// Operations
-public:
+void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
+{
+	CPropertyPage::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CDlgOptionsProgram)
+	DDX_Check(pDX, IDC_AUTO_CHECK, m_bAutoCheck);
+	DDX_Text(pDX, IDC_EDIT, m_Backups);
+	//}}AFX_DATA_MAP
+}
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgOptions)
-	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+BEGIN_MESSAGE_MAP(CDlgOptionsProgram, CPropertyPage)
+	//{{AFX_MSG_MAP(CDlgOptionsProgram)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
-protected:
-	//{{AFX_MSG(CDlgOptions)
-	afx_msg void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
+/////////////////////////////////////////////////////////////////////////////
+// CDlgOptionsProgram message handlers
+
+BOOL CDlgOptionsProgram::OnInitDialog() 
+{
+	CPropertyPage::OnInitDialog();
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}

@@ -142,6 +142,8 @@ public:
 	CAgilityBookViewCalendar* GetCalendarView() const;
 	CAgilityBookViewTraining* GetTrainingView() const;
 
+	void BackupFile(LPCTSTR lpszPathName);
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CAgilityBookDoc)

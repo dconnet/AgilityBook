@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-11 DRC Added options for import/export wizard.
@@ -191,6 +192,12 @@ public:
 		eViewCal	= 0x0100,
 		eViewLog	= 0x0200,
 	} ColumnOrder;
+	// General program options
+	static bool GetAutoUpdateCheck();
+	static void SetAutoUpdateCheck(bool bSet);
+	static int GetNumBackupFiles();
+	static void SetNumBackupFiles(int nFiles);
+
 protected:
 	friend class CDlgAssignColumns;
 	// CDlgAssignColumns has some structs for used to ensure validity.

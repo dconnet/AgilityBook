@@ -65,12 +65,13 @@
 #define IDD_VIEW_OPTIONS_FILTER         238
 #define IDD_VIEW_OPTIONS_FONTS          239
 #define IDD_VIEW_OPTIONS_TRAINING       240
-#define IDD_REORDER                     241
-#define IDD_WIZARD_START                242
-#define IDD_WIZARD_IMPORT               243
-#define IDD_WIZARD_EXPORT               244
-#define IDD_ASSIGN_COLUMNS              245
-#define IDD_FIND_LINKS                  246
+#define IDD_VIEW_OPTIONS_PROGRAM        241
+#define IDD_REORDER                     242
+#define IDD_WIZARD_START                243
+#define IDD_WIZARD_IMPORT               244
+#define IDD_WIZARD_EXPORT               245
+#define IDD_ASSIGN_COLUMNS              246
+#define IDD_FIND_LINKS                  247
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -240,6 +241,7 @@
 #define IDC_HIDDEN                      1177
 #define IDC_EARNED                      1178
 #define IDC_OPEN                        1179
+#define IDC_AUTO_CHECK                  1180
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -409,7 +411,6 @@
 #define IDS_ADDED_TRAINING_ITEMS        5169
 #define IDS_LIFETIME_POINTS             5170
 #define ID_FILE_EXPORT_WIZARD           32772
-#define ID_FILE_AUTOCHECK               32773
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780
 #define ID_EDIT_FIND_PREVIOUS           32781
@@ -455,9 +456,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        247
+#define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1180
+#define _APS_NEXT_CONTROL_VALUE         1181
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

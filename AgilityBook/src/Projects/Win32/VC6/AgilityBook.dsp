@@ -274,6 +274,10 @@ SOURCE=..\..\..\Win\DlgOptionsFonts.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsProgram.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOptionsTraining.cpp
 # End Source File
 # Begin Source File
@@ -572,6 +576,10 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgOptionsFonts.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsProgram.h
 # End Source File
 # Begin Source File
 

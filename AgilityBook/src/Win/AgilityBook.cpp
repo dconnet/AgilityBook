@@ -153,8 +153,6 @@ void UpdateVersion(bool bVerbose)
 
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	//{{AFX_MSG_MAP(CAgilityBookApp)
-	ON_UPDATE_COMMAND_UI(ID_FILE_AUTOCHECK, OnUpdateFileAutoCheck)
-	ON_COMMAND(ID_FILE_AUTOCHECK, OnFileAutoCheck)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_HELP_UPDATE, OnAppUpdate)
 	//}}AFX_MSG_MAP
@@ -347,18 +345,6 @@ int CAgilityBookApp::ExitInstance()
 }
 
 // CAgilityBookApp message handlers
-
-void CAgilityBookApp::OnUpdateFileAutoCheck(CCmdUI* pCmdUI)
-{
-	DWORD dwChecked = AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1);
-	pCmdUI->SetCheck(dwChecked);
-}
-
-void CAgilityBookApp::OnFileAutoCheck()
-{
-	DWORD dwChecked = AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1);
-	AfxGetApp()->WriteProfileInt("Settings", "autoCheck", !dwChecked);
-}
 
 void CAgilityBookApp::OnAppAbout()
 {

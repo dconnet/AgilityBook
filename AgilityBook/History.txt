@@ -1,4 +1,4 @@
-4/6/2004: v1.0.5.8 <in development>
+4/8/2004: v1.0.5.8 <in development>
 - Note: Released beta to single person on 3/26 - dealt with table code.
 - Bumped file version to 8.6, Configuration v3:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
@@ -15,6 +15,9 @@
   - Added 'Links' in the run dialog and a corresponding 'Find Links' in the
     File menu.
   - Added simple sorting to the 3 main list views: Runs, CalendarList, Training
+  - Create a backup file before saving.
+  - Added a new page in the Options dialog for program options: number of
+    backup files and auto-update-check.
 - Bug fixes
   - The 'Show Hidden Titles' menu item was never enabled.
   - When merging configuration information via the update feature, if only
@@ -25,6 +28,8 @@
     text was garbled when pasting into the CRCD text box.
   - The edit/delete buttons did not get enabled/disabled properly in the
     Reference Runs in the Runs dialog
+  - If opening a file for writing fails, the error message was wrong. (It
+    reported on the minimum required resolution.)
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:

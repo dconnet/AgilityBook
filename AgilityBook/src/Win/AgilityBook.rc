@@ -231,8 +231,7 @@ BEGIN
     BEGIN
         MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
         MENUITEM SEPARATOR
-        MENUITEM "Check for &Updates Now...",   ID_HELP_UPDATE
-        MENUITEM "Check for Updates when &starting", ID_FILE_AUTOCHECK
+        MENUITEM "Check for &Updates...",       ID_HELP_UPDATE
     END
 END
 
@@ -1296,6 +1295,18 @@ BEGIN
                     DTS_RIGHTALIGN | WS_TABSTOP,209,55,60,12
 END
 
+IDD_VIEW_OPTIONS_PROGRAM DIALOGEX 0, 0, 285, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Program"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Automatically check for updates once a month.",
+                    IDC_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,
+                    10,164,10
+    LTEXT           "Number of backup copies",IDC_STATIC,3,32,82,8
+    EDITTEXT        IDC_EDIT,90,30,20,12,ES_AUTOHSCROLL
+END
+
 IDD_REORDER DIALOG  0, 0, 297, 106
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Reorder"
@@ -1808,7 +1819,15 @@ BEGIN
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 282
-        TOPMARGIN, 4
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 159
+    END
+
+    IDD_VIEW_OPTIONS_PROGRAM, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 282
+        TOPMARGIN, 3
         BOTTOMMARGIN, 159
     END
 
@@ -2223,7 +2242,6 @@ END
 STRINGTABLE 
 BEGIN
     ID_FILE_EXPORT_WIZARD   "Import and Export Wizard\nImport/Export"
-    ID_FILE_AUTOCHECK       "Check for updates every 30 days when the program starts\nAutoCheck"
     ID_FILE_LINKED          "Find all linked files\nFind Links"
     ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
     ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
