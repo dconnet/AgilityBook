@@ -562,11 +562,11 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 130 Touch N Go points
 130 Tunnelers points
 130 Weavers points</Titles>
-				<Titles Name="Novice Versatility">
+				<Titles Name="Novice Versatility">Novice Versatility Certificate
 NAC, NGC, NJC, TN-N, WV-N, TG-N</Titles>
-				<Titles Name="Open Versatility">
+				<Titles Name="Open Versatility">Open Versatility Certificate
 OAC, OGC, OJC, TN-O, WV-O, TG-O</Titles>
-				<Titles Name="Elite Versatility">
+				<Titles Name="Elite Versatility">Elite Versatility Certificate
 EAC, EGC, EJC, TN-E, WV-E, TG-E</Titles>
 				<Titles Name="O-NAC">Novice Agility Certificate Outstanding Performance
 100 points</Titles>
@@ -662,11 +662,11 @@ EAC, EGC, EJC, TN-E, WV-E, TG-E</Titles>
 330 Touch N Go points
 330 Tunnelers points
 330 Weavers points</Titles>
-				<Titles Name="Triple Superior Performance Dog">
+				<Titles Name="Triple Superior Performance Dog">Triple Superior Performance Dog
 S-NAC, S-NGC, S-NJC
 or S-OAC, S-OGC, S-OJC
 or S-EAC, S-EGC, S-EJC</Titles>
-				<Titles Name="Triple Triple Superior Performance">
+				<Titles Name="Triple Triple Superior Performance">Triple Triple Superior Performance
 S-NAC, S-NGC, S-NJC,
 S-OAC, S-OGC, S-OJC,
 S-EAC, S-EGC, S-EJC</Titles>
