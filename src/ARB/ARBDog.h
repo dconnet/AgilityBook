@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  */
 
 #include <string>
@@ -201,8 +202,6 @@ public:
 		return !isEqual(rhs);
 	}
 
-	void sort(bool inDescending = true);
-
 	int NumRegNumsInVenue(const std::string& inVenue) const;
 	int NumTitlesInVenue(const std::string& inVenue) const;
 	int NumTrialsInVenue(const std::string& inVenue) const;
@@ -272,6 +271,6 @@ public:
 		const std::string& inVenue,
 		const std::string& inEvent);
 
-	ARBDog* AddDog(const ARBDog* inDog);
+	ARBDog* AddDog(ARBDog* inDog);
 	bool DeleteDog(const ARBDog* inDog);
 };

@@ -65,11 +65,14 @@ public:
 	void SetVenue(const std::string& inVenue);
 	const std::string& GetNumber() const;
 	void SetNumber(const std::string& inNumber);
+	const std::string& GetHeight() const;
+	void SetHeight(const std::string& inHeight);
 
 private:
 	~ARBDogRegNum();
 	std::string m_Venue;
 	std::string m_Number;
+	std::string m_Height;
 };
 
 inline const std::string& ARBDogRegNum::GetVenue() const
@@ -90,6 +93,16 @@ inline const std::string& ARBDogRegNum::GetNumber() const
 inline void ARBDogRegNum::SetNumber(const std::string& inNumber)
 {
 	m_Number = inNumber;
+}
+
+inline const std::string& ARBDogRegNum::GetHeight() const
+{
+	return m_Height;
+}
+
+inline void ARBDogRegNum::SetHeight(const std::string& inHeight)
+{
+	m_Height = inHeight;
 }
 
 /////////////////////////////////////////////////////////////////////////////

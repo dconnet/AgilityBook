@@ -105,5 +105,5 @@ public:
 		return !isEqual(rhs);
 	}
 
-	ARBDogRunOtherPoints* AddOtherPoints(const ARBDogRunOtherPoints* inOther);
+	ARBDogRunOtherPoints* AddOtherPoints(ARBDogRunOtherPoints* inOther);
 };

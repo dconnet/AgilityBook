@@ -184,15 +184,14 @@ bool ARBDogReferenceRun::Save(CElement& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBDogReferenceRun* ARBDogReferenceRunList::AddReferenceRun(const ARBDogReferenceRun* inRef)
+ARBDogReferenceRun* ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRun* inRef)
 {
-	ARBDogReferenceRun* pRef = NULL;
 	if (inRef)
 	{
-		pRef = new ARBDogReferenceRun(*inRef);
-		push_back(pRef);
+		inRef->AddRef();
+		push_back(inRef);
 	}
-	return pRef;
+	return inRef;
 }
 
 bool ARBDogReferenceRunList::DeleteReferenceRun(const ARBDogReferenceRun* inRef)
