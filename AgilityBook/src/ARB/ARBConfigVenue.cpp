@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Added a long name to the venue.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Update didn't save desc changes if nothing else changed.
  * @li 2004-02-02 DRC Added VerifyEvent.
@@ -61,6 +62,7 @@ static char THIS_FILE[] = __FILE__;
 
 ARBConfigVenue::ARBConfigVenue()
 	: m_Name()
+	, m_LongName()
 	, m_Desc()
 	, m_Divisions()
 	, m_Events()
@@ -69,6 +71,7 @@ ARBConfigVenue::ARBConfigVenue()
 
 ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
+	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
 	, m_Divisions(rhs.m_Divisions)
 	, m_Events(rhs.m_Events)
@@ -84,6 +87,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
+		m_LongName = rhs.m_LongName;
 		m_Desc = rhs.m_Desc;
 		m_Divisions = rhs.m_Divisions;
 		m_Events = rhs.m_Events;
@@ -94,6 +98,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 {
 	return m_Name == rhs.m_Name
+		&& m_LongName == rhs.m_LongName
 		&& m_Desc == rhs.m_Desc
 		&& m_Divisions == rhs.m_Divisions
 		&& m_Events == rhs.m_Events;
@@ -107,6 +112,7 @@ bool ARBConfigVenue::operator!=(ARBConfigVenue const& rhs) const
 void ARBConfigVenue::clear()
 {
 	m_Name.erase();
+	m_LongName.erase();
 	m_Desc.erase();
 	m_Divisions.clear();
 	m_Events.clear();
@@ -131,6 +137,8 @@ bool ARBConfigVenue::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
 		return false;
 	}
+	// Long name added in v10.1
+	inTree.GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
@@ -184,6 +192,8 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 {
 	Element& venue = ioTree.AddElement(TREE_VENUE);
 	venue.AddAttrib(ATTRIB_VENUE_NAME, m_Name);
+	if (0 < m_LongName.length())
+		venue.AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	if (0 < m_Desc.length())
 	{
 		Element& desc = venue.AddElement(TREE_VENUE_DESC);
@@ -209,6 +219,12 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 	indentName += "-";
 
 	bool bChanges = false;
+	if (GetLongName() != inVenueNew->GetLongName())
+	{
+		bChanges = true;
+		SetLongName(inVenueNew->GetLongName());
+	}
+
 	if (GetDesc() != inVenueNew->GetDesc())
 	{
 		bChanges = true;

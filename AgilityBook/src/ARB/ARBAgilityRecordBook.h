@@ -134,6 +134,7 @@
 #define ATTRIB_ACTION_OLDNAME				"OldName"
 #define ATTRIB_ACTION_NEWNAME				"NewName"
 #define ATTRIB_VENUE_NAME					"Name"
+#define ATTRIB_VENUE_LONGNAME				"LongName"
 #define ATTRIB_OTHERPTS_NAME				"Name"
 #define ATTRIB_OTHERPTS_COUNT				"Count"
 #define ATTRIB_DIVISION_NAME				"Name"

@@ -115,6 +115,8 @@ public:
 	 */
 	std::string const& GetName() const;
 	void SetName(std::string const& inName);
+	std::string const& GetLongName() const;
+	void SetLongName(std::string const& inName);
 	std::string const& GetDesc() const;
 	void SetDesc(std::string const& inDesc);
 	ARBConfigDivisionList const& GetDivisions() const;
@@ -125,6 +127,7 @@ public:
 private:
 	~ARBConfigVenue();
 	std::string m_Name;
+	std::string m_LongName;
 	std::string m_Desc;
 	ARBConfigDivisionList m_Divisions;
 	ARBConfigEventList m_Events;
@@ -143,6 +146,16 @@ inline std::string const& ARBConfigVenue::GetName() const
 inline void ARBConfigVenue::SetName(std::string const& inName)
 {
 	m_Name = inName;
+}
+
+inline std::string const& ARBConfigVenue::GetLongName() const
+{
+	return m_LongName;
+}
+
+inline void ARBConfigVenue::SetLongName(std::string const& inName)
+{
+	m_LongName = inName;
 }
 
 inline std::string const& ARBConfigVenue::GetDesc() const

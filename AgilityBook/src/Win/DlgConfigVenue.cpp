@@ -119,6 +119,7 @@ void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigVenue)
 	DDX_Control(pDX, IDC_CONFIG_VENUE, m_ctrlName);
+	DDX_Control(pDX, IDC_CONFIG_VENUE_LONGNAME, m_ctrlLongName);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_DESC, m_ctrlDesc);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_LEVEL, m_ctrlLevels);
@@ -614,6 +615,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	m_ctrlEvents.InsertColumn(0, "Events");
 
 	m_ctrlName.SetWindowText(m_pVenue->GetName().c_str());
+	m_ctrlLongName.SetWindowText(m_pVenue->GetLongName().c_str());
 	CString str(m_pVenue->GetDesc().c_str());
 	str.Replace("\n", "\r\n");
 	m_ctrlDesc.SetWindowText(str);
@@ -1589,6 +1591,8 @@ void CDlgConfigVenue::OnOK()
 		}
 		m_pVenue->SetName(name);
 	}
+	m_ctrlLongName.GetWindowText(str);
+	m_pVenue->SetLongName((LPCTSTR)str);
 	m_ctrlDesc.GetWindowText(str);
 	str.TrimRight();
 	str.Replace("\r\n", "\n");
