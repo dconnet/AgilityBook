@@ -266,14 +266,6 @@ bool ARBConfigDivisionList::VerifyLevel(const std::string& inDiv, const std::str
 	return false;
 }
 
-bool ARBConfigDivisionList::VerifyTitle(const std::string& inTitle) const
-{
-	if (FindTitle(inTitle))
-		return true;
-	else
-		return false;
-}
-
 const ARBConfigDivision* ARBConfigDivisionList::FindDivision(const std::string& inDiv) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -330,6 +322,17 @@ int ARBConfigDivisionList::DeleteDivision(const std::string& inDiv, ARBConfigEve
 		}
 	}
 	return 0;
+}
+
+const ARBConfigTitle* ARBConfigDivisionList::FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		const ARBConfigTitle* pTitle = (*iter)->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst);
+		if (pTitle)
+			return pTitle;
+	}
+	return NULL;
 }
 
 const ARBConfigTitle* ARBConfigDivisionList::FindTitle(const std::string& inTitle) const

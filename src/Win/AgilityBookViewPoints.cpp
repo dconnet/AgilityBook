@@ -523,7 +523,7 @@ void CAgilityBookViewPoints::LoadData()
 					}
 					GetListCtrl().InsertItem(i, "");
 					GetListCtrl().SetItemText(i, 1, pTitle->GetDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str());
-					CString str = pTitle->GetName().c_str();
+					CString str = GetDocument()->GetConfig().GetTitleCompleteName(pTitle->GetVenue(), pTitle->GetName(), false).c_str();
 					if (pTitle->GetReceived())
 						str += "*";
 					GetListCtrl().SetItemText(i, 2, str);

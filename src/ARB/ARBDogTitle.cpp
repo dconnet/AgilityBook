@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-26 DRC Recover from a bug where the title name was the nice name.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -125,6 +126,15 @@ bool ARBDogTitle::Load(
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE);
 		return false;
 	}
+	const ARBConfigVenue* pVenue = inConfig.GetVenues().FindVenue(m_Venue);
+	if (!pVenue)
+	{
+		std::string msg("Unknown venue name: '");
+		msg += m_Venue;
+		msg += "'";
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str());
+		return false;
+	}
 
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
@@ -155,14 +165,24 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (!inConfig.GetVenues().VerifyTitle(m_Venue, m_Name))
+	if (NULL == inConfig.GetVenues().FindTitle(m_Venue, m_Name))
 	{
-		std::string msg(INVALID_TITLE);
-		msg += m_Venue;
-		msg += "/";
-		msg += m_Name;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str());
-		return false;
+		// This fixes a bug in v1.0.0.8 where the 'nice' name was being written
+		// as the title name.
+		const ARBConfigTitle* pTitle = inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, true);
+		if (!pTitle)
+			pTitle = inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, false);
+		if (pTitle)
+			m_Name = pTitle->GetName();
+		else
+		{
+			std::string msg(INVALID_TITLE);
+			msg += m_Venue;
+			msg += "/";
+			msg += m_Name;
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str());
+			return false;
+		}
 	}
 
 	return true;

@@ -344,14 +344,25 @@ bool ARBConfigVenueList::VerifyLevel(
 	return false;
 }
 
-bool ARBConfigVenueList::VerifyTitle(
+const ARBConfigTitle* ARBConfigVenueList::FindTitleCompleteName(
+	const std::string& inVenue,
+	const std::string& inName,
+	bool bAbbrevFirst) const
+{
+	const ARBConfigVenue* pVenue = FindVenue(inVenue);
+	if (pVenue)
+		return pVenue->GetDivisions().FindTitleCompleteName(inName, bAbbrevFirst);
+	return NULL;
+}
+
+const ARBConfigTitle* ARBConfigVenueList::FindTitle(
 	const std::string& inVenue,
 	const std::string& inTitle) const
 {
 	const ARBConfigVenue* pVenue = FindVenue(inVenue);
 	if (pVenue)
-		return pVenue->GetDivisions().VerifyTitle(inTitle);
-	return false;
+		return pVenue->GetDivisions().FindTitle(inTitle);
+	return NULL;
 }
 
 const ARBConfigVenue* ARBConfigVenueList::FindVenue(const std::string& inVenue) const

@@ -73,6 +73,10 @@ public:
 	void Default();
 	static std::string GetDTD();
 
+	std::string GetTitleCompleteName(
+		const std::string& inVenue,
+		const std::string& inTitle,
+		bool bAbbrevFirst = true) const;
 	std::string Update(int indent, const ARBConfig& inConfigNew);
 
 	const ARBConfigActionList& GetActions() const;

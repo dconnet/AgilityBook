@@ -157,6 +157,16 @@ std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+const ARBConfigTitle* ARBConfigTitleList::FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetCompleteName(bAbbrevFirst) == inName)
+			return (*iter);
+	}
+	return NULL;
+}
+
 const ARBConfigTitle* ARBConfigTitleList::FindTitle(const std::string& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)

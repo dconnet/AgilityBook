@@ -159,7 +159,11 @@ public:
 		const std::string& inDivision,
 		const std::string& inLevel
 		) const;
-	bool VerifyTitle(
+	const ARBConfigTitle* FindTitleCompleteName(
+		const std::string& inVenue,
+		const std::string& inName,
+		bool bAbbrevFirst = true) const;
+	const ARBConfigTitle* FindTitle(
 		const std::string& inVenue,
 		const std::string& inTitle) const;
 
