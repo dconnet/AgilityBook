@@ -1,9 +1,13 @@
-8/25/2004: v1.3.0.8 <in development>
+8/26/2004: v1.3.0.9 <in development>
 - Bumped Configuration v5:
-  - Removed titling points from USDAA Tournament Jumper/Snooker.
-  - Added non-titling Performance events for Steeplechase and DAM Team since
-    many clubs offer these. (They will typically be offered using different
-    names.)
+  - Update USDAA configuration to remove titling points from Tournament
+    Jumpers and Snooker. Tournament runs that offered titling should be
+    entered in the Div/Level they apply to.
+  - Add Performance events for the Tournament runs (except Pairs) and
+    Steeplechase. These are non-titling events, but many clubs are offering
+    them now. Note, the name of the event will vary from club to club. We
+    will just treat them as real runs. (If USDAA ever extends these events
+    to Performance, then it will be easier to update.)
 - New features / Enhancements:
   - Check for configuration updates when the user requests an update check.
     These are auto-downloaded from the web. Configuration checks are also
@@ -11,8 +15,8 @@
     web information - opening a document will not access the web).
   - Added 'verified' option to trials in the tree (via column customization)
   - Added dbl-click support in the Points view to see the runs behind the data.
-  - Enable the new title toolbar button in the Points view.
-  - Added merging of existing ARB files.
+  - Enable the 'new title' toolbar button in the Points view.
+  - Enable the merging (via Import) of Dogs, Trials, Runs, Judges.
 - Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.

@@ -6,6 +6,55 @@
 <BODY>
 <h1>History of releases</h1>
 <ul>
+	<li><b>?: v1.3.0.9</b>
+		<ul>
+			<li>Bumped Configuration to v5
+				<ul>
+					<li>Updated USDAA configuration to remove titling points
+					from Tournament Jumpers and Snooker. Tournament runs that
+					offered titling should be entered in the Div/Level they
+					apply to.</li>
+					<li>Add Performance events for the Tournament runs (except
+					Pairs) and Steeplechase. These are non-titling events, but
+					many clubs are offering them now. Note, the name of the
+					event will vary from club to club. We will just treat
+					them as real runs. (If USDAA ever extends these events
+					to Performance, then it will be easier to update.)</li>
+				</ul>
+			</li>
+			<li>New features / Enhancements:
+				<ul>
+					<li>Check for configuration updates when the user requests
+					an update check. These are auto-downloaded from the web.
+					Configuration checks are also done when a document is opened
+					(but only if a previous check loaded the web information
+					- opening a document will not access the web).</li>
+					<li>Added 'verified' option to trials in the tree (via
+					column customization)</li>
+					<li>Added dbl-click support in the Points view to see the
+					runs behind the data.</li>
+					<li>Enable the 'new title' toolbar button in the Points
+					view.</li>
+					<li>Enable the merging (via Import) of Dogs, Trials, Runs,
+					Judges.</li>
+					</li>
+				</ul>
+			</li>
+			<li>Bug Fixes:
+				<ul>
+					<li>When updating the configuration, if they are the same
+					but the version numbers are different, go ahead and update
+					the version number.</li>
+					<li>If you dbl-clicked in some of the configuration
+					dialogs when nothing was selected, the program faulted.</li>
+					<li>Existing other points were tallied in all exising
+					other points entries.</li>
+					<li>Up/Down sort icons on lists were backwards.</li>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
 	<li><b>7/3/2004: v1.2.1.8</b>
 		<ul>
 			<li>Bug Fixes
