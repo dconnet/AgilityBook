@@ -35,6 +35,8 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-09-15 DRC Fixed a bug where a trial created for more than one dog
+ *                    at the same time actually only created one linked entry.
  * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
  *                    I don't have to use UpdateAllViews. Added methods to allow
  *                    creating titles/trials/runs from the Run view.
@@ -225,7 +227,13 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* 
 			{
 				bCreated = true;
 				ARBDog* pDog = *iter;
-				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pTrial);
+				// If we're inserting this entry into more than one dog, we
+				// MUST make a copy. Otherwise the trial will be the same trial
+				// for both dogs and all changes will be reflected from one to
+				// the other - until you save, exit and reload the program.
+				ARBDogTrial* pCopyTrial = new ARBDogTrial(*pTrial);
+				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pCopyTrial);
+				pCopyTrial->Release();
 				SetModifiedFlag();
 				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(pNewTrial));
 			}
