@@ -536,6 +536,7 @@ void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult
 		CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pDispInfo->item.lParam);
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	if (pDispInfo->item.mask & LVIF_IMAGE)
 	{

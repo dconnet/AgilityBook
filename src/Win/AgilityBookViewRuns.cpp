@@ -718,6 +718,7 @@ void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 		CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pDispInfo->item.lParam);
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	*pResult = 0;
 }

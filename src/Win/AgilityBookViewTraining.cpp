@@ -483,6 +483,7 @@ void CAgilityBookViewTraining::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 		CAgilityBookViewTrainingData *pData = reinterpret_cast<CAgilityBookViewTrainingData*>(pDispInfo->item.lParam);
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	*pResult = 0;
 }

@@ -751,7 +751,7 @@ void CAgilityBookTree::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 		CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(pDispInfo->item.lParam);
 		CString str = pData->OnNeedText();
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
-		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = NULL;
+		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	*pResult = 0;
 }
