@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-07-31 DRC Allow screen fonts for printer font selection. Also, the
+ *                    wrong font was created for the printer date font.
  */
 
 #include "stdafx.h"
@@ -142,10 +144,10 @@ void CDlgOptionsCalendar::OnFont2Date()
 {
 	LOGFONT logFont;
 	m_fontDate[1].GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_PRINTERFONTS);
+	CFontDialog dlg(&logFont, CF_SCREENFONTS|CF_PRINTERFONTS);
 	if (IDOK == dlg.DoModal())
 	{
-		m_fontDateInfo[1].CreateFont(dlg, m_fontText[1]);
+		m_fontDateInfo[1].CreateFont(dlg, m_fontDate[1]);
 		m_ctrlFontDate.SetFont(&(m_fontDate[1]));
 	}
 }
@@ -154,7 +156,7 @@ void CDlgOptionsCalendar::OnFont2Text()
 {
 	LOGFONT logFont;
 	m_fontText[1].GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_PRINTERFONTS);
+	CFontDialog dlg(&logFont, CF_SCREENFONTS|CF_PRINTERFONTS);
 	if (IDOK == dlg.DoModal())
 	{
 		m_fontTextInfo[1].CreateFont(dlg, m_fontText[1]);
