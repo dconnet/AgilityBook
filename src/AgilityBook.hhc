@@ -240,6 +240,18 @@
 					<param name="Local" value="Help\html\DlgDogPicker.html">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Dog Registration Number Dialog">
+					<param name="Local" value="Help\html\DlgRegNum.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Existing Points Dialog">
+					<param name="Local" value="Help\html\DlgExistingPoints.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Fault Dialog">
+					<param name="Local" value="Help\html\DlgFault.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Find">
 					<param name="Local" value="Help\html\DlgFind.html">
 					</OBJECT>
@@ -250,6 +262,18 @@
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Judge Information">
 					<param name="Local" value="Help\html\DlgJudgeInfo.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Other Points Dialog">
+					<param name="Local" value="Help\html\DlgOtherPoints.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Partner Dialog">
+					<param name="Local" value="Help\html\DlgPartner.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Reference Run Dialog">
+					<param name="Local" value="Help\html\DlgRefRun.html">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Reorder">

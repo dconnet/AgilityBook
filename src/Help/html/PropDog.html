@@ -5,23 +5,8 @@
 </HEAD>
 <BODY>
 <h1>Dog Properties</h1>
-<ul>
-    <li>IDD_DOG_PROP Properties</li>
-    <li>IDD_DOG_TITLES Dog Titles<ul>
-      <li>IDD_TITLE Title</li>
-    </ul>
-    </li>
-    <li>IDD_DOG_NUMBERS Dog Numbers<ul>
-      <li>IDD_REG_NUM Reg Numbers</li>
-    </ul>
-    </li>
-    <li>IDD_DOG_POINTS Dog Existing Points<ul>
-      <li>IDD_EXISTING_POINTS Existing Points</li>
-    </ul>
-    </li>
-  </ul>
-<p>The first time you edit a dog, you are presented with a dialog that has the 
-following four pages:</p>
+<p>The Dog Property dialog allows you to record quite a bit of information about 
+your dog.</p>
 <ul>
   <li><a href="#Properties">Properties</a></li>
   <li><a href="#Titles">Titles</a></li>
@@ -30,19 +15,23 @@ following four pages:</p>
 </ul>
 <h2><a name="Properties">Properties</a></h2>
 <p><img border="0" src="images/DlgNewDogProp.gif" width="551" height="387"></p>
-<p>The only field that you absolutely must fill out is the Call Name. All other 
-fields are optional. Though you probably will want to set the date of birth to 
+<p>The only field that you absolutely must fill out is the <b>Call Name</b>. All other 
+fields are optional. Though you probably will want to set the <b>Birthday</b> to 
 the correct date!</p>
-<p>The Notes field is for an miscellaneous data you may want to record, for 
+<p>If your dog has passed away, checking the <b>Deceased</b> button will enable 
+a date you can enter. Once this is done, the age of the dog will no longer be 
+based on the current date.</p>
+<p>The <b>Notes</b> field is for any miscellaneous data you may want to record, for 
 instance, an embedded chip id or city license number.</p>
 <h2><a name="Titles">Titles</a></h2>
 <p><img border="0" src="images/DlgNewDogTitles.gif" width="551" height="387"></p>
 <p>This page is for recording an titles that you earn. After entering a title 
-via a menu item or the toolbar
+via a <a href="MenuMain.html#TitleNew">menu item</a> or the toolbar button
 <img border="0" src="images/ToolbarNewTitle.gif" width="18" height="17">, you will be 
 taken to this page.</p>
-<p>The &quot;View Hidden&quot; option (also available on the main &quot;View-&gt;Show Hidden 
-Titles&quot; menu), allows you to hide titles you no longer want to see. There are 
+<p>The <b>View Hidden</b> option (also available on the main 
+<a href="MenuMain.html#ShowHiddenTitles">View-&gt;Show Hidden 
+Titles</a> menu), allows you to hide titles you no longer want to see. There are 
 two occasions you may want to hide a title:</p>
 <ul>
   <li>The title has been superceded by a later title. For instance, earning your 
@@ -51,9 +40,28 @@ two occasions you may want to hide a title:</p>
   competing in USDAA prior to 2004 and are currently in Masters, you will never 
   earn the new game titles.</li>
 </ul>
+<p>When you create a new title using the <b>New</b> button, or edit an existing 
+entry with the <b>Edit</b> button (double-clicking on an entry will also edit 
+it), you will be taken to the <a href="DlgTitle.html">Title dialog</a>.</p>
+<p>If you notice the column headers, you may think they look a little strange. 
+The &quot;&lt;&quot; and &quot;&gt;&quot; symbols denote a descending or ascending sort. The number in 
+parentheses denotes the sort order. This applies to any lists you see that have 
+this appearance.</p>
 <h2><a name="Registration">Registration Numbers</a></h2>
 <p><img border="0" src="images/DlgNewDogRegNum.gif" width="551" height="387"></p>
+<p>The Registration Numbers pane is used to enter all the registration numbers 
+you have for the various venues. This number will be listed in the Points view. 
+When you create a new entry or edit an existing one, you will be taken to the
+<a href="DlgRegNum.html">Registration Number dialog</a>.</p>
 <h2><a name="Existing">Existing Points</a></h2>
 <p><img border="0" src="images/DlgNewDogExistingPts.gif" width="551" height="387"></p>
+<p>Existing Points allow you to create a dog in Agility Record Book who has been 
+competing for a while without the need to enter all of their runs. Typically, 
+the points generated in the Points view are based only on runs that Agility 
+Record Book knows about. If you have a dog with 200 runs, you may not want to 
+enter all that data! This pane allows you to tell Agility Record Book about 
+points you have already earned.</p>
+<p>Clicking the <b>New</b> or <b>Edit</b> buttons will take you to the
+<a href="DlgExistingPoints.html">Existing Points dialog</a>.</p>
 </BODY>
 </HTML>
