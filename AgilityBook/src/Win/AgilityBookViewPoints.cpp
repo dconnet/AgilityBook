@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-12-09 DRC Fixed problem tallying QQs when a 3rd run is present.
  * @li 2003-11-22 DRC Added more dog information into the report.
@@ -520,7 +521,7 @@ void CAgilityBookViewPoints::LoadData()
 						++i;
 					}
 					GetListCtrl().InsertItem(i, "");
-					GetListCtrl().SetItemText(i, 1, pTitle->GetDate().GetString(false, false).c_str());
+					GetListCtrl().SetItemText(i, 1, pTitle->GetDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str());
 					CString str = pTitle->GetName().c_str();
 					if (pTitle->GetReceived())
 						str += "*";

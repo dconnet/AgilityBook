@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-29 DRC Created default column orders.
  * @li 2003-12-11 DRC Added options for import/export wizard.
@@ -42,6 +43,7 @@
 #include "AgilityBookOptions.h"
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBDate.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
 #include "DlgAssignColumns.h"
@@ -801,6 +803,26 @@ void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, con
 		section = "Export";
 	AfxGetApp()->WriteProfileInt(section, "delim", delim);
 	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
+}
+
+void CAgilityBookOptions::GetImportExportDateFormat(bool bImport, ARBDate::DateFormat& outFormat)
+{
+	CString section;
+	if (bImport)
+		section = "Import";
+	else
+		section = "Export";
+	outFormat = static_cast<ARBDate::DateFormat>(AfxGetApp()->GetProfileInt(section, "dateformat", static_cast<int>(ARBDate::eDashYYYYMMDD)));
+}
+
+void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDate::DateFormat inFormat)
+{
+	CString section;
+	if (bImport)
+		section = "Import";
+	else
+		section = "Export";
+	AfxGetApp()->WriteProfileInt(section, "dateformat", static_cast<int>(inFormat));
 }
 
 void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int>& outValues)

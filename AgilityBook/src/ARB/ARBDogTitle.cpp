@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -100,7 +101,7 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(false, true));
+	ioStrings.insert(m_Date.GetString(false, ARBDate::eDashYYYYMMDD));
 	++nItems;
 
 	ioStrings.insert(m_Venue);

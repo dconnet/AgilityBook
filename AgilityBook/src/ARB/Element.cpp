@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces 2.2.0.
  *
  * Revision History
+ * @li 2004-01-04 DRC Moved date parsing code to ARBDate::FromString.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
  */
@@ -1048,44 +1049,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBDate& o
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		std::string::size_type pos = value.find('-');
-		int yr = 0, mon = 0, day = 0;
-		if (std::string::npos != pos)
-		{
-			yr = static_cast<short>(atol(value.c_str()));
-			value = value.substr(pos+1);
-			pos = value.find('-');
-			if (std::string::npos != pos)
-			{
-				mon = static_cast<short>(atol(value.c_str()));
-				value = value.substr(pos+1);
-				day = static_cast<short>(atol(value.c_str()));
-			}
-		}
-		else
-		{
-			pos = value.find('/');
-			if (std::string::npos != pos)
-			{
-				mon = static_cast<short>(atol(value.c_str()));
-				value = value.substr(pos+1);
-				pos = value.find('/');
-				if (std::string::npos != pos)
-				{
-					day = static_cast<short>(atol(value.c_str()));
-					value = value.substr(pos+1);
-					yr = static_cast<short>(atol(value.c_str()));
-				}
-			}
-		}
-		ARBDate date(yr, mon, day);
-		if (date.IsValid())
-		{
-			int yr2, mon2, day2;
-			date.GetDate(yr2, mon2, day2);
-			if (yr != yr2 || mon != mon2 || day != day2)
-				date.clear();
-		}
+		ARBDate date = ARBDate::FromString(value, ARBDate::eDefault);
 		if (date.IsValid())
 			outValue = date;
 		else
@@ -1175,7 +1139,7 @@ bool CElement::AddAttrib(const std::string& inName, const ARBVersion& inValue)
 bool CElement::AddAttrib(const std::string& inName, const ARBDate& inValue)
 {
 	if (inValue.IsValid())
-		AddAttrib(inName, inValue.GetString(false, true));
+		AddAttrib(inName, inValue.GetString(false, ARBDate::eDashYYYYMMDD));
 	return true;
 }
 

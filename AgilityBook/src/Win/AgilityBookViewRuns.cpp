@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-30 DRC Implemented full column reordering.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -126,7 +127,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pDog->GetCallName().c_str();
 			break;
 		case IO_RUNS_DATE:
-			str = m_pRun->GetDate().GetString(false, true).c_str();
+			str = m_pRun->GetDate().GetString(false, ARBDate::eSlashMMDDYYYY).c_str();
 			break;
 		case IO_RUNS_VENUE:
 			{

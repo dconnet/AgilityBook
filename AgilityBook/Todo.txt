@@ -1,4 +1,4 @@
-Last Updated: 12/30/03
+Last Updated: 1/4/04
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,
@@ -13,7 +13,6 @@ Last Updated: 12/30/03
     about the importance of matching div/level/etc names to the config names.
     In addition, need some intelligence to group several days of runs into a
     single trial.
-	- Need to add UI controls to specify input date format
 
 - Rework Configuration dialog so it is easier to use.
   - Allow items (divisions/levels/etc) in config dialog to be reordered.

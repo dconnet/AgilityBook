@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-11 DRC Added options for import/export wizard.
  */
 
@@ -169,6 +170,8 @@ public:
 	static void SetImportStartRow(int row);
 	static void GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter);
 	static void SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter);
+	static void GetImportExportDateFormat(bool bImport, ARBDate::DateFormat& outFormat);
+	static void SetImportExportDateFormat(bool bImport, ARBDate::DateFormat inFormat);
 	typedef enum
 	{
 		eUnknown	= 0x0000,

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003 David Connet. All Rights Reserved.
+ * Copyright © 2003-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-12-14 DRC Re-sort items after editing an existing one.
  * @li 2003-09-21 DRC Created
@@ -112,7 +113,7 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_LOG_DATE:
-			str = m_pTraining->GetDate().GetString(false, false).c_str();
+			str = m_pTraining->GetDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_LOG_NAME:
 			str = m_pTraining->GetName().c_str();

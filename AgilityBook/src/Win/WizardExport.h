@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2003 David Connet. All Rights Reserved.
+ * Copyright © 2003-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-10 DRC Created
  */
 
@@ -56,6 +57,7 @@ private:
 	int	m_Delim;
 	CString	m_Delimiter;
 	CButton	m_ctrlAssign;
+	CComboBox	m_ctrlDateFormat;
 	CListBox2	m_ctrlPreview;
 	//}}AFX_DATA
 	CWizard* m_pSheet;
@@ -83,6 +85,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnExportDelim();
 	afx_msg void OnExportAssign();
+	afx_msg void OnSelchangeDate();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
