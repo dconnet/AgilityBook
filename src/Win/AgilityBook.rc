@@ -1510,7 +1510,7 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com"
+    IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com?subject=AgilityBook Help: "
     IDS_ABOUT_LINK3         "Source Forge\thttp://sourceforge.net/projects/agilitybook"
     IDS_NEW                 "<New>"
     IDS_CONFIGURE           "Configure"
