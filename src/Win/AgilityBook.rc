@@ -85,6 +85,7 @@ IDI_HIDDEN              ICON                    "res\\hidden.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_LOGO                BITMAP                  "res\\Logo.bmp"
 IDB_SPLASH              BITMAP                  "res\\Splash.bmp"
 
 /////////////////////////////////////////////////////////////////////////////

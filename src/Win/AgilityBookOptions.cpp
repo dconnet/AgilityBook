@@ -1129,6 +1129,16 @@ void CAgilityBookOptions::SetNumBackupFiles(int nFiles)
 	AfxGetApp()->WriteProfileInt("Settings", "BackupFiles", nFiles);
 }
 
+CString CAgilityBookOptions::GetSplashImage()
+{
+	return AfxGetApp()->GetProfileString("Settings", "Splash", "");
+}
+
+void CAgilityBookOptions::SetSplashImage(const CString& filename)
+{
+	AfxGetApp()->WriteProfileString("Settings", "Splash", filename);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Special clipboard formats
 

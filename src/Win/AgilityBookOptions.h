@@ -197,6 +197,8 @@ public:
 	static void SetAutoUpdateCheck(bool bSet);
 	static int GetNumBackupFiles();
 	static void SetNumBackupFiles(int nFiles);
+	static CString GetSplashImage();
+	static void SetSplashImage(const CString& filename);
 
 protected:
 	friend class CDlgAssignColumns;
