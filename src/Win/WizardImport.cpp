@@ -127,6 +127,9 @@ void CWizardImport::UpdateButtons()
 
 void CWizardImport::UpdatePreview()
 {
+	//switch (m_pSheet->GetImportExportItem())
+	//{
+	//}
 }
 
 /////////////////////////////////////////////////////////////////////////////

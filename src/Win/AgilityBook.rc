@@ -1101,11 +1101,15 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Import / Export Wizard"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Choose an action to perform",IDC_STATIC,0,0,90,8
-    LISTBOX         IDC_EXPORT_LIST,0,13,147,162,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Description",IDC_STATIC,153,13,147,162
-    LTEXT           "",IDC_EXPORT_DESCRIPTION,160,23,133,144
+    LTEXT           "Import/Export data for use in:",IDC_STATIC,0,0,92,8
+    CONTROL         "A spreadsheet",IDC_WIZARD_SPREADSHEET,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,5,11,61,10
+    CONTROL         "Agility Record Book",IDC_WIZARD_ARB,"Button",
+                    BS_AUTORADIOBUTTON,5,23,78,10
+    LISTBOX         IDC_WIZARD_LIST,0,36,147,139,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    GROUPBOX        "Description",IDC_STATIC,153,33,147,142
+    LTEXT           "",IDC_WIZARD_DESCRIPTION,160,43,133,124
 END
 
 IDD_WIZARD_IMPORT DIALOG DISCARDABLE  0, 0, 300, 175
@@ -1868,7 +1872,7 @@ BEGIN
     IDS_FILEEXT_DEF_XML     "xml"
     IDS_FILEEXT_FNAME_XML   "*.xml"
     IDS_FILEEXT_FILTER_XML  "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
-    IDS_ADDED_CAL_ITEMS     "Added %d new calendar items."
+    IDS_ADDED_CAL_ITEMS     "Added %1!d! new calendar items."
     IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
     IDS_FILE_PREVIEW        "Preview of %1."
 END
@@ -1876,6 +1880,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDS_BLANK_COLUMN        "<Blank Column>"
+    IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
 END
 
 STRINGTABLE DISCARDABLE 

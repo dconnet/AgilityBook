@@ -41,6 +41,19 @@
 #include "WizardStart.h"
 class CAgilityBookDoc;
 
+// These must agree with the order of items in sc_Items in WizardStart.cpp.
+// They are simply for ease-of-coding.
+#define WIZ_IMPORT_RUNS				0
+#define WIZ_EXPORT_RUNS				1
+#define WIZ_IMPORT_CALENDAR			2
+#define WIZ_EXPORT_CALENDAR			3
+#define WIZ_IMPORT_LOG				4
+#define WIZ_EXPORT_LOG				5
+#define WIZ_IMPORT_CONFIGURATION	6
+#define WIZ_EXPORT_CONFIGURATION	7
+#define WIZ_EXPORT_DTD				8
+#define WIZ_EXPORT_XML				9
+
 class CWizard : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CWizard)
@@ -55,9 +68,18 @@ private:
 	CWizardStart m_pageStart;
 	CWizardImport m_pageImport;
 	CWizardExport m_pageExport;
+	int m_ImportExportItem;
 
 // Operations
 public:
+	/**
+	 * This lets CWizardImport/Export know what data is being processed.
+	 */
+	int GetImportExportItem() const		{return m_ImportExportItem;}
+	/**
+	 * Only CWizardStart should call this.
+	 */
+	void SetImportExportItem(int item)	{m_ImportExportItem = item;}
 
 // Overrides
 	//{{AFX_VIRTUAL(CWizard)
