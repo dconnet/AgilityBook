@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-12-10 DRC Moved import/export into a wizard.
  * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  * @li 2003-10-31 DRC Added import/export calendar, export config.
  * @li 2003-10-22 DRC Added export dtd/xml menu options.
@@ -60,11 +61,9 @@
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewTraining.h"
 #include "DlgCalendar.h"
-#include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
 #include "DlgInfoJudge.h"
-#include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
 #include "DlgTraining.h"
@@ -72,6 +71,7 @@
 #include "Element.h"
 #include "MainFrm.h"
 #include "TabView.h"
+#include "Wizard.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -86,16 +86,7 @@ IMPLEMENT_DYNCREATE(CAgilityBookDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	//{{AFX_MSG_MAP(CAgilityBookDoc)
-	ON_UPDATE_COMMAND_UI(ID_FILE_IMPORT_WIZARD, OnUpdateFileImportWizard)
-	ON_COMMAND(ID_FILE_IMPORT_WIZARD, OnFileImportWizard)
-	ON_COMMAND(ID_FILE_IMPORT_CALENDAR, OnFileImportCalender)
-	ON_COMMAND(ID_FILE_IMPORT_CONFIG, OnFileImportConfig)
-	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_WIZARD, OnUpdateFileImportWizard)
 	ON_COMMAND(ID_FILE_EXPORT_WIZARD, OnFileExportWizard)
-	ON_COMMAND(ID_FILE_EXPORT_CALENDAR, OnFileExportCalender)
-	ON_COMMAND(ID_FILE_EXPORT_CONFIG, OnFileExportConfig)
-	ON_COMMAND(ID_FILE_EXPORT_DTD, OnFileExportDTD)
-	ON_COMMAND(ID_FILE_EXPORT_XML, OnFileExportXML)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_JUDGES, OnUpdateEditJudges)
 	ON_COMMAND(ID_EDIT_JUDGES, OnEditJudges)
@@ -534,326 +525,10 @@ void CAgilityBookDoc::Dump(CDumpContext& dc) const
 
 // CAgilityBookDoc commands
 
-void CAgilityBookDoc::OnUpdateFileImportWizard(CCmdUI* pCmdUI)
-{
-	pCmdUI->Enable(FALSE);
-}
-
-void CAgilityBookDoc::OnFileImportWizard()
-{
-}
-
-void CAgilityBookDoc::OnFileImportCalender()
-{
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_ARB);
-	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
-	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
-	CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		AfxGetMainWnd()->UpdateWindow();
-		CWaitCursor wait;
-		CElement tree;
-		if (!tree.LoadXMLFile(file.GetPathName()))
-			AfxMessageBox(AFX_IDP_FAILED_TO_OPEN_DOC);
-		else
-		{
-			ARBAgilityRecordBook book;
-			if (book.Load(tree, true, false, false, false, false))
-			{
-				int count = 0;
-				for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
-				{
-					ARBCalendar* cal = *iter;
-					if (!m_Records.GetCalendar().FindCalendar(cal))
-					{
-						if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-						{
-							m_Records.GetCalendar().AddCalendar(cal);
-							++count;
-						}
-					}
-				}
-				if (0 < count)
-				{
-					m_Records.GetCalendar().sort();
-					UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
-					SetModifiedFlag();
-				}
-				CString str;
-				str.FormatMessage(IDS_ADDED_CAL_ITEMS, count);
-				AfxMessageBox(str, MB_ICONINFORMATION);
-			}
-		}
-	}
-}
-
-void CAgilityBookDoc::OnFileImportConfig()
-{
-	CDlgConfigUpdate dlg;
-	if (IDOK == dlg.DoModal())
-	{
-		ARBConfig& update = dlg.GetConfig();
-		CString msg;
-		msg = GetConfig().Update(0, update).c_str();
-		if (0 < msg.GetLength())
-		{
-			CDlgMessage dlg(msg, 0);
-			dlg.DoModal();
-			SetModifiedFlag();
-			UpdateAllViews(NULL, UPDATE_CONFIG);
-		}
-		else
-			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
-	}
-}
-
 void CAgilityBookDoc::OnFileExportWizard()
 {
-	// Note, I'm disabling this right now with the import ui update handler
-}
-
-void CAgilityBookDoc::OnFileExportCalender()
-{
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_ARB);
-	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
-	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
-	CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		CElement tree;
-		if (m_Records.Save(tree, true, false, false, false, false))
-		{
-			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
-			output.exceptions(std::ios_base::badbit);
-			if (output.is_open())
-			{
-				tree.SaveXML(output);
-				output.close();
-			}
-		}
-	}
-}
-
-void CAgilityBookDoc::OnFileExportConfig()
-{
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_ARB);
-	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
-	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
-	CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		CElement tree;
-		if (m_Records.Save(tree, false, false, true, false, false))
-		{
-			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
-			output.exceptions(std::ios_base::badbit);
-			if (output.is_open())
-			{
-				tree.SaveXML(output);
-				output.close();
-			}
-		}
-	}
-}
-
-#if 0
-{
-	//ARBDog* pDog = GetCurrentDog();
-	//if (pDog)
-	//	bEnable = TRUE;
-	// @todo: Write file import code
-The following code will import - but there's no safety and it can/will
-corrupt the file. But there's some ideas here that may be of future use...
-	ARBDog* pDog = GetCurrentDog();
-	HTREEITEM hDog = GetTreeView()->GetCurrentTreeItem()->GetHTreeItem();
-	if (!pDog)
-		return;
-	//Make sure any strings end up in the resource file.
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_TXT);
-	fname.LoadString(IDS_FILEEXT_FNAME_TXT);
-	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
-	CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		TRY
-		{
-			CStdioFile input(file.GetFileName(), CFile::modeRead | CFile::typeBinary);
-			CString buffer;
-			int line = 0;
-			ARBDogTrial* pTrial = NULL;
-			HTREEITEM hTrial = NULL;
-			while (input.ReadString(buffer))
-			{
-				++line;
-				buffer.TrimRight();
-				if (!buffer.IsEmpty())
-				{
-					//0   :1   :2   :3  :4    :5    :6       :7    :8       :9        :10  :11         :12          :13   :14 :15:16   :17     :18    :19
-					//Date:Show:Club:Org:Class:Level:Division:Judge:SCT     :Yards    :Time:TimeFaults :CourseFaults:Total:YPS:Q :Place:InClass:Points:Notes
-					//    :    :    :   :     :     :        :     :Open Pts:Close Pts:Time:Opening Pts:Closing Pts :...
-					//TRIAL:Place:Club1:Venue1[:Club2:Venue2...]
-					CStringArray fields;
-					LPCTSTR pos = LPCTSTR(buffer);
-					LPCTSTR npos = _tcschr(pos, '\t');
-					while (npos)
-					{
-						CString str(pos, static_cast<int>(npos - pos));
-						fields.Add(str);
-						pos = npos + 1;
-						npos = _tcschr(pos, '\t');
-					}
-					if (pos)
-					{
-						CString str(pos);
-						fields.Add(str);
-					}
-					if (fields[0] == "TRIAL")
-					{
-						ARBDogTrial* pNewTrial = new ARBDogTrial;
-						pNewTrial->SetLocation((LPCTSTR)fields[1]);
-						for (int i = 2; i < fields.GetSize(); i += 2)
-						{
-							pNewTrial->GetClubs().AddClub((LPCTSTR)fields[i], (LPCTSTR)fields[i+1]);
-						}
-						pTrial = pDog->GetTrials().AddTrial(pNewTrial);
-						pNewTrial->Release();
-						hTrial = GetTreeView()->InsertTrial(pTrial, hDog);
-					}
-					else if (pTrial)
-					{
-						ARBDogRun* pRun = new ARBDogRun;
-						pRun->SetHeight("22");
-						ARBDate date;
-						date.Load((LPCTSTR)fields[0], 1);
-						pRun->SetDate(date);
-						if (fields.GetSize() > 4 && !fields[4].IsEmpty())
-							pRun->SetEvent((LPCSTR)fields[4]);
-						if (fields.GetSize() > 5 && !fields[5].IsEmpty())
-							pRun->SetLevel((LPCSTR)fields[5]);
-						if (fields.GetSize() > 6 && !fields[6].IsEmpty())
-							pRun->SetDivision((LPCSTR)fields[6]);
-						if (fields.GetSize() > 7 && !fields[7].IsEmpty())
-							pRun->SetJudge((LPCTSTR)fields[7]);
-						ARB_Q q;
-						if (fields.GetSize() > 15 && !fields[15].IsEmpty())
-						{
-							q.Load((LPCTSTR)fields[15], 1);
-						}
-						if (fields.GetSize() > 10 && !fields[10].IsEmpty())
-						{
-							if (fields[10] == "NT")
-								q.Load("E", 1);
-							else
-								pRun->GetScoring().SetTime(atof(fields[10]));
-						}
-						if (fields[4] == "Gamblers")
-						{
-							pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, false);
-							if (fields.GetSize() > 8 && !fields[8].IsEmpty())
-								pRun->GetScoring().SetNeedOpenPts(atoi(fields[8]));
-							if (fields.GetSize() > 9 && !fields[9].IsEmpty())
-								pRun->GetScoring().SetNeedClosePts(atoi(fields[9]));
-							if (fields.GetSize() > 11 && !fields[11].IsEmpty())
-								pRun->GetScoring().SetOpenPts(atoi(fields[11]));
-							if (fields.GetSize() > 12 && !fields[12].IsEmpty())
-								pRun->GetScoring().SetClosePts(atoi(fields[12]));
-						}
-						else if (fields[4] == "Snooker")
-						{
-							pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, false);
-							pRun->GetScoring().SetNeedOpenPts(37);
-							int score = 0;
-							if (fields.GetSize() > 11 && !fields[11].IsEmpty())
-								score += atoi(fields[11]);
-							if (fields.GetSize() > 12 && !fields[12].IsEmpty())
-								score += atoi(fields[12]);
-							pRun->GetScoring().SetOpenPts(score);
-						}
-						else
-						{
-							pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, false);
-							if (fields.GetSize() > 8 && !fields[8].IsEmpty())
-								pRun->GetScoring().SetSCT(atof(fields[8]));
-							if (fields.GetSize() > 9 && !fields[9].IsEmpty())
-								pRun->GetScoring().SetYards(atof(fields[9]));
-							if (fields.GetSize() > 12 && !fields[12].IsEmpty())
-							{
-								if (fields[12] == "E")
-									q.Load("E", 1);
-								else
-									pRun->GetScoring().SetCourseFaults(atoi(fields[12]));
-							}
-						}
-						pRun->SetQ(q);
-						if (fields.GetSize() > 16 && !fields[16].IsEmpty())
-							pRun->SetPlace(atoi(fields[16]));
-						if (fields.GetSize() > 17 && !fields[17].IsEmpty())
-							pRun->SetInClass(atoi(fields[17]));
-						if (fields.GetSize() > 19 && !fields[19].IsEmpty())
-							pRun->SetNote((LPCTSTR)fields[19]);
-						ARBDogRun* pInsert = pTrial->GetRuns().AddRun(pRun);
-						pRun->Release();
-						GetTreeView()->InsertRun(pInsert, hTrial);
-					}
-				}
-			}
-			UpdateAllViews(NULL, 0);
-			TRACE("%d lines\n", line);
-		}
-		CATCH (CFileException, e)
-		{
-		}
-		END_CATCH
-	}
-}
-#endif
-
-void CAgilityBookDoc::OnFileExportDTD()
-{
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_DTD);
-	filter.LoadString(IDS_FILEEXT_FILTER_DTD);
-	CFileDialog file(FALSE, def, "AgilityRecordBook.dtd", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		CStdioFile output(file.GetFileName(), CFile::modeCreate | CFile::modeWrite | CFile::typeBinary);
-		std::string dtd = ARBConfig::GetDTD();
-		output.WriteString(dtd.c_str());
-		output.Close();
-	}
-}
-
-void CAgilityBookDoc::OnFileExportXML()
-{
-	CString name = GetPathName();
-	if (name.IsEmpty())
-		name = "AgilityRecordBook.xml";
-	else
-		name = name.Left(name.ReverseFind('.')) + ".xml";
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_ARB);
-	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
-	CFileDialog file(FALSE, def, name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		CElement tree;
-		if (m_Records.Save(tree, true, true, true, true, true))
-		{
-			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
-			output.exceptions(std::ios_base::badbit);
-			if (output.is_open())
-			{
-				std::string dtd = ARBConfig::GetDTD();
-				tree.SaveXML(output, &dtd);
-				output.close();
-			}
-		}
-	}
+	CWizard wiz(this);
+	wiz.DoModal();
 }
 
 void CAgilityBookDoc::OnEditConfiguration()

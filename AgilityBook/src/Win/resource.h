@@ -53,6 +53,10 @@
 #define IDD_MESSAGE                     178
 #define IDD_TRAINING                    179
 #define IDD_JUDGE_INFO                  180
+#define IDD_WIZARD_START                181
+#define IDD_WIZARD_IMPORT               182
+#define IDD_WIZARD_EXPORT               183
+#define IDD_ASSIGN_COLUMNS              184
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -190,6 +194,24 @@
 #define IDC_DROP_FRACTIONS              1148
 #define IDC_VERIFIED                    1149
 #define IDC_IS_DECEASED                 1150
+#define IDC_EXPORT_LIST                 1151
+#define IDC_EXPORT_DESCRIPTION          1152
+#define IDC_IMPORT_ROW                  1153
+#define IDC_IMPORT_ROW_SPIN             1154
+#define IDC_IMPORT_DELIM_TAB            1155
+#define IDC_IMPORT_DELIM_SPACE          1156
+#define IDC_IMPORT_DELIM_COLON          1157
+#define IDC_IMPORT_DELIM_SEMI           1158
+#define IDC_IMPORT_DELIM_COMMA          1159
+#define IDC_IMPORT_DELIM_OTHER          1160
+#define IDC_WIZARD_DELIM                1161
+#define IDC_WIZARD_ASSIGN               1162
+#define IDC_IMPORT_FILE                 1163
+#define IDC_IMPORT_PREVIEW_FILE         1164
+#define IDC_WIZARD_PREVIEW              1165
+#define IDC_COLUMNS                     1166
+#define IDC_AVAILABLE                   1167
+#define IDC_ADD                         1168
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002
@@ -320,18 +342,16 @@
 #define IDS_CREATETRIAL_FILTERED        5156
 #define IDS_CREATERUN_FILTERED          5157
 #define IDS_NUM_TRAINING                5158
-#define IDS_FILEEXT_DEF_TXT             5159
-#define IDS_FILEEXT_FNAME_TXT           5160
-#define IDS_FILEEXT_FILTER_TXT          5161
-#define IDS_FILEEXT_DEF_DTD             5162
-#define IDS_FILEEXT_FNAME_DTD           5163
-#define IDS_FILEEXT_FILTER_DTD          5164
-#define IDS_FILEEXT_DEF_XML             5165
-#define IDS_FILEEXT_FNAME_XML           5166
-#define IDS_FILEEXT_FILTER_XML          5167
-#define IDS_ADDED_CAL_ITEMS             5168
-#define ID_FILE_IMPORT_CONFIG           32772
-#define ID_FILE_EXPORT_DTD              32773
+#define IDS_FILEEXT_DEF_DTD             5159
+#define IDS_FILEEXT_FNAME_DTD           5160
+#define IDS_FILEEXT_FILTER_DTD          5161
+#define IDS_FILEEXT_DEF_XML             5162
+#define IDS_FILEEXT_FNAME_XML           5163
+#define IDS_FILEEXT_FILTER_XML          5164
+#define IDS_ADDED_CAL_ITEMS             5165
+#define IDS_FILEEXT_FILTER_TXT          5166
+#define IDS_FILE_PREVIEW                5167
+#define ID_FILE_EXPORT_WIZARD           32772
 #define ID_EDIT_CONFIGURATION           32774
 #define ID_CONFIG_ADD                   32775
 #define ID_CONFIG_DUPLICATE             32776
@@ -366,13 +386,7 @@
 #define ID_REORDER                      32805
 #define ID_VIEW_SORTRUNS                32806
 #define ID_VIEW_RUNS_BY_TRIAL           32807
-#define ID_FILE_EXPORT_XML              32808
-#define ID_FILE_IMPORT_CALENDAR         32809
-#define ID_FILE_EXPORT_CALENDAR         32810
-#define ID_FILE_EXPORT_CONFIG           32811
-#define ID_EDIT_JUDGES                  32812
-#define ID_FILE_IMPORT_WIZARD           32813
-#define ID_FILE_EXPORT_WIZARD           32814
+#define ID_EDIT_JUDGES                  32808
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -380,9 +394,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        181
-#define _APS_NEXT_COMMAND_VALUE         32815
-#define _APS_NEXT_CONTROL_VALUE         1151
+#define _APS_NEXT_RESOURCE_VALUE        185
+#define _APS_NEXT_COMMAND_VALUE         32809
+#define _APS_NEXT_CONTROL_VALUE         1169
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

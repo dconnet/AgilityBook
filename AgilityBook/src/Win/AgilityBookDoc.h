@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-10 DRC Moved import/export into a wizard.
  * @li 2003-10-31 DRC Added import/export calendar, export config.
  * @li 2003-10-22 DRC Added export dtd/xml menu options.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
@@ -82,6 +83,7 @@ public:
 	ARBDog* GetCurrentDog();
 	ARBDogTrial* GetCurrentTrial();
 	ARBDogRun* GetCurrentRun();
+	ARBAgilityRecordBook& GetARB()			{return m_Records;}
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
 	ARBTrainingList& GetTraining()			{return m_Records.GetTraining();}
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
@@ -159,15 +161,7 @@ private:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CAgilityBookDoc)
-	afx_msg void OnUpdateFileImportWizard(CCmdUI* pCmdUI);
-	afx_msg void OnFileImportWizard();
-	afx_msg void OnFileImportCalender();
-	afx_msg void OnFileImportConfig();
 	afx_msg void OnFileExportWizard();
-	afx_msg void OnFileExportCalender();
-	afx_msg void OnFileExportConfig();
-	afx_msg void OnFileExportDTD();
-	afx_msg void OnFileExportXML();
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnUpdateEditJudges(CCmdUI* pCmdUI);
 	afx_msg void OnEditJudges();

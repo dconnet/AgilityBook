@@ -125,24 +125,7 @@ BEGIN
         MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
         MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        POPUP "&Import"
-        BEGIN
-            MENUITEM "&Wizard...",                  ID_FILE_IMPORT_WIZARD
-            MENUITEM SEPARATOR
-            MENUITEM "&Calendar...",                ID_FILE_IMPORT_CALENDAR
-            MENUITEM "C&onfiguration...",           ID_FILE_IMPORT_CONFIG
-        END
-        POPUP "&Export"
-        BEGIN
-            MENUITEM "&Wizard...",                  ID_FILE_EXPORT_WIZARD
-            MENUITEM SEPARATOR
-            MENUITEM "&Calendar...",                ID_FILE_EXPORT_CALENDAR
-            MENUITEM "C&onfiguration...",           ID_FILE_EXPORT_CONFIG
-            MENUITEM SEPARATOR
-            MENUITEM "&DTD (Document Type Definition)...", 
-                                                    ID_FILE_EXPORT_DTD
-            MENUITEM "As &XML...",                  ID_FILE_EXPORT_XML
-        END
+        MENUITEM "&Import and Export...",       ID_FILE_EXPORT_WIZARD
         MENUITEM SEPARATOR
         MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
@@ -1106,6 +1089,81 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,183,24,50,14
 END
 
+IDD_WIZARD_START DIALOG DISCARDABLE  0, 0, 300, 175
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Import / Export Wizard"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Choose an action to perform",IDC_STATIC,0,0,90,8
+    LISTBOX         IDC_EXPORT_LIST,0,13,147,162,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Description",IDC_STATIC,153,13,147,162
+    LTEXT           "",IDC_EXPORT_DESCRIPTION,160,23,133,144
+END
+
+IDD_WIZARD_IMPORT DIALOG DISCARDABLE  0, 0, 300, 175
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Import Wizard"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Start import at row:",IDC_STATIC,0,2,60,8
+    EDITTEXT        IDC_IMPORT_ROW,60,0,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_IMPORT_ROW_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS,99,0,11,14
+    GROUPBOX        "Delimiters",IDC_STATIC,0,15,160,40
+    CONTROL         "Tab",IDC_IMPORT_DELIM_TAB,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,25,29,10
+    CONTROL         "Space",IDC_IMPORT_DELIM_SPACE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,37,37,10
+    CONTROL         "Colon",IDC_IMPORT_DELIM_COLON,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,45,25,34,10
+    CONTROL         "Semicolon",IDC_IMPORT_DELIM_SEMI,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,45,37,49,10
+    CONTROL         "Comma",IDC_IMPORT_DELIM_COMMA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,95,25,39,10
+    CONTROL         "Other:",IDC_IMPORT_DELIM_OTHER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,95,37,35,10
+    EDITTEXT        IDC_WIZARD_DELIM,130,35,20,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Assign Columns...",IDC_WIZARD_ASSIGN,173,41,70,14
+    PUSHBUTTON      "File...",IDC_IMPORT_FILE,0,60,40,14
+    LTEXT           "",IDC_IMPORT_PREVIEW_FILE,45,63,254,8
+    CONTROL         "List1",IDC_WIZARD_PREVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_NOSORTHEADER | WS_DISABLED | WS_BORDER | WS_TABSTOP,
+                    0,77,299,98
+END
+
+IDD_WIZARD_EXPORT DIALOG DISCARDABLE  0, 0, 300, 175
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Export Wizard"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_WIZARD_DELIM,130,35,20,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Assign Columns...",IDC_WIZARD_ASSIGN,173,41,70,14
+    CONTROL         "List1",IDC_WIZARD_PREVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_NOSORTHEADER | WS_DISABLED | WS_BORDER | WS_TABSTOP,
+                    0,77,299,98
+END
+
+IDD_ASSIGN_COLUMNS DIALOG DISCARDABLE  0, 0, 350, 164
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Import/Export Columns"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Available &fields:",IDC_STATIC,7,7,50,8
+    LISTBOX         IDC_AVAILABLE,7,17,105,140,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add ->",IDC_ADD,117,17,50,14
+    PUSHBUTTON      "<- &Remove",IDC_DELETE,117,37,50,14
+    PUSHBUTTON      "Move &Up",IDC_MOVE_UP,117,123,50,14
+    PUSHBUTTON      "Move &Down",IDC_MOVE_DOWN,117,143,50,14
+    LTEXT           "Field &order:",IDC_STATIC,172,7,36,8
+    LISTBOX         IDC_COLUMNS,172,17,105,140,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,293,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,293,24,50,14
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -1421,6 +1479,14 @@ BEGIN
         RIGHTMARGIN, 233
         TOPMARGIN, 7
         BOTTOMMARGIN, 88
+    END
+
+    IDD_ASSIGN_COLUMNS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 343
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 157
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1752,26 +1818,20 @@ BEGIN
                             "Warning: The trial you have just created cannot be shown due to filter options."
     IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
     IDS_NUM_TRAINING        "%1!d! entries"
-    IDS_FILEEXT_DEF_TXT     "txt"
-    IDS_FILEEXT_FNAME_TXT   "*.txt"
-    IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
     IDS_FILEEXT_DEF_DTD     "dtd"
     IDS_FILEEXT_FNAME_DTD   "*.dtd"
     IDS_FILEEXT_FILTER_DTD  "DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||"
     IDS_FILEEXT_DEF_XML     "xml"
     IDS_FILEEXT_FNAME_XML   "*.xml"
     IDS_FILEEXT_FILTER_XML  "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_ADDED_CAL_ITEMS     "Added %d new calendar items."
+    IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
+    IDS_FILE_PREVIEW        "Preview of %1."
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_FILE_IMPORT_CONFIG   "Import configuration information from other sources\nImport Config"
-    ID_FILE_EXPORT_DTD      "Export DTD\nExport DTD"
+    ID_FILE_EXPORT_WIZARD   "Import and Export Wizard\nImport/Export"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
     ID_CONFIG_ADD           "Add a configuration item\nAdd"
     ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
@@ -1810,13 +1870,7 @@ BEGIN
     ID_REORDER              "Reorder items\nReorder"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
-    ID_FILE_EXPORT_XML      "Export data as XML\nExport XML"
-    ID_FILE_IMPORT_CALENDAR "Import another Calendar\nImport Calendar"
-    ID_FILE_EXPORT_CALENDAR "Export your Calendar\nExport Calendar"
-    ID_FILE_EXPORT_CONFIG   "Export your Configuration\nExport Configuration"
     ID_EDIT_JUDGES          "Edit judge information\nJudges"
-    ID_FILE_IMPORT_WIZARD   "Import data from a spreadsheet\nImport Wizard"
-    ID_FILE_EXPORT_WIZARD   "Export data for a spreadsheet\nExport Wizard"
 END
 
 #endif    // English (U.S.) resources
