@@ -123,9 +123,6 @@ void CDlgFixupDeleteEvent::Commit(ARBAgilityRecordBook& book)
 
 void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
 {
-	ARBConfigVenue const* pVenue = book.GetConfig().GetVenues().FindVenue(m_Venue);
-	ARBConfigEvent const* pEvent = pVenue->GetEvents().FindEvent(m_Event);
-	ARBConfigScoringList const& scorings = pEvent->GetScorings();
 	for (ARBDogList::iterator iterDog = book.GetDogs().begin();
 		iterDog != book.GetDogs().end();
 		++iterDog)
@@ -141,7 +138,9 @@ void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
 				)
 			{
 				ARBDogRun* pRun = *iterRun;
-				ARBConfigScoring const* pScoring = scorings.FindEvent(
+				ARBConfigScoring const* pScoring = book.GetConfig().GetVenues().FindEvent(
+					m_Venue,
+					m_Event,
 					pRun->GetDivision(),
 					pRun->GetLevel(),
 					pRun->GetDate());
