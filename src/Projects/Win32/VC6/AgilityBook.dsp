@@ -254,10 +254,6 @@ SOURCE=..\..\..\Win\DlgName.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\Win\DlgNameDesc.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\Win\DlgOptions.cpp
 # End Source File
 # Begin Source File
@@ -560,10 +556,6 @@ SOURCE=..\..\..\Win\DlgMessage.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgName.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\Win\DlgNameDesc.h
 # End Source File
 # Begin Source File
 

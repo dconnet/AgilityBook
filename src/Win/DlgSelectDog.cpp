@@ -74,7 +74,7 @@ void CDlgSelectDog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgSelectDog)
-	DDX_Control(pDX, IDC_NAME, m_ctrlList);
+	DDX_Control(pDX, IDC_PICK_NAME, m_ctrlList);
 	//}}AFX_DATA_MAP
 }
 

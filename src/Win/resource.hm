@@ -91,7 +91,6 @@
 #define HIDC_CONFIG_VENUE_MOVE_UP       0x80cf0418    // IDD_CONFIG_VENUE
 #define HIDC_CONFIG_VENUE_NEW           0x80cf0414    // IDD_CONFIG_VENUE
 #define HIDC_CONFIG_VENUE_TITLES        0x80cf041c    // IDD_CONFIG_VENUE
-#define HIDC_DESC                       0x80ca03f3    // IDD_NAME_DESC
 #define HIDC_DOGNUM_DELETE              0x80db0475    // IDD_DOG_NUMBERS
 #define HIDC_DOGNUM_EDIT                0x80db0474    // IDD_DOG_NUMBERS
 #define HIDC_DOGNUM_NEW                 0x80db0473    // IDD_DOG_NUMBERS
@@ -143,7 +142,7 @@
 #define HIDC_LIST_NEW                   0x80cb03f5    // IDD_LISTCTRL
 #define HIDC_LIST_TRIAL                 0x80cb03fa    // IDD_LISTCTRL
 #define HIDC_MESSAGE                    0x80cc03fb    // IDD_MESSAGE
-#define HIDC_NAME                       0x80d703f2    // IDD_DOG_PICKER
+#define HIDC_NAME                       0x80d703f2    // IDD_NAME
 #define HIDC_OPTIONS_CAL_AUTO_DELETE    0x80ed04ed    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_DAY_OF_WEEK    0x80ed04ec    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_HIDE_OLD       0x80ed04ee    // IDD_VIEW_OPTIONS_CALENDAR
@@ -205,6 +204,7 @@
 #define HIDC_PARTNER_CALLNAME           0x80e704e0    // IDD_PARTNER
 #define HIDC_PARTNER_NAME               0x80e704df    // IDD_PARTNER
 #define HIDC_PARTNER_REG_NUM            0x80e704e1    // IDD_PARTNER
+#define HIDC_PICK_NAME                  0x80d70476    // IDD_DOG_PICKER
 #define HIDC_REFRUN_BREED               0x80e604dd    // IDD_REF_RUN
 #define HIDC_REFRUN_NAME                0x80e604dc    // IDD_REF_RUN
 #define HIDC_REFRUN_NOTES               0x80e604de    // IDD_REF_RUN
