@@ -46,6 +46,7 @@ class ARBDate
 {
 public:
 	static ARBDate Today();
+	static ARBDate FromString(const std::string& inDate);
 
 	ARBDate();
 	ARBDate(const ARBDate& rhs);
