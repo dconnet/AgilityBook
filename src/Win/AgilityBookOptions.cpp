@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-29 DRC Created default column orders.
  * @li 2003-12-11 DRC Added options for import/export wizard.
  * @li 2003-10-09 DRC Added *etViewRunsByTrial.
@@ -966,8 +967,21 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std:
 			}
 			break;
 		case eViewTree:
-			if (IO_TYPE_VIEW_TREE == idxColumn)
+			switch (idxColumn)
 			{
+			case IO_TYPE_VIEW_TREE_DOG:
+				outValues.push_back(IO_TREE_DOG_CALLNAME);
+				break;
+			case IO_TYPE_VIEW_TREE_TRIAL:
+				outValues.push_back(IO_TREE_TRIAL_START);
+				outValues.push_back(IO_TREE_TRIAL_END);
+				outValues.push_back(IO_TREE_TRIAL_VENUE);
+				outValues.push_back(IO_TREE_TRIAL_LOCATION);
+				break;
+			case IO_TYPE_VIEW_TREE_RUN:
+				outValues.push_back(IO_TREE_RUN_DATE);
+				outValues.push_back(IO_TREE_RUN_EVENT);
+				break;
 			}
 			break;
 		case eViewRuns:

@@ -1819,6 +1819,8 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDS_COL_ENTERED         "Entered"
+    IDS_COL_DOB             "Birthday"
+    IDS_COL_AGE             "Age"
 END
 
 STRINGTABLE DISCARDABLE 

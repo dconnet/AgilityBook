@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  */
 
 #include <list>
@@ -85,6 +86,9 @@ public:
 protected:
 	CAgilityBookTree* m_pTree;
 	HTREEITEM m_hItem;
+	const std::vector<int>& GetDogColumns() const;
+	const std::vector<int>& GetTrialColumns() const;
+	const std::vector<int>& GetRunColumns() const;
 };
 
 /////////////////////////////////////////////////////////////////////////////

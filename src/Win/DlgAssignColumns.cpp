@@ -90,6 +90,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-10 DRC Created
  */
 
@@ -127,7 +128,11 @@ static const struct
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
 		IO_TYPE_TRAINING,           "Training Log"},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE,          "Runs Tree"},
+		IO_TYPE_VIEW_TREE_DOG,      "Tree - Dog"},
+	{CAgilityBookOptions::eViewTree,
+		IO_TYPE_VIEW_TREE_TRIAL,    "Tree - Trial"},
+	{CAgilityBookOptions::eViewTree,
+		IO_TYPE_VIEW_TREE_RUN,      "Tree - Run"},
 	{CAgilityBookOptions::eViewRuns,
 		IO_TYPE_VIEW_RUNS_LIST,     "Runs"},
 	{CAgilityBookOptions::eViewCal,
@@ -245,6 +250,43 @@ static const struct
 		IO_LOG_NAME,           true,  LVCFMT_LEFT,   IDS_COL_NAME, NULL},
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
 		IO_LOG_NOTES,          true,  LVCFMT_LEFT,   IDS_COL_NOTES, NULL},
+
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_DOG_REGNAME,   false, 0, IDS_COL_REG_NAME, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_DOG_CALLNAME,  false, 0, IDS_COL_CALLNAME, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_DOG_BREED,     false, 0, IDS_COL_BREED, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_DOG_DOB,       false, 0, IDS_COL_DOB, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_DOG_AGE,       false, 0, IDS_COL_AGE, NULL},
+
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_START,   false, 0, IDS_COL_START_DATE, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_END,     false, 0, IDS_COL_END_DATE, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_CLUB,    false, 0, IDS_COL_CLUB, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_VENUE,   false, 0, IDS_COL_VENUE, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_LOCATION, false, 0, IDS_COL_LOCATION, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_TRIAL_NOTES,   false, 0, IDS_COL_NOTES, NULL},
+
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_RUN_DATE,      false, 0, IDS_COL_DATE, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_RUN_Q,         false, 0, IDS_COL_Q, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_RUN_EVENT,     false, 0, IDS_COL_EVENT, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_RUN_DIVISION,  false, 0, IDS_COL_DIVISION, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_RUN_LEVEL,     false, 0, IDS_COL_LEVEL, NULL},
+	{CAgilityBookOptions::eViewTree,
+		IO_TREE_RUN_HEIGHT,    false, 0, IDS_COL_HEIGHT, NULL},
 };
 
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
@@ -291,48 +333,112 @@ bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, 
 	return bOk;
 }
 
-static const struct
+static const int idxRunsFaultsTime[] = {
+	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
+	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
+	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
+	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
+	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
+	IO_RUNS_TIME,			IO_RUNS_YARDS,			IO_RUNS_YPS,
+	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_PLACE,
+	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
+	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
+	IO_RUNS_FAULTS,
+-1};
+static const int idxRunsTimeFaults[] = {
+	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
+	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
+	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
+	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
+	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
+	IO_RUNS_TIME,			IO_RUNS_YARDS,			IO_RUNS_YPS,
+	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_PLACE,
+	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
+	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
+	IO_RUNS_FAULTS,
+-1};
+static const int idxRunsOpenClose[] = {
+	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
+	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
+	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
+	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
+	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
+	IO_RUNS_TIME,			IO_RUNS_REQ_OPENING,	IO_RUNS_REQ_CLOSING,
+	IO_RUNS_OPENING,		IO_RUNS_CLOSING,		IO_RUNS_PLACE,
+	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
+	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
+	IO_RUNS_FAULTS,
+-1};
+static const int idxRunsPoints[] = {
+	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
+	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
+	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
+	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
+	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
+	IO_RUNS_TIME,			IO_RUNS_REQ_POINTS,		IO_RUNS_POINTS,
+	IO_RUNS_PLACE,			IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,
+	IO_RUNS_Q,				IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,
+	IO_RUNS_COMMENTS,		IO_RUNS_FAULTS,
+-1};
+static const int idxCalendar[] = {
+	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_TENTATIVE,
+	IO_CAL_ENTERED,			IO_CAL_LOCATION,		IO_CAL_CLUB,
+	IO_CAL_VENUE,			IO_CAL_OPENS,			IO_CAL_CLOSES,
+	IO_CAL_NOTES,
+-1};
+static const int idxTraining[] = {
+	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_NOTES,
+-1};
+static const int idxViewTreeDog[] = {
+	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_BREED,
+	IO_TREE_DOG_DOB,		IO_TREE_DOG_AGE,
+-1};
+static const int idxViewTreeTrial[] = {
+	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,		IO_TREE_TRIAL_CLUB,
+	IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,	IO_TREE_TRIAL_NOTES,
+-1};
+static const int idxViewTreeRun[] = {
+	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,
+	IO_TREE_RUN_DIVISION,	IO_TREE_RUN_LEVEL,		IO_TREE_RUN_HEIGHT,
+-1};
+static const int idxViewRunsList[] = {
+	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
+	IO_RUNS_VENUE,			IO_RUNS_CLUB,			IO_RUNS_LOCATION,
+	IO_RUNS_TRIAL_NOTES,	IO_RUNS_DIVISION,		IO_RUNS_LEVEL,
+	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
+	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
+	IO_RUNS_TIME,			IO_RUNS_YARDS,			IO_RUNS_YPS,
+	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_REQ_OPENING,
+	IO_RUNS_REQ_CLOSING,	IO_RUNS_OPENING,		IO_RUNS_CLOSING,
+	IO_RUNS_REQ_POINTS,		IO_RUNS_POINTS,			IO_RUNS_PLACE,
+	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
+	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
+	IO_RUNS_FAULTS,
+-1};
+static const int idxViewCalendarList[] = {
+	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_LOCATION,
+	IO_CAL_CLUB,			IO_CAL_VENUE,			IO_CAL_OPENS,
+	IO_CAL_CLOSES,			IO_CAL_NOTES,
+-1};
+static const int idxViewTrainingList[] = {
+	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_NOTES,
+-1};
+
+static const int* sc_Fields[IO_TYPE_MAX] =
 {
-	int idxName[IO_TYPE_MAX];
-} sc_Fields[] =
-{
-//    RUNS_FAULTS_TIME       RUNS_TIME_FAULTS       RUNS_OPEN_CLOSE        RUNS_POINTS            CALENDAR           TRAINING      VIEW_TREE VIEW_RUNS_LIST         VIEW_CALENDAR_LIST VIEW_TRAINING_LIST
-	{{IO_RUNS_REG_NAME,      IO_RUNS_REG_NAME,      IO_RUNS_REG_NAME,      IO_RUNS_REG_NAME,      IO_CAL_START_DATE, IO_LOG_DATE,  -1,       IO_RUNS_REG_NAME,      IO_CAL_START_DATE, IO_LOG_DATE}},
-	{{IO_RUNS_CALL_NAME,     IO_RUNS_CALL_NAME,     IO_RUNS_CALL_NAME,     IO_RUNS_CALL_NAME,     IO_CAL_END_DATE,   IO_LOG_NAME,  -1,       IO_RUNS_CALL_NAME,     IO_CAL_END_DATE,   IO_LOG_NAME}},
-	{{IO_RUNS_DATE,          IO_RUNS_DATE,          IO_RUNS_DATE,          IO_RUNS_DATE,          IO_CAL_TENTATIVE,  IO_LOG_NOTES, -1,       IO_RUNS_DATE,          IO_CAL_LOCATION,   IO_LOG_NOTES}},
-	{{IO_RUNS_VENUE,         IO_RUNS_VENUE,         IO_RUNS_VENUE,         IO_RUNS_VENUE,         IO_CAL_ENTERED,    -1,           -1,       IO_RUNS_VENUE,         IO_CAL_CLUB,       -1}},
-	{{IO_RUNS_CLUB,          IO_RUNS_CLUB,          IO_RUNS_CLUB,          IO_RUNS_CLUB,          IO_CAL_LOCATION,   -1,           -1,       IO_RUNS_CLUB,          IO_CAL_VENUE,      -1}},
-	{{IO_RUNS_LOCATION,      IO_RUNS_LOCATION,      IO_RUNS_LOCATION,      IO_RUNS_LOCATION,      IO_CAL_CLUB,       -1,           -1,       IO_RUNS_LOCATION,      IO_CAL_OPENS,      -1}},
-	{{IO_RUNS_TRIAL_NOTES,   IO_RUNS_TRIAL_NOTES,   IO_RUNS_TRIAL_NOTES,   IO_RUNS_TRIAL_NOTES,   IO_CAL_VENUE,      -1,           -1,       IO_RUNS_TRIAL_NOTES,   IO_CAL_CLOSES,     -1}},
-	{{IO_RUNS_DIVISION,      IO_RUNS_DIVISION,      IO_RUNS_DIVISION,      IO_RUNS_DIVISION,      IO_CAL_OPENS,      -1,           -1,       IO_RUNS_DIVISION,      IO_CAL_NOTES,      -1}},
-	{{IO_RUNS_LEVEL,         IO_RUNS_LEVEL,         IO_RUNS_LEVEL,         IO_RUNS_LEVEL,         IO_CAL_CLOSES,     -1,           -1,       IO_RUNS_LEVEL,         -1,                -1}},
-	{{IO_RUNS_EVENT,         IO_RUNS_EVENT,         IO_RUNS_EVENT,         IO_RUNS_EVENT,         IO_CAL_NOTES,      -1,           -1,       IO_RUNS_EVENT,         -1,                -1}},
-	{{IO_RUNS_HEIGHT,        IO_RUNS_HEIGHT,        IO_RUNS_HEIGHT,        IO_RUNS_HEIGHT,        -1,                -1,           -1,       IO_RUNS_HEIGHT,        -1,                -1}},
-	{{IO_RUNS_JUDGE,         IO_RUNS_JUDGE,         IO_RUNS_JUDGE,         IO_RUNS_JUDGE,         -1,                -1,           -1,       IO_RUNS_JUDGE,         -1,                -1}},
-	{{IO_RUNS_HANDLER,       IO_RUNS_HANDLER,       IO_RUNS_HANDLER,       IO_RUNS_HANDLER,       -1,                -1,           -1,       IO_RUNS_HANDLER,       -1,                -1}},
-	{{IO_RUNS_CONDITIONS,    IO_RUNS_CONDITIONS,    IO_RUNS_CONDITIONS,    IO_RUNS_CONDITIONS,    -1,                -1,           -1,       IO_RUNS_CONDITIONS,    -1,                -1}},
-	{{IO_RUNS_COURSE_FAULTS, IO_RUNS_COURSE_FAULTS, IO_RUNS_COURSE_FAULTS, IO_RUNS_COURSE_FAULTS, -1,                -1,           -1,       IO_RUNS_COURSE_FAULTS, -1,                -1}},
-	{{IO_RUNS_TIME,          IO_RUNS_TIME,          IO_RUNS_TIME,          IO_RUNS_TIME,          -1,                -1,           -1,       IO_RUNS_TIME,          -1,                -1}},
-	{{IO_RUNS_YARDS,         IO_RUNS_YARDS,         IO_RUNS_REQ_OPENING,   IO_RUNS_REQ_POINTS,    -1,                -1,           -1,       IO_RUNS_YARDS,         -1,                -1}},
-	{{IO_RUNS_YPS,           IO_RUNS_YPS,           IO_RUNS_REQ_CLOSING,   IO_RUNS_POINTS,        -1,                -1,           -1,       IO_RUNS_YPS,           -1,                -1}},
-	{{IO_RUNS_SCT,           IO_RUNS_SCT,           IO_RUNS_OPENING,       -1,                    -1,                -1,           -1,       IO_RUNS_SCT,           -1,                -1}},
-	{{IO_RUNS_TOTAL_FAULTS,  IO_RUNS_TOTAL_FAULTS,  IO_RUNS_CLOSING,       -1,                    -1,                -1,           -1,       IO_RUNS_TOTAL_FAULTS,  -1,                -1}},
-	{{IO_RUNS_PLACE,         IO_RUNS_PLACE,         IO_RUNS_PLACE,         IO_RUNS_PLACE,         -1,                -1,           -1,       IO_RUNS_REQ_OPENING,   -1,                -1}},
-	{{IO_RUNS_IN_CLASS,      IO_RUNS_IN_CLASS,      IO_RUNS_IN_CLASS,      IO_RUNS_IN_CLASS,      -1,                -1,           -1,       IO_RUNS_REQ_CLOSING,   -1,                -1}},
-	{{IO_RUNS_DOGSQD,        IO_RUNS_DOGSQD,        IO_RUNS_DOGSQD,        IO_RUNS_DOGSQD,        -1,                -1,           -1,       IO_RUNS_OPENING,       -1,                -1}},
-	{{IO_RUNS_Q,             IO_RUNS_Q,             IO_RUNS_Q,             IO_RUNS_Q,             -1,                -1,           -1,       IO_RUNS_CLOSING,       -1,                -1}},
-	{{IO_RUNS_SCORE,         IO_RUNS_SCORE,         IO_RUNS_SCORE,         IO_RUNS_SCORE,         -1,                -1,           -1,       IO_RUNS_REQ_POINTS,    -1,                -1}},
-	{{IO_RUNS_TITLE_POINTS,  IO_RUNS_TITLE_POINTS,  IO_RUNS_TITLE_POINTS,  IO_RUNS_TITLE_POINTS,  -1,                -1,           -1,       IO_RUNS_POINTS,        -1,                -1}},
-	{{IO_RUNS_COMMENTS,      IO_RUNS_COMMENTS,      IO_RUNS_COMMENTS,      IO_RUNS_COMMENTS,      -1,                -1,           -1,       IO_RUNS_PLACE,         -1,                -1}},
-	{{IO_RUNS_FAULTS,        IO_RUNS_FAULTS,        IO_RUNS_FAULTS,        IO_RUNS_FAULTS,        -1,                -1,           -1,       IO_RUNS_IN_CLASS,      -1,                -1}},
-	{{-1,                    -1,                    -1,                    -1,                    -1,                -1,           -1,       IO_RUNS_DOGSQD,        -1,                -1}},
-	{{-1,                    -1,                    -1,                    -1,                    -1,                -1,           -1,       IO_RUNS_Q,             -1,                -1}},
-	{{-1,                    -1,                    -1,                    -1,                    -1,                -1,           -1,       IO_RUNS_SCORE,         -1,                -1}},
-	{{-1,                    -1,                    -1,                    -1,                    -1,                -1,           -1,       IO_RUNS_TITLE_POINTS,  -1,                -1}},
-	{{-1,                    -1,                    -1,                    -1,                    -1,                -1,           -1,       IO_RUNS_COMMENTS,      -1,                -1}},
-	{{-1,                    -1,                    -1,                    -1,                    -1,                -1,           -1,       IO_RUNS_FAULTS,        -1,                -1}},
+	idxRunsFaultsTime,
+	idxRunsTimeFaults,
+	idxRunsOpenClose,
+	idxRunsPoints,
+	idxCalendar,
+	idxTraining,
+	idxViewTreeDog,
+	idxViewTreeTrial,
+	idxViewTreeRun,
+	idxViewRunsList,
+	idxViewCalendarList,
+	idxViewTrainingList
 };
-static const int sc_nFields = sizeof(sc_Fields) / sizeof(sc_Fields[0]);
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
@@ -434,17 +540,17 @@ void CDlgAssignColumns::FillColumns()
 		bool bImport = (CAgilityBookOptions::eRunsImport == m_eOrder
 			|| CAgilityBookOptions::eCalImport == m_eOrder
 			|| CAgilityBookOptions::eLogImport == m_eOrder);
-		for (i = 0; i < sc_nFields; ++i)
+		for (i = 0; 0 <= sc_Fields[idxType][i]; ++i)
 		{
-			if (-1 == sc_Fields[i].idxName[idxType]
-			|| !(sc_FieldNames[sc_Fields[i].idxName[idxType]].bValid & m_eOrder)
-			|| (bImport && !sc_FieldNames[sc_Fields[i].idxName[idxType]].bImportable)
-			|| bInUse[sc_Fields[i].idxName[idxType]])
+			if (
+			!(sc_FieldNames[sc_Fields[idxType][i]].bValid & m_eOrder)
+			|| (bImport && !sc_FieldNames[sc_Fields[idxType][i]].bImportable)
+			|| bInUse[sc_Fields[idxType][i]])
 				continue;
-			CString name = GetNameFromColumnID(sc_Fields[i].idxName[idxType]);
+			CString name = GetNameFromColumnID(sc_Fields[idxType][i]);
 			int idx = m_ctrlAvailable.AddString(name);
 			if (LB_ERR != idx)
-				m_ctrlAvailable.SetItemData(idx, sc_Fields[i].idxName[idxType]);
+				m_ctrlAvailable.SetItemData(idx, sc_Fields[idxType][i]);
 		}
 	}
 	UpdateButtons();
@@ -501,8 +607,8 @@ BOOL CDlgAssignColumns::OnInitDialog()
 	}
 	m_ctrlType.SetCurSel(0);
 	FillColumns();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE;	// return TRUE unless you set the focus to a control
+					// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CDlgAssignColumns::OnSelchangeType() 

@@ -1,15 +1,10 @@
-Last Updated: 12/28/03
+Last Updated: 12/30/03
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,
   plus GP). This is currently handled manually via OtherPoints. It would be
   nice to include auto-top10 accumulation also. (USDAA lifetime Top10
   accululates from 1/1/99)
-
-- Add logic to the reorder dialog to know if an item can be reordered around
-  an adjacent entry. (For instance, when reordering runs, reordering really
-  only applies to runs on a given date. If you attempt to reorder more, the
-  sorting that occurs after the reordering will undo what you did.)
 
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
@@ -20,23 +15,19 @@ Last Updated: 12/28/03
     single trial.
 
 - Rework Configuration dialog so it is easier to use.
+  - Allow items (divisions/levels/etc) in config dialog to be reordered.
+    (currently you have to _carefully_ hand edit the file)
 
-- Allow items (divisions/levels/etc) in config dialog to be reordered.
-  (currently you have to _carefully_ hand edit the file)
+- Run entry dialog integrity checks (define!)
+  - If faults entered is greated then faults allowed, and 'Q' is set, warn
+    about possible problem
+  - If 'Q' not set and total faults says it should be a Q, warn.
+  - ...
 
-- Allow the user to specify what data to show for a trial in the tree.
-  Currently "startDate-endDate Venue: Location"
-  This will then affect what is printed too.
-
-- Runs: Allow the user to specify what columns to show.
-  Additional column info? (title pts, times, etc)
-  This will then affect what is printed too.
-
-- CalList: Allow the user to specify what columns to show.
-
-- Runs: Allow the user to specify what columns to print.
-
-- CalList: Allow the user to specify what columns to print.
+- Add logic to the reorder dialog to know if an item can be reordered around
+  an adjacent entry. (For instance, when reordering runs, reordering really
+  only applies to runs on a given date. If you attempt to reorder more, the
+  sorting that occurs after the reordering will undo what you did.)
 
 - Refine Points (rename to Reports?)
   - track faults, generate avgs in ranges (.5 refusals in last 6 months
@@ -44,9 +35,6 @@ Last Updated: 12/28/03
   - Qs related to judges
   - fastest yps/avg (base on related events)
   - graph of similar runs showing yps, include sct.
-
-- Run entry dialog integrity checks (define!)
-  - If faults entered is greated then faults allowed, and 'Q' is set, warn
-    about possible problem
-  - If 'Q' not set and total faults says it should be a Q, warn.
-  - ...
+  --- Note the previous stuff will probably _not_ be implemented. Now that
+      we have a good export mechanism, spreadsheet programs are much better
+      at data analysis than I am!

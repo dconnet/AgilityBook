@@ -272,6 +272,8 @@
 #define IDS_COL_FAULTS                  4046
 #define IDS_COL_TENTATIVE               4047
 #define IDS_COL_ENTERED                 4048
+#define IDS_COL_DOB                     4049
+#define IDS_COL_AGE                     4050
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002

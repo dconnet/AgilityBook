@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-09-04 DRC When pasting, set document modified flag. Clean up some
  *                    warning messages when creating/pasting items and a filter
  *                    is set. (It was saying they weren't added - they were,
@@ -56,6 +57,7 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgReorder.h"
 #include "DlgRun.h"
@@ -536,6 +538,21 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	return bLoaded;
 }
 
+const std::vector<int>& CAgilityBookTreeData::GetDogColumns() const
+{
+	return m_pTree->m_Columns[0];
+}
+
+const std::vector<int>& CAgilityBookTreeData::GetTrialColumns() const
+{
+	return m_pTree->m_Columns[1];
+}
+
+const std::vector<int>& CAgilityBookTreeData::GetRunColumns() const
+{
+	return m_pTree->m_Columns[2];
+}
+
 ////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(CAgilityBookTree* pTree, ARBDog* pDog)
@@ -665,7 +682,39 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 
 CString CAgilityBookTreeDataDog::OnNeedText() const
 {
-	return m_pDog->GetCallName().c_str();
+	CString str;
+	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
+	{
+		if (0 < idx)
+			str += ' ';
+		switch (GetDogColumns()[idx])
+		{
+		case IO_TREE_DOG_REGNAME:
+			str = m_pDog->GetRegisteredName().c_str();
+			break;
+		case IO_TREE_DOG_CALLNAME:
+			str = m_pDog->GetCallName().c_str();
+			break;
+		case IO_TREE_DOG_BREED:
+			str = m_pDog->GetBreed().c_str();
+			break;
+		case IO_TREE_DOG_DOB:
+			str = m_pDog->GetDOB().GetString(false, false).c_str();
+			break;
+		case IO_TREE_DOG_AGE:
+			{
+				CTime dob = m_pDog->GetDOB().GetDate();
+				CTime current = CTime::GetCurrentTime();
+				if (m_pDog->GetDeceased().IsValid())
+					current = m_pDog->GetDeceased().GetDate();
+				CTimeSpan age = current - dob;
+				CString str;
+				str.Format("%.1f", age.GetDays()/365.0);
+			}
+			break;
+		}
+	}
+	return str;
 }
 
 void CAgilityBookTreeDataDog::Properties()
@@ -818,31 +867,63 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 
 CString CAgilityBookTreeDataTrial::OnNeedText() const
 {
-	CString trial;
-	ARBDate date1 = m_pTrial->GetRuns().GetStartDate();
-	ARBDate date2 = m_pTrial->GetRuns().GetEndDate();
-	if (date1.IsValid())
+	CString str;
+	for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
 	{
-		trial += date1.GetString(true, false).c_str();
-		if (date1 != date2)
+		if (0 < idx)
 		{
-			trial += "-";
-			trial += date2.GetString(true, false).c_str();
+			if ((IO_TREE_TRIAL_START == GetTrialColumns()[idx]
+			&& IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
+			|| (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1]
+			&& IO_TREE_TRIAL_END == GetTrialColumns()[idx]))
+				str += '-';
+			else
+				str += ' ';
 		}
-		trial += " ";
+		switch (GetTrialColumns()[idx])
+		{
+		case IO_TREE_TRIAL_START:
+			str += m_pTrial->GetRuns().GetStartDate().GetString(true, false).c_str();
+			break;
+		case IO_TREE_TRIAL_END:
+			str += m_pTrial->GetRuns().GetEndDate().GetString(true, false).c_str();
+			break;
+		case IO_TREE_TRIAL_CLUB:
+			{
+				int i = 0;
+				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
+					iter != m_pTrial->GetClubs().end();
+					++iter, ++i)
+				{
+					if (0 < i)
+						str += "/";
+					str += (*iter)->GetName().c_str();
+				}
+			}
+			break;
+		case IO_TREE_TRIAL_VENUE:
+			{
+				int i = 0;
+				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
+					iter != m_pTrial->GetClubs().end();
+					++iter, ++i)
+				{
+					if (0 < i)
+						str += "/";
+					str += (*iter)->GetVenue().c_str();
+				}
+			}
+			break;
+		case IO_TREE_TRIAL_LOCATION:
+			str += m_pTrial->GetLocation().c_str();
+			break;
+		case IO_TREE_TRIAL_NOTES:
+			str += m_pTrial->GetNote().c_str();
+			str.Replace("\n", " ");
+			break;
+		}
 	}
-	int i = 0;
-	for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
-		iter != m_pTrial->GetClubs().end();
-		++iter, ++i)
-	{
-		if (0 < i)
-			trial += "/";
-		trial += (*iter)->GetVenue().c_str();
-	}
-	trial += ": ";
-	trial += m_pTrial->GetLocation().c_str();
-	return trial;
+	return str;
 }
 
 void CAgilityBookTreeDataTrial::Properties()
@@ -1027,11 +1108,51 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 
 CString CAgilityBookTreeDataRun::OnNeedText() const
 {
-	CString run;
-	run += m_pRun->GetDate().GetString(true, true).c_str();
-	run += " ";
-	run += m_pRun->GetEvent().c_str();
-	return run;
+	CString str;
+	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
+	{
+		if (0 < idx)
+			str += ' ';
+		switch (GetRunColumns()[idx])
+		{
+		case IO_TREE_RUN_DATE:
+			str += m_pRun->GetDate().GetString(true, true).c_str();
+			break;
+		case IO_TREE_RUN_Q:
+			{
+				CString q;
+				q = m_pRun->GetQ().str().c_str();
+				if (m_pRun->GetQ().Qualified())
+				{
+					if (GetTrial()->HasQQ(
+						m_pRun->GetDate(),
+						m_pTree->GetDocument()->GetConfig(),
+						m_pRun->GetDivision(),
+						m_pRun->GetLevel()))
+					{
+						q.LoadString(IDS_QQ);
+					}
+					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
+						q.LoadString(IDS_SQ);
+				}
+				str += q;
+			}
+			break;
+		case IO_TREE_RUN_EVENT:
+			str += m_pRun->GetEvent().c_str();
+			break;
+		case IO_TREE_RUN_DIVISION:
+			str += m_pRun->GetDivision().c_str();
+			break;
+		case IO_TREE_RUN_LEVEL:
+			str += m_pRun->GetLevel().c_str();
+			break;
+		case IO_TREE_RUN_HEIGHT:
+			str += m_pRun->GetHeight().c_str();
+			break;
+		}
+	}
+	return str;
 }
 
 void CAgilityBookTreeDataRun::Properties()

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-28 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
  *                    printing and viewing (already in the listctrl)
@@ -74,6 +75,7 @@ private:
 class CAgilityBookTree : public CTreeView, public ICommonView
 {
 	friend class CFindTree;
+	friend class CAgilityBookTreeData;
 protected: // create from serialization only
 	CAgilityBookTree();
 	DECLARE_DYNCREATE(CAgilityBookTree)
@@ -124,6 +126,7 @@ private:
 	void LoadData();
 	CAgilityBookTreeData* GetItemData(HTREEITEM hItem) const;
 	void PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const;
+	std::vector<int> m_Columns[3];
 	bool m_bReset;
 	bool m_bSuppressSelect;
 	CFindTree m_Callback;
