@@ -1163,6 +1163,18 @@ SOURCE=..\..\..\Win\res\DefaultConfig.xml
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\res\HdrDown.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\HdrUp.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\help.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\res\hidden.ico
 # End Source File
 # Begin Source File
