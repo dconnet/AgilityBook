@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-21 DRC Implemented Action items in configuration update.
  * @li 2004-01-14 DRC Use complete title name instead of nice name.
  * @li 2003-12-27 DRC Changed the scoring method to show the valid date range.
  * @li 2003-02-04 DRC Changed dbl-click to edit an item.
@@ -842,7 +843,45 @@ void CDlgConfigure::OnUpdate()
 	{
 		ARBConfig& update = dlg.GetConfig();
 		CString msg;
-		msg = m_Config.Update(0, update).c_str();
+		for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
+		{
+			const ARBConfigAction* action = *iterAction;
+			if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
+			{
+				// Find the venue.
+				ARBConfigVenue* venue = m_Config.GetVenues().FindVenue(action->GetVenue());
+				if (venue)
+				{
+					// Find the title we're renaming.
+					ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
+					if (oldTitle)
+					{
+						CString tmp;
+						tmp.Format("Action: Renaming title [%s] to [%s]",
+							action->GetOldName().c_str(),
+							action->GetNewName().c_str());
+						msg += tmp;
+						// If any titles are in use, create a fixup action.
+						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
+						if (0 < nTitles)
+						{
+							tmp.Format(", updating %d titles\n", nTitles);
+							m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
+						}
+						else
+							tmp = "\n";
+						msg += tmp;
+						// If the new title exists, just delete the old. Otherwise, rename the old to new.
+						const ARBConfigTitle* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
+						if (newTitle)
+							venue->GetDivisions().DeleteTitle(action->GetOldName());
+						else
+							oldTitle->SetName(action->GetNewName());
+					}
+				}
+			}
+		}
+		msg += m_Config.Update(0, update).c_str();
 		if (0 < msg.GetLength())
 		{
 			CDlgMessage dlg(msg, 0, this);
