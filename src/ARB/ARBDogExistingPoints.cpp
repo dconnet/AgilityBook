@@ -88,6 +88,7 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 	, m_Div()
 	, m_Level()
 	, m_Event()
+	, m_SubName()
 	, m_Points(0)
 {
 }
@@ -101,6 +102,7 @@ ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 	, m_Div(rhs.m_Div)
 	, m_Level(rhs.m_Level)
 	, m_Event(rhs.m_Event)
+	, m_SubName(rhs.m_SubName)
 	, m_Points(rhs.m_Points)
 {
 }
@@ -121,6 +123,7 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const
 		m_Div = rhs.m_Div;
 		m_Level = rhs.m_Level;
 		m_Event = rhs.m_Event;
+		m_SubName = rhs.m_SubName;
 		m_Points = rhs.m_Points;
 	}
 	return *this;
@@ -136,6 +139,7 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 		&& m_Div == rhs.m_Div
 		&& m_Level == rhs.m_Level
 		&& m_Event == rhs.m_Event
+		&& m_SubName == rhs.m_SubName
 		&& m_Points == rhs.m_Points;
 }
 
@@ -278,6 +282,8 @@ bool ARBDogExistingPoints::Load(
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str()));
 			return false;
 		}
+		// Only used in eRuns.
+		inTree.GetAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 	}
 	else
 	{
@@ -326,6 +332,7 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 		break;
 	case eSpeed:
 		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SPEED);

@@ -87,9 +87,9 @@ protected:
 #define COL_RUN_DATE		0
 #define COL_RUN_STATUS		1
 #define COL_RUN_DOG			2
-#define COL_RUN_SUBNAME		3
-#define COL_RUN_Q			4
-#define COL_RUN_TITLE_PTS	5
+#define COL_RUN_Q			3
+#define COL_RUN_TITLE_PTS	4
+#define COL_RUN_SUBNAME		5
 #define COL_RUN_LOCATION	6
 #define COL_RUN_CLUB		7
 #define COL_RUN_JUDGE		8
@@ -226,17 +226,17 @@ CString CDlgListViewerDataExisting::OnNeedText(int iCol) const
 	case COL_RUN_DATE:
 		str = m_Existing->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
 		break;
-	case COL_RUN_SUBNAME:
-		//str = m_Run->GetSubName().c_str();
-		break;
 	case COL_RUN_TITLE_PTS:
 		{
 			short pts = m_Existing->GetPoints();
 			str.Format("%hd", pts);
 		}
 		break;
+	case COL_RUN_SUBNAME:
+		str = m_Existing->GetSubName().c_str();
+		break;
 	case COL_RUN_LOCATION:
-		str = "Existing Points";
+		str.LoadString(IDS_EXISTING_POINTS);
 		break;
 	}
 	return str;
@@ -290,8 +290,8 @@ int CDlgListViewerDataExisting::Compare(CDlgListViewerData const* pRow2, int inC
 
 	case COL_RUN_STATUS:
 	case COL_RUN_DOG:
-	case COL_RUN_SUBNAME:
 	case COL_RUN_Q:
+	case COL_RUN_SUBNAME:
 	case COL_RUN_LOCATION:
 	case COL_RUN_CLUB:
 	case COL_RUN_JUDGE:
@@ -337,9 +337,6 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 		if (m_Dog)
 			str = m_Dog->GetCallName().c_str();
 		break;
-	case COL_RUN_SUBNAME:
-		str = m_Run->GetSubName().c_str();
-		break;
 	case COL_RUN_Q:
 		str = m_Run->GetQ().str().c_str();
 		break;
@@ -350,6 +347,9 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 				pts = m_Run->GetTitlePoints(m_Scoring);
 			str.Format("%hd", pts);
 		}
+		break;
+	case COL_RUN_SUBNAME:
+		str = m_Run->GetSubName().c_str();
 		break;
 	case COL_RUN_LOCATION:
 		str = m_Trial->GetLocation().c_str();
@@ -1091,21 +1091,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			if ((iter->second)->GetSubName().length())
 				names.insert((iter->second)->GetSubName());
 		}
-
-		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, IDS_COL_DATE);
-		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, IDS_COL_Q);
-		if (0 < names.size())
-			pColData->InsertColumn(m_ctrlList, COL_RUN_SUBNAME, IDS_COL_SUBNAME);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, IDS_COL_TITLE_PTS);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, IDS_COL_LOCATION);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, IDS_COL_CLUB);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, IDS_COL_JUDGE);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, IDS_COL_PLACE);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, IDS_COL_IN_CLASS);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, IDS_COL_Q_D);
-		int iItem = 0;
+		std::vector<ARBDogExistingPoints const*> existingRuns;
 		if (m_Data)
 		{
 			for (ARBDogExistingPointsList::const_iterator iter = m_Data->m_Dog->GetExistingPoints().begin();
@@ -1120,15 +1106,41 @@ BOOL CDlgListViewer::OnInitDialog()
 				|| m_Data->m_Level->GetSubLevels().FindSubLevel(pExisting->GetLevel()))
 				&& pExisting->GetEvent() == m_Data->m_Event->GetName())
 				{
-					CDlgListViewerDataExisting* pData = new CDlgListViewerDataExisting(pColData, pExisting);
-					LVITEM item;
-					item.mask = LVIF_TEXT | LVIF_PARAM;
-					item.iItem = iItem++;
-					item.iSubItem = 0;
-					item.pszText = LPSTR_TEXTCALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(pData);
-					m_ctrlList.InsertItem(&item);
+					existingRuns.push_back(pExisting);
+					if (0 < pExisting->GetSubName().length())
+						names.insert(pExisting->GetSubName());
 				}
+			}
+		}
+
+		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, IDS_COL_DATE);
+		m_SortColumn = pColData->NumColumns();
+		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, IDS_COL_Q);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, IDS_COL_TITLE_PTS);
+		if (0 < names.size())
+			pColData->InsertColumn(m_ctrlList, COL_RUN_SUBNAME, IDS_COL_SUBNAME);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, IDS_COL_JUDGE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, IDS_COL_PLACE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, IDS_COL_IN_CLASS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, IDS_COL_Q_D);
+		int iItem = 0;
+		if (m_Data)
+		{
+			for (std::vector<ARBDogExistingPoints const*>::iterator iter = existingRuns.begin();
+				iter != existingRuns.end();
+				++iter)
+			{
+				CDlgListViewerDataExisting* pData = new CDlgListViewerDataExisting(pColData, *iter);
+				LVITEM item;
+				item.mask = LVIF_TEXT | LVIF_PARAM;
+				item.iItem = iItem++;
+				item.iSubItem = 0;
+				item.pszText = LPSTR_TEXTCALLBACK;
+				item.lParam = reinterpret_cast<LPARAM>(pData);
+				m_ctrlList.InsertItem(&item);
 			}
 		}
 		for (std::list<RunInfo>::const_iterator iter = m_Runs->begin();

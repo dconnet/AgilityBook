@@ -38,14 +38,17 @@
 
 #include "ARBDate.h"
 #include "DlgBaseDialog.h"
-class ARBConfig;
 class ARBDogExistingPoints;
 class ARBDogExistingPointsList;
+class CAgilityBookDoc;
 
 class CDlgExistingPoints : public CDlgBaseDialog
 {
 public:
-	CDlgExistingPoints(ARBConfig const& config, ARBDogExistingPointsList& points, ARBDogExistingPoints* pExistingPoints, CWnd* pParent = NULL);
+	CDlgExistingPoints(CAgilityBookDoc* pDoc,
+		ARBDogExistingPointsList& points,
+		ARBDogExistingPoints* pExistingPoints,
+		CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -58,10 +61,12 @@ private:
 	CComboBox	m_ctrlDivisions;
 	CComboBox	m_ctrlLevels;
 	CComboBox	m_ctrlEvents;
+	CComboBox	m_ctrlSubNames;
+	CString	m_SubName;
 	short	m_Points;
 	CString	m_Comments;
 	//}}AFX_DATA
-	ARBConfig const& m_Config;
+	CAgilityBookDoc* m_pDoc;
 	ARBDogExistingPointsList& m_PointsList;
 	ARBDogExistingPoints* m_pExistingPoints;
 	ARBDate m_Date;
@@ -78,12 +83,14 @@ protected:
 	void FillDivisions();
 	void FillLevels();
 	void FillEvents();
+	void FillSubNames();
 	//{{AFX_MSG(CDlgExistingPoints)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeType();
 	afx_msg void OnSelchangeVenues();
 	afx_msg void OnSelchangeDivision();
 	afx_msg void OnSelchangeLevel();
+	afx_msg void OnSelchangeEvent();
 	virtual void OnOK();
 	virtual void OnCancel();
 	//}}AFX_MSG

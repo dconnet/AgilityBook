@@ -41,8 +41,8 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBConfig;
 class ARBDog;
+class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -50,8 +50,7 @@ class CDlgDogTitles : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogTitles(ARBConfig& config, ARBDogTitleList const& titles);
-	ARBConfig const& GetConfig() const	{return m_Config;}
+	CDlgDogTitles(CAgilityBookDoc* pDoc, ARBDogTitleList const& titles);
 
 private:
 // Dialog Data
@@ -62,7 +61,7 @@ private:
 	CButton	m_ctrlTitleDelete;
 	CButton	m_ctrlHidden;
 	//}}AFX_DATA
-	ARBConfig& m_Config;
+	CAgilityBookDoc* m_pDoc;
 	CColumnOrder m_sortTitles;
 	CImageList m_ImageList;
 	int m_imgEmpty;

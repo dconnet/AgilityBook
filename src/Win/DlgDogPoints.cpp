@@ -39,6 +39,7 @@
 #include "AgilityBook.h"
 #include "DlgDogPoints.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBDate.h"
 #include "ARBDog.h"
 #include "DlgExistingPoints.h"
@@ -66,6 +67,7 @@ static struct
 	{LVCFMT_LEFT, 50, IDS_COL_DIVISION},
 	{LVCFMT_LEFT, 50, IDS_COL_LEVEL},
 	{LVCFMT_LEFT, 50, IDS_COL_EVENT},
+	{LVCFMT_LEFT, 50, IDS_COL_SUBNAME},
 	{LVCFMT_LEFT, 50, IDS_COL_COMMENTS},
 };
 static int const nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
@@ -159,9 +161,9 @@ int CALLBACK ComparePoints(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogPoints dialog
 
-CDlgDogPoints::CDlgDogPoints(ARBConfig& config, ARBDogExistingPointsList const& points)
+CDlgDogPoints::CDlgDogPoints(CAgilityBookDoc* pDoc, ARBDogExistingPointsList const& points)
 	: CDlgBasePropertyPage(CDlgDogPoints::IDD)
-	, m_Config(config)
+	, m_pDoc(pDoc)
 	, m_sortPoints("ExistingPoints")
 	, m_ExistingPoints(points)
 {
@@ -348,7 +350,10 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 		case 7: // Event
 			str = pData->GetEvent().c_str();
 			break;
-		case 8: // Comment
+		case 8: // SubName
+			str = pData->GetSubName().c_str();
+			break;
+		case 9: // Comment
 			str = pData->GetComment().c_str();
 			str.Replace("\n", " ");
 			break;
@@ -368,7 +373,7 @@ void CDlgDogPoints::OnItemchangedExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogPoints::OnNew()
 {
-	CDlgExistingPoints dlg(m_Config, m_ExistingPoints, NULL, this);
+	CDlgExistingPoints dlg(m_pDoc, m_ExistingPoints, NULL, this);
 	if (IDOK == dlg.DoModal())
 		ListExistingPoints();
 }
@@ -379,7 +384,7 @@ void CDlgDogPoints::OnEdit()
 	if (0 <= i)
 	{
 		ARBDogExistingPoints* pExistingPoints = reinterpret_cast<ARBDogExistingPoints*>(m_ctrlPoints.GetItemData(i));
-		CDlgExistingPoints dlg(m_Config, m_ExistingPoints, pExistingPoints, this);
+		CDlgExistingPoints dlg(m_pDoc, m_ExistingPoints, pExistingPoints, this);
 		if (IDOK == dlg.DoModal())
 			ListExistingPoints();
 	}

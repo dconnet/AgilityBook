@@ -379,6 +379,9 @@ Other Points these points were earned in.
 .topic HIDC_EXISTING_POINTS
 Number of points earned.
 
+.topic HIDC_EXISTING_SUBNAME
+Extra naming information used to organize events.
+
 .topic HIDC_EXISTING_TYPE
 Type of existing points. Note, if entering a Snooker run and you have SuperQ
 points, you should create two separate entries for the points.

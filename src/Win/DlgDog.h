@@ -57,7 +57,6 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBConfig& m_Config;
 	ARBDog* m_pDog;
 	CDlgDogProperties* m_pageProp;
 	CDlgDogTitles* m_pageTitles;
