@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-01 DRC Fixed problem with Score and TitlePts in time+faults.
  */
 
 #include "StdAfx.h"
@@ -401,7 +402,7 @@ short ARBDogRun::GetTitlePoints(
 			double faults = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults();
 			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
 			{
-				if (faults <= m_Scoring.GetSCT())
+				if (0 == m_Scoring.GetSCT() || faults <= m_Scoring.GetSCT())
 				{
 					if (outClean)
 						*outClean = true;
@@ -452,6 +453,7 @@ ARBDouble ARBDogRun::GetScore(const ARBConfigScoring* inScoring) const
 		switch (inScoring->GetScoringStyle())
 		{
 		default: break;
+		case ARBConfigScoring::eTimePlusFaults: pts += GetScoring().GetTime(); break;
 		case ARBConfigScoring::eFaults100ThenTime: pts = 100 - pts; break;
 		case ARBConfigScoring::eFaults200ThenTime: pts = 200 - pts; break;
 		}
