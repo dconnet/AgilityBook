@@ -192,7 +192,7 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 			for (iter1 = GetScorings().begin(); iter1 != GetScorings().end(); ++iter1)
 			{
 				if ((*iter1)->GetDivision() == (*iter2)->GetDivision()
-				&& (*iter1)->GetLevel() == (*iter1)->GetLevel())
+				&& (*iter1)->GetLevel() == (*iter2)->GetLevel())
 				{
 					bFound = true;
 					break;
