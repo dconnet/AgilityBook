@@ -278,6 +278,20 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 Games:
   4 Qualifying Legs of each game
   Earned under at least 2 different judges for each game.</Titles>
+				<Titles Name="ChST">Champion Standard
+15 Qs</Titles>
+				<Titles Name="ChCL">Champion Colors
+15 Qs</Titles>
+				<Titles Name="ChWC">Champion Wildcard
+15 Qs</Titles>
+				<Titles Name="ChSN">Champion Snooker
+15 Qs</Titles>
+				<Titles Name="ChJP">Champion Jackpot
+15 Qs</Titles>
+				<Titles Name="ChFH">Champion FullHouse
+15 Qs</Titles>
+				<Titles Name="ChJU">Champion Jumpers
+15 Qs</Titles>
 				<Titles Name="CADE">5000 points, 3000 by class requirements, 2000 by handler choice.
 Standard: 500 pts (20 legs)
 Colors: 300 pts (20 legs)
@@ -287,6 +301,20 @@ Snooker: 500 pts (20 legs)
 FullHouse: 400 pts (20 legs)
 Jumpers: 400 pts (20 legs)
 </Titles>
+				<Titles Name="ExST">Extraordinaire Standard
+30 Qs</Titles>
+				<Titles Name="ExCL">Extraordinaire Colors
+30 Qs</Titles>
+				<Titles Name="ExWC">Extraordinaire Wildcard
+30 Qs</Titles>
+				<Titles Name="ExSN">Extraordinaire Snooker
+30 Qs</Titles>
+				<Titles Name="ExJP">Extraordinaire Jackpot
+30 Qs</Titles>
+				<Titles Name="ExFH">Extraordinaire FullHouse
+30 Qs</Titles>
+				<Titles Name="ExJU">Extraordinaire Jumpers
+30 Qs</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Level 1"/>
