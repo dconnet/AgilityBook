@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-01 DRC Venue filtering could allow filtered runs thru at times.
  * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
@@ -193,13 +194,30 @@ unsigned short CAgilityBookOptions::IsRunVisible(
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
 		nVisible = 0;
-		if (IsTrialVisible(venues, pTrial))
+		// Don't call IsTrialVisible. We need more control over the club/venue
+		// check. Otherwise (for instance), if AKC/NoviceB is disabled and
+		// ASCA/NoviceB is enabled, since the division/level names match, the
+		// AKC run will actually show up. So we need to make sure the venue
+		// of the filter matches too.
+		if (IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
 		{
 			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
 				iter != venues.end();
 				++iter)
 			{
-				if (pRun->GetDivision() == (*iter).division
+				bool bCheck = false;
+				for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
+					iterClub != pTrial->GetClubs().end();
+					++iterClub)
+				{
+					if ((*iter).venue == (*iterClub)->GetVenue())
+					{
+						bCheck = true;
+						break;
+					}
+				}
+				if (bCheck
+				&& pRun->GetDivision() == (*iter).division
 				&& pRun->GetLevel() == (*iter).level)
 				{
 					nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
