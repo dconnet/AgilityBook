@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
@@ -104,6 +105,8 @@ protected:
 	afx_msg void OnAgilityNewRun();
 	afx_msg void OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityDeleteRun();
+	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
+	afx_msg void OnEditCopy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

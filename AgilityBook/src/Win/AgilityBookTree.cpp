@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
+ *                    printing and viewing (already in the listctrl)
  * @li 2003-08-28 DRC Added printing.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
@@ -183,6 +185,11 @@ void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookTree printing
 
+CString CAgilityBookTree::GetPrintLine(HTREEITEM hItem) const
+{
+	return GetTreeCtrl().GetItemText(hItem);
+}
+
 struct CTreePrintData
 {
 	CStringArray lines;
@@ -213,7 +220,7 @@ void CAgilityBookTree::PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hIte
 		CString str;
 		for (int i = 0; i < indent; ++i)
 			str += "   ";
-		str += GetTreeCtrl().GetItemText(hItem);
+		str += GetPrintLine(hItem);
 		pData->lines.Add(str);
 		CRect r(0,0,0,0);
 		pDC->DrawText(str, &r, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);

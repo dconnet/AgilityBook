@@ -34,6 +34,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
+ *                    printing and viewing (already in the listctrl)
  * @li 2003-08-28 DRC Added printing.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
@@ -95,6 +97,9 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+public:
+	// Only CAgilityBookTreeData should be calling this.
+	CString GetPrintLine(HTREEITEM hItem) const;
 private:
 	void LoadData();
 	CAgilityBookTreeData* GetItemData(HTREEITEM hItem) const;

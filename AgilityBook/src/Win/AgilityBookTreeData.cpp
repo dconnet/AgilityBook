@@ -32,6 +32,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Copy a trial/run in the tree to the clipboard in dual
+ *                    form. The internal form allows copying of the entry.
+ *                    The text form copies what is printed.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  * @li 2003-07-24 DRC Added reorder support on all items. Made dogs user-sorted.
@@ -319,7 +322,7 @@ static bool AddTitle(
 		return false;
 }
 
-static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree)
+static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree, const CString& txtForm)
 {
 	if (!AfxGetMainWnd()->OpenClipboard())
 		return false;
@@ -341,6 +344,19 @@ static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree)
 		GlobalUnlock((void*)temp);
 		// send data to clipbard
 		SetClipboardData(clpFmt, temp);
+
+		if (!txtForm.IsEmpty())
+		{
+			temp = GlobalAlloc(GHND, txtForm.GetLength()+1);
+			if (NULL != temp)
+			{
+				LPTSTR str = (LPTSTR)GlobalLock(temp);
+				lstrcpy(str, (LPCTSTR)txtForm);
+				GlobalUnlock((void*)temp);
+				// send data to clipbard
+				SetClipboardData(CF_TEXT, temp);
+			}
+		}
 	}
 
 	CloseClipboard();
@@ -649,7 +665,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 			CElement tree;
 			tree.SetName(CLIPDATA);
 			GetTrial()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree);
+			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree, m_pTree->GetPrintLine(GetHTreeItem()));
 		}
 		break;
 	case ID_EDIT_PASTE:
@@ -857,7 +873,7 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 			CElement tree;
 			tree.SetName(CLIPDATA);
 			GetRun()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree);
+			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, m_pTree->GetPrintLine(GetHTreeItem()));
 		}
 		break;
 	case ID_EDIT_PASTE:
