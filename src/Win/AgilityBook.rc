@@ -1419,6 +1419,24 @@ BEGIN
     LTEXT           "x",IDC_STATIC,139,80,8,8
     EDITTEXT        IDC_OPTIONS_CAL_SIZE_Y,148,78,25,12,ES_AUTOHSCROLL | 
                     ES_NUMBER,0,HIDC_OPTIONS_CAL_SIZE_Y
+    LTEXT           "Entries in Calendar View",IDC_STATIC,3,95,77,8
+    CONTROL         "Normal Entries",IDC_OPTIONS_CAL_NORMAL,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,106,61,10,0,
+                    HIDC_OPTIONS_CAL_NORMAL
+    CONTROL         "Entries with Opening Dates",IDC_OPTIONS_CAL_OPENING,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,120,
+                    101,10,0,HIDC_OPTIONS_CAL_OPENING
+    CONTROL         "",IDC_OPTIONS_CAL_COLOR_OPEN,"Static",SS_OWNERDRAW | 
+                    SS_SUNKEN,123,120,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_OPEN_SET,145,119,40,
+                    12,0,0,HIDC_OPTIONS_CAL_COLOR_OPEN_SET
+    CONTROL         "Entries with Closing Dates",IDC_OPTIONS_CAL_CLOSING,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,134,
+                    97,10,0,HIDC_OPTIONS_CAL_CLOSING
+    CONTROL         "",IDC_OPTIONS_CAL_COLOR_CLOSE,"Static",SS_OWNERDRAW | 
+                    SS_SUNKEN,123,134,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSE_SET,145,133,
+                    40,12,0,0,HIDC_OPTIONS_CAL_COLOR_CLOSE_SET
 END
 
 IDD_VIEW_OPTIONS_FILTER DIALOGEX 0, 0, 285, 162

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added AutoShowSplashScreen
  * @li 2004-06-16 DRC Added options to remember date formats.
  * @li 2004-06-06 DRC Added additional clipboard formats.
@@ -375,6 +376,37 @@ void CAgilityBookOptions::SetCalendarEntrySize(CSize const& sz)
 {
 	AfxGetApp()->WriteProfileInt("Calendar", "EntrySize.cx", sz.cx);
 	AfxGetApp()->WriteProfileInt("Calendar", "EntrySize.cy", sz.cy);
+}
+
+CCalendarViewFilter CAgilityBookOptions::FilterCalendarView()
+{
+	unsigned short uVal = static_cast<unsigned short>(AfxGetApp()->GetProfileInt("Calendar", "Filter", CCalendarViewFilter::eViewNormal));
+	return uVal;
+}
+
+void CAgilityBookOptions::SetFilterCalendarView(CCalendarViewFilter inFilter)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "Filter", inFilter.m_Filter);
+}
+
+COLORREF CAgilityBookOptions::CalendarOpeningColor()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "OpenColor", RGB(255,0,0));
+}
+
+void CAgilityBookOptions::SetCalendarOpeningColor(COLORREF inColor)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "OpenColor", inColor);
+}
+
+COLORREF CAgilityBookOptions::CalendarClosingColor()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "CloseColor", RGB(255,0,255));
+}
+
+void CAgilityBookOptions::SetCalendarClosingColor(COLORREF inColor)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "CloseColor", inColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -177,15 +177,26 @@ bool CAgilityBookViewCalendar::GetMessage2(CString& msg) const
 	return true;
 }
 
-size_t CAgilityBookViewCalendar::GetEntriesOn(ARBDate const& date, std::vector<ARBCalendar*>& entries, bool bGetAll) const
+size_t CAgilityBookViewCalendar::GetEntriesOn(ARBDate const& date,
+	std::vector<ARBCalendar*>& entries,
+	bool bGetHidden) const
 {
 	entries.clear();
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
 	for (vector<ARBCalendar*>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
-		if ((*iter)->InRange(date))
+		ARBCalendar const* pCal = *iter;
+		if (filter.ViewNormal() && pCal->InRange(date))
 			entries.push_back((*iter));
+		// Only show opening/closing dates if we've planning on entering
+		else if (ARBCalendar::ePlanning == pCal->GetEntered())
+		{
+			if ((filter.ViewOpening() && pCal->GetOpeningDate() == date)
+			|| (filter.ViewClosing() && pCal->GetClosingDate() == date))
+				entries.push_back((*iter));
+		}
 	}
-	if (bGetAll)
+	if (bGetHidden)
 	{
 		for (vector<ARBCalendar*>::const_iterator iter = m_CalendarHidden.begin(); iter != m_CalendarHidden.end(); ++iter)
 		{
@@ -212,14 +223,15 @@ void CAgilityBookViewCalendar::LoadData()
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
 	bool bViewAll = CAgilityBookOptions::ViewAllCalendarEntries();
 	bool bHide = CAgilityBookOptions::HideOverlappingCalendarEntries();
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
 
 	// Add items.
 	vector<ARBCalendar const*> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
-	iter != GetDocument()->GetCalendar().end();
-	++iter)
+		iter != GetDocument()->GetCalendar().end();
+		++iter)
 	{
 		bool bSuppress = false;
 		ARBCalendar* pCal = (*iter);
@@ -231,8 +243,8 @@ void CAgilityBookViewCalendar::LoadData()
 		if (!bSuppress && bHide)
 		{
 			for (vector<ARBCalendar const*>::const_iterator iterE = entered.begin();
-			!bSuppress && iterE != entered.end();
-			++iterE)
+				!bSuppress && iterE != entered.end();
+				++iterE)
 			{
 				ARBCalendar const* pEntered = (*iterE);
 				if (pCal != pEntered
@@ -246,16 +258,42 @@ void CAgilityBookViewCalendar::LoadData()
 			m_CalendarHidden.push_back(pCal);
 		else
 		{
-			if (!m_First.IsValid() || pCal->GetStartDate() < m_First)
-				m_First = pCal->GetStartDate();
-			if (!m_Last.IsValid() || pCal->GetEndDate() > m_Last)
-				m_Last = pCal->GetEndDate();
-			m_Calendar.push_back(pCal);
+			bool bAdd = false;
+			ARBDate f, l;
+			if (filter.ViewNormal())
+			{
+				bAdd = true;
+				f = pCal->GetStartDate();
+				l = pCal->GetEndDate();
+			}
+			if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
+			{
+				bAdd = true;
+				if (!f.IsValid() || pCal->GetOpeningDate() < f)
+					f = pCal->GetOpeningDate();
+				if (!l.IsValid() || pCal->GetOpeningDate() > l)
+					l = pCal->GetOpeningDate();
+			}
+			if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
+			{
+				bAdd = true;
+				if (!f.IsValid() || pCal->GetClosingDate() < f)
+					f = pCal->GetClosingDate();
+				if (!l.IsValid() || pCal->GetClosingDate() > l)
+					l = pCal->GetClosingDate();
+			}
+			if (f.IsValid() && (!m_First.IsValid() || f < m_First))
+				m_First = f;
+			if (l.IsValid() && (!m_Last.IsValid() || l > m_Last))
+				m_Last = l;
+			if (bAdd)
+				m_Calendar.push_back(pCal);
 		}
 	}
 	if (!m_Current.IsValid())
 		m_Current = ARBDate::Today();
-	m_First -= m_First.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek()); // Set the first day to the start of the week.
+	// Set the first day to the start of the week.
+	m_First -= m_First.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
 	m_Last += 6 - m_Last.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
 	m_nWeeks = ((m_Last - m_First) / 7) + 1;
 	// Set the scrolling page size to 4 weeks.
@@ -346,6 +384,8 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 {
 	if (m_First.IsValid() && m_Last.IsValid())
 	{
+		TEXTMETRIC tm;
+		pDC->GetTextMetrics(&tm);
 		if (!pDC->IsPrinting())
 		{
 			pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
@@ -365,6 +405,10 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		pen.CreatePen(PS_SOLID, DAY_BORDER, GetSysColor(COLOR_WINDOWTEXT));
 		CFont* pOldFont = pDC->SelectObject(&fontDate);
 		CPen* pOldPen = pDC->SelectObject(&pen);
+
+		CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+		COLORREF clrOpening = CAgilityBookOptions::CalendarOpeningColor();
+		COLORREF clrClosing = CAgilityBookOptions::CalendarClosingColor();
 
 		// Draw the calendar framework.
 		int i;
@@ -424,31 +468,47 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
 			ARBCalendar const* pCal = (*iter);
-			for (ARBDate date = pCal->GetStartDate(); date <= pCal->GetEndDate(); ++date)
+			if (filter.ViewNormal())
 			{
-				dates.insert(date);
+				for (ARBDate date = pCal->GetStartDate(); date <= pCal->GetEndDate(); ++date)
+				{
+					dates.insert(date);
+				}
 			}
+			if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
+				dates.insert(pCal->GetOpeningDate());
+			if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
+				dates.insert(pCal->GetClosingDate());
 		}
 		pDC->SelectObject(&fontText);
 		for (set<ARBDate>::iterator iterDate = dates.begin(); iterDate != dates.end(); ++iterDate)
 		{
 			ARBDate date = (*iterDate);
-			// Should be...
 			vector<ARBCalendar*> entries;
 			// Then for each date, get all the events on that date to print.
 			if (0 < GetEntriesOn(date, entries, false))
 			{
+				if (!pDC->IsPrinting())
+				{
+					if (m_Current == date)
+					{
+						if (bActive)
+							pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
+						else
+							pDC->SetTextColor(GetSysColor(COLOR_MENUTEXT));
+					}
+					else
+						pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
+				}
 				CRect r = GetDateRect(date, true);
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
-				CString str;
 				for (iter = entries.begin(); iter != entries.end(); ++iter)
 				{
 					ARBCalendar const* pCal = (*iter);
-					if (!str.IsEmpty())
-						str += "\r\n";
 					// @todo: Make data in calendar entries user selectable
 					string const& venue = pCal->GetVenue();
 					string const& loc = pCal->GetLocation();
+					CString str;
 					if (ARBCalendar::eEntered == pCal->GetEntered())
 						str += "*";
 					else if (ARBCalendar::ePlanning == pCal->GetEntered())
@@ -462,20 +522,26 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						str += "?";
 					else
 						str += loc.c_str();
-				}
-				if (!pDC->IsPrinting())
-				{
-					if (m_Current == date)
+					bool bReset = false;
+					COLORREF oldText = 0;
+					if (!pDC->IsPrinting())
 					{
-						if (bActive)
-							pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
-						else
-							pDC->SetTextColor(GetSysColor(COLOR_MENUTEXT));
+						if (filter.ViewOpening() && pCal->GetOpeningDate() == date)
+						{
+							bReset = true;
+							oldText = pDC->SetTextColor(clrOpening);
+						}
+						else if (filter.ViewClosing() && pCal->GetClosingDate() == date)
+						{
+							bReset = true;
+							oldText = pDC->SetTextColor(clrClosing);
+						}
 					}
-					else
-						pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
+					pDC->DrawText(str, r, DT_NOPREFIX);
+					if (bReset)
+						pDC->SetTextColor(oldText);
+					r.top -= tm.tmAscent;
 				}
-				pDC->DrawText(str, r, DT_NOPREFIX);
 			}
 		}
 		pDC->SelectObject(pOldFont);

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
@@ -71,6 +72,10 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	m_pageCalendar.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
 	m_pageCalendar.m_sizeX = CAgilityBookOptions::GetCalendarEntrySize().cx;
 	m_pageCalendar.m_sizeY = CAgilityBookOptions::GetCalendarEntrySize().cy;
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+	m_pageCalendar.m_bNormal = filter.ViewNormal();
+	m_pageCalendar.m_bOpening = filter.ViewOpening();
+	m_pageCalendar.m_bClosing = filter.ViewClosing();
 	// Filter
 	m_pageFilter.m_ViewDates = CAgilityBookOptions::GetViewAllDates() ? 0 : 1;
 	m_pageFilter.m_timeStart = CAgilityBookOptions::GetStartFilterDate().GetDate();
@@ -140,6 +145,14 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCalendar.m_Days);
 		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCalendar.m_bHideOverlapping ? true : false);
 		CAgilityBookOptions::SetCalendarEntrySize(CSize(m_pageCalendar.m_sizeX, m_pageCalendar.m_sizeY));
+		CCalendarViewFilter filter;
+		if (m_pageCalendar.m_bNormal)
+			filter.AddNormal();
+		if (m_pageCalendar.m_bOpening)
+			filter.AddOpening();
+		if (m_pageCalendar.m_bClosing)
+			filter.AddClosing();
+		CAgilityBookOptions::SetFilterCalendarView(filter);
 		// Runs
 		CAgilityBookOptions::SetViewAllDates(m_pageFilter.m_ViewDates == 0);
 		CAgilityBookOptions::SetStartFilterDate(m_pageFilter.m_timeStart.GetTime());

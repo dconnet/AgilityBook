@@ -67,7 +67,7 @@ private:
 	size_t GetEntriesOn(
 		ARBDate const& date,
 		std::vector<ARBCalendar*>& entries,
-		bool bGetAll) const;
+		bool bGetHidden) const;
 	void LoadData();
 	CRect GetDateRect(ARBDate const& date, bool bLogical) const;
 	void GetDateFromPoint(CPoint pt, ARBDate& date);

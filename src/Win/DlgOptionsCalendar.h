@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
@@ -58,18 +59,26 @@ private:
 	BOOL	m_bHideOverlapping;
 	int		m_sizeX;
 	int		m_sizeY;
+	BOOL	m_bNormal;
+	BOOL	m_bOpening;
+	CStatic	m_Opening;
+	BOOL	m_bClosing;
+	CStatic	m_Closing;
 	//}}AFX_DATA
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgOptionsCalendar)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	//{{AFX_MSG(CDlgOptionsCalendar)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnOptionsCalColorOpen();
+	afx_msg void OnOptionsCalColorClose();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2003-08-09 DRC Moved fonts to new page.
  * @li 2003-07-31 DRC Allow screen fonts for printer font selection. Also, the
  *                    wrong font was created for the printer date font.
@@ -39,6 +40,7 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgOptionsCalendar.h"
+#include ".\dlgoptionscalendar.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -62,6 +64,9 @@ CDlgOptionsCalendar::CDlgOptionsCalendar()
 	m_bHideOverlapping = FALSE;
 	m_sizeX = 0;
 	m_sizeY = 0;
+	m_bNormal = TRUE;
+	m_bOpening = FALSE;
+	m_bClosing = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -82,11 +87,19 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_sizeX, 10, 1000);
 	DDX_Text(pDX, IDC_OPTIONS_CAL_SIZE_Y, m_sizeY);
 	DDV_MinMaxInt(pDX, m_sizeY, 10, 1000);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_NORMAL, m_bNormal);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_OPENING, m_bOpening);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPEN, m_Opening);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_CLOSING, m_bClosing);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSE, m_Closing);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
+	ON_WM_DRAWITEM()
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_OPEN_SET, OnOptionsCalColorOpen)
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_CLOSE_SET, OnOptionsCalColorClose)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -98,4 +111,51 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgOptionsCalendar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	CStatic* pCtrl = NULL;
+	COLORREF color = 0;
+	switch (nIDCtl)
+	{
+	case IDC_OPTIONS_CAL_COLOR_OPEN:
+		pCtrl = &m_Opening;
+		color = CAgilityBookOptions::CalendarOpeningColor();
+		break;
+	case IDC_OPTIONS_CAL_COLOR_CLOSE:
+		pCtrl = &m_Closing;
+		color = CAgilityBookOptions::CalendarClosingColor();
+		break;
+	}
+	if (pCtrl)
+	{
+		CDC dc;
+		dc.Attach(lpDrawItemStruct->hDC);
+		CRect r;
+		pCtrl->GetClientRect(&r);
+		dc.SetBkColor(color);
+		dc.ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
+		dc.Detach();
+	}
+}
+
+void CDlgOptionsCalendar::OnOptionsCalColorOpen()
+{
+	CColorDialog dlg(CAgilityBookOptions::CalendarOpeningColor(), CC_ANYCOLOR, this);
+	if (IDOK == dlg.DoModal())
+	{
+		CAgilityBookOptions::SetCalendarOpeningColor(dlg.GetColor());
+		m_Opening.Invalidate();
+	}
+}
+
+void CDlgOptionsCalendar::OnOptionsCalColorClose()
+{
+	CColorDialog dlg(CAgilityBookOptions::CalendarClosingColor(), CC_ANYCOLOR, this);
+	if (IDOK == dlg.DoModal())
+	{
+		CAgilityBookOptions::SetCalendarClosingColor(dlg.GetColor());
+		m_Closing.Invalidate();
+	}
 }
