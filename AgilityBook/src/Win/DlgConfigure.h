@@ -40,14 +40,44 @@
 #include <vector>
 #include "ARBConfig.h"
 #include "DlgBaseDialog.h"
+#include "DlgListViewer.h"
 #include "ListCtrl.h"
-#include "PointsData.h"
 class ARBAgilityRecordBook;
 class ARBConfigScoringList;
+class ARBDog;
 class ARBDogList;
+class ARBDogRun;
+class ARBDogTrial;
 class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgFixup;
+
+
+class ScoringRunInfo
+{
+public:
+	typedef enum
+	{
+		eNotScoringDetail,
+		eScoringDeleted,
+		eScoringChanged
+	} eScoringDetail;
+	ScoringRunInfo(
+		ARBDog const* inDog,
+		ARBDogTrial const* inTrial,
+		ARBDogRun const* inRun,
+		eScoringDetail inScoringDetail)
+		: m_Dog(inDog)
+		, m_Trial(inTrial)
+		, m_Run(inRun)
+		, m_ScoringDetail(inScoringDetail)
+	{
+	}
+	ARBDog const* m_Dog;
+	ARBDogTrial const* m_Trial;
+	ARBDogRun const* m_Run;
+	eScoringDetail m_ScoringDetail;
+};
 
 class CDlgConfigure : public CDlgBaseDialog
 {
@@ -89,8 +119,8 @@ public:
 		ARBConfigScoringList const& inScorings,
 		std::vector<CDlgFixup*>& ioDlgFixup,
 		// These settings are only used from the preceeding api.
-		std::list<RunInfo>* inRunsScoringDeleted = NULL,
-		std::list<RunInfo>* inRunsScoringChanged = NULL);
+		int* inRunsDeleted = NULL, int* inRunsChanged = NULL,
+		std::list<ScoringRunInfo>* inScoringRuns = NULL);
 
 	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book);
 	virtual ~CDlgConfigure();

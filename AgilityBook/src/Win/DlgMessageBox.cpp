@@ -93,40 +93,40 @@ protected:
 
 // Since we display a variable number of buttons (max of 4),
 // this aids in modifying a button's behavior to match what we want.
-static void SetButtonInfo(CButton& ctrlButton, UINT id)
+static void SetButtonInfo(CString const& strDetails, CButton& ctrlButton, UINT id)
 {
-	const char* pText = NULL;
+	CString text;
 	switch (id)
 	{
 	default:
 		id = IDOK;
 		// fallthru
 	case IDOK:
-		pText = "OK";
-		break;
-	case IDABORT:
-		pText = "Abort";
+		text.LoadString(IDS_BUTTON_OK);
 		break;
 	case IDCANCEL:
-		pText = "Cancel";
-		break;
-	case IDIGNORE:
-		pText = "Ignore";
-		break;
-	case IDNO:
-		pText = "No";
-		break;
-	case IDRETRY:
-		pText = "Retry";
+		text.LoadString(IDS_BUTTON_CANCEL);
 		break;
 	case IDYES:
-		pText = "Yes";
+		text.LoadString(IDS_BUTTON_YES);
+		break;
+	case IDNO:
+		text.LoadString(IDS_BUTTON_NO);
+		break;
+	case IDABORT:
+		text.LoadString(IDS_BUTTON_ABORT);
+		break;
+	case IDIGNORE:
+		text.LoadString(IDS_BUTTON_IGNORE);
+		break;
+	case IDRETRY:
+		text.LoadString(IDS_BUTTON_RETRY);
 		break;
 	case IDC_MESSAGE_BOX_DETAILS:
-		pText = "Details...";
+		text = strDetails;
 		break;
 	}
-	ctrlButton.SetWindowText(pText);
+	ctrlButton.SetWindowText(text);
 	ctrlButton.SetDlgCtrlID(id);
 }
 
@@ -178,6 +178,9 @@ BOOL CDlgMessageBox::OnInitDialog()
 	SetRedraw(FALSE);
 
 	CDialog::OnInitDialog();
+	// Get the extra button info.
+	CString strDetails;
+	m_ctrlButton[3].GetWindowText(strDetails);
 
 	// Set the window caption.
 	char szExeName[_MAX_PATH] = "";
@@ -232,43 +235,43 @@ BOOL CDlgMessageBox::OnInitDialog()
 	default:
 	case MB_OK:
 		nButtons = 1;
-		SetButtonInfo(m_ctrlButton[0], IDOK);
+		SetButtonInfo(strDetails, m_ctrlButton[0], IDOK);
 		m_ctrlButton[1].ShowWindow(SW_HIDE);
 		m_ctrlButton[2].ShowWindow(SW_HIDE);
 		m_ctrlButton[3].ShowWindow(SW_HIDE);
 		break;
 	case MB_OKCANCEL:
 		nButtons = 2;
-		SetButtonInfo(m_ctrlButton[0], IDOK);
-		SetButtonInfo(m_ctrlButton[1], IDCANCEL);
+		SetButtonInfo(strDetails, m_ctrlButton[0], IDOK);
+		SetButtonInfo(strDetails, m_ctrlButton[1], IDCANCEL);
 		m_ctrlButton[2].ShowWindow(SW_HIDE);
 		m_ctrlButton[3].ShowWindow(SW_HIDE);
 		break;
 	case MB_ABORTRETRYIGNORE:
 		nButtons = 3;
-		SetButtonInfo(m_ctrlButton[0], IDABORT);
-		SetButtonInfo(m_ctrlButton[1], IDRETRY);
-		SetButtonInfo(m_ctrlButton[2], IDIGNORE);
+		SetButtonInfo(strDetails, m_ctrlButton[0], IDABORT);
+		SetButtonInfo(strDetails, m_ctrlButton[1], IDRETRY);
+		SetButtonInfo(strDetails, m_ctrlButton[2], IDIGNORE);
 		m_ctrlButton[3].ShowWindow(SW_HIDE);
 		break;
 	case MB_YESNOCANCEL:
 		nButtons = 3;
-		SetButtonInfo(m_ctrlButton[0], IDYES);
-		SetButtonInfo(m_ctrlButton[1], IDNO);
-		SetButtonInfo(m_ctrlButton[2], IDCANCEL);
+		SetButtonInfo(strDetails, m_ctrlButton[0], IDYES);
+		SetButtonInfo(strDetails, m_ctrlButton[1], IDNO);
+		SetButtonInfo(strDetails, m_ctrlButton[2], IDCANCEL);
 		m_ctrlButton[3].ShowWindow(SW_HIDE);
 		break;
 	case MB_YESNO:
 		nButtons = 2;
-		SetButtonInfo(m_ctrlButton[0], IDYES);
-		SetButtonInfo(m_ctrlButton[1], IDNO);
+		SetButtonInfo(strDetails, m_ctrlButton[0], IDYES);
+		SetButtonInfo(strDetails, m_ctrlButton[1], IDNO);
 		m_ctrlButton[2].ShowWindow(SW_HIDE);
 		m_ctrlButton[3].ShowWindow(SW_HIDE);
 		break;
 	case MB_RETRYCANCEL:
 		nButtons = 2;
-		SetButtonInfo(m_ctrlButton[0], IDRETRY);
-		SetButtonInfo(m_ctrlButton[1], IDCANCEL);
+		SetButtonInfo(strDetails, m_ctrlButton[0], IDRETRY);
+		SetButtonInfo(strDetails, m_ctrlButton[1], IDCANCEL);
 		m_ctrlButton[2].ShowWindow(SW_HIDE);
 		m_ctrlButton[3].ShowWindow(SW_HIDE);
 		break;
@@ -277,7 +280,7 @@ BOOL CDlgMessageBox::OnInitDialog()
 	if (m_Callback)
 	{
 		m_ctrlButton[nButtons].ShowWindow(SW_SHOW);
-		SetButtonInfo(m_ctrlButton[nButtons], IDC_MESSAGE_BOX_DETAILS);
+		SetButtonInfo(strDetails, m_ctrlButton[nButtons], IDC_MESSAGE_BOX_DETAILS);
 		++nButtons;
 	}
 
