@@ -279,7 +279,10 @@ void CDlgConfigVenue::LoadDivisionData()
 	ARBConfigDivision* pDiv = NULL;
 	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
 	if (pDivData)
+	{
 		pDiv = pDivData->GetDivision();
+		pDiv->AddRef();
+	}
 	m_ctrlDivisions.DeleteAllItems();
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
 	{
@@ -289,6 +292,8 @@ void CDlgConfigVenue::LoadDivisionData()
 	}
 	m_ctrlDivisions.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	FindCurrentDivision(pDiv, true);
+	if (pDiv)
+		pDiv->Release();
 	LoadLevelData();
 	LoadTitleData();
 }
@@ -300,11 +305,15 @@ void CDlgConfigVenue::LoadLevelData()
 	CDlgConfigureDataLevel* pLevelData = GetCurrentLevelData();
 	CDlgConfigureDataSubLevel* pSubLevelData = GetCurrentSubLevelData();
 	if (pLevelData)
+	{
 		pLevel = pLevelData->GetLevel();
+		pLevel->AddRef();
+	}
 	else if (pSubLevelData)
 	{
 		pLevel = pSubLevelData->GetLevel();
 		pSubLevel = pSubLevelData->GetSubLevel();
+		pSubLevel->AddRef();
 	}
 	m_ctrlLevels.DeleteAllItems();
 	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
@@ -331,9 +340,15 @@ void CDlgConfigVenue::LoadLevelData()
 		}
 	}
 	if (pSubLevel)
+	{
 		FindCurrentSubLevel(pSubLevel, true);
+		pSubLevel->Release();
+	}
 	else if (pLevel)
+	{
 		FindCurrentLevel(pLevel, true);
+		pLevel->Release();
+	}
 }
 
 void CDlgConfigVenue::LoadTitleData()
@@ -341,7 +356,10 @@ void CDlgConfigVenue::LoadTitleData()
 	ARBConfigTitle* pTitle = NULL;
 	CDlgConfigureDataTitle* pTitleData = GetCurrentTitleData();
 	if (pTitleData)
+	{
 		pTitle = pTitleData->GetTitle();
+		pTitle->AddRef();
+	}
 	m_ctrlTitles.DeleteAllItems();
 	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
 	if (!pDivData)
@@ -356,6 +374,8 @@ void CDlgConfigVenue::LoadTitleData()
 	}
 	m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	FindCurrentTitle(pTitle, true);
+	if (pTitle)
+		pTitle->Release();
 }
 
 void CDlgConfigVenue::LoadEventData()
@@ -364,9 +384,15 @@ void CDlgConfigVenue::LoadEventData()
 	CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
 	CDlgConfigureDataScoring* pScoringData = GetCurrentScoringData();
 	if (pEventData)
+	{
 		pOldEvent = pEventData->GetEvent();
+		pOldEvent->AddRef();
+	}
 	else if (pScoringData)
+	{
 		pOldEvent = pScoringData->GetEvent();
+		pOldEvent->AddRef();
+	}
 	m_ctrlEvents.DeleteAllItems();
 	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
 	{
@@ -390,6 +416,8 @@ void CDlgConfigVenue::LoadEventData()
 		}
 	}
 	FindCurrentEvent(pOldEvent, true);
+	if (pOldEvent)
+		pOldEvent->Release();
 }
 
 int CDlgConfigVenue::FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSet)
@@ -1298,6 +1326,7 @@ void CDlgConfigVenue::OnEdit()
 				pEvent = pScoringData->GetEvent();
 			std::string event = pEvent->GetName();
 			CDlgConfigEvent dlg(m_pVenue, pEvent, this);
+			pEvent->AddRef();
 			if (IDOK == dlg.DoModal())
 			{
 				if (pEvent->GetName() != event)
@@ -1307,6 +1336,7 @@ void CDlgConfigVenue::OnEdit()
 				LoadEventData();
 				FindCurrentEvent(pEvent, true);
 			}
+			pEvent->Release();
 		}
 		break;
 	}
@@ -1367,10 +1397,12 @@ void CDlgConfigVenue::OnMoveUp()
 			{
 				CDlgConfigureDataDivision* pDivData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
 				ARBConfigDivision* pDiv = pDivData->GetDivision();
+				pDiv->AddRef();
 				m_pVenue->GetDivisions().Move(pDiv, -1);
 				LoadDivisionData();
 				UpdateButtons();
 				FindCurrentDivision(pDiv, true);
+				pDiv->Release();
 			}
 		}
 		break;
@@ -1388,19 +1420,27 @@ void CDlgConfigVenue::OnMoveUp()
 				if (pLevelData)
 				{
 					pLevel = pLevelData->GetLevel();
+					pLevel->AddRef();
 					pLevelData->GetDivision()->GetLevels().Move(pLevel, -1);
 				}
 				else if (pSubLevelData)
 				{
 					pSubLevel = pSubLevelData->GetSubLevel();
+					pSubLevel->AddRef();
 					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevel, -1);
 				}
 				LoadLevelData();
 				UpdateButtons();
 				if (pLevel)
+				{
 					FindCurrentLevel(pLevel, true);
+					pLevel->Release();
+				}
 				else if (pSubLevel)
+				{
 					FindCurrentSubLevel(pSubLevel, true);
+					pSubLevel->Release();
+				}
 			}
 		}
 		break;
@@ -1411,10 +1451,12 @@ void CDlgConfigVenue::OnMoveUp()
 			{
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
 				ARBConfigTitle* pTitle = pTitleData->GetTitle();
+				pTitle->AddRef();
 				pTitleData->GetDivision()->GetTitles().Move(pTitle, -1);
 				LoadTitleData();
 				UpdateButtons();
 				FindCurrentTitle(pTitle, true);
+				pTitle->Release();
 			}
 		}
 		break;
@@ -1428,10 +1470,12 @@ void CDlgConfigVenue::OnMoveUp()
 				if (NULL != hPrevItem)
 				{
 					ARBConfigEvent* pEvent = pEventData->GetEvent();
+					pEvent->AddRef();
 					m_pVenue->GetEvents().Move(pEvent, -1);
 					LoadEventData();
 					UpdateButtons();
 					FindCurrentEvent(pEvent, true);
+					pEvent->Release();
 				}
 			}
 		}
@@ -1450,10 +1494,12 @@ void CDlgConfigVenue::OnMoveDown()
 			{
 				CDlgConfigureDataDivision* pDivData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
 				ARBConfigDivision* pDiv = pDivData->GetDivision();
+				pDiv->AddRef();
 				m_pVenue->GetDivisions().Move(pDiv, 1);
 				LoadDivisionData();
 				UpdateButtons();
 				FindCurrentDivision(pDiv, true);
+				pDiv->Release();
 			}
 		}
 		break;
@@ -1471,19 +1517,27 @@ void CDlgConfigVenue::OnMoveDown()
 				if (pLevelData)
 				{
 					pLevel = pLevelData->GetLevel();
+					pLevel->AddRef();
 					pLevelData->GetDivision()->GetLevels().Move(pLevel, 1);
 				}
 				else if (pSubLevelData)
 				{
 					pSubLevel = pSubLevelData->GetSubLevel();
+					pSubLevel->AddRef();
 					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevel, 1);
 				}
 				LoadLevelData();
 				UpdateButtons();
 				if (pLevel)
+				{
 					FindCurrentLevel(pLevel, true);
+					pLevel->Release();
+				}
 				else if (pSubLevel)
+				{
 					FindCurrentSubLevel(pSubLevel, true);
+					pSubLevel->Release();
+				}
 			}
 		}
 		break;
@@ -1494,10 +1548,12 @@ void CDlgConfigVenue::OnMoveDown()
 			{
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
 				ARBConfigTitle* pTitle = pTitleData->GetTitle();
+				pTitle->AddRef();
 				pTitleData->GetDivision()->GetTitles().Move(pTitle, 1);
 				LoadTitleData();
 				UpdateButtons();
 				FindCurrentTitle(pTitle, true);
+				pTitle->Release();
 			}
 		}
 		break;
@@ -1511,10 +1567,12 @@ void CDlgConfigVenue::OnMoveDown()
 				if (NULL != hNextItem)
 				{
 					ARBConfigEvent* pEvent = pEventData->GetEvent();
+					pEvent->AddRef();
 					m_pVenue->GetEvents().Move(pEvent, 1);
 					LoadEventData();
 					UpdateButtons();
 					FindCurrentEvent(pEvent, true);
+					pEvent->Release();
 				}
 			}
 		}
