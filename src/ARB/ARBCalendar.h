@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The calendar cribsheet.
+ * @brief ARBCalendar and ARBCalendarList class.
  * @author David Connet
  *
  * Revision History
@@ -46,14 +45,26 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * The calendar cribsheet.
+ *
+ * @note A venue name in a calendar entry may be any name, including multiple
+ *       venues. It does not have to be a configured venue. However, in order
+ *       to create a trial entry from it, the venue name must be in the
+ *       configuration. Because of this, it is currently not possible to
+ *       automatically create a multiple hosted trial.
+ */
 class ARBCalendar : public ARBBase
 {
 public:
+	/**
+	 * Various states an entry may be in.
+	 */
 	typedef enum
 	{
-		eNot,
-		eEntered,
-		ePlanning
+		eNot,		///< Not entered
+		eEntered,	///< Entered
+		ePlanning	///< Not entered, but planning on it soon
 	} eEntry;
 
 	ARBCalendar();
@@ -66,13 +77,38 @@ public:
 	bool operator<(const ARBDate& rhs) const;
 	bool operator>(const ARBDate& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a calendar entry
+	 * @pre inTree is the actual ARBCalendar element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBCalendar element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
 	/**
@@ -82,6 +118,7 @@ public:
 	 * @retval false inDate is after one or both the start and end dates.
 	 */
 	bool IsBefore(const ARBDate& inDate) const;
+
 	/**
 	 * Is the given date in the range of the calendar entry?
 	 * @param inDate Date to check.
@@ -89,6 +126,7 @@ public:
 	 * @retval false inDate is outside the calendar entry range.
 	 */
 	bool InRange(const ARBDate& inDate) const;
+
 	/**
 	 * Does the range of inDate1 and inDate2 overlap this calendar entry?
 	 * @param inDate1 Beginning of date range.
@@ -100,56 +138,27 @@ public:
 		const ARBDate& inDate1,
 		const ARBDate& inDate2) const;
 
-	/**
-	 * Trial start date
+	/*
+	 * Getters/setters
 	 */
 	const ARBDate& GetStartDate() const;
 	void SetStartDate(const ARBDate& inDate);
-	/**
-	 * Trial end date
-	 */
 	const ARBDate& GetEndDate() const;
 	void SetEndDate(const ARBDate& inDate);
-	/**
-	 * Date trial entries are accepted.
-	 */
 	const ARBDate& GetOpeningDate() const;
 	void SetOpeningDate(const ARBDate& inDate);
-	/**
-	 * Date trial entries are no longer accepted.
-	 */
 	const ARBDate& GetClosingDate() const;
 	void SetClosingDate(const ARBDate& inDate);
-	/**
-	 * Is the trial date tentative?
-	 */
 	bool IsTentative() const;
 	void SetIsTentative(bool inTentative);
-	/**
-	 * Location of trial.
-	 */
 	const std::string& GetLocation() const;
 	void SetLocation(const std::string& inLocation);
-	/**
-	 * Name of club hosting trial.
-	 */
 	const std::string& GetClub() const;
 	void SetClub(const std::string& inClub);
-	/**
-	 * Trial venue. Note, this does not have to be a configured venue.
-	 * However, in order to create a trial entry from it, the venue name must
-	 * be in the configuration.
-	 */
 	const std::string& GetVenue() const;
 	void SetVenue(const std::string& inVenue);
-	/**
-	 * Am I planning on entering the trial?
-	 */
 	eEntry GetEntered() const;
 	void SetEntered(eEntry inEnter);
-	/**
-	 * A note...
-	 */
 	const std::string& GetNote() const;
 	void SetNote(const std::string& inNote);
 
@@ -289,6 +298,9 @@ inline void ARBCalendar::SetNote(const std::string& inNote)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBCalendar objects.
+ */
 class ARBCalendarList : public ARBVectorLoad1<ARBCalendar>
 {
 public:
@@ -301,13 +313,49 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort the list by date.
+	 * @param inDescending Sort in descending or ascending order.
+	 */
 	void sort(bool inDescending = true);
 
-	size_t GetAllEntered(std::vector<const ARBCalendar*>& ioEntered) const;
+	/**
+	 * Get a list of all the trials that have been entered.
+	 * @param outEntered Entered trials.
+	 * @return Number of entered trials.
+	 */
+	size_t GetAllEntered(std::vector<const ARBCalendar*>& outEntered) const;
+
+	/**
+	 * Trim all calendar entries before inDate.
+	 * @param inDate Date to trim entries.
+	 * @return Number of entries that were trimmed.
+	 * @note No dates are trimmed if inData is not valid.
+	 */
 	int TrimEntries(const ARBDate& inDate);
 
-	ARBCalendar* FindCalendar(ARBCalendar* inCal);
+	/**
+	 * Find a calendar entry.
+	 * @param inCal Object to search for.
+	 * @return Identical object.
+	 * @post The returned object is <i>not</i> reference counted.
+	 * @note Equality is tested by value, not pointer.
+	 */
+	ARBCalendar* FindCalendar(const ARBCalendar* inCal);
 
+	/**
+	 * Add a calendar entry to the list.
+	 * @param inCal Entry to add.
+	 * @return Returns the added object.
+	 * @post The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBCalendar* AddCalendar(ARBCalendar* inCal);
+
+	/**
+	 * Delete a calendar entry.
+	 * @param inCal Object to delete.
+	 * @return Object was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteCalendar(const ARBCalendar* inCal);
 };

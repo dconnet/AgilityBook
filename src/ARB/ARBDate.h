@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief Utility classes.
+ * @brief ARBDate class.
  * @author David Connet
  *
  * Revision History
@@ -41,22 +40,39 @@ class CElement;
 
 /////////////////////////////////////////////////////////////////////////////
 /**
+ * Date class.
  * In XML/CElement, this class is only used as an attribute, never an element.
+ *
+ * @todo Migrate all usage away from time_t.
  */
 class ARBDate
 {
 public:
+	/**
+	 * Output date format
+	 */
 	typedef enum
 	{
-		eDefault		= 0,	// YYYY-MM-DD or MM/DD/YYYY
-		eDashMMDDYYYY	= 1,
-		eSlashMMDDYYYY	= 2,
-		eDashYYYYMMDD	= 3,
-		eSlashYYYYMMDD	= 4,
-		eDashDDMMYYYY	= 5,
-		eSlashDDMMYYYY	= 6,
+		eDefault		= 0,	///< YYYY-MM-DD or MM/DD/YYYY
+		eDashMMDDYYYY	= 1,	///< MM-DD-YYYY
+		eSlashMMDDYYYY	= 2,	///< MM/DD/YYYY
+		eDashYYYYMMDD	= 3,	///< YYYY-MM-DD
+		eSlashYYYYMMDD	= 4,	///< YYYY/MM/DD
+		eDashDDMMYYYY	= 5,	///< DD-MM-YYYY
+		eSlashDDMMYYYY	= 6,	///< DD/MM/YYYY
 	} DateFormat;
+
+	/**
+	 * Convert a string to a date
+	 * @param inDate String to convert
+	 * @param inFormat Parse using this format
+	 * @return Parsed date, if parse fails, date is invalid.
+	 */
 	static ARBDate FromString(const std::string& inDate, DateFormat inFormat);
+
+	/**
+	 * Get the current date.
+	 */
 	static ARBDate Today();
 
 	ARBDate();
@@ -68,12 +84,37 @@ public:
 	ARBDate(int inYr, int inMon, int inDay);
 	~ARBDate();
 
+	/**
+	 * Is the date valid?
+	 */
 	bool IsValid() const;
+
+	/**
+	 * Set the date to invalid.
+	 */
 	void clear();
+
+	/**
+	 * Set the date to today.
+	 */
 	void SetToday();
 
+	/**
+	 * Get the julian day (not julian date)
+	 */
 	long GetJulianDay() const;
+
+	/**
+	 * Set the julian day (not julian date)
+	 */
 	void SetJulianDay(long inJulian);
+
+	/**
+	 * Set the date
+	 * @param inYr Current year.
+	 * @param inMon Current month.
+	 * @param inDay Current day.
+	 */
 	void SetDate(int inYr, int inMon, int inDay);
 
 	ARBDate& operator=(const ARBDate& rhs);
@@ -89,7 +130,14 @@ public:
 	void operator+=(int inD);
 	void operator-=(int inD);
 
+	/**
+	 * Test if date is between two dates (inclusive)
+	 */
 	bool isBetween(const ARBDate& inDate1, const ARBDate& inDate2) const;
+
+	/**
+	 * Is this a leap year?
+	 */
 	bool isLeap() const;
 
 	/**
@@ -101,26 +149,41 @@ public:
 	std::string GetString(bool inLeadingZeros, DateFormat inFormat) const;
 
 	/**
-	 * Convert the date to a time. Note, this will return an invalid time_t (-1)
-	 * if the date falls outside the range of a time_t (mktime()).
+	 * Convert the date to a time.
+	 * Note, this will return an invalid time_t (-1) if the date falls
+	 * outside the range of a time_t (mktime()).
 	 * @return Date converted to time_t.
 	 */
 	time_t GetDate() const;
-	void GetDate(int& outYr, int& outMon, int& outDay);
-	int GetDay() const;
-	int GetMonth() const;
-	int GetYear() const;
+
+	/**
+	 * Get the current date.
+	 * @param outYr Current year.
+	 * @param outMon Current month.
+	 * @param outDay Current day.
+	 */
+	void GetDate(int& outYr, int& outMon, int& outDay) const;
+
+	int GetDay() const;		///< Get the current day.
+	int GetMonth() const;	///< Get the current month.
+	int GetYear() const;	///< Get the current year.
+
+	/**
+	 * Days of the week
+	 */
 	typedef enum
 	{
-		eSunday = 0,
-		eMonday = 1,
-		eTuesday = 2,
-		eWednesday = 3,
-		eThursday = 4,
-		eFriday = 5,
-		eSaturday = 6,
+		eSunday = 0,	///< Sunday
+		eMonday = 1,	///< Monday
+		eTuesday = 2,	///< Tuesday
+		eWednesday = 3,	///< Wednesday
+		eThursday = 4,	///< Thursday
+		eFriday = 5,	///< Friday
+		eSaturday = 6,	///< Saturday
 	} DayOfWeek;
+
 	/**
+	 * Get the day of the week of the current date.
 	 * @param inFirstDay Define what day of week has index 0 (1st day of week).
 	 */
 	int GetDayOfWeek(DayOfWeek inFirstDay = eSunday) const;

@@ -28,9 +28,12 @@
 
 /**
  * @file
- *
- * @brief The main data class.
+ * @brief ARBAgilityRecordBook class, global functions and defines.
  * @author David Connet
+ *
+ * This file also contains global function declarations and defines that
+ * centralize most strings that would need globalization. The defines also
+ * list all the elements and attributes from the DTD.
  *
  * Revision History
  * @li 2004-02-14 DRC Added TableInYPS in run scoring.
@@ -42,9 +45,12 @@
  * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
  */
 
-/**
+/*
  * These defines make up the structure of the xml.
  * Make sure these agree with the .dtd.
+ *
+ * Defines that are indented are the valid values for the attribute that
+ * was just defined.
  */
 #define TREE_BOOK							"AgilityBook"
 #define TREE_CALENDAR						"Calendar"
@@ -190,15 +196,17 @@
 #define ATTRIB_REF_RUN_PLACE				"Place"
 #define ATTRIB_REF_RUN_TIME					"Time"
 
-/**
+/*
  * These defines list any special values.
  */
 #define WILDCARD_DIVISION		"*"
 #define WILDCARD_LEVEL			"*"
 
-/**
+/*
  * Localization stuff
- *  There is some stuff in Element.cpp (errors due to XML parsing failures)
+ *  There is some stuff in:
+ *    Element.cpp (errors due to XML parsing failures)
+ *    ARBTypes.cpp (ARB_Q)
  */
 #define UNKNOWN_VERSION			"Unknown document version"
 #define WARNING_NEWER_DOC		"Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?"
@@ -253,6 +261,9 @@ class ARBConfigOtherPoints;
 class ARBVersion;
 class CElement;
 
+/**
+ * The main data class.
+ */
 class ARBAgilityRecordBook
 {
 public:
@@ -264,6 +275,11 @@ public:
 
 	ARBAgilityRecordBook();
 	~ARBAgilityRecordBook();
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 * @post All content cleared, including configuration.
+	 */
 	void clear();
 
 	/**
@@ -276,7 +292,7 @@ public:
 	 * @param inConfig Load config info.
 	 * @param inInfo Load the Info (judges) info.
 	 * @param inDogs Load dog info.
-	 * @param ioErrMsg Error message on failure.
+	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
 	bool Load(
@@ -287,10 +303,17 @@ public:
 		bool inInfo,
 		bool inDogs,
 		std::string& ioErrMsg);
+	/**
+	 * Load an entire document.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(const CElement& inTree, std::string& ioErrMsg)
 	{
 		return Load(inTree, true, true, true, true, true, ioErrMsg);
 	}
+
 	/**
 	 * Save a document.
 	 * @param outTree XML structure to write ARB to.
@@ -299,6 +322,7 @@ public:
 	 * @param inConfig Save config info.
 	 * @param inInfo Save the Info (judges) info.
 	 * @param inDogs Save dog info, implies inConfig.
+	 * @return Success
 	 */
 	bool Save(
 		CElement& outTree,
@@ -310,35 +334,57 @@ public:
 
 	/**
 	 * Create a default document: No dogs, default configuration.
+	 * @post Clears all content, then creates default configuration.
 	 */
 	void Default();
 
 	// Convenience functions that do some data accumulation.
 	/**
-	 * Get all club names in use from existing trials.
+	 * Get all club names in use from existing trials and calendar entries.
+	 * @param outClubs List of clubs.
+	 * @return Number of clubs.
 	 */
 	size_t GetAllClubNames(std::set<std::string>& outClubs) const;
+
 	/**
-	 * Get all trial locations in use from existing trials.
+	 * Get all trial locations in use from existing trials and calendar entries.
+	 * @param outLocations List of locations.
+	 * @return Number of locations.
 	 */
 	size_t GetAllTrialLocations(std::set<std::string>& outLocations) const;
+
 	/**
 	 * Get all heights in use from existing runs.
+	 * @param outHeights List of heights.
+	 * @return Number of heights.
 	 */
 	size_t GetAllHeights(std::set<std::string>& outHeights) const;
+
 	/**
-	 * Get all judges in use from existing runs.
+	 * Get all judges in use from existing runs and Judges information.
+	 * @param outJudges List of judges.
+	 * @param bInfo Include judges from the ARBInfo.
+	 * @return Number of judges.
 	 */
 	size_t GetAllJudges(std::set<std::string>& outJudges, bool bInfo = true) const;
+
 	/**
 	 * Get all handlers in use from existing runs.
+	 * @param outHandlers List of handlers.
+	 * @return Number of handlers.
 	 */
 	size_t GetAllHandlers(std::set<std::string>& outHandlers) const;
+
 	/**
 	 * Get all fault types in use from existing runs and configuration.
+	 * @param outFaults List of faults.
+	 * @return Number of faults.
 	 */
 	size_t GetAllFaultTypes(std::set<std::string>& outFaults) const;
 
+	/*
+	 * Getter methods.
+	 */
 	const ARBCalendarList& GetCalendar() const;
 	ARBCalendarList& GetCalendar();
 	const ARBTrainingList& GetTraining() const;
@@ -414,6 +460,9 @@ inline ARBDogList& ARBAgilityRecordBook::GetDogs()
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// Global functions
+// These error routines centralize platform dependent code.
+// On windows, this prints using AfxMessageBox.
 
 /**
  * Print a warning that the document can be read, but saving it may cause the
@@ -421,29 +470,25 @@ inline ARBDogList& ARBAgilityRecordBook::GetDogs()
  * Prompt the user to continue (y/n)
  * This prints WARNING_NEWER_DOC (above)
  *
- * These error routines centralize platform dependent code.
- * On windows, this prints using AfxMessageBox.
- *
  * @return true to continue, false to abort.
  */
 extern bool WarningNewerDocStructure();
 
 /**
  * Return an error message about invalid document structure.
- *  "Invalid document structure: " followed by a message.
  *
  * @param inMsg Additional error information.
- * @return Message
+ * @return Message with newline.
  */
 extern std::string ErrorInvalidDocStructure(const char* const inMsg);
 
 /**
  * Return an error message about a missing required attribute.
- *
+ *  
  * @param inElement Element containing missing attribute.
  * @param inAttrib Attribute name that is missing.
  * @param inMsg Additional error information.
- * @return Message
+ * @return Message with newline.
  */
 extern std::string ErrorMissingAttribute(
 	const char* const inElement,
@@ -456,7 +501,7 @@ extern std::string ErrorMissingAttribute(
  * @param inElement Element containing bad attribute.
  * @param inAttrib Attribute name whose value is bad.
  * @param inMsg Additional error information.
- * @return Message
+ * @return Message with newline.
  */
 extern std::string ErrorInvalidAttributeValue(
 	const char* const inElement,

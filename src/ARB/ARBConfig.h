@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The main configuration class.
+ * @brief ARBConfig class.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,9 @@
 class ARBVersion;
 class CElement;
 
+/**
+ * The main configuration class.
+ */
 class ARBConfig
 {
 public:
@@ -53,35 +55,107 @@ public:
 	ARBConfig& operator=(const ARBConfig& rhs);
 	bool operator==(const ARBConfig& rhs) const;
 	bool operator!=(const ARBConfig& rhs) const;
+
+	/**
+	 * Reset the contents of this object and all sub-objects.
+	 */
 	void clear();
 
-	// These functions enable backwards file compatibility.
+	/**
+	 * Load a Fault object.
+	 * This functionality is here to enable backwards compatibility.
+	 * FileVersion 3 moved faults from the venue to the config.
+	 * @pre inTree is the actual ARBConfigFault element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool LoadFault(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Load an OtherPoint object.
+	 * This functionality is here to enable backwards compatibility.
+	 * FileVersion 3 moved OtherPoints from the venue to the config.
+	 * @pre inTree is the actual ARBConfigOtherPoint element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool LoadOtherPoints(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
+	/**
+	 * Load the configuration.
+	 * @pre inTree is the actual ARBConfig element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBConfig element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
+
+	/**
+	 * Set the configuration to the default (DefaultConfig.xml)
+	 */
 	void Default();
+
+	/**
+	 * Get the DTD (AgilityRecordBook.dtd)
+	 */
 	static std::string GetDTD();
 
+	/**
+	 * Convenience function to get the nice name of a title.
+	 * @param inVenue Venue that contains inTitle.
+	 * @param inTitle Name of title.
+	 * @return Nice name (longname) of a title.
+	 */
 	std::string GetTitleNiceName(
 		const std::string& inVenue,
 		const std::string& inTitle) const;
+
+	/**
+	 * Convenience function to get the complete name of a title.
+	 * @param inVenue Venue that contains inTitle.
+	 * @param inTitle Name of title.
+	 * @param bAbbrevFirst List Name before or after Longname.
+	 * @return Complete name of title (name + longname).
+	 */
 	std::string GetTitleCompleteName(
 		const std::string& inVenue,
 		const std::string& inTitle,
 		bool bAbbrevFirst = true) const;
+
+	/**
+	 * Update this configuration from inConfigNew.
+	 * @param indent Indentation level for generating messages.
+	 * @param inConfigNew Configuration to merge.
+	 * @param ioInfo Accumulated messages about changes that have happened.
+	 * @return Whether or not changes have occurred.
+	 */
 	bool Update(int indent, const ARBConfig& inConfigNew, std::string& ioInfo);
 
+	/*
+	 * Getters.
+	 */
 	const ARBConfigActionList& GetActions() const;
 	ARBConfigActionList& GetActions();
 	const ARBConfigVenueList& GetVenues() const;
