@@ -14,6 +14,7 @@ src/ARB/ARBAgilityRecordBook.cpp.
 Revision History:
 2004-11-15 DRC File version 10.1.
                Added 'underTF'/'overTF' to 'Scoring'.
+               Added 'ClubInfo', 'LocationInfo'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -239,10 +240,18 @@ This section adds optional data.
 Currently the only thing it tracks is comments about a judge.
 -->
 
-<!ELEMENT Info (JudgeInfo*) >
+<!ELEMENT Info (ClubInfo*, JudgeInfo*, LocationInfo*) >
 <!-- The pcdata is the comment about the judge -->
+<!ELEMENT ClubInfo (#PCDATA) >
+	<!ATTLIST ClubInfo
+		Name CDATA #REQUIRED
+		>
 <!ELEMENT JudgeInfo (#PCDATA) >
 	<!ATTLIST JudgeInfo
+		Name CDATA #REQUIRED
+		>
+<!ELEMENT LocationInfo (#PCDATA) >
+	<!ATTLIST LocationInfo
 		Name CDATA #REQUIRED
 		>
 

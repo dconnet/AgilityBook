@@ -399,17 +399,17 @@ List of all linked files.
 View the selected link.
 
 .topic HIDC_JUDGE
-List of judges from all your runs, plus any created here.
+List of club, judges or locations from all your runs, plus any created here.
 
 .topic HIDC_JUDGE_COMMENTS
-Comments about the judge.
+Comments about the club, judge or location.
 
 .topic HIDC_JUDGE_DELETE
-Delete the selected judge. If this judge is currently in use, only the
-comments will be deleted.
+Delete the selected club, judge or location. If this item is currently in use,
+only the comments will be deleted.
 
 .topic HIDC_JUDGE_NEW
-Create a new judge.
+Create a new club, judge or location.
 
 .topic HIDC_LIST_VIEWER
 List of entries.

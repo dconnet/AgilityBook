@@ -144,11 +144,12 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_FILE_EXPORT_WIZARD, OnFileExportWizard)
 	ON_COMMAND(ID_FILE_LINKED, OnFileLinked)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
-	ON_UPDATE_COMMAND_UI(ID_EDIT_JUDGES, OnUpdateEditJudges)
-	ON_COMMAND(ID_EDIT_JUDGES, OnEditJudges)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
+	ON_COMMAND(ID_NOTES_CLUBS, OnNotesClubs)
+	ON_COMMAND(ID_NOTES_JUDGES, OnNotesJudges)
+	ON_COMMAND(ID_NOTES_LOCATIONS, OnNotesLocations)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
@@ -897,22 +898,6 @@ void CAgilityBookDoc::OnEditConfiguration()
 	config.DoModal();
 }
 
-void CAgilityBookDoc::OnUpdateEditJudges(CCmdUI* pCmdUI) 
-{
-	BOOL bEnable = FALSE;
-	std::set<std::string> names;
-	GetAllJudges(names);
-	if (0 < names.size())
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
-
-void CAgilityBookDoc::OnEditJudges() 
-{
-	CDlgInfoJudge dlg(this);
-	dlg.DoModal();
-}
-
 void CAgilityBookDoc::OnAgilityNewDog()
 {
 	ARBDog* dog = new ARBDog();
@@ -995,6 +980,24 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 		}
 	}
 	training->Release();
+}
+
+void CAgilityBookDoc::OnNotesClubs()
+{
+	CDlgInfoJudge dlg(this, CDlgInfoJudge::eClubInfo);
+	dlg.DoModal();
+}
+
+void CAgilityBookDoc::OnNotesJudges() 
+{
+	CDlgInfoJudge dlg(this, CDlgInfoJudge::eJudgeInfo);
+	dlg.DoModal();
+}
+
+void CAgilityBookDoc::OnNotesLocations()
+{
+	CDlgInfoJudge dlg(this, CDlgInfoJudge::eLocationInfo);
+	dlg.DoModal();
 }
 
 void CAgilityBookDoc::OnViewOptions()
