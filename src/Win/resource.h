@@ -30,6 +30,7 @@
 #define IDI_HELP                        165
 #define IDD_ABOUTBOX                    200
 #define IDD_NAME                        201
+#define IDD_LIST_VIEWER                 202
 #define IDD_LISTCTRL                    203
 #define IDD_MESSAGE                     204
 #define IDD_FIND                        205
@@ -97,6 +98,8 @@
 #define IDC_FIND_VISIBLE                1023
 #define IDC_FIND_UP                     1024
 #define IDC_FIND_DOWN                   1025
+#define IDC_LIST_VIEWER                 1026
+#define IDC_LIST_VIEWER_CONFIG          1027
 #define IDC_CONFIG_VENUES               1030
 #define IDC_CONFIG_NEW                  1031
 #define IDC_CONFIG_EDIT                 1032

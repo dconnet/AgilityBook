@@ -48,6 +48,7 @@ class ARBDog;
 class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
+class PointsDataBase;
 struct CVenueFilter;
 
 class CAgilityBookViewPoints : public CListView2, public ICommonView
@@ -86,6 +87,7 @@ private:
 	};
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
 
+	PointsDataBase* GetItemData(int index) const;
 	int DoEvents(
 		ARBDog const* inDog,
 		std::vector<CVenueFilter> const& venues,
@@ -131,6 +133,9 @@ public:
 protected:
 	//{{AFX_MSG(CAgilityBookViewPoints)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -262,6 +262,10 @@ SOURCE=..\..\..\Win\DlgListCtrl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgListViewer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgMessage.cpp
 # End Source File
 # Begin Source File
@@ -580,6 +584,10 @@ SOURCE=..\..\..\Win\DlgInfoJudge.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgListCtrl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgListViewer.h
 # End Source File
 # Begin Source File
 
