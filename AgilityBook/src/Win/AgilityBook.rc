@@ -814,7 +814,7 @@ BEGIN
     EDITTEXT        IDC_FAULTS,50,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "&Time",IDC_STATIC,27,121,16,8
     EDITTEXT        IDC_TIME,50,119,30,12,ES_AUTOHSCROLL
-    CONTROL         "Run has a Table",IDC_TABLE_YPS,"Button",
+    CONTROL         "Run has a Ta&ble",IDC_TABLE_YPS,"Button",
                     BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,15,134,65,18
     GROUPBOX        "By Score",IDC_STATIC,91,92,109,77
     LTEXT           "&Required Opening",IDC_OPENING_PTS_TEXT,98,105,58,8
@@ -2157,12 +2157,22 @@ BEGIN
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
     ID_VIEW_HIDDEN          "Show Titles that have been hidden"
-    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS"
     ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
     ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
     ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
     ID_AGILITY_NEW_TITLE    "Create a new Title\nNew Title"
     ID_AGILITY_NEW_TRIAL    "Create a new Trial\nNew Trial"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_REORDER              "Reorder items\nReorder"
+    ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
+    ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
+    ID_EDIT_JUDGES          "Edit judge information\nJudges"
+    ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
+    ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
+    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS"
 END
 
 STRINGTABLE 
@@ -2184,16 +2194,6 @@ BEGIN
     ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
     ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
-END
-
-STRINGTABLE 
-BEGIN
-    ID_REORDER              "Reorder items\nReorder"
-    ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
-    ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
-    ID_EDIT_JUDGES          "Edit judge information\nJudges"
-    ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
-    ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
 END
 
 #endif    // English (U.S.) resources
