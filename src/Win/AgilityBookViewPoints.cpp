@@ -32,6 +32,7 @@
  *
  * Revision History
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
+ *                    Fix filtering on co-sanctioned trials.
  * @li 2004-05-27 DRC Lifetime point accumulation did not display the points
  *                    for existing runs.
  * @li 2004-05-20 DRC Add Dogs name and current date to report. Oops, just
@@ -274,7 +275,8 @@ int CAgilityBookViewPoints::DoEvents(
 									pRun->GetDate());
 								if (pScoring && pScoring->HasDoubleQ()
 								&& date == pRun->GetDate()
-								&& !pRun->IsFiltered(ARBBase::eIgnoreQ))
+								&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
+								&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun))
 								{
 									++nVisible;
 								}
@@ -289,7 +291,8 @@ int CAgilityBookViewPoints::DoEvents(
 					++iterRun)
 				{
 					ARBDogRun const* pRun = (*iterRun);
-					if (!pRun->IsFiltered(ARBBase::eIgnoreQ))
+					if (!pRun->IsFiltered(ARBBase::eIgnoreQ)
+					&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun))
 					{
 						if (pRun->GetDivision() != inDiv->GetName()
 						|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
@@ -624,7 +627,24 @@ void CAgilityBookViewPoints::LoadData()
 				if (pTrial->HasVenue(pVenue->GetName())
 				&& !pTrial->IsFiltered())
 				{
-					trialsInVenue.push_back(pTrial);
+					// Even tho the trial has "passed", it may actually contain
+					// some runs that should be filtered. This is due to the
+					// co-sanctioning issue.
+					bool bAdd = true;
+					if (1 < pTrial->GetClubs().size())
+					{
+						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+							bAdd && iterRun != pTrial->GetRuns().end();
+							++iterRun)
+						{
+							ARBDogRun const* pRun = *iterRun;
+							if (!pRun->IsFiltered()
+							&& !CAgilityBookOptions::IsRunVisible(venues, pVenue, pTrial, pRun))
+								bAdd = false;
+						}
+					}
+					if (bAdd)
+						trialsInVenue.push_back(pTrial);
 				}
 			}
 			if (pDog->GetExistingPoints().HasPoints(pVenue->GetName())
