@@ -84,8 +84,9 @@ public:
 	 * @param inEvent Name of event to verify against.
 	 * @param inScorings New scoring methods to verify against.
 	 * @param ioDlgFixup Fixup commands to update existing runs.
-	 * @param inRunsScoringDeleted Used only when checking all venues.
-	 * @param inRunsScoringChanged Used only when checking all venues.
+	 * @param inRunsDeleted Used only when checking all venues.
+	 * @param inRunsChanged Used only when checking all venues.
+	 * @param inScoringRuns Used only when checking all venues.
 	 */
 	static eCheck CheckExistingRuns(CAgilityBookDoc* inDoc,
 		ARBDogList const& inDogs,

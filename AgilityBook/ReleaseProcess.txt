@@ -1,6 +1,6 @@
 Notes for releasing a new version.
 
-Files to change before release:
+Files to change before marking files for release:
 - If file version has changed:
   - If major version has changed, make sure last part of pgm version agrees.
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
@@ -12,6 +12,7 @@ Files to change before release:
   - Same as file version changing above
 - History.txt
   Update program version and date, along with any comments.
+  - Reflect these changes into help/html/History.html
 - Todo.txt
   Any necessary changes...
 - Update CD Label (SureThing CD Labeler Deluxe v3.12)
@@ -62,6 +63,7 @@ Web Site:
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update AgilityBook.chm
+  - Update History.html and Bugs.html
 
 Backup:
 - Backup development directory onto CD.
