@@ -1,11 +1,9 @@
-12/11/2004: v1.4.1.10 <in development>
+12/18/2004: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Updated AAC.
 - New features / Enhancements:
-  - Added ability to compute time faults to Time+Fault style events.
-    This allows USDAA Time Gamble to compute correctly.
   - Added the ability to make notes about clubs/locations similar to
     how judges notes are made.
   - In the club/judge/location dialog, added indicators to show if an item
@@ -15,6 +13,8 @@
 - Bug fixes
   - Compute the score (in the run dialog) for NA runs that do not have
     titling points.
+  - USDAA Time Gamble does not compute time faults.
+    Added ability to compute time faults to Time+Fault style events.
   - When an event description has a newline in the configuration, the Run
     dialog shows a box instead.
   - Lifetime points were being filtered. Always show the total, but when
