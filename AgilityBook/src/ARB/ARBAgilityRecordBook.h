@@ -170,6 +170,7 @@
 #define ATTRIB_EXISTING_PTS_EVENT			"Event"
 #define ATTRIB_EXISTING_PTS_POINTS			"Pts"
 #define ATTRIB_REG_NUM_VENUE				"Venue"
+#define ATTRIB_REG_NUM_NUMBER				"Number"
 #define ATTRIB_REG_NUM_HEIGHT				"Height"
 #define ATTRIB_REG_NUM_RECEIVED				"isReceived"
 #define ATTRIB_TITLE_VENUE					"Venue"

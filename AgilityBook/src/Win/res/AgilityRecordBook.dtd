@@ -12,8 +12,9 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2004-06-02 DRC File version 8.7.
+2004-06-29 DRC File version 9.0.
                Added 'SubName' to 'Training'
+               'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
 2004-04-30 DRC File version 8.6.
                Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
                Added 'Link' to 'Run'
@@ -270,6 +271,7 @@ depends on how a venue has been defined above.
 <!ELEMENT RegNum (#PCDATA) >
 	<!ATTLIST RegNum
 		Venue CDATA #REQUIRED
+		Number CDATA #REQUIRED
 		Height CDATA #IMPLIED
 		isReceived (y|n) 'n'
 	>

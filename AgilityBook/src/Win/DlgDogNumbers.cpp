@@ -62,6 +62,7 @@ static struct
 	{LVCFMT_LEFT, 50, IDS_COL_NUMBER},
 	{LVCFMT_LEFT, 50, IDS_COL_HEIGHT},
 	{LVCFMT_LEFT, 50, IDS_COL_RECEIVED},
+	{LVCFMT_LEFT, 50, IDS_COL_NOTE},
 };
 static int const nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
@@ -107,6 +108,12 @@ int CALLBACK CompareRegNums(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			if (!pRegNum1->GetReceived() && pRegNum2->GetReceived())
 				rc = -1;
 			else if (pRegNum1->GetReceived() && !pRegNum2->GetReceived())
+				rc = 1;
+			break;
+		case 4: // note
+			if (pRegNum1->GetNote() < pRegNum2->GetNote())
+				rc = -1;
+			else if (pRegNum1->GetNote() > pRegNum2->GetNote())
 				rc = 1;
 			break;
 		}
@@ -194,6 +201,9 @@ void CDlgDogNumbers::ListRegNums()
 		m_ctrlRegNums.SetItemText(nItem, 1, pRegNum->GetNumber().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 2, pRegNum->GetHeight().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 3, pRegNum->GetReceived() ? "x" : "");
+		CString str(pRegNum->GetNote().c_str());
+		str.Replace("\n", " ");
+		m_ctrlRegNums.SetItemText(nItem, 4, str);
 		m_ctrlRegNums.SetItemData(nItem, reinterpret_cast<LPARAM>(pRegNum));
 	}
 	for (i = 0; i < nColRegNumInfo; ++i)

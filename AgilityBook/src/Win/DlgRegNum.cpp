@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-29 DRC Added Note to regnum.
  */
 
 #include "stdafx.h"
@@ -60,6 +61,7 @@ CDlgRegNum::CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDo
 	m_RegNum = _T("");
 	m_Height = _T("");
 	m_bReceived = FALSE;
+	m_Note = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -71,6 +73,7 @@ void CDlgRegNum::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_REGNUM_REG_NUM, m_RegNum);
 	DDX_Text(pDX, IDC_REGNUM_HEIGHT, m_Height);
 	DDX_Check(pDX, IDC_REGNUM_RECEIVED, m_bReceived);
+	DDX_Text(pDX, IDC_REGNUM_NOTE, m_Note);
 	//}}AFX_DATA_MAP
 }
 
@@ -100,6 +103,8 @@ BOOL CDlgRegNum::OnInitDialog()
 			m_ctrlVenues.SetCurSel(index);
 		m_Height = m_pRegNum->GetHeight().c_str();
 		m_bReceived = m_pRegNum->GetReceived() ? TRUE : FALSE;
+		m_Note = m_pRegNum->GetNote().c_str();
+		m_Note.Replace("\n", "\r\n");
 		UpdateData(FALSE);
 	}
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -114,6 +119,8 @@ void CDlgRegNum::OnOK()
 	m_RegNum.TrimLeft();
 	m_Height.TrimRight();
 	m_Height.TrimLeft();
+	m_Note.TrimRight();
+	m_Note.TrimLeft();
 
 	int index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR == index)
@@ -128,18 +135,21 @@ void CDlgRegNum::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_REGNUM_REG_NUM));
 		return;
 	}
+	m_Note.Replace("\r\n", "\n");
 	if (m_pRegNum)
 	{
 		m_pRegNum->SetNumber((LPCSTR)m_RegNum);
 		m_pRegNum->SetVenue((LPCSTR)venue);
 		m_pRegNum->SetHeight((LPCSTR)m_Height);
 		m_pRegNum->SetReceived(m_bReceived ? true : false);
+		m_pRegNum->SetNote((LPCSTR)m_Note);
 	}
 	else
 	{
 		ARBDogRegNum* pRegNum = m_RegNums.AddRegNum((LPCSTR)venue, (LPCSTR)m_RegNum);
 		pRegNum->SetHeight((LPCSTR)m_Height);
 		pRegNum->SetReceived(m_bReceived ? true : false);
+		pRegNum->SetNote((LPCSTR)m_Note);
 	}
 	CDlgBaseDialog::OnOK();
 }
