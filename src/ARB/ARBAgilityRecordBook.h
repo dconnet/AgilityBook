@@ -36,7 +36,8 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
- * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
+ * @li 2004-03-30 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
+ *                    Added Link to runs.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-02-14 DRC Added TableInYPS in run scoring.
  * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
@@ -98,6 +99,7 @@
 #define TREE_CRCD							"CRCD"
 #define TREE_CRCD_META						"CRCDMeta"
 #define TREE_OTHER							"Other"
+#define TREE_RUN_LINK						"Link"
 #define TREE_REF_RUN						"ReferenceRun"
 #define TREE_REF_NAME						"Name"
 #define TREE_REF_BREED						"Breed"

@@ -32,10 +32,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-30 DRC Added links.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
+#include <set>
+#include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBDogNotes.h"
@@ -191,6 +194,11 @@ public:
 	void SetNote(std::string const& inNote);
 	ARBDogReferenceRunList const& GetReferenceRuns() const;
 	ARBDogReferenceRunList& GetReferenceRuns();
+	size_t NumLinks() const;
+	size_t GetLinks(std::set<std::string>& outLinks) const;
+	bool HasLink(std::string const& inLink) const;
+	void AddLink(std::string const& inLink);
+	void RemoveLink(std::string const& inLink);
 
 private:
 	~ARBDogRun();
@@ -211,6 +219,8 @@ private:
 	ARBDogRunOtherPointsList m_OtherPoints;
 	ARBDogNotes m_Notes;
 	ARBDogReferenceRunList m_RefRuns;
+	typedef std::set<std::string> ARBDogRunLinks;
+	ARBDogRunLinks m_Links;
 };
 
 inline ARBDate const& ARBDogRun::GetDate() const
@@ -411,6 +421,11 @@ inline ARBDogRunOtherPointsList const& ARBDogRun::GetOtherPoints() const
 inline ARBDogRunOtherPointsList& ARBDogRun::GetOtherPoints()
 {
 	return m_OtherPoints;
+}
+
+inline size_t ARBDogRun::NumLinks() const
+{
+	return m_Links.size();
 }
 
 /////////////////////////////////////////////////////////////////////////////

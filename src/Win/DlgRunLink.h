@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,40 +29,37 @@
 /**
  * @file
  *
- * @brief interface of the CDlgRunReference class
+ * @brief interface of the CDlgRunLint class
  * @author David Connet
  *
  * Revision History
- * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
+ * @li 2004-03-30 DRC Created
  */
 
-#include "ColumnOrder.h"
 #include "ListCtrl.h"
-class ARBConfigVenue;
 class ARBDogRun;
 class CAgilityBookDoc;
 
-class CDlgRunReference : public CPropertyPage
+class CDlgRunLink : public CPropertyPage
 {
 public:
-	CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun);
-	~CDlgRunReference();
+	CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun);
+	~CDlgRunLink();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgRunReference)
-	enum { IDD = IDD_RUN_REFERENCE };
-	CListCtrl2	m_ctrlRefRuns;
+	//{{AFX_DATA(CDlgRunLink)
+	enum { IDD = IDD_RUN_LINK };
+	CListCtrl2	m_ctrlLinks;
 	CButton	m_ctrlNew;
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
+	CButton	m_ctrlOpen;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigVenue const* m_Venue;
 	ARBDogRun* m_Run;
-	CColumnOrder m_sortRefRuns;
 
-	//{{AFX_VIRTUAL(CDlgRunReference)
+	//{{AFX_VIRTUAL(CDlgRunLink)
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
@@ -70,18 +67,15 @@ protected:
 // Implementation
 protected:
 	void UpdateButtons();
-	void SetColumnHeaders();
-	void ListRuns();
+	void ListFiles(char const* pItem);
 
-	//{{AFX_MSG(CDlgRunReference)
+	//{{AFX_MSG(CDlgRunLink)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclkRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnRefRunNew();
-	afx_msg void OnRefRunEdit();
-	afx_msg void OnRefRunDelete();
+	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnNew();
+	afx_msg void OnEdit();
+	afx_msg void OnDelete();
+	afx_msg void OnOpen();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

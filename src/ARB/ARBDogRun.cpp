@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-30 DRC Added links.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -73,6 +74,7 @@ ARBDogRun::ARBDogRun()
 	, m_OtherPoints()
 	, m_Notes()
 	, m_RefRuns()
+	, m_Links()
 {
 }
 
@@ -94,6 +96,7 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	, m_OtherPoints(rhs.m_OtherPoints)
 	, m_Notes(rhs.m_Notes)
 	, m_RefRuns(rhs.m_RefRuns)
+	, m_Links(rhs.m_Links)
 {
 }
 
@@ -122,6 +125,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 		m_OtherPoints = rhs.m_OtherPoints;
 		m_Notes = rhs.m_Notes;
 		m_RefRuns = rhs.m_RefRuns;
+		m_Links = rhs.m_Links;
 	}
 	return *this;
 }
@@ -144,7 +148,8 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 		&& m_DogsQd == rhs.m_DogsQd
 		&& m_OtherPoints == rhs.m_OtherPoints
 		&& m_Notes == rhs.m_Notes
-		&& m_RefRuns == rhs.m_RefRuns;
+		&& m_RefRuns == rhs.m_RefRuns
+		&& m_Links == rhs.m_Links;
 }
 
 bool ARBDogRun::operator!=(ARBDogRun const& rhs) const
@@ -343,6 +348,10 @@ bool ARBDogRun::Load(
 			// Ignore any errors...
 			m_RefRuns.Load(inConfig, element, inVersion, ioErrMsg);
 		}
+		else if (name == TREE_RUN_LINK)
+		{
+			m_Links.insert(element.GetValue());
+		}
 	}
 	return true;
 }
@@ -382,6 +391,13 @@ bool ARBDogRun::Save(Element& ioTree) const
 		return false;
 	if (!m_RefRuns.Save(run))
 		return false;
+	for (ARBDogRunLinks::const_iterator iterLink = m_Links.begin();
+		iterLink != m_Links.end();
+		++iterLink)
+	{
+		Element& element = run.AddElement(TREE_RUN_LINK);
+		element.SetValue(*iterLink);
+	}
 	return true;
 }
 
@@ -527,6 +543,30 @@ ARBDouble ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
 		break;
 	}
 	return pts;
+}
+
+size_t ARBDogRun::GetLinks(std::set<std::string>& outLinks) const
+{
+	outLinks.clear();
+	outLinks = m_Links;
+	return outLinks.size();
+}
+
+bool ARBDogRun::HasLink(std::string const& inLink) const
+{
+	return m_Links.find(inLink) != m_Links.end();
+}
+
+void ARBDogRun::AddLink(std::string const& inLink)
+{
+	m_Links.insert(inLink);
+}
+
+void ARBDogRun::RemoveLink(std::string const& inLink)
+{
+	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
+	if (iter != m_Links.end())
+			m_Links.erase(iter);
 }
 
 /////////////////////////////////////////////////////////////////////////////

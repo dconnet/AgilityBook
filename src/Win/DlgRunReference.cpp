@@ -179,6 +179,22 @@ BEGIN_MESSAGE_MAP(CDlgRunReference, CPropertyPage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/////////////////////////////////////////////////////////////////////////////
+
+void CDlgRunReference::UpdateButtons()
+{
+	if (0 <= m_ctrlRefRuns.GetSelection())
+	{
+		m_ctrlEdit.EnableWindow(TRUE);
+		m_ctrlDelete.EnableWindow(TRUE);
+	}
+	else
+	{
+		m_ctrlEdit.EnableWindow(FALSE);
+		m_ctrlDelete.EnableWindow(FALSE);
+	}
+}
+
 void CDlgRunReference::SetColumnHeaders()
 {
 	LV_COLUMN col;
@@ -240,6 +256,7 @@ void CDlgRunReference::ListRuns()
 			}
 		}
 	}
+	UpdateButtons();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -328,16 +345,7 @@ void CDlgRunReference::OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 void CDlgRunReference::OnItemchangedRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 //	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	if (0 <= m_ctrlRefRuns.GetSelection())
-	{
-		m_ctrlEdit.EnableWindow(TRUE);
-		m_ctrlDelete.EnableWindow(TRUE);
-	}
-	else
-	{
-		m_ctrlEdit.EnableWindow(FALSE);
-		m_ctrlDelete.EnableWindow(FALSE);
-	}
+	UpdateButtons();
 	*pResult = 0;
 }
 
@@ -413,5 +421,6 @@ void CDlgRunReference::OnRefRunDelete()
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(nItem));
 		if (m_Run->GetReferenceRuns().DeleteReferenceRun(pRef))
 			m_ctrlRefRuns.DeleteItem(nItem);
+		UpdateButtons();
 	}
 }
