@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-03 DRC When pasting trials/runs, select the new item.
  * @li 2003-08-30 DRC Copy a trial/run in the tree to the clipboard in dual
  *                    form. The internal form allows copying of the entry.
  *                    The text form copies what is printed.
@@ -395,7 +396,7 @@ bool CAgilityBookTreeData::CanPaste() const
 	return bEnable;
 }
 
-bool CAgilityBookTreeData::DoPaste()
+bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
 	bool bLoaded = false;
 	CElement tree;
@@ -410,8 +411,29 @@ bool CAgilityBookTreeData::DoPaste()
 			if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
+				std::vector<CVenueFilter> venues;
+				CAgilityBookOptions::GetFilterVenue(venues);
 				pTrial->GetRuns().AddRun(pRun);
-				m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+				m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
+				HTREEITEM hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetHTreeItem());
+				bool bOk = true;
+				if (NULL == hItem)
+				{
+					bOk = false;
+					AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
+				}
+				else
+				{
+					m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
+				if (bOk)
+				{
+					pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+				}
 			}
 			pRun->Release();
 		}
@@ -425,8 +447,28 @@ bool CAgilityBookTreeData::DoPaste()
 			if (pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
+				std::vector<CVenueFilter> venues;
+				CAgilityBookOptions::GetFilterVenue(venues);
 				pDog->GetTrials().AddTrial(pTrial);
-				m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+				m_pTree->GetDocument()->ResetVisibility(venues, pTrial);
+				HTREEITEM hItem = m_pTree->InsertTrial(pTrial, GetDataDog()->GetHTreeItem());
+				bool bOk = true;
+				if (NULL == hItem)
+				{
+					bOk = false;
+					AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
+				}
+				else
+				{
+					m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
+				if (bOk)
+				{
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+				}
 			}
 			pTrial->Release();
 		}
@@ -500,7 +542,7 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 	default:
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste();
+		DoPaste(bTreeSelectionSet); // Currently this doesn't do anything. CanPaste said no.
 		break;
 	case ID_AGILITY_EDIT_DOG:
 		if (EditDog(this, m_pTree, bTreeSelectionSet))
@@ -669,7 +711,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 		}
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste();
+		DoPaste(bTreeSelectionSet);
 		break;
 	case ID_AGILITY_EDIT_TRIAL:
 		if (EditTrial(GetDataDog(), this, m_pTree, bTreeSelectionSet))
@@ -877,7 +919,7 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 		}
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste();
+		DoPaste(bTreeSelectionSet);
 		break;
 	case ID_AGILITY_EDIT_RUN:
 		if (EditRun(GetDataDog(), GetDataTrial(), this, m_pTree, bTreeSelectionSet))

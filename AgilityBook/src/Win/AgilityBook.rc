@@ -241,6 +241,8 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
         END
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
@@ -266,6 +268,8 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
         END
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
@@ -289,6 +293,8 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
         END
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
