@@ -168,7 +168,7 @@ void CHeaderCtrl2::OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CHeaderCtrl2::FixTooltips()
 {
-	if (!::IsWindow(m_ToolTip.GetSafeHwnd()))
+	if (!::IsWindow(m_ToolTip.GetSafeHwnd()) || !::IsWindow(GetSafeHwnd()))
 		return;
 
 	// Get rid of all existing tips.
