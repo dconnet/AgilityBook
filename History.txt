@@ -1,4 +1,10 @@
-3/21/2004: v1.0.5.8 <in development>
+3/25/2004: v1.0.5.8 <in development>
+- Bumped file version to 8.6:
+  - Changed 'TableInYPS' to 'hasTable'
+- New features / Enhancements:
+  - Instead of recording whether YPS should be adjusted for each run, just
+    record if that run has a table. A new option (under 'View') then
+    determines how to compute it.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:
@@ -9,7 +15,7 @@
     Titles headers)
   - Added the ability to hide a title. This allows you to hide an old title
     or a title that you will never earn (for instance USDAA SSA, if you are in
-	Masters already)
+    Masters already)
 - Bug fixes
   - When creating a new run in a new trial, the date did not get saved if we
     didn't change it. This would only occur on the first run created and only
