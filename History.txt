@@ -1,6 +1,6 @@
-10/29/2003: v0.9.4.7: <development>
+10/31/2003: v0.9.4.7: <development>
 - New features / Enhancements:
-  - Added DTD/XML export menu items.
+  - Expanded import/export [config/calendar, plus DTD/XML export]
   - Cleaned up some descriptions in DefaultConfig.xml.
   - In Points view, added '*' to Title if it has been received.
   - Support the mouse wheel for scrolling in the calendar view.
@@ -8,6 +8,7 @@
   - Changed copyright notices from "(c)" to "©"
   - Right-clicking on a Calendar entry sets that as the current date before
     popping up the context menu.
+  - Cleaned up page scrolling in calendar view.
 
 10/15/2003: v0.9.3.7: Release Candidate 4
 - Bumped file version to 7:

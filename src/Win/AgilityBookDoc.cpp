@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-10-31 DRC Added import/export calendar, export config.
  * @li 2003-10-22 DRC Added export dtd/xml menu options.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-09-15 DRC Fixed a bug where a trial created for more than one dog
@@ -83,8 +84,10 @@ IMPLEMENT_DYNCREATE(CAgilityBookDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	//{{AFX_MSG_MAP(CAgilityBookDoc)
-	ON_UPDATE_COMMAND_UI(ID_FILE_IMPORT_CONFIG, OnUpdateFileImportConfig)
 	ON_COMMAND(ID_FILE_IMPORT_CONFIG, OnFileImportConfig)
+	ON_COMMAND(ID_FILE_EXPORT_CONFIG, OnFileExportConfig)
+	ON_COMMAND(ID_FILE_IMPORT_CALENDAR, OnFileImportCalender)
+	ON_COMMAND(ID_FILE_EXPORT_CALENDAR, OnFileExportCalender)
 	ON_COMMAND(ID_FILE_EXPORT_DTD, OnFileExportDTD)
 	ON_COMMAND(ID_FILE_EXPORT_XML, OnFileExportXML)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
@@ -483,7 +486,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	BOOL bOk = FALSE;
 	CElement tree;
 	// First, we have to push all the class data into a tree.
-	if (m_Records.Save(tree))
+	if (m_Records.Save(tree, true, true, true, true))
 	{
 		// Then we can stream that tree out as XML.
 		std::ofstream output(lpszPathName, std::ios::out | std::ios::binary);
@@ -523,11 +526,6 @@ void CAgilityBookDoc::Dump(CDumpContext& dc) const
 
 // CAgilityBookDoc commands
 
-void CAgilityBookDoc::OnUpdateFileImportConfig(CCmdUI *pCmdUI)
-{
-	pCmdUI->Enable(TRUE);
-}
-
 void CAgilityBookDoc::OnFileImportConfig()
 {
 	CDlgConfigUpdate dlg;
@@ -548,6 +546,98 @@ void CAgilityBookDoc::OnFileImportConfig()
 	}
 }
 
+void CAgilityBookDoc::OnFileExportConfig()
+{
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_ARB);
+	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
+	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
+	CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
+	if (IDOK == file.DoModal())
+	{
+		CElement tree;
+		if (m_Records.Save(tree, false, false, true, false))
+		{
+			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+			output.exceptions(std::ios_base::badbit);
+			if (output.is_open())
+			{
+				tree.SaveXML(output);
+				output.close();
+			}
+		}
+	}
+}
+
+void CAgilityBookDoc::OnFileImportCalender()
+{
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_ARB);
+	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
+	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
+	CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter);
+	if (IDOK == file.DoModal())
+	{
+		AfxGetMainWnd()->UpdateWindow();
+		CWaitCursor wait;
+		CElement tree;
+		if (!tree.LoadXMLFile(file.GetPathName()))
+			AfxMessageBox(AFX_IDP_FAILED_TO_OPEN_DOC);
+		else
+		{
+			ARBAgilityRecordBook book;
+			if (book.Load(tree, true, false, false, false))
+			{
+				int count = 0;
+				for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
+				{
+					ARBCalendar* cal = *iter;
+					if (!m_Records.GetCalendar().FindCalendar(cal))
+					{
+						if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+						{
+							m_Records.GetCalendar().AddCalendar(cal);
+							++count;
+						}
+					}
+				}
+				if (0 < count)
+				{
+					m_Records.GetCalendar().sort();
+					UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
+					SetModifiedFlag();
+				}
+				CString str;
+				str.FormatMessage(IDS_ADDED_CAL_ITEMS, count);
+				AfxMessageBox(str, MB_ICONINFORMATION);
+			}
+		}
+	}
+}
+
+void CAgilityBookDoc::OnFileExportCalender()
+{
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_ARB);
+	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
+	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
+	CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
+	if (IDOK == file.DoModal())
+	{
+		CElement tree;
+		if (m_Records.Save(tree, true, false, false, false))
+		{
+			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+			output.exceptions(std::ios_base::badbit);
+			if (output.is_open())
+			{
+				tree.SaveXML(output);
+				output.close();
+			}
+		}
+	}
+}
+
 #if 0
 {
 	//ARBDog* pDog = GetCurrentDog();
@@ -561,7 +651,11 @@ corrupt the file. But there's some ideas here that may be of future use...
 	if (!pDog)
 		return;
 	//Make sure any strings end up in the resource file.
-	CFileDialog file(TRUE, "txt", "*.txt", OFN_FILEMUSTEXIST, "Text Files (*.txt)|*.txt|All Files (*.*)|*.*||");
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_TXT);
+	fname.LoadString(IDS_FILEEXT_FNAME_TXT);
+	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
+	CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter);
 	if (IDOK == file.DoModal())
 	{
 		TRY
@@ -699,8 +793,10 @@ corrupt the file. But there's some ideas here that may be of future use...
 
 void CAgilityBookDoc::OnFileExportDTD()
 {
-	CFileDialog file(FALSE, "dtd", "AgilityRecordBook.dtd", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST,
-		"DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||");
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_DTD);
+	filter.LoadString(IDS_FILEEXT_FILTER_DTD);
+	CFileDialog file(FALSE, def, "AgilityRecordBook.dtd", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
 	if (IDOK == file.DoModal())
 	{
 		CStdioFile output(file.GetFileName(), CFile::modeCreate | CFile::modeWrite | CFile::typeBinary);
@@ -717,12 +813,14 @@ void CAgilityBookDoc::OnFileExportXML()
 		name = "AgilityRecordBook.xml";
 	else
 		name = name.Left(name.ReverseFind('.')) + ".xml";
-	CFileDialog file(FALSE, "xml", name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST,
-		"XML Files (*.xml)|*.xml|All Files (*.*)|*.*||");
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_ARB);
+	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
+	CFileDialog file(FALSE, def, name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
 	if (IDOK == file.DoModal())
 	{
 		CElement tree;
-		if (m_Records.Save(tree))
+		if (m_Records.Save(tree, true, true, true, true))
 		{
 			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 			output.exceptions(std::ios_base::badbit);

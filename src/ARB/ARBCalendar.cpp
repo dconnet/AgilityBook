@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-31 DRC Added FindCalendar.
  * @li 2003-07-09 DRC IsRangeOverlapped test was wrong. It was actually a 'is
  *                    range contained in' test.
  * @li 2003-01-23 DRC DocVer 2: Replaced 'PlanOn' attribute and with 'Entered'.
@@ -334,6 +335,23 @@ int ARBCalendarList::TrimEntries(const ARBDate& inDate)
 		}
 	}
 	return trimmed;
+}
+
+ARBCalendar* ARBCalendarList::FindCalendar(ARBCalendar* inCal)
+{
+	ARBCalendar* pCal = NULL;
+	if (inCal)
+	{
+		for (iterator iter = begin(); iter != end(); ++iter)
+		{
+			if (*(*iter) == *inCal)
+			{
+				pCal = *iter;
+				break;
+			}
+		}
+	}
+	return pCal;
 }
 
 ARBCalendar* ARBCalendarList::AddCalendar(ARBCalendar* inCal)

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
  * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
  */
 
@@ -253,8 +254,17 @@ public:
 	/**
 	 * Save a document.
 	 * @param outTree XML structure to write ARB to.
+	 * @param inCalendar Save calendar info.
+	 * @param inTraining Save training info.
+	 * @param inConfig Save config info.
+	 * @param inDogs Save dog info, implies inConfig.
 	 */
-	bool Save(CElement& outTree) const;
+	bool Save(
+		CElement& outTree,
+		bool inCalendar,
+		bool inTraining,
+		bool inConfig,
+		bool inDogs) const;
 
 	/**
 	 * Create a default document: No dogs, default configuration.
