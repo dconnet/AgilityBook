@@ -274,6 +274,9 @@ void PointsDataTitle::OnDblClick() const
 	if (IDOK == dlg.DoModal())
 	{
 		pDoc->SetModifiedFlag();
+		std::vector<CVenueFilter> venues;
+		CAgilityBookOptions::GetFilterVenue(venues);
+		pDoc->ResetVisibility(venues, m_pTitle);
 		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
 	}
 }
@@ -281,7 +284,7 @@ void PointsDataTitle::OnDblClick() const
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataEvent::PointsDataEvent(CAgilityBookViewPoints* pView,
-		std::list<ARBDogRun const*>& inMatching,
+		std::list<RunInfo>& inMatching,
 		std::string const& inDiv,
 		std::string const& inLevel,
 		std::string const& inEvent,
@@ -347,7 +350,7 @@ void PointsDataEvent::OnDblClick() const
 	str += m_Level.c_str();
 	str += "/";
 	str += m_Event.c_str();
-	CDlgListViewer dlg(str, m_Matching, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), str, m_Matching, m_pView);
 	dlg.DoModal();
 }
 
@@ -405,7 +408,7 @@ std::string PointsDataDoubleQs::OnNeedText(size_t index) const
 
 void PointsDataDoubleQs::OnDblClick() const
 {
-	CDlgListViewer dlg("Double Qs", m_QQs, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), "Double Qs", m_QQs, m_pView);
 	dlg.DoModal();
 }
 
@@ -473,7 +476,7 @@ std::string PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 
 void PointsDataOtherPointsTallyAll::OnDblClick() const
 {
-	CDlgListViewer dlg("Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
 }
 
@@ -505,7 +508,7 @@ std::string PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 
 void PointsDataOtherPointsTallyAllByEvent::OnDblClick() const
 {
-	CDlgListViewer dlg("Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
 }
 
@@ -537,7 +540,7 @@ std::string PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 
 void PointsDataOtherPointsTallyLevel::OnDblClick() const
 {
-	CDlgListViewer dlg("Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
 }
 
@@ -572,6 +575,6 @@ std::string PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) con
 
 void PointsDataOtherPointsTallyLevelByEvent::OnDblClick() const
 {
-	CDlgListViewer dlg("Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
 }

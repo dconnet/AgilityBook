@@ -91,19 +91,12 @@ CDlgDog::~CDlgDog()
 
 BEGIN_MESSAGE_MAP(CDlgDog, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgDog)
-	ON_WM_DESTROY()
 	ON_COMMAND(IDOK, OnOK)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDog message handlers
-
-void CDlgDog::OnDestroy()
-{
-	CDlgBaseSheet::OnDestroy();
-	m_pDoc->ResetVisibility();
-}
 
 void CDlgDog::OnOK()
 {
@@ -120,6 +113,8 @@ void CDlgDog::OnOK()
 	m_pDog->GetTitles() = m_pageTitles->m_Titles;
 	m_pDog->GetRegNums() = m_pageRegNums->m_RegNums;
 	m_pDog->GetExistingPoints() = m_pagePoints->m_ExistingPoints;
+
+	m_pDoc->ResetVisibility();
 
 	EndDialog(IDOK);
 }

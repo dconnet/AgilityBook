@@ -1,10 +1,13 @@
-7/23/2004: v1.2.2.8 <in development>
+8/11/2004: v1.2.2.8 <in development>
 - Bumped Configuration v5:
   - Removed titling points from USDAA Tournament Jumper/Snooker.
 - New features / Enhancements:
   - Check for configuration updates when the user requests an update check.
     These are auto-downloaded from the web. Configuration checks are also
-    done when a document is opened. (This is can be turned off in pgm options)
+    done when a document is opened (but only if a previous check loaded the
+    web information - opening a document will not access the web).
+  - Added 'verified' option to trials in the tree (via column customization)
+  - Added dbl-click support in the Points view to see the runs behind the data.
 - Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.

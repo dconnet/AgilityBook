@@ -764,10 +764,6 @@ After adding a title, automatically display the dialog containing all titles.
 Automatically check every 30 days to see if a new version of the program is
 available.
 
-.topic HIDC_OPTIONS_PGM_AUTO_CHECKDOC
-Automatically check to see if there is a newer version of the configuration
-when a document is opened. If a newer one exists, it will be merged.
-
 .topic HIDC_OPTIONS_PGM_BROWSE
 Browse for a Windows .bmp file to use as the splash screen.
 

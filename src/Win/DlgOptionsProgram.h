@@ -52,7 +52,6 @@ private:
 	//{{AFX_DATA(CDlgOptionsProgram)
 	enum { IDD = IDD_VIEW_OPTIONS_PROGRAM };
 	BOOL	m_bAutoCheck;
-	BOOL	m_bAutoCheckDoc;
 	int	m_Backups;
 	BOOL	m_bAutoShow;
 	CString	m_Splash;

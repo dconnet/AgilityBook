@@ -38,6 +38,7 @@
 #include "AgilityBook.h"
 #include "DlgListViewer.h"
 
+#include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDate.h"
@@ -80,8 +81,12 @@ CString CDlgListViewerData::OnNeedText(int iCol)
 // CDlgListViewer dialog
 
 // Viewing runs
-CDlgListViewer::CDlgListViewer(CString const& inCaption, std::list<ARBDogRun const*> const& inRuns, CWnd* pParent)
+CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+		CString const& inCaption,
+		std::list<RunInfo> const& inRuns,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_Runs(&inRuns)
 	, m_DoubleQData(NULL)
@@ -96,8 +101,12 @@ CDlgListViewer::CDlgListViewer(CString const& inCaption, std::list<ARBDogRun con
 }
 
 // Viewing double-Qs
-CDlgListViewer::CDlgListViewer(CString const& inCaption, std::set<DoubleQdata> const& inQQs, CWnd* pParent)
+CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+		CString const& inCaption,
+		std::set<DoubleQdata> const& inQQs,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_Runs(NULL)
 	, m_DoubleQData(&inQQs)
@@ -110,8 +119,12 @@ CDlgListViewer::CDlgListViewer(CString const& inCaption, std::set<DoubleQdata> c
 }
 
 // Viewing other points
-CDlgListViewer::CDlgListViewer(CString const& inCaption, std::list<OtherPtInfo> const& inRunList, CWnd* pParent)
+CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+		CString const& inCaption,
+		std::list<OtherPtInfo> const& inRunList,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_Runs(NULL)
 	, m_DoubleQData(NULL)
@@ -164,38 +177,102 @@ BOOL CDlgListViewer::OnInitDialog()
 	SetWindowText(m_Caption);
 	if (m_Runs)
 	{
-		m_ctrlList.InsertColumn(0, "Date");
-		m_ctrlList.InsertColumn(1, "Judge");
-		m_ctrlList.InsertColumn(2, "Q");
-		m_ctrlList.InsertColumn(3, "Place");
-		m_ctrlList.InsertColumn(4, "In Class");
-		m_ctrlList.InsertColumn(5, "Q'd");
+		int idxCol = 0;
+		m_ctrlList.InsertColumn(idxCol++, "Q");
+//		int idxColQ = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Title Points");
+		int idxColPts = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Date");
+		int idxColDate = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Location");
+		int idxColLoc = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Club");
+		int idxColClub = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Judge");
+		int idxColJudge = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Place");
+		int idxColPlace = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "In Class");
+		int idxColInClass = idxCol - 1;
+		m_ctrlList.InsertColumn(idxCol++, "Q'd");
+		int idxColQd = idxCol - 1;
+		int idxColPartner = -1;
+		int idxColMach = -1;
+		bool bMachHdr = false;
 		bool bPartnerHdr = false;
 		int iItem = 0;
-		for (std::list<ARBDogRun const*>::const_iterator iter = m_Runs->begin();
+		for (std::list<RunInfo>::const_iterator iter = m_Runs->begin();
 			iter != m_Runs->end();
 			++iter)
 		{
-			m_ctrlList.InsertItem(iItem, (*iter)->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
-			m_ctrlList.SetItemText(iItem, 1, (*iter)->GetJudge().c_str());
-			m_ctrlList.SetItemText(iItem, 2, (*iter)->GetQ().str().c_str());
+			ARBDogTrial const* pTrial = iter->first;
+			ARBDogRun const* pRun = iter->second;
+			if (CAgilityBookOptions::IsFilterEnabled())
+			{
+				if (pRun->IsFiltered())
+					continue;
+			}
+
+			ARBConfigScoring const* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+				pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+				pRun->GetEvent(),
+				pRun->GetDivision(),
+				pRun->GetLevel(),
+				pRun->GetDate());
+
+			m_ctrlList.InsertItem(iItem, pRun->GetQ().str().c_str());
+
 			CString str;
-			str.Format("%hd", (*iter)->GetPlace());
-			m_ctrlList.SetItemText(iItem, 3, str);
-			str.Format("%hd", (*iter)->GetInClass());
-			m_ctrlList.SetItemText(iItem, 4, str);
-			str.Format("%hd", (*iter)->GetDogsQd());
-			m_ctrlList.SetItemText(iItem, 5, str);
-			if (0 < (*iter)->GetPartners().size())
+			short pts = 0;
+			if (pRun->GetQ().Qualified() && pScoring)
+				pts = pRun->GetTitlePoints(pScoring);
+			str.Format("%hd", pts);
+			m_ctrlList.SetItemText(iItem, idxColPts, str);
+
+			m_ctrlList.SetItemText(iItem, idxColDate,
+				pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
+
+			m_ctrlList.SetItemText(iItem, idxColLoc,
+				pTrial->GetLocation().c_str());
+
+			m_ctrlList.SetItemText(iItem, idxColClub,
+				pTrial->GetClubs().GetPrimaryClub()->GetName().c_str());
+
+			m_ctrlList.SetItemText(iItem, idxColJudge,
+				pRun->GetJudge().c_str());
+
+			str.Format("%hd", pRun->GetPlace());
+			m_ctrlList.SetItemText(iItem, idxColPlace, str);
+
+			str.Format("%hd", pRun->GetInClass());
+			m_ctrlList.SetItemText(iItem, idxColInClass, str);
+
+			str.Format("%hd", pRun->GetDogsQd());
+			m_ctrlList.SetItemText(iItem, idxColQd, str);
+
+			if (pScoring && pScoring->HasMachPts())
+			{
+				if (!bMachHdr)
+				{
+					bMachHdr = true;
+					m_ctrlList.InsertColumn(idxCol++, "Mach Points");
+					idxColMach = idxCol - 1;
+				}
+				str.Format("%hd", pRun->GetMachPoints(pScoring));
+				m_ctrlList.SetItemText(iItem, idxColMach, str);
+			}
+
+			if (0 < pRun->GetPartners().size())
 			{
 				if (!bPartnerHdr)
 				{
 					bPartnerHdr = true;
-					m_ctrlList.InsertColumn(6, "Partners");
+					m_ctrlList.InsertColumn(idxCol++, "Partners");
+					idxColPartner = idxCol - 1;
 				}
 				str.Empty();
-				for (ARBDogRunPartnerList::const_iterator iter2 = (*iter)->GetPartners().begin();
-					iter2 != (*iter)->GetPartners().end();
+				for (ARBDogRunPartnerList::const_iterator iter2 = pRun->GetPartners().begin();
+					iter2 != pRun->GetPartners().end();
 					++iter2)
 				{
 					if (!str.IsEmpty())
@@ -204,17 +281,18 @@ BOOL CDlgListViewer::OnInitDialog()
 					str += "/";
 					str += (*iter2)->GetDog().c_str();
 				}
-				m_ctrlList.SetItemText(iItem, 6, str);
+				m_ctrlList.SetItemText(iItem, idxColPartner, str);
 			}
+
 			++iItem;
 		}
-		for (int i = 0; i <= 6; ++i)
+		for (int i = 0; i < idxCol; ++i)
 			m_ctrlList.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}
 	else if (m_DoubleQData)
 	{
 		m_ctrlList.InsertColumn(0, "Date");
-		m_ctrlList.InsertColumn(1, "Trial");
+		m_ctrlList.InsertColumn(1, "Location");
 		m_ctrlList.InsertColumn(2, "Club");
 		int iItem = 0;
 		for (std::set<DoubleQdata>::const_iterator iter = m_DoubleQData->begin();

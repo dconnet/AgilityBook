@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-11 DRC Added verified-trial info to listing
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-06-06 DRC Added duplicate/cut/paste support for dogs.
  * @li 2004-05-09 DRC After adding a title, display dog property dlg.
@@ -986,6 +987,12 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 		case IO_TREE_TRIAL_NOTES:
 			str += m_pTrial->GetNote().c_str();
 			str.Replace("\n", " ");
+			break;
+		case IO_TREE_TRIAL_VERIFIED:
+			if (m_pTrial->IsVerified())
+				str += "*";
+			else
+				str += " ";
 			break;
 		}
 	}

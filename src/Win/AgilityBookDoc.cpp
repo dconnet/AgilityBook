@@ -746,7 +746,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		}
 	}
 	// Then check the external config.
-	else if (CAgilityBookOptions::GetAutoUpdateCheckDoc())
+	else
 	{
 		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		ASSERT(pApp);

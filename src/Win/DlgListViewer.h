@@ -42,16 +42,23 @@
 #include "ListCtrl.h"
 #include "PointsData.h"
 class ARBDate;
+class CAgilityBookDoc;
 
 class CDlgListViewer : public CDlgBaseDialog
 {
 public:
 	// Viewing runs
-	CDlgListViewer(CString const& inCaption, std::list<ARBDogRun const*> const& inRuns, CWnd* pParent = NULL);
+	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
+		std::list<RunInfo> const& inRuns,
+		CWnd* pParent = NULL);
 	// Viewing double-Qs
-	CDlgListViewer(CString const& inCaption, std::set<DoubleQdata> const& inQQs, CWnd* pParent = NULL);
+	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
+		std::set<DoubleQdata> const& inQQs,
+		CWnd* pParent = NULL);
 	// Viewing other points
-	CDlgListViewer(CString const& inCaption, std::list<OtherPtInfo> const& inRunList, CWnd* pParent = NULL);
+	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
+		std::list<OtherPtInfo> const& inRunList,
+		CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -61,7 +68,8 @@ private:
 	CButton	m_ctrlClose;
 	//}}AFX_DATA
 	CString m_Caption;
-	std::list<ARBDogRun const*> const* m_Runs;
+	CAgilityBookDoc* m_pDoc;
+	std::list<RunInfo> const* m_Runs;
 	std::set<DoubleQdata> const* m_DoubleQData;
 	std::list<OtherPtInfo> const* m_OtherData;
 	CRect m_rWin;

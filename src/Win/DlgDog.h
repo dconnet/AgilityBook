@@ -70,7 +70,6 @@ private:
 // Implementation
 protected:
 	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnDestroy();
 	afx_msg void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

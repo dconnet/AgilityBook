@@ -96,7 +96,6 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 	// Program options
 	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
-	m_pageProgram.m_bAutoCheckDoc = CAgilityBookOptions::GetAutoUpdateCheckDoc() ? TRUE : FALSE;
 	m_pageProgram.m_Backups = CAgilityBookOptions::GetNumBackupFiles();
 	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
 	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
@@ -203,7 +202,6 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 		// Program options
 		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
-		CAgilityBookOptions::SetAutoUpdateCheckDoc(m_pageProgram.m_bAutoCheckDoc ? true : false);
 		CAgilityBookOptions::SetNumBackupFiles(m_pageProgram.m_Backups);
 		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
