@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -28,39 +28,38 @@
 
 /**
  * @file
- * @brief ARBConfigTitlePoints and ARBConfigTitlePointsList class.
+ * @brief ARBConfigLifetimePoints and ARBConfigLifetimePointsList class.
  * @author David Connet
  *
  * Revision History
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
- * @li 2003-12-28 DRC Added GetSearchStrings.
- * @li 2003-11-26 DRC Changed version number to a complex value.
- * @li 2003-07-12 DRC Added as part of file version 5.
+ * @li 2004-10-06 DRC Added as part of file version 10.
  */
 
 #include <string>
 #include "ARBBase.h"
 #include "ARBVector.h"
-class ARBConfigLifetimePointsList;
 class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
 /**
- * Number of title points that can be earned based on number of faults.
+ * Number of lifetime points that can be earned based on number of faults.
  * Some venues have a sliding scale, for instance a clean run in NADAC
  * is worth 10 pts, a run with up to 5 faults earns 5 pts.
+ *
+ * This class works very much like ARBConfigTitlePoints. (In fact, lifetime
+ * points used to be titling points until it was discovered that some venues
+ * award different values [CPE].)
  */
-class ARBConfigTitlePoints : public ARBBase
+class ARBConfigLifetimePoints : public ARBBase
 {
 public:
-	ARBConfigTitlePoints();
-	ARBConfigTitlePoints(short inPoints, short inFaults);
-	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
-	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
-	bool operator==(ARBConfigTitlePoints const& rhs) const;
-	bool operator!=(ARBConfigTitlePoints const& rhs) const;
+	ARBConfigLifetimePoints();
+	ARBConfigLifetimePoints(short inPoints, short inFaults);
+	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
+	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+	bool operator==(ARBConfigLifetimePoints const& rhs) const;
+	bool operator!=(ARBConfigLifetimePoints const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -76,25 +75,23 @@ public:
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	/**
-	 * Load a title configuration.
-	 * @pre inTree is the actual ARBConfigTitlePoints element.
+	 * Load a lifetime configuration.
+	 * @pre inTree is the actual ARBConfigLifetimePoints element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
-	 * @param ioLifetimePoints Used for migrating older files.
 	 * @return Success
 	 */
 	bool Load(
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		ARBConfigLifetimePointsList& ioLifetimePoints);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
 	 * @param ioTree Parent element.
 	 * @return Success
-	 * @post The ARBConfigTitlePoints element will be created in ioTree.
+	 * @post The ARBConfigLifetimePoints element will be created in ioTree.
 	 */
 	bool Save(Element& ioTree) const;
 
@@ -105,32 +102,32 @@ public:
 	void SetPoints(short inPoints);
 	short GetFaults() const;
 	/**
-	 * @attention If faults is set via this API, the caller MUST call ARBConfigTitlePointsList::sort.
+	 * @attention If faults is set via this API, the caller MUST call ARBConfigLifetimePointsList::sort.
 	 */
 	void SetFaults(short inFaults);
 
 private:
-	~ARBConfigTitlePoints();
+	~ARBConfigLifetimePoints();
 	short m_Points;
 	short m_Faults;
 };
 
-inline short ARBConfigTitlePoints::GetPoints() const
+inline short ARBConfigLifetimePoints::GetPoints() const
 {
 	return m_Points;
 }
 
-inline void ARBConfigTitlePoints::SetPoints(short inPoints)
+inline void ARBConfigLifetimePoints::SetPoints(short inPoints)
 {
 	m_Points = inPoints;
 }
 
-inline short ARBConfigTitlePoints::GetFaults() const
+inline short ARBConfigLifetimePoints::GetFaults() const
 {
 	return m_Faults;
 }
 
-inline void ARBConfigTitlePoints::SetFaults(short inFaults)
+inline void ARBConfigLifetimePoints::SetFaults(short inFaults)
 {
 	m_Faults = inFaults;
 }
@@ -138,37 +135,22 @@ inline void ARBConfigTitlePoints::SetFaults(short inFaults)
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * List of ARBConfigTitlePoints objects.
+ * List of ARBConfigLifetimePoints objects.
  */
-class ARBConfigTitlePointsList : public ARBVectorLoad1<ARBConfigTitlePoints>
+class ARBConfigLifetimePointsList : public ARBVectorLoad1<ARBConfigLifetimePoints>
 {
 public:
 	/**
-	 * Load a title configuration.
-	 * @pre inTree is the actual ARBConfigTitlePoints element.
-	 * @param inTree XML structure to convert into ARB.
-	 * @param inVersion Version of the document being read.
-	 * @param ioCallback Error processing callback.
-	 * @param ioLifetimePoints Used for migrating older files.
-	 * @return Success
-	 */
-	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		ARBConfigLifetimePointsList& ioLifetimePoints);
-
-	/**
-	 * Sort the title point objects by faults.
+	 * Sort the lifetime point objects by faults.
 	 */
 	void sort();
 
 	/**
-	 * Get the number of title points earned based on faults.
+	 * Get the number of lifetime title points earned based on faults.
 	 * @param inFaults Number of faults in the run.
-	 * @return Number of titling points.
+	 * @return Number of lifetime titling points.
 	 */
-	short GetTitlePoints(double inFaults) const;
+	short GetLifetimePoints(double inFaults) const;
 
 	/**
 	 * Find a points object.
@@ -176,21 +158,21 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigTitlePoints const* FindTitlePoints(short inFaults) const;
+	ARBConfigLifetimePoints const* FindLifetimePoints(short inFaults) const;
 
 	/**
 	 * Add an object.
-	 * @param inPoints Number of title points.
+	 * @param inPoints Number of lifetime points.
 	 * @param inFaults Number of faults.
 	 * @return Pointer to new object, NULL if it already exists.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigTitlePoints* AddTitlePoints(short inPoints, short inFaults);
+	ARBConfigLifetimePoints* AddLifetimePoints(short inPoints, short inFaults);
 
 	/**
 	 * Delete an object.
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteTitlePoints(short inFaults);
+	bool DeleteLifetimePoints(short inFaults);
 };

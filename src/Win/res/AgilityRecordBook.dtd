@@ -12,8 +12,9 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2004-09-23 DRC File version 9.1.
-               Added 'Height' to 'ReferenceRun'
+2004-10-06 DRC File version 10.
+               Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
+               'Scoring', removed 'LifeTime' from 'TitlePoints'.
 2004-07-03 DRC File version 9.0.
                Added 'SubName' to 'Training'
                'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
@@ -199,7 +200,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
 		>
-<!ELEMENT Scoring (Note?, TitlePoints*) >
+<!ELEMENT Scoring (Note?, TitlePoints*, LifeTime*) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
@@ -218,7 +219,11 @@ If there are no 'TitlePoints', then the class is non-titling.
 	<!ATTLIST TitlePoints
 		Points CDATA #REQUIRED
 		Faults CDATA #REQUIRED
-		LifeTime (y|n) 'n'
+		>
+<!ELEMENT LifeTime EMPTY >
+	<!ATTLIST LifeTime
+		Points CDATA #REQUIRED
+		Faults CDATA #REQUIRED
 		>
 
 <!--

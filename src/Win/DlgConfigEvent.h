@@ -86,7 +86,7 @@ private:
 	CButton m_ctrlSuperQ;
 	CButton m_ctrlMachPts;
 	CButton m_ctrlDoubleQ;
-	CListBox2	m_ctrlTitleList;
+	CListBox2	m_ctrlPointsList;
 	CButton	m_ctrlTitleNew;
 	CButton	m_ctrlTitleEdit;
 	CButton	m_ctrlTitleDelete;

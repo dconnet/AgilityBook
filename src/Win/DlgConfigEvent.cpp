@@ -135,7 +135,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_MACH, m_ctrlMachPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DOUBLEQ, m_ctrlDoubleQ);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_LIST, m_ctrlTitleList);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_LIST, m_ctrlPointsList);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_NEW, m_ctrlTitleNew);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_EDIT, m_ctrlTitleEdit);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_DELETE, m_ctrlTitleDelete);
@@ -275,7 +275,7 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlLevel.SetCurSel(-1);
 		m_ctrlType.SetCurSel(-1);
 		m_ctrlDropFractions.SetCheck(0);
-		m_ctrlTitleList.ResetContent();
+		m_ctrlPointsList.ResetContent();
 		m_ctrlSuperQ.SetCheck(0);
 		m_ctrlMachPts.SetCheck(0);
 		m_ctrlDoubleQ.SetCheck(0);
@@ -297,7 +297,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlDelete.EnableWindow(bEnable);
 	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
 	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
-	m_ctrlTitleList.EnableWindow(bEnable);
+	m_ctrlPointsList.EnableWindow(bEnable);
 	m_ctrlTitleNew.EnableWindow(bEnable);
 	m_ctrlTitleEdit.EnableWindow(bEnable);
 	m_ctrlTitleDelete.EnableWindow(bEnable);
@@ -461,22 +461,35 @@ void CDlgConfigEvent::FillRequiredPoints()
 
 void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 {
-	ARBConfigTitlePoints* pOldTitle = NULL;
-	int idxTitle = m_ctrlTitleList.GetCurSel();
+	ARBBase* pOld = NULL;
+	int idxTitle = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxTitle)
-		pOldTitle = reinterpret_cast<ARBConfigTitlePoints*>(m_ctrlTitleList.GetItemDataPtr(idxTitle));
-	m_ctrlTitleList.ResetContent();
+		pOld = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idxTitle));
+	m_ctrlPointsList.ResetContent();
 	for (ARBConfigTitlePointsList::const_iterator iter = pScoring->GetTitlePoints().begin();
 		iter != pScoring->GetTitlePoints().end();
 		++iter)
 	{
 		ARBConfigTitlePoints* pTitle = (*iter);
-		int idx = m_ctrlTitleList.AddString(pTitle->GetGenericName().c_str());
+		int idx = m_ctrlPointsList.AddString(pTitle->GetGenericName().c_str());
 		if (LB_ERR != idx)
 		{
-			m_ctrlTitleList.SetItemDataPtr(idx, pTitle);
-			if (pOldTitle == pTitle)
-				m_ctrlTitleList.SetCurSel(idx);
+			m_ctrlPointsList.SetItemDataPtr(idx, pTitle);
+			if (pOld == pTitle)
+				m_ctrlPointsList.SetCurSel(idx);
+		}
+	}
+	for (ARBConfigLifetimePointsList::const_iterator iter2 = pScoring->GetLifetimePoints().begin();
+		iter2 != pScoring->GetLifetimePoints().end();
+		++iter2)
+	{
+		ARBConfigLifetimePoints* pLife = (*iter2);
+		int idx = m_ctrlPointsList.AddString(pLife->GetGenericName().c_str());
+		if (LB_ERR != idx)
+		{
+			m_ctrlPointsList.SetItemDataPtr(idx, pLife);
+			if (pOld == pLife)
+				m_ctrlPointsList.SetCurSel(idx);
 		}
 	}
 	m_ctrlTitleEdit.EnableWindow(FALSE);
@@ -762,7 +775,7 @@ void CDlgConfigEvent::OnSelchangeList()
 {
 	UpdateData(TRUE);
 	BOOL bEnable = FALSE;
-	if (LB_ERR != m_ctrlTitleList.GetCurSel())
+	if (LB_ERR != m_ctrlPointsList.GetCurSel())
 		bEnable = TRUE;
 	m_ctrlTitleEdit.EnableWindow(bEnable);
 	m_ctrlTitleDelete.EnableWindow(bEnable);
@@ -783,9 +796,22 @@ void CDlgConfigEvent::OnTitleNew()
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(pScoring->GetTitlePoints(), NULL, this);
+			CDlgConfigTitlePoints dlg(0, 0, false, this);
 			if (IDOK == dlg.DoModal())
+			{
+				// The only reason this fails is if the faults entry exists.
+				if (dlg.IsLifetime())
+				{
+					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.GetPoints(), dlg.GetFaults()))
+						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+				}
+				else
+				{
+					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.GetPoints(), dlg.GetFaults()))
+						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+				}
 				FillTitlePoints(pScoring);
+			}
 		}
 	}
 }
@@ -794,16 +820,63 @@ void CDlgConfigEvent::OnTitleEdit()
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
-	int idx = m_ctrlTitleList.GetCurSel();
+	int idx = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxMethod && LB_ERR != idx)
 	{
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
-		ARBConfigTitlePoints* pTitle = reinterpret_cast<ARBConfigTitlePoints*>(m_ctrlTitleList.GetItemDataPtr(idx));
-		if (pScoring && pTitle)
+		ARBBase* pBase = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idx));
+		ARBConfigTitlePoints* pTitle = dynamic_cast<ARBConfigTitlePoints*>(pBase);
+		ARBConfigLifetimePoints* pLife = dynamic_cast<ARBConfigLifetimePoints*>(pBase);
+		if (pScoring && (pTitle || pLife))
 		{
-			CDlgConfigTitlePoints dlg(pScoring->GetTitlePoints(), pTitle, this);
+			short pts, faults;
+			BOOL bLifetime;
+			if (pTitle)
+			{
+				pts = pTitle->GetPoints();
+				faults = pTitle->GetFaults();
+				bLifetime = FALSE;
+			}
+			else
+			{
+				pts = pLife->GetPoints();
+				faults = pLife->GetFaults();
+				bLifetime = TRUE;
+			}
+			CDlgConfigTitlePoints dlg(pts, faults, bLifetime);
 			if (IDOK == dlg.DoModal())
+			{
+				if (bLifetime != dlg.IsLifetime())
+				{
+					// Clean up.
+					if (pTitle)
+						pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+					else
+						pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+					if (bLifetime)
+						pScoring->GetLifetimePoints().AddLifetimePoints(dlg.GetPoints(), dlg.GetFaults());
+					else
+						pScoring->GetTitlePoints().AddTitlePoints(dlg.GetPoints(), dlg.GetFaults());
+				}
+				else
+				{
+					if (pTitle)
+					{
+						pTitle->SetPoints(dlg.GetPoints());
+						pTitle->SetFaults(dlg.GetFaults());
+					}
+					else
+					{
+						pLife->SetPoints(dlg.GetPoints());
+						pLife->SetFaults(dlg.GetFaults());
+					}
+				}
+				if (pTitle)
+					pScoring->GetTitlePoints().sort();
+				else
+					pScoring->GetLifetimePoints().sort();
 				FillTitlePoints(pScoring);
+			}
 		}
 	}
 }
@@ -812,15 +885,20 @@ void CDlgConfigEvent::OnTitleDelete()
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
-	int idx = m_ctrlTitleList.GetCurSel();
+	int idx = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxMethod && LB_ERR != idx)
 	{
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
-		ARBConfigTitlePoints* pTitle = reinterpret_cast<ARBConfigTitlePoints*>(m_ctrlTitleList.GetItemDataPtr(idx));
-		if (pScoring && pTitle)
+		ARBBase* pBase = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idx));
+		ARBConfigTitlePoints* pTitle = reinterpret_cast<ARBConfigTitlePoints*>(pBase);
+		ARBConfigLifetimePoints* pLife = reinterpret_cast<ARBConfigLifetimePoints*>(pBase);
+		if (pScoring && (pTitle || pLife))
 		{
-			pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
-			m_ctrlTitleList.DeleteString(idx);
+			if (pTitle)
+				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+			else
+				pScoring->GetLifetimePoints().DeleteLifetimePoints(pTitle->GetFaults());
+			m_ctrlPointsList.DeleteString(idx);
 			m_ctrlTitleEdit.EnableWindow(FALSE);
 			m_ctrlTitleDelete.EnableWindow(FALSE);
 		}
