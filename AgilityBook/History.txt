@@ -6,6 +6,7 @@
     record if that run has a table. A new option (under 'View') then
     determines how to compute it. Old files will be auto-updated when the new
 	configuration is merged, as long as it happens during startup.
+  - The 'Show Hidden Titles' menu item was never enabled.
 - Bug fixes
   - When updating a venue or event, if only the desc or partner changed,
     the changes didn't happen.
