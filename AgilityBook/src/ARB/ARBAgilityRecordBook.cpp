@@ -345,6 +345,7 @@ void ARBAgilityRecordBook::clear()
 	m_Calendar.clear();
 	m_Training.clear();
 	m_Config.clear();
+	m_Info.clear();
 	m_Dogs.clear();
 }
 
