@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  * @li 2003-10-31 DRC Added import/export calendar, export config.
  * @li 2003-10-22 DRC Added export dtd/xml menu options.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
@@ -62,6 +63,7 @@
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
+#include "DlgInfoJudge.h"
 #include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
@@ -91,6 +93,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_FILE_EXPORT_DTD, OnFileExportDTD)
 	ON_COMMAND(ID_FILE_EXPORT_XML, OnFileExportXML)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_JUDGES, OnUpdateEditJudges)
+	ON_COMMAND(ID_EDIT_JUDGES, OnEditJudges)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
@@ -486,7 +490,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	BOOL bOk = FALSE;
 	CElement tree;
 	// First, we have to push all the class data into a tree.
-	if (m_Records.Save(tree, true, true, true, true))
+	if (m_Records.Save(tree, true, true, true, true, true))
 	{
 		// Then we can stream that tree out as XML.
 		std::ofstream output(lpszPathName, std::ios::out | std::ios::binary);
@@ -556,7 +560,7 @@ void CAgilityBookDoc::OnFileExportConfig()
 	if (IDOK == file.DoModal())
 	{
 		CElement tree;
-		if (m_Records.Save(tree, false, false, true, false))
+		if (m_Records.Save(tree, false, false, true, false, false))
 		{
 			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 			output.exceptions(std::ios_base::badbit);
@@ -586,7 +590,7 @@ void CAgilityBookDoc::OnFileImportCalender()
 		else
 		{
 			ARBAgilityRecordBook book;
-			if (book.Load(tree, true, false, false, false))
+			if (book.Load(tree, true, false, false, false, false))
 			{
 				int count = 0;
 				for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -625,7 +629,7 @@ void CAgilityBookDoc::OnFileExportCalender()
 	if (IDOK == file.DoModal())
 	{
 		CElement tree;
-		if (m_Records.Save(tree, true, false, false, false))
+		if (m_Records.Save(tree, true, false, false, false, false))
 		{
 			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 			output.exceptions(std::ios_base::badbit);
@@ -820,7 +824,7 @@ void CAgilityBookDoc::OnFileExportXML()
 	if (IDOK == file.DoModal())
 	{
 		CElement tree;
-		if (m_Records.Save(tree, true, true, true, true))
+		if (m_Records.Save(tree, true, true, true, true, true))
 		{
 			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 			output.exceptions(std::ios_base::badbit);
@@ -838,6 +842,22 @@ void CAgilityBookDoc::OnEditConfiguration()
 {
 	CDlgConfigure config(this, m_Records);
 	config.DoModal();
+}
+
+void CAgilityBookDoc::OnUpdateEditJudges(CCmdUI* pCmdUI) 
+{
+	BOOL bEnable = FALSE;
+	std::set<std::string> names;
+	GetAllJudges(names);
+	if (0 < names.size())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookDoc::OnEditJudges() 
+{
+	CDlgInfoJudge dlg(this);
+	dlg.DoModal();
 }
 
 void CAgilityBookDoc::OnAgilityNewDog()

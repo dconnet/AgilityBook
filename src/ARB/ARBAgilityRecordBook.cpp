@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-12-07 DRC File version 8.0. Added Info section.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  *                    Added warning check when minor versions are different.
  * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
@@ -70,7 +71,7 @@ const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static const ARBVersion curVersion(7, 1);
+	static const ARBVersion curVersion(8, 0);
 	return curVersion;
 }
 
@@ -172,6 +173,7 @@ bool ARBAgilityRecordBook::Load(
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,
+	bool inInfo,
 	bool inDogs)
 {
 	// Get the records ready.
@@ -287,6 +289,18 @@ bool ARBAgilityRecordBook::Load(
 			}
 		}
 	}
+
+	if (inInfo)
+	{
+		bLoaded = true;
+		int i = inTree.FindElement(TREE_INFO);
+		if (0 <= i)
+		{
+			// Ignore any errors...
+			m_Info.Load(inTree.GetElement(i), version);
+		}
+	}
+
 	return bLoaded;
 }
 
@@ -294,6 +308,7 @@ bool ARBAgilityRecordBook::Save(CElement& outTree,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,
+	bool inInfo,
 	bool inDogs) const
 {
 	outTree.clear();
@@ -312,6 +327,11 @@ bool ARBAgilityRecordBook::Save(CElement& outTree,
 	if (inConfig || inDogs)
 	{
 		if (!m_Config.Save(outTree))
+			return false;
+	}
+	if (inInfo)
+	{
+		if (!m_Info.Save(outTree))
 			return false;
 	}
 	if (inDogs)
@@ -408,9 +428,11 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) co
 	return outHeights.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::string>& outJudges) const
+size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::string>& outJudges, bool bInfo) const
 {
 	outJudges.clear();
+	if (bInfo)
+		m_Info.GetJudgeInfo().GetAllJudges(outJudges);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)

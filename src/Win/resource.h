@@ -52,6 +52,7 @@
 #define IDD_TITLE_POINTS                177
 #define IDD_MESSAGE                     178
 #define IDD_TRAINING                    179
+#define IDD_JUDGE_INFO                  180
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -189,6 +190,7 @@
 #define IDC_DROP_FRACTIONS              1148
 #define IDC_VERIFIED                    1149
 #define IDC_IS_DECEASED                 1150
+#define IDC_ADD                         1151
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002
@@ -369,6 +371,7 @@
 #define ID_FILE_IMPORT_CALENDAR         32809
 #define ID_FILE_EXPORT_CALENDAR         32810
 #define ID_FILE_EXPORT_CONFIG           32811
+#define ID_EDIT_JUDGES                  32812
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -376,9 +379,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        180
-#define _APS_NEXT_COMMAND_VALUE         32812
-#define _APS_NEXT_CONTROL_VALUE         1151
+#define _APS_NEXT_RESOURCE_VALUE        181
+#define _APS_NEXT_COMMAND_VALUE         32813
+#define _APS_NEXT_CONTROL_VALUE         1152
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -11,9 +11,9 @@ In general, all fields are free form. Exceptions will be noted.
 
 <!--
  Book is a simple integer in versions 1 thru 7.
- It then changes to a more complex value ("major.minor"), starting with "7.1"
+ It then changes to a more complex value ("major.minor"), starting with "8.0"
 -->
-<!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Dog*) >
+<!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
 	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
 
 <!--
@@ -143,6 +143,18 @@ If there are no 'TitlePoints', then the class is non-titling.
 	<!ATTLIST TitlePoints
 		Points CDATA #REQUIRED
 		Faults CDATA #REQUIRED
+		>
+
+<!--
+This section adds optional data.
+Currently the only thing it tracks is comments about a judge.
+-->
+
+<!ELEMENT Info (JudgeInfo*) >
+<!-- The pcdata is the comment about the judge -->
+<!ELEMENT JudgeInfo (#PCDATA) >
+	<!ATTLIST JudgeInfo
+		Name CDATA #REQUIRED
 		>
 
 <!--

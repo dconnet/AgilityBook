@@ -1,7 +1,7 @@
-11/22/2003: v0.9.4.7: <development>
-- Bumped file version to 7.1:
-  File format is the same as 7 - this is simply for better future backwards
-  compatibility.
+12/7/2003: v0.9.4.7: <development>
+- Bumped file version to 8.0:
+  Modified version number for better backwards compatibility.
+  Added new Info section. Currently this only has comments on judges.
 - New features / Enhancements:
   - Expanded import/export [config/calendar, plus DTD/XML export]
   - Cleaned up some descriptions in DefaultConfig.xml. Added Nationals support
@@ -17,6 +17,7 @@
     - Moved the copy that was in the calendar list to the calendar view. The
       calendar view now generates a list similar to Karey's. The calendar list
       now copies like the other lists do (whatever is visible in the list).
+  - Added the ability to add comments to a judge (menu item "Edit->Judges")
 - Bug fixes
   - Changed copyright notices from "(c)" to "©" (internal code, not visible)
   - Right-clicking on a Calendar entry sets that as the current date before
@@ -24,6 +25,9 @@
   - Cleaned up page scrolling in calendar view.
   - When creating a calendar entry, the other view didn't update properly.
     Also, when editing an entry in the list, the calendar view didn't update.
+  - Fixed a crash when you tried to open a version of an ARB file that was
+    saved with a newer version of the program. This only happened when the
+    program auto-opened the last open file at startup.
 
 10/15/2003: v0.9.3.7: Release Candidate 4
 - Bumped file version to 7:
