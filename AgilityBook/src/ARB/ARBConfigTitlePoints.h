@@ -99,8 +99,7 @@ public:
 	void SetPoints(short inPoints);
 	short GetFaults() const;
 	/**
-	 * If faults is set via this API, the caller MUST call
-	 * ARBConfigTitlePointsList::sort.
+	 * @attention If faults is set via this API, the caller MUST call ARBConfigTitlePointsList::sort.
 	 */
 	void SetFaults(short inFaults);
 

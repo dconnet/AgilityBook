@@ -139,7 +139,7 @@ public:
 		const ARBDate& inDate2) const;
 
 	/*
-	 * Getters/setters
+	 * Getters/setters.
 	 */
 	const ARBDate& GetStartDate() const;
 	void SetStartDate(const ARBDate& inDate);
@@ -347,7 +347,8 @@ public:
 	 * Add a calendar entry to the list.
 	 * @param inCal Entry to add.
 	 * @return Returns the added object.
-	 * @post The pointer is added to the list and its ref count is incremented.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
 	 */
 	ARBCalendar* AddCalendar(ARBCalendar* inCal);
 

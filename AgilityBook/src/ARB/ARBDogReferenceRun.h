@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogReferenceRun and ARBDogReferenceRunList classes.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,9 @@ class ARBConfig;
 class ARBVersion;
 class CElement;
 
+/**
+ * How did other dogs perform on the run we did?
+ */
 class ARBDogReferenceRun : public ARBBase
 {
 public:
@@ -53,16 +55,45 @@ public:
 	bool operator==(const ARBDogReferenceRun& rhs) const;
 	bool operator!=(const ARBDogReferenceRun& rhs) const;
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load an existing point.
+	 * @pre inTree is the actual ARBDogReferenceRun element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogReferenceRun element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Getters/setters.
+	 */
 	ARB_Q GetQ() const;
 	void SetQ(ARB_Q inQ);
 	short GetPlace() const;
@@ -88,6 +119,11 @@ private:
 	std::string m_Score;
 	std::string m_Note;
 };
+
+inline std::string ARBDogReferenceRun::GetGenericName() const
+{
+	return m_Name;
+}
 
 inline ARB_Q ARBDogReferenceRun::GetQ() const
 {
@@ -161,6 +197,9 @@ inline void ARBDogReferenceRun::SetNote(const std::string& inNote)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDogReferenceRun objects.
+ */
 class ARBDogReferenceRunList : public ARBVectorLoad2<ARBDogReferenceRun>
 {
 public:
@@ -173,6 +212,20 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Add a reference run.
+	 * @param inRef Object to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDogReferenceRun* AddReferenceRun(ARBDogReferenceRun* inRef);
+
+	/**
+	 * Delete a reference run.
+	 * @param inRef Object to delete.
+	 * @return Whether object was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteReferenceRun(const ARBDogReferenceRun* inRef);
 };

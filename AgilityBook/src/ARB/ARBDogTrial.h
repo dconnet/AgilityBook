@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogTrial and ARBDogTrialList classes.
  * @author David Connet
  *
  * Revision History
@@ -48,6 +47,9 @@ class ARBDate;
 class ARBVersion;
 class CElement;
 
+/**
+ * All the information about a trial.
+ */
 class ARBDogTrial : public ARBBase
 {
 public:
@@ -58,28 +60,78 @@ public:
 	bool operator==(const ARBDogTrial& rhs) const;
 	bool operator!=(const ARBDogTrial& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a trial.
+	 * @pre inTree is the actual ARBDogTrial element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogTrial element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Does this trial have a QQ on the given date?
+	 * @param inDate Date to check.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inDiv Division to check.
+	 * @param inLevel Level to check.
+	 * @return Whether a QQ was earned on inDate.
+	 */
 	bool HasQQ(
 		const ARBDate& inDate,
 		const ARBConfig& inConfig,
 		const std::string& inDiv,
 		const std::string& inLevel) const;
+
+	/**
+	 * Get the MACH points earned for this trial.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inDiv Division to check.
+	 * @param inLevel Level to check.
+	 * @return Number of MACH points earned.
+	 */
 	short GetMachPoints(
 		const ARBConfig& inConfig,
 		const std::string& inDiv,
 		const std::string& inLevel) const;
 
+	/**
+	 * Does this trial have a hosting club in the specified venue?
+	 * @param inVenue Venue to look for.
+	 * @return This trial is hosted by the venue.
+	 */
 	bool HasVenue(const std::string inVenue) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetLocation() const;
 	void SetLocation(const std::string& inLoc);
 	const std::string& GetNote() const;
@@ -152,6 +204,9 @@ inline ARBDogRunList& ARBDogTrial::GetRuns()
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDogTrial objects.
+ */
 class ARBDogTrialList : public ARBVectorLoad2<ARBDogTrial>
 {
 public:
@@ -164,61 +219,196 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort the list by first date.
+	 * @param inDescending Sort in descending or ascending order.
+	 */
 	void sort(bool inDescending);
 
+	/**
+	 * Get the number of trials in a venue.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue to tally.
+	 * @return Number of objects.
+	 */
 	int NumTrialsInVenue(const std::string& inVenue) const;
+
+	/**
+	 * Rename a venue, rename any dependent objects.
+	 * @param inOldVenue Venue name being renamed.
+	 * @param inNewVenue New venue name.
+	 * @return Number of items changed.
+	 */
 	int RenameVenue(
 		const std::string& inOldVenue,
 		const std::string& inNewVenue);
+
+	/**
+	 * Delete a venue, remove any dependent objects.
+	 * @param inVenue Venue name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteVenue(const std::string& inVenue);
 
+	/**
+	 * Number of OtherPoint objects in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inOther Name of item to look for.
+	 * @return Number of objects, not points.
+	 */
 	int NumOtherPointsInUse(const std::string& inOther) const;
+
+	/**
+	 * Rename an OtherPoint, rename any dependent objects.
+	 * @param inOldOther OtherPoint name being renamed.
+	 * @param inNewOther New OtherPoint name.
+	 * @return Number of items changed.
+	 */
 	int RenameOtherPoints(
 		const std::string& inOldOther,
 		const std::string& inNewOther);
+
+	/**
+	 * Delete an OtherPoint, remove any dependent objects.
+	 * @param inOther OtherPoint name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteOtherPoints(const std::string& inOther);
 
+	/**
+	 * Number of multiple hosted trials in a division.
+	 * Used to warning about impending configuration changes.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inVenue Venue to tally.
+	 * @param inDiv Division to tally.
+	 * @return Number of objects.
+	 */
 	int NumMultiHostedTrialsInDivision(
 		const ARBConfig& inConfig,
 		const std::string& inVenue,
 		const std::string& inDiv);
+
+	/**
+	 * Get the number of runs in a division.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue to tally.
+	 * @param inDiv Division to tally.
+	 * @return Number of objects.
+	 */
 	int NumRunsInDivision(
 		const ARBConfigVenue* inVenue,
 		const std::string& inDiv) const;
+
+	/**
+	 * Rename a division, rename any dependent objects.
+	 * @param inVenue Venue division is in.
+	 * @param inOldDiv Division name being renamed.
+	 * @param inNewDiv New division name.
+	 * @return Number of items changed.
+	 */
 	int RenameDivision(
 		const ARBConfigVenue* inVenue,
 		const std::string& inOldDiv,
 		const std::string& inNewDiv);
+
+	/**
+	 * Delete a division, remove any dependent objects.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inVenue Venue division is in.
+	 * @param inDiv Division name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteDivision(
 		const ARBConfig& inConfig,
 		const std::string& inVenue,
 		const std::string& inDiv);
 
+	/**
+	 * Number of levels in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue level is in.
+	 * @param inDiv Division level is in.
+	 * @param inLevel Level to tally.
+	 * @return Number of objects.
+	 */
 	int NumLevelsInUse(
 		const std::string& inVenue,
 		const std::string& inDiv,
 		const std::string& inLevel) const;
+
+	/**
+	 * Rename a level, rename any dependent objects.
+	 * @param inVenue Venue level is in.
+	 * @param inDiv Division level is in.
+	 * @param inOldLevel Level name being renamed.
+	 * @param inNewLevel New level name.
+	 * @return Number of items changed.
+	 */
 	int RenameLevel(
 		const std::string& inVenue,
 		const std::string& inDiv,
 		const std::string& inOldLevel,
 		const std::string& inNewLevel);
+
+	/**
+	 * Delete a level, remove any dependent objects.
+	 * @param inVenue Venue level is in.
+	 * @param inDiv Division level is in.
+	 * @param inLevel Level name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteLevel(
 		const std::string& inVenue,
 		const std::string& inDiv,
 		const std::string& inLevel);
 
+	/**
+	 * Number of events in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue event is in.
+	 * @param inEvent Event to tally.
+	 * @return Number of objects.
+	 */
 	int NumEventsInUse(
 		const std::string& inVenue,
 		const std::string& inEvent) const;
+
+	/**
+	 * Rename an event, rename any dependent objects.
+	 * @param inVenue Venue title is in.
+	 * @param inOldEvent Event name being renamed.
+	 * @param inNewEvent New event name.
+	 * @return Number of items changed.
+	 */
 	int RenameEvent(
 		const std::string& inVenue,
 		const std::string& inOldEvent,
 		const std::string& inNewEvent);
+
+	/**
+	 * Delete an event, remove any dependent objects.
+	 * @param inVenue Venue event is in.
+	 * @param inEvent Event name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteEvent(
 		const std::string& inVenue,
 		const std::string& inEvent);
 
+	/**
+	 * Add a trial.
+	 * @param inTrial Trial to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDogTrial* AddTrial(ARBDogTrial* inTrial);
+
+	/**
+	 * Delete a trial.
+	 * @param inTrial Object to delete.
+	 * @return Whether trial was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteTrial(const ARBDogTrial* inTrial);
 };

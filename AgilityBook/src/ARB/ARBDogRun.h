@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogRun and ARBDogRunList classes.
  * @author David Connet
  *
  * Revision History
@@ -62,29 +61,96 @@ public:
 	bool operator==(const ARBDogRun& rhs) const;
 	bool operator!=(const ARBDogRun& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a run.
+	 * @pre inTree is the actual ARBDogRun element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inClubs Clubs hosting trial, for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogRun element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Number of OtherPoint objects in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inOther Name of item to look for.
+	 * @return Number of objects, not points.
+	 */
 	int NumOtherPointsInUse(const std::string& inOther) const;
+
+	/**
+	 * Rename an OtherPoint, rename any dependent objects.
+	 * @param inOldName OtherPoint name being renamed.
+	 * @param inNewName New OtherPoint name.
+	 * @return Number of items changed.
+	 */
 	int RenameOtherPoints(
 		const std::string& inOldName,
 		const std::string& inNewName);
+
+	/**
+	 * Delete an OtherPoint, remove any dependent objects.
+	 * @param inName OtherPoint name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteOtherPoints(const std::string& inName);
 
+	/**
+	 * Get the number of MACH points earned in this run.
+	 * @param inScoring Scoring method used.
+	 * @return Number of MACH points earned.
+	 */
 	short GetMachPoints(const ARBConfigScoring* inScoring) const;
+
+	/**
+	 * Get the number of title points earned in this run.
+	 * @param inScoring Scoring method used.
+	 * @param outClean Was this a clean run?
+	 * @return Number of title points earned.
+	 */
 	short GetTitlePoints(
 		const ARBConfigScoring* inScoring,
-		bool* bClean = NULL) const;
+		bool* outClean = NULL) const;
+
+	/**
+	 * Get the score for this run.
+	 * @param inScoring Scoring method used.
+	 * @return Total score for this run. The meaning of a score varies by event.
+	 */
 	ARBDouble GetScore(const ARBConfigScoring* inScoring) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const ARBDate& GetDate() const;
 	void SetDate(const ARBDate& inDate);
 	const std::string& GetDivision() const;
@@ -337,9 +403,22 @@ inline ARBDogRunOtherPointsList& ARBDogRun::GetOtherPoints()
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDogRun objects.
+ */
 class ARBDogRunList : public ARBVector<ARBDogRun>
 {
 public:
+	/**
+	 * Load a run.
+	 * @pre inTree is the actual ARBDogRun element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inClubs Clubs hosting trial, for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
@@ -356,11 +435,36 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort the list by date.
+	 * @param inDescending Sort in descending or ascending order.
+	 */
 	void sort(bool inDescending);
 
+	/**
+	 * Get the earliest date in the list.
+	 */
 	ARBDate GetStartDate() const;
+
+	/**
+	 * Get the latest date in the list.
+	 */
 	ARBDate GetEndDate() const;
 
+	/**
+	 * Add a run.
+	 * @param inRun Run to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDogRun* AddRun(ARBDogRun* inRun);
+
+	/**
+	 * Delete a run.
+	 * @param inRun Object to delete.
+	 * @return Whether run was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteRun(const ARBDogRun* inRun);
 };

@@ -57,19 +57,19 @@ std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointTy
 	switch (inType)
 	{
 	case eOtherPoints:
-		str = "OtherPoints";
+		str = EXISTING_POINTS_OTHER;
 		break;
 	case eRuns:
-		str = "Run";
+		str = EXISTING_POINTS_RUN;
 		break;
 	case eMach:
-		str = "MACH";
+		str = EXISTING_POINTS_MACH;
 		break;
 	case eQQ:
-		str = "Double Q";
+		str = EXISTING_POINTS_QQ;
 		break;
 	case eSQ:
-		str = "SuperQ";
+		str = EXISTING_POINTS_SQ;
 		break;
 	}
 	return str;

@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogRunPartner and ARBDogRunPartnerList classes.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,9 @@ class ARBConfig;
 class ARBVersion;
 class CElement;
 
+/**
+ * Keeps track of partners in pairs runs.
+ */
 class ARBDogRunPartner : public ARBBase
 {
 public:
@@ -53,16 +55,45 @@ public:
 	bool operator==(const ARBDogRunPartner& rhs) const;
 	bool operator!=(const ARBDogRunPartner& rhs) const;
 
-	virtual std::string GetGenericName() const	{return GetDog();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load a partner.
+	 * @pre inTree is the actual ARBDogRunPartner element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogRun element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetHandler() const;
 	void SetHandler(const std::string& inHandler);
 	const std::string& GetDog() const;
@@ -76,6 +107,11 @@ private:
 	std::string m_Dog;
 	std::string m_RegNum;
 };
+
+inline std::string ARBDogRunPartner::GetGenericName() const
+{
+	return m_Dog;
+}
 
 inline const std::string& ARBDogRunPartner::GetHandler() const
 {
@@ -109,6 +145,9 @@ inline void ARBDogRunPartner::SetRegNum(const std::string& inRegNum)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDogRunPartner objects.
+ */
 class ARBDogRunPartnerList : public ARBVectorLoad2<ARBDogRunPartner>
 {
 public:
@@ -121,5 +160,12 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Add a partner.
+	 * @param inPartner Partner to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDogRunPartner* AddPartner(ARBDogRunPartner* inPartner);
 };

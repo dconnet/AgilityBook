@@ -38,6 +38,7 @@
 #include "ARBTypes.h"
 #include <time.h>
 
+#include "ARBAgilityRecordBook.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -62,11 +63,11 @@ static const struct Q2Enum
 	const char* pQ;
 	ARB_Q::eQ q;
 } sc_Qs[] = {
-	{"NA", ARB_Q::eQ_NA},
-	{"Q",  ARB_Q::eQ_Q},
-	{"NQ", ARB_Q::eQ_NQ},
-	{"E",  ARB_Q::eQ_E},
-	{"SQ", ARB_Q::eQ_SuperQ}
+	{ARBQ_TYPE_NA, ARB_Q::eQ_NA},
+	{ARBQ_TYPE_Q,  ARB_Q::eQ_Q},
+	{ARBQ_TYPE_NQ, ARB_Q::eQ_NQ},
+	{ARBQ_TYPE_E,  ARB_Q::eQ_E},
+	{ARBQ_TYPE_SQ, ARB_Q::eQ_SuperQ}
 }; ///< This is a list of the various types of "Q"s we support.
 static const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 

@@ -88,20 +88,31 @@ public:
 	 * Get the filtered state of this object.
 	 * @return The filtered state.
 	 */
-	virtual bool IsFiltered() const				{return m_bFiltered;}
+	virtual bool IsFiltered() const;
 
 	/**
 	 * Set the filtered state of this object.
 	 * This attribute is not persistent. It is up to the UI to manage this.
 	 * @param bFiltered Filtered state of the object.
 	 */
-	virtual void SetFiltered(bool bFiltered)	{m_bFiltered = bFiltered;}
+	virtual void SetFiltered(bool bFiltered);
 
 protected:
 	/**
 	 * Protect the dtor to make sure no one can delete this.
+	 * @note Derived classes should not make their dtors public.
 	 */
 	virtual ~ARBBase();
 	unsigned int m_RefCount;
 	bool m_bFiltered;
 };
+
+inline bool ARBBase::IsFiltered() const
+{
+	return m_bFiltered;
+}
+
+inline void ARBBase::SetFiltered(bool bFiltered)
+{
+	m_bFiltered = bFiltered;
+}

@@ -206,8 +206,9 @@
  * Localization stuff
  *  There is some stuff in:
  *    Element.cpp (errors due to XML parsing failures)
- *    ARBTypes.cpp (ARB_Q)
  */
+
+// Used when loading data.
 #define UNKNOWN_VERSION			"Unknown document version"
 #define WARNING_NEWER_DOC		"Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?"
 #define INVALID_DOC_STRUCTURE	"Invalid document structure"
@@ -230,14 +231,7 @@
 #define VALID_VALUES_ENTRY		"Valid values: 'E', 'P', 'N'"
 #define VALID_VALUES_OTHERPT	"Valid values: All, AllByEvent, Level, LevelByEvent"
 #define VALID_VALUES_SCORE		"Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'"
-#define TITLE_POINTS_NAME_FORMAT	"%hd points with %hd faults"
-#define SCORE_STYLE_UNKNOWN			"Unknown"
-#define SCORE_STYLE_FAULTSTIME		"Faults Then Time"
-#define SCORE_STYLE_FAULTS100TIME	"100 Minus Faults Then Time"
-#define SCORE_STYLE_FAULTS200TIME	"200 Minus Faults Then Time"
-#define SCORE_STYLE_OCSCORETIME		"Opening/Closing Points Then Time"
-#define SCORE_STYLE_SCORETIME		"Points Then Time"
-#define SCORE_STYLE_TIMEPLUSFAULTS	"Time Plus Faults"
+
 // Strings for formatting the information returned when updating configurations.
 #define UPDATE_FORMAT_FAULTS	"Faults: %d added, %d identical\n"
 #define UPDATE_FORMAT_OTHERPTS	"Other Points: %d added, %d updated, %d identical\n"
@@ -248,6 +242,32 @@
 #define UPDATE_FORMAT_TITLES	"Titles: %d added, %d updated, %d identical\n"
 #define UPDATE_FORMAT_SUBLEVELS	"%d new sub-levels\n"
 #define UPDATE_FORMAT_RULES		" rules: %d added, %d deleted, %d updated, %d identical\n"
+
+// Used in ARBConfigTitlePoints.cpp
+#define TITLE_POINTS_NAME_FORMAT	"%hd points with %hd faults"
+
+// Used in ARBConfigScoring.cpp
+#define SCORE_STYLE_UNKNOWN			"Unknown"
+#define SCORE_STYLE_FAULTSTIME		"Faults Then Time"
+#define SCORE_STYLE_FAULTS100TIME	"100 Minus Faults Then Time"
+#define SCORE_STYLE_FAULTS200TIME	"200 Minus Faults Then Time"
+#define SCORE_STYLE_OCSCORETIME		"Opening/Closing Points Then Time"
+#define SCORE_STYLE_SCORETIME		"Points Then Time"
+#define SCORE_STYLE_TIMEPLUSFAULTS	"Time Plus Faults"
+
+// Used in ARBTypes.cpp
+#define ARBQ_TYPE_NA				"NA"
+#define ARBQ_TYPE_Q					"Q"
+#define ARBQ_TYPE_NQ				"NQ"
+#define ARBQ_TYPE_E					"E"
+#define ARBQ_TYPE_SQ				"SQ"
+
+// Used in ARBDogExistingPoints.cpp
+#define EXISTING_POINTS_OTHER		"OtherPoints"
+#define EXISTING_POINTS_RUN			"Run"
+#define EXISTING_POINTS_MACH		"MACH"
+#define EXISTING_POINTS_QQ			"Double Q"
+#define EXISTING_POINTS_SQ			"SuperQ"
 
 
 #include <list>
@@ -303,6 +323,7 @@ public:
 		bool inInfo,
 		bool inDogs,
 		std::string& ioErrMsg);
+
 	/**
 	 * Load an entire document.
 	 * @param inTree XML structure to convert into ARB.
@@ -338,7 +359,10 @@ public:
 	 */
 	void Default();
 
+	//
 	// Convenience functions that do some data accumulation.
+	//
+
 	/**
 	 * Get all club names in use from existing trials and calendar entries.
 	 * @param outClubs List of clubs.
@@ -383,7 +407,7 @@ public:
 	size_t GetAllFaultTypes(std::set<std::string>& outFaults) const;
 
 	/*
-	 * Getter methods.
+	 * Getters.
 	 */
 	const ARBCalendarList& GetCalendar() const;
 	ARBCalendarList& GetCalendar();

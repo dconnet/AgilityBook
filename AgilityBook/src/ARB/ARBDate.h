@@ -135,10 +135,7 @@ public:
 	 */
 	bool isBetween(const ARBDate& inDate1, const ARBDate& inDate2) const;
 
-	/**
-	 * Is this a leap year?
-	 */
-	bool isLeap() const;
+	bool isLeap() const; ///< Is this a leap year?
 
 	/**
 	 * Return the date as a string.

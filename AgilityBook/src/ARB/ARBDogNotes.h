@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogNotes class.
  * @author David Connet
  *
  * Revision History
@@ -46,6 +45,9 @@ class CElement;
 
 typedef std::vector<std::string> ARBDogFaultList;
 
+/**
+ * Various notes about a run.
+ */
 class ARBDogNotes
 {
 public:
@@ -56,15 +58,39 @@ public:
 	bool operator==(const ARBDogNotes& rhs) const;
 	bool operator!=(const ARBDogNotes& rhs) const;
 
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load an existing point.
+	 * @pre inTree is the actual ARBDogNotes element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogNotes element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const ARBDogFaultList& GetFaults() const;
 	ARBDogFaultList& GetFaults();
 	const std::string& GetCRCD() const;

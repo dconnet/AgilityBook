@@ -43,7 +43,7 @@ class ARBVersion;
 class CElement;
 
 /**
- * Fault object.
+ * Pre-loaded Fault types.
  */
 class ARBConfigFault : public ARBBase
 {
