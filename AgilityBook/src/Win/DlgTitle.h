@@ -35,11 +35,12 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBConfig;
 class ARBDogTitle;
 class ARBDogTitleList;
 
-class CDlgTitle : public CDialog
+class CDlgTitle : public CDlgBaseDialog
 {
 public:
 	CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent = NULL);

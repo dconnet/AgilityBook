@@ -36,11 +36,12 @@
  * @li 2004-03-30 DRC Created
  */
 
+#include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 class ARBDogRun;
 class CAgilityBookDoc;
 
-class CDlgRunLink : public CPropertyPage
+class CDlgRunLink : public CDlgBasePropertyPage
 {
 public:
 	CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun);

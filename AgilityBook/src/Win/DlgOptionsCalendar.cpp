@@ -49,9 +49,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsCalendar property page
 
-IMPLEMENT_DYNCREATE(CDlgOptionsCalendar, CPropertyPage)
+IMPLEMENT_DYNCREATE(CDlgOptionsCalendar, CDlgBasePropertyPage)
 
-CDlgOptionsCalendar::CDlgOptionsCalendar() : CPropertyPage(CDlgOptionsCalendar::IDD)
+CDlgOptionsCalendar::CDlgOptionsCalendar()
+	: CDlgBasePropertyPage(CDlgOptionsCalendar::IDD)
 {
 	//{{AFX_DATA_INIT(CDlgOptionsCalendar)
 	m_DayOfWeek = -1;
@@ -70,7 +71,7 @@ CDlgOptionsCalendar::~CDlgOptionsCalendar()
 
 void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsCalendar)
 	DDX_CBIndex(pDX, IDC_OPTIONS_CAL_DAY_OF_WEEK, m_DayOfWeek);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_AUTO_DELETE, m_bAutoDelete);
@@ -84,7 +85,7 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -94,7 +95,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgOptionsCalendar::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }

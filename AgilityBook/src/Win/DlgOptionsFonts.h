@@ -37,8 +37,9 @@
  */
 
 #include "AgilityBookOptions.h"
+#include "DlgBasePropertyPage.h"
 
-class CDlgOptionsFonts : public CPropertyPage
+class CDlgOptionsFonts : public CDlgBasePropertyPage
 {
 	friend class CDlgOptions;
 	DECLARE_DYNCREATE(CDlgOptionsFonts)

@@ -159,7 +159,7 @@ int CALLBACK ComparePoints(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 // CDlgDogPoints dialog
 
 CDlgDogPoints::CDlgDogPoints(ARBConfig& config, ARBDogExistingPointsList const& points)
-	: CPropertyPage(CDlgDogPoints::IDD)
+	: CDlgBasePropertyPage(CDlgDogPoints::IDD)
 	, m_Config(config)
 	, m_sortPoints("ExistingPoints")
 	, m_ExistingPoints(points)
@@ -171,7 +171,7 @@ CDlgDogPoints::CDlgDogPoints(ARBConfig& config, ARBDogExistingPointsList const& 
 
 void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogPoints)
 	DDX_Control(pDX, IDC_DOGPTS_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_DOGPTS_DELETE, m_ctrlDelete);
@@ -179,7 +179,7 @@ void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgDogPoints, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgDogPoints, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogPoints)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOGPTS_POINTS, OnColumnclickExistingPoints)
 	ON_NOTIFY(NM_DBLCLK, IDC_DOGPTS_POINTS, OnDblclkExistingPoints)
@@ -271,7 +271,7 @@ void CDlgDogPoints::UpdateButtons()
 
 BOOL CDlgDogPoints::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlPoints.SetExtendedStyle(m_ctrlPoints.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 
 	LV_COLUMN col;

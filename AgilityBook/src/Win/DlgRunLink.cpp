@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgRunLink dialog
 
 CDlgRunLink::CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun)
-	: CPropertyPage(CDlgRunLink::IDD)
+	: CDlgBasePropertyPage(CDlgRunLink::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
 {
@@ -65,7 +65,7 @@ CDlgRunLink::~CDlgRunLink()
 
 void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunLink)
 	DDX_Control(pDX, IDC_RUNLINK_LIST, m_ctrlLinks);
 	DDX_Control(pDX, IDC_RUNLINK_NEW, m_ctrlNew);
@@ -75,7 +75,7 @@ void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgRunLink, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgRunLink, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunLink)
 	ON_NOTIFY(NM_DBLCLK, IDC_RUNLINK_LIST, OnDblclkList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RUNLINK_LIST, OnItemchangedList)
@@ -121,7 +121,7 @@ void CDlgRunLink::ListFiles(char const* pItem)
 
 BOOL CDlgRunLink::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlLinks.InsertColumn(0, "");
 	ListFiles(NULL);

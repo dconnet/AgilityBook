@@ -35,10 +35,11 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBCalendar;
 class CAgilityBookDoc;
 
-class CDlgCalendar : public CDialog
+class CDlgCalendar : public CDlgBaseDialog
 {
 public:
 	CDlgCalendar(ARBCalendar* pCal, CAgilityBookDoc* pDoc, CWnd* pParent = NULL);

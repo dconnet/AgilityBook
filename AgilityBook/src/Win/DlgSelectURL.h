@@ -36,7 +36,9 @@
  * 2004-03-30 DRC Created.
  */
 
-class CDlgSelectURL : public CDialog
+#include "DlgBaseDialog.h"
+
+class CDlgSelectURL : public CDlgBaseDialog
 {
 public:
 	CDlgSelectURL(LPCTSTR name, CWnd* pParent = NULL);

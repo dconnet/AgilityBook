@@ -36,11 +36,12 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "DlgBasePropertyPage.h"
 #include "ListBox.h"
 class CAgilityBookDoc;
 class CWizard;
 
-class CWizardStart : public CPropertyPage
+class CWizardStart : public CDlgBasePropertyPage
 {
 	DECLARE_DYNAMIC(CWizardStart)
 

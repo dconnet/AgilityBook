@@ -72,7 +72,7 @@ public:
 // CDlgSelectEvent dialog
 
 CDlgSelectEvent::CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent)
-	: CDialog(CDlgSelectEvent::IDD, pParent)
+	: CDlgBaseDialog(CDlgSelectEvent::IDD, pParent)
 	, m_pVenue(pVenue)
 {
 	//{{AFX_DATA_INIT(CDlgSelectEvent)
@@ -81,7 +81,7 @@ CDlgSelectEvent::CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent)
 
 void CDlgSelectEvent::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgSelectEvent)
 	DDX_Control(pDX, IDC_DIVISION, m_ctrlDivision);
 	DDX_Control(pDX, IDC_LEVEL, m_ctrlLevel);
@@ -89,7 +89,7 @@ void CDlgSelectEvent::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgSelectEvent, CDialog)
+BEGIN_MESSAGE_MAP(CDlgSelectEvent, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgSelectEvent)
 	ON_CBN_SELCHANGE(IDC_DIVISION, OnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_LEVEL, OnSelchangeLevel)
@@ -172,7 +172,7 @@ void CDlgSelectEvent::FillEvents()
 
 BOOL CDlgSelectEvent::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	for (ARBConfigDivisionList::const_iterator iter = m_pVenue->GetDivisions().begin();
 		iter != m_pVenue->GetDivisions().end();
@@ -223,11 +223,11 @@ void CDlgSelectEvent::OnOK()
 	}
 	m_ctrlEvent.GetLBText(index, m_Event);
 	ClearLevels();
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }
 
 void CDlgSelectEvent::OnCancel()
 {
 	ClearLevels();
-	CDialog::OnCancel();
+	CDlgBaseDialog::OnCancel();
 }

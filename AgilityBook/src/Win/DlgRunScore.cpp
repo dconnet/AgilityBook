@@ -101,7 +101,7 @@ public:
 
 CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
 	ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun)
-	: CPropertyPage(CDlgRunScore::IDD)
+	: CDlgBasePropertyPage(CDlgRunScore::IDD)
 	, m_pDoc(pDoc)
 	, m_pVenue(pVenue)
 	, m_pTrial(pTrial)
@@ -139,7 +139,7 @@ CDlgRunScore::~CDlgRunScore()
 
 void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunScore)
 	DDX_Control(pDX, IDC_RUNSCORE_DATE, m_ctrlDate);
 	DDX_Text(pDX, IDC_RUNSCORE_VENUE, m_Venue);
@@ -356,7 +356,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
-BEGIN_MESSAGE_MAP(CDlgRunScore, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunScore)
 	ON_WM_DESTROY()
 	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_RUNSCORE_DATE, OnDatetimechangeDate)
@@ -898,7 +898,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 
 BOOL CDlgRunScore::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 
 	m_ctrlOpeningText.GetWindowText(m_strOpening[0]);
 	m_ctrlOpenText.GetWindowText(m_strOpen[0]);
@@ -1003,7 +1003,7 @@ BOOL CDlgRunScore::OnInitDialog()
 void CDlgRunScore::OnDestroy() 
 {
 	ClearLevels();
-	CPropertyPage::OnDestroy();
+	CDlgBasePropertyPage::OnDestroy();
 }
 
 void CDlgRunScore::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 

@@ -37,8 +37,9 @@
 
 #include <set>
 #include <string>
+#include "DlgBaseDialog.h"
 
-class CDlgFault : public CDialog
+class CDlgFault : public CDlgBaseDialog
 {
 public:
 	CDlgFault(std::set<std::string>& faults, LPCTSTR pFault, CWnd* pParent = NULL);

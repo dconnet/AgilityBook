@@ -35,9 +35,10 @@
  * Revision History
  */
 
+#include "DlgBasePropertyPage.h"
 class ARBDogRun;
 
-class CDlgRunCRCD : public CPropertyPage
+class CDlgRunCRCD : public CDlgBasePropertyPage
 {
 public:
 	CDlgRunCRCD(ARBDogRun* pRun);

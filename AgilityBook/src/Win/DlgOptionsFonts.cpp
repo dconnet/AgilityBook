@@ -47,9 +47,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsFonts property page
 
-IMPLEMENT_DYNCREATE(CDlgOptionsFonts, CPropertyPage)
+IMPLEMENT_DYNCREATE(CDlgOptionsFonts, CDlgBasePropertyPage)
 
-CDlgOptionsFonts::CDlgOptionsFonts() : CPropertyPage(CDlgOptionsFonts::IDD)
+CDlgOptionsFonts::CDlgOptionsFonts()
+	: CDlgBasePropertyPage(CDlgOptionsFonts::IDD)
 {
 	//{{AFX_DATA_INIT(CDlgOptionsFonts)
 	//}}AFX_DATA_INIT
@@ -61,7 +62,7 @@ CDlgOptionsFonts::~CDlgOptionsFonts()
 
 void CDlgOptionsFonts::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsFonts)
 	DDX_Control(pDX, IDC_OPTIONS_FONT_GENERAL_PRINT_TEXT, m_ctrlFontGeneralPrint);
 	DDX_Control(pDX, IDC_OPTIONS_FONT_CAL_VIEW_DATE_TEXT, m_ctrlFontCalViewDate);
@@ -71,7 +72,7 @@ void CDlgOptionsFonts::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgOptionsFonts, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgOptionsFonts, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsFonts)
 	ON_BN_CLICKED(IDC_OPTIONS_FONT_GENERAL_PRINT, OnFontGeneralPrint)
 	ON_BN_CLICKED(IDC_OPTIONS_FONT_CAL_VIEW_DATE, OnFontCalViewDate)
@@ -86,7 +87,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgOptionsFonts::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_fontGeneralPrintInfo.CreateFont(m_fontGeneralPrint);
 	for (int i = 0; i < 2; ++i)
 	{

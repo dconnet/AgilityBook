@@ -27,16 +27,16 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgOptionsProgram class
+ * @brief Base class for all property pages.
  * @author David Connet
  *
  * Revision History
- * @li 2004-04-08 DRC Created
+ * 2004-05-31 DRC Created.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
-#include "DlgOptionsProgram.h"
+#include "DlgBasePropertyPage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,59 +45,77 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsProgram property page
+// CDlgBasePropertyPage property page
 
-IMPLEMENT_DYNCREATE(CDlgOptionsProgram, CDlgBasePropertyPage)
+IMPLEMENT_DYNAMIC(CDlgBasePropertyPage, CPropertyPage)
 
-CDlgOptionsProgram::CDlgOptionsProgram()
-	: CDlgBasePropertyPage(CDlgOptionsProgram::IDD)
+#if _MSC_VER < 1300
+CDlgBasePropertyPage::CDlgBasePropertyPage(UINT nIDTemplate, UINT nIDCaption)
+	: CPropertyPage(nIDTemplate, nIDCaption)
 {
-	//{{AFX_DATA_INIT(CDlgOptionsProgram)
-	m_bAutoCheck = TRUE;
-	m_Backups = 0;
-	m_bAutoShow = TRUE;
-	m_Splash = _T("");
+}
+CDlgBasePropertyPage::CDlgBasePropertyPage(LPCTSTR lpszTemplateName, UINT nIDCaption)
+	: CPropertyPage(lpszTemplateName, nIDCaption)
+{
+}
+
+#else
+CDlgBasePropertyPage::CDlgBasePropertyPage(
+		UINT nIDTemplate, UINT nIDCaption, DWORD dwSize)
+	: CPropertyPage(nIDTemplate, nIDCaption, dwSize)
+{
+	//{{AFX_DATA_INIT(CDlgBasePropertyPage)
 	//}}AFX_DATA_INIT
 }
+CDlgBasePropertyPage::CDlgBasePropertyPage(
+		LPCTSTR lpszTemplateName, UINT nIDCaption, DWORD dwSize)
+	: CPropertyPage(lpszTemplateName, nIDCaption, dwSize)
+{
+}
+CDlgBasePropertyPage::CDlgBasePropertyPage(
+		UINT nIDTemplate, UINT nIDCaption,
+		UINT nIDHeaderTitle, UINT nIDHeaderSubTitle, DWORD dwSize)
+	: CPropertyPage(nIDTemplate, nIDCaption, nIDHeaderTitle, nIDHeaderSubTitle, dwSize)
+{
+}
+CDlgBasePropertyPage::CDlgBasePropertyPage(
+		LPCTSTR lpszTemplateName, UINT nIDCaption, UINT nIDHeaderTitle,
+		UINT nIDHeaderSubTitle, DWORD dwSize)
+	: CPropertyPage(lpszTemplateName, nIDCaption, nIDHeaderTitle, nIDHeaderSubTitle, dwSize)
+{
+}
+#endif
 
-CDlgOptionsProgram::~CDlgOptionsProgram()
+CDlgBasePropertyPage::~CDlgBasePropertyPage()
 {
 }
 
-void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
+void CDlgBasePropertyPage::DoDataExchange(CDataExchange* pDX)
 {
-	CDlgBasePropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgOptionsProgram)
-	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTO_CHECK, m_bAutoCheck);
-	DDX_Text(pDX, IDC_OPTIONS_PGM_EDIT, m_Backups);
-	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTOSHOW, m_bAutoShow);
-	DDX_Text(pDX, IDC_OPTIONS_PGM_FILENAME, m_Splash);
+	CPropertyPage::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CDlgBasePropertyPage)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgOptionsProgram, CDlgBasePropertyPage)
-	//{{AFX_MSG_MAP(CDlgOptionsProgram)
-	ON_BN_CLICKED(IDC_OPTIONS_PGM_BROWSE, OnBrowse)
+BEGIN_MESSAGE_MAP(CDlgBasePropertyPage, CPropertyPage)
+	//{{AFX_MSG_MAP(CDlgBasePropertyPage)
+	ON_WM_HELPINFO()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsProgram message handlers
+// CDlgBasePropertyPage message handlers
 
-BOOL CDlgOptionsProgram::OnInitDialog() 
+BOOL CDlgBasePropertyPage::OnInitDialog() 
 {
-	CDlgBasePropertyPage::OnInitDialog();
+	CPropertyPage::OnInitDialog();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgOptionsProgram::OnBrowse()
+BOOL CDlgBasePropertyPage::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	UpdateData(TRUE);
-	CFileDialog dlg(TRUE, NULL, m_Splash, OFN_FILEMUSTEXIST, "Bitmap Files (*.bmp)|*.bmp||", this);
-	if (IDOK == dlg.DoModal())
-	{
-		m_Splash = dlg.GetPathName();
-		UpdateData(FALSE);
-	}
+	ShowContextHelp(pHelpInfo);
+	return TRUE;
 }

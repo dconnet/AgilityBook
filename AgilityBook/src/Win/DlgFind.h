@@ -36,6 +36,8 @@
  * @li 2003-12-27 DRC Created
  */
 
+#include "DlgBaseDialog.h"
+
 class IFindCallback
 {
 public:
@@ -65,7 +67,7 @@ protected:
 	bool m_bDown;
 };
 
-class CDlgFind : public CDialog
+class CDlgFind : public CDlgBaseDialog
 {
 // Construction
 public:

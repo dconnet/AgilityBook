@@ -1,7 +1,5 @@
-#pragma once
-
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,61 +27,67 @@
 /**
  * @file
  *
- * @brief interface of the CDlgDogNumbers class
+ * @brief Base class for all dialogs.
  * @author David Connet
  *
  * Revision History
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * 2004-05-31 DRC Created.
  */
 
-#include "ARBDogRegNum.h"
-#include "ColumnOrder.h"
-#include "DlgBasePropertyPage.h"
-#include "ListCtrl.h"
-class ARBConfig;
-class ARBDog;
+#include "stdafx.h"
+#include "AgilityBook.h"
+#include "DlgBaseDialog.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
+// CDlgBaseDialog dialog
 
-class CDlgDogNumbers : public CDlgBasePropertyPage
+IMPLEMENT_DYNAMIC(CDlgBaseDialog, CDialog)
+
+CDlgBaseDialog::CDlgBaseDialog(LPCTSTR lpszTemplateName, CWnd* pParentWnd)
+	: CDialog(lpszTemplateName, pParentWnd)
 {
-	friend class CDlgDog;
-public:
-	CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnums);
+	//{{AFX_DATA_INIT(CDlgBaseDialog)
+	//}}AFX_DATA_INIT
+}
 
-private:
-// Dialog Data
-	//{{AFX_DATA(CDlgDogNumbers)
-	enum { IDD = IDD_DOG_NUMBERS };
-	CButton	m_ctrlRegEdit;
-	CButton	m_ctrlRegDelete;
-	CListCtrl2	m_ctrlRegNums;
-	//}}AFX_DATA
-	ARBConfig& m_Config;
-	CColumnOrder m_sortRegNums;
-	ARBDogRegNumList m_RegNums;
+CDlgBaseDialog::CDlgBaseDialog(UINT nIDTemplate, CWnd* pParentWnd)
+	: CDialog(nIDTemplate, pParentWnd)
+{
+}
 
-	//{{AFX_VIRTUAL(CDlgDogNumbers)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+void CDlgBaseDialog::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CDlgBaseDialog)
+	//}}AFX_DATA_MAP
+}
 
-private:
-	void SetColumnRegNumHeaders();
-	void ListRegNums();
-	void UpdateButtons();
+BEGIN_MESSAGE_MAP(CDlgBaseDialog, CDialog)
+	//{{AFX_MSG_MAP(CDlgBaseDialog)
+	ON_WM_HELPINFO()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgDogNumbers)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnColumnclickRegNums(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclkRegNums(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedRegNums(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnRegNew();
-	afx_msg void OnRegEdit();
-	afx_msg void OnRegDelete();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
+/////////////////////////////////////////////////////////////////////////////
+// CDlgBaseDialog message handlers
+
+BOOL CDlgBaseDialog::OnInitDialog() 
+{
+	CDialog::OnInitDialog();
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+BOOL CDlgBaseDialog::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	if (IDOK != pHelpInfo->iCtrlId
+	&& IDCANCEL != pHelpInfo->iCtrlId)
+		ShowContextHelp(pHelpInfo);
+	return TRUE;
+}

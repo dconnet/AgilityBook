@@ -141,7 +141,7 @@ int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 // CDlgRunReference dialog
 
 CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun)
-	: CPropertyPage(CDlgRunReference::IDD)
+	: CDlgBasePropertyPage(CDlgRunReference::IDD)
 	, m_pDoc(pDoc)
 	, m_Venue(pVenue)
 	, m_Run(pRun)
@@ -158,7 +158,7 @@ CDlgRunReference::~CDlgRunReference()
 
 void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunReference)
 	DDX_Control(pDX, IDC_RUNREF_REF_RUNS, m_ctrlRefRuns);
 	DDX_Control(pDX, IDC_RUNREF_NEW, m_ctrlNew);
@@ -167,7 +167,7 @@ void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgRunReference, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgRunReference, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunReference)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_RUNREF_REF_RUNS, OnGetdispinfoRefRuns)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_RUNREF_REF_RUNS, OnColumnclickRefRuns)
@@ -264,7 +264,7 @@ void CDlgRunReference::ListRuns()
 
 BOOL CDlgRunReference::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlRefRuns.SetExtendedStyle(m_ctrlRefRuns.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 
 	LV_COLUMN col;

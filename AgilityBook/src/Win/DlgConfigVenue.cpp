@@ -84,7 +84,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigVenue dialog
 
 CDlgConfigVenue::CDlgConfigVenue(ARBAgilityRecordBook& book, ARBConfig& config, ARBConfigVenue* pVenue, CWnd* pParent)
-	: CDialog(CDlgConfigVenue::IDD, pParent)
+	: CDlgBaseDialog(CDlgConfigVenue::IDD, pParent)
 	, m_Book(book)
 	, m_Config(config)
 	, m_pVenue(pVenue)
@@ -113,7 +113,7 @@ void CDlgConfigVenue::GetFixups(std::vector<CDlgFixup*>& ioFixups)
 
 void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigVenue)
 	DDX_Control(pDX, IDC_CONFIG_VENUE, m_ctrlName);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_DESC, m_ctrlDesc);
@@ -131,7 +131,7 @@ void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigVenue)
 	ON_WM_DESTROY()
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_DIVISION, OnGetdispinfoList)
@@ -597,7 +597,7 @@ CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
 
 BOOL CDlgConfigVenue::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	m_ctrlDivisions.SetExtendedStyle(m_ctrlDivisions.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlDivisions.InsertColumn(0, "Divisions");
@@ -620,7 +620,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 void CDlgConfigVenue::OnDestroy() 
 {
 	m_ctrlLevels.DeleteAllItems();
-	CDialog::OnDestroy();
+	CDlgBaseDialog::OnDestroy();
 }
 
 void CDlgConfigVenue::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -1560,5 +1560,5 @@ void CDlgConfigVenue::OnOK()
 
 	// The rest is already taken care of.
 
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

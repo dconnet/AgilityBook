@@ -60,10 +60,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWizardImport property page
 
-IMPLEMENT_DYNAMIC(CWizardImport, CPropertyPage)
+IMPLEMENT_DYNAMIC(CWizardImport, CDlgBasePropertyPage)
 
 CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc)
-	: CPropertyPage(CWizardImport::IDD)
+	: CDlgBasePropertyPage(CWizardImport::IDD)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 {
@@ -92,7 +92,7 @@ CWizardImport::~CWizardImport()
 
 void CWizardImport::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardImport)
 	DDX_Text(pDX, IDC_WIZARD_IMPORT_ROW, m_Row);
 	DDV_MinMaxInt(pDX, m_Row, 1, 100);
@@ -107,7 +107,7 @@ void CWizardImport::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CWizardImport, CPropertyPage)
+BEGIN_MESSAGE_MAP(CWizardImport, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardImport)
 	ON_EN_KILLFOCUS(IDC_WIZARD_IMPORT_ROW, OnImportKillFocus)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_WIZARD_IMPORT_ROW_SPIN, OnDeltaposImportRowSpin)
@@ -346,7 +346,7 @@ void CWizardImport::UpdatePreview()
 
 BOOL CWizardImport::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlSpin.SetRange(100, 1);
 	static struct
 	{
@@ -379,7 +379,7 @@ BOOL CWizardImport::OnInitDialog()
 BOOL CWizardImport::OnSetActive() 
 {
 	UpdateButtons();
-	BOOL rc = CPropertyPage::OnSetActive();
+	BOOL rc = CDlgBasePropertyPage::OnSetActive();
 	if (m_FileName.IsEmpty())
 		OnImportFile();
 	return rc;
@@ -1123,7 +1123,7 @@ BOOL CWizardImport::OnWizardFinish()
 		m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
 	}
 
-	return CPropertyPage::OnWizardFinish();
+	return CDlgBasePropertyPage::OnWizardFinish();
 }
 
 void CWizardImport::OnImportKillFocus()

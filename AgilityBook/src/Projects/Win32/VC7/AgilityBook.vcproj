@@ -185,6 +185,12 @@
 				RelativePath="..\..\..\Win\DlgAssignColumns.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgBaseDialog.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgBasePropertyPage.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgCalendar.cpp">
 			</File>
 			<File
@@ -424,6 +430,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgAssignColumns.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgBaseDialog.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgBasePropertyPage.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgCalendar.h">

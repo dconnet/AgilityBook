@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgRunComments dialog
 
 CDlgRunComments::CDlgRunComments(CAgilityBookDoc* pDoc, ARBDogRun* pRun)
-	: CPropertyPage(CDlgRunComments::IDD)
+	: CDlgBasePropertyPage(CDlgRunComments::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
 {
@@ -67,7 +67,7 @@ CDlgRunComments::~CDlgRunComments()
 
 void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunComments)
 	DDX_Control(pDX, IDC_RUNCOMMENT_COMMENTS_FAULTS, m_ctrlCommentsFaults);
 	DDX_Control(pDX, IDC_RUNCOMMENT_FAULTS_LIST, m_ctrlFaultsList);
@@ -84,7 +84,7 @@ void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
-BEGIN_MESSAGE_MAP(CDlgRunComments, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgRunComments, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunComments)
 	ON_BN_CLICKED(IDC_RUNCOMMENT_COMMENTS_FAULTS, OnCommentsFaults)
 	//}}AFX_MSG_MAP
@@ -109,7 +109,7 @@ void CDlgRunComments::SetFaultsText()
 
 BOOL CDlgRunComments::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	SetFaultsText();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

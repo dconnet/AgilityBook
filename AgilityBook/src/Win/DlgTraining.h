@@ -36,10 +36,11 @@
  * @li 2003-09-21 DRC Created
  */
 
+#include "DlgBaseDialog.h"
 class ARBTraining;
 class CAgilityBookDoc;
 
-class CDlgTraining : public CDialog
+class CDlgTraining : public CDlgBaseDialog
 {
 // Construction
 public:

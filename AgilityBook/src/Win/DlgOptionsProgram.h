@@ -36,7 +36,9 @@
  * @li 2004-04-08 DRC Created
  */
 
-class CDlgOptionsProgram : public CPropertyPage
+#include "DlgBasePropertyPage.h"
+
+class CDlgOptionsProgram : public CDlgBasePropertyPage
 {
 	friend class CDlgOptions;
 	DECLARE_DYNCREATE(CDlgOptionsProgram)

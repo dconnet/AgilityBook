@@ -36,8 +36,9 @@
  */
 
 #include "ARBAgilityRecordBook.h"
+#include "DlgBaseDialog.h"
 
-class CDlgConfigUpdate : public CDialog
+class CDlgConfigUpdate : public CDlgBaseDialog
 {
 public:
 	CDlgConfigUpdate(CWnd* pParent = NULL);

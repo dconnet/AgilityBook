@@ -49,10 +49,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsFilter property page
 
-IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CPropertyPage)
+IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CDlgBasePropertyPage)
 
 CDlgOptionsFilter::CDlgOptionsFilter(ARBConfig const& config)
-	: CPropertyPage(CDlgOptionsFilter::IDD)
+	: CDlgBasePropertyPage(CDlgOptionsFilter::IDD)
 	, m_Config(config)
 {
 	//{{AFX_DATA_INIT(CDlgOptionsFilter)
@@ -72,7 +72,7 @@ CDlgOptionsFilter::~CDlgOptionsFilter()
 
 void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsFilter)
 	DDX_Radio(pDX, IDC_OPTIONS_FILTER_DATES_ALL, m_ViewDates);
 	DDX_Control(pDX, IDC_OPTIONS_FILTER_DATE_START_CHECK, m_ctrlDateStartCheck);
@@ -89,7 +89,7 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsFilter)
 	ON_WM_HELPINFO()
 	ON_BN_CLICKED(IDC_OPTIONS_FILTER_DATES_ALL, OnViewUpdate)
@@ -209,7 +209,7 @@ void CDlgOptionsFilter::UpdateControls()
 
 BOOL CDlgOptionsFilter::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 
 	for (ARBConfigVenueList::const_iterator iter = m_Config.GetVenues().begin(); iter != m_Config.GetVenues().end(); ++iter)
 	{

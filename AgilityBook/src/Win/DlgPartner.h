@@ -35,9 +35,10 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBDogRunPartner;
 
-class CDlgPartner : public CDialog
+class CDlgPartner : public CDlgBaseDialog
 {
 public:
 	CDlgPartner(ARBDogRunPartner* partner, CWnd* pParent = NULL);

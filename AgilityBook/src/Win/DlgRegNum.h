@@ -35,11 +35,12 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBConfig;
 class ARBDogRegNum;
 class ARBDogRegNumList;
 
-class CDlgRegNum : public CDialog
+class CDlgRegNum : public CDlgBaseDialog
 {
 public:
 	CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent = NULL);

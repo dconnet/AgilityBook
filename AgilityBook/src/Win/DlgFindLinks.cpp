@@ -138,7 +138,7 @@ int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 // CDlgFindLinks dialog
 
 CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, CWnd* pParent)
-	: CDialog(CDlgFindLinks::IDD, pParent)
+	: CDlgBaseDialog(CDlgFindLinks::IDD, pParent)
 	, m_sortLinks("Links")
 	, m_Session("my version")
 {
@@ -187,14 +187,14 @@ CDlgFindLinks::~CDlgFindLinks()
 
 void CDlgFindLinks::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgFindLinks)
 	DDX_Control(pDX, IDC_FINDLINKS_LIST, m_ctrlLinks);
 	DDX_Control(pDX, IDC_FINDLINKS_EDIT, m_ctrlEdit);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgFindLinks, CDialog)
+BEGIN_MESSAGE_MAP(CDlgFindLinks, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgFindLinks)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_FINDLINKS_LIST, OnColumnclickList)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_FINDLINKS_LIST, OnGetdispinfoList)
@@ -278,7 +278,7 @@ void CDlgFindLinks::UpdateButtons()
 BOOL CDlgFindLinks::OnInitDialog()
 {
 	CWaitCursor wait;
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
 
@@ -446,5 +446,5 @@ void CDlgFindLinks::OnOK()
 				m_Data[idx].m_pRun->AddLink(m_Data[idx].m_Link);
 		}
 	}
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

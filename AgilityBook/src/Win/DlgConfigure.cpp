@@ -75,7 +75,7 @@ int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 // CDlgConfigure dialog
 
 CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book)
-	: CDialog(CDlgConfigure::IDD)
+	: CDlgBaseDialog(CDlgConfigure::IDD)
 	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(m_Book.GetConfig())
@@ -97,7 +97,7 @@ CDlgConfigure::~CDlgConfigure()
 
 void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigure)
 	DDX_Control(pDX, IDC_CONFIG_VENUES, m_ctrlVenues);
 	DDX_Control(pDX, IDC_CONFIG_FAULTS, m_ctrlFaults);
@@ -110,7 +110,7 @@ void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigure, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigure, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigure)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUES, OnGetdispinfo)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_CONFIG_VENUES, OnDeleteitem)
@@ -315,7 +315,7 @@ int CDlgConfigure::FindCurrentOtherPoints(ARBConfigOtherPoints const* pOther, bo
 
 BOOL CDlgConfigure::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
@@ -841,5 +841,5 @@ void CDlgConfigure::OnOK()
 		m_pDoc->SetModifiedFlag();
 		m_pDoc->UpdateAllViews(NULL, UPDATE_CONFIG);
 	}
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

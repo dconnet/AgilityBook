@@ -48,7 +48,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgSelectURL dialog
 
 CDlgSelectURL::CDlgSelectURL(LPCTSTR name, CWnd* pParent)
-	: CDialog(CDlgSelectURL::IDD, pParent)
+	: CDlgBaseDialog(CDlgSelectURL::IDD, pParent)
 	, m_Name(name)
 {
 	//{{AFX_DATA_INIT(CDlgSelectURL)
@@ -61,13 +61,13 @@ CDlgSelectURL::~CDlgSelectURL()
 
 void CDlgSelectURL::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgSelectURL)
 	DDX_Text(pDX, IDC_SELECTURL_NAME, m_Name);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgSelectURL, CDialog)
+BEGIN_MESSAGE_MAP(CDlgSelectURL, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgSelectURL)
 	ON_BN_CLICKED(IDC_SELECTURL_FILENAME, OnBnClickedFilename)
 	//}}AFX_MSG_MAP
@@ -77,7 +77,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgSelectURL::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -105,5 +105,5 @@ void CDlgSelectURL::OnOK()
 	m_Name.TrimLeft();
 #endif
 	UpdateData(FALSE);
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

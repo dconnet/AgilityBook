@@ -66,7 +66,7 @@ static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 // CDlgConfigOtherPoints dialog
 
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(ARBConfig& config, ARBConfigOtherPoints* pOther, CWnd* pParent)
-	: CDialog(CDlgConfigOtherPoints::IDD, pParent)
+	: CDlgBaseDialog(CDlgConfigOtherPoints::IDD, pParent)
 	, m_Config(config)
 	, m_pOther(pOther)
 {
@@ -84,7 +84,7 @@ CDlgConfigOtherPoints::~CDlgConfigOtherPoints()
 
 void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigOtherPoints)
 	DDX_Text(pDX, IDC_CONFIG_OTHER_NAME, m_Name);
 	DDX_Control(pDX, IDC_CONFIG_OTHER_TALLY, m_ctrlTally);
@@ -92,7 +92,7 @@ void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigOtherPoints, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigOtherPoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigOtherPoints)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -101,7 +101,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgConfigOtherPoints::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	for (int index = 0; index < sc_numTally; ++index)
 	{
@@ -147,5 +147,5 @@ void CDlgConfigOtherPoints::OnOK()
 		m_pOther->SetTally(static_cast<ARBConfigOtherPoints::eOtherPointsTally>(m_ctrlTally.GetItemData(index)));
 	}
 	m_pOther->SetDescription((LPCSTR)m_Desc);
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

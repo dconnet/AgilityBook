@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigUpdate dialog
 
 CDlgConfigUpdate::CDlgConfigUpdate(CWnd* pParent)
-	: CDialog(CDlgConfigUpdate::IDD, pParent)
+	: CDlgBaseDialog(CDlgConfigUpdate::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CDlgConfigUpdate)
 	m_Update = 0;
@@ -62,7 +62,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(CWnd* pParent)
 
 void CDlgConfigUpdate::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigUpdate)
 	DDX_Radio(pDX, IDC_CONFIG_UPDATE_DEFAULT, m_Update);
 	DDX_Control(pDX, IDC_CONFIG_UPDATE_FILENAME, m_ctrlFileNameEdit);
@@ -71,7 +71,7 @@ void CDlgConfigUpdate::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigUpdate, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigUpdate, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigUpdate)
 	ON_BN_CLICKED(IDC_CONFIG_UPDATE_DEFAULT, OnUpdateDefault)
 	ON_BN_CLICKED(IDC_CONFIG_UPDATE_EXISTING, OnUpdateExisting)
@@ -136,7 +136,7 @@ bool CDlgConfigUpdate::LoadConfig(char const* pFile)
 
 BOOL CDlgConfigUpdate::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	EnableControls();
 
@@ -186,5 +186,5 @@ void CDlgConfigUpdate::OnOK()
 		pFile = (char const*)source;
 	if (!LoadConfig(pFile))
 		return;
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

@@ -53,7 +53,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	ARBConfigTitlePointsList& titlePoints,
 	ARBConfigTitlePoints* pTitle,
 	CWnd* pParent)
-	: CDialog(CDlgConfigTitlePoints::IDD, pParent)
+	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)
 	, m_TitlePoints(titlePoints)
 	, m_pTitle(pTitle)
 {
@@ -66,7 +66,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 
 void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitlePoints)
 	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_POINTS, m_Points);
 	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_FAULTS, m_Faults);
@@ -74,7 +74,7 @@ void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigTitlePoints, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigTitlePoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitlePoints)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -84,7 +84,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgConfigTitlePoints::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	if (m_pTitle)
 	{
@@ -119,5 +119,5 @@ void CDlgConfigTitlePoints::OnOK()
 		}
 	}
 
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

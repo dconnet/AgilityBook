@@ -124,9 +124,10 @@
 
 #include <vector>
 #include "AgilityBookOptions.h"
+#include "DlgBaseDialog.h"
 #include "ListBox.h"
 
-class CDlgAssignColumns : public CDialog
+class CDlgAssignColumns : public CDlgBaseDialog
 {
 // Construction
 public:

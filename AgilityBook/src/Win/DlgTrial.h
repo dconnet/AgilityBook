@@ -36,11 +36,12 @@
  */
 
 #include "ARBDogClub.h"
+#include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 class ARBDogTrial;
 class CAgilityBookDoc;
 
-class CDlgTrial : public CDialog
+class CDlgTrial : public CDlgBaseDialog
 {
 public:
 	CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent = NULL);

@@ -39,9 +39,10 @@
 #include <string>
 #include "ARBDate.h"
 #include "CheckTreeCtrl.h"
+#include "DlgBasePropertyPage.h"
 class CAgilityBookDoc;
 
-class CDlgOptionsTraining : public CPropertyPage
+class CDlgOptionsTraining : public CDlgBasePropertyPage
 {
 	friend class CDlgOptions;
 	DECLARE_DYNAMIC(CDlgOptionsTraining)

@@ -37,12 +37,13 @@
  */
 
 #include "ColumnOrder.h"
+#include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 class ARBConfigVenue;
 class ARBDogRun;
 class CAgilityBookDoc;
 
-class CDlgRunReference : public CPropertyPage
+class CDlgRunReference : public CDlgBasePropertyPage
 {
 public:
 	CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun);

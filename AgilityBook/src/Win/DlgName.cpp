@@ -47,7 +47,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgName dialog
 
 CDlgName::CDlgName(LPCTSTR name, UINT caption, CWnd* pParent)
-	: CDialog(CDlgName::IDD, pParent)
+	: CDlgBaseDialog(CDlgName::IDD, pParent)
 	, m_Name(name)
 {
 	if (0 != caption)
@@ -57,7 +57,7 @@ CDlgName::CDlgName(LPCTSTR name, UINT caption, CWnd* pParent)
 }
 
 CDlgName::CDlgName(LPCTSTR name, LPCTSTR pCaption, CWnd* pParent)
-	: CDialog(CDlgName::IDD, pParent)
+	: CDlgBaseDialog(CDlgName::IDD, pParent)
 	, m_Name(name)
 	, m_Caption(pCaption)
 {
@@ -69,13 +69,13 @@ CDlgName::~CDlgName()
 
 void CDlgName::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgName)
 	DDX_Text(pDX, IDC_NAME, m_Name);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgName, CDialog)
+BEGIN_MESSAGE_MAP(CDlgName, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgName)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -84,7 +84,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgName::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	if (!m_Caption.IsEmpty())
 		SetWindowText(m_Caption);
@@ -109,5 +109,5 @@ void CDlgName::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_NAME));
 		return;
 	}
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

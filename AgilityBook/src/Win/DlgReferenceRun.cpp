@@ -49,7 +49,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgReferenceRun dialog
 
 CDlgReferenceRun::CDlgReferenceRun(ARBDogReferenceRun* ref, CWnd* pParent)
-	: CDialog(CDlgReferenceRun::IDD, pParent)
+	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
 	, m_Ref(ref)
 {
 	ASSERT(m_Ref);
@@ -68,7 +68,7 @@ CDlgReferenceRun::CDlgReferenceRun(ARBDogReferenceRun* ref, CWnd* pParent)
 
 void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgReferenceRun)
 	DDX_Text(pDX, IDC_REFRUN_PLACE, m_Place);
 	DDX_Control(pDX, IDC_REFRUN_Q, m_ctrlQ);
@@ -80,7 +80,7 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgReferenceRun, CDialog)
+BEGIN_MESSAGE_MAP(CDlgReferenceRun, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgReferenceRun)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -90,7 +90,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgReferenceRun::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	int nQs = ARB_Q::GetNumValidTypes();
 	for (int index = 0; index < nQs; ++index)
 	{
@@ -134,5 +134,5 @@ void CDlgReferenceRun::OnOK()
 	m_Notes.Replace("\r\n", "\n");
 	m_Ref->SetNote((LPCSTR)m_Notes);
 
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

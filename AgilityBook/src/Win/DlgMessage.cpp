@@ -47,7 +47,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgMessage dialog
 
 CDlgMessage::CDlgMessage(CString const& msg, UINT caption, CWnd* pParent)
-	: CDialog(CDlgMessage::IDD, pParent)
+	: CDlgBaseDialog(CDlgMessage::IDD, pParent)
 {
 	if (0 != caption)
 		m_Caption.LoadString(caption);
@@ -59,13 +59,13 @@ CDlgMessage::CDlgMessage(CString const& msg, UINT caption, CWnd* pParent)
 
 void CDlgMessage::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgMessage)
 	DDX_Text(pDX, IDC_MESSAGE, m_Message);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgMessage, CDialog)
+BEGIN_MESSAGE_MAP(CDlgMessage, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgMessage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -74,7 +74,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgMessage::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	if (!m_Caption.IsEmpty())
 		SetWindowText(m_Caption);

@@ -112,7 +112,7 @@ int CALLBACK CompareRegNums(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 // CDlgDogNumbers dialog
 
 CDlgDogNumbers::CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnums)
-	: CPropertyPage(CDlgDogNumbers::IDD)
+	: CDlgBasePropertyPage(CDlgDogNumbers::IDD)
 	, m_Config(config)
 	, m_sortRegNums("RegNums")
 	, m_RegNums(regnums)
@@ -124,7 +124,7 @@ CDlgDogNumbers::CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnum
 
 void CDlgDogNumbers::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogNumbers)
 	DDX_Control(pDX, IDC_DOGNUM_EDIT, m_ctrlRegEdit);
 	DDX_Control(pDX, IDC_DOGNUM_DELETE, m_ctrlRegDelete);
@@ -132,7 +132,7 @@ void CDlgDogNumbers::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgDogNumbers, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgDogNumbers, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogNumbers)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOGNUM_REG_NUMS, OnColumnclickRegNums)
 	ON_NOTIFY(NM_DBLCLK, IDC_DOGNUM_REG_NUMS, OnDblclkRegNums)
@@ -225,7 +225,7 @@ void CDlgDogNumbers::UpdateButtons()
 
 BOOL CDlgDogNumbers::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlRegNums.SetExtendedStyle(m_ctrlRegNums.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 
 	LV_COLUMN col;

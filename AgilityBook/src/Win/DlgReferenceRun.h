@@ -35,9 +35,10 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBDogReferenceRun;
 
-class CDlgReferenceRun : public CDialog
+class CDlgReferenceRun : public CDlgBaseDialog
 {
 public:
 	CDlgReferenceRun(ARBDogReferenceRun* ref, CWnd* pParent = NULL);

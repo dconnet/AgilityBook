@@ -36,7 +36,9 @@
  * @li 2004-03-06 DRC Created
  */
 
-class CDlgCRCDViewer : public CDialog
+#include "DlgBaseDialog.h"
+
+class CDlgCRCDViewer : public CDlgBaseDialog
 {
 public:
 	CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent = NULL);
