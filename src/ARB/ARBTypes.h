@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
 #include <string>
@@ -142,6 +143,16 @@ public:
 			m_Prec = rhs.m_Prec;
 			m_Val = rhs.m_Val;
 		}
+		return *this;
+	}
+	ARBDouble& operator+=(const ARBDouble& rhs)
+	{
+		m_Val += rhs.m_Val;
+		return *this;
+	}
+	ARBDouble& operator-=(const ARBDouble& rhs)
+	{
+		m_Val -= rhs.m_Val;
 		return *this;
 	}
 	bool operator==(const ARBDouble& rhs) const
