@@ -90,6 +90,15 @@ void CFontInfo::CreateFont(const CFontDialog& dlg, CFont& font, CDC* pDC)
 /////////////////////////////////////////////////////////////////////////////
 // Helper functions
 
+bool CAgilityBookOptions::IsFilterEnabled()
+{
+	if (CAgilityBookOptions::GetViewAllDates()
+	&& CAgilityBookOptions::GetViewAllVenues())
+		return false;
+	else
+		return true;
+}
+
 bool CAgilityBookOptions::IsDateVisible(
 	const ARBDate& startDate,
 	const ARBDate& endDate)

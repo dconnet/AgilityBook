@@ -42,6 +42,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -148,6 +149,9 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 		// Update
 		m_pDoc->ResetVisibility();
+		CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+		ASSERT(pFrame);
+		pFrame->UpdateFiltered();
 		EndDialog(IDOK);
 	}
 }

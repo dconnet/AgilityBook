@@ -344,7 +344,7 @@ BEGIN
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
-    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, NOINVERT
+    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
     VK_TAB,         ID_PREV_TAB,            VIRTKEY, SHIFT, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
@@ -1338,6 +1338,7 @@ BEGIN
     ID_INDICATOR_SCRL       "SCRL"
     ID_INDICATOR_OVR        "OVR"
     ID_INDICATOR_REC        "REC"
+    ID_INDICATOR_FILTERED   "Filtered"
     ID_INDICATOR_STATUS     "status"
 END
 
@@ -1573,20 +1574,6 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "%1!d! Q+"
-    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
-    IDS_POINTS_QQS          "%1!d! QQ"
-    IDS_POINTS_MACH         "%1!d! Mach"
-    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
-    IDS_FILEEXT_DEF_ARB     "arb"
-    IDS_FILEEXT_FNAME_ARB   "*.arb"
-    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
-    IDS_CREATERUN_FAILED    "Warning: Failed to create run. Please check the filter options, it may be preventing the creation of this run."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_COPYOF              "Copy of "
     IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
@@ -1604,6 +1591,20 @@ BEGIN
     IDS_POINTS_PARTNERS     ", %1!d! partners"
     IDS_POINTS_QS           "%1!d! Qs"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_POINTS_SQS          "%1!d! Q+"
+    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
+    IDS_POINTS_QQS          "%1!d! QQ"
+    IDS_POINTS_MACH         "%1!d! Mach"
+    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+    IDS_FILEEXT_DEF_ARB     "arb"
+    IDS_FILEEXT_FNAME_ARB   "*.arb"
+    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+    IDS_CREATERUN_FAILED    "Warning: Failed to create run. Please check the filter options, it may be preventing the creation of this run."
 END
 
 STRINGTABLE DISCARDABLE 

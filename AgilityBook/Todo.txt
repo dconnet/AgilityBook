@@ -1,4 +1,4 @@
-Last Updated: 8/27/03
+Last Updated: 8/28/03
 
 - OtherPoints point tallying is not implemented as stated.
   Currently, it ignores the configured option and tallies by "All Events"
@@ -7,8 +7,6 @@ Last Updated: 8/27/03
   an adjacent entry. (For instance, when reordering runs, reordering really
   only applies to runs on a given date. If you attempt to reorder more, the
   sorting that occurs after the reordering will undo what you did.)
-
-- Complete configuration importer
 
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
