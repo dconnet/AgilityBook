@@ -1,4 +1,6 @@
 5/9/2004: v1.1.1.8 <in development>
+- Bumped file Configuration v4:
+  - CPE 'CADE' changed to 'C-ATE'.
 - New features / Enhancements:
   - In the Points view, do not filter individual runs (only venues and titles).
     This change allows us to show a qualifying percentage.
