@@ -243,7 +243,7 @@ void CTabView::SetActiveView()
 		if (!m_pLastFocusCal)
 			m_pLastFocusCal = (CView*)m_splitterCal.GetPane(0,0);
 		pView = m_pLastFocusCal;
-		pCommon = dynamic_cast<ICommonView*>((CView*)m_splitterRuns.GetPane(0,0));
+		pCommon = dynamic_cast<ICommonView*>((CView*)m_splitterCal.GetPane(0,0));
 		break;
 	case 3:
 		pView = (CView*)m_Panes[nIndex];
@@ -260,6 +260,8 @@ void CTabView::SetActiveView()
 		CString msg;
 		if (pCommon->GetMessage(msg))
 			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, pCommon->IsFiltered());
+		if (pCommon->GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
 

@@ -294,9 +294,14 @@ void CAgilityBookTree::OnInitialUpdate()
 void CAgilityBookTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	CTreeView::OnActivateView(bActivate, pActivateView, pDeactiveView);
-	CString msg;
-	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (pActivateView)
+	{
+		CString msg;
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 }
 
 void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -617,7 +622,22 @@ bool CAgilityBookTree::IsFiltered() const
 
 bool CAgilityBookTree::GetMessage(CString& msg) const
 {
+	msg.Empty();
 	return false;
+}
+
+bool CAgilityBookTree::GetMessage2(CString& msg) const
+{
+	if (GetDocument()->GetCurrentDog())
+	{
+		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		return true;
+	}
+	else
+	{
+		msg.Empty();
+		return false;
+	}
 }
 
 void CAgilityBookTree::LoadData()

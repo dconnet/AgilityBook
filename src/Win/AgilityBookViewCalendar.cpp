@@ -169,6 +169,12 @@ bool CAgilityBookViewCalendar::GetMessage(CString& msg) const
 	return true;
 }
 
+bool CAgilityBookViewCalendar::GetMessage2(CString& msg) const
+{
+	msg.LoadString(IDS_INDICATOR_BLANK);
+	return true;
+}
+
 size_t CAgilityBookViewCalendar::GetEntriesOn(ARBDate const& date, std::vector<ARBCalendar*>& entries, bool bGetAll) const
 {
 	entries.clear();
@@ -255,10 +261,15 @@ void CAgilityBookViewCalendar::LoadData()
 			(m_nWeeks + 1) * DAY_BORDER + m_nWeeks * m_szEntry.cy));
 
 	CString msg;
-	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
-	Invalidate();
+	if (IsWindowVisible())
+	{
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 
+	Invalidate();
 	m_bSuppressSelect = false;
 }
 
@@ -302,9 +313,14 @@ void CAgilityBookViewCalendar::GetDateFromPoint(CPoint pt, ARBDate& date)
 void CAgilityBookViewCalendar::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	CScrollView::OnActivateView(bActivate, pActivateView, pDeactiveView);
-	CString msg;
-	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (pActivateView)
+	{
+		CString msg;
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 	if (m_Current.IsValid())
 	{
 		CRect r = GetDateRect(m_Current, false);

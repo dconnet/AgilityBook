@@ -1050,7 +1050,7 @@ void CDlgConfigVenue::OnDelete()
 	case eEvents:
 		{
 			int index;
-            if (0 <= (index = m_ctrlEvents.GetSelection()))
+			if (0 <= (index = m_ctrlEvents.GetSelection()))
 			{
 				CDlgConfigureDataEvent* pEventData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
 				ASSERT(NULL != pEventData);
@@ -1314,7 +1314,7 @@ void CDlgConfigVenue::OnCopy()
 	case eEvents:
 		{
 			int index;
-            if (0 <= (index = m_ctrlEvents.GetSelection()))
+			if (0 <= (index = m_ctrlEvents.GetSelection()))
 			{
 				CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
 				CString copyOf;

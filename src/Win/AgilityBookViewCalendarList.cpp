@@ -404,9 +404,14 @@ void CAgilityBookViewCalendarList::OnDestroy()
 void CAgilityBookViewCalendarList::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
-	CString msg;
-	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (pActivateView)
+	{
+		CString msg;
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 }
 
 void CAgilityBookViewCalendarList::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -452,6 +457,12 @@ bool CAgilityBookViewCalendarList::IsFiltered() const
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_EVENTS, GetListCtrl().GetItemCount());
+	return true;
+}
+
+bool CAgilityBookViewCalendarList::GetMessage2(CString& msg) const
+{
+	msg.LoadString(IDS_INDICATOR_BLANK);
 	return true;
 }
 
@@ -571,8 +582,13 @@ void CAgilityBookViewCalendarList::LoadData()
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	CString msg;
-	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (IsWindowVisible())
+	{
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 
 	SORT_CAL_INFO info;
 	info.pThis = this;

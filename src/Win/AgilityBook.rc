@@ -2162,6 +2162,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
     ID_INDICATOR_STATUS     "status"
     ID_INDICATOR_FILTERED   "Filtered"
+    ID_INDICATOR_DOG        "Dog"
 END
 
 STRINGTABLE 
@@ -2494,6 +2495,7 @@ BEGIN
     IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
     IDS_LIFETIME_POINTS     "LifeTime Points"
     IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
+    IDS_INDICATOR_BLANK     "          "
 END
 
 STRINGTABLE 

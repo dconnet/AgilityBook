@@ -103,17 +103,17 @@ void CScrollHotStatic::OnClicked()
 
 void CScrollHotStatic::OnMouseMove(UINT nFlags, CPoint point)
 {
-    if(g_bMoveControl)
+	if(g_bMoveControl)
 	{
 		KillTimer(m_nRedrawTimer);
 
-        TRACKMOUSEEVENT tme;
-        tme.cbSize = sizeof(tme);
-        tme.hwndTrack = m_hWnd;
-        tme.dwFlags = TME_LEAVE;
-        _TrackMouseEvent(&tme);
-        g_bMoveControl = FALSE;
-    }
+		TRACKMOUSEEVENT tme;
+		tme.cbSize = sizeof(tme);
+		tme.hwndTrack = m_hWnd;
+		tme.dwFlags = TME_LEAVE;
+		_TrackMouseEvent(&tme);
+		g_bMoveControl = FALSE;
+	}
 	else
 	{
 		int nHeight = point.y + g_nMemHeight - g_nMemOffset;
@@ -140,13 +140,13 @@ void CScrollHotStatic::OnMouseMove(UINT nFlags, CPoint point)
 
 LPARAM  CScrollHotStatic::OnMouseLeave(WPARAM wp, LPARAM lp)
 {
-    g_bMoveControl = TRUE;
+	g_bMoveControl = TRUE;
 	SetTimer(m_nRedrawTimer,30,NULL);
 	::SetCursor(m_hArrowCursor);
 	for( int i = 0; i < m_ItemVector.size(); i++ )
 		m_ItemVector[i].m_dwFlag &= ~ITEM_CHOOSED;
 
-    return 0;
+	return 0;
 }
 
 void CScrollHotStatic::OnPaint()
@@ -217,8 +217,8 @@ void CScrollHotStatic::OnTimer(UINT nIDEvent)
 {
 	if( nIDEvent == m_nRedrawTimer )
 	{
-        Invalidate(FALSE);
-        UpdateWindow();
+		Invalidate(FALSE);
+		UpdateWindow();
 	}
 
 	CStatic::OnTimer(nIDEvent);

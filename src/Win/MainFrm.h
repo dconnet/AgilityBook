@@ -56,6 +56,7 @@ public:
 public:
 	virtual ~CMainFrame();
 	void SetStatusText(CString const& msg, bool bFiltered);
+	void SetStatusText2(CString const& msg);
 	int GetCurTab() const;
 	void SetCurTab(int tab);
 

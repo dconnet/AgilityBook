@@ -56,8 +56,10 @@
 #include "AgilityBookTree.h"
 #include "AgilityBookTreeData.h"
 #include "ARBTypes.h"
+#include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
+#include "Element.h"
 #include "MainFrm.h"
 
 using namespace std;
@@ -962,6 +964,10 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_TRIAL, OnAgilityNewTrial)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_RUN, OnUpdateAgilityNewRun)
 	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
+	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
@@ -1010,9 +1016,14 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
-	CString msg;
-	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (pActivateView)
+	{
+		CString msg;
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 }
 
 void CAgilityBookViewRuns::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -1066,6 +1077,20 @@ bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 	}
 	msg.FormatMessage(IDS_NUM_RUNS_QS, GetListCtrl().GetItemCount(), nQs);
 	return true;
+}
+
+bool CAgilityBookViewRuns::GetMessage2(CString& msg) const
+{
+	if (GetDocument()->GetCurrentDog())
+	{
+		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		return true;
+	}
+	else
+	{
+		msg.Empty();
+		return false;
+	}
 }
 
 CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
@@ -1176,8 +1201,13 @@ void CAgilityBookViewRuns::LoadData()
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	CString msg;
-	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+	if (IsWindowVisible())
+	{
+		if (GetMessage(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+	}
 
 	SORT_RUN_INFO info;
 	info.pThis = this;
@@ -1439,6 +1469,71 @@ void CAgilityBookViewRuns::OnAgilityNewRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
 		GetDocument()->AddRun(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)
+{
+	OnUpdateEditCopy(pCmdUI);
+}
+
+void CAgilityBookViewRuns::OnEditCut()
+{
+	OnEditCopy();
+	OnAgilityDeleteRun();
+}
+
+void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetSelectedCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnEditCopy()
+{
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
+	{
+		CString data;
+		CStringArray line;
+
+		// Take care of the header, but only if more than one line is selected.
+		if (1 < indices.size()
+		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		{
+			GetPrintLine(-1, line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		Element tree;
+		tree.SetName(CLIPDATA);
+
+		// Now all the data.
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewRunsData* pData = GetItemData(*iter);
+			if (pData)
+				pData->GetRun()->Save(tree);
+			CStringArray line;
+			GetPrintLine((*iter), line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, data);
+	}
 }
 
 void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI) 

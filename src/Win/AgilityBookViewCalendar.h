@@ -61,6 +61,7 @@ public:
 	// ICommonView interface
 	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
+	virtual bool GetMessage2(CString& msg) const;
 
 private:
 	size_t GetEntriesOn(

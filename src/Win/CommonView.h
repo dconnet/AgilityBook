@@ -46,4 +46,8 @@ public:
 	 * Get a status message for the current view.
 	 */
 	virtual bool GetMessage(CString& msg) const = 0;
+	/**
+	 * Get a second status message for the current view.
+	 */
+	virtual bool GetMessage2(CString& msg) const = 0;
 };
