@@ -345,8 +345,8 @@ void CAgilityBookViewTraining::SetupColumns()
 			CString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
 			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
 			col.pszText = str.GetBuffer(0);
-			col.iSubItem = iCol;
-			GetListCtrl().InsertColumn(iCol, &col);
+			col.iSubItem = static_cast<int>(iCol);
+			GetListCtrl().InsertColumn(static_cast<int>(iCol), &col);
 			str.ReleaseBuffer();
 		}
 	}
