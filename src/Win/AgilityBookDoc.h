@@ -107,13 +107,13 @@ public:
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBInfo& GetInfo()						{return m_Records.GetInfo();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
-	size_t GetAllClubNames(std::set<std::string>& clubs) const
+	size_t GetAllClubNames(std::set<std::string>& clubs, bool bInfo = true) const
 	{
-		return m_Records.GetAllClubNames(clubs);
+		return m_Records.GetAllClubNames(clubs, bInfo);
 	}
-	size_t GetAllTrialLocations(std::set<std::string>& locations) const
+	size_t GetAllTrialLocations(std::set<std::string>& locations, bool bInfo = true) const
 	{
-		return m_Records.GetAllTrialLocations(locations);
+		return m_Records.GetAllTrialLocations(locations, bInfo);
 	}
 	size_t GetAllHeights(std::set<std::string>& judges) const
 	{
@@ -197,11 +197,12 @@ protected:
 	afx_msg void OnFileExportWizard();
 	afx_msg void OnFileLinked();
 	afx_msg void OnEditConfiguration();
-	afx_msg void OnUpdateEditJudges(CCmdUI* pCmdUI);
-	afx_msg void OnEditJudges();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
 	afx_msg void OnAgilityNewTraining();
+	afx_msg void OnNotesClubs();
+	afx_msg void OnNotesJudges();
+	afx_msg void OnNotesLocations();
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnViewSortruns();

@@ -36,7 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
- * @li 2004-11-15 DRC Added TimeFaults for T+F.
+ * @li 2004-11-15 DRC Added TimeFaults for T+F, ClubInfo, LocationInfo
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2004-03-30 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
@@ -77,7 +77,9 @@
 #define TREE_FAULTTYPE						"FaultType"
 #define TREE_OTHERPTS						"OtherPts"
 #define TREE_INFO							"Info"
+#define TREE_CLUBINFO						"ClubInfo"
 #define TREE_JUDGEINFO						"JudgeInfo"
+#define TREE_LOCATIONINFO					"LocationInfo"
 #define TREE_DOG							"Dog"
 #define TREE_REGNAME						"RegisteredName"
 #define TREE_BREED							"Breed"
@@ -158,7 +160,9 @@
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
 #define ATTRIB_LIFETIME_POINTS_POINTS		"Points"
 #define ATTRIB_LIFETIME_POINTS_FAULTS		"Faults"
+#define ATTRIB_CLUBINFO_NAME				"Name"
 #define ATTRIB_JUDGEINFO_NAME				"Name"
+#define ATTRIB_LOCATIONINFO_NAME			"Name"
 #define ATTRIB_DOG_CALLNAME					"CallName"
 #define ATTRIB_DOG_DOB						"DOB"
 #define ATTRIB_DOG_DECEASED					"Deceased"
@@ -422,16 +426,18 @@ public:
 	/**
 	 * Get all club names in use from existing trials and calendar entries.
 	 * @param outClubs List of clubs.
+	 * @param bInfo Include judges from the ARBInfo.
 	 * @return Number of clubs.
 	 */
-	size_t GetAllClubNames(std::set<std::string>& outClubs) const;
+	size_t GetAllClubNames(std::set<std::string>& outClubs, bool bInfo = true) const;
 
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
 	 * @param outLocations List of locations.
+	 * @param bInfo Include judges from the ARBInfo.
 	 * @return Number of locations.
 	 */
-	size_t GetAllTrialLocations(std::set<std::string>& outLocations) const;
+	size_t GetAllTrialLocations(std::set<std::string>& outLocations, bool bInfo = true) const;
 
 	/**
 	 * Get all heights in use from existing runs.

@@ -357,7 +357,9 @@ BOOL CWizardStart::OnWizardFinish()
 							int countExistingPts = 0;
 							int countTitles = 0;
 							int countTrials = 0;
+							int countClubs = 0;
 							int countJudges = 0;
+							int countLocations = 0;
 							for (ARBDogList::iterator iterDog = book.GetDogs().begin();
 								iterDog != book.GetDogs().end();
 								++iterDog)
@@ -463,6 +465,17 @@ BOOL CWizardStart::OnWizardFinish()
 									}
 								}
 							}
+							for (ARBInfoClubList::const_iterator iterClub = book.GetInfo().GetClubInfo().begin();
+								iterClub != book.GetInfo().GetClubInfo().end();
+								++iterClub)
+							{
+								ARBInfoClub* pClub = *iterClub;
+								// If this fails, it already exists.
+								if (m_pDoc->GetARB().GetInfo().GetClubInfo().AddClub(pClub))
+								{
+									++countClubs;
+								}
+							}
 							for (ARBInfoJudgeList::const_iterator iterJudge = book.GetInfo().GetJudgeInfo().begin();
 								iterJudge != book.GetInfo().GetJudgeInfo().end();
 								++iterJudge)
@@ -474,6 +487,17 @@ BOOL CWizardStart::OnWizardFinish()
 									++countJudges;
 								}
 							}
+							for (ARBInfoLocationList::const_iterator iterLocation = book.GetInfo().GetLocationInfo().begin();
+								iterLocation != book.GetInfo().GetLocationInfo().end();
+								++iterLocation)
+							{
+								ARBInfoLocation* pLocation = *iterLocation;
+								// If this fails, it already exists.
+								if (m_pDoc->GetARB().GetInfo().GetLocationInfo().AddLocation(pLocation))
+								{
+									++countLocations;
+								}
+							}
 							if (0 < countDog
 							|| 0 < countRegNums
 							|| 0 < countExistingPts
@@ -483,11 +507,23 @@ BOOL CWizardStart::OnWizardFinish()
 								m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
 								m_pDoc->SetModifiedFlag();
 							}
+							if (0 < countClubs)
+							{
+								std::set<std::string> namesInUse;
+								m_pDoc->GetAllClubNames(namesInUse, false);
+								m_pDoc->GetARB().GetInfo().GetClubInfo().CondenseContent(namesInUse);
+							}
 							if (0 < countJudges)
 							{
 								std::set<std::string> namesInUse;
 								m_pDoc->GetAllJudges(namesInUse, false);
 								m_pDoc->GetARB().GetInfo().GetJudgeInfo().CondenseContent(namesInUse);
+							}
+							if (0 < countLocations)
+							{
+								std::set<std::string> namesInUse;
+								m_pDoc->GetAllTrialLocations(namesInUse, false);
+								m_pDoc->GetARB().GetInfo().GetLocationInfo().CondenseContent(namesInUse);
 							}
 							//"Added %1!d! new dogs, updated %2!d! dogs and added %3!d! judges."
 							CString str("Added ");
@@ -537,6 +573,15 @@ BOOL CWizardStart::OnWizardFinish()
 								str2.FormatMessage(IDS_ADDED_TRIALS, countTrials);
 								str += str2;
 							}
+							if (0 < countClubs)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_CLUBS, countClubs);
+								str += str2;
+							}
 							if (0 < countJudges)
 							{
 								if (bAdded)
@@ -544,6 +589,15 @@ BOOL CWizardStart::OnWizardFinish()
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_JUDGES, countJudges);
+								str += str2;
+							}
+							if (0 < countLocations)
+							{
+								if (bAdded)
+									str += ", ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_LOCATIONS, countLocations);
 								str += str2;
 							}
 							AfxMessageBox(str, MB_ICONINFORMATION);

@@ -50,12 +50,26 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoJudge dialog
 
-CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, CWnd* pParent /*=NULL*/)
+CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, eInfoType inType, CWnd* pParent /*=NULL*/)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
-	, m_Info(pDoc->GetInfo().GetJudgeInfo())
+	, m_Type(inType)
+	, m_InfoClub(pDoc->GetInfo().GetClubInfo())
+	, m_InfoJudge(pDoc->GetInfo().GetJudgeInfo())
+	, m_InfoLocation(pDoc->GetInfo().GetLocationInfo())
 {
-	m_pDoc->GetAllJudges(m_NamesInUse, false);
+	switch (m_Type)
+	{
+	case eClubInfo:
+		m_pDoc->GetAllClubNames(m_NamesInUse, false);
+		break;
+	case eJudgeInfo:
+		m_pDoc->GetAllJudges(m_NamesInUse, false);
+		break;
+	case eLocationInfo:
+		m_pDoc->GetAllTrialLocations(m_NamesInUse, false);
+		break;
+	}
 	//{{AFX_DATA_INIT(CDlgInfoJudge)
 	//}}AFX_DATA_INIT
 }
@@ -65,7 +79,7 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgInfoJudge)
 	DDX_Control(pDX, IDC_JUDGE_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_JUDGE, m_ctrlJudge);
+	DDX_Control(pDX, IDC_JUDGE, m_ctrlNames);
 	DDX_Control(pDX, IDC_JUDGE_COMMENTS, m_ctrlComment);
 	//}}AFX_DATA_MAP
 }
@@ -74,7 +88,7 @@ BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgInfoJudge)
 	ON_BN_CLICKED(IDC_JUDGE_NEW, OnNew)
 	ON_BN_CLICKED(IDC_JUDGE_DELETE, OnDelete)
-	ON_CBN_SELCHANGE(IDC_JUDGE, OnSelchangeJudge)
+	ON_CBN_SELCHANGE(IDC_JUDGE, OnSelchangeName)
 	ON_EN_KILLFOCUS(IDC_JUDGE_COMMENTS, OnKillfocusComments)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -86,19 +100,49 @@ BOOL CDlgInfoJudge::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
+	CString caption;
 	std::set<std::string> names;
-	m_pDoc->GetAllJudges(names);
+	switch (m_Type)
+	{
+	case eClubInfo:
+		caption.LoadString(IDS_INFO_CLUB);
+		m_pDoc->GetAllClubNames(names);
+		break;
+	case eJudgeInfo:
+		caption.LoadString(IDS_INFO_JUDGE);
+		m_pDoc->GetAllJudges(names);
+		break;
+	case eLocationInfo:
+		caption.LoadString(IDS_INFO_LOCATION);
+		m_pDoc->GetAllTrialLocations(names);
+		break;
+	}
+	SetWindowText(caption);
 	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
-		m_ctrlJudge.AddString((*iter).c_str());
+		m_ctrlNames.AddString((*iter).c_str());
 	}
+	ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
 	ARBDogRun const* pRun = m_pDoc->GetCurrentRun();
-	int index = CB_ERR;
-	if (pRun)
-		index = m_ctrlJudge.SelectString(-1, pRun->GetJudge().c_str());
+	int index = -1;
+	switch (m_Type)
+	{
+	case eClubInfo:
+		if (pTrial)
+			index = m_ctrlNames.SelectString(-1, pTrial->GetClubs().GetPrimaryClub()->GetName().c_str());
+		break;
+	case eJudgeInfo:
+		if (pRun)
+			index = m_ctrlNames.SelectString(-1, pRun->GetJudge().c_str());
+		break;
+	case eLocationInfo:
+		if (pTrial)
+			index = m_ctrlNames.SelectString(-1, pTrial->GetLocation().c_str());
+		break;
+	}
 	if (-1 == index)
-		m_ctrlJudge.SetCurSel(0);
-	OnSelchangeJudge();
+		m_ctrlNames.SetCurSel(0);
+	OnSelchangeName();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -109,58 +153,142 @@ void CDlgInfoJudge::OnNew()
 	CDlgName dlg("", "", this);
 	if (IDOK == dlg.DoModal())
 	{
-		ARBInfoJudge* judge = m_Info.AddJudge((LPCTSTR)dlg.GetName());
-		if (judge)
+		switch (m_Type)
 		{
-			m_ctrlJudge.AddString(judge->GetName().c_str());
-			m_ctrlComment.SetWindowText("");
+		case eClubInfo:
+			{
+				ARBInfoClub* club = m_InfoClub.AddClub((LPCTSTR)dlg.GetName());
+				if (club)
+				{
+					m_ctrlNames.AddString(club->GetName().c_str());
+					m_ctrlComment.SetWindowText("");
+				}
+				else
+					club = m_InfoClub.FindClub((LPCTSTR)dlg.GetName());
+				if (club)
+				{
+					m_ctrlNames.SelectString(-1, club->GetName().c_str());
+					OnSelchangeName();
+				}
+			}
+			break;
+		case eJudgeInfo:
+			{
+				ARBInfoJudge* judge = m_InfoJudge.AddJudge((LPCTSTR)dlg.GetName());
+				if (judge)
+				{
+					m_ctrlNames.AddString(judge->GetName().c_str());
+					m_ctrlComment.SetWindowText("");
+				}
+				else
+					judge = m_InfoJudge.FindJudge((LPCTSTR)dlg.GetName());
+				if (judge)
+				{
+					m_ctrlNames.SelectString(-1, judge->GetName().c_str());
+					OnSelchangeName();
+				}
+			}
+			break;
+		case eLocationInfo:
+			{
+				ARBInfoLocation* location = m_InfoLocation.AddLocation((LPCTSTR)dlg.GetName());
+				if (location)
+				{
+					m_ctrlNames.AddString(location->GetName().c_str());
+					m_ctrlComment.SetWindowText("");
+				}
+				else
+					location = m_InfoLocation.FindLocation((LPCTSTR)dlg.GetName());
+				if (location)
+				{
+					m_ctrlNames.SelectString(-1, location->GetName().c_str());
+					OnSelchangeName();
+				}
+			}
+			break;
 		}
-		else
-			judge = m_Info.FindJudge((LPCTSTR)dlg.GetName());
-		if (judge)
-		{
-			m_ctrlJudge.SelectString(-1, judge->GetName().c_str());
-			OnSelchangeJudge();
-		}
+
 	}
 }
 
 void CDlgInfoJudge::OnDelete()
 {
-	int index = m_ctrlJudge.GetCurSel();
+	int index = m_ctrlNames.GetCurSel();
 	if (CB_ERR != index)
 	{
 		CString name;
-		m_ctrlJudge.GetLBText(index, name);
+		m_ctrlNames.GetLBText(index, name);
 		if (m_NamesInUse.end() == m_NamesInUse.find((LPCTSTR)name))
 		{
-			m_ctrlJudge.DeleteString(index);
-			ARBInfoJudge* judge = m_Info.FindJudge((LPCTSTR)name);
-			if (judge)
-				m_Info.DeleteJudge(judge);
-			if (index == m_ctrlJudge.GetCount())
+			m_ctrlNames.DeleteString(index);
+			switch (m_Type)
+			{
+			case eClubInfo:
+				{
+					ARBInfoClub* club = m_InfoClub.FindClub((LPCTSTR)name);
+					if (club)
+						m_InfoClub.DeleteClub(club);
+				}
+				break;
+			case eJudgeInfo:
+				{
+					ARBInfoJudge* judge = m_InfoJudge.FindJudge((LPCTSTR)name);
+					if (judge)
+						m_InfoJudge.DeleteJudge(judge);
+				}
+				break;
+			case eLocationInfo:
+				{
+					ARBInfoLocation* location = m_InfoLocation.FindLocation((LPCTSTR)name);
+					if (location)
+						m_InfoLocation.DeleteLocation(location);
+				}
+				break;
+			}
+			if (index == m_ctrlNames.GetCount())
 				--index;
 			if (0 <= index)
-				m_ctrlJudge.SetCurSel(index);
-			OnSelchangeJudge();
+				m_ctrlNames.SetCurSel(index);
+			OnSelchangeName();
 		}
 		else
 			MessageBeep(0);
 	}
 }
 
-void CDlgInfoJudge::OnSelchangeJudge()
+void CDlgInfoJudge::OnSelchangeName()
 {
 	BOOL bEnable = FALSE;
 	CString data;
-	int index = m_ctrlJudge.GetCurSel();
+	int index = m_ctrlNames.GetCurSel();
 	if (CB_ERR != index)
 	{
 		CString name;
-		m_ctrlJudge.GetLBText(index, name);
-		ARBInfoJudge* judge = m_Info.FindJudge((LPCTSTR)name);
-		if (judge)
-			data = judge->GetComment().c_str();
+		m_ctrlNames.GetLBText(index, name);
+		switch (m_Type)
+		{
+		case eClubInfo:
+			{
+				ARBInfoClub* club = m_InfoClub.FindClub((LPCTSTR)name);
+				if (club)
+					data = club->GetComment().c_str();
+			}
+			break;
+		case eJudgeInfo:
+			{
+				ARBInfoJudge* judge = m_InfoJudge.FindJudge((LPCTSTR)name);
+				if (judge)
+					data = judge->GetComment().c_str();
+			}
+			break;
+		case eLocationInfo:
+			{
+				ARBInfoLocation* location = m_InfoLocation.FindLocation((LPCTSTR)name);
+				if (location)
+					data = location->GetComment().c_str();
+			}
+			break;
+		}
 		if (m_NamesInUse.end() == m_NamesInUse.find((LPCTSTR)name))
 			bEnable = TRUE;
 	}
@@ -171,21 +299,48 @@ void CDlgInfoJudge::OnSelchangeJudge()
 
 void CDlgInfoJudge::OnKillfocusComments()
 {
-	int index = m_ctrlJudge.GetCurSel();
+	int index = m_ctrlNames.GetCurSel();
 	if (CB_ERR != index)
 	{
 		CString name;
-		m_ctrlJudge.GetLBText(index, name);
-		ARBInfoJudge* judge = m_Info.FindJudge((LPCTSTR)name);
-		if (!judge)
-			judge = m_Info.AddJudge((LPCTSTR)name);
-		if (!judge)
-			return;
+		m_ctrlNames.GetLBText(index, name);
 		CString data;
 		m_ctrlComment.GetWindowText(data);
 		data.TrimRight();
 		data.Replace("\r\n", "\n");
-		judge->SetComment((LPCTSTR)data);
+		switch (m_Type)
+		{
+		case eClubInfo:
+			{
+				ARBInfoClub* club = m_InfoClub.FindClub((LPCTSTR)name);
+				if (!club)
+					club = m_InfoClub.AddClub((LPCTSTR)name);
+				if (!club)
+					return;
+				club->SetComment((LPCTSTR)data);
+			}
+			break;
+		case eJudgeInfo:
+			{
+				ARBInfoJudge* judge = m_InfoJudge.FindJudge((LPCTSTR)name);
+				if (!judge)
+					judge = m_InfoJudge.AddJudge((LPCTSTR)name);
+				if (!judge)
+					return;
+				judge->SetComment((LPCTSTR)data);
+			}
+			break;
+		case eLocationInfo:
+			{
+				ARBInfoLocation* location = m_InfoLocation.FindLocation((LPCTSTR)name);
+				if (!location)
+					location = m_InfoLocation.AddLocation((LPCTSTR)name);
+				if (!location)
+					return;
+				location->SetComment((LPCTSTR)data);
+			}
+			break;
+		}
 	}
 }
 
@@ -193,11 +348,38 @@ void CDlgInfoJudge::OnOK()
 {
 	// Not bothering to call UpdateData because we aren't exchanging any
 	// data. We're using the controls directly.
-	m_Info.CondenseContent(m_NamesInUse);
-	if (m_pDoc->GetInfo().GetJudgeInfo() != m_Info)
+	switch (m_Type)
 	{
-		m_pDoc->GetInfo().GetJudgeInfo() = m_Info;
-		m_pDoc->SetModifiedFlag();
+	case eClubInfo:
+		{
+			m_InfoClub.CondenseContent(m_NamesInUse);
+			if (m_pDoc->GetInfo().GetClubInfo() != m_InfoClub)
+			{
+				m_pDoc->GetInfo().GetClubInfo() = m_InfoClub;
+				m_pDoc->SetModifiedFlag();
+			}
+		}
+		break;
+	case eJudgeInfo:
+		{
+			m_InfoJudge.CondenseContent(m_NamesInUse);
+			if (m_pDoc->GetInfo().GetJudgeInfo() != m_InfoJudge)
+			{
+				m_pDoc->GetInfo().GetJudgeInfo() = m_InfoJudge;
+				m_pDoc->SetModifiedFlag();
+			}
+		}
+		break;
+	case eLocationInfo:
+		{
+			m_InfoLocation.CondenseContent(m_NamesInUse);
+			if (m_pDoc->GetInfo().GetLocationInfo() != m_InfoLocation)
+			{
+				m_pDoc->GetInfo().GetLocationInfo() = m_InfoLocation;
+				m_pDoc->SetModifiedFlag();
+			}
+		}
+		break;
 	}
 	CDlgBaseDialog::OnOK();
 }

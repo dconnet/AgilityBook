@@ -616,12 +616,16 @@
 #define IDS_ADDED_TRIALS                5177
 #define IDS_ADDED_JUDGES                5178
 #define IDS_FILEEXT_FILTER_XLS          5179
+#define IDS_ADDED_CLUBS                 5180
+#define IDS_ADDED_LOCATIONS             5181
+#define IDS_INFO_CLUB                   5182
+#define IDS_INFO_JUDGE                  5183
+#define IDS_INFO_LOCATION               5184
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780
 #define ID_EDIT_FIND_PREVIOUS           32781
 #define ID_EDIT_CONFIGURATION           32782
-#define ID_EDIT_JUDGES                  32783
 #define ID_EDIT_DUPLICATE               32784
 #define ID_AGILITY_NEW_CALENDAR         32790
 #define ID_AGILITY_NEW_TRAINING         32791
@@ -642,6 +646,9 @@
 #define ID_AGILITY_DELETE_TRIAL         32806
 #define ID_AGILITY_DELETE_RUN           32807
 #define ID_AGILITY_CREATEENTRY_CALENDAR 32808
+#define ID_NOTES_CLUBS                  32810
+#define ID_NOTES_JUDGES                 32811
+#define ID_NOTES_LOCATIONS              32812
 #define ID_VIEW_OPTIONS                 32820
 #define ID_VIEW_CUSTOMIZE               32821
 #define ID_VIEW_SORTRUNS                32822

@@ -355,9 +355,11 @@ void ARBAgilityRecordBook::Default()
 	m_Config.Default();
 }
 
-size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs) const
+size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs, bool bInfo) const
 {
 	outClubs.clear();
+	if (bInfo)
+		m_Info.GetClubInfo().GetAllClubs(outClubs);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -389,9 +391,11 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs) co
 	return outClubs.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLocations) const
+size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLocations, bool bInfo) const
 {
 	outLocations.clear();
+	if (bInfo)
+		m_Info.GetLocationInfo().GetAllLocations(outLocations);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)

@@ -50,12 +50,16 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBInfo::ARBInfo()
-	: m_JudgeInfo()
+	: m_ClubInfo()
+	, m_JudgeInfo()
+	, m_LocationInfo()
 {
 }
 
 ARBInfo::ARBInfo(ARBInfo const& rhs)
-	: m_JudgeInfo(rhs.m_JudgeInfo)
+	: m_ClubInfo(rhs.m_ClubInfo)
+	, m_JudgeInfo(rhs.m_JudgeInfo)
+	, m_LocationInfo(rhs.m_LocationInfo)
 {
 }
 
@@ -68,14 +72,18 @@ ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 {
 	if (this != &rhs)
 	{
+		m_ClubInfo = rhs.m_ClubInfo;
 		m_JudgeInfo = rhs.m_JudgeInfo;
+		m_LocationInfo = rhs.m_LocationInfo;
 	}
 	return *this;
 }
 
 bool ARBInfo::operator==(ARBInfo const& rhs) const
 {
-	return m_JudgeInfo == rhs.m_JudgeInfo;
+	return m_ClubInfo == rhs.m_ClubInfo
+		&& m_JudgeInfo == rhs.m_JudgeInfo
+		&& m_LocationInfo == rhs.m_LocationInfo;
 }
 
 bool ARBInfo::operator!=(ARBInfo const& rhs) const
@@ -85,7 +93,9 @@ bool ARBInfo::operator!=(ARBInfo const& rhs) const
 
 void ARBInfo::clear()
 {
+	m_ClubInfo.clear();
 	m_JudgeInfo.clear();
+	m_LocationInfo.clear();
 }
 
 bool ARBInfo::Load(
@@ -97,10 +107,20 @@ bool ARBInfo::Load(
 	{
 		Element const& element = inTree.GetElement(i);
 		std::string const& name = element.GetName();
-		if (name == TREE_JUDGEINFO)
+		if (name == TREE_CLUBINFO)
+		{
+			// Ignore any errors.
+			m_ClubInfo.Load(element, inVersion, ioCallback);
+		}
+		else if (name == TREE_JUDGEINFO)
 		{
 			// Ignore any errors.
 			m_JudgeInfo.Load(element, inVersion, ioCallback);
+		}
+		else if (name == TREE_LOCATIONINFO)
+		{
+			// Ignore any errors.
+			m_LocationInfo.Load(element, inVersion, ioCallback);
 		}
 	}
 	return true;
@@ -108,11 +128,12 @@ bool ARBInfo::Load(
 
 bool ARBInfo::Save(Element& ioTree) const
 {
-	if (0 < m_JudgeInfo.size())
-	{
-		Element& info = ioTree.AddElement(TREE_INFO);
-		if (!m_JudgeInfo.Save(info))
-			return false;
-	}
+	Element& info = ioTree.AddElement(TREE_INFO);
+	if (!m_ClubInfo.Save(info))
+		return false;
+	if (!m_JudgeInfo.Save(info))
+		return false;
+	if (!m_LocationInfo.Save(info))
+		return false;
 	return true;
 }

@@ -166,8 +166,6 @@ BEGIN
         MENUITEM "Find Previous\tShift+F3",     ID_EDIT_FIND_PREVIOUS
         MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
-        MENUITEM SEPARATOR
-        MENUITEM "&Judges...\tCtrl+J",          ID_EDIT_JUDGES
     END
     POPUP "&Agility"
     BEGIN
@@ -219,6 +217,12 @@ BEGIN
             MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRAINING
 
         END
+    END
+    POPUP "&Notes"
+    BEGIN
+        MENUITEM "&Clubs...",                   ID_NOTES_CLUBS
+        MENUITEM "&Judges...\tCtrl+J",          ID_NOTES_JUDGES
+        MENUITEM "&Locations",                  ID_NOTES_LOCATIONS
     END
     POPUP "&View"
     BEGIN
@@ -374,7 +378,7 @@ BEGIN
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     "E",            ID_FILE_EXPORT_WIZARD,  VIRTKEY, CONTROL, NOINVERT
     "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
-    "J",            ID_EDIT_JUDGES,         VIRTKEY, CONTROL, NOINVERT
+    "J",            ID_NOTES_JUDGES,        VIRTKEY, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
     "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
@@ -829,21 +833,21 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,243,24,50,14
 END
 
-IDD_JUDGE_INFO DIALOGEX 0, 0, 240, 95
+IDD_JUDGE_INFO DIALOGEX 0, 0, 265, 95
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Judge's Information"
+CAPTION "Information"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    COMBOBOX        IDC_JUDGE,7,7,90,130,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+    COMBOBOX        IDC_JUDGE,7,7,115,130,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_JUDGE
-    PUSHBUTTON      "&New",IDC_JUDGE_NEW,105,7,30,12,0,0,HIDC_JUDGE_NEW
-    PUSHBUTTON      "&Delete",IDC_JUDGE_DELETE,142,7,30,12,0,0,
+    PUSHBUTTON      "&New",IDC_JUDGE_NEW,130,7,30,12,0,0,HIDC_JUDGE_NEW
+    PUSHBUTTON      "&Delete",IDC_JUDGE_DELETE,167,7,30,12,0,0,
                     HIDC_JUDGE_DELETE
-    EDITTEXT        IDC_JUDGE_COMMENTS,7,24,165,64,ES_MULTILINE | 
+    EDITTEXT        IDC_JUDGE_COMMENTS,7,24,190,64,ES_MULTILINE | 
                     ES_WANTRETURN | WS_VSCROLL,0,HIDC_JUDGE_COMMENTS
-    DEFPUSHBUTTON   "OK",IDOK,183,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,183,24,50,14
+    DEFPUSHBUTTON   "OK",IDOK,208,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,208,24,50,14
 END
 
 IDD_DOG_PICKER DIALOGEX 0, 0, 186, 95
@@ -1935,7 +1939,7 @@ BEGIN
     IDD_JUDGE_INFO, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 233
+        RIGHTMARGIN, 258
         TOPMARGIN, 7
         BOTTOMMARGIN, 88
     END
@@ -2608,6 +2612,11 @@ BEGIN
     IDS_ADDED_TRIALS        "%1!d! trials"
     IDS_ADDED_JUDGES        "%1!d! judges"
     IDS_FILEEXT_FILTER_XLS  "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
+    IDS_ADDED_CLUBS         "%1!d! clubs"
+    IDS_ADDED_LOCATIONS     "%1!d! locations"
+    IDS_INFO_CLUB           "Club's Information"
+    IDS_INFO_JUDGE          "Judge's Information"
+    IDS_INFO_LOCATION       "Location Information"
 END
 
 STRINGTABLE 
@@ -2617,7 +2626,6 @@ BEGIN
     ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
     ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
-    ID_EDIT_JUDGES          "Edit judge information\nJudges"
 END
 
 STRINGTABLE 
@@ -2633,6 +2641,24 @@ BEGIN
     ID_AGILITY_EDIT_TRAINING "Edit a Training Log entry\nEdit Training Log"
     ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
     ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
+    ID_AGILITY_EDIT_RUN     "Edit a Run's information\nEdit Run"
+    ID_AGILITY_DELETE_CALENDAR 
+                            "Delete an upcoming Calendar entry\nDelete Calendar"
+    ID_AGILITY_DELETE_TRAINING 
+                            "Delete a Training Log entry\nDelete Training Log"
+    ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
+    ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
+    ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
+    ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
+    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
+    ID_NOTES_CLUBS          "Edit club information\nClubs"
+    ID_NOTES_JUDGES         "Edit judge information\nJudges"
+    ID_NOTES_LOCATIONS      "Edit location information\nLocations"
 END
 
 STRINGTABLE 
@@ -2655,21 +2681,6 @@ END
 STRINGTABLE 
 BEGIN
     ID_REORDER              "Reorder items\nReorder"
-END
-
-STRINGTABLE 
-BEGIN
-    ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
-    ID_AGILITY_EDIT_RUN     "Edit a Run's information\nEdit Run"
-    ID_AGILITY_DELETE_CALENDAR 
-                            "Delete an upcoming Calendar entry\nDelete Calendar"
-    ID_AGILITY_DELETE_TRAINING 
-                            "Delete a Training Log entry\nDelete Training Log"
-    ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
-    ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
-    ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
-    ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
-    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
 END
 
 #endif    // English (U.S.) resources

@@ -38,7 +38,9 @@
 
 #include <set>
 #include <string>
+#include "ARBInfoClub.h"
 #include "ARBInfoJudge.h"
+#include "ARBInfoLocation.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -46,19 +48,28 @@ class CDlgInfoJudge : public CDlgBaseDialog
 {
 // Construction
 public:
-	CDlgInfoJudge(CAgilityBookDoc* pDoc, CWnd* pParent = NULL);   // standard constructor
+	typedef enum
+	{
+		eClubInfo,
+		eJudgeInfo,
+		eLocationInfo
+	} eInfoType;
+	CDlgInfoJudge(CAgilityBookDoc* pDoc, eInfoType inType, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgInfoJudge)
 	enum { IDD = IDD_JUDGE_INFO };
 	CButton	m_ctrlDelete;
-	CComboBox	m_ctrlJudge;
+	CComboBox	m_ctrlNames;
 	CEdit		m_ctrlComment;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
+	eInfoType m_Type;
 	std::set<std::string> m_NamesInUse;
-	ARBInfoJudgeList m_Info;
+	ARBInfoClubList m_InfoClub;
+	ARBInfoJudgeList m_InfoJudge;
+	ARBInfoLocationList m_InfoLocation;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgInfoJudge)
@@ -72,7 +83,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnNew();
 	afx_msg void OnDelete();
-	afx_msg void OnSelchangeJudge();
+	afx_msg void OnSelchangeName();
 	afx_msg void OnKillfocusComments();
 	virtual void OnOK();
 	//}}AFX_MSG

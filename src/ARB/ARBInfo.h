@@ -32,11 +32,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-11-18 DRC Added Club/Location info.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-07 DRC Created
  */
 
+#include "ARBInfoClub.h"
 #include "ARBInfoJudge.h"
+#include "ARBInfoLocation.h"
 class ARBErrorCallback;
 class ARBVersion;
 class Element;
@@ -86,12 +89,28 @@ public:
 	/*
 	 * Getters.
 	 */
+	ARBInfoClubList const& GetClubInfo() const;
+	ARBInfoClubList& GetClubInfo();
 	ARBInfoJudgeList const& GetJudgeInfo() const;
 	ARBInfoJudgeList& GetJudgeInfo();
+	ARBInfoLocationList const& GetLocationInfo() const;
+	ARBInfoLocationList& GetLocationInfo();
 
 private:
+	ARBInfoClubList m_ClubInfo;
 	ARBInfoJudgeList m_JudgeInfo;
+	ARBInfoLocationList m_LocationInfo;
 };
+
+inline ARBInfoClubList const& ARBInfo::GetClubInfo() const
+{
+	return m_ClubInfo;
+}
+
+inline ARBInfoClubList& ARBInfo::GetClubInfo()
+{
+	return m_ClubInfo;
+}
 
 inline ARBInfoJudgeList const& ARBInfo::GetJudgeInfo() const
 {
@@ -101,4 +120,14 @@ inline ARBInfoJudgeList const& ARBInfo::GetJudgeInfo() const
 inline ARBInfoJudgeList& ARBInfo::GetJudgeInfo()
 {
 	return m_JudgeInfo;
+}
+
+inline ARBInfoLocationList const& ARBInfo::GetLocationInfo() const
+{
+	return m_LocationInfo;
+}
+
+inline ARBInfoLocationList& ARBInfo::GetLocationInfo()
+{
+	return m_LocationInfo;
 }
