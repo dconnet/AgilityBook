@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-12 DRC Allow creating a new title.
  * @li 2004-06-23 DRC Fixed a problem when getting the Q/NQ ratio when a filter
  *                    was in place. Trials that were hidden also removed any
  *                    runs that might have been applicable to the ratio.
@@ -70,6 +71,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "AgilityBookTreeData.h"
 #include "ARBDogClub.h"
 #include "ARBDogTrial.h"
 #include "MainFrm.h"
@@ -116,6 +118,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
+	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -945,3 +949,23 @@ void CAgilityBookViewPoints::LoadData()
 }
 
 // CAgilityBookViewPoints message handlers
+
+void CAgilityBookViewPoints::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	if (pDog)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewPoints::OnAgilityNewTitle()
+{
+	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	if (pDog)
+	{
+		// Convenience! No duplicated code!
+		CAgilityBookTreeDataDog data(GetDocument()->GetTreeView(), pDog);
+		data.OnCmd(ID_AGILITY_NEW_TITLE, NULL);
+	}
+}

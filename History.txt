@@ -8,6 +8,7 @@
     web information - opening a document will not access the web).
   - Added 'verified' option to trials in the tree (via column customization)
   - Added dbl-click support in the Points view to see the runs behind the data.
+  - Enable the new title toolbar button in the Points view.
 - Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.
