@@ -58,6 +58,7 @@ CWizard::CWizard(CAgilityBookDoc* pDoc, CWnd* pParentWnd)
 	, m_pageStart(this, pDoc)
 	, m_pageImport(this, pDoc)
 	, m_pageExport(this, pDoc)
+	, m_ImportExportItem(-1)
 {
 	SetWizardMode();
 	AddPage(&m_pageStart);

@@ -195,24 +195,26 @@
 #define IDC_DROP_FRACTIONS              1144
 #define IDC_VERIFIED                    1145
 #define IDC_IS_DECEASED                 1146
-#define IDC_EXPORT_LIST                 1147
-#define IDC_EXPORT_DESCRIPTION          1148
-#define IDC_IMPORT_ROW                  1149
-#define IDC_IMPORT_ROW_SPIN             1150
-#define IDC_WIZARD_DELIM_TAB            1151
-#define IDC_WIZARD_DELIM_SPACE          1152
-#define IDC_WIZARD_DELIM_COLON          1153
-#define IDC_WIZARD_DELIM_SEMI           1154
-#define IDC_WIZARD_DELIM_COMMA          1155
-#define IDC_WIZARD_DELIM_OTHER          1156
-#define IDC_WIZARD_DELIM                1157
-#define IDC_WIZARD_ASSIGN               1158
-#define IDC_IMPORT_FILE                 1159
-#define IDC_IMPORT_PREVIEW_FILE         1160
-#define IDC_WIZARD_PREVIEW              1161
-#define IDC_COLUMNS                     1162
-#define IDC_AVAILABLE                   1163
-#define IDC_COPY                        1164
+#define IDC_WIZARD_SPREADSHEET          1147
+#define IDC_WIZARD_ARB                  1148
+#define IDC_WIZARD_LIST                 1149
+#define IDC_WIZARD_DESCRIPTION          1150
+#define IDC_IMPORT_ROW                  1151
+#define IDC_IMPORT_ROW_SPIN             1152
+#define IDC_WIZARD_DELIM_TAB            1153
+#define IDC_WIZARD_DELIM_SPACE          1154
+#define IDC_WIZARD_DELIM_COLON          1155
+#define IDC_WIZARD_DELIM_SEMI           1156
+#define IDC_WIZARD_DELIM_COMMA          1157
+#define IDC_WIZARD_DELIM_OTHER          1158
+#define IDC_WIZARD_DELIM                1159
+#define IDC_WIZARD_ASSIGN               1160
+#define IDC_IMPORT_FILE                 1161
+#define IDC_IMPORT_PREVIEW_FILE         1162
+#define IDC_WIZARD_PREVIEW              1163
+#define IDC_COLUMNS                     1164
+#define IDC_AVAILABLE                   1165
+#define IDC_COPY                        1166
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -370,6 +372,7 @@
 #define IDS_FILEEXT_FILTER_TXT          5166
 #define IDS_FILE_PREVIEW                5167
 #define IDS_BLANK_COLUMN                5168
+#define IDS_ADDED_TRAINING_ITEMS        5169
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_EDIT_CONFIGURATION           32774
 #define ID_CONFIG_ADD                   32775
@@ -415,7 +418,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1165
+#define _APS_NEXT_CONTROL_VALUE         1167
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

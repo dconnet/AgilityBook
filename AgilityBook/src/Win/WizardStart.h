@@ -53,6 +53,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CWizardStart)
 	enum { IDD = IDD_WIZARD_START };
+	int		m_Style;
 	CListBox2	m_ctrlList;
 	CStatic	m_ctrlDesc;
 	//}}AFX_DATA
@@ -60,6 +61,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 
 private:
+	void UpdateList();
 	void UpdateButtons();
 
 // Overrides
@@ -77,9 +79,9 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CWizardStart)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnWizardStyle();
 	afx_msg void OnSelchangeExportList();
 	afx_msg void OnDblclkExportList();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };

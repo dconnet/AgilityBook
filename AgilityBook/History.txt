@@ -1,4 +1,12 @@
-12/13/2003: v0.9.5.8: <in development>
+12/14/2003: v0.9.5.8: <in development>
+- New features / Enhancements:
+  - Changed how items are shown for export - separated spreadsheet/ARB items.
+  - Added more items to import/export.
+    - SpreadSheet Export: Can now export Calendar/TrainingLog
+    - ARB Import: Can now import TrainingLog
+    - ARB Export: Can now export TrainingLog
+- Bug fixes
+  - Training log didn't re-sort if you edited an item.
 
 12/13/2003: v0.9.4.8:
 - Bumped file version to 8.0:
@@ -22,8 +30,8 @@
   - Added the ability to add comments to a judge (menu item "Edit->Judges")
   - Added a 'Valid From' date to an scoring configuration for an event. This
     is currently saved, but not used. It will be used in the future to support
-	changes in venues (for instance, say the number of faults allowed for a
-	given event changes from 10 to 5)
+    changes in venues (for instance, say the number of faults allowed for a
+    given event changes from 10 to 5)
 - Bug fixes
   - Changed copyright notices from "(c)" to "©" (internal code, not visible)
   - Right-clicking on a Calendar entry sets that as the current date before

@@ -55,6 +55,7 @@ private:
 	enum { IDD = IDD_WIZARD_EXPORT };
 	int	m_Delim;
 	CString	m_Delimiter;
+	CButton	m_ctrlAssign;
 	CListBox2	m_ctrlPreview;
 	//}}AFX_DATA
 	CWizard* m_pSheet;
