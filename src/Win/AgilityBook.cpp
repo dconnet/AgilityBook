@@ -269,9 +269,8 @@ BOOL CAgilityBookApp::InitInstance()
 
 	// Change the registry key under which our settings are stored
 	SetRegistryKey(_T("dcon Software"));
+	InitCrashHandler(GetAppRegistryKey());
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
-
-	SetUnhandledExceptionFilter(CrashHandler);
 
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
@@ -406,6 +405,7 @@ int CAgilityBookApp::ExitInstance()
 	delete m_pDocTemplateCal;
 	delete m_pDocTemplateTraining;
 	XMLPlatformUtils::Terminate();
+	CleanupCrashHandler();
 	return CWinApp::ExitInstance();
 }
 

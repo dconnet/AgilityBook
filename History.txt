@@ -1,4 +1,4 @@
-10/20/2004: v1.4.0.10 <in development>
+10/22/2004: v1.4.0.10 <in development>
 - Bumped file version to 10, Configuration v6:
   - Added 'Height' to 'ReferenceRun'.
   - Added 'LifeTime' to 'Scoring'.
@@ -20,6 +20,9 @@
   - Added debug symbols to the installation to aid any problems that might
     be found during deployment.
   - Do not acculumate runs marked as NA in Point totals.
+  - Added error logging. If the program faults, it will now attempt to write
+    a log file to the same location as the program. This will contain a stack
+    trace and a dump of the current registry settings.
 - Bug fix
   - When a qualifying run is inserted in the tree and the tree is configured
     to show Qs for a run, the program will crash.

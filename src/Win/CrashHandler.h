@@ -36,4 +36,5 @@
  * @li 2004-10-22 DRC Created
  */
 
-extern LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS ExceptionInfo);
+extern bool InitCrashHandler(HKEY hAppKey);
+extern bool CleanupCrashHandler();
