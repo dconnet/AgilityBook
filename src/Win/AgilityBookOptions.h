@@ -204,6 +204,8 @@ public:
 	// General program options
 	static bool GetAutoUpdateCheck();
 	static void SetAutoUpdateCheck(bool bSet);
+	static bool GetAutoUpdateCheckDoc();
+	static void SetAutoUpdateCheckDoc(bool bSet);
 	static int GetNumBackupFiles();
 	static void SetNumBackupFiles(int nFiles);
 	static CString GetSplashImage();

@@ -356,6 +356,7 @@
 #define IDC_OPTIONS_PGM_AUTOSHOW        1302
 #define IDC_OPTIONS_PGM_FILENAME        1303
 #define IDC_OPTIONS_PGM_BROWSE          1304
+#define IDC_OPTIONS_PGM_AUTO_CHECKDOC   1305
 #define IDC_REORDER_LIST                1310
 #define IDC_REORDER_MOVE_UP             1311
 #define IDC_REORDER_MOVE_DOWN           1312
@@ -622,7 +623,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1351
+#define _APS_NEXT_CONTROL_VALUE         1352
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

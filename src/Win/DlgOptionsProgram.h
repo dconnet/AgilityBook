@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-04-08 DRC Created
  */
 
@@ -51,6 +52,7 @@ private:
 	//{{AFX_DATA(CDlgOptionsProgram)
 	enum { IDD = IDD_VIEW_OPTIONS_PROGRAM };
 	BOOL	m_bAutoCheck;
+	BOOL	m_bAutoCheckDoc;
 	int	m_Backups;
 	BOOL	m_bAutoShow;
 	CString	m_Splash;

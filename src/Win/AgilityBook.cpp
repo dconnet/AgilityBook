@@ -193,8 +193,8 @@ void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 
 bool ReadHttpFile(CString const& inURL, CString& outData)
 {
-	outData.Empty();
 	CWaitCursor wait;
+	outData.Empty();
 	try
 	{
 		CInternetSession session("my version");
@@ -230,9 +230,10 @@ bool ReadHttpFile(CString const& inURL, CString& outData)
  * Check the version against the web.
  * @param outData Version info from the web.
  * @param bVerbose Show information dialogs
+ * @param bOnOpenDoc We're calling this during a file open.
  * @return <0 failure, 0 Update occurred, >0 Version ok
  */
-static int UpdateVersion(CString& outData, bool bVerbose)
+static int UpdateVersion(CString& outData, bool bVerbose, bool bOnOpenDoc)
 {
 	CString url;
 	url.LoadString(IDS_HELP_UPDATE);
@@ -240,9 +241,17 @@ static int UpdateVersion(CString& outData, bool bVerbose)
 	if (!ReadHttpFile(url, outData))
 	{
 		if (bVerbose)
+		{
+			CSplashWnd::HideSplashScreen();
 			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
+		}
 		return -1;
 	}
+
+	// Pretend the version is up-to-date.
+	// Don't worry about the splash screen after this.
+	if (bOnOpenDoc)
+		return 1;
 
 	ARBDate today = ARBDate::Today();
 	CVersionNum verNew(outData);
@@ -279,19 +288,18 @@ static int UpdateVersion(CString& outData, bool bVerbose)
 void UpdateVersion()
 {
 	CString data;
-	UpdateVersion(data, false);
+	UpdateVersion(data, false, true);
 }
 
-void UpdateVersion(CAgilityBookDoc* pDoc)
+void UpdateVersion(CAgilityBookDoc* pDoc, bool bOnOpenDoc)
 {
 	CString data;
-	if (0 >= UpdateVersion(data, true))
-	{
-		// Only continue if we parsed the version.txt file AND the version
-		// is up-to-date.
+	if (0 >= UpdateVersion(data, true, bOnOpenDoc))
 		return;
-	}
-	// Skip the first line.
+	// Only continue if we parsed the version.txt file AND the version
+	// is up-to-date.
+
+	// Skip the first line, that's the version.
 	int n = data.Find('\n');
 	if (0 < n)
 		data = data.Mid(n+1);
@@ -315,8 +323,10 @@ void UpdateVersion(CAgilityBookDoc* pDoc)
 			msg += "\n\n";
 			msg += errMsg.c_str();
 		}
+		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 	}
+	// If the parse was successful, check for the posted config version.
 	else if (tree.GetName() == "Data")
 	{
 		int nConfig = tree.FindElement("Config");
@@ -336,9 +346,16 @@ void UpdateVersion(CAgilityBookDoc* pDoc)
 					CString msg("The configuration has been updated. Would you like to merge the new one with your data?");
 					if (0 < note.length())
 					{
+						// If the info contains a note, append it.
+						// A note will often give a brief description of things
+						// the user must do. For instance, from v4->5, USDAA
+						// titling pts were removed from Tournament Jumpers and
+						// Snooker to allow for non-titling runs. In case the
+						// user saved some that way, we need to warn them.
 						msg += "\n\n";
 						msg += note.c_str();
 					}
+					CSplashWnd::HideSplashScreen();
 					if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
 					{
 						// Load the config.
@@ -390,7 +407,7 @@ void UpdateVersion(CAgilityBookDoc* pDoc)
 			}
 		}
 	}
-	if (bUpToDate)
+	if (bUpToDate && !bOnOpenDoc)
 		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
 }
 

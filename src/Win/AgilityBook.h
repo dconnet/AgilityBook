@@ -89,4 +89,4 @@ extern bool ShowContextHelp(HELPINFO* pHelpInfo);
 extern void RunCommand(char const* pCmd);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
 extern void UpdateVersion();
-extern void UpdateVersion(CAgilityBookDoc* pDoc);
+extern void UpdateVersion(CAgilityBookDoc* pDoc, bool bOnOpenDoc = false);

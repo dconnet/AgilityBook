@@ -1,12 +1,11 @@
-7/20/2004: v1.2.2.8 <in development>
+7/23/2004: v1.2.2.8 <in development>
 - Bumped Configuration v5:
   - Removed titling points from USDAA Tournament Jumper/Snooker.
 - New features / Enhancements:
   - Check for configuration updates when the user requests an update check.
-    These are auto-downloaded from the web. Configuration checks are not done
-    automatically at program start - only on user-request. I thought about
-    adding the check on document open, but that means accessing the web
-    everytime.
+    These are auto-downloaded from the web. Configuration checks are also
+    done when a document is opened. (This is can be turned off in pgm options)
+- Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.
 

@@ -1515,21 +1515,26 @@ BEGIN
     CONTROL         "Automatically check for updates once a month.",
                     IDC_OPTIONS_PGM_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,3,3,164,10,0,HIDC_OPTIONS_PGM_AUTO_CHECK
-    LTEXT           "Note: This only checks for updates. It will not download the update, nor will it install the new version after you download it. You must do that.",
+    LTEXT           "Note: This only >checks< for updates. It will not download the update, nor will it install the new version after you download it. You must do that.",
                     IDC_STATIC,15,13,260,16
-    LTEXT           "Number of backup copies",IDC_STATIC,3,37,82,8
-    EDITTEXT        IDC_OPTIONS_PGM_EDIT,88,35,20,12,ES_AUTOHSCROLL,0,
+    CONTROL         "Automatically check the web for configuration updates when opening a document.",
+                    IDC_OPTIONS_PGM_AUTO_CHECKDOC,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,4,33,275,10,0,HIDC_OPTIONS_PGM_AUTO_CHECKDOC
+    LTEXT           "On finding a newer version, the program will automatically upgrade the configuration.",
+                    IDC_STATIC,15,43,265,8
+    LTEXT           "Number of backup copies",IDC_STATIC,3,62,82,8
+    EDITTEXT        IDC_OPTIONS_PGM_EDIT,88,60,20,12,ES_AUTOHSCROLL,0,
                     HIDC_OPTIONS_PGM_EDIT
     LTEXT           "Each time you save a file, a backup is made before saving the new file. Set to 0 to prevent backups.",
-                    IDC_STATIC,115,33,167,16
+                    IDC_STATIC,115,58,167,16
     CONTROL         "Automatically show Dog Properties after adding a title.",
                     IDC_OPTIONS_PGM_AUTOSHOW,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,3,55,185,10,0,HIDC_OPTIONS_PGM_AUTOSHOW
+                    WS_TABSTOP,3,80,185,10,0,HIDC_OPTIONS_PGM_AUTOSHOW
     LTEXT           "Splash screen image (clear to use default)",IDC_STATIC,
-                    3,72,132,8
-    EDITTEXT        IDC_OPTIONS_PGM_FILENAME,3,82,180,12,ES_AUTOHSCROLL,0,
+                    3,97,132,8
+    EDITTEXT        IDC_OPTIONS_PGM_FILENAME,3,107,180,12,ES_AUTOHSCROLL,0,
                     HIDC_OPTIONS_PGM_FILENAME
-    PUSHBUTTON      "Browse...",IDC_OPTIONS_PGM_BROWSE,190,82,40,12,0,0,
+    PUSHBUTTON      "Browse...",IDC_OPTIONS_PGM_BROWSE,190,107,40,12,0,0,
                     HIDC_OPTIONS_PGM_BROWSE
 END
 

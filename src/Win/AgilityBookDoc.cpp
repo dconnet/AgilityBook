@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-07-20 DRC Moved the user-request updates here so it can check if
  *                    a new configuration is available.
  * @li 2004-06-29 DRC Set filtering on runs that are in hidden trials.
@@ -734,6 +735,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 	AfxGetApp()->WriteProfileString("Settings", "LastFile", lpszPathName);
 
+	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion())
 	{
 		CSplashWnd::HideSplashScreen();
@@ -743,6 +745,9 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 				SetModifiedFlag(TRUE);
 		}
 	}
+	// Then check the external config.
+	else if (CAgilityBookOptions::GetAutoUpdateCheckDoc())
+		UpdateVersion(this, true);
 
 	if (0 == GetDogs().size())
 	{
