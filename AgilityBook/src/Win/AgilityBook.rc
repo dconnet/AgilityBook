@@ -128,8 +128,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Import and Export...\tCtrl+E", ID_FILE_EXPORT_WIZARD
         MENUITEM SEPARATOR
-        MENUITEM "&Check for updates on start", ID_FILE_AUTOCHECK
-        MENUITEM SEPARATOR
         MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
@@ -226,7 +224,8 @@ BEGIN
     BEGIN
         MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
         MENUITEM SEPARATOR
-        MENUITEM "Check for &Updates...",       ID_HELP_UPDATE
+        MENUITEM "Check for &Updates Now...",   ID_HELP_UPDATE
+        MENUITEM "Check for Updates when &starting", ID_FILE_AUTOCHECK
     END
 END
 
