@@ -38,6 +38,7 @@
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
+#include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
@@ -59,6 +60,7 @@ private:
 
 class CAgilityBookViewRuns : public CListView2, public ICommonView
 {
+	friend class CAgilityBookViewRunsData;
 	friend class CFindRuns;
 protected: // create from serialization only
 	CAgilityBookViewRuns();
@@ -97,6 +99,7 @@ public:
 #endif
 
 private:
+	std::vector<int> m_Columns;
 	bool m_bSuppressSelect;
 	CFindRuns m_Callback;
 

@@ -65,50 +65,15 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-// These columns must agree with CAgilityBookViewRunsData.
-static const struct
-{
-	UINT col;
-	UINT fmt;
-} scColumns[] = {
-	{IDS_COL_Q, LVCFMT_CENTER},
-	{IDS_COL_PTS, LVCFMT_RIGHT},
-	{IDS_COL_DATE, LVCFMT_LEFT},
-	{IDS_COL_VENUE, LVCFMT_LEFT},
-	{IDS_COL_EVENT, LVCFMT_LEFT},
-	{IDS_COL_DIVISION, LVCFMT_LEFT},
-	{IDS_COL_LEVEL, LVCFMT_LEFT},
-	{IDS_COL_JUDGE, LVCFMT_LEFT},
-	//SCT,Time,YPS,[DQ/Mach],Score
-	{IDS_COL_PLACE, LVCFMT_CENTER},
-	{IDS_COL_IN_CLASS, LVCFMT_CENTER},
-	{IDS_COL_Q_D, LVCFMT_CENTER},
-	{IDS_COL_NOTES, LVCFMT_LEFT},
-};
-static const int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
-#define COL_Q			0
-#define COL_Points		1
-#define COL_Date		2
-#define COL_Venue		3
-#define COL_Event		4
-#define COL_Division	5
-#define COL_Level		6
-#define COL_Judge		7
-#define COL_Place		8
-#define COL_InClass		9
-#define COL_Qd			10
-#define COL_Notes		11
-
-/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRunsData
 
 class CAgilityBookViewRunsData
 {
 public:
-	CAgilityBookViewRunsData(CAgilityBookViewRuns* pView, ARBDogTrial* pTrial, ARBDogRun* pRun)
+	CAgilityBookViewRunsData(CAgilityBookViewRuns* pView, ARBDog* pDog, ARBDogTrial* pTrial, ARBDogRun* pRun)
 		: m_RefCount(1)
 		, m_pView(pView)
+		, m_pDog(pDog)
 		, m_pTrial(pTrial)
 		, m_pRun(pRun)
 	{
@@ -125,6 +90,7 @@ protected:
 	~CAgilityBookViewRunsData()		{}
 	UINT m_RefCount;
 	CAgilityBookViewRuns* m_pView;
+	ARBDog* m_pDog;
 	ARBDogTrial* m_pTrial;
 	ARBDogRun* m_pRun;
 };
@@ -147,11 +113,135 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 	CString str;
 	if (m_pRun)
 	{
-		switch (iCol)
+		switch (m_pView->m_Columns[iCol])
 		{
 		default:
 			break;
-		case COL_Q:
+
+		case IO_RUNS_REG_NAME:
+			str = m_pDog->GetRegisteredName().c_str();
+			break;
+		case IO_RUNS_CALL_NAME:
+			str = m_pDog->GetCallName().c_str();
+			break;
+		case IO_RUNS_DATE:
+			str = m_pRun->GetDate().GetString(false, true).c_str();
+			break;
+		case IO_RUNS_VENUE:
+			{
+				str.Empty();
+				int i = 0;
+				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
+					iter != m_pTrial->GetClubs().end();
+					++iter, ++i)
+				{
+					if (0 < i)
+						str += "/";
+					str += (*iter)->GetVenue().c_str();
+				}
+			}
+			break;
+		case IO_RUNS_CLUB:
+			{
+				str.Empty();
+				int i = 0;
+				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
+					iter != m_pTrial->GetClubs().end();
+					++iter, ++i)
+				{
+					if (0 < i)
+						str += "/";
+					str += (*iter)->GetName().c_str();
+				}
+			}
+			break;
+		case IO_RUNS_LOCATION:
+			str = m_pTrial->GetLocation().c_str();
+			break;
+		case IO_RUNS_TRIAL_NOTES:
+			str = m_pTrial->GetNote().c_str();
+			break;
+		case IO_RUNS_DIVISION:
+			str = m_pRun->GetDivision().c_str();
+			break;
+		case IO_RUNS_LEVEL:
+			str = m_pRun->GetLevel().c_str();
+			break;
+		case IO_RUNS_EVENT:
+			str = m_pRun->GetEvent().c_str();
+			break;
+		case IO_RUNS_HEIGHT:
+			str = m_pRun->GetHeight().c_str();
+			break;
+		case IO_RUNS_JUDGE:
+			str = m_pRun->GetJudge().c_str();
+			break;
+		case IO_RUNS_HANDLER:
+			str = m_pRun->GetHandler().c_str();
+			break;
+		case IO_RUNS_CONDITIONS:
+			str = m_pRun->GetConditions().c_str();
+			break;
+		case IO_RUNS_COURSE_FAULTS:
+			//TODO
+			break;
+		case IO_RUNS_TIME:
+			str = m_pRun->GetScoring().GetTime().str().c_str();
+			break;
+		case IO_RUNS_YARDS:
+			//TODO
+			break;
+		case IO_RUNS_YPS:
+			//TODO
+			break;
+		case IO_RUNS_SCT:
+			//TODO
+			break;
+		case IO_RUNS_TOTAL_FAULTS:
+			//TODO
+			break;
+		case IO_RUNS_REQ_OPENING:
+			//TODO
+			break;
+		case IO_RUNS_REQ_CLOSING:
+			//TODO
+			break;
+		case IO_RUNS_OPENING:
+			//TODO
+			break;
+		case IO_RUNS_CLOSING:
+			//TODO
+			break;
+		case IO_RUNS_REQ_POINTS:
+			//TODO
+			break;
+		case IO_RUNS_POINTS:
+			//TODO
+			break;
+		case IO_RUNS_PLACE:
+			val = m_pRun->GetPlace();
+			if (0 > val)
+				str = "?";
+			else if (0 == val)
+				str = "-";
+			else
+				str.Format("%hd", val);
+			break;
+		case IO_RUNS_IN_CLASS:
+			val = m_pRun->GetInClass();
+			if (0 >= val)
+				str = "?";
+			else
+				str.Format("%hd", val);
+			break;
+		case IO_RUNS_DOGSQD:
+			val = m_pRun->GetDogsQd();
+			if (0 > val)
+				str = "?";
+			else
+				str.Format("%hd", m_pRun->GetDogsQd());
+			break;
+		case IO_RUNS_Q:
 			str = m_pRun->GetQ().str().c_str();
 			if (m_pRun->GetQ().Qualified())
 			{
@@ -167,7 +257,10 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					str.LoadString(IDS_SQ);
 			}
 			break;
-		case COL_Points:
+		case IO_RUNS_SCORE:
+			//TODO
+			break;
+		case IO_RUNS_TITLE_POINTS:
 			{
 				short pts = 0;
 				if (m_pRun->GetQ().Qualified())
@@ -184,50 +277,23 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				str.Format("%hd", pts);
 			}
 			break;
-		case COL_Date:
-			str = m_pRun->GetDate().GetString(false, true).c_str();
-			break;
-		case COL_Venue:
-			str = m_pTrial->GetClubs().GetPrimaryClub()->GetVenue().c_str();
-			break;
-		case COL_Event:
-			str = m_pRun->GetEvent().c_str();
-			break;
-		case COL_Division:
-			str = m_pRun->GetDivision().c_str();
-			break;
-		case COL_Level:
-			str = m_pRun->GetLevel().c_str();
-			break;
-		case COL_Judge:
-			str = m_pRun->GetJudge().c_str();
-			break;
-		case COL_Place:
-			val = m_pRun->GetPlace();
-			if (0 > val)
-				str = "?";
-			else if (0 == val)
-				str = "-";
-			else
-				str.Format("%hd", val);
-			break;
-		case COL_InClass:
-			val = m_pRun->GetInClass();
-			if (0 >= val)
-				str = "?";
-			else
-				str.Format("%hd", val);
-			break;
-		case COL_Qd:
-			val = m_pRun->GetDogsQd();
-			if (0 > val)
-				str = "?";
-			else
-				str.Format("%hd", m_pRun->GetDogsQd());
-			break;
-		case COL_Notes:
+		case IO_RUNS_COMMENTS:
 			str = m_pRun->GetNote().c_str();
 			str.Replace("\n", " ");
+			break;
+		case IO_RUNS_FAULTS:
+			{
+				str.Empty();
+				int i = 0;
+				for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin();
+					iter != m_pRun->GetFaults().end();
+					++i, ++iter)
+				{
+					if (0 < i)
+						str += ", ";
+					str += (*iter).c_str();
+				}
+			}
 			break;
 		}
 	}
@@ -429,17 +495,22 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 
 void CAgilityBookViewRuns::SetupColumns()
 {
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < scNumColumns; ++i)
+	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	for (int i = 0; i < nColumnCount; ++i)
+		GetListCtrl().DeleteColumn(0);
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewRuns, IO_TYPE_VIEW_RUNS_LIST, m_Columns))
 	{
-		CString str;
-		str.LoadString(scColumns[i].col);
-		col.fmt = scColumns[i].fmt;
-		col.pszText = str.GetBuffer(0);
-		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
-		str.ReleaseBuffer();
+		LV_COLUMN col;
+		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
+			col.pszText = str.GetBuffer(0);
+			col.iSubItem = iCol;
+			GetListCtrl().InsertColumn(iCol, &col);
+			str.ReleaseBuffer();
+		}
 	}
 }
 
@@ -462,12 +533,12 @@ void CAgilityBookViewRuns::LoadData()
 	std::vector<CVenueFilter> venues;
 	CAgilityBookOptions::GetFilterVenue(venues);
 	list<ARBDogTrial*> trials;
+	ARBDog* pDog = GetDocument()->GetCurrentDog();
 	ARBDogTrial* pCurTrial = GetDocument()->GetCurrentTrial();
 	if (pCurTrial && CAgilityBookOptions::GetViewRunsByTrial())
 		trials.push_back(pCurTrial);
 	else
 	{
-		ARBDog* pDog = GetDocument()->GetCurrentDog();
 		if (pDog)
 		{
 			for (ARBDogTrialList::iterator iter = pDog->GetTrials().begin();
@@ -496,7 +567,7 @@ void CAgilityBookViewRuns::LoadData()
 					continue;
 				if (pRun->GetQ().Qualified())
 					++nQs;
-				CAgilityBookViewRunsData* pData = new CAgilityBookViewRunsData(this, pTrial, pRun);
+				CAgilityBookViewRunsData* pData = new CAgilityBookViewRunsData(this, pDog, pTrial, pRun);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				item.pszText = LPSTR_TEXTCALLBACK;

@@ -37,6 +37,7 @@
  * @li 2003-09-21 DRC Created
  */
 
+#include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
@@ -98,6 +99,7 @@ public:
 #endif
 
 private:
+	std::vector<int> m_Columns;
 	CFindTraining m_Callback;
 
 // Generated message map functions
