@@ -14,11 +14,11 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="New Features">
-			<param name="Local" value="Help\html\Features.html">
+			<param name="Name" value="History">
+			<param name="Local" value="Help\html\History.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Contact Us">
+			<param name="Name" value="AboutUs">
 			<param name="Local" value="Help\html\Contact.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
@@ -27,25 +27,77 @@
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Getting Started">
-		<param name="Local" value="Help\html\GettingStarted.html">
+		<param name="Name" value="Program Overview">
+		<param name="Local" value="Help\html\ProgramOverview.html">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="First Time">
-			<param name="Local" value="Help\html\FirstTime.html">
+			<param name="Name" value="Menus">
+			<param name="Local" value="Help\html\Menus.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="File Menu">
+				<param name="Local" value="Help\html\MenuFile.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Edit Menu">
+				<param name="Local" value="Help\html\MenuEdit.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Agility Menu">
+				<param name="Local" value="Help\html\MenuAgility.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="View Menu">
+				<param name="Local" value="Help\html\MenuView.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Window Menu">
+				<param name="Local" value="Help\html\MenuWindow.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Help Menu">
+				<param name="Local" value="Help\html\MenuHelp.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Toolbar">
+			<param name="Local" value="Help\html\Toolbar.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Creating a new Dog">
-			<param name="Local" value="Help\html\NewDog.html">
+			<param name="Name" value="Tabs">
+			<param name="Local" value="Help\html\Tabs.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Runs">
+				<param name="Local" value="Help\html\TabRuns.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Points">
+				<param name="Local" value="Help\html\TabPoints.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Calendar">
+				<param name="Local" value="Help\html\TabCalendar.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Training Log">
+				<param name="Local" value="Help\html\TabLog.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Statusbar">
+			<param name="Local" value="Help\html\Statusbar.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Creating a new Trial">
-			<param name="Local" value="Help\html\NewTrial.html">
+			<param name="Name" value="Keyboard shortcuts">
+			<param name="Local" value="Help\html\Keyboard.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Creating a new Run">
-			<param name="Local" value="Help\html\NewRun.html">
+			<param name="Name" value="Dialogs">
+			<param name="Local" value="Help\html\Dialogs.html">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
@@ -54,43 +106,39 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Create a new Dog">
+			<param name="Local" value="Help\html\NewDog.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Create a new Trial">
+			<param name="Local" value="Help\html\NewTrial.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Create a new Run">
+			<param name="Local" value="Help\html\NewRun.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Configuration">
 			<param name="Local" value="Help\html\Configuration.html">
 			</OBJECT>
-	</UL>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Menus">
-		<param name="Local" value="Help\html\Menus.html">
-		</OBJECT>
-	<UL>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="File Menu">
-			<param name="Local" value="Help\html\MenuFile.html">
-			</OBJECT>
-	</UL>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Program Overview">
-		<param name="Local" value="Help\html\ProgramOverview.html">
-		</OBJECT>
-	<UL>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Preferences">
+			<param name="Name" value="Viewing Preferences">
 			<param name="Local" value="Help\html\Preferences.html">
 			</OBJECT>
-	</UL>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Import and Export">
-		<param name="Local" value="Help\html\ImportExport.html">
-		</OBJECT>
-	<UL>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Import">
-			<param name="Local" value="Help\html\Import.html">
+			<param name="Name" value="Import and Export">
+			<param name="Local" value="Help\html\ImportExport.html">
 			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Export">
-			<param name="Local" value="Help\html\Export.html">
-			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Import">
+				<param name="Local" value="Help\html\Import.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Export">
+				<param name="Local" value="Help\html\Export.html">
+				</OBJECT>
+		</UL>
 	</UL>
 </UL>
 </BODY></HTML>
