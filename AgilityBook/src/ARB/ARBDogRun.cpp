@@ -466,11 +466,14 @@ short ARBDogRun::GetMachPoints(ARBConfigScoring const* inScoring) const
 
 short ARBDogRun::GetTitlePoints(
 	ARBConfigScoring const* inScoring,
-	bool* outClean) const
+	bool* outClean,
+	short* outLifeTime) const
 {
 	short pts = 0;
 	if (outClean)
 		*outClean = false;
+	if (outLifeTime)
+		*outLifeTime = 0;
 	switch (m_Scoring.GetType())
 	{
 	default:
@@ -485,6 +488,8 @@ short ARBDogRun::GetTitlePoints(
 					if (outClean)
 						*outClean = true;
 					pts = inScoring->GetTitlePoints().GetTitlePoints(0);
+					if (outLifeTime)
+						*outLifeTime = inScoring->GetTitlePoints().GetLifetimePoints(0);
 				}
 			}
 			else
@@ -495,6 +500,8 @@ short ARBDogRun::GetTitlePoints(
 						*outClean = true;
 				}
 				pts = inScoring->GetTitlePoints().GetTitlePoints(faults);
+				if (outLifeTime)
+					*outLifeTime = inScoring->GetTitlePoints().GetLifetimePoints(faults);
 			}
 		}
 		break;
@@ -505,6 +512,8 @@ short ARBDogRun::GetTitlePoints(
 			if (outClean)
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(0);
+			if (outLifeTime)
+				*outLifeTime = inScoring->GetTitlePoints().GetLifetimePoints(0);
 		}
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
@@ -513,6 +522,8 @@ short ARBDogRun::GetTitlePoints(
 			if (outClean)
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(0);
+			if (outLifeTime)
+				*outLifeTime = inScoring->GetTitlePoints().GetLifetimePoints(0);
 		}
 		break;
 	}

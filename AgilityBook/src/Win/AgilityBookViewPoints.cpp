@@ -199,7 +199,8 @@ int CAgilityBookViewPoints::DoEvents(
 	std::list<ARBDogTrial const*> const& trials,
 	ARBConfigVenue const* inVenue,
 	ARBConfigDivision const* inDiv,
-	ARBConfigLevel const* inLevel)
+	ARBConfigLevel const* inLevel,
+	LifeTimePointList& inLifetime)
 {
 	int nAdded = 0;
 	int machPts = 0;
@@ -325,7 +326,7 @@ int CAgilityBookViewPoints::DoEvents(
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, inLevel->GetName().c_str());
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
 				int nCleanQ, nNotCleanQ;
-				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
+				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ, inLifetime);
 				pts += inDog->GetExistingPoints().ExistingPoints(
 					ARBDogExistingPoints::eRuns,
 					inVenue, inDiv, inLevel, pEvent);
@@ -424,7 +425,7 @@ int CAgilityBookViewPoints::DoEvents(
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 		++nAdded;
 	}
-	ASSERT(nAdded < MAX_COLUMNS);
+	//ASSERT(nAdded < MAX_COLUMNS);
 	return nAdded;
 }
 
@@ -449,7 +450,8 @@ int CAgilityBookViewPoints::TallyPoints(
 	std::list<ARBDogRun const*> const& runs,
 	ARBConfigScoring const* pScoringMethod,
 	int& nCleanQ,
-	int& nNotCleanQ)
+	int& nNotCleanQ,
+	LifeTimePointList& inLifetime)
 {
 	nCleanQ = 0;
 	nNotCleanQ = 0;
@@ -460,7 +462,10 @@ int CAgilityBookViewPoints::TallyPoints(
 		if (pRun->GetQ().Qualified())
 		{
 			bool bClean = false;
-			score += pRun->GetTitlePoints(pScoringMethod, &bClean);
+			short nLifetime;
+			score += pRun->GetTitlePoints(pScoringMethod, &bClean, &nLifetime);
+			if (0 < nLifetime)
+				inLifetime.push_back(LifeTimePoint(pRun, nLifetime));
 			if (bClean)
 				++nCleanQ;
 			else
@@ -539,6 +544,8 @@ void CAgilityBookViewPoints::LoadData()
 			if (!CAgilityBookOptions::IsVenueVisible(venues, pVenue->GetName()))
 				continue;
 
+			LifeTimePointsList lifetime;
+
 			// First, titles.
 			bool bHeaderInserted = false;
 			for (ARBDogTitleList::const_iterator iterTitle = pDog->GetTitles().begin();
@@ -615,9 +622,37 @@ void CAgilityBookViewPoints::LoadData()
 					++iterLevel)
 					{
 						ARBConfigLevel const* pLevel = (*iterLevel);
-						i += DoEvents(pDog, venues, i, trialsInVenue, pVenue, pDiv, pLevel);
+						LifeTimePoints pts;
+						pts.pDiv = pDiv;
+						pts.pLevel = pLevel;
+						i += DoEvents(pDog, venues, i, trialsInVenue, pVenue, pDiv, pLevel, pts.ptList);
+						if (0 < pts.ptList.size())
+							lifetime.push_back(pts);
 					}
 				}
+			}
+			if (0 < lifetime.size())
+			{
+				int pts = 0;
+				for (LifeTimePointsList::iterator iter = lifetime.begin();
+					iter != lifetime.end();
+					++iter)
+				{
+					for (LifeTimePointList::iterator iter2 = (*iter).ptList.begin();
+						iter2 != (*iter).ptList.end();
+						++iter2)
+					{
+						pts += (*iter2).points;
+					}
+				}
+				GetListCtrl().InsertItem(i, "");
+				int nextCol = 1;
+				CString str;
+				str.LoadString(IDS_LIFETIME_POINTS);
+				GetListCtrl().SetItemText(i, nextCol++, str);
+				str.Format("%d", pts);
+				GetListCtrl().SetItemText(i, nextCol++, str);
+				++i;
 			}
 		}
 

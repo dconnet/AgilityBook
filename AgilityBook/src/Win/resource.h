@@ -407,6 +407,7 @@
 #define IDS_FILE_PREVIEW                5167
 #define IDS_BLANK_COLUMN                5168
 #define IDS_ADDED_TRAINING_ITEMS        5169
+#define IDS_LIFETIME_POINTS             5170
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_AUTOCHECK               32773
 #define ID_FILE_LINKED                  32774

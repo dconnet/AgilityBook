@@ -1001,48 +1001,48 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 			</Division>
 			<Event Name="Regular">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
+					<TitlePoints Faults="5" LifeTime="y" Points="5"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
 				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Tunnelers">
 				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="TouchNGo">
 				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 			</Event>
 			<Event Name="Weavers">
 				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="10"/>
 				</Scoring>
 			</Event>
 		</Venue>
@@ -1224,8 +1224,14 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
+				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1237,12 +1243,18 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>DAM Team: Qualifying is marked under Relay. The Q here is used for individual points.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
 				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="FaultsThenTime">
@@ -1257,12 +1269,18 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Tournament" type="OCScoreThenTime">
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
+				<Scoring Division="Championship" Level="Masters" type="OCScoreThenTime">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="*" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
 				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="OCScoreThenTime">
@@ -1279,7 +1297,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Advanced" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1289,7 +1307,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1305,6 +1323,9 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Championship" Level="Masters" type="TimePlusFaults">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
@@ -1312,16 +1333,19 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Performance" Level="*" type="TimePlusFaults">
+					<Note>Non-titling class</Note>
+				</Scoring>
 			</Event>
 			<Event Name="Grand Prix">
 				<Scoring Division="Championship" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" type="FaultsThenTime">
-					<TitlePoints Faults="7" Points="1"/>
+					<TitlePoints Faults="7" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<Note>Effective starting in 2004</Note>
-					<TitlePoints Faults="7" Points="1"/>
+					<TitlePoints Faults="7" LifeTime="y" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Steeplechase">
@@ -1365,6 +1389,5 @@ Dogs/Placements/Points
 11-20/4/7,5,3,1
 21-30/5/9,7,5,3,1
 Each additional 10, +1place, +2 pts.</OtherPts>
-		<OtherPts Count="All" Name="USDAA LAA">USDAA Lifetime Achievement Points</OtherPts>
 	</Configuration>
 </DefaultConfig>

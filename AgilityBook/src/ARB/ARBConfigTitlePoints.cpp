@@ -179,6 +179,22 @@ short ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 	return 0;
 }
 
+short ARBConfigTitlePointsList::GetLifetimePoints(double inFaults) const
+{
+	// This is why we keep the list sorted!
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (inFaults <= static_cast<double>((*iter)->GetFaults()))
+		{
+			if ((*iter)->IsLifeTimePoints())
+				return (*iter)->GetPoints();
+			else
+				return 0;
+		}
+	}
+	return 0;
+}
+
 ARBConfigTitlePoints const* ARBConfigTitlePointsList::FindTitlePoints(short inFaults) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)

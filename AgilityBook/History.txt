@@ -1,18 +1,21 @@
-3/31/2004: v1.0.5.8 <in development>
+4/3/2004: v1.0.5.8 <in development>
 - Note: Released beta to single person on 3/26 - dealt with table code.
-- Bumped file version to 8.6:
+- Bumped file version to 8.6, Configuration v3:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
   - Added 'Link' to 'Runs'
+  - Added 'LifeTime' to 'TitlePoints'
 - New features / Enhancements:
   - Instead of recording whether YPS should be adjusted for each run, just
     record if that run has a table. A new option (under 'View') then
     determines how to compute it. Old files will be auto-updated when the new
     configuration is merged, as long as it happens during startup.
-  - The 'Show Hidden Titles' menu item was never enabled.
+  - Added Lifetime point accumulation information to USDAA and NADAC. Removed
+    USDAA LAA from OtherPoints.
   - Changed 'Insert Course' to 'Paste Course' in run dialog.
   - Added 'Links' in the run dialog and a corresponding 'Find Links' in the
     File menu.
 - Bug fixes
+  - The 'Show Hidden Titles' menu item was never enabled.
   - When merging configuration information via the update feature, if only
     the description was changed in either a venue or an event, that
     information did not get properly merged 
@@ -44,7 +47,7 @@
     when the event type was changed.
 
 3/8/2004: v1.0.3.8
-- Bumped file version to 8.4:
+- Bumped file version to 8.4, Configuration v2:
   - Added table-in-yps flag (default is true for backwards compatibility)
   - Added new 'Configuration/Action' verb: DeleteTitle
   - Added 'version' to Configuration.

@@ -142,7 +142,8 @@ public:
 	 */
 	short GetTitlePoints(
 		ARBConfigScoring const* inScoring,
-		bool* outClean = NULL) const;
+		bool* outClean = NULL,
+		short* outLifeTime = NULL) const;
 
 	/**
 	 * Get the score for this run.
