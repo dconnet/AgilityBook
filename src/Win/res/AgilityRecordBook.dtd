@@ -10,6 +10,7 @@ Revision History:
 2004-03-30 DRC File version 8.6, Configuration version 3.
                Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
                Added 'Link' to 'Run'
+			   Added 'LifeTime' to 'TitlePoints'
 2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.
@@ -206,6 +207,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 	<!ATTLIST TitlePoints
 		Points CDATA #REQUIRED
 		Faults CDATA #REQUIRED
+		LifeTime (y|n) 'n'
 		>
 
 <!--

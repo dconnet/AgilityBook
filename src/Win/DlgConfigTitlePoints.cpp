@@ -60,6 +60,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	//{{AFX_DATA_INIT(CDlgConfigTitlePoints)
 	m_Points = 0;
 	m_Faults = 0;
+	m_LifeTime = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -69,6 +70,7 @@ void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CDlgConfigTitlePoints)
 	DDX_Text(pDX, IDC_POINTS, m_Points);
 	DDX_Text(pDX, IDC_FAULTS, m_Faults);
+	DDX_Check(pDX, IDC_TITLE_POINTS, m_LifeTime);
 	//}}AFX_DATA_MAP
 }
 
@@ -88,6 +90,7 @@ BOOL CDlgConfigTitlePoints::OnInitDialog()
 	{
 		m_Points = m_pTitle->GetPoints();
 		m_Faults = m_pTitle->GetFaults();
+		m_LifeTime = m_pTitle->IsLifeTimePoints() ? TRUE : FALSE;
 		UpdateData(FALSE);
 	}
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -103,12 +106,13 @@ void CDlgConfigTitlePoints::OnOK()
 	{
 		m_pTitle->SetPoints(m_Points);
 		m_pTitle->SetFaults(m_Faults);
+		m_pTitle->SetLifeTimePoints(m_LifeTime ? true : false);
 		m_TitlePoints.sort();
 	}
 	else
 	{
 		// The only reason this fails is if the faults entry exists.
-		if (!m_TitlePoints.AddTitlePoints(m_Points, m_Faults))
+		if (!m_TitlePoints.AddTitlePoints(m_Points, m_Faults, m_LifeTime ? true : false))
 		{
 			AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
 			return;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-12 DRC Added as part of file version 5.
@@ -55,18 +56,21 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigTitlePoints::ARBConfigTitlePoints()
 	: m_Points(0)
 	, m_Faults(0)
+	, m_bLifeTime(false)
 {
 }
 
-ARBConfigTitlePoints::ARBConfigTitlePoints(short inPoints, short inFaults)
+ARBConfigTitlePoints::ARBConfigTitlePoints(short inPoints, short inFaults, bool bLifeTime)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
+	, m_bLifeTime(bLifeTime)
 {
 }
 
 ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
+	, m_bLifeTime(rhs.m_bLifeTime)
 {
 }
 
@@ -80,6 +84,7 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 	{
 		m_Points = rhs.m_Points;
 		m_Faults = rhs.m_Faults;
+		m_bLifeTime = rhs.m_bLifeTime;
 	}
 	return *this;
 }
@@ -87,7 +92,8 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
-		&& m_Faults == rhs.m_Faults;
+		&& m_Faults == rhs.m_Faults
+		&& m_bLifeTime == rhs.m_bLifeTime;
 }
 
 bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
@@ -99,6 +105,8 @@ std::string ARBConfigTitlePoints::GetGenericName() const
 {
 	char buffer[100];
 	sprintf(buffer, TITLE_POINTS_NAME_FORMAT, m_Points, m_Faults);
+	if (m_bLifeTime)
+		strcat(buffer, " #");
 	return buffer;
 }
 
@@ -123,6 +131,11 @@ bool ARBConfigTitlePoints::Load(
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS);
 		return false;
 	}
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_POINTS_LIFETIME, m_bLifeTime))
+	{
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_LIFETIME, VALID_VALUES_BOOL);
+		return false;
+	}
 	return true;
 }
 
@@ -131,6 +144,8 @@ bool ARBConfigTitlePoints::Save(Element& ioTree) const
 	Element& title = ioTree.AddElement(TREE_TITLE_POINTS);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults);
+	if (m_bLifeTime)
+		title.AddAttrib(ATTRIB_TITLE_POINTS_LIFETIME, m_bLifeTime);
 	return true;
 }
 
@@ -174,11 +189,11 @@ ARBConfigTitlePoints const* ARBConfigTitlePointsList::FindTitlePoints(short inFa
 	return NULL;
 }
 
-ARBConfigTitlePoints* ARBConfigTitlePointsList::AddTitlePoints(short inPoints, short inFaults)
+ARBConfigTitlePoints* ARBConfigTitlePointsList::AddTitlePoints(short inPoints, short inFaults, bool bLifeTime)
 {
 	if (NULL != FindTitlePoints(inFaults))
 		return NULL;
-	ARBConfigTitlePoints* pTitle = new ARBConfigTitlePoints(inPoints, inFaults);
+	ARBConfigTitlePoints* pTitle = new ARBConfigTitlePoints(inPoints, inFaults, bLifeTime);
 	push_back(pTitle);
 	sort();
 	return pTitle;

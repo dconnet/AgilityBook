@@ -318,7 +318,7 @@ bool ARBConfigScoring::Load(
 		}
 		if (0 < ptsWhenClean)
 		{
-			m_TitlePoints.AddTitlePoints(ptsWhenClean, 0);
+			m_TitlePoints.AddTitlePoints(ptsWhenClean, 0, false);
 		}
 
 		short faultsAllowed = 0;
@@ -327,7 +327,7 @@ bool ARBConfigScoring::Load(
 		inTree.GetAttrib("WithFaults", ptsWhenNotClean);
 		if (0 < faultsAllowed && 0 < ptsWhenNotClean)
 		{
-			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed);
+			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed, false);
 		}
 
 		if (inVersion >= ARBVersion(3,0))
