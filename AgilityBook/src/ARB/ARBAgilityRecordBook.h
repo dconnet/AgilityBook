@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-11-15 DRC Added TimeFaults for T+F, ClubInfo, LocationInfo
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -72,6 +73,7 @@
 #define TREE_SUBLEVEL						"SubLevel"
 #define TREE_EVENT							"Event"
 #define TREE_EVENT_DESC						"Desc"
+#define TREE_EVENT_SUBNAME					"SubName"
 #define TREE_SCORING						"Scoring"
 #define TREE_TITLE_POINTS					"TitlePoints"
 #define TREE_LIFETIME_POINTS				"LifeTime"
@@ -145,6 +147,7 @@
 #define ATTRIB_EVENT_NAME					"Name"
 #define ATTRIB_EVENT_HAS_TABLE				"hasTable"
 #define ATTRIB_EVENT_HASPARTNER				"hasPartner"
+#define ATTRIB_EVENT_HASSUBNAMES			"hasSubNames"
 #define ATTRIB_SCORING_VALIDFROM			"ValidFrom"
 #define ATTRIB_SCORING_VALIDTO				"ValidTo"
 #define ATTRIB_SCORING_DIVISION				"Division"
@@ -195,6 +198,7 @@
 #define ATTRIB_RUN_LEVEL					"Level"
 #define ATTRIB_RUN_HEIGHT					"Height"
 #define ATTRIB_RUN_EVENT					"Event"
+#define ATTRIB_RUN_SUBNAME					"SubName"
 #define ATTRIB_PARTNER_HANDLER				"Handler"
 #define ATTRIB_PARTNER_DOG					"Dog"
 #define ATTRIB_PARTNER_REGNUM				"RegNum"
@@ -439,6 +443,15 @@ public:
 	 * @return Number of locations.
 	 */
 	size_t GetAllTrialLocations(std::set<std::string>& outLocations, bool bInfo = true) const;
+
+	/**
+	 * Get all the subnames in use for the given event.
+	 * @param inVenue Venue to find event in.
+	 * @param inEvent Event info to match.
+	 * @param outNames List of Sub-Names in use.
+	 * @return Number of subnames.
+	 */
+	size_t GetAllEventSubNames(std::string const& inVenue, ARBConfigEvent const* inEvent, std::set<std::string>& outNames) const;
 
 	/**
 	 * Get all heights in use from existing runs.

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
@@ -67,6 +68,9 @@ private:
 	CComboBox	m_ctrlDivisions;
 	CComboBox	m_ctrlLevels;
 	CComboBox	m_ctrlEvents;
+	CStatic	m_ctrlSubNamesText;
+	CComboBox	m_ctrlSubNames;
+	CString	m_SubName;
 	CEdit	m_ctrlDesc;
 	CComboBox	m_ctrlHeight;
 	CString	m_Height;
@@ -147,6 +151,7 @@ private:
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();
+	void FillSubNames();
 	void SetEventDesc(ARBConfigEvent const* inEvent);
 	void SetPartnerText();
 	void SetYPS();

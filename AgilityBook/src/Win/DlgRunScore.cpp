@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-11-13 DRC Also compute score for NA runs that have no titling pts.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
@@ -118,6 +119,7 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
 	m_Venue = m_pVenue->GetName().c_str();
 	m_Club = pClub->GetName().c_str();
 	m_Location = m_pTrial->GetLocation().c_str();
+	m_SubName = m_Run->GetSubName().c_str();
 	m_Height = m_Run->GetHeight().c_str();
 	m_Handler = _T("");
 	m_Conditions = m_Run->GetConditions().c_str();
@@ -152,6 +154,9 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_RUNSCORE_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_RUNSCORE_EVENT, m_ctrlEvents);
+	DDX_Control(pDX, IDC_RUNSCORE_SUBNAME_TEXT, m_ctrlSubNamesText);
+	DDX_Control(pDX, IDC_RUNSCORE_SUBNAME, m_ctrlSubNames);
+	DDX_CBString(pDX, IDC_RUNSCORE_SUBNAME, m_SubName);
 	DDX_Control(pDX, IDC_RUNSCORE_DESC, m_ctrlDesc);
 	DDX_Control(pDX, IDC_RUNSCORE_HEIGHT, m_ctrlHeight);
 	DDX_CBString(pDX, IDC_RUNSCORE_HEIGHT, m_Height);
@@ -218,6 +223,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Club.TrimLeft();
 		m_Location.TrimRight();
 		m_Location.TrimLeft();
+		m_SubName.TrimRight();
+		m_SubName.TrimLeft();
 		m_Height.TrimRight();
 		m_Height.TrimLeft();
 		m_Judge.TrimRight();
@@ -324,6 +331,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetDivision(div);
 		m_Run->SetLevel(level);
 		m_Run->SetEvent(event);
+		m_Run->SetSubName((LPCSTR)m_SubName);
 		m_Run->SetHeight((LPCSTR)m_Height);
 		m_Run->SetJudge((LPCSTR)m_Judge);
 		m_Run->SetHandler((LPCSTR)m_Handler);
@@ -565,7 +573,32 @@ void CDlgRunScore::FillEvents()
 			}
 		}
 	}
+	FillSubNames();
 	UpdateControls();
+}
+
+void CDlgRunScore::FillSubNames()
+{
+	ARBConfigEvent const* pEvent = GetEvent();
+	if (pEvent && pEvent->HasSubNames())
+	{
+		std::set<std::string> names;
+		m_pDoc->GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
+		m_ctrlSubNames.ResetContent();
+		for (std::set<std::string>::const_iterator iter = names.begin();
+			iter != names.end();
+			++iter)
+		{
+			m_ctrlSubNames.AddString(iter->c_str());
+		}
+		m_ctrlSubNamesText.ShowWindow(SW_SHOW);
+		m_ctrlSubNames.ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		m_ctrlSubNamesText.ShowWindow(SW_HIDE);
+		m_ctrlSubNames.ShowWindow(SW_HIDE);
+	}
 }
 
 void CDlgRunScore::SetEventDesc(ARBConfigEvent const* inEvent)
@@ -1054,6 +1087,7 @@ void CDlgRunScore::OnSelchangeLevel()
 
 void CDlgRunScore::OnSelchangeEvent()
 {
+	FillSubNames();
 	UpdateControls(true);
 	SetEventDesc(GetEvent());
 }

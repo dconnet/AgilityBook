@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-10 DRC Moved import/export into a wizard.
  * @li 2003-10-31 DRC Added import/export calendar, export config.
@@ -114,6 +115,12 @@ public:
 	size_t GetAllTrialLocations(std::set<std::string>& locations, bool bInfo = true) const
 	{
 		return m_Records.GetAllTrialLocations(locations, bInfo);
+	}
+	size_t GetAllEventSubNames(std::string const& inVenue,
+		ARBConfigEvent const* inEvent,
+		std::set<std::string>& outNames) const
+	{
+		return m_Records.GetAllEventSubNames(inVenue, inEvent, outNames);
 	}
 	size_t GetAllHeights(std::set<std::string>& judges) const
 	{

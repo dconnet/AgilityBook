@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
@@ -63,6 +64,10 @@ private:
 	CString m_Name;
 	BOOL	m_bHasTable;
 	BOOL	m_bHasPartners;
+	BOOL	m_bHasSubNames;
+	CListBox2	m_ctrlSubNames;
+	CButton m_ctrlSubNamesNew;
+	CButton m_ctrlSubNamesDelete;
 	CString	m_Desc;
 	CButton m_ctrlNew;
 	CButton m_ctrlCopy;
@@ -112,6 +117,7 @@ private:
 	void ClearFixups();
 	CString GetListName(ARBConfigScoring* pScoring) const;
 	void FillControls();
+	void FillSubNames(bool bInit = false);
 	void FillMethodList();
 	void FillDivisionList();
 	void FillLevelList();
@@ -127,6 +133,10 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgConfigEvent)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedSubNames();
+	afx_msg void OnLbnSelchangeSubnames();
+	afx_msg void OnBnClickedSubNamesNew();
+	afx_msg void OnBnClickedSubNamesDelete();
 	afx_msg void OnBnClickedNew();
 	afx_msg void OnBnClickedCopy();
 	afx_msg void OnBnClickedDelete();

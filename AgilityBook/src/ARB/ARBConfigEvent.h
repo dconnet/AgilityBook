@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
  * @li 2004-02-02 DRC Added VerifyEvent.
@@ -40,6 +41,7 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
+#include <set>
 #include <string>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
@@ -154,6 +156,10 @@ public:
 	void SetHasTable(bool inBool);
 	bool HasPartner() const;
 	void SetHasPartner(bool inHas);
+	bool HasSubNames() const;
+	void SetHasSubNames(bool inHas);
+	size_t GetSubNames(std::set<std::string>& outNames) const;
+	void SetSubNames(std::set<std::string> const& inNames);
 	ARBConfigScoringList const& GetScorings() const;
 	ARBConfigScoringList& GetScorings();
 
@@ -163,6 +169,8 @@ private:
 	std::string m_Desc;
 	bool m_bTable;
 	bool m_bHasPartner;
+	bool m_bHasSubNames;
+	std::set<std::string> m_SubNames;
 	ARBConfigScoringList m_Scoring;
 };
 
@@ -209,6 +217,16 @@ inline bool ARBConfigEvent::HasPartner() const
 inline void ARBConfigEvent::SetHasPartner(bool inHas)
 {
 	m_bHasPartner = inHas;
+}
+
+inline bool ARBConfigEvent::HasSubNames() const
+{
+	return m_bHasSubNames;
+}
+
+inline void ARBConfigEvent::SetHasSubNames(bool inHas)
+{
+	m_bHasSubNames = inHas;
 }
 
 inline ARBConfigScoringList const& ARBConfigEvent::GetScorings() const

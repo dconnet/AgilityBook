@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-11-15 DRC File version 10.1. Added 'underTF'/'overTF' to 'Scoring'.
  * @li 2004-10-06 DRC File version 10. Added 'Height' to 'ReferenceRun'
  *                    GetAllHeights now accumulates these too. Changed
@@ -419,6 +420,43 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLoca
 			outLocations.insert(pCal->GetLocation());
 	}
 	return outLocations.size();
+}
+
+size_t ARBAgilityRecordBook::GetAllEventSubNames(std::string const& inVenue,
+	ARBConfigEvent const* inEvent,
+	std::set<std::string>& outNames) const
+{
+	outNames.clear();
+	if (!inEvent || !inEvent->HasSubNames())
+		return 0;
+	inEvent->GetSubNames(outNames);
+	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
+		iterDog != m_Dogs.end();
+		++iterDog)
+	{
+		ARBDog const* pDog = (*iterDog);
+		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrial const* pTrial = (*iterTrial);
+			if (pTrial->HasVenue(inVenue))
+			{
+				for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+					iterRun != pTrial->GetRuns().end();
+					++iterRun)
+				{
+					ARBDogRun const* pRun = (*iterRun);
+					if (pRun->GetEvent() == inEvent->GetName())
+					{
+						if (0 < pRun->GetSubName().length())
+							outNames.insert(pRun->GetSubName());
+					}
+				}
+			}
+		}
+	}
+	return outNames.size();
 }
 
 size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) const

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-30 DRC Added links.
@@ -167,6 +168,8 @@ public:
 	void SetLevel(std::string const& inLevel);
 	std::string const& GetEvent() const;
 	void SetEvent(std::string const& inEvent);
+	std::string const& GetSubName() const;
+	void SetSubName(std::string const& inSubName);
 	std::string const& GetHeight() const;
 	void SetHeight(std::string const& inHeight);
 	std::string const& GetConditions() const;
@@ -212,6 +215,7 @@ private:
 	std::string m_Level;
 	std::string m_Height;
 	std::string m_Event;
+	std::string m_SubName; //< Only used if the config supports it.
 	std::string m_Conditions;
 	std::string m_Judge;
 	std::string m_Handler;
@@ -266,6 +270,16 @@ inline std::string const& ARBDogRun::GetEvent() const
 inline void ARBDogRun::SetEvent(std::string const& inEvent)
 {
 	m_Event = inEvent;
+}
+
+inline std::string const& ARBDogRun::GetSubName() const
+{
+	return m_SubName;
+}
+
+inline void ARBDogRun::SetSubName(std::string const& inSubName)
+{
+	m_SubName = inSubName;
 }
 
 inline std::string const& ARBDogRun::GetHeight() const

@@ -5,49 +5,51 @@
 </HEAD>
 <BODY>
 <h1>Event Configuration Dialog</h1>
-<p>The Event Configuration dialog is probably the most complicated of the 
-configuration dialogs. This is used to define various combinations of divisions 
-and levels for which this event is valid. Sometimes only one method is required, 
-often scoring is done differently at the different levels.</p>
+<p>The Event Configuration dialog is probably the most complicated of the
+configuration dialogs. This is used to define various combinations of divisions
+and levels for which this event is valid. Sometimes only one method is required,
+though often scoring is done differently at the different levels.</p>
 <p><img border="0" src="images/DlgConfigEvent.gif"></p>
-<p>The <b>Name</b> is a unique name identifying this event. The <b>Event Note</b> 
+<p>The <b>Name</b> is a unique name identifying this event. The <b>Event Note</b>
 is a description that applies to the event as a whole.</p>
-<p>The two checkboxes, <b>Has Table?</b> and <b>Has Partners?</b> describe 
-certain aspects of this event. Enabling the table option will allow this run 
+<p>The two checkboxes, <b>Has Table?</b> and <b>Has Partners?</b> describe
+certain aspects of this event. Enabling the table option will allow this run
 adjust the Yards Per Second in the <a href="PropRun.html">Run Properties</a>.</p>
-<p>The order of scoring methods is very important. When attempting to find a 
-scoring method for a division/level, the first item that is matched will be 
-used. So if the &quot;&lt;All&gt; / &lt;All&gt;&quot; method were first, no other method would ever be 
+<p>The <b>Has Sub-Names?</b> checkbox is used when a particular event may
+actually be composed of several variations. See below for more details.</p>
+<p>The order of scoring methods is very important. When attempting to find a
+scoring method for a division/level, the first item that is matched will be
+used. So if the &quot;&lt;All&gt; / &lt;All&gt;&quot; method were first, no other method would ever be
 used.</p>
-<p>When this dialog is brought up for a new event, the first thing you must do 
-(after setting the above information), is to create a new scoring method with 
-the <b>New</b> button. This will create a method for all divisions and levels. 
-If you need to refine that (as with the example above), use the <b>Division</b> 
+<p>When this dialog is brought up for a new event, the first thing you must do
+(after setting the above information), is to create a new scoring method with
+the <b>New</b> button. This will create a method for all divisions and levels.
+If you need to refine that (as with the example above), use the <b>Division</b>
 and <b>Level</b> controls to select what this method is for. You can use the <b>
-Copy</b> button to copy an existing scoring method - this is convenient when 
+Copy</b> button to copy an existing scoring method - this is convenient when
 different method vary only a little.</p>
-<p>The <b>Valid From</b> and <b>Valid To</b> fields enable scoring methods to 
-change. For instance, in 2004 USDAA introduced titling programs for the Novice 
-and Advanced levels. In the dialog below, you can see how the number of methods 
+<p>The <b>Valid From</b> and <b>Valid To</b> fields enable scoring methods to
+change. For instance, in 2004 USDAA introduced titling programs for the Novice
+and Advanced levels. In the dialog below, you can see how the number of methods
 increases! (This is also where the <b>Copy</b> button was very convenient!)</p>
 <p>
 <img border="0" src="images/DlgConfigEventSnooker.gif"></p>
-<p>The <b>Scoring Style</b> affects what other controls will be visible. As you 
-can see, this dialog differs slightly from the first example. The available 
+<p>The <b>Scoring Style</b> affects what other controls will be visible. As you
+can see, this dialog differs slightly from the first example. The available
 scoring styles are:</p>
 <ul>
   <li><b>Faults Then Time</b> - Lowest number of faults wins, ties are broken
   by time.</li>
-  <li><b>100 Minus Faults Then Time</b> - Score closest to 100 wins, ties are 
+  <li><b>100 Minus Faults Then Time</b> - Score closest to 100 wins, ties are
   broken by time.</li>
-  <li><b>200 Minus Faults Then Time</b> - Score closest to 200 wins, ties are 
+  <li><b>200 Minus Faults Then Time</b> - Score closest to 200 wins, ties are
   broken by time.</li>
-  <li><b>Opening/Closing Points Then Time</b> - The sum of points earned during 
+  <li><b>Opening/Closing Points Then Time</b> - The sum of points earned during
   the opening and closing periods wins, ties are broken by time.</li>
-  <li><b>Points Then Time</b> - Greatest number of points wins, ties are broken 
-  by time. This differs from the above in that it doesn't matter if the points 
+  <li><b>Points Then Time</b> - Greatest number of points wins, ties are broken
+  by time. This differs from the above in that it doesn't matter if the points
   were earned during an opening or closing period.</li>
-  <li><b>Time Plus Faults</b> - The lowest score when time and faults are 
+  <li><b>Time Plus Faults</b> - The lowest score when time and faults are
   combined, wins. Note, this style does not compute time faults, unless
   specifically enabled.</li>
 </ul>
@@ -55,41 +57,51 @@ scoring styles are:</p>
 <b>Drop time fractions for faults</b> option enables this.
 Also, the <b>Time Fault Multiplier</b> enables time faults to generate
 additional faults, for instance in AKC.</p>
-<p>For the &quot;Opening/Closing Points Then Time&quot; style, there will be two fields 
-visible. These are for designating the number of points that must be earned 
-during the open and closing periods in order to qualify. When you create a run, 
-you must have at least that number of points in order to earn title points. As 
-you can see above, there is only one field for the &quot;Points Then Time&quot; option. 
+<p>For the &quot;Opening/Closing Points Then Time&quot; style, there will be two fields
+visible. These are for designating the number of points that must be earned
+during the open and closing periods in order to qualify. When you create a run,
+you must have at least that number of points in order to earn title points. As
+you can see above, there is only one field for the &quot;Points Then Time&quot; option.
 All other options hide these fields.</p>
-<p>The <b>Super Q?</b> option is for USDAA Snooker. It means you qualified in 
-the top 15% of the class. Agility Record Book will not compute this for you. 
-This is so this option could be used in other venues for similar purposes, even 
+<p>The <b>Super Q?</b> option is for USDAA Snooker. It means you qualified in
+the top 15% of the class. Agility Record Book will not compute this for you.
+This is so this option could be used in other venues for similar purposes, even
 though the percentage may be different.</p>
 <p>The <b>Speed Points?</b> and <b>Double Q?</b> options apply to AKC runs.
 Speed Points (in AKC, they are known as Mach Points) are computed as the
-number of whole seconds below Standard Course Time. 
-Double Q means that you qualified in two runs that have Double Q ability on the 
+number of whole seconds below Standard Course Time.
+Double Q means that you qualified in two runs that have Double Q ability on the
 same day. That last point is important - for instance, at AKC Nationals, you run
-in three rounds in one day, but the Double Q can only be earned if you qualify 
-in Standard and JWW, not Hybrid. These options could be used in other venues, 
+in three rounds in one day, but the Double Q can only be earned if you qualify
+in Standard and JWW, not Hybrid. These options could be used in other venues,
 though no other venue (that I know of) does at this time.</p>
-<p>The <b>Title Points</b> section shows how many title points you can earn, 
-based on the number of faults incurred. In both examples above, you must run 
-clean. In NADAC (and others), you can still qualify if you, for instance, drop a 
-bar, but the number of titling points you earn is less. In that case, you would 
-have multiple entries in this section. The &quot;<b>#</b>&quot; that you see in the 
-example above means that these titling points also are accumulated in a lifetime 
-total. In this section, the order of entries is determined by the number of 
+<p>The <b>Title Points</b> section shows how many title points you can earn,
+based on the number of faults incurred. In both examples above, you must run
+clean. In NADAC (and others), you can still qualify if you, for instance, drop a
+bar, but the number of titling points you earn is less. In that case, you would
+have multiple entries in this section. The &quot;<b>#</b>&quot; that you see in the
+example above means that these titling points also are accumulated in a lifetime
+total. In this section, the order of entries is determined by the number of
 faults. You cannot create two entries that have the same number of faults.</p>
-<p>When you create or edit a Title Points entry, the following dialog will be 
+<p>When you create or edit a Title Points entry, the following dialog will be
 displayed:</p>
 <p>
 <img border="0" src="images/DlgConfigTitlePoints.gif"></p>
-<p>The <b>Faults Allowed</b> field allows you to specify what the maximum number 
-of faults you can incur and still qualify is. The <b>Points</b> is the number of 
-points you will earn. <b>Accumulate Lifetime Points?</b> specifies that this 
-event will accumulate lifetime points. Lifetime points are accumulated across 
+<p>The <b>Faults Allowed</b> field allows you to specify what the maximum number
+of faults you can incur and still qualify is. The <b>Points</b> is the number of
+points you will earn. <b>Accumulate Lifetime Points?</b> specifies that this
+event will accumulate lifetime points. Lifetime points are accumulated across
 all divisions, levels and events and displayed in the main
 <a href="TabPoints.html">Points View</a>.</p>
+<h1>Sub Names</h1>
+<p>An event is configured for sub-names when multiple variations of the event
+exist. An example of these are NADAC's Gamblers class and the game classes in
+TDAA. In the NADAC example, we know all the sub-names to start with, so we can
+pre-configure the program with them. In TDAA, games are not pre-defined. So,
+we can list some initial ones, however the user must be able to enter names
+of new events without the need to modify this configuration. In TDAA, we will
+create a generic events that the user can add to.</p>
+<p>
+<img border="0" src="images/DlgConfigEventGamblers.gif"></p>
 </BODY>
 </HTML>

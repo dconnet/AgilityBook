@@ -5,8 +5,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2004-12-10 DRC Configuration version 7.
-               AAC: Updated new rules.
+2005-01-02 DRC Configuration version 7.
+               AAC: Updated new rules. Added CKC and TDAA.
+			   Added SubNames to events.
 2004-10-06 DRC Configuration version 6.
                CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
                points.  Change points in Specialist to be like LevelC.
@@ -571,6 +572,38 @@ Events and titles are based on NADAC</Desc>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+		</Venue>
+		<Venue LongName="Canadian Kennel Club" Name="CKC">
+			<Desc>http://www.ckc.ca/</Desc>
+			<Division Name="Standard">
+				<Level Name="Novice">
+					<SubLevel Name="Novice A"/>
+					<SubLevel Name="Novice B"/>
+				</Level>
+				<Level Name="Intermediate"/>
+				<Level Name="Excellent A"/>
+				<Level Name="Excellent B"/>
+				<Titles LongName="Agility Novice" Name="AG.N.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+				<Titles LongName="Agility Intermediate" Name="AG.I.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+				<Titles LongName="Agility Excellent" Name="AG.X.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+				<Titles LongName="Agility Master" Name="AG.M.X.">Receive 10 qualifying scores.</Titles>
+			</Division>
+			<Event Name="Standard" hasTable="y">
+				<Scoring Division="*" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Intermediate" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+					<Note>1 Refusal allowed</Note>
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+					<Note>2 Refusals allowed</Note>
+					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
 		</Venue>
@@ -1216,55 +1249,43 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
-			<Event Name="Gamblers">
-				<Desc>Gamblers changed in 2005. For specified-type gambles, use one of the other 3 defined gamblers events.</Desc>
+			<Event Name="Gamblers" hasSubNames="y">
+				<Desc>Gamblers changed in 2005. For specified-type gambles, use one of the pre-defined sub-names.</Desc>
+				<SubName>Contacts</SubName>
+				<SubName>Jumps</SubName>
+				<SubName>Weaves</SubName>
 				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
+					<Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" ValidTo="2004-12-31" type="OCScoreThenTime">
+					<Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" ValidTo="2004-12-31" type="OCScoreThenTime">
+					<Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
+					<Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" ValidTo="2004-12-31" type="OCScoreThenTime">
+					<Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2004-12-31" type="OCScoreThenTime">
+					<Note>For gamblers runs earned in 2004 using the 2005 rules, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
-					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="Gamblers - Contacts">
-				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
-					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="Gamblers - Jumps">
-				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
-					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="Gamblers - Weaves">
-				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
-					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
+					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
@@ -1286,6 +1307,62 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
+			</Event>
+		</Venue>
+		<Venue LongName="Teacup Dogs Agility Association" Name="TDAA">
+			<Desc>http://www.dogagility.org/</Desc>
+			<Division Name="Standard">
+				<Level Name="Beginner"/>
+				<Level Name="Intermediate"/>
+				<Level Name="Superior"/>
+				<Titles LongName="Teacup Beginner Agility Dog" Name="TBAD">3 Qs in standard courses under 2 different judges</Titles>
+				<Titles LongName="Teacup Intermediate Agility Dog" Name="TIAD">3 Qs in standard courses under 2 different judges</Titles>
+				<Titles LongName="Teacup Superior Agility Dog" Name="TSAD">5 Qs in standard courses under 3 different judges</Titles>
+				<Titles LongName="Teacup Games I" Name="TG1">3 Qs in at least 2 different games under 2 different judges</Titles>
+				<Titles LongName="Teacup Games II" Name="TG2">3 Qs in at least 3 different games under 2 different judges</Titles>
+				<Titles LongName="Teacup Games III" Name="TG3">5 Qs in at least 5 different games under 3 different judges</Titles>
+				<Titles LongName="Teacup Agile Dog Champion" Name="TACh">TSAD + 10 Qs in Superior with 3 wins
+TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
+			</Division>
+			<Event Name="Standard" hasTable="y">
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Game: Faults/Time" hasSubNames="y">
+				<Desc>This is for events scored like Standard.</Desc>
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Game: Time+Faults" hasSubNames="y">
+				<Desc>This is for Time plus Fault events. Time faults are not added. (Like USDAA Relay)</Desc>
+				<SubName>Louganis</SubName>
+				<SubName>Time Warp</SubName>
+				<Scoring Division="*" Level="*" type="TimePlusFaults">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Game: Points (open/close)" hasSubNames="y">
+				<Desc>This is for Point-based events where it is does matter when the points are earned (opening or closing), like Gamblers.</Desc>
+				<SubName>Gamblers</SubName>
+				<Scoring Division="*" Level="*" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Game: Points" hasSubNames="y">
+				<Desc>This is for Point-based events where it is doesn't matter when the points are earned (opening or closing), like Snooker.</Desc>
+				<SubName>12 Tone Row</SubName>
+				<SubName>Dare to Double</SubName>
+				<SubName>Quidditch</SubName>
+				<SubName>Snooker</SubName>
+				<SubName>The Weakest Link</SubName>
+				<Scoring Division="*" Level="*" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Petit Prix">
+				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
 			</Event>
 		</Venue>
 		<Venue LongName="United Kennel Club" Name="UKC">

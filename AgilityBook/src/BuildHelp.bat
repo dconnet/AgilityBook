@@ -13,8 +13,10 @@ set PATH=c:\Program Files\HTML Help Workshop;%PATH%
 hhc AgilityBook.hhp
 REM /r:overwrite readonly, /q: don't show copied filename, /y:no prompt
 echo Copying chm file to build output directories
-xcopy /r/q/y Help\AgilityBook.chm "..\bin\Win32\VC6\%1\"
-xcopy /r/q/y Help\AgilityBook.chm "..\bin\Win32\VC7\%1\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\Win32\VC6\Release\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\Win32\VC6\Debug\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\Win32\VC7\Release\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\Win32\VC7\Debug\"
 goto done
 
 set PATH=%OLDPATH%
