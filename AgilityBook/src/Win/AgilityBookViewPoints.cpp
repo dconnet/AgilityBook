@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-16 DRC Do filter levels.
  * @li 2004-05-03 DRC Do not filter runs, only venues and titles.
  *                    Added percent qualifying.
  * @li 2004-02-02 DRC Added ExistingPoints accumulation.
@@ -264,8 +265,11 @@ int CAgilityBookViewPoints::DoEvents(
 									pRun->GetLevel(),
 									pRun->GetDate());
 								if (pScoring && pScoring->HasDoubleQ()
-								&& date == pRun->GetDate())
+								&& date == pRun->GetDate()
+								&& CAgilityBookOptions::IsLevelVisible(venues, pTrial, pRun->GetLevel()))
+								{
 									++nVisible;
+								}
 							}
 							if (2 == nVisible)
 								QQs.insert(date);
@@ -277,40 +281,43 @@ int CAgilityBookViewPoints::DoEvents(
 				++iterRun)
 				{
 					ARBDogRun const* pRun = (*iterRun);
-					if (pRun->GetDivision() != inDiv->GetName()
-					|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
-					|| pRun->GetEvent() != pEvent->GetName())
-						continue;
-					ARBConfigScoring const* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
-					ASSERT(pScoring);
-					if (!pScoring) continue; // Shouldn't need it...
-					if (*pScoring != *pScoringMethod)
-						continue;
-					matching.push_back(pRun);
-					judges.insert(pRun->GetJudge());
-					if (pRun->GetQ().Qualified())
-						judgesQ.insert(pRun->GetJudge());
-					if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
-						++SQs;
-					if (pScoringMethod->HasMachPts())
+					if (CAgilityBookOptions::IsLevelVisible(venues, pTrial, pRun->GetLevel()))
 					{
-						int pts = pRun->GetMachPoints(pScoringMethod);
-						machPts += pts;
-						machPtsEvent += pts;
-					}
-					// Only tally partners for pairs. In USDAA DAM, pairs is
-					// actually a 3-dog relay.
-					if (pEvent->HasPartner() && 1 == pRun->GetPartners().size())
-					{
-						for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
-						iterPartner != pRun->GetPartners().end();
-						++iterPartner)
+						if (pRun->GetDivision() != inDiv->GetName()
+						|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
+						|| pRun->GetEvent() != pEvent->GetName())
+							continue;
+						ARBConfigScoring const* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
+						ASSERT(pScoring);
+						if (!pScoring) continue; // Shouldn't need it...
+						if (*pScoring != *pScoringMethod)
+							continue;
+						matching.push_back(pRun);
+						judges.insert(pRun->GetJudge());
+						if (pRun->GetQ().Qualified())
+							judgesQ.insert(pRun->GetJudge());
+						if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
+							++SQs;
+						if (pScoringMethod->HasMachPts())
 						{
-							string p = (*iterPartner)->GetDog();
-							p += (*iterPartner)->GetRegNum();
-							partners.insert(p);
-							if (pRun->GetQ().Qualified())
-								partnersQ.insert(p);
+							int pts = pRun->GetMachPoints(pScoringMethod);
+							machPts += pts;
+							machPtsEvent += pts;
+						}
+						// Only tally partners for pairs. In USDAA DAM, pairs is
+						// actually a 3-dog relay.
+						if (pEvent->HasPartner() && 1 == pRun->GetPartners().size())
+						{
+							for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
+							iterPartner != pRun->GetPartners().end();
+							++iterPartner)
+							{
+								string p = (*iterPartner)->GetDog();
+								p += (*iterPartner)->GetRegNum();
+								partners.insert(p);
+								if (pRun->GetQ().Qualified())
+									partnersQ.insert(p);
+							}
 						}
 					}
 				}
@@ -681,14 +688,17 @@ void CAgilityBookViewPoints::LoadData()
 					++iterRun)
 					{
 						ARBDogRun const* pRun = (*iterRun);
-						for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
-						iterOtherPts != pRun->GetOtherPoints().end();
-						++iterOtherPts)
+						if (CAgilityBookOptions::IsLevelVisible(venues, pTrial, pRun->GetLevel()))
 						{
-							ARBDogRunOtherPoints const* pOtherPts = (*iterOtherPts);
-							if (pOtherPts->GetName() == pOther->GetName())
+							for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
+							iterOtherPts != pRun->GetOtherPoints().end();
+							++iterOtherPts)
 							{
-								runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+								ARBDogRunOtherPoints const* pOtherPts = (*iterOtherPts);
+								if (pOtherPts->GetName() == pOther->GetName())
+								{
+									runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+								}
 							}
 						}
 					}
