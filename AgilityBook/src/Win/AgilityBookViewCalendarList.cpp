@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-24 DRC Added a sort header image.
@@ -167,6 +168,58 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 
 /////////////////////////////////////////////////////////////////////////////
 // List sorting
+
+CAgilityBookViewCalendarList::CSortColumn::CSortColumn(
+	CAgilityBookViewCalendarList* pParent)
+	: m_pParent(pParent)
+	, m_iCol(1)
+{
+}
+
+void CAgilityBookViewCalendarList::CSortColumn::Initialize()
+{
+	int realCol = IO_CAL_START_DATE;
+	realCol = AfxGetApp()->GetProfileInt("Sorting", "Calendar", realCol);
+	int neg = 1;
+	if (0 > realCol)
+	{
+		neg = -1;
+		realCol *= -1;
+	}
+	int col = LookupColumn(realCol);
+	if (0 > m_iCol)
+		col = LookupColumn(IO_CAL_START_DATE);
+	m_iCol = col * neg;
+}
+
+void CAgilityBookViewCalendarList::CSortColumn::SetColumn(int iCol)
+{
+	m_iCol = iCol;
+	if (0 == iCol)
+		return;
+	int neg = 1;
+	int col = iCol;
+	if (0 > iCol)
+	{
+		neg = -1;
+		col = iCol * -1;
+	}
+	int realCol = m_pParent->m_Columns[col-1] * neg;
+	AfxGetApp()->WriteProfileInt("Sorting", "Calendar", realCol);
+}
+
+int CAgilityBookViewCalendarList::CSortColumn::LookupColumn(int iCol) const
+{
+	size_t n = m_pParent->m_Columns.size();
+	for (size_t i = 0; i < n; ++i)
+	{
+		if (m_pParent->m_Columns[i] == iCol)
+		{
+			return static_cast<int>(i+1);
+		}
+	}
+	return -1;
+}
 
 struct SORT_CAL_INFO
 {
@@ -367,7 +420,7 @@ END_MESSAGE_MAP()
 CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	: m_bSuppressSelect(false)
 	, m_Callback(this)
-	, m_SortColumn(1)
+	, m_SortColumn(this)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 6, 0);
 	CWinApp* app = AfxGetApp();
@@ -508,6 +561,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 			InsertColumn(static_cast<int>(iCol), &col);
 			str.ReleaseBuffer();
 		}
+		m_SortColumn.Initialize();
 	}
 }
 
@@ -608,9 +662,10 @@ void CAgilityBookViewCalendarList::LoadData()
 
 	SORT_CAL_INFO info;
 	info.pThis = this;
-	info.nCol = m_SortColumn;
+	info.nCol = m_SortColumn.GetColumn();
 	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
-	HeaderSort(abs(m_SortColumn)-1, CHeaderCtrl2::eAscending);
+	HeaderSort(abs(m_SortColumn.GetColumn())-1,
+		info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 
 	// Cleanup.
 	if (pCurData)
@@ -683,16 +738,16 @@ void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
 void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	HeaderSort(abs(m_SortColumn)-1, CHeaderCtrl2::eNoSort);
+	HeaderSort(abs(m_SortColumn.GetColumn())-1, CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
-	if (m_SortColumn == pNMListView->iSubItem + 1)
+	if (m_SortColumn.GetColumn() == pNMListView->iSubItem + 1)
 		nBackwards = -1;
-	m_SortColumn = (pNMListView->iSubItem + 1) * nBackwards;
+	m_SortColumn.SetColumn((pNMListView->iSubItem + 1) * nBackwards);
 	SORT_CAL_INFO info;
 	info.pThis = this;
-	info.nCol = m_SortColumn;
+	info.nCol = m_SortColumn.GetColumn();
 	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
-	HeaderSort(abs(m_SortColumn)-1,
+	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
 }

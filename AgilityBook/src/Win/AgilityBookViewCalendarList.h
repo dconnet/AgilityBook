@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-15 DRC Added Duplicate menu item.
@@ -66,6 +67,9 @@ class CAgilityBookViewCalendarList : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewCalendarData;
 	friend class CFindCalendar;
+	// Note: VC7 can do "friend class CSortColumn", but VC6 needs the following
+	class CSortColumn;
+	friend class CAgilityBookViewCalendarList::CSortColumn;
 	friend int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 protected: // create from serialization only
 	CAgilityBookViewCalendarList();
@@ -92,7 +96,18 @@ private:
 	int m_imgPlanTentative;
 	int m_imgEntered;
 	int m_imgEnteredTentative;
-	int m_SortColumn;
+	class CSortColumn
+	{
+	public:
+		CSortColumn(CAgilityBookViewCalendarList* pParent);
+		void Initialize();
+		int GetColumn() const		{return m_iCol;}
+		void SetColumn(int iCol);
+	private:
+		int LookupColumn(int iCol) const;
+		CAgilityBookViewCalendarList* m_pParent;
+		int m_iCol;
+	} m_SortColumn;
 
 protected:
 	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-06 DRC Added simple sorting by column.
@@ -65,6 +66,9 @@ class CAgilityBookViewRuns : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewRunsData;
 	friend class CFindRuns;
+	// Note: VC7 can do "friend class CSortColumn", but VC6 needs the following
+	class CSortColumn;
+	friend class CAgilityBookViewRuns::CSortColumn;
 	friend int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 protected: // create from serialization only
 	CAgilityBookViewRuns();
@@ -111,7 +115,18 @@ private:
 	std::vector<int> m_Columns;
 	bool m_bSuppressSelect;
 	CFindRuns m_Callback;
-	int m_SortColumn;
+	class CSortColumn
+	{
+	public:
+		CSortColumn(CAgilityBookViewRuns* pParent);
+		void Initialize();
+		int GetColumn() const		{return m_iCol;}
+		void SetColumn(int iCol);
+	private:
+		int LookupColumn(int iCol) const;
+		CAgilityBookViewRuns* m_pParent;
+		int m_iCol;
+	} m_SortColumn;
 
 // Generated message map functions
 protected:

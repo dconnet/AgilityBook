@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-15 DRC Added Duplicate menu item.
@@ -67,6 +68,9 @@ class CAgilityBookViewTraining : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewTrainingData;
 	friend class CFindTraining;
+	// Note: VC7 can do "friend class CSortColumn", but VC6 needs the following
+	class CSortColumn;
+	friend class CAgilityBookViewTraining::CSortColumn;
 	friend int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 protected: // create from serialization only
 	CAgilityBookViewTraining();
@@ -108,7 +112,18 @@ public:
 private:
 	std::vector<int> m_Columns;
 	CFindTraining m_Callback;
-	int m_SortColumn;
+	class CSortColumn
+	{
+	public:
+		CSortColumn(CAgilityBookViewTraining* pParent);
+		void Initialize();
+		int GetColumn() const		{return m_iCol;}
+		void SetColumn(int iCol);
+	private:
+		int LookupColumn(int iCol) const;
+		CAgilityBookViewTraining* m_pParent;
+		int m_iCol;
+	} m_SortColumn;
 
 // Generated message map functions
 protected:

@@ -1,7 +1,4 @@
-Last Updated: 1/1/2005
-
-- Remember which field is sorted in the main views between program
-  invocation.
+Last Updated: 1/25/2005
 
 - Fix printing so it wraps multi-line text.
 
