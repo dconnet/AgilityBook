@@ -54,6 +54,7 @@ private:
 	BOOL m_bHasPartners;
 	CString	m_Desc;
 	CButton m_ctrlNew;
+	CButton m_ctrlCopy;
 	CButton m_ctrlDelete;
 	CButton m_ctrlUp;
 	CButton m_ctrlDown;
@@ -104,10 +105,12 @@ protected:
 	//{{AFX_MSG(CDlgConfigEvent)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedNew();
+	afx_msg void OnBnClickedCopy();
 	afx_msg void OnBnClickedDelete();
 	afx_msg void OnBnClickedUp();
 	afx_msg void OnBnClickedDown();
 	afx_msg void OnValidFrom();
+	afx_msg void OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLbnSelchangeMethods();
 	afx_msg void OnCbnSelchangeDivision();
 	afx_msg void OnCbnSelchangeLevel();

@@ -212,6 +212,7 @@
 #define IDC_WIZARD_PREVIEW              1161
 #define IDC_COLUMNS                     1162
 #define IDC_AVAILABLE                   1163
+#define IDC_COPY                        1164
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -414,7 +415,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1169
+#define _APS_NEXT_CONTROL_VALUE         1165
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
