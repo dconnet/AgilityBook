@@ -50,9 +50,13 @@ using namespace std;
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#pragma warning ( disable : 4311 4312 )
+#if _MSC_VER >= 1300
+
+// As long as sizeof(void*) == sizeof(DWORD), we're ok...
+// VC7's default warns about 64bit compatibility issues.
 // warning C4311: 'type cast' : pointer truncation from 'PVOID' to 'DWORD'
 // warning C4312: 'type cast' : conversion from 'DWORD' to 'HINSTANCE' of greater size
+#pragma warning ( disable : 4311 4312 )
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +66,7 @@ static HKEY g_hAppKey = NULL;
 // things on the stack.
 #define BUFF_SIZE 1024
 static TCHAR g_szBuff[BUFF_SIZE];
+static TCHAR g_szBuff2[BUFF_SIZE];
 // The static symbol lookup buffer. This gets casted to make it work.
 #define SYM_BUFF_SIZE 512
 static BYTE g_stSymbol[SYM_BUFF_SIZE];
@@ -676,135 +681,124 @@ static LPCTSTR GetNextStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 	return InternalGetStackTraceString(pExPtrs);
 }
 
+#define PRINT_INDENT	for (int indent = 0; indent < inIndent; ++indent) fputc(' ', output);
+
 // This function does put a bit of data on the stack and heap.
 // Hopefully it won't cause more trouble... So we log this data last.
-static void QueryKey(ofstream& output, HKEY hKey, int indent)
+static void QueryKey(FILE* output, HKEY hKey, int inIndent)
 {
-	CString strIndent(' ', indent);
-	DWORD numSubKeys = 0;
-	DWORD maxSubKeyName = 0;
-	DWORD numValues = 0;
-	DWORD maxValueName = 0;
-	DWORD maxValueData = 0;
-	if (ERROR_SUCCESS == RegQueryInfoKey(hKey, NULL, NULL, NULL,
-		&numSubKeys, &maxSubKeyName,
-		NULL,
-		&numValues, &maxValueName, &maxValueData,
-		NULL, NULL))
-	{
-		// Enumerate the subkeys, recursively.
-		if (0 < numSubKeys)
-		{
-			TCHAR* nameSubKey = new TCHAR[maxSubKeyName+1];
-			for (DWORD i = 0; i < numSubKeys; ++i)
-			{
-				DWORD nameSubKeyLen = maxSubKeyName + 1;
-				if (ERROR_SUCCESS == RegEnumKeyEx(hKey, i,
-					nameSubKey, &nameSubKeyLen, NULL, NULL, NULL, NULL))
-				{
-					HKEY hSubKey;
-					if (ERROR_SUCCESS == RegOpenKeyEx(hKey, nameSubKey, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
-					{
-						output << (LPCTSTR)strIndent << nameSubKey << endl;
-						QueryKey(output, hSubKey, indent + 1);
-						RegCloseKey(hSubKey);
-					}
-				}
-			}
-			delete [] nameSubKey;
-		}
+	if (!hKey)
+		return;
+	// Prevent recursion from going too deep.
+	if (3 < inIndent)
+		return;
 
-		// Enumerate the key values.
-		if (numValues)
+	DWORD i;
+	DWORD dwLen;
+	// Enumerate the subkeys, recursively.
+	for (i = 0; ; ++i)
+	{
+		dwLen = BUFF_SIZE;
+		// A key name max size is 255.
+		if (ERROR_SUCCESS != RegEnumKeyEx(hKey, i, g_szBuff, &dwLen, NULL, NULL, NULL, NULL))
+			break;
+		HKEY hSubKey;
+		if (ERROR_SUCCESS == RegOpenKeyEx(hKey, g_szBuff, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
 		{
-			TCHAR* valueName = new TCHAR[maxValueName + 1];
-			TCHAR* valueData = new TCHAR[maxValueData + 2];
-			for (DWORD i = 0; i < numValues; ++i)
+			PRINT_INDENT
+			fputs(g_szBuff, output);
+			fputs("\n", output);
+			QueryKey(output, hSubKey, inIndent + 1);
+			RegCloseKey(hSubKey);
+		}
+	}
+
+	// Enumerate the key values.
+	for (i = 0; ; ++i)
+	{
+		dwLen = BUFF_SIZE;
+		DWORD type;
+		if (ERROR_SUCCESS != RegEnumValue(hKey, i,
+			g_szBuff, &dwLen, NULL,
+			&type, NULL, NULL))
+		{
+			break;
+		}
+		bool bOk = false;
+		TCHAR* pType = "??";
+		switch (type)
+		{
+		default:
+			break;
+		case REG_BINARY:
+			pType = "BINARY";
+			break;
+		//REG_DWORD_LITTLE_ENDIAN == REG_DWORD
+		case REG_DWORD_BIG_ENDIAN:
+			pType = "DWORD_BIG_ENDIAN";
+			break;
+		case REG_LINK:
+			pType = "LINK";
+			break;
+		case REG_MULTI_SZ:
+			pType = "MULTI_SZ";
+			break;
+		case REG_NONE:
+			pType = "NONE";
+			break;
+		case REG_QWORD:
+		//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
+			pType = "QWORD";
+			break;
+		case REG_DWORD:
+			pType = "DWORD";
 			{
-				valueName[0] = '\0';
-				DWORD dwSize = maxValueName + 1;
-				DWORD type;
-				if (ERROR_SUCCESS == RegEnumValue(hKey, i,
-					valueName, &dwSize, NULL,
-					&type, NULL, NULL))
+				DWORD dwVal;
+				dwLen = sizeof(dwVal);
+				if (ERROR_SUCCESS == RegQueryValueEx(hKey, g_szBuff, NULL, &type, (LPBYTE)&dwVal, &dwLen))
 				{
-					bool bOk = false;
-					TCHAR* pType = "??";
-					switch (type)
-					{
-					default:
-						break;
-					case REG_BINARY:
-						pType = "BINARY";
-						break;
-					//REG_DWORD_LITTLE_ENDIAN == REG_DWORD
-					case REG_DWORD_BIG_ENDIAN:
-						pType = "DWORD_BIG_ENDIAN";
-						break;
-					case REG_LINK:
-						pType = "LINK";
-						break;
-					case REG_MULTI_SZ:
-						pType = "MULTI_SZ";
-						break;
-					case REG_NONE:
-						pType = "NONE";
-						break;
-					case REG_QWORD:
-					//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
-						pType = "QWORD";
-						break;
-					case REG_DWORD:
-						pType = "DWORD";
-						{
-							DWORD dwVal;
-							dwSize = sizeof(dwVal);
-							if (ERROR_SUCCESS == RegQueryValueEx(hKey, valueName, NULL, &type, (LPBYTE)&dwVal, &dwSize))
-							{
-								bOk = true;
-								output << (LPCTSTR)strIndent
-									<< valueName
-									<< '('
-									<< pType
-									<< "): "
-									<< dwVal
-									<< endl;
-							}
-						}
-						break;
-					case REG_EXPAND_SZ:
-					case REG_SZ:
-						if (REG_EXPAND_SZ == type)
-							pType = "EXPAND_SZ";
-						else
-							pType = "SZ";
-						dwSize = maxValueData + 2;
-						if (ERROR_SUCCESS == RegQueryValueEx(hKey, valueName, NULL, &type, (LPBYTE)valueData, &dwSize))
-						{
-							bOk = true;
-							output << (LPCTSTR)strIndent
-								<< valueName
-								<< '('
-								<< pType
-								<< "): "
-								<< valueData
-								<< endl;
-						}
-						break;
-					}
-					if (!bOk)
-					{
-						output << (LPCTSTR)strIndent
-							<< valueName
-							<< '('
-							<< pType
-							<< ')'
-							<< endl;
-					}
+					bOk = true;
+					PRINT_INDENT
+					fputs(g_szBuff, output);
+					fputs("(", output);
+					fputs(pType, output);
+					fputs("): ", output);
+					fprintf(output, "%08x\n", dwVal);
 				}
 			}
-			delete [] valueName;
-			delete [] valueData;
+			break;
+		case REG_EXPAND_SZ:
+		case REG_SZ:
+			if (REG_EXPAND_SZ == type)
+				pType = "EXPAND_SZ";
+			else
+				pType = "SZ";
+			{
+				dwLen = BUFF_SIZE;
+				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, (LPBYTE)g_szBuff2, &dwLen);
+				if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
+				{
+					bOk = true;
+					PRINT_INDENT
+					fputs(g_szBuff, output);
+					fputs("(", output);
+					fputs(pType, output);
+					fputs("): ", output);
+					fputs(g_szBuff2, output);
+					if (ERROR_MORE_DATA == dwRet)
+						fputs("...", output);
+					fputs("\n", output);
+				}
+			}
+			break;
+		}
+		if (!bOk)
+		{
+			PRINT_INDENT
+			fputs(g_szBuff, output);
+			fputs("(", output);
+			fputs(pType, output);
+			fputs(")\n", output);
 		}
 	}
 }
@@ -818,68 +812,78 @@ LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 	LPCTSTR pReason = GetFaultReason(pExPtrs);
 
 	// Create the log file.
-	static TCHAR buffer[MAX_PATH]; // static to keep off stack
 	{
-		GetModuleFileName(NULL, buffer, MAX_PATH);
-		int len = lstrlen(buffer);
+		GetModuleFileName(NULL, g_szBuff2, BUFF_SIZE);
+		int len = lstrlen(g_szBuff2);
 		if (5 > len)
 		{
 			AfxMessageBox(pReason, MB_ICONSTOP);
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
-		lstrcpy(&buffer[len-3], "log");
+		lstrcpy(&g_szBuff2[len-3], "log");
 	}
-	ofstream output(buffer, ios::app);
-	output.exceptions(ios_base::badbit);
+	FILE* output = fopen(g_szBuff2, "a+");
 
-	// Need to copy this since it's sitting in a global buffer.
+	// Need to copy pReason since it's sitting in a global buffer.
 	// We don't display it until after we've written the log.
 	static TCHAR reasonBuffer[BUFF_SIZE+MAX_PATH+30];
 	lstrcpy(reasonBuffer, pReason);
 
 	// Now dump the stack.
-	if (!(output.rdstate() & ios::failbit))
+	if (output)
 	{
+		// Add some info to display.
 		lstrcat(reasonBuffer, "\n\nLog written at ");
-		lstrcat(reasonBuffer, buffer);
+		lstrcat(reasonBuffer, g_szBuff2);
 
 		time_t t;
 		time(&t);
 		struct tm* local = localtime(&t);
-		_tcsftime(buffer, MAX_PATH, _T("%#c"), local);
-		output << endl << "============================================================" << endl;
-		output << buffer << endl << endl;
+		_tcsftime(g_szBuff2, MAX_PATH, _T("%#c"), local);
+		fputs("\n============================================================\n", output);
+		fputs(g_szBuff2, output);
+		fputs("\n\n", output);
 		// Write the reason
-		output << pReason << endl << endl;
+		fputs(pReason, output);
+		fputs("\n\n", output);
 		// Now re-use the variable
 		for (pReason = GetFirstStackTraceString(pExPtrs);
 			pReason;
 			pReason = GetNextStackTraceString(pExPtrs))
 		{
-			output << pReason << endl;
+			fputs(pReason, output);
+			fputs("\n", output);
 		}
 		// Since we are handling an unhandled exception, there is a very
 		// real danger that the application is in an extremely unstable
 		// state. So dump the registry settings last just in case we die.
-		output << endl << "Current registry settings:" << endl;
+		fputs("\nCurrent registry settings:\n", output);
 		QueryKey(output, g_hAppKey, 1);
-		output.close();
+		fclose(output);
 	}
 
 	AfxMessageBox(reasonBuffer, MB_ICONSTOP);
 	return EXCEPTION_EXECUTE_HANDLER;
 }
+#endif
 
 bool InitCrashHandler(HKEY hAppKey)
 {
+#if _MSC_VER >= 1300
 	g_hAppKey = hAppKey;
 	SetUnhandledExceptionFilter(CrashHandler);
+#endif
 	return true;
 }
 
 bool CleanupCrashHandler()
 {
+#if _MSC_VER >= 1300
 	if (g_hAppKey != NULL)
+	{
 		RegCloseKey(g_hAppKey);
+		g_hAppKey = NULL;
+	}
+#endif
 	return true;
 }
