@@ -660,7 +660,7 @@ END_MESSAGE_MAP()
 BOOL CDlgListViewer::OnInitDialog() 
 {
 	CDlgBaseDialog::OnInitDialog();
-	m_ctrlList.SetExtendedStyle(m_ctrlList.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlList.SetExtendedStyle(m_ctrlList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog

@@ -316,9 +316,9 @@ int CDlgConfigure::FindCurrentOtherPoints(ARBConfigOtherPoints const* pOther, bo
 BOOL CDlgConfigure::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
-	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
-	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlVenues.InsertColumn(0, "Venues");
 	m_ctrlVenues.InsertColumn(1, "Description");
 	m_ctrlFaults.InsertColumn(0, "Faults");

@@ -599,8 +599,8 @@ CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
 BOOL CDlgConfigVenue::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-	m_ctrlDivisions.SetExtendedStyle(m_ctrlDivisions.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
-	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlDivisions.SetExtendedStyle(m_ctrlDivisions.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlDivisions.InsertColumn(0, "Divisions");
 	m_ctrlTitles.InsertColumn(0, "Titles");
 	m_ctrlEvents.InsertColumn(0, "Events");

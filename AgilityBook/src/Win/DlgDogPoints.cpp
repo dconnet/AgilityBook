@@ -273,7 +273,7 @@ void CDlgDogPoints::UpdateButtons()
 BOOL CDlgDogPoints::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	m_ctrlPoints.SetExtendedStyle(m_ctrlPoints.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlPoints.SetExtendedStyle(m_ctrlPoints.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
