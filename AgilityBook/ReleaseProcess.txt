@@ -16,7 +16,8 @@ Files to change before marking files for release:
 - Todo.txt
   Any necessary changes...
 - Update CD Label (SureThing CD Labeler Deluxe v3.12)
-  
+- Update help\html\images\DlgAbout.gif
+
 Run Doxygen and fix any warnings/errors it reports.
   - cd ...\AgilityBook
   - doxygen AgilityBook.dox
