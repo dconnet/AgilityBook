@@ -58,6 +58,7 @@ class ARBTraining;
 class CAgilityBookTree;
 class CAgilityBookViewCalendar;
 class CAgilityBookViewCalendarList;
+class CAgilityBookViewTraining;
 class CTabView;
 struct CVenueFilter;
 
@@ -138,6 +139,7 @@ public:
 	CAgilityBookTree* GetTreeView() const;
 	CAgilityBookViewCalendarList* GetCalendarListView() const;
 	CAgilityBookViewCalendar* GetCalendarView() const;
+	CAgilityBookViewTraining* GetTrainingView() const;
 
 // Overrides
 public:
