@@ -56,6 +56,7 @@
  *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
+ * @li 2004-08-14 DRC Fixed a problem dbl-clicking when nothing was selected.
  * @li 2004-04-29 DRC Changed the way events are displayed (from tree to list).
  * @li 2004-02-09 DRC Fixed some bugs when creating/modifying venues.
  * @li 2004-02-02 DRC Added ExistingPoints.
@@ -833,7 +834,6 @@ void CDlgConfigVenue::OnNew()
 			CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
 			if (!pDivData)
 				return;
-
 			while (!done)
 			{
 				done = true;
@@ -1088,6 +1088,8 @@ void CDlgConfigVenue::OnEdit()
 	case eDivisions:
 		{
 			CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
+			if (!pDivData)
+				return;
 			bool done = false;
 			std::string oldName = pDivData->GetDivision()->GetName();
 			std::string name(oldName);
@@ -1221,6 +1223,8 @@ void CDlgConfigVenue::OnEdit()
 	case eTitles:
 		{
 			CDlgConfigureDataTitle* pTitleData = GetCurrentTitleData();
+			if (!pTitleData)
+				return;
 			bool done = false;
 			std::string oldName = pTitleData->GetTitle()->GetName();
 			std::string oldLongName = pTitleData->GetTitle()->GetLongName();
@@ -1280,9 +1284,9 @@ void CDlgConfigVenue::OnEdit()
 	case eEvents:
 		{
 			CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-			ARBConfigEvent* pEvent = NULL;
-			if (pEventData)
-				pEvent = pEventData->GetEvent();
+			if (!pEventData)
+				return;
+			ARBConfigEvent* pEvent = pEventData->GetEvent();
 			std::string event = pEvent->GetName();
 			CDlgConfigEvent dlg(m_pVenue, pEvent, this);
 			pEvent->AddRef();
@@ -1316,6 +1320,7 @@ void CDlgConfigVenue::OnCopy()
 			int index;
 			if (0 <= (index = m_ctrlEvents.GetSelection()))
 			{
+				// Since index is valid, I know pEventData will be too.
 				CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
 				CString copyOf;
 				copyOf.LoadString(IDS_COPYOF);

@@ -1,4 +1,4 @@
-8/11/2004: v1.2.2.8 <in development>
+8/14/2004: v1.2.2.8 <in development>
 - Bumped Configuration v5:
   - Removed titling points from USDAA Tournament Jumper/Snooker.
 - New features / Enhancements:
@@ -12,6 +12,8 @@
 - Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.
+  - If you dbl-clicked in some of the configuration dialogs when nothing was
+    selected, the program faulted.
 
 7/3/2004: v1.2.1.8
 - Bug fixes

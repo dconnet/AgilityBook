@@ -1,8 +1,4 @@
-Last Updated: 7/26/04
-
-- Change auto-config check to only check against highest known version. Highest
-  known is set when doing an update check. That way we don't run a web-check
-  every time a document is opened.
+Last Updated: 8/14/04
 
 - Add importing dog/trials/runs in ARB format.
 
