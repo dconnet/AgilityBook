@@ -856,6 +856,21 @@
 				RelativePath="..\..\..\ARB\Element.h">
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\..\..\History.txt">
+		</File>
+		<File
+			RelativePath="..\..\..\..\License.txt">
+		</File>
+		<File
+			RelativePath="..\..\..\..\Readme.txt">
+		</File>
+		<File
+			RelativePath="..\..\..\..\ReleaseProcess.txt">
+		</File>
+		<File
+			RelativePath="..\..\..\..\Todo.txt">
+		</File>
 	</Files>
 	<Globals>
 		<Global

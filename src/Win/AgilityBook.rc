@@ -686,26 +686,29 @@ BEGIN
     PUSHBUTTON      "&Delete",IDC_DELETE,103,163,45,14
 END
 
-IDD_TITLE DIALOG  0, 0, 210, 130
+IDD_TITLE DIALOGEX 0, 0, 220, 140
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "&Date Earned",IDC_STATIC,7,9,41,8
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,55,7,60,12
-    LTEXT           "&Venue",IDC_STATIC,7,27,22,8
-    COMBOBOX        IDC_VENUES,35,25,80,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Venue",IDC_STATIC,7,26,22,8
+    COMBOBOX        IDC_VENUES,35,24,80,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Title",IDC_STATIC,7,45,14,8
-    COMBOBOX        IDC_TITLES,25,43,120,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Title",IDC_STATIC,7,44,14,8
+    COMBOBOX        IDC_TITLES,25,42,120,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "&Received",IDC_RECEIVED,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,153,45,47,10
-    EDITTEXT        IDC_DESC,7,62,196,61,ES_MULTILINE | ES_READONLY | 
+                    WS_TABSTOP,163,45,47,10
+    CONTROL         "&Hide required titles where the higher title was earned",
+                    IDC_HIDE_OLD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,58,
+                    180,10
+    EDITTEXT        IDC_DESC,7,72,206,61,ES_MULTILINE | ES_READONLY | 
                     WS_VSCROLL | WS_HSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,153,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,153,24,50,14
+    DEFPUSHBUTTON   "OK",IDOK,163,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,163,24,50,14
 END
 
 IDD_REG_NUM DIALOG  0, 0, 180, 100
@@ -1527,9 +1530,9 @@ BEGIN
     IDD_TITLE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 203
+        RIGHTMARGIN, 213
         TOPMARGIN, 7
-        BOTTOMMARGIN, 123
+        BOTTOMMARGIN, 133
     END
 
     IDD_REG_NUM, DIALOG

@@ -1,5 +1,9 @@
 Last Updated: 2/3/04
 
+- Handle rename/delete of config title items - need to propagate changes
+  into the required things. Keep title required items limited within
+  a division. (should add some checks to make sure in ARBlib)
+
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,
   plus GP). This is currently handled manually via OtherPoints. It would be

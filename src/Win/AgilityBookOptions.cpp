@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-11 DRC Added GetHideRequiredTitles.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-29 DRC Created default column orders.
@@ -761,6 +762,20 @@ CString CAgilityBookOptions::GetLastEnteredHandler()
 void CAgilityBookOptions::SetLastEnteredHandler(const char* inLast)
 {
 	AfxGetApp()->WriteProfileString("Last", "Handler", inLast);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Titles options
+
+bool CAgilityBookOptions::GetHideRequiredTitles()
+{
+	int val = AfxGetApp()->GetProfileInt("Titles", "HideReq", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetHideRequiredTitles(bool bHide)
+{
+	AfxGetApp()->WriteProfileInt("Titles", "HideReq", bHide ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

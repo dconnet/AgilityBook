@@ -215,8 +215,7 @@ bool ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew, st
 				else
 				{
 					++nChanged;
-					pTitle->SetLongName((*iterTitle)->GetLongName());
-					pTitle->SetDescription((*iterTitle)->GetDescription());
+					*pTitle = *(*iterTitle);
 				}
 			}
 			else
