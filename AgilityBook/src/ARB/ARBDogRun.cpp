@@ -67,7 +67,6 @@ ARBDogRun::ARBDogRun()
 	, m_Level()
 	, m_Height()
 	, m_Event()
-	, m_SubCategory()
 	, m_Conditions()
 	, m_Judge()
 	, m_Handler()
@@ -90,7 +89,6 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	, m_Level(rhs.m_Level)
 	, m_Height(rhs.m_Height)
 	, m_Event(rhs.m_Event)
-	, m_SubCategory(rhs.m_SubCategory)
 	, m_Conditions(rhs.m_Conditions)
 	, m_Judge(rhs.m_Judge)
 	, m_Handler(rhs.m_Handler)
@@ -120,7 +118,6 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 		m_Level = rhs.m_Level;
 		m_Height = rhs.m_Height;
 		m_Event = rhs.m_Event;
-		m_SubCategory = rhs.m_SubCategory;
 		m_Conditions = rhs.m_Conditions;
 		m_Judge = rhs.m_Judge;
 		m_Handler = rhs.m_Handler;
@@ -145,7 +142,6 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 		&& m_Level == rhs.m_Level
 		&& m_Height == rhs.m_Height
 		&& m_Event == rhs.m_Event
-		&& m_SubCategory == rhs.m_SubCategory
 		&& m_Conditions == rhs.m_Conditions
 		&& m_Judge == rhs.m_Judge
 		&& m_Handler == rhs.m_Handler
@@ -175,11 +171,6 @@ std::string ARBDogRun::GetGenericName() const
 	name += m_Level;
 	name += ' ';
 	name += m_Event;
-	if (0 < m_SubCategory.length())
-	{
-		name += ' ';
-		name += m_SubCategory;
-	}
 	return name;
 }
 
@@ -211,12 +202,6 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::string>& ioStrings) const
 	if (0 < m_Event.length())
 	{
 		ioStrings.insert(m_Event);
-		++nItems;
-	}
-
-	if (0 < m_SubCategory.length())
-	{
-		ioStrings.insert(m_SubCategory);
 		++nItems;
 	}
 
@@ -295,8 +280,6 @@ bool ARBDogRun::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
 		return false;
 	}
-
-	inTree.GetAttrib(ATTRIB_RUN_SUBCAT, m_SubCategory);
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
@@ -386,8 +369,6 @@ bool ARBDogRun::Save(Element& ioTree) const
 	run.AddAttrib(ATTRIB_RUN_LEVEL, m_Level);
 	run.AddAttrib(ATTRIB_RUN_HEIGHT, m_Height);
 	run.AddAttrib(ATTRIB_RUN_EVENT, m_Event);
-	if (0 < m_SubCategory.length())
-		run.AddAttrib(ATTRIB_RUN_SUBCAT, m_SubCategory);
 	if (0 < m_Conditions.length())
 	{
 		Element& element = run.AddElement(TREE_CONDITIONS);

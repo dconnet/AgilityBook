@@ -66,7 +66,6 @@ private:
 	CComboBox	m_ctrlDivisions;
 	CComboBox	m_ctrlLevels;
 	CComboBox	m_ctrlEvents;
-	CComboBox	m_ctrlSubCat;
 	CComboBox	m_ctrlHeight;
 	CString	m_Height;
 	CComboBox	m_ctrlJudge;
@@ -146,7 +145,6 @@ private:
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();
-	void FillSubCategory();
 	void SetPartnerText();
 	void SetYPS();
 	void SetTotalFaults();
@@ -164,7 +162,6 @@ protected:
 	afx_msg void OnSelchangeDivision();
 	afx_msg void OnSelchangeLevel();
 	afx_msg void OnSelchangeEvent();
-	afx_msg void OnSelchangeSubCat();
 	afx_msg void OnPartnersEdit();
 	afx_msg void OnOtherpoints();
 	afx_msg void OnKillfocusFaults();

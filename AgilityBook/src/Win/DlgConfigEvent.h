@@ -60,10 +60,6 @@ private:
 	CString m_Name;
 	BOOL	m_bHasTable;
 	BOOL	m_bHasPartners;
-	CListBox2	m_ctrlSubCat;
-	CButton	m_ctrlSubCatNew;
-	CButton	m_ctrlSubCatEdit;
-	CButton	m_ctrlSubCatDelete;
 	CString	m_Desc;
 	CButton m_ctrlNew;
 	CButton m_ctrlCopy;
@@ -123,11 +119,6 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgConfigEvent)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeSubCat();
-	afx_msg void OnDblclkSubCat();
-	afx_msg void OnSubCatNew();
-	afx_msg void OnSubCatEdit();
-	afx_msg void OnSubCatDelete();
 	afx_msg void OnBnClickedNew();
 	afx_msg void OnBnClickedCopy();
 	afx_msg void OnBnClickedDelete();

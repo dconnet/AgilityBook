@@ -150,7 +150,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_RUNSCORE_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_RUNSCORE_EVENT, m_ctrlEvents);
-	DDX_Control(pDX, IDC_RUNSCORE_SUBCAT, m_ctrlSubCat);
 	DDX_Control(pDX, IDC_RUNSCORE_HEIGHT, m_ctrlHeight);
 	DDX_CBString(pDX, IDC_RUNSCORE_HEIGHT, m_Height);
 	DDX_Control(pDX, IDC_RUNSCORE_JUDGE, m_ctrlJudge);
@@ -226,7 +225,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Conditions.TrimLeft();
 
 		CString str;
-		std::string div, level, event, subcat;
+		std::string div, level, event;
 
 		pDX->PrepareCtrl(m_ctrlDivisions.GetDlgCtrlID());
 		int index = m_ctrlDivisions.GetCurSel();
@@ -281,14 +280,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 		event = (LPCSTR)str;
 
-		pDX->PrepareCtrl(m_ctrlSubCat.GetDlgCtrlID());
-		index = m_ctrlSubCat.GetCurSel();
-		if (CB_ERR != index)
-		{
-			m_ctrlSubCat.GetLBText(index, str);
-			subcat = (LPCSTR)str;
-		}
-
 		pDX->PrepareCtrl(m_ctrlJudge.GetDlgCtrlID());
 		if (m_Judge.IsEmpty())
 		{
@@ -330,7 +321,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetDivision(div);
 		m_Run->SetLevel(level);
 		m_Run->SetEvent(event);
-		m_Run->SetSubCategory(subcat);
 		m_Run->SetHeight((LPCSTR)m_Height);
 		m_Run->SetJudge((LPCSTR)m_Judge);
 		m_Run->SetHandler((LPCSTR)m_Handler);
@@ -383,7 +373,6 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_DIVISION, OnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_LEVEL, OnSelchangeLevel)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_EVENT, OnSelchangeEvent)
-	ON_CBN_SELCHANGE(IDC_RUNSCORE_SUBCAT, OnSelchangeSubCat)
 	ON_BN_CLICKED(IDC_RUNSCORE_PARTNERS_EDIT, OnPartnersEdit)
 	ON_BN_CLICKED(IDC_RUNSCORE_OTHERPOINTS, OnOtherpoints)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_FAULTS, OnKillfocusFaults)
@@ -570,30 +559,7 @@ void CDlgRunScore::FillEvents()
 			}
 		}
 	}
-	FillSubCategory();
 	UpdateControls();
-}
-
-void CDlgRunScore::FillSubCategory()
-{
-	m_ctrlSubCat.ResetContent();
-	ARBConfigEvent const* pEvent = GetEvent();
-	if (pEvent)
-	{
-		std::vector<std::string> const& subcat = pEvent->GetSubCategories();
-		if (0 < subcat.size())
-		{
-			m_ctrlSubCat.AddString("");
-			for (std::vector<std::string>::const_iterator iter = subcat.begin();
-			iter != subcat.end();
-			++iter)
-			{
-				int idx = m_ctrlSubCat.AddString((*iter).c_str());
-				if (*iter == m_Run->GetSubCategory())
-					m_ctrlSubCat.SetCurSel(idx);
-			}
-		}
-	}
 }
 
 void CDlgRunScore::SetPartnerText()
@@ -731,7 +697,6 @@ void CDlgRunScore::SetTitlePoints()
 
 void CDlgRunScore::UpdateControls(bool bOnEventChange)
 {
-	m_ctrlSubCat.EnableWindow(FALSE);
 	m_ctrlHeight.EnableWindow(FALSE);
 	m_ctrlJudge.EnableWindow(FALSE);
 	m_ctrlHandler.EnableWindow(FALSE);
@@ -779,10 +744,6 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	}
 
 	ARBConfigEvent const* pEvent = GetEvent();
-	if (0 < pEvent->GetSubCategories().size())
-	{
-		m_ctrlSubCat.EnableWindow(TRUE);
-	}
 
 	CString str;
 	m_ctrlHeight.GetWindowText(str);
@@ -1068,13 +1029,7 @@ void CDlgRunScore::OnSelchangeLevel()
 
 void CDlgRunScore::OnSelchangeEvent()
 {
-	FillSubCategory();
 	UpdateControls(true);
-}
-
-void CDlgRunScore::OnSelchangeSubCat()
-{
-	UpdateControls();
 }
 
 void CDlgRunScore::OnPartnersEdit() 

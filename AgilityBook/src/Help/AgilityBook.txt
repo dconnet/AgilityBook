@@ -98,19 +98,6 @@ Enable/disable the setting of a date. This allows for evolving rule changes.
 .topic HIDC_CONFIG_EVENT_DELETE
 Delete the selected scoring method.
 
-.topic HIDC_CONFIG_EVENT_SUBCAT
-List of subcategories.
-These allow subtotaling points (for instance, NADAC Gamblers).
-
-.topic HIDC_CONFIG_EVENT_SUBCAT_NEW
-Create a new subcategory.
-
-.topic HIDC_CONFIG_EVENT_SUBCAT_EDIT
-Edit the selected subcategory.
-
-.topic HIDC_CONFIG_EVENT_SUBCAT_DELETE
-Delete the selected subcategory.
-
 .topic HIDC_CONFIG_EVENT_DESC
 Description of this event.
 

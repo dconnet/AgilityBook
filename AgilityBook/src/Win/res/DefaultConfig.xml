@@ -1177,9 +1177,7 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
-				<SubCat>Contacts</SubCat>
-				<SubCat>Jumps</SubCat>
-				<SubCat>Weaves</SubCat>
+				<Desc>Gamblers changed in 2005. For specified-type gambles, use one of the other 3 defined gamblers events.</Desc>
 				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -1204,6 +1202,27 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
+				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
+					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+			<Event Name="Gamblers - Contacts">
+				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
+					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+			<Event Name="Gamblers - Jumps">
+				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
+					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+			<Event Name="Gamblers - Weaves">
 				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ. For new gamblers runs earned using this style in 2004, simply change the required opening/closing points to 0 when creating a run.</Note>
 					<TitlePoints Faults="0" Points="10"/>
