@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-12 DRC Allow creating a new title.
  * @li 2004-05-27 DRC Changed lifetime points structure to take a string.
  */
 
@@ -137,6 +138,8 @@ protected:
 	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityNewTitle();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
