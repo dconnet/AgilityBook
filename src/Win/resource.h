@@ -315,6 +315,8 @@
 #define IDS_FILEEXT_FNAME_ARB           5143
 #define IDS_FILEEXT_FILTER_ARB          5144
 #define IDS_CREATERUN_FAILED            5145
+#define IDS_CREATETRIAL_FILTERED        5146
+#define IDS_CREATERUN_FILTERED          5147
 #define ID_FILE_IMPORT_CONFIG           32772
 #define ID_FILE_EXPORT                  32773
 #define ID_EDIT_CONFIGURATION           32774

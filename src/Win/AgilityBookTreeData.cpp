@@ -32,6 +32,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-04 DRC When pasting, set document modified flag. Clean up some
+ *                    warning messages when creating/pasting items and a filter
+ *                    is set. (It was saying they weren't added - they were,
+ *                    they just weren't visible.) Also, after adding/editing
+ *                    trials/runs, make sure the items get sorted properly.
  * @li 2003-09-03 DRC When pasting trials/runs, select the new item.
  * @li 2003-08-30 DRC Copy a trial/run in the tree to the clipboard in dual
  *                    form. The internal form allows copying of the entry.
@@ -89,18 +94,29 @@ static bool EditDog(
 	CDlgDog dlg(pTree->GetDocument()->GetConfig(), pDog, pTree);
 	if (IDOK == dlg.DoModal())
 	{
+		bOk = true;
 		if (bAdd)
 		{
 			ARBDog* pNewDog = pTree->GetDocument()->GetDogs().AddDog(pDog);
-			HTREEITEM hItem = pTree->InsertDog(pNewDog);
-			pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-			if (bTreeSelectionSet)
-				*bTreeSelectionSet = true;
+			if (!pNewDog)
+			{
+				bOk = false;
+			}
+			else
+			{
+				HTREEITEM hItem = pTree->InsertDog(pNewDog);
+				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+				if (bTreeSelectionSet)
+					*bTreeSelectionSet = true;
+			}
 		}
 		else
 			pTree->Invalidate();
-		pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
-		bOk = true;
+		// No need to update the tree view here. We don't sort the dogs so
+		// adding a new dog is all set and editing an existing one doesn't
+		// change any ordering.
+		if (bOk)
+			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 	}
 	pDog->Release();
 	return bOk;
@@ -129,29 +145,40 @@ static bool EditTrial(
 	if (IDOK == dlg.DoModal())
 	{
 		bOk = true;
-		LPARAM updateFlags = UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW;
+		std::vector<CVenueFilter> venues;
+		CAgilityBookOptions::GetFilterVenue(venues);
 		if (bAdd)
 		{
-			std::vector<CVenueFilter> venues;
-			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDogTrial* pNewTrial = pDogData->GetDog()->GetTrials().AddTrial(pTrial);
-			pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
-			HTREEITEM hItem = pTree->InsertTrial(pNewTrial, pDogData->GetHTreeItem());
-			if (NULL == hItem)
+			if (!pNewTrial)
 			{
 				bOk = false;
 				AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
 			}
 			else
 			{
-				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-				if (bTreeSelectionSet)
-					*bTreeSelectionSet = true;
+				pDogData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				HTREEITEM hItem = pTree->InsertTrial(pNewTrial, pDogData->GetHTreeItem());
+				if (NULL == hItem)
+				{
+					AfxMessageBox(IDS_CREATETRIAL_FILTERED, MB_ICONSTOP);
+				}
+				else
+				{
+					pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
 			}
 		}
 		else
 		{
-			updateFlags |= UPDATE_TREE_VIEW;
+			pDogData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTree->GetDocument()->ResetVisibility(venues, pTrial);
 			pTree->Invalidate();
 			if (dlg.RunsWereDeleted())
 			{
@@ -159,8 +186,10 @@ static bool EditTrial(
 					*bTreeSelectionSet = true;
 			}
 		}
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
 		if (bOk)
-			pTree->GetDocument()->UpdateAllViews(NULL, updateFlags);
+			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 	}
 	pTrial->Release();
 	return bOk;
@@ -206,33 +235,48 @@ static bool EditRun(
 	if (IDOK == dlg.DoModal())
 	{
 		bOk = true;
+		std::vector<CVenueFilter> venues;
+		CAgilityBookOptions::GetFilterVenue(venues);
 		if (bAdd)
 		{
-			std::vector<CVenueFilter> venues;
-			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDogRun* pNewRun = pTrialData->GetTrial()->GetRuns().AddRun(pRun);
-			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pNewRun);
-			HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
-			if (NULL == hItem)
+			if (!pNewRun)
 			{
 				bOk = false;
 				AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
 			}
 			else
 			{
-				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-				if (bTreeSelectionSet)
-					*bTreeSelectionSet = true;
+				pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pNewRun);
+				// Even though we will reset the tree, go ahead and add/select
+				// the item into the tree here. That will make sure when the
+				// tree is reloaded, that the new item is selected.
+				HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
+				if (NULL == hItem)
+				{
+					if (CAgilityBookOptions::IsFilterEnabled())
+						AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
+				}
+				else
+				{
+					pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
 			}
 		}
 		else
-			pTree->Invalidate();
-		if (bOk)
 		{
 			pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
 		}
+		// We have to update the tree even when we add above as it may have
+		// caused the trial to be reordered.
+		if (bOk)
+			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 	}
 	pRun->Release();
 	return bOk;
@@ -408,31 +452,40 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		if (CLIPDATA == tree.GetName())
 		{
 			ARBDogRun* pRun = new ARBDogRun;
-			if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
+			if (pRun && pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
 				std::vector<CVenueFilter> venues;
 				CAgilityBookOptions::GetFilterVenue(venues);
-				pTrial->GetRuns().AddRun(pRun);
-				m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
-				HTREEITEM hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetHTreeItem());
-				bool bOk = true;
-				if (NULL == hItem)
+				ARBDogRun* pNewRun = pTrial->GetRuns().AddRun(pRun);
+				if (!pNewRun)
 				{
-					bOk = false;
+					bLoaded = false;
 					AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
 				}
 				else
 				{
-					m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-					if (bTreeSelectionSet)
-						*bTreeSelectionSet = true;
-				}
-				if (bOk)
-				{
 					pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-					m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+					m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pNewRun);
+					HTREEITEM hItem = m_pTree->InsertRun(pTrial, pNewRun, GetDataTrial()->GetHTreeItem());
+					bool bOk = true;
+					if (NULL == hItem)
+					{
+						bOk = false;
+						if (CAgilityBookOptions::IsFilterEnabled())
+							AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
+					}
+					else
+					{
+						m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+						if (bTreeSelectionSet)
+							*bTreeSelectionSet = true;
+					}
+					if (bOk)
+					{
+						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+					}
 				}
 			}
 			pRun->Release();
@@ -444,30 +497,38 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		if (CLIPDATA == tree.GetName())
 		{
 			ARBDogTrial* pTrial = new ARBDogTrial;
-			if (pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
+			if (pTrial && pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
 				std::vector<CVenueFilter> venues;
 				CAgilityBookOptions::GetFilterVenue(venues);
-				pDog->GetTrials().AddTrial(pTrial);
-				m_pTree->GetDocument()->ResetVisibility(venues, pTrial);
-				HTREEITEM hItem = m_pTree->InsertTrial(pTrial, GetDataDog()->GetHTreeItem());
-				bool bOk = true;
-				if (NULL == hItem)
+				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pTrial);
+				if (!pNewTrial)
 				{
-					bOk = false;
+					bLoaded = false;
 					AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
 				}
 				else
 				{
-					m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-					if (bTreeSelectionSet)
-						*bTreeSelectionSet = true;
-				}
-				if (bOk)
-				{
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-					m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+					m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+					HTREEITEM hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetHTreeItem());
+					bool bOk = true;
+					if (NULL == hItem)
+					{
+						bOk = false;
+						AfxMessageBox(IDS_CREATETRIAL_FILTERED, MB_ICONSTOP);
+					}
+					else
+					{
+						m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+						if (bTreeSelectionSet)
+							*bTreeSelectionSet = true;
+					}
+					if (bOk)
+					{
+						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+					}
 				}
 			}
 			pTrial->Release();
@@ -542,7 +603,8 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 	default:
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste(bTreeSelectionSet); // Currently this doesn't do anything. CanPaste said no.
+		if (DoPaste(bTreeSelectionSet)) // Currently this doesn't do anything. CanPaste said no.
+			bModified = true;
 		break;
 	case ID_AGILITY_EDIT_DOG:
 		if (EditDog(this, m_pTree, bTreeSelectionSet))
@@ -711,7 +773,8 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 		}
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste(bTreeSelectionSet);
+		if (DoPaste(bTreeSelectionSet))
+			bModified = true;
 		break;
 	case ID_AGILITY_EDIT_TRIAL:
 		if (EditTrial(GetDataDog(), this, m_pTree, bTreeSelectionSet))
@@ -919,7 +982,8 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 		}
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste(bTreeSelectionSet);
+		if (DoPaste(bTreeSelectionSet))
+			bModified = true;
 		break;
 	case ID_AGILITY_EDIT_RUN:
 		if (EditRun(GetDataDog(), GetDataTrial(), this, m_pTree, bTreeSelectionSet))
