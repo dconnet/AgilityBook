@@ -84,6 +84,7 @@
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zi"
 				Optimization="3"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="TRUE"
@@ -98,6 +99,7 @@
 				WarningLevel="4"
 				WarnAsError="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4100;4127;4702"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -106,6 +108,7 @@
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../../../../lib/Win32/VC7"
+				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"/>

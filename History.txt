@@ -8,14 +8,14 @@
     for Level C events.
   - In the calendar view, set the page scrolling size to 4 weeks. It used a
     default value which could scroll multiple pages at a time.
+  - Added debug symbols to the installation to aid any problems that might
+    be found during deployment.
 - Bug fix
   - The splash screen could cause a problem opening a file whose format is
     newer than the current program.
   - When the list viewer dialog is resized, the 'Copy' button doesn't move.
   - When switching options in the export wizard, the description gets out
     of sync.
-  - Only compute MACH points if time and SCT are greater than zero. Also,
-    do not allow negative mach points.
   - Entering an incomplete run (either the time or SCT left at 0) and
     marking the run as a 'Q' would generate Mach points (obviously, way too
     many!). Also, if a run that was over-time was marked as a Q, the program
