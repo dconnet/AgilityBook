@@ -7,6 +7,9 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2004-07-17 DRC Configuration version 5.
                Remove titling points from USDAA Tournament Jumper/Snooker.
+               Added non-titling Performance events for Steeplechase and DAM
+               Team since many clubs offer these. (They will typically be
+               offered using different names.)
 2004-07-03 DRC Configuration version 4.
                CPE 'CADE' changed to 'C-ATE'
                Include new Gamblers class (changed scoring methods)
@@ -1252,6 +1255,9 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="FaultsThenTime">
+					<Note>Non-titling team event a club may offer</Note>
+				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
@@ -1273,6 +1279,9 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				</Scoring>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
+					<Note>Non-titling team event a club may offer</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
@@ -1300,6 +1309,9 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="*" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="OCScoreThenTime">
+					<Note>Non-titling team event a club may offer</Note>
+				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
@@ -1325,6 +1337,9 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
 				<Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidFrom="2004-1-1" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="ScoreThenTime">
+					<Note>Non-titling team event a club may offer</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
@@ -1379,6 +1394,9 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
+					<Note>Non-titling event a club may offer</Note>
 				</Scoring>
 			</Event>
 			<Event Name="Jokers Wild">
