@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-04 DRC Only compute MACH points if time and SCT are >0. Also, do
+ *                    not allow negative mach points.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -456,12 +458,17 @@ short ARBDogRun::GetMachPoints(ARBConfigScoring const* inScoring) const
 		{
 			ARBDouble time = GetScoring().GetTime();
 			ARBDouble sct = GetScoring().GetSCT();
-			ARBDouble diff = sct - time;
-			pts = static_cast<short>(diff);
-			if (1 == GetPlace())
-				pts *= 2;
-			else if (2 == GetPlace())
-				pts = static_cast<short>(pts * 1.5);
+			if (0.0 < time && 0.0 < sct)
+			{
+				ARBDouble diff = sct - time;
+				pts = static_cast<short>(diff);
+				if (0 > pts)
+					pts = 0;
+				if (1 == GetPlace())
+					pts *= 2;
+				else if (2 == GetPlace())
+					pts = static_cast<short>(pts * 1.5);
+			}
 		}
 	}
 	return pts;

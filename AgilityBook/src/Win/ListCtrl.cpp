@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
  * @li 2004-09-09 DRC Added tooltips to header control.
  * @li 2004-09-03 DRC Using the sort icon forced alignment to left.
@@ -605,7 +606,11 @@ void CListView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	CString strTextForHeight("Testing for height");
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	pData->nHeight = 4 * rTest.Height() / 3;
+	if (1 > pData->nHeight)
+		pData->nHeight = 1;
 	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
+	if (1 > pData->nLinesPerPage)
+		pData->nLinesPerPage = 1;
 	pData->nPages = (GetListCtrl().GetItemCount() + 1) / pData->nLinesPerPage + 1;
 	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
 	//	pData->nLinesPerPage,
