@@ -111,12 +111,13 @@ void CDlgNameDesc::OnOK()
 	m_Desc.TrimRight();
 	m_Desc.TrimLeft();
 #endif
+	UpdateData(FALSE);
 	if (m_Name.IsEmpty())
 	{
 		MessageBeep(0);
 		GotoDlgCtrl(GetDlgItem(IDC_NAME));
 		return;
 	}
-	m_Desc.Replace("\r\n", "\n");
 	CDialog::OnOK();
+	m_Desc.Replace("\r\n", "\n");
 }

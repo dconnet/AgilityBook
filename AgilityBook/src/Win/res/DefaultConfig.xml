@@ -9,6 +9,7 @@
 		<Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
 		<Venue Name="AAC">
 			<Desc>http://www.aac.ca/</Desc>
 			<Division Name="Regular">
@@ -873,9 +874,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				<Titles LongName="Elite Weavers Certificate" Name="WV-E">30 points</Titles>
 				<Titles LongName="Elite Weavers Certificate Outstanding Performance" Name="O-WV-E">100 points</Titles>
 				<Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
-				<Titles LongName="Triple Superior Performance Dog" Name="Triple Superior Performance Dog">S-NAC, S-NGC, S-NJC
-or S-OAC, S-OGC, S-OJC
-or S-EAC, S-EGC, S-EJC</Titles>
+				<Titles LongName="Novice Triple Superior Performance Dog" Name="Novice Triple Superior Performance Dog">S-NAC, S-NGC, S-NJC</Titles>
+				<Titles LongName="Open Triple Superior Performance Dog" Name="Open Triple Superior Performance Dog">S-OAC, S-OGC, S-OJC</Titles>
+				<Titles LongName="Elite Triple Superior Performance Dog" Name="Elite Triple Superior Performance Dog">S-EAC, S-EGC, S-EJC</Titles>
 				<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple Superior Performance">S-NAC, S-NGC, S-NJC,
 S-OAC, S-OGC, S-OJC,
 S-EAC, S-EGC, S-EJC</Titles>

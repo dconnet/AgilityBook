@@ -1,4 +1,10 @@
-1/26/2004: v1.0.2.8 <in development>
+1/27/2004: v1.0.2.8 <in development>
+- Bug fixes
+  - Updated NADAC Configuration with Novice/Open/Elite Triple Superior
+    (mapped old 'Triple Superior' to 'Novice Triple...')
+  - Fixed a number of dialogs where data could be corrupted. (Note: In dialogs
+    when using a DDX variable after the dialog returns, be careful about
+	modifying it - CDialog::OnOK will force the UI data back into the variable)
 
 1/26/2004: v1.0.1.8
 - New features / Enhancements:
