@@ -21,21 +21,33 @@ main="Agility Record Book","AgilityBook.hhc","Help\Index.hhk","Help\html\Introdu
 Help\html\Configuration.html
 Help\html\Contact.html
 Help\html\Copyright.html
+Help\html\Dialogs.html
 Help\html\Export.html
-Help\html\Features.html
-Help\html\FirstTime.html
-Help\html\GettingStarted.html
+Help\html\History.html
 Help\html\Import.html
 Help\html\ImportExport.html
 Help\html\Introduction.html
+Help\html\Keyboard.html
+Help\html\MenuAgility.html
+Help\html\MenuEdit.html
 Help\html\MenuFile.html
+Help\html\MenuHelp.html
 Help\html\Menus.html
+Help\html\MenuView.html
+Help\html\MenuWindow.html
 Help\html\NewDog.html
 Help\html\NewRun.html
 Help\html\NewTrial.html
 Help\html\Preferences.html
 Help\html\ProgramOverview.html
+Help\html\Statusbar.html
+Help\html\TabCalendar.html
+Help\html\TabLog.html
+Help\html\TabPoints.html
+Help\html\TabRuns.html
+Help\html\Tabs.html
 Help\html\Tasks.html
+Help\html\Toolbar.html
 
 [MAP]
 #include Help\contextid.h
