@@ -1324,34 +1324,30 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				<Titles LongName="Teacup Agile Dog Champion" Name="TACh">TSAD + 10 Qs in Superior with 3 wins
 TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 			</Division>
+			<Event Name="Petit Prix">
+				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
+			</Event>
 			<Event Name="Standard" hasTable="y">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
-			<Event Name="Game: Faults/Time" hasSubNames="y">
+			<Event Name="Game: Faults/Time" hasSubNames="y" hasTable="y">
 				<Desc>This is for events scored like Standard.</Desc>
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Game: Time+Faults" hasSubNames="y">
-				<Desc>This is for Time plus Fault events. Time faults are not added. (Like USDAA Relay)</Desc>
+				<Desc>This is for Time plus Fault events. Time faults are not added.</Desc>
 				<SubName>Louganis</SubName>
 				<SubName>Time Warp</SubName>
 				<Scoring Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
-			<Event Name="Game: Points (open/close)" hasSubNames="y">
-				<Desc>This is for Point-based events where it is does matter when the points are earned (opening or closing), like Gamblers.</Desc>
-				<SubName>Gamblers</SubName>
-				<Scoring Division="*" Level="*" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-			</Event>
-			<Event Name="Game: Points" hasSubNames="y">
-				<Desc>This is for Point-based events where it is doesn't matter when the points are earned (opening or closing), like Snooker.</Desc>
+			<Event Name="Game: Total Points" hasSubNames="y">
+				<Desc>Points are accumulated in a single time period, like Snooker.</Desc>
 				<SubName>12 Tone Row</SubName>
 				<SubName>Dare to Double</SubName>
 				<SubName>Quidditch</SubName>
@@ -1361,8 +1357,18 @@ TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
-			<Event Name="Petit Prix">
-				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
+			<Event Name="Game: Open/Close Points" hasSubNames="y">
+				<Desc>Points are accumulated separately in the opening and closing, like Gamblers.</Desc>
+				<SubName>Gamblers</SubName>
+				<Scoring Division="*" Level="*" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Game: Relay" hasPartner="y" hasSubNames="y">
+				<Desc>This is for events run with one or more partners.</Desc>
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 			</Event>
 		</Venue>
 		<Venue LongName="United Kennel Club" Name="UKC">
