@@ -562,6 +562,9 @@ Conditions of the run: weather, ground surface, etc.
 .topic HIDC_RUNSCORE_DATE
 Date of this run.
 
+.topic HIDC_RUNSCORE_DESC
+Description of the event (from the configuration).
+
 .topic HIDC_RUNSCORE_DIVISION
 Division of this run.
 
