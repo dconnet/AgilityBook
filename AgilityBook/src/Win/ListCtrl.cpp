@@ -84,6 +84,77 @@ static void SetSelection(CListCtrl& list, std::vector<int>& indices, bool bEnsur
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// CHeaderCtrl2
+
+BEGIN_MESSAGE_MAP(CHeaderCtrl2, CHeaderCtrl)
+	//{{AFX_MSG_MAP(CHeaderCtrl2)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+CHeaderCtrl2::CHeaderCtrl2()
+{
+	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
+	CWinApp* app = AfxGetApp();
+	m_sortAscending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_UP));
+	m_sortDescending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_DOWN));
+}
+
+CHeaderCtrl2::~CHeaderCtrl2()
+{
+}
+
+void CHeaderCtrl2::PreSubclassWindow()
+{
+	CHeaderCtrl::PreSubclassWindow();
+	SetImageList(&m_ImageList);
+#if _MSC_VER >= 1300
+	SetBitmapMargin(0);
+#endif
+}
+
+CHeaderCtrl2::SortOrder CHeaderCtrl2::GetSortOrder(int iCol) const
+{
+	if (0 > iCol || iCol >= GetItemCount())
+		return eNoSort;
+	HDITEM item;
+	item.mask = HDI_FORMAT | HDI_IMAGE;
+	GetItem(iCol, &item);
+	if (item.fmt & HDF_IMAGE)
+	{
+		if (item.iImage == m_sortAscending)
+			return eAscending;
+		else if (item.iImage == m_sortDescending)
+			return eDescending;
+	}
+	return eNoSort;
+}
+
+void CHeaderCtrl2::Sort(int iCol, SortOrder eOrder)
+{
+	if (0 > iCol || iCol >= GetItemCount())
+		return;
+	int nIndex = -1;
+	switch (eOrder)
+	{
+	case eAscending: nIndex = m_sortAscending; break;
+	case eDescending: nIndex = m_sortDescending; break;
+	}
+	HDITEM item;
+	item.mask = HDI_FORMAT;
+	if (0 <= nIndex)
+		item.mask |= HDI_IMAGE;
+	item.iImage = nIndex;
+	item.fmt = HDF_LEFT | HDF_STRING;
+	if (0 <= nIndex)
+		item.fmt |= HDF_IMAGE;
+	SetItem(iCol, &item);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CHeaderCtrl2 message handlers
+
+
+/////////////////////////////////////////////////////////////////////////////
 // CListCtrl2
 
 BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
@@ -92,11 +163,41 @@ BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 END_MESSAGE_MAP()
 
 CListCtrl2::CListCtrl2()
+	: m_bInit(false)
 {
 }
 
 CListCtrl2::~CListCtrl2()
 {
+}
+
+void CListCtrl2::Init()
+{
+	if (!m_bInit)
+	{
+		if (::IsWindow(GetHeaderCtrl()->GetSafeHwnd()))
+		{
+			m_bInit = true;
+			m_SortHeader.SubclassWindow(GetHeaderCtrl()->GetSafeHwnd());
+		}
+	}
+}
+
+int CListCtrl2::HeaderItemCount()
+{
+	return GetHeaderCtrl()->GetItemCount();
+}
+
+CHeaderCtrl2::SortOrder CListCtrl2::HeaderSortOrder(int iCol) const
+{
+	const_cast<CListCtrl2*>(this)->Init();
+	return m_SortHeader.GetSortOrder(iCol);
+}
+
+void CListCtrl2::HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder)
+{
+	Init();
+	m_SortHeader.Sort(iCol, eOrder);
 }
 
 int CListCtrl2::GetSelection()
@@ -153,11 +254,41 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 END_MESSAGE_MAP()
 
 CListView2::CListView2()
+	: m_bInit(false)
 {
 }
 
 CListView2::~CListView2()
 {
+}
+
+void CListView2::Init()
+{
+	if (!m_bInit)
+	{
+		if (::IsWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd()))
+		{
+			m_bInit = true;
+			m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
+		}
+	}
+}
+
+int CListView2::HeaderItemCount()
+{
+	return GetListCtrl().GetHeaderCtrl()->GetItemCount();
+}
+
+CHeaderCtrl2::SortOrder CListView2::HeaderSortOrder(int iCol) const
+{
+	const_cast<CListView2*>(this)->Init();
+	return m_SortHeader.GetSortOrder(iCol);
+}
+
+void CListView2::HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder)
+{
+	Init();
+	m_SortHeader.Sort(iCol, eOrder);
 }
 
 int CListView2::GetSelection()

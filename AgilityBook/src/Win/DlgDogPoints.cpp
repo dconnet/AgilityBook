@@ -203,13 +203,13 @@ void CDlgDogPoints::SetColumnHeaders()
 		CString str;
 		str.LoadString(colExistingPointsInfo[i].idText);
 		CString order;
-		order.Format(_T("%c %s (%d)"),
-			m_sortPoints.IsDescending(i) ? '<' : '>',
+		order.Format(_T("%s (%d)"),
 			(LPCTSTR)str,
 			m_sortPoints.FindColumnOrder(i) + 1);
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlPoints.SetColumn(i, &col);
+		m_ctrlPoints.HeaderSort(i, m_sortPoints.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
 }

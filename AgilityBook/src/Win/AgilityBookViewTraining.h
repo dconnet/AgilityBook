@@ -43,7 +43,6 @@
 #include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
-#include "HeaderCtrl.h"
 #include "ListCtrl.h"
 class ARBDate;
 class ARBTraining;
@@ -106,7 +105,6 @@ public:
 #endif
 
 private:
-	CHeaderCtrl2 m_SortHeader;
 	std::vector<int> m_Columns;
 	CFindTraining m_Callback;
 	int m_SortColumn;

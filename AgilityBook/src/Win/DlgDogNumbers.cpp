@@ -97,6 +97,18 @@ int CALLBACK CompareRegNums(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			else if (pRegNum1->GetNumber() > pRegNum2->GetNumber())
 				rc = 1;
 			break;
+		case 2: // height
+			if (pRegNum1->GetNumber() < pRegNum2->GetNumber())
+				rc = -1;
+			else if (pRegNum1->GetNumber() > pRegNum2->GetNumber())
+				rc = 1;
+			break;
+		case 3: // received
+			if (!pRegNum1->GetReceived() && pRegNum2->GetReceived())
+				rc = -1;
+			else if (pRegNum1->GetReceived() && !pRegNum2->GetReceived())
+				rc = 1;
+			break;
 		}
 		if (rc)
 		{
@@ -154,13 +166,13 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 		CString str;
 		str.LoadString(colRegNumInfo[i].idText);
 		CString order;
-		order.Format(_T("%c %s (%d)"),
-			m_sortRegNums.IsDescending(i) ? '<' : '>',
+		order.Format(_T("%s (%d)"),
 			(LPCTSTR)str,
 			m_sortRegNums.FindColumnOrder(i) + 1);
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlRegNums.SetColumn(i, &col);
+		m_ctrlRegNums.HeaderSort(i, m_sortRegNums.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
 }

@@ -44,7 +44,6 @@
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
-#include "HeaderCtrl.h"
 class CAgilityBookDoc;
 class CAgilityBookViewRuns;
 class CAgilityBookViewRunsData;
@@ -105,7 +104,6 @@ public:
 #endif
 
 private:
-	CHeaderCtrl2 m_SortHeader;
 	CImageList m_ImageList;
 	int m_imgCourse;
 	int m_imgMap;

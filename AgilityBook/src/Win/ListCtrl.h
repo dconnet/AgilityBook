@@ -40,11 +40,50 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CListCtrl2 : public CListCtrl
+/**
+ * Header control designed for subclassing for use in a ListCtrl.
+ */
+class CHeaderCtrl2 : public CHeaderCtrl
 {
 // Construction
 public:
+	CHeaderCtrl2();
+	virtual ~CHeaderCtrl2();
+
+	typedef enum { eNoSort, eAscending, eDescending } SortOrder;
+	SortOrder GetSortOrder(int iCol) const;
+	void Sort(int iCol, SortOrder eOrder);
+
+protected:
+// Overrides
+	//{{AFX_VIRTUAL(CHeaderCtrl2)
+	virtual void PreSubclassWindow();
+	//}}AFX_VIRTUAL
+	CImageList m_ImageList;
+	int m_sortAscending;
+	int m_sortDescending;
+
+	// Generated message map functions
+protected:
+	//{{AFX_MSG(CHeaderCtrl2)
+	//}}AFX_MSG
+
+	DECLARE_MESSAGE_MAP()
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CListCtrl2 : public CListCtrl
+{
+public:
 	CListCtrl2();
+	virtual ~CListCtrl2();
+
+	// Header functions
+	int HeaderItemCount();
+	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
+	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
+
 	/**
 	 * Returns the first selected item.
 	 */
@@ -57,20 +96,16 @@ public:
 	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
 
 protected:
+	void Init();
+	bool m_bInit;
+	CHeaderCtrl2 m_SortHeader;
 // Overrides
-	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CListCtrl2)
 	//}}AFX_VIRTUAL
 
-// Implementation
-public:
-	virtual ~CListCtrl2();
-
-	// Generated message map functions
 protected:
 	//{{AFX_MSG(CListCtrl2)
 	//}}AFX_MSG
-
 	DECLARE_MESSAGE_MAP()
 };
 
@@ -79,9 +114,15 @@ protected:
 class CListView2 : public CListView
 {
 	DECLARE_DYNCREATE(CListView2)
-// Construction
 public:
 	CListView2();
+	virtual ~CListView2();
+
+	// Header functions
+	int HeaderItemCount();
+	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
+	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
+
 	/**
 	 * Returns the first selected item.
 	 */
@@ -98,6 +139,9 @@ public:
 	virtual void GetPrintLine(int nItem, CStringArray& line);
 
 protected:
+	void Init();
+	bool m_bInit;
+	CHeaderCtrl2 m_SortHeader;
 	//{{AFX_VIRTUAL(CListView2)
 	protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
@@ -105,10 +149,6 @@ protected:
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnPrint(CDC* pDC, CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
-
-// Implementation
-public:
-	virtual ~CListView2();
 
 	// Generated message map functions
 protected:
@@ -119,6 +159,5 @@ protected:
 	afx_msg void OnEditSelectAll();
 	//}}AFX_MSG
 	afx_msg void OnUpdateNotSupported(CCmdUI* pCmdUI);
-
 	DECLARE_MESSAGE_MAP()
 };

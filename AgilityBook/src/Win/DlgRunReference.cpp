@@ -204,13 +204,13 @@ void CDlgRunReference::SetColumnHeaders()
 		CString str;
 		str.LoadString(scColumns[i].idText);
 		CString order;
-		order.Format(_T("%c %s (%d)"),
-			m_sortRefRuns.IsDescending(i) ? '<' : '>',
+		order.Format(_T("%s (%d)"),
 			(LPCTSTR)str,
 			m_sortRefRuns.FindColumnOrder(i) + 1);
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlRefRuns.SetColumn(i, &col);
+		m_ctrlRefRuns.HeaderSort(i, m_sortRefRuns.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
 }
