@@ -94,9 +94,9 @@ public:
 
 	/**
 	 * Return the date as a string.
-	 * @param bLeadingZeros Add leading 0s to single digit months/days.
-	 * @param bYearFirst Form to return date string.
-	 * @return Return date as "YYYY-MM-DD" or "MM/DD/YYYY"
+	 * @param inLeadingZeros Add leading 0s to single digit months/days.
+	 * @param inFormat Format of date string.
+	 * @return Date in the format defined by inFormat.
 	 */
 	std::string GetString(bool inLeadingZeros, DateFormat inFormat) const;
 
@@ -121,7 +121,7 @@ public:
 		eSaturday = 6,
 	} DayOfWeek;
 	/**
-	 * @param firstDay Define what day of week has index 0 (1st day of week).
+	 * @param inFirstDay Define what day of week has index 0 (1st day of week).
 	 */
 	int GetDayOfWeek(DayOfWeek inFirstDay = eSunday) const;
 

@@ -238,6 +238,7 @@ public:
 	/**
 	 * Save this element to the given output stream.
 	 * @param outStream Stream to write tree to.
+	 * @param inDTD DTD to include in generation of XML file.
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
