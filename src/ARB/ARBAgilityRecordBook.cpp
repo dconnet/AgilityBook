@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2004-02-15 DRC Cleaned up newline in warning msg.
  * @li 2004-02-14 DRC File version 8.4. Added Table-in-YPS flag.
  * @li 2004-02-02 DRC File version 8.3. Added ARBDogExistingPoints items.
  * @li 2004-01-21 DRC File version 8.2. Added ConfigTitles LongName. Added
@@ -102,6 +103,7 @@ std::string ErrorInvalidDocStructure(const char* const inMsg)
 	{
 		str += ": ";
 		str += inMsg;
+		str += "\n";
 	}
 	return str;
 }
@@ -118,8 +120,9 @@ std::string ErrorMissingAttribute(
 	str += "'.";
 	if (inMsg)
 	{
-		str += "\n";
+		str += " ";
 		str += inMsg;
+		str += "\n";
 	}
 	return str;
 }
@@ -136,8 +139,9 @@ std::string ErrorInvalidAttributeValue(
 	str += "'.";
 	if (inMsg)
 	{
-		str += "\n";
+		str += " ";
 		str += inMsg;
+		str += "\n";
 	}
 	return str;
 }
