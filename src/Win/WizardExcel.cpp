@@ -79,13 +79,14 @@ public:
 	// Create the safe array.
 	virtual bool CreateArray(long inRows, long inCols);
 	// Insert data into the safe array.
-	virtual bool InsertArrayData(long inRow, long inCol, const CString& inData);
+	virtual bool InsertArrayData(long inRow, long inCol, CString const& inData);
 	// Copy the safe array to excel (safe array is reset)
 	virtual bool ExportDataArray(long inRowTop = 0, long inColLeft = 0);
-	virtual bool InsertData(long nRow, long nCol, const CString& inData);
+	virtual bool AllowAccess(bool bAllow);
+	virtual bool InsertData(long nRow, long nCol, COleVariant const& inData);
 	virtual bool InsertFormula(long inRowFrom, long inColFrom,
 		long inRowTo, long inColTo,
-		const CString& inFormula);
+		CString const& inFormula);
 
 private:
 	_Application& m_App;
@@ -138,7 +139,7 @@ bool CWizardExcelExportImpl::CreateArray(long inRows, long inCols)
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertArrayData(long inRow, long inCol, const CString& inData)
+bool CWizardExcelExportImpl::InsertArrayData(long inRow, long inCol, CString const& inData)
 {
 	if (!ArrayOkay())
 		return false;
@@ -187,33 +188,41 @@ bool CWizardExcelExportImpl::ExportDataArray(long inRowTop, long inColLeft)
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertData(long inRow, long inCol, const CString& inData)
+bool CWizardExcelExportImpl::AllowAccess(bool bAllow)
+{
+	if (bAllow)
+	{
+		m_App.put_Visible(TRUE);
+		m_App.put_UserControl(TRUE);
+	}
+	else
+	{
+		m_App.put_UserControl(FALSE);
+	}
+	return true;
+}
+
+bool CWizardExcelExportImpl::InsertData(long inRow, long inCol, COleVariant const& inData)
 {
 	CString cell1;
 	if (!CWizardExcel::GetRowCol(inRow, inCol, cell1))
 		return false;
 	Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell1));
-	range.put_Value2(COleVariant(inData));
-	m_App.put_UserControl(FALSE);
-	m_App.put_Visible(TRUE);
-	m_App.put_UserControl(TRUE);
+	range.put_Value2(inData);
 	return true;
 }
 
 bool CWizardExcelExportImpl::InsertFormula(long inRowFrom, long inColFrom,
 	long inRowTo, long inColTo,
-	const CString& inFormula)
+	CString const& inFormula)
 {
 	CString cell1, cell2;
 	if (!CWizardExcel::GetRowCol(inRowFrom, inColFrom, cell1))
 		return false;
 	if (!CWizardExcel::GetRowCol(inRowTo, inColTo, cell2))
 		return false;
-	m_App.put_UserControl(FALSE);
 	Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
 	range.put_Formula(COleVariant(inFormula));
-	m_App.put_Visible(TRUE);
-	m_App.put_UserControl(TRUE);
 	return true;
 }
 
