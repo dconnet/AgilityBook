@@ -69,6 +69,7 @@ private:
 	//{{AFX_DATA(CDlgConfigVenue)
 	enum { IDD = IDD_CONFIG_VENUE };
 	CEdit	m_ctrlName;
+	CEdit	m_ctrlLongName;
 	CEdit	m_ctrlDesc;
 	CListCtrl2	m_ctrlDivisions;
 	CTreeCtrl	m_ctrlLevels;

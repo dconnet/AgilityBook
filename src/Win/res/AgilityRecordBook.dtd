@@ -15,7 +15,8 @@ Revision History:
 2005-01-01 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
-			   Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
+               Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
+               Added 'LongName' to 'Venue'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -143,7 +144,10 @@ top-ten points. The 'Count' value is how they are accumulated
 		>
 
 <!ELEMENT Venue (Desc?, Division+, Event+) >
-	<!ATTLIST Venue Name CDATA #REQUIRED >
+	<!ATTLIST Venue
+		Name CDATA #REQUIRED
+		LongName CDATA #IMPLIED
+		>
 <!ELEMENT Desc (#PCDATA) >
 
 <!--
@@ -151,8 +155,10 @@ top-ten points. The 'Count' value is how they are accumulated
 <!ELEMENT Division (Level+, Titles*) >
 	<!ATTLIST Division Name CDATA #REQUIRED >
 <!ELEMENT Titles (#PCDATA) >
-	<!ATTLIST Titles Name CDATA #REQUIRED >
-	<!ATTLIST Titles LongName CDATA #IMPLIED >
+	<!ATTLIST Titles
+		Name CDATA #REQUIRED
+		LongName CDATA #IMPLIED
+		>
 
 <!--
 Rules for levels are based on the level name. A level may be

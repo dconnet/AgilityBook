@@ -2,6 +2,8 @@
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
+  - Renamed 'machPts' to 'speedPts'.
+  - Added 'LongName' to 'Venue'.
   - Updated AAC.
   - Added CKC and TDAA.
 - New features / Enhancements:
@@ -16,6 +18,7 @@
     sorting the runs is handled by the header in the Runs view.
   - Make F1 open context help from the main tab windows.
   - Renamed 'Mach points' to 'Speed Points' to make it more generic.
+  - Added a long name to the venue configuration.
 - Bug fixes
   - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have

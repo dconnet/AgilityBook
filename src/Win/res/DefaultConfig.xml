@@ -43,7 +43,7 @@ Revision History:
 		<Action NewName="AMBOR Triple Superior Open" OldName="A-OTS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Action NewName="AMBOR Triple Superior Elite" OldName="A-ETS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Action NewName="AMBOR Triple Triple Superior" OldName="A-TTS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Venue Name="AAC">
+		<Venue LongName="Agility Association of Canada" Name="AAC">
 			<Desc>http://www.aac.ca/</Desc>
 			<Division Name="Regular">
 				<Level Name="Starters"/>
@@ -157,7 +157,7 @@ Revision History:
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue Name="AKC">
+		<Venue LongName="American Kennel Club" Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
 			<Division Name="ISC">
 				<Level Name="Excellent B"/>
@@ -242,7 +242,7 @@ Revision History:
 				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime"/>
 			</Event>
 		</Venue>
-		<Venue Name="AMBOR">
+		<Venue LongName="American Mixed Breed Obedience Registration" Name="AMBOR">
 			<Desc>http://www.amborusa.org/
 Events and titles are based on NADAC</Desc>
 			<Division Name="Standard">
@@ -440,7 +440,7 @@ Events and titles are based on NADAC</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue Name="ASCA">
+		<Venue LongName="Australian Shepherd Club of America" Name="ASCA">
 			<Desc>http://www.asca.org/
 Events and titles are based on NADAC</Desc>
 			<Division Name="Standard">
@@ -574,7 +574,7 @@ Events and titles are based on NADAC</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue Name="CPE">
+		<Venue LongName="Canine Performance Events" Name="CPE">
 			<Desc>http://www.k9cpe.com/</Desc>
 			<Division Name="Standard">
 				<Level Name="Level 1"/>
@@ -1023,7 +1023,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue Name="NADAC">
+		<Venue LongName="North American Dog Agility Council" Name="NADAC">
 			<Desc>http://www.nadac.com/</Desc>
 			<Division Name="Standard">
 				<Level Name="Novice">
@@ -1288,8 +1288,8 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue Name="UKC">
-			<Desc>http://www.ukcdogs.com</Desc>
+		<Venue LongName="United Kennel Club" Name="UKC">
+			<Desc>http://www.ukcdogs.com/</Desc>
 			<Division Name="Standard">
 				<Level Name="Agility I">
 					<SubLevel Name="Agility I A"/>
@@ -1322,7 +1322,7 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue Name="USDAA">
+		<Venue LongName="United States Dog Agility Association" Name="USDAA">
 			<Desc>http://www.usdaa.com/</Desc>
 			<Division Name="Championship">
 				<Level Name="Nationals"/>
