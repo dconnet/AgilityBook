@@ -76,6 +76,7 @@ public:
 	std::string Update(int indent, const ARBConfig& inConfigNew);
 
 	const ARBConfigActionList& GetActions() const;
+	ARBConfigActionList& GetActions();
 	const ARBConfigVenueList& GetVenues() const;
 	ARBConfigVenueList& GetVenues();
 	const ARBConfigFaultList& GetFaults() const;
@@ -91,6 +92,11 @@ private:
 };
 
 inline const ARBConfigActionList& ARBConfig::GetActions() const
+{
+	return m_Actions;
+}
+
+inline ARBConfigActionList& ARBConfig::GetActions()
 {
 	return m_Actions;
 }
