@@ -57,7 +57,7 @@ static char THIS_FILE[] = __FILE__;
 class CDlgListViewerData
 {
 public:
-	CDlgListViewerData(CListCtrl& list) : m_List(list), m_RefCount(1) {}
+	CDlgListViewerData() : m_RefCount(1) {}
 	void AddRef() {++m_RefCount;}
 	void Release()
 	{
@@ -65,21 +65,272 @@ public:
 		if (0 == m_RefCount)
 			delete this;
 	}
-	CString OnNeedText(int iCol);
+	virtual CString OnNeedText(int iCol) const = 0;
+	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const = 0;
 protected:
-	~CDlgListViewerData() {}
-	CListCtrl& m_List;
+	virtual ~CDlgListViewerData() {}
 	UINT m_RefCount;
 };
 
-CString CDlgListViewerData::OnNeedText(int iCol)
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgListViewerDataRun : public CDlgListViewerData
 {
-	return "";
+public:
+	CDlgListViewerDataRun() {}
+	virtual CString OnNeedText(int iCol) const;
+	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+};
+
+CString CDlgListViewerDataRun::OnNeedText(int iCol) const
+{
+	CString str;
+	//switch (iCol)
+	//{
+	//case 0: // Q
+	//case 1: // Title Points
+	//case 2: // Date
+	//case 3: // Location
+	//case 4: // Club
+	//case 5: // Judge
+	//case 6: // Place
+	//case 7: // In Class
+	//case 8: // Qd
+	//case 9: // Mach or Partners
+	//	break;
+	//}
+	return str;
+}
+
+int CDlgListViewerDataRun::Compare(CDlgListViewerData const* pRow2, int inCol) const
+{
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgListViewerDataDblQ : public CDlgListViewerData
+{
+public:
+	CDlgListViewerDataDblQ(ARBDate const& inDate, ARBDogTrial const* inTrial)
+		: m_Date(inDate)
+		, m_Trial(inTrial)
+	{
+	}
+	virtual CString OnNeedText(int iCol) const;
+	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+private:
+	ARBDate m_Date;
+	ARBDogTrial const* m_Trial;
+};
+
+CString CDlgListViewerDataDblQ::OnNeedText(int iCol) const
+{
+	CString str;
+	switch (iCol)
+	{
+	case 0: // Date
+		str = m_Date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
+		break;
+	case 1: // Location
+		str = m_Trial->GetLocation().c_str();
+		break;
+	case 2: // Club
+		str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
+		break;
+	}
+	return str;
+}
+
+int CDlgListViewerDataDblQ::Compare(CDlgListViewerData const* pRow2, int inCol) const
+{
+	CDlgListViewerDataDblQ const* pData = dynamic_cast<CDlgListViewerDataDblQ const*>(pRow2);
+	if (!pData)
+		return 0;
+	std::string str1, str2;
+	switch (inCol)
+	{
+	default:
+	case 0:
+		if (m_Date < pData->m_Date)
+			return -1;
+		else if (m_Date > pData->m_Date)
+			return 1;
+		else
+			return 0;
+	case 1:
+		str1 = m_Trial->GetLocation();
+		str2 = pData->m_Trial->GetLocation();
+		break;
+	case 2:
+		str1 = m_Trial->GetClubs().GetPrimaryClub()->GetName();
+		str2 = pData->m_Trial->GetClubs().GetPrimaryClub()->GetName();
+		break;
+	}
+	if (str1 < str2)
+		return -1;
+	else if (str1 > str2)
+		return 1;
+	else
+		return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgListViewerDataOther : public CDlgListViewerData
+{
+public:
+	CDlgListViewerDataOther(OtherPtInfo const& info)
+		: m_info(info)
+	{
+	}
+	virtual CString OnNeedText(int iCol) const;
+	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+private:
+	OtherPtInfo m_info;
+};
+
+CString CDlgListViewerDataOther::OnNeedText(int iCol) const
+{
+	CString str;
+	switch (iCol)
+	{
+	case 0: // Date
+		if (m_info.m_pExisting)
+			str = m_info.m_pExisting->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
+		else
+			str = m_info.m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
+		break;
+	case 1: // Trial/Existing Points
+		if (m_info.m_pExisting)
+			str = m_info.m_pExisting->GetOtherPoints().c_str();
+		else
+			str = m_info.m_pTrial->GetLocation().c_str();
+		break;
+	case 2: // Club
+		if (!m_info.m_pExisting)
+			str = m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName().c_str();
+		break;
+	case 3: // Venue
+		str = m_info.m_Venue.c_str();
+		break;
+	case 4: // Division
+		str = m_info.m_Div.c_str();
+		break;
+	case 5: // Level
+		str = m_info.m_Level.c_str();
+		break;
+	case 6: // Event
+		str = m_info.m_Event.c_str();
+		break;
+	case 7: // Points
+		str.Format("%d", m_info.m_Score);
+		break;
+	}
+	return str;
+}
+
+int CDlgListViewerDataOther::Compare(CDlgListViewerData const* pRow2, int inCol) const
+{
+	CDlgListViewerDataOther const* pData = dynamic_cast<CDlgListViewerDataOther const*>(pRow2);
+	if (!pData)
+		return 0;
+	std::string str1, str2;
+	switch (inCol)
+	{
+	default:
+	case 0:
+		{
+			ARBDate date1, date2;
+			if (m_info.m_pExisting)
+				date1 = m_info.m_pExisting->GetDate();
+			else
+				date1 = m_info.m_pRun->GetDate();
+			if (m_info.m_pExisting)
+				date2 = pData->m_info.m_pExisting->GetDate();
+			else
+				date2 = pData->m_info.m_pRun->GetDate();
+			if (date1 < date2)
+				return -1;
+			else if (date1 > date2)
+				return 1;
+			else
+				return 0;
+		}
+	case 1: // Trial/Existing Points
+		if (m_info.m_pExisting)
+			str1 = m_info.m_pExisting->GetOtherPoints();
+		else
+			str1 = m_info.m_pTrial->GetLocation();
+		if (pData->m_info.m_pExisting)
+			str2 = pData->m_info.m_pExisting->GetOtherPoints();
+		else
+			str2 = pData->m_info.m_pTrial->GetLocation();
+		break;
+	case 2: // Club
+		if (!m_info.m_pExisting)
+			str1 = m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName();
+		if (!pData->m_info.m_pExisting)
+			str2 = pData->m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName();
+		break;
+	case 3: // Venue
+		str1 = m_info.m_Venue;
+		str2 = pData->m_info.m_Venue;
+		break;
+	case 4: // Division
+		str1 = m_info.m_Div;
+		str2 = pData->m_info.m_Div;
+		break;
+	case 5: // Level
+		str1 = m_info.m_Level;
+		str2 = pData->m_info.m_Level;
+		break;
+	case 6: // Event
+		str1 = m_info.m_Event;
+		str2 = pData->m_info.m_Event;
+		break;
+	case 7:
+		if (m_info.m_Score < pData->m_info.m_Score)
+			return -1;
+		else if (m_info.m_Score > pData->m_info.m_Score)
+			return 1;
+		else
+			return 0;
+	}
+	if (str1 < str2)
+		return -1;
+	else if (str1 > str2)
+		return 1;
+	else
+		return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListViewer dialog
 
+struct SORT_COL_INFO
+{
+	CDlgListViewer *pThis;
+	int nCol;
+};
+
+int CALLBACK CompareRows(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+{
+	SORT_COL_INFO* sortInfo = reinterpret_cast<SORT_COL_INFO*>(lParam3);
+	if (!sortInfo)
+		return 0;
+	CDlgListViewerData* pRow1 = reinterpret_cast<CDlgListViewerData*>(lParam1);
+	CDlgListViewerData* pRow2 = reinterpret_cast<CDlgListViewerData*>(lParam2);
+	if (!pRow1 || !pRow2)
+		return 0;
+	int iCol = abs(sortInfo->nCol);
+	int nRet = pRow1->Compare(pRow2, iCol - 1);
+	if (0 > sortInfo->nCol)
+		nRet *= -1;
+	return nRet;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // Viewing runs
 CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 		CString const& inCaption,
@@ -95,6 +346,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
 	, m_rOK(0,0,0,0)
+	, m_SortColumn(1)
 {
 	//{{AFX_DATA_INIT(CDlgListViewer)
 	//}}AFX_DATA_INIT
@@ -115,6 +367,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
 	, m_rOK(0,0,0,0)
+	, m_SortColumn(1)
 {
 }
 
@@ -133,6 +386,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
 	, m_rOK(0,0,0,0)
+	, m_SortColumn(1)
 {
 }
 
@@ -149,6 +403,7 @@ BEGIN_MESSAGE_MAP(CDlgListViewer, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListViewer)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST_VIEWER, OnGetdispinfoList)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_LIST_VIEWER, OnDeleteitemList)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST_VIEWER, OnColumnclickList)
 	ON_WM_GETMINMAXINFO()
 	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
@@ -299,10 +554,14 @@ BOOL CDlgListViewer::OnInitDialog()
 			iter != m_DoubleQData->end();
 			++iter)
 		{
-			m_ctrlList.InsertItem(iItem, iter->first.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
-			m_ctrlList.SetItemText(iItem, 1, iter->second->GetLocation().c_str());
-			m_ctrlList.SetItemText(iItem, 2, iter->second->GetClubs().GetPrimaryClub()->GetName().c_str());
-			++iItem;
+			CDlgListViewerDataDblQ* pData = new CDlgListViewerDataDblQ(iter->first, iter->second);
+			LVITEM item;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.iItem = iItem++;
+			item.iSubItem = 0;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.lParam = reinterpret_cast<LPARAM>(pData);
+			m_ctrlList.InsertItem(&item);
 		}
 		for (int i = 0; i <= 2; ++i)
 			m_ctrlList.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
@@ -310,7 +569,7 @@ BOOL CDlgListViewer::OnInitDialog()
 	else if (m_OtherData)
 	{
 		m_ctrlList.InsertColumn(0, "Date");
-		m_ctrlList.InsertColumn(1, "Trial");
+		m_ctrlList.InsertColumn(1, "Trial / Existing Pts");
 		m_ctrlList.InsertColumn(2, "Club");
 		m_ctrlList.InsertColumn(3, "Venue");
 		m_ctrlList.InsertColumn(4, "Division");
@@ -322,30 +581,25 @@ BOOL CDlgListViewer::OnInitDialog()
 			iter != m_OtherData->end();
 			++iter)
 		{
-			const OtherPtInfo& info = *iter;
-			if (info.m_pExisting)
-			{
-				m_ctrlList.InsertItem(iItem, info.m_pExisting->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
-				m_ctrlList.SetItemText(iItem, 1, "Existing Points");
-			}
-			else
-			{
-				m_ctrlList.InsertItem(iItem, info.m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
-				m_ctrlList.SetItemText(iItem, 1, info.m_pTrial->GetLocation().c_str());
-				m_ctrlList.SetItemText(iItem, 2, info.m_pTrial->GetClubs().GetPrimaryClub()->GetName().c_str());
-			}
-			m_ctrlList.SetItemText(iItem, 3, info.m_Venue.c_str());
-			m_ctrlList.SetItemText(iItem, 4, info.m_Div.c_str());
-			m_ctrlList.SetItemText(iItem, 5, info.m_Level.c_str());
-			m_ctrlList.SetItemText(iItem, 6, info.m_Event.c_str());
-			CString str;
-			str.Format("%d", info.m_Score);
-			m_ctrlList.SetItemText(iItem, 7, str);
-			++iItem;
+			OtherPtInfo const& info = *iter;
+			CDlgListViewerDataOther* pData = new CDlgListViewerDataOther(info);
+			LVITEM item;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.iItem = iItem++;
+			item.iSubItem = 0;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.lParam = reinterpret_cast<LPARAM>(pData);
+			m_ctrlList.InsertItem(&item);
 		}
 		for (int i = 0; i <= 7; ++i)
 			m_ctrlList.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}
+
+	SORT_COL_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	m_ctrlList.SortItems(CompareRows, reinterpret_cast<LPARAM>(&info));
+	m_ctrlList.HeaderSort(abs(m_SortColumn) - 1, CHeaderCtrl2::eAscending);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -376,6 +630,23 @@ void CDlgListViewer::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult)
 	if (pData)
 		pData->Release();
 	pNMListView->lParam = 0;
+	*pResult = 0;
+}
+
+void CDlgListViewer::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	m_ctrlList.HeaderSort(abs(m_SortColumn) - 1, CHeaderCtrl2::eNoSort);
+	int nBackwards = 1;
+	if (m_SortColumn == pNMListView->iSubItem + 1)
+		nBackwards = -1;
+	m_SortColumn = (pNMListView->iSubItem + 1) * nBackwards;
+	SORT_COL_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	m_ctrlList.SortItems(CompareRows, reinterpret_cast<LPARAM>(&info));
+	m_ctrlList.HeaderSort(abs(m_SortColumn) - 1,
+		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
 }
 
