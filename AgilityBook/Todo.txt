@@ -1,6 +1,4 @@
-Last Updated: 4/20/04
-
-- Remember the last viewed dog, in addition to the last viewed tab.
+Last Updated: 4/27/04
 
 - Development issue:
   There is a problem somewhere in the Configuration dialogs. When running under

@@ -1,4 +1,4 @@
-4/15/2004: v1.0.5.8 <in development>
+4/27/2004: v1.0.5.8 <in development>
 - Note: Released beta to single person on 3/26 - dealt with table code.
 - Bumped file version to 8.6, Configuration v3:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
@@ -20,6 +20,7 @@
     backup files and auto-update-check.
   - Added 'Duplicate' menu item for trials/runs/calendar/training entries.
   - Added a splash screen.
+  - In multi-dog files, remember the last dog viewed when opening the file.
 - Bug fixes
   - When merging configuration information via the update feature, if only
     the description was changed in either a venue or an event, that
@@ -33,6 +34,8 @@
     reported on the minimum required resolution.)
   - If you imported a calendar listing that had a heading, but tried to parse
     the heading as an entry, the program faulted.
+  - Fixed a problem encoding/decoding binary data. This affected pasting/viewing
+    the CRCD image.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:

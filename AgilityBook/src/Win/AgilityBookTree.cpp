@@ -620,7 +620,12 @@ void CAgilityBookTree::LoadData()
 
 	CWaitCursor wait;
 	// Remember the currently selected item.
+	std::string strCallName;
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
+	if (!pData)
+	{
+		strCallName = AfxGetApp()->GetProfileString("Settings", "LastDog", "");
+	}
 	std::vector<ARBBase const*> baseItems;
 	while (pData)
 	{
@@ -630,13 +635,15 @@ void CAgilityBookTree::LoadData()
 	// Load the data
 	CTreeCtrl& tree = GetTreeCtrl();
 	tree.DeleteAllItems();
+	HTREEITEM hItem = NULL;
 	for (ARBDogList::const_iterator iterDog = GetDocument()->GetDogs().begin();
 		iterDog != GetDocument()->GetDogs().end();
 		++iterDog)
 	{
-		InsertDog((*iterDog));
+		HTREEITEM hItem2 = InsertDog((*iterDog));
+		if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
+			hItem = hItem2;
 	}
-	HTREEITEM hItem = NULL;
 	for (std::vector<ARBBase const*>::iterator iter = baseItems.begin();
 		NULL == hItem && iter != baseItems.end();
 		++iter)
