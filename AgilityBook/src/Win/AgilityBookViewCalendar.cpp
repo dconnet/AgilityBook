@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-22 DRC Right click sets the current date.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-09 DRC When dbl-clicking on a date, make sure all entries are
  *                    visible - even if 'hide on entered' option is on.
@@ -68,8 +69,8 @@ IMPLEMENT_DYNCREATE(CAgilityBookViewCalendar, CScrollView)
 
 BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
 	//{{AFX_MSG_MAP(CAgilityBookViewCalendar)
-	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_INITMENUPOPUP()
+	ON_WM_RBUTTONDOWN()
 	ON_WM_CONTEXTMENU()
 	ON_WM_ERASEBKGND()
 	ON_WM_LBUTTONDOWN()
@@ -540,13 +541,6 @@ CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug vers
 
 // CAgilityBookViewCalendar message handlers
 
-void CAgilityBookViewCalendar::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	// Send WM_CONTEXTMENU to self (done according to Q222905)
-	SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, GetMessagePos());
-	*pResult = 1;
-}
-
 void CAgilityBookViewCalendar::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CScrollView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
@@ -563,6 +557,19 @@ void CAgilityBookViewCalendar::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, B
 		// Undocumented MFC cmd calls the ON_UPDATE_COMMAND_UI funcs.
 		cmdUI.DoUpdate(pTarget, FALSE);
 	}
+}
+
+void CAgilityBookViewCalendar::OnRButtonDown(UINT nFlags, CPoint point) 
+{
+	CClientDC dc(this);
+	dc.SetMapMode(MM_LOENGLISH);
+	CPoint pt(point);
+	dc.DPtoLP(&pt);
+	pt += GetScrollPosition();
+	ARBDate date;
+	GetDateFromPoint(pt, date);
+	SetCurrentDate(date, false);
+	CScrollView::OnRButtonDown(nFlags, point);
 }
 
 void CAgilityBookViewCalendar::OnContextMenu(CWnd* pWnd, CPoint point)
