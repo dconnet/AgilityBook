@@ -1177,6 +1177,9 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
+				<SubCat>Contacts</SubCat>
+				<SubCat>Jumps</SubCat>
+				<SubCat>Weaves</SubCat>
 				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2004-12-31" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>

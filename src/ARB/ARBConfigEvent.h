@@ -156,6 +156,8 @@ public:
 	void SetHasPartner(bool inHas);
 	ARBConfigScoringList const& GetScorings() const;
 	ARBConfigScoringList& GetScorings();
+	std::vector<std::string> const& GetSubCategories() const;
+	std::vector<std::string>& GetSubCategories();
 
 private:
 	~ARBConfigEvent();
@@ -163,6 +165,7 @@ private:
 	std::string m_Desc;
 	bool m_bTable;
 	bool m_bHasPartner;
+	std::vector<std::string> m_SubCategories;
 	ARBConfigScoringList m_Scoring;
 };
 
@@ -209,6 +212,16 @@ inline bool ARBConfigEvent::HasPartner() const
 inline void ARBConfigEvent::SetHasPartner(bool inHas)
 {
 	m_bHasPartner = inHas;
+}
+
+inline std::vector<std::string> const& ARBConfigEvent::GetSubCategories() const
+{
+	return m_SubCategories;
+}
+
+inline std::vector<std::string>& ARBConfigEvent::GetSubCategories()
+{
+	return m_SubCategories;
 }
 
 inline ARBConfigScoringList const& ARBConfigEvent::GetScorings() const

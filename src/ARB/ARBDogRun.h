@@ -164,11 +164,13 @@ public:
 	void SetDivision(std::string const& inDiv);
 	std::string const& GetLevel() const;
 	void SetLevel(std::string const& inLevel);
-	std::string const& GetHeight() const;
-	void SetEvent(std::string const& inEvent);
-	std::string const& GetConditions() const;
-	void SetHeight(std::string const& inHeight);
 	std::string const& GetEvent() const;
+	void SetEvent(std::string const& inEvent);
+	std::string const& GetSubCategory() const;
+	void SetSubCategory(std::string const& inSubCat);
+	std::string const& GetHeight() const;
+	void SetHeight(std::string const& inHeight);
+	std::string const& GetConditions() const;
 	void SetConditions(std::string const& inConditions);
 	std::string const& GetJudge() const;
 	void SetJudge(std::string const& inJudge);
@@ -211,6 +213,7 @@ private:
 	std::string m_Level;
 	std::string m_Height;
 	std::string m_Event;
+	std::string m_SubCategory;
 	std::string m_Conditions;
 	std::string m_Judge;
 	std::string m_Handler;
@@ -265,6 +268,16 @@ inline std::string const& ARBDogRun::GetEvent() const
 inline void ARBDogRun::SetEvent(std::string const& inEvent)
 {
 	m_Event = inEvent;
+}
+
+inline std::string const& ARBDogRun::GetSubCategory() const
+{
+	return m_SubCategory;
+}
+
+inline void ARBDogRun::SetSubCategory(std::string const& inSubCat)
+{
+	m_SubCategory = inSubCat;
 }
 
 inline std::string const& ARBDogRun::GetHeight() const

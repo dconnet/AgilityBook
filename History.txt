@@ -3,11 +3,17 @@
   - Added 'Height' to 'ReferenceRun'.
   - Added 'LifeTime' to 'Scoring'.
   - Removed 'LifeTime' from 'TitlePoints'.
+  - Added 'SCT', 'SCT2' to 'ByOpenClose'.
+  - Added 'SCT' to 'ByPoints'.
+  - Added 'SubCat' to 'Event'.
+  - Added 'SubCat' to 'ExistingPoints'.
+  - Added 'SubCat' to 'Run'.
 - New features / Enhancements:
+  - Updated CPE comments on CL1-5 "titles". Accumulate lifetime (top10)
+    points for all events. Accumulate Specialist points like Level C.
+  - Added subcategories to NADAC Gamblers.
   - Added direct Excel import/export capability.
   - Added Mach points to the allowed columns in the runs view.
-  - Updated CPE comments on CL1-5 "titles". Accumulate lifetime points
-    for Level C events. Accumulate Specialist points like Level C.
   - In the calendar view, set the page scrolling size to 4 weeks. It used a
     default value which could scroll multiple pages at a time.
   - Added debug symbols to the installation to aid any problems that might
