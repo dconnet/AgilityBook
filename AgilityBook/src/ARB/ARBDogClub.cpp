@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -85,6 +86,25 @@ bool ARBDogClub::operator==(const ARBDogClub& rhs) const
 bool ARBDogClub::operator!=(const ARBDogClub& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBDogClub::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	if (0 < m_Name.length())
+	{
+		ioStrings.insert(m_Name);
+		++nItems;
+	}
+
+	if (0 < m_Venue.length())
+	{
+		ioStrings.insert(m_Venue);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 bool ARBDogClub::Load(

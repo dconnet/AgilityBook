@@ -52,7 +52,7 @@ public:
 		: m_pView(pView)
 	{
 	}
-	virtual bool Search();
+	virtual bool Search() const;
 private:
 	CAgilityBookViewTraining* m_pView;
 };
@@ -113,6 +113,7 @@ protected:
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnEditFind();
 	afx_msg void OnEditFindNext();
+	afx_msg void OnEditFindPrevious();
 	afx_msg void OnUpdateTrainingEdit(CCmdUI* pCmdUI);
 	afx_msg void OnTrainingEdit();
 	afx_msg void OnTrainingNew();

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-07 DRC Created
  */
 
@@ -55,6 +56,7 @@ public:
 	bool operator>(const ARBInfoJudge& rhs) const;
 
 	virtual std::string GetGenericName() const;
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	bool Load(
 		const CElement& inTree,

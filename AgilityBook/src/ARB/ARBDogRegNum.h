@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-11-22 DRC Added FindRegNum().
  */
@@ -56,6 +57,7 @@ public:
 	bool operator!=(const ARBDogRegNum& rhs) const;
 
 	virtual std::string GetGenericName() const;
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	bool Load(
 		const ARBConfig& inConfig,

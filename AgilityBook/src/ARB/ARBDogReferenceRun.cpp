@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -104,6 +105,31 @@ bool ARBDogReferenceRun::operator==(const ARBDogReferenceRun& rhs) const
 bool ARBDogReferenceRun::operator!=(const ARBDogReferenceRun& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	if (0 < m_Name.length())
+	{
+		ioStrings.insert(m_Name);
+		++nItems;
+	}
+
+	if (0 < m_Breed.length())
+	{
+		ioStrings.insert(m_Breed);
+		++nItems;
+	}
+
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 bool ARBDogReferenceRun::Load(

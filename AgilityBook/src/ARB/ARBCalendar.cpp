@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-31 DRC Added FindCalendar.
  * @li 2003-07-09 DRC IsRangeOverlapped test was wrong. It was actually a 'is
@@ -130,6 +131,55 @@ std::string ARBCalendar::GetGenericName() const
 	name += " ";
 	name += m_Location;
 	return name;
+}
+
+size_t ARBCalendar::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	ioStrings.insert(m_DateStart.GetString(false, false));
+	++nItems;
+
+	ioStrings.insert(m_DateEnd.GetString(false, false));
+	++nItems;
+
+	if (m_DateOpening.IsValid())
+	{
+		ioStrings.insert(m_DateOpening.GetString(false, false));
+		++nItems;
+	}
+
+	if (m_DateClosing.IsValid())
+	{
+		ioStrings.insert(m_DateClosing.GetString(false, false));
+		++nItems;
+	}
+
+	if (0 < m_Location.length())
+	{
+		ioStrings.insert(m_Location);
+		++nItems;
+	}
+
+	if (0 < m_Club.length())
+	{
+		ioStrings.insert(m_Club);
+		++nItems;
+	}
+
+	if (0 < m_Venue.length())
+	{
+		ioStrings.insert(m_Venue);
+		++nItems;
+	}
+
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 bool ARBCalendar::IsBefore(const ARBDate& inDate) const

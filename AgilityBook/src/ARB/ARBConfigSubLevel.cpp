@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -77,6 +78,12 @@ bool ARBConfigSubLevel::operator==(const ARBConfigSubLevel& rhs) const
 bool ARBConfigSubLevel::operator!=(const ARBConfigSubLevel& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBConfigSubLevel::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+	return nItems;
 }
 
 bool ARBConfigSubLevel::Load(

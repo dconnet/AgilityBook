@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -117,6 +118,14 @@ public:
 				return false;
 		}
 		return true;
+	}
+
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const
+	{
+		size_t nItems = 0;
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+			nItems += (*iter)->GetSearchStrings(ioStrings);
+		return nItems;
 	}
 
 	void clear()

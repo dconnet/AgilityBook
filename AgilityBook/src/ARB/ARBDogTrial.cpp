@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
@@ -117,6 +118,27 @@ std::string ARBDogTrial::GetGenericName() const
 {
 	std::string name = m_Location;
 	return name;
+}
+
+size_t ARBDogTrial::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	if (0 < m_Location.length())
+	{
+		ioStrings.insert(m_Location);
+		++nItems;
+	}
+
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+
+	nItems += m_Clubs.GetSearchStrings(ioStrings);
+
+	return nItems;
 }
 
 bool ARBDogTrial::Load(

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-07 DRC Created
  */
 
@@ -89,6 +90,22 @@ bool ARBInfoJudge::operator!=(const ARBInfoJudge& rhs) const
 std::string ARBInfoJudge::GetGenericName() const
 {
 	return m_Name;
+}
+
+size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	ioStrings.insert(m_Name);
+	++nItems;
+
+	if (0 < m_Comment.length())
+	{
+		ioStrings.insert(m_Comment);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 bool ARBInfoJudge::Load(

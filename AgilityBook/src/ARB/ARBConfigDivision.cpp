@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
@@ -95,6 +96,12 @@ void ARBConfigDivision::clear()
 	m_Name.erase();
 	m_Levels.clear();
 	m_Titles.clear();
+}
+
+size_t ARBConfigDivision::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+	return nItems;
 }
 
 bool ARBConfigDivision::Load(

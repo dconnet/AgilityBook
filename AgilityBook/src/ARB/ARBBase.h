@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  */
 
+#include <set>
 #include <string>
 
 class ARBBase
@@ -62,6 +64,11 @@ public:
 	 * @return Name of the object.
 	 */
 	virtual std::string GetGenericName() const = 0;
+
+	/**
+	 * Get all the strings to search in an object.
+	 */
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const = 0;
 
 	/**
 	 * Get the filtered state of this object.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -94,6 +95,12 @@ void ARBConfigOtherPoints::clear()
 	m_Name.erase();
 	m_Tally = ARBConfigOtherPoints::eTallyAll;
 	m_Desc.erase();
+}
+
+size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+	return nItems;
 }
 
 bool ARBConfigOtherPoints::Load(

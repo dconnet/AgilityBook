@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-08 DRC Changed AddPartner usage.
  */
@@ -89,6 +90,31 @@ bool ARBDogRunPartner::operator==(const ARBDogRunPartner& rhs) const
 bool ARBDogRunPartner::operator!=(const ARBDogRunPartner& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBDogRunPartner::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	if (0 < m_Handler.length())
+	{
+		ioStrings.insert(m_Handler);
+		++nItems;
+	}
+
+	if (0 < m_Dog.length())
+	{
+		ioStrings.insert(m_Dog);
+		++nItems;
+	}
+
+	if (0 < m_RegNum.length())
+	{
+		ioStrings.insert(m_RegNum);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 bool ARBDogRunPartner::Load(

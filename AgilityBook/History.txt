@@ -1,4 +1,4 @@
-12/27/2003: v0.9.5.8: <in development>
+12/28/2003: v0.9.5.8
 - Bumped file version to 8.1:
   - Added 'ValidFrom' and 'ValidTo' dates to an events scoring method. This
     allows an evolution of rules while preserving point accumulation.
@@ -15,6 +15,9 @@
     - ARB Export: Can now export TrainingLog
   - Added some new accelerators:
     - Ctrl+E: Import/Export Wizard
+    - Ctrl+F: Find (Find does not work in the points or calendar view)
+	- F3: Find Next
+	- Shift+F3: Find Previous
     - Ctrl+J: Judge's comments dialog
     - Ctrl+R: Create a new run
     - F7: Viewing options dialog
@@ -24,7 +27,7 @@
   - Training log didn't re-sort if you edited an item.
   - Adding a calendar entry from the List dialog didn't set the icon properly.
 
-12/13/2003: v0.9.4.8:
+12/13/2003: v0.9.4.8
 - Bumped file version to 8.0:
   Modified version number for better backwards compatibility.
   Added new Info section. Currently this only has comments on judges.

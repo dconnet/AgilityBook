@@ -147,6 +147,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Find\tCtrl+F",               ID_EDIT_FIND
         MENUITEM "Find Next\tF3",               ID_EDIT_FIND_NEXT
+        MENUITEM "Find Previous\tShift+F3",     ID_EDIT_FIND_PREVIOUS
         MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
         MENUITEM SEPARATOR
@@ -205,7 +206,7 @@ BEGIN
     END
     POPUP "&View"
     BEGIN
-        MENUITEM "&Options...\tCtrl+F",         ID_VIEW_OPTIONS
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
         MENUITEM SEPARATOR
@@ -380,6 +381,7 @@ BEGIN
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
     VK_F12,         ID_FILE_SAVE_AS,        VIRTKEY, NOINVERT
     VK_F3,          ID_EDIT_FIND_NEXT,      VIRTKEY, NOINVERT
+    VK_F3,          ID_EDIT_FIND_PREVIOUS,  VIRTKEY, SHIFT, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
     VK_F7,          ID_VIEW_OPTIONS,        VIRTKEY, NOINVERT
@@ -1977,6 +1979,7 @@ BEGIN
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_EDIT_JUDGES          "Edit judge information\nJudges"
     ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
+    ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
 END
 
 #endif    // English (U.S.) resources

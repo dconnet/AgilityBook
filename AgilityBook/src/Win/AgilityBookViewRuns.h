@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
@@ -51,7 +52,7 @@ public:
 		: m_pView(pView)
 	{
 	}
-	virtual bool Search();
+	virtual bool Search() const;
 private:
 	CAgilityBookViewRuns* m_pView;
 };
@@ -113,6 +114,7 @@ protected:
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnEditFind();
 	afx_msg void OnEditFindNext();
+	afx_msg void OnEditFindPrevious();
 	afx_msg void OnUpdateAgilityEditRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityEditRun();
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);

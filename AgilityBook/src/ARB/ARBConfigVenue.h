@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -56,6 +57,7 @@ public:
 	void clear();
 
 	virtual std::string GetGenericName() const	{return GetName();}
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	/**
 	 * @param ioConfig When migrating an old file, we may be updating the config.
