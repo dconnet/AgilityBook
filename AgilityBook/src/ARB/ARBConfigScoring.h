@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-11 DRC Added ValidFrom, not fully implemented yet.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -40,6 +41,7 @@
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigTitlePoints.h"
+#include "ARBDate.h"
 #include "ARBVector.h"
 class ARBConfigEvent;
 class ARBVersion;
@@ -74,6 +76,8 @@ public:
 		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
+	const ARBDate& GetValidFrom() const;
+	void SetValidFrom(const ARBDate& inDate);
 	const std::string& GetDivision() const;
 	void SetDivision(const std::string& inDiv);
 	const std::string& GetLevel() const;
@@ -100,6 +104,7 @@ public:
 
 private:
 	~ARBConfigScoring();
+	ARBDate m_ValidDate;
 	std::string m_Division;
 	std::string m_Level;
 	ScoringStyle m_Style;
@@ -112,6 +117,16 @@ private:
 	bool m_bMachPts;
 	ARBConfigTitlePointsList m_TitlePoints;
 };
+
+inline const ARBDate& ARBConfigScoring::GetValidFrom() const
+{
+	return m_ValidDate;
+}
+
+inline void ARBConfigScoring::SetValidFrom(const ARBDate& inDate)
+{
+	m_ValidDate = inDate;
+}
 
 inline const std::string& ARBConfigScoring::GetDivision() const
 {

@@ -6,6 +6,9 @@ Last Updated: 12/7/03
   This could be something as simple as an effective date. In usage, it should
   be part of a single title point object. The dialog for editing a title point
   would become more complex to handle the multiple dates.
+  [The ValidFrom date is now part of the config - but need to figure out the
+  'FindScoring' stuff. For a given div/level/event, the scoring object should
+  auto-sort the items. The FindScoring method needs to change to take a date]
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,

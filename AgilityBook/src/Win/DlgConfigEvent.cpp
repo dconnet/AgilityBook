@@ -92,8 +92,12 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_DESC, m_Desc);
 	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_MOVE_UP, m_ctrlUp);
+	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
 	DDX_Control(pDX, IDC_METHODS, m_ctrlMethods);
 	DDX_Control(pDX, IDC_UNUSED, m_ctrlUnused);
+	DDX_Control(pDX, IDC_DATE_START, m_ctrlValidFrom);
+	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
 	DDX_Control(pDX, IDC_DIVISION, m_ctrlDivision);
 	DDX_Control(pDX, IDC_LEVEL, m_ctrlLevel);
 	DDX_Control(pDX, IDC_TYPE, m_ctrlType);
@@ -119,6 +123,9 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
 	ON_BN_CLICKED(IDC_NEW, OnBnClickedNew)
 	ON_BN_CLICKED(IDC_DELETE, OnBnClickedDelete)
+	ON_BN_CLICKED(IDC_MOVE_UP, OnBnClickedUp)
+	ON_BN_CLICKED(IDC_MOVE_DOWN, OnBnClickedDown)
+	ON_BN_CLICKED(IDC_DATE_START, OnValidFrom)
 	ON_LBN_SELCHANGE(IDC_METHODS, OnLbnSelchangeMethods)
 	ON_CBN_SELCHANGE(IDC_DIVISION, OnCbnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_LEVEL, OnCbnSelchangeLevel)
@@ -159,6 +166,18 @@ void CDlgConfigEvent::FillControls()
 		CString str;
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
 		bEnable = TRUE;
+		CTime t;
+		if (pScoring->GetValidFrom().IsValid())
+		{
+			m_ctrlValidFrom.SetCheck(1);
+			t = pScoring->GetValidFrom().GetDate();
+		}
+		else
+		{
+			m_ctrlValidFrom.SetCheck(0);
+			t = CTime(1990, 1, 1, 0, 0, 0);
+		}
+		m_ctrlDate.SetTime(&t);
 		FillDivisionList();
 		FillLevelList();
 		m_ctrlType.SetCurSel(-1);
@@ -195,6 +214,9 @@ void CDlgConfigEvent::FillControls()
 	}
 	else
 	{
+		m_ctrlValidFrom.SetCheck(0);
+		CTime t(1990, 1, 1, 0, 0, 0);
+		m_ctrlDate.SetTime(&t);
 		m_ctrlDivision.SetCurSel(-1);
 		m_ctrlLevel.SetCurSel(-1);
 		m_ctrlType.SetCurSel(-1);
@@ -206,6 +228,8 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlNote.SetWindowText("");
 		FillRequiredPoints();
 	}
+	m_ctrlValidFrom.EnableWindow(bEnable);
+	m_ctrlDate.EnableWindow(bEnable && m_ctrlValidFrom.GetCheck());
 	m_ctrlDivision.EnableWindow(bEnable);
 	m_ctrlLevel.EnableWindow(bEnable);
 	m_ctrlType.EnableWindow(bEnable);
@@ -214,6 +238,8 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlMachPts.EnableWindow(bEnable);
 	m_ctrlDoubleQ.EnableWindow(bEnable);
 	m_ctrlDelete.EnableWindow(bEnable);
+	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
+	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
 	m_ctrlTitleList.EnableWindow(bEnable);
 	m_ctrlTitleNew.EnableWindow(bEnable);
 	m_ctrlTitleEdit.EnableWindow(bEnable);
@@ -544,6 +570,67 @@ void CDlgConfigEvent::OnBnClickedDelete()
 		FillMethodList();
 		FillControls();
 	}
+}
+
+void CDlgConfigEvent::OnBnClickedUp()
+{
+	UpdateData(TRUE);
+	int idxMethod = m_ctrlMethods.GetCurSel();
+	if (LB_ERR != idxMethod && 0 != idxMethod)
+	{
+		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
+			iter != m_Scorings.end();
+			++iter)
+		{
+			if ((*iter) == pScoring)
+			{
+				pScoring->AddRef();
+				iter = m_Scorings.erase(iter);
+				--iter;
+				m_Scorings.insert(iter, pScoring);
+				m_ctrlMethods.SetCurSel(idxMethod-1);
+				break;
+			}
+		}
+		FillMethodList();
+		FillControls();
+	}
+}
+
+void CDlgConfigEvent::OnBnClickedDown()
+{
+	UpdateData(TRUE);
+	int idxMethod = m_ctrlMethods.GetCurSel();
+	if (LB_ERR != idxMethod && idxMethod < m_ctrlMethods.GetCount() - 1)
+	{
+		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
+			iter != m_Scorings.end();
+			++iter)
+		{
+			if ((*iter) == pScoring)
+			{
+				pScoring->AddRef();
+				iter = m_Scorings.erase(iter);
+				++iter;
+				m_Scorings.insert(iter, pScoring);
+				m_ctrlMethods.SetCurSel(idxMethod+1);
+				break;
+			}
+		}
+		FillMethodList();
+		FillControls();
+	}
+}
+
+void CDlgConfigEvent::OnValidFrom() 
+{
+	UpdateData(TRUE);
+	BOOL bEnable = FALSE;
+	if (m_ctrlValidFrom.GetCheck())
+		bEnable = TRUE;
+	m_ctrlDate.EnableWindow(bEnable);
 }
 
 void CDlgConfigEvent::OnSelchangeType() 

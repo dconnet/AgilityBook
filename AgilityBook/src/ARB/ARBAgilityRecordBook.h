@@ -111,6 +111,7 @@
 #define ATTRIB_SUBLEVEL_NAME				"Name"
 #define ATTRIB_EVENT_NAME					"Name"
 #define ATTRIB_EVENT_HASPARTNER				"hasPartner"
+#define ATTRIB_SCORING_DATE					"Date"
 #define ATTRIB_SCORING_DIVISION				"Division"
 #define ATTRIB_SCORING_LEVEL				"Level"
 #define ATTRIB_SCORING_TYPE					"type"
