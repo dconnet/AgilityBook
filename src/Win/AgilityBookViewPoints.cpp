@@ -31,6 +31,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-23 DRC Fixed a problem when getting the Q/NQ ratio when a filter
+ *                    was in place. Trials that were hidden also removed any
+ *                    runs that might have been applicable to the ratio.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  *                    Fix filtering on co-sanctioned trials.
  * @li 2004-05-27 DRC Lifetime point accumulation did not display the points
@@ -624,28 +627,10 @@ void CAgilityBookViewPoints::LoadData()
 				++iterTrial)
 			{
 				ARBDogTrial const* pTrial = (*iterTrial);
-				if (pTrial->HasVenue(pVenue->GetName())
-				&& !pTrial->IsFiltered())
-				{
-					// Even tho the trial has "passed", it may actually contain
-					// some runs that should be filtered. This is due to the
-					// co-sanctioning issue.
-					bool bAdd = true;
-					if (1 < pTrial->GetClubs().size())
-					{
-						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-							bAdd && iterRun != pTrial->GetRuns().end();
-							++iterRun)
-						{
-							ARBDogRun const* pRun = *iterRun;
-							if (!pRun->IsFiltered()
-							&& !CAgilityBookOptions::IsRunVisible(venues, pVenue, pTrial, pRun))
-								bAdd = false;
-						}
-					}
-					if (bAdd)
-						trialsInVenue.push_back(pTrial);
-				}
+				// Don't bother subtracting "hidden" trials. Doing so
+				// will skew the qualifying percentage.
+				if (pTrial->HasVenue(pVenue->GetName()))
+					trialsInVenue.push_back(pTrial);
 			}
 			if (pDog->GetExistingPoints().HasPoints(pVenue->GetName())
 			|| 0 < trialsInVenue.size())
