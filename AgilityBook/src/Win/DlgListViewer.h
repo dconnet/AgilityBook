@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2004-07-29 DRC Created
  */
@@ -117,6 +118,10 @@ public:
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
 		std::set<DoubleQdata> const& inQQs,
 		CWnd* pParent = NULL);
+	// Viewing lifetime data
+	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
+		std::list<LifeTimePointInfo> const& inLifetime,
+		CWnd* pParent = NULL);
 	// Viewing other points
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
 		std::list<OtherPtInfo> const& inRunList,
@@ -140,6 +145,7 @@ private:
 	std::list<RunInfo> const* m_Runs;
 	std::list<ScoringRunInfo> const* m_ScoringRuns;
 	std::set<DoubleQdata> const* m_DoubleQData;
+	std::list<LifeTimePointInfo> const* m_Lifetime;
 	std::list<OtherPtInfo> const* m_OtherData;
 	std::vector<CFindItemInfo> const* m_Items;
 	CRect m_rWin;

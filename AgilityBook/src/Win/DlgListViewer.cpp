@@ -37,6 +37,7 @@
  * this dialog.
  *
  * Revision History
+ * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  *                    Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -613,6 +614,90 @@ int CDlgListViewerDataDblQ::Compare(CDlgListViewerData const* pRow2, int inCol) 
 
 /////////////////////////////////////////////////////////////////////////////
 
+class CDlgListViewerDataLifetime : public CDlgListViewerData
+{
+public:
+	CDlgListViewerDataLifetime(CDlgListViewerDataColumns* inColData,
+		LifeTimePointInfo const& info)
+		: m_ColData(inColData)
+		, m_info(info)
+	{
+		ASSERT(m_ColData);
+		if (m_ColData)
+			m_ColData->AddRef();
+	}
+	virtual ~CDlgListViewerDataLifetime()
+	{
+		if (m_ColData)
+			m_ColData->Release();
+	}
+	virtual CString OnNeedText(int iCol) const;
+	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+private:
+	CDlgListViewerDataColumns* m_ColData;
+	LifeTimePointInfo m_info;
+};
+
+CString CDlgListViewerDataLifetime::OnNeedText(int iCol) const
+{
+	CString str;
+	switch (m_ColData->GetIndex(iCol))
+	{
+	case COL_OTHER_DIV:
+		str = m_info.div.c_str();
+		break;
+	case COL_OTHER_LEVEL:
+		str = m_info.level.c_str();
+		break;
+	case COL_OTHER_PTS:
+		{
+			CString str2;
+			if (0 < m_info.filtered)
+				str2.Format("%d (%d)", m_info.points - m_info.filtered, m_info.points);
+			else
+				str2.Format("%d", m_info.points);
+			str = (LPCTSTR)str2;
+		}
+		break;
+	}
+	return str;
+}
+
+int CDlgListViewerDataLifetime::Compare(CDlgListViewerData const* pRow2, int inCol) const
+{
+	CDlgListViewerDataLifetime const* pData = dynamic_cast<CDlgListViewerDataLifetime const*>(pRow2);
+	if (!pData)
+		return 0;
+	std::string str1, str2;
+	switch (m_ColData->GetIndex(inCol))
+	{
+	default:
+	case COL_OTHER_DIV:
+		str1 = m_info.div;
+		str2 = pData->m_info.div;
+		break;
+	case COL_OTHER_LEVEL:
+		str1 = m_info.level;
+		str2 = pData->m_info.level;
+		break;
+	case COL_OTHER_PTS:
+		if (m_info.points < pData->m_info.points)
+			return -1;
+		else if (m_info.points > pData->m_info.points)
+			return 1;
+		else
+			return 0;
+	}
+	if (str1 < str2)
+		return -1;
+	else if (str1 > str2)
+		return 1;
+	else
+		return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 class CDlgListViewerDataOther : public CDlgListViewerData
 {
 public:
@@ -907,6 +992,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_Runs(&inRuns)
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
+	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
@@ -930,6 +1016,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_Runs(NULL)
 	, m_ScoringRuns(&inScoringRuns)
 	, m_DoubleQData(NULL)
+	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
@@ -952,6 +1039,30 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(&inQQs)
+	, m_Lifetime(NULL)
+	, m_OtherData(NULL)
+	, m_Items(NULL)
+	, m_rWin(0,0,0,0)
+	, m_rDlg(0,0,0,0)
+	, m_rList(0,0,0,0)
+	, m_rOK(0,0,0,0)
+	, m_SortColumn(1)
+{
+}
+
+// Viewing lifetime data
+CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+	CString const& inCaption,
+	std::list<LifeTimePointInfo> const& inLifetime,
+	CWnd* pParent)
+	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_pDoc(inDoc)
+	, m_Caption(inCaption)
+	, m_Data(NULL)
+	, m_Runs(NULL)
+	, m_ScoringRuns(NULL)
+	, m_DoubleQData(NULL)
+	, m_Lifetime(&inLifetime)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
@@ -974,6 +1085,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
+	, m_Lifetime(NULL)
 	, m_OtherData(&inRunList)
 	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
@@ -995,6 +1107,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
+	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(&inItems)
 	, m_rWin(0,0,0,0)
@@ -1197,6 +1310,30 @@ BOOL CDlgListViewer::OnInitDialog()
 			++iter)
 		{
 			CDlgListViewerDataDblQ* pData = new CDlgListViewerDataDblQ(pColData, iter->first, iter->second);
+			LVITEM item;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.iItem = iItem++;
+			item.iSubItem = 0;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.lParam = reinterpret_cast<LPARAM>(pData);
+			m_ctrlList.InsertItem(&item);
+		}
+		pColData->SetColumnWidths(m_ctrlList);
+		pColData->Release();
+	}
+	else if (m_Lifetime)
+	{
+		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, IDS_COL_DIVISION);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, IDS_COL_POINTS);
+		int iItem = 0;
+		for (std::list<LifeTimePointInfo>::const_iterator iter = m_Lifetime->begin();
+			iter != m_Lifetime->end();
+			++iter)
+		{
+			LifeTimePointInfo const& info = *iter;
+			CDlgListViewerDataLifetime* pData = new CDlgListViewerDataLifetime(pColData, info);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -55,6 +56,16 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+LifeTimePointInfo::LifeTimePointInfo(std::string const& inDiv, std::string const& inLevel, int inPoints, int inFiltered)
+	: div(inDiv)
+	, level(inLevel)
+	, points(inPoints)
+	, filtered(inFiltered)
+{
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -369,13 +380,19 @@ void PointsDataEvent::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataLifetime::PointsDataLifetime(CAgilityBookViewPoints* pView,
-	int inLifetime,
-	int inFiltered)
+PointsDataLifetime::PointsDataLifetime(CAgilityBookViewPoints* pView, std::string const& inVenue)
 	: PointsDataBase(pView)
-	, m_Lifetime(inLifetime)
-	, m_Filtered(inFiltered)
+	, m_Venue(inVenue.c_str())
+	, m_Lifetime(0)
+	, m_Filtered(0)
 {
+}
+
+void PointsDataLifetime::AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered)
+{
+	m_Data.push_back(LifeTimePointInfo(inDiv, inLevel, inLifetime, inFiltered));
+	m_Lifetime += inLifetime;
+	m_Filtered += inFiltered;
 }
 
 std::string PointsDataLifetime::OnNeedText(size_t index) const
@@ -402,6 +419,14 @@ std::string PointsDataLifetime::OnNeedText(size_t index) const
 		break;
 	}
 	return str;
+}
+
+void PointsDataLifetime::OnDblClick() const
+{
+	CString caption(m_Venue);
+	caption += " Lifetime Points";
+	CDlgListViewer dlg(m_pView->GetDocument(), caption, m_Data, m_pView);
+	dlg.DoModal();
 }
 
 /////////////////////////////////////////////////////////////////////////////

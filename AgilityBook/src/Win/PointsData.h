@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
@@ -59,6 +60,19 @@ typedef std::pair<ARBDate, ARBDogTrial const*> DoubleQdata;
 typedef std::pair<ARBDogTrial const*, ARBDogRun const*> RunInfo;
 
 /////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Used to accumulate lifetime info.
+ */
+class LifeTimePointInfo
+{
+public:
+	LifeTimePointInfo(std::string const& inDiv, std::string const& inLevel, int inPoints, int inFiltered);
+	std::string div;
+	std::string level;
+	int points;
+	int filtered;
+};
 
 /**
  * Used to accumulate run info into a flat list.
@@ -198,11 +212,15 @@ protected:
 class PointsDataLifetime : public PointsDataBase
 {
 public:
-	PointsDataLifetime(CAgilityBookViewPoints* pView, int inLifetime, int inFiltered);
+	PointsDataLifetime(CAgilityBookViewPoints* pView, std::string const& inVenue);
+	void AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered);
 
 	virtual std::string OnNeedText(size_t index) const;
+	virtual void OnDblClick() const;
 
 protected:
+	CString m_Venue;
+	std::list<LifeTimePointInfo> m_Data;
 	int m_Lifetime; //< Total lifetime points.
 	int m_Filtered; //< Points that are filtered out.
 };
