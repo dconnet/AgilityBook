@@ -35,6 +35,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-09-15 DRC Fixed a bug where a trial created for more than one dog
  *                    at the same time actually only created one linked entry.
  * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
@@ -93,6 +94,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
+	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -815,5 +818,16 @@ void CAgilityBookDoc::OnViewSortruns()
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
 	SortDates();
+	UpdateAllViews(NULL, UPDATE_OPTIONS);
+}
+
+void CAgilityBookDoc::OnUpdateViewRunsByTrial(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
+}
+
+void CAgilityBookDoc::OnViewRunsByTrial()
+{
+	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
 	UpdateAllViews(NULL, UPDATE_OPTIONS);
 }

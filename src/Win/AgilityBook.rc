@@ -204,7 +204,8 @@ BEGIN
     POPUP "&View"
     BEGIN
         MENUITEM "&Options...",                 ID_VIEW_OPTIONS
-        MENUITEM "Show Newest &Runs First",     ID_VIEW_SORTRUNS
+        MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
+        MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
         MENUITEM SEPARATOR
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
@@ -712,48 +713,46 @@ BEGIN
                     ES_WANTRETURN | WS_VSCROLL
     PUSHBUTTON      "Partners...",IDC_PARTNERS_EDIT,112,75,40,12
     EDITTEXT        IDC_PARTNER,156,75,227,12,ES_AUTOHSCROLL | ES_READONLY
-    GROUPBOX        "By Time",IDC_STATIC,7,92,376,30
-    RTEXT           "Course Faults",IDC_FAULTS_TEXT,15,104,44,8
-    EDITTEXT        IDC_FAULTS,63,102,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    RTEXT           "Time",IDC_TIME4FAULT_TEXT,94,104,16,8
-    EDITTEXT        IDC_TIME4FAULT,114,102,30,12,ES_AUTOHSCROLL
-    RTEXT           "Yards",IDC_YARDS_TEXT,149,104,19,8
-    EDITTEXT        IDC_YARDS,172,102,30,12,ES_AUTOHSCROLL
-    RTEXT           "YPS",IDC_YPS_TEXT,207,104,16,8
-    CTEXT           "",IDC_YPS,227,103,25,10,SS_SUNKEN
-    RTEXT           "SCT",IDC_SCT_TEXT,259,104,15,8
-    EDITTEXT        IDC_SCT,278,102,25,12,ES_AUTOHSCROLL
-    RTEXT           "Total Faults",IDC_TOTAL_FAULTS_TEXT,308,104,38,8
-    CTEXT           "",IDC_TOTAL_FAULTS,350,103,25,10,SS_SUNKEN
-    GROUPBOX        "By Score",IDC_STATIC,7,125,376,30
-    RTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,137,58,8
-    EDITTEXT        IDC_OPENING_PTS,78,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    RTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,113,137,54,8
-    EDITTEXT        IDC_CLOSING_PTS,171,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    RTEXT           "Time",IDC_TIME4SCORE_TEXT,206,137,16,8
-    EDITTEXT        IDC_TIME4SCORE,226,135,30,12,ES_AUTOHSCROLL
-    RTEXT           "Open",IDC_OPEN_PTS_TEXT,262,137,23,8
-    EDITTEXT        IDC_OPEN_PTS,290,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    RTEXT           "Close",IDC_CLOSE_PTS_TEXT,327,137,18,8
-    EDITTEXT        IDC_CLOSE_PTS,350,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    RTEXT           "Place",IDC_STATIC,7,162,19,8
-    EDITTEXT        IDC_PLACE,30,160,20,12,ES_AUTOHSCROLL | ES_NUMBER
-    CTEXT           "of",IDC_STATIC,52,162,8,8
-    EDITTEXT        IDC_IN_CLASS,62,160,20,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Dogs Q'd",IDC_STATIC,100,162,30,8
-    EDITTEXT        IDC_DOGS_QD,134,160,20,12,ES_AUTOHSCROLL
-    LTEXT           "Q?",IDC_STATIC,165,162,10,8
-    COMBOBOX        IDC_Q,180,160,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "Course Faults",IDC_STATIC,7,105,44,8
+    EDITTEXT        IDC_FAULTS,55,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Time",IDC_STATIC,27,121,16,8
+    EDITTEXT        IDC_TIME,50,119,30,12,ES_AUTOHSCROLL
+    GROUPBOX        "By Score",IDC_STATIC,88,92,103,77
+    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,95,105,58,8
+    EDITTEXT        IDC_OPENING_PTS,158,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,95,121,54,8
+    EDITTEXT        IDC_CLOSING_PTS,158,119,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Opening",IDC_OPEN_PTS_TEXT,95,137,28,8
+    EDITTEXT        IDC_OPEN_PTS,158,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Closing",IDC_CLOSE_PTS_TEXT,95,153,24,8
+    EDITTEXT        IDC_CLOSE_PTS,158,151,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    GROUPBOX        "By Time",IDC_STATIC,199,92,85,77
+    LTEXT           "Yards",IDC_YARDS_TEXT,206,105,19,8
+    EDITTEXT        IDC_YARDS,247,103,30,12,ES_AUTOHSCROLL
+    LTEXT           "YPS",IDC_YPS_TEXT,206,121,16,8
+    CTEXT           "",IDC_YPS,247,120,30,10,SS_SUNKEN
+    LTEXT           "SCT",IDC_SCT_TEXT,206,137,15,8
+    EDITTEXT        IDC_SCT,247,135,30,12,ES_AUTOHSCROLL
+    LTEXT           "Total Faults",IDC_TOTAL_FAULTS_TEXT,206,153,38,8
+    CTEXT           "",IDC_TOTAL_FAULTS,247,152,30,10,SS_SUNKEN
+    RTEXT           "Place",IDC_STATIC,308,105,19,8
+    EDITTEXT        IDC_PLACE,332,103,20,12,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "of",IDC_STATIC,353,105,8,8
+    EDITTEXT        IDC_IN_CLASS,363,103,20,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Dogs Q'd",IDC_STATIC,328,121,30,8
+    EDITTEXT        IDC_DOGS_QD,363,119,20,12,ES_AUTOHSCROLL
+    LTEXT           "Q?",IDC_STATIC,344,137,10,8
+    COMBOBOX        IDC_Q,358,135,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Score",IDC_STATIC,220,162,20,8
-    CTEXT           "",IDC_SCORE,245,161,25,10,SS_SUNKEN
-    PUSHBUTTON      "Other Points...",IDC_OTHERPOINTS,7,180,50,12
-    LTEXT           "Title Points",IDC_TITLE_POINTS_TEXT,70,181,36,8
-    CTEXT           "",IDC_TITLE_POINTS,113,180,20,10,SS_SUNKEN
-    LTEXT           "Mach Points",IDC_MACHPTS_TEXT,143,181,40,8
-    CTEXT           "",IDC_MACHPTS,188,180,20,10,SS_SUNKEN
+    LTEXT           "Score",IDC_STATIC,333,152,20,8
+    CTEXT           "",IDC_SCORE,357,151,25,10,SS_SUNKEN
     CONTROL         "Double Q",IDC_DOUBLE_Q,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,224,180,46,10
+                    WS_DISABLED | WS_TABSTOP,125,182,46,10
+    LTEXT           "Mach Points",IDC_MACHPTS_TEXT,180,183,40,8
+    CTEXT           "",IDC_MACHPTS,225,182,20,10,SS_SUNKEN
+    LTEXT           "Title Points",IDC_TITLE_POINTS_TEXT,255,183,36,8
+    CTEXT           "",IDC_TITLE_POINTS,297,182,20,10,SS_SUNKEN
+    PUSHBUTTON      "Other Points...",IDC_OTHERPOINTS,333,180,50,12
 END
 
 IDD_RUN_COMMENTS DIALOG DISCARDABLE  0, 0, 390, 199
@@ -1083,8 +1082,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,2,6
- PRODUCTVERSION 0,9,2,6
+ FILEVERSION 0,9,3,7
+ PRODUCTVERSION 0,9,3,7
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1099,13 +1098,18 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
             VALUE "FileDescription", "Agility Record Book\0"
-            VALUE "FileVersion", "0.9.2.6\0"
+            VALUE "FileVersion", "0.9.3.7\0"
             VALUE "InternalName", "AgilityBook.exe\0"
             VALUE "LegalCopyright", "All rights reserved.\0"
+            VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
+            VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "Agility Record Book\0"
-            VALUE "ProductVersion", "0.9.2.6\0"
+            VALUE "ProductVersion", "0.9.3.7\0"
+            VALUE "SpecialBuild", "\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -1614,7 +1618,7 @@ BEGIN
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
     IDS_ABOUT_UPDATE        "Check for Updates\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
     IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
-    IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com?subject=AgilityBook Help: "
+    IDS_ABOUT_LINK2         "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook Help: "
     IDS_ABOUT_LINK3         "Source Forge\thttp://sourceforge.net/projects/agilitybook"
 END
 
@@ -1751,6 +1755,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     ID_REORDER              "Reorder items\nReorder"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
+    ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
 END
 
 #endif    // English (U.S.) resources

@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-14 DRC Fixed problem inserting other point lines.
+ * @li 2003-10-13 DRC Don't tally runs that have no titling points.
  * @li 2003-08-28 DRC Completed Other Points tallying
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -201,7 +203,8 @@ int CAgilityBookViewPoints::DoEvents(
 	{
 		const ARBConfigEvent* pEvent = (*iterEvent);
 		const ARBConfigScoring* pScoringMethod = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName());
-		if (!pScoringMethod)
+		// Don't tally runs that have no titling points.
+		if (!pScoringMethod || 0 == pScoringMethod->GetTitlePoints().size())
 			continue;
 		int SQs = 0;
 		int machPtsEvent = 0;
@@ -528,7 +531,7 @@ void CAgilityBookViewPoints::LoadData()
 				GetListCtrl().InsertItem(i++, "");
 			str.LoadString(IDS_OTHERPOINTS);
 			GetListCtrl().InsertItem(i++, str);
-			for (vector<ARBConfigOtherPoints*>::const_iterator iterOther = other.begin(); iterOther != other.end(); ++iterOther)
+			for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin(); iterOther != other.end(); ++iterOther)
 			{
 				// First, just generate a list of runs with the needed info.
 				std::list<OtherPtInfo> runs;
@@ -581,7 +584,6 @@ void CAgilityBookViewPoints::LoadData()
 						CString str;
 						str.Format("%d", score);
 						GetListCtrl().SetItemText(i, 2, str);
-						++i;
 					}
 					break;
 
@@ -666,6 +668,7 @@ void CAgilityBookViewPoints::LoadData()
 					}
 					break;
 				}
+				++i;
 			}
 		}
 	}

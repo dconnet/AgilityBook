@@ -32,12 +32,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgRunReference.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBDogRun.h"
 #include "DlgReferenceRun.h"
 
@@ -138,8 +140,10 @@ int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunReference dialog
 
-CDlgRunReference::CDlgRunReference(ARBDogRun* pRun)
+CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue, ARBDogRun* pRun)
 	: CPropertyPage(CDlgRunReference::IDD)
+	, m_pDoc(pDoc)
+	, m_Venue(pVenue)
 	, m_Run(pRun)
 	, m_sortRefRuns("RefRuns")
 {
@@ -345,6 +349,31 @@ void CDlgRunReference::OnDblclkRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 void CDlgRunReference::OnRefRunNew() 
 {
 	ARBDogReferenceRun* ref = new ARBDogReferenceRun;
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	{
+		const ARBConfigScoring* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+			m_Venue->GetName(),
+			m_Run->GetEvent(),
+			m_Run->GetDivision(),
+			m_Run->GetLevel());
+		if (pScoring)
+		{
+			std::string nScore;
+			switch (pScoring->GetScoringStyle())
+			{
+			default:
+				nScore = "0";
+				break;
+			case ARBConfigScoring::eFaults100ThenTime:
+				nScore = "100";
+				break;
+			case ARBConfigScoring::eFaults200ThenTime:
+				nScore = "200";
+				break;
+			}
+			ref->SetScore(nScore);
+		}
+	}
 	CDlgReferenceRun dlg(ref, this);
 	if (IDOK == dlg.DoModal())
 	{

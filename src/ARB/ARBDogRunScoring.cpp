@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
  */
 
 #include "StdAfx.h"
@@ -128,6 +129,10 @@ bool ARBDogRunScoring::Load(
 
 	m_bRoundTimeFaults = inEvent->DropFractions();
 	const std::string& name = inTree.GetName();
+	double d;
+	if (CElement::eFound == inTree.GetAttrib(ATTRIB_SCORING_TIME, d))
+		m_Time = d;
+	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	switch (inEvent->GetScoringStyle())
 	{
 	default:
@@ -140,10 +145,6 @@ bool ARBDogRunScoring::Load(
 		if (name == TREE_BY_TIME)
 		{
 			m_type = eTypeByTime;
-			double d;
-			if (CElement::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_TIME, d))
-				m_Time = d;
-			inTree.GetAttrib(ATTRIB_BY_TIME_FAULTS, m_CourseFaults);
 			if (CElement::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_SCT, d))
 				m_SCT = d;
 			inTree.GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
@@ -157,9 +158,6 @@ bool ARBDogRunScoring::Load(
 			m_type = eTypeByOpenClose;
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
-			double d;
-			if (CElement::eFound == inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_TIME, d))
-				m_Time = d;
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
 			return true;
@@ -171,9 +169,6 @@ bool ARBDogRunScoring::Load(
 		{
 			m_type = eTypeByPoints;
 			inTree.GetAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
-			double d;
-			if (CElement::eFound == inTree.GetAttrib(ATTRIB_BY_POINTS_TIME, d))
-				m_Time = d;
 			inTree.GetAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
 			return true;
 		}
@@ -191,8 +186,8 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 	case eTypeByTime:
 		{
 			CElement& scoring = ioTree.AddElement(TREE_BY_TIME);
-			m_Time.Save(scoring, ATTRIB_BY_TIME_TIME);
-			scoring.AddAttrib(ATTRIB_BY_TIME_FAULTS, m_CourseFaults);
+			scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
 			scoring.AddAttrib(ATTRIB_BY_TIME_SCT, m_SCT);
 			scoring.AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 		}
@@ -200,9 +195,11 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 	case eTypeByOpenClose:
 		{
 			CElement& scoring = ioTree.AddElement(TREE_BY_OPENCLOSE);
+			if (0 < m_CourseFaults)
+				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
-			m_Time.Save(scoring, ATTRIB_BY_OPENCLOSE_TIME);
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
 		}
@@ -210,8 +207,10 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 	case eTypeByPoints:
 		{
 			CElement& scoring = ioTree.AddElement(TREE_BY_POINTS);
+			if (0 < m_CourseFaults)
+				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
 			scoring.AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
-			m_Time.Save(scoring, ATTRIB_BY_POINTS_TIME);
 			scoring.AddAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
 		}
 		return true;

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Allow course faults on point runs.
  * @li 2003-09-01 DRC Fixed problem with Score and TitlePts in time+faults.
  */
 
@@ -459,10 +460,10 @@ ARBDouble ARBDogRun::GetScore(const ARBConfigScoring* inScoring) const
 		}
 		break;
 	case ARBDogRunScoring::eTypeByOpenClose:
-		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts();
+		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts() - m_Scoring.GetCourseFaults();
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
-		pts = m_Scoring.GetOpenPts();
+		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults();
 		break;
 	}
 	return pts;

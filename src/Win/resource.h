@@ -101,10 +101,7 @@
 #define IDC_JUDGE                       1054
 #define IDC_PARTNERS_EDIT               1055
 #define IDC_CONDITIONS                  1056
-#define IDC_FAULTS_TEXT                 1057
 #define IDC_FAULTS                      1058
-#define IDC_TIME4FAULT_TEXT             1059
-#define IDC_TIME4FAULT                  1060
 #define IDC_YARDS_TEXT                  1061
 #define IDC_YARDS                       1062
 #define IDC_YPS_TEXT                    1063
@@ -117,8 +114,6 @@
 #define IDC_OPENING_PTS                 1070
 #define IDC_CLOSING_PTS_TEXT            1071
 #define IDC_CLOSING_PTS                 1072
-#define IDC_TIME4SCORE_TEXT             1073
-#define IDC_TIME4SCORE                  1074
 #define IDC_OPEN_PTS_TEXT               1075
 #define IDC_OPEN_PTS                    1076
 #define IDC_CLOSE_PTS_TEXT              1077
@@ -359,6 +354,7 @@
 #define ID_PREV_TAB                     32804
 #define ID_REORDER                      32805
 #define ID_VIEW_SORTRUNS                32806
+#define ID_VIEW_RUNS_BY_TRIAL           32807
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -367,7 +363,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        180
-#define _APS_NEXT_COMMAND_VALUE         32807
+#define _APS_NEXT_COMMAND_VALUE         32808
 #define _APS_NEXT_CONTROL_VALUE         1151
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
