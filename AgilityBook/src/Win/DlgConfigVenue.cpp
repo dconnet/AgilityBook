@@ -38,19 +38,25 @@
  * If the file is hand-edited, it could... But just how paranoid do we get?!
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
- * There some internal problem what happens when editing this via a specific
+ * There is some internal problem that happens when editing this via a specific
  * series of events:
  *  Using NADAC, dbl-click on Gamblers. Then 'OK' to close. Then 'OK' to close
  *  this. Somewhere in the final sequence, the program will die in the debugger
- *  with a msg that the pgm has modified memory that was deleted. Sometimes
- *  scrolling the event tree or moving the window is enough to trigger it. So
- *  far, I have made no progress towards figuring this out. It doesn't seem to
- *  do any harm - I can keep going. Except the one time the code ended up in
- *  some critical section code where it was permanently stuck. The call stack
- *  is pretty much useless in all cases. (The most common trigger is during the
- *  this windows destruction process: OnDestroy, not dtor.)
+ *  with a msg that the pgm has modified memory that was deleted. (USDAA/snooker
+ *  also triggers the problem)
+ *   HEAP[AgilityBook.exe]: HEAP: Free Heap block 170830 modified at 170acc after it was freed
+ *   Unhandled exception at 0x77f75a58 in AgilityBook.exe: User breakpoint.
+ *  The block number and memory address both vary. Simply twitching the mouse
+ *  over the event tree control is enough to trigger it. SmartHeap was useless.
+ *  Happens in both VC6 and 7. Commenting out ALL of my deletes does not solve
+ *  it - it's something windows is accessing. By not adding the scoring events
+ *  under the events in the tree, that seems to make the problem go away - so
+ *  I have modified the dialog to only display the event name, not scoring
+ *  methods. Hopefully this actually solves things and doesn't just move it.
+ *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
+ * @li 2004-04-29 DRC Changed the way events are displayed (from tree to list).
  * @li 2004-02-09 DRC Fixed some bugs when creating/modifying venues.
  * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2004-01-24 DRC Created
@@ -134,7 +140,9 @@ BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDialog)
 	ON_NOTIFY(TVN_DELETEITEM, IDC_LEVEL, OnDeleteitemTree)
 	ON_NOTIFY(NM_DBLCLK, IDC_DIVISION, OnDblclk)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DIVISION, OnItemchangedDivision)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TITLES, OnItemchangedTitles)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TITLES, OnItemchangedList)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_EVENT, OnItemchangedList)
+	ON_NOTIFY(TVN_SELCHANGED, IDC_LEVEL, OnItemchanged)
 	ON_NOTIFY(NM_SETFOCUS, IDC_DIVISION, OnSetfocusDivision)
 	ON_NOTIFY(NM_SETFOCUS, IDC_LEVEL, OnSetfocusLevel)
 	ON_NOTIFY(NM_SETFOCUS, IDC_TITLES, OnSetfocusTitles)
@@ -146,14 +154,12 @@ BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDialog)
 	ON_BN_CLICKED(IDC_MOVE_UP, OnMoveUp)
 	ON_BN_CLICKED(IDC_MOVE_DOWN, OnMoveDown)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_TITLES, OnGetdispinfoList)
-	ON_NOTIFY(TVN_GETDISPINFO, IDC_EVENT, OnGetdispinfoTree)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_TITLES, OnDeleteitemList)
-	ON_NOTIFY(TVN_DELETEITEM, IDC_EVENT, OnDeleteitemTree)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_EVENT, OnGetdispinfoList)
+	ON_NOTIFY(LVN_DELETEITEM, IDC_EVENT, OnDeleteitemList)
 	ON_NOTIFY(NM_DBLCLK, IDC_LEVEL, OnDblclk)
 	ON_NOTIFY(NM_DBLCLK, IDC_TITLES, OnDblclk)
 	ON_NOTIFY(NM_DBLCLK, IDC_EVENT, OnDblclk)
-	ON_NOTIFY(TVN_SELCHANGED, IDC_LEVEL, OnItemchanged)
-	ON_NOTIFY(TVN_SELCHANGED, IDC_EVENT, OnItemchanged)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -247,18 +253,17 @@ void CDlgConfigVenue::UpdateButtons()
 	case eEvents:
 		{
 			bNew = TRUE;
-			HTREEITEM hItem = m_ctrlEvents.GetSelectedItem();
-			if (NULL != hItem)
+			int index = m_ctrlEvents.GetSelection();
+			if (0 <= index)
 			{
 				bDelete = bEdit = TRUE;
-				CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlEvents.GetItemData(hItem));
-				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(pData);
+				CDlgConfigureDataEvent* pEventData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
 				if (pEventData)
 				{
 					bCopy = TRUE;
-					if (NULL != m_ctrlEvents.GetPrevSiblingItem(hItem))
+					if (0 < index)
 						bMoveUp = TRUE;
-					if (NULL != m_ctrlEvents.GetNextSiblingItem(hItem))
+					if (index < m_ctrlEvents.GetItemCount() - 1)
 						bMoveDown = TRUE;
 				}
 			}
@@ -382,39 +387,19 @@ void CDlgConfigVenue::LoadEventData()
 {
 	ARBConfigEvent* pOldEvent = NULL;
 	CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-	CDlgConfigureDataScoring* pScoringData = GetCurrentScoringData();
 	if (pEventData)
 	{
 		pOldEvent = pEventData->GetEvent();
 		pOldEvent->AddRef();
 	}
-	else if (pScoringData)
-	{
-		pOldEvent = pScoringData->GetEvent();
-		pOldEvent->AddRef();
-	}
 	m_ctrlEvents.DeleteAllItems();
 	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
 	{
-		ARBConfigEvent* pEvent = *iterEvent;
-		HTREEITEM hItem = m_ctrlEvents.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-			0, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataEvent(pEvent)),
-			TVI_ROOT, TVI_LAST);
-		ASSERT(hItem != NULL);
-		if (0 < pEvent->GetScorings().size())
-		{
-			for (ARBConfigScoringList::iterator iterScoring = pEvent->GetScorings().begin(); iterScoring != pEvent->GetScorings().end(); ++iterScoring)
-			{
-				ARBConfigScoring* pScoring = *iterScoring;
-				m_ctrlEvents.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(new CDlgConfigureDataScoring(pEvent, pScoring)),
-					hItem, TVI_LAST);
-			}
-			m_ctrlEvents.Expand(hItem, TVE_EXPAND);
-		}
+		m_ctrlEvents.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlEvents.GetItemCount(),
+			LPSTR_TEXTCALLBACK, 0, 0, 0,
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataEvent(*iterEvent)));
 	}
+	m_ctrlEvents.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	FindCurrentEvent(pOldEvent, true);
 	if (pOldEvent)
 		pOldEvent->Release();
@@ -531,31 +516,29 @@ int CDlgConfigVenue::FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet)
 	return idxCurrent;
 }
 
-HTREEITEM CDlgConfigVenue::FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet)
+int CDlgConfigVenue::FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet)
 {
-	HTREEITEM hCurrent = NULL;
+	int idxCurrent = -1;
 	if (pEvent)
 	{
-		HTREEITEM hItem = m_ctrlEvents.GetRootItem();
-		while (NULL == hCurrent && NULL != hItem)
+		for (int index = 0; index < m_ctrlEvents.GetItemCount(); ++index)
 		{
-			CDlgConfigureDataEvent* pData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(hItem));
+			CDlgConfigureDataEvent* pData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
 			if (pData->GetEvent() == pEvent)
 			{
-				hCurrent = hItem;
+				idxCurrent = index;
 				break;
 			}
-			hItem = m_ctrlEvents.GetNextSiblingItem(hItem);
 		}
 	}
 	if (bSet)
 	{
-		m_ctrlEvents.SelectItem(hCurrent);
-		if (NULL != hCurrent)
-			m_ctrlEvents.EnsureVisible(hCurrent);
+		m_ctrlEvents.SetSelection(idxCurrent);
+		if (0 < idxCurrent)
+			m_ctrlEvents.EnsureVisible(idxCurrent, FALSE);
 		UpdateButtons();
 	}
-	return hCurrent;
+	return idxCurrent;
 }
 
 CDlgConfigureDataDivision* CDlgConfigVenue::GetCurrentDivisionData()
@@ -602,24 +585,9 @@ CDlgConfigureDataTitle* CDlgConfigVenue::GetCurrentTitleData()
 
 CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
 {
-	HTREEITEM hItem = m_ctrlEvents.GetSelectedItem();
-	if (NULL != hItem)
-	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlEvents.GetItemData(hItem));
-		return dynamic_cast<CDlgConfigureDataEvent*>(pData);
-	}
-	else
-		return NULL;
-}
-
-CDlgConfigureDataScoring* CDlgConfigVenue::GetCurrentScoringData()
-{
-	HTREEITEM hItem = m_ctrlEvents.GetSelectedItem();
-	if (NULL != hItem)
-	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlEvents.GetItemData(hItem));
-		return dynamic_cast<CDlgConfigureDataScoring*>(pData);
-	}
+	int index = m_ctrlEvents.GetSelection();
+	if (0 <= index)
+		return reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
 	else
 		return NULL;
 }
@@ -634,6 +602,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlDivisions.InsertColumn(0, "Divisions");
 	m_ctrlTitles.InsertColumn(0, "Titles");
+	m_ctrlEvents.InsertColumn(0, "Events");
 
 	m_ctrlName.SetWindowText(m_pVenue->GetName().c_str());
 	CString str(m_pVenue->GetDesc().c_str());
@@ -651,7 +620,6 @@ BOOL CDlgConfigVenue::OnInitDialog()
 void CDlgConfigVenue::OnDestroy() 
 {
 	m_ctrlLevels.DeleteAllItems();
-	m_ctrlEvents.DeleteAllItems();
 	CDialog::OnDestroy();
 }
 
@@ -719,7 +687,7 @@ void CDlgConfigVenue::OnItemchangedDivision(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	UpdateButtons();
 	*pResult = 0;
@@ -1081,18 +1049,12 @@ void CDlgConfigVenue::OnDelete()
 
 	case eEvents:
 		{
-			HTREEITEM hItem;
-            if (NULL != (hItem = m_ctrlEvents.GetSelectedItem()))
+			int index;
+            if (0 <= (index = m_ctrlEvents.GetSelection()))
 			{
-				CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(m_ctrlEvents.GetItemData(hItem));
-				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(pData);
-				CDlgConfigureDataScoring* pScoringData = dynamic_cast<CDlgConfigureDataScoring*>(pData);
-				ARBConfigEvent* pEvent = NULL;
-				if (pEventData)
-					pEvent = pEventData->GetEvent();
-				else if (pScoringData)
-					pEvent = pScoringData->GetEvent();
-				std::string event = pEvent->GetName();
+				CDlgConfigureDataEvent* pEventData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
+				ASSERT(NULL != pEventData);
+				std::string event = pEventData->GetEvent()->GetName();
 				int nEvents = m_Book.GetDogs().NumEventsInUse(m_pVenue->GetName(), event);
 				if (0 < nEvents)
 				{
@@ -1110,7 +1072,7 @@ void CDlgConfigVenue::OnDelete()
 						// Then we commit to fixing the real data.
 						if (0 < nEvents)
 							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(m_pVenue->GetName(), event));
-						m_ctrlEvents.DeleteItem(hItem);
+						m_ctrlEvents.DeleteItem(index);
 					}
 				}
 			}
@@ -1318,12 +1280,9 @@ void CDlgConfigVenue::OnEdit()
 	case eEvents:
 		{
 			CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-			CDlgConfigureDataScoring* pScoringData = GetCurrentScoringData();
 			ARBConfigEvent* pEvent = NULL;
 			if (pEventData)
 				pEvent = pEventData->GetEvent();
-			else if (pScoringData)
-				pEvent = pScoringData->GetEvent();
 			std::string event = pEvent->GetName();
 			CDlgConfigEvent dlg(m_pVenue, pEvent, this);
 			pEvent->AddRef();
@@ -1354,24 +1313,18 @@ void CDlgConfigVenue::OnCopy()
 
 	case eEvents:
 		{
-			HTREEITEM hItem;
-            if (NULL != (hItem = m_ctrlEvents.GetSelectedItem()))
+			int index;
+            if (0 <= (index = m_ctrlEvents.GetSelection()))
 			{
 				CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-				CDlgConfigureDataScoring* pScoringData = GetCurrentScoringData();
-				ARBConfigEvent* pEvent = NULL;
-				if (pEventData)
-					pEvent = pEventData->GetEvent();
-				else if (pScoringData)
-					pEvent = pScoringData->GetEvent();
 				CString copyOf;
 				copyOf.LoadString(IDS_COPYOF);
-				std::string name(pEvent->GetName());
+				std::string name(pEventData->GetEvent()->GetName());
 				while (m_pVenue->GetEvents().FindEvent(name))
 				{
 					name = (LPCSTR)copyOf + name;
 				}
-				ARBConfigEvent* event = new ARBConfigEvent(*pEvent);
+				ARBConfigEvent* event = new ARBConfigEvent(*(pEventData->GetEvent()));
 				event->SetName(name);
 				ARBConfigEvent* pNewEvent = m_pVenue->GetEvents().AddEvent(event);
 				if (pNewEvent)
@@ -1462,21 +1415,17 @@ void CDlgConfigVenue::OnMoveUp()
 		break;
 	case eEvents:
 		{
-			CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-			if (pEventData)
+			int index = m_ctrlEvents.GetSelection();
+			if (0 < index)
 			{
-				HTREEITEM hItem = m_ctrlEvents.GetSelectedItem();
-				HTREEITEM hPrevItem = m_ctrlEvents.GetPrevSiblingItem(hItem);
-				if (NULL != hPrevItem)
-				{
-					ARBConfigEvent* pEvent = pEventData->GetEvent();
-					pEvent->AddRef();
-					m_pVenue->GetEvents().Move(pEvent, -1);
-					LoadEventData();
-					UpdateButtons();
-					FindCurrentEvent(pEvent, true);
-					pEvent->Release();
-				}
+				CDlgConfigureDataEvent* pEventData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
+				ARBConfigEvent* pEvent = pEventData->GetEvent();
+				pEvent->AddRef();
+				m_pVenue->GetEvents().Move(pEvent, -1);
+				LoadEventData();
+				UpdateButtons();
+				FindCurrentEvent(pEvent, true);
+				pEvent->Release();
 			}
 		}
 		break;
@@ -1559,21 +1508,17 @@ void CDlgConfigVenue::OnMoveDown()
 		break;
 	case eEvents:
 		{
-			CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-			if (pEventData)
+			int index = m_ctrlEvents.GetSelection();
+			if (index < m_ctrlEvents.GetItemCount() - 1)
 			{
-				HTREEITEM hItem = m_ctrlEvents.GetSelectedItem();
-				HTREEITEM hNextItem = m_ctrlEvents.GetNextSiblingItem(hItem);
-				if (NULL != hNextItem)
-				{
-					ARBConfigEvent* pEvent = pEventData->GetEvent();
-					pEvent->AddRef();
-					m_pVenue->GetEvents().Move(pEvent, 1);
-					LoadEventData();
-					UpdateButtons();
-					FindCurrentEvent(pEvent, true);
-					pEvent->Release();
-				}
+				CDlgConfigureDataEvent* pEventData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
+				ARBConfigEvent* pEvent = pEventData->GetEvent();
+				pEvent->AddRef();
+				m_pVenue->GetEvents().Move(pEvent, 1);
+				LoadEventData();
+				UpdateButtons();
+				FindCurrentEvent(pEvent, true);
+				pEvent->Release();
 			}
 		}
 		break;
