@@ -1,11 +1,14 @@
-10/22/2004: v1.4.0.10 <in development>
-- Bumped file version to 10, Configuration v6:
+10/31/2004: v1.4.0.10
+- Bumped file version to 10.0, Configuration v6:
   - Added 'Height' to 'ReferenceRun'.
   - Added 'LifeTime' to 'Scoring'.
   - Removed 'LifeTime' from 'TitlePoints'.
   - Added 'SCT', 'SCT2' to 'ByOpenClose'.
   - Added 'SCT' to 'ByPoints'.
 - New features / Enhancements:
+  - Updated CPE configuration to note that CL1 (thru 5) are not really titles.
+    They are shorthand for the combined 4 titles. Also, make Level C runs
+    accumulate lifetime points.
   - Updated CPE comments on CL1-5 "titles". Accumulate lifetime (top10)
     points for all events. Accumulate Specialist points like Level C.
   - Added more Gamblers events for NADAC to handle the various 'styles'.
@@ -23,9 +26,9 @@
   - Added error logging. If the program faults, it will now attempt to write
     a log file to the same location as the program. This will contain a stack
     trace and a dump of the current registry settings.
-- Bug fix
+- Bug fixes
   - When a qualifying run is inserted in the tree and the tree is configured
-    to show Qs for a run, the program will crash.
+    to show Qs for a run (via View->Customize), the program will crash.
   - The splash screen could cause a problem opening a file whose format is
     newer than the current program.
   - When the list viewer dialog is resized, the 'Copy' button doesn't move.
