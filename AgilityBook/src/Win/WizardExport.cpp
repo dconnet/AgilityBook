@@ -193,19 +193,31 @@ void CWizardExport::UpdatePreview()
 			std::vector<int> columns[IO_TYPE_MAX];
 			for (i = 0; i < IO_TYPE_MAX; ++i)
 				CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eRunsExport, i, columns[i]);
+			CStringArray cols;
 			for (i = 0; i < IO_TYPE_MAX; ++i)
 			{
 				if (0 == columns[i].size())
 					continue;
-				CString data;
-				for (size_t idx = 0; idx < columns[i].size(); ++idx)
+				for (int iCol = 0; iCol < static_cast<int>(columns[i].size()); ++iCol)
 				{
-					if (0 < idx)
-						data += delim;
-					data += CDlgAssignColumns::GetNameFromColumnID(columns[i][idx]);
+					CString str = CDlgAssignColumns::GetNameFromColumnID(columns[i][iCol]);
+					if (iCol >= cols.GetSize())
+						cols.Add(str);
+					else
+					{
+						if (cols[iCol] != str && 0 < str.GetLength())
+							cols[iCol] += "/" + str;
+					}
 				}
-				m_ctrlPreview.AddString(data);
 			}
+			CString data;
+			for (i = 0; i < cols.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += delim;
+				data += cols[i];
+			}
+			m_ctrlPreview.AddString(data);
 			for (ARBDogList::const_iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
 			{
 				const ARBDog* pDog = *iterDog;

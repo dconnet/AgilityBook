@@ -36,6 +36,7 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "AgilityBookOptions.h"
 class CAgilityBookDoc;
 class CWizard;
 
@@ -55,6 +56,7 @@ private:
 	int		m_Row;
 	CSpinButtonCtrl	m_ctrlSpin;
 	int		m_Delim;
+	CButton	m_ctrlAssign;
 	CString	m_Delimiter;
 	CStatic	m_ctrlPreviewFile;
 	CListCtrl	m_ctrlPreview;
@@ -62,8 +64,11 @@ private:
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
 	CString m_FileName;
+	CStringArray m_FileData;
 
 private:
+	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
+	CString GetDelim() const;
 	void UpdateButtons();
 	void UpdatePreview();
 

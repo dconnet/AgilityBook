@@ -1157,7 +1157,7 @@ BEGIN
     PUSHBUTTON      "File...",IDC_IMPORT_FILE,0,60,40,14
     LTEXT           "",IDC_IMPORT_PREVIEW_FILE,45,63,254,8
     CONTROL         "List1",IDC_WIZARD_PREVIEW,"SysListView32",LVS_REPORT | 
-                    LVS_NOSORTHEADER | WS_DISABLED | WS_BORDER | WS_TABSTOP,
+                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,
                     0,77,299,98
 END
 

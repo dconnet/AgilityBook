@@ -94,6 +94,7 @@ void CWizardImport::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_WIZARD_DELIM, m_Delimiter);
 	DDV_MaxChars(pDX, m_Delimiter, 1);
 	DDX_Control(pDX, IDC_IMPORT_PREVIEW_FILE, m_ctrlPreviewFile);
+	DDX_Control(pDX, IDC_WIZARD_ASSIGN, m_ctrlAssign);
 	DDX_Control(pDX, IDC_WIZARD_PREVIEW, m_ctrlPreview);
 	//}}AFX_DATA_MAP
 }
@@ -116,20 +117,172 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+CAgilityBookOptions::ColumnOrder CWizardImport::GetColumnInfo() const
+{
+	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
+	switch (m_pSheet->GetImportExportItem())
+	{
+	default: break;
+	case WIZ_IMPORT_RUNS: order = CAgilityBookOptions::eRunsImport; break;
+	case WIZ_IMPORT_CALENDAR: order = CAgilityBookOptions::eCalImport; break;
+	case WIZ_IMPORT_LOG: order = CAgilityBookOptions::eLogImport; break;
+	}
+	return order;
+}
+
+CString CWizardImport::GetDelim() const
+{
+	CString delim;
+	switch (m_Delim)
+	{
+	default: break;
+	case 0: delim = "\t"; break;
+	case 1: delim = " "; break;
+	case 2: delim = ":"; break;
+	case 3: delim = ";"; break;
+	case 4: delim = ","; break;
+	case 5: delim = m_Delimiter; break;
+	}
+	return delim;
+}
+
 void CWizardImport::UpdateButtons()
 {
 	DWORD dwWiz = PSWIZB_BACK;
 	// Some test to make sure things are ready
 	bool bOk = false;
+	if (1 == GetDelim().GetLength())
+		bOk = true;
+	BOOL bEnable = FALSE;
+	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
+	if (CAgilityBookOptions::eUnknown != order)
+	{
+		bEnable = TRUE;
+		if (bOk)
+		{
+			for (int i = 0; bOk && i < IO_TYPE_MAX; ++i)
+			{
+				std::vector<int> columns;
+				if (CDlgAssignColumns::GetColumnOrder(order, i, columns))
+				{
+					if (0 == columns.size())
+						bOk = false;
+				}
+			}
+		}
+	}
+	m_ctrlAssign.EnableWindow(bEnable);
 	dwWiz |= (bOk ? PSWIZB_FINISH : PSWIZB_DISABLEDFINISH);
 	m_pSheet->SetWizardButtons(dwWiz);
 }
 
 void CWizardImport::UpdatePreview()
 {
-	//switch (m_pSheet->GetImportExportItem())
-	//{
-	//}
+	CString delim = GetDelim();
+	if (1 != delim.GetLength())
+		return;
+	m_ctrlPreview.DeleteAllItems();
+	int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
+	int i;
+	for (i = 0; i < nColumnCount; ++i)
+		m_ctrlPreview.DeleteColumn(0);
+	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
+	int iCol;
+	std::vector<int> columns[IO_TYPE_MAX];
+	for (iCol = 0; iCol < IO_TYPE_MAX; ++iCol)
+	{
+		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
+	}
+
+	CStringArray cols;
+	switch (m_pSheet->GetImportExportItem())
+	{
+	default: break;
+	case WIZ_IMPORT_RUNS:
+		{
+			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_FAULTS_TIME].size()); ++iCol)
+			{
+				cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_FAULTS_TIME][iCol]));
+			}
+			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_TIME_FAULTS].size()); ++iCol)
+			{
+				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_TIME_FAULTS][iCol]);
+				if (iCol >= cols.GetSize())
+					cols.Add(str);
+				else
+				{
+					if (cols[iCol] != str && 0 < str.GetLength())
+						cols[iCol] += "/" + str;
+				}
+			}
+			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_OPEN_CLOSE].size()); ++iCol)
+			{
+				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_OPEN_CLOSE][iCol]);
+				if (iCol >= cols.GetSize())
+					cols.Add(str);
+				else
+				{
+					if (cols[iCol] != str && 0 < str.GetLength())
+						cols[iCol] += "/" + str;
+				}
+			}
+			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_POINTS].size()); ++iCol)
+			{
+				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_POINTS][iCol]);
+				if (iCol >= cols.GetSize())
+					cols.Add(str);
+				else
+				{
+					if (cols[iCol] != str && 0 < str.GetLength())
+						cols[iCol] += "/" + str;
+				}
+			}
+		}
+		break;
+	case WIZ_IMPORT_CALENDAR:
+		for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++iCol)
+		{
+			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][iCol]));
+		}
+		break;
+	case WIZ_IMPORT_LOG:
+		for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++iCol)
+		{
+			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][iCol]));
+		}
+		break;
+	}
+	LV_COLUMN col;
+	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+	{
+		CString str = cols[iCol];
+		col.fmt = LVCFMT_LEFT;
+		col.pszText = str.GetBuffer(0);
+		col.iSubItem = static_cast<int>(iCol);
+		m_ctrlPreview.InsertColumn(static_cast<int>(iCol), &col);
+	}
+
+	for (i = m_Row - 1; i < m_FileData.GetSize(); ++i)
+	{
+		CString str = m_FileData[i];
+		iCol = 0;
+		int pos;
+		while (0 <= (pos = str.Find(delim)) && iCol < cols.GetSize())
+		{
+			CString data = str.Left(pos);
+			str = str.Mid(pos+1);
+			if (0 == iCol)
+				m_ctrlPreview.InsertItem(i-m_Row-1, data);
+			else
+				m_ctrlPreview.SetItemText(i-m_Row-1, iCol, data);
+			++iCol;
+		}
+		if (!str.IsEmpty() && iCol < cols.GetSize())
+			m_ctrlPreview.SetItemText(i-m_Row-1, iCol, str);
+	}
+	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -139,10 +292,7 @@ BOOL CWizardImport::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	m_ctrlSpin.SetRange(100, 1);
-	m_ctrlPreview.InsertColumn(0, "Todo");
-	m_ctrlPreview.InsertItem(0, "This is still being developed.");
-	m_ctrlPreview.InsertItem(1, "It doesn't work yet.");
-	m_ctrlPreview.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	UpdatePreview();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -163,7 +313,8 @@ LRESULT CWizardImport::OnWizardBack()
 
 BOOL CWizardImport::OnWizardFinish() 
 {
-	UpdateData(TRUE);
+	if (!UpdateData(TRUE))
+		return FALSE;
 	CAgilityBookOptions::SetImportStartRow(m_Row);
 	int delim;
 	switch (m_Delim)
@@ -177,13 +328,28 @@ BOOL CWizardImport::OnWizardFinish()
 	case 5: delim = CAgilityBookOptions::eDelimOther; break;
 	}
 	CAgilityBookOptions::SetImportExportDelimiters(true, delim, m_Delimiter);
+
+	switch (m_pSheet->GetImportExportItem())
+	{
+	default: break;
+	case WIZ_IMPORT_RUNS:
+		break;
+	case WIZ_IMPORT_CALENDAR:
+		break;
+	case WIZ_IMPORT_LOG:
+		break;
+	}
+
 	return CPropertyPage::OnWizardFinish();
 }
 
 void CWizardImport::OnImportKillFocus()
 {
-	UpdateData(TRUE);
-	UpdatePreview();
+	if (!UpdateData(TRUE))
+		return;
+	int row = m_Row;
+	if (row != m_Row)
+		UpdatePreview();
 }
 
 void CWizardImport::OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -191,29 +357,27 @@ void CWizardImport::OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	// There is no "changed" msg, only the "changing".
 	// So we'll just update the ddx variable ourselves.
-	m_Row = pNMUpDown->iPos + pNMUpDown->iDelta;
-	UpdatePreview();
+	if (m_Row != pNMUpDown->iPos + pNMUpDown->iDelta)
+	{
+		m_Row = pNMUpDown->iPos + pNMUpDown->iDelta;
+		UpdatePreview();
+	}
 	*pResult = 0;
 }
 
 void CWizardImport::OnImportDelim() 
 {
-	UpdateData(TRUE);
+	if (!UpdateData(TRUE))
+		return;
 	UpdateButtons();
 	UpdatePreview();
 }
 
 void CWizardImport::OnImportAssign() 
 {
-	UpdateData(TRUE);
-	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
-	switch (m_pSheet->GetImportExportItem())
-	{
-	default: break;
-	case WIZ_EXPORT_RUNS: order = CAgilityBookOptions::eRunsImport; break;
-	case WIZ_EXPORT_CALENDAR: order = CAgilityBookOptions::eCalImport; break;
-	case WIZ_EXPORT_LOG: order = CAgilityBookOptions::eLogImport; break;
-	}
+	if (!UpdateData(TRUE))
+		return;
+	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
 	if (CAgilityBookOptions::eUnknown != order)
 	{
 		CDlgAssignColumns dlg(order, this);
@@ -227,7 +391,8 @@ void CWizardImport::OnImportAssign()
 
 void CWizardImport::OnImportFile() 
 {
-	UpdateData(TRUE);
+	if (!UpdateData(TRUE))
+		return;
 	CString filter;
 	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
 	CFileDialog file(TRUE, "", "", OFN_FILEMUSTEXIST, filter, this);
@@ -237,7 +402,19 @@ void CWizardImport::OnImportFile()
 		CString str;
 		str.FormatMessage(IDS_FILE_PREVIEW, (LPCTSTR)m_FileName);
 		m_ctrlPreviewFile.SetWindowText(str);
-		// TODO: Load data
+		CWaitCursor wait;
+		m_FileData.RemoveAll();
+		CStdioFile file;
+		if (file.Open(m_FileName, CFile::modeRead | CFile::typeText))
+		{
+			CString str;
+			while (file.ReadString(str))
+			{
+				str.TrimRight();
+				m_FileData.Add(str);
+			}
+			file.Close();
+		}
 		UpdateButtons();
 		UpdatePreview();
 	}
