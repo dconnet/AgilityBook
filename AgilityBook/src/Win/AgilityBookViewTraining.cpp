@@ -174,7 +174,8 @@ CAgilityBookViewTraining::~CAgilityBookViewTraining()
 
 BOOL CAgilityBookViewTraining::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOSORTHEADER;
+	// This is actually set in TabView.cpp.
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -381,7 +382,10 @@ void CAgilityBookViewTraining::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	int index = GetSelection();
 	if (0 > index)
+	{
+		MessageBeep(0);
 		return;
+	}
 	CAgilityBookViewTrainingData* pData = GetItemData(index);
 	if (!pData)
 		return;
@@ -502,11 +506,15 @@ void CAgilityBookViewTraining::OnUpdateTrainingDelete(CCmdUI* pCmdUI)
 
 void CAgilityBookViewTraining::OnTrainingDelete()
 {
-	CAgilityBookViewTrainingData* pData = GetItemData(GetSelection());
-	if (pData)
+	int index = GetSelection();
+	if (0 <= index)
 	{
-		GetDocument()->GetTraining().DeleteTraining(pData->GetTraining());
-		GetListCtrl().DeleteItem(GetSelection());
-		GetDocument()->SetModifiedFlag();
+		CAgilityBookViewTrainingData* pData = GetItemData(index);
+		if (pData)
+		{
+			GetDocument()->GetTraining().DeleteTraining(pData->GetTraining());
+			GetListCtrl().DeleteItem(GetSelection());
+			GetDocument()->SetModifiedFlag();
+		}
 	}
 }

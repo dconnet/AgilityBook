@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
  * @li 2003-10-22 DRC Right click sets the current date.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
@@ -113,6 +114,8 @@ protected:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
+	afx_msg void OnEditCopy();
 	afx_msg void OnUpdateCalendarEdit(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarEdit();
 	afx_msg void OnCalendarNew();

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Enabled consistent copy and select all (old copy moved).
  * @li 2003-08-30 DRC Fixed bug when copying list to clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-07-24 DRC Calendar view didn't update when item deleted from list.
@@ -189,8 +190,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
-	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
-	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_CREATEENTRY_CALENDAR, OnUpdateCalendarCreateEntry)
 	ON_COMMAND(ID_AGILITY_CREATEENTRY_CALENDAR, OnCalendarCreateEntry)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_CALENDAR, OnUpdateCalendarEdit)
@@ -222,7 +221,7 @@ CAgilityBookViewCalendarList::~CAgilityBookViewCalendarList()
 
 BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOSORTHEADER;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -448,7 +447,10 @@ void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	int index = GetSelection();
 	if (0 > index)
+	{
+		MessageBeep(0);
 		return;
+	}
 	CAgilityBookViewCalendarData* pData = GetItemData(index);
 	if (!pData)
 		return;
@@ -566,123 +568,6 @@ void CAgilityBookViewCalendarList::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 		break;
 	}
 	*pResult = 0;
-}
-
-void CAgilityBookViewCalendarList::OnUpdateEditCopy(CCmdUI* pCmdUI) 
-{
-	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetItemCount())
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
-
-void CAgilityBookViewCalendarList::OnEditCopy() 
-{
-	if (AfxGetMainWnd()->OpenClipboard())
-	{
-		EmptyClipboard();
-
-		int index;
-		size_t maxLen[scNumColumns];
-		CString columns[scNumColumns];
-		for (index = 0; index < scNumColumns; ++index)
-		{
-			CString str;
-			str.LoadString(scColumns[index].col);
-			maxLen[index] = str.GetLength();
-			columns[index] = str;
-		}
-		for (index = 0; index < GetListCtrl().GetItemCount(); ++index)
-		{
-			CAgilityBookViewCalendarData* pData = GetItemData(index);
-			if (pData)
-			{
-				size_t len = pData->GetCalendar()->GetStartDate().GetString(true, false).length();
-				if (len > maxLen[COL_START_DATE])
-					maxLen[COL_START_DATE] = len;
-				len = pData->GetCalendar()->GetEndDate().GetString(true, false).length();
-				if (len > maxLen[COL_END_DATE])
-					maxLen[COL_END_DATE] = len;
-				len = pData->GetCalendar()->GetLocation().length();
-				if (len > maxLen[COL_LOCATION])
-					maxLen[COL_LOCATION] = len;
-				len = pData->GetCalendar()->GetClub().length();
-				if (len > maxLen[COL_CLUB])
-					maxLen[COL_CLUB] = len;
-				len = pData->GetCalendar()->GetVenue().length();
-				if (len > maxLen[COL_VENUE])
-					maxLen[COL_VENUE] = len;
-				len = pData->GetCalendar()->GetOpeningDate().GetString(true, false).length();
-				if (len > maxLen[COL_OPENS])
-					maxLen[COL_OPENS] = len;
-				len = pData->GetCalendar()->GetClosingDate().GetString(true, false).length();
-				if (len > maxLen[COL_CLOSES])
-					maxLen[COL_CLOSES] = len;
-				len = pData->GetCalendar()->GetNote().length();
-				if (len > maxLen[COL_NOTES])
-					maxLen[COL_NOTES] = len;
-			}
-		}
-		// The header
-		CString data;
-		data.Format(" %*s-%-*s %-*s %-*s %-*s %*s-%-*s %-*s",
-			maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
-			maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
-			maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
-			maxLen[COL_LOCATION], (LPCTSTR)columns[COL_LOCATION],
-			maxLen[COL_CLUB], (LPCTSTR)columns[COL_CLUB],
-			maxLen[COL_OPENS], (LPCTSTR)columns[COL_OPENS],
-			maxLen[COL_CLOSES], (LPCTSTR)columns[COL_CLOSES],
-			maxLen[COL_NOTES], (LPCTSTR)columns[COL_NOTES]);
-		data.TrimRight();
-		data += "\r\n";
-		// The data
-		for (index = 0; index < GetListCtrl().GetItemCount(); ++index)
-		{
-			CAgilityBookViewCalendarData* pData = GetItemData(index);
-			if (pData)
-			{
-				std::string items[scNumColumns];
-				items[COL_START_DATE] = pData->GetCalendar()->GetStartDate().GetString(true, false);
-				items[COL_END_DATE] = pData->GetCalendar()->GetEndDate().GetString(true, false);
-				items[COL_LOCATION] = pData->GetCalendar()->GetLocation();
-				items[COL_CLUB] = pData->GetCalendar()->GetClub();
-				items[COL_VENUE] = pData->GetCalendar()->GetVenue();
-				items[COL_OPENS] = pData->GetCalendar()->GetOpeningDate().GetString(true, false);
-				items[COL_CLOSES] = pData->GetCalendar()->GetClosingDate().GetString(true, false);
-				items[COL_NOTES] = pData->GetCalendar()->GetNote();
-				CString tentative(" ");
-				if (pData->GetCalendar()->IsTentative())
-					tentative = "?";
-				CString str;
-				str.Format("%s%*s-%*s %-*s %-*s %-*s %-*s%s%-*s %-*s",
-					(LPCTSTR)tentative,
-					maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
-					maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
-					maxLen[COL_VENUE], items[COL_VENUE].c_str(),
-					maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
-					maxLen[COL_CLUB], items[COL_CLUB].c_str(),
-					maxLen[COL_OPENS], items[COL_OPENS].c_str(),
-					(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? "-" : " ",
-					maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
-					maxLen[COL_NOTES], items[COL_NOTES].c_str());
-				str.TrimRight();
-				data += str + "\r\n";
-			}
-		}
-		// alloc mem block & copy text in
-		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
-		if (NULL != temp)
-		{
-			LPTSTR str = (LPTSTR)GlobalLock(temp);
-			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock((void*)temp);
-			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
-		}
-
-		CloseClipboard();
-	}
 }
 
 void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)

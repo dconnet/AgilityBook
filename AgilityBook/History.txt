@@ -1,9 +1,13 @@
-10/31/2003: v0.9.4.7: <development>
+11/21/2003: v0.9.4.7: <development>
 - New features / Enhancements:
   - Expanded import/export [config/calendar, plus DTD/XML export]
   - Cleaned up some descriptions in DefaultConfig.xml.
   - In Points view, added '*' to Title if it has been received.
   - Support the mouse wheel for scrolling in the calendar view.
+  - Changed copy (ctrl+c) code to only copy selected items. Lists now support
+    multiple selection. Added select all (ctrl+a).
+  - Moved the copy that was in the calendar list to the calendar view. The
+    calendar list now copies like the other lists do.
 - Bug fixes
   - Changed copyright notices from "(c)" to "©"
   - Right-clicking on a Calendar entry sets that as the current date before

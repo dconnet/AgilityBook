@@ -157,6 +157,8 @@ BEGIN
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
     END
     POPUP "&Agility"
@@ -378,6 +380,7 @@ BEGIN
     "P",            ID_FILE_PRINT_PREVIEW,  VIRTKEY, CONTROL, ALT, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    "A",            ID_EDIT_SELECT_ALL,     VIRTKEY, CONTROL, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
     VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
@@ -1506,7 +1509,7 @@ BEGIN
     ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
     ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
     ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
-    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_SELECT_ALL      "Select all items\nSelect All"
     ID_EDIT_UNDO            "Undo the last action\nUndo"
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END

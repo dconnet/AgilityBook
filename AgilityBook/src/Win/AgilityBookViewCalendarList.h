@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
@@ -102,8 +103,6 @@ protected:
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
-	afx_msg void OnEditCopy();
 	afx_msg void OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarCreateEntry();
 	afx_msg void OnUpdateCalendarEdit(CCmdUI* pCmdUI);

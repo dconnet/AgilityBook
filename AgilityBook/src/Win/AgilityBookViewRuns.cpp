@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
@@ -253,8 +254,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
-	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
-	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -271,7 +270,7 @@ CAgilityBookViewRuns::~CAgilityBookViewRuns()
 
 BOOL CAgilityBookViewRuns::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOSORTHEADER;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -487,7 +486,10 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	int index = GetSelection();
 	if (0 > index)
+	{
+		MessageBeep(0);
 		return;
+	}
 	CAgilityBookViewRunsData* pData = GetItemData(index);
 	if (!pData)
 		return;
@@ -533,7 +535,7 @@ void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	&& !(LVIS_SELECTED & pNMListView->uOldState)
 	&& (LVIS_SELECTED & pNMListView->uNewState))
 	{
-		if (!m_bSuppressSelect)
+		if (!m_bSuppressSelect && 1 == GetListCtrl().GetSelectedCount())
 		{
 			CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
 			if (pData)
@@ -564,7 +566,8 @@ void CAgilityBookViewRuns::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 void CAgilityBookViewRuns::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
-	GetDocument()->EditRun(pData->GetRun());
+	if (pData)
+		GetDocument()->EditRun(pData->GetRun());
 	*pResult = 0;
 }
 
@@ -579,7 +582,8 @@ void CAgilityBookViewRuns::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 	case VK_RETURN:
 		{
 			CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
-			GetDocument()->EditRun(pData->GetRun());
+			if (pData)
+				GetDocument()->EditRun(pData->GetRun());
 		}
 		break;
 	}
@@ -664,58 +668,4 @@ void CAgilityBookViewRuns::OnAgilityDeleteRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
-}
-
-void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetItemCount())
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
-
-void CAgilityBookViewRuns::OnEditCopy()
-{
-	if (AfxGetMainWnd()->OpenClipboard())
-	{
-		EmptyClipboard();
-
-		CString data;
-		CStringArray line;
-
-		// Take care of the header.
-		GetPrintLine(-1, line);
-		for (int i = 0; i < line.GetSize(); ++i)
-		{
-			if (0 < i)
-				data += '\t';
-			data += line[i];
-		}
-		// Now all the data.
-		for (int index = 0; index < GetListCtrl().GetItemCount(); ++index)
-		{
-			CStringArray line;
-			GetPrintLine(index, line);
-			for (int i = 0; i < line.GetSize(); ++i)
-			{
-				if (0 < i)
-					data += '\t';
-				data += line[i];
-			}
-			data += "\r\n";
-		}
-
-		// alloc mem block & copy text in
-		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
-		if (NULL != temp)
-		{
-			LPTSTR str = (LPTSTR)GlobalLock(temp);
-			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock((void*)temp);
-			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
-		}
-
-		CloseClipboard();
-	}
 }
