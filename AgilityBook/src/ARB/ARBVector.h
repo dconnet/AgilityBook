@@ -179,9 +179,9 @@ public:
 
 	iterator erase(iterator inFirst, iterator inLast)
 	{
-		if (inFirst == end())
+		if (inFirst == inLast)
 			return inFirst;
-		for (iterator iter = inFirst; iter <= inLast; ++iter)
+		for (iterator iter = inFirst; iter < inLast; ++iter)
 			(*iter)->Release();
 #if _MSC_VER < 1300
 		return vector<T*>::erase(inFirst, inLast);
