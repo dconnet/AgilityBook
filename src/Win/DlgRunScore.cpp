@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-09 DRC Update YPS when the time is changed.
  * @li 2004-01-19 DRC Total faults weren't updated when course faults changed.
  * @li 2004-01-18 DRC Calling UpdateData during data entry causes way too much
  *                    validation. Only call during OnOK (from dlgsheet)
@@ -1036,6 +1037,7 @@ void CDlgRunScore::OnKillfocusTime()
 {
 	GetText(&m_ctrlTime, m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
+	SetYPS();
 	SetTotalFaults();
 	SetTitlePoints();
 }

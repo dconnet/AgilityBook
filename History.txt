@@ -1,4 +1,4 @@
-2/3/2004: v1.0.2.8 <in development>
+2/9/2004: v1.0.2.8 <in development>
 - Bumped file version to 8.3:
   - Added Existing Points.
 - New features / Enhancements:
@@ -16,6 +16,7 @@
   - When updating the configuration, you could get some false-positive messages
     that things had changed. This was due to the order of items being different
     (which we don't care about).
+  - In the Run dialog, update the YPS when the time is changed.
 
 1/26/2004: v1.0.1.8
 - New features / Enhancements:
