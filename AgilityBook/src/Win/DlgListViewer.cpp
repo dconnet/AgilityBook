@@ -692,6 +692,7 @@ void CDlgListViewer::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgListViewer)
 	DDX_Control(pDX, IDC_LIST_VIEWER, m_ctrlList);
+	DDX_Control(pDX, IDC_LIST_COPY, m_ctrlCopy);
 	DDX_Control(pDX, IDOK, m_ctrlClose);
 	//}}AFX_DATA_MAP
 }
@@ -756,6 +757,8 @@ BOOL CDlgListViewer::OnInitDialog()
 	GetClientRect(m_rDlg);
 	m_ctrlList.GetWindowRect(m_rList);
 	ScreenToClient(m_rList);
+	m_ctrlCopy.GetWindowRect(m_rCopy);
+	ScreenToClient(m_rCopy);
 	m_ctrlClose.GetWindowRect(m_rOK);
 	ScreenToClient(m_rOK);
 
@@ -941,6 +944,9 @@ void CDlgListViewer::OnSize(UINT nType, int cx, int cy)
 	CDlgBaseDialog::OnSize(nType, cx, cy);
 	if (::IsWindow(m_ctrlList.GetSafeHwnd()))
 	{
+		m_ctrlCopy.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rCopy.left), cy - (m_rDlg.Height() - m_rCopy.bottom) - m_rCopy.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
 		m_ctrlClose.SetWindowPos(NULL,
 			cx - (m_rDlg.Width() - m_rOK.left), cy - (m_rDlg.Height() - m_rOK.bottom) - m_rOK.Height(),
 			0, 0, SWP_NOZORDER | SWP_NOSIZE);

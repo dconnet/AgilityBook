@@ -95,6 +95,7 @@ private:
 	//{{AFX_DATA(CDlgListViewer)
 	enum { IDD = IDD_LIST_VIEWER };
 	CListCtrl2	m_ctrlList;
+	CButton	m_ctrlCopy;
 	CButton	m_ctrlClose;
 	//}}AFX_DATA
 	CString m_Caption;
@@ -106,6 +107,7 @@ private:
 	CRect m_rWin;
 	CRect m_rDlg;
 	CRect m_rList;
+	CRect m_rCopy;
 	CRect m_rOK;
 	int m_SortColumn;
 

@@ -8,6 +8,7 @@
 - Bug fix
   - The splash screen could cause a problem opening a file whose format is
     newer than the current program.
+  - When the list viewer dialog is resized, the 'Copy' button doesn't move.
 
 9/15/2004: v1.3.2.9
 - Bug fix
