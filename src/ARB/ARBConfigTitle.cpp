@@ -201,7 +201,7 @@ ARBConfigTitle* ARBConfigTitleList::AddTitle(const std::string& inName)
 
 ARBConfigTitle* ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
 {
-	if (!inTitle)
+	if (!inTitle || 0 == inTitle->GetName().length())
 		return NULL;
 	if (FindTitle(inTitle->GetName()))
 		return NULL;
