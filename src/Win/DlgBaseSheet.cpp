@@ -1,7 +1,5 @@
-#pragma once
-
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,49 +27,63 @@
 /**
  * @file
  *
- * @brief interface of the CDlgRun class
+ * @brief Base class for Property sheets
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-05 DRC Created
  */
 
+#include "stdafx.h"
+#include <afxpriv.h>
+#include "AgilityBook.h"
 #include "DlgBaseSheet.h"
-class ARBDogRun;
-class ARBDogTrial;
-class CAgilityBookDoc;
-class CDlgRunScore;
-class CDlgRunComments;
-class CDlgRunReference;
-class CDlgRunCRCD;
-class CDlgRunLink;
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgRun
+// CDlgBaseSheet dialog
 
-class CDlgRun : public CDlgBaseSheet
+IMPLEMENT_DYNAMIC(CDlgBaseSheet, CPropertySheet)
+
+CDlgBaseSheet::CDlgBaseSheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
+	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
-	DECLARE_DYNAMIC(CDlgRun)
-public:
-	CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgRun();
+	m_psh.dwFlags |= PSH_HASHELP;
+}
 
-// Attributes
-private:
-	ARBDogRun* m_pRealRun;
-	ARBDogRun* m_Run;
-	CDlgRunScore* m_pageScore;
-	CDlgRunComments* m_pageComments;
-	CDlgRunReference* m_pageReference;
-	CDlgRunCRCD* m_pageCRCD;
-	CDlgRunLink* m_pageLink;
+CDlgBaseSheet::CDlgBaseSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
+	: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+{
+	m_psh.dwFlags |= PSH_HASHELP;
+}
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgRun)
-	//}}AFX_VIRTUAL
+CDlgBaseSheet::~CDlgBaseSheet()
+{
+}
 
-protected:
-	//{{AFX_MSG(CDlgRun)
-	afx_msg void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
+BEGIN_MESSAGE_MAP(CDlgBaseSheet, CPropertySheet)
+	//{{AFX_MSG_MAP(CDlgBaseSheet)
+	ON_WM_HELPINFO()
+	ON_COMMAND(IDHELP, OnHelp)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CDlgBaseSheet message handlers
+
+BOOL CDlgBaseSheet::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	if (!ShowContextHelp(pHelpInfo))
+		OnHelp();
+	return TRUE;
+}
+
+void CDlgBaseSheet::OnHelp()
+{
+	SendMessage(WM_COMMANDHELP);
+}

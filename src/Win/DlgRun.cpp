@@ -56,10 +56,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRun
 
-IMPLEMENT_DYNAMIC(CDlgRun, CPropertySheet)
+IMPLEMENT_DYNAMIC(CDlgRun, CDlgBaseSheet)
 
 CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CWnd* pParent, UINT iSelectPage)
-	: CPropertySheet(IDS_RUN_PROPERTIES, pParent, iSelectPage)
+	: CDlgBaseSheet(IDS_RUN_PROPERTIES, pParent, iSelectPage)
 	, m_pRealRun(pRun)
 	, m_Run(new ARBDogRun(*pRun))
 	, m_pageScore(NULL)
@@ -98,7 +98,7 @@ CDlgRun::~CDlgRun()
 	delete m_pageLink;
 }
 
-BEGIN_MESSAGE_MAP(CDlgRun, CPropertySheet)
+BEGIN_MESSAGE_MAP(CDlgRun, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgRun)
 	ON_COMMAND(IDOK, OnOK)
 	//}}AFX_MSG_MAP

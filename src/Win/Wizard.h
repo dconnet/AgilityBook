@@ -36,6 +36,7 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "DlgBaseSheet.h"
 #include "WizardExport.h"
 #include "WizardImport.h"
 #include "WizardStart.h"
@@ -54,7 +55,7 @@ class CAgilityBookDoc;
 #define WIZ_EXPORT_DTD				8
 #define WIZ_EXPORT_XML				9
 
-class CWizard : public CPropertySheet
+class CWizard : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CWizard)
 

@@ -16,6 +16,7 @@
 			OutputDirectory="..\..\bin\Win32\VC7\Debug"
 			IntermediateDirectory="..\..\bin\Win32\VC7\Debug\ParseResourceHeader"
 			ConfigurationType="1"
+			UseOfMFC="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
@@ -23,7 +24,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -67,11 +68,12 @@ BuildHelp.bat $(ConfigurationName)
 			OutputDirectory="..\..\bin\Win32\VC7\Release"
 			IntermediateDirectory="..\..\bin\Win32\VC7\Release\ParseResourceHeader"
 			ConfigurationType="1"
+			UseOfMFC="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"

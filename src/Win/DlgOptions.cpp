@@ -51,10 +51,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptions
 
-IMPLEMENT_DYNAMIC(CDlgOptions, CPropertySheet)
+IMPLEMENT_DYNAMIC(CDlgOptions, CDlgBaseSheet)
 
 CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPage)
-	: CPropertySheet(IDS_VIEWING_OPTIONS, pParentWnd, iSelectPage)
+	: CDlgBaseSheet(IDS_VIEWING_OPTIONS, pParentWnd, iSelectPage)
 	, m_pDoc(pDoc)
 	, m_pageFilter(pDoc->GetConfig())
 	, m_pageTraining(pDoc)
@@ -112,10 +112,10 @@ CDlgOptions::~CDlgOptions()
 
 BOOL CDlgOptions::PreCreateWindow(CREATESTRUCT& cs) 
 {
-	return CPropertySheet::PreCreateWindow(cs);
+	return CDlgBaseSheet::PreCreateWindow(cs);
 }
 
-BEGIN_MESSAGE_MAP(CDlgOptions, CPropertySheet)
+BEGIN_MESSAGE_MAP(CDlgOptions, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgOptions)
 	ON_COMMAND(IDOK, OnOK)
 	//}}AFX_MSG_MAP

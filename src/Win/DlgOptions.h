@@ -35,6 +35,7 @@
  * Revision History
  */
 
+#include "DlgBaseSheet.h"
 #include "DlgOptionsCalendar.h"
 #include "DlgOptionsFilter.h"
 #include "DlgOptionsFonts.h"
@@ -45,7 +46,7 @@ class CAgilityBookDoc;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptions
 
-class CDlgOptions : public CPropertySheet
+class CDlgOptions : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgOptions)
 public:

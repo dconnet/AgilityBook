@@ -142,7 +142,6 @@
 #define HIDC_LIST_MOVE_UP               0x80cb03f8    // IDD_LISTCTRL
 #define HIDC_LIST_NEW                   0x80cb03f5    // IDD_LISTCTRL
 #define HIDC_LIST_TRIAL                 0x80cb03fa    // IDD_LISTCTRL
-#define HIDC_MESSAGE                    0x80cc03fb    // IDD_MESSAGE
 #define HIDC_NAME                       0x80d703f2    // IDD_NAME
 #define HIDC_OPTIONS_CAL_AUTO_DELETE    0x80ed04ed    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_DAY_OF_WEEK    0x80ed04ec    // IDD_VIEW_OPTIONS_CALENDAR
