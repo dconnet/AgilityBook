@@ -1,20 +1,21 @@
-12/31/2004: v1.5.0.10 <in development>
+1/1/2005: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Updated AAC.
-  - Added CKC.
+  - Added CKC and TDAA.
 - New features / Enhancements:
   - Added the ability to make notes about clubs/locations similar to
     how judges notes are made. Also added the ability to search them.
   - In the club/judge/location dialog, added indicators to show if an item
     is added (not in-use) and/or has comments.
-  - Flipped the order of 2 fields on the Run dialog.
+  - Flipped the order of 2 fields on the Run dialog it make more logical.
   - Enable duplication of a title in the configuration.
   - Added opening/closing dates to calendar view.
   - Changed the 'Show Newest Runs First' to sort only trials since
     sorting the runs is handled by the header in the Runs view.
   - Make F1 open context help from the main tab windows.
+  - Renamed 'Mach points' to 'Speed Points' to make it more generic.
 - Bug fixes
   - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have

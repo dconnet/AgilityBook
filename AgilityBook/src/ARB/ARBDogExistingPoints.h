@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-02-02 DRC Created
  */
@@ -105,7 +106,7 @@ public:
 	{
 		eOtherPoints,	///< OtherPoint points.
 		eRuns,			///< Number of titling points for a run.
-		eMach,			///< Number of MACH points.
+		eSpeed,			///< Number of Speed points.
 		eQQ,			///< Number of double Qs.
 		eSQ				///< Number of Super Qs.
 	} PointType;

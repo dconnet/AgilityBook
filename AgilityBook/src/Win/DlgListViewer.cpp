@@ -35,8 +35,9 @@
  * to do so since this is a modal dialog. Since these things exist when the
  * dialog is launched, by definition they will exist during the lifetime of
  * this dialog.
-
+ *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-08-26 DRC Completed.
  * @li 2004-07-29 DRC Created
  */
@@ -92,7 +93,7 @@ protected:
 #define COL_RUN_PLACE		8
 #define COL_RUN_INCLASS		9
 #define COL_RUN_QD			10
-#define COL_RUN_MACH		11
+#define COL_RUN_SPEED		11
 #define COL_RUN_PARTNERS	12
 #define COL_QQ_DATE			0
 #define COL_QQ_LOCATION		1
@@ -243,9 +244,9 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 	case COL_RUN_QD:
 		str.Format("%hd", m_Run->GetDogsQd());
 		break;
-	case COL_RUN_MACH:
+	case COL_RUN_SPEED:
 		if (m_Scoring)
-			str.Format("%hd", m_Run->GetMachPoints(m_Scoring));
+			str.Format("%hd", m_Run->GetSpeedPoints(m_Scoring));
 		break;
 	case COL_RUN_PARTNERS:
 		for (ARBDogRunPartnerList::const_iterator iter2 = m_Run->GetPartners().begin();
@@ -332,15 +333,15 @@ int CDlgListViewerDataRun::Compare(CDlgListViewerData const* pRow2, int inCol) c
 		else
 			return 0;
 		break;
-	case COL_RUN_MACH:
+	case COL_RUN_SPEED:
 		if (m_Scoring && !pData->m_Scoring)
 			return 1;
 		else if (!m_Scoring && pData->m_Scoring)
 			return -1;
 		else
 		{
-			short pts1 = m_Run->GetMachPoints(m_Scoring);
-			short pts2 = pData->m_Run->GetMachPoints(pData->m_Scoring);
+			short pts1 = m_Run->GetSpeedPoints(m_Scoring);
+			short pts2 = pData->m_Run->GetSpeedPoints(pData->m_Scoring);
 			if (pts1 < pts2)
 				return -1;
 			else if (pts1 > pts2)
@@ -878,8 +879,8 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 			pRun->GetDivision(),
 			pRun->GetLevel(),
 			pRun->GetDate());
-	if (pScoring && pScoring->HasMachPts())
-		pColData->InsertColumn(ctrlList, COL_RUN_MACH, IDS_MACHPTS);
+	if (pScoring && pScoring->HasSpeedPts())
+		pColData->InsertColumn(ctrlList, COL_RUN_SPEED, IDS_SPEEDPTS);
 	if (0 < pRun->GetPartners().size())
 		pColData->InsertColumn(ctrlList, COL_RUN_PARTNERS, IDS_PARTNERS);
 

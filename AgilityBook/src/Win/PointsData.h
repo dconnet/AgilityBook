@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-06 DRC Created
  */
@@ -164,7 +165,7 @@ public:
 		std::string const& inQcount,
 		std::string const& inPts,
 		std::string const& inSuperQ,
-		std::string const& inMach);
+		std::string const& inSpeed);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -178,7 +179,7 @@ protected:
 	std::string m_Qcount;
 	std::string m_Pts;
 	std::string m_SuperQ;
-	std::string m_Mach;
+	std::string m_Speed;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -219,12 +220,12 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * Keeps track of all Mach points
+ * Keeps track of all Speed points
  */
-class PointsDataMachPts : public PointsDataBase
+class PointsDataSpeedPts : public PointsDataBase
 {
 public:
-	PointsDataMachPts(CAgilityBookViewPoints* pView, int inPts);
+	PointsDataSpeedPts(CAgilityBookViewPoints* pView, int inPts);
 
 	virtual std::string OnNeedText(size_t index) const;
 

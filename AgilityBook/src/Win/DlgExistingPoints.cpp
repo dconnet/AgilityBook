@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-02-03 DRC Created
  */
 
@@ -150,7 +151,7 @@ void CDlgExistingPoints::UpdateControls()
 		bEnableEvent = TRUE;
 		GetDlgItem(IDOK)->EnableWindow(TRUE);
 		ARBDogExistingPoints::PointType type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
-		if (ARBDogExistingPoints::eMach == type
+		if (ARBDogExistingPoints::eSpeed == type
 		|| ARBDogExistingPoints::eQQ == type)
 		{
 			bEnableEvent = FALSE;
@@ -300,7 +301,7 @@ BOOL CDlgExistingPoints::OnInitDialog()
 	{
 		ARBDogExistingPoints::eOtherPoints,
 		ARBDogExistingPoints::eRuns,
-		ARBDogExistingPoints::eMach,
+		ARBDogExistingPoints::eSpeed,
 		ARBDogExistingPoints::eQQ,
 		ARBDogExistingPoints::eSQ
 	};
@@ -432,7 +433,7 @@ void CDlgExistingPoints::OnOK()
 
 	m_Comments.Replace("\r\n", "\n");
 
-	if (ARBDogExistingPoints::eMach == type
+	if (ARBDogExistingPoints::eSpeed == type
 	|| ARBDogExistingPoints::eQQ == type)
 	{
 		event.erase();

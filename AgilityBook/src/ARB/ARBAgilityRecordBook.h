@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-11-15 DRC Added TimeFaults for T+F, ClubInfo, LocationInfo
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
@@ -155,7 +156,7 @@
 #define ATTRIB_SCORING_CLOSINGPTS			"ClosingPts"
 #define ATTRIB_SCORING_SUPERQ				"superQ"
 #define ATTRIB_SCORING_DOUBLEQ				"doubleQ"
-#define ATTRIB_SCORING_MACHPTS				"machPts"
+#define ATTRIB_SCORING_SPEEDPTS				"speedPts"
 #define ATTRIB_TITLE_POINTS_POINTS			"Points"
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
 #define ATTRIB_LIFETIME_POINTS_POINTS		"Points"
@@ -168,7 +169,7 @@
 #define ATTRIB_EXISTING_PTS_TYPE			"Type"
 	#define EXISTING_PTS_TYPE_OTHER				"Other"
 	#define EXISTING_PTS_TYPE_RUNS				"Run"
-	#define EXISTING_PTS_TYPE_MACH				"Mach"
+	#define EXISTING_PTS_TYPE_SPEED				"Speed"
 	#define EXISTING_PTS_TYPE_QQ				"QQ"
 	#define EXISTING_PTS_TYPE_SQ				"SQ"
 #define ATTRIB_EXISTING_PTS_OTHER			"Other"
@@ -290,7 +291,7 @@
 // Used in ARBDogExistingPoints.cpp
 #define EXISTING_POINTS_OTHER		"OtherPoints"
 #define EXISTING_POINTS_RUN			"Run"
-#define EXISTING_POINTS_MACH		"MACH"
+#define EXISTING_POINTS_SPEED		"Speed"
 #define EXISTING_POINTS_QQ			"Double Q"
 #define EXISTING_POINTS_SQ			"SuperQ"
 

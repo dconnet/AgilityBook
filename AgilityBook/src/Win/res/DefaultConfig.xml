@@ -201,7 +201,7 @@ Revision History:
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" timeFault="3" type="Faults100ThenTime">
+				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -221,7 +221,7 @@ Revision History:
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" timeFault="3" type="Faults100ThenTime">
+				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">

@@ -122,8 +122,10 @@ Level this scoring method applies to.
 .topic HIDC_CONFIG_EVENT_POINTS
 List of titling and/or lifetime points, based on the number of faults.
 
-.topic HIDC_CONFIG_EVENT_MACH
-Does this scoring method have MACH points?
+.topic HIDC_CONFIG_EVENT_SPEED
+Does this scoring method have Speed points? (In AKC, these are MACH points.)
+Speed points are computed as full seconds under SCT. First place earns 2x.
+Second place earns 1.5x. All other places earn 1 point per second.
 
 .topic HIDC_CONFIG_EVENT_METHODS
 Currently defined scoring methods. Order is very important - the first scoring

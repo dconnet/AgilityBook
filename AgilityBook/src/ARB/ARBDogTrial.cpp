@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -235,14 +236,14 @@ bool ARBDogTrial::HasQQ(
 	return 2 == nQs;
 }
 
-short ARBDogTrial::GetMachPoints(
+short ARBDogTrial::GetSpeedPoints(
 	ARBConfig const& inConfig,
 	std::string const& inDiv,
 	std::string const& inLevel) const
 {
 	if (!GetClubs().GetPrimaryClub())
 		return 0;
-	short mach = 0;
+	short speed = 0;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 	{
 		ARBDogRun* pRun = (*iterRun);
@@ -255,10 +256,10 @@ short ARBDogTrial::GetMachPoints(
 				pRun->GetDivision(),
 				pRun->GetLevel(),
 				pRun->GetDate());
-			mach = mach + pRun->GetMachPoints(pScoring);
+			speed = speed + pRun->GetSpeedPoints(pScoring);
 		}
 	}
-	return mach;
+	return speed;
 }
 
 bool ARBDogTrial::HasVenue(std::string const& inVenue) const

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-10-20 DRC Do not accumulate NA titling runs.
@@ -103,8 +104,8 @@ static char THIS_FILE[] = __FILE__;
 // 5: n Runs, n Judges, n Partners
 // 6: n Qs (x %), (n clean), n Judges, n Partners
 // 7: Points
-// 8: SuperQs/MachPts(per run), total QQs/machpts
-// 9: MachPts (if SuperQs too) [possible, but an event like this doesn't exist]
+// 8: SuperQs/SpeedPts(per run), total QQs/speedpts
+// 9: SpeedPts (if SuperQs too) [possible, but an event like this doesn't exist]
 //
 // 1: Other Points
 // 2: Name
@@ -330,8 +331,8 @@ int CAgilityBookViewPoints::DoEvents(
 	LifeTimePointList& inLifetime)
 {
 	int nAdded = 0;
-	int machPts = 0;
-	bool bHasMachPts = false;
+	int speedPts = 0;
+	bool bHasSpeedPts = false;
 	std::set<DoubleQdata> QQs;
 	bool bHasDoubleQs = false;
 	for (ARBConfigEventList::const_iterator iterEvent = inVenue->GetEvents().begin();
@@ -355,7 +356,7 @@ int CAgilityBookViewPoints::DoEvents(
 		{
 			ARBConfigScoring const* pScoringMethod = *iterScoring;
 			int SQs = 0;
-			int machPtsEvent = 0;
+			int speedPtsEvent = 0;
 			list<RunInfo> matching;
 			set<std::string> judges;
 			set<std::string> judgesQ;
@@ -433,11 +434,11 @@ int CAgilityBookViewPoints::DoEvents(
 							judgesQ.insert(pRun->GetJudge());
 						if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
 							++SQs;
-						if (pScoringMethod->HasMachPts())
+						if (pScoringMethod->HasSpeedPts())
 						{
-							int pts = pRun->GetMachPoints(pScoringMethod);
-							machPts += pts;
-							machPtsEvent += pts;
+							int pts = pRun->GetSpeedPoints(pScoringMethod);
+							speedPts += pts;
+							speedPtsEvent += pts;
 						}
 						// Only tally partners for pairs. In USDAA DAM, pairs is
 						// actually a 3-dog relay.
@@ -534,15 +535,15 @@ int CAgilityBookViewPoints::DoEvents(
 					SQs += nExistingSQ;
 					strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
 				}
-				CString strMach;
+				CString strSpeed;
 				if (pScoringMethod->HasDoubleQ())
 					bHasDoubleQs = true;
-				if (pScoringMethod->HasMachPts())
+				if (pScoringMethod->HasSpeedPts())
 				{
-					bHasMachPts = true;
-					if (0 < machPtsEvent)
+					bHasSpeedPts = true;
+					if (0 < speedPtsEvent)
 					{
-						strMach.FormatMessage(IDS_POINTS_MACH_SUBTOTAL, machPtsEvent);
+						strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
 					}
 				}
 				PointsDataEvent* pData = new PointsDataEvent(this,
@@ -554,7 +555,7 @@ int CAgilityBookViewPoints::DoEvents(
 					(LPCTSTR)strQcount,
 					(LPCTSTR)strPts,
 					(LPCTSTR)strSuperQ,
-					(LPCTSTR)strMach);
+					(LPCTSTR)strSpeed);
 				LVITEM item;
 				item.iItem = index + nAdded;
 				item.iSubItem = 0;
@@ -570,8 +571,8 @@ int CAgilityBookViewPoints::DoEvents(
 	// Information that is tallied after all a venue's events.
 	if (bHasDoubleQs)
 	{
-		machPts += inDog->GetExistingPoints().ExistingPoints(
-			ARBDogExistingPoints::eMach,
+		speedPts += inDog->GetExistingPoints().ExistingPoints(
+			ARBDogExistingPoints::eSpeed,
 			inVenue, inDiv, inLevel, NULL);
 		int existingDblQs = inDog->GetExistingPoints().ExistingPoints(
 			ARBDogExistingPoints::eQQ,
@@ -587,9 +588,9 @@ int CAgilityBookViewPoints::DoEvents(
 		GetListCtrl().InsertItem(&item);
 		++nAdded;
 	}
-	if (bHasMachPts)
+	if (bHasSpeedPts)
 	{
-		PointsDataMachPts* pData = new PointsDataMachPts(this, machPts);
+		PointsDataSpeedPts* pData = new PointsDataSpeedPts(this, speedPts);
 		LVITEM item;
 		item.iItem = index + nAdded;
 		item.iSubItem = 0;

@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-12-10 DRC Changes weren't saved when lifetime pts were modified.
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
@@ -140,7 +141,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_UNDER, m_ctrlTimeFaultsUnder);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_OVER, m_ctrlTimeFaultsOver);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_MACH, m_ctrlMachPts);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SPEED, m_ctrlSpeedPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DOUBLEQ, m_ctrlDoubleQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT, m_ctrlMultiplyText);
@@ -259,10 +260,10 @@ void CDlgConfigEvent::FillControls()
 			m_ctrlSuperQ.SetCheck(1);
 		else
 			m_ctrlSuperQ.SetCheck(0);
-		if (pScoring->HasMachPts())
-			m_ctrlMachPts.SetCheck(1);
+		if (pScoring->HasSpeedPts())
+			m_ctrlSpeedPts.SetCheck(1);
 		else
-			m_ctrlMachPts.SetCheck(0);
+			m_ctrlSpeedPts.SetCheck(0);
 		if (pScoring->HasDoubleQ())
 			m_ctrlDoubleQ.SetCheck(1);
 		else
@@ -285,7 +286,7 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlTimeFaultsUnder.SetCheck(0);
 		m_ctrlTimeFaultsOver.SetCheck(0);
 		m_ctrlPointsList.ResetContent();
-		m_ctrlMachPts.SetCheck(0);
+		m_ctrlSpeedPts.SetCheck(0);
 		m_ctrlDoubleQ.SetCheck(0);
 		m_ctrlSuperQ.SetCheck(0);
 		m_ctrlMultiply.SetWindowText("1");
@@ -302,7 +303,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlDropFractions.EnableWindow(bEnable);
 	m_ctrlTimeFaultsUnder.EnableWindow(bEnable);
 	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
-	m_ctrlMachPts.EnableWindow(bEnable);
+	m_ctrlSpeedPts.EnableWindow(bEnable);
 	m_ctrlDoubleQ.EnableWindow(bEnable);
 	m_ctrlSuperQ.EnableWindow(bEnable);
 	m_ctrlMultiply.EnableWindow(bEnable);
@@ -658,10 +659,10 @@ bool CDlgConfigEvent::SaveControls()
 			pScoring->SetHasSuperQ(true);
 		else
 			pScoring->SetHasSuperQ(false);
-		if (m_ctrlMachPts.GetCheck())
-			pScoring->SetHasMachPts(true);
+		if (m_ctrlSpeedPts.GetCheck())
+			pScoring->SetHasSpeedPts(true);
 		else
-			pScoring->SetHasMachPts(false);
+			pScoring->SetHasSpeedPts(false);
 		if (m_ctrlDoubleQ.GetCheck())
 			pScoring->SetHasDoubleQ(true);
 		else

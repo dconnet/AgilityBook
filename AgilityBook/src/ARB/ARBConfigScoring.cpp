@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation on T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -106,7 +107,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_ClosingPts(0)
 	, m_bSuperQ(false)
 	, m_bDoubleQ(false)
-	, m_bMachPts(false)
+	, m_bSpeedPts(false)
 	, m_TitlePoints()
 	, m_LifePoints()
 {
@@ -127,7 +128,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_ClosingPts(rhs.m_ClosingPts)
 	, m_bSuperQ(rhs.m_bSuperQ)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
-	, m_bMachPts(rhs.m_bMachPts)
+	, m_bSpeedPts(rhs.m_bSpeedPts)
 	, m_TitlePoints(rhs.m_TitlePoints)
 	, m_LifePoints(rhs.m_LifePoints)
 {
@@ -155,7 +156,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_ClosingPts = rhs.m_ClosingPts;
 		m_bSuperQ = rhs.m_bSuperQ;
 		m_bDoubleQ = rhs.m_bDoubleQ;
-		m_bMachPts = rhs.m_bMachPts;
+		m_bSpeedPts = rhs.m_bSpeedPts;
 		m_TitlePoints = rhs.m_TitlePoints;
 		m_LifePoints = rhs.m_LifePoints;
 	}
@@ -178,7 +179,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_ClosingPts == rhs.m_ClosingPts
 		&& m_bSuperQ == rhs.m_bSuperQ
 		&& m_bDoubleQ == rhs.m_bDoubleQ
-		&& m_bMachPts == rhs.m_bMachPts
+		&& m_bSpeedPts == rhs.m_bSpeedPts
 		&& m_TitlePoints == rhs.m_TitlePoints
 		&& m_LifePoints == rhs.m_LifePoints;
 }
@@ -314,15 +315,23 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_MACHPTS, m_bMachPts))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_MACHPTS, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SPEEDPTS, VALID_VALUES_BOOL));
 		return false;
 	}
 
 	bool bVer10orMore = (inVersion >= ARBVersion(10, 0));
 	if (inVersion >= ARBVersion(5,0))
 	{
+		if (inVersion < ARBVersion(10, 1))
+		{
+			if (Element::eInvalidValue == inTree.GetAttrib("machPts", m_bSpeedPts))
+			{
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, "machPts", VALID_VALUES_BOOL));
+				return false;
+			}
+		}
 		inTree.GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
 		inTree.GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -435,8 +444,8 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
 	if (m_bDoubleQ)
 		scoring.AddAttrib(ATTRIB_SCORING_DOUBLEQ, m_bDoubleQ);
-	if (m_bMachPts)
-		scoring.AddAttrib(ATTRIB_SCORING_MACHPTS, m_bMachPts);
+	if (m_bSpeedPts)
+		scoring.AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
 	if (!m_TitlePoints.Save(scoring))
 		return false;
 	if (!m_LifePoints.Save(scoring))

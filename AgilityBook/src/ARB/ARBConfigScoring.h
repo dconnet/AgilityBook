@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation on T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -155,8 +156,8 @@ public:
 	void SetHasSuperQ(bool inBool);
 	bool HasDoubleQ() const;
 	void SetHasDoubleQ(bool inBool);
-	bool HasMachPts() const;
-	void SetHasMachPts(bool inBool);
+	bool HasSpeedPts() const;
+	void SetHasSpeedPts(bool inBool);
 	ARBConfigTitlePointsList const& GetTitlePoints() const;
 	ARBConfigTitlePointsList& GetTitlePoints();
 	ARBConfigLifetimePointsList const& GetLifetimePoints() const;
@@ -178,7 +179,7 @@ private:
 	short m_ClosingPts;
 	bool m_bSuperQ;
 	bool m_bDoubleQ;
-	bool m_bMachPts;
+	bool m_bSpeedPts;
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;
 };
@@ -327,14 +328,14 @@ inline void ARBConfigScoring::SetHasDoubleQ(bool inBool)
 	m_bDoubleQ = inBool;
 }
 
-inline bool ARBConfigScoring::HasMachPts() const
+inline bool ARBConfigScoring::HasSpeedPts() const
 {
-	return m_bMachPts;
+	return m_bSpeedPts;
 }
 
-inline void ARBConfigScoring::SetHasMachPts(bool inBool)
+inline void ARBConfigScoring::SetHasSpeedPts(bool inBool)
 {
-	m_bMachPts = inBool;
+	m_bSpeedPts = inBool;
 }
 
 inline ARBConfigTitlePointsList const& ARBConfigScoring::GetTitlePoints() const

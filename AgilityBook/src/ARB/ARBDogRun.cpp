@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-10-04 DRC Only compute MACH points if time and SCT are >0. Also, do
  *                    not allow negative mach points.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -449,10 +450,10 @@ int ARBDogRun::DeleteOtherPoints(std::string const& inName)
 	return count;
 }
 
-short ARBDogRun::GetMachPoints(ARBConfigScoring const* inScoring) const
+short ARBDogRun::GetSpeedPoints(ARBConfigScoring const* inScoring) const
 {
 	short pts = 0;
-	if (inScoring && inScoring->HasMachPts())
+	if (inScoring && inScoring->HasSpeedPts())
 	{
 		if (GetQ().Qualified())
 		{

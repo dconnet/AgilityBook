@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-24 DRC Added a sort header image.
@@ -383,7 +384,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				}
 			}
 			break;
-		case IO_RUNS_MACH:
+		case IO_RUNS_SPEED:
 			{
 				ARBConfigScoring const* pScoring = NULL;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
@@ -393,9 +394,9 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate());
-				if (pScoring && pScoring->HasMachPts())
+				if (pScoring && pScoring->HasSpeedPts())
 				{
-					int pts = m_pRun->GetMachPoints(pScoring);
+					int pts = m_pRun->GetSpeedPoints(pScoring);
 					str.Format("%d", pts);
 				}
 			}
@@ -929,7 +930,7 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 				nRet = 1;
 		}
 		break;
-	case IO_RUNS_MACH:
+	case IO_RUNS_SPEED:
 		{
 			ARBConfigScoring const* pScoring1 = NULL;
 			if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
@@ -951,10 +952,10 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			int pts2 = -1;
 			if (pScoring1 && pScoring2)
 			{
-				if (pScoring1->HasMachPts())
-					pts1 = pRun1->m_pRun->GetMachPoints(pScoring1);
-				if (pScoring2->HasMachPts())
-					pts2 = pRun2->m_pRun->GetMachPoints(pScoring2);
+				if (pScoring1->HasSpeedPts())
+					pts1 = pRun1->m_pRun->GetSpeedPoints(pScoring1);
+				if (pScoring2->HasSpeedPts())
+					pts2 = pRun2->m_pRun->GetSpeedPoints(pScoring2);
 			}
 			if (pts1 > pts2)
 				nRet = 1;

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation option on T+F.
  */
@@ -87,7 +88,7 @@ private:
 	CButton	m_ctrlTimeFaultsUnder;
 	CButton	m_ctrlTimeFaultsOver;
 	CEdit	m_ctrlNote;
-	CButton m_ctrlMachPts;
+	CButton m_ctrlSpeedPts;
 	CButton m_ctrlDoubleQ;
 	CButton m_ctrlSuperQ;
 	CStatic	m_ctrlMultiplyText;

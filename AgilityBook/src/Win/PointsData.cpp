@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-06 DRC Created
  */
@@ -297,7 +298,7 @@ PointsDataEvent::PointsDataEvent(CAgilityBookViewPoints* pView,
 		std::string const& inQcount,
 		std::string const& inPts,
 		std::string const& inSuperQ,
-		std::string const& inMach)
+		std::string const& inSpeed)
 	: PointsDataBase(pView)
 	, m_Matching(inMatching)
 	, m_Div(inDiv)
@@ -307,7 +308,7 @@ PointsDataEvent::PointsDataEvent(CAgilityBookViewPoints* pView,
 	, m_Qcount(inQcount)
 	, m_Pts(inPts)
 	, m_SuperQ(inSuperQ)
-	, m_Mach(inMach)
+	, m_Speed(inSpeed)
 {
 }
 
@@ -334,14 +335,14 @@ std::string PointsDataEvent::OnNeedText(size_t index) const
 	case 6: // Points
 		str = m_Pts;
 		break;
-	case 7: // SuperQ/MachPts
+	case 7: // SuperQ/SpeedPts
 		if (0 < m_SuperQ.length())
 			str = m_SuperQ;
-		else if (0 < m_Mach.length())
-			str = m_Mach;
-	case 8: // Only used for SQ AND Mach
-		if (0 < m_SuperQ.length() &&  0 < m_Mach.length())
-			str = m_Mach;
+		else if (0 < m_Speed.length())
+			str = m_Speed;
+	case 8: // Only used for SQ AND Speed
+		if (0 < m_SuperQ.length() &&  0 < m_Speed.length())
+			str = m_Speed;
 		break;
 	}
 	return str;
@@ -425,19 +426,19 @@ void PointsDataDoubleQs::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataMachPts::PointsDataMachPts(CAgilityBookViewPoints* pView, int inPts)
+PointsDataSpeedPts::PointsDataSpeedPts(CAgilityBookViewPoints* pView, int inPts)
 	: PointsDataBase(pView)
 	, m_Pts(inPts)
 {
 }
 
-std::string PointsDataMachPts::OnNeedText(size_t index) const
+std::string PointsDataSpeedPts::OnNeedText(size_t index) const
 {
 	std::string str;
 	if (7 == index)
 	{
 		CString str2;
-		str2.FormatMessage(IDS_POINTS_MACH, m_Pts);
+		str2.FormatMessage(IDS_POINTS_SPEED, m_Pts);
 		str = (LPCTSTR)str2;
 	}
 	return str;

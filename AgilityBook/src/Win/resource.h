@@ -151,7 +151,7 @@
 #define IDC_CONFIG_EVENT_CLOSING_PTS_TEXT 1115
 #define IDC_CONFIG_EVENT_CLOSING_PTS    1116
 #define IDC_CONFIG_EVENT_SUPERQ         1117
-#define IDC_CONFIG_EVENT_MACH           1118
+#define IDC_CONFIG_EVENT_SPEED          1118
 #define IDC_CONFIG_EVENT_DOUBLEQ        1119
 #define IDC_CONFIG_EVENT_NOTES          1120
 #define IDC_CONFIG_EVENT_POINTS         1121
@@ -289,8 +289,8 @@
 #define IDC_RUNSCORE_Q                  1340
 #define IDC_RUNSCORE_SCORE              1341
 #define IDC_RUNSCORE_DOUBLE_Q           1342
-#define IDC_RUNSCORE_MACHPTS_TEXT       1343
-#define IDC_RUNSCORE_MACHPTS            1344
+#define IDC_RUNSCORE_SPEEDPTS_TEXT      1343
+#define IDC_RUNSCORE_SPEEDPTS           1344
 #define IDC_RUNSCORE_TITLE_POINTS_TEXT  1345
 #define IDC_RUNSCORE_TITLE_POINTS       1346
 #define IDC_RUNSCORE_OTHERPOINTS        1347
@@ -493,7 +493,7 @@
 #define IDS_COL_TRIAL                   4053
 #define IDS_COL_SUBNAME                 4054
 #define IDS_COL_VERIFIED                4055
-#define IDS_COL_MACH                    4056
+#define IDS_COL_SPEED                   4056
 #define IDS_BUTTON_OK                   4080
 #define IDS_BUTTON_CANCEL               4081
 #define IDS_BUTTON_YES                  4082
@@ -526,7 +526,7 @@
 #define IDS_SUPER_Q                     5029
 #define IDS_QQ                          5030
 #define IDS_DOUBLE_Q                    5031
-#define IDS_MACHPTS                     5032
+#define IDS_SPEEDPTS                    5032
 #define IDS_ARE_YOU_SURE                5078
 #define IDS_ABOUT_VERSION               5079
 #define IDS_ABOUT_TEXT                  5080
@@ -596,9 +596,9 @@
 #define IDS_POINTS_CLEAN                5145
 #define IDS_POINTS_JUDGES               5146
 #define IDS_POINTS_SQS                  5147
-#define IDS_POINTS_MACH_SUBTOTAL        5148
+#define IDS_POINTS_SPEED_SUBTOTAL       5148
 #define IDS_POINTS_QQS                  5149
-#define IDS_POINTS_MACH                 5150
+#define IDS_POINTS_SPEED                5150
 #define IDS_CONFIG_TITLEPTS             5151
 #define IDS_FILEEXT_DEF_ARB             5152
 #define IDS_FILEEXT_FNAME_ARB           5153
