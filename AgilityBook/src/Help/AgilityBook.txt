@@ -98,6 +98,19 @@ Enable/disable the setting of a date. This allows for evolving rule changes.
 .topic HIDC_CONFIG_EVENT_DELETE
 Delete the selected scoring method.
 
+.topic HIDC_CONFIG_EVENT_SUBCAT
+List of subcategories.
+These allow subtotaling points (for instance, NADAC Gamblers).
+
+.topic HIDC_CONFIG_EVENT_SUBCAT_NEW
+Create a new subcategory.
+
+.topic HIDC_CONFIG_EVENT_SUBCAT_EDIT
+Edit the selected subcategory.
+
+.topic HIDC_CONFIG_EVENT_SUBCAT_DELETE
+Delete the selected subcategory.
+
 .topic HIDC_CONFIG_EVENT_DESC
 Description of this event.
 
@@ -148,13 +161,13 @@ Does this scoring method have Super Qs?
 .topic HIDC_CONFIG_EVENT_TABLE
 Could there be a table in this event?
 
-.topic HIDC_CONFIG_EVENT_TITLE_DELETE
+.topic HIDC_CONFIG_EVENT_POINTS_DELETE
 Delete the selected titling point item.
 
-.topic HIDC_CONFIG_EVENT_TITLE_EDIT
+.topic HIDC_CONFIG_EVENT_POINTS_EDIT
 Edit the selected titling point item.
 
-.topic HIDC_CONFIG_EVENT_TITLE_NEW
+.topic HIDC_CONFIG_EVENT_POINTS_NEW
 Create a new titling point item.
 
 .topic HIDC_CONFIG_EVENT_TYPE
@@ -614,7 +627,10 @@ Placement earned. Enter 0 if not known or doesn't apply.
 Qualifying status of run.
 
 .topic HIDC_RUNSCORE_SCT
-Standard Course Time.
+Standard Course Time (or opening time for point-based events)
+
+.topic HIDC_RUNSCORE_SCT2
+Standard Course Time (or closing time for point-based events)
 
 .topic HIDC_RUNSCORE_TABLE
 Did this run have a table in it?

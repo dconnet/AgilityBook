@@ -47,12 +47,14 @@
 #include "AgilityBook.h"
 #include "DlgConfigEvent.h"
 
+#include <algorithm>
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
 #include "DlgFixup.h"
+#include "DlgName.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -109,6 +111,10 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CONFIG_EVENT, m_Name);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_TABLE, m_bHasTable);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_PARTNER, m_bHasPartners);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT, m_ctrlSubCat);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT_NEW, m_ctrlSubCatNew);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT_EDIT, m_ctrlSubCatEdit);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT_DELETE, m_ctrlSubCatDelete);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_DESC, m_Desc);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
@@ -135,15 +141,20 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_MACH, m_ctrlMachPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DOUBLEQ, m_ctrlDoubleQ);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_LIST, m_ctrlPointsList);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_NEW, m_ctrlTitleNew);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_EDIT, m_ctrlTitleEdit);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_DELETE, m_ctrlTitleDelete);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS, m_ctrlPointsList);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_NEW, m_ctrlPointsNew);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_EDIT, m_ctrlPointsEdit);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_DELETE, m_ctrlPointsDelete);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
+	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_SUBCAT, OnSelchangeSubCat)
+	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_SUBCAT, OnDblclkSubCat)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBCAT_NEW, OnSubCatNew)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBCAT_EDIT, OnSubCatEdit)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBCAT_DELETE, OnSubCatDelete)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_DELETE, OnBnClickedDelete)
@@ -157,11 +168,11 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_DIVISION, OnCbnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_LEVEL, OnCbnSelchangeLevel)
 	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_TYPE, OnSelchangeType)
-	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_LIST, OnSelchangeList)
-	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_LIST, OnDblclkList)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_TITLE_NEW, OnTitleNew)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_TITLE_EDIT, OnTitleEdit)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_TITLE_DELETE, OnTitleDelete)
+	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_POINTS, OnSelchangePoints)
+	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_POINTS, OnDblclkPoints)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_NEW, OnPointsNew)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_EDIT, OnPointsEdit)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_DELETE, OnPointsDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -298,9 +309,9 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
 	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
 	m_ctrlPointsList.EnableWindow(bEnable);
-	m_ctrlTitleNew.EnableWindow(bEnable);
-	m_ctrlTitleEdit.EnableWindow(bEnable);
-	m_ctrlTitleDelete.EnableWindow(bEnable);
+	m_ctrlPointsNew.EnableWindow(bEnable);
+	m_ctrlPointsEdit.EnableWindow(bEnable);
+	m_ctrlPointsDelete.EnableWindow(bEnable);
 }
 
 void CDlgConfigEvent::FillMethodList()
@@ -492,8 +503,8 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 				m_ctrlPointsList.SetCurSel(idx);
 		}
 	}
-	m_ctrlTitleEdit.EnableWindow(FALSE);
-	m_ctrlTitleDelete.EnableWindow(FALSE);
+	m_ctrlPointsEdit.EnableWindow(FALSE);
+	m_ctrlPointsDelete.EnableWindow(FALSE);
 }
 
 bool CDlgConfigEvent::SaveControls()
@@ -600,6 +611,16 @@ BOOL CDlgConfigEvent::OnInitDialog()
 		m_ctrlType.SetItemData(idx, Styles[index]);
 	}
 
+	// Fill subcategories.
+	for (std::vector<std::string>::iterator iter = m_pEvent->GetSubCategories().begin();
+		iter != m_pEvent->GetSubCategories().end();
+		++iter)
+	{
+		m_ctrlSubCat.AddString((*iter).c_str());
+	}
+	m_ctrlSubCatEdit.EnableWindow(FALSE);
+	m_ctrlSubCatDelete.EnableWindow(FALSE);
+
 	FillMethodList();
 	FillControls();
 	FillRequiredPoints();
@@ -629,6 +650,86 @@ void CDlgConfigEvent::OnCbnSelchangeLevel()
 	UpdateData(TRUE);
 	SaveControls();
 	FillMethodList();
+}
+
+void CDlgConfigEvent::OnSelchangeSubCat()
+{
+	UpdateData(TRUE);
+	BOOL bEnable = FALSE;
+	if (LB_ERR != m_ctrlSubCat.GetCurSel())
+		bEnable = TRUE;
+	m_ctrlSubCatEdit.EnableWindow(bEnable);
+	m_ctrlSubCatDelete.EnableWindow(bEnable);
+}
+
+void CDlgConfigEvent::OnDblclkSubCat()
+{
+	UpdateData(TRUE);
+	OnSubCatEdit();
+}
+
+void CDlgConfigEvent::OnSubCatNew()
+{
+	CDlgName dlg("", (LPCTSTR)NULL, this);
+	if (IDOK == dlg.DoModal())
+	{
+		std::vector<std::string> subcat;
+		for (int index = 0; index < m_ctrlSubCat.GetCount(); ++index)
+		{
+			CString text;
+			m_ctrlSubCat.GetText(index, text);
+			subcat.push_back((LPCSTR)text);
+		}
+		std::string item = dlg.GetName();
+		if (subcat.end() == find(subcat.begin(), subcat.end(), item))
+		{
+			int idx = m_ctrlSubCat.AddString(item.c_str());
+			m_ctrlSubCat.SetCurSel(idx);
+		}
+	}
+}
+
+void CDlgConfigEvent::OnSubCatEdit()
+{
+	int idx = m_ctrlSubCat.GetCurSel();
+	if (LB_ERR != idx)
+	{
+		CString text;
+		m_ctrlSubCat.GetText(idx, text);
+		CDlgName dlg(text, (LPCTSTR)NULL, this);
+		if (IDOK == dlg.DoModal())
+		{
+			CString oldText;
+			m_ctrlSubCat.GetText(idx, oldText);
+			m_ctrlSubCat.DeleteString(idx);
+			std::vector<std::string> subcat;
+			for (int index = 0; index < m_ctrlSubCat.GetCount(); ++index)
+			{
+				CString text;
+				m_ctrlSubCat.GetText(index, text);
+				subcat.push_back((LPCSTR)text);
+			}
+			std::string item = dlg.GetName();
+			if (subcat.end() == find(subcat.begin(), subcat.end(), item))
+			{
+				int idx = m_ctrlSubCat.AddString(item.c_str());
+				m_ctrlSubCat.SetCurSel(idx);
+			}
+			else
+			{
+				// New name exists, put the old one back.
+				int idx = m_ctrlSubCat.AddString(oldText);
+				m_ctrlSubCat.SetCurSel(idx);
+			}
+		}
+	}
+}
+
+void CDlgConfigEvent::OnSubCatDelete()
+{
+	int idx = m_ctrlSubCat.GetCurSel();
+	if (LB_ERR != idx)
+		m_ctrlSubCat.DeleteString(idx);
 }
 
 void CDlgConfigEvent::OnBnClickedNew()
@@ -771,23 +872,23 @@ void CDlgConfigEvent::OnSelchangeType()
 	FillRequiredPoints();
 }
 
-void CDlgConfigEvent::OnSelchangeList() 
+void CDlgConfigEvent::OnSelchangePoints() 
 {
 	UpdateData(TRUE);
 	BOOL bEnable = FALSE;
 	if (LB_ERR != m_ctrlPointsList.GetCurSel())
 		bEnable = TRUE;
-	m_ctrlTitleEdit.EnableWindow(bEnable);
-	m_ctrlTitleDelete.EnableWindow(bEnable);
+	m_ctrlPointsEdit.EnableWindow(bEnable);
+	m_ctrlPointsDelete.EnableWindow(bEnable);
 }
 
-void CDlgConfigEvent::OnDblclkList() 
+void CDlgConfigEvent::OnDblclkPoints() 
 {
 	UpdateData(TRUE);
-	OnTitleEdit();
+	OnPointsEdit();
 }
 
-void CDlgConfigEvent::OnTitleNew() 
+void CDlgConfigEvent::OnPointsNew() 
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
@@ -816,7 +917,7 @@ void CDlgConfigEvent::OnTitleNew()
 	}
 }
 
-void CDlgConfigEvent::OnTitleEdit() 
+void CDlgConfigEvent::OnPointsEdit() 
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
@@ -881,7 +982,7 @@ void CDlgConfigEvent::OnTitleEdit()
 	}
 }
 
-void CDlgConfigEvent::OnTitleDelete()
+void CDlgConfigEvent::OnPointsDelete()
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
@@ -899,8 +1000,8 @@ void CDlgConfigEvent::OnTitleDelete()
 			else
 				pScoring->GetLifetimePoints().DeleteLifetimePoints(pTitle->GetFaults());
 			m_ctrlPointsList.DeleteString(idx);
-			m_ctrlTitleEdit.EnableWindow(FALSE);
-			m_ctrlTitleDelete.EnableWindow(FALSE);
+			m_ctrlPointsEdit.EnableWindow(FALSE);
+			m_ctrlPointsDelete.EnableWindow(FALSE);
 		}
 	}
 }
@@ -925,6 +1026,7 @@ void CDlgConfigEvent::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
 		return;
 	}
+
 	// Validate that from-to dates are okay.
 	int index;
 	for (index = 0; index < m_ctrlMethods.GetCount(); ++index)
@@ -1029,7 +1131,18 @@ void CDlgConfigEvent::OnOK()
 		}
 	}
 
+	std::vector<std::string> subcat;
+	for (index = 0; index < m_ctrlSubCat.GetCount(); ++index)
+	{
+		CString text;
+		m_ctrlSubCat.GetText(index, text);
+		std::string item = (LPCSTR)text;
+		if (subcat.end() == find(subcat.begin(), subcat.end(), item))
+			subcat.push_back(item);
+	}
+
 	m_Desc.Replace("\r\n", "\n");
+	m_pEvent->GetSubCategories() = subcat;
 	m_pEvent->SetDesc((LPCSTR)m_Desc);
 	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
 	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
