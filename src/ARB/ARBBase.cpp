@@ -48,7 +48,7 @@ static char THIS_FILE[] = __FILE__;
 
 ARBBase::ARBBase()
 	: m_RefCount(1)
-	, m_bFiltered(false)
+	, m_nFiltered(0)
 {
 }
 

@@ -31,7 +31,9 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-05-20 DRC Add Dogs name and current date to report.
+ * @li 2004-05-20 DRC Add Dogs name and current date to report. Oops, just
+ *                    realized the only thing that shouldn't be filtered on
+ *                    runs is the Q-status (resets the last 2 changes).
  * @li 2004-05-16 DRC Do filter levels.
  * @li 2004-05-03 DRC Do not filter runs, only venues and titles.
  *                    Added percent qualifying.
@@ -269,7 +271,7 @@ int CAgilityBookViewPoints::DoEvents(
 									pRun->GetDate());
 								if (pScoring && pScoring->HasDoubleQ()
 								&& date == pRun->GetDate()
-								&& CAgilityBookOptions::IsLevelVisible(venues, pTrial, pRun->GetLevel()))
+								&& !pRun->IsFiltered(ARBBase::eIgnoreQ))
 								{
 									++nVisible;
 								}
@@ -284,7 +286,7 @@ int CAgilityBookViewPoints::DoEvents(
 				++iterRun)
 				{
 					ARBDogRun const* pRun = (*iterRun);
-					if (CAgilityBookOptions::IsLevelVisible(venues, pTrial, pRun->GetLevel()))
+					if (!pRun->IsFiltered(ARBBase::eIgnoreQ))
 					{
 						if (pRun->GetDivision() != inDiv->GetName()
 						|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
@@ -610,7 +612,8 @@ void CAgilityBookViewPoints::LoadData()
 			++iterTrial)
 			{
 				ARBDogTrial const* pTrial = (*iterTrial);
-				if (pTrial->HasVenue(pVenue->GetName()))
+				if (pTrial->HasVenue(pVenue->GetName())
+				&& !pTrial->IsFiltered())
 				{
 					trialsInVenue.push_back(pTrial);
 				}
@@ -697,21 +700,24 @@ void CAgilityBookViewPoints::LoadData()
 				++iterTrial)
 				{
 					ARBDogTrial const* pTrial = (*iterTrial);
-					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-					iterRun != pTrial->GetRuns().end();
-					++iterRun)
+					if (!pTrial->IsFiltered())
 					{
-						ARBDogRun const* pRun = (*iterRun);
-						if (CAgilityBookOptions::IsLevelVisible(venues, pTrial, pRun->GetLevel()))
+						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+						iterRun != pTrial->GetRuns().end();
+						++iterRun)
 						{
-							for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
-							iterOtherPts != pRun->GetOtherPoints().end();
-							++iterOtherPts)
+							ARBDogRun const* pRun = (*iterRun);
+							if (!pRun->IsFiltered(ARBBase::eIgnoreQ))
 							{
-								ARBDogRunOtherPoints const* pOtherPts = (*iterOtherPts);
-								if (pOtherPts->GetName() == pOther->GetName())
+								for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
+								iterOtherPts != pRun->GetOtherPoints().end();
+								++iterOtherPts)
 								{
-									runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+									ARBDogRunOtherPoints const* pOtherPts = (*iterOtherPts);
+									if (pOtherPts->GetName() == pOther->GetName())
+									{
+										runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+									}
 								}
 							}
 						}

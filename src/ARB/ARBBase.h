@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-20 DRC Added different types of filtering.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -84,6 +85,28 @@ public:
 	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const = 0;
 
+	// Filtered state
+	typedef enum
+	{
+		eFilter = 0x0,	// Full filter
+		eIgnoreQ = 0x1,	// Ignore Q status when filtering
+	} FilterType;
+
+	/**
+	 * Get the filtered state of this object.
+	 * @param inFilterType The filtered type to check.
+	 * @return The filtered state.
+	 */
+	virtual bool IsFiltered(FilterType inFilterType) const;
+
+	/**
+	 * Set the filtered state of this object.
+	 * This attribute is not persistent. It is up to the UI to manage this.
+	 * @param inFilterType The filtered type to set.
+	 * @param bFiltered Filtered state of the object.
+	 */
+	virtual void SetFiltered(FilterType inFilterType, bool bFiltered);
+
 	/**
 	 * Get the filtered state of this object.
 	 * @return The filtered state.
@@ -93,7 +116,7 @@ public:
 	/**
 	 * Set the filtered state of this object.
 	 * This attribute is not persistent. It is up to the UI to manage this.
-	 * @param bFiltered Filtered state of the object.
+	 * @param bFiltered Filtered state of the object, set all types.
 	 */
 	virtual void SetFiltered(bool bFiltered);
 
@@ -104,15 +127,29 @@ protected:
 	 */
 	virtual ~ARBBase();
 	unsigned int m_RefCount;
-	bool m_bFiltered;
+	unsigned short m_nFiltered;
 };
+
+inline bool ARBBase::IsFiltered(FilterType inFilterType) const
+{
+	return (m_nFiltered & (0x1 << inFilterType)) ? true : false;
+}
+
+inline void ARBBase::SetFiltered(FilterType inFilterType, bool bFiltered)
+{
+	if (bFiltered)
+		m_nFiltered |= (0x1 << inFilterType);
+	else
+		m_nFiltered &= ~(0x1 << inFilterType);
+}
 
 inline bool ARBBase::IsFiltered() const
 {
-	return m_bFiltered;
+	return IsFiltered(eFilter);
 }
 
 inline void ARBBase::SetFiltered(bool bFiltered)
 {
-	m_bFiltered = bFiltered;
+	SetFiltered(eFilter, bFiltered);
+	SetFiltered(eIgnoreQ, bFiltered);
 }

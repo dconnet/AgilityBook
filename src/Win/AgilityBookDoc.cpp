@@ -490,8 +490,9 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 
 void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun)
 {
-	bool bVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
-	pRun->SetFiltered(!bVisRun);
+	unsigned short nVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
+	pRun->SetFiltered(ARBBase::eFilter, (nVisRun & (0x1 << ARBBase::eFilter)) ? false : true);
+	pRun->SetFiltered(ARBBase::eIgnoreQ, (nVisRun & (0x1 << ARBBase::eIgnoreQ)) ? false : true);
 }
 
 void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle)
