@@ -18,7 +18,7 @@
 			<param name="Local" value="Help\html\History.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="AboutUs">
+			<param name="Name" value="About Us">
 			<param name="Local" value="Help\html\Contact.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
@@ -51,16 +51,6 @@
 			<param name="Name" value="Import and Export">
 			<param name="Local" value="Help\html\ImportExport.html">
 			</OBJECT>
-		<UL>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Import">
-				<param name="Local" value="Help\html\Import.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Export">
-				<param name="Local" value="Help\html\Export.html">
-				</OBJECT>
-		</UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Configuration">
 			<param name="Local" value="Help\html\Configuration.html">
@@ -77,34 +67,40 @@
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Program Menu">
+				<param name="Name" value="Main Menu">
 				<param name="Local" value="Help\html\MenuMain.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Dog Context Menu">
-				<param name="Local" value="Help\html\MenuDog.html">
+				<param name="Name" value="Context Menus">
+				<param name="Local" value="Help\html\ContextMenus.html">
 				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Dog">
+					<param name="Local" value="Help\html\MenuDog.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Trial">
+					<param name="Local" value="Help\html\MenuTrial.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Run">
+					<param name="Local" value="Help\html\MenuRuns.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Calendar">
+					<param name="Local" value="Help\html\MenuCalendar.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Training Log">
+					<param name="Local" value="Help\html\MenuTrainingLog.html">
+					</OBJECT>
+			</UL>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Trial Context Menu">
-				<param name="Local" value="Help\html\MenuTrial.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Run Context Menu">
-				<param name="Local" value="Help\html\MenuRuns.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Calendar Context Menu">
-				<param name="Local" value="Help\html\MenuCalendar.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Training Log Context Menu">
-				<param name="Local" value="Help\html\MenuTrainingLog.html">
+				<param name="Name" value="Toolbar">
+				<param name="Local" value="Help\html\Toolbar.html">
 				</OBJECT>
 		</UL>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Toolbar">
-			<param name="Local" value="Help\html\Toolbar.html">
-			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Tabs">
 			<param name="Local" value="Help\html\Tabs.html">
@@ -141,9 +137,147 @@
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Dog Properties">
-				<param name="Local" value="Help\html\EditDog.html">
+				<param name="Name" value="Property Dialogs">
+				<param name="Local" value="Help\html\DialogsProp.html">
 				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Dog">
+					<param name="Local" value="Help\html\PropDog.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Trial">
+					<param name="Local" value="Help\html\PropTrial.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Run">
+					<param name="Local" value="Help\html\PropRun.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Calendar">
+					<param name="Local" value="Help\html\PropCal.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Training Log">
+					<param name="Local" value="Help\html\PropLog.html">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Configuration Dialogs">
+				<param name="Local" value="Help\html\DialogsConfig.html">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Configuration">
+					<param name="Local" value="Help\html\DlgConfig.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Venue Configuration">
+					<param name="Local" value="Help\html\DlgConfigVenue.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Event Configuration">
+					<param name="Local" value="Help\html\DlgConfigEvent.html">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Options Dialogs">
+				<param name="Local" value="Help\html\DialogsOptions.html">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Trial Filter">
+					<param name="Local" value="Help\html\DlgOptionsTrial.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Calendar">
+					<param name="Local" value="Help\html\DlgOptionsCal.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Training Log">
+					<param name="Local" value="Help\html\DlgOptionsLog.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Fonts">
+					<param name="Local" value="Help\html\DlgOptionsFonts.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Program">
+					<param name="Local" value="Help\html\DlgOptionsPgm.html">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Import Export Dialogs">
+				<param name="Local" value="Help\html\DialogsWizard.html">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Import / Export Wizard">
+					<param name="Local" value="Help\html\DlgWizardStart.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Import Wizard">
+					<param name="Local" value="Help\html\DlgWizardImport.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Export Wizard">
+					<param name="Local" value="Help\html\DlgWizardExport.html">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Miscellaneous Dialogs">
+				<param name="Local" value="Help\html\DialogsMisc.html">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="About">
+					<param name="Local" value="Help\html\DlgAbout.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Assign Columns">
+					<param name="Local" value="Help\html\DlgAssignCol.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="CRCD Viewer">
+					<param name="Local" value="Help\html\DlgCRCDViewer.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Dog Picker">
+					<param name="Local" value="Help\html\DlgDogPicker.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Find">
+					<param name="Local" value="Help\html\DlgFind.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Find Links">
+					<param name="Local" value="Help\html\DlgFindLinks.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Judge Information">
+					<param name="Local" value="Help\html\DlgJudgeInfo.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Item Selection">
+					<param name="Local" value="Help\html\DlgListCtrl.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Name">
+					<param name="Local" value="Help\html\DlgName.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Messages">
+					<param name="Local" value="Help\html\DlgMessage.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Reorder">
+					<param name="Local" value="Help\html\DlgReorder.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Select URL">
+					<param name="Local" value="Help\html\DlgSelectUrl.html">
+					</OBJECT>
+			</UL>
 		</UL>
 	</UL>
 </UL>
