@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-17 DRC Title points were being computed on 'NQ' and the score was
+ *                    always being computed. Fixed both.
  * @li 2003-07-14 DRC Changed 'Score' to show data on 'Q' and 'NQ'.
  */
 
@@ -651,9 +653,8 @@ void CDlgRunScore::SetTitlePoints()
 		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName());
 	if (pScoring)
 	{
-		if (ARB_Q::eQ_Q == q
-		|| ARB_Q::eQ_SuperQ == q
-		|| ARB_Q::eQ_NQ == q)
+		// 8/17/03: Only compute title points on Q runs.
+		if (q.Qualified())
 		{
 			if (pScoring->HasMachPts())
 			{
@@ -661,7 +662,10 @@ void CDlgRunScore::SetTitlePoints()
 			}
 			strTitle.Format("%hd", m_Run->GetTitlePoints(pScoring));
 		}
-		strScore = m_Run->GetScore(pScoring).str().c_str();
+		// 8/17/03: Only compute score on Q and NQ runs.
+		if (q.Qualified()
+		|| ARB_Q::eQ_NQ == q)
+			strScore = m_Run->GetScore(pScoring).str().c_str();
 	}
 	// Doesn't matter if they're hidden,..
 	m_ctrlMachPts.SetWindowText(strMach);
