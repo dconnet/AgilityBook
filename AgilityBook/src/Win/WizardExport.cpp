@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-05-10 DRC Place quotes are field on output as needed.
  * @li 2004-01-04 DRC Added date format specification.
@@ -394,7 +395,7 @@ void CWizardExport::UpdatePreview()
 											if (ARBDogRunScoring::eTypeByTime == pRun->GetScoring().GetType())
 											{
 												CString str;
-												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults();
+												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults(pScoring);
 												str.Format("%.3f", faults);
 												data += PrepFieldOutput(str);
 											}

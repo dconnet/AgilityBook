@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -113,7 +114,7 @@ public:
 	bool HasTable() const;
 	void SetHasTable(bool inInc);
 	bool TableNeedsConverting() const;
-	double GetTimeFaults() const;
+	double GetTimeFaults(ARBConfigScoring const* inScoring) const;
 	short GetCourseFaults() const;
 	void SetCourseFaults(short inFaults);
 	short GetNeedOpenPts() const;

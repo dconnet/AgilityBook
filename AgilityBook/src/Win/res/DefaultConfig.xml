@@ -1258,7 +1258,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Novice" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
 					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-04-06 DRC Added simple sorting by column.
@@ -239,7 +240,13 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 		case IO_RUNS_TOTAL_FAULTS:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 			{
-				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults();
+				ARBConfigScoring const* pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					m_pRun->GetEvent(),
+					m_pRun->GetDivision(),
+					m_pRun->GetLevel(),
+					m_pRun->GetDate());
+				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
 				str.Format("%g", faults);
 			}
 			break;
@@ -610,8 +617,20 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->m_pRun->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
-				double faults1 = pRun1->m_pRun->GetScoring().GetCourseFaults() + pRun1->m_pRun->GetScoring().GetTimeFaults();
-				double faults2 = pRun2->m_pRun->GetScoring().GetCourseFaults() + pRun2->m_pRun->GetScoring().GetTimeFaults();
+				ARBConfigScoring const* pScoring1 = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun1->m_pRun->GetEvent(),
+					pRun1->m_pRun->GetDivision(),
+					pRun1->m_pRun->GetLevel(),
+					pRun1->m_pRun->GetDate());
+				ARBConfigScoring const* pScoring2 = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pRun->GetEvent(),
+					pRun2->m_pRun->GetDivision(),
+					pRun2->m_pRun->GetLevel(),
+					pRun2->m_pRun->GetDate());
+				double faults1 = pRun1->m_pRun->GetScoring().GetCourseFaults() + pRun1->m_pRun->GetScoring().GetTimeFaults(pScoring1);
+				double faults2 = pRun2->m_pRun->GetScoring().GetCourseFaults() + pRun2->m_pRun->GetScoring().GetTimeFaults(pScoring2);
 				if (faults1 < faults2)
 					nRet = -1;
 				else if (faults1 > faults2)

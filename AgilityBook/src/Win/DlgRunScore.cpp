@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-03-20 DRC The date never got set if the initial entry had no date
  *                    and we didn't change it (first run in a trial).
  *                    Plus, the table-in-yps flag was backwards and didn't
@@ -414,6 +415,33 @@ ARBConfigEvent const* CDlgRunScore::GetEvent() const
 	return m_pVenue->GetEvents().FindEvent(event);
 }
 
+ARBConfigScoring const* CDlgRunScore::GetScoring() const
+{
+	std::string div, level;
+	CString str;
+	int index = m_ctrlDivisions.GetCurSel();
+	if (CB_ERR != index)
+	{
+		m_ctrlDivisions.GetLBText(index, str);
+		if (!str.IsEmpty())
+			div = (LPCSTR)str;
+	}
+	index = m_ctrlLevels.GetCurSel();
+	if (CB_ERR != index)
+	{
+		m_ctrlLevels.GetLBText(index, str);
+		if (!str.IsEmpty())
+			level = (LPCSTR)str;
+	}
+	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
+	ASSERT(pLevel);
+	ARBConfigEvent const* pEvent = GetEvent();
+	ARBConfigScoring const* pScoring = NULL;
+	if (0 < div.length() && 0 < level.length() && pEvent)
+		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
+	return pScoring;
+}
+
 void CDlgRunScore::ClearLevels()
 {
 	for (int index = m_ctrlLevels.GetCount() - 1; 0 <= index; --index)
@@ -558,7 +586,7 @@ void CDlgRunScore::SetTotalFaults()
 	CString total;
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
-		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults();
+		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(GetScoring());
 		total.Format("%.3f", faults);
 	}
 	m_ctrlTotalFaults.SetWindowText(total);
@@ -634,28 +662,7 @@ void CDlgRunScore::SetTitlePoints()
 	CString strMach("0");
 	CString strTitle("0");
 	CString strScore("");
-	ARBConfigEvent const* pEvent = GetEvent();
-	std::string div, level;
-	CString str;
-	index = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlDivisions.GetLBText(index, str);
-		if (!str.IsEmpty())
-			div = (LPCSTR)str;
-	}
-	index = m_ctrlLevels.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlLevels.GetLBText(index, str);
-		if (!str.IsEmpty())
-			level = (LPCSTR)str;
-	}
-	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
-	ASSERT(pLevel);
-	ARBConfigScoring const* pScoring = NULL;
-	if (0 < div.length() && 0 < level.length() && pEvent)
-		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
+	ARBConfigScoring const* pScoring = GetScoring();
 	if (pScoring)
 	{
 		// 8/17/03: Only compute title points on Q runs.
@@ -680,28 +687,7 @@ void CDlgRunScore::SetTitlePoints()
 
 void CDlgRunScore::UpdateControls(bool bOnEventChange)
 {
-	ARBConfigEvent const* pEvent = GetEvent();
-	std::string div, level;
-	CString str;
-	int index = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlDivisions.GetLBText(index, str);
-		if (!str.IsEmpty())
-			div = (LPCSTR)str;
-	}
-	index = m_ctrlLevels.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlLevels.GetLBText(index, str);
-		if (!str.IsEmpty())
-			level = (LPCSTR)str;
-	}
-	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
-	ASSERT(pLevel);
-	ARBConfigScoring const* pScoring = NULL;
-	if (0 < div.length() && 0 < level.length() && pEvent)
-		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
+	ARBConfigScoring const* pScoring = GetScoring();
 	if (!pScoring)
 	{
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeUnknown, false);
@@ -732,6 +718,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		return;
 	}
 
+	CString str;
 	m_ctrlHeight.GetWindowText(str);
 	if (str.IsEmpty())
 	{
@@ -752,6 +739,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 
 	m_ctrlConditions.EnableWindow(TRUE);
 
+	ARBConfigEvent const* pEvent = GetEvent();
 	if (pEvent->HasPartner())
 	{
 		m_ctrlPartnerEdit.ShowWindow(SW_SHOW);

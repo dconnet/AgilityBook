@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-03-30 DRC Added links.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -481,7 +482,7 @@ short ARBDogRun::GetTitlePoints(
 		break;
 	case ARBDogRunScoring::eTypeByTime:
 		{
-			double faults = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults();
+			double faults = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
 			{
 				if (0 == m_Scoring.GetSCT() || faults <= m_Scoring.GetSCT())
@@ -539,7 +540,7 @@ ARBDouble ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
 	default:
 		break;
 	case ARBDogRunScoring::eTypeByTime:
-		pts = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults();
+		pts = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 		switch (inScoring->GetScoringStyle())
 		{
 		default: break;
