@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-11 DRC Added ValidFrom, not fully implemented yet.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-14 DRC Added open/close pts to configuration.
  * @li 2003-07-12 DRC Version 5: changed how title points are configured.
@@ -83,7 +84,8 @@ std::string ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 }
 
 ARBConfigScoring::ARBConfigScoring()
-	: m_Division()
+	: m_ValidDate()
+	, m_Division()
 	, m_Level()
 	, m_Style(eUnknown)
 	, m_bDropFractions(false)
@@ -98,7 +100,8 @@ ARBConfigScoring::ARBConfigScoring()
 }
 
 ARBConfigScoring::ARBConfigScoring(const ARBConfigScoring& rhs)
-	: m_Division(rhs.m_Division)
+	: m_ValidDate(rhs.m_ValidDate)
+	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
 	, m_Style(rhs.m_Style)
 	, m_bDropFractions(rhs.m_bDropFractions)
@@ -120,6 +123,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(const ARBConfigScoring& rhs)
 {
 	if (this != &rhs)
 	{
+		m_ValidDate = rhs.m_ValidDate;
 		m_Division = rhs.m_Division;
 		m_Level = rhs.m_Level;
 		m_Style = rhs.m_Style;
@@ -137,7 +141,8 @@ ARBConfigScoring& ARBConfigScoring::operator=(const ARBConfigScoring& rhs)
 
 bool ARBConfigScoring::operator==(const ARBConfigScoring& rhs) const
 {
-	return m_Division == rhs.m_Division
+	return m_ValidDate == rhs.m_ValidDate
+		&& m_Division == rhs.m_Division
 		&& m_Level == rhs.m_Level
 		&& m_Style == rhs.m_Style
 		&& m_bDropFractions == rhs.m_bDropFractions
@@ -168,6 +173,16 @@ bool ARBConfigScoring::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DATE, m_ValidDate))
+	{
+		std::string attrib;
+		inTree.GetAttrib(ATTRIB_SCORING_DATE, attrib);
+		std::string msg(INVALID_DATE);
+		msg += attrib;
+		ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DATE, msg.c_str());
+		return false;
+	}
+
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
@@ -298,6 +313,8 @@ bool ARBConfigScoring::Load(
 bool ARBConfigScoring::Save(CElement& ioTree) const
 {
 	CElement& scoring = ioTree.AddElement(TREE_SCORING);
+	if (m_ValidDate.IsValid())
+		scoring.AddAttrib(ATTRIB_SCORING_DATE, m_ValidDate);
 	scoring.AddAttrib(ATTRIB_SCORING_DIVISION, m_Division);
 	scoring.AddAttrib(ATTRIB_SCORING_LEVEL, m_Level);
 	switch (m_Style)

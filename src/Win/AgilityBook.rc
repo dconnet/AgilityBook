@@ -512,49 +512,55 @@ BEGIN
     LTEXT           "Event N&ote",IDC_STATIC,7,23,21,16
     EDITTEXT        IDC_DESC,30,23,200,28,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
-    PUSHBUTTON      "N&ew Method",IDC_NEW,7,57,60,14
-    PUSHBUTTON      "Dele&te Method",IDC_DELETE,80,57,60,14
-    GROUPBOX        "Scoring Methods",IDC_STATIC,7,75,320,205
-    LTEXT           "Division/Levels defined",IDC_STATIC,15,87,74,8
-    LISTBOX         IDC_METHODS,15,97,149,62,LBS_NOINTEGRALHEIGHT | 
+    GROUPBOX        "Scoring Methods",IDC_STATIC,7,55,320,225
+    LTEXT           "Division/Levels defined",IDC_STATIC,15,67,74,8
+    LISTBOX         IDC_METHODS,15,77,123,84,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
-    LTEXT           "Division/Levels not defined",IDC_STATIC,170,87,86,8
-    LISTBOX         IDC_UNUSED,170,97,149,62,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
-    LTEXT           "&Division",IDC_STATIC,15,166,25,8
-    COMBOBOX        IDC_DIVISION,45,164,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    PUSHBUTTON      "New",IDC_NEW,144,77,45,14
+    PUSHBUTTON      "Delete",IDC_DELETE,144,94,45,14
+    PUSHBUTTON      "Move Up",IDC_MOVE_UP,144,111,45,14
+    PUSHBUTTON      "Move Down",IDC_MOVE_DOWN,144,128,45,14
+    LTEXT           "Division/Levels not defined",IDC_STATIC,196,67,86,8
+    LISTBOX         IDC_UNUSED,196,77,123,84,LBS_NOINTEGRALHEIGHT | 
+                    WS_DISABLED | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    CONTROL         "Valid From",IDC_DATE_START,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,165,49,10
+    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,66,164,60,12
+    LTEXT           "&Division",IDC_STATIC,15,182,25,8
+    COMBOBOX        IDC_DIVISION,45,180,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Level",IDC_STATIC,15,182,18,8
-    COMBOBOX        IDC_LEVEL,45,180,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Level",IDC_STATIC,15,198,18,8
+    COMBOBOX        IDC_LEVEL,45,196,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Scoring style",IDC_STATIC,15,198,26,16
-    COMBOBOX        IDC_TYPE,45,196,115,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Scoring style",IDC_STATIC,15,212,26,16
+    COMBOBOX        IDC_TYPE,45,212,115,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "D&rop time fractions for faults",IDC_DROP_FRACTIONS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,45,212,103,10
-    LTEXT           "Method Note",IDC_STATIC,170,164,26,16
-    EDITTEXT        IDC_NOTES,196,164,123,50,ES_MULTILINE | ES_WANTRETURN | 
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,45,227,103,10
+    LTEXT           "Method Note",IDC_STATIC,169,167,26,16
+    EDITTEXT        IDC_NOTES,196,167,123,56,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
-    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,230,29,16,NOT 
+    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,242,29,16,NOT 
                     WS_VISIBLE
-    EDITTEXT        IDC_OPENING_PTS,50,230,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
+    EDITTEXT        IDC_OPENING_PTS,50,242,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
                     NOT WS_VISIBLE
-    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,15,250,29,16,NOT 
+    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,15,261,29,16,NOT 
                     WS_VISIBLE
-    EDITTEXT        IDC_CLOSING_PTS,50,250,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
+    EDITTEXT        IDC_CLOSING_PTS,50,261,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
                     NOT WS_VISIBLE
     CONTROL         "S&uper Q?",IDC_SUPERQ,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,110,230,45,10
+                    WS_TABSTOP,110,242,45,10
     CONTROL         "&Mach Points?",IDC_MACH,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,110,245,57,10
+                    WS_TABSTOP,110,254,57,10
     CONTROL         "D&ouble Q?",IDC_DOUBLEQ,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,110,260,49,10
-    LTEXT           "Title Points",IDC_STATIC,170,228,20,16
-    LISTBOX         IDC_LIST,196,228,88,44,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP,110,266,49,10
+    LTEXT           "Title Points",IDC_STATIC,172,229,20,16
+    LISTBOX         IDC_LIST,196,229,88,44,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
                     WS_HSCROLL | WS_TABSTOP
-    PUSHBUTTON      "New...",IDC_TITLE_NEW,289,228,30,12
-    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,289,244,30,12
-    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,289,260,30,12
+    PUSHBUTTON      "New...",IDC_TITLE_NEW,289,229,30,12
+    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,289,245,30,12
+    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,289,261,30,12
     DEFPUSHBUTTON   "OK",IDOK,277,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,277,24,50,14
 END

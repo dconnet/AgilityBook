@@ -55,8 +55,12 @@ private:
 	CString	m_Desc;
 	CButton m_ctrlNew;
 	CButton m_ctrlDelete;
+	CButton m_ctrlUp;
+	CButton m_ctrlDown;
 	CListBox2 m_ctrlMethods;
 	CListBox2 m_ctrlUnused;
+	CButton	m_ctrlValidFrom;
+	CDateTimeCtrl	m_ctrlDate;
 	CComboBox m_ctrlDivision;
 	CComboBox m_ctrlLevel;
 	CComboBox m_ctrlType;
@@ -101,6 +105,9 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedNew();
 	afx_msg void OnBnClickedDelete();
+	afx_msg void OnBnClickedUp();
+	afx_msg void OnBnClickedDown();
+	afx_msg void OnValidFrom();
 	afx_msg void OnLbnSelchangeMethods();
 	afx_msg void OnCbnSelchangeDivision();
 	afx_msg void OnCbnSelchangeLevel();
