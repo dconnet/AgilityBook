@@ -1,4 +1,5 @@
 3/26/2004: v1.0.5.8 <in development>
+- Note: Released beta to single person on 3/26.
 - Bumped file version to 8.6:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
 - New features / Enhancements:
