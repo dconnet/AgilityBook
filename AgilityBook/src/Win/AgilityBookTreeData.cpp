@@ -690,16 +690,16 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 		switch (GetDogColumns()[idx])
 		{
 		case IO_TREE_DOG_REGNAME:
-			str = m_pDog->GetRegisteredName().c_str();
+			str += m_pDog->GetRegisteredName().c_str();
 			break;
 		case IO_TREE_DOG_CALLNAME:
-			str = m_pDog->GetCallName().c_str();
+			str += m_pDog->GetCallName().c_str();
 			break;
 		case IO_TREE_DOG_BREED:
-			str = m_pDog->GetBreed().c_str();
+			str += m_pDog->GetBreed().c_str();
 			break;
 		case IO_TREE_DOG_DOB:
-			str = m_pDog->GetDOB().GetString(false, false).c_str();
+			str += m_pDog->GetDOB().GetString(false, false).c_str();
 			break;
 		case IO_TREE_DOG_AGE:
 			{
@@ -708,8 +708,9 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 				if (m_pDog->GetDeceased().IsValid())
 					current = m_pDog->GetDeceased().GetDate();
 				CTimeSpan age = current - dob;
-				CString str;
-				str.Format("%.1f", age.GetDays()/365.0);
+				CString tmp;
+				tmp.Format("%.1f yrs", age.GetDays()/365.0);
+				str += tmp;
 			}
 			break;
 		}
