@@ -583,7 +583,8 @@ void CAgilityBookViewPoints::LoadData()
 				case ARBConfigOtherPoints::eTallyAllByEvent:
 					{
 						std::set<std::string> tally;
-						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						std::list<OtherPtInfo>::iterator iter;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
 							tally.insert((*iter).m_pRun->GetEvent());
 						}
@@ -608,7 +609,8 @@ void CAgilityBookViewPoints::LoadData()
 				case ARBConfigOtherPoints::eTallyLevel:
 					{
 						std::set<std::string> tally;
-						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						std::list<OtherPtInfo>::iterator iter;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
 							tally.insert((*iter).m_pRun->GetLevel());
 						}
@@ -634,7 +636,8 @@ void CAgilityBookViewPoints::LoadData()
 					{
 						typedef std::pair<std::string, std::string> LevelEvent;
 						std::set<LevelEvent> tally;
-						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						std::list<OtherPtInfo>::iterator iter;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
 							tally.insert(LevelEvent((*iter).m_pRun->GetLevel(), (*iter).m_pRun->GetEvent()));
 						}

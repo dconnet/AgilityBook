@@ -259,7 +259,7 @@ void CAgilityBookTree::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	pData->nHeight = 4 * rTest.Height() / 3;
 	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
-	pData->nPages = (pData->lines.GetSize() + 1) / pData->nLinesPerPage + 1;
+	pData->nPages = (static_cast<int>(pData->lines.GetSize()) + 1) / pData->nLinesPerPage + 1;
 	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
@@ -285,7 +285,7 @@ void CAgilityBookTree::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
 
 	int nStartItem = pData->nLinesPerPage * (pInfo->m_nCurPage - 1);
-	int nMaxItem = pData->lines.GetSize();
+	int nMaxItem = static_cast<int>(pData->lines.GetSize());
 	for (int nItem = nStartItem; nItem < nMaxItem && nItem - nStartItem < pData->nLinesPerPage; ++nItem)
 	{
 		CRect r = pData->r;
