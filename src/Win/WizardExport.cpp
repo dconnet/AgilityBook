@@ -254,6 +254,8 @@ void CWizardExport::UpdatePreview()
 {
 	CWaitCursor wait;
 
+	m_ctrlPreview.SetRedraw(FALSE);
+
 	// Clear existing preview data.
 	m_ctrlPreview.DeleteAllItems();
 	int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
@@ -273,6 +275,8 @@ void CWizardExport::UpdatePreview()
 		m_ctrlPreview.InsertColumn(0, "");
 		m_ctrlPreview.InsertItem(0, "No delimiter specified. Unable to preview data.");
 		m_ctrlPreview.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlPreview.SetRedraw(TRUE);
+		m_ctrlPreview.Invalidate();
 		return;
 	}
 
@@ -286,6 +290,9 @@ void CWizardExport::UpdatePreview()
 	}
 
 	// Now generate the header information.
+	CString hdrSep("/");
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		hdrSep = "\n";
 	CStringArray cols;
 	switch (m_pSheet->GetImportExportItem())
 	{
@@ -304,7 +311,7 @@ void CWizardExport::UpdatePreview()
 				else
 				{
 					if (cols[iCol] != str && 0 < str.GetLength())
-						cols[iCol] += "/" + str;
+						cols[iCol] += hdrSep + str;
 				}
 			}
 		}
@@ -758,6 +765,8 @@ void CWizardExport::UpdatePreview()
 	}
 	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
 		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlPreview.SetRedraw(TRUE);
+	m_ctrlPreview.Invalidate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -832,16 +841,30 @@ BOOL CWizardExport::OnWizardFinish()
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
-		int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
-		// TODO: Write data to excel
-		for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
+		CWizardExcelExport* pExporter = m_pSheet->ExcelHelper().GetExporter();
+		if (pExporter)
 		{
-			for (int iCol = 0; iCol < nColumnCount; ++iCol)
+			int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
+			if (pExporter->CreateArray(m_ctrlPreview.GetItemCount(), nColumnCount))
 			{
-				CString line = m_ctrlPreview.GetItemText(i, iCol);
+				for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
+				{
+					for (int iCol = 0; iCol < nColumnCount; ++iCol)
+					{
+						CString line = m_ctrlPreview.GetItemText(i, iCol);
+						pExporter->InsertArrayData(i, iCol, line);
+					}
+				}
+				pExporter->ExportDataArray();
 			}
+			delete pExporter;
+			return CDlgBasePropertyPage::OnWizardFinish();
 		}
-		return CDlgBasePropertyPage::OnWizardFinish();
+		else
+		{
+			AfxMessageBox("Failed to write data to Excel");
+			return FALSE;
+		}
 	}
 	else
 	{

@@ -816,6 +816,7 @@ BOOL CWizardStart::OnWizardFinish()
 void CWizardStart::OnWizardStyle() 
 {
 	UpdateData(TRUE);
+	m_pSheet->ResetData();
 	UpdateList();
 }
 

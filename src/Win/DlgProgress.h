@@ -29,58 +29,43 @@
 /**
  * @file
  *
- * @brief Import/Export Wizard for Excel
+ * @brief Progress dialog
  * @author David Connet
  *
+ * This is simply an interface in case I want to push it down into the ARB
+ * code at some point. If that happens, this interface declaration will move
+ * and the factory method will remain behind.
+ *
  * Revision History
- * @li 2004-09-30 DRC Created
+ * @li 2004-10-01 DRC Created
  */
 
-class IDlgProgress;
-
-class CWizardExcelExport
+class IDlgProgress
 {
 public:
-	CWizardExcelExport();
-	virtual ~CWizardExcelExport();
+	static IDlgProgress* CreateProgress(CWnd* pParent = NULL);
 
-	virtual bool ArrayOkay() const = 0;
-	virtual bool CreateArray(long inRows, long inCols) = 0;
-	virtual bool InsertArrayData(long inRow, long inCol, const CString& inData) = 0;
-	virtual bool ExportDataArray() = 0;
-	virtual bool InsertFormula(long inRowFrom, long inColFrom,
-		long inRowTo, long inColTo,
-		const CString& inFormula) = 0;
-};
+	// Setup dialog.
+	/// Set the caption of the dialog.
+	virtual void SetCaption(LPCTSTR inCaption) = 0;
+	/// Set a visible message.
+	virtual void SetMessage(LPCTSTR inMessage) = 0;
+	/// Set the number of progress bars (0,1,2)
+	virtual bool SetNumProgressBars(short nBars) = 0;
 
-class CWizardExcelImport
-{
-public:
-	CWizardExcelImport();
-	virtual ~CWizardExcelImport();
+	// Progress bar interface (these are thin wrappers on the progress bar)
+	virtual bool SetRange(short inBar, int inLower, int inUpper) = 0;
+	virtual bool SetStep(short inBar, int inStep) = 0;
+	virtual bool StepIt(short inBar) = 0;
+	virtual bool OffsetPos(short inBar, int inDelta) = 0;
+	virtual bool SetPos(short inBar, int inPos) = 0;
+	virtual bool GetPos(short inBar, int& outPos) = 0;
 
-	virtual bool OpenFile(CString const& inFilename) = 0;
-	virtual bool GetData(std::vector< std::vector<CString> >& outData, IDlgProgress* ioProgress = NULL) = 0;
-};
+	/// Show/hide the dialog.
+	virtual void Show(bool bShow = true) = 0;
+	/// Shut down (delete) the dialog.
+	virtual void Dismiss() = 0;
 
-class CWizardExcelImpl;
-class CWizardExcel
-{
-public:
-	/// Get the maximum number of rows Excel can handle.
-	static long GetMaxRows();
-	/// Get the maximum number of columns Excel can handle.
-	static long GetMaxCols();
-	/// Translate a given row/col into Excel notation: (0,0) -> "A1"
-	static bool GetRowCol(long inRow, long inCol, CString& outCell);
-
-	CWizardExcel();
-	~CWizardExcel();
-
-	bool IsAvailable() const;
-	CWizardExcelExport* GetExporter();
-	CWizardExcelImport* GetImporter();
-
-private:
-	CWizardExcelImpl* m_Excel;
+protected:
+	virtual ~IDlgProgress();
 };

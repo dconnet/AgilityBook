@@ -40,6 +40,7 @@
 #include "AgilityBookOptions.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
+#include <vector>
 class CAgilityBookDoc;
 class CWizard;
 
@@ -51,6 +52,7 @@ class CWizardImport : public CDlgBasePropertyPage
 public:
 	CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc);
 	~CWizardImport();
+	void ResetData();
 
 private:
 // Dialog Data
@@ -68,7 +70,8 @@ private:
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
 	CString m_FileName;
-	CStringArray m_FileData;
+	CStringArray m_FileData; ///< For reading generic text files.
+	std::vector< std::vector<CString> > m_ExcelData; ///< For reading excel directly.
 
 private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;

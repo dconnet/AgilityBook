@@ -310,6 +310,10 @@ SOURCE=..\..\..\Win\DlgPartner.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgProgress.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgReferenceRun.cpp
 # End Source File
 # Begin Source File
@@ -648,6 +652,10 @@ SOURCE=..\..\..\Win\DlgOtherPoint.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgPartner.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgProgress.h
 # End Source File
 # Begin Source File
 

@@ -1577,7 +1577,8 @@ FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "Import from / Export to:",IDC_STATIC,0,1,73,8
     CONTROL         "Excel (directly)",IDC_WIZARD_START_EXCEL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,75,1,61,10
+                    BS_AUTORADIOBUTTON | WS_GROUP,75,1,61,10,0,
+                    HIDC_WIZARD_START_EXCEL
     CONTROL         "For a spreadsheet",IDC_WIZARD_START_SPREADSHEET,"Button",
                     BS_AUTORADIOBUTTON,75,12,73,10,0,
                     HIDC_WIZARD_START_SPREADSHEET
@@ -1730,6 +1731,18 @@ BEGIN
     PUSHBUTTON      "Cancel",IDC_MESSAGE_BOX_BUTTON2,74,49,50,14
     PUSHBUTTON      "Retry",IDC_MESSAGE_BOX_BUTTON3,136,49,50,14
     PUSHBUTTON      "Details...",IDC_MESSAGE_BOX_DETAILS,198,49,50,14
+END
+
+IDD_PROGRESS_DLG DIALOGEX 0, 0, 220, 63
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Progress"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "",IDC_PROGRESS_MESSAGE,7,7,206,16,SS_NOPREFIX
+    CONTROL         "",IDC_PROGRESS_BAR1,"msctls_progress32",WS_BORDER | 0x1,
+                    7,30,206,10
+    CONTROL         "",IDC_PROGRESS_BAR2,"msctls_progress32",NOT WS_VISIBLE | 
+                    WS_BORDER | 0x1,7,46,206,10
 END
 
 
@@ -2160,6 +2173,14 @@ BEGIN
         RIGHTMARGIN, 253
         TOPMARGIN, 7
         BOTTOMMARGIN, 63
+    END
+
+    IDD_PROGRESS_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 213
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 56
     END
 END
 #endif    // APSTUDIO_INVOKED

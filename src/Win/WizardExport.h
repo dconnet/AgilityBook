@@ -94,5 +94,4 @@ protected:
 	afx_msg void OnSelchangeDate();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };

@@ -302,6 +302,12 @@
 				RelativePath="..\..\..\Win\DlgPartner.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgProgress.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgProgress.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgReferenceRun.cpp">
 			</File>
 			<File

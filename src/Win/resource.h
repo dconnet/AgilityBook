@@ -77,6 +77,7 @@
 #define IDD_ASSIGN_COLUMNS              246
 #define IDD_FIND_LINKS                  247
 #define IDD_MESSAGE_BOX                 248
+#define IDD_PROGRESS_DLG                249
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -414,6 +415,9 @@
 #define IDC_MESSAGE_BOX_BUTTON2         1384
 #define IDC_MESSAGE_BOX_BUTTON3         1385
 #define IDC_MESSAGE_BOX_DETAILS         1386
+#define IDC_PROGRESS_MESSAGE            1390
+#define IDC_PROGRESS_BAR1               1391
+#define IDC_PROGRESS_BAR2               1392
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -655,9 +659,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        248
+#define _APS_NEXT_RESOURCE_VALUE        250
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1390
+#define _APS_NEXT_CONTROL_VALUE         1395
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

@@ -90,5 +90,11 @@ BEGIN_MESSAGE_MAP(CWizard, CDlgBaseSheet)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+void CWizard::ResetData()
+{
+	if (m_pageImport)
+		m_pageImport->ResetData();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CWizard message handlers

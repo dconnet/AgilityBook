@@ -98,6 +98,10 @@ public:
 		m_ImportExportItem = item;
 		m_ImportExportStyle = style;
 	}
+	/**
+	 * Called by WizardStart
+	 */
+	void ResetData();
 
 // Overrides
 	//{{AFX_VIRTUAL(CWizard)
