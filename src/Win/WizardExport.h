@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-10 DRC Place quotes are field on output as needed.
  * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-10 DRC Created
  */
@@ -65,6 +66,7 @@ private:
 
 private:
 	CString GetDelim() const;
+	CString PrepFieldOutput(LPCTSTR inStr) const;
 	void UpdateButtons();
 	void UpdatePreview();
 
