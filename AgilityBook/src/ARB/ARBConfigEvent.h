@@ -158,6 +158,6 @@ public:
 
 	const ARBConfigEvent* FindEvent(const std::string& inEvent) const;
 	ARBConfigEvent* FindEvent(const std::string& inEvent);
-	ARBConfigEvent* AddEvent(const ARBConfigEvent* inEvent);
+	ARBConfigEvent* AddEvent(ARBConfigEvent* inEvent);
 	bool DeleteEvent(const std::string& inEvent);
 };

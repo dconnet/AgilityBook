@@ -134,7 +134,7 @@ public:
 	const ARBConfigDivision* FindDivision(const std::string& inDiv) const;
 	ARBConfigDivision* FindDivision(const std::string& inDiv);
 	ARBConfigDivision* AddDivision(const std::string& inDiv);
-	ARBConfigDivision* AddDivision(const ARBConfigDivision* inDiv);
+	ARBConfigDivision* AddDivision(ARBConfigDivision* inDiv);
 	int DeleteDivision(
 		const std::string& inDiv,
 		ARBConfigEventList& ioEvents);

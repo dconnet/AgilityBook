@@ -295,15 +295,15 @@ ARBConfigDivision* ARBConfigDivisionList::AddDivision(const std::string& inDiv)
 	return pDiv;
 }
 
-ARBConfigDivision* ARBConfigDivisionList::AddDivision(const ARBConfigDivision* inDiv)
+ARBConfigDivision* ARBConfigDivisionList::AddDivision(ARBConfigDivision* inDiv)
 {
 	if (!inDiv
 	|| 0 == inDiv->GetName().length()
 	|| FindDivision(inDiv->GetName()))
 		return NULL;
-	ARBConfigDivision* pDiv = new ARBConfigDivision(*inDiv);
-	push_back(pDiv);
-	return pDiv;
+	inDiv->AddRef();
+	push_back(inDiv);
+	return inDiv;
 }
 
 int ARBConfigDivisionList::DeleteDivision(const std::string& inDiv, ARBConfigEventList& ioEvents)

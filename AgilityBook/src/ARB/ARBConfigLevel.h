@@ -123,7 +123,7 @@ public:
 	bool FindTrueLevel(const std::string& inName) const;
 	const ARBConfigLevel* FindSubLevel(const std::string& inName) const;
 	ARBConfigLevel* AddLevel(const std::string& inName);
-	ARBConfigLevel* AddLevel(const ARBConfigLevel* inLevel);
+	ARBConfigLevel* AddLevel(ARBConfigLevel* inLevel);
 	bool DeleteLevel(
 		const std::string& inName,
 		ARBConfigEventList& ioEvents);

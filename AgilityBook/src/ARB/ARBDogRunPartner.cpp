@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-08 DRC Changed AddPartner usage.
  */
 
 #include "StdAfx.h"
@@ -126,11 +127,12 @@ bool ARBDogRunPartner::Save(CElement& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBDogRunPartner* ARBDogRunPartnerList::AddPartner(const std::string& inHandler, const std::string& inDog)
+ARBDogRunPartner* ARBDogRunPartnerList::AddPartner(ARBDogRunPartner* inPartner)
 {
-	ARBDogRunPartner* partner = new ARBDogRunPartner;
-	partner->SetHandler(inHandler);
-	partner->SetDog(inDog);
-	push_back(partner);
-	return partner;
+	if (inPartner)
+	{
+		inPartner->AddRef();
+		push_back(inPartner);
+	}
+	return inPartner;
 }

@@ -215,6 +215,6 @@ public:
 		const std::string& inVenue,
 		const std::string& inEvent);
 
-	ARBDogTrial* AddTrial(const ARBDogTrial* inTrial);
+	ARBDogTrial* AddTrial(ARBDogTrial* inTrial);
 	bool DeleteTrial(const ARBDogTrial* inTrial);
 };

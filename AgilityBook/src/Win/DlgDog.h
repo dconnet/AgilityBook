@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
 #include "ARBDogRegNum.h"
@@ -55,7 +56,9 @@ private:
 	//{{AFX_DATA(CDlgDog)
 	enum { IDD = IDD_DOG };
 	CString	m_CallName;
-	CDateTimeCtrl	m_ctrlDate;
+	CDateTimeCtrl	m_ctrlDateDOB;
+	CButton	m_ctrlDeceased;
+	CDateTimeCtrl	m_ctrlDateDeceased;
 	CString	m_Breed;
 	CStatic	m_ctrlAge;
 	CString	m_RegName;
@@ -91,7 +94,8 @@ private:
 protected:
 	//{{AFX_MSG(CDlgDog)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnDatetimechangeDob(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDatetimechange(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnIsDeceased();
 	afx_msg void OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkTitles(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult);

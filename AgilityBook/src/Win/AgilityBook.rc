@@ -93,10 +93,18 @@ BEGIN
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
     SEPARATOR
+    BUTTON      ID_AGILITY_NEW_DOG
+    BUTTON      ID_AGILITY_NEW_TITLE
+    BUTTON      ID_AGILITY_NEW_TRIAL
+    BUTTON      ID_AGILITY_NEW_RUN
+    BUTTON      ID_AGILITY_NEW_CALENDAR
+    BUTTON      ID_AGILITY_NEW_TRAINING
+    SEPARATOR
     BUTTON      ID_EDIT_CUT
     BUTTON      ID_EDIT_COPY
     BUTTON      ID_EDIT_PASTE
     SEPARATOR
+    BUTTON      ID_FILE_PRINT_PREVIEW
     BUTTON      ID_FILE_PRINT
     SEPARATOR
     BUTTON      ID_APP_ABOUT
@@ -184,6 +192,14 @@ BEGIN
             MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
         END
+        POPUP "&Training"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRAINING
+
+        END
     END
     POPUP "&View"
     BEGIN
@@ -234,7 +250,11 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
         END
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+        MENUITEM SEPARATOR
+        MENUITEM "&Reorder...",                 ID_REORDER
         MENUITEM SEPARATOR
         MENUITEM "Expand",                      ID_EXPAND
         MENUITEM "Collapse",                    ID_COLLAPSE
@@ -257,6 +277,8 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
         END
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
@@ -280,7 +302,11 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
         END
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+        MENUITEM SEPARATOR
+        MENUITEM "&Reorder...",                 ID_REORDER
     END
 END
 
@@ -290,6 +316,14 @@ BEGIN
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
         MENUITEM SEPARATOR
+        POPUP "&New"
+        BEGIN
+            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
+            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM SEPARATOR
+            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
+        END
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
     END
 END
@@ -305,6 +339,17 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
+    END
+END
+
+IDR_TRAINING MENU DISCARDABLE 
+BEGIN
+    POPUP "Training"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+        MENUITEM SEPARATOR
+        MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
+        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_TRAINING
     END
 END
 
@@ -325,7 +370,7 @@ BEGIN
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
-    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, NOINVERT
+    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
     VK_TAB,         ID_PREV_TAB,            VIRTKEY, SHIFT, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
@@ -341,14 +386,18 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 280, 55
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 290, 90
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About"
 FONT 8, "MS Shell Dlg"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,175,41,SS_NOPREFIX
-    DEFPUSHBUTTON   "OK",IDOK,223,7,50,16,WS_GROUP
+    LTEXT           "Update",IDC_ABOUT_UPDATE,40,7,170,8,SS_NOPREFIX
+    LTEXT           "Version",IDC_ABOUT_TEXT,40,21,185,34,SS_NOPREFIX
+    LTEXT           "Link1",IDC_ABOUT_LINK1,55,56,170,8,SS_NOPREFIX
+    LTEXT           "Link2",IDC_ABOUT_LINK2,55,65,170,8,SS_NOPREFIX
+    LTEXT           "Link3",IDC_ABOUT_LINK3,55,74,170,8,SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,233,7,50,16,WS_GROUP
 END
 
 IDD_NAME DIALOGEX 0, 0, 186, 46
@@ -509,22 +558,26 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,277,24,50,14
 END
 
-IDD_DOG DIALOG DISCARDABLE  0, 0, 320, 250
+IDD_DOG DIALOG DISCARDABLE  0, 0, 350, 250
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dog Properties"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "&Call Name",IDC_STATIC,7,9,33,8
-    EDITTEXT        IDC_CALLNAME,45,7,100,12,ES_AUTOHSCROLL
-    LTEXT           "&Birthday",IDC_STATIC,160,9,26,8
+    LTEXT           "Registered &Name",IDC_STATIC,7,9,56,8
+    EDITTEXT        IDC_REG_NAME,65,7,192,12,ES_AUTOHSCROLL
+    LTEXT           "&Call Name",IDC_STATIC,7,27,33,8
+    EDITTEXT        IDC_CALLNAME,43,25,100,12,ES_AUTOHSCROLL
+    RTEXT           "&Birthday",IDC_STATIC,161,27,26,8
     CONTROL         "DateTimePicker1",IDC_DOB,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,190,7,60,12
-    LTEXT           "B&reed",IDC_STATIC,7,26,20,8
-    EDITTEXT        IDC_BREED,45,24,100,12,ES_AUTOHSCROLL
-    LTEXT           "Age (years)",IDC_STATIC,173,26,36,8
-    CTEXT           "",IDC_AGE_TEXT,214,25,36,10,SS_NOPREFIX | SS_SUNKEN
-    LTEXT           "Registered &Name",IDC_STATIC,7,43,56,8
-    EDITTEXT        IDC_REG_NAME,65,41,185,12,ES_AUTOHSCROLL
+                    DTS_RIGHTALIGN | WS_TABSTOP,198,25,60,12
+    LTEXT           "B&reed",IDC_STATIC,7,45,20,8
+    EDITTEXT        IDC_BREED,43,43,100,12,ES_AUTOHSCROLL
+    CONTROL         "Deceased",IDC_IS_DECEASED,"Button",BS_AUTOCHECKBOX | 
+                    BS_LEFT | WS_TABSTOP,149,44,49,10
+    CONTROL         "DateTimePicker1",IDC_DECEASED,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,198,43,60,12
+    LTEXT           "Age (years)",IDC_STATIC,267,45,36,8
+    CTEXT           "",IDC_AGE_TEXT,307,44,36,10,SS_NOPREFIX | SS_SUNKEN
     LTEXT           "&Titles",IDC_STATIC,7,62,18,8
     CONTROL         "List1",IDC_TITLES,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
@@ -535,15 +588,15 @@ BEGIN
     LTEXT           "N&umbers",IDC_STATIC,183,62,29,8
     CONTROL         "List2",IDC_REG_NUMS,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
-                    WS_TABSTOP,183,75,130,70
-    PUSHBUTTON      "New...",IDC_REG_NEW,217,60,30,12
-    PUSHBUTTON      "Edit...",IDC_REG_EDIT,250,60,30,12
-    PUSHBUTTON      "Delete",IDC_REG_DELETE,283,60,30,12
+                    WS_TABSTOP,183,75,160,70
+    PUSHBUTTON      "New...",IDC_REG_NEW,247,60,30,12
+    PUSHBUTTON      "Edit...",IDC_REG_EDIT,280,60,30,12
+    PUSHBUTTON      "Delete",IDC_REG_DELETE,313,60,30,12
     LTEXT           "N&otes",IDC_STATIC,7,150,20,8
-    EDITTEXT        IDC_NOTES,7,160,306,83,ES_MULTILINE | ES_WANTRETURN | 
+    EDITTEXT        IDC_NOTES,7,160,336,83,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,263,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,263,24,50,14
+    DEFPUSHBUTTON   "OK",IDOK,293,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,293,24,50,14
 END
 
 IDD_TITLE DIALOG DISCARDABLE  0, 0, 190, 119
@@ -568,7 +621,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
 END
 
-IDD_REG_NUM DIALOG DISCARDABLE  0, 0, 180, 54
+IDD_REG_NUM DIALOG DISCARDABLE  0, 0, 180, 100
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Registration Number"
 FONT 8, "MS Sans Serif"
@@ -576,8 +629,12 @@ BEGIN
     LTEXT           "&Venue",IDC_STATIC,7,9,22,8
     COMBOBOX        IDC_VENUES,35,7,75,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Registration Number",IDC_STATIC,7,25,65,8
-    EDITTEXT        IDC_REG_NUM,7,35,102,12,ES_AUTOHSCROLL
+    LTEXT           "Registration &Number",IDC_STATIC,7,25,65,8
+    EDITTEXT        IDC_REG_NUM,7,35,103,12,ES_AUTOHSCROLL
+    LTEXT           "Measured &Height",IDC_STATIC,7,53,55,8
+    EDITTEXT        IDC_HEIGHT,7,63,103,12,ES_AUTOHSCROLL
+    CONTROL         "Height Card &Received",IDC_RECEIVED,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,83,86,10
     DEFPUSHBUTTON   "OK",IDOK,123,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,123,24,50,14
 END
@@ -657,7 +714,7 @@ BEGIN
     EDITTEXT        IDC_PARTNER,156,75,227,12,ES_AUTOHSCROLL | ES_READONLY
     GROUPBOX        "By Time",IDC_STATIC,7,92,376,30
     RTEXT           "Course Faults",IDC_FAULTS_TEXT,15,104,44,8
-    EDITTEXT        IDC_FAULTS,63,102,25,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FAULTS,63,102,25,12,ES_AUTOHSCROLL | ES_NUMBER
     RTEXT           "Time",IDC_TIME4FAULT_TEXT,94,104,16,8
     EDITTEXT        IDC_TIME4FAULT,114,102,30,12,ES_AUTOHSCROLL
     RTEXT           "Yards",IDC_YARDS_TEXT,149,104,19,8
@@ -680,9 +737,9 @@ BEGIN
     RTEXT           "Close",IDC_CLOSE_PTS_TEXT,327,137,18,8
     EDITTEXT        IDC_CLOSE_PTS,350,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
     RTEXT           "Place",IDC_STATIC,7,162,19,8
-    EDITTEXT        IDC_PLACE,30,160,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PLACE,30,160,20,12,ES_AUTOHSCROLL | ES_NUMBER
     CTEXT           "of",IDC_STATIC,52,162,8,8
-    EDITTEXT        IDC_IN_CLASS,62,160,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_IN_CLASS,62,160,20,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "Dogs Q'd",IDC_STATIC,100,162,30,8
     EDITTEXT        IDC_DOGS_QD,134,160,20,12,ES_AUTOHSCROLL
     LTEXT           "Q?",IDC_STATIC,165,162,10,8
@@ -741,7 +798,7 @@ CAPTION "Reference Run"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "&Place",IDC_STATIC,7,9,19,8
-    EDITTEXT        IDC_PLACE,30,7,25,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PLACE,30,7,25,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "&Q?",IDC_STATIC,60,9,10,8
     COMBOBOX        IDC_Q,72,7,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
@@ -818,7 +875,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,148,25,50,14
 END
 
-IDD_VIEW_OPTIONS_CALENDAR DIALOG DISCARDABLE  0, 0, 205, 242
+IDD_VIEW_OPTIONS_CALENDAR DIALOG DISCARDABLE  0, 0, 285, 162
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Calendar"
 FONT 8, "MS Sans Serif"
@@ -842,48 +899,100 @@ BEGIN
     EDITTEXT        IDC_SIZE_X,115,82,25,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "x",IDC_STATIC,143,84,8,8
     EDITTEXT        IDC_SIZE_Y,152,82,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    GROUPBOX        "Viewing fonts",IDC_STATIC,7,98,191,66
-    CTEXT           "2/14/2003",IDC_FONT_DATE_TEXT,17,113,80,25,SS_NOPREFIX | 
-                    SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Date Font",IDC_FONT_DATE,32,144,50,14
-    CTEXT           "USDAA Hayward, CA",IDC_FONT_TEXT_TEXT,108,113,80,25,
-                    SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Text Font",IDC_FONT_TEXT,123,144,50,14
-    GROUPBOX        "Printing fonts",IDC_STATIC,7,169,191,66
-    CTEXT           "2/14/2003",IDC_FONT2_DATE_TEXT,17,184,80,25,SS_NOPREFIX | 
-                    SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Date Font",IDC_FONT2_DATE,32,215,50,14
-    CTEXT           "USDAA Hayward, CA",IDC_FONT2_TEXT_TEXT,108,184,80,25,
-                    SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Text Font",IDC_FONT2_TEXT,123,215,50,14
 END
 
-IDD_VIEW_OPTIONS_FILTER DIALOG DISCARDABLE  0, 0, 205, 242
+IDD_VIEW_OPTIONS_FILTER DIALOG DISCARDABLE  0, 0, 285, 162
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Trial Filter"
 FONT 8, "MS Sans Serif"
 BEGIN
-    GROUPBOX        "Dates",IDC_STATIC,7,7,191,74
-    CONTROL         "View all dates",IDC_VIEW_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,59,10
-    CONTROL         "View dates in range (inclusive):",IDC_VIEW_RANGE,"Button",
-                    BS_AUTORADIOBUTTON,15,32,113,10
-    CONTROL         "After",IDC_DATE_START_CHECK,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,25,45,31,10
-    CONTROL         "DateTimePicker2",IDC_DATE_START,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,65,44,60,12
-    CONTROL         "Before",IDC_DATE_END_CHECK,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,25,60,37,10
-    CONTROL         "DateTimePicker2",IDC_DATE_END,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,65,59,60,12
-    GROUPBOX        "Trials",IDC_STATIC,7,87,191,148
-    CONTROL         "View all venues",IDC_ALL_VENUES,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,100,65,10
-    CONTROL         "View only:",IDC_VENUE,"Button",BS_AUTORADIOBUTTON,15,
-                    112,48,10
-    CONTROL         "Tree1",IDC_VENUES,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
-                    WS_BORDER | WS_GROUP | WS_TABSTOP,15,126,175,102
+    GROUPBOX        "Trials",IDC_STATIC,7,7,132,148
+    CONTROL         "View all venues",IDC_OPTIONS_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,65,10
+    CONTROL         "View only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,15,32,48,10
+    CONTROL         "Tree1",IDC_OPTIONS_VENUES,"SysTreeView32",
+                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,15,
+                    46,115,102
+    GROUPBOX        "Dates",IDC_STATIC,146,7,132,74
+    CONTROL         "View all dates",IDC_OPTIONS_DATES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,154,20,59,10
+    CONTROL         "View dates in range (inclusive):",
+                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,154,
+                    32,113,10
+    CONTROL         "After",IDC_OPTIONS_DATE_START_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,166,45,31,10
+    CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_START,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,207,44,
+                    60,12
+    CONTROL         "Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,166,60,37,10
+    CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,207,59,60,12
+    GROUPBOX        "Qs",IDC_STATIC,146,88,132,54
+    CONTROL         "View all runs",IDC_OPTIONS_RUNS_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,154,101,55,10
+    CONTROL         "View only Qualifying runs",IDC_OPTIONS_RUNS_Q,"Button",
+                    BS_AUTORADIOBUTTON,154,113,94,10
+    CONTROL         "View only Non-Qualifying runs",IDC_OPTIONS_RUNS_NON_Q,
+                    "Button",BS_AUTORADIOBUTTON,154,125,109,10
+END
+
+IDD_VIEW_OPTIONS_FONTS DIALOG DISCARDABLE  0, 0, 285, 162
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Fonts"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Calendar Printing",IDC_STATIC,7,7,174,70
+    CTEXT           "2/14/2003",IDC_FONT_CAL_PRINT_DATE_TEXT,15,23,75,25,
+                    SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Date Font...",IDC_FONT_CAL_PRINT_DATE,27,55,50,14
+    CTEXT           "USDAA Hayward, CA",IDC_FONT_CAL_PRINT_TEXT_TEXT,97,23,
+                    75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Text Font...",IDC_FONT_CAL_PRINT_TEXT,109,55,50,14
+    GROUPBOX        "Calendar Viewing",IDC_STATIC,7,85,174,70
+    CTEXT           "2/14/2003",IDC_FONT_CAL_VIEW_DATE_TEXT,15,101,75,25,
+                    SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Date Font...",IDC_FONT_CAL_VIEW_DATE,27,133,50,14
+    CTEXT           "USDAA Hayward, CA",IDC_FONT_CAL_VIEW_TEXT_TEXT,97,101,
+                    75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Text Font...",IDC_FONT_CAL_VIEW_TEXT,109,133,50,14
+    GROUPBOX        "General Printing",IDC_STATIC,189,85,89,70
+    CTEXT           "Printing Text",IDC_FONT_GENERAL_PRINT_TEXT,196,101,75,
+                    25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Set Font...",IDC_FONT_GENERAL_PRINT,208,133,50,14
+END
+
+IDD_VIEW_OPTIONS_TRAINING DIALOG DISCARDABLE  0, 0, 285, 162
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Training Log"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Name",IDC_STATIC,7,7,132,148
+    CONTROL         "View all names",IDC_OPTIONS_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,65,10
+    CONTROL         "View only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,15,32,48,10
+    CONTROL         "Tree1",IDC_OPTIONS_VENUES,"SysTreeView32",
+                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,15,
+                    46,115,102
+    GROUPBOX        "Dates",IDC_STATIC,146,7,132,74
+    CONTROL         "View all dates",IDC_OPTIONS_DATES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,154,20,59,10
+    CONTROL         "View dates in range (inclusive):",
+                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,154,
+                    32,113,10
+    CONTROL         "After",IDC_OPTIONS_DATE_START_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,166,45,31,10
+    CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_START,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,207,44,
+                    60,12
+    CONTROL         "Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,166,60,37,10
+    CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,207,59,60,12
 END
 
 IDD_DOG_PICKER DIALOG DISCARDABLE  0, 0, 186, 95
@@ -949,6 +1058,23 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,217,154,50,14
 END
 
+IDD_TRAINING DIALOG DISCARDABLE  0, 0, 300, 201
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Training Log"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Date:",IDC_STATIC,7,9,18,8
+    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,30,7,60,12
+    LTEXT           "&Name",IDC_STATIC,7,27,20,8
+    COMBOBOX        IDC_NAME,30,25,150,125,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_NOTES,7,45,286,149,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL | WS_HSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,243,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,243,24,50,14
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -957,8 +1083,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,4,2,5
- PRODUCTVERSION 0,4,2,5
+ FILEVERSION 0,9,2,6
+ PRODUCTVERSION 0,9,2,6
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -974,12 +1100,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "FileDescription", "Agility Record Book\0"
-            VALUE "FileVersion", "0.4.2.5\0"
+            VALUE "FileVersion", "0.9.2.6\0"
             VALUE "InternalName", "AgilityBook.exe\0"
             VALUE "LegalCopyright", "All rights reserved.\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
             VALUE "ProductName", "Agility Record Book\0"
-            VALUE "ProductVersion", "0.4.2.5\0"
+            VALUE "ProductVersion", "0.9.2.6\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -1016,9 +1142,9 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 6
-        RIGHTMARGIN, 273
+        RIGHTMARGIN, 283
         TOPMARGIN, 7
-        BOTTOMMARGIN, 48
+        BOTTOMMARGIN, 83
     END
 
     IDD_NAME, DIALOG
@@ -1072,7 +1198,7 @@ BEGIN
     IDD_DOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 313
+        RIGHTMARGIN, 343
         TOPMARGIN, 7
         BOTTOMMARGIN, 243
     END
@@ -1090,7 +1216,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 173
         TOPMARGIN, 7
-        BOTTOMMARGIN, 47
+        BOTTOMMARGIN, 93
     END
 
     IDD_TRIAL, DIALOG
@@ -1184,17 +1310,25 @@ BEGIN
     IDD_VIEW_OPTIONS_CALENDAR, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 198
+        RIGHTMARGIN, 278
         TOPMARGIN, 7
-        BOTTOMMARGIN, 235
+        BOTTOMMARGIN, 155
     END
 
     IDD_VIEW_OPTIONS_FILTER, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 198
+        RIGHTMARGIN, 278
         TOPMARGIN, 7
-        BOTTOMMARGIN, 235
+        BOTTOMMARGIN, 155
+    END
+
+    IDD_VIEW_OPTIONS_FONTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 155
     END
 
     IDD_DOG_PICKER, DIALOG
@@ -1235,6 +1369,14 @@ BEGIN
         RIGHTMARGIN, 267
         TOPMARGIN, 7
         BOTTOMMARGIN, 168
+    END
+
+    IDD_TRAINING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 194
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1290,6 +1432,7 @@ BEGIN
     ID_INDICATOR_OVR        "OVR"
     ID_INDICATOR_REC        "REC"
     ID_INDICATOR_STATUS     "status"
+    ID_INDICATOR_FILTERED   "Filtered"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1299,6 +1442,8 @@ BEGIN
     ID_FILE_CLOSE           "Close the active document\nClose"
     ID_FILE_SAVE            "Save the active document\nSave"
     ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PRINT           "Print the current view\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Print Preview\nPreview"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1392,15 +1537,16 @@ BEGIN
     IDS_RUNS                "Runs"
     IDS_POINTS              "Points"
     IDS_CALENDAR            "Calendar"
+    IDS_TRAINING            "Training Log"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_PARTNERS            "Partners"
     IDS_VENUES              "Venues"
     IDS_VENUE_NAME          "Venue"
     IDS_FAULT_TYPES         "Fault Types"
     IDS_FAULT_TYPE_NAME     "Fault Name"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_OTHERPOINTS         "Other Points"
     IDS_OTHERPOINTS_NAME    "Other Points Name"
     IDS_DIVISIONS           "Divisions"
@@ -1410,6 +1556,10 @@ BEGIN
     IDS_LEVELS              "Levels"
     IDS_LEVEL_NAME          "Level"
     IDS_SUBLEVEL_NAME       "SubLevel"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_EVENTS              "Events"
     IDS_EVENT_NAME          "Event Name"
     IDS_SCORING             "Scoring Methods"
@@ -1417,12 +1567,12 @@ BEGIN
     IDS_SQ                  "SQ"
     IDS_SUPER_Q             "SuperQ"
     IDS_QQ                  "QQ"
+    IDS_DOUBLE_Q            "DoubleQ"
+    IDS_MACHPTS             "MachPts"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_DOUBLE_Q            "DoubleQ"
-    IDS_MACHPTS             "MachPts"
     IDS_COL_BREED           "Breed"
     IDS_COL_CLOSES          "Closes"
     IDS_COL_CLUB            "Club"
@@ -1433,16 +1583,16 @@ BEGIN
     IDS_COL_EVENT           "Event"
     IDS_COL_FAULT           "Fault"
     IDS_COL_HANDLER         "Handler"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_COL_IN_CLASS        "In Class"
     IDS_COL_JUDGE           "Judge"
     IDS_COL_LEVEL           "Level"
     IDS_COL_LOCATION        "Location"
     IDS_COL_NAME            "Name"
     IDS_COL_NOTE            "Note"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_COL_NOTES           "Notes"
     IDS_COL_NUMBER          "Number"
     IDS_COL_OPENS           "Opens"
@@ -1453,19 +1603,24 @@ BEGIN
     IDS_COL_Q_D             "Q'd"
     IDS_COL_RECEIVED        "Received"
     IDS_COL_SCORE           "Score"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_COL_START_DATE      "Start Date"
     IDS_COL_TIME            "Time"
     IDS_COL_VENUE           "Venue"
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:\n   http://groups.yahoo.com/group/AgilityRecordBook/\nor\n   agilityrecordbook@dconsoft.com"
-    IDS_NEW                 "<New>"
+    IDS_COL_HEIGHT          "Height"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
+    IDS_ABOUT_UPDATE        "Check for Updates\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
+    IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
+    IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com?subject=AgilityBook Help: "
+    IDS_ABOUT_LINK3         "Source Forge\thttp://sourceforge.net/projects/agilitybook"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NEW                 "<New>"
     IDS_CONFIGURE           "Configure"
     IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
     IDS_DELETE_VENUE        "Warning: The venue '%1' is currently in use. Deleting this venue will also delete %2!d! registration number(s), %3!d! title(s) and may delete %4!d! trial(s).\n\nAre you sure you want to do this?"
@@ -1479,14 +1634,14 @@ BEGIN
                             "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_NAME_IN_USE         "Name is already in use."
-    IDS_ALL                 "<All>"
-    IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
-    IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
-    IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_ALL                 "<All>"
+    IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
+    IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
+    IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
     IDS_VIEWING_OPTIONS     "Viewing Options"
     IDS_RUN_PROPERTIES      "Run Properties"
     IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
@@ -1499,15 +1654,15 @@ BEGIN
     IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
     IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
     IDS_SCORING_REQUIRED_POINTS "Required points"
-    IDS_SCORING_POINTS      "Points"
-    IDS_NUM_EVENTS          "%1!d! events"
-    IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
-    IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_CREATETRIAL_FAILED  "Warning: Failed to create trial. Please check the filter options, it may be preventing the creation of this trial"
+    IDS_SCORING_POINTS      "Points"
+    IDS_NUM_EVENTS          "%1!d! events"
+    IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
+    IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
+    IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_VENUE_CONFIG_MISSING 
                             "Unable to locate configuration information for the venue '%1'."
@@ -1521,14 +1676,14 @@ BEGIN
                             "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_NOCONFIGDATA_FOUND  "No configuration data found."
     IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
-    IDS_OTHERPTS_ALL        "All Events"
-    IDS_OTHERPTS_EVENT      "Tally by Event"
-    IDS_OTHERPTS_LEVEL      "Tally by Level"
-    IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_OTHERPTS_ALL        "All Events"
+    IDS_OTHERPTS_EVENT      "Tally by Event"
+    IDS_OTHERPTS_LEVEL      "Tally by Level"
+    IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
     IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
     IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
     IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
@@ -1536,14 +1691,23 @@ BEGIN
     IDS_POINTS_QS           "%1!d! Qs"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
     IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "%1!d! Q+"
+    IDS_POINTS_SQS          "[%1!d! Q+]"
     IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
     IDS_POINTS_QQS          "%1!d! QQ"
     IDS_POINTS_MACH         "%1!d! Mach"
     IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_FILEEXT_DEF_ARB     "arb"
     IDS_FILEEXT_FNAME_ARB   "*.arb"
     IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+    IDS_CREATERUN_FAILED    "Error: Failed to create run."
+    IDS_CREATETRIAL_FILTERED 
+                            "Warning: The trial you have just created cannot be shown due to filter options."
+    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
+    IDS_NUM_TRAINING        "%1!d! entries"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1555,32 +1719,36 @@ BEGIN
     ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
     ID_CONFIG_EDIT          "Edit a configuration item\nEdit"
     ID_CONFIG_DELETE        "Delete a configuration item\nDelete"
-    ID_AGILITY_NEW_CALENDAR "Create an upcoming calendar entry\nNew Calendar"
-    ID_AGILITY_NEW_DOG      "Create a new dog\nNew Dog"
-    ID_AGILITY_NEW_TITLE    "Create a new title\nNew Title"
-    ID_AGILITY_NEW_TRIAL    "Create a new trial\nNew Trial"
-    ID_AGILITY_NEW_RUN      "Create a new ruun\nNew Run"
+    ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
+    ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
+    ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
+    ID_AGILITY_NEW_TITLE    "Create a new Title\nNew Title"
+    ID_AGILITY_NEW_TRIAL    "Create a new Trial\nNew Trial"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_AGILITY_EDIT_CALENDAR "Edit an upcoming calendar entry\nEdit Calendar"
+    ID_AGILITY_NEW_RUN      "Create a new Run\nNew Run"
+    ID_AGILITY_EDIT_CALENDAR "Edit an upcoming Calendar entry\nEdit Calendar"
+    ID_AGILITY_EDIT_TRAINING "Edit a Training Log entry\nEdit Training Log"
     ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
     ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
     ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
     ID_AGILITY_EDIT_RUN     "Edit a Run's information\nEdit Run"
     ID_AGILITY_DELETE_CALENDAR 
-                            "Delete an upcoming calendar entry\nDelete Calendar"
+                            "Delete an upcoming Calendar entry\nDelete Calendar"
+    ID_AGILITY_DELETE_TRAINING 
+                            "Delete a Training Log entry\nDelete Training Log"
     ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
     ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
     ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
     ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
+    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_AGILITY_CREATEENTRY_CALENDAR "Create a trial entry\nNew Trial"
     ID_REORDER              "Reorder items\nReorder"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
 END

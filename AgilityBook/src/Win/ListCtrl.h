@@ -36,6 +36,8 @@
  * Revision History
  */
 
+#include <vector>
+
 /////////////////////////////////////////////////////////////////////////////
 
 class CListCtrl2 : public CListCtrl
@@ -76,9 +78,13 @@ public:
 	void SetSelection(int index, bool bEnsureVisible = false);
 
 protected:
-// Overrides
-	// ClassWizard generated virtual function overrides
+	virtual void GetPrintLine(int nItem, CStringArray& line);
 	//{{AFX_VIRTUAL(CListView2)
+	protected:
+	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnPrint(CDC* pDC, CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
 
 // Implementation

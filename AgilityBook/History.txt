@@ -1,4 +1,72 @@
-07/17/2003: v0.4.2.5 <in development>
+09/29/2003: v0.9.2.6: Release Candidate 3
+- Bug fixes
+  - Required points in the Runs dialog were being overwriten with default
+    values during initialization.
+  - Fixed possible crasher bug in the About dialog.
+
+09/21/2003: v0.9.1.6: Release Candidate 2
+- Bumped file version to 6:
+  - Added the Training Log.
+- New features / Enhancements:
+  - Training Log and filtering options for it.
+  - Enhanced the 'Filtered' message to be sensitive to the current view.
+- Bug fixes
+  - When creating a trial entry from the calendar, if you selected more than one
+    dog at a time when creating the trial, that new trial was actually linked
+    together for both dogs. Changes in one were reflected in the other. The
+    "link" was fixed when the file was reloaded.
+  - In the pairs partners dialog, the dog's number wasn't being saved.
+  - Pasting a trial/run didn't mark the document as needing saving.
+  - When adding/pasting a trial/run and the filtering options filtered that new
+    item out, a message appeared saying the run wasn't added. Actually it was,
+    it just wasn't visible. In addition, the (now) not visible run was not
+    sorted properly when the filtered was removed.
+  - When updating a configuration, the scoring methods could get messed up.
+  - CRCD data could be lost if a run contained no comments or faults.
+
+09/03/2003: v0.9.0.5: Release Candidate 1
+- New features / Enhancements:
+  - Added a 'deceased' date to the dogs info. (This is a file version change but
+    it is backwards compatible, so theres no need to increment the file version)
+  - Finished implementing OtherPoints point tallying.
+  - Optimized filtering, much faster now.
+  - Added filtering by qualifying/non-qualifying runs.
+  - Added a 'Filtered' item to the status bar.
+  - Added 'New dog/title/trial' items in the r-click menu of the Runs view.
+  - Added Print & Print Preview in the Tree.
+  - When copying an item in the tree, also copy some text to the clipboard.
+  - Copy the runs in the view to the clipboard in tab-separated form (ctrl+c).
+    It is copied in the same format that it is printed in.
+  - Added copy/paste menu items to the Tree's context menu.
+  - When pasting a new trial or run, select the new item.
+- Bug fixes
+  - A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the
+    score on all runs and title points on NQ+Qs. It should only compute score
+    on NQ+Q and title points on Qs. This only affected the run entry dialog and
+    not the point accumulation view.
+  - Cleaned up selection synchronization in the runs and calendar views.
+    The trial run list selection now mirrors the tree selection.
+  - Fixed bug where "ctrl+tab" didn't change tabs. "Shift+tab" was working.
+  - In the calendar/faults/otherpts/partners dialog, set the selection when
+    adding/deleting items.
+  - Fixed bug (crashes program) when copying the calendar list to the clipboard.
+
+08/16/2003: v0.4.2.5
+- 7/23: Published source in sourceforge.net.
+- New features / Enhancements:
+  - Added printing for runs (not tree though), points and calendar list.
+  - Removed automatic sorting of dogs - allow the user to set the ordering.
+  - Added actual height and card received info to dog registration information.
+  - When trying to cancel from the Run entry dialog, data verification prevented
+    the cancel from occuring.
+  - Added toolbar items for new dog/title/trial/run/calentry and print preview.
+  - Added new options page for fonts, added font for printing, moved calendar
+    fonts from calendar options page to this one.
+  - In calendar view dialog (dbl-click,etc), show all entries for a date, even
+    if the 'hide on entered' option is on.
+- Bug fixes
+  - Allow screen font selection for calendar printer items. Also the wrong
+    font was displayed for the date on the printer.
 
 07/16/2003: v0.4.1.5
 - Bumped file version to 5:

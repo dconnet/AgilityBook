@@ -34,6 +34,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
+ *                    printing and viewing (already in the listctrl)
+ * @li 2003-08-28 DRC Added printing.
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include <vector>
@@ -44,6 +50,7 @@ class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
 class CAgilityBookTreeData;
+struct CTreePrintData;
 struct CVenueFilter;
 
 class CAgilityBookTree : public CTreeView, public ICommonView
@@ -60,11 +67,13 @@ public:
 	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDog* pDog) const;
 	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDogTrial* pTrial) const;
 	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDogRun* pRun) const;
-	HTREEITEM InsertDog(const std::vector<CVenueFilter>& venues, ARBDog* pDog, bool bSelect = false);
-	HTREEITEM InsertTrial(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, HTREEITEM hParent);
-	HTREEITEM InsertRun(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
+	HTREEITEM InsertDog(ARBDog* pDog, bool bSelect = false);
+	HTREEITEM InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent);
+	HTREEITEM InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
+	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
 
 // Overrides
@@ -75,6 +84,10 @@ public:
 	virtual void OnInitialUpdate(); // called first time after construct
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnPrint(CDC* pDC, CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -85,11 +98,15 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+public:
+	// Only CAgilityBookTreeData should be calling this.
+	CString GetPrintLine(HTREEITEM hItem) const;
 private:
 	void LoadData();
 	CAgilityBookTreeData* GetItemData(HTREEITEM hItem) const;
+	void PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const;
 	bool m_bReset;
-	bool m_bInInit;
+	bool m_bSuppressSelect;
 	ARBDog* m_pDog;
 
 // Generated message map functions
