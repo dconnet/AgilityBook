@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-11 DRC Fix runs when scoring methods change.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */
 
@@ -246,6 +247,27 @@ public:
 protected:
 	std::string m_Venue;
 	std::string m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * This will delete and fixup existing runs when the scoring methods of an
+ * event changes in a configuration.
+ */
+class CDlgFixupEventScoring : public CDlgFixup
+{
+public:
+	CDlgFixupEventScoring(std::string const& inVenue,
+		std::string const& inEvent)
+		: m_Venue(inVenue)
+		, m_Event(inEvent)
+	{
+	}
+	virtual void Commit(ARBAgilityRecordBook& book);
+protected:
+	std::string m_Venue;
+	std::string m_Event;
 };
 
 /////////////////////////////////////////////////////////////////////////////

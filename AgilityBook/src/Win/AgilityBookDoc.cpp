@@ -398,6 +398,23 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	if (GetConfig().GetVersion() <= 2 && update.GetVersion() == 3)
 		bUpdateRuns = true;
 	GetConfig().Update(0, update, info);
+	std::vector<CDlgFixup*> fixups;
+	switch (CDlgConfigure::CheckExistingRuns(this, m_Records.GetDogs(), GetConfig(), fixups, true))
+	{
+	default:
+	case CDlgConfigure::eCancelChanges:
+		AfxMessageBox(IDS_CANNOT_CANCEL, MB_ICONSTOP);
+		// Fallthru
+	case CDlgConfigure::eNoChange:
+	case CDlgConfigure::eDoIt:
+		break;
+	}
+	for (std::vector<CDlgFixup*>::iterator iter = fixups.begin(); iter != fixups.end(); ++iter)
+	{
+		(*iter)->Commit(m_Records);
+		delete (*iter);
+	}
+	fixups.clear();
 	msg += info.c_str();
 	if (bUpdateRuns)
 	{

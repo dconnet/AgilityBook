@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-11 DRC Fix runs when scoring methods change.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */
 
@@ -116,6 +117,50 @@ void CDlgFixupRenameEvent::Commit(ARBAgilityRecordBook& book)
 void CDlgFixupDeleteEvent::Commit(ARBAgilityRecordBook& book)
 {
 	book.GetDogs().DeleteEvent(m_Venue, m_Name);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
+{
+	ARBConfigVenue const* pVenue = book.GetConfig().GetVenues().FindVenue(m_Venue);
+	ARBConfigEvent const* pEvent = pVenue->GetEvents().FindEvent(m_Event);
+	ARBConfigScoringList const& scorings = pEvent->GetScorings();
+	for (ARBDogList::iterator iterDog = book.GetDogs().begin();
+		iterDog != book.GetDogs().end();
+		++iterDog)
+	{
+		ARBDog* pDog = *iterDog;
+		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrial* pTrial = *iterTrial;
+			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				)
+			{
+				ARBDogRun* pRun = *iterRun;
+				ARBConfigScoring const* pScoring = scorings.FindEvent(
+					pRun->GetDivision(),
+					pRun->GetLevel(),
+					pRun->GetDate());
+				if (!pScoring)
+				{
+					iterRun = pTrial->GetRuns().erase(iterRun);
+				}
+				else
+				{
+					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
+						!= pRun->GetScoring().GetType())
+					{
+						pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
+					}
+				}
+				++iterRun;
+			}
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

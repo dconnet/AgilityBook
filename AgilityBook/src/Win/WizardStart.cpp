@@ -704,6 +704,8 @@ BOOL CWizardStart::OnWizardFinish()
 
 		case WIZ_IMPORT_CONFIGURATION:
 			bOk = m_pDoc->ImportConfiguration(false);
+			if (bOk)
+				m_pDoc->SetModifiedFlag();
 			break;
 
 		case WIZ_EXPORT_CONFIGURATION:

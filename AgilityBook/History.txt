@@ -36,6 +36,11 @@
       - Create a gamblers run.
       - Edit the configuration and change gamblers to open/close pts.
       - Save the file. Close it. Reopen it. This file can no longer be saved.
+    Fix: When the scoring type of an event is changed, the program verifies
+    that no runs are currently using that scoring type. If it finds runs are
+    are using it, it will warn you that the runs will either be deleted or
+    modified. Since the scoring method is being changed or deleted, there is
+    no other option. As a user, you can choose not to merge the configuration.
   - Time+Faults scoring should not also compute time faults. You end up
     double-dinged when they are.
   - 'Reorder' menu item in the Runs view did nothing, disable it.

@@ -35,12 +35,16 @@
  * Revision History
  */
 
+#include <list>
 #include <string>
 #include <vector>
 #include "ARBConfig.h"
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
+#include "PointsData.h"
 class ARBAgilityRecordBook;
+class ARBConfigScoringList;
+class ARBDogList;
 class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgFixup;
@@ -48,6 +52,46 @@ class CDlgFixup;
 class CDlgConfigure : public CDlgBaseDialog
 {
 public:
+	typedef enum
+	{
+		eNoChange,		// No runs to update
+		eCancelChanges,	// IDCANCEL
+		eDoNotDoIt,		// IDNO
+		eDoIt			// IDYES
+	} eCheck;
+	/**
+	 * Update existing runs in case event scoring methods have changed.
+	 * @param inDoc MFC Document
+	 * @param inDogs List of existing runs.
+	 * @param inConfig New configuration to verify against.
+	 * @param ioDlgFixup Fixup commands to update existing runs.
+	 * @param bCommitChanges Changes cannot be cancelled.
+	 */
+	static eCheck CheckExistingRuns(CAgilityBookDoc* inDoc,
+		ARBDogList const& inDogs,
+		ARBConfig const& inConfig,
+		std::vector<CDlgFixup*>& ioDlgFixup,
+		bool bCommitChanges);
+	/**
+	 * Update existing runs in case event scoring methods have changed.
+	 * @param inDoc MFC Document
+	 * @param inDogs List of existing runs.
+	 * @param inVenue Name of venue to verify against.
+	 * @param inEvent Name of event to verify against.
+	 * @param inScorings New scoring methods to verify against.
+	 * @param ioDlgFixup Fixup commands to update existing runs.
+	 * @param inRunsScoringDeleted Used only when checking all venues.
+	 * @param inRunsScoringChanged Used only when checking all venues.
+	 */
+	static eCheck CheckExistingRuns(CAgilityBookDoc* inDoc,
+		ARBDogList const& inDogs,
+		std::string const& inVenue, std::string const& inEvent,
+		ARBConfigScoringList const& inScorings,
+		std::vector<CDlgFixup*>& ioDlgFixup,
+		// These settings are only used from the preceeding api.
+		std::list<RunInfo>* inRunsScoringDeleted = NULL,
+		std::list<RunInfo>* inRunsScoringChanged = NULL);
+
 	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book);
 	virtual ~CDlgConfigure();
 

@@ -84,8 +84,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigVenue dialog
 
-CDlgConfigVenue::CDlgConfigVenue(ARBAgilityRecordBook& book, ARBConfig& config, ARBConfigVenue* pVenue, CWnd* pParent)
+CDlgConfigVenue::CDlgConfigVenue(CAgilityBookDoc* pDoc,
+	ARBAgilityRecordBook& book, ARBConfig& config,
+	ARBConfigVenue* pVenue, CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigVenue::IDD, pParent)
+	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(config)
 	, m_pVenue(pVenue)
@@ -872,7 +875,7 @@ void CDlgConfigVenue::OnNew()
 		{
 			// The dialog will ensure uniqueness.
 			ARBConfigEvent* event = new ARBConfigEvent();
-			CDlgConfigEvent dlg(NULL, NULL, m_pVenue, event, this);
+			CDlgConfigEvent dlg(m_pDoc, NULL, NULL, m_pVenue, event, this);
 			if (IDOK == dlg.DoModal())
 			{
 				ARBConfigEvent* pEvent = m_pVenue->GetEvents().AddEvent(event);
@@ -1286,7 +1289,7 @@ void CDlgConfigVenue::OnEdit()
 			if (!pEventData)
 				return;
 			ARBConfigEvent* pEvent = pEventData->GetEvent();
-			CDlgConfigEvent dlg(&m_Book, &m_Config, m_pVenue, pEvent, this);
+			CDlgConfigEvent dlg(m_pDoc, &m_Book, &m_Config, m_pVenue, pEvent, this);
 			pEvent->AddRef();
 			if (IDOK == dlg.DoModal())
 			{

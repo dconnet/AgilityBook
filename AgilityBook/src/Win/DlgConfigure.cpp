@@ -52,7 +52,9 @@
 #include "DlgConfigVenue.h"
 #include "DlgConfigureData.h"
 #include "DlgFixup.h"
+#include "DlgListViewer.h"
 #include "DlgMessage.h"
+#include "DlgMessageBox.h"
 #include "DlgName.h"
 
 #ifdef _DEBUG
@@ -62,6 +64,181 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+
+class CDetails : public IMessageBoxCallback
+{
+public:
+	CDetails(CAgilityBookDoc* inDoc,
+		std::list<RunInfo> const& inRunsScoringDeleted,
+		std::list<RunInfo> const& inRunsScoringChanged)
+		: m_RunsScoringDeleted(inRunsScoringDeleted)
+		, m_RunsScoringChanged(inRunsScoringChanged)
+	{
+	}
+	virtual void OnDetails(CWnd* pParent);
+protected:
+	CAgilityBookDoc* m_pDoc;
+	std::list<RunInfo> const& m_RunsScoringDeleted;
+	std::list<RunInfo> const& m_RunsScoringChanged;
+};
+
+void CDetails::OnDetails(CWnd* pParent)
+{
+	CDlgListViewer dlg(m_pDoc, "Runs affected by configuration changes", m_RunsScoringDeleted, m_RunsScoringChanged, pParent);
+	dlg.DoModal();
+}
+
+CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
+	ARBDogList const& inDogs,
+	ARBConfig const& inConfig,
+	std::vector<CDlgFixup*>& ioDlgFixup,
+	bool bCommitChanges)
+{
+	CWaitCursor wait;
+	std::vector<CDlgFixup*> dlgFixup;
+	std::list<RunInfo> runsScoringDeleted;
+	std::list<RunInfo> runsScoringChanged;
+	CString eventinfo;
+	for (ARBConfigVenueList::const_iterator iterVenue = inConfig.GetVenues().begin();
+		iterVenue != inConfig.GetVenues().end();
+		++iterVenue)
+	{
+		ARBConfigVenue const* pVenue = *iterVenue;
+		for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
+			iterEvent != pVenue->GetEvents().end();
+			++iterEvent)
+		{
+			ARBConfigEvent const* pEvent = *iterEvent;
+			if (CDlgConfigure::eDoIt == CDlgConfigure::CheckExistingRuns(
+				inDoc, inDogs,
+				pVenue->GetName(), pEvent->GetName(), pEvent->GetScorings(),
+				dlgFixup, &runsScoringDeleted, &runsScoringChanged))
+			{
+				CString str;
+				str.FormatMessage(IDS_DELETE_EVENT_SCORING_INFO,
+					pEvent->GetName().c_str(),
+					pVenue->GetName().c_str());
+				eventinfo += str;
+			}
+		}
+	}
+	if (0 < runsScoringDeleted.size() || 0 < runsScoringChanged.size())
+	{
+		CString msg;
+		msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
+			(LPCTSTR)eventinfo,
+			(int)runsScoringDeleted.size(), (int)runsScoringChanged.size());
+		if (!bCommitChanges)
+		{
+			CString str;
+			str.LoadString(IDS_ARE_YOU_SURE);
+			msg += "\n\n" + str;
+		}
+		CDetails details(inDoc, runsScoringDeleted, runsScoringChanged);
+		switch (AfxMessageBox2(msg, MB_ICONEXCLAMATION | MB_OKCANCEL | MB_DEFBUTTON2, &details))
+		{
+		case IDOK:
+			break;
+		case IDCANCEL:
+			return CDlgConfigure::eCancelChanges;
+		}
+		for (std::vector<CDlgFixup*>::iterator iter = dlgFixup.begin();
+			iter != dlgFixup.end();
+			++iter)
+		{
+			ioDlgFixup.push_back(*iter);
+		}
+		return CDlgConfigure::eDoIt;
+	}
+	else
+		return CDlgConfigure::eNoChange;
+}
+
+CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
+	ARBDogList const& inDogs,
+	std::string const& inVenue, std::string const& inEvent,
+	ARBConfigScoringList const& inScorings,
+	std::vector<CDlgFixup*>& ioDlgFixup,
+	std::list<RunInfo>* inRunsScoringDeleted,
+	std::list<RunInfo>* inRunsScoringChanged)
+{
+	bool bQuiet = (NULL != inRunsScoringDeleted);
+	CWaitCursor wait;
+	std::list<RunInfo> runsScoringDeleted;
+	std::list<RunInfo> runsScoringChanged;
+	for (ARBDogList::const_iterator iterDog = inDogs.begin();
+		iterDog != inDogs.end();
+		++iterDog)
+	{
+		ARBDog const* pDog = *iterDog;
+		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrial const* pTrial = *iterTrial;
+			if (!pTrial->GetClubs().FindVenue(inVenue))
+				continue;
+			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				++iterRun)
+			{
+				ARBDogRun const* pRun = *iterRun;
+				if (pRun->GetEvent() != inEvent)
+					continue;
+				ARBConfigScoring const* pScoring = inScorings.FindEvent(
+					pRun->GetDivision(),
+					pRun->GetLevel(),
+					pRun->GetDate());
+				if (!pScoring)
+				{
+					if (inRunsScoringDeleted)
+						inRunsScoringDeleted->push_back(RunInfo(pTrial, pRun));
+					runsScoringDeleted.push_back(RunInfo(pTrial, pRun));
+				}
+				else
+				{
+					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
+						!= pRun->GetScoring().GetType())
+					{
+						if (inRunsScoringChanged)
+							inRunsScoringChanged->push_back(RunInfo(pTrial, pRun));
+						runsScoringChanged.push_back(RunInfo(pTrial, pRun));
+					}
+				}
+			}
+		}
+	}
+	if (0 < runsScoringDeleted.size() || 0 < runsScoringChanged.size())
+	{
+		UINT rc = IDYES;
+		if (!bQuiet)
+		{
+			CString eventinfo;
+			eventinfo.FormatMessage(IDS_DELETE_EVENT_SCORING_INFO,
+				inEvent.c_str(), inVenue.c_str());
+			CString msg;
+			msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
+				(LPCTSTR)eventinfo,
+				(int)runsScoringDeleted.size(), (int)runsScoringChanged.size());
+			CDetails details(inDoc, runsScoringDeleted, runsScoringChanged);
+			rc = AfxMessageBox2(msg, MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2, &details);
+		}
+		switch (rc)
+		{
+		default:
+			return CDlgConfigure::eDoNotDoIt;
+		case IDYES:
+			break;
+		case IDCANCEL:
+			return CDlgConfigure::eCancelChanges;
+		}
+		CDlgFixupEventScoring* pFixup = new CDlgFixupEventScoring(inVenue, inEvent);
+		ioDlgFixup.push_back(pFixup);
+		return CDlgConfigure::eDoIt;
+	}
+	else
+		return CDlgConfigure::eNoChange;
+}
 
 int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
@@ -393,7 +570,7 @@ void CDlgConfigure::OnNew()
 	case eVenues:
 		{
 			ARBConfigVenue* pVenue = new ARBConfigVenue();
-			CDlgConfigVenue dlg(m_Book, m_Config, pVenue, this);
+			CDlgConfigVenue dlg(m_pDoc, m_Book, m_Config, pVenue, this);
 			if (IDOK == dlg.DoModal())
 			{
 				ARBConfigVenue* pNewVenue = m_Config.GetVenues().AddVenue(pVenue);
@@ -561,7 +738,7 @@ void CDlgConfigure::OnEdit()
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			CDlgConfigVenue dlg(m_Book, m_Config, pVenueData->GetVenue(), this);
+			CDlgConfigVenue dlg(m_pDoc, m_Book, m_Config, pVenueData->GetVenue(), this);
 			if (IDOK == dlg.DoModal())
 			{
 				dlg.GetFixups(m_DlgFixup);
@@ -800,10 +977,19 @@ void CDlgConfigure::OnUpdate()
 		if (m_Config.GetVersion() <= 2 && update.GetVersion() == 3)
 			bUpdateRuns = true;
 		m_Config.Update(0, update, info);
-		if (bUpdateRuns)
+
+		switch (CDlgConfigure::CheckExistingRuns(m_pDoc, m_Book.GetDogs(), m_Config, m_DlgFixup, false))
 		{
-			m_DlgFixup.push_back(new CDlgFixupTableInRuns());
+		default:
+		case CDlgConfigure::eCancelChanges:
+			EndDialog(IDCANCEL);
+			return;
+		case CDlgConfigure::eNoChange:
+		case CDlgConfigure::eDoIt:
+			break;
 		}
+		if (bUpdateRuns)
+			m_DlgFixup.push_back(new CDlgFixupTableInRuns());
 		msg += info.c_str();
 		if (0 < msg.GetLength())
 		{
