@@ -1172,15 +1172,15 @@ BEGIN
                     176
 END
 
-IDD_SELECT_URL DIALOGEX 0, 0, 230, 46
+IDD_SELECT_URL DIALOGEX 0, 0, 240, 47
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "File Name or URL"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_NAME,7,7,180,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "File...",IDC_FILENAME,193,7,30,12
-    DEFPUSHBUTTON   "OK",IDOK,57,25,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,123,25,50,14
+    PUSHBUTTON      "Browse...",IDC_FILENAME,193,7,40,12
+    DEFPUSHBUTTON   "OK",IDOK,62,26,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,128,26,50,14
 END
 
 IDD_VIEW_OPTIONS_CALENDAR DIALOGEX 0, 0, 285, 162
@@ -1309,10 +1309,21 @@ CAPTION "Program"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "Automatically check for updates once a month.",
-                    IDC_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,
-                    10,164,10
-    LTEXT           "Number of backup copies",IDC_STATIC,3,32,82,8
-    EDITTEXT        IDC_EDIT,90,30,20,12,ES_AUTOHSCROLL
+                    IDC_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,3,
+                    164,10
+    LTEXT           "Note: This only checks for updates. It will not download the update, nor will it install the new version after you download it. You must do that.",
+                    IDC_STATIC,15,13,260,16
+    LTEXT           "Number of backup copies",IDC_STATIC,3,37,82,8
+    EDITTEXT        IDC_EDIT,88,35,20,12,ES_AUTOHSCROLL
+    LTEXT           "Each time you save a file, a backup is made before saving the new file. Set to 0 to prevent backups.",
+                    IDC_STATIC,115,33,167,16
+    CONTROL         "Automatically show Dog Properties after adding a title.",
+                    IDC_AUTOSHOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,55,
+                    185,10
+    LTEXT           "Splash screen image (clear to use default)",IDC_STATIC,
+                    3,72,132,8
+    EDITTEXT        IDC_FILENAME,3,82,180,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE,190,82,40,12
 END
 
 IDD_REORDER DIALOG  0, 0, 297, 106
@@ -1795,9 +1806,9 @@ BEGIN
     IDD_SELECT_URL, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 223
+        RIGHTMARGIN, 233
         TOPMARGIN, 7
-        BOTTOMMARGIN, 39
+        BOTTOMMARGIN, 40
     END
 
     IDD_VIEW_OPTIONS_CALENDAR, DIALOG

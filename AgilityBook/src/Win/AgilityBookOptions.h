@@ -199,6 +199,8 @@ public:
 	static void SetNumBackupFiles(int nFiles);
 	static CString GetSplashImage();
 	static void SetSplashImage(const CString& filename);
+	static bool AutoShowPropertiesOnNewTitle();
+	static void AutoShowPropertiesOnNewTitle(bool bShow);
 
 protected:
 	friend class CDlgAssignColumns;

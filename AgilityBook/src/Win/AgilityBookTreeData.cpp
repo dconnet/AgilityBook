@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-09 DRC After adding a title, display dog property dlg.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-30 DRC Implemented customized text in tree.
@@ -80,7 +81,8 @@ static char THIS_FILE[] = __FILE__;
 static bool EditDog(
 	CAgilityBookTreeDataDog* pDogData,
 	CAgilityBookTree* pTree,
-	bool* bTreeSelectionSet)
+	bool* bTreeSelectionSet,
+	int nPage = 0)
 {
 	bool bAdd = false;
 	ARBDog* pDog = NULL;
@@ -94,7 +96,7 @@ static bool EditDog(
 		pDog = new ARBDog();
 	}
 	bool bOk = false;
-	CDlgDog dlg(pTree->GetDocument(), pDog, pTree);
+	CDlgDog dlg(pTree->GetDocument(), pDog, pTree, nPage);
 	if (IDOK == dlg.DoModal())
 	{
 		bOk = true;
@@ -364,6 +366,8 @@ static bool AddTitle(
 	if (IDOK == dlg.DoModal())
 	{
 		pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
+		if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
+			EditDog(pDogData, pTree, NULL, 1);
 		return true;
 	}
 	else
