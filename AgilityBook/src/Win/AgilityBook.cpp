@@ -47,6 +47,7 @@
 #endif
 
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewPoints.h"
@@ -217,11 +218,6 @@ CAgilityBookApp theApp;
 // CAgilityBookApp initialization
 BOOL CAgilityBookApp::InitInstance()
 {
-	// Parse command line for standard shell commands, DDE, file open
-	CCommandLineInfo cmdInfo;
-	ParseCommandLine(cmdInfo);
-	CSplashWnd::EnableSplashScreen(cmdInfo.m_bShowSplash);
-
 	CWinApp::InitInstance();
 
 	try
@@ -268,6 +264,12 @@ BOOL CAgilityBookApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	SetRegistryKey(_T("dcon Software"));
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
+
+	// Parse command line for standard shell commands, DDE, file open
+	CCommandLineInfo cmdInfo;
+	ParseCommandLine(cmdInfo);
+	CSplashWnd::EnableSplashScreen(cmdInfo.m_bShowSplash && CAgilityBookOptions::AutoShowSplashScreen());
+
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views
 	CSingleDocTemplate* pDocTemplate;
@@ -422,7 +424,10 @@ void CAgilityBookApp::OnHelpIndex()
 
 void CAgilityBookApp::OnHelpSplash()
 {
+	BOOL bEnabled = CSplashWnd::IsSplashScreenEnabled();
+	CSplashWnd::EnableSplashScreen(TRUE);
 	CSplashWnd::ShowSplashScreen(AfxGetMainWnd(), false);
+	CSplashWnd::EnableSplashScreen(bEnabled);
 }
 
 BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)

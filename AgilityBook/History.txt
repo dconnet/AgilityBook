@@ -1,4 +1,4 @@
-8/26/2004: v1.3.0.9 <in development>
+8/31/2004: v1.3.0.9 <in development>
 - Bumped Configuration v5:
   - Update USDAA configuration to remove titling points from Tournament
     Jumpers and Snooker. Tournament runs that offered titling should be
@@ -17,6 +17,7 @@
   - Added dbl-click support in the Points view to see the runs behind the data.
   - Enable the 'new title' toolbar button in the Points view.
   - Enable the merging (via Import) of Dogs, Trials, Runs, Judges.
+  - Added an option to disable the splash screen.
 - Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.

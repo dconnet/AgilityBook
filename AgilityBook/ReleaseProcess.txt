@@ -2,13 +2,14 @@ Notes for releasing a new version.
 
 Files to change before release:
 - If file version has changed:
+  - If major version has changed, make sure last part of pgm version agrees.
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
   - Archive Megan.arb as TestVn.n.arb and add to CVS
   - Update the version in DefaultConfig.xml
-- If configuration has changed:
-  - Same as file version changing above
   - Plus: Make sure that the Update() methods have been updated!
     If this is missed, the new data will not be merged.
+- If configuration has changed:
+  - Same as file version changing above
 - History.txt
   Update program version and date, along with any comments.
 - Todo.txt
@@ -26,7 +27,7 @@ Tag CVS repository "vn_n_n_n"
 Create the files to be distributed (make sure you archive them too)
 - AgilityBook_n_n_n_nsrc.zip [distrib/]
 - AgilityBook_n_n_n_n.msi [distrib/Win32/vc7/]
-- AgilityBook_n_n_n_n.zip (AgilityBook.exe) [distrib/Win32/vc6/] 
+- AgilityBook_n_n_n_n.zip (AgilityBook.exe/.chm) [distrib/Win32/vc6/] 
 - Megan.zip [Megan.arb] - Only update on file version changes
 - Any extra readme files required
 
@@ -57,8 +58,10 @@ In Yahoo
 
 Web Site:
 - Update version.txt
+  - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
   - Update DTD
+  - Update AgilityBook.chm
 
 Backup:
 - Backup development directory onto CD.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-04-08 DRC Created
  */
@@ -57,6 +58,7 @@ CDlgOptionsProgram::CDlgOptionsProgram()
 	m_bAutoCheck = TRUE;
 	m_Backups = 0;
 	m_bAutoShow = TRUE;
+	m_bShowSplash = TRUE;
 	m_Splash = _T("");
 	//}}AFX_DATA_INIT
 }
@@ -72,15 +74,25 @@ void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTO_CHECK, m_bAutoCheck);
 	DDX_Text(pDX, IDC_OPTIONS_PGM_EDIT, m_Backups);
 	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTOSHOW, m_bAutoShow);
+	DDX_Check(pDX, IDC_OPTIONS_PGM_SHOW_SPLASH, m_bShowSplash);
 	DDX_Text(pDX, IDC_OPTIONS_PGM_FILENAME, m_Splash);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsProgram, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsProgram)
+	ON_BN_CLICKED(IDC_OPTIONS_PGM_SHOW_SPLASH, OnShowSplash)
 	ON_BN_CLICKED(IDC_OPTIONS_PGM_BROWSE, OnBrowse)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+
+void CDlgOptionsProgram::UpdateButtons()
+{
+	GetDlgItem(IDC_OPTIONS_PGM_FILENAME)->EnableWindow(m_bShowSplash);
+	GetDlgItem(IDC_OPTIONS_PGM_BROWSE)->EnableWindow(m_bShowSplash);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsProgram message handlers
@@ -90,6 +102,12 @@ BOOL CDlgOptionsProgram::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgOptionsProgram::OnShowSplash()
+{
+	UpdateData(TRUE);
+	UpdateButtons();
 }
 
 void CDlgOptionsProgram::OnBrowse()
