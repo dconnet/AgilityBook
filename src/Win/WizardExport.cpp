@@ -218,7 +218,8 @@ void CWizardExport::UpdatePreview()
 							pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
 							pRun->GetEvent(),
 							pRun->GetDivision(),
-							pRun->GetLevel());
+							pRun->GetLevel(),
+							pRun->GetDate());
 						ASSERT(pScoring);
 						if (pScoring)
 						{

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-13 DRC Allow course faults on point runs.
  * @li 2003-09-01 DRC Fixed problem with Score and TitlePts in time+faults.
@@ -213,7 +214,7 @@ bool ARBDogRun::Load(
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
-	const ARBConfigScoring* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level);
+	const ARBConfigScoring* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today());
 	if (!pEvent)
 		return false;
 

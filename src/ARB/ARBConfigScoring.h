@@ -38,6 +38,7 @@
  */
 
 #include <string>
+#include <vector>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigTitlePoints.h"
@@ -78,6 +79,9 @@ public:
 
 	const ARBDate& GetValidFrom() const;
 	void SetValidFrom(const ARBDate& inDate);
+	const ARBDate& GetValidTo() const;
+	void SetValidTo(const ARBDate& inDate);
+	std::string GetValidDateString() const;
 	const std::string& GetDivision() const;
 	void SetDivision(const std::string& inDiv);
 	const std::string& GetLevel() const;
@@ -104,7 +108,8 @@ public:
 
 private:
 	~ARBConfigScoring();
-	ARBDate m_ValidDate;
+	ARBDate m_ValidFrom;
+	ARBDate m_ValidTo;
 	std::string m_Division;
 	std::string m_Level;
 	ScoringStyle m_Style;
@@ -120,12 +125,22 @@ private:
 
 inline const ARBDate& ARBConfigScoring::GetValidFrom() const
 {
-	return m_ValidDate;
+	return m_ValidFrom;
 }
 
 inline void ARBConfigScoring::SetValidFrom(const ARBDate& inDate)
 {
-	m_ValidDate = inDate;
+	m_ValidFrom = inDate;
+}
+
+inline const ARBDate& ARBConfigScoring::GetValidTo() const
+{
+	return m_ValidTo;
+}
+
+inline void ARBConfigScoring::SetValidTo(const ARBDate& inDate)
+{
+	m_ValidTo = inDate;
 }
 
 inline const std::string& ARBConfigScoring::GetDivision() const
@@ -262,10 +277,22 @@ public:
 	/**
 	 * @param inDivision Division name.
 	 * @param inLevel Level (NOT sublevel) name.
+	 * @param inTitlePoints Only look for events that have titling points.
+	 */
+	size_t FindAllEvents(
+		const std::string& inDivision,
+		const std::string& inLevel,
+		bool inTitlePoints,
+		std::vector<const ARBConfigScoring*>& outList) const;
+
+	/**
+	 * @param inDivision Division name.
+	 * @param inLevel Level (NOT sublevel) name.
 	 */
 	const ARBConfigScoring* FindEvent(
 		const std::string& inDivision,
-		const std::string& inLevel) const;
+		const std::string& inLevel,
+		const ARBDate& inDate) const;
 
 	ARBConfigScoring* AddScoring();
 };

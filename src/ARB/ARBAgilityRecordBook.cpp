@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-12-27 DRC File version 8.1. Changed ARBConfigScoring.
  * @li 2003-12-07 DRC File version 8.0. Added Info section.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  *                    Added warning check when minor versions are different.
@@ -71,7 +72,7 @@ const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static const ARBVersion curVersion(8, 0);
+	static const ARBVersion curVersion(8, 1);
 	return curVersion;
 }
 

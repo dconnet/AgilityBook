@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  */
 
 #include "stdafx.h"
@@ -276,7 +277,8 @@ void CDlgTrial::OnOK()
 						(*iterVenues),
 						pRun->GetEvent(),
 						pRun->GetDivision(),
-						pRun->GetLevel()))
+						pRun->GetLevel(),
+						pRun->GetDate()))
 					{
 						bFound = true;
 						break;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -146,12 +147,13 @@ const ARBConfigScoring* ARBDogClubList::FindEvent(
 	const ARBConfig* inConfig,
 	const std::string& inEvent,
 	const std::string& inDivision,
-	const std::string& inLevel) const
+	const std::string& inLevel,
+	const ARBDate& inDate) const
 {
 	const ARBConfigScoring* pEvent = NULL;
 	for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
 	{
-		pEvent = inConfig->GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel);
+		pEvent = inConfig->GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate);
 	}
 	if (!pEvent)
 	{

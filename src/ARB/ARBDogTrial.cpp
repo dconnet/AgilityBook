@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  * @li 2003-06-23 DRC Added note field to trials.
@@ -200,7 +201,8 @@ bool ARBDogTrial::HasQQ(
 				GetClubs().GetPrimaryClub()->GetVenue(),
 				pRun->GetEvent(),
 				pRun->GetDivision(),
-				pRun->GetLevel());
+				pRun->GetLevel(),
+				pRun->GetDate());
 			if (pScoring && pScoring->HasDoubleQ())
 				++nQs;
 		}
@@ -226,7 +228,8 @@ short ARBDogTrial::GetMachPoints(
 				GetClubs().GetPrimaryClub()->GetVenue(),
 				pRun->GetEvent(),
 				pRun->GetDivision(),
-				pRun->GetLevel());
+				pRun->GetLevel(),
+				pRun->GetDate());
 			mach = mach + pRun->GetMachPoints(pScoring);
 		}
 	}

@@ -148,6 +148,7 @@ protected:
 	//{{AFX_MSG(CDlgRunScore)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDestroy();
+	afx_msg void OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelchangeDivision();
 	afx_msg void OnSelchangeLevel();
 	afx_msg void OnSelchangeEvent();

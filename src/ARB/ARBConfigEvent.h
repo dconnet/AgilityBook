@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -63,9 +64,15 @@ public:
 
 	std::string Update(int indent, const ARBConfigEvent* inEventNew);
 
+	size_t FindAllEvents(
+		const std::string& inDivision,
+		const std::string& inLevel,
+		bool inTitlePoints,
+		std::vector<const ARBConfigScoring*>& outList) const;
 	const ARBConfigScoring* FindEvent(
 		const std::string& inDivision,
-		const std::string& linEvel) const;
+		const std::string& inLevel,
+		const ARBDate& inDate) const;
 
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
@@ -146,7 +153,8 @@ public:
 	const ARBConfigScoring* FindEvent(
 		const std::string& inEvent,
 		const std::string& inDivision,
-		const std::string& inLevel) const;
+		const std::string& inLevel,
+		const ARBDate& inDate) const;
 
 	int RenameDivision(
 		const std::string& inOldDiv,
