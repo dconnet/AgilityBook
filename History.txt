@@ -1,9 +1,9 @@
-9/9/2004: v1.3.0.9 <in development>
+9/12/2004: v1.3.0.9
 - Bumped Configuration v5:
-  - Update USDAA configuration to remove titling points from Tournament
+  - Updated USDAA configuration to remove titling points from Tournament
     Jumpers and Snooker. Tournament runs that offered titling should be
     entered in the Div/Level they apply to.
-  - Add Performance events for the Tournament runs (except Pairs) and
+  - Added Performance events for the Tournament runs (except Pairs) and
     Steeplechase. These are non-titling events, but many clubs are offering
     them now. Note, the name of the event will vary from club to club. We
     will just treat them as real runs. (If USDAA ever extends these events
@@ -24,7 +24,8 @@
     numbers are different, go ahead and update the version number.
   - If you dbl-clicked in some of the configuration dialogs when nothing was
     selected, the program faulted.
-  - Existing other points were tallied in all exising other points entries.
+  - Existing other points were tallied in all existing other points entries.
+    This resulted in too many points on the Points tab.
   - Up/Down sort icons on lists were backwards.
   - Changing the scoring type of an existing event did not ripple out to
     existing runs. This could cause a run to be stored with the wrong type

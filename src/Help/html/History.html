@@ -6,7 +6,7 @@
 <BODY>
 <h1>History of releases</h1>
 <ul>
-	<li><b>?: v1.3.0.9</b>
+	<li><b>9/12/2004: v1.3.0.9</b>
 		<ul>
 			<li>Bumped Configuration to v5
 				<ul>
@@ -14,7 +14,7 @@
 					from Tournament Jumpers and Snooker. Tournament runs that
 					offered titling should be entered in the Div/Level they
 					apply to.</li>
-					<li>Add Performance events for the Tournament runs (except
+					<li>Added Performance events for the Tournament runs (except
 					Pairs) and Steeplechase. These are non-titling events, but
 					many clubs are offering them now. Note, the name of the
 					event will vary from club to club. We will just treat
@@ -38,6 +38,8 @@
 					<li>Enable the merging (via Import) of Dogs, Trials, Runs,
 					Judges.</li>
 					</li>
+					<li>Added an option to disable the splash screen.</li>
+					<li>Added tooltips in lists when columns are too small.</li>
 				</ul>
 			</li>
 			<li>Bug Fixes:
@@ -47,10 +49,38 @@
 					the version number.</li>
 					<li>If you dbl-clicked in some of the configuration
 					dialogs when nothing was selected, the program faulted.</li>
-					<li>Existing other points were tallied in all exising
-					other points entries.</li>
+					<li>Existing other points were tallied in all existing
+					other points entries. This resulted in too many points on
+					the Points tab.</li>
 					<li>Up/Down sort icons on lists were backwards.</li>
-					</li>
+					<li>Changing the scoring type of an existing event did not
+					ripple out to existing runs. This could cause a run to be
+					stored with the wrong type so when it is read back in, the
+					scoring type never got set - which then prevents the file
+					from being saved again.
+						<ul>
+							<li>In 1.2.1.8, to recreate:</li>
+							<li>Create a new file, create a dog, create a 
+							rial.</li>
+							<li>Edit the configuration to change gamblers to
+							faults/time.</li>
+							<li>Create a gamblers run.</li>
+							<li>Edit the configuration and change gamblers to
+							open/close pts.</li>
+							<li>Save the file. Close it. Reopen it. This file
+							can no longer be saved.</li>
+						</ul>
+						Fix: When the scoring type of an event is changed, the
+						program verifies that no runs are currently using that
+						scoring type. If it finds runs are are using it, it will
+						warn you that the runs will either be deleted or
+						modified. Since the scoring method is being changed or
+						deleted, there is no other option. As a user, you can
+						choose not to merge the configuration.</li>
+					<li>Time+Faults scoring should not also compute time
+					faults. You end up double-dinged when they are.</li>
+					<li>'Reorder' menu item in the Runs view did nothing,
+					disable it.</li>
 				</ul>
 			</li>
 		</ul>
