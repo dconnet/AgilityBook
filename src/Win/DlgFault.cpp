@@ -99,6 +99,7 @@ void CDlgFault::OnOK()
 		return;
 	m_Faults.TrimRight();
 	m_Faults.TrimLeft();
+	UpdateData(FALSE);
 	if (m_Faults.IsEmpty())
 		return;
 	CDialog::OnOK();

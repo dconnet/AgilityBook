@@ -103,6 +103,7 @@ void CDlgName::OnOK()
 	m_Name.TrimRight();
 	m_Name.TrimLeft();
 #endif
+	UpdateData(FALSE);
 	if (m_Name.IsEmpty())
 	{
 		GotoDlgCtrl(GetDlgItem(IDC_NAME));
