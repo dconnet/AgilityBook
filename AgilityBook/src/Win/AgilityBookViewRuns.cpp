@@ -1228,12 +1228,6 @@ void CAgilityBookViewRuns::LoadData()
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRuns message handlers
 
-void CAgilityBookViewRuns::OnDestroy() 
-{
-	GetListCtrl().DeleteAllItems();
-	CListView2::OnDestroy();
-}
-
 void CAgilityBookViewRuns::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
