@@ -266,6 +266,9 @@
 				RelativePath="..\..\..\Win\DlgListCtrl.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgListViewer.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgMessage.cpp">
 			</File>
 			<File
@@ -517,6 +520,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgListCtrl.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgListViewer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgMessage.h">
