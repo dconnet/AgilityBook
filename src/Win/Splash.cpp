@@ -67,6 +67,11 @@ CSplashWnd* CSplashWnd::c_pSplashWnd = NULL;
 // the destruction of the window, that seems to have solved the problem.
 static CCriticalSection s_Crit;
 
+BOOL CSplashWnd::IsSplashScreenEnabled()
+{
+	return c_bShowSplashWnd;
+}
+
 void CSplashWnd::EnableSplashScreen(BOOL bEnable)
 {
 	c_bShowSplashWnd = bEnable;

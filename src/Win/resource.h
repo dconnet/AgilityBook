@@ -360,6 +360,7 @@
 #define IDC_OPTIONS_PGM_AUTOSHOW        1302
 #define IDC_OPTIONS_PGM_FILENAME        1303
 #define IDC_OPTIONS_PGM_BROWSE          1304
+#define IDC_OPTIONS_PGM_SHOW_SPLASH     1305
 #define IDC_REORDER_LIST                1310
 #define IDC_REORDER_MOVE_UP             1311
 #define IDC_REORDER_MOVE_DOWN           1312

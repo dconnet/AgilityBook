@@ -51,6 +51,7 @@ public:
 
 // Operations
 public:
+	static BOOL IsSplashScreenEnabled();
 	static void EnableSplashScreen(BOOL bEnable = true);
 	/**
 	 * If the splash screen is displayed, it MUST be dismissed before any

@@ -1538,11 +1538,14 @@ BEGIN
     CONTROL         "Automatically show Dog Properties after adding a title.",
                     IDC_OPTIONS_PGM_AUTOSHOW,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,3,60,185,10,0,HIDC_OPTIONS_PGM_AUTOSHOW
+    CONTROL         "Show splash screen at startup.",
+                    IDC_OPTIONS_PGM_SHOW_SPLASH,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,3,77,113,10,0,HIDC_OPTIONS_PGM_SHOW_SPLASH
     LTEXT           "Splash screen image (clear to use default)",IDC_STATIC,
-                    3,77,132,8
-    EDITTEXT        IDC_OPTIONS_PGM_FILENAME,3,87,180,12,ES_AUTOHSCROLL,0,
+                    15,88,132,8
+    EDITTEXT        IDC_OPTIONS_PGM_FILENAME,15,98,180,12,ES_AUTOHSCROLL,0,
                     HIDC_OPTIONS_PGM_FILENAME
-    PUSHBUTTON      "Browse...",IDC_OPTIONS_PGM_BROWSE,190,87,40,12,0,0,
+    PUSHBUTTON      "Browse...",IDC_OPTIONS_PGM_BROWSE,200,98,40,12,0,0,
                     HIDC_OPTIONS_PGM_BROWSE
 END
 

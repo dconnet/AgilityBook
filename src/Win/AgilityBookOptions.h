@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-31 DRC Added AutoShowSplashScreen
  * @li 2004-06-16 DRC Added options to remember date formats.
  * @li 2004-06-06 DRC Added additional clipboard formats.
  * @li 2004-05-16 DRC Added IsLevelVisible.
@@ -206,6 +207,8 @@ public:
 	static void SetAutoUpdateCheck(bool bSet);
 	static int GetNumBackupFiles();
 	static void SetNumBackupFiles(int nFiles);
+	static bool AutoShowSplashScreen();
+	static void AutoShowSplashScreen(bool bAutoShow);
 	static CString GetSplashImage();
 	static void SetSplashImage(const CString& filename);
 	static bool AutoShowPropertiesOnNewTitle();

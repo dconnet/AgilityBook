@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -98,6 +99,7 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
 	m_pageProgram.m_Backups = CAgilityBookOptions::GetNumBackupFiles();
 	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
+	m_pageProgram.m_bShowSplash = CAgilityBookOptions::AutoShowSplashScreen() ? TRUE : FALSE;
 	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
 
 	AddPage(&m_pageFilter);
@@ -204,6 +206,7 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
 		CAgilityBookOptions::SetNumBackupFiles(m_pageProgram.m_Backups);
 		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
+		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
 		// Update
 		m_pDoc->ResetVisibility();

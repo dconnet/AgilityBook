@@ -104,7 +104,6 @@ CUpdateInfo::CUpdateInfo()
 /**
  * This will read the version.txt file and cache it.
  * In addition, it will ask to update if a newer version is found.
- * @param outData Version info from the web.
  * @param bVerbose Show error message.
  */
 bool CUpdateInfo::ReadVersionFile(bool bVerbose)

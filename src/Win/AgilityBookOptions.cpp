@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-31 DRC Added AutoShowSplashScreen
  * @li 2004-06-16 DRC Added options to remember date formats.
  * @li 2004-06-06 DRC Added additional clipboard formats.
  * @li 2004-06-01 DRC Venue filtering could allow filtered runs thru at times.
@@ -1187,6 +1188,17 @@ int CAgilityBookOptions::GetNumBackupFiles()
 void CAgilityBookOptions::SetNumBackupFiles(int nFiles)
 {
 	AfxGetApp()->WriteProfileInt("Settings", "BackupFiles", nFiles);
+}
+
+bool CAgilityBookOptions::AutoShowSplashScreen()
+{
+	int val = AfxGetApp()->GetProfileInt("Settings", "ShowSplash", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::AutoShowSplashScreen(bool bAutoShow)
+{
+	AfxGetApp()->WriteProfileInt("Settings", "ShowSplash", bAutoShow ? 1 : 0);
 }
 
 CString CAgilityBookOptions::GetSplashImage()
