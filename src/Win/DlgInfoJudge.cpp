@@ -85,7 +85,7 @@ bool CDlgInfoJudge::NameInfo::operator==(NameInfo const& rhs)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoJudge dialog
 
-CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, eInfoType inType, CWnd* pParent /*=NULL*/)
+CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, ARBInfo::eInfoType inType, CWnd* pParent /*=NULL*/)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Type(inType)
@@ -95,19 +95,17 @@ CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, eInfoType inType, CWnd* pPar
 {
 	switch (m_Type)
 	{
-	case eClubInfo:
+	case ARBInfo::eClubInfo:
 		m_pDoc->GetAllClubNames(m_NamesInUse, false);
-		m_InfoOrig = m_pDoc->GetInfo().GetClubInfo();
 		break;
-	case eJudgeInfo:
+	case ARBInfo::eJudgeInfo:
 		m_pDoc->GetAllJudges(m_NamesInUse, false);
-		m_InfoOrig = m_pDoc->GetInfo().GetJudgeInfo();
 		break;
-	case eLocationInfo:
+	case ARBInfo::eLocationInfo:
 		m_pDoc->GetAllTrialLocations(m_NamesInUse, false);
-		m_InfoOrig = m_pDoc->GetInfo().GetLocationInfo();
 		break;
 	}
+	m_InfoOrig = m_pDoc->GetInfo().GetInfo(m_Type);
 	m_Info = m_InfoOrig;
 	//{{AFX_DATA_INIT(CDlgInfoJudge)
 	//}}AFX_DATA_INIT
@@ -147,7 +145,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	std::string select;
 	switch (m_Type)
 	{
-	case eClubInfo:
+	case ARBInfo::eClubInfo:
 		{
 			caption.LoadString(IDS_INFO_CLUB);
 			m_pDoc->GetAllClubNames(names);
@@ -156,7 +154,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 				select = pTrial->GetClubs().GetPrimaryClub()->GetName();
 		}
 		break;
-	case eJudgeInfo:
+	case ARBInfo::eJudgeInfo:
 		{
 			caption.LoadString(IDS_INFO_JUDGE);
 			m_pDoc->GetAllJudges(names);
@@ -165,7 +163,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 				select = pRun->GetJudge();
 		}
 		break;
-	case eLocationInfo:
+	case ARBInfo::eLocationInfo:
 		{
 			caption.LoadString(IDS_INFO_LOCATION);
 			m_pDoc->GetAllTrialLocations(names);
@@ -299,6 +297,7 @@ void CDlgInfoJudge::OnKillfocusComments()
 			return;
 		item->SetComment((LPCTSTR)data);
 		m_Names[idx].m_bHasData = (0 < data.GetLength());
+		m_ctrlNames.Invalidate();
 	}
 }
 
@@ -376,18 +375,7 @@ void CDlgInfoJudge::OnOK()
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
 	{
-		switch (m_Type)
-		{
-		case eClubInfo:
-			m_pDoc->GetInfo().GetClubInfo() = m_Info;
-			break;
-		case eJudgeInfo:
-			m_pDoc->GetInfo().GetJudgeInfo() = m_Info;
-			break;
-		case eLocationInfo:
-			m_pDoc->GetInfo().GetLocationInfo() = m_Info;
-			break;
-		}
+		m_pDoc->GetInfo().GetInfo(m_Type) = m_Info;
 		m_pDoc->SetModifiedFlag();
 	}
 	CDlgBaseDialog::OnOK();

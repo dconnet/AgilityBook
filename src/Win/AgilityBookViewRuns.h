@@ -55,7 +55,7 @@ public:
 		: m_pView(pView)
 	{
 	}
-	virtual bool Search() const;
+	virtual bool Search(CDlgFind* pDlg) const;
 private:
 	CAgilityBookViewRuns* m_pView;
 };

@@ -38,6 +38,7 @@
 
 #include "resource.h"
 #include <set>
+#include "ARBInfo.h"
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 #include "PointsData.h"
@@ -70,6 +71,13 @@ public:
 	eScoringDetail m_ScoringDetail;
 };
 
+struct CFindItemInfo
+{
+	ARBInfo::eInfoType type;
+	std::string name;
+	ARBInfoItem const* pItem;
+};
+
 class CDlgListViewer : public CDlgBaseDialog
 {
 public:
@@ -89,6 +97,10 @@ public:
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
 		std::list<OtherPtInfo> const& inRunList,
 		CWnd* pParent = NULL);
+	// Viewing Info
+	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
+		std::vector<CFindItemInfo> const& inItems,
+		CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -104,6 +116,7 @@ private:
 	std::list<ScoringRunInfo> const* m_ScoringRuns;
 	std::set<DoubleQdata> const* m_DoubleQData;
 	std::list<OtherPtInfo> const* m_OtherData;
+	std::vector<CFindItemInfo> const* m_Items;
 	CRect m_rWin;
 	CRect m_rDlg;
 	CRect m_rList;

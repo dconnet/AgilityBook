@@ -191,7 +191,7 @@ int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindTraining::Search() const
+bool CFindTraining::Search(CDlgFind* pDlg) const
 {
 	bool bFound = false;
 	int inc = 1;
@@ -644,7 +644,7 @@ void CAgilityBookViewTraining::OnEditFindNext()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookViewTraining::OnEditFindPrevious()
@@ -653,7 +653,7 @@ void CAgilityBookViewTraining::OnEditFindPrevious()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookViewTraining::OnUpdateTrainingEdit(CCmdUI* pCmdUI)

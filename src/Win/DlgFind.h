@@ -37,6 +37,7 @@
  */
 
 #include "DlgBaseDialog.h"
+class CDlgFind;
 
 class IFindCallback
 {
@@ -44,7 +45,9 @@ public:
 	IFindCallback()
 		: m_strSearch()
 		, m_bMatchCase(false)
+		, m_bEnableSearch(true)
 		, m_bSearchAll(false)
+		, m_bEnableDirection(true)
 		, m_bDown(true)
 	{
 	}
@@ -53,17 +56,21 @@ public:
 	virtual void Text(CString const& text)	{m_strSearch = text;}
 	virtual bool MatchCase() const			{return m_bMatchCase;}
 	virtual void MatchCase(bool bCase)		{m_bMatchCase = bCase;}
+	virtual bool EnableSearch() const		{return m_bEnableSearch;}
 	virtual bool SearchAll() const			{return m_bSearchAll;}
 	virtual void SearchAll(bool bAll)		{m_bSearchAll = bAll;}
+	virtual bool EnableDirection() const	{return m_bEnableDirection;}
 	virtual bool SearchDown() const			{return m_bDown;}
 	virtual void SearchDown(bool bDown)		{m_bDown = bDown;}
 
-	virtual bool Search() const = 0;
+	virtual bool Search(CDlgFind* pDlg) const = 0;
 
 protected:
 	CString m_strSearch;
 	bool m_bMatchCase;
+	bool m_bEnableSearch;
 	bool m_bSearchAll;
+	bool m_bEnableDirection;
 	bool m_bDown;
 };
 

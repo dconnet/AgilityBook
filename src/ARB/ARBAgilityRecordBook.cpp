@@ -359,7 +359,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs, bo
 {
 	outClubs.clear();
 	if (bInfo)
-		m_Info.GetClubInfo().GetAllItems(outClubs);
+		m_Info.GetInfo(ARBInfo::eClubInfo).GetAllItems(outClubs);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -395,7 +395,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLoca
 {
 	outLocations.clear();
 	if (bInfo)
-		m_Info.GetLocationInfo().GetAllItems(outLocations);
+		m_Info.GetInfo(ARBInfo::eLocationInfo).GetAllItems(outLocations);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -459,7 +459,7 @@ size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::string>& outJudges, bool
 {
 	outJudges.clear();
 	if (bInfo)
-		m_Info.GetJudgeInfo().GetAllItems(outJudges);
+		m_Info.GetInfo(ARBInfo::eJudgeInfo).GetAllItems(outJudges);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)

@@ -161,7 +161,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
         MENUITEM SEPARATOR
-        MENUITEM "&Find\tCtrl+F",               ID_EDIT_FIND
+        MENUITEM "&Find...\tCtrl+F",            ID_EDIT_FIND
         MENUITEM "Find Next\tF3",               ID_EDIT_FIND_NEXT
         MENUITEM "Find Previous\tShift+F3",     ID_EDIT_FIND_PREVIOUS
         MENUITEM SEPARATOR
@@ -223,13 +223,15 @@ BEGIN
         MENUITEM "&Clubs...",                   ID_NOTES_CLUBS
         MENUITEM "&Judges...\tCtrl+J",          ID_NOTES_JUDGES
         MENUITEM "&Locations",                  ID_NOTES_LOCATIONS
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...",                    ID_NOTES_SEARCH
     END
     POPUP "&View"
     BEGIN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
         MENUITEM SEPARATOR
-        MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
+        MENUITEM "Show &Newest Trials First",   ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
         MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
         MENUITEM "Include Table in &YPS",       ID_VIEW_TABLE_IN_YPS
@@ -1043,7 +1045,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,250,24,50,14
 END
 
-IDD_TRIAL DIALOGEX 0, 0, 250, 154
+IDD_TRIAL DIALOGEX 0, 0, 306, 175
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Trial Properties"
@@ -1053,9 +1055,14 @@ BEGIN
     COMBOBOX        IDC_TRIAL_LOCATION,40,7,142,130,CBS_DROPDOWN | 
                     CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,
                     HIDC_TRIAL_LOCATION
+    CONTROL         "&Verified",IDC_TRIAL_VERIFIED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,189,8,39,10,0,HIDC_TRIAL_VERIFIED
     LTEXT           "N&otes:",IDC_STATIC,7,23,22,8
     EDITTEXT        IDC_TRIAL_NOTES,7,33,175,42,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL,0,HIDC_TRIAL_NOTES
+    EDITTEXT        IDC_TRIAL_LOCATION_INFO,189,33,110,42,ES_MULTILINE | 
+                    ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP,0,
+                    HIDC_TRIAL_LOCATION_INFO
     LTEXT           "&Club",IDC_STATIC,7,87,15,8
     PUSHBUTTON      "&New...",IDC_TRIAL_CLUB_NEW,85,82,30,12,0,0,
                     HIDC_TRIAL_CLUB_NEW
@@ -1066,10 +1073,11 @@ BEGIN
     CONTROL         "List1",IDC_TRIAL_CLUBS,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
                     WS_BORDER | WS_TABSTOP,7,97,175,50,0,HIDC_TRIAL_CLUBS
-    CONTROL         "&Verified",IDC_TRIAL_VERIFIED,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,204,137,39,10,0,HIDC_TRIAL_VERIFIED
-    DEFPUSHBUTTON   "OK",IDOK,193,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,193,24,50,14
+    EDITTEXT        IDC_TRIAL_CLUB_INFO,189,97,110,50,ES_MULTILINE | 
+                    ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP,0,
+                    HIDC_TRIAL_CLUB_INFO
+    DEFPUSHBUTTON   "OK",IDOK,95,154,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,161,154,50,14
 END
 
 IDD_CLUB DIALOGEX 0, 0, 215, 47
@@ -2035,9 +2043,9 @@ BEGIN
     IDD_TRIAL, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 243
+        RIGHTMARGIN, 299
         TOPMARGIN, 7
-        BOTTOMMARGIN, 147
+        BOTTOMMARGIN, 168
     END
 
     IDD_CLUB, DIALOG
@@ -2687,13 +2695,14 @@ BEGIN
     ID_NOTES_CLUBS          "Edit club information\nClubs"
     ID_NOTES_JUDGES         "Edit judge information\nJudges"
     ID_NOTES_LOCATIONS      "Edit location information\nLocations"
+    ID_NOTES_SEARCH         "Search Note Information\nSearch"
 END
 
 STRINGTABLE 
 BEGIN
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
     ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
-    ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
+    ID_VIEW_SORTRUNS        "Sort newest trials first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_VIEW_HIDDEN          "Show Titles that have been hidden\nHidden Titles"
     ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"

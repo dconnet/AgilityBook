@@ -296,8 +296,10 @@
 #define HIDC_TRIAL_CLUBS                0x80df0505    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_DELETE          0x80df0504    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_EDIT            0x80df0503    // IDD_TRIAL
+#define HIDC_TRIAL_CLUB_INFO            0x80df0508    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_NEW             0x80df0502    // IDD_TRIAL
 #define HIDC_TRIAL_LOCATION             0x80df0500    // IDD_TRIAL
+#define HIDC_TRIAL_LOCATION_INFO        0x80df0507    // IDD_TRIAL
 #define HIDC_TRIAL_NOTES                0x80df0501    // IDD_TRIAL
 #define HIDC_TRIAL_VERIFIED             0x80df0506    // IDD_TRIAL
 #define HIDC_WIZARD_EXPORT_ASSIGN       0x80f5062b    // IDD_WIZARD_EXPORT

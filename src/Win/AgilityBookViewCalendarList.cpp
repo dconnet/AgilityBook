@@ -259,7 +259,7 @@ int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindCalendar::Search() const
+bool CFindCalendar::Search(CDlgFind* pDlg) const
 {
 	bool bFound = false;
 	int inc = 1;
@@ -793,7 +793,7 @@ void CAgilityBookViewCalendarList::OnEditFindNext()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookViewCalendarList::OnEditFindPrevious()
@@ -802,7 +802,7 @@ void CAgilityBookViewCalendarList::OnEditFindPrevious()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)

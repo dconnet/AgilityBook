@@ -51,6 +51,13 @@ class Element;
 class ARBInfo
 {
 public:
+	typedef enum
+	{
+		eClubInfo,
+		eJudgeInfo,
+		eLocationInfo
+	} eInfoType;
+
 	ARBInfo();
 	ARBInfo(ARBInfo const& rhs);
 	~ARBInfo();
@@ -87,12 +94,8 @@ public:
 	/*
 	 * Getters.
 	 */
-	ARBInfoItemList const& GetClubInfo() const;
-	ARBInfoItemList& GetClubInfo();
-	ARBInfoItemList const& GetJudgeInfo() const;
-	ARBInfoItemList& GetJudgeInfo();
-	ARBInfoItemList const& GetLocationInfo() const;
-	ARBInfoItemList& GetLocationInfo();
+	ARBInfoItemList const& GetInfo(ARBInfo::eInfoType inType) const;
+	ARBInfoItemList& GetInfo(ARBInfo::eInfoType inType);
 
 private:
 	ARBInfoItemList m_ClubInfo;
@@ -100,32 +103,30 @@ private:
 	ARBInfoItemList m_LocationInfo;
 };
 
-inline ARBInfoItemList const& ARBInfo::GetClubInfo() const
+inline ARBInfoItemList const& ARBInfo::GetInfo(ARBInfo::eInfoType inType) const
 {
-	return m_ClubInfo;
+	switch (inType)
+	{
+	default:
+	case ARBInfo::eClubInfo:
+		return m_ClubInfo;
+	case ARBInfo::eJudgeInfo:
+		return m_JudgeInfo;
+	case ARBInfo::eLocationInfo:
+		return m_LocationInfo;
+	}
 }
 
-inline ARBInfoItemList& ARBInfo::GetClubInfo()
+inline ARBInfoItemList& ARBInfo::GetInfo(ARBInfo::eInfoType inType)
 {
-	return m_ClubInfo;
-}
-
-inline ARBInfoItemList const& ARBInfo::GetJudgeInfo() const
-{
-	return m_JudgeInfo;
-}
-
-inline ARBInfoItemList& ARBInfo::GetJudgeInfo()
-{
-	return m_JudgeInfo;
-}
-
-inline ARBInfoItemList const& ARBInfo::GetLocationInfo() const
-{
-	return m_LocationInfo;
-}
-
-inline ARBInfoItemList& ARBInfo::GetLocationInfo()
-{
-	return m_LocationInfo;
+	switch (inType)
+	{
+	default:
+	case ARBInfo::eClubInfo:
+		return m_ClubInfo;
+	case ARBInfo::eJudgeInfo:
+		return m_JudgeInfo;
+	case ARBInfo::eLocationInfo:
+		return m_LocationInfo;
+	}
 }

@@ -87,6 +87,16 @@ BOOL CDlgFind::OnInitDialog()
 		m_ctrlFind.EnableWindow(TRUE);
 	else
 		m_ctrlFind.EnableWindow(FALSE);
+	if (!m_Callback.EnableSearch())
+	{
+    	GetDlgItem(IDC_FIND_ALL)->EnableWindow(FALSE);
+    	GetDlgItem(IDC_FIND_VISIBLE)->EnableWindow(FALSE);
+	}
+	if (!m_Callback.EnableDirection())
+	{
+    	GetDlgItem(IDC_FIND_UP)->EnableWindow(FALSE);
+    	GetDlgItem(IDC_FIND_DOWN)->EnableWindow(FALSE);
+	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -107,5 +117,5 @@ void CDlgFind::OnOK()
 	m_Callback.MatchCase(m_bCase ? true : false);
 	m_Callback.SearchAll(0 == m_Search);
 	m_Callback.SearchDown(1 == m_Direction);
-	m_Callback.Search();
+	m_Callback.Search(this);
 }

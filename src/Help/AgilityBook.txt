@@ -703,6 +703,12 @@ General notes about the trial.
 .topic HIDC_TRIAL_VERIFIED
 Have the results of this trial been verified?
 
+.topic HIDC_TRIAL_CLUB_INFO
+Notes about the selected club.
+
+.topic HIDC_TRIAL_LOCATION_INFO
+Notes about the selected location.
+
 .topic HIDC_OPTIONS_CAL_AUTO_DELETE
 Automatically delete calendar entries that have passed.
 
