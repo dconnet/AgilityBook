@@ -378,6 +378,10 @@ SOURCE=..\..\..\Win\MainFrm.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\PointsData.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\Splash.cpp
 # End Source File
 # Begin Source File
@@ -704,6 +708,10 @@ SOURCE=..\..\..\Win\ListCtrl.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\MainFrm.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\PointsData.h
 # End Source File
 # Begin Source File
 

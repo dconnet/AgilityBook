@@ -72,8 +72,8 @@
 #include "AgilityBookOptions.h"
 #include "ARBDogClub.h"
 #include "ARBDogTrial.h"
-#include "DlgListViewer.h"
 #include "MainFrm.h"
+#include "PointsData.h"
 
 using namespace std;
 
@@ -105,78 +105,6 @@ static char THIS_FILE[] = __FILE__;
 #define MAX_COLUMNS		9
 
 /////////////////////////////////////////////////////////////////////////////
-
-class PointsDataBase
-{
-public:
-	PointsDataBase(CAgilityBookViewPoints* pView)
-		: m_RefCount(1)
-		, m_pView(pView)
-	{
-	}
-	void AddRef()		{++m_RefCount;}
-	void Release()		{if (0 == --m_RefCount) delete this;}
-	virtual string OnNeedText(size_t index) const = 0;
-	virtual void OnDblClick() const {}
-protected:
-	virtual ~PointsDataBase() {}
-	UINT m_RefCount;
-	CAgilityBookViewPoints* m_pView;
-};
-
-class PointsData : public PointsDataBase
-{
-public:
-	PointsData(CAgilityBookViewPoints* pView)
-		: PointsDataBase(pView)
-	{
-	}
-	virtual string OnNeedText(size_t index) const
-	{
-		return m_Data[index];
-	}
-	virtual void OnDblClick() const;
-
-	void SetColumn(size_t index, string const& inStr)
-	{
-		m_Data[index] = inStr;
-	}
-protected:
-	string m_Data[MAX_COLUMNS];
-};
-
-void PointsData::OnDblClick() const
-{
-	CDlgListViewer dlg(m_pView);
-	dlg.DoModal();
-}
-
-class PointsDataDoubleQs : public PointsDataBase
-{
-public:
-	PointsDataDoubleQs(CAgilityBookViewPoints* pView)
-		: PointsDataBase(pView)
-		, m_DblQs(0)
-	{
-	}
-	virtual string OnNeedText(size_t index) const
-	{
-		string str;
-		if (7 == index)
-		{
-			CString str2;
-			str2.FormatMessage(IDS_POINTS_QQS, m_DblQs);
-			str = (LPCTSTR)str2;
-		}
-		return str;
-	}
-
-	void SetPoints(int inDblQs)		{m_DblQs = inDblQs;}
-protected:
-	int m_DblQs;
-};
-
-/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewPoints
 
 IMPLEMENT_DYNCREATE(CAgilityBookViewPoints, CListView2)
@@ -186,6 +114,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnLvnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMDblclk)
+	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -241,6 +170,25 @@ void CAgilityBookViewPoints::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 	PointsDataBase* pData = GetItemData(GetSelection());
 	if (pData)
 		pData->OnDblClick();
+	*pResult = 0;
+}
+
+void CAgilityBookViewPoints::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LV_KEYDOWN* pLVKeyDown = (LV_KEYDOWN*)pNMHDR;
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+	case VK_RETURN:
+		{
+			PointsDataBase* pData = GetItemData(GetSelection());
+			if (pData)
+				pData->OnDblClick();
+		}
+		break;
+	}
 	*pResult = 0;
 }
 
@@ -361,7 +309,7 @@ int CAgilityBookViewPoints::DoEvents(
 	int nAdded = 0;
 	int machPts = 0;
 	bool bHasMachPts = false;
-	std::set<ARBDate> QQs;
+	std::set<DoubleQdata> QQs;
 	bool bHasDoubleQs = false;
 	for (ARBConfigEventList::const_iterator iterEvent = inVenue->GetEvents().begin();
 		iterEvent != inVenue->GetEvents().end();
@@ -426,7 +374,7 @@ int CAgilityBookViewPoints::DoEvents(
 								}
 							}
 							if (2 == nVisible)
-								QQs.insert(date);
+								QQs.insert(DoubleQdata(date, pTrial));
 						}
 					}
 				}
@@ -477,25 +425,8 @@ int CAgilityBookViewPoints::DoEvents(
 					}
 				}
 			}
-			CString str, str2;
 			if (bHasPoints || 0 < matching.size())
 			{
-				PointsData* pData = new PointsData(this);
-				LVITEM item;
-				item.iItem = index + nAdded;
-				item.iSubItem = 0;
-				item.mask = LVIF_TEXT | LVIF_PARAM;
-				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
-				GetListCtrl().InsertItem(&item);
-				//GetListCtrl().InsertItem(index+nAdded, "");
-				int nextCol = 1;
-				pData->SetColumn(nextCol++, inDiv->GetName());
-				//GetListCtrl().SetItemText(index+nAdded, nextCol++, inDiv->GetName().c_str());
-				pData->SetColumn(nextCol++, inLevel->GetName());
-				//GetListCtrl().SetItemText(index+nAdded, nextCol++, inLevel->GetName().c_str());
-				pData->SetColumn(nextCol++, pEvent->GetName());
-				//GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
 				int nCleanQ, nNotCleanQ;
 				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ, inLifetime);
 				int nExistingPts = inDog->GetExistingPoints().ExistingPoints(
@@ -511,49 +442,48 @@ int CAgilityBookViewPoints::DoEvents(
 				{
 					inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ));
 				}
-				str.FormatMessage(IDS_POINTS_RUNS_JUDGES,
+				CString strRunCount;
+				strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
 					matching.size(),
 					judges.size());
 				if (pEvent->HasPartner() && 0 < partners.size())
 				{
 					CString str2;
 					str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
-					str += str2;
+					strRunCount += str2;
 				}
-				pData->SetColumn(nextCol++, (LPCTSTR)str);
-				//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 				double percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
-				str.FormatMessage(IDS_POINTS_QS,
+				CString strQcount;
+				strQcount.FormatMessage(IDS_POINTS_QS,
 					nCleanQ + nNotCleanQ,
 					static_cast<int>(percentQs));
 				if (0 < nCleanQ)
 				{
+					CString str2;
 					str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
-					str += str2;
+					strQcount += str2;
 				}
 				if (0 < judgesQ.size())
 				{
+					CString str2;
 					str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
-					str += str2;
+					strQcount += str2;
 				}
 				if (pEvent->HasPartner() && 0 < partnersQ.size())
 				{
+					CString str2;
 					str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
-					str += str2;
+					strQcount += str2;
 				}
-				pData->SetColumn(nextCol++, (LPCTSTR)str);
-				//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-
-				str.Format("%d", pts + nExistingSQ);
-				pData->SetColumn(nextCol++, (LPCTSTR)str);
-				//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+				CString strPts;
+				CString strSuperQ;
+				strPts.Format("%d", pts + nExistingSQ);
 				if (pScoringMethod->HasSuperQ())
 				{
 					SQs += nExistingSQ;
-					str.FormatMessage(IDS_POINTS_SQS, SQs);
-					pData->SetColumn(nextCol++, (LPCTSTR)str);
-					//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+					strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
 				}
+				CString strMach;
 				if (pScoringMethod->HasDoubleQ())
 					bHasDoubleQs = true;
 				if (pScoringMethod->HasMachPts())
@@ -561,12 +491,26 @@ int CAgilityBookViewPoints::DoEvents(
 					bHasMachPts = true;
 					if (0 < machPtsEvent)
 					{
-						str.FormatMessage(IDS_POINTS_MACH_SUBTOTAL, machPtsEvent);
-						pData->SetColumn(nextCol++, (LPCTSTR)str);
-						//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+						strMach.FormatMessage(IDS_POINTS_MACH_SUBTOTAL, machPtsEvent);
 					}
 				}
-				ASSERT(nextCol <= MAX_COLUMNS);
+				PointsDataEvent* pData = new PointsDataEvent(this,
+					matching,
+					inDiv->GetName(),
+					inLevel->GetName(),
+					pEvent->GetName(),
+					(LPCTSTR)strRunCount,
+					(LPCTSTR)strQcount,
+					(LPCTSTR)strPts,
+					(LPCTSTR)strSuperQ,
+					(LPCTSTR)strMach);
+				LVITEM item;
+				item.iItem = index + nAdded;
+				item.iSubItem = 0;
+				item.mask = LVIF_TEXT | LVIF_PARAM;
+				item.pszText = LPSTR_TEXTCALLBACK;
+				item.lParam = reinterpret_cast<LPARAM>(pData);
+				GetListCtrl().InsertItem(&item);
 				++nAdded;
 			}
 		}
@@ -578,13 +522,11 @@ int CAgilityBookViewPoints::DoEvents(
 		machPts += inDog->GetExistingPoints().ExistingPoints(
 			ARBDogExistingPoints::eMach,
 			inVenue, inDiv, inLevel, NULL);
-		int dblQs = static_cast<int>(QQs.size());
-		dblQs += inDog->GetExistingPoints().ExistingPoints(
+		int existingDblQs = inDog->GetExistingPoints().ExistingPoints(
 			ARBDogExistingPoints::eQQ,
 			inVenue, inDiv, inLevel, NULL);
 
-		PointsDataDoubleQs* pData = new PointsDataDoubleQs(this);
-		pData->SetPoints(dblQs);
+		PointsDataDoubleQs* pData = new PointsDataDoubleQs(this, existingDblQs, QQs);
 		LVITEM item;
 		item.iItem = index + nAdded;
 		item.iSubItem = 0;
@@ -592,23 +534,11 @@ int CAgilityBookViewPoints::DoEvents(
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.lParam = reinterpret_cast<LPARAM>(pData);
 		GetListCtrl().InsertItem(&item);
-		//GetListCtrl().InsertItem(index+nAdded, "");
-		//int nextCol = 1;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		//CString str;
-		//str.FormatMessage(IDS_POINTS_QQS, dblQs);
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-		//ASSERT(nextCol <= MAX_COLUMNS);
 		++nAdded;
 	}
 	if (bHasMachPts)
 	{
-		PointsData* pData = new PointsData(this);
+		PointsDataMachPts* pData = new PointsDataMachPts(this, machPts);
 		LVITEM item;
 		item.iItem = index + nAdded;
 		item.iSubItem = 0;
@@ -616,25 +546,6 @@ int CAgilityBookViewPoints::DoEvents(
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.lParam = reinterpret_cast<LPARAM>(pData);
 		GetListCtrl().InsertItem(&item);
-		//GetListCtrl().InsertItem(index+nAdded, "");
-		int nextCol = 1;
-		++nextCol;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		++nextCol;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		++nextCol;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		++nextCol;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		++nextCol;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		++nextCol;
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, "");
-		CString str;
-		str.FormatMessage(IDS_POINTS_MACH, machPts);
-		pData->SetColumn(nextCol++, (LPCTSTR)str);
-		//GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
-		ASSERT(nextCol <= MAX_COLUMNS);
 		++nAdded;
 	}
 	return nAdded;
@@ -690,45 +601,6 @@ int CAgilityBookViewPoints::TallyPoints(
 	return score;
 }
 
-/**
- * Used to accumulate run info into a flat list.
- */
-class OtherPtInfo
-{
-public:
-	OtherPtInfo(std::string const& venue,
-			std::string const& div,
-			std::string const& level,
-			std::string const& event,
-			int score)
-		: m_Venue(venue)
-		, m_Div(div)
-		, m_Level(level)
-		, m_Event(event)
-		, m_Score(score)
-	{
-	}
-	OtherPtInfo(ARBDogTrial const* pTrial, ARBDogRun const* pRun, int score)
-		: m_Score(score)
-	{
-		ARBDogClub const* pClub = NULL;
-		if (pTrial)
-			pClub = pTrial->GetClubs().GetPrimaryClub();
-		if (pClub)
-		{
-			m_Venue = pClub->GetVenue();
-			m_Div = pRun->GetDivision();
-			m_Level = pRun->GetLevel();
-			m_Event = pRun->GetEvent();
-		}
-	}
-	std::string m_Venue;
-	std::string m_Div;
-	std::string m_Level;
-	std::string m_Event;
-	int m_Score;
-};
-
 void CAgilityBookViewPoints::LoadData()
 {
 	CWaitCursor wait;
@@ -740,7 +612,7 @@ void CAgilityBookViewPoints::LoadData()
 	GetListCtrl().DeleteAllItems();
 
 	// Find all visible items and sort them out by venue.
-	ARBDog const* pDog = GetDocument()->GetCurrentDog();
+	ARBDog* pDog = GetDocument()->GetCurrentDog();
 	if (pDog)
 	{
 		std::vector<CVenueFilter> venues;
@@ -748,9 +620,7 @@ void CAgilityBookViewPoints::LoadData()
 		int idxInsertItem = 0;
 
 		// Put general info about the dog in...
-		ARBDate today(ARBDate::Today());
-		PointsData* pData = new PointsData(this);
-		pData->SetColumn(0, pDog->GetCallName());
+		PointsDataDog* pData = new PointsDataDog(this, pDog);
 		LVITEM item;
 		item.iItem = idxInsertItem;
 		item.iSubItem = 0;
@@ -758,13 +628,6 @@ void CAgilityBookViewPoints::LoadData()
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.lParam = reinterpret_cast<LPARAM>(pData);
 		GetListCtrl().InsertItem(&item);
-		//GetListCtrl().InsertItem(idxInsertItem, pDog->GetCallName().c_str());
-		pData->SetColumn(1, pDog->GetRegisteredName());
-		//GetListCtrl().SetItemText(idxInsertItem, 1, pDog->GetRegisteredName().c_str());
-		// (MAX_COLUMNS-1) is a theorectical column - no events exist that will populate it.
-		pData->SetColumn(MAX_COLUMNS-2, today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)));
-		//GetListCtrl().SetItemText(idxInsertItem, MAX_COLUMNS-2,
-		//	today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
 		++idxInsertItem;
 
 		// For each venue...
@@ -772,7 +635,7 @@ void CAgilityBookViewPoints::LoadData()
 			iterVenue != GetDocument()->GetConfig().GetVenues().end();
 			++iterVenue)
 		{
-			ARBConfigVenue const* pVenue = (*iterVenue);
+			ARBConfigVenue* pVenue = (*iterVenue);
 			if (!CAgilityBookOptions::IsVenueVisible(venues, pVenue->GetName()))
 				continue;
 
@@ -784,7 +647,7 @@ void CAgilityBookViewPoints::LoadData()
 				iterTitle != pDog->GetTitles().end();
 				++iterTitle)
 			{
-				ARBDogTitle const* pTitle = (*iterTitle);
+				ARBDogTitle* pTitle = (*iterTitle);
 				if (pTitle->GetVenue() == pVenue->GetName()
 				&& !pTitle->IsFiltered())
 				{
@@ -792,17 +655,17 @@ void CAgilityBookViewPoints::LoadData()
 					{
 						bHeaderInserted = true;
 						GetListCtrl().InsertItem(idxInsertItem++, "");
-						GetListCtrl().InsertItem(idxInsertItem, pVenue->GetName().c_str());
-						ARBDogRegNum const* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
-						if (pRegNum)
-						{
-							CString str;
-							str.Format("[%s]", pRegNum->GetNumber().c_str());
-							GetListCtrl().SetItemText(idxInsertItem, 1, str);
-						}
+						PointsDataVenue* pData = new PointsDataVenue(this, pDog, pVenue);
+						LVITEM item;
+						item.iItem = idxInsertItem;
+						item.iSubItem = 0;
+						item.mask = LVIF_TEXT | LVIF_PARAM;
+						item.pszText = LPSTR_TEXTCALLBACK;
+						item.lParam = reinterpret_cast<LPARAM>(pData);
+						GetListCtrl().InsertItem(&item);
 						++idxInsertItem;
 					}
-					PointsData* pData = new PointsData(this);
+					PointsDataTitle* pData = new PointsDataTitle(this, pDog, pTitle);
 					LVITEM item;
 					item.iItem = idxInsertItem;
 					item.iSubItem = 0;
@@ -810,14 +673,6 @@ void CAgilityBookViewPoints::LoadData()
 					item.pszText = LPSTR_TEXTCALLBACK;
 					item.lParam = reinterpret_cast<LPARAM>(pData);
 					GetListCtrl().InsertItem(&item);
-					//GetListCtrl().InsertItem(idxInsertItem, "");
-					pData->SetColumn(1, pTitle->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)));
-					//GetListCtrl().SetItemText(idxInsertItem, 1, pTitle->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str());
-					CString str = GetDocument()->GetConfig().GetTitleCompleteName(pTitle->GetVenue(), pTitle->GetName(), false).c_str();
-					if (pTitle->GetReceived())
-						str += "*";
-					pData->SetColumn(2, (LPCTSTR)str);
-					//GetListCtrl().SetItemText(idxInsertItem, 2, str);
 					++idxInsertItem;
 				}
 			}
@@ -841,14 +696,14 @@ void CAgilityBookViewPoints::LoadData()
 				{
 					bHeaderInserted = true;
 					GetListCtrl().InsertItem(idxInsertItem++, "");
-					GetListCtrl().InsertItem(idxInsertItem, pVenue->GetName().c_str());
-					ARBDogRegNum const* pRegNum = pDog->GetRegNums().FindRegNum(pVenue->GetName());
-					if (pRegNum)
-					{
-						CString str;
-						str.Format("[%s]", pRegNum->GetNumber().c_str());
-						GetListCtrl().SetItemText(idxInsertItem, 1, str);
-					}
+					PointsDataVenue* pData = new PointsDataVenue(this, pDog, pVenue);
+					LVITEM item;
+					item.iItem = idxInsertItem;
+					item.iSubItem = 0;
+					item.mask = LVIF_TEXT | LVIF_PARAM;
+					item.pszText = LPSTR_TEXTCALLBACK;
+					item.lParam = reinterpret_cast<LPARAM>(pData);
+					GetListCtrl().InsertItem(&item);
 					++idxInsertItem;
 				}
 				for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
@@ -884,7 +739,7 @@ void CAgilityBookViewPoints::LoadData()
 						pts += (*iter2).points;
 					}
 				}
-				PointsData* pData = new PointsData(this);
+				PointsDataLifetime* pData = new PointsDataLifetime(this, pts);
 				LVITEM item;
 				item.iItem = idxInsertItem;
 				item.iSubItem = 0;
@@ -892,15 +747,6 @@ void CAgilityBookViewPoints::LoadData()
 				item.pszText = LPSTR_TEXTCALLBACK;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				GetListCtrl().InsertItem(&item);
-				//GetListCtrl().InsertItem(idxInsertItem, "");
-				int nextCol = 1;
-				CString str;
-				str.LoadString(IDS_LIFETIME_POINTS);
-				pData->SetColumn(nextCol++, (LPCTSTR)str);
-				//GetListCtrl().SetItemText(idxInsertItem, nextCol++, str);
-				str.Format("%d", pts);
-				pData->SetColumn(nextCol++, (LPCTSTR)str);
-				//GetListCtrl().SetItemText(idxInsertItem, nextCol++, str);
 				++idxInsertItem;
 			}
 		}
@@ -956,49 +802,32 @@ void CAgilityBookViewPoints::LoadData()
 				{
 					if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType())
 					{
-						runs.push_back(OtherPtInfo(
-							(*iterExisting)->GetVenue(),
-							(*iterExisting)->GetDivision(),
-							(*iterExisting)->GetLevel(),
-							(*iterExisting)->GetEvent(),
-							(*iterExisting)->GetPoints()));
+						runs.push_back(OtherPtInfo(*iterExisting));
 					}
 				}
 
 				if (0 == runs.size())
 					continue;
 
-				PointsData* pData = new PointsData(this);
-				LVITEM item;
-				item.iItem = idxInsertItem;
-				item.iSubItem = 0;
-				item.mask = LVIF_TEXT | LVIF_PARAM;
-				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
-				GetListCtrl().InsertItem(&item);
-				//GetListCtrl().InsertItem(idxInsertItem, "");
-				pData->SetColumn(1, pOther->GetName());
-				//GetListCtrl().SetItemText(idxInsertItem, 1, pOther->GetName().c_str());
 				switch (pOther->GetTally())
 				{
 				default:
 				case ARBConfigOtherPoints::eTallyAll:
 					{
-						int score = 0;
-						for (std::list<OtherPtInfo>::iterator iter = runs.begin();
-							iter != runs.end();
-							++iter)
-						{
-							score += (*iter).m_Score;
-						}
-						CString str;
-						str.Format("%d", score);
-						pData->SetColumn(2, (LPCTSTR)str);
-						//GetListCtrl().SetItemText(idxInsertItem, 2, str);
+						PointsDataOtherPointsTallyAll* pData = new PointsDataOtherPointsTallyAll(this, pOther->GetName(), runs);
+						LVITEM item;
+						item.iItem = idxInsertItem++;
+						item.iSubItem = 0;
+						item.mask = LVIF_TEXT | LVIF_PARAM;
+						item.pszText = LPSTR_TEXTCALLBACK;
+						item.lParam = reinterpret_cast<LPARAM>(pData);
+						GetListCtrl().InsertItem(&item);
 					}
 					break;
 
 				case ARBConfigOtherPoints::eTallyAllByEvent:
+					GetListCtrl().InsertItem(idxInsertItem, "");
+					GetListCtrl().SetItemText(idxInsertItem++, 1, pOther->GetName().c_str());
 					{
 						std::set<std::string> tally;
 						std::list<OtherPtInfo>::iterator iter;
@@ -1010,33 +839,27 @@ void CAgilityBookViewPoints::LoadData()
 							iterTally != tally.end();
 							++iterTally)
 						{
-							int score = 0;
+							std::list<OtherPtInfo> validRuns;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
 								if ((*iter).m_Event == (*iterTally))
-									score += (*iter).m_Score;
+									validRuns.push_back(*iter);
 							}
-							++idxInsertItem;
-							PointsData* pData = new PointsData(this);
+							PointsDataOtherPointsTallyAllByEvent* pData = new PointsDataOtherPointsTallyAllByEvent(this, validRuns);
 							LVITEM item;
-							item.iItem = idxInsertItem;
+							item.iItem = idxInsertItem++;
 							item.iSubItem = 0;
 							item.mask = LVIF_TEXT | LVIF_PARAM;
 							item.pszText = LPSTR_TEXTCALLBACK;
 							item.lParam = reinterpret_cast<LPARAM>(pData);
 							GetListCtrl().InsertItem(&item);
-							//GetListCtrl().InsertItem(idxInsertItem, "");
-							pData->SetColumn(2, (*iterTally));
-							//GetListCtrl().SetItemText(idxInsertItem, 2, (*iterTally).c_str());
-							CString str;
-							str.Format("%d", score);
-							pData->SetColumn(3, (LPCTSTR)str);
-							//GetListCtrl().SetItemText(idxInsertItem, 3, str);
 						}
 					}
 					break;
 
 				case ARBConfigOtherPoints::eTallyLevel:
+					GetListCtrl().InsertItem(idxInsertItem, "");
+					GetListCtrl().SetItemText(idxInsertItem++, 1, pOther->GetName().c_str());
 					{
 						std::set<std::string> tally;
 						std::list<OtherPtInfo>::iterator iter;
@@ -1048,33 +871,27 @@ void CAgilityBookViewPoints::LoadData()
 							iterTally != tally.end();
 							++iterTally)
 						{
-							int score = 0;
+							std::list<OtherPtInfo> validRuns;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
 								if ((*iter).m_Level == (*iterTally))
-									score += (*iter).m_Score;
+									validRuns.push_back(*iter);
 							}
-							++idxInsertItem;
-							PointsData* pData = new PointsData(this);
+							PointsDataOtherPointsTallyLevel* pData = new PointsDataOtherPointsTallyLevel(this, validRuns);
 							LVITEM item;
-							item.iItem = idxInsertItem;
+							item.iItem = idxInsertItem++;
 							item.iSubItem = 0;
 							item.mask = LVIF_TEXT | LVIF_PARAM;
 							item.pszText = LPSTR_TEXTCALLBACK;
 							item.lParam = reinterpret_cast<LPARAM>(pData);
 							GetListCtrl().InsertItem(&item);
-							//GetListCtrl().InsertItem(idxInsertItem, "");
-							pData->SetColumn(2, (*iterTally));
-							//GetListCtrl().SetItemText(idxInsertItem, 2, (*iterTally).c_str());
-							CString str;
-							str.Format("%d", score);
-							pData->SetColumn(3, (LPCTSTR)str);
-							//GetListCtrl().SetItemText(idxInsertItem, 3, str);
 						}
 					}
 					break;
 
 				case ARBConfigOtherPoints::eTallyLevelByEvent:
+					GetListCtrl().InsertItem(idxInsertItem, "");
+					GetListCtrl().SetItemText(idxInsertItem++, 1, pOther->GetName().c_str());
 					{
 						typedef std::pair<std::string, std::string> LevelEvent;
 						std::set<LevelEvent> tally;
@@ -1087,36 +904,25 @@ void CAgilityBookViewPoints::LoadData()
 							iterTally != tally.end();
 							++iterTally)
 						{
-							int score = 0;
+							std::list<OtherPtInfo> validRuns;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
 								if ((*iter).m_Level == (*iterTally).first
 								&& (*iter).m_Event == (*iterTally).second)
-									score += (*iter).m_Score;
+									validRuns.push_back(*iter);
 							}
-							++idxInsertItem;
-							PointsData* pData = new PointsData(this);
+							PointsDataOtherPointsTallyLevelByEvent* pData = new PointsDataOtherPointsTallyLevelByEvent(this, validRuns);
 							LVITEM item;
-							item.iItem = idxInsertItem;
+							item.iItem = idxInsertItem++;
 							item.iSubItem = 0;
 							item.mask = LVIF_TEXT | LVIF_PARAM;
 							item.pszText = LPSTR_TEXTCALLBACK;
 							item.lParam = reinterpret_cast<LPARAM>(pData);
 							GetListCtrl().InsertItem(&item);
-							//GetListCtrl().InsertItem(idxInsertItem, "");
-							pData->SetColumn(2, (*iterTally).first);
-							//GetListCtrl().SetItemText(idxInsertItem, 2, (*iterTally).first.c_str());
-							pData->SetColumn(3, (*iterTally).second);
-							//GetListCtrl().SetItemText(idxInsertItem, 3, (*iterTally).second.c_str());
-							CString str;
-							str.Format("%d", score);
-							pData->SetColumn(4, (LPCTSTR)str);
-							//GetListCtrl().SetItemText(idxInsertItem, 4, str);
 						}
 					}
 					break;
 				}
-				++idxInsertItem;
 			}
 		}
 	}

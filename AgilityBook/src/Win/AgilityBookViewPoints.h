@@ -135,6 +135,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

@@ -36,20 +36,38 @@
  * @li 2004-07-29 DRC Created
  */
 
+#include "resource.h"
+#include <set>
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
+#include "PointsData.h"
+class ARBDate;
 
 class CDlgListViewer : public CDlgBaseDialog
 {
 public:
-	CDlgListViewer(CWnd* pParent = NULL);
+	// Viewing runs
+	CDlgListViewer(CString const& inCaption, std::list<ARBDogRun const*> const& inRuns, CWnd* pParent = NULL);
+	// Viewing double-Qs
+	CDlgListViewer(CString const& inCaption, std::set<DoubleQdata> const& inQQs, CWnd* pParent = NULL);
+	// Viewing other points
+	CDlgListViewer(CString const& inCaption, std::list<OtherPtInfo> const& inRunList, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgListViewer)
 	enum { IDD = IDD_LIST_VIEWER };
 	CListCtrl2	m_ctrlList;
+	CButton	m_ctrlClose;
 	//}}AFX_DATA
+	CString m_Caption;
+	std::list<ARBDogRun const*> const* m_Runs;
+	std::set<DoubleQdata> const* m_DoubleQData;
+	std::list<OtherPtInfo> const* m_OtherData;
+	CRect m_rWin;
+	CRect m_rDlg;
+	CRect m_rList;
+	CRect m_rOK;
 
 	//{{AFX_VIRTUAL(CDlgListViewer)
 protected:
@@ -62,7 +80,8 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnConfig();
+	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -51,6 +51,7 @@ private:
 	CButton	m_ctrlOK;
 	//}}AFX_DATA
 	HENHMETAFILE m_metaFile;
+	CRect m_rWin;
 	CRect m_rDlg;
 	CRect m_rCRCDwin;
 	CRect m_rCRCDclient;
