@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-27 DRC Updating could cause some false-positive messages because
+ *                    the ordering was different.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -168,6 +170,7 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 		SetDesc(inEventNew->GetDesc());
 	if (HasPartner() != inEventNew->HasPartner())
 		SetHasPartner(inEventNew->HasPartner());
+	// If the order is different, we will fall into this...
 	if (GetScorings() != inEventNew->GetScorings())
 	{
 		int nAdded, nDeleted, nChanged, nSkipped;
@@ -211,11 +214,15 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 				++nAdded;
 		}
 		GetScorings() = inEventNew->GetScorings();
-		char buffer[1000];
-		sprintf(buffer, UPDATE_FORMAT_RULES, nAdded, nDeleted, nChanged, nSkipped);
-		info += indentBuffer;
-		info += GetName();
-		info += buffer;
+		// ... so only generate a message if we added or changed.
+		if (0 < nAdded || 0 < nDeleted || 0 < nChanged)
+		{
+			char buffer[1000];
+			sprintf(buffer, UPDATE_FORMAT_RULES, nAdded, nDeleted, nChanged, nSkipped);
+			info += indentBuffer;
+			info += GetName();
+			info += buffer;
+		}
 	}
 	return info;
 }

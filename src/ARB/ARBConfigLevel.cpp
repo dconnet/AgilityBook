@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-27 DRC Updating could cause some false-positive messages because
+ *                    the ordering was different.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
@@ -137,6 +139,7 @@ std::string ARBConfigLevel::Update(int indent, const ARBConfigLevel* inLevelNew)
 	indentBuffer = indentName + "   ";
 	indentName += "-";
 
+	// If the order is different, we will fall into this...
 	if (GetSubLevels() != inLevelNew->GetSubLevels())
 	{
 		int nAdded = 0;

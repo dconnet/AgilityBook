@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-27 DRC Updating could cause some false-positive messages because
+ *                    the ordering was different.
  * @li 2004-01-21 DRC Added DeleteTitle.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -154,6 +156,7 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 	indentBuffer = indentName + "   ";
 	indentName += "-";
 
+	// If the order is different, we will fall into this...
 	if (GetLevels() != inDivNew->GetLevels())
 	{
 		std::string info2;
@@ -184,7 +187,8 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 				info2 += "\n";
 			}
 		}
-		if (0 < nAdded || 0 < nChanged || 0 < nSkipped)
+		// ... so only generate a message if we added or changed.
+		if (0 < nAdded || 0 < nChanged)
 		{
 			char buffer[1000];
 			sprintf(buffer, UPDATE_FORMAT_LEVELS, nAdded, nChanged, nSkipped);
@@ -193,6 +197,8 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 			info += info2;
 		}
 	}
+
+	// If the order is different, we will fall into this...
 	if (GetTitles() != inDivNew->GetTitles())
 	{
 		int nChanged, nAdded, nSkipped;
@@ -219,7 +225,8 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 				GetTitles().AddTitle((*iterTitle));
 			}
 		}
-		if (0 < nAdded || 0 < nChanged || 0 < nSkipped)
+		// ... so only generate a message if we added or changed.
+		if (0 < nAdded || 0 < nChanged)
 		{
 			char buffer[1000];
 			sprintf(buffer, UPDATE_FORMAT_TITLES, nAdded, nChanged, nSkipped);
