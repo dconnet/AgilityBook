@@ -58,14 +58,15 @@ class CTabView;
 struct CVenueFilter;
 
 // UpdateAllViews() hints
-#define UPDATE_CONFIG			0x001
-#define UPDATE_CALENDAR_VIEW	0x010
-#define UPDATE_POINTS_VIEW		0x020
-#define UPDATE_RUNS_VIEW		0x040
-#define UPDATE_TREE_VIEW		0x080
-#define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
-#define UPDATE_OPTIONS			0x100
-#define UPDATE_NEW_TRIAL		0x200
+#define UPDATE_CONFIG			0x0001
+#define UPDATE_CALENDAR_VIEW	0x0010
+#define UPDATE_TRAINING_VIEW	0x0020
+#define UPDATE_POINTS_VIEW		0x0040
+#define UPDATE_RUNS_VIEW		0x0080
+#define UPDATE_TREE_VIEW		0x0100
+#define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
+#define UPDATE_OPTIONS			0x1000
+#define UPDATE_NEW_TRIAL		0x2000
 
 class CAgilityBookDoc : public CDocument
 {
@@ -79,6 +80,7 @@ public:
 	ARBDogTrial* GetCurrentTrial();
 	ARBDogRun* GetCurrentRun();
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
+	ARBTrainingList& GetTraining()			{return m_Records.GetTraining();}
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
 	size_t GetAllClubNames(std::set<std::string>& clubs) const
@@ -155,6 +157,7 @@ protected:
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
+	afx_msg void OnAgilityNewTraining();
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnViewSortruns();

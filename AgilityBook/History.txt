@@ -1,4 +1,6 @@
-09/16/2003: v1.0.0.5: <development>
+09/21/2003: v0.9.1.6: <development>
+- Bumped file version to 6:
+  - Added the Training Log.
 - Bug fixes
   - When creating a trial entry from the calendar, if you selected more than one
     dog at a time when creating the trial, that new trial was actually linked

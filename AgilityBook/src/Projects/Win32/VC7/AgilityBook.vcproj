@@ -172,6 +172,9 @@
 				RelativePath="..\..\..\Win\AgilityBookViewRuns.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\AgilityBookViewTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\CheckTreeCtrl.cpp">
 			</File>
 			<File
@@ -271,6 +274,9 @@
 				RelativePath="..\..\..\Win\DlgTitle.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgTrial.cpp">
 			</File>
 			<File
@@ -339,6 +345,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\AgilityBookViewRuns.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\AgilityBookViewTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\CheckTreeCtrl.h">
@@ -438,6 +447,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgTitle.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgTrial.h">
@@ -677,6 +689,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBDogTrial.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Arb\ARBTraining.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Arb\ARBTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBTypes.cpp">

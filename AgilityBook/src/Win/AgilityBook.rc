@@ -98,6 +98,7 @@ BEGIN
     BUTTON      ID_AGILITY_NEW_TRIAL
     BUTTON      ID_AGILITY_NEW_RUN
     BUTTON      ID_AGILITY_NEW_CALENDAR
+    BUTTON      ID_AGILITY_NEW_TRAINING
     SEPARATOR
     BUTTON      ID_EDIT_CUT
     BUTTON      ID_EDIT_COPY
@@ -189,6 +190,14 @@ BEGIN
 
             MENUITEM SEPARATOR
             MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
+
+        END
+        POPUP "&Training"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRAINING
 
         END
     END
@@ -330,6 +339,17 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
+    END
+END
+
+IDR_TRAINING MENU DISCARDABLE 
+BEGIN
+    POPUP "Training"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+        MENUITEM SEPARATOR
+        MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
+        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_TRAINING
     END
 END
 
@@ -1007,6 +1027,23 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,217,154,50,14
 END
 
+IDD_TRAINING DIALOG DISCARDABLE  0, 0, 300, 201
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Training Log"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Date:",IDC_STATIC,7,9,18,8
+    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,30,7,60,12
+    LTEXT           "&Name",IDC_STATIC,7,27,20,8
+    COMBOBOX        IDC_NAME,30,25,150,125,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_NOTES,7,45,286,149,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL | WS_HSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,243,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,243,24,50,14
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -1015,8 +1052,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,5
- PRODUCTVERSION 1,0,0,5
+ FILEVERSION 0,9,1,6
+ PRODUCTVERSION 0,9,1,6
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1032,12 +1069,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "FileDescription", "Agility Record Book\0"
-            VALUE "FileVersion", "1.0.0.5\0"
+            VALUE "FileVersion", "0.9.1.6\0"
             VALUE "InternalName", "AgilityBook.exe\0"
             VALUE "LegalCopyright", "All rights reserved.\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
             VALUE "ProductName", "Agility Record Book\0"
-            VALUE "ProductVersion", "1.0.0.5\0"
+            VALUE "ProductVersion", "0.9.1.6\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -1302,6 +1339,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 168
     END
+
+    IDD_TRAINING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 194
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -1461,15 +1506,16 @@ BEGIN
     IDS_RUNS                "Runs"
     IDS_POINTS              "Points"
     IDS_CALENDAR            "Calendar"
+    IDS_TRAINING            "Training Log"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_PARTNERS            "Partners"
     IDS_VENUES              "Venues"
     IDS_VENUE_NAME          "Venue"
     IDS_FAULT_TYPES         "Fault Types"
     IDS_FAULT_TYPE_NAME     "Fault Name"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_OTHERPOINTS         "Other Points"
     IDS_OTHERPOINTS_NAME    "Other Points Name"
     IDS_DIVISIONS           "Divisions"
@@ -1479,6 +1525,10 @@ BEGIN
     IDS_LEVELS              "Levels"
     IDS_LEVEL_NAME          "Level"
     IDS_SUBLEVEL_NAME       "SubLevel"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_EVENTS              "Events"
     IDS_EVENT_NAME          "Event Name"
     IDS_SCORING             "Scoring Methods"
@@ -1486,12 +1536,12 @@ BEGIN
     IDS_SQ                  "SQ"
     IDS_SUPER_Q             "SuperQ"
     IDS_QQ                  "QQ"
+    IDS_DOUBLE_Q            "DoubleQ"
+    IDS_MACHPTS             "MachPts"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_DOUBLE_Q            "DoubleQ"
-    IDS_MACHPTS             "MachPts"
     IDS_COL_BREED           "Breed"
     IDS_COL_CLOSES          "Closes"
     IDS_COL_CLUB            "Club"
@@ -1502,16 +1552,16 @@ BEGIN
     IDS_COL_EVENT           "Event"
     IDS_COL_FAULT           "Fault"
     IDS_COL_HANDLER         "Handler"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_COL_IN_CLASS        "In Class"
     IDS_COL_JUDGE           "Judge"
     IDS_COL_LEVEL           "Level"
     IDS_COL_LOCATION        "Location"
     IDS_COL_NAME            "Name"
     IDS_COL_NOTE            "Note"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_COL_NOTES           "Notes"
     IDS_COL_NUMBER          "Number"
     IDS_COL_OPENS           "Opens"
@@ -1522,23 +1572,23 @@ BEGIN
     IDS_COL_Q_D             "Q'd"
     IDS_COL_RECEIVED        "Received"
     IDS_COL_SCORE           "Score"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_COL_START_DATE      "Start Date"
     IDS_COL_TIME            "Time"
     IDS_COL_VENUE           "Venue"
     IDS_COL_HEIGHT          "Height"
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
-    IDS_ABOUT_UPDATE        "Check for Updates\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
+    IDS_ABOUT_UPDATE        "Check for Updates\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
     IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
     IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com?subject=AgilityBook Help: "
     IDS_ABOUT_LINK3         "Source Forge\thttp://sourceforge.net/projects/agilitybook"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_NEW                 "<New>"
     IDS_CONFIGURE           "Configure"
     IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
@@ -1546,10 +1596,6 @@ BEGIN
     IDS_DELETE_OTHERPOINTS  "Warning: Other Points '%1' is currently in use. Deleting this item will delete points from %2!d! run(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_DIVISION     "Warning: The division '%1' is currently in use. Deleting this division will also delete %2!d! title(s) and may delete %3!d! run(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_LEVEL        "Warning: The level '%1' is currently in use. Deleting this level may also delete %2!d! run(s).\n\nAre you sure you want to do this?"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_DELETE_TITLE        "Warning: The title '%1' is currently in use. Deleting this title will also delete %2!d! title(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_EVENT        "Warning: The event '%1' is currently in use. Deleting this event will also delete %2!d! event(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
@@ -1557,6 +1603,10 @@ BEGIN
                             "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_NAME_IN_USE         "Name is already in use."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_ALL                 "<All>"
     IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
     IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
@@ -1567,16 +1617,16 @@ BEGIN
     IDS_SELECT_DIVISION     "Please select a division."
     IDS_SELECT_LEVEL        "Please select a level."
     IDS_SELECT_EVENT        "Please select an event."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_SELECT_HEIGHT       "Please select a height."
     IDS_SELECT_JUDGE        "Please select a judge."
     IDS_SELECT_Q            "Please select a 'Q'."
     IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
     IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
     IDS_SCORING_REQUIRED_POINTS "Required points"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_SCORING_POINTS      "Points"
     IDS_NUM_EVENTS          "%1!d! events"
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
@@ -1588,27 +1638,6 @@ BEGIN
     IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "[%1!d! Q+]"
-    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
-    IDS_POINTS_QQS          "%1!d! QQ"
-    IDS_POINTS_MACH         "%1!d! Mach"
-    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
-    IDS_FILEEXT_DEF_ARB     "arb"
-    IDS_FILEEXT_FNAME_ARB   "*.arb"
-    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
-    IDS_CREATERUN_FAILED    "Error: Failed to create run."
-    IDS_CREATETRIAL_FILTERED 
-                            "Warning: The trial you have just created cannot be shown due to filter options."
-    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_COPYOF              "Copy of "
     IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
@@ -1616,6 +1645,10 @@ BEGIN
                             "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_NOCONFIGDATA_FOUND  "No configuration data found."
     IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_OTHERPTS_ALL        "All Events"
     IDS_OTHERPTS_EVENT      "Tally by Event"
     IDS_OTHERPTS_LEVEL      "Tally by Level"
@@ -1626,6 +1659,24 @@ BEGIN
     IDS_POINTS_PARTNERS     ", %1!d! partners"
     IDS_POINTS_QS           "%1!d! Qs"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
+    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_POINTS_SQS          "[%1!d! Q+]"
+    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
+    IDS_POINTS_QQS          "%1!d! QQ"
+    IDS_POINTS_MACH         "%1!d! Mach"
+    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_FILEEXT_DEF_ARB     "arb"
+    IDS_FILEEXT_FNAME_ARB   "*.arb"
+    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+    IDS_CREATERUN_FAILED    "Error: Failed to create run."
+    IDS_CREATETRIAL_FILTERED 
+                            "Warning: The trial you have just created cannot be shown due to filter options."
+    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
+    IDS_NUM_TRAINING        "%1!d! entries"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1637,32 +1688,36 @@ BEGIN
     ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
     ID_CONFIG_EDIT          "Edit a configuration item\nEdit"
     ID_CONFIG_DELETE        "Delete a configuration item\nDelete"
-    ID_AGILITY_NEW_CALENDAR "Create an upcoming calendar entry\nNew Calendar Entry"
-    ID_AGILITY_NEW_DOG      "Create a new dog\nNew Dog"
-    ID_AGILITY_NEW_TITLE    "Create a new title\nNew Title"
-    ID_AGILITY_NEW_TRIAL    "Create a new trial\nNew Trial"
-    ID_AGILITY_NEW_RUN      "Create a new run\nNew Run"
+    ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
+    ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
+    ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
+    ID_AGILITY_NEW_TITLE    "Create a new Title\nNew Title"
+    ID_AGILITY_NEW_TRIAL    "Create a new Trial\nNew Trial"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_AGILITY_EDIT_CALENDAR "Edit an upcoming calendar entry\nEdit Calendar"
+    ID_AGILITY_NEW_RUN      "Create a new Run\nNew Run"
+    ID_AGILITY_EDIT_CALENDAR "Edit an upcoming Calendar entry\nEdit Calendar"
+    ID_AGILITY_EDIT_TRAINING "Edit a Training Log entry\nEdit Training Log"
     ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
     ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
     ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
     ID_AGILITY_EDIT_RUN     "Edit a Run's information\nEdit Run"
     ID_AGILITY_DELETE_CALENDAR 
-                            "Delete an upcoming calendar entry\nDelete Calendar"
+                            "Delete an upcoming Calendar entry\nDelete Calendar"
+    ID_AGILITY_DELETE_TRAINING 
+                            "Delete a Training Log entry\nDelete Training Log"
     ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
     ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
     ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
     ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
+    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_AGILITY_CREATEENTRY_CALENDAR "Create a trial entry\nNew Trial"
     ID_REORDER              "Reorder items\nReorder"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
 END

@@ -42,6 +42,7 @@
  */
 #define TREE_BOOK							"AgilityBook"
 #define TREE_CALENDAR						"Calendar"
+#define TREE_TRAINING						"Training"
 #define TREE_CONFIG							"Configuration"
 #define TREE_VENUE							"Venue"
 #define TREE_VENUE_DESC						"Desc"
@@ -94,6 +95,8 @@
 #define ATTRIB_CAL_VENUE					"Venue"
 #define ATTRIB_CAL_ENTERED					"Entered"
 #define ATTRIB_CAL_NOTE						"Note"
+#define ATTRIB_TRAINING_DATE				"Date"
+#define ATTRIB_TRAINING_NAME				"Name"
 #define ATTRIB_VENUE_NAME					"Name"
 #define ATTRIB_OTHERPTS_NAME				"Name"
 #define ATTRIB_OTHERPTS_COUNT				"Count"
@@ -211,6 +214,7 @@
 #include "ARBCalendar.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
+#include "ARBTraining.h"
 class ARBConfigOtherPoints;
 class CElement;
 
@@ -233,15 +237,21 @@ public:
 	 * @pre If bDogs is true, bConfig must also be true or dogs won't load.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inCalendar Load calendar info.
+	 * @param inTraining Load training info.
 	 * @param inConfig Load config info.
 	 * @param inDogs Load dog info.
 	 * @return Success
 	 */
 	bool Load(
 		const CElement& inTree,
-		bool inCalendar = true,
-		bool inConfig = true,
-		bool inDogs = true);
+		bool inCalendar,
+		bool inTraining,
+		bool inConfig,
+		bool inDogs);
+	bool Load(const CElement& inTree)
+	{
+		return Load(inTree, true, true, true, true);
+	}
 	/**
 	 * Save a document.
 	 * @param outTree XML structure to write ARB to.
@@ -281,6 +291,8 @@ public:
 
 	const ARBCalendarList& GetCalendar() const;
 	ARBCalendarList& GetCalendar();
+	const ARBTrainingList& GetTraining() const;
+	ARBTrainingList& GetTraining();
 	const ARBConfig& GetConfig() const;
 	ARBConfig& GetConfig();
 	const ARBDogList& GetDogs() const;
@@ -293,6 +305,7 @@ private:
 
 private:
 	ARBCalendarList m_Calendar;
+	ARBTrainingList m_Training;
 	ARBConfig m_Config;
 	ARBDogList m_Dogs;
 };
@@ -305,6 +318,16 @@ inline const ARBCalendarList& ARBAgilityRecordBook::GetCalendar() const
 inline ARBCalendarList& ARBAgilityRecordBook::GetCalendar()
 {
 	return m_Calendar;
+}
+
+inline const ARBTrainingList& ARBAgilityRecordBook::GetTraining() const
+{
+	return m_Training;
+}
+
+inline ARBTrainingList& ARBAgilityRecordBook::GetTraining()
+{
+	return m_Training;
 }
 
 inline const ARBConfig& ARBAgilityRecordBook::GetConfig() const

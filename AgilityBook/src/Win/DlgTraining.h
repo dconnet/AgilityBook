@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright (c) 2002-2003 David Connet.
+ * Copyright (c) 2003 David Connet.
  * All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
@@ -30,46 +30,45 @@
 /**
  * @file
  *
- * @brief main header file for the AgilityBook application
+ * @brief interface of the CDlgTraining class
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-21 DRC Created
  */
 
-#ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
-#endif
+class ARBTraining;
+class CAgilityBookDoc;
 
-#include "resource.h"       // main symbols
-
-class CAgilityBookApp : public CWinApp
+class CDlgTraining : public CDialog
 {
+// Construction
 public:
-	CAgilityBookApp();
+	CDlgTraining(ARBTraining* pTraining, CAgilityBookDoc* pDoc, CWnd* pParent = NULL);
 
 private:
-	CSingleDocTemplate* m_pDocTemplateTree;
-	CSingleDocTemplate* m_pDocTemplateRuns;
-	CSingleDocTemplate* m_pDocTemplatePoints;
-	CSingleDocTemplate* m_pDocTemplateCal;
-	CSingleDocTemplate* m_pDocTemplateTraining;
+// Dialog Data
+	//{{AFX_DATA(CDlgTraining)
+	enum { IDD = IDD_TRAINING };
+	CTime	m_date;
+	CComboBox	m_ctrlNames;
+	CString	m_Name;
+	CString	m_Notes;
+	//}}AFX_DATA
+	ARBTraining* m_pTraining;
+	CAgilityBookDoc* m_pDoc;
 
 // Overrides
-	//{{AFX_VIRTUAL(CAgilityBookApp)
-public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
+	//{{AFX_VIRTUAL(CDlgTraining)
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
-private:
-	//{{AFX_MSG(CAgilityBookApp)
-	afx_msg void OnAppAbout();
+protected:
+	//{{AFX_MSG(CDlgTraining)
+	virtual BOOL OnInitDialog();
+	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-extern CAgilityBookApp theApp;
-
-// Some global functions.
-extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);

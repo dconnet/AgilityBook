@@ -55,6 +55,7 @@
 #include "AgilityBookTreeData.h"
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewCalendarList.h"
+#include "AgilityBookViewTraining.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -62,6 +63,7 @@
 #include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
+#include "DlgTraining.h"
 #include "DlgTrial.h"
 #include "Element.h"
 #include "MainFrm.h"
@@ -87,6 +89,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
+	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
@@ -750,6 +753,32 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 		}
 	}
 	cal->Release();
+}
+
+void CAgilityBookDoc::OnAgilityNewTraining()
+{
+	ARBTraining* training = new ARBTraining();
+	CDlgTraining dlg(training, this);
+	if (IDOK == dlg.DoModal())
+	{
+		CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+		pFrame->SetCurTab(3);
+		GetTraining().AddTraining(training);
+		GetTraining().sort();
+		SetModifiedFlag();
+		UpdateAllViews(NULL, UPDATE_TRAINING_VIEW);
+		POSITION pos = GetFirstViewPosition();
+		while (NULL != pos)
+		{
+			CView* pView = GetNextView(pos);
+			if (DYNAMIC_DOWNCAST(CAgilityBookViewTraining, pView))
+			{
+				reinterpret_cast<CAgilityBookViewTraining*>(pView)->SetCurrentDate(training->GetDate());
+				break;
+			}
+		}
+	}
+	training->Release();
 }
 
 void CAgilityBookDoc::OnViewOptions()

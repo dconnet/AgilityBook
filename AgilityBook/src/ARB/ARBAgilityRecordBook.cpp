@@ -35,6 +35,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-09-21 DRC File version 6. Added training log.
  * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  * @li 2003-06-23 DRC File version 5. Added 'Note' and 'Verified' to trials.
  *                    Changed how title points are configured.
@@ -63,7 +64,7 @@ static char THIS_FILE[] = __FILE__;
 
 short ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static const short curVersion = 5;
+	static const short curVersion = 6;
 	return curVersion;
 }
 
@@ -150,6 +151,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 bool ARBAgilityRecordBook::Load(
 	const CElement& inTree,
 	bool inCalendar,
+	bool inTraining,
 	bool inConfig,
 	bool inDogs)
 {
@@ -193,6 +195,21 @@ bool ARBAgilityRecordBook::Load(
 			}
 		}
 		m_Calendar.sort();
+	}
+
+	if (inTraining)
+	{
+		bLoaded = true;
+		for (int i = 0; i < inTree.GetElementCount(); ++i)
+		{
+			const CElement& element = inTree.GetElement(i);
+			if (element.GetName() == TREE_TRAINING)
+			{
+				// Ignore any errors...
+				m_Training.Load(element, version);
+			}
+		}
+		m_Training.sort();
 	}
 
 	// We have to load the configuration before any dog records.
@@ -253,6 +270,8 @@ bool ARBAgilityRecordBook::Save(CElement& outTree) const
 	outTree.AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	if (!m_Calendar.Save(outTree))
 		return false;
+	if (!m_Training.Save(outTree))
+		return false;
 	if (!m_Config.Save(outTree))
 		return false;
 	if (!m_Dogs.Save(outTree))
@@ -263,6 +282,7 @@ bool ARBAgilityRecordBook::Save(CElement& outTree) const
 void ARBAgilityRecordBook::clear()
 {
 	m_Calendar.clear();
+	m_Training.clear();
 	m_Config.clear();
 	m_Dogs.clear();
 }
