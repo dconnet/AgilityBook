@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultConfig Book="8.6">
-	<Configuration version="3">
+	<Configuration version="4">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -12,6 +12,7 @@
 		<Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="C-ATE" OldName="CADE" Venue="CPE" Verb="RenameTitle"/>
 		<Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="AMBOR Triple Superior Novice" OldName="A-NTS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Action NewName="AMBOR Triple Superior Open" OldName="A-OTS" Venue="AMBOR" Verb="RenameTitle"/>
@@ -568,7 +569,7 @@ Games:
 				<Titles LongName="Champion Jackpot" Name="ChJP">15 Qs</Titles>
 				<Titles LongName="Champion FullHouse" Name="ChFH">15 Qs</Titles>
 				<Titles LongName="Champion Jumpers" Name="ChJU">15 Qs</Titles>
-				<Titles LongName="CPE Agility Dog Extraordinaire" Name="CADE">5000 points, 3000 by class requirements, 2000 by handler choice.
+				<Titles LongName="CPE Agility Team Extraordinaire" Name="C-ATE">5000 points, 3000 by class requirements, 2000 by handler choice.
 Standard: 500 pts (20 legs)
 Colors: 300 pts (20 legs)
 Wildcard: 400 pts (20 legs)
