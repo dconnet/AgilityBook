@@ -643,7 +643,8 @@ BOOL CAgilityBookDoc::OnNewDocument()
 
 	if (0 == GetDogs().size())
 	{
-		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
+		if (IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
+			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
 	return TRUE;
 }
@@ -781,6 +782,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	CWaitCursor wait;
 
+	bool bAlreadyWarned = false;
 	BOOL bOk = FALSE;
 	Element tree;
 	// First, we have to push all the class data into a tree.
@@ -802,10 +804,15 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		}
 		else
 		{
+			bAlreadyWarned = true;
 			CString errMsg;
 			errMsg.FormatMessage(IDS_CANNOT_OPEN, lpszPathName);
 			AfxMessageBox(errMsg, MB_OK | MB_ICONEXCLAMATION);
 		}
+	}
+	if (!bOk && !bAlreadyWarned)
+	{
+		AfxMessageBox("Internal error: File not saved.", MB_ICONSTOP);
 	}
 	return bOk;
 }
