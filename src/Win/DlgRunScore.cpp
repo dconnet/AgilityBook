@@ -117,19 +117,20 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
 	m_Club = pClub->GetName().c_str();
 	m_Location = m_pTrial->GetLocation().c_str();
 	m_Height = m_Run->GetHeight().c_str();
+	m_Handler = _T("");
 	m_Conditions = m_Run->GetConditions().c_str();
-	m_Faults = 0;
-	m_Time = 0.0;
-	m_Yards = 0.0;
 	m_SCT = 0.0;
 	m_Opening = 0;
+	m_Yards = 0.0;
+	m_SCT2 = 0.0;
 	m_Closing = 0;
+	m_Time = 0.0;
 	m_Open = 0;
+	m_Faults = 0;
 	m_Close = 0;
 	m_Place = m_Run->GetPlace();
 	m_InClass = m_Run->GetInClass();
 	m_DogsQd = m_Run->GetDogsQd();
-	m_Handler = _T("");
 	//}}AFX_DATA_INIT
 	m_Conditions.Replace("\n", "\r\n");
 }
@@ -149,43 +150,49 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_RUNSCORE_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_RUNSCORE_EVENT, m_ctrlEvents);
+	DDX_Control(pDX, IDC_RUNSCORE_SUBCAT, m_ctrlSubCat);
 	DDX_Control(pDX, IDC_RUNSCORE_HEIGHT, m_ctrlHeight);
 	DDX_CBString(pDX, IDC_RUNSCORE_HEIGHT, m_Height);
 	DDX_Control(pDX, IDC_RUNSCORE_JUDGE, m_ctrlJudge);
 	DDX_CBString(pDX, IDC_RUNSCORE_JUDGE, m_Judge);
+	DDX_Control(pDX, IDC_RUNSCORE_HANDLER, m_ctrlHandler);
+	DDX_CBString(pDX, IDC_RUNSCORE_HANDLER, m_Handler);
 	DDX_Control(pDX, IDC_RUNSCORE_CONDITIONS, m_ctrlConditions);
 	DDX_Text(pDX, IDC_RUNSCORE_CONDITIONS, m_Conditions);
 	DDX_Control(pDX, IDC_RUNSCORE_PARTNERS_EDIT, m_ctrlPartnerEdit);
 	DDX_Control(pDX, IDC_RUNSCORE_PARTNER, m_ctrlPartner);
-	DDX_Control(pDX, IDC_RUNSCORE_HANDLER, m_ctrlHandler);
-	DDX_CBString(pDX, IDC_RUNSCORE_HANDLER, m_Handler);
-	DDX_Control(pDX, IDC_RUNSCORE_FAULTS, m_ctrlFaults);
-	DDX_Text(pDX, IDC_RUNSCORE_FAULTS, m_Faults);
-	DDX_Control(pDX, IDC_RUNSCORE_TIME, m_ctrlTime);
-	DDX_Text(pDX, IDC_RUNSCORE_TIME, m_Time);
 	DDX_Control(pDX, IDC_RUNSCORE_TABLE, m_ctrlTable);
-	DDX_Control(pDX, IDC_RUNSCORE_YARDS_TEXT, m_ctrlYardsText);
-	DDX_Control(pDX, IDC_RUNSCORE_YARDS, m_ctrlYards);
-	DDX_Text(pDX, IDC_RUNSCORE_YARDS, m_Yards);
-	DDX_Control(pDX, IDC_RUNSCORE_YPS_TEXT, m_ctrlYPSText);
-	DDX_Control(pDX, IDC_RUNSCORE_YPS, m_ctrlYPS);
 	DDX_Control(pDX, IDC_RUNSCORE_SCT_TEXT, m_ctrlSCTText);
 	DDX_Control(pDX, IDC_RUNSCORE_SCT, m_ctrlSCT);
 	DDX_Text(pDX, IDC_RUNSCORE_SCT, m_SCT);
-	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS_TEXT, m_ctrlTotalFaultsText);
-	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS, m_ctrlTotalFaults);
 	DDX_Control(pDX, IDC_RUNSCORE_OPENING_PTS_TEXT, m_ctrlOpeningText);
 	DDX_Control(pDX, IDC_RUNSCORE_OPENING_PTS, m_ctrlOpening);
 	DDX_Text(pDX, IDC_RUNSCORE_OPENING_PTS, m_Opening);
+	DDX_Control(pDX, IDC_RUNSCORE_YARDS_TEXT, m_ctrlYardsText);
+	DDX_Control(pDX, IDC_RUNSCORE_YARDS, m_ctrlYards);
+	DDX_Text(pDX, IDC_RUNSCORE_YARDS, m_Yards);
+	DDX_Control(pDX, IDC_RUNSCORE_SCT2_TEXT, m_ctrlSCT2Text);
+	DDX_Control(pDX, IDC_RUNSCORE_SCT2, m_ctrlSCT2);
+	DDX_Text(pDX, IDC_RUNSCORE_SCT2, m_SCT2);
 	DDX_Control(pDX, IDC_RUNSCORE_CLOSING_PTS_TEXT, m_ctrlClosingText);
 	DDX_Control(pDX, IDC_RUNSCORE_CLOSING_PTS, m_ctrlClosing);
 	DDX_Text(pDX, IDC_RUNSCORE_CLOSING_PTS, m_Closing);
+	DDX_Control(pDX, IDC_RUNSCORE_TIME_TEXT, m_ctrlTimeText);
+	DDX_Control(pDX, IDC_RUNSCORE_TIME, m_ctrlTime);
+	DDX_Text(pDX, IDC_RUNSCORE_TIME, m_Time);
 	DDX_Control(pDX, IDC_RUNSCORE_OPEN_PTS_TEXT, m_ctrlOpenText);
 	DDX_Control(pDX, IDC_RUNSCORE_OPEN_PTS, m_ctrlOpen);
 	DDX_Text(pDX, IDC_RUNSCORE_OPEN_PTS, m_Open);
+	DDX_Control(pDX, IDC_RUNSCORE_YPS_TEXT, m_ctrlYPSText);
+	DDX_Control(pDX, IDC_RUNSCORE_YPS, m_ctrlYPS);
+	DDX_Control(pDX, IDC_RUNSCORE_FAULTS_TEXT, m_ctrlFaultsText);
+	DDX_Control(pDX, IDC_RUNSCORE_FAULTS, m_ctrlFaults);
+	DDX_Text(pDX, IDC_RUNSCORE_FAULTS, m_Faults);
 	DDX_Control(pDX, IDC_RUNSCORE_CLOSE_PTS_TEXT, m_ctrlCloseText);
 	DDX_Control(pDX, IDC_RUNSCORE_CLOSE_PTS, m_ctrlClose);
 	DDX_Text(pDX, IDC_RUNSCORE_CLOSE_PTS, m_Close);
+	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS_TEXT, m_ctrlTotalFaultsText);
+	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS, m_ctrlTotalFaults);
 	DDX_Control(pDX, IDC_RUNSCORE_PLACE, m_ctrlPlace);
 	DDX_Text(pDX, IDC_RUNSCORE_PLACE, m_Place);
 	DDX_Control(pDX, IDC_RUNSCORE_IN_CLASS, m_ctrlInClass);
@@ -194,11 +201,11 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RUNSCORE_DOGS_QD, m_DogsQd);
 	DDX_Control(pDX, IDC_RUNSCORE_Q, m_ctrlQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SCORE, m_ctrlScore);
-	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
-	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS, m_ctrlTitlePoints);
+	DDX_Control(pDX, IDC_RUNSCORE_DOUBLE_Q, m_ctrlDoubleQ);
 	DDX_Control(pDX, IDC_RUNSCORE_MACHPTS_TEXT, m_ctrlMachPtsText);
 	DDX_Control(pDX, IDC_RUNSCORE_MACHPTS, m_ctrlMachPts);
-	DDX_Control(pDX, IDC_RUNSCORE_DOUBLE_Q, m_ctrlDoubleQ);
+	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
+	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS, m_ctrlTitlePoints);
 	DDX_Control(pDX, IDC_RUNSCORE_OTHERPOINTS, m_ctrlOtherPoints);
 	//}}AFX_DATA_MAP
 	if (pDX->m_bSaveAndValidate)
@@ -213,13 +220,13 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Height.TrimLeft();
 		m_Judge.TrimRight();
 		m_Judge.TrimLeft();
-		m_Conditions.TrimRight();
-		m_Conditions.TrimLeft();
 		m_Handler.TrimRight();
 		m_Handler.TrimLeft();
+		m_Conditions.TrimRight();
+		m_Conditions.TrimLeft();
 
 		CString str;
-		std::string div, level, event;
+		std::string div, level, event, subcat;
 
 		pDX->PrepareCtrl(m_ctrlDivisions.GetDlgCtrlID());
 		int index = m_ctrlDivisions.GetCurSel();
@@ -274,6 +281,14 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 		event = (LPCSTR)str;
 
+		pDX->PrepareCtrl(m_ctrlSubCat.GetDlgCtrlID());
+		index = m_ctrlSubCat.GetCurSel();
+		if (CB_ERR != index)
+		{
+			m_ctrlSubCat.GetLBText(index, str);
+			subcat = (LPCSTR)str;
+		}
+
 		pDX->PrepareCtrl(m_ctrlJudge.GetDlgCtrlID());
 		if (m_Judge.IsEmpty())
 		{
@@ -315,8 +330,10 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetDivision(div);
 		m_Run->SetLevel(level);
 		m_Run->SetEvent(event);
+		m_Run->SetSubCategory(subcat);
 		m_Run->SetHeight((LPCSTR)m_Height);
 		m_Run->SetJudge((LPCSTR)m_Judge);
+		m_Run->SetHandler((LPCSTR)m_Handler);
 		CString tmp(m_Conditions);
 		tmp.Replace("\r\n", "\n");
 		m_Run->SetConditions((LPCSTR)tmp);
@@ -329,27 +346,29 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		case ARBConfigScoring::eFaults100ThenTime:
 		case ARBConfigScoring::eFaults200ThenTime:
 		case ARBConfigScoring::eTimePlusFaults:
-			m_Run->GetScoring().SetCourseFaults(m_Faults);
-			m_Run->GetScoring().SetTime(m_Time);
-			m_Run->GetScoring().SetYards(m_Yards);
 			m_Run->GetScoring().SetSCT(m_SCT);
+			m_Run->GetScoring().SetYards(m_Yards);
+			m_Run->GetScoring().SetTime(m_Time);
+			m_Run->GetScoring().SetCourseFaults(m_Faults);
 			break;
 		case ARBConfigScoring::eOCScoreThenTime:
-			m_Run->GetScoring().SetCourseFaults(m_Faults);
-			m_Run->GetScoring().SetTime(m_Time);
+			m_Run->GetScoring().SetSCT(m_SCT);
 			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
+			m_Run->GetScoring().SetSCT2(m_SCT2);
 			m_Run->GetScoring().SetNeedClosePts(m_Closing);
+			m_Run->GetScoring().SetTime(m_Time);
 			m_Run->GetScoring().SetOpenPts(m_Open);
+			m_Run->GetScoring().SetCourseFaults(m_Faults);
 			m_Run->GetScoring().SetClosePts(m_Close);
 			break;
 		case ARBConfigScoring::eScoreThenTime:
-			m_Run->GetScoring().SetCourseFaults(m_Faults);
-			m_Run->GetScoring().SetTime(m_Time);
+			m_Run->GetScoring().SetSCT(m_SCT);
 			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
+			m_Run->GetScoring().SetTime(m_Time);
 			m_Run->GetScoring().SetOpenPts(m_Open);
+			m_Run->GetScoring().SetCourseFaults(m_Faults);
 			break;
 		}
-		m_Run->SetHandler((LPCSTR)m_Handler);
 		m_Run->SetPlace(m_Place);
 		m_Run->SetInClass(m_InClass);
 		m_Run->SetDogsQd(m_DogsQd);
@@ -364,12 +383,14 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_DIVISION, OnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_LEVEL, OnSelchangeLevel)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_EVENT, OnSelchangeEvent)
+	ON_CBN_SELCHANGE(IDC_RUNSCORE_SUBCAT, OnSelchangeSubCat)
 	ON_BN_CLICKED(IDC_RUNSCORE_PARTNERS_EDIT, OnPartnersEdit)
 	ON_BN_CLICKED(IDC_RUNSCORE_OTHERPOINTS, OnOtherpoints)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_FAULTS, OnKillfocusFaults)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_TIME, OnKillfocusTime)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_YARDS, OnKillfocusYards)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_SCT, OnKillfocusSct)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_SCT2, OnKillfocusSct2)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPENING_PTS, OnKillfocusOpening)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_CLOSING_PTS, OnKillfocusClosing)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPEN_PTS, OnKillfocusOpen)
@@ -549,7 +570,30 @@ void CDlgRunScore::FillEvents()
 			}
 		}
 	}
+	FillSubCategory();
 	UpdateControls();
+}
+
+void CDlgRunScore::FillSubCategory()
+{
+	m_ctrlSubCat.ResetContent();
+	ARBConfigEvent const* pEvent = GetEvent();
+	if (pEvent)
+	{
+		std::vector<std::string> const& subcat = pEvent->GetSubCategories();
+		if (0 < subcat.size())
+		{
+			m_ctrlSubCat.AddString("");
+			for (std::vector<std::string>::const_iterator iter = subcat.begin();
+			iter != subcat.end();
+			++iter)
+			{
+				int idx = m_ctrlSubCat.AddString((*iter).c_str());
+				if (*iter == m_Run->GetSubCategory())
+					m_ctrlSubCat.SetCurSel(idx);
+			}
+		}
+	}
 }
 
 void CDlgRunScore::SetPartnerText()
@@ -687,35 +731,57 @@ void CDlgRunScore::SetTitlePoints()
 
 void CDlgRunScore::UpdateControls(bool bOnEventChange)
 {
+	m_ctrlSubCat.EnableWindow(FALSE);
+	m_ctrlHeight.EnableWindow(FALSE);
+	m_ctrlJudge.EnableWindow(FALSE);
+	m_ctrlHandler.EnableWindow(FALSE);
+	m_ctrlConditions.EnableWindow(FALSE);
+	m_ctrlPartnerEdit.ShowWindow(SW_HIDE);
+	m_ctrlPartner.ShowWindow(SW_HIDE);
+	m_ctrlTable.ShowWindow(SW_HIDE);
+	m_ctrlSCTText.ShowWindow(SW_HIDE);
+	m_ctrlSCT.ShowWindow(SW_HIDE);
+	m_ctrlOpeningText.ShowWindow(SW_HIDE);
+	m_ctrlOpening.ShowWindow(SW_HIDE);
+	m_ctrlYardsText.ShowWindow(SW_HIDE);
+	m_ctrlYards.ShowWindow(SW_HIDE);
+	m_ctrlSCT2Text.ShowWindow(SW_HIDE);
+	m_ctrlSCT2.ShowWindow(SW_HIDE);
+	m_ctrlClosingText.ShowWindow(SW_HIDE);
+	m_ctrlClosing.ShowWindow(SW_HIDE);
+	m_ctrlTimeText.ShowWindow(SW_HIDE);
+	m_ctrlTime.ShowWindow(SW_HIDE);
+	m_ctrlOpenText.ShowWindow(SW_HIDE);
+	m_ctrlOpen.ShowWindow(SW_HIDE);
+	m_ctrlYPSText.ShowWindow(SW_HIDE);
+	m_ctrlYPS.ShowWindow(SW_HIDE);
+	m_ctrlFaultsText.ShowWindow(SW_HIDE);
+	m_ctrlFaults.ShowWindow(SW_HIDE);
+	m_ctrlCloseText.ShowWindow(SW_HIDE);
+	m_ctrlClose.ShowWindow(SW_HIDE);
+	m_ctrlTotalFaultsText.ShowWindow(SW_HIDE);
+	m_ctrlTotalFaults.ShowWindow(SW_HIDE);
+	m_ctrlPlace.EnableWindow(FALSE);
+	m_ctrlInClass.EnableWindow(FALSE);
+	m_ctrlDogsQd.EnableWindow(FALSE);
+	m_ctrlQ.EnableWindow(FALSE);
+	m_ctrlDoubleQ.ShowWindow(SW_HIDE);
+	m_ctrlMachPtsText.ShowWindow(SW_HIDE);
+	m_ctrlMachPts.ShowWindow(SW_HIDE);
+	m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
+	m_ctrlTitlePoints.ShowWindow(SW_HIDE);
+
 	ARBConfigScoring const* pScoring = GetScoring();
 	if (!pScoring)
 	{
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeUnknown, false);
-		m_ctrlHeight.EnableWindow(FALSE);
-		m_ctrlJudge.EnableWindow(FALSE);
-		m_ctrlConditions.EnableWindow(FALSE);
-		m_ctrlPartnerEdit.ShowWindow(SW_HIDE);
-		m_ctrlPartner.ShowWindow(SW_HIDE);
-		m_ctrlHandler.EnableWindow(FALSE);
-		m_ctrlTime.EnableWindow(FALSE);
-		m_ctrlTable.EnableWindow(FALSE);
-		m_ctrlFaults.EnableWindow(FALSE);
-		m_ctrlYards.EnableWindow(FALSE);
-		m_ctrlSCT.EnableWindow(FALSE);
-		m_ctrlOpening.EnableWindow(FALSE);
-		m_ctrlClosing.EnableWindow(FALSE);
-		m_ctrlOpen.EnableWindow(FALSE);
-		m_ctrlClose.EnableWindow(FALSE);
-		m_ctrlPlace.EnableWindow(FALSE);
-		m_ctrlInClass.EnableWindow(FALSE);
-		m_ctrlDogsQd.EnableWindow(FALSE);
-		m_ctrlQ.EnableWindow(FALSE);
-		m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
-		m_ctrlTitlePoints.ShowWindow(SW_HIDE);
-		m_ctrlMachPtsText.ShowWindow(SW_HIDE);
-		m_ctrlMachPts.ShowWindow(SW_HIDE);
-		m_ctrlDoubleQ.ShowWindow(SW_HIDE);
 		return;
+	}
+
+	ARBConfigEvent const* pEvent = GetEvent();
+	if (0 < pEvent->GetSubCategories().size())
+	{
+		m_ctrlSubCat.EnableWindow(TRUE);
 	}
 
 	CString str;
@@ -737,20 +803,6 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	}
 	m_ctrlJudge.EnableWindow(TRUE);
 
-	m_ctrlConditions.EnableWindow(TRUE);
-
-	ARBConfigEvent const* pEvent = GetEvent();
-	if (pEvent->HasPartner())
-	{
-		m_ctrlPartnerEdit.ShowWindow(SW_SHOW);
-		m_ctrlPartner.ShowWindow(SW_SHOW);
-	}
-	else
-	{
-		m_ctrlPartnerEdit.ShowWindow(SW_HIDE);
-		m_ctrlPartner.ShowWindow(SW_HIDE);
-	}
-
 	m_ctrlHandler.GetWindowText(str);
 	if (str.IsEmpty())
 	{
@@ -760,15 +812,21 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	}
 	m_ctrlHandler.EnableWindow(TRUE);
 
+	m_ctrlConditions.EnableWindow(TRUE);
+
+	if (pEvent->HasPartner())
+	{
+		m_ctrlPartnerEdit.ShowWindow(SW_SHOW);
+		m_ctrlPartner.ShowWindow(SW_SHOW);
+	}
+
 	if (pEvent->HasTable())
 	{
 		if (bOnEventChange)
 			m_Run->GetScoring().SetHasTable(pEvent->HasTable());
-		m_ctrlTable.EnableWindow(TRUE);
+		m_ctrlTable.ShowWindow(SW_SHOW);
 		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
 	}
-	else
-		m_ctrlTable.EnableWindow(FALSE);
 
 	switch (pScoring->GetScoringStyle())
 	{
@@ -780,35 +838,43 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	case ARBConfigScoring::eFaults200ThenTime:
 	case ARBConfigScoring::eTimePlusFaults:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
-		m_ctrlTime.EnableWindow(TRUE);
-		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlYards.EnableWindow(TRUE);
-		m_ctrlSCT.EnableWindow(TRUE);
-		m_ctrlOpening.EnableWindow(FALSE);
-		m_ctrlClosing.EnableWindow(FALSE);
-		m_ctrlOpen.EnableWindow(FALSE);
-		m_ctrlClose.EnableWindow(FALSE);
+		m_ctrlSCTText.ShowWindow(SW_SHOW);
+		m_ctrlSCT.ShowWindow(SW_SHOW);
+		m_ctrlYardsText.ShowWindow(SW_SHOW);
+		m_ctrlYards.ShowWindow(SW_SHOW);
+		m_ctrlTimeText.ShowWindow(SW_SHOW);
+		m_ctrlTime.ShowWindow(SW_SHOW);
+		m_ctrlYPSText.ShowWindow(SW_SHOW);
+		m_ctrlYPS.ShowWindow(SW_SHOW);
+		m_ctrlFaultsText.ShowWindow(SW_SHOW);
+		m_ctrlFaults.ShowWindow(SW_SHOW);
+		m_ctrlTotalFaultsText.ShowWindow(SW_SHOW);
+		m_ctrlTotalFaults.ShowWindow(SW_SHOW);
 		break;
 	case ARBConfigScoring::eOCScoreThenTime:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
 		m_Opening = pScoring->GetRequiredOpeningPoints();
 		m_Closing = pScoring->GetRequiredClosingPoints();
-		// Do not push these back into the run.
+		// Do not push these (above) back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
-		m_ctrlTime.EnableWindow(TRUE);
-		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlYards.EnableWindow(FALSE);
-		m_ctrlSCT.EnableWindow(FALSE);
+		m_ctrlSCTText.ShowWindow(SW_SHOW);
+		m_ctrlSCT.ShowWindow(SW_SHOW);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[0]);
-		m_ctrlOpening.EnableWindow(TRUE);
+		m_ctrlOpeningText.ShowWindow(SW_SHOW);
+		m_ctrlOpening.ShowWindow(SW_SHOW);
+		m_ctrlSCT2Text.ShowWindow(SW_SHOW);
+		m_ctrlSCT2.ShowWindow(SW_SHOW);
 		m_ctrlClosingText.ShowWindow(SW_SHOW);
 		m_ctrlClosing.ShowWindow(SW_SHOW);
-		m_ctrlClosing.EnableWindow(TRUE);
+		m_ctrlTimeText.ShowWindow(SW_SHOW);
+		m_ctrlTime.ShowWindow(SW_SHOW);
 		m_ctrlOpenText.SetWindowText(m_strOpen[0]);
-		m_ctrlOpen.EnableWindow(TRUE);
+		m_ctrlOpenText.ShowWindow(SW_SHOW);
+		m_ctrlOpen.ShowWindow(SW_SHOW);
+		m_ctrlFaultsText.ShowWindow(SW_SHOW);
+		m_ctrlFaults.ShowWindow(SW_SHOW);
 		m_ctrlCloseText.ShowWindow(SW_SHOW);
 		m_ctrlClose.ShowWindow(SW_SHOW);
-		m_ctrlClose.EnableWindow(TRUE);
 		// I don't want to call UpdateData here. It could cause a loss of data.
 		str.Format("%hd", m_Opening);
 		m_ctrlOpening.SetWindowText(str);
@@ -820,18 +886,18 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_Opening = pScoring->GetRequiredOpeningPoints();
 		// Do not push this back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
-		m_ctrlTime.EnableWindow(TRUE);
-		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlYards.EnableWindow(FALSE);
-		m_ctrlSCT.EnableWindow(FALSE);
+		m_ctrlSCTText.ShowWindow(SW_SHOW);
+		m_ctrlSCT.ShowWindow(SW_SHOW);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[1]);
-		m_ctrlOpening.EnableWindow(TRUE);
-		m_ctrlClosingText.ShowWindow(SW_HIDE);
-		m_ctrlClosing.ShowWindow(SW_HIDE);
+		m_ctrlOpeningText.ShowWindow(SW_SHOW);
+		m_ctrlOpening.ShowWindow(SW_SHOW);
+		m_ctrlTimeText.ShowWindow(SW_SHOW);
+		m_ctrlTime.ShowWindow(SW_SHOW);
 		m_ctrlOpenText.SetWindowText(m_strOpen[1]);
-		m_ctrlOpen.EnableWindow(TRUE);
-		m_ctrlCloseText.ShowWindow(SW_HIDE);
-		m_ctrlClose.ShowWindow(SW_HIDE);
+		m_ctrlOpenText.ShowWindow(SW_SHOW);
+		m_ctrlOpen.ShowWindow(SW_SHOW);
+		m_ctrlFaultsText.ShowWindow(SW_SHOW);
+		m_ctrlFaults.ShowWindow(SW_SHOW);
 		// I don't want to call UpdateData here. It could cause a loss of data.
 		str.Format("%hd", m_Opening);
 		m_ctrlOpening.SetWindowText(str);
@@ -845,39 +911,22 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlQ.EnableWindow(TRUE);
 		m_ctrlDogsQd.EnableWindow(TRUE);
 	}
-	else
-	{
-		m_ctrlQ.EnableWindow(FALSE);
-		m_ctrlDogsQd.EnableWindow(FALSE);
-	}
 	FillQ(pScoring->HasSuperQ());
 	if (0 < pScoring->GetTitlePoints().size())
 	{
 		m_ctrlTitlePointsText.ShowWindow(SW_SHOW);
 		m_ctrlTitlePoints.ShowWindow(SW_SHOW);
 	}
-	else
-	{
-		m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
-		m_ctrlTitlePoints.ShowWindow(SW_HIDE);
-	}
 	if (pScoring->HasMachPts())
 	{
 		m_ctrlMachPtsText.ShowWindow(SW_SHOW);
 		m_ctrlMachPts.ShowWindow(SW_SHOW);
-	}
-	else
-	{
-		m_ctrlMachPtsText.ShowWindow(SW_HIDE);
-		m_ctrlMachPts.ShowWindow(SW_HIDE);
 	}
 	if (pScoring->HasDoubleQ())
 	{
 		m_ctrlDoubleQ.ShowWindow(SW_SHOW);
 		SetDoubleQ();
 	}
-	else
-		m_ctrlDoubleQ.ShowWindow(SW_HIDE);
 	SetTitlePoints();
 }
 
@@ -968,12 +1017,15 @@ BOOL CDlgRunScore::OnInitDialog()
 		m_Closing = m_Run->GetScoring().GetNeedClosePts();
 		m_Open = m_Run->GetScoring().GetOpenPts();
 		m_Close = m_Run->GetScoring().GetClosePts();
+		m_SCT = m_Run->GetScoring().GetSCT();
+		m_SCT2 = m_Run->GetScoring().GetSCT2();
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
 		m_Opening = m_Run->GetScoring().GetNeedOpenPts();
 		m_Open = m_Run->GetScoring().GetOpenPts();
+		m_SCT = m_Run->GetScoring().GetSCT();
 		break;
 	}
 
@@ -1016,7 +1068,13 @@ void CDlgRunScore::OnSelchangeLevel()
 
 void CDlgRunScore::OnSelchangeEvent()
 {
+	FillSubCategory();
 	UpdateControls(true);
+}
+
+void CDlgRunScore::OnSelchangeSubCat()
+{
+	UpdateControls();
 }
 
 void CDlgRunScore::OnPartnersEdit() 
@@ -1067,6 +1125,12 @@ void CDlgRunScore::OnKillfocusSct()
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetTotalFaults();
 	SetTitlePoints();
+}
+
+void CDlgRunScore::OnKillfocusSct2() 
+{
+	GetText(&m_ctrlSCT2, m_SCT2);
+	m_Run->GetScoring().SetSCT2(m_SCT2);
 }
 
 void CDlgRunScore::OnKillfocusOpening()

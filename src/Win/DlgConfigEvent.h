@@ -60,6 +60,10 @@ private:
 	CString m_Name;
 	BOOL	m_bHasTable;
 	BOOL	m_bHasPartners;
+	CListBox2	m_ctrlSubCat;
+	CButton	m_ctrlSubCatNew;
+	CButton	m_ctrlSubCatEdit;
+	CButton	m_ctrlSubCatDelete;
 	CString	m_Desc;
 	CButton m_ctrlNew;
 	CButton m_ctrlCopy;
@@ -87,9 +91,9 @@ private:
 	CButton m_ctrlMachPts;
 	CButton m_ctrlDoubleQ;
 	CListBox2	m_ctrlPointsList;
-	CButton	m_ctrlTitleNew;
-	CButton	m_ctrlTitleEdit;
-	CButton	m_ctrlTitleDelete;
+	CButton	m_ctrlPointsNew;
+	CButton	m_ctrlPointsEdit;
+	CButton	m_ctrlPointsDelete;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook* m_Book;
@@ -119,6 +123,11 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgConfigEvent)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnSelchangeSubCat();
+	afx_msg void OnDblclkSubCat();
+	afx_msg void OnSubCatNew();
+	afx_msg void OnSubCatEdit();
+	afx_msg void OnSubCatDelete();
 	afx_msg void OnBnClickedNew();
 	afx_msg void OnBnClickedCopy();
 	afx_msg void OnBnClickedDelete();
@@ -131,11 +140,11 @@ protected:
 	afx_msg void OnCbnSelchangeDivision();
 	afx_msg void OnCbnSelchangeLevel();
 	afx_msg void OnSelchangeType();
-	afx_msg void OnSelchangeList();
-	afx_msg void OnDblclkList();
-	afx_msg void OnTitleNew();
-	afx_msg void OnTitleEdit();
-	afx_msg void OnTitleDelete();
+	afx_msg void OnSelchangePoints();
+	afx_msg void OnDblclkPoints();
+	afx_msg void OnPointsNew();
+	afx_msg void OnPointsEdit();
+	afx_msg void OnPointsDelete();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
