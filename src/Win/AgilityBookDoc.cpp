@@ -356,7 +356,8 @@ CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 }
 
 /**
- * Function to get the calendar list view. This is used by the calendar view.
+ * Function to get the calendar list view. This is used by the calendar view
+ * and by the export wizard.
  */
 CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
 {
@@ -388,6 +389,24 @@ CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
 	ASSERT(0);
 	return NULL;
 }
+
+/**
+ * Function to get the trainging view. This is used by the export wizard.
+ */
+CAgilityBookViewTraining* CAgilityBookDoc::GetTrainingView() const
+{
+	POSITION pos = this->GetFirstViewPosition();
+	while (NULL != pos)
+	{
+		CView* pView = GetNextView(pos);
+		CAgilityBookViewTraining* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewTraining, pView);
+		if (pView2)
+			return pView2;
+	}
+	ASSERT(0);
+	return NULL;
+}
+
 
 /**
  * MFC method to delete contents of current document.
