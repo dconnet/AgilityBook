@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-09 DRC Added *etViewRunsByTrial.
  * @li 2003-19-05 DRC Removed registry entry: "Calendar"/"List" (boolean)
  */
 
@@ -326,6 +327,17 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 
 /////////////////////////////////////////////////////////////////////////////
 // Runs/points options
+
+bool CAgilityBookOptions::GetViewRunsByTrial()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewRunsByTrial", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewRunsByTrial", bView ? 1 : 0);
+}
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {

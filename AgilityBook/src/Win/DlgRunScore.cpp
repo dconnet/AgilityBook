@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
+ *                    This allows faults for things like language!
  * @li 2003-09-29 DRC Required pts were being overwriten with default values
  *                    during dialog initialization.
  * @li 2003-09-01 DRC Total faults weren't being shown when there was no SCT.
@@ -103,12 +105,11 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue,
 	m_Height = m_Run->GetHeight().c_str();
 	m_Conditions = m_Run->GetConditions().c_str();
 	m_Faults = 0;
-	m_Time4Fault = 0.0;
+	m_Time = 0.0;
 	m_Yards = 0.0;
 	m_SCT = 0.0;
 	m_Opening = 0;
 	m_Closing = 0;
-	m_Time4Score = 0.0;
 	m_Open = 0;
 	m_Close = 0;
 	m_Place = m_Run->GetPlace();
@@ -147,12 +148,10 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PARTNER, m_ctrlPartner);
 	DDX_Control(pDX, IDC_HANDLER, m_ctrlHandler);
 	DDX_CBString(pDX, IDC_HANDLER, m_Handler);
-	DDX_Control(pDX, IDC_FAULTS_TEXT, m_ctrlFaultsText);
 	DDX_Control(pDX, IDC_FAULTS, m_ctrlFaults);
 	DDX_Text(pDX, IDC_FAULTS, m_Faults);
-	DDX_Control(pDX, IDC_TIME4FAULT_TEXT, m_ctrlTime4FaultText);
-	DDX_Control(pDX, IDC_TIME4FAULT, m_ctrlTime4Fault);
-	DDX_Text(pDX, IDC_TIME4FAULT, m_Time4Fault);
+	DDX_Control(pDX, IDC_TIME, m_ctrlTime);
+	DDX_Text(pDX, IDC_TIME, m_Time);
 	DDX_Control(pDX, IDC_YARDS_TEXT, m_ctrlYardsText);
 	DDX_Control(pDX, IDC_YARDS, m_ctrlYards);
 	DDX_Text(pDX, IDC_YARDS, m_Yards);
@@ -169,9 +168,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CLOSING_PTS_TEXT, m_ctrlClosingText);
 	DDX_Control(pDX, IDC_CLOSING_PTS, m_ctrlClosing);
 	DDX_Text(pDX, IDC_CLOSING_PTS, m_Closing);
-	DDX_Control(pDX, IDC_TIME4SCORE_TEXT, m_ctrlTime4ScoreText);
-	DDX_Control(pDX, IDC_TIME4SCORE, m_ctrlTime4Score);
-	DDX_Text(pDX, IDC_TIME4SCORE, m_Time4Score);
 	DDX_Control(pDX, IDC_OPEN_PTS_TEXT, m_ctrlOpenText);
 	DDX_Control(pDX, IDC_OPEN_PTS, m_ctrlOpen);
 	DDX_Text(pDX, IDC_OPEN_PTS, m_Open);
@@ -330,20 +326,22 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		case ARBConfigScoring::eFaults200ThenTime:
 		case ARBConfigScoring::eTimePlusFaults:
 			m_Run->GetScoring().SetCourseFaults(m_Faults);
-			m_Run->GetScoring().SetTime(m_Time4Fault);
+			m_Run->GetScoring().SetTime(m_Time);
 			m_Run->GetScoring().SetYards(m_Yards);
 			m_Run->GetScoring().SetSCT(m_SCT);
 			break;
 		case ARBConfigScoring::eOCScoreThenTime:
+			m_Run->GetScoring().SetCourseFaults(m_Faults);
+			m_Run->GetScoring().SetTime(m_Time);
 			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
 			m_Run->GetScoring().SetNeedClosePts(m_Closing);
-			m_Run->GetScoring().SetTime(m_Time4Score);
 			m_Run->GetScoring().SetOpenPts(m_Open);
 			m_Run->GetScoring().SetClosePts(m_Close);
 			break;
 		case ARBConfigScoring::eScoreThenTime:
+			m_Run->GetScoring().SetCourseFaults(m_Faults);
+			m_Run->GetScoring().SetTime(m_Time);
 			m_Run->GetScoring().SetNeedOpenPts(m_Opening);
-			m_Run->GetScoring().SetTime(m_Time4Score);
 			m_Run->GetScoring().SetOpenPts(m_Open);
 			break;
 		}
@@ -364,12 +362,11 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CPropertyPage)
 	ON_BN_CLICKED(IDC_PARTNERS_EDIT, OnPartnersEdit)
 	ON_BN_CLICKED(IDC_OTHERPOINTS, OnOtherpoints)
 	ON_EN_KILLFOCUS(IDC_FAULTS, OnKillfocusFaults)
-	ON_EN_KILLFOCUS(IDC_TIME4FAULT, OnKillfocusTime4fault)
+	ON_EN_KILLFOCUS(IDC_TIME, OnKillfocusTime)
 	ON_EN_KILLFOCUS(IDC_YARDS, OnKillfocusYards)
 	ON_EN_KILLFOCUS(IDC_SCT, OnKillfocusSct)
 	ON_EN_KILLFOCUS(IDC_OPENING_PTS, OnKillfocusOpening)
 	ON_EN_KILLFOCUS(IDC_CLOSING_PTS, OnKillfocusClosing)
-	ON_EN_KILLFOCUS(IDC_TIME4SCORE, OnKillfocusTime4score)
 	ON_EN_KILLFOCUS(IDC_OPEN_PTS, OnKillfocusOpen)
 	ON_EN_KILLFOCUS(IDC_CLOSE_PTS, OnKillfocusClose)
 	ON_EN_KILLFOCUS(IDC_PLACE, OnKillfocusPlace)
@@ -544,9 +541,9 @@ void CDlgRunScore::SetYPS()
 {
 	CString yps;
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType()
-	&& 0 < m_Yards && 0.0 < m_Time4Fault)
+	&& 0 < m_Yards && 0.0 < m_Time)
 	{
-		yps.Format("%.3f", m_Yards / m_Time4Fault);
+		yps.Format("%.3f", m_Yards / m_Time);
 	}
 	m_ctrlYPS.SetWindowText(yps);
 }
@@ -708,13 +705,10 @@ void CDlgRunScore::UpdateControls()
 		m_ctrlPartnerEdit.ShowWindow(SW_HIDE);
 		m_ctrlPartner.ShowWindow(SW_HIDE);
 		m_ctrlHandler.EnableWindow(FALSE);
-		m_ctrlFaults.EnableWindow(FALSE);
-		m_ctrlTime4Fault.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpening.EnableWindow(FALSE);
 		m_ctrlClosing.EnableWindow(FALSE);
-		m_ctrlTime4Score.EnableWindow(FALSE);
 		m_ctrlOpen.EnableWindow(FALSE);
 		m_ctrlClose.EnableWindow(FALSE);
 		m_ctrlPlace.EnableWindow(FALSE);
@@ -780,13 +774,10 @@ void CDlgRunScore::UpdateControls()
 	case ARBConfigScoring::eFaults200ThenTime:
 	case ARBConfigScoring::eTimePlusFaults:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
-		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTime4Fault.EnableWindow(TRUE);
 		m_ctrlYards.EnableWindow(TRUE);
 		m_ctrlSCT.EnableWindow(TRUE);
 		m_ctrlOpening.EnableWindow(FALSE);
 		m_ctrlClosing.EnableWindow(FALSE);
-		m_ctrlTime4Score.EnableWindow(FALSE);
 		m_ctrlOpen.EnableWindow(FALSE);
 		m_ctrlClose.EnableWindow(FALSE);
 		break;
@@ -796,8 +787,6 @@ void CDlgRunScore::UpdateControls()
 		m_Closing = pScoring->GetRequiredClosingPoints();
 		// Do not push these back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
-		m_ctrlFaults.EnableWindow(FALSE);
-		m_ctrlTime4Fault.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[0]);
@@ -805,7 +794,6 @@ void CDlgRunScore::UpdateControls()
 		m_ctrlClosingText.ShowWindow(SW_SHOW);
 		m_ctrlClosing.ShowWindow(SW_SHOW);
 		m_ctrlClosing.EnableWindow(TRUE);
-		m_ctrlTime4Score.EnableWindow(TRUE);
 		m_ctrlOpenText.SetWindowText(m_strOpen[0]);
 		m_ctrlOpen.EnableWindow(TRUE);
 		m_ctrlCloseText.ShowWindow(SW_SHOW);
@@ -822,15 +810,12 @@ void CDlgRunScore::UpdateControls()
 		m_Opening = pScoring->GetRequiredOpeningPoints();
 		// Do not push this back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
-		m_ctrlFaults.EnableWindow(FALSE);
-		m_ctrlTime4Fault.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[1]);
 		m_ctrlOpening.EnableWindow(TRUE);
 		m_ctrlClosingText.ShowWindow(SW_HIDE);
 		m_ctrlClosing.ShowWindow(SW_HIDE);
-		m_ctrlTime4Score.EnableWindow(TRUE);
 		m_ctrlOpenText.SetWindowText(m_strOpen[1]);
 		m_ctrlOpen.EnableWindow(TRUE);
 		m_ctrlCloseText.ShowWindow(SW_HIDE);
@@ -950,21 +935,23 @@ BOOL CDlgRunScore::OnInitDialog()
 		break;
 	case ARBDogRunScoring::eTypeByTime:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
-		m_Time4Fault = m_Run->GetScoring().GetTime();
+		m_Time = m_Run->GetScoring().GetTime();
 		m_Yards = m_Run->GetScoring().GetYards();
 		m_SCT = m_Run->GetScoring().GetSCT();
 		SetYPS();
 		SetTotalFaults();
 		break;
 	case ARBDogRunScoring::eTypeByOpenClose:
+		m_Faults = m_Run->GetScoring().GetCourseFaults();
+		m_Time = m_Run->GetScoring().GetTime();
 		m_Opening = m_Run->GetScoring().GetNeedOpenPts();
 		m_Closing = m_Run->GetScoring().GetNeedClosePts();
-		m_Time4Score = m_Run->GetScoring().GetTime();
 		m_Open = m_Run->GetScoring().GetOpenPts();
 		m_Close = m_Run->GetScoring().GetClosePts();
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
-		m_Time4Score = m_Run->GetScoring().GetTime();
+		m_Faults = m_Run->GetScoring().GetCourseFaults();
+		m_Time = m_Run->GetScoring().GetTime();
 		m_Opening = m_Run->GetScoring().GetNeedOpenPts();
 		m_Open = m_Run->GetScoring().GetOpenPts();
 		break;
@@ -1031,10 +1018,10 @@ void CDlgRunScore::OnKillfocusFaults()
 	SetTitlePoints();
 }
 
-void CDlgRunScore::OnKillfocusTime4fault() 
+void CDlgRunScore::OnKillfocusTime() 
 {
-	GetText(&m_ctrlTime4Fault, m_Time4Fault);
-	m_Run->GetScoring().SetTime(m_Time4Fault);
+	GetText(&m_ctrlTime, m_Time);
+	m_Run->GetScoring().SetTime(m_Time);
 	SetTotalFaults();
 	SetTitlePoints();
 }
@@ -1066,13 +1053,6 @@ void CDlgRunScore::OnKillfocusClosing()
 {
 	GetText(&m_ctrlClosing, m_Closing);
 	m_Run->GetScoring().SetNeedClosePts(m_Closing);
-	SetTitlePoints();
-}
-
-void CDlgRunScore::OnKillfocusTime4score()
-{
-	GetText(&m_ctrlTime4Score, m_Time4Score);
-	m_Run->GetScoring().SetTime(m_Time4Score);
 	SetTitlePoints();
 }
 

@@ -34,16 +34,19 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
 #include "ColumnOrder.h"
 #include "ListCtrl.h"
+class ARBConfigVenue;
 class ARBDogRun;
+class CAgilityBookDoc;
 
 class CDlgRunReference : public CPropertyPage
 {
 public:
-	CDlgRunReference(ARBDogRun* pRun);
+	CDlgRunReference(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue, ARBDogRun* pRun);
 	~CDlgRunReference();
 
 private:
@@ -55,6 +58,8 @@ private:
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
 	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
+	const ARBConfigVenue* m_Venue;
 	ARBDogRun* m_Run;
 	CColumnOrder m_sortRefRuns;
 

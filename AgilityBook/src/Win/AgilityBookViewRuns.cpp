@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  *                    Added creating titles/trials/runs from the Run view.
@@ -386,7 +387,7 @@ void CAgilityBookViewRuns::LoadData()
 	CAgilityBookOptions::GetFilterVenue(venues);
 	list<ARBDogTrial*> trials;
 	ARBDogTrial* pCurTrial = GetDocument()->GetCurrentTrial();
-	if (pCurTrial)
+	if (pCurTrial && CAgilityBookOptions::GetViewRunsByTrial())
 		trials.push_back(pCurTrial);
 	else
 	{

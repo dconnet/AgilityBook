@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
  */
 
 /**
@@ -137,17 +138,15 @@
 #define ATTRIB_PARTNER_HANDLER				"Handler"
 #define ATTRIB_PARTNER_DOG					"Dog"
 #define ATTRIB_PARTNER_REGNUM				"RegNum"
-#define ATTRIB_BY_TIME_TIME					"Time"
-#define ATTRIB_BY_TIME_FAULTS				"CourseFaults"
+#define ATTRIB_SCORING_FAULTS				"CourseFaults"
+#define ATTRIB_SCORING_TIME					"Time"
 #define ATTRIB_BY_TIME_SCT					"SCT"
 #define ATTRIB_BY_TIME_YARDS				"Yards"
 #define ATTRIB_BY_OPENCLOSE_NEEDOPEN		"NeedOpenPts"
 #define ATTRIB_BY_OPENCLOSE_NEEDCLOSE		"NeedClosePts"
-#define ATTRIB_BY_OPENCLOSE_TIME			"Time"
 #define ATTRIB_BY_OPENCLOSE_GOTOPEN			"OpenPts"
 #define ATTRIB_BY_OPENCLOSE_GOTCLOSE		"ClosePts"
 #define ATTRIB_BY_POINTS_NEED				"NeedPts"
-#define ATTRIB_BY_POINTS_TIME				"Time"
 #define ATTRIB_BY_POINTS_GOT				"Points"
 #define ATTRIB_PLACEMENT_Q					"Q"
 #define ATTRIB_PLACEMENT_PLACE				"Place"

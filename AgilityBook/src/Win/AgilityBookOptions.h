@@ -100,6 +100,8 @@ public:
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
 	// Runs/points options
+	static bool GetViewRunsByTrial();
+	static void SetViewRunsByTrial(bool bView);
 	static bool GetNewestDatesFirst();
 	static void SetNewestDatesFirst(bool bNewest);
 	static bool GetViewAllDates();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="6">
+<DefaultConfig Book="7">
 	<Configuration>
 		<Venue Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
@@ -997,5 +997,6 @@ Dogs/Placements/Points
 11-20/4/7,5,3,1
 21-30/5/9,7,5,3,1
 Each additional 10, +1place, +2 pts.</OtherPts>
+		<OtherPts Count="All" Name="USDAA LAA">USDAA Lifetime Achievement Points</OtherPts>
 	</Configuration>
 </DefaultConfig>

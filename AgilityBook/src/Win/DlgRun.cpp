@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
 #include "stdafx.h"
@@ -75,7 +76,7 @@ CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CW
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
 	m_pageComments = new CDlgRunComments(pDoc, m_Run);
-	m_pageReference = new CDlgRunReference(m_Run);
+	m_pageReference = new CDlgRunReference(pDoc, pVenue, m_Run);
 	m_pageCRCD = new CDlgRunCRCD(m_Run);
 	AddPage(m_pageScore);
 	AddPage(m_pageComments);

@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
  * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
  *                    I don't have to use UpdateAllViews. Added methods to allow
  *                    creating titles/trials/runs from the Run view.
@@ -167,6 +168,8 @@ protected:
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnViewSortruns();
+	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
+	afx_msg void OnViewRunsByTrial();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -35,6 +35,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-10-13 DRC File version 7. Added course faults to ByScore/etc.
  * @li 2003-09-21 DRC File version 6. Added training log.
  * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  * @li 2003-06-23 DRC File version 5. Added 'Note' and 'Verified' to trials.
@@ -64,7 +65,7 @@ static char THIS_FILE[] = __FILE__;
 
 short ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static const short curVersion = 6;
+	static const short curVersion = 7;
 	return curVersion;
 }
 

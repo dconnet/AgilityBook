@@ -212,23 +212,25 @@ These 3 elements define the major scoring mechanisms.
 -->
 <!ELEMENT ByTime EMPTY >
 	<!ATTLIST ByTime
-		Time CDATA #REQUIRED
 		CourseFaults CDATA #REQUIRED
+		Time CDATA #REQUIRED
 		SCT CDATA #IMPLIED
 		Yards CDATA #IMPLIED
 		>
 <!ELEMENT ByOpenClose EMPTY >
 	<!ATTLIST ByOpenClose
+		CourseFaults CDATA #IMPLIED
+		Time CDATA #REQUIRED
 		NeedOpenPts CDATA #REQUIRED
 		NeedClosePts CDATA #REQUIRED
-		Time CDATA #REQUIRED
 		OpenPts CDATA #REQUIRED
 		ClosePts CDATA #REQUIRED
 		>
 <!ELEMENT ByPoints EMPTY >
 	<!ATTLIST ByPoints
-		NeedPts CDATA #REQUIRED
+		CourseFaults CDATA #IMPLIED
 		Time CDATA #REQUIRED
+		NeedPts CDATA #REQUIRED
 		Points CDATA #REQUIRED
 		>
 
