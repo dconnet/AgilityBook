@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_020F458C27054A47A4DD93E7121AFD35"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
@@ -27,13 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_40792FBC2307635170D4F92A38B438B6"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4EA9E8C5BB7A46F5BA4BF7B45952A66A"
+        "MsmKey" = "8:_437C1CEBD25740DAA953B25685E2BF2D"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,7 +51,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C14733F4E86343C783D897764F783AC0"
+        "MsmKey" = "8:_7698B3588ABA43D0A19EF50178829EEA"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -63,7 +63,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DF8676A95B854FBB99F503F1ED1CF864"
+        "MsmKey" = "8:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -165,26 +165,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_40792FBC2307635170D4F92A38B438B6"
-            {
-            "SourcePath" = "8:xerces-c_2_2_0.dll"
-            "TargetName" = "8:xerces-c_2_2_0.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_5E446DC8AA924BA6B5BCC12DD868C8B9"
             {
             "SourcePath" = "8:..\\..\\..\\Help\\AgilityBook.chm"
@@ -223,6 +203,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
+            {
+            "SourcePath" = "8:xerces-c_2_2_0.dll"
+            "TargetName" = "8:xerces-c_2_2_0.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -924,21 +924,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_4EA9E8C5BB7A46F5BA4BF7B45952A66A"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_stl71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_C14733F4E86343C783D897764F783AC0"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_020F458C27054A47A4DD93E7121AFD35"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -952,7 +938,21 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_DF8676A95B854FBB99F503F1ED1CF864"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_437C1CEBD25740DAA953B25685E2BF2D"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:vc_user_stl71_rtl_x86_---.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_7698B3588ABA43D0A19EF50178829EEA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -969,34 +969,6 @@
         }
         "ProjectOutput"
         {
-            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_17074D863D8E48548E8F2252138979A3"
-            {
-            "SourcePath" = "8:"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Symbols"
-            "OutputProjectGuid" = "8:{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_6ECEE00896D64C0EB4B463E926655387"
             {
             "SourcePath" = "8:..\\..\\..\\..\\bin\\Win32\\Vc7\\Release\\AgilityBook.exe"
