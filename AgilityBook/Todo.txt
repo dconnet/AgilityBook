@@ -1,4 +1,15 @@
-Last Updated: 11/26/03
+Last Updated: 12/7/03
+
+- Add something to the points configuration to allow for changes in rules.
+  This could be something as simple as an effective date. In usage, it should
+  be part of a single title point object. The dialog for editing a title point
+  would become more complex to handle the multiple dates.
+
+- Add auto-lifetime point accumulation. Currently known ones are NADAC (all
+  points at all levels) and USDAA (points from Masters std and non-std events,
+  plus GP). This is currently handled manually via OtherPoints. It would be
+  nice to include auto-top10 accumulation also. (USDAA lifetime Top10
+  accululates from 1/1/99)
 
 - Add logic to the reorder dialog to know if an item can be reordered around
   an adjacent entry. (For instance, when reordering runs, reordering really
