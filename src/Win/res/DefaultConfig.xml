@@ -1,14 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultConfig Book="8.2">
 	<Configuration>
-		<Action Venue="USDAA" Verb="RenameTitle" Old="ADCh" New="ADCH" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PDI" New="PD1" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PDII" New="PD2" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PDIII" New="PD3" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PJ" New="PJ3" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PG" New="PG3" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PS" New="PK3" />
-		<Action Venue="USDAA" Verb="RenameTitle" Old="PJ" New="PJ3" />
+		<Action NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PD3" OldName="PDIII" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
+		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
+		<Venue Name="AAC">
+			<Desc>http://www.aac.ca/</Desc>
+			<Division Name="Regular">
+				<Level Name="Starters"/>
+				<Level Name="Advanced"/>
+				<Level Name="Masters"/>
+				<Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores under 2 different judges, plus 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
+				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">3 qualifying scores under 2 different judges</Titles>
+			</Division>
+			<Division Name="Veteran">
+				<Level Name="Starters"/>
+				<Level Name="Advanced"/>
+				<Level Name="Masters"/>
+				<Titles LongName="Veteran Agility Dog of Canada" Name="VADC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Veteran Advanced Agility Dog of Canada" Name="VAADC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Veteran Master Agility Dog of Canada" Name="VMADC">3 qualifying scores under 2 different judges, 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
+				<Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+				<Titles LongName="Veteran Masters Gamblers Dog of Canada" Name="VMGDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Veteran Masters Team Relay Dog of Canada" Name="VMTRDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Veteran Masters Jumpers Dog of Canada" Name="VMJDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Veteran Masters Snooker Dog of Canada" Name="VMSDC">3 qualifying scores under 2 different judges</Titles>
+			</Division>
+			<Division Name="Special">
+				<Level Name="Starters"/>
+				<Level Name="Advanced"/>
+				<Level Name="Masters"/>
+				<Titles LongName="Special Agility Dog of Canada" Name="SADC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Special Advanced Agility Dog of Canada" Name="SAADC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Special Master Agility Dog of Canada" Name="SMADC">3 qualifying scores under 2 different judges, 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
+				<Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+				<Titles LongName="Special Masters Gamblers Dog of Canada" Name="SMGDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Special Masters Team Relay Dog of Canada" Name="SMTRDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC">3 qualifying scores under 2 different judges</Titles>
+			</Division>
+			<Event Name="Standard">
+				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
+					<Note>E: 3 Rs or 1 wrong course or 1 NC</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Advanced" type="FaultsThenTime">
+					<Note>E: 3 Rs or 2 NCs</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Starters" type="FaultsThenTime">
+					<Note>E: 3 NCs</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Gamblers">
+				<Scoring Division="*" Level="Masters" OpeningPts="28" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="*" OpeningPts="20" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Team Relay" hasPartner="y">
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Jumpers">
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Snooker">
+				<Scoring Division="*" Level="Masters" OpeningPts="40" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="*" OpeningPts="37" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+		</Venue>
 		<Venue Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
 			<Division Name="ISC">
