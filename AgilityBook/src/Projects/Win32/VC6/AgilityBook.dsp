@@ -763,6 +763,14 @@ SOURCE=..\..\..\ARB\ARBDogClub.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\ARB\ARBDogExistingPoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogExistingPoints.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\ARB\ARBDogNotes.cpp
 # End Source File
 # Begin Source File

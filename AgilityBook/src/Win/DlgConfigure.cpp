@@ -473,14 +473,16 @@ void CDlgConfigure::OnDelete()
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
 			std::string venue = pVenueData->GetVenue()->GetName();
+			int nPoints = m_Book.GetDogs().NumExistingPointsInVenue(venue);
 			int nRegNums = m_Book.GetDogs().NumRegNumsInVenue(venue);
 			int nTitles = m_Book.GetDogs().NumTitlesInVenue(venue);
 			int nTrials = m_Book.GetDogs().NumTrialsInVenue(venue);
-			if (0 < nRegNums || 0 < nTitles || 0 < nTrials)
+			if (0 < nPoints || 0 < nRegNums || 0 < nTitles || 0 < nTrials)
 			{
 				CString msg;
 				msg.FormatMessage(IDS_DELETE_VENUE,
 					venue.c_str(),
+					nPoints,
 					nRegNums,
 					nTitles,
 					nTrials);
@@ -493,7 +495,7 @@ void CDlgConfigure::OnDelete()
 				if (m_Config.GetVenues().DeleteVenue(venue))
 				{
 					// Then we commit to fixing the real data.
-					if (0 < nRegNums || 0 < nTitles || 0 < nTrials)
+					if (0 < nPoints || 0 < nRegNums || 0 < nTitles || 0 < nTrials)
 						m_DlgFixup.push_back(new CDlgFixupDeleteVenue(venue));
 					pCtrl->DeleteItem(index);
 				}

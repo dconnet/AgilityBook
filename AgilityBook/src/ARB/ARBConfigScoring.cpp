@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Added ValidTo, changed ValidFrom dtd name (was 'Date').
@@ -527,6 +528,15 @@ const ARBConfigScoring* ARBConfigScoringList::FindEvent(
 			return *(items.begin());
 		}
 	}
+}
+
+bool ARBConfigScoringList::VerifyEvent(
+	const std::string& inDivision,
+	const std::string& inLevel) const
+{
+	std::vector<const ARBConfigScoring*> items;
+	FindAllEvents(inDivision, inLevel, false, items);
+	return (0 < items.size());
 }
 
 ARBConfigScoring* ARBConfigScoringList::AddScoring()

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added ExistingPoints accumulation.
  * @li 2004-01-05 DRC Header didn't generate properly if there were no titles.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -455,14 +456,36 @@ int CAgilityBookViewPoints::TallyPoints(
 class OtherPtInfo
 {
 public:
-	OtherPtInfo(const ARBDogTrial* pTrial, const ARBDogRun* pRun, int score)
-		: m_pTrial(pTrial)
-		, m_pRun(pRun)
+	OtherPtInfo(const std::string& venue,
+			const std::string& div,
+			const std::string& level,
+			const std::string& event,
+			int score)
+		: m_Venue(venue)
+		, m_Div(div)
+		, m_Level(level)
+		, m_Event(event)
 		, m_Score(score)
 	{
 	}
-	const ARBDogTrial* m_pTrial;
-	const ARBDogRun* m_pRun;
+	OtherPtInfo(const ARBDogTrial* pTrial, const ARBDogRun* pRun, int score)
+		: m_Score(score)
+	{
+		const ARBDogClub* pClub = NULL;
+		if (pTrial)
+			pClub = pTrial->GetClubs().GetPrimaryClub();
+		if (pClub)
+		{
+			m_Venue = pClub->GetVenue();
+			m_Div = pRun->GetDivision();
+			m_Level = pRun->GetLevel();
+			m_Event = pRun->GetEvent();
+		}
+	}
+	std::string m_Venue;
+	std::string m_Div;
+	std::string m_Level;
+	std::string m_Event;
 	int m_Score;
 };
 
@@ -621,6 +644,14 @@ void CAgilityBookViewPoints::LoadData()
 					}
 				}
 
+				for (ARBDogExistingPointsList::const_iterator iterExisting = pDog->GetExistingPoints().begin();
+					iterExisting != pDog->GetExistingPoints().end();
+					++iterExisting)
+				{
+					//TODO
+					//runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+				}
+
 				if (0 == runs.size())
 					continue;
 
@@ -648,14 +679,14 @@ void CAgilityBookViewPoints::LoadData()
 						std::list<OtherPtInfo>::iterator iter;
 						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
-							tally.insert((*iter).m_pRun->GetEvent());
+							tally.insert((*iter).m_Event);
 						}
 						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 						{
 							int score = 0;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
-								if ((*iter).m_pRun->GetEvent() == (*iterTally))
+								if ((*iter).m_Event == (*iterTally))
 									score += (*iter).m_Score;
 							}
 							++i;
@@ -674,14 +705,14 @@ void CAgilityBookViewPoints::LoadData()
 						std::list<OtherPtInfo>::iterator iter;
 						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
-							tally.insert((*iter).m_pRun->GetLevel());
+							tally.insert((*iter).m_Level);
 						}
 						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 						{
 							int score = 0;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
-								if ((*iter).m_pRun->GetLevel() == (*iterTally))
+								if ((*iter).m_Level == (*iterTally))
 									score += (*iter).m_Score;
 							}
 							++i;
@@ -701,15 +732,15 @@ void CAgilityBookViewPoints::LoadData()
 						std::list<OtherPtInfo>::iterator iter;
 						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
-							tally.insert(LevelEvent((*iter).m_pRun->GetLevel(), (*iter).m_pRun->GetEvent()));
+							tally.insert(LevelEvent((*iter).m_Level, (*iter).m_Event));
 						}
 						for (std::set<LevelEvent>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
 						{
 							int score = 0;
 							for (iter = runs.begin(); iter != runs.end(); ++iter)
 							{
-								if ((*iter).m_pRun->GetLevel() == (*iterTally).first
-								&& (*iter).m_pRun->GetEvent() == (*iterTally).second)
+								if ((*iter).m_Level == (*iterTally).first
+								&& (*iter).m_Event == (*iterTally).second)
 									score += (*iter).m_Score;
 							}
 							++i;

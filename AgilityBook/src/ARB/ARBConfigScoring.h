@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Added ValidTo, changed ValidFrom dtd name (was 'Date').
  * @li 2003-12-11 DRC Added ValidFrom, not fully implemented yet.
@@ -300,6 +301,9 @@ public:
 		const std::string& inDivision,
 		const std::string& inLevel,
 		const ARBDate& inDate) const;
+	bool VerifyEvent(
+		const std::string& inDivision,
+		const std::string& inLevel) const;
 
 	ARBConfigScoring* AddScoring();
 };

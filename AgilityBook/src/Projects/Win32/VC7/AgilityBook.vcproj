@@ -705,6 +705,12 @@
 				RelativePath="..\..\..\ARB\ARBDogClub.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Arb\ARBDogExistingPoints.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Arb\ARBDogExistingPoints.h">
+			</File>
+			<File
 				RelativePath="..\..\..\ARB\ARBDogNotes.cpp">
 			</File>
 			<File

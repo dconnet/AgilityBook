@@ -42,6 +42,7 @@
 #include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
+#include "ARBDogExistingPoints.h"
 #include "ARBDogRegNum.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
@@ -96,6 +97,8 @@ public:
 	void SetBreed(const std::string& inBreed);
 	const std::string& GetNote() const;
 	void SetNote(const std::string& inNote);
+	const ARBDogExistingPointsList& GetExistingPoints() const;
+	ARBDogExistingPointsList& GetExistingPoints();
 	const ARBDogRegNumList& GetRegNums() const;
 	ARBDogRegNumList& GetRegNums();
 	const ARBDogTitleList& GetTitles() const;
@@ -111,6 +114,7 @@ private:
 	std::string m_RegName;
 	std::string m_Breed;
 	std::string m_Note;
+	ARBDogExistingPointsList m_ExistingPoints;
 	ARBDogRegNumList m_RegNums;
 	ARBDogTitleList m_Titles;
 	ARBDogTrialList m_Trials;
@@ -176,6 +180,16 @@ inline void ARBDog::SetNote(const std::string& inNote)
 	m_Note = inNote;
 }
 
+inline const ARBDogExistingPointsList& ARBDog::GetExistingPoints() const
+{
+	return m_ExistingPoints;
+}
+
+inline ARBDogExistingPointsList& ARBDog::GetExistingPoints()
+{
+	return m_ExistingPoints;
+}
+
 inline const ARBDogRegNumList& ARBDog::GetRegNums() const
 {
 	return m_RegNums;
@@ -220,6 +234,7 @@ public:
 		return !isEqual(rhs);
 	}
 
+	int NumExistingPointsInVenue(const std::string& inVenue) const;
 	int NumRegNumsInVenue(const std::string& inVenue) const;
 	int NumTitlesInVenue(const std::string& inVenue) const;
 	int NumTrialsInVenue(const std::string& inVenue) const;

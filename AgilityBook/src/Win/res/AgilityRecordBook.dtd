@@ -197,9 +197,11 @@ This section defines a dog's runs. The way the data is interpretted
 depends on how a venue has been defined above.
  Date: DOB,Deceased
  Height is free form - this allows for NADACs "20+" height.
+ ExistingPoints allows setting an initial value for points earned at a certain
+  level. This way, you don't have to have all trial information for older dogs.
 -->
 
-<!ELEMENT Dog (RegisteredName?, Breed?, Note?, RegNum*, Title*, Trial*) >
+<!ELEMENT Dog (RegisteredName?, Breed?, Note?, ExistingPoints*, RegNum*, Title*, Trial*) >
 	<!ATTLIST Dog
 		CallName CDATA #REQUIRED
 		DOB CDATA #IMPLIED
@@ -208,6 +210,20 @@ depends on how a venue has been defined above.
 <!ELEMENT RegisteredName (#PCDATA) >
 <!ELEMENT Breed (#PCDATA) >
 <!ELEMENT Note (#PCDATA) >
+<!--
+If 'Other' is set, the information is used to compute OtherPoints. If not set,
+it is added to the normal points. Venue/etc are required for 'Other' since the
+otherpts item may be accumulating by div/level/event...
+-->
+<!ELEMENT ExistingPoints EMPTY >
+	<!ATTLIST ExistingPoints
+		Venue CDATA #REQUIRED
+		Div CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		Event CDATA #REQUIRED
+		Other CDATA #IMPLIED
+		Pts CDATA #REQUIRED
+		>
 <!ELEMENT RegNum (#PCDATA) >
 	<!ATTLIST RegNum
 		Venue CDATA #REQUIRED

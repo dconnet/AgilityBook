@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -353,6 +354,28 @@ bool ARBConfigVenueList::VerifyLevel(
 	if (pVenue)
 		return pVenue->GetDivisions().VerifyLevel(inDivision, inLevel);
 	return false;
+}
+
+bool ARBConfigVenueList::VerifyEvent(
+	const std::string& inVenue,
+	const std::string& inDivision,
+	const std::string& inLevel,
+	const std::string& inEvent
+	) const
+{
+	const ARBConfigVenue* pVenue = FindVenue(inVenue);
+	if (pVenue)
+	{
+		// Translate the sublevel to level.
+		const ARBConfigDivision* pDiv = pVenue->GetDivisions().FindDivision(inDivision);
+		if (pDiv)
+		{
+			const ARBConfigLevel* pLevel = pDiv->GetLevels().FindSubLevel(inLevel);
+			if (pLevel)
+				return pVenue->GetEvents().VerifyEvent(inEvent, inDivision, pLevel->GetName());
+		}
+	}
+	return NULL;
 }
 
 const ARBConfigTitle* ARBConfigVenueList::FindTitleCompleteName(
