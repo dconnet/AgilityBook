@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by AgilityBook.rc
 //
 #define IDD_ABOUTBOX                    100
@@ -226,6 +226,7 @@
 #define IDC_FIND_UP                     1172
 #define IDC_FIND_DOWN                   1173
 #define IDC_LONG_NAME                   1174
+#define IDC_TABLE_YPS                   1175
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -432,7 +433,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32812
-#define _APS_NEXT_CONTROL_VALUE         1193
+#define _APS_NEXT_CONTROL_VALUE         1176
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

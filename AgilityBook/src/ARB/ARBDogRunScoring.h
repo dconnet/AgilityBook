@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -66,6 +67,8 @@ public:
 		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
+	bool GetYPS(double& outYPS) const;
+
 	ScoringType GetType() const;
 	void SetType(ScoringType inType, bool inRound);
 	ARBDouble GetSCT() const;
@@ -74,6 +77,8 @@ public:
 	void SetYards(double inYards);
 	ARBDouble GetTime() const;
 	void SetTime(ARBDouble inTime);
+	bool GetTableInYPS() const;
+	void SetTableInYPS(bool inInc);
 	double GetTimeFaults() const;
 	short GetCourseFaults() const;
 	void SetCourseFaults(short inFaults);
@@ -92,6 +97,7 @@ private:
 	ARBDouble m_SCT;
 	double m_Yards;
 	ARBDouble m_Time;
+	bool m_TableInYPS;
 	short m_CourseFaults;
 	short m_NeedOpenPts;
 	short m_NeedClosePts;
@@ -140,6 +146,16 @@ inline ARBDouble ARBDogRunScoring::GetTime() const
 inline void ARBDogRunScoring::SetTime(ARBDouble inTime)
 {
 	m_Time = inTime;
+}
+
+inline bool ARBDogRunScoring::GetTableInYPS() const
+{
+	return m_TableInYPS;
+}
+
+inline void ARBDogRunScoring::SetTableInYPS(bool inInc)
+{
+	m_TableInYPS = inInc;
 }
 
 inline short ARBDogRunScoring::GetCourseFaults() const

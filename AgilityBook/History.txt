@@ -1,4 +1,8 @@
-2/9/2004: v1.0.3.8 <in development>
+2/14/2004: v1.0.3.8 <in development>
+- Bumped file version to 8.4:
+  - Added table-in-yps flag (default is true for backwards compatibility)
+- New features / Enhancements:
+  - Add a 5-sec table YPS computation checkbox in the runs.
 
 2/9/2004: v1.0.2.8
 - Bumped file version to 8.3:
@@ -39,6 +43,7 @@
   - Added a new "Long Name" to the titles configuration.
   - Added 'Action' items to Configuration.
 - New features / Enhancements:
+  - Began distributing an MSVC7 msi installation.
   - Added AAC and AMBOR configurations.
   - Updated USDAA configuration.
   - GetAllClubs/Locations now includes calendar entries.
@@ -199,11 +204,11 @@
   - Removed automatic sorting of dogs - allow the user to set the ordering.
   - Added actual height and card received info to dog registration information.
   - When trying to cancel from the Run entry dialog, data verification prevented
-    the cancel from occuring.
-  - Added toolbar items for new dog/title/trial/run/calentry and print preview.
+    the cancel from occurring.
+  - Added toolbar items for new dog/title/trial/run/calendar and print preview.
   - Added new options page for fonts, added font for printing, moved calendar
     fonts from calendar options page to this one.
-  - In calendar view dialog (dbl-click,etc), show all entries for a date, even
+  - In calendar view dialog (dbl-click, etc), show all entries for a date, even
     if the 'hide on entered' option is on.
 - Bug fixes
   - Allow screen font selection for calendar printer items. Also the wrong
@@ -339,7 +344,7 @@ Known issues: See the 'todo.txt' file.
 - Bug fix: Comboboxes that allow data entry do not scroll.
 - Bug fix: Sort order of titles in Dog properties didn't remember multiple
   column sort properly.
-- Bug fix: Calender: Turning on the 'hide overlap' option didn't hide trials
+- Bug fix: Calendar: Turning on the 'hide overlap' option didn't hide trials
   that partially overlap
 - Bug fix: Display correct title pts in time+faults runs when there are faults.
 

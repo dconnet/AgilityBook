@@ -352,11 +352,11 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_YPS:
 										{
-											if (ARBDogRunScoring::eTypeByTime == pRun->GetScoring().GetType()
-											&& 0 < pRun->GetScoring().GetYards() && 0.0 < pRun->GetScoring().GetTime())
+											double yps;
+											if (pRun->GetScoring().GetYPS(yps))
 											{
 												CString str;
-												str.Format("%.3f", pRun->GetScoring().GetYards() / pRun->GetScoring().GetTime());
+												str.Format("%.3f", yps);
 												data += str;
 											}
 										}

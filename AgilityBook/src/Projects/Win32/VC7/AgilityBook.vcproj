@@ -615,6 +615,9 @@
 				RelativePath="..\..\..\Win\res\CalTentative.ico">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\res\checked.ico">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\res\DefaultConfig.xml">
 			</File>
 			<File
@@ -622,6 +625,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\res\Toolbar.bmp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\res\unchecked.ico">
 			</File>
 		</Filter>
 		<Filter
@@ -833,6 +839,6 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="\dcon\WinSrc\AgilityBook\src\Win\AgilityBook.rc"/>
+			Value="\AgilityBook\src\AgilityBook\src\Win\AgilityBook.rc"/>
 	</Globals>
 </VisualStudioProject>
