@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="9.0">
+<DefaultConfig Book="9.1">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2004-09-17 DRC Added comment to CL1-4 titles.
+2004-09-28 DRC Configuration version 6.
+               Added comment to CL1-4 titles. Accumulate lifetime LevelC points
 2004-07-17 DRC Configuration version 5.
                Remove titling points from USDAA Tournament Jumper/Snooker.
                Added non-titling Performance events for Steeplechase and DAM
@@ -22,7 +23,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="5">
+	<Configuration version="6">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -627,7 +628,7 @@ Jumpers: 400 pts (20 legs)</Titles>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="25"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="25"/>
 				</Scoring>
 				<Scoring Division="*" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -666,7 +667,7 @@ Jumpers: 400 pts (20 legs)</Titles>
 			<Event Name="Colors">
 				<Desc>Successfully run your choice of one of the three over-lapping mini-agility courses on the same field.</Desc>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="15"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="15"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
@@ -700,7 +701,7 @@ Jumpers: 400 pts (20 legs)</Titles>
 				<Desc>Successfully complete the course including enough "wildcards" to qualify!</Desc>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt</Note>
-					<TitlePoints Faults="0" Points="20"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
@@ -743,7 +744,7 @@ Faults allowed:
 			<Event Name="Snooker">
 				<Desc>To test the course planning strategies of the handler, and the dog's ability to concentrate on and execute the handlers directions.</Desc>
 				<Scoring Division="Standard" Level="Level C" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" Points="25"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="25"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -764,7 +765,7 @@ Faults allowed:
 			<Event Name="Jackpot">
 				<Desc>To test the course planning strategies of the handler, and the dog's ability to work at a distance.</Desc>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level C" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="25"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="25"/>
 				</Scoring>
 				<Scoring ClosingPts="20" Division="Standard" Level="Level 5" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -788,7 +789,7 @@ Faults allowed:
 2 of a kind: 2 "circles" (3 pts each)
 joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				<Scoring Division="Standard" Level="Level C" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
-					<TitlePoints Faults="0" Points="20"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -809,7 +810,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Event Name="Jumpers">
 				<Desc>Successfully complete course within fault limits and course time.</Desc>
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="20"/>
+					<TitlePoints Faults="0" LifeTime="y" Points="20"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:

@@ -51,9 +51,12 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgReferenceRun dialog
 
-CDlgReferenceRun::CDlgReferenceRun(CAgilityBookDoc* pDoc, ARBDogReferenceRun* ref, CWnd* pParent)
+CDlgReferenceRun::CDlgReferenceRun(CAgilityBookDoc* pDoc,
+		std::set<std::string> const& inNames,
+		ARBDogReferenceRun* ref, CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
 	, m_pDoc(pDoc)
+	, m_Names(inNames)
 	, m_Ref(ref)
 {
 	ASSERT(m_Ref);
@@ -108,10 +111,8 @@ BOOL CDlgReferenceRun::OnInitDialog()
 			m_ctrlQ.SetCurSel(idx);
 	}
 
-	std::set<std::string> names;
-	m_pDoc->GetAllHeights(names);
 	std::set<std::string>::const_iterator iter;
-	for (iter = names.begin(); iter != names.end(); ++iter)
+	for (iter = m_Names.begin(); iter != m_Names.end(); ++iter)
 	{
 		m_ctrlHeight.AddString((*iter).c_str());
 	}

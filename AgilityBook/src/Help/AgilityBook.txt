@@ -460,6 +460,9 @@ Breed of dog.
 .topic HIDC_REFRUN_NAME
 Name of dog.
 
+.topic HIDC_REFRUN_HEIGHT
+Height of the dog.
+
 .topic HIDC_REFRUN_NOTES
 General notes about run.
 

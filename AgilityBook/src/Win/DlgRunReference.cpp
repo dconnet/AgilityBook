@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Accumulate all heights for refrun dlg.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
@@ -255,8 +256,8 @@ void CDlgRunReference::ListRuns()
 	{
 		for (index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
 		{
-			ARBDogReferenceRun const* pRegRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
-			if (pRegRun == pSelected) // compare by ptr is fine.
+			ARBDogReferenceRun const* pRefRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
+			if (pRefRun == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlRefRuns.SetSelection(index, true);
 				break;
@@ -264,6 +265,21 @@ void CDlgRunReference::ListRuns()
 		}
 	}
 	UpdateButtons();
+}
+
+void CDlgRunReference::GetAllHeights(std::set<std::string>& ioNames)
+{
+	m_pDoc->GetAllHeights(ioNames);
+	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
+	{
+		ARBDogReferenceRun const* pRefRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
+		if (pRefRun)
+		{
+			std::string const& ht = pRefRun->GetHeight();
+			if (0 < ht.length())
+				ioNames.insert(ht);
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -394,7 +410,9 @@ void CDlgRunReference::OnRefRunNew()
 			ref->SetScore(nScore);
 		}
 	}
-	CDlgReferenceRun dlg(m_pDoc, ref, this);
+	std::set<std::string> names;
+	GetAllHeights(names);
+	CDlgReferenceRun dlg(m_pDoc, names, ref, this);
 	if (IDOK == dlg.DoModal())
 	{
 		ARBDogReferenceRun* pRef = m_Run->GetReferenceRuns().AddReferenceRun(ref);
@@ -416,8 +434,10 @@ void CDlgRunReference::OnRefRunEdit()
 	int nItem = m_ctrlRefRuns.GetSelection();
 	if (0 <= nItem)
 	{
+		std::set<std::string> names;
+		GetAllHeights(names);
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(nItem));
-		CDlgReferenceRun dlg(m_pDoc, pRef, this);
+		CDlgReferenceRun dlg(m_pDoc, names, pRef, this);
 		if (IDOK == dlg.DoModal())
 			ListRuns();
 	}

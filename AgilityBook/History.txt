@@ -1,9 +1,10 @@
 9/23/2004: v1.3.3.9 <in development>
-- Bumped file version to 9.1:
+- Bumped file version to 9.1, Configuration v6:
   - Added 'Height' to 'ReferenceRun'
 - New features / Enhancements:
   - Added Mach points to the allowed columns in the runs view.
-  - Updated CPE comments on CL1-5 "titles".
+  - Updated CPE comments on CL1-5 "titles". Accumulate lifetime points
+    for Level C events.
 
 9/15/2004: v1.3.2.9
 - Bug fix

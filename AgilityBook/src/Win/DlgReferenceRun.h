@@ -36,13 +36,17 @@
  */
 
 #include "DlgBaseDialog.h"
+#include <set>
+#include <string>
 class ARBDogReferenceRun;
 class CAgilityBookDoc;
 
 class CDlgReferenceRun : public CDlgBaseDialog
 {
 public:
-	CDlgReferenceRun(CAgilityBookDoc* pDoc, ARBDogReferenceRun* ref, CWnd* pParent = NULL);
+	CDlgReferenceRun(CAgilityBookDoc* pDoc,
+		std::set<std::string> const& inNames,
+		ARBDogReferenceRun* ref, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -60,6 +64,7 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogReferenceRun* m_Ref;
+	std::set<std::string> const& m_Names;
 
 	//{{AFX_VIRTUAL(CDlgReferenceRun)
 protected:
