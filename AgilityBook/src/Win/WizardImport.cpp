@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-22 DRC Fixed line/col number reporting (off by one)
  * @li 2004-01-04 DRC Implemented import, except for trials/runs.
  * @li 2003-12-10 DRC Created
  */
@@ -512,7 +513,7 @@ BOOL CWizardImport::OnWizardFinish()
 				{
 					CString str;
 					str.Format("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n",
-						nItem);
+						nItem + 1);
 					errLog += str;
 					++nSkipped;
 					continue;
@@ -564,7 +565,7 @@ BOOL CWizardImport::OnWizardFinish()
 							{
 								CString str;
 								str.Format("ERROR: Line %d, Column %d: Invalid run date: %s\n",
-									nItem, iCol, entry[iCol].c_str());
+									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								pRun->Release();
 								pRun = NULL;
@@ -845,7 +846,7 @@ BOOL CWizardImport::OnWizardFinish()
 							{
 								CString str;
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n",
-									nItem, iCol, entry[iCol].c_str());
+									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								pCal->Release();
 								pCal = NULL;
@@ -865,7 +866,7 @@ BOOL CWizardImport::OnWizardFinish()
 							{
 								CString str;
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n",
-									nItem, iCol, entry[iCol].c_str());
+									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								pCal->Release();
 								pCal = NULL;
@@ -897,7 +898,7 @@ BOOL CWizardImport::OnWizardFinish()
 						{
 							CString str;
 							str.Format("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n",
-								nItem, iCol, entry[iCol].c_str());
+								nItem + 1, iCol + 1, entry[iCol].c_str());
 							errLog += str;
 							pCal->Release();
 							pCal = NULL;
@@ -928,7 +929,7 @@ BOOL CWizardImport::OnWizardFinish()
 							{
 								CString str;
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n",
-									nItem, iCol, entry[iCol].c_str());
+									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								pCal->Release();
 								pCal = NULL;
@@ -948,7 +949,7 @@ BOOL CWizardImport::OnWizardFinish()
 							{
 								CString str;
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n",
-									nItem, iCol, entry[iCol].c_str());
+									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								pCal->Release();
 								pCal = NULL;
@@ -1000,7 +1001,7 @@ BOOL CWizardImport::OnWizardFinish()
 							{
 								CString str;
 								str.Format("ERROR: Line %d, Column %d: Invalid training log date: %s\n",
-									nItem, iCol, entry[iCol].c_str());
+									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								pLog->Release();
 								pLog = NULL;
