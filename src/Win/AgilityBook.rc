@@ -2252,6 +2252,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
+    ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_VIEW_HIDDEN          "Show Titles that have been hidden"

@@ -75,11 +75,6 @@ public:
 		if (m_pTraining)
 			m_pTraining->AddRef();
 	}
-	~CAgilityBookViewTrainingData()
-	{
-		if (m_pTraining)
-			m_pTraining->Release();
-	}
 	void AddRef();
 	void Release();
 
@@ -90,6 +85,11 @@ public:
 	CString OnNeedText(int iCol) const;
 
 private:
+	~CAgilityBookViewTrainingData()
+	{
+		if (m_pTraining)
+			m_pTraining->Release();
+	}
 	UINT m_RefCount;
 	CAgilityBookViewTraining* m_pView;
 	ARBTraining* m_pTraining;

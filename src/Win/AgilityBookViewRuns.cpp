@@ -81,6 +81,12 @@ public:
 		, m_pTrial(pTrial)
 		, m_pRun(pRun)
 	{
+		if (m_pDog)
+			m_pDog->AddRef();
+		if (m_pTrial)
+			m_pTrial->AddRef();
+		if (m_pRun)
+			m_pRun->AddRef();
 	}
 
 	void AddRef();
@@ -92,7 +98,15 @@ public:
 	int OnNeedIcon() const;
 
 protected:
-	~CAgilityBookViewRunsData()		{}
+	~CAgilityBookViewRunsData()
+	{
+		if (m_pDog)
+			m_pDog->Release();
+		if (m_pTrial)
+			m_pTrial->Release();
+		if (m_pRun)
+			m_pRun->Release();
+	}
 	UINT m_RefCount;
 	CAgilityBookViewRuns* m_pView;
 	ARBDog* m_pDog;

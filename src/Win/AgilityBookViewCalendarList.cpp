@@ -81,11 +81,6 @@ public:
 		if (m_pCal)
 			m_pCal->AddRef();
 	}
-	~CAgilityBookViewCalendarData()
-	{
-		if (m_pCal)
-			m_pCal->Release();
-	}
 	void AddRef();
 	void Release();
 
@@ -96,6 +91,11 @@ public:
 	CString OnNeedText(int iCol) const;
 
 private:
+	~CAgilityBookViewCalendarData()
+	{
+		if (m_pCal)
+			m_pCal->Release();
+	}
 	UINT m_RefCount;
 	CAgilityBookViewCalendarList* m_pView;
 	ARBCalendar* m_pCal;
