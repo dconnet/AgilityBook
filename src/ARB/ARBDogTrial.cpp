@@ -179,14 +179,14 @@ bool ARBDogTrial::Save(CElement& ioTree) const
 }
 
 // This level is the true level (ie: sublevel), not the config level.
-int ARBDogTrial::NumQs(
+bool ARBDogTrial::HasQQ(
 	const ARBDate& inDate,
 	const ARBConfig& inConfig,
 	const std::string& inDiv,
 	const std::string& inLevel) const
 {
 	if (!GetClubs().GetPrimaryClub())
-		return 0;
+		return false;
 	int nQs = 0;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 	{
@@ -205,7 +205,7 @@ int ARBDogTrial::NumQs(
 				++nQs;
 		}
 	}
-	return nQs;
+	return 2 == nQs;
 }
 
 short ARBDogTrial::GetMachPoints(

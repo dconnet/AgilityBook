@@ -1,4 +1,4 @@
-12/7/2003: v0.9.4.8: <development>
+12/9/2003: v0.9.4.8: <development>
 - Bumped file version to 8.0:
   Modified version number for better backwards compatibility.
   Added new Info section. Currently this only has comments on judges.
@@ -28,6 +28,8 @@
   - Fixed a crash when you tried to open a version of an ARB file that was
     saved with a newer version of the program. This only happened when the
     program auto-opened the last open file at startup.
+  - Tallying QQs when a 3rd run is present was wrong in the Points view.
+  - The QQ checkbox in the run dialog wasn't updating properly.
 
 10/15/2003: v0.9.3.7: Release Candidate 4
 - Bumped file version to 7:

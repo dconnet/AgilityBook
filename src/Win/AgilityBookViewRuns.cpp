@@ -151,13 +151,14 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pRun->GetQ().str().c_str();
 			if (m_pRun->GetQ().Qualified())
 			{
-				int nQs = m_pTrial->NumQs(
+				if (m_pTrial->HasQQ(
 					m_pRun->GetDate(),
 					m_pView->GetDocument()->GetConfig(),
 					m_pRun->GetDivision(),
-					m_pRun->GetLevel());
-				if (2 == nQs)
+					m_pRun->GetLevel()))
+				{
 					str.LoadString(IDS_QQ);
+				}
 				if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					str.LoadString(IDS_SQ);
 			}
