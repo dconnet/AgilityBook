@@ -1,13 +1,4 @@
-Last Updated: 8/25/03
-
-- After editing a calendar entry, the selected day is changing because of
-  the selection in the list. - This may be a problem... In order to reflect
-  the changes in the list, we update - the update action eventually reselects
-  the old item, selecting the item causes the date in the calendar to be set.
-- The tree now has the same selection issue - dbl-clicking on an entry in
-  the run list will eventually cause whatever is selected in the tree to be
-  selected again - which may not be what was just edited.
---- I need to re-design how selection changes work.
+Last Updated: 8/27/03
 
 - OtherPoints point tallying is not implemented as stated.
   Currently, it ignores the configured option and tallies by "All Events"

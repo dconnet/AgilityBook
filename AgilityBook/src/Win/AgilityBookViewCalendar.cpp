@@ -32,7 +32,8 @@
  * @author David Connet
  *
  * Revision History
- * @li 2003-08=09 DRC When dbl-clicking on a date, make sure all entries are
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ * @li 2003-08-09 DRC When dbl-clicking on a date, make sure all entries are
  *                    visible - even if 'hide on entered' option is on.
  */
 
@@ -92,6 +93,7 @@ END_MESSAGE_MAP()
 
 CAgilityBookViewCalendar::CAgilityBookViewCalendar()
 	: m_nWeeks(0)
+	, m_bSuppressSelect(false)
 {
 }
 
@@ -171,6 +173,8 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(const ARBDate& date, std::vector<A
 
 void CAgilityBookViewCalendar::LoadData()
 {
+	m_bSuppressSelect = true;
+
 	// Clear everything.
 	m_Calendar.clear();
 	m_CalendarHidden.clear();
@@ -237,6 +241,8 @@ void CAgilityBookViewCalendar::LoadData()
 	if (GetMessage(msg) && IsWindowVisible())
 		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
 	Invalidate();
+
+	m_bSuppressSelect = false;
 }
 
 /**
@@ -293,12 +299,6 @@ void CAgilityBookViewCalendar::OnUpdate(CView* pSender, LPARAM lHint, CObject* p
 {
 	if (0 == lHint || (UPDATE_CALENDAR_VIEW & lHint) || (UPDATE_OPTIONS & lHint))
 		LoadData();
-	else if (UPDATE_CALENDAR_SEL & lHint)
-	{
-		ARBCalendar* pCal = reinterpret_cast<ARBCalendar*>(pHint);
-		if (pCal && pCal->GetStartDate().IsValid())
-			SetCurrentDate(pCal->GetStartDate(), true);
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

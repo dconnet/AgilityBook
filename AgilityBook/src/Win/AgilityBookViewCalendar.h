@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
 #include <vector>
@@ -52,6 +53,8 @@ protected: // create from serialization only
 public:
 	CAgilityBookDoc* GetDocument() const;
 	bool SetCurrentDate(const ARBDate& date, bool bEnsureVisible);
+
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
 	virtual bool GetMessage(CString& msg) const;
@@ -93,6 +96,9 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+
+private:
+	bool m_bSuppressSelect;
 
 // Generated message map functions
 protected:

@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  */
@@ -65,6 +66,7 @@ public:
 	HTREEITEM InsertDog(ARBDog* pDog, bool bSelect = false);
 	HTREEITEM InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent);
 	HTREEITEM InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
 	virtual bool GetMessage(CString& msg) const;
@@ -99,7 +101,7 @@ private:
 	void LoadData();
 	CAgilityBookTreeData* GetItemData(HTREEITEM hItem) const;
 	bool m_bReset;
-	bool m_bInInit;
+	bool m_bSuppressSelect;
 	ARBDog* m_pDog;
 
 // Generated message map functions

@@ -35,6 +35,9 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
+ *                    I don't have to use UpdateAllViews. Added methods to allow
+ *                    creating titles/trials/runs from the Run view.
  * @li 2003-08-25 DRC Added GetCurrentRun().
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -49,6 +52,7 @@
 #include "AgilityBookTree.h"
 #include "AgilityBookTreeData.h"
 #include "AgilityBookViewCalendar.h"
+#include "AgilityBookViewCalendarList.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -139,6 +143,45 @@ ARBDogRun* CAgilityBookDoc::GetCurrentRun()
  * runs are controlled by the selected item in the tree, 'pData' should never
  * be NULL.
  */
+void CAgilityBookDoc::AddTitle(ARBDogRun* pSelectedRun)
+{
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	if (pData)
+	{
+		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+		if (pData->OnCmd(ID_AGILITY_NEW_TITLE, NULL))
+			SetModifiedFlag(TRUE);
+	}
+}
+
+void CAgilityBookDoc::AddTrial(ARBDogRun* pSelectedRun)
+{
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	if (pData)
+	{
+		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, NULL))
+			SetModifiedFlag(TRUE);
+	}
+}
+
+void CAgilityBookDoc::AddRun(ARBDogRun* pSelectedRun)
+{
+	CAgilityBookTree* pTree = GetTreeView();
+	ASSERT(pTree);
+	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	if (pData)
+	{
+		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+		if (pData->OnCmd(ID_AGILITY_NEW_RUN, NULL))
+			SetModifiedFlag(TRUE);
+	}
+}
+
 void CAgilityBookDoc::EditRun(ARBDogRun* pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
@@ -249,7 +292,7 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 			if (!(*iterRun)->IsFiltered())
 				++nVisible;
 		}
-		if (0 == nVisible)
+		if (0 == nVisible && 0 < pTrial->GetRuns().size())
 			pTrial->SetFiltered(true);
 	}
 }
@@ -267,7 +310,7 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 }
 
 /**
- * Internal function to get the tree view.
+ * Function to get the tree view. This is used internally and by the runs view.
  */
 CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 {
@@ -276,6 +319,40 @@ CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 	{
 		CView* pView = GetNextView(pos);
 		CAgilityBookTree* pView2 = DYNAMIC_DOWNCAST(CAgilityBookTree, pView);
+		if (pView2)
+			return pView2;
+	}
+	ASSERT(0);
+	return NULL;
+}
+
+/**
+ * Function to get the calendar list view. This is used by the calendar view.
+ */
+CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
+{
+	POSITION pos = this->GetFirstViewPosition();
+	while (NULL != pos)
+	{
+		CView* pView = GetNextView(pos);
+		CAgilityBookViewCalendarList* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewCalendarList, pView);
+		if (pView2)
+			return pView2;
+	}
+	ASSERT(0);
+	return NULL;
+}
+
+/**
+ * Function to get the calendar view. This is used by the calendar list view.
+ */
+CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
+{
+	POSITION pos = this->GetFirstViewPosition();
+	while (NULL != pos)
+	{
+		CView* pView = GetNextView(pos);
+		CAgilityBookViewCalendar* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewCalendar, pView);
 		if (pView2)
 			return pView2;
 	}
