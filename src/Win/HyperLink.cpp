@@ -50,6 +50,7 @@
  * the tooltip fixed.
  *
  * Revision History
+ * @li 2004-03-05 DRC Made goto-url functionality visible.
  * @li 2003-08-24 DRC Removed 4311 warning in VC7 with HINSTANCE.
  * @li 2003-08-16 DRC Modified code from Chris Maunder's original
  */
@@ -66,6 +67,117 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 #define TOOLTIP_ID 1
+
+/////////////////////////////////////////////////////////////////////////////
+
+static LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
+{
+	HKEY hkey;
+	LONG retval = RegOpenKeyEx(key, subkey, 0, KEY_QUERY_VALUE, &hkey);
+	if (retval == ERROR_SUCCESS)
+	{
+		long datasize = MAX_PATH;
+		TCHAR data[MAX_PATH];
+		RegQueryValue(hkey, NULL, data, &datasize);
+		lstrcpy(retdata,data);
+		RegCloseKey(hkey);
+	}
+	return retval;
+}
+
+bool CHyperLink::GotoURL(const CString& url)
+{
+	// First try ShellExecute()
+	// Use INT_PTR instead of 'int' for compatibility with VC7.
+	// Removes the '4311' warning message.
+	INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), url, NULL, NULL, SW_SHOW));
+
+	// If it failed, get the .htm regkey and lookup the program
+	if (result <= HINSTANCE_ERROR)
+	{
+		TCHAR key[MAX_PATH + MAX_PATH];
+		if (GetRegKey(HKEY_CLASSES_ROOT, _T(".htm"), key) == ERROR_SUCCESS)
+		{
+			lstrcat(key, _T("\\shell\\open\\command"));
+
+			if (GetRegKey(HKEY_CLASSES_ROOT,key,key) == ERROR_SUCCESS)
+			{
+				TCHAR *pos;
+				pos = _tcsstr(key, _T("\"%1\""));
+				if (pos == NULL) {	// No quotes found
+					pos = _tcsstr(key, _T("%1"));	// Check for %1, without quotes
+					if (pos == NULL)				// No parameter at all...
+						pos = key+lstrlen(key)-1;
+					else
+						*pos = '\0';				// Remove the parameter
+				}
+				else
+					*pos = '\0';					// Remove the parameter
+
+				lstrcat(pos, _T(" "));
+				lstrcat(pos, url);
+
+				USES_CONVERSION;
+				result = WinExec(T2A(key), SW_SHOW);
+			}
+		}
+	}
+
+	if (result <= HINSTANCE_ERROR)
+	{
+		CString str;
+		switch (result)
+		{
+		case 0:
+			str = "The operating system is out\nof memory or resources.";
+			break;
+		case SE_ERR_PNF:
+			str = "The specified path was not found.";
+			break;
+		case SE_ERR_FNF:
+			str = "The specified file was not found.";
+			break;
+		case ERROR_BAD_FORMAT:
+			str = "The .EXE file is invalid\n(non-Win32 .EXE or error in .EXE image).";
+			break;
+		case SE_ERR_ACCESSDENIED:
+			str = "The operating system denied\naccess to the specified file.";
+			break;
+		case SE_ERR_ASSOCINCOMPLETE:
+			str = "The filename association is\nincomplete or invalid.";
+			break;
+		case SE_ERR_DDEBUSY:
+			str = "The DDE transaction could not\nbe completed because other DDE transactions\nwere being processed.";
+			break;
+		case SE_ERR_DDEFAIL:
+			str = "The DDE transaction failed.";
+			break;
+		case SE_ERR_DDETIMEOUT:
+			str = "The DDE transaction could not\nbe completed because the request timed out.";
+			break;
+		case SE_ERR_DLLNOTFOUND:
+			str = "The specified dynamic-link library was not found.";
+			break;
+		case SE_ERR_NOASSOC:
+			str = "There is no application associated\nwith the given filename extension.";
+			break;
+		case SE_ERR_OOM:
+			str = "There was not enough memory to complete the operation.";
+			break;
+		case SE_ERR_SHARE:
+			str = "A sharing violation occurred. ";
+			break;
+		default:
+			str.Format(_T("Unknown Error (%d) occurred."), result);
+			break;
+		}
+		str = "Unable to open hyperlink:\n\n" + str;
+		AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+	else
+		return true;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CHyperLink
@@ -242,95 +354,7 @@ BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/
 void CHyperLink::OnClicked()
 {
 	m_bOverControl = false;
-
-	// First try ShellExecute()
-	// Use INT_PTR instead of 'int' for compatibility with VC7.
-	// Removes the '4311' warning message.
-	INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), m_strURL, NULL, NULL, SW_SHOW));
-
-	// If it failed, get the .htm regkey and lookup the program
-	if (result <= HINSTANCE_ERROR)
-	{
-		TCHAR key[MAX_PATH + MAX_PATH];
-		if (GetRegKey(HKEY_CLASSES_ROOT, _T(".htm"), key) == ERROR_SUCCESS)
-		{
-			lstrcat(key, _T("\\shell\\open\\command"));
-
-			if (GetRegKey(HKEY_CLASSES_ROOT,key,key) == ERROR_SUCCESS)
-			{
-				TCHAR *pos;
-				pos = _tcsstr(key, _T("\"%1\""));
-				if (pos == NULL) {	// No quotes found
-					pos = _tcsstr(key, _T("%1"));	// Check for %1, without quotes
-					if (pos == NULL)				// No parameter at all...
-						pos = key+lstrlen(key)-1;
-					else
-						*pos = '\0';				// Remove the parameter
-				}
-				else
-					*pos = '\0';					// Remove the parameter
-
-				lstrcat(pos, _T(" "));
-				lstrcat(pos, m_strURL);
-
-				USES_CONVERSION;
-				result = WinExec(T2A(key), SW_SHOW);
-			}
-		}
-	}
-
-	if (result <= HINSTANCE_ERROR)
-	{
-		CString str;
-		switch (result)
-		{
-		case 0:
-			str = "The operating system is out\nof memory or resources.";
-			break;
-		case SE_ERR_PNF:
-			str = "The specified path was not found.";
-			break;
-		case SE_ERR_FNF:
-			str = "The specified file was not found.";
-			break;
-		case ERROR_BAD_FORMAT:
-			str = "The .EXE file is invalid\n(non-Win32 .EXE or error in .EXE image).";
-			break;
-		case SE_ERR_ACCESSDENIED:
-			str = "The operating system denied\naccess to the specified file.";
-			break;
-		case SE_ERR_ASSOCINCOMPLETE:
-			str = "The filename association is\nincomplete or invalid.";
-			break;
-		case SE_ERR_DDEBUSY:
-			str = "The DDE transaction could not\nbe completed because other DDE transactions\nwere being processed.";
-			break;
-		case SE_ERR_DDEFAIL:
-			str = "The DDE transaction failed.";
-			break;
-		case SE_ERR_DDETIMEOUT:
-			str = "The DDE transaction could not\nbe completed because the request timed out.";
-			break;
-		case SE_ERR_DLLNOTFOUND:
-			str = "The specified dynamic-link library was not found.";
-			break;
-		case SE_ERR_NOASSOC:
-			str = "There is no application associated\nwith the given filename extension.";
-			break;
-		case SE_ERR_OOM:
-			str = "There was not enough memory to complete the operation.";
-			break;
-		case SE_ERR_SHARE:
-			str = "A sharing violation occurred. ";
-			break;
-		default:
-			str.Format(_T("Unknown Error (%d) occurred."), result);
-			break;
-		}
-		str = "Unable to open hyperlink:\n\n" + str;
-		AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
-	}
-	else
+	if (GotoURL(m_strURL))
 		SetVisited();	// Repaint to show visited colour
 }
 
@@ -493,19 +517,4 @@ void CHyperLink::SetDefaultCursor()
 		}
 		FreeLibrary(hModule);
 	}
-}
-
-LONG CHyperLink::GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
-{
-	HKEY hkey;
-	LONG retval = RegOpenKeyEx(key, subkey, 0, KEY_QUERY_VALUE, &hkey);
-	if (retval == ERROR_SUCCESS)
-	{
-		long datasize = MAX_PATH;
-		TCHAR data[MAX_PATH];
-		RegQueryValue(hkey, NULL, data, &datasize);
-		lstrcpy(retdata,data);
-		RegCloseKey(hkey);
-	}
-	return retval;
 }

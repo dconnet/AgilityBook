@@ -1,4 +1,4 @@
-3/2/2004: v1.0.3.8 <in development>
+3/5/2004: v1.0.3.8 <in development>
 - Bumped file version to 8.4:
   - Added table-in-yps flag (default is true for backwards compatibility)
   - Added new 'Configuration/Action' verb: DeleteTitle
@@ -6,11 +6,12 @@
   - Added 'CRCDMeta' to Notes.
 - New features / Enhancements:
   - Updated doxygen comments in ARB classes.
+  - Added 'Check for Updates' on Help menu and About box.
   - Add a 5-sec table YPS computation checkbox in the runs.
   - Added the ability to tell if the program contains an updated config. When
     you open an old file, it will prompt to merge. Once you have updated, you
     will not be prompted again, even if you modify your config.
-  - Added additional text to email message generated from hotlink in about box.
+  - Added additional text to email message generated from hotlink in About box.
 - Bug fixes
   - Creating a new document didn't clear the judge info from the previous doc.
   - Removed 'V-ATCH',etc from ASCA configuration.

@@ -346,6 +346,9 @@
 				RelativePath="..\..\..\Win\TabView.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\VersionNum.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\Wizard.cpp">
 			</File>
 			<File
@@ -558,6 +561,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\TabView.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\VersionNum.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\Wizard.h">

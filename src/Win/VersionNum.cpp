@@ -1,0 +1,224 @@
+/*
+ * Copyright © 2004 David Connet. All Rights Reserved.
+ *
+ * Permission to use, copy, modify and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, provided
+ * that the above copyright notice appear in all copies, that both the
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the names of David Connet, dcon Software,
+ * AgilityBook, AgilityRecordBook or "Agility Record Book" not be used in
+ * advertising or publicity pertaining to distribution of the software
+ * without specific, written prior permission. David Connet makes no
+ * representations about the suitability of this software for any purpose.
+ * It is provided "as is" without express or implied warranty.
+ *
+ * DAVID CONNET DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+ * EVENT SHALL DAVID CONNET BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+ * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+ * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+ * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ *
+ * http://opensource.org
+ * Open Source Historical Permission Notice and Disclaimer.
+ */
+
+/**
+ * @file
+ *
+ * @brief implementation of the CVersionNum class
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2004-03-04 DRC Created
+ */
+
+#include "stdafx.h"
+#include "AgilityBook.h"
+
+#include "VersionNum.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+CVersionNum::CVersionNum(WORD inwLangID, WORD inwCharSet)
+	: m_Valid(false)
+{
+	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
+
+	// Get the filename and other info...
+	CString appFName;
+	LPTSTR tp = appFName.GetBuffer(MAX_PATH);
+	::GetModuleFileName(NULL, tp, MAX_PATH);
+	appFName.ReleaseBuffer();
+#ifndef _UNICODE
+	appFName.OemToAnsi();
+#endif
+
+	// Get the version information size for allocate the buffer
+	LPTSTR pAppName = appFName.GetBuffer(0);
+	DWORD fvHandle;
+	DWORD dwSize = ::GetFileVersionInfoSize(pAppName, &fvHandle);
+	if (0 == dwSize)
+	{
+		appFName.ReleaseBuffer();
+		return;
+	}
+
+	// Allocate buffer and retrieve version information
+	BYTE* pFVData = new BYTE[dwSize];
+	if (!::GetFileVersionInfo(pAppName, fvHandle, dwSize, pFVData))
+	{
+		appFName.ReleaseBuffer();
+		return;
+	}
+	appFName.ReleaseBuffer();
+	// Retrieve the language and character-set identifier
+	UINT nQuerySize;
+	DWORD* pTransBlock;
+	if (!::VerQueryValue(pFVData, _T("\\VarFileInfo\\Translation"), reinterpret_cast<void**>(&pTransBlock), &nQuerySize))
+	{
+		delete [] pFVData;
+		pFVData = NULL;
+		return;
+	}
+	DWORD dwData = 0;
+	if (nQuerySize > 4 && (0 != inwLangID || 0 != inwCharSet))
+	{
+		bool bOk = false;
+		for (DWORD offset = 0; !bOk && offset < nQuerySize; offset += sizeof(DWORD))
+		{
+			dwData = pTransBlock[0];
+			if (inwLangID == LOWORD(dwData) && inwCharSet == HIWORD(dwData))
+				bOk = true;
+		}
+		if (!bOk)
+			dwData = pTransBlock[0];
+	}
+	else
+		dwData = pTransBlock[0];
+	// Swap the words so wsprintf will print the lang-codepage in
+	// the correct format.
+	//  Hi-order: IBM code page
+	//  Lo-order: Microsoft language id
+	WORD wLangID = LOWORD(dwData);
+	WORD wCodePage = HIWORD(dwData);
+
+	// Cache the fixed info.
+	VS_FIXEDFILEINFO* pffi;
+	if (!::VerQueryValue(pFVData, _T("\\"), reinterpret_cast<void**>(&pffi), &nQuerySize))
+	{
+		delete [] pFVData;
+		pFVData = NULL;
+		return;
+	}
+	// Date didn't get set. Get the create date.
+	if (0 == pffi->dwFileDateLS && 0 == pffi->dwFileDateMS)
+	{
+		HANDLE hFile = CreateFile(appFName, GENERIC_READ, FILE_SHARE_READ, NULL,
+			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hFile)
+		{
+			FILETIME ft;
+			GetFileTime(hFile, &ft, NULL, NULL);
+			CloseHandle(hFile);
+			pffi->dwFileDateLS = ft.dwLowDateTime;
+			pffi->dwFileDateMS = ft.dwHighDateTime;
+		}
+	}
+
+	// Get the real name.
+	TCHAR subBlockName[255];
+	wsprintf(subBlockName, _T("\\StringFileInfo\\%04hx%04hx\\ProductName"), wLangID, wCodePage);
+	void* pValue = NULL;
+	UINT vSize;
+	::VerQueryValue(pFVData, subBlockName, &pValue, &vSize);
+	m_Name = reinterpret_cast<LPCTSTR>(pValue);
+
+	m_Version.part1 = HIWORD(pffi->dwProductVersionMS);
+	m_Version.part2 = LOWORD(pffi->dwProductVersionMS);
+	m_Version.part3 = HIWORD(pffi->dwProductVersionLS);
+	m_Version.part4 = LOWORD(pffi->dwProductVersionLS);
+
+	delete [] pFVData;
+	m_Valid = true;
+}
+
+CVersionNum::CVersionNum(CString inVer)
+{
+	m_Name.Empty();
+	int pos = inVer.Find('.');
+	if (0 <= pos)
+	{
+		m_Version.part1 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+		inVer = inVer.Mid(pos);
+		int pos = inVer.Find('.');
+		if (0 <= pos)
+		{
+			m_Version.part2 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+			inVer = inVer.Mid(pos);
+			int pos = inVer.Find('.');
+			if (0 <= pos)
+			{
+				m_Version.part3 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+				inVer = inVer.Mid(pos);
+				int pos = inVer.Find('.');
+				if (0 <= pos)
+				{
+					m_Version.part4 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+					inVer = inVer.Mid(pos);
+				}
+			}
+		}
+	}
+}
+
+bool CVersionNum::operator==(const CVersionNum& rhs) const
+{
+	return m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 == rhs.m_Version.part2
+		&& m_Version.part3 == rhs.m_Version.part3
+		&& m_Version.part4 == rhs.m_Version.part4;
+}
+
+bool CVersionNum::operator<(const CVersionNum& rhs) const
+{
+	if (m_Version.part1 < rhs.m_Version.part1
+	|| m_Version.part2 < rhs.m_Version.part2
+	|| m_Version.part3 < rhs.m_Version.part3
+	|| m_Version.part4 < rhs.m_Version.part4)
+		return true;
+	return false;
+}
+
+bool CVersionNum::operator>(const CVersionNum& rhs) const
+{
+	if (m_Version.part1 > rhs.m_Version.part1
+	|| m_Version.part2 > rhs.m_Version.part2
+	|| m_Version.part3 > rhs.m_Version.part3
+	|| m_Version.part4 > rhs.m_Version.part4)
+		return true;
+	return false;
+}
+
+CString CVersionNum::GetVersionString() const
+{
+	CString version;
+	version.Format(_T("%hd.%hd.%hd.%hd"),
+		m_Version.part1,
+		m_Version.part2,
+		m_Version.part3,
+		m_Version.part4);
+	return version;
+}
+
+void CVersionNum::GetVersion(VERSION_NUMBER& outVer) const
+{
+	outVer = m_Version;
+}
