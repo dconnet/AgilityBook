@@ -1,4 +1,4 @@
-10/14/2003: v0.9.3.7: <development>
+10/15/2003: v0.9.3.7: Release Candidate 4
 - Bumped file version to 7:
   - Allow course faults on runs scored by points. For instance, a handler could
     be faulted for language.
