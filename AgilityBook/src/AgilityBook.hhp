@@ -80,7 +80,7 @@ Help\html\TabRuns.html
 Help\html\Tabs.html
 Help\html\Tasks.html
 Help\html\Toolbar.html
-
+Help\html\DlgTitle.html
 
 [ALIAS]
 HIDD_ABOUTBOX=Help\html\DlgAbout.html
@@ -119,7 +119,7 @@ HIDD_RUN_LINK=Help\html\PropRun.html
 HIDD_RUN_REFERENCE=Help\html\PropRun.html
 HIDD_RUN_SCORE=Help\html\PropRun.html
 HIDD_SELECT_URL=Help\html\DlgSelectUrl.html
-HIDD_TITLE=Help\html\PropDog.html
+HIDD_TITLE=Help\html\DlgTitle.html
 HIDD_TRAINING=Help\html\PropLog.html
 HIDD_TRIAL=Help\html\PropTrial.html
 HIDD_VIEW_OPTIONS_CALENDAR=Help\html\DlgOptionsCal.html

@@ -5,99 +5,156 @@
 </HEAD>
 <BODY>
 <h1>Program Menu</h1>
+<p>The following items are available in the main program menu.</p>
+<p><b>File Menu</b></p>
 <ul>
-<li>File<ul>
-  <li>New</li>
-  <li>Open...</li>
-  <li>Save</li>
-  <li>Save As...</li>
-  <li>Import and Export...</li>
-  <li>Find all linked files...</li>
-  <li>Print</li>
-  <li>Print Preview</li>
-  <li>Print Setup</li>
-  <li>&lt;Recent Files&gt;</li>
-  <li>Exit</li>
+  <li><b><a name="New">New</a></b> - Create a new file.</li>
+  <li><b><a name="Open">Open...</a></b> - Open an existing file.</li>
+  <li><b><a name="Save">Save</a></b> - Save the current file. If this is a new 
+  file, this performs the <b>Save As...</b> action.</li>
+  <li><b><a name="SaveAs">Save As...</a></b> - Prompts you for the location and 
+  name of a file and then saves it.</li>
+  <li><b><a name="ImportExport">Import and Export...</a></b> - Opens the
+  <a href="DialogsWizard.html">Import Export Wizard</a> dialog.</li>
+  <li><b><a name="FindAllLinkedFiles">Find all linked files</a>...</b> - Find 
+  and <a href="DlgFindLinks.html">display</a> all the files currently linked to 
+  runs.</li>
+  <li><b><a name="Print">Print</a></b> - Prints the current view.</li>
+  <li><b><a name="PrintPreview">Print Preview</a></b> - Preview the current view 
+  for printing. The preview also allows you to print from there.</li>
+  <li><b><a name="PrintSetup">Print Setup...</a></b> - Configuration your 
+  printer. This displays the standard Windows print configuration dialog.</li>
+  <li><b>Recent Files list</b> - A list of files that you have recently opened. 
+  Simply select one of these files to open it.</li>
+  <li><b><a name="Exit">Exit</a></b> - Closes the Agility Record Book 
+  application. If your file has been changed, you will be prompted to save those 
+  changes.</li>
 </ul>
-  </li>
-<li>Edit<ul>
-  <li>Undo</li>
-  <li>Duplicate</li>
-  <li>Cut</li>
-  <li>Copy</li>
-  <li>Paste</li>
-  <li>Select All</li>
-  <li>Find</li>
-  <li>Find Next</li>
-  <li>Find Previous</li>
-  <li>Configuration</li>
-  <li>Judges</li>
+  <b>Edit Menu</b><ul>
+  <li><b><a name="Undo">Undo</a></b> - Undo the last action.</li>
+  <li><b><a name="Duplicate">Duplicate</a></b> - Duplicate the current 
+  selection.</li>
+  <li><b><a name="Cut">Cut</a></b> - Copy the current selection to the clipboard 
+  and then delete it.</li>
+  <li><b><a name="Copy">Copy</a></b> - Copy the current selection to the 
+  clipboard.</li>
+  <li><b><a name="Paste">Paste</a></b> - Paste the clipboard contents.</li>
+  <li><b><a name="SelectAll">Select All</a></b> - Select all items.</li>
+  <li><b><a name="Find">Find</a></b> - Display the <a href="DlgFind.html">Find</a> 
+  dialog.</li>
+  <li><b><a name="FindNext">Find Next</a></b> - Find the next item matching the 
+  last search criteria. If no search has been performed, the Find dialog is 
+  displayed.</li>
+  <li><b><a name="FindPrevious">Find Previous</a></b> - Find the previous item 
+  matching the last search criteria. If no search has been performed, the Find 
+  dialog is displayed.</li>
+  <li><b><a name="Configuration">Configuration</a></b> - Display the
+  <a href="DlgConfig.html">Configuration</a> dialog.</li>
+  <li><b><a name="Judges">Judges</a></b> - Display the
+  <a href="DlgJudgeInfo.html">Judge's Information</a> dialog.</li>
 </ul>
-  </li>
-  <li>Agility<ul>
-  <li>Dog<ul>
-    <li>Properties...</li>
-    <li>New...</li>
-    <li>Delete</li>
+  <b>Agility Menu</b><ul>
+  <li><b>Dog</b><ul>
+    <li><b><a name="DogProperties">Properties...</a></b> - Display the 
+    <a href="PropDog.html">properties</a> of the selected dog.</li>
+    <li><b><a name="DogNew">New...</a></b> - Create a <a href="NewDog.html">new dog</a>.</li>
+    <li><b><a name="DogDelete">Delete</a></b> - Delete the selected dog and all 
+    the titles, trials and runs associated with it.</li>
   </ul>
   </li>
-  <li>Title<ul>
-    <li>Properties...</li>
-    <li>New...</li>
-    <li>Delete</li>
+  <li><b>Title</b><ul>
+    <li><b><a name="TitleProperties">Properties...</a></b> - Display the
+    <a href="DlgTitle.html">properties</a> of the current title.</li>
+    <li><b><a name="TitleNew">New...</a></b> - Create a <a href="DlgTitle.html">
+    new title</a> for the current dog.</li>
+    <li><b><a name="TitleDelete">Delete</a></b> - Delete the selected title.</li>
   </ul>
   </li>
-  <li>Trial<ul>
-    <li>Properties...</li>
-    <li>New...</li>
-    <li>Delete</li>
+  <li><b>Trial</b><ul>
+    <li><b><a name="TrialProperties">Properties...</a></b> - Display the
+    <a href="PropTrial.html">properties</a> for the selected trial.</li>
+    <li><b><a name="TrialNew">New...</a></b> - Create a <a href="NewTrial.html">
+    new trial</a> for the current dog.</li>
+    <li><b><a name="TrialDelete">Delete</a></b> - Delete the selected trial and 
+    all the runs associated with it.</li>
   </ul>
   </li>
-  <li>Run<ul>
-    <li>Properties...</li>
-    <li>New...</li>
-    <li>Delete</li>
+  <li><b>Run</b><ul>
+    <li><b><a name="RunProperties">Properties...</a></b> - Display the
+    <a href="PropRun.html">properties</a> for the selected run.</li>
+    <li><b><a name="RunNew">New...</a></b> - Create a <a href="NewRun.html">new 
+    run</a> for the current trial.</li>
+    <li><b><a name="RunDelete">Delete</a></b> - Delete the selected run.</li>
   </ul>
   </li>
-  <li>Calendar<ul>
-    <li>Properties...</li>
-    <li>New...</li>
-    <li>Delete</li>
-    <li>Create Trial Entry...</li>
+  <li><b>Calendar</b><ul>
+    <li><b><a name="CalendarProperties">Properties...</a></b> - Display the
+    <a href="PropCal.html">properties</a> for the selected calendar entry.</li>
+    <li><b><a name="CalendarNew">New...</a></b> - Create a
+    <a href="PropCal.html">new calendar</a> entry.</li>
+    <li><b><a name="CalendarDelete">Delete</a></b> - Delete the selected 
+    calendar entry.</li>
+    <li><b><a name="CalendarEntry">Create Trial Entry...</a></b> -
+    <a href="NewTrial.html#Calendar">Create a trial</a> directly from the 
+    calendar entry.</li>
   </ul>
   </li>
-  <li>Training<ul>
-    <li>Properties...</li>
-    <li>New...</li>
-    <li>Delete</li>
+  <li><b>Training</b><ul>
+    <li><b><a name="LogProperties">Properties...</a></b> - Display the
+    <a href="PropLog.html">properties</a> for the selected training log.</li>
+    <li><b><a name="LogNew">New...</a></b> - Create a <a href="PropLog.html">new 
+    training log</a>.</li>
+    <li><b><a name="LogDelete">Delete</a></b> - Delete the selected training 
+    log.</li>
   </ul>
   </li>
 </ul>
-  </li>
-  <li>View<ul>
-  <li>Options...</li>
-  <li>Customize...</li>
-  <li>Show Newest Runs First</li>
-  <li>Show Runs By Trial</li>
-  <li>Show Hidden Titles</li>
-  <li>Include Table in YPS</li>
-  <li>Toolbar</li>
-  <li>Status Bar</li>
+  <b>View Menu</b><ul>
+  <li><b><a name="Options">Options...</a></b> - This
+  <a href="DialogsOptions.html">dialog</a> displays the various options that can 
+  be set. The page that is initially shown is based on the view that is 
+  currently active.</li>
+  <li><b><a name="Customize">Customize...</a></b> - Customize the current view. 
+  This will display a different list of items that can be customized for each 
+  window in the four main tabs. It allows you to specify the fields you would 
+  like to see, and their order.</li>
+  <li><b><a name="ShowNewestRunsFirst">Show Newest Runs First</a></b> - Show the 
+  newest runs first. This simply reverses the sorting of all runs.</li>
+  <li><b><a name="ShowRunsByTrial">Show Runs By Trial</a></b> - When this option 
+  is set, the right side of the Runs view shows only runs associated with the 
+  item selected in the left side. If you select a dog, all the runs will be 
+  visible. When you select a trial, only those runs in that trial will be 
+  visible. Unsetting this option displays all the runs for the current dog.</li>
+  <li><b><a name="ShowHiddenTitles">Show Hidden Titles</a></b> - Show any titles 
+  that have been hidden. This option is also available in the
+  <a href="PropDog.html#Titles">Titles page</a>.</li>
+  <li><b><a name="IncludeTableinYPS">Include Table in YPS</a></b> - Not 
+  including the table will subtract 5 seconds from your course time when 
+  computing your Yards Per Second.</li>
+  <li><b><a name="Toolbar">Toolbar</a></b> - Toggle the visibility of the tool 
+  bar.</li>
+  <li><b><a name="StatusBar">Status Bar</a></b> - Toggle the visibility of the 
+  status bar.</li>
 </ul>
-  </li>
-  <li>Window<ul>
-  <li>Next Pane</li>
-  <li>Previous Pane</li>
+  <b>Window Menu</b><ul>
+  <li><b><a name="NextPane">Next Pane</a></b> - Navigate between two windows 
+  within the same view.</li>
+  <li><b><a name="PreviousPane">Previous Pane</a></b> - Navigate between two 
+  windows within the same view.</li>
 </ul>
-  </li>
-  <li>Help<ul>
-  <li>Contents</li>
-  <li>Index</li>
-  <li>Check for Updates...</li>
-  <li>Show Splash Screen...</li>
-  <li>About Agility Record Book...</li>
+  <b>Help Menu</b><ul>
+  <li><b><a name="Contents">Contents</a></b> - Display the help contents.</li>
+  <li><b><a name="Index">Index</a></b> - Display the help index.</li>
+  <li><b><a name="CheckforUpdates">Check for Updates...</a></b> - Check to see 
+  if there are any updates available. If there are, you will be asked if you 
+  want to download the update. Opting to download the update will simply launch 
+  a URL to a website where you can download the new version. Once downloaded, 
+  you must then install it.</li>
+  <li><b><a name="ShowSplashScreen">Show Splash Screen...</a></b> - Show the 
+  initial splash screen. Click anywhere to dismiss it. You can change the image 
+  using the <a href="DlgOptionsPgm.html">Options dialog</a>.</li>
+  <li><b><a name="About">About Agility Record Book...</a></b> - Display the
+  <a href="DlgAbout.html">About dialog</a>.</li>
 </ul>
-  </li>
-</ul>
-</BODY>
+  </BODY>
 </HTML>
