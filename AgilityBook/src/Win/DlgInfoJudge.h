@@ -38,7 +38,7 @@
 
 #include <set>
 #include <string>
-#include "ARBInfoItem.h"
+#include "ARBInfo.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -46,13 +46,7 @@ class CDlgInfoJudge : public CDlgBaseDialog
 {
 // Construction
 public:
-	typedef enum
-	{
-		eClubInfo,
-		eJudgeInfo,
-		eLocationInfo
-	} eInfoType;
-	CDlgInfoJudge(CAgilityBookDoc* pDoc, eInfoType inType, CWnd* pParent = NULL);
+	CDlgInfoJudge(CAgilityBookDoc* pDoc, ARBInfo::eInfoType inType, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -63,7 +57,7 @@ private:
 	CEdit		m_ctrlComment;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	eInfoType m_Type;
+	ARBInfo::eInfoType m_Type;
 	std::set<std::string> m_NamesInUse;
 	ARBInfoItemList m_InfoOrig;
 	ARBInfoItemList m_Info;

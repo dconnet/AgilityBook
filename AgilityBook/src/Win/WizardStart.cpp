@@ -465,35 +465,35 @@ BOOL CWizardStart::OnWizardFinish()
 									}
 								}
 							}
-							for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetClubInfo().begin();
-								iterClub != book.GetInfo().GetClubInfo().end();
+							for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetInfo(ARBInfo::eClubInfo).begin();
+								iterClub != book.GetInfo().GetInfo(ARBInfo::eClubInfo).end();
 								++iterClub)
 							{
 								ARBInfoItem* pClub = *iterClub;
 								// If this fails, it already exists.
-								if (m_pDoc->GetARB().GetInfo().GetClubInfo().AddItem(pClub))
+								if (m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eClubInfo).AddItem(pClub))
 								{
 									++countClubs;
 								}
 							}
-							for (ARBInfoItemList::const_iterator iterJudge = book.GetInfo().GetJudgeInfo().begin();
-								iterJudge != book.GetInfo().GetJudgeInfo().end();
+							for (ARBInfoItemList::const_iterator iterJudge = book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).begin();
+								iterJudge != book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).end();
 								++iterJudge)
 							{
 								ARBInfoItem* pJudge = *iterJudge;
 								// If this fails, it already exists.
-								if (m_pDoc->GetARB().GetInfo().GetJudgeInfo().AddItem(pJudge))
+								if (m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eJudgeInfo).AddItem(pJudge))
 								{
 									++countJudges;
 								}
 							}
-							for (ARBInfoItemList::const_iterator iterLocation = book.GetInfo().GetLocationInfo().begin();
-								iterLocation != book.GetInfo().GetLocationInfo().end();
+							for (ARBInfoItemList::const_iterator iterLocation = book.GetInfo().GetInfo(ARBInfo::eLocationInfo).begin();
+								iterLocation != book.GetInfo().GetInfo(ARBInfo::eLocationInfo).end();
 								++iterLocation)
 							{
 								ARBInfoItem* pLocation = *iterLocation;
 								// If this fails, it already exists.
-								if (m_pDoc->GetARB().GetInfo().GetLocationInfo().AddItem(pLocation))
+								if (m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eLocationInfo).AddItem(pLocation))
 								{
 									++countLocations;
 								}
@@ -511,19 +511,19 @@ BOOL CWizardStart::OnWizardFinish()
 							{
 								std::set<std::string> namesInUse;
 								m_pDoc->GetAllClubNames(namesInUse, false);
-								m_pDoc->GetARB().GetInfo().GetClubInfo().CondenseContent(namesInUse);
+								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
 							}
 							if (0 < countJudges)
 							{
 								std::set<std::string> namesInUse;
 								m_pDoc->GetAllJudges(namesInUse, false);
-								m_pDoc->GetARB().GetInfo().GetJudgeInfo().CondenseContent(namesInUse);
+								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
 							}
 							if (0 < countLocations)
 							{
 								std::set<std::string> namesInUse;
 								m_pDoc->GetAllTrialLocations(namesInUse, false);
-								m_pDoc->GetARB().GetInfo().GetLocationInfo().CondenseContent(namesInUse);
+								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 							}
 							//"Added %1!d! new dogs, updated %2!d! dogs and added %3!d! judges."
 							CString str("Added ");

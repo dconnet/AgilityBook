@@ -969,7 +969,7 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindRuns::Search() const
+bool CFindRuns::Search(CDlgFind* pDlg) const
 {
 	bool bFound = false;
 	int inc = 1;
@@ -1499,7 +1499,7 @@ void CAgilityBookViewRuns::OnEditFindNext()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookViewRuns::OnEditFindPrevious()
@@ -1508,7 +1508,7 @@ void CAgilityBookViewRuns::OnEditFindPrevious()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI) 

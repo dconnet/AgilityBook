@@ -105,6 +105,9 @@ protected:
 #define COL_OTHER_LEVEL		5
 #define COL_OTHER_EVENT		6
 #define COL_OTHER_PTS		7
+#define COL_ITEM_TYPE		0
+#define COL_ITEM_NAME		1
+#define COL_ITEM_COMMENT	2
 class CDlgListViewerDataColumns : public CDlgListViewerData
 {
 public:
@@ -115,6 +118,12 @@ public:
 	}
 	virtual CString OnNeedText(int iCol) const {return "";}
 	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const {return 0;}
+	bool InsertColumn(CListCtrl2& inList, int inIndex, UINT inName)
+	{
+		CString name;
+		name.LoadString(inName);
+		return InsertColumn(inList, inIndex, (LPCTSTR)name);
+	}
 	bool InsertColumn(CListCtrl2& inList, int inIndex, LPCTSTR inName)
 	{
 		int col = static_cast<int>(m_Columns.size());
@@ -581,6 +590,123 @@ int CDlgListViewerDataOther::Compare(CDlgListViewerData const* pRow2, int inCol)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+class CDlgListViewerDataItem : public CDlgListViewerData
+{
+public:
+	CDlgListViewerDataItem(CDlgListViewerDataColumns* inColData,
+		CFindItemInfo const& info)
+		: m_ColData(inColData)
+		, m_info(info)
+	{
+		ASSERT(m_ColData);
+		if (m_ColData)
+			m_ColData->AddRef();
+	}
+	virtual ~CDlgListViewerDataItem()
+	{
+		if (m_ColData)
+			m_ColData->Release();
+	}
+	virtual CString OnNeedText(int iCol) const;
+	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+private:
+	CDlgListViewerDataColumns* m_ColData;
+	CFindItemInfo m_info;
+};
+
+CString CDlgListViewerDataItem::OnNeedText(int iCol) const
+{
+	CString str;
+	switch (m_ColData->GetIndex(iCol))
+	{
+	case COL_ITEM_TYPE:
+		switch (m_info.type)
+		{
+		case ARBInfo::eClubInfo:
+			str.LoadString(IDS_COL_CLUB);
+			break;
+		case ARBInfo::eJudgeInfo:
+			str.LoadString(IDS_COL_JUDGE);
+			break;
+		case ARBInfo::eLocationInfo:
+			str.LoadString(IDS_COL_LOCATION);
+			break;
+		}
+		break;
+
+	case COL_ITEM_NAME:
+		str = m_info.name.c_str();
+		break;
+
+	case COL_ITEM_COMMENT:
+		if (m_info.pItem)
+			str = m_info.pItem->GetComment().c_str();
+		break;
+	}
+	return str;
+}
+
+int CDlgListViewerDataItem::Compare(CDlgListViewerData const* pRow2, int inCol) const
+{
+	CDlgListViewerDataItem const* pData = dynamic_cast<CDlgListViewerDataItem const*>(pRow2);
+	if (!pData)
+		return 0;
+	CString str;
+	std::string str1, str2;
+	switch (m_ColData->GetIndex(inCol))
+	{
+	default:
+	case COL_ITEM_TYPE:
+		switch (m_info.type)
+		{
+		case ARBInfo::eClubInfo:
+			str.LoadString(IDS_COL_CLUB);
+			break;
+		case ARBInfo::eJudgeInfo:
+			str.LoadString(IDS_COL_JUDGE);
+			break;
+		case ARBInfo::eLocationInfo:
+			str.LoadString(IDS_COL_LOCATION);
+			break;
+		}
+		str1 = (LPCTSTR)str;
+		switch (pData->m_info.type)
+		{
+		case ARBInfo::eClubInfo:
+			str.LoadString(IDS_COL_CLUB);
+			break;
+		case ARBInfo::eJudgeInfo:
+			str.LoadString(IDS_COL_JUDGE);
+			break;
+		case ARBInfo::eLocationInfo:
+			str.LoadString(IDS_COL_LOCATION);
+			break;
+		}
+		str2 = (LPCTSTR)str;
+		break;
+
+	case COL_ITEM_NAME:
+		str1 = m_info.name;
+		str2 = pData->m_info.name;
+		break;
+
+	case COL_ITEM_COMMENT:
+		if (m_info.pItem)
+			str1 = m_info.pItem->GetComment();
+		if (pData->m_info.pItem)
+			str1 = pData->m_info.pItem->GetComment();
+		break;
+	}
+	if (str1 < str2)
+		return -1;
+	else if (str1 > str2)
+		return 1;
+	else
+		return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CDlgListViewer dialog
 
 struct SORT_COL_INFO
@@ -618,6 +744,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
 	, m_OtherData(NULL)
+	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
@@ -639,6 +766,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_ScoringRuns(&inScoringRuns)
 	, m_DoubleQData(NULL)
 	, m_OtherData(NULL)
+	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
@@ -659,6 +787,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(&inQQs)
 	, m_OtherData(NULL)
+	, m_Items(NULL)
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
@@ -679,6 +808,27 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
 	, m_OtherData(&inRunList)
+	, m_Items(NULL)
+	, m_rWin(0,0,0,0)
+	, m_rDlg(0,0,0,0)
+	, m_rList(0,0,0,0)
+	, m_rOK(0,0,0,0)
+	, m_SortColumn(1)
+{
+}
+
+CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+		CString const& inCaption,
+		std::vector<CFindItemInfo> const& inItems,
+		CWnd* pParent)
+	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_pDoc(inDoc)
+	, m_Caption(inCaption)
+	, m_Runs(NULL)
+	, m_ScoringRuns(NULL)
+	, m_DoubleQData(NULL)
+	, m_OtherData(NULL)
+	, m_Items(&inItems)
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
@@ -729,9 +879,9 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 			pRun->GetLevel(),
 			pRun->GetDate());
 	if (pScoring && pScoring->HasMachPts())
-		pColData->InsertColumn(ctrlList, COL_RUN_MACH, "Mach Points");
+		pColData->InsertColumn(ctrlList, COL_RUN_MACH, IDS_MACHPTS);
 	if (0 < pRun->GetPartners().size())
-		pColData->InsertColumn(ctrlList, COL_RUN_PARTNERS, "Partners");
+		pColData->InsertColumn(ctrlList, COL_RUN_PARTNERS, IDS_PARTNERS);
 
 	CDlgListViewerDataRun* pData = new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail);
 	LVITEM item;
@@ -766,16 +916,16 @@ BOOL CDlgListViewer::OnInitDialog()
 	if (m_Runs)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, "Date");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, "Q");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, "Title Points");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, "Location");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, "Club");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, "Judge");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, "Place");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, "In Class");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, "Q'd");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, IDS_COL_Q);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, IDS_COL_TITLE_PTS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, IDS_COL_JUDGE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, IDS_COL_PLACE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, IDS_COL_IN_CLASS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, IDS_COL_Q_D);
 		int iItem = 0;
 		for (std::list<RunInfo>::const_iterator iter = m_Runs->begin();
 			iter != m_Runs->end();
@@ -798,17 +948,17 @@ BOOL CDlgListViewer::OnInitDialog()
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(12);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_STATUS, "Status");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DOG, "Dog");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, "Date");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_DOG, IDS_COL_DOG);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, "Q");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, "Title Points");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, "Location");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, "Club");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, "Judge");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, "Place");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, "In Class");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, "Q'd");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, IDS_COL_Q);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, IDS_COL_TITLE_PTS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, IDS_COL_JUDGE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, IDS_COL_PLACE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, IDS_COL_IN_CLASS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, IDS_COL_Q_D);
 		int iItem = 0;
 		for (std::list<ScoringRunInfo>::const_iterator iter = m_ScoringRuns->begin();
 			iter != m_ScoringRuns->end();
@@ -824,10 +974,10 @@ BOOL CDlgListViewer::OnInitDialog()
 	else if (m_DoubleQData)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
-		pColData->InsertColumn(m_ctrlList, COL_QQ_DATE, "Date");
+		pColData->InsertColumn(m_ctrlList, COL_QQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_QQ_LOCATION, "Location");
-		pColData->InsertColumn(m_ctrlList, COL_QQ_CLUB, "Club");
+		pColData->InsertColumn(m_ctrlList, COL_QQ_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_QQ_CLUB, IDS_COL_CLUB);
 		int iItem = 0;
 		for (std::set<DoubleQdata>::const_iterator iter = m_DoubleQData->begin();
 			iter != m_DoubleQData->end();
@@ -848,15 +998,15 @@ BOOL CDlgListViewer::OnInitDialog()
 	else if (m_OtherData)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(8);
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_DATE, "Date");
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_NAME, "Trial / Existing Pts");
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_CLUB, "Club");
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_VENUE, "Venue");
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, "Division");
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, "Level");
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_EVENT, "Event");
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, "Points");
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_VENUE, IDS_COL_VENUE);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, IDS_COL_DIVISION);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_EVENT, IDS_COL_EVENT);
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, IDS_COL_POINTS);
 		int iItem = 0;
 		for (std::list<OtherPtInfo>::const_iterator iter = m_OtherData->begin();
 			iter != m_OtherData->end();
@@ -864,6 +1014,31 @@ BOOL CDlgListViewer::OnInitDialog()
 		{
 			OtherPtInfo const& info = *iter;
 			CDlgListViewerDataOther* pData = new CDlgListViewerDataOther(pColData, info);
+			LVITEM item;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.iItem = iItem++;
+			item.iSubItem = 0;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.lParam = reinterpret_cast<LPARAM>(pData);
+			m_ctrlList.InsertItem(&item);
+		}
+		pColData->SetColumnWidths(m_ctrlList);
+		pColData->Release();
+	}
+	else if (m_Items)
+	{
+		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
+		pColData->InsertColumn(m_ctrlList, COL_ITEM_TYPE, IDS_COL_TYPE);
+		m_SortColumn = pColData->NumColumns();
+		pColData->InsertColumn(m_ctrlList, COL_ITEM_NAME, IDS_COL_NAME);
+		pColData->InsertColumn(m_ctrlList, COL_ITEM_COMMENT, IDS_COL_COMMENTS);
+		int iItem = 0;
+		for (std::vector<CFindItemInfo>::const_iterator iter = m_Items->begin();
+			iter != m_Items->end();
+			++iter)
+		{
+			CFindItemInfo const& info = *iter;
+			CDlgListViewerDataItem* pData = new CDlgListViewerDataItem(pColData, info);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;

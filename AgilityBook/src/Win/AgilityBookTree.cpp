@@ -107,7 +107,7 @@ HTREEITEM CFindTree::GetNextItem() const
 	return hItem;
 }
 
-bool CFindTree::Search() const
+bool CFindTree::Search(CDlgFind* pDlg) const
 {
 	bool bFound = false;
 	m_Items.clear();
@@ -932,7 +932,7 @@ void CAgilityBookTree::OnEditFindNext()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookTree::OnEditFindPrevious()
@@ -941,7 +941,7 @@ void CAgilityBookTree::OnEditFindPrevious()
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else
-		m_Callback.Search();
+		m_Callback.Search(NULL);
 }
 
 void CAgilityBookTree::OnUpdateExpand(CCmdUI* pCmdUI)

@@ -203,6 +203,7 @@ protected:
 	afx_msg void OnNotesClubs();
 	afx_msg void OnNotesJudges();
 	afx_msg void OnNotesLocations();
+	afx_msg void OnNotesSearch();
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnViewSortruns();

@@ -241,6 +241,8 @@
 #define IDC_TRIAL_CLUB_DELETE           1284
 #define IDC_TRIAL_CLUBS                 1285
 #define IDC_TRIAL_VERIFIED              1286
+#define IDC_TRIAL_LOCATION_INFO         1287
+#define IDC_TRIAL_CLUB_INFO             1288
 #define IDC_CLUB_CLUBS                  1290
 #define IDC_CLUB_VENUES                 1291
 #define IDC_RUNSCORE_DATE               1300
@@ -658,6 +660,7 @@
 #define ID_NOTES_CLUBS                  32810
 #define ID_NOTES_JUDGES                 32811
 #define ID_NOTES_LOCATIONS              32812
+#define ID_NOTES_SEARCH                 32813
 #define ID_VIEW_OPTIONS                 32820
 #define ID_VIEW_CUSTOMIZE               32821
 #define ID_VIEW_SORTRUNS                32822

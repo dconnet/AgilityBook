@@ -9,7 +9,7 @@
 configuration dialogs. This is used to define various combinations of divisions 
 and levels for which this event is valid. Sometimes only one method is required, 
 often scoring is done differently at the different levels.</p>
-<p><img border="0" src="images/DlgConfigEvent.gif" width="507" height="516"></p>
+<p><img border="0" src="images/DlgConfigEvent.gif"></p>
 <p>The <b>Name</b> is a unique name identifying this event. The <b>Event Note</b> 
 is a description that applies to the event as a whole.</p>
 <p>The two checkboxes, <b>Has Table?</b> and <b>Has Partners?</b> describe 
@@ -31,7 +31,7 @@ change. For instance, in 2004 USDAA introduced titling programs for the Novice
 and Advanced levels. In the dialog below, you can see how the number of methods 
 increases! (This is also where the <b>Copy</b> button was very convenient!)</p>
 <p>
-<img border="0" src="images/DlgConfigEventSnooker.gif" width="507" height="516"></p>
+<img border="0" src="images/DlgConfigEventSnooker.gif"></p>
 <p>The <b>Scoring Style</b> affects what other controls will be visible. As you 
 can see, this dialog differs slightly from the first example. The available 
 scoring styles are:</p>
@@ -48,10 +48,13 @@ scoring styles are:</p>
   by time. This differs from the above in that it doesn't matter if the points 
   were earned during an opening or closing period.</li>
   <li><b>Time Plus Faults</b> - The lowest score when time and faults are 
-  combined, wins. Note, this style does not compute time faults.</li>
+  combined, wins. Note, this style does not compute time faults, unless
+  specifically enabled.</li>
 </ul>
 <p>In some venues, fractional seconds are rounded off when computing faults. The
-<b>Drop time fractions for faults</b> option enables this.</p>
+<b>Drop time fractions for faults</b> option enables this.
+Also, the <b>Time Fault Multiplier</b> enables time faults to generate
+additional faults, for instance in AKC.</p>
 <p>For the &quot;Opening/Closing Points Then Time&quot; style, there will be two fields 
 visible. These are for designating the number of points that must be earned 
 during the open and closing periods in order to qualify. When you create a run, 
@@ -80,7 +83,7 @@ faults. You cannot create two entries that have the same number of faults.</p>
 <p>When you create or edit a Title Points entry, the following dialog will be 
 displayed:</p>
 <p>
-<img border="0" src="images/DlgConfigTitlePoints.gif" width="291" height="123"></p>
+<img border="0" src="images/DlgConfigTitlePoints.gif"></p>
 <p>The <b>Faults Allowed</b> field allows you to specify what the maximum number 
 of faults you can incur and still qualify is. The <b>Points</b> is the number of 
 points you will earn. <b>Accumulate Lifetime Points?</b> specifies that this 

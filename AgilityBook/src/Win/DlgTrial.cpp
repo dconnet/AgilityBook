@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-19 DRC Added Location/Club note information.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  */
 
@@ -41,6 +42,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBDogTrial.h"
 #include "DlgClub.h"
+#include ".\dlgtrial.h"
 
 using namespace std;
 
@@ -75,9 +77,9 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent)
 	, m_bRunsDeleted(false)
 {
 	//{{AFX_DATA_INIT(CDlgTrial)
+	m_Verified = pTrial->IsVerified() ? TRUE : FALSE;
 	m_Location = pTrial->GetLocation().c_str();
 	m_Notes = pTrial->GetNote().c_str();
-	m_Verified = pTrial->IsVerified() ? TRUE : FALSE;
 	//}}AFX_DATA_INIT
 	m_Notes.Replace("\n", "\r\n");
 }
@@ -86,18 +88,22 @@ void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTrial)
+	DDX_Check(pDX, IDC_TRIAL_VERIFIED, m_Verified);
 	DDX_CBString(pDX, IDC_TRIAL_LOCATION, m_Location);
 	DDX_Control(pDX, IDC_TRIAL_LOCATION, m_ctrlLocation);
 	DDX_Text(pDX, IDC_TRIAL_NOTES, m_Notes);
+	DDX_Control(pDX, IDC_TRIAL_LOCATION_INFO, m_ctrlLocationInfo);
 	DDX_Control(pDX, IDC_TRIAL_CLUB_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_TRIAL_CLUB_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_TRIAL_CLUBS, m_ctrlClubs);
-	DDX_Check(pDX, IDC_TRIAL_VERIFIED, m_Verified);
+	DDX_Control(pDX, IDC_TRIAL_CLUB_INFO, m_ctrlClubInfo);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgTrial, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTrial)
+	ON_CBN_SELCHANGE(IDC_TRIAL_LOCATION, OnSelchangeLocation)
+	ON_CBN_KILLFOCUS(IDC_TRIAL_LOCATION, OnKillfocusLocation)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TRIAL_CLUBS, OnItemchangedClubs)
 	ON_NOTIFY(NM_DBLCLK, IDC_TRIAL_CLUBS, OnDblclkClubs)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_NEW, OnClubNew)
@@ -108,19 +114,37 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDlgTrial::UpdateButtons()
+void CDlgTrial::UpdateNotes(bool bLocation, bool bClub)
 {
-	UINT selected = m_ctrlClubs.GetSelectedCount();
-	ASSERT(1 >= selected);
-	if (0 == selected)
+	if (bLocation)
 	{
-		m_ctrlEdit.EnableWindow(FALSE);
-		m_ctrlDelete.EnableWindow(FALSE);
+		CString str;
+		ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location);
+		if (pItem)
+		{
+			str = pItem->GetComment().c_str();
+			str.Replace("\n", "\r\n");
+		}
+		m_ctrlLocationInfo.SetWindowText(str);
 	}
-	else
+	if (bClub)
 	{
-		m_ctrlEdit.EnableWindow(TRUE);
-		m_ctrlDelete.EnableWindow(TRUE);
+		CString str;
+		int index = m_ctrlClubs.GetSelection();
+		if (0 <= index)
+		{
+			ARBDogClub* pClub = reinterpret_cast<ARBDogClub*>(m_ctrlClubs.GetItemData(index));
+			if (pClub)
+			{
+				ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName());
+				if (pItem)
+				{
+					str = pItem->GetComment().c_str();
+					str.Replace("\n", "\r\n");
+				}
+			}
+		}
+		m_ctrlClubInfo.SetWindowText(str);
 	}
 }
 
@@ -171,15 +195,45 @@ BOOL CDlgTrial::OnInitDialog()
 			m_ctrlLocation.SetCurSel(index);
 	}
 	ListClubs();
+	UpdateNotes(true, true);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+void CDlgTrial::OnSelchangeLocation()
+{
+	// This message is sent when the combo is about to change.
+	int idx = m_ctrlLocation.GetCurSel();
+	if (CB_ERR != idx)
+		m_ctrlLocation.GetLBText(idx, m_Location);
+	else
+		m_Location.Empty();
+	UpdateNotes(true, false);
+}
+
+void CDlgTrial::OnKillfocusLocation()
+{
+	UpdateData(TRUE);
+	UpdateNotes(true, false);
+}
+
 void CDlgTrial::OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	//NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	UpdateButtons();
+	UINT selected = m_ctrlClubs.GetSelectedCount();
+	ASSERT(1 >= selected);
+	if (0 == selected)
+	{
+		m_ctrlEdit.EnableWindow(FALSE);
+		m_ctrlDelete.EnableWindow(FALSE);
+	}
+	else
+	{
+		m_ctrlEdit.EnableWindow(TRUE);
+		m_ctrlDelete.EnableWindow(TRUE);
+	}
+	UpdateNotes(false, true);
 	*pResult = 0;
 }
 

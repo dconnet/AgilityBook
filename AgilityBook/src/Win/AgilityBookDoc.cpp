@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-12-19 DRC Changed sort-newest to only do trials, not runs.
  * @li 2004-12-18 DRC Added an extra check before posting the new dog msg.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
@@ -81,6 +82,7 @@
 #include "DlgFindLinks.h"
 #include "DlgFixup.h"
 #include "DlgInfoJudge.h"
+#include "DlgListViewer.h"
 #include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
@@ -151,6 +153,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_NOTES_CLUBS, OnNotesClubs)
 	ON_COMMAND(ID_NOTES_JUDGES, OnNotesJudges)
 	ON_COMMAND(ID_NOTES_LOCATIONS, OnNotesLocations)
+	ON_COMMAND(ID_NOTES_SEARCH, OnNotesSearch)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
@@ -321,11 +324,6 @@ void CAgilityBookDoc::SortDates()
 	{
 		ARBDog* pDog = *iterDogs;
 		pDog->GetTrials().sort(bDescending);
-		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
-		{
-			ARBDogTrial* pTrial = *iterTrial;
-			pTrial->GetRuns().sort(bDescending);
-		}
 	}
 }
 
@@ -985,20 +983,141 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 
 void CAgilityBookDoc::OnNotesClubs()
 {
-	CDlgInfoJudge dlg(this, CDlgInfoJudge::eClubInfo);
+	CDlgInfoJudge dlg(this, ARBInfo::eClubInfo);
 	dlg.DoModal();
 }
 
 void CAgilityBookDoc::OnNotesJudges() 
 {
-	CDlgInfoJudge dlg(this, CDlgInfoJudge::eJudgeInfo);
+	CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo);
 	dlg.DoModal();
 }
 
 void CAgilityBookDoc::OnNotesLocations()
 {
-	CDlgInfoJudge dlg(this, CDlgInfoJudge::eLocationInfo);
+	CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo);
 	dlg.DoModal();
+}
+
+class CFindInfo : public IFindCallback
+{
+public:
+	CFindInfo(CAgilityBookDoc* pDoc)
+		: m_pDoc(pDoc)
+	{
+		m_bEnableSearch = false;
+		m_bSearchAll = true;
+		m_bEnableDirection = false;
+	}
+	virtual bool Search(CDlgFind* pDlg) const;
+	mutable std::vector<CFindItemInfo> m_Items;
+private:
+	CAgilityBookDoc* m_pDoc;
+	void Search(
+		CString const& search,
+		ARBInfo::eInfoType inType,
+		std::set<std::string> const& inUse,
+		ARBInfo const& info) const;
+};
+
+bool CFindInfo::Search(CDlgFind* pDlg) const
+{
+	m_Items.clear();
+	CString search = Text();
+	if (!MatchCase())
+		search.MakeLower();
+	ARBInfo& info = m_pDoc->GetInfo();
+	std::set<std::string> inUse;
+	m_pDoc->GetAllClubNames(inUse, false);
+	Search(search, ARBInfo::eClubInfo, inUse, info);
+	m_pDoc->GetAllJudges(inUse, false);
+	Search(search, ARBInfo::eJudgeInfo, inUse, info);
+	m_pDoc->GetAllTrialLocations(inUse, false);
+	Search(search, ARBInfo::eLocationInfo, inUse, info);
+	if (0 < m_Items.size())
+	{
+		pDlg->EndDialog(IDOK);
+		return true;
+	}
+	else
+	{
+		CString msg;
+		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		AfxMessageBox(msg, MB_ICONINFORMATION);
+		return false;
+	}
+}
+
+void CFindInfo::Search(
+	CString const& search,
+	ARBInfo::eInfoType inType,
+	std::set<std::string> const& inUse,
+	ARBInfo const& info) const
+{
+	for (std::set<std::string>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
+	{
+		CString str((*iter).c_str());
+		if (!MatchCase())
+			str.MakeLower();
+		if (0 <= str.Find(search))
+		{
+			CFindItemInfo item;
+			item.type = inType;
+			item.name = *iter;
+			item.pItem = NULL;
+			m_Items.push_back(item);
+			break;
+		}
+	}
+	for (ARBInfoItemList::const_iterator iterItem = info.GetInfo(inType).begin();
+		iterItem != info.GetInfo(inType).end();
+		++iterItem)
+	{
+		std::set<std::string> strings;
+		if (0 < (*iterItem)->GetSearchStrings(strings))
+		{
+			for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+			{
+				CString str((*iter).c_str());
+				if (!MatchCase())
+					str.MakeLower();
+				if (0 <= str.Find(search))
+				{
+					// First, see if we've inserted the item name
+					std::vector<CFindItemInfo>::iterator iter2;
+					for (iter2 = m_Items.begin();
+						iter2 != m_Items.end();
+						++iter2)
+					{
+						if (iter2->name == (*iterItem)->GetName())
+							break;
+					}
+					CFindItemInfo item;
+					item.type = inType;
+					item.name = (*iterItem)->GetName();
+					item.pItem = *iterItem;
+					if (iter2 != m_Items.end())
+						*iter2 = item;
+					else
+						m_Items.push_back(item);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void CAgilityBookDoc::OnNotesSearch()
+{
+	CFindInfo callback(this);
+	CDlgFind dlg(callback);
+	if (IDOK == dlg.DoModal())
+	{
+		CString caption;
+		caption.LoadString(IDS_COL_NOTES);
+		CDlgListViewer dlg(this, caption, callback.m_Items);
+		dlg.DoModal();
+	}
 }
 
 void CAgilityBookDoc::OnViewOptions()

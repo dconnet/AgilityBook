@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-19 DRC Added Location/Club note information.
  */
 
 #include "ARBDogClub.h"
@@ -53,11 +54,13 @@ private:
 	enum { IDD = IDD_TRIAL };
 	CString	m_Location;
 	CComboBox	m_ctrlLocation;
+	BOOL	m_Verified;
 	CString	m_Notes;
+	CEdit	m_ctrlLocationInfo;
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
 	CListCtrl2	m_ctrlClubs;
-	BOOL	m_Verified;
+	CEdit	m_ctrlClubInfo;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogTrial* m_pTrial;
@@ -70,13 +73,15 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
-	void UpdateButtons();
+	void UpdateNotes(bool bLocation, bool bClub);
 	void ListClubs();
 
 // Implementation
 protected:
 	//{{AFX_MSG(CDlgTrial)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnSelchangeLocation();
+	afx_msg void OnKillfocusLocation();
 	afx_msg void OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnClubNew();
