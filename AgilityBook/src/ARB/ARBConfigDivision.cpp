@@ -132,6 +132,7 @@ bool ARBConfigDivision::Load(
 			m_Titles.Load(element, inVersion, ioErrMsg);
 		}
 	}
+	m_Titles.VerifyRequiresLists();
 	return true;
 }
 

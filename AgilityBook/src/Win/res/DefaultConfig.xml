@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultConfig Book="9.0">
 	<Configuration version="3">
-		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
-		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
-		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
-		<Action NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PD3" OldName="PDIII" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
-		<Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Superior Novice" OldName="A-NTS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Superior Open" OldName="A-OTS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Superior Elite" OldName="A-ETS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Triple Superior" OldName="A-TTS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Venue Name="AAC">
 			<Desc>http://www.aac.ca/</Desc>
 			<Division Name="Regular">
@@ -690,10 +674,10 @@ May be earned under 1 judge.</Desc>
 May be earned under 1 judge.</Desc>
 				</Titles>
 				<Titles Name="CL1">
-					<Requires>CL1-R</Requires>
-					<Requires>CL1-H</Requires>
-					<Requires>CL1-S</Requires>
 					<Requires>CL1-F</Requires>
+					<Requires>CL1-H</Requires>
+					<Requires>CL1-R</Requires>
+					<Requires>CL1-S</Requires>
 					<Desc>CL1-R, CL1-H, CL1-S, CL1-F</Desc>
 				</Titles>
 				<Titles Name="CL2-R">
@@ -717,10 +701,10 @@ Earned under at least 2 different judges for the 4 legs combined.</Desc>
 Earned under at least 2 different judges for the 4 legs combined.</Desc>
 				</Titles>
 				<Titles Name="CL2">
-					<Requires>CL2-R</Requires>
-					<Requires>CL2-H</Requires>
-					<Requires>CL2-S</Requires>
 					<Requires>CL2-F</Requires>
+					<Requires>CL2-H</Requires>
+					<Requires>CL2-R</Requires>
+					<Requires>CL2-S</Requires>
 					<Desc>CL2-R, CL2-H, CL2-S, CL2-F</Desc>
 				</Titles>
 				<Titles Name="CL3-R">
@@ -744,10 +728,10 @@ Earned under at least 2 different judges for the 4 legs combined.</Desc>
 Earned under at least 2 different judges for the 4 legs combined.</Desc>
 				</Titles>
 				<Titles Name="CL3">
-					<Requires>CL2-R</Requires>
-					<Requires>CL2-H</Requires>
-					<Requires>CL2-S</Requires>
 					<Requires>CL2-F</Requires>
+					<Requires>CL2-H</Requires>
+					<Requires>CL2-R</Requires>
+					<Requires>CL2-S</Requires>
 					<Desc>CL3-R, CL3-H, CL3-S, CL3-F</Desc>
 				</Titles>
 				<Titles Name="CL4-R">
@@ -771,10 +755,10 @@ Earned under at least 2 different judges for the 4 legs combined.</Desc>
 Earned under at least 2 different judges for the 4 legs combined.</Desc>
 				</Titles>
 				<Titles Name="CL4">
-					<Requires>CL4-R</Requires>
-					<Requires>CL4-H</Requires>
-					<Requires>CL4-S</Requires>
 					<Requires>CL4-F</Requires>
+					<Requires>CL4-H</Requires>
+					<Requires>CL4-R</Requires>
+					<Requires>CL4-S</Requires>
 					<Desc>CL4-R, CL4-H, CL4-S, CL4-F</Desc>
 				</Titles>
 				<Titles LongName="CPE Agility Trial Champion" Name="C-ATCH">
@@ -1550,6 +1534,7 @@ S-EAC-V, S-EGC-V, S-EJC-V</Desc>
 				<Level Name="Advanced"/>
 				<Level Name="Masters"/>
 				<Titles LongName="Agility Dog®" Name="AD">
+					<Requires>SSA</Requires>
 					<Desc>[before 1/1/2004] 3 Qs earned from at least 2 different judges
 Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.</Desc>
 				</Titles>
@@ -1569,159 +1554,219 @@ Starters Standard Agility title plus 1 qualifying score in each of the 4 Starter
 					<Desc>3 qualifying scores with 3 different partners under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Advanced Agility Dog®" Name="AAD">
+					<Requires>AD</Requires>
+					<Requires>ASA</Requires>
 					<Desc>[before 1/1/2004] 3 Qs earned from at least 2 different judges
 Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advanced nonstandard classes.</Desc>
 				</Titles>
 				<Titles LongName="Advanced Standard Agility" Name="ASA">
+					<Requires>SSA</Requires>
 					<Desc>3 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Advanced Jumpers" Name="AJ">
+					<Requires>SJ</Requires>
 					<Desc>3 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Advanced Gamblers" Name="AG">
+					<Requires>SG</Requires>
 					<Desc>3 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Advanced Snooker" Name="AS">
+					<Requires>SS</Requires>
 					<Desc>3 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Advanced Relay" Name="AR">
+					<Requires>SR</Requires>
 					<Desc>3 qualifying scores with 3 different partners under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Master Agility Dog®" Name="MAD">
+					<Requires>AAD</Requires>
 					<Desc>3 qualifying scores in the Masters Standard Agility class plus 1 qualifying score in each of the 4 Masters nonstandard classes.</Desc>
 				</Titles>
 				<Titles LongName="Standard Agility Masters" Name="SAM">
+					<Requires>ASA</Requires>
 					<Desc>5 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Jumpers Master" Name="JM">
+					<Requires>AJ</Requires>
 					<Desc>5 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Gamblers Master" Name="GM">
+					<Requires>AG</Requires>
 					<Desc>5 qualifying scores earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Snooker Master" Name="SM">
+					<Requires>AS</Requires>
 					<Desc>5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Relay Master" Name="RM">
+					<Requires>AR</Requires>
 					<Desc>5 qualifying scores with 3 different partners under at least 2 different judges.</Desc>
 				</Titles>
 				<Titles LongName="Agility Dog Champion®" Name="ADCH">
+					<Requires>GM</Requires>
+					<Requires>JM</Requires>
+					<Requires>MAD</Requires>
+					<Requires>RM</Requires>
+					<Requires>SAM</Requires>
+					<Requires>SM</Requires>
 					<Desc>[earned MAD before 1/1/2000] MAD, JM, GM, SM, RM
 [earned MAD before 1/1/2005] MAD, JM, GM, SM, RM, plus 4 Standard Qs
 SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at least 1 qualifying score in each tournament</Desc>
 				</Titles>
 				<Titles LongName="Agility Dog Champion® - Bronze" Name="ADCH-Bronze">
+					<Requires>ADCH</Requires>
 					<Desc>All Bronze titles</Desc>
 				</Titles>
 				<Titles LongName="Agility Dog Champion® - Silver" Name="ADCH-Silver">
+					<Requires>ADCH-Bronze</Requires>
 					<Desc>All Silver titles</Desc>
 				</Titles>
 				<Titles LongName="Agility Dog Champion® - Gold" Name="ADCH-Gold">
+					<Requires>ADCH-Silver</Requires>
 					<Desc>All Gold titles</Desc>
 				</Titles>
 				<Titles LongName="Agility Dog Champion® - Platinum" Name="ADCH-Platinum">
+					<Requires>ADCH-Gold</Requires>
 					<Desc>All Platinum titles</Desc>
 				</Titles>
 				<Titles LongName="Tournament Master" Name="TM">
 					<Desc>10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.</Desc>
 				</Titles>
 				<Titles LongName="Tournament Master - Bronze" Name="TM-Bronze">
+					<Requires>TM</Requires>
 					<Desc>15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.</Desc>
 				</Titles>
 				<Titles LongName="Tournament Master - Silver" Name="TM-Silver">
+					<Requires>TM-Bronze</Requires>
 					<Desc>25 qualifying scores in tournament competition with at least 5 qualifying scores in each tournament.</Desc>
 				</Titles>
 				<Titles LongName="Tournament Master - Gold" Name="TM-Gold">
+					<Requires>TM-Silver</Requires>
 					<Desc>35 qualifying scores in tournament competition with at least 7 qualifying scores in each tournament.</Desc>
 				</Titles>
 				<Titles LongName="Tournament Master - Platinum" Name="TM-Platinum">
+					<Requires>TM-Gold</Requires>
 					<Desc>50 qualifying scores in tournament competition with at least 10 qualifying scores in each tournament.</Desc>
 				</Titles>
 				<Titles LongName="Standard Agility Champion" Name="SACH">
+					<Requires>SAM</Requires>
 					<Desc>Masters Standard Agility title plus 5 additional qualifying scores in Masters Standard class</Desc>
 				</Titles>
 				<Titles LongName="Standard Agility Champion - Bronze" Name="SACH-Bronze">
+					<Requires>SACH</Requires>
 					<Desc>15 qualifying scores in Masters Standard class</Desc>
 				</Titles>
 				<Titles LongName="Standard Agility Champion - Silver" Name="SACH-Silver">
+					<Requires>SACH-Bronze</Requires>
 					<Desc>25 qualifying scores in Masters Standard class</Desc>
 				</Titles>
 				<Titles LongName="Standard Agility Champion - Gold" Name="SACH-Gold">
+					<Requires>SACH-Silver</Requires>
 					<Desc>35 qualifying scores in Masters Standard class</Desc>
 				</Titles>
 				<Titles LongName="Standard Agility Champion - Platinum" Name="SACH-Platinum">
+					<Requires>SACH-Gold</Requires>
 					<Desc>50 qualifying scores in Masters Standard class</Desc>
 				</Titles>
 				<Titles LongName="Jumpers Champion" Name="JCH">
+					<Requires>JM</Requires>
 					<Desc>JM plus 5 additional qualifying scores in Masters Jumpers class</Desc>
 				</Titles>
 				<Titles LongName="Jumpers Champion - Bronze" Name="JCH-Bronze">
+					<Requires>JCH</Requires>
 					<Desc>15 qualifying scores in Masters Jumpers class</Desc>
 				</Titles>
 				<Titles LongName="Jumpers Champion - Silver" Name="JCH-Silver">
+					<Requires>JCH-Bronze</Requires>
 					<Desc>25 qualifying scores in Masters Jumpers class</Desc>
 				</Titles>
 				<Titles LongName="Jumpers Champion - Gold" Name="JCH-Gold">
+					<Requires>JCH-Silver</Requires>
 					<Desc>35 qualifying scores in Masters Jumpers class</Desc>
 				</Titles>
 				<Titles LongName="Jumpers Champion - Platinum" Name="JCH-Platinum">
+					<Requires>JCH-Gold</Requires>
 					<Desc>50 qualifying scores in Masters Jumpers class</Desc>
 				</Titles>
 				<Titles LongName="Gamblers Champion" Name="GCH">
+					<Requires>GM</Requires>
 					<Desc>GM plus 5 additional qualifying scores in Masters Gamblers class</Desc>
 				</Titles>
 				<Titles LongName="Gamblers Champion - Bronze" Name="GCH-Bronze">
+					<Requires>GCH</Requires>
 					<Desc>15 qualifying scores in Masters Gamblers class</Desc>
 				</Titles>
 				<Titles LongName="Gamblers Champion - Silver" Name="GCH-Silver">
+					<Requires>GCH-Bronze</Requires>
 					<Desc>25 qualifying scores in Masters Gamblers class</Desc>
 				</Titles>
 				<Titles LongName="Gamblers Champion - Gold" Name="GCH-Gold">
+					<Requires>GCH-Silver</Requires>
 					<Desc>35 qualifying scores in Masters Gamblers class</Desc>
 				</Titles>
 				<Titles LongName="Gamblers Champion - Platinum" Name="GCH-Platinum">
+					<Requires>GCH-Gold</Requires>
 					<Desc>50 qualifying scores in Masters Gamblers class</Desc>
 				</Titles>
 				<Titles LongName="Snooker Champion" Name="SCH">
+					<Requires>SM</Requires>
 					<Desc>SM plus 5 additional qualifying scores in Masters Snooker class</Desc>
 				</Titles>
 				<Titles LongName="Snooker Champion - Bronze" Name="SCh-Bronze">
+					<Requires>SCH</Requires>
 					<Desc>15 qualifying scores in Masters Snooker class</Desc>
 				</Titles>
 				<Titles LongName="Snooker Champion - Silver" Name="SCh-Silver">
+					<Requires>SCh-Bronze</Requires>
 					<Desc>25 qualifying scores in Masters Snooker class</Desc>
 				</Titles>
 				<Titles LongName="Snooker Champion - Gold" Name="SCh-Gold">
+					<Requires>SCh-Silver</Requires>
 					<Desc>35 qualifying scores in Masters Snooker class</Desc>
 				</Titles>
 				<Titles LongName="Snooker Champion - Platinum" Name="SCh-Platinum">
+					<Requires>SCh-Gold</Requires>
 					<Desc>50 qualifying scores in Masters Snooker class</Desc>
 				</Titles>
 				<Titles LongName="Relay Champion" Name="RCH">
+					<Requires>RM</Requires>
 					<Desc>RM plus 5 additional qualifying scores in Masters Relay class</Desc>
 				</Titles>
 				<Titles LongName="Relay Champion - Bronze" Name="RCH-Bronze">
+					<Requires>RCH</Requires>
 					<Desc>15 qualifying scores in Masters Relay class</Desc>
 				</Titles>
 				<Titles LongName="Relay Champion - Silver" Name="RCH-Silver">
+					<Requires>RCH-Bronze</Requires>
 					<Desc>25 qualifying scores in Masters Relay class</Desc>
 				</Titles>
 				<Titles LongName="Relay Champion - Gold" Name="RCH-Gold">
+					<Requires>RCH-Silver</Requires>
 					<Desc>35 qualifying scores in Masters Relay class</Desc>
 				</Titles>
 				<Titles LongName="Relay Champion - Platinum" Name="RCH-Platinum">
+					<Requires>RCH-Gold</Requires>
 					<Desc>50 qualifying scores in Masters Relay class</Desc>
 				</Titles>
 				<Titles LongName="Lifetime Achievement Award Bronze" Name="LAA Bronze">
+					<Requires>GCH-Bronze</Requires>
+					<Requires>JCH-Bronze</Requires>
+					<Requires>RCH-Bronze</Requires>
+					<Requires>SACH-Bronze</Requires>
+					<Requires>SCh-Bronze</Requires>
 					<Desc>150 points qualifying scores among Masters standand and nonstandard classes, Performance Level III standard and nonstandard titling classes, and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 15 qualifying scores in each Masters standard and Masters nonstandard classes.</Desc>
 				</Titles>
 				<Titles LongName="Lifetime Achievement Award Silver" Name="LAA Silver">
+					<Requires>LAA Bronze</Requires>
 					<Desc>250 points qualifying scores among Masters standand and nonstandard classes, Performance Level III standard and nonstandard titling classes, and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 25 qualifying scores in each Masters standard and Masters nonstandard classes.</Desc>
 				</Titles>
 				<Titles LongName="Lifetime Achievement Award Gold" Name="LAA Gold">
+					<Requires>LAA Silver</Requires>
 					<Desc>350 points qualifying scores among Masters standand and nonstandard classes, Performance Level III standard and nonstandard titling classes, and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 35 qualifying scores in each Masters standard and Masters nonstandard classes.</Desc>
 				</Titles>
 				<Titles LongName="Lifetime Achievement Award Platinum" Name="LAA Platinum">
+					<Requires>LAA Gold</Requires>
 					<Desc>500 points qualifying scores among Masters standand and nonstandard classes, Performance Level III standard and nonstandard titling classes, and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 50 qualifying scores in each Masters standard and Masters nonstandard classes.</Desc>
 				</Titles>
 			</Division>

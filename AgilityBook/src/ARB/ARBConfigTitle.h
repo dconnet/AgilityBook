@@ -38,13 +38,14 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
+#include <set>
 #include <string>
 #include "ARBBase.h"
 #include "ARBVector.h"
 class ARBVersion;
 class CElement;
 
-typedef std::vector<std::string> ARBConfigTitleRequiresList;
+typedef std::set<std::string> ARBConfigTitleRequiresList;
 
 /**
  * Title configuration.
@@ -202,6 +203,21 @@ public:
 	}
 
 	/**
+	 * Verify all titles Requires items are within this list
+	 * (they are within a division)
+	 * @post Any required items not in the title list will be removed.
+	 */
+	bool VerifyRequiresLists();
+
+	/**
+	 * Determine whether a title requires the specified name.
+	 * This searches thru all the linkings.
+	 * @param inTitle Title to check.
+	 * @param inName Name of requirement to check.
+	 */
+	bool Requires(const ARBConfigTitle* inTitle, const std::string& inName) const;
+
+	/**
 	 * Find a title by the complete name.
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inName Complete name of title to find.
@@ -235,6 +251,14 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	ARBConfigTitle* AddTitle(ARBConfigTitle* inTitle);
+
+	/**
+	 * Rename a title.
+	 * @param inOldName Name of title to rename.
+	 * @param inNewName New name of title.
+	 * @return Number of titles changed.
+	 */
+	int RenameTitle(const std::string& inOldName, const std::string& inNewName);
 
 	/**
 	 * Delete a title.
