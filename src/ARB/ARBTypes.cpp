@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "StdAfx.h"
@@ -44,6 +45,15 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+std::string ARBVersion::ToString() const
+{
+	char buffer[100];
+	sprintf(buffer, "%hd.%hd", Major(), Minor());
+	return buffer;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -112,7 +122,7 @@ std::string ARB_Q::str() const
 
 bool ARB_Q::Load(
 	const std::string& inAttrib,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
@@ -162,7 +172,7 @@ std::string ARBDouble::str() const
 
 bool ARBDouble::Load(
 	const std::string& inAttrib,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (0 < inAttrib.length())
 		m_Val = strtod(inAttrib.c_str(), NULL);

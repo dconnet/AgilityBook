@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
  */
 
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
+class ARBVersion;
 class CElement;
 
 class ARBConfig
@@ -55,14 +57,14 @@ public:
 	// These functions enable backwards file compatibility.
 	bool LoadFault(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool LoadOtherPoints(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 
 	bool Load(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 	void Default();
 	static std::string GetDTD();

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include <vector>
@@ -40,6 +41,7 @@ class ARBConfig;
 class ARBConfigDivisionList;
 class ARBConfigVenue;
 class ARBDogClubList;
+class ARBVersion;
 class CElement;
 
 #if _MSC_VER < 1300
@@ -191,7 +193,7 @@ public:
 	 * @retval true Successfully loaded.
 	 * @retval false Unable to load (an error message is generated).
 	 */
-	bool Load(const CElement& inTree, int inVersion)
+	bool Load(const CElement& inTree, const ARBVersion& inVersion)
 	{
 		ARBThing* thing = new ARBThing;
 		if (!thing->Load(inTree, inVersion))
@@ -219,7 +221,7 @@ public:
 	 * @retval true Successfully loaded.
 	 * @retval false Unable to load (an error message is generated).
 	 */
-	bool Load(const ARBConfig& inConfig, const CElement& inTree, int inVersion)
+	bool Load(const ARBConfig& inConfig, const CElement& inTree, const ARBVersion& inVersion)
 	{
 		ARBThing* thing = new ARBThing;
 		if (!thing->Load(inConfig, inTree, inVersion))

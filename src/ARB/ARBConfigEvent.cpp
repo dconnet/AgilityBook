@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-16 DRC Fixed a bug in Update with Scoring.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
@@ -97,7 +98,7 @@ bool ARBConfigEvent::operator!=(const ARBConfigEvent& rhs) const
 bool ARBConfigEvent::Load(
 	const ARBConfigDivisionList& inDivisions,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EVENT_NAME, m_Name)
 	|| 0 == m_Name.length())
@@ -222,7 +223,7 @@ const ARBConfigScoring* ARBConfigEvent::FindEvent(
 bool ARBConfigEventList::Load(
 	const ARBConfigDivisionList& inDivisions,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	ARBConfigEvent* thing = new ARBConfigEvent;
 	if (!thing->Load(inDivisions, inTree, inVersion))

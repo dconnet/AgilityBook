@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "StdAfx.h"
@@ -92,7 +93,7 @@ void ARBConfigTitle::clear()
 
 bool ARBConfigTitle::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())

@@ -33,12 +33,74 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
 #include <string>
 #include <vector>
 class CElement;
+
+class ARBVersion
+{
+public:
+	ARBVersion()
+		: m_Version(0)
+	{
+	}
+
+	ARBVersion(unsigned short major, unsigned short minor)
+		: m_Version((major<<8) | minor)
+	{
+	}
+
+	ARBVersion(const ARBVersion& inVer)
+		: m_Version(inVer.m_Version)
+	{
+	}
+
+	ARBVersion& operator=(const ARBVersion& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Version = rhs.m_Version;
+		}
+		return *this;
+	}
+	bool operator==(const ARBVersion& rhs) const
+	{
+		return m_Version == rhs.m_Version;
+	}
+	bool operator<(const ARBVersion& rhs) const
+	{
+		return m_Version < rhs.m_Version;
+	}
+	bool operator<=(const ARBVersion& rhs) const
+	{
+		return m_Version <= rhs.m_Version;
+	}
+	bool operator>(const ARBVersion& rhs) const
+	{
+		return m_Version > rhs.m_Version;
+	}
+	bool operator>=(const ARBVersion& rhs) const
+	{
+		return m_Version >= rhs.m_Version;
+	}
+
+	unsigned short Major() const
+	{
+		return static_cast<unsigned short>(m_Version >> 8);
+	}
+	unsigned short Minor() const
+	{
+		return static_cast<unsigned short>(m_Version & 0xff);
+	}
+	std::string ToString() const;
+
+private:
+	unsigned long m_Version;
+};
 
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -100,7 +162,7 @@ public:
 
 	bool Load(
 		const std::string& inAttrib,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(
 		CElement& ioTree,
 		const char* const inAttribName) const;
@@ -173,7 +235,7 @@ public:
 
 	bool Load(
 		const std::string& inAttrib,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(
 		CElement& ioTree,
 		const char* const inAttribName) const;

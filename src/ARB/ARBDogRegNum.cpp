@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-11-22 DRC Added FindRegNum().
  */
 
@@ -103,7 +104,7 @@ std::string ARBDogRegNum::GetGenericName() const
 bool ARBDogRegNum::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
@@ -112,7 +113,7 @@ bool ARBDogRegNum::Load(
 		return false;
 	}
 
-	if (1 == inVersion)
+	if (inVersion == ARBVersion(1,0))
 	{
 		if (CElement::eFound != inTree.GetAttrib("Number", m_Number)
 		|| 0 == m_Number.length())

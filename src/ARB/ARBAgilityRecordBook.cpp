@@ -34,6 +34,8 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
+ *                    Added warning check when minor versions are different.
  * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
  * @li 2003-10-13 DRC File version 7. Added course faults to ByScore/etc.
  * @li 2003-09-21 DRC File version 6. Added training log.
@@ -63,14 +65,29 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-short ARBAgilityRecordBook::GetCurrentDocVersion()
+const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	static const short curVersion = 7;
+	// Note, when bumping to the next version - DO NOT bump to a 7.x.
+	// V0.9.3.7 can read 7.x files, but will not issue the warning about
+	// possible data loss.
+	static const ARBVersion curVersion(7, 1);
 	return curVersion;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // These error routines centralize platform dependent code.
+
+/**
+ * Print a warning that the document can be read, but saving it may cause the
+ * loss of data.
+ * Prompt the user to continue (y/n)
+ *
+ * @return true to continue, false to abort.
+ */
+bool WarningNewerDocStructure()
+{
+	return IDYES == AfxMessageBox(WARNING_NEWER_DOC, MB_ICONEXCLAMATION | MB_YESNO);
+}
 
 void ErrorInvalidDocStructure(const char* const inMsg)
 {
@@ -149,6 +166,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // than the DTD, we have some integrity checks that should never trigger if
 // we actually include the DTD in the file.
 // @todo: Relax strictness when reading data and handle errors better.
+//  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
 	const CElement& inTree,
 	bool inCalendar,
@@ -167,16 +185,24 @@ bool ARBAgilityRecordBook::Load(
 		return false;
 	}
 	// The version of the document must be something we understand.
-	short version;
+	ARBVersion version;
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
 		ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION);
 		return false;
 	}
-	if (1 > version || version > GetCurrentDocVersion())
+	if (version < ARBVersion(1,0) || version > GetCurrentDocVersion())
 	{
-		ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION);
-		return false;
+		if (version.Major() == GetCurrentDocVersion().Major())
+		{
+			if (!WarningNewerDocStructure())
+				return false;
+		}
+		else
+		{
+			ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION);
+			return false;
+		}
 	}
 
 	// Something was loaded.

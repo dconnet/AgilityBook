@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include <string>
@@ -41,6 +42,7 @@
 #include "ARBConfigTitlePoints.h"
 #include "ARBVector.h"
 class ARBConfigEvent;
+class ARBVersion;
 class CElement;
 
 class ARBConfigScoring : public ARBBase
@@ -69,7 +71,7 @@ public:
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	const std::string& GetDivision() const;
@@ -231,7 +233,7 @@ public:
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 
 	bool operator==(const ARBConfigScoringList& rhs) const
 	{

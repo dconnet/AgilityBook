@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
@@ -107,7 +108,7 @@ void ARBConfigVenue::clear()
 bool ARBConfigVenue::Load(
 	ARBConfig& ioConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	// Get the venue name.
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_VENUE_NAME, m_Name)
@@ -139,7 +140,7 @@ bool ARBConfigVenue::Load(
 			// Ignore any errors...
 			m_Events.Load(m_Divisions, element, inVersion);
 		}
-		if (3 > inVersion)
+		if (inVersion < ARBVersion(3,0))
 		{
 			if (name == TREE_FAULTTYPE)
 			{
@@ -283,7 +284,7 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 bool ARBConfigVenueList::Load(
 	ARBConfig& ioConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	ARBConfigVenue* thing = new ARBConfigVenue;
 	if (!thing->Load(ioConfig, inTree, inVersion))

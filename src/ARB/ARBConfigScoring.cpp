@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-14 DRC Added open/close pts to configuration.
  * @li 2003-07-12 DRC Version 5: changed how title points are configured.
  * @li 2003-06-11 DRC Added dropFractions attribute.
@@ -165,7 +166,7 @@ std::string ARBConfigScoring::GetGenericName() const
 bool ARBConfigScoring::Load(
 	const ARBConfigDivisionList& inDivisions,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
 	|| 0 == m_Division.length())
@@ -202,7 +203,7 @@ bool ARBConfigScoring::Load(
 	else if (attrib == "Faults100ThenTime")
 	{
 		m_Style = eFaults100ThenTime;
-		if (3 >= inVersion)
+		if (inVersion <= ARBVersion(3,0))
 			m_bDropFractions = true;
 	}
 	else if (attrib == "Faults200ThenTime") // Version5.
@@ -246,7 +247,7 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	if (5 <= inVersion)
+	if (inVersion >= ARBVersion(5,0))
 	{
 		inTree.GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
 		inTree.GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
@@ -287,7 +288,7 @@ bool ARBConfigScoring::Load(
 			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed);
 		}
 
-		if (3 <= inVersion)
+		if (inVersion >= ARBVersion(3,0))
 			m_Note = inTree.GetValue();
 	}
 
@@ -355,7 +356,7 @@ std::string ARBConfigScoring::GetScoringStyleStr() const
 bool ARBConfigScoringList::Load(
 	const ARBConfigDivisionList& inDivisions,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	ARBConfigScoring* thing = new ARBConfigScoring;
 	if (!thing->Load(inDivisions, inTree, inVersion))

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-08 DRC Changed AddPartner usage.
  */
 
@@ -93,7 +94,7 @@ bool ARBDogRunPartner::operator!=(const ARBDogRunPartner& rhs) const
 bool ARBDogRunPartner::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())

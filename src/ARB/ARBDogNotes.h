@@ -33,11 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include <string>
 #include <vector>
 class ARBConfig;
+class ARBVersion;
 class CElement;
 
 typedef std::vector<std::string> ARBDogFaultList;
@@ -55,7 +57,7 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	const ARBDogFaultList& GetFaults() const;

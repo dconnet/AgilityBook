@@ -1,4 +1,7 @@
 11/22/2003: v0.9.4.7: <development>
+- Bumped file version to 7.1:
+  File format is the same as 7 - this is simply for better future backwards
+  compatibility.
 - New features / Enhancements:
   - Expanded import/export [config/calendar, plus DTD/XML export]
   - Cleaned up some descriptions in DefaultConfig.xml. Added Nationals support

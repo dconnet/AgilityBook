@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-12 DRC Added as part of file version 5.
  */
 
@@ -102,7 +103,7 @@ std::string ARBConfigTitlePoints::GetGenericName() const
 
 bool ARBConfigTitlePoints::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{

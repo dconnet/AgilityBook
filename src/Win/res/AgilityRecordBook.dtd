@@ -3,6 +3,16 @@ An AgilityRecordBook file is made up of 2 main sections, the
 configuration area, and the dog's runs. Multiple dogs may be
 contained within a file, as this DTD defines below.
 -->
+
+<!--
+In general, all fields are free form. Exceptions will be noted.
+ All date attributes are in the form "YYYY-MM-DD".
+-->
+
+<!--
+ Book is a simple integer in versions 1 thru 7.
+ It then changes to a more complex value ("major.minor"), starting with "7.1"
+-->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Dog*) >
 	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
 
@@ -109,6 +119,8 @@ If it thinks you should/not Q and you enter data differently,
 it will ask if you really mean that.
 
 If there are no 'TitlePoints', then the class is non-titling.
+
+ Integer: OpeningPts,ClosingPts,Points,Faults
 -->
 <!ELEMENT Event (Desc?, Scoring+) >
 	<!ATTLIST Event
@@ -136,6 +148,8 @@ If there are no 'TitlePoints', then the class is non-titling.
 <!--
 This section defines a dog's runs. The way the data is interpretted
 depends on how a venue has been defined above.
+ Date: DOB,Deceased
+ Height is free form - this allows for NADACs "20+" height.
 -->
 
 <!ELEMENT Dog (RegisteredName?, Breed?, Note?, RegNum*, Title*, Trial*) >
@@ -210,6 +224,9 @@ These 3 elements define the major scoring mechanisms.
   specified, then it is assumed time faults are also tallied.
  ByOpenClose: OCScoreThenTime
  ByPoints: ScoreThenTime
+
+ Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points
+ Decimal: Time,SCT,Yards
 -->
 <!ELEMENT ByTime EMPTY >
 	<!ATTLIST ByTime
@@ -235,6 +252,9 @@ These 3 elements define the major scoring mechanisms.
 		Points CDATA #REQUIRED
 		>
 
+<!--
+ Integer: Place,InClass,DogsQd,Points
+-->
 <!ELEMENT Placement (OtherPoints*) >
 	<!ATTLIST Placement
 		Q (NA|SQ|Q|NQ|E) 'NA'
@@ -256,6 +276,8 @@ These 3 elements define the major scoring mechanisms.
 <!--
 The meaning of ScoreOrFaults is dependent on the type of run. These
 entries are just for reference, hence the data is not interpreted.
+ Integer: Place
+ Decimal: Time
 -->
 <!ELEMENT ReferenceRun (Name, Breed?, ScoreOrFaults?, Note?) >
 	<!ATTLIST ReferenceRun

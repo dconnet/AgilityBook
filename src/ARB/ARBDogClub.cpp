@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "StdAfx.h"
@@ -88,9 +89,9 @@ bool ARBDogClub::operator!=(const ARBDogClub& rhs) const
 bool ARBDogClub::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
-	if (1 == inVersion)
+	if (inVersion == ARBVersion(1,0))
 	{
 		if (CElement::eFound != inTree.GetAttrib("Name", m_Name)
 		|| 0 == m_Name.length())

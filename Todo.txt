@@ -1,4 +1,4 @@
-Last Updated: 10/14/03
+Last Updated: 11/26/03
 
 - Add logic to the reorder dialog to know if an item can be reordered around
   an adjacent entry. (For instance, when reordering runs, reordering really

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
@@ -98,7 +99,7 @@ void ARBConfigDivision::clear()
 
 bool ARBConfigDivision::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
@@ -225,7 +226,7 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 
 bool ARBConfigDivisionList::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	ARBConfigDivision* thing = new ARBConfigDivision;
 	if (!thing->Load(inTree, inVersion))

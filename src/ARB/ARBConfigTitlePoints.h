@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-12 DRC Added as part of file version 5.
  */
 
 #include <string>
 #include "ARBBase.h"
 #include "ARBVector.h"
+class ARBVersion;
 class CElement;
 
 class ARBConfigTitlePoints : public ARBBase
@@ -55,7 +57,7 @@ public:
 
 	bool Load(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& inTree) const;
 
 	short GetPoints() const;

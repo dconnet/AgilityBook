@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "StdAfx.h"
@@ -80,7 +81,7 @@ bool ARBConfigSubLevel::operator!=(const ARBConfigSubLevel& rhs) const
 
 bool ARBConfigSubLevel::Load(
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())

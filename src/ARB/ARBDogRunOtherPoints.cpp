@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "StdAfx.h"
@@ -93,7 +94,7 @@ void ARBDogRunOtherPoints::clear()
 bool ARBDogRunOtherPoints::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	int inVersion)
+	const ARBVersion& inVersion)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)
 	|| 0 == m_Name.length())

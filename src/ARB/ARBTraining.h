@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-21 DRC Created
  */
 
@@ -42,6 +43,7 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
+class ARBVersion;
 class CElement;
 
 class ARBTraining : public ARBBase
@@ -61,7 +63,7 @@ public:
 
 	bool Load(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	/**

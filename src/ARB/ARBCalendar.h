@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-31 DRC Added FindCalendar.
  */
 
@@ -41,6 +42,7 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
+class ARBVersion;
 class CElement;
 
 class ARBCalendar : public ARBBase
@@ -67,7 +69,7 @@ public:
 
 	bool Load(
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	/**

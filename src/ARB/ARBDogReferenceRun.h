@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBConfig;
+class ARBVersion;
 class CElement;
 
 class ARBDogReferenceRun : public ARBBase
@@ -55,7 +57,7 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
-		int inVersion);
+		const ARBVersion& inVersion);
 	bool Save(CElement& ioTree) const;
 
 	ARB_Q GetQ() const;
