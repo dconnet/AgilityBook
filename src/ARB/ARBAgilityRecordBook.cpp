@@ -34,7 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * When changing the file version, make sure to update 'curVersion' below,
- * src\Win\res\DefaultConfig.xml and src\Win\res\AgilityRecordBook.dtd.
+ * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
  * @li 2004-06-02 DRC File version 8.7. Added 'SubName' to 'Training'.
