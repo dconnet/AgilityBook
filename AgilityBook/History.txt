@@ -1,3 +1,5 @@
+7/3/2004: v1.2.1.8 <in development>
+
 7/3/2004: v1.2.0.8
 - Bumped file version to 9.0, Configuration v4:
   - Added 'SubName' to 'Training'.
