@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogRunScoring class.
  * @author David Connet
  *
  * Revision History
@@ -42,15 +41,21 @@ class ARBConfigScoring;
 class ARBVersion;
 class CElement;
 
+/**
+ * Keeps track of the scoring for a run.
+ */
 class ARBDogRunScoring
 {
 public:
+	/**
+	 * Types of scoring
+	 */
 	typedef enum
 	{
-		eTypeUnknown = -1,
-		eTypeByTime = 0,
-		eTypeByOpenClose = 1,
-		eTypeByPoints = 2
+		eTypeUnknown = -1,		///< Unknown
+		eTypeByTime = 0,		///< Scoring based on time.
+		eTypeByOpenClose = 1,	///< Scoring based on Opening/Closing points.
+		eTypeByPoints = 2		///< Scoring based on points.
 	} ScoringType;
 
 	ARBDogRunScoring();
@@ -60,15 +65,39 @@ public:
 	bool operator==(const ARBDogRunScoring& rhs) const;
 	bool operator!=(const ARBDogRunScoring& rhs) const;
 
+	/**
+	 * Load the scoring.
+	 * @pre inTree is the actual ARBDogRunScoring element.
+	 * @param inEvent Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfigScoring* inEvent,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogRunScoring element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Get the YPS for the run.
+	 * @param outYPS YPS for the run.
+	 * @return Indicates whether outYPS is valid, not all runs have YPS.
+	 */
 	bool GetYPS(double& outYPS) const;
 
+	/**
+	 * Getters/setters.
+	 */
 	ScoringType GetType() const;
 	void SetType(ScoringType inType, bool inRound);
 	ARBDouble GetSCT() const;
@@ -97,7 +126,7 @@ private:
 	ARBDouble m_SCT;
 	double m_Yards;
 	ARBDouble m_Time;
-	bool m_TableInYPS;
+	bool m_TableInYPS;	///< Used in YPS computation.
 	short m_CourseFaults;
 	short m_NeedOpenPts;
 	short m_NeedClosePts;

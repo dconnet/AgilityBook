@@ -86,12 +86,6 @@ bool ARBDogRunOtherPoints::operator!=(const ARBDogRunOtherPoints& rhs) const
 	return !operator==(rhs);
 }
 
-void ARBDogRunOtherPoints::clear()
-{
-	m_Name.erase();
-	m_Points = 0;
-}
-
 size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	ioStrings.insert(m_Name);

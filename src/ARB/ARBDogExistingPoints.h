@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogExistingPoints and ARBDogExistingPointsList classes.
  * @author David Connet
  *
  * Revision History
@@ -49,6 +48,9 @@ class ARBConfigVenue;
 class ARBVersion;
 class CElement;
 
+/**
+ * Initializes the titling points a dog has.
+ */
 class ARBDogExistingPoints : public ARBBase
 {
 public:
@@ -58,26 +60,62 @@ public:
 	bool operator==(const ARBDogExistingPoints& rhs) const;
 	bool operator!=(const ARBDogExistingPoints& rhs) const;
 
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
 	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load an existing point.
+	 * @pre inTree is the actual ARBDogExistingPoints element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogExistingPoints element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/**
+	 * Type of points.
+	 */
 	typedef enum
 	{
-		eOtherPoints,
-		eRuns,
-		eMach,
-		eQQ,
-		eSQ
+		eOtherPoints,	///< OtherPoint points.
+		eRuns,			///< Number of titling points for a run.
+		eMach,			///< Number of MACH points.
+		eQQ,			///< Number of double Qs.
+		eSQ				///< Number of Super Qs.
 	} PointType;
+
+	/**
+	 * Translate the enum to a string.
+	 */
 	static std::string GetPointTypeName(PointType inType);
 
+	/*
+	 * Getters/setters.
+	 */
 	PointType GetType() const;
 	void SetType(PointType inType);
 	const ARBDate& GetDate() const;
@@ -202,6 +240,9 @@ inline void ARBDogExistingPoints::SetPoints(short inPoints)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDogExistingPoints objects.
+ */
 class ARBDogExistingPointsList : public ARBVectorLoad2<ARBDogExistingPoints>
 {
 public:
@@ -214,14 +255,41 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Sort by points/venue/division/level.
+	 */
 	void sort();
 
+	/**
+	 * Are there any existing points for the specified venue?
+	 * @param inVenue Venue to search for.
+	 * @return Whether any existing points exist.
+	 */
 	bool HasPoints(const std::string& inVenue) const;
+
+	/**
+	 * Are there any existing points?
+	 * @param inVenue Venue to search for.
+	 * @param inDiv Division to search for.
+	 * @param inLevel Level to search for.
+	 * @param inEvent Event to search for.
+	 * @return Whether any existing points exist.
+	 */
 	bool HasPoints(
 		const ARBConfigVenue* inVenue,
 		const ARBConfigDivision* inDiv,
 		const ARBConfigLevel* inLevel,
 		const ARBConfigEvent* inEvent) const;
+
+	/**
+	 * Get the number of existing points.
+	 * @param inType Type of existing points to tally.
+	 * @param inVenue Venue to search for.
+	 * @param inDiv Division to search for.
+	 * @param inLevel Level to search for.
+	 * @param inEvent Event to search for.
+	 * @return The number of existing points.
+	 */
 	short ExistingPoints(
 		ARBDogExistingPoints::PointType inType,
 		const ARBConfigVenue* inVenue,
@@ -229,54 +297,174 @@ public:
 		const ARBConfigLevel* inLevel,
 		const ARBConfigEvent* inEvent) const;
 
+	/**
+	 * Get the number of existing point items in a venue.
+	 * @param inVenue Venue to search for.
+	 * @return Number of objects, not points.
+	 */
 	int NumExistingPointsInVenue(const std::string& inVenue) const;
+
+	/**
+	 * Rename a venue, rename any dependent objects.
+	 * @param inOldVenue Venue name being renamed.
+	 * @param inNewVenue New venue name.
+	 * @return Number of items changed.
+	 */
 	int RenameVenue(
 		const std::string& inOldVenue,
 		const std::string& inNewVenue);
+
+	/**
+	 * Delete a venue, remove any dependent objects.
+	 * @param inVenue Venue name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteVenue(const std::string& inVenue);
 
+	/**
+	 * Get the number of existing point entries in a division.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue to tally.
+	 * @param inDiv Division to tally.
+	 * @return Number of objects, not points.
+	 */
 	int NumExistingPointsInDivision(
 		const ARBConfigVenue* inVenue,
 		const std::string& inDiv) const;
+
+	/**
+	 * Rename a division.
+	 * @param inVenue Venue whose division is being renamed.
+	 * @param inOldDiv Division name being renamed.
+	 * @param inNewDiv New division name.
+	 * @return Number of items updated.
+	 */
 	int RenameDivision(
 		const std::string& inVenue,
 		const std::string& inOldDiv,
 		const std::string& inNewDiv);
+
+	/**
+	 * Delete a division.
+	 * @param inVenue Venue whose division is being renamed.
+	 * @param inDiv Division name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteDivision(
 		const std::string& inVenue,
 		const std::string& inDiv);
 
+	/**
+	 * Number of levels in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue level is in.
+	 * @param inDiv Division level is in.
+	 * @param inLevel Level to tally.
+	 * @return Number of objects.
+	 */
 	int NumLevelsInUse(
 		const std::string& inVenue,
 		const std::string& inDiv,
 		const std::string& inLevel) const;
+
+	/**
+	 * Rename a level, rename any dependent objects.
+	 * @param inVenue Venue level is in.
+	 * @param inDiv Division level is in.
+	 * @param inOldLevel Level name being renamed.
+	 * @param inNewLevel New level name.
+	 * @return Number of items changed.
+	 */
 	int RenameLevel(
 		const std::string& inVenue,
 		const std::string& inDiv,
 		const std::string& inOldLevel,
 		const std::string& inNewLevel);
+
+	/**
+	 * Delete a level, remove any dependent objects.
+	 * @param inVenue Venue level is in.
+	 * @param inDiv Division level is in.
+	 * @param inLevel Level name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteLevel(
 		const std::string& inVenue,
 		const std::string& inDiv,
 		const std::string& inLevel);
 
+	/**
+	 * Number of events in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue event is in.
+	 * @param inEvent Event to tally.
+	 * @return Number of objects.
+	 */
 	int NumEventsInUse(
 		const std::string& inVenue,
 		const std::string& inEvent) const;
+
+	/**
+	 * Rename an event, rename any dependent objects.
+	 * @param inVenue Venue title is in.
+	 * @param inOldEvent Event name being renamed.
+	 * @param inNewEvent New event name.
+	 * @return Number of items changed.
+	 */
 	int RenameEvent(
 		const std::string& inVenue,
 		const std::string& inOldEvent,
 		const std::string& inNewEvent);
+
+	/**
+	 * Delete an event, remove any dependent objects.
+	 * @param inVenue Venue event is in.
+	 * @param inEvent Event name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteEvent(
 		const std::string& inVenue,
 		const std::string& inEvent);
 
+	/**
+	 * Number of OtherPoint objects in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inOther Name of item to look for.
+	 * @return Number of objects, not points.
+	 */
 	int NumOtherPointsInUse(const std::string& inOther) const;
+
+	/**
+	 * Rename an OtherPoint, rename any dependent objects.
+	 * @param inOldOther OtherPoint name being renamed.
+	 * @param inNewOther New OtherPoint name.
+	 * @return Number of items changed.
+	 */
 	int RenameOtherPoints(
 		const std::string& inOldOther,
 		const std::string& inNewOther);
+
+	/**
+	 * Delete an OtherPoint, remove any dependent objects.
+	 * @param inOther OtherPoint name being deleted.
+	 * @return Number of items removed.
+	 */
 	int DeleteOtherPoints(const std::string& inOther);
 
+	/**
+	 * Add an existing point object.
+	 * @param inExistingPoints Object to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDogExistingPoints* AddExistingPoints(ARBDogExistingPoints* inExistingPoints);
+
+	/**
+	 * Delete an existing point object.
+	 * @param inExistingPoints Object to delete.
+	 * @return Whether object was deleted.
+	 * @note Equality is tested by value, not pointer.
+	 */
 	bool DeleteExistingPoints(const ARBDogExistingPoints* inExistingPoints);
 };

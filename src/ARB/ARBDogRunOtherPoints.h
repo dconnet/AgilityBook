@@ -28,8 +28,7 @@
 
 /**
  * @file
- *
- * @brief The classes that make up the dog's information.
+ * @brief ARBDogRunOtherPoints and ARBDogRunOtherPointsList classes.
  * @author David Connet
  *
  * Revision History
@@ -44,6 +43,9 @@ class ARBConfig;
 class ARBVersion;
 class CElement;
 
+/**
+ * Other points are accumulated on a per-run basis.
+ */
 class ARBDogRunOtherPoints : public ARBBase
 {
 public:
@@ -52,18 +54,46 @@ public:
 	ARBDogRunOtherPoints& operator=(const ARBDogRunOtherPoints& rhs);
 	bool operator==(const ARBDogRunOtherPoints& rhs) const;
 	bool operator!=(const ARBDogRunOtherPoints& rhs) const;
-	void clear();
 
-	virtual std::string GetGenericName() const	{return GetName();}
+	/**
+	 * Get the generic name of this object.
+	 * @return The generic name of this object.
+	 */
+	virtual std::string GetGenericName() const;
+
+	/**
+	 * Get all the strings to search in this object.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
 	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
+	/**
+	 * Load an other point.
+	 * @pre inTree is the actual ARBDogOtherPoints element.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Success
+	 */
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
+
+	/**
+	 * Save a document.
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The ARBDogOtherPoints element will be created in ioTree.
+	 */
 	bool Save(CElement& ioTree) const;
 
+	/*
+	 * Getters/setters.
+	 */
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
 	short GetPoints() const;
@@ -74,6 +104,11 @@ private:
 	std::string m_Name;
 	short m_Points;
 };
+
+inline std::string ARBDogRunOtherPoints::GetGenericName() const
+{
+	return m_Name;
+}
 
 inline const std::string& ARBDogRunOtherPoints::GetName() const
 {
@@ -97,6 +132,9 @@ inline void ARBDogRunOtherPoints::SetPoints(short inPts)
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * List of ARBDogRunOtherPoints objects.
+ */
 class ARBDogRunOtherPointsList : public ARBVectorLoad2<ARBDogRunOtherPoints>
 {
 public:
@@ -109,5 +147,12 @@ public:
 		return !isEqual(rhs);
 	}
 
+	/**
+	 * Add an other point.
+	 * @param inOther OtherPoints to add.
+	 * @return Pointer to object.
+	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 *       The pointer is added to the list and its ref count is incremented.
+	 */
 	ARBDogRunOtherPoints* AddOtherPoints(ARBDogRunOtherPoints* inOther);
 };
