@@ -35,6 +35,7 @@
  *
  * Revision History
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
+ *                    Added menu handlers for 'Show Hidden Titles' (oops)
  * @li 2004-02-26 DRC Moved config update here, test doc for current config.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-10 DRC Moved import/export into a wizard.
@@ -120,6 +121,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
 	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
+	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TABLE_IN_YPS, OnUpdateViewTableInYPS)
 	ON_COMMAND(ID_VIEW_TABLE_IN_YPS, OnViewTableInYPS)
 	//}}AFX_MSG_MAP
@@ -865,14 +868,20 @@ void CAgilityBookDoc::OnViewRunsByTrial()
 	UpdateAllViews(NULL, UPDATE_OPTIONS);
 }
 
-void CAgilityBookDoc::OnUpdateViewHiddenTrials(CCmdUI* pCmdUI)
+void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
 }
 
-void CAgilityBookDoc::OnViewHiddenTrials()
+void CAgilityBookDoc::OnViewHiddenTitles()
 {
 	CAgilityBookOptions::SetViewHiddenTitles(!CAgilityBookOptions::GetViewHiddenTitles());
+	std::vector<CVenueFilter> venues;
+	CAgilityBookOptions::GetFilterVenue(venues);
+	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
+		for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
+			ResetVisibility(venues, *iterTitle);
+	UpdateAllViews(NULL, UPDATE_POINTS_VIEW); // Titles aren't visible anywhere else
 }
 
 void CAgilityBookDoc::OnUpdateViewTableInYPS(CCmdUI* pCmdUI)

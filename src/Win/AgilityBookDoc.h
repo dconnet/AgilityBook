@@ -176,8 +176,8 @@ protected:
 	afx_msg void OnViewSortruns();
 	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
 	afx_msg void OnViewRunsByTrial();
-	afx_msg void OnUpdateViewHiddenTrials(CCmdUI* pCmdUI);
-	afx_msg void OnViewHiddenTrials();
+	afx_msg void OnUpdateViewHiddenTitles(CCmdUI* pCmdUI);
+	afx_msg void OnViewHiddenTitles();
 	afx_msg void OnUpdateViewTableInYPS(CCmdUI* pCmdUI);
 	afx_msg void OnViewTableInYPS();
 	//}}AFX_MSG
