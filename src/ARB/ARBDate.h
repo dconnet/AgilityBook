@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-21 DRC Fixed up some operators.
  * @li 2004-01-04 DRC Added FromString().
  */
 
@@ -125,10 +126,12 @@ public:
 	bool operator<=(const ARBDate& rhs) const;
 	bool operator>=(const ARBDate& rhs) const;
 	long operator-(const ARBDate& rhs) const;
-	void operator++();
-	void operator--();
-	void operator+=(int inD);
-	void operator-=(int inD);
+	ARBDate& operator++(); //prefix
+	ARBDate operator++(int); //postfix
+	ARBDate& operator--(); //prefix
+	ARBDate operator--(int); //postfix
+	ARBDate& operator+=(int inD);
+	ARBDate& operator-=(int inD);
 
 	/**
 	 * Test if date is between two dates (inclusive)
@@ -252,24 +255,42 @@ inline long ARBDate::operator-(const ARBDate& rhs) const
 	return m_Julian - rhs.m_Julian;
 }
 
-inline void ARBDate::operator++()
+inline ARBDate& ARBDate::operator++()
 {
 	++m_Julian;
+	return *this;
 }
 
-inline void ARBDate::operator--()
+inline ARBDate ARBDate::operator++(int)
+{
+	ARBDate tmp(*this);
+	++m_Julian;
+	return tmp;
+}
+
+inline ARBDate& ARBDate::operator--()
 {
 	--m_Julian;
+	return *this;
 }
 
-inline void ARBDate::operator+=(int inD)
+inline ARBDate ARBDate::operator--(int)
+{
+	ARBDate tmp(*this);
+	--m_Julian;
+	return tmp;
+}
+
+inline ARBDate& ARBDate::operator+=(int inD)
 {
 	m_Julian += inD;
+	return *this;
 }
 
-inline void ARBDate::operator-=(int inD)
+inline ARBDate& ARBDate::operator-=(int inD)
 {
 	m_Julian -= inD;
+	return *this;
 }
 
 inline bool ARBDate::isBetween(const ARBDate& inDate1, const ARBDate& inDate2) const
