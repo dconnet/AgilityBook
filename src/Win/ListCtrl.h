@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
 
 #include <vector>
@@ -44,8 +45,16 @@ class CListCtrl2 : public CListCtrl
 // Construction
 public:
 	CListCtrl2();
+	/**
+	 * Returns the first selected item.
+	 */
 	int GetSelection();
+	/**
+	 * Returns the number of selected items.
+	 */
+	size_t GetSelection(std::vector<int>& indices);
 	void SetSelection(int index, bool bEnsureVisible = false);
+	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
 
 protected:
 // Overrides
@@ -73,8 +82,16 @@ class CListView2 : public CListView
 // Construction
 public:
 	CListView2();
+	/**
+	 * Returns the first selected item.
+	 */
 	int GetSelection();
+	/**
+	 * Returns the number of selected items.
+	 */
+	size_t GetSelection(std::vector<int>& indices);
 	void SetSelection(int index, bool bEnsureVisible = false);
+	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
 
 protected:
 	virtual void GetPrintLine(int nItem, CStringArray& line);
@@ -93,6 +110,10 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CListView2)
+	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
+	afx_msg void OnEditCopy();
+	afx_msg void OnUpdateEditSelectAll(CCmdUI* pCmdUI);
+	afx_msg void OnEditSelectAll();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

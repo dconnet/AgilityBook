@@ -31,6 +31,7 @@ Last Updated: 10/14/03
     compared to .8 in previous 6)
   - Qs related to judges
   - fastest yps/avg (base on related events)
+  - graph of similar runs showing yps, include sct.
 
 - Run entry dialog integrity checks (define!)
   - If faults entered is greated then faults allowed, and 'Q' is set, warn

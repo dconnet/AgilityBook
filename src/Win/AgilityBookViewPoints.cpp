@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-28 DRC Added '*' to Title if it has been received.
  * @li 2003-10-14 DRC Fixed problem inserting other point lines.
  * @li 2003-10-13 DRC Don't tally runs that have no titling points.
@@ -102,7 +103,8 @@ CAgilityBookViewPoints::~CAgilityBookViewPoints()
 
 BOOL CAgilityBookViewPoints::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOCOLUMNHEADER;
+	// This is actually set in TabView.cpp.
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER;
 	return CListView2::PreCreateWindow(cs);
 }
 

@@ -148,7 +148,7 @@ void CTabView::OnInitialUpdate()
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
 	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 	points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
-		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOSORTHEADER,
+		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER,
 		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
 	points->SendMessage(WM_INITIALUPDATE);
 
@@ -170,7 +170,7 @@ void CTabView::OnInitialUpdate()
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
 	dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
-		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_NOSORTHEADER,
+		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER,
 		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
 	training->SendMessage(WM_INITIALUPDATE);
 

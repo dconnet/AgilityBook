@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-11-21 DRC Added multi-select and copy/selectall support.
  */
 
 #include "stdafx.h"
@@ -46,16 +47,18 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-// Single selection only
-static int GetSelection(CListCtrl& list)
+static size_t GetSelection(CListCtrl& list, std::vector<int>& indices)
 {
+	indices.clear();
 	POSITION pos = list.GetFirstSelectedItemPosition();
-	if (NULL == pos)
-		return -1;
-	return list.GetNextSelectedItem(pos);
+	while (NULL != pos)
+	{
+		indices.push_back(list.GetNextSelectedItem(pos));
+	}
+	return indices.size();
 }
 
-static void SetSelection(CListCtrl& list, int index, bool bEnsureVisible)
+static void SetSelection(CListCtrl& list, std::vector<int>& indices, bool bEnsureVisible)
 {
 	// Clear everything.
 	POSITION pos = list.GetFirstSelectedItemPosition();
@@ -65,11 +68,15 @@ static void SetSelection(CListCtrl& list, int index, bool bEnsureVisible)
 		list.SetItemState(i, 0, LVIS_SELECTED|LVIS_FOCUSED);
 	}
 	// Set it.
-	if (index >= 0 && index < list.GetItemCount())
+	for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 	{
-		list.SetItemState(index, LVIS_SELECTED|LVIS_FOCUSED, LVIS_SELECTED|LVIS_FOCUSED);
-		if (bEnsureVisible)
-			list.EnsureVisible(index, FALSE);
+		int index = *iter;
+		if (index >= 0 && index < list.GetItemCount())
+		{
+			list.SetItemState(index, LVIS_SELECTED|LVIS_FOCUSED, LVIS_SELECTED|LVIS_FOCUSED);
+			if (bEnsureVisible)
+				list.EnsureVisible(index, FALSE);
+		}
 	}
 }
 
@@ -91,12 +98,31 @@ CListCtrl2::~CListCtrl2()
 
 int CListCtrl2::GetSelection()
 {
-	return ::GetSelection(*this);
+	std::vector<int> indices;
+	::GetSelection(*this, indices);
+	bool bSingle = (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL));
+	if ((!bSingle && 1 == indices.size())
+	|| (bSingle && 0 < indices.size()))
+		return indices[0];
+	else
+		return -1;
+}
+
+size_t CListCtrl2::GetSelection(std::vector<int>& indices)
+{
+	return ::GetSelection(*this, indices);
 }
 
 void CListCtrl2::SetSelection(int index, bool bEnsureVisible)
 {
-	::SetSelection(*this, index, bEnsureVisible);
+	std::vector<int> indices;
+	indices.push_back(index);
+	::SetSelection(*this, indices, bEnsureVisible);
+}
+
+void CListCtrl2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
+{
+	::SetSelection(*this, indices, bEnsureVisible);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -110,6 +136,10 @@ IMPLEMENT_DYNCREATE(CListView2, CListView)
 
 BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECT_ALL, OnUpdateEditSelectAll)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, OnEditSelectAll)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
@@ -126,12 +156,31 @@ CListView2::~CListView2()
 
 int CListView2::GetSelection()
 {
-	return ::GetSelection(GetListCtrl());
+	std::vector<int> indices;
+	::GetSelection(GetListCtrl(), indices);
+	bool bSingle = (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL));
+	if ((!bSingle && 1 == indices.size())
+	|| (bSingle && 0 < indices.size()))
+		return indices[0];
+	else
+		return -1;
+}
+
+size_t CListView2::GetSelection(std::vector<int>& indices)
+{
+	return ::GetSelection(GetListCtrl(), indices);
 }
 
 void CListView2::SetSelection(int index, bool bEnsureVisible)
 {
-	::SetSelection(GetListCtrl(), index, bEnsureVisible);
+	std::vector<int> indices;
+	indices.push_back(index);
+	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
+}
+
+void CListView2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
+{
+	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
 }
 
 // This allows a derived class to print a subset of columns if it wants.
@@ -260,5 +309,83 @@ void CListView2::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 			pDC->DrawText(line[i], r, DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 			r.left = r.right;
 		}
+	}
+}
+
+void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetSelectedCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CListView2::OnEditCopy()
+{
+	std::vector<int> indices;
+	if (0 < GetSelection(indices) && AfxGetMainWnd()->OpenClipboard())
+	{
+		EmptyClipboard();
+
+		CString data;
+		CStringArray line;
+
+		// Take care of the header.
+		GetPrintLine(-1, line);
+		for (int i = 0; i < line.GetSize(); ++i)
+		{
+			if (0 < i)
+				data += '\t';
+			data += line[i];
+		}
+		data += "\r\n";
+
+		// Now all the data.
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CStringArray line;
+			GetPrintLine((*iter), line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		// alloc mem block & copy text in
+		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
+		if (NULL != temp)
+		{
+			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			lstrcpy(str, (LPCTSTR)data);
+			GlobalUnlock((void*)temp);
+			// send data to clipbard
+			SetClipboardData(CF_TEXT, temp);
+		}
+
+		CloseClipboard();
+	}
+}
+
+void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetItemCount() && (LVS_SINGLESEL != (GetStyle() & LVS_SINGLESEL)))
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CListView2::OnEditSelectAll()
+{
+	int nIndices = GetListCtrl().GetItemCount();
+	if (0 < nIndices)
+	{
+		std::vector<int> indices;
+		indices.reserve(nIndices);
+		for (int i = 0; i < nIndices; ++i)
+			indices.push_back(i);
+		SetSelection(indices, false);
 	}
 }
