@@ -226,51 +226,51 @@ std::string Base64::Encode(char const* inBuffer, size_t inLength)
 		int tmp = 0;
 		//let's step through the buffer and encode it...
 		if (inLength > 2) // A really small buffer causes problems with the logic below
-	{
-		while (count <= inLength)
 		{
-			if (count % 3 == 0 && count != 0)
+			while (count <= inLength)
 			{
-				tmp >>= 8;
-				tmp &= 0xFFFFFF;
-				//we have 4 new b64 chars, add them to encoded
-				int mid = tmp;
-				mid >>= 18;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-				++LineLen;
-				mid = tmp;
-				mid >>= 12;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-				++LineLen;
-				mid = tmp;
-				mid >>= 6;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-				++LineLen;
-				mid = tmp;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-				++LineLen;
-				//reset tmp
-				tmp = 0;
-				// Should we break the line?
-				if (LineLen >= MaxLineLength)
+				if (count % 3 == 0 && count != 0)
 				{
-					*(fresult++) = '\n';
-					LineLen = 0;
+					tmp >>= 8;
+					tmp &= 0xFFFFFF;
+					//we have 4 new b64 chars, add them to encoded
+					int mid = tmp;
+					mid >>= 18;
+					mid &= 0x3F;
+					*(fresult++) = base64chars[mid];
+					++LineLen;
+					mid = tmp;
+					mid >>= 12;
+					mid &= 0x3F;
+					*(fresult++) = base64chars[mid];
+					++LineLen;
+					mid = tmp;
+					mid >>= 6;
+					mid &= 0x3F;
+					*(fresult++) = base64chars[mid];
+					++LineLen;
+					mid = tmp;
+					mid &= 0x3F;
+					*(fresult++) = base64chars[mid];
+					++LineLen;
+					//reset tmp
+					tmp = 0;
+					// Should we break the line?
+					if (LineLen >= MaxLineLength)
+					{
+						*(fresult++) = '\n';
+						LineLen = 0;
+					}
+					if (inLength - count < 3)
+						break;
 				}
-				if (inLength - count < 3)
-					break;
+				unsigned char mid = (256 - (0 - *s)) & 0xff;
+				tmp |= mid;
+				tmp <<= 8;
+				++count;
+				++s;
 			}
-			unsigned char mid = (256 - (0 - *s)) & 0xff;
-			tmp |= mid;
-			tmp <<= 8;
-			++count;
-			++s;
 		}
-	}
 		//do we have some chars left...
 		size_t rest = (inLength - count) % 3;
 		if (rest != 0)
