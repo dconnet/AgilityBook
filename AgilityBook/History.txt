@@ -1,6 +1,6 @@
 12/18/2004: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
-  - Added 'underTF'/'overTF' to 'Scoring'.
+  - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Updated AAC.
   - Added CKC.
@@ -12,7 +12,6 @@
   - Flipped the order of 2 fields on the Run dialog.
   - Enable duplication of a title in the configuration.
   - Added opening/closing dates to calendar view.
-  - Added a time fault multiplier.
 - Bug fixes
   - Compute the score (in the run dialog) for NA runs that do not have
     titling points.
@@ -27,6 +26,7 @@
   - Adding a judge that already exists in the information dialog resulted
     in a duplicate entry in the list. Closing the dialog and reopening it
     would clear up the problem.
+  - Time faults are not properly computed in AKC in Open and Excellent.
 
 10/31/2004: v1.4.0.10
 - Bumped file version to 10.0, Configuration v6:
