@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-02-14 DRC Added TableInYPS in run scoring.
  * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
  * @li 2004-01-21 DRC Added ARBConfigAction items.
@@ -114,6 +115,7 @@
 #define ATTRIB_TRAINING_DATE				"Date"
 #define ATTRIB_TRAINING_NAME				"Name"
 #define ATTRIB_ACTION_VERB					"Verb"
+	#define ACTION_VERB_DELETE_TITLE			"DeleteTitle"
 	#define ACTION_VERB_RENAME_TITLE			"RenameTitle"
 #define ATTRIB_ACTION_VENUE					"Venue"
 #define ATTRIB_ACTION_OLDNAME				"OldName"

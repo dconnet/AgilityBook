@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-01-21 DRC Implemented Action items in configuration update.
  * @li 2004-01-14 DRC Use complete title name instead of nice name.
  * @li 2003-12-27 DRC Changed the scoring method to show the valid date range.
@@ -749,6 +750,46 @@ void CDlgConfigure::OnUpdate()
 							venue->GetDivisions().DeleteTitle(action->GetOldName());
 						else
 							oldTitle->SetName(action->GetNewName());
+					}
+				}
+			}
+			else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
+			{
+				// Find the venue.
+				ARBConfigVenue* venue = m_Config.GetVenues().FindVenue(action->GetVenue());
+				if (venue)
+				{
+					// Find the title we're renaming.
+					ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
+					if (oldTitle)
+					{
+						CString tmp;
+						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
+						// If any titles are in use, create a fixup action.
+						if (0 < nTitles)
+						{
+							if (0 < action->GetNewName().length())
+							{
+								tmp.Format("Action: Renaming existing %d title(s) [%s] to [%s]\n",
+									nTitles,
+									action->GetOldName().c_str(),
+									action->GetNewName().c_str());
+								msg += tmp;
+								m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
+							}
+							else
+							{
+								tmp.Format("Action: Deleting existing %d [%s] title(s)\n",
+									nTitles,
+									action->GetOldName().c_str());
+								msg += tmp;
+								m_DlgFixup.push_back(new CDlgFixupDeleteTitle(action->GetVenue(), action->GetOldName()));
+							}
+						}
+						tmp.Format("Action: Deleting title [%s]\n",
+							action->GetOldName().c_str());
+						msg += tmp;
+						venue->GetDivisions().DeleteTitle(action->GetOldName());
 					}
 				}
 			}
