@@ -64,6 +64,7 @@ ARBDog::ARBDog()
 	, m_RegName()
 	, m_Breed()
 	, m_Note()
+	, m_ExistingPoints()
 	, m_RegNums()
 	, m_Titles()
 	, m_Trials()
@@ -77,6 +78,7 @@ ARBDog::ARBDog(const ARBDog& rhs)
 	, m_RegName(rhs.m_RegName)
 	, m_Breed(rhs.m_Breed)
 	, m_Note(rhs.m_Note)
+	, m_ExistingPoints(rhs.m_ExistingPoints)
 	, m_RegNums(rhs.m_RegNums)
 	, m_Titles(rhs.m_Titles)
 	, m_Trials(rhs.m_Trials)
@@ -97,6 +99,7 @@ ARBDog& ARBDog::operator=(const ARBDog& rhs)
 		m_RegName = rhs.m_RegName;
 		m_Breed = rhs.m_Breed;
 		m_Note = rhs.m_Note;
+		m_ExistingPoints = rhs.m_ExistingPoints;
 		m_RegNums = rhs.m_RegNums;
 		m_Titles = rhs.m_Titles;
 		m_Trials = rhs.m_Trials;
@@ -112,6 +115,7 @@ bool ARBDog::operator==(const ARBDog& rhs) const
 		&& m_RegName == rhs.m_RegName
 		&& m_Breed == rhs.m_Breed
 		&& m_Note == rhs.m_Note
+		&& m_ExistingPoints == rhs.m_ExistingPoints
 		&& m_RegNums == rhs.m_RegNums
 		&& m_Titles == rhs.m_Titles
 		&& m_Trials == rhs.m_Trials;
@@ -158,6 +162,8 @@ size_t ARBDog::GetSearchStrings(std::set<std::string>& ioStrings) const
 		ioStrings.insert(m_Note);
 		++nItems;
 	}
+
+	nItems += m_ExistingPoints.GetSearchStrings(ioStrings);
 
 	nItems += m_RegNums.GetSearchStrings(ioStrings);
 
@@ -214,6 +220,11 @@ bool ARBDog::Load(
 		{
 			m_Note = element.GetValue();
 		}
+		else if (element.GetName() == TREE_EXISTING_PTS)
+		{
+			// Ignore any errors...
+			m_ExistingPoints.Load(inConfig, element, inVersion, ioErrMsg);
+		}
 		else if (element.GetName() == TREE_REG_NUM)
 		{
 			// Ignore any errors...
@@ -230,6 +241,7 @@ bool ARBDog::Load(
 			m_Trials.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 	}
+	m_ExistingPoints.sort();
 	m_RegNums.sort();
 	m_Titles.sort();
 	m_Trials.sort(true);
@@ -258,6 +270,8 @@ bool ARBDog::Save(CElement& ioTree) const
 		CElement& element = dog.AddElement(TREE_NOTE);
 		element.SetValue(m_Note);
 	}
+	if (!m_ExistingPoints.Save(dog))
+		return false;
 	if (!m_RegNums.Save(dog))
 		return false;
 	if (!m_Titles.Save(dog))
@@ -269,7 +283,8 @@ bool ARBDog::Save(CElement& ioTree) const
 
 int ARBDog::RenameVenue(const std::string& inOldVenue, const std::string& inNewVenue)
 {
-	int count = m_RegNums.RenameVenue(inOldVenue, inNewVenue);
+	int count = m_ExistingPoints.RenameVenue(inOldVenue, inNewVenue);
+	count = m_RegNums.RenameVenue(inOldVenue, inNewVenue);
 	count += m_Titles.RenameVenue(inOldVenue, inNewVenue);
 	count += m_Trials.RenameVenue(inOldVenue, inNewVenue);
 	return count;
@@ -277,7 +292,8 @@ int ARBDog::RenameVenue(const std::string& inOldVenue, const std::string& inNewV
 
 int ARBDog::DeleteVenue(const std::string& inVenue)
 {
-	int count = m_RegNums.DeleteVenue(inVenue);
+	int count = m_ExistingPoints.DeleteVenue(inVenue);
+	count = m_RegNums.DeleteVenue(inVenue);
 	count += m_Titles.DeleteVenue(inVenue);
 	count += m_Trials.DeleteVenue(inVenue);
 	return count;
@@ -285,19 +301,29 @@ int ARBDog::DeleteVenue(const std::string& inVenue)
 
 int ARBDog::RenameDivision(const ARBConfigVenue* inVenue, const std::string& inOldDiv, const std::string& inNewDiv)
 {
-	int count = m_Titles.RenameDivision(inVenue, inOldDiv, inNewDiv);
+	int count = m_ExistingPoints.RenameDivision(inVenue->GetName(), inOldDiv, inNewDiv);
+	count = m_Titles.RenameDivision(inVenue, inOldDiv, inNewDiv);
 	count += m_Trials.RenameDivision(inVenue, inOldDiv, inNewDiv);
 	return count;
 }
 
 int ARBDog::DeleteDivision(const ARBConfig& inConfig, const std::string& inVenue, const std::string& inDiv)
 {
-	int count = m_Titles.DeleteDivision(inConfig, inVenue, inDiv);
+	int count = m_ExistingPoints.DeleteDivision(inVenue, inDiv);
+	count = m_Titles.DeleteDivision(inConfig, inVenue, inDiv);
 	count += m_Trials.DeleteDivision(inConfig, inVenue, inDiv);
 	return count;
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+int ARBDogList::NumExistingPointsInVenue(const std::string& inVenue) const
+{
+	int count = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+		count += (*iter)->GetExistingPoints().NumExistingPointsInVenue(inVenue);
+	return count;
+}
 
 int ARBDogList::NumRegNumsInVenue(const std::string& inVenue) const
 {
@@ -329,7 +355,10 @@ int ARBDogList::RenameVenue(
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().RenameVenue(inOldVenue, inNewVenue);
 		count += (*iter)->RenameVenue(inOldVenue, inNewVenue);
+	}
 	return count;
 }
 
@@ -337,7 +366,10 @@ int ARBDogList::DeleteVenue(const std::string& inVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().DeleteVenue(inVenue);
 		count += (*iter)->DeleteVenue(inVenue);
+	}
 	return count;
 }
 
@@ -345,7 +377,10 @@ int ARBDogList::NumOtherPointsInUse(const std::string& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().NumOtherPointsInUse(inOther);
 		count += (*iter)->GetTrials().NumOtherPointsInUse(inOther);
+	}
 	return count;
 }
 
@@ -355,7 +390,10 @@ int ARBDogList::RenameOtherPoints(
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().RenameOtherPoints(inOldOther, inNewOther);
 		count += (*iter)->GetTrials().RenameOtherPoints(inOldOther, inNewOther);
+	}
 	return count;
 }
 
@@ -363,7 +401,10 @@ int ARBDogList::DeleteOtherPoints(const std::string& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().DeleteOtherPoints(inOther);
 		count += (*iter)->GetTrials().DeleteOtherPoints(inOther);
+	}
 	return count;
 }
 

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -158,6 +159,12 @@ public:
 		const std::string& inVenue,
 		const std::string& inDivision,
 		const std::string& inLevel
+		) const;
+	bool VerifyEvent(
+		const std::string& inVenue,
+		const std::string& inDivision,
+		const std::string& inLevel,
+		const std::string& inEvent
 		) const;
 	const ARBConfigTitle* FindTitleCompleteName(
 		const std::string& inVenue,

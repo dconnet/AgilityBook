@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
  * @li 2004-01-21 DRC Added ARBConfigAction items.
  * @li 2003-12-07 DRC Added Info section.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -67,6 +68,7 @@
 #define TREE_REGNAME						"RegisteredName"
 #define TREE_BREED							"Breed"
 #define TREE_NOTE							"Note"
+#define TREE_EXISTING_PTS					"ExistingPoints"
 #define TREE_REG_NUM						"RegNum"
 #define TREE_TITLE							"Title"
 #define TREE_TRIAL							"Trial"
@@ -136,6 +138,12 @@
 #define ATTRIB_DOG_CALLNAME					"CallName"
 #define ATTRIB_DOG_DOB						"DOB"
 #define ATTRIB_DOG_DECEASED					"Deceased"
+#define ATTRIB_EXISTING_PTS_VENUE			"Venue"
+#define ATTRIB_EXISTING_PTS_DIV				"Div"
+#define ATTRIB_EXISTING_PTS_LEVEL			"Level"
+#define ATTRIB_EXISTING_PTS_EVENT			"Event"
+#define ATTRIB_EXISTING_PTS_OTHER			"Other"
+#define ATTRIB_EXISTING_PTS_POINTS			"Pts"
 #define ATTRIB_REG_NUM_VENUE				"Venue"
 #define ATTRIB_REG_NUM_HEIGHT				"Height"
 #define ATTRIB_REG_NUM_RECEIVED				"isReceived"
@@ -197,6 +205,7 @@
 #define INVALID_CONFIG			"Only one '" TREE_CONFIG "' section is allowed."
 #define INVALID_VENUE_CONFIG	"All '" TREE_DIVISION "' elements must come before '" TREE_EVENT "' elements."
 #define INVALID_VENUE_NAME		"Invalid venue name: "
+#define INVALID_OTHER_PTS_NAME	"Invalid Other Points name: "
 #define INVALID_EVENT			"Unable to locate an event description in any of the venues of the affiliated clubs: "
 #define INVALID_TITLE			"Title is not defined in the Venue description: "
 #define VALID_VALUES			"Valid values: "

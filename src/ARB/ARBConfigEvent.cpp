@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -242,6 +243,13 @@ size_t ARBConfigEvent::FindAllEvents(
 	return m_Scoring.FindAllEvents(inDivision, inLevel, inTitlePoints, outList);
 }
 
+bool ARBConfigEvent::VerifyEvent(
+	const std::string& inDivision,
+	const std::string& inLevel) const
+{
+	return m_Scoring.VerifyEvent(inDivision, inLevel);
+}
+
 const ARBConfigScoring* ARBConfigEvent::FindEvent(
 	const std::string& inDivision,
 	const std::string& inLevel,
@@ -266,6 +274,19 @@ bool ARBConfigEventList::Load(
 	}
 	push_back(thing);
 	return true;
+}
+
+bool ARBConfigEventList::VerifyEvent(
+	const std::string& inEvent,
+	const std::string& inDivision,
+	const std::string& inLevel) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetName() == inEvent)
+			return (*iter)->VerifyEvent(inDivision, inLevel);
+	}
+	return false;
 }
 
 const ARBConfigScoring* ARBConfigEventList::FindEvent(
