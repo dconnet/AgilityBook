@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
 #include "DlgBaseDialog.h"
@@ -54,10 +55,12 @@ private:
 	int		m_Entered;
 	CComboBox	m_ctrlLocation;
 	CString	m_Location;
-	CComboBox	m_ctrlClub;
-	CString	m_Club;
+	CEdit	m_ctrlLocationInfo;
 	CComboBox	m_ctrlVenue;
 	CString	m_Venue;
+	CComboBox	m_ctrlClub;
+	CString	m_Club;
+	CEdit	m_ctrlClubInfo;
 	CTime	m_dateOpens;
 	BOOL	m_bOpeningUnknown;
 	CTime	m_dateCloses;
@@ -74,8 +77,14 @@ protected:
 
 // Implementation
 protected:
+	void UpdateLocationInfo(char const* pLocation);
+	void UpdateClubInfo(char const* pClub);
 	//{{AFX_MSG(CDlgCalendar)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnSelchangeLocation();
+	afx_msg void OnKillfocusLocation();
+	afx_msg void OnSelchangeClub();
+	afx_msg void OnKillfocusClub();
 	afx_msg void OnDateOpensUnknown();
 	afx_msg void OnDateClosesUnknown();
 	virtual void OnOK();

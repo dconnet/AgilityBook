@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
 #include "stdafx.h"
@@ -64,8 +65,8 @@ CDlgCalendar::CDlgCalendar(ARBCalendar* pCal, CAgilityBookDoc* pDoc, CWnd* pPare
 	m_bTentative = m_pCal->IsTentative() ? TRUE : FALSE;
 	m_Entered = 0;
 	m_Location = m_pCal->GetLocation().c_str();
-	m_Club = m_pCal->GetClub().c_str();
 	m_Venue = m_pCal->GetVenue().c_str();
+	m_Club = m_pCal->GetClub().c_str();
 	m_dateOpens = CTime::GetCurrentTime();
 	m_bOpeningUnknown = TRUE;
 	m_dateCloses = CTime::GetCurrentTime();
@@ -110,10 +111,12 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_CAL_ENTER_NOT, m_Entered);
 	DDX_Control(pDX, IDC_CAL_LOCATION, m_ctrlLocation);
 	DDX_CBString(pDX, IDC_CAL_LOCATION, m_Location);
-	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
-	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
+	DDX_Control(pDX, IDC_CAL_LOCATION_NOTE, m_ctrlLocationInfo);
 	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
 	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
+	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
+	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
+	DDX_Control(pDX, IDC_CAL_CLUB_NOTE, m_ctrlClubInfo);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_OPENS, m_dateOpens);
 	DDX_Check(pDX, IDC_CAL_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_CLOSES, m_dateCloses);
@@ -124,10 +127,46 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendar)
+	ON_CBN_SELCHANGE(IDC_CAL_LOCATION, OnSelchangeLocation)
+	ON_CBN_KILLFOCUS(IDC_CAL_LOCATION, OnKillfocusLocation)
+	ON_CBN_SELCHANGE(IDC_CAL_CLUB, OnSelchangeClub)
+	ON_CBN_KILLFOCUS(IDC_CAL_CLUB, OnKillfocusClub)
 	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+
+void CDlgCalendar::UpdateLocationInfo(char const* pLocation)
+{
+	CString str;
+	if (pLocation && *pLocation)
+	{
+		ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation);
+		if (pItem)
+		{
+			str = pItem->GetComment().c_str();
+			str.Replace("\n", "\r\n");
+		}
+	}
+	m_ctrlLocationInfo.SetWindowText(str);
+}
+
+void CDlgCalendar::UpdateClubInfo(char const* pClub)
+{
+	CString str;
+	if (pClub && *pClub)
+	{
+		ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub);
+		if (pItem)
+		{
+			str = pItem->GetComment().c_str();
+			str.Replace("\n", "\r\n");
+		}
+	}
+	m_ctrlClubInfo.SetWindowText(str);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCalendar message handlers
@@ -143,15 +182,10 @@ BOOL CDlgCalendar::OnInitDialog()
 	{
 		int index = m_ctrlLocation.AddString((*iter).c_str());
 		if ((*iter) == m_pCal->GetLocation())
+		{
 			m_ctrlLocation.SetCurSel(index);
-	}
-	set<string> clubs;
-	m_pDoc->GetAllClubNames(clubs);
-	for (iter = clubs.begin(); iter != clubs.end(); ++iter)
-	{
-		int index = m_ctrlClub.AddString((*iter).c_str());
-		if ((*iter) == m_pCal->GetClub())
-			m_ctrlClub.SetCurSel(index);
+			UpdateLocationInfo((*iter).c_str());
+		}
 	}
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->GetConfig().GetVenues().begin();
 		iterVenue != m_pDoc->GetConfig().GetVenues().end();
@@ -161,6 +195,17 @@ BOOL CDlgCalendar::OnInitDialog()
 		int index = m_ctrlVenue.AddString(pVenue->GetName().c_str());
 		if (pVenue->GetName() == m_pCal->GetVenue())
 			m_ctrlVenue.SetCurSel(index);
+	}
+	set<string> clubs;
+	m_pDoc->GetAllClubNames(clubs);
+	for (iter = clubs.begin(); iter != clubs.end(); ++iter)
+	{
+		int index = m_ctrlClub.AddString((*iter).c_str());
+		if ((*iter) == m_pCal->GetClub())
+		{
+			m_ctrlClub.SetCurSel(index);
+			UpdateClubInfo((*iter).c_str());
+		}
 	}
 
 	if (m_bOpeningUnknown)
@@ -173,6 +218,36 @@ BOOL CDlgCalendar::OnInitDialog()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgCalendar::OnSelchangeLocation()
+{
+	int idx = m_ctrlLocation.GetCurSel();
+	CString str;
+	if (CB_ERR != idx)
+		m_ctrlLocation.GetLBText(idx, str);
+	UpdateLocationInfo((LPCTSTR)str);
+}
+
+void CDlgCalendar::OnKillfocusLocation()
+{
+	UpdateData(TRUE);
+	UpdateLocationInfo((LPCTSTR)m_Location);
+}
+
+void CDlgCalendar::OnSelchangeClub()
+{
+	int idx = m_ctrlClub.GetCurSel();
+	CString str;
+	if (CB_ERR != idx)
+		m_ctrlClub.GetLBText(idx, str);
+	UpdateClubInfo((LPCTSTR)str);
+}
+
+void CDlgCalendar::OnKillfocusClub()
+{
+	UpdateData(TRUE);
+	UpdateClubInfo((LPCTSTR)m_Club);
 }
 
 void CDlgCalendar::OnDateOpensUnknown() 
@@ -199,10 +274,10 @@ void CDlgCalendar::OnOK()
 		return;
 	m_Location.TrimRight();
 	m_Location.TrimLeft();
-	m_Club.TrimRight();
-	m_Club.TrimLeft();
 	m_Venue.TrimRight();
 	m_Venue.TrimLeft();
+	m_Club.TrimRight();
+	m_Club.TrimLeft();
 	m_Notes.TrimRight();
 	m_Notes.TrimLeft();
 
@@ -246,8 +321,8 @@ void CDlgCalendar::OnOK()
 	}
 	m_pCal->SetIsTentative(m_bTentative ? true : false);
 	m_pCal->SetLocation((LPCSTR)m_Location);
-	m_pCal->SetClub((LPCSTR)m_Club);
 	m_pCal->SetVenue((LPCSTR)m_Venue);
+	m_pCal->SetClub((LPCSTR)m_Club);
 	if (m_bOpeningUnknown)
 		openingDate.clear();
 	if (m_bClosingUnknown)
