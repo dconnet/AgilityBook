@@ -1,4 +1,11 @@
-Last Updated: 8/21/04
+Last Updated: 9/27/04
+
+- Do not acculumate runs marked as NA in Point totals.
+
+- Add a column in runs to allow cumulative title points. Also add this to
+  the score tab in the run properties.
+
+- Possible expense tracking?
 
 - Fix printing so it wraps multi-line text.
 

@@ -39,6 +39,8 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
+#include <set>
+#include <string>
 class ARBConfigVenue;
 class ARBDogRun;
 class CAgilityBookDoc;
@@ -73,6 +75,7 @@ protected:
 	void UpdateButtons();
 	void SetColumnHeaders();
 	void ListRuns();
+	void GetAllHeights(std::set<std::string>& ioNames);
 
 	//{{AFX_MSG(CDlgRunReference)
 	virtual BOOL OnInitDialog();
