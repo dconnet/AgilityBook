@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-31 DRC Added FindCalendar.
  */
 
 #include <string>
@@ -299,6 +300,8 @@ public:
 
 	size_t GetAllEntered(std::vector<const ARBCalendar*>& ioEntered) const;
 	int TrimEntries(const ARBDate& inDate);
+
+	ARBCalendar* FindCalendar(ARBCalendar* inCal);
 
 	ARBCalendar* AddCalendar(ARBCalendar* inCal);
 	bool DeleteCalendar(const ARBCalendar* inCal);

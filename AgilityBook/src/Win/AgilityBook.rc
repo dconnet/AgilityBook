@@ -127,11 +127,16 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "&Import"
         BEGIN
-            MENUITEM "&Configuration...",           ID_FILE_IMPORT_CONFIG
-            , INACTIVE
+            MENUITEM "&Calendar...",                ID_FILE_IMPORT_CALENDAR
+            MENUITEM SEPARATOR
+            MENUITEM "C&onfiguration...",           ID_FILE_IMPORT_CONFIG
         END
         POPUP "&Export"
         BEGIN
+            MENUITEM "&Calendar...",                ID_FILE_EXPORT_CALENDAR
+            MENUITEM SEPARATOR
+            MENUITEM "C&onfiguration...",           ID_FILE_EXPORT_CONFIG
+            MENUITEM SEPARATOR
             MENUITEM "&DTD (Document Type Definition)...",ID_FILE_EXPORT_DTD
             MENUITEM "As &XML...",                  ID_FILE_EXPORT_XML
         END
@@ -1716,6 +1721,16 @@ BEGIN
                             "Warning: The trial you have just created cannot be shown due to filter options."
     IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
     IDS_NUM_TRAINING        "%1!d! entries"
+    IDS_FILEEXT_DEF_TXT     "txt"
+    IDS_FILEEXT_FNAME_TXT   "*.txt"
+    IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IDS_FILEEXT_DEF_DTD     "dtd"
+    IDS_FILEEXT_FNAME_DTD   "*.dtd"
+    IDS_FILEEXT_FILTER_DTD  "DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||"
+    IDS_FILEEXT_DEF_XML     "xml"
+    IDS_FILEEXT_FNAME_XML   "*.xml"
+    IDS_FILEEXT_FILTER_XML  "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
+    IDS_ADDED_CAL_ITEMS     "Added %d new calendar items."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1761,6 +1776,9 @@ BEGIN
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_FILE_EXPORT_XML      "Export data as XML\nExport XML"
+    ID_FILE_IMPORT_CALENDAR "Import another Calendar\nImport Calendar"
+    ID_FILE_EXPORT_CALENDAR "Export your Calendar\nExport Calendar"
+    ID_FILE_EXPORT_CONFIG   "Export your Configuration\nExport Configuration"
 END
 
 #endif    // English (U.S.) resources

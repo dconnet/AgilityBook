@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
  * @li 2003-10-13 DRC File version 7. Added course faults to ByScore/etc.
  * @li 2003-09-21 DRC File version 6. Added training log.
  * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
@@ -263,19 +264,35 @@ bool ARBAgilityRecordBook::Load(
 	return bLoaded;
 }
 
-bool ARBAgilityRecordBook::Save(CElement& outTree) const
+bool ARBAgilityRecordBook::Save(CElement& outTree,
+	bool inCalendar,
+	bool inTraining,
+	bool inConfig,
+	bool inDogs) const
 {
 	outTree.clear();
 	outTree.SetName(TREE_BOOK);
 	outTree.AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
-	if (!m_Calendar.Save(outTree))
-		return false;
-	if (!m_Training.Save(outTree))
-		return false;
-	if (!m_Config.Save(outTree))
-		return false;
-	if (!m_Dogs.Save(outTree))
-		return false;
+	if (inCalendar)
+	{
+		if (!m_Calendar.Save(outTree))
+			return false;
+	}
+	if (inTraining)
+	{
+		if (!m_Training.Save(outTree))
+			return false;
+	}
+	if (inConfig || inDogs)
+	{
+		if (!m_Config.Save(outTree))
+			return false;
+	}
+	if (inDogs)
+	{
+		if (!m_Dogs.Save(outTree))
+			return false;
+	}
 	return true;
 }
 

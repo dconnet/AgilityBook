@@ -319,6 +319,16 @@
 #define IDS_CREATETRIAL_FILTERED        5156
 #define IDS_CREATERUN_FILTERED          5157
 #define IDS_NUM_TRAINING                5158
+#define IDS_FILEEXT_DEF_TXT             5159
+#define IDS_FILEEXT_FNAME_TXT           5160
+#define IDS_FILEEXT_FILTER_TXT          5161
+#define IDS_FILEEXT_DEF_DTD             5162
+#define IDS_FILEEXT_FNAME_DTD           5163
+#define IDS_FILEEXT_FILTER_DTD          5164
+#define IDS_FILEEXT_DEF_XML             5165
+#define IDS_FILEEXT_FNAME_XML           5166
+#define IDS_FILEEXT_FILTER_XML          5167
+#define IDS_ADDED_CAL_ITEMS             5168
 #define ID_FILE_IMPORT_CONFIG           32772
 #define ID_FILE_EXPORT_DTD              32773
 #define ID_EDIT_CONFIGURATION           32774
@@ -356,6 +366,9 @@
 #define ID_VIEW_SORTRUNS                32806
 #define ID_VIEW_RUNS_BY_TRIAL           32807
 #define ID_FILE_EXPORT_XML              32808
+#define ID_FILE_IMPORT_CALENDAR         32809
+#define ID_FILE_EXPORT_CALENDAR         32810
+#define ID_FILE_EXPORT_CONFIG           32811
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -364,7 +377,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        180
-#define _APS_NEXT_COMMAND_VALUE         32809
+#define _APS_NEXT_COMMAND_VALUE         32812
 #define _APS_NEXT_CONTROL_VALUE         1151
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

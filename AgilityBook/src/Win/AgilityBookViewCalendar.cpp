@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-31 DRC Cleaned up pagedown scrolling.
  * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
  * @li 2003-10-22 DRC Right click sets the current date.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
@@ -136,7 +137,7 @@ bool CAgilityBookViewCalendar::SetCurrentDate(const ARBDate& date, bool bEnsureV
 				CRect rClient;
 				GetClientRect(rClient);
 				CRect r2;
-				if (!r2.IntersectRect(rClient, r))
+				if (!r2.IntersectRect(rClient, r) || r2 != r)
 				{
 					CPoint pt = GetScrollPosition();
 					pt.y = rCurrent.top;
@@ -684,9 +685,9 @@ void CAgilityBookViewCalendar::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 				dc.DPtoLP(rClient);
 				int nEntriesPerPage = abs(rClient.Height()) / (2 * DAY_BORDER + m_szEntry.cy);
 				if (VK_PRIOR == nChar)
-					date -= (nEntriesPerPage + 1) * 7;
+					date -= nEntriesPerPage * 7;
 				else
-					date += (nEntriesPerPage + 1) * 7;
+					date += nEntriesPerPage * 7;
 			}
 			break;
 
