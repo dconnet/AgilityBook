@@ -40,6 +40,7 @@
 #include "AgilityBook.h"
 #include "DlgDog.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBDog.h"
 #include "DlgDogNumbers.h"
 #include "DlgDogPoints.h"
@@ -59,9 +60,10 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgDog, CPropertySheet)
 
-CDlgDog::CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent, UINT iSelectPage)
+CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent, UINT iSelectPage)
 	: CPropertySheet(IDS_COL_DOG, pParent, iSelectPage)
-	, m_Config(config)
+	, m_pDoc(pDoc)
+	, m_Config(pDoc->GetConfig())
 	, m_pDog(pDog)
 	, m_pageProp(NULL)
 	, m_pageTitles(NULL)
@@ -69,10 +71,10 @@ CDlgDog::CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent, UINT iSelectPag
 	, m_pagePoints(NULL)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
-	m_pageProp = new CDlgDogProperties(config, pDog);
-	m_pageTitles = new CDlgDogTitles(config, pDog->GetTitles());
-	m_pageRegNums = new CDlgDogNumbers(config, pDog->GetRegNums());
-	m_pagePoints = new CDlgDogPoints(config, pDog->GetExistingPoints());
+	m_pageProp = new CDlgDogProperties(m_Config, pDog);
+	m_pageTitles = new CDlgDogTitles(m_Config, pDog->GetTitles());
+	m_pageRegNums = new CDlgDogNumbers(m_Config, pDog->GetRegNums());
+	m_pagePoints = new CDlgDogPoints(m_Config, pDog->GetExistingPoints());
 	AddPage(m_pageProp);
 	AddPage(m_pageTitles);
 	AddPage(m_pageRegNums);
@@ -89,12 +91,19 @@ CDlgDog::~CDlgDog()
 
 BEGIN_MESSAGE_MAP(CDlgDog, CPropertySheet)
 	//{{AFX_MSG_MAP(CDlgDog)
+	ON_WM_DESTROY()
 	ON_COMMAND(IDOK, OnOK)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDog message handlers
+
+void CDlgDog::OnDestroy()
+{
+	CPropertySheet::OnDestroy();
+	m_pDoc->ResetVisibility();
+}
 
 void CDlgDog::OnOK()
 {

@@ -729,7 +729,7 @@ void CAgilityBookDoc::OnEditJudges()
 void CAgilityBookDoc::OnAgilityNewDog()
 {
 	ARBDog* dog = new ARBDog();
-	CDlgDog dlg(GetConfig(), dog);
+	CDlgDog dlg(this, dog);
 	if (IDOK == dlg.DoModal())
 	{
 		CAgilityBookTree* pTree = NULL;
@@ -843,4 +843,14 @@ void CAgilityBookDoc::OnViewRunsByTrial()
 {
 	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
 	UpdateAllViews(NULL, UPDATE_OPTIONS);
+}
+
+void CAgilityBookDoc::OnUpdateViewHiddenTrials(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
+}
+
+void CAgilityBookDoc::OnViewHiddenTrials()
+{
+	CAgilityBookOptions::SetViewHiddenTitles(!CAgilityBookOptions::GetViewHiddenTitles());
 }

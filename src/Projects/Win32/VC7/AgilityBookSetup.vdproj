@@ -27,7 +27,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6331967F7A824A6E834340BB66F269AE"
+        "MsmKey" = "8:_4CF13C01339DB5A3C4462233358BB08D"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5460A2AA32F6EE5731E1F59DCE520E9B"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_66A95285C6859A5021EB04465B8F74EE"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,19 +57,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F499C3640DED459ABBB877B4442835EA"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FA78DC6C6A4F4D488CA3A2397D12DACF"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
+        "MsmKey" = "8:_E0FAFD4E527395D21563953089EB4FA2"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -78,7 +78,7 @@
         "CertificateFile" = "8:"
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
-        "InstallerBootstrapper" = "3:2"
+        "InstallerBootstrapper" = "3:1"
         }
         "Release"
         {
@@ -159,6 +159,66 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_4CF13C01339DB5A3C4462233358BB08D"
+            {
+            "SourcePath" = "8:MSVCP71D.dll"
+            "TargetName" = "8:MSVCP71D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_5460A2AA32F6EE5731E1F59DCE520E9B"
+            {
+            "SourcePath" = "8:MSVCR71D.dll"
+            "TargetName" = "8:MSVCR71D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_66A95285C6859A5021EB04465B8F74EE"
+            {
+            "SourcePath" = "8:xerces-c_2_2_0D.dll"
+            "TargetName" = "8:xerces-c_2_2_0D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_D856BA91561A4C9CBFC70DA37046D394"
             {
             "SourcePath" = "8:..\\..\\..\\Agility Record Book Web Site.html"
@@ -179,10 +239,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E0FAFD4E527395D21563953089EB4FA2"
             {
-            "SourcePath" = "8:xerces-c_2_2_0.dll"
-            "TargetName" = "8:xerces-c_2_2_0.dll"
+            "SourcePath" = "8:MFC71D.DLL"
+            "TargetName" = "8:MFC71D.DLL"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
             "Condition" = "8:"
@@ -289,7 +349,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
         "ProductCode" = "8:{5FF1E4D8-C54D-4B16-98ED-49CE4F87D7AE}"
-        "PackageCode" = "8:{F472BCE7-74D3-4062-937F-827841E62F48}"
+        "PackageCode" = "8:{1394D59A-721E-492E-B07C-A0B44D1771C5}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -884,54 +944,12 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_6331967F7A824A6E834340BB66F269AE"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_crt71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_F499C3640DED459ABBB877B4442835EA"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_mfc71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_FA78DC6C6A4F4D488CA3A2397D12DACF"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_stl71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
         }
         "ProjectOutput"
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_6ECEE00896D64C0EB4B463E926655387"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\bin\\Win32\\Vc7\\Release\\AgilityBook.exe"
+            "SourcePath" = "8:..\\..\\..\\..\\bin\\Win32\\Vc7\\Debug\\AgilityBook.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-13 DRC Added GetViewHiddenTitles.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-11 DRC Added options for import/export wizard.
  */
@@ -123,6 +124,8 @@ public:
 	static void SetViewAllRuns(bool bViewAll);
 	static bool GetViewQRuns(); // Subset of AllRuns
 	static void SetViewQRuns(bool bViewQs);
+	static bool GetViewHiddenTitles();
+	static void SetViewHiddenTitles(bool bSet);
 	// Training Log options
 	static bool GetTrainingViewAllDates();
 	static void SetTrainingViewAllDates(bool bViewAll);

@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-13 DRC Added ability to hide titles, including unearned ones.
+ *                    An unearned title has an invalid date.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -98,13 +100,19 @@ public:
 	 * Getters/setters.
 	 */
 	const ARBDate& GetDate() const;
+	/**
+	 * @post Setting the date also affects the hidden value. An invalid date
+	 *       will hide the entry, a valid date will unhide.
+	 */
 	void SetDate(const ARBDate& inDate);
 	const std::string& GetVenue() const;
 	void SetVenue(const std::string& inVenue);
 	const std::string& GetName() const;
 	void SetName(const std::string& inName);
-	const bool GetReceived() const;
+	bool GetReceived() const;
 	void SetReceived(bool inReceived);
+	bool IsHidden() const;
+	void SetHidden(bool bHidden);
 
 private:
 	~ARBDogTitle();
@@ -112,6 +120,7 @@ private:
 	std::string m_Venue;
 	std::string m_Name;
 	bool m_bReceived;
+	bool m_bHidden;
 };
 
 inline std::string ARBDogTitle::GetGenericName() const
@@ -127,6 +136,8 @@ inline const ARBDate& ARBDogTitle::GetDate() const
 inline void ARBDogTitle::SetDate(const ARBDate& inDate)
 {
 	m_Date = inDate;
+	if (!m_Date.IsValid())
+		m_bHidden = true;
 }
 
 inline const std::string& ARBDogTitle::GetVenue() const
@@ -149,7 +160,7 @@ inline void ARBDogTitle::SetName(const std::string& inName)
 	m_Name = inName;
 }
 
-inline const bool ARBDogTitle::GetReceived() const
+inline bool ARBDogTitle::GetReceived() const
 {
 	return m_bReceived;
 }
@@ -157,6 +168,19 @@ inline const bool ARBDogTitle::GetReceived() const
 inline void ARBDogTitle::SetReceived(bool inReceived)
 {
 	m_bReceived = inReceived;
+}
+
+inline bool ARBDogTitle::IsHidden() const
+{
+	return m_bHidden;
+}
+
+inline void ARBDogTitle::SetHidden(bool bHidden)
+{
+	if (m_Date.IsValid())
+		m_bHidden = bHidden;
+	else
+		m_bHidden = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -837,7 +837,7 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 		if (ID_AGILITY_NEW_DOG == id)
 		{
 			ARBDog* dog = new ARBDog();
-			CDlgDog dlg(GetDocument()->GetConfig(), dog);
+			CDlgDog dlg(GetDocument(), dog);
 			if (IDOK == dlg.DoModal())
 			{
 				GetDocument()->SetModifiedFlag();

@@ -93,7 +93,7 @@ static bool EditDog(
 		pDog = new ARBDog();
 	}
 	bool bOk = false;
-	CDlgDog dlg(pTree->GetDocument()->GetConfig(), pDog, pTree);
+	CDlgDog dlg(pTree->GetDocument(), pDog, pTree);
 	if (IDOK == dlg.DoModal())
 	{
 		bOk = true;

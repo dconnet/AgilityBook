@@ -75,6 +75,9 @@ IDI_CALENDAR_ENTERED_TENTATIVE ICON                    "res\\CalEnteredTentative
 IDI_CHECKED             ICON                    "res\\checked.ico"
 IDI_UNCHECKED           ICON                    "res\\unchecked.ico"
 IDI_CRCD                ICON                    "res\\crcd.ico"
+IDI_TITLE               ICON                    "res\\title.ico"
+IDI_TITLE2              ICON                    "res\\title2.ico"
+IDI_HIDDEN              ICON                    "res\\hidden.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -196,7 +199,7 @@ BEGIN
             MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
         END
-        POPUP "&Training"
+        POPUP "Tr&aining"
         BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
             MENUITEM SEPARATOR
@@ -209,8 +212,10 @@ BEGIN
     BEGIN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM SEPARATOR
         MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
+        MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
         MENUITEM SEPARATOR
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
@@ -647,10 +652,10 @@ BEGIN
                     WS_VSCROLL
 END
 
-IDD_DOG_TITLES DIALOG  0, 0, 350, 180
+IDD_DOG_TITLES DIALOGEX 0, 0, 350, 180
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Titles"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_TITLES,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
@@ -658,6 +663,8 @@ BEGIN
     PUSHBUTTON      "&New...",IDC_TITLE_NEW,3,163,45,14
     PUSHBUTTON      "&Edit...",IDC_TITLE_EDIT,53,163,45,14
     PUSHBUTTON      "&Delete",IDC_TITLE_DELETE,103,163,45,14
+    CONTROL         "View Hidden",IDC_HIDDEN,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,291,165,56,10
 END
 
 IDD_DOG_NUMBERS DIALOG  0, 0, 350, 180
@@ -686,23 +693,26 @@ BEGIN
     PUSHBUTTON      "&Delete",IDC_DELETE,103,163,45,14
 END
 
-IDD_TITLE DIALOGEX 0, 0, 210, 130
+IDD_TITLE DIALOGEX 0, 0, 210, 146
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    LTEXT           "&Date Earned",IDC_STATIC,7,9,41,8
+    CONTROL         "&Earned",IDC_EARNED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,8,39,10
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,55,7,60,12
-    LTEXT           "&Venue",IDC_STATIC,7,27,22,8
-    COMBOBOX        IDC_VENUES,35,25,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    CONTROL         "&Hide this title",IDC_HIDDEN,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,23,56,10
+    LTEXT           "&Venue",IDC_STATIC,7,42,22,8
+    COMBOBOX        IDC_VENUES,35,40,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Title",IDC_STATIC,7,45,14,8
-    COMBOBOX        IDC_TITLES,25,43,120,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Title",IDC_STATIC,7,60,14,8
+    COMBOBOX        IDC_TITLES,25,58,120,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "&Received",IDC_RECEIVED,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,153,45,47,10
-    EDITTEXT        IDC_DESC,7,62,196,61,ES_MULTILINE | ES_READONLY | 
+                    WS_TABSTOP,153,60,47,10
+    EDITTEXT        IDC_DESC,7,78,196,61,ES_MULTILINE | ES_READONLY | 
                     WS_VSCROLL | WS_HSCROLL
     DEFPUSHBUTTON   "OK",IDOK,153,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,153,24,50,14
@@ -1530,7 +1540,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 203
         TOPMARGIN, 7
-        BOTTOMMARGIN, 123
+        BOTTOMMARGIN, 139
     END
 
     IDD_REG_NUM, DIALOG
@@ -2024,7 +2034,7 @@ BEGIN
     IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
     IDS_ABOUT_LINK_EMAILHELP 
                             "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
-    IDS_ABOUT_LINK_ARB      "AgilityRecordBook Home Page\thttp://www.agilityrecordbook.com"
+    IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
     IDS_ABOUT_LINK_SOURCEFORGE 
                             "Source Forge (downloads and source code)\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
     IDS_UPDATE_NEWER_VERSION 
@@ -2145,6 +2155,7 @@ BEGIN
     ID_FILE_AUTOCHECK       "Check for updates every 30 days when the program starts\nAutoCheck"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
+    ID_VIEW_HIDDEN          "Show Titles that have been hidden"
     ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
     ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
     ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"

@@ -39,6 +39,7 @@
 
 class ARBConfig;
 class ARBDog;
+class CAgilityBookDoc;
 class CDlgDogNumbers;
 class CDlgDogPoints;
 class CDlgDogProperties;
@@ -50,10 +51,11 @@ class CDlgDog : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CDlgDog)
 public:
-	CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
+	CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
 	virtual ~CDlgDog();
 
 private:
+	CAgilityBookDoc* m_pDoc;
 	ARBConfig& m_Config;
 	ARBDog* m_pDog;
 	CDlgDogProperties* m_pageProp;
@@ -67,7 +69,9 @@ private:
 // Implementation
 protected:
 	//{{AFX_MSG(CDlgDog)
+	afx_msg void OnDestroy();
 	afx_msg void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
 };

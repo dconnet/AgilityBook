@@ -48,7 +48,9 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgTitle)
 	enum { IDD = IDD_TITLE };
+	CButton	m_ctrlEarned;
 	CDateTimeCtrl	m_ctrlDate;
+	CButton	m_ctrlHidden;
 	CComboBox	m_ctrlVenues;
 	CComboBox	m_ctrlTitles;
 	CButton	m_ctrlReceived;
@@ -68,6 +70,7 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgTitle)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedEarned();
 	afx_msg void OnSelchangeVenues();
 	afx_msg void OnSelchangeTitles();
 	virtual void OnOK();

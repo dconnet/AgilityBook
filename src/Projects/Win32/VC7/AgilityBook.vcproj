@@ -636,7 +636,16 @@
 				RelativePath="..\..\..\Win\res\DefaultConfig.xml">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\res\hidden.ico">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\res\jump.ico">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\res\title.ico">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\res\title2.ico">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\res\Toolbar.bmp">
