@@ -348,33 +348,36 @@ void CDlgConfigVenue::LoadTitleData()
 
 void CDlgConfigVenue::LoadEventData()
 {
-	ARBConfigEvent* pEvent = NULL;
+	ARBConfigEvent* pOldEvent = NULL;
 	CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
 	CDlgConfigureDataScoring* pScoringData = GetCurrentScoringData();
 	if (pEventData)
-		pEvent = pEventData->GetEvent();
+		pOldEvent = pEventData->GetEvent();
 	else if (pScoringData)
-		pEvent = pScoringData->GetEvent();
+		pOldEvent = pScoringData->GetEvent();
 	m_ctrlEvents.DeleteAllItems();
 	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
 	{
+		ARBConfigEvent* pEvent = *iterEvent;
 		HTREEITEM hItem = m_ctrlEvents.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 			0, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataEvent(*iterEvent)),
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataEvent(pEvent)),
 			TVI_ROOT, TVI_LAST);
-		if (0 < (*iterEvent)->GetScorings().size())
+		ASSERT(hItem != NULL);
+		if (0 < pEvent->GetScorings().size())
 		{
-			for (ARBConfigScoringList::iterator iterScoring = (*iterEvent)->GetScorings().begin(); iterScoring != (*iterEvent)->GetScorings().end(); ++iterScoring)
+			for (ARBConfigScoringList::iterator iterScoring = pEvent->GetScorings().begin(); iterScoring != pEvent->GetScorings().end(); ++iterScoring)
 			{
+				ARBConfigScoring* pScoring = *iterScoring;
 				m_ctrlEvents.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(new CDlgConfigureDataScoring(*iterEvent, *iterScoring)),
+					reinterpret_cast<LPARAM>(new CDlgConfigureDataScoring(pEvent, pScoring)),
 					hItem, TVI_LAST);
 			}
 			m_ctrlEvents.Expand(hItem, TVE_EXPAND);
 		}
 	}
-	FindCurrentEvent(pEvent, true);
+	FindCurrentEvent(pOldEvent, true);
 }
 
 int CDlgConfigVenue::FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSet)
