@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgFault class
+ * @brief interface of the CDlgFault class
  * @author David Connet
  *
  * Revision History
