@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-03 DRC Added CRCDMetaFile, string of Windows Enhanced Metafile.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-17 DRC Save would not write data if only CRCD contained info.
@@ -54,6 +55,7 @@ static char THIS_FILE[] = __FILE__;
 ARBDogNotes::ARBDogNotes()
 	: m_Faults()
 	, m_CRCD()
+	, m_CRCDMeta()
 	, m_Note()
 {
 }
@@ -61,6 +63,7 @@ ARBDogNotes::ARBDogNotes()
 ARBDogNotes::ARBDogNotes(const ARBDogNotes& rhs)
 	: m_Faults(rhs.m_Faults)
 	, m_CRCD(rhs.m_CRCD)
+	, m_CRCDMeta(rhs.m_CRCDMeta)
 	, m_Note(rhs.m_Note)
 {
 }
@@ -75,6 +78,7 @@ ARBDogNotes& ARBDogNotes::operator=(const ARBDogNotes& rhs)
 	{
 		m_Faults = rhs.m_Faults;
 		m_CRCD = rhs.m_CRCD;
+		m_CRCDMeta = rhs.m_CRCDMeta;
 		m_Note = rhs.m_Note;
 	}
 	return *this;
@@ -84,6 +88,7 @@ bool ARBDogNotes::operator==(const ARBDogNotes& rhs) const
 {
 	return m_Faults == rhs.m_Faults
 		&& m_CRCD == rhs.m_CRCD
+		&& m_CRCDMeta == rhs.m_CRCDMeta
 		&& m_Note == rhs.m_Note;
 }
 
@@ -125,6 +130,10 @@ bool ARBDogNotes::Load(
 		{
 			m_CRCD = element.GetValue();
 		}
+		else if (element.GetName() == TREE_CRCD_META)
+		{
+			m_CRCDMeta = element.GetValue();
+		}
 		else if (element.GetName() == TREE_OTHER)
 		{
 			m_Note = element.GetValue();
@@ -137,6 +146,7 @@ bool ARBDogNotes::Save(CElement& ioTree) const
 {
 	if (0 < m_Faults.size()
 	|| 0 < m_CRCD.length()
+	|| 0 < m_CRCDMeta.length()
 	|| 0 < m_Note.length())
 	{
 		CElement& notes = ioTree.AddElement(TREE_NOTES);
@@ -149,6 +159,11 @@ bool ARBDogNotes::Save(CElement& ioTree) const
 		{
 			CElement& element = notes.AddElement(TREE_CRCD);
 			element.SetValue(m_CRCD);
+		}
+		if (0 < m_CRCDMeta.length())
+		{
+			CElement& element = notes.AddElement(TREE_CRCD_META);
+			element.SetValue(m_CRCDMeta);
 		}
 		if (0 < m_Note.length())
 		{

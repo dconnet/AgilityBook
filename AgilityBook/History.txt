@@ -3,6 +3,7 @@
   - Added table-in-yps flag (default is true for backwards compatibility)
   - Added new 'Configuration/Action' verb: DeleteTitle
   - Added 'version' to Configuration.
+  - Added 'CRCDMeta' to Notes.
 - New features / Enhancements:
   - Updated doxygen comments in ARB classes.
   - Add a 5-sec table YPS computation checkbox in the runs.
