@@ -1,4 +1,6 @@
-3/30/2005: v1.5.3.10 <in development>
+4/1/2005: v1.5.3.10 <in development>
+- New features / Enhancements:
+  - Made the hyperlinks on the About box accessible by keyboard.
 
 3/29/2005: v1.5.2.10
 - Bumped to Configuration v8:

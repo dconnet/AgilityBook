@@ -50,6 +50,7 @@
  * the tooltip fixed.
  *
  * Revision History
+ * @li 2005-04-01 DRC Made hyperlinks keyboard-capable.
  * @li 2004-03-05 DRC Made goto-url functionality visible.
  * @li 2003-08-24 DRC Removed 4311 warning in VC7 with HINSTANCE.
  * @li 2003-08-16 DRC Modified code from Chris Maunder's original
@@ -87,6 +88,8 @@ static LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
 
 bool CHyperLink::GotoURL(CString const& url)
 {
+	CWaitCursor wait;
+
 	// First try ShellExecute()
 	// Use INT_PTR instead of 'int' for compatibility with VC7.
 	// Removes the '4311' warning message.
@@ -274,17 +277,26 @@ void CHyperLink::PreSubclassWindow()
 
 BEGIN_MESSAGE_MAP(CHyperLink, CStatic)
 	//{{AFX_MSG_MAP(CHyperLink)
+	ON_WM_GETDLGCODE()
 	ON_WM_CTLCOLOR_REFLECT()
 	ON_WM_ERASEBKGND()
+	ON_WM_SETFOCUS()
+	ON_WM_KILLFOCUS()
 	ON_WM_SETCURSOR()
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
+	ON_WM_CHAR()
 	ON_CONTROL_REFLECT(STN_CLICKED, OnClicked)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CHyperLink message handlers
+
+UINT CHyperLink::OnGetDlgCode()
+{
+	return DLGC_WANTCHARS;
+}
 
 HBRUSH CHyperLink::CtlColor(CDC* pDC, UINT nCtlColor)
 {
@@ -308,6 +320,16 @@ BOOL CHyperLink::OnEraseBkgnd(CDC* pDC)
 	pDC->ExtTextOut(0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
 	//pDC->FillSolidRect(rect, ::GetSysColor(COLOR_3DFACE));
 	return TRUE;
+}
+
+void CHyperLink::OnSetFocus(CWnd* pOldWnd)
+{
+	DrawFocusRect();
+}
+
+void CHyperLink::OnKillFocus(CWnd* pNewWnd)
+{
+	DrawFocusRect();
 }
 
 void CHyperLink::OnMouseMove(UINT nFlags, CPoint point)
@@ -351,12 +373,23 @@ BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/
 	return FALSE;
 }
 
+void CHyperLink::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if (VK_SPACE == nChar)
+	{
+		if (GotoURL(m_strURL))
+			SetVisited();	// Repaint to show visited colour
+	}
+	else
+		CStatic::OnChar(nChar, nRepCnt, nFlags);
+}
 void CHyperLink::OnClicked()
 {
 	m_bOverControl = false;
 	if (GotoURL(m_strURL))
 		SetVisited();	// Repaint to show visited colour
 }
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CHyperLink operations
@@ -421,6 +454,18 @@ void CHyperLink::SetAutoSize(bool bAutoSize)
 	m_bAdjustToFit = bAutoSize;
 	if (::IsWindow(GetSafeHwnd()))
 		PositionWindow();
+}
+
+void CHyperLink::DrawFocusRect()
+{
+	CWnd* pParent = GetParent();
+	ASSERT(pParent);
+	CRect r;
+	GetWindowRect(&r);
+	r.InflateRect(1, 1);
+	pParent->ScreenToClient(&r);
+	CClientDC dc(pParent);
+	dc.DrawFocusRect(&r);
 }
 
 // Move and resize the window so that the window is the same size

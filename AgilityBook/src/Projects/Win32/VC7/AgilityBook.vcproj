@@ -1008,4 +1008,9 @@
 			RelativePath="..\..\..\..\Todo.txt">
 		</File>
 	</Files>
+	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="\AgilityBook\src\AgilityBook\src\Win\AgilityBook.rc"/>
+	</Globals>
 </VisualStudioProject>
