@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-06 DRC Added op< to ARB_Q.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
  */
@@ -124,9 +125,9 @@ public:
 	typedef enum
 	{
 		eQ_NA,		///< Cannot qualify in this run.
-		eQ_Q,		///< Qualified.
-		eQ_NQ,		///< Not qualified.
 		eQ_E,		///< Eliminated.
+		eQ_NQ,		///< Not qualified.
+		eQ_Q,		///< Qualified.
 		eQ_SuperQ,	///< Super Qualifier (USDAA Snooker top 15%).
 	} eQ;
 
@@ -175,6 +176,22 @@ public:
 	bool operator!=(ARB_Q const& rhs) const
 	{
 		return !operator==(rhs);
+	}
+	bool operator<(ARB_Q const& rhs) const
+	{
+		return static_cast<int>(m_Q) < static_cast<int>(rhs.m_Q);
+	}
+	bool operator<=(ARB_Q const& rhs) const
+	{
+		return static_cast<int>(m_Q) <= static_cast<int>(rhs.m_Q);
+	}
+	bool operator>(ARB_Q const& rhs) const
+	{
+		return static_cast<int>(m_Q) > static_cast<int>(rhs.m_Q);
+	}
+	bool operator>=(ARB_Q const& rhs) const
+	{
+		return static_cast<int>(m_Q) >= static_cast<int>(rhs.m_Q);
 	}
 
 	/**
