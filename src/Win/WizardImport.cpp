@@ -42,6 +42,8 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
+#include "DlgMessage.h"
+#include "Element.h"
 #include "Wizard.h"
 
 #ifdef _DEBUG
@@ -160,7 +162,7 @@ void CWizardImport::UpdateButtons()
 		bEnable = TRUE;
 		if (bOk)
 		{
-			for (int i = 0; bOk && i < IO_TYPE_MAX; ++i)
+			for (size_t i = 0; bOk && i < IO_TYPE_MAX; ++i)
 			{
 				std::vector<int> columns;
 				if (CDlgAssignColumns::GetColumnOrder(order, i, columns))
@@ -187,7 +189,7 @@ void CWizardImport::UpdatePreview()
 	for (i = 0; i < nColumnCount; ++i)
 		m_ctrlPreview.DeleteColumn(0);
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
-	int iCol;
+	size_t iCol;
 	std::vector<int> columns[IO_TYPE_MAX];
 	for (iCol = 0; iCol < IO_TYPE_MAX; ++iCol)
 	{
@@ -200,14 +202,14 @@ void CWizardImport::UpdatePreview()
 	default: break;
 	case WIZ_IMPORT_RUNS:
 		{
-			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_FAULTS_TIME].size()); ++iCol)
+			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_FAULTS_TIME].size(); ++iCol)
 			{
 				cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_FAULTS_TIME][iCol]));
 			}
-			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_TIME_FAULTS].size()); ++iCol)
+			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_TIME_FAULTS].size(); ++iCol)
 			{
 				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_TIME_FAULTS][iCol]);
-				if (iCol >= cols.GetSize())
+				if (iCol >= static_cast<size_t>(cols.GetSize()))
 					cols.Add(str);
 				else
 				{
@@ -215,10 +217,10 @@ void CWizardImport::UpdatePreview()
 						cols[iCol] += "/" + str;
 				}
 			}
-			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_OPEN_CLOSE].size()); ++iCol)
+			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_OPEN_CLOSE].size(); ++iCol)
 			{
 				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_OPEN_CLOSE][iCol]);
-				if (iCol >= cols.GetSize())
+				if (iCol >= static_cast<size_t>(cols.GetSize()))
 					cols.Add(str);
 				else
 				{
@@ -226,10 +228,10 @@ void CWizardImport::UpdatePreview()
 						cols[iCol] += "/" + str;
 				}
 			}
-			for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_RUNS_POINTS].size()); ++iCol)
+			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_POINTS].size(); ++iCol)
 			{
 				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_POINTS][iCol]);
-				if (iCol >= cols.GetSize())
+				if (iCol >= static_cast<size_t>(cols.GetSize()))
 					cols.Add(str);
 				else
 				{
@@ -240,13 +242,13 @@ void CWizardImport::UpdatePreview()
 		}
 		break;
 	case WIZ_IMPORT_CALENDAR:
-		for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++iCol)
+		for (iCol = 0; iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
 		{
 			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][iCol]));
 		}
 		break;
 	case WIZ_IMPORT_LOG:
-		for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++iCol)
+		for (iCol = 0; iCol < columns[IO_TYPE_TRAINING].size(); ++iCol)
 		{
 			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][iCol]));
 		}
@@ -254,7 +256,7 @@ void CWizardImport::UpdatePreview()
 	}
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+	for (iCol = 0; iCol < static_cast<size_t>(cols.GetSize()); ++iCol)
 	{
 		CString str = cols[iCol];
 		col.fmt = LVCFMT_LEFT;
@@ -268,21 +270,21 @@ void CWizardImport::UpdatePreview()
 		CString str = m_FileData[i];
 		iCol = 0;
 		int pos;
-		while (0 <= (pos = str.Find(delim)) && iCol < cols.GetSize())
+		while (0 <= (pos = str.Find(delim)) && iCol < static_cast<size_t>(cols.GetSize()))
 		{
 			CString data = str.Left(pos);
 			str = str.Mid(pos+1);
 			if (0 == iCol)
-				m_ctrlPreview.InsertItem(i-m_Row-1, data);
+				m_ctrlPreview.InsertItem(i-(m_Row-1), data);
 			else
-				m_ctrlPreview.SetItemText(i-m_Row-1, iCol, data);
+				m_ctrlPreview.SetItemText(i-(m_Row-1), static_cast<int>(iCol), data);
 			++iCol;
 		}
-		if (!str.IsEmpty() && iCol < cols.GetSize())
-			m_ctrlPreview.SetItemText(i-m_Row-1, iCol, str);
+		if (!str.IsEmpty() && iCol < static_cast<size_t>(cols.GetSize()))
+			m_ctrlPreview.SetItemText(i-(m_Row-1), static_cast<int>(iCol), str);
 	}
-	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
-		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
+	for (iCol = 0; iCol < static_cast<size_t>(cols.GetSize()); ++iCol)
+		m_ctrlPreview.SetColumnWidth(static_cast<int>(iCol), LVSCW_AUTOSIZE_USEHEADER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -311,6 +313,34 @@ LRESULT CWizardImport::OnWizardBack()
 	return IDD_WIZARD_START;
 }
 
+static ARBDogRun* CreateRun(ARBDogRun* pRun)
+{
+	if (!pRun)
+	{
+		pRun = new ARBDogRun();
+	}
+	return pRun;
+}
+
+static ARBCalendar* CreateCal(ARBCalendar* pCal)
+{
+	if (!pCal)
+	{
+		pCal = new ARBCalendar();
+	}
+	return pCal;
+}
+
+static ARBTraining* CreateLog(ARBTraining* pLog)
+{
+	if (!pLog)
+	{
+		pLog = new ARBTraining();
+		pLog->SetDate(ARBDate::Today());
+	}
+	return pLog;
+}
+
 BOOL CWizardImport::OnWizardFinish() 
 {
 	if (!UpdateData(TRUE))
@@ -329,15 +359,242 @@ BOOL CWizardImport::OnWizardFinish()
 	}
 	CAgilityBookOptions::SetImportExportDelimiters(true, delim, m_Delimiter);
 
-	switch (m_pSheet->GetImportExportItem())
+	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
+	size_t iCol;
+	std::vector<int> columns[IO_TYPE_MAX];
+	for (iCol = 0; iCol < IO_TYPE_MAX; ++iCol)
 	{
-	default: break;
-	case WIZ_IMPORT_RUNS:
-		break;
-	case WIZ_IMPORT_CALENDAR:
-		break;
-	case WIZ_IMPORT_LOG:
-		break;
+		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
+	}
+	CString errLog;
+	int nAdded = 0;
+	int nDuplicate = 0;
+	int nSkipped = 0;
+	int nColumns = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
+	for (int nItem = 0; nItem < m_ctrlPreview.GetItemCount(); ++nItem)
+	{
+		std::vector<std::string> entry;
+		entry.reserve(nColumns);
+		for (int i = 0; i < nColumns; ++i)
+		{
+			CString str = m_ctrlPreview.GetItemText(nItem, i);
+			str.Replace("\r\n", "\n");
+			entry.push_back((LPCTSTR)str);
+		}
+		switch (m_pSheet->GetImportExportItem())
+		{
+		default: break;
+
+		case WIZ_IMPORT_RUNS:
+			++nSkipped;
+			break;
+
+		case WIZ_IMPORT_CALENDAR:
+			{
+				ARBCalendar* pCal = NULL;
+				for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++iCol)
+				{
+					if (0 == entry[iCol].length())
+						continue;
+					switch (columns[IO_TYPE_CALENDAR][iCol])
+					{
+					case IO_CAL_START_DATE:
+						{
+							ARBDate date = ARBDate::FromString(entry[iCol]);
+							if (date.IsValid())
+							{
+								pCal = CreateCal(pCal);
+								pCal->SetStartDate(date);
+							}
+							else
+							{
+								CString str;
+								str.Format("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n",
+									nItem, iCol, entry[iCol].c_str());
+								errLog += str;
+							}
+						}
+						break;
+					case IO_CAL_END_DATE:
+						{
+							ARBDate date = ARBDate::FromString(entry[iCol]);
+							if (date.IsValid())
+							{
+								pCal = CreateCal(pCal);
+								pCal->SetEndDate(date);
+							}
+							else
+							{
+								CString str;
+								str.Format("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n",
+									nItem, iCol, entry[iCol].c_str());
+								errLog += str;
+							}
+						}
+						break;
+					case IO_CAL_TENTATIVE:
+						pCal = CreateCal(pCal);
+						pCal->SetIsTentative(("?" == entry[iCol] || "y" == entry[iCol] || "Y" == entry[iCol]));
+						break;
+					case IO_CAL_ENTERED:
+						if ("N" == entry[iCol])
+						{
+							pCal = CreateCal(pCal);
+							pCal->SetEntered(ARBCalendar::eNot);
+						}
+						else if ("P" == entry[iCol] || "Planning" == entry[iCol])
+						{
+							pCal = CreateCal(pCal);
+							pCal->SetEntered(ARBCalendar::ePlanning);
+						}
+						else if ("E" == entry[iCol] || "Entered" == entry[iCol])
+						{
+							pCal = CreateCal(pCal);
+							pCal->SetEntered(ARBCalendar::eEntered);
+						}
+						else
+						{
+							CString str;
+							str.Format("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n",
+								nItem, iCol, entry[iCol].c_str());
+							errLog += str;
+						}
+						break;
+					case IO_CAL_LOCATION:
+						pCal = CreateCal(pCal);
+						pCal->SetLocation(entry[iCol]);
+						break;
+					case IO_CAL_CLUB:
+						pCal = CreateCal(pCal);
+						pCal->SetClub(entry[iCol]);
+						break;
+					case IO_CAL_VENUE:
+						pCal = CreateCal(pCal);
+						pCal->SetVenue(entry[iCol]);
+						break;
+					case IO_CAL_OPENS:
+						{
+							ARBDate date = ARBDate::FromString(entry[iCol]);
+							if (date.IsValid())
+							{
+								pCal = CreateCal(pCal);
+								pCal->SetOpeningDate(date);
+							}
+							else
+							{
+								CString str;
+								str.Format("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n",
+									nItem, iCol, entry[iCol].c_str());
+								errLog += str;
+							}
+						}
+						break;
+					case IO_CAL_CLOSES:
+						{
+							ARBDate date = ARBDate::FromString(entry[iCol]);
+							if (date.IsValid())
+							{
+								pCal = CreateCal(pCal);
+								pCal->SetClosingDate(date);
+							}
+							else
+							{
+								CString str;
+								str.Format("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n",
+									nItem, iCol, entry[iCol].c_str());
+								errLog += str;
+							}
+						}
+						break;
+					case IO_CAL_NOTES:
+						pCal = CreateCal(pCal);
+						pCal->SetNote(entry[iCol]);
+						break;
+					}
+				}
+				if (pCal)
+				{
+					if (NULL == m_pDoc->GetCalendar().FindCalendar(pCal))
+					{
+						m_pDoc->GetCalendar().AddCalendar(pCal);
+						m_pDoc->GetCalendar().sort();
+						++nAdded;
+					}
+					else
+						++nDuplicate;
+					pCal->Release();
+				}
+				else
+					++nSkipped;
+			}
+			break;
+
+		case WIZ_IMPORT_LOG:
+			{
+				ARBTraining* pLog = NULL;
+				for (iCol = 0; iCol < entry.size() && iCol < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++iCol)
+				{
+					if (0 == entry[iCol].length())
+						continue;
+					switch (columns[IO_TYPE_TRAINING][iCol])
+					{
+					case IO_LOG_DATE:
+						{
+							ARBDate date = ARBDate::FromString(entry[iCol]);
+							if (date.IsValid())
+							{
+								pLog = CreateLog(pLog);
+								pLog->SetDate(date);
+							}
+							else
+							{
+								CString str;
+								str.Format("ERROR: Line %d, Column %d: Invalid training log date: %s\n",
+									nItem, iCol, entry[iCol].c_str());
+								errLog += str;
+							}
+						}
+						break;
+					case IO_LOG_NAME:
+						pLog = CreateLog(pLog);
+						pLog->SetName(entry[iCol]);
+						break;
+					case IO_LOG_NOTES:
+						pLog = CreateLog(pLog);
+						pLog->SetNote(entry[iCol]);
+						break;
+					}
+				}
+				if (pLog)
+				{
+					if (NULL == m_pDoc->GetTraining().FindTraining(pLog))
+					{
+						m_pDoc->GetTraining().AddTraining(pLog);
+						m_pDoc->GetTraining().sort();
+						++nAdded;
+					}
+					else
+						++nDuplicate;
+					pLog->Release();
+				}
+				else
+					++nSkipped;
+			}
+			break;
+		}
+	}
+	CString str;
+	if (!errLog.IsEmpty())
+		errLog += "\n";
+	str.Format("%d entries added\n%d duplicates (not added)\n%d entries skipped",
+		nAdded, nDuplicate, nSkipped);
+	errLog += str;
+	CDlgMessage dlg(errLog, 0, this);
+	dlg.DoModal();
+	if (0 < nAdded)
+	{
+		m_pDoc->SetModifiedFlag(TRUE);
+		m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
 	}
 
 	return CPropertyPage::OnWizardFinish();
@@ -357,7 +614,8 @@ void CWizardImport::OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 	// There is no "changed" msg, only the "changing".
 	// So we'll just update the ddx variable ourselves.
-	if (m_Row != pNMUpDown->iPos + pNMUpDown->iDelta)
+	if (m_Row != pNMUpDown->iPos + pNMUpDown->iDelta
+	&& 0 < pNMUpDown->iPos + pNMUpDown->iDelta)
 	{
 		m_Row = pNMUpDown->iPos + pNMUpDown->iDelta;
 		UpdatePreview();

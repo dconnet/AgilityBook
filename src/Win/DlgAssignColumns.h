@@ -132,8 +132,8 @@ class CDlgAssignColumns : public CDialog
 public:
 	static UINT GetFormatFromColumnID(int column);
 	static CString GetNameFromColumnID(int column);
-	static bool GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, std::vector<int>& values);
-	static bool SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, const std::vector<int>& values);
+	static bool GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, std::vector<int>& values);
+	static bool SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& values);
 
 	CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CWnd* pParent = NULL);   // standard constructor
 

@@ -160,7 +160,7 @@ void CWizardExport::UpdateButtons()
 		bEnable = TRUE;
 		if (bOk)
 		{
-			for (int i = 0; bOk && i < IO_TYPE_MAX; ++i)
+			for (size_t i = 0; bOk && i < IO_TYPE_MAX; ++i)
 			{
 				std::vector<int> columns;
 				if (CDlgAssignColumns::GetColumnOrder(order, i, columns))
@@ -189,7 +189,7 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_RUNS:
 		{
-			int i;
+			size_t i;
 			std::vector<int> columns[IO_TYPE_MAX];
 			for (i = 0; i < IO_TYPE_MAX; ++i)
 				CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eRunsExport, i, columns[i]);
@@ -211,7 +211,7 @@ void CWizardExport::UpdatePreview()
 				}
 			}
 			CString data;
-			for (i = 0; i < cols.GetSize(); ++i)
+			for (i = 0; i < static_cast<size_t>(cols.GetSize()); ++i)
 			{
 				if (0 < i)
 					data += delim;
