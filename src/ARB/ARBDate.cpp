@@ -170,6 +170,16 @@ ARBDate ARBDate::Today()
 	return today;
 }
 
+// static
+ARBDate ARBDate::FromString(const std::string& inDate)
+{
+	CElement ele;
+	ele.AddAttrib("date", inDate);
+	ARBDate date;
+	ele.GetAttrib("date", date);
+	return date;
+}
+
 ARBDate::ARBDate()
 	: m_Julian(0)
 {
