@@ -2,17 +2,26 @@
 An AgilityRecordBook file is made up of 2 main sections, the
 configuration area, and the dog's runs. Multiple dogs may be
 contained within a file, as this DTD defines below.
--->
 
-<!--
 In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
+
+Revision History:
+2004-01-19 DRC Development: File version 8.2
+2003-12-28 DRC File version 8.1
+2003-12-13 DRC File version 8.0
+2003-10-15 DRC File version 7
+2003-09-21 DRC File version 6
+2003-07-16 DRC File version 5
+2003-06-15 DRC File version 4
+2003-06-02 DRC File version 3
+2003-02-21 DRC File version 2
+2002-12-28 DRC File version 1
 -->
 
 <!--
  Book is a simple integer in versions 1 thru 7.
  It then changes to a more complex value ("major.minor"), starting with "8.0"
- Current Version: 8.2
 -->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
 	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
