@@ -707,7 +707,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 
 void CAgilityBookViewCalendarList::OnCalendarNew()
 {
-	ARBCalendar* cal = new ARBCalendar;
+	ARBCalendar* cal = new ARBCalendar();
 	CDlgCalendar dlg(cal, GetDocument());
 	if (IDOK == dlg.DoModal())
 	{

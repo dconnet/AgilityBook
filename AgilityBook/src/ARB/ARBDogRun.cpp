@@ -536,7 +536,7 @@ bool ARBDogRunList::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	ARBDogRun* thing = new ARBDogRun;
+	ARBDogRun* thing = new ARBDogRun();
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion))
 	{
 		thing->Release();

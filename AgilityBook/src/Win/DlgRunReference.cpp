@@ -348,7 +348,7 @@ void CDlgRunReference::OnDblclkRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgRunReference::OnRefRunNew() 
 {
-	ARBDogReferenceRun* ref = new ARBDogReferenceRun;
+	ARBDogReferenceRun* ref = new ARBDogReferenceRun();
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
 		const ARBConfigScoring* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(

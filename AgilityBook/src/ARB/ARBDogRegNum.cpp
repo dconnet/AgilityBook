@@ -261,7 +261,7 @@ ARBDogRegNum* ARBDogRegNumList::AddRegNum(
 	const std::string& inVenue,
 	const std::string& inNumber)
 {
-	ARBDogRegNum* pRegNum = new ARBDogRegNum;
+	ARBDogRegNum* pRegNum = new ARBDogRegNum();
 	pRegNum->SetVenue(inVenue);
 	pRegNum->SetNumber(inNumber);
 	push_back(pRegNum);

@@ -281,7 +281,7 @@ void CDlgConfigureData::Add()
 
 	case eOtherPoints:
 		{
-			ARBConfigOtherPoints* other = new ARBConfigOtherPoints;
+			ARBConfigOtherPoints* other = new ARBConfigOtherPoints();
 			// The dialog will ensure uniqueness.
 			CDlgConfigOtherPoints dlg(GetConfig(), other, m_pDlg);
 			if (IDOK == dlg.DoModal())
@@ -382,7 +382,7 @@ void CDlgConfigureData::Add()
 			// The dialog will ensure uniqueness.
 			CDlgConfigureDataVenue* pVenueData = GetVenueData();
 			ASSERT(pVenueData);
-			ARBConfigEvent* event = new ARBConfigEvent;
+			ARBConfigEvent* event = new ARBConfigEvent();
 			CDlgConfigEvent dlg(pVenueData->GetVenue(), event, m_pDlg);
 			if (IDOK == dlg.DoModal())
 			{

@@ -152,7 +152,7 @@ bool ARBConfigVenue::Load(
 		{
 			if (name == TREE_FAULTTYPE)
 			{
-				ARBConfigFault* pFault = new ARBConfigFault;
+				ARBConfigFault* pFault = new ARBConfigFault();
 				// Kind-of ignore any errors...
 				bool bOk = pFault->Load(element, inVersion);
 				// When migrating, avoid duplicate fault names.
@@ -294,7 +294,7 @@ bool ARBConfigVenueList::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	ARBConfigVenue* thing = new ARBConfigVenue;
+	ARBConfigVenue* thing = new ARBConfigVenue();
 	if (!thing->Load(ioConfig, inTree, inVersion))
 	{
 		thing->Release();
@@ -378,7 +378,7 @@ ARBConfigVenue* ARBConfigVenueList::AddVenue(const std::string& inVenue)
 		return NULL;
 	if (NULL != FindVenue(inVenue))
 		return NULL;
-	ARBConfigVenue* pVenue = new ARBConfigVenue;
+	ARBConfigVenue* pVenue = new ARBConfigVenue();
 	pVenue->SetName(inVenue);
 	push_back(pVenue);
 	sort();

@@ -192,7 +192,7 @@ void CDlgTitle::OnOK()
 	CString name;
 	m_ctrlTitles.GetLBText(index, name);
 
-	ARBDogTitle* title = new ARBDogTitle;
+	ARBDogTitle* title = new ARBDogTitle();
 	ARBDate date(time.GetYear(), time.GetMonth(), time.GetDay());
 	title->SetDate(date);
 	title->SetVenue((LPCSTR)venue);

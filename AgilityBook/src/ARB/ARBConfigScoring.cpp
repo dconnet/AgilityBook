@@ -422,7 +422,7 @@ bool ARBConfigScoringList::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	ARBConfigScoring* thing = new ARBConfigScoring;
+	ARBConfigScoring* thing = new ARBConfigScoring();
 	if (!thing->Load(inDivisions, inTree, inVersion))
 	{
 		thing->Release();
@@ -526,7 +526,7 @@ const ARBConfigScoring* ARBConfigScoringList::FindEvent(
 
 ARBConfigScoring* ARBConfigScoringList::AddScoring()
 {
-	ARBConfigScoring* pScoring = new ARBConfigScoring;
+	ARBConfigScoring* pScoring = new ARBConfigScoring();
 	pScoring->SetDivision(WILDCARD_DIVISION);
 	pScoring->SetLevel(WILDCARD_LEVEL);
 	pScoring->SetScoringStyle(ARBConfigScoring::eFaultsThenTime);

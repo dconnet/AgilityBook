@@ -243,7 +243,7 @@ bool ARBConfigEventList::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	ARBConfigEvent* thing = new ARBConfigEvent;
+	ARBConfigEvent* thing = new ARBConfigEvent();
 	if (!thing->Load(inDivisions, inTree, inVersion))
 	{
 		thing->Release();

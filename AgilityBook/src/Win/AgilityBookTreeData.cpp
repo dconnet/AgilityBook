@@ -90,7 +90,7 @@ static bool EditDog(
 	else
 	{
 		bAdd = true;
-		pDog = new ARBDog;
+		pDog = new ARBDog();
 	}
 	bool bOk = false;
 	CDlgDog dlg(pTree->GetDocument()->GetConfig(), pDog, pTree);
@@ -140,7 +140,7 @@ static bool EditTrial(
 	else
 	{
 		bAdd = true;
-		pTrial = new ARBDogTrial;
+		pTrial = new ARBDogTrial();
 	}
 	bool bOk = false;
 	CDlgTrial dlg(pTree->GetDocument(), pTrial, pTree);
@@ -229,7 +229,7 @@ static bool EditRun(
 			return false;
 		}
 		bAdd = true;
-		pRun = new ARBDogRun;
+		pRun = new ARBDogRun();
 		pRun->SetDate(pTrialData->GetTrial()->GetRuns().GetEndDate());
 	}
 	bool bOk = false;
@@ -453,7 +453,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDogRun* pRun = new ARBDogRun;
+			ARBDogRun* pRun = new ARBDogRun();
 			if (pRun && pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
@@ -498,7 +498,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDogTrial* pTrial = new ARBDogTrial;
+			ARBDogTrial* pTrial = new ARBDogTrial();
 			if (pTrial && pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;

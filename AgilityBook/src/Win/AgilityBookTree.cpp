@@ -361,7 +361,7 @@ void CAgilityBookTree::PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hIte
 
 void CAgilityBookTree::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	CTreePrintData *pData = new CTreePrintData;
+	CTreePrintData *pData = new CTreePrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
 	// Set the font
@@ -836,7 +836,7 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 	{
 		if (ID_AGILITY_NEW_DOG == id)
 		{
-			ARBDog* dog = new ARBDog;
+			ARBDog* dog = new ARBDog();
 			CDlgDog dlg(GetDocument()->GetConfig(), dog);
 			if (IDOK == dlg.DoModal())
 			{
