@@ -2,7 +2,9 @@
 - Bug fix
   - If a trial has no clubs associated with it, attempting to upgrade the
     configuration will cause the program to crash. The work-around is to
-	either add a club or delete the (empty) trial.
+    either add a club or delete the (empty) trial.
+  - In some cases, when you create the first dog in a new file, it does not
+    show up in the tree.
 
 9/12/2004: v1.3.1.9
 - Bug fix
