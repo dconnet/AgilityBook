@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-07 DRC Fixed a crash when opening a bad ARB file version.
  * @li 2003-09-21 DRC Added training log.
  */
 
@@ -85,7 +86,7 @@ void CTabView::OnDestroy()
 	m_Panes.clear();
 
 	// If doc fails to open, no window was ever created.
-	if (IsWindow(GetSafeHwnd()))
+	if (IsWindow(GetSafeHwnd()) && IsWindow(m_splitterRuns.GetSafeHwnd()) && IsWindow(m_splitterCal.GetSafeHwnd()))
 	{
 		AfxGetApp()->WriteProfileInt("Settings", "View", GetTabCtrl().GetCurSel());
 		int cxCur, cxMin;
