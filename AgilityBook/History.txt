@@ -16,7 +16,9 @@
   - When updating the configuration, you could get some false-positive messages
     that things had changed. This was due to the order of items being different
     (which we don't care about).
-  - In the Run dialog, update the YPS when the time is changed.
+  - In the Run dialog
+    - update the YPS when the time is changed.
+    - update controls when date changes (in case different rules are in effect)
   - Fixed some bugs in the configuration dialog when creating/modifying a venue.
 
 1/26/2004: v1.0.1.8

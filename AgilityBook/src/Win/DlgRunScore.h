@@ -56,7 +56,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgRunScore)
 	enum { IDD = IDD_RUN_SCORE };
-	CTime	m_Date;
+	CDateTimeCtrl	m_ctrlDate;
 	CString	m_Venue;
 	CString	m_Club;
 	CString	m_Location;

@@ -32,6 +32,7 @@
  *
  * Revision History
  * @li 2004-02-09 DRC Update YPS when the time is changed.
+ *                    When date changes, update controls.
  * @li 2004-01-19 DRC Total faults weren't updated when course faults changed.
  * @li 2004-01-18 DRC Calling UpdateData during data entry causes way too much
  *                    validation. Only call during OnOK (from dlgsheet)
@@ -124,9 +125,6 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue,
 	m_DogsQd = m_Run->GetDogsQd();
 	m_Handler = _T("");
 	//}}AFX_DATA_INIT
-	m_Date = CTime::GetCurrentTime();
-	if (m_Run->GetDate().IsValid())
-		m_Date = CTime(m_Run->GetDate().GetDate());
 	m_Conditions.Replace("\n", "\r\n");
 }
 
@@ -138,7 +136,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunScore)
-	DDX_DateTimeCtrl(pDX, IDC_DATE, m_Date);
+	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
 	DDX_Text(pDX, IDC_VENUE, m_Venue);
 	DDX_Text(pDX, IDC_CLUB, m_Club);
 	DDX_Text(pDX, IDC_LOCATION, m_Location);
@@ -215,8 +213,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 
 		CString str;
 		std::string div, level, event;
-
-		ARBDate date(m_Date.GetYear(), m_Date.GetMonth(), m_Date.GetDay());
 
 		pDX->PrepareCtrl(m_ctrlDivisions.GetDlgCtrlID());
 		int index = m_ctrlDivisions.GetCurSel();
@@ -299,7 +295,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 
 		pDX->PrepareCtrl(m_ctrlLevels.GetDlgCtrlID());
-		const ARBConfigScoring* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), date);
+		const ARBConfigScoring* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
 		if (!pScoring)
 		{
 			AfxMessageBox(IDS_BAD_SCORINGMETHOD, MB_ICONSTOP);
@@ -309,7 +305,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 
 		//@todo: Add integrity checks - things like snooker score >=37? is Q set?
 
-		m_Run->SetDate(date);
 		m_Run->SetDivision(div);
 		m_Run->SetLevel(level);
 		m_Run->SetEvent(event);
@@ -599,7 +594,7 @@ void CDlgRunScore::SetDoubleQ()
 	int nQs = 0;
 	if (0 < div.length() && 0 < level.length())
 	{
-		ARBDate date(m_Date.GetYear(), m_Date.GetMonth(), m_Date.GetDay());
+		ARBDate date(m_Run->GetDate());
 		// Get all Qs for the trial date.
 		if (m_pTrial->HasQQ(date, m_pDoc->GetConfig(), div, level))
 			nQs = 2;
@@ -893,6 +888,11 @@ BOOL CDlgRunScore::OnInitDialog()
 	m_strOpening[1].LoadString(IDS_SCORING_REQUIRED_POINTS);
 	m_strOpen[1].LoadString(IDS_SCORING_POINTS);
 
+	CTime date = CTime::GetCurrentTime();
+	if (m_Run->GetDate().IsValid())
+		date = CTime(m_Run->GetDate().GetDate());
+	m_ctrlDate.SetTime(&date);
+
 	int index;
 	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
 		iterDiv != m_pVenue->GetDivisions().end();
@@ -989,6 +989,9 @@ void CDlgRunScore::OnDestroy()
 void CDlgRunScore::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	// Do not call UpdateData, it causes too much validation
+	CTime time;
+	m_ctrlDate.GetTime(time);
+	m_Run->SetDate(ARBDate(time.GetYear(), time.GetMonth(), time.GetDay()));
 	UpdateControls();
 	*pResult = 0;
 }
