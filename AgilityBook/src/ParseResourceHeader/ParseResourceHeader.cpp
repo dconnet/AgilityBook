@@ -56,6 +56,9 @@
 #include <string>
 #include <tchar.h>
 
+// Include this simply for re-compile and cause the post-build event.
+#include "../Win/resource.hm"
+
 using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])

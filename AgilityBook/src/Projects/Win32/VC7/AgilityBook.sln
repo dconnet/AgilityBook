@@ -1,17 +1,16 @@
 Microsoft Visual Studio Solution File, Format Version 8.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgilityBook", "AgilityBook.vcproj", "{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E608D05A-7F1D-4C1C-867D-EA699DCAB177} = {E608D05A-7F1D-4C1C-867D-EA699DCAB177}
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup", "AgilityBookSetup.vdproj", "{EA2C7DC7-6660-4913-A9C0-59981B35968E}"
 	ProjectSection(ProjectDependencies) = postProject
+		{E608D05A-7F1D-4C1C-867D-EA699DCAB177} = {E608D05A-7F1D-4C1C-867D-EA699DCAB177}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParseResourceHeader", "..\..\..\ParseResourceHeader\ParseResourceHeader.vcproj", "{E608D05A-7F1D-4C1C-867D-EA699DCAB177}"
 	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
+		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8} = {ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}
 	EndProjectSection
 EndProject
 Global

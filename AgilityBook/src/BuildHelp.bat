@@ -9,7 +9,7 @@ if not exist "..\bin\Win32\VC7\%1\ParseResourceHeader.exe" goto usage
 set OLDPATH=%PATH%
 set PATH=c:\Program Files\HTML Help Workshop;%PATH%
 
-ParseResourceHeader\%1\ParseResourceHeader.exe Win\resource.hm >Help\AgilityBook.h
+"..\bin\Win32\VC7\%1\ParseResourceHeader.exe" Win\resource.hm >Help\AgilityBook.h
 hhc AgilityBook.hhp
 goto done
 

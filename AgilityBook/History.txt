@@ -4,6 +4,8 @@
 - New features / Enhancements:
   - In the Points view, do not filter individual runs based on Qs (use all
     other filter criteria). This allows us to show a qualifying percentage.
+  - Added the Dogs call name, registered name and current date to the top of
+    the Points view (good when printing!).
   - Allow users to specify their own splash screen. Only .bmp files are
     supported (limited to Window's LoadImage API). Set in the Options dialog.
   - After adding a title, display the dog properties on title page. Change the
