@@ -55,6 +55,51 @@
 			<param name="Name" value="Configuration">
 			<param name="Local" value="Help\html\DialogsConfig.html">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="File Management Issues">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Checking for updates">
+				<param name="Local" value="Help\html\FileManagement.html#Updates">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Multiple files or multiple dogs">
+				<param name="Local" value="Help\html\FileManagement.html#Multiple">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Move a file to a different machine">
+				<param name="Local" value="Help\html\FileManagement.html#Moving">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Customizing your views">
+			<param name="Local" value="Help\html\DlgAssignCol.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Search for information">
+			<param name="Local" value="Help\html\DlgFind.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Making comments about a judge">
+			<param name="Local" value="Help\html\DlgJudgeInfo.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Moving a run">
+			<param name="Local" value="Help\html\Misc.html#MoveRun">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Entering a USDAA DT event">
+			<param name="Local" value="Help\html\Misc.html#DT">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Entering Top-10 points">
+			<param name="Local" value="Help\html\Misc.html#Top10">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Creating a co-sanctioned trial">
+			<param name="Local" value="Help\html\Misc.html#CoSanction">
+			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Program Overview">
