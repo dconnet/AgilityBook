@@ -575,16 +575,16 @@ BOOL CWizardImport::OnWizardFinish()
 				case ARBConfigScoring::eFaultsThenTime:
 				case ARBConfigScoring::eFaults100ThenTime:
 				case ARBConfigScoring::eFaults200ThenTime:
-					i = 0;
+					i = IO_TYPE_RUNS_FAULTS_TIME;
 					break;
 				case ARBConfigScoring::eOCScoreThenTime:
-					i = 2;
+					i = IO_TYPE_RUNS_OPEN_CLOSE;
 					break;
 				case ARBConfigScoring::eScoreThenTime:
-					i = 3;
+					i = IO_TYPE_RUNS_POINTS;
 					break;
 				case ARBConfigScoring::eTimePlusFaults:
-					i = 1;
+					i = IO_TYPE_RUNS_TIME_FAULTS;
 					break;
 				}
 				ASSERT(0 <= i);
