@@ -19,6 +19,12 @@ Revision History:
 -->
 
 	<Configuration version="5">
+		<UpdateNote>Titling points have been removed from USDAA Tournament Jumpers
+and Snooker (used for Team events). If you previously recorded
+titling runs under the Tournament level, you should change
+those runs to the level the points were earned. This change
+was made since Jumpers/Snooker may be offered as non-titling
+runs when they are part of the Team event.</UpdateNote>
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>

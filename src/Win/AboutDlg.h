@@ -33,16 +33,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-07-20 DRC Added a note for updating information.
  * @li 2003-09-17 DRC Added a 'check for updates' control.
  */
 
 #include "DlgBaseDialog.h"
 #include "HyperLink.h"
+class CAgilityBookDoc;
 
 class CAboutDlg : public CDlgBaseDialog
 {
 public:
-	CAboutDlg();
+	CAboutDlg(CAgilityBookDoc* pDoc);
 
 private:
 	// Dialog Data
@@ -54,6 +56,7 @@ private:
 	CHyperLink	m_ctrlLink3;
 	CHyperLink	m_ctrlLink4;
 	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
 
 	//{{AFX_VIRTUAL(CAboutDlg)
 protected:

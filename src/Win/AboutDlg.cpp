@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-07-20 DRC This now takes a Doc ptr so the update feature works.
  * @li 2004-03-05 DRC Moved versioninfo into new class, added new links/buttons.
  * @li 2004-03-02 DRC Added %VERSION% keyword in hotlinks.
  * @li 2003-09-17 DRC Added a 'check for updates' control.
@@ -57,7 +58,9 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDlgBaseDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-CAboutDlg::CAboutDlg() : CDlgBaseDialog(CAboutDlg::IDD)
+CAboutDlg::CAboutDlg(CAgilityBookDoc* pDoc)
+	: CDlgBaseDialog(CAboutDlg::IDD)
+	, m_pDoc(pDoc)
 {
 	//{{AFX_DATA_INIT(CAboutDlg)
 	//}}AFX_DATA_INIT
@@ -232,5 +235,5 @@ BOOL CAboutDlg::OnInitDialog()
 
 void CAboutDlg::OnBnClickedUpdate()
 {
-	UpdateVersion(true);
+	UpdateVersion(m_pDoc);
 }
