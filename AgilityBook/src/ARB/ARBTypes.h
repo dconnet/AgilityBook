@@ -49,6 +49,8 @@ class Element;
  * from reading newer files. Differences in minor numbers allows an older
  * version to read the newer file, but warns that some information may be
  * lost if the file is saved.
+ *
+ * This class is assuming that a short==16 bits and long==32 bits.
  */
 class ARBVersion
 {
@@ -105,7 +107,7 @@ public:
 	{
 		return static_cast<unsigned short>(m_Version & 0xff);
 	}
-	std::string ToString() const;
+	std::string str() const;
 
 private:
 	unsigned long m_Version;
@@ -280,6 +282,8 @@ public:
 	ARBDouble& operator+=(ARBDouble const& rhs)
 	{
 		m_Val += rhs.m_Val;
+		if (m_Prec < rhs.m_Prec)
+			m_Prec = rhs.m_Prec;
 		return *this;
 	}
 	ARBDouble& operator-=(ARBDouble const& rhs)
