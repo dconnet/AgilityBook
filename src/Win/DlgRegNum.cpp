@@ -60,6 +60,7 @@ CDlgRegNum::CDlgRegNum(const ARBConfig& config, ARBDogRegNumList& regnums, ARBDo
 	//{{AFX_DATA_INIT(CDlgRegNum)
 	m_RegNum = _T("");
 	m_Height = _T("");
+	m_bReceived = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -70,6 +71,7 @@ void CDlgRegNum::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
 	DDX_Text(pDX, IDC_REG_NUM, m_RegNum);
 	DDX_Text(pDX, IDC_HEIGHT, m_Height);
+	DDX_Check(pDX, IDC_RECEIVED, m_bReceived);
 	//}}AFX_DATA_MAP
 }
 
@@ -98,6 +100,7 @@ BOOL CDlgRegNum::OnInitDialog()
 		if (0 <= index)
 			m_ctrlVenues.SetCurSel(index);
 		m_Height = m_pRegNum->GetHeight().c_str();
+		m_bReceived = m_pRegNum->GetReceived() ? TRUE : FALSE;
 		UpdateData(FALSE);
 	}
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -131,8 +134,13 @@ void CDlgRegNum::OnOK()
 		m_pRegNum->SetNumber((LPCSTR)m_RegNum);
 		m_pRegNum->SetVenue((LPCSTR)venue);
 		m_pRegNum->SetHeight((LPCSTR)m_Height);
+		m_pRegNum->SetReceived(m_bReceived ? true : false);
 	}
 	else
-		m_RegNums.AddRegNum((LPCSTR)venue, (LPCSTR)m_RegNum);
+	{
+		ARBDogRegNum* pRegNum = m_RegNums.AddRegNum((LPCSTR)venue, (LPCSTR)m_RegNum);
+		pRegNum->SetHeight((LPCSTR)m_Height);
+		pRegNum->SetReceived(m_bReceived ? true : false);
+	}
 	CDialog::OnOK();
 }

@@ -1,7 +1,7 @@
 07/24/2003: v0.4.2.5 <in development>
 - 7/23: Published source in sourceforge.net.
-  - Remove automatic sorting of dogs - allow the user to set the ordering.
-  - Add actual height to dog registration information.
+  - Removed automatic sorting of dogs - allow the user to set the ordering.
+  - Added actual height and card received to dog registration information.
 
 07/16/2003: v0.4.1.5
 - Bumped file version to 5:

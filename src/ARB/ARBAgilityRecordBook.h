@@ -118,6 +118,7 @@
 #define ATTRIB_DOG_DOB						"DOB"
 #define ATTRIB_REG_NUM_VENUE				"Venue"
 #define ATTRIB_REG_NUM_HEIGHT				"Height"
+#define ATTRIB_REG_NUM_RECEIVED				"isReceived"
 #define ATTRIB_TITLE_VENUE					"Venue"
 #define ATTRIB_TITLE_NAME					"Name"
 #define ATTRIB_TITLE_DATE					"Date"

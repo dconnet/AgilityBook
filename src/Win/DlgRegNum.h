@@ -52,6 +52,7 @@ private:
 	CComboBox	m_ctrlVenues;
 	CString	m_RegNum;
 	CString	m_Height;
+	BOOL	m_bReceived;
 	//}}AFX_DATA
 	const ARBConfig& m_Config;
 	ARBDogRegNumList& m_RegNums;
