@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-28 DRC Started completion of other points tally: look for @todo
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  * @li 2003-06-11 DRC Accumulate points based on level, not sublevel, name.
@@ -406,9 +407,25 @@ int CAgilityBookViewPoints::TallyPoints(
 				++nNotCleanQ;
 		}
 	}
-//@todo: need to tally SQ,Mach,QQ
 	return score;
 }
+
+/**
+ * Used to accumulate run info into a flat list.
+ */
+class OtherPtInfo
+{
+public:
+	OtherPtInfo(const ARBDogTrial* pTrial, const ARBDogRun* pRun, int score)
+		: m_pTrial(pTrial)
+		, m_pRun(pRun)
+		, m_Score(score)
+	{
+	}
+	const ARBDogTrial* m_pTrial;
+	const ARBDogRun* m_pRun;
+	int m_Score;
+};
 
 void CAgilityBookViewPoints::LoadData()
 {
@@ -508,18 +525,10 @@ void CAgilityBookViewPoints::LoadData()
 			GetListCtrl().InsertItem(i++, str);
 			for (vector<ARBConfigOtherPoints*>::const_iterator iterOther = other.begin(); iterOther != other.end(); ++iterOther)
 			{
-				int score = 0;
-				ARBConfigOtherPoints* pOther = (*iterOther);
-				// @todo: Tally properly. Currently everything is treated as eTallyAll.
-				/*pOther->GetTally() ==
-				eTallyAll,
-				eTallyAllByEvent,
-				eTallyLevel,
-				eTallyLevelByEvent
-				*/
-				GetListCtrl().InsertItem(i, "");
-				GetListCtrl().SetItemText(i, 1, pOther->GetName().c_str());
+				// First, just generate a list of runs with the needed info.
+				std::list<OtherPtInfo> runs;
 
+				ARBConfigOtherPoints* pOther = (*iterOther);
 				for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 				iterTrial != pDog->GetTrials().end();
 				++iterTrial)
@@ -540,16 +549,87 @@ void CAgilityBookViewPoints::LoadData()
 								{
 									const ARBDogRunOtherPoints* pOtherPts = (*iterOtherPts);
 									if (pOtherPts->GetName() == pOther->GetName())
-										score += pOtherPts->GetPoints();
+									{
+							TRACE("%s %s %d\n", pTrial->GetLocation().c_str(), pRun->GetEvent().c_str(), pOtherPts->GetPoints());
+										runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+									}
 								}
 							}
 						}
 					}
 				}
-				CString str;
-				str.Format("%d", score);
-				GetListCtrl().SetItemText(i, 2, str);
-				++i;
+
+				GetListCtrl().InsertItem(i, "");
+				GetListCtrl().SetItemText(i, 1, pOther->GetName().c_str());
+				switch (pOther->GetTally())
+				{
+				default:
+				case ARBConfigOtherPoints::eTallyAll:
+					{
+						int score = 0;
+						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							score += (*iter).m_Score;
+						}
+						CString str;
+						str.Format("%d", score);
+						GetListCtrl().SetItemText(i, 2, str);
+						++i;
+					}
+					break;
+
+				case ARBConfigOtherPoints::eTallyAllByEvent:
+					{
+						//@todo: Complete this
+						std::set<std::string> tally;
+						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							tally.insert((*iter).m_pRun->GetEvent());
+						}
+						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+						{
+							for (iter = runs.begin(); iter != runs.end(); ++iter)
+							{
+							}
+						}
+					}
+					break;
+
+				case ARBConfigOtherPoints::eTallyLevel:
+					{
+						//@todo: Complete this
+						std::set<std::string> tally;
+						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							tally.insert((*iter).m_pRun->GetLevel());
+						}
+						for (std::set<std::string>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+						{
+							for (iter = runs.begin(); iter != runs.end(); ++iter)
+							{
+							}
+						}
+					}
+					break;
+
+				case ARBConfigOtherPoints::eTallyLevelByEvent:
+					{
+						//@todo: Complete this
+						typedef std::pair<std::string, std::string> LevelEvent;
+						std::set<LevelEvent> tally;
+						for (std::list<OtherPtInfo>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							tally.insert(LevelEvent((*iter).m_pRun->GetEvent(), (*iter).m_pRun->GetLevel()));
+						}
+						for (std::set<LevelEvent>::iterator iterTally = tally.begin(); iterTally != tally.end(); ++iterTally)
+						{
+							for (iter = runs.begin(); iter != runs.end(); ++iter)
+							{
+							}
+						}
+					}
+					break;
+				}
 			}
 		}
 	}
