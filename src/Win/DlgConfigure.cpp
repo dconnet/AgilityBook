@@ -69,23 +69,20 @@ class CDetails : public IMessageBoxCallback
 {
 public:
 	CDetails(CAgilityBookDoc* inDoc,
-		std::list<RunInfo> const& inRunsScoringDeleted,
-		std::list<RunInfo> const& inRunsScoringChanged)
+		std::list<ScoringRunInfo> const& inScoringRuns)
 		: m_pDoc(inDoc)
-		, m_RunsScoringDeleted(inRunsScoringDeleted)
-		, m_RunsScoringChanged(inRunsScoringChanged)
+		, m_ScoringRuns(inScoringRuns)
 	{
 	}
 	virtual void OnDetails(CWnd* pParent);
 protected:
 	CAgilityBookDoc* m_pDoc;
-	std::list<RunInfo> const& m_RunsScoringDeleted;
-	std::list<RunInfo> const& m_RunsScoringChanged;
+	std::list<ScoringRunInfo> const& m_ScoringRuns;
 };
 
 void CDetails::OnDetails(CWnd* pParent)
 {
-	CDlgListViewer dlg(m_pDoc, "Runs affected by configuration changes", m_RunsScoringDeleted, m_RunsScoringChanged, pParent);
+	CDlgListViewer dlg(m_pDoc, "Runs affected by configuration changes", m_ScoringRuns, pParent);
 	dlg.DoModal();
 }
 
@@ -97,8 +94,8 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 {
 	CWaitCursor wait;
 	std::vector<CDlgFixup*> dlgFixup;
-	std::list<RunInfo> runsScoringDeleted;
-	std::list<RunInfo> runsScoringChanged;
+	int nRunsDeleted = 0, nRunsChanged = 0;
+	std::list<ScoringRunInfo> scoringRuns;
 	CString eventinfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfig.GetVenues().begin();
 		iterVenue != inConfig.GetVenues().end();
@@ -113,7 +110,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			if (CDlgConfigure::eDoIt == CDlgConfigure::CheckExistingRuns(
 				inDoc, inDogs,
 				pVenue, pEvent->GetName(), pEvent->GetScorings(),
-				dlgFixup, &runsScoringDeleted, &runsScoringChanged))
+				dlgFixup, &nRunsDeleted, &nRunsChanged, &scoringRuns))
 			{
 				CString str;
 				str.FormatMessage(IDS_DELETE_EVENT_SCORING_INFO,
@@ -123,20 +120,27 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			}
 		}
 	}
-	if (0 < runsScoringDeleted.size() || 0 < runsScoringChanged.size())
+	if (0 < nRunsDeleted || 0 < nRunsChanged)
 	{
 		CString msg;
 		msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
 			(LPCTSTR)eventinfo,
-			(int)runsScoringDeleted.size(), (int)runsScoringChanged.size());
-		if (!bCommitChanges)
+			nRunsDeleted, nRunsChanged);
+		UINT flags = MB_ICONEXCLAMATION;
+		if (bCommitChanges)
 		{
+			// When running this in commit mode, we cannot cancel.
+			flags |= MB_OK;
+		}
+		else
+		{
+			flags |= MB_OKCANCEL | MB_DEFBUTTON2;
 			CString str;
 			str.LoadString(IDS_ARE_YOU_SURE);
 			msg += "\n\n" + str;
 		}
-		CDetails details(inDoc, runsScoringDeleted, runsScoringChanged);
-		switch (AfxMessageBox2(msg, MB_ICONEXCLAMATION | MB_OKCANCEL | MB_DEFBUTTON2, &details))
+		CDetails details(inDoc, scoringRuns);
+		switch (AfxMessageBox2(msg, flags, &details))
 		{
 		case IDOK:
 			break;
@@ -160,13 +164,13 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 	ARBConfigVenue const* inVenue, std::string const& inEvent,
 	ARBConfigScoringList const& inScorings,
 	std::vector<CDlgFixup*>& ioDlgFixup,
-	std::list<RunInfo>* inRunsScoringDeleted,
-	std::list<RunInfo>* inRunsScoringChanged)
+	int* inRunsDeleted, int* inRunsChanged,
+	std::list<ScoringRunInfo>* inScoringRuns)
 {
-	bool bQuiet = (NULL != inRunsScoringDeleted);
+	bool bQuiet = (NULL != inScoringRuns);
 	CWaitCursor wait;
-	std::list<RunInfo> runsScoringDeleted;
-	std::list<RunInfo> runsScoringChanged;
+	std::list<ScoringRunInfo> scoringRuns;
+	int nRunsDeleted = 0, nRunsChanged = 0;
 	for (ARBDogList::const_iterator iterDog = inDogs.begin();
 		iterDog != inDogs.end();
 		++iterDog)
@@ -202,24 +206,34 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 				}
 				if (!pScoring)
 				{
-					if (inRunsScoringDeleted)
-						inRunsScoringDeleted->push_back(RunInfo(pTrial, pRun));
-					runsScoringDeleted.push_back(RunInfo(pTrial, pRun));
+					if (inRunsDeleted)
+						++(*inRunsDeleted);
+					++nRunsDeleted;
+					ScoringRunInfo info(pDog, pTrial, pRun,
+						ScoringRunInfo::eScoringDeleted);
+					if (inScoringRuns)
+						inScoringRuns->push_back(info);
+					scoringRuns.push_back(info);
 				}
 				else
 				{
 					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
 						!= pRun->GetScoring().GetType())
 					{
-						if (inRunsScoringChanged)
-							inRunsScoringChanged->push_back(RunInfo(pTrial, pRun));
-						runsScoringChanged.push_back(RunInfo(pTrial, pRun));
+						if (inRunsChanged)
+							++(*inRunsChanged);
+						++nRunsChanged;
+						ScoringRunInfo info(pDog, pTrial, pRun,
+							ScoringRunInfo::eScoringChanged);
+						if (inScoringRuns)
+							inScoringRuns->push_back(info);
+						scoringRuns.push_back(info);
 					}
 				}
 			}
 		}
 	}
-	if (0 < runsScoringDeleted.size() || 0 < runsScoringChanged.size())
+	if (0 < nRunsDeleted || 0 < nRunsChanged)
 	{
 		UINT rc = IDYES;
 		if (!bQuiet)
@@ -230,8 +244,8 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			CString msg;
 			msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
 				(LPCTSTR)eventinfo,
-				(int)runsScoringDeleted.size(), (int)runsScoringChanged.size());
-			CDetails details(inDoc, runsScoringDeleted, runsScoringChanged);
+				nRunsDeleted, nRunsChanged);
+			CDetails details(inDoc, scoringRuns);
 			rc = AfxMessageBox2(msg, MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2, &details);
 		}
 		switch (rc)

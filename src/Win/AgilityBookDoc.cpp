@@ -148,6 +148,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 END_MESSAGE_MAP()
 
 CAgilityBookDoc::CAgilityBookDoc()
+	: m_SuppressUpdates(false)
 {
 }
 
@@ -399,16 +400,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		bUpdateRuns = true;
 	GetConfig().Update(0, update, info);
 	std::vector<CDlgFixup*> fixups;
-	switch (CDlgConfigure::CheckExistingRuns(this, m_Records.GetDogs(), GetConfig(), fixups, true))
-	{
-	default:
-	case CDlgConfigure::eCancelChanges:
-		AfxMessageBox(IDS_CANNOT_CANCEL, MB_ICONSTOP);
-		// Fallthru
-	case CDlgConfigure::eNoChange:
-	case CDlgConfigure::eDoIt:
-		break;
-	}
+	CDlgConfigure::CheckExistingRuns(this, m_Records.GetDogs(), GetConfig(), fixups, true);
 	for (std::vector<CDlgFixup*>::iterator iter = fixups.begin(); iter != fixups.end(); ++iter)
 	{
 		(*iter)->Commit(m_Records);
@@ -487,7 +479,8 @@ void CAgilityBookDoc::ResetVisibility()
 	//	ARBCalendar* pCal = *iterCal;
 	//}
 
-	UpdateAllViews(NULL, UPDATE_OPTIONS);
+	if (!m_SuppressUpdates)
+		UpdateAllViews(NULL, UPDATE_OPTIONS);
 }
 
 void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog)
@@ -739,7 +732,9 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 	SortDates();
 
+	m_SuppressUpdates = true;
 	ResetVisibility();
+	m_SuppressUpdates = false;
 
 	SetModifiedFlag(FALSE);     // start off with unmodified
 

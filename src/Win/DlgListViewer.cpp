@@ -49,9 +49,11 @@
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDate.h"
+#include "ARBDog.h"
 #include "ARBDogExistingPoints.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "DlgConfigure.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -79,19 +81,19 @@ protected:
 	UINT m_RefCount;
 };
 
-// Indices of columns (col 0 should be the default sort column):
 #define COL_RUN_DATE		0
 #define COL_RUN_STATUS		1
-#define COL_RUN_Q			2
-#define COL_RUN_TITLE_PTS	3
-#define COL_RUN_LOCATION	4
-#define COL_RUN_CLUB		5
-#define COL_RUN_JUDGE		6
-#define COL_RUN_PLACE		7
-#define COL_RUN_INCLASS		8
-#define COL_RUN_QD			9
-#define COL_RUN_MACH		10
-#define COL_RUN_PARTNERS	11
+#define COL_RUN_DOG			2
+#define COL_RUN_Q			3
+#define COL_RUN_TITLE_PTS	4
+#define COL_RUN_LOCATION	5
+#define COL_RUN_CLUB		6
+#define COL_RUN_JUDGE		7
+#define COL_RUN_PLACE		8
+#define COL_RUN_INCLASS		9
+#define COL_RUN_QD			10
+#define COL_RUN_MACH		11
+#define COL_RUN_PARTNERS	12
 #define COL_QQ_DATE			0
 #define COL_QQ_LOCATION		1
 #define COL_QQ_CLUB			2
@@ -134,6 +136,7 @@ public:
 			return m_Columns[inColumn];
 		return -1;
 	}
+	int NumColumns() const	{return static_cast<int>(m_Columns.size());}
 private:
 	std::vector<int> m_Columns;
 };
@@ -143,18 +146,14 @@ private:
 class CDlgListViewerDataRun : public CDlgListViewerData
 {
 public:
-	typedef enum
-	{
-		eNotScoringDetail,
-		eScoringDeleted,
-		eScoringChanged
-	} eScoringDetail;
 	CDlgListViewerDataRun(CDlgListViewerDataColumns* inColData,
+		ARBDog const* inDog,
 		ARBDogTrial const* inTrial,
 		ARBDogRun const* inRun,
 		ARBConfigScoring const* inScoring,
-		eScoringDetail inScoringDetail)
+		ScoringRunInfo::eScoringDetail inScoringDetail)
 		: m_ColData(inColData)
+		, m_Dog(inDog)
 		, m_Trial(inTrial)
 		, m_Run(inRun)
 		, m_Scoring(inScoring)
@@ -173,10 +172,11 @@ public:
 	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
+	ARBDog const* m_Dog;
 	ARBDogTrial const* m_Trial;
 	ARBDogRun const* m_Run;
 	ARBConfigScoring const* m_Scoring;
-	eScoringDetail m_ScoringDetail;
+	ScoringRunInfo::eScoringDetail m_ScoringDetail;
 };
 
 CString CDlgListViewerDataRun::OnNeedText(int iCol) const
@@ -192,13 +192,17 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 		{
 		default:
 			break;
-		case eScoringDeleted:
+		case ScoringRunInfo::eScoringDeleted:
 			str = "Deleted";
 			break;
-		case eScoringChanged:
+		case ScoringRunInfo::eScoringChanged:
 			str = "Changed";
 			break;
 		}
+		break;
+	case COL_RUN_DOG: // Only happens for scoring detail items.
+		if (m_Dog)
+			str = m_Dog->GetCallName().c_str();
 		break;
 	case COL_RUN_Q:
 		str = m_Run->GetQ().str().c_str();
@@ -607,7 +611,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_Runs(&inRuns)
-	, m_Runs2(NULL)
+	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
 	, m_OtherData(NULL)
 	, m_rWin(0,0,0,0)
@@ -622,14 +626,13 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 
 CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 		CString const& inCaption,
-		std::list<RunInfo> const& inRunsScoringDeleted,
-		std::list<RunInfo> const& inRunsScoringChanged,
+		std::list<ScoringRunInfo> const& inScoringRuns,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Runs(&inRunsScoringDeleted)
-	, m_Runs2(&inRunsScoringChanged)
+	, m_Runs(NULL)
+	, m_ScoringRuns(&inScoringRuns)
 	, m_DoubleQData(NULL)
 	, m_OtherData(NULL)
 	, m_rWin(0,0,0,0)
@@ -649,7 +652,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_Runs(NULL)
-	, m_Runs2(NULL)
+	, m_ScoringRuns(NULL)
 	, m_DoubleQData(&inQQs)
 	, m_OtherData(NULL)
 	, m_rWin(0,0,0,0)
@@ -669,7 +672,7 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_Runs(NULL)
-	, m_Runs2(NULL)
+	, m_ScoringRuns(NULL)
 	, m_DoubleQData(NULL)
 	, m_OtherData(&inRunList)
 	, m_rWin(0,0,0,0)
@@ -707,9 +710,10 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 	CListCtrl2& ctrlList,
 	CDlgListViewerDataColumns* pColData,
 	int& iItem,
+	ARBDog const* pDog,
 	ARBDogTrial const* pTrial,
 	ARBDogRun const* pRun,
-	CDlgListViewerDataRun::eScoringDetail scoringDetail)
+	ScoringRunInfo::eScoringDetail scoringDetail)
 {
 	ARBConfigScoring const* pScoring = pDoc->GetConfig().GetVenues().FindEvent(
 		pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
@@ -722,7 +726,7 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 	if (0 < pRun->GetPartners().size())
 		pColData->InsertColumn(ctrlList, COL_RUN_PARTNERS, "Partners");
 
-	CDlgListViewerDataRun* pData = new CDlgListViewerDataRun(pColData, pTrial, pRun, pScoring, scoringDetail);
+	CDlgListViewerDataRun* pData = new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail);
 	LVITEM item;
 	item.mask = LVIF_TEXT | LVIF_PARAM;
 	item.iItem = iItem++;
@@ -752,10 +756,9 @@ BOOL CDlgListViewer::OnInitDialog()
 	SetWindowText(m_Caption);
 	if (m_Runs)
 	{
-		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(11);
+		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, "Date");
-		if (m_Runs2)
-			pColData->InsertColumn(m_ctrlList, COL_RUN_STATUS, "Status");
+		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, "Q");
 		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, "Title Points");
 		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, "Location");
@@ -765,30 +768,46 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, "In Class");
 		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, "Q'd");
 		int iItem = 0;
-		std::list<RunInfo>::const_iterator iter;
-		for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
+		for (std::list<RunInfo>::const_iterator iter = m_Runs->begin();
+			iter != m_Runs->end();
+			++iter)
 		{
 			ARBDogTrial const* pTrial = iter->first;
 			ARBDogRun const* pRun = iter->second;
-			// Only filter normal runs. Not config update info.
-			if (!m_Runs2 && CAgilityBookOptions::IsFilterEnabled())
+			if (CAgilityBookOptions::IsFilterEnabled())
 			{
 				if (pRun->IsFiltered())
 					continue;
 			}
-			InsertRun(m_pDoc, m_ctrlList, pColData, iItem, pTrial, pRun,
-				NULL != m_Runs2
-					? CDlgListViewerDataRun::eScoringDeleted
-					: CDlgListViewerDataRun::eNotScoringDetail);
+			InsertRun(m_pDoc, m_ctrlList, pColData, iItem,
+				NULL, pTrial, pRun, ScoringRunInfo::eNotScoringDetail);
 		}
-		if (m_Runs2)
+		pColData->SetColumnWidths(m_ctrlList);
+		pColData->Release();
+	}
+	else if (m_ScoringRuns)
+	{
+		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(12);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_STATUS, "Status");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_DOG, "Dog");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, "Date");
+		m_SortColumn = pColData->NumColumns();
+		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, "Q");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, "Title Points");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, "Location");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, "Club");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, "Judge");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, "Place");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, "In Class");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, "Q'd");
+		int iItem = 0;
+		for (std::list<ScoringRunInfo>::const_iterator iter = m_ScoringRuns->begin();
+			iter != m_ScoringRuns->end();
+			++iter)
 		{
-			for (iter = m_Runs2->begin(); iter != m_Runs2->end(); ++iter)
-			{
-				ARBDogTrial const* pTrial = iter->first;
-				ARBDogRun const* pRun = iter->second;
-				InsertRun(m_pDoc, m_ctrlList, pColData, iItem, pTrial, pRun, CDlgListViewerDataRun::eScoringChanged);
-			}
+			ScoringRunInfo const& info = *iter;
+			InsertRun(m_pDoc, m_ctrlList, pColData, iItem,
+				info.m_Dog, info.m_Trial, info.m_Run, info.m_ScoringDetail);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
@@ -797,6 +816,7 @@ BOOL CDlgListViewer::OnInitDialog()
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
 		pColData->InsertColumn(m_ctrlList, COL_QQ_DATE, "Date");
+		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_QQ_LOCATION, "Location");
 		pColData->InsertColumn(m_ctrlList, COL_QQ_CLUB, "Club");
 		int iItem = 0;
@@ -820,6 +840,7 @@ BOOL CDlgListViewer::OnInitDialog()
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(8);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_DATE, "Date");
+		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_NAME, "Trial / Existing Pts");
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_CLUB, "Club");
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_VENUE, "Venue");

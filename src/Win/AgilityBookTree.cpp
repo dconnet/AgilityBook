@@ -644,6 +644,8 @@ void CAgilityBookTree::LoadData()
 {
 	m_bSuppressSelect = true;
 
+	SetRedraw(FALSE);
+
 	CWaitCursor wait;
 	// Remember the currently selected item.
 	std::string strCallName;
@@ -682,6 +684,9 @@ void CAgilityBookTree::LoadData()
 		hItem = tree.GetRootItem();
 	tree.SelectItem(hItem);
 	tree.Expand(hItem, TVE_EXPAND);
+
+	SetRedraw(TRUE);
+	Invalidate();
 
 	m_bSuppressSelect = false;
 }

@@ -43,6 +43,7 @@
 #include "PointsData.h"
 class ARBDate;
 class CAgilityBookDoc;
+class ScoringRunInfo;
 
 class CDlgListViewer : public CDlgBaseDialog
 {
@@ -51,9 +52,9 @@ public:
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
 		std::list<RunInfo> const& inRuns,
 		CWnd* pParent = NULL);
+	// Viewing runs affected by configuration changes
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::list<RunInfo> const& inRunsScoringDeleted,
-		std::list<RunInfo> const& inRunsScoringChanged,
+		std::list<ScoringRunInfo> const& inScoringRuns,
 		CWnd* pParent = NULL);
 	// Viewing double-Qs
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
@@ -74,7 +75,7 @@ private:
 	CString m_Caption;
 	CAgilityBookDoc* m_pDoc;
 	std::list<RunInfo> const* m_Runs;
-	std::list<RunInfo> const* m_Runs2;
+	std::list<ScoringRunInfo> const* m_ScoringRuns;
 	std::set<DoubleQdata> const* m_DoubleQData;
 	std::list<OtherPtInfo> const* m_OtherData;
 	CRect m_rWin;

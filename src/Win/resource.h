@@ -466,6 +466,13 @@
 #define IDS_COL_TRIAL                   4053
 #define IDS_COL_SUBNAME                 4054
 #define IDS_COL_VERIFIED                4055
+#define IDS_BUTTON_OK                   4080
+#define IDS_BUTTON_CANCEL               4081
+#define IDS_BUTTON_YES                  4082
+#define IDS_BUTTON_NO                   4083
+#define IDS_BUTTON_ABORT                4084
+#define IDS_BUTTON_IGNORE               4085
+#define IDS_BUTTON_RETRY                4086
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002
@@ -592,7 +599,6 @@
 #define IDS_ADDED_TITLES                5176
 #define IDS_ADDED_TRIALS                5177
 #define IDS_ADDED_JUDGES                5178
-#define IDS_CANNOT_CANCEL               5179
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780

@@ -177,6 +177,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 private:
+	bool m_SuppressUpdates;
 	ARBAgilityRecordBook m_Records; ///< The real records.
 
 // Generated message map functions
