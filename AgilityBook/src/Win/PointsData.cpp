@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-06 DRC Created
  */
 
@@ -360,9 +361,12 @@ void PointsDataEvent::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataLifetime::PointsDataLifetime(CAgilityBookViewPoints* pView, int inLifetime)
+PointsDataLifetime::PointsDataLifetime(CAgilityBookViewPoints* pView,
+	int inLifetime,
+	int inFiltered)
 	: PointsDataBase(pView)
 	, m_Lifetime(inLifetime)
+	, m_Filtered(inFiltered)
 {
 }
 
@@ -381,7 +385,10 @@ std::string PointsDataLifetime::OnNeedText(size_t index) const
 	case 2:
 		{
 			CString str2;
-			str2.Format("%d", m_Lifetime);
+			if (0 < m_Filtered)
+				str2.Format("%d (%d)", m_Lifetime - m_Filtered, m_Lifetime);
+			else
+				str2.Format("%d", m_Lifetime);
 			str = (LPCTSTR)str2;
 		}
 		break;

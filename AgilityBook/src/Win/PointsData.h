@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-06 DRC Created
  */
 
@@ -188,12 +189,13 @@ protected:
 class PointsDataLifetime : public PointsDataBase
 {
 public:
-	PointsDataLifetime(CAgilityBookViewPoints* pView, int inLifetime);
+	PointsDataLifetime(CAgilityBookViewPoints* pView, int inLifetime, int inFiltered);
 
 	virtual std::string OnNeedText(size_t index) const;
 
 protected:
-	int m_Lifetime;
+	int m_Lifetime; //< Total lifetime points.
+	int m_Filtered; //< Points that are filtered out.
 };
 
 /////////////////////////////////////////////////////////////////////////////

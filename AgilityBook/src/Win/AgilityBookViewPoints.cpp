@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-10-20 DRC Do not accumulate NA titling runs.
  * @li 2004-08-25 DRC Existing other pts were included in all other points.
  * @li 2004-08-12 DRC Allow creating a new title.
@@ -307,8 +308,8 @@ PointsDataBase* CAgilityBookViewPoints::GetItemData(int index) const
 	return pData;
 }
 
-// Entering this function, we know the trial is visible.
-// We don't know if the individual runs are.
+// Entering this function, we know the venue is visible.
+// We don't know if the trial or individual runs are.
 int CAgilityBookViewPoints::DoEvents(
 	ARBDog const* inDog,
 	std::vector<CVenueFilter> const& venues,
@@ -329,7 +330,8 @@ int CAgilityBookViewPoints::DoEvents(
 		++iterEvent)
 	{
 		ARBConfigEvent const* pEvent = (*iterEvent);
-		bool bHasPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, false);
+		bool bHasExistingPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, false);
+		bool bHasExistingLifetimePoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, true);
 
 		// Don't tally runs that have no titling points.
 		std::vector<ARBConfigScoring const*> scoringItems;
@@ -400,18 +402,19 @@ int CAgilityBookViewPoints::DoEvents(
 					++iterRun)
 				{
 					ARBDogRun const* pRun = (*iterRun);
-					if (!pRun->IsFiltered(ARBBase::eIgnoreQ)
-					&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun))
+					if (pRun->GetDivision() != inDiv->GetName()
+					|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
+					|| pRun->GetEvent() != pEvent->GetName())
+						continue;
+					ARBConfigScoring const* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
+					ASSERT(pScoring);
+					if (!pScoring) continue; // Shouldn't need it...
+					if (*pScoring != *pScoringMethod)
+						continue;
+					bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
+					&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun));
+					if (bRunVisible)
 					{
-						if (pRun->GetDivision() != inDiv->GetName()
-						|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
-						|| pRun->GetEvent() != pEvent->GetName())
-							continue;
-						ARBConfigScoring const* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
-						ASSERT(pScoring);
-						if (!pScoring) continue; // Shouldn't need it...
-						if (*pScoring != *pScoringMethod)
-							continue;
 						// Don't tally NA runs for titling events.
 						if (pRun->GetQ() == ARB_Q::eQ_NA)
 							continue;
@@ -443,25 +446,44 @@ int CAgilityBookViewPoints::DoEvents(
 							}
 						}
 					}
+					// Tally lifetime points, regardless of visibility.
+					if (0 < pScoringMethod->GetLifetimePoints().size()
+					&& pRun->GetQ().Qualified())
+					{
+						short nLifetime;
+						pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime);
+						if (0 < nLifetime)
+						{
+							inLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+						}
+					}
 				}
 			}
-			if (bHasPoints || 0 < matching.size())
+			int nExistingPts = 0;
+			int nExistingSQ = 0;
+			// Accumulate existing points - used for both lifetime and
+			// normal runs.
+			if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
 			{
-				int nCleanQ, nNotCleanQ;
-				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ, inLifetime);
-				int nExistingPts = inDog->GetExistingPoints().ExistingPoints(
+				nExistingPts = inDog->GetExistingPoints().ExistingPoints(
 					ARBDogExistingPoints::eRuns,
 					inVenue, inDiv, inLevel, pEvent);
-				pts += nExistingPts;
-				int nExistingSQ = 0;
 				if (pScoringMethod->HasSuperQ())
 					nExistingSQ += inDog->GetExistingPoints().ExistingPoints(
 						ARBDogExistingPoints::eSQ,
 						inVenue, inDiv, inLevel, pEvent);
-				if (inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, true))
-				{
-					inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ));
-				}
+			}
+			// Now add the existing lifetime points
+			if (bHasExistingLifetimePoints && 0 < nExistingPts + nExistingSQ)
+			{
+				inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
+			}
+			// Now we deal with the visible runs.
+			if (bHasExistingPoints || 0 < matching.size())
+			{
+				int nCleanQ, nNotCleanQ;
+				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
+				pts += nExistingPts;
 				CString strRunCount;
 				strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
 					matching.size(),
@@ -594,8 +616,7 @@ int CAgilityBookViewPoints::TallyPoints(
 	std::list<RunInfo> const& runs,
 	ARBConfigScoring const* pScoringMethod,
 	int& nCleanQ,
-	int& nNotCleanQ,
-	LifeTimePointList& inLifetime)
+	int& nNotCleanQ)
 {
 	nCleanQ = 0;
 	nNotCleanQ = 0;
@@ -608,10 +629,7 @@ int CAgilityBookViewPoints::TallyPoints(
 		if (pRun->GetQ().Qualified())
 		{
 			bool bClean = false;
-			short nLifetime;
-			score += pRun->GetTitlePoints(pScoringMethod, &bClean, &nLifetime);
-			if (0 < nLifetime)
-				inLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime));
+			score += pRun->GetTitlePoints(pScoringMethod, &bClean);
 			if (bClean)
 				++nCleanQ;
 			else
@@ -748,6 +766,7 @@ void CAgilityBookViewPoints::LoadData()
 			if (0 < lifetime.size())
 			{
 				int pts = 0;
+				int ptFiltered = 0;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
 					iter != lifetime.end();
 					++iter)
@@ -757,9 +776,11 @@ void CAgilityBookViewPoints::LoadData()
 						++iter2)
 					{
 						pts += (*iter2).points;
+						if ((*iter2).bFiltered)
+							ptFiltered += (*iter2).points;
 					}
 				}
-				PointsDataLifetime* pData = new PointsDataLifetime(this, pts);
+				PointsDataLifetime* pData = new PointsDataLifetime(this, pts, ptFiltered);
 				LVITEM item;
 				item.iItem = idxInsertItem;
 				item.iSubItem = 0;
