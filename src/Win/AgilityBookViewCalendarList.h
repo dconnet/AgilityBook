@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
@@ -43,6 +44,7 @@
 #include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
+#include "HeaderCtrl.h"
 #include "ListCtrl.h"
 class ARBCalendar;
 class CAgilityBookDoc;
@@ -83,6 +85,7 @@ private:
 	CAgilityBookViewCalendarData* GetItemData(int index) const;
 	void SetupColumns();
 	void LoadData();
+	CHeaderCtrl2 m_SortHeader;
 	CImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgTentative;
@@ -98,6 +101,7 @@ protected:
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
+	virtual void OnInitialUpdate();
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL

@@ -83,6 +83,8 @@ IDI_CRCD                ICON                    "res\\crcd.ico"
 IDI_TITLE               ICON                    "res\\title.ico"
 IDI_TITLE2              ICON                    "res\\title2.ico"
 IDI_HIDDEN              ICON                    "res\\hidden.ico"
+IDI_HEADER_UP           ICON                    "res\\HdrUp.ico"
+IDI_HEADER_DOWN         ICON                    "res\\HdrDown.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

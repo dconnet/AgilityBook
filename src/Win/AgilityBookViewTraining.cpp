@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
@@ -218,7 +219,7 @@ bool CFindTraining::Search() const
 		}
 		else
 		{
-			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
+			int nColumns = m_pView->m_SortHeader.GetItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
@@ -287,7 +288,7 @@ END_MESSAGE_MAP()
 #pragma warning ( disable : 4355 )
 CAgilityBookViewTraining::CAgilityBookViewTraining()
 	: m_Callback(this)
-	, m_SortColumn(0)
+	, m_SortColumn(1)
 {
 }
 #pragma warning (pop)
@@ -308,9 +309,6 @@ int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
-
-	SetupColumns();
-
 	return 0;
 }
 
@@ -318,6 +316,13 @@ void CAgilityBookViewTraining::OnDestroy()
 {
 	GetListCtrl().DeleteAllItems();
 	CListView2::OnDestroy();
+}
+
+void CAgilityBookViewTraining::OnInitialUpdate()
+{
+	m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
+	SetupColumns();
+	CListView2::OnInitialUpdate();
 }
 
 void CAgilityBookViewTraining::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
@@ -414,7 +419,7 @@ CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemData(int index) c
 
 void CAgilityBookViewTraining::SetupColumns()
 {
-	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	int nColumnCount = m_SortHeader.GetItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewLog, IO_TYPE_VIEW_TRAINING_LIST, m_Columns))
@@ -481,7 +486,7 @@ void CAgilityBookViewTraining::LoadData()
 		}
 		++i;
 	}
-	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	int nColumnCount = m_SortHeader.GetItemCount();
 	for (i = 0; i < nColumnCount; ++i)
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
@@ -498,6 +503,7 @@ void CAgilityBookViewTraining::LoadData()
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
+	m_SortHeader.Sort(abs(m_SortColumn)-1, CHeaderCtrl2::eDescending);
 
 	// Cleanup.
 	if (pCurData)
@@ -568,6 +574,7 @@ void CAgilityBookViewTraining::OnContextMenu(CWnd* pWnd, CPoint point)
 void CAgilityBookViewTraining::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	m_SortHeader.Sort(abs(m_SortColumn)-1, CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
 	if (m_SortColumn == pNMListView->iSubItem + 1)
 		nBackwards = -1;
@@ -576,6 +583,8 @@ void CAgilityBookViewTraining::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
+	m_SortHeader.Sort(abs(m_SortColumn)-1,
+		nBackwards > 0 ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 	*pResult = 0;
 }
 
@@ -667,7 +676,7 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 			LoadData();
 			GetDocument()->SetModifiedFlag();
 			Invalidate();
-			int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+			int nColumnCount = m_SortHeader.GetItemCount();
 			for (int i = 0; i < nColumnCount; ++i)
 				GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 		}
@@ -685,7 +694,7 @@ void CAgilityBookViewTraining::OnTrainingNew()
 		LoadData();
 		GetDocument()->SetModifiedFlag();
 		SetCurrentDate(training->GetDate());
-		int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+		int nColumnCount = m_SortHeader.GetItemCount();
 		for (int i = 0; i < nColumnCount; ++i)
 			GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}

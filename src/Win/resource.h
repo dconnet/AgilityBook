@@ -25,6 +25,8 @@
 #define IDI_TITLE                       160
 #define IDI_TITLE2                      161
 #define IDI_HIDDEN                      162
+#define IDI_HEADER_UP                   163
+#define IDI_HEADER_DOWN                 164
 #define IDD_ABOUTBOX                    200
 #define IDD_NAME                        201
 #define IDD_LISTCTRL                    203

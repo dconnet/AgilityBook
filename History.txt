@@ -1,4 +1,4 @@
-6/23/2004: v1.2.0.8 <in development>
+6/24/2004: v1.2.0.8 <in development>
 - Bumped file version to 8.7, Configuration v4:
   - Added 'SubName' to 'Training'.
   - CPE 'CADE' changed to 'C-ATE'.
@@ -21,6 +21,7 @@
   - When you open a file that has no dogs, you will be prompted to create one.
   - When creating a trial from a calendar entry, copy the notes too.
   - Added the current dogs name to the status bar.
+  - Added indicators for how the lists are sorted.
 - Bug fixes
   - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter
