@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
@@ -114,6 +115,7 @@ private:
 
 // Generated message map functions
 protected:
+	afx_msg LRESULT OnCommandHelp(WPARAM, LPARAM);
 	//{{AFX_MSG(CAgilityBookViewRuns)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);

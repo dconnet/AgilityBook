@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-12 DRC Allow creating a new title.
  * @li 2004-05-27 DRC Changed lifetime points structure to take a string.
@@ -135,6 +136,7 @@ public:
 
 // Generated message map functions
 protected:
+	afx_msg LRESULT OnCommandHelp(WPARAM, LPARAM);
 	//{{AFX_MSG(CAgilityBookViewPoints)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);

@@ -129,6 +129,7 @@ HIDR_CALENDAR=Help\html\TabCalendar.html
 HIDR_DOG=Help\html\PropDog.html
 HIDR_MAINFRAME=Help\html\Introduction.html
 HIDR_RUN=Help\html\TabRuns.html
+HIDR_POINTS=Help\html\TabPoints.html
 HIDR_TRAINING=Help\html\TabLog.html
 HIDR_TRIAL=Help\html\PropTrial.html
 

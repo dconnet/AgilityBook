@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2003-12-30 DRC Implemented customized text in tree.
@@ -48,6 +49,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookTree.h"
 
+#include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
 #include "ARBDog.h"
@@ -180,6 +182,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 IMPLEMENT_DYNCREATE(CAgilityBookTree, CTreeView)
 
 BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
+	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookTree)
 	ON_WM_DESTROY()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
@@ -265,6 +268,12 @@ CAgilityBookTree::CAgilityBookTree()
 
 CAgilityBookTree::~CAgilityBookTree()
 {
+}
+
+LRESULT CAgilityBookTree::OnCommandHelp(WPARAM, LPARAM)
+{
+	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
+	return 1;
 }
 
 void CAgilityBookTree::OnDestroy()

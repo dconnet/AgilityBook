@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-10-20 DRC Do not accumulate NA titling runs.
  * @li 2004-08-25 DRC Existing other pts were included in all other points.
@@ -72,6 +73,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookViewPoints.h"
 
+#include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
@@ -115,6 +117,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CAgilityBookViewPoints, CListView2)
 
 BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
+	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewPoints)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnLvnDeleteitem)
@@ -141,6 +144,12 @@ BOOL CAgilityBookViewPoints::PreCreateWindow(CREATESTRUCT& cs)
 	// This is actually set in TabView.cpp.
 	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
 	return CListView2::PreCreateWindow(cs);
+}
+
+LRESULT CAgilityBookViewPoints::OnCommandHelp(WPARAM, LPARAM)
+{
+	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_POINTS, HH_HELP_CONTEXT);
+	return 1;
 }
 
 int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct) 

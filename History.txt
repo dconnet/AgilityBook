@@ -1,4 +1,4 @@
-12/19/2004: v1.5.0.10 <in development>
+12/31/2004: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
@@ -14,6 +14,7 @@
   - Added opening/closing dates to calendar view.
   - Changed the 'Show Newest Runs First' to sort only trials since
     sorting the runs is handled by the header in the Runs view.
+  - Make F1 open context help from the main tab windows.
 - Bug fixes
   - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have

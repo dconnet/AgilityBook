@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-09-28 DRC Set the page scrolling size to 4 weeks.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -50,6 +51,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookViewCalendar.h"
 
+#include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
@@ -76,6 +78,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CAgilityBookViewCalendar, CScrollView)
 
 BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
+	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewCalendar)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_RBUTTONDOWN()
@@ -118,6 +121,12 @@ CAgilityBookViewCalendar::~CAgilityBookViewCalendar()
 BOOL CAgilityBookViewCalendar::PreCreateWindow(CREATESTRUCT& cs)
 {
 	return CScrollView::PreCreateWindow(cs);
+}
+
+LRESULT CAgilityBookViewCalendar::OnCommandHelp(WPARAM, LPARAM)
+{
+	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_CALENDAR, HH_HELP_CONTEXT);
+	return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
