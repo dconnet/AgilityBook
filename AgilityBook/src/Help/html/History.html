@@ -6,6 +6,67 @@
 <BODY>
 <h1>History of releases</h1>
 <ul>
+	<li><b>10/31/2004: v1.4.0.10</b>
+		<ul>
+			<li>Bumped file version to 10.0, Configuration v6
+				<ul>
+					<li>Added 'Height' to 'ReferenceRun'.</li>
+					<li>Added 'LifeTime' to 'Scoring'.</li>
+					<li>Removed 'LifeTime' from 'TitlePoints'.</li>
+					<li>Added 'SCT', 'SCT2' to 'ByOpenClose'.</li>
+					<li>Added 'SCT' to 'ByPoints'.</li>
+				</ul>
+			</li>
+			<li>New features / Enhancements:
+				<ul>
+					<li>Updated CPE configuration to note that CL1 (thru 5) are
+					not really titles. They are shorthand for the combined 4
+					titles. Also, make Level C runs accumulate lifetime points.</li>
+					<li>Added more Gamblers events for NADAC to handle the
+					various 'styles'.</li>
+					<li>Added a Height to the Reference Run dialog.</li>
+					<li>Added direct Excel import/export capability.</li>
+					<li>Added Mach points to the allowed columns in the runs
+					view.</li>
+					<li>In the Calendar view, set the scroll amount to 4 weeks
+					when you click on the scroll bar to page it.</li>
+					<li>Added the event description from the configuration to
+					the dialog where a run is entered.</li>
+					<li>Added SCTs to gambler/snooker-style events. These are
+					not used to compute anything, they are there just for
+					reference.</li>
+					<li>Do not acculumate runs marked as NA in Point totals.</li>
+					<li>Added debug symbols to the installation to aid any
+					problems that might be found during deployment.</li>
+					<li>Added error logging. If the program faults, it will now
+					attempt to write a log file to the same location as the
+					program. This will contain a stack trace and a dump of the
+					current registry settings.</li>
+				</ul>
+			</li>
+			<li>Bug fixes
+				<ul>
+					<li>When a qualifying run is inserted in the tree and the
+					tree is configured to show Qs for a run
+					(via View-&gt;Customize), the program will crash.</li>
+					<li>The splash screen could cause a problem opening a file
+					whose format is newer than the current program.</li>
+					<li>When the list viewer dialog is resized, the 'Copy'
+					button doesn't move.</li>
+					<li>When switching options in the export wizard, the
+					description gets out of sync.</li>
+					<li>Entering an incomplete run (either the time or SCT
+					left at 0) and marking the run as a 'Q' would generate
+					Mach points (obviously, way too many!). Also, if a run
+					that was over-time was marked as a Q, the program generated
+					a negative number of MACH points. In both cases, it should
+					report zero points.</li>
+					<li>Lifetime points do not necessarily accrue at the same
+					rate as titling points [CPE].</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
 	<li><b>9/15/2004: v1.3.2.9</b>
 		<ul>
 			<li>Bug Fixes:

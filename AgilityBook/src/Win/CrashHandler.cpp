@@ -746,10 +746,12 @@ static void QueryKey(FILE* output, HKEY hKey, int inIndent)
 		case REG_NONE:
 			pType = "NONE";
 			break;
+#if _MSC_VER >= 1300
 		case REG_QWORD:
 		//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
 			pType = "QWORD";
 			break;
+#endif
 		case REG_DWORD:
 			pType = "DWORD";
 			{
