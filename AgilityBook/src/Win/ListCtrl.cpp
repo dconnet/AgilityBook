@@ -334,7 +334,7 @@ void CListView2::OnEditCopy()
 
 		// Take care of the header, but only if more than one line is selected.
 		if (1 < indices.size()
-		|| indices.size() == GetListCtrl().GetItemCount())
+		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
 		{
 			GetPrintLine(-1, line);
 			for (int i = 0; i < line.GetSize(); ++i)
