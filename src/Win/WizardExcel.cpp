@@ -299,7 +299,15 @@ bool CWizardExcelImportImpl::GetData(std::vector< std::vector<CString> >& outDat
 					bAbort = true;
 					break;
 				}
-				CString str = Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+				CString str;
+#if _MSC_VER < 1300
+				// VC6 can't translate a variant to cstring directly. sigh.
+				COleVariant var = Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+				if (var.vt == VT_BSTR)
+					str = var.bstrVal;
+#else
+				str = Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+#endif
 				row.push_back(str);
 			}
 			outData.push_back(row);
