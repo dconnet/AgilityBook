@@ -53,10 +53,11 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 // static stuff
 
 BOOL CSplashWnd::c_bShowSplashWnd = TRUE;
+int CSplashWnd::c_okToDismiss = 0;
 
 CSplashWnd* CSplashWnd::c_pSplashWnd = NULL;
 
-void CSplashWnd::EnableSplashScreen(BOOL bEnable /*= TRUE*/)
+void CSplashWnd::EnableSplashScreen(BOOL bEnable)
 {
 	c_bShowSplashWnd = bEnable;
 }
@@ -102,6 +103,7 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 CSplashWnd::CSplashWnd(bool bTimed)
 	: m_bTimed(bTimed)
 	, m_szBitmap(0,0)
+	, m_TimerId(0)
 {
 }
 
@@ -143,10 +145,24 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 
 void CSplashWnd::HideSplashScreen()
 {
-	// Destroy the window, and update the mainframe.
-	ShowWindow(SW_HIDE);
-	AfxGetMainWnd()->UpdateWindow();
-	DestroyWindow();
+	// We may be displaying a msgbox due to a file load error.
+	if (0 == c_okToDismiss
+	&& AfxGetMainWnd()
+	&& ::IsWindow(AfxGetMainWnd()->GetSafeHwnd())
+	&& AfxGetMainWnd()->IsWindowVisible())
+	{
+		// Destroy the window, and update the mainframe.
+		ShowWindow(SW_HIDE);
+		AfxGetMainWnd()->UpdateWindow();
+		DestroyWindow();
+	}
+	else if (0 != m_TimerId)
+	{
+		// Speed up the timer so when we do dismiss, there's little delay.
+		KillTimer(m_TimerId);
+		m_TimerId = 0;
+		SetTimer(1, 200, NULL);
+	}
 }
 
 void CSplashWnd::PostNcDestroy()
@@ -165,7 +181,7 @@ int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Set a timer to destroy the splash screen.
 	if (m_bTimed)
-		SetTimer(1, 2000, NULL);
+		m_TimerId = SetTimer(1, 2000, NULL);
 
 	return 0;
 }

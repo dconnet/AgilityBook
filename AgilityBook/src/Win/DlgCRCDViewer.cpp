@@ -37,7 +37,6 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgCRCDViewer.h"
-#include ".\dlgcrcdviewer.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -42,7 +42,6 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "DlgSelectURL.h"
-#include ".\dlgfindlinks.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -193,10 +192,6 @@ void CDlgFindLinks::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST, m_ctrlLinks);
 	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
 	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		m_sortLinks.Save();
-	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgFindLinks, CDialog)
@@ -333,6 +328,7 @@ void CDlgFindLinks::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
 	SetColumnHeaders();
 	si.pCols = &m_sortLinks;
 	m_ctrlLinks.SortItems(CompareLinks, reinterpret_cast<LPARAM>(&si));
+	m_sortLinks.Save();
 	*pResult = 0;
 }
 

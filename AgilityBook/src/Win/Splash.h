@@ -48,10 +48,23 @@ public:
 	CBitmap m_bitmap;
 	CSize m_szBitmap;
 	CString m_Version;
+	UINT_PTR m_TimerId;
 
 // Operations
 public:
-	static void EnableSplashScreen(BOOL bEnable = TRUE);
+	class CSplashWndLock
+	{
+	public:
+		CSplashWndLock()
+		{
+			++c_okToDismiss;
+		}
+		~CSplashWndLock()
+		{
+			--c_okToDismiss;
+		}
+	};
+	static void EnableSplashScreen(BOOL bEnable = true);
 	static void ShowSplashScreen(CWnd* pParentWnd = NULL, bool bTimed = true);
 	static BOOL PreTranslateAppMessage(MSG* pMsg);
 
@@ -69,6 +82,7 @@ protected:
 	BOOL Create(CWnd* pParentWnd = NULL);
 	void HideSplashScreen();
 	static BOOL c_bShowSplashWnd;
+	static int c_okToDismiss;
 	static CSplashWnd* c_pSplashWnd;
 
 // Generated message map functions
