@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-13 DRC Allow course faults on point runs.
@@ -160,6 +161,66 @@ std::string ARBDogRun::GetGenericName() const
 	name += " ";
 	name += m_Event;
 	return name;
+}
+
+size_t ARBDogRun::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	ioStrings.insert(m_Date.GetString(false, true));
+	++nItems;
+
+	if (0 < m_Division.length())
+	{
+		ioStrings.insert(m_Division);
+		++nItems;
+	}
+
+	if (0 < m_Level.length())
+	{
+		ioStrings.insert(m_Level);
+		++nItems;
+	}
+
+	if (0 < m_Height.length())
+	{
+		ioStrings.insert(m_Height);
+		++nItems;
+	}
+
+	if (0 < m_Event.length())
+	{
+		ioStrings.insert(m_Event);
+		++nItems;
+	}
+
+	if (0 < m_Conditions.length())
+	{
+		ioStrings.insert(m_Conditions);
+		++nItems;
+	}
+
+	if (0 < m_Judge.length())
+	{
+		ioStrings.insert(m_Judge);
+		++nItems;
+	}
+
+	if (0 < m_Handler.length())
+	{
+		ioStrings.insert(m_Handler);
+		++nItems;
+	}
+
+	nItems += m_Partners.GetSearchStrings(ioStrings);
+
+	nItems += m_OtherPoints.GetSearchStrings(ioStrings);
+
+	nItems += m_Notes.GetSearchStrings(ioStrings);
+
+	nItems += m_RefRuns.GetSearchStrings(ioStrings);
+
+	return nItems;
 }
 
 bool ARBDogRun::Load(

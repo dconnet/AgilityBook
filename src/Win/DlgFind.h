@@ -56,7 +56,7 @@ public:
 	virtual bool SearchDown() const			{return m_bDown;}
 	virtual void SearchDown(bool bDown)		{m_bDown = bDown;}
 
-	virtual bool Search() = 0;
+	virtual bool Search() const = 0;
 
 protected:
 	CString m_strSearch;

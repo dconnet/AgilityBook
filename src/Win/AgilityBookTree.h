@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
  *                    printing and viewing (already in the listctrl)
  * @li 2003-08-28 DRC Added printing.
@@ -61,9 +62,13 @@ public:
 		: m_pView(pView)
 	{
 	}
-	virtual bool Search();
+	virtual bool Search() const;
 private:
+	void FillTree(HTREEITEM hItem) const;
+	HTREEITEM GetNextItem() const;
 	CAgilityBookTree* m_pView;
+	mutable std::vector<HTREEITEM> m_Items;
+	mutable std::vector<HTREEITEM>::const_iterator m_Iter;
 };
 
 class CAgilityBookTree : public CTreeView, public ICommonView
@@ -140,6 +145,7 @@ protected:
 	afx_msg BOOL OnDogCmd(UINT id);
 	afx_msg void OnEditFind();
 	afx_msg void OnEditFindNext();
+	afx_msg void OnEditFindPrevious();
 	afx_msg void OnUpdateExpand(CCmdUI* pCmdUI);
 	afx_msg void OnExpand();
 	afx_msg void OnUpdateExpandAll(CCmdUI* pCmdUI);

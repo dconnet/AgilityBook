@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-08-18 DRC Added a deceased date.
  * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
@@ -61,6 +62,7 @@ public:
 	bool operator!=(const ARBDog& rhs) const;
 
 	virtual std::string GetGenericName() const	{return GetCallName();}
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
 
 	bool Load(
 		const ARBConfig& inConfig,

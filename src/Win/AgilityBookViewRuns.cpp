@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-09 DRC Added option to not filter runs by selected trial.
@@ -51,6 +52,7 @@
 #include "AgilityBookTree.h"
 #include "AgilityBookTreeData.h"
 #include "ARBTypes.h"
+#include "DlgFind.h"
 #include "MainFrm.h"
 
 using namespace std;
@@ -234,7 +236,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindRuns::Search()
+bool CFindRuns::Search() const
 {
 	bool bFound = false;
 	int inc = 1;
@@ -254,58 +256,27 @@ bool CFindRuns::Search()
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		CStringArray strings;
+		std::set<std::string> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewRunsData* pData = m_pView->GetItemData(index);
 			if (pData)
-			{
-				strings.Add(pData->GetRun()->GetDate().GetString(false, true).c_str());
-				strings.Add(pData->GetRun()->GetDivision().c_str());
-				strings.Add(pData->GetRun()->GetLevel().c_str());
-				strings.Add(pData->GetRun()->GetHeight().c_str());
-				strings.Add(pData->GetRun()->GetConditions().c_str());
-				strings.Add(pData->GetRun()->GetEvent().c_str());
-				strings.Add(pData->GetRun()->GetJudge().c_str());
-				strings.Add(pData->GetRun()->GetHandler().c_str());
-				for (ARBDogRunPartnerList::const_iterator iterPartner = pData->GetRun()->GetPartners().begin();
-					iterPartner != pData->GetRun()->GetPartners().end();
-					++iterPartner)
-				{
-					strings.Add((*iterPartner)->GetHandler().c_str());
-					strings.Add((*iterPartner)->GetDog().c_str());
-					strings.Add((*iterPartner)->GetRegNum().c_str());
-				}
-				for (ARBDogFaultList::const_iterator iterFault = pData->GetRun()->GetFaults().begin();
-					iterFault != pData->GetRun()->GetFaults().end();
-					++iterFault)
-				{
-					strings.Add((*iterFault).c_str());
-				}
-				strings.Add(pData->GetRun()->GetNote().c_str());
-				for (ARBDogReferenceRunList::const_iterator iterRef = pData->GetRun()->GetReferenceRuns().begin();
-					iterRef != pData->GetRun()->GetReferenceRuns().end();
-					++iterRef)
-				{
-					strings.Add((*iterRef)->GetName().c_str());
-					strings.Add((*iterRef)->GetBreed().c_str());
-					strings.Add((*iterRef)->GetNote().c_str());
-				}
-			}
+				pData->GetRun()->GetSearchStrings(strings);
 		}
 		else
 		{
 			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
-				strings.Add(m_pView->GetListCtrl().GetItemText(index, i));
+				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (int i = 0; !bFound && i < strings.GetSize(); ++i)
+		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
+			CString str((*iter).c_str());
 			if (!MatchCase())
-				strings[i].MakeLower();
-			if (0 <= strings[i].Find(search))
+				str.MakeLower();
+			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
 				bFound = true;
@@ -339,6 +310,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
 	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
+	ON_COMMAND(ID_EDIT_FIND_PREVIOUS, OnEditFindPrevious)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_RUN, OnUpdateAgilityEditRun)
 	ON_COMMAND(ID_AGILITY_EDIT_RUN, OnAgilityEditRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
@@ -697,6 +669,16 @@ void CAgilityBookViewRuns::OnEditFind()
 
 void CAgilityBookViewRuns::OnEditFindNext()
 {
+	m_Callback.SearchDown(true);
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
+}
+
+void CAgilityBookViewRuns::OnEditFindPrevious()
+{
+	m_Callback.SearchDown(false);
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else

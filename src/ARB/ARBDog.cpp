@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-08-18 DRC Added a deceased date. While this does change the format
  *                of the file, it's backwards compatible, so it doesn't warrant
@@ -118,6 +119,50 @@ bool ARBDog::operator==(const ARBDog& rhs) const
 bool ARBDog::operator!=(const ARBDog& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBDog::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	ioStrings.insert(m_CallName);
+	++nItems;
+
+	if (m_DOB.IsValid())
+	{
+		ioStrings.insert(m_DOB.GetString(false, true));
+		++nItems;
+	}
+	
+	if (m_Deceased.IsValid())
+	{
+		ioStrings.insert(m_Deceased.GetString(false, true));
+		++nItems;
+	}
+
+	if (0 < m_RegName.length())
+	{
+		ioStrings.insert(m_RegName);
+		++nItems;
+	}
+
+	if (0 < m_Breed.length())
+	{
+		ioStrings.insert(m_Breed);
+		++nItems;
+	}
+
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+
+	nItems += m_RegNums.GetSearchStrings(ioStrings);
+
+	nItems += m_Titles.GetSearchStrings(ioStrings);
+
+	return nItems;
 }
 
 bool ARBDog::Load(

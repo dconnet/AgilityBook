@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-11-22 DRC Update the view when creating or editing an entry.
  * @li 2003-11-21 DRC Enabled consistent copy and select all (old copy moved).
  * @li 2003-08-30 DRC Fixed bug when copying list to clipboard.
@@ -48,6 +49,7 @@
 #include "AgilityBookViewCalendar.h"
 #include "ARBCalendar.h"
 #include "DlgCalendar.h"
+#include "DlgFind.h"
 #include "DlgSelectDog.h"
 #include "DlgTrial.h"
 #include "MainFrm.h"
@@ -178,7 +180,7 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindCalendar::Search()
+bool CFindCalendar::Search() const
 {
 	bool bFound = false;
 	int inc = 1;
@@ -198,37 +200,27 @@ bool CFindCalendar::Search()
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		CStringArray strings;
+		std::set<std::string> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewCalendarData* pData = m_pView->GetItemData(index);
 			if (pData)
-			{
-				strings.Add(pData->GetCalendar()->GetStartDate().GetString(false, false).c_str());
-				strings.Add(pData->GetCalendar()->GetEndDate().GetString(false, false).c_str());
-				strings.Add(pData->GetCalendar()->GetLocation().c_str());
-				strings.Add(pData->GetCalendar()->GetClub().c_str());
-				strings.Add(pData->GetCalendar()->GetVenue().c_str());
-				if (pData->GetCalendar()->GetOpeningDate().IsValid())
-					strings.Add(pData->GetCalendar()->GetOpeningDate().GetString(false, false).c_str());
-				if (pData->GetCalendar()->GetClosingDate().IsValid())
-					strings.Add(pData->GetCalendar()->GetClosingDate().GetString(false, false).c_str());
-				strings.Add(pData->GetCalendar()->GetNote().c_str());
-			}
+				pData->GetCalendar()->GetSearchStrings(strings);
 		}
 		else
 		{
 			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
-				strings.Add(m_pView->GetListCtrl().GetItemText(index, i));
+				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (int i = 0; !bFound && i < strings.GetSize(); ++i)
+		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
+			CString str((*iter).c_str());
 			if (!MatchCase())
-				strings[i].MakeLower();
-			if (0 <= strings[i].Find(search))
+				str.MakeLower();
+			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
 				bFound = true;
@@ -262,6 +254,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
 	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
+	ON_COMMAND(ID_EDIT_FIND_PREVIOUS, OnEditFindPrevious)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_CREATEENTRY_CALENDAR, OnUpdateCalendarCreateEntry)
 	ON_COMMAND(ID_AGILITY_CREATEENTRY_CALENDAR, OnCalendarCreateEntry)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_CALENDAR, OnUpdateCalendarEdit)
@@ -654,6 +647,16 @@ void CAgilityBookViewCalendarList::OnEditFind()
 
 void CAgilityBookViewCalendarList::OnEditFindNext()
 {
+	m_Callback.SearchDown(true);
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
+}
+
+void CAgilityBookViewCalendarList::OnEditFindPrevious()
+{
+	m_Callback.SearchDown(false);
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else

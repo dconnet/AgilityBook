@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
  *                    printing and viewing (already in the listctrl)
  * @li 2003-08-28 DRC Added printing.
@@ -50,6 +51,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "DlgDog.h"
+#include "DlgFind.h"
 #include "MainFrm.h"
 
 #ifdef _DEBUG
@@ -61,43 +63,103 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindTree::Search()
+void CFindTree::FillTree(HTREEITEM hItem) const
+{
+	if (NULL == hItem)
+		return;
+
+	if (TVI_ROOT != hItem)
+		m_Items.push_back(hItem);
+	HTREEITEM hChildItem = m_pView->GetTreeCtrl().GetNextItem(hItem, TVGN_CHILD);
+	while (hChildItem)
+	{
+		FillTree(hChildItem);
+		hChildItem = m_pView->GetTreeCtrl().GetNextItem(hChildItem, TVGN_NEXT);
+	}
+}
+
+HTREEITEM CFindTree::GetNextItem() const
+{
+	HTREEITEM hItem = NULL;
+	if (SearchDown())
+	{
+		++m_Iter;
+		if (m_Iter == m_Items.end())
+			hItem = NULL;
+		else
+			hItem = *m_Iter;
+	}
+	else
+	{
+		if (m_Iter == m_Items.begin())
+			hItem = NULL;
+		else
+		{
+			--m_Iter;
+			hItem = *m_Iter;
+		}
+	}
+	return hItem;
+}
+
+bool CFindTree::Search() const
 {
 	bool bFound = false;
-	int inc = 1;
-	if (!SearchDown())
-		inc = -1;
-	AfxMessageBox("TODO: Implement find in the tree");
-	//TODO: implement tree find
-	/*
-	int index = m_pView->GetSelection();
-	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	m_Items.clear();
+	FillTree(TVI_ROOT);
+	if (0 == m_Items.size())
+		return bFound;
+
+	HTREEITEM hItem = m_pView->GetTreeCtrl().GetSelectedItem();
+	if (NULL == hItem)
 	{
-		index += inc;
+		if (SearchDown())
+			m_Iter = m_Items.begin();
+		else
+		{
+			m_Iter = m_Items.end();
+			--m_Iter;
+		}
 	}
-	else if (0 > index && SearchDown())
-		index = 0;
-	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
-		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	else
+	{
+		for (m_Iter = m_Items.begin(); m_Iter != m_Items.end(); ++m_Iter)
+		{
+			if (*m_Iter == hItem)
+				break;
+		}
+		hItem = GetNextItem();
+	}
 	CString search = Text();
 	if (!MatchCase())
 		search.MakeLower();
-	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	while (!bFound && NULL != hItem)
 	{
-		int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
-		for (int i = 0; !bFound && i < nColumns; ++i)
+		std::set<std::string> strings;
+		if (SearchAll())
 		{
-			CString str = m_pView->GetListCtrl().GetItemText(index, i);
+			CAgilityBookTreeData* pData = m_pView->GetItemData(hItem);
+			if (pData)
+				pData->GetARBBase()->GetSearchStrings(strings);
+		}
+		else
+		{
+			strings.insert((LPCTSTR)m_pView->GetTreeCtrl().GetItemText(hItem));
+		}
+		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		{
+			CString str((*iter).c_str());
 			if (!MatchCase())
 				str.MakeLower();
 			if (0 <= str.Find(search))
 			{
-				m_pView->SetSelection(index, true);
+				m_pView->GetTreeCtrl().Select(hItem, TVGN_CARET);
+				m_pView->GetTreeCtrl().EnsureVisible(hItem);
 				bFound = true;
 			}
 		}
+		hItem = GetNextItem();
 	}
-	*/
 	if (!bFound)
 	{
 		CString msg;
@@ -127,6 +189,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND_EX(ID_EDIT_UNDO, OnDogCmd)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
 	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
+	ON_COMMAND(ID_EDIT_FIND_PREVIOUS, OnEditFindPrevious)
 	ON_UPDATE_COMMAND_UI(ID_EXPAND, OnUpdateExpand)
 	ON_COMMAND(ID_EXPAND, OnExpand)
 	ON_UPDATE_COMMAND_UI(ID_EXPAND_ALL, OnUpdateExpandAll)
@@ -790,6 +853,16 @@ void CAgilityBookTree::OnEditFind()
 
 void CAgilityBookTree::OnEditFindNext()
 {
+	m_Callback.SearchDown(true);
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
+}
+
+void CAgilityBookTree::OnEditFindPrevious()
+{
+	m_Callback.SearchDown(false);
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else

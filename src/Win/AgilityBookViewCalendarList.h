@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
@@ -51,7 +52,7 @@ public:
 		: m_pView(pView)
 	{
 	}
-	virtual bool Search();
+	virtual bool Search() const;
 private:
 	CAgilityBookViewCalendarList* m_pView;
 };
@@ -121,6 +122,7 @@ protected:
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnEditFind();
 	afx_msg void OnEditFindNext();
+	afx_msg void OnEditFindPrevious();
 	afx_msg void OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarCreateEntry();
 	afx_msg void OnUpdateCalendarEdit(CCmdUI* pCmdUI);

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -89,6 +90,12 @@ void ARBDogRunOtherPoints::clear()
 {
 	m_Name.erase();
 	m_Points = 0;
+}
+
+size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	ioStrings.insert(m_Name);
+	return 1;
 }
 
 bool ARBDogRunOtherPoints::Load(

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-16 DRC Fixed a bug in Update with Scoring.
@@ -94,6 +95,12 @@ bool ARBConfigEvent::operator==(const ARBConfigEvent& rhs) const
 bool ARBConfigEvent::operator!=(const ARBConfigEvent& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBConfigEvent::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+	return nItems;
 }
 
 bool ARBConfigEvent::Load(

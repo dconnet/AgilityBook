@@ -145,7 +145,7 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
-bool CFindTraining::Search()
+bool CFindTraining::Search() const
 {
 	bool bFound = false;
 	int inc = 1;
@@ -165,30 +165,27 @@ bool CFindTraining::Search()
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		CStringArray strings;
+		std::set<std::string> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewTrainingData* pData = m_pView->GetItemData(index);
 			if (pData)
-			{
-				strings.Add(pData->GetTraining()->GetDate().GetString(false, false).c_str());
-				strings.Add(pData->GetTraining()->GetName().c_str());
-				strings.Add(pData->GetTraining()->GetNote().c_str());
-			}
+				pData->GetTraining()->GetSearchStrings(strings);
 		}
 		else
 		{
 			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
-				strings.Add(m_pView->GetListCtrl().GetItemText(index, i));
+				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (int i = 0; !bFound && i < strings.GetSize(); ++i)
+		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
+			CString str((*iter).c_str());
 			if (!MatchCase())
-				strings[i].MakeLower();
-			if (0 <= strings[i].Find(search))
+				str.MakeLower();
+			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
 				bFound = true;
@@ -221,6 +218,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
 	ON_COMMAND(ID_EDIT_FIND_NEXT, OnEditFindNext)
+	ON_COMMAND(ID_EDIT_FIND_PREVIOUS, OnEditFindPrevious)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_TRAINING, OnUpdateTrainingEdit)
 	ON_COMMAND(ID_AGILITY_EDIT_TRAINING, OnTrainingEdit)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnTrainingNew)
@@ -532,6 +530,16 @@ void CAgilityBookViewTraining::OnEditFind()
 
 void CAgilityBookViewTraining::OnEditFindNext()
 {
+	m_Callback.SearchDown(true);
+	if (m_Callback.Text().IsEmpty())
+		OnEditFind();
+	else
+		m_Callback.Search();
+}
+
+void CAgilityBookViewTraining::OnEditFindPrevious()
+{
+	m_Callback.SearchDown(false);
 	if (m_Callback.Text().IsEmpty())
 		OnEditFind();
 	else

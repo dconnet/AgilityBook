@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-17 DRC Save would not write data if only CRCD contained info.
  */
@@ -89,6 +90,22 @@ bool ARBDogNotes::operator==(const ARBDogNotes& rhs) const
 bool ARBDogNotes::operator!=(const ARBDogNotes& rhs) const
 {
 	return !operator==(rhs);
+}
+
+size_t ARBDogNotes::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+	for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
+	{
+		ioStrings.insert(*iter);
+		++nItems;
+	}
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+	return nItems;
 }
 
 bool ARBDogNotes::Load(

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-11-22 DRC Added FindRegNum().
  */
@@ -99,6 +100,12 @@ bool ARBDogRegNum::operator!=(const ARBDogRegNum& rhs) const
 std::string ARBDogRegNum::GetGenericName() const
 {
 	return GetVenue() + " " + GetNumber();
+}
+
+size_t ARBDogRegNum::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	ioStrings.insert(GetGenericName());
+	return 1;
 }
 
 bool ARBDogRegNum::Load(

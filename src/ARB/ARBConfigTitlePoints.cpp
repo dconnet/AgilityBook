@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-12 DRC Added as part of file version 5.
  */
@@ -99,6 +100,12 @@ std::string ARBConfigTitlePoints::GetGenericName() const
 	char buffer[100];
 	sprintf(buffer, TITLE_POINTS_NAME_FORMAT, m_Points, m_Faults);
 	return buffer;
+}
+
+size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+	return nItems;
 }
 
 bool ARBConfigTitlePoints::Load(

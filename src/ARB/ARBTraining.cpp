@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-14 DRC Added FindTraining to support importing data.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-21 DRC Created
@@ -95,6 +96,28 @@ bool ARBTraining::operator!=(const ARBTraining& rhs) const
 std::string ARBTraining::GetGenericName() const
 {
 	return m_Date.GetString(false, false);
+}
+
+size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
+{
+	size_t nItems = 0;
+
+	ioStrings.insert(m_Date.GetString(false, false));
+	++nItems;
+
+	if (0 < m_Name.length())
+	{
+		ioStrings.insert(m_Name);
+		++nItems;
+	}
+
+	if (0 < m_Note.length())
+	{
+		ioStrings.insert(m_Note);
+		++nItems;
+	}
+
+	return nItems;
 }
 
 bool ARBTraining::Load(
