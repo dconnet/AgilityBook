@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-25 DRC Added Move().
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -158,6 +159,35 @@ public:
 #else
 		return std::vector<ARBThing*>::erase(inFirst, inLast);
 #endif
+	}
+
+	bool Move(ARBThing* inItem, int inMove)
+	{
+		bool bOk = false;
+		if (inItem)
+		{
+			int n = 0;
+			for (iterator iter = begin(); iter != end(); ++iter, ++n)
+			{
+				if (inItem == *iter)
+				{
+					int offset = n + inMove;
+					if (offset < 0)
+						offset = 0;
+					if (offset >= static_cast<int>(size()))
+						offset = static_cast<int>(size()) - 1;
+					if (offset != n)
+					{
+						bOk = true;
+						ARBThing* tmp = at(n);
+						at(n) = at(offset);
+						at(offset) = tmp;
+						break;
+					}
+				}
+			}
+		}
+		return bOk;
 	}
 
 	/**
