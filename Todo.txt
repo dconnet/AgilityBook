@@ -1,5 +1,7 @@
 Last Updated: 4/20/04
 
+- Remember the last viewed dog, in addition to the last viewed tab.
+
 - Development issue:
   There is a problem somewhere in the Configuration dialogs. When running under
   the debugger (in either release or debug), the following messages will be
