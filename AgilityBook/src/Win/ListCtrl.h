@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
  * @li 2004-09-09 DRC Added tooltips to header control.
  * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
  * @li 2003-11-21 DRC Added multi-select and copy/selectall support.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
  * @li 2004-09-09 DRC Added tooltips to header control.
  * @li 2004-09-03 DRC Using the sort icon forced alignment to left.
  * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
