@@ -31,6 +31,7 @@ Create the files to be distributed (make sure you archive them too)
 - AgilityBook_n_n_n_n.zip (AgilityBook.exe/.chm) [distrib/Win32/vc6/] 
 - Megan.zip [Megan.arb] - Only update on file version changes
 - Any extra readme files required
+- Copy a backup vc6/7 .exe image to \AgilityBook\testVC[67]
 
 In SourceForge, enter the File Releases section in Admin.
 - At the bottom of the page, 'Add Release' to 'agilitybook' package.
