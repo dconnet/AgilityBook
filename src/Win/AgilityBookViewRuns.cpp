@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  *                    Added creating titles/trials/runs from the Run view.
  * @li 2003-08-25 DRC Mirror the selection in the tree.
@@ -252,6 +253,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -656,4 +659,58 @@ void CAgilityBookViewRuns::OnAgilityDeleteRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetItemCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnEditCopy()
+{
+	if (AfxGetMainWnd()->OpenClipboard())
+	{
+		EmptyClipboard();
+
+		CString data;
+		CStringArray line;
+
+		// Take care of the header.
+		GetPrintLine(-1, line);
+		for (int i = 0; i < line.GetSize(); ++i)
+		{
+			if (0 < i)
+				data += '\t';
+			data += line[i];
+		}
+		// Now all the data.
+		for (int index = 0; index < GetListCtrl().GetItemCount(); ++index)
+		{
+			CStringArray line;
+			GetPrintLine(index, line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		// alloc mem block & copy text in
+		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
+		if (NULL != temp)
+		{
+			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			lstrcpy(str, (LPCTSTR)data);
+			GlobalUnlock((void*)temp);
+			// send data to clipbard
+			SetClipboardData(CF_TEXT, temp);
+		}
+
+		CloseClipboard();
+	}
 }
