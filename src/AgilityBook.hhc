@@ -362,23 +362,23 @@
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Judge Information">
-					<param name="Local" value="Help\html\DlgJudgeInfo.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Lists">
+					<param name="Name" value="Generic List">
 					<param name="Local" value="Help\html\DlgListctrl.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="List Viewer">
+					<param name="Name" value="Generic List Viewer">
 					<param name="Local" value="Help\html\DlgListViewer.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Name">
+					<param name="Name" value="Generic Name">
 					<param name="Local" value="Help\html\DlgName.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Judge Information">
+					<param name="Local" value="Help\html\DlgJudgeInfo.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
