@@ -227,7 +227,7 @@ Number of faults allowed for these title points.
 Number of points that will be earned.
 
 .topic HIDC_CONFIG_TITLEPTS_TITLE_POINTS
-Should these points be accumulated as Lifetime points for the venue?
+These points are accumulated as Lifetime points, not Titling points.
 
 .topic HIDC_CONFIG_UPDATE_DEFAULT
 Merge in the configuration defined in this program.
