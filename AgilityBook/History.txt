@@ -1,15 +1,15 @@
 2/9/2004: v1.0.2.8 <in development>
 - Bumped file version to 8.3:
-  - Added Existing Points.
+  - Added Existing Points to dog properties.
 - New features / Enhancements:
   - Changed the Dog Property dialog to multiple tabs.
   - Added nice title names into the dog's property title page.
-  - Added Existing Points to dog properties.
   - Updated dialog accelerators.
 - Bug fixes
   - Updated NADAC Configuration with Novice/Open/Elite Triple Superior
     (mapped old 'Triple Superior' to 'Novice Triple...')
   - Updated ASCA Configuration with ATCHs.
+  - Updated 2 CPE titles with long names.
   - Fixed a number of dialogs where data could be corrupted. (Note: In dialogs
     when using a DDX variable after the dialog returns, be careful about
     modifying it - CDialog::OnOK will force the UI data back into the variable)
@@ -19,7 +19,8 @@
   - In the Run dialog
     - update the YPS when the time is changed.
     - update controls when date changes (in case different rules are in effect)
-  - Fixed some bugs in the configuration dialog when creating/modifying a venue.
+  - Fixed some crasher bugs in the configuration dialog when
+    creating/modifying a venue.
 
 1/26/2004: v1.0.1.8
 - New features / Enhancements:

@@ -551,7 +551,7 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL4-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL4">CL4-R, CL4-H, CL4-S, CL4-F</Titles>
-				<Titles Name="C-ATCH">Standard:
+				<Titles LongName="CPE Agility Trial Champion" Name="C-ATCH">Standard:
   8 Clean Q Legs or 10 Qualifying Legs
   Earned under at least 4 different judges
 Games:
@@ -564,15 +564,14 @@ Games:
 				<Titles LongName="Champion Jackpot" Name="ChJP">15 Qs</Titles>
 				<Titles LongName="Champion FullHouse" Name="ChFH">15 Qs</Titles>
 				<Titles LongName="Champion Jumpers" Name="ChJU">15 Qs</Titles>
-				<Titles Name="CADE">5000 points, 3000 by class requirements, 2000 by handler choice.
+				<Titles LongName="CPE Agility Dog Extraordinaire" Name="CADE">5000 points, 3000 by class requirements, 2000 by handler choice.
 Standard: 500 pts (20 legs)
 Colors: 300 pts (20 legs)
 Wildcard: 400 pts (20 legs)
 Jackpot: 500 pts (20 legs)
 Snooker: 500 pts (20 legs)
 FullHouse: 400 pts (20 legs)
-Jumpers: 400 pts (20 legs)
-</Titles>
+Jumpers: 400 pts (20 legs)</Titles>
 				<Titles LongName="Extraordinaire Standard" Name="ExST">30 Qs</Titles>
 				<Titles LongName="Extraordinaire Colors" Name="ExCL">30 Qs</Titles>
 				<Titles LongName="Extraordinaire Wildcard" Name="ExWC">30 Qs</Titles>
