@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-07-24 DRC Calendar view didn't update when item deleted from list.
  */
 
@@ -42,6 +43,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
+#include "AgilityBookViewCalendar.h"
 #include "ARBCalendar.h"
 #include "DlgCalendar.h"
 #include "DlgSelectDog.h"
@@ -202,6 +204,7 @@ END_MESSAGE_MAP()
 // CAgilityBookViewCalendarList construction/destruction
 
 CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
+	: m_bSuppressSelect(false)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 3, 0);
 	CWinApp* app = AfxGetApp();
@@ -312,6 +315,8 @@ CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int inde
 
 void CAgilityBookViewCalendarList::LoadData()
 {
+	m_bSuppressSelect = true;
+
 	// Remember what's selected.
 	CAgilityBookViewCalendarData* pCurData = GetItemData(GetSelection());
 	if (pCurData)
@@ -403,6 +408,8 @@ void CAgilityBookViewCalendarList::LoadData()
 		pCurData->Release();
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
+
+	m_bSuppressSelect = false;
 }
 
 // CAgilityBookViewCalendarList message handlers
@@ -510,10 +517,16 @@ void CAgilityBookViewCalendarList::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult
 	&& !(LVIS_SELECTED & pNMListView->uOldState)
 	&& (LVIS_SELECTED & pNMListView->uNewState))
 	{
-		CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
-		if (pData)
+		if (!m_bSuppressSelect)
 		{
-			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_SEL, reinterpret_cast<CObject*>(pData->GetCalendar()));
+			CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+			if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
+			{
+				CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
+				pCalView->SuppressSelect(true);
+				pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
+				pCalView->SuppressSelect(false);
+			}
 		}
 	}
 	*pResult = 0;

@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
 #include "CommonView.h"
@@ -49,6 +50,8 @@ protected: // create from serialization only
 
 public:
 	CAgilityBookDoc* GetDocument() const;
+
+	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
 	virtual bool GetMessage(CString& msg) const;
@@ -75,6 +78,9 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+private:
+	bool m_bSuppressSelect;
+
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CAgilityBookViewRuns)
@@ -84,11 +90,18 @@ protected:
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnUpdateAgilityEditRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityEditRun();
+	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityNewTitle();
+	afx_msg void OnUpdateAgilityNewTrial(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityNewTrial();
+	afx_msg void OnUpdateAgilityNewRun(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityNewRun();
 	afx_msg void OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityDeleteRun();
 	//}}AFX_MSG

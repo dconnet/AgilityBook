@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  */
@@ -123,7 +124,7 @@ END_MESSAGE_MAP()
 
 CAgilityBookTree::CAgilityBookTree()
 	: m_bReset(false)
-	, m_bInInit(false)
+	, m_bSuppressSelect(false)
 	, m_pDog(NULL)
 {
 }
@@ -150,9 +151,9 @@ BOOL CAgilityBookTree::PreCreateWindow(CREATESTRUCT& cs)
 
 void CAgilityBookTree::OnInitialUpdate()
 {
-	m_bInInit = true;
+	m_bSuppressSelect = true;
 	CTreeView::OnInitialUpdate();
-	m_bInInit = false;
+	m_bSuppressSelect = false;
 }
 
 void CAgilityBookTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
@@ -398,6 +399,8 @@ bool CAgilityBookTree::GetMessage(CString& msg) const
 
 void CAgilityBookTree::LoadData()
 {
+	m_bSuppressSelect = true;
+
 	CWaitCursor wait;
 	// Remember the currently selected item.
 	const CAgilityBookTreeData* pData = GetCurrentTreeItem();
@@ -429,6 +432,8 @@ void CAgilityBookTree::LoadData()
 		hItem = tree.GetRootItem();
 	tree.SelectItem(hItem);
 	tree.Expand(hItem, TVE_EXPAND);
+
+	m_bSuppressSelect = false;
 }
 
 CAgilityBookTreeData* CAgilityBookTree::GetItemData(HTREEITEM hItem) const
@@ -539,7 +544,7 @@ void CAgilityBookTree::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookTree::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	if (!m_bInInit)
+	if (!m_bSuppressSelect)
 	{
 		NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 		CAgilityBookTreeData* pData = NULL;

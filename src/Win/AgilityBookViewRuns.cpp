@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ *                    Added creating titles/trials/runs from the Run view.
  * @li 2003-08-25 DRC Mirror the selection in the tree.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -43,6 +45,8 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "AgilityBookTree.h"
+#include "AgilityBookTreeData.h"
 #include "ARBTypes.h"
 #include "MainFrm.h"
 
@@ -234,11 +238,18 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
+	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemchanged)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_RUN, OnUpdateAgilityEditRun)
 	ON_COMMAND(ID_AGILITY_EDIT_RUN, OnAgilityEditRun)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
+	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TRIAL, OnUpdateAgilityNewTrial)
+	ON_COMMAND(ID_AGILITY_NEW_TRIAL, OnAgilityNewTrial)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_RUN, OnUpdateAgilityNewRun)
+	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
 	//}}AFX_MSG_MAP
@@ -247,6 +258,7 @@ END_MESSAGE_MAP()
 // CAgilityBookViewRuns construction/destruction
 
 CAgilityBookViewRuns::CAgilityBookViewRuns()
+	: m_bSuppressSelect(false)
 {
 }
 
@@ -348,6 +360,8 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 
 void CAgilityBookViewRuns::LoadData()
 {
+	m_bSuppressSelect = true;
+	
 	CWaitCursor wait;
 
 	// Mirror the selection in the tree here.
@@ -423,6 +437,8 @@ void CAgilityBookViewRuns::LoadData()
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
+
+	m_bSuppressSelect = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -500,6 +516,33 @@ void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	// I only care about the item being selected.
+	if (0 <= pNMListView->iItem
+	&& (LVIF_STATE & pNMListView->uChanged)
+	&& !(LVIS_SELECTED & pNMListView->uOldState)
+	&& (LVIS_SELECTED & pNMListView->uNewState))
+	{
+		if (!m_bSuppressSelect)
+		{
+			CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
+			if (pData)
+			{
+				CAgilityBookTreeData* pTreeData = GetDocument()->GetTreeView()->FindData(TVI_ROOT, pData->GetRun());
+				if (pTreeData)
+				{
+					GetDocument()->GetTreeView()->SuppressSelect(true);
+					GetDocument()->GetTreeView()->GetTreeCtrl().SelectItem(pTreeData->GetHTreeItem());
+					GetDocument()->GetTreeView()->SuppressSelect(false);
+				}
+			}
+		}
+	}
+	*pResult = 0;
+}
+
 void CAgilityBookViewRuns::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
@@ -549,6 +592,54 @@ void CAgilityBookViewRuns::OnAgilityEditRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
 		GetDocument()->EditRun(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityNewTitle()
+{
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		GetDocument()->AddTitle(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityNewTrial()
+{
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		GetDocument()->AddTrial(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityNewRun()
+{
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	if (pData)
+		GetDocument()->AddRun(pData->GetRun());
 }
 
 void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI) 
