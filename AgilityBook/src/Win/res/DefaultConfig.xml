@@ -406,6 +406,9 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="Elite Gamblers" Name="GS-E"/>
 				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GS-E-OP"/>
 				<Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP"/>
+				<Titles LongName="Agility Trial Champion" Name="ATCH">RS-E plus 200 pts, GS-E plus 100 pts, JS-E plus 100 pts</Titles>
+				<Titles LongName="Outstanding Performance Agility Trial Champion" Name="ATCH-OP">RS-E plus 400 pts, GS-E plus 200 pts, JS-E plus 200 pts</Titles>
+				<Titles LongName="Superior Performance Agility Trial Champion" Name="ATCH-SP">RS-E plus 600 pts, GS-E plus 300 pts, JS-E plus 300 pts</Titles>
 			</Division>
 			<Division Name="Veterans">
 				<Level Name="Novice">
@@ -441,6 +444,9 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="Elite Gamblers" Name="GV-E"/>
 				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GV-E-OP"/>
 				<Titles LongName="Elite Gamblers Superior Performance" Name="GV-E-SP"/>
+				<Titles LongName="Agility Trial Champion" Name="V-ATCH">RV-E plus 200 pts, GV-E plus 100 pts, JV-E plus 100 pts</Titles>
+				<Titles LongName="Outstanding Performance Agility Trial Champion" Name="V-ATCH-OP">RV-E plus 400 pts, GV-E plus 200 pts, JV-E plus 200 pts</Titles>
+				<Titles LongName="Superior Performance Agility Trial Champion" Name="V-ATCH-SP">RV-E plus 600 pts, GV-E plus 300 pts, JV-E plus 300 pts</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
