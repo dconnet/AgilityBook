@@ -56,7 +56,7 @@
  *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-12-10 DRC Enable duplication of a title.
  * @li 2004-08-14 DRC Fixed a problem dbl-clicking when nothing was selected.
  * @li 2004-04-29 DRC Changed the way events are displayed (from tree to list).
@@ -848,7 +848,7 @@ void CDlgConfigVenue::OnNew()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(), false, "", "", this);
+				CDlgConfigTitle dlg(name.c_str(), "", "", 0, this);
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
@@ -859,7 +859,7 @@ void CDlgConfigVenue::OnNew()
 						continue;
 					}
 					ARBConfigTitle* pTitle = pDivData->GetDivision()->GetTitles().AddTitle(name);
-					pTitle->SetAllowMany(dlg.AllowMany());
+					pTitle->SetMultiple(dlg.GetMultiple());
 					pTitle->SetLongName(dlg.GetLongName());
 					pTitle->SetDescription(dlg.GetDesc());
 					if (pTitle)
@@ -1245,8 +1245,11 @@ void CDlgConfigVenue::OnEdit()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(), pTitleData->GetTitle()->AllowMany(),
-					pTitleData->GetTitle()->GetLongName().c_str(), pTitleData->GetTitle()->GetDescription().c_str(), this);
+				CDlgConfigTitle dlg(name.c_str(),
+					pTitleData->GetTitle()->GetLongName().c_str(),
+					pTitleData->GetTitle()->GetDescription().c_str(),
+					pTitleData->GetTitle()->GetMultiple(),
+					this);
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
@@ -1279,7 +1282,7 @@ void CDlgConfigVenue::OnEdit()
 						}
 						pTitleData->GetTitle()->SetName(name);
 					}
-					pTitleData->GetTitle()->SetAllowMany(dlg.AllowMany());
+					pTitleData->GetTitle()->SetMultiple(dlg.GetMultiple());
 					pTitleData->GetTitle()->SetLongName(longname);
 					pTitleData->GetTitle()->SetDescription(dlg.GetDesc());
 					m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);

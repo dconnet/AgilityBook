@@ -31,13 +31,14 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-05 DRC Created.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgConfigTitle.h"
+#include ".\dlgconfigtitle.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,14 +49,15 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitle dialog
 
-CDlgConfigTitle::CDlgConfigTitle(LPCTSTR name,
-		bool bAllowMany, LPCTSTR longname, LPCTSTR desc,
+CDlgConfigTitle::CDlgConfigTitle(LPCTSTR name, LPCTSTR longname,
+		LPCTSTR desc, short inMultiple,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
 	, m_Name(name)
-	, m_AllowMany(bAllowMany ? TRUE : FALSE)
 	, m_LongName(longname)
 	, m_Desc(desc)
+	, m_AllowMany(1 < inMultiple ? TRUE : FALSE)
+	, m_Multiple(inMultiple)
 {
 	m_Desc.Replace("\n", "\r\n");
 	//{{AFX_DATA_INIT(CDlgConfigTitle)
@@ -71,14 +73,17 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitle)
 	DDX_Text(pDX, IDC_CONFIG_TITLE_NAME, m_Name);
-	DDX_Check(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_AllowMany);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_LONG_NAME, m_LongName);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_DESC, m_Desc);
+	DDX_Check(pDX, IDC_CONFIG_TITLE_ALLOW_MULTIPLE, m_AllowMany);
+	DDX_Control(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_ctrlMultiple);
+	DDX_Text(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_Multiple);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitle)
+	ON_BN_CLICKED(IDC_CONFIG_TITLE_ALLOW_MULTIPLE, OnAllowMultiple)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -87,9 +92,21 @@ END_MESSAGE_MAP()
 BOOL CDlgConfigTitle::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-
+	m_ctrlMultiple.EnableWindow(m_AllowMany);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgConfigTitle::OnAllowMultiple()
+{
+	if (!UpdateData(TRUE))
+		return;
+	if (m_AllowMany && 1 > m_Multiple)
+	{
+		m_Multiple = 2;
+		UpdateData(FALSE);
+	}
+	m_ctrlMultiple.EnableWindow(m_AllowMany);
 }
 
 void CDlgConfigTitle::OnOK()
@@ -114,6 +131,19 @@ void CDlgConfigTitle::OnOK()
 		MessageBeep(0);
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_TITLE_NAME));
 		return;
+	}
+	if (m_AllowMany && 1 > m_Multiple)
+	{
+		MessageBeep(0);
+		m_Multiple = 2;
+		UpdateData(FALSE);
+		GotoDlgCtrl(&m_ctrlMultiple);
+		return;
+	}
+	else if (!m_AllowMany && 0 != m_Multiple)
+	{
+		m_Multiple = 0;
+		UpdateData(FALSE);
 	}
 	CDlgBaseDialog::OnOK();
 	// Get rid of the dialog first - either that or we have to UpdateData(FALSE)

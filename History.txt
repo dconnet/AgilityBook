@@ -1,11 +1,11 @@
-1/10/2005: v1.5.0.10 <in development>
+1/11/2005: v1.5.0.10 <in development>
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
   - Renamed 'machPts' to 'speedPts'.
   - Added 'LongName' to 'Venue'.
   - Added 'SubName' to 'Event','Run','ExistingPoints'.
-  - Added 'allowMany' to 'Titles', 'instance' to 'Title'.
+  - Added 'Multiple' to 'Titles', 'instance' to 'Title'.
   - Updated AAC.
   - Added CKC and TDAA.
 - New features / Enhancements:
@@ -24,6 +24,7 @@
   - Added a SubName to an event so users can 'create' new events without
     the need to modify the configuration.
   - When you view run details in the Points view, also show existing points.
+  - Added ability to create MACH-2/NATCH-4(etc) titles.
 - Bug fixes
   - Added a comment to USDAA/PD3 title about the old requirements.
   - Compute the score (in the run dialog) for NA runs that do not have
@@ -40,6 +41,9 @@
     in a duplicate entry in the list. Closing the dialog and reopening it
     would clear up the problem.
   - Time faults are not properly computed in AKC in Open and Excellent.
+  - Creating a title while in the Points view didn't mark the document as
+    modified. This meant you could close the program and it would not prompt
+    you to save it.
 
 10/31/2004: v1.4.0.10
 - Bumped file version to 10.0, Configuration v6:

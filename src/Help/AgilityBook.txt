@@ -204,8 +204,12 @@ Description of this title.
 .topic HIDC_CONFIG_TITLE_LONG_NAME
 Long name of the title.
 
+.topic HIDC_CONFIG_TITLE_ALLOW_MULTIPLE
+Allow the title to be created multiple times. For instance, MACH, MACH-2, etc.
+Usually the requirements are a multiple of listed requirements for a single title.
+
 .topic HIDC_CONFIG_TITLE_MULTIPLE
-Allow the title to be created multiple times. For instance, MACH, MACH2, etc.
+Starting number when multiple titles are allowed. Usually, this will be 2. In some cases, like NADAC, it may start higher.
 
 .topic HIDC_CONFIG_TITLE_NAME
 Title abbreviation.
