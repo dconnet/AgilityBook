@@ -93,6 +93,11 @@ BEGIN
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
     SEPARATOR
+    BUTTON      ID_AGILITY_NEW_TITLE
+    BUTTON      ID_AGILITY_NEW_TRIAL
+    BUTTON      ID_AGILITY_NEW_RUN
+    BUTTON      ID_AGILITY_NEW_CALENDAR
+    SEPARATOR
     BUTTON      ID_EDIT_CUT
     BUTTON      ID_EDIT_COPY
     BUTTON      ID_EDIT_PASTE
@@ -665,7 +670,7 @@ BEGIN
     EDITTEXT        IDC_PARTNER,156,75,227,12,ES_AUTOHSCROLL | ES_READONLY
     GROUPBOX        "By Time",IDC_STATIC,7,92,376,30
     RTEXT           "Course Faults",IDC_FAULTS_TEXT,15,104,44,8
-    EDITTEXT        IDC_FAULTS,63,102,25,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FAULTS,63,102,25,12,ES_AUTOHSCROLL | ES_NUMBER
     RTEXT           "Time",IDC_TIME4FAULT_TEXT,94,104,16,8
     EDITTEXT        IDC_TIME4FAULT,114,102,30,12,ES_AUTOHSCROLL
     RTEXT           "Yards",IDC_YARDS_TEXT,149,104,19,8
@@ -688,9 +693,9 @@ BEGIN
     RTEXT           "Close",IDC_CLOSE_PTS_TEXT,327,137,18,8
     EDITTEXT        IDC_CLOSE_PTS,350,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
     RTEXT           "Place",IDC_STATIC,7,162,19,8
-    EDITTEXT        IDC_PLACE,30,160,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PLACE,30,160,20,12,ES_AUTOHSCROLL | ES_NUMBER
     CTEXT           "of",IDC_STATIC,52,162,8,8
-    EDITTEXT        IDC_IN_CLASS,62,160,20,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_IN_CLASS,62,160,20,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "Dogs Q'd",IDC_STATIC,100,162,30,8
     EDITTEXT        IDC_DOGS_QD,134,160,20,12,ES_AUTOHSCROLL
     LTEXT           "Q?",IDC_STATIC,165,162,10,8
@@ -749,7 +754,7 @@ CAPTION "Reference Run"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "&Place",IDC_STATIC,7,9,19,8
-    EDITTEXT        IDC_PLACE,30,7,25,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PLACE,30,7,25,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "&Q?",IDC_STATIC,60,9,10,8
     COMBOBOX        IDC_Q,72,7,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
@@ -1564,7 +1569,7 @@ BEGIN
     ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
     ID_CONFIG_EDIT          "Edit a configuration item\nEdit"
     ID_CONFIG_DELETE        "Delete a configuration item\nDelete"
-    ID_AGILITY_NEW_CALENDAR "Create an upcoming calendar entry\nNew Calendar"
+    ID_AGILITY_NEW_CALENDAR "Create an upcoming calendar entry\nNew Calendar Entry"
     ID_AGILITY_NEW_DOG      "Create a new dog\nNew Dog"
     ID_AGILITY_NEW_TITLE    "Create a new title\nNew Title"
     ID_AGILITY_NEW_TRIAL    "Create a new trial\nNew Trial"
