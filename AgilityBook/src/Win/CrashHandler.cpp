@@ -122,7 +122,7 @@ static DWORD GetModuleBaseNameA(HANDLE hProcess, HMODULE hModule, LPSTR lpBaseNa
 			return FALSE;
 		}
 		// Now do the GetProcAddress stuff.
-		g_pGetModuleBaseName = (GETMODULEBASENAME)GetProcAddress(hInst, "GetModuleBaseNameA");
+		g_pGetModuleBaseName = reinterpret_cast<GETMODULEBASENAME>(GetProcAddress(hInst, "GetModuleBaseNameA"));
 		ASSERT(NULL != g_pGetModuleBaseName);
 		if (NULL == g_pGetModuleBaseName)
 		{
@@ -196,7 +196,7 @@ static DWORD BSUGetModuleBaseName(HANDLE hProcess,
 			// Move up one character.
 			++pStart;
 			//lint -e666
-			iMin = min((int)nSize, lstrlen(pStart) + 1);
+			iMin = min(static_cast<int>(nSize), lstrlen(pStart) + 1);
 			//lint +e666
 			lstrcpyn(lpBaseName, pStart, iMin);
 		}
@@ -204,7 +204,7 @@ static DWORD BSUGetModuleBaseName(HANDLE hProcess,
 		{
 			// Copy the szBuff buffer in.
 			//lint -e666
-			iMin = min((int)nSize, lstrlen(szBuff) + 1);
+			iMin = min(static_cast<int>(nSize), lstrlen(szBuff) + 1);
 			//lint +e666
 			lstrcpyn(lpBaseName, szBuff, iMin);
 		}
@@ -318,7 +318,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		iCurr += BSUGetModuleBaseName(GetCurrentProcess(), NULL, g_szBuff, BUFF_SIZE);
 		iCurr += wsprintf(g_szBuff + iCurr , _T(" caused a "));
 
-		dwTemp = (DWORD)ConvertSimpleException(pExPtrs->ExceptionRecord->ExceptionCode);
+		dwTemp = reinterpret_cast<DWORD>(ConvertSimpleException(pExPtrs->ExceptionRecord->ExceptionCode));
 
 		if (NULL != dwTemp)
 		{
@@ -341,7 +341,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		iCurr += wsprintf(g_szBuff + iCurr, _T(" in module "));
 
 		dwTemp = g_SymGetModuleBase(GetCurrentProcess(),
-			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress);
+			reinterpret_cast<DWORD>(pExPtrs->ExceptionRecord->ExceptionAddress));
 
 		ASSERT(NULL != dwTemp);
 
@@ -352,7 +352,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		else
 		{
 			iCurr += BSUGetModuleBaseName(GetCurrentProcess(),
-				(HINSTANCE)dwTemp, g_szBuff + iCurr, BUFF_SIZE - iCurr);
+				reinterpret_cast<HINSTANCE>(dwTemp), g_szBuff + iCurr, BUFF_SIZE - iCurr);
 		}
 
 #ifdef _ALPHA_
@@ -377,14 +377,14 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 
 		DWORD dwDisp;
 		if (g_SymGetSymFromAddr(GetCurrentProcess(),
-			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress,
+			reinterpret_cast<DWORD>(pExPtrs->ExceptionRecord->ExceptionAddress),
 			&dwDisp, pSym))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
 
 			// Copy no more than there is room for.
 			dwTemp = lstrlen(pSym->Name);
-			if ((int)dwTemp > (BUFF_SIZE - iCurr - 20))
+			if (static_cast<int>(dwTemp) > (BUFF_SIZE - iCurr - 20))
 			{
 				lstrcpyn(g_szBuff + iCurr, pSym->Name, BUFF_SIZE - iCurr - 1);
 				// Gotta leave now.
@@ -420,14 +420,14 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		g_stLine.SizeOfStruct = sizeof(IMAGEHLP_LINE);
 
 		if (InternalSymGetLineFromAddr(GetCurrentProcess(),
-			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress,
+			reinterpret_cast<DWORD>(pExPtrs->ExceptionRecord->ExceptionAddress),
 			&dwDisp, &g_stLine))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
 
 			// Copy no more than there is room for.
 			dwTemp = lstrlen(g_stLine.FileName);
-			if ((int)dwTemp > (BUFF_SIZE - iCurr - 25))
+			if (static_cast<int>(dwTemp) > (BUFF_SIZE - iCurr - 25))
 			{
 				lstrcpyn(g_szBuff + iCurr,
 					g_stLine.FileName,
@@ -537,7 +537,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 			else
 			{
 				iCurr += BSUGetModuleBaseName(GetCurrentProcess(),
-					(HINSTANCE)dwTemp,
+					reinterpret_cast<HINSTANCE>(dwTemp),
 					g_szBuff + iCurr,
 					BUFF_SIZE - iCurr);
 			}
@@ -777,7 +777,7 @@ static void QueryKey(FILE* output, HKEY hKey, int inIndent)
 				pType = "SZ";
 			{
 				dwLen = BUFF_SIZE;
-				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, (LPBYTE)g_szBuff2, &dwLen);
+				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
 				if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
 				{
 					bOk = true;
@@ -883,15 +883,15 @@ bool InitCrashHandler(HKEY hAppKey)
 			SetLastErrorEx(ERROR_DLL_INIT_FAILED, SLE_ERROR);
 			return false;
 		}
-		g_pfnSymGetLineFromAddr = (PFNSYMGETLINEFROMADDR)GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr");
+		g_pfnSymGetLineFromAddr = reinterpret_cast<PFNSYMGETLINEFROMADDR>(GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr"));
 		// Now do the GetProcAddress stuff.
-		g_SymGetOptions = (PFNSYMGETOPTIONS)GetProcAddress(hInst, "SymGetOptions");
-		g_SymSetOptions = (PFNSYMSETOPTIONS)GetProcAddress(hInst, "SymSetOptions");
-		g_SymInitialize = (PFNSYMINITIALIZE)GetProcAddress(hInst, "SymInitialize");
-		g_SymGetModuleBase = (PFNSYMGETMODULEBASE)GetProcAddress(hInst, "SymGetModuleBase");
-		g_SymGetSymFromAddr = (PFNSYMGETSYMFROMADDR)GetProcAddress(hInst, "SymGetSymFromAddr");
-		g_SymFunctionTableAccess = (PFNSYMFUNCTIONTABLEACCESS)GetProcAddress(hInst, "SymFunctionTableAccess");
-		g_StackWalk = (PFNSTACKWALK)GetProcAddress(hInst, "StackWalk");
+		g_SymGetOptions = reinterpret_cast<PFNSYMGETOPTIONS>(GetProcAddress(hInst, "SymGetOptions"));
+		g_SymSetOptions = reinterpret_cast<PFNSYMSETOPTIONS>(GetProcAddress(hInst, "SymSetOptions"));
+		g_SymInitialize = reinterpret_cast<PFNSYMINITIALIZE>(GetProcAddress(hInst, "SymInitialize"));
+		g_SymGetModuleBase = reinterpret_cast<PFNSYMGETMODULEBASE>(GetProcAddress(hInst, "SymGetModuleBase"));
+		g_SymGetSymFromAddr = reinterpret_cast<PFNSYMGETSYMFROMADDR>(GetProcAddress(hInst, "SymGetSymFromAddr"));
+		g_SymFunctionTableAccess = reinterpret_cast<PFNSYMFUNCTIONTABLEACCESS>(GetProcAddress(hInst, "SymFunctionTableAccess"));
+		g_StackWalk = reinterpret_cast<PFNSTACKWALK>(GetProcAddress(hInst, "StackWalk"));
 
 		// Set up the symbol engine.
 		DWORD dwOpts = g_SymGetOptions();

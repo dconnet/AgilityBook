@@ -65,7 +65,7 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 
 	// Calendar
-	m_pageCalendar.m_DayOfWeek = (int)CAgilityBookOptions::GetFirstDayOfWeek();
+	m_pageCalendar.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
 	m_pageCalendar.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
 	m_pageCalendar.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
 	m_pageCalendar.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
@@ -139,7 +139,7 @@ void CDlgOptions::OnOK()
 		CWaitCursor wait;
 		bool bOldNewest = CAgilityBookOptions::GetNewestDatesFirst();
 		// Calendar
-		CAgilityBookOptions::SetFirstDayOfWeek((ARBDate::DayOfWeek)m_pageCalendar.m_DayOfWeek);
+		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCalendar.m_DayOfWeek));
 		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCalendar.m_bAutoDelete ? true : false);
 		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCalendar.m_bHideOld ? false : true);
 		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCalendar.m_Days);

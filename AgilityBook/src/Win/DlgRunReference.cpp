@@ -314,7 +314,7 @@ BOOL CDlgRunReference::OnInitDialog()
 
 void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(pDispInfo->item.lParam);
@@ -357,7 +357,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgRunReference::OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
 	si.pThis = this;
 	m_sortRefRuns.SetColumnOrder(pNMListView->iSubItem);
@@ -370,7 +370,7 @@ void CDlgRunReference::OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgRunReference::OnItemchangedRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }

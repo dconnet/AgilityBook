@@ -332,7 +332,7 @@ BOOL CDlgDogTitles::OnInitDialog()
 
 void CDlgDogTitles::OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
 	si.pDoc = m_pDoc;
 	m_sortTitles.SetColumnOrder(pNMListView->iSubItem);
@@ -351,7 +351,7 @@ void CDlgDogTitles::OnDblclkTitles(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogTitles::OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult)
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }

@@ -104,9 +104,9 @@ CWizardExcelExportImpl::CWizardExcelExportImpl(_Application& ioApp)
 	: m_App(ioApp)
 	, m_Rows(0)
 	, m_Cols(0)
-	, covTrue((short)TRUE)
-	, covFalse((short)FALSE)
-	, covOptional((long)DISP_E_PARAMNOTFOUND, VT_ERROR)
+	, covTrue(static_cast<short>(TRUE))
+	, covFalse(static_cast<short>(FALSE))
+	, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
 {
 	// Create a new workbook.
 	Workbooks books = m_App.get_Workbooks();
@@ -250,9 +250,9 @@ private:
 
 CWizardExcelImportImpl::CWizardExcelImportImpl(_Application& ioApp)
 	: m_App(ioApp)
-	, covTrue((short)TRUE)
-	, covFalse((short)FALSE)
-	, covOptional((long)DISP_E_PARAMNOTFOUND, VT_ERROR)
+	, covTrue(static_cast<short>(TRUE))
+	, covFalse(static_cast<short>(FALSE))
+	, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
 {
 }
 

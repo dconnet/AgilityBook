@@ -235,7 +235,7 @@ void CDlgRunCRCD::OnCopy()
 				{
 					m_ViewText = true;
 					HANDLE hData = GetClipboardData(CF_TEXT);
-					CString str((LPCTSTR)GlobalLock(hData));
+					CString str(reinterpret_cast<LPCTSTR>(GlobalLock(hData)));
 					GlobalUnlock(hData);
 					m_ctrlText.SetWindowText(str);
 					str.TrimRight();
@@ -250,7 +250,7 @@ void CDlgRunCRCD::OnCopy()
 					// just clear it then.
 					if (bMeta)
 					{
-						HENHMETAFILE hData = (HENHMETAFILE)GetClipboardData(CF_ENHMETAFILE);
+						HENHMETAFILE hData = reinterpret_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
 						m_metaFile = CopyEnhMetaFile(hData, NULL);
 						ENHMETAHEADER header;
 						GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);

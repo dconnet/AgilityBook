@@ -705,9 +705,9 @@ void CListView2::OnEditCopy()
 		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
 		if (NULL != temp)
 		{
-			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock((void*)temp);
+			GlobalUnlock(temp);
 			// send data to clipbard
 			SetClipboardData(CF_TEXT, temp);
 		}

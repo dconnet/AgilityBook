@@ -1176,9 +1176,9 @@ void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, 
 	{
 		CString msg;
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
 
@@ -1203,7 +1203,7 @@ void CAgilityBookViewRuns::Dump(CDumpContext& dc) const
 CAgilityBookDoc* CAgilityBookViewRuns::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return (CAgilityBookDoc*)m_pDocument;
+	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -1362,9 +1362,9 @@ void CAgilityBookViewRuns::LoadData()
 	if (IsWindowVisible())
 	{
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 
 	SORT_RUN_INFO info;
@@ -1390,7 +1390,7 @@ void CAgilityBookViewRuns::LoadData()
 void CAgilityBookViewRuns::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
-	SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, GetMessagePos());
+	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
 
@@ -1446,7 +1446,7 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	if (0 != pNMListView->iSubItem)
 	{
 		HeaderSort(abs(m_SortColumn.GetColumn()), CHeaderCtrl2::eNoSort);
@@ -1466,7 +1466,7 @@ void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pDispInfo->item.lParam);
@@ -1484,7 +1484,7 @@ void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	// I only care about the item being selected.
 	if (0 <= pNMListView->iItem
 	&& (LVIF_STATE & pNMListView->uChanged)
@@ -1511,7 +1511,7 @@ void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookViewRuns::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
 	if (pData)
 		pData->Release();
@@ -1529,7 +1529,7 @@ void CAgilityBookViewRuns::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookViewRuns::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_KEYDOWN* pLVKeyDown = (LV_KEYDOWN*)pNMHDR;
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
 	{
 	default:

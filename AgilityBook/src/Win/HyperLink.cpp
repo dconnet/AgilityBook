@@ -244,7 +244,7 @@ void CHyperLink::PreSubclassWindow()
 	CFont* pFont = GetFont();
 	if (!pFont)
 	{
-		HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+		HFONT hFont = reinterpret_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
 		if (hFont == NULL)
 			hFont = (HFONT) GetStockObject(ANSI_VAR_FONT);
 		if (hFont)
@@ -256,7 +256,7 @@ void CHyperLink::PreSubclassWindow()
 	LOGFONT lf;
 	pFont->GetLogFont(&lf);
 	m_StdFont.CreateFontIndirect(&lf);
-	lf.lfUnderline = (BYTE)TRUE;
+	lf.lfUnderline = static_cast<BYTE>(TRUE);
 	m_UnderlineFont.CreateFontIndirect(&lf);
 
 	// Create the tooltip - must do this before calling PositionWindow!
@@ -297,7 +297,7 @@ HBRUSH CHyperLink::CtlColor(CDC* pDC, UINT nCtlColor)
 		pDC->SetTextColor(m_crLinkColor);
 	// transparent text.
 	pDC->SetBkMode(TRANSPARENT);
-	return (HBRUSH)GetStockObject(NULL_BRUSH);
+	return reinterpret_cast<HBRUSH>(GetStockObject(NULL_BRUSH));
 }
 
 BOOL CHyperLink::OnEraseBkgnd(CDC* pDC)

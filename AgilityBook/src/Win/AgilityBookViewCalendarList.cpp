@@ -476,9 +476,9 @@ void CAgilityBookViewCalendarList::OnActivateView(BOOL bActivate, CView* pActiva
 	{
 		CString msg;
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
 
@@ -503,7 +503,7 @@ void CAgilityBookViewCalendarList::Dump(CDumpContext& dc) const
 CAgilityBookDoc* CAgilityBookViewCalendarList::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return (CAgilityBookDoc*)m_pDocument;
+	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -654,9 +654,9 @@ void CAgilityBookViewCalendarList::LoadData()
 	if (IsWindowVisible())
 	{
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 
 	SORT_CAL_INFO info;
@@ -680,7 +680,7 @@ void CAgilityBookViewCalendarList::LoadData()
 void CAgilityBookViewCalendarList::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
-	SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, GetMessagePos());
+	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
 
@@ -736,7 +736,7 @@ void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	HeaderSort(abs(m_SortColumn.GetColumn())-1, CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
 	if (m_SortColumn.GetColumn() == pNMListView->iSubItem + 1)
@@ -753,7 +753,7 @@ void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult
 
 void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pDispInfo->item.lParam);
@@ -794,7 +794,7 @@ void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult
 
 void CAgilityBookViewCalendarList::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NMLISTVIEW* pNMListView = (NMLISTVIEW*)pNMHDR;
+	NMLISTVIEW* pNMListView = reinterpret_cast<NMLISTVIEW*>(pNMHDR);
 	// I only care about the item being selected.
 	if (0 <= pNMListView->iItem
 	&& (LVIF_STATE & pNMListView->uChanged)
@@ -818,7 +818,7 @@ void CAgilityBookViewCalendarList::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult
 
 void CAgilityBookViewCalendarList::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pNMListView->lParam);
 	if (pData)
 		pData->Release();
@@ -834,7 +834,7 @@ void CAgilityBookViewCalendarList::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookViewCalendarList::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_KEYDOWN* pLVKeyDown = (LV_KEYDOWN*)pNMHDR;
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
 	{
 	default:

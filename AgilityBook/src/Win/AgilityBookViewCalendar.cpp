@@ -319,9 +319,9 @@ void CAgilityBookViewCalendar::LoadData()
 	if (IsWindowVisible())
 	{
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 
 	Invalidate();
@@ -372,9 +372,9 @@ void CAgilityBookViewCalendar::OnActivateView(BOOL bActivate, CView* pActivateVi
 	{
 		CString msg;
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 	if (m_Current.IsValid())
 	{
@@ -404,7 +404,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
 			pDC->SetBkMode(TRANSPARENT);
 		}
-		bool bActive = (((CMainFrame*)AfxGetMainWnd())->GetActiveView() == this);
+		bool bActive = (reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->GetActiveView() == this);
 		CBrush brCurrentActive(GetSysColor(COLOR_HIGHLIGHT));
 		CBrush brCurrentInActive(GetSysColor(COLOR_MENU));
 		CFont fontDate, fontText;
@@ -648,7 +648,7 @@ void CAgilityBookViewCalendar::Dump(CDumpContext& dc) const
 CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return (CAgilityBookDoc*)m_pDocument;
+	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -948,9 +948,9 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
 		if (NULL != temp)
 		{
-			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock((void*)temp);
+			GlobalUnlock(reinterpret_cast<void*>(temp));
 			// send data to clipbard
 			SetClipboardData(CF_TEXT, temp);
 		}

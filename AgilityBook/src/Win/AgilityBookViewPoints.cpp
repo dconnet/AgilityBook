@@ -202,7 +202,7 @@ void CAgilityBookViewPoints::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CAgilityBookViewPoints::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	LV_KEYDOWN* pLVKeyDown = (LV_KEYDOWN*)pNMHDR;
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
 	{
 	default:
@@ -246,9 +246,9 @@ void CAgilityBookViewPoints::OnActivateView(BOOL bActivate, CView* pActivateView
 	{
 		CString msg;
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
 
@@ -276,7 +276,7 @@ void CAgilityBookViewPoints::Dump(CDumpContext& dc) const
 CAgilityBookDoc* CAgilityBookViewPoints::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return (CAgilityBookDoc*)m_pDocument;
+	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -565,7 +565,7 @@ int CAgilityBookViewPoints::DoEvents(
 				item.iSubItem = 0;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 				GetListCtrl().InsertItem(&item);
 				++nAdded;
 			}
@@ -588,7 +588,7 @@ int CAgilityBookViewPoints::DoEvents(
 		item.iSubItem = 0;
 		item.mask = LVIF_TEXT | LVIF_PARAM;
 		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(pData);
+		item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 		GetListCtrl().InsertItem(&item);
 		++nAdded;
 	}
@@ -600,7 +600,7 @@ int CAgilityBookViewPoints::DoEvents(
 		item.iSubItem = 0;
 		item.mask = LVIF_TEXT | LVIF_PARAM;
 		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(pData);
+		item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 		GetListCtrl().InsertItem(&item);
 		++nAdded;
 	}
@@ -678,7 +678,7 @@ void CAgilityBookViewPoints::LoadData()
 		item.iSubItem = 0;
 		item.mask = LVIF_TEXT | LVIF_PARAM;
 		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(pData);
+		item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 		GetListCtrl().InsertItem(&item);
 		++idxInsertItem;
 
@@ -713,7 +713,7 @@ void CAgilityBookViewPoints::LoadData()
 						item.iSubItem = 0;
 						item.mask = LVIF_TEXT | LVIF_PARAM;
 						item.pszText = LPSTR_TEXTCALLBACK;
-						item.lParam = reinterpret_cast<LPARAM>(pData);
+						item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 						GetListCtrl().InsertItem(&item);
 						++idxInsertItem;
 					}
@@ -723,7 +723,7 @@ void CAgilityBookViewPoints::LoadData()
 					item.iSubItem = 0;
 					item.mask = LVIF_TEXT | LVIF_PARAM;
 					item.pszText = LPSTR_TEXTCALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(pData);
+					item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 					GetListCtrl().InsertItem(&item);
 					++idxInsertItem;
 				}
@@ -754,7 +754,7 @@ void CAgilityBookViewPoints::LoadData()
 					item.iSubItem = 0;
 					item.mask = LVIF_TEXT | LVIF_PARAM;
 					item.pszText = LPSTR_TEXTCALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(pData);
+					item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 					GetListCtrl().InsertItem(&item);
 					++idxInsertItem;
 				}
@@ -805,7 +805,7 @@ void CAgilityBookViewPoints::LoadData()
 				item.iSubItem = 0;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 				GetListCtrl().InsertItem(&item);
 				++idxInsertItem;
 			}
@@ -881,7 +881,7 @@ void CAgilityBookViewPoints::LoadData()
 						item.iSubItem = 0;
 						item.mask = LVIF_TEXT | LVIF_PARAM;
 						item.pszText = LPSTR_TEXTCALLBACK;
-						item.lParam = reinterpret_cast<LPARAM>(pData);
+						item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 						GetListCtrl().InsertItem(&item);
 					}
 					break;
@@ -912,7 +912,7 @@ void CAgilityBookViewPoints::LoadData()
 							item.iSubItem = 0;
 							item.mask = LVIF_TEXT | LVIF_PARAM;
 							item.pszText = LPSTR_TEXTCALLBACK;
-							item.lParam = reinterpret_cast<LPARAM>(pData);
+							item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 							GetListCtrl().InsertItem(&item);
 						}
 					}
@@ -944,7 +944,7 @@ void CAgilityBookViewPoints::LoadData()
 							item.iSubItem = 0;
 							item.mask = LVIF_TEXT | LVIF_PARAM;
 							item.pszText = LPSTR_TEXTCALLBACK;
-							item.lParam = reinterpret_cast<LPARAM>(pData);
+							item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 							GetListCtrl().InsertItem(&item);
 						}
 					}
@@ -978,7 +978,7 @@ void CAgilityBookViewPoints::LoadData()
 							item.iSubItem = 0;
 							item.mask = LVIF_TEXT | LVIF_PARAM;
 							item.pszText = LPSTR_TEXTCALLBACK;
-							item.lParam = reinterpret_cast<LPARAM>(pData);
+							item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 							GetListCtrl().InsertItem(&item);
 						}
 					}
@@ -996,9 +996,9 @@ void CAgilityBookViewPoints::LoadData()
 	if (IsWindowVisible())
 	{
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 
 	GetListCtrl().SetRedraw(TRUE);

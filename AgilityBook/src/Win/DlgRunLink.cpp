@@ -182,7 +182,7 @@ void CDlgRunLink::OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgRunLink::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult)
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }

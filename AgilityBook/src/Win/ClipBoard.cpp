@@ -66,9 +66,9 @@ bool CopyDataToClipboard(UINT clpFmt, Element const& tree, CString const& txtFor
 	HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
 	if (NULL != temp)
 	{
-		LPTSTR str = (LPTSTR)GlobalLock(temp);
+		LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 		lstrcpy(str, data.c_str());
-		GlobalUnlock((void*)temp);
+		GlobalUnlock(reinterpret_cast<void*>(temp));
 		// send data to clipbard
 		SetClipboardData(clpFmt, temp);
 
@@ -77,9 +77,9 @@ bool CopyDataToClipboard(UINT clpFmt, Element const& tree, CString const& txtFor
 			temp = GlobalAlloc(GHND, txtForm.GetLength()+1);
 			if (NULL != temp)
 			{
-				LPTSTR str = (LPTSTR)GlobalLock(temp);
+				LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 				lstrcpy(str, (LPCTSTR)txtForm);
-				GlobalUnlock((void*)temp);
+				GlobalUnlock(reinterpret_cast<void*>(temp));
 				// send data to clipbard
 				SetClipboardData(CF_TEXT, temp);
 			}
@@ -99,7 +99,7 @@ bool GetDataFromClipboard(UINT clpFmt, Element& tree)
 			return false;
 		tree.clear();
 		HANDLE hData = GetClipboardData(clpFmt);
-		CString data((LPCTSTR)GlobalLock(hData));
+		CString data(reinterpret_cast<LPCTSTR>(GlobalLock(hData)));
 		GlobalUnlock(hData);
 		CloseClipboard();
 		std::string err;

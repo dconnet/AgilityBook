@@ -327,7 +327,7 @@ BOOL CDlgFindLinks::OnInitDialog()
 
 void CDlgFindLinks::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
 	si.pThis = this;
 	m_sortLinks.SetColumnOrder(pNMListView->iSubItem);
@@ -374,7 +374,7 @@ void CDlgFindLinks::OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgFindLinks::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult)
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }
@@ -402,9 +402,9 @@ void CDlgFindLinks::OnCopy()
 		HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
 		if (NULL != temp)
 		{
-			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 			lstrcpy(str, data.c_str());
-			GlobalUnlock((void*)temp);
+			GlobalUnlock(reinterpret_cast<void*>(temp));
 			// send data to clipbard
 			SetClipboardData(CF_TEXT, temp);
 		}

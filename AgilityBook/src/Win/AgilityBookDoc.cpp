@@ -308,6 +308,9 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* 
 				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pCopyTrial);
 				pCopyTrial->Release();
 				SetModifiedFlag();
+				// This is pure evil - casting ARBDogTrial* to a CObject*.
+				// On the other side, we reinterpret right back to ARBDogTrial*
+				// Definite abuse of this parameter.
 				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(pNewTrial));
 			}
 			pTabView->SetCurSel(0);
@@ -916,7 +919,7 @@ void CAgilityBookDoc::OnAgilityNewDog()
 		}
 		if (pTree)
 		{
-			CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
 			pFrame->SetCurTab(0);
 			SetModifiedFlag();
 			ARBDog* pNewDog = GetDogs().AddDog(dog);
@@ -934,7 +937,7 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 	{
 		if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 		{
-			CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
 			pFrame->SetCurTab(2);
 			GetCalendar().AddCalendar(cal);
 			GetCalendar().sort();
@@ -961,7 +964,7 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 	CDlgTraining dlg(training, this);
 	if (IDOK == dlg.DoModal())
 	{
-		CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+		CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
 		pFrame->SetCurTab(3);
 		GetTraining().AddTraining(training);
 		GetTraining().sort();
@@ -1123,7 +1126,7 @@ void CAgilityBookDoc::OnNotesSearch()
 void CAgilityBookDoc::OnViewOptions()
 {
 	int nPage = 0;
-	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
 	if (2 == pFrame->GetCurTab())
 		nPage = 1;
 	else if (3 == pFrame->GetCurTab())

@@ -368,7 +368,7 @@ void CDlgConfigEvent::FillMethodList()
 		ARBConfigScoring* pScoring = (*iter);
 		str = GetListName(pScoring);
 		int index = m_ctrlMethods.AddString(str);
-		m_ctrlMethods.SetItemDataPtr(index, reinterpret_cast<void*>(pScoring));
+		m_ctrlMethods.SetItemDataPtr(index, pScoring);
 	}
 	m_ctrlMethods.SetCurSel(m_idxMethod);
 
@@ -411,7 +411,7 @@ void CDlgConfigEvent::FillDivisionList()
 	{
 		ARBConfigDivision* pDiv = (*iter);
 		index = m_ctrlDivision.AddString(pDiv->GetName().c_str());
-		m_ctrlDivision.SetItemDataPtr(index, reinterpret_cast<void*>(pDiv));
+		m_ctrlDivision.SetItemDataPtr(index, pDiv);
 		if (pScoring && pScoring->GetDivision() == pDiv->GetName())
 			m_ctrlDivision.SetCurSel(index);
 	}
@@ -591,7 +591,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 		int idx = m_ctrlPointsList.AddString(pTitle->GetGenericName().c_str());
 		if (LB_ERR != idx)
 		{
-			m_ctrlPointsList.SetItemDataPtr(idx, pTitle);
+			m_ctrlPointsList.SetItemDataPtr(idx, static_cast<ARBBase*>(pTitle));
 			if (pOld == pTitle)
 				m_ctrlPointsList.SetCurSel(idx);
 		}
@@ -604,7 +604,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 		int idx = m_ctrlPointsList.AddString(pLife->GetGenericName().c_str());
 		if (LB_ERR != idx)
 		{
-			m_ctrlPointsList.SetItemDataPtr(idx, pLife);
+			m_ctrlPointsList.SetItemDataPtr(idx, static_cast<ARBBase*>(pLife));
 			if (pOld == pLife)
 				m_ctrlPointsList.SetCurSel(idx);
 		}
@@ -789,7 +789,7 @@ void CDlgConfigEvent::OnLbnSelchangeSubnames()
 
 void CDlgConfigEvent::OnBnClickedSubNamesNew()
 {
-	CDlgName dlg("", (LPCTSTR)NULL, this);
+	CDlgName dlg("", static_cast<UINT>(0), this);
 	if (IDOK == dlg.DoModal())
 	{
 		int idx = m_ctrlSubNames.AddString(dlg.GetName());
@@ -815,7 +815,7 @@ void CDlgConfigEvent::OnBnClickedNew()
 	ARBConfigScoring* pScoring = m_Scorings.AddScoring();
 	CString str = GetListName(pScoring);
 	m_idxMethod = m_ctrlMethods.AddString(str);
-	m_ctrlMethods.SetItemDataPtr(m_idxMethod, reinterpret_cast<void*>(pScoring));
+	m_ctrlMethods.SetItemDataPtr(m_idxMethod, pScoring);
 	m_ctrlMethods.SetCurSel(m_idxMethod);
 	FillMethodList();
 	FillControls();
