@@ -366,6 +366,7 @@ void CDlgConfigureData::Add()
 					continue;
 				}
 				ARBConfigTitle* pTitle = pDivData->GetDivision()->GetTitles().AddTitle(name);
+				pTitle->SetLongName(dlg.GetLongName());
 				pTitle->SetDescription(dlg.GetDesc());
 				if (pTitle)
 				{
@@ -1167,7 +1168,9 @@ void CDlgConfigureDataTitle::Edit()
 	ASSERT(pVenueData);
 	bool done = false;
 	std::string oldName = m_Title->GetName();
+	std::string oldLongName = m_Title->GetLongName();
 	std::string name(oldName);
+	std::string longname(oldLongName);
 	while (!done)
 	{
 		done = true;
@@ -1175,6 +1178,7 @@ void CDlgConfigureDataTitle::Edit()
 		if (IDOK == dlg.DoModal())
 		{
 			name = dlg.GetName();
+			longname = dlg.GetLongName();
 			if (oldName != name)
 			{
 				if (pVenueData->GetVenue()->GetDivisions().FindTitle(name))
@@ -1185,13 +1189,15 @@ void CDlgConfigureDataTitle::Edit()
 				}
 				m_Title->SetName(name);
 			}
+			m_Title->SetLongName(longname);
 			m_Title->SetDescription(dlg.GetDesc());
-			if (name != oldName)
+			if (name != oldName || longname != oldLongName)
 			{
-				GetFixupList().push_back(new CDlgFixupRenameTitle(pVenueData->GetVenue()->GetName(), oldName, m_Title->GetName()));
+				if (name != oldName)
+					GetFixupList().push_back(new CDlgFixupRenameTitle(pVenueData->GetVenue()->GetName(), oldName, m_Title->GetName()));
 				GetTree().SetItem(m_hItem,
 					TVIF_TEXT,
-					m_Title->GetName().c_str(),
+					m_Title->GetNiceName().c_str(),
 					0, 0, 0, 0, 0);
 				SetItemCurrent();
 			}

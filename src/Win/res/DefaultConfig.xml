@@ -14,15 +14,15 @@
 				<Level Name="Open"/>
 				<Level Name="Excellent A"/>
 				<Level Name="Excellent B"/>
-				<Titles Name="NA" LongName="Novice Agility">3 Qs</Titles>
-				<Titles Name="OA" LongName="Open Agility">3 Qs</Titles>
-				<Titles Name="AX" LongName="Agility Excellent">3 Qs</Titles>
-				<Titles Name="MX" LongName="Master Agility Excellent">10 Qs</Titles>
-				<Titles Name="NAJ" LongName="Novice JWW">3 Qs</Titles>
-				<Titles Name="OAJ" LongName="Open JWW">3 Qs</Titles>
-				<Titles Name="AXJ" LongName="Agility Excellent JWW">3 Qs</Titles>
-				<Titles Name="MXJ" LongName="Master Excellent JWW">10 Qs</Titles>
-				<Titles Name="MACH" LongName="Master Agility Champion">20 Double Qs, 750 Mach points</Titles>
+				<Titles LongName="Novice Agility" Name="NA">3 Qs</Titles>
+				<Titles LongName="Open Agility" Name="OA">3 Qs</Titles>
+				<Titles LongName="Agility Excellent" Name="AX">3 Qs</Titles>
+				<Titles LongName="Master Agility Excellent" Name="MX">10 Qs</Titles>
+				<Titles LongName="Novice JWW" Name="NAJ">3 Qs</Titles>
+				<Titles LongName="Open JWW" Name="OAJ">3 Qs</Titles>
+				<Titles LongName="Agility Excellent JWW" Name="AXJ">3 Qs</Titles>
+				<Titles LongName="Master Excellent JWW" Name="MXJ">10 Qs</Titles>
+				<Titles LongName="Master Agility Champion" Name="MACH">20 Double Qs, 750 Mach points</Titles>
 			</Division>
 			<Division Name="Preferred">
 				<Level Name="Novice">
@@ -32,14 +32,14 @@
 				<Level Name="Open"/>
 				<Level Name="Excellent A"/>
 				<Level Name="Excellent B"/>
-				<Titles Name="NAP" LongName="Novice Agility Preferred">3 Qs</Titles>
-				<Titles Name="OAP" LongName="Open Agility Preferred">3 Qs</Titles>
-				<Titles Name="AXP" LongName="Agility Excellent Preferred">3 Qs</Titles>
-				<Titles Name="MXP" LongName="Master Agility Excellent Preferred">10 Qs</Titles>
-				<Titles Name="NJP" LongName="Novice JWW Preferred">3 Qs</Titles>
-				<Titles Name="OJP" LongName="Open JWW Preferred">3 Qs</Titles>
-				<Titles Name="AJP" LongName="Agility Excellent JWW Preferred">3 Qs</Titles>
-				<Titles Name="MJP" LongName="Master Excellent JWW Preferred">10 Qs</Titles>
+				<Titles LongName="Novice Agility Preferred" Name="NAP">3 Qs</Titles>
+				<Titles LongName="Open Agility Preferred" Name="OAP">3 Qs</Titles>
+				<Titles LongName="Agility Excellent Preferred" Name="AXP">3 Qs</Titles>
+				<Titles LongName="Master Agility Excellent Preferred" Name="MXP">10 Qs</Titles>
+				<Titles LongName="Novice JWW Preferred" Name="NJP">3 Qs</Titles>
+				<Titles LongName="Open JWW Preferred" Name="OJP">3 Qs</Titles>
+				<Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
+				<Titles LongName="Master Excellent JWW Preferred" Name="MJP">10 Qs</Titles>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
@@ -147,33 +147,33 @@
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles Name="RS-N" LongName="Novice Regular"/>
-				<Titles Name="RS-O" LongName="Open Regular"/>
-				<Titles Name="RS-E" LongName="Elite Regular"/>
-				<Titles Name="JS-N" LongName="Novice Jumpers"/>
-				<Titles Name="JS-O" LongName="Open Jumpers"/>
-				<Titles Name="JS-E" LongName="Elite Jumpers"/>
-				<Titles Name="GS-N" LongName="Novice Gamblers"/>
-				<Titles Name="GS-O" LongName="Open Gamblers"/>
-				<Titles Name="GS-E" LongName="Elite Gamblers"/>
-				<Titles Name="RS-N-OP" LongName="Novice Regular Outstanding Performance"/>
-				<Titles Name="RS-O-OP" LongName="Open Regular Outstanding Performance"/>
-				<Titles Name="RS-E-OP" LongName="Elite Regular Outstanding Performance"/>
-				<Titles Name="JS-N-OP" LongName="Novice Jumpers Outstanding Performance"/>
-				<Titles Name="JS-O-OP" LongName="Open Jumpers Outstanding Performance"/>
-				<Titles Name="JS-E-OP" LongName="Elite Jumpers Outstanding Performance"/>
-				<Titles Name="GS-N-OP" LongName="Novice Gamblers Outstanding Performance"/>
-				<Titles Name="GS-O-OP" LongName="Open Gamblers Outstanding Performance"/>
-				<Titles Name="GS-E-OP" LongName="Elite Gamblers Outstanding Performance"/>
-				<Titles Name="RS-N-SP" LongName="Novice Regular Superior Performance"/>
-				<Titles Name="RS-O-SP" LongName="Open Regular Superior Performance"/>
-				<Titles Name="RS-E-SP" LongName="Elite Regular Superior Performance"/>
-				<Titles Name="JS-N-SP" LongName="Novice Jumpers Superior Performance"/>
-				<Titles Name="JS-O-SP" LongName="Open Jumpers Superior Performance"/>
-				<Titles Name="JS-E-SP" LongName="Elite Jumpers Superior Performance"/>
-				<Titles Name="GS-N-SP" LongName="Novice Gamblers Superior Performance"/>
-				<Titles Name="GS-O-SP" LongName="Open Gamblers Superior Performance"/>
-				<Titles Name="GS-E-SP" LongName="Elite Gamblers Superior Performance"/>
+				<Titles LongName="Novice Regular" Name="RS-N"/>
+				<Titles LongName="Open Regular" Name="RS-O"/>
+				<Titles LongName="Elite Regular" Name="RS-E"/>
+				<Titles LongName="Novice Jumpers" Name="JS-N"/>
+				<Titles LongName="Open Jumpers" Name="JS-O"/>
+				<Titles LongName="Elite Jumpers" Name="JS-E"/>
+				<Titles LongName="Novice Gamblers" Name="GS-N"/>
+				<Titles LongName="Open Gamblers" Name="GS-O"/>
+				<Titles LongName="Elite Gamblers" Name="GS-E"/>
+				<Titles LongName="Novice Regular Outstanding Performance" Name="RS-N-OP"/>
+				<Titles LongName="Open Regular Outstanding Performance" Name="RS-O-OP"/>
+				<Titles LongName="Elite Regular Outstanding Performance" Name="RS-E-OP"/>
+				<Titles LongName="Novice Jumpers Outstanding Performance" Name="JS-N-OP"/>
+				<Titles LongName="Open Jumpers Outstanding Performance" Name="JS-O-OP"/>
+				<Titles LongName="Elite Jumpers Outstanding Performance" Name="JS-E-OP"/>
+				<Titles LongName="Novice Gamblers Outstanding Performance" Name="GS-N-OP"/>
+				<Titles LongName="Open Gamblers Outstanding Performance" Name="GS-O-OP"/>
+				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GS-E-OP"/>
+				<Titles LongName="Novice Regular Superior Performance" Name="RS-N-SP"/>
+				<Titles LongName="Open Regular Superior Performance" Name="RS-O-SP"/>
+				<Titles LongName="Elite Regular Superior Performance" Name="RS-E-SP"/>
+				<Titles LongName="Novice Jumpers Superior Performance" Name="JS-N-SP"/>
+				<Titles LongName="Open Jumpers Superior Performance" Name="JS-O-SP"/>
+				<Titles LongName="Elite Jumpers Superior Performance" Name="JS-E-SP"/>
+				<Titles LongName="Novice Gamblers Superior Performance" Name="GS-N-SP"/>
+				<Titles LongName="Open Gamblers Superior Performance" Name="GS-O-SP"/>
+				<Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP"/>
 			</Division>
 			<Division Name="Veterans">
 				<Level Name="Novice">
@@ -182,33 +182,33 @@
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles Name="RV-N" LongName="Novice Regular"/>
-				<Titles Name="RV-O" LongName="Open Regular"/>
-				<Titles Name="RV-E" LongName="Elite Regular"/>
-				<Titles Name="JV-N" LongName="Novice Jumpers"/>
-				<Titles Name="JV-O" LongName="Open Jumpers"/>
-				<Titles Name="JV-E" LongName="Elite Jumpers"/>
-				<Titles Name="GV-N" LongName="Novice Gamblers"/>
-				<Titles Name="GV-O" LongName="Open Gamblers"/>
-				<Titles Name="GV-E" LongName="Elite Gamblers"/>
-				<Titles Name="RV-N-OP" LongName="Novice Regular Outstanding Performance"/>
-				<Titles Name="RV-O-OP" LongName="Open Regular Outstanding Performance"/>
-				<Titles Name="RV-E-OP" LongName="Elite Regular Outstanding Performance"/>
-				<Titles Name="JV-N-OP" LongName="Novice Jumpers Outstanding Performance"/>
-				<Titles Name="JV-O-OP" LongName="Open Jumpers Outstanding Performance"/>
-				<Titles Name="JV-E-OP" LongName="Elite Jumpers Outstanding Performance"/>
-				<Titles Name="GV-N-OP" LongName="Novice Gamblers Outstanding Performance"/>
-				<Titles Name="GV-O-OP" LongName="Open Gamblers Outstanding Performance"/>
-				<Titles Name="GV-E-OP" LongName="Elite Gamblers Outstanding Performance"/>
-				<Titles Name="RV-N-SP" LongName="Novice Regular Superior Performance"/>
-				<Titles Name="RV-O-SP" LongName="Open Regular Superior Performance"/>
-				<Titles Name="RV-E-SP" LongName="Elite Regular Superior Performance"/>
-				<Titles Name="JV-N-SP" LongName="Novice Jumpers Superior Performance"/>
-				<Titles Name="JV-O-SP" LongName="Open Jumpers Superior Performance"/>
-				<Titles Name="JV-E-SP" LongName="Elite Jumpers Superior Performance"/>
-				<Titles Name="GV-N-SP" LongName="Novice Gamblers Superior Performance"/>
-				<Titles Name="GV-O-SP" LongName="Open Gamblers Superior Performance"/>
-				<Titles Name="GV-E-SP" LongName="Elite Gamblers Superior Performance"/>
+				<Titles LongName="Novice Regular" Name="RV-N"/>
+				<Titles LongName="Open Regular" Name="RV-O"/>
+				<Titles LongName="Elite Regular" Name="RV-E"/>
+				<Titles LongName="Novice Jumpers" Name="JV-N"/>
+				<Titles LongName="Open Jumpers" Name="JV-O"/>
+				<Titles LongName="Elite Jumpers" Name="JV-E"/>
+				<Titles LongName="Novice Gamblers" Name="GV-N"/>
+				<Titles LongName="Open Gamblers" Name="GV-O"/>
+				<Titles LongName="Elite Gamblers" Name="GV-E"/>
+				<Titles LongName="Novice Regular Outstanding Performance" Name="RV-N-OP"/>
+				<Titles LongName="Open Regular Outstanding Performance" Name="RV-O-OP"/>
+				<Titles LongName="Elite Regular Outstanding Performance" Name="RV-E-OP"/>
+				<Titles LongName="Novice Jumpers Outstanding Performance" Name="JV-N-OP"/>
+				<Titles LongName="Open Jumpers Outstanding Performance" Name="JV-O-OP"/>
+				<Titles LongName="Elite Jumpers Outstanding Performance" Name="JV-E-OP"/>
+				<Titles LongName="Novice Gamblers Outstanding Performance" Name="GV-N-OP"/>
+				<Titles LongName="Open Gamblers Outstanding Performance" Name="GV-O-OP"/>
+				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GV-E-OP"/>
+				<Titles LongName="Novice Regular Superior Performance" Name="RV-N-SP"/>
+				<Titles LongName="Open Regular Superior Performance" Name="RV-O-SP"/>
+				<Titles LongName="Elite Regular Superior Performance" Name="RV-E-SP"/>
+				<Titles LongName="Novice Jumpers Superior Performance" Name="JV-N-SP"/>
+				<Titles LongName="Open Jumpers Superior Performance" Name="JV-O-SP"/>
+				<Titles LongName="Elite Jumpers Superior Performance" Name="JV-E-SP"/>
+				<Titles LongName="Novice Gamblers Superior Performance" Name="GV-N-SP"/>
+				<Titles LongName="Open Gamblers Superior Performance" Name="GV-O-SP"/>
+				<Titles LongName="Elite Gamblers Superior Performance" Name="GV-E-SP"/>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
@@ -217,24 +217,24 @@
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles Name="RJ-N" LongName="Novice Regular"/>
-				<Titles Name="RJ-O" LongName="Open Regular"/>
-				<Titles Name="RJ-E" LongName="Elite Regular"/>
-				<Titles Name="JJ-N" LongName="Novice Jumpers"/>
-				<Titles Name="JJ-O" LongName="Open Jumpers"/>
-				<Titles Name="JJ-E" LongName="Elite Jumpers"/>
-				<Titles Name="RJ-N-OP" LongName="Novice Regular Outstanding Performance"/>
-				<Titles Name="RJ-O-OP" LongName="Open Regular Outstanding Performance"/>
-				<Titles Name="RJ-E-OP" LongName="Elite Regular Outstanding Performance"/>
-				<Titles Name="JJ-N-OP" LongName="Novice Jumpers Outstanding Performance"/>
-				<Titles Name="JJ-O-OP" LongName="Open Jumpers Outstanding Performance"/>
-				<Titles Name="JJ-E-OP" LongName="Elite Jumpers Outstanding Performance"/>
-				<Titles Name="RJ-N-SP" LongName="Novice Regular Superior Performance"/>
-				<Titles Name="RJ-O-SP" LongName="Open Regular Superior Performance"/>
-				<Titles Name="RJ-E-SP" LongName="Elite Regular Superior Performance"/>
-				<Titles Name="JJ-N-SP" LongName="Novice Jumpers Superior Performance"/>
-				<Titles Name="JJ-O-SP" LongName="Open Jumpers Superior Performance"/>
-				<Titles Name="JJ-E-SP" LongName="Elite Jumpers Superior Performance"/>
+				<Titles LongName="Novice Regular" Name="RJ-N"/>
+				<Titles LongName="Open Regular" Name="RJ-O"/>
+				<Titles LongName="Elite Regular" Name="RJ-E"/>
+				<Titles LongName="Novice Jumpers" Name="JJ-N"/>
+				<Titles LongName="Open Jumpers" Name="JJ-O"/>
+				<Titles LongName="Elite Jumpers" Name="JJ-E"/>
+				<Titles LongName="Novice Regular Outstanding Performance" Name="RJ-N-OP"/>
+				<Titles LongName="Open Regular Outstanding Performance" Name="RJ-O-OP"/>
+				<Titles LongName="Elite Regular Outstanding Performance" Name="RJ-E-OP"/>
+				<Titles LongName="Novice Jumpers Outstanding Performance" Name="JJ-N-OP"/>
+				<Titles LongName="Open Jumpers Outstanding Performance" Name="JJ-O-OP"/>
+				<Titles LongName="Elite Jumpers Outstanding Performance" Name="JJ-E-OP"/>
+				<Titles LongName="Novice Regular Superior Performance" Name="RJ-N-SP"/>
+				<Titles LongName="Open Regular Superior Performance" Name="RJ-O-SP"/>
+				<Titles LongName="Elite Regular Superior Performance" Name="RJ-E-SP"/>
+				<Titles LongName="Novice Jumpers Superior Performance" Name="JJ-N-SP"/>
+				<Titles LongName="Open Jumpers Superior Performance" Name="JJ-O-SP"/>
+				<Titles LongName="Elite Jumpers Superior Performance" Name="JJ-E-SP"/>
 			</Division>
 			<Event Name="Regular">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
@@ -319,13 +319,13 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 Games:
   4 Qualifying Legs of each game
   Earned under at least 2 different judges for each game.</Titles>
-				<Titles Name="ChST" LongName="Champion Standard">15 Qs</Titles>
-				<Titles Name="ChCL" LongName="Champion Colors">15 Qs</Titles>
-				<Titles Name="ChWC" LongName="Champion Wildcard">15 Qs</Titles>
-				<Titles Name="ChSN" LongName="Champion Snooker">15 Qs</Titles>
-				<Titles Name="ChJP" LongName="Champion Jackpot">15 Qs</Titles>
-				<Titles Name="ChFH" LongName="Champion FullHouse">15 Qs</Titles>
-				<Titles Name="ChJU" LongName="Champion Jumpers">15 Qs</Titles>
+				<Titles LongName="Champion Standard" Name="ChST">15 Qs</Titles>
+				<Titles LongName="Champion Colors" Name="ChCL">15 Qs</Titles>
+				<Titles LongName="Champion Wildcard" Name="ChWC">15 Qs</Titles>
+				<Titles LongName="Champion Snooker" Name="ChSN">15 Qs</Titles>
+				<Titles LongName="Champion Jackpot" Name="ChJP">15 Qs</Titles>
+				<Titles LongName="Champion FullHouse" Name="ChFH">15 Qs</Titles>
+				<Titles LongName="Champion Jumpers" Name="ChJU">15 Qs</Titles>
 				<Titles Name="CADE">5000 points, 3000 by class requirements, 2000 by handler choice.
 Standard: 500 pts (20 legs)
 Colors: 300 pts (20 legs)
@@ -335,13 +335,13 @@ Snooker: 500 pts (20 legs)
 FullHouse: 400 pts (20 legs)
 Jumpers: 400 pts (20 legs)
 </Titles>
-				<Titles Name="ExST" LongName="Extraordinaire Standard">30 Qs</Titles>
-				<Titles Name="ExCL" LongName="Extraordinaire Colors">30 Qs</Titles>
-				<Titles Name="ExWC" LongName="Extraordinaire Wildcard">30 Qs</Titles>
-				<Titles Name="ExSN" LongName="Extraordinaire Snooker">30 Qs</Titles>
-				<Titles Name="ExJP" LongName="Extraordinaire Jackpot">30 Qs</Titles>
-				<Titles Name="ExFH" LongName="Extraordinaire FullHouse">30 Qs</Titles>
-				<Titles Name="ExJU" LongName="Extraordinaire Jumpers">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Standard" Name="ExST">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Colors" Name="ExCL">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Wildcard" Name="ExWC">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Snooker" Name="ExSN">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Jackpot" Name="ExJP">30 Qs</Titles>
+				<Titles LongName="Extraordinaire FullHouse" Name="ExFH">30 Qs</Titles>
+				<Titles LongName="Extraordinaire Jumpers" Name="ExJU">30 Qs</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Level 1"/>
@@ -355,8 +355,8 @@ Jumpers: 400 pts (20 legs)
 			</Division>
 			<Division Name="Specialist">
 				<Level Name="Level 3"/>
-				<Titles Name="SpCh" LongName="Specialist Champion">Will need to obtain a total of 750 points, which must include at least 4 legs in 4 of the 7 classes offered by CPE, handler choice.</Titles>
-				<Titles Name="SpEx" LongName="Specialist Extraordinaire">Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
+				<Titles LongName="Specialist Champion" Name="SpCh">Will need to obtain a total of 750 points, which must include at least 4 legs in 4 of the 7 classes offered by CPE, handler choice.</Titles>
+				<Titles LongName="Specialist Extraordinaire" Name="SpEx">Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
@@ -588,94 +588,94 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles Name="NAC" LongName="Novice Agility Certificate">30 points</Titles>
-				<Titles Name="OAC" LongName="Open Agility Certificate">30 points</Titles>
-				<Titles Name="EAC" LongName="Elite Agility Certificate">30 points</Titles>
-				<Titles Name="NJC" LongName="Novice Jumpers Certificate">20 points</Titles>
-				<Titles Name="OJC" LongName="Open Jumpers Certificate">20 points</Titles>
-				<Titles Name="EJC" LongName="Elite Jumpers Certificate">20 points</Titles>
-				<Titles Name="NGC" LongName="Novice Gamblers Certificate">20 points</Titles>
-				<Titles Name="OGC" LongName="Open Gamblers Certificate">20 points</Titles>
-				<Titles Name="EGC" LongName="Elite Gamblers Certificate">20 points</Titles>
-				<Titles Name="TN-N" LongName="Novice Tunnelers Certificate">30 points</Titles>
-				<Titles Name="TN-O" LongName="Open Tunnelers Certificate">30 points</Titles>
-				<Titles Name="TN-E" LongName="Elite Tunnelers Certificate">30 points</Titles>
-				<Titles Name="TG-N" LongName="Novice Touch N Go Certificate">30 points</Titles>
-				<Titles Name="TG-O" LongName="Open Touch N Go Certificate">30 points</Titles>
-				<Titles Name="TG-E" LongName="Elite Touch N Go Certificate">30 points</Titles>
-				<Titles Name="WV-N" LongName="Novice Weavers Certificate">30 points</Titles>
-				<Titles Name="WV-O" LongName="Open Weavers Certificate">30 points</Titles>
-				<Titles Name="WV-E" LongName="Elite Weavers Certificate">30 points</Titles>
-				<Titles Name="NATCH" LongName="NADAC Agility Trial Champion">230 Regular points
+				<Titles LongName="Novice Agility Certificate" Name="NAC">30 points</Titles>
+				<Titles LongName="Open Agility Certificate" Name="OAC">30 points</Titles>
+				<Titles LongName="Elite Agility Certificate" Name="EAC">30 points</Titles>
+				<Titles LongName="Novice Jumpers Certificate" Name="NJC">20 points</Titles>
+				<Titles LongName="Open Jumpers Certificate" Name="OJC">20 points</Titles>
+				<Titles LongName="Elite Jumpers Certificate" Name="EJC">20 points</Titles>
+				<Titles LongName="Novice Gamblers Certificate" Name="NGC">20 points</Titles>
+				<Titles LongName="Open Gamblers Certificate" Name="OGC">20 points</Titles>
+				<Titles LongName="Elite Gamblers Certificate" Name="EGC">20 points</Titles>
+				<Titles LongName="Novice Tunnelers Certificate" Name="TN-N">30 points</Titles>
+				<Titles LongName="Open Tunnelers Certificate" Name="TN-O">30 points</Titles>
+				<Titles LongName="Elite Tunnelers Certificate" Name="TN-E">30 points</Titles>
+				<Titles LongName="Novice Touch N Go Certificate" Name="TG-N">30 points</Titles>
+				<Titles LongName="Open Touch N Go Certificate" Name="TG-O">30 points</Titles>
+				<Titles LongName="Elite Touch N Go Certificate" Name="TG-E">30 points</Titles>
+				<Titles LongName="Novice Weavers Certificate" Name="WV-N">30 points</Titles>
+				<Titles LongName="Open Weavers Certificate" Name="WV-O">30 points</Titles>
+				<Titles LongName="Elite Weavers Certificate" Name="WV-E">30 points</Titles>
+				<Titles LongName="NADAC Agility Trial Champion" Name="NATCH">230 Regular points
 120 Gambler points
 120 Jumper points</Titles>
-				<Titles Name="Versatility NATCH" LongName="NADAC Versatility Champion">230 Regular points
+				<Titles LongName="NADAC Versatility Champion" Name="Versatility NATCH">230 Regular points
 120 Gambler points
 120 Jumper points
 130 Touch N Go points
 130 Tunnelers points
 130 Weavers points</Titles>
-				<Titles Name="Novice Versatility" LongName="Novice Versatility Certificate">NAC, NGC, NJC, TN-N, WV-N, TG-N</Titles>
-				<Titles Name="Open Versatility" LongName="Open Versatility Certificate">OAC, OGC, OJC, TN-O, WV-O, TG-O</Titles>
-				<Titles Name="Elite Versatility" LongName="Elite Versatility Certificate">EAC, EGC, EJC, TN-E, WV-E, TG-E</Titles>
-				<Titles Name="O-NAC" LongName="Novice Agility Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-OAC" LongName="Open Agility Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-EAC" LongName="Elite Agility Certificate Outstanding Performance">200 points</Titles>
-				<Titles Name="O-NJC" LongName="Novice Jumpers Certificate Outstanding Performance">50 points</Titles>
-				<Titles Name="O-OJC" LongName="Open Jumpers Certificate Outstanding Performance">50 points</Titles>
-				<Titles Name="O-EJC" LongName="Elite Jumpers Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-NGC" LongName="Novice Gamblers Certificate Outstanding Performance">50 points</Titles>
-				<Titles Name="O-OGC" LongName="Open Gamblers Certificate Outstanding Performance">50 points</Titles>
-				<Titles Name="O-EGC" LongName="Elite Gamblers Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-TN-N" LongName="Novice Tunnelers Certificate Outstanding Performance">60 points</Titles>
-				<Titles Name="O-TN-O" LongName="Open Tunnelers Certificate Outstanding Performance">60 points</Titles>
-				<Titles Name="O-TN-E" LongName="Elite Tunnelers Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-TG-N" LongName="Novice Touch N Go Certificate Outstanding Performance">60 points</Titles>
-				<Titles Name="O-TG-O" LongName="Open Touch N Go Certificate Outstanding Performance">60 points</Titles>
-				<Titles Name="O-TG-E" LongName="Elite Touch N Go Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-WV-N" LongName="Novice Weavers Certificate Outstanding Performance">60 points</Titles>
-				<Titles Name="O-WV-O" LongName="Open Weavers Certificate Outstanding Performance">60 points</Titles>
-				<Titles Name="O-WV-E" LongName="Elite Weavers Certificate Outstanding Performance">100 points</Titles>
-				<Titles Name="O-NATCH" LongName="NADAC Agility Trial Champion Outstanding Performance">430 Regular points
+				<Titles LongName="Novice Versatility Certificate" Name="Novice Versatility">NAC, NGC, NJC, TN-N, WV-N, TG-N</Titles>
+				<Titles LongName="Open Versatility Certificate" Name="Open Versatility">OAC, OGC, OJC, TN-O, WV-O, TG-O</Titles>
+				<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility">EAC, EGC, EJC, TN-E, WV-E, TG-E</Titles>
+				<Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
+				<Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
+				<Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
+				<Titles LongName="Novice Jumpers Certificate Outstanding Performance" Name="O-NJC">50 points</Titles>
+				<Titles LongName="Open Jumpers Certificate Outstanding Performance" Name="O-OJC">50 points</Titles>
+				<Titles LongName="Elite Jumpers Certificate Outstanding Performance" Name="O-EJC">100 points</Titles>
+				<Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC">50 points</Titles>
+				<Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC">50 points</Titles>
+				<Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC">100 points</Titles>
+				<Titles LongName="Novice Tunnelers Certificate Outstanding Performance" Name="O-TN-N">60 points</Titles>
+				<Titles LongName="Open Tunnelers Certificate Outstanding Performance" Name="O-TN-O">60 points</Titles>
+				<Titles LongName="Elite Tunnelers Certificate Outstanding Performance" Name="O-TN-E">100 points</Titles>
+				<Titles LongName="Novice Touch N Go Certificate Outstanding Performance" Name="O-TG-N">60 points</Titles>
+				<Titles LongName="Open Touch N Go Certificate Outstanding Performance" Name="O-TG-O">60 points</Titles>
+				<Titles LongName="Elite Touch N Go Certificate Outstanding Performance" Name="O-TG-E">100 points</Titles>
+				<Titles LongName="Novice Weavers Certificate Outstanding Performance" Name="O-WV-N">60 points</Titles>
+				<Titles LongName="Open Weavers Certificate Outstanding Performance" Name="O-WV-O">60 points</Titles>
+				<Titles LongName="Elite Weavers Certificate Outstanding Performance" Name="O-WV-E">100 points</Titles>
+				<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH">430 Regular points
 220 Gambler points
 220 Jumper points</Titles>
-				<Titles Name="Outstanding Versatility NATCH" LongName="NADAC Versatility Champion Outstanding Performance">430 Regular points
+				<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="Outstanding Versatility NATCH">430 Regular points
 220 Gambler points
 220 Jumper points
 230 Touch N Go points
 230 Tunnelers points
 230 Weavers points</Titles>
-				<Titles Name="S-NAC" LongName="Novice Agility Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-OAC" LongName="Open Agility Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-EAC" LongName="Elite Agility Certificate Superior Performance">400 points</Titles>
-				<Titles Name="S-NJC" LongName="Novice Jumpers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-OJC" LongName="Open Jumpers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-EJC" LongName="Elite Jumpers Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-NGC" LongName="Novice Gamblers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-OGC" LongName="Open Gamblers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-EGC" LongName="Elite Gamblers Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-TN-N" LongName="Novice Tunnelers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-TN-O" LongName="Open Tunnelers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-TN-E" LongName="Elite Tunnelers Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-TG-N" LongName="Novice Touch N Go Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-TG-O" LongName="Open Touch N Go Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-TG-E" LongName="Elite Touch N Go Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-WV-N" LongName="Novice Weavers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-WV-O" LongName="Open Weavers Certificate Superior Performance">100 points</Titles>
-				<Titles Name="S-WV-E" LongName="Elite Weavers Certificate Superior Performance">200 points</Titles>
-				<Titles Name="S-NATCH" LongName="NADAC Agility Trial Champion Superior Performance">630 Regular points
+				<Titles LongName="Novice Agility Certificate Superior Performance" Name="S-NAC">200 points</Titles>
+				<Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
+				<Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
+				<Titles LongName="Novice Jumpers Certificate Superior Performance" Name="S-NJC">100 points</Titles>
+				<Titles LongName="Open Jumpers Certificate Superior Performance" Name="S-OJC">100 points</Titles>
+				<Titles LongName="Elite Jumpers Certificate Superior Performance" Name="S-EJC">200 points</Titles>
+				<Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC">100 points</Titles>
+				<Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC">100 points</Titles>
+				<Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC">200 points</Titles>
+				<Titles LongName="Novice Tunnelers Certificate Superior Performance" Name="S-TN-N">100 points</Titles>
+				<Titles LongName="Open Tunnelers Certificate Superior Performance" Name="S-TN-O">100 points</Titles>
+				<Titles LongName="Elite Tunnelers Certificate Superior Performance" Name="S-TN-E">200 points</Titles>
+				<Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
+				<Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
+				<Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
+				<Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
+				<Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
+				<Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
+				<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH">630 Regular points
 320 Gambler points
 320 Jumper points</Titles>
-				<Titles Name="Superior Versatility NATCH" LongName="NADAC Versatility Champion Superior Performance">630 Regular points
+				<Titles LongName="NADAC Versatility Champion Superior Performance" Name="Superior Versatility NATCH">630 Regular points
 320 Gambler points
 320 Jumper points
 330 Touch N Go points
 330 Tunnelers points
 330 Weavers points</Titles>
-				<Titles Name="Triple Superior Performance Dog" LongName="Triple Superior Performance Dog">S-NAC, S-NGC, S-NJC
+				<Titles LongName="Triple Superior Performance Dog" Name="Triple Superior Performance Dog">S-NAC, S-NGC, S-NJC
 or S-OAC, S-OGC, S-OJC
 or S-EAC, S-EGC, S-EJC</Titles>
-				<Titles Name="Triple Triple Superior Performance" LongName="Triple Triple Superior Performance">S-NAC, S-NGC, S-NJC,
+				<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple Superior Performance">S-NAC, S-NGC, S-NJC,
 S-OAC, S-OGC, S-OJC,
 S-EAC, S-EGC, S-EJC</Titles>
 			</Division>
@@ -686,36 +686,36 @@ S-EAC, S-EGC, S-EJC</Titles>
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles Name="NAC-V" LongName="Novice Agility Certificate-Veterans">30 points</Titles>
-				<Titles Name="OAC-V" LongName="Open Agility Certificate-Veterans">30 points</Titles>
-				<Titles Name="EAC-V" LongName="Elite Agility Certificate-Veterans">30 points</Titles>
-				<Titles Name="NJC-V" LongName="Novice Jumpers Certificate-Veterans">20 points</Titles>
-				<Titles Name="OJC-V" LongName="Open Jumpers Certificate-Veterans">20 points</Titles>
-				<Titles Name="EJC-V" LongName="Elite Jumpers Certificate-Veterans">20 points</Titles>
-				<Titles Name="NGC-V" LongName="Novice Gamblers Certificate-Veterans">20 points</Titles>
-				<Titles Name="OGC-V" LongName="Open Gamblers Certificate-Veterans">20 points</Titles>
-				<Titles Name="EGC-V" LongName="Elite Gamblers Certificate-Veterans">20 points</Titles>
-				<Titles Name="V-NATCH" LongName="NADAC Agility Trial Champion-Veteran"/>
-				<Titles Name="O-NAC-V" LongName="Novice Agility Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-OAC-V" LongName="Open Agility Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-EAC-V" LongName="Elite Agility Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-NJC-V" LongName="Novice Jumpers Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-OJC-V" LongName="Open Jumpers Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-EJC-V" LongName="Elite Jumpers Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-NGC-V" LongName="Novice Gamblers Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-OGC-V" LongName="Open Gamblers Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-EGC-V" LongName="Elite Gamblers Certificate-Veterans Outstanding Performance"/>
-				<Titles Name="O-V-NATCH" LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance"/>
-				<Titles Name="S-NAC-V" LongName="Novice Agility Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-OAC-V" LongName="Open Agility Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-EAC-V" LongName="Elite Agility Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-NJC-V" LongName="Novice Jumpers Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-OJC-V" LongName="Open Jumpers Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-EJC-V" LongName="Elite Jumpers Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-NGC-V" LongName="Novice Gamblers Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-OGC-V" LongName="Open Gamblers Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-EGC-V" LongName="Elite Gamblers Certificate-Veterans Superior Performance"/>
-				<Titles Name="S-V-NATCH" LongName="NADAC Agility Trial Champion-Veteran Superior Performance"/>
+				<Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V">30 points</Titles>
+				<Titles LongName="Open Agility Certificate-Veterans" Name="OAC-V">30 points</Titles>
+				<Titles LongName="Elite Agility Certificate-Veterans" Name="EAC-V">30 points</Titles>
+				<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V">20 points</Titles>
+				<Titles LongName="Open Jumpers Certificate-Veterans" Name="OJC-V">20 points</Titles>
+				<Titles LongName="Elite Jumpers Certificate-Veterans" Name="EJC-V">20 points</Titles>
+				<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V">20 points</Titles>
+				<Titles LongName="Open Gamblers Certificate-Veterans" Name="OGC-V">20 points</Titles>
+				<Titles LongName="Elite Gamblers Certificate-Veterans" Name="EGC-V">20 points</Titles>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran" Name="V-NATCH"/>
+				<Titles LongName="Novice Agility Certificate-Veterans Outstanding Performance" Name="O-NAC-V"/>
+				<Titles LongName="Open Agility Certificate-Veterans Outstanding Performance" Name="O-OAC-V"/>
+				<Titles LongName="Elite Agility Certificate-Veterans Outstanding Performance" Name="O-EAC-V"/>
+				<Titles LongName="Novice Jumpers Certificate-Veterans Outstanding Performance" Name="O-NJC-V"/>
+				<Titles LongName="Open Jumpers Certificate-Veterans Outstanding Performance" Name="O-OJC-V"/>
+				<Titles LongName="Elite Jumpers Certificate-Veterans Outstanding Performance" Name="O-EJC-V"/>
+				<Titles LongName="Novice Gamblers Certificate-Veterans Outstanding Performance" Name="O-NGC-V"/>
+				<Titles LongName="Open Gamblers Certificate-Veterans Outstanding Performance" Name="O-OGC-V"/>
+				<Titles LongName="Elite Gamblers Certificate-Veterans Outstanding Performance" Name="O-EGC-V"/>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH"/>
+				<Titles LongName="Novice Agility Certificate-Veterans Superior Performance" Name="S-NAC-V"/>
+				<Titles LongName="Open Agility Certificate-Veterans Superior Performance" Name="S-OAC-V"/>
+				<Titles LongName="Elite Agility Certificate-Veterans Superior Performance" Name="S-EAC-V"/>
+				<Titles LongName="Novice Jumpers Certificate-Veterans Superior Performance" Name="S-NJC-V"/>
+				<Titles LongName="Open Jumpers Certificate-Veterans Superior Performance" Name="S-OJC-V"/>
+				<Titles LongName="Elite Jumpers Certificate-Veterans Superior Performance" Name="S-EJC-V"/>
+				<Titles LongName="Novice Gamblers Certificate-Veterans Superior Performance" Name="S-NGC-V"/>
+				<Titles LongName="Open Gamblers Certificate-Veterans Superior Performance" Name="S-OGC-V"/>
+				<Titles LongName="Elite Gamblers Certificate-Veterans Superior Performance" Name="S-EGC-V"/>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH"/>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
@@ -724,27 +724,27 @@ S-EAC, S-EGC, S-EJC</Titles>
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles Name="NAC-JH" LongName="Novice Agility Certificate-Jr. Handler"/>
-				<Titles Name="OAC-JH" LongName="Open Agility Certificate-Jr. Handler"/>
-				<Titles Name="EAC-JH" LongName="Elite Agility Certificate-Jr. Handler"/>
-				<Titles Name="NJC-JH" LongName="Novice Jumpers Certificate-Jr. Handler"/>
-				<Titles Name="OJC-JH" LongName="Open Jumpers Certificate-Jr. Handler"/>
-				<Titles Name="EJC-JH" LongName="Elite Jumpers Certificate-Jr. Handler"/>
-				<Titles Name="JH-NATCH" LongName="NADAC Agility Trial Champion-Jr. Handler"/>
-				<Titles Name="O-NAC-JH" LongName="Novice Agility Certificate-Jr. Handler Outstanding Performance"/>
-				<Titles Name="O-OAC-JH" LongName="Open Agility Certificate-Jr. Handler Outstanding Performance"/>
-				<Titles Name="O-EAC-JH" LongName="Elite Agility Certificate-Jr. Handler Outstanding Performance"/>
-				<Titles Name="O-NJC-JH" LongName="Novice Jumpers Certificate-Jr. Handler Outstanding Performance"/>
-				<Titles Name="O-OJC-JH" LongName="Open Jumpers Certificate-Jr. Handler Outstanding Performance"/>
-				<Titles Name="O-EJC-JH" LongName="Elite Jumpers Certificate-Jr. Handler Outstanding Performance"/>
-				<Titles Name="O-JH-NATCH" LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance"/>
-				<Titles Name="S-NAC-JH" LongName="Novice Agility Certificate-Jr. Handler Superior Performance"/>
-				<Titles Name="S-OAC-JH" LongName="Open Agility Certificate-Jr. Handler Superior Performance"/>
-				<Titles Name="S-EAC-JH" LongName="Elite Agility Certificate-Jr. Handler Superior Performance"/>
-				<Titles Name="S-NJC-JH" LongName="Novice Jumpers Certificate-Jr. Handler Superior Performance"/>
-				<Titles Name="S-OJC-JH" LongName="Open Jumpers Certificate-Jr. Handler Superior Performance"/>
-				<Titles Name="S-EJC-JH" LongName="Elite Jumpers Certificate-Jr. Handler Superior Performance"/>
-				<Titles Name="S-JH-NATCH" LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance"/>
+				<Titles LongName="Novice Agility Certificate-Jr. Handler" Name="NAC-JH"/>
+				<Titles LongName="Open Agility Certificate-Jr. Handler" Name="OAC-JH"/>
+				<Titles LongName="Elite Agility Certificate-Jr. Handler" Name="EAC-JH"/>
+				<Titles LongName="Novice Jumpers Certificate-Jr. Handler" Name="NJC-JH"/>
+				<Titles LongName="Open Jumpers Certificate-Jr. Handler" Name="OJC-JH"/>
+				<Titles LongName="Elite Jumpers Certificate-Jr. Handler" Name="EJC-JH"/>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Name="JH-NATCH"/>
+				<Titles LongName="Novice Agility Certificate-Jr. Handler Outstanding Performance" Name="O-NAC-JH"/>
+				<Titles LongName="Open Agility Certificate-Jr. Handler Outstanding Performance" Name="O-OAC-JH"/>
+				<Titles LongName="Elite Agility Certificate-Jr. Handler Outstanding Performance" Name="O-EAC-JH"/>
+				<Titles LongName="Novice Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-NJC-JH"/>
+				<Titles LongName="Open Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-OJC-JH"/>
+				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-EJC-JH"/>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH"/>
+				<Titles LongName="Novice Agility Certificate-Jr. Handler Superior Performance" Name="S-NAC-JH"/>
+				<Titles LongName="Open Agility Certificate-Jr. Handler Superior Performance" Name="S-OAC-JH"/>
+				<Titles LongName="Elite Agility Certificate-Jr. Handler Superior Performance" Name="S-EAC-JH"/>
+				<Titles LongName="Novice Jumpers Certificate-Jr. Handler Superior Performance" Name="S-NJC-JH"/>
+				<Titles LongName="Open Jumpers Certificate-Jr. Handler Superior Performance" Name="S-OJC-JH"/>
+				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Superior Performance" Name="S-EJC-JH"/>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH"/>
 			</Division>
 			<Event Name="Regular">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
@@ -805,10 +805,10 @@ S-EAC, S-EGC, S-EJC</Titles>
 					<SubLevel Name="Agility II B"/>
 				</Level>
 				<Level Name="Agility III"/>
-				<Titles Name="UAgI" LongName="UKC Agility I">3 Qs</Titles>
-				<Titles Name="UAgII" LongName="UKC Agility II">3 Qs</Titles>
-				<Titles Name="UACH" LongName="UKC Agility Champion">100 pts, 40 must be from UAgII</Titles>
-				<Titles Name="UACHX" LongName="UKC Agility Champion Excellent">5 Qs</Titles>
+				<Titles LongName="UKC Agility I" Name="UAgI">3 Qs</Titles>
+				<Titles LongName="UKC Agility II" Name="UAgII">3 Qs</Titles>
+				<Titles LongName="UKC Agility Champion" Name="UACH">100 pts, 40 must be from UAgII</Titles>
+				<Titles LongName="UKC Agility Champion Excellent" Name="UACHX">5 Qs</Titles>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="*" Level="*" type="Faults200ThenTime">
@@ -838,66 +838,66 @@ S-EAC, S-EGC, S-EJC</Titles>
 				</Level>
 				<Level Name="Advanced"/>
 				<Level Name="Masters"/>
-				<Titles Name="AD" LongName="Agility Dog®">(pre-2004) 3 Qs earned from at least 2 different judges
+				<Titles LongName="Agility Dog®" Name="AD">(pre-2004) 3 Qs earned from at least 2 different judges
 Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.</Titles>
-				<Titles Name="SAS" LongName="Starters Standard Agility">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="JS" LongName="Starters Jumpers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="GS" LongName="Starters Gamblers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="SS" LongName="Starters Snooker">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="RS" LongName="Starters Relay">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-				<Titles Name="AAD" LongName="Advanced Agility Dog®">(pre-2004) 3 Qs earned from at least 2 different judges
+				<Titles LongName="Starters Standard Agility" Name="SAS">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Starters Jumpers" Name="JS">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Starters Gamblers" Name="GS">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Starters Snooker" Name="SS">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Starters Relay" Name="RS">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
+				<Titles LongName="Advanced Agility Dog®" Name="AAD">(pre-2004) 3 Qs earned from at least 2 different judges
 Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advanced nonstandard classes.</Titles>
-				<Titles Name="SAA" LongName="Advanced Standard Agility">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="JA" LongName="Advanced Jumpers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="GA" LongName="Advanced Gamblers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="SA" LongName="Advanced Snooker">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="RA" LongName="Advanced Relay">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-				<Titles Name="MAD" LongName="Master Agility Dog®">3 qualifying scores in the Masters Standard Agility plus 1 qualifying score in each of the 4 Masters nonstandard classes.</Titles>
-				<Titles Name="SAM" LongName="Advanced Standard Agility">5 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="JM" LongName="Jumpers Master">5 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="GM" LongName="Gamblers Master">5 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="SM" LongName="Snooker Master">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
-				<Titles Name="RM" LongName="Relay Master">5 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-				<Titles Name="TM" LongName="Tournament Master">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.</Titles>
-				<Titles Name="ADCh" LongName="Agility Dog Champion®">(pre 2004) MAD, JM, GM, SM, RM plus 4 Standard Qs
+				<Titles LongName="Advanced Standard Agility" Name="SAA">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Advanced Jumpers" Name="JA">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Advanced Gamblers" Name="GA">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Advanced Snooker" Name="SA">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Advanced Relay" Name="RA">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
+				<Titles LongName="Master Agility Dog®" Name="MAD">3 qualifying scores in the Masters Standard Agility plus 1 qualifying score in each of the 4 Masters nonstandard classes.</Titles>
+				<Titles LongName="Advanced Standard Agility" Name="SAM">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Jumpers Master" Name="JM">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Gamblers Master" Name="GM">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Snooker Master" Name="SM">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
+				<Titles LongName="Relay Master" Name="RM">5 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
+				<Titles LongName="Tournament Master" Name="TM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.</Titles>
+				<Titles LongName="Agility Dog Champion®" Name="ADCh">(pre 2004) MAD, JM, GM, SM, RM plus 4 Standard Qs
 MSA, JM, GM, SM, RM, TM</Titles>
-				<Titles Name="SACh" LongName="Standard Agility Champion">MSA plus 5 additional qualifying scores in Masters Standard class</Titles>
-				<Titles Name="JCh" LongName="Jumpers Champion">JM plus 5 additional qualifying scores in Masters Jumpers class</Titles>
-				<Titles Name="GCh" LongName="Gamblers Champion">GM plus 5 additional qualifying scores in Masters Gamblers class</Titles>
-				<Titles Name="SCh" LongName="Snooker Champion">SM plus 5 additional qualifying scores in Masters Snooker class</Titles>
-				<Titles Name="RCh" LongName="Relay Champion">RM plus 5 additional qualifying scores in Masters Relay class</Titles>
-				<Titles Name="ADCh-B" LongName="Agility Dog Champion® - Bronze">All Bronze titles</Titles>
-				<Titles Name="SACh-B" LongName="Standard Agility Champion - Bronze">15 qualifying scores in Masters Standard class</Titles>
-				<Titles Name="JCh-B" LongName="Jumpers Champion - Bronze">15 qualifying scores in Masters Jumpers class</Titles>
-				<Titles Name="GCh-B" LongName="Gamblers Champion - Bronze">15 qualifying scores in Masters Gamblers class</Titles>
-				<Titles Name="SCh-B" LongName="Snooker Champion - Bronze">15 qualifying scores in Masters Snooker class</Titles>
-				<Titles Name="RCh-B" LongName="Relay Champion - Bronze">15 qualifying scores in Masters Relay class</Titles>
-				<Titles Name="TCh-B" LongName="Tournament Master - Bronze">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.</Titles>
-				<Titles Name="ADCh-S" LongName="Agility Dog Champion® - Silver">All Silver titles.</Titles>
-				<Titles Name="SACh-S" LongName="Standard Agility Champion - Silver">25 qualifying scores in Masters Standard class</Titles>
-				<Titles Name="JCh-S" LongName="Jumpers Champion - Silver">25 qualifying scores in Masters Jumpers class</Titles>
-				<Titles Name="GCh-S" LongName="Gamblers Champion - Silver">25 qualifying scores in Masters Gamblers class</Titles>
-				<Titles Name="SCh-S" LongName="Snooker Champion - Silver">25 qualifying scores in Masters Snooker class</Titles>
-				<Titles Name="RCh-S" LongName="Relay Champion - Silver">25 qualifying scores in Masters Relay class</Titles>
-				<Titles Name="TCh-S" LongName="Tournament Master - Silver">25 qualifying scores in tournament competition with at least 5 qualifying scores in each tournament.</Titles>
-				<Titles Name="ADCh-G" LongName="Agility Dog Champion® - Gold">All Gold titles.</Titles>
-				<Titles Name="SACh-G" LongName="Standard Agility Champion - Gold">35 qualifying scores in Masters Standard class</Titles>
-				<Titles Name="JCh-G" LongName="Jumpers Champion - Gold">35 qualifying scores in Masters Jumpers class</Titles>
-				<Titles Name="GCh-G" LongName="Gamblers Champion - Gold">35 qualifying scores in Masters Gamblers class</Titles>
-				<Titles Name="SCh-G" LongName="Snooker Champion - Gold">35 qualifying scores in Masters Snooker class</Titles>
-				<Titles Name="RCh-G" LongName="Relay Champion - Gold">35 qualifying scores in Masters Relay class</Titles>
-				<Titles Name="TCh-G" LongName="Tournament Master - Gold">35 qualifying scores in tournament competition with at least 7 qualifying scores in each tournament.</Titles>
-				<Titles Name="ADCh-P" LongName="Agility Dog Champion® - Platinum">All Platinum titles.</Titles>
-				<Titles Name="SACh-P" LongName="Standard Agility Champion - Platinum">50 qualifying scores in Masters Standard class</Titles>
-				<Titles Name="JCh-P" LongName="Jumpers Champion - Platinum">50 qualifying scores in Masters Jumpers class</Titles>
-				<Titles Name="GCh-P" LongName="Gamblers Champion - Platinum">50 qualifying scores in Masters Gamblers class</Titles>
-				<Titles Name="SCh-P" LongName="Snooker Champion - Platinum">50 qualifying scores in Masters Snooker class</Titles>
-				<Titles Name="RCh-P" LongName="Relay Champion - Platinum">50 qualifying scores in Masters Relay class</Titles>
-				<Titles Name="TCh-P" LongName="Tournament Master - Platinum">50 qualifying scores in tournament competition with at least 10 qualifying scores in each tournament.</Titles>
-				<Titles Name="LAA Bronze" LongName="Lifetime Achievement Award Bronze">(150pts): 15 std, 15 jumpers, 15 gamblers, 15 snooker, 15 pairs</Titles>
-				<Titles Name="LAA Silver" LongName="Lifetime Achievement Award Silver">(250pts): 25 std, 25 jumpers, 25 gamblers, 25 snooker, 25 pairs</Titles>
-				<Titles Name="LAA Gold" LongName="Lifetime Achievement Award Gold">(350pts): 35 std, 35 jumpers, 35 gamblers, 35 snooker, 35 pairs</Titles>
-				<Titles Name="LAA Platinum" LongName="Lifetime Achievement Award Platinum">(500pts): 50 std, 50 jumpers, 50 gamblers, 50 snooker, 50 pairs</Titles>
+				<Titles LongName="Standard Agility Champion" Name="SACh">MSA plus 5 additional qualifying scores in Masters Standard class</Titles>
+				<Titles LongName="Jumpers Champion" Name="JCh">JM plus 5 additional qualifying scores in Masters Jumpers class</Titles>
+				<Titles LongName="Gamblers Champion" Name="GCh">GM plus 5 additional qualifying scores in Masters Gamblers class</Titles>
+				<Titles LongName="Snooker Champion" Name="SCh">SM plus 5 additional qualifying scores in Masters Snooker class</Titles>
+				<Titles LongName="Relay Champion" Name="RCh">RM plus 5 additional qualifying scores in Masters Relay class</Titles>
+				<Titles LongName="Agility Dog Champion® - Bronze" Name="ADCh-B">All Bronze titles</Titles>
+				<Titles LongName="Standard Agility Champion - Bronze" Name="SACh-B">15 qualifying scores in Masters Standard class</Titles>
+				<Titles LongName="Jumpers Champion - Bronze" Name="JCh-B">15 qualifying scores in Masters Jumpers class</Titles>
+				<Titles LongName="Gamblers Champion - Bronze" Name="GCh-B">15 qualifying scores in Masters Gamblers class</Titles>
+				<Titles LongName="Snooker Champion - Bronze" Name="SCh-B">15 qualifying scores in Masters Snooker class</Titles>
+				<Titles LongName="Relay Champion - Bronze" Name="RCh-B">15 qualifying scores in Masters Relay class</Titles>
+				<Titles LongName="Tournament Master - Bronze" Name="TCh-B">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.</Titles>
+				<Titles LongName="Agility Dog Champion® - Silver" Name="ADCh-S">All Silver titles.</Titles>
+				<Titles LongName="Standard Agility Champion - Silver" Name="SACh-S">25 qualifying scores in Masters Standard class</Titles>
+				<Titles LongName="Jumpers Champion - Silver" Name="JCh-S">25 qualifying scores in Masters Jumpers class</Titles>
+				<Titles LongName="Gamblers Champion - Silver" Name="GCh-S">25 qualifying scores in Masters Gamblers class</Titles>
+				<Titles LongName="Snooker Champion - Silver" Name="SCh-S">25 qualifying scores in Masters Snooker class</Titles>
+				<Titles LongName="Relay Champion - Silver" Name="RCh-S">25 qualifying scores in Masters Relay class</Titles>
+				<Titles LongName="Tournament Master - Silver" Name="TCh-S">25 qualifying scores in tournament competition with at least 5 qualifying scores in each tournament.</Titles>
+				<Titles LongName="Agility Dog Champion® - Gold" Name="ADCh-G">All Gold titles.</Titles>
+				<Titles LongName="Standard Agility Champion - Gold" Name="SACh-G">35 qualifying scores in Masters Standard class</Titles>
+				<Titles LongName="Jumpers Champion - Gold" Name="JCh-G">35 qualifying scores in Masters Jumpers class</Titles>
+				<Titles LongName="Gamblers Champion - Gold" Name="GCh-G">35 qualifying scores in Masters Gamblers class</Titles>
+				<Titles LongName="Snooker Champion - Gold" Name="SCh-G">35 qualifying scores in Masters Snooker class</Titles>
+				<Titles LongName="Relay Champion - Gold" Name="RCh-G">35 qualifying scores in Masters Relay class</Titles>
+				<Titles LongName="Tournament Master - Gold" Name="TCh-G">35 qualifying scores in tournament competition with at least 7 qualifying scores in each tournament.</Titles>
+				<Titles LongName="Agility Dog Champion® - Platinum" Name="ADCh-P">All Platinum titles.</Titles>
+				<Titles LongName="Standard Agility Champion - Platinum" Name="SACh-P">50 qualifying scores in Masters Standard class</Titles>
+				<Titles LongName="Jumpers Champion - Platinum" Name="JCh-P">50 qualifying scores in Masters Jumpers class</Titles>
+				<Titles LongName="Gamblers Champion - Platinum" Name="GCh-P">50 qualifying scores in Masters Gamblers class</Titles>
+				<Titles LongName="Snooker Champion - Platinum" Name="SCh-P">50 qualifying scores in Masters Snooker class</Titles>
+				<Titles LongName="Relay Champion - Platinum" Name="RCh-P">50 qualifying scores in Masters Relay class</Titles>
+				<Titles LongName="Tournament Master - Platinum" Name="TCh-P">50 qualifying scores in tournament competition with at least 10 qualifying scores in each tournament.</Titles>
+				<Titles LongName="Lifetime Achievement Award Bronze" Name="LAA Bronze">(150pts): 15 std, 15 jumpers, 15 gamblers, 15 snooker, 15 pairs</Titles>
+				<Titles LongName="Lifetime Achievement Award Silver" Name="LAA Silver">(250pts): 25 std, 25 jumpers, 25 gamblers, 25 snooker, 25 pairs</Titles>
+				<Titles LongName="Lifetime Achievement Award Gold" Name="LAA Gold">(350pts): 35 std, 35 jumpers, 35 gamblers, 35 snooker, 35 pairs</Titles>
+				<Titles LongName="Lifetime Achievement Award Platinum" Name="LAA Platinum">(500pts): 50 std, 50 jumpers, 50 gamblers, 50 snooker, 50 pairs</Titles>
 			</Division>
 			<Division Name="Performance">
 				<Level Name="Nationals"/>
@@ -905,61 +905,61 @@ MSA, JM, GM, SM, RM, TM</Titles>
 				<Level Name="PI"/>
 				<Level Name="PII"/>
 				<Level Name="PIII"/>
-				<Titles Name="PDI" LongName="Performance Dog I"/>
-				<Titles Name="SAPI" LongName="Performance I Standard"/>
-				<Titles Name="JPI" LongName="Performance I Jumpers"/>
-				<Titles Name="GPI" LongName="Performance I Gamblers"/>
-				<Titles Name="SPI" LongName="Performance I Snooker"/>
-				<Titles Name="PDII" LongName="Performance Dog II"/>
-				<Titles Name="SAPII" LongName="Performance II Standard"/>
-				<Titles Name="JPII" LongName="Performance II Jumpers"/>
-				<Titles Name="GPII" LongName="Performance II Gamblers"/>
-				<Titles Name="SPII" LongName="Performance II Snooker"/>
-				<Titles Name="PDIII" LongName="Performance Dog III"/>
-				<Titles Name="SAIII" LongName="Performance III Standard"/>
-				<Titles Name="PJ" LongName="Performance III Jumper"/>
-				<Titles Name="PG" LongName="Performance III Gambler"/>
-				<Titles Name="PS" LongName="Performance III Snooker"/>
-				<Titles Name="APD" LongName="Accomplished Performance Dog"/>
-				<Titles Name="APSA" LongName="Accomplished Standard"/>
-				<Titles Name="APJ" LongName="Accomplished Jumpers"/>
-				<Titles Name="APG" LongName="Accomplished Gamblers"/>
-				<Titles Name="APS" LongName="Accomplished Snooker"/>
-				<Titles Name="APT" LongName="Accomplished Tournament Performer"/>
-				<Titles Name="APD-B" LongName="Accomplished Performance Dog - Bronze">All Bronze titles</Titles>
-				<Titles Name="APSA-B" LongName="Accomplished Standard - Bronze">15 qualifying scores in PIII Standard</Titles>
-				<Titles Name="APJ-B" LongName="Accomplished Jumpers - Bronze">15 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="APG-B" LongName="Accomplished Gamblers - Bronze">15 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="APS-B" LongName="Accomplished Snooker - Bronze">15 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="APT-B" LongName="Accomplished Tournament Performer - Bronze">15 qualifying scores in Performance Grand Prix</Titles>
-				<Titles Name="APD-S" LongName="Accomplished Performance Dog - Silver">All Silver titles</Titles>
-				<Titles Name="APSA-S" LongName="Accomplished Standard - Silver">25 qualifying scores in PIII Standard</Titles>
-				<Titles Name="APJ-S" LongName="Accomplished Jumpers - Silver">25 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="APG-S" LongName="Accomplished Gamblers - Silver">25 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="APS-S" LongName="Accomplished Snooker - Silver">25 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="APT-S" LongName="Accomplished Tournament Performer - Silver">25 qualifying scores in Performance Grand Prix</Titles>
-				<Titles Name="APD-G" LongName="Accomplished Performance Dog - Gold">All Gold titles</Titles>
-				<Titles Name="APSA-G" LongName="Accomplished Standard - Gold">35 qualifying scores in PIII Standard</Titles>
-				<Titles Name="APJ-G" LongName="Accomplished Jumpers - Gold">35 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="APG-G" LongName="Accomplished Gamblers - Gold">35 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="APS-G" LongName="Accomplished Snooker - Gold">35 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="APT-G" LongName="Accomplished Tournament Performer - Gold">35 qualifying scores in Performance Grand Prix</Titles>
-				<Titles Name="APD-P" LongName="Accomplished Performance Dog - Platinum">All Platinum titles</Titles>
-				<Titles Name="APSA-P" LongName="Accomplished Standard - Platinum">50 qualifying scores in PIII Standard</Titles>
-				<Titles Name="APJ-P" LongName="Accomplished Jumpers - Platinum">50 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="APG-P" LongName="Accomplished Gamblers - Platinum">50 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="APS-P" LongName="Accomplished Snooker - Platinum">50 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="APT-P" LongName="Accomplished Tournament Performer - Platinum">50 qualifying scores in Performance Grand Prix</Titles>
+				<Titles LongName="Performance Dog I" Name="PDI"/>
+				<Titles LongName="Performance I Standard" Name="SAPI"/>
+				<Titles LongName="Performance I Jumpers" Name="JPI"/>
+				<Titles LongName="Performance I Gamblers" Name="GPI"/>
+				<Titles LongName="Performance I Snooker" Name="SPI"/>
+				<Titles LongName="Performance Dog II" Name="PDII"/>
+				<Titles LongName="Performance II Standard" Name="SAPII"/>
+				<Titles LongName="Performance II Jumpers" Name="JPII"/>
+				<Titles LongName="Performance II Gamblers" Name="GPII"/>
+				<Titles LongName="Performance II Snooker" Name="SPII"/>
+				<Titles LongName="Performance Dog III" Name="PDIII"/>
+				<Titles LongName="Performance III Standard" Name="SAIII"/>
+				<Titles LongName="Performance III Jumper" Name="PJ"/>
+				<Titles LongName="Performance III Gambler" Name="PG"/>
+				<Titles LongName="Performance III Snooker" Name="PS"/>
+				<Titles LongName="Accomplished Performance Dog" Name="APD"/>
+				<Titles LongName="Accomplished Standard" Name="APSA"/>
+				<Titles LongName="Accomplished Jumpers" Name="APJ"/>
+				<Titles LongName="Accomplished Gamblers" Name="APG"/>
+				<Titles LongName="Accomplished Snooker" Name="APS"/>
+				<Titles LongName="Accomplished Tournament Performer" Name="APT"/>
+				<Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-B">All Bronze titles</Titles>
+				<Titles LongName="Accomplished Standard - Bronze" Name="APSA-B">15 qualifying scores in PIII Standard</Titles>
+				<Titles LongName="Accomplished Jumpers - Bronze" Name="APJ-B">15 qualifying scores in PIII Jumpers</Titles>
+				<Titles LongName="Accomplished Gamblers - Bronze" Name="APG-B">15 qualifying scores in PIII Gamblers</Titles>
+				<Titles LongName="Accomplished Snooker - Bronze" Name="APS-B">15 qualifying scores in PIII Snooker</Titles>
+				<Titles LongName="Accomplished Tournament Performer - Bronze" Name="APT-B">15 qualifying scores in Performance Grand Prix</Titles>
+				<Titles LongName="Accomplished Performance Dog - Silver" Name="APD-S">All Silver titles</Titles>
+				<Titles LongName="Accomplished Standard - Silver" Name="APSA-S">25 qualifying scores in PIII Standard</Titles>
+				<Titles LongName="Accomplished Jumpers - Silver" Name="APJ-S">25 qualifying scores in PIII Jumpers</Titles>
+				<Titles LongName="Accomplished Gamblers - Silver" Name="APG-S">25 qualifying scores in PIII Gamblers</Titles>
+				<Titles LongName="Accomplished Snooker - Silver" Name="APS-S">25 qualifying scores in PIII Snooker</Titles>
+				<Titles LongName="Accomplished Tournament Performer - Silver" Name="APT-S">25 qualifying scores in Performance Grand Prix</Titles>
+				<Titles LongName="Accomplished Performance Dog - Gold" Name="APD-G">All Gold titles</Titles>
+				<Titles LongName="Accomplished Standard - Gold" Name="APSA-G">35 qualifying scores in PIII Standard</Titles>
+				<Titles LongName="Accomplished Jumpers - Gold" Name="APJ-G">35 qualifying scores in PIII Jumpers</Titles>
+				<Titles LongName="Accomplished Gamblers - Gold" Name="APG-G">35 qualifying scores in PIII Gamblers</Titles>
+				<Titles LongName="Accomplished Snooker - Gold" Name="APS-G">35 qualifying scores in PIII Snooker</Titles>
+				<Titles LongName="Accomplished Tournament Performer - Gold" Name="APT-G">35 qualifying scores in Performance Grand Prix</Titles>
+				<Titles LongName="Accomplished Performance Dog - Platinum" Name="APD-P">All Platinum titles</Titles>
+				<Titles LongName="Accomplished Standard - Platinum" Name="APSA-P">50 qualifying scores in PIII Standard</Titles>
+				<Titles LongName="Accomplished Jumpers - Platinum" Name="APJ-P">50 qualifying scores in PIII Jumpers</Titles>
+				<Titles LongName="Accomplished Gamblers - Platinum" Name="APG-P">50 qualifying scores in PIII Gamblers</Titles>
+				<Titles LongName="Accomplished Snooker - Platinum" Name="APS-P">50 qualifying scores in PIII Snooker</Titles>
+				<Titles LongName="Accomplished Tournament Performer - Platinum" Name="APT-P">50 qualifying scores in Performance Grand Prix</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Beginners"/>
 				<Level Name="Elementary"/>
 				<Level Name="Intermediate"/>
 				<Level Name="Senior"/>
-				<Titles Name="Beginners Agility" LongName="JH - Beginners Agility"/>
-				<Titles Name="Elementary Agility" LongName="JH - Elementary Agility"/>
-				<Titles Name="Intermediate Agility" LongName="JH - Intermediate Agility"/>
-				<Titles Name="Senior Agility" LongName="JH - Senior Agility"/>
+				<Titles LongName="JH - Beginners Agility" Name="Beginners Agility"/>
+				<Titles LongName="JH - Elementary Agility" Name="Elementary Agility"/>
+				<Titles LongName="JH - Intermediate Agility" Name="Intermediate Agility"/>
+				<Titles LongName="JH - Senior Agility" Name="Senior Agility"/>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
