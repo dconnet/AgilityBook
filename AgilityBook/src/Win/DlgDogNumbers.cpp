@@ -126,20 +126,20 @@ void CDlgDogNumbers::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogNumbers)
-	DDX_Control(pDX, IDC_EDIT, m_ctrlRegEdit);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlRegDelete);
-	DDX_Control(pDX, IDC_REG_NUMS, m_ctrlRegNums);
+	DDX_Control(pDX, IDC_DOGNUM_EDIT, m_ctrlRegEdit);
+	DDX_Control(pDX, IDC_DOGNUM_DELETE, m_ctrlRegDelete);
+	DDX_Control(pDX, IDC_DOGNUM_REG_NUMS, m_ctrlRegNums);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgDogNumbers, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogNumbers)
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_REG_NUMS, OnColumnclickRegNums)
-	ON_NOTIFY(NM_DBLCLK, IDC_REG_NUMS, OnDblclkRegNums)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_REG_NUMS, OnItemchangedRegNums)
-	ON_BN_CLICKED(IDC_NEW, OnRegNew)
-	ON_BN_CLICKED(IDC_EDIT, OnRegEdit)
-	ON_BN_CLICKED(IDC_DELETE, OnRegDelete)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOGNUM_REG_NUMS, OnColumnclickRegNums)
+	ON_NOTIFY(NM_DBLCLK, IDC_DOGNUM_REG_NUMS, OnDblclkRegNums)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DOGNUM_REG_NUMS, OnItemchangedRegNums)
+	ON_BN_CLICKED(IDC_DOGNUM_NEW, OnRegNew)
+	ON_BN_CLICKED(IDC_DOGNUM_EDIT, OnRegEdit)
+	ON_BN_CLICKED(IDC_DOGNUM_DELETE, OnRegDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

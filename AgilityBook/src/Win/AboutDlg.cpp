@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-	ON_BN_CLICKED(IDC_UPDATE, OnBnClickedUpdate)
+	ON_BN_CLICKED(IDC_ABOUT_UPDATE, OnBnClickedUpdate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -108,7 +108,7 @@ BOOL CAboutDlg::OnInitDialog()
 		UINT id; // Dlgid of other controls to be moved.
 	} idControls[] = {
 		{IDC_ABOUT_TEXT2},
-		{IDC_UPDATE}
+		{IDC_ABOUT_UPDATE}
 	};
 	int nControls = sizeof(idControls) / sizeof(idControls[0]);
 

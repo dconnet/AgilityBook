@@ -61,17 +61,17 @@ void CDlgReorder::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgReorder)
-	DDX_Control(pDX, IDC_LIST, m_ctrlList);
-	DDX_Control(pDX, IDC_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
+	DDX_Control(pDX, IDC_REORDER_LIST, m_ctrlList);
+	DDX_Control(pDX, IDC_REORDER_MOVE_UP, m_ctrlUp);
+	DDX_Control(pDX, IDC_REORDER_MOVE_DOWN, m_ctrlDown);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgReorder, CDialog)
 	//{{AFX_MSG_MAP(CDlgReorder)
-	ON_LBN_SELCHANGE(IDC_LIST, OnSelchangeList)
-	ON_BN_CLICKED(IDC_MOVE_UP, OnMoveUp)
-	ON_BN_CLICKED(IDC_MOVE_DOWN, OnMoveDown)
+	ON_LBN_SELCHANGE(IDC_REORDER_LIST, OnSelchangeList)
+	ON_BN_CLICKED(IDC_REORDER_MOVE_UP, OnMoveUp)
+	ON_BN_CLICKED(IDC_REORDER_MOVE_DOWN, OnMoveDown)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

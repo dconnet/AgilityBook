@@ -63,7 +63,7 @@ void CDlgCRCDViewer::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgCRCDViewer)
-	DDX_Control(pDX, IDC_CRCD, m_ctrlCRCD);
+	DDX_Control(pDX, IDC_VIEWER_CRCD, m_ctrlCRCD);
 	DDX_Control(pDX, IDOK, m_ctrlOK);
 	//}}AFX_DATA_MAP
 }
@@ -138,7 +138,7 @@ BOOL CDlgCRCDViewer::OnInitDialog()
 HBRUSH CDlgCRCDViewer::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = NULL;
-	if (pWnd->GetDlgCtrlID() == IDC_CRCD)
+	if (pWnd->GetDlgCtrlID() == IDC_VIEWER_CRCD)
 		hbr = GetSysColorBrush(COLOR_WINDOW);
 	else
 		hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);

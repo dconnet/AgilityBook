@@ -73,27 +73,27 @@ void CDlgOptionsTraining::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsTraining)
-	DDX_Radio(pDX, IDC_OPTIONS_VENUES_ALL, m_ViewNames);
-	DDX_Control(pDX, IDC_OPTIONS_VENUES, m_ctrlNames);
-	DDX_Radio(pDX, IDC_OPTIONS_DATES_ALL, m_ViewDates);
-	DDX_Control(pDX, IDC_OPTIONS_DATE_START_CHECK, m_ctrlDateStartCheck);
-	DDX_Check(pDX, IDC_OPTIONS_DATE_START_CHECK, m_bDateStart);
-	DDX_Control(pDX, IDC_OPTIONS_DATE_START, m_ctrlDateStart);
-	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_DATE_START, m_timeStart);
-	DDX_Control(pDX, IDC_OPTIONS_DATE_END_CHECK, m_ctrlDateEndCheck);
-	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_DATE_END, m_timeEnd);
-	DDX_Check(pDX, IDC_OPTIONS_DATE_END_CHECK, m_bDateEnd);
-	DDX_Control(pDX, IDC_OPTIONS_DATE_END, m_ctrlDateEnd);
+	DDX_Radio(pDX, IDC_OPTIONS_TRAINING_VENUES_ALL, m_ViewNames);
+	DDX_Control(pDX, IDC_OPTIONS_TRAINING_VENUES, m_ctrlNames);
+	DDX_Radio(pDX, IDC_OPTIONS_TRAINING_DATES_ALL, m_ViewDates);
+	DDX_Control(pDX, IDC_OPTIONS_TRAINING_DATE_START_CHECK, m_ctrlDateStartCheck);
+	DDX_Check(pDX, IDC_OPTIONS_TRAINING_DATE_START_CHECK, m_bDateStart);
+	DDX_Control(pDX, IDC_OPTIONS_TRAINING_DATE_START, m_ctrlDateStart);
+	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_TRAINING_DATE_START, m_timeStart);
+	DDX_Control(pDX, IDC_OPTIONS_TRAINING_DATE_END_CHECK, m_ctrlDateEndCheck);
+	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_TRAINING_DATE_END, m_timeEnd);
+	DDX_Check(pDX, IDC_OPTIONS_TRAINING_DATE_END_CHECK, m_bDateEnd);
+	DDX_Control(pDX, IDC_OPTIONS_TRAINING_DATE_END, m_ctrlDateEnd);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsTraining, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsTraining)
-	ON_BN_CLICKED(IDC_OPTIONS_DATES_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_DATES_RANGE, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_VENUES_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_VENUES_SELECTED, OnViewUpdate)
-	ON_NOTIFY(TVN_SETDISPINFO, IDC_OPTIONS_VENUES, OnSetdispinfoNames)
+	ON_BN_CLICKED(IDC_OPTIONS_TRAINING_DATES_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_TRAINING_DATES_RANGE, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_TRAINING_VENUES_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_TRAINING_VENUES_SELECTED, OnViewUpdate)
+	ON_NOTIFY(TVN_SETDISPINFO, IDC_OPTIONS_TRAINING_VENUES, OnSetdispinfoNames)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -145,7 +145,7 @@ BOOL CDlgOptionsTraining::OnInitDialog()
 	if (0 == names.size())
 	{
 		m_ViewNames = 0;
-		GetDlgItem(IDC_OPTIONS_VENUES_SELECTED)->EnableWindow(FALSE);
+		GetDlgItem(IDC_OPTIONS_TRAINING_VENUES_SELECTED)->EnableWindow(FALSE);
 		UpdateData(FALSE);
 	}
 	else

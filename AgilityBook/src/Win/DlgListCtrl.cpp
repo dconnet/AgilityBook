@@ -400,11 +400,11 @@ void CDlgListCtrl::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgListCtrl)
 	DDX_Control(pDX, IDC_LIST, m_ctrlList);
-	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
-	DDX_Control(pDX, IDC_TRIAL, m_ctrlCreateTrial);
+	DDX_Control(pDX, IDC_LIST_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_LIST_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_LIST_MOVE_UP, m_ctrlUp);
+	DDX_Control(pDX, IDC_LIST_MOVE_DOWN, m_ctrlDown);
+	DDX_Control(pDX, IDC_LIST_TRIAL, m_ctrlCreateTrial);
 	//}}AFX_DATA_MAP
 }
 
@@ -414,12 +414,12 @@ BEGIN_MESSAGE_MAP(CDlgListCtrl, CDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_LIST, OnDeleteitemList)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
-	ON_BN_CLICKED(IDC_NEW, OnNew)
-	ON_BN_CLICKED(IDC_EDIT, OnEdit)
-	ON_BN_CLICKED(IDC_DELETE, OnDelete)
-	ON_BN_CLICKED(IDC_MOVE_UP, OnMoveUp)
-	ON_BN_CLICKED(IDC_MOVE_DOWN, OnMoveDown)
-	ON_BN_CLICKED(IDC_TRIAL, OnCreateTrial)
+	ON_BN_CLICKED(IDC_LIST_NEW, OnNew)
+	ON_BN_CLICKED(IDC_LIST_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_LIST_DELETE, OnDelete)
+	ON_BN_CLICKED(IDC_LIST_MOVE_UP, OnMoveUp)
+	ON_BN_CLICKED(IDC_LIST_MOVE_DOWN, OnMoveDown)
+	ON_BN_CLICKED(IDC_LIST_TRIAL, OnCreateTrial)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -63,21 +63,21 @@ void CDlgOptionsFonts::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsFonts)
-	DDX_Control(pDX, IDC_FONT_GENERAL_PRINT_TEXT, m_ctrlFontGeneralPrint);
-	DDX_Control(pDX, IDC_FONT_CAL_VIEW_DATE_TEXT, m_ctrlFontCalViewDate);
-	DDX_Control(pDX, IDC_FONT_CAL_VIEW_TEXT_TEXT, m_ctrlFontCalViewText);
-	DDX_Control(pDX, IDC_FONT_CAL_PRINT_DATE_TEXT, m_ctrlFontCalPrintDate);
-	DDX_Control(pDX, IDC_FONT_CAL_PRINT_TEXT_TEXT, m_ctrlFontCalPrintText);
+	DDX_Control(pDX, IDC_OPTIONS_FONT_GENERAL_PRINT_TEXT, m_ctrlFontGeneralPrint);
+	DDX_Control(pDX, IDC_OPTIONS_FONT_CAL_VIEW_DATE_TEXT, m_ctrlFontCalViewDate);
+	DDX_Control(pDX, IDC_OPTIONS_FONT_CAL_VIEW_TEXT_TEXT, m_ctrlFontCalViewText);
+	DDX_Control(pDX, IDC_OPTIONS_FONT_CAL_PRINT_DATE_TEXT, m_ctrlFontCalPrintDate);
+	DDX_Control(pDX, IDC_OPTIONS_FONT_CAL_PRINT_TEXT_TEXT, m_ctrlFontCalPrintText);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsFonts, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsFonts)
-	ON_BN_CLICKED(IDC_FONT_GENERAL_PRINT, OnFontGeneralPrint)
-	ON_BN_CLICKED(IDC_FONT_CAL_VIEW_DATE, OnFontCalViewDate)
-	ON_BN_CLICKED(IDC_FONT_CAL_VIEW_TEXT, OnFontCalViewText)
-	ON_BN_CLICKED(IDC_FONT_CAL_PRINT_DATE, OnFontCalPrintDate)
-	ON_BN_CLICKED(IDC_FONT_CAL_PRINT_TEXT, OnFontCalPrintText)
+	ON_BN_CLICKED(IDC_OPTIONS_FONT_GENERAL_PRINT, OnFontGeneralPrint)
+	ON_BN_CLICKED(IDC_OPTIONS_FONT_CAL_VIEW_DATE, OnFontCalViewDate)
+	ON_BN_CLICKED(IDC_OPTIONS_FONT_CAL_VIEW_TEXT, OnFontCalViewText)
+	ON_BN_CLICKED(IDC_OPTIONS_FONT_CAL_PRINT_DATE, OnFontCalPrintDate)
+	ON_BN_CLICKED(IDC_OPTIONS_FONT_CAL_PRINT_TEXT, OnFontCalPrintText)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

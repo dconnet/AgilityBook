@@ -63,9 +63,9 @@ void CDlgFind::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgFind)
-	DDX_Text(pDX, IDC_NAME, m_strName);
-	DDX_Check(pDX, IDC_MATCH_CASE, m_bCase);
-	DDX_Radio(pDX, IDC_SEARCH_ALL, m_Search);
+	DDX_Text(pDX, IDC_FIND_NAME, m_strName);
+	DDX_Check(pDX, IDC_FIND_CASE, m_bCase);
+	DDX_Radio(pDX, IDC_FIND_ALL, m_Search);
 	DDX_Radio(pDX, IDC_FIND_UP, m_Direction);
 	DDX_Control(pDX, IDOK, m_ctrlFind);
 	//}}AFX_DATA_MAP
@@ -73,7 +73,7 @@ void CDlgFind::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgFind, CDialog)
 	//{{AFX_MSG_MAP(CDlgFind)
-	ON_EN_CHANGE(IDC_NAME, OnChangeName)
+	ON_EN_CHANGE(IDC_FIND_NAME, OnChangeName)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

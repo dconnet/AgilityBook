@@ -70,10 +70,10 @@ void CDlgTraining::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTraining)
-	DDX_DateTimeCtrl(pDX, IDC_DATE, m_date);
-	DDX_Control(pDX, IDC_NAME, m_ctrlNames);
-	DDX_CBString(pDX, IDC_NAME, m_Name);
-	DDX_Text(pDX, IDC_NOTES, m_Notes);
+	DDX_DateTimeCtrl(pDX, IDC_TRAINING_DATE, m_date);
+	DDX_Control(pDX, IDC_TRAINING_NAME, m_ctrlNames);
+	DDX_CBString(pDX, IDC_TRAINING_NAME, m_Name);
+	DDX_Text(pDX, IDC_TRAINING_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
 

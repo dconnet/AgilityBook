@@ -173,21 +173,21 @@ void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogPoints)
-	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_POINTS, m_ctrlPoints);
+	DDX_Control(pDX, IDC_DOGPTS_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_DOGPTS_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_DOGPTS_POINTS, m_ctrlPoints);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgDogPoints, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogPoints)
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_POINTS, OnColumnclickExistingPoints)
-	ON_NOTIFY(NM_DBLCLK, IDC_POINTS, OnDblclkExistingPoints)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_POINTS, OnGetdispinfoExistingPoints)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_POINTS, OnItemchangedExistingPoints)
-	ON_BN_CLICKED(IDC_NEW, OnNew)
-	ON_BN_CLICKED(IDC_EDIT, OnEdit)
-	ON_BN_CLICKED(IDC_DELETE, OnDelete)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOGPTS_POINTS, OnColumnclickExistingPoints)
+	ON_NOTIFY(NM_DBLCLK, IDC_DOGPTS_POINTS, OnDblclkExistingPoints)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_DOGPTS_POINTS, OnGetdispinfoExistingPoints)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DOGPTS_POINTS, OnItemchangedExistingPoints)
+	ON_BN_CLICKED(IDC_DOGPTS_NEW, OnNew)
+	ON_BN_CLICKED(IDC_DOGPTS_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_DOGPTS_DELETE, OnDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

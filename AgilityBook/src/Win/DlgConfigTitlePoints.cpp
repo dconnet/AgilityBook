@@ -68,9 +68,9 @@ void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitlePoints)
-	DDX_Text(pDX, IDC_POINTS, m_Points);
-	DDX_Text(pDX, IDC_FAULTS, m_Faults);
-	DDX_Check(pDX, IDC_TITLE_POINTS, m_LifeTime);
+	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_POINTS, m_Points);
+	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_FAULTS, m_Faults);
+	DDX_Check(pDX, IDC_CONFIG_TITLEPTS_TITLE_POINTS, m_LifeTime);
 	//}}AFX_DATA_MAP
 }
 

@@ -64,9 +64,9 @@ void CDlgPartner::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgPartner)
-	DDX_Text(pDX, IDC_NAME, m_Handler);
-	DDX_Text(pDX, IDC_CALLNAME, m_Dog);
-	DDX_Text(pDX, IDC_REG_NUM, m_RegNum);
+	DDX_Text(pDX, IDC_PARTNER_NAME, m_Handler);
+	DDX_Text(pDX, IDC_PARTNER_CALLNAME, m_Dog);
+	DDX_Text(pDX, IDC_PARTNER_REG_NUM, m_RegNum);
 	//}}AFX_DATA_MAP
 }
 

@@ -141,64 +141,64 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunScore)
-	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
-	DDX_Text(pDX, IDC_VENUE, m_Venue);
-	DDX_Text(pDX, IDC_CLUB, m_Club);
-	DDX_Text(pDX, IDC_LOCATION, m_Location);
-	DDX_Control(pDX, IDC_DIVISION, m_ctrlDivisions);
-	DDX_Control(pDX, IDC_LEVEL, m_ctrlLevels);
-	DDX_Control(pDX, IDC_EVENT, m_ctrlEvents);
-	DDX_Control(pDX, IDC_HEIGHT, m_ctrlHeight);
-	DDX_CBString(pDX, IDC_HEIGHT, m_Height);
-	DDX_Control(pDX, IDC_JUDGE, m_ctrlJudge);
-	DDX_CBString(pDX, IDC_JUDGE, m_Judge);
-	DDX_Control(pDX, IDC_CONDITIONS, m_ctrlConditions);
-	DDX_Text(pDX, IDC_CONDITIONS, m_Conditions);
-	DDX_Control(pDX, IDC_PARTNERS_EDIT, m_ctrlPartnerEdit);
-	DDX_Control(pDX, IDC_PARTNER, m_ctrlPartner);
-	DDX_Control(pDX, IDC_HANDLER, m_ctrlHandler);
-	DDX_CBString(pDX, IDC_HANDLER, m_Handler);
-	DDX_Control(pDX, IDC_FAULTS, m_ctrlFaults);
-	DDX_Text(pDX, IDC_FAULTS, m_Faults);
-	DDX_Control(pDX, IDC_TIME, m_ctrlTime);
-	DDX_Text(pDX, IDC_TIME, m_Time);
-	DDX_Control(pDX, IDC_TABLE, m_ctrlTable);
-	DDX_Control(pDX, IDC_YARDS_TEXT, m_ctrlYardsText);
-	DDX_Control(pDX, IDC_YARDS, m_ctrlYards);
-	DDX_Text(pDX, IDC_YARDS, m_Yards);
-	DDX_Control(pDX, IDC_YPS_TEXT, m_ctrlYPSText);
-	DDX_Control(pDX, IDC_YPS, m_ctrlYPS);
-	DDX_Control(pDX, IDC_SCT_TEXT, m_ctrlSCTText);
-	DDX_Control(pDX, IDC_SCT, m_ctrlSCT);
-	DDX_Text(pDX, IDC_SCT, m_SCT);
-	DDX_Control(pDX, IDC_TOTAL_FAULTS_TEXT, m_ctrlTotalFaultsText);
-	DDX_Control(pDX, IDC_TOTAL_FAULTS, m_ctrlTotalFaults);
-	DDX_Control(pDX, IDC_OPENING_PTS_TEXT, m_ctrlOpeningText);
-	DDX_Control(pDX, IDC_OPENING_PTS, m_ctrlOpening);
-	DDX_Text(pDX, IDC_OPENING_PTS, m_Opening);
-	DDX_Control(pDX, IDC_CLOSING_PTS_TEXT, m_ctrlClosingText);
-	DDX_Control(pDX, IDC_CLOSING_PTS, m_ctrlClosing);
-	DDX_Text(pDX, IDC_CLOSING_PTS, m_Closing);
-	DDX_Control(pDX, IDC_OPEN_PTS_TEXT, m_ctrlOpenText);
-	DDX_Control(pDX, IDC_OPEN_PTS, m_ctrlOpen);
-	DDX_Text(pDX, IDC_OPEN_PTS, m_Open);
-	DDX_Control(pDX, IDC_CLOSE_PTS_TEXT, m_ctrlCloseText);
-	DDX_Control(pDX, IDC_CLOSE_PTS, m_ctrlClose);
-	DDX_Text(pDX, IDC_CLOSE_PTS, m_Close);
-	DDX_Control(pDX, IDC_PLACE, m_ctrlPlace);
-	DDX_Text(pDX, IDC_PLACE, m_Place);
-	DDX_Control(pDX, IDC_IN_CLASS, m_ctrlInClass);
-	DDX_Text(pDX, IDC_IN_CLASS, m_InClass);
-	DDX_Control(pDX, IDC_DOGS_QD, m_ctrlDogsQd);
-	DDX_Text(pDX, IDC_DOGS_QD, m_DogsQd);
-	DDX_Control(pDX, IDC_Q, m_ctrlQ);
-	DDX_Control(pDX, IDC_SCORE, m_ctrlScore);
-	DDX_Control(pDX, IDC_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
-	DDX_Control(pDX, IDC_TITLE_POINTS, m_ctrlTitlePoints);
-	DDX_Control(pDX, IDC_MACHPTS_TEXT, m_ctrlMachPtsText);
-	DDX_Control(pDX, IDC_MACHPTS, m_ctrlMachPts);
-	DDX_Control(pDX, IDC_DOUBLE_Q, m_ctrlDoubleQ);
-	DDX_Control(pDX, IDC_OTHERPOINTS, m_ctrlOtherPoints);
+	DDX_Control(pDX, IDC_RUNSCORE_DATE, m_ctrlDate);
+	DDX_Text(pDX, IDC_RUNSCORE_VENUE, m_Venue);
+	DDX_Text(pDX, IDC_RUNSCORE_CLUB, m_Club);
+	DDX_Text(pDX, IDC_RUNSCORE_LOCATION, m_Location);
+	DDX_Control(pDX, IDC_RUNSCORE_DIVISION, m_ctrlDivisions);
+	DDX_Control(pDX, IDC_RUNSCORE_LEVEL, m_ctrlLevels);
+	DDX_Control(pDX, IDC_RUNSCORE_EVENT, m_ctrlEvents);
+	DDX_Control(pDX, IDC_RUNSCORE_HEIGHT, m_ctrlHeight);
+	DDX_CBString(pDX, IDC_RUNSCORE_HEIGHT, m_Height);
+	DDX_Control(pDX, IDC_RUNSCORE_JUDGE, m_ctrlJudge);
+	DDX_CBString(pDX, IDC_RUNSCORE_JUDGE, m_Judge);
+	DDX_Control(pDX, IDC_RUNSCORE_CONDITIONS, m_ctrlConditions);
+	DDX_Text(pDX, IDC_RUNSCORE_CONDITIONS, m_Conditions);
+	DDX_Control(pDX, IDC_RUNSCORE_PARTNERS_EDIT, m_ctrlPartnerEdit);
+	DDX_Control(pDX, IDC_RUNSCORE_PARTNER, m_ctrlPartner);
+	DDX_Control(pDX, IDC_RUNSCORE_HANDLER, m_ctrlHandler);
+	DDX_CBString(pDX, IDC_RUNSCORE_HANDLER, m_Handler);
+	DDX_Control(pDX, IDC_RUNSCORE_FAULTS, m_ctrlFaults);
+	DDX_Text(pDX, IDC_RUNSCORE_FAULTS, m_Faults);
+	DDX_Control(pDX, IDC_RUNSCORE_TIME, m_ctrlTime);
+	DDX_Text(pDX, IDC_RUNSCORE_TIME, m_Time);
+	DDX_Control(pDX, IDC_RUNSCORE_TABLE, m_ctrlTable);
+	DDX_Control(pDX, IDC_RUNSCORE_YARDS_TEXT, m_ctrlYardsText);
+	DDX_Control(pDX, IDC_RUNSCORE_YARDS, m_ctrlYards);
+	DDX_Text(pDX, IDC_RUNSCORE_YARDS, m_Yards);
+	DDX_Control(pDX, IDC_RUNSCORE_YPS_TEXT, m_ctrlYPSText);
+	DDX_Control(pDX, IDC_RUNSCORE_YPS, m_ctrlYPS);
+	DDX_Control(pDX, IDC_RUNSCORE_SCT_TEXT, m_ctrlSCTText);
+	DDX_Control(pDX, IDC_RUNSCORE_SCT, m_ctrlSCT);
+	DDX_Text(pDX, IDC_RUNSCORE_SCT, m_SCT);
+	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS_TEXT, m_ctrlTotalFaultsText);
+	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS, m_ctrlTotalFaults);
+	DDX_Control(pDX, IDC_RUNSCORE_OPENING_PTS_TEXT, m_ctrlOpeningText);
+	DDX_Control(pDX, IDC_RUNSCORE_OPENING_PTS, m_ctrlOpening);
+	DDX_Text(pDX, IDC_RUNSCORE_OPENING_PTS, m_Opening);
+	DDX_Control(pDX, IDC_RUNSCORE_CLOSING_PTS_TEXT, m_ctrlClosingText);
+	DDX_Control(pDX, IDC_RUNSCORE_CLOSING_PTS, m_ctrlClosing);
+	DDX_Text(pDX, IDC_RUNSCORE_CLOSING_PTS, m_Closing);
+	DDX_Control(pDX, IDC_RUNSCORE_OPEN_PTS_TEXT, m_ctrlOpenText);
+	DDX_Control(pDX, IDC_RUNSCORE_OPEN_PTS, m_ctrlOpen);
+	DDX_Text(pDX, IDC_RUNSCORE_OPEN_PTS, m_Open);
+	DDX_Control(pDX, IDC_RUNSCORE_CLOSE_PTS_TEXT, m_ctrlCloseText);
+	DDX_Control(pDX, IDC_RUNSCORE_CLOSE_PTS, m_ctrlClose);
+	DDX_Text(pDX, IDC_RUNSCORE_CLOSE_PTS, m_Close);
+	DDX_Control(pDX, IDC_RUNSCORE_PLACE, m_ctrlPlace);
+	DDX_Text(pDX, IDC_RUNSCORE_PLACE, m_Place);
+	DDX_Control(pDX, IDC_RUNSCORE_IN_CLASS, m_ctrlInClass);
+	DDX_Text(pDX, IDC_RUNSCORE_IN_CLASS, m_InClass);
+	DDX_Control(pDX, IDC_RUNSCORE_DOGS_QD, m_ctrlDogsQd);
+	DDX_Text(pDX, IDC_RUNSCORE_DOGS_QD, m_DogsQd);
+	DDX_Control(pDX, IDC_RUNSCORE_Q, m_ctrlQ);
+	DDX_Control(pDX, IDC_RUNSCORE_SCORE, m_ctrlScore);
+	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
+	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS, m_ctrlTitlePoints);
+	DDX_Control(pDX, IDC_RUNSCORE_MACHPTS_TEXT, m_ctrlMachPtsText);
+	DDX_Control(pDX, IDC_RUNSCORE_MACHPTS, m_ctrlMachPts);
+	DDX_Control(pDX, IDC_RUNSCORE_DOUBLE_Q, m_ctrlDoubleQ);
+	DDX_Control(pDX, IDC_RUNSCORE_OTHERPOINTS, m_ctrlOtherPoints);
 	//}}AFX_DATA_MAP
 	if (pDX->m_bSaveAndValidate)
 	{
@@ -359,23 +359,23 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgRunScore, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunScore)
 	ON_WM_DESTROY()
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE, OnDatetimechangeDate)
-	ON_CBN_SELCHANGE(IDC_DIVISION, OnSelchangeDivision)
-	ON_CBN_SELCHANGE(IDC_LEVEL, OnSelchangeLevel)
-	ON_CBN_SELCHANGE(IDC_EVENT, OnSelchangeEvent)
-	ON_BN_CLICKED(IDC_PARTNERS_EDIT, OnPartnersEdit)
-	ON_BN_CLICKED(IDC_OTHERPOINTS, OnOtherpoints)
-	ON_EN_KILLFOCUS(IDC_FAULTS, OnKillfocusFaults)
-	ON_EN_KILLFOCUS(IDC_TIME, OnKillfocusTime)
-	ON_EN_KILLFOCUS(IDC_YARDS, OnKillfocusYards)
-	ON_EN_KILLFOCUS(IDC_SCT, OnKillfocusSct)
-	ON_EN_KILLFOCUS(IDC_OPENING_PTS, OnKillfocusOpening)
-	ON_EN_KILLFOCUS(IDC_CLOSING_PTS, OnKillfocusClosing)
-	ON_EN_KILLFOCUS(IDC_OPEN_PTS, OnKillfocusOpen)
-	ON_EN_KILLFOCUS(IDC_CLOSE_PTS, OnKillfocusClose)
-	ON_EN_KILLFOCUS(IDC_PLACE, OnKillfocusPlace)
-	ON_BN_CLICKED(IDC_TABLE, OnBnClickedTableYps)
-	ON_CBN_SELCHANGE(IDC_Q, OnSelchangeQ)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_RUNSCORE_DATE, OnDatetimechangeDate)
+	ON_CBN_SELCHANGE(IDC_RUNSCORE_DIVISION, OnSelchangeDivision)
+	ON_CBN_SELCHANGE(IDC_RUNSCORE_LEVEL, OnSelchangeLevel)
+	ON_CBN_SELCHANGE(IDC_RUNSCORE_EVENT, OnSelchangeEvent)
+	ON_BN_CLICKED(IDC_RUNSCORE_PARTNERS_EDIT, OnPartnersEdit)
+	ON_BN_CLICKED(IDC_RUNSCORE_OTHERPOINTS, OnOtherpoints)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_FAULTS, OnKillfocusFaults)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_TIME, OnKillfocusTime)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_YARDS, OnKillfocusYards)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_SCT, OnKillfocusSct)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPENING_PTS, OnKillfocusOpening)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_CLOSING_PTS, OnKillfocusClosing)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPEN_PTS, OnKillfocusOpen)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_CLOSE_PTS, OnKillfocusClose)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_PLACE, OnKillfocusPlace)
+	ON_BN_CLICKED(IDC_RUNSCORE_TABLE, OnBnClickedTableYps)
+	ON_CBN_SELCHANGE(IDC_RUNSCORE_Q, OnSelchangeQ)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

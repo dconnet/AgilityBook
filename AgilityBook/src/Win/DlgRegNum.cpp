@@ -67,10 +67,10 @@ void CDlgRegNum::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRegNum)
-	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
-	DDX_Text(pDX, IDC_REG_NUM, m_RegNum);
-	DDX_Text(pDX, IDC_HEIGHT, m_Height);
-	DDX_Check(pDX, IDC_RECEIVED, m_bReceived);
+	DDX_Control(pDX, IDC_REGNUM_VENUES, m_ctrlVenues);
+	DDX_Text(pDX, IDC_REGNUM_REG_NUM, m_RegNum);
+	DDX_Text(pDX, IDC_REGNUM_HEIGHT, m_Height);
+	DDX_Check(pDX, IDC_REGNUM_RECEIVED, m_bReceived);
 	//}}AFX_DATA_MAP
 }
 
@@ -125,7 +125,7 @@ void CDlgRegNum::OnOK()
 	m_ctrlVenues.GetLBText(index, venue);
 	if (m_RegNum.IsEmpty())
 	{
-		GotoDlgCtrl(GetDlgItem(IDC_REG_NUM));
+		GotoDlgCtrl(GetDlgItem(IDC_REGNUM_REG_NUM));
 		return;
 	}
 	if (m_pRegNum)

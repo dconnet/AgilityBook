@@ -67,22 +67,22 @@ void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunLink)
-	DDX_Control(pDX, IDC_LIST, m_ctrlLinks);
-	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
-	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_OPEN, m_ctrlOpen);
+	DDX_Control(pDX, IDC_RUNLINK_LIST, m_ctrlLinks);
+	DDX_Control(pDX, IDC_RUNLINK_NEW, m_ctrlNew);
+	DDX_Control(pDX, IDC_RUNLINK_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_RUNLINK_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_RUNLINK_OPEN, m_ctrlOpen);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgRunLink, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunLink)
-	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
-	ON_BN_CLICKED(IDC_NEW, OnNew)
-	ON_BN_CLICKED(IDC_EDIT, OnEdit)
-	ON_BN_CLICKED(IDC_DELETE, OnDelete)
-	ON_BN_CLICKED(IDC_OPEN, OnOpen)
+	ON_NOTIFY(NM_DBLCLK, IDC_RUNLINK_LIST, OnDblclkList)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RUNLINK_LIST, OnItemchangedList)
+	ON_BN_CLICKED(IDC_RUNLINK_NEW, OnNew)
+	ON_BN_CLICKED(IDC_RUNLINK_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_RUNLINK_DELETE, OnDelete)
+	ON_BN_CLICKED(IDC_RUNLINK_OPEN, OnOpen)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

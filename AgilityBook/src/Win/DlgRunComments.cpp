@@ -69,10 +69,10 @@ void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunComments)
-	DDX_Control(pDX, IDC_COMMENTS_FAULTS, m_ctrlCommentsFaults);
-	DDX_Control(pDX, IDC_FAULTS_LIST, m_ctrlFaultsList);
-	DDX_Control(pDX, IDC_COMMENTS, m_ctrlComments);
-	DDX_Text(pDX, IDC_COMMENTS, m_Comments);
+	DDX_Control(pDX, IDC_RUNCOMMENT_COMMENTS_FAULTS, m_ctrlCommentsFaults);
+	DDX_Control(pDX, IDC_RUNCOMMENT_FAULTS_LIST, m_ctrlFaultsList);
+	DDX_Control(pDX, IDC_RUNCOMMENT_COMMENTS, m_ctrlComments);
+	DDX_Text(pDX, IDC_RUNCOMMENT_COMMENTS, m_Comments);
 	//}}AFX_DATA_MAP
 	if (pDX->m_bSaveAndValidate)
 	{
@@ -86,7 +86,7 @@ void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgRunComments, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunComments)
-	ON_BN_CLICKED(IDC_COMMENTS_FAULTS, OnCommentsFaults)
+	ON_BN_CLICKED(IDC_RUNCOMMENT_COMMENTS_FAULTS, OnCommentsFaults)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

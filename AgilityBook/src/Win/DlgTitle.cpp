@@ -66,21 +66,21 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTitle)
-	DDX_Control(pDX, IDC_EARNED, m_ctrlEarned);
-	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
-	DDX_Control(pDX, IDC_HIDDEN, m_ctrlHidden);
-	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
-	DDX_Control(pDX, IDC_TITLES, m_ctrlTitles);
-	DDX_Control(pDX, IDC_RECEIVED, m_ctrlReceived);
-	DDX_Control(pDX, IDC_DESC, m_ctrlDesc);
+	DDX_Control(pDX, IDC_TITLE_EARNED, m_ctrlEarned);
+	DDX_Control(pDX, IDC_TITLE_DATE, m_ctrlDate);
+	DDX_Control(pDX, IDC_TITLE_HIDDEN, m_ctrlHidden);
+	DDX_Control(pDX, IDC_TITLE_VENUES, m_ctrlVenues);
+	DDX_Control(pDX, IDC_TITLE_TITLES, m_ctrlTitles);
+	DDX_Control(pDX, IDC_TITLE_RECEIVED, m_ctrlReceived);
+	DDX_Control(pDX, IDC_TITLE_DESC, m_ctrlDesc);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgTitle, CDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
-	ON_BN_CLICKED(IDC_EARNED, OnBnClickedEarned)
-	ON_CBN_SELCHANGE(IDC_VENUES, OnSelchangeVenues)
-	ON_CBN_SELCHANGE(IDC_TITLES, OnSelchangeTitles)
+	ON_BN_CLICKED(IDC_TITLE_EARNED, OnBnClickedEarned)
+	ON_CBN_SELCHANGE(IDC_TITLE_VENUES, OnSelchangeVenues)
+	ON_CBN_SELCHANGE(IDC_TITLE_TITLES, OnSelchangeTitles)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -63,13 +63,13 @@ void CDlgSelectURL::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgSelectURL)
-	DDX_Text(pDX, IDC_NAME, m_Name);
+	DDX_Text(pDX, IDC_SELECTURL_NAME, m_Name);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgSelectURL, CDialog)
 	//{{AFX_MSG_MAP(CDlgSelectURL)
-	ON_BN_CLICKED(IDC_FILENAME, OnBnClickedFilename)
+	ON_BN_CLICKED(IDC_SELECTURL_FILENAME, OnBnClickedFilename)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

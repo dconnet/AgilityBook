@@ -70,13 +70,13 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgReferenceRun)
-	DDX_Text(pDX, IDC_PLACE, m_Place);
-	DDX_Control(pDX, IDC_Q, m_ctrlQ);
-	DDX_Text(pDX, IDC_POINTS, m_Points);
-	DDX_Text(pDX, IDC_TIME, m_Time);
-	DDX_Text(pDX, IDC_NAME, m_Name);
-	DDX_Text(pDX, IDC_BREED, m_Breed);
-	DDX_Text(pDX, IDC_NOTES, m_Notes);
+	DDX_Text(pDX, IDC_REFRUN_PLACE, m_Place);
+	DDX_Control(pDX, IDC_REFRUN_Q, m_ctrlQ);
+	DDX_Text(pDX, IDC_REFRUN_POINTS, m_Points);
+	DDX_Text(pDX, IDC_REFRUN_TIME, m_Time);
+	DDX_Text(pDX, IDC_REFRUN_NAME, m_Name);
+	DDX_Text(pDX, IDC_REFRUN_BREED, m_Breed);
+	DDX_Text(pDX, IDC_REFRUN_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
 

@@ -84,9 +84,9 @@ void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigOtherPoints)
-	DDX_Text(pDX, IDC_NAME, m_Name);
-	DDX_Control(pDX, IDC_TALLY, m_ctrlTally);
-	DDX_Text(pDX, IDC_DESC, m_Desc);
+	DDX_Text(pDX, IDC_CONFIG_OTHER_NAME, m_Name);
+	DDX_Control(pDX, IDC_CONFIG_OTHER_TALLY, m_ctrlTally);
+	DDX_Text(pDX, IDC_CONFIG_OTHER_DESC, m_Desc);
 	//}}AFX_DATA_MAP
 }
 
@@ -125,7 +125,7 @@ void CDlgConfigOtherPoints::OnOK()
 	m_Desc.TrimLeft();
 	if (m_Name.IsEmpty())
 	{
-		GotoDlgCtrl(GetDlgItem(IDC_NAME));
+		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
 		return;
 	}
 	if (m_pOther->GetName() != (LPCSTR)m_Name)
@@ -133,7 +133,7 @@ void CDlgConfigOtherPoints::OnOK()
 		if (m_Config.GetOtherPoints().FindOtherPoints((LPCSTR)m_Name))
 		{
 			AfxMessageBox(IDS_NAME_IN_USE);
-			GotoDlgCtrl(GetDlgItem(IDC_NAME));
+			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
 			return;
 		}
 		m_pOther->SetName((LPCSTR)m_Name);

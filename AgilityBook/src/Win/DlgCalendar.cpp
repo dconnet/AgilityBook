@@ -104,28 +104,28 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgCalendar)
-	DDX_DateTimeCtrl(pDX, IDC_DATE_START, m_dateStart);
-	DDX_DateTimeCtrl(pDX, IDC_DATE_END, m_dateEnd);
-	DDX_Check(pDX, IDC_TENTATIVE, m_bTentative);
-	DDX_Radio(pDX, IDC_ENTER_NOT, m_Entered);
-	DDX_Control(pDX, IDC_LOCATION, m_ctrlLocation);
-	DDX_CBString(pDX, IDC_LOCATION, m_Location);
-	DDX_Control(pDX, IDC_CLUB, m_ctrlClub);
-	DDX_CBString(pDX, IDC_CLUB, m_Club);
-	DDX_Control(pDX, IDC_VENUE, m_ctrlVenue);
-	DDX_CBString(pDX, IDC_VENUE, m_Venue);
-	DDX_DateTimeCtrl(pDX, IDC_DATE_OPENS, m_dateOpens);
-	DDX_Check(pDX, IDC_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
-	DDX_DateTimeCtrl(pDX, IDC_DATE_CLOSES, m_dateCloses);
-	DDX_Check(pDX, IDC_DATE_CLOSES_UNKNOWN, m_bClosingUnknown);
-	DDX_Text(pDX, IDC_NOTES, m_Notes);
+	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_START, m_dateStart);
+	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_END, m_dateEnd);
+	DDX_Check(pDX, IDC_CAL_TENTATIVE, m_bTentative);
+	DDX_Radio(pDX, IDC_CAL_ENTER_NOT, m_Entered);
+	DDX_Control(pDX, IDC_CAL_LOCATION, m_ctrlLocation);
+	DDX_CBString(pDX, IDC_CAL_LOCATION, m_Location);
+	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
+	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
+	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
+	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
+	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_OPENS, m_dateOpens);
+	DDX_Check(pDX, IDC_CAL_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
+	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_CLOSES, m_dateCloses);
+	DDX_Check(pDX, IDC_CAL_DATE_CLOSES_UNKNOWN, m_bClosingUnknown);
+	DDX_Text(pDX, IDC_CAL_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgCalendar, CDialog)
 	//{{AFX_MSG_MAP(CDlgCalendar)
-	ON_BN_CLICKED(IDC_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
-	ON_BN_CLICKED(IDC_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
+	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
+	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -164,13 +164,13 @@ BOOL CDlgCalendar::OnInitDialog()
 	}
 
 	if (m_bOpeningUnknown)
-		GetDlgItem(IDC_DATE_OPENS)->EnableWindow(FALSE);
+		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(FALSE);
 	else
-		GetDlgItem(IDC_DATE_OPENS)->EnableWindow(TRUE);
+		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
 	if (m_bClosingUnknown)
-		GetDlgItem(IDC_DATE_CLOSES)->EnableWindow(FALSE);
+		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
 	else
-		GetDlgItem(IDC_DATE_CLOSES)->EnableWindow(TRUE);
+		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -179,18 +179,18 @@ void CDlgCalendar::OnDateOpensUnknown()
 {
 	UpdateData(TRUE);
 	if (m_bOpeningUnknown)
-		GetDlgItem(IDC_DATE_OPENS)->EnableWindow(FALSE);
+		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(FALSE);
 	else
-		GetDlgItem(IDC_DATE_OPENS)->EnableWindow(TRUE);
+		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
 }
 
 void CDlgCalendar::OnDateClosesUnknown() 
 {
 	UpdateData(TRUE);
 	if (m_bClosingUnknown)
-		GetDlgItem(IDC_DATE_CLOSES)->EnableWindow(FALSE);
+		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
 	else
-		GetDlgItem(IDC_DATE_CLOSES)->EnableWindow(TRUE);
+		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 }
 
 void CDlgCalendar::OnOK()

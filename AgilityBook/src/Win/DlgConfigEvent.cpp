@@ -91,62 +91,62 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigEvent)
-	DDX_Text(pDX, IDC_NAME, m_Name);
-	DDX_Check(pDX, IDC_TABLE, m_bHasTable);
-	DDX_Check(pDX, IDC_PARTNER, m_bHasPartners);
-	DDX_Text(pDX, IDC_DESC, m_Desc);
-	DDX_Control(pDX, IDC_NEW, m_ctrlNew);
-	DDX_Control(pDX, IDC_COPY, m_ctrlCopy);
-	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_MOVE_DOWN, m_ctrlDown);
-	DDX_Control(pDX, IDC_METHODS, m_ctrlMethods);
-	DDX_Control(pDX, IDC_UNUSED, m_ctrlUnused);
-	DDX_Control(pDX, IDC_DATE_VALID_FROM, m_ctrlValidFrom);
-	DDX_Control(pDX, IDC_DATE_START, m_ctrlDateFrom);
-	DDX_Control(pDX, IDC_DATE_VALID_TO, m_ctrlValidTo);
-	DDX_Control(pDX, IDC_DATE_END, m_ctrlDateTo);
-	DDX_Control(pDX, IDC_DIVISION, m_ctrlDivision);
-	DDX_Control(pDX, IDC_LEVEL, m_ctrlLevel);
-	DDX_Control(pDX, IDC_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_DROP_FRACTIONS, m_ctrlDropFractions);
-	DDX_Control(pDX, IDC_OPENING_PTS_TEXT, m_ctrlPointsOpeningText);
-	DDX_Control(pDX, IDC_OPENING_PTS, m_ctrlPointsOpening);
-	DDX_Text(pDX, IDC_OPENING_PTS, m_OpeningPts);
-	DDX_Control(pDX, IDC_CLOSING_PTS_TEXT, m_ctrlPointsClosingText);
-	DDX_Control(pDX, IDC_CLOSING_PTS, m_ctrlPointsClosing);
-	DDX_Text(pDX, IDC_CLOSING_PTS, m_ClosingPts);
-	DDX_Control(pDX, IDC_NOTES, m_ctrlNote);
-	DDX_Control(pDX, IDC_SUPERQ, m_ctrlSuperQ);
-	DDX_Control(pDX, IDC_MACH, m_ctrlMachPts);
-	DDX_Control(pDX, IDC_DOUBLEQ, m_ctrlDoubleQ);
-	DDX_Control(pDX, IDC_LIST, m_ctrlTitleList);
-	DDX_Control(pDX, IDC_TITLE_NEW, m_ctrlTitleNew);
-	DDX_Control(pDX, IDC_TITLE_EDIT, m_ctrlTitleEdit);
-	DDX_Control(pDX, IDC_TITLE_DELETE, m_ctrlTitleDelete);
+	DDX_Text(pDX, IDC_CONFIG_EVENT, m_Name);
+	DDX_Check(pDX, IDC_CONFIG_EVENT_TABLE, m_bHasTable);
+	DDX_Check(pDX, IDC_CONFIG_EVENT_PARTNER, m_bHasPartners);
+	DDX_Text(pDX, IDC_CONFIG_EVENT_DESC, m_Desc);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_NEW, m_ctrlNew);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_MOVE_UP, m_ctrlUp);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_MOVE_DOWN, m_ctrlDown);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_METHODS, m_ctrlMethods);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_UNUSED, m_ctrlUnused);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_VALID_FROM, m_ctrlValidFrom);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_START, m_ctrlDateFrom);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_VALID_TO, m_ctrlValidTo);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_END, m_ctrlDateTo);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DIVISION, m_ctrlDivision);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_LEVEL, m_ctrlLevel);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TYPE, m_ctrlType);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DROP_FRACTIONS, m_ctrlDropFractions);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_OPENING_PTS_TEXT, m_ctrlPointsOpeningText);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_OPENING_PTS, m_ctrlPointsOpening);
+	DDX_Text(pDX, IDC_CONFIG_EVENT_OPENING_PTS, m_OpeningPts);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_CLOSING_PTS_TEXT, m_ctrlPointsClosingText);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ctrlPointsClosing);
+	DDX_Text(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ClosingPts);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_MACH, m_ctrlMachPts);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DOUBLEQ, m_ctrlDoubleQ);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_LIST, m_ctrlTitleList);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_NEW, m_ctrlTitleNew);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_EDIT, m_ctrlTitleEdit);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TITLE_DELETE, m_ctrlTitleDelete);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
-	ON_BN_CLICKED(IDC_NEW, OnBnClickedNew)
-	ON_BN_CLICKED(IDC_COPY, OnBnClickedCopy)
-	ON_BN_CLICKED(IDC_DELETE, OnBnClickedDelete)
-	ON_BN_CLICKED(IDC_MOVE_UP, OnBnClickedUp)
-	ON_BN_CLICKED(IDC_MOVE_DOWN, OnBnClickedDown)
-	ON_BN_CLICKED(IDC_DATE_VALID_FROM, OnValidFrom)
-	ON_BN_CLICKED(IDC_DATE_VALID_TO, OnValidTo)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE_START, OnDatetimechangeDate)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE_END, OnDatetimechangeDate)
-	ON_LBN_SELCHANGE(IDC_METHODS, OnLbnSelchangeMethods)
-	ON_CBN_SELCHANGE(IDC_DIVISION, OnCbnSelchangeDivision)
-	ON_CBN_SELCHANGE(IDC_LEVEL, OnCbnSelchangeLevel)
-	ON_CBN_SELCHANGE(IDC_TYPE, OnSelchangeType)
-	ON_LBN_SELCHANGE(IDC_LIST, OnSelchangeList)
-	ON_LBN_DBLCLK(IDC_LIST, OnDblclkList)
-	ON_BN_CLICKED(IDC_TITLE_NEW, OnTitleNew)
-	ON_BN_CLICKED(IDC_TITLE_EDIT, OnTitleEdit)
-	ON_BN_CLICKED(IDC_TITLE_DELETE, OnTitleDelete)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_DELETE, OnBnClickedDelete)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_UP, OnBnClickedUp)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_DOWN, OnBnClickedDown)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_DATE_VALID_FROM, OnValidFrom)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_DATE_VALID_TO, OnValidTo)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CONFIG_EVENT_DATE_START, OnDatetimechangeDate)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CONFIG_EVENT_DATE_END, OnDatetimechangeDate)
+	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_METHODS, OnLbnSelchangeMethods)
+	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_DIVISION, OnCbnSelchangeDivision)
+	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_LEVEL, OnCbnSelchangeLevel)
+	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_TYPE, OnSelchangeType)
+	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_LIST, OnSelchangeList)
+	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_LIST, OnDblclkList)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_TITLE_NEW, OnTitleNew)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_TITLE_EDIT, OnTitleEdit)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_TITLE_DELETE, OnTitleDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -822,7 +822,7 @@ void CDlgConfigEvent::OnOK()
 #endif
 	if (m_Name.IsEmpty())
 	{
-		GotoDlgCtrl(GetDlgItem(IDC_NAME));
+		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
 		return;
 	}
 	// Validate that from-to dates are okay.
@@ -903,7 +903,7 @@ void CDlgConfigEvent::OnOK()
 		if (m_pVenue->GetEvents().FindEvent((LPCSTR)m_Name))
 		{
 			AfxMessageBox(IDS_NAME_IN_USE);
-			GotoDlgCtrl(GetDlgItem(IDC_NAME));
+			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
 			return;
 		}
 		m_pEvent->SetName((LPCSTR)m_Name);
