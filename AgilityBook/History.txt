@@ -1,4 +1,4 @@
-2/9/2004: v1.0.2.8 <in development>
+2/9/2004: v1.0.2.8
 - Bumped file version to 8.3:
   - Added Existing Points to dog properties.
 - New features / Enhancements:

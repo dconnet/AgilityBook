@@ -224,6 +224,7 @@ public:
 	 * Populate this element from the given buffer.
 	 * @param inData XML data to load.
 	 * @param nData Length of inData buffer.
+	 * @param ioErrMsg Output buffer for generated error messages.
 	 * @retval true File successfully loaded.
 	 * @retval false File failed to load.
 	 */
@@ -231,6 +232,7 @@ public:
 	/**
 	 * Populate this element from the given file.
 	 * @param inFileName XML file to load.
+	 * @param ioErrMsg Output buffer for generated error messages.
 	 * @retval true File successfully loaded.
 	 * @retval false File failed to load.
 	 */
