@@ -182,6 +182,7 @@ public:
 	 * Add an object.
 	 * @param inPoints Number of title points.
 	 * @param inFaults Number of faults.
+	 * @param bLifeTime Accumulate lifetime points.
 	 * @return Pointer to new object, NULL if it already exists.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */

@@ -138,6 +138,7 @@ public:
 	 * Get the number of title points earned in this run.
 	 * @param inScoring Scoring method used.
 	 * @param outClean Was this a clean run?
+	 * @param outLifeTime Lifetime points earned in this run.
 	 * @return Number of title points earned.
 	 */
 	short GetTitlePoints(
