@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-02-10 DRC There was a problem initializing RICHED*.DLL on Win98.
  * @li 2004-07-20 DRC Changed the updating to auto-update configurations also.
  *                    Moved the user-request updates to the document.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -221,11 +222,24 @@ BOOL CAgilityBookApp::InitInstance()
 {
 	if (!AfxOleInit())
 	{
-		AfxMessageBox("Cannot initialize COM");
+		AfxMessageBox("ERROR: Cannot initialize COM", MB_ICONSTOP);
 		return FALSE;
 	}
-	AfxInitRichEdit();
 	CWinApp::InitInstance();
+	// Calling AfxInitRichEdit() is not sufficient for older systems.
+	// All that will do is load RICHED32.DLL. On newer systems, RICHED32
+	// automatically loads RICHED20 also. But not on Win98. So specifically
+	// load that too.
+	if (!AfxInitRichEdit())
+	{
+		AfxMessageBox("ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem.", MB_ICONSTOP);
+		return FALSE;
+	}
+	if (NULL == LoadLibrary(_T("RICHED20.DLL")))
+	{
+		AfxMessageBox("ERROR: Unable to initialize RICHED20.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem.", MB_ICONSTOP);
+		return FALSE;
+	}
 
 	try
 	{
@@ -245,7 +259,11 @@ BOOL CAgilityBookApp::InitInstance()
 	INITCOMMONCONTROLSEX icc;
 	icc.dwSize = sizeof(icc);
 	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
-	InitCommonControlsEx(&icc);
+	if (!InitCommonControlsEx(&icc))
+	{
+		AfxMessageBox("ERROR: Unable to initialize the common controls.", MB_ICONSTOP);
+		return FALSE;
+	}
 
 #if defined (_MSC_VER) && (_MSC_VER < 1300) // 1300 is VC7
 #ifdef _AFXDLL
