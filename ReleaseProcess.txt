@@ -11,7 +11,7 @@ Files to change before release:
 
 Run and verify build
 
-Tag CVS repository "v_n_n_n_n"
+Tag CVS repository "vn_n_n_n"
 
 Create the files to be distributed (make sure you archive them too)
 - AgilityBook_n_n_n_nsrc.zip [distrib/]
