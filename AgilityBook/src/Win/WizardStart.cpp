@@ -138,12 +138,7 @@ static const struct
 	{WIZ_IMPORT_CALENDAR,
 		{
 			{
-#ifdef _DEBUG
-				PSWIZB_NEXT
-#else
-				PSWIZB_DISABLEDFINISH
-#endif
-				, IDD_WIZARD_IMPORT,
+				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Calendar",
 				"Not implemented yet.\n\nImport a calendar listing from a spreadsheet."},
 			{PSWIZB_FINISH, -1,
@@ -164,12 +159,7 @@ static const struct
 	{WIZ_IMPORT_LOG,
 		{
 			{
-#ifdef _DEBUG
-				PSWIZB_NEXT
-#else
-				PSWIZB_DISABLEDFINISH
-#endif
-				, IDD_WIZARD_IMPORT,
+				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Training Log",
 				"Not implemented yet.\n\nImport a Training Log from a spreadsheet."},
 			{PSWIZB_FINISH, -1,

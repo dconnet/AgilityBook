@@ -305,7 +305,7 @@ CString CDlgAssignColumns::GetNameFromColumnID(int column)
 	return name;
 }
 
-bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, std::vector<int>& values)
+bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, std::vector<int>& values)
 {
 	bool bOk = false;
 	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
@@ -319,7 +319,7 @@ bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, 
 	return bOk;
 }
 
-bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, const std::vector<int>& values)
+bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& values)
 {
 	bool bOk = false;
 	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
@@ -450,7 +450,7 @@ CDlgAssignColumns::CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CW
 {
 	//{{AFX_DATA_INIT(CDlgAssignColumns)
 	//}}AFX_DATA_INIT
-	for (int i = 0; i < IO_TYPE_MAX; ++i)
+	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		GetColumnOrder(m_eOrder, i, m_Columns[i]);
 	switch (m_eOrder)
 	{
@@ -737,7 +737,7 @@ void CDlgAssignColumns::OnMoveDown()
 
 void CDlgAssignColumns::OnOK() 
 {
-	for (int i = 0; i < IO_TYPE_MAX; ++i)
+	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		SetColumnOrder(m_eOrder, i, m_Columns[i]);
 	CDialog::OnOK();
 }

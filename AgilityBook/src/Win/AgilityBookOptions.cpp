@@ -803,7 +803,7 @@ void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, con
 	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
 }
 
-void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& outValues)
+void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int>& outValues)
 {
 	CString section;
 	switch (eOrder)
@@ -1026,7 +1026,7 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std:
 	}
 }
 
-void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& inValues)
+void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& inValues)
 {
 	CString section;
 	switch (eOrder)

@@ -186,8 +186,8 @@ public:
 protected:
 	friend class CDlgAssignColumns;
 	// CDlgAssignColumns has some structs for used to ensure validity.
-	static void GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& outValues);
-	static void SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& inValues);
+	static void GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int>& outValues);
+	static void SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& inValues);
 public:
 	// Special clipboard formats
 	typedef enum
