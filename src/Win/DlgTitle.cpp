@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-26 DRC The wrong name was saved into the ARBDogTitle object.
  */
 
 #include "stdafx.h"
@@ -179,15 +180,17 @@ void CDlgTitle::OnOK()
 		GotoDlgCtrl(&m_ctrlVenues);
 		return;
 	}
+	const ARBConfigVenue* pVenue = reinterpret_cast<const ARBConfigVenue*>(m_ctrlVenues.GetItemDataPtr(index));
+	ASSERT(NULL != pVenue);
 
-	CString venue;
-	m_ctrlVenues.GetLBText(index, venue);
 	index = m_ctrlTitles.GetCurSel();
 	if (CB_ERR == index)
 	{
 		GotoDlgCtrl(&m_ctrlTitles);
 		return;
 	}
+	const ARBConfigTitle* pTitle = reinterpret_cast<const ARBConfigTitle*>(m_ctrlTitles.GetItemDataPtr(index));
+	ASSERT(NULL != pTitle);
 
 	CString name;
 	m_ctrlTitles.GetLBText(index, name);
@@ -195,8 +198,8 @@ void CDlgTitle::OnOK()
 	ARBDogTitle* title = new ARBDogTitle();
 	ARBDate date(time.GetYear(), time.GetMonth(), time.GetDay());
 	title->SetDate(date);
-	title->SetVenue((LPCSTR)venue);
-	title->SetName((LPCSTR)name);
+	title->SetVenue(pVenue->GetName());
+	title->SetName(pTitle->GetName());
 	title->SetReceived(m_ctrlReceived.GetCheck()==1);
 	if (m_pTitle)
 		*m_pTitle = *title;
