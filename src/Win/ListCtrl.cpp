@@ -247,6 +247,7 @@ void CListView2::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 //	pDC->Rectangle(pData->r);
 
 	int nMaxItem = GetListCtrl().GetItemCount();
+	// ListCtrl starts with item '-1'. This gets the header information.
 	int nStartItem = pData->nLinesPerPage * (pInfo->m_nCurPage - 1) - 1;
 	for (int nItem = nStartItem; nItem < nMaxItem && nItem - nStartItem < pData->nLinesPerPage; ++nItem)
 	{

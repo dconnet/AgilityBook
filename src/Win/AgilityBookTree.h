@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-28 DRC Added printing.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
@@ -47,6 +48,7 @@ class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
 class CAgilityBookTreeData;
+struct CTreePrintData;
 struct CVenueFilter;
 
 class CAgilityBookTree : public CTreeView, public ICommonView
@@ -79,15 +81,11 @@ public:
 	virtual void OnInitialUpdate(); // called first time after construct
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-	//}}AFX_VIRTUAL
-#if 0
-	// These belong in the section above.
-	// I haven't really decided if I want printing in the tree.
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnPrint(CDC* pDC, CPrintInfo* pInfo);
-#endif
+	//}}AFX_VIRTUAL
 
 // Implementation
 public:
@@ -100,6 +98,7 @@ public:
 private:
 	void LoadData();
 	CAgilityBookTreeData* GetItemData(HTREEITEM hItem) const;
+	void PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const;
 	bool m_bReset;
 	bool m_bSuppressSelect;
 	ARBDog* m_pDog;
