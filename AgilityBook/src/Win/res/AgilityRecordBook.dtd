@@ -12,7 +12,7 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2004-06-29 DRC File version 9.0.
+2004-07-03 DRC File version 9.0.
                Added 'SubName' to 'Training'
                'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
 2004-04-30 DRC File version 8.6.

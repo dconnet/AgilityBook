@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="8.7">
+<DefaultConfig Book="9.0">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2004-06-29 DRC Configuration version 4.
+2004-07-03 DRC Configuration version 4.
                CPE 'CADE' changed to 'C-ATE'
                Include new Gamblers class (changed scoring methods)
 2004-04-30 DRC Configuration version 3.
