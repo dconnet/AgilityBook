@@ -159,10 +159,13 @@ private:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CAgilityBookDoc)
-	afx_msg void OnFileImportConfig();
-	afx_msg void OnFileExportConfig();
+	afx_msg void OnUpdateFileImportWizard(CCmdUI* pCmdUI);
+	afx_msg void OnFileImportWizard();
 	afx_msg void OnFileImportCalender();
+	afx_msg void OnFileImportConfig();
+	afx_msg void OnFileExportWizard();
 	afx_msg void OnFileExportCalender();
+	afx_msg void OnFileExportConfig();
 	afx_msg void OnFileExportDTD();
 	afx_msg void OnFileExportXML();
 	afx_msg void OnEditConfiguration();

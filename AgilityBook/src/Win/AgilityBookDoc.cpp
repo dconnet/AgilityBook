@@ -86,10 +86,14 @@ IMPLEMENT_DYNCREATE(CAgilityBookDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	//{{AFX_MSG_MAP(CAgilityBookDoc)
-	ON_COMMAND(ID_FILE_IMPORT_CONFIG, OnFileImportConfig)
-	ON_COMMAND(ID_FILE_EXPORT_CONFIG, OnFileExportConfig)
+	ON_UPDATE_COMMAND_UI(ID_FILE_IMPORT_WIZARD, OnUpdateFileImportWizard)
+	ON_COMMAND(ID_FILE_IMPORT_WIZARD, OnFileImportWizard)
 	ON_COMMAND(ID_FILE_IMPORT_CALENDAR, OnFileImportCalender)
+	ON_COMMAND(ID_FILE_IMPORT_CONFIG, OnFileImportConfig)
+	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_WIZARD, OnUpdateFileImportWizard)
+	ON_COMMAND(ID_FILE_EXPORT_WIZARD, OnFileExportWizard)
 	ON_COMMAND(ID_FILE_EXPORT_CALENDAR, OnFileExportCalender)
+	ON_COMMAND(ID_FILE_EXPORT_CONFIG, OnFileExportConfig)
 	ON_COMMAND(ID_FILE_EXPORT_DTD, OnFileExportDTD)
 	ON_COMMAND(ID_FILE_EXPORT_XML, OnFileExportXML)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
@@ -530,47 +534,13 @@ void CAgilityBookDoc::Dump(CDumpContext& dc) const
 
 // CAgilityBookDoc commands
 
-void CAgilityBookDoc::OnFileImportConfig()
+void CAgilityBookDoc::OnUpdateFileImportWizard(CCmdUI* pCmdUI)
 {
-	CDlgConfigUpdate dlg;
-	if (IDOK == dlg.DoModal())
-	{
-		ARBConfig& update = dlg.GetConfig();
-		CString msg;
-		msg = GetConfig().Update(0, update).c_str();
-		if (0 < msg.GetLength())
-		{
-			CDlgMessage dlg(msg, 0);
-			dlg.DoModal();
-			SetModifiedFlag();
-			UpdateAllViews(NULL, UPDATE_CONFIG);
-		}
-		else
-			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
-	}
+	pCmdUI->Enable(FALSE);
 }
 
-void CAgilityBookDoc::OnFileExportConfig()
+void CAgilityBookDoc::OnFileImportWizard()
 {
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_ARB);
-	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
-	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
-	CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
-	{
-		CElement tree;
-		if (m_Records.Save(tree, false, false, true, false, false))
-		{
-			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
-			output.exceptions(std::ios_base::badbit);
-			if (output.is_open())
-			{
-				tree.SaveXML(output);
-				output.close();
-			}
-		}
-	}
 }
 
 void CAgilityBookDoc::OnFileImportCalender()
@@ -619,6 +589,31 @@ void CAgilityBookDoc::OnFileImportCalender()
 	}
 }
 
+void CAgilityBookDoc::OnFileImportConfig()
+{
+	CDlgConfigUpdate dlg;
+	if (IDOK == dlg.DoModal())
+	{
+		ARBConfig& update = dlg.GetConfig();
+		CString msg;
+		msg = GetConfig().Update(0, update).c_str();
+		if (0 < msg.GetLength())
+		{
+			CDlgMessage dlg(msg, 0);
+			dlg.DoModal();
+			SetModifiedFlag();
+			UpdateAllViews(NULL, UPDATE_CONFIG);
+		}
+		else
+			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
+	}
+}
+
+void CAgilityBookDoc::OnFileExportWizard()
+{
+	// Note, I'm disabling this right now with the import ui update handler
+}
+
 void CAgilityBookDoc::OnFileExportCalender()
 {
 	CString def, fname, filter;
@@ -630,6 +625,29 @@ void CAgilityBookDoc::OnFileExportCalender()
 	{
 		CElement tree;
 		if (m_Records.Save(tree, true, false, false, false, false))
+		{
+			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+			output.exceptions(std::ios_base::badbit);
+			if (output.is_open())
+			{
+				tree.SaveXML(output);
+				output.close();
+			}
+		}
+	}
+}
+
+void CAgilityBookDoc::OnFileExportConfig()
+{
+	CString def, fname, filter;
+	def.LoadString(IDS_FILEEXT_DEF_ARB);
+	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
+	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
+	CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter);
+	if (IDOK == file.DoModal())
+	{
+		CElement tree;
+		if (m_Records.Save(tree, false, false, true, false, false))
 		{
 			std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 			output.exceptions(std::ios_base::badbit);
