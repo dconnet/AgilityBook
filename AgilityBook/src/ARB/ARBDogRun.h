@@ -185,6 +185,8 @@ public:
 	ARBDogFaultList& GetFaults();
 	const std::string& GetCRCD() const;
 	void SetCRCD(const std::string& inCRCD);
+	const std::string& GetCRCDMetaFile() const;
+	void SetCRCDMetaFile(const std::string& inCRCDMeta);
 	const std::string& GetNote() const;
 	void SetNote(const std::string& inNote);
 	const ARBDogReferenceRunList& GetReferenceRuns() const;
@@ -369,6 +371,16 @@ inline const std::string& ARBDogRun::GetCRCD() const
 inline void ARBDogRun::SetCRCD(const std::string& inCRCD)
 {
 	m_Notes.SetCRCD(inCRCD);
+}
+
+inline const std::string& ARBDogRun::GetCRCDMetaFile() const
+{
+	return m_Notes.GetCRCDMetaFile();
+}
+
+inline void ARBDogRun::SetCRCDMetaFile(const std::string& inCRCDMeta)
+{
+	m_Notes.SetCRCDMetaFile(inCRCDMeta);
 }
 
 inline const std::string& ARBDogRun::GetNote() const

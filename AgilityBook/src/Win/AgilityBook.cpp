@@ -100,7 +100,7 @@ void UpdateVersion(bool bVerbose)
 		{
 			char buffer[1025];
 			UINT nChars;
-			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer))))
+			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
 			{
 				buffer[nChars] = 0;
 				ver += buffer;
@@ -320,7 +320,6 @@ BOOL CAgilityBookApp::InitInstance()
 	// Check for updates every 30 days.
 	if (AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1))
 	{
-		TRACE0("checking\n");
 		CString ver = AfxGetApp()->GetProfileString("Settings", "lastVerCheck", "");
 		ARBDate date = ARBDate::FromString((LPCSTR)ver, ARBDate::eDashYYYYMMDD);
 		if (date.IsValid())

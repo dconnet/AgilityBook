@@ -87,6 +87,7 @@ public:
 	ARBDogTrial* GetTrial()		{return m_pTrial;}
 	ARBDogRun* GetRun()			{return m_pRun;}
 	CString OnNeedText(int iCol) const;
+	int OnNeedIcon() const;
 
 protected:
 	~CAgilityBookViewRunsData()		{}
@@ -115,7 +116,9 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 	CString str;
 	if (m_pRun)
 	{
-		switch (m_pView->m_Columns[iCol])
+		// Col 0 is special: it has the icons. Instead of saving it,
+		// we simply ignore it - so iCol is always off by 1.
+		switch (m_pView->m_Columns[iCol-1])
 		{
 		default:
 			break;
@@ -349,6 +352,19 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 	return str;
 }
 
+int CAgilityBookViewRunsData::OnNeedIcon() const
+{
+	int iImage = -1;
+	if (m_pRun)
+	{
+		if (0 < m_pRun->GetCRCDMetaFile().length())
+			iImage = m_pView->m_imgMap;
+		else if (0 < m_pRun->GetCRCD().length())
+			iImage = m_pView->m_imgCourse;
+	}
+	return iImage;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Find
 
@@ -449,6 +465,10 @@ CAgilityBookViewRuns::CAgilityBookViewRuns()
 	: m_bSuppressSelect(false)
 	, m_Callback(this)
 {
+	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
+	CWinApp* app = AfxGetApp();
+	m_imgCourse = m_ImageList.Add(app->LoadIcon(IDI_AGILITYBOOKDOC));
+	m_imgMap = m_ImageList.Add(app->LoadIcon(IDI_CRCD));
 }
 #pragma warning (pop)
 
@@ -467,6 +487,8 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+
+	GetListCtrl().SetImageList(&m_ImageList, LVSIL_SMALL);
 
 	SetupColumns();
 
@@ -551,10 +573,14 @@ void CAgilityBookViewRuns::SetupColumns()
 	{
 		LV_COLUMN col;
 		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
+		for (size_t iCol = 0; iCol <= m_Columns.size(); ++iCol)
 		{
-			CString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
-			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
+			CString str("");
+			if (0 < iCol)
+			{
+				str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol-1]);
+				col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol-1]);
+			}
 			col.pszText = str.GetBuffer(0);
 			col.iSubItem = static_cast<int>(iCol);
 			GetListCtrl().InsertColumn(static_cast<int>(iCol), &col);
@@ -618,8 +644,9 @@ void CAgilityBookViewRuns::LoadData()
 					++nQs;
 				CAgilityBookViewRunsData* pData = new CAgilityBookViewRunsData(this, pDog, pTrial, pRun);
 				LV_ITEM item;
-				item.mask = LVIF_TEXT | LVIF_PARAM;
+				item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
 				item.pszText = LPSTR_TEXTCALLBACK;
+				item.iImage = I_IMAGECALLBACK;
 				item.iItem = i;
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
@@ -721,6 +748,11 @@ void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+	}
+	if (pDispInfo->item.mask & LVIF_IMAGE)
+	{
+		CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pDispInfo->item.lParam);
+		pDispInfo->item.iImage = pData->OnNeedIcon();
 	}
 	*pResult = 0;
 }

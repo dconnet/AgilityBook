@@ -21,6 +21,7 @@
 #define IDI_CALENDAR_ENTERED_TENTATIVE  146
 #define IDI_CHECKED                     147
 #define IDI_UNCHECKED                   148
+#define IDI_CRCD                        149
 #define IDD_NAME                        150
 #define IDD_NAME_DESC                   151
 #define IDD_CONFIGURE                   152
@@ -63,6 +64,7 @@
 #define IDD_DOG_TITLES                  189
 #define IDD_DOG_NUMBERS                 190
 #define IDD_EXISTING_POINTS             191
+#define IDD_CRCD_VIEWER                 192
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -228,7 +230,7 @@
 #define IDC_FIND_DOWN                   1173
 #define IDC_LONG_NAME                   1174
 #define IDC_TABLE_YPS                   1175
-#define IDC_BUTTON1                     1176
+#define IDC_VIEW                        1176
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -439,7 +441,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        192
+#define _APS_NEXT_RESOURCE_VALUE        193
 #define _APS_NEXT_COMMAND_VALUE         32812
 #define _APS_NEXT_CONTROL_VALUE         1177
 #define _APS_NEXT_SYMED_VALUE           101

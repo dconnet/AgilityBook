@@ -64,7 +64,6 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "DlgListCtrl.h"
-#include ".\dlgrunscore.h"
 
 using namespace std;
 

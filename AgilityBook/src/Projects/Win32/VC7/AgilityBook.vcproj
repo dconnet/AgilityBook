@@ -214,6 +214,9 @@
 				RelativePath="..\..\..\Win\DlgConfigVenue.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgCRCDViewer.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgDog.cpp">
 			</File>
 			<File
@@ -440,6 +443,9 @@
 				RelativePath="..\..\..\Win\DlgConfigVenue.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgCRCDViewer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgDog.h">
 			</File>
 			<File
@@ -624,6 +630,9 @@
 				RelativePath="..\..\..\Win\res\checked.ico">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\res\crcd.ico">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\res\DefaultConfig.xml">
 			</File>
 			<File
@@ -718,10 +727,10 @@
 				RelativePath="..\..\..\ARB\ARBConfigTitle.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBConfigTitlePoints.cpp">
+				RelativePath="..\..\..\ARB\ARBConfigTitlePoints.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBConfigTitlePoints.h">
+				RelativePath="..\..\..\ARB\ARBConfigTitlePoints.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBConfigVenue.cpp">
@@ -748,10 +757,10 @@
 				RelativePath="..\..\..\ARB\ARBDogClub.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBDogExistingPoints.cpp">
+				RelativePath="..\..\..\ARB\ARBDogExistingPoints.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBDogExistingPoints.h">
+				RelativePath="..\..\..\ARB\ARBDogExistingPoints.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBDogNotes.cpp">
@@ -808,22 +817,22 @@
 				RelativePath="..\..\..\ARB\ARBDogTrial.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfo.cpp">
+				RelativePath="..\..\..\ARB\ARBInfo.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfo.h">
+				RelativePath="..\..\..\ARB\ARBInfo.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfoJudge.cpp">
+				RelativePath="..\..\..\ARB\ARBInfoJudge.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfoJudge.h">
+				RelativePath="..\..\..\ARB\ARBInfoJudge.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBTraining.cpp">
+				RelativePath="..\..\..\ARB\ARBTraining.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBTraining.h">
+				RelativePath="..\..\..\ARB\ARBTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBTypes.cpp">
@@ -833,6 +842,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBVector.h">
+			</File>
+			<File
+				RelativePath="..\..\..\ARB\Base64.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\ARB\Base64.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\Element.cpp">

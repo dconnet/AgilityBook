@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -28,53 +28,45 @@
 
 /**
  * @file
- *
- * @brief interface of the CDlgRunCRCD class
+ * @brief Base64 encoding/decoding class.
  * @author David Connet
  *
+ * Base on code found on www.codeproject.com:
+ *  http://www.codeproject.com/string/ammimeutils.asp
+ *  AMMimeUtils, posted 3/23/2001 by Anders Molin
+ *
  * Revision History
+ * @li 2004-03-06 DRC Created
  */
 
-class ARBDogRun;
+#include <string>
 
-class CDlgRunCRCD : public CPropertyPage
+class CBase64
 {
 public:
-	CDlgRunCRCD(ARBDogRun* pRun);
-	~CDlgRunCRCD();
+	CBase64(bool bDeleteDecodeBuffer = true);
+	~CBase64();
+
+	/**
+	 * Decode a base64 string.
+	 * @param inBuffer Encoded buffer
+	 * @param outBuffer Decoded buffer
+	 * @param outLength Length of decoded data
+	 * @return Success
+	 * @note User must call "delete[]" on outBuffer if bDeleteDecodeBuffer is false.
+	 */
+	bool Decode(const std::string& inBuffer, char*& outBuffer, size_t& outLength);
+
+	/**
+	 * Encode data
+	 * @param inBuffer Buffer to encode
+	 * @param inLength Length of inBuffer
+	 * @return Encoded data
+	 */
+	std::string Encode(const char* inBuffer, size_t inLength);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgRunCRCD)
-	enum { IDD = IDD_RUN_CRCD };
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlView;
-	CButton	m_ctrlInsert;
-	CEdit	m_ctrlText;
-	CStatic	m_ctrlCRCD;
-	//}}AFX_DATA
-	ARBDogRun* m_Run;
-	HENHMETAFILE m_metaFile;
-	bool m_ViewText;
-	bool m_Insert;
-	CRect m_rCRCDwin; // Original CRCD rectangle.
-	CRect m_rCRCDclient;
-
-	//{{AFX_VIRTUAL(CDlgRunCRCD)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	void AdjustCRCD();
-	void SetView();
-	//{{AFX_MSG(CDlgRunCRCD)
-	virtual BOOL OnInitDialog();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg void OnEdit();
-	afx_msg void OnView();
-	afx_msg void OnCopy();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void SetBuffer(char* inBuffer);
+	bool m_DeleteDecodeBuffer;
+	char* m_DecodeBuffer;
 };
