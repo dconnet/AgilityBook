@@ -39,18 +39,13 @@
 #include "stdafx.h"
 #include "CrashHandler.h"
 
-#include "SymbolEngine.h"
-
-#include <fstream>
-using namespace std;
+#include "imagehlp.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-
-#if _MSC_VER >= 1300
 
 // As long as sizeof(void*) == sizeof(DWORD), we're ok...
 // VC7's default warns about 64bit compatibility issues.
@@ -75,20 +70,36 @@ static IMAGEHLP_LINE g_stLine;
 // The stack frame used in walking the stack.
 static STACKFRAME g_stFrame;
 
-static void InitSymEng()
-{
-	static bool g_bSymEngInit = false;
-	if (!g_bSymEngInit)
-	{
-		// Set up the symbol engine.
-		DWORD dwOpts = SymGetOptions();
-		// Always defer loading to make life faster.
-		SymSetOptions(dwOpts | SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES);
-		// Initialize the symbol engine.
-		VERIFY(SymInitialize(GetCurrentProcess(), NULL, TRUE));
-		g_bSymEngInit = true;
-	}
-}
+static bool g_bSymEngInit = false;
+// From ImageHlp.dll
+typedef BOOL (__stdcall *PFNSYMGETLINEFROMADDR)(IN HANDLE hProcess, IN DWORD dwAddr, OUT PDWORD pdwDisplacement, OUT PIMAGEHLP_LINE Line);
+static PFNSYMGETLINEFROMADDR g_pfnSymGetLineFromAddr = NULL;
+// From DbgHelp.dll
+typedef DWORD (__stdcall *PFNSYMGETOPTIONS)(VOID);
+static PFNSYMGETOPTIONS g_SymGetOptions = NULL;
+typedef DWORD (__stdcall *PFNSYMSETOPTIONS)(IN DWORD SymOptions);
+static PFNSYMSETOPTIONS g_SymSetOptions = NULL;
+typedef BOOL (__stdcall *PFNSYMINITIALIZE)(IN HANDLE hProcess, IN PSTR UserSearchPath, IN BOOL fInvadeProcess);
+static PFNSYMINITIALIZE g_SymInitialize = NULL;
+typedef DWORD (__stdcall *PFNSYMGETMODULEBASE)(IN HANDLE hProcess, IN DWORD dwAddr);
+static PFNSYMGETMODULEBASE g_SymGetModuleBase = NULL;
+typedef BOOL (__stdcall *PFNSYMGETSYMFROMADDR)(IN HANDLE hProcess, IN DWORD dwAddr, OUT PDWORD pdwDisplacement, OUT PIMAGEHLP_SYMBOL Symbol);
+static PFNSYMGETSYMFROMADDR g_SymGetSymFromAddr = NULL;
+typedef PVOID (__stdcall *PFNSYMFUNCTIONTABLEACCESS)(HANDLE hProcess, DWORD AddrBase);
+static PFNSYMFUNCTIONTABLEACCESS g_SymFunctionTableAccess = NULL;
+typedef BOOL (__stdcall *PFNSTACKWALK)(
+	DWORD                             MachineType,
+	HANDLE                            hProcess,
+	HANDLE                            hThread,
+	LPSTACKFRAME                      StackFrame,
+	PVOID                             ContextRecord,
+	PREAD_PROCESS_MEMORY_ROUTINE      ReadMemoryRoutine,
+	PFUNCTION_TABLE_ACCESS_ROUTINE    FunctionTableAccessRoutine,
+	PGET_MODULE_BASE_ROUTINE          GetModuleBaseRoutine,
+	PTRANSLATE_ADDRESS_ROUTINE        TranslateAddress
+	);
+static PFNSTACKWALK g_StackWalk = NULL;
+
 
 static DWORD GetModuleBaseNameA(HANDLE hProcess, HMODULE hModule, LPSTR lpBaseName, DWORD nSize)
 {
@@ -257,15 +268,6 @@ static LPCTSTR ConvertSimpleException(DWORD dwExcept)
 static BOOL InternalSymGetLineFromAddr(HANDLE hProcess,
 	DWORD dwAddr, PDWORD pdwDisplacement, PIMAGEHLP_LINE Line)
 {
-	static bool g_bLookedForSymFuncs = false;
-	static PFNSYMGETLINEFROMADDR g_pfnSymGetLineFromAddr = NULL;
-
-	// Have I already done the GetProcAddress?
-	if (!g_bLookedForSymFuncs)
-	{
-		g_bLookedForSymFuncs = true;
-		g_pfnSymGetLineFromAddr = (PFNSYMGETLINEFROMADDR)GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr");
-	}
 	if (NULL != g_pfnSymGetLineFromAddr)
 	{
 #ifdef WORK_AROUND_SRCLINE_BUG
@@ -305,9 +307,6 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 	LPCTSTR szRet = NULL;
 	__try
 	{
-		// Initialize the symbol engine in case it is not initialized.
-		InitSymEng();
-
 		// The current position in the buffer.
 		int iCurr = 0;
 		// A temp value holder. This is to keep the stack usage to a
@@ -338,7 +337,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 
 		iCurr += wsprintf(g_szBuff + iCurr, _T(" in module "));
 
-		dwTemp = SymGetModuleBase(GetCurrentProcess(),
+		dwTemp = g_SymGetModuleBase(GetCurrentProcess(),
 			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress);
 
 		ASSERT(NULL != dwTemp);
@@ -374,7 +373,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL);
 
 		DWORD dwDisp;
-		if (SymGetSymFromAddr(GetCurrentProcess(),
+		if (g_SymGetSymFromAddr(GetCurrentProcess(),
 			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress,
 			&dwDisp, pSym))
 		{
@@ -479,8 +478,6 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 
 	__try
 	{
-		// Initialize the symbol engine in case it is not initialized.
-		InitSymEng();
 #ifdef _ALPHA_
 #define CH_MACHINE IMAGE_FILE_MACHINE_ALPHA
 #else
@@ -488,14 +485,14 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 #endif
 		// Note: If the source and line functions are used, then
 		// StackWalk can access violate.
-		BOOL bSWRet = StackWalk(CH_MACHINE,
+		BOOL bSWRet = g_StackWalk(CH_MACHINE,
 			GetCurrentProcess(),
 			GetCurrentThread(),
 			&g_stFrame,
 			pExPtrs->ContextRecord,
 			NULL,
-			SymFunctionTableAccess,
-			SymGetModuleBase,
+			g_SymFunctionTableAccess,
+			g_SymGetModuleBase,
 			NULL) ;
 		if (!bSWRet || 0 == g_stFrame.AddrFrame.Offset)
 		{
@@ -528,7 +525,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 		//if (GSTSO_MODULE == (dwOpts & GSTSO_MODULE))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(" "));
-			dwTemp = SymGetModuleBase(GetCurrentProcess(), g_stFrame.AddrPC.Offset);
+			dwTemp = g_SymGetModuleBase(GetCurrentProcess(), g_stFrame.AddrPC.Offset);
 			ASSERT(NULL != dwTemp);
 			if (NULL == dwTemp)
 			{
@@ -556,7 +553,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 			pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
 			pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL);
 
-			if (SymGetSymFromAddr(GetCurrentProcess(),
+			if (g_SymGetSymFromAddr(GetCurrentProcess(),
 				g_stFrame.AddrPC.Offset, &dwDisp, pSym))
 			{
 				iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
@@ -809,6 +806,9 @@ static void QueryKey(FILE* output, HKEY hKey, int inIndent)
  */
 LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 {
+	if (!g_bSymEngInit)
+		return EXCEPTION_CONTINUE_SEARCH;
+
 	LPCTSTR pReason = GetFaultReason(pExPtrs);
 
 	// Create the log file.
@@ -865,25 +865,48 @@ LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 	AfxMessageBox(reasonBuffer, MB_ICONSTOP);
 	return EXCEPTION_EXECUTE_HANDLER;
 }
-#endif
 
 bool InitCrashHandler(HKEY hAppKey)
 {
-#if _MSC_VER >= 1300
+	if (!g_bSymEngInit)
+	{
+		HINSTANCE hInst = LoadLibraryA("DBGHELP.DLL");
+		ASSERT(NULL != hInst);
+		if (NULL == hInst)
+		{
+			TRACE0("Unable to load DBGHELP.DLL!\n");
+			SetLastErrorEx(ERROR_DLL_INIT_FAILED, SLE_ERROR);
+			return false;
+		}
+		g_pfnSymGetLineFromAddr = (PFNSYMGETLINEFROMADDR)GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr");
+		// Now do the GetProcAddress stuff.
+		g_SymGetOptions = (PFNSYMGETOPTIONS)GetProcAddress(hInst, "SymGetOptions");
+		g_SymSetOptions = (PFNSYMSETOPTIONS)GetProcAddress(hInst, "SymSetOptions");
+		g_SymInitialize = (PFNSYMINITIALIZE)GetProcAddress(hInst, "SymInitialize");
+		g_SymGetModuleBase = (PFNSYMGETMODULEBASE)GetProcAddress(hInst, "SymGetModuleBase");
+		g_SymGetSymFromAddr = (PFNSYMGETSYMFROMADDR)GetProcAddress(hInst, "SymGetSymFromAddr");
+		g_SymFunctionTableAccess = (PFNSYMFUNCTIONTABLEACCESS)GetProcAddress(hInst, "SymFunctionTableAccess");
+		g_StackWalk = (PFNSTACKWALK)GetProcAddress(hInst, "StackWalk");
+
+		// Set up the symbol engine.
+		DWORD dwOpts = g_SymGetOptions();
+		// Always defer loading to make life faster.
+		g_SymSetOptions(dwOpts | SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES);
+		// Initialize the symbol engine.
+		VERIFY(g_SymInitialize(GetCurrentProcess(), NULL, TRUE));
+		g_bSymEngInit = true;
+	}
 	g_hAppKey = hAppKey;
 	SetUnhandledExceptionFilter(CrashHandler);
-#endif
 	return true;
 }
 
 bool CleanupCrashHandler()
 {
-#if _MSC_VER >= 1300
 	if (g_hAppKey != NULL)
 	{
 		RegCloseKey(g_hAppKey);
 		g_hAppKey = NULL;
 	}
-#endif
 	return true;
 }
