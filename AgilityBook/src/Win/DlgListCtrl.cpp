@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-24 DRC Adding a new calendar item didn't set the icon properly.
  * @li 2003-09-08 DRC In Partners, the dog's number wasn't being saved.
  * @li 2003-08-25 DRC Set listctrl selection when adding/deleting items.
  * @li 2003-07-14 DRC Fixed bug where a new faulttype didn't show up until the
@@ -680,11 +681,13 @@ void CDlgListCtrl::OnNew()
 				{
 					CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, cal);
 					LV_ITEM item;
-					item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+					item.mask = LVIF_TEXT | LVIF_PARAM;
+					if (pData->HasIcon())
+						item.mask |= LVIF_IMAGE;
 					item.pszText = LPSTR_TEXTCALLBACK;
 					item.iItem = m_ctrlList.GetItemCount();
 					item.iSubItem = 0;
-					item.pszText = LPSTR_TEXTCALLBACK;
+					item.iImage = I_IMAGECALLBACK;
 					item.lParam = reinterpret_cast<LPARAM>(pData);
 					m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 				}
@@ -703,9 +706,12 @@ void CDlgListCtrl::OnNew()
 				CDlgListCtrlDataFaults* pData = new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, (LPCSTR)dlg.GetFault());
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
+				if (pData->HasIcon())
+					item.mask |= LVIF_IMAGE;
 				item.pszText = LPSTR_TEXTCALLBACK;
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
+				item.iImage = I_IMAGECALLBACK;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
@@ -721,9 +727,12 @@ void CDlgListCtrl::OnNew()
 				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, m_pConfig, m_pRun, pOther);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
+				if (pData->HasIcon())
+					item.mask |= LVIF_IMAGE;
 				item.pszText = LPSTR_TEXTCALLBACK;
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
+				item.iImage = I_IMAGECALLBACK;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
@@ -740,9 +749,12 @@ void CDlgListCtrl::OnNew()
 				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, partner);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
+				if (pData->HasIcon())
+					item.mask |= LVIF_IMAGE;
 				item.pszText = LPSTR_TEXTCALLBACK;
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
+				item.iImage = I_IMAGECALLBACK;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
