@@ -1,12 +1,12 @@
-08/30/2003: v0.4.3.5 <in development>
+09/03/2003: v0.4.3.5
 - New features / Enhancements:
   - Added a 'deceased' date to the dogs info. (This is a file version change but
     it is backwards compatible, so theres no need to increment the file version)
   - Finished implementing OtherPoints point tallying.
   - Optimized filtering, much faster now.
-    Added filtering by qualifying/non-qualifying runs.
-  - Added 'New dog/title/trial' items in the r-click menu of the Runs view.
+  - Added filtering by qualifying/non-qualifying runs.
   - Added a 'Filtered' item to the status bar.
+  - Added 'New dog/title/trial' items in the r-click menu of the Runs view.
   - Added Print & Print Preview in the Tree.
   - When copying an item in the tree, also copy some text to the clipboard.
   - Copy the runs in the view to the clipboard in tab-separated form (ctrl+c).
