@@ -108,17 +108,17 @@ size_t ARBConfigEvent::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBConfigEvent::Load(
 	const ARBConfigDivisionList& inDivisions,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EVENT_NAME, m_Name)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_EVENT_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME);
 		return false;
 	}
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL);
 		return false;
@@ -126,7 +126,7 @@ bool ARBConfigEvent::Load(
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_EVENT_DESC)
 		{
 			m_Desc = element.GetValue();
@@ -140,13 +140,13 @@ bool ARBConfigEvent::Load(
 	return true;
 }
 
-bool ARBConfigEvent::Save(CElement& ioTree) const
+bool ARBConfigEvent::Save(Element& ioTree) const
 {
-	CElement& event = ioTree.AddElement(TREE_EVENT);
+	Element& event = ioTree.AddElement(TREE_EVENT);
 	event.AddAttrib(ATTRIB_EVENT_NAME, m_Name);
 	if (0 < m_Desc.length())
 	{
-		CElement& desc = event.AddElement(TREE_EVENT_DESC);
+		Element& desc = event.AddElement(TREE_EVENT_DESC);
 		desc.SetValue(m_Desc);
 	}
 	// No need to write if not set.
@@ -262,7 +262,7 @@ const ARBConfigScoring* ARBConfigEvent::FindEvent(
 
 bool ARBConfigEventList::Load(
 	const ARBConfigDivisionList& inDivisions,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {

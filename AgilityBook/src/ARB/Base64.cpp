@@ -95,18 +95,18 @@ static const char base64map[] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-CBase64::CBase64(bool bDeleteDecodeBuffer)
+Base64::Base64(bool bDeleteDecodeBuffer)
 	: m_DeleteDecodeBuffer(bDeleteDecodeBuffer)
 	, m_DecodeBuffer(NULL)
 {
 }
 
-CBase64::~CBase64()
+Base64::~Base64()
 {
 	SetBuffer(NULL);
 }
 
-void CBase64::SetBuffer(char* inBuffer)
+void Base64::SetBuffer(char* inBuffer)
 {
 	if (m_DeleteDecodeBuffer)
 	{
@@ -115,7 +115,7 @@ void CBase64::SetBuffer(char* inBuffer)
 	}
 }
 
-bool CBase64::Decode(const std::string& inBuffer, char*& outBuffer, size_t& outLength)
+bool Base64::Decode(const std::string& inBuffer, char*& outBuffer, size_t& outLength)
 {
 	outBuffer = NULL;
 	outLength = 0;
@@ -202,7 +202,7 @@ bool CBase64::Decode(const std::string& inBuffer, char*& outBuffer, size_t& outL
 	return true;
 }
 
-std::string CBase64::Encode(const char* inBuffer, size_t inLength)
+std::string Base64::Encode(const char* inBuffer, size_t inLength)
 {
 	char *encoded = NULL;
 	if (inBuffer != NULL && 0 < inLength)

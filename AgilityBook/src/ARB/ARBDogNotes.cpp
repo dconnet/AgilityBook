@@ -115,13 +115,13 @@ size_t ARBDogNotes::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBDogNotes::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_FAULTS)
 		{
 			m_Faults.push_back(element.GetValue());
@@ -142,32 +142,32 @@ bool ARBDogNotes::Load(
 	return true;
 }
 
-bool ARBDogNotes::Save(CElement& ioTree) const
+bool ARBDogNotes::Save(Element& ioTree) const
 {
 	if (0 < m_Faults.size()
 	|| 0 < m_CRCD.length()
 	|| 0 < m_CRCDMeta.length()
 	|| 0 < m_Note.length())
 	{
-		CElement& notes = ioTree.AddElement(TREE_NOTES);
+		Element& notes = ioTree.AddElement(TREE_NOTES);
 		for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
 		{
-			CElement& element = notes.AddElement(TREE_FAULTS);
+			Element& element = notes.AddElement(TREE_FAULTS);
 			element.SetValue((*iter));
 		}
 		if (0 < m_CRCD.length())
 		{
-			CElement& element = notes.AddElement(TREE_CRCD);
+			Element& element = notes.AddElement(TREE_CRCD);
 			element.SetValue(m_CRCD);
 		}
 		if (0 < m_CRCDMeta.length())
 		{
-			CElement& element = notes.AddElement(TREE_CRCD_META);
+			Element& element = notes.AddElement(TREE_CRCD_META);
 			element.SetValue(m_CRCDMeta);
 		}
 		if (0 < m_Note.length())
 		{
-			CElement& element = notes.AddElement(TREE_OTHER);
+			Element& element = notes.AddElement(TREE_OTHER);
 			element.SetValue(m_Note);
 		}
 	}

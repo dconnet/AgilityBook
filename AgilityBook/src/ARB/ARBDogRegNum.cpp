@@ -110,11 +110,11 @@ size_t ARBDogRegNum::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBDogRegNum::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE);
@@ -123,7 +123,7 @@ bool ARBDogRegNum::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (CElement::eFound != inTree.GetAttrib("Number", m_Number)
+		if (Element::eFound != inTree.GetAttrib("Number", m_Number)
 		|| 0 == m_Number.length())
 		{
 			ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, "Number");
@@ -135,7 +135,7 @@ bool ARBDogRegNum::Load(
 
 	inTree.GetAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL);
 		return false;
@@ -152,9 +152,9 @@ bool ARBDogRegNum::Load(
 	return true;
 }
 
-bool ARBDogRegNum::Save(CElement& ioTree) const
+bool ARBDogRegNum::Save(Element& ioTree) const
 {
-	CElement& title = ioTree.AddElement(TREE_REG_NUM);
+	Element& title = ioTree.AddElement(TREE_REG_NUM);
 	title.AddAttrib(ATTRIB_REG_NUM_VENUE, m_Venue);
 	if (0 < m_Height.length())
 		title.AddAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);

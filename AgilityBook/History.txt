@@ -1,7 +1,23 @@
-3/12/2004: v1.0.4.8 <in development>
+3/20/2004: v1.0.4.8 <in development>
+- Bumped file version to 8.5:
+  - Added 'isHidden' to 'Title'.
+  - Made 'Date' optional in 'Title'.
 - New features / Enhancements:
   - Changed Venue configuration slightly so it looks better (Divisions and
     Titles headers)
+  - Added the ability to hide a title. This allows you to hide an old title
+    or a title that you will never earn (for instance USDAA SSA, if you are in
+	Masters already)
+- Bug fixes
+  - When creating a new run in a new trial, the date did not get saved if we
+    didn't change it. This would only occur on the first run created and only
+    if we didn't change the date (in other words, we entered the run on the
+    day we ran it)
+  - In the run dialog, the text on the table-in-yps was inverted. Instead of
+    asking if you wanted to subtract for the table, it should have been asking
+    it you wanted to include (pretty obvious when you watched the yps change
+    after clicking the checkbox). In addition, it did not properly initialize
+    when the event type was changed.
 
 3/8/2004: v1.0.3.8
 - Bumped file version to 8.4:

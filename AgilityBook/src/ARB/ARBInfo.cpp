@@ -88,13 +88,13 @@ void ARBInfo::clear()
 }
 
 bool ARBInfo::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		const std::string& name = element.GetName();
 		if (name == TREE_JUDGEINFO)
 		{
@@ -105,11 +105,11 @@ bool ARBInfo::Load(
 	return true;
 }
 
-bool ARBInfo::Save(CElement& ioTree) const
+bool ARBInfo::Save(Element& ioTree) const
 {
 	if (0 < m_JudgeInfo.size())
 	{
-		CElement& info = ioTree.AddElement(TREE_INFO);
+		Element& info = ioTree.AddElement(TREE_INFO);
 		if (!m_JudgeInfo.Save(info))
 			return false;
 	}

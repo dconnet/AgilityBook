@@ -167,7 +167,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // @todo: Relax strictness when reading data and handle errors better.
 //  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,
@@ -187,7 +187,7 @@ bool ARBAgilityRecordBook::Load(
 	}
 	// The version of the document must be something we understand.
 	ARBVersion version;
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_BOOK_VERSION, version))
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION);
 		return false;
@@ -215,7 +215,7 @@ bool ARBAgilityRecordBook::Load(
 		bLoaded = true;
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
 		{
-			const CElement& element = inTree.GetElement(i);
+			const Element& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_CALENDAR)
 			{
 				// Ignore any errors...
@@ -230,7 +230,7 @@ bool ARBAgilityRecordBook::Load(
 		bLoaded = true;
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
 		{
-			const CElement& element = inTree.GetElement(i);
+			const Element& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_TRAINING)
 			{
 				// Ignore any errors...
@@ -278,7 +278,7 @@ bool ARBAgilityRecordBook::Load(
 			// Now load the rest
 			for (i = 0; i < inTree.GetElementCount(); ++i)
 			{
-				const CElement& element = inTree.GetElement(i);
+				const Element& element = inTree.GetElement(i);
 				if (element.GetName() == TREE_DOG)
 				{
 					// If this fails, keep going.
@@ -303,7 +303,7 @@ bool ARBAgilityRecordBook::Load(
 	return bLoaded;
 }
 
-bool ARBAgilityRecordBook::Save(CElement& outTree,
+bool ARBAgilityRecordBook::Save(Element& outTree,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,

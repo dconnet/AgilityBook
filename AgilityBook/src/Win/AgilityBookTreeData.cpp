@@ -369,7 +369,7 @@ static bool AddTitle(
 		return false;
 }
 
-static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree, const CString& txtForm)
+static bool CopyDataToClipboard(UINT clpFmt, const Element& tree, const CString& txtForm)
 {
 	if (!AfxGetMainWnd()->OpenClipboard())
 		return false;
@@ -410,7 +410,7 @@ static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree, const CString
 	return true;
 }
 
-static bool GetDataFromClipboard(UINT clpFmt, CElement& tree)
+static bool GetDataFromClipboard(UINT clpFmt, Element& tree)
 {
 	bool bOk = false;
 	if (IsClipboardFormatAvailable(clpFmt))
@@ -450,7 +450,7 @@ bool CAgilityBookTreeData::CanPaste() const
 bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
 	bool bLoaded = false;
-	CElement tree;
+	Element tree;
 	ARBDogTrial* pTrial = GetTrial();
 	ARBDog* pDog = GetDog();
 	if (pTrial
@@ -834,7 +834,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 		break;
 	case ID_EDIT_COPY:
 		{
-			CElement tree;
+			Element tree;
 			tree.SetName(CLIPDATA);
 			GetTrial()->Save(tree);
 			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree, m_pTree->GetPrintLine(GetHTreeItem()));
@@ -1075,7 +1075,7 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 		break;
 	case ID_EDIT_COPY:
 		{
-			CElement tree;
+			Element tree;
 			tree.SetName(CLIPDATA);
 			GetRun()->Save(tree);
 			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, m_pTree->GetPrintLine(GetHTreeItem()));

@@ -586,7 +586,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	CStringA source(lpszPathName);
 #endif
 	std::string err;
-	CElement tree;
+	Element tree;
 	// Translate the XML to a tree form.
 	if (!tree.LoadXMLFile((const char*)source, err))
 	{
@@ -656,7 +656,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	CWaitCursor wait;
 
 	BOOL bOk = FALSE;
-	CElement tree;
+	Element tree;
 	// First, we have to push all the class data into a tree.
 	if (m_Records.Save(tree, true, true, true, true, true))
 	{

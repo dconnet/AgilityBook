@@ -41,7 +41,7 @@
 #include "ARBBase.h"
 #include "ARBVector.h"
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Number of title points that can be earned based on number of faults.
@@ -80,7 +80,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -90,7 +90,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigTitlePoints element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/*
 	 * Setters/getters.

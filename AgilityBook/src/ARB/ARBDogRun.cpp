@@ -227,16 +227,16 @@ size_t ARBDogRun::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBDogRun::Load(
 	const ARBConfig& inConfig,
 	const ARBDogClubList& inClubs,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
-	case CElement::eNotFound:
+	case Element::eNotFound:
 		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE);
 		return false;
-	case CElement::eInvalidValue:
+	case Element::eInvalidValue:
 		{
 			std::string attrib;
 			inTree.GetAttrib(ATTRIB_RUN_DATE, attrib);
@@ -247,14 +247,14 @@ bool ARBDogRun::Load(
 		}
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION);
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL);
@@ -264,7 +264,7 @@ bool ARBDogRun::Load(
 	// Height is no longer a required attribute (doc ver 8.1)
 	inTree.GetAttrib(ATTRIB_RUN_HEIGHT, m_Height);
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_EVENT, m_Event)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT);
@@ -279,7 +279,7 @@ bool ARBDogRun::Load(
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		const std::string& name = element.GetName();
 		if (name == TREE_CONDITIONS)
 		{
@@ -308,7 +308,7 @@ bool ARBDogRun::Load(
 		else if (name == TREE_PLACEMENT)
 		{
 			std::string attrib;
-			if (CElement::eFound != element.GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
+			if (Element::eFound != element.GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
 				ioErrMsg += ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q);
@@ -326,7 +326,7 @@ bool ARBDogRun::Load(
 			element.GetAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
 			for (int idx = 0; idx < element.GetElementCount(); ++idx)
 			{
-				const CElement& subElement = element.GetElement(idx);
+				const Element& subElement = element.GetElement(idx);
 				if (subElement.GetName() == TREE_PLACEMENT_OTHERPOINTS)
 				{
 					m_OtherPoints.Load(inConfig, subElement, inVersion, ioErrMsg);
@@ -347,9 +347,9 @@ bool ARBDogRun::Load(
 	return true;
 }
 
-bool ARBDogRun::Save(CElement& ioTree) const
+bool ARBDogRun::Save(Element& ioTree) const
 {
-	CElement& run = ioTree.AddElement(TREE_RUN);
+	Element& run = ioTree.AddElement(TREE_RUN);
 	run.AddAttrib(ATTRIB_RUN_DATE, m_Date);
 	run.AddAttrib(ATTRIB_RUN_DIVISION, m_Division);
 	run.AddAttrib(ATTRIB_RUN_LEVEL, m_Level);
@@ -357,7 +357,7 @@ bool ARBDogRun::Save(CElement& ioTree) const
 	run.AddAttrib(ATTRIB_RUN_EVENT, m_Event);
 	if (0 < m_Conditions.length())
 	{
-		CElement& element = run.AddElement(TREE_CONDITIONS);
+		Element& element = run.AddElement(TREE_CONDITIONS);
 		element.SetValue(m_Conditions);
 	}
 	run.AddElement(TREE_JUDGE).SetValue(m_Judge);
@@ -368,7 +368,7 @@ bool ARBDogRun::Save(CElement& ioTree) const
 		return false;
 	if (0 < m_Place || ARB_Q::eQ_NA != m_Q)
 	{
-		CElement& element = run.AddElement(TREE_PLACEMENT);
+		Element& element = run.AddElement(TREE_PLACEMENT);
 		m_Q.Save(element, ATTRIB_PLACEMENT_Q);
 		element.AddAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
 		if (0 < m_InClass)
@@ -534,7 +534,7 @@ ARBDouble ARBDogRun::GetScore(const ARBConfigScoring* inScoring) const
 bool ARBDogRunList::Load(
 	const ARBConfig& inConfig,
 	const ARBDogClubList& inClubs,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {

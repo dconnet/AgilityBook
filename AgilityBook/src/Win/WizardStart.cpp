@@ -293,7 +293,7 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					std::string err;
-					CElement tree;
+					Element tree;
 					if (!tree.LoadXMLFile(file.GetPathName(), err))
 					{
 						CString msg;
@@ -352,7 +352,7 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					CElement tree;
+					Element tree;
 					if (m_pDoc->GetARB().Save(tree, true, false, false, false, false))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
@@ -380,7 +380,7 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					std::string err;
-					CElement tree;
+					Element tree;
 					if (!tree.LoadXMLFile(file.GetPathName(), err))
 					{
 						CString msg;
@@ -436,7 +436,7 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					CElement tree;
+					Element tree;
 					if (m_pDoc->GetARB().Save(tree, false, true, false, false, false))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
@@ -465,7 +465,7 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					CElement tree;
+					Element tree;
 					if (m_pDoc->GetARB().Save(tree, false, false, true, false, false))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
@@ -511,7 +511,7 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					CElement tree;
+					Element tree;
 					if (m_pDoc->GetARB().Save(tree, true, true, true, true, true))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);

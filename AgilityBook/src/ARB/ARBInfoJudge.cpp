@@ -109,11 +109,11 @@ size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBInfoJudge::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eNotFound == inTree.GetAttrib(ATTRIB_JUDGEINFO_NAME, m_Name))
+	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_JUDGEINFO_NAME, m_Name))
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_JUDGEINFO, ATTRIB_JUDGEINFO_NAME);
 		return false;
@@ -122,9 +122,9 @@ bool ARBInfoJudge::Load(
 	return true;
 }
 
-bool ARBInfoJudge::Save(CElement& ioTree) const
+bool ARBInfoJudge::Save(Element& ioTree) const
 {
-	CElement& info = ioTree.AddElement(TREE_JUDGEINFO);
+	Element& info = ioTree.AddElement(TREE_JUDGEINFO);
 	info.AddAttrib(ATTRIB_JUDGEINFO_NAME, m_Name);
 	info.SetValue(m_Comment);
 	return true;

@@ -46,7 +46,7 @@ class ARBConfigEvent;
 class ARBConfigLevel;
 class ARBConfigVenue;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Initializes the titling points a dog has.
@@ -84,7 +84,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfig& inConfig,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -94,7 +94,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogExistingPoints element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Type of points.

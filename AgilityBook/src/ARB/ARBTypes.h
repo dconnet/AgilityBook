@@ -38,7 +38,7 @@
 
 #include <string>
 #include <vector>
-class CElement;
+class Element;
 
 /**
  * A version has a major and minor number.
@@ -111,7 +111,7 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 /**
  * Qualifying status of a run.
- * In XML/CElement, this class is only used as an attribute, never an element.
+ * In XML/Element, this class is only used as an attribute, never an element.
  * This serves as a translation mechanism from the string in the XML to
  * something we can use as a basic type.
  */
@@ -215,7 +215,7 @@ public:
 	 * @post The ARB_Q attribute will be added to ioTree.
 	 */
 	bool Save(
-		CElement& ioTree,
+		Element& ioTree,
 		const char* const inAttribName) const;
 
 private:
@@ -225,7 +225,7 @@ private:
 /////////////////////////////////////////////////////////////////////////////
 /**
  * Double class with some formatting.
- * In XML/CElement, this class is only used as an attribute, never an element.
+ * In XML/Element, this class is only used as an attribute, never an element.
  */
 class ARBDouble
 {
@@ -308,7 +308,7 @@ public:
 	 * @post The double attribute will be added to ioTree.
 	 */
 	bool Save(
-		CElement& ioTree,
+		Element& ioTree,
 		const char* const inAttribName) const;
 
 private:

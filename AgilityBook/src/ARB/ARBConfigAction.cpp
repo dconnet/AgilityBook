@@ -111,11 +111,11 @@ size_t ARBConfigAction::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBConfigAction::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_ACTION_VERB, m_Verb)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_ACTION_VERB, m_Verb)
 	|| 0 == m_Verb.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB);
@@ -129,9 +129,9 @@ bool ARBConfigAction::Load(
 	return true;
 }
 
-bool ARBConfigAction::Save(CElement& ioTree) const
+bool ARBConfigAction::Save(Element& ioTree) const
 {
-	CElement& action = ioTree.AddElement(TREE_ACTION);
+	Element& action = ioTree.AddElement(TREE_ACTION);
 	action.AddAttrib(ATTRIB_ACTION_VERB, m_Verb);
 	if (0 < m_Venue.length())
 		action.AddAttrib(ATTRIB_ACTION_VENUE, m_Venue);

@@ -51,7 +51,7 @@
 class ARBConfig;
 class ARBConfigVenue;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Information about a dog, titles, runs, etc.
@@ -89,7 +89,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfig& inConfig,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -99,7 +99,7 @@ public:
 	 * @return Success
 	 * @post The ARBDog element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Rename a venue.

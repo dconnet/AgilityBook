@@ -41,7 +41,7 @@
 #include "ARBVector.h"
 class ARBConfig;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * How did other dogs perform on the run we did?
@@ -79,7 +79,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfig& inConfig,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -89,7 +89,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogReferenceRun element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Getters/setters.

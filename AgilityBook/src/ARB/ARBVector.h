@@ -44,7 +44,7 @@ class ARBConfigDivisionList;
 class ARBConfigVenue;
 class ARBDogClubList;
 class ARBVersion;
-class CElement;
+class Element;
 
 #if _MSC_VER < 1300
 // VC6 has problems with std::vector::clear() type syntax.
@@ -234,7 +234,7 @@ public:
 	 * @return Success
 	 * @post The ARBThing element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const
+	bool Save(Element& ioTree) const
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
@@ -269,7 +269,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
-	bool Load(const CElement& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
+	bool Load(const Element& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
 	{
 		ARBThing* thing = new ARBThing();
 		if (!thing->Load(inTree, inVersion, ioErrMsg))
@@ -298,7 +298,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
-	bool Load(const ARBConfig& inConfig, const CElement& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
+	bool Load(const ARBConfig& inConfig, const Element& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
 	{
 		ARBThing* thing = new ARBThing();
 		if (!thing->Load(inConfig, inTree, inVersion, ioErrMsg))

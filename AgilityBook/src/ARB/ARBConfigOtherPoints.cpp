@@ -104,18 +104,18 @@ size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 }
 
 bool ARBConfigOtherPoints::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME);
 		return false;
 	}
 	std::string attrib;
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT);
@@ -142,9 +142,9 @@ bool ARBConfigOtherPoints::Load(
 	return true;
 }
 
-bool ARBConfigOtherPoints::Save(CElement& ioTree) const
+bool ARBConfigOtherPoints::Save(Element& ioTree) const
 {
-	CElement& other = ioTree.AddElement(TREE_OTHERPTS);
+	Element& other = ioTree.AddElement(TREE_OTHERPTS);
 	other.AddAttrib(ATTRIB_OTHERPTS_NAME, m_Name);
 	switch (m_Tally)
 	{

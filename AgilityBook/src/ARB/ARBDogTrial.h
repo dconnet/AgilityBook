@@ -45,7 +45,7 @@ class ARBConfig;
 class ARBConfigVenue;
 class ARBDate;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * All the information about a trial.
@@ -84,7 +84,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfig& inConfig,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -94,7 +94,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogTrial element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Does this trial have a QQ on the given date?

@@ -105,11 +105,11 @@ size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBConfigTitle::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME);
@@ -120,9 +120,9 @@ bool ARBConfigTitle::Load(
 	return true;
 }
 
-bool ARBConfigTitle::Save(CElement& ioTree) const
+bool ARBConfigTitle::Save(Element& ioTree) const
 {
-	CElement& title = ioTree.AddElement(TREE_TITLES);
+	Element& title = ioTree.AddElement(TREE_TITLES);
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);

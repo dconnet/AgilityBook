@@ -41,7 +41,7 @@
 #include "ARBBase.h"
 #include "ARBVector.h"
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Title configuration.
@@ -83,7 +83,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -93,7 +93,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigTitle element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Get the nice (long) name.

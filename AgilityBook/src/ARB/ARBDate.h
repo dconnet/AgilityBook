@@ -36,12 +36,12 @@
  */
 
 #include <string>
-class CElement;
+class Element;
 
 /////////////////////////////////////////////////////////////////////////////
 /**
  * Date class.
- * In XML/CElement, this class is only used as an attribute, never an element.
+ * In XML/Element, this class is only used as an attribute, never an element.
  *
  * @todo Migrate all usage away from time_t.
  */

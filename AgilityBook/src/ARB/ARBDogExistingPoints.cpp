@@ -159,13 +159,13 @@ size_t ARBDogExistingPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 
 bool ARBDogExistingPoints::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	std::string attrib;
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
 		inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
 		std::string msg(INVALID_DATE);
@@ -174,7 +174,7 @@ bool ARBDogExistingPoints::Load(
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE);
@@ -211,7 +211,7 @@ bool ARBDogExistingPoints::Load(
 
 	if (eOtherPoints == m_Type)
 	{
-		if (CElement::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other)
+		if (Element::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other)
 		&& 0 < m_Other.length())
 		{
 			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
@@ -229,21 +229,21 @@ bool ARBDogExistingPoints::Load(
 		}
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE);
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
 	|| 0 == m_Div.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV);
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL);
@@ -254,7 +254,7 @@ bool ARBDogExistingPoints::Load(
 	// event... but let the UI handle that...
 	if (eOtherPoints == m_Type || eRuns == m_Type || eSQ == m_Type)
 	{
-		if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
+		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
 		|| 0 == m_Event.length())
 		{
 			ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT);
@@ -298,9 +298,9 @@ bool ARBDogExistingPoints::Load(
 	return true;
 }
 
-bool ARBDogExistingPoints::Save(CElement& ioTree) const
+bool ARBDogExistingPoints::Save(Element& ioTree) const
 {
-	CElement& title = ioTree.AddElement(TREE_EXISTING_PTS);
+	Element& title = ioTree.AddElement(TREE_EXISTING_PTS);
 	title.AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
 	switch (m_Type)
 	{

@@ -120,11 +120,11 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBDogTitle::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE);
@@ -140,7 +140,7 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME);
@@ -152,7 +152,7 @@ bool ARBDogTitle::Load(
 
 	switch (inTree.GetAttrib(ATTRIB_TITLE_DATE, m_Date))
 	{
-	case CElement::eNotFound:
+	case Element::eNotFound:
 		// As of version 8.5, no date infers this is an unearned title
 		// that we're hiding.
 		if (inVersion < ARBVersion(8, 5))
@@ -162,7 +162,7 @@ bool ARBDogTitle::Load(
 		}
 		m_bHidden = true;
 		break;
-	case CElement::eInvalidValue:
+	case Element::eInvalidValue:
 		{
 			std::string attrib;
 			inTree.GetAttrib(ATTRIB_TITLE_DATE, attrib);
@@ -173,7 +173,7 @@ bool ARBDogTitle::Load(
 		}
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL);
 		return false;
@@ -202,9 +202,9 @@ bool ARBDogTitle::Load(
 	return true;
 }
 
-bool ARBDogTitle::Save(CElement& ioTree) const
+bool ARBDogTitle::Save(Element& ioTree) const
 {
-	CElement& title = ioTree.AddElement(TREE_TITLE);
+	Element& title = ioTree.AddElement(TREE_TITLE);
 	if (m_Date.IsValid())
 	{
 		title.AddAttrib(ATTRIB_TITLE_DATE, m_Date);

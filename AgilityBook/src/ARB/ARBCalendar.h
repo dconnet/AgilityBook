@@ -43,7 +43,7 @@
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * The calendar cribsheet.
@@ -99,7 +99,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -109,7 +109,7 @@ public:
 	 * @return Success
 	 * @post The ARBCalendar element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Is this calendar entry (start and end dates) before a given date?
