@@ -151,11 +151,26 @@ bool ARBDogRunScoring::Load(
 	case ARBConfigScoring::eTimePlusFaults:
 		if (name == TREE_BY_TIME)
 		{
-			if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
+			if (inVersion < ARBVersion(8,6))
 			{
-				ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, VALID_VALUES_BOOL);
-				// Report the error, but keep going.
-				m_Table = false;
+				// File version 8.4 and 8.5 stored whether to just the YPS.
+				// If false, the YPS would be adjusted - this means there was
+				// a table, so migrate that information.
+				bool bTableInYPS = true;
+				if (Element::eFound == inTree.GetAttrib("TableInYPS", bTableInYPS))
+				{
+					if (!bTableInYPS)
+						m_Table = true;
+				}
+			}
+			else
+			{
+				if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
+				{
+					ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, VALID_VALUES_BOOL);
+					// Report the error, but keep going.
+					m_Table = false;
+				}
 			}
 			m_type = eTypeByTime;
 			if (Element::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_SCT, d))
