@@ -163,7 +163,8 @@ public:
 	 */
 	void clear()
 	{
-		erase(begin(), end());
+		if (0 < size())
+			erase(begin(), end());
 	}
 
 	iterator erase(iterator inIter)
@@ -178,6 +179,8 @@ public:
 
 	iterator erase(iterator inFirst, iterator inLast)
 	{
+		if (inFirst == end())
+			return inFirst;
 		for (iterator iter = inFirst; iter <= inLast; ++iter)
 			(*iter)->Release();
 #if _MSC_VER < 1300
