@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-30 DRC DOB/Deceased were not initialized in ctor.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
@@ -56,6 +57,8 @@ CDlgDogProperties::CDlgDogProperties(ARBConfig& config, ARBDog* pDog)
 	: CPropertyPage(CDlgDogProperties::IDD)
 	, m_Config(config)
 	, m_pDog(pDog)
+	, m_DOB(pDog->GetDOB())
+	, m_Deceased(pDog->GetDeceased())
 {
 	//{{AFX_DATA_INIT(CDlgDogProperties)
 	m_CallName = pDog->GetCallName().c_str();
