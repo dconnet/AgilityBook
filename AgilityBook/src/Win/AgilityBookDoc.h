@@ -87,7 +87,7 @@ class CErrorCallback : public ARBErrorCallback
 {
 public:
 	CErrorCallback();
-	virtual bool OnError(char const* pMsg);
+	virtual bool OnError(char const* const pMsg);
 	std::string m_ErrMsg;
 };
 
