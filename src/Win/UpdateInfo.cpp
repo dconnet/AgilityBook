@@ -112,8 +112,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	// Clear everything.
 	m_VersionNum.clear();
 	m_VerConfig = 0;
-	m_FileName.clear();
-	m_InfoMsg.clear();
+	m_FileName.erase();
+	m_InfoMsg.erase();
 
 	// Read the file.
 	CString url;

@@ -99,7 +99,6 @@
 #define IDC_FIND_UP                     1024
 #define IDC_FIND_DOWN                   1025
 #define IDC_LIST_VIEWER                 1026
-#define IDC_LIST_VIEWER_CONFIG          1027
 #define IDC_CONFIG_VENUES               1030
 #define IDC_CONFIG_NEW                  1031
 #define IDC_CONFIG_EDIT                 1032

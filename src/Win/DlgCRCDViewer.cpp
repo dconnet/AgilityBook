@@ -50,6 +50,7 @@ static char THIS_FILE[] = __FILE__;
 CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent)
 	: CDlgBaseDialog(CDlgCRCDViewer::IDD, pParent)
 	, m_metaFile(inMetaFile)
+	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rCRCDwin(0,0,0,0)
 	, m_rCRCDclient(0,0,0,0)
@@ -120,6 +121,7 @@ BOOL CDlgCRCDViewer::OnInitDialog()
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
 
+	GetWindowRect(m_rWin);
 	GetClientRect(m_rDlg);
 	m_ctrlCRCD.GetWindowRect(m_rCRCDwin);
 	ScreenToClient(m_rCRCDwin);
@@ -147,8 +149,8 @@ HBRUSH CDlgCRCDViewer::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 void CDlgCRCDViewer::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
-	lpMMI->ptMinTrackSize.x = m_rDlg.Width();
-	lpMMI->ptMinTrackSize.y = m_rDlg.Height();
+	lpMMI->ptMinTrackSize.x = m_rWin.Width();
+	lpMMI->ptMinTrackSize.y = m_rWin.Height();
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
 
