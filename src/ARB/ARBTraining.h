@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-14 DRC Added FindTraining to support importing data.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-21 DRC Created
  */
@@ -156,6 +157,8 @@ public:
 	void sort(bool inDescending = true);
 
 	size_t GetAllNames(std::set<std::string>& outNames) const;
+
+	const ARBTraining* FindTraining(const ARBTraining* inTraining) const;
 
 	ARBTraining* AddTraining(ARBTraining* inTraining);
 	bool DeleteTraining(const ARBTraining* inTraining);
