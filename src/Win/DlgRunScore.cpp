@@ -721,7 +721,6 @@ void CDlgRunScore::UpdateControls()
 		m_ctrlInClass.EnableWindow(FALSE);
 		m_ctrlDogsQd.EnableWindow(FALSE);
 		m_ctrlQ.EnableWindow(FALSE);
-		m_ctrlOtherPoints.EnableWindow(FALSE);
 		m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
 		m_ctrlTitlePoints.ShowWindow(SW_HIDE);
 		m_ctrlMachPtsText.ShowWindow(SW_HIDE);
