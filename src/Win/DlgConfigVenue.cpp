@@ -299,7 +299,10 @@ void CDlgConfigVenue::LoadDivisionData()
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
 			reinterpret_cast<LPARAM>(new CDlgConfigureDataDivision(*iterDiv)));
 		if (pDiv == *iterDiv)
+		{
 			m_ctrlDivisions.SetSelection(index);
+			m_ctrlDivisions.EnsureVisible(index, FALSE);
+		}
 	}
 	m_ctrlDivisions.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	LoadLevelData();
@@ -339,7 +342,10 @@ void CDlgConfigVenue::LoadLevelData()
 			reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pData->GetDivision(), *iterLevel)),
 			TVI_ROOT, TVI_LAST);
 		if (NULL == pSubLevel && pLevel == *iterLevel)
+		{
 			m_ctrlLevels.SelectItem(hItem);
+			m_ctrlLevels.EnsureVisible(hItem);
+		}
 		if (0 < (*iterLevel)->GetSubLevels().size())
 		{
 			for (ARBConfigSubLevelList::iterator iterSubLevel = (*iterLevel)->GetSubLevels().begin(); iterSubLevel != (*iterLevel)->GetSubLevels().end(); ++iterSubLevel)
@@ -349,7 +355,10 @@ void CDlgConfigVenue::LoadLevelData()
 					reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pData->GetDivision(), *iterLevel, *iterSubLevel)),
 					hItem, TVI_LAST);
 				if (pSubLevel == *iterSubLevel)
+				{
 					m_ctrlLevels.SelectItem(hSub);
+					m_ctrlLevels.EnsureVisible(hSub);
+				}
 			}
 			m_ctrlLevels.Expand(hItem, TVE_EXPAND);
 		}
@@ -378,7 +387,10 @@ void CDlgConfigVenue::LoadTitleData()
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
 			reinterpret_cast<LPARAM>(new CDlgConfigureDataTitle(pData->GetDivision(), *iterTitle)));
 		if (pTitle == *iterTitle)
+		{
 			m_ctrlTitles.SetSelection(index);
+			m_ctrlTitles.EnsureVisible(index, FALSE);
+		}
 	}
 	m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 }
@@ -416,7 +428,10 @@ void CDlgConfigVenue::LoadEventData()
 			m_ctrlEvents.Expand(hItem, TVE_EXPAND);
 		}
 		if (pEvent == *iterEvent)
+		{
 			m_ctrlEvents.SelectItem(hItem);
+			m_ctrlEvents.EnsureVisible(hItem);
+		}
 	}
 }
 
@@ -806,9 +821,9 @@ void CDlgConfigVenue::OnNew()
 				pTitle->SetDescription(dlg.GetDesc());
 				if (pTitle)
 				{
-					int nInsertAt = m_ctrlDivisions.GetSelection();
+					int nInsertAt = m_ctrlTitles.GetSelection();
 					if (0 > nInsertAt)
-						nInsertAt = m_ctrlDivisions.GetItemCount();
+						nInsertAt = m_ctrlTitles.GetItemCount();
 					else
 						++nInsertAt;
 					int index = m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, nInsertAt,
