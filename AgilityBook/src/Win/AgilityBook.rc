@@ -233,7 +233,7 @@ BEGIN
     POPUP "&Window"
     BEGIN
         MENUITEM "&Next Pane\tF6",              ID_NEXT_PANE
-        MENUITEM "&Previous Window\tShift+F6",  ID_PREV_PANE
+        MENUITEM "&Previous Pane\tShift+F6",    ID_PREV_PANE
     END
     POPUP "&Help"
     BEGIN

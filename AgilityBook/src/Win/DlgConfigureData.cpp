@@ -51,7 +51,6 @@
 #include "DlgConfigure.h"
 #include "DlgFixup.h"
 #include "DlgName.h"
-#include "DlgNameDesc.h"
 #include "DlgReorder.h"
 
 #ifdef _DEBUG

@@ -54,7 +54,6 @@
 #include "DlgFixup.h"
 #include "DlgMessage.h"
 #include "DlgName.h"
-#include "DlgNameDesc.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
