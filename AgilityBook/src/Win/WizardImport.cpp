@@ -49,6 +49,7 @@
 #include "AgilityBookOptions.h"
 #include "DlgAssignColumns.h"
 #include "DlgMessage.h"
+#include "DlgProgress.h"
 #include "Element.h"
 #include "Wizard.h"
 
@@ -89,6 +90,13 @@ CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc)
 
 CWizardImport::~CWizardImport()
 {
+}
+
+void CWizardImport::ResetData()
+{
+	m_FileName.Empty();
+	m_FileData.RemoveAll();
+	m_ExcelData.clear();
 }
 
 void CWizardImport::DoDataExchange(CDataExchange* pDX)
@@ -253,6 +261,7 @@ static bool GetField(const CString& delim, CString& ioStr, CString& outFld, int 
 void CWizardImport::UpdatePreview()
 {
 	CWaitCursor wait;
+	m_ctrlPreview.SetRedraw(FALSE);
 
 	// Clear existing preview data.
 	m_ctrlPreview.DeleteAllItems();
@@ -266,7 +275,11 @@ void CWizardImport::UpdatePreview()
 	{
 	}
 	else if (1 != delim.GetLength())
+	{
+		m_ctrlPreview.SetRedraw(TRUE);
+		m_ctrlPreview.Invalidate();
 		return;
+	}
 
 	// Get export columns.
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
@@ -274,7 +287,7 @@ void CWizardImport::UpdatePreview()
 	std::vector<int> columns[IO_TYPE_MAX];
 	for (index = 0; index < IO_TYPE_MAX; ++index)
 	{
-		CDlgAssignColumns::GetColumnOrder(order, index, columns[iCol]);
+		CDlgAssignColumns::GetColumnOrder(order, index, columns[index]);
 	}
 
 	// Now generate the header information.
@@ -326,7 +339,28 @@ void CWizardImport::UpdatePreview()
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
-		//TODO: pull excel data
+		int iLine = 0;
+		for (std::vector< std::vector<CString> >::const_iterator iter = m_ExcelData.begin();
+			iter != m_ExcelData.end();
+			++iter, ++iLine)
+		{
+			if (iLine >= m_Row - 1)
+			{
+				std::vector<CString> const& rowData = *iter;
+				int iCol = 0;
+				int iCurLine = -1;
+				for (std::vector<CString>::const_iterator iter2 = rowData.begin();
+					iter2 != rowData.end() && iCol < cols.GetSize();
+					++iter2, ++iCol)
+				{
+					CString const& str = *iter2;
+					if (0 == iCol)
+						iCurLine = m_ctrlPreview.InsertItem(iLine, str);
+					else
+						m_ctrlPreview.SetItemText(iCurLine, iCol, str);
+				}
+			}
+		}
 	}
 	else
 	{
@@ -347,6 +381,8 @@ void CWizardImport::UpdatePreview()
 	}
 	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
 		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlPreview.SetRedraw(TRUE);
+	m_ctrlPreview.Invalidate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -459,7 +495,11 @@ BOOL CWizardImport::OnWizardFinish()
 		return FALSE;
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR == index)
+	{
+		AfxMessageBox("Please select a date format");
+		GotoDlgCtrl(GetDlgItem(IDC_WIZARD_IMPORT_DATE));
 		return FALSE;
+	}
 	CAgilityBookOptions::SetImportStartRow(m_Row);
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
 	{
@@ -479,6 +519,7 @@ BOOL CWizardImport::OnWizardFinish()
 	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
 	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
+	CWaitCursor wait;
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
 	size_t iCol;
 	std::vector<int> columns[IO_TYPE_MAX];
@@ -1194,9 +1235,20 @@ void CWizardImport::OnImportFile()
 		m_ctrlPreviewFile.SetWindowText(str);
 		CWaitCursor wait;
 		m_FileData.RemoveAll();
+		m_ExcelData.clear();
 		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 		{
-			// TODO: Read excel data
+			CWizardExcelImport* pImporter = m_pSheet->ExcelHelper().GetImporter();
+			if (pImporter)
+			{
+				IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
+				if (pImporter->OpenFile(m_FileName))
+				{
+					pImporter->GetData(m_ExcelData, pProgress);
+				}
+				pProgress->Dismiss();
+				delete pImporter;
+			}
 		}
 		else
 		{

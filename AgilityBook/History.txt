@@ -1,4 +1,4 @@
-9/28/2004: v1.3.3.9 <in development>
+10/1/2004: v1.3.3.9 <in development>
 - Bumped file version to 9.1, Configuration v6:
   - Added 'Height' to 'ReferenceRun'
 - New features / Enhancements:
@@ -7,6 +7,7 @@
     for Level C events.
   - In the calendar view, set the page scrolling size to 4 weeks. It used a
     default value which could scroll multiple pages at a time.
+  - Added direct Excel import/export capability.
 - Bug fix
   - The splash screen could cause a problem opening a file whose format is
     newer than the current program.

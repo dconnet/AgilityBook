@@ -881,12 +881,15 @@ properly before importing. Use the 'Assign Columns' button above to align.
 .topic HIDC_WIZARD_IMPORT_ROW
 Start the import at the specified row. This allows skipping of header data.
 
+.topic HIDC_WIZARD_START_EXCEL
+Import data directly from or export data directly to Excel.
+
 .topic HIDC_WIZARD_START_ARB
-Import/export data from/to another Agility Record Book file.
+Import data from or export data to another Agility Record Book file.
 
 .topic HIDC_WIZARD_START_LIST
 Things that can be imported or exported. Selecting an item will display some
 information in the pane to the right.
 
 .topic HIDC_WIZARD_START_SPREADSHEET
-Import/export data from/to a spreadsheet.
+Import data from or export data to a spreadsheet in text form.
