@@ -127,10 +127,6 @@
 #define IDC_CONFIG_EVENT                1090
 #define IDC_CONFIG_EVENT_TABLE          1091
 #define IDC_CONFIG_EVENT_PARTNER        1092
-#define IDC_CONFIG_EVENT_SUBCAT         1093
-#define IDC_CONFIG_EVENT_SUBCAT_NEW     1094
-#define IDC_CONFIG_EVENT_SUBCAT_EDIT    1095
-#define IDC_CONFIG_EVENT_SUBCAT_DELETE  1096
 #define IDC_CONFIG_EVENT_DESC           1097
 #define IDC_CONFIG_EVENT_METHODS        1098
 #define IDC_CONFIG_EVENT_UNUSED         1099
@@ -250,7 +246,6 @@
 #define IDC_RUNSCORE_DIVISION           1304
 #define IDC_RUNSCORE_LEVEL              1305
 #define IDC_RUNSCORE_EVENT              1306
-#define IDC_RUNSCORE_SUBCAT             1307
 #define IDC_RUNSCORE_HEIGHT             1308
 #define IDC_RUNSCORE_JUDGE              1309
 #define IDC_RUNSCORE_HANDLER            1310

@@ -16,7 +16,6 @@ Revision History:
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
                'SCT', 'SCT2' to 'ByOpenClose'. Added 'SCT' to 'ByPoints'.
-               Added 'SubCat' to 'Event', 'ExistingPoints', 'Run'.
 2004-07-03 DRC File version 9.0.
                Added 'SubName' to 'Training'
                'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
@@ -196,13 +195,12 @@ If there are no 'TitlePoints', then the class is non-titling.
 
  Integer: OpeningPts,ClosingPts,Points,Faults
 -->
-<!ELEMENT Event (Desc?, SubCat*, Scoring+) >
+<!ELEMENT Event (Desc?, Scoring+) >
 	<!ATTLIST Event
 		Name CDATA #REQUIRED
 		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
 		>
-<!ELEMENT SubCat (#PCDATA) >
 <!ELEMENT Scoring (Note?, TitlePoints*, LifeTime*) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
@@ -261,11 +259,11 @@ depends on how a venue has been defined above.
 <!ELEMENT Note (#PCDATA) >
 <!--
  Type: [required items..]
-  'Other': Other Points [Other, Venue, Div, Level, Event(SubCat)]
-  'Run': Runs           [       Venue, Div, Level, Event(SubCat)]
+  'Other': Other Points [Other, Venue, Div, Level, Event]
+  'Run': Runs           [       Venue, Div, Level, Event]
   'Mach': Mach points   [       Venue, Div, Level]
   'QQ': Double Q        [       Venue, Div, Level]
-  'SQ': Super Q         [       Venue, Div, Level, Event(SubCat)]
+  'SQ': Super Q         [       Venue, Div, Level, Event]
 -->
 <!ELEMENT ExistingPoints (#PCDATA) >
 	<!ATTLIST ExistingPoints
@@ -276,7 +274,6 @@ depends on how a venue has been defined above.
 		Div CDATA #IMPLIED
 		Level CDATA #IMPLIED
 		Event CDATA #IMPLIED
-		SubCat CDATA #IMPLIED
 		Pts CDATA #REQUIRED
 		>
 <!ELEMENT RegNum (#PCDATA) >
@@ -309,7 +306,7 @@ The 'Venue' must be defined above in a Configuration/Venue element.
 	<!ATTLIST Club Venue CDATA #REQUIRED >
 
 <!--
-The attributes 'Division', 'Event' and 'SubCat' must be defined above in a
+The attributes 'Division' and 'Event' must be defined above in a
 Configuration/Venue element. The 'Level' attribute is defined in either
 a Level or SubLevel element.
 -->
@@ -320,7 +317,6 @@ a Level or SubLevel element.
 		Level CDATA #REQUIRED
 		Height CDATA #IMPLIED
 		Event CDATA #REQUIRED
-		SubCat CDATA #IMPLIED
 		>
 
 <!ELEMENT Conditions (#PCDATA) >

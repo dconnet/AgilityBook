@@ -111,10 +111,6 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CONFIG_EVENT, m_Name);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_TABLE, m_bHasTable);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_PARTNER, m_bHasPartners);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT, m_ctrlSubCat);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT_NEW, m_ctrlSubCatNew);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT_EDIT, m_ctrlSubCatEdit);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBCAT_DELETE, m_ctrlSubCatDelete);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_DESC, m_Desc);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
@@ -150,11 +146,6 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
-	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_SUBCAT, OnSelchangeSubCat)
-	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_SUBCAT, OnDblclkSubCat)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBCAT_NEW, OnSubCatNew)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBCAT_EDIT, OnSubCatEdit)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBCAT_DELETE, OnSubCatDelete)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_DELETE, OnBnClickedDelete)
@@ -611,16 +602,6 @@ BOOL CDlgConfigEvent::OnInitDialog()
 		m_ctrlType.SetItemData(idx, Styles[index]);
 	}
 
-	// Fill subcategories.
-	for (std::vector<std::string>::iterator iter = m_pEvent->GetSubCategories().begin();
-		iter != m_pEvent->GetSubCategories().end();
-		++iter)
-	{
-		m_ctrlSubCat.AddString((*iter).c_str());
-	}
-	m_ctrlSubCatEdit.EnableWindow(FALSE);
-	m_ctrlSubCatDelete.EnableWindow(FALSE);
-
 	FillMethodList();
 	FillControls();
 	FillRequiredPoints();
@@ -650,86 +631,6 @@ void CDlgConfigEvent::OnCbnSelchangeLevel()
 	UpdateData(TRUE);
 	SaveControls();
 	FillMethodList();
-}
-
-void CDlgConfigEvent::OnSelchangeSubCat()
-{
-	UpdateData(TRUE);
-	BOOL bEnable = FALSE;
-	if (LB_ERR != m_ctrlSubCat.GetCurSel())
-		bEnable = TRUE;
-	m_ctrlSubCatEdit.EnableWindow(bEnable);
-	m_ctrlSubCatDelete.EnableWindow(bEnable);
-}
-
-void CDlgConfigEvent::OnDblclkSubCat()
-{
-	UpdateData(TRUE);
-	OnSubCatEdit();
-}
-
-void CDlgConfigEvent::OnSubCatNew()
-{
-	CDlgName dlg("", (LPCTSTR)NULL, this);
-	if (IDOK == dlg.DoModal())
-	{
-		std::vector<std::string> subcat;
-		for (int index = 0; index < m_ctrlSubCat.GetCount(); ++index)
-		{
-			CString text;
-			m_ctrlSubCat.GetText(index, text);
-			subcat.push_back((LPCSTR)text);
-		}
-		std::string item = dlg.GetName();
-		if (subcat.end() == std::find(subcat.begin(), subcat.end(), item))
-		{
-			int idx = m_ctrlSubCat.AddString(item.c_str());
-			m_ctrlSubCat.SetCurSel(idx);
-		}
-	}
-}
-
-void CDlgConfigEvent::OnSubCatEdit()
-{
-	int idx = m_ctrlSubCat.GetCurSel();
-	if (LB_ERR != idx)
-	{
-		CString text;
-		m_ctrlSubCat.GetText(idx, text);
-		CDlgName dlg(text, (LPCTSTR)NULL, this);
-		if (IDOK == dlg.DoModal())
-		{
-			CString oldText;
-			m_ctrlSubCat.GetText(idx, oldText);
-			m_ctrlSubCat.DeleteString(idx);
-			std::vector<std::string> subcat;
-			for (int index = 0; index < m_ctrlSubCat.GetCount(); ++index)
-			{
-				CString text;
-				m_ctrlSubCat.GetText(index, text);
-				subcat.push_back((LPCSTR)text);
-			}
-			std::string item = dlg.GetName();
-			if (subcat.end() == std::find(subcat.begin(), subcat.end(), item))
-			{
-				int idx = m_ctrlSubCat.AddString(item.c_str());
-				m_ctrlSubCat.SetCurSel(idx);
-			}
-			else
-			{
-				// New name exists, put the old one back.
-				int idx = m_ctrlSubCat.AddString(oldText);
-				m_ctrlSubCat.SetCurSel(idx);
-			}
-		}
-	}
-}
-
-void CDlgConfigEvent::OnSubCatDelete()
-{
-	int idx = m_ctrlSubCat.GetCurSel();
-	if (LB_ERR != idx)
-		m_ctrlSubCat.DeleteString(idx);
 }
 
 void CDlgConfigEvent::OnBnClickedNew()
@@ -1131,18 +1032,7 @@ void CDlgConfigEvent::OnOK()
 		}
 	}
 
-	std::vector<std::string> subcat;
-	for (index = 0; index < m_ctrlSubCat.GetCount(); ++index)
-	{
-		CString text;
-		m_ctrlSubCat.GetText(index, text);
-		std::string item = (LPCSTR)text;
-		if (subcat.end() == std::find(subcat.begin(), subcat.end(), item))
-			subcat.push_back(item);
-	}
-
 	m_Desc.Replace("\r\n", "\n");
-	m_pEvent->GetSubCategories() = subcat;
 	m_pEvent->SetDesc((LPCSTR)m_Desc);
 	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
 	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
