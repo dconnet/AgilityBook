@@ -50,6 +50,8 @@ private:
 	enum { IDD = IDD_VIEW_OPTIONS_PROGRAM };
 	BOOL	m_bAutoCheck;
 	int	m_Backups;
+	BOOL	m_bAutoShow;
+	CString	m_Splash;
 	//}}AFX_DATA
 
 // Overrides
@@ -62,6 +64,7 @@ private:
 protected:
 	//{{AFX_MSG(CDlgOptionsProgram)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBrowse();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

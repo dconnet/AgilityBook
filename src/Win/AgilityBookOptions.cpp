@@ -1139,6 +1139,17 @@ void CAgilityBookOptions::SetSplashImage(const CString& filename)
 	AfxGetApp()->WriteProfileString("Settings", "Splash", filename);
 }
 
+bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
+{
+	int val = AfxGetApp()->GetProfileInt("Settings", "autoShowTitle", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
+{
+	AfxGetApp()->WriteProfileInt("Settings", "autoShowTitle", bShow ? 1 : 0);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Special clipboard formats
 

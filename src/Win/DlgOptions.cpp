@@ -96,6 +96,8 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	// Program options
 	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
 	m_pageProgram.m_Backups = CAgilityBookOptions::GetNumBackupFiles();
+	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
+	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
 
 	AddPage(&m_pageFilter);
 	AddPage(&m_pageCalendar);
@@ -199,6 +201,8 @@ void CDlgOptions::OnOK()
 		// Program options
 		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
 		CAgilityBookOptions::SetNumBackupFiles(m_pageProgram.m_Backups);
+		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
+		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
 		// Update
 		m_pDoc->ResetVisibility();
 		EndDialog(IDOK);

@@ -672,6 +672,9 @@
 				RelativePath="..\..\..\Win\res\jump.ico">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\res\Logo.bmp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\res\Splash.bmp">
 			</File>
 			<File

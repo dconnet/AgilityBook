@@ -1,10 +1,4 @@
-Last Updated: 5/8/04
-
-- Allow users to specify their own splash screen.
-  - Just need to add UI to specify name - note, only .bmp is supported
-
-- After adding a title, display the dog properties on title page. Too many
-  people can't find it afterwards.
+Last Updated: 5/9/04
 
 - Fix printing so it wraps multi-line text.
 

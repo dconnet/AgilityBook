@@ -106,6 +106,8 @@
 #define IDC_TITLE_EDIT                  1037
 #define IDC_TITLE_DELETE                1038
 #define IDC_TITLES                      1039
+#define IDC_BROWSE                      1040
+#define IDC_AUTOSHOW                    1041
 #define IDC_REG_NUMS                    1043
 #define IDC_NOTES                       1044
 #define IDC_DATE                        1045
