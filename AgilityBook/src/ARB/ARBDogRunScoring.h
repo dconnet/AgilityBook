@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-25 DRC Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -90,10 +91,11 @@ public:
 
 	/**
 	 * Get the YPS for the run.
+	 * @param inTableInYPS Include table in YPS computation.
 	 * @param outYPS YPS for the run.
 	 * @return Indicates whether outYPS is valid, not all runs have YPS.
 	 */
-	bool GetYPS(double& outYPS) const;
+	bool GetYPS(bool inTableInYPS, double& outYPS) const;
 
 	/**
 	 * Getters/setters.
@@ -106,8 +108,8 @@ public:
 	void SetYards(double inYards);
 	ARBDouble GetTime() const;
 	void SetTime(ARBDouble inTime);
-	bool GetTableInYPS() const;
-	void SetTableInYPS(bool inInc);
+	bool HasTable() const;
+	void SetHasTable(bool inInc);
 	double GetTimeFaults() const;
 	short GetCourseFaults() const;
 	void SetCourseFaults(short inFaults);
@@ -126,7 +128,7 @@ private:
 	ARBDouble m_SCT;
 	double m_Yards;
 	ARBDouble m_Time;
-	bool m_TableInYPS;	///< Used in YPS computation.
+	bool m_Table;
 	short m_CourseFaults;
 	short m_NeedOpenPts;
 	short m_NeedClosePts;
@@ -177,14 +179,14 @@ inline void ARBDogRunScoring::SetTime(ARBDouble inTime)
 	m_Time = inTime;
 }
 
-inline bool ARBDogRunScoring::GetTableInYPS() const
+inline bool ARBDogRunScoring::HasTable() const
 {
-	return m_TableInYPS;
+	return m_Table;
 }
 
-inline void ARBDogRunScoring::SetTableInYPS(bool inInc)
+inline void ARBDogRunScoring::SetHasTable(bool inInc)
 {
-	m_TableInYPS = inInc;
+	m_Table= inInc;
 }
 
 inline short ARBDogRunScoring::GetCourseFaults() const

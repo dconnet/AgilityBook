@@ -216,6 +216,7 @@ BEGIN
         MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
         MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
+        MENUITEM "Include Table in &YPS",       ID_VIEW_TABLE_IN_YPS
         MENUITEM SEPARATOR
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
@@ -813,7 +814,7 @@ BEGIN
     EDITTEXT        IDC_FAULTS,50,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "&Time",IDC_STATIC,27,121,16,8
     EDITTEXT        IDC_TIME,50,119,30,12,ES_AUTOHSCROLL
-    CONTROL         "Subtract Table for YPS",IDC_TABLE_YPS,"Button",
+    CONTROL         "Run has a Table",IDC_TABLE_YPS,"Button",
                     BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,15,134,65,18
     GROUPBOX        "By Score",IDC_STATIC,91,92,109,77
     LTEXT           "&Required Opening",IDC_OPENING_PTS_TEXT,98,105,58,8
@@ -2156,6 +2157,7 @@ BEGIN
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
     ID_VIEW_HIDDEN          "Show Titles that have been hidden"
+    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS"
     ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
     ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
     ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"

@@ -126,6 +126,8 @@ public:
 	static void SetViewQRuns(bool bViewQs);
 	static bool GetViewHiddenTitles();
 	static void SetViewHiddenTitles(bool bSet);
+	static bool GetTableInYPS();
+	static void SetTableInYPS(bool bSet);
 	// Training Log options
 	static bool GetTrainingViewAllDates();
 	static void SetTrainingViewAllDates(bool bViewAll);

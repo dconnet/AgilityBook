@@ -353,7 +353,7 @@ void CWizardExport::UpdatePreview()
 									case IO_RUNS_YPS:
 										{
 											double yps;
-											if (pRun->GetScoring().GetYPS(yps))
+											if (pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 											{
 												CString str;
 												str.Format("%.3f", yps);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="8.5">
+<DefaultConfig Book="8.6">
 	<Configuration version="2">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>

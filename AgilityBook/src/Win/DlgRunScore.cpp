@@ -162,7 +162,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FAULTS, m_Faults);
 	DDX_Control(pDX, IDC_TIME, m_ctrlTime);
 	DDX_Text(pDX, IDC_TIME, m_Time);
-	DDX_Control(pDX, IDC_TABLE_YPS, m_ctrlTableYPS);
+	DDX_Control(pDX, IDC_TABLE_YPS, m_ctrlTable);
 	DDX_Control(pDX, IDC_YARDS_TEXT, m_ctrlYardsText);
 	DDX_Control(pDX, IDC_YARDS, m_ctrlYards);
 	DDX_Text(pDX, IDC_YARDS, m_Yards);
@@ -546,7 +546,7 @@ void CDlgRunScore::SetYPS()
 {
 	CString str;
 	double yps;
-	if (m_Run->GetScoring().GetYPS(yps))
+	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 	{
 		str.Format("%.3f", yps);
 	}
@@ -712,7 +712,7 @@ void CDlgRunScore::UpdateControls()
 		m_ctrlPartner.ShowWindow(SW_HIDE);
 		m_ctrlHandler.EnableWindow(FALSE);
 		m_ctrlTime.EnableWindow(FALSE);
-		m_ctrlTableYPS.EnableWindow(FALSE);
+		m_ctrlTable.EnableWindow(FALSE);
 		m_ctrlFaults.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
@@ -784,8 +784,8 @@ void CDlgRunScore::UpdateControls()
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTableYPS.EnableWindow(TRUE);
-		m_ctrlTableYPS.SetCheck(m_Run->GetScoring().GetTableInYPS() ? 0 : 1);
+		m_ctrlTable.EnableWindow(TRUE);
+		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
 		m_ctrlYards.EnableWindow(TRUE);
 		m_ctrlSCT.EnableWindow(TRUE);
 		m_ctrlOpening.EnableWindow(FALSE);
@@ -801,7 +801,7 @@ void CDlgRunScore::UpdateControls()
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTableYPS.EnableWindow(FALSE);
+		m_ctrlTable.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[0]);
@@ -827,7 +827,7 @@ void CDlgRunScore::UpdateControls()
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
-		m_ctrlTableYPS.EnableWindow(FALSE);
+		m_ctrlTable.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[1]);
@@ -961,7 +961,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	case ARBDogRunScoring::eTypeByTime:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
-		m_ctrlTableYPS.SetCheck(m_Run->GetScoring().GetTableInYPS() ? 0 : 1);
+		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
 		m_Yards = m_Run->GetScoring().GetYards();
 		m_SCT = m_Run->GetScoring().GetSCT();
 		SetYPS();
@@ -1112,7 +1112,7 @@ void CDlgRunScore::OnKillfocusPlace()
 
 void CDlgRunScore::OnBnClickedTableYps()
 {
-	m_Run->GetScoring().SetTableInYPS(m_ctrlTableYPS.GetCheck() ? false : true);
+	m_Run->GetScoring().SetHasTable(m_ctrlTable.GetCheck() ? true : false);
 	SetYPS();
 }
 

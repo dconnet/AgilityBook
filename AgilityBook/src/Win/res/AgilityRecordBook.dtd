@@ -7,6 +7,8 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
+2004-03-25 DRC File version 8.6.
+               Changed 'TableInYPS' to 'hasTable'.
 2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.
@@ -316,7 +318,7 @@ These 3 elements define the major scoring mechanisms.
 
  Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points
  Decimal: Time,SCT,Yards
- Boolean: TableInYPS
+ Boolean: hasTable
 -->
 <!ELEMENT ByTime EMPTY >
 	<!ATTLIST ByTime
@@ -324,7 +326,7 @@ These 3 elements define the major scoring mechanisms.
 		Time CDATA #REQUIRED
 		SCT CDATA #IMPLIED
 		Yards CDATA #IMPLIED
-		TableInYPS (y|n) 'y'
+		hasTable (y|n) 'y'
 		>
 <!ELEMENT ByOpenClose EMPTY >
 	<!ATTLIST ByOpenClose
