@@ -13,7 +13,7 @@ src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
 2004-11-15 DRC File version 10.1.
-               Added 'underTF'/'overTF' to 'Scoring'.
+               Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
@@ -192,6 +192,8 @@ automatically determine if a double Q occurs on a given date.
 'hasTable' specifies that this run might have a table. This is used as the
 default when creating a run.
 
+'timeFault' is a multiplier when a run has time faults.
+
 Entries in 'TitlePoints' determines if a Q should/not be awarded. When
 data is entered in the program, the program will perform certain tests.
 If it thinks you should/not Q and you enter data differently,
@@ -221,6 +223,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		doubleQ (y|n) 'n'
 		machPts (y|n) 'n'
 		hasTable (y|n) 'n'
+		timeFault CDATA #IMPLIED
 		OpeningPts CDATA #IMPLIED
 		ClosingPts CDATA #IMPLIED
 		>

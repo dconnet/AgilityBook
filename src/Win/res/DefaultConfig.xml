@@ -201,16 +201,19 @@ Revision History:
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" type="Faults100ThenTime">
+				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="*" Level="Excellent A" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="*" Level="*" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
@@ -218,22 +221,25 @@ Revision History:
 				<Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" type="Faults100ThenTime">
+				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="*" Level="Excellent A" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="*" Level="*" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="National Rounds">
 				<Desc>Hybrid, Challenger and Final Rounds</Desc>
-				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" type="Faults100ThenTime"/>
+				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime"/>
 			</Event>
 		</Venue>
 		<Venue Name="AMBOR">

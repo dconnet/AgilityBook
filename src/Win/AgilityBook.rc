@@ -657,12 +657,12 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_TYPE
     LTEXT           "Required &Opening",IDC_CONFIG_EVENT_OPENING_PTS_TEXT,
                     190,211,29,16
-    EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,223,211,25,12,
+    EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,223,211,20,12,
                     ES_AUTOHSCROLL | ES_NUMBER,0,
                     HIDC_CONFIG_EVENT_OPENING_PTS
     LTEXT           "Required &Closing",IDC_CONFIG_EVENT_CLOSING_PTS_TEXT,
-                    255,211,29,16
-    EDITTEXT        IDC_CONFIG_EVENT_CLOSING_PTS,288,211,25,12,
+                    250,211,29,16
+    EDITTEXT        IDC_CONFIG_EVENT_CLOSING_PTS,283,211,20,12,
                     ES_AUTOHSCROLL | ES_NUMBER,0,
                     HIDC_CONFIG_EVENT_CLOSING_PTS
     CONTROL         "D&rop time fractions for faults",
@@ -678,14 +678,19 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,190,218,109,10,0,
                     HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
     CONTROL         "M&ach Points?",IDC_CONFIG_EVENT_MACH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,184,57,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,322,174,57,10,0,
                     HIDC_CONFIG_EVENT_MACH
     CONTROL         "Double &Q?",IDC_CONFIG_EVENT_DOUBLEQ,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,196,49,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,322,186,49,10,0,
                     HIDC_CONFIG_EVENT_DOUBLEQ
     CONTROL         "S&uper Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,208,45,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,322,198,45,10,0,
                     HIDC_CONFIG_EVENT_SUPERQ
+    LTEXT           "Time Fault Multiplier",
+                    IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT,317,211,34,16
+    EDITTEXT        IDC_CONFIG_EVENT_TF_MULTIPLY,354,213,25,12,
+                    ES_AUTOHSCROLL | ES_NUMBER,0,
+                    HIDC_CONFIG_EVENT_TF_MULTIPLY
     LTEXT           "&Method Note",IDC_STATIC,195,234,27,16
     EDITTEXT        IDC_CONFIG_EVENT_NOTES,223,234,156,52,ES_MULTILINE | 
                     ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_NOTES
