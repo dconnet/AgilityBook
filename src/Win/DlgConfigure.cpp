@@ -71,7 +71,8 @@ public:
 	CDetails(CAgilityBookDoc* inDoc,
 		std::list<RunInfo> const& inRunsScoringDeleted,
 		std::list<RunInfo> const& inRunsScoringChanged)
-		: m_RunsScoringDeleted(inRunsScoringDeleted)
+		: m_pDoc(inDoc)
+		, m_RunsScoringDeleted(inRunsScoringDeleted)
 		, m_RunsScoringChanged(inRunsScoringChanged)
 	{
 	}
@@ -176,7 +177,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			++iterTrial)
 		{
 			ARBDogTrial const* pTrial = *iterTrial;
-			if (!pTrial->GetClubs().FindVenue(inVenue))
+			if (pTrial->GetClubs().GetPrimaryClub()->GetVenue() != inVenue)
 				continue;
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
