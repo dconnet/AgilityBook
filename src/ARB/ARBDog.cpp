@@ -169,12 +169,13 @@ size_t ARBDog::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBDog::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())
 	{
-		ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME);
 		return false;
 	}
 
@@ -184,7 +185,7 @@ bool ARBDog::Load(
 		inTree.GetAttrib(ATTRIB_DOG_DOB, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str());
 		return false;
 	}
 
@@ -194,7 +195,7 @@ bool ARBDog::Load(
 		inTree.GetAttrib(ATTRIB_DOG_DECEASED, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str());
 		return false;
 	}
 
@@ -216,17 +217,17 @@ bool ARBDog::Load(
 		else if (element.GetName() == TREE_REG_NUM)
 		{
 			// Ignore any errors...
-			m_RegNums.Load(inConfig, element, inVersion);
+			m_RegNums.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 		else if (element.GetName() == TREE_TITLE)
 		{
 			// Ignore any errors...
-			m_Titles.Load(inConfig, element, inVersion);
+			m_Titles.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 		else if (element.GetName() == TREE_TRIAL)
 		{
 			// Ignore any errors...
-			m_Trials.Load(inConfig, element, inVersion);
+			m_Trials.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 	}
 	m_RegNums.sort();

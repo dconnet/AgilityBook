@@ -106,12 +106,13 @@ size_t ARBConfigDivision::GetSearchStrings(std::set<std::string>& ioStrings) con
 
 bool ARBConfigDivision::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME);
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -120,12 +121,12 @@ bool ARBConfigDivision::Load(
 		if (element.GetName() == TREE_LEVEL)
 		{
 			// Ignore any errors...
-			m_Levels.Load(element, inVersion);
+			m_Levels.Load(element, inVersion, ioErrMsg);
 		}
 		else if (element.GetName() == TREE_TITLES)
 		{
 			// Ignore any errors...
-			m_Titles.Load(element, inVersion);
+			m_Titles.Load(element, inVersion, ioErrMsg);
 		}
 	}
 	return true;
@@ -233,10 +234,11 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 
 bool ARBConfigDivisionList::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	ARBConfigDivision* thing = new ARBConfigDivision();
-	if (!thing->Load(inTree, inVersion))
+	if (!thing->Load(inTree, inVersion, ioErrMsg))
 	{
 		thing->Release();
 		return false;

@@ -228,12 +228,13 @@ bool ARBDogRun::Load(
 	const ARBConfig& inConfig,
 	const ARBDogClubList& inClubs,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
 	case CElement::eNotFound:
-		ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE);
+		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE);
 		return false;
 	case CElement::eInvalidValue:
 		{
@@ -241,7 +242,7 @@ bool ARBDogRun::Load(
 			inTree.GetAttrib(ATTRIB_RUN_DATE, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str());
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str());
 			return false;
 		}
 	}
@@ -249,14 +250,14 @@ bool ARBDogRun::Load(
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
-		ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION);
+		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION);
 		return false;
 	}
 
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
-		ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL);
+		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL);
 		return false;
 	}
 
@@ -266,13 +267,13 @@ bool ARBDogRun::Load(
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
-		ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT);
+		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT);
 		return false;
 	}
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
-	const ARBConfigScoring* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today());
+	const ARBConfigScoring* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today(), ioErrMsg);
 	if (!pEvent)
 		return false;
 
@@ -295,14 +296,14 @@ bool ARBDogRun::Load(
 		else if (name == TREE_PARTNER)
 		{
 			// Ignore any errors...
-			m_Partners.Load(inConfig, element, inVersion);
+			m_Partners.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 		else if (name == TREE_BY_TIME
 		|| name == TREE_BY_OPENCLOSE
 		|| name == TREE_BY_POINTS)
 		{
 			// Ignore any errors...
-			m_Scoring.Load(pEvent, element, inVersion);
+			m_Scoring.Load(pEvent, element, inVersion, ioErrMsg);
 		}
 		else if (name == TREE_PLACEMENT)
 		{
@@ -310,14 +311,14 @@ bool ARBDogRun::Load(
 			if (CElement::eFound != element.GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
-				ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q);
+				ioErrMsg += ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q);
 				return false;
 			}
-			if (!m_Q.Load(attrib, inVersion))
+			if (!m_Q.Load(attrib, inVersion, ioErrMsg))
 			{
 				std::string msg(VALID_VALUES);
 				msg += ARB_Q::GetValidTypes();
-				ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str());
+				ioErrMsg += ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str());
 				return false;
 			}
 			element.GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
@@ -328,19 +329,19 @@ bool ARBDogRun::Load(
 				const CElement& subElement = element.GetElement(idx);
 				if (subElement.GetName() == TREE_PLACEMENT_OTHERPOINTS)
 				{
-					m_OtherPoints.Load(inConfig, subElement, inVersion);
+					m_OtherPoints.Load(inConfig, subElement, inVersion, ioErrMsg);
 				}
 			}
 		}
 		else if (name == TREE_NOTES)
 		{
 			// Ignore any errors...
-			m_Notes.Load(inConfig, element, inVersion);
+			m_Notes.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 		else if (name == TREE_REF_RUN)
 		{
 			// Ignore any errors...
-			m_RefRuns.Load(inConfig, element, inVersion);
+			m_RefRuns.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 	}
 	return true;
@@ -534,10 +535,11 @@ bool ARBDogRunList::Load(
 	const ARBConfig& inConfig,
 	const ARBDogClubList& inClubs,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	ARBDogRun* thing = new ARBDogRun();
-	if (!thing->Load(inConfig, inClubs, inTree, inVersion))
+	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioErrMsg))
 	{
 		thing->Release();
 		return false;

@@ -106,12 +106,13 @@ size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBConfigTitle::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME);
 		return false;
 	}
 	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);

@@ -251,6 +251,7 @@ public:
 	 * @param inConfig Load config info.
 	 * @param inInfo Load the Info (judges) info.
 	 * @param inDogs Load dog info.
+	 * @param ioErrMsg Error message on failure.
 	 * @return Success
 	 */
 	bool Load(
@@ -259,10 +260,11 @@ public:
 		bool inTraining,
 		bool inConfig,
 		bool inInfo,
-		bool inDogs);
-	bool Load(const CElement& inTree)
+		bool inDogs,
+		std::string& ioErrMsg);
+	bool Load(const CElement& inTree, std::string& ioErrMsg)
 	{
-		return Load(inTree, true, true, true, true, true);
+		return Load(inTree, true, true, true, true, true, ioErrMsg);
 	}
 	/**
 	 * Save a document.
@@ -388,52 +390,50 @@ inline ARBDogList& ARBAgilityRecordBook::GetDogs()
 
 /////////////////////////////////////////////////////////////////////////////
 
-//
-// These error routines centralize platform dependent code.
-// On windows, this prints using AfxMessageBox.
-//
-
 /**
  * Print a warning that the document can be read, but saving it may cause the
  * loss of data.
  * Prompt the user to continue (y/n)
  * This prints WARNING_NEWER_DOC (above)
  *
+ * These error routines centralize platform dependent code.
+ * On windows, this prints using AfxMessageBox.
+ *
  * @return true to continue, false to abort.
  */
 extern bool WarningNewerDocStructure();
 
 /**
- * Print an error message about invalid document structure.
- * This prints "Invalid document structure: " followed by a message.
+ * Return an error message about invalid document structure.
+ *  "Invalid document structure: " followed by a message.
  *
  * @param inMsg Additional error information.
- * @return None
+ * @return Message
  */
-extern void ErrorInvalidDocStructure(const char* const inMsg);
+extern std::string ErrorInvalidDocStructure(const char* const inMsg);
 
 /**
- * Print an error message about a missing required attribute.
+ * Return an error message about a missing required attribute.
  *
  * @param inElement Element containing missing attribute.
  * @param inAttrib Attribute name that is missing.
  * @param inMsg Additional error information.
- * @return None
+ * @return Message
  */
-extern void ErrorMissingAttribute(
+extern std::string ErrorMissingAttribute(
 	const char* const inElement,
 	const char* const inAttrib,
 	const char* const inMsg = NULL);
 
 /**
- * Print an error message about an invalid value in an attribute.
+ * Return an error message about an invalid value in an attribute.
  *
  * @param inElement Element containing bad attribute.
  * @param inAttrib Attribute name whose value is bad.
  * @param inMsg Additional error information.
- * @return None
+ * @return Message
  */
-extern void ErrorInvalidAttributeValue(
+extern std::string ErrorInvalidAttributeValue(
 	const char* const inElement,
 	const char* const inAttrib,
 	const char* const inMsg = NULL);

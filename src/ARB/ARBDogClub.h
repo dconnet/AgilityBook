@@ -61,7 +61,8 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	const std::string& GetName() const;
@@ -117,7 +118,8 @@ public:
 		const std::string& inEvent,
 		const std::string& inDivision,
 		const std::string& inLevel,
-		const ARBDate& inDate) const;
+		const ARBDate& inDate,
+		std::string& ioErrMsg) const;
 	const ARBDogClub* FindVenue(const std::string& inVenue) const;
 
 	ARBDogClub* AddClub(

@@ -108,10 +108,11 @@ void ARBConfig::clear()
  */
 bool ARBConfig::LoadFault(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (inTree.GetName() == TREE_FAULTTYPE
-	&& m_FaultTypes.Load(inTree, inVersion))
+	&& m_FaultTypes.Load(inTree, inVersion, ioErrMsg))
 		return true;
 	else
 		return false;
@@ -123,10 +124,11 @@ bool ARBConfig::LoadFault(
  */
 bool ARBConfig::LoadOtherPoints(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (inTree.GetName() == TREE_OTHERPTS
-	&& m_OtherPoints.Load(inTree, inVersion))
+	&& m_OtherPoints.Load(inTree, inVersion, ioErrMsg))
 		return true;
 	else
 		return false;
@@ -134,7 +136,8 @@ bool ARBConfig::LoadOtherPoints(
 
 bool ARBConfig::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -143,19 +146,19 @@ bool ARBConfig::Load(
 		if (name == TREE_VENUE)
 		{
 			// Ignore any errors...
-			m_Venues.Load(*this, element, inVersion);
+			m_Venues.Load(*this, element, inVersion, ioErrMsg);
 		}
 		else if (name == TREE_FAULTTYPE)
 		{
 			// Ignore any errors...
 			// This was moved here in version 3.
-			LoadFault(element, inVersion);
+			LoadFault(element, inVersion, ioErrMsg);
 		}
 		else if (name == TREE_OTHERPTS)
 		{
 			// Ignore any errors...
 			// This was moved here in version 3.
-			LoadOtherPoints(element, inVersion);
+			LoadOtherPoints(element, inVersion, ioErrMsg);
 		}
 	}
 	m_Venues.sort();
@@ -181,6 +184,8 @@ void ARBConfig::Default()
 	// We could just distribute the .xml file and load it, but I'm taking
 	// advantage of Win32 resources and stashing the default config inside
 	// the program.
+	bool bOk = false;
+	std::string err;
 	CElement tree;
 #ifdef WIN32
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), "XML");
@@ -191,7 +196,7 @@ void ARBConfig::Default()
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
 			const char* pData = reinterpret_cast<const char*>(LockResource(hRes));
-			tree.LoadXMLBuffer(pData, size);
+			bOk = tree.LoadXMLBuffer(pData, size, err);
 			FreeResource(hRes);
 		}
 	}
@@ -199,15 +204,17 @@ void ARBConfig::Default()
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	tree.LoadXMLFile("DefaultConfig.xml");
+	bOk = tree.LoadXMLFile("DefaultConfig.xml", err);
 #endif
-	if (tree.GetName() == "DefaultConfig")
+	if (bOk && tree.GetName() == "DefaultConfig")
 	{
 		ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 		tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
 		int config = tree.FindElement(TREE_CONFIG);
 		if (0 <= config)
-			Load(tree.GetElement(config), version);
+		{
+			bOk = Load(tree.GetElement(config), version, err);
+		}
 	}
 }
 

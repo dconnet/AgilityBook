@@ -101,17 +101,18 @@ size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 bool ARBDogRunOtherPoints::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_NAME);
 		return false;
 	}
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points))
 	{
-		ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_POINTS);
+		ioErrMsg += ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_POINTS);
 		return false;
 	}
 	return true;

@@ -123,7 +123,8 @@ bool ARBDogRunScoring::operator!=(const ARBDogRunScoring& rhs) const
 bool ARBDogRunScoring::Load(
 	const ARBConfigScoring* inEvent,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	std::string attrib;
 

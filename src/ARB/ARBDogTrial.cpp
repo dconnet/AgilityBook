@@ -144,11 +144,12 @@ size_t ARBDogTrial::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBDogTrial::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
-		ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL);
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL);
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -165,7 +166,7 @@ bool ARBDogTrial::Load(
 		else if (element.GetName() == TREE_CLUB)
 		{
 			// Ignore any errors...
-			m_Clubs.Load(inConfig, element, inVersion);
+			m_Clubs.Load(inConfig, element, inVersion, ioErrMsg);
 		}
 		// Clubs should all be loaded first. We're not going to validate that
 		// though. If it's not true, someone has been messing with the file
@@ -173,7 +174,7 @@ bool ARBDogTrial::Load(
 		else if (element.GetName() == TREE_RUN)
 		{
 			// Ignore any errors...
-			m_Runs.Load(inConfig, m_Clubs, element, inVersion);
+			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioErrMsg);
 		}
 	}
 	m_Runs.sort(true);

@@ -106,17 +106,18 @@ size_t ARBConfigEvent::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBConfigEvent::Load(
 	const ARBConfigDivisionList& inDivisions,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EVENT_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME);
 		return false;
 	}
 	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
-		ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL);
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL);
 		return false;
 	}
 
@@ -130,7 +131,7 @@ bool ARBConfigEvent::Load(
 		else if (element.GetName() == TREE_SCORING)
 		{
 			// Ignore any errors...
-			m_Scoring.Load(inDivisions, element, inVersion);
+			m_Scoring.Load(inDivisions, element, inVersion, ioErrMsg);
 		}
 	}
 	return true;
@@ -241,10 +242,11 @@ const ARBConfigScoring* ARBConfigEvent::FindEvent(
 bool ARBConfigEventList::Load(
 	const ARBConfigDivisionList& inDivisions,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	ARBConfigEvent* thing = new ARBConfigEvent();
-	if (!thing->Load(inDivisions, inTree, inVersion))
+	if (!thing->Load(inDivisions, inTree, inVersion, ioErrMsg))
 	{
 		thing->Release();
 		return false;

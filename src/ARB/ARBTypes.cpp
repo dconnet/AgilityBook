@@ -122,7 +122,8 @@ std::string ARB_Q::str() const
 
 bool ARB_Q::Load(
 	const std::string& inAttrib,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
@@ -172,7 +173,8 @@ std::string ARBDouble::str() const
 
 bool ARBDouble::Load(
 	const std::string& inAttrib,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (0 < inAttrib.length())
 		m_Val = strtod(inAttrib.c_str(), NULL);

@@ -69,7 +69,8 @@ public:
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	int NumOtherPointsInUse(const std::string& inOther) const;
@@ -343,7 +344,8 @@ public:
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 
 	bool operator==(const ARBDogRunList& rhs) const
 	{

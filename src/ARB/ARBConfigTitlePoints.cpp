@@ -110,16 +110,17 @@ size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 
 bool ARBConfigTitlePoints::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
-		ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS);
+		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS);
 		return false;
 	}
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
 	{
-		ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS);
+		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS);
 		return false;
 	}
 	return true;

@@ -162,7 +162,8 @@ public:
 
 	bool Load(
 		const std::string& inAttrib,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(
 		CElement& ioTree,
 		const char* const inAttribName) const;
@@ -235,7 +236,8 @@ public:
 
 	bool Load(
 		const std::string& inAttrib,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(
 		CElement& ioTree,
 		const char* const inAttribName) const;

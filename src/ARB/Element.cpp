@@ -1257,7 +1257,7 @@ int CElement::FindElement(const std::string& inName, int inStartFrom) const
 }
 
 //private
-bool CElement::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource)
+bool CElement::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource, std::string& ioErrMsg)
 {
 	clear();
 	bool bOk = false;
@@ -1299,27 +1299,23 @@ bool CElement::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSourc
 	}
 	if (!bOk)
 	{
-#ifdef ERRORS_TO_CERR
-		cerr << eMsg.c_str() << endl;
-#else
-		AfxMessageBox(eMsg.c_str(), MB_ICONSTOP);
-#endif
+		ioErrMsg += eMsg;
 	}
 	delete parser;
 	return bOk;
 }
 
-bool CElement::LoadXMLBuffer(const char* inData, const unsigned int nData)
+bool CElement::LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg)
 {
 	MemBufInputSource source(reinterpret_cast<const XMLByte*>(inData), nData, "buffer");
-	return LoadXML(source);
+	return LoadXML(source, ioErrMsg);
 }
 
-bool CElement::LoadXMLFile(const char* inFileName)
+bool CElement::LoadXMLFile(const char* inFileName, std::string& ioErrMsg)
 {
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
-	return LoadXML(source);
+	return LoadXML(source, ioErrMsg);
 }
 
 bool CElement::SaveXML(std::ostream& outOutput, const std::string* inDTD) const

@@ -89,7 +89,8 @@ void ARBInfo::clear()
 
 bool ARBInfo::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -98,7 +99,7 @@ bool ARBInfo::Load(
 		if (name == TREE_JUDGEINFO)
 		{
 			// Ignore any errors.
-			m_JudgeInfo.Load(element, inVersion);
+			m_JudgeInfo.Load(element, inVersion, ioErrMsg);
 		}
 	}
 	return true;

@@ -676,7 +676,8 @@ BOOL CWizardImport::OnWizardFinish()
 							ARB_Q q;
 							if ("QQ" == entry[iCol])
 								entry[iCol] = "Q";
-							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion());
+							std::string err;
+							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion(), err);
 							pRun->SetQ(q);
 						}
 						break;

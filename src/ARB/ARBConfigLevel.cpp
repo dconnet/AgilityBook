@@ -95,12 +95,13 @@ size_t ARBConfigLevel::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBConfigLevel::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME);
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -109,7 +110,7 @@ bool ARBConfigLevel::Load(
 		if (element.GetName() == TREE_SUBLEVEL)
 		{
 			// Ignore any errors...
-			m_SubLevels.Load(element, inVersion);
+			m_SubLevels.Load(element, inVersion, ioErrMsg);
 		}
 	}
 	return true;

@@ -63,11 +63,13 @@ public:
 	 * @param ioConfig When migrating an old file, we may be updating the config.
 	 * @param inTree Data to parse.
 	 * @param inVersion Version of file being loaded.
+	 * @param ioErrMsg Output string for error accumulated messages.
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	std::string Update(int indent, const ARBConfigVenue* inVenueNew);
@@ -137,7 +139,8 @@ public:
 	bool Load(
 		ARBConfig& ioConfig,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 
 	bool operator==(const ARBConfigVenueList& rhs) const
 	{

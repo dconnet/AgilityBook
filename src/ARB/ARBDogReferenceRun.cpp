@@ -135,18 +135,19 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::string>& ioStrings) co
 bool ARBDogReferenceRun::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	std::string attrib;
 
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{
-		ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
+		ioErrMsg += ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
 		return false;
 	}
-	if (!m_Q.Load(attrib, inVersion))
+	if (!m_Q.Load(attrib, inVersion, ioErrMsg))
 	{
-		ErrorInvalidAttributeValue(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
 		return false;
 	}
 

@@ -116,13 +116,14 @@ size_t ARBConfigVenue::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBConfigVenue::Load(
 	ARBConfig& ioConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	// Get the venue name.
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_VENUE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME);
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -137,16 +138,16 @@ bool ARBConfigVenue::Load(
 		{
 			if (0 < m_Events.size())
 			{
-				ErrorInvalidDocStructure(INVALID_VENUE_CONFIG);
+				ioErrMsg += ErrorInvalidDocStructure(INVALID_VENUE_CONFIG);
 				return false;
 			}
 			// Ignore any errors...
-			m_Divisions.Load(element, inVersion);
+			m_Divisions.Load(element, inVersion, ioErrMsg);
 		}
 		else if (name == TREE_EVENT)
 		{
 			// Ignore any errors...
-			m_Events.Load(m_Divisions, element, inVersion);
+			m_Events.Load(m_Divisions, element, inVersion, ioErrMsg);
 		}
 		if (inVersion < ARBVersion(3,0))
 		{
@@ -154,20 +155,20 @@ bool ARBConfigVenue::Load(
 			{
 				ARBConfigFault* pFault = new ARBConfigFault();
 				// Kind-of ignore any errors...
-				bool bOk = pFault->Load(element, inVersion);
+				bool bOk = pFault->Load(element, inVersion, ioErrMsg);
 				// When migrating, avoid duplicate fault names.
 				// We do allow the user have duplicates. (just not here)
 				bool bExists = (bOk && NULL != ioConfig.GetFaults().FindFault(pFault->GetName()));
 				pFault->Release();
 				if (bOk && !bExists)
 				{
-					ioConfig.LoadFault(element, inVersion);
+					ioConfig.LoadFault(element, inVersion, ioErrMsg);
 				}
 			}
 			else if (name == TREE_OTHERPTS)
 			{
 				// Ignore any errors...
-				ioConfig.LoadOtherPoints(element, inVersion);
+				ioConfig.LoadOtherPoints(element, inVersion, ioErrMsg);
 			}
 		}
 	}
@@ -292,10 +293,11 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 bool ARBConfigVenueList::Load(
 	ARBConfig& ioConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	ARBConfigVenue* thing = new ARBConfigVenue();
-	if (!thing->Load(ioConfig, inTree, inVersion))
+	if (!thing->Load(ioConfig, inTree, inVersion, ioErrMsg))
 	{
 		thing->Release();
 		return false;

@@ -77,7 +77,8 @@ public:
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	const ARBDate& GetValidFrom() const;
@@ -266,7 +267,8 @@ public:
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 
 	bool operator==(const ARBConfigScoringList& rhs) const
 	{

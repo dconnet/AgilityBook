@@ -111,12 +111,13 @@ size_t ARBDogRegNum::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBDogRegNum::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE);
+		ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE);
 		return false;
 	}
 
@@ -125,7 +126,7 @@ bool ARBDogRegNum::Load(
 		if (CElement::eFound != inTree.GetAttrib("Number", m_Number)
 		|| 0 == m_Number.length())
 		{
-			ErrorMissingAttribute(TREE_REG_NUM, "Number");
+			ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, "Number");
 			return false;
 		}
 	}
@@ -136,7 +137,7 @@ bool ARBDogRegNum::Load(
 
 	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
-		ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL);
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL);
 		return false;
 	}
 
@@ -144,7 +145,7 @@ bool ARBDogRegNum::Load(
 	{
 		std::string msg(INVALID_VENUE_NAME);
 		msg += m_Venue;
-		ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str());
 		return false;
 	}
 
