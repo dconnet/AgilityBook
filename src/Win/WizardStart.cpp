@@ -250,6 +250,7 @@ static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 void CWizardStart::UpdateList()
 {
 	m_ctrlList.ResetContent();
+	m_ctrlDesc.SetWindowText("");
 	for (int i = 0; i < sc_nItems; ++i)
 	{
 		ASSERT(sc_Items[i].index == i);
