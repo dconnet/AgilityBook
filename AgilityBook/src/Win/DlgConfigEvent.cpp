@@ -937,7 +937,7 @@ void CDlgConfigEvent::OnOK()
 	if (m_Book)
 	{
 		switch (CDlgConfigure::CheckExistingRuns(m_pDoc, m_Book->GetDogs(),
-			m_pVenue->GetName(), m_pEvent->GetName(), m_Scorings, m_DlgFixup))
+			m_pVenue, m_pEvent->GetName(), m_Scorings, m_DlgFixup))
 		{
 		case CDlgConfigure::eCancelChanges:
 			EndDialog(IDCANCEL);

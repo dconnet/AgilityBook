@@ -112,7 +112,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			ARBConfigEvent const* pEvent = *iterEvent;
 			if (CDlgConfigure::eDoIt == CDlgConfigure::CheckExistingRuns(
 				inDoc, inDogs,
-				pVenue->GetName(), pEvent->GetName(), pEvent->GetScorings(),
+				pVenue, pEvent->GetName(), pEvent->GetScorings(),
 				dlgFixup, &runsScoringDeleted, &runsScoringChanged))
 			{
 				CString str;
@@ -157,7 +157,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 
 CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 	ARBDogList const& inDogs,
-	std::string const& inVenue, std::string const& inEvent,
+	ARBConfigVenue const* inVenue, std::string const& inEvent,
 	ARBConfigScoringList const& inScorings,
 	std::vector<CDlgFixup*>& ioDlgFixup,
 	std::list<RunInfo>* inRunsScoringDeleted,
@@ -177,7 +177,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			++iterTrial)
 		{
 			ARBDogTrial const* pTrial = *iterTrial;
-			if (pTrial->GetClubs().GetPrimaryClub()->GetVenue() != inVenue)
+			if (pTrial->GetClubs().GetPrimaryClub()->GetVenue() != inVenue->GetName())
 				continue;
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
@@ -186,10 +186,20 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 				ARBDogRun const* pRun = *iterRun;
 				if (pRun->GetEvent() != inEvent)
 					continue;
-				ARBConfigScoring const* pScoring = inScorings.FindEvent(
-					pRun->GetDivision(),
-					pRun->GetLevel(),
-					pRun->GetDate());
+				// Translate a sub-level to level
+				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigDivision const* pDiv = inVenue->GetDivisions().FindDivision(pRun->GetDivision());
+				if (pDiv) // Should never be null...
+				{
+					ARBConfigLevel const* pLevel = pDiv->GetLevels().FindSubLevel(pRun->GetLevel());
+					if (pLevel) // Again, should never be null...
+					{
+						pScoring = inVenue->GetEvents().FindEvent(inEvent,
+							pRun->GetDivision(),
+							pLevel->GetName(),
+							pRun->GetDate());
+					}
+				}
 				if (!pScoring)
 				{
 					if (inRunsScoringDeleted)
@@ -216,7 +226,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 		{
 			CString eventinfo;
 			eventinfo.FormatMessage(IDS_DELETE_EVENT_SCORING_INFO,
-				inEvent.c_str(), inVenue.c_str());
+				inEvent.c_str(), inVenue->GetName().c_str());
 			CString msg;
 			msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
 				(LPCTSTR)eventinfo,
@@ -233,7 +243,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 		case IDCANCEL:
 			return CDlgConfigure::eCancelChanges;
 		}
-		CDlgFixupEventScoring* pFixup = new CDlgFixupEventScoring(inVenue, inEvent);
+		CDlgFixupEventScoring* pFixup = new CDlgFixupEventScoring(inVenue->GetName(), inEvent);
 		ioDlgFixup.push_back(pFixup);
 		return CDlgConfigure::eDoIt;
 	}

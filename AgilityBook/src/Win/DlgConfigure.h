@@ -85,7 +85,7 @@ public:
 	 */
 	static eCheck CheckExistingRuns(CAgilityBookDoc* inDoc,
 		ARBDogList const& inDogs,
-		std::string const& inVenue, std::string const& inEvent,
+		ARBConfigVenue const* inVenue, std::string const& inEvent,
 		ARBConfigScoringList const& inScorings,
 		std::vector<CDlgFixup*>& ioDlgFixup,
 		// These settings are only used from the preceeding api.
