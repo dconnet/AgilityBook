@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-03 DRC Using the sort icon forced alignment to left.
  * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
  * @li 2003-11-22 DRC When copying, only create a header if more than 1 line
  *                    is selected (or if only one line exists).
@@ -163,12 +164,15 @@ void CHeaderCtrl2::Sort(int iCol, SortOrder eOrder)
 	}
 	HDITEM item;
 	item.mask = HDI_FORMAT;
+	GetItem(iCol, &item);
 	if (0 <= nIndex)
+	{
 		item.mask |= HDI_IMAGE;
-	item.iImage = nIndex;
-	item.fmt = HDF_LEFT | HDF_STRING;
-	if (0 <= nIndex)
 		item.fmt |= HDF_IMAGE;
+		item.iImage = nIndex;
+	}
+	else
+		item.fmt &= ~HDF_IMAGE;
 	SetItem(iCol, &item);
 }
 
