@@ -175,6 +175,8 @@ void CAgilityBookViewPoints::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 	PointsDataBase* pData = GetItemData(GetSelection());
 	if (pData)
 		pData->OnDblClick();
+	else
+		MessageBeep(0);
 	*pResult = 0;
 }
 
@@ -191,6 +193,8 @@ void CAgilityBookViewPoints::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 			PointsDataBase* pData = GetItemData(GetSelection());
 			if (pData)
 				pData->OnDblClick();
+			else
+				MessageBeep(0);
 		}
 		break;
 	}
