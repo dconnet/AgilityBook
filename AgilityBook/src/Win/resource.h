@@ -86,6 +86,7 @@
 #define IDC_ABOUT_LINK3                 1004
 #define IDC_ABOUT_LINK4                 1005
 #define IDC_ABOUT_UPDATE                1006
+#define IDC_ABOUT_LINK5                 1007
 #define IDC_NAME                        1010
 #define IDC_LIST_VIEWER                 1020
 #define IDC_LIST_COPY                   1021
@@ -576,6 +577,7 @@
 #define IDS_SELECT_DIVISION             5111
 #define IDS_SELECT_LEVEL                5112
 #define IDS_SELECT_EVENT                5113
+#define IDS_ABOUT_LINK_YAHOO_FILES      5114
 #define IDS_SELECT_JUDGE                5115
 #define IDS_SELECT_Q                    5116
 #define IDS_BAD_EVENT                   5117
