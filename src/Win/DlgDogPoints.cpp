@@ -177,10 +177,6 @@ void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_POINTS, m_ctrlPoints);
 	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		m_sortPoints.Save();
-	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgDogPoints, CPropertyPage)
@@ -308,6 +304,7 @@ void CDlgDogPoints::OnColumnclickExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 	SetColumnHeaders();
 	si.pCols = &m_sortPoints;
 	m_ctrlPoints.SortItems(ComparePoints, reinterpret_cast<LPARAM>(&si));
+	m_sortPoints.Save();
 	*pResult = 0;
 }
 

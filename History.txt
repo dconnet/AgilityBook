@@ -4,15 +4,16 @@
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
   - Added 'Link' to 'Runs'
   - Added 'LifeTime' to 'TitlePoints'
-  - Updated configuration (LAA information)
+  - Updated configuration with lifetime point information.
 - New features / Enhancements:
   - Instead of recording whether YPS should be adjusted for each run, just
     record if that run has a table. A new option (under 'View') then
     determines how to compute it. Old files will be auto-updated when the new
     configuration is merged, as long as it happens during startup.
   - Added Lifetime point accumulation information to USDAA and NADAC. Removed
-    USDAA LAA from OtherPoints.
-  - Changed 'Insert Course' to 'Paste Course' in run dialog.
+    USDAA LAA from OtherPoints. Also, updated DAM and Steeplechase to accumulate
+    LAA points from 1999 on.
+  - Changed 'Insert Course' to 'Paste Course' in run dialog. (For clarity)
   - Added 'Links' in the run dialog and a corresponding 'Find Links' in the
     File menu.
   - Added simple sorting to the 3 main list views: Runs, CalendarList, Training
@@ -20,24 +21,27 @@
   - Added a new page in the Options dialog for program options: number of
     backup files and auto-update-check.
   - Added 'Duplicate' menu item for trials/runs/calendar/training entries.
-  - Added a splash screen at start and as a menu option.
+  - Added a splash screen at start and as a menu option. (This is a picture of
+    Megan and me at the 2003 USDAA Nationals.)
     (Note for me: ARB font is 'FifthAve'/36pt)
   - In multi-dog files, remember the last dog viewed when opening the file.
 - Bug fixes
   - When merging configuration information via the update feature, if only
     the description was changed in either a venue or an event, that
-    information did not get properly merged 
+    information did not get properly merged.
   - The 'View->Show Hidden Titles' menu item was never enabled.
   - Fixed an inconsistency in pasting text from the clipboard. Sometimes the
     text was garbled when pasting into the CRCD text box.
   - The edit/delete buttons did not get enabled/disabled properly in the
-    Reference Runs in the Runs dialog
+    Reference Runs in the Runs dialog.
   - If opening a file for writing fails, the error message was wrong. (It
     reported on the minimum required resolution.)
   - If you imported a calendar listing that had a heading, but tried to parse
     the heading as an entry, the program faulted.
   - Fixed a problem encoding/decoding binary data. This affected pasting/viewing
     the CRCD image.
+  - Some of the lists with sortable columns didn't properly remember their
+    settings.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:
@@ -185,7 +189,7 @@
   - Enhanced list selection (runs, points, calendar, training log)
     - Support multiple selection.
     - Added "select all" (ctrl+a).
-  - Enhanced copy support (ctrl+c) 
+  - Enhanced copy support (ctrl+c)
     - Only copy selected items in lists.
     - Moved the copy that was in the calendar list to the calendar view. The
       calendar view now generates a list similar to Karey's. The calendar list
@@ -443,7 +447,7 @@ Known issues: See the 'todo.txt' file.
 02/21/2003: v0.2.0.1: Release Alpha3
 - Updated xerces to 2.2.0.
 - Bumped file version to 2:
-  - Removed Calendar 'PlanOn'(y|n) attribute, replaced with 'Entered'(E|P|N). 
+  - Removed Calendar 'PlanOn'(y|n) attribute, replaced with 'Entered'(E|P|N).
   - Redid DTD on a few entries (moved attributes to elements)
 - Calendar view:
   - Fixed problem where a new calendar entry didn't show up.

@@ -130,10 +130,6 @@ void CDlgDogNumbers::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DELETE, m_ctrlRegDelete);
 	DDX_Control(pDX, IDC_REG_NUMS, m_ctrlRegNums);
 	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		m_sortRegNums.Save();
-	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgDogNumbers, CPropertyPage)
@@ -262,6 +258,7 @@ void CDlgDogNumbers::OnColumnclickRegNums(NMHDR* pNMHDR, LRESULT* pResult)
 	SetColumnRegNumHeaders();
 	si.pCols = &m_sortRegNums;
 	m_ctrlRegNums.SortItems(CompareRegNums, reinterpret_cast<LPARAM>(&si));
+	m_sortRegNums.Save();
 	*pResult = 0;
 }
 

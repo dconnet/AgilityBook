@@ -268,6 +268,11 @@ BOOL CAgilityBookApp::InitInstance()
 	EnableShellOpen();
 	RegisterShellFileTypes(FALSE);
 
+	// Lock the splash window so when it times out, it doesn't dismiss an
+	// error dialog. (If the doc being loaded caused a msgbox to appear, the
+	// dismissal of the splash screen actually causes that msgbox to go away.)
+	CSplashWnd::CSplashWndLock lock;
+
 	// Should we open the last open file?
 	bool bOpeningLast = false;
 	if (CCommandLineInfo::FileNew == cmdInfo.m_nShellCommand)

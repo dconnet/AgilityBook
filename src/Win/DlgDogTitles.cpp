@@ -169,10 +169,6 @@ void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TITLE_DELETE, m_ctrlTitleDelete);
 	DDX_Control(pDX, IDC_HIDDEN, m_ctrlHidden);
 	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		m_sortTitles.Save();
-	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgDogTitles, CPropertyPage)
@@ -336,6 +332,7 @@ void CDlgDogTitles::OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult)
 	SetColumnTitleHeaders();
 	si.pCols = &m_sortTitles;
 	m_ctrlTitles.SortItems(CompareTitles, reinterpret_cast<LPARAM>(&si));
+	m_sortTitles.Save();
 	*pResult = 0;
 }
 

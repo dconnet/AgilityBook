@@ -82,7 +82,6 @@
 #include "MainFrm.h"
 #include "TabView.h"
 #include "Wizard.h"
-#include ".\agilitybookdoc.h"
 
 #if _MSC_VER < 1300
 #ifndef INVALID_FILE_ATTRIBUTES
