@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-14 DRC Added FindTraining to support importing data.
@@ -100,14 +101,14 @@ bool ARBTraining::operator!=(ARBTraining const& rhs) const
 
 std::string ARBTraining::GetGenericName() const
 {
-	return m_Date.GetString(false, ARBDate::eSlashMMDDYYYY);
+	return m_Date.GetString(ARBDate::eSlashMDY);
 }
 
 size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
-	ioStrings.insert(m_Date.GetString(false, ARBDate::eSlashMMDDYYYY));
+	ioStrings.insert(m_Date.GetString(ARBDate::eSlashMDY));
 	++nItems;
 
 	if (0 < m_Name.length())

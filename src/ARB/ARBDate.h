@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-03-21 DRC Fixed up some operators.
  * @li 2004-01-04 DRC Added FromString().
  */
@@ -54,6 +55,7 @@ public:
 	 */
 	typedef enum
 	{
+		// Leading zeros
 		eDefault		= 0,	///< YYYY-MM-DD or MM/DD/YYYY
 		eDashMMDDYYYY	= 1,	///< MM-DD-YYYY
 		eSlashMMDDYYYY	= 2,	///< MM/DD/YYYY
@@ -61,6 +63,13 @@ public:
 		eSlashYYYYMMDD	= 4,	///< YYYY/MM/DD
 		eDashDDMMYYYY	= 5,	///< DD-MM-YYYY
 		eSlashDDMMYYYY	= 6,	///< DD/MM/YYYY
+		// No leading zeros
+		eDashMDY		= 7,	///< M-D-Y
+		eSlashMDY		= 8,	///< M/D/Y
+		eDashYMD		= 9,	///< Y-M-D
+		eSlashYMD		= 10,	///< Y/M/D
+		eDashDMY		= 11,	///< D-M-Y
+		eSlashDMY		= 12,	///< D/M/Y
 	} DateFormat;
 
 	/**
@@ -142,11 +151,10 @@ public:
 
 	/**
 	 * Return the date as a string.
-	 * @param inLeadingZeros Add leading 0s to single digit months/days.
 	 * @param inFormat Format of date string.
 	 * @return Date in the format defined by inFormat.
 	 */
-	std::string GetString(bool inLeadingZeros, DateFormat inFormat) const;
+	std::string GetString(DateFormat inFormat) const;
 
 	/**
 	 * Convert the date to a time.

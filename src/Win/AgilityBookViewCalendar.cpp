@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-11-22 DRC Update the list when creating an entry.
  * @li 2003-11-21 DRC Enabled copy and select all.
@@ -357,7 +358,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				CRect r = GetDateRect(date, true);
 				CRect rFull(r);
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
-				CString str(date.GetString(false, ARBDate::eDashYYYYMMDD).c_str());
+				CString str(date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)).c_str());
 				if (!pDC->IsPrinting())
 				{
 					if (m_Current == date)
@@ -766,13 +767,14 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			columns[index] = str;
 		}
 		vector<ARBCalendar*>::const_iterator iter;
+		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
 			ARBCalendar* cal = *iter;
-			size_t len = cal->GetStartDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
+			size_t len = cal->GetStartDate().GetString(dFmt).length();
 			if (len > maxLen[COL_START_DATE])
 				maxLen[COL_START_DATE] = len;
-			len = cal->GetEndDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
+			len = cal->GetEndDate().GetString(dFmt).length();
 			if (len > maxLen[COL_END_DATE])
 				maxLen[COL_END_DATE] = len;
 			len = cal->GetLocation().length();
@@ -784,10 +786,10 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			len = cal->GetVenue().length();
 			if (len > maxLen[COL_VENUE])
 				maxLen[COL_VENUE] = len;
-			len = cal->GetOpeningDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
+			len = cal->GetOpeningDate().GetString(dFmt).length();
 			if (len > maxLen[COL_OPENS])
 				maxLen[COL_OPENS] = len;
-			len = cal->GetClosingDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
+			len = cal->GetClosingDate().GetString(dFmt).length();
 			if (len > maxLen[COL_CLOSES])
 				maxLen[COL_CLOSES] = len;
 			len = cal->GetNote().length();
@@ -796,7 +798,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		}
 		// The header
 		CString data;
-		data.Format(" %*s-%-*s %-*s %-*s %-*s %*s-%-*s %-*s",
+		data.Format(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
 			maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
 			maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
 			maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
@@ -813,19 +815,21 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		{
 			ARBCalendar* cal = *iter;
 			std::string items[scNumColumns];
-			items[COL_START_DATE] = cal->GetStartDate().GetString(true, ARBDate::eDashYYYYMMDD);
-			items[COL_END_DATE] = cal->GetEndDate().GetString(true, ARBDate::eDashYYYYMMDD);
+			items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
+			items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
 			items[COL_LOCATION] = cal->GetLocation();
 			items[COL_CLUB] = cal->GetClub();
 			items[COL_VENUE] = cal->GetVenue();
-			items[COL_OPENS] = cal->GetOpeningDate().GetString(true, ARBDate::eDashYYYYMMDD);
-			items[COL_CLOSES] = cal->GetClosingDate().GetString(true, ARBDate::eDashYYYYMMDD);
-			items[COL_NOTES] = cal->GetNote();
+			items[COL_OPENS] = cal->GetOpeningDate().GetString(dFmt);
+			items[COL_CLOSES] = cal->GetClosingDate().GetString(dFmt);
+			CString tmp = cal->GetNote().c_str();
+			tmp.Replace("\n", " ");
+			items[COL_NOTES] = (LPCTSTR)tmp;
 			CString tentative(" ");
 			if (cal->IsTentative())
 				tentative = "?";
 			CString str;
-			str.Format("%s%*s-%*s %-*s %-*s %-*s %-*s%s%-*s %-*s",
+			str.Format("%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s",
 				(LPCTSTR)tentative,
 				maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
 				maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
@@ -833,7 +837,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 				maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
 				maxLen[COL_CLUB], items[COL_CLUB].c_str(),
 				maxLen[COL_OPENS], items[COL_OPENS].c_str(),
-				(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? "-" : " ",
+				(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? " - " : "   ",
 				maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
 				maxLen[COL_NOTES], items[COL_NOTES].c_str());
 			str.TrimRight();

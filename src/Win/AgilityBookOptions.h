@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Added options to remember date formats.
  * @li 2004-06-06 DRC Added additional clipboard formats.
  * @li 2004-05-16 DRC Added IsLevelVisible.
  * @li 2004-04-08 DRC Added general program options.
@@ -203,6 +204,17 @@ public:
 	static void SetSplashImage(const CString& filename);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
+	typedef enum
+	{
+		eRunTree	= 0,
+		eRunList	= 1,
+		ePoints		= 2,
+		eCalList	= 3,
+		eCalendar	= 4,
+		eTraining	= 5,
+	} FormattedDate;
+	static ARBDate::DateFormat GetDateFormat(FormattedDate inItem);
+	static void SetDateFormat(FormattedDate inItem, ARBDate::DateFormat inFormat);
 
 protected:
 	friend class CDlgAssignColumns;

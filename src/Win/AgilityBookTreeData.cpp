@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-06-06 DRC Added duplicate/cut/paste support for dogs.
  * @li 2004-05-09 DRC After adding a title, display dog property dlg.
  * @li 2004-04-15 DRC Added Duplicate menu item.
@@ -728,7 +729,7 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 			str += m_pDog->GetBreed().c_str();
 			break;
 		case IO_TREE_DOG_DOB:
-			str += m_pDog->GetDOB().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
+			str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 			break;
 		case IO_TREE_DOG_AGE:
 			{
@@ -937,10 +938,10 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 		switch (GetTrialColumns()[idx])
 		{
 		case IO_TREE_TRIAL_START:
-			str += m_pTrial->GetRuns().GetStartDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str();
+			str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 			break;
 		case IO_TREE_TRIAL_END:
-			str += m_pTrial->GetRuns().GetEndDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str();
+			str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 			break;
 		case IO_TREE_TRIAL_CLUB:
 			{
@@ -1194,7 +1195,7 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			str += m_pRun->GetDate().GetString(true, ARBDate::eSlashMMDDYYYY).c_str();
+			str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 			break;
 		case IO_TREE_RUN_Q:
 			{
