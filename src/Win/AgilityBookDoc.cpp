@@ -631,6 +631,11 @@ BOOL CAgilityBookDoc::OnNewDocument()
 	AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
 	m_Records.Default();
 	m_Records.GetConfig().GetActions().clear();
+
+	if (0 == GetDogs().size())
+	{
+		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
+	}
 	return TRUE;
 }
 
@@ -730,6 +735,12 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 				SetModifiedFlag(TRUE);
 		}
 	}
+
+	if (0 == GetDogs().size())
+	{
+		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
+	}
+
 	return TRUE;
 }
 

@@ -62,6 +62,14 @@ class CAgilityBookViewTraining;
 class CTabView;
 struct CVenueFilter;
 
+//
+// Application specific message
+//
+#define PM_DELAY_MESSAGE		(WM_APP+1)
+	// Only sent if there are no dogs and we want to auto-create one to start
+	#define	CREATE_NEWDOG				1 // LPARAM unused
+
+
 // UpdateAllViews() hints
 #define UPDATE_CONFIG			0x0001
 #define UPDATE_CALENDAR_VIEW	0x0010
