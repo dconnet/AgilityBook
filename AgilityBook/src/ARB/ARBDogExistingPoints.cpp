@@ -400,7 +400,8 @@ bool ARBDogExistingPointsList::HasPoints(
 	ARBConfigVenue const* inVenue,
 	ARBConfigDivision const* inDiv,
 	ARBConfigLevel const* inLevel,
-	ARBConfigEvent const* inEvent) const
+	ARBConfigEvent const* inEvent,
+	bool inHasLifetime) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -415,7 +416,16 @@ bool ARBDogExistingPointsList::HasPoints(
 			|| ARBDogExistingPoints::eSQ == type)
 			{
 				if ((*iter)->GetEvent() == inEvent->GetName())
-					return true;
+				{
+					if (inHasLifetime)
+					{
+						const ARBConfigScoring* pScoring = inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate());
+						if (0 < pScoring->GetTitlePoints().GetLifetimePoints(0.0))
+							return true;
+					}
+					else
+						return true;
+				}
 			}
 			else
 				return true;

@@ -906,10 +906,10 @@ BEGIN
                     ES_NUMBER
     GROUPBOX        "Where Points were earned",IDC_STATIC,7,45,140,115
     LTEXT           "&Other Points",IDC_STATIC,14,61,40,8
-    COMBOBOX        IDC_EXISTING_OTHERPOINTS,57,59,80,80,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_EXISTING_OTHERPOINTS,57,59,80,100,CBS_DROPDOWNLIST | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "&Venue",IDC_STATIC,14,81,22,8
-    COMBOBOX        IDC_EXISTING_VENUES,57,79,80,50,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_EXISTING_VENUES,57,79,80,100,CBS_DROPDOWNLIST | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "&Division",IDC_STATIC,14,101,26,8
     COMBOBOX        IDC_EXISTING_DIVISION,57,99,80,100,CBS_DROPDOWNLIST | 
@@ -2001,6 +2001,7 @@ STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_INDEX           "Display the Index tab of the help file\nIndex"
 END
 
 STRINGTABLE 
@@ -2349,8 +2350,11 @@ BEGIN
     ID_VIEW_HIDDEN          "Show Titles that have been hidden\nHidden Titles"
     ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"
     ID_HELP_CONTENTS        "Display the Contents tab of the help file\nContents"
-    ID_HELP_INDEX           "Display the Index tab of the help file\nIndex"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
+END
+
+STRINGTABLE 
+BEGIN
     ID_HELP_SPLASH          "Show the initial splash screen\nSplash"
 END
 

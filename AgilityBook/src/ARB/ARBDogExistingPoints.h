@@ -264,13 +264,15 @@ public:
 	 * @param inDiv Division to search for.
 	 * @param inLevel Level to search for.
 	 * @param inEvent Event to search for.
+	 * @param inHasLifetime Are there any lifetime points?
 	 * @return Whether any existing points exist.
 	 */
 	bool HasPoints(
 		ARBConfigVenue const* inVenue,
 		ARBConfigDivision const* inDiv,
 		ARBConfigLevel const* inLevel,
-		ARBConfigEvent const* inEvent) const;
+		ARBConfigEvent const* inEvent,
+		bool inHasLifetime) const;
 
 	/**
 	 * Get the number of existing points.
