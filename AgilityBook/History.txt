@@ -1,7 +1,8 @@
-10/22/2003: v0.9.4.7: <development>
+10/29/2003: v0.9.4.7: <development>
 - New features / Enhancements:
   - Added DTD/XML export menu items.
   - Cleaned up some descriptions in DefaultConfig.xml.
+  - In Points view, added '*' to Title if it has been received.
 - Bug fixes
   - Changed copyright notices from "(c)" to "©"
   - Right-clicking on a Calendar entry sets that as the current date before
