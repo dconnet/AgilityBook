@@ -910,7 +910,7 @@ bool CFindRuns::Search() const
 		}
 		else
 		{
-			int nColumns = m_pView->m_SortHeader.GetItemCount();
+			int nColumns = m_pView->HeaderItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
@@ -1012,7 +1012,6 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CAgilityBookViewRuns::OnInitialUpdate()
 {
-	m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
 	SetupColumns();
 	CListView2::OnInitialUpdate();
 }
@@ -1107,7 +1106,7 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 
 void CAgilityBookViewRuns::SetupColumns()
 {
-	int nColumnCount = m_SortHeader.GetItemCount();
+	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewRuns, IO_TYPE_VIEW_RUNS_LIST, m_Columns))
@@ -1200,7 +1199,7 @@ void CAgilityBookViewRuns::LoadData()
 			}
 		}
 	}
-	int nColumnCount = m_SortHeader.GetItemCount();
+	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
@@ -1217,7 +1216,7 @@ void CAgilityBookViewRuns::LoadData()
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
-	m_SortHeader.Sort(abs(m_SortColumn), CHeaderCtrl2::eDescending);
+	HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eAscending);
 
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);
@@ -1295,7 +1294,7 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	m_SortHeader.Sort(abs(m_SortColumn), CHeaderCtrl2::eNoSort);
+	HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
 	if (m_SortColumn == pNMListView->iSubItem)
 		nBackwards = -1;
@@ -1304,8 +1303,8 @@ void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
-	m_SortHeader.Sort(abs(m_SortColumn),
-		nBackwards > 0 ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
+	HeaderSort(abs(m_SortColumn),
+		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
 }
 

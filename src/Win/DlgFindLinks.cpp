@@ -259,13 +259,13 @@ void CDlgFindLinks::SetColumnHeaders()
 			str += ' ';
 		}
 		CString order;
-		order.Format(_T("%c %s(%d)"),
-			m_sortLinks.IsDescending(i) ? '<' : '>',
+		order.Format(_T("%s(%d)"),
 			(LPCTSTR)str,
 			m_sortLinks.FindColumnOrder(i) + 1);
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlLinks.SetColumn(i, &col);
+		m_ctrlLinks.HeaderSort(i, m_sortLinks.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
 }

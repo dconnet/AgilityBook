@@ -338,9 +338,6 @@
 				RelativePath="..\..\..\Win\DlgTrial.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Win\HeaderCtrl.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\Win\HyperLink.cpp">
 			</File>
 			<File
@@ -592,9 +589,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgTrial.h">
-			</File>
-			<File
-				RelativePath="..\..\..\Win\HeaderCtrl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\HyperLink.h">

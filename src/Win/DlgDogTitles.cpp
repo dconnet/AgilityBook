@@ -199,13 +199,13 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 			str += ' ';
 		}
 		CString order;
-		order.Format(_T("%c %s(%d)"),
-			m_sortTitles.IsDescending(i) ? '<' : '>',
+		order.Format(_T("%s(%d)"),
 			(LPCTSTR)str,
 			m_sortTitles.FindColumnOrder(i) + 1);
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlTitles.SetColumn(i, &col);
+		m_ctrlTitles.HeaderSort(i, m_sortTitles.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
 }

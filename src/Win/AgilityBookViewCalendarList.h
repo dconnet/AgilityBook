@@ -44,7 +44,6 @@
 #include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
-#include "HeaderCtrl.h"
 #include "ListCtrl.h"
 class ARBCalendar;
 class CAgilityBookDoc;
@@ -85,7 +84,6 @@ private:
 	CAgilityBookViewCalendarData* GetItemData(int index) const;
 	void SetupColumns();
 	void LoadData();
-	CHeaderCtrl2 m_SortHeader;
 	CImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgTentative;

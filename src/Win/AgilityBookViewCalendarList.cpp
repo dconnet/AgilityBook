@@ -287,7 +287,7 @@ bool CFindCalendar::Search() const
 		}
 		else
 		{
-			int nColumns = m_pView->m_SortHeader.GetItemCount();
+			int nColumns = m_pView->HeaderItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
@@ -400,7 +400,6 @@ void CAgilityBookViewCalendarList::OnDestroy()
 
 void CAgilityBookViewCalendarList::OnInitialUpdate()
 {
-	m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
 	SetupColumns();
 	CListView2::OnInitialUpdate();
 }
@@ -480,7 +479,7 @@ CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int inde
 
 void CAgilityBookViewCalendarList::SetupColumns()
 {
-	int nColumnCount = m_SortHeader.GetItemCount();
+	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
@@ -581,7 +580,7 @@ void CAgilityBookViewCalendarList::LoadData()
 		}
 		++i;
 	}
-	int nColumnCount = m_SortHeader.GetItemCount();
+	int nColumnCount = HeaderItemCount();
 	for (i = 0; i < nColumnCount; ++i)
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
@@ -598,7 +597,7 @@ void CAgilityBookViewCalendarList::LoadData()
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
-	m_SortHeader.Sort(abs(m_SortColumn)-1, CHeaderCtrl2::eDescending);
+	HeaderSort(abs(m_SortColumn)-1, CHeaderCtrl2::eAscending);
 
 	// Cleanup.
 	if (pCurData)
@@ -671,7 +670,7 @@ void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
 void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	m_SortHeader.Sort(abs(m_SortColumn)-1, CHeaderCtrl2::eNoSort);
+	HeaderSort(abs(m_SortColumn)-1, CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
 	if (m_SortColumn == pNMListView->iSubItem + 1)
 		nBackwards = -1;
@@ -680,8 +679,8 @@ void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
-	m_SortHeader.Sort(abs(m_SortColumn)-1,
-		nBackwards > 0 ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
+	HeaderSort(abs(m_SortColumn)-1,
+		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
 }
 
