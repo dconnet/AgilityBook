@@ -1,4 +1,4 @@
-4/8/2004: v1.0.5.8 <in development>
+4/15/2004: v1.0.5.8 <in development>
 - Note: Released beta to single person on 3/26 - dealt with table code.
 - Bumped file version to 8.6, Configuration v3:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
@@ -30,6 +30,8 @@
     Reference Runs in the Runs dialog
   - If opening a file for writing fails, the error message was wrong. (It
     reported on the minimum required resolution.)
+  - If you imported a calendar listing that had a heading, but tried to parse
+    the heading as an entry, the program faulted.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:

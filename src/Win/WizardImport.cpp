@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC If imported data contained a header that we parsed as
+ *                    data, the program faulted trying to release a null ptr.
  * @li 2004-03-22 DRC Fixed line/col number reporting (off by one)
  * @li 2004-01-04 DRC Implemented import, except for trials/runs.
  * @li 2003-12-10 DRC Created
@@ -567,8 +569,11 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid run date: %s\n",
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
-								pRun->Release();
-								pRun = NULL;
+								if (pRun)
+								{
+									pRun->Release();
+									pRun = NULL;
+								}
 								iCol = columns[i].size();
 							}
 						}
@@ -848,8 +853,11 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n",
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
-								pCal->Release();
-								pCal = NULL;
+								if (pCal)
+								{
+									pCal->Release();
+									pCal = NULL;
+								}
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -868,8 +876,11 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n",
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
-								pCal->Release();
-								pCal = NULL;
+								if (pCal)
+								{
+									pCal->Release();
+									pCal = NULL;
+								}
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -900,8 +911,11 @@ BOOL CWizardImport::OnWizardFinish()
 							str.Format("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n",
 								nItem + 1, iCol + 1, entry[iCol].c_str());
 							errLog += str;
-							pCal->Release();
-							pCal = NULL;
+							if (pCal)
+							{
+								pCal->Release();
+								pCal = NULL;
+							}
 							iCol = columns[IO_TYPE_CALENDAR].size();
 						}
 						break;
@@ -931,8 +945,11 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n",
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
-								pCal->Release();
-								pCal = NULL;
+								if (pCal)
+								{
+									pCal->Release();
+									pCal = NULL;
+								}
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -951,8 +968,11 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n",
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
-								pCal->Release();
-								pCal = NULL;
+								if (pCal)
+								{
+									pCal->Release();
+									pCal = NULL;
+								}
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -1003,8 +1023,11 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid training log date: %s\n",
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
-								pLog->Release();
-								pLog = NULL;
+								if (pLog)
+								{
+									pLog->Release();
+									pLog = NULL;
+								}
 								iCol = columns[IO_TYPE_TRAINING].size();
 							}
 						}
