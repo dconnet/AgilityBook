@@ -27,6 +27,9 @@ Run type (scoring style) these fields are being assigned for.
 .topic HIDC_CAL_CLUB
 Name of the club hosting this event.
 
+.topic HIDC_CAL_CLUB_NOTE
+Notes about the selected club.
+
 .topic HIDC_CAL_DATE_CLOSES
 Date the trial closes.
 
@@ -56,6 +59,9 @@ Your entry status on this trial. Planning on entering.
 
 .topic HIDC_CAL_LOCATION
 Location this trial is being held.
+
+.topic HIDC_CAL_LOCATION_NOTE
+Notes about the selected location.
 
 .topic HIDC_CAL_NOTES
 Any notes you want to make about this trial.

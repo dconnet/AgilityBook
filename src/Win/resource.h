@@ -191,6 +191,8 @@
 #define IDC_CAL_DATE_CLOSES             1171
 #define IDC_CAL_DATE_CLOSES_UNKNOWN     1172
 #define IDC_CAL_NOTES                   1173
+#define IDC_CAL_LOCATION_NOTE           1174
+#define IDC_CAL_CLUB_NOTE               1175
 #define IDC_TRAINING_DATE               1180
 #define IDC_TRAINING_NAME               1181
 #define IDC_TRAINING_NOTES              1182

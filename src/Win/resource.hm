@@ -10,6 +10,7 @@
 #define HIDC_ASSIGN_MOVE_UP             0x80f6063a    // IDD_ASSIGN_COLUMNS
 #define HIDC_ASSIGN_TYPE                0x80f60636    // IDD_ASSIGN_COLUMNS
 #define HIDC_CAL_CLUB                   0x80d4048f    // IDD_CALENDAR
+#define HIDC_CAL_CLUB_NOTE              0x80d40497    // IDD_CALENDAR
 #define HIDC_CAL_DATE_CLOSES            0x80d40493    // IDD_CALENDAR
 #define HIDC_CAL_DATE_CLOSES_UNKNOWN    0x80d40494    // IDD_CALENDAR
 #define HIDC_CAL_DATE_END               0x80d40489    // IDD_CALENDAR
@@ -20,6 +21,7 @@
 #define HIDC_CAL_ENTER_NOT              0x80d4048b    // IDD_CALENDAR
 #define HIDC_CAL_ENTER_PLANNING         0x80d4048c    // IDD_CALENDAR
 #define HIDC_CAL_LOCATION               0x80d4048e    // IDD_CALENDAR
+#define HIDC_CAL_LOCATION_NOTE          0x80d40496    // IDD_CALENDAR
 #define HIDC_CAL_NOTES                  0x80d40495    // IDD_CALENDAR
 #define HIDC_CAL_TENTATIVE              0x80d4048a    // IDD_CALENDAR
 #define HIDC_CAL_VENUE                  0x80d40490    // IDD_CALENDAR
