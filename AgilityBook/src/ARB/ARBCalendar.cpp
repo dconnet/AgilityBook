@@ -204,12 +204,13 @@ bool ARBCalendar::IsRangeOverlapped(const ARBDate& inDate1, const ARBDate& inDat
 
 bool ARBCalendar::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
 	case CElement::eNotFound:
-		ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START);
+		ioErrMsg += ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START);
 		return false;
 	case CElement::eInvalidValue:
 		{
@@ -217,7 +218,7 @@ bool ARBCalendar::Load(
 			inTree.GetAttrib(ATTRIB_CAL_START, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str());
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str());
 		}
 		return false;
 	}
@@ -225,7 +226,7 @@ bool ARBCalendar::Load(
 	switch (inTree.GetAttrib(ATTRIB_CAL_END, m_DateEnd))
 	{
 	case CElement::eNotFound:
-		ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END);
+		ioErrMsg += ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END);
 		return false;
 	case CElement::eInvalidValue:
 		{
@@ -233,7 +234,7 @@ bool ARBCalendar::Load(
 			inTree.GetAttrib(ATTRIB_CAL_END, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str());
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str());
 			return false;
 		}
 	}
@@ -244,7 +245,7 @@ bool ARBCalendar::Load(
 		inTree.GetAttrib(ATTRIB_CAL_OPENING, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str());
 		return false;
 	}
 
@@ -254,13 +255,13 @@ bool ARBCalendar::Load(
 		inTree.GetAttrib(ATTRIB_CAL_CLOSING, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str());
 		return false;
 	}
 
 	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
-		ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, VALID_VALUES_BOOL);
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, VALID_VALUES_BOOL);
 		return false;
 	}
 
@@ -292,7 +293,7 @@ bool ARBCalendar::Load(
 				m_eEntered = eNot;
 			else
 			{
-				ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, VALID_VALUES_ENTRY);
+				ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, VALID_VALUES_ENTRY);
 				return false;
 			}
 		}

@@ -103,15 +103,27 @@ bool CDlgConfigUpdate::LoadConfig(const char* pFile)
 		m_Book.GetConfig().Default();
 	else
 	{
+		std::string err;
 		CElement tree;
 		// Translate the XML to a tree form.
-		if (!tree.LoadXMLFile(pFile))
+		if (!tree.LoadXMLFile(pFile, err))
 		{
-			AfxMessageBox(AFX_IDP_FAILED_TO_OPEN_DOC);
+			CString msg;
+			msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+			if (0 < err.length())
+			{
+				msg += "\n\n";
+				msg += err.c_str();
+			}
+			AfxMessageBox(msg, MB_ICONEXCLAMATION);
 			return false;
 		}
-		if (!m_Book.Load(tree, false, false, true, false, false))
+		if (!m_Book.Load(tree, false, false, true, false, false, err))
+		{
+			if (0 < err.length())
+				AfxMessageBox(err.c_str(), MB_ICONWARNING);
 			return false;
+		}
 	}
 	return true;
 }

@@ -57,14 +57,17 @@ public:
 	// These functions enable backwards file compatibility.
 	bool LoadFault(
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool LoadOtherPoints(
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 
 	bool Load(
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 	void Default();
 	static std::string GetDTD();

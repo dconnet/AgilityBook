@@ -412,6 +412,7 @@ static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree, const CString
 
 static bool GetDataFromClipboard(UINT clpFmt, CElement& tree)
 {
+	bool bOk = false;
 	if (IsClipboardFormatAvailable(clpFmt))
 	{
 		if (!AfxGetMainWnd()->OpenClipboard())
@@ -422,10 +423,14 @@ static bool GetDataFromClipboard(UINT clpFmt, CElement& tree)
 		CString data(str);
 		GlobalUnlock(hData);
 		CloseClipboard();
-		return tree.LoadXMLBuffer((LPCSTR)data, data.GetLength());
+		std::string err;
+		bOk = tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
+		if (!bOk && 0 < err.length())
+		{
+			AfxMessageBox(err.c_str(), MB_ICONEXCLAMATION);
+		}
 	}
-	else
-		return false;
+	return bOk;
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -454,43 +459,50 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		if (CLIPDATA == tree.GetName())
 		{
 			ARBDogRun* pRun = new ARBDogRun();
-			if (pRun && pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
+			if (pRun)
 			{
-				bLoaded = true;
-				std::vector<CVenueFilter> venues;
-				CAgilityBookOptions::GetFilterVenue(venues);
-				ARBDogRun* pNewRun = pTrial->GetRuns().AddRun(pRun);
-				if (!pNewRun)
+				std::string err;
+				if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
-					bLoaded = false;
-					AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
-				}
-				else
-				{
-					pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-					m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pNewRun);
-					HTREEITEM hItem = m_pTree->InsertRun(pTrial, pNewRun, GetDataTrial()->GetHTreeItem());
-					bool bOk = true;
-					if (NULL == hItem)
+					bLoaded = true;
+					std::vector<CVenueFilter> venues;
+					CAgilityBookOptions::GetFilterVenue(venues);
+					ARBDogRun* pNewRun = pTrial->GetRuns().AddRun(pRun);
+					if (!pNewRun)
 					{
-						bOk = false;
-						if (CAgilityBookOptions::IsFilterEnabled())
-							AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
+						bLoaded = false;
+						AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
 					}
 					else
 					{
-						m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-						if (bTreeSelectionSet)
-							*bTreeSelectionSet = true;
-					}
-					if (bOk)
-					{
-						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pNewRun);
+						HTREEITEM hItem = m_pTree->InsertRun(pTrial, pNewRun, GetDataTrial()->GetHTreeItem());
+						bool bOk = true;
+						if (NULL == hItem)
+						{
+							bOk = false;
+							if (CAgilityBookOptions::IsFilterEnabled())
+								AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
+						}
+						else
+						{
+							m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+							if (bTreeSelectionSet)
+								*bTreeSelectionSet = true;
+						}
+						if (bOk)
+						{
+							m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						}
 					}
 				}
+				else if (0 < err.length())
+					AfxMessageBox(err.c_str(), MB_ICONWARNING);
+				pRun->Release();
+				pRun = NULL;
 			}
-			pRun->Release();
 		}
 	}
 	else if (pDog
@@ -499,41 +511,47 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		if (CLIPDATA == tree.GetName())
 		{
 			ARBDogTrial* pTrial = new ARBDogTrial();
-			if (pTrial && pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
+			if (pTrial)
 			{
-				bLoaded = true;
-				std::vector<CVenueFilter> venues;
-				CAgilityBookOptions::GetFilterVenue(venues);
-				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pTrial);
-				if (!pNewTrial)
+				std::string err;
+				if (pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
-					bLoaded = false;
-					AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
-				}
-				else
-				{
-					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-					m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
-					HTREEITEM hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetHTreeItem());
-					bool bOk = true;
-					if (NULL == hItem)
+					bLoaded = true;
+					std::vector<CVenueFilter> venues;
+					CAgilityBookOptions::GetFilterVenue(venues);
+					ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pTrial);
+					if (!pNewTrial)
 					{
-						bOk = false;
-						AfxMessageBox(IDS_CREATETRIAL_FILTERED, MB_ICONSTOP);
+						bLoaded = false;
+						AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
 					}
 					else
 					{
-						m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-						if (bTreeSelectionSet)
-							*bTreeSelectionSet = true;
-					}
-					if (bOk)
-					{
-						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+						HTREEITEM hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetHTreeItem());
+						bool bOk = true;
+						if (NULL == hItem)
+						{
+							bOk = false;
+							AfxMessageBox(IDS_CREATETRIAL_FILTERED, MB_ICONSTOP);
+						}
+						else
+						{
+							m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+							if (bTreeSelectionSet)
+								*bTreeSelectionSet = true;
+						}
+						if (bOk)
+						{
+							m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+						}
 					}
 				}
+				else if (0 < err.length())
+					AfxMessageBox(err.c_str(), MB_ICONWARNING);
+				pTrial->Release();
 			}
-			pTrial->Release();
 		}
 	}
 	return bLoaded;

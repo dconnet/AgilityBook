@@ -110,11 +110,12 @@ size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBInfoJudge::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eNotFound == inTree.GetAttrib(ATTRIB_JUDGEINFO_NAME, m_Name))
 	{
-		ErrorMissingAttribute(TREE_JUDGEINFO, ATTRIB_JUDGEINFO_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_JUDGEINFO, ATTRIB_JUDGEINFO_NAME);
 		return false;
 	}
 	m_Comment = inTree.GetValue();

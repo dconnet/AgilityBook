@@ -105,19 +105,20 @@ size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 
 bool ARBConfigOtherPoints::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME);
 		return false;
 	}
 	std::string attrib;
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
-		ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT);
+		ioErrMsg += ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT);
 		return false;
 	}
 	if (attrib == "All")
@@ -134,7 +135,7 @@ bool ARBConfigOtherPoints::Load(
 		msg += attrib;
 		msg += "\n";
 		msg += VALID_VALUES_OTHERPT;
-		ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str());
 		return false;
 	}
 	m_Desc = inTree.GetValue();

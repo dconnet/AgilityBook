@@ -111,7 +111,8 @@ size_t ARBDogNotes::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBDogNotes::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{

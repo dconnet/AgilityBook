@@ -227,14 +227,14 @@ public:
 	 * @retval true File successfully loaded.
 	 * @retval false File failed to load.
 	 */
-	bool LoadXMLBuffer(const char* inData, const unsigned int nData);
+	bool LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg);
 	/**
 	 * Populate this element from the given file.
 	 * @param inFileName XML file to load.
 	 * @retval true File successfully loaded.
 	 * @retval false File failed to load.
 	 */
-	bool LoadXMLFile(const char* inFileName);
+	bool LoadXMLFile(const char* inFileName, std::string& ioErrMsg);
 	/**
 	 * Save this element to the given output stream.
 	 * @param outStream Stream to write tree to.
@@ -245,7 +245,7 @@ public:
 	bool SaveXML(std::ostream& outStream, const std::string* inDTD = NULL) const;
 
 private:
-	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource);
+	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource, std::string& ioErrMsg);
 	typedef std::map<std::string, std::string> CAttributes;
 	std::string m_Name;
 	std::string m_Value;

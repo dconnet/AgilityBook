@@ -461,19 +461,34 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 #else
 	CStringA source(lpszPathName);
 #endif
+	std::string err;
 	CElement tree;
 	// Translate the XML to a tree form.
-	if (!tree.LoadXMLFile((const char*)source))
+	if (!tree.LoadXMLFile((const char*)source, err))
 	{
 		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
-		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
+		CString msg;
+		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+		if (0 < err.length())
+		{
+			msg += "\n\n";
+			msg += err.c_str();
+		}
+		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 		return FALSE;
 	}
 	// Translate the tree to a class structure.
-	if (!m_Records.Load(tree))
+	if (!m_Records.Load(tree, err))
 	{
 		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
-		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
+		CString msg;
+		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+		if (0 < err.length())
+		{
+			msg += "\n\n";
+			msg += err.c_str();
+		}
+		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 		return FALSE;
 	}
 	SortDates();

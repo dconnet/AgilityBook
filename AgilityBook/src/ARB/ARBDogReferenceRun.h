@@ -59,7 +59,8 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	ARB_Q GetQ() const;

@@ -123,12 +123,13 @@ size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBTraining::Load(
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
 	case CElement::eNotFound:
-		ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE);
+		ioErrMsg += ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE);
 		return false;
 	case CElement::eInvalidValue:
 		{
@@ -136,7 +137,7 @@ bool ARBTraining::Load(
 			inTree.GetAttrib(ATTRIB_TRAINING_DATE, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str());
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str());
 		}
 		return false;
 	}

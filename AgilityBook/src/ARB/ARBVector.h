@@ -199,13 +199,14 @@ public:
 	 * Load the information from XML (the tree).
 	 * @param inTree Actual data to load (not the parent as it is during Save).
 	 * @param inVersion Version of .arb file (for backwards compatibility).
+	 * @param ioErrMsg Error message on failure.
 	 * @retval true Successfully loaded.
-	 * @retval false Unable to load (an error message is generated).
+	 * @retval false Unable to load
 	 */
-	bool Load(const CElement& inTree, const ARBVersion& inVersion)
+	bool Load(const CElement& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
 	{
 		ARBThing* thing = new ARBThing();
-		if (!thing->Load(inTree, inVersion))
+		if (!thing->Load(inTree, inVersion, ioErrMsg))
 		{
 			thing->Release();
 			return false;
@@ -227,13 +228,14 @@ public:
 	 * @param inConfig Configuration information to verify data to load against.
 	 * @param inTree Actual data to load (not the parent as it is during Save).
 	 * @param inVersion Version of .arb file (for backwards compatibility).
+	 * @param ioErrMsg Error message on failure.
 	 * @retval true Successfully loaded.
 	 * @retval false Unable to load (an error message is generated).
 	 */
-	bool Load(const ARBConfig& inConfig, const CElement& inTree, const ARBVersion& inVersion)
+	bool Load(const ARBConfig& inConfig, const CElement& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
 	{
 		ARBThing* thing = new ARBThing();
-		if (!thing->Load(inConfig, inTree, inVersion))
+		if (!thing->Load(inConfig, inTree, inVersion, ioErrMsg))
 		{
 			thing->Release();
 			return false;

@@ -62,7 +62,8 @@ public:
 
 	bool Load(
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	std::string Update(int indent, const ARBConfigDivision* inDiv);
@@ -118,7 +119,8 @@ class ARBConfigDivisionList : public ARBVector<ARBConfigDivision>
 public:
 	bool Load(
 		const CElement& tree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 
 	bool operator==(const ARBConfigDivisionList& rhs) const
 	{

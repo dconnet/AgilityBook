@@ -120,19 +120,20 @@ size_t ARBDogRunPartner::GetSearchStrings(std::set<std::string>& ioStrings) cons
 bool ARBDogRunPartner::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())
 	{
-		ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER);
+		ioErrMsg += ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER);
 		return false;
 	}
 
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
 	|| 0 == m_Dog.length())
 	{
-		ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG);
+		ioErrMsg += ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG);
 		return false;
 	}
 

@@ -57,7 +57,8 @@ public:
 
 	bool Load(
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	const std::string& GetName() const;

@@ -61,7 +61,8 @@ public:
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
 	std::string Update(int indent, const ARBConfigEvent* inEventNew);
@@ -141,7 +142,8 @@ public:
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
 		const CElement& inTree,
-		const ARBVersion& inVersion);
+		const ARBVersion& inVersion,
+		std::string& ioErrMsg);
 
 	bool operator==(const ARBConfigEventList& rhs) const
 	{

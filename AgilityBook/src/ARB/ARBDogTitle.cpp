@@ -116,26 +116,27 @@ size_t ARBDogTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBDogTitle::Load(
 	const ARBConfig& inConfig,
 	const CElement& inTree,
-	const ARBVersion& inVersion)
+	const ARBVersion& inVersion,
+	std::string& ioErrMsg)
 {
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE);
+		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE);
 		return false;
 	}
 
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME);
+		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME);
 		return false;
 	}
 
 	switch (inTree.GetAttrib(ATTRIB_TITLE_DATE, m_Date))
 	{
 	case CElement::eNotFound:
-		ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE);
+		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE);
 		return false;
 	case CElement::eInvalidValue:
 		{
@@ -143,14 +144,14 @@ bool ARBDogTitle::Load(
 			inTree.GetAttrib(ATTRIB_TITLE_DATE, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str());
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str());
 			return false;
 		}
 	}
 
 	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
-		ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL);
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL);
 		return false;
 	}
 
@@ -160,7 +161,7 @@ bool ARBDogTitle::Load(
 		msg += m_Venue;
 		msg += "/";
 		msg += m_Name;
-		ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str());
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str());
 		return false;
 	}
 

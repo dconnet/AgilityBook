@@ -79,7 +79,6 @@ const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// These error routines centralize platform dependent code.
 
 /**
  * Print a warning that the document can be read, but saving it may cause the
@@ -93,7 +92,7 @@ bool WarningNewerDocStructure()
 	return IDYES == AfxMessageBox(WARNING_NEWER_DOC, MB_ICONEXCLAMATION | MB_YESNO);
 }
 
-void ErrorInvalidDocStructure(const char* const inMsg)
+std::string ErrorInvalidDocStructure(const char* const inMsg)
 {
 	std::string str(INVALID_DOC_STRUCTURE);
 	if (inMsg)
@@ -101,14 +100,10 @@ void ErrorInvalidDocStructure(const char* const inMsg)
 		str += ": ";
 		str += inMsg;
 	}
-#ifdef WIN32
-	AfxMessageBox(str.c_str());
-#else
-	cerr << str.c_str() << endl;
-#endif
+	return str;
 }
 
-void ErrorMissingAttribute(
+std::string ErrorMissingAttribute(
 	const char* const inElement,
 	const char* const inAttrib,
 	const char* const inMsg)
@@ -123,14 +118,10 @@ void ErrorMissingAttribute(
 		str += "\n";
 		str += inMsg;
 	}
-#ifdef WIN32
-	AfxMessageBox(str.c_str());
-#else
-	cerr << str.c_str() << endl;
-#endif
+	return str;
 }
 
-void ErrorInvalidAttributeValue(
+std::string ErrorInvalidAttributeValue(
 	const char* const inElement,
 	const char* const inAttrib,
 	const char* const inMsg)
@@ -145,11 +136,7 @@ void ErrorInvalidAttributeValue(
 		str += "\n";
 		str += inMsg;
 	}
-#ifdef WIN32
-	AfxMessageBox(str.c_str());
-#else
-	cerr << str.c_str() << endl;
-#endif
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -177,7 +164,8 @@ bool ARBAgilityRecordBook::Load(
 	bool inTraining,
 	bool inConfig,
 	bool inInfo,
-	bool inDogs)
+	bool inDogs,
+	std::string& ioErrMsg)
 {
 	// Get the records ready.
 	clear();
@@ -186,14 +174,14 @@ bool ARBAgilityRecordBook::Load(
 	// The root must be TREE_BOOK.
 	if (inTree.GetName() != TREE_BOOK)
 	{
-		ErrorInvalidDocStructure(INVALID_ROOT);
+		ioErrMsg += ErrorInvalidDocStructure(INVALID_ROOT);
 		return false;
 	}
 	// The version of the document must be something we understand.
 	ARBVersion version;
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
-		ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION);
+		ioErrMsg += ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION);
 		return false;
 	}
 	if (version < ARBVersion(1,0) || version > GetCurrentDocVersion())
@@ -205,7 +193,7 @@ bool ARBAgilityRecordBook::Load(
 		}
 		else
 		{
-			ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION);
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION);
 			return false;
 		}
 	}
@@ -223,7 +211,7 @@ bool ARBAgilityRecordBook::Load(
 			if (element.GetName() == TREE_CALENDAR)
 			{
 				// Ignore any errors...
-				m_Calendar.Load(element, version);
+				m_Calendar.Load(element, version, ioErrMsg);
 			}
 		}
 		m_Calendar.sort();
@@ -238,7 +226,7 @@ bool ARBAgilityRecordBook::Load(
 			if (element.GetName() == TREE_TRAINING)
 			{
 				// Ignore any errors...
-				m_Training.Load(element, version);
+				m_Training.Load(element, version, ioErrMsg);
 			}
 		}
 		m_Training.sort();
@@ -257,7 +245,7 @@ bool ARBAgilityRecordBook::Load(
 			{
 				if (-1 != nConfig)
 				{
-					ErrorInvalidDocStructure(INVALID_CONFIG);
+					ioErrMsg += ErrorInvalidDocStructure(INVALID_CONFIG);
 					return false;
 				}
 				nConfig = i;
@@ -266,11 +254,11 @@ bool ARBAgilityRecordBook::Load(
 		// Oops. No config.
 		if (0 > nConfig)
 		{
-			ErrorInvalidDocStructure(MISSING_CONFIG);
+			ioErrMsg += ErrorInvalidDocStructure(MISSING_CONFIG);
 			return false;
 		}
 		// Load the config.
-		else if (!m_Config.Load(inTree.GetElement(nConfig), version))
+		else if (!m_Config.Load(inTree.GetElement(nConfig), version, ioErrMsg))
 		{
 			// Error message was printed within.
 			return false;
@@ -287,7 +275,7 @@ bool ARBAgilityRecordBook::Load(
 				{
 					// If this fails, keep going.
 					// We'll try to load whatever we can.
-					m_Dogs.Load(m_Config, element, version);
+					m_Dogs.Load(m_Config, element, version, ioErrMsg);
 				}
 			}
 		}
@@ -300,7 +288,7 @@ bool ARBAgilityRecordBook::Load(
 		if (0 <= i)
 		{
 			// Ignore any errors...
-			m_Info.Load(inTree.GetElement(i), version);
+			m_Info.Load(inTree.GetElement(i), version, ioErrMsg);
 		}
 	}
 
