@@ -1,7 +1,10 @@
-1/19/2004: v0.9.6.8: In development
+1/21/2004: v0.9.6.8
 - Bumped file version to 8.2:
   - Added a new "Long Name" to the titles configuration.
+  - Added 'Action' items to Configuration.
 - New features / Enhancements:
+  - Added AAC and AMBOR configurations.
+  - Updated USDAA configuration.
   - GetAllClubs/Locations now includes calendar entries.
   - Implemented column customizing in Tree, Runs, Calendar and TrainingLog.
   - Implemented importing from a spreadsheet.
@@ -9,8 +12,10 @@
   - The configuration and new title dialogs use the new long name (if available)
   - When renaming a title in the configuration and the new name already exists,
     ask the user if they actually want to merge the existing titles into that
-	name. This allows us to change the name of a title non-destructively (though
-	it requires some work on the users part to rename)
+    name. This allows us to change the name of a title non-destructively (though
+    it requires some work on the users part to rename)
+    - As an addition to this, added the ability to merge items when doing
+      a configuration update.
 - Bug fixes
   - Exporting the training log for import into a spreadsheet was wrong.
   - The points view didn't generate a venue header consistently if a venue
@@ -37,8 +42,8 @@
   - Added some new accelerators:
     - Ctrl+E: Import/Export Wizard
     - Ctrl+F: Find (Find does not work in the points or calendar view)
-	- F3: Find Next
-	- Shift+F3: Find Previous
+    - F3: Find Next
+    - Shift+F3: Find Previous
     - Ctrl+J: Judge's comments dialog
     - Ctrl+R: Create a new run
     - F7: Viewing options dialog
