@@ -116,6 +116,7 @@
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
 #define ATTRIB_DOG_CALLNAME					"CallName"
 #define ATTRIB_DOG_DOB						"DOB"
+#define ATTRIB_DOG_DECEASED					"Deceased"
 #define ATTRIB_REG_NUM_VENUE				"Venue"
 #define ATTRIB_REG_NUM_HEIGHT				"Height"
 #define ATTRIB_REG_NUM_RECEIVED				"isReceived"

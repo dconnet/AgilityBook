@@ -32,6 +32,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-18 DRC Added a deceased date. While this does change the format
+ *                of the file, it's backwards compatible, so it doesn't warrant
+ *                a file version change.
  * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
@@ -55,6 +58,7 @@ static char THIS_FILE[] = __FILE__;
 ARBDog::ARBDog()
 	: m_CallName()
 	, m_DOB()
+	, m_Deceased()
 	, m_RegName()
 	, m_Breed()
 	, m_Note()
@@ -67,6 +71,7 @@ ARBDog::ARBDog()
 ARBDog::ARBDog(const ARBDog& rhs)
 	: m_CallName(rhs.m_CallName)
 	, m_DOB(rhs.m_DOB)
+	, m_Deceased(rhs.m_Deceased)
 	, m_RegName(rhs.m_RegName)
 	, m_Breed(rhs.m_Breed)
 	, m_Note(rhs.m_Note)
@@ -86,6 +91,7 @@ ARBDog& ARBDog::operator=(const ARBDog& rhs)
 	{
 		m_CallName = rhs.m_CallName;
 		m_DOB = rhs.m_DOB;
+		m_Deceased = rhs.m_Deceased;
 		m_RegName = rhs.m_RegName;
 		m_Breed = rhs.m_Breed;
 		m_Note = rhs.m_Note;
@@ -100,6 +106,7 @@ bool ARBDog::operator==(const ARBDog& rhs) const
 {
 	return m_CallName == rhs.m_CallName
 		&& m_DOB == rhs.m_DOB
+		&& m_Deceased == rhs.m_Deceased
 		&& m_RegName == rhs.m_RegName
 		&& m_Breed == rhs.m_Breed
 		&& m_Note == rhs.m_Note
@@ -132,6 +139,16 @@ bool ARBDog::Load(
 		std::string msg(INVALID_DATE);
 		msg += attrib;
 		ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str());
+		return false;
+	}
+
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
+	{
+		std::string attrib;
+		inTree.GetAttrib(ATTRIB_DOG_DECEASED, attrib);
+		std::string msg(INVALID_DATE);
+		msg += attrib;
+		ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str());
 		return false;
 	}
 
@@ -177,6 +194,8 @@ bool ARBDog::Save(CElement& ioTree) const
 	CElement& dog = ioTree.AddElement(TREE_DOG);
 	dog.AddAttrib(ATTRIB_DOG_CALLNAME, m_CallName);
 	dog.AddAttrib(ATTRIB_DOG_DOB, m_DOB);
+	if (m_Deceased.IsValid())
+		dog.AddAttrib(ATTRIB_DOG_DECEASED, m_Deceased);
 	if (0 < m_RegName.length())
 	{
 		CElement& element = dog.AddElement(TREE_REGNAME);

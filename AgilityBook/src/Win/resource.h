@@ -84,6 +84,7 @@
 #define IDC_REG_NUMS                    1032
 #define IDC_NOTES                       1033
 #define IDC_DATE                        1034
+#define IDC_DECEASED                    1034
 #define IDC_REG_NUM                     1035
 #define IDC_LOCATION                    1036
 #define IDC_CLUB_NEW                    1037
@@ -181,6 +182,7 @@
 #define IDC_FILENAME                    1129
 #define IDC_DROP_FRACTIONS              1130
 #define IDC_VERIFIED                    1131
+#define IDC_IS_DECEASED                 1132
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002
@@ -345,7 +347,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        178
 #define _APS_NEXT_COMMAND_VALUE         32804
-#define _APS_NEXT_CONTROL_VALUE         1132
+#define _APS_NEXT_CONTROL_VALUE         1133
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
 #include "stdafx.h"
@@ -190,7 +191,9 @@ void CDlgDog::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDog)
 	DDX_Text(pDX, IDC_CALLNAME, m_CallName);
-	DDX_Control(pDX, IDC_DOB, m_ctrlDate);
+	DDX_Control(pDX, IDC_DOB, m_ctrlDateDOB);
+	DDX_Control(pDX, IDC_IS_DECEASED, m_ctrlDeceased);
+	DDX_Control(pDX, IDC_DECEASED, m_ctrlDateDeceased);
 	DDX_Text(pDX, IDC_BREED, m_Breed);
 	DDX_Control(pDX, IDC_AGE_TEXT, m_ctrlAge);
 	DDX_Text(pDX, IDC_REG_NAME, m_RegName);
@@ -206,13 +209,15 @@ void CDlgDog::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgDog, CDialog)
 	//{{AFX_MSG_MAP(CDlgDog)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOB, OnDatetimechangeDob)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOB, OnDatetimechange)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DECEASED, OnDatetimechange)
+	ON_BN_CLICKED(IDC_IS_DECEASED, OnIsDeceased)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_TITLES, OnColumnclickTitles)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TITLES, OnItemchangedTitles)
 	ON_NOTIFY(NM_DBLCLK, IDC_TITLES, OnDblclkTitles)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TITLES, OnItemchangedTitles)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_REG_NUMS, OnColumnclickRegNums)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_REG_NUMS, OnItemchangedRegNums)
 	ON_NOTIFY(NM_DBLCLK, IDC_REG_NUMS, OnDblclkRegNums)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_REG_NUMS, OnItemchangedRegNums)
 	ON_BN_CLICKED(IDC_TITLE_NEW, OnTitleNew)
 	ON_BN_CLICKED(IDC_TITLE_EDIT, OnTitleEdit)
 	ON_BN_CLICKED(IDC_TITLE_DELETE, OnTitleDelete)
@@ -372,10 +377,12 @@ void CDlgDog::UpdateButtons()
 
 void CDlgDog::UpdateAge()
 {
-	CTime time;
-	m_ctrlDate.GetTime(time);
-	CTime today = CTime::GetCurrentTime();
-	CTimeSpan age = today - time;
+	CTime dob;
+	m_ctrlDateDOB.GetTime(dob);
+	CTime current = CTime::GetCurrentTime();
+	if (BST_CHECKED == m_ctrlDeceased.GetCheck())
+		m_ctrlDateDeceased.GetTime(current);
+	CTimeSpan age = current - dob;
 	CString str;
 	str.Format("%.1f", age.GetDays()/365.0);
 	m_ctrlAge.SetWindowText(str);
@@ -395,8 +402,18 @@ BOOL CDlgDog::OnInitDialog()
 		dob = CTime(m_pDog->GetDOB().GetDate());
 	else
 		dob = CTime::GetCurrentTime();
-	m_ctrlDate.SetTime(&dob);
-	UpdateAge();
+	m_ctrlDateDOB.SetTime(&dob);
+	int nCheck = BST_UNCHECKED;
+	if (m_pDog->GetDeceased().IsValid())
+	{
+		nCheck = BST_CHECKED;
+		dob = CTime(m_pDog->GetDeceased().GetDate());
+	}
+	else
+		dob = CTime::GetCurrentTime();
+	m_ctrlDeceased.SetCheck(nCheck);
+	m_ctrlDateDeceased.SetTime(&dob);
+	OnIsDeceased(); // Fixes visibility of date and calls UpdateAge()
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
@@ -430,10 +447,19 @@ BOOL CDlgDog::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgDog::OnDatetimechangeDob(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDog::OnDatetimechange(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	UpdateAge();
 	*pResult = 0;
+}
+
+void CDlgDog::OnIsDeceased()
+{
+	if (BST_CHECKED == m_ctrlDeceased.GetCheck())
+		m_ctrlDateDeceased.ShowWindow(SW_SHOW);
+	else
+		m_ctrlDateDeceased.ShowWindow(SW_HIDE);
+	UpdateAge();
 }
 
 void CDlgDog::OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult)
@@ -566,11 +592,19 @@ void CDlgDog::OnOK()
 	}
 
 	CTime time;
-	m_ctrlDate.GetTime(time);
+	m_ctrlDateDOB.GetTime(time);
 	ARBDate date(time.GetYear(), time.GetMonth(), time.GetDay());
+
+	ARBDate deceased;
+	if (BST_CHECKED == m_ctrlDeceased.GetCheck())
+	{
+		m_ctrlDateDeceased.GetTime(time);
+		deceased = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+	}
 
 	m_pDog->SetCallName((LPCSTR)m_CallName);
 	m_pDog->SetDOB(date);
+	m_pDog->SetDeceased(deceased);
 	m_pDog->SetBreed((LPCSTR)m_Breed);
 	m_pDog->SetRegisteredName((LPCSTR)m_RegName);
 	m_pDog->GetTitles() = m_Titles;
