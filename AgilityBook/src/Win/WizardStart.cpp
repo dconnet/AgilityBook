@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2004-01-21 DRC Implemented Action items in configuration update.
  * @li 2003-12-10 DRC Created
  */
@@ -308,6 +309,8 @@ BOOL CWizardStart::OnWizardFinish()
 						ARBAgilityRecordBook book;
 						if (book.Load(tree, true, false, false, false, false, err))
 						{
+							if (0 < err.length())
+								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
 							int count = 0;
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
 							{
@@ -393,6 +396,8 @@ BOOL CWizardStart::OnWizardFinish()
 						ARBAgilityRecordBook book;
 						if (book.Load(tree, false, true, false, false, false, err))
 						{
+							if (0 < err.length())
+								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
 							int count = 0;
 							for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 							{

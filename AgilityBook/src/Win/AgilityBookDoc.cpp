@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-10 DRC Moved import/export into a wizard.
  * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  * @li 2003-10-31 DRC Added import/export calendar, export config.
@@ -491,6 +492,12 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		}
 		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 		return FALSE;
+	}
+	else if (0 < err.length())
+	{
+		CString msg("Warning: Some non-fatal messages were generated while loading the file:\n\n");
+		msg += err.c_str();
+		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	SortDates();
 
