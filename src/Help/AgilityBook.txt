@@ -223,6 +223,9 @@ Copy the selected item.
 .topic HIDC_CONFIG_VENUE_DELETE
 Delete the selected item.
 
+.topic HIDC_CONFIG_VENUE_LONGNAME
+Full name of the Venue.
+
 .topic HIDC_CONFIG_VENUE_DESC
 Description of the venue.
 
