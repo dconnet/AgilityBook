@@ -568,6 +568,7 @@ HTREEITEM CAgilityBookTree::InsertDog(ARBDog* pDog, bool bSelect)
 		reinterpret_cast<LPARAM>(pDataDog),
 		TVI_ROOT,
 		TVI_LAST);
+	// Note, the text callback will occur BEFORE we make the next call!
 	pDataDog->SetHTreeItem(hItem);
 	for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 		iterTrial != pDog->GetTrials().end();
@@ -596,6 +597,7 @@ HTREEITEM CAgilityBookTree::InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent)
 		reinterpret_cast<LPARAM>(pDataTrial),
 		hParent,
 		TVI_LAST);
+	// Note, the text callback will occur BEFORE we make the next call!
 	pDataTrial->SetHTreeItem(hTrial);
 	for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 		iterRun != pTrial->GetRuns().end();
@@ -619,6 +621,7 @@ HTREEITEM CAgilityBookTree::InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTRE
 		reinterpret_cast<LPARAM>(pDataRun),
 		hParent,
 		TVI_LAST);
+	// Note, the text callback will occur BEFORE we make the next call!
 	pDataRun->SetHTreeItem(hRun);
 	return hRun;
 }
