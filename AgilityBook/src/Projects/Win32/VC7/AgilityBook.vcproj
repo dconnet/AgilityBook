@@ -616,6 +616,12 @@
 				RelativePath="..\..\..\ARB\ARBConfig.h">
 			</File>
 			<File
+				RelativePath="..\..\..\ARB\ARBConfigAction.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\ARB\ARBConfigAction.h">
+			</File>
+			<File
 				RelativePath="..\..\..\ARB\ARBConfigDivision.cpp">
 			</File>
 			<File

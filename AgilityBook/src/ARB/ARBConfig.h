@@ -37,6 +37,7 @@
  * @li 2003-10-22 DRC Added static GetDTD() method.
  */
 
+#include "ARBConfigAction.h"
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
@@ -74,6 +75,7 @@ public:
 
 	std::string Update(int indent, const ARBConfig& inConfigNew);
 
+	const ARBConfigActionList& GetActions() const;
 	const ARBConfigVenueList& GetVenues() const;
 	ARBConfigVenueList& GetVenues();
 	const ARBConfigFaultList& GetFaults() const;
@@ -82,10 +84,16 @@ public:
 	ARBConfigOtherPointsList& GetOtherPoints();
 
 private:
+	ARBConfigActionList m_Actions;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;
 };
+
+inline const ARBConfigActionList& ARBConfig::GetActions() const
+{
+	return m_Actions;
+}
 
 inline const ARBConfigVenueList& ARBConfig::GetVenues() const
 {

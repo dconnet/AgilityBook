@@ -643,6 +643,14 @@ SOURCE=..\..\..\ARB\ARBConfig.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\ARB\ARBConfigAction.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigAction.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\ARB\ARBConfigDivision.cpp
 # End Source File
 # Begin Source File

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DefaultConfig Book="8.2">
 	<Configuration>
+		<Action Venue="USDAA" Verb="RenameTitle" Old="ADCh" New="ADCH" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PDI" New="PD1" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PDII" New="PD2" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PDIII" New="PD3" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PJ" New="PJ3" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PG" New="PG3" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PS" New="PK3" />
+		<Action Venue="USDAA" Verb="RenameTitle" Old="PJ" New="PJ3" />
 		<Venue Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
 			<Division Name="ISC">

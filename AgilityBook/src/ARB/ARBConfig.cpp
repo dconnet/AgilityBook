@@ -143,7 +143,12 @@ bool ARBConfig::Load(
 	{
 		const CElement& element = inTree.GetElement(i);
 		const std::string& name = element.GetName();
-		if (name == TREE_VENUE)
+		if (name == TREE_ACTION)
+		{
+			// Ignore any errors...
+			m_Actions.Load(element, inVersion, ioErrMsg);
+		}
+		else if (name == TREE_VENUE)
 		{
 			// Ignore any errors...
 			m_Venues.Load(*this, element, inVersion, ioErrMsg);
@@ -168,6 +173,8 @@ bool ARBConfig::Load(
 bool ARBConfig::Save(CElement& ioTree) const
 {
 	CElement& config = ioTree.AddElement(TREE_CONFIG);
+	if (!m_Actions.Save(config))
+		return false;
 	if (!m_Venues.Save(config))
 		return false;
 	if (!m_FaultTypes.Save(config))

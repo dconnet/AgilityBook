@@ -7,7 +7,7 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-01-19 DRC Development: File version 8.2
+2004-01-21 DRC Development: File version 8.2
 2003-12-28 DRC File version 8.1
 2003-12-13 DRC File version 8.0
 2003-10-15 DRC File version 7
@@ -55,7 +55,26 @@ This section defines the rules for the training log.
 <!--
 This section defines the rules of each venue.
 -->
-<!ELEMENT Configuration (Venue*, FaultType*, OtherPts*) >
+<!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
+
+<!--
+This is a special element that is applied to the old configuration before
+we import the new one (where this resides). Currently, it is used only
+for renaming titles.
+ Verb: Supported actions (determines usage of other attributes):
+  'RenameTitle':
+    Venue: Venue that contains title
+    OldName: Title to be renamed.
+    NewName: New name.
+ pcdata: currently unused, defined to allow future expansion.
+-->
+<!ELEMENT Action (#PCDATA) >
+	<!ATTLIST Action
+		Verb CDATA #REQUIRED
+		Venue CDATA #IMPLIED
+		OldName CDATA #IMPLIED
+		NewName CDATA #IMPLIED
+		>
 
 <!--
 There will be a number of Fault Types that are pre-defined. But in general,
