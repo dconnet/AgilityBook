@@ -81,7 +81,8 @@ public:
 	// Insert data into the safe array.
 	virtual bool InsertArrayData(long inRow, long inCol, const CString& inData);
 	// Copy the safe array to excel (safe array is reset)
-	virtual bool ExportDataArray();
+	virtual bool ExportDataArray(long inRowTop = 0, long inColLeft = 0);
+	virtual bool InsertData(long nRow, long nCol, const CString& inData);
 	virtual bool InsertFormula(long inRowFrom, long inColFrom,
 		long inRowTo, long inColTo,
 		const CString& inFormula);
@@ -157,15 +158,15 @@ bool CWizardExcelExportImpl::InsertArrayData(long inRow, long inCol, const CStri
 	return true;
 }
 
-bool CWizardExcelExportImpl::ExportDataArray()
+bool CWizardExcelExportImpl::ExportDataArray(long inRowTop, long inColLeft)
 {
 	if (!ArrayOkay())
 		return false;
 
 	CString cell1, cell2;
-	if (!CWizardExcel::GetRowCol(0, 0, cell1))
+	if (!CWizardExcel::GetRowCol(inRowTop, inColLeft, cell1))
 		return false;
-	if (!CWizardExcel::GetRowCol(m_Rows-1, m_Cols-1, cell2))
+	if (!CWizardExcel::GetRowCol(inRowTop + m_Rows - 1, inColLeft + m_Cols - 1, cell2))
 		return false;
 
 	m_App.put_UserControl(FALSE);
@@ -174,7 +175,7 @@ bool CWizardExcelExportImpl::ExportDataArray()
 	range.put_Value2(COleVariant(m_Array));
 	m_Array.Detach();
 
-	CWizardExcel::GetRowCol(0, m_Cols-1, cell2);
+	CWizardExcel::GetRowCol(inRowTop, inColLeft + m_Cols - 1, cell2);
 	range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
 	Range cols = range.get_EntireColumn();
 	cols.AutoFit();
@@ -183,6 +184,19 @@ bool CWizardExcelExportImpl::ExportDataArray()
 	m_App.put_Visible(TRUE);
 	m_App.put_UserControl(TRUE);
 
+	return true;
+}
+
+bool CWizardExcelExportImpl::InsertData(long inRow, long inCol, const CString& inData)
+{
+	CString cell1;
+	if (!CWizardExcel::GetRowCol(inRow, inCol, cell1))
+		return false;
+	Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell1));
+	range.put_Value2(COleVariant(inData));
+	m_App.put_UserControl(FALSE);
+	m_App.put_Visible(TRUE);
+	m_App.put_UserControl(TRUE);
 	return true;
 }
 
