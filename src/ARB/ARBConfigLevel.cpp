@@ -224,7 +224,7 @@ ARBConfigLevel* ARBConfigLevelList::AddLevel(const std::string& inName)
 		return NULL;
 	if (FindTrueLevel(inName))
 		return NULL;
-	ARBConfigLevel* pLevel = new ARBConfigLevel;
+	ARBConfigLevel* pLevel = new ARBConfigLevel();
 	pLevel->SetName(inName);
 	push_back(pLevel);
 	return pLevel;

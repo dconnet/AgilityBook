@@ -204,7 +204,7 @@ public:
 	 */
 	bool Load(const CElement& inTree, const ARBVersion& inVersion)
 	{
-		ARBThing* thing = new ARBThing;
+		ARBThing* thing = new ARBThing();
 		if (!thing->Load(inTree, inVersion))
 		{
 			thing->Release();
@@ -232,7 +232,7 @@ public:
 	 */
 	bool Load(const ARBConfig& inConfig, const CElement& inTree, const ARBVersion& inVersion)
 	{
-		ARBThing* thing = new ARBThing;
+		ARBThing* thing = new ARBThing();
 		if (!thing->Load(inConfig, inTree, inVersion))
 		{
 			thing->Release();

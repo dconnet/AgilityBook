@@ -182,7 +182,7 @@ ARBConfigTitle* ARBConfigTitleList::AddTitle(const std::string& inName)
 		return NULL;
 	if (FindTitle(inName))
 		return NULL;
-	ARBConfigTitle* pTitle = new ARBConfigTitle;
+	ARBConfigTitle* pTitle = new ARBConfigTitle();
 	pTitle->SetName(inName);
 	push_back(pTitle);
 	return pTitle;

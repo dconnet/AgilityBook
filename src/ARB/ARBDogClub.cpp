@@ -209,7 +209,7 @@ const ARBDogClub* ARBDogClubList::FindVenue(const std::string& inVenue) const
 
 ARBDogClub* ARBDogClubList::AddClub(const std::string& inName, const std::string& inVenue)
 {
-	ARBDogClub* pClub = new ARBDogClub;
+	ARBDogClub* pClub = new ARBDogClub();
 	pClub->SetName(inName);
 	pClub->SetVenue(inVenue);
 	push_back(pClub);

@@ -234,7 +234,7 @@ BOOL CListView2::OnPreparePrinting(CPrintInfo* pInfo)
 
 void CListView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
-	CListPrintData *pData = new CListPrintData;
+	CListPrintData *pData = new CListPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
 	// Set the font

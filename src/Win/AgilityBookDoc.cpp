@@ -574,7 +574,7 @@ void CAgilityBookDoc::OnEditJudges()
 
 void CAgilityBookDoc::OnAgilityNewDog()
 {
-	ARBDog* dog = new ARBDog;
+	ARBDog* dog = new ARBDog();
 	CDlgDog dlg(GetConfig(), dog);
 	if (IDOK == dlg.DoModal())
 	{
@@ -603,7 +603,7 @@ void CAgilityBookDoc::OnAgilityNewDog()
 
 void CAgilityBookDoc::OnAgilityNewCalendar()
 {
-	ARBCalendar* cal = new ARBCalendar;
+	ARBCalendar* cal = new ARBCalendar();
 	CDlgCalendar dlg(cal, this);
 	if (IDOK == dlg.DoModal())
 	{

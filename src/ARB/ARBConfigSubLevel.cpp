@@ -123,7 +123,7 @@ ARBConfigSubLevel* ARBConfigSubLevelList::AddSubLevel(const std::string& inName)
 	// The calling function must make sure this name is unique within the division.
 	if (0 == inName.length())
 		return NULL;
-	ARBConfigSubLevel* pLevel = new ARBConfigSubLevel;
+	ARBConfigSubLevel* pLevel = new ARBConfigSubLevel();
 	pLevel->SetName(inName);
 	push_back(pLevel);
 	return pLevel;

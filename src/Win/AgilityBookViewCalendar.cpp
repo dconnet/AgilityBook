@@ -487,7 +487,7 @@ void CAgilityBookViewCalendar::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	CRect r(CPoint(0,0), szDevice);
 	pDC->DPtoLP(r);
 
-	CPrintData* pData = new CPrintData;
+	CPrintData* pData = new CPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 	pData->nEntriesPerPage = abs(r.Height()) / (2 * DAY_BORDER + m_szEntry.cy);
 	pData->sz = CSize(r.Width(), abs(r.Height()));
@@ -880,7 +880,7 @@ void CAgilityBookViewCalendar::OnCalendarEdit()
 
 void CAgilityBookViewCalendar::OnCalendarNew()
 {
-	ARBCalendar* cal = new ARBCalendar;
+	ARBCalendar* cal = new ARBCalendar();
 	if (m_Current.IsValid())
 	{
 		cal->SetStartDate(m_Current);

@@ -672,7 +672,7 @@ void CDlgListCtrl::OnNew()
 		break;
 	case eCalendar:
 		{
-			ARBCalendar* cal = new ARBCalendar;
+			ARBCalendar* cal = new ARBCalendar();
 			cal->SetStartDate(m_Date);
 			cal->SetEndDate(m_Date);
 			CDlgCalendar dlg(cal, m_pDoc);
@@ -721,7 +721,7 @@ void CDlgListCtrl::OnNew()
 
 	case eOtherPoints:
 		{
-			ARBDogRunOtherPoints* pOther = new ARBDogRunOtherPoints;
+			ARBDogRunOtherPoints* pOther = new ARBDogRunOtherPoints();
 			CDlgOtherPoint dlg(*m_pConfig, pOther, this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -743,7 +743,7 @@ void CDlgListCtrl::OnNew()
 
 	case ePartners:
 		{
-			ARBDogRunPartner* partner = new ARBDogRunPartner;
+			ARBDogRunPartner* partner = new ARBDogRunPartner();
 			CDlgPartner dlg(partner, this);
 			if (IDOK == dlg.DoModal())
 			{

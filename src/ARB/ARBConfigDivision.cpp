@@ -235,7 +235,7 @@ bool ARBConfigDivisionList::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	ARBConfigDivision* thing = new ARBConfigDivision;
+	ARBConfigDivision* thing = new ARBConfigDivision();
 	if (!thing->Load(inTree, inVersion))
 	{
 		thing->Release();
@@ -296,7 +296,7 @@ ARBConfigDivision* ARBConfigDivisionList::AddDivision(const std::string& inDiv)
 		return NULL;
 	if (NULL != FindDivision(inDiv))
 		return NULL;
-	ARBConfigDivision* pDiv = new ARBConfigDivision;
+	ARBConfigDivision* pDiv = new ARBConfigDivision();
 	pDiv->SetName(inDiv);
 	push_back(pDiv);
 	return pDiv;
