@@ -40,7 +40,6 @@
  */
 
 #include "stdafx.h"
-#include <afxinet.h>
 #include "AgilityBook.h"
 #include "MainFrm.h"
 #if _MSC_VER < 1300
@@ -54,10 +53,8 @@
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
 #include "Element.h"
-#include "HyperLink.h"
 #include "Splash.h"
 #include "TabView.h"
-#include "VersionNum.h"
 
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLException.hpp>
@@ -189,226 +186,6 @@ void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 		ExpandAll(ctrl, hChildItem, code);
 		hChildItem = ctrl.GetNextItem(hChildItem, TVGN_NEXT);
 	}
-}
-
-bool ReadHttpFile(CString const& inURL, CString& outData)
-{
-	CWaitCursor wait;
-	outData.Empty();
-	try
-	{
-		CInternetSession session("my version");
-		CStdioFile* pFile = session.OpenURL(inURL);
-		if (pFile)
-		{
-			char buffer[1025];
-			UINT nChars;
-			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
-			{
-				buffer[nChars] = 0;
-				outData += buffer;
-			}
-			pFile->Close();
-			delete pFile;
-		}
-		session.Close();
-	}
-	catch (CInternetException* ex)
-	{
-		ex->Delete();
-		outData.Empty();
-	}
-	return (outData.GetLength() > 0);
-}
-
-// The format of the version.txt file is:
-// line 1:
-//  "ARB Version n1.n2.n3.n4"
-// line 2-n: xml (see below)
-
-/**
- * Check the version against the web.
- * @param outData Version info from the web.
- * @param bVerbose Show information dialogs
- * @param bOnOpenDoc We're calling this during a file open.
- * @return <0 failure, 0 Update occurred, >0 Version ok
- */
-static int UpdateVersion(CString& outData, bool bVerbose, bool bOnOpenDoc)
-{
-	CString url;
-	url.LoadString(IDS_HELP_UPDATE);
-	url += "/version.txt";
-	if (!ReadHttpFile(url, outData))
-	{
-		if (bVerbose)
-		{
-			CSplashWnd::HideSplashScreen();
-			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
-		}
-		return -1;
-	}
-
-	// Pretend the version is up-to-date.
-	// Don't worry about the splash screen after this.
-	if (bOnOpenDoc)
-		return 1;
-
-	ARBDate today = ARBDate::Today();
-	CVersionNum verNew(outData);
-	CVersionNum verThis;
-	ASSERT(verThis.Valid());
-	if (!verNew.Valid())
-	{
-		if (bVerbose)
-			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
-		return -1;
-	}
-
-	// If the version has changed, don't bother checking the config.
-	if (verThis < verNew)
-	{
-		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
-		CString ver;
-		ver.FormatMessage(IDS_UPDATE_NEWER_VERSION, (LPCTSTR)verNew.GetVersionString());
-		if (IDYES == AfxMessageBox(ver, MB_ICONQUESTION | MB_YESNO))
-		{
-			CString url;
-			url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
-			int nTab = url.Find('\t');
-			if (0 < nTab)
-				url = url.Mid(nTab+1);
-			CHyperLink::GotoURL(url);
-		}
-		return 0;
-	}
-	AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
-	return 1;
-}
-
-void UpdateVersion()
-{
-	CString data;
-	UpdateVersion(data, false, true);
-}
-
-void UpdateVersion(CAgilityBookDoc* pDoc, bool bOnOpenDoc)
-{
-	CString data;
-	if (0 >= UpdateVersion(data, true, bOnOpenDoc))
-		return;
-	// Only continue if we parsed the version.txt file AND the version
-	// is up-to-date.
-
-	// Skip the first line, that's the version.
-	int n = data.Find('\n');
-	if (0 < n)
-		data = data.Mid(n+1);
-	else
-		data.Empty();
-	if (data.IsEmpty())
-		return;
-	// The rest of the file is xml:
-	// <Data>
-	//   <Config ver="1" file="file">data</Config>
-	// </Data>
-	bool bUpToDate = true;
-	Element tree;
-	std::string errMsg;
-	if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg))
-	{
-		bUpToDate = false;
-		CString msg("Failed to load 'version.txt'.");
-		if (0 < errMsg.length())
-		{
-			msg += "\n\n";
-			msg += errMsg.c_str();
-		}
-		CSplashWnd::HideSplashScreen();
-		AfxMessageBox(msg, MB_ICONEXCLAMATION);
-	}
-	// If the parse was successful, check for the posted config version.
-	else if (tree.GetName() == "Data")
-	{
-		int nConfig = tree.FindElement("Config");
-		if (0 <= nConfig)
-		{
-			Element& config = tree.GetElement(nConfig);
-			short ver;
-			std::string file;
-			if (Element::eFound == config.GetAttrib("ver", ver)
-			&& Element::eFound == config.GetAttrib("file", file))
-			{
-				// Cool! New config!
-				if (ver > pDoc->GetConfig().GetVersion())
-				{
-					bUpToDate = false;
-					std::string note = config.GetValue();
-					CString msg("The configuration has been updated. Would you like to merge the new one with your data?");
-					if (0 < note.length())
-					{
-						// If the info contains a note, append it.
-						// A note will often give a brief description of things
-						// the user must do. For instance, from v4->5, USDAA
-						// titling pts were removed from Tournament Jumpers and
-						// Snooker to allow for non-titling runs. In case the
-						// user saved some that way, we need to warn them.
-						msg += "\n\n";
-						msg += note.c_str();
-					}
-					CSplashWnd::HideSplashScreen();
-					if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
-					{
-						// Load the config.
-						CString url;
-						url.LoadString(IDS_HELP_UPDATE);
-						url += "/";
-						url += file.c_str();
-						CString strConfig;
-						if (ReadHttpFile(url, strConfig))
-						{
-							Element tree;
-							std::string errMsg;
-							if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg))
-							{
-								CString msg("Failed to load '");
-								msg += url;
-								msg += "'.";
-								if (0 < errMsg.length())
-								{
-									msg += "\n\n";
-									msg += errMsg.c_str();
-								}
-								AfxMessageBox(msg, MB_ICONEXCLAMATION);
-							}
-							else if (tree.GetName() == "DefaultConfig")
-							{
-								strConfig.Empty();
-								ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-								tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
-								int nConfig = tree.FindElement(TREE_CONFIG);
-								if (0 <= nConfig)
-								{
-									ARBAgilityRecordBook book;
-									if (!book.GetConfig().Load(tree.GetElement(nConfig), version, errMsg))
-									{
-										if (0 < errMsg.length())
-											AfxMessageBox(errMsg.c_str(), MB_ICONWARNING);
-									}
-									else
-									{
-										pDoc->ImportConfiguration(book.GetConfig());
-										pDoc->SetModifiedFlag(TRUE);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	if (bUpToDate && !bOnOpenDoc)
-		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -602,7 +379,7 @@ BOOL CAgilityBookApp::InitInstance()
 			ARBDate today = ARBDate::Today();
 			date += 30;
 			if (date < today)
-				UpdateVersion();
+				m_UpdateInfo.UpdateVersion();
 		}
 	}
 	return TRUE;

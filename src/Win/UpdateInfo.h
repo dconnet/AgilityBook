@@ -29,42 +29,44 @@
 /**
  * @file
  *
- * @brief interface of the VersionNum class
+ * @brief Parse and cache "version.txt" on www.agilityrecordbook.com
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-04 DRC Created
+ * @li 2004-08-03 DRC Created
  */
 
-class CVersionNum
+#include <string>
+#include "Element.h"
+#include "VersionNum.h"
+class CAgilityBookDoc;
+
+class CUpdateInfo
 {
+protected:
+	friend class CAgilityBookApp;
+
+	CUpdateInfo();
+	bool ReadVersionFile(bool bVerbose);
+	bool UpdateVer();
+
 public:
-	typedef struct
-	{
-		WORD part1;
-		WORD part2;
-		WORD part3;
-		WORD part4;
-	} VERSION_NUMBER;
-
-	CVersionNum(WORD inwLangID = 0, WORD inwCharSet = 0);
 	/**
-	 * Used to translate the "version.txt" on www.agilityrecordbook.com
+	 * Called when the program does its monthly auto-check.
+	 * This only checks program version.
 	 */
-	explicit CVersionNum(CString inVer);
+	void UpdateVersion();
 
-	bool operator==(CVersionNum const& rhs) const;
-	bool operator<(CVersionNum const& rhs) const;
-	bool operator>(CVersionNum const& rhs) const;
-
-	void clear();
-	bool Valid() const						{return m_Valid;}
-	CString GetName() const					{return m_Name;}
-	CString GetVersionString() const;
-	void GetVersion(VERSION_NUMBER& outVer) const; 
+	/**
+	 * Check the configuration. This will also check the program version.
+	 * @param pDoc Document to check configuration against.
+	 * @param bOnOpenDoc When true, we will only check cached info.
+	 */
+	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool bOnOpenDoc = false);
 
 private:
-	bool m_Valid;
-	CString m_Name;
-	VERSION_NUMBER m_Version;
+	CVersionNum m_VersionNum;
+	short m_VerConfig;
+	std::string m_FileName;
+	std::string m_InfoMsg;
 };

@@ -395,6 +395,10 @@ SOURCE=..\..\..\Win\TabView.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\UpdateInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\VersionNum.cpp
 # End Source File
 # Begin Source File
@@ -720,6 +724,10 @@ SOURCE=..\..\..\stdafx.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\TabView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\UpdateInfo.h
 # End Source File
 # Begin Source File
 

@@ -41,12 +41,15 @@
 #endif
 
 #include "resource.h"       // main symbols
+#include "UpdateInfo.h"
 
 class CAgilityBookApp : public CWinApp
 {
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CAgilityBookApp();
+
+	CUpdateInfo& UpdateInfo()		{return m_UpdateInfo;}
 
 	/**
 	 * Override the WinHelp api so we can map it to HtmlHelp.
@@ -63,6 +66,7 @@ private:
 	CSingleDocTemplate* m_pDocTemplatePoints;
 	CSingleDocTemplate* m_pDocTemplateCal;
 	CSingleDocTemplate* m_pDocTemplateTraining;
+	CUpdateInfo m_UpdateInfo;
 
 // Overrides
 	//{{AFX_VIRTUAL(CAgilityBookApp)
@@ -88,5 +92,3 @@ class CAgilityBookDoc;
 extern bool ShowContextHelp(HELPINFO* pHelpInfo);
 extern void RunCommand(char const* pCmd);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
-extern void UpdateVersion();
-extern void UpdateVersion(CAgilityBookDoc* pDoc, bool bOnOpenDoc = false);

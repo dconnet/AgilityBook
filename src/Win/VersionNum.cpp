@@ -211,6 +211,13 @@ bool CVersionNum::operator>(CVersionNum const& rhs) const
 	return false;
 }
 
+void CVersionNum::clear()
+{
+	m_Valid = false;
+	m_Name.Empty();
+	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
+}
+
 CString CVersionNum::GetVersionString() const
 {
 	CString version;
