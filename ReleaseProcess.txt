@@ -12,7 +12,8 @@ Files to change before marking files for release:
   - Same as file version changing above
 - History.txt
   Update program version and date, along with any comments.
-  - Reflect these changes into help/html/History.html
+  - Reflect these changes into help/html/HistoryData.html
+  - Run "src\UpdateHistory.py -h"
 - Todo.txt
   Any necessary changes...
 - Update CD Label (SureThing CD Labeler Deluxe v3.12)
@@ -65,7 +66,8 @@ Web Site:
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update AgilityBook.chm
-  - Update History.html and Bugs.html
+  - Run "src\UpdateHistory.py -h" (updates history.html)
+  - Update bugs.html
 
 Backup:
 - Backup development directory onto CD.

@@ -1,6 +1,9 @@
-2/8/2005: v1.5.1.10 <in development>
+2/10/2005: v1.5.1.10
 - New features / Enhancements:
   - Added a link to the Yahoo group files section in the about box.
+- Bug fixes
+  - The rich-text edit control was not properly initializing on older Windows
+    systems (like Win98). This caused several dialogs to not appear.
 
 2/7/2005: v1.5.0.10
 - Bumped file version to 10.1, Configuration v7:
