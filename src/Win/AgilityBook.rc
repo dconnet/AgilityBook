@@ -127,14 +127,16 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "&Import"
         BEGIN
-            MENUITEM "&Calendar...",                ID_FILE_IMPORT_CALENDAR
+            MENUITEM "&Wizard...",                  ID_FILE_IMPORT_WIZARD
             MENUITEM SEPARATOR
+            MENUITEM "&Calendar...",                ID_FILE_IMPORT_CALENDAR
             MENUITEM "C&onfiguration...",           ID_FILE_IMPORT_CONFIG
         END
         POPUP "&Export"
         BEGIN
-            MENUITEM "&Calendar...",                ID_FILE_EXPORT_CALENDAR
+            MENUITEM "&Wizard...",                  ID_FILE_EXPORT_WIZARD
             MENUITEM SEPARATOR
+            MENUITEM "&Calendar...",                ID_FILE_EXPORT_CALENDAR
             MENUITEM "C&onfiguration...",           ID_FILE_EXPORT_CONFIG
             MENUITEM SEPARATOR
             MENUITEM "&DTD (Document Type Definition)...", 
@@ -1813,6 +1815,7 @@ BEGIN
     ID_FILE_EXPORT_CALENDAR "Export your Calendar\nExport Calendar"
     ID_FILE_EXPORT_CONFIG   "Export your Configuration\nExport Configuration"
     ID_EDIT_JUDGES          "Edit Judge information\nJudges"
+    ID_FILE_EXPORT_WIZARD   "Export data for spreadsheet\nExport Wizard"
 END
 
 #endif    // English (U.S.) resources

@@ -371,6 +371,8 @@
 #define ID_FILE_EXPORT_CALENDAR         32810
 #define ID_FILE_EXPORT_CONFIG           32811
 #define ID_EDIT_JUDGES                  32812
+#define ID_FILE_IMPORT_WIZARD           32813
+#define ID_FILE_EXPORT_WIZARD           32814
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -379,7 +381,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        181
-#define _APS_NEXT_COMMAND_VALUE         32813
+#define _APS_NEXT_COMMAND_VALUE         32815
 #define _APS_NEXT_CONTROL_VALUE         1151
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
