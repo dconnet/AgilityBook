@@ -951,6 +951,12 @@ S-EAC, S-EGC, S-EJC</Titles>
 				<Titles LongName="Elite Gamblers Certificate-Veterans" Name="EGC-V">20 points</Titles>
 				<Titles LongName="Elite Gamblers Certificate-Veterans Outstanding Performance" Name="O-EGC-V"/>
 				<Titles LongName="Elite Gamblers Certificate-Veterans Superior Performance" Name="S-EGC-V"/>
+				<Titles LongName="Novice Triple Superior Performance Dog" Name="Novice Triple Superior Performance Dog">S-NAC-V, S-NGC-V, S-NJC-V</Titles>
+				<Titles LongName="Open Triple Superior Performance Dog" Name="Open Triple Superior Performance Dog">S-OAC-V, S-OGC-V, S-OJC-V</Titles>
+				<Titles LongName="Elite Triple Superior Performance Dog" Name="Elite Triple Superior Performance Dog">S-EAC-V, S-EGC-V, S-EJC-V</Titles>
+				<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple Superior Performance">S-NAC-V, S-NGC-V, S-NJC-V,
+S-OAC-V, S-OGC-V, S-OJC-V,
+S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				<Titles LongName="NADAC Agility Trial Champion-Veteran" Name="V-NATCH"/>
 				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH"/>
 				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH"/>
