@@ -395,21 +395,8 @@ static ARBDogRun* CreateRun(ARBDogRun* pRun, ARBConfigScoring const* pScoring)
 	if (!pRun)
 	{
 		pRun = new ARBDogRun();
-		switch (pScoring->GetScoringStyle())
-		{
-		case ARBConfigScoring::eFaultsThenTime:
-		case ARBConfigScoring::eFaults100ThenTime:
-		case ARBConfigScoring::eFaults200ThenTime:
-		case ARBConfigScoring::eTimePlusFaults:
-			pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
-			break;
-		case ARBConfigScoring::eOCScoreThenTime:
-			pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
-			break;
-		case ARBConfigScoring::eScoreThenTime:
-			pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
-			break;
-		}
+		pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()),
+			pScoring->DropFractions());
 	}
 	return pRun;
 }

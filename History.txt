@@ -1,4 +1,4 @@
-8/31/2004: v1.3.0.9 <in development>
+9/1/2004: v1.3.0.9 <in development>
 - Bumped Configuration v5:
   - Update USDAA configuration to remove titling points from Tournament
     Jumpers and Snooker. Tournament runs that offered titling should be
@@ -26,6 +26,16 @@
     selected, the program faulted.
   - Existing other points were tallied in all exising other points entries.
   - Up/Down sort icons on lists were backwards.
+  - Changing the scoring type of an existing event did not ripple out to
+    existing runs. This could cause a run to be stored with the wrong type
+    so when it is read back in, the scoring type never got set - which then
+    prevents the file from being saved again.
+    - In 1.2.1.8, to recreate:
+      - Create a new file, create a dog, create a trial.
+      - Edit the configuration to change gamblers to faults/time.
+      - Create a gamblers run.
+      - Edit the configuration and change gamblers to open/close pts.
+      - Save the file. Close it. Reopen it. This file can no longer be saved.
 
 7/3/2004: v1.2.1.8
 - Bug fixes

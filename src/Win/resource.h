@@ -495,6 +495,7 @@
 #define IDS_UPDATE_NEWER_VERSION        5086
 #define IDS_UPDATE_CURRENT              5087
 #define IDS_UPDATE_UNKNOWN              5088
+#define IDS_DELETE_EVENT_SCORING        5090
 #define IDS_NEW                         5091
 #define IDS_CONFIGURE                   5092
 #define IDS_SCORING_NAME                5093

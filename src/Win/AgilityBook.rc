@@ -2420,6 +2420,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_UPDATE_UNKNOWN      "Unable to determine current released version. (Is your internet connection alive?)"
+    IDS_DELETE_EVENT_SCORING "Warning: Event scoring methods are currently in use. Accepting these changes will also delete %1!d! run(s) and lose scoring information in %2!d! run(s).\n\nAre you sure you want to do this?"
     IDS_NEW                 "<New>"
     IDS_CONFIGURE           "Configure"
     IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"

@@ -242,6 +242,7 @@ bool ARBConfigEvent::Update(int indent, ARBConfigEvent const* inEventNew, std::s
 			if (!bFound)
 				++nAdded;
 		}
+		// TODO: This can actually invalidate existing runs
 		GetScorings() = inEventNew->GetScorings();
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nDeleted || 0 < nChanged)

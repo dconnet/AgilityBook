@@ -38,7 +38,7 @@
  */
 
 #include "ARBTypes.h"
-class ARBConfigScoring;
+#include "ARBConfigScoring.h"
 class ARBVersion;
 class Element;
 
@@ -58,6 +58,8 @@ public:
 		eTypeByOpenClose = 1,	///< Scoring based on Opening/Closing points.
 		eTypeByPoints = 2		///< Scoring based on points.
 	} ScoringType;
+
+	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
 
 	ARBDogRunScoring();
 	ARBDogRunScoring(ARBDogRunScoring const& rhs);

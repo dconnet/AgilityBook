@@ -99,9 +99,7 @@ CDlgConfigVenue::CDlgConfigVenue(ARBAgilityRecordBook& book, ARBConfig& config, 
 CDlgConfigVenue::~CDlgConfigVenue()
 {
 	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-	{
 		delete (*iter);
-	}
 	m_DlgFixup.clear();
 }
 
@@ -873,7 +871,7 @@ void CDlgConfigVenue::OnNew()
 		{
 			// The dialog will ensure uniqueness.
 			ARBConfigEvent* event = new ARBConfigEvent();
-			CDlgConfigEvent dlg(m_pVenue, event, this);
+			CDlgConfigEvent dlg(NULL, NULL, m_pVenue, event, this);
 			if (IDOK == dlg.DoModal())
 			{
 				ARBConfigEvent* pEvent = m_pVenue->GetEvents().AddEvent(event);
@@ -1287,15 +1285,11 @@ void CDlgConfigVenue::OnEdit()
 			if (!pEventData)
 				return;
 			ARBConfigEvent* pEvent = pEventData->GetEvent();
-			std::string event = pEvent->GetName();
-			CDlgConfigEvent dlg(m_pVenue, pEvent, this);
+			CDlgConfigEvent dlg(&m_Book, &m_Config, m_pVenue, pEvent, this);
 			pEvent->AddRef();
 			if (IDOK == dlg.DoModal())
 			{
-				if (pEvent->GetName() != event)
-				{
-					m_DlgFixup.push_back(new CDlgFixupRenameEvent(m_pVenue->GetName(), event, pEvent->GetName()));
-				}
+				dlg.GetFixups(m_DlgFixup);
 				LoadEventData();
 				FindCurrentEvent(pEvent, true);
 			}
