@@ -1,12 +1,20 @@
-12/14/2003: v0.9.5.8: <in development>
+12/24/2003: v0.9.5.8: <in development>
 - New features / Enhancements:
-  - Changed how items are shown for export - separated spreadsheet/ARB items.
+  - Changed how items are shown for export in the first wizard page
+    (separated spreadsheet/ARB items).
   - Added more items to import/export.
     - SpreadSheet Export: Can now export Calendar/TrainingLog
     - ARB Import: Can now import TrainingLog
     - ARB Export: Can now export TrainingLog
+  - Added some new accelerators:
+	- Ctrl+E: Import/Export Wizard
+	- Ctrl+F: Viewing options dialog
+	- Ctrl+J: Judge's comments dialog
+    - Ctrl+R: Create a new run
+	- F12: Save As
 - Bug fixes
   - Training log didn't re-sort if you edited an item.
+  - Adding a calendar entry from the List dialog didn't set the icon properly.
 
 12/13/2003: v0.9.4.8:
 - Bumped file version to 8.0:

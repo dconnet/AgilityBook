@@ -123,9 +123,9 @@ BEGIN
         MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
         MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM "Save &As...\tF12",            ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "&Import and Export...",       ID_FILE_EXPORT_WIZARD
+        MENUITEM "&Import and Export...\tCtrl+E", ID_FILE_EXPORT_WIZARD
         MENUITEM SEPARATOR
         MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
@@ -147,7 +147,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
         MENUITEM SEPARATOR
-        MENUITEM "&Judges...",                  ID_EDIT_JUDGES
+        MENUITEM "&Judges...\tCtrl+J",          ID_EDIT_JUDGES
     END
     POPUP "&Agility"
     BEGIN
@@ -176,7 +176,7 @@ BEGIN
         BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
             MENUITEM SEPARATOR
-            MENUITEM "&New...",                     ID_AGILITY_NEW_RUN
+            MENUITEM "&New...\tCtrl+R",             ID_AGILITY_NEW_RUN
             MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
         END
         MENUITEM SEPARATOR
@@ -202,7 +202,7 @@ BEGIN
     END
     POPUP "&View"
     BEGIN
-        MENUITEM "&Options...",                 ID_VIEW_OPTIONS
+        MENUITEM "&Options...\tCtrl+F",         ID_VIEW_OPTIONS
         MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
         MENUITEM SEPARATOR
@@ -275,7 +275,7 @@ BEGIN
             MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
+            MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
@@ -300,7 +300,7 @@ BEGIN
             MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
+            MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
@@ -322,7 +322,7 @@ BEGIN
             MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
+            MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
     END
@@ -361,22 +361,27 @@ END
 
 IDR_MAINFRAME ACCELERATORS MOVEABLE PURE 
 BEGIN
+    "A",            ID_EDIT_SELECT_ALL,     VIRTKEY, CONTROL, NOINVERT
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "E",            ID_FILE_EXPORT_WIZARD,  VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_VIEW_OPTIONS,        VIRTKEY, CONTROL, NOINVERT
+    "J",            ID_EDIT_JUDGES,         VIRTKEY, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
     "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
     "P",            ID_FILE_PRINT_PREVIEW,  VIRTKEY, CONTROL, ALT, NOINVERT
+    "R",            ID_AGILITY_NEW_RUN,     VIRTKEY, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
-    "A",            ID_EDIT_SELECT_ALL,     VIRTKEY, CONTROL, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
-    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
-    VK_TAB,         ID_PREV_TAB,            VIRTKEY, SHIFT, NOINVERT
+    VK_F12,         ID_FILE_SAVE_AS,        VIRTKEY, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
+    VK_TAB,         ID_PREV_TAB,            VIRTKEY, SHIFT, NOINVERT
     "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
     "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
 END
@@ -1766,6 +1771,10 @@ BEGIN
     IDS_COL_COMMENTS        "Comments"
     IDS_COL_FAULTS          "Faults"
     IDS_COL_TENTATIVE       "Tentative"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_COL_ENTERED         "Entered"
 END
 
