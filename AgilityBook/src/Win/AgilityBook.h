@@ -48,6 +48,15 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CAgilityBookApp();
 
+	/**
+	 * Override the WinHelp api so we can map it to HtmlHelp.
+	 * We are not re-mapping the cmd ids - most of the WinHelp cmds are
+	 * <i>not</i> the same as HtmlHelp. It is recommended that when you
+	 * need to call help, that you use the HtmlHelp api. Overriding this
+	 * api allows MFC contexthelp to work properly.
+	 */
+	virtual void WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
+
 private:
 	CSingleDocTemplate* m_pDocTemplateTree;
 	CSingleDocTemplate* m_pDocTemplateRuns;
@@ -77,7 +86,7 @@ private:
 extern CAgilityBookApp theApp;
 
 // Some global functions.
-extern void ShowContextHelp(HELPINFO* pHelpInfo);
+extern bool ShowContextHelp(HELPINFO* pHelpInfo);
 extern void RunCommand(char const* pCmd);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
 extern void UpdateVersion(bool bVerbose);

@@ -57,6 +57,20 @@
 // Modify the following defines if you have to target a platform prior to the ones specified below.
 // Refer to MSDN for the latest info on corresponding values for different platforms.
 
+// Minimum system
+// Server 2003 family _WIN32_WINNT >= 0x0502  WINVER >= 0x0502
+// WinXP              _WIN32_WINNT >= 0x0501  WINVER >= 0x0501
+// Win2K              _WIN32_WINNT >= 0x0500  WINVER >= 0x0500
+// WinNT4             _WIN32_WINNT >= 0x0400  WINVER >= 0x0400
+// WinMe            _WIN32_WINDOWS >= 0x0500  WINVER >= 0x0500
+// Win98            _WIN32_WINDOWS >= 0x0410  WINVER >= 0x0410
+// IE6.0             _WIN32_IE >= 0x0600
+// IE5.01, 5.5       _WIN32_IE >= 0x0501
+// IE5.0, 5.0a, 5.0b _WIN32_IE >= 0x0500
+// IE4.01            _WIN32_IE >= 0x0401
+// IE4.0             _WIN32_IE >= 0x0400
+// IE3.0, 3.01, 3.02 _WIN32_IE >= 0x0300
+
 #ifndef WINVER				/// Allow use of features specific to Windows 95 and Windows NT 4 or later.
 #define WINVER 0x0400		/// Change this to the appropriate value to target Windows 98 and Windows 2000 or later.
 #endif
@@ -65,22 +79,18 @@
 #define _WIN32_WINNT 0x0400	/// Minimum system, NT4.0
 #endif
 
-#if _MSC_VER >= 1300
+// Note VC6 hard-codes this define to ME. So we'll follow suit...
 #ifndef _WIN32_WINDOWS		/// Allow use of features specific to Windows 98 or later.
-#define _WIN32_WINDOWS 0x0410 /// Minimum system, Win98
-#endif
+#define _WIN32_WINDOWS 0x0500 /// Minimum system, WinME
 #endif
 
 #ifndef _WIN32_IE			/// Allow use of features specific to IE 4.0 or later.
-#define _WIN32_IE 0x0401	/// Minimum IE, 4.01
+#define _WIN32_IE 0x0500	/// Minimum IE, 5.0
 #endif
 
 // This is new as of vc7
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	/// some CString constructors will be explicit
-
-// This is new as of vc7
-/// turns off MFC's hiding of some common and often safely ignored warning messages
-#define _AFX_ALL_WARNINGS
+#define _AFX_ALL_WARNINGS	/// turns off MFC's hiding of some common and often safely ignored warning messages
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions

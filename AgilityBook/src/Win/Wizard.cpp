@@ -47,19 +47,20 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWizard
 
-IMPLEMENT_DYNAMIC(CWizard, CPropertySheet)
+IMPLEMENT_DYNAMIC(CWizard, CDlgBaseSheet)
 
 #pragma warning( push )
 // Disable "warning C4355: 'this' : used in base member initializer list"
 #pragma warning( disable : 4355 )
 CWizard::CWizard(CAgilityBookDoc* pDoc, CWnd* pParentWnd)
-	: CPropertySheet("", pParentWnd, 0)
+	: CDlgBaseSheet("", pParentWnd, 0)
 	, m_pDoc(pDoc)
 	, m_pageStart(this, pDoc)
 	, m_pageImport(this, pDoc)
 	, m_pageExport(this, pDoc)
 	, m_ImportExportItem(-1)
 {
+	m_psh.dwFlags |= PSH_WIZARDCONTEXTHELP;
 	SetWizardMode();
 	AddPage(&m_pageStart);
 	AddPage(&m_pageImport);
@@ -71,7 +72,7 @@ CWizard::~CWizard()
 {
 }
 
-BEGIN_MESSAGE_MAP(CWizard, CPropertySheet)
+BEGIN_MESSAGE_MAP(CWizard, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CWizard)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()

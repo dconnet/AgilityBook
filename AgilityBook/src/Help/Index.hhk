@@ -5,5 +5,10 @@
 <!-- Sitemap 1.0 -->
 </HEAD><BODY>
 <UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Calendar">
+		<param name="Name" value="Calendar">
+		<param name="Local" value="html\TabCalendar.html">
+		</OBJECT>
 </UL>
 </BODY></HTML>

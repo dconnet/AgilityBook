@@ -53,10 +53,12 @@ IMPLEMENT_DYNAMIC(CDlgBasePropertyPage, CPropertyPage)
 CDlgBasePropertyPage::CDlgBasePropertyPage(UINT nIDTemplate, UINT nIDCaption)
 	: CPropertyPage(nIDTemplate, nIDCaption)
 {
+	m_psp.dwFlags |= PSP_HASHELP;
 }
 CDlgBasePropertyPage::CDlgBasePropertyPage(LPCTSTR lpszTemplateName, UINT nIDCaption)
 	: CPropertyPage(lpszTemplateName, nIDCaption)
 {
+	m_psp.dwFlags |= PSP_HASHELP;
 }
 
 #else
@@ -64,6 +66,7 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 		UINT nIDTemplate, UINT nIDCaption, DWORD dwSize)
 	: CPropertyPage(nIDTemplate, nIDCaption, dwSize)
 {
+	m_psp.dwFlags |= PSP_HASHELP;
 	//{{AFX_DATA_INIT(CDlgBasePropertyPage)
 	//}}AFX_DATA_INIT
 }
@@ -71,18 +74,21 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 		LPCTSTR lpszTemplateName, UINT nIDCaption, DWORD dwSize)
 	: CPropertyPage(lpszTemplateName, nIDCaption, dwSize)
 {
+	m_psp.dwFlags |= PSP_HASHELP;
 }
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		UINT nIDTemplate, UINT nIDCaption,
 		UINT nIDHeaderTitle, UINT nIDHeaderSubTitle, DWORD dwSize)
 	: CPropertyPage(nIDTemplate, nIDCaption, nIDHeaderTitle, nIDHeaderSubTitle, dwSize)
 {
+	m_psp.dwFlags |= PSP_HASHELP;
 }
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		LPCTSTR lpszTemplateName, UINT nIDCaption, UINT nIDHeaderTitle,
 		UINT nIDHeaderSubTitle, DWORD dwSize)
 	: CPropertyPage(lpszTemplateName, nIDCaption, nIDHeaderTitle, nIDHeaderSubTitle, dwSize)
 {
+	m_psp.dwFlags |= PSP_HASHELP;
 }
 #endif
 
@@ -116,6 +122,7 @@ BOOL CDlgBasePropertyPage::OnInitDialog()
 
 BOOL CDlgBasePropertyPage::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	ShowContextHelp(pHelpInfo);
+	if (!ShowContextHelp(pHelpInfo))
+		OnHelp();
 	return TRUE;
 }

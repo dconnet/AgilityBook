@@ -35,6 +35,7 @@
  */
 
 #include "stdafx.h"
+#include <afxpriv.h>
 #include "AgilityBook.h"
 #include "DlgBaseDialog.h"
 
@@ -71,6 +72,7 @@ void CDlgBaseDialog::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgBaseDialog, CDialog)
 	//{{AFX_MSG_MAP(CDlgBaseDialog)
 	ON_WM_HELPINFO()
+	ON_COMMAND(IDHELP, OnHelp)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -86,8 +88,12 @@ BOOL CDlgBaseDialog::OnInitDialog()
 
 BOOL CDlgBaseDialog::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	if (IDOK != pHelpInfo->iCtrlId
-	&& IDCANCEL != pHelpInfo->iCtrlId)
-		ShowContextHelp(pHelpInfo);
+	if (!ShowContextHelp(pHelpInfo))
+		OnHelp();
 	return TRUE;
+}
+
+void CDlgBaseDialog::OnHelp()
+{
+	SendMessage(WM_COMMANDHELP);
 }

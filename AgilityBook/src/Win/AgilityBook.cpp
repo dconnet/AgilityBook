@@ -77,39 +77,42 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // Some global functions.
 
-void ShowContextHelp(HELPINFO* pHelpInfo)
+bool ShowContextHelp(HELPINFO* pHelpInfo)
 {
-	HWND hwnd = NULL;
-	POINT pt = pHelpInfo->MousePos;
-	if (HELPINFO_WINDOW == pHelpInfo->iContextType)
-	{
-		hwnd = static_cast<HWND>(pHelpInfo->hItemHandle);
-		RECT r;
-		::GetWindowRect(hwnd, &r);
-		pt.x = r.left + (r.right - r.left) / 2;
-		pt.y = r.bottom;
-	}
-	HH_POPUP popup;
-	memset(&popup, 0, sizeof(HH_POPUP));
-	popup.cbStruct = sizeof(HH_POPUP);
-	popup.hinst = 0;
-	popup.idString = static_cast<UINT>(pHelpInfo->dwContextId);
+	bool bOk = false;
 	if (pHelpInfo->dwContextId > 0)
+	{
+		bOk = true;
+		HWND hwnd = NULL;
+		POINT pt = pHelpInfo->MousePos;
+		if (HELPINFO_WINDOW == pHelpInfo->iContextType)
+		{
+			hwnd = static_cast<HWND>(pHelpInfo->hItemHandle);
+			RECT r;
+			::GetWindowRect(hwnd, &r);
+			pt.x = r.left + (r.right - r.left) / 2;
+			pt.y = r.bottom;
+		}
+		HH_POPUP popup;
+		memset(&popup, 0, sizeof(HH_POPUP));
+		popup.cbStruct = sizeof(HH_POPUP);
+		popup.hinst = 0;
+		popup.idString = static_cast<UINT>(pHelpInfo->dwContextId);
 		popup.pszText = "";
-	else
-		popup.pszText = "No help available.";
-	popup.pt = pt;
-	popup.clrForeground = GetSysColor(COLOR_INFOTEXT);
-	popup.clrBackground = GetSysColor(COLOR_INFOBK);
-	popup.rcMargins.left = -1;
-	popup.rcMargins.top = -1;
-	popup.rcMargins.right = -1;
-	popup.rcMargins.bottom = -1;
-	popup.pszFont = "Arial, 8, ascii, , , ";
+		popup.pt = pt;
+		popup.clrForeground = GetSysColor(COLOR_INFOTEXT);
+		popup.clrBackground = GetSysColor(COLOR_INFOBK);
+		popup.rcMargins.left = -1;
+		popup.rcMargins.top = -1;
+		popup.rcMargins.right = -1;
+		popup.rcMargins.bottom = -1;
+		popup.pszFont = "Arial, 8, ascii, , , ";
 
-	CString name(AfxGetApp()->m_pszHelpFilePath);
-	name += "::/Help/AgilityBook.txt";
-	::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
+		CString name(AfxGetApp()->m_pszHelpFilePath);
+		name += "::/Help/AgilityBook.txt";
+		::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
+	}
+	return bOk;
 }
 
 void RunCommand(char const* pCmd)
@@ -459,6 +462,15 @@ int CAgilityBookApp::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
+void CAgilityBookApp::WinHelp(DWORD_PTR dwData, UINT nCmd)
+{
+#if _MSC_VER < 1300
+	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, nCmd, dwData);
+#else
+	HtmlHelp(dwData, nCmd);
+#endif
+}
+
 // CAgilityBookApp message handlers
 
 void CAgilityBookApp::OnAppAbout()
@@ -469,20 +481,12 @@ void CAgilityBookApp::OnAppAbout()
 
 void CAgilityBookApp::OnHelpContents()
 {
-#if _MSC_VER < 1300
-	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, HH_DISPLAY_TOC, 0);
-#else
-	HtmlHelp(0, HH_DISPLAY_TOC);
-#endif
+	WinHelp(0, HH_DISPLAY_TOC);
 }
 
 void CAgilityBookApp::OnHelpIndex()
 {
-#if _MSC_VER < 1300
-	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, HH_DISPLAY_INDEX, 0);
-#else
-	HtmlHelp(0, HH_DISPLAY_INDEX);
-#endif
+	WinHelp(0, HH_DISPLAY_INDEX);
 }
 
 void CAgilityBookApp::OnHelpSplash()

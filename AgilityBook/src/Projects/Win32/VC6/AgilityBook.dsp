@@ -162,6 +162,10 @@ SOURCE=..\..\..\Win\DlgBasePropertyPage.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgBaseSheet.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgCalendar.cpp
 # End Source File
 # Begin Source File
@@ -472,6 +476,10 @@ SOURCE=..\..\..\Win\DlgBaseDialog.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgBasePropertyPage.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgBaseSheet.h
 # End Source File
 # Begin Source File
 

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,49 +29,34 @@
 /**
  * @file
  *
- * @brief interface of the CDlgRun class
+ * @brief Base class for Property sheets
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-05 DRC Created
  */
 
-#include "DlgBaseSheet.h"
-class ARBDogRun;
-class ARBDogTrial;
-class CAgilityBookDoc;
-class CDlgRunScore;
-class CDlgRunComments;
-class CDlgRunReference;
-class CDlgRunCRCD;
-class CDlgRunLink;
-
 /////////////////////////////////////////////////////////////////////////////
-// CDlgRun
 
-class CDlgRun : public CDlgBaseSheet
+class CDlgBaseSheet : public CPropertySheet
 {
-	DECLARE_DYNAMIC(CDlgRun)
+	DECLARE_DYNAMIC(CDlgBaseSheet)
 public:
-	CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgRun();
+	explicit CDlgBaseSheet(UINT nIDCaption, CWnd* pParentWnd = NULL,
+		UINT iSelectPage = 0);
+	explicit CDlgBaseSheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL,
+		UINT iSelectPage = 0);
+	virtual ~CDlgBaseSheet();
 
-// Attributes
 private:
-	ARBDogRun* m_pRealRun;
-	ARBDogRun* m_Run;
-	CDlgRunScore* m_pageScore;
-	CDlgRunComments* m_pageComments;
-	CDlgRunReference* m_pageReference;
-	CDlgRunCRCD* m_pageCRCD;
-	CDlgRunLink* m_pageLink;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgRun)
+	//{{AFX_VIRTUAL(CDlgBaseSheet)
 	//}}AFX_VIRTUAL
 
+// Implementation
 protected:
-	//{{AFX_MSG(CDlgRun)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgBaseSheet)
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
+	afx_msg void OnHelp();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

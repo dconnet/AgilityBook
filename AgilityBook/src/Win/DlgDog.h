@@ -37,6 +37,7 @@
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
+#include "DlgBaseSheet.h"
 class ARBConfig;
 class ARBDog;
 class CAgilityBookDoc;
@@ -47,7 +48,7 @@ class CDlgDogTitles;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDog : public CPropertySheet
+class CDlgDog : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgDog)
 public:

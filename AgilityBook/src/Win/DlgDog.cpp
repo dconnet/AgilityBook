@@ -58,10 +58,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDog dialog
 
-IMPLEMENT_DYNAMIC(CDlgDog, CPropertySheet)
+IMPLEMENT_DYNAMIC(CDlgDog, CDlgBaseSheet)
 
 CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent, UINT iSelectPage)
-	: CPropertySheet(IDS_COL_DOG, pParent, iSelectPage)
+	: CDlgBaseSheet(IDS_COL_DOG, pParent, iSelectPage)
 	, m_pDoc(pDoc)
 	, m_Config(pDoc->GetConfig())
 	, m_pDog(pDog)
@@ -89,7 +89,7 @@ CDlgDog::~CDlgDog()
 	delete m_pagePoints;
 }
 
-BEGIN_MESSAGE_MAP(CDlgDog, CPropertySheet)
+BEGIN_MESSAGE_MAP(CDlgDog, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgDog)
 	ON_WM_DESTROY()
 	ON_COMMAND(IDOK, OnOK)
@@ -101,7 +101,7 @@ END_MESSAGE_MAP()
 
 void CDlgDog::OnDestroy()
 {
-	CPropertySheet::OnDestroy();
+	CDlgBaseSheet::OnDestroy();
 	m_pDoc->ResetVisibility();
 }
 

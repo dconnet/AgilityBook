@@ -14,7 +14,7 @@ Language=0x409 English (United States)
 Title=Agility Record Book
 
 [WINDOWS]
-main="Agility Record Book","AgilityBook.hhc","Help\Index.hhk","Help\html\Introduction.html","Help\html\Introduction.html",,,,,0x62520,,0x300e,[0,0,800,600],,,,,,,0
+main="Agility Record Book","AgilityBook.hhc","Help\Index.hhk","Help\html\Introduction.html","Help\html\Introduction.html",,,,,0x62520,,0x300e,[0,0,800,600],0x90000000,,,,,,0
 
 
 [FILES]
@@ -48,6 +48,64 @@ Help\html\TabRuns.html
 Help\html\Tabs.html
 Help\html\Tasks.html
 Help\html\Toolbar.html
+
+[ALIAS]
+HIDD_ABOUTBOX=Help\html\Contact.html
+HIDD_ASSIGN_COLUMNS=Help\html\Introduction.html
+HIDD_CALENDAR=Help\html\Introduction.html
+HIDD_CLUB=Help\html\Introduction.html
+HIDD_CONFIG_EVENT=Help\html\Introduction.html
+HIDD_CONFIG_OTHERPOINTS=Help\html\Introduction.html
+HIDD_CONFIG_TITLE_POINTS=Help\html\Introduction.html
+HIDD_CONFIG_TITLE=Help\html\Introduction.html
+HIDD_CONFIG_UPDATE=Help\html\Introduction.html
+HIDD_CONFIG_VENUE=Help\html\Introduction.html
+HIDD_CONFIGURE=Help\html\Introduction.html
+HIDD_CRCD_VIEWER=Help\html\Introduction.html
+HIDD_DOG_NUMBERS=Help\html\NewDog.html
+HIDD_DOG_PICKER=Help\html\Introduction.html
+HIDD_DOG_POINTS=Help\html\NewDog.html
+HIDD_DOG_PROP=Help\html\NewDog.html
+HIDD_DOG_TITLES=Help\html\NewDog.html
+HIDD_EXISTING_POINTS=Help\html\Introduction.html
+HIDD_FAULT=Help\html\Introduction.html
+HIDD_FIND_LINKS=Help\html\Introduction.html
+HIDD_FIND=Help\html\Introduction.html
+HIDD_JUDGE_INFO=Help\html\Introduction.html
+HIDD_LISTCTRL=Help\html\Introduction.html
+HIDD_MESSAGE=Help\html\Introduction.html
+HIDD_NAME=Help\html\Introduction.html
+HIDD_OTHER_POINT=Help\html\Introduction.html
+HIDD_PARTNER=Help\html\Introduction.html
+HIDD_REF_RUN=Help\html\Introduction.html
+HIDD_REG_NUM=Help\html\Introduction.html
+HIDD_REORDER=Help\html\Introduction.html
+HIDD_RUN_COMMENTS=Help\html\Introduction.html
+HIDD_RUN_CRCD=Help\html\Introduction.html
+HIDD_RUN_LINK=Help\html\Introduction.html
+HIDD_RUN_REFERENCE=Help\html\Introduction.html
+HIDD_RUN_SCORE=Help\html\Introduction.html
+HIDD_SELECT_URL=Help\html\Introduction.html
+HIDD_TITLE=Help\html\Introduction.html
+HIDD_TRAINING=Help\html\Introduction.html
+HIDD_TRIAL=Help\html\Introduction.html
+HIDD_VIEW_OPTIONS_CALENDAR=Help\html\Introduction.html
+HIDD_VIEW_OPTIONS_FILTER=Help\html\Introduction.html
+HIDD_VIEW_OPTIONS_FONTS=Help\html\Introduction.html
+HIDD_VIEW_OPTIONS_PROGRAM=Help\html\Introduction.html
+HIDD_VIEW_OPTIONS_TRAINING=Help\html\Introduction.html
+HIDD_WIZARD_EXPORT=Help\html\Introduction.html
+HIDD_WIZARD_IMPORT=Help\html\Introduction.html
+HIDD_WIZARD_START=Help\html\Introduction.html
+HIDR_CALENDAR=Help\html\Introduction.html
+HIDR_DOG=Help\html\Introduction.html
+HIDR_DTD_AGILITYRECORDBOOK=Help\html\Introduction.html
+HIDR_MAINFRAME=Help\html\Introduction.html
+HIDR_RUN=Help\html\Introduction.html
+HIDR_RUNS=Help\html\Introduction.html
+HIDR_TRAINING=Help\html\Introduction.html
+HIDR_TRIAL=Help\html\Introduction.html
+HIDR_XML_DEFAULT_CONFIG=Help\html\Introduction.html
 
 [MAP]
 #include Help\contextid.h
