@@ -1,7 +1,4 @@
-Last Updated: 2/3/04
-
-- Add a 'links' tab on the run dialog. This will allow linking in existing
-  files.
+Last Updated: 3/31/04
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,

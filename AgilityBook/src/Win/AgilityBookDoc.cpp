@@ -68,6 +68,7 @@
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
+#include "DlgFindLinks.h"
 #include "DlgFixup.h"
 #include "DlgInfoJudge.h"
 #include "DlgMessage.h"
@@ -110,6 +111,7 @@ IMPLEMENT_DYNCREATE(CAgilityBookDoc, CDocument)
 BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	//{{AFX_MSG_MAP(CAgilityBookDoc)
 	ON_COMMAND(ID_FILE_EXPORT_WIZARD, OnFileExportWizard)
+	ON_COMMAND(ID_FILE_LINKED, OnFileLinked)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_JUDGES, OnUpdateEditJudges)
 	ON_COMMAND(ID_EDIT_JUDGES, OnEditJudges)
@@ -725,6 +727,19 @@ void CAgilityBookDoc::OnFileExportWizard()
 {
 	CWizard wiz(this);
 	wiz.DoModal();
+}
+
+void CAgilityBookDoc::OnFileLinked()
+{
+	CDlgFindLinks dlg(GetDogs());
+	if (0 == dlg.GetNumLinks())
+	{
+		//TODO
+		AfxMessageBox("No linked files found.", MB_ICONINFORMATION);
+	}
+	else
+		dlg.DoModal();
+
 }
 
 void CAgilityBookDoc::OnEditConfiguration()

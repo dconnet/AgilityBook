@@ -77,6 +77,7 @@ void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgRunLink, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunLink)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
 	ON_BN_CLICKED(IDC_NEW, OnNew)
 	ON_BN_CLICKED(IDC_EDIT, OnEdit)
@@ -128,6 +129,12 @@ BOOL CDlgRunLink::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+void CDlgRunLink::OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	OnEdit();
+	*pResult = 0;
+}
+
 void CDlgRunLink::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 //	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
@@ -141,8 +148,11 @@ void CDlgRunLink::OnNew()
 	if (IDOK == dlg.DoModal())
 	{
 		std::string newName = dlg.GetName();
-		m_Run->AddLink(newName);
-		ListFiles(newName.c_str());
+		if (0 < newName.length())
+		{
+			m_Run->AddLink(newName);
+			ListFiles(newName.c_str());
+		}
 	}
 }
 
@@ -159,7 +169,8 @@ void CDlgRunLink::OnEdit()
 			if (name != newName)
 			{
 				m_Run->RemoveLink(name);
-				m_Run->AddLink(newName);
+				if (0 < newName.length())
+					m_Run->AddLink(newName);
 				ListFiles(newName.c_str());
 			}
 		}

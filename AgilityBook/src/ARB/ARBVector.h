@@ -68,8 +68,8 @@ using std::vector;
  * Load functionality varies slightly from class to class, so that is handled
  * by several ARBVector derivations.
  */
-template <typename ARBThing>
-class ARBVector : public std::vector<ARBThing*>
+template <typename T>
+class ARBVector : public std::vector<T*>
 {
 public:
 	ARBVector()
@@ -81,17 +81,17 @@ public:
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVector(ARBVector<ARBThing> const& rhs)
+	ARBVector(ARBVector<T> const& rhs)
 	{
 		// Make a copy first. Then if we throw an exception during
 		// the copy, we won't clobber the existing data.
-		ARBVector<ARBThing> tmp;
+		ARBVector<T> tmp;
 		tmp.reserve(rhs.size());
 		for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 		{
-			ARBThing* pItem = *iter;
+			T* pItem = *iter;
 			if (pItem)
-				tmp.push_back(new ARBThing(*pItem));
+				tmp.push_back(new T(*pItem));
 		}
 		swap(tmp);
 	}
@@ -106,16 +106,16 @@ public:
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVector<ARBThing>& operator=(ARBVector<ARBThing> const& rhs)
+	ARBVector<T>& operator=(ARBVector<T> const& rhs)
 	{
 		if (this != &rhs)
 		{
-			ARBVector<ARBThing> tmp;
+			ARBVector<T> tmp;
 			tmp.reserve(rhs.size());
 			for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 			{
 				if ((*iter))
-					tmp.push_back(new ARBThing(*(*iter)));
+					tmp.push_back(new T(*(*iter)));
 			}
 			swap(tmp);
 		}
@@ -125,7 +125,7 @@ public:
 	/**
 	 * Equality test.
 	 */
-	bool operator==(ARBVector<ARBThing> const& rhs) const
+	bool operator==(ARBVector<T> const& rhs) const
 	{
 		if (this == &rhs)
 			return true;
@@ -139,7 +139,7 @@ public:
 		}
 		return true;
 	}
-	bool operator!=(ARBVector<ARBThing> const& rhs) const
+	bool operator!=(ARBVector<T> const& rhs) const
 	{
 		return !operator==(rhs);
 	}
@@ -163,22 +163,16 @@ public:
 	 */
 	void clear()
 	{
-		for (iterator iter = begin(); iter != end(); ++iter)
-			(*iter)->Release();
-#if _MSC_VER < 1300
-		vector<ARBThing*>::clear();
-#else
-		std::vector<ARBThing*>::clear();
-#endif
+		erase(begin(), end());
 	}
 
 	iterator erase(iterator inIter)
 	{
 		(*inIter)->Release();
 #if _MSC_VER < 1300
-		return vector<ARBThing*>::erase(inIter);
+		return vector<T*>::erase(inIter);
 #else
-		return std::vector<ARBThing*>::erase(inIter);
+		return std::vector<T*>::erase(inIter);
 #endif
 	}
 
@@ -187,9 +181,9 @@ public:
 		for (iterator iter = inFirst; iter <= inLast; ++iter)
 			(*iter)->Release();
 #if _MSC_VER < 1300
-		return vector<ARBThing*>::erase(inFirst, inLast);
+		return vector<T*>::erase(inFirst, inLast);
 #else
-		return std::vector<ARBThing*>::erase(inFirst, inLast);
+		return std::vector<T*>::erase(inFirst, inLast);
 #endif
 	}
 
@@ -199,7 +193,7 @@ public:
 	 * @param inMove Number of positions to move object.
 	 * @return Whether or not object was moved.
 	 */
-	bool Move(ARBThing* inItem, int inMove)
+	bool Move(T* inItem, int inMove)
 	{
 		bool bOk = false;
 		if (inItem)
@@ -217,7 +211,7 @@ public:
 					if (offset != n)
 					{
 						bOk = true;
-						ARBThing* tmp = at(n);
+						T* tmp = at(n);
 						at(n) = at(offset);
 						at(offset) = tmp;
 						break;
@@ -234,7 +228,7 @@ public:
 	 * (It flattens the tree a little.)
 	 * @param ioTree Parent element.
 	 * @return Success
-	 * @post The ARBThing element will be created in ioTree.
+	 * @post The T element will be created in ioTree.
 	 */
 	bool Save(Element& ioTree) const
 	{
@@ -259,13 +253,13 @@ public:
 /**
  * This load method is used by several of the ARBConfig* classes.
  */
-template <typename ARBThing>
-class ARBVectorLoad1 : public ARBVector<ARBThing>
+template <typename T>
+class ARBVectorLoad1 : public ARBVector<T>
 {
 public:
 	/**
 	 * Load the information from XML (the tree).
-	 * @pre inTree is the actual ARBThing element.
+	 * @pre inTree is the actual T element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioErrMsg Accumulated error messages.
@@ -273,7 +267,7 @@ public:
 	 */
 	bool Load(Element const& inTree, ARBVersion const& inVersion, std::string& ioErrMsg)
 	{
-		ARBThing* thing = new ARBThing();
+		T* thing = new T();
 		if (!thing->Load(inTree, inVersion, ioErrMsg))
 		{
 			thing->Release();
@@ -287,13 +281,13 @@ public:
 /**
  * This load method is used by several of the ARBDog* classes.
  */
-template <typename ARBThing>
-class ARBVectorLoad2 : public ARBVector<ARBThing>
+template <typename T>
+class ARBVectorLoad2 : public ARBVector<T>
 {
 public:
 	/**
 	 * Load the information from XML (the tree).
-	 * @pre inTree is the actual ARBThing element.
+	 * @pre inTree is the actual T element.
 	 * @param inConfig Configuration information to verify data to load against.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
@@ -302,7 +296,7 @@ public:
 	 */
 	bool Load(ARBConfig const& inConfig, Element const& inTree, ARBVersion const& inVersion, std::string& ioErrMsg)
 	{
-		ARBThing* thing = new ARBThing();
+		T* thing = new T();
 		if (!thing->Load(inConfig, inTree, inVersion, ioErrMsg))
 		{
 			thing->Release();

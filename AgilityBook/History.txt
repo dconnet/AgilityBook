@@ -1,5 +1,5 @@
-3/30/2004: v1.0.5.8 <in development>
-- Note: Released beta to single person on 3/26.
+3/31/2004: v1.0.5.8 <in development>
+- Note: Released beta to single person on 3/26 - dealt with table code.
 - Bumped file version to 8.6:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
   - Added 'Link' to 'Runs'
@@ -10,14 +10,17 @@
     configuration is merged, as long as it happens during startup.
   - The 'Show Hidden Titles' menu item was never enabled.
   - Changed 'Insert Course' to 'Paste Course' in run dialog.
-  - Added 'Links' in the run dialog.
+  - Added 'Links' in the run dialog and a corresponding 'Find Links' in the
+    File menu.
 - Bug fixes
-  - When updating a venue or event, if only the desc or partner changed,
-    the changes didn't happen.
+  - When merging configuration information via the update feature, if only
+    the description was changed in either a venue or an event, that
+    information did not get properly merged 
   - The 'View->Show Hidden Titles' menu item was never enabled.
   - Fixed an inconsistency in pasting text from the clipboard. Sometimes the
     text was garbled when pasting into the CRCD text box.
-  - The edit/delete buttons didn't get enabled properly in the reference runs.
+  - The edit/delete buttons did not get enabled/disabled properly in the
+    Reference Runs in the Runs dialog
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:

@@ -165,6 +165,7 @@ private:
 protected:
 	//{{AFX_MSG(CAgilityBookDoc)
 	afx_msg void OnFileExportWizard();
+	afx_msg void OnFileLinked();
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnUpdateEditJudges(CCmdUI* pCmdUI);
 	afx_msg void OnEditJudges();

@@ -230,6 +230,10 @@ SOURCE=..\..\..\Win\DlgFind.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgFindLinks.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgFixup.cpp
 # End Source File
 # Begin Source File
@@ -524,6 +528,10 @@ SOURCE=..\..\..\Win\DlgFault.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgFind.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFindLinks.h
 # End Source File
 # Begin Source File
 

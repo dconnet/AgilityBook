@@ -29,54 +29,77 @@
 /**
  * @file
  *
- * @brief interface of the CDlgRunLint class
+ * @brief interface of the CDlgFindLinks class
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-30 DRC Created
+ * 2004-03-31 DRC Created.
  */
 
+#include <afxinet.h>
+#include <vector>
+#include "ColumnOrder.h"
 #include "ListCtrl.h"
-class ARBDogRun;
-class CAgilityBookDoc;
 
-class CDlgRunLink : public CPropertyPage
+class ARBDog;
+class ARBDogList;
+class ARBDogRun;
+class ARBDogTrial;
+
+class CDlgFindLinks : public CDialog
 {
+	friend int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 public:
-	CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun);
-	~CDlgRunLink();
+	CDlgFindLinks(ARBDogList& inDogs, CWnd* pParent = NULL);
+	virtual ~CDlgFindLinks();
+	size_t GetNumLinks() const		{return m_Data.size();}
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgRunLink)
-	enum { IDD = IDD_RUN_LINK };
+	//{{AFX_DATA(CDlgFindLinks)
+	enum { IDD = IDD_FIND_LINKS };
 	CListCtrl2	m_ctrlLinks;
-	CButton	m_ctrlNew;
 	CButton	m_ctrlEdit;
-	CButton	m_ctrlDelete;
-	CButton	m_ctrlOpen;
 	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-	ARBDogRun* m_Run;
+	CColumnOrder m_sortLinks;
+	CImageList m_ImageList;
+	int m_imgEmpty;
+	int m_imgOk;
+	int m_imgMissing;
+	CInternetSession m_Session;
 
-	//{{AFX_VIRTUAL(CDlgRunLink)
+	class CDlgFindLinksData
+	{
+	public:
+		CDlgFindLinksData(ARBDog* pDog, ARBDogTrial* pTrial, ARBDogRun* pRun, std::string const& inLink);
+		~CDlgFindLinksData();
+		ARBDog* m_pDog;
+		ARBDogTrial* m_pTrial;
+		ARBDogRun* m_pRun;
+		std::string m_OldLink;
+		std::string m_Link;
+	};
+	std::vector<CDlgFindLinksData> m_Data;
+
+	//{{AFX_VIRTUAL(CDlgFindLinks)
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
+	int GetImageIndex(std::string const& inLink);
+	void SetColumnHeaders();
 	void UpdateButtons();
-	void ListFiles(char const* pItem);
 
-	//{{AFX_MSG(CDlgRunLink)
+	//{{AFX_MSG(CDlgFindLinks)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnGetdispinfoList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnNew();
+	afx_msg void OnCopy();
 	afx_msg void OnEdit();
-	afx_msg void OnDelete();
-	afx_msg void OnOpen();
+	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
