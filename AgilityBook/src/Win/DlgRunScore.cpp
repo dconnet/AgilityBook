@@ -580,6 +580,7 @@ void CDlgRunScore::SetEventDesc(ARBConfigEvent const* inEvent)
 			desc += "\n==========\n";
 		desc += note.c_str();
 	}
+	desc.Replace("\n", "\r\n");
 	m_ctrlDesc.SetWindowText(desc);
 }
 
