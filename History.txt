@@ -1,4 +1,6 @@
-12/28/2003: v0.9.6.8: In development
+12/29/2003: v0.9.6.8: In development
+- New features / Enhancements:
+  - GetAllClubs/Locations now includes calendar entries.
 
 12/28/2003: v0.9.5.8
 - Bumped file version to 8.1:
