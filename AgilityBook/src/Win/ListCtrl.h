@@ -104,6 +104,7 @@ public:
 	int InsertColumn(int nCol, LVCOLUMN const* pColumn);
 	int InsertColumn(int nCol, LPCTSTR lpszColumnHeading,
 		int nFormat = LVCFMT_LEFT, int nWidth = -1, int nSubItem = -1);
+	BOOL SetColumnWidth(int nCol, int cx);
 	BOOL DeleteColumn(int nCol);
 
 	/**
@@ -158,6 +159,7 @@ public:
 	int InsertColumn(int nCol, LVCOLUMN const* pColumn);
 	int InsertColumn(int nCol, LPCTSTR lpszColumnHeading,
 		int nFormat = LVCFMT_LEFT, int nWidth = -1, int nSubItem = -1);
+	BOOL SetColumnWidth(int nCol, int cx);
 	BOOL DeleteColumn(int nCol);
 
 	/**
