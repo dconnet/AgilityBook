@@ -1,10 +1,10 @@
+@echo off
 REM Generate the help file.
 REM
 REM Revision History
 REM 2005-01-23 DRC Added History.html creation from a template.
 REM 2004-05-20 DRC Created
 
-@echo off
 if ("%1")==("Debug") goto doit
 if ("%1")==("Release") goto doit
 goto usage
