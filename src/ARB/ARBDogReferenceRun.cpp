@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -146,18 +147,18 @@ bool ARBDogReferenceRun::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	std::string attrib;
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
 		return false;
 	}
-	if (!m_Q.Load(attrib, inVersion, ioErrMsg))
+	if (!m_Q.Load(attrib, inVersion, ioCallback))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
 		return false;
 	}
 

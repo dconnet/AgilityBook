@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
@@ -40,6 +41,7 @@
 
 #include "ARBTypes.h"
 #include "ARBConfigScoring.h"
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
@@ -75,14 +77,14 @@ public:
 	 * @param inEvent Configuration for looking up information.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		ARBConfigScoring const* inEvent,
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

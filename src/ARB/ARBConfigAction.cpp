@@ -42,6 +42,7 @@
  * via import, which means actions are live.)
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Created
  */
 
@@ -113,12 +114,12 @@ size_t ARBConfigAction::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBConfigAction::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_ACTION_VERB, m_Verb)
 	|| 0 == m_Verb.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB));
 		return false;
 	}
 	inTree.GetAttrib(ATTRIB_ACTION_VENUE, m_Venue);

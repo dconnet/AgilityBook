@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-04-15 DRC Added Duplicate menu item.
@@ -813,7 +814,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 				if (element.GetName() == TREE_TRAINING)
 				{
 					ARBTraining* pLog = new ARBTraining();
-					std::string err;
+					CErrorCallback err;
 					if (pLog->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{
 						bLoaded = true;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-07 DRC Created
  */
@@ -111,11 +112,11 @@ size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBInfoJudge::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_JUDGEINFO_NAME, m_Name))
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_JUDGEINFO, ATTRIB_JUDGEINFO_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_JUDGEINFO, ATTRIB_JUDGEINFO_NAME));
 		return false;
 	}
 	m_Comment = inTree.GetValue();

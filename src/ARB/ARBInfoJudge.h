@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-07 DRC Created
  */
@@ -40,6 +41,7 @@
 #include <string>
 #include "ARBBase.h"
 #include "ARBVector.h"
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
@@ -75,13 +77,13 @@ public:
 	 * @pre inTree is the actual ARBInfoJudge element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

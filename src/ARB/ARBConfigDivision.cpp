@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
  * @li 2004-01-21 DRC Added DeleteTitle.
@@ -110,12 +111,12 @@ size_t ARBConfigDivision::GetSearchStrings(std::set<std::string>& ioStrings) con
 bool ARBConfigDivision::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -124,12 +125,12 @@ bool ARBConfigDivision::Load(
 		if (element.GetName() == TREE_LEVEL)
 		{
 			// Ignore any errors...
-			m_Levels.Load(element, inVersion, ioErrMsg);
+			m_Levels.Load(element, inVersion, ioCallback);
 		}
 		else if (element.GetName() == TREE_TITLES)
 		{
 			// Ignore any errors...
-			m_Titles.Load(element, inVersion, ioErrMsg);
+			m_Titles.Load(element, inVersion, ioCallback);
 		}
 	}
 	return true;
@@ -248,10 +249,10 @@ bool ARBConfigDivision::Update(int indent, ARBConfigDivision const* inDivNew, st
 bool ARBConfigDivisionList::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigDivision* thing = new ARBConfigDivision();
-	if (!thing->Load(inTree, inVersion, ioErrMsg))
+	if (!thing->Load(inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-26 DRC Added version number to configuration.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added static GetDTD() method.
@@ -120,10 +121,10 @@ void ARBConfig::clear()
 bool ARBConfig::LoadFault(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (inTree.GetName() == TREE_FAULTTYPE
-	&& m_FaultTypes.Load(inTree, inVersion, ioErrMsg))
+	&& m_FaultTypes.Load(inTree, inVersion, ioCallback))
 		return true;
 	else
 		return false;
@@ -136,10 +137,10 @@ bool ARBConfig::LoadFault(
 bool ARBConfig::LoadOtherPoints(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (inTree.GetName() == TREE_OTHERPTS
-	&& m_OtherPoints.Load(inTree, inVersion, ioErrMsg))
+	&& m_OtherPoints.Load(inTree, inVersion, ioCallback))
 		return true;
 	else
 		return false;
@@ -148,7 +149,7 @@ bool ARBConfig::LoadOtherPoints(
 bool ARBConfig::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -158,24 +159,24 @@ bool ARBConfig::Load(
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
-			m_Actions.Load(element, inVersion, ioErrMsg);
+			m_Actions.Load(element, inVersion, ioCallback);
 		}
 		else if (name == TREE_VENUE)
 		{
 			// Ignore any errors...
-			m_Venues.Load(*this, element, inVersion, ioErrMsg);
+			m_Venues.Load(*this, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_FAULTTYPE)
 		{
 			// Ignore any errors...
 			// This was moved here in version 3.
-			LoadFault(element, inVersion, ioErrMsg);
+			LoadFault(element, inVersion, ioCallback);
 		}
 		else if (name == TREE_OTHERPTS)
 		{
 			// Ignore any errors...
 			// This was moved here in version 3.
-			LoadOtherPoints(element, inVersion, ioErrMsg);
+			LoadOtherPoints(element, inVersion, ioCallback);
 		}
 	}
 	m_Venues.sort();
@@ -205,7 +206,8 @@ void ARBConfig::Default()
 	// advantage of Win32 resources and stashing the default config inside
 	// the program.
 	bool bOk = false;
-	std::string err;
+	std::string errMsg;
+	ARBErrorCallback err(errMsg);
 	Element tree;
 #ifdef WIN32
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), "XML");
@@ -216,7 +218,7 @@ void ARBConfig::Default()
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
 			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			bOk = tree.LoadXMLBuffer(pData, size, err);
+			bOk = tree.LoadXMLBuffer(pData, size, errMsg);
 			FreeResource(hRes);
 		}
 	}
@@ -224,7 +226,7 @@ void ARBConfig::Default()
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	bOk = tree.LoadXMLFile("DefaultConfig.xml", err);
+	bOk = tree.LoadXMLFile("DefaultConfig.xml", errMsg);
 #endif
 	if (bOk && tree.GetName() == "DefaultConfig")
 	{

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -89,12 +90,12 @@ size_t ARBConfigSubLevel::GetSearchStrings(std::set<std::string>& ioStrings) con
 bool ARBConfigSubLevel::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_SUBLEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_SUBLEVEL, ATTRIB_SUBLEVEL_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SUBLEVEL, ATTRIB_SUBLEVEL_NAME));
 		return false;
 	}
 	return true;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-08-11 DRC Added verified-trial info to listing
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-06-06 DRC Added duplicate/cut/paste support for dogs.
@@ -408,7 +409,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			ARBDog* pDog = new ARBDog();
 			if (pDog)
 			{
-				std::string err;
+				CErrorCallback err;
 				if (pDog->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
@@ -430,8 +431,8 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 					}
 				}
-				else if (0 < err.length())
-					AfxMessageBox(err.c_str(), MB_ICONWARNING);
+				else if (0 < err.m_ErrMsg.length())
+					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 				pDog->Release();
 				pDog = NULL;
 			}
@@ -445,7 +446,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			ARBDogRun* pRun = new ARBDogRun();
 			if (pRun)
 			{
-				std::string err;
+				CErrorCallback err;
 				if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
@@ -485,8 +486,8 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						}
 					}
 				}
-				else if (0 < err.length())
-					AfxMessageBox(err.c_str(), MB_ICONWARNING);
+				else if (0 < err.m_ErrMsg.length())
+					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 				pRun->Release();
 				pRun = NULL;
 			}
@@ -500,7 +501,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			ARBDogTrial* pTrial = new ARBDogTrial();
 			if (pTrial)
 			{
-				std::string err;
+				CErrorCallback err;
 				if (pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
@@ -538,8 +539,8 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						}
 					}
 				}
-				else if (0 < err.length())
-					AfxMessageBox(err.c_str(), MB_ICONWARNING);
+				else if (0 < err.m_ErrMsg.length())
+					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 				pTrial->Release();
 			}
 		}

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-04-06 DRC Added op< to ARB_Q.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
@@ -39,6 +40,7 @@
 
 #include <string>
 #include <vector>
+class ARBErrorCallback;
 class Element;
 
 /**
@@ -216,13 +218,13 @@ public:
 	 * Load a Q
 	 * @param inAttrib Name of attribute containing value to parse.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		std::string const& inAttrib,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -309,13 +311,13 @@ public:
 	 * Load a double
 	 * @param inAttrib Name of attribute containing value to parse.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		std::string const& inAttrib,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

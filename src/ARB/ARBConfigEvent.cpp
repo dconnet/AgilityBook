@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
  *                    Update didn't save desc changes if nothing else changed.
  * @li 2004-02-02 DRC Added VerifyEvent.
@@ -116,25 +117,25 @@ bool ARBConfigEvent::Load(
 	ARBConfigDivisionList const& inDivisions,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_EVENT_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME));
 		return false;
 	}
 
 	// Introduced in file version 8.6.
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HAS_TABLE, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HAS_TABLE, VALID_VALUES_BOOL));
 		return false;
 	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL));
 		return false;
 	}
 
@@ -148,7 +149,7 @@ bool ARBConfigEvent::Load(
 		else if (element.GetName() == TREE_SCORING)
 		{
 			// Ignore any errors...
-			m_Scoring.Load(inDivisions, element, inVersion, ioErrMsg);
+			m_Scoring.Load(inDivisions, element, inVersion, ioCallback);
 		}
 	}
 	return true;
@@ -292,10 +293,10 @@ bool ARBConfigEventList::Load(
 	ARBConfigDivisionList const& inDivisions,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigEvent* thing = new ARBConfigEvent();
-	if (!thing->Load(inDivisions, inTree, inVersion, ioErrMsg))
+	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;

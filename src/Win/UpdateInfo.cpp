@@ -36,6 +36,7 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-08-03 DRC Created
  */
 
@@ -285,11 +286,12 @@ void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
 					int nConfig = tree.FindElement(TREE_CONFIG);
 					if (0 <= nConfig)
 					{
+						CErrorCallback err;
 						ARBAgilityRecordBook book;
-						if (!book.GetConfig().Load(tree.GetElement(nConfig), version, errMsg))
+						if (!book.GetConfig().Load(tree.GetElement(nConfig), version, err))
 						{
-							if (0 < errMsg.length())
-								AfxMessageBox(errMsg.c_str(), MB_ICONWARNING);
+							if (0 < err.m_ErrMsg.length())
+								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 						}
 						else
 						{

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-26 DRC Recover from a bug where the title name was the nice name.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -123,12 +124,12 @@ bool ARBDogTitle::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE));
 		return false;
 	}
 	ARBConfigVenue const* pVenue = inConfig.GetVenues().FindVenue(m_Venue);
@@ -137,14 +138,14 @@ bool ARBDogTitle::Load(
 		std::string msg("Unknown venue name: '");
 		msg += m_Venue;
 		msg += "'";
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME));
 		return false;
 	}
 
@@ -158,7 +159,7 @@ bool ARBDogTitle::Load(
 		// that we're hiding.
 		if (inVersion < ARBVersion(8, 5))
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE);
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE));
 			return false;
 		}
 		m_bHidden = true;
@@ -169,14 +170,14 @@ bool ARBDogTitle::Load(
 			inTree.GetAttrib(ATTRIB_TITLE_DATE, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str());
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
 			return false;
 		}
 	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL));
 		return false;
 	}
 
@@ -195,7 +196,7 @@ bool ARBDogTitle::Load(
 			msg += m_Venue;
 			msg += "/";
 			msg += m_Name;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str());
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
 			return false;
 		}
 	}

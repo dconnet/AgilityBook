@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -187,7 +188,7 @@ bool ARBConfigScoring::Load(
 	ARBConfigDivisionList const& inDivisions,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
@@ -198,7 +199,7 @@ bool ARBConfigScoring::Load(
 		inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str()));
 		return false;
 	}
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
@@ -207,21 +208,21 @@ bool ARBConfigScoring::Load(
 		inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str()));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_DIVISION);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_DIVISION));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_LEVEL);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_LEVEL));
 		return false;
 	}
 	if (!inDivisions.VerifyLevel(m_Division, m_Level))
@@ -230,7 +231,7 @@ bool ARBConfigScoring::Load(
 		msg += m_Division;
 		msg += "/";
 		msg += m_Level;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_LEVEL, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_LEVEL, msg.c_str()));
 		return false;
 	}
 
@@ -238,7 +239,7 @@ bool ARBConfigScoring::Load(
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE));
 		return false;
 	}
 	if (attrib == "FaultsThenTime")
@@ -259,7 +260,7 @@ bool ARBConfigScoring::Load(
 		m_Style = eTimePlusFaults;
 	else
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, VALID_VALUES_SCORE);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, VALID_VALUES_SCORE));
 		return false;
 	}
 
@@ -268,25 +269,25 @@ bool ARBConfigScoring::Load(
 	// Not advisable, but it doesn't hurt anything either.
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, VALID_VALUES_BOOL));
 		return false;
 	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, VALID_VALUES_BOOL));
 		return false;
 	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DOUBLEQ, m_bDoubleQ))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DOUBLEQ, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DOUBLEQ, VALID_VALUES_BOOL));
 		return false;
 	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_MACHPTS, m_bMachPts))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_MACHPTS, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_MACHPTS, VALID_VALUES_BOOL));
 		return false;
 	}
 
@@ -301,7 +302,7 @@ bool ARBConfigScoring::Load(
 				m_Note = element.GetValue();
 			else if (element.GetName() == TREE_TITLE_POINTS)
 			{
-				if (!m_TitlePoints.Load(element, inVersion, ioErrMsg))
+				if (!m_TitlePoints.Load(element, inVersion, ioCallback))
 					return false;
 			}
 		}
@@ -314,7 +315,7 @@ bool ARBConfigScoring::Load(
 		short ptsWhenClean = 0;
 		if (Element::eFound != inTree.GetAttrib("Clean", ptsWhenClean))
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_SCORING, "Clean");
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, "Clean"));
 			return false;
 		}
 		if (0 < ptsWhenClean)
@@ -427,10 +428,10 @@ bool ARBConfigScoringList::Load(
 	ARBConfigDivisionList const& inDivisions,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigScoring* thing = new ARBConfigScoring();
-	if (!thing->Load(inDivisions, inTree, inVersion, ioErrMsg))
+	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-11-22 DRC Added FindRegNum().
@@ -117,12 +118,12 @@ bool ARBDogRegNum::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE));
 		return false;
 	}
 
@@ -131,7 +132,7 @@ bool ARBDogRegNum::Load(
 		if (Element::eFound != inTree.GetAttrib("Number", m_Number)
 		|| 0 == m_Number.length())
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, "Number");
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, "Number"));
 			return false;
 		}
 	}
@@ -142,7 +143,7 @@ bool ARBDogRegNum::Load(
 		if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
 		|| 0 == m_Number.length())
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER);
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER));
 			return false;
 		}
 
@@ -153,7 +154,7 @@ bool ARBDogRegNum::Load(
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL));
 		return false;
 	}
 
@@ -161,7 +162,7 @@ bool ARBDogRegNum::Load(
 	{
 		std::string msg(INVALID_VENUE_NAME);
 		msg += m_Venue;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
 		return false;
 	}
 

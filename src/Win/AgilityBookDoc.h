@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-10 DRC Moved import/export into a wizard.
  * @li 2003-10-31 DRC Added import/export calendar, export config.
  * @li 2003-10-22 DRC Added export dtd/xml menu options.
@@ -80,6 +81,14 @@ struct CVenueFilter;
 #define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
 #define UPDATE_OPTIONS			0x1000
 #define UPDATE_NEW_TRIAL		0x2000
+
+class CErrorCallback : public ARBErrorCallback
+{
+public:
+	CErrorCallback();
+	virtual bool OnError(char const* pMsg);
+	std::string m_ErrMsg;
+};
 
 class CAgilityBookDoc : public CDocument
 {

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -119,21 +120,21 @@ size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 bool ARBConfigTitlePoints::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
 		return false;
 	}
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
 		return false;
 	}
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_POINTS_LIFETIME, m_bLifeTime))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_LIFETIME, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_LIFETIME, VALID_VALUES_BOOL));
 		return false;
 	}
 	return true;

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-13 DRC Added ability to hide titles, including unearned ones.
  *                    An unearned title has an invalid date.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -45,6 +46,7 @@
 #include "ARBVector.h"
 class ARBConfig;
 class ARBConfigVenue;
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
@@ -79,14 +81,14 @@ public:
 	 * @param inConfig Configuration for looking up information.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

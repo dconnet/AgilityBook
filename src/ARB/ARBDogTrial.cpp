@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -145,11 +146,11 @@ bool ARBDogTrial::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL);
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL));
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -166,7 +167,7 @@ bool ARBDogTrial::Load(
 		else if (element.GetName() == TREE_CLUB)
 		{
 			// Ignore any errors...
-			m_Clubs.Load(inConfig, element, inVersion, ioErrMsg);
+			m_Clubs.Load(inConfig, element, inVersion, ioCallback);
 		}
 		// Clubs should all be loaded first. We're not going to validate that
 		// though. If it's not true, someone has been messing with the file
@@ -174,7 +175,7 @@ bool ARBDogTrial::Load(
 		else if (element.GetName() == TREE_RUN)
 		{
 			// Ignore any errors...
-			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioErrMsg);
+			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioCallback);
 		}
 	}
 	m_Runs.sort(true);

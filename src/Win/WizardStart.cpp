@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-08-21 DRC Added ability to import dog/trial/run/judge info.
  * @li 2004-02-26 DRC Moved configuration update logic to the doc.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
@@ -307,26 +308,27 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					std::string err;
+					std::string errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile(file.GetPathName(), err))
+					if (!tree.LoadXMLFile(file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
-						if (0 < err.length())
+						if (0 < errMsg.length())
 						{
 							msg += "\n\n";
-							msg += err.c_str();
+							msg += errMsg.c_str();
 						}
 						AfxMessageBox(msg, MB_ICONEXCLAMATION);
 					}
 					else
 					{
+						CErrorCallback err;
 						ARBAgilityRecordBook book;
 						if (book.Load(tree, false, false, true, true, true, err))
 						{
-							if (0 < err.length())
-								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
+							if (0 < err.m_ErrMsg.length())
+								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
 							int countDog = 0;
 							int countRegNums = 0;
 							int countExistingPts = 0;
@@ -524,8 +526,8 @@ BOOL CWizardStart::OnWizardFinish()
 							AfxMessageBox(str, MB_ICONINFORMATION);
 							bOk = true;
 						}
-						else if (0 < err.length())
-							AfxMessageBox(err.c_str(), MB_ICONWARNING);
+						else if (0 < err.m_ErrMsg.length())
+							AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 					}
 				}
 			}
@@ -542,26 +544,27 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					std::string err;
+					std::string errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile(file.GetPathName(), err))
+					if (!tree.LoadXMLFile(file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
-						if (0 < err.length())
+						if (0 < errMsg.length())
 						{
 							msg += "\n\n";
-							msg += err.c_str();
+							msg += errMsg.c_str();
 						}
 						AfxMessageBox(msg, MB_ICONEXCLAMATION);
 					}
 					else
 					{
+						CErrorCallback err;
 						ARBAgilityRecordBook book;
 						if (book.Load(tree, true, false, false, false, false, err))
 						{
-							if (0 < err.length())
-								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
+							if (0 < err.m_ErrMsg.length())
+								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
 							int count = 0;
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
 							{
@@ -586,8 +589,8 @@ BOOL CWizardStart::OnWizardFinish()
 							AfxMessageBox(str, MB_ICONINFORMATION);
 							bOk = true;
 						}
-						else if (0 < err.length())
-							AfxMessageBox(err.c_str(), MB_ICONWARNING);
+						else if (0 < err.m_ErrMsg.length())
+							AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 					}
 				}
 			}
@@ -629,26 +632,27 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					std::string err;
+					std::string errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile(file.GetPathName(), err))
+					if (!tree.LoadXMLFile(file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
-						if (0 < err.length())
+						if (0 < errMsg.length())
 						{
 							msg += "\n\n";
-							msg += err.c_str();
+							msg += errMsg.c_str();
 						}
 						AfxMessageBox(msg, MB_ICONEXCLAMATION);
 					}
 					else
 					{
+						CErrorCallback err;
 						ARBAgilityRecordBook book;
 						if (book.Load(tree, false, true, false, false, false, err))
 						{
-							if (0 < err.length())
-								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
+							if (0 < err.m_ErrMsg.length())
+								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
 							int count = 0;
 							for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 							{
@@ -670,8 +674,8 @@ BOOL CWizardStart::OnWizardFinish()
 							AfxMessageBox(str, MB_ICONINFORMATION);
 							bOk = true;
 						}
-						else if (0 < err.length())
-							AfxMessageBox(err.c_str(), MB_ICONWARNING);
+						else if (0 < err.m_ErrMsg.length())
+							AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 					}
 				}
 			}

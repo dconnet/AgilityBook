@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-03-30 DRC Added links.
@@ -236,12 +237,12 @@ bool ARBDogRun::Load(
 	ARBDogClubList const& inClubs,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
 	case Element::eNotFound:
-		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
 		return false;
 	case Element::eInvalidValue:
 		{
@@ -249,7 +250,7 @@ bool ARBDogRun::Load(
 			inTree.GetAttrib(ATTRIB_RUN_DATE, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str());
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
 			return false;
 		}
 	}
@@ -257,14 +258,14 @@ bool ARBDogRun::Load(
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL));
 		return false;
 	}
 
@@ -274,13 +275,13 @@ bool ARBDogRun::Load(
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
 		return false;
 	}
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
-	ARBConfigScoring const* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today(), ioErrMsg);
+	ARBConfigScoring const* pEvent = inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, ARBDate::Today(), ioCallback);
 	if (!pEvent)
 		return false;
 
@@ -303,14 +304,14 @@ bool ARBDogRun::Load(
 		else if (name == TREE_PARTNER)
 		{
 			// Ignore any errors...
-			m_Partners.Load(inConfig, element, inVersion, ioErrMsg);
+			m_Partners.Load(inConfig, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_BY_TIME
 		|| name == TREE_BY_OPENCLOSE
 		|| name == TREE_BY_POINTS)
 		{
 			// Ignore any errors...
-			m_Scoring.Load(pEvent, element, inVersion, ioErrMsg);
+			m_Scoring.Load(pEvent, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_PLACEMENT)
 		{
@@ -318,14 +319,14 @@ bool ARBDogRun::Load(
 			if (Element::eFound != element.GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
-				ioErrMsg += ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q);
+				ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
 				return false;
 			}
-			if (!m_Q.Load(attrib, inVersion, ioErrMsg))
+			if (!m_Q.Load(attrib, inVersion, ioCallback))
 			{
 				std::string msg(VALID_VALUES);
 				msg += ARB_Q::GetValidTypes();
-				ioErrMsg += ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str());
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
 				return false;
 			}
 			element.GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
@@ -336,19 +337,19 @@ bool ARBDogRun::Load(
 				Element const& subElement = element.GetElement(idx);
 				if (subElement.GetName() == TREE_PLACEMENT_OTHERPOINTS)
 				{
-					m_OtherPoints.Load(inConfig, subElement, inVersion, ioErrMsg);
+					m_OtherPoints.Load(inConfig, subElement, inVersion, ioCallback);
 				}
 			}
 		}
 		else if (name == TREE_NOTES)
 		{
 			// Ignore any errors...
-			m_Notes.Load(inConfig, element, inVersion, ioErrMsg);
+			m_Notes.Load(inConfig, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_REF_RUN)
 		{
 			// Ignore any errors...
-			m_RefRuns.Load(inConfig, element, inVersion, ioErrMsg);
+			m_RefRuns.Load(inConfig, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_RUN_LINK)
 		{
@@ -590,10 +591,10 @@ bool ARBDogRunList::Load(
 	ARBDogClubList const& inClubs,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	ARBDogRun* thing = new ARBDogRun();
-	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioErrMsg))
+	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -106,19 +107,19 @@ size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 bool ARBConfigOtherPoints::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
 		return false;
 	}
 	std::string attrib;
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
 		return false;
 	}
 	if (attrib == "All")
@@ -135,7 +136,7 @@ bool ARBConfigOtherPoints::Load(
 		msg += attrib;
 		msg += "\n";
 		msg += VALID_VALUES_OTHERPT;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;
 	}
 	m_Desc = inTree.GetValue();

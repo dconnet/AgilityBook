@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -178,12 +179,12 @@ bool ARBDog::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME));
 		return false;
 	}
 
@@ -193,7 +194,7 @@ bool ARBDog::Load(
 		inTree.GetAttrib(ATTRIB_DOG_DOB, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str()));
 		return false;
 	}
 
@@ -203,7 +204,7 @@ bool ARBDog::Load(
 		inTree.GetAttrib(ATTRIB_DOG_DECEASED, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str()));
 		return false;
 	}
 
@@ -225,22 +226,22 @@ bool ARBDog::Load(
 		else if (element.GetName() == TREE_EXISTING_PTS)
 		{
 			// Ignore any errors...
-			m_ExistingPoints.Load(inConfig, element, inVersion, ioErrMsg);
+			m_ExistingPoints.Load(inConfig, element, inVersion, ioCallback);
 		}
 		else if (element.GetName() == TREE_REG_NUM)
 		{
 			// Ignore any errors...
-			m_RegNums.Load(inConfig, element, inVersion, ioErrMsg);
+			m_RegNums.Load(inConfig, element, inVersion, ioCallback);
 		}
 		else if (element.GetName() == TREE_TITLE)
 		{
 			// Ignore any errors...
-			m_Titles.Load(inConfig, element, inVersion, ioErrMsg);
+			m_Titles.Load(inConfig, element, inVersion, ioCallback);
 		}
 		else if (element.GetName() == TREE_TRIAL)
 		{
 			// Ignore any errors...
-			m_Trials.Load(inConfig, element, inVersion, ioErrMsg);
+			m_Trials.Load(inConfig, element, inVersion, ioCallback);
 		}
 	}
 	m_ExistingPoints.sort();

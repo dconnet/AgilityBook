@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-09-01 DRC Fix a file that may have been corrupted (see history.txt)
  * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
@@ -156,7 +157,7 @@ bool ARBDogRunScoring::Load(
 	ARBConfigScoring const* inEvent,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	std::string attrib;
 
@@ -200,7 +201,7 @@ bool ARBDogRunScoring::Load(
 			{
 				if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
 				{
-					ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, VALID_VALUES_BOOL);
+					ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, VALID_VALUES_BOOL));
 					// Report the error, but keep going.
 					m_Table = false;
 				}

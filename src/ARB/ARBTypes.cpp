@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
@@ -124,7 +125,7 @@ std::string ARB_Q::str() const
 bool ARB_Q::Load(
 	std::string const& inAttrib,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
@@ -175,7 +176,7 @@ std::string ARBDouble::str() const
 bool ARBDouble::Load(
 	std::string const& inAttrib,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (0 < inAttrib.length())
 		m_Val = strtod(inAttrib.c_str(), NULL);
