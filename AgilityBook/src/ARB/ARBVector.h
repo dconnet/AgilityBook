@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-16 DRC Made copy ctor and operator= safer.
  * @li 2004-01-25 DRC Added Move().
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -82,12 +83,17 @@ public:
 	 */
 	ARBVector(const ARBVector& rhs)
 	{
-		clear();
+		// Make a copy first. Then if we throw an exception during
+		// the copy, we won't clobber the existing data.
+		ARBVector<ARBThing> tmp;
+		tmp.reserve(rhs.size());
 		for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 		{
-			if ((*iter))
-				push_back(new ARBThing(*(*iter)));
+			ARBThing* pItem = *iter;
+			if (pItem)
+				tmp.push_back(new ARBThing(*pItem));
 		}
+		swap(tmp);
 	}
 
 	virtual ~ARBVector()
@@ -104,12 +110,14 @@ public:
 	{
 		if (this != &rhs)
 		{
-			clear();
+			ARBVector<ARBThing> tmp;
+			tmp.reserve(rhs.size());
 			for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 			{
 				if ((*iter))
-					push_back(new ARBThing(*(*iter)));
+					tmp.push_back(new ARBThing(*(*iter)));
 			}
+			swap(tmp);
 		}
 		return *this;
 	}
