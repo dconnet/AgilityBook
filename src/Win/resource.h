@@ -27,6 +27,7 @@
 #define IDI_HIDDEN                      162
 #define IDI_HEADER_UP                   163
 #define IDI_HEADER_DOWN                 164
+#define IDI_HELP                        165
 #define IDD_ABOUTBOX                    200
 #define IDD_NAME                        201
 #define IDD_LISTCTRL                    203

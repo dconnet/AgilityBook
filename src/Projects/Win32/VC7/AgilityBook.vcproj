@@ -694,6 +694,9 @@
 				RelativePath="..\..\..\Win\res\HdrUp.ico">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\res\help.ico">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\res\hidden.ico">
 			</File>
 			<File
