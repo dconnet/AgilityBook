@@ -34,6 +34,8 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-03-31 DRC Only prompt to merge config if config version number is
+ *                    greater (was simply checking for not-equal)
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  *                    Added menu handlers for 'Show Hidden Titles' (oops)
  * @li 2004-02-26 DRC Moved config update here, test doc for current config.
@@ -662,7 +664,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 	AfxGetApp()->WriteProfileString("Settings", "LastFile", lpszPathName);
 
-	if (GetCurrentConfigVersion() != m_Records.GetConfig().GetVersion())
+	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion())
 	{
 		if (IDYES == AfxMessageBox("The configuration has been updated. Would you like to merge the new one with your data?", MB_ICONQUESTION | MB_YESNO))
 		{
