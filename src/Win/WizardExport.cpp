@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Fixed a bug exporting the training log.
  * @li 2003-12-10 DRC Created
  */
 
@@ -510,7 +511,7 @@ void CWizardExport::UpdatePreview()
 			m_ctrlPreview.AddString(data);
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 			{
-				CString data;
+				data.Empty();
 				const ARBCalendar* pCal = *iterCal;
 				for (size_t idx = 0; idx < columns.size(); ++idx)
 				{
@@ -587,6 +588,7 @@ void CWizardExport::UpdatePreview()
 			m_ctrlPreview.AddString(data);
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
 			{
+				data.Empty();
 				const ARBTraining* pLog = *iterLog;
 				for (size_t idx = 0; idx < columns.size(); ++idx)
 				{
