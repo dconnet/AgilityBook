@@ -31,8 +31,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-29 DRC Created default column orders.
+ * @li 2003-12-11 DRC Added options for import/export wizard.
  * @li 2003-10-09 DRC Added *etViewRunsByTrial.
- * @li 2003-19-05 DRC Removed registry entry: "Calendar"/"List" (boolean)
  */
 
 #include "stdafx.h"
@@ -42,6 +43,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
+#include "DlgAssignColumns.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -800,7 +802,7 @@ void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, con
 	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
 }
 
-void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& values)
+void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& outValues)
 {
 	CString section;
 	switch (eOrder)
@@ -812,8 +814,13 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std:
 	case eCalExport:	section = "ExportCal"; break;
 	case eLogImport:	section = "ImportLog"; break;
 	case eLogExport:	section = "ExportLog"; break;
+	case eViewTree:
+	case eViewRuns:
+	case eViewCal:
+	case eViewLog:
+		section = "Columns"; break;
 	}
-	values.clear();
+	outValues.clear();
 	CString item;
 	item.Format("col%d", idxColumn);
 	CString data = AfxGetApp()->GetProfileString(section, item, "");
@@ -821,18 +828,191 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std:
 	while (0 <= idx)
 	{
 		int val = atol((LPCTSTR)data);
-		values.push_back(val);
+		outValues.push_back(val);
 		data = data.Mid(idx+1);
 		idx = data.Find(',');
 	}
 	if (0 < data.GetLength())
 	{
 		int val = atol((LPCTSTR)data);
-		values.push_back(val);
+		outValues.push_back(val);
+	}
+	if (0 == outValues.size())
+	{
+		switch (eOrder)
+		{
+		default:
+			break;
+		case eRunsImport:
+		case eRunsExport:
+			switch (idxColumn)
+			{
+			case IO_TYPE_RUNS_FAULTS_TIME:
+				outValues.push_back(IO_RUNS_LOCATION);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_CLUB);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_COURSE_FAULTS);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_YARDS);
+				outValues.push_back(IO_RUNS_YPS);
+				outValues.push_back(IO_RUNS_SCT);
+				outValues.push_back(IO_RUNS_TOTAL_FAULTS);
+				outValues.push_back(IO_RUNS_SCORE);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_Q);
+				break;
+
+			case IO_TYPE_RUNS_TIME_FAULTS:
+				outValues.push_back(IO_RUNS_DATE);
+				outValues.push_back(IO_RUNS_LOCATION);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_CLUB);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_COURSE_FAULTS);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_YARDS);
+				outValues.push_back(IO_RUNS_YPS);
+				outValues.push_back(IO_RUNS_SCT);
+				outValues.push_back(IO_RUNS_TOTAL_FAULTS);
+				outValues.push_back(IO_RUNS_SCORE);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_Q);
+				break;
+
+			case IO_TYPE_RUNS_OPEN_CLOSE:
+				outValues.push_back(IO_RUNS_DATE);
+				outValues.push_back(IO_RUNS_LOCATION);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_CLUB);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_COURSE_FAULTS);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_REQ_OPENING);
+				outValues.push_back(IO_RUNS_REQ_CLOSING);
+				outValues.push_back(IO_RUNS_OPENING);
+				outValues.push_back(IO_RUNS_CLOSING);
+				outValues.push_back(IO_RUNS_SCORE);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_Q);
+				break;
+
+			case IO_TYPE_RUNS_POINTS:
+				outValues.push_back(IO_RUNS_DATE);
+				outValues.push_back(IO_RUNS_LOCATION);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_CLUB);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_COURSE_FAULTS);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_REQ_POINTS);
+				outValues.push_back(-1);
+				outValues.push_back(IO_RUNS_POINTS);
+				outValues.push_back(-1);
+				outValues.push_back(IO_RUNS_SCORE);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_Q);
+
+				break;
+			}
+			break;
+		case eCalImport:
+		case eCalExport:
+			if (IO_TYPE_CALENDAR == idxColumn)
+			{
+				outValues.push_back(IO_CAL_START_DATE);
+				outValues.push_back(IO_CAL_END_DATE);
+				outValues.push_back(IO_CAL_TENTATIVE);
+				outValues.push_back(IO_CAL_ENTERED);
+				outValues.push_back(IO_CAL_VENUE);
+				outValues.push_back(IO_CAL_LOCATION);
+				outValues.push_back(IO_CAL_CLUB);
+				outValues.push_back(IO_CAL_OPENS);
+				outValues.push_back(IO_CAL_CLOSES);
+				outValues.push_back(IO_CAL_NOTES);
+			}
+			break;
+		case eLogImport:
+		case eLogExport:
+			if (IO_TYPE_TRAINING == idxColumn)
+			{
+				outValues.push_back(IO_LOG_DATE);
+				outValues.push_back(IO_LOG_NAME);
+				outValues.push_back(IO_LOG_NOTES);
+			}
+			break;
+		case eViewTree:
+			if (IO_TYPE_VIEW_TREE == idxColumn)
+			{
+			}
+			break;
+		case eViewRuns:
+			if (IO_TYPE_VIEW_RUNS_LIST == idxColumn)
+			{
+				outValues.push_back(IO_RUNS_Q);
+				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_DATE);
+				outValues.push_back(IO_RUNS_VENUE);
+				outValues.push_back(IO_RUNS_EVENT);
+				outValues.push_back(IO_RUNS_DIVISION);
+				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_PLACE);
+				outValues.push_back(IO_RUNS_IN_CLASS);
+				outValues.push_back(IO_RUNS_DOGSQD);
+				outValues.push_back(IO_RUNS_COMMENTS);
+			}
+			break;
+		case eViewCal:
+			if (IO_TYPE_VIEW_CALENDAR_LIST == idxColumn)
+			{
+				outValues.push_back(IO_CAL_START_DATE);
+				outValues.push_back(IO_CAL_END_DATE);
+				outValues.push_back(IO_CAL_VENUE);
+				outValues.push_back(IO_CAL_LOCATION);
+				outValues.push_back(IO_CAL_CLUB);
+				outValues.push_back(IO_CAL_OPENS);
+				outValues.push_back(IO_CAL_CLOSES);
+				outValues.push_back(IO_CAL_NOTES);
+			}
+			break;
+		case eViewLog:
+			if (IO_TYPE_VIEW_TRAINING_LIST == idxColumn)
+			{
+				outValues.push_back(IO_LOG_DATE);
+				outValues.push_back(IO_LOG_NAME);
+				outValues.push_back(IO_LOG_NOTES);
+			}
+			break;
+		}
 	}
 }
 
-void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& values)
+void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& inValues)
 {
 	CString section;
 	switch (eOrder)
@@ -844,12 +1024,17 @@ void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, int idxColumn, cons
 	case eCalExport:	section = "ExportCal"; break;
 	case eLogImport:	section = "ImportLog"; break;
 	case eLogExport:	section = "ExportLog"; break;
+	case eViewTree:
+	case eViewRuns:
+	case eViewCal:
+	case eViewLog:
+		section = "Columns"; break;
 	}
 	CString item;
 	CString data;
-	for (size_t i = 0; i < values.size(); ++i)
+	for (size_t i = 0; i < inValues.size(); ++i)
 	{
-		item.Format("%d", values[i]);
+		item.Format("%d", inValues[i]);
 		if (0 < i)
 			data += ",";
 		data += item;

@@ -47,7 +47,11 @@
 #define IO_TYPE_RUNS_POINTS			3
 #define IO_TYPE_CALENDAR			4
 #define IO_TYPE_TRAINING			5
-#define IO_TYPE_MAX					6
+#define IO_TYPE_VIEW_TREE			6
+#define IO_TYPE_VIEW_RUNS_LIST		7
+#define IO_TYPE_VIEW_CALENDAR_LIST	8
+#define IO_TYPE_VIEW_TRAINING_LIST	9
+#define IO_TYPE_MAX					10
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1

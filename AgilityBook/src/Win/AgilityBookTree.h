@@ -154,6 +154,7 @@ protected:
 	afx_msg void OnCollapse();
 	afx_msg void OnUpdateCollapseAll(CCmdUI* pCmdUI);
 	afx_msg void OnCollapseAll();
+	afx_msg void OnViewCustomize();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

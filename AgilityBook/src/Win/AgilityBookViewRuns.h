@@ -75,6 +75,7 @@ public:
 
 private:
 	CAgilityBookViewRunsData* GetItemData(int index) const;
+	void SetupColumns();
 	void LoadData();
 
 protected:
@@ -125,6 +126,7 @@ protected:
 	afx_msg void OnAgilityNewRun();
 	afx_msg void OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityDeleteRun();
+	afx_msg void OnViewCustomize();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

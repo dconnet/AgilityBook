@@ -50,6 +50,7 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgFind.h"
 #include "MainFrm.h"
@@ -230,6 +231,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_TRIAL, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_RUN, OnDogCmd)
+	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
@@ -937,4 +939,13 @@ void CAgilityBookTree::OnCollapseAll()
 	HTREEITEM hItem = GetTreeCtrl().GetSelectedItem();
 	ExpandAll(GetTreeCtrl(), hItem, TVE_COLLAPSE);
 	GetTreeCtrl().EnsureVisible(hItem);
+}
+
+void CAgilityBookTree::OnViewCustomize()
+{
+	CDlgAssignColumns dlg(CAgilityBookOptions::eViewTree);
+	if (IDOK == dlg.DoModal())
+	{
+		Invalidate();
+	}
 }

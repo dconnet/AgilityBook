@@ -48,6 +48,7 @@
 #include "AgilityBookTreeData.h"
 #include "AgilityBookViewCalendar.h"
 #include "ARBCalendar.h"
+#include "DlgAssignColumns.h"
 #include "DlgCalendar.h"
 #include "DlgFind.h"
 #include "DlgSelectDog.h"
@@ -262,6 +263,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnCalendarNew)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_CALENDAR, OnUpdateCalendarDelete)
 	ON_COMMAND(ID_AGILITY_DELETE_CALENDAR, OnCalendarDelete)
+	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -302,18 +304,7 @@ int CAgilityBookViewCalendarList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	GetListCtrl().SetImageList(&m_ImageList, LVSIL_SMALL);
 
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < scNumColumns; ++i)
-	{
-		CString str;
-		str.LoadString(scColumns[i].col);
-		col.fmt = scColumns[i].fmt;
-		col.pszText = str.GetBuffer(0);
-		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
-		str.ReleaseBuffer();
-	}
+	SetupColumns();
 
 	return 0;
 }
@@ -384,6 +375,22 @@ CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int inde
 	if (0 <= index && index < GetListCtrl().GetItemCount())
 		pData = reinterpret_cast<CAgilityBookViewCalendarData*>(GetListCtrl().GetItemData(index));
 	return pData;
+}
+
+void CAgilityBookViewCalendarList::SetupColumns()
+{
+	LV_COLUMN col;
+	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+	for (int i = 0; i < scNumColumns; ++i)
+	{
+		CString str;
+		str.LoadString(scColumns[i].col);
+		col.fmt = scColumns[i].fmt;
+		col.pszText = str.GetBuffer(0);
+		col.iSubItem = i;
+		GetListCtrl().InsertColumn(i, &col);
+		str.ReleaseBuffer();
+	}
 }
 
 void CAgilityBookViewCalendarList::LoadData()
@@ -775,5 +782,15 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 			cal->Release();
 		}
+	}
+}
+
+void CAgilityBookViewCalendarList::OnViewCustomize()
+{
+	CDlgAssignColumns dlg(CAgilityBookOptions::eViewCal);
+	if (IDOK == dlg.DoModal())
+	{
+		SetupColumns();
+		LoadData();
 	}
 }

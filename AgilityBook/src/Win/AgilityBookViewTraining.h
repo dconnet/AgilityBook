@@ -76,6 +76,7 @@ public:
 
 private:
 	CAgilityBookViewTrainingData* GetItemData(int index) const;
+	void SetupColumns();
 	void LoadData();
 
 protected:
@@ -119,6 +120,7 @@ protected:
 	afx_msg void OnTrainingNew();
 	afx_msg void OnUpdateTrainingDelete(CCmdUI* pCmdUI);
 	afx_msg void OnTrainingDelete();
+	afx_msg void OnViewCustomize();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

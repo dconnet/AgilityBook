@@ -52,6 +52,7 @@
 #include "AgilityBookTree.h"
 #include "AgilityBookTreeData.h"
 #include "ARBTypes.h"
+#include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "MainFrm.h"
 
@@ -321,6 +322,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
+	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -351,18 +353,7 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < scNumColumns; ++i)
-	{
-		CString str;
-		str.LoadString(scColumns[i].col);
-		col.fmt = scColumns[i].fmt;
-		col.pszText = str.GetBuffer(0);
-		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
-		str.ReleaseBuffer();
-	}
+	SetupColumns();
 
 	return 0;
 }
@@ -434,6 +425,22 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 	if (0 <= index && index < GetListCtrl().GetItemCount())
 		pData = reinterpret_cast<CAgilityBookViewRunsData*>(GetListCtrl().GetItemData(index));
 	return pData;
+}
+
+void CAgilityBookViewRuns::SetupColumns()
+{
+	LV_COLUMN col;
+	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+	for (int i = 0; i < scNumColumns; ++i)
+	{
+		CString str;
+		str.LoadString(scColumns[i].col);
+		col.fmt = scColumns[i].fmt;
+		col.pszText = str.GetBuffer(0);
+		col.iSubItem = i;
+		GetListCtrl().InsertColumn(i, &col);
+		str.ReleaseBuffer();
+	}
 }
 
 void CAgilityBookViewRuns::LoadData()
@@ -763,4 +770,14 @@ void CAgilityBookViewRuns::OnAgilityDeleteRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnViewCustomize()
+{
+	CDlgAssignColumns dlg(CAgilityBookOptions::eViewRuns);
+	if (IDOK == dlg.DoModal())
+	{
+		SetupColumns();
+		LoadData();
+	}
 }

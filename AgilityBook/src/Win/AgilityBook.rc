@@ -207,6 +207,7 @@ BEGIN
     POPUP "&View"
     BEGIN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
+        MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
         MENUITEM "Show &Newest Runs First",     ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
         MENUITEM SEPARATOR
