@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-09 DRC Added tooltips to header control.
  * @li 2004-09-03 DRC Using the sort icon forced alignment to left.
  * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
  * @li 2003-11-22 DRC When copying, only create a header if more than 1 line
@@ -111,19 +112,25 @@ static void GetPrintLineImp(CListCtrl& list, int nItem, CStringArray& line)
 
 BEGIN_MESSAGE_MAP(CHeaderCtrl2, CHeaderCtrl)
 	//{{AFX_MSG_MAP(CHeaderCtrl2)
+	ON_WM_SIZE()
+	ON_NOTIFY_REFLECT(HDN_ITEMCHANGED, OnHdnItemChanged)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CHeaderCtrl2::CHeaderCtrl2()
+	: fBufferSize(300)
+	, fpBuffer(NULL)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
 	CWinApp* app = AfxGetApp();
 	m_sortAscending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_UP));
 	m_sortDescending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_DOWN));
+	fpBuffer = new char[fBufferSize];
 }
 
 CHeaderCtrl2::~CHeaderCtrl2()
 {
+	delete [] fpBuffer;
 }
 
 void CHeaderCtrl2::PreSubclassWindow()
@@ -133,6 +140,90 @@ void CHeaderCtrl2::PreSubclassWindow()
 #if _MSC_VER >= 1300
 	SetBitmapMargin(0);
 #endif
+	m_ToolTip.Create(this);
+}
+
+BOOL CHeaderCtrl2::PreTranslateMessage(MSG* pMsg)
+{
+	m_ToolTip.RelayEvent(pMsg);
+	return CHeaderCtrl::PreTranslateMessage(pMsg);
+}
+
+void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
+{
+	CHeaderCtrl::OnSize(nType, cx, cy);
+	FixTooltips();
+}
+
+void CHeaderCtrl2::OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	if (phdr->pitem->mask & HDI_WIDTH)
+		SetColumnTip(phdr->iItem);
+	*pResult = 0;
+}
+
+void CHeaderCtrl2::FixTooltips()
+{
+	if (::IsWindow(m_ToolTip.GetSafeHwnd()))
+	{
+		// Get rid of all existing tips.
+		int nCols = m_ToolTip.GetToolCount();
+		while (0 < nCols)
+		{
+			m_ToolTip.DelTool(this, nCols);
+			--nCols;
+		}
+		// Now add them back.
+		nCols = GetItemCount();
+		for (int iCol = 0; iCol < nCols; ++iCol)
+		{
+			SetColumnTip(iCol);
+		}
+	}
+}
+
+void CHeaderCtrl2::SetColumnTip(int iCol)
+{
+	CClientDC dc(this);
+	CFont* pOldFont = dc.SelectObject(GetFont());
+
+	HDITEM item;
+	item.mask = HDI_TEXT;
+	item.pszText = fpBuffer;
+	item.cchTextMax = fBufferSize;
+	GetItem(iCol, &item);
+	while (lstrlen(fpBuffer) == fBufferSize - 1)
+	{
+		delete [] fpBuffer;
+		fBufferSize *= 2;
+		fpBuffer = new char[fBufferSize];
+		item.pszText = fpBuffer;
+		item.cchTextMax = fBufferSize;
+		GetItem(iCol, &item);
+	}
+	bool bDelTip = true;
+	if (fpBuffer && *fpBuffer)
+	{
+		CRect r;
+		GetItemRect(iCol, r);
+		r.DeflateRect(6, 0); // Deflate to allow for the padding. 6 is just an observed number on each side
+		CRect r2(r);
+		CString str(fpBuffer);
+		dc.DrawText(str, r2, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
+		if (r2.Width() > r.Width())
+		{
+			// A tooltip can only display 260 chars.
+			if (str.GetLength() >= 260)
+				str = str.Right(259);
+			m_ToolTip.AddTool(this, str, r, iCol+1);
+			bDelTip = false;
+		}
+	}
+	if (bDelTip)
+		m_ToolTip.DelTool(this, iCol+1);
+
+	dc.SelectObject(pOldFont);
 }
 
 CHeaderCtrl2::SortOrder CHeaderCtrl2::GetSortOrder(int iCol) const
@@ -177,10 +268,6 @@ void CHeaderCtrl2::Sort(int iCol, SortOrder eOrder)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CHeaderCtrl2 message handlers
-
-
-/////////////////////////////////////////////////////////////////////////////
 // CListCtrl2
 
 BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
@@ -205,8 +292,14 @@ void CListCtrl2::Init()
 		{
 			m_bInit = true;
 			m_SortHeader.SubclassWindow(GetHeaderCtrl()->GetSafeHwnd());
+			m_SortHeader.FixTooltips();
 		}
 	}
+}
+
+void CListCtrl2::FixTooltips()
+{
+	m_SortHeader.FixTooltips();
 }
 
 int CListCtrl2::HeaderItemCount()
@@ -303,8 +396,14 @@ void CListView2::Init()
 		{
 			m_bInit = true;
 			m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
+			m_SortHeader.FixTooltips();
 		}
 	}
+}
+
+void CListView2::FixTooltips()
+{
+	m_SortHeader.FixTooltips();
 }
 
 int CListView2::HeaderItemCount()

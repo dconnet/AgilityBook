@@ -39,6 +39,7 @@
 
 #include "AgilityBookOptions.h"
 #include "DlgBasePropertyPage.h"
+#include "ListCtrl.h"
 class CAgilityBookDoc;
 class CWizard;
 
@@ -62,7 +63,7 @@ private:
 	CButton	m_ctrlAssign;
 	CComboBox	m_ctrlDateFormat;
 	CStatic	m_ctrlPreviewFile;
-	CListCtrl	m_ctrlPreview;
+	CListCtrl2	m_ctrlPreview;
 	//}}AFX_DATA
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;

@@ -212,6 +212,7 @@ void CDlgDogPoints::SetColumnHeaders()
 		m_ctrlPoints.HeaderSort(i, m_sortPoints.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
+	m_ctrlPoints.FixTooltips();
 }
 
 void CDlgDogPoints::ListExistingPoints()

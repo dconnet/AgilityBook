@@ -333,11 +333,11 @@ BOOL CWizardStart::OnWizardFinish()
 							int countTitles = 0;
 							int countTrials = 0;
 							int countJudges = 0;
-							for (ARBDogList::iterator iter = book.GetDogs().begin();
-								iter != book.GetDogs().end();
-								++iter)
+							for (ARBDogList::iterator iterDog = book.GetDogs().begin();
+								iterDog != book.GetDogs().end();
+								++iterDog)
 							{
-								ARBDog* pDog = *iter;
+								ARBDog* pDog = *iterDog;
 								ARBDog* pExisting = NULL;
 								for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin();
 									iterDog != m_pDoc->GetDogs().end();
@@ -438,11 +438,11 @@ BOOL CWizardStart::OnWizardFinish()
 									}
 								}
 							}
-							for (ARBInfoJudgeList::const_iterator iter = book.GetInfo().GetJudgeInfo().begin();
-								iter != book.GetInfo().GetJudgeInfo().end();
-								++iter)
+							for (ARBInfoJudgeList::const_iterator iterJudge = book.GetInfo().GetJudgeInfo().begin();
+								iterJudge != book.GetInfo().GetJudgeInfo().end();
+								++iterJudge)
 							{
-								ARBInfoJudge* pJudge = *iter;
+								ARBInfoJudge* pJudge = *iterJudge;
 								// If this fails, it already exists.
 								if (m_pDoc->GetARB().GetInfo().GetJudgeInfo().AddJudge(pJudge))
 								{

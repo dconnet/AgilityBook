@@ -208,6 +208,7 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 		m_ctrlTitles.HeaderSort(i, m_sortTitles.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
+	m_ctrlTitles.FixTooltips();
 }
 
 void CDlgDogTitles::ListTitles()

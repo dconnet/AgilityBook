@@ -156,6 +156,7 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		col.iSubItem = i;
 		GetListCtrl().InsertColumn(i, &col);
 	}
+	FixTooltips();
 
 	return 0;
 }

@@ -53,6 +53,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookViewRuns.h"
 
+#include <algorithm>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
@@ -1146,6 +1147,7 @@ void CAgilityBookViewRuns::SetupColumns()
 			str.ReleaseBuffer();
 		}
 	}
+	FixTooltips();
 }
 
 void CAgilityBookViewRuns::LoadData()
@@ -1233,9 +1235,15 @@ void CAgilityBookViewRuns::LoadData()
 
 	SORT_RUN_INFO info;
 	info.pThis = this;
+	vector<int>::iterator iter = find(m_Columns.begin(), m_Columns.end(), IO_RUNS_DATE);
+	if (iter != m_Columns.end())
+		m_SortColumn = *iter;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
-	HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eAscending);
+	if (0 == m_SortColumn)
+		HeaderSort(0, CHeaderCtrl2::eNoSort);
+	else
+		HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eAscending);
 
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);
@@ -1307,17 +1315,20 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eNoSort);
-	int nBackwards = 1;
-	if (m_SortColumn == pNMListView->iSubItem)
-		nBackwards = -1;
-	m_SortColumn = pNMListView->iSubItem * nBackwards;
-	SORT_RUN_INFO info;
-	info.pThis = this;
-	info.nCol = m_SortColumn;
-	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
-	HeaderSort(abs(m_SortColumn),
-		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
+	if (0 != pNMListView->iSubItem)
+	{
+		HeaderSort(abs(m_SortColumn), CHeaderCtrl2::eNoSort);
+		int nBackwards = 1;
+		if (m_SortColumn == pNMListView->iSubItem)
+			nBackwards = -1;
+		m_SortColumn = pNMListView->iSubItem * nBackwards;
+		SORT_RUN_INFO info;
+		info.pThis = this;
+		info.nCol = m_SortColumn;
+		GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+		HeaderSort(abs(m_SortColumn),
+			nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
+	}
 	*pResult = 0;
 }
 
