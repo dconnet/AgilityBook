@@ -138,8 +138,10 @@ IMPLEMENT_DYNCREATE(CListView2, CListView)
 
 BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECT_ALL, OnUpdateEditSelectAll)
 	ON_COMMAND(ID_EDIT_SELECT_ALL, OnEditSelectAll)
 	//}}AFX_MSG_MAP
@@ -314,6 +316,11 @@ void CListView2::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 	}
 }
 
+void CListView2::OnUpdateEditCut(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(FALSE);
+}
+
 void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -373,6 +380,11 @@ void CListView2::OnEditCopy()
 
 		CloseClipboard();
 	}
+}
+
+void CListView2::OnUpdateEditPaste(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(FALSE);
 }
 
 void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
