@@ -169,6 +169,7 @@
 #define ATTRIB_TITLE_NAME					"Name"
 #define ATTRIB_TITLE_DATE					"Date"
 #define ATTRIB_TITLE_RECEIVED				"isReceived"
+#define ATTRIB_TITLE_HIDDEN					"isHidden"
 #define ATTRIB_TRIAL_VERIFIED				"Verified"
 #define ATTRIB_CLUB_VENUE					"Venue"
 #define ATTRIB_RUN_DATE						"Date"

@@ -40,6 +40,7 @@
 #include "AgilityBook.h"
 #include "DlgDogTitles.h"
 
+#include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
 #include "DlgTitle.h"
@@ -52,6 +53,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+// Overlay indices
+#define IDX_HIDDEN	1
+
 static const struct
 {
 	int fmt;
@@ -59,11 +63,11 @@ static const struct
 	UINT idText;
 } colTitleInfo[] =
 {
+	{LVCFMT_LEFT, 10, 0},
 	{LVCFMT_LEFT, 50, IDS_COL_DATE},
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
 	{LVCFMT_LEFT, 50, IDS_COL_TITLE},
 	{LVCFMT_LEFT, 50, IDS_COL_NAME},
-	{LVCFMT_LEFT, 50, IDS_COL_RECEIVED},
 };
 static const int nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
@@ -86,26 +90,35 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 		int col = psi->pCols->GetColumnAt(i);
 		switch (col)
 		{
-		default:
-		case 1: // venue
+		case 0: // Received and hidden
+			if (!pTitle1->GetReceived() && pTitle2->GetReceived())
+				rc = -1;
+			else if (pTitle1->GetReceived() && !pTitle2->GetReceived())
+				rc = 1;
+			else if (!pTitle1->IsHidden() && pTitle2->IsHidden())
+				rc = -1;
+			else if (pTitle1->IsHidden() && !pTitle2->IsHidden())
+				rc = 1;
+			break;
+		case 2: // venue
 			if (pTitle1->GetVenue() < pTitle2->GetVenue())
 				rc = -1;
 			else if (pTitle1->GetVenue() > pTitle2->GetVenue())
 				rc = 1;
 			break;
-		case 0: // date
+		case 1: // date
 			if (pTitle1->GetDate() < pTitle2->GetDate())
 				rc = -1;
 			else if (pTitle1->GetDate() > pTitle2->GetDate())
 				rc = 1;
 			break;
-		case 2: // name
+		case 3: // name
 			if (pTitle1->GetName() < pTitle2->GetName())
 				rc = -1;
 			else if (pTitle1->GetName() > pTitle2->GetName())
 				rc = 1;
 			break;
-		case 3: // nice name
+		case 4: // nice name
 			{
 				std::string name1 = psi->pThis->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetName());
 				std::string name2 = psi->pThis->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetName());
@@ -114,12 +127,6 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 				else if (name1 > name2)
 					rc = 1;
 			}
-			break;
-		case 4: // received
-			if (!pTitle1->GetReceived() && pTitle2->GetReceived())
-				rc = -1;
-			else if (pTitle1->GetReceived() && !pTitle2->GetReceived())
-				rc = 1;
 			break;
 		}
 		if (rc)
@@ -142,6 +149,13 @@ CDlgDogTitles::CDlgDogTitles(ARBConfig& config, const ARBDogTitleList& titles)
 	, m_Titles(titles)
 {
 	m_sortTitles.Initialize(nColTitleInfo);
+	m_ImageList.Create(16, 16, ILC_MASK, 3, 0);
+	CWinApp* app = AfxGetApp();
+	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
+	m_imgTitled = m_ImageList.Add(app->LoadIcon(IDI_TITLE));
+	m_imgTitledReceived = m_ImageList.Add(app->LoadIcon(IDI_TITLE2));
+	int imgHidden = m_ImageList.Add(app->LoadIcon(IDI_HIDDEN));
+	m_ImageList.SetOverlayImage(imgHidden,IDX_HIDDEN);
 	//{{AFX_DATA_INIT(CDlgDogTitles)
 	//}}AFX_DATA_INIT
 }
@@ -150,9 +164,10 @@ void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogTitles)
+	DDX_Control(pDX, IDC_TITLES, m_ctrlTitles);
 	DDX_Control(pDX, IDC_TITLE_EDIT, m_ctrlTitleEdit);
 	DDX_Control(pDX, IDC_TITLE_DELETE, m_ctrlTitleDelete);
-	DDX_Control(pDX, IDC_TITLES, m_ctrlTitles);
+	DDX_Control(pDX, IDC_HIDDEN, m_ctrlHidden);
 	//}}AFX_DATA_MAP
 	if (pDX->m_bSaveAndValidate)
 	{
@@ -168,6 +183,7 @@ BEGIN_MESSAGE_MAP(CDlgDogTitles, CPropertyPage)
 	ON_BN_CLICKED(IDC_TITLE_NEW, OnTitleNew)
 	ON_BN_CLICKED(IDC_TITLE_EDIT, OnTitleEdit)
 	ON_BN_CLICKED(IDC_TITLE_DELETE, OnTitleDelete)
+	ON_BN_CLICKED(IDC_HIDDEN, OnBnClickedHidden)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -180,9 +196,13 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 	for (int i = 0; i < nColTitleInfo; ++i)
 	{
 		CString str;
-		str.LoadString(colTitleInfo[i].idText);
+		if (0 < colTitleInfo[i].idText)
+		{
+			str.LoadString(colTitleInfo[i].idText);
+			str += ' ';
+		}
 		CString order;
-		order.Format(_T("%c %s (%d)"),
+		order.Format(_T("%c %s(%d)"),
 			m_sortTitles.IsDescending(i) ? '<' : '>',
 			(LPCTSTR)str,
 			m_sortTitles.FindColumnOrder(i) + 1);
@@ -203,15 +223,42 @@ void CDlgDogTitles::ListTitles()
 	i = 0;
 	for (ARBDogTitleList::const_iterator iterTitle = m_Titles.begin();
 		iterTitle != m_Titles.end();
-		++i, ++iterTitle)
+		++iterTitle)
 	{
 		const ARBDogTitle* pTitle = (*iterTitle);
-		int nItem = m_ctrlTitles.InsertItem(i, pTitle->GetDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str());
-		m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetVenue().c_str());
-		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetName().c_str());
-		m_ctrlTitles.SetItemText(nItem, 3, m_Config.GetTitleNiceName(pTitle->GetVenue(), pTitle->GetName()).c_str());
-		m_ctrlTitles.SetItemText(nItem, 4, pTitle->GetReceived() ? "x" : "");
-		m_ctrlTitles.SetItemData(nItem, reinterpret_cast<LPARAM>(pTitle));
+		if (!CAgilityBookOptions::GetViewHiddenTitles()
+		&& pTitle->IsHidden())
+		{
+			continue;
+		}
+		LVITEM item;
+		item.mask = LVIF_IMAGE | LVIF_PARAM;
+		item.iItem = i;
+		item.iSubItem = 0;
+		if (pTitle->IsHidden())
+		{
+			item.mask |= LVIF_STATE;
+			item.state = INDEXTOOVERLAYMASK(IDX_HIDDEN);
+			item.stateMask = LVIS_OVERLAYMASK;
+		}
+		if (pTitle->GetDate().IsValid())
+		{
+			item.iImage = m_imgTitled;
+			if (pTitle->GetReceived())
+				item.iImage = m_imgTitledReceived;
+		}
+		else
+			item.iImage = m_imgEmpty;
+		item.lParam = reinterpret_cast<LPARAM>(pTitle);
+		int nItem = m_ctrlTitles.InsertItem(&item);
+		if (pTitle->GetDate().IsValid())
+			m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str());
+		else
+			m_ctrlTitles.SetItemText(nItem, 1, "<Unearned>");
+		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());
+		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetName().c_str());
+		m_ctrlTitles.SetItemText(nItem, 4, m_Config.GetTitleNiceName(pTitle->GetVenue(), pTitle->GetName()).c_str());
+		++i;
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
 		m_ctrlTitles.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
@@ -256,6 +303,7 @@ BOOL CDlgDogTitles::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlTitles.SetImageList(&m_ImageList, LVSIL_SMALL);
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
@@ -269,6 +317,8 @@ BOOL CDlgDogTitles::OnInitDialog()
 		m_ctrlTitles.InsertColumn(i, &col);
 	}
 	SetColumnTitleHeaders();
+
+	m_ctrlHidden.SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
 
 	ListTitles();
 
@@ -330,4 +380,10 @@ void CDlgDogTitles::OnTitleDelete()
 		m_Titles.DeleteTitle(pTitle->GetVenue(), pTitle->GetName());
 		m_ctrlTitles.DeleteItem(i);
 	}
+}
+
+void CDlgDogTitles::OnBnClickedHidden()
+{
+	CAgilityBookOptions::SetViewHiddenTitles(m_ctrlHidden.GetCheck() == 1);
+	ListTitles();
 }

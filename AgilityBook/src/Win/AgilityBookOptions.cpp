@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-29 DRC Created default column orders.
@@ -131,7 +132,10 @@ bool CAgilityBookOptions::IsTitleVisible(
 	const std::vector<CVenueFilter>& venues,
 	const ARBDogTitle* pTitle)
 {
-	if (!IsDateVisible(pTitle->GetDate(), pTitle->GetDate()))
+	if (!GetViewHiddenTitles() && pTitle->IsHidden())
+		return false;
+	if (!pTitle->GetDate().IsValid()
+	|| !IsDateVisible(pTitle->GetDate(), pTitle->GetDate()))
 		return false;
 	return IsVenueVisible(venues, pTitle->GetVenue());
 }
@@ -521,6 +525,17 @@ bool CAgilityBookOptions::GetViewQRuns()
 void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
 {
 	AfxGetApp()->WriteProfileInt("Common", "ViewQRuns", bViewQs ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetViewHiddenTitles()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewHiddenTitles", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewHiddenTitles", bSet ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

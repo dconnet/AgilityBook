@@ -56,12 +56,17 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgDogTitles)
 	enum { IDD = IDD_DOG_TITLES };
+	CListCtrl2	m_ctrlTitles;
 	CButton	m_ctrlTitleEdit;
 	CButton	m_ctrlTitleDelete;
-	CListCtrl2	m_ctrlTitles;
+	CButton	m_ctrlHidden;
 	//}}AFX_DATA
 	ARBConfig& m_Config;
 	CColumnOrder m_sortTitles;
+	CImageList m_ImageList;
+	int m_imgEmpty;
+	int m_imgTitled;
+	int m_imgTitledReceived;
 	ARBDogTitleList m_Titles;
 
 	//{{AFX_VIRTUAL(CDlgDogTitles)
@@ -84,6 +89,7 @@ protected:
 	afx_msg void OnTitleNew();
 	afx_msg void OnTitleEdit();
 	afx_msg void OnTitleDelete();
+	afx_msg void OnBnClickedHidden();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -58,6 +58,7 @@ ARBDogTitle::ARBDogTitle()
 	, m_Venue()
 	, m_Name()
 	, m_bReceived(false)
+	, m_bHidden(false)
 {
 }
 
@@ -66,6 +67,7 @@ ARBDogTitle::ARBDogTitle(const ARBDogTitle& rhs)
 	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 	, m_bReceived(rhs.m_bReceived)
+	, m_bHidden(rhs.m_bHidden)
 {
 }
 
@@ -81,6 +83,7 @@ ARBDogTitle& ARBDogTitle::operator=(const ARBDogTitle& rhs)
 		m_Venue = rhs.m_Venue;
 		m_Name = rhs.m_Name;
 		m_bReceived = rhs.m_bReceived;
+		m_bHidden = rhs.m_bHidden;
 	}
 	return *this;
 }
@@ -90,7 +93,8 @@ bool ARBDogTitle::operator==(const ARBDogTitle& rhs) const
 	return m_Date == rhs.m_Date
 		&& m_Venue == rhs.m_Venue
 		&& m_Name == rhs.m_Name
-		&& m_bReceived == rhs.m_bReceived;
+		&& m_bReceived == rhs.m_bReceived
+		&& m_bHidden == rhs.m_bHidden;
 }
 
 bool ARBDogTitle::operator!=(const ARBDogTitle& rhs) const
@@ -143,11 +147,21 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
+	// Must get Hidden before getting date.
+	inTree.GetAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
+
 	switch (inTree.GetAttrib(ATTRIB_TITLE_DATE, m_Date))
 	{
 	case CElement::eNotFound:
-		ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE);
-		return false;
+		// As of version 8.5, no date infers this is an unearned title
+		// that we're hiding.
+		if (inVersion < ARBVersion(8, 5))
+		{
+			ioErrMsg += ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE);
+			return false;
+		}
+		m_bHidden = true;
+		break;
 	case CElement::eInvalidValue:
 		{
 			std::string attrib;
@@ -191,7 +205,16 @@ bool ARBDogTitle::Load(
 bool ARBDogTitle::Save(CElement& ioTree) const
 {
 	CElement& title = ioTree.AddElement(TREE_TITLE);
-	title.AddAttrib(ATTRIB_TITLE_DATE, m_Date);
+	if (m_Date.IsValid())
+	{
+		title.AddAttrib(ATTRIB_TITLE_DATE, m_Date);
+		title.AddAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
+	}
+	else
+	{
+		bool bTemp = true;
+		title.AddAttrib(ATTRIB_TITLE_HIDDEN, bTemp);
+	}
 	title.AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
 	title.AddAttrib(ATTRIB_TITLE_NAME, m_Name);
 	title.AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);

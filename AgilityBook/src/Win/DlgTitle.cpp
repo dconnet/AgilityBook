@@ -66,7 +66,9 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTitle)
+	DDX_Control(pDX, IDC_EARNED, m_ctrlEarned);
 	DDX_Control(pDX, IDC_DATE, m_ctrlDate);
+	DDX_Control(pDX, IDC_HIDDEN, m_ctrlHidden);
 	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
 	DDX_Control(pDX, IDC_TITLES, m_ctrlTitles);
 	DDX_Control(pDX, IDC_RECEIVED, m_ctrlReceived);
@@ -76,6 +78,7 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgTitle, CDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
+	ON_BN_CLICKED(IDC_EARNED, OnBnClickedEarned)
 	ON_CBN_SELCHANGE(IDC_VENUES, OnSelchangeVenues)
 	ON_CBN_SELCHANGE(IDC_TITLES, OnSelchangeTitles)
 	//}}AFX_MSG_MAP
@@ -101,21 +104,50 @@ BOOL CDlgTitle::OnInitDialog()
 			OnSelchangeVenues();
 		}
 	}
-	if (m_pTitle && m_pTitle->GetReceived())
-		m_ctrlReceived.SetCheck(1);
-	else
-		m_ctrlReceived.SetCheck(0);
+	int nEarned = 1;
+	int nHidden = 0;
+	int nReceived = 0;
 	if (m_pTitle)
 	{
-		const ARBDate& date = m_pTitle->GetDate();
-		CTime t(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
-		m_ctrlDate.SetTime(&t);
+		if (m_pTitle->GetDate().IsValid())
+		{
+			const ARBDate& date = m_pTitle->GetDate();
+			CTime t(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
+			m_ctrlDate.SetTime(&t);
+		}
+		else
+		{
+			nEarned = 0;
+			m_ctrlDate.EnableWindow(FALSE);
+			m_ctrlReceived.EnableWindow(FALSE);
+		}
+		if (m_pTitle->IsHidden())
+			nHidden = 1;
+		if (m_pTitle->GetReceived())
+			nReceived = 1;
 	}
 	else
 		m_ctrlDesc.SetWindowText("");
+	m_ctrlEarned.SetCheck(nEarned);
+	m_ctrlHidden.SetCheck(nHidden);
+	m_ctrlReceived.SetCheck(nReceived);
 	m_bInit = false;
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgTitle::OnBnClickedEarned()
+{
+	if (m_ctrlEarned.GetCheck() == 1)
+	{
+		m_ctrlDate.EnableWindow(TRUE);
+		m_ctrlReceived.EnableWindow(TRUE);
+	}
+	else
+	{
+		m_ctrlDate.EnableWindow(FALSE);
+		m_ctrlReceived.EnableWindow(FALSE);
+	}
 }
 
 void CDlgTitle::OnSelchangeVenues()
@@ -171,9 +203,6 @@ void CDlgTitle::OnOK()
 	if (!UpdateData(TRUE))
 		return;
 
-	CTime time;
-	m_ctrlDate.GetTime(time);
-
 	int index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR == index)
 	{
@@ -195,12 +224,27 @@ void CDlgTitle::OnOK()
 	CString name;
 	m_ctrlTitles.GetLBText(index, name);
 
+	bool bHidden = (m_ctrlHidden.GetCheck() == 1);
+	bool bReceived = (m_ctrlReceived.GetCheck() == 1);
+	ARBDate date;
+	if (m_ctrlEarned.GetCheck() == 1)
+	{
+		CTime time;
+		m_ctrlDate.GetTime(time);
+		date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+	}
+	else
+	{
+		bHidden = true;
+		bReceived = false;
+	}
+
 	ARBDogTitle* title = new ARBDogTitle();
-	ARBDate date(time.GetYear(), time.GetMonth(), time.GetDay());
 	title->SetDate(date);
+	title->SetHidden(bHidden);
 	title->SetVenue(pVenue->GetName());
 	title->SetName(pTitle->GetName());
-	title->SetReceived(m_ctrlReceived.GetCheck()==1);
+	title->SetReceived(bReceived);
 	if (m_pTitle)
 		*m_pTitle = *title;
 	else

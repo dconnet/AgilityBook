@@ -7,6 +7,8 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
+2004-03-13 DRC File version 8.5.
+               Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.
                Added versioning to configuration to allow auto-upgrades.
                Added "TableInYPS" to "ByTime"
@@ -255,10 +257,11 @@ depends on how a venue has been defined above.
 	>
 <!ELEMENT Title EMPTY >
 	<!ATTLIST Title
-		Date CDATA #REQUIRED
+		Date CDATA #IMPLIED
 		Venue CDATA #REQUIRED
 		Name CDATA #REQUIRED
 		isReceived (y|n) 'n'
+		isHidden (y|n) 'n'
 	>
 
 <!-- Entries in the file are grouped by trial. -->
