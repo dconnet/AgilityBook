@@ -18,6 +18,8 @@
     numbers are different, go ahead and update the version number.
   - If you dbl-clicked in some of the configuration dialogs when nothing was
     selected, the program faulted.
+  - Existing other points were tallied in all exising other points entries.
+  - Up/Down sort icons on lists were backwards.
 
 7/3/2004: v1.2.1.8
 - Bug fixes
