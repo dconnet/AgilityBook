@@ -1,0 +1,1612 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE MOVEABLE PURE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE MOVEABLE PURE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE MOVEABLE PURE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\AgilityBook.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\AgilityBook.ico"
+IDI_AGILITYBOOKDOC      ICON    DISCARDABLE     "res\\AgilityBook.ico"
+IDI_CALENDAR_EMPTY      ICON    DISCARDABLE     "res\\CalEmpty.ico"
+IDI_CALENDAR_TENTATIVE  ICON    DISCARDABLE     "res\\CalTentative.ico"
+IDI_CALENDAR_PLAN       ICON    DISCARDABLE     "res\\CalPlan.ico"
+IDI_CALENDAR_PLAN_TENTATIVE ICON    DISCARDABLE     "res\\CalPlanTentative.ico"
+IDI_CALENDAR_ENTERED    ICON    DISCARDABLE     "res\\CalEntered.ico"
+IDI_CALENDAR_ENTERED_TENTATIVE ICON    DISCARDABLE     "res\\CalEnteredTentative.ico"
+IDI_CHECKED             ICON    DISCARDABLE     "res\\checked.ico"
+IDI_UNCHECKED           ICON    DISCARDABLE     "res\\unchecked.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR MOVEABLE PURE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        POPUP "&Import"
+        BEGIN
+            MENUITEM "&Configuration...",           ID_FILE_IMPORT_CONFIG
+            , INACTIVE
+        END
+        MENUITEM "&Export...",                  ID_FILE_EXPORT, INACTIVE
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
+    END
+    POPUP "&Agility"
+    BEGIN
+        POPUP "&Dog"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_DOG
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+        END
+        POPUP "&Title"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TITLE
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_TITLE
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TITLE
+        END
+        POPUP "Tr&ial"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+        END
+        POPUP "&Run"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_RUN
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Calendar"
+        BEGIN
+            MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
+            MENUITEM SEPARATOR
+            MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
+            MENUITEM "&Delete",                     ID_AGILITY_DELETE_CALENDAR
+
+            MENUITEM SEPARATOR
+            MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
+
+        END
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Options...",                 ID_VIEW_OPTIONS
+        MENUITEM "Show Newest &Runs First",     ID_VIEW_SORTRUNS
+        MENUITEM SEPARATOR
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Next Pane\tF6",              ID_NEXT_PANE
+        MENUITEM "&Previous Window\tShift+F6",  ID_PREV_PANE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About AgilityBook...",       ID_APP_ABOUT
+    END
+END
+
+IDR_CONFIGURE MENU DISCARDABLE 
+BEGIN
+    POPUP "Config"
+    BEGIN
+        MENUITEM "&Properties...",              ID_CONFIG_EDIT
+        MENUITEM SEPARATOR
+        MENUITEM "&Add...",                     ID_CONFIG_ADD
+        MENUITEM "D&uplicate...",               ID_CONFIG_DUPLICATE
+        MENUITEM "&Delete",                     ID_CONFIG_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Expand",                      ID_EXPAND
+        MENUITEM "Collapse",                    ID_COLLAPSE
+        MENUITEM "Expand All",                  ID_EXPAND_ALL
+        MENUITEM "Collapse All",                ID_COLLAPSE_ALL
+    END
+END
+
+IDR_DOG MENU DISCARDABLE 
+BEGIN
+    POPUP "Dog"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
+        MENUITEM SEPARATOR
+        POPUP "&New"
+        BEGIN
+            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
+            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM SEPARATOR
+            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
+        END
+        MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+        MENUITEM SEPARATOR
+        MENUITEM "Expand",                      ID_EXPAND
+        MENUITEM "Collapse",                    ID_COLLAPSE
+        MENUITEM "Expand All",                  ID_EXPAND_ALL
+        MENUITEM "Collapse All",                ID_COLLAPSE_ALL
+    END
+END
+
+IDR_TRIAL MENU DISCARDABLE 
+BEGIN
+    POPUP "Trial"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
+        MENUITEM SEPARATOR
+        POPUP "&New"
+        BEGIN
+            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
+            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM SEPARATOR
+            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
+        END
+        MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+        MENUITEM SEPARATOR
+        MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM SEPARATOR
+        MENUITEM "Expand",                      ID_EXPAND
+        MENUITEM "Collapse",                    ID_COLLAPSE
+    END
+END
+
+IDR_RUN MENU DISCARDABLE 
+BEGIN
+    POPUP "Run"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
+        MENUITEM SEPARATOR
+        POPUP "&New"
+        BEGIN
+            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
+            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM SEPARATOR
+            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
+        END
+        MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+    END
+END
+
+IDR_RUNS MENU DISCARDABLE 
+BEGIN
+    POPUP "Runs"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
+        MENUITEM SEPARATOR
+        MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+    END
+END
+
+IDR_CALENDAR MENU DISCARDABLE 
+BEGIN
+    POPUP "Calendar"
+    BEGIN
+        MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
+        MENUITEM SEPARATOR
+        MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
+        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_CALENDAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
+
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT_PREVIEW,  VIRTKEY, CONTROL, ALT, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_TAB,         ID_NEXT_TAB,            VIRTKEY, NOINVERT
+    VK_TAB,         ID_PREV_TAB,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 280, 55
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
+    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,175,41,SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,223,7,50,16,WS_GROUP
+END
+
+IDD_NAME DIALOGEX 0, 0, 186, 46
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Name"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_NAME,7,7,115,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+END
+
+IDD_NAME_DESC DIALOG DISCARDABLE  0, 0, 205, 111
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Name"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_NAME,7,7,130,12,ES_AUTOHSCROLL
+    LTEXT           "&Description",IDC_STATIC,7,25,36,8
+    EDITTEXT        IDC_DESC,7,35,130,68,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
+END
+
+IDD_CALENDAR DIALOG DISCARDABLE  0, 0, 284, 236
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Calendar Cribsheet"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Start Date:",IDC_STATIC,7,9,35,8
+    CONTROL         "DateTimePicker1",IDC_DATE_START,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,45,7,60,12
+    LTEXT           "End &Date:",IDC_STATIC,110,9,33,8
+    CONTROL         "DateTimePicker2",IDC_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,145,7,60,12
+    CONTROL         "&Trial information is tentative",IDC_TENTATIVE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,25,101,10
+    GROUPBOX        "Entry",IDC_STATIC,7,39,198,25
+    CONTROL         "&Not currently",IDC_ENTER_NOT,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,50,56,10
+    CONTROL         "&Planning",IDC_ENTER_PLANNING,"Button",
+                    BS_AUTORADIOBUTTON,90,50,43,10
+    CONTROL         "&Entered",IDC_ENTER_ENTERED,"Button",BS_AUTORADIOBUTTON,
+                    155,50,41,10
+    LTEXT           "&Location:",IDC_STATIC,7,72,30,8
+    COMBOBOX        IDC_LOCATION,40,70,165,125,CBS_DROPDOWN | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Club:",IDC_STATIC,7,92,17,8
+    COMBOBOX        IDC_CLUB,27,90,80,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Venue:",IDC_STATIC,120,92,24,8
+    COMBOBOX        IDC_VENUE,145,90,60,50,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Trial Opens",IDC_STATIC,46,112,40,8
+    CONTROL         "DateTimePicker1",IDC_DATE_OPENS,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,91,110,60,12
+    CONTROL         "Unknown",IDC_DATE_OPENS_UNKNOWN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,156,111,47,10
+    RTEXT           "Closes",IDC_STATIC,46,129,40,8
+    CONTROL         "DateTimePicker2",IDC_DATE_CLOSES,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,91,127,60,12
+    CONTROL         "Unknown",IDC_DATE_CLOSES_UNKNOWN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,156,128,47,10
+    LTEXT           "N&otes",IDC_STATIC,7,136,20,8
+    EDITTEXT        IDC_NOTES,7,146,270,83,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,227,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,227,24,50,14
+END
+
+IDD_CONFIGURE DIALOG DISCARDABLE  0, 0, 350, 258
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_VENUES,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,280,244
+    PUSHBUTTON      "&Update...",IDC_UPDATE,293,65,50,14
+    PUSHBUTTON      "OK",IDOK,293,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,293,24,50,14
+END
+
+IDD_CONFIG_OTHERPOINTS DIALOG DISCARDABLE  0, 0, 211, 127
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Other Points"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Name",IDC_STATIC,7,9,19,8
+    EDITTEXT        IDC_NAME,27,7,120,12,ES_AUTOHSCROLL
+    LTEXT           "&Tally Points",IDC_STATIC,7,27,37,8
+    COMBOBOX        IDC_TALLY,48,25,100,64,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Description",IDC_STATIC,7,43,36,8
+    EDITTEXT        IDC_DESC,7,52,140,68,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,154,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,154,24,50,14
+END
+
+IDD_CONFIG_EVENT DIALOG DISCARDABLE  0, 0, 334, 287
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Event"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Name",IDC_STATIC,7,9,20,8
+    EDITTEXT        IDC_NAME,30,7,115,12,ES_AUTOHSCROLL
+    CONTROL         "Has &Partners?",IDC_PARTNER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,155,8,61,10
+    LTEXT           "Event N&ote",IDC_STATIC,7,23,21,16
+    EDITTEXT        IDC_DESC,30,23,200,28,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    PUSHBUTTON      "N&ew Method",IDC_NEW,7,57,60,14
+    PUSHBUTTON      "Dele&te Method",IDC_DELETE,80,57,60,14
+    GROUPBOX        "Scoring Methods",IDC_STATIC,7,75,320,205
+    LTEXT           "Division/Levels defined",IDC_STATIC,15,87,74,8
+    LISTBOX         IDC_METHODS,15,97,149,62,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Division/Levels not defined",IDC_STATIC,170,87,86,8
+    LISTBOX         IDC_UNUSED,170,97,149,62,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "&Division",IDC_STATIC,15,166,25,8
+    COMBOBOX        IDC_DIVISION,45,164,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "&Level",IDC_STATIC,15,182,18,8
+    COMBOBOX        IDC_LEVEL,45,180,60,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "&Scoring style",IDC_STATIC,15,198,26,16
+    COMBOBOX        IDC_TYPE,45,196,115,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "D&rop time fractions for faults",IDC_DROP_FRACTIONS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,45,212,103,10
+    LTEXT           "Method Note",IDC_STATIC,170,164,26,16
+    EDITTEXT        IDC_NOTES,196,164,123,50,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,230,29,16,NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_OPENING_PTS,50,230,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
+                    NOT WS_VISIBLE
+    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,15,250,29,16,NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_CLOSING_PTS,50,250,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
+                    NOT WS_VISIBLE
+    CONTROL         "S&uper Q?",IDC_SUPERQ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,110,230,45,10
+    CONTROL         "&Mach Points?",IDC_MACH,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,110,245,57,10
+    CONTROL         "D&ouble Q?",IDC_DOUBLEQ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,110,260,49,10
+    LTEXT           "Title Points",IDC_STATIC,170,228,20,16
+    LISTBOX         IDC_LIST,196,228,88,44,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "New...",IDC_TITLE_NEW,289,228,30,12
+    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,289,244,30,12
+    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,289,260,30,12
+    DEFPUSHBUTTON   "OK",IDOK,277,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,277,24,50,14
+END
+
+IDD_DOG DIALOG DISCARDABLE  0, 0, 320, 250
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dog Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Call Name",IDC_STATIC,7,9,33,8
+    EDITTEXT        IDC_CALLNAME,45,7,100,12,ES_AUTOHSCROLL
+    LTEXT           "&Birthday",IDC_STATIC,160,9,26,8
+    CONTROL         "DateTimePicker1",IDC_DOB,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,190,7,60,12
+    LTEXT           "B&reed",IDC_STATIC,7,26,20,8
+    EDITTEXT        IDC_BREED,45,24,100,12,ES_AUTOHSCROLL
+    LTEXT           "Age (years)",IDC_STATIC,173,26,36,8
+    CTEXT           "",IDC_AGE_TEXT,214,25,36,10,SS_NOPREFIX | SS_SUNKEN
+    LTEXT           "Registered &Name",IDC_STATIC,7,43,56,8
+    EDITTEXT        IDC_REG_NAME,65,41,185,12,ES_AUTOHSCROLL
+    LTEXT           "&Titles",IDC_STATIC,7,62,18,8
+    CONTROL         "List1",IDC_TITLES,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
+                    WS_TABSTOP,7,75,170,70
+    PUSHBUTTON      "New...",IDC_TITLE_NEW,81,60,30,12
+    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,114,60,30,12
+    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,147,60,30,12
+    LTEXT           "N&umbers",IDC_STATIC,183,62,29,8
+    CONTROL         "List2",IDC_REG_NUMS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
+                    WS_TABSTOP,183,75,130,70
+    PUSHBUTTON      "New...",IDC_REG_NEW,217,60,30,12
+    PUSHBUTTON      "Edit...",IDC_REG_EDIT,250,60,30,12
+    PUSHBUTTON      "Delete",IDC_REG_DELETE,283,60,30,12
+    LTEXT           "N&otes",IDC_STATIC,7,150,20,8
+    EDITTEXT        IDC_NOTES,7,160,306,83,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,263,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,263,24,50,14
+END
+
+IDD_TITLE DIALOG DISCARDABLE  0, 0, 190, 119
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Title"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Date Earned",IDC_STATIC,7,9,41,8
+    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,55,7,60,12
+    LTEXT           "&Venue",IDC_STATIC,7,27,22,8
+    COMBOBOX        IDC_VENUES,40,25,75,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "&Title",IDC_STATIC,7,45,14,8
+    COMBOBOX        IDC_TITLES,40,43,75,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "&Received",IDC_RECEIVED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,125,45,47,10
+    EDITTEXT        IDC_DESC,7,62,176,50,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL | WS_HSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,133,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
+END
+
+IDD_REG_NUM DIALOG DISCARDABLE  0, 0, 180, 54
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Registration Number"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Venue",IDC_STATIC,7,9,22,8
+    COMBOBOX        IDC_VENUES,35,7,75,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "&Registration Number",IDC_STATIC,7,25,65,8
+    EDITTEXT        IDC_REG_NUM,7,35,102,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,123,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,123,24,50,14
+END
+
+IDD_TRIAL DIALOG DISCARDABLE  0, 0, 250, 154
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Trial Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Location",IDC_STATIC,7,9,28,8
+    COMBOBOX        IDC_LOCATION,40,7,142,125,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Notes:",IDC_STATIC,7,23,22,8
+    EDITTEXT        IDC_NOTES,7,33,175,42,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    LTEXT           "&Club",IDC_STATIC,7,87,15,8
+    PUSHBUTTON      "New...",IDC_CLUB_NEW,85,82,30,12
+    PUSHBUTTON      "Edit...",IDC_CLUB_EDIT,118,82,30,12
+    PUSHBUTTON      "Delete",IDC_CLUB_DELETE,151,82,30,12
+    CONTROL         "List1",IDC_CLUBS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,97,175,50
+    CONTROL         "Verified",IDC_VERIFIED,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,204,137,39,10
+    DEFPUSHBUTTON   "OK",IDOK,193,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,193,24,50,14
+END
+
+IDD_CLUB DIALOG DISCARDABLE  0, 0, 200, 46
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Club"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Name",IDC_STATIC,7,9,20,8
+    COMBOBOX        IDC_CLUBS,35,7,80,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Venue",IDC_STATIC,7,27,22,8
+    COMBOBOX        IDC_VENUES,35,25,80,50,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,143,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,143,24,50,14
+END
+
+IDD_RUN_SCORE DIALOG DISCARDABLE  0, 0, 390, 199
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Score"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Date",IDC_STATIC,7,9,16,8
+    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,30,7,60,12
+    LTEXT           "Venue",IDC_VENUE,100,8,50,10,SS_SUNKEN
+    LTEXT           "Club",IDC_CLUB,162,8,100,10,SS_SUNKEN
+    LTEXT           "Location",IDC_LOCATION,274,8,109,10,SS_SUNKEN
+    LTEXT           "Division",IDC_STATIC,7,24,26,8
+    COMBOBOX        IDC_DIVISION,35,22,75,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Level",IDC_STATIC,7,41,18,8
+    COMBOBOX        IDC_LEVEL,35,39,75,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Event",IDC_STATIC,7,58,20,8
+    COMBOBOX        IDC_EVENT,35,56,75,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Height",IDC_STATIC,7,75,22,8
+    COMBOBOX        IDC_HEIGHT,35,73,30,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Judge",IDC_STATIC,131,24,20,8
+    COMBOBOX        IDC_JUDGE,156,22,90,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Handler",IDC_STATIC,263,24,26,8
+    COMBOBOX        IDC_HANDLER,294,22,89,75,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Conditions",IDC_STATIC,117,40,34,8
+    EDITTEXT        IDC_CONDITIONS,156,40,227,31,ES_MULTILINE | 
+                    ES_WANTRETURN | WS_VSCROLL
+    PUSHBUTTON      "Partners...",IDC_PARTNERS_EDIT,112,75,40,12
+    EDITTEXT        IDC_PARTNER,156,75,227,12,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "By Time",IDC_STATIC,7,92,376,30
+    RTEXT           "Course Faults",IDC_FAULTS_TEXT,15,104,44,8
+    EDITTEXT        IDC_FAULTS,63,102,25,12,ES_AUTOHSCROLL
+    RTEXT           "Time",IDC_TIME4FAULT_TEXT,94,104,16,8
+    EDITTEXT        IDC_TIME4FAULT,114,102,30,12,ES_AUTOHSCROLL
+    RTEXT           "Yards",IDC_YARDS_TEXT,149,104,19,8
+    EDITTEXT        IDC_YARDS,172,102,30,12,ES_AUTOHSCROLL
+    RTEXT           "YPS",IDC_YPS_TEXT,207,104,16,8
+    CTEXT           "",IDC_YPS,227,103,25,10,SS_SUNKEN
+    RTEXT           "SCT",IDC_SCT_TEXT,259,104,15,8
+    EDITTEXT        IDC_SCT,278,102,25,12,ES_AUTOHSCROLL
+    RTEXT           "Total Faults",IDC_TOTAL_FAULTS_TEXT,308,104,38,8
+    CTEXT           "",IDC_TOTAL_FAULTS,350,103,25,10,SS_SUNKEN
+    GROUPBOX        "By Score",IDC_STATIC,7,125,376,30
+    RTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,137,58,8
+    EDITTEXT        IDC_OPENING_PTS,78,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    RTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,113,137,54,8
+    EDITTEXT        IDC_CLOSING_PTS,171,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    RTEXT           "Time",IDC_TIME4SCORE_TEXT,206,137,16,8
+    EDITTEXT        IDC_TIME4SCORE,226,135,30,12,ES_AUTOHSCROLL
+    RTEXT           "Open",IDC_OPEN_PTS_TEXT,262,137,23,8
+    EDITTEXT        IDC_OPEN_PTS,290,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    RTEXT           "Close",IDC_CLOSE_PTS_TEXT,327,137,18,8
+    EDITTEXT        IDC_CLOSE_PTS,350,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    RTEXT           "Place",IDC_STATIC,7,162,19,8
+    EDITTEXT        IDC_PLACE,30,160,20,12,ES_AUTOHSCROLL
+    CTEXT           "of",IDC_STATIC,52,162,8,8
+    EDITTEXT        IDC_IN_CLASS,62,160,20,12,ES_AUTOHSCROLL
+    LTEXT           "Dogs Q'd",IDC_STATIC,100,162,30,8
+    EDITTEXT        IDC_DOGS_QD,134,160,20,12,ES_AUTOHSCROLL
+    LTEXT           "Q?",IDC_STATIC,165,162,10,8
+    COMBOBOX        IDC_Q,180,160,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Score",IDC_STATIC,220,162,20,8
+    CTEXT           "",IDC_SCORE,245,161,25,10,SS_SUNKEN
+    PUSHBUTTON      "Other Points...",IDC_OTHERPOINTS,7,180,50,12
+    LTEXT           "Title Points",IDC_TITLE_POINTS_TEXT,70,181,36,8
+    CTEXT           "",IDC_TITLE_POINTS,113,180,20,10,SS_SUNKEN
+    LTEXT           "Mach Points",IDC_MACHPTS_TEXT,143,181,40,8
+    CTEXT           "",IDC_MACHPTS,188,180,20,10,SS_SUNKEN
+    CONTROL         "Double Q",IDC_DOUBLE_Q,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,224,180,46,10
+END
+
+IDD_RUN_COMMENTS DIALOG DISCARDABLE  0, 0, 390, 199
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Comments/Faults"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_COMMENTS,7,7,256,185,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    EDITTEXT        IDC_FAULTS_LIST,273,7,110,169,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL
+    PUSHBUTTON      "Faults...",IDC_COMMENTS_FAULTS,273,180,50,12
+END
+
+IDD_RUN_REFERENCE DIALOG DISCARDABLE  0, 0, 391, 199
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Reference Runs"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "List1",IDC_REF_RUNS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
+                    WS_TABSTOP,7,7,377,165
+    PUSHBUTTON      "New...",IDC_NEW,7,178,50,14
+    PUSHBUTTON      "Edit...",IDC_EDIT,67,178,50,14
+    PUSHBUTTON      "Delete",IDC_DELETE,127,178,50,14
+END
+
+IDD_RUN_CRCD DIALOG DISCARDABLE  0, 0, 390, 199
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "CRCD"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Paste in the text between ""Begin Course Design"" and ""End Course Design"", inclusive. To view it, copy this text and paste in CRCD.",
+                    IDC_STATIC,7,7,376,16
+    EDITTEXT        IDC_CRCD,7,26,376,166,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL | WS_HSCROLL
+END
+
+IDD_REF_RUN DIALOG DISCARDABLE  0, 0, 275, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Reference Run"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Place",IDC_STATIC,7,9,19,8
+    EDITTEXT        IDC_PLACE,30,7,25,12,ES_AUTOHSCROLL
+    LTEXT           "&Q?",IDC_STATIC,60,9,10,8
+    COMBOBOX        IDC_Q,72,7,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "&Score",IDC_STATIC,105,9,20,8
+    EDITTEXT        IDC_POINTS,128,7,25,12,ES_AUTOHSCROLL
+    LTEXT           "&Time",IDC_STATIC,160,9,16,8
+    EDITTEXT        IDC_TIME,180,7,30,12,ES_AUTOHSCROLL
+    LTEXT           "&Name",IDC_STATIC,7,25,20,8
+    EDITTEXT        IDC_NAME,30,23,180,12,ES_AUTOHSCROLL
+    LTEXT           "&Breed",IDC_STATIC,7,40,20,8
+    EDITTEXT        IDC_BREED,30,38,180,12,ES_AUTOHSCROLL
+    LTEXT           "N&otes",IDC_STATIC,7,55,20,8
+    EDITTEXT        IDC_NOTES,30,53,180,35,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,218,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,218,24,50,14
+END
+
+IDD_PARTNER DIALOG DISCARDABLE  0, 0, 205, 63
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Partner"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Handler",IDC_STATIC,7,9,26,8
+    EDITTEXT        IDC_NAME,35,7,100,12,ES_AUTOHSCROLL
+    LTEXT           "&Dog",IDC_STATIC,7,27,14,8
+    EDITTEXT        IDC_CALLNAME,35,25,100,12,ES_AUTOHSCROLL
+    LTEXT           "&Number",IDC_STATIC,7,47,26,8
+    EDITTEXT        IDC_REG_NUM,35,45,100,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
+END
+
+IDD_OTHER_POINT DIALOG DISCARDABLE  0, 0, 215, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Other Points"
+FONT 8, "MS Sans Serif"
+BEGIN
+    COMBOBOX        IDC_OTHERPOINTS,7,7,140,80,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_DESC,7,23,140,55,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL | WS_HSCROLL
+    LTEXT           "&Points",IDC_STATIC,7,83,20,8
+    EDITTEXT        IDC_POINTS,30,81,30,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,158,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,158,24,50,14
+END
+
+IDD_LISTCTRL DIALOG DISCARDABLE  0, 0, 297, 117
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "List1",IDC_LIST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,7,220,83
+    PUSHBUTTON      "&New",IDC_NEW,7,95,50,14
+    PUSHBUTTON      "&Edit",IDC_EDIT,67,95,50,14
+    PUSHBUTTON      "&Delete",IDC_DELETE,127,95,50,14
+    PUSHBUTTON      "Move &Up",IDC_MOVE_UP,240,51,50,14
+    PUSHBUTTON      "Move Do&wn",IDC_MOVE_DOWN,240,68,50,14
+    PUSHBUTTON      "&Create Trial...",IDC_TRIAL,240,96,50,14,NOT WS_VISIBLE
+    DEFPUSHBUTTON   "OK",IDOK,240,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,240,24,50,14
+END
+
+IDD_FAULT DIALOG DISCARDABLE  0, 0, 205, 46
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Fault"
+FONT 8, "MS Sans Serif"
+BEGIN
+    COMBOBOX        IDC_FAULTS,7,7,100,175,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK",IDOK,148,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,25,50,14
+END
+
+IDD_VIEW_OPTIONS_CALENDAR DIALOG DISCARDABLE  0, 0, 205, 242
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Calendar"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "First day of week",IDC_STATIC,7,9,54,8
+    COMBOBOX        IDC_DAY_OF_WEEK,71,7,70,91,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "Automatically delete past entries",IDC_AUTO_DELETE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,27,117,10
+    CONTROL         "Hide past entries",IDC_HIDE_OLD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,41,69,10
+    LTEXT           "Past entry is",IDC_STATIC,20,55,39,8
+    EDITTEXT        IDC_OLD_ENTRY_DAYS,63,53,20,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "days after event ends.",IDC_STATIC,87,55,71,8
+    CONTROL         "Hide entries on dates where you've entered a trial",
+                    IDC_HIDE_OVERLAP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,
+                    69,171,10
+    LTEXT           "Approx size of entry (.01 inches)",IDC_STATIC,7,84,101,
+                    8
+    EDITTEXT        IDC_SIZE_X,115,82,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "x",IDC_STATIC,143,84,8,8
+    EDITTEXT        IDC_SIZE_Y,152,82,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    GROUPBOX        "Viewing fonts",IDC_STATIC,7,98,191,66
+    CTEXT           "2/14/2003",IDC_FONT_DATE_TEXT,17,113,80,25,SS_NOPREFIX | 
+                    SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Date Font",IDC_FONT_DATE,32,144,50,14
+    CTEXT           "USDAA Hayward, CA",IDC_FONT_TEXT_TEXT,108,113,80,25,
+                    SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Text Font",IDC_FONT_TEXT,123,144,50,14
+    GROUPBOX        "Printing fonts",IDC_STATIC,7,169,191,66
+    CTEXT           "2/14/2003",IDC_FONT2_DATE_TEXT,17,184,80,25,SS_NOPREFIX | 
+                    SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Date Font",IDC_FONT2_DATE,32,215,50,14
+    CTEXT           "USDAA Hayward, CA",IDC_FONT2_TEXT_TEXT,108,184,80,25,
+                    SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Text Font",IDC_FONT2_TEXT,123,215,50,14
+END
+
+IDD_VIEW_OPTIONS_FILTER DIALOG DISCARDABLE  0, 0, 205, 242
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Trial Filter"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Dates",IDC_STATIC,7,7,191,74
+    CONTROL         "View all dates",IDC_VIEW_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,59,10
+    CONTROL         "View dates in range (inclusive):",IDC_VIEW_RANGE,"Button",
+                    BS_AUTORADIOBUTTON,15,32,113,10
+    CONTROL         "After",IDC_DATE_START_CHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,25,45,31,10
+    CONTROL         "DateTimePicker2",IDC_DATE_START,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,65,44,60,12
+    CONTROL         "Before",IDC_DATE_END_CHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,25,60,37,10
+    CONTROL         "DateTimePicker2",IDC_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,65,59,60,12
+    GROUPBOX        "Trials",IDC_STATIC,7,87,191,148
+    CONTROL         "View all venues",IDC_ALL_VENUES,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,100,65,10
+    CONTROL         "View only:",IDC_VENUE,"Button",BS_AUTORADIOBUTTON,15,
+                    112,48,10
+    CONTROL         "Tree1",IDC_VENUES,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_BORDER | WS_GROUP | WS_TABSTOP,15,126,175,102
+END
+
+IDD_DOG_PICKER DIALOG DISCARDABLE  0, 0, 186, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select dog(s)"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         IDC_NAME,7,7,110,81,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+END
+
+IDD_REORDER DIALOG DISCARDABLE  0, 0, 297, 106
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Reorder"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         IDC_LIST,7,7,220,93,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Move &Up",IDC_MOVE_UP,240,69,50,14
+    PUSHBUTTON      "Move Do&wn",IDC_MOVE_DOWN,240,85,50,14
+    DEFPUSHBUTTON   "OK",IDOK,240,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,240,24,50,14
+END
+
+IDD_CONFIG_UPDATE DIALOG DISCARDABLE  0, 0, 240, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Update Configuration"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Use Default Configuration",IDC_UPDATE_DEFAULT,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,7,10,97,10
+    CONTROL         "Use Existing Configuration",IDC_UPDATE_EXISTING,"Button",
+                    BS_AUTORADIOBUTTON,7,26,98,10
+    PUSHBUTTON      "Pick File",IDC_NAME,105,24,50,14,WS_GROUP
+    EDITTEXT        IDC_FILENAME,20,43,213,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,183,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,183,24,50,14
+END
+
+IDD_TITLE_POINTS DIALOG DISCARDABLE  0, 0, 190, 46
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Title Points"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Faults Allowed",IDC_STATIC,7,9,46,8
+    EDITTEXT        IDC_FAULTS,57,7,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Points",IDC_STATIC,7,25,20,8
+    EDITTEXT        IDC_POINTS,57,23,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,133,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
+END
+
+IDD_MESSAGE DIALOG DISCARDABLE  0, 0, 274, 175
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Message"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_NOTES,7,7,260,140,ES_MULTILINE | ES_READONLY | 
+                    WS_VSCROLL | WS_HSCROLL
+    DEFPUSHBUTTON   "Close",IDOK,217,154,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,4,2,5
+ PRODUCTVERSION 0,4,2,5
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "FileDescription", "Agility Record Book\0"
+            VALUE "FileVersion", "0.4.2.5\0"
+            VALUE "InternalName", "AgilityBook.exe\0"
+            VALUE "LegalCopyright", "All rights reserved.\0"
+            VALUE "OriginalFilename", "AgilityBook.exe\0"
+            VALUE "ProductName", "Agility Record Book\0"
+            VALUE "ProductVersion", "0.4.2.5\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DTD
+//
+
+IDR_DTD_AGILITYRECORDBOOK DTD     MOVEABLE PURE   "res\\AgilityRecordBook.dtd"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// XML
+//
+
+IDR_XML_DEFAULT_CONFIG  XML     MOVEABLE PURE   "res\\DefaultConfig.xml"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO MOVEABLE PURE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 273
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_NAME, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 38
+    END
+
+    IDD_NAME_DESC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+
+    IDD_CALENDAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 277
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 229
+    END
+
+    IDD_CONFIGURE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 343
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 251
+    END
+
+    IDD_CONFIG_OTHERPOINTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 204
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+
+    IDD_CONFIG_EVENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 327
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 280
+    END
+
+    IDD_DOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 243
+    END
+
+    IDD_TITLE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 183
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 112
+    END
+
+    IDD_REG_NUM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 173
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 47
+    END
+
+    IDD_TRIAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_CLUB, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 193
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    IDD_RUN_SCORE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 383
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_RUN_COMMENTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 383
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_RUN_REFERENCE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 384
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_RUN_CRCD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 383
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_REF_RUN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 268
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_PARTNER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 56
+    END
+
+    IDD_OTHER_POINT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 93
+    END
+
+    IDD_LISTCTRL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 290
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 110
+    END
+
+    IDD_FAULT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    IDD_VIEW_OPTIONS_CALENDAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 235
+    END
+
+    IDD_VIEW_OPTIONS_FILTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 235
+    END
+
+    IDD_DOG_PICKER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_REORDER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 290
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 99
+    END
+
+    IDD_CONFIG_UPDATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 233
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_TITLE_POINTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 183
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    IDD_MESSAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 267
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 168
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_VIEW_OPTIONS_CALENDAR DLGINIT
+BEGIN
+    IDC_DAY_OF_WEEK, 0x403, 7, 0
+0x7553, 0x646e, 0x7961, "\000" 
+    IDC_DAY_OF_WEEK, 0x403, 7, 0
+0x6f4d, 0x646e, 0x7961, "\000" 
+    IDC_DAY_OF_WEEK, 0x403, 8, 0
+0x7554, 0x7365, 0x6164, 0x0079, 
+    IDC_DAY_OF_WEEK, 0x403, 10, 0
+0x6557, 0x6e64, 0x7365, 0x6164, 0x0079, 
+    IDC_DAY_OF_WEEK, 0x403, 9, 0
+0x6854, 0x7275, 0x6473, 0x7961, "\000" 
+    IDC_DAY_OF_WEEK, 0x403, 7, 0
+0x7246, 0x6469, 0x7961, "\000" 
+    IDC_DAY_OF_WEEK, 0x403, 9, 0
+0x6153, 0x7574, 0x6472, 0x7961, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Agility Record Book\n\nAgilityBook\nAgility Record Book Files (*.arb)\n.arb\nAgilityBook.Document\nAgilityBook.Document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Agility Record Book"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+    ID_INDICATOR_STATUS     "status"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+    ID_VIEW_AUTOARRANGE     "Arrange icons on a grid."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_SMALLICON       "Display items by using small icons.\nSmall Icons"
+    ID_VIEW_LARGEICON       "Display items by using large icons.\nLarge Icons"
+    ID_VIEW_LIST            "Displays items in a list.\nList"
+    ID_VIEW_DETAILS         "Displays detailed information about each item in the window.\nDetails"
+    ID_VIEW_LINEUP          "Arranges icons in a grid."
+    ID_VIEW_BYNAME          "Sorts the icons alphabetically."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RUNS                "Runs"
+    IDS_POINTS              "Points"
+    IDS_CALENDAR            "Calendar"
+    IDS_PARTNERS            "Partners"
+    IDS_VENUES              "Venues"
+    IDS_VENUE_NAME          "Venue"
+    IDS_FAULT_TYPES         "Fault Types"
+    IDS_FAULT_TYPE_NAME     "Fault Name"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OTHERPOINTS         "Other Points"
+    IDS_OTHERPOINTS_NAME    "Other Points Name"
+    IDS_DIVISIONS           "Divisions"
+    IDS_DIVISION_NAME       "Division Name"
+    IDS_TITLES              "Titles"
+    IDS_TITLE_NAME          "Title"
+    IDS_LEVELS              "Levels"
+    IDS_LEVEL_NAME          "Level"
+    IDS_SUBLEVEL_NAME       "SubLevel"
+    IDS_EVENTS              "Events"
+    IDS_EVENT_NAME          "Event Name"
+    IDS_SCORING             "Scoring Methods"
+    IDS_Q                   "Q"
+    IDS_SQ                  "SQ"
+    IDS_SUPER_Q             "SuperQ"
+    IDS_QQ                  "QQ"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DOUBLE_Q            "DoubleQ"
+    IDS_MACHPTS             "MachPts"
+    IDS_COL_BREED           "Breed"
+    IDS_COL_CLOSES          "Closes"
+    IDS_COL_CLUB            "Club"
+    IDS_COL_DATE            "Date"
+    IDS_COL_DIVISION        "Division"
+    IDS_COL_DOG             "Dog"
+    IDS_COL_END_DATE        "End Date"
+    IDS_COL_EVENT           "Event"
+    IDS_COL_FAULT           "Fault"
+    IDS_COL_HANDLER         "Handler"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_COL_IN_CLASS        "In Class"
+    IDS_COL_JUDGE           "Judge"
+    IDS_COL_LEVEL           "Level"
+    IDS_COL_LOCATION        "Location"
+    IDS_COL_NAME            "Name"
+    IDS_COL_NOTE            "Note"
+    IDS_COL_NOTES           "Notes"
+    IDS_COL_NUMBER          "Number"
+    IDS_COL_OPENS           "Opens"
+    IDS_COL_PLACE           "Place"
+    IDS_COL_POINTS          "Points"
+    IDS_COL_PTS             "Pts"
+    IDS_COL_Q               "Q"
+    IDS_COL_Q_D             "Q'd"
+    IDS_COL_RECEIVED        "Received"
+    IDS_COL_SCORE           "Score"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_COL_START_DATE      "Start Date"
+    IDS_COL_TIME            "Time"
+    IDS_COL_VENUE           "Venue"
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:\n   http://groups.yahoo.com/group/AgilityRecordBook/\nor\n   agilityrecordbook@dconsoft.com"
+    IDS_NEW                 "<New>"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CONFIGURE           "Configure"
+    IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
+    IDS_DELETE_VENUE        "Warning: The venue '%1' is currently in use. Deleting this venue will also delete %2!d! registration number(s), %3!d! title(s) and may delete %4!d! trial(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_OTHERPOINTS  "Warning: Other Points '%1' is currently in use. Deleting this item will delete points from %2!d! run(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_DIVISION     "Warning: The division '%1' is currently in use. Deleting this division will also delete %2!d! title(s) and may delete %3!d! run(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_LEVEL        "Warning: The level '%1' is currently in use. Deleting this level may also delete %2!d! run(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_TITLE        "Warning: The title '%1' is currently in use. Deleting this title will also delete %2!d! title(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_EVENT        "Warning: The event '%1' is currently in use. Deleting this event will also delete %2!d! event(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
+    IDS_DELETE_ALL_OTHERPOINTS 
+                            "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
+    IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
+    IDS_NAME_IN_USE         "Name is already in use."
+    IDS_ALL                 "<All>"
+    IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
+    IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
+    IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_VIEWING_OPTIONS     "Viewing Options"
+    IDS_RUN_PROPERTIES      "Run Properties"
+    IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_SELECT_DIVISION     "Please select a division."
+    IDS_SELECT_LEVEL        "Please select a level."
+    IDS_SELECT_EVENT        "Please select an event."
+    IDS_SELECT_HEIGHT       "Please select a height."
+    IDS_SELECT_JUDGE        "Please select a judge."
+    IDS_SELECT_Q            "Please select a 'Q'."
+    IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
+    IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
+    IDS_SCORING_REQUIRED_POINTS "Required points"
+    IDS_SCORING_POINTS      "Points"
+    IDS_NUM_EVENTS          "%1!d! events"
+    IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
+    IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CREATETRIAL_FAILED  "Warning: Failed to create trial. Please check the filter options, it may be preventing the creation of this trial"
+    IDS_NEED_CLUB           "You must create a hosting club before creating any events."
+    IDS_VENUE_CONFIG_MISSING 
+                            "Unable to locate configuration information for the venue '%1'."
+    IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_COPYOF              "Copy of "
+    IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_CHANGESUBLEVEL_ISSUES 
+                            "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_NOCONFIGDATA_FOUND  "No configuration data found."
+    IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
+    IDS_OTHERPTS_ALL        "All Events"
+    IDS_OTHERPTS_EVENT      "Tally by Event"
+    IDS_OTHERPTS_LEVEL      "Tally by Level"
+    IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
+    IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
+    IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
+    IDS_POINTS_PARTNERS     ", %1!d! partners"
+    IDS_POINTS_QS           "%1!d! Qs"
+    IDS_POINTS_CLEAN        ", (%1!d! clean)"
+    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_POINTS_SQS          "%1!d! Q+"
+    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
+    IDS_POINTS_QQS          "%1!d! QQ"
+    IDS_POINTS_MACH         "%1!d! Mach"
+    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+    IDS_FILEEXT_DEF_ARB     "arb"
+    IDS_FILEEXT_FNAME_ARB   "*.arb"
+    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_IMPORT_CONFIG   "Import configuration information from other sources\nImport Config"
+    ID_FILE_EXPORT          "Export data\nExport"
+    ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
+    ID_CONFIG_ADD           "Add a configuration item\nAdd"
+    ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
+    ID_CONFIG_EDIT          "Edit a configuration item\nEdit"
+    ID_CONFIG_DELETE        "Delete a configuration item\nDelete"
+    ID_AGILITY_NEW_CALENDAR "Create an upcoming calendar entry\nNew Calendar"
+    ID_AGILITY_NEW_DOG      "Create a new dog\nNew Dog"
+    ID_AGILITY_NEW_TITLE    "Create a new title\nNew Title"
+    ID_AGILITY_NEW_TRIAL    "Create a new trial\nNew Trial"
+    ID_AGILITY_NEW_RUN      "Create a new ruun\nNew Run"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_AGILITY_EDIT_CALENDAR "Edit an upcoming calendar entry\nEdit Calendar"
+    ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
+    ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
+    ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
+    ID_AGILITY_EDIT_RUN     "Edit a Run's information\nEdit Run"
+    ID_AGILITY_DELETE_CALENDAR 
+                            "Delete an upcoming calendar entry\nDelete Calendar"
+    ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
+    ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
+    ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
+    ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
+    ID_VIEW_OPTIONS         "Change viewing options\nOptions"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_AGILITY_CREATEENTRY_CALENDAR "Create a trial entry\nNew Trial"
+    ID_REORDER              "Reorder items\nReorder"
+    ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\AgilityBook.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,821 @@
+# Microsoft Developer Studio Project File - Name="AgilityBook" - Package Owner=<4>
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# ** DO NOT EDIT **
+
+# TARGTYPE "Win32 (x86) Application" 0x0101
+
+CFG=AgilityBook - Win32 Debug
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
+!MESSAGE NMAKE /f "AgilityBook.mak".
+!MESSAGE 
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "AgilityBook.mak" CFG="AgilityBook - Win32 Debug"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+!MESSAGE "AgilityBook - Win32 Release" (based on "Win32 (x86) Application")
+!MESSAGE "AgilityBook - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE 
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName "AgilityBook"
+# PROP Scc_LocalPath "."
+CPP=cl.exe
+MTL=midl.exe
+RSC=rc.exe
+
+!IF  "$(CFG)" == "AgilityBook - Win32 Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "Release"
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 2
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "../../../../bin/Win32/VC6/Release"
+# PROP Intermediate_Dir "../../../../bin/Win32/VC6/Release/obj"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../.." /I "../../../ARB" /I "../../../Win" /I "../../../../../xml-xerces/c/src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../../lib/Win32/VC6"
+# SUBTRACT LINK32 /debug
+
+!ELSEIF  "$(CFG)" == "AgilityBook - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 2
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "../../../../bin/Win32/VC6/Debug"
+# PROP Intermediate_Dir "../../../../bin/Win32/VC6/Debug/obj"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../../.." /I "../../../ARB" /I "../../../Win" /I "../../../../../xml-xerces/c/src" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /FR /Yu"stdafx.h" /FD /GZ /c
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../../lib/Win32/VC6"
+
+!ENDIF 
+
+# Begin Target
+
+# Name "AgilityBook - Win32 Release"
+# Name "AgilityBook - Win32 Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=..\..\..\Win\AboutDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBook.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBook.rc
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookDoc.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookOptions.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookTree.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookTreeData.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewCalendar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewCalendarList.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewPoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewRuns.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\CheckTreeCtrl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ColumnOrder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgCalendar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgClub.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigOtherPoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigTitlePoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigUpdate.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigure.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigureData.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgDog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFault.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFixup.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgListCtrl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgMessage.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgName.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgNameDesc.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptions.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsCalendar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsFilter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOtherPoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgPartner.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgReferenceRun.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRegNum.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgReorder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRun.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunComments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunCRCD.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunReference.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunScore.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgSelectDog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgTitle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgTrial.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ListBox.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ListCtrl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\MainFrm.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\Splitter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\stdafx.cpp
+# ADD CPP /Yc"stdafx.h"
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\TabView.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=..\..\..\Win\AboutDlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBook.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookDoc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookOptions.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookTree.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookTreeData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewCalendar.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewCalendarList.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewPoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\AgilityBookViewRuns.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\CheckTreeCtrl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ColumnOrder.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgCalendar.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgClub.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigOtherPoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigTitlePoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigUpdate.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigure.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgConfigureData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgDog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFault.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFixup.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgListCtrl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgMessage.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgName.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgNameDesc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptions.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsCalendar.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsFilter.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOtherPoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgPartner.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgReferenceRun.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRegNum.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgReorder.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRun.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunComments.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunCRCD.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunReference.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgRunScore.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgSelectDog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgTitle.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ListBox.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ListCtrl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\MainFrm.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\Splitter.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\stdafx.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\TabView.h
+# End Source File
+# End Group
+# Begin Group "ARB"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBAgilityRecordBook.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBAgilityRecordBook.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBBase.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBBase.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBCalendar.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBCalendar.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfig.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigDivision.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigDivision.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigFault.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigFault.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigLevel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigLevel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigOtherPoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigOtherPoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigScoring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigScoring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigSubLevel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigSubLevel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigTitle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigTitle.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigTitlePoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigTitlePoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigVenue.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigVenue.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDate.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDate.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogClub.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogClub.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogNotes.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogNotes.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogReferenceRun.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogReferenceRun.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRegNum.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRegNum.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRun.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRun.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRunOtherPoints.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRunOtherPoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRunPartner.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRunPartner.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRunScoring.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogRunScoring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogTitle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogTitle.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogTrial.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBDogTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBTypes.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBTypes.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBVector.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\Element.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\Element.h
+# End Source File
+# End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\AgilityBook.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\AgilityBook.rc2
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\AgilityBookDoc.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\AgilityRecordBook.dtd
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\BoxCheck.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\BoxEmpty.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\BoxQuestion.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalEmpty.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalEntered.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalEnteredTentative.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalMaybe.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalPlan.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalPlanMaybe.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalPlanTentative.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\CalTentative.ico
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\..\Win\res\checked-off.ico"
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\checked.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\DefaultConfig.xml
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\Question.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\Toolbar.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\unchecked.ico
+# End Source File
+# End Group
+# End Target
+# End Project

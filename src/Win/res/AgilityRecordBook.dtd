@@ -1,0 +1,250 @@
+<!--
+An AgilityRecordBook file is made up of 2 main sections, the
+configuration area, and the dog's runs. Multiple dogs may be
+contained within a file, as this DTD defines below.
+-->
+<!ELEMENT AgilityBook (Calendar*, Configuration, Dog*) >
+	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
+
+<!--
+This section defines the rules for the calendar cribsheet.
+ Entered: E==Entered, P==Planning, N==Not
+-->
+<!ELEMENT Calendar (#PCDATA) >
+	<!ATTLIST Calendar
+		DateStart CDATA #REQUIRED
+		DateEnd CDATA #REQUIRED
+		DateOpening CDATA #IMPLIED
+		DateClosing CDATA #IMPLIED
+		isTentative (y|n) 'n'
+		Location CDATA #REQUIRED
+		Club CDATA #REQUIRED
+		Venue CDATA #REQUIRED
+		Entered (E|P|N) 'N'
+		>
+
+<!--
+This section defines the rules of each venue.
+-->
+<!ELEMENT Configuration (Venue*, FaultType*, OtherPts*) >
+
+<!--
+There will be a number of Fault Types that are pre-defined. But in general,
+this will be a user defined field for their own tracking purposes.
+-->
+<!ELEMENT FaultType (#PCDATA) >
+
+<!--
+OtherPts is used to enable things like breed points and USDAA
+top-ten points. The 'Count' value is how they are accumulated
+(points will be totalled by year/lifetime):
+  All: Tally all points in every event at all levels
+  AllByEvent: Tally points by event, but include all levels
+  Level: Tally all events, by level. (this infers by division too)
+  LevelByEvent: Tally events and levels separately.
+ The PCDATA content of the element is it's description.
+-->
+<!ELEMENT OtherPts (#PCDATA) >
+	<!ATTLIST OtherPts
+		Name CDATA #REQUIRED
+		Count (All|AllByEvent|Level|LevelByEvent) #REQUIRED
+		>
+
+<!ELEMENT Venue (Desc?, Division+, Event+) >
+	<!ATTLIST Venue Name CDATA #REQUIRED >
+<!ELEMENT Desc (#PCDATA) >
+
+<!--
+-->
+<!ELEMENT Division (Level+, Titles*) >
+	<!ATTLIST Division Name CDATA #REQUIRED >
+<!ELEMENT Titles (#PCDATA) >
+	<!ATTLIST Titles Name CDATA #REQUIRED >
+
+<!--
+Rules for levels are based on the level name. A level may be
+broken into sublevels, for instance "Novice A" and "Novice B".
+AKC's ExA and ExB should be treated as distinct levels, since
+you title in each one, unlike the novice levels.
+-->
+<!ELEMENT Level (SubLevel*) >
+	<!ATTLIST Level Name CDATA #REQUIRED >
+<!ELEMENT SubLevel EMPTY >
+	<!ATTLIST SubLevel Name CDATA #REQUIRED >
+
+<!--
+The biggest difference in events is in how they are scored. These
+are the types of scoring recognized:
+ FaultsThenTime    Accumulate faults.
+ Faults100ThenTime Subtract faults from 100 and round time faults.
+ OCScoreThenTime   Must have a required number of opening and closing pts.
+ ScoreThenTime     Must have a required number of pts.
+ TimePlusFaults    Score by adding faults and time together.
+
+The 'Division' and 'Level' attributes should enumerate all possible
+levels listed in the Division elements (remember a level is 'Level',
+not 'SubLevel'). The name may be '*' which will be the default. If not
+enumerated, the event will not be offered for that division/level pair.
+
+'dropFractions' means that when computing time faults, fractions are
+dropped. (AKC and CPE do this.)
+
+The 'superQ', 'doubleQ' and 'machPts' attributes enable built-in
+features for an event. If 'doubleQ' is enabled, the program will
+automatically determine if a double Q occurs on a given date.
+
+Entries in 'TitlePoints' determines if a Q should/not be awarded. When
+data is entered in the program, the program will perform certain tests.
+If it thinks you should/not Q and you enter data differently,
+it will ask if you really mean that.
+
+If there are no 'TitlePoints', then the class is non-titling.
+-->
+<!ELEMENT Event (Desc?, Scoring+) >
+	<!ATTLIST Event
+		Name CDATA #REQUIRED
+		hasPartner (y|n) 'n'
+		>
+<!ELEMENT Scoring (Note?, TitlePoints*) >
+	<!ATTLIST Scoring
+		Division CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		type (FaultsThenTime|Faults100ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults) #REQUIRED
+		dropFractions (y|n) 'n'
+		superQ (y|n) 'n'
+		doubleQ (y|n) 'n'
+		machPts (y|n) 'n'
+		OpeningPts CDATA #IMPLIED
+		ClosingPts CDATA #IMPLIED
+		>
+<!ELEMENT TitlePoints EMPTY >
+	<!ATTLIST TitlePoints
+		Points CDATA #REQUIRED
+		Faults CDATA #REQUIRED
+		>
+
+<!--
+This section defines a dog's runs. The way the data is interpretted
+depends on how a venue has been defined above.
+-->
+
+<!ELEMENT Dog (RegisteredName?, Breed?, Note?, RegNum*, Title*, Trial*) >
+	<!ATTLIST Dog
+		CallName CDATA #REQUIRED
+		DOB CDATA #IMPLIED
+		>
+<!ELEMENT RegisteredName (#PCDATA) >
+<!ELEMENT Breed (#PCDATA) >
+<!ELEMENT Note (#PCDATA) >
+<!ELEMENT RegNum (#PCDATA) >
+	<!ATTLIST RegNum Venue CDATA #REQUIRED >
+<!ELEMENT Title EMPTY >
+	<!ATTLIST Title
+		Date CDATA #REQUIRED
+		Venue CDATA #REQUIRED
+		Name CDATA #REQUIRED
+		isReceived (y|n) 'n'
+	>
+
+<!-- Entries in the file are grouped by trial. -->
+<!ELEMENT Trial (Location?, Note?, Club+, Run*) >
+	<!ATTLIST Trial Verified (y|n) 'n' >
+
+<!ELEMENT Location (#PCDATA) >
+
+<!--
+Multiple clubs are allowed for co-sanctioned matches, such as NADAC/ASCA.
+The 'Venue' must be defined above in a Configuration/Venue element.
+-->
+<!ELEMENT Club (#PCDATA) >
+	<!ATTLIST Club Venue CDATA #REQUIRED >
+
+<!--
+The attributes 'Division' and 'Event' must be defined above in a
+Configuration/Venue element. The 'Level' attribute is defined in either
+a Level or SubLevel element.
+-->
+<!ELEMENT Run (Conditions?, Judge, Handler?, Partner*, (ByTime | ByOpenClose | ByPoints), Placement?, Notes?, ReferenceRun*) >
+	<!ATTLIST Run
+		Date CDATA #REQUIRED
+		Division CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		Height CDATA #REQUIRED
+		Event CDATA #REQUIRED
+		>
+
+<!ELEMENT Conditions (#PCDATA) >
+<!ELEMENT Judge (#PCDATA) >
+<!ELEMENT Handler (#PCDATA) >
+
+<!--
+The '*' on Partner allows for 3 dogs relays, etc. This element may only be
+specified if the 'hasPartner' attribute on the event is true.
+-->
+<!ELEMENT Partner EMPTY >
+	<!ATTLIST Partner
+		Handler CDATA #REQUIRED
+		Dog CDATA #REQUIRED
+		RegNum CDATA #IMPLIED
+	>
+
+<!--
+These 3 elements define the major scoring mechanisms.
+ ByTime: FaultsThenTime, Faults100ThenTime, TimePlusFaults
+  When used by 'TimePlusFaults', SCT and Yards are not required. If
+  specified, then it is assumed time faults are also tallied.
+ ByOpenClose: OCScoreThenTime
+ ByPoints: ScoreThenTime
+-->
+<!ELEMENT ByTime EMPTY >
+	<!ATTLIST ByTime
+		Time CDATA #REQUIRED
+		CourseFaults CDATA #REQUIRED
+		SCT CDATA #IMPLIED
+		Yards CDATA #IMPLIED
+		>
+<!ELEMENT ByOpenClose EMPTY >
+	<!ATTLIST ByOpenClose
+		NeedOpenPts CDATA #REQUIRED
+		NeedClosePts CDATA #REQUIRED
+		Time CDATA #REQUIRED
+		OpenPts CDATA #REQUIRED
+		ClosePts CDATA #REQUIRED
+		>
+<!ELEMENT ByPoints EMPTY >
+	<!ATTLIST ByPoints
+		NeedPts CDATA #REQUIRED
+		Time CDATA #REQUIRED
+		Points CDATA #REQUIRED
+		>
+
+<!ELEMENT Placement (OtherPoints*) >
+	<!ATTLIST Placement
+		Q (NA|SQ|Q|NQ|E) 'NA'
+		Place CDATA #REQUIRED
+		InClass CDATA #IMPLIED
+		DogsQd CDATA #IMPLIED
+	>
+<!ELEMENT OtherPoints EMPTY >
+	<!ATTLIST OtherPoints
+		Name CDATA #REQUIRED
+		Points CDATA #REQUIRED
+		>
+
+<!ELEMENT Notes (Faults*, CRCD?, Other?) >
+<!ELEMENT Faults (#PCDATA) >
+<!ELEMENT CRCD (#PCDATA) >
+<!ELEMENT Other (#PCDATA) >
+
+<!--
+The meaning of ScoreOrFaults is dependent on the type of run. These
+entries are just for reference, hence the data is not interpreted.
+-->
+<!ELEMENT ReferenceRun (Name, Breed?, ScoreOrFaults?, Note?) >
+	<!ATTLIST ReferenceRun
+		Q (NA|SQ|Q|NQ|E) 'NA'
+		Place CDATA #REQUIRED
+		Time CDATA #IMPLIED
+	>
+<!ELEMENT Name (#PCDATA) >
+<!ELEMENT ScoreOrFaults (#PCDATA) >
