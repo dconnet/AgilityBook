@@ -115,7 +115,7 @@ static const struct
 {
 	{WIZ_IMPORT_RUNS, 
 		{
-			{PSWIZB_DISABLEDFINISH/*PSWIZB_NEXT*/, IDD_WIZARD_IMPORT,
+			{/*PSWIZB_DISABLEDFINISH*/PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Runs",
 				"Not implemented yet.\n\nImport trial and run information from a spreadsheet. Data must be in a text format."},
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}

@@ -150,7 +150,7 @@ void CWizardExport::UpdateButtons()
 			for (int i = 0; bOk && i < IO_TYPE_MAX; ++i)
 			{
 				std::vector<int> columns;
-				CAgilityBookOptions::GetImportExportColumns(false, i, columns);
+				CAgilityBookOptions::GetColumnOrder(CAgilityBookOptions::eExport, i, columns);
 				if (0 == columns.size())
 					bOk = false;
 			}
@@ -178,7 +178,7 @@ void CWizardExport::UpdatePreview()
 			int i;
 			std::vector<int> columns[IO_TYPE_MAX];
 			for (i = 0; i < IO_TYPE_MAX; ++i)
-				CAgilityBookOptions::GetImportExportColumns(false, i, columns[i]);
+				CAgilityBookOptions::GetColumnOrder(CAgilityBookOptions::eExport, i, columns[i]);
 			for (i = 0; i < IO_TYPE_MAX; ++i)
 			{
 				CString data;
@@ -591,7 +591,7 @@ void CWizardExport::OnExportDelim()
 void CWizardExport::OnExportAssign() 
 {
 	UpdateData(TRUE);
-	CDlgAssignColumns dlg(false, this);
+	CDlgAssignColumns dlg(CAgilityBookOptions::eExport, this);
 	if (IDOK == dlg.DoModal())
 	{
 		UpdateButtons();
