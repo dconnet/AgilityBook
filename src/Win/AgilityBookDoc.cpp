@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-04-29 DRC Use default config during auto-update (no file prompt).
  * @li 2004-03-31 DRC Only prompt to merge config if config version number is
  *                    greater (was simply checking for not-equal)
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
@@ -80,6 +81,7 @@
 #include "DlgTrial.h"
 #include "Element.h"
 #include "MainFrm.h"
+#include "Splash.h"
 #include "TabView.h"
 #include "Wizard.h"
 
@@ -303,11 +305,22 @@ void CAgilityBookDoc::SortDates()
 	}
 }
 
-bool CAgilityBookDoc::ImportConfiguration()
+bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 {
 	bool bOk = false;
+	bool bDoIt = false;
 	CDlgConfigUpdate dlg;
-	if (IDOK == dlg.DoModal())
+	if (bUseDefault)
+	{
+		bDoIt = true;
+		dlg.LoadConfig(NULL);
+	}
+	else
+	{
+		if (IDOK == dlg.DoModal())
+			bDoIt = true;
+	}
+	if (bDoIt)
 	{
 		ARBConfig& update = dlg.GetConfig();
 		CString msg;
@@ -630,6 +643,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	CFileStatus status;
 	if (!CFile::GetStatus(lpszPathName, status))
 	{
+		CSplashWnd::HideSplashScreen();
 		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
 		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
@@ -664,6 +678,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 			msg += "\n\n";
 			msg += err.c_str();
 		}
+		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 		return FALSE;
 	}
@@ -678,6 +693,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 			msg += "\n\n";
 			msg += err.c_str();
 		}
+		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 		return FALSE;
 	}
@@ -685,6 +701,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	{
 		CString msg("Warning: Some non-fatal messages were generated while loading the file:\n\n");
 		msg += err.c_str();
+		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	SortDates();
@@ -705,9 +722,10 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion())
 	{
+		CSplashWnd::HideSplashScreen();
 		if (IDYES == AfxMessageBox("The configuration has been updated. Would you like to merge the new one with your data?", MB_ICONQUESTION | MB_YESNO))
 		{
-			if (ImportConfiguration())
+			if (ImportConfiguration(true))
 				SetModifiedFlag(TRUE);
 		}
 	}

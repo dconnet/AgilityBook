@@ -453,7 +453,7 @@ BOOL CWizardStart::OnWizardFinish()
 			break;
 
 		case WIZ_IMPORT_CONFIGURATION:
-			bOk = m_pDoc->ImportConfiguration();
+			bOk = m_pDoc->ImportConfiguration(false);
 			break;
 
 		case WIZ_EXPORT_CONFIGURATION:
