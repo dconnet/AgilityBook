@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Added FromString().
  */
 
 #include "StdAfx.h"
@@ -170,13 +171,79 @@ ARBDate ARBDate::Today()
 	return today;
 }
 
-// static
-ARBDate ARBDate::FromString(const std::string& inDate)
+static int ParseFields(std::string inDate, char sep, int& val1, int& val2, int& val3)
 {
-	CElement ele;
-	ele.AddAttrib("date", inDate);
+	int nVals = 0;
+	std::string::size_type pos = inDate.find(sep);
+	if (std::string::npos != pos)
+	{
+		val1 = static_cast<short>(atol(inDate.c_str()));
+		++nVals;
+		inDate = inDate.substr(pos+1);
+		pos = inDate.find(sep);
+		if (std::string::npos != pos)
+		{
+			val2 = static_cast<short>(atol(inDate.c_str()));
+			++nVals;
+			inDate = inDate.substr(pos+1);
+			val3 = static_cast<short>(atol(inDate.c_str()));
+			++nVals;
+		}
+	}
+	return nVals;
+}
+
+// static
+ARBDate ARBDate::FromString(const std::string& inDate, ARBDate::DateFormat inFormat)
+{
 	ARBDate date;
-	ele.GetAttrib("date", date);
+	std::string value(inDate);
+	if (0 < inDate.length())
+	{
+		int val1 = 0, val2 = 0, val3 = 0;
+		int nDash = ParseFields(inDate, '-', val1, val2, val3);
+		int nSlash = ParseFields(inDate, '/', val1, val2, val3);
+		int yr = 0, mon = 0, day = 0;
+		if (3 == nDash || 3 == nSlash)
+		{
+			if (0 == inFormat)
+			{
+				if (3 == nDash)
+					inFormat = eDashYYYYMMDD;
+				else if (3 == nSlash)
+					inFormat = eSlashMMDDYYYY;
+			}
+			switch (inFormat)
+			{
+			case eDashMMDDYYYY:
+			case eSlashMMDDYYYY:
+				mon = val1;
+				day = val2;
+				yr = val3;
+				break;
+			case eDashYYYYMMDD:
+			case eSlashYYYYMMDD:
+				yr = val1;
+				mon = val2;
+				day = val3;
+				break;
+			case eDashDDMMYYYY:
+			case eSlashDDMMYYYY:
+				day = val1;
+				mon = val2;
+				yr = val3;
+				break;
+			}
+		}
+		date.SetDate(yr, mon, day);
+		if (date.IsValid())
+		{
+			int yr2, mon2, day2;
+			date.GetDate(yr2, mon2, day2);
+			if (yr != yr2 || mon != mon2 || day != day2)
+				date.clear();
+		}
+	}
 	return date;
 }
 
@@ -250,31 +317,69 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-std::string ARBDate::GetString(bool inLeadingZeros, bool inYearFirst) const
+std::string ARBDate::GetString(bool inLeadingZeros, DateFormat inFormat) const
 {
-	char buffer[100];
+	std::string date;
 	if (IsValid())
 	{
 		int yr, mon, day;
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-		if (inYearFirst)
+		char sYr[10], sMon[10], sDay[10];
+		if (inLeadingZeros)
 		{
-			if (inLeadingZeros)
-				sprintf(buffer, "%04d-%02d-%02d", yr, mon, day);
-			else
-				sprintf(buffer, "%d-%d-%d", yr, mon, day);
+			sprintf(sYr, "%04d", yr);
+			sprintf(sMon, "%02d", mon);
+			sprintf(sDay, "%02d", day);
 		}
 		else
 		{
-			if (inLeadingZeros)
-				sprintf(buffer, "%02d/%02d/%04d", mon, day, yr);
-			else
-				sprintf(buffer, "%d/%d/%d", mon, day, yr);
+			sprintf(sYr, "%d", yr);
+			sprintf(sMon, "%d", mon);
+			sprintf(sDay, "%d", day);
+		}
+		char sep = '?';
+		switch (inFormat)
+		{
+		case eDashMMDDYYYY:
+		case eDashYYYYMMDD:
+		case eDashDDMMYYYY:
+			sep = '-';
+			break;
+		case eSlashMMDDYYYY:
+		case eSlashYYYYMMDD:
+		case eSlashDDMMYYYY:
+			sep = '/';
+			break;
+		}
+		switch (inFormat)
+		{
+		case eDashMMDDYYYY:
+		case eSlashMMDDYYYY:
+			date = sMon;
+			date += sep;
+			date += sDay;
+			date += sep;
+			date += sYr;
+			break;
+		case eDashYYYYMMDD:
+		case eSlashYYYYMMDD:
+			date = sYr;
+			date += sep;
+			date += sMon;
+			date += sep;
+			date += sDay;
+			break;
+		case eDashDDMMYYYY:
+		case eSlashDDMMYYYY:
+			date = sDay;
+			date += sep;
+			date += sMon;
+			date += sep;
+			date += sYr;
+			break;
 		}
 	}
-	else
-		buffer[0] = NULL;
-	return std::string(buffer);
+	return date;
 }
 
 time_t ARBDate::GetDate() const

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-11-22 DRC Update the list when creating an entry.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-31 DRC Cleaned up pagedown scrolling.
@@ -353,7 +354,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				CRect r = GetDateRect(date, true);
 				CRect rFull(r);
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
-				CString str(date.GetString(false, false).c_str());
+				CString str(date.GetString(false, ARBDate::eDashYYYYMMDD).c_str());
 				if (!pDC->IsPrinting())
 				{
 					if (m_Current == date)
@@ -765,10 +766,10 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
 			ARBCalendar* cal = *iter;
-			size_t len = cal->GetStartDate().GetString(true, false).length();
+			size_t len = cal->GetStartDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
 			if (len > maxLen[COL_START_DATE])
 				maxLen[COL_START_DATE] = len;
-			len = cal->GetEndDate().GetString(true, false).length();
+			len = cal->GetEndDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
 			if (len > maxLen[COL_END_DATE])
 				maxLen[COL_END_DATE] = len;
 			len = cal->GetLocation().length();
@@ -780,10 +781,10 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			len = cal->GetVenue().length();
 			if (len > maxLen[COL_VENUE])
 				maxLen[COL_VENUE] = len;
-			len = cal->GetOpeningDate().GetString(true, false).length();
+			len = cal->GetOpeningDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
 			if (len > maxLen[COL_OPENS])
 				maxLen[COL_OPENS] = len;
-			len = cal->GetClosingDate().GetString(true, false).length();
+			len = cal->GetClosingDate().GetString(true, ARBDate::eDashYYYYMMDD).length();
 			if (len > maxLen[COL_CLOSES])
 				maxLen[COL_CLOSES] = len;
 			len = cal->GetNote().length();
@@ -809,13 +810,13 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		{
 			ARBCalendar* cal = *iter;
 			std::string items[scNumColumns];
-			items[COL_START_DATE] = cal->GetStartDate().GetString(true, false);
-			items[COL_END_DATE] = cal->GetEndDate().GetString(true, false);
+			items[COL_START_DATE] = cal->GetStartDate().GetString(true, ARBDate::eDashYYYYMMDD);
+			items[COL_END_DATE] = cal->GetEndDate().GetString(true, ARBDate::eDashYYYYMMDD);
 			items[COL_LOCATION] = cal->GetLocation();
 			items[COL_CLUB] = cal->GetClub();
 			items[COL_VENUE] = cal->GetVenue();
-			items[COL_OPENS] = cal->GetOpeningDate().GetString(true, false);
-			items[COL_CLOSES] = cal->GetClosingDate().GetString(true, false);
+			items[COL_OPENS] = cal->GetOpeningDate().GetString(true, ARBDate::eDashYYYYMMDD);
+			items[COL_CLOSES] = cal->GetClosingDate().GetString(true, ARBDate::eDashYYYYMMDD);
 			items[COL_NOTES] = cal->GetNote();
 			CString tentative(" ");
 			if (cal->IsTentative())

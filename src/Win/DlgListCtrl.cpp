@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-24 DRC Adding a new calendar item didn't set the icon properly.
  * @li 2003-09-08 DRC In Partners, the dog's number wasn't being saved.
  * @li 2003-08-25 DRC Set listctrl selection when adding/deleting items.
@@ -117,10 +118,10 @@ CString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 	switch (iCol)
 	{
 	case 1: // Start Date
-		str = m_pCal->GetStartDate().GetString(false, false).c_str();
+		str = m_pCal->GetStartDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 		break;
 	case 2: // End Date
-		str = m_pCal->GetEndDate().GetString(false, false).c_str();
+		str = m_pCal->GetEndDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 		break;
 	case 3: // Location
 		str = m_pCal->GetLocation().c_str();

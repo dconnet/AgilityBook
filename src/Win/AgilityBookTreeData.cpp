@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-09-04 DRC When pasting, set document modified flag. Clean up some
  *                    warning messages when creating/pasting items and a filter
@@ -699,7 +700,7 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 			str += m_pDog->GetBreed().c_str();
 			break;
 		case IO_TREE_DOG_DOB:
-			str += m_pDog->GetDOB().GetString(false, false).c_str();
+			str += m_pDog->GetDOB().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_TREE_DOG_AGE:
 			{
@@ -884,10 +885,10 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 		switch (GetTrialColumns()[idx])
 		{
 		case IO_TREE_TRIAL_START:
-			str += m_pTrial->GetRuns().GetStartDate().GetString(true, false).c_str();
+			str += m_pTrial->GetRuns().GetStartDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_TREE_TRIAL_END:
-			str += m_pTrial->GetRuns().GetEndDate().GetString(true, false).c_str();
+			str += m_pTrial->GetRuns().GetEndDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_TREE_TRIAL_CLUB:
 			{
@@ -1117,7 +1118,7 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			str += m_pRun->GetDate().GetString(true, true).c_str();
+			str += m_pRun->GetDate().GetString(true, ARBDate::eSlashMMDDYYYY).c_str();
 			break;
 		case IO_TREE_RUN_Q:
 			{

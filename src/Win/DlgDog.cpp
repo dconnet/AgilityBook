@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
@@ -281,7 +282,7 @@ void CDlgDog::ListTitles()
 		++i, ++iterTitle)
 	{
 		const ARBDogTitle* pTitle = (*iterTitle);
-		int nItem = m_ctrlTitles.InsertItem(i, pTitle->GetDate().GetString(true, false).c_str());
+		int nItem = m_ctrlTitles.InsertItem(i, pTitle->GetDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str());
 		m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetVenue().c_str());
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetName().c_str());
 		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetReceived() ? "x" : "");

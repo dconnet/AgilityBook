@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Added ValidTo, changed ValidFrom dtd name (was 'Date').
  * @li 2003-12-11 DRC Added ValidFrom, not fully implemented yet.
@@ -396,12 +397,12 @@ std::string ARBConfigScoring::GetValidDateString() const
 	{
 		str += "[";
 		if (m_ValidFrom.IsValid())
-			str += m_ValidFrom.GetString(false, false).c_str();
+			str += m_ValidFrom.GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 		else
 			str += "*";
 		str += "-";
 		if (m_ValidTo.IsValid())
-			str += m_ValidTo.GetString(false, false).c_str();
+			str += m_ValidTo.GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 		else
 			str += "*";
 		str += "]";

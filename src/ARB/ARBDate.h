@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Added FromString().
  */
 
 #include <string>
@@ -45,8 +46,18 @@ class CElement;
 class ARBDate
 {
 public:
+	typedef enum
+	{
+		eDefault		= 0,	// YYYY-MM-DD or MM/DD/YYYY
+		eDashMMDDYYYY	= 1,
+		eSlashMMDDYYYY	= 2,
+		eDashYYYYMMDD	= 3,
+		eSlashYYYYMMDD	= 4,
+		eDashDDMMYYYY	= 5,
+		eSlashDDMMYYYY	= 6,
+	} DateFormat;
+	static ARBDate FromString(const std::string& inDate, DateFormat inFormat);
 	static ARBDate Today();
-	static ARBDate FromString(const std::string& inDate);
 
 	ARBDate();
 	ARBDate(const ARBDate& rhs);
@@ -87,7 +98,7 @@ public:
 	 * @param bYearFirst Form to return date string.
 	 * @return Return date as "YYYY-MM-DD" or "MM/DD/YYYY"
 	 */
-	std::string GetString(bool inLeadingZeros, bool inYearFirst) const;
+	std::string GetString(bool inLeadingZeros, DateFormat inFormat) const;
 
 	/**
 	 * Convert the date to a time. Note, this will return an invalid time_t (-1)

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003 David Connet. All Rights Reserved.
+ * Copyright © 2003-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-30 DRC Fixed a bug exporting the training log.
  * @li 2003-12-10 DRC Created
  */
@@ -97,20 +98,22 @@ void CWizardExport::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_WIZARD_DELIM, m_Delimiter);
 	DDV_MaxChars(pDX, m_Delimiter, 1);
 	DDX_Control(pDX, IDC_WIZARD_ASSIGN, m_ctrlAssign);
+	DDX_Control(pDX, IDC_DATE, m_ctrlDateFormat);
 	DDX_Control(pDX, IDC_WIZARD_PREVIEW, m_ctrlPreview);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CWizardExport, CPropertyPage)
 	//{{AFX_MSG_MAP(CWizardExport)
-	ON_BN_CLICKED(IDC_WIZARD_ASSIGN, OnExportAssign)
 	ON_BN_CLICKED(IDC_WIZARD_DELIM_TAB, OnExportDelim)
+	ON_BN_CLICKED(IDC_WIZARD_ASSIGN, OnExportAssign)
 	ON_BN_CLICKED(IDC_WIZARD_DELIM_SPACE, OnExportDelim)
 	ON_BN_CLICKED(IDC_WIZARD_DELIM_COLON, OnExportDelim)
 	ON_BN_CLICKED(IDC_WIZARD_DELIM_SEMI, OnExportDelim)
 	ON_BN_CLICKED(IDC_WIZARD_DELIM_COMMA, OnExportDelim)
 	ON_BN_CLICKED(IDC_WIZARD_DELIM_OTHER, OnExportDelim)
 	ON_EN_CHANGE(IDC_WIZARD_DELIM, OnExportDelim)
+	ON_CBN_SELCHANGE(IDC_DATE, OnSelchangeDate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -178,6 +181,10 @@ void CWizardExport::UpdateButtons()
 
 void CWizardExport::UpdatePreview()
 {
+	ARBDate::DateFormat format = ARBDate::eSlashMMDDYYYY;
+	int index = m_ctrlDateFormat.GetCurSel();
+	if (CB_ERR != index)
+		format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
 	m_ctrlPreview.ResetContent();
 	CString delim = GetDelim();
 	if (delim.IsEmpty())
@@ -271,7 +278,7 @@ void CWizardExport::UpdatePreview()
 										data += pDog->GetCallName().c_str();
 										break;
 									case IO_RUNS_DATE:
-										data += pRun->GetDate().GetString(false, true).c_str();
+										data += pRun->GetDate().GetString(false, format).c_str();
 										break;
 									case IO_RUNS_VENUE:
 										{
@@ -533,10 +540,10 @@ void CWizardExport::UpdatePreview()
 					switch (columns[idx])
 					{
 					case IO_CAL_START_DATE:
-						data += pCal->GetStartDate().GetString(false, true).c_str();
+						data += pCal->GetStartDate().GetString(false, format).c_str();
 						break;
 					case IO_CAL_END_DATE:
-						data += pCal->GetEndDate().GetString(false, true).c_str();
+						data += pCal->GetEndDate().GetString(false, format).c_str();
 						break;
 					case IO_CAL_TENTATIVE:
 						if (pCal->IsTentative())
@@ -568,12 +575,12 @@ void CWizardExport::UpdatePreview()
 					case IO_CAL_OPENS:
 						date = pCal->GetOpeningDate();
 						if (date.IsValid())
-							data += date.GetString(false, true).c_str();
+							data += date.GetString(false, format).c_str();
 						break;
 					case IO_CAL_CLOSES:
 						date = pCal->GetClosingDate();
 						if (date.IsValid())
-							data += date.GetString(false, true).c_str();
+							data += date.GetString(false, format).c_str();
 						break;
 					case IO_CAL_NOTES:
 						data += pCal->GetNote().c_str();
@@ -609,7 +616,7 @@ void CWizardExport::UpdatePreview()
 					switch (columns[idx])
 					{
 					case IO_LOG_DATE:
-						data += pLog->GetDate().GetString(false, true).c_str();
+						data += pLog->GetDate().GetString(false, format).c_str();
 						break;
 					case IO_LOG_NAME:
 						data += pLog->GetName().c_str();
@@ -633,6 +640,29 @@ void CWizardExport::UpdatePreview()
 BOOL CWizardExport::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
+	static const struct
+	{
+		const char* pFormat;
+		ARBDate::DateFormat format;
+	} sc_Dates[] =
+	{
+		{"MM-DD-YYYY", ARBDate::eDashMMDDYYYY},
+		{"MM/DD/YYYY", ARBDate::eSlashMMDDYYYY},
+		{"YYYY-MM-DD", ARBDate::eDashYYYYMMDD},
+		{"YYYY/MM/DD", ARBDate::eSlashYYYYMMDD},
+		{"DD-MM-YYYY", ARBDate::eDashDDMMYYYY},
+		{"DD/MM/YYYY", ARBDate::eSlashDDMMYYYY},
+	};
+	ARBDate::DateFormat format;
+	CAgilityBookOptions::GetImportExportDateFormat(true, format);
+	static const int sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
+	for (int i = 0; i < sc_nDates; ++i)
+	{
+		int index = m_ctrlDateFormat.AddString(sc_Dates[i].pFormat);
+		m_ctrlDateFormat.SetItemData(index, static_cast<DWORD>(sc_Dates[i].format));
+		if (sc_Dates[i].format == format)
+			m_ctrlDateFormat.SetCurSel(index);
+	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -652,6 +682,9 @@ LRESULT CWizardExport::OnWizardBack()
 BOOL CWizardExport::OnWizardFinish() 
 {
 	UpdateData(TRUE);
+	int index = m_ctrlDateFormat.GetCurSel();
+	if (CB_ERR == index)
+		return FALSE;
 	UpdatePreview();
 	int delim;
 	switch (m_Delim)
@@ -665,6 +698,8 @@ BOOL CWizardExport::OnWizardFinish()
 	case 5: delim = CAgilityBookOptions::eDelimOther; break;
 	}
 	CAgilityBookOptions::SetImportExportDelimiters(false, delim, m_Delimiter);
+	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
+	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
 	CString filter;
 	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
@@ -716,4 +751,9 @@ void CWizardExport::OnExportAssign()
 			UpdatePreview();
 		}
 	}
+}
+
+void CWizardExport::OnSelchangeDate() 
+{
+	UpdatePreview();
 }

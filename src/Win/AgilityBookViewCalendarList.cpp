@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-11-22 DRC Update the view when creating or editing an entry.
  * @li 2003-11-21 DRC Enabled consistent copy and select all (old copy moved).
@@ -118,10 +119,10 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_CAL_START_DATE:
-			str = m_pCal->GetStartDate().GetString(false, false).c_str();
+			str = m_pCal->GetStartDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_CAL_END_DATE:
-			str = m_pCal->GetEndDate().GetString(false, false).c_str();
+			str = m_pCal->GetEndDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_CAL_LOCATION:
 			str = m_pCal->GetLocation().c_str();
@@ -134,11 +135,11 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 			break;
 		case IO_CAL_OPENS:
 			if (m_pCal->GetOpeningDate().IsValid())
-				str = m_pCal->GetOpeningDate().GetString(false, false).c_str();
+				str = m_pCal->GetOpeningDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_CAL_CLOSES:
 			if (m_pCal->GetClosingDate().IsValid())
-				str = m_pCal->GetClosingDate().GetString(false, false).c_str();
+				str = m_pCal->GetClosingDate().GetString(false, ARBDate::eDashYYYYMMDD).c_str();
 			break;
 		case IO_CAL_NOTES:
 			str = m_pCal->GetNote().c_str();

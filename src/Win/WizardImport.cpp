@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003 David Connet. All Rights Reserved.
+ * Copyright © 2003-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-04 DRC Implemented import, except for trials/runs.
  * @li 2003-12-10 DRC Created
  */
 
@@ -95,8 +96,9 @@ void CWizardImport::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_WIZARD_DELIM_TAB, m_Delim);
 	DDX_Text(pDX, IDC_WIZARD_DELIM, m_Delimiter);
 	DDV_MaxChars(pDX, m_Delimiter, 1);
-	DDX_Control(pDX, IDC_IMPORT_PREVIEW_FILE, m_ctrlPreviewFile);
 	DDX_Control(pDX, IDC_WIZARD_ASSIGN, m_ctrlAssign);
+	DDX_Control(pDX, IDC_DATE, m_ctrlDateFormat);
+	DDX_Control(pDX, IDC_IMPORT_PREVIEW_FILE, m_ctrlPreviewFile);
 	DDX_Control(pDX, IDC_WIZARD_PREVIEW, m_ctrlPreview);
 	//}}AFX_DATA_MAP
 }
@@ -294,6 +296,29 @@ BOOL CWizardImport::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	m_ctrlSpin.SetRange(100, 1);
+	static const struct
+	{
+		const char* pFormat;
+		ARBDate::DateFormat format;
+	} sc_Dates[] =
+	{
+		{"MM-DD-YYYY", ARBDate::eDashMMDDYYYY},
+		{"MM/DD/YYYY", ARBDate::eSlashMMDDYYYY},
+		{"YYYY-MM-DD", ARBDate::eDashYYYYMMDD},
+		{"YYYY/MM/DD", ARBDate::eSlashYYYYMMDD},
+		{"DD-MM-YYYY", ARBDate::eDashDDMMYYYY},
+		{"DD/MM/YYYY", ARBDate::eSlashDDMMYYYY},
+	};
+	ARBDate::DateFormat format;
+	CAgilityBookOptions::GetImportExportDateFormat(true, format);
+	static const int sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
+	for (int i = 0; i < sc_nDates; ++i)
+	{
+		int index = m_ctrlDateFormat.AddString(sc_Dates[i].pFormat);
+		m_ctrlDateFormat.SetItemData(index, static_cast<DWORD>(sc_Dates[i].format));
+		if (sc_Dates[i].format == format)
+			m_ctrlDateFormat.SetCurSel(index);
+	}
 	UpdatePreview();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -345,6 +370,9 @@ BOOL CWizardImport::OnWizardFinish()
 {
 	if (!UpdateData(TRUE))
 		return FALSE;
+	int index = m_ctrlDateFormat.GetCurSel();
+	if (CB_ERR == index)
+		return FALSE;
 	CAgilityBookOptions::SetImportStartRow(m_Row);
 	int delim;
 	switch (m_Delim)
@@ -358,6 +386,8 @@ BOOL CWizardImport::OnWizardFinish()
 	case 5: delim = CAgilityBookOptions::eDelimOther; break;
 	}
 	CAgilityBookOptions::SetImportExportDelimiters(true, delim, m_Delimiter);
+	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
+	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
 	size_t iCol;
@@ -392,7 +422,7 @@ BOOL CWizardImport::OnWizardFinish()
 		case WIZ_IMPORT_CALENDAR:
 			{
 				ARBCalendar* pCal = NULL;
-				for (iCol = 0; iCol < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++iCol)
+				for (iCol = 0; iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
 				{
 					if (0 == entry[iCol].length())
 						continue;
@@ -400,7 +430,7 @@ BOOL CWizardImport::OnWizardFinish()
 					{
 					case IO_CAL_START_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol]);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -412,12 +442,15 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n",
 									nItem, iCol, entry[iCol].c_str());
 								errLog += str;
+								pCal->Release();
+								pCal = NULL;
+								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
 						break;
 					case IO_CAL_END_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol]);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -429,6 +462,9 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n",
 									nItem, iCol, entry[iCol].c_str());
 								errLog += str;
+								pCal->Release();
+								pCal = NULL;
+								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
 						break;
@@ -458,6 +494,9 @@ BOOL CWizardImport::OnWizardFinish()
 							str.Format("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n",
 								nItem, iCol, entry[iCol].c_str());
 							errLog += str;
+							pCal->Release();
+							pCal = NULL;
+							iCol = columns[IO_TYPE_CALENDAR].size();
 						}
 						break;
 					case IO_CAL_LOCATION:
@@ -474,7 +513,7 @@ BOOL CWizardImport::OnWizardFinish()
 						break;
 					case IO_CAL_OPENS:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol]);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -486,12 +525,15 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n",
 									nItem, iCol, entry[iCol].c_str());
 								errLog += str;
+								pCal->Release();
+								pCal = NULL;
+								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
 						break;
 					case IO_CAL_CLOSES:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol]);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -503,6 +545,9 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n",
 									nItem, iCol, entry[iCol].c_str());
 								errLog += str;
+								pCal->Release();
+								pCal = NULL;
+								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
 						break;
@@ -532,7 +577,7 @@ BOOL CWizardImport::OnWizardFinish()
 		case WIZ_IMPORT_LOG:
 			{
 				ARBTraining* pLog = NULL;
-				for (iCol = 0; iCol < entry.size() && iCol < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++iCol)
+				for (iCol = 0; iCol < entry.size() && iCol < columns[IO_TYPE_TRAINING].size(); ++iCol)
 				{
 					if (0 == entry[iCol].length())
 						continue;
@@ -540,7 +585,7 @@ BOOL CWizardImport::OnWizardFinish()
 					{
 					case IO_LOG_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol]);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pLog = CreateLog(pLog);
@@ -552,6 +597,9 @@ BOOL CWizardImport::OnWizardFinish()
 								str.Format("ERROR: Line %d, Column %d: Invalid training log date: %s\n",
 									nItem, iCol, entry[iCol].c_str());
 								errLog += str;
+								pLog->Release();
+								pLog = NULL;
+								iCol = columns[IO_TYPE_TRAINING].size();
 							}
 						}
 						break;
