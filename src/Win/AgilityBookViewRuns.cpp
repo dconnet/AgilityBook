@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -375,7 +377,7 @@ void CAgilityBookViewRuns::LoadData()
 			++iter)
 			{
 				ARBDogTrial* pTrial = (*iter);
-				if (CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+				if (!pTrial->IsFiltered())
 					trials.push_back(pTrial);
 			}
 		}
@@ -392,7 +394,7 @@ void CAgilityBookViewRuns::LoadData()
 			++i, ++iterRun)
 			{
 				ARBDogRun* pRun = (*iterRun);
-				if (!CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+				if (pRun->IsFiltered())
 					continue;
 				if (pRun->GetQ().Qualified())
 					++nQs;

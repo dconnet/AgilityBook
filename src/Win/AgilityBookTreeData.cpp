@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  * @li 2003-07-24 DRC Added reorder support on all items. Made dogs user-sorted.
  */
 
@@ -85,10 +87,8 @@ static bool EditDog(
 	{
 		if (bAdd)
 		{
-			std::vector<CVenueFilter> venues;
-			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDog* pNewDog = pTree->GetDocument()->GetDogs().AddDog(pDog);
-			HTREEITEM hItem = pTree->InsertDog(venues, pNewDog);
+			HTREEITEM hItem = pTree->InsertDog(pNewDog);
 			pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
 			if (bTreeSelectionSet)
 				*bTreeSelectionSet = true;
@@ -131,7 +131,8 @@ static bool EditTrial(
 			std::vector<CVenueFilter> venues;
 			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDogTrial* pNewTrial = pDogData->GetDog()->GetTrials().AddTrial(pTrial);
-			HTREEITEM hItem = pTree->InsertTrial(venues, pNewTrial, pDogData->GetHTreeItem());
+			pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+			HTREEITEM hItem = pTree->InsertTrial(pNewTrial, pDogData->GetHTreeItem());
 			if (NULL == hItem)
 			{
 				bOk = false;
@@ -200,22 +201,34 @@ static bool EditRun(
 	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetTrial(), pRun, pTree);
 	if (IDOK == dlg.DoModal())
 	{
+		bOk = true;
 		if (bAdd)
 		{
 			std::vector<CVenueFilter> venues;
 			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDogRun* pNewRun = pTrialData->GetTrial()->GetRuns().AddRun(pRun);
-			HTREEITEM hItem = pTree->InsertRun(venues, pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
-			pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-			if (bTreeSelectionSet)
-				*bTreeSelectionSet = true;
+			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pNewRun);
+			HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
+			if (NULL == hItem)
+			{
+				bOk = false;
+				AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
+			}
+			else
+			{
+				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+				if (bTreeSelectionSet)
+					*bTreeSelectionSet = true;
+			}
 		}
 		else
 			pTree->Invalidate();
-		pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-		pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-		pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
-		bOk = true;
+		if (bOk)
+		{
+			pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+		}
 	}
 	pRun->Release();
 	return bOk;

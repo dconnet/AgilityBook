@@ -34,6 +34,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include <vector>
@@ -60,9 +62,9 @@ public:
 	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDog* pDog) const;
 	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDogTrial* pTrial) const;
 	CAgilityBookTreeData* FindData(HTREEITEM hItem, const ARBDogRun* pRun) const;
-	HTREEITEM InsertDog(const std::vector<CVenueFilter>& venues, ARBDog* pDog, bool bSelect = false);
-	HTREEITEM InsertTrial(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, HTREEITEM hParent);
-	HTREEITEM InsertRun(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
+	HTREEITEM InsertDog(ARBDog* pDog, bool bSelect = false);
+	HTREEITEM InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent);
+	HTREEITEM InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
 
 	// ICommonView interface
 	virtual bool GetMessage(CString& msg) const;

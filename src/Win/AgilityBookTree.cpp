@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -324,7 +326,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDogRu
 	return pData;
 }
 
-HTREEITEM CAgilityBookTree::InsertDog(const std::vector<CVenueFilter>& venues, ARBDog* pDog, bool bSelect)
+HTREEITEM CAgilityBookTree::InsertDog(ARBDog* pDog, bool bSelect)
 {
 	if (!pDog)
 		return NULL;
@@ -342,16 +344,16 @@ HTREEITEM CAgilityBookTree::InsertDog(const std::vector<CVenueFilter>& venues, A
 		iterTrial != pDog->GetTrials().end();
 		++iterTrial)
 	{
-		InsertTrial(venues, (*iterTrial), hItem);
+		InsertTrial((*iterTrial), hItem);
 	}
 	if (bSelect)
 		GetTreeCtrl().Select(hItem, TVGN_CARET);
 	return hItem;
 }
 
-HTREEITEM CAgilityBookTree::InsertTrial(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, HTREEITEM hParent)
+HTREEITEM CAgilityBookTree::InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent)
 {
-	if (!pTrial || !CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+	if (!pTrial || pTrial->IsFiltered())
 		return NULL;
 
 	CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, pTrial);
@@ -367,14 +369,14 @@ HTREEITEM CAgilityBookTree::InsertTrial(const std::vector<CVenueFilter>& venues,
 		iterRun != pTrial->GetRuns().end();
 		++iterRun)
 	{
-		InsertRun(venues, pTrial, (*iterRun), hTrial);
+		InsertRun(pTrial, (*iterRun), hTrial);
 	}
 	return hTrial;
 }
 
-HTREEITEM CAgilityBookTree::InsertRun(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent)
+HTREEITEM CAgilityBookTree::InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent)
 {
-	if (!pRun || !CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+	if (!pRun || pRun->IsFiltered())
 		return NULL;
 
 	CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, pRun);
@@ -406,15 +408,13 @@ void CAgilityBookTree::LoadData()
 		pData = pData->GetParent();
 	}
 	// Load the data
-	std::vector<CVenueFilter> venues;
-	CAgilityBookOptions::GetFilterVenue(venues);
 	CTreeCtrl& tree = GetTreeCtrl();
 	tree.DeleteAllItems();
 	for (ARBDogList::const_iterator iterDog = GetDocument()->GetDogs().begin();
 		iterDog != GetDocument()->GetDogs().end();
 		++iterDog)
 	{
-		InsertDog(venues, (*iterDog));
+		InsertDog((*iterDog));
 	}
 	HTREEITEM hItem = NULL;
 	for (std::vector<const ARBBase*>::iterator iter = baseItems.begin();
@@ -621,11 +621,9 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 			CDlgDog dlg(GetDocument()->GetConfig(), dog);
 			if (IDOK == dlg.DoModal())
 			{
-				std::vector<CVenueFilter> venues;
-				CAgilityBookOptions::GetFilterVenue(venues);
 				GetDocument()->SetModifiedFlag();
 				ARBDog* pNewDog = GetDocument()->GetDogs().AddDog(dog);
-				InsertDog(venues, pNewDog, true);
+				InsertDog(pNewDog, true);
 			}
 			dog->Release();
 			bHandled = TRUE;

@@ -34,6 +34,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include <set>
@@ -47,6 +49,7 @@ class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookTree;
 class CTabView;
+struct CVenueFilter;
 
 // UpdateAllViews() hints
 #define UPDATE_CONFIG			0x001
@@ -96,10 +99,17 @@ public:
 	{
 		return m_Records.GetAllFaultTypes(faults);
 	}
+
 	void EditRun(ARBDogRun* pRun);
 	void DeleteRun(ARBDogRun* pRun);
 	bool CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* pTabView);
 	void SortDates();
+
+	void ResetVisibility();
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle);
 protected:
 	CAgilityBookTree* GetTreeView() const;
 

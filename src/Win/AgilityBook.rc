@@ -1554,13 +1554,27 @@ BEGIN
     IDS_NUM_EVENTS          "%1!d! events"
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
     IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
-    IDS_CREATETRIAL_FAILED  "Warning: Failed to create trial. Please check the filter options, it may be preventing the creation of this trial"
+    IDS_CREATETRIAL_FAILED  "Warning: Failed to create trial. Please check the filter options, it may be preventing the creation of this trial."
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_VENUE_CONFIG_MISSING 
                             "Unable to locate configuration information for the venue '%1'."
     IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_POINTS_SQS          "%1!d! Q+"
+    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
+    IDS_POINTS_QQS          "%1!d! QQ"
+    IDS_POINTS_MACH         "%1!d! Mach"
+    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+    IDS_FILEEXT_DEF_ARB     "arb"
+    IDS_FILEEXT_FNAME_ARB   "*.arb"
+    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+    IDS_CREATERUN_FAILED    "Warning: Failed to create run. Please check the filter options, it may be preventing the creation of this run."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1582,19 +1596,6 @@ BEGIN
     IDS_POINTS_PARTNERS     ", %1!d! partners"
     IDS_POINTS_QS           "%1!d! Qs"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "%1!d! Q+"
-    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
-    IDS_POINTS_QQS          "%1!d! QQ"
-    IDS_POINTS_MACH         "%1!d! Mach"
-    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
-    IDS_FILEEXT_DEF_ARB     "arb"
-    IDS_FILEEXT_FNAME_ARB   "*.arb"
-    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
 END
 
 STRINGTABLE DISCARDABLE 
