@@ -82,6 +82,7 @@
 #include "MainFrm.h"
 #include "TabView.h"
 #include "Wizard.h"
+#include ".\agilitybookdoc.h"
 
 #if _MSC_VER < 1300
 #ifndef INVALID_FILE_ATTRIBUTES
@@ -153,7 +154,6 @@ ARBDog* CAgilityBookDoc::GetCurrentDog()
 {
 	ARBDog* pDog = NULL;
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pDog = pTree->GetCurrentTreeItem()->GetDog();
 	return pDog;
@@ -507,7 +507,6 @@ CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 		if (pView2)
 			return pView2;
 	}
-	ASSERT(0);
 	return NULL;
 }
 
@@ -714,6 +713,19 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		}
 	}
 	return TRUE;
+}
+
+/**
+ * MFC method to close a document (will call DeleteContents thru base class)
+ */
+void CAgilityBookDoc::OnCloseDocument()
+{
+	ARBDog* pDog = GetCurrentDog();
+	if (pDog)
+		AfxGetApp()->WriteProfileString("Settings", "LastDog", pDog->GetCallName().c_str());
+	else
+		AfxGetApp()->WriteProfileString("Settings", "LastDog", "");
+	CDocument::OnCloseDocument();
 }
 
 /**

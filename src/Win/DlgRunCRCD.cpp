@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-27 DRC Added some error recovery.
  */
 
 #include "stdafx.h"
@@ -175,10 +176,13 @@ BOOL CDlgRunCRCD::OnInitDialog()
 		size_t len;
 		if (decode.Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
 		{
-			m_ViewText = false;
 			m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(len), reinterpret_cast<LPBYTE>(pOutput));
-			AdjustCRCD();
-			m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
+			if (m_metaFile)
+			{
+				m_ViewText = false;
+				AdjustCRCD();
+				m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
+			}
 		}
 	}
 	SetView();
@@ -234,6 +238,8 @@ void CDlgRunCRCD::OnCopy()
 					CString str((LPCTSTR)GlobalLock(hData));
 					GlobalUnlock(hData);
 					m_ctrlText.SetWindowText(str);
+					str.TrimRight();
+					str.TrimLeft();
 					str.Replace("\r\n", "\n");
 					m_Run->SetCRCD((LPCTSTR)str);
 					if (0 < str.GetLength())
@@ -246,13 +252,13 @@ void CDlgRunCRCD::OnCopy()
 					{
 						HENHMETAFILE hData = (HENHMETAFILE)GetClipboardData(CF_ENHMETAFILE);
 						m_metaFile = CopyEnhMetaFile(hData, NULL);
-						Base64 decode;
 						ENHMETAHEADER header;
 						GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
 						UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
 						LPBYTE bits = new BYTE[nSize+1];
 						GetEnhMetaFileBits(m_metaFile, nSize, bits);
 						Base64 encode;
+						ASSERT(sizeof(BYTE) == sizeof(char));
 						std::string moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
 						m_Run->SetCRCDMetaFile(moreBits);
 						delete [] bits;
