@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-12-18 DRC Added an extra check before posting the new dog msg.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-07-20 DRC Moved the user-request updates here so it can check if
@@ -782,7 +783,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
 
-	if (0 == GetDogs().size())
+	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
 		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
