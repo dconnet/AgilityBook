@@ -1,4 +1,9 @@
 08/16/2003: v0.4.3.5 <in development>
+- Bug fixes
+  - A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the
+    score on all runs and title points on NQs. It should only compute title
+    points on Qs and score on NQ+Q. This only affected the run entry dialog
+    and not the point accumulation view.
 
 08/16/2003: v0.4.2.5
 - 7/23: Published source in sourceforge.net.
