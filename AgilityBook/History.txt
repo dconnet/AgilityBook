@@ -1,11 +1,13 @@
-10/4/2004: v1.3.3.9 <in development>
-- Bumped file version to 9.1, Configuration v6:
-  - Added 'Height' to 'ReferenceRun'
+10/6/2004: v1.4.0.10 <in development>
+- Bumped file version to 10, Configuration v6:
+  - Added 'Height' to 'ReferenceRun'.
+  - Added 'LifeTime' to 'Scoring'.
+  - Removed 'LifeTime' from 'TitlePoints'.
 - New features / Enhancements:
   - Added direct Excel import/export capability.
   - Added Mach points to the allowed columns in the runs view.
   - Updated CPE comments on CL1-5 "titles". Accumulate lifetime points
-    for Level C events.
+    for Level C events. Accumulate Specialist points like Level C.
   - In the calendar view, set the page scrolling size to 4 weeks. It used a
     default value which could scroll multiple pages at a time.
   - Added debug symbols to the installation to aid any problems that might
@@ -21,6 +23,8 @@
     many!). Also, if a run that was over-time was marked as a Q, the program
     generated a negative number of MACH points. In both cases, it should report
     zero points.
+  - Lifetime points do not necessarily accrue at the same rate as titling
+    points [CPE].
 
 9/15/2004: v1.3.2.9
 - Bug fix
