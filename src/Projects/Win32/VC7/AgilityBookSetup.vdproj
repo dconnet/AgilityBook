@@ -15,26 +15,8 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0226D13F929349AEBFB414EADDAA098E"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3E0AB2A9D2F048C2B34B2F2D327D0AC6"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_56F200DFE9584A82B40D0B6222FC47D3"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,20 +33,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C0E8806AB34147B098C6A9BCEFF6505E"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_D856BA91561A4C9CBFC70DA37046D394"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -125,26 +95,6 @@
         }
         "File"
         {
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_2E625F001E6FEE0346B41032CE679764"
-            {
-            "SourcePath" = "8:VERSION.dll"
-            "TargetName" = "8:VERSION.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_3E0AB2A9D2F048C2B34B2F2D327D0AC6"
             {
             "SourcePath" = "8:..\\..\\..\\Yahoo Discussion Group.html"
@@ -203,26 +153,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_FEC40DEC23AF7FC1E30DABBA1865BEBF"
-            {
-            "SourcePath" = "8:xerces-c_2_2_0.dll"
-            "TargetName" = "8:xerces-c_2_2_0.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -314,13 +244,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
-        "ProductCode" = "8:{FA77D904-C079-40B4-A945-1880D6ADE426}"
-        "PackageCode" = "8:{BE5938BA-C0BF-4C66-B9CF-4C705D68DC11}"
+        "ProductCode" = "8:{32A5476C-D40D-4061-BC6E-48ED26E316A9}"
+        "PackageCode" = "8:{19B621B6-8D4D-4182-9177-6DD066DD7074}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.2.0"
+        "ProductVersion" = "8:1.2.1"
         "Manufacturer" = "8:dcon Software"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.agilityrecordbook.com"
@@ -924,48 +854,6 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_0226D13F929349AEBFB414EADDAA098E"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_mfc71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_56F200DFE9584A82B40D0B6222FC47D3"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_crt71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_C0E8806AB34147B098C6A9BCEFF6505E"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_stl71_rtl_x86_---.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
         }
         "ProjectOutput"
         {
