@@ -440,6 +440,7 @@
 #define ID_EDIT_FIND_NEXT               32809
 #define ID_EDIT_FIND_PREVIOUS           32810
 #define ID_VIEW_CUSTOMIZE               32811
+#define ID_VIEW_TABLE_IN_YPS            32812
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 
@@ -448,7 +449,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        243
-#define _APS_NEXT_COMMAND_VALUE         32812
+#define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1179
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2004-03-25 DRC Changed Table-in-YPS to hasTable.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-02-14 DRC Added TableInYPS in run scoring.
  * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
@@ -182,7 +183,7 @@
 #define ATTRIB_PARTNER_REGNUM				"RegNum"
 #define ATTRIB_SCORING_FAULTS				"CourseFaults"
 #define ATTRIB_SCORING_TIME					"Time"
-#define ATTRIB_SCORING_TABLEINYPS			"TableInYPS"
+#define ATTRIB_SCORING_HAS_TABLE			"hasTable"
 #define ATTRIB_BY_TIME_SCT					"SCT"
 #define ATTRIB_BY_TIME_YARDS				"Yards"
 #define ATTRIB_BY_OPENCLOSE_NEEDOPEN		"NeedOpenPts"

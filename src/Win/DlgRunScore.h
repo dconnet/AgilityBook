@@ -78,7 +78,7 @@ private:
 	short	m_Faults;
 	CEdit	m_ctrlTime;
 	double	m_Time;
-	CButton m_ctrlTableYPS;
+	CButton m_ctrlTable;
 	CStatic	m_ctrlYardsText;
 	CEdit	m_ctrlYards;
 	double	m_Yards;

@@ -178,6 +178,8 @@ protected:
 	afx_msg void OnViewRunsByTrial();
 	afx_msg void OnUpdateViewHiddenTrials(CCmdUI* pCmdUI);
 	afx_msg void OnViewHiddenTrials();
+	afx_msg void OnUpdateViewTableInYPS(CCmdUI* pCmdUI);
+	afx_msg void OnViewTableInYPS();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

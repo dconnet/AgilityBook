@@ -34,6 +34,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2004-03-25 DRC File version 8.6. Changed Table-in-YPS to hasTable.
  * @li 2004-03-13 DRC File version 8.5. Added 'isHidden' to 'Title'.
  * @li 2004-02-15 DRC Cleaned up newline in warning msg.
  * @li 2004-02-14 DRC File version 8.4. Added Table-in-YPS flag.
@@ -79,7 +80,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(8, 5);
+	static ARBVersion const curVersion(8, 6);
 	return curVersion;
 }
 

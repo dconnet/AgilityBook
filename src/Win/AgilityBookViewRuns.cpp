@@ -203,7 +203,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 		case IO_RUNS_YPS:
 			{
 				double yps;
-				if (m_pRun->GetScoring().GetYPS(yps))
+				if (m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 				{
 					str.Format("%.3f", yps);
 				}

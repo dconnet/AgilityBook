@@ -538,6 +538,17 @@ void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 	AfxGetApp()->WriteProfileInt("Common", "ViewHiddenTitles", bSet ? 1 : 0);
 }
 
+bool CAgilityBookOptions::GetTableInYPS()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "TableInYPS", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetTableInYPS(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TableInYPS", bSet ? 1 : 0);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Training Log options
 
