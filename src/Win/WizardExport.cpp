@@ -506,7 +506,7 @@ BOOL CWizardExport::OnWizardFinish()
 			{
 				CString line;
 				m_ctrlPreview.GetText(i, line);
-				output << (LPCTSTR)line << endl;
+				output << (LPCTSTR)line << std::endl;
 			}
 			output.close();
 		}
