@@ -64,6 +64,9 @@ public:
 			--c_okToDismiss;
 		}
 	};
+#if _MSC_VER < 1300
+	friend class CSplashWnd::CSplashWndLock;
+#endif
 	static void EnableSplashScreen(BOOL bEnable = true);
 	static void ShowSplashScreen(CWnd* pParentWnd = NULL, bool bTimed = true);
 	static BOOL PreTranslateAppMessage(MSG* pMsg);
