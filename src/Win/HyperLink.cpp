@@ -51,6 +51,7 @@
  * the tooltip fixed.
  *
  * Revision History
+ * @li 2003-08-24 DRC Removed 4311 warning in VC7 with HINSTANCE.
  * @li 2003-08-16 DRC Modified code from Chris Maunder's original
  */
 
@@ -244,7 +245,9 @@ void CHyperLink::OnClicked()
 	m_bOverControl = false;
 
 	// First try ShellExecute()
-	int result = reinterpret_cast<int>(ShellExecute(NULL, _T("open"), m_strURL, NULL, NULL, SW_SHOW));
+	// Use INT_PTR instead of 'int' for compatibility with VC7.
+	// Removes the '4311' warning message.
+	INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), m_strURL, NULL, NULL, SW_SHOW));
 
 	// If it failed, get the .htm regkey and lookup the program
 	if (result <= HINSTANCE_ERROR)
