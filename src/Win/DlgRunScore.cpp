@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-19 DRC Total faults weren't updated when course faults changed.
  * @li 2004-01-18 DRC Calling UpdateData during data entry causes way too much
  *                    validation. Only call during OnOK (from dlgsheet)
  * @li 2003-12-27 DRC Changed FindEvent to take a date. Also, update the
@@ -707,6 +708,8 @@ void CDlgRunScore::UpdateControls()
 		m_ctrlPartnerEdit.ShowWindow(SW_HIDE);
 		m_ctrlPartner.ShowWindow(SW_HIDE);
 		m_ctrlHandler.EnableWindow(FALSE);
+		m_ctrlTime.EnableWindow(FALSE);
+		m_ctrlFaults.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpening.EnableWindow(FALSE);
@@ -776,6 +779,8 @@ void CDlgRunScore::UpdateControls()
 	case ARBConfigScoring::eFaults200ThenTime:
 	case ARBConfigScoring::eTimePlusFaults:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
+		m_ctrlTime.EnableWindow(TRUE);
+		m_ctrlFaults.EnableWindow(TRUE);
 		m_ctrlYards.EnableWindow(TRUE);
 		m_ctrlSCT.EnableWindow(TRUE);
 		m_ctrlOpening.EnableWindow(FALSE);
@@ -789,6 +794,8 @@ void CDlgRunScore::UpdateControls()
 		m_Closing = pScoring->GetRequiredClosingPoints();
 		// Do not push these back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
+		m_ctrlTime.EnableWindow(TRUE);
+		m_ctrlFaults.EnableWindow(TRUE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[0]);
@@ -812,6 +819,8 @@ void CDlgRunScore::UpdateControls()
 		m_Opening = pScoring->GetRequiredOpeningPoints();
 		// Do not push this back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
+		m_ctrlTime.EnableWindow(TRUE);
+		m_ctrlFaults.EnableWindow(TRUE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[1]);
@@ -1019,6 +1028,7 @@ void CDlgRunScore::OnKillfocusFaults()
 {
 	GetText(&m_ctrlFaults, m_Faults);
 	m_Run->GetScoring().SetCourseFaults(m_Faults);
+	SetTotalFaults();
 	SetTitlePoints();
 }
 
