@@ -7,10 +7,11 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-02-26 DRC File version 8.4, Configuration version 2.
+2004-03-03 DRC File version 8.4, Configuration version 2.
+               Added versioning to configuration to allow auto-upgrades.
                Added "TableInYPS" to "ByTime"
                Added new Config/Action: DeleteTitle
-               Added versioning to configuration to allow auto-upgrades.
+			   Added "CRCDMeta" to "Notes"
 2004-02-09 DRC File version 8.3
                Added "ExistingPoints" to "Dog"
 2004-01-21 DRC File version 8.2
@@ -355,9 +356,17 @@ These 3 elements define the major scoring mechanisms.
 		Points CDATA #REQUIRED
 		>
 
-<!ELEMENT Notes (Faults*, CRCD?, Other?) >
+<!--
+Notes on a dogs run.
+ Faults: Simple string, for generating reports in the future
+ CRCD: Text copy of CRCD course
+ CRCDMeta: Enhanced Metafile of course
+ Other: Generic comments
+-->
+<!ELEMENT Notes (Faults*, CRCD?, CRCDMeta?, Other?) >
 <!ELEMENT Faults (#PCDATA) >
 <!ELEMENT CRCD (#PCDATA) >
+<!ELEMENT CRCDMeta (#PCDATA) >
 <!ELEMENT Other (#PCDATA) >
 
 <!--

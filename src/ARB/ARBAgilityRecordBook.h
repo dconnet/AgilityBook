@@ -95,6 +95,7 @@
 #define TREE_NOTES							"Notes"
 #define TREE_FAULTS							"Faults"
 #define TREE_CRCD							"CRCD"
+#define TREE_CRCD_META						"CRCDMeta"
 #define TREE_OTHER							"Other"
 #define TREE_REF_RUN						"ReferenceRun"
 #define TREE_REF_NAME						"Name"
