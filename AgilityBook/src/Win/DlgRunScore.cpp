@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-18 DRC Calling UpdateData during data entry causes way too much
+ *                    validation. Only call during OnOK (from dlgsheet)
  * @li 2003-12-27 DRC Changed FindEvent to take a date. Also, update the
  *                    controls when the date changes as the scoring config may
  *                    change.
@@ -976,32 +978,28 @@ void CDlgRunScore::OnDestroy()
 
 void CDlgRunScore::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	UpdateData(TRUE);
+	// Do not call UpdateData, it causes too much validation
 	UpdateControls();
 	*pResult = 0;
 }
 
 void CDlgRunScore::OnSelchangeDivision()
 {
-	// Do not call UpdateData, it causes too much validation
 	FillLevels();
 }
 
 void CDlgRunScore::OnSelchangeLevel()
 {
-	// Do not call UpdateData, it causes too much validation
 	FillEvents();
 }
 
 void CDlgRunScore::OnSelchangeEvent()
 {
-	// Do not call UpdateData, it causes too much validation
 	UpdateControls();
 }
 
 void CDlgRunScore::OnPartnersEdit() 
 {
-	UpdateData(TRUE);
 	CDlgListCtrl dlg(m_Run, this);
 	if (IDOK == dlg.DoModal())
 		SetPartnerText();
@@ -1009,7 +1007,6 @@ void CDlgRunScore::OnPartnersEdit()
 
 void CDlgRunScore::OnOtherpoints() 
 {
-	UpdateData(TRUE);
 	CDlgListCtrl dlg(&m_pDoc->GetConfig(), m_Run, this);
 	dlg.DoModal();
 }
@@ -1086,7 +1083,6 @@ void CDlgRunScore::OnKillfocusPlace()
 
 void CDlgRunScore::OnSelchangeQ()
 {
-	UpdateData(TRUE);
 	ARB_Q q;
 	int index = m_ctrlQ.GetCurSel();
 	if (CB_ERR != index)
