@@ -252,18 +252,6 @@
 					<param name="Local" value="Help\html\DlgJudgeInfo.html">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Item Selection">
-					<param name="Local" value="Help\html\DlgListCtrl.html">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Messages">
-					<param name="Local" value="Help\html\DlgMessage.html">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Name">
-					<param name="Local" value="Help\html\DlgName.html">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Reorder">
 					<param name="Local" value="Help\html\DlgReorder.html">
 					</OBJECT>

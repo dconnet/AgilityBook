@@ -66,7 +66,7 @@ ARBDogTrial::ARBDogTrial()
 
 ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 	: m_Location(inCal.GetLocation())
-	, m_Note()
+	, m_Note(inCal.GetNote())
 	, m_Verified(false)
 	, m_Clubs()
 	, m_Runs()

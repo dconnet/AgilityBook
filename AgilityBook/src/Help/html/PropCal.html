@@ -5,13 +5,44 @@
 </HEAD>
 <BODY>
 <h1>Calendar Properties</h1>
-<ul>
-    <li>IDD_LISTCTRL ListCtrl (calendar) [via cal, not list]<ul>
-      <li>IDD_CALENDAR Calendar</li>
-    </ul>
-    </li>
-  </ul>
+<p>There are two dialogs associated with a calendar entry. This first dialog is 
+displayed when you select a menu item from the <a href="MenuCalendar.html">
+context menu </a>in the Calendar View. Since there may be multiple entries on a 
+given day, this dialog is used to select which entry you want to work with.</p>
 <p><img border="0" src="images/DlgCalendarMulti.gif" width="452" height="215"></p>
+<p>When you create an entry (or edit an existing one), the following dialog is 
+displayed.</p>
 <p><img border="0" src="images/DlgCalendar.gif" width="432" height="409"></p>
+<p>If the trial is still tentative (for instance, you know a club always holds 
+their trial on the Labor Day weekend, but it hasn't been announced yet), use the 
+checkbox to signify this. You can also indicate whether you are planning on 
+entering the trial. The following icons are used in the Calendar List to show 
+the status of an entry.</p>
+<p>There is no icon for a trial that is not tentative and that you are not 
+entering.<br>
+<img border="0" src="images/CalEntered.gif" width="13" height="11"> You have 
+entered this trial.<br>
+<img border="0" src="images/CalMaybe.gif" width="13" height="13"> You are 
+planning on entering this trial.<br>
+<img border="0" src="images/CalTentative.gif" width="13" height="13"> The 
+information for this trial is still tentative.<br>
+<img border="0" src="images/CalTentativeEntered.gif" width="13" height="13"> 
+This trial is still tentative, but you have entered it. (A little odd, and not 
+likely to occur!)<br>
+<img border="0" src="images/CalTentativeMaybe.gif" width="13" height="13"> This 
+trial is still tentative, and you are planning on entering it.</p>
+<p>The location field contains a list of locations from all the trials you have 
+created and all of the calendar entries. You may also type anything you want in 
+this field.</p>
+<p>The club and venue fields work the same way. However, if you want to create a 
+trial entry directly from a calendar entry, you should only select a venue that 
+is currently configured. You can enter &quot;NADAC/ASCA&quot; for a co-sanctioned trial, 
+however, since that is not a valid venue (taken as a single string), you cannot 
+create the trial directly. The recommended way to do this is to list only one 
+venue and put the co-sanctioning information in the notes. Then when you create 
+the trial, you can add the second venue.</p>
+<p>If the opening and closing dates for the trial are known, you can uncheck the 
+&quot;Unknown&quot; checkbox and set the date. These fields are for your information only.</p>
+<p>The final field, notes, is simply so you can make any comments you want.</p>
 </BODY>
 </HTML>
