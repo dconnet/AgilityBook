@@ -272,9 +272,9 @@ public:
 private:
 	bool LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource,
 		std::string& ioErrMsg);
-	typedef std::map<std::string, std::string> CAttributes;
+	typedef std::map<std::string, std::string> Attributes;
 	std::string m_Name;
 	std::string m_Value;
-	CAttributes m_Attribs;
+	Attributes m_Attribs;
 	std::vector<Element> m_Elements;
 };
