@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-07-24 DRC Calendar view didn't update when item deleted from list.
  */
 
 #include "stdafx.h"
@@ -761,6 +762,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 			}
 			GetDocument()->GetCalendar().DeleteCalendar(cal);
 			GetDocument()->SetModifiedFlag();
+			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 			cal->Release();
 		}
 	}
