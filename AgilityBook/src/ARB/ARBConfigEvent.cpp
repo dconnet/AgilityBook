@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-16 DRC Fixed a bug in Update with Scoring.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
@@ -171,7 +172,7 @@ std::string ARBConfigEvent::Update(int indent, const ARBConfigEvent* inEventNew)
 			for (iter2 = inEventNew->GetScorings().begin(); iter2 != inEventNew->GetScorings().end(); ++iter2)
 			{
 				if ((*iter1)->GetDivision() == (*iter2)->GetDivision()
-				&& (*iter1)->GetLevel() == (*iter1)->GetLevel())
+				&& (*iter1)->GetLevel() == (*iter2)->GetLevel())
 				{
 					bFound = true;
 					if (*(*iter1) == *(*iter2))
