@@ -1,6 +1,9 @@
 8/25/2004: v1.3.0.8 <in development>
 - Bumped Configuration v5:
   - Removed titling points from USDAA Tournament Jumper/Snooker.
+  - Added non-titling Performance events for Steeplechase and DAM Team since
+    many clubs offer these. (They will typically be offered using different
+    names.)
 - New features / Enhancements:
   - Check for configuration updates when the user requests an update check.
     These are auto-downloaded from the web. Configuration checks are also
