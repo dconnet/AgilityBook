@@ -1319,9 +1319,13 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 			</Event>
 			<Event Name="Pairs" hasPartner="y">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
+				<Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
+					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="TimePlusFaults">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
@@ -1350,8 +1354,11 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 			</Event>
 			<Event Name="Steeplechase">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
+				<Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
+					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jokers Wild">
