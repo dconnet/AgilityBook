@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-02 DRC Moved ShellExecute code here.
  * @li 2004-03-05 DRC Added check-for-updates feature.
  * @li 2003-12-07 DRC When opening the last opened file fails, open a new doc.
  */
@@ -109,6 +110,65 @@ void ShowContextHelp(HELPINFO* pHelpInfo)
 	CString name(AfxGetApp()->m_pszHelpFilePath);
 	name += "::/Help/AgilityBook.txt";
 	::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
+}
+
+void RunCommand(char const* pCmd)
+{
+	if (pCmd)
+	{
+		INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), pCmd, NULL, NULL, SW_SHOW));
+		if (result <= HINSTANCE_ERROR)
+		{
+			CString str;
+			switch (result)
+			{
+			case 0:
+				str = "The operating system is out of memory or resources.";
+				break;
+			case SE_ERR_PNF:
+				str = "The specified path was not found.";
+				break;
+			case SE_ERR_FNF:
+				str = "The specified file was not found.";
+				break;
+			case ERROR_BAD_FORMAT:
+				str = "The .EXE file is invalid (non-Win32 .EXE or error in .EXE image).";
+				break;
+			case SE_ERR_ACCESSDENIED:
+				str = "The operating system denied access to the specified file.";
+				break;
+			case SE_ERR_ASSOCINCOMPLETE:
+				str = "The filename association is incomplete or invalid.";
+				break;
+			case SE_ERR_DDEBUSY:
+				str = "The DDE transaction could not be completed because other DDE transactions were being processed.";
+				break;
+			case SE_ERR_DDEFAIL:
+				str = "The DDE transaction failed.";
+				break;
+			case SE_ERR_DDETIMEOUT:
+				str = "The DDE transaction could not be completed because the request timed out.";
+				break;
+			case SE_ERR_DLLNOTFOUND:
+				str = "The specified dynamic-link library was not found.";
+				break;
+			case SE_ERR_NOASSOC:
+				str = "There is no application associated with the given filename extension.";
+				break;
+			case SE_ERR_OOM:
+				str = "There was not enough memory to complete the operation.";
+				break;
+			case SE_ERR_SHARE:
+				str = "A sharing violation occurred. ";
+				break;
+			default:
+				str.Format(_T("Unknown Error (%d) occurred."), result);
+				break;
+			}
+			str = "Unable to open " + str;
+			AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
+		}
+	}
 }
 
 void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)

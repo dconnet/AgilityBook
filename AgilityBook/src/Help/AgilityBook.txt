@@ -75,236 +75,335 @@ Enter the name of the club. All previously entered clubs are listed here.
 Venue of hosting club.
 
 .topic HIDC_CONFIG_EVENT
-TODO IDD_CONFIG_EVENT
+Name of event.
+
 .topic HIDC_CONFIG_EVENT_CLOSING_PTS
-TODO IDD_CONFIG_EVENT
+Number of closing points required in order to qualify.
+
 .topic HIDC_CONFIG_EVENT_COPY
-TODO IDD_CONFIG_EVENT
+Make a copy of the selected scoring method.
+
 .topic HIDC_CONFIG_EVENT_DATE_END
-TODO IDD_CONFIG_EVENT
+Date this scoring method is valid until.
+
 .topic HIDC_CONFIG_EVENT_DATE_START
-TODO IDD_CONFIG_EVENT
+Date this scoring method becomes valid.
+
 .topic HIDC_CONFIG_EVENT_DATE_VALID_FROM
-TODO IDD_CONFIG_EVENT
+Enable/disable the setting of a date. This allows for evolving rule changes.
+
 .topic HIDC_CONFIG_EVENT_DATE_VALID_TO
-TODO IDD_CONFIG_EVENT
+Enable/disable the setting of a date. This allows for evolving rule changes.
+
 .topic HIDC_CONFIG_EVENT_DELETE
-TODO IDD_CONFIG_EVENT
+Delete the selected scoring method.
+
 .topic HIDC_CONFIG_EVENT_DESC
-TODO IDD_CONFIG_EVENT
+Description of this event.
+
 .topic HIDC_CONFIG_EVENT_DIVISION
-TODO IDD_CONFIG_EVENT
+Division this scoring method applies to.
+
 .topic HIDC_CONFIG_EVENT_DOUBLEQ
-TODO IDD_CONFIG_EVENT
+Does this scoring method have double-Qs?
+
 .topic HIDC_CONFIG_EVENT_DROP_FRACTIONS
-TODO IDD_CONFIG_EVENT
+When computing over-time faults, should the fractions be dropped?
+
 .topic HIDC_CONFIG_EVENT_LEVEL
-TODO IDD_CONFIG_EVENT
+Level this scoring method applies to.
+
 .topic HIDC_CONFIG_EVENT_LIST
-TODO IDD_CONFIG_EVENT
+List of titling points, based on the number of faults.
+
 .topic HIDC_CONFIG_EVENT_MACH
-TODO IDD_CONFIG_EVENT
+Does this scoring method have MACH points?
+
 .topic HIDC_CONFIG_EVENT_METHODS
-TODO IDD_CONFIG_EVENT
+Currently defined scoring methods. Order is very important - the first scoring
+method that matches a division/level is the one that will be used.
+
 .topic HIDC_CONFIG_EVENT_MOVE_DOWN
-TODO IDD_CONFIG_EVENT
+Move the selected scoring method down.
+
 .topic HIDC_CONFIG_EVENT_MOVE_UP
-TODO IDD_CONFIG_EVENT
+Move the selected scoring method up.
+
 .topic HIDC_CONFIG_EVENT_NEW
-TODO IDD_CONFIG_EVENT
+Create a new scoring method.
+
 .topic HIDC_CONFIG_EVENT_NOTES
-TODO IDD_CONFIG_EVENT
+Notes about the current scoring method.
+
 .topic HIDC_CONFIG_EVENT_OPENING_PTS
-TODO IDD_CONFIG_EVENT
+Number of opening points required in order to qualify. For events without
+closing points, this is the total number of points required.
+
 .topic HIDC_CONFIG_EVENT_PARTNER
-TODO IDD_CONFIG_EVENT
+Does this event have partners?
+
 .topic HIDC_CONFIG_EVENT_SUPERQ
-TODO IDD_CONFIG_EVENT
+Does this scoring method have Super Qs?
+
 .topic HIDC_CONFIG_EVENT_TABLE
-TODO IDD_CONFIG_EVENT
+Could there be a table in this event?
+
 .topic HIDC_CONFIG_EVENT_TITLE_DELETE
-TODO IDD_CONFIG_EVENT
+Delete the selected titling point item.
+
 .topic HIDC_CONFIG_EVENT_TITLE_EDIT
-TODO IDD_CONFIG_EVENT
+Edit the selected titling point item.
+
 .topic HIDC_CONFIG_EVENT_TITLE_NEW
-TODO IDD_CONFIG_EVENT
+Create a new titling point item.
+
 .topic HIDC_CONFIG_EVENT_TYPE
-TODO IDD_CONFIG_EVENT
+Scoring style of this scoring method.
+
 .topic HIDC_CONFIG_EVENT_UNUSED
-TODO IDD_CONFIG_EVENT
+Divisions/levels that are not currently defined.
 
 .topic HIDC_CONFIG_OTHER_DESC
-TODO IDD_CONFIG_OTHERPOINTS
+Description of this Other Point item. This is normally the "rules" on how to
+accumulate the points.
+
 .topic HIDC_CONFIG_OTHER_NAME
-TODO IDD_CONFIG_OTHERPOINTS
+Name of this Other Point item.
+
 .topic HIDC_CONFIG_OTHER_TALLY
-TODO IDD_CONFIG_OTHERPOINTS
+How are these Other Points accumulated?
 
 .topic HIDC_CONFIG_TITLE_DESC
-TODO IDD_CONFIG_TITLE
+Description of this title.
+
 .topic HIDC_CONFIG_TITLE_LONG_NAME
-TODO IDD_CONFIG_TITLE
+Long name of the title.
+
 .topic HIDC_CONFIG_TITLE_NAME
-TODO IDD_CONFIG_TITLE
+Title abbreviation.
 
 .topic HIDC_CONFIG_TITLEPTS_FAULTS
-TODO IDD_CONFIG_TITLE_POINTS
+Number of faults allowed for these title points.
+
 .topic HIDC_CONFIG_TITLEPTS_POINTS
-TODO IDD_CONFIG_TITLE_POINTS
+Number of points that will be earned.
+
 .topic HIDC_CONFIG_TITLEPTS_TITLE_POINTS
-TODO IDD_CONFIG_TITLE_POINTS
+Should these points be accumulated as Lifetime points for the venue?
 
 .topic HIDC_CONFIG_UPDATE_DEFAULT
-TODO IDD_CONFIG_UPDATE
+Merge in the configuration defined in this program.
+
 .topic HIDC_CONFIG_UPDATE_EXISTING
-TODO IDD_CONFIG_UPDATE
+Merge in a configuration from another AgilityRecordBook file.
+
 .topic HIDC_CONFIG_UPDATE_FILENAME
-TODO IDD_CONFIG_UPDATE
+Name of file to merge.
+
 .topic HIDC_CONFIG_UPDATE_NAME
-TODO IDD_CONFIG_UPDATE
+Select a file.
 
 .topic HIDC_CONFIG_VENUE
-TODO IDD_CONFIG_VENUE
+Name of Venue.
+
 .topic HIDC_CONFIG_VENUE_COPY
-TODO IDD_CONFIG_VENUE
+Copy the selected item.
+
 .topic HIDC_CONFIG_VENUE_DELETE
-TODO IDD_CONFIG_VENUE
+Delete the selected item.
+
 .topic HIDC_CONFIG_VENUE_DESC
-TODO IDD_CONFIG_VENUE
+Description of the venue.
+
 .topic HIDC_CONFIG_VENUE_DIVISION
-TODO IDD_CONFIG_VENUE
+List of currently configured divisions.
+
 .topic HIDC_CONFIG_VENUE_EDIT
-TODO IDD_CONFIG_VENUE
+Edit the selected item.
+
 .topic HIDC_CONFIG_VENUE_EVENT
-TODO IDD_CONFIG_VENUE
+List of currently configured events.
+
 .topic HIDC_CONFIG_VENUE_LEVEL
-TODO IDD_CONFIG_VENUE
+List of currently configured levels for the selected division.
+
 .topic HIDC_CONFIG_VENUE_MOVE_DOWN
-TODO IDD_CONFIG_VENUE
+Move the selected item down.
+
 .topic HIDC_CONFIG_VENUE_MOVE_UP
-TODO IDD_CONFIG_VENUE
+Move the selected item up.
+
 .topic HIDC_CONFIG_VENUE_NEW
-TODO IDD_CONFIG_VENUE
+Create a new item.
+
 .topic HIDC_CONFIG_VENUE_TITLES
-TODO IDD_CONFIG_VENUE
+List of currently configured titles for the selected division.
 
 .topic HIDC_CONFIG_COPY
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_DELETE
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_EDIT
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_FAULTS
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_NEW
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_OTHERPOINTS
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_UPDATE
-TODO IDD_CONFIGURE
-.topic HIDC_CONFIG_VENUES
-TODO IDD_CONFIGURE
+Copy the selected item.
 
-.topic HIDC_VIEWER_CRCD
-TODO IDD_CRCD_VIEWER
+.topic HIDC_CONFIG_DELETE
+Delete the selected item.
+
+.topic HIDC_CONFIG_EDIT
+Edit the selected item.
+
+.topic HIDC_CONFIG_FAULTS
+List of currently configured Faults.
+
+.topic HIDC_CONFIG_NEW
+Create a new item.
+
+.topic HIDC_CONFIG_OTHERPOINTS
+List of currently configured Other Points.
+
+.topic HIDC_CONFIG_UPDATE
+Update the configuration.
+
+.topic HIDC_CONFIG_VENUES
+List of currently configured Venues.
 
 .topic HIDC_DOGNUM_DELETE
-TODO IDD_DOG_NUMBERS
+Delete the selected registration number.
+
 .topic HIDC_DOGNUM_EDIT
-TODO IDD_DOG_NUMBERS
+Edit the selected registration number.
+
 .topic HIDC_DOGNUM_NEW
-TODO IDD_DOG_NUMBERS
+Create a new registration number.
+
 .topic HIDC_DOGNUM_REG_NUMS
-TODO IDD_DOG_NUMBERS
+List of configured registration numbers.
 
 .topic HIDC_PICK_NAME
-TODO IDD_DOG_PICKER
+List of existing dogs.
 
 .topic HIDC_DOGPTS_DELETE
-TODO IDD_DOG_POINTS
+Delete the selected existing points item.
+
 .topic HIDC_DOGPTS_EDIT
-TODO IDD_DOG_POINTS
+Edit the selected existing points item.
+
 .topic HIDC_DOGPTS_NEW
-TODO IDD_DOG_POINTS
+Create a new existing points item.
+
 .topic HIDC_DOGPTS_POINTS
-TODO IDD_DOG_POINTS
+List of existing points. These allow you to enter an advanced dog without
+needing to enter every run the dog has done.
 
 .topic HIDC_DOG_BREED
-TODO IDD_DOG_PROP
+Breed of your dog.
+
 .topic HIDC_DOG_CALLNAME
-TODO IDD_DOG_PROP
+Call name of your dog.
+
 .topic HIDC_DOG_DECEASED
-TODO IDD_DOG_PROP
+Date this dog passed away.
+
 .topic HIDC_DOG_DOB
-TODO IDD_DOG_PROP
+Birthday.
+
 .topic HIDC_DOG_IS_DECEASED
-TODO IDD_DOG_PROP
+Has this dog passed away? This will cause the deceased date to be visible
+and stop computing the age.
+
 .topic HIDC_DOG_NOTES
-TODO IDD_DOG_PROP
+Notes. Anything additional you want to add.
+
 .topic HIDC_DOG_REG_NAME
-TODO IDD_DOG_PROP
+Registered name.
 
 .topic HIDC_DOG_TITLE_DELETE
-TODO IDD_DOG_TITLES
+Delete the selected title.
+
 .topic HIDC_DOG_TITLE_EDIT
-TODO IDD_DOG_TITLES
+Edit the selected title.
+
 .topic HIDC_DOG_TITLE_HIDDEN
-TODO IDD_DOG_TITLES
+Set the viewing status for hidden titles.
+This is also available in the main menu.
+
 .topic HIDC_DOG_TITLE_NEW
-TODO IDD_DOG_TITLES
+Create a new title.
+
 .topic HIDC_DOG_TITLE_TITLES
-TODO IDD_DOG_TITLES
+List of titles. The icon denotes whether the title is hidden and also whether
+you have actually received the certificate.
 
 .topic HIDC_EXISTING_COMMENTS
-TODO IDD_EXISTING_POINTS
+Comments about these existing points.
+
 .topic HIDC_EXISTING_DATE
-TODO IDD_EXISTING_POINTS
+Date these points were earned by.
+
 .topic HIDC_EXISTING_DIVISION
-TODO IDD_EXISTING_POINTS
+Division these points were earned in.
+
 .topic HIDC_EXISTING_EVENT
-TODO IDD_EXISTING_POINTS
+Event these points were earned in.
+
 .topic HIDC_EXISTING_LEVEL
-TODO IDD_EXISTING_POINTS
+Level these points were earned in.
+
 .topic HIDC_EXISTING_OTHERPOINTS
-TODO IDD_EXISTING_POINTS
+Other Points these points were earned in.
+
 .topic HIDC_EXISTING_POINTS
-TODO IDD_EXISTING_POINTS
+Number of points earned.
+
 .topic HIDC_EXISTING_TYPE
-TODO IDD_EXISTING_POINTS
+Type of existing points. Note, if entering a Snooker run and you have SuperQ
+points, you should create two separate entries for the points.
+
 .topic HIDC_EXISTING_VENUES
-TODO IDD_EXISTING_POINTS
+Venue these points were earned in.
 
 .topic HIDC_FAULTS
-TODO IDD_FAULT
+List of all faults, both configured and user-defined. You may also enter any
+text you want.
 
 .topic HIDC_FIND_ALL
-TODO IDD_FIND
+Search all fields in this view.
+
 .topic HIDC_FIND_CASE
-TODO IDD_FIND
+Match case when searching.
+
 .topic HIDC_FIND_DOWN
-TODO IDD_FIND
+Search from the selected item down.
+
 .topic HIDC_FIND_NAME
-TODO IDD_FIND
+Text to search for.
+
 .topic HIDC_FIND_UP
-TODO IDD_FIND
+Search from the selected item up.
+
 .topic HIDC_FIND_VISIBLE
-TODO IDD_FIND
+Search only the fields that are visible in this view.
 
 .topic HIDC_FINDLINKS_COPY
-TODO IDD_FIND_LINKS
+Copy all the paths to the clipboard.
+
 .topic HIDC_FINDLINKS_EDIT
-TODO IDD_FIND_LINKS
+Edit the selected link. This allows you to fix any bad paths.
+
 .topic HIDC_FINDLINKS_LIST
-TODO IDD_FIND_LINKS
+List of all linked files.
+
+.topic HIDC_FINDLINKS_OPEN
+View the selected link.
 
 .topic HIDC_JUDGE
-TODO IDD_JUDGE_INFO
+List of judges from all your runs, plus any created here.
+
 .topic HIDC_JUDGE_COMMENTS
-TODO IDD_JUDGE_INFO
+Comments about the judge.
+
 .topic HIDC_JUDGE_DELETE
-TODO IDD_JUDGE_INFO
+Delete the selected judge. If this judge is currently in use, only the comments
+will be deleted.
+
 .topic HIDC_JUDGE_NEW
-TODO IDD_JUDGE_INFO
+Create a new judge.
 
 .topic HIDC_LIST
 TODO IDD_LISTCTRL

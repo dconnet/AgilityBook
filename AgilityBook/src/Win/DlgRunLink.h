@@ -33,9 +33,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
  * @li 2004-03-30 DRC Created
  */
 
+#include <afxinet.h>
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 class ARBDogRun;
@@ -59,6 +61,11 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogRun* m_Run;
+	CImageList m_ImageList;
+	int m_imgEmpty;
+	int m_imgOk;
+	int m_imgMissing;
+	CInternetSession m_Session;
 
 	//{{AFX_VIRTUAL(CDlgRunLink)
 protected:
@@ -69,6 +76,7 @@ protected:
 protected:
 	void UpdateButtons();
 	void ListFiles(char const* pItem);
+	int GetImageIndex(std::string const& inLink);
 
 	//{{AFX_MSG(CDlgRunLink)
 	virtual BOOL OnInitDialog();
