@@ -5,6 +5,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2004-12-10 DRC Configuration version 7.
+               AAC: Updated new rules.
 2004-10-06 DRC Configuration version 6.
                CPE: Added comment to CL1-4 titles. Accumulate lifetime LevelC
                points.  Change points in Specialist to be like LevelC.
@@ -24,7 +26,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="6">
+	<Configuration version="7">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -49,12 +51,21 @@ Revision History:
 				<Level Name="Masters"/>
 				<Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores under 2 different judges</Titles>
 				<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores under 2 different judges, plus 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
+				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores under 2 different judges
+[Before 1/1/2005] 3 qualifying scores under 2 different judges, plus 1 qualifying score in each of Gamblers, Team Relay, Jumpers and Snooker, under at least 2 different judges under Advanced rules</Titles>
 				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
-				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">3 qualifying scores under 2 different judges</Titles>
-				<Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Starters Gamblers Dog of Canada" Name="SGDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Advanced Gamblers Dog of Canada" Name="AGDC">2 qualifying scores</Titles>
+				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">1 qualifying scores</Titles>
+				<Titles LongName="Starters Team Relay Dog of Canada" Name="STRDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Advanced Team Relay Dog of Canada" Name="ATRDC">2 qualifying scores</Titles>
+				<Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">1 qualifying scores</Titles>
+				<Titles LongName="Starters Jumpers Dog of Canada" Name="SJDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Advanced Jumpers Dog of Canada" Name="AJDC">2 qualifying scores</Titles>
+				<Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">1 qualifying score</Titles>
+				<Titles LongName="Starters Snooker Dog of Canada" Name="SSDC">3 qualifying scores under 2 different judges</Titles>
+				<Titles LongName="Advanced Snooker Dog of Canada" Name="ASDC">2 qualifying scores</Titles>
+				<Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">1 qualifying scores</Titles>
 			</Division>
 			<Division Name="Veteran">
 				<Level Name="Starters"/>
@@ -85,7 +96,7 @@ Revision History:
 			<Event Name="Standard">
 				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
 					<Note>E: 3 Rs or 1 wrong course or 1 NC</Note>
-					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Advanced" type="FaultsThenTime">
 					<Note>E: 3 Rs or 2 NCs</Note>
@@ -97,7 +108,13 @@ Revision History:
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
+				<Scoring Division="Veteran" Level="Masters" OpeningPts="22" ValidFrom="2005-1-1" type="OCScoreThenTime">
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="*" Level="Masters" OpeningPts="28" type="OCScoreThenTime">
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Veteran" Level="*" OpeningPts="16" ValidFrom="2005-1-1" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="*" OpeningPts="20" type="OCScoreThenTime">
@@ -105,21 +122,38 @@ Revision History:
 				</Scoring>
 			</Event>
 			<Event Name="Team Relay" hasPartner="y">
+				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
+				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Snooker">
+				<Scoring Division="Veteran" Level="Masters" OpeningPts="34" ValidFrom="2005-1-1" type="ScoreThenTime">
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="*" Level="Masters" OpeningPts="40" type="ScoreThenTime">
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Veteran" Level="*" OpeningPts="32" ValidFrom="2005-1-1" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="*" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Steeplechase">
+				<Scoring Division="*" Level="Masters" type="TimePlusFaults">
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 		</Venue>
@@ -1293,15 +1327,15 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				</Level>
 				<Level Name="Advanced"/>
 				<Level Name="Masters"/>
-				<Titles LongName="Agility Dog®" Name="AD">[before 1/1/2004] 3 Qs earned from at least 2 different judges
-Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.</Titles>
+				<Titles LongName="Agility Dog®" Name="AD">Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.
+[Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 				<Titles LongName="Starters Standard Agility" Name="SSA">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Starters Jumpers" Name="SJ">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Starters Gamblers" Name="SG">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Starters Snooker" Name="SS">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Starters Relay" Name="SR">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-				<Titles LongName="Advanced Agility Dog®" Name="AAD">[before 1/1/2004] 3 Qs earned from at least 2 different judges
-Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advanced nonstandard classes.</Titles>
+				<Titles LongName="Advanced Agility Dog®" Name="AAD">Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advanced nonstandard classes.
+[Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 				<Titles LongName="Advanced Standard Agility" Name="ASA">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Advanced Jumpers" Name="AJ">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Advanced Gamblers" Name="AG">3 qualifying scores earned under at least 2 different judges.</Titles>
@@ -1313,9 +1347,9 @@ Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advance
 				<Titles LongName="Gamblers Master" Name="GM">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Snooker Master" Name="SM">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
 				<Titles LongName="Relay Master" Name="RM">5 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-				<Titles LongName="Agility Dog Champion®" Name="ADCH">[earned MAD before 1/1/2000] MAD, JM, GM, SM, RM
-[earned MAD before 1/1/2005] MAD, JM, GM, SM, RM, plus 4 Standard Qs
-SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at least 1 qualifying score in each tournament</Titles>
+				<Titles LongName="Agility Dog Champion®" Name="ADCH">SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at least 1 qualifying score in each tournament
+[Earned MAD before 1/1/2005] MAD, JM, GM, SM, RM, plus 4 Standard Qs
+[Earned MAD before 1/1/2000] MAD, JM, GM, SM, RM</Titles>
 				<Titles LongName="Agility Dog Champion® - Bronze" Name="ADCH-Bronze">All Bronze titles</Titles>
 				<Titles LongName="Agility Dog Champion® - Silver" Name="ADCH-Silver">All Silver titles</Titles>
 				<Titles LongName="Agility Dog Champion® - Gold" Name="ADCH-Gold">All Gold titles</Titles>
@@ -1361,14 +1395,14 @@ SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at 
 				<Level Name="PI"/>
 				<Level Name="PII"/>
 				<Level Name="PIII"/>
-				<Titles LongName="Performance Dog I" Name="PD1">[before 1/1/2004] 3 Qs earned from at least 2 different judges
-Performance Standard I title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.</Titles>
+				<Titles LongName="Performance Dog I" Name="PD1">Performance Standard I title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
+[Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 				<Titles LongName="Performance Standard I" Name="PS1">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Jumpers I" Name="PJ1">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Gamblers I" Name="PG1">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Snooker I" Name="PK1">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles LongName="Performance Dog II" Name="PD2">[before 1/1/2004] 3 Qs earned from at least 2 different judges
-Performance Standard II title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.</Titles>
+				<Titles LongName="Performance Dog II" Name="PD2">Performance Standard II title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
+[Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 				<Titles LongName="Performance Standard II" Name="PS2">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Gamblers II" Name="PG2">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Jumpers II" Name="PJ2">3 qualifying scores earned under at least 2 different judges.</Titles>
@@ -1378,9 +1412,9 @@ Performance Standard II title plus 1 qualifying score in each of the 3 Performan
 				<Titles LongName="Performance Gambler III" Name="PG3">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Jumper III" Name="PJ3">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Snooker III" Name="PK3">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
-				<Titles LongName="Accomplished Performance Dog" Name="APD">[earned PD3 before 1/1/2000] PD3
-[earned PD3 before 1/1/2005]PD3, PG3, PJ3, PK3, plus 2 Standard Qs
-PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament</Titles>
+				<Titles LongName="Accomplished Performance Dog" Name="APD">PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
+[Earned PD3 before 1/1/2005] PD3, PG3, PJ3, PK3, plus 2 Standard Qs
+[Earned PD3 before 1/1/2000] PD3</Titles>
 				<Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-Bronze">All Bronze titles</Titles>
 				<Titles LongName="Accomplished Performance Dog - Silver" Name="APD-Silver">All Silver titles</Titles>
 				<Titles LongName="Accomplished Performance Dog - Gold" Name="APD-Gold">All Gold titles</Titles>
