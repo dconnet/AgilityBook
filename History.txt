@@ -1,3 +1,9 @@
+9/13/2004: v1.3.2.9
+- Bug fix
+  - If a trial has no clubs associated with it, attempting to upgrade the
+    configuration will cause the program to crash. The work-around is to
+	either add a club or delete the (empty) trial.
+
 9/12/2004: v1.3.1.9
 - Bug fix
   - My ISP host is no longer allowing direct access to files via

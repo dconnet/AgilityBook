@@ -256,12 +256,14 @@ void CWizardExport::UpdatePreview()
 					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
 					{
 						ARBDogRun const* pRun = *iterRun;
-						ARBConfigScoring const* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
-							pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
-							pRun->GetEvent(),
-							pRun->GetDivision(),
-							pRun->GetLevel(),
-							pRun->GetDate());
+						ARBConfigScoring const* pScoring = NULL;
+						if (pTrial->GetClubs().GetPrimaryClub())
+							pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+								pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+								pRun->GetEvent(),
+								pRun->GetDivision(),
+								pRun->GetLevel(),
+								pRun->GetDate());
 						ASSERT(pScoring);
 						if (pScoring)
 						{

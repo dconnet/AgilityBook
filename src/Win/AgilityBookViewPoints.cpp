@@ -368,12 +368,16 @@ int CAgilityBookViewPoints::DoEvents(
 								ARBDogRun const* pRun = (*iterRun);
 								// This extra test only looks at runs that are
 								// QQing. Otherwise a 3rd NA run throws things off.
-								ARBConfigScoring const* pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
-									pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
-									pRun->GetEvent(),
-									pRun->GetDivision(),
-									pRun->GetLevel(),
-									pRun->GetDate());
+								ARBConfigScoring const* pScoring = NULL;
+								if (pTrial->GetClubs().GetPrimaryClub())
+								{
+									pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
+										pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+										pRun->GetEvent(),
+										pRun->GetDivision(),
+										pRun->GetLevel(),
+										pRun->GetDate());
+								}
 								if (pScoring && pScoring->HasDoubleQ()
 								&& date == pRun->GetDate()
 								&& !pRun->IsFiltered(ARBBase::eIgnoreQ)

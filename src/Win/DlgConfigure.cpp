@@ -181,6 +181,10 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 			++iterTrial)
 		{
 			ARBDogTrial const* pTrial = *iterTrial;
+			if (0 == pTrial->GetRuns().size())
+				continue;
+			if (!pTrial->GetClubs().GetPrimaryClub())
+				continue;
 			if (pTrial->GetClubs().GetPrimaryClub()->GetVenue() != inVenue->GetName())
 				continue;
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
