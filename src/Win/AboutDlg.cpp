@@ -169,6 +169,9 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
 	DDX_Control(pDX, IDC_ABOUT_TEXT, m_ctrlText);
+	DDX_Control(pDX, IDC_ABOUT_LINK1, m_ctrlLink1);
+	DDX_Control(pDX, IDC_ABOUT_LINK2, m_ctrlLink2);
+	DDX_Control(pDX, IDC_ABOUT_LINK3, m_ctrlLink3);
 	//}}AFX_DATA_MAP
 }
 
@@ -185,6 +188,32 @@ BOOL CAboutDlg::OnInitDialog()
 		info.FormatMessage(IDS_ABOUT_TEXT, (LPCTSTR)version, (LPCTSTR)name);
 	}
 	m_ctrlText.SetWindowText(info);
+
+	static struct
+	{
+		UINT id;
+		CHyperLink* pCtrl;
+	} idControls[] = {
+		{IDS_ABOUT_LINK1, &m_ctrlLink1},
+		{IDS_ABOUT_LINK2, &m_ctrlLink2},
+		{IDS_ABOUT_LINK3, &m_ctrlLink3}
+	};
+	static int nControls = sizeof(idControls) / sizeof(idControls[0]);
+	for (int i = 0; i < nControls; ++i)
+	{
+		name.LoadString(idControls[i].id);
+		CString url;
+		int nTab = name.Find('\t');
+		if (0 < nTab)
+		{
+			url = name.Mid(nTab+1);
+			name = name.Left(nTab);
+		}
+		else
+			url = name;
+		idControls[i].pCtrl->SetWindowText(name);
+		idControls[i].pCtrl->SetURL(url);
+	}
 
 	// Re-size the text control and dialog as needed.
 
@@ -247,12 +276,24 @@ BOOL CAboutDlg::OnInitDialog()
 			pCtrl->MapWindowPoints(this, rect);
 			pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 		}
+		// Move some other controls
+		if (0 < offsetY)
+		{
+			for (int i = 0; i < nControls; ++i)
+			{
+				idControls[i].pCtrl->GetClientRect(rect);
+				rect.OffsetRect(0, offsetY);
+				idControls[i].pCtrl->MapWindowPoints(this, rect);
+				idControls[i].pCtrl->SetWindowPos(NULL, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+			}
+		}
 		// And finally resize the dialog.
 		GetWindowRect(rect);
 		rect.right -= offsetX;
 		rect.bottom += offsetY;
 		SetWindowPos(NULL, 0, 0, rect.Width(), rect.Height(), SWP_NOMOVE | SWP_NOZORDER);
 	}
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }

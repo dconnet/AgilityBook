@@ -273,6 +273,10 @@ SOURCE=..\..\..\Win\DlgTrial.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\HyperLink.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\ListBox.cpp
 # End Source File
 # Begin Source File
@@ -475,6 +479,10 @@ SOURCE=..\..\..\Win\DlgTitle.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\HyperLink.h
 # End Source File
 # Begin Source File
 

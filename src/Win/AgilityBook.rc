@@ -104,6 +104,7 @@ BEGIN
     BUTTON      ID_EDIT_PASTE
     SEPARATOR
     BUTTON      ID_FILE_PRINT_PREVIEW
+    BUTTON      ID_FILE_PRINT
     SEPARATOR
     BUTTON      ID_APP_ABOUT
 END
@@ -351,13 +352,16 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 290, 55
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 290, 76
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About"
 FONT 8, "MS Shell Dlg"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,185,41,SS_NOPREFIX
+    LTEXT           "Version",IDC_ABOUT_TEXT,40,7,185,34,SS_NOPREFIX
+    LTEXT           "Link1",IDC_ABOUT_LINK1,55,42,170,8,SS_NOPREFIX
+    LTEXT           "Link2",IDC_ABOUT_LINK2,55,51,170,8,SS_NOPREFIX
+    LTEXT           "Link3",IDC_ABOUT_LINK3,55,60,170,8,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,233,7,50,16,WS_GROUP
 END
 
@@ -1043,7 +1047,7 @@ BEGIN
         LEFTMARGIN, 6
         RIGHTMARGIN, 283
         TOPMARGIN, 7
-        BOTTOMMARGIN, 48
+        BOTTOMMARGIN, 69
     END
 
     IDD_NAME, DIALOG
@@ -1332,6 +1336,8 @@ BEGIN
     ID_FILE_CLOSE           "Close the active document\nClose"
     ID_FILE_SAVE            "Save the active document\nSave"
     ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PRINT           "Print the current view\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Print Preview\nPreview"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -1494,18 +1500,25 @@ BEGIN
     IDS_COL_TIME            "Time"
     IDS_COL_VENUE           "Venue"
     IDS_COL_HEIGHT          "Height"
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable (see http://sourceforge.net/projects/agilitybook/) . We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:\n   http://groups.yahoo.com/group/AgilityRecordBook/\nor\n   agilityrecordbook@dconsoft.com"
-    IDS_NEW                 "<New>"
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable. We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions one of the following addresses:"
+    IDS_ABOUT_LINK1         "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_ABOUT_LINK2         "agilityrecordbook@dconsoft.com\tmailto:agilityrecordbook@dconsoft.com"
+    IDS_ABOUT_LINK3         "Source Forge\thttp://sourceforge.net/projects/agilitybook"
+    IDS_NEW                 "<New>"
     IDS_CONFIGURE           "Configure"
     IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
     IDS_DELETE_VENUE        "Warning: The venue '%1' is currently in use. Deleting this venue will also delete %2!d! registration number(s), %3!d! title(s) and may delete %4!d! trial(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_OTHERPOINTS  "Warning: Other Points '%1' is currently in use. Deleting this item will delete points from %2!d! run(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_DIVISION     "Warning: The division '%1' is currently in use. Deleting this division will also delete %2!d! title(s) and may delete %3!d! run(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_LEVEL        "Warning: The level '%1' is currently in use. Deleting this level may also delete %2!d! run(s).\n\nAre you sure you want to do this?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_DELETE_TITLE        "Warning: The title '%1' is currently in use. Deleting this title will also delete %2!d! title(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_EVENT        "Warning: The event '%1' is currently in use. Deleting this event will also delete %2!d! event(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
@@ -1517,16 +1530,16 @@ BEGIN
     IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
     IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
     IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_VIEWING_OPTIONS     "Viewing Options"
     IDS_RUN_PROPERTIES      "Run Properties"
     IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_SELECT_DIVISION     "Please select a division."
     IDS_SELECT_LEVEL        "Please select a level."
     IDS_SELECT_EVENT        "Please select an event."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_SELECT_HEIGHT       "Please select a height."
     IDS_SELECT_JUDGE        "Please select a judge."
     IDS_SELECT_Q            "Please select a 'Q'."
@@ -1537,10 +1550,6 @@ BEGIN
     IDS_NUM_EVENTS          "%1!d! events"
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
     IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_CREATETRIAL_FAILED  "Warning: Failed to create trial. Please check the filter options, it may be preventing the creation of this trial"
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_VENUE_CONFIG_MISSING 
@@ -1548,6 +1557,10 @@ BEGIN
     IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_COPYOF              "Copy of "
     IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
@@ -1559,16 +1572,16 @@ BEGIN
     IDS_OTHERPTS_EVENT      "Tally by Event"
     IDS_OTHERPTS_LEVEL      "Tally by Level"
     IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
     IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
     IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
     IDS_POINTS_PARTNERS     ", %1!d! partners"
     IDS_POINTS_QS           "%1!d! Qs"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_POINTS_JUDGES       ", %1!d! judges"
     IDS_POINTS_SQS          "%1!d! Q+"
     IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
@@ -1593,7 +1606,7 @@ BEGIN
     ID_AGILITY_NEW_DOG      "Create a new dog\nNew Dog"
     ID_AGILITY_NEW_TITLE    "Create a new title\nNew Title"
     ID_AGILITY_NEW_TRIAL    "Create a new trial\nNew Trial"
-    ID_AGILITY_NEW_RUN      "Create a new ruun\nNew Run"
+    ID_AGILITY_NEW_RUN      "Create a new run\nNew Run"
 END
 
 STRINGTABLE DISCARDABLE 
