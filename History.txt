@@ -1,4 +1,4 @@
-9/1/2004: v1.3.0.9 <in development>
+9/7/2004: v1.3.0.9 <in development>
 - Bumped Configuration v5:
   - Update USDAA configuration to remove titling points from Tournament
     Jumpers and Snooker. Tournament runs that offered titling should be
@@ -36,6 +36,9 @@
       - Create a gamblers run.
       - Edit the configuration and change gamblers to open/close pts.
       - Save the file. Close it. Reopen it. This file can no longer be saved.
+  - Time+Faults scoring should not also compute time faults. You end up
+    double-dinged when they are.
+  - 'Reorder' menu item in the Runs view did nothing, disable it.
 
 7/3/2004: v1.2.1.8
 - Bug fixes

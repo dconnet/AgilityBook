@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  */
 
@@ -135,6 +136,7 @@ private:
 	bool GetText(CEdit* pEdit, short& val) const;
 	bool GetText(CEdit* pEdit, double& val) const;
 	ARBConfigEvent const* GetEvent() const;
+	ARBConfigScoring const* GetScoring() const;
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();

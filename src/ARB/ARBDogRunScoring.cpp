@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-09-01 DRC Fix a file that may have been corrupted (see history.txt)
  * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
@@ -292,16 +293,22 @@ bool ARBDogRunScoring::GetYPS(bool inTableInYPS, double& outYPS) const
 	return bOk;
 }
 
-double ARBDogRunScoring::GetTimeFaults() const
+double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
 {
 	double timeFaults = 0.0;
 	if (ARBDogRunScoring::eTypeByTime == m_type)
 	{
-		double time = m_Time;
-		if (m_bRoundTimeFaults)
-			time = floor(m_Time);
-		if (0.0 < m_SCT && time > m_SCT)
-			timeFaults = time - m_SCT;
+		bool bAddTimeFaults = true;
+		if (inScoring && ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+			bAddTimeFaults = false;
+		if (bAddTimeFaults)
+		{
+			double time = m_Time;
+			if (m_bRoundTimeFaults)
+				time = floor(m_Time);
+			if (0.0 < m_SCT && time > m_SCT)
+				timeFaults = time - m_SCT;
+		}
 	}
 	return timeFaults;
 }
