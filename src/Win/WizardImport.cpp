@@ -1085,6 +1085,10 @@ BOOL CWizardImport::OnWizardFinish()
 						pLog = CreateLog(pLog);
 						pLog->SetName(entry[iCol]);
 						break;
+					case IO_LOG_SUBNAME:
+						pLog = CreateLog(pLog);
+						pLog->SetSubName(entry[iCol]);
+						break;
 					case IO_LOG_NOTES:
 						pLog = CreateLog(pLog);
 						pLog->SetNote(entry[iCol]);

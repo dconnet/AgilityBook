@@ -1034,6 +1034,7 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 			{
 				outValues.push_back(IO_LOG_DATE);
 				outValues.push_back(IO_LOG_NAME);
+				outValues.push_back(IO_LOG_SUBNAME);
 				outValues.push_back(IO_LOG_NOTES);
 			}
 			break;
@@ -1090,6 +1091,7 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 			{
 				outValues.push_back(IO_LOG_DATE);
 				outValues.push_back(IO_LOG_NAME);
+				outValues.push_back(IO_LOG_SUBNAME);
 				outValues.push_back(IO_LOG_NOTES);
 			}
 			break;

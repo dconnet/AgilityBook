@@ -120,6 +120,7 @@
 #define ATTRIB_CAL_NOTE						"Note"
 #define ATTRIB_TRAINING_DATE				"Date"
 #define ATTRIB_TRAINING_NAME				"Name"
+#define ATTRIB_TRAINING_SUBNAME				"SubName"
 #define ATTRIB_ACTION_VERB					"Verb"
 	#define ACTION_VERB_DELETE_TITLE			"DeleteTitle"
 	#define ACTION_VERB_RENAME_TITLE			"RenameTitle"

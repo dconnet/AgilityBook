@@ -121,6 +121,9 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 		case IO_LOG_NAME:
 			str = m_pTraining->GetName().c_str();
 			break;
+		case IO_LOG_SUBNAME:
+			str = m_pTraining->GetSubName().c_str();
+			break;
 		case IO_LOG_NOTES:
 			str = m_pTraining->GetNote().c_str();
 			str.Replace("\n", " ");
@@ -160,6 +163,12 @@ int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 		if (pItem1->m_pTraining->GetName() < pItem2->m_pTraining->GetName())
 			nRet = -1;
 		else if (pItem1->m_pTraining->GetName() > pItem2->m_pTraining->GetName())
+			nRet = 1;
+		break;
+	case IO_LOG_SUBNAME:
+		if (pItem1->m_pTraining->GetSubName() < pItem2->m_pTraining->GetSubName())
+			nRet = -1;
+		else if (pItem1->m_pTraining->GetSubName() > pItem2->m_pTraining->GetSubName())
 			nRet = 1;
 		break;
 	case IO_LOG_NOTES:

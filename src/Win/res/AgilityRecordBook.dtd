@@ -6,16 +6,21 @@ contained within a file, as this DTD defines below.
 In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
+See comments in DefaultConfig.xml for configuration changes.
+
+Note: When updating file version number, see notes in
+src/ARB/ARBAgilityRecordBook.cpp.
+
 Revision History:
-2004-04-30 DRC File version 8.6, Configuration version 3.
+2004-06-02 DRC File version 8.7.
+               Added 'SubName' to 'Training'
+2004-04-30 DRC File version 8.6.
                Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
                Added 'Link' to 'Run'
                Added 'LifeTime' to 'TitlePoints'
-               Updated Default Config to contain lifetime information, removed
-               USDAA LAA.
 2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
-2004-03-08 DRC File version 8.4, Configuration version 2.
+2004-03-08 DRC File version 8.4.
                Added versioning to configuration to allow auto-upgrades.
                Added "TableInYPS" to "ByTime"
                Added new Config/Action: DeleteTitle
@@ -68,6 +73,7 @@ This section defines the rules for the training log.
 	<!ATTLIST Training
 		Date CDATA #REQUIRED
 		Name CDATA #IMPLIED
+		SubName CDATA #IMPLIED
 		>
 
 <!--

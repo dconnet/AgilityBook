@@ -104,6 +104,8 @@ public:
 	void SetDate(ARBDate const& inDate);
 	std::string const& GetName() const;
 	void SetName(std::string const& inName);
+	std::string const& GetSubName() const;
+	void SetSubName(std::string const& inName);
 	std::string const& GetNote() const;
 	void SetNote(std::string const& inNote);
 
@@ -111,6 +113,7 @@ private:
 	~ARBTraining();
 	ARBDate m_Date;
 	std::string m_Name;
+	std::string m_SubName;
 	std::string m_Note;
 };
 
@@ -144,16 +147,6 @@ inline void ARBTraining::SetDate(ARBDate const& inDate)
 	m_Date = inDate;
 }
 
-inline std::string const& ARBTraining::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBTraining::SetNote(std::string const& inNote)
-{
-	m_Note = inNote;
-}
-
 inline std::string const& ARBTraining::GetName() const
 {
 	return m_Name;
@@ -162,6 +155,26 @@ inline std::string const& ARBTraining::GetName() const
 inline void ARBTraining::SetName(std::string const& inName)
 {
 	m_Name = inName;
+}
+
+inline std::string const& ARBTraining::GetSubName() const
+{
+	return m_SubName;
+}
+
+inline void ARBTraining::SetSubName(std::string const& inName)
+{
+	m_SubName = inName;
+}
+
+inline std::string const& ARBTraining::GetNote() const
+{
+	return m_Note;
+}
+
+inline void ARBTraining::SetNote(std::string const& inNote)
+{
+	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -184,6 +197,13 @@ public:
 	 * @return Number of unique names.
 	 */
 	size_t GetAllNames(std::set<std::string>& outNames) const;
+
+	/**
+	 * Get a list of all the different sub-names in the list.
+	 * @param outNames A list of the unique training sub-names.
+	 * @return Number of unique sub-names.
+	 */
+	size_t GetAllSubNames(std::set<std::string>& outSubNames) const;
 
 	/**
 	 * Find a training object.

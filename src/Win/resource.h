@@ -201,6 +201,7 @@
 #define IDC_DOGNUM_EDIT                 1140
 #define IDC_DOGNUM_DELETE               1141
 #define IDC_PICK_NAME                   1142
+#define IDC_TRAINING_SUBNAME            1143
 #define IDC_REGNUM_VENUES               1150
 #define IDC_REGNUM_REG_NUM              1151
 #define IDC_REGNUM_HEIGHT               1152
@@ -448,6 +449,7 @@
 #define IDS_COL_TYPE                    4051
 #define IDS_COL_TITLE                   4052
 #define IDS_COL_TRIAL                   4053
+#define IDS_COL_SUBNAME                 4054
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002

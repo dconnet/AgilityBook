@@ -59,6 +59,7 @@ CDlgTraining::CDlgTraining(ARBTraining* pTraining, CAgilityBookDoc* pDoc, CWnd* 
 	//{{AFX_DATA_INIT(CDlgTraining)
 	m_date = CTime::GetCurrentTime();
 	m_Name = pTraining->GetName().c_str();
+	m_SubName = pTraining->GetSubName().c_str();
 	m_Notes = pTraining->GetNote().c_str();
 	//}}AFX_DATA_INIT
 	if (pTraining->GetDate().IsValid())
@@ -73,6 +74,8 @@ void CDlgTraining::DoDataExchange(CDataExchange* pDX)
 	DDX_DateTimeCtrl(pDX, IDC_TRAINING_DATE, m_date);
 	DDX_Control(pDX, IDC_TRAINING_NAME, m_ctrlNames);
 	DDX_CBString(pDX, IDC_TRAINING_NAME, m_Name);
+	DDX_Control(pDX, IDC_TRAINING_SUBNAME, m_ctrlSubNames);
+	DDX_CBString(pDX, IDC_TRAINING_SUBNAME, m_SubName);
 	DDX_Text(pDX, IDC_TRAINING_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
@@ -97,6 +100,13 @@ BOOL CDlgTraining::OnInitDialog()
 		if ((*iter) == m_pTraining->GetName())
 			m_ctrlNames.SetCurSel(index);
 	}
+	m_pDoc->GetTraining().GetAllSubNames(names);
+	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	{
+		int index = m_ctrlSubNames.AddString((*iter).c_str());
+		if ((*iter) == m_pTraining->GetName())
+			m_ctrlSubNames.SetCurSel(index);
+	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -111,10 +121,13 @@ void CDlgTraining::OnOK()
 
 	m_Name.TrimRight();
 	m_Name.TrimLeft();
+	m_SubName.TrimRight();
+	m_SubName.TrimLeft();
 	m_Notes.Replace("\r\n", "\n");
 
 	m_pTraining->SetDate(date);
 	m_pTraining->SetName((LPCTSTR)m_Name);
+	m_pTraining->SetSubName((LPCTSTR)m_SubName);
 	m_pTraining->SetNote((LPCTSTR)m_Notes);
 
 	CDlgBaseDialog::OnOK();

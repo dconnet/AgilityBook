@@ -272,6 +272,7 @@
 #define HIDC_TRAINING_DATE              0x80d5045a    // IDD_TRAINING
 #define HIDC_TRAINING_NAME              0x80d5045b    // IDD_TRAINING
 #define HIDC_TRAINING_NOTES             0x80d5045c    // IDD_TRAINING
+#define HIDC_TRAINING_SUBNAME           0x80d50477    // IDD_TRAINING
 #define HIDC_TRIAL_CLUBS                0x80df0497    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_DELETE          0x80df0496    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_EDIT            0x80df0495    // IDD_TRIAL

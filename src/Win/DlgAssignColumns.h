@@ -120,7 +120,8 @@
 #define IO_TREE_RUN_DIVISION		61
 #define IO_TREE_RUN_LEVEL			62
 #define IO_TREE_RUN_HEIGHT			63
-#define IO_MAX						64
+#define IO_LOG_SUBNAME				64
+#define IO_MAX						65
 
 #include <vector>
 #include "AgilityBookOptions.h"

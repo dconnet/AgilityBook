@@ -53,6 +53,8 @@ private:
 	CTime	m_date;
 	CComboBox	m_ctrlNames;
 	CString	m_Name;
+	CComboBox	m_ctrlSubNames;
+	CString	m_SubName;
 	CString	m_Notes;
 	//}}AFX_DATA
 	ARBTraining* m_pTraining;

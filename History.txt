@@ -1,5 +1,6 @@
-6/1/2004: v1.1.1.8 <in development>
-- Bumped file Configuration v4:
+6/2/2004: v1.1.1.8 <in development>
+- Bumped file version to 8.7, Configuration v4:
+  - Added 'SubName' to 'Training'.
   - CPE 'CADE' changed to 'C-ATE'.
 - New features / Enhancements:
   - In the Points view, do not filter individual runs based on Qs (use all
@@ -11,6 +12,7 @@
   - After adding a title, display the dog properties on title page. Change the
     behavior in the Options dialog to restore previous program behavior.
     (Too many people were having problems finding the title later.)
+  - Added 'Sub-name' to the Training Log.
 - Bug fixes
   - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter
