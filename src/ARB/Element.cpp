@@ -991,7 +991,7 @@ int Element::GetAttribCount() const
 
 Element::AttribLookup Element::GetNthAttrib(int inIndex, std::string& outName, std::string& outValue) const
 {
-	Attributes::const_iterator iter = m_Attribs.begin();
+	MyAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
 	{
 		++iter;
@@ -1009,7 +1009,7 @@ Element::AttribLookup Element::GetNthAttrib(int inIndex, std::string& outName, s
 
 Element::AttribLookup Element::GetAttrib(std::string const& inName, std::string& outValue) const
 {
-	Attributes::const_iterator iter = m_Attribs.find(inName);
+	MyAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
 	{
 		outValue = (*iter).second;
@@ -1176,7 +1176,7 @@ bool Element::AddAttrib(std::string const& inName, double inValue, int inPrec)
 
 bool Element::RemoveAttrib(std::string const& inName)
 {
-	Attributes::iterator iter = m_Attribs.find(inName);
+	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
 	{
 		m_Attribs.erase(iter);
