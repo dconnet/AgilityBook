@@ -4,7 +4,10 @@
     (mapped old 'Triple Superior' to 'Novice Triple...')
   - Fixed a number of dialogs where data could be corrupted. (Note: In dialogs
     when using a DDX variable after the dialog returns, be careful about
-	modifying it - CDialog::OnOK will force the UI data back into the variable)
+    modifying it - CDialog::OnOK will force the UI data back into the variable)
+  - When updating the configuration, you could get some false-positive messages
+    that things had changed. This was due to the order of items being different
+    (which we don't care about).
 
 1/26/2004: v1.0.1.8
 - New features / Enhancements:
@@ -14,7 +17,7 @@
 - Bug fixes
   - Titles that were edited/created were saved with the wrong name. This caused
     the title to vanish after saving the file and re-opening it. [The fix will
-	auto-correct the problem titles, if they are still in the file]
+    auto-correct the problem titles, if they are still in the file]
 
 1/21/2004: v1.0.0.8
 - Bumped file version to 8.2:

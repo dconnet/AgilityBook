@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-27 DRC Updating could cause some false-positive messages because
+ *                    the ordering was different.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -205,6 +207,7 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 
 	if (GetDesc() != inVenueNew->GetDesc())
 		SetDesc(inVenueNew->GetDesc());
+	// If the order is different, we will fall into this...
 	if (GetDivisions() != inVenueNew->GetDivisions())
 	{
 		std::string info2;
@@ -235,7 +238,8 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 				info2 += "\n";
 			}
 		}
-		if (0 < nAdded || 0 < nChanged || 0 < nSkipped)
+		// ... so only generate a message if we added or changed.
+		if (0 < nAdded || 0 < nChanged)
 		{
 			char buffer[1000];
 			sprintf(buffer, UPDATE_FORMAT_DIVISIONS, nAdded, nChanged, nSkipped);
@@ -244,6 +248,8 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 			info += info2;
 		}
 	}
+
+	// If the order is different, we will fall into this...
 	if (GetEvents() != inVenueNew->GetEvents())
 	{
 		std::string info2;
@@ -274,7 +280,8 @@ std::string ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew)
 				info2 += "\n";
 			}
 		}
-		if (0 < nAdded || 0 < nChanged || 0 < nSkipped)
+		// ... so only generate a message if we added or changed.
+		if (0 < nAdded || 0 < nChanged)
 		{
 			char buffer[1000];
 			sprintf(buffer, UPDATE_FORMAT_EVENTS, nAdded, nChanged, nSkipped);
