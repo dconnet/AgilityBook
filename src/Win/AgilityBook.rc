@@ -2430,6 +2430,7 @@ BEGIN
     IDS_COL_TRIAL           "Trial"
     IDS_COL_SUBNAME         "SubName"
     IDS_COL_VERIFIED        "Verified"
+    IDS_COL_MACH            "MACH"
 END
 
 STRINGTABLE 

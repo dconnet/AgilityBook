@@ -381,6 +381,23 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				}
 			}
 			break;
+		case IO_RUNS_MACH:
+			{
+				ARBConfigScoring const* pScoring = NULL;
+				if (m_pTrial->GetClubs().GetPrimaryClub())
+                    pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+						m_pRun->GetEvent(),
+						m_pRun->GetDivision(),
+						m_pRun->GetLevel(),
+						m_pRun->GetDate());
+				if (pScoring && pScoring->HasMachPts())
+				{
+					int pts = m_pRun->GetMachPoints(pScoring);
+					str.Format("%d", pts);
+				}
+			}
+			break;
 		}
 	}
 	return str;
@@ -908,6 +925,39 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 				nRet = -1;
 			else if (str1 > str2)
 				nRet = 1;
+		}
+		break;
+	case IO_RUNS_MACH:
+		{
+			ARBConfigScoring const* pScoring1 = NULL;
+			if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
+				pScoring1 = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun1->m_pRun->GetEvent(),
+					pRun1->m_pRun->GetDivision(),
+					pRun1->m_pRun->GetLevel(),
+					pRun1->m_pRun->GetDate());
+			ARBConfigScoring const* pScoring2 = NULL;
+			if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
+				pScoring2 = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pRun->GetEvent(),
+					pRun2->m_pRun->GetDivision(),
+					pRun2->m_pRun->GetLevel(),
+					pRun2->m_pRun->GetDate());
+			int pts1 = -1;
+			int pts2 = -1;
+			if (pScoring1 && pScoring2)
+			{
+				if (pScoring1->HasMachPts())
+					pts1 = pRun1->m_pRun->GetMachPoints(pScoring1);
+				if (pScoring2->HasMachPts())
+					pts2 = pRun2->m_pRun->GetMachPoints(pScoring2);
+			}
+			if (pts1 > pts2)
+				nRet = 1;
+			else if (pts1 < pts2)
+				nRet = -1;
 		}
 		break;
 	}

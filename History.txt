@@ -1,4 +1,6 @@
-9/16/2004: v1.3.3.9 <in development>
+9/23/2004: v1.3.3.9 <in development>
+- New features / Enhancements:
+  - Added Mach points to the allowed columns in the runs view.
 
 9/15/2004: v1.3.2.9
 - Bug fix
