@@ -1252,16 +1252,22 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
+				<Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Championship" Level="Novice" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" type="FaultsThenTime">
-					<Note>Non-titling team event a club may offer</Note>
+					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -1273,24 +1279,24 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
+				<Scoring Division="Championship" Level="Advanced" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
-					<Note>Non-titling team event a club may offer</Note>
+					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
-				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
+				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -1302,24 +1308,24 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Masters" type="OCScoreThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
+				<Scoring Division="Championship" Level="Advanced" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="*" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" type="OCScoreThenTime">
-					<Note>Non-titling team event a club may offer</Note>
+					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
-				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="OCScoreThenTime">
+				<Scoring Division="Performance" Level="PII" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="*" type="OCScoreThenTime">
+				<Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
+				<Scoring Division="Performance" Level="PI" ValidFrom="2004-1-1" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -1339,7 +1345,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" type="ScoreThenTime">
-					<Note>Non-titling team event a club may offer</Note>
+					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
@@ -1365,15 +1371,21 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 				<Scoring Division="Championship" Level="Masters" type="TimePlusFaults">
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
+				<Scoring Division="Championship" Level="Advanced" type="TimePlusFaults">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="*" type="TimePlusFaults">
-					<TitlePoints Faults="0" Points="1"/>
+				<Scoring Division="Performance" Level="PIII" type="TimePlusFaults">
+					<Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
 				</Scoring>
-				<Scoring Division="Performance" Level="*" type="TimePlusFaults">
-					<Note>Non-titling class</Note>
+				<Scoring Division="Performance" Level="PII" type="TimePlusFaults">
+					<Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" type="TimePlusFaults">
+					<Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
 				</Scoring>
 			</Event>
 			<Event Name="Grand Prix">
@@ -1396,7 +1408,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<TitlePoints Faults="0" LifeTime="y" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
-					<Note>Non-titling event a club may offer</Note>
+					<Note>Non-titling event - known as Leap N Chase, Fast &amp; Furious, etc.</Note>
 				</Scoring>
 			</Event>
 			<Event Name="Jokers Wild">

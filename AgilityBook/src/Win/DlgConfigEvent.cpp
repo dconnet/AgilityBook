@@ -51,6 +51,7 @@
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigTitlePoints.h"
+#include "DlgFixup.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -61,8 +62,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigEvent dialog
 
-CDlgConfigEvent::CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent)
+CDlgConfigEvent::CDlgConfigEvent(ARBAgilityRecordBook* book, ARBConfig* config,
+	ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigEvent::IDD, pParent)
+	, m_Book(book)
+	, m_Config(config)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
 	, m_Scorings(pEvent->GetScorings())
@@ -85,6 +89,14 @@ CDlgConfigEvent::CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent,
 
 CDlgConfigEvent::~CDlgConfigEvent()
 {
+	ClearFixups();
+}
+
+void CDlgConfigEvent::GetFixups(std::vector<CDlgFixup*>& ioFixups)
+{
+	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
+		ioFixups.push_back(*iter);
+	m_DlgFixup.clear();
 }
 
 void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
@@ -151,6 +163,13 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
+
+void CDlgConfigEvent::ClearFixups()
+{
+	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
+		delete (*iter);
+	m_DlgFixup.clear();
+}
 
 CString CDlgConfigEvent::GetListName(ARBConfigScoring* pScoring) const
 {
@@ -898,6 +917,7 @@ void CDlgConfigEvent::OnOK()
 			return;
 	}
 
+	ClearFixups();
 	if (m_pEvent->GetName() != (LPCSTR)m_Name)
 	{
 		if (m_pVenue->GetEvents().FindEvent((LPCSTR)m_Name))
@@ -906,8 +926,69 @@ void CDlgConfigEvent::OnOK()
 			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
 			return;
 		}
+		if (m_Book)
+			m_DlgFixup.push_back(new CDlgFixupRenameEvent(m_pVenue->GetName(), (LPCSTR)m_Name, m_pEvent->GetName()));
 		m_pEvent->SetName((LPCSTR)m_Name);
 	}
+	// m_Book and m_Config are only valid when editing an existing entry.
+	if (m_Book)
+	{
+		CWaitCursor wait;
+		int nDeletedRuns = 0;
+		int nScoringChange = 0;
+		for (ARBDogList::iterator iterDog = m_Book->GetDogs().begin();
+			iterDog != m_Book->GetDogs().end();
+			++iterDog)
+		{
+			ARBDog* pDog = *iterDog;
+			for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+				iterTrial != pDog->GetTrials().end();
+				++iterTrial)
+			{
+				ARBDogTrial* pTrial = *iterTrial;
+				for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+					iterRun != pTrial->GetRuns().end();
+					++iterRun)
+				{
+					ARBDogRun* pRun = *iterRun;
+					ARBConfigScoring const* pScoring = m_Scorings.FindEvent(
+						pRun->GetDivision(),
+						pRun->GetLevel(),
+						pRun->GetDate());
+					if (!pScoring)
+					{
+						++nDeletedRuns;
+						// TODO: Create fixup object
+					}
+					else
+					{
+						if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
+							!= pRun->GetScoring().GetType())
+						{
+							++nScoringChange;
+							// TODO: Create fixup object
+						}
+					}
+				}
+			}
+		}
+		if (0 < nDeletedRuns || 0 < nScoringChange)
+		{
+			CString msg;
+			msg.FormatMessage(IDS_DELETE_EVENT_SCORING, nDeletedRuns, nScoringChange);
+			switch (AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2))
+			{
+			default:
+				return;
+			case IDYES:
+				break;
+			case IDCANCEL:
+				EndDialog(IDCANCEL);
+				return;
+			}
+		}
+	}
+
 	m_Desc.Replace("\r\n", "\n");
 	m_pEvent->SetDesc((LPCSTR)m_Desc);
 	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);

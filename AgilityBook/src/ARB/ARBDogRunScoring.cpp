@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-01 DRC Fix a file that may have been corrupted (see history.txt)
  * @li 2004-03-26 DRC File version 8.6. Changed Table-in-YPS to hasTable.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -50,6 +51,28 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+// static
+
+ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(
+	ARBConfigScoring::ScoringStyle inType)
+{
+	switch (inType)
+	{
+	default:
+		ASSERT(0);
+	case ARBConfigScoring::eFaultsThenTime:
+	case ARBConfigScoring::eFaults100ThenTime:
+	case ARBConfigScoring::eFaults200ThenTime:
+	case ARBConfigScoring::eTimePlusFaults:
+		return ARBDogRunScoring::eTypeByTime;
+	case ARBConfigScoring::eOCScoreThenTime:
+		return ARBDogRunScoring::eTypeByOpenClose;
+	case ARBConfigScoring::eScoreThenTime:
+		return ARBDogRunScoring::eTypeByPoints;
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -142,15 +165,13 @@ bool ARBDogRunScoring::Load(
 	if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_TIME, d))
 		m_Time = d;
 	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-	switch (inEvent->GetScoringStyle())
+	m_type = ARBDogRunScoring::TranslateConfigScoring(inEvent->GetScoringStyle());
+	switch (m_type)
 	{
 	default:
 		break;
 
-	case ARBConfigScoring::eFaults100ThenTime:
-	case ARBConfigScoring::eFaults200ThenTime:
-	case ARBConfigScoring::eFaultsThenTime:
-	case ARBConfigScoring::eTimePlusFaults:
+	case eTypeByTime:
 		if (name == TREE_BY_TIME)
 		{
 			if (inVersion < ARBVersion(8,6))
@@ -183,7 +204,6 @@ bool ARBDogRunScoring::Load(
 					m_Table = false;
 				}
 			}
-			m_type = eTypeByTime;
 			if (Element::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_SCT, d))
 				m_SCT = d;
 			inTree.GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
@@ -191,10 +211,9 @@ bool ARBDogRunScoring::Load(
 		}
 		break;
 
-	case ARBConfigScoring::eOCScoreThenTime:
+	case eTypeByOpenClose:
 		if (name == TREE_BY_OPENCLOSE)
 		{
-			m_type = eTypeByOpenClose;
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
@@ -203,10 +222,9 @@ bool ARBDogRunScoring::Load(
 		}
 		break;
 
-	case ARBConfigScoring::eScoreThenTime:
+	case eTypeByPoints:
 		if (name == TREE_BY_POINTS)
 		{
-			m_type = eTypeByPoints;
 			inTree.GetAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
 			inTree.GetAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
 			return true;

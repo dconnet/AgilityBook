@@ -38,14 +38,19 @@
 #include "ARBConfigScoring.h"
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
+class ARBAgilityRecordBook;
+class ARBConfig;
 class ARBConfigEvent;
 class ARBConfigVenue;
+class CDlgFixup;
 
 class CDlgConfigEvent : public CDlgBaseDialog
 {
 public:
-	CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent = NULL);
+	CDlgConfigEvent(ARBAgilityRecordBook* book, ARBConfig* config,
+		ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent = NULL);
 	virtual ~CDlgConfigEvent();
+	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
 
 private:
 // Dialog Data
@@ -85,12 +90,16 @@ private:
 	CButton	m_ctrlTitleEdit;
 	CButton	m_ctrlTitleDelete;
 	//}}AFX_DATA
+	ARBAgilityRecordBook* m_Book;
+	ARBConfig* m_Config;
 	ARBConfigVenue* m_pVenue;
 	ARBConfigEvent* m_pEvent;
+	std::vector<CDlgFixup*> m_DlgFixup;
 	ARBConfigScoringList m_Scorings;
 	int m_idxMethod;
 	CString m_strOpening[2];
 
+	void ClearFixups();
 	CString GetListName(ARBConfigScoring* pScoring) const;
 	void FillControls();
 	void FillMethodList();
