@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2004-07-29 DRC Created
  */
 
@@ -71,6 +72,29 @@ public:
 	eScoringDetail m_ScoringDetail;
 };
 
+class RunInfoData
+{
+	friend class CDlgListViewer;
+public:
+	RunInfoData(ARBDog const* inDog,
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel,
+		ARBConfigEvent const* inEvent)
+		: m_Dog(inDog)
+		, m_Venue(inVenue)
+		, m_Div(inDiv)
+		, m_Level(inLevel)
+		, m_Event(inEvent)
+	{
+	}
+	ARBDog const* m_Dog;
+	ARBConfigVenue const* m_Venue;
+	ARBConfigDivision const* m_Div;
+	ARBConfigLevel const* m_Level;
+	ARBConfigEvent const* m_Event;
+};
+
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
@@ -83,7 +107,7 @@ class CDlgListViewer : public CDlgBaseDialog
 public:
 	// Viewing runs
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::list<RunInfo> const& inRuns,
+		RunInfoData const* inData, std::list<RunInfo> const& inRuns,
 		CWnd* pParent = NULL);
 	// Viewing runs affected by configuration changes
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
@@ -112,6 +136,7 @@ private:
 	//}}AFX_DATA
 	CString m_Caption;
 	CAgilityBookDoc* m_pDoc;
+	RunInfoData const* m_Data;
 	std::list<RunInfo> const* m_Runs;
 	std::list<ScoringRunInfo> const* m_ScoringRuns;
 	std::set<DoubleQdata> const* m_DoubleQData;

@@ -110,22 +110,13 @@ Does this scoring method have double-Qs?
 .topic HIDC_CONFIG_EVENT_DROP_FRACTIONS
 When computing time faults, should the fractions be dropped?
 
-.topic HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
-Add time faults for the number of seconds under course time.
-
-.topic HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
-Add time faults for the number of seconds over course time.
+.topic HIDC_CONFIG_EVENT_HAS_SUBNAMES
+Allow sub-names for this event. This allows the user to 'create' an event
+without modifying the configuration. An example of this is different types
+of Gambles in NADAC.
 
 .topic HIDC_CONFIG_EVENT_LEVEL
 Level this scoring method applies to.
-
-.topic HIDC_CONFIG_EVENT_POINTS
-List of titling and/or lifetime points, based on the number of faults.
-
-.topic HIDC_CONFIG_EVENT_SPEED
-Does this scoring method have Speed points? (In AKC, these are MACH points.)
-Speed points are computed as full seconds under SCT. First place earns 2x.
-Second place earns 1.5x. All other places earn 1 point per second.
 
 .topic HIDC_CONFIG_EVENT_METHODS
 Currently defined scoring methods. Order is very important - the first scoring
@@ -150,14 +141,8 @@ closing points, this is the total number of points required.
 .topic HIDC_CONFIG_EVENT_PARTNER
 Does this event have partners?
 
-.topic HIDC_CONFIG_EVENT_SUPERQ
-Does this scoring method have Super Qs?
-
-.topic HIDC_CONFIG_EVENT_TF_MULTIPLY
-Multiply any time faults by a weighting factor.
-
-.topic HIDC_CONFIG_EVENT_TABLE
-Could there be a table in this event?
+.topic HIDC_CONFIG_EVENT_POINTS
+List of titling and/or lifetime points, based on the number of faults.
 
 .topic HIDC_CONFIG_EVENT_POINTS_DELETE
 Delete the selected titling point item.
@@ -167,6 +152,35 @@ Edit the selected titling point item.
 
 .topic HIDC_CONFIG_EVENT_POINTS_NEW
 Create a new titling point item.
+
+.topic HIDC_CONFIG_EVENT_SPEED
+Does this scoring method have Speed points? (In AKC, these are MACH points.)
+Speed points are computed as full seconds under SCT. First place earns 2x.
+Second place earns 1.5x. All other places earn 1 point per second.
+
+.topic HIDC_CONFIG_EVENT_SUBNAMES
+Pre-configured event sub-names.
+
+.topic HIDC_CONFIG_EVENT_SUBNAMES_DELETE
+Remove an event sub-name.
+
+.topic HIDC_CONFIG_EVENT_SUBNAMES_NEW
+Add an event sub-name.
+
+.topic HIDC_CONFIG_EVENT_SUPERQ
+Does this scoring method have Super Qs?
+
+.topic HIDC_CONFIG_EVENT_TABLE
+Could there be a table in this event?
+
+.topic HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
+Add time faults for the number of seconds under course time.
+
+.topic HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
+Add time faults for the number of seconds over course time.
+
+.topic HIDC_CONFIG_EVENT_TF_MULTIPLY
+Multiply any time faults by a weighting factor.
 
 .topic HIDC_CONFIG_EVENT_TYPE
 Scoring style of this scoring method.
@@ -223,9 +237,6 @@ Copy the selected item.
 .topic HIDC_CONFIG_VENUE_DELETE
 Delete the selected item.
 
-.topic HIDC_CONFIG_VENUE_LONGNAME
-Full name of the Venue.
-
 .topic HIDC_CONFIG_VENUE_DESC
 Description of the venue.
 
@@ -240,6 +251,9 @@ List of currently configured events.
 
 .topic HIDC_CONFIG_VENUE_LEVEL
 List of currently configured levels for the selected division.
+
+.topic HIDC_CONFIG_VENUE_LONGNAME
+Full name of the Venue.
 
 .topic HIDC_CONFIG_VENUE_MOVE_DOWN
 Move the selected item down.
@@ -531,6 +545,9 @@ Clear the existing course, or paste the clipboard data here.
 .topic HIDC_RUNCRCD_CRCD
 Preview of course.
 
+.topic HIDC_RUNCRCD_DESC
+CRCD text.
+
 .topic HIDC_RUNCRCD_EDIT
 Display the course in a resizeable viewing window.
 
@@ -585,6 +602,9 @@ Division of this run.
 .topic HIDC_RUNSCORE_DOGS_QD
 Number of dogs that qualified. Enter -1 if not known.
 
+.topic HIDC_RUNSCORE_DOUBLE_Q
+Indicates this run is part of a double Q.
+
 .topic HIDC_RUNSCORE_EVENT
 Type of run. This list is filled in based on data in the Division and Level
 lists. The event selected will control what fields are enabled on this dialog.
@@ -635,6 +655,9 @@ Standard Course Time (or opening time for point-based events)
 
 .topic HIDC_RUNSCORE_SCT2
 Standard Course Time (or closing time for point-based events)
+
+.topic HIDC_RUNSCORE_SUBNAME
+Extra naming information used to organize events.
 
 .topic HIDC_RUNSCORE_TABLE
 Did this run have a table in it?
@@ -921,6 +944,9 @@ properly before importing. Use the 'Assign Columns' button above to align.
 
 .topic HIDC_WIZARD_IMPORT_ROW
 Start the import at the specified row. This allows skipping of header data.
+
+.topic HIDC_WIZARD_IMPORT_ROW_SPIN
+Use this to scroll the starting row.
 
 .topic HIDC_WIZARD_START_EXCEL
 Import data directly from or export data directly to Excel.

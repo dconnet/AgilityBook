@@ -12,11 +12,12 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-01-01 DRC File version 10.1.
+2005-01-02 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
                Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
                Added 'LongName' to 'Venue'.
+               Added 'SubName' to 'Event','Run'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -210,12 +211,14 @@ If there are no 'TitlePoints', then the class is non-titling.
 
  Integer: OpeningPts,ClosingPts,Points,Faults
 -->
-<!ELEMENT Event (Desc?, Scoring+) >
+<!ELEMENT Event (Desc?, SubName*, Scoring+) >
 	<!ATTLIST Event
 		Name CDATA #REQUIRED
 		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
+		hasSubNames (y|n) 'n'
 		>
+<!ELEMENT SubName (#PCDATA) >
 <!ELEMENT Scoring (Note?, TitlePoints*, LifeTime*) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
@@ -343,6 +346,7 @@ a Level or SubLevel element.
 		Level CDATA #REQUIRED
 		Height CDATA #IMPLIED
 		Event CDATA #REQUIRED
+		SubName CDATA #IMPLIED
 		>
 
 <!ELEMENT Conditions (#PCDATA) >

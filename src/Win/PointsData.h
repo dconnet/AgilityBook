@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-06 DRC Created
@@ -43,6 +44,9 @@
 #include <string>
 #include <vector>
 #include "ARBDate.h"
+class ARBConfigDivision;
+class ARBConfigEvent;
+class ARBConfigLevel;
 class ARBConfigVenue;
 class ARBDog;
 class ARBDogExistingPoints;
@@ -157,10 +161,12 @@ class PointsDataEvent : public PointsDataBase
 {
 public:
 	PointsDataEvent(CAgilityBookViewPoints* pView,
+		ARBDog const* inDog,
 		std::list<RunInfo>& inMatching,
-		std::string const& inDiv,
-		std::string const& inLevel,
-		std::string const& inEvent,
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel,
+		ARBConfigEvent const* inEvent,
 		std::string const& inRunCount,
 		std::string const& inQcount,
 		std::string const& inPts,
@@ -171,10 +177,12 @@ public:
 	virtual void OnDblClick() const;
 
 protected:
+	ARBDog const* m_Dog;
 	std::list<RunInfo> m_Matching;
-	std::string m_Div;
-	std::string m_Level;
-	std::string m_Event;
+	ARBConfigVenue const* m_Venue;
+	ARBConfigDivision const* m_Div;
+	ARBConfigLevel const* m_Level;
+	ARBConfigEvent const* m_Event;
 	std::string m_RunCount;
 	std::string m_Qcount;
 	std::string m_Pts;

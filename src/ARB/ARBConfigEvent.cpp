@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
  *                    Update didn't save desc changes if nothing else changed.
@@ -63,6 +64,8 @@ ARBConfigEvent::ARBConfigEvent()
 	, m_Desc()
 	, m_bTable(false)
 	, m_bHasPartner(false)
+	, m_bHasSubNames(false)
+	, m_SubNames()
 	, m_Scoring()
 {
 }
@@ -72,6 +75,8 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	, m_Desc(rhs.m_Desc)
 	, m_bTable(rhs.m_bTable)
 	, m_bHasPartner(rhs.m_bHasPartner)
+	, m_bHasSubNames(rhs.m_bHasSubNames)
+	, m_SubNames(rhs.m_SubNames)
 	, m_Scoring(rhs.m_Scoring)
 {
 }
@@ -88,6 +93,8 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 		m_Desc = rhs.m_Desc;
 		m_bTable = rhs.m_bTable;
 		m_bHasPartner = rhs.m_bHasPartner;
+		m_bHasSubNames = rhs.m_bHasSubNames;
+		m_SubNames = rhs.m_SubNames;
 		m_Scoring = rhs.m_Scoring;
 	}
 	return *this;
@@ -99,6 +106,8 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 		&& m_Desc == rhs.m_Desc
 		&& m_bTable == rhs.m_bTable
 		&& m_bHasPartner == rhs.m_bHasPartner
+		&& m_bHasSubNames == rhs.m_bHasSubNames
+		&& m_SubNames == rhs.m_SubNames
 		&& m_Scoring == rhs.m_Scoring;
 }
 
@@ -139,12 +148,22 @@ bool ARBConfigEvent::Load(
 		return false;
 	}
 
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL));
+		return false;
+	}
+
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_EVENT_DESC)
 		{
 			m_Desc = element.GetValue();
+		}
+		else if (element.GetName() == TREE_EVENT_SUBNAME)
+		{
+			m_SubNames.insert(element.GetValue());
 		}
 		else if (element.GetName() == TREE_SCORING)
 		{
@@ -169,6 +188,17 @@ bool ARBConfigEvent::Save(Element& ioTree) const
 		event.AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
 	if (m_bHasPartner)
 		event.AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
+	if (m_bHasSubNames)
+	{
+		event.AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
+		for (std::set<std::string>::const_iterator iter = m_SubNames.begin();
+			iter != m_SubNames.end();
+			++iter)
+		{
+			Element& name = event.AddElement(TREE_EVENT_SUBNAME);
+			name.SetValue(*iter);
+		}
+	}
 	if (!m_Scoring.Save(event))
 		return false;
 	return true;
@@ -194,6 +224,19 @@ bool ARBConfigEvent::Update(int indent, ARBConfigEvent const* inEventNew, std::s
 	{
 		bChanges = true;
 		SetHasPartner(inEventNew->HasPartner());
+	}
+	if (HasSubNames() != inEventNew->HasSubNames())
+	{
+		bChanges = true;
+		SetHasSubNames(inEventNew->HasSubNames());
+	}
+	std::set<std::string> oldNames, newNames;
+	GetSubNames(oldNames);
+	inEventNew->GetSubNames(newNames);
+	if (oldNames != newNames)
+	{
+		bChanges = true;
+		SetSubNames(newNames);
 	}
 	if (HasTable() != inEventNew->HasTable())
 	{
@@ -285,6 +328,19 @@ ARBConfigScoring const* ARBConfigEvent::FindEvent(
 	ARBDate const& inDate) const
 {
 	return m_Scoring.FindEvent(inDivision, inLevel, inDate);
+}
+
+size_t ARBConfigEvent::GetSubNames(std::set<std::string>& outNames) const
+{
+	outNames.clear();
+	outNames = m_SubNames;
+	return outNames.size();
+}
+
+void ARBConfigEvent::SetSubNames(std::set<std::string> const& inNames)
+{
+	m_SubNames.clear();
+	m_SubNames = inNames;
 }
 
 /////////////////////////////////////////////////////////////////////////////

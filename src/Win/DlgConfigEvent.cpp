@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-12-10 DRC Changes weren't saved when lifetime pts were modified.
@@ -82,6 +83,7 @@ CDlgConfigEvent::CDlgConfigEvent(CAgilityBookDoc* pDoc,
 	, m_idxMethod(-1)
 	, m_bHasTable(FALSE)
 	, m_bHasPartners(FALSE)
+	, m_bHasSubNames(FALSE)
 {
 	ASSERT(m_pVenue);
 	ASSERT(m_pEvent);
@@ -90,6 +92,7 @@ CDlgConfigEvent::CDlgConfigEvent(CAgilityBookDoc* pDoc,
 	m_Desc.Replace("\n", "\r\n");
 	m_bHasTable = m_pEvent->HasTable() ? TRUE : FALSE;
 	m_bHasPartners = m_pEvent->HasPartner() ? TRUE : FALSE;
+	m_bHasSubNames = m_pEvent->HasSubNames() ? TRUE : FALSE;
 	//{{AFX_DATA_INIT(CDlgConfigEvent)
 	m_OpeningPts = 0;
 	m_ClosingPts = 0;
@@ -116,6 +119,10 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CONFIG_EVENT, m_Name);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_TABLE, m_bHasTable);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_PARTNER, m_bHasPartners);
+	DDX_Check(pDX, IDC_CONFIG_EVENT_HAS_SUBNAMES, m_bHasSubNames);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES, m_ctrlSubNames);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_NEW, m_ctrlSubNamesNew);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_DELETE, m_ctrlSubNamesDelete);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_DESC, m_Desc);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
@@ -156,6 +163,10 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_HAS_SUBNAMES, OnBnClickedSubNames)
+	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_SUBNAMES, OnLbnSelchangeSubnames)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_NEW, OnBnClickedSubNamesNew)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_DELETE, OnBnClickedSubNamesDelete)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_DELETE, OnBnClickedDelete)
@@ -315,6 +326,34 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlPointsNew.EnableWindow(bEnable);
 	m_ctrlPointsEdit.EnableWindow(bEnable);
 	m_ctrlPointsDelete.EnableWindow(bEnable);
+}
+
+void CDlgConfigEvent::FillSubNames(bool bInit)
+{
+	if (m_bHasSubNames)
+	{
+		m_ctrlSubNames.ShowWindow(SW_SHOW);
+		m_ctrlSubNamesNew.ShowWindow(SW_SHOW);
+		m_ctrlSubNamesDelete.ShowWindow(SW_SHOW);
+		if (bInit)
+		{
+			m_ctrlSubNames.ResetContent();
+			std::set<std::string> subNames;
+			m_pEvent->GetSubNames(subNames);
+			for (std::set<std::string>::const_iterator iter = subNames.begin();
+				iter != subNames.end();
+				++iter)
+			{
+				m_ctrlSubNames.AddString(iter->c_str());
+			}
+		}
+	}
+	else
+	{
+		m_ctrlSubNames.ShowWindow(SW_HIDE);
+		m_ctrlSubNamesNew.ShowWindow(SW_HIDE);
+		m_ctrlSubNamesDelete.ShowWindow(SW_HIDE);
+	}
 }
 
 void CDlgConfigEvent::FillMethodList()
@@ -701,6 +740,7 @@ BOOL CDlgConfigEvent::OnInitDialog()
 		m_ctrlType.SetItemData(idx, Styles[index]);
 	}
 
+	FillSubNames(true);
 	FillMethodList();
 	FillControls();
 	FillRequiredPoints();
@@ -730,6 +770,42 @@ void CDlgConfigEvent::OnCbnSelchangeLevel()
 	UpdateData(TRUE);
 	SaveControls();
 	FillMethodList();
+}
+
+void CDlgConfigEvent::OnBnClickedSubNames()
+{
+	UpdateData(TRUE);
+	FillSubNames();
+	OnLbnSelchangeSubnames();
+}
+
+void CDlgConfigEvent::OnLbnSelchangeSubnames()
+{
+	BOOL bEnable = FALSE;
+	if (LB_ERR != m_ctrlSubNames.GetCurSel())
+		bEnable = TRUE;
+	m_ctrlSubNamesDelete.EnableWindow(bEnable);
+}
+
+void CDlgConfigEvent::OnBnClickedSubNamesNew()
+{
+	CDlgName dlg("", (LPCTSTR)NULL, this);
+	if (IDOK == dlg.DoModal())
+	{
+		int idx = m_ctrlSubNames.AddString(dlg.GetName());
+		m_ctrlSubNames.SetCurSel(idx);
+		OnLbnSelchangeSubnames();
+	}
+}
+
+void CDlgConfigEvent::OnBnClickedSubNamesDelete()
+{
+	int idx = m_ctrlSubNames.GetCurSel();
+	if (LB_ERR != idx)
+	{
+		m_ctrlSubNames.DeleteString(idx);
+		m_ctrlSubNamesDelete.EnableWindow(FALSE);
+	}
 }
 
 void CDlgConfigEvent::OnBnClickedNew()
@@ -1135,6 +1211,22 @@ void CDlgConfigEvent::OnOK()
 	m_pEvent->SetDesc((LPCSTR)m_Desc);
 	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
 	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
+	m_pEvent->SetHasSubNames(m_bHasSubNames == TRUE ? true : false);
+	if (m_bHasSubNames)
+	{
+		std::set<std::string> subNames;
+		int nCount = m_ctrlSubNames.GetCount();
+		for (int i = 0; i < nCount; ++i)
+		{
+			CString str;
+			m_ctrlSubNames.GetText(i, str);
+			str.TrimRight();
+			str.TrimLeft();
+			if (!str.IsEmpty())
+				subNames.insert((LPCTSTR)str);
+		}
+		m_pEvent->SetSubNames(subNames);
+	}
 	m_pEvent->GetScorings() = m_Scorings;
 	CDlgBaseDialog::OnOK();
 }

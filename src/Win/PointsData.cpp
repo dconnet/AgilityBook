@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-06 DRC Created
@@ -290,17 +291,21 @@ void PointsDataTitle::OnDblClick() const
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataEvent::PointsDataEvent(CAgilityBookViewPoints* pView,
+		ARBDog const* inDog,
 		std::list<RunInfo>& inMatching,
-		std::string const& inDiv,
-		std::string const& inLevel,
-		std::string const& inEvent,
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel,
+		ARBConfigEvent const* inEvent,
 		std::string const& inRunCount,
 		std::string const& inQcount,
 		std::string const& inPts,
 		std::string const& inSuperQ,
 		std::string const& inSpeed)
 	: PointsDataBase(pView)
+	, m_Dog(inDog)
 	, m_Matching(inMatching)
+	, m_Venue(inVenue)
 	, m_Div(inDiv)
 	, m_Level(inLevel)
 	, m_Event(inEvent)
@@ -318,13 +323,13 @@ std::string PointsDataEvent::OnNeedText(size_t index) const
 	switch (index)
 	{
 	case 1: // Division
-		str = m_Div;
+		str = m_Div->GetName();
 		break;
 	case 2: // Level
-		str = m_Level;
+		str = m_Level->GetName();
 		break;
 	case 3: // Event
-		str = m_Event;
+		str = m_Event->GetName();
 		break;
 	case 4: // Runs, judges, partners
 		str = m_RunCount;
@@ -350,13 +355,14 @@ std::string PointsDataEvent::OnNeedText(size_t index) const
 
 void PointsDataEvent::OnDblClick() const
 {
-	CString str("Runs: ");
-	str += m_Div.c_str();
+	std::string str("Runs: ");
+	str += m_Div->GetName();
 	str += "/";
-	str += m_Level.c_str();
+	str += m_Level->GetName();
 	str += "/";
-	str += m_Event.c_str();
-	CDlgListViewer dlg(m_pView->GetDocument(), str, m_Matching, m_pView);
+	str += m_Event->GetName();
+	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
+	CDlgListViewer dlg(m_pView->GetDocument(), str.c_str(), m_Dog ? &data : NULL, m_Matching, m_pView);
 	dlg.DoModal();
 }
 

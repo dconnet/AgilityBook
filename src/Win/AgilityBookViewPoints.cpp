@@ -547,10 +547,9 @@ int CAgilityBookViewPoints::DoEvents(
 					}
 				}
 				PointsDataEvent* pData = new PointsDataEvent(this,
+					0 < nExistingPts + nExistingSQ ? inDog : NULL,
 					matching,
-					inDiv->GetName(),
-					inLevel->GetName(),
-					pEvent->GetName(),
+					inVenue, inDiv, inLevel, pEvent,
 					(LPCTSTR)strRunCount,
 					(LPCTSTR)strQcount,
 					(LPCTSTR)strPts,
