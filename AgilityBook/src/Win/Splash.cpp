@@ -38,11 +38,16 @@
 #include "resource.h"
 #include "Splash.h"
 
+#include "VersionNum.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char BASED_CODE THIS_FILE[] = __FILE__;
 #endif
+
+// Border (one side)
+#define BORDER	7
 
 /////////////////////////////////////////////////////////////////////////////
 // static stuff
@@ -56,13 +61,13 @@ void CSplashWnd::EnableSplashScreen(BOOL bEnable /*= TRUE*/)
 	c_bShowSplashWnd = bEnable;
 }
 
-void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd /*= NULL*/)
+void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd, bool bTimed)
 {
 	if (!c_bShowSplashWnd || c_pSplashWnd != NULL)
 		return;
 
 	// Allocate a new splash screen, and create the window.
-	c_pSplashWnd = new CSplashWnd;
+	c_pSplashWnd = new CSplashWnd(bTimed);
 	if (!c_pSplashWnd->Create(pParentWnd))
 		delete c_pSplashWnd;
 	else
@@ -94,7 +99,9 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 /////////////////////////////////////////////////////////////////////////////
 //   Splash Screen class
 
-CSplashWnd::CSplashWnd()
+CSplashWnd::CSplashWnd(bool bTimed)
+	: m_bTimed(bTimed)
+	, m_szBitmap(0,0)
 {
 }
 
@@ -120,10 +127,18 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 
 	BITMAP bm;
 	m_bitmap.GetBitmap(&bm);
+	m_szBitmap = CSize(bm.bmWidth, bm.bmHeight);
+
+	CVersionNum ver;
+	if (ver.Valid())
+		m_Version.FormatMessage(IDS_ABOUT_VERSION, (LPCTSTR)ver.GetVersionString());
 
 	return CreateEx(0,
 		AfxRegisterWndClass(0, AfxGetApp()->LoadStandardCursor(IDC_ARROW)),
-		NULL, WS_POPUP | WS_VISIBLE, 0, 0, bm.bmWidth, bm.bmHeight, pParentWnd->GetSafeHwnd(), NULL);
+		NULL, WS_POPUP | WS_VISIBLE,
+		0, 0,
+		m_szBitmap.cx + 2 * BORDER, m_szBitmap.cy + 2 * BORDER,
+		pParentWnd->GetSafeHwnd(), NULL);
 }
 
 void CSplashWnd::HideSplashScreen()
@@ -149,7 +164,8 @@ int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CenterWindow();
 
 	// Set a timer to destroy the splash screen.
-	SetTimer(1, 1000, NULL);
+	if (m_bTimed)
+		SetTimer(1, 2000, NULL);
 
 	return 0;
 }
@@ -162,13 +178,81 @@ void CSplashWnd::OnPaint()
 	if (!dcImage.CreateCompatibleDC(&dc))
 		return;
 
-	BITMAP bm;
-	m_bitmap.GetBitmap(&bm);
+	CRect r;
+	GetClientRect(&r);
+
+	// Fill with white...
+	COLORREF cr = dc.SetBkColor(RGB(255,255,255));
+	dc.ExtTextOut(0, 0, ETO_OPAQUE, &r, NULL, 0, NULL);
+	dc.SetBkColor(cr);
 
 	// Paint the image.
 	CBitmap* pOldBitmap = dcImage.SelectObject(&m_bitmap);
-	dc.BitBlt(0, 0, bm.bmWidth, bm.bmHeight, &dcImage, 0, 0, SRCCOPY);
+	dc.BitBlt(BORDER, BORDER, m_szBitmap.cx, m_szBitmap.cy, &dcImage, 0, 0, SRCCOPY);
 	dcImage.SelectObject(pOldBitmap);
+
+	// Draw the frame: Outer frame, inner fill, inside frame
+	// (remember, lineto goes _to_, not thru!)
+	int i;
+	// Gray lines first.
+	CPen pen(PS_SOLID, 1, RGB(128, 128, 128));
+	CPen* pOldPen = dc.SelectObject(&pen);
+	// left, top outer frame sides
+	dc.MoveTo(0, r.bottom - 1);
+	dc.LineTo(0, 0);
+	dc.LineTo(r.right, 0);
+	// right, bottom fill
+	// no need for "left, top fill", handled by ExtTextOut
+	for (i = 1; i < BORDER - 1; ++i)
+	{
+		dc.MoveTo(i, r.bottom - i - 1);
+		dc.LineTo(r.right - i - 1, r.bottom - i - 1);
+		dc.LineTo(r.right - i - 1, i);
+	}
+	dc.SelectObject(pOldPen);
+	dc.SelectStockObject(BLACK_PEN);
+	// right, bottom outer frame
+	dc.MoveTo(1, r.bottom - 1);
+	dc.LineTo(r.right - 1, r.bottom - 1);
+	dc.LineTo(r.right - 1, 0);
+	// inside frame
+	dc.MoveTo(BORDER - 1, BORDER - 1);
+	dc.LineTo(BORDER - 1, r.bottom - BORDER);
+	dc.LineTo(r.right - BORDER, r.bottom - BORDER);
+	dc.LineTo(r.right - BORDER, BORDER - 1);
+	dc.LineTo(BORDER - 1, BORDER - 1);
+
+	// Now toss in the version number.
+	if (!m_Version.IsEmpty())
+	{
+		CFont font;
+		LOGFONT lf;
+		memset(&lf, 0, sizeof(lf));
+		lf.lfHeight = 100;
+		lf.lfWeight = FW_BOLD;
+		lstrcpy(lf.lfFaceName, "Comic Sans MS");
+		font.CreatePointFontIndirect(&lf, &dc);
+		CFont* pOldFont = dc.SelectObject(&font);
+		TEXTMETRIC tm;
+		dc.GetTextMetrics(&tm);
+		r.right -= (BORDER + tm.tmDescent); // This makes the text look square in the corner
+		r.bottom -= BORDER;
+		dc.SetBkMode(TRANSPARENT);
+		// Create a shadow/smear the real text will sit on.
+		dc.SetTextColor(RGB(192,192,192));
+		dc.DrawText(m_Version, r, DT_BOTTOM | DT_RIGHT | DT_SINGLELINE | DT_NOPREFIX);
+		r.OffsetRect(-2,0);
+		dc.DrawText(m_Version, r, DT_BOTTOM | DT_RIGHT | DT_SINGLELINE | DT_NOPREFIX);
+		r.OffsetRect(0,-2);
+		dc.DrawText(m_Version, r, DT_BOTTOM | DT_RIGHT | DT_SINGLELINE | DT_NOPREFIX);
+		r.OffsetRect(2,0);
+		dc.DrawText(m_Version, r, DT_BOTTOM | DT_RIGHT | DT_SINGLELINE | DT_NOPREFIX);
+		// The real text.
+		r.OffsetRect(-1,1);
+		dc.SetTextColor(RGB(0,0,0));
+		dc.DrawText(m_Version, r, DT_BOTTOM | DT_RIGHT | DT_SINGLELINE | DT_NOPREFIX);
+		dc.SelectObject(pOldFont);
+	}
 }
 
 void CSplashWnd::OnTimer(UINT nIDEvent)

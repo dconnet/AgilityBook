@@ -232,6 +232,7 @@ BEGIN
     POPUP "&Help"
     BEGIN
         MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
+        MENUITEM "&Show Splash Screen...",      ID_HELP_SPLASH
         MENUITEM SEPARATOR
         MENUITEM "Check for &Updates...",       ID_HELP_UPDATE
     END
@@ -2125,6 +2126,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_ABOUT_VERSION       "Version %1"
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
     IDS_HELP_UPDATE         "http://www.agilityrecordbook.com/version.txt"
     IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
@@ -2277,9 +2279,10 @@ BEGIN
     ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
     ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
-    ID_VIEW_HIDDEN          "Show Titles that have been hidden"
-    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS"
+    ID_VIEW_HIDDEN          "Show Titles that have been hidden\nHidden Titles"
+    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
+    ID_HELP_SPLASH          "Show the initial splash screen\nSplash"
 END
 
 STRINGTABLE 
