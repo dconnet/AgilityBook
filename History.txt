@@ -2,6 +2,8 @@
 - New features / Enhancements:
   - GetAllClubs/Locations now includes calendar entries.
   - Implemented column customizing in Tree, Runs, Calendar and TrainingLog.
+- Bug fixes
+  - Exporting the training log for import into a spreadsheet was wrong.
 
 12/28/2003: v0.9.5.8
 - Bumped file version to 8.1:
