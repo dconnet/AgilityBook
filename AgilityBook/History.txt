@@ -21,6 +21,8 @@
     be found during deployment.
   - Do not acculumate runs marked as NA in Point totals.
 - Bug fix
+  - When a qualifying run is inserted in the tree and the tree is configured
+    to show Qs for a run, the program will crash.
   - The splash screen could cause a problem opening a file whose format is
     newer than the current program.
   - When the list viewer dialog is resized, the 'Copy' button doesn't move.
