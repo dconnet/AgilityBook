@@ -136,6 +136,7 @@ public:
 
 	bool CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView);
 	void SortDates();
+	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
 
 	/**
@@ -181,6 +182,8 @@ private:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CAgilityBookDoc)
+	afx_msg void OnAppAbout();
+	afx_msg void OnHelpUpdate();
 	afx_msg void OnFileExportWizard();
 	afx_msg void OnFileLinked();
 	afx_msg void OnEditConfiguration();

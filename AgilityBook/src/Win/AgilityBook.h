@@ -74,11 +74,9 @@ public:
 // Implementation
 private:
 	//{{AFX_MSG(CAgilityBookApp)
-	afx_msg void OnAppAbout();
 	afx_msg void OnHelpContents();
 	afx_msg void OnHelpIndex();
 	afx_msg void OnHelpSplash();
-	afx_msg void OnHelpUpdate();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -86,7 +84,10 @@ private:
 extern CAgilityBookApp theApp;
 
 // Some global functions.
+class CAgilityBookDoc;
 extern bool ShowContextHelp(HELPINFO* pHelpInfo);
 extern void RunCommand(char const* pCmd);
 extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
-extern void UpdateVersion(bool bVerbose);
+extern bool ReadHttpFile(CString const& inURL, CStringArray& outData);
+extern void UpdateVersion();
+extern void UpdateVersion(CAgilityBookDoc* pDoc);

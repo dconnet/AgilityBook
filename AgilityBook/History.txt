@@ -1,6 +1,13 @@
-7/17/2004: v1.2.2.8 <in development>
-- Bumped file Configuration v5:
-  - Remove titling points from USDAA Tournament Jumper/Snooker.
+7/20/2004: v1.2.2.8 <in development>
+- Bumped file version to 9.1, Configuration v5:
+  - Added 'UpdateNote' to 'Configuration'.
+  - Removed titling points from USDAA Tournament Jumper/Snooker.
+- New features / Enhancements:
+  - Check for configuration updates when the user requests an update check.
+    These are auto-downloaded from the web. Configuration checks are not done
+    automatically at program start - only on user-request. I thought about
+    adding the check on document open, but that means accessing the web
+    everytime.
 
 7/3/2004: v1.2.1.8
 - Bug fixes

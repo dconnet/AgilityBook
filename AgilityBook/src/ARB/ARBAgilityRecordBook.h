@@ -60,6 +60,7 @@
 #define TREE_CALENDAR						"Calendar"
 #define TREE_TRAINING						"Training"
 #define TREE_CONFIG							"Configuration"
+#define TREE_CONFIG_UPDATE_NOTE				"UpdateNote"
 #define TREE_ACTION							"Action"
 #define TREE_VENUE							"Venue"
 #define TREE_VENUE_DESC						"Desc"

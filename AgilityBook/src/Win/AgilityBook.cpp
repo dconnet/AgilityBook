@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-07-20 DRC Changed the updating to auto-update configurations also.
+ *                    Moved the user-request updates to the document.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-06-02 DRC Moved ShellExecute code here.
  * @li 2004-03-05 DRC Added check-for-updates feature.
@@ -45,13 +47,13 @@
 #include "htmlhelp.h"
 #endif
 
-#include "AboutDlg.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookTree.h"
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
+#include "Element.h"
 #include "HyperLink.h"
 #include "Splash.h"
 #include "TabView.h"
@@ -189,16 +191,19 @@ void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 	}
 }
 
-void UpdateVersion(bool bVerbose)
+bool ReadHttpFile(CString const& inURL, CString* outData, CStringArray* outDataArr)
 {
+	ASSERT(outData || outDataArr);
+	if (outData)
+		outData->Empty();
+	if (outDataArr)
+		outDataArr->RemoveAll();
 	CWaitCursor wait;
-	CString ver;
+	CString data;
 	try
 	{
-		CString url;
-		url.LoadString(IDS_HELP_UPDATE);
 		CInternetSession session("my version");
-		CStdioFile* pFile = session.OpenURL(url);
+		CStdioFile* pFile = session.OpenURL(inURL);
 		if (pFile)
 		{
 			char buffer[1025];
@@ -206,7 +211,7 @@ void UpdateVersion(bool bVerbose)
 			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
 			{
 				buffer[nChars] = 0;
-				ver += buffer;
+				data += buffer;
 			}
 			pFile->Close();
 			delete pFile;
@@ -216,19 +221,68 @@ void UpdateVersion(bool bVerbose)
 	catch (CInternetException* ex)
 	{
 		ex->Delete();
-		ver.Empty();
+		data.Empty();
+	}
+	bool bOk = false;
+	if (outData)
+	{
+		*outData = data;
+		bOk = (outData->GetLength() > 0);
+	}
+	if (outDataArr && 0 < data.GetLength())
+	{
+		int n;
+		while (0 <= (n = data.Find('\n')))
+		{
+			if ('#' != data[0])
+				outDataArr->Add(data.Left(n));
+			data = data.Mid(n+1);
+		}
+		if (!data.IsEmpty() && '#' != data[0])
+			outDataArr->Add(data);
+		bOk = (outDataArr->GetSize() > 0);
+	}
+	return bOk;
+}
+
+// The format of the version.txt file is:
+// line 1:
+//  "ARB Version n1.n2.n3.n4"
+// line 2-n:
+//  "#" in col 1: comment, skipped
+//  "Config:n:name": Configuration number n, http.../name
+
+/**
+ * Check the version against the web.
+ * @param outData Version info from the web.
+ * @param bVerbose Show information dialogs
+ * @return <0 failure, 0 Update occurred, >0 Version ok
+ */
+static int UpdateVersion(CStringArray& outData, bool bVerbose)
+{
+	CString url;
+	url.LoadString(IDS_HELP_UPDATE);
+	url += "/version.txt";
+	if (!ReadHttpFile(url, NULL, &outData))
+	{
+		if (bVerbose)
+			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
+		return -1;
 	}
 
 	ARBDate today = ARBDate::Today();
-	CVersionNum verNew(ver);
+	CVersionNum verNew(outData[0]);
 	CVersionNum verThis;
 	ASSERT(verThis.Valid());
 	if (!verNew.Valid())
 	{
 		if (bVerbose)
 			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
+		return -1;
 	}
-	else if (verThis < verNew)
+
+	// If the version has changed, don't bother checking the config.
+	if (verThis < verNew)
 	{
 		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
 		CString ver;
@@ -242,13 +296,95 @@ void UpdateVersion(bool bVerbose)
 				url = url.Mid(nTab+1);
 			CHyperLink::GotoURL(url);
 		}
+		return 0;
 	}
-	else
+	AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
+	return 1;
+}
+
+void UpdateVersion()
+{
+	CStringArray data;
+	UpdateVersion(data, false);
+}
+
+void UpdateVersion(CAgilityBookDoc* pDoc)
+{
+	CStringArray data;
+	if (0 >= UpdateVersion(data, true))
+		return;
+	// Only continue if we parsed the version.txt file AND the version
+	// is up-to-date.
+	bool bUpToDate = true;
+	for (int i = 0; i < data.GetSize(); ++i)
 	{
-		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
-		if (bVerbose)
-			AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
+		// Found the Config info...
+		if (0 == data[i].Find("Config:"))
+		{
+			int n = data[i].Find(':');
+			CString info = data[i].Mid(n+1);
+			int ver = atol((LPCTSTR)info); // Get the current configuration version.
+			n = info.Find(':'); // Set n to point to the file name on the server.
+			if (0 < n)
+			{
+				// Cool! New config!
+				if (ver > pDoc->GetConfig().GetVersion())
+				{
+					bUpToDate = false;
+					if (IDYES == AfxMessageBox("The configuration has been updated. Would you like to merge the new one with your data?", MB_ICONQUESTION | MB_YESNO))
+					{
+						// Load the config.
+						CString url;
+						url.LoadString(IDS_HELP_UPDATE);
+						url += "/";
+						url += info.Mid(n+1);
+						CString config;
+						if (ReadHttpFile(url, &config, NULL))
+						{
+							Element tree;
+							std::string errMsg;
+							if (!tree.LoadXMLBuffer((LPCSTR)config, config.GetLength(), errMsg))
+							{
+								CString msg("Failed to load '");
+								msg += url;
+								msg += "'.";
+								if (0 < errMsg.length())
+								{
+									msg += "\n\n";
+									msg += errMsg.c_str();
+								}
+								AfxMessageBox(msg, MB_ICONEXCLAMATION);
+							}
+							else if (tree.GetName() == "DefaultConfig")
+							{
+								config.Empty();
+								ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
+								tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
+								int nConfig = tree.FindElement(TREE_CONFIG);
+								if (0 <= nConfig)
+								{
+									ARBAgilityRecordBook book;
+									if (!book.GetConfig().Load(tree.GetElement(nConfig), version, errMsg))
+									{
+										if (0 < errMsg.length())
+											AfxMessageBox(errMsg.c_str(), MB_ICONWARNING);
+									}
+									else
+									{
+										pDoc->ImportConfiguration(book.GetConfig());
+										pDoc->SetModifiedFlag(TRUE);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			break;
+		}
 	}
+	if (bUpToDate)
+		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -256,11 +392,9 @@ void UpdateVersion(bool bVerbose)
 
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	//{{AFX_MSG_MAP(CAgilityBookApp)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_HELP_CONTENTS, OnHelpContents)
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
 	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
-	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 	// Standard file based document commands
@@ -444,7 +578,7 @@ BOOL CAgilityBookApp::InitInstance()
 			ARBDate today = ARBDate::Today();
 			date += 30;
 			if (date < today)
-				UpdateVersion(false);
+				UpdateVersion();
 		}
 	}
 	return TRUE;
@@ -475,12 +609,6 @@ void CAgilityBookApp::WinHelp(DWORD_PTR dwData, UINT nCmd)
 
 // CAgilityBookApp message handlers
 
-void CAgilityBookApp::OnAppAbout()
-{
-	CAboutDlg aboutDlg;
-	aboutDlg.DoModal();
-}
-
 void CAgilityBookApp::OnHelpContents()
 {
 	WinHelp(0, HH_DISPLAY_TOC);
@@ -494,11 +622,6 @@ void CAgilityBookApp::OnHelpIndex()
 void CAgilityBookApp::OnHelpSplash()
 {
 	CSplashWnd::ShowSplashScreen(AfxGetMainWnd(), false);
-}
-
-void CAgilityBookApp::OnHelpUpdate()
-{
-	UpdateVersion(true);
 }
 
 BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
