@@ -1,7 +1,8 @@
-1/27/2004: v1.0.2.8 <in development>
+1/29/2004: v1.0.2.8 <in development>
 - Bug fixes
   - Updated NADAC Configuration with Novice/Open/Elite Triple Superior
     (mapped old 'Triple Superior' to 'Novice Triple...')
+  - Updated ASCA Configuration with ATCHs.
   - Fixed a number of dialogs where data could be corrupted. (Note: In dialogs
     when using a DDX variable after the dialog returns, be careful about
     modifying it - CDialog::OnOK will force the UI data back into the variable)
