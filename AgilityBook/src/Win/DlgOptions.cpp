@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -145,7 +147,7 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
 		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 		// Update
-		m_pDoc->UpdateAllViews(NULL, UPDATE_OPTIONS);
+		m_pDoc->ResetVisibility();
 		EndDialog(IDOK);
 	}
 }

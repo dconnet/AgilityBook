@@ -35,6 +35,8 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -192,6 +194,64 @@ void CAgilityBookDoc::SortDates()
 	}
 }
 
+void CAgilityBookDoc::ResetVisibility()
+{
+	std::vector<CVenueFilter> venues;
+	CAgilityBookOptions::GetFilterVenue(venues);
+
+	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
+	{
+		ResetVisibility(venues, *iterDogs);
+	}
+
+// Currently, calendar entries are not filtered.
+	//for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
+	//{
+	//	ARBCalendar* pCal = *iterCal;
+	//}
+
+	UpdateAllViews(NULL, UPDATE_OPTIONS);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog)
+{
+	for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
+		ResetVisibility(venues, *iterTrial);
+
+	for (ARBDogTitleList::iterator iterTitle = pDog->GetTitles().begin(); iterTitle != pDog->GetTitles().end(); ++iterTitle)
+		ResetVisibility(venues, *iterTitle);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial)
+{
+	bool bVisTrial = CAgilityBookOptions::IsTrialVisible(venues, pTrial);
+	pTrial->SetFiltered(!bVisTrial);
+	if (bVisTrial)
+	{
+		int nVisible = 0;
+		for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
+		{
+			ResetVisibility(venues, pTrial, *iterRun);
+			if (!(*iterRun)->IsFiltered())
+				++nVisible;
+		}
+		if (0 == nVisible)
+			pTrial->SetFiltered(true);
+	}
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun)
+{
+	bool bVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
+	pRun->SetFiltered(!bVisRun);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle)
+{
+	bool bVisTitle = CAgilityBookOptions::IsTitleVisible(venues, pTitle);
+	pTitle->SetFiltered(!bVisTitle);
+}
+
 /**
  * Internal function to get the tree view.
  */
@@ -278,6 +338,8 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	}
 	SortDates();
+
+	ResetVisibility();
 
 	SetModifiedFlag(FALSE);     // start off with unmodified
 
@@ -554,11 +616,9 @@ void CAgilityBookDoc::OnAgilityNewDog()
 		{
 			CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 			pFrame->SetCurTab(0);
-			std::vector<CVenueFilter> venues;
-			CAgilityBookOptions::GetFilterVenue(venues);
 			SetModifiedFlag();
 			ARBDog* pNewDog = GetDogs().AddDog(dog);
-			pTree->InsertDog(venues, pNewDog, true);
+			pTree->InsertDog(pNewDog, true);
 		}
 	}
 	dog->Release();

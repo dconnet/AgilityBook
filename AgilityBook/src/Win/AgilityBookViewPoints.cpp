@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  * @li 2003-06-11 DRC Accumulate points based on level, not sublevel, name.
  */
 
@@ -223,7 +225,7 @@ int CAgilityBookViewPoints::DoEvents(
 						{
 							const ARBDogRun* pRun = (*iterRun);
 							if (date == pRun->GetDate()
-							&& CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+							&& !pRun->IsFiltered())
 								++nVisible;
 						}
 						if (2 == nVisible)
@@ -236,7 +238,7 @@ int CAgilityBookViewPoints::DoEvents(
 			++iterRun)
 			{
 				const ARBDogRun* pRun = (*iterRun);
-				if (CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+				if (!pRun->IsFiltered())
 				{
 					if (pRun->GetDivision() == inDiv->GetName()
 					&& (pRun->GetLevel() == inLevel->GetName() || inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
@@ -446,7 +448,7 @@ void CAgilityBookViewPoints::LoadData()
 			{
 				const ARBDogTitle* pTitle = (*iterTitle);
 				if (pTitle->GetVenue() == pVenue->GetName()
-				&& CAgilityBookOptions::IsTitleVisible(venues, pTitle))
+				&& !pTitle->IsFiltered())
 				{
 					if (!bHeaderInserted)
 					{
@@ -470,7 +472,7 @@ void CAgilityBookViewPoints::LoadData()
 			{
 				const ARBDogTrial* pTrial = (*iterTrial);
 				if (pTrial->HasVenue(pVenue->GetName())
-				&& CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+				&& !pTrial->IsFiltered())
 				{
 					trialsInVenue.push_back(pTrial);
 				}
@@ -523,14 +525,14 @@ void CAgilityBookViewPoints::LoadData()
 				++iterTrial)
 				{
 					const ARBDogTrial* pTrial = (*iterTrial);
-					if (CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+					if (!pTrial->IsFiltered())
 					{
 						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 						iterRun != pTrial->GetRuns().end();
 						++iterRun)
 						{
 							const ARBDogRun* pRun = (*iterRun);
-							if (CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+							if (!pRun->IsFiltered())
 							{
 								for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
 								iterOtherPts != pRun->GetOtherPoints().end();
