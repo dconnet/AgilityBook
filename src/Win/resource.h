@@ -46,11 +46,12 @@
 #define IDD_VIEW_OPTIONS_CALENDAR       171
 #define IDD_VIEW_OPTIONS_FILTER         172
 #define IDD_VIEW_OPTIONS_FONTS          173
-#define IDD_REORDER                     174
-#define IDD_CONFIG_UPDATE               175
-#define IDD_TITLE_POINTS                176
-#define IDD_MESSAGE                     177
-#define IDD_TRAINING                    178
+#define IDD_VIEW_OPTIONS_TRAINING       174
+#define IDD_REORDER                     175
+#define IDD_CONFIG_UPDATE               176
+#define IDD_TITLE_POINTS                177
+#define IDD_MESSAGE                     178
+#define IDD_TRAINING                    179
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -365,7 +366,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        179
+#define _APS_NEXT_RESOURCE_VALUE        180
 #define _APS_NEXT_COMMAND_VALUE         32807
 #define _APS_NEXT_CONTROL_VALUE         1151
 #define _APS_NEXT_SYMED_VALUE           101

@@ -115,7 +115,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
 	m_wndStatusBar.SetPaneText(index, "");
-	UpdateFiltered();
 
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
@@ -164,7 +163,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 }
 #endif //_DEBUG
 
-void CMainFrame::SetStatusText(const CString& msg)
+void CMainFrame::SetStatusText(const CString& msg, bool bFiltered)
 {
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
 	UINT nId, nStyle;
@@ -178,14 +177,11 @@ void CMainFrame::SetStatusText(const CString& msg)
 	m_wndStatusBar.SetPaneInfo(index, nId, nStyle, sz.cx);
 	// Note, a cmdui handler is required to get text to display.
 	m_wndStatusBar.SetPaneText(index, msg);
-}
 
-void CMainFrame::UpdateFiltered()
-{
 	CString filtered;
-	if (CAgilityBookOptions::IsFilterEnabled())
+	if (bFiltered)
 		filtered.LoadString(ID_INDICATOR_FILTERED);
-	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_FILTERED);
+	index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_FILTERED);
 	m_wndStatusBar.SetPaneText(index, filtered);
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright (c) 2002-2003 David Connet.
+ * Copyright (c) 2003 David Connet.
  * All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
@@ -30,48 +30,60 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptions class
+ * @brief interface of the CDlgOptionsTraining class
  * @author David Connet
  *
  * Revision History
  */
 
-#include "DlgOptionsCalendar.h"
-#include "DlgOptionsFilter.h"
-#include "DlgOptionsFonts.h"
-#include "DlgOptionsTraining.h"
+#include <set>
+#include <string>
+#include "ARBDate.h"
+#include "CheckTreeCtrl.h"
 class CAgilityBookDoc;
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
-
-class CDlgOptions : public CPropertySheet
+class CDlgOptionsTraining : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgOptions)
+	friend class CDlgOptions;
+	DECLARE_DYNAMIC(CDlgOptionsTraining)
 public:
-	CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgOptions();
+	CDlgOptionsTraining(CAgilityBookDoc* pDoc);
+	~CDlgOptionsTraining();
 
-// Attributes
-public:
+private:
+// Dialog Data
+	//{{AFX_DATA(CDlgOptionsTraining)
+	enum { IDD = IDD_VIEW_OPTIONS_TRAINING };
+	int		m_ViewNames;
+	CCheckTreeCtrl	m_ctrlNames;
+	int		m_ViewDates;
+	CButton	m_ctrlDateStartCheck;
+	BOOL	m_bDateStart;
+	CDateTimeCtrl	m_ctrlDateStart;
+	CTime	m_timeStart;
+	CButton	m_ctrlDateEndCheck;
+	BOOL	m_bDateEnd;
+	CDateTimeCtrl	m_ctrlDateEnd;
+	CTime	m_timeEnd;
+	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	CDlgOptionsCalendar m_pageCalendar;
-	CDlgOptionsFilter m_pageFilter;
-	CDlgOptionsFonts m_pageFonts;
-	CDlgOptionsTraining m_pageTraining;
+	std::set<std::string> m_filterNames;
 
-// Operations
-public:
+private:
+	void UpdateControls();
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptions)
+	//{{AFX_VIRTUAL(CDlgOptionsTraining)
 	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
+// Implementation
 protected:
-	//{{AFX_MSG(CDlgOptions)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgOptionsTraining)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnViewUpdate();
+	afx_msg void OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

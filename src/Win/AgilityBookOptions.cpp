@@ -189,7 +189,10 @@ bool CAgilityBookOptions::IsRunVisible(
 			{
 				if (pRun->GetDivision() == (*iter).division
 				&& pRun->GetLevel() == (*iter).level)
+				{
 					bVisible = true;
+					break;
+				}
 			}
 		}
 	}
@@ -200,6 +203,43 @@ bool CAgilityBookOptions::IsRunVisible(
 		if ((pRun->GetQ().Qualified() && bQualifying)
 		|| (!pRun->GetQ().Qualified() && !bQualifying))
 			bVisible = true;
+	}
+	return bVisible;
+}
+
+bool CAgilityBookOptions::IsTrainingLogVisible(
+	const std::set<std::string>& names,
+	const ARBTraining* pTraining)
+{
+	if (!CAgilityBookOptions::GetTrainingViewAllDates())
+	{
+		if (CAgilityBookOptions::GetTrainingStartFilterDateSet())
+		{
+			ARBDate date = CAgilityBookOptions::GetTrainingStartFilterDate();
+			if (pTraining->GetDate() < date)
+				return false;
+		}
+		if (CAgilityBookOptions::GetTrainingEndFilterDateSet())
+		{
+			ARBDate date = CAgilityBookOptions::GetTrainingEndFilterDate();
+			if (pTraining->GetDate() > date)
+				return false;
+		}
+	}
+	bool bVisible = true;
+	if (!CAgilityBookOptions::GetTrainingViewAllNames())
+	{
+		bVisible = false;
+		for (std::set<std::string>::const_iterator iter = names.begin();
+			iter != names.end();
+			++iter)
+		{
+			if (pTraining->GetName() == *iter)
+			{
+				bVisible = true;
+				break;
+			}
+		}
 	}
 	return bVisible;
 }
@@ -465,6 +505,106 @@ bool CAgilityBookOptions::GetViewQRuns()
 void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
 {
 	AfxGetApp()->WriteProfileInt("Common", "ViewQRuns", bViewQs ? 1 : 0);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Training Log options
+
+bool CAgilityBookOptions::GetTrainingViewAllDates()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "TrainingViewAllDates", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetTrainingViewAllDates(bool bViewAll)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TrainingViewAllDates", bViewAll ? 1 : 0);
+}
+
+ARBDate CAgilityBookOptions::GetTrainingStartFilterDate()
+{
+	ARBDate date(ARBDate::Today());
+	date.SetJulianDay(AfxGetApp()->GetProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay()));
+	return date;
+}
+
+void CAgilityBookOptions::SetTrainingStartFilterDate(const ARBDate& date)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay());
+}
+
+bool CAgilityBookOptions::GetTrainingStartFilterDateSet()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "TrainingStartFilter", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetTrainingStartFilterDateSet(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TrainingStartFilter", bSet ? 1 : 0);
+}
+
+ARBDate CAgilityBookOptions::GetTrainingEndFilterDate()
+{
+	ARBDate date(ARBDate::Today());
+	date.SetJulianDay(AfxGetApp()->GetProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay()));
+	return date;
+}
+
+void CAgilityBookOptions::SetTrainingEndFilterDate(const ARBDate& date)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay());
+}
+
+bool CAgilityBookOptions::GetTrainingEndFilterDateSet()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "TrainingEndFilter", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetTrainingEndFilterDateSet(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TrainingEndFilter", bSet ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetTrainingViewAllNames()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewAllNames", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetTrainingViewAllNames(bool bViewAll)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewAllNames", bViewAll ? 1 : 0);
+}
+
+void CAgilityBookOptions::GetTrainingFilterNames(std::set<std::string>& outNames)
+{
+	outNames.clear();
+	CString names;
+	names = AfxGetApp()->GetProfileString("Common", "FilterTrainingNames", "");
+	if (!names.IsEmpty())
+	{
+		int pos;
+		while (0 <= (pos = names.Find(':')))
+		{
+			outNames.insert((LPCSTR)names.Left(pos));
+			names = names.Mid(pos+1);
+		}
+		outNames.insert((LPCSTR)names);
+	}
+}
+
+void CAgilityBookOptions::SetTrainingFilterNames(const std::set<std::string>& inNames)
+{
+	CString names;
+	for (std::set<std::string>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	{
+		if (!names.IsEmpty())
+			names += ':';
+		names += (*iter).c_str();
+	}
+	AfxGetApp()->WriteProfileString("Common", "FilterTrainingNames", names);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -262,7 +262,7 @@ void CAgilityBookViewCalendarList::OnActivateView(BOOL bActivate, CView* pActiva
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookViewCalendarList::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -299,6 +299,11 @@ void CAgilityBookViewCalendarList::GetPrintLine(int nItem, CStringArray& line)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+bool CAgilityBookViewCalendarList::IsFiltered() const
+{
+	return false;
+}
 
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
 {
@@ -402,7 +407,7 @@ void CAgilityBookViewCalendarList::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
 	// Cleanup.
 	if (pCurData)

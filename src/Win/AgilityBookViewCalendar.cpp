@@ -146,6 +146,11 @@ bool CAgilityBookViewCalendar::SetCurrentDate(const ARBDate& date, bool bEnsureV
 	return bSet;
 }
 
+bool CAgilityBookViewCalendar::IsFiltered() const
+{
+	return false;
+}
+
 bool CAgilityBookViewCalendar::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_EVENTS, m_Calendar.size());
@@ -239,7 +244,7 @@ void CAgilityBookViewCalendar::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 	Invalidate();
 
 	m_bSuppressSelect = false;
@@ -287,7 +292,7 @@ void CAgilityBookViewCalendar::OnActivateView(BOOL bActivate, CView* pActivateVi
 	CScrollView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 	if (m_Current.IsValid())
 	{
 		CRect r = GetDateRect(m_Current, false);

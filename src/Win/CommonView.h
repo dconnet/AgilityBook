@@ -39,5 +39,12 @@
 class ICommonView
 {
 public:
+	/**
+	 * Used so the current view can report whether it is filtering or not.
+	 */
+	virtual bool IsFiltered() const = 0;
+	/**
+	 * Get a status message for the current view.
+	 */
 	virtual bool GetMessage(CString& msg) const = 0;
 };

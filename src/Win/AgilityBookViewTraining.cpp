@@ -212,12 +212,12 @@ void CAgilityBookViewTraining::OnActivateView(BOOL bActivate, CView* pActivateVi
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookViewTraining::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
-	if (0 == lHint || (UPDATE_TRAINING_VIEW & lHint))
+	if (0 == lHint || ((UPDATE_TRAINING_VIEW | UPDATE_OPTIONS) & lHint))
 		LoadData();
 }
 
@@ -265,6 +265,15 @@ void CAgilityBookViewTraining::SetCurrentDate(const ARBDate& inDate)
 	SetSelection(index, true);
 }
 
+bool CAgilityBookViewTraining::IsFiltered() const
+{
+	if (CAgilityBookOptions::GetTrainingViewAllDates()
+	&& CAgilityBookOptions::GetTrainingViewAllNames())
+		return false;
+	else
+		return true;
+}
+
 bool CAgilityBookViewTraining::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_TRAINING, GetListCtrl().GetItemCount());
@@ -299,6 +308,8 @@ void CAgilityBookViewTraining::LoadData()
 	++iter)
 	{
 		ARBTraining* pTraining = (*iter);
+		if (pTraining->IsFiltered())
+			continue;
 		CAgilityBookViewTrainingData* pData = new CAgilityBookViewTrainingData(this, pTraining);
 		LV_ITEM item;
 		item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
@@ -331,7 +342,7 @@ void CAgilityBookViewTraining::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
 	// Cleanup.
 	if (pCurData)

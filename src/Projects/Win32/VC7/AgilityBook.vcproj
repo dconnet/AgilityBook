@@ -238,6 +238,9 @@
 				RelativePath="..\..\..\Win\DlgOptionsFonts.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgOptionsTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.cpp">
 			</File>
 			<File
@@ -356,6 +359,9 @@
 				RelativePath="..\..\..\Win\ColumnOrder.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\CommonView.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgCalendar.h">
 			</File>
 			<File
@@ -411,6 +417,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOptionsFonts.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgOptionsTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.h">

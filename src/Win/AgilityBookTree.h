@@ -73,6 +73,7 @@ public:
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
+	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
 
 // Overrides
