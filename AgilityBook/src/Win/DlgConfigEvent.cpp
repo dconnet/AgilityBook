@@ -447,6 +447,10 @@ void CDlgConfigEvent::FillRequiredPoints()
 
 void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 {
+	ARBConfigTitlePoints* pOldTitle = NULL;
+	int idxTitle = m_ctrlTitleList.GetCurSel();
+	if (LB_ERR != idxTitle)
+		pOldTitle = reinterpret_cast<ARBConfigTitlePoints*>(m_ctrlTitleList.GetItemDataPtr(idxTitle));
 	m_ctrlTitleList.ResetContent();
 	for (ARBConfigTitlePointsList::const_iterator iter = pScoring->GetTitlePoints().begin();
 		iter != pScoring->GetTitlePoints().end();
@@ -455,7 +459,11 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 		ARBConfigTitlePoints* pTitle = (*iter);
 		int idx = m_ctrlTitleList.AddString(pTitle->GetGenericName().c_str());
 		if (LB_ERR != idx)
+		{
 			m_ctrlTitleList.SetItemDataPtr(idx, pTitle);
+			if (pOldTitle == pTitle)
+				m_ctrlTitleList.SetCurSel(idx);
+		}
 	}
 	m_ctrlTitleEdit.EnableWindow(FALSE);
 	m_ctrlTitleDelete.EnableWindow(FALSE);
