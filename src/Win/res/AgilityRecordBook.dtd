@@ -11,7 +11,7 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-01-21 DRC File version 10.1.
+2005-02-07 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
                Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.

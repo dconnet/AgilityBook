@@ -1,4 +1,4 @@
-1/25/2005: v1.5.0.10 <in development>
+2/7/2005: v1.5.0.10
 - Bumped file version to 10.1, Configuration v7:
   - Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
@@ -7,7 +7,7 @@
   - Added 'SubName' to 'Event','Run','ExistingPoints'.
   - Added 'Multiple' to 'Titles', 'instance' to 'Title'.
   - Added CKC and TDAA.
-  - Updated AAC.
+  - Updated AAC (partially).
   - Changed NADAC Gamblers to use the new SubNames feature. The individual
     Gamblers events for Contacts/etc have been removed.
 - New features / Enhancements:
