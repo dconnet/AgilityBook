@@ -46,6 +46,12 @@ class ARBConfigSubLevel;
 class ARBConfigTitle;
 class ARBConfigVenue;
 class CDlgConfigureData;
+class CDlgConfigureDataDivision;
+class CDlgConfigureDataEvent;
+class CDlgConfigureDataLevel;
+class CDlgConfigureDataScoring;
+class CDlgConfigureDataSubLevel;
+class CDlgConfigureDataTitle;
 class CDlgFixup;
 
 class CDlgConfigVenue : public CDialog
@@ -87,7 +93,6 @@ protected:
 
 private:
 	void SetAction(eAction inAction);
-	CDlgConfigureData* GetActionData(CWnd*& pWnd);
 	void UpdateButtons();
 	void LoadDivisionData();
 	void LoadLevelData();
@@ -98,6 +103,12 @@ private:
 	HTREEITEM FindCurrentSubLevel(const ARBConfigSubLevel* pSubLevel, bool bSet);
 	int FindCurrentTitle(const ARBConfigTitle* pTitle, bool bSet);
 	HTREEITEM FindCurrentEvent(const ARBConfigEvent* pEvent, bool bSet);
+	CDlgConfigureDataDivision* GetCurrentDivisionData();
+	CDlgConfigureDataLevel* GetCurrentLevelData();
+	CDlgConfigureDataSubLevel* GetCurrentSubLevelData();
+	CDlgConfigureDataTitle* GetCurrentTitleData();
+	CDlgConfigureDataEvent* GetCurrentEventData();
+	CDlgConfigureDataScoring* GetCurrentScoringData();
 
 protected:
 	//{{AFX_MSG(CDlgConfigVenue)
