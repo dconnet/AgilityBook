@@ -52,6 +52,7 @@ private:
 	enum { IDD = IDD_TITLE_POINTS };
 	short	m_Points;
 	short	m_Faults;
+	BOOL	m_LifeTime;
 	//}}AFX_DATA
 	ARBConfigTitlePointsList& m_TitlePoints;
 	ARBConfigTitlePoints* m_pTitle;

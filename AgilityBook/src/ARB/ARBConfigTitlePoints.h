@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-07-12 DRC Added as part of file version 5.
@@ -52,7 +53,7 @@ class ARBConfigTitlePoints : public ARBBase
 {
 public:
 	ARBConfigTitlePoints();
-	ARBConfigTitlePoints(short inPoints, short inFaults);
+	ARBConfigTitlePoints(short inPoints, short inFaults, bool bLifeTime);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
 	bool operator==(ARBConfigTitlePoints const& rhs) const;
@@ -102,11 +103,14 @@ public:
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigTitlePointsList::sort.
 	 */
 	void SetFaults(short inFaults);
+	bool IsLifeTimePoints() const;
+	void SetLifeTimePoints(bool inLife);
 
 private:
 	~ARBConfigTitlePoints();
 	short m_Points;
 	short m_Faults;
+	bool m_bLifeTime;
 };
 
 inline short ARBConfigTitlePoints::GetPoints() const
@@ -127,6 +131,16 @@ inline short ARBConfigTitlePoints::GetFaults() const
 inline void ARBConfigTitlePoints::SetFaults(short inFaults)
 {
 	m_Faults = inFaults;
+}
+
+inline bool ARBConfigTitlePoints::IsLifeTimePoints() const
+{
+	return m_bLifeTime;
+}
+
+inline void ARBConfigTitlePoints::SetLifeTimePoints(bool inLife)
+{
+	m_bLifeTime = inLife;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -164,7 +178,7 @@ public:
 	 * @return Pointer to new object, NULL if it already exists.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigTitlePoints* AddTitlePoints(short inPoints, short inFaults);
+	ARBConfigTitlePoints* AddTitlePoints(short inPoints, short inFaults, bool bLifeTime);
 
 	/**
 	 * Delete an object.

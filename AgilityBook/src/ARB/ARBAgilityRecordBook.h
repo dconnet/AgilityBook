@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2004-03-30 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
  *                    Added Link to runs.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
@@ -149,6 +150,7 @@
 #define ATTRIB_SCORING_MACHPTS				"machPts"
 #define ATTRIB_TITLE_POINTS_POINTS			"Points"
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
+#define ATTRIB_TITLE_POINTS_LIFETIME		"LifeTime"
 #define ATTRIB_JUDGEINFO_NAME				"Name"
 #define ATTRIB_DOG_CALLNAME					"CallName"
 #define ATTRIB_DOG_DOB						"DOB"

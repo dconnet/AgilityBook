@@ -1,4 +1,21 @@
-Last Updated: 3/31/04
+Last Updated: 4/1/04
+
+- Development issue:
+  There is a problem somewhere in the Configuration dialogs. When running under
+  the debugger (in either release or debug), the following messages will be
+  seen (the heap block number and exception address will vary):
+    HEAP[AgilityBook.exe]: HEAP: Free Heap block 170830 modified at 170acc after it was freed
+    Unhandled exception at 0x77f75a58 in AgilityBook.exe: User breakpoint.
+  If looks like MFC is accessing a window that no longer exists. When I comment
+  out certain sections of code, it goes away - actually, I think it just moves.
+  I have ABSOLUTELY no clue what the hell is going on. If it continues, I may
+  just scrap the whole configuration dialog setup I've got and try something
+  totally different. I tried to use SmartHeap - to no avail. This is seen in
+  both VC6 and VC7. I've commented out all of my 'delete's, but it still
+  happens (therefore, it can't be my stuff!). Tracing into the MFC internals,
+  it occurs when DestroyWindow is called on CDlgConfigVenue. One time, I
+  actually got the program totally stuck when trying to release critical
+  sections. And I don't use critical sections!
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,
