@@ -106,8 +106,11 @@ bool ARBInfo::Load(
 
 bool ARBInfo::Save(CElement& ioTree) const
 {
-	CElement& info = ioTree.AddElement(TREE_INFO);
-	if (!m_JudgeInfo.Save(info))
-		return false;
+	if (0 < m_JudgeInfo.size())
+	{
+		CElement& info = ioTree.AddElement(TREE_INFO);
+		if (!m_JudgeInfo.Save(info))
+			return false;
+	}
 	return true;
 }

@@ -36,6 +36,8 @@
  * @li 2003-12-07 DRC Created
  */
 
+#include <set>
+#include <string>
 #include "ARBInfoJudge.h"
 class CAgilityBookDoc;
 
@@ -49,10 +51,12 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgInfoJudge)
 	enum { IDD = IDD_JUDGE_INFO };
+	CButton	m_ctrlDelete;
 	CComboBox	m_ctrlJudge;
 	CEdit		m_ctrlComment;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
+	std::set<std::string> m_NamesInUse;
 	ARBInfoJudgeList m_Info;
 
 // Overrides
@@ -65,7 +69,8 @@ private:
 protected:
 	//{{AFX_MSG(CDlgInfoJudge)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnAdd();
+	afx_msg void OnNew();
+	afx_msg void OnDelete();
 	afx_msg void OnSelchangeJudge();
 	afx_msg void OnKillfocusComments();
 	virtual void OnOK();

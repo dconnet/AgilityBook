@@ -55,6 +55,7 @@ CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, CWnd* pParent /*=NULL*/)
 	, m_pDoc(pDoc)
 	, m_Info(pDoc->GetInfo().GetJudgeInfo())
 {
+	m_pDoc->GetAllJudges(m_NamesInUse, false);
 	//{{AFX_DATA_INIT(CDlgInfoJudge)
 	//}}AFX_DATA_INIT
 }
@@ -63,6 +64,7 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgInfoJudge)
+	DDX_Control(pDX, IDC_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_JUDGE, m_ctrlJudge);
 	DDX_Control(pDX, IDC_COMMENTS, m_ctrlComment);
 	//}}AFX_DATA_MAP
@@ -70,7 +72,8 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDialog)
 	//{{AFX_MSG_MAP(CDlgInfoJudge)
-	ON_BN_CLICKED(IDC_ADD, OnAdd)
+	ON_BN_CLICKED(IDC_NEW, OnNew)
+	ON_BN_CLICKED(IDC_DELETE, OnDelete)
 	ON_CBN_SELCHANGE(IDC_JUDGE, OnSelchangeJudge)
 	ON_EN_KILLFOCUS(IDC_COMMENTS, OnKillfocusComments)
 	//}}AFX_MSG_MAP
@@ -101,7 +104,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgInfoJudge::OnAdd()
+void CDlgInfoJudge::OnNew()
 {
 	CDlgName dlg("", "", this);
 	if (IDOK == dlg.DoModal())
@@ -122,8 +125,33 @@ void CDlgInfoJudge::OnAdd()
 	}
 }
 
+void CDlgInfoJudge::OnDelete()
+{
+	int index = m_ctrlJudge.GetCurSel();
+	if (CB_ERR != index)
+	{
+		CString name;
+		m_ctrlJudge.GetLBText(index, name);
+		if (m_NamesInUse.end() == m_NamesInUse.find((LPCTSTR)name))
+		{
+			m_ctrlJudge.DeleteString(index);
+			ARBInfoJudge* judge = m_Info.FindJudge((LPCTSTR)name);
+			if (judge)
+				m_Info.DeleteJudge(judge);
+			if (index == m_ctrlJudge.GetCount())
+				--index;
+			if (0 <= index)
+				m_ctrlJudge.SetCurSel(index);
+			OnSelchangeJudge();
+		}
+		else
+			MessageBeep(0);
+	}
+}
+
 void CDlgInfoJudge::OnSelchangeJudge()
 {
+	BOOL bEnable = FALSE;
 	CString data;
 	int index = m_ctrlJudge.GetCurSel();
 	if (CB_ERR != index)
@@ -133,9 +161,12 @@ void CDlgInfoJudge::OnSelchangeJudge()
 		ARBInfoJudge* judge = m_Info.FindJudge((LPCTSTR)name);
 		if (judge)
 			data = judge->GetComment().c_str();
+		if (m_NamesInUse.end() == m_NamesInUse.find((LPCTSTR)name))
+			bEnable = TRUE;
 	}
 	data.Replace("\n", "\r\n");
 	m_ctrlComment.SetWindowText(data);
+	m_ctrlDelete.EnableWindow(bEnable);
 }
 
 void CDlgInfoJudge::OnKillfocusComments()
@@ -162,9 +193,7 @@ void CDlgInfoJudge::OnOK()
 {
 	// Not bothering to call UpdateData because we aren't exchanging any
 	// data. We're using the controls directly.
-	std::set<std::string> namesInUse;
-	m_pDoc->GetAllJudges(namesInUse, false);
-	m_Info.CondenseContent(namesInUse);
+	m_Info.CondenseContent(m_NamesInUse);
 	if (m_pDoc->GetInfo().GetJudgeInfo() != m_Info)
 	{
 		m_pDoc->GetInfo().GetJudgeInfo() = m_Info;
