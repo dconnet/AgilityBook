@@ -1,4 +1,4 @@
-12/3/2004: v1.4.1.10 <in development>
+12/7/2004: v1.4.1.10 <in development>
 - Bumped file version to 10.1:
   - Added 'underTF'/'overTF' to 'Scoring'.
   - Added 'ClubInfo'/'LocationInfo' to 'Info'.
@@ -7,6 +7,7 @@
     This allows USDAA Time Gamble to compute correctly.
   - Added the ability to make notes about clubs/locations similar to
     how judges notes are made.
+  - Flipped the order of 2 fields on the Run dialog.
 - Bug fixes
   - Compute the score (in the run dialog) for NA runs that do not have
     titling points.
