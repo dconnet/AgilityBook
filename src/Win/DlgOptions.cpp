@@ -128,6 +128,7 @@ void CDlgOptions::OnOK()
 {
 	if (GetActivePage()->UpdateData(TRUE))
 	{
+		CWaitCursor wait;
 		bool bOldNewest = CAgilityBookOptions::GetNewestDatesFirst();
 		// Calendar
 		CAgilityBookOptions::SetFirstDayOfWeek((ARBDate::DayOfWeek)m_pageCalendar.m_DayOfWeek);
