@@ -7,8 +7,11 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-01-21 DRC Development: File version 8.2
+2004-01-21 DRC File version 8.2
+               Added "LongName" to "Titles"
+               Added "Action" to "Configuration"
 2003-12-28 DRC File version 8.1
+               Added "ValidFrom","ValidTo" to "Scoring"
 2003-12-13 DRC File version 8.0
 2003-10-15 DRC File version 7
 2003-09-21 DRC File version 6
