@@ -116,7 +116,7 @@ BOOL CAgilityBookViewCalendar::PreCreateWindow(CREATESTRUCT& cs)
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CAgilityBookViewCalendar::SetCurrentDate(const ARBDate& date, bool bEnsureVisible)
+bool CAgilityBookViewCalendar::SetCurrentDate(ARBDate const& date, bool bEnsureVisible)
 {
 	bool bSet = false;
 	if (date != m_Current && date >= m_First && date <= m_Last)
@@ -165,7 +165,7 @@ bool CAgilityBookViewCalendar::GetMessage(CString& msg) const
 	return true;
 }
 
-size_t CAgilityBookViewCalendar::GetEntriesOn(const ARBDate& date, std::vector<ARBCalendar*>& entries, bool bGetAll) const
+size_t CAgilityBookViewCalendar::GetEntriesOn(ARBDate const& date, std::vector<ARBCalendar*>& entries, bool bGetAll) const
 {
 	entries.clear();
 	for (vector<ARBCalendar*>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
@@ -202,7 +202,7 @@ void CAgilityBookViewCalendar::LoadData()
 	bool bHide = CAgilityBookOptions::HideOverlappingCalendarEntries();
 
 	// Add items.
-	vector<const ARBCalendar*> entered;
+	vector<ARBCalendar const*> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
@@ -218,11 +218,11 @@ void CAgilityBookViewCalendar::LoadData()
 		}
 		if (!bSuppress && bHide)
 		{
-			for (vector<const ARBCalendar*>::const_iterator iterE = entered.begin();
+			for (vector<ARBCalendar const*>::const_iterator iterE = entered.begin();
 			!bSuppress && iterE != entered.end();
 			++iterE)
 			{
-				const ARBCalendar* pEntered = (*iterE);
+				ARBCalendar const* pEntered = (*iterE);
 				if (pCal != pEntered
 				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{
@@ -261,7 +261,7 @@ void CAgilityBookViewCalendar::LoadData()
 /**
  * Returns the working rect for a date. Borders are handled entirely separately.
  */
-CRect CAgilityBookViewCalendar::GetDateRect(const ARBDate& date, bool bLogical) const
+CRect CAgilityBookViewCalendar::GetDateRect(ARBDate const& date, bool bLogical) const
 {
 	CRect r(0, 0, m_szEntry.cx, -m_szEntry.cy);
 	int nWeek = (date - m_First) / 7;
@@ -398,7 +398,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		vector<ARBCalendar*>::const_iterator iter;
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
-			const ARBCalendar* pCal = (*iter);
+			ARBCalendar const* pCal = (*iter);
 			for (ARBDate date = pCal->GetStartDate(); date <= pCal->GetEndDate(); ++date)
 			{
 				dates.insert(date);
@@ -418,12 +418,12 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				CString str;
 				for (iter = entries.begin(); iter != entries.end(); ++iter)
 				{
-					const ARBCalendar* pCal = (*iter);
+					ARBCalendar const* pCal = (*iter);
 					if (!str.IsEmpty())
 						str += "\r\n";
 					// @todo: Make data in calendar entries user selectable
-					const string& venue = pCal->GetVenue();
-					const string& loc = pCal->GetLocation();
+					string const& venue = pCal->GetVenue();
+					string const& loc = pCal->GetLocation();
 					if (ARBCalendar::eEntered == pCal->GetEntered())
 						str += "*";
 					else if (ARBCalendar::ePlanning == pCal->GetEntered())
@@ -731,7 +731,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 	{
 		EmptyClipboard();
 
-		static const UINT scColumns[] =
+		static UINT const scColumns[] =
 		{
 			IDS_COL_START_DATE,
 			IDS_COL_END_DATE,
@@ -742,7 +742,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			IDS_COL_CLOSES,
 			IDS_COL_NOTES,
 		};
-		static const int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
+		static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
 #define COL_START_DATE	0
 #define COL_END_DATE	1
 #define COL_VENUE		2

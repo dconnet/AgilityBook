@@ -48,18 +48,18 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	UINT idDesc;
 	ARBConfigOtherPoints::eOtherPointsTally tally;
-} sc_Tally[] =
+} const sc_Tally[] =
 {
 	{IDS_OTHERPTS_ALL, ARBConfigOtherPoints::eTallyAll},
 	{IDS_OTHERPTS_EVENT, ARBConfigOtherPoints::eTallyAllByEvent},
 	{IDS_OTHERPTS_LEVEL, ARBConfigOtherPoints::eTallyLevel},
 	{IDS_OTHERPTS_EVENT_LEVEL, ARBConfigOtherPoints::eTallyLevelByEvent}
 };
-static const int sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
+static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigOtherPoints dialog

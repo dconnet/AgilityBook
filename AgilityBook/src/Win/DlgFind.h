@@ -47,8 +47,8 @@ public:
 	{
 	}
 
-	virtual const CString& Text() const		{return m_strSearch;}
-	virtual void Text(const CString& text)	{m_strSearch = text;}
+	virtual CString const& Text() const		{return m_strSearch;}
+	virtual void Text(CString const& text)	{m_strSearch = text;}
 	virtual bool MatchCase() const			{return m_bMatchCase;}
 	virtual void MatchCase(bool bCase)		{m_bMatchCase = bCase;}
 	virtual bool SearchAll() const			{return m_bSearchAll;}

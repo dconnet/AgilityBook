@@ -294,7 +294,7 @@ void CAgilityBookViewTraining::GetPrintLine(int nItem, CStringArray& line)
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CAgilityBookViewTraining::SetCurrentDate(const ARBDate& inDate)
+void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 {
 	int index = -1;
 	for (int i = 0; i < GetListCtrl().GetItemCount(); ++i)

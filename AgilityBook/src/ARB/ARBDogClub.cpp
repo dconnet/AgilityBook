@@ -57,7 +57,7 @@ ARBDogClub::ARBDogClub()
 {
 }
 
-ARBDogClub::ARBDogClub(const ARBDogClub& rhs)
+ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Venue(rhs.m_Venue)
 {
@@ -67,7 +67,7 @@ ARBDogClub::~ARBDogClub()
 {
 }
 
-ARBDogClub& ARBDogClub::operator=(const ARBDogClub& rhs)
+ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -77,13 +77,13 @@ ARBDogClub& ARBDogClub::operator=(const ARBDogClub& rhs)
 	return *this;
 }
 
-bool ARBDogClub::operator==(const ARBDogClub& rhs) const
+bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
 }
 
-bool ARBDogClub::operator!=(const ARBDogClub& rhs) const
+bool ARBDogClub::operator!=(ARBDogClub const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -108,9 +108,9 @@ size_t ARBDogClub::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBDogClub::Load(
-	const ARBConfig& inConfig,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfig const& inConfig,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (inVersion == ARBVersion(1,0))
@@ -153,7 +153,7 @@ bool ARBDogClub::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-const ARBDogClub* ARBDogClubList::GetPrimaryClub() const
+ARBDogClub const* ARBDogClubList::GetPrimaryClub() const
 {
 	if (0 < size())
 	{
@@ -164,15 +164,15 @@ const ARBDogClub* ARBDogClubList::GetPrimaryClub() const
 		return NULL;
 }
 
-const ARBConfigScoring* ARBDogClubList::FindEvent(
-	const ARBConfig* inConfig,
-	const std::string& inEvent,
-	const std::string& inDivision,
-	const std::string& inLevel,
-	const ARBDate& inDate,
+ARBConfigScoring const* ARBDogClubList::FindEvent(
+	ARBConfig const* inConfig,
+	std::string const& inEvent,
+	std::string const& inDivision,
+	std::string const& inLevel,
+	ARBDate const& inDate,
 	std::string& ioErrMsg) const
 {
-	const ARBConfigScoring* pEvent = NULL;
+	ARBConfigScoring const* pEvent = NULL;
 	for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
 	{
 		pEvent = inConfig->GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate);
@@ -199,7 +199,7 @@ const ARBConfigScoring* ARBDogClubList::FindEvent(
 	return pEvent;
 }
 
-const ARBDogClub* ARBDogClubList::FindVenue(const std::string& inVenue) const
+ARBDogClub const* ARBDogClubList::FindVenue(std::string const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -209,7 +209,7 @@ const ARBDogClub* ARBDogClubList::FindVenue(const std::string& inVenue) const
 	return NULL;
 }
 
-ARBDogClub* ARBDogClubList::AddClub(const std::string& inName, const std::string& inVenue)
+ARBDogClub* ARBDogClubList::AddClub(std::string const& inName, std::string const& inVenue)
 {
 	ARBDogClub* pClub = new ARBDogClub();
 	pClub->SetName(inName);
@@ -218,7 +218,7 @@ ARBDogClub* ARBDogClubList::AddClub(const std::string& inName, const std::string
 	return pClub;
 }
 
-bool ARBDogClubList::DeleteClub(const std::string& inName, const std::string& inVenue)
+bool ARBDogClubList::DeleteClub(std::string const& inName, std::string const& inVenue)
 {
 	std::string name(inName);
 	std::string venue(inVenue);

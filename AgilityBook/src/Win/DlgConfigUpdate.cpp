@@ -97,7 +97,7 @@ void CDlgConfigUpdate::EnableControls()
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CDlgConfigUpdate::LoadConfig(const char* pFile)
+bool CDlgConfigUpdate::LoadConfig(char const* pFile)
 {
 	CWaitCursor wait;
 	if (!pFile)
@@ -174,7 +174,7 @@ void CDlgConfigUpdate::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
-	const char* pFile = NULL;
+	char const* pFile = NULL;
 	// We need a char*, even in UNICODE.
 #if _MSC_VER < 1300
 	// But since I'm not compiling in unicode...
@@ -183,7 +183,7 @@ void CDlgConfigUpdate::OnOK()
 	CStringA source(m_FileName);
 #endif
 	if (1 == m_Update)
-		pFile = (const char*)source;
+		pFile = (char const*)source;
 	if (!LoadConfig(pFile))
 		return;
 	CDialog::OnOK();

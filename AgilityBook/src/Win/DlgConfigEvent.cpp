@@ -536,7 +536,7 @@ BOOL CDlgConfigEvent::OnInitDialog()
 
 	// If any additional types are added in ARBConfigScoring,
 	// they'll have to be manually added here...
-	static const ARBConfigScoring::ScoringStyle Styles[] =
+	static ARBConfigScoring::ScoringStyle const Styles[] =
 	{
 		ARBConfigScoring::eFaultsThenTime,
 		ARBConfigScoring::eFaults100ThenTime,
@@ -545,7 +545,7 @@ BOOL CDlgConfigEvent::OnInitDialog()
 		ARBConfigScoring::eScoreThenTime,
 		ARBConfigScoring::eTimePlusFaults
 	};
-	static const int nStyles = sizeof(Styles) / sizeof(Styles[0]);
+	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (int index = 0; index < nStyles; ++index)
 	{
 		std::string str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
@@ -818,7 +818,7 @@ void CDlgConfigEvent::OnOK()
 	for (index = 0; index < m_ctrlMethods.GetCount(); ++index)
 	{
 		CString str;
-		const ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(index));
+		ARBConfigScoring const* pScoring = reinterpret_cast<const ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(index));
 		ARBDate validFrom = pScoring->GetValidFrom();
 		ARBDate validTo = pScoring->GetValidTo();
 		if (validFrom.IsValid() && validTo.IsValid()
@@ -861,10 +861,10 @@ void CDlgConfigEvent::OnOK()
 			while (!bOverlap && 1 < items.size())
 			{
 				iter = items.begin();
-				const ARBConfigScoring* pScoring = *iter;
+				ARBConfigScoring const* pScoring = *iter;
 				for (++iter; !bOverlap && iter != items.end(); ++iter)
 				{
-					const ARBConfigScoring* pScoring2 = *iter;
+					ARBConfigScoring const* pScoring2 = *iter;
 					if ((!pScoring->GetValidFrom().IsValid()
 					&& !pScoring2->GetValidFrom().IsValid())
 					|| (!pScoring->GetValidTo().IsValid()

@@ -89,7 +89,7 @@ END_MESSAGE_MAP()
 BOOL CDlgSelectDog::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
-	const ARBDogList& dogs = m_pDoc->GetDogs();
+	ARBDogList const& dogs = m_pDoc->GetDogs();
 	for (ARBDogList::const_iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 	{
 		ARBDog* pDog = *iter;

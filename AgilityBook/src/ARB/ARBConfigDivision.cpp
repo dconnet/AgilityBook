@@ -60,7 +60,7 @@ ARBConfigDivision::ARBConfigDivision()
 {
 }
 
-ARBConfigDivision::ARBConfigDivision(const ARBConfigDivision& rhs)
+ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Levels(rhs.m_Levels)
 	, m_Titles(rhs.m_Titles)
@@ -71,7 +71,7 @@ ARBConfigDivision::~ARBConfigDivision()
 {
 }
 
-ARBConfigDivision& ARBConfigDivision::operator=(const ARBConfigDivision& rhs)
+ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -82,14 +82,14 @@ ARBConfigDivision& ARBConfigDivision::operator=(const ARBConfigDivision& rhs)
 	return *this;
 }
 
-bool ARBConfigDivision::operator==(const ARBConfigDivision& rhs) const
+bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Levels == rhs.m_Levels
 		&& m_Titles == rhs.m_Titles;
 }
 
-bool ARBConfigDivision::operator!=(const ARBConfigDivision& rhs) const
+bool ARBConfigDivision::operator!=(ARBConfigDivision const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -108,8 +108,8 @@ size_t ARBConfigDivision::GetSearchStrings(std::set<std::string>& ioStrings) con
 }
 
 bool ARBConfigDivision::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
@@ -120,7 +120,7 @@ bool ARBConfigDivision::Load(
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const Element& element = inTree.GetElement(i);
+		Element const& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_LEVEL)
 		{
 			// Ignore any errors...
@@ -146,7 +146,7 @@ bool ARBConfigDivision::Save(Element& ioTree) const
 	return true;
 }
 
-bool ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew, std::string& ioInfo)
+bool ARBConfigDivision::Update(int indent, ARBConfigDivision const* inDivNew, std::string& ioInfo)
 {
 	std::string info;
 
@@ -246,8 +246,8 @@ bool ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew, st
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigDivisionList::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	ARBConfigDivision* thing = new ARBConfigDivision();
@@ -260,7 +260,7 @@ bool ARBConfigDivisionList::Load(
 	return true;
 }
 
-bool ARBConfigDivisionList::VerifyLevel(const std::string& inDiv, const std::string& inLevel) const
+bool ARBConfigDivisionList::VerifyLevel(std::string const& inDiv, std::string const& inLevel) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	bool bWildCard = (inDiv == WILDCARD_DIVISION);
@@ -277,7 +277,7 @@ bool ARBConfigDivisionList::VerifyLevel(const std::string& inDiv, const std::str
 	return false;
 }
 
-const ARBConfigDivision* ARBConfigDivisionList::FindDivision(const std::string& inDiv) const
+ARBConfigDivision const* ARBConfigDivisionList::FindDivision(std::string const& inDiv) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -287,7 +287,7 @@ const ARBConfigDivision* ARBConfigDivisionList::FindDivision(const std::string& 
 	return NULL;
 }
 
-ARBConfigDivision* ARBConfigDivisionList::FindDivision(const std::string& inDiv)
+ARBConfigDivision* ARBConfigDivisionList::FindDivision(std::string const& inDiv)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -297,7 +297,7 @@ ARBConfigDivision* ARBConfigDivisionList::FindDivision(const std::string& inDiv)
 	return NULL;
 }
 
-ARBConfigDivision* ARBConfigDivisionList::AddDivision(const std::string& inDiv)
+ARBConfigDivision* ARBConfigDivisionList::AddDivision(std::string const& inDiv)
 {
 	if (0 == inDiv.length())
 		return NULL;
@@ -320,7 +320,7 @@ ARBConfigDivision* ARBConfigDivisionList::AddDivision(ARBConfigDivision* inDiv)
 	return inDiv;
 }
 
-int ARBConfigDivisionList::DeleteDivision(const std::string& inDiv, ARBConfigEventList& ioEvents)
+int ARBConfigDivisionList::DeleteDivision(std::string const& inDiv, ARBConfigEventList& ioEvents)
 {
 	std::string div(inDiv);
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -335,29 +335,29 @@ int ARBConfigDivisionList::DeleteDivision(const std::string& inDiv, ARBConfigEve
 	return 0;
 }
 
-const ARBConfigTitle* ARBConfigDivisionList::FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst) const
+ARBConfigTitle const* ARBConfigDivisionList::FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		const ARBConfigTitle* pTitle = (*iter)->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst);
+		ARBConfigTitle const* pTitle = (*iter)->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst);
 		if (pTitle)
 			return pTitle;
 	}
 	return NULL;
 }
 
-const ARBConfigTitle* ARBConfigDivisionList::FindTitle(const std::string& inTitle) const
+ARBConfigTitle const* ARBConfigDivisionList::FindTitle(std::string const& inTitle) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		const ARBConfigTitle* pTitle = (*iter)->GetTitles().FindTitle(inTitle);
+		ARBConfigTitle const* pTitle = (*iter)->GetTitles().FindTitle(inTitle);
 		if (pTitle)
 			return pTitle;
 	}
 	return NULL;
 }
 
-ARBConfigTitle* ARBConfigDivisionList::FindTitle(const std::string& inTitle)
+ARBConfigTitle* ARBConfigDivisionList::FindTitle(std::string const& inTitle)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -368,13 +368,13 @@ ARBConfigTitle* ARBConfigDivisionList::FindTitle(const std::string& inTitle)
 	return NULL;
 }
 
-bool ARBConfigDivisionList::DeleteTitle(const std::string& inTitle)
+bool ARBConfigDivisionList::DeleteTitle(std::string const& inTitle)
 {
 	bool bDeleted = false;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		ARBConfigDivision* div = *iter;
-		const ARBConfigTitle* pTitle = div->GetTitles().FindTitle(inTitle);
+		ARBConfigTitle const* pTitle = div->GetTitles().FindTitle(inTitle);
 		if (pTitle)
 		{
 			bDeleted = div->GetTitles().DeleteTitle(inTitle);

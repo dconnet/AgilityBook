@@ -56,7 +56,7 @@ ARBInfoJudge::ARBInfoJudge()
 {
 }
 
-ARBInfoJudge::ARBInfoJudge(const ARBInfoJudge& rhs)
+ARBInfoJudge::ARBInfoJudge(ARBInfoJudge const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Comment(rhs.m_Comment)
 {
@@ -66,7 +66,7 @@ ARBInfoJudge::~ARBInfoJudge()
 {
 }
 
-ARBInfoJudge& ARBInfoJudge::operator=(const ARBInfoJudge& rhs)
+ARBInfoJudge& ARBInfoJudge::operator=(ARBInfoJudge const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -76,13 +76,13 @@ ARBInfoJudge& ARBInfoJudge::operator=(const ARBInfoJudge& rhs)
 	return *this;
 }
 
-bool ARBInfoJudge::operator==(const ARBInfoJudge& rhs) const
+bool ARBInfoJudge::operator==(ARBInfoJudge const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Comment == rhs.m_Comment;
 }
 
-bool ARBInfoJudge::operator!=(const ARBInfoJudge& rhs) const
+bool ARBInfoJudge::operator!=(ARBInfoJudge const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -109,8 +109,8 @@ size_t ARBInfoJudge::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBInfoJudge::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_JUDGEINFO_NAME, m_Name))
@@ -161,19 +161,19 @@ size_t ARBInfoJudgeList::GetAllJudges(std::set<std::string>& outNames) const
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		const ARBInfoJudge* info = *iter;
+		ARBInfoJudge const* info = *iter;
 		outNames.insert(info->GetName());
 	}
 	return outNames.size();
 }
 
-void ARBInfoJudgeList::CondenseContent(const std::set<std::string>& inNamesInUse)
+void ARBInfoJudgeList::CondenseContent(std::set<std::string> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for judges that we have
 	// shown under. This is simply to keep the file size down.
 	for (iterator iter = begin(); iter != end(); )
 	{
-		const ARBInfoJudge* judge = *iter;
+		ARBInfoJudge const* judge = *iter;
 		if (0 == judge->GetComment().length())
 		{
 			if (inNamesInUse.end() == inNamesInUse.find(judge->GetName()))
@@ -186,7 +186,7 @@ void ARBInfoJudgeList::CondenseContent(const std::set<std::string>& inNamesInUse
 	}
 }
 
-ARBInfoJudge* ARBInfoJudgeList::FindJudge(const std::string& inName) const
+ARBInfoJudge* ARBInfoJudgeList::FindJudge(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -197,7 +197,7 @@ ARBInfoJudge* ARBInfoJudgeList::FindJudge(const std::string& inName) const
 	return NULL;
 }
 
-ARBInfoJudge* ARBInfoJudgeList::AddJudge(const std::string& inJudge)
+ARBInfoJudge* ARBInfoJudgeList::AddJudge(std::string const& inJudge)
 {
 	if (NULL != FindJudge(inJudge))
 		return NULL;
@@ -211,7 +211,7 @@ ARBInfoJudge* ARBInfoJudgeList::AddJudge(const std::string& inJudge)
 	return judge;
 }
 
-bool ARBInfoJudgeList::DeleteJudge(const ARBInfoJudge* inJudge)
+bool ARBInfoJudgeList::DeleteJudge(ARBInfoJudge const* inJudge)
 {
 	if (inJudge)
 	{

@@ -64,7 +64,7 @@ ARBConfigTitlePoints::ARBConfigTitlePoints(short inPoints, short inFaults)
 {
 }
 
-ARBConfigTitlePoints::ARBConfigTitlePoints(const ARBConfigTitlePoints& rhs)
+ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
 {
@@ -74,7 +74,7 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
 
-ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(const ARBConfigTitlePoints& rhs)
+ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -84,13 +84,13 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(const ARBConfigTitlePoints
 	return *this;
 }
 
-bool ARBConfigTitlePoints::operator==(const ARBConfigTitlePoints& rhs) const
+bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
 		&& m_Faults == rhs.m_Faults;
 }
 
-bool ARBConfigTitlePoints::operator!=(const ARBConfigTitlePoints& rhs) const
+bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -109,8 +109,8 @@ size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 }
 
 bool ARBConfigTitlePoints::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
@@ -164,7 +164,7 @@ short ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 	return 0;
 }
 
-const ARBConfigTitlePoints* ARBConfigTitlePointsList::FindTitlePoints(short inFaults) const
+ARBConfigTitlePoints const* ARBConfigTitlePointsList::FindTitlePoints(short inFaults) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{

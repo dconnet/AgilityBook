@@ -68,9 +68,9 @@ CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CW
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 
-	const ARBDogClub* pClub = pTrial->GetClubs().GetPrimaryClub();
+	ARBDogClub const* pClub = pTrial->GetClubs().GetPrimaryClub();
 	ASSERT(NULL != pClub);
-	const ARBConfigVenue* pVenue = pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue());
+	ARBConfigVenue const* pVenue = pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue());
 	ASSERT(NULL != pVenue);
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);

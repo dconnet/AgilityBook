@@ -38,7 +38,7 @@
 class CDlgMessage : public CDialog
 {
 public:
-	CDlgMessage(const CString& msg, UINT caption = 0, CWnd* pParent = NULL);
+	CDlgMessage(CString const& msg, UINT caption = 0, CWnd* pParent = NULL);
 
 private:
 // Dialog Data

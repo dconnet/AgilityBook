@@ -49,11 +49,11 @@ class ARBInfo
 {
 public:
 	ARBInfo();
-	ARBInfo(const ARBInfo& rhs);
+	ARBInfo(ARBInfo const& rhs);
 	~ARBInfo();
-	ARBInfo& operator=(const ARBInfo& rhs);
-	bool operator==(const ARBInfo& rhs) const;
-	bool operator!=(const ARBInfo& rhs) const;
+	ARBInfo& operator=(ARBInfo const& rhs);
+	bool operator==(ARBInfo const& rhs) const;
+	bool operator!=(ARBInfo const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -69,8 +69,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -84,14 +84,14 @@ public:
 	/*
 	 * Getters.
 	 */
-	const ARBInfoJudgeList& GetJudgeInfo() const;
+	ARBInfoJudgeList const& GetJudgeInfo() const;
 	ARBInfoJudgeList& GetJudgeInfo();
 
 private:
 	ARBInfoJudgeList m_JudgeInfo;
 };
 
-inline const ARBInfoJudgeList& ARBInfo::GetJudgeInfo() const
+inline ARBInfoJudgeList const& ARBInfo::GetJudgeInfo() const
 {
 	return m_JudgeInfo;
 }

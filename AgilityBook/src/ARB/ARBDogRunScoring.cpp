@@ -67,7 +67,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 {
 }
 
-ARBDogRunScoring::ARBDogRunScoring(const ARBDogRunScoring& rhs)
+ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	: m_type(rhs.m_type)
 	, m_bRoundTimeFaults(rhs.m_bRoundTimeFaults)
 	, m_SCT(rhs.m_SCT)
@@ -86,7 +86,7 @@ ARBDogRunScoring::~ARBDogRunScoring()
 {
 }
 
-ARBDogRunScoring& ARBDogRunScoring::operator=(const ARBDogRunScoring& rhs)
+ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -105,7 +105,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(const ARBDogRunScoring& rhs)
 	return *this;
 }
 
-bool ARBDogRunScoring::operator==(const ARBDogRunScoring& rhs) const
+bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 {
 	return m_type == rhs.m_type
 		&& m_bRoundTimeFaults == rhs.m_bRoundTimeFaults
@@ -120,21 +120,21 @@ bool ARBDogRunScoring::operator==(const ARBDogRunScoring& rhs) const
 		&& m_ClosePts == rhs.m_ClosePts;
 }
 
-bool ARBDogRunScoring::operator!=(const ARBDogRunScoring& rhs) const
+bool ARBDogRunScoring::operator!=(ARBDogRunScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
 
 bool ARBDogRunScoring::Load(
-	const ARBConfigScoring* inEvent,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfigScoring const* inEvent,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	std::string attrib;
 
 	m_bRoundTimeFaults = inEvent->DropFractions();
-	const std::string& name = inTree.GetName();
+	std::string const& name = inTree.GetName();
 	double d;
 	if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_TIME, d))
 		m_Time = d;

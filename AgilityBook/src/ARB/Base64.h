@@ -55,7 +55,7 @@ public:
 	 * @return Success
 	 * @note User must call "delete[]" on outBuffer if bDeleteDecodeBuffer is false.
 	 */
-	bool Decode(const std::string& inBuffer, char*& outBuffer, size_t& outLength);
+	bool Decode(std::string const& inBuffer, char*& outBuffer, size_t& outLength);
 
 	/**
 	 * Encode data
@@ -63,7 +63,7 @@ public:
 	 * @param inLength Length of inBuffer
 	 * @return Encoded data
 	 */
-	std::string Encode(const char* inBuffer, size_t inLength);
+	std::string Encode(char const* inBuffer, size_t inLength);
 
 private:
 	void SetBuffer(char* inBuffer);

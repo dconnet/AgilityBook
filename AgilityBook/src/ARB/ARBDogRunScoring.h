@@ -59,11 +59,11 @@ public:
 	} ScoringType;
 
 	ARBDogRunScoring();
-	ARBDogRunScoring(const ARBDogRunScoring& rhs);
+	ARBDogRunScoring(ARBDogRunScoring const& rhs);
 	~ARBDogRunScoring();
-	ARBDogRunScoring& operator=(const ARBDogRunScoring& rhs);
-	bool operator==(const ARBDogRunScoring& rhs) const;
-	bool operator!=(const ARBDogRunScoring& rhs) const;
+	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+	bool operator==(ARBDogRunScoring const& rhs) const;
+	bool operator!=(ARBDogRunScoring const& rhs) const;
 
 	/**
 	 * Load the scoring.
@@ -75,9 +75,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfigScoring* inEvent,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfigScoring const* inEvent,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**

@@ -50,10 +50,10 @@ class ARBDogRunPartner : public ARBBase
 {
 public:
 	ARBDogRunPartner();
-	ARBDogRunPartner(const ARBDogRunPartner& rhs);
-	ARBDogRunPartner& operator=(const ARBDogRunPartner& rhs);
-	bool operator==(const ARBDogRunPartner& rhs) const;
-	bool operator!=(const ARBDogRunPartner& rhs) const;
+	ARBDogRunPartner(ARBDogRunPartner const& rhs);
+	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
+	bool operator==(ARBDogRunPartner const& rhs) const;
+	bool operator!=(ARBDogRunPartner const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -78,9 +78,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -94,12 +94,12 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetHandler() const;
-	void SetHandler(const std::string& inHandler);
-	const std::string& GetDog() const;
-	void SetDog(const std::string& inDog);
-	const std::string& GetRegNum() const;
-	void SetRegNum(const std::string& inRegNum);
+	std::string const& GetHandler() const;
+	void SetHandler(std::string const& inHandler);
+	std::string const& GetDog() const;
+	void SetDog(std::string const& inDog);
+	std::string const& GetRegNum() const;
+	void SetRegNum(std::string const& inRegNum);
 
 private:
 	~ARBDogRunPartner();
@@ -113,32 +113,32 @@ inline std::string ARBDogRunPartner::GetGenericName() const
 	return m_Dog;
 }
 
-inline const std::string& ARBDogRunPartner::GetHandler() const
+inline std::string const& ARBDogRunPartner::GetHandler() const
 {
 	return m_Handler;
 }
 
-inline void ARBDogRunPartner::SetHandler(const std::string& inHandler)
+inline void ARBDogRunPartner::SetHandler(std::string const& inHandler)
 {
 	m_Handler = inHandler;
 }
 
-inline const std::string& ARBDogRunPartner::GetDog() const
+inline std::string const& ARBDogRunPartner::GetDog() const
 {
 	return m_Dog;
 }
 
-inline void ARBDogRunPartner::SetDog(const std::string& inDog)
+inline void ARBDogRunPartner::SetDog(std::string const& inDog)
 {
 	m_Dog = inDog;
 }
 
-inline const std::string& ARBDogRunPartner::GetRegNum() const
+inline std::string const& ARBDogRunPartner::GetRegNum() const
 {
 	return m_RegNum;
 }
 
-inline void ARBDogRunPartner::SetRegNum(const std::string& inRegNum)
+inline void ARBDogRunPartner::SetRegNum(std::string const& inRegNum)
 {
 	m_RegNum = inRegNum;
 }
@@ -151,15 +151,6 @@ inline void ARBDogRunPartner::SetRegNum(const std::string& inRegNum)
 class ARBDogRunPartnerList : public ARBVectorLoad2<ARBDogRunPartner>
 {
 public:
-	bool operator==(const ARBDogRunPartnerList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogRunPartnerList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Add a partner.
 	 * @param inPartner Partner to add.

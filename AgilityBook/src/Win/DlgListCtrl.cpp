@@ -78,7 +78,7 @@ public:
 	virtual CString OnNeedText(int iCol) = 0;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
-	virtual const ARBCalendar* GetCalendar() const	{return NULL;}
+	virtual ARBCalendar const* GetCalendar() const	{return NULL;}
 protected:
 	virtual ~CDlgListCtrlData() {}
 	CListCtrl& m_List;
@@ -101,7 +101,7 @@ public:
 	virtual CString OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
-	virtual const ARBCalendar* GetCalendar() const	{return m_pCal;}
+	virtual ARBCalendar const* GetCalendar() const	{return m_pCal;}
 protected:
 	~CDlgListCtrlDataCalendar()
 	{
@@ -230,7 +230,7 @@ void CDlgListCtrlDataFaults::Apply()
 class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 {
 public:
-	CDlgListCtrlDataOtherPoints(CListCtrl& list, const ARBConfig* config, ARBDogRun* pRun, ARBDogRunOtherPoints* pOther)
+	CDlgListCtrlDataOtherPoints(CListCtrl& list, ARBConfig const* config, ARBDogRun* pRun, ARBDogRunOtherPoints* pOther)
 		: CDlgListCtrlData(list)
 		, m_pConfig(config)
 		, m_pRun(pRun)
@@ -247,7 +247,7 @@ protected:
 		m_Other->Release();
 	}
 private:
-	const ARBConfig* m_pConfig;
+	ARBConfig const* m_pConfig;
 	ARBDogRun* m_pRun;
 	ARBDogRunOtherPoints* m_Other;
 };
@@ -345,7 +345,7 @@ void CDlgListCtrlDataPartners::Apply()
 // CDlgListCtrl dialog
 
 // Calendar
-CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, const ARBDate& date, const std::vector<ARBCalendar*>* entries, CTabView* pTabView, CWnd* pParent)
+CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vector<ARBCalendar*> const* entries, CTabView* pTabView, CWnd* pParent)
 	: CDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eCalendar)
 	, m_pDoc(pDoc)
@@ -372,7 +372,7 @@ CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent)
 }
 
 // OtherPoints
-CDlgListCtrl::CDlgListCtrl(const ARBConfig* pConfig, ARBDogRun* run, CWnd* pParent)
+CDlgListCtrl::CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pParent)
 	: CDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eOtherPoints)
 	, m_pDoc(NULL)
@@ -440,7 +440,7 @@ void CDlgListCtrl::UpdateControls()
 		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(m_ctrlList.GetItemData(index));
 		if (pData)
 		{
-			const ARBCalendar* pCal = pData->GetCalendar();
+			ARBCalendar const* pCal = pData->GetCalendar();
 			if (pCal)
 			{
 				if (m_pDoc->GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
@@ -827,7 +827,7 @@ void CDlgListCtrl::OnCreateTrial()
 		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(m_ctrlList.GetItemData(nItem));
 		if (pData)
 		{
-			const ARBCalendar* pCal = pData->GetCalendar();
+			ARBCalendar const* pCal = pData->GetCalendar();
 			if (pCal)
 			{
 				if (m_pDoc->CreateTrialFromCalendar(*pCal, m_pTabView))

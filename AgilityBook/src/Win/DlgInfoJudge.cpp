@@ -92,7 +92,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	{
 		m_ctrlJudge.AddString((*iter).c_str());
 	}
-	const ARBDogRun* pRun = m_pDoc->GetCurrentRun();
+	ARBDogRun const* pRun = m_pDoc->GetCurrentRun();
 	int index = CB_ERR;
 	if (pRun)
 		index = m_ctrlJudge.SelectString(-1, pRun->GetJudge().c_str());

@@ -51,10 +51,10 @@ class ARBConfigLevel : public ARBBase
 {
 public:
 	ARBConfigLevel();
-	ARBConfigLevel(const ARBConfigLevel& rhs);
-	ARBConfigLevel& operator=(const ARBConfigLevel& rhs);
-	bool operator==(const ARBConfigLevel& rhs) const;
-	bool operator!=(const ARBConfigLevel& rhs) const;
+	ARBConfigLevel(ARBConfigLevel const& rhs);
+	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
+	bool operator==(ARBConfigLevel const& rhs) const;
+	bool operator!=(ARBConfigLevel const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -83,8 +83,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -102,14 +102,14 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, const ARBConfigLevel* inLevelNew, std::string& ioInfo);
+	bool Update(int indent, ARBConfigLevel const* inLevelNew, std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const ARBConfigSubLevelList& GetSubLevels() const;
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	ARBConfigSubLevelList const& GetSubLevels() const;
 	ARBConfigSubLevelList& GetSubLevels();
 
 private:
@@ -123,17 +123,17 @@ inline std::string ARBConfigLevel::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBConfigLevel::GetName() const
+inline std::string const& ARBConfigLevel::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigLevel::SetName(const std::string& inName)
+inline void ARBConfigLevel::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const ARBConfigSubLevelList& ARBConfigLevel::GetSubLevels() const
+inline ARBConfigSubLevelList const& ARBConfigLevel::GetSubLevels() const
 {
 	return m_SubLevels;
 }
@@ -151,15 +151,6 @@ inline ARBConfigSubLevelList& ARBConfigLevel::GetSubLevels()
 class ARBConfigLevelList : public ARBVectorLoad1<ARBConfigLevel>
 {
 public:
-	bool operator==(const ARBConfigLevelList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigLevelList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Verify this is a valid level (not sublevel).
 	 * Used to verify configuration stuff.
@@ -168,7 +159,7 @@ public:
 	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
-		const std::string& inName,
+		std::string const& inName,
 		bool inAllowWildCard = true) const;
 
 	/**
@@ -177,7 +168,7 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigLevel* FindLevel(const std::string& inName);
+	ARBConfigLevel* FindLevel(std::string const& inName);
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -185,7 +176,7 @@ public:
 	 * @param inName Name of level/sublevel to find.
 	 * @return Whether name exists.
 	 */
-	bool FindTrueLevel(const std::string& inName) const;
+	bool FindTrueLevel(std::string const& inName) const;
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -194,7 +185,7 @@ public:
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigLevel* FindSubLevel(const std::string& inName) const;
+	ARBConfigLevel const* FindSubLevel(std::string const& inName) const;
 
 	/**
 	 * Add a level.
@@ -203,7 +194,7 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 *       The pointer is added to the list and its ref count is incremented.
 	 */
-	ARBConfigLevel* AddLevel(const std::string& inName);
+	ARBConfigLevel* AddLevel(std::string const& inName);
 
 	/**
 	 * Add a level.
@@ -221,7 +212,7 @@ public:
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
-		const std::string& inName,
+		std::string const& inName,
 		ARBConfigEventList& ioEvents);
 
 	/**
@@ -232,6 +223,6 @@ public:
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
 	bool DeleteSubLevel(
-		const std::string& inName,
+		std::string const& inName,
 		bool& outLevelModified);
 };

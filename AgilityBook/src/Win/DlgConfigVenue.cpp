@@ -377,7 +377,7 @@ void CDlgConfigVenue::LoadEventData()
 	FindCurrentEvent(pEvent, true);
 }
 
-int CDlgConfigVenue::FindCurrentDivision(const ARBConfigDivision* pDiv, bool bSet)
+int CDlgConfigVenue::FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSet)
 {
 	int idxCurrent = -1;
 	if (pDiv)
@@ -401,7 +401,7 @@ int CDlgConfigVenue::FindCurrentDivision(const ARBConfigDivision* pDiv, bool bSe
 	return idxCurrent;
 }
 
-HTREEITEM CDlgConfigVenue::FindCurrentLevel(const ARBConfigLevel* pLevel, bool bSet)
+HTREEITEM CDlgConfigVenue::FindCurrentLevel(ARBConfigLevel const* pLevel, bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
 	if (pLevel)
@@ -428,7 +428,7 @@ HTREEITEM CDlgConfigVenue::FindCurrentLevel(const ARBConfigLevel* pLevel, bool b
 	return hCurrent;
 }
 
-HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(const ARBConfigSubLevel* pSubLevel, bool bSet)
+HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(ARBConfigSubLevel const* pSubLevel, bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
 	if (pSubLevel)
@@ -463,7 +463,7 @@ HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(const ARBConfigSubLevel* pSubLeve
 	return hCurrent;
 }
 
-int CDlgConfigVenue::FindCurrentTitle(const ARBConfigTitle* pTitle, bool bSet)
+int CDlgConfigVenue::FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet)
 {
 	int idxCurrent = -1;
 	if (pTitle)
@@ -488,7 +488,7 @@ int CDlgConfigVenue::FindCurrentTitle(const ARBConfigTitle* pTitle, bool bSet)
 	return idxCurrent;
 }
 
-HTREEITEM CDlgConfigVenue::FindCurrentEvent(const ARBConfigEvent* pEvent, bool bSet)
+HTREEITEM CDlgConfigVenue::FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
 	if (pEvent)

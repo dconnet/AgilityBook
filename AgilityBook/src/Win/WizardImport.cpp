@@ -297,11 +297,11 @@ BOOL CWizardImport::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	m_ctrlSpin.SetRange(100, 1);
-	static const struct
+	static struct
 	{
-		const char* pFormat;
+		char const* pFormat;
 		ARBDate::DateFormat format;
-	} sc_Dates[] =
+	} const sc_Dates[] =
 	{
 		{"MM-DD-YYYY", ARBDate::eDashMMDDYYYY},
 		{"MM/DD/YYYY", ARBDate::eSlashMMDDYYYY},
@@ -312,7 +312,7 @@ BOOL CWizardImport::OnInitDialog()
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
-	static const int sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
+	static int const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	for (int i = 0; i < sc_nDates; ++i)
 	{
 		int index = m_ctrlDateFormat.AddString(sc_Dates[i].pFormat);
@@ -339,7 +339,7 @@ LRESULT CWizardImport::OnWizardBack()
 	return IDD_WIZARD_START;
 }
 
-static ARBDogRun* CreateRun(ARBDogRun* pRun, const ARBConfigScoring* pScoring)
+static ARBDogRun* CreateRun(ARBDogRun* pRun, ARBConfigScoring const* pScoring)
 {
 	if (!pRun)
 	{
@@ -363,7 +363,7 @@ static ARBDogRun* CreateRun(ARBDogRun* pRun, const ARBConfigScoring* pScoring)
 	return pRun;
 }
 
-static std::string GetPrimaryVenue(const std::string& venues)
+static std::string GetPrimaryVenue(std::string const& venues)
 {
 	std::string venue;
 	std::string::size_type pos = venues.find('/');
@@ -457,7 +457,7 @@ BOOL CWizardImport::OnWizardFinish()
 
 		case WIZ_IMPORT_RUNS:
 			{
-				const int colIdx[4] =
+				int const colIdx[4] =
 				{
 					IO_TYPE_RUNS_FAULTS_TIME,
 					IO_TYPE_RUNS_TIME_FAULTS,
@@ -493,7 +493,7 @@ BOOL CWizardImport::OnWizardFinish()
 							idxEvent[i] = static_cast<int>(iCol);
 					}
 				}
-				const ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoring const* pScoring = NULL;
 				for (i = 0; !pScoring && i < 4; ++i)
 				{
 					if (0 <= idxVenue[i] && 0 <= idxEvent[i] && 0 <= idxDiv[i] && 0 <= idxLevel[i] && 0 <= idxDate[i])

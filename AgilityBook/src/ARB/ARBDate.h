@@ -69,7 +69,7 @@ public:
 	 * @param inFormat Parse using this format
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
-	static ARBDate FromString(const std::string& inDate, DateFormat inFormat);
+	static ARBDate FromString(std::string const& inDate, DateFormat inFormat);
 
 	/**
 	 * Get the current date.
@@ -77,7 +77,7 @@ public:
 	static ARBDate Today();
 
 	ARBDate();
-	ARBDate(const ARBDate& rhs);
+	ARBDate(ARBDate const& rhs);
 	ARBDate(time_t inTime);
 #if _WIN32 && _MSC_VER >= 1300
 	ARBDate(__time64_t inTime);
@@ -118,14 +118,14 @@ public:
 	 */
 	void SetDate(int inYr, int inMon, int inDay);
 
-	ARBDate& operator=(const ARBDate& rhs);
-	bool operator==(const ARBDate& rhs) const;
-	bool operator!=(const ARBDate& rhs) const;
-	bool operator<(const ARBDate& rhs) const;
-	bool operator>(const ARBDate& rhs) const;
-	bool operator<=(const ARBDate& rhs) const;
-	bool operator>=(const ARBDate& rhs) const;
-	long operator-(const ARBDate& rhs) const;
+	ARBDate& operator=(ARBDate const& rhs);
+	bool operator==(ARBDate const& rhs) const;
+	bool operator!=(ARBDate const& rhs) const;
+	bool operator<(ARBDate const& rhs) const;
+	bool operator>(ARBDate const& rhs) const;
+	bool operator<=(ARBDate const& rhs) const;
+	bool operator>=(ARBDate const& rhs) const;
+	long operator-(ARBDate const& rhs) const;
 	ARBDate& operator++(); //prefix
 	ARBDate operator++(int); //postfix
 	ARBDate& operator--(); //prefix
@@ -136,7 +136,7 @@ public:
 	/**
 	 * Test if date is between two dates (inclusive)
 	 */
-	bool isBetween(const ARBDate& inDate1, const ARBDate& inDate2) const;
+	bool isBetween(ARBDate const& inDate1, ARBDate const& inDate2) const;
 
 	bool isLeap() const; ///< Is this a leap year?
 
@@ -211,7 +211,7 @@ inline long ARBDate::GetJulianDay() const
 	return m_Julian;
 }
 
-inline ARBDate& ARBDate::operator=(const ARBDate& rhs)
+inline ARBDate& ARBDate::operator=(ARBDate const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -220,37 +220,37 @@ inline ARBDate& ARBDate::operator=(const ARBDate& rhs)
 	return *this;
 }
 
-inline bool ARBDate::operator==(const ARBDate& rhs) const
+inline bool ARBDate::operator==(ARBDate const& rhs) const
 {
 	return m_Julian == rhs.m_Julian;
 }
 
-inline bool ARBDate::operator!=(const ARBDate& rhs) const
+inline bool ARBDate::operator!=(ARBDate const& rhs) const
 {
 	return m_Julian != rhs.m_Julian;
 }
 
-inline bool ARBDate::operator<(const ARBDate& rhs) const
+inline bool ARBDate::operator<(ARBDate const& rhs) const
 {
 	return m_Julian < rhs.m_Julian;
 }
 
-inline bool ARBDate::operator>(const ARBDate& rhs) const
+inline bool ARBDate::operator>(ARBDate const& rhs) const
 {
 	return m_Julian > rhs.m_Julian;
 }
 
-inline bool ARBDate::operator<=(const ARBDate& rhs) const
+inline bool ARBDate::operator<=(ARBDate const& rhs) const
 {
 	return m_Julian <= rhs.m_Julian;
 }
 
-inline bool ARBDate::operator>=(const ARBDate& rhs) const
+inline bool ARBDate::operator>=(ARBDate const& rhs) const
 {
 	return m_Julian >= rhs.m_Julian;
 }
 
-inline long ARBDate::operator-(const ARBDate& rhs) const
+inline long ARBDate::operator-(ARBDate const& rhs) const
 {
 	return m_Julian - rhs.m_Julian;
 }
@@ -293,7 +293,7 @@ inline ARBDate& ARBDate::operator-=(int inD)
 	return *this;
 }
 
-inline bool ARBDate::isBetween(const ARBDate& inDate1, const ARBDate& inDate2) const
+inline bool ARBDate::isBetween(ARBDate const& inDate1, ARBDate const& inDate2) const
 {
 	return m_Julian >= inDate1.m_Julian && m_Julian <= inDate2.m_Julian;
 }

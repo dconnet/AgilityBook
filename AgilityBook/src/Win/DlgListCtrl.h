@@ -49,11 +49,11 @@ class CDlgListCtrl : public CDialog
 {
 public:
 	// Calendar
-	CDlgListCtrl(CAgilityBookDoc* pDoc, const ARBDate& date, const std::vector<ARBCalendar*>* entries, CTabView* pTabView, CWnd* pParent = NULL);
+	CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vector<ARBCalendar*> const* entries, CTabView* pTabView, CWnd* pParent = NULL);
 	// Faults
 	CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent = NULL);
 	// OtherPoints
-	CDlgListCtrl(const ARBConfig* pConfig, ARBDogRun* run, CWnd* pParent = NULL);
+	CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pParent = NULL);
 	// Partners
 	CDlgListCtrl(ARBDogRun* run, CWnd* pParent = NULL);
 
@@ -79,9 +79,9 @@ private:
 	WhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
 	ARBDate m_Date;
-	const std::vector<ARBCalendar*>* m_CalEntries;
+	std::vector<ARBCalendar*> const* m_CalEntries;
 	CTabView* m_pTabView;
-	const ARBConfig* m_pConfig;
+	ARBConfig const* m_pConfig;
 	ARBDogRun* m_pRun;
 	CImageList m_ImageList;
 	int m_imgEmpty;

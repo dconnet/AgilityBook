@@ -54,14 +54,14 @@ class ARBTraining : public ARBBase
 {
 public:
 	ARBTraining();
-	ARBTraining(const ARBTraining& rhs);
-	ARBTraining& operator=(const ARBTraining& rhs);
-	bool operator==(const ARBTraining& rhs) const;
-	bool operator!=(const ARBTraining& rhs) const;
-	bool operator<(const ARBTraining& rhs) const;
-	bool operator>(const ARBTraining& rhs) const;
-	bool operator<(const ARBDate& rhs) const;
-	bool operator>(const ARBDate& rhs) const;
+	ARBTraining(ARBTraining const& rhs);
+	ARBTraining& operator=(ARBTraining const& rhs);
+	bool operator==(ARBTraining const& rhs) const;
+	bool operator!=(ARBTraining const& rhs) const;
+	bool operator<(ARBTraining const& rhs) const;
+	bool operator>(ARBTraining const& rhs) const;
+	bool operator<(ARBDate const& rhs) const;
+	bool operator>(ARBDate const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -85,8 +85,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -100,12 +100,12 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const ARBDate& GetDate() const;
-	void SetDate(const ARBDate& inDate);
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetNote() const;
-	void SetNote(const std::string& inNote);
+	ARBDate const& GetDate() const;
+	void SetDate(ARBDate const& inDate);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
 
 private:
 	~ARBTraining();
@@ -114,52 +114,52 @@ private:
 	std::string m_Note;
 };
 
-inline bool ARBTraining::operator<(const ARBTraining& rhs) const
+inline bool ARBTraining::operator<(ARBTraining const& rhs) const
 {
 	return m_Date < rhs.GetDate();
 }
 
-inline bool ARBTraining::operator>(const ARBTraining& rhs) const
+inline bool ARBTraining::operator>(ARBTraining const& rhs) const
 {
 	return m_Date > rhs.GetDate();
 }
 
-inline bool ARBTraining::operator<(const ARBDate& rhs) const
+inline bool ARBTraining::operator<(ARBDate const& rhs) const
 {
 	return m_Date < rhs;
 }
 
-inline bool ARBTraining::operator>(const ARBDate& rhs) const
+inline bool ARBTraining::operator>(ARBDate const& rhs) const
 {
 	return m_Date > rhs;
 }
 
-inline const ARBDate& ARBTraining::GetDate() const
+inline ARBDate const& ARBTraining::GetDate() const
 {
 	return m_Date;
 }
 
-inline void ARBTraining::SetDate(const ARBDate& inDate)
+inline void ARBTraining::SetDate(ARBDate const& inDate)
 {
 	m_Date = inDate;
 }
 
-inline const std::string& ARBTraining::GetNote() const
+inline std::string const& ARBTraining::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBTraining::SetNote(const std::string& inNote)
+inline void ARBTraining::SetNote(std::string const& inNote)
 {
 	m_Note = inNote;
 }
 
-inline const std::string& ARBTraining::GetName() const
+inline std::string const& ARBTraining::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBTraining::SetName(const std::string& inName)
+inline void ARBTraining::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
@@ -172,15 +172,6 @@ inline void ARBTraining::SetName(const std::string& inName)
 class ARBTrainingList : public ARBVectorLoad1<ARBTraining>
 {
 public:
-	bool operator==(const ARBTrainingList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBTrainingList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Sort the list by date.
 	 * @param inDescending Sort in descending or ascending order.
@@ -201,7 +192,7 @@ public:
 	 * @post The returned object is <i>not</i> reference counted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	const ARBTraining* FindTraining(const ARBTraining* inTraining) const;
+	ARBTraining const* FindTraining(ARBTraining const* inTraining) const;
 
 	/**
 	 * Add a training object to the list.
@@ -217,5 +208,5 @@ public:
 	 * @return Object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteTraining(const ARBTraining* inTraining);
+	bool DeleteTraining(ARBTraining const* inTraining);
 };

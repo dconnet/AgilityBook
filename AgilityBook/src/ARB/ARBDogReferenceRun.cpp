@@ -61,7 +61,7 @@ ARBDogReferenceRun::ARBDogReferenceRun()
 {
 }
 
-ARBDogReferenceRun::ARBDogReferenceRun(const ARBDogReferenceRun& rhs)
+ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun const& rhs)
 	: m_Q(rhs.m_Q)
 	, m_Place(rhs.m_Place)
 	, m_Name(rhs.m_Name)
@@ -76,7 +76,7 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 {
 }
 
-ARBDogReferenceRun& ARBDogReferenceRun::operator=(const ARBDogReferenceRun& rhs)
+ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -91,7 +91,7 @@ ARBDogReferenceRun& ARBDogReferenceRun::operator=(const ARBDogReferenceRun& rhs)
 	return *this;
 }
 
-bool ARBDogReferenceRun::operator==(const ARBDogReferenceRun& rhs) const
+bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 {
 	return m_Q == rhs.m_Q
 		&& m_Place == rhs.m_Place
@@ -102,7 +102,7 @@ bool ARBDogReferenceRun::operator==(const ARBDogReferenceRun& rhs) const
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBDogReferenceRun::operator!=(const ARBDogReferenceRun& rhs) const
+bool ARBDogReferenceRun::operator!=(ARBDogReferenceRun const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -133,9 +133,9 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::string>& ioStrings) co
 }
 
 bool ARBDogReferenceRun::Load(
-	const ARBConfig& inConfig,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfig const& inConfig,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	std::string attrib;
@@ -159,7 +159,7 @@ bool ARBDogReferenceRun::Load(
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const Element& element = inTree.GetElement(i);
+		Element const& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_REF_NAME)
 		{
 			m_Name = element.GetValue();
@@ -221,7 +221,7 @@ ARBDogReferenceRun* ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRun* 
 	return inRef;
 }
 
-bool ARBDogReferenceRunList::DeleteReferenceRun(const ARBDogReferenceRun* inRef)
+bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRun const* inRef)
 {
 	if (inRef)
 	{

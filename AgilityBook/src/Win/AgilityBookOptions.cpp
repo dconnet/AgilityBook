@@ -84,7 +84,7 @@ void CFontInfo::CreateFont(CFont& font, CDC* pDC)
 		font.CreatePointFontIndirect(&logFont);
 }
 
-void CFontInfo::CreateFont(const CFontDialog& dlg, CFont& font, CDC* pDC)
+void CFontInfo::CreateFont(CFontDialog const& dlg, CFont& font, CDC* pDC)
 {
 	size = dlg.GetSize();
 	name = dlg.GetFaceName();
@@ -107,8 +107,8 @@ bool CAgilityBookOptions::IsFilterEnabled()
 }
 
 bool CAgilityBookOptions::IsDateVisible(
-	const ARBDate& startDate,
-	const ARBDate& endDate)
+	ARBDate const& startDate,
+	ARBDate const& endDate)
 {
 	if (!CAgilityBookOptions::GetViewAllDates())
 	{
@@ -129,8 +129,8 @@ bool CAgilityBookOptions::IsDateVisible(
 }
 
 bool CAgilityBookOptions::IsTitleVisible(
-	const std::vector<CVenueFilter>& venues,
-	const ARBDogTitle* pTitle)
+	std::vector<CVenueFilter> const& venues,
+	ARBDogTitle const* pTitle)
 {
 	if (!GetViewHiddenTitles() && pTitle->IsHidden())
 		return false;
@@ -141,8 +141,8 @@ bool CAgilityBookOptions::IsTitleVisible(
 }
 
 bool CAgilityBookOptions::IsVenueVisible(
-	const std::vector<CVenueFilter>& venues,
-	const std::string& venue)
+	std::vector<CVenueFilter> const& venues,
+	std::string const& venue)
 {
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
@@ -159,8 +159,8 @@ bool CAgilityBookOptions::IsVenueVisible(
 }
 
 bool CAgilityBookOptions::IsTrialVisible(
-	const std::vector<CVenueFilter>& venues,
-	const ARBDogTrial* pTrial)
+	std::vector<CVenueFilter> const& venues,
+	ARBDogTrial const* pTrial)
 {
 	// Yes, it seems backwards, but it is correct.
 	if (!IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
@@ -180,9 +180,9 @@ bool CAgilityBookOptions::IsTrialVisible(
 }
 
 bool CAgilityBookOptions::IsRunVisible(
-	const std::vector<CVenueFilter>& venues,
-	const ARBDogTrial* pTrial,
-	const ARBDogRun* pRun)
+	std::vector<CVenueFilter> const& venues,
+	ARBDogTrial const* pTrial,
+	ARBDogRun const* pRun)
 {
 	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
 		return false;
@@ -217,8 +217,8 @@ bool CAgilityBookOptions::IsRunVisible(
 }
 
 bool CAgilityBookOptions::IsTrainingLogVisible(
-	const std::set<std::string>& names,
-	const ARBTraining* pTraining)
+	std::set<std::string> const& names,
+	ARBTraining const* pTraining)
 {
 	if (!CAgilityBookOptions::GetTrainingViewAllDates())
 	{
@@ -311,7 +311,7 @@ CSize CAgilityBookOptions::GetCalendarEntrySize()
 	return szInches;
 }
 
-void CAgilityBookOptions::SetCalendarEntrySize(const CSize& sz)
+void CAgilityBookOptions::SetCalendarEntrySize(CSize const& sz)
 {
 	AfxGetApp()->WriteProfileInt("Calendar", "EntrySize.cx", sz.cx);
 	AfxGetApp()->WriteProfileInt("Calendar", "EntrySize.cy", sz.cy);
@@ -376,7 +376,7 @@ ARBDate CAgilityBookOptions::GetStartFilterDate()
 	return date;
 }
 
-void CAgilityBookOptions::SetStartFilterDate(const ARBDate& date)
+void CAgilityBookOptions::SetStartFilterDate(ARBDate const& date)
 {
 	AfxGetApp()->WriteProfileInt("Common", "StartFilterJDay", date.GetJulianDay());
 }
@@ -399,7 +399,7 @@ ARBDate CAgilityBookOptions::GetEndFilterDate()
 	return date;
 }
 
-void CAgilityBookOptions::SetEndFilterDate(const ARBDate& date)
+void CAgilityBookOptions::SetEndFilterDate(ARBDate const& date)
 {
 	AfxGetApp()->WriteProfileInt("Common", "EndFilterJDay", date.GetJulianDay());
 }
@@ -484,7 +484,7 @@ void CAgilityBookOptions::GetFilterVenue(std::vector<CVenueFilter>& venues)
 	}
 }
 
-void CAgilityBookOptions::SetFilterVenue(const std::vector<CVenueFilter>& venues)
+void CAgilityBookOptions::SetFilterVenue(std::vector<CVenueFilter> const& venues)
 {
 	CString venue;
 	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
@@ -559,7 +559,7 @@ ARBDate CAgilityBookOptions::GetTrainingStartFilterDate()
 	return date;
 }
 
-void CAgilityBookOptions::SetTrainingStartFilterDate(const ARBDate& date)
+void CAgilityBookOptions::SetTrainingStartFilterDate(ARBDate const& date)
 {
 	AfxGetApp()->WriteProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay());
 }
@@ -582,7 +582,7 @@ ARBDate CAgilityBookOptions::GetTrainingEndFilterDate()
 	return date;
 }
 
-void CAgilityBookOptions::SetTrainingEndFilterDate(const ARBDate& date)
+void CAgilityBookOptions::SetTrainingEndFilterDate(ARBDate const& date)
 {
 	AfxGetApp()->WriteProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay());
 }
@@ -626,7 +626,7 @@ void CAgilityBookOptions::GetTrainingFilterNames(std::set<std::string>& outNames
 	}
 }
 
-void CAgilityBookOptions::SetTrainingFilterNames(const std::set<std::string>& inNames)
+void CAgilityBookOptions::SetTrainingFilterNames(std::set<std::string> const& inNames)
 {
 	CString names;
 	for (std::set<std::string>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
@@ -654,7 +654,7 @@ void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 	info.bold = (AfxGetApp()->GetProfileInt("Common", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
-void CAgilityBookOptions::SetPrinterFontInfo(const CFontInfo& info)
+void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 {
 	CString item("PrintFontList");
 	AfxGetApp()->WriteProfileString("Common", item + "Name", info.name);
@@ -682,7 +682,7 @@ void CAgilityBookOptions::GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrintin
 	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
-void CAgilityBookOptions::SetCalendarDateFontInfo(const CFontInfo& info, BOOL bPrinting)
+void CAgilityBookOptions::SetCalendarDateFontInfo(CFontInfo const& info, BOOL bPrinting)
 {
 	CString item("Font");
 	if (bPrinting)
@@ -713,7 +713,7 @@ void CAgilityBookOptions::GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrintin
 	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
-void CAgilityBookOptions::SetCalendarTextFontInfo(const CFontInfo& info, BOOL bPrinting)
+void CAgilityBookOptions::SetCalendarTextFontInfo(CFontInfo const& info, BOOL bPrinting)
 {
 	CString item("Font");
 	if (bPrinting)
@@ -733,7 +733,7 @@ CString CAgilityBookOptions::GetLastEnteredDivision()
 	return AfxGetApp()->GetProfileString("Last", "Division", "");
 }
 
-void CAgilityBookOptions::SetLastEnteredDivision(const char* inLast)
+void CAgilityBookOptions::SetLastEnteredDivision(char const* inLast)
 {
 	AfxGetApp()->WriteProfileString("Last", "Division", inLast);
 }
@@ -743,7 +743,7 @@ CString CAgilityBookOptions::GetLastEnteredLevel()
 	return AfxGetApp()->GetProfileString("Last", "Level", "");
 }
 
-void CAgilityBookOptions::SetLastEnteredLevel(const char* inLast)
+void CAgilityBookOptions::SetLastEnteredLevel(char const* inLast)
 {
 	AfxGetApp()->WriteProfileString("Last", "Level", inLast);
 }
@@ -753,7 +753,7 @@ CString CAgilityBookOptions::GetLastEnteredHeight()
 	return AfxGetApp()->GetProfileString("Last", "Height", "");
 }
 
-void CAgilityBookOptions::SetLastEnteredHeight(const char* inLast)
+void CAgilityBookOptions::SetLastEnteredHeight(char const* inLast)
 {
 	AfxGetApp()->WriteProfileString("Last", "Height", inLast);
 }
@@ -763,7 +763,7 @@ CString CAgilityBookOptions::GetLastEnteredJudge()
 	return AfxGetApp()->GetProfileString("Last", "Judge", "");
 }
 
-void CAgilityBookOptions::SetLastEnteredJudge(const char* inLast)
+void CAgilityBookOptions::SetLastEnteredJudge(char const* inLast)
 {
 	AfxGetApp()->WriteProfileString("Last", "Judge", inLast);
 }
@@ -773,7 +773,7 @@ CString CAgilityBookOptions::GetLastEnteredHandler()
 	return AfxGetApp()->GetProfileString("Last", "Handler", "");
 }
 
-void CAgilityBookOptions::SetLastEnteredHandler(const char* inLast)
+void CAgilityBookOptions::SetLastEnteredHandler(char const* inLast)
 {
 	AfxGetApp()->WriteProfileString("Last", "Handler", inLast);
 }
@@ -809,7 +809,7 @@ void CAgilityBookOptions::GetImportExportDelimiters(bool bImport, int& delim, CS
 		delimiter = delimiter.Left(1);
 }
 
-void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter)
+void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, CString const& delimiter)
 {
 	CString section;
 	if (bImport)
@@ -1063,7 +1063,7 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 	}
 }
 
-void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& inValues)
+void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int> const& inValues)
 {
 	CString section;
 	switch (eOrder)

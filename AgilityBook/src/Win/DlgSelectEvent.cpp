@@ -54,24 +54,24 @@ static char THIS_FILE[] = __FILE__;
 class CDlgSelectEventDataLevel
 {
 public:
-	CDlgSelectEventDataLevel(const ARBConfigLevel* pLevel)
+	CDlgSelectEventDataLevel(ARBConfigLevel const* pLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(NULL)
 	{
 	}
-	CDlgSelectEventDataLevel(const ARBConfigLevel* pLevel, const ARBConfigSubLevel* pSubLevel)
+	CDlgSelectEventDataLevel(ARBConfigLevel const* pLevel, ARBConfigSubLevel const* pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
 	}
-	const ARBConfigLevel* m_pLevel;
-	const ARBConfigSubLevel* m_pSubLevel;
+	ARBConfigLevel const* m_pLevel;
+	ARBConfigSubLevel const* m_pSubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgSelectEvent dialog
 
-CDlgSelectEvent::CDlgSelectEvent(const ARBConfigVenue* pVenue, CWnd* pParent)
+CDlgSelectEvent::CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent)
 	: CDialog(CDlgSelectEvent::IDD, pParent)
 	, m_pVenue(pVenue)
 {
@@ -115,19 +115,19 @@ void CDlgSelectEvent::FillLevels()
 	int index = m_ctrlDivision.GetCurSel();
 	if (CB_ERR != index)
 	{
-		const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivision.GetItemDataPtr(index));
+		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivision.GetItemDataPtr(index));
 		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
 			iter != pDiv->GetLevels().end();
 			++iter)
 		{
-			const ARBConfigLevel* pLevel = (*iter);
+			ARBConfigLevel const* pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
 				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
 					iterSub != pLevel->GetSubLevels().end();
 					++iterSub)
 				{
-					const ARBConfigSubLevel* pSubLevel = (*iterSub);
+					ARBConfigSubLevel const* pSubLevel = (*iterSub);
 					CDlgSelectEventDataLevel* pData = new CDlgSelectEventDataLevel(pLevel, pSubLevel);
 					int idx = m_ctrlLevel.AddString(pSubLevel->GetName().c_str());
 					m_ctrlLevel.SetItemDataPtr(idx, pData);
@@ -150,7 +150,7 @@ void CDlgSelectEvent::FillEvents()
 	int idxDiv = m_ctrlDivision.GetCurSel();
 	if (CB_ERR == idxDiv)
 		return;
-	const ARBConfigDivision* pDiv = reinterpret_cast<const ARBConfigDivision*>(m_ctrlDivision.GetItemDataPtr(idxDiv));
+	ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivision.GetItemDataPtr(idxDiv));
 	int idxLevel = m_ctrlLevel.GetCurSel();
 	if (CB_ERR == idxLevel)
 		return;
@@ -159,7 +159,7 @@ void CDlgSelectEvent::FillEvents()
 		iter != m_pVenue->GetEvents().end();
 		++iter)
 	{
-		const ARBConfigEvent* pEvent = (*iter);
+		ARBConfigEvent const* pEvent = (*iter);
 		if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName()))
 		{
 			m_ctrlEvent.AddString(pEvent->GetName().c_str());

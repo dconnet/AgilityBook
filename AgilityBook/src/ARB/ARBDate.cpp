@@ -194,7 +194,7 @@ static int ParseFields(std::string inDate, char sep, int& val1, int& val2, int& 
 }
 
 // static
-ARBDate ARBDate::FromString(const std::string& inDate, ARBDate::DateFormat inFormat)
+ARBDate ARBDate::FromString(std::string const& inDate, ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
 	std::string value(inDate);
@@ -252,7 +252,7 @@ ARBDate::ARBDate()
 {
 }
 
-ARBDate::ARBDate(const ARBDate& rhs)
+ARBDate::ARBDate(ARBDate const& rhs)
 	: m_Julian(rhs.m_Julian)
 {
 }

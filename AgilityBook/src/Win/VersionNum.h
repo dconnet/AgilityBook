@@ -53,9 +53,9 @@ public:
 	 */
 	explicit CVersionNum(CString inVer);
 
-	bool operator==(const CVersionNum& rhs) const;
-	bool operator<(const CVersionNum& rhs) const;
-	bool operator>(const CVersionNum& rhs) const;
+	bool operator==(CVersionNum const& rhs) const;
+	bool operator<(CVersionNum const& rhs) const;
+	bool operator>(CVersionNum const& rhs) const;
 
 	bool Valid() const						{return m_Valid;}
 	CString GetName() const					{return m_Name;}

@@ -46,7 +46,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgMessage dialog
 
-CDlgMessage::CDlgMessage(const CString& msg, UINT caption, CWnd* pParent)
+CDlgMessage::CDlgMessage(CString const& msg, UINT caption, CWnd* pParent)
 	: CDialog(CDlgMessage::IDD, pParent)
 {
 	if (0 != caption)

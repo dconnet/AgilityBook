@@ -51,11 +51,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	UINT idText;
 	UINT fmt;
-} scColumns[] = {
+} const scColumns[] = {
 	{IDS_COL_Q, LVCFMT_CENTER},
 	{IDS_COL_PLACE, LVCFMT_CENTER},
 	{IDS_COL_SCORE, LVCFMT_CENTER},
@@ -64,7 +64,7 @@ static const struct
 	{IDS_COL_BREED, LVCFMT_LEFT},
 	{IDS_COL_NOTE, LVCFMT_LEFT},
 };
-static const int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
+static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
 
 typedef struct
 {
@@ -74,8 +74,8 @@ typedef struct
 
 int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 {
-	const ARBDogReferenceRun* pTitle1 = reinterpret_cast<const ARBDogReferenceRun*>(lParam1);
-	const ARBDogReferenceRun* pTitle2 = reinterpret_cast<const ARBDogReferenceRun*>(lParam2);
+	ARBDogReferenceRun const* pTitle1 = reinterpret_cast<ARBDogReferenceRun const*>(lParam1);
+	ARBDogReferenceRun const* pTitle2 = reinterpret_cast<ARBDogReferenceRun const*>(lParam2);
 	SORTINFO *psi = reinterpret_cast<SORTINFO*>(lParam3);
 	int rc = 0;
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
@@ -140,7 +140,7 @@ int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunReference dialog
 
-CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue, ARBDogRun* pRun)
+CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun)
 	: CPropertyPage(CDlgRunReference::IDD)
 	, m_pDoc(pDoc)
 	, m_Venue(pVenue)
@@ -201,10 +201,10 @@ void CDlgRunReference::SetColumnHeaders()
 
 void CDlgRunReference::ListRuns()
 {
-	const ARBDogReferenceRun* pSelected = NULL;
+	ARBDogReferenceRun const* pSelected = NULL;
 	int index = m_ctrlRefRuns.GetSelection();
 	if (0 <= index)
-		pSelected = reinterpret_cast<const ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(index));
+		pSelected = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
 	m_ctrlRefRuns.DeleteAllItems();
 
 	index = 0;
@@ -232,7 +232,7 @@ void CDlgRunReference::ListRuns()
 	{
 		for (index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
 		{
-			const ARBDogReferenceRun* pRegRun = reinterpret_cast<const ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(index));
+			ARBDogReferenceRun const* pRegRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
 			if (pRegRun == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlRefRuns.SetSelection(index, true);
@@ -352,7 +352,7 @@ void CDlgRunReference::OnRefRunNew()
 	ARBDogReferenceRun* ref = new ARBDogReferenceRun();
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
-		const ARBConfigScoring* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+		ARBConfigScoring const* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
 			m_Venue->GetName(),
 			m_Run->GetEvent(),
 			m_Run->GetDivision(),

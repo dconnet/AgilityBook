@@ -69,7 +69,7 @@ protected: // create from serialization only
 
 public:
 	CAgilityBookDoc* GetDocument() const;
-	void SetCurrentDate(const ARBDate& inDate);
+	void SetCurrentDate(ARBDate const& inDate);
 
 	// ICommonView interface
 	virtual bool IsFiltered() const;

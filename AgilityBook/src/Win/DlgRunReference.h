@@ -45,7 +45,7 @@ class CAgilityBookDoc;
 class CDlgRunReference : public CPropertyPage
 {
 public:
-	CDlgRunReference(CAgilityBookDoc* pDoc, const ARBConfigVenue* pVenue, ARBDogRun* pRun);
+	CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun);
 	~CDlgRunReference();
 
 private:
@@ -58,7 +58,7 @@ private:
 	CButton	m_ctrlDelete;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	const ARBConfigVenue* m_Venue;
+	ARBConfigVenue const* m_Venue;
 	ARBDogRun* m_Run;
 	CColumnOrder m_sortRefRuns;
 

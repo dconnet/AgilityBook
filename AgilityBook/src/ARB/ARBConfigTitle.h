@@ -51,10 +51,10 @@ class ARBConfigTitle : public ARBBase
 {
 public:
 	ARBConfigTitle();
-	ARBConfigTitle(const ARBConfigTitle& rhs);
-	ARBConfigTitle& operator=(const ARBConfigTitle& rhs);
-	bool operator==(const ARBConfigTitle& rhs) const;
-	bool operator!=(const ARBConfigTitle& rhs) const;
+	ARBConfigTitle(ARBConfigTitle const& rhs);
+	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
+	bool operator==(ARBConfigTitle const& rhs) const;
+	bool operator!=(ARBConfigTitle const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -83,8 +83,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -99,7 +99,7 @@ public:
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
-	const std::string& GetNiceName() const;
+	std::string const& GetNiceName() const;
 
 	/**
 	 * Get the complete name (name + nicename).
@@ -111,12 +111,12 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetLongName() const;
-	void SetLongName(const std::string& inName);
-	const std::string& GetDescription() const;
-	void SetDescription(const std::string& inDesc);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetLongName() const;
+	void SetLongName(std::string const& inName);
+	std::string const& GetDescription() const;
+	void SetDescription(std::string const& inDesc);
 
 private:
 	~ARBConfigTitle();
@@ -130,7 +130,7 @@ inline std::string ARBConfigTitle::GetGenericName() const
 	return GetNiceName();
 }
 
-inline const std::string& ARBConfigTitle::GetNiceName() const
+inline std::string const& ARBConfigTitle::GetNiceName() const
 {
 	if (0 == m_LongName.length())
 		return m_Name;
@@ -138,32 +138,32 @@ inline const std::string& ARBConfigTitle::GetNiceName() const
 		return m_LongName;
 }
 
-inline const std::string& ARBConfigTitle::GetName() const
+inline std::string const& ARBConfigTitle::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigTitle::SetName(const std::string& inName)
+inline void ARBConfigTitle::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string& ARBConfigTitle::GetLongName() const
+inline std::string const& ARBConfigTitle::GetLongName() const
 {
 	return m_LongName;
 }
 
-inline void ARBConfigTitle::SetLongName(const std::string& inName)
+inline void ARBConfigTitle::SetLongName(std::string const& inName)
 {
 	m_LongName = inName;
 }
 
-inline const std::string& ARBConfigTitle::GetDescription() const
+inline std::string const& ARBConfigTitle::GetDescription() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigTitle::SetDescription(const std::string& inDesc)
+inline void ARBConfigTitle::SetDescription(std::string const& inDesc)
 {
 	m_Desc = inDesc;
 }
@@ -176,15 +176,6 @@ inline void ARBConfigTitle::SetDescription(const std::string& inDesc)
 class ARBConfigTitleList : public ARBVectorLoad1<ARBConfigTitle>
 {
 public:
-	bool operator==(const ARBConfigTitleList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigTitleList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Find a title by the complete name.
 	 * This api is used to fix a problem introduced in v1.0.0.8.
@@ -193,7 +184,7 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitle* FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst = true) const;
+	ARBConfigTitle const* FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst = true) const;
 
 	/**
 	 * Find a title.
@@ -201,8 +192,8 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitle* FindTitle(const std::string& inName) const;
-	ARBConfigTitle* FindTitle(const std::string& inName);
+	ARBConfigTitle const* FindTitle(std::string const& inName) const;
+	ARBConfigTitle* FindTitle(std::string const& inName);
 
 	/**
 	 * Add a title.
@@ -210,7 +201,7 @@ public:
 	 * @return Pointer to new object, NULL if name already exists or is empty.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigTitle* AddTitle(const std::string& inName);
+	ARBConfigTitle* AddTitle(std::string const& inName);
 
 	/**
 	 * Add a title.
@@ -225,5 +216,5 @@ public:
 	 * @param inName Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(const std::string& inName);
+	bool DeleteTitle(std::string const& inName);
 };

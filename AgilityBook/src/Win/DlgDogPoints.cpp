@@ -50,12 +50,12 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const struct
+static struct
 {
 	int fmt;
 	int cx;
 	UINT idText;
-} colExistingPointsInfo[] =
+} const colExistingPointsInfo[] =
 {
 	{LVCFMT_LEFT, 50, IDS_COL_DATE},
 	{LVCFMT_LEFT, 50, IDS_COL_TYPE},
@@ -67,7 +67,7 @@ static const struct
 	{LVCFMT_LEFT, 50, IDS_COL_EVENT},
 	{LVCFMT_LEFT, 50, IDS_COL_COMMENTS},
 };
-static const int nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
+static int const nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
 
 typedef struct
 {
@@ -158,7 +158,7 @@ int CALLBACK ComparePoints(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogPoints dialog
 
-CDlgDogPoints::CDlgDogPoints(ARBConfig& config, const ARBDogExistingPointsList& points)
+CDlgDogPoints::CDlgDogPoints(ARBConfig& config, ARBDogExistingPointsList const& points)
 	: CPropertyPage(CDlgDogPoints::IDD)
 	, m_Config(config)
 	, m_sortPoints("ExistingPoints")
@@ -219,17 +219,17 @@ void CDlgDogPoints::SetColumnHeaders()
 
 void CDlgDogPoints::ListExistingPoints()
 {
-	const ARBDogExistingPoints* pSelected = NULL;
+	ARBDogExistingPoints const* pSelected = NULL;
 	int i = m_ctrlPoints.GetSelection();
 	if (0 <= i)
-		pSelected = reinterpret_cast<const ARBDogExistingPoints*>(m_ctrlPoints.GetItemData(i));
+		pSelected = reinterpret_cast<ARBDogExistingPoints const*>(m_ctrlPoints.GetItemData(i));
 	m_ctrlPoints.DeleteAllItems();
 	i = 0;
 	for (ARBDogExistingPointsList::const_iterator iterExistingPoints = m_ExistingPoints.begin();
 		iterExistingPoints != m_ExistingPoints.end();
 		++i, ++iterExistingPoints)
 	{
-		const ARBDogExistingPoints* pExistingPoints = (*iterExistingPoints);
+		ARBDogExistingPoints const* pExistingPoints = (*iterExistingPoints);
 		m_ctrlPoints.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlPoints.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
 			reinterpret_cast<LPARAM>(pExistingPoints));
@@ -244,7 +244,7 @@ void CDlgDogPoints::ListExistingPoints()
 	{
 		for (i = 0; i < m_ctrlPoints.GetItemCount(); ++i)
 		{
-			const ARBDogExistingPoints* pExistingPoints = reinterpret_cast<const ARBDogExistingPoints*>(m_ctrlPoints.GetItemData(i));
+			ARBDogExistingPoints const* pExistingPoints = reinterpret_cast<ARBDogExistingPoints const*>(m_ctrlPoints.GetItemData(i));
 			if (pExistingPoints == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlPoints.SetSelection(i, true);
@@ -322,7 +322,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		const ARBDogExistingPoints* pData = reinterpret_cast<const ARBDogExistingPoints*>(pDispInfo->item.lParam);
+		ARBDogExistingPoints const* pData = reinterpret_cast<ARBDogExistingPoints const*>(pDispInfo->item.lParam);
 		CString str;
 		switch (pDispInfo->item.iSubItem)
 		{
@@ -392,7 +392,7 @@ void CDlgDogPoints::OnDelete()
 	int i = m_ctrlPoints.GetSelection();
 	if (0 <= i)
 	{
-		const ARBDogExistingPoints* pExistingPoints = reinterpret_cast<const ARBDogExistingPoints*>(m_ctrlPoints.GetItemData(i));
+		ARBDogExistingPoints const* pExistingPoints = reinterpret_cast<ARBDogExistingPoints const*>(m_ctrlPoints.GetItemData(i));
 		m_ExistingPoints.DeleteExistingPoints(pExistingPoints);
 		m_ctrlPoints.DeleteItem(i);
 	}

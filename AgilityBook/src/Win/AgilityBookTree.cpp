@@ -442,7 +442,7 @@ CAgilityBookTreeData* CAgilityBookTree::GetCurrentTreeItem() const
 	return GetItemData(GetTreeCtrl().GetSelectedItem());
 }
 
-CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBBase* pBase) const
+CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, ARBBase const* pBase) const
 {
 	if (!pBase)
 		return NULL;
@@ -465,7 +465,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBBase*
 	return pData;
 }
 
-CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDog* pDog) const
+CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, ARBDog const* pDog) const
 {
 	if (!pDog)
 		return NULL;
@@ -490,7 +490,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDog* 
 	return pData;
 }
 
-CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDogTrial* pTrial) const
+CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, ARBDogTrial const* pTrial) const
 {
 	if (!pTrial)
 		return NULL;
@@ -513,7 +513,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDogTr
 	return pData;
 }
 
-CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDogRun* pRun) const
+CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, ARBDogRun const* pRun) const
 {
 	if (!pRun)
 		return NULL;
@@ -617,8 +617,8 @@ void CAgilityBookTree::LoadData()
 
 	CWaitCursor wait;
 	// Remember the currently selected item.
-	const CAgilityBookTreeData* pData = GetCurrentTreeItem();
-	std::vector<const ARBBase*> baseItems;
+	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
+	std::vector<ARBBase const*> baseItems;
 	while (pData)
 	{
 		baseItems.push_back(pData->GetARBBase());
@@ -634,7 +634,7 @@ void CAgilityBookTree::LoadData()
 		InsertDog((*iterDog));
 	}
 	HTREEITEM hItem = NULL;
-	for (std::vector<const ARBBase*>::iterator iter = baseItems.begin();
+	for (std::vector<ARBBase const*>::iterator iter = baseItems.begin();
 		NULL == hItem && iter != baseItems.end();
 		++iter)
 	{

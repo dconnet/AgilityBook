@@ -58,17 +58,17 @@ public:
 
 	HTREEITEM GetHTreeItem() const									{return m_hItem;}
 	void SetHTreeItem(HTREEITEM hItem)								{m_hItem = hItem;}
-	virtual const CAgilityBookTreeData* GetParent() const = 0;
-	virtual const ARBBase* GetARBBase() const						{return NULL;}
-	virtual const ARBDog* GetDog() const							{return NULL;}
-	virtual const ARBDogTrial* GetTrial() const						{return NULL;}
-	virtual const ARBDogRun* GetRun() const							{return NULL;}
+	virtual CAgilityBookTreeData const* GetParent() const = 0;
+	virtual ARBBase const* GetARBBase() const						{return NULL;}
+	virtual ARBDog const* GetDog() const							{return NULL;}
+	virtual ARBDogTrial const* GetTrial() const						{return NULL;}
+	virtual ARBDogRun const* GetRun() const							{return NULL;}
 	virtual ARBDog* GetDog()										{return NULL;}
 	virtual ARBDogTrial* GetTrial()									{return NULL;}
 	virtual ARBDogRun* GetRun()										{return NULL;}
-	virtual const CAgilityBookTreeDataDog* GetDataDog() const		{return NULL;}
-	virtual const CAgilityBookTreeDataTrial* GetDataTrial() const	{return NULL;}
-	virtual const CAgilityBookTreeDataRun* GetDataRun() const		{return NULL;}
+	virtual CAgilityBookTreeDataDog const* GetDataDog() const		{return NULL;}
+	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const	{return NULL;}
+	virtual CAgilityBookTreeDataRun const* GetDataRun() const		{return NULL;}
 	virtual CAgilityBookTreeDataDog* GetDataDog()					{return NULL;}
 	virtual CAgilityBookTreeDataTrial* GetDataTrial()				{return NULL;}
 	virtual CAgilityBookTreeDataRun* GetDataRun()					{return NULL;}
@@ -86,9 +86,9 @@ public:
 protected:
 	CAgilityBookTree* m_pTree;
 	HTREEITEM m_hItem;
-	const std::vector<int>& GetDogColumns() const;
-	const std::vector<int>& GetTrialColumns() const;
-	const std::vector<int>& GetRunColumns() const;
+	std::vector<int> const& GetDogColumns() const;
+	std::vector<int> const& GetTrialColumns() const;
+	std::vector<int> const& GetRunColumns() const;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -99,11 +99,11 @@ public:
 	CAgilityBookTreeDataDog(CAgilityBookTree* pTree, ARBDog* pDog);
 	~CAgilityBookTreeDataDog();
 
-	virtual const CAgilityBookTreeData* GetParent() const		{return NULL;}
-	virtual const ARBBase* GetARBBase() const					{return m_pDog;}
-	virtual const ARBDog* GetDog() const						{return m_pDog;}
+	virtual CAgilityBookTreeData const* GetParent() const		{return NULL;}
+	virtual ARBBase const* GetARBBase() const					{return m_pDog;}
+	virtual ARBDog const* GetDog() const						{return m_pDog;}
 	virtual ARBDog* GetDog()									{return m_pDog;}
-	virtual const CAgilityBookTreeDataDog* GetDataDog() const	{return this;}
+	virtual CAgilityBookTreeDataDog const* GetDataDog() const	{return this;}
 	virtual CAgilityBookTreeDataDog* GetDataDog()				{return this;}
 
 	virtual UINT GetMenuID() const								{return IDR_DOG;}
@@ -125,14 +125,14 @@ public:
 	CAgilityBookTreeDataTrial(CAgilityBookTree* pTree, ARBDogTrial* pTrial);
 	~CAgilityBookTreeDataTrial();
 
-	virtual const CAgilityBookTreeData* GetParent() const			{return GetDataDog();}
-	virtual const ARBBase* GetARBBase() const						{return m_pTrial;}
-	virtual const ARBDog* GetDog() const;
-	virtual const ARBDogTrial* GetTrial() const						{return m_pTrial;}
+	virtual CAgilityBookTreeData const* GetParent() const			{return GetDataDog();}
+	virtual ARBBase const* GetARBBase() const						{return m_pTrial;}
+	virtual ARBDog const* GetDog() const;
+	virtual ARBDogTrial const* GetTrial() const						{return m_pTrial;}
 	virtual ARBDog* GetDog();
 	virtual ARBDogTrial* GetTrial()									{return m_pTrial;}
-	virtual const CAgilityBookTreeDataDog* GetDataDog() const;
-	virtual const CAgilityBookTreeDataTrial* GetDataTrial() const	{return this;}
+	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
+	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const	{return this;}
 	virtual CAgilityBookTreeDataDog* GetDataDog();
 	virtual CAgilityBookTreeDataTrial* GetDataTrial()				{return this;}
 
@@ -155,17 +155,17 @@ public:
 	CAgilityBookTreeDataRun(CAgilityBookTree* pTree, ARBDogRun* pRun);
 	~CAgilityBookTreeDataRun();
 
-	virtual const CAgilityBookTreeData* GetParent() const			{return GetDataTrial();}
-	virtual const ARBBase* GetARBBase() const						{return m_pRun;}
-	virtual const ARBDog* GetDog() const;
-	virtual const ARBDogTrial* GetTrial() const;
-	virtual const ARBDogRun* GetRun() const							{return m_pRun;}
+	virtual CAgilityBookTreeData const* GetParent() const			{return GetDataTrial();}
+	virtual ARBBase const* GetARBBase() const						{return m_pRun;}
+	virtual ARBDog const* GetDog() const;
+	virtual ARBDogTrial const* GetTrial() const;
+	virtual ARBDogRun const* GetRun() const							{return m_pRun;}
 	virtual ARBDog* GetDog();
 	virtual ARBDogTrial* GetTrial();
 	virtual ARBDogRun* GetRun()										{return m_pRun;}
-	virtual const CAgilityBookTreeDataDog* GetDataDog() const;
-	virtual const CAgilityBookTreeDataTrial* GetDataTrial() const;
-	virtual const CAgilityBookTreeDataRun* GetDataRun() const		{return this;}
+	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
+	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const;
+	virtual CAgilityBookTreeDataRun const* GetDataRun() const		{return this;}
 	virtual CAgilityBookTreeDataDog* GetDataDog();
 	virtual CAgilityBookTreeDataTrial* GetDataTrial();
 	virtual CAgilityBookTreeDataRun* GetDataRun()					{return this;}

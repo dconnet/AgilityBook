@@ -47,7 +47,7 @@ class CDlgOptionsFilter : public CPropertyPage
 	friend class CDlgOptions;
 	DECLARE_DYNAMIC(CDlgOptionsFilter)
 public:
-	CDlgOptionsFilter(const ARBConfig& config);
+	CDlgOptionsFilter(ARBConfig const& config);
 	~CDlgOptionsFilter();
 
 private:
@@ -67,13 +67,13 @@ private:
 	CCheckTreeCtrl	m_ctrlVenue;
 	int		m_ViewQs;
 	//}}AFX_DATA
-	const ARBConfig& m_Config;
+	ARBConfig const& m_Config;
 	std::vector<CVenueFilter> m_VenueFilter;
 
 private:
-	bool Find(const std::string& venue,
-		const std::string& div,
-		const std::string& level) const;
+	bool Find(std::string const& venue,
+		std::string const& div,
+		std::string const& level) const;
 	void FillFilter(HTREEITEM hItem, CString path);
 	void UpdateControls();
 

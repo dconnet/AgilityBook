@@ -53,10 +53,10 @@ class ARBConfigTitlePoints : public ARBBase
 public:
 	ARBConfigTitlePoints();
 	ARBConfigTitlePoints(short inPoints, short inFaults);
-	ARBConfigTitlePoints(const ARBConfigTitlePoints& rhs);
-	ARBConfigTitlePoints& operator=(const ARBConfigTitlePoints& rhs);
-	bool operator==(const ARBConfigTitlePoints& rhs) const;
-	bool operator!=(const ARBConfigTitlePoints& rhs) const;
+	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
+	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
+	bool operator==(ARBConfigTitlePoints const& rhs) const;
+	bool operator!=(ARBConfigTitlePoints const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -80,8 +80,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -137,15 +137,6 @@ inline void ARBConfigTitlePoints::SetFaults(short inFaults)
 class ARBConfigTitlePointsList : public ARBVectorLoad1<ARBConfigTitlePoints>
 {
 public:
-	bool operator==(const ARBConfigTitlePointsList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigTitlePointsList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Sort the title point objects by faults.
 	 */
@@ -164,7 +155,7 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitlePoints* FindTitlePoints(short inFaults) const;
+	ARBConfigTitlePoints const* FindTitlePoints(short inFaults) const;
 
 	/**
 	 * Add an object.

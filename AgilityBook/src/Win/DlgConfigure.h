@@ -80,9 +80,9 @@ private:
 	bool GetActionData(CListCtrl2*& pCtrl, int& index, CDlgConfigureData*& pData);
 	void UpdateButtons();
 	void LoadData();
-	int FindCurrentVenue(const ARBConfigVenue* pVenue, bool bSet);
-	int FindCurrentFault(const ARBConfigFault* pFault, bool bSet);
-	int FindCurrentOtherPoints(const ARBConfigOtherPoints* pOther, bool bSet);
+	int FindCurrentVenue(ARBConfigVenue const* pVenue, bool bSet);
+	int FindCurrentFault(ARBConfigFault const* pFault, bool bSet);
+	int FindCurrentOtherPoints(ARBConfigOtherPoints const* pOther, bool bSet);
 
 protected:
 	//{{AFX_MSG(CDlgConfigure)

@@ -41,7 +41,7 @@ class ARBDogRunOtherPoints;
 class CDlgOtherPoint : public CDialog
 {
 public:
-	CDlgOtherPoint(const ARBConfig& config, ARBDogRunOtherPoints* pOther, CWnd* pParent = NULL);
+	CDlgOtherPoint(ARBConfig const& config, ARBDogRunOtherPoints* pOther, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -51,7 +51,7 @@ private:
 	CEdit	m_ctrlDesc;
 	short	m_Points;
 	//}}AFX_DATA
-	const ARBConfig& m_Config;
+	ARBConfig const& m_Config;
 	ARBDogRunOtherPoints* m_pOther;
 
 	//{{AFX_VIRTUAL(CDlgOtherPoint)

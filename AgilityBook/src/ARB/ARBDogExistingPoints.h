@@ -55,10 +55,10 @@ class ARBDogExistingPoints : public ARBBase
 {
 public:
 	ARBDogExistingPoints();
-	ARBDogExistingPoints(const ARBDogExistingPoints& rhs);
-	ARBDogExistingPoints& operator=(const ARBDogExistingPoints& rhs);
-	bool operator==(const ARBDogExistingPoints& rhs) const;
-	bool operator!=(const ARBDogExistingPoints& rhs) const;
+	ARBDogExistingPoints(ARBDogExistingPoints const& rhs);
+	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
+	bool operator==(ARBDogExistingPoints const& rhs) const;
+	bool operator!=(ARBDogExistingPoints const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -83,9 +83,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -118,20 +118,20 @@ public:
 	 */
 	PointType GetType() const;
 	void SetType(PointType inType);
-	const ARBDate& GetDate() const;
-	void SetDate(const ARBDate& inDate);
-	const std::string& GetComment() const;
-	void SetComment(const std::string& inComment);
-	const std::string& GetOtherPoints() const;
-	void SetOtherPoints(const std::string& inOther);
-	const std::string& GetVenue() const;
-	void SetVenue(const std::string& inVenue);
-	const std::string& GetDivision() const;
-	void SetDivision(const std::string& inDiv);
-	const std::string& GetLevel() const;
-	void SetLevel(const std::string& inLevel);
-	const std::string& GetEvent() const;
-	void SetEvent(const std::string& inEvent);
+	ARBDate const& GetDate() const;
+	void SetDate(ARBDate const& inDate);
+	std::string const& GetComment() const;
+	void SetComment(std::string const& inComment);
+	std::string const& GetOtherPoints() const;
+	void SetOtherPoints(std::string const& inOther);
+	std::string const& GetVenue() const;
+	void SetVenue(std::string const& inVenue);
+	std::string const& GetDivision() const;
+	void SetDivision(std::string const& inDiv);
+	std::string const& GetLevel() const;
+	void SetLevel(std::string const& inLevel);
+	std::string const& GetEvent() const;
+	void SetEvent(std::string const& inEvent);
 	short GetPoints() const;
 	void SetPoints(short inPoints);
 
@@ -158,72 +158,72 @@ inline void ARBDogExistingPoints::SetType(ARBDogExistingPoints::PointType inType
 	m_Type = inType;
 }
 
-inline const ARBDate& ARBDogExistingPoints::GetDate() const
+inline ARBDate const& ARBDogExistingPoints::GetDate() const
 {
 	return m_Date;
 }
 
-inline void ARBDogExistingPoints::SetDate(const ARBDate& inDate)
+inline void ARBDogExistingPoints::SetDate(ARBDate const& inDate)
 {
 	m_Date = inDate;
 }
 
-inline const std::string& ARBDogExistingPoints::GetComment() const
+inline std::string const& ARBDogExistingPoints::GetComment() const
 {
 	return m_Comment;
 }
 
-inline void ARBDogExistingPoints::SetComment(const std::string& inComment)
+inline void ARBDogExistingPoints::SetComment(std::string const& inComment)
 {
 	m_Comment = inComment;
 }
 
-inline const std::string& ARBDogExistingPoints::GetOtherPoints() const
+inline std::string const& ARBDogExistingPoints::GetOtherPoints() const
 {
 	return m_Other;
 }
 
-inline void ARBDogExistingPoints::SetOtherPoints(const std::string& inOther)
+inline void ARBDogExistingPoints::SetOtherPoints(std::string const& inOther)
 {
 	m_Other = inOther;
 }
 
-inline const std::string& ARBDogExistingPoints::GetVenue() const
+inline std::string const& ARBDogExistingPoints::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogExistingPoints::SetVenue(const std::string& inVenue)
+inline void ARBDogExistingPoints::SetVenue(std::string const& inVenue)
 {
 	m_Venue = inVenue;
 }
 
-inline const std::string& ARBDogExistingPoints::GetDivision() const
+inline std::string const& ARBDogExistingPoints::GetDivision() const
 {
 	return m_Div;
 }
 
-inline void ARBDogExistingPoints::SetDivision(const std::string& inDiv)
+inline void ARBDogExistingPoints::SetDivision(std::string const& inDiv)
 {
 	m_Div = inDiv;
 }
 
-inline const std::string& ARBDogExistingPoints::GetLevel() const
+inline std::string const& ARBDogExistingPoints::GetLevel() const
 {
 	return m_Level;
 }
 
-inline void ARBDogExistingPoints::SetLevel(const std::string& inLevel)
+inline void ARBDogExistingPoints::SetLevel(std::string const& inLevel)
 {
 	m_Level = inLevel;
 }
 
-inline const std::string& ARBDogExistingPoints::GetEvent() const
+inline std::string const& ARBDogExistingPoints::GetEvent() const
 {
 	return m_Event;
 }
 
-inline void ARBDogExistingPoints::SetEvent(const std::string& inEvent)
+inline void ARBDogExistingPoints::SetEvent(std::string const& inEvent)
 {
 	m_Event = inEvent;
 }
@@ -246,15 +246,6 @@ inline void ARBDogExistingPoints::SetPoints(short inPoints)
 class ARBDogExistingPointsList : public ARBVectorLoad2<ARBDogExistingPoints>
 {
 public:
-	bool operator==(const ARBDogExistingPointsList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBDogExistingPointsList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Sort by points/venue/division/level.
 	 */
@@ -265,7 +256,7 @@ public:
 	 * @param inVenue Venue to search for.
 	 * @return Whether any existing points exist.
 	 */
-	bool HasPoints(const std::string& inVenue) const;
+	bool HasPoints(std::string const& inVenue) const;
 
 	/**
 	 * Are there any existing points?
@@ -276,10 +267,10 @@ public:
 	 * @return Whether any existing points exist.
 	 */
 	bool HasPoints(
-		const ARBConfigVenue* inVenue,
-		const ARBConfigDivision* inDiv,
-		const ARBConfigLevel* inLevel,
-		const ARBConfigEvent* inEvent) const;
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel,
+		ARBConfigEvent const* inEvent) const;
 
 	/**
 	 * Get the number of existing points.
@@ -292,17 +283,17 @@ public:
 	 */
 	short ExistingPoints(
 		ARBDogExistingPoints::PointType inType,
-		const ARBConfigVenue* inVenue,
-		const ARBConfigDivision* inDiv,
-		const ARBConfigLevel* inLevel,
-		const ARBConfigEvent* inEvent) const;
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel,
+		ARBConfigEvent const* inEvent) const;
 
 	/**
 	 * Get the number of existing point items in a venue.
 	 * @param inVenue Venue to search for.
 	 * @return Number of objects, not points.
 	 */
-	int NumExistingPointsInVenue(const std::string& inVenue) const;
+	int NumExistingPointsInVenue(std::string const& inVenue) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -311,15 +302,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-		const std::string& inOldVenue,
-		const std::string& inNewVenue);
+		std::string const& inOldVenue,
+		std::string const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(const std::string& inVenue);
+	int DeleteVenue(std::string const& inVenue);
 
 	/**
 	 * Get the number of existing point entries in a division.
@@ -329,8 +320,8 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumExistingPointsInDivision(
-		const ARBConfigVenue* inVenue,
-		const std::string& inDiv) const;
+		ARBConfigVenue const* inVenue,
+		std::string const& inDiv) const;
 
 	/**
 	 * Rename a division.
@@ -340,9 +331,9 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameDivision(
-		const std::string& inVenue,
-		const std::string& inOldDiv,
-		const std::string& inNewDiv);
+		std::string const& inVenue,
+		std::string const& inOldDiv,
+		std::string const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -351,8 +342,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteDivision(
-		const std::string& inVenue,
-		const std::string& inDiv);
+		std::string const& inVenue,
+		std::string const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -363,9 +354,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-		const std::string& inVenue,
-		const std::string& inDiv,
-		const std::string& inLevel) const;
+		std::string const& inVenue,
+		std::string const& inDiv,
+		std::string const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -376,10 +367,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-		const std::string& inVenue,
-		const std::string& inDiv,
-		const std::string& inOldLevel,
-		const std::string& inNewLevel);
+		std::string const& inVenue,
+		std::string const& inDiv,
+		std::string const& inOldLevel,
+		std::string const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -389,9 +380,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-		const std::string& inVenue,
-		const std::string& inDiv,
-		const std::string& inLevel);
+		std::string const& inVenue,
+		std::string const& inDiv,
+		std::string const& inLevel);
 
 	/**
 	 * Number of events in use.
@@ -401,8 +392,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-		const std::string& inVenue,
-		const std::string& inEvent) const;
+		std::string const& inVenue,
+		std::string const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -412,9 +403,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-		const std::string& inVenue,
-		const std::string& inOldEvent,
-		const std::string& inNewEvent);
+		std::string const& inVenue,
+		std::string const& inOldEvent,
+		std::string const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -423,8 +414,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-		const std::string& inVenue,
-		const std::string& inEvent);
+		std::string const& inVenue,
+		std::string const& inEvent);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -432,7 +423,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(const std::string& inOther) const;
+	int NumOtherPointsInUse(std::string const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -441,15 +432,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-		const std::string& inOldOther,
-		const std::string& inNewOther);
+		std::string const& inOldOther,
+		std::string const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inOther OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(const std::string& inOther);
+	int DeleteOtherPoints(std::string const& inOther);
 
 	/**
 	 * Add an existing point object.
@@ -466,5 +457,5 @@ public:
 	 * @return Whether object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteExistingPoints(const ARBDogExistingPoints* inExistingPoints);
+	bool DeleteExistingPoints(ARBDogExistingPoints const* inExistingPoints);
 };

@@ -49,7 +49,7 @@ class CDlgDogNumbers : public CPropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogNumbers(ARBConfig& config, const ARBDogRegNumList& regnums);
+	CDlgDogNumbers(ARBConfig& config, ARBDogRegNumList const& regnums);
 
 private:
 // Dialog Data

@@ -49,8 +49,8 @@ class CDlgDogTitles : public CPropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogTitles(ARBConfig& config, const ARBDogTitleList& titles);
-	const ARBConfig& GetConfig() const	{return m_Config;}
+	CDlgDogTitles(ARBConfig& config, ARBDogTitleList const& titles);
+	ARBConfig const& GetConfig() const	{return m_Config;}
 
 private:
 // Dialog Data

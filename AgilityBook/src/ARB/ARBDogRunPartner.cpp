@@ -58,7 +58,7 @@ ARBDogRunPartner::ARBDogRunPartner()
 {
 }
 
-ARBDogRunPartner::ARBDogRunPartner(const ARBDogRunPartner& rhs)
+ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner const& rhs)
 	: m_Handler(rhs.m_Handler)
 	, m_Dog(rhs.m_Dog)
 	, m_RegNum(rhs.m_RegNum)
@@ -69,7 +69,7 @@ ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
 
-ARBDogRunPartner& ARBDogRunPartner::operator=(const ARBDogRunPartner& rhs)
+ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -80,14 +80,14 @@ ARBDogRunPartner& ARBDogRunPartner::operator=(const ARBDogRunPartner& rhs)
 	return *this;
 }
 
-bool ARBDogRunPartner::operator==(const ARBDogRunPartner& rhs) const
+bool ARBDogRunPartner::operator==(ARBDogRunPartner const& rhs) const
 {
 	return m_Handler == rhs.m_Handler
 		&& m_Dog == rhs.m_Dog
 		&& m_RegNum == rhs.m_RegNum;
 }
 
-bool ARBDogRunPartner::operator!=(const ARBDogRunPartner& rhs) const
+bool ARBDogRunPartner::operator!=(ARBDogRunPartner const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -118,9 +118,9 @@ size_t ARBDogRunPartner::GetSearchStrings(std::set<std::string>& ioStrings) cons
 }
 
 bool ARBDogRunPartner::Load(
-	const ARBConfig& inConfig,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfig const& inConfig,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)

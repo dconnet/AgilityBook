@@ -51,11 +51,11 @@ class ARBConfig
 {
 public:
 	ARBConfig();
-	ARBConfig(const ARBConfig& rhs);
+	ARBConfig(ARBConfig const& rhs);
 	~ARBConfig();
-	ARBConfig& operator=(const ARBConfig& rhs);
-	bool operator==(const ARBConfig& rhs) const;
-	bool operator!=(const ARBConfig& rhs) const;
+	ARBConfig& operator=(ARBConfig const& rhs);
+	bool operator==(ARBConfig const& rhs) const;
+	bool operator!=(ARBConfig const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -73,8 +73,8 @@ public:
 	 * @return Success
 	 */
 	bool LoadFault(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -88,8 +88,8 @@ public:
 	 * @return Success
 	 */
 	bool LoadOtherPoints(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -101,8 +101,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -130,8 +130,8 @@ public:
 	 * @return Nice name (longname) of a title.
 	 */
 	std::string GetTitleNiceName(
-		const std::string& inVenue,
-		const std::string& inTitle) const;
+		std::string const& inVenue,
+		std::string const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -141,8 +141,8 @@ public:
 	 * @return Complete name of title (name + longname).
 	 */
 	std::string GetTitleCompleteName(
-		const std::string& inVenue,
-		const std::string& inTitle,
+		std::string const& inVenue,
+		std::string const& inTitle,
 		bool bAbbrevFirst = true) const;
 
 	/**
@@ -152,19 +152,19 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, const ARBConfig& inConfigNew, std::string& ioInfo);
+	bool Update(int indent, ARBConfig const& inConfigNew, std::string& ioInfo);
 
 	/*
 	 * Getters.
 	 */
 	short GetVersion() const;
-	const ARBConfigActionList& GetActions() const;
+	ARBConfigActionList const& GetActions() const;
 	ARBConfigActionList& GetActions();
-	const ARBConfigVenueList& GetVenues() const;
+	ARBConfigVenueList const& GetVenues() const;
 	ARBConfigVenueList& GetVenues();
-	const ARBConfigFaultList& GetFaults() const;
+	ARBConfigFaultList const& GetFaults() const;
 	ARBConfigFaultList& GetFaults();
-	const ARBConfigOtherPointsList& GetOtherPoints() const;
+	ARBConfigOtherPointsList const& GetOtherPoints() const;
 	ARBConfigOtherPointsList& GetOtherPoints();
 
 private:
@@ -180,7 +180,7 @@ inline short ARBConfig::GetVersion() const
 	return m_Version;
 }
 
-inline const ARBConfigActionList& ARBConfig::GetActions() const
+inline ARBConfigActionList const& ARBConfig::GetActions() const
 {
 	return m_Actions;
 }
@@ -190,7 +190,7 @@ inline ARBConfigActionList& ARBConfig::GetActions()
 	return m_Actions;
 }
 
-inline const ARBConfigVenueList& ARBConfig::GetVenues() const
+inline ARBConfigVenueList const& ARBConfig::GetVenues() const
 {
 	return m_Venues;
 }
@@ -200,7 +200,7 @@ inline ARBConfigVenueList& ARBConfig::GetVenues()
 	return m_Venues;
 }
 
-inline const ARBConfigFaultList& ARBConfig::GetFaults() const
+inline ARBConfigFaultList const& ARBConfig::GetFaults() const
 {
 	return m_FaultTypes;
 }
@@ -210,7 +210,7 @@ inline ARBConfigFaultList& ARBConfig::GetFaults()
 	return m_FaultTypes;
 }
 
-inline const ARBConfigOtherPointsList& ARBConfig::GetOtherPoints() const
+inline ARBConfigOtherPointsList const& ARBConfig::GetOtherPoints() const
 {
 	return m_OtherPoints;
 }

@@ -50,12 +50,12 @@ class ARBInfoJudge : public ARBBase
 {
 public:
 	ARBInfoJudge();
-	ARBInfoJudge(const ARBInfoJudge& rhs);
-	ARBInfoJudge& operator=(const ARBInfoJudge& rhs);
-	bool operator==(const ARBInfoJudge& rhs) const;
-	bool operator!=(const ARBInfoJudge& rhs) const;
-	bool operator<(const ARBInfoJudge& rhs) const;
-	bool operator>(const ARBInfoJudge& rhs) const;
+	ARBInfoJudge(ARBInfoJudge const& rhs);
+	ARBInfoJudge& operator=(ARBInfoJudge const& rhs);
+	bool operator==(ARBInfoJudge const& rhs) const;
+	bool operator!=(ARBInfoJudge const& rhs) const;
+	bool operator<(ARBInfoJudge const& rhs) const;
+	bool operator>(ARBInfoJudge const& rhs) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -79,8 +79,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -94,10 +94,10 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const std::string& GetComment() const;
-	void SetComment(const std::string& inComment);
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	std::string const& GetComment() const;
+	void SetComment(std::string const& inComment);
 
 private:
 	~ARBInfoJudge();
@@ -105,32 +105,32 @@ private:
 	std::string m_Comment;
 };
 
-inline bool ARBInfoJudge::operator<(const ARBInfoJudge& rhs) const
+inline bool ARBInfoJudge::operator<(ARBInfoJudge const& rhs) const
 {
 	return m_Name < rhs.GetName();
 }
 
-inline bool ARBInfoJudge::operator>(const ARBInfoJudge& rhs) const
+inline bool ARBInfoJudge::operator>(ARBInfoJudge const& rhs) const
 {
 	return m_Name > rhs.GetName();
 }
 
-inline const std::string& ARBInfoJudge::GetName() const
+inline std::string const& ARBInfoJudge::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBInfoJudge::SetName(const std::string& inName)
+inline void ARBInfoJudge::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const std::string& ARBInfoJudge::GetComment() const
+inline std::string const& ARBInfoJudge::GetComment() const
 {
 	return m_Comment;
 }
 
-inline void ARBInfoJudge::SetComment(const std::string& inComment)
+inline void ARBInfoJudge::SetComment(std::string const& inComment)
 {
 	m_Comment = inComment;
 }
@@ -143,15 +143,6 @@ inline void ARBInfoJudge::SetComment(const std::string& inComment)
 class ARBInfoJudgeList : public ARBVectorLoad1<ARBInfoJudge>
 {
 public:
-	bool operator==(const ARBInfoJudgeList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBInfoJudgeList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
-
 	/**
 	 * Sort the list by name.
 	 * @param inDescending Sort in descending or ascending order.
@@ -169,7 +160,7 @@ public:
 	 * Remove entries from list that are in use but have no associated comments.
 	 * @param inNamesInUse Names of judges from runs.
 	 */
-	void CondenseContent(const std::set<std::string>& inNamesInUse);
+	void CondenseContent(std::set<std::string> const& inNamesInUse);
 
 	/**
 	 * Find a judge.
@@ -177,7 +168,7 @@ public:
 	 * @return Object matching judge.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBInfoJudge* FindJudge(const std::string& inName) const;
+	ARBInfoJudge* FindJudge(std::string const& inName) const;
 
 	/**
 	 * Add a new judge.
@@ -185,12 +176,12 @@ public:
 	 * @return Pointer to new object, NULL if name already exists or is empty.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBInfoJudge* AddJudge(const std::string& inJudge);
+	ARBInfoJudge* AddJudge(std::string const& inJudge);
 
 	/**
 	 * Delete a judge.
 	 * @param inJudge Object to delete.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteJudge(const ARBInfoJudge* inJudge);
+	bool DeleteJudge(ARBInfoJudge const* inJudge);
 };

@@ -227,14 +227,14 @@ void CWizardExport::UpdatePreview()
 			m_ctrlPreview.AddString(data);
 			for (ARBDogList::const_iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
 			{
-				const ARBDog* pDog = *iterDog;
+				ARBDog const* pDog = *iterDog;
 				for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
 				{
-					const ARBDogTrial* pTrial = *iterTrial;
+					ARBDogTrial const* pTrial = *iterTrial;
 					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
 					{
-						const ARBDogRun* pRun = *iterRun;
-						const ARBConfigScoring* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+						ARBDogRun const* pRun = *iterRun;
+						ARBConfigScoring const* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
 							pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
 							pRun->GetEvent(),
 							pRun->GetDivision(),
@@ -531,7 +531,7 @@ void CWizardExport::UpdatePreview()
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 			{
 				data.Empty();
-				const ARBCalendar* pCal = *iterCal;
+				ARBCalendar const* pCal = *iterCal;
 				for (size_t idx = 0; idx < columns.size(); ++idx)
 				{
 					ARBDate date;
@@ -608,7 +608,7 @@ void CWizardExport::UpdatePreview()
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
 			{
 				data.Empty();
-				const ARBTraining* pLog = *iterLog;
+				ARBTraining const* pLog = *iterLog;
 				for (size_t idx = 0; idx < columns.size(); ++idx)
 				{
 					if (0 < idx)
@@ -640,11 +640,11 @@ void CWizardExport::UpdatePreview()
 BOOL CWizardExport::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
-	static const struct
+	static struct
 	{
-		const char* pFormat;
+		char const* pFormat;
 		ARBDate::DateFormat format;
-	} sc_Dates[] =
+	} const sc_Dates[] =
 	{
 		{"MM-DD-YYYY", ARBDate::eDashMMDDYYYY},
 		{"MM/DD/YYYY", ARBDate::eSlashMMDDYYYY},
@@ -655,7 +655,7 @@ BOOL CWizardExport::OnInitDialog()
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
-	static const int sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
+	static int const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	for (int i = 0; i < sc_nDates; ++i)
 	{
 		int index = m_ctrlDateFormat.AddString(sc_Dates[i].pFormat);

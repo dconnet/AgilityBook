@@ -60,7 +60,7 @@ ARBTraining::ARBTraining()
 {
 }
 
-ARBTraining::ARBTraining(const ARBTraining& rhs)
+ARBTraining::ARBTraining(ARBTraining const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Name(rhs.m_Name)
 	, m_Note(rhs.m_Note)
@@ -71,7 +71,7 @@ ARBTraining::~ARBTraining()
 {
 }
 
-ARBTraining& ARBTraining::operator=(const ARBTraining& rhs)
+ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -82,14 +82,14 @@ ARBTraining& ARBTraining::operator=(const ARBTraining& rhs)
 	return *this;
 }
 
-bool ARBTraining::operator==(const ARBTraining& rhs) const
+bool ARBTraining::operator==(ARBTraining const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Name == rhs.m_Name
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBTraining::operator!=(const ARBTraining& rhs) const
+bool ARBTraining::operator!=(ARBTraining const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -122,8 +122,8 @@ size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBTraining::Load(
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
@@ -190,16 +190,16 @@ size_t ARBTrainingList::GetAllNames(std::set<std::string>& outNames) const
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		const ARBTraining* training = *iter;
+		ARBTraining const* training = *iter;
 		if (0 < training->GetName().length())
 			outNames.insert(training->GetName());
 	}
 	return outNames.size();
 }
 
-const ARBTraining* ARBTrainingList::FindTraining(const ARBTraining* inTraining) const
+ARBTraining const* ARBTrainingList::FindTraining(ARBTraining const* inTraining) const
 {
-	const ARBTraining* pTraining = NULL;
+	ARBTraining const* pTraining = NULL;
 	if (inTraining)
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -224,7 +224,7 @@ ARBTraining* ARBTrainingList::AddTraining(ARBTraining* inTraining)
 	return inTraining;
 }
 
-bool ARBTrainingList::DeleteTraining(const ARBTraining* inTraining)
+bool ARBTrainingList::DeleteTraining(ARBTraining const* inTraining)
 {
 	if (inTraining)
 	{

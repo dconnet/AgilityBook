@@ -54,7 +54,7 @@ struct CFontInfo
 	bool italic;
 	bool bold;
 	void CreateFont(CFont& font, CDC* pDC = NULL);
-	void CreateFont(const CFontDialog& dlg, CFont& font, CDC* pDC = NULL);
+	void CreateFont(CFontDialog const& dlg, CFont& font, CDC* pDC = NULL);
 };
 
 struct CVenueFilter
@@ -69,23 +69,23 @@ class CAgilityBookOptions
 public:
 	// Helper functions
 	static bool IsFilterEnabled();
-	static bool IsDateVisible(const ARBDate& startDate, const ARBDate& endDate);
+	static bool IsDateVisible(ARBDate const& startDate, ARBDate const& endDate);
 	static bool IsTitleVisible(
-		const std::vector<CVenueFilter>& venues,
-		const ARBDogTitle* pTitle);
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTitle const* pTitle);
 	static bool IsVenueVisible(
-		const std::vector<CVenueFilter>& venues,
-		const std::string& venue);
+		std::vector<CVenueFilter> const& venues,
+		std::string const& venue);
 	static bool IsTrialVisible(
-		const std::vector<CVenueFilter>& venues,
-		const ARBDogTrial* pTrial);
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTrial const* pTrial);
 	static bool IsRunVisible(
-		const std::vector<CVenueFilter>& venues,
-		const ARBDogTrial* pTrial,
-		const ARBDogRun* pRun);
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRun);
 	static bool IsTrainingLogVisible(
-		const std::set<std::string>& names,
-		const ARBTraining* pTraining);
+		std::set<std::string> const& names,
+		ARBTraining const* pTraining);
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
 	static void SetAutoDeleteCalendarEntries(bool bAuto);
@@ -97,7 +97,7 @@ public:
 	static void SetHideOverlappingCalendarEntries(bool bHide);
 	static bool ViewCalendarAsList();
 	static CSize GetCalendarEntrySize();
-	static void SetCalendarEntrySize(const CSize& sz);
+	static void SetCalendarEntrySize(CSize const& sz);
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
@@ -109,17 +109,17 @@ public:
 	static bool GetViewAllDates();
 	static void SetViewAllDates(bool bViewAll);
 	static ARBDate GetStartFilterDate();
-	static void SetStartFilterDate(const ARBDate& date);
+	static void SetStartFilterDate(ARBDate const& date);
 	static bool GetStartFilterDateSet();
 	static void SetStartFilterDateSet(bool bSet);
 	static ARBDate GetEndFilterDate();
-	static void SetEndFilterDate(const ARBDate& date);
+	static void SetEndFilterDate(ARBDate const& date);
 	static bool GetEndFilterDateSet();
 	static void SetEndFilterDateSet(bool bSet);
 	static bool GetViewAllVenues();
 	static void SetViewAllVenues(bool bViewAll);
 	static void GetFilterVenue(std::vector<CVenueFilter>& venues);
-	static void SetFilterVenue(const std::vector<CVenueFilter>& venues);
+	static void SetFilterVenue(std::vector<CVenueFilter> const& venues);
 	static bool GetViewAllRuns();
 	static void SetViewAllRuns(bool bViewAll);
 	static bool GetViewQRuns(); // Subset of AllRuns
@@ -130,35 +130,35 @@ public:
 	static bool GetTrainingViewAllDates();
 	static void SetTrainingViewAllDates(bool bViewAll);
 	static ARBDate GetTrainingStartFilterDate();
-	static void SetTrainingStartFilterDate(const ARBDate& date);
+	static void SetTrainingStartFilterDate(ARBDate const& date);
 	static bool GetTrainingStartFilterDateSet();
 	static void SetTrainingStartFilterDateSet(bool bSet);
 	static ARBDate GetTrainingEndFilterDate();
-	static void SetTrainingEndFilterDate(const ARBDate& date);
+	static void SetTrainingEndFilterDate(ARBDate const& date);
 	static bool GetTrainingEndFilterDateSet();
 	static void SetTrainingEndFilterDateSet(bool bSet);
 	static bool GetTrainingViewAllNames();
 	static void SetTrainingViewAllNames(bool bViewAll);
 	static void GetTrainingFilterNames(std::set<std::string>& outNames);
-	static void SetTrainingFilterNames(const std::set<std::string>& inNames);
+	static void SetTrainingFilterNames(std::set<std::string> const& inNames);
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
-	static void SetPrinterFontInfo(const CFontInfo& info);
+	static void SetPrinterFontInfo(CFontInfo const& info);
 	static void GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting);
-	static void SetCalendarDateFontInfo(const CFontInfo& info, BOOL bPrinting);
+	static void SetCalendarDateFontInfo(CFontInfo const& info, BOOL bPrinting);
 	static void GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting);
-	static void SetCalendarTextFontInfo(const CFontInfo& info, BOOL bPrinting);
+	static void SetCalendarTextFontInfo(CFontInfo const& info, BOOL bPrinting);
 	// Last entered options
 	static CString GetLastEnteredDivision();
-	static void SetLastEnteredDivision(const char* inLast);
+	static void SetLastEnteredDivision(char const* inLast);
 	static CString GetLastEnteredLevel();
-	static void SetLastEnteredLevel(const char* inLast);
+	static void SetLastEnteredLevel(char const* inLast);
 	static CString GetLastEnteredHeight();
-	static void SetLastEnteredHeight(const char* inLast);
+	static void SetLastEnteredHeight(char const* inLast);
 	static CString GetLastEnteredJudge();
-	static void SetLastEnteredJudge(const char* inLast);
+	static void SetLastEnteredJudge(char const* inLast);
 	static CString GetLastEnteredHandler();
-	static void SetLastEnteredHandler(const char* inLast);
+	static void SetLastEnteredHandler(char const* inLast);
 	// Import/Export options
 	enum
 	{
@@ -172,7 +172,7 @@ public:
 	static int GetImportStartRow();
 	static void SetImportStartRow(int row);
 	static void GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter);
-	static void SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter);
+	static void SetImportExportDelimiters(bool bImport, int delim, CString const& delimiter);
 	static void GetImportExportDateFormat(bool bImport, ARBDate::DateFormat& outFormat);
 	static void SetImportExportDateFormat(bool bImport, ARBDate::DateFormat inFormat);
 	typedef enum
@@ -193,7 +193,7 @@ protected:
 	friend class CDlgAssignColumns;
 	// CDlgAssignColumns has some structs for used to ensure validity.
 	static void GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int>& outValues);
-	static void SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, const std::vector<int>& inValues);
+	static void SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int> const& inValues);
 public:
 	// Special clipboard formats
 	typedef enum

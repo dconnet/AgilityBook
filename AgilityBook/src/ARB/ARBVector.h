@@ -68,7 +68,7 @@ using std::vector;
  * Load functionality varies slightly from class to class, so that is handled
  * by several ARBVector derivations.
  */
-template <class ARBThing>
+template <typename ARBThing>
 class ARBVector : public std::vector<ARBThing*>
 {
 public:
@@ -77,11 +77,11 @@ public:
 	}
 
 	/**
-	 * Copy constructor.
+	 * Deep copy constructor.
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVector(const ARBVector& rhs)
+	ARBVector(ARBVector<ARBThing> const& rhs)
 	{
 		// Make a copy first. Then if we throw an exception during
 		// the copy, we won't clobber the existing data.
@@ -102,11 +102,11 @@ public:
 	}
 
 	/**
-	 * Assignment operator.
+	 * Deep assignment operator.
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVector& operator=(const ARBVector& rhs)
+	ARBVector<ARBThing>& operator=(ARBVector<ARBThing> const& rhs)
 	{
 		if (this != &rhs)
 		{
@@ -123,11 +123,9 @@ public:
 	}
 
 	/**
-	 * Ahh, the fun of templates...
-	 * op==/op!= has a template instantiation problem.
-	 * @attention: Implement op==/op!= in each derived class and call this.
+	 * Equality test.
 	 */
-	bool isEqual(const ARBVector& rhs) const
+	bool operator==(ARBVector<ARBThing> const& rhs) const
 	{
 		if (this == &rhs)
 			return true;
@@ -140,6 +138,10 @@ public:
 				return false;
 		}
 		return true;
+	}
+	bool operator!=(ARBVector<ARBThing> const& rhs) const
+	{
+		return !operator==(rhs);
 	}
 
 	/**
@@ -257,7 +259,7 @@ public:
 /**
  * This load method is used by several of the ARBConfig* classes.
  */
-template <class ARBThing>
+template <typename ARBThing>
 class ARBVectorLoad1 : public ARBVector<ARBThing>
 {
 public:
@@ -269,7 +271,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
-	bool Load(const Element& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
+	bool Load(Element const& inTree, ARBVersion const& inVersion, std::string& ioErrMsg)
 	{
 		ARBThing* thing = new ARBThing();
 		if (!thing->Load(inTree, inVersion, ioErrMsg))
@@ -285,7 +287,7 @@ public:
 /**
  * This load method is used by several of the ARBDog* classes.
  */
-template <class ARBThing>
+template <typename ARBThing>
 class ARBVectorLoad2 : public ARBVector<ARBThing>
 {
 public:
@@ -298,7 +300,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
-	bool Load(const ARBConfig& inConfig, const Element& inTree, const ARBVersion& inVersion, std::string& ioErrMsg)
+	bool Load(ARBConfig const& inConfig, Element const& inTree, ARBVersion const& inVersion, std::string& ioErrMsg)
 	{
 		ARBThing* thing = new ARBThing();
 		if (!thing->Load(inConfig, inTree, inVersion, ioErrMsg))

@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CPropertyPage)
 
-CDlgOptionsFilter::CDlgOptionsFilter(const ARBConfig& config)
+CDlgOptionsFilter::CDlgOptionsFilter(ARBConfig const& config)
 	: CPropertyPage(CDlgOptionsFilter::IDD)
 	, m_Config(config)
 {
@@ -105,9 +105,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 
 bool CDlgOptionsFilter::Find(
-	const std::string& venue,
-	const std::string& div,
-	const std::string& level) const
+	std::string const& venue,
+	std::string const& div,
+	std::string const& level) const
 {
 	for (std::vector<CVenueFilter>::const_iterator iter = m_VenueFilter.begin();
 		iter != m_VenueFilter.end();

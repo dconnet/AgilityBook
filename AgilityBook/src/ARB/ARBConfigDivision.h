@@ -54,10 +54,10 @@ class ARBConfigDivision : public ARBBase
 {
 public:
 	ARBConfigDivision();
-	ARBConfigDivision(const ARBConfigDivision& rhs);
-	ARBConfigDivision& operator=(const ARBConfigDivision& rhs);
-	bool operator==(const ARBConfigDivision& rhs) const;
-	bool operator!=(const ARBConfigDivision& rhs) const;
+	ARBConfigDivision(ARBConfigDivision const& rhs);
+	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+	bool operator==(ARBConfigDivision const& rhs) const;
+	bool operator!=(ARBConfigDivision const& rhs) const;
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -86,8 +86,8 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -105,16 +105,16 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, const ARBConfigDivision* inDivNew, std::string& ioInfo);
+	bool Update(int indent, ARBConfigDivision const* inDivNew, std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	const std::string& GetName() const;
-	void SetName(const std::string& inName);
-	const ARBConfigLevelList& GetLevels() const;
+	std::string const& GetName() const;
+	void SetName(std::string const& inName);
+	ARBConfigLevelList const& GetLevels() const;
 	ARBConfigLevelList& GetLevels();
-	const ARBConfigTitleList& GetTitles() const;
+	ARBConfigTitleList const& GetTitles() const;
 	ARBConfigTitleList& GetTitles();
 
 private:
@@ -129,17 +129,17 @@ inline std::string ARBConfigDivision::GetGenericName() const
 	return m_Name;
 }
 
-inline const std::string& ARBConfigDivision::GetName() const
+inline std::string const& ARBConfigDivision::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigDivision::SetName(const std::string& inName)
+inline void ARBConfigDivision::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
 
-inline const ARBConfigLevelList& ARBConfigDivision::GetLevels() const
+inline ARBConfigLevelList const& ARBConfigDivision::GetLevels() const
 {
 	return m_Levels;
 }
@@ -149,7 +149,7 @@ inline ARBConfigLevelList& ARBConfigDivision::GetLevels()
 	return m_Levels;
 }
 
-inline const ARBConfigTitleList& ARBConfigDivision::GetTitles() const
+inline ARBConfigTitleList const& ARBConfigDivision::GetTitles() const
 {
 	return m_Titles;
 }
@@ -176,18 +176,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
-
-	bool operator==(const ARBConfigDivisionList& rhs) const
-	{
-		return isEqual(rhs);
-	}
-	bool operator!=(const ARBConfigDivisionList& rhs) const
-	{
-		return !isEqual(rhs);
-	}
 
 	/**
 	 * Verify a level exists.
@@ -196,8 +187,8 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-		const std::string& inDiv,
-		const std::string& inLevel) const;
+		std::string const& inDiv,
+		std::string const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -205,8 +196,8 @@ public:
 	 * @return Object that was found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigDivision* FindDivision(const std::string& inDiv) const;
-	ARBConfigDivision* FindDivision(const std::string& inDiv);
+	ARBConfigDivision const* FindDivision(std::string const& inDiv) const;
+	ARBConfigDivision* FindDivision(std::string const& inDiv);
 
 	/**
 	 * Add a division.
@@ -214,7 +205,7 @@ public:
 	 * @return Pointer to new object, NULL if name already exists or is empty.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigDivision* AddDivision(const std::string& inDiv);
+	ARBConfigDivision* AddDivision(std::string const& inDiv);
 
 	/**
 	 * Add a division.
@@ -232,7 +223,7 @@ public:
 	 * @return Number of divisions deleted (0 or 1).
 	 */
 	int DeleteDivision(
-		const std::string& inDiv,
+		std::string const& inDiv,
 		ARBConfigEventList& ioEvents);
 
 	/**
@@ -243,7 +234,7 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitle* FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst = true) const;
+	ARBConfigTitle const* FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst = true) const;
 
 	/**
 	 * Find a title.
@@ -251,13 +242,13 @@ public:
 	 * @return Pointer to found object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	const ARBConfigTitle* FindTitle(const std::string& inTitle) const;
-	ARBConfigTitle* FindTitle(const std::string& inTitle);
+	ARBConfigTitle const* FindTitle(std::string const& inTitle) const;
+	ARBConfigTitle* FindTitle(std::string const& inTitle);
 
 	/**
 	 * Delete a title.
 	 * @param inTitle Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(const std::string& inTitle);
+	bool DeleteTitle(std::string const& inTitle);
 };

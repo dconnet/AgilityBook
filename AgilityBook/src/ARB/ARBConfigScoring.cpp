@@ -104,7 +104,7 @@ ARBConfigScoring::ARBConfigScoring()
 {
 }
 
-ARBConfigScoring::ARBConfigScoring(const ARBConfigScoring& rhs)
+ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	: m_ValidFrom(rhs.m_ValidFrom)
 	, m_ValidTo(rhs.m_ValidTo)
 	, m_Division(rhs.m_Division)
@@ -125,7 +125,7 @@ ARBConfigScoring::~ARBConfigScoring()
 {
 }
 
-ARBConfigScoring& ARBConfigScoring::operator=(const ARBConfigScoring& rhs)
+ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -146,7 +146,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(const ARBConfigScoring& rhs)
 	return *this;
 }
 
-bool ARBConfigScoring::operator==(const ARBConfigScoring& rhs) const
+bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 {
 	return m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
@@ -163,7 +163,7 @@ bool ARBConfigScoring::operator==(const ARBConfigScoring& rhs) const
 		&& m_TitlePoints == rhs.m_TitlePoints;
 }
 
-bool ARBConfigScoring::operator!=(const ARBConfigScoring& rhs) const
+bool ARBConfigScoring::operator!=(ARBConfigScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -183,9 +183,9 @@ size_t ARBConfigScoring::GetSearchStrings(std::set<std::string>& ioStrings) cons
 }
 
 bool ARBConfigScoring::Load(
-	const ARBConfigDivisionList& inDivisions,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfigDivisionList const& inDivisions,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	// Probably unnecessary since it isn't actually implemented yet!
@@ -295,7 +295,7 @@ bool ARBConfigScoring::Load(
 		inTree.GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
 		{
-			const Element& element = inTree.GetElement(i);
+			Element const& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_NOTE)
 				m_Note = element.GetValue();
 			else if (element.GetName() == TREE_TITLE_POINTS)
@@ -423,9 +423,9 @@ std::string ARBConfigScoring::GetScoringStyleStr() const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigScoringList::Load(
-	const ARBConfigDivisionList& inDivisions,
-	const Element& inTree,
-	const ARBVersion& inVersion,
+	ARBConfigDivisionList const& inDivisions,
+	Element const& inTree,
+	ARBVersion const& inVersion,
 	std::string& ioErrMsg)
 {
 	ARBConfigScoring* thing = new ARBConfigScoring();
@@ -439,10 +439,10 @@ bool ARBConfigScoringList::Load(
 }
 
 size_t ARBConfigScoringList::FindAllEvents(
-	const std::string& inDivision,
-	const std::string& inLevel,
+	std::string const& inDivision,
+	std::string const& inLevel,
 	bool inTitlePoints,
-	std::vector<const ARBConfigScoring*>& outList) const
+	std::vector<ARBConfigScoring const*>& outList) const
 {
 	outList.clear();
 	const_iterator iter;
@@ -479,7 +479,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 	if (inTitlePoints)
 	{
-		std::vector<const ARBConfigScoring*>::iterator iter;
+		std::vector<ARBConfigScoring const*>::iterator iter;
 		for (iter = outList.begin(); iter != outList.end(); )
 		{
 			if (0 < (*iter)->GetTitlePoints().size())
@@ -491,12 +491,12 @@ size_t ARBConfigScoringList::FindAllEvents(
 	return outList.size();
 }
 
-const ARBConfigScoring* ARBConfigScoringList::FindEvent(
-	const std::string& inDivision,
-	const std::string& inLevel,
-	const ARBDate& inDate) const
+ARBConfigScoring const* ARBConfigScoringList::FindEvent(
+	std::string const& inDivision,
+	std::string const& inLevel,
+	ARBDate const& inDate) const
 {
-	std::vector<const ARBConfigScoring*> items;
+	std::vector<ARBConfigScoring const*> items;
 	FindAllEvents(inDivision, inLevel, false, items);
 	if (0 == items.size())
 		return NULL;
@@ -504,12 +504,12 @@ const ARBConfigScoring* ARBConfigScoringList::FindEvent(
 		return *(items.begin());
 	else
 	{
-		std::vector<const ARBConfigScoring*>::iterator iter;
+		std::vector<ARBConfigScoring const*>::iterator iter;
 		for (iter = items.begin(); iter != items.end(); )
 		{
-			const ARBConfigScoring* pScoring = *iter;
-			const ARBDate& validFrom = pScoring->GetValidFrom();
-			const ARBDate& validTo = pScoring->GetValidTo();
+			ARBConfigScoring const* pScoring = *iter;
+			ARBDate const& validFrom = pScoring->GetValidFrom();
+			ARBDate const& validTo = pScoring->GetValidTo();
 			if ((validFrom.IsValid() && inDate < validFrom)
 			|| (validTo.IsValid() && inDate > validTo))
 				iter = items.erase(iter);
@@ -531,10 +531,10 @@ const ARBConfigScoring* ARBConfigScoringList::FindEvent(
 }
 
 bool ARBConfigScoringList::VerifyEvent(
-	const std::string& inDivision,
-	const std::string& inLevel) const
+	std::string const& inDivision,
+	std::string const& inLevel) const
 {
-	std::vector<const ARBConfigScoring*> items;
+	std::vector<ARBConfigScoring const*> items;
 	FindAllEvents(inDivision, inLevel, false, items);
 	return (0 < items.size());
 }

@@ -53,11 +53,11 @@ class ARBDogNotes
 {
 public:
 	ARBDogNotes();
-	ARBDogNotes(const ARBDogNotes& rhs);
+	ARBDogNotes(ARBDogNotes const& rhs);
 	~ARBDogNotes();
-	ARBDogNotes& operator=(const ARBDogNotes& rhs);
-	bool operator==(const ARBDogNotes& rhs) const;
-	bool operator!=(const ARBDogNotes& rhs) const;
+	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+	bool operator==(ARBDogNotes const& rhs) const;
+	bool operator!=(ARBDogNotes const& rhs) const;
 
 	/**
 	 * Get all the strings to search in this object.
@@ -76,9 +76,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const ARBConfig& inConfig,
-		const Element& inTree,
-		const ARBVersion& inVersion,
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
 		std::string& ioErrMsg);
 
 	/**
@@ -92,14 +92,14 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	const ARBDogFaultList& GetFaults() const;
+	ARBDogFaultList const& GetFaults() const;
 	ARBDogFaultList& GetFaults();
-	const std::string& GetCRCD() const;
-	void SetCRCD(const std::string& inCRCD);
-	const std::string& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanded Metafile.
-	void SetCRCDMetaFile(const std::string& inCRCDMeta);
-	const std::string& GetNote() const;
-	void SetNote(const std::string& inNote);
+	std::string const& GetCRCD() const;
+	void SetCRCD(std::string const& inCRCD);
+	std::string const& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanded Metafile.
+	void SetCRCDMetaFile(std::string const& inCRCDMeta);
+	std::string const& GetNote() const;
+	void SetNote(std::string const& inNote);
 
 private:
 	ARBDogFaultList m_Faults;
@@ -108,7 +108,7 @@ private:
 	std::string m_Note;
 };
 
-inline const ARBDogFaultList& ARBDogNotes::GetFaults() const
+inline ARBDogFaultList const& ARBDogNotes::GetFaults() const
 {
 	return m_Faults;
 }
@@ -118,32 +118,32 @@ inline ARBDogFaultList& ARBDogNotes::GetFaults()
 	return m_Faults;
 }
 
-inline const std::string& ARBDogNotes::GetCRCD() const
+inline std::string const& ARBDogNotes::GetCRCD() const
 {
 	return m_CRCD;
 }
 
-inline void ARBDogNotes::SetCRCD(const std::string& inCRCD)
+inline void ARBDogNotes::SetCRCD(std::string const& inCRCD)
 {
 	m_CRCD = inCRCD;
 }
 
-inline const std::string& ARBDogNotes::GetCRCDMetaFile() const
+inline std::string const& ARBDogNotes::GetCRCDMetaFile() const
 {
 	return m_CRCDMeta;
 }
 
-inline void ARBDogNotes::SetCRCDMetaFile(const std::string& inCRCDMeta)
+inline void ARBDogNotes::SetCRCDMetaFile(std::string const& inCRCDMeta)
 {
 	m_CRCDMeta = inCRCDMeta;
 }
 
-inline const std::string& ARBDogNotes::GetNote() const
+inline std::string const& ARBDogNotes::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBDogNotes::SetNote(const std::string& inNote)
+inline void ARBDogNotes::SetNote(std::string const& inNote)
 {
 	m_Note = inNote;
 }
