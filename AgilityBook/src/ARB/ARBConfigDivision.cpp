@@ -208,6 +208,7 @@ std::string ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDiv
 				else
 				{
 					++nChanged;
+					pTitle->SetLongName((*iterTitle)->GetLongName());
 					pTitle->SetDescription((*iterTitle)->GetDescription());
 				}
 			}
