@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Set the page scrolling size to 4 weeks.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-11-22 DRC Update the list when creating an entry.
@@ -256,9 +257,12 @@ void CAgilityBookViewCalendar::LoadData()
 	m_First -= m_First.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek()); // Set the first day to the start of the week.
 	m_Last += 6 - m_Last.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
 	m_nWeeks = ((m_Last - m_First) / 7) + 1;
+	// Set the scrolling page size to 4 weeks.
 	SetScrollSizes(MM_LOENGLISH,
 		CSize(8 * DAY_BORDER + 7 * m_szEntry.cx,
-			(m_nWeeks + 1) * DAY_BORDER + m_nWeeks * m_szEntry.cy));
+			(m_nWeeks + 1) * DAY_BORDER + m_nWeeks * m_szEntry.cy),
+		CSize(0, 
+			5 * DAY_BORDER + 4 * m_szEntry.cy));
 
 	CString msg;
 	if (IsWindowVisible())
