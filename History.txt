@@ -1,3 +1,8 @@
+1/22/2004: v1.0.1.8 <in development>
+- New features / Enhancements:
+  - When starting the program, holding the SHIFT key down will prevent the
+    last file from being automatically opened.
+
 1/21/2004: v1.0.0.8
 - Bumped file version to 8.2:
   - Added a new "Long Name" to the titles configuration.
