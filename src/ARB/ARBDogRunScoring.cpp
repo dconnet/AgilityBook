@@ -225,7 +225,8 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 	case eTypeByTime:
 		{
 			Element& scoring = ioTree.AddElement(TREE_BY_TIME);
-			scoring.AddAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table);
+			if (m_Table) // Default is no
+				scoring.AddAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table);
 			scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
 			scoring.AddAttrib(ATTRIB_BY_TIME_SCT, m_SCT);

@@ -208,7 +208,8 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	if (m_Date.IsValid())
 	{
 		title.AddAttrib(ATTRIB_TITLE_DATE, m_Date);
-		title.AddAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
+		if (m_bHidden) // Default is no
+			title.AddAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
 	}
 	else
 	{
@@ -217,7 +218,8 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	}
 	title.AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
 	title.AddAttrib(ATTRIB_TITLE_NAME, m_Name);
-	title.AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
+	if (m_bReceived) // Default is no.
+		title.AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
 	return true;
 }
 

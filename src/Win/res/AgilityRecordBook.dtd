@@ -184,6 +184,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 <!ELEMENT Event (Desc?, Scoring+) >
 	<!ATTLIST Event
 		Name CDATA #REQUIRED
+		hasTable (y|n) 'n'
 		hasPartner (y|n) 'n'
 		>
 <!ELEMENT Scoring (Note?, TitlePoints*) >
@@ -332,7 +333,7 @@ These 3 elements define the major scoring mechanisms.
 		Time CDATA #REQUIRED
 		SCT CDATA #IMPLIED
 		Yards CDATA #IMPLIED
-		hasTable (y|n) 'y'
+		hasTable (y|n) 'n'
 		>
 <!ELEMENT ByOpenClose EMPTY >
 	<!ATTLIST ByOpenClose
