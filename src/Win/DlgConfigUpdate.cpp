@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  */
 
@@ -124,6 +125,8 @@ bool CDlgConfigUpdate::LoadConfig(const char* pFile)
 				AfxMessageBox(err.c_str(), MB_ICONWARNING);
 			return false;
 		}
+		else if (0 < err.length())
+			AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
 	}
 	return true;
 }
