@@ -36,6 +36,7 @@
  */
 
 #include "DlgBaseDialog.h"
+#include "RichEditCtrl2.h"
 class ARBConfig;
 class ARBDogTitle;
 class ARBDogTitleList;
@@ -55,7 +56,7 @@ private:
 	CComboBox	m_ctrlVenues;
 	CComboBox	m_ctrlTitles;
 	CButton	m_ctrlReceived;
-	CEdit	m_ctrlDesc;
+	CRichEditCtrl2	m_ctrlDesc;
 	//}}AFX_DATA
 	ARBConfig const& m_Config;
 	ARBDogTitleList& m_Titles;

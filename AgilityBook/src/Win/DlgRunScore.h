@@ -41,6 +41,7 @@
 
 #include <vector>
 #include "DlgBasePropertyPage.h"
+#include "RichEditCtrl2.h"
 class ARBConfigEvent;
 class ARBConfigOtherPoints;
 class ARBConfigScoring;
@@ -71,7 +72,7 @@ private:
 	CStatic	m_ctrlSubNamesText;
 	CComboBox	m_ctrlSubNames;
 	CString	m_SubName;
-	CEdit	m_ctrlDesc;
+	CRichEditCtrl2	m_ctrlDesc;
 	CComboBox	m_ctrlHeight;
 	CString	m_Height;
 	CComboBox	m_ctrlJudge;

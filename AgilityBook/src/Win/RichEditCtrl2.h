@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2005 David Connet. All Rights Reserved.
+ * Copyright © 2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,66 +29,33 @@
 /**
  * @file
  *
- * @brief interface of the CDlgTrial class
+ * @brief Autodetect URLs and open a window when clicked.
  * @author David Connet
  *
  * Revision History
- * @li 2004-12-19 DRC Added Location/Club note information.
+ * @li 2005-01-30 DRC Created
  */
 
-#include "ARBDogClub.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
-#include "RichEditCtrl2.h"
-class ARBDogTrial;
-class CAgilityBookDoc;
-
-class CDlgTrial : public CDlgBaseDialog
+class CRichEditCtrl2 : public CRichEditCtrl
 {
 public:
-	CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent = NULL);
-	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
+	CRichEditCtrl2();
 
-private:
-// Dialog Data
-	//{{AFX_DATA(CDlgTrial)
-	enum { IDD = IDD_TRIAL };
-	CString	m_Location;
-	CComboBox	m_ctrlLocation;
-	BOOL	m_Verified;
-	CString	m_Notes;
-	CRichEditCtrl2	m_ctrlLocationInfo;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlDelete;
-	CListCtrl2	m_ctrlClubs;
-	CRichEditCtrl2	m_ctrlClubInfo;
-	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-	ARBDogTrial* m_pTrial;
-	ARBDogClubList m_Clubs;
-	bool m_bRunsDeleted;
-
-	//{{AFX_VIRTUAL(CDlgTrial)
+	//{{AFX_VIRTUAL(CRichEditCtrl2)
+public:
+	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+#if _MSC_VER >= 1300
+	virtual BOOL CreateEx(DWORD dwExStyle, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+#endif
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void PreSubclassWindow();
 	//}}AFX_VIRTUAL
-
-private:
-	void UpdateNotes(bool bLocation, bool bClub);
-	void ListClubs();
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgTrial)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeLocation();
-	afx_msg void OnKillfocusLocation();
-	afx_msg void OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnClubNew();
-	afx_msg void OnClubEdit();
-	afx_msg void OnClubDelete();
-	virtual void OnOK();
+	void Setup();
+	//{{AFX_MSG(CRichEditCtrl2)
+	afx_msg void OnEnLink(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

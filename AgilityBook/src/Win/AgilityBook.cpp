@@ -224,6 +224,7 @@ BOOL CAgilityBookApp::InitInstance()
 		AfxMessageBox("Cannot initialize COM");
 		return FALSE;
 	}
+	AfxInitRichEdit();
 	CWinApp::InitInstance();
 
 	try

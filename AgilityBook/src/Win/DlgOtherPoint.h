@@ -36,6 +36,7 @@
  */
 
 #include "DlgBaseDialog.h"
+#include "RichEditCtrl2.h"
 class ARBConfig;
 class ARBDogRunOtherPoints;
 
@@ -49,7 +50,7 @@ private:
 	//{{AFX_DATA(CDlgOtherPoint)
 	enum { IDD = IDD_OTHER_POINT };
 	CComboBox	m_ctrlOtherPoints;
-	CEdit	m_ctrlDesc;
+	CRichEditCtrl2	m_ctrlDesc;
 	short	m_Points;
 	//}}AFX_DATA
 	ARBConfig const& m_Config;
