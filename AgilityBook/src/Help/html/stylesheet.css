@@ -1,0 +1,25 @@
+body { 
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	background-color : aqua;
+	color : navy; }
+
+ h1 { 
+ 	font-family : "Comic Sans MS",Verdana, Arial, Helvetica, sans-serif;
+	font-size : 1.5em;
+	color : maroon; }
+
+ h2 { 
+ 	font-family : "Comic Sans MS",Verdana, Arial, Helvetica, sans-serif;
+	font-size : 1.25em;
+	color : maroon; }
+
+li {
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+ A:link { color : maroon; }
+
+ A:visited { color : gray; }
+
+ A:active { color : navy; }
