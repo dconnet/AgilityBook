@@ -747,7 +747,11 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 	// Then check the external config.
 	else if (CAgilityBookOptions::GetAutoUpdateCheckDoc())
-		UpdateVersion(this, true);
+	{
+		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
+		ASSERT(pApp);
+		pApp->UpdateInfo().UpdateConfiguration(this, true);
+	}
 
 	if (0 == GetDogs().size())
 	{
@@ -829,7 +833,9 @@ void CAgilityBookDoc::OnAppAbout()
 
 void CAgilityBookDoc::OnHelpUpdate()
 {
-	UpdateVersion(this);
+	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
+	ASSERT(pApp);
+	pApp->UpdateInfo().UpdateConfiguration(this);
 }
 
 void CAgilityBookDoc::OnFileExportWizard()

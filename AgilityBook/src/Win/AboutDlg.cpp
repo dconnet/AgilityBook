@@ -235,5 +235,7 @@ BOOL CAboutDlg::OnInitDialog()
 
 void CAboutDlg::OnBnClickedUpdate()
 {
-	UpdateVersion(m_pDoc);
+	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
+	ASSERT(pApp);
+	pApp->UpdateInfo().UpdateConfiguration(m_pDoc);
 }
