@@ -148,15 +148,15 @@ ARBConfigTitle* ARBConfigTitleList::AddTitle(const std::string& inName)
 	return pTitle;
 }
 
-ARBConfigTitle* ARBConfigTitleList::AddTitle(const ARBConfigTitle* inTitle)
+ARBConfigTitle* ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
 {
 	if (!inTitle)
 		return NULL;
 	if (FindTitle(inTitle->GetName()))
 		return NULL;
-	ARBConfigTitle* pTitle = new ARBConfigTitle(*inTitle);
-	push_back(pTitle);
-	return pTitle;
+	inTitle->AddRef();
+	push_back(inTitle);
+	return inTitle;
 }
 
 bool ARBConfigTitleList::DeleteTitle(const std::string& inName)

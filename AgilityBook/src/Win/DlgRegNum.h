@@ -51,6 +51,7 @@ private:
 	enum { IDD = IDD_REG_NUM };
 	CComboBox	m_ctrlVenues;
 	CString	m_RegNum;
+	CString	m_Height;
 	//}}AFX_DATA
 	const ARBConfig& m_Config;
 	ARBDogRegNumList& m_RegNums;

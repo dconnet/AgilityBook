@@ -236,6 +236,8 @@ BEGIN
         END
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
         MENUITEM SEPARATOR
+        MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM SEPARATOR
         MENUITEM "Expand",                      ID_EXPAND
         MENUITEM "Collapse",                    ID_COLLAPSE
         MENUITEM "Expand All",                  ID_EXPAND_ALL
@@ -281,6 +283,8 @@ BEGIN
             MENUITEM "&Run...",                     ID_AGILITY_NEW_RUN
         END
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+        MENUITEM SEPARATOR
+        MENUITEM "&Reorder...",                 ID_REORDER
     END
 END
 
@@ -568,7 +572,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
 END
 
-IDD_REG_NUM DIALOG DISCARDABLE  0, 0, 180, 54
+IDD_REG_NUM DIALOG DISCARDABLE  0, 0, 180, 74
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Registration Number"
 FONT 8, "MS Sans Serif"
@@ -577,7 +581,9 @@ BEGIN
     COMBOBOX        IDC_VENUES,35,7,75,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     LTEXT           "&Registration Number",IDC_STATIC,7,25,65,8
-    EDITTEXT        IDC_REG_NUM,7,35,102,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_REG_NUM,7,35,103,12,ES_AUTOHSCROLL
+    LTEXT           "Measured &Height",IDC_STATIC,7,57,55,8
+    EDITTEXT        IDC_HEIGHT,65,55,45,12,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,123,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,123,24,50,14
 END
@@ -1090,7 +1096,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 173
         TOPMARGIN, 7
-        BOTTOMMARGIN, 47
+        BOTTOMMARGIN, 67
     END
 
     IDD_TRIAL, DIALOG
@@ -1460,6 +1466,7 @@ BEGIN
     IDS_COL_START_DATE      "Start Date"
     IDS_COL_TIME            "Time"
     IDS_COL_VENUE           "Venue"
+    IDS_COL_HEIGHT          "Height"
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is open source and freely distibutable (see http://sourceforge.net/projects/agilitybook/) . We only request that you make a $10+ contribution to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:\n   http://groups.yahoo.com/group/AgilityRecordBook/\nor\n   agilityrecordbook@dconsoft.com"
     IDS_NEW                 "<New>"
 END

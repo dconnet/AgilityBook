@@ -348,13 +348,12 @@ int ARBDogTitleList::DeleteTitle(
 	return count;
 }
 
-ARBDogTitle* ARBDogTitleList::AddTitle(const ARBDogTitle* inTitle)
+ARBDogTitle* ARBDogTitleList::AddTitle(ARBDogTitle* inTitle)
 {
-	ARBDogTitle* pTitle = NULL;
 	if (inTitle)
 	{
-		pTitle = new ARBDogTitle(*inTitle);
-		push_back(pTitle);
+		inTitle->AddRef();
+		push_back(inTitle);
 	}
-	return pTitle;
+	return inTitle;
 }

@@ -230,6 +230,7 @@
 #define IDS_COL_START_DATE              5056
 #define IDS_COL_TIME                    5057
 #define IDS_COL_VENUE                   5058
+#define IDS_COL_HEIGHT                  5059
 #define IDS_ABOUT_TEXT                  5070
 #define IDS_NEW                         5071
 #define IDS_CONFIGURE                   5072
