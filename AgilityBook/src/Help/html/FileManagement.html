@@ -19,7 +19,11 @@ must then run the installation to actually update it.)</p>
 <p>In addition, if the program is currently up to date, the configuration will
 be checked. If a newer version is available on the web, you will be prompted
 to upgrade. Unlike the check above that only guides you to the location to get
-the update, this check will actually do the upgrade.</p>
+the update, this check will actually do the upgrade. Once the program has
+actually performed the update check, it will then check each file you open
+to see if the configuration within that file is up-to-date. The check during
+file open never accesses the internet, it only checks previously cached
+information</p>
 <p>Also, see <a href="DlgOptionsPgm.html">Options dialog</a> for information
 about configuring the automation of these items.</p>
 <h2><a name="Multiple">Multiple files or multiple dogs</a></h2>

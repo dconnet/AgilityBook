@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-08-14 DRC Added ability to import dog/trial/run/judge info.
  * @li 2004-02-26 DRC Moved configuration update logic to the doc.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
@@ -118,61 +119,71 @@ static struct
 {
 	{WIZ_IMPORT_RUNS, 
 		{
-			{
-				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-				"Import Runs",
-				"Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."},
-			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+			{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+				"Import Trials and Runs",
+				"Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+			},
+			{PSWIZB_FINISH, -1,
+				"Import Dogs, Trials, Runs and Judges",
+				"Import dog, trial, run and judge information from Agility Record Book."
+			}
 		}
 	},
 	{WIZ_EXPORT_RUNS,
 		{
 			{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 				"Export Runs",
-				"Export trial and run information so it can be imported into a spreadsheet."},
+				"Export trial and run information so it can be imported into a spreadsheet."
+			},
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 		}
 	},
 	{WIZ_IMPORT_CALENDAR,
 		{
-			{
-				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Calendar",
-				"Import a calendar listing from a spreadsheet."},
+				"Import a calendar listing from a spreadsheet."
+			},
 			{PSWIZB_FINISH, -1,
 				"Import Calendar",
-				"Import a calendar listing that was exported from Agility Record Book."}
+				"Import a calendar listing that was exported from Agility Record Book."
+			}
 		}
 	},
 	{WIZ_EXPORT_CALENDAR,
 		{
 			{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 				"Export Calendar",
-				"Export your calendar listing to a spreadsheet."},
+				"Export your calendar listing to a spreadsheet."
+			},
 			{PSWIZB_FINISH, -1,
 				"Export Calendar",
-				"Export your calendar listing so it can be imported into Agility Record Book."}
+				"Export your calendar listing so it can be imported into Agility Record Book."
+			}
 		}
 	},
 	{WIZ_IMPORT_LOG,
 		{
-			{
-				PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 				"Import Training Log",
-				"Import a Training Log from a spreadsheet."},
+				"Import a Training Log from a spreadsheet."
+			},
 			{PSWIZB_FINISH, -1,
 				"Import Training Log",
-				"Import a Training Log that was exported from Agility Record Book."}
+				"Import a Training Log that was exported from Agility Record Book."
+			}
 		}
 	},
 	{WIZ_EXPORT_LOG,
 		{
 			{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 				"Export Training Log",
-				"Export your Training Log to a spreadsheet."},
+				"Export your Training Log to a spreadsheet."
+			},
 			{PSWIZB_FINISH, -1,
 				"Export Training Log",
-				"Export your Training Log so it can be imported into Agility Record Book."}
+				"Export your Training Log so it can be imported into Agility Record Book."
+			}
 		}
 	},
 	{WIZ_IMPORT_CONFIGURATION,
@@ -180,7 +191,8 @@ static struct
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 			{PSWIZB_FINISH, -1,
 				"Import Configuration",
-				"Update your configuration to support new and/or updated venues."}
+				"Update your configuration to support new and/or updated venues."
+			}
 		}
 	},
 	{WIZ_EXPORT_CONFIGURATION,
@@ -188,7 +200,8 @@ static struct
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 			{PSWIZB_FINISH, -1,
 				"Export Configuration",
-				"Export your configuration so it can be imported into Agility Record Book."}
+				"Export your configuration so it can be imported into Agility Record Book."
+			}
 		}
 	},
 	{WIZ_EXPORT_DTD,
@@ -196,7 +209,8 @@ static struct
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 			{PSWIZB_FINISH, -1,
 				"Export DTD",
-				"Export the Document Type Definition. This data describes the XML format of the data file."}
+				"Export the Document Type Definition. This data describes the XML format of the data file."
+			}
 		}
 	},
 	{WIZ_EXPORT_XML,
@@ -204,7 +218,8 @@ static struct
 			{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 			{PSWIZB_FINISH, -1,
 				"Export File as XML",
-				"Export your data file as an XML file. The DTD will be contained within this file."}
+				"Export your data file as an XML file. The DTD will be contained within this file."
+			}
 		}
 	},
 };
@@ -279,6 +294,71 @@ BOOL CWizardStart::OnWizardFinish()
 		switch (data)
 		{
 		default:
+			break;
+
+		case WIZ_IMPORT_RUNS:
+			{
+				AfxMessageBox("TODO: This is still work-in-progress");
+				CString def, fname, filter;
+				def.LoadString(IDS_FILEEXT_DEF_ARB);
+				fname.LoadString(IDS_FILEEXT_FNAME_ARB);
+				filter.LoadString(IDS_FILEEXT_FILTER_ARB);
+				CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter, this);
+				if (IDOK == file.DoModal())
+				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
+					std::string err;
+					Element tree;
+					if (!tree.LoadXMLFile(file.GetPathName(), err))
+					{
+						CString msg;
+						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+						if (0 < err.length())
+						{
+							msg += "\n\n";
+							msg += err.c_str();
+						}
+						AfxMessageBox(msg, MB_ICONEXCLAMATION);
+					}
+					else
+					{
+						ARBAgilityRecordBook book;
+						if (book.Load(tree, false, false, true, true, true, err))
+						{
+							if (0 < err.length())
+								AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
+							//TODO: Merge dog/trial/run and judgeinfo
+							int count = 0;
+							for (ARBDogList::iterator iter = book.GetDogs().begin();
+								iter != book.GetDogs().end();
+								++iter)
+							{
+								//ARBDog* pDog = *iter;
+								//if (!m_pDoc->GetARB().GetCalendar().FindCalendar(cal))
+								//{
+								//	if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+								//	{
+								//		m_pDoc->GetARB().GetCalendar().AddCalendar(cal);
+								//		++count;
+								//	}
+								//}
+							}
+							if (0 < count)
+							{
+								m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
+								m_pDoc->SetModifiedFlag();
+							}
+							//CString str;
+							//str.FormatMessage(IDS_ADDED_CAL_ITEMS, count);
+							//AfxMessageBox(str, MB_ICONINFORMATION);
+							bOk = true;
+						}
+						else if (0 < err.length())
+							AfxMessageBox(err.c_str(), MB_ICONWARNING);
+					}
+				}
+			}
 			break;
 
 		case WIZ_IMPORT_CALENDAR:
