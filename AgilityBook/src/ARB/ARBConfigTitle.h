@@ -32,20 +32,16 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-11 DRC Added 'Requires', moved desc to 'Desc'.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <set>
 #include <string>
 #include "ARBBase.h"
 #include "ARBVector.h"
 class ARBVersion;
 class CElement;
-
-typedef std::set<std::string> ARBConfigTitleRequiresList;
 
 /**
  * Title configuration.
@@ -121,15 +117,12 @@ public:
 	void SetLongName(const std::string& inName);
 	const std::string& GetDescription() const;
 	void SetDescription(const std::string& inDesc);
-	const ARBConfigTitleRequiresList& GetRequires() const;
-	ARBConfigTitleRequiresList& GetRequires();
 
 private:
 	~ARBConfigTitle();
 	std::string m_Name;
 	std::string m_LongName;
 	std::string m_Desc;
-	ARBConfigTitleRequiresList m_Requires;
 };
 
 inline std::string ARBConfigTitle::GetGenericName() const
@@ -175,16 +168,6 @@ inline void ARBConfigTitle::SetDescription(const std::string& inDesc)
 	m_Desc = inDesc;
 }
 
-inline const ARBConfigTitleRequiresList& ARBConfigTitle::GetRequires() const
-{
-	return m_Requires;
-}
-
-inline ARBConfigTitleRequiresList& ARBConfigTitle::GetRequires()
-{
-	return m_Requires;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -201,21 +184,6 @@ public:
 	{
 		return !isEqual(rhs);
 	}
-
-	/**
-	 * Verify all titles Requires items are within this list
-	 * (they are within a division)
-	 * @post Any required items not in the title list will be removed.
-	 */
-	bool VerifyRequiresLists();
-
-	/**
-	 * Determine whether a title requires the specified name.
-	 * This searches thru all the linkings.
-	 * @param inTitle Title to check.
-	 * @param inName Name of requirement to check.
-	 */
-	bool Requires(const ARBConfigTitle* inTitle, const std::string& inName) const;
 
 	/**
 	 * Find a title by the complete name.
@@ -251,14 +219,6 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	ARBConfigTitle* AddTitle(ARBConfigTitle* inTitle);
-
-	/**
-	 * Rename a title.
-	 * @param inOldName Name of title to rename.
-	 * @param inNewName New name of title.
-	 * @return Number of titles changed.
-	 */
-	int RenameTitle(const std::string& inOldName, const std::string& inNewName);
 
 	/**
 	 * Delete a title.

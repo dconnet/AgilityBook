@@ -1,13 +1,7 @@
-3/12/2004: v1.0.4.9 <in development>
-- Bumped file version to 9.0
-  - Added 'Requires' to 'Titles', moved desc text to sub-element.
+3/12/2004: v1.0.4.8 <in development>
 - New features / Enhancements:
   - Changed Venue configuration slightly so it looks better (Divisions and
     Titles headers)
-  - Added new checkbox to New Title dialog that allows you to hide any titles
-    that you haven't earned where you have earned a higher level title.
-  - Added the required title to the title configuration dialog.
-  - Updated default configuration to include title requirements.
 
 3/8/2004: v1.0.3.8
 - Bumped file version to 8.4:

@@ -34,7 +34,6 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
- * @li 2004-03-11 DRC File version 9.0. Changed Title configuration.
  * @li 2004-02-15 DRC Cleaned up newline in warning msg.
  * @li 2004-02-14 DRC File version 8.4. Added Table-in-YPS flag.
  * @li 2004-02-02 DRC File version 8.3. Added ARBDogExistingPoints items.
@@ -79,7 +78,7 @@ const ARBVersion& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static const ARBVersion curVersion(9, 0);
+	static const ARBVersion curVersion(8, 4);
 	return curVersion;
 }
 

@@ -33,7 +33,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-11 DRC Added GetHideRequiredTitles.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-11 DRC Added options for import/export wizard.
  */
@@ -157,9 +156,6 @@ public:
 	static void SetLastEnteredJudge(const char* inLast);
 	static CString GetLastEnteredHandler();
 	static void SetLastEnteredHandler(const char* inLast);
-	// Titles options
-	static bool GetHideRequiredTitles();
-	static void SetHideRequiredTitles(bool bHide);
 	// Import/Export options
 	enum
 	{

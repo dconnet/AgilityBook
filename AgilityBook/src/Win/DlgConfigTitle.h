@@ -36,22 +36,14 @@
  * @li 2004-01-05 DRC Created.
  */
 
-#include <set>
-#include <string>
-#include "ListCtrl.h"
-#include "ARBConfigTitle.h"
-
 class CDlgConfigTitle : public CDialog
 {
 public:
-	CDlgConfigTitle(const ARBConfigTitleList& titles,
-		LPCTSTR name,
-		const ARBConfigTitle* pTitle,
-		CWnd* pParent = NULL);
+	CDlgConfigTitle(LPCTSTR name, LPCTSTR desc, LPCTSTR longname, CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
-
-	std::string GetName() const;
-	void SetTitleData(ARBConfigTitle* pTitle);
+	const char* GetName() const		{return (LPCSTR)m_Name;}
+	const char* GetLongName() const	{return (LPCSTR)m_LongName;}
+	const char* GetDesc() const		{return (LPCSTR)m_Desc;}
 
 private:
 // Dialog Data
@@ -59,11 +51,8 @@ private:
 	enum { IDD = IDD_CONFIG_TITLE };
 	CString m_Name;
 	CString m_LongName;
-	CListCtrl2 m_ctrlRequires;
 	CString m_Desc;
 	//}}AFX_DATA
-	const ARBConfigTitleList& m_Titles;
-	ARBConfigTitleRequiresList m_ReqTitles;
 
 	//{{AFX_VIRTUAL(CDlgConfigTitle)
 protected:
@@ -71,17 +60,9 @@ protected:
 	//}}AFX_VIRTUAL
 
 protected:
-	void UpdateButtons();
-	bool VerifyTitle(const ARBConfigTitle* pTitleToReplace, const ARBConfigTitle* pTitleToAdd);
 	//{{AFX_MSG(CDlgConfigTitle)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnLvnItemchangedTitles(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnNMDblclkTitles(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedAdd();
-	afx_msg void OnBnClickedEdit();
-	afx_msg void OnBnClickedDelete();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-public:
 };

@@ -33,7 +33,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-11 DRC Added option to suppress "skipped" titles.
  */
 
 class ARBConfig;
@@ -53,7 +52,6 @@ private:
 	CComboBox	m_ctrlVenues;
 	CComboBox	m_ctrlTitles;
 	CButton	m_ctrlReceived;
-	CButton	m_ctrlHide;
 	CEdit	m_ctrlDesc;
 	//}}AFX_DATA
 	const ARBConfig& m_Config;
@@ -72,7 +70,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeVenues();
 	afx_msg void OnSelchangeTitles();
-	afx_msg void OnBnClickedHideOld();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

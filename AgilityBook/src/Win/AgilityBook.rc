@@ -686,7 +686,7 @@ BEGIN
     PUSHBUTTON      "&Delete",IDC_DELETE,103,163,45,14
 END
 
-IDD_TITLE DIALOGEX 0, 0, 220, 140
+IDD_TITLE DIALOGEX 0, 0, 210, 130
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
@@ -694,21 +694,18 @@ BEGIN
     LTEXT           "&Date Earned",IDC_STATIC,7,9,41,8
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,55,7,60,12
-    LTEXT           "&Venue",IDC_STATIC,7,26,22,8
-    COMBOBOX        IDC_VENUES,35,24,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Venue",IDC_STATIC,7,27,22,8
+    COMBOBOX        IDC_VENUES,35,25,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "&Title",IDC_STATIC,7,44,14,8
-    COMBOBOX        IDC_TITLES,25,42,120,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Title",IDC_STATIC,7,45,14,8
+    COMBOBOX        IDC_TITLES,25,43,120,175,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "&Received",IDC_RECEIVED,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,163,45,47,10
-    CONTROL         "&Hide required titles where the higher title was earned",
-                    IDC_HIDE_OLD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,58,
-                    180,10
-    EDITTEXT        IDC_DESC,7,72,206,61,ES_MULTILINE | ES_READONLY | 
+                    WS_TABSTOP,153,45,47,10
+    EDITTEXT        IDC_DESC,7,62,196,61,ES_MULTILINE | ES_READONLY | 
                     WS_VSCROLL | WS_HSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,163,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,163,24,50,14
+    DEFPUSHBUTTON   "OK",IDOK,153,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,153,24,50,14
 END
 
 IDD_REG_NUM DIALOGEX 0, 0, 180, 100
@@ -1308,24 +1305,17 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,158,24,50,14
 END
 
-IDD_CONFIG_TITLE DIALOGEX 0, 0, 244, 189
+IDD_CONFIG_TITLE DIALOGEX 0, 0, 244, 137
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title Configuration"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_NAME,30,7,40,12,ES_AUTOHSCROLL
-    LTEXT           "&Long Name",IDC_STATIC,7,23,38,8
-    EDITTEXT        IDC_LONG_NAME,7,33,170,12,ES_AUTOHSCROLL
-    LTEXT           "Required Titles",IDC_STATIC,7,53,48,8
-    PUSHBUTTON      "&Add",IDC_ADD,81,49,30,12
-    PUSHBUTTON      "&Edit",IDC_EDIT,114,49,30,12
-    PUSHBUTTON      "&Delete",IDC_DELETE,147,49,30,12
-    CONTROL         "List1",IDC_TITLES,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_TABSTOP,7,63,170,36
-    LTEXT           "De&scription",IDC_STATIC,7,103,36,8
-    EDITTEXT        IDC_DESC,7,113,170,68,ES_MULTILINE | ES_WANTRETURN | 
+    LTEXT           "&Long Name",IDC_STATIC,7,24,38,8
+    EDITTEXT        IDC_LONG_NAME,7,34,170,12,ES_AUTOHSCROLL
+    LTEXT           "&Description",IDC_STATIC,7,51,36,8
+    EDITTEXT        IDC_DESC,7,61,170,68,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
     DEFPUSHBUTTON   "OK",IDOK,187,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,187,24,50,14
@@ -1385,8 +1375,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,4,9
- PRODUCTVERSION 1,0,4,9
+ FILEVERSION 1,0,4,8
+ PRODUCTVERSION 1,0,4,8
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1402,12 +1392,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "FileDescription", "Agility Record Book"
-            VALUE "FileVersion", "1.0.4.9"
+            VALUE "FileVersion", "1.0.4.8"
             VALUE "InternalName", "AgilityBook.exe"
             VALUE "LegalCopyright", "Copyright © 2002-2004 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
-            VALUE "ProductVersion", "1.0.4.9"
+            VALUE "ProductVersion", "1.0.4.8"
         END
     END
     BLOCK "VarFileInfo"
@@ -1538,9 +1528,9 @@ BEGIN
     IDD_TITLE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 213
+        RIGHTMARGIN, 203
         TOPMARGIN, 7
-        BOTTOMMARGIN, 133
+        BOTTOMMARGIN, 123
     END
 
     IDD_REG_NUM, DIALOG
@@ -1748,7 +1738,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 237
         TOPMARGIN, 7
-        BOTTOMMARGIN, 181
+        BOTTOMMARGIN, 129
     END
 
     IDD_EXISTING_POINTS, DIALOG

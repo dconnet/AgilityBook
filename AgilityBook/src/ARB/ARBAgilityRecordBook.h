@@ -63,8 +63,6 @@
 #define TREE_DIVISION						"Division"
 #define TREE_LEVEL							"Level"
 #define TREE_TITLES							"Titles"
-#define TREE_TITLES_REQUIRES				"Requires"
-#define TREE_TITLES_DESC					"Desc"
 #define TREE_SUBLEVEL						"SubLevel"
 #define TREE_EVENT							"Event"
 #define TREE_EVENT_DESC						"Desc"
