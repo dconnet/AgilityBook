@@ -10,6 +10,7 @@
 - Bug fixes
   - When updating a venue or event, if only the desc or partner changed,
     the changes didn't happen.
+  - The 'View->Show Hidden Titles' menu item was never enabled.
 
 3/21/2004: v1.0.4.8
 - Bumped file version to 8.5:
