@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,45 +29,60 @@
 /**
  * @file
  *
- * @brief interface of the CDlgDog class
+ * @brief interface of the CDlgDogPoints class
  * @author David Connet
  *
  * Revision History
- * @li 2004-02-03 DRC Broke dialog up into pages.
- * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * @li 2004-02-03 DRC Created.
  */
 
+#include "ARBDogExistingPoints.h"
+#include "ColumnOrder.h"
+#include "ListCtrl.h"
 class ARBConfig;
 class ARBDog;
-class CDlgDogNumbers;
-class CDlgDogPoints;
-class CDlgDogProperties;
-class CDlgDogTitles;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDog : public CPropertySheet
+class CDlgDogPoints : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgDog)
+	friend class CDlgDog;
 public:
-	CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgDog();
+	CDlgDogPoints(ARBConfig& config, const ARBDogExistingPointsList& points);
 
 private:
+// Dialog Data
+	//{{AFX_DATA(CDlgDogPoints)
+	enum { IDD = IDD_DOG_POINTS };
+	CButton	m_ctrlEdit;
+	CButton	m_ctrlDelete;
+	CListCtrl2	m_ctrlPoints;
+	//}}AFX_DATA
 	ARBConfig& m_Config;
-	ARBDog* m_pDog;
-	CDlgDogProperties* m_pageProp;
-	CDlgDogTitles* m_pageTitles;
-	CDlgDogNumbers* m_pageRegNums;
-	CDlgDogPoints* m_pagePoints;
+	CColumnOrder m_sortPoints;
+	ARBDogExistingPointsList m_ExistingPoints;
 
-	//{{AFX_VIRTUAL(CDlgDog)
+	//{{AFX_VIRTUAL(CDlgDogPoints)
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
+
+private:
+	void SetColumnHeaders();
+	void ListExistingPoints();
+	void UpdateButtons();
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgDogPoints)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnColumnclickExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDblclkExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchangedExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnNew();
+	afx_msg void OnEdit();
+	afx_msg void OnDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

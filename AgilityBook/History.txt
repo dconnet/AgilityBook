@@ -1,6 +1,9 @@
-2/2/2004: v1.0.2.8 <in development>
+2/3/2004: v1.0.2.8 <in development>
 - Bumped file version to 8.3:
   - Added Existing Points.
+- New features / Enhancements:
+  - Changed the Dog Property dialog to multiple tabs.
+  - Added Existing Points to dog properties.
 - Bug fixes
   - Updated NADAC Configuration with Novice/Open/Elite Triple Superior
     (mapped old 'Triple Superior' to 'Novice Triple...')

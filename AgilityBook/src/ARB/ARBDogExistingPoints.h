@@ -76,6 +76,7 @@ public:
 		eQQ,
 		eSQ
 	} PointType;
+	static std::string GetPointTypeName(PointType inType);
 
 	PointType GetType() const;
 	void SetType(PointType inType);
@@ -277,4 +278,5 @@ public:
 	int DeleteOtherPoints(const std::string& inOther);
 
 	ARBDogExistingPoints* AddExistingPoints(ARBDogExistingPoints* inExistingPoints);
+	bool DeleteExistingPoints(const ARBDogExistingPoints* inExistingPoints);
 };

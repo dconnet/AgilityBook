@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgDog class
+ * @brief interface of the CDlgDogNumbers class
  * @author David Connet
  *
  * Revision History
@@ -37,37 +37,52 @@
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
+#include "ARBDogRegNum.h"
+#include "ColumnOrder.h"
+#include "ListCtrl.h"
 class ARBConfig;
 class ARBDog;
-class CDlgDogNumbers;
-class CDlgDogPoints;
-class CDlgDogProperties;
-class CDlgDogTitles;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDog : public CPropertySheet
+class CDlgDogNumbers : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgDog)
+	friend class CDlgDog;
 public:
-	CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgDog();
+	CDlgDogNumbers(ARBConfig& config, const ARBDogRegNumList& regnums);
 
 private:
+// Dialog Data
+	//{{AFX_DATA(CDlgDogNumbers)
+	enum { IDD = IDD_DOG_NUMBERS };
+	CButton	m_ctrlRegEdit;
+	CButton	m_ctrlRegDelete;
+	CListCtrl2	m_ctrlRegNums;
+	//}}AFX_DATA
 	ARBConfig& m_Config;
-	ARBDog* m_pDog;
-	CDlgDogProperties* m_pageProp;
-	CDlgDogTitles* m_pageTitles;
-	CDlgDogNumbers* m_pageRegNums;
-	CDlgDogPoints* m_pagePoints;
+	CColumnOrder m_sortRegNums;
+	ARBDogRegNumList m_RegNums;
 
-	//{{AFX_VIRTUAL(CDlgDog)
+	//{{AFX_VIRTUAL(CDlgDogNumbers)
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
+
+private:
+	void SetColumnRegNumHeaders();
+	void ListRegNums();
+	void UpdateButtons();
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgDogNumbers)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnColumnclickRegNums(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDblclkRegNums(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchangedRegNums(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnRegNew();
+	afx_msg void OnRegEdit();
+	afx_msg void OnRegDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -29,45 +29,58 @@
 /**
  * @file
  *
- * @brief interface of the CDlgDog class
+ * @brief interface of the CDlgDogProperties class
  * @author David Connet
  *
  * Revision History
- * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
+#include "ARBDate.h"
 class ARBConfig;
 class ARBDog;
-class CDlgDogNumbers;
-class CDlgDogPoints;
-class CDlgDogProperties;
-class CDlgDogTitles;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDog : public CPropertySheet
+class CDlgDogProperties : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgDog)
+	friend class CDlgDog;
 public:
-	CDlgDog(ARBConfig& config, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgDog();
+	CDlgDogProperties(ARBConfig& config, ARBDog* pDog);
+	~CDlgDogProperties();
 
 private:
+// Dialog Data
+	//{{AFX_DATA(CDlgDogProperties)
+	enum { IDD = IDD_DOG_PROP };
+	CString	m_CallName;
+	CDateTimeCtrl	m_ctrlDateDOB;
+	CButton	m_ctrlDeceased;
+	CDateTimeCtrl	m_ctrlDateDeceased;
+	CString	m_Breed;
+	CStatic	m_ctrlAge;
+	CString	m_RegName;
+	CString	m_Notes;
+	//}}AFX_DATA
 	ARBConfig& m_Config;
 	ARBDog* m_pDog;
-	CDlgDogProperties* m_pageProp;
-	CDlgDogTitles* m_pageTitles;
-	CDlgDogNumbers* m_pageRegNums;
-	CDlgDogPoints* m_pagePoints;
+	ARBDate m_DOB;
+	ARBDate m_Deceased;
 
-	//{{AFX_VIRTUAL(CDlgDog)
+	//{{AFX_VIRTUAL(CDlgDogProperties)
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
+
+private:
+	void UpdateAge();
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgDogProperties)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnDatetimechange(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnIsDeceased();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

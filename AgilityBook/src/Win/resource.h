@@ -28,7 +28,7 @@
 #define IDD_CONFIG_OTHERPOINTS          154
 #define IDD_CONFIG_EVENT                155
 #define IDD_DOG_PICKER                  156
-#define IDD_DOG                         157
+#define IDD_DOG_POINTS                  157
 #define IDD_TITLE                       158
 #define IDD_REG_NUM                     159
 #define IDD_TRIAL                       160
@@ -59,6 +59,10 @@
 #define IDD_FIND                        185
 #define IDD_CONFIG_TITLE                186
 #define IDD_CONFIG_VENUE                187
+#define IDD_DOG_PROP                    188
+#define IDD_DOG_TITLES                  189
+#define IDD_DOG_NUMBERS                 190
+#define IDD_EXISTING_POINTS             191
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -90,9 +94,6 @@
 #define IDC_TITLE_EDIT                  1037
 #define IDC_TITLE_DELETE                1038
 #define IDC_TITLES                      1039
-#define IDC_REG_NEW                     1040
-#define IDC_REG_EDIT                    1041
-#define IDC_REG_DELETE                  1042
 #define IDC_REG_NUMS                    1043
 #define IDC_NOTES                       1044
 #define IDC_DATE                        1045
@@ -276,6 +277,7 @@
 #define IDS_COL_ENTERED                 4048
 #define IDS_COL_DOB                     4049
 #define IDS_COL_AGE                     4050
+#define IDS_COL_TYPE                    4051
 #define IDS_RUNS                        5000
 #define IDS_POINTS                      5001
 #define IDS_CALENDAR                    5002
@@ -427,9 +429,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        190
+#define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32812
-#define _APS_NEXT_CONTROL_VALUE         1192
+#define _APS_NEXT_CONTROL_VALUE         1193
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
