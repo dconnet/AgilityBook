@@ -408,6 +408,9 @@ Create a new judge.
 .topic HIDC_LIST_VIEWER
 List of entries.
 
+.topic HIDC_LIST_COPY
+Copy the items in the list to the clipboard in a tab-delineated form.
+
 .topic HIDC_LIST
 List of entries.
 

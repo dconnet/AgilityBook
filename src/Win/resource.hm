@@ -136,13 +136,14 @@
 #define HIDC_JUDGE_DELETE               0x80d6045f    // IDD_JUDGE_INFO
 #define HIDC_JUDGE_NEW                  0x80d6045e    // IDD_JUDGE_INFO
 #define HIDC_LIST                       0x80cb03f4    // IDD_LISTCTRL
+#define HIDC_LIST_COPY                  0x80ca0403    // IDD_LIST_VIEWER
 #define HIDC_LIST_DELETE                0x80cb03f7    // IDD_LISTCTRL
 #define HIDC_LIST_EDIT                  0x80cb03f6    // IDD_LISTCTRL
 #define HIDC_LIST_MOVE_DOWN             0x80cb03f9    // IDD_LISTCTRL
 #define HIDC_LIST_MOVE_UP               0x80cb03f8    // IDD_LISTCTRL
 #define HIDC_LIST_NEW                   0x80cb03f5    // IDD_LISTCTRL
 #define HIDC_LIST_TRIAL                 0x80cb03fa    // IDD_LISTCTRL
-#define HIDC_LIST_VIEWER                0x80ca03f3    // IDD_LIST_VIEWER
+#define HIDC_LIST_VIEWER                0x80ca0402    // IDD_LIST_VIEWER
 #define HIDC_NAME                       0x80d703f2    // IDD_NAME
 #define HIDC_OPTIONS_CAL_AUTO_DELETE    0x80ed04ed    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_DAY_OF_WEEK    0x80ed04ec    // IDD_VIEW_OPTIONS_CALENDAR
