@@ -150,6 +150,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_RUNSCORE_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_RUNSCORE_EVENT, m_ctrlEvents);
+	DDX_Control(pDX, IDC_RUNSCORE_DESC, m_ctrlDesc);
 	DDX_Control(pDX, IDC_RUNSCORE_HEIGHT, m_ctrlHeight);
 	DDX_CBString(pDX, IDC_RUNSCORE_HEIGHT, m_Height);
 	DDX_Control(pDX, IDC_RUNSCORE_JUDGE, m_ctrlJudge);
@@ -554,12 +555,31 @@ void CDlgRunScore::FillEvents()
 				{
 					int idx = m_ctrlEvents.AddString(pEvent->GetName().c_str());
 					if (event == pEvent->GetName())
+					{
 						m_ctrlEvents.SetCurSel(idx);
+						SetEventDesc(pEvent);
+					}
 				}
 			}
 		}
 	}
 	UpdateControls();
+}
+
+void CDlgRunScore::SetEventDesc(ARBConfigEvent const* inEvent)
+{
+	CString desc;
+	if (inEvent)
+		desc += inEvent->GetDesc().c_str();
+	ARBConfigScoring const* pScoring = GetScoring();
+	if (pScoring)
+	{
+		std::string const& note = pScoring->GetNote();
+		if (!desc.IsEmpty() && 0 < note.length())
+			desc += "\n==========\n";
+		desc += note.c_str();
+	}
+	m_ctrlDesc.SetWindowText(desc);
 }
 
 void CDlgRunScore::SetPartnerText()
@@ -1030,6 +1050,7 @@ void CDlgRunScore::OnSelchangeLevel()
 void CDlgRunScore::OnSelchangeEvent()
 {
 	UpdateControls(true);
+	SetEventDesc(GetEvent());
 }
 
 void CDlgRunScore::OnPartnersEdit() 

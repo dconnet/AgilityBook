@@ -1,4 +1,4 @@
-10/6/2004: v1.4.0.10 <in development>
+10/15/2004: v1.4.0.10 <in development>
 - Bumped file version to 10, Configuration v6:
   - Added 'Height' to 'ReferenceRun'.
   - Added 'LifeTime' to 'Scoring'.
@@ -8,11 +8,15 @@
 - New features / Enhancements:
   - Updated CPE comments on CL1-5 "titles". Accumulate lifetime (top10)
     points for all events. Accumulate Specialist points like Level C.
-  - Modified NADAC Gamblers into several events for gamble 'styles'.
+  - Added more Gamblers events for NADAC to handle the various 'styles'.
   - Added direct Excel import/export capability.
   - Added Mach points to the allowed columns in the runs view.
-  - In the calendar view, set the page scrolling size to 4 weeks. It used a
-    default value which could scroll multiple pages at a time.
+  - In the Calendar view, set the scroll amount to 4 weeks when you click
+    on the scroll bar to page it.
+  - Added the event description from the configuration to the dialog where
+    a run is entered.
+  - Added SCTs to gambler/snooker-style events. These are not used to
+    compute anything, they are there just for reference.
   - Added debug symbols to the installation to aid any problems that might
     be found during deployment.
 - Bug fix

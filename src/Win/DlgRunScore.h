@@ -66,6 +66,7 @@ private:
 	CComboBox	m_ctrlDivisions;
 	CComboBox	m_ctrlLevels;
 	CComboBox	m_ctrlEvents;
+	CEdit	m_ctrlDesc;
 	CComboBox	m_ctrlHeight;
 	CString	m_Height;
 	CComboBox	m_ctrlJudge;
@@ -145,6 +146,7 @@ private:
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();
+	void SetEventDesc(ARBConfigEvent const* inEvent);
 	void SetPartnerText();
 	void SetYPS();
 	void SetTotalFaults();
