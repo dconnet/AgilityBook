@@ -136,7 +136,7 @@ static XMLCh const gEndCDATA[] =
 {
 	chCloseSquare, chCloseSquare, chCloseAngle, chNull
 };
-///< Data: <!--
+///< Data: (xml comment begin - not shown as doxygen is having problems with it)
 static XMLCh const gStartComment[] =
 {
 	chOpenAngle, chBang, chDash, chDash, chNull

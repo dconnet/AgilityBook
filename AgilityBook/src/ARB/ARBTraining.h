@@ -200,7 +200,7 @@ public:
 
 	/**
 	 * Get a list of all the different sub-names in the list.
-	 * @param outNames A list of the unique training sub-names.
+	 * @param outSubNames A list of the unique training sub-names.
 	 * @return Number of unique sub-names.
 	 */
 	size_t GetAllSubNames(std::set<std::string>& outSubNames) const;
