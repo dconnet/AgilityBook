@@ -100,6 +100,8 @@ public:
 	void SetPlace(short inPlace);
 	std::string const& GetName() const;
 	void SetName(std::string const& inName);
+	std::string const& GetHeight() const;
+	void SetHeight(std::string const& inHeight);
 	std::string const& GetBreed() const;
 	void SetBreed(std::string const& inBreed);
 	ARBDouble GetTime() const;
@@ -114,6 +116,7 @@ private:
 	ARB_Q m_Q;
 	short m_Place;
 	std::string m_Name;
+	std::string m_Height;
 	std::string m_Breed;
 	ARBDouble m_Time;
 	std::string m_Score;
@@ -153,6 +156,16 @@ inline std::string const& ARBDogReferenceRun::GetName() const
 inline void ARBDogReferenceRun::SetName(std::string const& inName)
 {
 	m_Name = inName;
+}
+
+inline std::string const& ARBDogReferenceRun::GetHeight() const
+{
+	return m_Height;
+}
+
+inline void ARBDogReferenceRun::SetHeight(std::string const& inHeight)
+{
+	m_Height = inHeight;
 }
 
 inline std::string const& ARBDogReferenceRun::GetBreed() const

@@ -12,6 +12,8 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2004-09-23 DRC File version 9.1.
+               Added 'Height' to 'ReferenceRun'
 2004-07-03 DRC File version 9.0.
                Added 'SubName' to 'Training'
                'RegNum': Moved PCDATA to 'Number', added 'Note' as PCDATA
@@ -404,6 +406,7 @@ entries are just for reference, hence the data is not interpreted.
 		Q (NA|SQ|Q|NQ|E) 'NA'
 		Place CDATA #REQUIRED
 		Time CDATA #IMPLIED
+		Height CDATA #IMPLIED
 	>
 <!ELEMENT Name (#PCDATA) >
 <!ELEMENT ScoreOrFaults (#PCDATA) >

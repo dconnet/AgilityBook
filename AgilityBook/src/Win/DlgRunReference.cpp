@@ -61,6 +61,7 @@ static struct
 	{IDS_COL_SCORE, LVCFMT_CENTER},
 	{IDS_COL_TIME, LVCFMT_LEFT},
 	{IDS_COL_NAME, LVCFMT_LEFT},
+	{IDS_COL_HEIGHT, LVCFMT_LEFT},
 	{IDS_COL_BREED, LVCFMT_LEFT},
 	{IDS_COL_NOTE, LVCFMT_LEFT},
 };
@@ -114,13 +115,19 @@ int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			else if (pTitle1->GetName() > pTitle2->GetName())
 				rc = 1;
 			break;
-		case 5: // Breed
+		case 5: // Height
+			if (pTitle1->GetHeight() < pTitle2->GetHeight())
+				rc = -1;
+			else if (pTitle1->GetHeight() > pTitle2->GetHeight())
+				rc = 1;
+			break;
+		case 6: // Breed
 			if (pTitle1->GetBreed() < pTitle2->GetBreed())
 				rc = -1;
 			else if (pTitle1->GetBreed() > pTitle2->GetBreed())
 				rc = 1;
 			break;
-		case 6: // Notes
+		case 7: // Notes
 			if (pTitle1->GetNote() < pTitle2->GetNote())
 				rc = -1;
 			else if (pTitle1->GetNote() > pTitle2->GetNote())
@@ -315,10 +322,13 @@ void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 		case 4: // Name
 			str = pRef->GetName().c_str();
 			break;
-		case 5: // Breed
+		case 5: // Height
+			str = pRef->GetHeight().c_str();
+			break;
+		case 6: // Breed
 			str = pRef->GetBreed().c_str();
 			break;
-		case 6: // Note
+		case 7: // Note
 			str = pRef->GetNote().c_str();
 			str.Replace("\n", " ");
 			break;
@@ -384,7 +394,7 @@ void CDlgRunReference::OnRefRunNew()
 			ref->SetScore(nScore);
 		}
 	}
-	CDlgReferenceRun dlg(ref, this);
+	CDlgReferenceRun dlg(m_pDoc, ref, this);
 	if (IDOK == dlg.DoModal())
 	{
 		ARBDogReferenceRun* pRef = m_Run->GetReferenceRuns().AddReferenceRun(ref);
@@ -407,7 +417,7 @@ void CDlgRunReference::OnRefRunEdit()
 	if (0 <= nItem)
 	{
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(nItem));
-		CDlgReferenceRun dlg(pRef, this);
+		CDlgReferenceRun dlg(m_pDoc, pRef, this);
 		if (IDOK == dlg.DoModal())
 			ListRuns();
 	}

@@ -300,6 +300,7 @@
 #define IDC_RUNLINK_OPEN                1239
 #define IDC_REFRUN_PLACE                1240
 #define IDC_REFRUN_Q                    1241
+#define IDC_REFRUN_HEIGHT               1242
 #define IDC_REFRUN_TIME                 1243
 #define IDC_REFRUN_NAME                 1244
 #define IDC_REFRUN_BREED                1245
@@ -652,7 +653,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1358
+#define _APS_NEXT_CONTROL_VALUE         1359
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif
