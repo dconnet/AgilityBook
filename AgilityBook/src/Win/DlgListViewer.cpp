@@ -770,7 +770,8 @@ BOOL CDlgListViewer::OnInitDialog()
 		{
 			ARBDogTrial const* pTrial = iter->first;
 			ARBDogRun const* pRun = iter->second;
-			if (CAgilityBookOptions::IsFilterEnabled())
+			// Only filter normal runs. Not config update info.
+			if (!m_Runs2 && CAgilityBookOptions::IsFilterEnabled())
 			{
 				if (pRun->IsFiltered())
 					continue;
@@ -786,11 +787,6 @@ BOOL CDlgListViewer::OnInitDialog()
 			{
 				ARBDogTrial const* pTrial = iter->first;
 				ARBDogRun const* pRun = iter->second;
-				if (CAgilityBookOptions::IsFilterEnabled())
-				{
-					if (pRun->IsFiltered())
-						continue;
-				}
 				InsertRun(m_pDoc, m_ctrlList, pColData, iItem, pTrial, pRun, CDlgListViewerDataRun::eScoringChanged);
 			}
 		}
