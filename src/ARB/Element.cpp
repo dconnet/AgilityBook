@@ -722,7 +722,7 @@ public:
 		, unsigned int const count
 		, XMLFormatter* const /*formatter*/)
 	{
-		m_out.write((char*)toWrite, count);
+		m_out.write(reinterpret_cast<char const* const>(toWrite), count);
 	}
 private:
 	std::ostream& m_out; ///< Output stream.

@@ -220,7 +220,7 @@ void CDlgTrial::OnKillfocusLocation()
 
 void CDlgTrial::OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	//NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	//NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UINT selected = m_ctrlClubs.GetSelectedCount();
 	ASSERT(1 >= selected);
 	if (0 == selected)

@@ -274,7 +274,7 @@ BOOL CDlgDogNumbers::OnInitDialog()
 
 void CDlgDogNumbers::OnColumnclickRegNums(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
 	si.pThis = this;
 	m_sortRegNums.SetColumnOrder(pNMListView->iSubItem);
@@ -293,7 +293,7 @@ void CDlgDogNumbers::OnDblclkRegNums(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogNumbers::OnItemchangedRegNums(NMHDR* pNMHDR, LRESULT* pResult)
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }

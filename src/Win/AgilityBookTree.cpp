@@ -311,9 +311,9 @@ void CAgilityBookTree::OnActivateView(BOOL bActivate, CView* pActivateView, CVie
 	{
 		CString msg;
 		if (GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
 
@@ -324,6 +324,9 @@ void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	else if (UPDATE_NEW_TRIAL & lHint)
 	{
 		LoadData();
+		// This is pure evil - casting CObject* to a ARBDogTrial*.
+		// It was reinterpretted on the sending side in the same manner.
+		// Definite abuse of this parameter.
 		ARBDogTrial *pTrial = reinterpret_cast<ARBDogTrial*>(pHint);
 		ASSERT(pTrial);
 		CAgilityBookTreeData* pData = FindData(TVI_ROOT, pTrial);
@@ -464,7 +467,7 @@ void CAgilityBookTree::Dump(CDumpContext& dc) const
 CAgilityBookDoc* CAgilityBookTree::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return (CAgilityBookDoc*)m_pDocument;
+	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -577,7 +580,7 @@ HTREEITEM CAgilityBookTree::InsertDog(ARBDog* pDog, bool bSelect)
 		LPSTR_TEXTCALLBACK,
 		0, 0, //image, selectedimage
 		0, 0, //state, statemask
-		reinterpret_cast<LPARAM>(pDataDog),
+		reinterpret_cast<LPARAM>(static_cast<CAgilityBookTreeData*>(pDataDog)),
 		TVI_ROOT,
 		TVI_LAST);
 	// Note, the text callback will occur BEFORE we make the next call!
@@ -606,7 +609,7 @@ HTREEITEM CAgilityBookTree::InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent)
 		LPSTR_TEXTCALLBACK,
 		0, 0, //image, selectedimage
 		0, 0, //state, statemask
-		reinterpret_cast<LPARAM>(pDataTrial),
+		reinterpret_cast<LPARAM>(static_cast<CAgilityBookTreeData*>(pDataTrial)),
 		hParent,
 		TVI_LAST);
 	// Note, the text callback will occur BEFORE we make the next call!
@@ -630,7 +633,7 @@ HTREEITEM CAgilityBookTree::InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTRE
 		LPSTR_TEXTCALLBACK,
 		0, 0, //image, selectedimage
 		0, 0, //state, statemask
-		reinterpret_cast<LPARAM>(pDataRun),
+		reinterpret_cast<LPARAM>(static_cast<CAgilityBookTreeData*>(pDataRun)),
 		hParent,
 		TVI_LAST);
 	// Note, the text callback will occur BEFORE we make the next call!
@@ -741,7 +744,7 @@ LRESULT CAgilityBookTree::OnDelayedMessage(WPARAM wParam, LPARAM lParam)
 void CAgilityBookTree::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
-	SendMessage(WM_CONTEXTMENU, (WPARAM)m_hWnd, GetMessagePos());
+	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
 
@@ -811,7 +814,7 @@ void CAgilityBookTree::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CAgilityBookTree::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
 	CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(pNMTreeView->itemOld.lParam);
 	if (pData)
 	{
@@ -823,7 +826,7 @@ void CAgilityBookTree::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookTree::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	TV_DISPINFO* pDispInfo = (TV_DISPINFO*)pNMHDR;
+	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & TVIF_TEXT)
 	{
 		CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(pDispInfo->item.lParam);
@@ -838,7 +841,7 @@ void CAgilityBookTree::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	if (!m_bSuppressSelect)
 	{
-		NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+		NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
 		CAgilityBookTreeData* pData = NULL;
 		HTREEITEM hItem = pNMTreeView->itemNew.hItem;
 		if (NULL != hItem)
@@ -872,7 +875,7 @@ void CAgilityBookTree::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookTree::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	TV_KEYDOWN* pTVKeyDown = (TV_KEYDOWN*)pNMHDR;
+	TV_KEYDOWN* pTVKeyDown = reinterpret_cast<TV_KEYDOWN*>(pNMHDR);
 	switch (pTVKeyDown->wVKey)
 	{
 	default:

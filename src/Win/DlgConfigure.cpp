@@ -428,7 +428,9 @@ void CDlgConfigure::LoadData()
 	{
 		m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataVenue(*iterVenue)));
+			reinterpret_cast<LPARAM>(
+				static_cast<CDlgConfigureData*>(
+					new CDlgConfigureDataVenue(*iterVenue))));
 	}
 	m_ctrlVenues.SortItems(CompareItems, 0);
 	m_ctrlVenues.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
@@ -438,7 +440,9 @@ void CDlgConfigure::LoadData()
 	{
 		m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataFault(*iterFault)));
+			reinterpret_cast<LPARAM>(
+				static_cast<CDlgConfigureData*>(
+					new CDlgConfigureDataFault(*iterFault))));
 	}
 	m_ctrlFaults.SortItems(CompareItems, 0);
 	m_ctrlFaults.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
@@ -447,7 +451,9 @@ void CDlgConfigure::LoadData()
 	{
 		m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataOtherPoints(*iterOther)));
+			reinterpret_cast<LPARAM>(
+				static_cast<CDlgConfigureData*>(
+					new CDlgConfigureDataOtherPoints(*iterOther))));
 	}
 	m_ctrlOthers.SortItems(CompareItems, 0);
 	m_ctrlOthers.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
@@ -539,7 +545,7 @@ BOOL CDlgConfigure::OnInitDialog()
 
 void CDlgConfigure::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pDispInfo->item.lParam);
@@ -555,7 +561,7 @@ void CDlgConfigure::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMListView->lParam);
 	delete pData;
 	pNMListView->lParam = 0;
@@ -608,7 +614,9 @@ void CDlgConfigure::OnNew()
 					dlg.GetFixups(m_DlgFixup);
 					m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
 						LPSTR_TEXTCALLBACK, 0, 0, 0,
-						reinterpret_cast<LPARAM>(new CDlgConfigureDataVenue(pNewVenue)));
+						reinterpret_cast<LPARAM>(
+							static_cast<CDlgConfigureData*>(
+								new CDlgConfigureDataVenue(pNewVenue))));
 					m_ctrlVenues.SortItems(CompareItems, 0);
 					FindCurrentVenue(pNewVenue, true);
 				}
@@ -633,7 +641,9 @@ void CDlgConfigure::OnNew()
 					{
 						m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlFaults.GetItemCount(),
 							LPSTR_TEXTCALLBACK, 0, 0, 0,
-							reinterpret_cast<LPARAM>(new CDlgConfigureDataFault(pNewFault)));
+							reinterpret_cast<LPARAM>(
+								static_cast<CDlgConfigureData*>(
+									new CDlgConfigureDataFault(pNewFault))));
 						m_ctrlFaults.SortItems(CompareItems, 0);
 						FindCurrentFault(pNewFault, true);
 					}
@@ -654,7 +664,9 @@ void CDlgConfigure::OnNew()
 				{
 					m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlOthers.GetItemCount(),
 						LPSTR_TEXTCALLBACK, 0, 0, 0,
-						reinterpret_cast<LPARAM>(new CDlgConfigureDataOtherPoints(pNewOther)));
+						reinterpret_cast<LPARAM>(
+							static_cast<CDlgConfigureData*>(
+								new CDlgConfigureDataOtherPoints(pNewOther))));
 					m_ctrlOthers.SortItems(CompareItems, 0);
 					FindCurrentOtherPoints(pNewOther, true);
 				}
@@ -859,7 +871,8 @@ void CDlgConfigure::OnCopy()
 				pNewData = new CDlgConfigureDataVenue(pNewVenue);
 				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
 					LPSTR_TEXTCALLBACK, 0, 0, 0,
-					reinterpret_cast<LPARAM>(pNewData));
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(pNewData)));
 				pCtrl->SortItems(CompareItems, 0);
 				FindCurrentVenue(pNewVenue, true);
 			}
@@ -877,7 +890,8 @@ void CDlgConfigure::OnCopy()
 				pNewData = new CDlgConfigureDataFault(pNewFault);
 				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
 					LPSTR_TEXTCALLBACK, 0, 0, 0,
-					reinterpret_cast<LPARAM>(pNewData));
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(pNewData)));
 				pCtrl->SortItems(CompareItems, 0);
 				FindCurrentFault(pNewFault, true);
 			}
@@ -902,7 +916,8 @@ void CDlgConfigure::OnCopy()
 				pNewData = new CDlgConfigureDataOtherPoints(pNewOther);
 				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
 					LPSTR_TEXTCALLBACK, 0, 0, 0,
-					reinterpret_cast<LPARAM>(pNewData));
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(pNewData)));
 				pCtrl->SortItems(CompareItems, 0);
 				FindCurrentOtherPoints(pNewOther, true);
 			}

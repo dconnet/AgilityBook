@@ -47,9 +47,10 @@ public:
 	virtual ~CTabView();
 
 	CAgilityBookDoc* GetDocument() const;
-	CTabCtrl& GetTabCtrl() const	{return *(CTabCtrl*)this;}
-	int GetItemCount() const		{return GetTabCtrl().GetItemCount();}
-	int GetCurSel() const			{return GetTabCtrl().GetCurSel();}
+	CTabCtrl const& GetTabCtrl() const	{return *reinterpret_cast<CTabCtrl const*>(this);}
+	CTabCtrl& GetTabCtrl()				{return *reinterpret_cast<CTabCtrl*>(this);}
+	int GetItemCount() const			{return GetTabCtrl().GetItemCount();}
+	int GetCurSel() const				{return GetTabCtrl().GetCurSel();}
 	void SetCurSel(int index);
 
 // Overrides

@@ -87,7 +87,7 @@ void CRichEditCtrl2::Setup()
 	SetEventMask(GetEventMask() | ENM_LINK);
 #if _MSC_VER < 1300
 	ASSERT(::IsWindow(m_hWnd));
-	::SendMessage(m_hWnd, EM_AUTOURLDETECT, (WPARAM)TRUE, 0);
+	::SendMessage(m_hWnd, EM_AUTOURLDETECT, static_cast<WPARAM>(TRUE), 0);
 #else
 	SetAutoURLDetect(TRUE);
 #endif

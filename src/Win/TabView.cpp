@@ -113,7 +113,7 @@ void CTabView::OnInitialUpdate()
 	if (0 != GetTabCtrl().GetItemCount())
 		return;
 
-	((CMainFrame*)GetParentFrame())->m_pView = this;
+	reinterpret_cast<CMainFrame*>(GetParentFrame())->m_pView = this;
 
 	CString str;
 	str.LoadString(IDS_RUNS);
@@ -144,7 +144,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_Panes.push_back(&m_splitterRuns);
 
-	CAgilityBookViewPoints* points = (CAgilityBookViewPoints*)RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject();
+	CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
 	m_Panes.push_back(points);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
 	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
@@ -165,7 +165,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_Panes.push_back(&m_splitterCal);
 
-	CAgilityBookViewTraining* training = (CAgilityBookViewTraining*)RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject();
+	CAgilityBookViewTraining* training = reinterpret_cast<CAgilityBookViewTraining*>(RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject());
 	m_Panes.push_back(training);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
 	dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
@@ -203,7 +203,7 @@ void CTabView::Dump(CDumpContext& dc) const
 CAgilityBookDoc* CTabView::GetDocument() const // non-debug version is inline
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return (CAgilityBookDoc*)m_pDocument;
+	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
 
@@ -229,22 +229,22 @@ void CTabView::SetActiveView()
 	case 0:
 		// We may need to kick start the view the 1st time.
 		if (!m_pLastFocusRuns)
-			m_pLastFocusRuns = (CView*)m_splitterRuns.GetPane(0,0);
+			m_pLastFocusRuns = reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,0));
 		pView = m_pLastFocusRuns;
-		pCommon = dynamic_cast<ICommonView*>((CView*)m_splitterRuns.GetPane(0,1));
+		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,1)));
 		break;
 	case 1:
-		pView = (CView*)m_Panes[nIndex];
+		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
 		pCommon = dynamic_cast<ICommonView*>(pView);
 		break;
 	case 2:
 		if (!m_pLastFocusCal)
-			m_pLastFocusCal = (CView*)m_splitterCal.GetPane(0,0);
+			m_pLastFocusCal = reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0));
 		pView = m_pLastFocusCal;
-		pCommon = dynamic_cast<ICommonView*>((CView*)m_splitterCal.GetPane(0,0));
+		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0)));
 		break;
 	case 3:
-		pView = (CView*)m_Panes[nIndex];
+		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
 		pCommon = dynamic_cast<ICommonView*>(pView);
 		break;
 	}
@@ -257,9 +257,9 @@ void CTabView::SetActiveView()
 	{
 		CString msg;
 		if (pCommon->GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, pCommon->IsFiltered());
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, pCommon->IsFiltered());
 		if (pCommon->GetMessage2(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
 
@@ -289,10 +289,10 @@ void CTabView::OnSetFocus(CWnd* pOldWnd)
 		switch (nIndex)
 		{
 		case 0:
-			m_pLastFocusRuns = (CView*)pOldWnd;
+			m_pLastFocusRuns = reinterpret_cast<CView*>(pOldWnd);
 			break;
 		case 2:
-			m_pLastFocusCal = (CView*)pOldWnd;
+			m_pLastFocusCal = reinterpret_cast<CView*>(pOldWnd);
 			break;
 		}
 	}
@@ -310,7 +310,7 @@ void CTabView::OnSelChanging(NMHDR* pNMHDR, LRESULT* pResult)
 		int r, c;
 		m_splitterRuns.GetActivePane(&r, &c);
 		if (0 <= r && 0 <= c)
-			m_pLastFocusRuns = (CView*)m_splitterRuns.GetPane(r, c);
+			m_pLastFocusRuns = reinterpret_cast<CView*>(m_splitterRuns.GetPane(r, c));
 		// No else. If there is no active, we want to inherit what was set
 		// in the OnSetFocus handler.
 	}
@@ -319,7 +319,7 @@ void CTabView::OnSelChanging(NMHDR* pNMHDR, LRESULT* pResult)
 		int r, c;
 		m_splitterCal.GetActivePane(&r, &c);
 		if (0 <= r && 0 <= c)
-			m_pLastFocusCal = (CView*)m_splitterCal.GetPane(r, c);
+			m_pLastFocusCal = reinterpret_cast<CView*>(m_splitterCal.GetPane(r, c));
 	}
 	m_Panes[nIndex]->ShowWindow(SW_HIDE);
 	m_Panes[nIndex]->EnableWindow(FALSE);

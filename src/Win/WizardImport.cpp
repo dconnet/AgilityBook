@@ -1182,7 +1182,7 @@ void CWizardImport::OnImportKillFocus()
 
 void CWizardImport::OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
+	NM_UPDOWN* pNMUpDown = reinterpret_cast<NM_UPDOWN*>(pNMHDR);
 	// There is no "changed" msg, only the "changing".
 	// So we'll just update the ddx variable ourselves.
 	if (m_Row != pNMUpDown->iPos + pNMUpDown->iDelta

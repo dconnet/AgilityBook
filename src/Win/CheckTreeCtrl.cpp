@@ -228,7 +228,7 @@ void CCheckTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 
 BOOL CCheckTreeCtrl::OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	TV_KEYDOWN* pTVKeyDown = (TV_KEYDOWN*)pNMHDR;
+	TV_KEYDOWN* pTVKeyDown = reinterpret_cast<TV_KEYDOWN*>(pNMHDR);
 	LRESULT res = 0;
 	if (VK_SPACE == pTVKeyDown->wVKey)
 	{
@@ -242,5 +242,5 @@ BOOL CCheckTreeCtrl::OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 		res = 1;
 	}
 	*pResult = res;
-	return (BOOL)res;
+	return static_cast<BOOL>(res);
 }

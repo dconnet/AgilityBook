@@ -300,7 +300,7 @@ BOOL CDlgDogPoints::OnInitDialog()
 
 void CDlgDogPoints::OnColumnclickExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
 	si.pThis = this;
 	m_sortPoints.SetColumnOrder(pNMListView->iSubItem);
@@ -319,7 +319,7 @@ void CDlgDogPoints::OnDblclkExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		ARBDogExistingPoints const* pData = reinterpret_cast<ARBDogExistingPoints const*>(pDispInfo->item.lParam);
@@ -366,7 +366,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgDogPoints::OnItemchangedExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }

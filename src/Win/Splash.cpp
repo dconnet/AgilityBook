@@ -154,8 +154,9 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 	CString filename = CAgilityBookOptions::GetSplashImage();
 	if (!filename.IsEmpty())
 	{
-		HBITMAP hBm = (HBITMAP)LoadImage(NULL, filename, IMAGE_BITMAP, 0, 0,
-			LR_DEFAULTSIZE | LR_LOADFROMFILE);
+		HBITMAP hBm = reinterpret_cast<HBITMAP>(LoadImage(NULL, filename,
+			IMAGE_BITMAP, 0, 0,
+			LR_DEFAULTSIZE | LR_LOADFROMFILE));
 		if (hBm)
 			splash.Attach(hBm);
 		else

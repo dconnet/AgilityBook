@@ -1170,7 +1170,7 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 	item.iItem = iItem++;
 	item.iSubItem = 0;
 	item.pszText = LPSTR_TEXTCALLBACK;
-	item.lParam = reinterpret_cast<LPARAM>(pData);
+	item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 	ctrlList.InsertItem(&item);
 }
 
@@ -1251,7 +1251,7 @@ BOOL CDlgListViewer::OnInitDialog()
 				item.iItem = iItem++;
 				item.iSubItem = 0;
 				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 				m_ctrlList.InsertItem(&item);
 			}
 		}
@@ -1315,7 +1315,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(pData);
+			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1339,7 +1339,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(pData);
+			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1369,7 +1369,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(pData);
+			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1394,7 +1394,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(pData);
+			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1414,7 +1414,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 void CDlgListViewer::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CDlgListViewerData *pData = reinterpret_cast<CDlgListViewerData*>(pDispInfo->item.lParam);
@@ -1432,7 +1432,7 @@ void CDlgListViewer::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgListViewer::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgListViewerData *pData = reinterpret_cast<CDlgListViewerData*>(pNMListView->lParam);
 	if (pData)
 		pData->Release();
@@ -1442,7 +1442,7 @@ void CDlgListViewer::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgListViewer::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	m_ctrlList.HeaderSort(abs(m_SortColumn) - 1, CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
 	if (m_SortColumn == pNMListView->iSubItem + 1)
@@ -1522,9 +1522,9 @@ void CDlgListViewer::OnBnClickedListCopy()
 		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
 		if (NULL != temp)
 		{
-			LPTSTR str = (LPTSTR)GlobalLock(temp);
+			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock((void*)temp);
+			GlobalUnlock(reinterpret_cast<void*>(temp));
 			// send data to clipbard
 			SetClipboardData(CF_TEXT, temp);
 		}

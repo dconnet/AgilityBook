@@ -340,7 +340,9 @@ void CDlgConfigVenue::LoadLevelData()
 	{
 		HTREEITEM hItem = m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 			0, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pDivData->GetDivision(), *iterLevel)),
+			reinterpret_cast<LPARAM>(
+				static_cast<CDlgConfigureData*>(
+					new CDlgConfigureDataLevel(pDivData->GetDivision(), *iterLevel))),
 			TVI_ROOT, TVI_LAST);
 		if (0 < (*iterLevel)->GetSubLevels().size())
 		{
@@ -348,7 +350,9 @@ void CDlgConfigVenue::LoadLevelData()
 			{
 				m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pDivData->GetDivision(), *iterLevel, *iterSubLevel)),
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(
+							new CDlgConfigureDataSubLevel(pDivData->GetDivision(), *iterLevel, *iterSubLevel))),
 					hItem, TVI_LAST);
 			}
 			m_ctrlLevels.Expand(hItem, TVE_EXPAND);
@@ -447,7 +451,8 @@ HTREEITEM CDlgConfigVenue::FindCurrentLevel(ARBConfigLevel const* pLevel, bool b
 		HTREEITEM hItem = m_ctrlLevels.GetRootItem();
 		while (NULL != hItem)
 		{
-			CDlgConfigureDataLevel* pData = reinterpret_cast<CDlgConfigureDataLevel*>(m_ctrlLevels.GetItemData(hItem));
+			CDlgConfigureData* pRawData = reinterpret_cast<CDlgConfigureDataLevel*>(m_ctrlLevels.GetItemData(hItem));
+			CDlgConfigureDataLevel* pData = dynamic_cast<CDlgConfigureDataLevel*>(pRawData);
 			if (pData->GetLevel() == pLevel)
 			{
 				hCurrent = hItem;
@@ -479,7 +484,8 @@ HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(ARBConfigSubLevel const* pSubLeve
 				HTREEITEM hChildItem = m_ctrlLevels.GetChildItem(hItem);
 				while (NULL == hCurrent && NULL != hChildItem)
 				{
-					CDlgConfigureDataSubLevel* pData = reinterpret_cast<CDlgConfigureDataSubLevel*>(m_ctrlLevels.GetItemData(hChildItem));
+					CDlgConfigureData* pRawData = reinterpret_cast<CDlgConfigureData*>(m_ctrlLevels.GetItemData(hChildItem));
+					CDlgConfigureDataSubLevel* pData = dynamic_cast<CDlgConfigureDataSubLevel*>(pRawData);
 					if (pData->GetSubLevel() == pSubLevel)
 					{
 						hCurrent = hChildItem;
@@ -637,7 +643,7 @@ void CDlgConfigVenue::OnDestroy()
 
 void CDlgConfigVenue::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pDispInfo->item.lParam);
@@ -653,7 +659,7 @@ void CDlgConfigVenue::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgConfigVenue::OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
+	TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	if (pTVDispInfo->item.mask & TVIF_TEXT)
 	{
 		CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pTVDispInfo->item.lParam);
@@ -669,7 +675,7 @@ void CDlgConfigVenue::OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgConfigVenue::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMListView->lParam);
 	delete pData;
 	pNMListView->lParam = 0;
@@ -678,7 +684,7 @@ void CDlgConfigVenue::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgConfigVenue::OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMTreeView->itemOld.lParam);
 	delete pData;
 	pNMTreeView->itemOld.lParam = 0;
@@ -818,7 +824,9 @@ void CDlgConfigVenue::OnNew()
 						{
 							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 								0, 0, 0, 0,
-								reinterpret_cast<LPARAM>(new CDlgConfigureDataLevel(pDivData->GetDivision(), pNewLevel)),
+								reinterpret_cast<LPARAM>(
+									static_cast<CDlgConfigureData*>(
+										new CDlgConfigureDataLevel(pDivData->GetDivision(), pNewLevel))),
 								hParentItem, hItem);
 							FindCurrentLevel(pNewLevel, true);
 						}
@@ -830,7 +838,9 @@ void CDlgConfigVenue::OnNew()
 						{
 							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 								0, 0, 0, 0,
-								reinterpret_cast<LPARAM>(new CDlgConfigureDataSubLevel(pDivData->GetDivision(), pLevel, pNewSubLevel)),
+								reinterpret_cast<LPARAM>(
+									static_cast<CDlgConfigureData*>(
+										new CDlgConfigureDataSubLevel(pDivData->GetDivision(), pLevel, pNewSubLevel))),
 								hParentItem, hItem);
 							FindCurrentSubLevel(pNewSubLevel, true);
 						}
@@ -871,7 +881,8 @@ void CDlgConfigVenue::OnNew()
 							++nInsertAt;
 						int index = m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, nInsertAt,
 							LPSTR_TEXTCALLBACK, 0, 0, 0,
-							reinterpret_cast<LPARAM>(new CDlgConfigureDataTitle(pDivData->GetDivision(), pTitle)));
+							reinterpret_cast<LPARAM>(
+								new CDlgConfigureDataTitle(pDivData->GetDivision(), pTitle)));
 						m_ctrlTitles.SetSelection(index);
 						m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 						m_ctrlTitles.Invalidate();

@@ -298,7 +298,7 @@ void CDlgOptionsFilter::OnViewUpdate()
 
 void CDlgOptionsFilter::OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	//TV_DISPINFO* pTVDispInfo = (TV_DISPINFO*)pNMHDR;
+	//TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	// We could probably do this by just watching what changed. but this
 	// is way easier - no state to keep track of!
 	m_VenueFilter.clear();

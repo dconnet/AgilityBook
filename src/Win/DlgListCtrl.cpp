@@ -602,7 +602,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 
 void CDlgListCtrl::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pDispInfo->item.lParam);
@@ -644,14 +644,14 @@ void CDlgListCtrl::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgListCtrl::OnItemchangedList(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateControls();
 	*pResult = 0;
 }
 
 void CDlgListCtrl::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pNMListView->lParam);
 	if (pData)
 		pData->Release();
@@ -691,7 +691,7 @@ void CDlgListCtrl::OnNew()
 					item.iItem = m_ctrlList.GetItemCount();
 					item.iSubItem = 0;
 					item.iImage = I_IMAGECALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(pData);
+					item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
 					m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 				}
 			}
@@ -715,7 +715,7 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.iImage = I_IMAGECALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 		}
@@ -736,7 +736,7 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.iImage = I_IMAGECALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 			pOther->Release();
@@ -758,7 +758,7 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.iImage = I_IMAGECALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 			partner->Release();

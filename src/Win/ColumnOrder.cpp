@@ -125,7 +125,7 @@ void CColumnOrder::Save()
 	str.Empty();
 	for (i = 0; i < m_nColumns; ++i)
 	{
-		tmp.Format(_T("%d"), (int)m_bDescending[i]);
+		tmp.Format(_T("%d"), static_cast<int>(m_bDescending[i]));
 		if (!str.IsEmpty())
 			str += ',';
 		str += tmp;

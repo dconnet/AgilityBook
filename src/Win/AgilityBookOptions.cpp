@@ -1257,7 +1257,7 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 {
 	CString section;
-	section.Format("dateFormat%d", (int)inItem);
+	section.Format("dateFormat%d", static_cast<int>(inItem));
 	ARBDate::DateFormat def;
 	switch (inItem)
 	{
@@ -1269,15 +1269,15 @@ ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 	case eCalendar: def = ARBDate::eDashYMD; break;
 	case eTraining: def = ARBDate::eDashYMD; break;
 	}
-	int val = AfxGetApp()->GetProfileInt("Settings", section, (int)def);
-	return (ARBDate::DateFormat)val;
+	int val = AfxGetApp()->GetProfileInt("Settings", section, static_cast<int>(def));
+	return static_cast<ARBDate::DateFormat>(val);
 }
 
 void CAgilityBookOptions::SetDateFormat(FormattedDate inItem, ARBDate::DateFormat inFormat)
 {
 	CString section;
-	section.Format("dateFormat%d", (int)inItem);
-	AfxGetApp()->WriteProfileInt("Settings", section, (int)inFormat);
+	section.Format("dateFormat%d", static_cast<int>(inItem));
+	AfxGetApp()->WriteProfileInt("Settings", section, static_cast<int>(inFormat));
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -88,7 +88,7 @@ void CScrollHotStatic::OnClicked()
 	if( i == j ) return;
 	
 	HINSTANCE h = ShellExecute(NULL, "open", m_ItemVector[i].m_strLink, NULL, NULL, SW_SHOWNORMAL);
-	if ((UINT)h > 32)
+	if (static_cast<UINT>(h) > 32)
 	{
 		m_bVisited = TRUE;
 		m_ItemVector[i].m_dwFlag |= ITEM_VISITED;
@@ -164,7 +164,7 @@ void CScrollHotStatic::OnPaint()
 	if( m_nRedrawTimer == -1 )
 		m_nRedrawTimer = SetTimer(1000,30,NULL);
 
-	if (!(HFONT)m_font)
+	if (!reinterpret_cast<HFONT>(m_font))
 	{
 		CFont *pFont = GetFont();
 		if(pFont)
@@ -179,7 +179,7 @@ void CScrollHotStatic::OnPaint()
 		m_nFontHeight = size.cy;
 	}
 
-	if (!(HFONT)m_NoUnderLineFont)
+	if (!reinterpret_cast<HFONT>(m_NoUnderLineFont))
 	{
 		CFont *pFont = GetFont();
 		if(pFont)
