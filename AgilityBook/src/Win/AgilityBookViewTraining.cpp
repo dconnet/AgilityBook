@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -46,6 +47,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookViewTraining.h"
 
+#include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
@@ -253,6 +255,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 IMPLEMENT_DYNCREATE(CAgilityBookViewTraining, CListView2)
 
 BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
+	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewTraining)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
@@ -303,6 +306,12 @@ BOOL CAgilityBookViewTraining::PreCreateWindow(CREATESTRUCT& cs)
 	// This is actually set in TabView.cpp.
 	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
 	return CListView2::PreCreateWindow(cs);
+}
+
+LRESULT CAgilityBookViewTraining::OnCommandHelp(WPARAM, LPARAM)
+{
+	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_TRAINING, HH_HELP_CONTEXT);
+	return 1;
 }
 
 int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct) 

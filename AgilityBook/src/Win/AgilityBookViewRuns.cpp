@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -54,6 +55,7 @@
 #include "AgilityBookViewRuns.h"
 
 #include <algorithm>
+#include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
@@ -1031,6 +1033,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 IMPLEMENT_DYNCREATE(CAgilityBookViewRuns, CListView2)
 
 BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
+	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewRuns)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
@@ -1087,6 +1090,12 @@ BOOL CAgilityBookViewRuns::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
 	return CListView2::PreCreateWindow(cs);
+}
+
+LRESULT CAgilityBookViewRuns::OnCommandHelp(WPARAM, LPARAM)
+{
+	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
+	return 1;
 }
 
 int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct) 

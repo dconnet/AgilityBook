@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -50,6 +51,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookViewCalendarList.h"
 
+#include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
@@ -321,6 +323,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 IMPLEMENT_DYNCREATE(CAgilityBookViewCalendarList, CListView2)
 
 BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
+	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewCalendarList)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
@@ -382,6 +385,12 @@ BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
 	return CListView2::PreCreateWindow(cs);
+}
+
+LRESULT CAgilityBookViewCalendarList::OnCommandHelp(WPARAM, LPARAM)
+{
+	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_CALENDAR, HH_HELP_CONTEXT);
+	return 1;
 }
 
 int CAgilityBookViewCalendarList::OnCreate(LPCREATESTRUCT lpCreateStruct) 

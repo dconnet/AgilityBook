@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
  * @li 2003-10-22 DRC Right click sets the current date.
@@ -106,6 +107,7 @@ private:
 
 // Generated message map functions
 protected:
+	afx_msg LRESULT OnCommandHelp(WPARAM, LPARAM);
 	//{{AFX_MSG(CAgilityBookViewCalendar)
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);

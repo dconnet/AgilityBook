@@ -10,6 +10,7 @@
 #define IDR_DOG                         132
 #define IDR_TRIAL                       133
 #define IDR_RUN                         134
+#define IDR_POINTS                      135
 #define IDR_CALENDAR                    136
 #define IDR_TRAINING                    137
 #define IDI_AGILITYBOOKDOC              150

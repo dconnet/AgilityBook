@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-28 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
@@ -135,6 +136,7 @@ private:
 
 // Generated message map functions
 protected:
+	afx_msg LRESULT OnCommandHelp(WPARAM, LPARAM);
 	//{{AFX_MSG(CAgilityBookTree)
 	afx_msg void OnDestroy();
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
