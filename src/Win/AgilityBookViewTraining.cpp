@@ -44,6 +44,7 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
 #include "ARBTraining.h"
+#include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "DlgTraining.h"
 #include "MainFrm.h"
@@ -224,6 +225,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnTrainingNew)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_TRAINING, OnUpdateTrainingDelete)
 	ON_COMMAND(ID_AGILITY_DELETE_TRAINING, OnTrainingDelete)
+	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -254,18 +256,7 @@ int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < scNumColumns; ++i)
-	{
-		CString str;
-		str.LoadString(scColumns[i].col);
-		col.fmt = scColumns[i].fmt;
-		col.pszText = str.GetBuffer(0);
-		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
-		str.ReleaseBuffer();
-	}
+	SetupColumns();
 
 	return 0;
 }
@@ -355,6 +346,22 @@ CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemData(int index) c
 	if (0 <= index && index < GetListCtrl().GetItemCount())
 		pData = reinterpret_cast<CAgilityBookViewTrainingData*>(GetListCtrl().GetItemData(index));
 	return pData;
+}
+
+void CAgilityBookViewTraining::SetupColumns()
+{
+	LV_COLUMN col;
+	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+	for (int i = 0; i < scNumColumns; ++i)
+	{
+		CString str;
+		str.LoadString(scColumns[i].col);
+		col.fmt = scColumns[i].fmt;
+		col.pszText = str.GetBuffer(0);
+		col.iSubItem = i;
+		GetListCtrl().InsertColumn(i, &col);
+		str.ReleaseBuffer();
+	}
 }
 
 void CAgilityBookViewTraining::LoadData()
@@ -611,5 +618,15 @@ void CAgilityBookViewTraining::OnTrainingDelete()
 			GetListCtrl().DeleteItem(GetSelection());
 			GetDocument()->SetModifiedFlag();
 		}
+	}
+}
+
+void CAgilityBookViewTraining::OnViewCustomize()
+{
+	CDlgAssignColumns dlg(CAgilityBookOptions::eViewLog);
+	if (IDOK == dlg.DoModal())
+	{
+		SetupColumns();
+		LoadData();
 	}
 }

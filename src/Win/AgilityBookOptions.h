@@ -171,19 +171,23 @@ public:
 	static void SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter);
 	typedef enum
 	{
-		eUnknown	= 0x00,
-		eRunsImport	= 0x01,
-		eRunsExport	= 0x02,
-		eCalImport	= 0x04,
-		eCalExport	= 0x08,
-		eLogImport	= 0x10,
-		eLogExport	= 0x20,
+		eUnknown	= 0x0000,
+		eRunsImport	= 0x0001,
+		eRunsExport	= 0x0002,
+		eCalImport	= 0x0004,
+		eCalExport	= 0x0008,
+		eLogImport	= 0x0010,
+		eLogExport	= 0x0020,
+		eViewTree	= 0x0040,
+		eViewRuns	= 0x0080,
+		eViewCal	= 0x0100,
+		eViewLog	= 0x0200,
 	} ColumnOrder;
 protected:
 	friend class CDlgAssignColumns;
 	// CDlgAssignColumns has some structs for used to ensure validity.
-	static void GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& values);
-	static void SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& values);
+	static void GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& outValues);
+	static void SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& inValues);
 public:
 	// Special clipboard formats
 	typedef enum

@@ -76,6 +76,7 @@ public:
 
 private:
 	CAgilityBookViewCalendarData* GetItemData(int index) const;
+	void SetupColumns();
 	void LoadData();
 	CImageList m_ImageList;
 	int m_imgEmpty;
@@ -130,6 +131,7 @@ protected:
 	afx_msg void OnCalendarNew();
 	afx_msg void OnUpdateCalendarDelete(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarDelete();
+	afx_msg void OnViewCustomize();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
