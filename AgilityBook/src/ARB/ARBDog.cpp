@@ -32,6 +32,10 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-18 DRC Added a deceased date. While this does change the format
+ *                of the file, it's backwards compatible, so it doesn't warrant
+ *                a file version change.
+ * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
@@ -54,6 +58,7 @@ static char THIS_FILE[] = __FILE__;
 ARBDog::ARBDog()
 	: m_CallName()
 	, m_DOB()
+	, m_Deceased()
 	, m_RegName()
 	, m_Breed()
 	, m_Note()
@@ -66,6 +71,7 @@ ARBDog::ARBDog()
 ARBDog::ARBDog(const ARBDog& rhs)
 	: m_CallName(rhs.m_CallName)
 	, m_DOB(rhs.m_DOB)
+	, m_Deceased(rhs.m_Deceased)
 	, m_RegName(rhs.m_RegName)
 	, m_Breed(rhs.m_Breed)
 	, m_Note(rhs.m_Note)
@@ -85,6 +91,7 @@ ARBDog& ARBDog::operator=(const ARBDog& rhs)
 	{
 		m_CallName = rhs.m_CallName;
 		m_DOB = rhs.m_DOB;
+		m_Deceased = rhs.m_Deceased;
 		m_RegName = rhs.m_RegName;
 		m_Breed = rhs.m_Breed;
 		m_Note = rhs.m_Note;
@@ -99,6 +106,7 @@ bool ARBDog::operator==(const ARBDog& rhs) const
 {
 	return m_CallName == rhs.m_CallName
 		&& m_DOB == rhs.m_DOB
+		&& m_Deceased == rhs.m_Deceased
 		&& m_RegName == rhs.m_RegName
 		&& m_Breed == rhs.m_Breed
 		&& m_Note == rhs.m_Note
@@ -131,6 +139,16 @@ bool ARBDog::Load(
 		std::string msg(INVALID_DATE);
 		msg += attrib;
 		ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str());
+		return false;
+	}
+
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
+	{
+		std::string attrib;
+		inTree.GetAttrib(ATTRIB_DOG_DECEASED, attrib);
+		std::string msg(INVALID_DATE);
+		msg += attrib;
+		ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str());
 		return false;
 	}
 
@@ -176,6 +194,8 @@ bool ARBDog::Save(CElement& ioTree) const
 	CElement& dog = ioTree.AddElement(TREE_DOG);
 	dog.AddAttrib(ATTRIB_DOG_CALLNAME, m_CallName);
 	dog.AddAttrib(ATTRIB_DOG_DOB, m_DOB);
+	if (m_Deceased.IsValid())
+		dog.AddAttrib(ATTRIB_DOG_DECEASED, m_Deceased);
 	if (0 < m_RegName.length())
 	{
 		CElement& element = dog.AddElement(TREE_REGNAME);
@@ -231,28 +251,6 @@ int ARBDog::DeleteDivision(const ARBConfig& inConfig, const std::string& inVenue
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
-class SortDog
-{
-public:
-	SortDog(bool bDescending) : m_bDescending(bDescending) {}
-	bool operator()(ARBDog* one, ARBDog* two) const
-	{
-		if (one->GetCallName() < two->GetCallName())
-			return m_bDescending;
-		else
-			return !m_bDescending;
-	}
-private:
-	bool m_bDescending;
-};
-
-void ARBDogList::sort(bool inDescending)
-{
-	if (2 > size())
-		return;
-	std::stable_sort(begin(), end(), SortDog(inDescending));
-}
 
 int ARBDogList::NumRegNumsInVenue(const std::string& inVenue) const
 {
@@ -471,15 +469,14 @@ int ARBDogList::DeleteEvent(
 	return count;
 }
 
-ARBDog* ARBDogList::AddDog(const ARBDog* inDog)
+ARBDog* ARBDogList::AddDog(ARBDog* inDog)
 {
-	ARBDog* pDog = NULL;
 	if (inDog)
 	{
-		pDog = new ARBDog(*inDog);
-		push_back(pDog);
+		inDog->AddRef();
+		push_back(inDog);
 	}
-	return pDog;
+	return inDog;
 }
 
 bool ARBDogList::DeleteDog(const ARBDog* inDog)

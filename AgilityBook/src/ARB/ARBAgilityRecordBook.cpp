@@ -35,6 +35,7 @@
  * tries to port this to a different platform or put a different GUI on it.
  *
  * Revision History
+ * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  * @li 2003-06-23 DRC File version 5. Added 'Note' and 'Verified' to trials.
  *                    Changed how title points are configured.
  * @li 2003-06-11 DRC File version 4. Added 'dropFractions' to config scoring.
@@ -240,7 +241,6 @@ bool ARBAgilityRecordBook::Load(
 					m_Dogs.Load(m_Config, element, version);
 				}
 			}
-			m_Dogs.sort();
 		}
 	}
 	return bLoaded;

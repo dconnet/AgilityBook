@@ -34,6 +34,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-18 DRC Added a deceased date.
+ * @li 2003-07-24 DRC Removed built-in sort on dogs. Dogs are user-sorted now.
  */
 
 #include <string>
@@ -82,6 +84,8 @@ public:
 	void SetCallName(const std::string& inName);
 	const ARBDate& GetDOB() const;
 	void SetDOB(const ARBDate& inDOB);
+	const ARBDate& GetDeceased() const;
+	void SetDeceased(const ARBDate& inDeceased);
 	const std::string& GetRegisteredName() const;
 	void SetRegisteredName(const std::string& inName);
 	const std::string& GetBreed() const;
@@ -99,6 +103,7 @@ private:
 	~ARBDog();
 	std::string m_CallName;
 	ARBDate m_DOB;
+	ARBDate m_Deceased;
 	std::string m_RegName;
 	std::string m_Breed;
 	std::string m_Note;
@@ -125,6 +130,16 @@ inline const ARBDate& ARBDog::GetDOB() const
 inline void ARBDog::SetDOB(const ARBDate& inDOB)
 {
 	m_DOB = inDOB;
+}
+
+inline const ARBDate& ARBDog::GetDeceased() const
+{
+	return m_Deceased;
+}
+
+inline void ARBDog::SetDeceased(const ARBDate& inDeceased)
+{
+	m_Deceased = inDeceased;
 }
 
 inline const std::string& ARBDog::GetRegisteredName() const
@@ -201,8 +216,6 @@ public:
 		return !isEqual(rhs);
 	}
 
-	void sort(bool inDescending = true);
-
 	int NumRegNumsInVenue(const std::string& inVenue) const;
 	int NumTitlesInVenue(const std::string& inVenue) const;
 	int NumTrialsInVenue(const std::string& inVenue) const;
@@ -272,6 +285,6 @@ public:
 		const std::string& inVenue,
 		const std::string& inEvent);
 
-	ARBDog* AddDog(const ARBDog* inDog);
+	ARBDog* AddDog(ARBDog* inDog);
 	bool DeleteDog(const ARBDog* inDog);
 };

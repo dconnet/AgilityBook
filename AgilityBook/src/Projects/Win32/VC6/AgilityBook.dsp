@@ -217,6 +217,10 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsFonts.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOtherPoint.cpp
 # End Source File
 # Begin Source File
@@ -266,6 +270,10 @@ SOURCE=..\..\..\Win\DlgTitle.cpp
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgTrial.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\HyperLink.cpp
 # End Source File
 # Begin Source File
 
@@ -418,6 +426,10 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsFonts.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOtherPoint.h
 # End Source File
 # Begin Source File
@@ -467,6 +479,10 @@ SOURCE=..\..\..\Win\DlgTitle.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\HyperLink.h
 # End Source File
 # Begin Source File
 

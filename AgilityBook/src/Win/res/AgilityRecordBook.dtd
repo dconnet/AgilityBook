@@ -132,12 +132,17 @@ depends on how a venue has been defined above.
 	<!ATTLIST Dog
 		CallName CDATA #REQUIRED
 		DOB CDATA #IMPLIED
+		Deceased CDATA #IMPLIED
 		>
 <!ELEMENT RegisteredName (#PCDATA) >
 <!ELEMENT Breed (#PCDATA) >
 <!ELEMENT Note (#PCDATA) >
 <!ELEMENT RegNum (#PCDATA) >
-	<!ATTLIST RegNum Venue CDATA #REQUIRED >
+	<!ATTLIST RegNum
+		Venue CDATA #REQUIRED
+		Height CDATA #IMPLIED
+		isReceived (y|n) 'n'
+	>
 <!ELEMENT Title EMPTY >
 	<!ATTLIST Title
 		Date CDATA #REQUIRED

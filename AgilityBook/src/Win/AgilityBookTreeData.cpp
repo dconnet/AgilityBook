@@ -32,6 +32,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-03 DRC When pasting trials/runs, select the new item.
+ * @li 2003-08-30 DRC Copy a trial/run in the tree to the clipboard in dual
+ *                    form. The internal form allows copying of the entry.
+ *                    The text form copies what is printed.
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
+ * @li 2003-07-24 DRC Added reorder support on all items. Made dogs user-sorted.
  */
 
 #include "stdafx.h"
@@ -84,10 +91,8 @@ static bool EditDog(
 	{
 		if (bAdd)
 		{
-			std::vector<CVenueFilter> venues;
-			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDog* pNewDog = pTree->GetDocument()->GetDogs().AddDog(pDog);
-			HTREEITEM hItem = pTree->InsertDog(venues, pNewDog);
+			HTREEITEM hItem = pTree->InsertDog(pNewDog);
 			pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
 			if (bTreeSelectionSet)
 				*bTreeSelectionSet = true;
@@ -130,7 +135,8 @@ static bool EditTrial(
 			std::vector<CVenueFilter> venues;
 			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDogTrial* pNewTrial = pDogData->GetDog()->GetTrials().AddTrial(pTrial);
-			HTREEITEM hItem = pTree->InsertTrial(venues, pNewTrial, pDogData->GetHTreeItem());
+			pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+			HTREEITEM hItem = pTree->InsertTrial(pNewTrial, pDogData->GetHTreeItem());
 			if (NULL == hItem)
 			{
 				bOk = false;
@@ -199,24 +205,106 @@ static bool EditRun(
 	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetTrial(), pRun, pTree);
 	if (IDOK == dlg.DoModal())
 	{
+		bOk = true;
 		if (bAdd)
 		{
 			std::vector<CVenueFilter> venues;
 			CAgilityBookOptions::GetFilterVenue(venues);
 			ARBDogRun* pNewRun = pTrialData->GetTrial()->GetRuns().AddRun(pRun);
-			HTREEITEM hItem = pTree->InsertRun(venues, pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
-			pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-			if (bTreeSelectionSet)
-				*bTreeSelectionSet = true;
+			pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pNewRun);
+			HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
+			if (NULL == hItem)
+			{
+				bOk = false;
+				AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
+			}
+			else
+			{
+				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+				if (bTreeSelectionSet)
+					*bTreeSelectionSet = true;
+			}
 		}
 		else
 			pTree->Invalidate();
-		pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-		pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-		pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
-		bOk = true;
+		if (bOk)
+		{
+			pTrialData->GetTrial()->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+		}
 	}
 	pRun->Release();
+	return bOk;
+}
+
+static bool ReOrderDogs(
+	ARBDogList& dogs,
+	CAgilityBookTree* pTree)
+{
+	bool bOk = false;
+	std::vector<ARBBase*> items;
+	for (ARBDogList::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
+	{
+		ARBDog* pDog = *iter;
+		pDog->AddRef();
+		items.push_back(pDog);
+	}
+	CDlgReorder dlg(items);
+	if (IDOK == dlg.DoModal())
+	{
+		bOk = true;
+		dogs.clear();
+		for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+		{
+			ARBDog* pDog = dynamic_cast<ARBDog*>(*iter2);
+			dogs.AddDog(pDog);
+		}
+		CAgilityBookDoc* pDoc = pTree->GetDocument();
+		pDoc->SetModifiedFlag(TRUE);
+		pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
+	}
+	for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+	{
+		(*iter2)->Release();
+	}
+	return bOk;
+}
+
+static bool ReOrderTrial(
+	ARBDogTrial* pTrial,
+	CAgilityBookTree* pTree)
+{
+	bool bOk = false;
+	if (pTrial)
+	{
+		std::vector<ARBBase*> items;
+		for (ARBDogRunList::iterator iter = pTrial->GetRuns().begin(); iter != pTrial->GetRuns().end(); ++iter)
+		{
+			ARBDogRun* pRun = *iter;
+			pRun->AddRef();
+			items.push_back(pRun);
+		}
+		CDlgReorder dlg(items);
+		if (IDOK == dlg.DoModal())
+		{
+			bOk = true;
+			pTrial->GetRuns().clear();
+			for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+			{
+				ARBDogRun* pRun = dynamic_cast<ARBDogRun*>(*iter2);
+				pTrial->GetRuns().AddRun(pRun);
+			}
+			pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			CAgilityBookDoc* pDoc = pTree->GetDocument();
+			pDoc->SetModifiedFlag(TRUE);
+			pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
+		}
+		for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
+		{
+			(*iter2)->Release();
+		}
+	}
 	return bOk;
 }
 
@@ -235,7 +323,7 @@ static bool AddTitle(
 		return false;
 }
 
-static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree)
+static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree, const CString& txtForm)
 {
 	if (!AfxGetMainWnd()->OpenClipboard())
 		return false;
@@ -257,6 +345,19 @@ static bool CopyDataToClipboard(UINT clpFmt, const CElement& tree)
 		GlobalUnlock((void*)temp);
 		// send data to clipbard
 		SetClipboardData(clpFmt, temp);
+
+		if (!txtForm.IsEmpty())
+		{
+			temp = GlobalAlloc(GHND, txtForm.GetLength()+1);
+			if (NULL != temp)
+			{
+				LPTSTR str = (LPTSTR)GlobalLock(temp);
+				lstrcpy(str, (LPCTSTR)txtForm);
+				GlobalUnlock((void*)temp);
+				// send data to clipbard
+				SetClipboardData(CF_TEXT, temp);
+			}
+		}
 	}
 
 	CloseClipboard();
@@ -295,7 +396,7 @@ bool CAgilityBookTreeData::CanPaste() const
 	return bEnable;
 }
 
-bool CAgilityBookTreeData::DoPaste()
+bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
 	bool bLoaded = false;
 	CElement tree;
@@ -310,8 +411,29 @@ bool CAgilityBookTreeData::DoPaste()
 			if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
+				std::vector<CVenueFilter> venues;
+				CAgilityBookOptions::GetFilterVenue(venues);
 				pTrial->GetRuns().AddRun(pRun);
-				m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+				m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
+				HTREEITEM hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetHTreeItem());
+				bool bOk = true;
+				if (NULL == hItem)
+				{
+					bOk = false;
+					AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
+				}
+				else
+				{
+					m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
+				if (bOk)
+				{
+					pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+				}
 			}
 			pRun->Release();
 		}
@@ -325,8 +447,28 @@ bool CAgilityBookTreeData::DoPaste()
 			if (pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion()))
 			{
 				bLoaded = true;
+				std::vector<CVenueFilter> venues;
+				CAgilityBookOptions::GetFilterVenue(venues);
 				pDog->GetTrials().AddTrial(pTrial);
-				m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW);
+				m_pTree->GetDocument()->ResetVisibility(venues, pTrial);
+				HTREEITEM hItem = m_pTree->InsertTrial(pTrial, GetDataDog()->GetHTreeItem());
+				bool bOk = true;
+				if (NULL == hItem)
+				{
+					bOk = false;
+					AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
+				}
+				else
+				{
+					m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					if (bTreeSelectionSet)
+						*bTreeSelectionSet = true;
+				}
+				if (bOk)
+				{
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+				}
 			}
 			pTrial->Release();
 		}
@@ -365,6 +507,10 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 	case ID_AGILITY_DELETE_DOG:
 		bEnable = true;
 		break;
+	case ID_REORDER:
+		if (m_pTree && 1 < m_pTree->GetDocument()->GetDogs().size())
+			bEnable = true;
+		break;
 	case ID_EXPAND:
 		if (m_hItem && m_pTree && m_pTree->GetTreeCtrl().ItemHasChildren(m_hItem))
 		{
@@ -396,7 +542,7 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 	default:
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste();
+		DoPaste(bTreeSelectionSet); // Currently this doesn't do anything. CanPaste said no.
 		break;
 	case ID_AGILITY_EDIT_DOG:
 		if (EditDog(this, m_pTree, bTreeSelectionSet))
@@ -426,6 +572,11 @@ bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
+		break;
+
+	case ID_REORDER:
+		if (m_pTree)
+			ReOrderDogs(m_pTree->GetDocument()->GetDogs(), m_pTree);
 		break;
 
 	case ID_EXPAND:
@@ -556,11 +707,11 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 			CElement tree;
 			tree.SetName(CLIPDATA);
 			GetTrial()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree);
+			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree, m_pTree->GetPrintLine(GetHTreeItem()));
 		}
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste();
+		DoPaste(bTreeSelectionSet);
 		break;
 	case ID_AGILITY_EDIT_TRIAL:
 		if (EditTrial(GetDataDog(), this, m_pTree, bTreeSelectionSet))
@@ -597,35 +748,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 		}
 		break;
 	case ID_REORDER:
-		if (GetTrial())
-		{
-			ARBDogTrial* pTrial = GetTrial();
-			std::vector<ARBBase*> items;
-			for (ARBDogRunList::iterator iter = pTrial->GetRuns().begin(); iter != pTrial->GetRuns().end(); ++iter)
-			{
-				ARBDogRun* pRun = *iter;
-				pRun->AddRef();
-				items.push_back(pRun);
-			}
-			CDlgReorder dlg(items);
-			if (IDOK == dlg.DoModal())
-			{
-				pTrial->GetRuns().clear();
-				for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
-				{
-					ARBDogRun* pRun = dynamic_cast<ARBDogRun*>(*iter2);
-					pTrial->GetRuns().AddRun(pRun);
-				}
-				pTrial->GetRuns().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
-				pDoc->SetModifiedFlag(TRUE);
-				pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
-			}
-			for (std::vector<ARBBase*>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
-			{
-				(*iter2)->Release();
-			}
-		}
+		ReOrderTrial(GetTrial(), m_pTree);
 		break;
 	}
 	return bModified;
@@ -772,6 +895,10 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 	case ID_AGILITY_DELETE_RUN:
 		bEnable = true;
 		break;
+	case ID_REORDER:
+		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
+			bEnable = true;
+		break;
 	}
 	return bEnable;
 }
@@ -788,11 +915,11 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 			CElement tree;
 			tree.SetName(CLIPDATA);
 			GetRun()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree);
+			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, m_pTree->GetPrintLine(GetHTreeItem()));
 		}
 		break;
 	case ID_EDIT_PASTE:
-		DoPaste();
+		DoPaste(bTreeSelectionSet);
 		break;
 	case ID_AGILITY_EDIT_RUN:
 		if (EditRun(GetDataDog(), GetDataTrial(), this, m_pTree, bTreeSelectionSet))
@@ -827,6 +954,9 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
+		break;
+	case ID_REORDER:
+		ReOrderTrial(GetTrial(), m_pTree);
 		break;
 	}
 	return bModified;

@@ -34,6 +34,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-27 DRC Added view accessors for calendar, made them public so
+ *                    I don't have to use UpdateAllViews. Added methods to allow
+ *                    creating titles/trials/runs from the Run view.
+ * @li 2003-08-25 DRC Added GetCurrentRun().
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include <set>
@@ -46,7 +52,10 @@ class ARBDogList;
 class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookTree;
+class CAgilityBookViewCalendar;
+class CAgilityBookViewCalendarList;
 class CTabView;
+struct CVenueFilter;
 
 // UpdateAllViews() hints
 #define UPDATE_CONFIG			0x001
@@ -56,8 +65,7 @@ class CTabView;
 #define UPDATE_TREE_VIEW		0x080
 #define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
 #define UPDATE_OPTIONS			0x100
-#define UPDATE_CALENDAR_SEL		0x200
-#define UPDATE_NEW_TRIAL		0x400
+#define UPDATE_NEW_TRIAL		0x200
 
 class CAgilityBookDoc : public CDocument
 {
@@ -69,6 +77,7 @@ public:
 	// Data
 	ARBDog* GetCurrentDog();
 	ARBDogTrial* GetCurrentTrial();
+	ARBDogRun* GetCurrentRun();
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
@@ -96,12 +105,26 @@ public:
 	{
 		return m_Records.GetAllFaultTypes(faults);
 	}
+
+	// These are called from the Runs view so the tree view can do the add.
+	void AddTitle(ARBDogRun* pSelectedRun);
+	void AddTrial(ARBDogRun* pSelectedRun);
+	void AddRun(ARBDogRun* pSelectedRun);
 	void EditRun(ARBDogRun* pRun);
 	void DeleteRun(ARBDogRun* pRun);
+
 	bool CreateTrialFromCalendar(const ARBCalendar& cal, CTabView* pTabView);
 	void SortDates();
-protected:
+
+	void ResetVisibility();
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun);
+	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle);
+
 	CAgilityBookTree* GetTreeView() const;
+	CAgilityBookViewCalendarList* GetCalendarListView() const;
+	CAgilityBookViewCalendar* GetCalendarView() const;
 
 // Overrides
 public:

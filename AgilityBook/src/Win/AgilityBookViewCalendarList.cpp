@@ -32,6 +32,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Fixed bug when copying list to clipboard.
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ * @li 2003-07-24 DRC Calendar view didn't update when item deleted from list.
  */
 
 #include "stdafx.h"
@@ -41,6 +44,7 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
+#include "AgilityBookViewCalendar.h"
 #include "ARBCalendar.h"
 #include "DlgCalendar.h"
 #include "DlgSelectDog.h"
@@ -201,6 +205,7 @@ END_MESSAGE_MAP()
 // CAgilityBookViewCalendarList construction/destruction
 
 CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
+	: m_bSuppressSelect(false)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 3, 0);
 	CWinApp* app = AfxGetApp();
@@ -285,6 +290,16 @@ CAgilityBookDoc* CAgilityBookViewCalendarList::GetDocument() const // non-debug 
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// Printing
+
+void CAgilityBookViewCalendarList::GetPrintLine(int nItem, CStringArray& line)
+{
+	CListView2::GetPrintLine(nItem, line);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_EVENTS, GetListCtrl().GetItemCount());
@@ -301,6 +316,8 @@ CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int inde
 
 void CAgilityBookViewCalendarList::LoadData()
 {
+	m_bSuppressSelect = true;
+
 	// Remember what's selected.
 	CAgilityBookViewCalendarData* pCurData = GetItemData(GetSelection());
 	if (pCurData)
@@ -392,6 +409,8 @@ void CAgilityBookViewCalendarList::LoadData()
 		pCurData->Release();
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
+
+	m_bSuppressSelect = false;
 }
 
 // CAgilityBookViewCalendarList message handlers
@@ -499,10 +518,16 @@ void CAgilityBookViewCalendarList::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult
 	&& !(LVIS_SELECTED & pNMListView->uOldState)
 	&& (LVIS_SELECTED & pNMListView->uNewState))
 	{
-		CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
-		if (pData)
+		if (!m_bSuppressSelect)
 		{
-			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_SEL, reinterpret_cast<CObject*>(pData->GetCalendar()));
+			CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+			if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
+			{
+				CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
+				pCalView->SuppressSelect(true);
+				pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
+				pCalView->SuppressSelect(false);
+			}
 		}
 	}
 	*pResult = 0;
@@ -555,11 +580,13 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		int index;
 		size_t maxLen[scNumColumns];
+		CString columns[scNumColumns];
 		for (index = 0; index < scNumColumns; ++index)
 		{
 			CString str;
 			str.LoadString(scColumns[index].col);
 			maxLen[index] = str.GetLength();
+			columns[index] = str;
 		}
 		for (index = 0; index < GetListCtrl().GetItemCount(); ++index)
 		{
@@ -595,14 +622,14 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 		// The header
 		CString data;
 		data.Format(" %*s-%-*s %-*s %-*s %-*s %*s-%-*s %-*s",
-			maxLen[COL_START_DATE], scColumns[COL_START_DATE].col,
-			maxLen[COL_END_DATE], scColumns[COL_END_DATE].col,
-			maxLen[COL_VENUE], scColumns[COL_VENUE].col,
-			maxLen[COL_LOCATION], scColumns[COL_LOCATION].col,
-			maxLen[COL_CLUB], scColumns[COL_CLUB].col,
-			maxLen[COL_OPENS], scColumns[COL_OPENS].col,
-			maxLen[COL_CLOSES], scColumns[COL_CLOSES].col,
-			maxLen[COL_NOTES], scColumns[COL_NOTES].col);
+			maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
+			maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
+			maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
+			maxLen[COL_LOCATION], (LPCTSTR)columns[COL_LOCATION],
+			maxLen[COL_CLUB], (LPCTSTR)columns[COL_CLUB],
+			maxLen[COL_OPENS], (LPCTSTR)columns[COL_OPENS],
+			maxLen[COL_CLOSES], (LPCTSTR)columns[COL_CLOSES],
+			maxLen[COL_NOTES], (LPCTSTR)columns[COL_NOTES]);
 		data.TrimRight();
 		data += "\r\n";
 		// The data
@@ -761,6 +788,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 			}
 			GetDocument()->GetCalendar().DeleteCalendar(cal);
 			GetDocument()->SetModifiedFlag();
+			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 			cal->Release();
 		}
 	}

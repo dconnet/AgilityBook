@@ -32,6 +32,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
+ *                    printing and viewing (already in the listctrl)
+ * @li 2003-08-28 DRC Added printing.
+ * @li 2003-08-27 DRC Cleaned up selection synchronization.
+ * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
+ *                    prevent constant re-evaluation.
  */
 
 #include "stdafx.h"
@@ -112,13 +118,16 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_UPDATE_COMMAND_UI(ID_COLLAPSE_ALL, OnUpdateCollapseAll)
 	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
 	//}}AFX_MSG_MAP
+	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 // CAgilityBookTree construction/destruction
 
 CAgilityBookTree::CAgilityBookTree()
 	: m_bReset(false)
-	, m_bInInit(false)
+	, m_bSuppressSelect(false)
 	, m_pDog(NULL)
 {
 }
@@ -145,9 +154,9 @@ BOOL CAgilityBookTree::PreCreateWindow(CREATESTRUCT& cs)
 
 void CAgilityBookTree::OnInitialUpdate()
 {
-	m_bInInit = true;
+	m_bSuppressSelect = true;
 	CTreeView::OnInitialUpdate();
-	m_bInInit = false;
+	m_bSuppressSelect = false;
 }
 
 void CAgilityBookTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
@@ -170,6 +179,119 @@ void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		CAgilityBookTreeData* pData = FindData(TVI_ROOT, pTrial);
 		ASSERT(pData);
 		GetTreeCtrl().Select(pData->GetHTreeItem(), TVGN_CARET);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CAgilityBookTree printing
+
+CString CAgilityBookTree::GetPrintLine(HTREEITEM hItem) const
+{
+	return GetTreeCtrl().GetItemText(hItem);
+}
+
+struct CTreePrintData
+{
+	CStringArray lines;
+	CRect r;
+	int nMaxWidth;
+	int nHeight;
+	int nLinesPerPage;
+	int nPages;
+};
+
+BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
+{
+	// We can't set the number of pages here cause we need the DC to determine
+	// how much we can fit, so the computation is defered until BeginPrint.
+	// However, that has the side effect of not populating the print dialog
+	// with the page range correctly. For that to show up, it must be set here.
+	// So, you must first answer the chicken and egg question...
+	// Which is - disable the page selection stuff!
+	// We allow the page numbers, but as noted, the max page is not set.
+	pInfo->m_pPD->m_pd.Flags |= PD_NOSELECTION;
+	return DoPreparePrinting(pInfo);
+}
+
+void CAgilityBookTree::PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const
+{
+	if (TVI_ROOT != hItem)
+	{
+		CString str;
+		for (int i = 0; i < indent; ++i)
+			str += "   ";
+		str += GetPrintLine(hItem);
+		pData->lines.Add(str);
+		CRect r(0,0,0,0);
+		pDC->DrawText(str, &r, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
+		if (r.Width() > pData->nMaxWidth)
+			pData->nMaxWidth = r.Width();
+	}
+	HTREEITEM hChildItem = GetTreeCtrl().GetNextItem(hItem, TVGN_CHILD);
+	while (hChildItem)
+	{
+		PrintLine(pDC, pData, hChildItem, indent+1);
+		hChildItem = GetTreeCtrl().GetNextItem(hChildItem, TVGN_NEXT);
+	}
+}
+
+
+void CAgilityBookTree::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
+{
+	CTreePrintData *pData = new CTreePrintData;
+	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
+
+	// Set the font
+	CFontInfo fontInfo;
+	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
+	CFont font;
+	fontInfo.CreateFont(font, pDC);
+	pDC->SelectObject(&font);
+
+	CSize szDevice(pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
+	pData->r = CRect(CPoint(0,0), szDevice);
+	pDC->DPtoLP(pData->r);
+
+	PrintLine(pDC, pData, TVI_ROOT, 0);
+
+	CRect rTest(0,0,0,0);
+	CString strTextForHeight("Testing for height");
+	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
+	pData->nHeight = 4 * rTest.Height() / 3;
+	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
+	pData->nPages = (static_cast<int>(pData->lines.GetSize()) + 1) / pData->nLinesPerPage + 1;
+	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
+	//	pData->nLinesPerPage,
+	//	GetListCtrl().GetItemCount(),
+	//	pData->nPages);
+	pInfo->SetMinPage(1);
+	pInfo->SetMaxPage(pData->nPages);
+}
+
+void CAgilityBookTree::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* pInfo)
+{
+	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
+	delete pData;
+}
+
+void CAgilityBookTree::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+{
+	CFontInfo fontInfo;
+	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
+	CFont font;
+	fontInfo.CreateFont(font, pDC);
+	pDC->SelectObject(&font);
+
+	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
+
+	int nStartItem = pData->nLinesPerPage * (pInfo->m_nCurPage - 1);
+	int nMaxItem = static_cast<int>(pData->lines.GetSize());
+	for (int nItem = nStartItem; nItem < nMaxItem && nItem - nStartItem < pData->nLinesPerPage; ++nItem)
+	{
+		CRect r = pData->r;
+		r.top += (nItem - nStartItem) * pData->nHeight;
+		r.right = r.left + pData->nMaxWidth;
+		pDC->DrawText(pData->lines[nItem], r, DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	}
 }
 
@@ -291,7 +413,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(HTREEITEM hItem, const ARBDogRu
 	return pData;
 }
 
-HTREEITEM CAgilityBookTree::InsertDog(const std::vector<CVenueFilter>& venues, ARBDog* pDog, bool bSelect)
+HTREEITEM CAgilityBookTree::InsertDog(ARBDog* pDog, bool bSelect)
 {
 	if (!pDog)
 		return NULL;
@@ -309,16 +431,16 @@ HTREEITEM CAgilityBookTree::InsertDog(const std::vector<CVenueFilter>& venues, A
 		iterTrial != pDog->GetTrials().end();
 		++iterTrial)
 	{
-		InsertTrial(venues, (*iterTrial), hItem);
+		InsertTrial((*iterTrial), hItem);
 	}
 	if (bSelect)
 		GetTreeCtrl().Select(hItem, TVGN_CARET);
 	return hItem;
 }
 
-HTREEITEM CAgilityBookTree::InsertTrial(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, HTREEITEM hParent)
+HTREEITEM CAgilityBookTree::InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent)
 {
-	if (!pTrial || !CAgilityBookOptions::IsTrialVisible(venues, pTrial))
+	if (!pTrial || pTrial->IsFiltered())
 		return NULL;
 
 	CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, pTrial);
@@ -334,14 +456,14 @@ HTREEITEM CAgilityBookTree::InsertTrial(const std::vector<CVenueFilter>& venues,
 		iterRun != pTrial->GetRuns().end();
 		++iterRun)
 	{
-		InsertRun(venues, pTrial, (*iterRun), hTrial);
+		InsertRun(pTrial, (*iterRun), hTrial);
 	}
 	return hTrial;
 }
 
-HTREEITEM CAgilityBookTree::InsertRun(const std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent)
+HTREEITEM CAgilityBookTree::InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent)
 {
-	if (!pRun || !CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun))
+	if (!pRun || pRun->IsFiltered())
 		return NULL;
 
 	CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, pRun);
@@ -363,6 +485,8 @@ bool CAgilityBookTree::GetMessage(CString& msg) const
 
 void CAgilityBookTree::LoadData()
 {
+	m_bSuppressSelect = true;
+
 	CWaitCursor wait;
 	// Remember the currently selected item.
 	const CAgilityBookTreeData* pData = GetCurrentTreeItem();
@@ -373,15 +497,13 @@ void CAgilityBookTree::LoadData()
 		pData = pData->GetParent();
 	}
 	// Load the data
-	std::vector<CVenueFilter> venues;
-	CAgilityBookOptions::GetFilterVenue(venues);
 	CTreeCtrl& tree = GetTreeCtrl();
 	tree.DeleteAllItems();
 	for (ARBDogList::const_iterator iterDog = GetDocument()->GetDogs().begin();
 		iterDog != GetDocument()->GetDogs().end();
 		++iterDog)
 	{
-		InsertDog(venues, (*iterDog));
+		InsertDog((*iterDog));
 	}
 	HTREEITEM hItem = NULL;
 	for (std::vector<const ARBBase*>::iterator iter = baseItems.begin();
@@ -396,6 +518,8 @@ void CAgilityBookTree::LoadData()
 		hItem = tree.GetRootItem();
 	tree.SelectItem(hItem);
 	tree.Expand(hItem, TVE_EXPAND);
+
+	m_bSuppressSelect = false;
 }
 
 CAgilityBookTreeData* CAgilityBookTree::GetItemData(HTREEITEM hItem) const
@@ -506,7 +630,7 @@ void CAgilityBookTree::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CAgilityBookTree::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	if (!m_bInInit)
+	if (!m_bSuppressSelect)
 	{
 		NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 		CAgilityBookTreeData* pData = NULL;
@@ -588,11 +712,9 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 			CDlgDog dlg(GetDocument()->GetConfig(), dog);
 			if (IDOK == dlg.DoModal())
 			{
-				std::vector<CVenueFilter> venues;
-				CAgilityBookOptions::GetFilterVenue(venues);
 				GetDocument()->SetModifiedFlag();
 				ARBDog* pNewDog = GetDocument()->GetDogs().AddDog(dog);
-				InsertDog(venues, pNewDog, true);
+				InsertDog(pNewDog, true);
 			}
 			dog->Release();
 			bHandled = TRUE;

@@ -301,6 +301,6 @@ public:
 	size_t GetAllEntered(std::vector<const ARBCalendar*>& ioEntered) const;
 	int TrimEntries(const ARBDate& inDate);
 
-	ARBCalendar* AddCalendar(const ARBCalendar* inCal);
+	ARBCalendar* AddCalendar(ARBCalendar* inCal);
 	bool DeleteCalendar(const ARBCalendar* inCal);
 };

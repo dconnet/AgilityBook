@@ -38,6 +38,7 @@
 
 #include "DlgOptionsCalendar.h"
 #include "DlgOptionsFilter.h"
+#include "DlgOptionsFonts.h"
 class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -55,6 +56,7 @@ public:
 	CAgilityBookDoc* m_pDoc;
 	CDlgOptionsCalendar m_pageCalendar;
 	CDlgOptionsFilter m_pageFilter;
+	CDlgOptionsFonts m_pageFonts;
 
 // Operations
 public:

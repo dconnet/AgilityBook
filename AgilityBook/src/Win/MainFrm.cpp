@@ -43,6 +43,7 @@
 
 #include "ARBConfigVenue.h"
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewCalendarList.h"
@@ -65,6 +66,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_STATUS, OnUpdatePane)
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_FILTERED, OnUpdatePane)
 	ON_COMMAND(ID_NEXT_TAB, OnNextTab)
 	ON_COMMAND(ID_PREV_TAB, OnPrevTab)
 	ON_WM_CLOSE()
@@ -75,6 +77,7 @@ static UINT indicators[] =
 {
 	ID_SEPARATOR,           // status line indicator
 	ID_INDICATOR_STATUS,
+	ID_INDICATOR_FILTERED,
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 };
@@ -112,6 +115,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
 	m_wndStatusBar.SetPaneText(index, "");
+	UpdateFiltered();
 
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
@@ -174,6 +178,15 @@ void CMainFrame::SetStatusText(const CString& msg)
 	m_wndStatusBar.SetPaneInfo(index, nId, nStyle, sz.cx);
 	// Note, a cmdui handler is required to get text to display.
 	m_wndStatusBar.SetPaneText(index, msg);
+}
+
+void CMainFrame::UpdateFiltered()
+{
+	CString filtered;
+	if (CAgilityBookOptions::IsFilterEnabled())
+		filtered.LoadString(ID_INDICATOR_FILTERED);
+	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_FILTERED);
+	m_wndStatusBar.SetPaneText(index, filtered);
 }
 
 void CMainFrame::SetCurTab(int tab)
