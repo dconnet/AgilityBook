@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-23 DRC File version 9.1. Added 'Height' to 'ReferenceRun'
  *                    GetAllHeights now accumulates these too.
  * @li 2004-06-29 DRC File version 9.0. Added 'SubName' to 'Training'. Changed
@@ -92,18 +93,6 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
-/**
- * Print a warning that the document can be read, but saving it may cause the
- * loss of data.
- * Prompt the user to continue (y/n)
- *
- * @return true to continue, false to abort.
- */
-bool WarningNewerDocStructure()
-{
-	return IDYES == AfxMessageBox(WARNING_NEWER_DOC, MB_ICONEXCLAMATION | MB_YESNO);
-}
 
 std::string ErrorInvalidDocStructure(char const* const inMsg)
 {
@@ -181,7 +170,7 @@ bool ARBAgilityRecordBook::Load(
 	bool inConfig,
 	bool inInfo,
 	bool inDogs,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	// Get the records ready.
 	clear();
@@ -190,26 +179,26 @@ bool ARBAgilityRecordBook::Load(
 	// The root must be TREE_BOOK.
 	if (inTree.GetName() != TREE_BOOK)
 	{
-		ioErrMsg += ErrorInvalidDocStructure(INVALID_ROOT);
+		ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_ROOT));
 		return false;
 	}
 	// The version of the document must be something we understand.
 	ARBVersion version;
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION));
 		return false;
 	}
 	if (version < ARBVersion(1,0) || version > GetCurrentDocVersion())
 	{
 		if (version.Major() == GetCurrentDocVersion().Major())
 		{
-			if (!WarningNewerDocStructure())
+			if (!ioCallback.OnError(WARNING_NEWER_DOC))
 				return false;
 		}
 		else
 		{
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION);
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION));
 			return false;
 		}
 	}
@@ -227,7 +216,7 @@ bool ARBAgilityRecordBook::Load(
 			if (element.GetName() == TREE_CALENDAR)
 			{
 				// Ignore any errors...
-				m_Calendar.Load(element, version, ioErrMsg);
+				m_Calendar.Load(element, version, ioCallback);
 			}
 		}
 		m_Calendar.sort();
@@ -242,7 +231,7 @@ bool ARBAgilityRecordBook::Load(
 			if (element.GetName() == TREE_TRAINING)
 			{
 				// Ignore any errors...
-				m_Training.Load(element, version, ioErrMsg);
+				m_Training.Load(element, version, ioCallback);
 			}
 		}
 		m_Training.sort();
@@ -261,7 +250,7 @@ bool ARBAgilityRecordBook::Load(
 			{
 				if (-1 != nConfig)
 				{
-					ioErrMsg += ErrorInvalidDocStructure(INVALID_CONFIG);
+					ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_CONFIG));
 					return false;
 				}
 				nConfig = i;
@@ -270,11 +259,11 @@ bool ARBAgilityRecordBook::Load(
 		// Oops. No config.
 		if (0 > nConfig)
 		{
-			ioErrMsg += ErrorInvalidDocStructure(MISSING_CONFIG);
+			ioCallback.LogMessage(ErrorInvalidDocStructure(MISSING_CONFIG));
 			return false;
 		}
 		// Load the config.
-		else if (!m_Config.Load(inTree.GetElement(nConfig), version, ioErrMsg))
+		else if (!m_Config.Load(inTree.GetElement(nConfig), version, ioCallback))
 		{
 			// Error message was printed within.
 			return false;
@@ -291,7 +280,7 @@ bool ARBAgilityRecordBook::Load(
 				{
 					// If this fails, keep going.
 					// We'll try to load whatever we can.
-					m_Dogs.Load(m_Config, element, version, ioErrMsg);
+					m_Dogs.Load(m_Config, element, version, ioCallback);
 				}
 			}
 		}
@@ -304,7 +293,7 @@ bool ARBAgilityRecordBook::Load(
 		if (0 <= i)
 		{
 			// Ignore any errors...
-			m_Info.Load(inTree.GetElement(i), version, ioErrMsg);
+			m_Info.Load(inTree.GetElement(i), version, ioCallback);
 		}
 	}
 

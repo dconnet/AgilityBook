@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -42,6 +43,7 @@
 class ARBConfig;
 class ARBConfigScoring;
 class ARBDate;
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
@@ -76,14 +78,14 @@ public:
 	 * @param inConfig Configuration for looking up information.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		ARBConfig const& inConfig,
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -158,7 +160,7 @@ public:
 	 * @param inDivision Division to search for.
 	 * @param inLevel Level to search for.
 	 * @param inDate Date of event.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Pointer to object, NULL if not found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
@@ -168,7 +170,7 @@ public:
 		std::string const& inDivision,
 		std::string const& inLevel,
 		ARBDate const& inDate,
-		std::string& ioErrMsg) const;
+		ARBErrorCallback& ioCallback) const;
 
 	/**
 	 * Find a club that uses the specified venue.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -111,14 +112,14 @@ bool ARBDogClub::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (inVersion == ARBVersion(1,0))
 	{
 		if (Element::eFound != inTree.GetAttrib("Name", m_Name)
 		|| 0 == m_Name.length())
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_CLUB, "Name");
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_CLUB, "Name"));
 			return false;
 		}
 	}
@@ -128,7 +129,7 @@ bool ARBDogClub::Load(
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_CLUB_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_CLUB, ATTRIB_CLUB_VENUE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CLUB, ATTRIB_CLUB_VENUE));
 		return false;
 	}
 
@@ -136,7 +137,7 @@ bool ARBDogClub::Load(
 	{
 		std::string msg(INVALID_VENUE_NAME);
 		msg += m_Venue;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg.c_str()));
 		return false;
 	}
 
@@ -170,7 +171,7 @@ ARBConfigScoring const* ARBDogClubList::FindEvent(
 	std::string const& inDivision,
 	std::string const& inLevel,
 	ARBDate const& inDate,
-	std::string& ioErrMsg) const
+	ARBErrorCallback& ioCallback) const
 {
 	ARBConfigScoring const* pEvent = NULL;
 	for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
@@ -194,7 +195,7 @@ ARBConfigScoring const* ARBDogClubList::FindEvent(
 			msg += (*iter)->GetVenue();
 			msg += "]";
 		}
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str()));
 	}
 	return pEvent;
 }

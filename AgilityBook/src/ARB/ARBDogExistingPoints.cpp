@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-02-02 DRC Created
  */
 
@@ -161,7 +162,7 @@ bool ARBDogExistingPoints::Load(
 	ARBConfig const& inConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	std::string attrib;
 
@@ -170,14 +171,14 @@ bool ARBDogExistingPoints::Load(
 		inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
 		std::string msg(INVALID_DATE);
 		msg += attrib;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE));
 		return false;
 	}
 	if (attrib == EXISTING_PTS_TYPE_OTHER)
@@ -205,7 +206,7 @@ bool ARBDogExistingPoints::Load(
 		msg += EXISTING_PTS_TYPE_QQ;
 		msg += ", ";
 		msg += EXISTING_PTS_TYPE_SQ;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str());
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
 		return false;
 	}
 
@@ -218,13 +219,13 @@ bool ARBDogExistingPoints::Load(
 			{
 				std::string msg(INVALID_OTHER_PTS_NAME);
 				msg += m_Other;
-				ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str());
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str()));
 				return false;
 			}
 		}
 		else
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER);
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER));
 			return false;
 		}
 	}
@@ -232,21 +233,21 @@ bool ARBDogExistingPoints::Load(
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
 	|| 0 == m_Div.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
 		return false;
 	}
 
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
 		return false;
 	}
 
@@ -257,7 +258,7 @@ bool ARBDogExistingPoints::Load(
 		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
 		|| 0 == m_Event.length())
 		{
-			ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT);
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
 			return false;
 		}
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
@@ -270,7 +271,7 @@ bool ARBDogExistingPoints::Load(
 			msg += m_Level;
 			msg += "/";
 			msg += m_Event;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str());
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str()));
 			return false;
 		}
 	}
@@ -286,7 +287,7 @@ bool ARBDogExistingPoints::Load(
 			msg += m_Level;
 			msg += "/";
 			msg += m_Event;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str());
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str()));
 			return false;
 		}
 	}

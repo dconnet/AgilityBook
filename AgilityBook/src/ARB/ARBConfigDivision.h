@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Added DeleteTitle.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -42,6 +43,7 @@
 #include "ARBConfigLevel.h"
 #include "ARBConfigTitle.h"
 #include "ARBVector.h"
+class ARBErrorCallback;
 class ARBConfigEventList;
 class ARBConfigVenue;
 class ARBVersion;
@@ -82,13 +84,13 @@ public:
 	 * @pre inTree is the actual ARBConfigDivision element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -172,13 +174,13 @@ public:
 	 * @pre inTree is the actual ARBConfigDivision element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Verify a level exists.

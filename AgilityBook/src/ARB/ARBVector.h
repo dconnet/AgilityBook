@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-16 DRC Made copy ctor and operator= safer.
  * @li 2004-01-25 DRC Added Move().
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -40,6 +41,7 @@
 
 #include <vector>
 class ARBConfig;
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
@@ -262,13 +264,16 @@ public:
 	 * @pre inTree is the actual T element.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(Element const& inTree, ARBVersion const& inVersion, std::string& ioErrMsg)
+	bool Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 	{
 		T* thing = new T();
-		if (!thing->Load(inTree, inVersion, ioErrMsg))
+		if (!thing->Load(inTree, inVersion, ioCallback))
 		{
 			thing->Release();
 			return false;
@@ -291,13 +296,17 @@ public:
 	 * @param inConfig Configuration information to verify data to load against.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(ARBConfig const& inConfig, Element const& inTree, ARBVersion const& inVersion, std::string& ioErrMsg)
+	bool Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 	{
 		T* thing = new T();
-		if (!thing->Load(inConfig, inTree, inVersion, ioErrMsg))
+		if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		{
 			thing->Release();
 			return false;

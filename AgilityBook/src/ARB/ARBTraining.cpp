@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -135,12 +136,12 @@ size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBTraining::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	switch (inTree.GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
 	case Element::eNotFound:
-		ioErrMsg += ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
 		return false;
 	case Element::eInvalidValue:
 		{
@@ -148,7 +149,7 @@ bool ARBTraining::Load(
 			inTree.GetAttrib(ATTRIB_TRAINING_DATE, attrib);
 			std::string msg(INVALID_DATE);
 			msg += attrib;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str());
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
 		}
 		return false;
 	}

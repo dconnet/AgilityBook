@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Update didn't save desc changes if nothing else changed.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
@@ -121,13 +122,13 @@ bool ARBConfigVenue::Load(
 	ARBConfig& ioConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	// Get the venue name.
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_VENUE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -142,16 +143,16 @@ bool ARBConfigVenue::Load(
 		{
 			if (0 < m_Events.size())
 			{
-				ioErrMsg += ErrorInvalidDocStructure(INVALID_VENUE_CONFIG);
+				ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_VENUE_CONFIG));
 				return false;
 			}
 			// Ignore any errors...
-			m_Divisions.Load(element, inVersion, ioErrMsg);
+			m_Divisions.Load(element, inVersion, ioCallback);
 		}
 		else if (name == TREE_EVENT)
 		{
 			// Ignore any errors...
-			m_Events.Load(m_Divisions, element, inVersion, ioErrMsg);
+			m_Events.Load(m_Divisions, element, inVersion, ioCallback);
 		}
 		if (inVersion < ARBVersion(3,0))
 		{
@@ -159,20 +160,20 @@ bool ARBConfigVenue::Load(
 			{
 				ARBConfigFault* pFault = new ARBConfigFault();
 				// Kind-of ignore any errors...
-				bool bOk = pFault->Load(element, inVersion, ioErrMsg);
+				bool bOk = pFault->Load(element, inVersion, ioCallback);
 				// When migrating, avoid duplicate fault names.
 				// We do allow the user have duplicates. (just not here)
 				bool bExists = (bOk && NULL != ioConfig.GetFaults().FindFault(pFault->GetName()));
 				pFault->Release();
 				if (bOk && !bExists)
 				{
-					ioConfig.LoadFault(element, inVersion, ioErrMsg);
+					ioConfig.LoadFault(element, inVersion, ioCallback);
 				}
 			}
 			else if (name == TREE_OTHERPTS)
 			{
 				// Ignore any errors...
-				ioConfig.LoadOtherPoints(element, inVersion, ioErrMsg);
+				ioConfig.LoadOtherPoints(element, inVersion, ioCallback);
 			}
 		}
 	}
@@ -311,10 +312,10 @@ bool ARBConfigVenueList::Load(
 	ARBConfig& ioConfig,
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	ARBConfigVenue* thing = new ARBConfigVenue();
-	if (!thing->Load(ioConfig, inTree, inVersion, ioErrMsg))
+	if (!thing->Load(ioConfig, inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;

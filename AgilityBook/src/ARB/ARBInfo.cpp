@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-07 DRC Created
  */
 
@@ -90,7 +91,7 @@ void ARBInfo::clear()
 bool ARBInfo::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -99,7 +100,7 @@ bool ARBInfo::Load(
 		if (name == TREE_JUDGEINFO)
 		{
 			// Ignore any errors.
-			m_JudgeInfo.Load(element, inVersion, ioErrMsg);
+			m_JudgeInfo.Load(element, inVersion, ioCallback);
 		}
 	}
 	return true;

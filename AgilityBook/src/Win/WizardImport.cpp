@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-05-10 DRC Process quoted fields in input (like Excel).
  * @li 2004-04-15 DRC If imported data contained a header that we parsed as
  *                    data, the program faulted trying to release a null ptr.
@@ -719,7 +720,7 @@ BOOL CWizardImport::OnWizardFinish()
 							ARB_Q q;
 							if ("QQ" == entry[iCol])
 								entry[iCol] = "Q";
-							std::string err;
+							CErrorCallback err;
 							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion(), err);
 							pRun->SetQ(q);
 						}

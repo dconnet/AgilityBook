@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Added ValidTo, changed ValidFrom dtd name (was 'Date').
@@ -47,6 +48,7 @@
 #include "ARBDate.h"
 #include "ARBVector.h"
 class ARBConfigEvent;
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
@@ -100,14 +102,14 @@ public:
 	 * @param inDivisions Configurate division used for verification.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		ARBConfigDivisionList const& inDivisions,
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -312,14 +314,14 @@ public:
 	 * @param inDivisions Configurate division used for verification.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
 		ARBConfigDivisionList const& inDivisions,
 		Element const& inTree,
 		ARBVersion const& inVersion,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Find all the scoring methods that match.

@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-07-20 DRC Moved the user-request updates here so it can check if
  *                    a new configuration is available.
@@ -116,6 +117,19 @@ static short GetCurrentConfigVersion()
 		ver = config.GetVersion();
 	}
 	return ver;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CErrorCallback::CErrorCallback()
+	: ARBErrorCallback(m_ErrMsg)
+{
+}
+
+bool CErrorCallback::OnError(char const* pMsg)
+{
+	CSplashWnd::HideSplashScreen();
+	return (IDYES == AfxMessageBox(pMsg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -709,24 +723,25 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	}
 	// Translate the tree to a class structure.
-	if (!m_Records.Load(tree, err))
+	CErrorCallback callback;
+	if (!m_Records.Load(tree, callback))
 	{
 		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
-		if (0 < err.length())
+		if (0 < callback.m_ErrMsg.length())
 		{
 			msg += "\n\n";
-			msg += err.c_str();
+			msg += callback.m_ErrMsg.c_str();
 		}
 		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONEXCLAMATION);
 		return FALSE;
 	}
-	else if (0 < err.length())
+	else if (0 < callback.m_ErrMsg.length())
 	{
 		CString msg("Warning: Some non-fatal messages were generated while loading the file:\n\n");
-		msg += err.c_str();
+		msg += callback.m_ErrMsg.c_str();
 		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}

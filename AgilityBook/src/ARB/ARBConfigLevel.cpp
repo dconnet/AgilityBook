@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-27 DRC Updating could cause some false-positive messages because
  *                    the ordering was different.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -98,12 +99,12 @@ size_t ARBConfigLevel::GetSearchStrings(std::set<std::string>& ioStrings) const
 bool ARBConfigLevel::Load(
 	Element const& inTree,
 	ARBVersion const& inVersion,
-	std::string& ioErrMsg)
+	ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME);
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME));
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -112,7 +113,7 @@ bool ARBConfigLevel::Load(
 		if (element.GetName() == TREE_SUBLEVEL)
 		{
 			// Ignore any errors...
-			m_SubLevels.Load(element, inVersion, ioErrMsg);
+			m_SubLevels.Load(element, inVersion, ioCallback);
 		}
 	}
 	return true;

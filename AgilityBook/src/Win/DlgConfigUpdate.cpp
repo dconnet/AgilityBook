@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  */
@@ -39,6 +40,7 @@
 #include "AgilityBook.h"
 #include "DlgConfigUpdate.h"
 
+#include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
 #include "Element.h"
 
@@ -104,29 +106,30 @@ bool CDlgConfigUpdate::LoadConfig(char const* pFile)
 		m_Book.GetConfig().Default();
 	else
 	{
-		std::string err;
+		std::string errMsg;
 		Element tree;
 		// Translate the XML to a tree form.
-		if (!tree.LoadXMLFile(pFile, err))
+		if (!tree.LoadXMLFile(pFile, errMsg))
 		{
 			CString msg;
 			msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
-			if (0 < err.length())
+			if (0 < errMsg.length())
 			{
 				msg += "\n\n";
-				msg += err.c_str();
+				msg += errMsg.c_str();
 			}
 			AfxMessageBox(msg, MB_ICONEXCLAMATION);
 			return false;
 		}
+		CErrorCallback err;
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
-			if (0 < err.length())
-				AfxMessageBox(err.c_str(), MB_ICONWARNING);
+			if (0 < err.m_ErrMsg.length())
+				AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 			return false;
 		}
-		else if (0 < err.length())
-			AfxMessageBox(err.c_str(), MB_ICONINFORMATION);
+		else if (0 < err.m_ErrMsg.length())
+			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
 	}
 	return true;
 }

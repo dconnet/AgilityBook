@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2004-03-30 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
  *                    Added Link to runs.
@@ -296,6 +297,40 @@ class ARBVersion;
 class Element;
 
 /**
+ * Error callback class.
+ */
+class ARBErrorCallback
+{
+public:
+	ARBErrorCallback(std::string& ioErrMsg)
+		: m_ErrMsg(ioErrMsg)
+	{
+	}
+	virtual ~ARBErrorCallback() {}
+
+	/**
+	 * Error message that requires a user response.
+	 * @param pMsg Message to display to user.
+	 * @return True to continue, false to abort.
+	 */
+	virtual bool OnError(char const* pMsg)
+	{
+		return false;
+	}
+
+	/**
+	 * Log an error message.
+	 */
+	virtual void LogMessage(std::string const& inMsg)
+	{
+		m_ErrMsg += inMsg;
+	}
+
+protected:
+	std::string& m_ErrMsg;
+};
+
+/**
  * The main data class.
  */
 class ARBAgilityRecordBook
@@ -326,7 +361,7 @@ public:
 	 * @param inConfig Load config info.
 	 * @param inInfo Load the Info (judges) info.
 	 * @param inDogs Load dog info.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
@@ -336,17 +371,17 @@ public:
 		bool inConfig,
 		bool inInfo,
 		bool inDogs,
-		std::string& ioErrMsg);
+		ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load an entire document.
 	 * @param inTree XML structure to convert into ARB.
-	 * @param ioErrMsg Accumulated error messages.
+	 * @param ioCallback Error processing callback
 	 * @return Success
 	 */
-	bool Load(Element const& inTree, std::string& ioErrMsg)
+	bool Load(Element const& inTree, ARBErrorCallback& ioCallback)
 	{
-		return Load(inTree, true, true, true, true, true, ioErrMsg);
+		return Load(inTree, true, true, true, true, true, ioCallback);
 	}
 
 	/**
@@ -499,18 +534,6 @@ inline ARBDogList& ARBAgilityRecordBook::GetDogs()
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions
-// These error routines centralize platform dependent code.
-// On windows, this prints using AfxMessageBox.
-
-/**
- * Print a warning that the document can be read, but saving it may cause the
- * loss of data.
- * Prompt the user to continue (y/n)
- * This prints WARNING_NEWER_DOC (above)
- *
- * @return true to continue, false to abort.
- */
-extern bool WarningNewerDocStructure();
 
 /**
  * Return an error message about invalid document structure.
