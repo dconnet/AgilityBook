@@ -147,9 +147,8 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 /////////////////////////////////////////////////////////////////////////////
 // List sorting
 
-CAgilityBookViewTraining::CSortColumn::CSortColumn(
-	CAgilityBookViewTraining* pParent)
-	: m_pParent(pParent)
+CAgilityBookViewTraining::CSortColumn::CSortColumn(std::vector<int>& inColumns)
+	: m_Columns(inColumns)
 	, m_iCol(1)
 {
 }
@@ -182,16 +181,16 @@ void CAgilityBookViewTraining::CSortColumn::SetColumn(int iCol)
 		neg = -1;
 		col = iCol * -1;
 	}
-	int realCol = m_pParent->m_Columns[col-1] * neg;
+	int realCol = m_Columns[col-1] * neg;
 	AfxGetApp()->WriteProfileInt("Sorting", "Training", realCol);
 }
 
 int CAgilityBookViewTraining::CSortColumn::LookupColumn(int iCol) const
 {
-	size_t n = m_pParent->m_Columns.size();
+	size_t n = m_Columns.size();
 	for (size_t i = 0; i < n; ++i)
 	{
-		if (m_pParent->m_Columns[i] == iCol)
+		if (m_Columns[i] == iCol)
 		{
 			return static_cast<int>(i+1);
 		}
@@ -348,7 +347,7 @@ END_MESSAGE_MAP()
 #pragma warning ( disable : 4355 )
 CAgilityBookViewTraining::CAgilityBookViewTraining()
 	: m_Callback(this)
-	, m_SortColumn(this)
+	, m_SortColumn(m_Columns)
 {
 }
 #pragma warning (pop)

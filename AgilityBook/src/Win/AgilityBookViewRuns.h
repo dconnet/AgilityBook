@@ -66,9 +66,6 @@ class CAgilityBookViewRuns : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewRunsData;
 	friend class CFindRuns;
-	// Note: VC7 can do "friend class CSortColumn", but VC6 needs the following
-	class CSortColumn;
-	friend class CAgilityBookViewRuns::CSortColumn;
 	friend int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 protected: // create from serialization only
 	CAgilityBookViewRuns();
@@ -118,13 +115,13 @@ private:
 	class CSortColumn
 	{
 	public:
-		CSortColumn(CAgilityBookViewRuns* pParent);
+		CSortColumn(std::vector<int>& inColumns);
 		void Initialize();
 		int GetColumn() const		{return m_iCol;}
 		void SetColumn(int iCol);
 	private:
 		int LookupColumn(int iCol) const;
-		CAgilityBookViewRuns* m_pParent;
+		std::vector<int>& m_Columns;
 		int m_iCol;
 	} m_SortColumn;
 

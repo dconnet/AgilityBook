@@ -169,9 +169,8 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 /////////////////////////////////////////////////////////////////////////////
 // List sorting
 
-CAgilityBookViewCalendarList::CSortColumn::CSortColumn(
-	CAgilityBookViewCalendarList* pParent)
-	: m_pParent(pParent)
+CAgilityBookViewCalendarList::CSortColumn::CSortColumn(std::vector<int>& inColumns)
+	: m_Columns(inColumns)
 	, m_iCol(1)
 {
 }
@@ -204,16 +203,16 @@ void CAgilityBookViewCalendarList::CSortColumn::SetColumn(int iCol)
 		neg = -1;
 		col = iCol * -1;
 	}
-	int realCol = m_pParent->m_Columns[col-1] * neg;
+	int realCol = m_Columns[col-1] * neg;
 	AfxGetApp()->WriteProfileInt("Sorting", "Calendar", realCol);
 }
 
 int CAgilityBookViewCalendarList::CSortColumn::LookupColumn(int iCol) const
 {
-	size_t n = m_pParent->m_Columns.size();
+	size_t n = m_Columns.size();
 	for (size_t i = 0; i < n; ++i)
 	{
-		if (m_pParent->m_Columns[i] == iCol)
+		if (m_Columns[i] == iCol)
 		{
 			return static_cast<int>(i+1);
 		}
@@ -420,7 +419,7 @@ END_MESSAGE_MAP()
 CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	: m_bSuppressSelect(false)
 	, m_Callback(this)
-	, m_SortColumn(this)
+	, m_SortColumn(m_Columns)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 6, 0);
 	CWinApp* app = AfxGetApp();
