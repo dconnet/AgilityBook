@@ -2,14 +2,212 @@
 <HTML>
 <HEAD>
 <Title>New Features</Title>
+<script language="JavaScript" fptype="dynamicoutline">
+	function getControlTag(src)
+	{
+		TRok = false
+		while ("HTML" != src.tagName)
+		{
+			if ("IMG" == src.tagName || "FONT" == src.tagName || "A" == src.tagName || "TD" == src.tagName)
+			    TRok = true
+			if ("LI" == src.tagName)
+				return src
+			if ("TR" == src.tagName)
+			{
+				if(TRok)
+					return src
+				return null
+			}
+			src = src.parentElement
+		}
+		return null
+	}
+	function dynOutlineEnabled(src)
+	{
+		while ("BODY" != src.tagName)
+		{
+			table = "TABLE" == src.tagName;
+			if(table && src.getAttribute("border", false) != "0")
+				return false;
+			if("OL" == src.tagName || "UL" == src.tagName || table)
+			{
+				if(null != src.getAttribute("nodynamicoutline", false))
+					return false
+				if(null != src.getAttribute("dynamicoutline", false))
+					return true
+				if(mac > 0)
+				{
+					var at = src.outerHTML.indexOf("dynamicoutline")
+					if(at > 0)
+					{
+						var gt = src.outerHTML.indexOf(">")
+						if(at < gt)
+							return true
+					}
+				}
+			}
+			src = src.parentElement
+		}
+		return false
+	}
+    function initCollapse(src)
+    {
+		while ("BODY" != src.tagName)
+		{
+			table = "TABLE" == src.tagName;
+    		if(table && src.getAttribute("border", false) != "0")
+    			return false;
+        	if("OL" == src.tagName || "UL" == src.tagName || table)
+    		{
+    			if(null != src.getAttribute("initcollapsed", false))
+    				return true
+    		}
+    		src = src.parentElement
+        }
+		return false
+    }
+	function containedIn(src, dest)
+	{
+		if ("!" == src.tagName)
+			return true
+		src = getControlTag(src)
+		if (src == dest)
+		    return true
+		return false
+	}
+    function initOutline()
+    {
+		var ms = navigator.appVersion.indexOf("MSIE");
+    	mac = navigator.appVersion.indexOf("Macintosh");
+		ie4 = (ms>0) && (parseInt(navigator.appVersion.substring(ms+5, ms+6)) >= 4);
+		if(!ie4)
+			return;
+        listTags = new Array()
+        listTags[0]="UL"
+        listTags[1]="OL"
+        listTags[2]="TABLE"
+        for(j=0;j<listTags.length;j++)
+        {
+            tagName=listTags[j]
+            coll=document.all.tags(tagName)
+            for(i=0; i<coll.length; i++)
+            {
+                if(dynOutlineEnabled(coll[i].parentElement))
+                {
+                    if(initCollapse(coll[i]))
+                        coll[i].style.display="none"
+                }
+            }
+        }        
+    }   
+	function dynOutline()
+	{
+		var ms = navigator.appVersion.indexOf("MSIE");
+		ie4 = (ms>0) && (parseInt(navigator.appVersion.substring(ms+5, ms+6)) >= 4);
+		if(!ie4)
+			return;
+		var src = event.srcElement
+		src = getControlTag(src)
+		if (null == src)
+			return
+		if (!dynOutlineEnabled(src))
+			return
+		var idx = src.sourceIndex+1
+		while (idx < document.all.length && containedIn(document.all[idx], src))
+		{
+			srcTmp = document.all[idx]
+			tag = srcTmp.tagName
+			if ("UL" == tag || "OL" == tag || "TABLE" == tag)
+				srcTmp.style.display = srcTmp.style.display == "none" ? "" : "none"
+			idx++;
+		}
+	}
+</script>
+<script language="JavaScript1.2" fptype="dynamicoutline" for="document" event="onreadystatechange()">
+<!--
+initOutline()
+//-->
+</script>
 </HEAD>
-<BODY>
+<BODY onclick="dynOutline()">
 <h1>History of releases</h1>
-<ul>
+<p>(Click on each entry to expand it.)</p>
+<ul dynamicoutline initcollapsed>
+	<li><b>1/20/2005: v1.5.0.10</b>
+		<ul type="disc">
+			<li>Bumped file version to 10.1, Configuration v7
+				<ul type="disc">
+					<li>Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.</li>
+					<li>Added 'ClubInfo'/'LocationInfo' to 'Info'.</li>
+					<li>Renamed 'machPts' to 'speedPts'.</li>
+					<li>Added 'LongName' to 'Venue'.</li>
+					<li>Added 'SubName' to 'Event','Run','ExistingPoints'.</li>
+					<li>Added 'Multiple' to 'Titles', 'instance' to 'Title'.</li>
+					<li>Added CKC and TDAA.</li>
+					<li>Updated AAC.</li>
+					<li>Changed NADAC Gamblers to use the new SubNames feature.
+					The individual Gamblers events for Contacts/etc have been
+					removed.</li>
+				</ul>
+			</li>
+			<li>New features / Enhancements:
+				<ul type="disc">
+					<li>Added the ability to make notes about clubs/locations
+					similar to how judges notes are made. Also added the
+					ability to search them.</li>
+					<li>In the club/judge/location dialog, added indicators to
+					show if an item is added (not in-use) and/or has
+					comments.</li>
+					<li>Flipped the order of 2 fields on the Run dialog it
+					make more logical.</li>
+					<li>Enable duplication of a title in the configuration.</li>
+					<li>Added opening/closing dates to calendar view.</li>
+					<li>Changed the 'Show Newest Runs First' to sort only
+					trials since sorting the runs is handled by the header in
+					the Runs view.</li>
+					<li>Make F1 open context help from the main tab windows.</li>
+					<li>Renamed 'Mach points' to 'Speed Points' to make it
+					more generic.</li>
+					<li>Added a long name to the venue configuration.</li>
+					<li>Added a SubName to an event so users can 'create' new
+					events without the need to modify the configuration.</li>
+					<li>When you view run details in the Points view,
+					also show existing points.</li>
+					<li>Added the ability to create MACH-2/NATCH-4(etc) titles.</li>
+				</ul>
+			</li>
+			<li>Bug fixes
+				<ul type="disc">
+					<li>Added a comment to USDAA/PD3 title about the old
+					requirements.</li>
+					<li>A score was not computed (in the run dialog) on runs
+					that are marked NA when that run is not a titling run.
+					(USDAA National events)</li>
+					<li>USDAA Time Gamble did not compute time faults. Added
+					ability to compute time faults to Time+Fault style events.</li>
+					<li>When an event description had a newline in the
+					configuration, the Run dialog showed a box instead.</li>
+					<li>Lifetime points were being filtered. Always show the
+					total, but when filtering, also show what was earned in
+					the filter.</li>
+					<li>Changes weren't saved when lifetime points in the
+					configuration were modified.</li>
+					<li>Adding a judge that already exists in the information
+					dialog resulted in a duplicate entry in the list. Closing
+					the dialog and reopening it would clear up the problem.</li>
+					<li>Time faults were not properly computed in AKC in Open
+					and Excellent.</li>
+					<li>Creating a title while in the Points view didn't mark
+					the document as modified. This meant you could close the
+					program and it would not prompt you to save it.</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
 	<li><b>10/31/2004: v1.4.0.10</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 10.0, Configuration v6
-				<ul>
+				<ul type="disc">
 					<li>Added 'Height' to 'ReferenceRun'.</li>
 					<li>Added 'LifeTime' to 'Scoring'.</li>
 					<li>Removed 'LifeTime' from 'TitlePoints'.</li>
@@ -18,7 +216,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements:
-				<ul>
+				<ul type="disc">
 					<li>Updated CPE configuration to note that CL1 (thru 5) are
 					not really titles. They are shorthand for the combined 4
 					titles. Also, make Level C runs accumulate lifetime points.</li>
@@ -45,7 +243,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>When a qualifying run is inserted in the tree and the
 					tree is configured to show Qs for a run
 					(via View-&gt;Customize), the program will crash.</li>
@@ -68,9 +266,9 @@
 		</ul>
 	</li>
 	<li><b>9/15/2004: v1.3.2.9</b>
-		<ul>
+		<ul type="disc">
 			<li>Bug Fixes:
-				<ul>
+				<ul type="disc">
 					<li>If a trial has no clubs associated with it, attempting
 					to upgrade the configuration will cause the program to
 					crash. The work-around is to either add a club or delete
@@ -82,9 +280,9 @@
 		</ul>
 	</li>
 	<li><b>9/12/2004: v1.3.1.9</b>
-		<ul>
+		<ul type="disc">
 			<li>Bug Fixes:
-				<ul>
+				<ul type="disc">
 					<li>My ISP host is no longer allowing direct access to
 					files via agilityrecordbook.com since that actually
 					forwards to another location. The URL must be properly
@@ -94,9 +292,9 @@
 		</ul>
 	</li>
 	<li><b>9/12/2004: v1.3.0.9</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped Configuration to v5
-				<ul>
+				<ul type="disc">
 					<li>Updated USDAA configuration to remove titling points
 					from Tournament Jumpers and Snooker. Tournament runs that
 					offered titling should be entered in the Div/Level they
@@ -110,7 +308,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements:
-				<ul>
+				<ul type="disc">
 					<li>Check for configuration updates when the user requests
 					an update check. These are auto-downloaded from the web.
 					Configuration checks are also done when a document is opened
@@ -130,7 +328,7 @@
 				</ul>
 			</li>
 			<li>Bug Fixes:
-				<ul>
+				<ul type="disc">
 					<li>When updating the configuration, if they are the same
 					but the version numbers are different, go ahead and update
 					the version number.</li>
@@ -145,7 +343,7 @@
 					stored with the wrong type so when it is read back in, the
 					scoring type never got set - which then prevents the file
 					from being saved again.
-						<ul>
+						<ul type="disc">
 							<li>In 1.2.1.8, to recreate:</li>
 							<li>Create a new file, create a dog, create a 
 							rial.</li>
@@ -173,9 +371,9 @@
 		</ul>
 	</li>
 	<li><b>7/3/2004: v1.2.1.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bug Fixes
-				<ul>
+				<ul type="disc">
 					<li>Some systems were crashing when the program started.
 					Turns out there was a threading problem in the splash
 					screen.</li>
@@ -184,9 +382,9 @@
 		</ul>
 	</li>
 	<li><b>7/3/2004: v1.2.0.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 9.0, Configuration v4
-				<ul>
+				<ul type="disc">
 					<li>Added 'SubName' to 'Training'.</li>
 					<li>Moved 'RegNum' data to 'Number', data is now 'Note'</li>
 					<li>CPE 'CADE' changed to 'C-ATE'.</li>
@@ -195,7 +393,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Integrated help system.</li>
 					<li>In the Points view, do not filter individual runs based
 					on Qs (use all other filter criteria). This allows us to
@@ -228,7 +426,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Lifetime point accumulation did not display the points
 					for existing runs.</li>
 					<li>Quote exported data so non-tab delimiters work properly
@@ -253,9 +451,9 @@
 		</ul>
 	</li>
 	<li><b>4/30/2004: v1.1.0.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.6, configuration to version 3.</li>
-				<ul>
+				<ul type="disc">
 					<li>Changed 'TableInYPS' to 'hasTable', added 'hasTable'
 					to 'Scoring'</li>
 					<li>Added 'Link' to 'Runs'</li>
@@ -265,7 +463,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Instead of recording whether YPS should be adjusted
 					for each run, just record if that run has a table. A new
 					option (under 'View') then determines how to compute it.
@@ -299,7 +497,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>When merging configuration information via the update
 					feature, if only the description was changed in either a
 					venue or an event, that information did not get properly
@@ -329,15 +527,15 @@
 		</ul>
 	</li>
 	<li><b>3/21/2004: v1.0.4.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.5
-				<ul>
+				<ul type="disc">
 					<li>Added 'isHidden' to 'Title'.</li>
 					<li>Made 'Date' optional in 'Title'.</li>
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Changed Venue configuration slightly so it looks better
 					(Divisions and Titles headers)</li>
 					<li>Added the ability to hide a title. This allows you to
@@ -346,7 +544,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>When creating a new run in a new trial, the date did
 					not get saved if we didn't change it. This would only
 					occur on the first run created and only if we didn't
@@ -363,9 +561,9 @@
 		</ul>
 	</li>
 	<li><b>3/8/2004: v1.0.3.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.4
-				<ul>
+				<ul type="disc">
 					<li>Added table-in-yps flag (default is true for backwards
 					compatibility)</li>
 					<li>Added new 'Configuration/Action' verb: DeleteTitle</li>
@@ -374,7 +572,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Added 'Check for Updates' on Help menu and About box.</li>
 					<li>Added auto-check - checks for updates every 30 days
 					(enabled/disabled under Help menu)</li>
@@ -391,7 +589,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Creating a new document didn't clear the judge info
 					from the previous doc.</li>
 					<li>The OtherPoints button in the runs dialog was
@@ -405,14 +603,14 @@
 		</ul>
 	</li>
 	<li><b>2/9/2004: v1.0.2.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.3
-				<ul>
+				<ul type="disc">
 					<li>Added Existing Points to dog properties.</li>
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Changed the Dog Property dialog to multiple tabs.</li>
 					<li>Added nice title names into the dog's property title
 					page.</li>
@@ -420,7 +618,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Updated NADAC Configuration with Novice/Open/Elite
 					Triple Superior (mapped old 'Triple Superior' to 'Novice
 					Triple...')</li>
@@ -436,7 +634,7 @@
 					due to the order of items being different (which we don't
 					care about).</li>
 					<li>In the Run dialog
-						<ul>
+						<ul type="disc">
 							<li>update the YPS when the time is changed.</li>
 							<li>update controls when date changes (in case different rules are in effect)</li>
 						</ul>
@@ -448,16 +646,16 @@
 		</ul>
 	</li>
 	<li><b>1/26/2004: v1.0.1.8</b>
-		<ul>
+		<ul type="disc">
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>When starting the program, holding the SHIFT key down
 					will prevent the last file from being automatically opened.</li>
 					<li>Redesigned Configuration dialog for ease-of-use.</li>
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Titles that were edited/created were saved with the
 					wrong name. This caused the title to vanish after saving
 					the file and re-opening it. [The fix will auto-correct the
@@ -468,16 +666,16 @@
 		</ul>
 	</li>
 	<li><b>1/21/2004: v1.0.0.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.2
-				<ul>
+				<ul type="disc">
 					<li>Added a new "Long Name" to the titles configuration.</li>
 					<li>Added 'Action' items to Configuration.</li>
 					<li>Height is no longer a required field in a run.</li>
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Began distributing an MSVC7 msi installation.</li>
 					<li>Added AAC and AMBOR configurations.</li>
 					<li>Updated USDAA configuration.</li>
@@ -497,7 +695,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Exporting the training log for import into a
 					spreadsheet was wrong.</li>
 					<li>The points view didn't generate a venue header
@@ -512,16 +710,16 @@
 		</ul>
 	</li>
 	<li><b>12/28/2003: v0.9.5.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.1
-				<ul>
+				<ul type="disc">
 					<li>Added 'ValidFrom' and 'ValidTo' dates to an events
 					scoring method. This allows an evolution of rules while
 					preserving point accumulation.</li>
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Updated the initial support for the new USDAA titling
 					(using ValidFrom/To) in the default configuration.</li>
 					<li>Added support for evolving rules in the configuration
@@ -534,7 +732,7 @@
 					<li>ARB Import: Can now import TrainingLog</li>
 					<li>ARB Export: Can now export TrainingLog</li>
 					<li>Added some new accelerators
-						<ul>
+						<ul type="disc">
 							<li>Ctrl+E: Import/Export Wizard</li>
 							<li>Ctrl+F: Find (Find does not work in the points or calendar view)</li>
 							<li>F3: Find Next</li>
@@ -550,7 +748,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Training log didn't re-sort if you edited an item.</li>
 					<li>Adding a calendar entry from the List dialog didn't
 					set the icon properly.</li>
@@ -559,9 +757,9 @@
 		</ul>
 	</li>
 	<li><b>12/13/2003: v0.9.4.8</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 8.0
-				<ul>
+				<ul type="disc">
 					<li>Modified version number for better backwards
 					compatibility.</li>
 					<li>Added new Info section. Currently this only has
@@ -569,7 +767,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Expanded import/export</li>
 					<li>Cleaned up some descriptions in DefaultConfig.xml.
 					Added Nationals support for USDAA (plus some initial
@@ -595,7 +793,7 @@
 					given event changes from 10 to 5)</li>
 				</ul>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Changed copyright notices from "(c)" to "©" (internal
 					code, not visible)</li>
 					<li>Right-clicking on a Calendar entry sets that as the
@@ -616,9 +814,9 @@
 		</ul>
 	</li>
 	<li><b>10/15/2003: v0.9.3.7</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 7
-				<ul>
+				<ul type="disc">
 					<li>Allow course faults on runs scored by points. For
 					instance, a handler could be faulted for language.</li>
 					<li>Added USDAA Performance Grand Prix to the default configuration.</li>
@@ -626,12 +824,12 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Added option to not filter runs by selected trial.</li>
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>In Reference Runs, default the score to a perfect score
 					based on venue.</li>
 					<li>If a run does not have titling points, don't show it
@@ -643,9 +841,9 @@
 		</ul>
 	</li>
 	<li><b>9/29/2003: v0.9.2.6</b>
-		<ul>
+		<ul type="disc">
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Required points in the Runs dialog were being
 					overwritten with default values during initialization.</li>
 					<li>Fixed possible crasher bug in the About dialog.</li>
@@ -654,21 +852,21 @@
 		</ul>
 	</li>
 	<li><b>9/21/2003: v0.9.1.6</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 6
-				<ul>
+				<ul type="disc">
 					<li>Added the Training Log.</li>
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Training Log and filtering options for it.</li>
 					<li>Enhanced the 'Filtered' message to be sensitive to the
 					current view.</li>
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>When creating a trial entry from the calendar, if you
 					selected more than one dog at a time when creating the
 					trial, that new trial was actually linked together for
@@ -692,9 +890,9 @@
 		</ul>
 	</li>
 	<li><b>9/3/2003: v0.9.0.5</b>
-		<ul>
+		<ul type="disc">
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Added a 'deceased' date to the dogs info. (This is a
 					file version change but it is backwards compatible, so
 					theres no need to increment the file version)</li>
@@ -715,7 +913,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>A change in 0.4.1.5 to compute the score on NQs was
 					wrong - it computed the score on all runs and title points
 					on NQ+Qs. It should only compute score on NQ+Q and title
@@ -735,9 +933,9 @@
 		</ul>
 	</li>
 	<li><b>8/16/2003: v0.4.2.5</b>
-		<ul>
+		<ul type="disc">
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>Added printing for runs (not tree though), points and
 					calendar list.</li>
 					<li>Removed automatic sorting of dogs - allow the user to
@@ -757,7 +955,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Allow screen font selection for calendar printer
 					items. Also the wrong font was displayed for the date on
 					the printer.</li>
@@ -765,16 +963,16 @@
 			</li>
 		</ul>
 	</li>
-	<li><b>7/23/2003</b>
-		<ul>
+	<li><b>7/23/2003: Published v0.4.1.5 on Sourceforcge</b>
+		<ul type="disc">
 			<li>Source released on <a href="http://sourceforge.net/projects/agilitybook">SourceForge.net</a>.
 			Releases are now done on both Yahoo and SourceForge.</li>
 		</ul>
 	</li>
 	<li><b>7/16/2003: v0.4.1.5</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 5
-				<ul>
+				<ul type="disc">
 					<li>Added 'Note' and 'Verified' to trials.</li>
 					<li>Changed 'Scoring' to have 'Note' and 'TitlePoints'
 					subitems.</li>
@@ -784,7 +982,7 @@
 				</ul>
 			</li>
 			<li>New features / Enhancements
-				<ul>
+				<ul type="disc">
 					<li>In Points: Changed the run totalling to be a little
 					cleaner.</li>
 					<li>Reorganized options dialog.</li>
@@ -815,7 +1013,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Fixed date overlap test. If 2 date ranges only
 					partially overlapped, the test was wrong. This resulted in
 					calendar entries being visible when they shouldn't
@@ -838,9 +1036,9 @@
 		</ul>
 	</li>
 	<li><b>6/15/2003: v0.3.0.2</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 4
-				<ul>
+				<ul type="disc">
 					<li>Added item to configuration scoring methods to drop
 					fractional time faults.</li>
 					<li>Added a description to venues and events in the
@@ -848,7 +1046,7 @@
 				</ul>
 			</li>
 			<li>New features
-				<ul>
+				<ul type="disc">
 					<li>Added CPE to default configuration.</li>
 					<li>Enable copy/paste of trials and runs.</li>
 					<li>Added filtering on multiple venues.</li>
@@ -858,7 +1056,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Wasn't remembering the selected view between program
 					invokations.</li>
 					<li>NewLine wasn't handled properly in Event Configuration
@@ -871,9 +1069,9 @@
 		</ul>
 	</li>
 	<li><b>6/2/2003: v0.3.0.1</b>
-		<ul>
+		<ul type="disc">
 			<li>Bumped file version to 3
-				<ul>
+				<ul type="disc">
 					<li>Add notes to configuration events specifically for
 					USDAA DAM jumpers and snooker - the fact the "Q" there
 					applies towards master legs and DAM relay Q
@@ -885,7 +1083,7 @@
 				</ul>
 			</li>
 			<li>New features
-				<ul>
+				<ul type="disc">
 					<li>Create a trial entry from a calendar entry.</li>
 					<li>Add a delay factor to auto-delete of old calendar
 					entries. (default: 5 days)</li>
@@ -898,7 +1096,7 @@
 				</ul>
 			</li>
 			<li>Minor enhancements
-				<ul>
+				<ul type="disc">
 					<li>Updated default USDAA config rules.</li>
 					<li>Tally the list of fault types like I do with judges.
 					(You don't need to modify the configuration to have a new
@@ -929,7 +1127,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Changing the Selected dog didn't update the points view.</li>
 					<li>Points view: QQ tallied wrong (it was double counting)</li>
 					<li>When venues are not filtered, ASCA pts were incorrectly
@@ -946,10 +1144,10 @@
 		</ul>
 	</li>
 	<li><b>4/3/2003: v0.2.0.3</b>
-		<ul>
+		<ul type="disc">
 			<li>Updated default configuration rules to include more
 			description in titles
-				<ul>
+				<ul type="disc">
 					<li>Changed title configuration dialog to allow editing
 					description.</li>
 					<li>Show title description when selecting a title.</li>
@@ -968,7 +1166,7 @@
 			<li>In run entry dialog, show total faults.</li>
 			<li>Add support for bold/italic options in fonts</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>Initial dates could end up with really odd values</li>
 					<li>Comboboxes that allow data entry do not scroll.</li>
 					<li>Sort order of titles in Dog properties didn't remember
@@ -982,9 +1180,9 @@
 		</ul>
 	</li>
 	<li><b>2/23/2003: v0.2.0.2</b>
-		<ul>
+		<ul type="disc">
 			<li>Modified default rules to add USDAA's Tournament classes.
-				<ul>
+				<ul type="disc">
 					<li>If you have an existing file, the only way to get the
 					new default rules is to hand edit. A future enhancement is
 					to add an automated way of doing this. Currently: Create
@@ -994,7 +1192,7 @@
 				</ul>
 			</li>
 			<li>Bug fixes
-				<ul>
+				<ul type="disc">
 					<li>The date on a new run was occasionally 12/31/1969.</li>
 					<li>Made comboboxes for division and level wider in the
 					RunEntry dialog.</li>
@@ -1009,10 +1207,10 @@
 		</ul>
 	</li>
 	<li><b>2/21/2003: v0.2.0.1</b>
-		<ul>
+		<ul type="disc">
 			<li>Updated xerces dll from 2.1.0 to 2.2.0.</li>
 			<li>ARB file version 2
-				<ul>
+				<ul type="disc">
 					<li>Removed Calendar 'PlanOn'(y|n) attribute, replaced
 					with 'Entered'(E|P|N).</li>
 					<li>Redid DTD on a few entries (moved attributes to
@@ -1020,28 +1218,28 @@
 				</ul>
 			</li>
 			<li>Calendar View
-				<ul>
+				<ul type="disc">
 					<li>Fixed problem where a new calendar entry didn't show up.</li>
 					<li>Created new view</li>
 					<li>Added options to control the view ('View'-&gt;'Options')</li>
 				</ul>
 			</li>
 			<li>Runs view
-				<ul>
+				<ul type="disc">
 					<li>After editing a run entry, it was selected, but not
 					necessarily visible.</li>
 					<li>Double clicking on a run now edits that entry.</li>
 				</ul>
 			</li>
 			<li>Run entry dialog
-				<ul>
+				<ul type="disc">
 					<li>Titling points (mach/doubleQ) now appear correctly.</li>
 					<li>Enable/disable buttons properly.</li>
 					<li>Double-click on reference run now edits that entry.</li>
 				</ul>
 			</li>
 			<li>General
-				<ul>
+				<ul type="disc">
 					<li>Fixed all multi-line edit controls to auto-wrap
 					correctly.</li>
 				</ul>
@@ -1049,24 +1247,24 @@
 		</ul>
 	</li>
 	<li><b>1/22/2003: v0.1.0.1</b>
-		<ul>
+		<ul type="disc">
 			<li>Major data entry dialogs completed.</li>
 			<li>Main views on the data are still incomplete. Program options
 			still need implementing. Lots of outstanding tidbits.</li>
 		</ul>
 	</li>
 	<li><b>12/31/2002: v0.0.0.2</b>
-		<ul>
+		<ul type="disc">
 			<li>Re-released v0.0.0.1 using MSVC6.</li>
 		</ul>
 	</li>
 	<li><b>12/28/2002: v0.0.0.1</b>
-		<ul>
+		<ul type="disc">
 			<li>First release using MSVC7.</li>
 		</ul>
 	</li>
-	<li><b>11/6/2002</b>
-		<ul>
+	<li><b>11/6/2002: Created Yahoo group</b>
+		<ul type="disc">
 			<li><a href="http://groups.yahoo.com/group/AgilityRecordBook">Yahoo group</a>
 			founded. Initial solicitation for what people would like
 			to see in the program.</li>
