@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-14 DRC Use complete title name instead of nice name. When
+ *                    renaming a title and that name is in use, prompt to merge.
  * @li 2003-02-23 DRC Modifying the scoring methods wasn't updated in the tree.
  */
 
@@ -1183,8 +1185,27 @@ void CDlgConfigureDataTitle::Edit()
 			{
 				if (pVenueData->GetVenue()->GetDivisions().FindTitle(name))
 				{
-					done = false;
-					AfxMessageBox(IDS_NAME_IN_USE);
+					int nTitles = GetRecordBook().GetDogs().NumTitlesInUse(pVenueData->GetVenue()->GetName(), oldName);
+					bool bInUse = true;
+					if (0 < nTitles)
+					{
+						if (IDYES == AfxMessageBox("This name is currently in use. Do you want to merge your data into this existing name?", MB_YESNO | MB_ICONQUESTION))
+						{
+							bInUse = false;
+							GetFixupList().push_back(new CDlgFixupRenameTitle(pVenueData->GetVenue()->GetName(), oldName, name));
+							CDlgConfigureDataDivision* pDivData = GetDivisionData();
+							ASSERT(pDivData);
+							if (pDivData->GetDivision()->GetTitles().DeleteTitle(oldName))
+							{
+								GetTree().DeleteItem(m_hItem);
+							}
+						}
+					}
+					if (bInUse)
+					{
+						done = false;
+						AfxMessageBox(IDS_NAME_IN_USE);
+					}
 					continue;
 				}
 				m_Title->SetName(name);
@@ -1197,7 +1218,7 @@ void CDlgConfigureDataTitle::Edit()
 					GetFixupList().push_back(new CDlgFixupRenameTitle(pVenueData->GetVenue()->GetName(), oldName, m_Title->GetName()));
 				GetTree().SetItem(m_hItem,
 					TVIF_TEXT,
-					m_Title->GetNiceName().c_str(),
+					m_Title->GetCompleteName().c_str(),
 					0, 0, 0, 0, 0);
 				SetItemCurrent();
 			}

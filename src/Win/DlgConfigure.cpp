@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-14 DRC Use complete title name instead of nice name.
  * @li 2003-12-27 DRC Changed the scoring method to show the valid date range.
  * @li 2003-02-04 DRC Changed dbl-click to edit an item.
  */
@@ -291,7 +292,7 @@ HTREEITEM CDlgConfigure::InsertTitle(HTREEITEM hParent, ARBConfigTitle* title)
 	CDlgConfigureData* pData = new CDlgConfigureDataTitle(this, title);
 	HTREEITEM hTitle = m_ctrlTree.InsertItem(
 		TVIF_TEXT | TVIF_PARAM,
-		title->GetNiceName().c_str(),
+		title->GetCompleteName().c_str(),
 		0, //nImage
 		0, //nSelectedImage
 		0, //nState
