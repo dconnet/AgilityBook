@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-11-22 DRC Update the view when creating or editing an entry.
@@ -70,6 +71,7 @@ static char THIS_FILE[] = __FILE__;
 
 class CAgilityBookViewCalendarData
 {
+	friend int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 public:
 	CAgilityBookViewCalendarData(CAgilityBookViewCalendarList* pView, ARBCalendar* pCal)
 		: m_RefCount(1)
@@ -151,6 +153,102 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// List sorting
+
+struct SORT_CAL_INFO
+{
+	CAgilityBookViewCalendarList *pThis;
+	int nCol;
+};
+
+int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+{
+	SORT_CAL_INFO* sortInfo = reinterpret_cast<SORT_CAL_INFO*>(lParam3);
+	if (!sortInfo || 0 == sortInfo->nCol)
+		return 0;
+	CAgilityBookViewCalendarData* pItem1 = reinterpret_cast<CAgilityBookViewCalendarData*>(lParam1);
+	CAgilityBookViewCalendarData* pItem2 = reinterpret_cast<CAgilityBookViewCalendarData*>(lParam2);
+	int nRet = 0;
+	int iCol = abs(sortInfo->nCol);
+	switch (sortInfo->pThis->m_Columns[iCol-1])
+	{
+	case IO_CAL_START_DATE:
+		if (pItem1->m_pCal->GetStartDate() < pItem2->m_pCal->GetStartDate())
+			nRet = -1;
+		else if (pItem1->m_pCal->GetStartDate() > pItem2->m_pCal->GetStartDate())
+			nRet = 1;
+		break;
+	case IO_CAL_END_DATE:
+		if (pItem1->m_pCal->GetEndDate() < pItem2->m_pCal->GetEndDate())
+			nRet = -1;
+		else if (pItem1->m_pCal->GetEndDate() > pItem2->m_pCal->GetEndDate())
+			nRet = 1;
+		break;
+	case IO_CAL_LOCATION:
+		if (pItem1->m_pCal->GetLocation() < pItem2->m_pCal->GetLocation())
+			nRet = -1;
+		else if (pItem1->m_pCal->GetLocation() > pItem2->m_pCal->GetLocation())
+			nRet = 1;
+		break;
+	case IO_CAL_CLUB:
+		if (pItem1->m_pCal->GetClub() < pItem2->m_pCal->GetClub())
+			nRet = -1;
+		else if (pItem1->m_pCal->GetClub() > pItem2->m_pCal->GetClub())
+			nRet = 1;
+		break;
+	case IO_CAL_VENUE:
+		if (pItem1->m_pCal->GetVenue() < pItem2->m_pCal->GetVenue())
+			nRet = -1;
+		else if (pItem1->m_pCal->GetVenue() > pItem2->m_pCal->GetVenue())
+			nRet = 1;
+		break;
+	case IO_CAL_OPENS:
+		{
+			bool bOk1 = pItem1->m_pCal->GetOpeningDate().IsValid();
+			bool bOk2 = pItem2->m_pCal->GetOpeningDate().IsValid();
+			if (bOk1 && bOk2)
+			{
+				if (pItem1->m_pCal->GetOpeningDate() < pItem2->m_pCal->GetOpeningDate())
+					nRet = -1;
+				else if (pItem1->m_pCal->GetOpeningDate() > pItem2->m_pCal->GetOpeningDate())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_CAL_CLOSES:
+		{
+			bool bOk1 = pItem1->m_pCal->GetClosingDate().IsValid();
+			bool bOk2 = pItem2->m_pCal->GetClosingDate().IsValid();
+			if (bOk1 && bOk2)
+			{
+				if (pItem1->m_pCal->GetClosingDate() < pItem2->m_pCal->GetClosingDate())
+					nRet = -1;
+				else if (pItem1->m_pCal->GetClosingDate() > pItem2->m_pCal->GetClosingDate())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_CAL_NOTES:
+		if (pItem1->m_pCal->GetNote() < pItem2->m_pCal->GetNote())
+			nRet = -1;
+		else if (pItem1->m_pCal->GetNote() > pItem2->m_pCal->GetNote())
+			nRet = 1;
+		break;
+	}
+	if (0 > sortInfo->nCol)
+		nRet *= -1;
+	return nRet;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // Find
 
 bool CFindCalendar::Search() const
@@ -220,6 +318,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
+	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemChanged)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
@@ -246,6 +345,7 @@ END_MESSAGE_MAP()
 CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	: m_bSuppressSelect(false)
 	, m_Callback(this)
+	, m_SortColumn(0)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 6, 0);
 	CWinApp* app = AfxGetApp();
@@ -264,7 +364,7 @@ CAgilityBookViewCalendarList::~CAgilityBookViewCalendarList()
 
 BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -460,6 +560,11 @@ void CAgilityBookViewCalendarList::LoadData()
 	if (GetMessage(msg) && IsWindowVisible())
 		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
+	SORT_CAL_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
+
 	// Cleanup.
 	if (pCurData)
 		pCurData->Release();
@@ -526,6 +631,20 @@ void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
 		ASSERT(pMenu != NULL);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
+}
+
+void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	int nBackwards = 1;
+	if (m_SortColumn == pNMListView->iSubItem + 1)
+		nBackwards = -1;
+	m_SortColumn = (pNMListView->iSubItem + 1) * nBackwards;
+	SORT_CAL_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
+	*pResult = 0;
 }
 
 void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)

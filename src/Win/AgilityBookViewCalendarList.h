@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
@@ -62,6 +63,7 @@ class CAgilityBookViewCalendarList : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewCalendarData;
 	friend class CFindCalendar;
+	friend int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 protected: // create from serialization only
 	CAgilityBookViewCalendarList();
 	DECLARE_DYNCREATE(CAgilityBookViewCalendarList)
@@ -86,6 +88,7 @@ private:
 	int m_imgPlanTentative;
 	int m_imgEntered;
 	int m_imgEnteredTentative;
+	int m_SortColumn;
 
 protected:
 	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
@@ -118,6 +121,7 @@ protected:
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
@@ -62,6 +63,7 @@ class CAgilityBookViewRuns : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewRunsData;
 	friend class CFindRuns;
+	friend int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 protected: // create from serialization only
 	CAgilityBookViewRuns();
 	DECLARE_DYNCREATE(CAgilityBookViewRuns)
@@ -105,6 +107,7 @@ private:
 	std::vector<int> m_Columns;
 	bool m_bSuppressSelect;
 	CFindRuns m_Callback;
+	int m_SortColumn;
 
 // Generated message map functions
 protected:
@@ -114,6 +117,7 @@ protected:
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
