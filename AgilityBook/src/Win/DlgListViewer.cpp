@@ -219,7 +219,8 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 		str = m_Trial->GetLocation().c_str();
 		break;
 	case COL_RUN_CLUB:
-		str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
+		if (m_Trial->GetClubs().GetPrimaryClub())
+			str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
 		break;
 	case COL_RUN_JUDGE:
 		str = m_Run->GetJudge().c_str();
@@ -396,7 +397,8 @@ CString CDlgListViewerDataDblQ::OnNeedText(int iCol) const
 		str = m_Trial->GetLocation().c_str();
 		break;
 	case COL_QQ_CLUB:
-		str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
+		if (m_Trial->GetClubs().GetPrimaryClub())
+			str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
 		break;
 	}
 	return str;
@@ -423,8 +425,10 @@ int CDlgListViewerDataDblQ::Compare(CDlgListViewerData const* pRow2, int inCol) 
 		str2 = pData->m_Trial->GetLocation();
 		break;
 	case COL_QQ_CLUB:
-		str1 = m_Trial->GetClubs().GetPrimaryClub()->GetName();
-		str2 = pData->m_Trial->GetClubs().GetPrimaryClub()->GetName();
+		if (m_Trial->GetClubs().GetPrimaryClub())
+			str1 = m_Trial->GetClubs().GetPrimaryClub()->GetName();
+		if (pData->m_Trial->GetClubs().GetPrimaryClub())
+			str2 = pData->m_Trial->GetClubs().GetPrimaryClub()->GetName();
 		break;
 	}
 	if (str1 < str2)
@@ -479,7 +483,7 @@ CString CDlgListViewerDataOther::OnNeedText(int iCol) const
 			str = m_info.m_pTrial->GetLocation().c_str();
 		break;
 	case COL_OTHER_CLUB:
-		if (!m_info.m_pExisting)
+		if (!m_info.m_pExisting && m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str = m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName().c_str();
 		break;
 	case COL_OTHER_VENUE:
@@ -539,9 +543,9 @@ int CDlgListViewerDataOther::Compare(CDlgListViewerData const* pRow2, int inCol)
 			str2 = pData->m_info.m_pTrial->GetLocation();
 		break;
 	case COL_OTHER_CLUB:
-		if (!m_info.m_pExisting)
+		if (!m_info.m_pExisting && m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str1 = m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName();
-		if (!pData->m_info.m_pExisting)
+		if (!pData->m_info.m_pExisting && pData->m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str2 = pData->m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName();
 		break;
 	case COL_OTHER_VENUE:
@@ -715,12 +719,14 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 	ARBDogRun const* pRun,
 	ScoringRunInfo::eScoringDetail scoringDetail)
 {
-	ARBConfigScoring const* pScoring = pDoc->GetConfig().GetVenues().FindEvent(
-		pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
-		pRun->GetEvent(),
-		pRun->GetDivision(),
-		pRun->GetLevel(),
-		pRun->GetDate());
+	ARBConfigScoring const* pScoring = NULL;
+	if (pTrial->GetClubs().GetPrimaryClub())
+		pScoring = pDoc->GetConfig().GetVenues().FindEvent(
+			pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+			pRun->GetEvent(),
+			pRun->GetDivision(),
+			pRun->GetLevel(),
+			pRun->GetDate());
 	if (pScoring && pScoring->HasMachPts())
 		pColData->InsertColumn(ctrlList, COL_RUN_MACH, "Mach Points");
 	if (0 < pRun->GetPartners().size())
