@@ -47,7 +47,7 @@ class Element;
 
 #if _MSC_VER < 1300
 // VC6 has problems with std::vector::clear() type syntax.
-// And I really don't want to declaring using statements in my headers!
+// And I really don't want to declare 'using' statements in my headers!
 using std::set;
 using std::string;
 using std::vector;
