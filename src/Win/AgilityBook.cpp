@@ -48,6 +48,7 @@
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
 #include "HyperLink.h"
+#include "Splash.h"
 #include "TabView.h"
 #include "VersionNum.h"
 
@@ -175,6 +176,11 @@ CAgilityBookApp theApp;
 // CAgilityBookApp initialization
 BOOL CAgilityBookApp::InitInstance()
 {
+	// Parse command line for standard shell commands, DDE, file open
+	CCommandLineInfo cmdInfo;
+	ParseCommandLine(cmdInfo);
+	CSplashWnd::EnableSplashScreen(cmdInfo.m_bShowSplash);
+
 	CWinApp::InitInstance();
 
 	try
@@ -260,9 +266,6 @@ BOOL CAgilityBookApp::InitInstance()
 	// Enable DDE Execute open
 	EnableShellOpen();
 	RegisterShellFileTypes(FALSE);
-	// Parse command line for standard shell commands, DDE, file open
-	CCommandLineInfo cmdInfo;
-	ParseCommandLine(cmdInfo);
 
 	// Should we open the last open file?
 	bool bOpeningLast = false;
@@ -355,4 +358,12 @@ void CAgilityBookApp::OnAppAbout()
 void CAgilityBookApp::OnAppUpdate()
 {
 	UpdateVersion(true);
+}
+
+BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
+{
+	// The following lines were added by the Splash Screen component.
+	if (CSplashWnd::PreTranslateAppMessage(pMsg))
+		return TRUE;
+	return CWinApp::PreTranslateMessage(pMsg);
 }

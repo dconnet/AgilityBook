@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
@@ -332,6 +333,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_CALENDAR, OnUpdateCalendarEdit)
 	ON_COMMAND(ID_AGILITY_EDIT_CALENDAR, OnCalendarEdit)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnCalendarNew)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateEditDuplicate)
+	ON_COMMAND(ID_EDIT_DUPLICATE, OnEditDuplicate)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_CALENDAR, OnUpdateCalendarDelete)
 	ON_COMMAND(ID_AGILITY_DELETE_CALENDAR, OnCalendarDelete)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
@@ -841,6 +844,40 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 		}
 	}
 	cal->Release();
+}
+
+void CAgilityBookViewCalendarList::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (GetItemData(GetSelection()))
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewCalendarList::OnEditDuplicate()
+{
+	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+	if (pData)
+	{
+		// We need to warn the user if the duplicated entry is not visible.
+		// This will happen if the source is marked as entered and they have
+		// selected the option to hide dates.
+		ARBCalendar* cal = new ARBCalendar(*(pData->GetCalendar()));
+		bool bNewIsNotVisible =
+			(pData->GetCalendar()->GetEntered() == ARBCalendar::eEntered
+			&& CAgilityBookOptions::HideOverlappingCalendarEntries());
+		cal->SetEntered(ARBCalendar::eNot);
+		GetDocument()->GetCalendar().AddCalendar(cal);
+		GetDocument()->GetCalendar().sort();
+		LoadData();
+		GetDocument()->SetModifiedFlag();
+		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
+		cal->Release();
+		if (bNewIsNotVisible)
+		{
+			AfxMessageBox("Warning: The entry you have just created is not visible due to your viewing options.", MB_ICONWARNING);
+		}
+	}
 }
 
 void CAgilityBookViewCalendarList::OnUpdateCalendarDelete(CCmdUI* pCmdUI)

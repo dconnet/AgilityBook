@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,49 +29,51 @@
 /**
  * @file
  *
- * @brief main header file for the AgilityBook application
+ * @brief Splash Screen component
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Created.
  */
 
-#ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
-#endif
-
-#include "resource.h"       // main symbols
-
-class CAgilityBookApp : public CWinApp
+class CSplashWnd : public CWnd
 {
-public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	CAgilityBookApp();
+// Construction
+protected:
+	CSplashWnd();
 
-private:
-	CSingleDocTemplate* m_pDocTemplateTree;
-	CSingleDocTemplate* m_pDocTemplateRuns;
-	CSingleDocTemplate* m_pDocTemplatePoints;
-	CSingleDocTemplate* m_pDocTemplateCal;
-	CSingleDocTemplate* m_pDocTemplateTraining;
+// Attributes:
+public:
+	CBitmap m_bitmap;
+
+// Operations
+public:
+	static void EnableSplashScreen(BOOL bEnable = TRUE);
+	static void ShowSplashScreen(CWnd* pParentWnd = NULL);
+	static BOOL PreTranslateAppMessage(MSG* pMsg);
 
 // Overrides
-	//{{AFX_VIRTUAL(CAgilityBookApp)
-public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CSplashWnd)
 	//}}AFX_VIRTUAL
 
 // Implementation
-private:
-	//{{AFX_MSG(CAgilityBookApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnAppUpdate();
+public:
+	~CSplashWnd();
+	virtual void PostNcDestroy();
+
+protected:
+	BOOL Create(CWnd* pParentWnd = NULL);
+	void HideSplashScreen();
+	static BOOL c_bShowSplashWnd;
+	static CSplashWnd* c_pSplashWnd;
+
+// Generated message map functions
+protected:
+	//{{AFX_MSG(CSplashWnd)
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnPaint();
+	afx_msg void OnTimer(UINT nIDEvent);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-extern CAgilityBookApp theApp;
-
-// Some global functions.
-extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
-extern void UpdateVersion(bool bVerbose);

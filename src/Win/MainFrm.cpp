@@ -48,6 +48,7 @@
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
+#include "Splash.h"
 #include "TabView.h"
 
 #ifdef _DEBUG
@@ -119,6 +120,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
 
+	CSplashWnd::ShowSplashScreen(this);
 	return 0;
 }
 

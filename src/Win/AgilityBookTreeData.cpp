@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-09-04 DRC When pasting, set document modified flag. Clean up some
@@ -797,6 +798,7 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 	{
 	default:
 		break;
+	case ID_EDIT_DUPLICATE:
 	case ID_EDIT_COPY:
 		bEnable = true;
 		break;
@@ -830,6 +832,18 @@ bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
 	switch (id)
 	{
 	default:
+		break;
+	case ID_EDIT_DUPLICATE:
+		if (GetTrial())
+		{
+			ARBDogTrial* pTrial = new ARBDogTrial(*GetTrial());
+			GetDog()->GetTrials().AddTrial(pTrial);
+			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
+			GetDog()->GetTrials().sort(bDescending);
+			pTrial->Release();
+			bModified = true;
+			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
+		}
 		break;
 	case ID_EDIT_COPY:
 		{
@@ -1038,6 +1052,7 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 	{
 	default:
 		break;
+	case ID_EDIT_DUPLICATE:
 	case ID_EDIT_COPY:
 		bEnable = true;
 		break;
@@ -1071,6 +1086,18 @@ bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
 	switch (id)
 	{
 	default:
+		break;
+	case ID_EDIT_DUPLICATE:
+		if (GetRun())
+		{
+			ARBDogRun* pRun = new ARBDogRun(*GetRun());
+			GetTrial()->GetRuns().AddRun(pRun);
+			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
+			GetTrial()->GetRuns().sort(bDescending);
+			pRun->Release();
+			bModified = true;
+			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
+		}
 		break;
 	case ID_EDIT_COPY:
 		{

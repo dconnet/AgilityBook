@@ -340,6 +340,9 @@
 				RelativePath="..\..\..\Win\MainFrm.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\Splash.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\Splitter.cpp">
 			</File>
 			<File
@@ -584,6 +587,9 @@
 				RelativePath="..\..\..\Win\Resource.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\Splash.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\Splitter.h">
 			</File>
 			<File
@@ -664,6 +670,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\res\jump.ico">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\res\Splash.bmp">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\res\title.ico">

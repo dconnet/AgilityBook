@@ -1162,7 +1162,8 @@ void CAgilityBookViewRuns::LoadData()
 				item.iSubItem = 0;
 				item.lParam = reinterpret_cast<LPARAM>(pData);
 				int index = GetListCtrl().InsertItem(&item);
-				if (pCurRun && *pCurRun == *pRun)
+				// Compare by ptr, not value.
+				if (pCurRun && pCurRun == pRun)
 				{
 					SetSelection(index, true);
 				}

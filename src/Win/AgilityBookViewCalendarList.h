@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-11-21 DRC Enabled copy and select all.
@@ -135,6 +136,8 @@ protected:
 	afx_msg void OnUpdateCalendarEdit(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarEdit();
 	afx_msg void OnCalendarNew();
+	afx_msg void OnUpdateEditDuplicate(CCmdUI* pCmdUI);
+	afx_msg void OnEditDuplicate();
 	afx_msg void OnUpdateCalendarDelete(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarDelete();
 	afx_msg void OnViewCustomize();
