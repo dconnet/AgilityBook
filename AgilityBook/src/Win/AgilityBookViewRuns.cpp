@@ -1235,9 +1235,14 @@ void CAgilityBookViewRuns::LoadData()
 
 	SORT_RUN_INFO info;
 	info.pThis = this;
-	vector<int>::iterator iter = find(m_Columns.begin(), m_Columns.end(), IO_RUNS_DATE);
-	if (iter != m_Columns.end())
-		m_SortColumn = *iter;
+	for (size_t i = 0; i < m_Columns.size(); ++i)
+	{
+		if (m_Columns[i] == IO_RUNS_DATE)
+		{
+			m_SortColumn = static_cast<int>(i) + 1;
+			break;
+		}
+	}
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
 	if (0 == m_SortColumn)
