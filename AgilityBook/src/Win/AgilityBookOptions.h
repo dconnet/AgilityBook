@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-06 DRC Added additional clipboard formats.
  * @li 2004-05-16 DRC Added IsLevelVisible.
  * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles.
@@ -212,8 +213,11 @@ public:
 	// Special clipboard formats
 	typedef enum
 	{
+		eFormatDog,
 		eFormatTrial,
-		eFormatRun
+		eFormatRun,
+		eFormatCalendar,
+		eFormatLog,
 	} eClipFormat;
 	static UINT GetClipboardFormat(eClipFormat fmt);
 };

@@ -130,6 +130,9 @@ BuildHelp.bat $(ConfigurationName)
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath="..\Win\resource.h">
+			</File>
+			<File
 				RelativePath="..\Win\resource.hm">
 			</File>
 		</Filter>

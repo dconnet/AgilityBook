@@ -1245,7 +1245,7 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
 	}
-	UINT idMenu = IDR_RUNS;
+	UINT idMenu = IDR_RUN;
 	if (0 != idMenu)
 	{
 		CMenu menu;

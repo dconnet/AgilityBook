@@ -261,6 +261,7 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
         END
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
@@ -289,6 +290,7 @@ BEGIN
             MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
@@ -315,29 +317,12 @@ BEGIN
             MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
-    END
-END
-
-IDR_RUNS MENU 
-BEGIN
-    POPUP "Runs"
-    BEGIN
-        MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
-        MENUITEM SEPARATOR
-        POPUP "&New"
-        BEGIN
-            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
-            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
-            MENUITEM SEPARATOR
-            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
-        END
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
     END
 END
 
@@ -349,6 +334,9 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete...",                  ID_AGILITY_DELETE_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
@@ -364,6 +352,9 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete...",                  ID_AGILITY_DELETE_TRAINING
     END
 END
