@@ -128,7 +128,7 @@ public:
 
 	bool CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView);
 	void SortDates();
-	bool ImportConfiguration();
+	bool ImportConfiguration(bool bUseDefault);
 
 	void ResetVisibility();
 	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog);

@@ -48,27 +48,18 @@ public:
 	CBitmap m_bitmap;
 	CSize m_szBitmap;
 	CString m_Version;
-	UINT_PTR m_TimerId;
 
 // Operations
 public:
-	class CSplashWndLock
-	{
-	public:
-		CSplashWndLock()
-		{
-			++c_okToDismiss;
-		}
-		~CSplashWndLock()
-		{
-			--c_okToDismiss;
-		}
-	};
-#if _MSC_VER < 1300
-	friend class CSplashWnd::CSplashWndLock;
-#endif
 	static void EnableSplashScreen(BOOL bEnable = true);
+	/**
+	 * If the splash screen is displayed, it MUST be dismissed before any
+	 * other dialog is displayed, for instance msgs that occur during the
+	 * auto-file-open. If not, when the splash screen goes away, any dialogs
+	 * currently up automatically go away. (not sure why yet)
+	 */
 	static void ShowSplashScreen(CWnd* pParentWnd = NULL, bool bTimed = true);
+	static void HideSplashScreen();
 	static BOOL PreTranslateAppMessage(MSG* pMsg);
 
 // Overrides
@@ -83,9 +74,8 @@ public:
 
 protected:
 	BOOL Create(CWnd* pParentWnd = NULL);
-	void HideSplashScreen();
+	void HideSplashScreenImpl();
 	static BOOL c_bShowSplashWnd;
-	static int c_okToDismiss;
 	static CSplashWnd* c_pSplashWnd;
 
 // Generated message map functions

@@ -1,4 +1,4 @@
-4/27/2004: v1.0.5.8 <in development>
+4/29/2004: v1.0.5.8 <in development>
 - Note: Released beta to single person on 3/26 - dealt with table code.
 - Bumped file version to 8.6, Configuration v3:
   - Changed 'TableInYPS' to 'hasTable', added 'hasTable' to 'Scoring'
@@ -25,6 +25,8 @@
     Megan and me at the 2003 USDAA Nationals.)
     (Note for me: ARB font is 'FifthAve'/36pt)
   - In multi-dog files, remember the last dog viewed when opening the file.
+  - When the program prompts to update the configuration when a file opens,
+    just merge the default config instead of prompting.
 - Bug fixes
   - When merging configuration information via the update feature, if only
     the description was changed in either a venue or an event, that

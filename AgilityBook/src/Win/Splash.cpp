@@ -53,7 +53,6 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 // static stuff
 
 BOOL CSplashWnd::c_bShowSplashWnd = TRUE;
-int CSplashWnd::c_okToDismiss = 0;
 
 CSplashWnd* CSplashWnd::c_pSplashWnd = NULL;
 
@@ -75,6 +74,12 @@ void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd, bool bTimed)
 		c_pSplashWnd->UpdateWindow();
 }
 
+void CSplashWnd::HideSplashScreen()
+{
+	if (c_pSplashWnd)
+		c_pSplashWnd->HideSplashScreenImpl();
+}
+
 BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 {
 	if (c_pSplashWnd == NULL)
@@ -90,7 +95,7 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 	    pMsg->message == WM_NCRBUTTONDOWN ||
 	    pMsg->message == WM_NCMBUTTONDOWN)
 	{
-		c_pSplashWnd->HideSplashScreen();
+		c_pSplashWnd->HideSplashScreenImpl();
 		return TRUE;	// message handled here
 	}
 
@@ -103,7 +108,6 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 CSplashWnd::CSplashWnd(bool bTimed)
 	: m_bTimed(bTimed)
 	, m_szBitmap(0,0)
-	, m_TimerId(0)
 {
 }
 
@@ -143,26 +147,9 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 		pParentWnd->GetSafeHwnd(), NULL);
 }
 
-void CSplashWnd::HideSplashScreen()
+void CSplashWnd::HideSplashScreenImpl()
 {
-	// We may be displaying a msgbox due to a file load error.
-	if (0 == c_okToDismiss
-	&& AfxGetMainWnd()
-	&& ::IsWindow(AfxGetMainWnd()->GetSafeHwnd())
-	&& AfxGetMainWnd()->IsWindowVisible())
-	{
-		// Destroy the window, and update the mainframe.
-		ShowWindow(SW_HIDE);
-		AfxGetMainWnd()->UpdateWindow();
-		DestroyWindow();
-	}
-	else if (0 != m_TimerId)
-	{
-		// Speed up the timer so when we do dismiss, there's little delay.
-		KillTimer(m_TimerId);
-		m_TimerId = 0;
-		SetTimer(1, 200, NULL);
-	}
+	DestroyWindow();
 }
 
 void CSplashWnd::PostNcDestroy()
@@ -181,7 +168,7 @@ int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Set a timer to destroy the splash screen.
 	if (m_bTimed)
-		m_TimerId = SetTimer(1, 2000, NULL);
+		SetTimer(1, 2000, NULL);
 
 	return 0;
 }
@@ -274,5 +261,5 @@ void CSplashWnd::OnPaint()
 void CSplashWnd::OnTimer(UINT nIDEvent)
 {
 	// Destroy the splash screen window.
-	HideSplashScreen();
+	HideSplashScreenImpl();
 }

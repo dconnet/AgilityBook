@@ -1,10 +1,11 @@
-Last Updated: 4/27/04
+Last Updated: 4/29/04
 
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
     <http://www.bayteam.org/docs/KareysCalendar.html>
   - Import: Need some intelligence to group several days of runs into a
     single trial.
+  - Import: Add intelligence to deal with quotes/multi-line data.
 
 - Run entry dialog integrity checks (define!)
   - If faults entered is greated then faults allowed, and 'Q' is set, warn
