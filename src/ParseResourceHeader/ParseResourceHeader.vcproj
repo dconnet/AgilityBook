@@ -4,6 +4,7 @@
 	Version="7.10"
 	Name="ParseResourceHeader"
 	ProjectGUID="{E608D05A-7F1D-4C1C-867D-EA699DCAB177}"
+	RootNamespace="ParseResourceHeader"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -40,7 +41,10 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)..
+BuildHelp.bat $(ConfigurationName)
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -86,7 +90,10 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)..
+BuildHelp.bat $(ConfigurationName)
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -120,6 +127,9 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="..\Win\resource.hm">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
