@@ -113,13 +113,12 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CListView2)
-	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
 	afx_msg void OnEditCopy();
-	afx_msg void OnUpdateEditPaste(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateEditSelectAll(CCmdUI* pCmdUI);
 	afx_msg void OnEditSelectAll();
 	//}}AFX_MSG
+	afx_msg void OnUpdateNotSupported(CCmdUI* pCmdUI);
 
 	DECLARE_MESSAGE_MAP()
 };

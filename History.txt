@@ -1,4 +1,4 @@
-6/2/2004: v1.1.1.8 <in development>
+6/6/2004: v1.1.1.8 <in development>
 - Bumped file version to 8.7, Configuration v4:
   - Added 'SubName' to 'Training'.
   - CPE 'CADE' changed to 'C-ATE'.
@@ -15,6 +15,7 @@
   - Added 'Sub-name' to the Training Log.
   - Added an 'Open' button to the 'Find Links' dialog.
   - Added status icons on the run dialog links page.
+  - Added support for cut/copy/paste of calendar entries.
 - Bug fixes
   - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter

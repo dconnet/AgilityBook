@@ -146,6 +146,10 @@ SOURCE=..\..\..\Win\CheckTreeCtrl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\ClipBoard.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\ColumnOrder.cpp
 # End Source File
 # Begin Source File
@@ -456,6 +460,10 @@ SOURCE=..\..\..\Win\AgilityBookViewTraining.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\CheckTreeCtrl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\ClipBoard.h
 # End Source File
 # Begin Source File
 

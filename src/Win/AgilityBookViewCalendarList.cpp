@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-06 DRC Added cut/copy/paste support.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -51,11 +52,13 @@
 #include "AgilityBookTreeData.h"
 #include "AgilityBookViewCalendar.h"
 #include "ARBCalendar.h"
+#include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgCalendar.h"
 #include "DlgFind.h"
 #include "DlgSelectDog.h"
 #include "DlgTrial.h"
+#include "Element.h"
 #include "MainFrm.h"
 #include "TabView.h"
 
@@ -335,6 +338,12 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnCalendarNew)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateEditDuplicate)
 	ON_COMMAND(ID_EDIT_DUPLICATE, OnEditDuplicate)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
+	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
+	ON_COMMAND(ID_EDIT_PASTE, OnEditPaste)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_CALENDAR, OnUpdateCalendarDelete)
 	ON_COMMAND(ID_AGILITY_DELETE_CALENDAR, OnCalendarDelete)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
@@ -877,6 +886,114 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 		{
 			AfxMessageBox("Warning: The entry you have just created is not visible due to your viewing options.", MB_ICONWARNING);
 		}
+	}
+}
+
+void CAgilityBookViewCalendarList::OnUpdateEditCut(CCmdUI* pCmdUI)
+{
+	OnUpdateEditCopy(pCmdUI);
+}
+
+void CAgilityBookViewCalendarList::OnEditCut()
+{
+	OnEditCopy();
+	OnCalendarDelete();
+}
+
+void CAgilityBookViewCalendarList::OnUpdateEditCopy(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetSelectedCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewCalendarList::OnEditCopy()
+{
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
+	{
+		CString data;
+		CStringArray line;
+
+		// Take care of the header, but only if more than one line is selected.
+		if (1 < indices.size()
+		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		{
+			GetPrintLine(-1, line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		Element tree;
+		tree.SetName(CLIPDATA);
+
+		// Now all the data.
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			if (pData)
+				pData->GetCalendar()->Save(tree);
+			CStringArray line;
+			GetPrintLine((*iter), line);
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				if (0 < i)
+					data += '\t';
+				data += line[i];
+			}
+			data += "\r\n";
+		}
+
+		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar), tree, data);
+	}
+}
+
+void CAgilityBookViewCalendarList::OnUpdateEditPaste(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar)))
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewCalendarList::OnEditPaste()
+{
+	bool bLoaded = false;
+	Element tree;
+	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar), tree))
+	{
+		if (CLIPDATA == tree.GetName())
+		{
+			for (int i = 0; i < tree.GetElementCount(); ++i)
+			{
+				Element const& element = tree.GetElement(i);
+				if (element.GetName() == TREE_CALENDAR)
+				{
+					ARBCalendar* pCal = new ARBCalendar();
+					std::string err;
+					if (pCal->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+					{
+						bLoaded = true;
+						GetDocument()->GetCalendar().AddCalendar(pCal);
+					}
+					pCal->Release();
+					pCal = NULL;
+				}
+			}
+		}
+	}
+	if (bLoaded)
+	{
+		GetDocument()->GetCalendar().sort();
+		LoadData();
+		GetDocument()->SetModifiedFlag();
+		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 	}
 }
 
