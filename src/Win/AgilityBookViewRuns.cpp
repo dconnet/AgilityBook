@@ -198,10 +198,12 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			}
 			break;
 		case IO_RUNS_YPS:
-			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
-			&& 0.0 < m_pRun->GetScoring().GetYards() && 0.0 < m_pRun->GetScoring().GetTime())
 			{
-				str.Format("%.3f", m_pRun->GetScoring().GetYards() / m_pRun->GetScoring().GetTime());
+				double yps;
+				if (m_pRun->GetScoring().GetYPS(yps))
+				{
+					str.Format("%.3f", yps);
+				}
 			}
 			break;
 		case IO_RUNS_SCT:

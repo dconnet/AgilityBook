@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2004-02-09 DRC Update YPS when the time is changed.
  *                    When date changes, update controls.
  * @li 2004-01-19 DRC Total faults weren't updated when course faults changed.
@@ -63,6 +64,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "DlgListCtrl.h"
+#include ".\dlgrunscore.h"
 
 using namespace std;
 
@@ -157,6 +159,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FAULTS, m_Faults);
 	DDX_Control(pDX, IDC_TIME, m_ctrlTime);
 	DDX_Text(pDX, IDC_TIME, m_Time);
+	DDX_Control(pDX, IDC_TABLE_YPS, m_ctrlTableYPS);
 	DDX_Control(pDX, IDC_YARDS_TEXT, m_ctrlYardsText);
 	DDX_Control(pDX, IDC_YARDS, m_ctrlYards);
 	DDX_Text(pDX, IDC_YARDS, m_Yards);
@@ -368,6 +371,7 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_OPEN_PTS, OnKillfocusOpen)
 	ON_EN_KILLFOCUS(IDC_CLOSE_PTS, OnKillfocusClose)
 	ON_EN_KILLFOCUS(IDC_PLACE, OnKillfocusPlace)
+	ON_BN_CLICKED(IDC_TABLE_YPS, OnBnClickedTableYps)
 	ON_CBN_SELCHANGE(IDC_Q, OnSelchangeQ)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -537,13 +541,13 @@ void CDlgRunScore::SetPartnerText()
 
 void CDlgRunScore::SetYPS()
 {
-	CString yps;
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType()
-	&& 0 < m_Yards && 0.0 < m_Time)
+	CString str;
+	double yps;
+	if (m_Run->GetScoring().GetYPS(yps))
 	{
-		yps.Format("%.3f", m_Yards / m_Time);
+		str.Format("%.3f", yps);
 	}
-	m_ctrlYPS.SetWindowText(yps);
+	m_ctrlYPS.SetWindowText(str);
 }
 
 void CDlgRunScore::SetTotalFaults()
@@ -705,6 +709,7 @@ void CDlgRunScore::UpdateControls()
 		m_ctrlPartner.ShowWindow(SW_HIDE);
 		m_ctrlHandler.EnableWindow(FALSE);
 		m_ctrlTime.EnableWindow(FALSE);
+		m_ctrlTableYPS.EnableWindow(FALSE);
 		m_ctrlFaults.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
@@ -776,6 +781,7 @@ void CDlgRunScore::UpdateControls()
 	case ARBConfigScoring::eTimePlusFaults:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
 		m_ctrlTime.EnableWindow(TRUE);
+		m_ctrlTableYPS.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
 		m_ctrlYards.EnableWindow(TRUE);
 		m_ctrlSCT.EnableWindow(TRUE);
@@ -948,6 +954,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	case ARBDogRunScoring::eTypeByTime:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
+		m_ctrlTableYPS.SetCheck(m_Run->GetScoring().GetTableInYPS() ? 1 : 0);
 		m_Yards = m_Run->GetScoring().GetYards();
 		m_SCT = m_Run->GetScoring().GetSCT();
 		SetYPS();
@@ -1094,6 +1101,12 @@ void CDlgRunScore::OnKillfocusPlace()
 	GetText(&m_ctrlPlace, m_Place);
 	m_Run->SetPlace(m_Place);
 	SetTitlePoints();
+}
+
+void CDlgRunScore::OnBnClickedTableYps()
+{
+	m_Run->GetScoring().SetTableInYPS(m_ctrlTableYPS.GetCheck() ? true : false);
+	SetYPS();
 }
 
 void CDlgRunScore::OnSelchangeQ()

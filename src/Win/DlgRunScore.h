@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-14 DRC Added Table-in-YPS flag.
  */
 
 #include <vector>
@@ -77,6 +78,7 @@ private:
 	short	m_Faults;
 	CEdit	m_ctrlTime;
 	double	m_Time;
+	CButton m_ctrlTableYPS;
 	CStatic	m_ctrlYardsText;
 	CEdit	m_ctrlYards;
 	double	m_Yards;
@@ -163,6 +165,7 @@ protected:
 	afx_msg void OnKillfocusOpen();
 	afx_msg void OnKillfocusClose();
 	afx_msg void OnKillfocusPlace();
+	afx_msg void OnBnClickedTableYps();
 	afx_msg void OnSelchangeQ();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

@@ -297,6 +297,7 @@ These 3 elements define the major scoring mechanisms.
 
  Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points
  Decimal: Time,SCT,Yards
+ Boolean: TableInYPS
 -->
 <!ELEMENT ByTime EMPTY >
 	<!ATTLIST ByTime
@@ -304,6 +305,7 @@ These 3 elements define the major scoring mechanisms.
 		Time CDATA #REQUIRED
 		SCT CDATA #IMPLIED
 		Yards CDATA #IMPLIED
+		TableInYPS (y|n) 'y'
 		>
 <!ELEMENT ByOpenClose EMPTY >
 	<!ATTLIST ByOpenClose

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-14 DRC Added TableInYPS in run scoring.
  * @li 2004-02-02 DRC Added ARBDogExistingPoints items.
  * @li 2004-01-21 DRC Added ARBConfigAction items.
  * @li 2003-12-07 DRC Added Info section.
@@ -170,6 +171,7 @@
 #define ATTRIB_PARTNER_REGNUM				"RegNum"
 #define ATTRIB_SCORING_FAULTS				"CourseFaults"
 #define ATTRIB_SCORING_TIME					"Time"
+#define ATTRIB_SCORING_TABLEINYPS			"TableInYPS"
 #define ATTRIB_BY_TIME_SCT					"SCT"
 #define ATTRIB_BY_TIME_YARDS				"Yards"
 #define ATTRIB_BY_OPENCLOSE_NEEDOPEN		"NeedOpenPts"

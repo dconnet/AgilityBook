@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
  */
@@ -57,6 +58,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 	, m_SCT(0)
 	, m_Yards(0)
 	, m_Time(0)
+	, m_TableInYPS(true)
 	, m_CourseFaults(0)
 	, m_NeedOpenPts(0)
 	, m_NeedClosePts(0)
@@ -71,6 +73,7 @@ ARBDogRunScoring::ARBDogRunScoring(const ARBDogRunScoring& rhs)
 	, m_SCT(rhs.m_SCT)
 	, m_Yards(rhs.m_Yards)
 	, m_Time(rhs.m_Time)
+	, m_TableInYPS(rhs.m_TableInYPS)
 	, m_CourseFaults(rhs.m_CourseFaults)
 	, m_NeedOpenPts(rhs.m_NeedOpenPts)
 	, m_NeedClosePts(rhs.m_NeedClosePts)
@@ -92,6 +95,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(const ARBDogRunScoring& rhs)
 		m_SCT = rhs.m_SCT;
 		m_Yards = rhs.m_Yards;
 		m_Time = rhs.m_Time;
+		m_TableInYPS = rhs.m_TableInYPS;
 		m_CourseFaults = rhs.m_CourseFaults;
 		m_NeedOpenPts = rhs.m_NeedOpenPts;
 		m_NeedClosePts = rhs.m_NeedClosePts;
@@ -108,6 +112,7 @@ bool ARBDogRunScoring::operator==(const ARBDogRunScoring& rhs) const
 		&& m_SCT == rhs.m_SCT
 		&& m_Yards == rhs.m_Yards
 		&& m_Time == rhs.m_Time
+		&& m_TableInYPS == rhs.m_TableInYPS
 		&& m_CourseFaults == rhs.m_CourseFaults
 		&& m_NeedOpenPts == rhs.m_NeedOpenPts
 		&& m_NeedClosePts == rhs.m_NeedClosePts
@@ -145,6 +150,12 @@ bool ARBDogRunScoring::Load(
 	case ARBConfigScoring::eTimePlusFaults:
 		if (name == TREE_BY_TIME)
 		{
+			if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TABLEINYPS, m_TableInYPS))
+			{
+				ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TABLEINYPS, VALID_VALUES_BOOL);
+				// Report the error, but keep going.
+				m_TableInYPS = true;
+			}
 			m_type = eTypeByTime;
 			if (CElement::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_SCT, d))
 				m_SCT = d;
@@ -187,6 +198,7 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 	case eTypeByTime:
 		{
 			CElement& scoring = ioTree.AddElement(TREE_BY_TIME);
+			scoring.AddAttrib(ATTRIB_SCORING_TABLEINYPS, m_TableInYPS);
 			scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
 			scoring.AddAttrib(ATTRIB_BY_TIME_SCT, m_SCT);
@@ -217,6 +229,21 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 		return true;
 	}
 	return false;
+}
+
+bool ARBDogRunScoring::GetYPS(double& outYPS) const
+{
+	bool bOk = false;
+	if (eTypeByTime == GetType()
+	&& 0 < GetYards() && 0.0 < GetTime())
+	{
+		bOk = true;
+		double t = GetTime();
+		if (5.0 < t && !GetTableInYPS())
+			t -= 5;
+		outYPS = GetYards() / t;
+	}
+	return bOk;
 }
 
 double ARBDogRunScoring::GetTimeFaults() const
