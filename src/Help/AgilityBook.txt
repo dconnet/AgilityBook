@@ -469,6 +469,9 @@ Qualifying status.
 .topic HIDC_REFRUN_TIME
 Time of run.
 
+.topic HIDC_REGNUM_NOTE
+Any additional information about this registration, such as your number.
+
 .topic HIDC_REGNUM_HEIGHT
 Measured height.
 
