@@ -826,7 +826,7 @@ void CDlgConfigVenue::OnNew()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(), "", "", this);
+				CDlgConfigTitle dlg(pDivData->GetDivision()->GetTitles(), name.c_str(), NULL, this);
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
@@ -837,8 +837,7 @@ void CDlgConfigVenue::OnNew()
 						continue;
 					}
 					ARBConfigTitle* pTitle = pDivData->GetDivision()->GetTitles().AddTitle(name);
-					pTitle->SetLongName(dlg.GetLongName());
-					pTitle->SetDescription(dlg.GetDesc());
+					dlg.SetTitleData(pTitle);
 					if (pTitle)
 					{
 						int nInsertAt = m_ctrlTitles.GetSelection();
@@ -1222,11 +1221,10 @@ void CDlgConfigVenue::OnEdit()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(), pTitleData->GetTitle()->GetLongName().c_str(), pTitleData->GetTitle()->GetDescription().c_str(), this);
+				CDlgConfigTitle dlg(pTitleData->GetDivision()->GetTitles(), name.c_str(), pTitleData->GetTitle(), this);
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
-					longname = dlg.GetLongName();
 					if (oldName != name)
 					{
 						if (m_pVenue->GetDivisions().FindTitle(name))
@@ -1253,10 +1251,12 @@ void CDlgConfigVenue::OnEdit()
 							}
 							continue;
 						}
-						pTitleData->GetTitle()->SetName(name);
+						// Do not set the name directly. We need to fix up
+						// all the required links too.
+						pTitleData->GetDivision()->GetTitles().RenameTitle(oldName, name);
 					}
-					pTitleData->GetTitle()->SetLongName(longname);
-					pTitleData->GetTitle()->SetDescription(dlg.GetDesc());
+					dlg.SetTitleData(pTitleData->GetTitle());
+					longname = pTitleData->GetTitle()->GetLongName();
 					if (name != oldName || longname != oldLongName)
 					{
 						if (name != oldName)

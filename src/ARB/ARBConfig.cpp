@@ -309,8 +309,11 @@ bool ARBConfig::Update(int indent, const ARBConfig& inConfigNew, std::string& io
 		else
 			++nSkipped;
 	}
-	sprintf(buffer, UPDATE_FORMAT_FAULTS, nNew, nSkipped);
-	info += buffer;
+	if (0 < nNew || 0 < nChanges)
+	{
+		sprintf(buffer, UPDATE_FORMAT_FAULTS, nNew, nSkipped);
+		info += buffer;
+	}
 
 	// Update OtherPoints.
 	nNew = 0;
@@ -341,8 +344,11 @@ bool ARBConfig::Update(int indent, const ARBConfig& inConfigNew, std::string& io
 			GetOtherPoints().AddOtherPoints((*iterOther));
 		}
 	}
-	sprintf(buffer, UPDATE_FORMAT_OTHERPTS, nNew, nUpdated, nSkipped);
-	info += buffer;
+	if (0 < nNew || 0 < nChanges)
+	{
+		sprintf(buffer, UPDATE_FORMAT_OTHERPTS, nNew, nUpdated, nSkipped);
+		info += buffer;
+	}
 
 	// Update Venues.
 	nNew = 0;
@@ -377,8 +383,11 @@ bool ARBConfig::Update(int indent, const ARBConfig& inConfigNew, std::string& io
 			venueInfo += "\n";
 		}
 	}
-	sprintf(buffer, UPDATE_FORMAT_VENUES, nNew, nUpdated, nSkipped);
-	info += buffer;
+	if (0 < nNew || 0 < nChanges)
+	{
+		sprintf(buffer, UPDATE_FORMAT_VENUES, nNew, nUpdated, nSkipped);
+		info += buffer;
+	}
 	if (0 < venueInfo.length())
 	{
 		info += "\n";
