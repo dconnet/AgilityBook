@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-28 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
@@ -202,6 +203,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND(ID_COLLAPSE_ALL, OnCollapseAll)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_EDIT_CUT, OnDogCmd)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateDogCmd)
+	ON_COMMAND_EX(ID_EDIT_DUPLICATE, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_EDIT_COPY, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateDogCmd)

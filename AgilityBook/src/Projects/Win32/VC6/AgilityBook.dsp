@@ -362,6 +362,10 @@ SOURCE=..\..\..\Win\MainFrm.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\Splash.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\Splitter.cpp
 # End Source File
 # Begin Source File
@@ -668,6 +672,10 @@ SOURCE=..\..\..\Win\MainFrm.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\Splash.h
 # End Source File
 # Begin Source File
 
@@ -1063,7 +1071,23 @@ SOURCE=..\..\..\Win\res\DefaultConfig.xml
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\res\hidden.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\res\Question.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\Splsh16.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\title.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\title2.ico
 # End Source File
 # Begin Source File
 
@@ -1076,3 +1100,7 @@ SOURCE=..\..\..\Win\res\unchecked.ico
 # End Group
 # End Target
 # End Project
+# Section AgilityBook : {72ADFD78-2C39-11D0-9903-00A0C91BC942}
+# 	1:10:IDB_SPLASH:106
+# 	2:21:SplashScreenInsertKey:4.0
+# End Section

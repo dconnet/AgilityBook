@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-09-21 DRC Created
@@ -124,6 +125,8 @@ protected:
 	afx_msg void OnUpdateTrainingEdit(CCmdUI* pCmdUI);
 	afx_msg void OnTrainingEdit();
 	afx_msg void OnTrainingNew();
+	afx_msg void OnUpdateEditDuplicate(CCmdUI* pCmdUI);
+	afx_msg void OnEditDuplicate();
 	afx_msg void OnUpdateTrainingDelete(CCmdUI* pCmdUI);
 	afx_msg void OnTrainingDelete();
 	afx_msg void OnViewCustomize();

@@ -18,8 +18,9 @@
   - Create a backup file before saving.
   - Added a new page in the Options dialog for program options: number of
     backup files and auto-update-check.
+  - Added 'Duplicate' menu item for trials/runs/calendar/training entries.
+  - Added a splash screen.
 - Bug fixes
-  - The 'Show Hidden Titles' menu item was never enabled.
   - When merging configuration information via the update feature, if only
     the description was changed in either a venue or an event, that
     information did not get properly merged 

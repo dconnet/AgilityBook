@@ -85,6 +85,7 @@ IDI_HIDDEN              ICON                    "res\\hidden.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_SPLASH              BITMAP                  "res\\Splash.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -144,6 +145,7 @@ BEGIN
     BEGIN
         MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
         MENUITEM SEPARATOR
+        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
@@ -248,6 +250,7 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
         END
+        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
@@ -275,6 +278,7 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
+        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
@@ -300,6 +304,7 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
+        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
@@ -333,6 +338,7 @@ BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
+        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "&Delete...",                  ID_AGILITY_DELETE_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
@@ -347,6 +353,7 @@ BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
+        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "&Delete...",                  ID_AGILITY_DELETE_TRAINING
     END
 END
@@ -509,7 +516,7 @@ END
 IDD_CONFIG_VENUE DIALOGEX 0, 0, 400, 286
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Venue Configuration"
-FONT 8, "Microsoft Sans Serif", 0, 0, 0x0
+FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "N&ame",IDC_STATIC,7,7,20,8
     EDITTEXT        IDC_VENUE,7,17,80,12,ES_AUTOHSCROLL
@@ -548,7 +555,7 @@ END
 IDD_CONFIG_EVENT DIALOGEX 0, 0, 334, 302
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Event Configuration"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_NAME,30,7,100,12,ES_AUTOHSCROLL
@@ -620,7 +627,7 @@ END
 IDD_CONFIG_OTHERPOINTS DIALOGEX 0, 0, 211, 127
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Other Points Configuration"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,19,8
     EDITTEXT        IDC_NAME,27,7,120,12,ES_AUTOHSCROLL
@@ -637,7 +644,7 @@ END
 IDD_CONFIG_TITLE DIALOGEX 0, 0, 244, 137
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title Configuration"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_NAME,30,7,40,12,ES_AUTOHSCROLL
@@ -668,7 +675,7 @@ END
 IDD_CALENDAR DIALOGEX 0, 0, 284, 236
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Calendar Cribsheet"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Start Date:",IDC_STATIC,7,9,35,8
     CONTROL         "DateTimePicker1",IDC_DATE_START,"SysDateTimePick32",
@@ -714,7 +721,7 @@ END
 IDD_TRAINING DIALOGEX 0, 0, 300, 201
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Training Log"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Date:",IDC_STATIC,7,9,18,8
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
@@ -731,7 +738,7 @@ END
 IDD_JUDGE_INFO DIALOGEX 0, 0, 240, 95
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Judge's Information"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_JUDGE,7,7,90,130,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
@@ -796,7 +803,7 @@ END
 IDD_DOG_TITLES DIALOGEX 0, 0, 350, 180
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Titles"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "List1",IDC_TITLES,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
@@ -824,7 +831,7 @@ END
 IDD_REG_NUM DIALOGEX 0, 0, 180, 100
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Registration Number"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Venue",IDC_STATIC,7,9,22,8
     COMBOBOX        IDC_VENUES,35,7,75,130,CBS_DROPDOWNLIST | WS_VSCROLL | 
@@ -842,7 +849,7 @@ END
 IDD_TITLE DIALOGEX 0, 0, 210, 146
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "&Earned",IDC_EARNED,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,7,8,39,10
@@ -867,7 +874,7 @@ END
 IDD_EXISTING_POINTS DIALOGEX 0, 0, 307, 167
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Existing Points"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Points Earned by:",IDC_STATIC,7,9,56,8
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
@@ -903,7 +910,7 @@ END
 IDD_TRIAL DIALOGEX 0, 0, 250, 154
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Trial Properties"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Location",IDC_STATIC,7,9,28,8
     COMBOBOX        IDC_LOCATION,40,7,142,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
@@ -927,7 +934,7 @@ END
 IDD_CLUB DIALOGEX 0, 0, 200, 46
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Club"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
     COMBOBOX        IDC_CLUBS,35,7,80,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
@@ -1075,7 +1082,7 @@ END
 IDD_REF_RUN DIALOGEX 0, 0, 275, 95
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Reference Run"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Place",IDC_STATIC,7,9,19,8
     EDITTEXT        IDC_PLACE,30,7,25,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -1115,7 +1122,7 @@ END
 IDD_OTHER_POINT DIALOGEX 0, 0, 215, 100
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Other Points"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_OTHERPOINTS,7,7,140,130,CBS_DROPDOWNLIST | CBS_SORT | 
                     WS_VSCROLL | WS_TABSTOP
@@ -1130,7 +1137,7 @@ END
 IDD_FAULT DIALOGEX 0, 0, 205, 46
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Fault"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_FAULTS,7,7,100,175,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
@@ -1141,7 +1148,7 @@ END
 IDD_TITLE_POINTS DIALOGEX 0, 0, 190, 60
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title Points"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Faults Allowed",IDC_STATIC,7,9,46,8
     EDITTEXT        IDC_FAULTS,57,7,40,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -1157,7 +1164,7 @@ IDD_CRCD_VIEWER DIALOGEX 0, 0, 272, 190
 STYLE DS_SETFONT | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | 
     WS_THICKFRAME
 CAPTION "CRCD Viewer"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Close",IDOK,215,7,50,14
     CONTROL         "",IDC_CRCD,"Static",SS_ENHMETAFILE | WS_BORDER,7,7,200,
@@ -1178,7 +1185,7 @@ END
 IDD_VIEW_OPTIONS_CALENDAR DIALOGEX 0, 0, 285, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Calendar"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "First day of week",IDC_STATIC,3,5,54,8
     COMBOBOX        IDC_DAY_OF_WEEK,71,3,70,91,CBS_DROPDOWNLIST | WS_VSCROLL | 
@@ -1298,7 +1305,7 @@ END
 IDD_VIEW_OPTIONS_PROGRAM DIALOGEX 0, 0, 285, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Program"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "Automatically check for updates once a month.",
                     IDC_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,
@@ -1339,7 +1346,7 @@ END
 IDD_WIZARD_IMPORT DIALOGEX 0, 0, 300, 175
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Import Wizard"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Start import at row:",IDC_STATIC,0,2,60,8
     EDITTEXT        IDC_IMPORT_ROW,60,0,40,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -1373,7 +1380,7 @@ END
 IDD_WIZARD_EXPORT DIALOGEX 0, 0, 300, 175
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Export Wizard"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Delimiters",IDC_STATIC,0,0,160,40
     CONTROL         "Tab",IDC_WIZARD_DELIM_TAB,"Button",BS_AUTORADIOBUTTON | 
@@ -1423,7 +1430,7 @@ END
 IDD_FIND_LINKS DIALOGEX 0, 0, 320, 121
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "File Links"
-FONT 8, "MS Sans Serif", 400, 0, 0x0
+FONT 8, "MS Sans Serif", 400, 0, 0x1
 BEGIN
     CONTROL         "",IDC_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | 
                     LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | 
@@ -2251,17 +2258,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    ID_VIEW_OPTIONS         "Change viewing options\nOptions"
-    ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
-    ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
-    ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
-    ID_VIEW_HIDDEN          "Show Titles that have been hidden"
-    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS"
-    ID_HELP_UPDATE          "Check for Updates\nUpdates"
-END
-
-STRINGTABLE 
-BEGIN
+    ID_EDIT_DUPLICATE       "Duplicate the current selection\nDuplicate"
     ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
     ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
     ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
@@ -2272,6 +2269,17 @@ BEGIN
     ID_AGILITY_EDIT_TRAINING "Edit a Training Log entry\nEdit Training Log"
     ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
     ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_OPTIONS         "Change viewing options\nOptions"
+    ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
+    ID_VIEW_SORTRUNS        "Sort newest runs first\nSort runs"
+    ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
+    ID_VIEW_HIDDEN          "Show Titles that have been hidden"
+    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS"
+    ID_HELP_UPDATE          "Check for Updates\nUpdates"
 END
 
 STRINGTABLE 

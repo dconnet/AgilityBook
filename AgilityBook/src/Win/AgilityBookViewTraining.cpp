@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
@@ -254,6 +255,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_TRAINING, OnUpdateTrainingEdit)
 	ON_COMMAND(ID_AGILITY_EDIT_TRAINING, OnTrainingEdit)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnTrainingNew)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateEditDuplicate)
+	ON_COMMAND(ID_EDIT_DUPLICATE, OnEditDuplicate)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_TRAINING, OnUpdateTrainingDelete)
 	ON_COMMAND(ID_AGILITY_DELETE_TRAINING, OnTrainingDelete)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
@@ -653,6 +656,32 @@ void CAgilityBookViewTraining::OnTrainingNew()
 			GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}
 	training->Release();
+}
+
+void CAgilityBookViewTraining::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (GetItemData(GetSelection()))
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewTraining::OnEditDuplicate()
+{
+	CAgilityBookViewTrainingData* pData = GetItemData(GetSelection());
+	if (pData)
+	{
+		// Currently, we don't need to worry if this is visible. The only filtering
+		// is on name/date. So they can see the item that's being duped, which means
+		// the new one is visible too.
+		ARBTraining* training = new ARBTraining(*(pData->GetTraining()));
+		GetDocument()->GetTraining().AddTraining(training);
+		GetDocument()->GetTraining().sort();
+		LoadData();
+		GetDocument()->SetModifiedFlag();
+		SetCurrentDate(training->GetDate());
+		training->Release();
+	}
 }
 
 void CAgilityBookViewTraining::OnUpdateTrainingDelete(CCmdUI* pCmdUI)

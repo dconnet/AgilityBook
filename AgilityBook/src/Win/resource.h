@@ -1,7 +1,8 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
+// Microsoft Developer Studio generated include file.
 // Used by AgilityBook.rc
 //
+#define IDB_SPLASH                      101
 #define IDR_MAINFRAME                   128
 #define IDR_DTD_AGILITYRECORDBOOK       129
 #define IDR_XML_DEFAULT_CONFIG          130
@@ -416,6 +417,7 @@
 #define ID_EDIT_FIND_PREVIOUS           32781
 #define ID_EDIT_CONFIGURATION           32782
 #define ID_EDIT_JUDGES                  32783
+#define ID_EDIT_DUPLICATE               32784
 #define ID_AGILITY_NEW_CALENDAR         32790
 #define ID_AGILITY_NEW_TRAINING         32791
 #define ID_AGILITY_NEW_DOG              32792
@@ -459,6 +461,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32860
 #define _APS_NEXT_CONTROL_VALUE         1181
-#define _APS_NEXT_SYMED_VALUE           101
+#define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif
