@@ -31,7 +31,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-11 DRC Added option to suppress "skipped" titles.
  * @li 2004-01-26 DRC The wrong name was saved into the ARBDogTitle object.
  */
 
@@ -41,7 +40,6 @@
 
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
-#include "AgilityBookOptions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -72,7 +70,6 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_VENUES, m_ctrlVenues);
 	DDX_Control(pDX, IDC_TITLES, m_ctrlTitles);
 	DDX_Control(pDX, IDC_RECEIVED, m_ctrlReceived);
-	DDX_Control(pDX, IDC_HIDE_OLD, m_ctrlHide);
 	DDX_Control(pDX, IDC_DESC, m_ctrlDesc);
 	//}}AFX_DATA_MAP
 }
@@ -81,7 +78,6 @@ BEGIN_MESSAGE_MAP(CDlgTitle, CDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
 	ON_CBN_SELCHANGE(IDC_VENUES, OnSelchangeVenues)
 	ON_CBN_SELCHANGE(IDC_TITLES, OnSelchangeTitles)
-	ON_BN_CLICKED(IDC_HIDE_OLD, OnBnClickedHideOld)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -109,7 +105,6 @@ BOOL CDlgTitle::OnInitDialog()
 		m_ctrlReceived.SetCheck(1);
 	else
 		m_ctrlReceived.SetCheck(0);
-	m_ctrlHide.SetCheck(CAgilityBookOptions::GetHideRequiredTitles() ? 1 : 0);
 	if (m_pTitle)
 	{
 		const ARBDate& date = m_pTitle->GetDate();
@@ -136,53 +131,6 @@ void CDlgTitle::OnSelchangeVenues()
 			++iter)
 		{
 			ARBConfigDivision* pDiv = (*iter);
-			// Names of titles that are required for titles we have but
-			// haven't earned yet (For instance, I started at level3 in CPE)
-			std::set<std::string> inUseRequired;
-			if (CAgilityBookOptions::GetHideRequiredTitles())
-			{
-				// This is the set of names to be processed
-				std::set<std::string> todo;
-				// First load the list with existing titles
-				for (ARBDogTitleList::const_iterator iterDogTitle = m_Titles.begin();
-					iterDogTitle != m_Titles.end();
-					++iterDogTitle)
-				{
-					const std::string& name = (*iterDogTitle)->GetName();
-					const ARBConfigTitle* pTitle = pDiv->GetTitles().FindTitle(name);
-					if (pTitle)
-						todo.insert(name);
-				}
-				// For each name, add all of its requirements to the inUse and
-				// todo list. Pop off the head and continue until the list is done.
-				while (0 < todo.size())
-				{
-					const ARBConfigTitle* pTitle = pDiv->GetTitles().FindTitle(*(todo.begin()));
-					todo.erase(todo.begin());
-					if (pTitle)
-					{
-						ARBConfigTitleRequiresList::const_iterator iterRequires;
-						for (iterRequires = pTitle->GetRequires().begin();
-							iterRequires != pTitle->GetRequires().end();
-							++iterRequires)
-						{
-							inUseRequired.insert(*iterRequires);
-							todo.insert(*iterRequires);
-						}
-					}
-				}
-				// Finally, go thru the inUse list and remove any titles we
-				// have already earned.
-				for (std::set<std::string>::iterator iterSet = inUseRequired.begin();
-					iterSet != inUseRequired.end();)
-				{
-					if (m_Titles.NumTitlesInUse(pVenue->GetName(), *iterSet))
-						iterSet = inUseRequired.erase(iterSet);
-					else
-						++iterSet;
-				}
-			}
-
 			for (ARBConfigTitleList::const_iterator iterTitle = pDiv->GetTitles().begin();
 				iterTitle != pDiv->GetTitles().end();
 				++iterTitle)
@@ -192,29 +140,12 @@ void CDlgTitle::OnSelchangeVenues()
 				if (0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
 				|| (m_pTitle && m_pTitle->GetName() == pTitle->GetName()))
 				{
-					bool bShow = true;
-					if (CAgilityBookOptions::GetHideRequiredTitles())
+					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
+					m_ctrlTitles.SetItemDataPtr(idx, pTitle);
+					if (m_bInit && m_pTitle && m_pTitle->GetName() == pTitle->GetName())
 					{
-						for (std::set<std::string>::iterator iterSet = inUseRequired.begin();
-							iterSet != inUseRequired.end();
-							++iterSet)
-						{
-							if (pTitle->GetName() == *iterSet)
-							{
-								bShow = false;
-								break;
-							}
-						}
-					}
-					if (bShow)
-					{
-						int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
-						m_ctrlTitles.SetItemDataPtr(idx, pTitle);
-						if (m_bInit && m_pTitle && m_pTitle->GetName() == pTitle->GetName())
-						{
-							m_ctrlTitles.SetCurSel(idx);
-							OnSelchangeTitles();
-						}
+						m_ctrlTitles.SetCurSel(idx);
+						OnSelchangeTitles();
 					}
 				}
 			}
@@ -233,15 +164,6 @@ void CDlgTitle::OnSelchangeTitles()
 	}
 	str.Replace("\n", "\r\n");
 	m_ctrlDesc.SetWindowText(str);
-}
-
-void CDlgTitle::OnBnClickedHideOld()
-{
-	bool bHide = m_ctrlHide.GetCheck() == 1 ? true : false;
-	CAgilityBookOptions::SetHideRequiredTitles(bHide);
-	m_bInit = true; // Make sure title is reset
-	OnSelchangeVenues();
-	m_bInit = false;
 }
 
 void CDlgTitle::OnOK()

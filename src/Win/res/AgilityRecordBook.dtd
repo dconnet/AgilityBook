@@ -7,8 +7,6 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-03-11 DRC File version 9.0, Configuration version 3.
-               Changed 'Titles' to have sub-elements.
 2004-03-08 DRC File version 8.4, Configuration version 2.
                Added versioning to configuration to allow auto-upgrades.
                Added "TableInYPS" to "ByTime"
@@ -129,13 +127,9 @@ top-ten points. The 'Count' value is how they are accumulated
 -->
 <!ELEMENT Division (Level+, Titles*) >
 	<!ATTLIST Division Name CDATA #REQUIRED >
-<!--
-'Requires' is the Name of a title that is required in order to earn this one.
--->
-<!ELEMENT Titles (Requires*, Desc?) >
+<!ELEMENT Titles (#PCDATA) >
 	<!ATTLIST Titles Name CDATA #REQUIRED >
 	<!ATTLIST Titles LongName CDATA #IMPLIED >
-<!ELEMENT Requires (#PCDATA) >
 
 <!--
 Rules for levels are based on the level name. A level may be

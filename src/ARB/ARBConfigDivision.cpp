@@ -132,7 +132,6 @@ bool ARBConfigDivision::Load(
 			m_Titles.Load(element, inVersion, ioErrMsg);
 		}
 	}
-	m_Titles.VerifyRequiresLists();
 	return true;
 }
 
@@ -216,7 +215,8 @@ bool ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew, st
 				else
 				{
 					++nChanged;
-					*pTitle = *(*iterTitle);
+					pTitle->SetLongName((*iterTitle)->GetLongName());
+					pTitle->SetDescription((*iterTitle)->GetDescription());
 				}
 			}
 			else

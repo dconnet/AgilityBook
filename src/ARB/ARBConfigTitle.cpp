@@ -31,7 +31,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-03-11 DRC Added 'Requires', moved desc to 'Desc'.
  * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -55,7 +54,6 @@ ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
 	, m_Desc()
-	, m_Requires()
 {
 }
 
@@ -63,7 +61,6 @@ ARBConfigTitle::ARBConfigTitle(const ARBConfigTitle& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
-	, m_Requires(rhs.m_Requires)
 {
 }
 
@@ -78,7 +75,6 @@ ARBConfigTitle& ARBConfigTitle::operator=(const ARBConfigTitle& rhs)
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
 		m_Desc = rhs.m_Desc;
-		m_Requires = rhs.m_Requires;
 	}
 	return *this;
 }
@@ -87,8 +83,7 @@ bool ARBConfigTitle::operator==(const ARBConfigTitle& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
-		&& m_Desc == rhs.m_Desc
-		&& m_Requires == rhs.m_Requires;
+		&& m_Desc == rhs.m_Desc;
 }
 
 bool ARBConfigTitle::operator!=(const ARBConfigTitle& rhs) const
@@ -101,7 +96,6 @@ void ARBConfigTitle::clear()
 	m_Name.erase();
 	m_LongName.erase();
 	m_Desc.erase();
-	m_Requires.clear();
 }
 
 size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
@@ -122,22 +116,7 @@ bool ARBConfigTitle::Load(
 		return false;
 	}
 	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
-	if (inVersion < ARBVersion(9,0))
-		m_Desc = inTree.GetValue();
-	else
-	{
-		for (int i = 0; i < inTree.GetElementCount(); ++i)
-		{
-			const CElement& element = inTree.GetElement(i);
-			const std::string& name = element.GetName();
-			if (name == TREE_TITLES_REQUIRES)
-			{
-				m_Requires.insert(element.GetValue());
-			}
-			else if (name == TREE_TITLES_DESC)
-				m_Desc = element.GetValue();
-		}
-	}
+	m_Desc = inTree.GetValue();
 	return true;
 }
 
@@ -147,18 +126,8 @@ bool ARBConfigTitle::Save(CElement& ioTree) const
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
-	for (ARBConfigTitleRequiresList::const_iterator iter = m_Requires.begin();
-		iter != m_Requires.end();
-		++iter)
-	{
-		CElement& req = title.AddElement(TREE_TITLES_REQUIRES);
-		req.SetValue(*iter);
-	}
 	if (0 < m_Desc.length())
-	{
-		CElement& desc = title.AddElement(TREE_TITLES_DESC);
-		desc.SetValue(m_Desc);
-	}
+		title.SetValue(m_Desc);
 	return true;
 }
 
@@ -187,69 +156,6 @@ std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
-bool ARBConfigTitleList::VerifyRequiresLists()
-{
-	iterator iter;
-	ARBConfigTitleRequiresList items;
-	ARBConfigTitleRequiresList::iterator iterItem, iterReq;
-	for (iter = begin(); iter != end(); ++iter)
-	{
-		for (iterReq = (*iter)->GetRequires().begin();
-			iterReq != (*iter)->GetRequires().end();
-			++iterReq)
-		{
-			items.insert(*iterReq);
-		}
-	}
-	for (iterItem = items.begin(); iterItem != items.end(); )
-	{
-		ARBConfigTitle* pTitle = FindTitle(*iterItem);
-		if (pTitle)
-			iterItem = items.erase(iterItem);
-		else
-			++iterItem;
-	}
-	// Remove titles not in this division.
-	// Note, this shouldn't actually happen - if the UI works properly!
-	// This is really more of a paranoid test.
-	for (iterItem = items.begin(); iterItem != items.end(); ++iterItem)
-	{
-		for (iter = begin(); iter != end(); ++iter)
-		{
-			for (iterReq = (*iter)->GetRequires().begin();
-				iterReq != (*iter)->GetRequires().end();
-				)
-			{
-				if (*iterItem == *iterReq)
-					iterReq = (*iter)->GetRequires().erase(iterReq);
-				else
-					++iterReq;
-			}
-		}
-	}
-	return true;
-}
-
-bool ARBConfigTitleList::Requires(const ARBConfigTitle* inTitle, const std::string& inName) const
-{
-	if (!inTitle)
-		return false;
-	for (ARBConfigTitleRequiresList::const_iterator iterReq = inTitle->GetRequires().begin();
-		iterReq != inTitle->GetRequires().end();
-		++iterReq)
-	{
-		if (*iterReq == inName)
-			return true;
-		const ARBConfigTitle* pTitle = FindTitle(*iterReq);
-		if (pTitle)
-		{
-			if (Requires(pTitle, inName))
-				return true;
-		}
-	}
-	return false;
-}
 
 const ARBConfigTitle* ARBConfigTitleList::FindTitleCompleteName(const std::string& inName, bool bAbbrevFirst) const
 {
@@ -304,60 +210,16 @@ ARBConfigTitle* ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
 	return inTitle;
 }
 
-int ARBConfigTitleList::RenameTitle(const std::string& inOldName, const std::string& inNewName)
-{
-	int nChanged = 0;
-	for (iterator iter = begin(); iter != end(); ++iter)
-	{
-		if ((*iter)->GetName() == inOldName)
-		{
-			(*iter)->SetName(inNewName);
-			++nChanged;
-		}
-		bool bAdd = false;
-		for (ARBConfigTitleRequiresList::iterator iterReq = (*iter)->GetRequires().begin();
-			iterReq != (*iter)->GetRequires().end();
-			)
-		{
-			if (*iterReq == inOldName)
-			{
-				bAdd = true;
-				iterReq = (*iter)->GetRequires().erase(iterReq);
-				++nChanged;
-			}
-			else
-				++iterReq;
-		}
-		if (bAdd)
-			(*iter)->GetRequires().insert(inNewName);
-	}
-	return nChanged;
-}
-
 bool ARBConfigTitleList::DeleteTitle(const std::string& inName)
 {
-	bool bDeleteTitle = false;
+	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetName() == inName)
+		if ((*iter)->GetName() == name)
 		{
 			erase(iter);
-			bDeleteTitle = true;
-			break;
+			return true;
 		}
 	}
-	// Cleanup required links.
-	for (iterator iter = begin(); iter != end(); ++iter)
-	{
-		for (ARBConfigTitleRequiresList::iterator iterReq = (*iter)->GetRequires().begin();
-			iterReq != (*iter)->GetRequires().end();
-			)
-		{
-			if (*iterReq == inName)
-				iterReq = (*iter)->GetRequires().erase(iterReq);
-			else
-				++iterReq;
-		}
-	}
-	return bDeleteTitle;
+	return false;
 }
