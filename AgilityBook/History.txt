@@ -1,6 +1,8 @@
 12/29/2003: v0.9.6.8: In development
 - New features / Enhancements:
   - GetAllClubs/Locations now includes calendar entries.
+  - Implemented column customizing in Runs, Calendar and TrainingLog.
+    (todo: tree and some items in runs)
 
 12/28/2003: v0.9.5.8
 - Bumped file version to 8.1:

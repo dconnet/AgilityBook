@@ -110,7 +110,8 @@ class CDlgAssignColumns : public CDialog
 {
 // Construction
 public:
-	static CString CDlgAssignColumns::GetNameFromColumnID(int column);
+	static UINT GetFormatFromColumnID(int column);
+	static CString GetNameFromColumnID(int column);
 	static bool GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, std::vector<int>& values);
 	static bool SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, int idxColumn, const std::vector<int>& values);
 

@@ -65,35 +65,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-// These columns must agree with CAgilityBookViewCalendarData.
-static const struct
-{
-	UINT col;
-	UINT fmt;
-} scColumns[] = {
-	{0, LVCFMT_LEFT},
-	{IDS_COL_START_DATE, LVCFMT_LEFT},
-	{IDS_COL_END_DATE, LVCFMT_LEFT},
-	{IDS_COL_VENUE, LVCFMT_LEFT},
-	{IDS_COL_LOCATION, LVCFMT_LEFT},
-	{IDS_COL_CLUB, LVCFMT_LEFT},
-	{IDS_COL_OPENS, LVCFMT_LEFT},
-	{IDS_COL_CLOSES, LVCFMT_LEFT},
-	{IDS_COL_NOTES, LVCFMT_LEFT}
-};
-static const int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
-#define COL_ICON		0
-#define COL_START_DATE	1
-#define COL_END_DATE	2
-#define COL_VENUE		3
-#define COL_LOCATION	4
-#define COL_CLUB		5
-#define COL_OPENS		6
-#define COL_CLOSES		7
-#define COL_NOTES		8
-
-/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendarData
 
 class CAgilityBookViewCalendarData
@@ -144,32 +115,32 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 	CString str;
 	if (m_pCal)
 	{
-		switch (iCol)
+		switch (m_pView->m_Columns[iCol])
 		{
-		case COL_START_DATE:
+		case IO_CAL_START_DATE:
 			str = m_pCal->GetStartDate().GetString(false, false).c_str();
 			break;
-		case COL_END_DATE:
+		case IO_CAL_END_DATE:
 			str = m_pCal->GetEndDate().GetString(false, false).c_str();
 			break;
-		case COL_LOCATION:
+		case IO_CAL_LOCATION:
 			str = m_pCal->GetLocation().c_str();
 			break;
-		case COL_CLUB:
+		case IO_CAL_CLUB:
 			str = m_pCal->GetClub().c_str();
 			break;
-		case COL_VENUE:
+		case IO_CAL_VENUE:
 			str = m_pCal->GetVenue().c_str();
 			break;
-		case COL_OPENS:
+		case IO_CAL_OPENS:
 			if (m_pCal->GetOpeningDate().IsValid())
 				str = m_pCal->GetOpeningDate().GetString(false, false).c_str();
 			break;
-		case COL_CLOSES:
+		case IO_CAL_CLOSES:
 			if (m_pCal->GetClosingDate().IsValid())
 				str = m_pCal->GetClosingDate().GetString(false, false).c_str();
 			break;
-		case COL_NOTES:
+		case IO_CAL_NOTES:
 			str = m_pCal->GetNote().c_str();
 			str.Replace("\n", " ");
 			break;
@@ -379,17 +350,22 @@ CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int inde
 
 void CAgilityBookViewCalendarList::SetupColumns()
 {
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < scNumColumns; ++i)
+	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	for (int i = 0; i < nColumnCount; ++i)
+		GetListCtrl().DeleteColumn(0);
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
 	{
-		CString str;
-		str.LoadString(scColumns[i].col);
-		col.fmt = scColumns[i].fmt;
-		col.pszText = str.GetBuffer(0);
-		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
-		str.ReleaseBuffer();
+		LV_COLUMN col;
+		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
+			col.pszText = str.GetBuffer(0);
+			col.iSubItem = iCol;
+			GetListCtrl().InsertColumn(iCol, &col);
+			str.ReleaseBuffer();
+		}
 	}
 }
 

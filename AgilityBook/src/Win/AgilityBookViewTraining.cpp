@@ -59,23 +59,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-// These columns must agree with CAgilityBookViewTrainingData.
-static const struct
-{
-	UINT col;
-	UINT fmt;
-} scColumns[] = {
-	{IDS_COL_DATE, LVCFMT_LEFT},
-	{IDS_COL_NAME, LVCFMT_LEFT},
-	{IDS_COL_NOTES, LVCFMT_LEFT}
-};
-static const int scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
-#define COL_START_DATE	0
-#define COL_NAME		1
-#define COL_NOTES		2
-
-/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewTrainingData
 
 class CAgilityBookViewTrainingData
@@ -126,15 +109,15 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 	CString str;
 	if (m_pTraining)
 	{
-		switch (iCol)
+		switch (m_pView->m_Columns[iCol])
 		{
-		case COL_START_DATE:
+		case IO_LOG_DATE:
 			str = m_pTraining->GetDate().GetString(false, false).c_str();
 			break;
-		case COL_NAME:
+		case IO_LOG_NAME:
 			str = m_pTraining->GetName().c_str();
 			break;
-		case COL_NOTES:
+		case IO_LOG_NOTES:
 			str = m_pTraining->GetNote().c_str();
 			str.Replace("\n", " ");
 			break;
@@ -350,17 +333,22 @@ CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemData(int index) c
 
 void CAgilityBookViewTraining::SetupColumns()
 {
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < scNumColumns; ++i)
+	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	for (int i = 0; i < nColumnCount; ++i)
+		GetListCtrl().DeleteColumn(0);
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewLog, IO_TYPE_VIEW_TRAINING_LIST, m_Columns))
 	{
-		CString str;
-		str.LoadString(scColumns[i].col);
-		col.fmt = scColumns[i].fmt;
-		col.pszText = str.GetBuffer(0);
-		col.iSubItem = i;
-		GetListCtrl().InsertColumn(i, &col);
-		str.ReleaseBuffer();
+		LV_COLUMN col;
+		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
+			col.pszText = str.GetBuffer(0);
+			col.iSubItem = iCol;
+			GetListCtrl().InsertColumn(iCol, &col);
+			str.ReleaseBuffer();
+		}
 	}
 }
 

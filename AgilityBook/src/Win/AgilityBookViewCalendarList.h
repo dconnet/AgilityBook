@@ -38,6 +38,7 @@
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  */
 
+#include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
@@ -105,6 +106,7 @@ public:
 #endif
 
 private:
+	std::vector<int> m_Columns;
 	bool m_bSuppressSelect;
 	CFindCalendar m_Callback;
 
