@@ -86,11 +86,73 @@ void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 	}
 }
 
+void UpdateVersion(bool bVerbose)
+{
+	CWaitCursor wait;
+	CString ver;
+	try
+	{
+		CString url;
+		url.LoadString(IDS_HELP_UPDATE);
+		CInternetSession session("my version");
+		CStdioFile* pFile = session.OpenURL(url);
+		if (pFile)
+		{
+			char buffer[1025];
+			UINT nChars;
+			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer))))
+			{
+				buffer[nChars] = 0;
+				ver += buffer;
+			}
+			delete pFile;
+		}
+		session.Close();
+	}
+	catch (CInternetException*)
+	{
+		ver.Empty();
+	}
+
+	ARBDate today = ARBDate::Today();
+	CVersionNum verNew(ver);
+	CVersionNum verThis;
+	ASSERT(verThis.Valid());
+	if (!verNew.Valid())
+	{
+		if (bVerbose)
+			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
+	}
+	else if (verThis < verNew)
+	{
+		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(false, ARBDate::eDashYYYYMMDD).c_str());
+		CString ver;
+		ver.FormatMessage(IDS_UPDATE_NEWER_VERSION, (LPCTSTR)verNew.GetVersionString());
+		if (IDYES == AfxMessageBox(ver, MB_ICONQUESTION | MB_YESNO))
+		{
+			CString url;
+			url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
+			int nTab = url.Find('\t');
+			if (0 < nTab)
+				url = url.Mid(nTab+1);
+			CHyperLink::GotoURL(url);
+		}
+	}
+	else
+	{
+		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(false, ARBDate::eDashYYYYMMDD).c_str());
+		if (bVerbose)
+			AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookApp
 
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	//{{AFX_MSG_MAP(CAgilityBookApp)
+	ON_UPDATE_COMMAND_UI(ID_FILE_AUTOCHECK, OnUpdateFileAutoCheck)
+	ON_COMMAND(ID_FILE_AUTOCHECK, OnFileAutoCheck)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_HELP_UPDATE, OnAppUpdate)
 	//}}AFX_MSG_MAP
@@ -254,6 +316,21 @@ BOOL CAgilityBookApp::InitInstance()
 	//  In an SDI app, this should occur after ProcessShellCommand
 	// Enable drag/drop open
 	m_pMainWnd->DragAcceptFiles();
+
+	// Check for updates every 30 days.
+	if (AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1))
+	{
+		TRACE0("checking\n");
+		CString ver = AfxGetApp()->GetProfileString("Settings", "lastVerCheck", "");
+		ARBDate date = ARBDate::FromString((LPCSTR)ver, ARBDate::eDashYYYYMMDD);
+		if (date.IsValid())
+		{
+			ARBDate today = ARBDate::Today();
+			date += 30;
+			if (date < today)
+				UpdateVersion(false);
+		}
+	}
 	return TRUE;
 }
 
@@ -270,6 +347,18 @@ int CAgilityBookApp::ExitInstance()
 
 // CAgilityBookApp message handlers
 
+void CAgilityBookApp::OnUpdateFileAutoCheck(CCmdUI* pCmdUI)
+{
+	DWORD dwChecked = AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1);
+	pCmdUI->SetCheck(dwChecked);
+}
+
+void CAgilityBookApp::OnFileAutoCheck()
+{
+	DWORD dwChecked = AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1);
+	AfxGetApp()->WriteProfileInt("Settings", "autoCheck", !dwChecked);
+}
+
 void CAgilityBookApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
@@ -278,38 +367,5 @@ void CAgilityBookApp::OnAppAbout()
 
 void CAgilityBookApp::OnAppUpdate()
 {
-	CWaitCursor wait;
-	CString ver;
-	CString url;
-	url.LoadString(IDS_HELP_UPDATE);
-	CInternetSession session("my version");
-	CStdioFile* pFile = session.OpenURL(url);
-	if (pFile)
-	{
-		char buffer[1025];
-		UINT nChars;
-		while (0 < (nChars = pFile->Read(buffer, sizeof(buffer))))
-		{
-			buffer[nChars] = 0;
-			ver += buffer;
-		}
-		delete pFile;
-	}
-	session.Close();
-
-	CVersionNum verNew(ver);
-	CVersionNum verThis;
-	if (verThis < verNew)
-	{
-		if (IDYES == AfxMessageBox(IDS_UPDATE_NEWER_VERSION, MB_ICONQUESTION | MB_YESNO))
-		{
-			url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
-			int nTab = url.Find('\t');
-			if (0 < nTab)
-				url = url.Mid(nTab+1);
-			CHyperLink::GotoURL(url);
-		}
-	}
-	else
-		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
+	UpdateVersion(true);
 }

@@ -127,6 +127,8 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Import and Export...\tCtrl+E", ID_FILE_EXPORT_WIZARD
         MENUITEM SEPARATOR
+        MENUITEM "&Check for updates on start", ID_FILE_AUTOCHECK
+        MENUITEM SEPARATOR
         MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
@@ -1998,8 +2000,9 @@ BEGIN
     IDS_ABOUT_LINK_ARB      "AgilityRecordBook Home Page\thttp://www.agilityrecordbook.com"
     IDS_ABOUT_LINK_SOURCEFORGE 
                             "Source Forge (downloads and source code)\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
-    IDS_UPDATE_NEWER_VERSION "A newer version is available. Would you like to download it?"
+    IDS_UPDATE_NEWER_VERSION "Version %1 is available. Would you like to download it?"
     IDS_UPDATE_CURRENT      "No updates are available at this time."
+    IDS_UPDATE_UNKNOWN      "Unable to determine current released version. (Is your internet connection alive?)"
 END
 
 STRINGTABLE 
@@ -2111,6 +2114,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_FILE_EXPORT_WIZARD   "Import and Export Wizard\nImport/Export"
+    ID_FILE_AUTOCHECK       "Check for updates every 30 days when the program starts\nAutoCheck"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
     ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
