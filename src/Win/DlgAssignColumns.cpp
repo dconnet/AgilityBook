@@ -99,10 +99,6 @@ Training Log:
 
 #include "AgilityBookOptions.h"
 
-#if _MSC_VER < 1300
-typedef DWORD DWORD_PTR;
-#endif
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

@@ -245,7 +245,7 @@ void CWizardStart::UpdateButtons()
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
 	{
-		DWORD data = m_ctrlList.GetItemData(index);
+		int data = static_cast<int>(m_ctrlList.GetItemData(index));
 		dwWiz |= sc_Items[data].data[m_Style].nButton;
 	}
 	m_pSheet->SetWizardButtons(dwWiz);
@@ -274,7 +274,7 @@ LRESULT CWizardStart::OnWizardNext()
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
 	{
-		DWORD data = m_ctrlList.GetItemData(index);
+		int data = static_cast<int>(m_ctrlList.GetItemData(index));
 		nextPage = sc_Items[data].data[m_Style].nextPage;
 		m_pSheet->SetImportExportItem(data);
 	}
@@ -287,7 +287,7 @@ BOOL CWizardStart::OnWizardFinish()
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
 	{
-		DWORD data = m_ctrlList.GetItemData(index);
+		int data = static_cast<int>(m_ctrlList.GetItemData(index));
 		switch (data)
 		{
 		default:
