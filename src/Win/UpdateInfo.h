@@ -41,6 +41,10 @@
 #include "VersionNum.h"
 class CAgilityBookDoc;
 
+/**
+ * This class manages checking to see if there are newer versions of the
+ * program or configuration.
+ */
 class CUpdateInfo
 {
 protected:
@@ -48,21 +52,29 @@ protected:
 
 	CUpdateInfo();
 	bool ReadVersionFile(bool bVerbose);
-	bool UpdateVer();
+	bool IsOutOfDate();
+	bool CheckProgram();
+	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
 
 public:
 	/**
 	 * Called when the program does its monthly auto-check.
-	 * This only checks program version.
+	 * This only checks the program version.
 	 */
-	void UpdateVersion();
+	void AutoUpdateProgram();
+
+	/**
+	 * Called when opening a document. This will not load anything
+	 * from the internet, it only uses cached data. If it knows the
+	 * program needs updating, it will not update the config.
+	 */
+	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 
 	/**
 	 * Check the configuration. This will also check the program version.
 	 * @param pDoc Document to check configuration against.
-	 * @param bOnOpenDoc When true, we will only check cached info.
 	 */
-	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool bOnOpenDoc = false);
+	void UpdateConfiguration(CAgilityBookDoc* pDoc);
 
 private:
 	CVersionNum m_VersionNum;
