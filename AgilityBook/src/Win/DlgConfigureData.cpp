@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-02 DRC Up the ref count to prevent problems. See comments below.
  * @li 2004-01-14 DRC Use complete title name instead of nice name. When
  *                    renaming a title and that name is in use, prompt to merge.
  * @li 2003-02-23 DRC Modifying the scoring methods wasn't updated in the tree.
@@ -61,6 +62,23 @@ static char THIS_FILE[] = __FILE__;
 
 ////////////////////////////////////////////////////////////////////////////
 
+// We _must_ ref count these objects. Otherwise, for instance, when we edit
+// Event/Scoring in the tree, the new scoring methods are pushed into the
+// event object. The GETDISPINFO triggers before we rebuild the tree, causing
+// us to use bad pointers.
+
+CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenue* venue)
+	: CDlgConfigureData()
+	, m_Venue(venue)
+{
+	m_Venue->AddRef();
+}
+
+CDlgConfigureDataVenue::~CDlgConfigureDataVenue()
+{
+	m_Venue->Release();
+}
+
 CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
 	CString str;
@@ -79,12 +97,36 @@ CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFault* fault)
+	: CDlgConfigureData()
+	, m_Fault(fault)
+{
+	m_Fault->AddRef();
+}
+
+CDlgConfigureDataFault::~CDlgConfigureDataFault()
+{
+	m_Fault->Release();
+}
+
 CString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 {
 	return m_Fault->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPoints* otherPoints)
+	: CDlgConfigureData()
+	, m_OtherPoints(otherPoints)
+{
+	m_OtherPoints->AddRef();
+}
+
+CDlgConfigureDataOtherPoints::~CDlgConfigureDataOtherPoints()
+{
+	m_OtherPoints->Release();
+}
 
 CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 {
@@ -93,12 +135,39 @@ CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivision* div)
+	: CDlgConfigureData()
+	, m_Div(div)
+{
+	m_Div->AddRef();
+}
+
+CDlgConfigureDataDivision::~CDlgConfigureDataDivision()
+{
+	m_Div->Release();
+}
+
 CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 {
 	return m_Div->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+CDlgConfigureDataLevel::CDlgConfigureDataLevel(ARBConfigDivision* div, ARBConfigLevel* level)
+	: CDlgConfigureData()
+	, m_Division(div)
+	, m_Level(level)
+{
+	m_Division->AddRef();
+	m_Level->AddRef();
+}
+
+CDlgConfigureDataLevel::~CDlgConfigureDataLevel()
+{
+	m_Division->Release();
+	m_Level->Release();
+}
 
 CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 {
@@ -107,12 +176,45 @@ CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(ARBConfigDivision* div, ARBConfigLevel* level, ARBConfigSubLevel* subLevel)
+	: CDlgConfigureData()
+	, m_Division(div)
+	, m_Level(level)
+	, m_SubLevel(subLevel)
+{
+	m_Division->AddRef();
+	m_Level->AddRef();
+	m_SubLevel->AddRef();
+}
+
+CDlgConfigureDataSubLevel::~CDlgConfigureDataSubLevel()
+{
+	m_Division->Release();
+	m_Level->Release();
+	m_SubLevel->Release();
+}
+
 CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 {
 	return m_SubLevel->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+CDlgConfigureDataTitle::CDlgConfigureDataTitle(ARBConfigDivision* div, ARBConfigTitle* title)
+	: CDlgConfigureData()
+	, m_Division(div)
+	, m_Title(title)
+{
+	m_Division->AddRef();
+	m_Title->AddRef();
+}
+
+CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
+{
+	m_Division->Release();
+	m_Title->Release();
+}
 
 CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
@@ -121,12 +223,39 @@ CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEvent* event)
+	: CDlgConfigureData()
+	, m_Event(event)
+{
+	m_Event->AddRef();
+}
+
+CDlgConfigureDataEvent::~CDlgConfigureDataEvent()
+{
+	m_Event->Release();
+}
+
 CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
 	return m_Event->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+CDlgConfigureDataScoring::CDlgConfigureDataScoring(ARBConfigEvent* event, ARBConfigScoring* scoring)
+	: CDlgConfigureData()
+	, m_Event(event)
+	, m_Scoring(scoring)
+{
+	m_Event->AddRef();
+	m_Scoring->AddRef();
+}
+
+CDlgConfigureDataScoring::~CDlgConfigureDataScoring()
+{
+	m_Event->Release();
+	m_Scoring->Release();
+}
 
 CString CDlgConfigureDataScoring::OnNeedText(int iColumn) const
 {

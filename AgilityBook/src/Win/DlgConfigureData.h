@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-02 DRC Up the ref count to prevent problems.
  */
 
 #include <string>
@@ -67,11 +68,8 @@ public:
 class CDlgConfigureDataVenue : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataVenue(ARBConfigVenue* venue)
-		: CDlgConfigureData()
-		, m_Venue(venue)
-	{
-	}
+	CDlgConfigureDataVenue(ARBConfigVenue* venue);
+	~CDlgConfigureDataVenue();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigVenue* GetVenue() const		{return m_Venue;}
 protected:
@@ -83,11 +81,8 @@ protected:
 class CDlgConfigureDataFault : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataFault(ARBConfigFault* fault)
-		: CDlgConfigureData()
-		, m_Fault(fault)
-	{
-	}
+	CDlgConfigureDataFault(ARBConfigFault* fault);
+	~CDlgConfigureDataFault();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigFault* GetFault() const		{return m_Fault;}
 protected:
@@ -99,11 +94,8 @@ protected:
 class CDlgConfigureDataOtherPoints : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataOtherPoints(ARBConfigOtherPoints* otherPoints)
-		: CDlgConfigureData()
-		, m_OtherPoints(otherPoints)
-	{
-	}
+	CDlgConfigureDataOtherPoints(ARBConfigOtherPoints* otherPoints);
+	~CDlgConfigureDataOtherPoints();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigOtherPoints* GetOtherPoints() const	{return m_OtherPoints;}
 protected:
@@ -115,11 +107,8 @@ protected:
 class CDlgConfigureDataDivision : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataDivision(ARBConfigDivision* div)
-		: CDlgConfigureData()
-		, m_Div(div)
-	{
-	}
+	CDlgConfigureDataDivision(ARBConfigDivision* div);
+	~CDlgConfigureDataDivision();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Div;}
 protected:
@@ -131,12 +120,8 @@ protected:
 class CDlgConfigureDataLevel : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataLevel(ARBConfigDivision* div, ARBConfigLevel* level)
-		: CDlgConfigureData()
-		, m_Division(div)
-		, m_Level(level)
-	{
-	}
+	CDlgConfigureDataLevel(ARBConfigDivision* div, ARBConfigLevel* level);
+	~CDlgConfigureDataLevel();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Division;}
 	ARBConfigLevel* GetLevel() const		{return m_Level;}
@@ -150,13 +135,8 @@ protected:
 class CDlgConfigureDataSubLevel : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataSubLevel(ARBConfigDivision* div, ARBConfigLevel* level, ARBConfigSubLevel* subLevel)
-		: CDlgConfigureData()
-		, m_Division(div)
-		, m_Level(level)
-		, m_SubLevel(subLevel)
-	{
-	}
+	CDlgConfigureDataSubLevel(ARBConfigDivision* div, ARBConfigLevel* level, ARBConfigSubLevel* subLevel);
+	~CDlgConfigureDataSubLevel();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Division;}
 	ARBConfigLevel* GetLevel() const		{return m_Level;}
@@ -172,12 +152,8 @@ protected:
 class CDlgConfigureDataTitle : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataTitle(ARBConfigDivision* div, ARBConfigTitle* title)
-		: CDlgConfigureData()
-		, m_Division(div)
-		, m_Title(title)
-	{
-	}
+	CDlgConfigureDataTitle(ARBConfigDivision* div, ARBConfigTitle* title);
+	~CDlgConfigureDataTitle();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Division;}
 	ARBConfigTitle* GetTitle() const		{return m_Title;}
@@ -191,11 +167,8 @@ protected:
 class CDlgConfigureDataEvent : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataEvent(ARBConfigEvent* event)
-		: CDlgConfigureData()
-		, m_Event(event)
-	{
-	}
+	CDlgConfigureDataEvent(ARBConfigEvent* event);
+	~CDlgConfigureDataEvent();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigEvent* GetEvent() const		{return m_Event;}
 protected:
@@ -207,12 +180,8 @@ protected:
 class CDlgConfigureDataScoring : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataScoring(ARBConfigEvent* event, ARBConfigScoring* scoring)
-		: CDlgConfigureData()
-		, m_Event(event)
-		, m_Scoring(scoring)
-	{
-	}
+	CDlgConfigureDataScoring(ARBConfigEvent* event, ARBConfigScoring* scoring);
+	~CDlgConfigureDataScoring();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigEvent* GetEvent() const		{return m_Event;}
 	ARBConfigScoring* GetScoring() const	{return m_Scoring;}
