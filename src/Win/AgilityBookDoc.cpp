@@ -83,6 +83,12 @@
 #include "TabView.h"
 #include "Wizard.h"
 
+#if _MSC_VER < 1300
+#ifndef INVALID_FILE_ATTRIBUTES
+#define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
+#endif
+#endif
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -558,6 +564,41 @@ CAgilityBookViewTraining* CAgilityBookDoc::GetTrainingView() const
 }
 
 
+void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
+{
+	int nBackups = CAgilityBookOptions::GetNumBackupFiles();
+	if (0 < nBackups)
+	{
+		CString backup;
+		// First find a hole.
+		int nHole = -1;
+		int i;
+		for (i = 1; i <= nBackups; ++i)
+		{
+			backup.Format("%s.bck%d", lpszPathName, i);
+			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(backup))
+			{
+				nHole = i;
+				break;
+			}
+		}
+		if (-1 == nHole)
+			nHole = nBackups;
+		// Then shift all the files into the hole.
+		for (i = nHole; i > 1; --i)
+		{
+			backup.Format("%s.bck%d", lpszPathName, i);
+			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(backup))
+				DeleteFile(backup);
+			CString filename;
+			filename.Format("%s.bck%d", lpszPathName, i-1);
+			MoveFile(filename, backup);
+		}
+		backup.Format("%s.bck1", lpszPathName);
+		CopyFile(lpszPathName, backup, FALSE);
+	}
+}
+
 /**
  * MFC method to delete contents of current document.
  */
@@ -687,6 +728,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	// First, we have to push all the class data into a tree.
 	if (m_Records.Save(tree, true, true, true, true, true))
 	{
+		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
 		std::ofstream output(lpszPathName, std::ios::out | std::ios::binary);
 		output.exceptions(std::ios_base::badbit);
@@ -703,7 +745,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		else
 		{
 			CString errMsg;
-			errMsg.FormatMessage(IDS_MIN_RESOLUTION, lpszPathName);
+			errMsg.FormatMessage(IDS_CANNOT_OPEN, lpszPathName);
 			AfxMessageBox(errMsg, MB_OK | MB_ICONEXCLAMATION);
 		}
 	}

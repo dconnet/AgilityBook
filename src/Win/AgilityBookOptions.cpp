@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
  * @li 2003-12-30 DRC Implemented customized text in tree.
@@ -1103,6 +1104,29 @@ void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 	}
 	item.Format("col%d", idxColumn);
 	AfxGetApp()->WriteProfileString(section, item, data);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+bool CAgilityBookOptions::GetAutoUpdateCheck()
+{
+	int val = AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Settings", "autoCheck", bSet ? 1 : 0);
+}
+
+int CAgilityBookOptions::GetNumBackupFiles()
+{
+	return AfxGetApp()->GetProfileInt("Settings", "BackupFiles", 3);
+}
+
+void CAgilityBookOptions::SetNumBackupFiles(int nFiles)
+{
+	AfxGetApp()->WriteProfileInt("Settings", "BackupFiles", nFiles);
 }
 
 /////////////////////////////////////////////////////////////////////////////

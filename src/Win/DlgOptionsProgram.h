@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,50 +29,39 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptions class
+ * @brief interface of the CDlgOptionsProgram class
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-08 DRC Created
  */
 
-#include "DlgOptionsCalendar.h"
-#include "DlgOptionsFilter.h"
-#include "DlgOptionsFonts.h"
-#include "DlgOptionsProgram.h"
-#include "DlgOptionsTraining.h"
-class CAgilityBookDoc;
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
-
-class CDlgOptions : public CPropertySheet
+class CDlgOptionsProgram : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgOptions)
+	friend class CDlgOptions;
+	DECLARE_DYNCREATE(CDlgOptionsProgram)
 public:
-	CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	virtual ~CDlgOptions();
+	CDlgOptionsProgram();
+	~CDlgOptionsProgram();
 
-// Attributes
-public:
-	CAgilityBookDoc* m_pDoc;
-	CDlgOptionsCalendar m_pageCalendar;
-	CDlgOptionsFilter m_pageFilter;
-	CDlgOptionsFonts m_pageFonts;
-	CDlgOptionsTraining m_pageTraining;
-	CDlgOptionsProgram m_pageProgram;
-
-// Operations
-public:
+private:
+// Dialog Data
+	//{{AFX_DATA(CDlgOptionsProgram)
+	enum { IDD = IDD_VIEW_OPTIONS_PROGRAM };
+	BOOL	m_bAutoCheck;
+	int	m_Backups;
+	//}}AFX_DATA
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptions)
+	//{{AFX_VIRTUAL(CDlgOptionsProgram)
 	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
+// Implementation
 protected:
-	//{{AFX_MSG(CDlgOptions)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgOptionsProgram)
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

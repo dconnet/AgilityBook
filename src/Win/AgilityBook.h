@@ -65,8 +65,6 @@ private:
 	//{{AFX_MSG(CAgilityBookApp)
 	afx_msg void OnAppAbout();
 	afx_msg void OnAppUpdate();
-	afx_msg void OnUpdateFileAutoCheck(CCmdUI* pCmdUI);
-	afx_msg void OnFileAutoCheck();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
