@@ -38,24 +38,14 @@
 #include <string>
 #include <vector>
 #include "ARBConfig.h"
+#include "ListCtrl.h"
 class ARBAgilityRecordBook;
-class ARBConfigDivision;
-class ARBConfigEvent;
-class ARBConfigFault;
-class ARBConfigLevel;
-class ARBConfigOtherPoints;
-class ARBConfigScoring;
-class ARBConfigSubLevel;
-class ARBConfigTitle;
-class ARBConfigVenue;
 class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgFixup;
 
 class CDlgConfigure : public CDialog
 {
-	friend class CDlgConfigureData;
-
 public:
 	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book);
 	virtual ~CDlgConfigure();
@@ -64,72 +54,52 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgConfigure)
 	enum { IDD = IDD_CONFIGURE };
-	CTreeCtrl m_ctrlTree;
+	CListCtrl2	m_ctrlVenues;
+	CListCtrl2	m_ctrlFaults;
+	CListCtrl2	m_ctrlOthers;
+	CButton	m_ctrlNew;
+	CButton	m_ctrlDelete;
+	CButton	m_ctrlEdit;
+	CButton	m_ctrlCopy;
+	CStatic	m_ctrlComments;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
+	ARBAgilityRecordBook& m_Book;
+	ARBConfig m_Config;
+	std::vector<CDlgFixup*> m_DlgFixup;
+	typedef enum {eNone, eVenues, eFaults, eOtherPoints} eAction;
+	eAction m_Action;
 
 	//{{AFX_VIRTUAL(CDlgConfigure)
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-public:
-	// These insertion routines are public so the dlgconfiguredata classes
-	// can access them without requiring friendship.
-	HTREEITEM InsertVenue(HTREEITEM hParent, ARBConfigVenue* venue);
-	HTREEITEM InsertFaultType(HTREEITEM hParent, ARBConfigFault* fault);
-	HTREEITEM InsertOtherPoint(HTREEITEM hParent, ARBConfigOtherPoints* other);
-	HTREEITEM InsertDivision(HTREEITEM hParent, ARBConfigDivision* div);
-	HTREEITEM InsertLevel(HTREEITEM hParent, ARBConfigLevel* level);
-	HTREEITEM InsertSubLevel(HTREEITEM hParent, ARBConfigSubLevel* subLevel);
-	HTREEITEM InsertTitle(HTREEITEM hParent, ARBConfigTitle* title);
-	HTREEITEM InsertEvent(HTREEITEM hParent, ARBConfigEvent* event);
-	HTREEITEM InsertScoring(HTREEITEM hParent, ARBConfigScoring* scoring);
-
 private:
+	void SetAction(eAction inAction);
+	bool GetActionData(CListCtrl2*& pCtrl, int& index, CDlgConfigureData*& pData);
+	void UpdateButtons();
 	void LoadData();
-	void InsertVenues(HTREEITEM hParent);
-	void InsertFaultTypes(HTREEITEM hParent);
-	void InsertOtherPoints(HTREEITEM hParent);
-	void InsertDivisions(HTREEITEM hParent, ARBConfigVenue* venue);
-	void InsertLevels(HTREEITEM hParent, ARBConfigDivision* div);
-	void InsertTitles(HTREEITEM hParent, ARBConfigDivision* div);
-	void InsertEvents(HTREEITEM hParent, ARBConfigVenue* venue);
-	void InsertScorings(HTREEITEM hParent, ARBConfigEvent* event);
-	CDlgConfigureData* GetItemData(HTREEITEM inItem);
-	ARBAgilityRecordBook& m_Book;
-	ARBConfig m_Config;
-	std::vector<CDlgFixup*> m_DlgFixup;
-	bool m_bReset;
+	int FindCurrentVenue(const ARBConfigVenue* pVenue, bool bSet);
+	int FindCurrentFault(const ARBConfigFault* pFault, bool bSet);
+	int FindCurrentOtherPoints(const ARBConfigOtherPoints* pOther, bool bSet);
 
 protected:
 	//{{AFX_MSG(CDlgConfigure)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
-	afx_msg void OnDestroy();
-	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
-	afx_msg void OnTvnDeleteitemVenues(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnNMRclickVenues(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnDblclkVenues(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnUpdateConfigAdd(CCmdUI *pCmdUI);
-	afx_msg void OnConfigAdd();
-	afx_msg void OnUpdateConfigDup(CCmdUI *pCmdUI);
-	afx_msg void OnConfigDup();
-	afx_msg void OnUpdateConfigEdit(CCmdUI *pCmdUI);
-	afx_msg void OnConfigEdit();
-	afx_msg void OnUpdateConfigDelete(CCmdUI *pCmdUI);
-	afx_msg void OnConfigDelete();
-	afx_msg void OnUpdateExpand(CCmdUI* pCmdUI);
-	afx_msg void OnExpand();
-	afx_msg void OnUpdateExpandAll(CCmdUI* pCmdUI);
-	afx_msg void OnExpandAll();
-	afx_msg void OnUpdateCollapse(CCmdUI* pCmdUI);
-	afx_msg void OnCollapse();
-	afx_msg void OnUpdateCollapseAll(CCmdUI* pCmdUI);
-	afx_msg void OnCollapseAll();
+	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSetfocusVenues(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSetfocusFaults(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSetfocusOtherpoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnNew();
+	afx_msg void OnDelete();
+	afx_msg void OnEdit();
+	afx_msg void OnCopy();
 	afx_msg void OnUpdate();
 	virtual void OnOK();
-	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

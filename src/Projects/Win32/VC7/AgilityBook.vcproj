@@ -210,6 +210,9 @@
 				RelativePath="..\..\..\Win\DlgConfigureData.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgConfigVenue.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgDog.cpp">
 			</File>
 			<File
@@ -413,6 +416,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgConfigureData.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgConfigVenue.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgDog.h">

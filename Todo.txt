@@ -1,4 +1,4 @@
-Last Updated: 1/4/04
+Last Updated: 1/25/04
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,
@@ -11,10 +11,6 @@ Last Updated: 1/4/04
     <http://www.bayteam.org/docs/KareysCalendar.html>
   - Import: Need some intelligence to group several days of runs into a
     single trial.
-
-- Rework Configuration dialog so it is easier to use.
-  - Allow items (divisions/levels/etc) in config dialog to be reordered.
-    (currently you have to _carefully_ hand edit the file)
 
 - Run entry dialog integrity checks (define!)
   - If faults entered is greated then faults allowed, and 'Q' is set, warn

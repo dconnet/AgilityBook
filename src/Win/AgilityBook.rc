@@ -225,23 +225,6 @@ BEGIN
     END
 END
 
-IDR_CONFIGURE MENU DISCARDABLE 
-BEGIN
-    POPUP "Config"
-    BEGIN
-        MENUITEM "&Properties...",              ID_CONFIG_EDIT
-        MENUITEM SEPARATOR
-        MENUITEM "&Add...",                     ID_CONFIG_ADD
-        MENUITEM "D&uplicate...",               ID_CONFIG_DUPLICATE
-        MENUITEM "&Delete",                     ID_CONFIG_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Expand",                      ID_EXPAND
-        MENUITEM "Collapse",                    ID_COLLAPSE
-        MENUITEM "Expand All",                  ID_EXPAND_ALL
-        MENUITEM "Collapse All",                ID_COLLAPSE_ALL
-    END
-END
-
 IDR_DOG MENU DISCARDABLE 
 BEGIN
     POPUP "Dog"
@@ -483,22 +466,70 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,227,24,50,14
 END
 
-IDD_CONFIGURE DIALOG DISCARDABLE  0, 0, 350, 258
+IDD_CONFIGURE DIALOG DISCARDABLE  0, 0, 324, 207
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Configuration"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    CONTROL         "",IDC_VENUES,"SysTreeView32",TVS_HASBUTTONS | 
+    CONTROL         "List1",IDC_VENUES,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,7,250,80
+    PUSHBUTTON      "&New...",IDC_NEW,7,90,45,14
+    PUSHBUTTON      "&Edit...",IDC_EDIT,57,90,45,14
+    PUSHBUTTON      "&Delete",IDC_DELETE,107,90,45,14
+    PUSHBUTTON      "&Copy...",IDC_COPY,157,90,45,14
+    CTEXT           "comments",IDC_COMMENTS,7,107,195,8
+    CONTROL         "List2",IDC_FAULTS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,120,100,80
+    CONTROL         "List3",IDC_OTHERPOINTS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,113,120,120,80
+    PUSHBUTTON      "&Update Configuration...",IDC_UPDATE,232,90,85,14
+    DEFPUSHBUTTON   "OK",IDOK,267,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,267,24,50,14
+END
+
+IDD_CONFIG_VENUE DIALOG DISCARDABLE  0, 0, 400, 286
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Venue Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "N&ame",IDC_STATIC,7,7,20,8
+    EDITTEXT        IDC_VENUE,7,17,80,12,ES_AUTOHSCROLL
+    LTEXT           "De&scription",IDC_STATIC,7,35,36,8
+    EDITTEXT        IDC_DESC,7,45,125,75,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    CONTROL         "List1",IDC_DIVISION,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,140,7,80,70
+    LTEXT           "&Levels",IDC_STATIC,225,7,22,8
+    CONTROL         "Tree1",IDC_LEVEL,"SysTreeView32",TVS_HASBUTTONS | 
                     TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,280,244
-    PUSHBUTTON      "&Update...",IDC_UPDATE,293,65,50,14
-    PUSHBUTTON      "OK",IDOK,293,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,293,24,50,14
+                    TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | 
+                    WS_TABSTOP,225,17,105,60
+    PUSHBUTTON      "&New...",IDC_NEW,185,83,45,14
+    PUSHBUTTON      "&Delete",IDC_DELETE,185,99,45,14
+    PUSHBUTTON      "&Edit...",IDC_EDIT,235,83,45,14
+    PUSHBUTTON      "&Copy...",IDC_COPY,235,99,45,14
+    PUSHBUTTON      "Move &Up",IDC_MOVE_UP,285,83,45,14
+    PUSHBUTTON      "Move Do&wn",IDC_MOVE_DOWN,285,99,45,14
+    CTEXT           "comments",IDC_COMMENTS,185,117,145,8
+    CONTROL         "List3",IDC_TITLES,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,125,128,154
+    LTEXT           "E&vents",IDC_STATIC,140,125,23,8
+    CONTROL         "Tree2",IDC_EVENT,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
+                    TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | 
+                    WS_TABSTOP,140,135,190,144
+    PUSHBUTTON      "OK",IDOK,343,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,343,24,50,14
 END
 
 IDD_CONFIG_OTHERPOINTS DIALOG DISCARDABLE  0, 0, 211, 127
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Other Points"
+CAPTION "Other Points Configuration"
 FONT 8, "MS Shell Dlg"
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,19,8
@@ -515,7 +546,7 @@ END
 
 IDD_CONFIG_EVENT DIALOG DISCARDABLE  0, 0, 334, 302
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Event"
+CAPTION "Event Configuration"
 FONT 8, "MS Shell Dlg"
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
@@ -1238,7 +1269,7 @@ END
 
 IDD_CONFIG_TITLE DIALOG DISCARDABLE  0, 0, 244, 141
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Title"
+CAPTION "Title Configuration"
 FONT 8, "MS Shell Dlg"
 BEGIN
     EDITTEXT        IDC_NAME,7,7,40,12,ES_AUTOHSCROLL
@@ -1355,9 +1386,17 @@ BEGIN
     IDD_CONFIGURE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 343
+        RIGHTMARGIN, 317
         TOPMARGIN, 7
-        BOTTOMMARGIN, 251
+        BOTTOMMARGIN, 200
+    END
+
+    IDD_CONFIG_VENUE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 393
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 279
     END
 
     IDD_CONFIG_OTHERPOINTS, DIALOG
@@ -1969,10 +2008,6 @@ STRINGTABLE DISCARDABLE
 BEGIN
     ID_FILE_EXPORT_WIZARD   "Import and Export Wizard\nImport/Export"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
-    ID_CONFIG_ADD           "Add a configuration item\nAdd"
-    ID_CONFIG_DUPLICATE     "Duplicate a configuration item\nDuplicate"
-    ID_CONFIG_EDIT          "Edit a configuration item\nEdit"
-    ID_CONFIG_DELETE        "Delete a configuration item\nDelete"
     ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
     ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
     ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
