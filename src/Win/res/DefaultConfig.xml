@@ -1556,6 +1556,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 			<Event Name="Grand Prix">
 				<Scoring Division="Championship" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" type="FaultsThenTime">
+					<Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
 					<TitlePoints Faults="7" Points="1"/>
 					<LifeTime Faults="7" Points="1"/>
 				</Scoring>
@@ -1572,6 +1573,7 @@ PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Ag
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
+					<Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
