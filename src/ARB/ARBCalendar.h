@@ -334,7 +334,7 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	ARBCalendar* FindCalendar(ARBCalendar const* inCal);
+	ARBCalendar const* FindCalendar(ARBCalendar const* inCal) const;
 
 	/**
 	 * Add a calendar entry to the list.
