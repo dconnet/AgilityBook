@@ -144,6 +144,9 @@ static struct
 
 // This simply defines the fields and what those fields are valid for.
 // sc_Fields defines what fields will be shown (and the order)
+// NOTE: Currently, the fields must be in index order - so any new fields must
+//       be added at the bottom. The physical ordering is not controlled by the
+//       order in this structure.
 static struct
 {
 	WORD bValid;
@@ -287,6 +290,9 @@ static struct
 		IO_TREE_RUN_LEVEL,     false, 0, IDS_COL_LEVEL, NULL},
 	{CAgilityBookOptions::eViewTree,
 		IO_TREE_RUN_HEIGHT,    false, 0, IDS_COL_HEIGHT, NULL},
+
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
+		IO_LOG_SUBNAME,        true,  LVCFMT_LEFT,   IDS_COL_SUBNAME, NULL},
 };
 
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
@@ -387,7 +393,8 @@ static int const idxCalendar[] = {
 	IO_CAL_NOTES,
 -1};
 static int const idxTraining[] = {
-	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_NOTES,
+	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_SUBNAME,
+	IO_LOG_NOTES,
 -1};
 static int const idxViewTreeDog[] = {
 	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_CALLNAME,	IO_TREE_DOG_BREED,
@@ -421,7 +428,8 @@ static int const idxViewCalendarList[] = {
 	IO_CAL_CLOSES,			IO_CAL_NOTES,
 -1};
 static int const idxViewTrainingList[] = {
-	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_NOTES,
+	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_SUBNAME,
+	IO_LOG_NOTES,
 -1};
 
 static int const* sc_Fields[IO_TYPE_MAX] =

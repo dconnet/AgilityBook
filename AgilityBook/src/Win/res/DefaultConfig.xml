@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="8.6">
+<DefaultConfig Book="8.7">
+
+<!--
+See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
+
+Revision History:
+2004-06-02 DRC Configuration version 4.
+               CPE 'CADE' changed to 'C-ATE'
+2004-04-30 DRC Configuration version 3.
+               Updated Default Config to contain lifetime information, removed
+               USDAA LAA.
+2004-03-08 DRC Configuration version 2.
+               Added versioning to configuration to allow auto-upgrades.
+               Added new Config/Action: DeleteTitle
+-->
+
 	<Configuration version="4">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>

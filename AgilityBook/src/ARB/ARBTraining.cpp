@@ -56,6 +56,7 @@ static char THIS_FILE[] = __FILE__;
 ARBTraining::ARBTraining()
 	: m_Date()
 	, m_Name()
+	, m_SubName()
 	, m_Note()
 {
 }
@@ -63,6 +64,7 @@ ARBTraining::ARBTraining()
 ARBTraining::ARBTraining(ARBTraining const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Name(rhs.m_Name)
+	, m_SubName(rhs.m_SubName)
 	, m_Note(rhs.m_Note)
 {
 }
@@ -77,6 +79,7 @@ ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 	{
 		m_Date = rhs.m_Date;
 		m_Name = rhs.m_Name;
+		m_SubName = rhs.m_SubName;
 		m_Note = rhs.m_Note;
 	}
 	return *this;
@@ -86,6 +89,7 @@ bool ARBTraining::operator==(ARBTraining const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Name == rhs.m_Name
+		&& m_SubName == rhs.m_SubName
 		&& m_Note == rhs.m_Note;
 }
 
@@ -109,6 +113,12 @@ size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 	if (0 < m_Name.length())
 	{
 		ioStrings.insert(m_Name);
+		++nItems;
+	}
+
+	if (0 < m_SubName.length())
+	{
+		ioStrings.insert(m_SubName);
 		++nItems;
 	}
 
@@ -143,6 +153,7 @@ bool ARBTraining::Load(
 	}
 
 	inTree.GetAttrib(ATTRIB_TRAINING_NAME, m_Name);
+	inTree.GetAttrib(ATTRIB_TRAINING_SUBNAME, m_SubName);
 
 	m_Note = inTree.GetValue();
 	return true;
@@ -154,6 +165,8 @@ bool ARBTraining::Save(Element& ioTree) const
 	training.AddAttrib(ATTRIB_TRAINING_DATE, m_Date);
 	if (0 < m_Name.length())
 		training.AddAttrib(ATTRIB_TRAINING_NAME, m_Name);
+	if (0 < m_SubName.length())
+		training.AddAttrib(ATTRIB_TRAINING_SUBNAME, m_SubName);
 	if (0 < m_Note.length())
 		training.SetValue(m_Note);
 	return true;
@@ -195,6 +208,18 @@ size_t ARBTrainingList::GetAllNames(std::set<std::string>& outNames) const
 			outNames.insert(training->GetName());
 	}
 	return outNames.size();
+}
+
+size_t ARBTrainingList::GetAllSubNames(std::set<std::string>& outSubNames) const
+{
+	outSubNames.clear();
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		ARBTraining const* training = *iter;
+		if (0 < training->GetSubName().length())
+			outSubNames.insert(training->GetSubName());
+	}
+	return outSubNames.size();
 }
 
 ARBTraining const* ARBTrainingList::FindTraining(ARBTraining const* inTraining) const

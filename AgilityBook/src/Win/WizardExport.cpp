@@ -649,6 +649,9 @@ void CWizardExport::UpdatePreview()
 					case IO_LOG_NAME:
 						data += PrepFieldOutput(pLog->GetName().c_str());
 						break;
+					case IO_LOG_SUBNAME:
+						data += PrepFieldOutput(pLog->GetSubName().c_str());
+						break;
 					case IO_LOG_NOTES:
 						data += PrepFieldOutput(pLog->GetNote().c_str());
 						break;
