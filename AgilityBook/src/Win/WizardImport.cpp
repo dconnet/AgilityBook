@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-10 DRC Process quoted fields in input (like Excel).
  * @li 2004-04-15 DRC If imported data contained a header that we parsed as
  *                    data, the program faulted trying to release a null ptr.
  * @li 2004-03-22 DRC Fixed line/col number reporting (off by one)
@@ -183,6 +184,58 @@ void CWizardImport::UpdateButtons()
 	m_pSheet->SetWizardButtons(dwWiz);
 }
 
+static bool GetField(const CString& delim, CString& ioStr, CString& outFld, int curFld, INT_PTR maxFlds)
+{
+	outFld.Empty();
+	if (ioStr.IsEmpty())
+		return false;
+
+	ASSERT(delim.GetLength() == 1);
+
+	int pos;
+	int nLen = ioStr.GetLength();
+	int quoteCount = 0;
+	for (pos = 0; pos < nLen; ++pos)
+	{
+		if ('"' == ioStr[pos])
+			++quoteCount;
+		else
+			break;
+	}
+	bool inQuote = false;
+	if (quoteCount % 2 == 1)
+	{
+		inQuote = true;
+		pos = 1;
+	}
+	else
+		pos = 0;
+
+	for (; pos < nLen; ++pos)
+	{
+		if (!inQuote && curFld < maxFlds - 1 && delim[0] == ioStr[pos])
+		{
+			ioStr = ioStr.Mid(pos+1);
+			break;
+		}
+		if ('"' == ioStr[pos])
+		{
+			if (pos < nLen + 1 && '"' == ioStr[pos+1])
+			{
+				outFld += ioStr[pos];
+				++pos;
+			}
+			else
+				inQuote = false;
+		}
+		else
+			outFld += ioStr[pos];
+	}
+	if (curFld >= maxFlds - 1)
+		ioStr.Empty();
+	return true;
+}
+
 void CWizardImport::UpdatePreview()
 {
 	CString delim = GetDelim();
@@ -273,20 +326,16 @@ void CWizardImport::UpdatePreview()
 	for (i = m_Row - 1; i < m_FileData.GetSize(); ++i)
 	{
 		CString str = m_FileData[i];
+		CString fld;
 		iCol = 0;
-		int pos;
-		while (0 <= (pos = str.Find(delim)) && iCol < static_cast<size_t>(cols.GetSize()))
+		while (GetField(delim, str, fld, static_cast<int>(iCol), cols.GetSize()))
 		{
-			CString data = str.Left(pos);
-			str = str.Mid(pos+1);
 			if (0 == iCol)
-				m_ctrlPreview.InsertItem(i-(m_Row-1), data);
+				m_ctrlPreview.InsertItem(i-(m_Row-1), fld);
 			else
-				m_ctrlPreview.SetItemText(i-(m_Row-1), static_cast<int>(iCol), data);
+				m_ctrlPreview.SetItemText(i-(m_Row-1), static_cast<int>(iCol), fld);
 			++iCol;
 		}
-		if (!str.IsEmpty() && iCol < static_cast<size_t>(cols.GetSize()))
-			m_ctrlPreview.SetItemText(i-(m_Row-1), static_cast<int>(iCol), str);
 	}
 	for (iCol = 0; iCol < static_cast<size_t>(cols.GetSize()); ++iCol)
 		m_ctrlPreview.SetColumnWidth(static_cast<int>(iCol), LVSCW_AUTOSIZE_USEHEADER);

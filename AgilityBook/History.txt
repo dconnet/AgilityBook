@@ -8,6 +8,9 @@
     behavior in the Options dialog to restore previous program behavior.
     (Too many people were having problems finding the title later.)
 - Bug fixes
+  - Quote exported data so non-tab delimiters work properly if the delimiter
+    character is actually part of the output data. Quotes are added if needed.
+    Also, on import, handle quotes properly. Quoting is done like Excel.
 
 4/30/2004: v1.1.0.8
 - Bumped file version to 8.6, Configuration v3:

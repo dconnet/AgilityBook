@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-10 DRC Place quotes are field on output as needed.
  * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-30 DRC Fixed a bug exporting the training log.
  * @li 2003-12-10 DRC Created
@@ -135,6 +136,25 @@ CString CWizardExport::GetDelim() const
 	return delim;
 }
 
+CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
+{
+	CString delim = GetDelim();
+	bool bAddQuotes = false;
+	CString fld(inStr);
+	if (0 <= fld.Find(delim) || 0 <= fld.Find('"'))
+	{
+		bAddQuotes = true;
+		if (0 <= fld.Find('"'))
+			fld.Replace("\"", "\"\"");
+	}
+	if (bAddQuotes)
+	{
+		fld = "\"" + fld;
+		fld += "\"";
+	}
+	return fld;
+}
+
 void CWizardExport::UpdateButtons()
 {
 	DWORD dwWiz = PSWIZB_BACK;
@@ -222,7 +242,7 @@ void CWizardExport::UpdatePreview()
 			{
 				if (0 < i)
 					data += delim;
-				data += cols[i];
+				data += PrepFieldOutput(cols[i]);
 			}
 			m_ctrlPreview.AddString(data);
 			for (ARBDogList::const_iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
@@ -272,82 +292,86 @@ void CWizardExport::UpdatePreview()
 									switch (columns[idxType][idx])
 									{
 									case IO_RUNS_REG_NAME:
-										data += pDog->GetRegisteredName().c_str();
+										data += PrepFieldOutput(pDog->GetRegisteredName().c_str());
 										break;
 									case IO_RUNS_CALL_NAME:
-										data += pDog->GetCallName().c_str();
+										data += PrepFieldOutput(pDog->GetCallName().c_str());
 										break;
 									case IO_RUNS_DATE:
-										data += pRun->GetDate().GetString(false, format).c_str();
+										data += PrepFieldOutput(pRun->GetDate().GetString(false, format).c_str());
 										break;
 									case IO_RUNS_VENUE:
 										{
+											CString fld;
 											int i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 												iter != pTrial->GetClubs().end();
 												++iter, ++i)
 											{
 												if (0 < i)
-													data += "/";
-												data += (*iter)->GetVenue().c_str();
+													fld += "/";
+												fld += (*iter)->GetVenue().c_str();
 											}
+											data += PrepFieldOutput(fld);
 										}
 										break;
 									case IO_RUNS_CLUB:
 										{
+											CString fld;
 											int i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 												iter != pTrial->GetClubs().end();
 												++iter, ++i)
 											{
 												if (0 < i)
-													data += "/";
-												data += (*iter)->GetName().c_str();
+													fld += "/";
+												fld += (*iter)->GetName().c_str();
 											}
+											data += PrepFieldOutput(fld);
 										}
 										break;
 									case IO_RUNS_LOCATION:
-										data += pTrial->GetLocation().c_str();
+										data += PrepFieldOutput(pTrial->GetLocation().c_str());
 										break;
 									case IO_RUNS_TRIAL_NOTES:
-										data += pTrial->GetNote().c_str();
+										data += PrepFieldOutput(pTrial->GetNote().c_str());
 										break;
 									case IO_RUNS_DIVISION:
-										data += pRun->GetDivision().c_str();
+										data += PrepFieldOutput(pRun->GetDivision().c_str());
 										break;
 									case IO_RUNS_LEVEL:
-										data += pRun->GetLevel().c_str();
+										data += PrepFieldOutput(pRun->GetLevel().c_str());
 										break;
 									case IO_RUNS_EVENT:
-										data += pRun->GetEvent().c_str();
+										data += PrepFieldOutput(pRun->GetEvent().c_str());
 										break;
 									case IO_RUNS_HEIGHT:
-										data += pRun->GetHeight().c_str();
+										data += PrepFieldOutput(pRun->GetHeight().c_str());
 										break;
 									case IO_RUNS_JUDGE:
-										data += pRun->GetJudge().c_str();
+										data += PrepFieldOutput(pRun->GetJudge().c_str());
 										break;
 									case IO_RUNS_HANDLER:
-										data += pRun->GetHandler().c_str();
+										data += PrepFieldOutput(pRun->GetHandler().c_str());
 										break;
 									case IO_RUNS_CONDITIONS:
-										data += pRun->GetConditions().c_str();
+										data += PrepFieldOutput(pRun->GetConditions().c_str());
 										break;
 									case IO_RUNS_COURSE_FAULTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetCourseFaults());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_TIME:
-										data += pRun->GetScoring().GetTime().str().c_str();
+										data += PrepFieldOutput(pRun->GetScoring().GetTime().str().c_str());
 										break;
 									case IO_RUNS_YARDS:
 										{
 											CString str;
 											str.Format("%.3f", pRun->GetScoring().GetYards());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_YPS:
@@ -357,12 +381,12 @@ void CWizardExport::UpdatePreview()
 											{
 												CString str;
 												str.Format("%.3f", yps);
-												data += str;
+												data += PrepFieldOutput(str);
 											}
 										}
 										break;
 									case IO_RUNS_SCT:
-										data += pRun->GetScoring().GetSCT().str().c_str();
+										data += PrepFieldOutput(pRun->GetScoring().GetSCT().str().c_str());
 										break;
 									case IO_RUNS_TOTAL_FAULTS:
 										{
@@ -371,7 +395,7 @@ void CWizardExport::UpdatePreview()
 												CString str;
 												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults();
 												str.Format("%.3f", faults);
-												data += str;
+												data += PrepFieldOutput(str);
 											}
 										}
 										break;
@@ -379,42 +403,42 @@ void CWizardExport::UpdatePreview()
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_REQ_CLOSING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedClosePts());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_OPENING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetOpenPts());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_CLOSING:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetClosePts());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_REQ_POINTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_POINTS:
 										{
 											CString str;
 											str.Format("%hd", pRun->GetScoring().GetOpenPts());
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_PLACE:
@@ -427,7 +451,7 @@ void CWizardExport::UpdatePreview()
 												str = "-";
 											else
 												str.Format("%hd", place);
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_IN_CLASS:
@@ -438,7 +462,7 @@ void CWizardExport::UpdatePreview()
 												str = "?";
 											else
 												str.Format("%hd", inClass);
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_DOGSQD:
@@ -449,7 +473,7 @@ void CWizardExport::UpdatePreview()
 												str = "?";
 											else
 												str.Format("%hd", qd);
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_Q:
@@ -468,14 +492,14 @@ void CWizardExport::UpdatePreview()
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 													str.LoadString(IDS_SQ);
 											}
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_SCORE:
 										if (pRun->GetQ().Qualified()
 										|| ARB_Q::eQ_NQ == pRun->GetQ())
 										{
-											data += pRun->GetScore(pScoring).str().c_str();
+											data += PrepFieldOutput(pRun->GetScore(pScoring).str().c_str());
 										}
 										break;
 									case IO_RUNS_TITLE_POINTS:
@@ -485,27 +509,30 @@ void CWizardExport::UpdatePreview()
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
 											str.Format("%hd", pts);
-											data += str;
+											data += PrepFieldOutput(str);
 										}
 										break;
 									case IO_RUNS_COMMENTS:
-										data += pRun->GetNote().c_str();
+										data += PrepFieldOutput(pRun->GetNote().c_str());
 										break;
 									case IO_RUNS_FAULTS:
 										{
+											CString fld;
 											int i = 0;
 											for (ARBDogFaultList::const_iterator iter = pRun->GetFaults().begin();
 												iter != pRun->GetFaults().end();
 												++iter)
 											{
 												if (0 < i)
-													data += "/";
-												data += (*iter).c_str();
+													fld += "/";
+												fld += (*iter).c_str();
 											}
+											data += PrepFieldOutput(fld);
 										}
 										break;
 									}
 								}
+								// TODO: Add option to allow CRs?
 								data.Replace("\n", " ");
 								m_ctrlPreview.AddString(data);
 							}
@@ -525,7 +552,7 @@ void CWizardExport::UpdatePreview()
 			{
 				if (0 < idx)
 					data += delim;
-				data += CDlgAssignColumns::GetNameFromColumnID(columns[idx]);
+				data += PrepFieldOutput(CDlgAssignColumns::GetNameFromColumnID(columns[idx]));
 			}
 			m_ctrlPreview.AddString(data);
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
@@ -540,14 +567,14 @@ void CWizardExport::UpdatePreview()
 					switch (columns[idx])
 					{
 					case IO_CAL_START_DATE:
-						data += pCal->GetStartDate().GetString(false, format).c_str();
+						data += PrepFieldOutput(pCal->GetStartDate().GetString(false, format).c_str());
 						break;
 					case IO_CAL_END_DATE:
-						data += pCal->GetEndDate().GetString(false, format).c_str();
+						data += PrepFieldOutput(pCal->GetEndDate().GetString(false, format).c_str());
 						break;
 					case IO_CAL_TENTATIVE:
 						if (pCal->IsTentative())
-							data += "?";
+							data += PrepFieldOutput("?");
 						break;
 					case IO_CAL_ENTERED:
 						switch (pCal->GetEntered())
@@ -556,37 +583,38 @@ void CWizardExport::UpdatePreview()
 						case ARBCalendar::eNot:
 							break;
 						case ARBCalendar::eEntered:
-							data += "Entered";
+							data += PrepFieldOutput("Entered");
 							break;
 						case ARBCalendar::ePlanning:
-							data += "Planning";
+							data += PrepFieldOutput("Planning");
 							break;
 						}
 						break;
 					case IO_CAL_LOCATION:
-						data += pCal->GetLocation().c_str();
+						data += PrepFieldOutput(pCal->GetLocation().c_str());
 						break;
 					case IO_CAL_CLUB:
-						data += pCal->GetClub().c_str();
+						data += PrepFieldOutput(pCal->GetClub().c_str());
 						break;
 					case IO_CAL_VENUE:
-						data += pCal->GetVenue().c_str();
+						data += PrepFieldOutput(pCal->GetVenue().c_str());
 						break;
 					case IO_CAL_OPENS:
 						date = pCal->GetOpeningDate();
 						if (date.IsValid())
-							data += date.GetString(false, format).c_str();
+							data += PrepFieldOutput(date.GetString(false, format).c_str());
 						break;
 					case IO_CAL_CLOSES:
 						date = pCal->GetClosingDate();
 						if (date.IsValid())
-							data += date.GetString(false, format).c_str();
+							data += PrepFieldOutput(date.GetString(false, format).c_str());
 						break;
 					case IO_CAL_NOTES:
-						data += pCal->GetNote().c_str();
+						data += PrepFieldOutput(pCal->GetNote().c_str());
 						break;
 					}
 				}
+				// TODO: Add option to allow CRs?
 				data.Replace("\n", " ");
 				m_ctrlPreview.AddString(data);
 			}
@@ -602,7 +630,7 @@ void CWizardExport::UpdatePreview()
 			{
 				if (0 < idx)
 					data += delim;
-				data += CDlgAssignColumns::GetNameFromColumnID(columns[idx]);
+				data += PrepFieldOutput(CDlgAssignColumns::GetNameFromColumnID(columns[idx]));
 			}
 			m_ctrlPreview.AddString(data);
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
@@ -616,16 +644,17 @@ void CWizardExport::UpdatePreview()
 					switch (columns[idx])
 					{
 					case IO_LOG_DATE:
-						data += pLog->GetDate().GetString(false, format).c_str();
+						data += PrepFieldOutput(pLog->GetDate().GetString(false, format).c_str());
 						break;
 					case IO_LOG_NAME:
-						data += pLog->GetName().c_str();
+						data += PrepFieldOutput(pLog->GetName().c_str());
 						break;
 					case IO_LOG_NOTES:
-						data += pLog->GetNote().c_str();
+						data += PrepFieldOutput(pLog->GetNote().c_str());
 						break;
 					}
 				}
+				// TODO: Add option to allow CRs?
 				data.Replace("\n", " ");
 				m_ctrlPreview.AddString(data);
 			}
