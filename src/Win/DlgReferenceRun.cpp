@@ -36,7 +36,10 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgReferenceRun.h"
+#include <set>
+#include <string>
 
+#include "AgilityBookDoc.h"
 #include "ARBDogReferenceRun.h"
 
 #ifdef _DEBUG
@@ -48,8 +51,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgReferenceRun dialog
 
-CDlgReferenceRun::CDlgReferenceRun(ARBDogReferenceRun* ref, CWnd* pParent)
+CDlgReferenceRun::CDlgReferenceRun(CAgilityBookDoc* pDoc, ARBDogReferenceRun* ref, CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
+	, m_pDoc(pDoc)
 	, m_Ref(ref)
 {
 	ASSERT(m_Ref);
@@ -58,6 +62,7 @@ CDlgReferenceRun::CDlgReferenceRun(ARBDogReferenceRun* ref, CWnd* pParent)
 	m_Points = m_Ref->GetScore().c_str();
 	m_Time = m_Ref->GetTime();
 	m_Name = m_Ref->GetName().c_str();
+	m_Height = m_Ref->GetHeight().c_str();
 	m_Breed = m_Ref->GetBreed().c_str();
 	m_Notes = m_Ref->GetNote().c_str();
 	//}}AFX_DATA_INIT
@@ -75,6 +80,8 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_REFRUN_POINTS, m_Points);
 	DDX_Text(pDX, IDC_REFRUN_TIME, m_Time);
 	DDX_Text(pDX, IDC_REFRUN_NAME, m_Name);
+	DDX_Control(pDX, IDC_REFRUN_HEIGHT, m_ctrlHeight);
+	DDX_CBString(pDX, IDC_REFRUN_HEIGHT, m_Height);
 	DDX_Text(pDX, IDC_REFRUN_BREED, m_Breed);
 	DDX_Text(pDX, IDC_REFRUN_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
@@ -100,6 +107,15 @@ BOOL CDlgReferenceRun::OnInitDialog()
 		if (m_Ref->GetQ() == q)
 			m_ctrlQ.SetCurSel(idx);
 	}
+
+	std::set<std::string> names;
+	m_pDoc->GetAllHeights(names);
+	std::set<std::string>::const_iterator iter;
+	for (iter = names.begin(); iter != names.end(); ++iter)
+	{
+		m_ctrlHeight.AddString((*iter).c_str());
+	}
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -112,6 +128,8 @@ void CDlgReferenceRun::OnOK()
 	m_Points.TrimLeft();
 	m_Name.TrimRight();
 	m_Name.TrimLeft();
+	m_Height.TrimRight();
+	m_Height.TrimLeft();
 	m_Breed.TrimRight();
 	m_Breed.TrimLeft();
 	m_Notes.TrimRight();
@@ -130,6 +148,7 @@ void CDlgReferenceRun::OnOK()
 	m_Ref->SetScore((LPCSTR)m_Points);
 	m_Ref->SetTime(m_Time); // Letting the prec default to 2 is fine.
 	m_Ref->SetName((LPCSTR)m_Name);
+	m_Ref->SetHeight((LPCSTR)m_Height);
 	m_Ref->SetBreed((LPCSTR)m_Breed);
 	m_Notes.Replace("\r\n", "\n");
 	m_Ref->SetNote((LPCSTR)m_Notes);

@@ -208,6 +208,7 @@
 #define ATTRIB_REF_RUN_Q					"Q"
 #define ATTRIB_REF_RUN_PLACE				"Place"
 #define ATTRIB_REF_RUN_TIME					"Time"
+#define ATTRIB_REF_RUN_HEIGHT				"Height"
 
 /*
  * These defines list any special values.

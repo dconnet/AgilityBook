@@ -54,6 +54,7 @@ ARBDogReferenceRun::ARBDogReferenceRun()
 	: m_Q()
 	, m_Place(0)
 	, m_Name()
+	, m_Height()
 	, m_Breed()
 	, m_Time(0)
 	, m_Score()
@@ -65,6 +66,7 @@ ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun const& rhs)
 	: m_Q(rhs.m_Q)
 	, m_Place(rhs.m_Place)
 	, m_Name(rhs.m_Name)
+	, m_Height(rhs.m_Height)
 	, m_Breed(rhs.m_Breed)
 	, m_Time(rhs.m_Time)
 	, m_Score(rhs.m_Score)
@@ -83,6 +85,7 @@ ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 		m_Q = rhs.m_Q;
 		m_Place = rhs.m_Place;
 		m_Name = rhs.m_Name;
+		m_Height = rhs.m_Height;
 		m_Breed = rhs.m_Breed;
 		m_Time = rhs.m_Time;
 		m_Score = rhs.m_Score;
@@ -96,6 +99,7 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 	return m_Q == rhs.m_Q
 		&& m_Place == rhs.m_Place
 		&& m_Name == rhs.m_Name
+		&& m_Height == rhs.m_Height
 		&& m_Breed == rhs.m_Breed
 		&& m_Time == rhs.m_Time
 		&& m_Score == rhs.m_Score
@@ -114,6 +118,12 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::string>& ioStrings) co
 	if (0 < m_Name.length())
 	{
 		ioStrings.insert(m_Name);
+		++nItems;
+	}
+
+	if (0 < m_Height.length())
+	{
+		ioStrings.insert(m_Height);
 		++nItems;
 	}
 
@@ -156,6 +166,7 @@ bool ARBDogReferenceRun::Load(
 		m_Time = d;
 
 	inTree.GetAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
+	inTree.GetAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -186,6 +197,9 @@ bool ARBDogReferenceRun::Save(Element& ioTree) const
 	Element& refRun = ioTree.AddElement(TREE_REF_RUN);
 	m_Q.Save(refRun, ATTRIB_REF_RUN_Q);
 	refRun.AddAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
+	if (0 < m_Height.length())
+		refRun.AddAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
+
 	{
 		Element& element = refRun.AddElement(TREE_REF_NAME);
 		element.SetValue(m_Name);

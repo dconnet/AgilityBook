@@ -209,6 +209,7 @@
 #define HIDC_PARTNER_REG_NUM            0x80e704e1    // IDD_PARTNER
 #define HIDC_PICK_NAME                  0x80d70476    // IDD_DOG_PICKER
 #define HIDC_REFRUN_BREED               0x80e604dd    // IDD_REF_RUN
+#define HIDC_REFRUN_HEIGHT              0x80e6054e    // IDD_REF_RUN
 #define HIDC_REFRUN_NAME                0x80e604dc    // IDD_REF_RUN
 #define HIDC_REFRUN_NOTES               0x80e604de    // IDD_REF_RUN
 #define HIDC_REFRUN_PLACE               0x80e604d8    // IDD_REF_RUN

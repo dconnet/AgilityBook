@@ -1,6 +1,9 @@
 9/23/2004: v1.3.3.9 <in development>
+- Bumped file version to 9.1:
+  - Added 'Height' to 'ReferenceRun'
 - New features / Enhancements:
   - Added Mach points to the allowed columns in the runs view.
+  - Updated CPE comments on CL1-5 "titles".
 
 9/15/2004: v1.3.2.9
 - Bug fix

@@ -5,6 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2004-09-17 DRC Added comment to CL1-4 titles.
 2004-07-17 DRC Configuration version 5.
                Remove titling points from USDAA Tournament Jumper/Snooker.
                Added non-titling Performance events for Steeplechase and DAM
@@ -548,7 +549,8 @@ May be earned under 1 judge.</Titles>
 May be earned under 1 judge.</Titles>
 				<Titles Name="CL1-F">1 Qualifying Leg each of FullHouse and Jumpers
 May be earned under 1 judge.</Titles>
-				<Titles Name="CL1">CL1-R, CL1-H, CL1-S, CL1-F</Titles>
+				<Titles Name="CL1">CL1-R, CL1-H, CL1-S, CL1-F
+This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
 				<Titles Name="CL2-R">2 Clean Q Legs, or 3 Qualifying Legs
 May be earned under 1 judge.</Titles>
 				<Titles Name="CL2-H">2 Qualifying Legs each of Colors and Wildcard
@@ -557,7 +559,8 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL2-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL2">CL2-R, CL2-H, CL2-S, CL2-F</Titles>
+				<Titles Name="CL2">CL2-R, CL2-H, CL2-S, CL2-F
+This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
 				<Titles Name="CL3-R">3 Clean Q Legs, or 4 Qualifying Legs
 May be earned under 1 judge.</Titles>
 				<Titles Name="CL3-H">2 Qualifying Legs each of Colors and Wildcard
@@ -566,7 +569,8 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL3-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL3">CL3-R, CL3-H, CL3-S, CL3-F</Titles>
+				<Titles Name="CL3">CL3-R, CL3-H, CL3-S, CL3-F
+This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
 				<Titles Name="CL4-R">4 Clean Q Legs, or 5 Qualifying Legs
 Earned under at least 2 different judges.</Titles>
 				<Titles Name="CL4-H">2 Qualifying Legs each of Colors and Wildcard
@@ -575,7 +579,8 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL4-F">2 Qualifying Legs each of FullHouse and Jumpers
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
-				<Titles Name="CL4">CL4-R, CL4-H, CL4-S, CL4-F</Titles>
+				<Titles Name="CL4">CL4-R, CL4-H, CL4-S, CL4-F
+This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
 				<Titles LongName="CPE Agility Trial Champion" Name="C-ATCH">Standard:
   8 Clean Q Legs or 10 Qualifying Legs
   Earned under at least 4 different judges

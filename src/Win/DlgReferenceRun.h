@@ -37,11 +37,12 @@
 
 #include "DlgBaseDialog.h"
 class ARBDogReferenceRun;
+class CAgilityBookDoc;
 
 class CDlgReferenceRun : public CDlgBaseDialog
 {
 public:
-	CDlgReferenceRun(ARBDogReferenceRun* ref, CWnd* pParent = NULL);
+	CDlgReferenceRun(CAgilityBookDoc* pDoc, ARBDogReferenceRun* ref, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -52,9 +53,12 @@ private:
 	CString	m_Points;
 	double	m_Time;
 	CString	m_Name;
+	CComboBox	m_ctrlHeight;
+	CString	m_Height;
 	CString	m_Breed;
 	CString	m_Notes;
 	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
 	ARBDogReferenceRun* m_Ref;
 
 	//{{AFX_VIRTUAL(CDlgReferenceRun)
