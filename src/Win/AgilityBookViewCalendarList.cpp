@@ -286,6 +286,16 @@ CAgilityBookDoc* CAgilityBookViewCalendarList::GetDocument() const // non-debug 
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
+// Printing
+
+void CAgilityBookViewCalendarList::GetPrintLine(int nItem, CStringArray& line)
+{
+	CListView2::GetPrintLine(nItem, line);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_EVENTS, GetListCtrl().GetItemCount());
