@@ -211,6 +211,17 @@ ARBInfoJudge* ARBInfoJudgeList::AddJudge(std::string const& inJudge)
 	return judge;
 }
 
+ARBInfoJudge* ARBInfoJudgeList::AddJudge(ARBInfoJudge* inJudge)
+{
+	if (!inJudge)
+		return NULL;
+	if (FindJudge(inJudge->GetName()))
+		return NULL;
+	inJudge->AddRef();
+	push_back(inJudge);
+	return inJudge;
+}
+
 bool ARBInfoJudgeList::DeleteJudge(ARBInfoJudge const* inJudge)
 {
 	if (inJudge)

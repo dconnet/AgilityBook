@@ -206,6 +206,15 @@ public:
 	int NumTitlesInVenue(std::string const& inVenue) const;
 
 	/**
+	 * Find a title
+	 * @param inVenue Venue name.
+	 * @param inTitle Name of title.
+	 */
+	ARBDogTitle const* FindTitle(
+		std::string const& inVenue,
+		std::string const& inTitle) const;
+
+	/**
 	 * Rename a venue, rename any dependent objects.
 	 * @param inOldVenue Venue name being renamed.
 	 * @param inNewVenue New venue name.
