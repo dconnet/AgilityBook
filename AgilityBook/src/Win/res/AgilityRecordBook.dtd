@@ -7,7 +7,7 @@ In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 Revision History:
-2004-03-13 DRC File version 8.5.
+2004-03-21 DRC File version 8.5.
                Added 'isHidden' to 'Title', made 'Date' optional.
 2004-03-08 DRC File version 8.4, Configuration version 2.
                Added versioning to configuration to allow auto-upgrades.
