@@ -160,7 +160,9 @@ void CWizardImport::UpdateButtons()
 	DWORD dwWiz = PSWIZB_BACK;
 	// Some test to make sure things are ready
 	bool bOk = false;
-	if (1 == GetDelim().GetLength())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		bOk = true;
+	else if (1 == GetDelim().GetLength())
 		bOk = true;
 	BOOL bEnable = FALSE;
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
@@ -180,6 +182,17 @@ void CWizardImport::UpdateButtons()
 			}
 		}
 	}
+	int nCmdShow = SW_SHOW;
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		nCmdShow = SW_HIDE;
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_GROUP)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_TAB)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_SPACE)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_COLON)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_SEMI)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_COMMA)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM_OTHER)->ShowWindow(nCmdShow);
+    GetDlgItem(IDC_WIZARD_IMPORT_DELIM)->ShowWindow(nCmdShow);
 	m_ctrlAssign.EnableWindow(bEnable);
 	dwWiz |= (bOk ? PSWIZB_FINISH : PSWIZB_DISABLEDFINISH);
 	m_pSheet->SetWizardButtons(dwWiz);
@@ -239,58 +252,45 @@ static bool GetField(const CString& delim, CString& ioStr, CString& outFld, int 
 
 void CWizardImport::UpdatePreview()
 {
-	CString delim = GetDelim();
-	if (1 != delim.GetLength())
-		return;
+	CWaitCursor wait;
+
+	// Clear existing preview data.
 	m_ctrlPreview.DeleteAllItems();
 	int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
-	int i;
-	for (i = 0; i < nColumnCount; ++i)
+	int iCol;
+	for (iCol = 0; iCol < nColumnCount; ++iCol)
 		m_ctrlPreview.DeleteColumn(0);
-	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
-	size_t iCol;
-	std::vector<int> columns[IO_TYPE_MAX];
-	for (iCol = 0; iCol < IO_TYPE_MAX; ++iCol)
+
+	CString delim = GetDelim();
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
-		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
+	}
+	else if (1 != delim.GetLength())
+		return;
+
+	// Get export columns.
+	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
+	size_t index;
+	std::vector<int> columns[IO_TYPE_MAX];
+	for (index = 0; index < IO_TYPE_MAX; ++index)
+	{
+		CDlgAssignColumns::GetColumnOrder(order, index, columns[iCol]);
 	}
 
+	// Now generate the header information.
 	CStringArray cols;
 	switch (m_pSheet->GetImportExportItem())
 	{
 	default: break;
 	case WIZ_IMPORT_RUNS:
+		for (index = 0; index < IO_TYPE_MAX; ++index)
 		{
-			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_FAULTS_TIME].size(); ++iCol)
+			if (0 == columns[index].size())
+				continue;
+			for (iCol = 0; iCol < static_cast<int>(columns[index].size()); ++iCol)
 			{
-				cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_FAULTS_TIME][iCol]));
-			}
-			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_TIME_FAULTS].size(); ++iCol)
-			{
-				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_TIME_FAULTS][iCol]);
-				if (iCol >= static_cast<size_t>(cols.GetSize()))
-					cols.Add(str);
-				else
-				{
-					if (cols[iCol] != str && 0 < str.GetLength())
-						cols[iCol] += "/" + str;
-				}
-			}
-			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_OPEN_CLOSE].size(); ++iCol)
-			{
-				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_OPEN_CLOSE][iCol]);
-				if (iCol >= static_cast<size_t>(cols.GetSize()))
-					cols.Add(str);
-				else
-				{
-					if (cols[iCol] != str && 0 < str.GetLength())
-						cols[iCol] += "/" + str;
-				}
-			}
-			for (iCol = 0; iCol < columns[IO_TYPE_RUNS_POINTS].size(); ++iCol)
-			{
-				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_RUNS_POINTS][iCol]);
-				if (iCol >= static_cast<size_t>(cols.GetSize()))
+				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
+				if (iCol >= cols.GetSize())
 					cols.Add(str);
 				else
 				{
@@ -301,45 +301,52 @@ void CWizardImport::UpdatePreview()
 		}
 		break;
 	case WIZ_IMPORT_CALENDAR:
-		for (iCol = 0; iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
+		for (index = 0; index < columns[IO_TYPE_CALENDAR].size(); ++index)
 		{
-			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][iCol]));
+			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][index]));
 		}
 		break;
 	case WIZ_IMPORT_LOG:
-		for (iCol = 0; iCol < columns[IO_TYPE_TRAINING].size(); ++iCol)
+		for (index = 0; index < columns[IO_TYPE_TRAINING].size(); ++index)
 		{
-			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][iCol]));
+			cols.Add(CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][index]));
 		}
 		break;
 	}
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (iCol = 0; iCol < static_cast<size_t>(cols.GetSize()); ++iCol)
+	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
 	{
 		CString str = cols[iCol];
 		col.fmt = LVCFMT_LEFT;
 		col.pszText = str.GetBuffer(0);
-		col.iSubItem = static_cast<int>(iCol);
-		m_ctrlPreview.InsertColumn(static_cast<int>(iCol), &col);
+		col.iSubItem = iCol;
+		m_ctrlPreview.InsertColumn(iCol, &col);
 	}
 
-	for (i = m_Row - 1; i < m_FileData.GetSize(); ++i)
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
-		CString str = m_FileData[i];
-		CString fld;
-		iCol = 0;
-		while (GetField(delim, str, fld, static_cast<int>(iCol), cols.GetSize()))
+		//TODO: pull excel data
+	}
+	else
+	{
+		for (int iLine = m_Row - 1; iLine < m_FileData.GetSize(); ++iLine)
 		{
-			if (0 == iCol)
-				m_ctrlPreview.InsertItem(i-(m_Row-1), fld);
-			else
-				m_ctrlPreview.SetItemText(i-(m_Row-1), static_cast<int>(iCol), fld);
-			++iCol;
+			CString str = m_FileData[iLine];
+			CString fld;
+			iCol = 0;
+			while (GetField(delim, str, fld, iCol, cols.GetSize()))
+			{
+				if (0 == iCol)
+					m_ctrlPreview.InsertItem(iLine-(m_Row-1), fld);
+				else
+					m_ctrlPreview.SetItemText(iLine-(m_Row-1), iCol, fld);
+				++iCol;
+			}
 		}
 	}
-	for (iCol = 0; iCol < static_cast<size_t>(cols.GetSize()); ++iCol)
-		m_ctrlPreview.SetColumnWidth(static_cast<int>(iCol), LVSCW_AUTOSIZE_USEHEADER);
+	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -454,18 +461,21 @@ BOOL CWizardImport::OnWizardFinish()
 	if (CB_ERR == index)
 		return FALSE;
 	CAgilityBookOptions::SetImportStartRow(m_Row);
-	int delim;
-	switch (m_Delim)
+	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
 	{
-	default:
-	case 0: delim = CAgilityBookOptions::eDelimTab; break;
-	case 1: delim = CAgilityBookOptions::eDelimSpace; break;
-	case 2: delim = CAgilityBookOptions::eDelimColon; break;
-	case 3: delim = CAgilityBookOptions::eDelimSemicolon; break;
-	case 4: delim = CAgilityBookOptions::eDelimComma; break;
-	case 5: delim = CAgilityBookOptions::eDelimOther; break;
+		int delim;
+		switch (m_Delim)
+		{
+		default:
+		case 0: delim = CAgilityBookOptions::eDelimTab; break;
+		case 1: delim = CAgilityBookOptions::eDelimSpace; break;
+		case 2: delim = CAgilityBookOptions::eDelimColon; break;
+		case 3: delim = CAgilityBookOptions::eDelimSemicolon; break;
+		case 4: delim = CAgilityBookOptions::eDelimComma; break;
+		case 5: delim = CAgilityBookOptions::eDelimOther; break;
+		}
+		CAgilityBookOptions::SetImportExportDelimiters(true, delim, m_Delimiter);
 	}
-	CAgilityBookOptions::SetImportExportDelimiters(true, delim, m_Delimiter);
 	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
 	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
@@ -1171,7 +1181,10 @@ void CWizardImport::OnImportFile()
 	if (!UpdateData(TRUE))
 		return;
 	CString filter;
-	filter.LoadString(IDS_FILEEXT_FILTER_TXT);
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+		filter.LoadString(IDS_FILEEXT_FILTER_XLS);
+	else
+		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
 	CFileDialog file(TRUE, "", "", OFN_FILEMUSTEXIST, filter, this);
 	if (IDOK == file.DoModal())
 	{
@@ -1181,16 +1194,23 @@ void CWizardImport::OnImportFile()
 		m_ctrlPreviewFile.SetWindowText(str);
 		CWaitCursor wait;
 		m_FileData.RemoveAll();
-		CStdioFile file;
-		if (file.Open(m_FileName, CFile::modeRead | CFile::typeText))
+		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 		{
-			CString str;
-			while (file.ReadString(str))
+			// TODO: Read excel data
+		}
+		else
+		{
+			CStdioFile file;
+			if (file.Open(m_FileName, CFile::modeRead | CFile::typeText))
 			{
-				str.TrimRight();
-				m_FileData.Add(str);
+				CString str;
+				while (file.ReadString(str))
+				{
+					str.TrimRight();
+					m_FileData.Add(str);
+				}
+				file.Close();
 			}
-			file.Close();
 		}
 		UpdateButtons();
 		UpdatePreview();

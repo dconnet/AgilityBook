@@ -37,10 +37,11 @@
  */
 
 #include "DlgBaseSheet.h"
-#include "WizardExport.h"
-#include "WizardImport.h"
-#include "WizardStart.h"
+#include "WizardExcel.h"
 class CAgilityBookDoc;
+class CWizardExport;
+class CWizardImport;
+class CWizardStart;
 
 // These must agree with the order of items in sc_Items in WizardStart.cpp.
 // They are simply for ease-of-coding.
@@ -55,6 +56,11 @@ class CAgilityBookDoc;
 #define WIZ_EXPORT_DTD				8
 #define WIZ_EXPORT_XML				9
 
+// These must agree with the radio button ordering in WizardStart.cpp
+#define WIZARD_RADIO_EXCEL			0
+#define WIZARD_RADIO_SPREADSHEET	1
+#define WIZARD_RADIO_ARB			2
+
 class CWizard : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CWizard)
@@ -66,21 +72,32 @@ public:
 // Attributes
 private:
 	CAgilityBookDoc* m_pDoc;
-	CWizardStart m_pageStart;
-	CWizardImport m_pageImport;
-	CWizardExport m_pageExport;
+	CWizardStart* m_pageStart;
+	CWizardImport* m_pageImport;
+	CWizardExport* m_pageExport;
+	CWizardExcel m_Excel;
 	int m_ImportExportItem;
+	int m_ImportExportStyle;
 
 // Operations
 public:
 	/**
+	 * Get the Excel wrapper.
+	 */
+	CWizardExcel& ExcelHelper()			{return m_Excel;}
+	/**
 	 * This lets CWizardImport/Export know what data is being processed.
 	 */
 	int GetImportExportItem() const		{return m_ImportExportItem;}
+	int GetImportExportStyle() const	{return m_ImportExportStyle;}
 	/**
 	 * Only CWizardStart should call this.
 	 */
-	void SetImportExportItem(int item)	{m_ImportExportItem = item;}
+	void SetImportExportItem(int item, int style)
+	{
+		m_ImportExportItem = item;
+		m_ImportExportStyle = style;
+	}
 
 // Overrides
 	//{{AFX_VIRTUAL(CWizard)

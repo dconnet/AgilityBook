@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -27,20 +27,18 @@
 /**
  * @file
  *
- * @brief Import/Export Wizard
+ * @brief Import/Export Wizard for Excel
  * @author David Connet
  *
  * Revision History
- * @li 2003-12-10 DRC Created
+ * @li 2004-09-30 DRC Created
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
-#include "Wizard.h"
+#include "WizardExcel.h"
 
-#include "WizardExport.h"
-#include "WizardImport.h"
-#include "WizardStart.h"
+#include "excel8.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -49,46 +47,68 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CWizard
+// CWizardExcelImpl
 
-IMPLEMENT_DYNAMIC(CWizard, CDlgBaseSheet)
-
-#pragma warning( push )
-// Disable "warning C4355: 'this' : used in base member initializer list"
-#pragma warning( disable : 4355 )
-CWizard::CWizard(CAgilityBookDoc* pDoc, CWnd* pParentWnd)
-	: CDlgBaseSheet("", pParentWnd, 0)
-	, m_pDoc(pDoc)
-	, m_pageStart(NULL)
-	, m_pageImport(NULL)
-	, m_pageExport(NULL)
-	, m_Excel()
-	, m_ImportExportItem(-1)
-	, m_ImportExportStyle(-1)
+/**
+ * Hide all OLE implmentation details.
+ */
+class CWizardExcelImpl
 {
-	m_psh.dwFlags |= PSH_WIZARDCONTEXTHELP;
-	SetWizardMode();
-	// Have to delay these as their ctor will use m_Excel.
-	m_pageStart = new CWizardStart(this, m_pDoc);
-	m_pageImport = new CWizardImport(this, m_pDoc);
-	m_pageExport = new CWizardExport(this, m_pDoc);
-	AddPage(m_pageStart);
-	AddPage(m_pageImport);
-	AddPage(m_pageExport);
-}
-#pragma warning( pop )
+public:
+	CWizardExcelImpl();
+	bool IsOkay() const		{return NULL != app.m_lpDispatch;}
 
-CWizard::~CWizard()
+	Excel8::_Application app;
+};
+
+CWizardExcelImpl::CWizardExcelImpl()
 {
-	delete m_pageStart;
-	delete m_pageImport;
-	delete m_pageExport;
-}
+	// Get the ClassID from the ProgID.
+	CLSID clsid;
+	if (NOERROR != CLSIDFromProgID(L"Excel.Application", &clsid))
+	{
+		return;
+	}
 
-BEGIN_MESSAGE_MAP(CWizard, CDlgBaseSheet)
-	//{{AFX_MSG_MAP(CWizard)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	// Get an interface to the running instance.
+	//LPUNKNOWN lpUnk;
+	//LPDISPATCH lpDispatch;
+	//if (NOERROR == GetActiveObject(clsid, NULL, &lpUnk))
+	//{
+	//	HRESULT hr = lpUnk->QueryInterface(IID_IDispatch, (LPVOID*)&lpDispatch);
+	//	lpUnk->Release();
+	//	if (hr == NOERROR)
+	//		app.AttachDispatch(lpDispatch, TRUE);
+	//}
+
+	// If dispatch ptr not attached yet, need to create one
+	COleException e;
+	if (app.m_lpDispatch == NULL && !app.CreateDispatch(clsid, &e))
+	{
+		return;
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
-// CWizard message handlers
+// CWizardExcel
+
+CWizardExcel::CWizardExcel()
+	: m_Excel(NULL)
+{
+	m_Excel = new CWizardExcelImpl();
+	if (m_Excel && !m_Excel->IsOkay())
+	{
+		delete m_Excel;
+		m_Excel = NULL;
+	}
+}
+
+CWizardExcel::~CWizardExcel()
+{
+	delete m_Excel;
+}
+
+bool CWizardExcel::IsAvailable() const
+{
+	return (m_Excel && m_Excel->IsOkay());
+}

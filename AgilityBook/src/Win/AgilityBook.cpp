@@ -218,6 +218,11 @@ CAgilityBookApp theApp;
 // CAgilityBookApp initialization
 BOOL CAgilityBookApp::InitInstance()
 {
+	if (!AfxOleInit())
+	{
+		AfxMessageBox("Cannot initialize COM");
+		return FALSE;
+	}
 	CWinApp::InitInstance();
 
 	try

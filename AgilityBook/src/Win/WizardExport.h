@@ -38,8 +38,9 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "AgilityBookOptions.h"
 #include "DlgBasePropertyPage.h"
-#include "ListBox.h"
+#include "ListCtrl.h"
 class CAgilityBookDoc;
 class CWizard;
 
@@ -60,15 +61,17 @@ private:
 	CString	m_Delimiter;
 	CButton	m_ctrlAssign;
 	CComboBox	m_ctrlDateFormat;
-	CListBox2	m_ctrlPreview;
+	CListCtrl2	m_ctrlPreview;
 	//}}AFX_DATA
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
 
 private:
+	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
 	CString GetDelim() const;
 	CString PrepFieldOutput(LPCTSTR inStr) const;
 	void UpdateButtons();
+	CString AddPreviewData(int inLine, int inCol, CString inData);
 	void UpdatePreview();
 
 // Overrides
