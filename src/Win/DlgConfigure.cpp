@@ -881,6 +881,7 @@ void CDlgConfigure::OnUpdate()
 				}
 			}
 		}
+		update.GetActions().clear();
 		msg += m_Config.Update(0, update).c_str();
 		if (0 < msg.GetLength())
 		{

@@ -54,14 +54,16 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfig::ARBConfig()
-	: m_Venues()
+	: m_Actions()
+	, m_Venues()
 	, m_FaultTypes()
 	, m_OtherPoints()
 {
 }
 
 ARBConfig::ARBConfig(const ARBConfig& rhs)
-	: m_Venues(rhs.m_Venues)
+	: m_Actions(rhs.m_Actions)
+	, m_Venues(rhs.m_Venues)
 	, m_FaultTypes(rhs.m_FaultTypes)
 	, m_OtherPoints(rhs.m_OtherPoints)
 {
@@ -76,6 +78,7 @@ ARBConfig& ARBConfig::operator=(const ARBConfig& rhs)
 {
 	if (this != &rhs)
 	{
+		m_Actions = rhs.m_Actions;
 		m_Venues = rhs.m_Venues;
 		m_FaultTypes = rhs.m_FaultTypes;
 		m_OtherPoints = rhs.m_OtherPoints;
@@ -85,7 +88,8 @@ ARBConfig& ARBConfig::operator=(const ARBConfig& rhs)
 
 bool ARBConfig::operator==(const ARBConfig& rhs) const
 {
-	return m_Venues == rhs.m_Venues
+	return m_Actions == rhs.m_Actions
+		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
 }
@@ -97,8 +101,9 @@ bool ARBConfig::operator!=(const ARBConfig& rhs) const
 
 void ARBConfig::clear()
 {
-	m_FaultTypes.clear();
+	m_Actions.clear();
 	m_Venues.clear();
+	m_FaultTypes.clear();
 	m_OtherPoints.clear();
 }
 

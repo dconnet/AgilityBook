@@ -427,6 +427,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 		return FALSE;
 	AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
 	m_Records.Default();
+	m_Records.GetConfig().GetActions().clear();
 	return TRUE;
 }
 
