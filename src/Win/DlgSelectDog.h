@@ -36,6 +36,7 @@
  */
 
 #include <vector>
+#include "DlgBaseDialog.h"
 class ARBDog;
 class CAgilityBookDoc;
 
@@ -45,7 +46,7 @@ class CAgilityBookDoc;
 #define DOMODAL_RETVAL	int
 #endif
 
-class CDlgSelectDog : public CDialog
+class CDlgSelectDog : public CDlgBaseDialog
 {
 // Construction
 public:

@@ -39,6 +39,7 @@
 #include <afxinet.h>
 #include <vector>
 #include "ColumnOrder.h"
+#include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 
 class ARBDog;
@@ -46,7 +47,7 @@ class ARBDogList;
 class ARBDogRun;
 class ARBDogTrial;
 
-class CDlgFindLinks : public CDialog
+class CDlgFindLinks : public CDlgBaseDialog
 {
 	friend int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 public:

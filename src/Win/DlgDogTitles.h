@@ -39,13 +39,14 @@
 
 #include "ARBDogTitle.h"
 #include "ColumnOrder.h"
+#include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 class ARBConfig;
 class ARBDog;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDogTitles : public CPropertyPage
+class CDlgDogTitles : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:

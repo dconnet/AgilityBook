@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgRunCRCD dialog
 
 CDlgRunCRCD::CDlgRunCRCD(ARBDogRun* pRun)
-	: CPropertyPage(CDlgRunCRCD::IDD)
+	: CDlgBasePropertyPage(CDlgRunCRCD::IDD)
 	, m_Run(pRun)
 	, m_metaFile(NULL)
 	, m_ViewText(false)
@@ -73,7 +73,7 @@ CDlgRunCRCD::~CDlgRunCRCD()
 
 void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunCRCD)
 	DDX_Control(pDX, IDC_RUNCRCD_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_RUNCRCD_VIEW, m_ctrlView);
@@ -83,7 +83,7 @@ void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgRunCRCD, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgRunCRCD, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunCRCD)
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_RUNCRCD_EDIT, OnEdit)
@@ -157,7 +157,7 @@ void CDlgRunCRCD::SetView()
 
 BOOL CDlgRunCRCD::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlCRCD.GetWindowRect(m_rCRCDwin);
 	m_ctrlCRCD.GetClientRect(m_rCRCDclient);
 	m_ctrlCRCD.MapWindowPoints(this, m_rCRCDclient);
@@ -196,7 +196,7 @@ HBRUSH CDlgRunCRCD::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if (pWnd->GetDlgCtrlID() == IDC_RUNCRCD_CRCD)
 		hbr = GetSysColorBrush(COLOR_WINDOW);
 	else
-		hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+		hbr = CDlgBasePropertyPage::OnCtlColor(pDC, pWnd, nCtlColor);
 	return hbr;
 }
 

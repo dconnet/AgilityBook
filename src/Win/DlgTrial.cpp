@@ -68,7 +68,7 @@ static int const nColInfo1 = sizeof(colInfo1) / sizeof(colInfo1[0]);
 // CDlgTrial dialog
 
 CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent)
-	: CDialog(CDlgTrial::IDD, pParent)
+	: CDlgBaseDialog(CDlgTrial::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
 	, m_Clubs(pTrial->GetClubs())
@@ -84,7 +84,7 @@ CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent)
 
 void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTrial)
 	DDX_CBString(pDX, IDC_TRIAL_LOCATION, m_Location);
 	DDX_Control(pDX, IDC_TRIAL_LOCATION, m_ctrlLocation);
@@ -96,7 +96,7 @@ void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgTrial, CDialog)
+BEGIN_MESSAGE_MAP(CDlgTrial, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTrial)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TRIAL_CLUBS, OnItemchangedClubs)
 	ON_NOTIFY(NM_DBLCLK, IDC_TRIAL_CLUBS, OnDblclkClubs)
@@ -144,7 +144,7 @@ void CDlgTrial::ListClubs()
 
 BOOL CDlgTrial::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	m_ctrlClubs.SetExtendedStyle(m_ctrlClubs.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 
 	LV_COLUMN col;
@@ -306,5 +306,5 @@ void CDlgTrial::OnOK()
 	m_pTrial->SetNote((LPCSTR)m_Notes);
 	m_pTrial->SetVerified(m_Verified ? true : false);
 	m_pTrial->GetClubs() = m_Clubs;
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

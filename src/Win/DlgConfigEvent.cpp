@@ -62,7 +62,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigEvent dialog
 
 CDlgConfigEvent::CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent)
-	: CDialog(CDlgConfigEvent::IDD, pParent)
+	: CDlgBaseDialog(CDlgConfigEvent::IDD, pParent)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
 	, m_Scorings(pEvent->GetScorings())
@@ -89,7 +89,7 @@ CDlgConfigEvent::~CDlgConfigEvent()
 
 void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigEvent)
 	DDX_Text(pDX, IDC_CONFIG_EVENT, m_Name);
 	DDX_Check(pDX, IDC_CONFIG_EVENT_TABLE, m_bHasTable);
@@ -127,7 +127,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
@@ -541,7 +541,7 @@ bool CDlgConfigEvent::SaveControls()
 
 BOOL CDlgConfigEvent::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	m_ctrlPointsOpeningText.GetWindowText(m_strOpening[0]);
 	m_strOpening[1].LoadString(IDS_SCORING_REQUIRED_POINTS);
@@ -913,5 +913,5 @@ void CDlgConfigEvent::OnOK()
 	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
 	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
 	m_pEvent->GetScorings() = m_Scorings;
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

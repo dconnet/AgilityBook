@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgDogProperties dialog
 
 CDlgDogProperties::CDlgDogProperties(ARBConfig& config, ARBDog* pDog)
-	: CPropertyPage(CDlgDogProperties::IDD)
+	: CDlgBasePropertyPage(CDlgDogProperties::IDD)
 	, m_Config(config)
 	, m_pDog(pDog)
 	, m_DOB(pDog->GetDOB())
@@ -75,7 +75,7 @@ CDlgDogProperties::~CDlgDogProperties()
 
 void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogProperties)
 	DDX_Text(pDX, IDC_DOG_CALLNAME, m_CallName);
 	DDX_Control(pDX, IDC_DOG_DOB, m_ctrlDateDOB);
@@ -119,7 +119,7 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
-BEGIN_MESSAGE_MAP(CDlgDogProperties, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgDogProperties, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogProperties)
 	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOG_DOB, OnDatetimechange)
 	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DOG_DECEASED, OnDatetimechange)
@@ -147,7 +147,7 @@ void CDlgDogProperties::UpdateAge()
 
 BOOL CDlgDogProperties::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 
 	CTime dob;
 	if (m_pDog->GetDOB().IsValid())

@@ -346,7 +346,7 @@ void CDlgListCtrlDataPartners::Apply()
 
 // Calendar
 CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vector<ARBCalendar*> const* entries, CTabView* pTabView, CWnd* pParent)
-	: CDialog(CDlgListCtrl::IDD, pParent)
+	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eCalendar)
 	, m_pDoc(pDoc)
 	, m_Date(date)
@@ -361,7 +361,7 @@ CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vect
 
 // Faults
 CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent)
-	: CDialog(CDlgListCtrl::IDD, pParent)
+	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eFaults)
 	, m_pDoc(pDoc)
 	, m_CalEntries(NULL)
@@ -373,7 +373,7 @@ CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent)
 
 // OtherPoints
 CDlgListCtrl::CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pParent)
-	: CDialog(CDlgListCtrl::IDD, pParent)
+	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eOtherPoints)
 	, m_pDoc(NULL)
 	, m_CalEntries(NULL)
@@ -385,7 +385,7 @@ CDlgListCtrl::CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pPare
 
 // Partners
 CDlgListCtrl::CDlgListCtrl(ARBDogRun* run, CWnd* pParent)
-	: CDialog(CDlgListCtrl::IDD, pParent)
+	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(ePartners)
 	, m_pDoc(NULL)
 	, m_CalEntries(NULL)
@@ -397,7 +397,7 @@ CDlgListCtrl::CDlgListCtrl(ARBDogRun* run, CWnd* pParent)
 
 void CDlgListCtrl::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgListCtrl)
 	DDX_Control(pDX, IDC_LIST, m_ctrlList);
 	DDX_Control(pDX, IDC_LIST_EDIT, m_ctrlEdit);
@@ -408,7 +408,7 @@ void CDlgListCtrl::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgListCtrl, CDialog)
+BEGIN_MESSAGE_MAP(CDlgListCtrl, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListCtrl)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST, OnGetdispinfoList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
@@ -480,7 +480,7 @@ void CDlgListCtrl::SwapEntries(int oldIndex, int newIndex)
 
 BOOL CDlgListCtrl::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	m_ctrlList.SetExtendedStyle(m_ctrlList.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlCreateTrial.ShowWindow(SW_HIDE);
 
@@ -887,5 +887,5 @@ void CDlgListCtrl::OnOK()
 		break;
 	}
 
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

@@ -73,7 +73,7 @@ public:
 CDlgExistingPoints::CDlgExistingPoints(ARBConfig const& config,
 	ARBDogExistingPointsList& points,
 	ARBDogExistingPoints* pExistingPoints, CWnd* pParent)
-	: CDialog(CDlgExistingPoints::IDD, pParent)
+	: CDlgBaseDialog(CDlgExistingPoints::IDD, pParent)
 	, m_Config(config)
 	, m_PointsList(points)
 	, m_pExistingPoints(pExistingPoints)
@@ -93,7 +93,7 @@ CDlgExistingPoints::CDlgExistingPoints(ARBConfig const& config,
 
 void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgExistingPoints)
 	DDX_Control(pDX, IDC_EXISTING_DATE, m_ctrlDate);
 	DDX_Control(pDX, IDC_EXISTING_TYPE, m_ctrlType);
@@ -113,7 +113,7 @@ void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
-BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDialog)
+BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgExistingPoints)
 	ON_CBN_SELCHANGE(IDC_EXISTING_TYPE, OnSelchangeType)
 	ON_CBN_SELCHANGE(IDC_EXISTING_VENUES, OnSelchangeVenues)
@@ -294,7 +294,7 @@ void CDlgExistingPoints::FillEvents()
 
 BOOL CDlgExistingPoints::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	ARBDogExistingPoints::PointType types[] =
 	{
@@ -469,11 +469,11 @@ void CDlgExistingPoints::OnOK()
 	}
 
 	ClearLevels();
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }
 
 void CDlgExistingPoints::OnCancel()
 {
 	ClearLevels();
-	CDialog::OnCancel();
+	CDlgBaseDialog::OnCancel();
 }

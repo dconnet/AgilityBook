@@ -48,7 +48,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigTitle dialog
 
 CDlgConfigTitle::CDlgConfigTitle(LPCTSTR name, LPCTSTR longname, LPCTSTR desc, CWnd* pParent)
-	: CDialog(CDlgConfigTitle::IDD, pParent)
+	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
 	, m_Name(name)
 	, m_LongName(longname)
 	, m_Desc(desc)
@@ -64,7 +64,7 @@ CDlgConfigTitle::~CDlgConfigTitle()
 
 void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitle)
 	DDX_Text(pDX, IDC_CONFIG_TITLE_NAME, m_Name);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_LONG_NAME, m_LongName);
@@ -72,7 +72,7 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDialog)
+BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -81,7 +81,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgConfigTitle::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -110,7 +110,7 @@ void CDlgConfigTitle::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_TITLE_NAME));
 		return;
 	}
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 	// Get rid of the dialog first - either that or we have to UpdateData(FALSE)
 	// since OnOK will UpdateData(TRUE).
 	m_Desc.Replace("\r\n", "\n");

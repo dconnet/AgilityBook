@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgFault dialog
 
 CDlgFault::CDlgFault(std::set<std::string>& faults, LPCTSTR pFault, CWnd* pParent)
-	: CDialog(CDlgFault::IDD, pParent)
+	: CDlgBaseDialog(CDlgFault::IDD, pParent)
 	, m_setFaults(faults)
 {
 	//{{AFX_DATA_INIT(CDlgFault)
@@ -64,14 +64,14 @@ CDlgFault::CDlgFault(std::set<std::string>& faults, LPCTSTR pFault, CWnd* pParen
 
 void CDlgFault::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgFault)
 	DDX_Control(pDX, IDC_FAULTS, m_ctrlFaults);
 	DDX_CBString(pDX, IDC_FAULTS, m_Faults);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgFault, CDialog)
+BEGIN_MESSAGE_MAP(CDlgFault, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgFault)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -81,7 +81,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgFault::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	
 	for (std::set<std::string>::const_iterator iter = m_setFaults.begin(); iter != m_setFaults.end(); ++iter)
 	{
@@ -102,5 +102,5 @@ void CDlgFault::OnOK()
 	UpdateData(FALSE);
 	if (m_Faults.IsEmpty())
 		return;
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

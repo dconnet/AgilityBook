@@ -36,11 +36,12 @@
  */
 
 #include <vector>
+#include "DlgBaseDialog.h"
 #include "ListBox.h"
 class ARBBase;
 class CDlgConfigureData;
 
-class CDlgReorder : public CDialog
+class CDlgReorder : public CDlgBaseDialog
 {
 // Construction
 public:

@@ -48,7 +48,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgCRCDViewer dialog
 
 CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent)
-	: CDialog(CDlgCRCDViewer::IDD, pParent)
+	: CDlgBaseDialog(CDlgCRCDViewer::IDD, pParent)
 	, m_metaFile(inMetaFile)
 	, m_rDlg(0,0,0,0)
 	, m_rCRCDwin(0,0,0,0)
@@ -61,14 +61,14 @@ CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent)
 
 void CDlgCRCDViewer::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgCRCDViewer)
 	DDX_Control(pDX, IDC_VIEWER_CRCD, m_ctrlCRCD);
 	DDX_Control(pDX, IDOK, m_ctrlOK);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgCRCDViewer, CDialog)
+BEGIN_MESSAGE_MAP(CDlgCRCDViewer, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCRCDViewer)
 	ON_WM_CTLCOLOR()
 	ON_WM_GETMINMAXINFO()
@@ -113,7 +113,7 @@ void CDlgCRCDViewer::AdjustCRCD()
 
 BOOL CDlgCRCDViewer::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
@@ -141,7 +141,7 @@ HBRUSH CDlgCRCDViewer::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if (pWnd->GetDlgCtrlID() == IDC_VIEWER_CRCD)
 		hbr = GetSysColorBrush(COLOR_WINDOW);
 	else
-		hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+		hbr = CDlgBaseDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 	return hbr;
 }
 
@@ -149,12 +149,12 @@ void CDlgCRCDViewer::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = m_rDlg.Width();
 	lpMMI->ptMinTrackSize.y = m_rDlg.Height();
-	CDialog::OnGetMinMaxInfo(lpMMI);
+	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
 
 void CDlgCRCDViewer::OnSize(UINT nType, int cx, int cy)
 {
-	CDialog::OnSize(nType, cx, cy);
+	CDlgBaseDialog::OnSize(nType, cx, cy);
 	if (::IsWindow(m_ctrlCRCD.GetSafeHwnd()))
 	{
 		m_ctrlOK.SetWindowPos(NULL,

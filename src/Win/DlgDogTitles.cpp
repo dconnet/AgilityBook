@@ -143,7 +143,7 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 // CDlgDogTitles dialog
 
 CDlgDogTitles::CDlgDogTitles(ARBConfig& config, ARBDogTitleList const& titles)
-	: CPropertyPage(CDlgDogTitles::IDD)
+	: CDlgBasePropertyPage(CDlgDogTitles::IDD)
 	, m_Config(config)
 	, m_sortTitles("Titles")
 	, m_Titles(titles)
@@ -162,7 +162,7 @@ CDlgDogTitles::CDlgDogTitles(ARBConfig& config, ARBDogTitleList const& titles)
 
 void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgDogTitles)
 	DDX_Control(pDX, IDC_DOG_TITLE_TITLES, m_ctrlTitles);
 	DDX_Control(pDX, IDC_DOG_TITLE_EDIT, m_ctrlTitleEdit);
@@ -171,7 +171,7 @@ void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgDogTitles, CPropertyPage)
+BEGIN_MESSAGE_MAP(CDlgDogTitles, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogTitles)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOG_TITLE_TITLES, OnColumnclickTitles)
 	ON_NOTIFY(NM_DBLCLK, IDC_DOG_TITLE_TITLES, OnDblclkTitles)
@@ -297,7 +297,7 @@ void CDlgDogTitles::UpdateButtons()
 
 BOOL CDlgDogTitles::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
 	m_ctrlTitles.SetImageList(&m_ImageList, LVSIL_SMALL);
 

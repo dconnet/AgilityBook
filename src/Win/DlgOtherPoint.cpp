@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgOtherPoint dialog
 
 CDlgOtherPoint::CDlgOtherPoint(ARBConfig const& config, ARBDogRunOtherPoints* pOther, CWnd* pParent)
-	: CDialog(CDlgOtherPoint::IDD, pParent)
+	: CDlgBaseDialog(CDlgOtherPoint::IDD, pParent)
 	, m_Config(config)
 	, m_pOther(pOther)
 {
@@ -62,7 +62,7 @@ CDlgOtherPoint::CDlgOtherPoint(ARBConfig const& config, ARBDogRunOtherPoints* pO
 
 void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOtherPoint)
 	DDX_Control(pDX, IDC_OTHER_OTHERPOINTS, m_ctrlOtherPoints);
 	DDX_Control(pDX, IDC_OTHER_DESC, m_ctrlDesc);
@@ -70,7 +70,7 @@ void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDialog)
+BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgOtherPoint)
 	ON_CBN_SELCHANGE(IDC_OTHER_OTHERPOINTS, OnSelchangeOtherpoints)
 	//}}AFX_MSG_MAP
@@ -81,7 +81,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgOtherPoint::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	m_ctrlDesc.SetWindowText("");
 	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
@@ -128,5 +128,5 @@ void CDlgOtherPoint::OnOK()
 	ARBConfigOtherPoints* pOther = reinterpret_cast<ARBConfigOtherPoints*>(m_ctrlOtherPoints.GetItemDataPtr(index));
 	m_pOther->SetName(pOther->GetName());
 	m_pOther->SetPoints(m_Points);
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

@@ -35,7 +35,9 @@
  * Revision History
  */
 
-class CDlgMessage : public CDialog
+#include "DlgBaseDialog.h"
+
+class CDlgMessage : public CDlgBaseDialog
 {
 public:
 	CDlgMessage(CString const& msg, UINT caption = 0, CWnd* pParent = NULL);

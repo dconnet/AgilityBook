@@ -49,7 +49,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgPartner dialog
 
 CDlgPartner::CDlgPartner(ARBDogRunPartner* partner, CWnd* pParent)
-	: CDialog(CDlgPartner::IDD, pParent)
+	: CDlgBaseDialog(CDlgPartner::IDD, pParent)
 	, m_Partner(partner)
 {
 	ASSERT(m_Partner);
@@ -62,7 +62,7 @@ CDlgPartner::CDlgPartner(ARBDogRunPartner* partner, CWnd* pParent)
 
 void CDlgPartner::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgPartner)
 	DDX_Text(pDX, IDC_PARTNER_NAME, m_Handler);
 	DDX_Text(pDX, IDC_PARTNER_CALLNAME, m_Dog);
@@ -70,7 +70,7 @@ void CDlgPartner::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgPartner, CDialog)
+BEGIN_MESSAGE_MAP(CDlgPartner, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgPartner)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -80,7 +80,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgPartner::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -99,5 +99,5 @@ void CDlgPartner::OnOK()
 	m_Partner->SetHandler((LPCSTR)m_Handler);
 	m_Partner->SetDog((LPCSTR)m_Dog);
 	m_Partner->SetRegNum((LPCSTR)m_RegNum);
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

@@ -35,10 +35,11 @@
  * Revision History
  */
 
+#include "DlgBasePropertyPage.h"
 class ARBDogRun;
 class CAgilityBookDoc;
 
-class CDlgRunComments : public CPropertyPage
+class CDlgRunComments : public CDlgBasePropertyPage
 {
 public:
 	CDlgRunComments(CAgilityBookDoc* pDoc, ARBDogRun* pRun);

@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 // If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgRegNum::CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent)
-	: CDialog(CDlgRegNum::IDD, pParent)
+	: CDlgBaseDialog(CDlgRegNum::IDD, pParent)
 	, m_Config(config)
 	, m_RegNums(regnums)
 	, m_pRegNum(pRegNum)
@@ -65,7 +65,7 @@ CDlgRegNum::CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDo
 
 void CDlgRegNum::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRegNum)
 	DDX_Control(pDX, IDC_REGNUM_VENUES, m_ctrlVenues);
 	DDX_Text(pDX, IDC_REGNUM_REG_NUM, m_RegNum);
@@ -74,7 +74,7 @@ void CDlgRegNum::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgRegNum, CDialog)
+BEGIN_MESSAGE_MAP(CDlgRegNum, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgRegNum)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -84,7 +84,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgRegNum::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	for (ARBConfigVenueList::const_iterator iter = m_Config.GetVenues().begin();
 		iter != m_Config.GetVenues().end();
 		++iter)
@@ -141,5 +141,5 @@ void CDlgRegNum::OnOK()
 		pRegNum->SetHeight((LPCSTR)m_Height);
 		pRegNum->SetReceived(m_bReceived ? true : false);
 	}
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

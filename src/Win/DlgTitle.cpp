@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 
 // If pTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent)
-	: CDialog(CDlgTitle::IDD, pParent)
+	: CDlgBaseDialog(CDlgTitle::IDD, pParent)
 	, m_Config(config)
 	, m_Titles(titles)
 	, m_pTitle(pTitle)
@@ -64,7 +64,7 @@ CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTit
 
 void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTitle)
 	DDX_Control(pDX, IDC_TITLE_EARNED, m_ctrlEarned);
 	DDX_Control(pDX, IDC_TITLE_DATE, m_ctrlDate);
@@ -76,7 +76,7 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgTitle, CDialog)
+BEGIN_MESSAGE_MAP(CDlgTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
 	ON_BN_CLICKED(IDC_TITLE_EARNED, OnBnClickedEarned)
 	ON_CBN_SELCHANGE(IDC_TITLE_VENUES, OnSelchangeVenues)
@@ -89,7 +89,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgTitle::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	m_bInit = true;
 	for (ARBConfigVenueList::const_iterator iter = m_Config.GetVenues().begin();
 		iter != m_Config.GetVenues().end();
@@ -250,5 +250,5 @@ void CDlgTitle::OnOK()
 	else
 		m_Titles.AddTitle(title);
 	title->Release();
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgReorder dialog
 
 CDlgReorder::CDlgReorder(std::vector<ARBBase*>& items, CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgReorder::IDD, pParent)
+	: CDlgBaseDialog(CDlgReorder::IDD, pParent)
 	, m_Items(items)
 {
 	//{{AFX_DATA_INIT(CDlgReorder)
@@ -59,7 +59,7 @@ CDlgReorder::CDlgReorder(std::vector<ARBBase*>& items, CWnd* pParent /*=NULL*/)
 
 void CDlgReorder::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgReorder)
 	DDX_Control(pDX, IDC_REORDER_LIST, m_ctrlList);
 	DDX_Control(pDX, IDC_REORDER_MOVE_UP, m_ctrlUp);
@@ -67,7 +67,7 @@ void CDlgReorder::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgReorder, CDialog)
+BEGIN_MESSAGE_MAP(CDlgReorder, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgReorder)
 	ON_LBN_SELCHANGE(IDC_REORDER_LIST, OnSelchangeList)
 	ON_BN_CLICKED(IDC_REORDER_MOVE_UP, OnMoveUp)
@@ -107,7 +107,7 @@ void CDlgReorder::EnableControls()
 
 BOOL CDlgReorder::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	LoadData();
 
@@ -158,5 +158,5 @@ void CDlgReorder::OnMoveDown()
 
 void CDlgReorder::OnOK() 
 {
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

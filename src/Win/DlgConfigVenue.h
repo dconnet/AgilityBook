@@ -37,6 +37,7 @@
  */
 
 #include "ARBConfigScoring.h"
+#include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 class ARBAgilityRecordBook;
 class ARBConfigDivision;
@@ -53,7 +54,7 @@ class CDlgConfigureDataSubLevel;
 class CDlgConfigureDataTitle;
 class CDlgFixup;
 
-class CDlgConfigVenue : public CDialog
+class CDlgConfigVenue : public CDlgBaseDialog
 {
 public:
 	CDlgConfigVenue(ARBAgilityRecordBook& book, ARBConfig& config, ARBConfigVenue* pVenue, CWnd* pParent = NULL);

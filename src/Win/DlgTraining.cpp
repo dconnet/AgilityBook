@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgTraining dialog
 
 CDlgTraining::CDlgTraining(ARBTraining* pTraining, CAgilityBookDoc* pDoc, CWnd* pParent)
-	: CDialog(CDlgTraining::IDD, pParent)
+	: CDlgBaseDialog(CDlgTraining::IDD, pParent)
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
 {
@@ -68,7 +68,7 @@ CDlgTraining::CDlgTraining(ARBTraining* pTraining, CAgilityBookDoc* pDoc, CWnd* 
 
 void CDlgTraining::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgTraining)
 	DDX_DateTimeCtrl(pDX, IDC_TRAINING_DATE, m_date);
 	DDX_Control(pDX, IDC_TRAINING_NAME, m_ctrlNames);
@@ -77,7 +77,7 @@ void CDlgTraining::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgTraining, CDialog)
+BEGIN_MESSAGE_MAP(CDlgTraining, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTraining)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -87,7 +87,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgTraining::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	std::set<std::string> names;
 	m_pDoc->GetTraining().GetAllNames(names);
@@ -117,5 +117,5 @@ void CDlgTraining::OnOK()
 	m_pTraining->SetName((LPCTSTR)m_Name);
 	m_pTraining->SetNote((LPCTSTR)m_Notes);
 
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

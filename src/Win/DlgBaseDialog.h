@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,47 +29,36 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptionsCalendar class
+ * @brief Base class for all dialogs.
  * @author David Connet
  *
  * Revision History
- * @li 2003-08-09 DRC Moved fonts to new page.
+ * 2004-05-31 DRC Created.
  */
 
-#include "AgilityBookOptions.h"
-#include "DlgBasePropertyPage.h"
-
-class CDlgOptionsCalendar : public CDlgBasePropertyPage
+class CDlgBaseDialog : public CDialog
 {
-	friend class CDlgOptions;
-	DECLARE_DYNCREATE(CDlgOptionsCalendar)
+	DECLARE_DYNAMIC(CDlgBaseDialog)
 public:
-	CDlgOptionsCalendar();
-	~CDlgOptionsCalendar();
+	explicit CDlgBaseDialog(LPCTSTR lpszTemplateName, CWnd* pParentWnd = NULL);
+	explicit CDlgBaseDialog(UINT nIDTemplate, CWnd* pParentWnd = NULL);
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgOptionsCalendar)
-	enum { IDD = IDD_VIEW_OPTIONS_CALENDAR };
-	int		m_DayOfWeek;
-	BOOL	m_bAutoDelete;
-	BOOL	m_bHideOld;
-	UINT	m_Days;
-	BOOL	m_bHideOverlapping;
-	int		m_sizeX;
-	int		m_sizeY;
+	//{{AFX_DATA(CDlgBaseDialog)
 	//}}AFX_DATA
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsCalendar)
+	//{{AFX_VIRTUAL(CDlgBaseDialog)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgOptionsCalendar)
+	//{{AFX_MSG(CDlgBaseDialog)
 	virtual BOOL OnInitDialog();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

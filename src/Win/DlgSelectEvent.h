@@ -35,9 +35,10 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBConfigVenue;
 
-class CDlgSelectEvent : public CDialog
+class CDlgSelectEvent : publicCDlgBaseDialog 
 {
 public:
 	CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent = NULL);

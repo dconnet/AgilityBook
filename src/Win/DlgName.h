@@ -35,7 +35,9 @@
  * Revision History
  */
 
-class CDlgName : public CDialog
+#include "DlgBaseDialog.h"
+
+class CDlgName : public CDlgBaseDialog
 {
 public:
 	CDlgName(LPCTSTR name, UINT caption = 0, CWnd* pParent = NULL);

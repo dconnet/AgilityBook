@@ -35,10 +35,11 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBConfig;
 class ARBConfigOtherPoints;
 
-class CDlgConfigOtherPoints : public CDialog
+class CDlgConfigOtherPoints : public CDlgBaseDialog
 {
 public:
 	CDlgConfigOtherPoints(ARBConfig& config, ARBConfigOtherPoints* pOther, CWnd* pParent = NULL);

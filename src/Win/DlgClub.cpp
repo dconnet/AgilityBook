@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 // If pClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgClub::CDlgClub(CAgilityBookDoc* pDoc, ARBDogClubList& clubs, ARBDogClub* pClub, CWnd* pParent)
-	: CDialog(CDlgClub::IDD, pParent)
+	: CDlgBaseDialog(CDlgClub::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Clubs(clubs)
 	, m_pClub(pClub)
@@ -65,7 +65,7 @@ CDlgClub::CDlgClub(CAgilityBookDoc* pDoc, ARBDogClubList& clubs, ARBDogClub* pCl
 
 void CDlgClub::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgClub)
 	DDX_Control(pDX, IDC_CLUB_CLUBS, m_ctrlClubs);
 	DDX_CBString(pDX, IDC_CLUB_CLUBS, m_Club);
@@ -73,7 +73,7 @@ void CDlgClub::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgClub, CDialog)
+BEGIN_MESSAGE_MAP(CDlgClub, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgClub)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -83,7 +83,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgClub::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	set<string> clubs;
 	m_pDoc->GetAllClubNames(clubs);
@@ -142,5 +142,5 @@ void CDlgClub::OnOK()
 	}
 	else
 		m_Clubs.AddClub((LPCSTR)m_Club, (LPCSTR)venue);
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

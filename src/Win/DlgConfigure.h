@@ -38,13 +38,14 @@
 #include <string>
 #include <vector>
 #include "ARBConfig.h"
+#include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgFixup;
 
-class CDlgConfigure : public CDialog
+class CDlgConfigure : public CDlgBaseDialog
 {
 public:
 	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book);

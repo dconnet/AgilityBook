@@ -35,10 +35,11 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBConfig;
 class ARBDogRunOtherPoints;
 
-class CDlgOtherPoint : public CDialog
+class CDlgOtherPoint : public CDlgBaseDialog
 {
 public:
 	CDlgOtherPoint(ARBConfig const& config, ARBDogRunOtherPoints* pOther, CWnd* pParent = NULL);

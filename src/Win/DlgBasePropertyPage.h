@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,47 +29,64 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptionsCalendar class
+ * @brief Base class for all property pages.
  * @author David Connet
  *
  * Revision History
- * @li 2003-08-09 DRC Moved fonts to new page.
+ * 2004-05-31 DRC Created.
  */
 
-#include "AgilityBookOptions.h"
-#include "DlgBasePropertyPage.h"
-
-class CDlgOptionsCalendar : public CDlgBasePropertyPage
+class CDlgBasePropertyPage : public CPropertyPage
 {
-	friend class CDlgOptions;
-	DECLARE_DYNCREATE(CDlgOptionsCalendar)
+	DECLARE_DYNAMIC(CDlgBasePropertyPage)
 public:
-	CDlgOptionsCalendar();
-	~CDlgOptionsCalendar();
+#if _MSC_VER < 1300
+	CDlgBasePropertyPage(UINT nIDTemplate, UINT nIDCaption = 0);
+	CDlgBasePropertyPage(LPCTSTR lpszTemplateName, UINT nIDCaption = 0);
+#else
+	explicit CDlgBasePropertyPage(
+		UINT nIDTemplate,
+		UINT nIDCaption = 0,
+		DWORD dwSize = sizeof(PROPSHEETPAGE)
+	);
+	explicit CDlgBasePropertyPage(
+		LPCTSTR lpszTemplateName,
+		UINT nIDCaption = 0,
+		DWORD dwSize = sizeof(PROPSHEETPAGE)
+	);
+	CDlgBasePropertyPage(
+		UINT nIDTemplate,
+		UINT nIDCaption,
+		UINT nIDHeaderTitle,
+		UINT nIDHeaderSubTitle = 0,
+		DWORD dwSize = sizeof(PROPSHEETPAGE)
+	);
+	CDlgBasePropertyPage(
+		LPCTSTR lpszTemplateName,
+		UINT nIDCaption,
+		UINT nIDHeaderTitle,
+		UINT nIDHeaderSubTitle = 0,
+		DWORD dwSize = sizeof(PROPSHEETPAGE)
+	);
+#endif
+	~CDlgBasePropertyPage();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgOptionsCalendar)
-	enum { IDD = IDD_VIEW_OPTIONS_CALENDAR };
-	int		m_DayOfWeek;
-	BOOL	m_bAutoDelete;
-	BOOL	m_bHideOld;
-	UINT	m_Days;
-	BOOL	m_bHideOverlapping;
-	int		m_sizeX;
-	int		m_sizeY;
+	//{{AFX_DATA(CDlgBasePropertyPage)
 	//}}AFX_DATA
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsCalendar)
+	//{{AFX_VIRTUAL(CDlgBasePropertyPage)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgOptionsCalendar)
+	//{{AFX_MSG(CDlgBasePropertyPage)
 	virtual BOOL OnInitDialog();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

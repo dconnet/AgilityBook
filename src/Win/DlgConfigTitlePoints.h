@@ -35,10 +35,11 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class ARBConfigTitlePoints;
 class ARBConfigTitlePointsList;
 
-class CDlgConfigTitlePoints : public CDialog
+class CDlgConfigTitlePoints : public CDlgBaseDialog
 {
 public:
 	CDlgConfigTitlePoints(

@@ -37,12 +37,13 @@
  */
 
 #include "ARBDate.h"
+#include "DlgBasePropertyPage.h"
 class ARBConfig;
 class ARBDog;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDogProperties : public CPropertyPage
+class CDlgDogProperties : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:

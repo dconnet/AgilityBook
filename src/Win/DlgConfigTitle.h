@@ -36,7 +36,9 @@
  * @li 2004-01-05 DRC Created.
  */
 
-class CDlgConfigTitle : public CDialog
+#include "DlgBaseDialog.h"
+
+class CDlgConfigTitle : public CDlgBaseDialog
 {
 public:
 	CDlgConfigTitle(LPCTSTR name, LPCTSTR desc, LPCTSTR longname, CWnd* pParent = NULL);

@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgCalendar dialog
 
 CDlgCalendar::CDlgCalendar(ARBCalendar* pCal, CAgilityBookDoc* pDoc, CWnd* pParent)
-	: CDialog(CDlgCalendar::IDD, pParent)
+	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)
 {
@@ -102,7 +102,7 @@ CDlgCalendar::CDlgCalendar(ARBCalendar* pCal, CAgilityBookDoc* pDoc, CWnd* pPare
 
 void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgCalendar)
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_START, m_dateStart);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_END, m_dateEnd);
@@ -122,7 +122,7 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgCalendar, CDialog)
+BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendar)
 	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
@@ -134,7 +134,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgCalendar::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	set<string> locations;
 	m_pDoc->GetAllTrialLocations(locations);
@@ -257,5 +257,5 @@ void CDlgCalendar::OnOK()
 	m_Notes.Replace("\r\n", "\n");
 	m_pCal->SetNote((LPCSTR)m_Notes);
 
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

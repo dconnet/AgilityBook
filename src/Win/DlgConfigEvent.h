@@ -36,11 +36,12 @@
  */
 
 #include "ARBConfigScoring.h"
+#include "DlgBaseDialog.h"
 #include "ListBox.h"
 class ARBConfigEvent;
 class ARBConfigVenue;
 
-class CDlgConfigEvent : public CDialog
+class CDlgConfigEvent : public CDlgBaseDialog
 {
 public:
 	CDlgConfigEvent(ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent = NULL);

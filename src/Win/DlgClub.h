@@ -35,11 +35,12 @@
  * Revision History
  */
 
+#include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 class ARBDogClub;
 class ARBDogClubList;
 
-class CDlgClub : public CDialog
+class CDlgClub : public CDlgBaseDialog
 {
 public:
 	CDlgClub(CAgilityBookDoc* pDoc, ARBDogClubList& clubs, ARBDogClub* pClub, CWnd* pParent = NULL);

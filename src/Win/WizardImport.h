@@ -38,10 +38,11 @@
  */
 
 #include "AgilityBookOptions.h"
+#include "DlgBasePropertyPage.h"
 class CAgilityBookDoc;
 class CWizard;
 
-class CWizardImport : public CPropertyPage
+class CWizardImport : public CDlgBasePropertyPage
 {
 	DECLARE_DYNAMIC(CWizardImport)
 

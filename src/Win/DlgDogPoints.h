@@ -38,13 +38,14 @@
 
 #include "ARBDogExistingPoints.h"
 #include "ColumnOrder.h"
+#include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 class ARBConfig;
 class ARBDog;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgDogPoints : public CPropertyPage
+class CDlgDogPoints : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:

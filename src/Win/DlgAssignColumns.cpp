@@ -444,7 +444,7 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 // CDlgAssignColumns dialog
 
 CDlgAssignColumns::CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgAssignColumns::IDD, pParent)
+	: CDlgBaseDialog(CDlgAssignColumns::IDD, pParent)
 	, m_eOrder(eOrder)
 	, m_bIncludeBlank(false)
 {
@@ -469,7 +469,7 @@ CDlgAssignColumns::CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CW
 
 void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgAssignColumns)
 	DDX_Control(pDX, IDC_ASSIGN_TYPE, m_ctrlType);
 	DDX_Control(pDX, IDC_ASSIGN_AVAILABLE, m_ctrlAvailable);
@@ -481,7 +481,7 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDialog)
+BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgAssignColumns)
 	ON_CBN_SELCHANGE(IDC_ASSIGN_TYPE, OnSelchangeType)
 	ON_LBN_SELCHANGE(IDC_ASSIGN_AVAILABLE, OnSelchangeAvailable)
@@ -588,7 +588,7 @@ void CDlgAssignColumns::UpdateButtons()
 
 BOOL CDlgAssignColumns::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	int index;
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)
@@ -739,5 +739,5 @@ void CDlgAssignColumns::OnOK()
 {
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		SetColumnOrder(m_eOrder, i, m_Columns[i]);
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

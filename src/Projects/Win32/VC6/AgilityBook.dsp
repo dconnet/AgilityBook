@@ -154,6 +154,14 @@ SOURCE=..\..\..\Win\DlgAssignColumns.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgBaseDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgBasePropertyPage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgCalendar.cpp
 # End Source File
 # Begin Source File
@@ -456,6 +464,14 @@ SOURCE=..\..\..\Win\CommonView.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgAssignColumns.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgBaseDialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgBasePropertyPage.h
 # End Source File
 # Begin Source File
 

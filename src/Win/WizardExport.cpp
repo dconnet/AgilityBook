@@ -62,10 +62,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWizardExport property page
 
-IMPLEMENT_DYNAMIC(CWizardExport, CPropertyPage)
+IMPLEMENT_DYNAMIC(CWizardExport, CDlgBasePropertyPage)
 
 CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc)
-	: CPropertyPage(CWizardExport::IDD)
+	: CDlgBasePropertyPage(CWizardExport::IDD)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 {
@@ -93,7 +93,7 @@ CWizardExport::~CWizardExport()
 
 void CWizardExport::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardExport)
 	DDX_Radio(pDX, IDC_WIZARD_EXPORT_DELIM_TAB, m_Delim);
 	DDX_Text(pDX, IDC_WIZARD_EXPORT_DELIM, m_Delimiter);
@@ -104,7 +104,7 @@ void CWizardExport::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CWizardExport, CPropertyPage)
+BEGIN_MESSAGE_MAP(CWizardExport, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardExport)
 	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_TAB, OnExportDelim)
 	ON_BN_CLICKED(IDC_WIZARD_EXPORT_ASSIGN, OnExportAssign)
@@ -668,7 +668,7 @@ void CWizardExport::UpdatePreview()
 
 BOOL CWizardExport::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	static struct
 	{
 		char const* pFormat;
@@ -700,7 +700,7 @@ BOOL CWizardExport::OnSetActive()
 {
 	UpdateButtons();
 	UpdatePreview();
-	return CPropertyPage::OnSetActive();
+	return CDlgBasePropertyPage::OnSetActive();
 }
 
 LRESULT CWizardExport::OnWizardBack()
@@ -747,7 +747,7 @@ BOOL CWizardExport::OnWizardFinish()
 			}
 			output.close();
 		}
-		return CPropertyPage::OnWizardFinish();
+		return CDlgBasePropertyPage::OnWizardFinish();
 	}
 	else
 		return FALSE;

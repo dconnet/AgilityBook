@@ -39,9 +39,10 @@
 #include <set>
 #include <string>
 #include "ARBInfoJudge.h"
+#include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
-class CDlgInfoJudge : public CDialog
+class CDlgInfoJudge : public CDlgBaseDialog
 {
 // Construction
 public:

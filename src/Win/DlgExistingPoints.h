@@ -37,11 +37,12 @@
  */
 
 #include "ARBDate.h"
+#include "DlgBaseDialog.h"
 class ARBConfig;
 class ARBDogExistingPoints;
 class ARBDogExistingPointsList;
 
-class CDlgExistingPoints : public CDialog
+class CDlgExistingPoints : public CDlgBaseDialog
 {
 public:
 	CDlgExistingPoints(ARBConfig const& config, ARBDogExistingPointsList& points, ARBDogExistingPoints* pExistingPoints, CWnd* pParent = NULL);

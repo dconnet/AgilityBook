@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgInfoJudge dialog
 
 CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgInfoJudge::IDD, pParent)
+	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Info(pDoc->GetInfo().GetJudgeInfo())
 {
@@ -62,7 +62,7 @@ CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, CWnd* pParent /*=NULL*/)
 
 void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgInfoJudge)
 	DDX_Control(pDX, IDC_JUDGE_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_JUDGE, m_ctrlJudge);
@@ -70,7 +70,7 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDialog)
+BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgInfoJudge)
 	ON_BN_CLICKED(IDC_JUDGE_NEW, OnNew)
 	ON_BN_CLICKED(IDC_JUDGE_DELETE, OnDelete)
@@ -84,7 +84,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgInfoJudge::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 
 	std::set<std::string> names;
 	m_pDoc->GetAllJudges(names);
@@ -199,5 +199,5 @@ void CDlgInfoJudge::OnOK()
 		m_pDoc->GetInfo().GetJudgeInfo() = m_Info;
 		m_pDoc->SetModifiedFlag();
 	}
-	CDialog::OnOK();
+	CDlgBaseDialog::OnOK();
 }

@@ -37,6 +37,7 @@
  */
 
 #include <vector>
+#include "DlgBasePropertyPage.h"
 class ARBConfigEvent;
 class ARBConfigOtherPoints;
 class ARBConfigScoring;
@@ -46,7 +47,7 @@ class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
 
-class CDlgRunScore : public CPropertyPage
+class CDlgRunScore : public CDlgBasePropertyPage
 {
 public:
 	CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,

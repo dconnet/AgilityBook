@@ -36,9 +36,10 @@
  * @li 2003-09-17 DRC Added a 'check for updates' control.
  */
 
+#include "DlgBaseDialog.h"
 #include "HyperLink.h"
 
-class CAboutDlg : public CDialog
+class CAboutDlg : public CDlgBaseDialog
 {
 public:
 	CAboutDlg();

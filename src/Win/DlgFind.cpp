@@ -48,7 +48,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgFind dialog
 
 CDlgFind::CDlgFind(IFindCallback& callback, CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgFind::IDD, pParent)
+	: CDlgBaseDialog(CDlgFind::IDD, pParent)
 	, m_Callback(callback)
 {
 	//{{AFX_DATA_INIT(CDlgFind)
@@ -61,7 +61,7 @@ CDlgFind::CDlgFind(IFindCallback& callback, CWnd* pParent /*=NULL*/)
 
 void CDlgFind::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgFind)
 	DDX_Text(pDX, IDC_FIND_NAME, m_strName);
 	DDX_Check(pDX, IDC_FIND_CASE, m_bCase);
@@ -71,7 +71,7 @@ void CDlgFind::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgFind, CDialog)
+BEGIN_MESSAGE_MAP(CDlgFind, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgFind)
 	ON_EN_CHANGE(IDC_FIND_NAME, OnChangeName)
 	//}}AFX_MSG_MAP
@@ -82,7 +82,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgFind::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	CDlgBaseDialog::OnInitDialog();
 	if (0 < m_strName.GetLength())
 		m_ctrlFind.EnableWindow(TRUE);
 	else

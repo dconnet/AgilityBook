@@ -40,9 +40,10 @@
 #include "ARBDate.h"
 #include "AgilityBookOptions.h"
 #include "CheckTreeCtrl.h"
+#include "DlgBasePropertyPage.h"
 class ARBConfig;
 
-class CDlgOptionsFilter : public CPropertyPage
+class CDlgOptionsFilter : public CDlgBasePropertyPage
 {
 	friend class CDlgOptions;
 	DECLARE_DYNAMIC(CDlgOptionsFilter)

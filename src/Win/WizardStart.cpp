@@ -58,10 +58,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
 
-IMPLEMENT_DYNAMIC(CWizardStart, CPropertyPage)
+IMPLEMENT_DYNAMIC(CWizardStart, CDlgBasePropertyPage)
 
 CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
-	: CPropertyPage(CWizardStart::IDD)
+	: CDlgBasePropertyPage(CWizardStart::IDD)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 {
@@ -76,7 +76,7 @@ CWizardStart::~CWizardStart()
 
 void CWizardStart::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardStart)
 	DDX_Radio(pDX, IDC_WIZARD_START_SPREADSHEET, m_Style);
 	DDX_Control(pDX, IDC_WIZARD_START_LIST, m_ctrlList);
@@ -84,7 +84,7 @@ void CWizardStart::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CWizardStart, CPropertyPage)
+BEGIN_MESSAGE_MAP(CWizardStart, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardStart)
 	ON_LBN_SELCHANGE(IDC_WIZARD_START_LIST, OnSelchangeExportList)
 	ON_LBN_DBLCLK(IDC_WIZARD_START_LIST, OnDblclkExportList)
@@ -244,7 +244,7 @@ void CWizardStart::UpdateButtons()
 
 BOOL CWizardStart::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CDlgBasePropertyPage::OnInitDialog();
 	UpdateList();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -253,7 +253,7 @@ BOOL CWizardStart::OnInitDialog()
 BOOL CWizardStart::OnSetActive() 
 {
 	UpdateButtons();
-	return CPropertyPage::OnSetActive();
+	return CDlgBasePropertyPage::OnSetActive();
 }
 
 LRESULT CWizardStart::OnWizardNext() 
@@ -530,7 +530,7 @@ BOOL CWizardStart::OnWizardFinish()
 		}
 	}
 	if (bOk)
-		return CPropertyPage::OnWizardFinish();
+		return CDlgBasePropertyPage::OnWizardFinish();
 	else
 		return FALSE;
 }
