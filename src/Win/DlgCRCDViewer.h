@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2004 David Connet. All Rights Reserved.
+ * Copyright © 2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,52 +29,44 @@
 /**
  * @file
  *
- * @brief interface of the CDlgRunCRCD class
+ * @brief interface of the CDlgCRCDViewer class
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-06 DRC Created
  */
 
-class ARBDogRun;
-
-class CDlgRunCRCD : public CPropertyPage
+class CDlgCRCDViewer : public CDialog
 {
 public:
-	CDlgRunCRCD(ARBDogRun* pRun);
-	~CDlgRunCRCD();
+	CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent = NULL);
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgRunCRCD)
-	enum { IDD = IDD_RUN_CRCD };
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlView;
-	CButton	m_ctrlInsert;
-	CEdit	m_ctrlText;
+	//{{AFX_DATA(CDlgCRCDViewer)
+	enum { IDD = IDD_CRCD_VIEWER };
 	CStatic	m_ctrlCRCD;
+	CButton	m_ctrlOK;
 	//}}AFX_DATA
-	ARBDogRun* m_Run;
 	HENHMETAFILE m_metaFile;
-	bool m_ViewText;
-	bool m_Insert;
-	CRect m_rCRCDwin; // Original CRCD rectangle.
+	CRect m_rDlg;
+	CRect m_rCRCDwin;
 	CRect m_rCRCDclient;
+	CRect m_rOK;
 
-	//{{AFX_VIRTUAL(CDlgRunCRCD)
+	//{{AFX_VIRTUAL(CDlgCRCDViewer)
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
 	void AdjustCRCD();
-	void SetView();
-	//{{AFX_MSG(CDlgRunCRCD)
+	//{{AFX_MSG(CDlgCRCDViewer)
 	virtual BOOL OnInitDialog();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg void OnEdit();
-	afx_msg void OnView();
-	afx_msg void OnCopy();
+	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
 };

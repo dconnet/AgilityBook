@@ -41,7 +41,6 @@
 
 #include "AboutDlg.h"
 #include "VersionNum.h"
-#include ".\aboutdlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

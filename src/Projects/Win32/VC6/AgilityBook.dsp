@@ -194,6 +194,10 @@ SOURCE=..\..\..\Win\DlgConfigVenue.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgCRCDViewer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgDog.cpp
 # End Source File
 # Begin Source File
@@ -476,6 +480,10 @@ SOURCE=..\..\..\Win\DlgConfigureData.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgConfigVenue.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgCRCDViewer.h
 # End Source File
 # Begin Source File
 
@@ -927,6 +935,14 @@ SOURCE=..\..\..\ARB\ARBVector.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\ARB\Base64.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\Base64.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\ARB\Element.cpp
 # End Source File
 # Begin Source File
@@ -1004,6 +1020,10 @@ SOURCE="..\..\..\Win\res\checked-off.ico"
 # Begin Source File
 
 SOURCE=..\..\..\Win\res\checked.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\res\crcd.ico
 # End Source File
 # Begin Source File
 

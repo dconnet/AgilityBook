@@ -99,6 +99,9 @@ public:
 #endif
 
 private:
+	CImageList m_ImageList;
+	int m_imgCourse;
+	int m_imgMap;
 	std::vector<int> m_Columns;
 	bool m_bSuppressSelect;
 	CFindRuns m_Callback;

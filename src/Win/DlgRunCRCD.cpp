@@ -38,6 +38,8 @@
 #include "DlgRunCRCD.h"
 
 #include "ARBDogRun.h"
+#include "Base64.h"
+#include "DlgCRCDViewer.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -51,37 +53,103 @@ static char THIS_FILE[] = __FILE__;
 CDlgRunCRCD::CDlgRunCRCD(ARBDogRun* pRun)
 	: CPropertyPage(CDlgRunCRCD::IDD)
 	, m_Run(pRun)
+	, m_metaFile(NULL)
+	, m_ViewText(false)
+	, m_Insert(true)
 {
 	//{{AFX_DATA_INIT(CDlgRunCRCD)
-	m_CRCD = m_Run->GetCRCD().c_str();
 	//}}AFX_DATA_INIT
-	m_CRCD.Replace("\n", "\r\n");
 }
 
 CDlgRunCRCD::~CDlgRunCRCD()
 {
+	if (m_metaFile)
+	{
+		DeleteEnhMetaFile(m_metaFile);
+		m_metaFile = NULL;
+	}
 }
 
 void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunCRCD)
-	DDX_Text(pDX, IDC_CRCD, m_CRCD);
+	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_VIEW, m_ctrlView);
+	DDX_Control(pDX, IDC_COPY, m_ctrlInsert);
+	DDX_Control(pDX, IDC_DESC, m_ctrlText);
+	DDX_Control(pDX, IDC_CRCD, m_ctrlCRCD);
 	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		m_CRCD.TrimRight();
-		m_CRCD.TrimLeft();
-		CString tmp(m_CRCD);
-		tmp.Replace("\r\n", "\n");
-		m_Run->SetCRCD((LPCSTR)tmp);
-	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgRunCRCD, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunCRCD)
+	ON_WM_CTLCOLOR()
+	ON_BN_CLICKED(IDC_EDIT, OnEdit)
+	ON_BN_CLICKED(IDC_VIEW, OnView)
+	ON_BN_CLICKED(IDC_COPY, OnCopy)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+
+void CDlgRunCRCD::AdjustCRCD()
+{
+	if (m_metaFile)
+	{
+		ENHMETAHEADER header;
+		GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
+		CRect rBounds(header.rclBounds.left,
+			header.rclBounds.top,
+			header.rclBounds.right,
+			header.rclBounds.bottom);
+		CRect r(m_rCRCDclient);
+		double bounds1 = static_cast<double>(rBounds.Width()) / rBounds.Height();
+		double crcd1 = static_cast<double>(m_rCRCDclient.Width()) / m_rCRCDclient.Height();
+		double bounds2 = static_cast<double>(rBounds.Height()) / rBounds.Width();
+		if (bounds1 < crcd1)
+		{
+			r.right = r.left + static_cast<LONG>(r.Height() * bounds1);
+		}
+		else
+		{
+			r.bottom = r.top + static_cast<LONG>(r.Width() * bounds2);
+		}
+		int x = (m_rCRCDwin.Width() - m_rCRCDclient.Width()) / 2;
+		int y = (m_rCRCDwin.Height() - m_rCRCDclient.Height()) / 2;
+		m_ctrlCRCD.SetWindowPos(NULL, 0, 0, r.Width()+x, r.Height()+y, SWP_NOZORDER | SWP_NOMOVE);
+	}
+}
+
+void CDlgRunCRCD::SetView()
+{
+	if (m_ViewText)
+	{
+		m_ctrlView.SetWindowText("View Image");
+		m_ctrlText.ShowWindow(SW_SHOW);
+		m_ctrlCRCD.ShowWindow(SW_HIDE);
+	}
+	else
+	{
+		m_ctrlView.SetWindowText("View Text");
+		m_ctrlText.ShowWindow(SW_HIDE);
+		m_ctrlCRCD.ShowWindow(SW_SHOW);
+	}
+	if (m_Insert)
+		m_ctrlInsert.SetWindowText("Insert Course");
+	else
+		m_ctrlInsert.SetWindowText("Clear Course");
+	if (m_metaFile)
+	{
+		m_ctrlEdit.EnableWindow(TRUE);
+		m_ctrlView.EnableWindow(TRUE);
+	}
+	else
+	{
+		m_ctrlEdit.EnableWindow(FALSE);
+		m_ctrlView.EnableWindow(FALSE);
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunCRCD message handlers
@@ -89,6 +157,130 @@ END_MESSAGE_MAP()
 BOOL CDlgRunCRCD::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
+	m_ctrlCRCD.GetWindowRect(m_rCRCDwin);
+	m_ctrlCRCD.GetClientRect(m_rCRCDclient);
+	m_ctrlCRCD.MapWindowPoints(this, m_rCRCDclient);
+	CString str = m_Run->GetCRCD().c_str();
+	str.Replace("\n", "\r\n");
+	m_ctrlText.SetWindowText(str);
+	if (0 < str.GetLength())
+		m_Insert = false;
+	else
+		m_Insert = true;
+	m_ViewText = true;
+	if (0 < m_Run->GetCRCDMetaFile().length())
+	{
+		CBase64 decode;
+		char* pOutput;
+		size_t len;
+		if (decode.Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
+		{
+			m_ViewText = false;
+			m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(len), reinterpret_cast<LPBYTE>(pOutput));
+			AdjustCRCD();
+			m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
+		}
+	}
+	SetView();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+HBRUSH CDlgRunCRCD::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = NULL;
+	if (pWnd->GetDlgCtrlID() == IDC_CRCD)
+		hbr = GetSysColorBrush(COLOR_WINDOW);
+	else
+		hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+	return hbr;
+}
+
+void CDlgRunCRCD::OnEdit()
+{
+	if (m_metaFile)
+	{
+		CDlgCRCDViewer viewer(m_metaFile, this);
+		viewer.DoModal();
+	}
+}
+
+void CDlgRunCRCD::OnView()
+{
+	m_ViewText = !m_ViewText;
+	SetView();
+}
+
+void CDlgRunCRCD::OnCopy()
+{
+	if (m_Insert)
+	{
+		BOOL bText = ::IsClipboardFormatAvailable(CF_TEXT);
+		BOOL bMeta = ::IsClipboardFormatAvailable(CF_ENHMETAFILE);
+		if (bText || bMeta)
+		{
+			if (AfxGetMainWnd()->OpenClipboard())
+			{
+				m_ctrlText.SetWindowText("");
+				if (m_metaFile)
+				{
+					DeleteEnhMetaFile(m_metaFile);
+					m_metaFile = NULL;
+				}
+				if (bText)
+				{
+					m_ViewText = true;
+					LPCTSTR hData = (LPCTSTR)GetClipboardData(CF_TEXT);
+					CString str(hData);
+					m_ctrlText.SetWindowText(str);
+					str.Replace("\r\n", "\n");
+					m_Run->SetCRCD((LPCTSTR)str);
+					if (0 < str.GetLength())
+						m_Insert = false;
+					// Only create the metafile if we pasted text. Otherwise
+					// we could end up with a non-CRCD metafile. It's still
+					// possible this may not be CRCD data - the user can
+					// just clear it then.
+					if (bMeta)
+					{
+						HENHMETAFILE hData = (HENHMETAFILE)GetClipboardData(CF_ENHMETAFILE);
+						m_metaFile = CopyEnhMetaFile(hData, NULL);
+						CBase64 decode;
+						ENHMETAHEADER header;
+						GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
+						UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
+						LPBYTE bits = new BYTE[nSize+1];
+						GetEnhMetaFileBits(m_metaFile, nSize, bits);
+						CBase64 encode;
+						std::string moreBits = encode.Encode(reinterpret_cast<const char*>(bits), nSize);
+						m_Run->SetCRCDMetaFile(moreBits);
+						delete [] bits;
+						AdjustCRCD();
+						m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
+						if (m_metaFile)
+						{
+							m_ViewText = false;
+							m_Insert = false;
+						}
+					}
+				}
+				CloseClipboard();
+				SetView();
+			}
+		}
+	}
+	else
+	{
+		m_Insert = true;
+		m_ViewText = true;
+		m_ctrlText.SetWindowText("");
+		if (m_metaFile)
+		{
+			DeleteEnhMetaFile(m_metaFile);
+			m_metaFile = NULL;
+		}
+		m_Run->SetCRCD("");
+		m_Run->SetCRCDMetaFile("");
+		SetView();
+	}
 }
