@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-10-29 DRC Support the mouse wheel for scrolling.
  * @li 2003-10-22 DRC Right click sets the current date.
  * @li 2003-08-27 DRC Cleaned up selection synchronization.
  * @li 2003-08-09 DRC When dbl-clicking on a date, make sure all entries are
@@ -75,6 +76,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
 	ON_WM_ERASEBKGND()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONDBLCLK()
+	ON_WM_MOUSEWHEEL()
 	ON_WM_KEYDOWN()
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_CALENDAR, OnUpdateCalendarEdit)
 	ON_COMMAND(ID_AGILITY_EDIT_CALENDAR, OnCalendarEdit)
@@ -629,6 +631,20 @@ void CAgilityBookViewCalendar::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	OnCalendarEdit();
 	CScrollView::OnLButtonDblClk(nFlags, point);
+}
+
+BOOL CAgilityBookViewCalendar::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+{
+	int nLines = zDelta / WHEEL_DELTA;
+	if (0 == nLines)
+		nLines = 1;
+	CClientDC dc(this);
+	dc.SetMapMode(MM_LOENGLISH);
+	CPoint p(0, GetScrollPos(SB_VERT));
+	dc.DPtoLP(&p);
+	p.y += nLines * (2 * DAY_BORDER + m_szEntry.cy);
+	ScrollToPosition(p);
+	return TRUE;
 }
 
 void CAgilityBookViewCalendar::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
