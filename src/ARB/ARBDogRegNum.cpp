@@ -257,6 +257,27 @@ ARBDogRegNum const* ARBDogRegNumList::FindRegNum(std::string const& inVenue) con
 	return NULL;
 }
 
+ARBDogRegNum* ARBDogRegNumList::AddRegNum(
+	std::string const& inVenue,
+	std::string const& inNumber)
+{
+	ARBDogRegNum* pRegNum = new ARBDogRegNum();
+	pRegNum->SetVenue(inVenue);
+	pRegNum->SetNumber(inNumber);
+	push_back(pRegNum);
+	return pRegNum;
+}
+
+ARBDogRegNum* ARBDogRegNumList::AddRegNum(ARBDogRegNum* inRegNum)
+{
+	if (inRegNum)
+	{
+		inRegNum->AddRef();
+		push_back(inRegNum);
+	}
+	return inRegNum;
+}
+
 int ARBDogRegNumList::DeleteRegNum(std::string const& inVenue, std::string const& inNumber)
 {
 	std::string venue(inVenue);
@@ -273,15 +294,4 @@ int ARBDogRegNumList::DeleteRegNum(std::string const& inVenue, std::string const
 			++iter;
 	}
 	return count;
-}
-
-ARBDogRegNum* ARBDogRegNumList::AddRegNum(
-	std::string const& inVenue,
-	std::string const& inNumber)
-{
-	ARBDogRegNum* pRegNum = new ARBDogRegNum();
-	pRegNum->SetVenue(inVenue);
-	pRegNum->SetNumber(inNumber);
-	push_back(pRegNum);
-	return pRegNum;
 }

@@ -2521,7 +2521,12 @@ BEGIN
     IDS_LIFETIME_POINTS     "LifeTime Points"
     IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
     IDS_INDICATOR_BLANK     "          "
-    IDS_ADDED_DOGS_JUDGES   "Added %1!d! new dogs, updated %2!d! dogs and added %3!d! judges."
+    IDS_ADDED_DOGS          "%1!d! dogs"
+    IDS_ADDED_REGNUMS       "%1!d! registration numbers"
+    IDS_ADDED_EXISTINGPTS   "%1!d! existing points"
+    IDS_ADDED_TITLES        "%1!d! titles"
+    IDS_ADDED_TRIALS        "%1!d! trials"
+    IDS_ADDED_JUDGES        "%1!d! judges"
 END
 
 STRINGTABLE 

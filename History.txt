@@ -1,4 +1,4 @@
-8/14/2004: v1.2.2.8 <in development>
+8/21/2004: v1.2.2.8 <in development>
 - Bumped Configuration v5:
   - Removed titling points from USDAA Tournament Jumper/Snooker.
 - New features / Enhancements:
@@ -9,6 +9,7 @@
   - Added 'verified' option to trials in the tree (via column customization)
   - Added dbl-click support in the Points view to see the runs behind the data.
   - Enable the new title toolbar button in the Points view.
+  - Added merging of existing ARB files.
 - Bug fixes
   - When updating the configuration, if they are the same but the version
     numbers are different, go ahead and update the version number.
