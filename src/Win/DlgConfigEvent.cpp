@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2004-11-15 DRC Added time fault computation option on T+F.
  * @li 2004-04-01 DRC Fixed? the memory access fault.
  * @li 2003-12-27 DRC Added support for from/to dates for the scoring method.
  */
@@ -126,13 +127,15 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DIVISION, m_ctrlDivision);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_LEVEL, m_ctrlLevel);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DROP_FRACTIONS, m_ctrlDropFractions);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_OPENING_PTS_TEXT, m_ctrlPointsOpeningText);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_OPENING_PTS, m_ctrlPointsOpening);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_OPENING_PTS, m_OpeningPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_CLOSING_PTS_TEXT, m_ctrlPointsClosingText);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ctrlPointsClosing);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ClosingPts);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_DROP_FRACTIONS, m_ctrlDropFractions);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_UNDER, m_ctrlTimeFaultsUnder);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_OVER, m_ctrlTimeFaultsOver);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_MACH, m_ctrlMachPts);
@@ -246,10 +249,6 @@ void CDlgConfigEvent::FillControls()
 		}
 		FillRequiredPoints();
 		FillTitlePoints(pScoring);
-		if (pScoring->DropFractions())
-			m_ctrlDropFractions.SetCheck(1);
-		else
-			m_ctrlDropFractions.SetCheck(0);
 		if (pScoring->HasSuperQ())
 			m_ctrlSuperQ.SetCheck(1);
 		else
@@ -277,6 +276,8 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlLevel.SetCurSel(-1);
 		m_ctrlType.SetCurSel(-1);
 		m_ctrlDropFractions.SetCheck(0);
+		m_ctrlTimeFaultsUnder.SetCheck(0);
+		m_ctrlTimeFaultsOver.SetCheck(0);
 		m_ctrlPointsList.ResetContent();
 		m_ctrlSuperQ.SetCheck(0);
 		m_ctrlMachPts.SetCheck(0);
@@ -292,6 +293,8 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlLevel.EnableWindow(bEnable);
 	m_ctrlType.EnableWindow(bEnable);
 	m_ctrlDropFractions.EnableWindow(bEnable);
+	m_ctrlTimeFaultsUnder.EnableWindow(bEnable);
+	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
 	m_ctrlSuperQ.EnableWindow(bEnable);
 	m_ctrlMachPts.EnableWindow(bEnable);
 	m_ctrlDoubleQ.EnableWindow(bEnable);
@@ -422,6 +425,9 @@ void CDlgConfigEvent::FillRequiredPoints()
 		m_ctrlPointsOpening.ShowWindow(SW_HIDE);
 		m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
 		m_ctrlPointsClosing.ShowWindow(SW_HIDE);
+		m_ctrlDropFractions.ShowWindow(SW_HIDE);
+		m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
+		m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
 	}
 	else
 	{
@@ -437,25 +443,70 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsOpening.ShowWindow(SW_HIDE);
 			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
+			m_ctrlDropFractions.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			break;
+		case ARBConfigScoring::eFaultsThenTime:
+		case ARBConfigScoring::eFaults100ThenTime:
+		case ARBConfigScoring::eFaults200ThenTime:
+			m_ctrlPointsOpeningText.ShowWindow(SW_HIDE);
+			m_ctrlPointsOpening.ShowWindow(SW_HIDE);
+			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
+			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
+			m_ctrlDropFractions.ShowWindow(SW_SHOW);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			if (pScoring->DropFractions())
+				m_ctrlDropFractions.SetCheck(1);
+			else
+				m_ctrlDropFractions.SetCheck(0);
 			break;
 		case ARBConfigScoring::eOCScoreThenTime:
-			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[0]);
 			m_ctrlPointsOpeningText.ShowWindow(SW_SHOW);
 			m_ctrlPointsOpening.ShowWindow(SW_SHOW);
 			m_ctrlPointsClosingText.ShowWindow(SW_SHOW);
 			m_ctrlPointsClosing.ShowWindow(SW_SHOW);
+			m_ctrlDropFractions.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[0]);
 			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
 			m_ClosingPts = pScoring->GetRequiredClosingPoints();
 			UpdateData(FALSE);
 			break;
 		case ARBConfigScoring::eScoreThenTime:
-			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[1]);
 			m_ctrlPointsOpeningText.ShowWindow(SW_SHOW);
 			m_ctrlPointsOpening.ShowWindow(SW_SHOW);
 			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
+			m_ctrlDropFractions.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[1]);
 			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
 			UpdateData(FALSE);
+			break;
+		case ARBConfigScoring::eTimePlusFaults:
+			m_ctrlPointsOpeningText.ShowWindow(SW_HIDE);
+			m_ctrlPointsOpening.ShowWindow(SW_HIDE);
+			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
+			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
+			m_ctrlDropFractions.ShowWindow(SW_SHOW);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
+			if (pScoring->DropFractions())
+				m_ctrlDropFractions.SetCheck(1);
+			else
+				m_ctrlDropFractions.SetCheck(0);
+			if (pScoring->ComputeTimeFaultsUnder())
+				m_ctrlTimeFaultsUnder.SetCheck(1);
+			else
+				m_ctrlTimeFaultsUnder.SetCheck(0);
+			if (pScoring->ComputeTimeFaultsOver())
+				m_ctrlTimeFaultsOver.SetCheck(1);
+			else
+				m_ctrlTimeFaultsOver.SetCheck(0);
 			break;
 		}
 	}
@@ -539,18 +590,39 @@ bool CDlgConfigEvent::SaveControls()
 		pScoring->SetLevel((LPCSTR)str);
 		ARBConfigScoring::ScoringStyle style = static_cast<ARBConfigScoring::ScoringStyle>(m_ctrlType.GetItemData(idxType));
 		pScoring->SetScoringStyle(style);
-		if (m_ctrlDropFractions.GetCheck())
-			pScoring->SetDropFractions(true);
-		else
-			pScoring->SetDropFractions(false);
-		if (ARBConfigScoring::eOCScoreThenTime == style)
+		switch (style)
 		{
+		default:
+			break;
+		case ARBConfigScoring::eFaultsThenTime:
+		case ARBConfigScoring::eFaults100ThenTime:
+		case ARBConfigScoring::eFaults200ThenTime:
+			if (m_ctrlDropFractions.GetCheck())
+				pScoring->SetDropFractions(true);
+			else
+				pScoring->SetDropFractions(false);
+			break;
+		case ARBConfigScoring::eOCScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
 			pScoring->SetRequiredClosingPoints(m_ClosingPts);
-		}
-		else if (ARBConfigScoring::eScoreThenTime == style)
-		{
+			break;
+		case ARBConfigScoring::eScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
+			break;
+		case ARBConfigScoring::eTimePlusFaults:
+			if (m_ctrlDropFractions.GetCheck())
+				pScoring->SetDropFractions(true);
+			else
+				pScoring->SetDropFractions(false);
+			if (m_ctrlTimeFaultsUnder.GetCheck())
+				pScoring->SetComputeTimeFaultsUnder(true);
+			else
+				pScoring->SetComputeTimeFaultsUnder(false);
+			if (m_ctrlTimeFaultsOver.GetCheck())
+				pScoring->SetComputeTimeFaultsOver(true);
+			else
+				pScoring->SetComputeTimeFaultsOver(false);
+			break;
 		}
 		m_ctrlNote.GetWindowText(str);
 		str.Replace("\r\n", "\n");

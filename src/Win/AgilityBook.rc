@@ -651,10 +651,6 @@ BEGIN
     LTEXT           "&Scoring style",IDC_STATIC,190,174,41,8
     COMBOBOX        IDC_CONFIG_EVENT_TYPE,190,184,125,130,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_TYPE
-    CONTROL         "D&rop time fractions for faults",
-                    IDC_CONFIG_EVENT_DROP_FRACTIONS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,190,198,103,10,0,
-                    HIDC_CONFIG_EVENT_DROP_FRACTIONS
     LTEXT           "Required &Opening",IDC_CONFIG_EVENT_OPENING_PTS_TEXT,
                     190,211,29,16
     EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,223,211,25,12,
@@ -665,6 +661,18 @@ BEGIN
     EDITTEXT        IDC_CONFIG_EVENT_CLOSING_PTS,288,211,25,12,
                     ES_AUTOHSCROLL | ES_NUMBER,0,
                     HIDC_CONFIG_EVENT_CLOSING_PTS
+    CONTROL         "D&rop time fractions for faults",
+                    IDC_CONFIG_EVENT_DROP_FRACTIONS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,190,198,103,10,0,
+                    HIDC_CONFIG_EVENT_DROP_FRACTIONS
+    CONTROL         "Compute time faults under SCT",
+                    IDC_CONFIG_EVENT_TIME_FAULTS_UNDER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,190,208,113,10,0,
+                    HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
+    CONTROL         "Compute time faults over SCT",
+                    IDC_CONFIG_EVENT_TIME_FAULTS_OVER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,190,218,109,10,0,
+                    HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
     CONTROL         "M&ach Points?",IDC_CONFIG_EVENT_MACH,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,322,184,57,10,0,
                     HIDC_CONFIG_EVENT_MACH

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-11-15 DRC Changed time fault computation on T+F events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-09-01 DRC Fix a file that may have been corrupted (see history.txt)
@@ -315,16 +316,31 @@ double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
 	double timeFaults = 0.0;
 	if (ARBDogRunScoring::eTypeByTime == m_type)
 	{
-		bool bAddTimeFaults = true;
+		bool bAddTimeFaultsUnder = false;
+		bool bAddTimeFaultsOver = true;
 		if (inScoring && ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
-			bAddTimeFaults = false;
-		if (bAddTimeFaults)
 		{
-			double time = m_Time;
-			if (m_bRoundTimeFaults)
-				time = floor(m_Time);
-			if (0.0 < m_SCT && time > m_SCT)
-				timeFaults = time - m_SCT;
+			bAddTimeFaultsUnder = inScoring->ComputeTimeFaultsUnder();
+			bAddTimeFaultsOver = inScoring->ComputeTimeFaultsOver();
+		}
+		if (0.0 < m_SCT)
+		{
+			if (bAddTimeFaultsUnder)
+			{
+				double time = m_Time;
+				if (m_bRoundTimeFaults)
+					time = ceil(m_Time);
+				if (time < m_SCT)
+					timeFaults = m_SCT - time;
+			}
+			if (bAddTimeFaultsOver)
+			{
+				double time = m_Time;
+				if (m_bRoundTimeFaults)
+					time = floor(m_Time);
+				if (time > m_SCT)
+					timeFaults = time - m_SCT;
+			}
 		}
 	}
 	return timeFaults;

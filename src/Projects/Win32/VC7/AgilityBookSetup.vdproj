@@ -15,7 +15,19 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_25B5368BDC364B09B45FC3F21FDBF89B"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_34519CE1ED94452183C1E2A597D9DAFA"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,32 +51,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7ED369F80E0449A3BA9156E41A36BD4B"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A5496D0B42FB4ED58099E6B0DBA19CA2"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_B5336E9DBB224077831DEE4A70999CF4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D856BA91561A4C9CBFC70DA37046D394"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_CC73DC68ACC8438FAA435CE9A657BE63"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E21A11A151C04B95B800427B7CB32472"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmKey" = "8:_D856BA91561A4C9CBFC70DA37046D394"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -197,7 +197,7 @@
             "TargetName" = "8:DbgHelp.Dll"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:WindowsBuild < 2195"
+            "Condition" = "8:DBGHELP"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
@@ -331,6 +331,21 @@
         }
         "Locator"
         {
+            "{FE475C8F-2277-44C4-85EE-F30EEC65FE8B}:_50EB8F13F4B34F8C888DBB4622DE3B74"
+            {
+            "Name" = "8:dbghelp.dll"
+            "Folder" = "8:[WindowsFolder]"
+            "Depth" = "2:2"
+            "FileName" = "8:dbghelp.dll"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:5.0.2195.1"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:DBGHELP"
+            }
         }
         "MsiBootstrapper"
         {
@@ -341,7 +356,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
         "ProductCode" = "8:{D6D30ADF-D241-4AC4-AB8C-28B5894F6949}"
-        "PackageCode" = "8:{32C871F3-AA16-4D7E-AE44-A2D0FA5403D9}"
+        "PackageCode" = "8:{676C76F1-E41D-4B5F-9139-4CD901260C23}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -950,7 +965,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_7ED369F80E0449A3BA9156E41A36BD4B"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_25B5368BDC364B09B45FC3F21FDBF89B"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -964,11 +979,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_A5496D0B42FB4ED58099E6B0DBA19CA2"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_34519CE1ED94452183C1E2A597D9DAFA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_stl71_rtl_x86_---.msm"
+            "SourcePath" = "8:vc_user_mfc71_rtl_x86_---.msm"
                 "Properties"
                 {
                 }
@@ -978,11 +993,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_E21A11A151C04B95B800427B7CB32472"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_CC73DC68ACC8438FAA435CE9A657BE63"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:vc_user_mfc71_rtl_x86_---.msm"
+            "SourcePath" = "8:vc_user_stl71_rtl_x86_---.msm"
                 "Properties"
                 {
                 }

@@ -108,7 +108,13 @@ Division this scoring method applies to.
 Does this scoring method have double-Qs?
 
 .topic HIDC_CONFIG_EVENT_DROP_FRACTIONS
-When computing over-time faults, should the fractions be dropped?
+When computing time faults, should the fractions be dropped?
+
+.topic HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
+Add time faults for the number of seconds under course time.
+
+.topic HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
+Add time faults for the number of seconds over course time.
 
 .topic HIDC_CONFIG_EVENT_LEVEL
 Level this scoring method applies to.
