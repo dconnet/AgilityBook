@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-08 DRC In Partners, the dog's number wasn't being saved.
  * @li 2003-08-25 DRC Set listctrl selection when adding/deleting items.
  * @li 2003-07-14 DRC Fixed bug where a new faulttype didn't show up until the
  *                    run was actually saved.
@@ -336,7 +337,7 @@ bool CDlgListCtrlDataPartners::OnEdit()
 void CDlgListCtrlDataPartners::Apply()
 {
 	if (0 < m_Partner->GetHandler().length() && 0 < m_Partner->GetDog().length())
-		m_pRun->GetPartners().AddPartner(m_Partner->GetHandler(), m_Partner->GetDog());
+		m_pRun->GetPartners().AddPartner(m_Partner);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
-09/04/2003: v1.0.0.5: <development>
+09/08/2003: v1.0.0.5: <development>
 - Bug fixes
+  - In the pairs partners dialog, the dog's number wasn't being saved.
   - Pasting a trial/run didn't mark the document as needing saving.
   - When adding/pasting a trial/run and the filtering options filtered that new
     item out, a message appeared saying the run wasn't added. Actually it was,
