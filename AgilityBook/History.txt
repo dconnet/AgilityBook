@@ -3,6 +3,7 @@
   - Added DTD/XML export menu items.
   - Cleaned up some descriptions in DefaultConfig.xml.
   - In Points view, added '*' to Title if it has been received.
+  - Support the mouse wheel for scrolling in the calendar view.
 - Bug fixes
   - Changed copyright notices from "(c)" to "©"
   - Right-clicking on a Calendar entry sets that as the current date before
