@@ -260,12 +260,8 @@ bool ARBDogRun::Load(
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_HEIGHT, m_Height)
-	|| 0 == m_Height.length())
-	{
-		ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_HEIGHT);
-		return false;
-	}
+	// Height is no longer a required attribute (doc ver 8.1)
+	inTree.GetAttrib(ATTRIB_RUN_HEIGHT, m_Height);
 
 	if (CElement::eFound != inTree.GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())

@@ -108,6 +108,7 @@
 #define ATTRIB_DIVISION_NAME				"Name"
 #define ATTRIB_LEVEL_NAME					"Name"
 #define ATTRIB_TITLES_NAME					"Name"
+#define ATTRIB_TITLES_LONGNAME				"LongName"
 #define ATTRIB_SUBLEVEL_NAME				"Name"
 #define ATTRIB_EVENT_NAME					"Name"
 #define ATTRIB_EVENT_HASPARTNER				"hasPartner"

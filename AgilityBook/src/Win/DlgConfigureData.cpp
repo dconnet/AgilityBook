@@ -44,6 +44,7 @@
 #include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigOtherPoints.h"
+#include "DlgConfigTitle.h"
 #include "DlgConfigure.h"
 #include "DlgFixup.h"
 #include "DlgName.h"
@@ -352,7 +353,7 @@ void CDlgConfigureData::Add()
 		while (!done)
 		{
 			done = true;
-			CDlgNameDesc dlg(name.c_str(), "", IDS_TITLE_NAME, m_pDlg);
+			CDlgConfigTitle dlg(name.c_str(), "", "", m_pDlg);
 			if (IDOK == dlg.DoModal())
 			{
 				CDlgConfigureDataDivision* pDivData = GetDivisionData();
@@ -1170,7 +1171,7 @@ void CDlgConfigureDataTitle::Edit()
 	while (!done)
 	{
 		done = true;
-		CDlgNameDesc dlg(name.c_str(), m_Title->GetDescription().c_str(), IDS_TITLE_NAME, m_pDlg);
+		CDlgConfigTitle dlg(name.c_str(), m_Title->GetLongName().c_str(), m_Title->GetDescription().c_str(), m_pDlg);
 		if (IDOK == dlg.DoModal())
 		{
 			name = dlg.GetName();

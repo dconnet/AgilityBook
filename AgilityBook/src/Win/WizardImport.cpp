@@ -338,13 +338,52 @@ LRESULT CWizardImport::OnWizardBack()
 	return IDD_WIZARD_START;
 }
 
-static ARBDogRun* CreateRun(ARBDogRun* pRun)
+static ARBDogRun* CreateRun(ARBDogRun* pRun, const ARBConfigScoring* pScoring)
 {
 	if (!pRun)
 	{
 		pRun = new ARBDogRun();
+		switch (pScoring->GetScoringStyle())
+		{
+		case ARBConfigScoring::eFaultsThenTime:
+		case ARBConfigScoring::eFaults100ThenTime:
+		case ARBConfigScoring::eFaults200ThenTime:
+		case ARBConfigScoring::eTimePlusFaults:
+			pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
+			break;
+		case ARBConfigScoring::eOCScoreThenTime:
+			pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
+			break;
+		case ARBConfigScoring::eScoreThenTime:
+			pRun->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
+			break;
+		}
 	}
 	return pRun;
+}
+
+static std::string GetPrimaryVenue(const std::string& venues)
+{
+	std::string venue;
+	std::string::size_type pos = venues.find('/');
+	if (std::string::npos != pos)
+		venue = venues.substr(0, pos);
+	else
+		venue = venues;
+	return venue;
+}
+
+static void BreakLine(char inSep, std::string inStr, std::vector<std::string>& outFields)
+{
+	outFields.clear();
+	std::string::size_type pos = inStr.find(inSep);
+	while (std::string::npos != pos)
+	{
+		outFields.push_back(inStr.substr(0, pos));
+		inStr = inStr.substr(pos+1);
+		pos = inStr.find(inSep);
+	}
+	outFields.push_back(inStr);
 }
 
 static ARBCalendar* CreateCal(ARBCalendar* pCal)
@@ -416,7 +455,372 @@ BOOL CWizardImport::OnWizardFinish()
 		default: break;
 
 		case WIZ_IMPORT_RUNS:
-			++nSkipped;
+			{
+				const int colIdx[4] =
+				{
+					IO_TYPE_RUNS_FAULTS_TIME,
+					IO_TYPE_RUNS_TIME_FAULTS,
+					IO_TYPE_RUNS_OPEN_CLOSE,
+					IO_TYPE_RUNS_POINTS
+				};
+				int idxDate[4];
+				int idxVenue[4];
+				int idxClub[4];
+				int idxDiv[4];
+				int idxLevel[4];
+				int idxEvent[4];
+				int i;
+				for (i = 0; i < 4; ++i)
+				{
+					idxDate[i] = idxVenue[i] = idxClub[i] = idxDiv[i] = idxLevel[i] = idxEvent[i] = -1;
+				}
+				for (i = 0; i < 4; ++i)
+				{
+					for (iCol = 0; iCol < columns[colIdx[i]].size(); ++iCol)
+					{
+						if (IO_RUNS_DATE == columns[colIdx[i]][iCol])
+							idxDate[i] = static_cast<int>(iCol);
+						else if (IO_RUNS_VENUE == columns[colIdx[i]][iCol])
+							idxVenue[i] = static_cast<int>(iCol);
+						else if (IO_RUNS_CLUB == columns[colIdx[i]][iCol])
+							idxClub[i] = static_cast<int>(iCol);
+						else if (IO_RUNS_DIVISION == columns[colIdx[i]][iCol])
+							idxDiv[i] = static_cast<int>(iCol);
+						else if (IO_RUNS_LEVEL == columns[colIdx[i]][iCol])
+							idxLevel[i] = static_cast<int>(iCol);
+						else if (IO_RUNS_EVENT == columns[colIdx[i]][iCol])
+							idxEvent[i] = static_cast<int>(iCol);
+					}
+				}
+				const ARBConfigScoring* pScoring = NULL;
+				for (i = 0; !pScoring && i < 4; ++i)
+				{
+					if (0 <= idxVenue[i] && 0 <= idxEvent[i] && 0 <= idxDiv[i] && 0 <= idxLevel[i] && 0 <= idxDate[i])
+					{
+						pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+							GetPrimaryVenue(entry[idxVenue[i]]),
+							entry[idxEvent[i]],
+							entry[idxDiv[i]],
+							entry[idxLevel[i]],
+							ARBDate::FromString(entry[idxDate[i]], format));
+					}
+				}
+				// It's conceivable that we could have more than one match.
+				// But just don't worry about that... If data from various
+				// rows/cols has that much overlap, it's just not worth it.
+				if (!pScoring)
+				{
+					CString str;
+					str.Format("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n",
+						nItem);
+					errLog += str;
+					++nSkipped;
+					continue;
+				}
+				i = -1;
+				switch (pScoring->GetScoringStyle())
+				{
+				case ARBConfigScoring::eFaultsThenTime:
+				case ARBConfigScoring::eFaults100ThenTime:
+				case ARBConfigScoring::eFaults200ThenTime:
+					i = 0;
+					break;
+				case ARBConfigScoring::eOCScoreThenTime:
+					i = 2;
+					break;
+				case ARBConfigScoring::eScoreThenTime:
+					i = 3;
+					break;
+				case ARBConfigScoring::eTimePlusFaults:
+					i = 1;
+					break;
+				}
+				ASSERT(0 <= i);
+
+				std::string nameReg, nameCall;
+				std::string trialVenue, trialClub, trialLocation, trialNotes;
+				ARBDogRun* pRun = NULL;
+				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
+				{
+					if (0 == entry[iCol].length())
+						continue;
+					switch (columns[i][iCol])
+					{
+					case IO_RUNS_REG_NAME:
+						nameReg = entry[iCol];
+						break;
+					case IO_RUNS_CALL_NAME:
+						nameCall = entry[iCol];
+						break;
+					case IO_RUNS_DATE:
+						{
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							if (date.IsValid())
+							{
+								pRun = CreateRun(pRun, pScoring);
+								pRun->SetDate(date);
+							}
+							else
+							{
+								CString str;
+								str.Format("ERROR: Line %d, Column %d: Invalid run date: %s\n",
+									nItem, iCol, entry[iCol].c_str());
+								errLog += str;
+								pRun->Release();
+								pRun = NULL;
+								iCol = columns[i].size();
+							}
+						}
+						break;
+					case IO_RUNS_VENUE:
+						trialVenue = entry[iCol];
+						break;
+					case IO_RUNS_CLUB:
+						trialClub = entry[iCol];
+						break;
+					case IO_RUNS_LOCATION:
+						trialLocation = entry[iCol];
+						break;
+					case IO_RUNS_TRIAL_NOTES:
+						trialNotes = entry[iCol];
+						break;
+					case IO_RUNS_DIVISION:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetDivision(entry[iCol]);
+						break;
+					case IO_RUNS_LEVEL:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetLevel(entry[iCol]);
+						break;
+					case IO_RUNS_EVENT:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetEvent(entry[iCol]);
+						break;
+					case IO_RUNS_HEIGHT:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetHeight(entry[iCol]);
+						break;
+					case IO_RUNS_JUDGE:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetJudge(entry[iCol]);
+						break;
+					case IO_RUNS_HANDLER:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetHandler(entry[iCol]);
+						break;
+					case IO_RUNS_CONDITIONS:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetConditions(entry[iCol]);
+						break;
+					case IO_RUNS_COURSE_FAULTS:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetCourseFaults(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_TIME:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetTime(strtod(entry[iCol].c_str(), NULL));
+						break;
+					case IO_RUNS_YARDS:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetYards(strtod(entry[iCol].c_str(), NULL));
+						break;
+					case IO_RUNS_YPS:
+						// Computed
+						break;
+					case IO_RUNS_SCT:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetSCT(strtod(entry[iCol].c_str(), NULL));
+						break;
+					case IO_RUNS_TOTAL_FAULTS:
+						// Computed.
+						break;
+					case IO_RUNS_REQ_OPENING:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_REQ_CLOSING:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetNeedClosePts(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_OPENING:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_CLOSING:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetClosePts(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_REQ_POINTS:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_POINTS:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_PLACE:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetPlace(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_IN_CLASS:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetInClass(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_DOGSQD:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->SetDogsQd(static_cast<short>(atol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_Q:
+						{
+							pRun = CreateRun(pRun, pScoring);
+							ARB_Q q;
+							if ("QQ" == entry[iCol])
+								entry[iCol] = "Q";
+							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion());
+							pRun->SetQ(q);
+						}
+						break;
+					case IO_RUNS_SCORE:
+						// This is computed.
+						break;
+					case IO_RUNS_TITLE_POINTS:
+						// These are computed.
+						break;
+					case IO_RUNS_COMMENTS:
+					case IO_RUNS_FAULTS:
+						{
+							pRun = CreateRun(pRun, pScoring);
+							std::string str = pRun->GetNote();
+							if (0 < str.length())
+								str += "\n";
+							str += entry[iCol];
+							pRun->SetNote(str);
+						}
+						break;
+					}
+				}
+				// Now that we've created a run, we have to put it somewhere.
+				if (pRun)
+				{
+					// Find the dog
+					ARBDog* pDog = m_pDoc->GetCurrentDog();
+					if (0 < nameReg.length() || 0 < nameCall.length())
+					{
+						pDog = NULL;
+						for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
+						{
+							ARBDog* pDogTmp = *iterDog;
+							if ((0 < nameReg.length() && pDogTmp->GetRegisteredName() == nameReg
+							&& 0 < nameCall.length() && pDogTmp->GetCallName() == nameCall)
+							|| (0 < nameReg.length() && pDogTmp->GetRegisteredName() == nameReg
+							&& 0 == nameCall.length())
+							|| (0 == nameReg.length()
+							&& 0 < nameCall.length() && pDogTmp->GetCallName() == nameCall))
+							{
+								pDog = pDogTmp;
+								break;
+							}
+						}
+						// Not found, create it.
+						if (!pDog)
+						{
+							pDog = new ARBDog();
+							if (0 < nameReg.length())
+								pDog->SetRegisteredName(nameReg);
+							if (0 < nameCall.length())
+								pDog->SetCallName(nameCall);
+							if (0 == nameCall.length() && 0 < nameReg.length())
+								pDog->SetCallName(nameReg);
+							m_pDoc->GetDogs().AddDog(pDog);
+							pDog->Release();
+							// pDog is still valid until it is actually removed from the doglist.
+						}
+					}
+					if (!pDog)
+					{
+						if (m_pDoc->GetDogs().begin() == m_pDoc->GetDogs().end())
+						{
+							pDog = new ARBDog();
+							pDog->SetCallName("?");
+							m_pDoc->GetDogs().AddDog(pDog);
+							pDog->Release();
+						}
+						else
+							pDog = *(m_pDoc->GetDogs().begin());
+					}
+					ASSERT(NULL != pDog);
+
+					// Find the trial
+					std::vector<std::string> venues;
+					std::vector<std::string> clubs;
+					if (0 < trialVenue.length())
+						BreakLine('/', trialVenue, venues);
+					if (0 < trialClub.length())
+						BreakLine('/', trialClub, clubs);
+					if (clubs.size() < venues.size())
+					{
+						// Clubs and venues now agree so we can use them together easily.
+						if (0 == clubs.size())
+							clubs.push_back("?");
+						while (clubs.size() < venues.size())
+							clubs.push_back(clubs[clubs.size()-1]);
+					}
+					ARBDogTrial* pTrial = NULL;
+					for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
+					{
+						ARBDogTrial* pTrialTmp = *iterTrial;
+						if (pTrialTmp->GetClubs().size() == venues.size()
+						&& pTrialTmp->GetLocation() == trialLocation
+						&& pRun->GetDate().isBetween(pTrialTmp->GetRuns().GetStartDate(), pTrialTmp->GetRuns().GetEndDate()))
+						{
+							bool bOk = true;
+							size_t i = 0;
+							for (ARBDogClubList::iterator iterClub = pTrialTmp->GetClubs().begin(); iterClub != pTrialTmp->GetClubs().end(); ++iterClub)
+							{
+								ARBDogClub* pClub = new ARBDogClub();
+								pClub->SetName(clubs[i]);
+								pClub->SetVenue(venues[i]);
+								if (*pClub != *(*(iterClub)))
+								{
+									bOk = false;
+									break;
+								}
+								pClub->Release();
+								++i;
+							}
+							if (bOk)
+							{
+								pTrial = pTrialTmp;
+								break;
+							}
+						}
+					}
+					if (!pTrial)
+					{
+						// Couldn't find a trial, so make one.
+						pTrial = new ARBDogTrial();
+						pDog->GetTrials().AddTrial(pTrial);
+						pDog->GetTrials().sort(true);
+						for (size_t i = 0; i < venues.size(); ++i)
+						{
+							pTrial->GetClubs().AddClub(clubs[i], venues[i]);
+						}
+						if (0 < trialLocation.length())
+							pTrial->SetLocation(trialLocation);
+						if (0 < trialNotes.length())
+							pTrial->SetNote(trialNotes);
+						pTrial->Release();
+					}
+					pTrial->GetRuns().AddRun(pRun);
+					pTrial->GetRuns().sort(true);
+					pRun->Release();
+					++nAdded;
+				}
+				else
+				{
+					++nSkipped;
+				}
+			}
 			break;
 
 		case WIZ_IMPORT_CALENDAR:

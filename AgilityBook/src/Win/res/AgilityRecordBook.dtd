@@ -12,6 +12,7 @@ In general, all fields are free form. Exceptions will be noted.
 <!--
  Book is a simple integer in versions 1 thru 7.
  It then changes to a more complex value ("major.minor"), starting with "8.0"
+ Current Version: 8.2
 -->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
 	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
@@ -79,6 +80,7 @@ top-ten points. The 'Count' value is how they are accumulated
 	<!ATTLIST Division Name CDATA #REQUIRED >
 <!ELEMENT Titles (#PCDATA) >
 	<!ATTLIST Titles Name CDATA #REQUIRED >
+	<!ATTLIST Titles LongName CDATA #IMPLIED >
 
 <!--
 Rules for levels are based on the level name. A level may be
@@ -212,7 +214,7 @@ a Level or SubLevel element.
 		Date CDATA #REQUIRED
 		Division CDATA #REQUIRED
 		Level CDATA #REQUIRED
-		Height CDATA #REQUIRED
+		Height CDATA #IMPLIED
 		Event CDATA #REQUIRED
 		>
 

@@ -871,6 +871,7 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 			switch (idxColumn)
 			{
 			case IO_TYPE_RUNS_FAULTS_TIME:
+				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_LOCATION);
 				outValues.push_back(IO_RUNS_VENUE);
 				outValues.push_back(IO_RUNS_CLUB);
@@ -959,7 +960,6 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_Q);
-
 				break;
 			}
 			break;

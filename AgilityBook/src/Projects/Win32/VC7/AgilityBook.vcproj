@@ -196,6 +196,9 @@
 				RelativePath="..\..\..\Win\DlgConfigOtherPoints.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgConfigTitle.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgConfigTitlePoints.cpp">
 			</File>
 			<File
@@ -396,6 +399,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgConfigOtherPoints.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgConfigTitle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgConfigTitlePoints.h">

@@ -58,6 +58,7 @@
 #define IDD_WIZARD_EXPORT               183
 #define IDD_ASSIGN_COLUMNS              184
 #define IDD_FIND                        185
+#define IDD_CONFIG_TITLE                186
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_UPDATE                1001
 #define IDC_ABOUT_LINK1                 1002
@@ -223,6 +224,7 @@
 #define IDC_MATCH_CASE                  1171
 #define IDC_FIND_UP                     1172
 #define IDC_FIND_DOWN                   1173
+#define IDC_LONG_NAME                   1174
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -288,7 +290,6 @@
 #define IDS_DIVISIONS                   5017
 #define IDS_DIVISION_NAME               5018
 #define IDS_TITLES                      5019
-#define IDS_TITLE_NAME                  5020
 #define IDS_LEVELS                      5021
 #define IDS_LEVEL_NAME                  5022
 #define IDS_SUBLEVEL_NAME               5023
@@ -329,7 +330,6 @@
 #define IDS_SELECT_DIVISION             5111
 #define IDS_SELECT_LEVEL                5112
 #define IDS_SELECT_EVENT                5113
-#define IDS_SELECT_HEIGHT               5114
 #define IDS_SELECT_JUDGE                5115
 #define IDS_SELECT_Q                    5116
 #define IDS_BAD_EVENT                   5117
@@ -433,7 +433,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32812
-#define _APS_NEXT_CONTROL_VALUE         1174
+#define _APS_NEXT_CONTROL_VALUE         1175
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

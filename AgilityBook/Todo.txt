@@ -9,9 +9,7 @@ Last Updated: 1/4/04
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
     <http://www.bayteam.org/docs/KareysCalendar.html>
-  - Import: when implemented, make sure there are comments in the dialogs
-    about the importance of matching div/level/etc names to the config names.
-    In addition, need some intelligence to group several days of runs into a
+  - Import: Need some intelligence to group several days of runs into a
     single trial.
 
 - Rework Configuration dialog so it is easier to use.

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2003 David Connet. All Rights Reserved.
+ * Copyright © 2002-2004 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-01-05 DRC Added LongName.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -51,12 +52,14 @@ static char THIS_FILE[] = __FILE__;
 
 ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
+	, m_LongName()
 	, m_Desc()
 {
 }
 
 ARBConfigTitle::ARBConfigTitle(const ARBConfigTitle& rhs)
 	: m_Name(rhs.m_Name)
+	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
 {
 }
@@ -70,6 +73,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(const ARBConfigTitle& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
+		m_LongName = rhs.m_LongName;
 		m_Desc = rhs.m_Desc;
 	}
 	return *this;
@@ -78,6 +82,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(const ARBConfigTitle& rhs)
 bool ARBConfigTitle::operator==(const ARBConfigTitle& rhs) const
 {
 	return m_Name == rhs.m_Name
+		&& m_LongName == rhs.m_LongName
 		&& m_Desc == rhs.m_Desc;
 }
 
@@ -89,6 +94,7 @@ bool ARBConfigTitle::operator!=(const ARBConfigTitle& rhs) const
 void ARBConfigTitle::clear()
 {
 	m_Name.erase();
+	m_LongName.erase();
 	m_Desc.erase();
 }
 
@@ -102,12 +108,13 @@ bool ARBConfigTitle::Load(
 	const CElement& inTree,
 	const ARBVersion& inVersion)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
+	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLE_NAME);
+		ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME);
 		return false;
 	}
+	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	m_Desc = inTree.GetValue();
 	return true;
 }
@@ -115,10 +122,36 @@ bool ARBConfigTitle::Load(
 bool ARBConfigTitle::Save(CElement& ioTree) const
 {
 	CElement& title = ioTree.AddElement(TREE_TITLES);
-	title.AddAttrib(ATTRIB_TITLE_NAME, m_Name);
+	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
+	if (0 < m_LongName.length())
+		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	if (0 < m_Desc.length())
 		title.SetValue(m_Desc);
 	return true;
+}
+
+std::string ARBConfigTitle::GetCompleteName(bool bAbbrevFirst) const
+{
+	std::string name;
+	if (0 < m_LongName.length())
+	{
+		if (bAbbrevFirst)
+		{
+			name += "[";
+			name += m_Name;
+			name += "] ";
+		}
+		name += m_LongName;
+		if (!bAbbrevFirst)
+		{
+			name += " [";
+			name += m_Name;
+			name += "]";
+		}
+	}
+	else
+		name = m_Name;
+	return name;
 }
 
 /////////////////////////////////////////////////////////////////////////////
