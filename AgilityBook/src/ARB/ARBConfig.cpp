@@ -396,6 +396,8 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	bool bChanges = true;
 	if (0 == nChanges)
 	{
+		if (m_Version < inConfigNew.GetVersion())
+			m_Version = inConfigNew.GetVersion();
 		bChanges = false;
 		info.erase();
 	}
