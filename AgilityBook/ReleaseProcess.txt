@@ -13,6 +13,7 @@ Files to change before release:
   Update program version and date, along with any comments.
 - Todo.txt
   Any necessary changes...
+- Update CD Label (SureThing CD Labeler Deluxe v3.12)
   
 Run Doxygen and fix any warnings/errors it reports.
   - cd ...\AgilityBook

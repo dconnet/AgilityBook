@@ -1,4 +1,14 @@
-Last Updated: 4/29/04
+Last Updated: 5/8/04
+
+- Allow users to specify their own splash screen.
+  - Just need to add UI to specify name - note, only .bmp is supported
+
+- After adding a title, display the dog properties on title page. Too many
+  people can't find it afterwards.
+
+- Fix printing so it wraps multi-line text.
+
+- Create a printable form for data input (that can be put in a notebook)
 
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
@@ -6,6 +16,9 @@ Last Updated: 4/29/04
   - Import: Need some intelligence to group several days of runs into a
     single trial.
   - Import: Add intelligence to deal with quotes/multi-line data.
+  - Export: Add quote character
+  - Export: Figure out a way to export the reference runs
+            How about imbedded CRCD and linked files?
 
 - Run entry dialog integrity checks (define!)
   - If faults entered is greated then faults allowed, and 'Q' is set, warn
