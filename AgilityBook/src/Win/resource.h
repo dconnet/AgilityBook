@@ -246,6 +246,7 @@
 #define IDC_RUNSCORE_DIVISION           1304
 #define IDC_RUNSCORE_LEVEL              1305
 #define IDC_RUNSCORE_EVENT              1306
+#define IDC_RUNSCORE_DESC               1707
 #define IDC_RUNSCORE_HEIGHT             1308
 #define IDC_RUNSCORE_JUDGE              1309
 #define IDC_RUNSCORE_HANDLER            1310
