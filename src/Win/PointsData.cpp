@@ -223,7 +223,11 @@ void PointsDataVenue::OnDblClick() const
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
+		else
+			MessageBeep(0);
 	}
+	else
+		MessageBeep(0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
