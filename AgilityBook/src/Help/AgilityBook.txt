@@ -126,8 +126,8 @@ When computing over-time faults, should the fractions be dropped?
 .topic HIDC_CONFIG_EVENT_LEVEL
 Level this scoring method applies to.
 
-.topic HIDC_CONFIG_EVENT_LIST
-List of titling points, based on the number of faults.
+.topic HIDC_CONFIG_EVENT_POINTS
+List of titling and/or lifetime points, based on the number of faults.
 
 .topic HIDC_CONFIG_EVENT_MACH
 Does this scoring method have MACH points?
