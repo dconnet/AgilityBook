@@ -419,8 +419,7 @@ static bool GetDataFromClipboard(UINT clpFmt, Element& tree)
 			return false;
 		tree.clear();
 		HANDLE hData = GetClipboardData(clpFmt);
-		LPTSTR str = (LPTSTR)GlobalLock(hData);
-		CString data(str);
+		CString data((LPCTSTR)GlobalLock(hData));
 		GlobalUnlock(hData);
 		CloseClipboard();
 		std::string err;
