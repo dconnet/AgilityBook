@@ -1014,8 +1014,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,0,5
- PRODUCTVERSION 0,9,0,5
+ FILEVERSION 1,0,0,5
+ PRODUCTVERSION 1,0,0,5
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1031,12 +1031,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "FileDescription", "Agility Record Book\0"
-            VALUE "FileVersion", "0.9.0.5\0"
+            VALUE "FileVersion", "1.0.0.5\0"
             VALUE "InternalName", "AgilityBook.exe\0"
             VALUE "LegalCopyright", "All rights reserved.\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
             VALUE "ProductName", "Agility Record Book\0"
-            VALUE "ProductVersion", "0.9.0.5\0"
+            VALUE "ProductVersion", "1.0.0.5\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -1579,7 +1579,8 @@ BEGIN
     IDS_NUM_EVENTS          "%1!d! events"
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
     IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
-    IDS_CREATETRIAL_FAILED  "Warning: Failed to create trial. Please check the filter options, it may be preventing the creation of this trial."
+    IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
+    IDS_CREATETRIAL_FILTERED  "Warning: The trial you have just created cannot be shown due to filter options."
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_VENUE_CONFIG_MISSING 
                             "Unable to locate configuration information for the venue '%1'."
@@ -1620,7 +1621,8 @@ BEGIN
     IDS_FILEEXT_DEF_ARB     "arb"
     IDS_FILEEXT_FNAME_ARB   "*.arb"
     IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
-    IDS_CREATERUN_FAILED    "Warning: Failed to create run. Please check the filter options, it may be preventing the creation of this run."
+    IDS_CREATERUN_FAILED    "Error: Failed to create run."
+    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
 END
 
 STRINGTABLE DISCARDABLE 

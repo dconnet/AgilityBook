@@ -1,3 +1,11 @@
+09/04/2003: v1.0.0.5: <development>
+- Bug fixes
+  - Pasting a trial/run didn't mark the document as needing saving.
+  - When adding/pasting a trial/run and the filtering options filtered that new
+    item out, a message appeared saying the run wasn't added. Actually it was,
+	it just wasn't visible. In addition, the (now) not visible run was not
+	sorted properly when the filtered was removed.
+
 09/03/2003: v0.9.0.5: Release Candidate 1
 - New features / Enhancements:
   - Added a 'deceased' date to the dogs info. (This is a file version change but
