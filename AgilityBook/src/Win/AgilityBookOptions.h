@@ -36,12 +36,14 @@
  * Revision History
  */
 
+#include <set>
 #include <string>
 #include <vector>
 #include "ARBDate.h"
 class ARBDogRun;
 class ARBDogTitle;
 class ARBDogTrial;
+class ARBTraining;
 
 struct CFontInfo
 {
@@ -79,6 +81,9 @@ public:
 		const std::vector<CVenueFilter>& venues,
 		const ARBDogTrial* pTrial,
 		const ARBDogRun* pRun);
+	static bool IsTrainingLogVisible(
+		const std::set<std::string>& names,
+		const ARBTraining* pTraining);
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
 	static void SetAutoDeleteCalendarEntries(bool bAuto);
@@ -115,6 +120,21 @@ public:
 	static void SetViewAllRuns(bool bViewAll);
 	static bool GetViewQRuns(); // Subset of AllRuns
 	static void SetViewQRuns(bool bViewQs);
+	// Training Log options
+	static bool GetTrainingViewAllDates();
+	static void SetTrainingViewAllDates(bool bViewAll);
+	static ARBDate GetTrainingStartFilterDate();
+	static void SetTrainingStartFilterDate(const ARBDate& date);
+	static bool GetTrainingStartFilterDateSet();
+	static void SetTrainingStartFilterDateSet(bool bSet);
+	static ARBDate GetTrainingEndFilterDate();
+	static void SetTrainingEndFilterDate(const ARBDate& date);
+	static bool GetTrainingEndFilterDateSet();
+	static void SetTrainingEndFilterDateSet(bool bSet);
+	static bool GetTrainingViewAllNames();
+	static void SetTrainingViewAllNames(bool bViewAll);
+	static void GetTrainingFilterNames(std::set<std::string>& outNames);
+	static void SetTrainingFilterNames(const std::set<std::string>& inNames);
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(const CFontInfo& info);

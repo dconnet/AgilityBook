@@ -59,6 +59,7 @@ public:
 	CAgilityBookDoc* GetDocument() const;
 
 	// ICommonView interface
+	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
 
 private:

@@ -55,6 +55,7 @@ public:
 	void SetCurrentDate(const ARBDate& inDate);
 
 	// ICommonView interface
+	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
 
 private:

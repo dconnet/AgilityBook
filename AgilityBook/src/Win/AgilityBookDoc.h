@@ -51,6 +51,7 @@ class ARBDog;
 class ARBDogList;
 class ARBDogRun;
 class ARBDogTrial;
+class ARBTraining;
 class CAgilityBookTree;
 class CAgilityBookViewCalendar;
 class CAgilityBookViewCalendarList;
@@ -107,6 +108,10 @@ public:
 	{
 		return m_Records.GetAllFaultTypes(faults);
 	}
+	size_t GetAllTrainingLogNames(std::set<std::string>& outNames) const
+	{
+		return m_Records.GetTraining().GetAllNames(outNames);
+	}
 
 	// These are called from the Runs view so the tree view can do the add.
 	void AddTitle(ARBDogRun* pSelectedRun);
@@ -123,6 +128,7 @@ public:
 	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial);
 	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun);
 	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle);
+	void ResetVisibility(std::set<std::string>& names, ARBTraining* pTraining);
 
 	CAgilityBookTree* GetTreeView() const;
 	CAgilityBookViewCalendarList* GetCalendarListView() const;

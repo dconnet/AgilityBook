@@ -964,6 +964,37 @@ BEGIN
     PUSHBUTTON      "Set Font...",IDC_FONT_GENERAL_PRINT,208,133,50,14
 END
 
+IDD_VIEW_OPTIONS_TRAINING DIALOG DISCARDABLE  0, 0, 285, 162
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Training Log"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Name",IDC_STATIC,7,7,132,148
+    CONTROL         "View all names",IDC_OPTIONS_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,65,10
+    CONTROL         "View only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,15,32,48,10
+    CONTROL         "Tree1",IDC_OPTIONS_VENUES,"SysTreeView32",
+                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,15,
+                    46,115,102
+    GROUPBOX        "Dates",IDC_STATIC,146,7,132,74
+    CONTROL         "View all dates",IDC_OPTIONS_DATES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,154,20,59,10
+    CONTROL         "View dates in range (inclusive):",
+                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,154,
+                    32,113,10
+    CONTROL         "After",IDC_OPTIONS_DATE_START_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,166,45,31,10
+    CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_START,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,207,44,
+                    60,12
+    CONTROL         "Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,166,60,37,10
+    CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,207,59,60,12
+END
+
 IDD_DOG_PICKER DIALOG DISCARDABLE  0, 0, 186, 95
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Select dog(s)"

@@ -302,7 +302,7 @@ void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, 
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookViewRuns::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -339,6 +339,11 @@ void CAgilityBookViewRuns::GetPrintLine(int nItem, CStringArray& line)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+bool CAgilityBookViewRuns::IsFiltered() const
+{
+	return CAgilityBookOptions::IsFilterEnabled();
+}
 
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 {
@@ -435,7 +440,7 @@ void CAgilityBookViewRuns::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);

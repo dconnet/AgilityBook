@@ -164,7 +164,7 @@ void CAgilityBookTree::OnActivateView(BOOL bActivate, CView* pActivateView, CVie
 	CTreeView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookTree::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -476,6 +476,11 @@ HTREEITEM CAgilityBookTree::InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTRE
 		TVI_LAST);
 	pDataRun->SetHTreeItem(hRun);
 	return hRun;
+}
+
+bool CAgilityBookTree::IsFiltered() const
+{
+	return CAgilityBookOptions::IsFilterEnabled();
 }
 
 bool CAgilityBookTree::GetMessage(CString& msg) const

@@ -226,6 +226,10 @@ SOURCE=..\..\..\Win\DlgOptionsFonts.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgOptionsTraining.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgOtherPoint.cpp
 # End Source File
 # Begin Source File
@@ -367,6 +371,10 @@ SOURCE=..\..\..\Win\ColumnOrder.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\CommonView.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgCalendar.h
 # End Source File
 # Begin Source File
@@ -440,6 +448,10 @@ SOURCE=..\..\..\Win\DlgOptionsFilter.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgOptionsFonts.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgOptionsTraining.h
 # End Source File
 # Begin Source File
 

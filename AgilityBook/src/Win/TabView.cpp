@@ -260,7 +260,7 @@ void CTabView::SetActiveView()
 	{
 		CString msg;
 		if (pCommon->GetMessage(msg))
-			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+			((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, pCommon->IsFiltered());
 	}
 }
 

@@ -128,7 +128,7 @@ void CAgilityBookViewPoints::OnActivateView(BOOL bActivate, CView* pActivateView
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	CString msg;
 	if (pActivateView && GetMessage(msg))
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 }
 
 void CAgilityBookViewPoints::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
@@ -168,6 +168,11 @@ void CAgilityBookViewPoints::GetPrintLine(int nItem, CStringArray& line)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+bool CAgilityBookViewPoints::IsFiltered() const
+{
+	return CAgilityBookOptions::IsFilterEnabled();
+}
 
 bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 {
@@ -671,7 +676,7 @@ void CAgilityBookViewPoints::LoadData()
 
 	CString msg;
 	if (GetMessage(msg) && IsWindowVisible())
-		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg);
+		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
 	// Cleanup.
 //	if (pCurData)

@@ -266,10 +266,17 @@ void CAgilityBookDoc::ResetVisibility()
 {
 	std::vector<CVenueFilter> venues;
 	CAgilityBookOptions::GetFilterVenue(venues);
+	std::set<std::string> names;
+	CAgilityBookOptions::GetTrainingFilterNames(names);
 
 	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
 	{
 		ResetVisibility(venues, *iterDogs);
+	}
+
+	for (ARBTrainingList::iterator iterTraining = GetTraining().begin(); iterTraining != GetTraining().end(); ++iterTraining)
+	{
+		ResetVisibility(names, *iterTraining);
 	}
 
 // Currently, calendar entries are not filtered.
@@ -318,6 +325,12 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 {
 	bool bVisTitle = CAgilityBookOptions::IsTitleVisible(venues, pTitle);
 	pTitle->SetFiltered(!bVisTitle);
+}
+
+void CAgilityBookDoc::ResetVisibility(std::set<std::string>& names, ARBTraining* pTraining)
+{
+	bool bVisTraining = CAgilityBookOptions::IsTrainingLogVisible(names, pTraining);
+	pTraining->SetFiltered(!bVisTraining);
 }
 
 /**
@@ -787,6 +800,8 @@ void CAgilityBookDoc::OnViewOptions()
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	if (2 == pFrame->GetCurTab())
 		nPage = 1;
+	else if (3 == pFrame->GetCurTab())
+		nPage = 2;
 	CDlgOptions options(this, AfxGetMainWnd(), nPage);
 	options.DoModal();
 }

@@ -1,6 +1,9 @@
-09/21/2003: v0.9.1.6: <development>
+09/21/2003: v0.9.1.6: Release Candidate 2
 - Bumped file version to 6:
   - Added the Training Log.
+- New features / Enhancements:
+  - Training Log and filtering options for it.
+  - Enhanced the 'Filtered' message to be sensitive to the current view.
 - Bug fixes
   - When creating a trial entry from the calendar, if you selected more than one
     dog at a time when creating the trial, that new trial was actually linked
