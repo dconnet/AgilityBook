@@ -1,4 +1,4 @@
-6/16/2004: v1.2.0.8 <in development>
+6/23/2004: v1.2.0.8 <in development>
 - Bumped file version to 8.7, Configuration v4:
   - Added 'SubName' to 'Training'.
   - CPE 'CADE' changed to 'C-ATE'.
@@ -30,6 +30,8 @@
     different, a run would end up visible in the points view when it shouldn't.
     For instance, in an ASCA/NADAC trial, if you set filtering to hide Novice
     runs in NADAC and not ASCA, the novice runs were still visible under NADAC.
+  - Fixed a problem in the Points View with accumulating non-qualifying runs
+    when the filter was set to view only qualifying or only non-qualifying.
 
 4/30/2004: v1.1.0.8
 - Bumped file version to 8.6, Configuration v3:
