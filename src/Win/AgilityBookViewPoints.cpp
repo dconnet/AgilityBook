@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-05-20 DRC Add Dogs name and current date to report.
  * @li 2004-05-16 DRC Do filter levels.
  * @li 2004-05-03 DRC Do not filter runs, only venues and titles.
  *                    Added percent qualifying.
@@ -71,15 +72,17 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 // Columns:
-// 1: Date
-// 2: Title
-//
 // 1: Venue
+// 2: Reg-Number
+// 1: <blank>
+// 2: Date
+// 3: Title
+// 1: <blank>
 // 2: Division
 // 3: Level
 // 4: Event
 // 5: n Runs, n Judges, n Partners
-// 6: n Qs (n clean), n Judges, n Partners
+// 6: n Qs (x %), (n clean), n Judges, n Partners
 // 7: Points
 // 8: SuperQs/MachPts(per run), total QQs/machpts
 // 9: MachPts (if SuperQs too) [possible, but an event like this doesn't exist]
@@ -389,6 +392,7 @@ int CAgilityBookViewPoints::DoEvents(
 						GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
 					}
 				}
+				ASSERT(nextCol <= MAX_COLUMNS);
 				++nAdded;
 			}
 		}
@@ -416,6 +420,7 @@ int CAgilityBookViewPoints::DoEvents(
 		CString str;
 		str.FormatMessage(IDS_POINTS_QQS, dblQs);
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+		ASSERT(nextCol <= MAX_COLUMNS);
 		++nAdded;
 	}
 	if (bHasMachPts)
@@ -431,9 +436,9 @@ int CAgilityBookViewPoints::DoEvents(
 		CString str;
 		str.FormatMessage(IDS_POINTS_MACH, machPts);
 		GetListCtrl().SetItemText(index+nAdded, nextCol++, str);
+		ASSERT(nextCol <= MAX_COLUMNS);
 		++nAdded;
 	}
-	//ASSERT(nAdded < MAX_COLUMNS);
 	return nAdded;
 }
 
@@ -543,6 +548,15 @@ void CAgilityBookViewPoints::LoadData()
 		std::vector<CVenueFilter> venues;
 		CAgilityBookOptions::GetFilterVenue(venues);
 		int i = 0;
+
+		// Put general info about the dog in...
+		ARBDate today(ARBDate::Today());
+		GetListCtrl().InsertItem(i, pDog->GetCallName().c_str());
+		GetListCtrl().SetItemText(i, 1, pDog->GetRegisteredName().c_str());
+		// MAX_COLUMNS is a theorectical column - no events exist that will populate it.
+		GetListCtrl().SetItemText(i, MAX_COLUMNS-2, today.GetString(false, ARBDate::eSlashMMDDYYYY).c_str());
+		++i;
+
 		// For each venue...
 		for (ARBConfigVenueList::const_iterator iterVenue = GetDocument()->GetConfig().GetVenues().begin();
 		iterVenue != GetDocument()->GetConfig().GetVenues().end();
