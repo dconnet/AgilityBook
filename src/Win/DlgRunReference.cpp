@@ -265,7 +265,7 @@ void CDlgRunReference::ListRuns()
 BOOL CDlgRunReference::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	m_ctrlRefRuns.SetExtendedStyle(m_ctrlRefRuns.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlRefRuns.SetExtendedStyle(m_ctrlRefRuns.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;

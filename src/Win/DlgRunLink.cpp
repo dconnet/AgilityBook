@@ -166,7 +166,7 @@ int CDlgRunLink::GetImageIndex(std::string const& inLink)
 BOOL CDlgRunLink::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
 	m_ctrlLinks.InsertColumn(0, "");
 	ListFiles(NULL);

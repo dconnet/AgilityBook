@@ -482,7 +482,7 @@ void CDlgListCtrl::SwapEntries(int oldIndex, int newIndex)
 BOOL CDlgListCtrl::OnInitDialog() 
 {
 	CDlgBaseDialog::OnInitDialog();
-	m_ctrlList.SetExtendedStyle(m_ctrlList.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlList.SetExtendedStyle(m_ctrlList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlCreateTrial.ShowWindow(SW_HIDE);
 
 	m_ImageList.Create(16, 16, ILC_MASK, 6, 0);

@@ -285,7 +285,7 @@ BOOL CDlgFindLinks::OnInitDialog()
 {
 	CWaitCursor wait;
 	CDlgBaseDialog::OnInitDialog();
-	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
 
 	LV_COLUMN col;

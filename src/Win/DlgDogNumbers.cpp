@@ -248,7 +248,7 @@ void CDlgDogNumbers::UpdateButtons()
 BOOL CDlgDogNumbers::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	m_ctrlRegNums.SetExtendedStyle(m_ctrlRegNums.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlRegNums.SetExtendedStyle(m_ctrlRegNums.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;

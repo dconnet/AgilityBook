@@ -145,7 +145,7 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;

@@ -299,7 +299,7 @@ void CDlgDogTitles::UpdateButtons()
 BOOL CDlgDogTitles::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlTitles.SetImageList(&m_ImageList, LVSIL_SMALL);
 
 	LV_COLUMN col;

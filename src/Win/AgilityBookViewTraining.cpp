@@ -308,7 +308,7 @@ int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
+	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	return 0;
 }
 
