@@ -108,11 +108,11 @@ size_t ARBConfigDivision::GetSearchStrings(std::set<std::string>& ioStrings) con
 }
 
 bool ARBConfigDivision::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME);
@@ -120,7 +120,7 @@ bool ARBConfigDivision::Load(
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_LEVEL)
 		{
 			// Ignore any errors...
@@ -135,9 +135,9 @@ bool ARBConfigDivision::Load(
 	return true;
 }
 
-bool ARBConfigDivision::Save(CElement& ioTree) const
+bool ARBConfigDivision::Save(Element& ioTree) const
 {
-	CElement& division = ioTree.AddElement(TREE_DIVISION);
+	Element& division = ioTree.AddElement(TREE_DIVISION);
 	division.AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
 	if (!m_Levels.Save(division))
 		return false;
@@ -246,7 +246,7 @@ bool ARBConfigDivision::Update(int indent, const ARBConfigDivision* inDivNew, st
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigDivisionList::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {

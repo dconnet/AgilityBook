@@ -184,14 +184,14 @@ size_t ARBConfigScoring::GetSearchStrings(std::set<std::string>& ioStrings) cons
 
 bool ARBConfigScoring::Load(
 	const ARBConfigDivisionList& inDivisions,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
 		inTree.GetAttrib("Date", m_ValidFrom);
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
 		std::string attrib;
 		inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
@@ -200,7 +200,7 @@ bool ARBConfigScoring::Load(
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str());
 		return false;
 	}
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
 	{
 		std::string attrib;
 		inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
@@ -210,14 +210,14 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_DIVISION);
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_LEVEL);
@@ -234,7 +234,7 @@ bool ARBConfigScoring::Load(
 	}
 
 	std::string attrib;
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_SCORING_TYPE, attrib)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE);
@@ -265,25 +265,25 @@ bool ARBConfigScoring::Load(
 	// This attribute came in in version 4, but go ahead and read it even if
 	// the current doc is earlier. This will allow someone to hand-edit it in.
 	// Not advisable, but it doesn't hurt anything either.
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, VALID_VALUES_BOOL);
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, VALID_VALUES_BOOL);
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DOUBLEQ, m_bDoubleQ))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DOUBLEQ, m_bDoubleQ))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DOUBLEQ, VALID_VALUES_BOOL);
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_MACHPTS, m_bMachPts))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_MACHPTS, m_bMachPts))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_MACHPTS, VALID_VALUES_BOOL);
 		return false;
@@ -295,7 +295,7 @@ bool ARBConfigScoring::Load(
 		inTree.GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
 		{
-			const CElement& element = inTree.GetElement(i);
+			const Element& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_NOTE)
 				m_Note = element.GetValue();
 			else if (element.GetName() == TREE_TITLE_POINTS)
@@ -311,7 +311,7 @@ bool ARBConfigScoring::Load(
 	else
 	{
 		short ptsWhenClean = 0;
-		if (CElement::eFound != inTree.GetAttrib("Clean", ptsWhenClean))
+		if (Element::eFound != inTree.GetAttrib("Clean", ptsWhenClean))
 		{
 			ioErrMsg += ErrorMissingAttribute(TREE_SCORING, "Clean");
 			return false;
@@ -337,9 +337,9 @@ bool ARBConfigScoring::Load(
 	return true;
 }
 
-bool ARBConfigScoring::Save(CElement& ioTree) const
+bool ARBConfigScoring::Save(Element& ioTree) const
 {
-	CElement& scoring = ioTree.AddElement(TREE_SCORING);
+	Element& scoring = ioTree.AddElement(TREE_SCORING);
 	if (m_ValidFrom.IsValid())
 		scoring.AddAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom);
 	if (m_ValidTo.IsValid())
@@ -377,7 +377,7 @@ bool ARBConfigScoring::Save(CElement& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions);
 	if (0 < m_Note.length())
 	{
-		CElement& note = scoring.AddElement(TREE_NOTE);
+		Element& note = scoring.AddElement(TREE_NOTE);
 		note.SetValue(m_Note);
 	}
 	if (0 < m_OpeningPts)
@@ -424,7 +424,7 @@ std::string ARBConfigScoring::GetScoringStyleStr() const
 
 bool ARBConfigScoringList::Load(
 	const ARBConfigDivisionList& inDivisions,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {

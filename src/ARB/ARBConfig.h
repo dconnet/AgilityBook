@@ -42,7 +42,7 @@
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * The main configuration class.
@@ -73,7 +73,7 @@ public:
 	 * @return Success
 	 */
 	bool LoadFault(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -88,7 +88,7 @@ public:
 	 * @return Success
 	 */
 	bool LoadOtherPoints(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -101,7 +101,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -111,7 +111,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfig element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Set the configuration to the default (DefaultConfig.xml)

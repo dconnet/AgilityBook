@@ -118,12 +118,12 @@ size_t ARBConfigVenue::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBConfigVenue::Load(
 	ARBConfig& ioConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	// Get the venue name.
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_VENUE_NAME, m_Name)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_VENUE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME);
@@ -131,7 +131,7 @@ bool ARBConfigVenue::Load(
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		const std::string& name = element.GetName();
 		if (name == TREE_VENUE_DESC)
 		{
@@ -178,13 +178,13 @@ bool ARBConfigVenue::Load(
 	return true;
 }
 
-bool ARBConfigVenue::Save(CElement& ioTree) const
+bool ARBConfigVenue::Save(Element& ioTree) const
 {
-	CElement& venue = ioTree.AddElement(TREE_VENUE);
+	Element& venue = ioTree.AddElement(TREE_VENUE);
 	venue.AddAttrib(ATTRIB_VENUE_NAME, m_Name);
 	if (0 < m_Desc.length())
 	{
-		CElement& desc = venue.AddElement(TREE_VENUE_DESC);
+		Element& desc = venue.AddElement(TREE_VENUE_DESC);
 		desc.SetValue(m_Desc);
 	}
 	if (!m_Divisions.Save(venue))
@@ -304,7 +304,7 @@ bool ARBConfigVenue::Update(int indent, const ARBConfigVenue* inVenueNew, std::s
 
 bool ARBConfigVenueList::Load(
 	ARBConfig& ioConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {

@@ -143,18 +143,18 @@ size_t ARBDogTrial::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBDogTrial::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL);
 		return false;
 	}
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_LOCATION)
 		{
 			m_Location = element.GetValue();
@@ -181,18 +181,18 @@ bool ARBDogTrial::Load(
 	return true;
 }
 
-bool ARBDogTrial::Save(CElement& ioTree) const
+bool ARBDogTrial::Save(Element& ioTree) const
 {
-	CElement& trial = ioTree.AddElement(TREE_TRIAL);
+	Element& trial = ioTree.AddElement(TREE_TRIAL);
 	trial.AddAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified);
 	if (0 < m_Location.length())
 	{
-		CElement& element = trial.AddElement(TREE_LOCATION);
+		Element& element = trial.AddElement(TREE_LOCATION);
 		element.SetValue(m_Location);
 	}
 	if (0 < m_Note.length())
 	{
-		CElement& element = trial.AddElement(TREE_NOTE);
+		Element& element = trial.AddElement(TREE_NOTE);
 		element.SetValue(m_Note);
 	}
 	if (!m_Clubs.Save(trial))

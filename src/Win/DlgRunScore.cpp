@@ -31,6 +31,10 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-03-20 DRC The date never got set if the initial entry had no date
+ *                    and we didn't change it (first run in a trial).
+ *                    Plus, the table-in-yps flag was backwards and didn't
+ *                    properly initialize when the event type changed.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  * @li 2004-02-09 DRC Update YPS when the time is changed.
  *                    When date changes, update controls.
@@ -779,8 +783,9 @@ void CDlgRunScore::UpdateControls()
 	case ARBConfigScoring::eTimePlusFaults:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByTime, pScoring->DropFractions());
 		m_ctrlTime.EnableWindow(TRUE);
-		m_ctrlTableYPS.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
+		m_ctrlTableYPS.EnableWindow(TRUE);
+		m_ctrlTableYPS.SetCheck(m_Run->GetScoring().GetTableInYPS() ? 0 : 1);
 		m_ctrlYards.EnableWindow(TRUE);
 		m_ctrlSCT.EnableWindow(TRUE);
 		m_ctrlOpening.EnableWindow(FALSE);
@@ -796,6 +801,7 @@ void CDlgRunScore::UpdateControls()
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
+		m_ctrlTableYPS.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[0]);
@@ -821,6 +827,7 @@ void CDlgRunScore::UpdateControls()
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlTime.EnableWindow(TRUE);
 		m_ctrlFaults.EnableWindow(TRUE);
+		m_ctrlTableYPS.EnableWindow(FALSE);
 		m_ctrlYards.EnableWindow(FALSE);
 		m_ctrlSCT.EnableWindow(FALSE);
 		m_ctrlOpeningText.SetWindowText(m_strOpening[1]);
@@ -895,6 +902,8 @@ BOOL CDlgRunScore::OnInitDialog()
 	CTime date = CTime::GetCurrentTime();
 	if (m_Run->GetDate().IsValid())
 		date = CTime(m_Run->GetDate().GetDate());
+	else
+		m_Run->SetDate(ARBDate::Today());
 	m_ctrlDate.SetTime(&date);
 
 	int index;
@@ -952,7 +961,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	case ARBDogRunScoring::eTypeByTime:
 		m_Faults = m_Run->GetScoring().GetCourseFaults();
 		m_Time = m_Run->GetScoring().GetTime();
-		m_ctrlTableYPS.SetCheck(m_Run->GetScoring().GetTableInYPS() ? 1 : 0);
+		m_ctrlTableYPS.SetCheck(m_Run->GetScoring().GetTableInYPS() ? 0 : 1);
 		m_Yards = m_Run->GetScoring().GetYards();
 		m_SCT = m_Run->GetScoring().GetSCT();
 		SetYPS();
@@ -1103,7 +1112,7 @@ void CDlgRunScore::OnKillfocusPlace()
 
 void CDlgRunScore::OnBnClickedTableYps()
 {
-	m_Run->GetScoring().SetTableInYPS(m_ctrlTableYPS.GetCheck() ? true : false);
+	m_Run->GetScoring().SetTableInYPS(m_ctrlTableYPS.GetCheck() ? false : true);
 	SetYPS();
 }
 

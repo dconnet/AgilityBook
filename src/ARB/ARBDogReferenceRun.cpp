@@ -134,13 +134,13 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<std::string>& ioStrings) co
 
 bool ARBDogReferenceRun::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	std::string attrib;
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_REF_RUN_Q, attrib))
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q);
 		return false;
@@ -152,14 +152,14 @@ bool ARBDogReferenceRun::Load(
 	}
 
 	double d;
-	if (CElement::eFound == inTree.GetAttrib(ATTRIB_REF_RUN_TIME, d))
+	if (Element::eFound == inTree.GetAttrib(ATTRIB_REF_RUN_TIME, d))
 		m_Time = d;
 
 	inTree.GetAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_REF_NAME)
 		{
 			m_Name = element.GetValue();
@@ -181,29 +181,29 @@ bool ARBDogReferenceRun::Load(
 	return true;
 }
 
-bool ARBDogReferenceRun::Save(CElement& ioTree) const
+bool ARBDogReferenceRun::Save(Element& ioTree) const
 {
-	CElement& refRun = ioTree.AddElement(TREE_REF_RUN);
+	Element& refRun = ioTree.AddElement(TREE_REF_RUN);
 	m_Q.Save(refRun, ATTRIB_REF_RUN_Q);
 	refRun.AddAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
 	{
-		CElement& element = refRun.AddElement(TREE_REF_NAME);
+		Element& element = refRun.AddElement(TREE_REF_NAME);
 		element.SetValue(m_Name);
 	}
 	if (0 < m_Breed.length())
 	{
-		CElement& element = refRun.AddElement(TREE_REF_BREED);
+		Element& element = refRun.AddElement(TREE_REF_BREED);
 		element.SetValue(m_Breed);
 	}
 	if (0 < m_Score.length())
 	{
-		CElement& element = refRun.AddElement(TREE_REF_SCORE);
+		Element& element = refRun.AddElement(TREE_REF_SCORE);
 		element.SetValue(m_Score);
 	}
 	m_Time.Save(refRun, ATTRIB_REF_RUN_TIME);
 	if (0 < m_Note.length())
 	{
-		CElement& element = refRun.AddElement(TREE_REF_NOTE);
+		Element& element = refRun.AddElement(TREE_REF_NOTE);
 		element.SetValue(m_Note);
 	}
 	return true;

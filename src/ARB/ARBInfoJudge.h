@@ -41,7 +41,7 @@
 #include "ARBBase.h"
 #include "ARBVector.h"
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Comments about judges
@@ -79,7 +79,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -89,7 +89,7 @@ public:
 	 * @return Success
 	 * @post The ARBInfoJudge element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/*
 	 * Getters/setters.

@@ -41,11 +41,11 @@
 
 #include <string>
 
-class CBase64
+class Base64
 {
 public:
-	CBase64(bool bDeleteDecodeBuffer = true);
-	~CBase64();
+	Base64(bool bDeleteDecodeBuffer = true);
+	~Base64();
 
 	/**
 	 * Decode a base64 string.

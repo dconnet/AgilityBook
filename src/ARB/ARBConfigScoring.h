@@ -48,7 +48,7 @@
 #include "ARBVector.h"
 class ARBConfigEvent;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Scoring methods for an event.
@@ -105,7 +105,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -115,7 +115,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigOtherPoints element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -317,7 +317,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfigDivisionList& inDivisions,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 

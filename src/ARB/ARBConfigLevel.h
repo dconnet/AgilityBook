@@ -42,7 +42,7 @@
 #include "ARBVector.h"
 class ARBConfigEventList;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Levels within a division.
@@ -83,7 +83,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -93,7 +93,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigLevel element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Update this configuration from inLevelNew.

@@ -105,7 +105,7 @@ bool CDlgConfigUpdate::LoadConfig(const char* pFile)
 	else
 	{
 		std::string err;
-		CElement tree;
+		Element tree;
 		// Translate the XML to a tree form.
 		if (!tree.LoadXMLFile(pFile, err))
 		{

@@ -203,16 +203,16 @@ bool ARBCalendar::IsRangeOverlapped(const ARBDate& inDate1, const ARBDate& inDat
 }
 
 bool ARBCalendar::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
-	case CElement::eNotFound:
+	case Element::eNotFound:
 		ioErrMsg += ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START);
 		return false;
-	case CElement::eInvalidValue:
+	case Element::eInvalidValue:
 		{
 			std::string attrib;
 			inTree.GetAttrib(ATTRIB_CAL_START, attrib);
@@ -225,10 +225,10 @@ bool ARBCalendar::Load(
 
 	switch (inTree.GetAttrib(ATTRIB_CAL_END, m_DateEnd))
 	{
-	case CElement::eNotFound:
+	case Element::eNotFound:
 		ioErrMsg += ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END);
 		return false;
-	case CElement::eInvalidValue:
+	case Element::eInvalidValue:
 		{
 			std::string attrib;
 			inTree.GetAttrib(ATTRIB_CAL_END, attrib);
@@ -239,7 +239,7 @@ bool ARBCalendar::Load(
 		}
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
 	{
 		std::string attrib;
 		inTree.GetAttrib(ATTRIB_CAL_OPENING, attrib);
@@ -249,7 +249,7 @@ bool ARBCalendar::Load(
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
 	{
 		std::string attrib;
 		inTree.GetAttrib(ATTRIB_CAL_CLOSING, attrib);
@@ -259,7 +259,7 @@ bool ARBCalendar::Load(
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
 		ioErrMsg += ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, VALID_VALUES_BOOL);
 		return false;
@@ -272,7 +272,7 @@ bool ARBCalendar::Load(
 	if (inVersion == ARBVersion(1,0))
 	{
 		std::string attrib;
-		if (CElement::eFound == inTree.GetAttrib("PlanOn", attrib))
+		if (Element::eFound == inTree.GetAttrib("PlanOn", attrib))
 		{
 			if (attrib == "y")
 				m_eEntered = ePlanning;
@@ -283,7 +283,7 @@ bool ARBCalendar::Load(
 	else if (inVersion >= ARBVersion(2,0))
 	{
 		std::string attrib;
-		if (CElement::eFound == inTree.GetAttrib(ATTRIB_CAL_ENTERED, attrib))
+		if (Element::eFound == inTree.GetAttrib(ATTRIB_CAL_ENTERED, attrib))
 		{
 			if (attrib == "E")
 				m_eEntered = eEntered;
@@ -303,9 +303,9 @@ bool ARBCalendar::Load(
 	return true;
 }
 
-bool ARBCalendar::Save(CElement& ioTree) const
+bool ARBCalendar::Save(Element& ioTree) const
 {
-	CElement& cal = ioTree.AddElement(TREE_CALENDAR);
+	Element& cal = ioTree.AddElement(TREE_CALENDAR);
 	cal.AddAttrib(ATTRIB_CAL_START, m_DateStart);
 	cal.AddAttrib(ATTRIB_CAL_END, m_DateEnd);
 	cal.AddAttrib(ATTRIB_CAL_OPENING, m_DateOpening);

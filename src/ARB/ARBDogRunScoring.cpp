@@ -127,7 +127,7 @@ bool ARBDogRunScoring::operator!=(const ARBDogRunScoring& rhs) const
 
 bool ARBDogRunScoring::Load(
 	const ARBConfigScoring* inEvent,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
@@ -136,7 +136,7 @@ bool ARBDogRunScoring::Load(
 	m_bRoundTimeFaults = inEvent->DropFractions();
 	const std::string& name = inTree.GetName();
 	double d;
-	if (CElement::eFound == inTree.GetAttrib(ATTRIB_SCORING_TIME, d))
+	if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_TIME, d))
 		m_Time = d;
 	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	switch (inEvent->GetScoringStyle())
@@ -150,14 +150,14 @@ bool ARBDogRunScoring::Load(
 	case ARBConfigScoring::eTimePlusFaults:
 		if (name == TREE_BY_TIME)
 		{
-			if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TABLEINYPS, m_TableInYPS))
+			if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TABLEINYPS, m_TableInYPS))
 			{
 				ioErrMsg += ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TABLEINYPS, VALID_VALUES_BOOL);
 				// Report the error, but keep going.
 				m_TableInYPS = true;
 			}
 			m_type = eTypeByTime;
-			if (CElement::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_SCT, d))
+			if (Element::eFound == inTree.GetAttrib(ATTRIB_BY_TIME_SCT, d))
 				m_SCT = d;
 			inTree.GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 			return true;
@@ -189,7 +189,7 @@ bool ARBDogRunScoring::Load(
 	return false;
 }
 
-bool ARBDogRunScoring::Save(CElement& ioTree) const
+bool ARBDogRunScoring::Save(Element& ioTree) const
 {
 	switch (m_type)
 	{
@@ -197,7 +197,7 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 		break;
 	case eTypeByTime:
 		{
-			CElement& scoring = ioTree.AddElement(TREE_BY_TIME);
+			Element& scoring = ioTree.AddElement(TREE_BY_TIME);
 			scoring.AddAttrib(ATTRIB_SCORING_TABLEINYPS, m_TableInYPS);
 			scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
@@ -207,7 +207,7 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 		return true;
 	case eTypeByOpenClose:
 		{
-			CElement& scoring = ioTree.AddElement(TREE_BY_OPENCLOSE);
+			Element& scoring = ioTree.AddElement(TREE_BY_OPENCLOSE);
 			if (0 < m_CourseFaults)
 				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
@@ -219,7 +219,7 @@ bool ARBDogRunScoring::Save(CElement& ioTree) const
 		return true;
 	case eTypeByPoints:
 		{
-			CElement& scoring = ioTree.AddElement(TREE_BY_POINTS);
+			Element& scoring = ioTree.AddElement(TREE_BY_POINTS);
 			if (0 < m_CourseFaults)
 				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 			m_Time.Save(scoring, ATTRIB_SCORING_TIME);

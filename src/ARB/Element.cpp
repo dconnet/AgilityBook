@@ -503,7 +503,7 @@ const char* StringTranscode::TranscodeElement(const XMLCh* const xmlStr)
 class SAXImportHandlers : public DefaultHandler
 {
 public:
-	SAXImportHandlers(CElement& outTree, StringDOM& outMsg)
+	SAXImportHandlers(Element& outTree, StringDOM& outMsg)
 		: m_Tree(outTree)
 		, m_Msg(outMsg)
 		, m_Warnings(0)
@@ -535,12 +535,12 @@ public:
 	void fatalError(const SAXParseException& exception);
 
 private:
-	CElement& m_Tree; ///< Parsed XML data
+	Element& m_Tree; ///< Parsed XML data
 	StringDOM& m_Msg; ///< Any messages generated in ErrorHandler interface
 	int m_Warnings;
 	int m_Errors;
 	int m_FatalErrors;
-	std::list<CElement*> m_Parents; ///< Keeps track of where we are.
+	std::list<Element*> m_Parents; ///< Keeps track of where we are.
 	StringDOM m_CurrentName; ///< Name of the element currently being parsed.
 	XMLstring m_CurrentData; ///< Data of the element currently being parsed.
 	class CurrentAttrib
@@ -566,7 +566,7 @@ void SAXImportHandlers::startElement(const XMLCh* const /*uri*/, const XMLCh* co
 	{
 		// Since we're caching the element, we need to flush it so we can
 		// start processing this incoming element.
-		CElement* pParent = NULL;
+		Element* pParent = NULL;
 		if (0 == m_Parents.size())
 		{
 			pParent = &m_Tree;
@@ -577,7 +577,7 @@ void SAXImportHandlers::startElement(const XMLCh* const /*uri*/, const XMLCh* co
 		{
 			pParent = m_Parents.front();
 			ASSERT(pParent);
-			CElement& element = pParent->AddElement(m_CurrentName);
+			Element& element = pParent->AddElement(m_CurrentName);
 			pParent = &element;
 			m_Parents.push_front(pParent);
 		}
@@ -603,10 +603,10 @@ void SAXImportHandlers::endElement(const XMLCh* const /*uri*/, const XMLCh* cons
 	// Insert the element.
 	if (0 < m_CurrentName.length())
 	{
-		CElement* pParent = NULL;
+		Element* pParent = NULL;
 		if (0 < m_Parents.size())
 			pParent = m_Parents.front();
-		CElement* pElement = NULL;
+		Element* pElement = NULL;
 		// It's the root element
 		if (!pParent)
 		{
@@ -615,7 +615,7 @@ void SAXImportHandlers::endElement(const XMLCh* const /*uri*/, const XMLCh* cons
 		}
 		else
 		{
-			CElement& element = pParent->AddElement(m_CurrentName);
+			Element& element = pParent->AddElement(m_CurrentName);
 			pElement = &element;
 		}
 		for (std::list<CurrentAttrib>::iterator iter = m_CurrentAttribs.begin(); m_CurrentAttribs.end() != iter; ++iter)
@@ -758,7 +758,7 @@ static void Indent(std::ostream& target, int indentLevel)
 	}
 }
 
-std::ostream& operator<<(std::ostream& target, const CElement& toWrite)
+std::ostream& operator<<(std::ostream& target, const Element& toWrite)
 {
 	Indent(target, gIndentLevel);
 	XMLstring nodeName(toWrite.GetName().c_str());
@@ -824,17 +824,17 @@ std::ostream& operator<<(std::ostream& target, const CElement& toWrite)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CElement::CElement()
+Element::Element()
 {
 }
 
-CElement::CElement(const std::string& inName)
+Element::Element(const std::string& inName)
 	: m_Name(inName)
 	, m_Value("")
 {
 }
 
-CElement::CElement(const CElement& rhs)
+Element::Element(const Element& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Value(rhs.m_Value)
 {
@@ -842,7 +842,7 @@ CElement::CElement(const CElement& rhs)
 	m_Elements = rhs.m_Elements;
 }
 
-CElement& CElement::operator=(const CElement& rhs)
+Element& Element::operator=(const Element& rhs)
 {
 	if (this != &rhs)
 	{
@@ -854,7 +854,7 @@ CElement& CElement::operator=(const CElement& rhs)
 	return *this;
 }
 
-CElement::~CElement()
+Element::~Element()
 {
 }
 
@@ -893,7 +893,7 @@ static std::string ConvertDouble(double inValue, int inPrec)
 	return retVal;
 }
 
-void CElement::Dump(int inLevel) const
+void Element::Dump(int inLevel) const
 {
 	int i;
 	CString msg;
@@ -924,7 +924,7 @@ void CElement::Dump(int inLevel) const
 	}
 }
 
-void CElement::clear()
+void Element::clear()
 {
 	m_Name.erase();
 	m_Value.erase();
@@ -932,28 +932,28 @@ void CElement::clear()
 	m_Elements.clear();
 }
 
-const std::string& CElement::GetName() const
+const std::string& Element::GetName() const
 {
 	return m_Name;
 }
 
-void CElement::SetName(const std::string& inName)
+void Element::SetName(const std::string& inName)
 {
 	m_Name = inName;
 }
 
-const std::string& CElement::GetValue() const
+const std::string& Element::GetValue() const
 {
 	return m_Value;
 }
 
-void CElement::SetValue(const std::string& inValue)
+void Element::SetValue(const std::string& inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = inValue;
 }
 
-void CElement::SetValue(const char* const inValue)
+void Element::SetValue(const char* const inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	if (inValue)
@@ -962,7 +962,7 @@ void CElement::SetValue(const char* const inValue)
 		m_Value.erase();
 }
 
-void CElement::SetValue(const short inValue)
+void Element::SetValue(const short inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -970,7 +970,7 @@ void CElement::SetValue(const short inValue)
 	m_Value = str.str();
 }
 
-void CElement::SetValue(const long inValue)
+void Element::SetValue(const long inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -978,18 +978,18 @@ void CElement::SetValue(const long inValue)
 	m_Value = str.str();
 }
 
-void CElement::SetValue(const double inValue, int inPrec)
+void Element::SetValue(const double inValue, int inPrec)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = ConvertDouble(inValue, inPrec);
 }
 
-int CElement::GetAttribCount() const
+int Element::GetAttribCount() const
 {
 	return static_cast<int>(m_Attribs.size());
 }
 
-CElement::AttribLookup CElement::GetNthAttrib(int inIndex, std::string& outName, std::string& outValue) const
+Element::AttribLookup Element::GetNthAttrib(int inIndex, std::string& outName, std::string& outValue) const
 {
 	CAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
@@ -1007,7 +1007,7 @@ CElement::AttribLookup CElement::GetNthAttrib(int inIndex, std::string& outName,
 		return eNotFound;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, std::string& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, std::string& outValue) const
 {
 	CAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1019,7 +1019,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, std::strin
 		return eNotFound;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBVersion& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, ARBVersion& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1043,7 +1043,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBVersion
 	return rc;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBDate& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, ARBDate& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1058,7 +1058,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, ARBDate& o
 	return rc;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, bool& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, bool& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1074,7 +1074,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, bool& outV
 	return rc;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, short& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, short& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1088,7 +1088,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, short& out
 	return rc;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, long& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, long& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1102,7 +1102,7 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, long& outV
 	return rc;
 }
 
-CElement::AttribLookup CElement::GetAttrib(const std::string& inName, double& outValue) const
+Element::AttribLookup Element::GetAttrib(const std::string& inName, double& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1116,13 +1116,13 @@ CElement::AttribLookup CElement::GetAttrib(const std::string& inName, double& ou
 	return rc;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const std::string& inValue)
+bool Element::AddAttrib(const std::string& inName, const std::string& inValue)
 {
 	m_Attribs[inName] = inValue;
 	return true;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const char* const inValue)
+bool Element::AddAttrib(const std::string& inName, const char* const inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = inValue;
@@ -1131,19 +1131,19 @@ bool CElement::AddAttrib(const std::string& inName, const char* const inValue)
 	return true;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const ARBVersion& inValue)
+bool Element::AddAttrib(const std::string& inName, const ARBVersion& inValue)
 {
 	return AddAttrib(inName, inValue.ToString());
 }
 
-bool CElement::AddAttrib(const std::string& inName, const ARBDate& inValue)
+bool Element::AddAttrib(const std::string& inName, const ARBDate& inValue)
 {
 	if (inValue.IsValid())
 		AddAttrib(inName, inValue.GetString(false, ARBDate::eDashYYYYMMDD));
 	return true;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const bool inValue)
+bool Element::AddAttrib(const std::string& inName, const bool inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = "y";
@@ -1152,7 +1152,7 @@ bool CElement::AddAttrib(const std::string& inName, const bool inValue)
 	return true;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const short inValue)
+bool Element::AddAttrib(const std::string& inName, const short inValue)
 {
 	std::stringstream str;
 	str << inValue << std::ends;
@@ -1160,7 +1160,7 @@ bool CElement::AddAttrib(const std::string& inName, const short inValue)
 	return true;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const long inValue)
+bool Element::AddAttrib(const std::string& inName, const long inValue)
 {
 	std::stringstream str;
 	str << inValue << std::ends;
@@ -1168,13 +1168,13 @@ bool CElement::AddAttrib(const std::string& inName, const long inValue)
 	return true;
 }
 
-bool CElement::AddAttrib(const std::string& inName, const double inValue, int inPrec)
+bool Element::AddAttrib(const std::string& inName, const double inValue, int inPrec)
 {
 	m_Attribs[inName] = ConvertDouble(inValue, inPrec);
 	return true;
 }
 
-bool CElement::RemoveAttrib(const std::string& inName)
+bool Element::RemoveAttrib(const std::string& inName)
 {
 	CAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1186,31 +1186,31 @@ bool CElement::RemoveAttrib(const std::string& inName)
 		return false;
 }
 
-void CElement::RemoveAllAttribs()
+void Element::RemoveAllAttribs()
 {
 	m_Attribs.clear();
 }
 
-int CElement::GetElementCount() const
+int Element::GetElementCount() const
 {
 	return static_cast<int>(m_Elements.size());
 }
 
-const CElement& CElement::GetElement(int inIndex) const
+const Element& Element::GetElement(int inIndex) const
 {
 	return m_Elements[inIndex];
 }
 
-CElement& CElement::GetElement(int inIndex)
+Element& Element::GetElement(int inIndex)
 {
 	return m_Elements[inIndex];
 }
 
-CElement& CElement::AddElement(const std::string& inName, int inAt)
+Element& Element::AddElement(const std::string& inName, int inAt)
 {
 	ASSERT(0 == m_Value.length());
 	size_t index;
-	std::vector<CElement>::iterator iter = m_Elements.begin();
+	std::vector<Element>::iterator iter = m_Elements.begin();
 	if (0 < inAt)
 	{
 		index = 0;
@@ -1222,16 +1222,16 @@ CElement& CElement::AddElement(const std::string& inName, int inAt)
 		index = m_Elements.size();
 		iter = m_Elements.end();
 	}
-	m_Elements.insert(iter, CElement(inName));
+	m_Elements.insert(iter, Element(inName));
 	return m_Elements[index];
 }
 
-bool CElement::RemoveElement(int inIndex)
+bool Element::RemoveElement(int inIndex)
 {
 	bool bOk = false;
 	if (0 <= inIndex && inIndex < static_cast<int>(m_Elements.size()))
 	{
-		std::vector<CElement>::iterator iter = m_Elements.begin();
+		std::vector<Element>::iterator iter = m_Elements.begin();
 		iter += inIndex;
 		m_Elements.erase(iter);
 		bOk = true;
@@ -1239,12 +1239,12 @@ bool CElement::RemoveElement(int inIndex)
 	return bOk;
 }
 
-void CElement::RemoveAllElements()
+void Element::RemoveAllElements()
 {
 	m_Elements.clear();
 }
 
-int CElement::FindElement(const std::string& inName, int inStartFrom) const
+int Element::FindElement(const std::string& inName, int inStartFrom) const
 {
 	if (0 > inStartFrom)
 		inStartFrom = 0;
@@ -1257,7 +1257,7 @@ int CElement::FindElement(const std::string& inName, int inStartFrom) const
 }
 
 //private
-bool CElement::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource, std::string& ioErrMsg)
+bool Element::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSource, std::string& ioErrMsg)
 {
 	clear();
 	bool bOk = false;
@@ -1305,20 +1305,20 @@ bool CElement::LoadXML(const XERCES_CPP_NAMESPACE_QUALIFIER InputSource &inSourc
 	return bOk;
 }
 
-bool CElement::LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg)
+bool Element::LoadXMLBuffer(const char* inData, const unsigned int nData, std::string& ioErrMsg)
 {
 	MemBufInputSource source(reinterpret_cast<const XMLByte*>(inData), nData, "buffer");
 	return LoadXML(source, ioErrMsg);
 }
 
-bool CElement::LoadXMLFile(const char* inFileName, std::string& ioErrMsg)
+bool Element::LoadXMLFile(const char* inFileName, std::string& ioErrMsg)
 {
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
 	return LoadXML(source, ioErrMsg);
 }
 
-bool CElement::SaveXML(std::ostream& outOutput, const std::string* inDTD) const
+bool Element::SaveXML(std::ostream& outOutput, const std::string* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");

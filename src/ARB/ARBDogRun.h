@@ -50,7 +50,7 @@ class ARBConfigScoring;
 class ARBDogClubList;
 class ARBDogTrial;
 class ARBVersion;
-class CElement;
+class Element;
 
 class ARBDogRun : public ARBBase
 {
@@ -87,7 +87,7 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -97,7 +97,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -434,7 +434,7 @@ public:
 	bool Load(
 		const ARBConfig& inConfig,
 		const ARBDogClubList& inClubs,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 

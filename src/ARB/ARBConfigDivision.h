@@ -45,7 +45,7 @@
 class ARBConfigEventList;
 class ARBConfigVenue;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Division configuration information.
@@ -86,7 +86,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -96,7 +96,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Update this configuration from inDivNew.
@@ -176,7 +176,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 

@@ -109,13 +109,13 @@ size_t ARBDogClub::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBDogClub::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (CElement::eFound != inTree.GetAttrib("Name", m_Name)
+		if (Element::eFound != inTree.GetAttrib("Name", m_Name)
 		|| 0 == m_Name.length())
 		{
 			ioErrMsg += ErrorMissingAttribute(TREE_CLUB, "Name");
@@ -125,7 +125,7 @@ bool ARBDogClub::Load(
 	else
 		m_Name = inTree.GetValue();
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_CLUB_VENUE, m_Venue)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_CLUB_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_CLUB, ATTRIB_CLUB_VENUE);
@@ -143,9 +143,9 @@ bool ARBDogClub::Load(
 	return true;
 }
 
-bool ARBDogClub::Save(CElement& ioTree) const
+bool ARBDogClub::Save(Element& ioTree) const
 {
-	CElement& club = ioTree.AddElement(TREE_CLUB);
+	Element& club = ioTree.AddElement(TREE_CLUB);
 	club.AddAttrib(ATTRIB_CLUB_VENUE, m_Venue);
 	club.SetValue(m_Name);
 	return true;

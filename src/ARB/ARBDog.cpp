@@ -175,18 +175,18 @@ size_t ARBDog::GetSearchStrings(std::set<std::string>& ioStrings) const
 
 bool ARBDog::Load(
 	const ARBConfig& inConfig,
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME);
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DOB, m_DOB))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DOB, m_DOB))
 	{
 		std::string attrib;
 		inTree.GetAttrib(ATTRIB_DOG_DOB, attrib);
@@ -196,7 +196,7 @@ bool ARBDog::Load(
 		return false;
 	}
 
-	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
 	{
 		std::string attrib;
 		inTree.GetAttrib(ATTRIB_DOG_DECEASED, attrib);
@@ -208,7 +208,7 @@ bool ARBDog::Load(
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		if (element.GetName() == TREE_REGNAME)
 		{
 			m_RegName = element.GetValue();
@@ -249,26 +249,26 @@ bool ARBDog::Load(
 	return true;
 }
 
-bool ARBDog::Save(CElement& ioTree) const
+bool ARBDog::Save(Element& ioTree) const
 {
-	CElement& dog = ioTree.AddElement(TREE_DOG);
+	Element& dog = ioTree.AddElement(TREE_DOG);
 	dog.AddAttrib(ATTRIB_DOG_CALLNAME, m_CallName);
 	dog.AddAttrib(ATTRIB_DOG_DOB, m_DOB);
 	if (m_Deceased.IsValid())
 		dog.AddAttrib(ATTRIB_DOG_DECEASED, m_Deceased);
 	if (0 < m_RegName.length())
 	{
-		CElement& element = dog.AddElement(TREE_REGNAME);
+		Element& element = dog.AddElement(TREE_REGNAME);
 		element.SetValue(m_RegName);
 	}
 	if (0 < m_Breed.length())
 	{
-		CElement& element = dog.AddElement(TREE_BREED);
+		Element& element = dog.AddElement(TREE_BREED);
 		element.SetValue(m_Breed);
 	}
 	if (0 < m_Note.length())
 	{
-		CElement& element = dog.AddElement(TREE_NOTE);
+		Element& element = dog.AddElement(TREE_NOTE);
 		element.SetValue(m_Note);
 	}
 	if (!m_ExistingPoints.Save(dog))

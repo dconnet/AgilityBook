@@ -109,16 +109,16 @@ size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) 
 }
 
 bool ARBConfigTitlePoints::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS);
 		return false;
 	}
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
 	{
 		ioErrMsg += ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS);
 		return false;
@@ -126,9 +126,9 @@ bool ARBConfigTitlePoints::Load(
 	return true;
 }
 
-bool ARBConfigTitlePoints::Save(CElement& ioTree) const
+bool ARBConfigTitlePoints::Save(Element& ioTree) const
 {
-	CElement& title = ioTree.AddElement(TREE_TITLE_POINTS);
+	Element& title = ioTree.AddElement(TREE_TITLE_POINTS);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults);
 	return true;

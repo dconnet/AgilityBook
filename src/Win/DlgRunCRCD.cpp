@@ -170,7 +170,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	m_ViewText = true;
 	if (0 < m_Run->GetCRCDMetaFile().length())
 	{
-		CBase64 decode;
+		Base64 decode;
 		char* pOutput;
 		size_t len;
 		if (decode.Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
@@ -245,13 +245,13 @@ void CDlgRunCRCD::OnCopy()
 					{
 						HENHMETAFILE hData = (HENHMETAFILE)GetClipboardData(CF_ENHMETAFILE);
 						m_metaFile = CopyEnhMetaFile(hData, NULL);
-						CBase64 decode;
+						Base64 decode;
 						ENHMETAHEADER header;
 						GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
 						UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
 						LPBYTE bits = new BYTE[nSize+1];
 						GetEnhMetaFileBits(m_metaFile, nSize, bits);
-						CBase64 encode;
+						Base64 encode;
 						std::string moreBits = encode.Encode(reinterpret_cast<const char*>(bits), nSize);
 						m_Run->SetCRCDMetaFile(moreBits);
 						delete [] bits;

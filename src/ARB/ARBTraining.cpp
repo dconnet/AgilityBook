@@ -122,16 +122,16 @@ size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBTraining::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	switch (inTree.GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
-	case CElement::eNotFound:
+	case Element::eNotFound:
 		ioErrMsg += ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE);
 		return false;
-	case CElement::eInvalidValue:
+	case Element::eInvalidValue:
 		{
 			std::string attrib;
 			inTree.GetAttrib(ATTRIB_TRAINING_DATE, attrib);
@@ -148,9 +148,9 @@ bool ARBTraining::Load(
 	return true;
 }
 
-bool ARBTraining::Save(CElement& ioTree) const
+bool ARBTraining::Save(Element& ioTree) const
 {
-	CElement& training = ioTree.AddElement(TREE_TRAINING);
+	Element& training = ioTree.AddElement(TREE_TRAINING);
 	training.AddAttrib(ATTRIB_TRAINING_DATE, m_Date);
 	if (0 < m_Name.length())
 		training.AddAttrib(ATTRIB_TRAINING_NAME, m_Name);

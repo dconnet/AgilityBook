@@ -44,7 +44,7 @@
 #include "ARBConfigEvent.h"
 #include "ARBVector.h"
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Venue configuration information.
@@ -87,7 +87,7 @@ public:
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -97,7 +97,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Update this configuration from inVenueNew.
@@ -192,7 +192,7 @@ public:
 	 */
 	bool Load(
 		ARBConfig& ioConfig,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 

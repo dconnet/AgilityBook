@@ -139,7 +139,7 @@ bool ARB_Q::Load(
 	return false;
 }
 
-bool ARB_Q::Save(CElement& ioTree, const char* const inAttribName) const
+bool ARB_Q::Save(Element& ioTree, const char* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
@@ -164,10 +164,10 @@ std::string ARBDouble::str() const
 {
 	// It's a little odd to do it this way,
 	// but we'll always get consistent output!
-	CElement element;
+	Element element;
 	element.AddAttrib("temp", m_Val, m_Prec);
 	std::string val;
-	if (CElement::eFound != element.GetAttrib("temp", val))
+	if (Element::eFound != element.GetAttrib("temp", val))
 		val = "?";
 	return val;
 }
@@ -184,7 +184,7 @@ bool ARBDouble::Load(
 	return true;
 }
 
-bool ARBDouble::Save(CElement& ioTree, const char* const inAttribName) const
+bool ARBDouble::Save(Element& ioTree, const char* const inAttribName) const
 {
 	ioTree.AddAttrib(inAttribName, m_Val, m_Prec);
 	return true;

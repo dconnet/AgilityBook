@@ -28,7 +28,7 @@
 
 /**
  * @file
- * @brief CElement class.
+ * @brief Element class.
  * @author David Connet
  *
  * Revision History
@@ -60,7 +60,7 @@ class ARBVersion;
  * @attention An element may not have both elements and a value. While XML
  * allows this, we do not. This greatly simplifies data representation.
  */
-class CElement
+class Element
 {
 public:
 	/**
@@ -73,11 +73,11 @@ public:
 		eFound			///< Attribute was found.
 	} AttribLookup;
 
-	CElement();
-	CElement(const std::string& inName);
-	CElement(const CElement& rhs);
-	CElement& operator=(const CElement& rhs);
-	~CElement();
+	Element();
+	Element(const std::string& inName);
+	Element(const Element& rhs);
+	Element& operator=(const Element& rhs);
+	~Element();
 
 	/**
 	 * Dump the element tree for debugging purposes.
@@ -203,14 +203,14 @@ public:
 	 * @param inIndex Index of element to be obtained.
 	 * @return The element.
 	 */
-	const CElement& GetElement(int inIndex) const;
+	const Element& GetElement(int inIndex) const;
 
 	/**
 	 * Get the specified element.
 	 * @param inIndex Index of element to be obtained.
 	 * @return The element.
 	 */
-	CElement& GetElement(int inIndex);
+	Element& GetElement(int inIndex);
 
 	/**
 	 * Add an element.
@@ -221,7 +221,7 @@ public:
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
-	CElement& AddElement(const std::string& inName, int inAt = -1);
+	Element& AddElement(const std::string& inName, int inAt = -1);
 
 	/**
 	 * Remove the specified element.
@@ -276,5 +276,5 @@ private:
 	std::string m_Name;
 	std::string m_Value;
 	CAttributes m_Attribs;
-	std::vector<CElement> m_Elements;
+	std::vector<Element> m_Elements;
 };

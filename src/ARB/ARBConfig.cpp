@@ -118,7 +118,7 @@ void ARBConfig::clear()
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadFault(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
@@ -134,7 +134,7 @@ bool ARBConfig::LoadFault(
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadOtherPoints(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
@@ -146,14 +146,14 @@ bool ARBConfig::LoadOtherPoints(
 }
 
 bool ARBConfig::Load(
-	const CElement& inTree,
+	const Element& inTree,
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
 	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
-		const CElement& element = inTree.GetElement(i);
+		const Element& element = inTree.GetElement(i);
 		const std::string& name = element.GetName();
 		if (name == TREE_ACTION)
 		{
@@ -182,9 +182,9 @@ bool ARBConfig::Load(
 	return true;
 }
 
-bool ARBConfig::Save(CElement& ioTree) const
+bool ARBConfig::Save(Element& ioTree) const
 {
-	CElement& config = ioTree.AddElement(TREE_CONFIG);
+	Element& config = ioTree.AddElement(TREE_CONFIG);
 	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	if (!m_Actions.Save(config))
 		return false;
@@ -206,7 +206,7 @@ void ARBConfig::Default()
 	// the program.
 	bool bOk = false;
 	std::string err;
-	CElement tree;
+	Element tree;
 #ifdef WIN32
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), "XML");
 	if (hrSrc)

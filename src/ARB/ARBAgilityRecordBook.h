@@ -284,7 +284,7 @@
 #include "ARBTraining.h"
 class ARBConfigOtherPoints;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * The main data class.
@@ -308,7 +308,7 @@ public:
 	void clear();
 
 	/**
-	 * Load a document. See CElement.h for more information on why we use it.
+	 * Load a document. See Element.h for more information on why we use it.
 	 * The individual load flags allow us to load just a portion of a document.
 	 * @pre If bDogs is true, bConfig must also be true or dogs won't load.
 	 * @param inTree XML structure to convert into ARB.
@@ -321,7 +321,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		const CElement& inTree,
+		const Element& inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -335,7 +335,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Success
 	 */
-	bool Load(const CElement& inTree, std::string& ioErrMsg)
+	bool Load(const Element& inTree, std::string& ioErrMsg)
 	{
 		return Load(inTree, true, true, true, true, true, ioErrMsg);
 	}
@@ -351,7 +351,7 @@ public:
 	 * @return Success
 	 */
 	bool Save(
-		CElement& outTree,
+		Element& outTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,

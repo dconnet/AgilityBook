@@ -39,7 +39,7 @@
 #include "ARBTypes.h"
 class ARBConfigScoring;
 class ARBVersion;
-class CElement;
+class Element;
 
 /**
  * Keeps track of the scoring for a run.
@@ -76,7 +76,7 @@ public:
 	 */
 	bool Load(
 		const ARBConfigScoring* inEvent,
-		const CElement& inTree,
+		const Element& inTree,
 		const ARBVersion& inVersion,
 		std::string& ioErrMsg);
 
@@ -86,7 +86,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRunScoring element will be created in ioTree.
 	 */
-	bool Save(CElement& ioTree) const;
+	bool Save(Element& ioTree) const;
 
 	/**
 	 * Get the YPS for the run.
