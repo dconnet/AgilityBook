@@ -479,7 +479,8 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="Elite Gamblers" Name="GS-E"/>
 				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GS-E-OP"/>
 				<Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP"/>
-				<Titles LongName="Agility Trial Champion" Name="ATCH">RS-E plus 200 pts, GS-E plus 100 pts, JS-E plus 100 pts</Titles>
+				<Titles LongName="Agility Trial Champion" Multiple="4" Name="ATCH">RS-E plus 200 pts, GS-E plus 100 pts, JS-E plus 100 pts
+Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				<Titles LongName="Outstanding Performance Agility Trial Champion" Name="ATCH-OP">RS-E plus 400 pts, GS-E plus 200 pts, JS-E plus 200 pts</Titles>
 				<Titles LongName="Superior Performance Agility Trial Champion" Name="ATCH-SP">RS-E plus 600 pts, GS-E plus 300 pts, JS-E plus 300 pts</Titles>
 			</Division>
