@@ -98,7 +98,7 @@ public:
 	ARBDogFaultList& GetFaults();
 	std::string const& GetCRCD() const;
 	void SetCRCD(std::string const& inCRCD);
-	std::string const& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanded Metafile.
+	std::string const& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanced Metafile.
 	void SetCRCDMetaFile(std::string const& inCRCDMeta);
 	std::string const& GetNote() const;
 	void SetNote(std::string const& inNote);
