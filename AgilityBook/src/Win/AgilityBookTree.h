@@ -159,6 +159,7 @@ protected:
 	afx_msg void OnCollapseAll();
 	afx_msg void OnViewCustomize();
 	//}}AFX_MSG
+	afx_msg LRESULT OnDelayedMessage(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 };
 

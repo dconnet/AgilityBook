@@ -56,6 +56,7 @@
 #include "DlgDog.h"
 #include "DlgFind.h"
 #include "MainFrm.h"
+#include "Splash.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -239,6 +240,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_RUN, OnDogCmd)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
 	//}}AFX_MSG_MAP
+	ON_MESSAGE(PM_DELAY_MESSAGE, OnDelayedMessage)
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
@@ -285,6 +287,8 @@ void CAgilityBookTree::OnInitialUpdate()
 	m_bSuppressSelect = true;
 	CTreeView::OnInitialUpdate();
 	m_bSuppressSelect = false;
+	if (0 == GetDocument()->GetDogs().size())
+		PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 }
 
 void CAgilityBookTree::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
@@ -671,6 +675,20 @@ CAgilityBookTreeData* CAgilityBookTree::GetItemData(HTREEITEM hItem) const
 }
 
 // CAgilityBookTree message handlers
+
+LRESULT CAgilityBookTree::OnDelayedMessage(WPARAM wParam, LPARAM lParam)
+{
+	if (CREATE_NEWDOG == wParam)
+	{
+		CSplashWnd::HideSplashScreen();
+		UpdateWindow();
+		if (IDYES == AfxMessageBox("Would you like to create a dog now?", MB_YESNO | MB_ICONINFORMATION))
+		{
+			PostMessage(WM_COMMAND, ID_AGILITY_NEW_DOG);
+		}
+	}
+	return 0;
+}
 
 void CAgilityBookTree::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
