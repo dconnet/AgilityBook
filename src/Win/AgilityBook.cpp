@@ -191,15 +191,10 @@ void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
 	}
 }
 
-bool ReadHttpFile(CString const& inURL, CString* outData, CStringArray* outDataArr)
+bool ReadHttpFile(CString const& inURL, CString& outData)
 {
-	ASSERT(outData || outDataArr);
-	if (outData)
-		outData->Empty();
-	if (outDataArr)
-		outDataArr->RemoveAll();
+	outData.Empty();
 	CWaitCursor wait;
-	CString data;
 	try
 	{
 		CInternetSession session("my version");
@@ -211,7 +206,7 @@ bool ReadHttpFile(CString const& inURL, CString* outData, CStringArray* outDataA
 			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
 			{
 				buffer[nChars] = 0;
-				data += buffer;
+				outData += buffer;
 			}
 			pFile->Close();
 			delete pFile;
@@ -221,36 +216,15 @@ bool ReadHttpFile(CString const& inURL, CString* outData, CStringArray* outDataA
 	catch (CInternetException* ex)
 	{
 		ex->Delete();
-		data.Empty();
+		outData.Empty();
 	}
-	bool bOk = false;
-	if (outData)
-	{
-		*outData = data;
-		bOk = (outData->GetLength() > 0);
-	}
-	if (outDataArr && 0 < data.GetLength())
-	{
-		int n;
-		while (0 <= (n = data.Find('\n')))
-		{
-			if ('#' != data[0])
-				outDataArr->Add(data.Left(n));
-			data = data.Mid(n+1);
-		}
-		if (!data.IsEmpty() && '#' != data[0])
-			outDataArr->Add(data);
-		bOk = (outDataArr->GetSize() > 0);
-	}
-	return bOk;
+	return (outData.GetLength() > 0);
 }
 
 // The format of the version.txt file is:
 // line 1:
 //  "ARB Version n1.n2.n3.n4"
-// line 2-n:
-//  "#" in col 1: comment, skipped
-//  "Config:n:name": Configuration number n, http.../name
+// line 2-n: xml (see below)
 
 /**
  * Check the version against the web.
@@ -258,12 +232,12 @@ bool ReadHttpFile(CString const& inURL, CString* outData, CStringArray* outDataA
  * @param bVerbose Show information dialogs
  * @return <0 failure, 0 Update occurred, >0 Version ok
  */
-static int UpdateVersion(CStringArray& outData, bool bVerbose)
+static int UpdateVersion(CString& outData, bool bVerbose)
 {
 	CString url;
 	url.LoadString(IDS_HELP_UPDATE);
 	url += "/version.txt";
-	if (!ReadHttpFile(url, NULL, &outData))
+	if (!ReadHttpFile(url, outData))
 	{
 		if (bVerbose)
 			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
@@ -271,7 +245,7 @@ static int UpdateVersion(CStringArray& outData, bool bVerbose)
 	}
 
 	ARBDate today = ARBDate::Today();
-	CVersionNum verNew(outData[0]);
+	CVersionNum verNew(outData);
 	CVersionNum verThis;
 	ASSERT(verThis.Valid());
 	if (!verNew.Valid())
@@ -304,46 +278,80 @@ static int UpdateVersion(CStringArray& outData, bool bVerbose)
 
 void UpdateVersion()
 {
-	CStringArray data;
+	CString data;
 	UpdateVersion(data, false);
 }
 
 void UpdateVersion(CAgilityBookDoc* pDoc)
 {
-	CStringArray data;
+	CString data;
 	if (0 >= UpdateVersion(data, true))
-		return;
-	// Only continue if we parsed the version.txt file AND the version
-	// is up-to-date.
-	bool bUpToDate = true;
-	for (int i = 0; i < data.GetSize(); ++i)
 	{
-		// Found the Config info...
-		if (0 == data[i].Find("Config:"))
+		// Only continue if we parsed the version.txt file AND the version
+		// is up-to-date.
+		return;
+	}
+	// Skip the first line.
+	int n = data.Find('\n');
+	if (0 < n)
+		data = data.Mid(n+1);
+	else
+		data.Empty();
+	if (data.IsEmpty())
+		return;
+	// The rest of the file is xml:
+	// <Data>
+	//   <Config ver="1" file="file">data</Config>
+	// </Data>
+	bool bUpToDate = true;
+	Element tree;
+	std::string errMsg;
+	if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg))
+	{
+		bUpToDate = false;
+		CString msg("Failed to load 'version.txt'.");
+		if (0 < errMsg.length())
 		{
-			int n = data[i].Find(':');
-			CString info = data[i].Mid(n+1);
-			int ver = atol((LPCTSTR)info); // Get the current configuration version.
-			n = info.Find(':'); // Set n to point to the file name on the server.
-			if (0 < n)
+			msg += "\n\n";
+			msg += errMsg.c_str();
+		}
+		AfxMessageBox(msg, MB_ICONEXCLAMATION);
+	}
+	else if (tree.GetName() == "Data")
+	{
+		int nConfig = tree.FindElement("Config");
+		if (0 <= nConfig)
+		{
+			Element& config = tree.GetElement(nConfig);
+			short ver;
+			std::string file;
+			if (Element::eFound == config.GetAttrib("ver", ver)
+			&& Element::eFound == config.GetAttrib("file", file))
 			{
 				// Cool! New config!
 				if (ver > pDoc->GetConfig().GetVersion())
 				{
 					bUpToDate = false;
-					if (IDYES == AfxMessageBox("The configuration has been updated. Would you like to merge the new one with your data?", MB_ICONQUESTION | MB_YESNO))
+					std::string note = config.GetValue();
+					CString msg("The configuration has been updated. Would you like to merge the new one with your data?");
+					if (0 < note.length())
+					{
+						msg += "\n\n";
+						msg += note.c_str();
+					}
+					if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
 					{
 						// Load the config.
 						CString url;
 						url.LoadString(IDS_HELP_UPDATE);
 						url += "/";
-						url += info.Mid(n+1);
-						CString config;
-						if (ReadHttpFile(url, &config, NULL))
+						url += file.c_str();
+						CString strConfig;
+						if (ReadHttpFile(url, strConfig))
 						{
 							Element tree;
 							std::string errMsg;
-							if (!tree.LoadXMLBuffer((LPCSTR)config, config.GetLength(), errMsg))
+							if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg))
 							{
 								CString msg("Failed to load '");
 								msg += url;
@@ -357,7 +365,7 @@ void UpdateVersion(CAgilityBookDoc* pDoc)
 							}
 							else if (tree.GetName() == "DefaultConfig")
 							{
-								config.Empty();
+								strConfig.Empty();
 								ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 								tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
 								int nConfig = tree.FindElement(TREE_CONFIG);
@@ -380,7 +388,6 @@ void UpdateVersion(CAgilityBookDoc* pDoc)
 					}
 				}
 			}
-			break;
 		}
 	}
 	if (bUpToDate)
