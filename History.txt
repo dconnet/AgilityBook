@@ -17,6 +17,7 @@
   - Added status icons on the run dialog links page.
   - Added support for cut/copy/paste of calendar entries.
   - When you open a file that has no dogs, you will be prompted to create one.
+  - When creating a trial from a calendar entry, copy the notes too.
 - Bug fixes
   - Lifetime point accumulation did not display the points for existing runs.
   - Quote exported data so non-tab delimiters work properly if the delimiter

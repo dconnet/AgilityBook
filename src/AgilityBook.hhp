@@ -36,9 +36,6 @@ Help\html\DlgDogPicker.html
 Help\html\DlgFind.html
 Help\html\DlgFindLinks.html
 Help\html\DlgJudgeInfo.html
-Help\html\DlgListCtrl.html
-Help\html\DlgMessage.html
-Help\html\DlgName.html
 Help\html\DlgOptionsCal.html
 Help\html\DlgOptionsFonts.html
 Help\html\DlgOptionsLog.html
@@ -98,9 +95,6 @@ HIDD_FAULT=Help\html\PropRun.html
 HIDD_FIND_LINKS=Help\html\DlgFindLinks.html
 HIDD_FIND=Help\html\DlgFind.html
 HIDD_JUDGE_INFO=Help\html\DlgJudgeInfo.html
-HIDD_LISTCTRL=Help\html\DlgListCtrl.html
-HIDD_MESSAGE=Help\html\DlgMessage.html
-HIDD_NAME=Help\html\DlgName.html
 HIDD_OTHER_POINT=Help\html\Introduction.html
 HIDD_PARTNER=Help\html\PropRun.html
 HIDD_REF_RUN=Help\html\PropRun.html
