@@ -1815,6 +1815,7 @@ BEGIN
     ID_FILE_EXPORT_CALENDAR "Export your Calendar\nExport Calendar"
     ID_FILE_EXPORT_CONFIG   "Export your Configuration\nExport Configuration"
     ID_EDIT_JUDGES          "Edit Judge information\nJudges"
+    ID_FILE_IMPORT_WIZARD   "Import data from a spreadsheet\nImport Wizard"
     ID_FILE_EXPORT_WIZARD   "Export data for spreadsheet\nExport Wizard"
 END
 
