@@ -1349,8 +1349,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,2,8
- PRODUCTVERSION 1,0,2,8
+ FILEVERSION 1,0,3,8
+ PRODUCTVERSION 1,0,3,8
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1368,14 +1368,14 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
             VALUE "FileDescription", "Agility Record Book\0"
-            VALUE "FileVersion", "1.0.2.8\0"
+            VALUE "FileVersion", "1.0.3.8\0"
             VALUE "InternalName", "AgilityBook.exe\0"
             VALUE "LegalCopyright", "Copyright © 2002-2004 David Connet. All Rights Reserved.\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "AgilityBook.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "Agility Record Book\0"
-            VALUE "ProductVersion", "1.0.2.8\0"
+            VALUE "ProductVersion", "1.0.3.8\0"
             VALUE "SpecialBuild", "\0"
         END
     END
