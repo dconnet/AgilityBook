@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2004-02-26 DRC Moved config update here, test doc for current config.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-10 DRC Moved import/export into a wizard.
  * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
@@ -62,9 +63,11 @@
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewTraining.h"
 #include "DlgCalendar.h"
+#include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
 #include "DlgInfoJudge.h"
+#include "DlgMessage.h"
 #include "DlgOptions.h"
 #include "DlgSelectDog.h"
 #include "DlgTraining.h"
@@ -79,6 +82,22 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+static short GetCurrentConfigVersion()
+{
+	static short ver = 0;
+	static bool bLoaded = false;
+	if (!bLoaded)
+	{
+		bLoaded = true;
+		ARBConfig config;
+		config.Default();
+		ver = config.GetVersion();
+	}
+	return ver;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookDoc
@@ -266,6 +285,109 @@ void CAgilityBookDoc::SortDates()
 			pTrial->GetRuns().sort(bDescending);
 		}
 	}
+}
+
+bool CAgilityBookDoc::ImportConfiguration()
+{
+	bool bOk = false;
+	CDlgConfigUpdate dlg;
+	if (IDOK == dlg.DoModal())
+	{
+		ARBConfig& update = dlg.GetConfig();
+		CString msg;
+		for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
+		{
+			const ARBConfigAction* action = *iterAction;
+			if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
+			{
+				// Find the venue.
+				ARBConfigVenue* venue = GetConfig().GetVenues().FindVenue(action->GetVenue());
+				if (venue)
+				{
+					// Find the title we're renaming.
+					ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
+					if (oldTitle)
+					{
+						CString tmp;
+						tmp.Format("Action: Renaming title [%s] to [%s]",
+							action->GetOldName().c_str(),
+							action->GetNewName().c_str());
+						msg += tmp;
+						// If any titles are in use, create a fixup action.
+						int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
+						if (0 < nTitles)
+						{
+							tmp.Format(", updating %d titles\n", nTitles);
+							GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
+						}
+						else
+							tmp = "\n";
+						msg += tmp;
+						// If the new title exists, just delete the old. Otherwise, rename the old to new.
+						const ARBConfigTitle* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
+						if (newTitle)
+							venue->GetDivisions().DeleteTitle(action->GetOldName());
+						else
+							oldTitle->SetName(action->GetNewName());
+					}
+				}
+			}
+			else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
+			{
+				// Find the venue.
+				ARBConfigVenue* venue = GetConfig().GetVenues().FindVenue(action->GetVenue());
+				if (venue)
+				{
+					// Find the title we're renaming.
+					ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
+					if (oldTitle)
+					{
+						CString tmp;
+						int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
+						// If any titles are in use, create a fixup action.
+						if (0 < nTitles)
+						{
+							if (0 < action->GetNewName().length())
+							{
+								tmp.Format("Action: Renaming existing %d title(s) [%s] to [%s]\n",
+									nTitles,
+									action->GetOldName().c_str(),
+									action->GetNewName().c_str());
+								msg += tmp;
+								GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
+							}
+							else
+							{
+								tmp.Format("Action: Deleting existing %d [%s] title(s)\n",
+									nTitles,
+									action->GetOldName().c_str());
+								msg += tmp;
+								GetDogs().DeleteTitle(action->GetVenue(), action->GetOldName());
+							}
+						}
+						tmp.Format("Action: Deleting title [%s]\n",
+							action->GetOldName().c_str());
+						msg += tmp;
+						venue->GetDivisions().DeleteTitle(action->GetOldName());
+					}
+				}
+			}
+		}
+		std::string info;
+		GetConfig().Update(0, update, info);
+		msg += info.c_str();
+		if (0 < msg.GetLength())
+		{
+			CDlgMessage dlg(msg, 0);
+			dlg.DoModal();
+			SetModifiedFlag();
+			UpdateAllViews(NULL, UPDATE_CONFIG);
+		}
+		else
+			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
+		bOk = true;
+	}
+	return bOk;
 }
 
 void CAgilityBookDoc::ResetVisibility()
@@ -514,6 +636,15 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 
 	AfxGetApp()->WriteProfileString("Settings", "LastFile", lpszPathName);
+
+	if (GetCurrentConfigVersion() != m_Records.GetConfig().GetVersion())
+	{
+		if (IDYES == AfxMessageBox("The configuration has been updated. Would you like to merge the new one with your data?", MB_ICONQUESTION | MB_YESNO))
+		{
+			if (ImportConfiguration())
+				SetModifiedFlag(TRUE);
+		}
+	}
 	return TRUE;
 }
 

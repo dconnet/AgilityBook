@@ -102,6 +102,7 @@
 #define TREE_REF_SCORE						"ScoreOrFaults"
 #define TREE_REF_NOTE						"Note"
 #define ATTRIB_BOOK_VERSION					"Book"
+#define ATTRIB_CONFIG_VERSION				"version"
 #define ATTRIB_CAL_START					"DateStart"
 #define ATTRIB_CAL_END						"DateEnd"
 #define ATTRIB_CAL_OPENING					"DateOpening"
