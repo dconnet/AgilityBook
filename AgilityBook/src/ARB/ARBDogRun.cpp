@@ -370,7 +370,8 @@ bool ARBDogRun::Save(Element& ioTree) const
 		element.SetValue(m_Conditions);
 	}
 	run.AddElement(TREE_JUDGE).SetValue(m_Judge);
-	run.AddElement(TREE_HANDLER).SetValue(m_Handler);
+	if (0 < m_Handler.length())
+		run.AddElement(TREE_HANDLER).SetValue(m_Handler);
 	if (!m_Partners.Save(run))
 		return false;
 	if (!m_Scoring.Save(run))

@@ -184,7 +184,8 @@ bool ARBDogTrial::Load(
 bool ARBDogTrial::Save(Element& ioTree) const
 {
 	Element& trial = ioTree.AddElement(TREE_TRIAL);
-	trial.AddAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified);
+	if (m_Verified) // Default is no
+		trial.AddAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified);
 	if (0 < m_Location.length())
 	{
 		Element& element = trial.AddElement(TREE_LOCATION);

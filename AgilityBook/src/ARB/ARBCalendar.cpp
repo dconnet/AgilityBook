@@ -310,7 +310,8 @@ bool ARBCalendar::Save(Element& ioTree) const
 	cal.AddAttrib(ATTRIB_CAL_END, m_DateEnd);
 	cal.AddAttrib(ATTRIB_CAL_OPENING, m_DateOpening);
 	cal.AddAttrib(ATTRIB_CAL_CLOSING, m_DateClosing);
-	cal.AddAttrib(ATTRIB_CAL_MAYBE, m_bTentative);
+	if (m_bTentative) // Default is no
+		cal.AddAttrib(ATTRIB_CAL_MAYBE, m_bTentative);
 	cal.AddAttrib(ATTRIB_CAL_LOCATION, m_Location);
 	cal.AddAttrib(ATTRIB_CAL_CLUB, m_Club);
 	cal.AddAttrib(ATTRIB_CAL_VENUE, m_Venue);
