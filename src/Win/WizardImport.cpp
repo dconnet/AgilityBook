@@ -206,7 +206,7 @@ void CWizardImport::OnImportDelim()
 void CWizardImport::OnImportAssign() 
 {
 	UpdateData(TRUE);
-	CDlgAssignColumns dlg(true, this);
+	CDlgAssignColumns dlg(CAgilityBookOptions::eImport, this);
 	if (IDOK == dlg.DoModal())
 	{
 		UpdateButtons();

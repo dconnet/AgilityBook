@@ -800,13 +800,21 @@ void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, con
 	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
 }
 
-void CAgilityBookOptions::GetImportExportColumns(bool bImport, int idxColumn, std::vector<int>& values)
+void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& values)
 {
 	CString section;
-	if (bImport)
+	switch (eOrder)
+	{
+	default:
+		section = "Unknown";
+		break;
+	case eImport:
 		section = "Import";
-	else
+		break;
+	case eExport:
 		section = "Export";
+		break;
+	}
 	values.clear();
 	CString item;
 	item.Format("col%d", idxColumn);
@@ -826,13 +834,21 @@ void CAgilityBookOptions::GetImportExportColumns(bool bImport, int idxColumn, st
 	}
 }
 
-void CAgilityBookOptions::SetImportExportColumns(bool bImport, int idxColumn, const std::vector<int>& values)
+void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& values)
 {
 	CString section;
-	if (bImport)
+	switch (eOrder)
+	{
+	default:
+		section = "Unknown";
+		break;
+	case eImport:
 		section = "Import";
-	else
+		break;
+	case eExport:
 		section = "Export";
+		break;
+	}
 	CString item;
 	CString data;
 	for (size_t i = 0; i < values.size(); ++i)

@@ -79,6 +79,7 @@
 #define IO_MAX				34
 
 #include <vector>
+#include "AgilityBookOptions.h"
 #include "ListBox.h"
 
 class CDlgAssignColumns : public CDialog
@@ -87,7 +88,7 @@ class CDlgAssignColumns : public CDialog
 public:
 	static CString CDlgAssignColumns::GetNameFromColumnID(int column);
 
-	CDlgAssignColumns(bool bImport, CWnd* pParent = NULL);   // standard constructor
+	CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CWnd* pParent = NULL);   // standard constructor
 
 private:
 // Dialog Data
@@ -101,7 +102,8 @@ private:
 	CButton	m_ctrlUp;
 	CButton	m_ctrlDown;
 	//}}AFX_DATA
-	bool m_bImport;
+	CAgilityBookOptions::ColumnOrder m_eOrder;
+	bool m_bIncludeBlank;
 	std::vector<int> m_Columns[IO_TYPE_MAX];
 
 private:

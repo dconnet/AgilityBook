@@ -169,8 +169,13 @@ public:
 	static void SetImportStartRow(int row);
 	static void GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter);
 	static void SetImportExportDelimiters(bool bImport, int delim, const CString& delimiter);
-	static void GetImportExportColumns(bool bImport, int idxColumn, std::vector<int>& values);
-	static void SetImportExportColumns(bool bImport, int idxColumn, const std::vector<int>& values);
+	typedef enum
+	{
+		eImport,
+		eExport
+	} ColumnOrder;
+	static void GetColumnOrder(ColumnOrder eOrder, int idxColumn, std::vector<int>& values);
+	static void SetColumnOrder(ColumnOrder eOrder, int idxColumn, const std::vector<int>& values);
 	// Special clipboard formats
 	typedef enum
 	{

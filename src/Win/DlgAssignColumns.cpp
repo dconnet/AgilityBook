@@ -214,14 +214,24 @@ static const int sc_nFields = sizeof(sc_Fields) / sizeof(sc_Fields[0]);
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
-CDlgAssignColumns::CDlgAssignColumns(bool bImport, CWnd* pParent /*=NULL*/)
+CDlgAssignColumns::CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgAssignColumns::IDD, pParent)
-	, m_bImport(bImport)
+	, m_eOrder(eOrder)
+	, m_bIncludeBlank(false)
 {
 	//{{AFX_DATA_INIT(CDlgAssignColumns)
 	//}}AFX_DATA_INIT
 	for (int i = 0; i < IO_TYPE_MAX; ++i)
-		CAgilityBookOptions::GetImportExportColumns(m_bImport, i, m_Columns[i]);
+		CAgilityBookOptions::GetColumnOrder(m_eOrder, i, m_Columns[i]);
+	switch (m_eOrder)
+	{
+	default:
+		break;
+	case CAgilityBookOptions::eImport:
+	case CAgilityBookOptions::eExport:
+		m_bIncludeBlank = true;
+		break;
+	}
 }
 
 void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
@@ -277,18 +287,24 @@ void CDlgAssignColumns::FillColumns()
 			}
 			else
 			{
-				int idx = m_ctrlColumns.AddString(blank);
-				if (LB_ERR != idx)
-					m_ctrlColumns.SetItemData(idx, static_cast<DWORD>(-1));
+				if (m_bIncludeBlank)
+				{
+					int idx = m_ctrlColumns.AddString(blank);
+					if (LB_ERR != idx)
+						m_ctrlColumns.SetItemData(idx, static_cast<DWORD>(-1));
+				}
 			}
 		}
-		int idx = m_ctrlAvailable.AddString(blank);
-		if (LB_ERR != idx)
-			m_ctrlAvailable.SetItemData(idx, static_cast<DWORD>(-1));
+		if (m_bIncludeBlank)
+		{
+			int idx = m_ctrlAvailable.AddString(blank);
+			if (LB_ERR != idx)
+				m_ctrlAvailable.SetItemData(idx, static_cast<DWORD>(-1));
+		}
 		for (i = 0; i < sc_nFields; ++i)
 		{
 			if (-1 == sc_Fields[i].idxName[index]
-			|| (m_bImport && !sc_FieldNames[sc_Fields[i].idxName[index]].bImportable)
+			|| (CAgilityBookOptions::eImport == m_eOrder && !sc_FieldNames[sc_Fields[i].idxName[index]].bImportable)
 			|| bInUse[sc_Fields[i].idxName[index]])
 				continue;
 			CString name = GetNameFromColumnID(sc_Fields[i].idxName[index]);
@@ -402,7 +418,7 @@ void CDlgAssignColumns::OnRemove()
 		if (static_cast<int>(dwData) >= 0)
 		{
 			int idxAvail = 0;
-			if (m_bImport)
+			if (m_bIncludeBlank)
 				++idxAvail; // Skip special "blank column"
 			bool bDone = false;
 			for (; idxAvail < m_ctrlAvailable.GetCount(); ++idxAvail)
@@ -477,6 +493,6 @@ void CDlgAssignColumns::OnMoveDown()
 void CDlgAssignColumns::OnOK() 
 {
 	for (int i = 0; i < IO_TYPE_MAX; ++i)
-		CAgilityBookOptions::SetImportExportColumns(m_bImport, i, m_Columns[i]);
+		CAgilityBookOptions::SetColumnOrder(m_eOrder, i, m_Columns[i]);
 	CDialog::OnOK();
 }
