@@ -840,20 +840,20 @@ S-EAC, S-EGC, S-EJC</Titles>
 				<Level Name="Masters"/>
 				<Titles Name="AD" LongName="Agility Dog®">(pre-2004) 3 Qs earned from at least 2 different judges
 Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.</Titles>
-				<Titles Name="SSA" LongName="Starters Standard Agility">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="SJ" LongName="Starters Jumpers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="SG" LongName="Starters Gamblers">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="SAS" LongName="Starters Standard Agility">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="JS" LongName="Starters Jumpers">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="GS" LongName="Starters Gamblers">3 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles Name="SS" LongName="Starters Snooker">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="SR" LongName="Starters Relay">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
+				<Titles Name="RS" LongName="Starters Relay">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
 				<Titles Name="AAD" LongName="Advanced Agility Dog®">(pre-2004) 3 Qs earned from at least 2 different judges
 Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advanced nonstandard classes.</Titles>
-				<Titles Name="ASA" LongName="Advanced Standard Agility">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="AJ" LongName="Advanced Jumpers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="AG" LongName="Advanced Gamblers">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="AS" LongName="Advanced Snooker">3 qualifying scores earned under at least 2 different judges.</Titles>
-				<Titles Name="AR" LongName="Advanced Relay">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
+				<Titles Name="SAA" LongName="Advanced Standard Agility">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="JA" LongName="Advanced Jumpers">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="GA" LongName="Advanced Gamblers">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="SA" LongName="Advanced Snooker">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="RA" LongName="Advanced Relay">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
 				<Titles Name="MAD" LongName="Master Agility Dog®">3 qualifying scores in the Masters Standard Agility plus 1 qualifying score in each of the 4 Masters nonstandard classes.</Titles>
-				<Titles Name="MSA" LongName="Advanced Standard Agility">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles Name="SAM" LongName="Advanced Standard Agility">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles Name="JM" LongName="Jumpers Master">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles Name="GM" LongName="Gamblers Master">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles Name="SM" LongName="Snooker Master">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
@@ -906,50 +906,50 @@ MSA, JM, GM, SM, RM, TM</Titles>
 				<Level Name="PII"/>
 				<Level Name="PIII"/>
 				<Titles Name="PDI" LongName="Performance Dog I"/>
-				<Titles Name="PIS" LongName="Performance I Standard"/>
-				<Titles Name="PIJ" LongName="Performance I Jumpers"/>
-				<Titles Name="PIG" LongName="Performance I Gamblers"/>
-				<Titles Name="PISn" LongName="Performance I Snooker"/>
+				<Titles Name="SAPI" LongName="Performance I Standard"/>
+				<Titles Name="JPI" LongName="Performance I Jumpers"/>
+				<Titles Name="GPI" LongName="Performance I Gamblers"/>
+				<Titles Name="SPI" LongName="Performance I Snooker"/>
 				<Titles Name="PDII" LongName="Performance Dog II"/>
-				<Titles Name="PIIS" LongName="Performance II Standard"/>
-				<Titles Name="PIIJ" LongName="Performance II Jumpers"/>
-				<Titles Name="PIIG" LongName="Performance II Gamblers"/>
-				<Titles Name="PIISn" LongName="Performance II Snooker"/>
+				<Titles Name="SAPII" LongName="Performance II Standard"/>
+				<Titles Name="JPII" LongName="Performance II Jumpers"/>
+				<Titles Name="GPII" LongName="Performance II Gamblers"/>
+				<Titles Name="SPII" LongName="Performance II Snooker"/>
 				<Titles Name="PDIII" LongName="Performance Dog III"/>
-				<Titles Name="PDIIIS" LongName="Performance III Standard"/>
+				<Titles Name="SAIII" LongName="Performance III Standard"/>
 				<Titles Name="PJ" LongName="Performance III Jumper"/>
 				<Titles Name="PG" LongName="Performance III Gambler"/>
 				<Titles Name="PS" LongName="Performance III Snooker"/>
-				<Titles Name="AT" LongName="Accomplished Tournament Performer"/>
 				<Titles Name="APD" LongName="Accomplished Performance Dog"/>
-				<Titles Name="AS" LongName="Accomplished Standard"/>
-				<Titles Name="AJ" LongName="Accomplished Jumpers"/>
-				<Titles Name="AG" LongName="Accomplished Gamblers"/>
-				<Titles Name="ASn" LongName="Accomplished Snooker"/>
+				<Titles Name="APSA" LongName="Accomplished Standard"/>
+				<Titles Name="APJ" LongName="Accomplished Jumpers"/>
+				<Titles Name="APG" LongName="Accomplished Gamblers"/>
+				<Titles Name="APS" LongName="Accomplished Snooker"/>
+				<Titles Name="APT" LongName="Accomplished Tournament Performer"/>
 				<Titles Name="APD-B" LongName="Accomplished Performance Dog - Bronze">All Bronze titles</Titles>
-				<Titles Name="AS-B" LongName="Accomplished Standard - Bronze">15 qualifying scores in PIII Standard</Titles>
-				<Titles Name="AJ-B" LongName="Accomplished Jumpers - Bronze">15 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="AG-B" LongName="Accomplished Gamblers - Bronze">15 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="ASn-B" LongName="Accomplished Snooker - Bronze">15 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="AT-B" LongName="Accomplished Tournament Performer - Bronze">15 qualifying scores in Performance Grand Prix</Titles>
+				<Titles Name="APSA-B" LongName="Accomplished Standard - Bronze">15 qualifying scores in PIII Standard</Titles>
+				<Titles Name="APJ-B" LongName="Accomplished Jumpers - Bronze">15 qualifying scores in PIII Jumpers</Titles>
+				<Titles Name="APG-B" LongName="Accomplished Gamblers - Bronze">15 qualifying scores in PIII Gamblers</Titles>
+				<Titles Name="APS-B" LongName="Accomplished Snooker - Bronze">15 qualifying scores in PIII Snooker</Titles>
+				<Titles Name="APT-B" LongName="Accomplished Tournament Performer - Bronze">15 qualifying scores in Performance Grand Prix</Titles>
 				<Titles Name="APD-S" LongName="Accomplished Performance Dog - Silver">All Silver titles</Titles>
-				<Titles Name="AS-S" LongName="Accomplished Standard - Silver">25 qualifying scores in PIII Standard</Titles>
-				<Titles Name="AJ-S" LongName="Accomplished Jumpers - Silver">25 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="AG-S" LongName="Accomplished Gamblers - Silver">25 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="ASn-S" LongName="Accomplished Snooker - Silver">25 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="AT-S" LongName="Accomplished Tournament Performer - Silver">25 qualifying scores in Performance Grand Prix</Titles>
+				<Titles Name="APSA-S" LongName="Accomplished Standard - Silver">25 qualifying scores in PIII Standard</Titles>
+				<Titles Name="APJ-S" LongName="Accomplished Jumpers - Silver">25 qualifying scores in PIII Jumpers</Titles>
+				<Titles Name="APG-S" LongName="Accomplished Gamblers - Silver">25 qualifying scores in PIII Gamblers</Titles>
+				<Titles Name="APS-S" LongName="Accomplished Snooker - Silver">25 qualifying scores in PIII Snooker</Titles>
+				<Titles Name="APT-S" LongName="Accomplished Tournament Performer - Silver">25 qualifying scores in Performance Grand Prix</Titles>
 				<Titles Name="APD-G" LongName="Accomplished Performance Dog - Gold">All Gold titles</Titles>
-				<Titles Name="AS-G" LongName="Accomplished Standard - Gold">35 qualifying scores in PIII Standard</Titles>
-				<Titles Name="AJ-G" LongName="Accomplished Jumpers - Gold">35 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="AG-G" LongName="Accomplished Gamblers - Gold">35 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="ASn-G" LongName="Accomplished Snooker - Gold">35 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="AT-G" LongName="Accomplished Tournament Performer - Gold">35 qualifying scores in Performance Grand Prix</Titles>
+				<Titles Name="APSA-G" LongName="Accomplished Standard - Gold">35 qualifying scores in PIII Standard</Titles>
+				<Titles Name="APJ-G" LongName="Accomplished Jumpers - Gold">35 qualifying scores in PIII Jumpers</Titles>
+				<Titles Name="APG-G" LongName="Accomplished Gamblers - Gold">35 qualifying scores in PIII Gamblers</Titles>
+				<Titles Name="APS-G" LongName="Accomplished Snooker - Gold">35 qualifying scores in PIII Snooker</Titles>
+				<Titles Name="APT-G" LongName="Accomplished Tournament Performer - Gold">35 qualifying scores in Performance Grand Prix</Titles>
 				<Titles Name="APD-P" LongName="Accomplished Performance Dog - Platinum">All Platinum titles</Titles>
-				<Titles Name="AS-P" LongName="Accomplished Standard - Platinum">50 qualifying scores in PIII Standard</Titles>
-				<Titles Name="AJ-P" LongName="Accomplished Jumpers - Platinum">50 qualifying scores in PIII Jumpers</Titles>
-				<Titles Name="AG-P" LongName="Accomplished Gamblers - Platinum">50 qualifying scores in PIII Gamblers</Titles>
-				<Titles Name="ASn-P" LongName="Accomplished Snooker - Platinum">50 qualifying scores in PIII Snooker</Titles>
-				<Titles Name="AT-P" LongName="Accomplished Tournament Performer - Platinum">50 qualifying scores in Performance Grand Prix</Titles>
+				<Titles Name="APSA-P" LongName="Accomplished Standard - Platinum">50 qualifying scores in PIII Standard</Titles>
+				<Titles Name="APJ-P" LongName="Accomplished Jumpers - Platinum">50 qualifying scores in PIII Jumpers</Titles>
+				<Titles Name="APG-P" LongName="Accomplished Gamblers - Platinum">50 qualifying scores in PIII Gamblers</Titles>
+				<Titles Name="APS-P" LongName="Accomplished Snooker - Platinum">50 qualifying scores in PIII Snooker</Titles>
+				<Titles Name="APT-P" LongName="Accomplished Tournament Performer - Platinum">50 qualifying scores in Performance Grand Prix</Titles>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Beginners"/>
