@@ -93,7 +93,8 @@ void CFontInfo::CreateFont(const CFontDialog& dlg, CFont& font, CDC* pDC)
 bool CAgilityBookOptions::IsFilterEnabled()
 {
 	if (CAgilityBookOptions::GetViewAllDates()
-	&& CAgilityBookOptions::GetViewAllVenues())
+	&& CAgilityBookOptions::GetViewAllVenues()
+	&& CAgilityBookOptions::GetViewAllRuns())
 		return false;
 	else
 		return true;
@@ -176,21 +177,31 @@ bool CAgilityBookOptions::IsRunVisible(
 {
 	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
 		return false;
+	bool bVisible = true;
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
-		if (!IsTrialVisible(venues, pTrial))
-			return false;
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
+		bVisible = false;
+		if (IsTrialVisible(venues, pTrial))
 		{
-			if (pRun->GetDivision() == (*iter).division
-			&& pRun->GetLevel() == (*iter).level)
-				return true;
+			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+				iter != venues.end();
+				++iter)
+			{
+				if (pRun->GetDivision() == (*iter).division
+				&& pRun->GetLevel() == (*iter).level)
+					bVisible = true;
+			}
 		}
-		return false;
 	}
-	return true;
+	if (bVisible && !CAgilityBookOptions::GetViewAllRuns())
+	{
+		bVisible = false;
+		bool bQualifying = CAgilityBookOptions::GetViewQRuns();
+		if ((pRun->GetQ().Qualified() && bQualifying)
+		|| (!pRun->GetQ().Qualified() && !bQualifying))
+			bVisible = true;
+	}
+	return bVisible;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -431,6 +442,29 @@ void CAgilityBookOptions::SetFilterVenue(const std::vector<CVenueFilter>& venues
 	AfxGetApp()->WriteProfileString("Common", "FilterVenue", venue);
 	s_venueCacheInit = true;
 	s_venueCache = venues;
+}
+
+bool CAgilityBookOptions::GetViewAllRuns()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewAllRuns", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewAllRuns(bool bViewAll)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewAllRuns", bViewAll ? 1 : 0);
+}
+
+// Subset of AllRuns
+bool CAgilityBookOptions::GetViewQRuns()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewQRuns", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewQRuns", bViewQs ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

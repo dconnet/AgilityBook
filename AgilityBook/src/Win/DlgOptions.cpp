@@ -78,6 +78,8 @@ CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPa
 	m_pageFilter.m_bDateEnd = CAgilityBookOptions::GetEndFilterDateSet();
 	m_pageFilter.m_ViewVenues = CAgilityBookOptions::GetViewAllVenues() ? 0 : 1;
 	CAgilityBookOptions::GetFilterVenue(m_pageFilter.m_VenueFilter);
+	m_pageFilter.m_ViewQs = CAgilityBookOptions::GetViewAllRuns() ? 0
+		: CAgilityBookOptions::GetViewQRuns() ? 1 : 2;
 	// Fonts
 	CAgilityBookOptions::GetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
 	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
@@ -138,6 +140,22 @@ void CDlgOptions::OnOK()
 		&& 0 == m_pageFilter.m_VenueFilter.size())
 		{
 			CAgilityBookOptions::SetViewAllVenues(true);
+		}
+		switch (m_pageFilter.m_ViewQs)
+		{
+		default:
+		case 0:
+			CAgilityBookOptions::SetViewAllRuns(true);
+			CAgilityBookOptions::SetViewQRuns(true);
+			break;
+		case 1:
+			CAgilityBookOptions::SetViewAllRuns(false);
+			CAgilityBookOptions::SetViewQRuns(true);
+			break;
+		case 2:
+			CAgilityBookOptions::SetViewAllRuns(false);
+			CAgilityBookOptions::SetViewQRuns(false);
+			break;
 		}
 		if (bOldNewest != CAgilityBookOptions::GetNewestDatesFirst())
 			m_pDoc->SortDates();

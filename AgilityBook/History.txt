@@ -1,12 +1,16 @@
-08/28/2003: v0.4.3.5 <in development>
+08/30/2003: v0.4.3.5 <in development>
 - New features / Enhancements:
   - Added a 'deceased' date to the dogs info. (This is a file version change but
     it is backwards compatible, so theres no need to increment the file version)
   - Finished implementing OtherPoints point tallying.
   - Optimized filtering, much faster now.
+    Added filtering by qualifying/non-qualifying runs.
   - Added 'New dog/title/trial' items in the r-click menu of the Runs view.
   - Added a 'Filtered' item to the status bar.
   - Added Print & Print Preview in the Tree.
+  - When copying an item in the tree, also copy some text to the clipboard.
+  - Copy the runs in the view to the clipboard in tab-separated form (ctrl+c).
+    It is copied in the same format that it is printed in.
 - Bug fixes
   - A change in 0.4.1.5 to compute the score on NQs was wrong - it computed the
     score on all runs and title points on NQ+Qs. It should only compute score
@@ -17,6 +21,7 @@
   - Fixed bug where "ctrl+tab" didn't change tabs. "Shift+tab" was working.
   - In the calendar/faults/otherpts/partners dialog, set the selection when
     adding/deleting items.
+  - Fixed bug (crashes program) when copying the calendar list to the clipboard.
 
 08/16/2003: v0.4.2.5
 - 7/23: Published source in sourceforge.net.
