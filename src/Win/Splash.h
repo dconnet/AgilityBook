@@ -40,16 +40,19 @@ class CSplashWnd : public CWnd
 {
 // Construction
 protected:
-	CSplashWnd();
+	CSplashWnd(bool bTimed);
 
 // Attributes:
 public:
+	bool m_bTimed;
 	CBitmap m_bitmap;
+	CSize m_szBitmap;
+	CString m_Version;
 
 // Operations
 public:
 	static void EnableSplashScreen(BOOL bEnable = TRUE);
-	static void ShowSplashScreen(CWnd* pParentWnd = NULL);
+	static void ShowSplashScreen(CWnd* pParentWnd = NULL, bool bTimed = true);
 	static BOOL PreTranslateAppMessage(MSG* pMsg);
 
 // Overrides

@@ -65,7 +65,8 @@ public:
 private:
 	//{{AFX_MSG(CAgilityBookApp)
 	afx_msg void OnAppAbout();
-	afx_msg void OnAppUpdate();
+	afx_msg void OnHelpSplash();
+	afx_msg void OnHelpUpdate();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -155,7 +155,8 @@ void UpdateVersion(bool bVerbose)
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	//{{AFX_MSG_MAP(CAgilityBookApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-	ON_COMMAND(ID_HELP_UPDATE, OnAppUpdate)
+	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
+	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
@@ -355,7 +356,12 @@ void CAgilityBookApp::OnAppAbout()
 	aboutDlg.DoModal();
 }
 
-void CAgilityBookApp::OnAppUpdate()
+void CAgilityBookApp::OnHelpSplash()
+{
+	CSplashWnd::ShowSplashScreen(AfxGetMainWnd(), false);
+}
+
+void CAgilityBookApp::OnHelpUpdate()
 {
 	UpdateVersion(true);
 }
