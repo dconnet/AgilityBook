@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-09-17 DRC Save would not write data if only CRCD contained info.
  */
 
 #include "StdAfx.h"
@@ -116,7 +117,9 @@ bool ARBDogNotes::Load(
 
 bool ARBDogNotes::Save(CElement& ioTree) const
 {
-	if (0 < m_Faults.size() || 0 < m_Note.length())
+	if (0 < m_Faults.size()
+	|| 0 < m_CRCD.length()
+	|| 0 < m_Note.length())
 	{
 		CElement& notes = ioTree.AddElement(TREE_NOTES);
 		for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
