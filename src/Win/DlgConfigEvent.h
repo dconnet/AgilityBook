@@ -47,7 +47,8 @@ class CDlgFixup;
 class CDlgConfigEvent : public CDlgBaseDialog
 {
 public:
-	CDlgConfigEvent(ARBAgilityRecordBook* book, ARBConfig* config,
+	CDlgConfigEvent(CAgilityBookDoc* pDoc,
+		ARBAgilityRecordBook* book, ARBConfig* config,
 		ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent = NULL);
 	virtual ~CDlgConfigEvent();
 	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
@@ -90,6 +91,7 @@ private:
 	CButton	m_ctrlTitleEdit;
 	CButton	m_ctrlTitleDelete;
 	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook* m_Book;
 	ARBConfig* m_Config;
 	ARBConfigVenue* m_pVenue;

@@ -51,6 +51,7 @@
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigTitlePoints.h"
+#include "DlgConfigure.h"
 #include "DlgFixup.h"
 
 #ifdef _DEBUG
@@ -62,9 +63,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigEvent dialog
 
-CDlgConfigEvent::CDlgConfigEvent(ARBAgilityRecordBook* book, ARBConfig* config,
+CDlgConfigEvent::CDlgConfigEvent(CAgilityBookDoc* pDoc,
+	ARBAgilityRecordBook* book, ARBConfig* config,
 	ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigEvent::IDD, pParent)
+	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(config)
 	, m_pVenue(pVenue)
@@ -933,59 +936,18 @@ void CDlgConfigEvent::OnOK()
 	// m_Book and m_Config are only valid when editing an existing entry.
 	if (m_Book)
 	{
-		CWaitCursor wait;
-		int nDeletedRuns = 0;
-		int nScoringChange = 0;
-		for (ARBDogList::iterator iterDog = m_Book->GetDogs().begin();
-			iterDog != m_Book->GetDogs().end();
-			++iterDog)
+		switch (CDlgConfigure::CheckExistingRuns(m_pDoc, m_Book->GetDogs(),
+			m_pVenue->GetName(), m_pEvent->GetName(), m_Scorings, m_DlgFixup))
 		{
-			ARBDog* pDog = *iterDog;
-			for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
-				iterTrial != pDog->GetTrials().end();
-				++iterTrial)
-			{
-				ARBDogTrial* pTrial = *iterTrial;
-				for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
-					iterRun != pTrial->GetRuns().end();
-					++iterRun)
-				{
-					ARBDogRun* pRun = *iterRun;
-					ARBConfigScoring const* pScoring = m_Scorings.FindEvent(
-						pRun->GetDivision(),
-						pRun->GetLevel(),
-						pRun->GetDate());
-					if (!pScoring)
-					{
-						++nDeletedRuns;
-						// TODO: Create fixup object
-					}
-					else
-					{
-						if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
-							!= pRun->GetScoring().GetType())
-						{
-							++nScoringChange;
-							// TODO: Create fixup object
-						}
-					}
-				}
-			}
-		}
-		if (0 < nDeletedRuns || 0 < nScoringChange)
-		{
-			CString msg;
-			msg.FormatMessage(IDS_DELETE_EVENT_SCORING, nDeletedRuns, nScoringChange);
-			switch (AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2))
-			{
-			default:
-				return;
-			case IDYES:
-				break;
-			case IDCANCEL:
-				EndDialog(IDCANCEL);
-				return;
-			}
+		case CDlgConfigure::eCancelChanges:
+			EndDialog(IDCANCEL);
+			return;
+		default:
+		case CDlgConfigure::eDoNotDoIt:
+			return;
+		case CDlgConfigure::eNoChange:
+		case CDlgConfigure::eDoIt:
+			break;
 		}
 	}
 

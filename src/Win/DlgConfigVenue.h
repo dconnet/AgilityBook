@@ -46,6 +46,7 @@ class ARBConfigLevel;
 class ARBConfigSubLevel;
 class ARBConfigTitle;
 class ARBConfigVenue;
+class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgConfigureDataDivision;
 class CDlgConfigureDataEvent;
@@ -57,7 +58,9 @@ class CDlgFixup;
 class CDlgConfigVenue : public CDlgBaseDialog
 {
 public:
-	CDlgConfigVenue(ARBAgilityRecordBook& book, ARBConfig& config, ARBConfigVenue* pVenue, CWnd* pParent = NULL);
+	CDlgConfigVenue(CAgilityBookDoc* pDoc,
+		ARBAgilityRecordBook& book, ARBConfig& config,
+		ARBConfigVenue* pVenue, CWnd* pParent = NULL);
 	virtual ~CDlgConfigVenue();
 	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
 
@@ -79,6 +82,7 @@ private:
 	CButton	m_ctrlMoveDown;
 	CStatic	m_ctrlComments;
 	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook& m_Book;
 	ARBConfig& m_Config;
 	ARBConfigVenue* m_pVenue;

@@ -272,6 +272,9 @@
 				RelativePath="..\..\..\Win\DlgMessage.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgMessageBox.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgName.cpp">
 			</File>
 			<File
@@ -532,6 +535,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgMessage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgMessageBox.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgName.h">

@@ -1219,8 +1219,9 @@ void CAgilityBookViewRuns::LoadData()
 			}
 		}
 	}
+	int i;
 	int nColumnCount = HeaderItemCount();
-	for (int i = 0; i < nColumnCount; ++i)
+	for (i = 0; i < nColumnCount; ++i)
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	CString msg;
@@ -1234,11 +1235,11 @@ void CAgilityBookViewRuns::LoadData()
 
 	SORT_RUN_INFO info;
 	info.pThis = this;
-	for (size_t i = 0; i < m_Columns.size(); ++i)
+	for (i = 0; i < static_cast<int>(m_Columns.size()); ++i)
 	{
 		if (m_Columns[i] == IO_RUNS_DATE)
 		{
-			m_SortColumn = static_cast<int>(i) + 1;
+			m_SortColumn = i + 1;
 			break;
 		}
 	}

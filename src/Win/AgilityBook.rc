@@ -1714,6 +1714,18 @@ BEGIN
                     HIDC_FINDLINKS_OPEN
 END
 
+IDD_MESSAGE_BOX DIALOGEX 0, 0, 260, 70
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_MESSAGE_BOX_ICON,7,7,21,20
+    LTEXT           "",IDC_MESSAGE_BOX_TEXT,35,7,218,32,SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDC_MESSAGE_BOX_BUTTON1,12,49,50,14
+    PUSHBUTTON      "Cancel",IDC_MESSAGE_BOX_BUTTON2,74,49,50,14
+    PUSHBUTTON      "Retry",IDC_MESSAGE_BOX_BUTTON3,136,49,50,14
+    PUSHBUTTON      "Details...",IDC_MESSAGE_BOX_DETAILS,198,49,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2135,6 +2147,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 114
     END
+
+    IDD_MESSAGE_BOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 253
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -2403,6 +2423,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
     IDS_ABOUT_VERSION       "Version %1"
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
     IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
@@ -2420,7 +2441,9 @@ END
 STRINGTABLE 
 BEGIN
     IDS_UPDATE_UNKNOWN      "Unable to determine current released version. (Is your internet connection alive?)"
-    IDS_DELETE_EVENT_SCORING "Warning: Event scoring methods are currently in use. Accepting these changes will also delete %1!d! run(s) and lose scoring information in %2!d! run(s).\n\nAre you sure you want to do this?"
+    IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
+    IDS_DELETE_EVENT_SCORING 
+                            "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."
     IDS_NEW                 "<New>"
     IDS_CONFIGURE           "Configure"
     IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
@@ -2532,6 +2555,7 @@ BEGIN
     IDS_ADDED_TITLES        "%1!d! titles"
     IDS_ADDED_TRIALS        "%1!d! trials"
     IDS_ADDED_JUDGES        "%1!d! judges"
+    IDS_CANNOT_CANCEL       "WARNING: These changes cannot be cancelled. If you do not want these changes then you must close Agility Record Book without saving your work."
 END
 
 STRINGTABLE 

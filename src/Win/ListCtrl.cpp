@@ -207,7 +207,9 @@ void CHeaderCtrl2::FixTooltips()
 				CRect rColumn;
 				GetItemRect(iCol, rColumn);
 				CRect rAdjusted(rColumn);
+#if _MSC_VER >= 1300
 				rAdjusted.right -= GetBitmapMargin();
+#endif
 				rAdjusted.right -= 12; // Deflate to allow for the padding. 6 is just an observed number on each side
 				if (item.fmt & HDF_IMAGE)
 					rAdjusted.right -= 16; // Subtract icon.

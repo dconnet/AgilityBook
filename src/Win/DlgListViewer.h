@@ -51,6 +51,10 @@ public:
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
 		std::list<RunInfo> const& inRuns,
 		CWnd* pParent = NULL);
+	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
+		std::list<RunInfo> const& inRunsScoringDeleted,
+		std::list<RunInfo> const& inRunsScoringChanged,
+		CWnd* pParent = NULL);
 	// Viewing double-Qs
 	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
 		std::set<DoubleQdata> const& inQQs,
@@ -70,6 +74,7 @@ private:
 	CString m_Caption;
 	CAgilityBookDoc* m_pDoc;
 	std::list<RunInfo> const* m_Runs;
+	std::list<RunInfo> const* m_Runs2;
 	std::set<DoubleQdata> const* m_DoubleQData;
 	std::list<OtherPtInfo> const* m_OtherData;
 	CRect m_rWin;

@@ -76,6 +76,7 @@
 #define IDD_WIZARD_EXPORT               245
 #define IDD_ASSIGN_COLUMNS              246
 #define IDD_FIND_LINKS                  247
+#define IDD_MESSAGE_BOX                 248
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -403,6 +404,12 @@
 #define IDC_FINDLINKS_COPY              1349
 #define IDC_FINDLINKS_EDIT              1350
 #define IDC_FINDLINKS_OPEN              1351
+#define IDC_MESSAGE_BOX_ICON            1352
+#define IDC_MESSAGE_BOX_TEXT            1353
+#define IDC_MESSAGE_BOX_BUTTON1         1354
+#define IDC_MESSAGE_BOX_BUTTON2         1355
+#define IDC_MESSAGE_BOX_BUTTON3         1356
+#define IDC_MESSAGE_BOX_DETAILS         1357
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -485,6 +492,7 @@
 #define IDS_QQ                          5030
 #define IDS_DOUBLE_Q                    5031
 #define IDS_MACHPTS                     5032
+#define IDS_ARE_YOU_SURE                5078
 #define IDS_ABOUT_VERSION               5079
 #define IDS_ABOUT_TEXT                  5080
 #define IDS_HELP_UPDATE                 5081
@@ -495,6 +503,7 @@
 #define IDS_UPDATE_NEWER_VERSION        5086
 #define IDS_UPDATE_CURRENT              5087
 #define IDS_UPDATE_UNKNOWN              5088
+#define IDS_DELETE_EVENT_SCORING_INFO   5089
 #define IDS_DELETE_EVENT_SCORING        5090
 #define IDS_NEW                         5091
 #define IDS_CONFIGURE                   5092
@@ -583,6 +592,7 @@
 #define IDS_ADDED_TITLES                5176
 #define IDS_ADDED_TRIALS                5177
 #define IDS_ADDED_JUDGES                5178
+#define IDS_CANNOT_CANCEL               5179
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780
@@ -635,7 +645,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1352
+#define _APS_NEXT_CONTROL_VALUE         1358
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

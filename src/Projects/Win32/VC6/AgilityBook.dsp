@@ -270,6 +270,10 @@ SOURCE=..\..\..\Win\DlgMessage.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgMessageBox.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgName.cpp
 # End Source File
 # Begin Source File
@@ -600,6 +604,10 @@ SOURCE=..\..\..\Win\DlgListViewer.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgMessage.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgMessageBox.h
 # End Source File
 # Begin Source File
 
