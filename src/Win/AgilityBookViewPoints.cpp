@@ -222,7 +222,7 @@ int CAgilityBookViewPoints::DoEvents(
 	++iterEvent)
 	{
 		ARBConfigEvent const* pEvent = (*iterEvent);
-		bool bHasPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent);
+		bool bHasPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, false);
 
 		// Don't tally runs that have no titling points.
 		std::vector<ARBConfigScoring const*> scoringItems;
@@ -339,16 +339,19 @@ int CAgilityBookViewPoints::DoEvents(
 				GetListCtrl().SetItemText(index+nAdded, nextCol++, pEvent->GetName().c_str());
 				int nCleanQ, nNotCleanQ;
 				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ, inLifetime);
-				int nLifeTimePts = inDog->GetExistingPoints().ExistingPoints(
+				int nExistingPts = inDog->GetExistingPoints().ExistingPoints(
 					ARBDogExistingPoints::eRuns,
 					inVenue, inDiv, inLevel, pEvent);
+				pts += nExistingPts;
 				int nExistingSQ = 0;
 				if (pScoringMethod->HasSuperQ())
 					nExistingSQ += inDog->GetExistingPoints().ExistingPoints(
 						ARBDogExistingPoints::eSQ,
 						inVenue, inDiv, inLevel, pEvent);
-				inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nLifeTimePts + nExistingSQ));
-				pts += nLifeTimePts;
+				if (inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, true))
+				{
+					inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ));
+				}
 				str.FormatMessage(IDS_POINTS_RUNS_JUDGES,
 					matching.size(),
 					judges.size());
