@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-11-15 DRC Added time fault computation option on T+F.
  */
 
 #include "ARBConfigScoring.h"
@@ -75,13 +76,15 @@ private:
 	CComboBox m_ctrlDivision;
 	CComboBox m_ctrlLevel;
 	CComboBox m_ctrlType;
-	CButton	m_ctrlDropFractions;
 	CStatic	m_ctrlPointsOpeningText;
 	CEdit	m_ctrlPointsOpening;
 	short	m_OpeningPts;
 	CStatic	m_ctrlPointsClosingText;
 	CEdit	m_ctrlPointsClosing;
 	short	m_ClosingPts;
+	CButton	m_ctrlDropFractions;
+	CButton	m_ctrlTimeFaultsUnder;
+	CButton	m_ctrlTimeFaultsOver;
 	CEdit	m_ctrlNote;
 	CButton m_ctrlSuperQ;
 	CButton m_ctrlMachPts;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-11-15 DRC Added time fault computation on T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-02 DRC Added VerifyEvent.
@@ -96,6 +97,8 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_Level()
 	, m_Style(eUnknown)
 	, m_bDropFractions(false)
+	, m_bTimeFaultsUnder(false)
+	, m_bTimeFaultsOver(false)
 	, m_Note()
 	, m_OpeningPts(0)
 	, m_ClosingPts(0)
@@ -114,6 +117,8 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_Level(rhs.m_Level)
 	, m_Style(rhs.m_Style)
 	, m_bDropFractions(rhs.m_bDropFractions)
+	, m_bTimeFaultsUnder(rhs.m_bTimeFaultsUnder)
+	, m_bTimeFaultsOver(rhs.m_bTimeFaultsOver)
 	, m_Note(rhs.m_Note)
 	, m_OpeningPts(rhs.m_OpeningPts)
 	, m_ClosingPts(rhs.m_ClosingPts)
@@ -139,6 +144,8 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_Level = rhs.m_Level;
 		m_Style = rhs.m_Style;
 		m_bDropFractions = rhs.m_bDropFractions;
+		m_bTimeFaultsUnder = rhs.m_bTimeFaultsUnder;
+		m_bTimeFaultsOver = rhs.m_bTimeFaultsOver;
 		m_Note = rhs.m_Note;
 		m_OpeningPts = rhs.m_OpeningPts;
 		m_ClosingPts = rhs.m_ClosingPts;
@@ -159,6 +166,8 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_Level == rhs.m_Level
 		&& m_Style == rhs.m_Style
 		&& m_bDropFractions == rhs.m_bDropFractions
+		&& m_bTimeFaultsUnder == rhs.m_bTimeFaultsUnder
+		&& m_bTimeFaultsOver == rhs.m_bTimeFaultsOver
 		&& m_Note == rhs.m_Note
 		&& m_OpeningPts == rhs.m_OpeningPts
 		&& m_ClosingPts == rhs.m_ClosingPts
@@ -276,6 +285,16 @@ bool ARBConfigScoring::Load(
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, VALID_VALUES_BOOL));
 		return false;
 	}
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_UNDER, VALID_VALUES_BOOL));
+		return false;
+	}
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, VALID_VALUES_BOOL));
+		return false;
+	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
@@ -391,6 +410,10 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 	}
 	if (m_bDropFractions)
 		scoring.AddAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions);
+	if (m_bTimeFaultsUnder)
+		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
+	if (m_bTimeFaultsOver)
+		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
 	if (0 < m_Note.length())
 	{
 		Element& note = scoring.AddElement(TREE_NOTE);

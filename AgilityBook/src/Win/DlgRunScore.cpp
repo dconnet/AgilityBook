@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-11-13 DRC Also compute score for NA runs that have no titling pts.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-03-20 DRC The date never got set if the initial entry had no date
  *                    and we didn't change it (first run in a trial).
@@ -705,8 +706,10 @@ void CDlgRunScore::SetTitlePoints()
 			strTitle.Format("%hd", m_Run->GetTitlePoints(pScoring));
 		}
 		// 8/17/03: Only compute score on Q and NQ runs.
+		// 11/13/04: Also compute score for NA runs that have no titling pts.
 		if (q.Qualified()
-		|| ARB_Q::eQ_NQ == q)
+		|| ARB_Q::eQ_NQ == q
+		|| (ARB_Q::eQ_NA == q && 0 == pScoring->GetTitlePoints().size()))
 			strScore = m_Run->GetScore(pScoring).str().c_str();
 	}
 	// Doesn't matter if they're hidden,..

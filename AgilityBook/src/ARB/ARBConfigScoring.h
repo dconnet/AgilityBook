@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-11-15 DRC Added time fault computation on T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -135,14 +136,18 @@ public:
 	ScoringStyle GetScoringStyle() const;
 	std::string GetScoringStyleStr() const;
 	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle);
-	bool DropFractions() const;
-	void SetDropFractions(bool inBool);
+	bool DropFractions() const; ///< Only valid for F/T, T+F
+	void SetDropFractions(bool inBool); ///< Only valid for F/T, T+F
+	bool ComputeTimeFaultsUnder() const; ///< Only valid for T+F
+	void SetComputeTimeFaultsUnder(bool inBool); ///< Only valid for T+F
+	bool ComputeTimeFaultsOver() const; ///< Only valid for T+F
+	void SetComputeTimeFaultsOver(bool inBool); ///< Only valid for T+F
+	short GetRequiredOpeningPoints() const; ///< Only valid for point-based
+	void SetRequiredOpeningPoints(short inPoints); ///< Only valid for point-based
+	short GetRequiredClosingPoints() const; ///< Only valid for point-based
+	void SetRequiredClosingPoints(short inPoints); ///< Only valid for point-based
 	std::string const& GetNote() const;
 	void SetNote(std::string const& inNote);
-	short GetRequiredOpeningPoints() const;
-	void SetRequiredOpeningPoints(short inPoints);
-	short GetRequiredClosingPoints() const;
-	void SetRequiredClosingPoints(short inPoints);
 	bool HasSuperQ() const;
 	void SetHasSuperQ(bool inBool);
 	bool HasDoubleQ() const;
@@ -162,6 +167,8 @@ private:
 	std::string m_Level;
 	ScoringStyle m_Style;
 	bool m_bDropFractions;
+	bool m_bTimeFaultsUnder;
+	bool m_bTimeFaultsOver;
 	std::string m_Note;
 	short m_OpeningPts;
 	short m_ClosingPts;
@@ -232,6 +239,26 @@ inline bool ARBConfigScoring::DropFractions() const
 inline void ARBConfigScoring::SetDropFractions(bool inBool)
 {
 	m_bDropFractions = inBool;
+}
+
+inline bool ARBConfigScoring::ComputeTimeFaultsUnder() const
+{
+	return m_bTimeFaultsUnder;
+}
+
+inline void ARBConfigScoring::SetComputeTimeFaultsUnder(bool inBool)
+{
+	m_bTimeFaultsUnder = inBool;
+}
+
+inline bool ARBConfigScoring::ComputeTimeFaultsOver() const
+{
+	return m_bTimeFaultsOver;
+}
+
+inline void ARBConfigScoring::SetComputeTimeFaultsOver(bool inBool)
+{
+	m_bTimeFaultsOver = inBool;
 }
 
 inline std::string const& ARBConfigScoring::GetNote() const

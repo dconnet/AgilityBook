@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2004-11-15 DRC Added TimeFaults for T+F.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2004-03-30 DRC Changed Table-in-YPS to hasTable, added to ConfigScoring.
@@ -146,6 +147,8 @@
 #define ATTRIB_SCORING_LEVEL				"Level"
 #define ATTRIB_SCORING_TYPE					"type"
 #define ATTRIB_SCORING_DROPFRACTIONS		"dropFractions"
+#define ATTRIB_SCORING_TIMEFAULTS_UNDER		"underTF"
+#define ATTRIB_SCORING_TIMEFAULTS_OVER		"overTF"
 #define ATTRIB_SCORING_OPENINGPTS			"OpeningPts"
 #define ATTRIB_SCORING_CLOSINGPTS			"ClosingPts"
 #define ATTRIB_SCORING_SUPERQ				"superQ"

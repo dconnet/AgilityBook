@@ -1,4 +1,12 @@
-10/31/2004: v1.4.1.10 <in development>
+11/15/2004: v1.4.1.10 <in development>
+- Bumped file version to 10.1:
+  - Added 'underTF'/'overTF' to 'Scoring'.
+- New features / Enhancements:
+  - Added ability to compute time faults to Time+Fault style events.
+    This allows USDAA Time Gamble to compute correctly.
+- Bug fixes
+  - Compute the score (in the run dialog) for NA runs that do not have
+    titling points.
 
 10/31/2004: v1.4.0.10
 - Bumped file version to 10.0, Configuration v6:
