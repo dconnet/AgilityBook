@@ -71,7 +71,7 @@ Runs Available fields:
   Faults
   Reference Runs: Q, Place, Score, Time, Name, Breed, Note
   CRCD
-  MACH
+  Speed (MACH)
 
 Calendar
   Start Date
@@ -91,6 +91,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-08-11 DRC Added verified column to trial in tree.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-10 DRC Created
@@ -298,7 +299,7 @@ static struct
 	{CAgilityBookOptions::eViewTree,
 		IO_TREE_TRIAL_VERIFIED, false, 0, IDS_COL_VERIFIED, NULL},
 	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
-		IO_RUNS_MACH,          false, LVCFMT_LEFT,   IDS_COL_MACH, NULL},
+		IO_RUNS_SPEED,         false, LVCFMT_LEFT,   IDS_COL_SPEED, NULL},
 };
 
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
@@ -426,7 +427,7 @@ static int const idxViewRunsList[] = {
 	IO_RUNS_REQ_CLOSING,	IO_RUNS_OPENING,		IO_RUNS_CLOSING,
 	IO_RUNS_REQ_POINTS,		IO_RUNS_POINTS,			IO_RUNS_PLACE,
 	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
-	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_MACH,
+	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_SPEED,
 	IO_RUNS_COMMENTS,		IO_RUNS_FAULTS,
 -1};
 static int const idxViewCalendarList[] = {

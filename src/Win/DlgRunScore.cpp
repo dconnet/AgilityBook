@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-11-13 DRC Also compute score for NA runs that have no titling pts.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-03-20 DRC The date never got set if the initial entry had no date
@@ -203,8 +204,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_Q, m_ctrlQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SCORE, m_ctrlScore);
 	DDX_Control(pDX, IDC_RUNSCORE_DOUBLE_Q, m_ctrlDoubleQ);
-	DDX_Control(pDX, IDC_RUNSCORE_MACHPTS_TEXT, m_ctrlMachPtsText);
-	DDX_Control(pDX, IDC_RUNSCORE_MACHPTS, m_ctrlMachPts);
+	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS_TEXT, m_ctrlSpeedPtsText);
+	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS, m_ctrlSpeedPts);
 	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
 	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS, m_ctrlTitlePoints);
 	DDX_Control(pDX, IDC_RUNSCORE_OTHERPOINTS, m_ctrlOtherPoints);
@@ -691,7 +692,7 @@ void CDlgRunScore::SetTitlePoints()
 	}
 	ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
-	CString strMach("0");
+	CString strSpeed("0");
 	CString strTitle("0");
 	CString strScore("");
 	ARBConfigScoring const* pScoring = GetScoring();
@@ -700,9 +701,9 @@ void CDlgRunScore::SetTitlePoints()
 		// 8/17/03: Only compute title points on Q runs.
 		if (q.Qualified())
 		{
-			if (pScoring->HasMachPts())
+			if (pScoring->HasSpeedPts())
 			{
-				strMach.Format("%hd", m_Run->GetMachPoints(pScoring));
+				strSpeed.Format("%hd", m_Run->GetSpeedPoints(pScoring));
 			}
 			strTitle.Format("%hd", m_Run->GetTitlePoints(pScoring));
 		}
@@ -714,7 +715,7 @@ void CDlgRunScore::SetTitlePoints()
 			strScore = m_Run->GetScore(pScoring).str().c_str();
 	}
 	// Doesn't matter if they're hidden,..
-	m_ctrlMachPts.SetWindowText(strMach);
+	m_ctrlSpeedPts.SetWindowText(strSpeed);
 	m_ctrlTitlePoints.SetWindowText(strTitle);
 	m_ctrlScore.SetWindowText(strScore);
 }
@@ -755,8 +756,8 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlDogsQd.EnableWindow(FALSE);
 	m_ctrlQ.EnableWindow(FALSE);
 	m_ctrlDoubleQ.ShowWindow(SW_HIDE);
-	m_ctrlMachPtsText.ShowWindow(SW_HIDE);
-	m_ctrlMachPts.ShowWindow(SW_HIDE);
+	m_ctrlSpeedPtsText.ShowWindow(SW_HIDE);
+	m_ctrlSpeedPts.ShowWindow(SW_HIDE);
 	m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
 	m_ctrlTitlePoints.ShowWindow(SW_HIDE);
 
@@ -902,10 +903,10 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlTitlePointsText.ShowWindow(SW_SHOW);
 		m_ctrlTitlePoints.ShowWindow(SW_SHOW);
 	}
-	if (pScoring->HasMachPts())
+	if (pScoring->HasSpeedPts())
 	{
-		m_ctrlMachPtsText.ShowWindow(SW_SHOW);
-		m_ctrlMachPts.ShowWindow(SW_SHOW);
+		m_ctrlSpeedPtsText.ShowWindow(SW_SHOW);
+		m_ctrlSpeedPts.ShowWindow(SW_SHOW);
 	}
 	if (pScoring->HasDoubleQ())
 	{

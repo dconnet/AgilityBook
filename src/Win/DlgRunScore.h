@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  */
@@ -118,8 +119,8 @@ private:
 	CComboBox	m_ctrlQ;
 	CStatic	m_ctrlScore;
 	CButton	m_ctrlDoubleQ;
-	CStatic	m_ctrlMachPtsText;
-	CStatic	m_ctrlMachPts;
+	CStatic	m_ctrlSpeedPtsText;
+	CStatic	m_ctrlSpeedPts;
 	CStatic	m_ctrlTitlePointsText;
 	CStatic	m_ctrlTitlePoints;
 	CButton	m_ctrlOtherPoints;

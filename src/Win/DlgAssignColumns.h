@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-08-11 DRC Added verified column to trial in tree.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-10 DRC Created
@@ -123,7 +124,7 @@
 #define IO_TREE_RUN_HEIGHT			63
 #define IO_LOG_SUBNAME				64
 #define IO_TREE_TRIAL_VERIFIED      65
-#define IO_RUNS_MACH                66
+#define IO_RUNS_SPEED               66
 #define IO_MAX						67
 
 #include <vector>

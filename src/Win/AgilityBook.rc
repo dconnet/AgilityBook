@@ -679,13 +679,13 @@ BEGIN
                     IDC_CONFIG_EVENT_TIME_FAULTS_OVER,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,190,218,109,10,0,
                     HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
-    CONTROL         "M&ach Points?",IDC_CONFIG_EVENT_MACH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,174,57,10,0,
-                    HIDC_CONFIG_EVENT_MACH
-    CONTROL         "Double &Q?",IDC_CONFIG_EVENT_DOUBLEQ,"Button",
+    CONTROL         "Speed Points?",IDC_CONFIG_EVENT_SPEED,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,322,174,62,10,0,
+                    HIDC_CONFIG_EVENT_SPEED
+    CONTROL         "Double Q?",IDC_CONFIG_EVENT_DOUBLEQ,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,322,186,49,10,0,
                     HIDC_CONFIG_EVENT_DOUBLEQ
-    CONTROL         "S&uper Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",
+    CONTROL         "Super Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,322,198,45,10,0,
                     HIDC_CONFIG_EVENT_SUPERQ
     LTEXT           "Time Fault Multiplier",
@@ -1194,8 +1194,8 @@ BEGIN
     CTEXT           "",IDC_RUNSCORE_SCORE,282,171,25,10,SS_SUNKEN
     CONTROL         "Double Q",IDC_RUNSCORE_DOUBLE_Q,"Button",
                     BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,341,122,46,10
-    LTEXT           "Mach Points",IDC_RUNSCORE_MACHPTS_TEXT,322,139,40,8
-    CTEXT           "",IDC_RUNSCORE_MACHPTS,367,138,20,10,SS_SUNKEN
+    LTEXT           "Speed Points",IDC_RUNSCORE_SPEEDPTS_TEXT,322,139,40,8
+    CTEXT           "",IDC_RUNSCORE_SPEEDPTS,367,138,20,10,SS_SUNKEN
     LTEXT           "Title Points",IDC_RUNSCORE_TITLE_POINTS_TEXT,325,155,36,
                     8
     CTEXT           "",IDC_RUNSCORE_TITLE_POINTS,367,154,20,10,SS_SUNKEN
@@ -2433,7 +2433,7 @@ BEGIN
     IDS_SUPER_Q             "SuperQ"
     IDS_QQ                  "QQ"
     IDS_DOUBLE_Q            "DoubleQ"
-    IDS_MACHPTS             "MachPts"
+    IDS_SPEEDPTS            "SpeedPts"
 END
 
 STRINGTABLE 
@@ -2506,7 +2506,7 @@ BEGIN
     IDS_COL_TRIAL           "Trial"
     IDS_COL_SUBNAME         "SubName"
     IDS_COL_VERIFIED        "Verified"
-    IDS_COL_MACH            "MACH"
+    IDS_COL_SPEED           "Speed"
 END
 
 STRINGTABLE 
@@ -2603,9 +2603,9 @@ BEGIN
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
     IDS_POINTS_JUDGES       ", %1!d! judges"
     IDS_POINTS_SQS          "[%1!d! Q+]"
-    IDS_POINTS_MACH_SUBTOTAL "[%1!d! mach]"
+    IDS_POINTS_SPEED_SUBTOTAL "[%1!d! speed]"
     IDS_POINTS_QQS          "%1!d! QQ"
-    IDS_POINTS_MACH         "%1!d! Mach"
+    IDS_POINTS_SPEED        "%1!d! Speed"
     IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
 END
 

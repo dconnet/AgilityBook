@@ -1,9 +1,7 @@
-Last Updated: 10/20/04
+Last Updated: 1/1/2005
 
-- Add a column in runs to allow cumulative title points. Also add this to
-  the score tab in the run properties.
-
-- Possible expense tracking?
+- Remember which field is sorted in the main views between program
+  invocation.
 
 - Fix printing so it wraps multi-line text.
 
@@ -29,6 +27,16 @@ Last Updated: 10/20/04
   an adjacent entry. (For instance, when reordering runs, reordering really
   only applies to runs on a given date. If you attempt to reorder more, the
   sorting that occurs after the reordering will undo what you did.)
+
+=== Considered, but probably will never do. ===
+
+- Add a column in runs to allow cumulative title points. Also add this to
+  the score tab in the run properties.
+  - Probably not - due to the current implementation, this could be rather
+    expensive.
+
+- Possible expense tracking?
+  - Most users said NO!
 
 - Refine Points (rename to Reports?)
   - track faults, generate avgs in ranges (.5 refusals in last 6 months

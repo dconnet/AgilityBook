@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -113,13 +114,13 @@ public:
 		std::string const& inLevel) const;
 
 	/**
-	 * Get the MACH points earned for this trial.
+	 * Get the Speed points earned for this trial.
 	 * @param inConfig Configuration for looking up information.
 	 * @param inDiv Division to check.
 	 * @param inLevel Level to check.
-	 * @return Number of MACH points earned.
+	 * @return Number of Speed points earned.
 	 */
-	short GetMachPoints(
+	short GetSpeedPoints(
 		ARBConfig const& inConfig,
 		std::string const& inDiv,
 		std::string const& inLevel) const;

@@ -12,9 +12,10 @@ Note: When updating file version number, see notes in
 src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2004-11-15 DRC File version 10.1.
+2005-01-01 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
+			   Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
 2004-10-12 DRC File version 10.
                Added 'Height' to 'ReferenceRun'. Added 'LifeTime' to
                'Scoring', removed 'LifeTime' from 'TitlePoints'. Added
@@ -185,7 +186,7 @@ dropped. (AKC and CPE do this.)
 'underTF' and 'overTF' are used to cause time faults to be computed on
 Time+Faults style events (USDAA Time Gamble)
 
-The 'superQ', 'doubleQ' and 'machPts' attributes enable built-in
+The 'superQ', 'doubleQ' and 'speedPts' attributes enable built-in
 features for an event. If 'doubleQ' is enabled, the program will
 automatically determine if a double Q occurs on a given date.
 
@@ -221,7 +222,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		overTF (y|n) 'n'
 		superQ (y|n) 'n'
 		doubleQ (y|n) 'n'
-		machPts (y|n) 'n'
+		speedPts (y|n) 'n'
 		hasTable (y|n) 'n'
 		timeFault CDATA #IMPLIED
 		OpeningPts CDATA #IMPLIED
@@ -280,7 +281,7 @@ depends on how a venue has been defined above.
  Type: [required items..]
   'Other': Other Points [Other, Venue, Div, Level, Event]
   'Run': Runs           [       Venue, Div, Level, Event]
-  'Mach': Mach points   [       Venue, Div, Level]
+  'Speed': Speed points [       Venue, Div, Level]
   'QQ': Double Q        [       Venue, Div, Level]
   'SQ': Super Q         [       Venue, Div, Level, Event]
 -->

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-02-02 DRC Created
  */
@@ -63,8 +64,8 @@ std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointTy
 	case eRuns:
 		str = EXISTING_POINTS_RUN;
 		break;
-	case eMach:
-		str = EXISTING_POINTS_MACH;
+	case eSpeed:
+		str = EXISTING_POINTS_SPEED;
 		break;
 	case eQQ:
 		str = EXISTING_POINTS_QQ;
@@ -185,12 +186,15 @@ bool ARBDogExistingPoints::Load(
 		m_Type = eOtherPoints;
 	else if (attrib == EXISTING_PTS_TYPE_RUNS)
 		m_Type = eRuns;
-	else if (attrib == EXISTING_PTS_TYPE_MACH)
-		m_Type = eMach;
+	else if (attrib == EXISTING_PTS_TYPE_SPEED)
+		m_Type = eSpeed;
 	else if (attrib == EXISTING_PTS_TYPE_QQ)
 		m_Type = eQQ;
 	else if (attrib == EXISTING_PTS_TYPE_SQ)
 		m_Type = eSQ;
+	// Changed attribute from 'Mach' to 'Speed' in 10.1
+	else if (inVersion < ARBVersion(10,1) && attrib == "Mach")
+		m_Type = eSpeed;
 	else
 	{
 		std::string msg(INVALID_VALUE);
@@ -201,7 +205,7 @@ bool ARBDogExistingPoints::Load(
 		msg += ", ";
 		msg += EXISTING_PTS_TYPE_RUNS;
 		msg += ", ";
-		msg += EXISTING_PTS_TYPE_MACH;
+		msg += EXISTING_PTS_TYPE_SPEED;
 		msg += ", ";
 		msg += EXISTING_PTS_TYPE_QQ;
 		msg += ", ";
@@ -251,7 +255,7 @@ bool ARBDogExistingPoints::Load(
 		return false;
 	}
 
-	// I could add additional verification to make sure it's a valid SQ/mach/QQ
+	// I could add additional verification to make sure it's a valid SQ/Speed/QQ
 	// event... but let the UI handle that...
 	if (eOtherPoints == m_Type || eRuns == m_Type || eSQ == m_Type)
 	{
@@ -323,8 +327,8 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
 		break;
-	case eMach:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MACH);
+	case eSpeed:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SPEED);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);

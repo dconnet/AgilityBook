@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-30 DRC Added links.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -130,11 +131,11 @@ public:
 	int DeleteOtherPoints(std::string const& inName);
 
 	/**
-	 * Get the number of MACH points earned in this run.
+	 * Get the number of Speed points earned in this run.
 	 * @param inScoring Scoring method used.
-	 * @return Number of MACH points earned.
+	 * @return Number of Speed points earned.
 	 */
-	short GetMachPoints(ARBConfigScoring const* inScoring) const;
+	short GetSpeedPoints(ARBConfigScoring const* inScoring) const;
 
 	/**
 	 * Get the number of title points earned in this run.
