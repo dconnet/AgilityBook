@@ -261,6 +261,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
 	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
 	//}}AFX_MSG_MAP
+	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
