@@ -94,14 +94,15 @@ BOOL CDlgTraining::OnInitDialog()
 
 	std::set<std::string> names;
 	m_pDoc->GetTraining().GetAllNames(names);
-	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	std::set<std::string>::iterator iter;
+	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		int index = m_ctrlNames.AddString((*iter).c_str());
 		if ((*iter) == m_pTraining->GetName())
 			m_ctrlNames.SetCurSel(index);
 	}
 	m_pDoc->GetTraining().GetAllSubNames(names);
-	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		int index = m_ctrlSubNames.AddString((*iter).c_str());
 		if ((*iter) == m_pTraining->GetName())
