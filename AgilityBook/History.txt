@@ -1,4 +1,4 @@
-3/5/2004: v1.0.3.8 <in development>
+3/6/2004: v1.0.3.8 <in development>
 - Bumped file version to 8.4:
   - Added table-in-yps flag (default is true for backwards compatibility)
   - Added new 'Configuration/Action' verb: DeleteTitle
@@ -12,10 +12,11 @@
     you open an old file, it will prompt to merge. Once you have updated, you
     will not be prompted again, even if you modify your config.
   - Added additional text to email message generated from hotlink in About box.
+  - Added MetaFile support into CRCD dialog.
 - Bug fixes
   - Creating a new document didn't clear the judge info from the previous doc.
-  - Removed 'V-ATCH',etc from ASCA configuration.
   - The OtherPoints button in the runs dialog was improperly disabled at times.
+  - Removed 'V-ATCH',etc from ASCA configuration.
   - Removed AMBOR Triple title abbreviations - titles are full text.
 
 2/9/2004: v1.0.2.8
