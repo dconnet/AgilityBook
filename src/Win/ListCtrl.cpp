@@ -185,11 +185,14 @@ void CHeaderCtrl2::FixTooltips()
 
 void CHeaderCtrl2::SetColumnTip(int iCol)
 {
+	if (!::IsWindow(m_ToolTip.GetSafeHwnd()))
+		return;
+
 	CClientDC dc(this);
 	CFont* pOldFont = dc.SelectObject(GetFont());
 
 	HDITEM item;
-	item.mask = HDI_TEXT;
+	item.mask = HDI_TEXT | HDI_FORMAT;
 	item.pszText = fpBuffer;
 	item.cchTextMax = fBufferSize;
 	GetItem(iCol, &item);
@@ -205,18 +208,24 @@ void CHeaderCtrl2::SetColumnTip(int iCol)
 	bool bDelTip = true;
 	if (fpBuffer && *fpBuffer)
 	{
-		CRect r;
-		GetItemRect(iCol, r);
-		r.DeflateRect(6, 0); // Deflate to allow for the padding. 6 is just an observed number on each side
-		CRect r2(r);
+		CRect rColumn;
+		GetItemRect(iCol, rColumn);
+		CRect rAdjusted(rColumn);
+		rAdjusted.right -= GetBitmapMargin();
+		rAdjusted.right -= 12; // Deflate to allow for the padding. 6 is just an observed number on each side
+		if (item.fmt & HDF_IMAGE)
+			rAdjusted.right -= 16; // Subtract icon.
+		CRect rText(rAdjusted);
 		CString str(fpBuffer);
-		dc.DrawText(str, r2, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
-		if (r2.Width() > r.Width())
+		// It doesn't matter if the column is left/center/right adjusted.
+		// We only care if the text exceeds the allowed area.
+		dc.DrawText(str, rText, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
+		if (rText.Width() > rAdjusted.Width())
 		{
 			// A tooltip can only display 260 chars.
 			if (str.GetLength() >= 260)
-				str = str.Right(259);
-			m_ToolTip.AddTool(this, str, r, iCol+1);
+				str = "..." + str.Right(256);
+			m_ToolTip.AddTool(this, str, rColumn, iCol+1);
 			bDelTip = false;
 		}
 	}
@@ -265,6 +274,7 @@ void CHeaderCtrl2::Sort(int iCol, SortOrder eOrder)
 	else
 		item.fmt &= ~HDF_IMAGE;
 	SetItem(iCol, &item);
+	SetColumnTip(iCol);
 }
 
 /////////////////////////////////////////////////////////////////////////////
