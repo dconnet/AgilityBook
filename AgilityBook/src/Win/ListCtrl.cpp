@@ -203,7 +203,7 @@ void CListView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	{
 		CStringArray line;
 		GetPrintLine(i, line);
-		for (int nCol = 0; nCol < line.GetSize(); ++nCol)
+		for (size_t nCol = 0; nCol < static_cast<size_t>(line.GetSize()); ++nCol)
 		{
 			line[nCol] += " ";
 			if (nCol == pData->nMaxWidth.size())

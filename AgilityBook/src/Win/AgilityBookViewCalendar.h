@@ -57,11 +57,15 @@ public:
 	virtual bool GetMessage(CString& msg) const;
 
 private:
-	size_t GetEntriesOn(const ARBDate& date, std::vector<ARBCalendar*>& entries) const;
+	size_t GetEntriesOn(
+		const ARBDate& date,
+		std::vector<ARBCalendar*>& entries,
+		bool bGetAll) const;
 	void LoadData();
 	CRect GetDateRect(const ARBDate& date, bool bLogical) const;
 	void GetDateFromPoint(CPoint pt, ARBDate& date);
 	std::vector<ARBCalendar*> m_Calendar;
+	std::vector<ARBCalendar*> m_CalendarHidden;
 	ARBDate m_First;	///< First date, adjusted to Mon of that week.
 	ARBDate m_Last;		///< Last trial date.
 	int m_nWeeks;		///< Number of visible weeks (range of first/last)

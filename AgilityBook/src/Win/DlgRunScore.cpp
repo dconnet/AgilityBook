@@ -381,7 +381,7 @@ bool CDlgRunScore::GetText(CEdit* pEdit, short& val) const
 		return false;
 	CString str;
 	pEdit->GetWindowText(str);
-	val = atoi((LPCTSTR)str);
+	val = static_cast<short>(atoi((LPCTSTR)str));
 	return true;
 }
 bool CDlgRunScore::GetText(CEdit* pEdit, double& val) const
