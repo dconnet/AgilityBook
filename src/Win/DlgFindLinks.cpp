@@ -299,7 +299,6 @@ BOOL CDlgFindLinks::OnInitDialog()
 		col.iSubItem = i;
 		m_ctrlLinks.InsertColumn(i, &col);
 	}
-	m_ctrlLinks.FixTooltips();
 
 	i = 0;
 	for (i = 0; i < static_cast<int>(m_Data.size()); ++i)

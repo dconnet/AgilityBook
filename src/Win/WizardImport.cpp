@@ -322,7 +322,6 @@ void CWizardImport::UpdatePreview()
 		col.iSubItem = static_cast<int>(iCol);
 		m_ctrlPreview.InsertColumn(static_cast<int>(iCol), &col);
 	}
-	m_ctrlPreview.FixTooltips();
 
 	for (i = m_Row - 1; i < m_FileData.GetSize(); ++i)
 	{

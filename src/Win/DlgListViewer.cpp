@@ -775,7 +775,6 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
-	m_ctrlList.FixTooltips();
 
 	SORT_COL_INFO info;
 	info.pThis = this;

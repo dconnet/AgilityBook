@@ -420,7 +420,7 @@ void CAgilityBookViewTraining::SetupColumns()
 {
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
-		GetListCtrl().DeleteColumn(0);
+		DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewLog, IO_TYPE_VIEW_TRAINING_LIST, m_Columns))
 	{
 		LV_COLUMN col;
@@ -431,11 +431,10 @@ void CAgilityBookViewTraining::SetupColumns()
 			col.fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
 			col.pszText = str.GetBuffer(0);
 			col.iSubItem = static_cast<int>(iCol);
-			GetListCtrl().InsertColumn(static_cast<int>(iCol), &col);
+			InsertColumn(static_cast<int>(iCol), &col);
 			str.ReleaseBuffer();
 		}
 	}
-	FixTooltips();
 }
 
 void CAgilityBookViewTraining::LoadData()

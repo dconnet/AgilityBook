@@ -280,7 +280,6 @@ BOOL CDlgRunReference::OnInitDialog()
 		m_ctrlRefRuns.InsertColumn(index, &col);
 		str.ReleaseBuffer();
 	}
-	m_ctrlRefRuns.FixTooltips();
 	SetColumnHeaders();
 	ListRuns();
 	for (index = 0; index < scNumColumns; ++index)

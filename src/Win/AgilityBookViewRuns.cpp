@@ -1128,7 +1128,7 @@ void CAgilityBookViewRuns::SetupColumns()
 {
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
-		GetListCtrl().DeleteColumn(0);
+		DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewRuns, IO_TYPE_VIEW_RUNS_LIST, m_Columns))
 	{
 		LV_COLUMN col;
@@ -1143,11 +1143,10 @@ void CAgilityBookViewRuns::SetupColumns()
 			}
 			col.pszText = str.GetBuffer(0);
 			col.iSubItem = static_cast<int>(iCol);
-			GetListCtrl().InsertColumn(static_cast<int>(iCol), &col);
+			InsertColumn(static_cast<int>(iCol), &col);
 			str.ReleaseBuffer();
 		}
 	}
-	FixTooltips();
 }
 
 void CAgilityBookViewRuns::LoadData()

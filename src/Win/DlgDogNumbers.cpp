@@ -182,7 +182,6 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 		m_ctrlRegNums.HeaderSort(i, m_sortRegNums.IsDescending(i) ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 		order.ReleaseBuffer();
 	}
-	m_ctrlRegNums.FixTooltips();
 }
 
 void CDlgDogNumbers::ListRegNums()
