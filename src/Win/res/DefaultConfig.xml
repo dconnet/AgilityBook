@@ -3,6 +3,9 @@
 	<Configuration>
 		<Venue Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
+			<Division Name="ISC">
+				<Level Name="Excellent B"/>
+			</Division>
 			<Division Name="Standard">
 				<Level Name="Novice">
 					<SubLevel Name="Novice A"/>
@@ -56,10 +59,7 @@
 10 Qs</Titles>
 			</Division>
 			<Event Name="Standard">
-				<Scoring Division="*" Level="*" dropFractions="y" type="Faults100ThenTime">
-					<TitlePoints Faults="15" Points="1"/>
-				</Scoring>
-				<Scoring Division="*" Level="Excellent A" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="ISC" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" type="Faults100ThenTime">
@@ -67,13 +67,16 @@
 				</Scoring>
 				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Excellent A" dropFractions="y" type="Faults100ThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="*" dropFractions="y" type="Faults100ThenTime">
+					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="JWW">
-				<Scoring Division="*" Level="*" dropFractions="y" type="Faults100ThenTime">
-					<TitlePoints Faults="15" Points="1"/>
-				</Scoring>
-				<Scoring Division="*" Level="Excellent A" dropFractions="y" type="Faults100ThenTime">
+				<Scoring Division="ISC" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Excellent B" doubleQ="y" dropFractions="y" machPts="y" type="Faults100ThenTime">
@@ -82,6 +85,16 @@
 				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="*" Level="Excellent A" dropFractions="y" type="Faults100ThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="*" dropFractions="y" type="Faults100ThenTime">
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="National Rounds">
+				<Desc>Hybrid, Challenger and Final Rounds</Desc>
+				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" type="Faults100ThenTime"/>
 			</Event>
 		</Venue>
 		<Venue Name="ASCA">
@@ -835,6 +848,7 @@ S-EAC, S-EGC, S-EJC</Titles>
 		<Venue Name="USDAA">
 			<Desc>http://www.usdaa.com/</Desc>
 			<Division Name="Championship">
+				<Level Name="Nationals"/>
 				<Level Name="Tournament"/>
 				<Level Name="Novice">
 					<SubLevel Name="Starters"/>
@@ -870,6 +884,7 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 (500pts): 50 std, 50 jumpers, 50 gamblers, 50 snooker, 50 pairs</Titles>
 			</Division>
 			<Division Name="Performance">
+				<Level Name="Nationals"/>
 				<Level Name="Tournament"/>
 				<Level Name="PI"/>
 				<Level Name="PII"/>
@@ -893,101 +908,135 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				<Titles Name="Senior Agility">JH - Senior Agility</Titles>
 			</Division>
 			<Event Name="Standard">
+				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
-					<Note>DAM Team, qualifying is marked under Relay.</Note>
+					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
+				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
-					<Note>DAM Team, qualifying is marked under Relay. The Q here is used for advanced/masters Ch. runs.</Note>
+					<Note>DAM Team: Qualifying is marked under Relay. The Q here is used for individual points.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="Novice" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="*" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" type="TimePlusFaults"/>
-				<Scoring Division="Performance" Level="*" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PII" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
+				<Scoring Division="Championship" Level="Nationals" type="OCScoreThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" type="OCScoreThenTime">
-					<Note>DAM Team, qualifying is marked under Relay.</Note>
+					<Note>DAM Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
-				<Scoring Division="Championship" Level="Novice" type="OCScoreThenTime"/>
 				<Scoring Division="Championship" Level="*" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" type="OCScoreThenTime"/>
-				<Scoring Division="Performance" Level="*" type="OCScoreThenTime">
+				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PII" type="OCScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Snooker">
+				<Scoring Division="Championship" Level="Nationals" OpeningPts="37" type="ScoreThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" OpeningPts="37" superQ="y" type="ScoreThenTime">
-					<Note>DAM Team, qualifying is marked under Relay. The Q here is used for advanced/masters Ch. runs.</Note>
-					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Championship" Level="Novice" OpeningPts="37" type="ScoreThenTime"/>
-				<Scoring Division="Championship" Level="Advanced" OpeningPts="37" type="ScoreThenTime">
+					<Note>DAM Team: Qualifying is marked under Relay. The Q here is used for individual points.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" OpeningPts="37" type="ScoreThenTime"/>
-				<Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
+				<Scoring Division="Championship" Level="*" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-			</Event>
-			<Event Name="Pairs" hasPartner="y">
-				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
-					<Note>Qualifying here means the team has qualified.</Note>
+				<Scoring Division="Performance" Level="PII" OpeningPts="37" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Championship" Level="Novice" type="TimePlusFaults"/>
+				<Scoring Division="Performance" Level="PI" OpeningPts="37" type="ScoreThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Pairs" hasPartner="y">
+				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
+					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 				<Scoring Division="Championship" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Grand Prix">
-				<Desc>Effective starting in 2004</Desc>
+				<Scoring Division="Championship" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" type="FaultsThenTime">
 					<TitlePoints Faults="7" Points="1"/>
 				</Scoring>
+				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime"/>
 				<Scoring Division="Performance" Level="Tournament" type="FaultsThenTime">
+					<Note>Effective starting in 2004</Note>
 					<TitlePoints Faults="7" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Steeplechase">
+				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
+			<Event Name="Jokers Wild">
+				<Desc>Nationals Event</Desc>
+				<Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
+			</Event>
+			<Event Name="Power &amp; Speed">
+				<Desc>Nationals Event</Desc>
+				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+			</Event>
+			<Event Name="Time Gamble">
+				<Desc>Nationals Events</Desc>
+				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+			</Event>
 		</Venue>
-		<FaultType>Missed Dogwalk Contact</FaultType>
-		<FaultType>Missed AFrame Contact</FaultType>
-		<FaultType>Missed Teeter Contact</FaultType>
-		<FaultType>Flyoff</FaultType>
-		<FaultType>Missed Weave Pole</FaultType>
-		<FaultType>Missed Weave Entrance</FaultType>
-		<FaultType>Knocked Bar</FaultType>
-		<FaultType>Off Course</FaultType>
-		<FaultType>Run out</FaultType>
-		<FaultType>Refusal</FaultType>
 		<FaultType>Elimination</FaultType>
 		<FaultType>Excused</FaultType>
 		<FaultType>Failure</FaultType>
+		<FaultType>Flyoff</FaultType>
+		<FaultType>Knocked Bar</FaultType>
+		<FaultType>Missed AFrame Contact</FaultType>
+		<FaultType>Missed Dogwalk Contact</FaultType>
+		<FaultType>Missed Teeter Contact</FaultType>
+		<FaultType>Missed Weave Entrance</FaultType>
+		<FaultType>Missed Weave Pole</FaultType>
+		<FaultType>Off Course</FaultType>
+		<FaultType>Refusal</FaultType>
+		<FaultType>Run out</FaultType>
 		<OtherPts Count="LevelByEvent" Name="ASCA Merit">ASCA Merit Points</OtherPts>
 		<OtherPts Count="LevelByEvent" Name="USDAA Top10">USDAA Top-10 Points
 Dogs/Placements/Points
