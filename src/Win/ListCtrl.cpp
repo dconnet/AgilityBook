@@ -141,6 +141,8 @@ void CHeaderCtrl2::PreSubclassWindow()
 	SetBitmapMargin(0);
 #endif
 	m_ToolTip.Create(this);
+	CRect rMargin(0,0,0,0);
+	m_ToolTip.SetMargin(&rMargin);
 }
 
 BOOL CHeaderCtrl2::PreTranslateMessage(MSG* pMsg)
@@ -349,6 +351,14 @@ int CListCtrl2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, i
 	return rc;
 }
 
+BOOL CListCtrl2::SetColumnWidth(int nCol, int cx)
+{
+	BOOL rc = CListCtrl::SetColumnWidth(nCol, cx);
+	if (rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
 BOOL CListCtrl2::DeleteColumn(int nCol)
 {
 	BOOL rc = CListCtrl::DeleteColumn(nCol);
@@ -477,6 +487,14 @@ int CListView2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, i
 {
 	int rc = GetListCtrl().InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
 	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+BOOL CListView2::SetColumnWidth(int nCol, int cx)
+{
+	BOOL rc = GetListCtrl().SetColumnWidth(nCol, cx);
+	if (rc && !Init())
 		m_SortHeader.FixTooltips();
 	return rc;
 }
