@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-28 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added GetPrintLine to allow future differences between
  *                    printing and viewing (already in the listctrl)
@@ -248,6 +249,9 @@ CAgilityBookTree::CAgilityBookTree()
 	, m_Callback(this)
 	, m_pDog(NULL)
 {
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
 }
 #pragma warning (pop)
 
@@ -946,6 +950,9 @@ void CAgilityBookTree::OnViewCustomize()
 	CDlgAssignColumns dlg(CAgilityBookOptions::eViewTree);
 	if (IDOK == dlg.DoModal())
 	{
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
 		Invalidate();
 	}
 }

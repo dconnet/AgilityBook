@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-30 DRC Implemented customized text in tree.
  * @li 2003-12-10 DRC Created
  */
 
@@ -47,11 +48,13 @@
 #define IO_TYPE_RUNS_POINTS			3
 #define IO_TYPE_CALENDAR			4
 #define IO_TYPE_TRAINING			5
-#define IO_TYPE_VIEW_TREE			6
-#define IO_TYPE_VIEW_RUNS_LIST		7
-#define IO_TYPE_VIEW_CALENDAR_LIST	8
-#define IO_TYPE_VIEW_TRAINING_LIST	9
-#define IO_TYPE_MAX					10
+#define IO_TYPE_VIEW_TREE_DOG		6
+#define IO_TYPE_VIEW_TREE_TRIAL		7
+#define IO_TYPE_VIEW_TREE_RUN		8
+#define IO_TYPE_VIEW_RUNS_LIST		9
+#define IO_TYPE_VIEW_CALENDAR_LIST	10
+#define IO_TYPE_VIEW_TRAINING_LIST	11
+#define IO_TYPE_MAX					12
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1
@@ -100,7 +103,24 @@
 #define IO_LOG_DATE					44
 #define IO_LOG_NAME					45
 #define IO_LOG_NOTES				46
-#define IO_MAX						47
+#define IO_TREE_DOG_REGNAME			47
+#define IO_TREE_DOG_CALLNAME		48
+#define IO_TREE_DOG_BREED			49
+#define IO_TREE_DOG_DOB				50
+#define IO_TREE_DOG_AGE				51
+#define IO_TREE_TRIAL_START			52
+#define IO_TREE_TRIAL_END			53
+#define IO_TREE_TRIAL_CLUB			54
+#define IO_TREE_TRIAL_VENUE			55
+#define IO_TREE_TRIAL_LOCATION		56
+#define IO_TREE_TRIAL_NOTES			57
+#define IO_TREE_RUN_DATE			58
+#define IO_TREE_RUN_Q				59
+#define IO_TREE_RUN_EVENT			60
+#define IO_TREE_RUN_DIVISION		61
+#define IO_TREE_RUN_LEVEL			62
+#define IO_TREE_RUN_HEIGHT			63
+#define IO_MAX						64
 
 #include <vector>
 #include "AgilityBookOptions.h"
