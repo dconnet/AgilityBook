@@ -38,9 +38,13 @@
 
 #include <string>
 #include "ARBBase.h"
+#include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBConfig;
+class ARBConfigDivision;
+class ARBConfigEvent;
+class ARBConfigLevel;
 class ARBConfigVenue;
 class ARBVersion;
 class CElement;
@@ -64,8 +68,23 @@ public:
 		std::string& ioErrMsg);
 	bool Save(CElement& ioTree) const;
 
-	const std::string& GetOther() const;
-	void SetOther(const std::string& inOther);
+	typedef enum
+	{
+		eOtherPoints,
+		eRuns,
+		eMach,
+		eQQ,
+		eSQ
+	} PointType;
+
+	PointType GetType() const;
+	void SetType(PointType inType);
+	const ARBDate& GetDate() const;
+	void SetDate(const ARBDate& inDate);
+	const std::string& GetComment() const;
+	void SetComment(const std::string& inComment);
+	const std::string& GetOtherPoints() const;
+	void SetOtherPoints(const std::string& inOther);
 	const std::string& GetVenue() const;
 	void SetVenue(const std::string& inVenue);
 	const std::string& GetDivision() const;
@@ -79,6 +98,9 @@ public:
 
 private:
 	~ARBDogExistingPoints();
+	ARBDate m_Date;
+	std::string m_Comment;
+	PointType m_Type;
 	std::string m_Other;
 	std::string m_Venue;
 	std::string m_Div;
@@ -87,12 +109,42 @@ private:
 	short m_Points;
 };
 
-inline const std::string& ARBDogExistingPoints::GetOther() const
+inline ARBDogExistingPoints::PointType ARBDogExistingPoints::GetType() const
+{
+	return m_Type;
+}
+
+inline void ARBDogExistingPoints::SetType(ARBDogExistingPoints::PointType inType)
+{
+	m_Type = inType;
+}
+
+inline const ARBDate& ARBDogExistingPoints::GetDate() const
+{
+	return m_Date;
+}
+
+inline void ARBDogExistingPoints::SetDate(const ARBDate& inDate)
+{
+	m_Date = inDate;
+}
+
+inline const std::string& ARBDogExistingPoints::GetComment() const
+{
+	return m_Comment;
+}
+
+inline void ARBDogExistingPoints::SetComment(const std::string& inComment)
+{
+	m_Comment = inComment;
+}
+
+inline const std::string& ARBDogExistingPoints::GetOtherPoints() const
 {
 	return m_Other;
 }
 
-inline void ARBDogExistingPoints::SetOther(const std::string& inOther)
+inline void ARBDogExistingPoints::SetOtherPoints(const std::string& inOther)
 {
 	m_Other = inOther;
 }
@@ -163,20 +215,27 @@ public:
 
 	void sort();
 
-	long ExistingPoints(
-		const std::string& inOther,
-		const std::string& inVenue,
-		const std::string& inDiv,
-		const std::string& inLevel,
-		const std::string& inEvent) const;
+	bool HasPoints(const std::string& inVenue) const;
+	bool HasPoints(
+		const ARBConfigVenue* inVenue,
+		const ARBConfigDivision* inDiv,
+		const ARBConfigLevel* inLevel,
+		const ARBConfigEvent* inEvent) const;
+	short ExistingPoints(
+		ARBDogExistingPoints::PointType inType,
+		const ARBConfigVenue* inVenue,
+		const ARBConfigDivision* inDiv,
+		const ARBConfigLevel* inLevel,
+		const ARBConfigEvent* inEvent) const;
 
 	int NumExistingPointsInVenue(const std::string& inVenue) const;
 	int RenameVenue(
 		const std::string& inOldVenue,
 		const std::string& inNewVenue);
 	int DeleteVenue(const std::string& inVenue);
+
 	int NumExistingPointsInDivision(
-		const std::string& inVenue,
+		const ARBConfigVenue* inVenue,
 		const std::string& inDiv) const;
 	int RenameDivision(
 		const std::string& inVenue,
@@ -185,6 +244,31 @@ public:
 	int DeleteDivision(
 		const std::string& inVenue,
 		const std::string& inDiv);
+
+	int NumLevelsInUse(
+		const std::string& inVenue,
+		const std::string& inDiv,
+		const std::string& inLevel) const;
+	int RenameLevel(
+		const std::string& inVenue,
+		const std::string& inDiv,
+		const std::string& inOldLevel,
+		const std::string& inNewLevel);
+	int DeleteLevel(
+		const std::string& inVenue,
+		const std::string& inDiv,
+		const std::string& inLevel);
+
+	int NumEventsInUse(
+		const std::string& inVenue,
+		const std::string& inEvent) const;
+	int RenameEvent(
+		const std::string& inVenue,
+		const std::string& inOldEvent,
+		const std::string& inNewEvent);
+	int DeleteEvent(
+		const std::string& inVenue,
+		const std::string& inEvent);
 
 	int NumOtherPointsInUse(const std::string& inOther) const;
 	int RenameOtherPoints(

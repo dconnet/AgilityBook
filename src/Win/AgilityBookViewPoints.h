@@ -43,6 +43,7 @@ class ARBConfigDivision;
 class ARBConfigLevel;
 class ARBConfigScoring;
 class ARBConfigVenue;
+class ARBDog;
 class ARBDogRun;
 class ARBDogTrial;
 class CAgilityBookDoc;
@@ -63,12 +64,13 @@ public:
 
 private:
 	int DoEvents(
+		const ARBDog* inDog,
 		const std::vector<CVenueFilter>& venues,
 		int index,
 		const std::list<const ARBDogTrial*>& trials,
-		const ARBConfigVenue* pVenue,
-		const ARBConfigDivision* pDiv,
-		const ARBConfigLevel* pLevel);
+		const ARBConfigVenue* inVenue,
+		const ARBConfigDivision* inDiv,
+		const ARBConfigLevel* inLevel);
 	size_t FindMatchingRuns(
 		const std::list<const ARBDogRun*>& runs,
 		const std::string& div,

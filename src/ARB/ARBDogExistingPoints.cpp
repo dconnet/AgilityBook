@@ -51,7 +51,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBDogExistingPoints::ARBDogExistingPoints()
-	: m_Other()
+	: m_Date()
+	, m_Comment()
+	, m_Type(eRuns)
+	, m_Other()
 	, m_Venue()
 	, m_Div()
 	, m_Level()
@@ -61,7 +64,10 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 }
 
 ARBDogExistingPoints::ARBDogExistingPoints(const ARBDogExistingPoints& rhs)
-	: m_Other(rhs.m_Other)
+	: m_Date(rhs.m_Date)
+	, m_Comment(rhs.m_Comment)
+	, m_Type(rhs.m_Type)
+	, m_Other(rhs.m_Other)
 	, m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
 	, m_Level(rhs.m_Level)
@@ -78,6 +84,9 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(const ARBDogExistingPoints
 {
 	if (this != &rhs)
 	{
+		m_Date = rhs.m_Date;
+		m_Comment = rhs.m_Comment;
+		m_Type = rhs.m_Type;
 		m_Other = rhs.m_Other;
 		m_Venue = rhs.m_Venue;
 		m_Div = rhs.m_Div;
@@ -90,7 +99,10 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(const ARBDogExistingPoints
 
 bool ARBDogExistingPoints::operator==(const ARBDogExistingPoints& rhs) const
 {
-	return m_Other == rhs.m_Other
+	return m_Date == rhs.m_Date
+		&& m_Comment == rhs.m_Comment
+		&& m_Type == rhs.m_Type
+		&& m_Other == rhs.m_Other
 		&& m_Venue == rhs.m_Venue
 		&& m_Div == rhs.m_Div
 		&& m_Level == rhs.m_Level
@@ -124,14 +136,68 @@ bool ARBDogExistingPoints::Load(
 	const ARBVersion& inVersion,
 	std::string& ioErrMsg)
 {
-	if (CElement::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other)
-	&& 0 == m_Other.length())
+	std::string attrib;
+
+	if (CElement::eInvalidValue == inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
-		if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
+		inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
+		std::string msg(INVALID_DATE);
+		msg += attrib;
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str());
+		return false;
+	}
+
+	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
+	|| 0 == attrib.length())
+	{
+		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE);
+		return false;
+	}
+	if (attrib == EXISTING_PTS_TYPE_OTHER)
+		m_Type = eOtherPoints;
+	else if (attrib == EXISTING_PTS_TYPE_RUNS)
+		m_Type = eRuns;
+	else if (attrib == EXISTING_PTS_TYPE_MACH)
+		m_Type = eMach;
+	else if (attrib == EXISTING_PTS_TYPE_QQ)
+		m_Type = eQQ;
+	else if (attrib == EXISTING_PTS_TYPE_SQ)
+		m_Type = eSQ;
+	else
+	{
+		std::string msg(INVALID_VALUE);
+		msg += attrib;
+		msg += "\n";
+		msg += VALID_VALUES;
+		msg += EXISTING_PTS_TYPE_OTHER;
+		msg += ", ";
+		msg += EXISTING_PTS_TYPE_RUNS;
+		msg += ", ";
+		msg += EXISTING_PTS_TYPE_MACH;
+		msg += ", ";
+		msg += EXISTING_PTS_TYPE_QQ;
+		msg += ", ";
+		msg += EXISTING_PTS_TYPE_SQ;
+		ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str());
+		return false;
+	}
+
+	if (eOtherPoints == m_Type)
+	{
+		if (CElement::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other)
+		&& 0 < m_Other.length())
 		{
-			std::string msg(INVALID_OTHER_PTS_NAME);
-			msg += m_Other;
-			ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str());
+			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
+			{
+				std::string msg(INVALID_OTHER_PTS_NAME);
+				msg += m_Other;
+				ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str());
+				return false;
+			}
+		}
+		else
+		{
+			ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER);
 			return false;
 		}
 	}
@@ -157,28 +223,50 @@ bool ARBDogExistingPoints::Load(
 		return false;
 	}
 
-	if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
-	|| 0 == m_Event.length())
+	// I could add additional verification to make sure it's a valid SQ/mach/QQ
+	// event... but let the UI handle that...
+	if (eOtherPoints == m_Type || eRuns == m_Type || eSQ == m_Type)
 	{
-		ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT);
-		return false;
+		if (CElement::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
+		|| 0 == m_Event.length())
+		{
+			ioErrMsg += ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT);
+			return false;
+		}
+		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
+		{
+			std::string msg(INVALID_VENUE_NAME);
+			msg += m_Venue;
+			msg += "/";
+			msg += m_Div;
+			msg += "/";
+			msg += m_Level;
+			msg += "/";
+			msg += m_Event;
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str());
+			return false;
+		}
 	}
-
-	if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
+	else
 	{
-		std::string msg(INVALID_VENUE_NAME);
-		msg += m_Venue;
-		msg += "/";
-		msg += m_Div;
-		msg += "/";
-		msg += m_Level;
-		msg += "/";
-		msg += m_Event;
-		ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str());
-		return false;
+		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
+		{
+			std::string msg(INVALID_VENUE_NAME);
+			msg += m_Venue;
+			msg += "/";
+			msg += m_Div;
+			msg += "/";
+			msg += m_Level;
+			msg += "/";
+			msg += m_Event;
+			ioErrMsg += ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str());
+			return false;
+		}
 	}
 
 	inTree.GetAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
+
+	m_Comment = inTree.GetValue();
 
 	return true;
 }
@@ -186,13 +274,50 @@ bool ARBDogExistingPoints::Load(
 bool ARBDogExistingPoints::Save(CElement& ioTree) const
 {
 	CElement& title = ioTree.AddElement(TREE_EXISTING_PTS);
-	if (0 < m_Other.length())
+	title.AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
+	switch (m_Type)
+	{
+	default:
+		ASSERT(0);
+		break;
+	case eOtherPoints:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_OTHER);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other);
-	title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-	title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
-	title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
-	title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		break;
+	case eRuns:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_RUNS);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		break;
+	case eMach:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MACH);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		break;
+	case eQQ:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_QQ);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		break;
+	case eSQ:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SQ);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		break;
+	}
 	title.AddAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
+	if (0 < m_Comment.length())
+		title.SetValue(m_Comment);
 	return true;
 }
 
@@ -204,7 +329,7 @@ public:
 	SortExistingPoints() {}
 	bool operator()(ARBDogExistingPoints* one, ARBDogExistingPoints* two) const
 	{
-		if (one->GetOther() == two->GetOther())
+		if (one->GetOtherPoints() == two->GetOtherPoints())
 		{
 			if (one->GetVenue() == two->GetVenue())
 			{
@@ -222,7 +347,7 @@ public:
 				return (one->GetVenue() < two->GetVenue());
 		}
 		else
-			return (one->GetOther() < two->GetOther());
+			return (one->GetOtherPoints() < two->GetOtherPoints());
 	}
 };
 
@@ -233,22 +358,68 @@ void ARBDogExistingPointsList::sort()
 	std::stable_sort(begin(), end(), SortExistingPoints());
 }
 
-long ARBDogExistingPointsList::ExistingPoints(
-	const std::string& inOther,
-	const std::string& inVenue,
-	const std::string& inDiv,
-	const std::string& inLevel,
-	const std::string& inEvent) const
+bool ARBDogExistingPointsList::HasPoints(const std::string& inVenue) const
 {
-	long pts = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetOther() == inOther
-		&& (*iter)->GetVenue() == inVenue
-		&& (*iter)->GetDivision() == inDiv
-		&& (*iter)->GetLevel() == inLevel
-		&& (*iter)->GetEvent() == inEvent)
-			pts += (*iter)->GetPoints();
+		if ((*iter)->GetType() != ARBDogExistingPoints::eOtherPoints
+		&& (*iter)->GetVenue() == inVenue)
+			return true;
+	}
+	return false;
+}
+
+bool ARBDogExistingPointsList::HasPoints(
+	const ARBConfigVenue* inVenue,
+	const ARBConfigDivision* inDiv,
+	const ARBConfigLevel* inLevel,
+	const ARBConfigEvent* inEvent) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		ARBDogExistingPoints::PointType type = (*iter)->GetType();
+		if (ARBDogExistingPoints::eOtherPoints != type
+		&& (*iter)->GetVenue() == inVenue->GetName()
+		&& (*iter)->GetDivision() == inDiv->GetName()
+		&& ((*iter)->GetLevel() == inLevel->GetName()
+		|| inLevel->GetSubLevels().FindSubLevel((*iter)->GetLevel())))
+		{
+			if (ARBDogExistingPoints::eRuns == type
+			|| ARBDogExistingPoints::eSQ == type)
+			{
+				if ((*iter)->GetEvent() == inEvent->GetName())
+					return true;
+			}
+			else
+				return true;
+		}
+	}
+	return false;
+}
+
+short ARBDogExistingPointsList::ExistingPoints(
+	ARBDogExistingPoints::PointType inType,
+	const ARBConfigVenue* inVenue,
+	const ARBConfigDivision* inDiv,
+	const ARBConfigLevel* inLevel,
+	const ARBConfigEvent* inEvent) const
+{
+	short pts = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetType() == inType)
+		{
+			if (inVenue && (*iter)->GetVenue() != inVenue->GetName())
+				continue;
+			if (inDiv && (*iter)->GetDivision() != inDiv->GetName())
+				continue;
+			if (inLevel && (*iter)->GetLevel() != inLevel->GetName()
+			&& !inLevel->GetSubLevels().FindSubLevel((*iter)->GetLevel()))
+				continue;
+			if (inEvent && (*iter)->GetEvent() != inEvent->GetName())
+				continue;
+			pts = pts + (*iter)->GetPoints();
+		}
 	}
 	return pts;
 }
@@ -298,13 +469,14 @@ int ARBDogExistingPointsList::DeleteVenue(const std::string& inVenue)
 }
 
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
-	const std::string& inVenue,
+	const ARBConfigVenue* inVenue,
 	const std::string& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetVenue() == inVenue && (*iter)->GetDivision() == inDiv)
+		if ((*iter)->GetVenue() == inVenue->GetName()
+		&& (*iter)->GetDivision() == inDiv)
 			++count;
 	}
 	return count;
@@ -345,12 +517,120 @@ int ARBDogExistingPointsList::DeleteDivision(
 	return count;
 }
 
+int ARBDogExistingPointsList::NumLevelsInUse(
+	const std::string& inVenue,
+	const std::string& inDiv,
+	const std::string& inLevel) const
+{
+	int count = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetDivision() == inDiv
+		&& (*iter)->GetLevel() == inLevel)
+			++count;
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::RenameLevel(
+	const std::string& inVenue,
+	const std::string& inDiv,
+	const std::string& inOldLevel,
+	const std::string& inNewLevel)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetDivision() == inDiv
+		&& (*iter)->GetLevel() == inOldLevel)
+		{
+			++count;
+			(*iter)->SetLevel(inNewLevel);
+		}
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::DeleteLevel(
+	const std::string& inVenue,
+	const std::string& inDiv,
+	const std::string& inLevel)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); )
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetDivision() == inDiv
+		&& (*iter)->GetLevel() == inLevel)
+		{
+			++count;
+			iter = erase(iter);
+		}
+		else
+			++iter;
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::NumEventsInUse(
+	const std::string& inVenue,
+	const std::string& inEvent) const
+{
+	int count = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetEvent() == inEvent)
+			++count;
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::RenameEvent(
+	const std::string& inVenue,
+	const std::string& inOldEvent,
+	const std::string& inNewEvent)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetEvent() == inOldEvent)
+		{
+			++count;
+			(*iter)->SetEvent(inNewEvent);
+		}
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::DeleteEvent(
+	const std::string& inVenue,
+	const std::string& inEvent)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); )
+	{
+		if ((*iter)->GetVenue() == inVenue
+		&& (*iter)->GetEvent() == inEvent)
+		{
+			++count;
+			iter = erase(iter);
+		}
+		else
+			++iter;
+	}
+	return count;
+}
+
 int ARBDogExistingPointsList::NumOtherPointsInUse(const std::string& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetOther() == inOther)
+		if ((*iter)->GetOtherPoints() == inOther)
 			++count;
 	}
 	return count;
@@ -363,9 +643,9 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetOther() == inOldOther)
+		if ((*iter)->GetOtherPoints() == inOldOther)
 		{
-			(*iter)->SetOther(inNewOther);
+			(*iter)->SetOtherPoints(inNewOther);
 			++count;
 		}
 	}
@@ -377,7 +657,7 @@ int ARBDogExistingPointsList::DeleteOtherPoints(const std::string& inOther)
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
-		if ((*iter)->GetOther() == inOther)
+		if ((*iter)->GetOtherPoints() == inOther)
 		{
 			iter = erase(iter);
 			++count;

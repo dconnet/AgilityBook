@@ -1,10 +1,7 @@
 Last Updated: 2/2/04
 
-- ExistingPoints: rename/delete events for div/level/event.
-  IDS_DELETE_DIVISION,IDS_DELETE_LEVEL,IDS_DELETE_EVENT
+- ExistingPoints:
   Add UI to enable existing point management (from dog dlg)
-  Finish adding existingpts to other points (in view)
-  add existingpts to normal points (in view)
 
 - Add auto-lifetime point accumulation. Currently known ones are NADAC (all
   points at all levels) and USDAA (points from Masters std and non-std events,

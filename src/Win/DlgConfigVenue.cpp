@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2004-01-24 DRC Created
  */
 
@@ -872,6 +873,7 @@ void CDlgConfigVenue::OnDelete()
 			CDlgConfigureDataDivision* pDivData = dynamic_cast<CDlgConfigureDataDivision*>(pData);
 			ASSERT(NULL != pDivData);
 			std::string div = pDivData->GetDivision()->GetName();
+			int nPoints = m_Book.GetDogs().NumExistingPointsInDivision(m_pVenue, div);
 			int nTrials = m_Book.GetDogs().NumRunsInDivision(m_pVenue, div);
 			int nTitles = m_Book.GetDogs().NumTitlesInDivision(m_pVenue, div);
 			if (0 < nTrials || 0 < nTitles)
@@ -879,6 +881,7 @@ void CDlgConfigVenue::OnDelete()
 				CString msg;
 				msg.FormatMessage(IDS_DELETE_DIVISION,
 					div.c_str(),
+					nPoints,
 					nTitles,
 					nTrials);
 				if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
