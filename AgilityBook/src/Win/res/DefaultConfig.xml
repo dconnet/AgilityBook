@@ -860,8 +860,8 @@ Advanced Standard Agility title plus 1 qualifying score in each of the 4 Advance
 				<Titles LongName="Relay Master" Name="RM">5 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
 				<Titles LongName="Tournament Master" Name="TM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.</Titles>
 				<Titles LongName="Agility Dog Champion®" Name="ADCh">(pre 2004) MAD, JM, GM, SM, RM plus 4 Standard Qs
-MSA, JM, GM, SM, RM, TM</Titles>
-				<Titles LongName="Standard Agility Champion" Name="SACh">MSA plus 5 additional qualifying scores in Masters Standard class</Titles>
+SAM, JM, GM, SM, RM, TM</Titles>
+				<Titles LongName="Standard Agility Champion" Name="SACh">SAM plus 5 additional qualifying scores in Masters Standard class</Titles>
 				<Titles LongName="Jumpers Champion" Name="JCh">JM plus 5 additional qualifying scores in Masters Jumpers class</Titles>
 				<Titles LongName="Gamblers Champion" Name="GCh">GM plus 5 additional qualifying scores in Masters Gamblers class</Titles>
 				<Titles LongName="Snooker Champion" Name="SCh">SM plus 5 additional qualifying scores in Masters Snooker class</Titles>
@@ -905,27 +905,29 @@ MSA, JM, GM, SM, RM, TM</Titles>
 				<Level Name="PI"/>
 				<Level Name="PII"/>
 				<Level Name="PIII"/>
-				<Titles LongName="Performance Dog I" Name="PDI"/>
-				<Titles LongName="Performance I Standard" Name="SAPI"/>
-				<Titles LongName="Performance I Jumpers" Name="JPI"/>
-				<Titles LongName="Performance I Gamblers" Name="GPI"/>
-				<Titles LongName="Performance I Snooker" Name="SPI"/>
-				<Titles LongName="Performance Dog II" Name="PDII"/>
-				<Titles LongName="Performance II Standard" Name="SAPII"/>
-				<Titles LongName="Performance II Jumpers" Name="JPII"/>
-				<Titles LongName="Performance II Gamblers" Name="GPII"/>
-				<Titles LongName="Performance II Snooker" Name="SPII"/>
-				<Titles LongName="Performance Dog III" Name="PDIII"/>
-				<Titles LongName="Performance III Standard" Name="SAPIII"/>
-				<Titles LongName="Performance III Jumper" Name="PJ"/>
-				<Titles LongName="Performance III Gambler" Name="PG"/>
-				<Titles LongName="Performance III Snooker" Name="PS"/>
-				<Titles LongName="Accomplished Performance Dog" Name="APD"/>
-				<Titles LongName="Accomplished Standard" Name="SAAP"/>
-				<Titles LongName="Accomplished Jumpers" Name="JAP"/>
-				<Titles LongName="Accomplished Gamblers" Name="GAP"/>
-				<Titles LongName="Accomplished Snooker" Name="SAP"/>
-				<Titles LongName="Accomplished Tournament Performer" Name="APT"/>
+				<Titles LongName="Performance Dog I" Name="PDI">(pre-2004) 3 Qs earned from at least 2 different judges
+Performance I Standard Agility title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.</Titles>
+				<Titles LongName="Performance I Standard" Name="SAPI">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance I Jumpers" Name="JPI">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance I Gamblers" Name="GPI">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance I Snooker" Name="SPI">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance Dog II" Name="PDII">(pre-2004) 3 Qs earned from at least 2 different judges
+Performance II Standard Agility title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.</Titles>
+				<Titles LongName="Performance II Standard" Name="SAPII">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance II Jumpers" Name="JPII">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance II Gamblers" Name="GPII">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance II Snooker" Name="SPII">3 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance Dog III" Name="PDIII">3 qualifying scores in the Performance III Standard Agility plus 1 qualifying score in each of the 3 Performance III nonstandard classes.</Titles>
+				<Titles LongName="Performance III Standard" Name="SAPIII">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance III Jumper" Name="PJ">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance III Gambler" Name="PG">5 qualifying scores earned under at least 2 different judges.</Titles>
+				<Titles LongName="Performance III Snooker" Name="PS">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
+				<Titles LongName="Accomplished Performance Dog" Name="APD">SAPIII, PJ, PG, PS, APT</Titles>
+				<Titles LongName="Accomplished Standard" Name="SAAP">SAPIII plus 5 additional qualifying scores in Performance III Standard class</Titles>
+				<Titles LongName="Accomplished Jumpers" Name="JAP">PJ plus 5 additional qualifying scores in Performance III Jumpers class</Titles>
+				<Titles LongName="Accomplished Gamblers" Name="GAP">PG plus 5 additional qualifying scores in Performance III Gamblers class</Titles>
+				<Titles LongName="Accomplished Snooker" Name="SAP">PS plus 5 additional qualifying scores in Performance III Snooker class</Titles>
+				<Titles LongName="Accomplished Tournament Performer" Name="APT">5 qualifying scores in Performance Grand Prix of Dog Agility tournament.</Titles>
 				<Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-B">All Bronze titles</Titles>
 				<Titles LongName="Accomplished Standard - Bronze" Name="APSA-B">15 qualifying scores in PIII Standard</Titles>
 				<Titles LongName="Accomplished Jumpers - Bronze" Name="APJ-B">15 qualifying scores in PIII Jumpers</Titles>
