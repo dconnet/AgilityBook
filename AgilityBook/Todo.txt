@@ -1,4 +1,6 @@
-Last Updated: 6/24/04
+Last Updated: 7/26/04
+
+- Add importing dog/trials/runs in ARB format.
 
 - Fix printing so it wraps multi-line text.
 
