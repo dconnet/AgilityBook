@@ -40,6 +40,7 @@
 #include "AgilityBook.h"
 #include "DlgDogTitles.h"
 
+#include "ARBConfig.h"
 #include "ARBDog.h"
 #include "DlgTitle.h"
 
@@ -60,6 +61,7 @@ static const struct
 {
 	{LVCFMT_LEFT, 50, IDS_COL_DATE},
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
+	{LVCFMT_LEFT, 50, IDS_COL_TITLE},
 	{LVCFMT_LEFT, 50, IDS_COL_NAME},
 	{LVCFMT_LEFT, 50, IDS_COL_RECEIVED},
 };
@@ -101,6 +103,22 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			if (pTitle1->GetName() < pTitle2->GetName())
 				rc = -1;
 			else if (pTitle1->GetName() > pTitle2->GetName())
+				rc = 1;
+			break;
+		case 3: // nice name
+			{
+				std::string name1 = psi->pThis->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetName());
+				std::string name2 = psi->pThis->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetName());
+				if (name1 < name2)
+					rc = -1;
+				else if (name1 > name2)
+					rc = 1;
+			}
+			break;
+		case 4: // received
+			if (!pTitle1->GetReceived() && pTitle2->GetReceived())
+				rc = -1;
+			else if (pTitle1->GetReceived() && !pTitle2->GetReceived())
 				rc = 1;
 			break;
 		}
@@ -191,7 +209,8 @@ void CDlgDogTitles::ListTitles()
 		int nItem = m_ctrlTitles.InsertItem(i, pTitle->GetDate().GetString(true, ARBDate::eDashYYYYMMDD).c_str());
 		m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetVenue().c_str());
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetName().c_str());
-		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetReceived() ? "x" : "");
+		m_ctrlTitles.SetItemText(nItem, 3, m_Config.GetTitleNiceName(pTitle->GetVenue(), pTitle->GetName()).c_str());
+		m_ctrlTitles.SetItemText(nItem, 4, pTitle->GetReceived() ? "x" : "");
 		m_ctrlTitles.SetItemData(nItem, reinterpret_cast<LPARAM>(pTitle));
 	}
 	for (i = 0; i < nColTitleInfo; ++i)

@@ -73,6 +73,9 @@ public:
 	void Default();
 	static std::string GetDTD();
 
+	std::string GetTitleNiceName(
+		const std::string& inVenue,
+		const std::string& inTitle) const;
 	std::string GetTitleCompleteName(
 		const std::string& inVenue,
 		const std::string& inTitle,

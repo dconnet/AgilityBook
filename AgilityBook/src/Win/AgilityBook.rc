@@ -551,9 +551,9 @@ FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_NAME,30,7,115,12,ES_AUTOHSCROLL
-    CONTROL         "Has &Partners?",IDC_PARTNER,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "&Has Partners?",IDC_PARTNER,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,155,8,61,10
-    LTEXT           "Event N&ote",IDC_STATIC,7,23,21,16
+    LTEXT           "&Event Note",IDC_STATIC,7,23,21,16
     EDITTEXT        IDC_DESC,30,23,200,28,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
     GROUPBOX        "Scoring Methods",IDC_STATIC,7,55,320,240
@@ -568,11 +568,11 @@ BEGIN
     LTEXT           "Division/Levels not defined",IDC_STATIC,196,67,86,8
     LISTBOX         IDC_UNUSED,196,77,123,84,LBS_NOINTEGRALHEIGHT | 
                     WS_DISABLED | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
-    CONTROL         "Valid From",IDC_DATE_VALID_FROM,"Button",
+    CONTROL         "Valid &From",IDC_DATE_VALID_FROM,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,165,49,10
     CONTROL         "DateTimePicker1",IDC_DATE_START,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,66,164,60,12
-    CONTROL         "Valid To",IDC_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "Valid &To",IDC_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,15,179,49,10
     CONTROL         "DateTimePicker1",IDC_DATE_END,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,66,178,60,12
@@ -587,24 +587,24 @@ BEGIN
                     WS_TABSTOP
     CONTROL         "D&rop time fractions for faults",IDC_DROP_FRACTIONS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,45,242,103,10
-    LTEXT           "Method Note",IDC_STATIC,169,167,26,16
-    EDITTEXT        IDC_NOTES,196,167,123,72,ES_MULTILINE | ES_WANTRETURN | 
-                    WS_VSCROLL
-    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,15,257,29,16,NOT 
-                    WS_VISIBLE
+    LTEXT           "Required &Opening",IDC_OPENING_PTS_TEXT,15,257,29,16,
+                    NOT WS_VISIBLE
     EDITTEXT        IDC_OPENING_PTS,50,257,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
                     NOT WS_VISIBLE
-    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,15,276,29,16,NOT 
-                    WS_VISIBLE
+    LTEXT           "Required &Closing",IDC_CLOSING_PTS_TEXT,15,276,29,16,
+                    NOT WS_VISIBLE
     EDITTEXT        IDC_CLOSING_PTS,50,276,25,12,ES_AUTOHSCROLL | ES_NUMBER | 
                     NOT WS_VISIBLE
     CONTROL         "S&uper Q?",IDC_SUPERQ,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,110,257,45,10
-    CONTROL         "&Mach Points?",IDC_MACH,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "M&ach Points?",IDC_MACH,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,110,269,57,10
-    CONTROL         "D&ouble Q?",IDC_DOUBLEQ,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "Double &Q?",IDC_DOUBLEQ,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,110,281,49,10
-    LTEXT           "Title Points",IDC_STATIC,172,244,20,16
+    LTEXT           "&Method Note",IDC_STATIC,169,167,26,16
+    EDITTEXT        IDC_NOTES,196,167,123,72,ES_MULTILINE | ES_WANTRETURN | 
+                    WS_VSCROLL
+    LTEXT           "Title &Points",IDC_STATIC,172,244,20,16
     LISTBOX         IDC_LIST,196,244,88,44,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
                     WS_HSCROLL | WS_TABSTOP
     PUSHBUTTON      "New...",IDC_TITLE_NEW,289,244,30,12
@@ -619,23 +619,23 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Properties"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Registered &Name",IDC_STATIC,7,9,56,8
-    EDITTEXT        IDC_REG_NAME,65,7,192,12,ES_AUTOHSCROLL
-    LTEXT           "&Call Name",IDC_STATIC,7,27,33,8
-    EDITTEXT        IDC_CALLNAME,43,25,100,12,ES_AUTOHSCROLL
-    LTEXT           "B&reed",IDC_STATIC,7,45,20,8
-    EDITTEXT        IDC_BREED,43,43,100,12,ES_AUTOHSCROLL
-    RTEXT           "&Birthday",IDC_STATIC,161,27,26,8
+    LTEXT           "&Call Name",IDC_STATIC,3,5,33,8
+    EDITTEXT        IDC_CALLNAME,38,3,110,12,ES_AUTOHSCROLL
+    LTEXT           "&Breed",IDC_STATIC,165,5,20,8
+    EDITTEXT        IDC_BREED,190,3,157,12,ES_AUTOHSCROLL
+    LTEXT           "&Registered Name",IDC_STATIC,3,21,56,8
+    EDITTEXT        IDC_REG_NAME,63,19,284,12,ES_AUTOHSCROLL
+    LTEXT           "Age (years)",IDC_STATIC,3,36,36,8
+    CTEXT           "",IDC_AGE_TEXT,45,36,36,10,SS_NOPREFIX | SS_SUNKEN
+    RTEXT           "B&irthday",IDC_STATIC,90,37,26,8
     CONTROL         "DateTimePicker1",IDC_DOB,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,198,25,60,12
-    CONTROL         "Deceased",IDC_IS_DECEASED,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFT | WS_TABSTOP,149,44,49,10
+                    DTS_RIGHTALIGN | WS_TABSTOP,120,35,60,12
+    CONTROL         "&Deceased",IDC_IS_DECEASED,"Button",BS_AUTOCHECKBOX | 
+                    BS_LEFT | WS_TABSTOP,190,36,49,10
     CONTROL         "DateTimePicker1",IDC_DECEASED,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,198,43,60,12
-    LTEXT           "Age (years)",IDC_STATIC,267,27,36,8
-    CTEXT           "",IDC_AGE_TEXT,307,26,36,10,SS_NOPREFIX | SS_SUNKEN
-    LTEXT           "N&otes",IDC_STATIC,7,62,20,8
-    EDITTEXT        IDC_NOTES,7,72,336,101,ES_MULTILINE | ES_WANTRETURN | 
+                    DTS_RIGHTALIGN | WS_TABSTOP,240,35,60,12
+    LTEXT           "&Notes",IDC_STATIC,3,50,20,8
+    EDITTEXT        IDC_NOTES,3,60,344,117,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
 END
 
@@ -646,10 +646,10 @@ FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "List1",IDC_TITLES,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
-                    WS_TABSTOP,7,7,336,145
-    PUSHBUTTON      "New...",IDC_TITLE_NEW,91,159,45,14
-    PUSHBUTTON      "Edit...",IDC_TITLE_EDIT,152,159,45,14
-    PUSHBUTTON      "Delete",IDC_TITLE_DELETE,213,159,45,14
+                    WS_TABSTOP,3,3,344,155
+    PUSHBUTTON      "&New...",IDC_TITLE_NEW,3,163,45,14
+    PUSHBUTTON      "&Edit...",IDC_TITLE_EDIT,53,163,45,14
+    PUSHBUTTON      "&Delete",IDC_TITLE_DELETE,103,163,45,14
 END
 
 IDD_DOG_NUMBERS DIALOG DISCARDABLE  0, 0, 350, 180
@@ -659,10 +659,10 @@ FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "List2",IDC_REG_NUMS,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
-                    WS_TABSTOP,7,7,336,145
-    PUSHBUTTON      "New...",IDC_NEW,91,159,45,14
-    PUSHBUTTON      "Edit...",IDC_EDIT,152,159,45,14
-    PUSHBUTTON      "Delete",IDC_DELETE,213,159,45,14
+                    WS_TABSTOP,3,3,344,155
+    PUSHBUTTON      "&New...",IDC_NEW,3,163,45,14
+    PUSHBUTTON      "&Edit...",IDC_EDIT,53,163,45,14
+    PUSHBUTTON      "&Delete",IDC_DELETE,103,163,45,14
 END
 
 IDD_DOG_POINTS DIALOG DISCARDABLE  0, 0, 350, 180
@@ -672,10 +672,10 @@ FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "List2",IDC_POINTS,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
-                    WS_TABSTOP,7,7,336,145
-    PUSHBUTTON      "New...",IDC_NEW,91,159,45,14
-    PUSHBUTTON      "Edit...",IDC_EDIT,152,159,45,14
-    PUSHBUTTON      "Delete",IDC_DELETE,213,159,45,14
+                    WS_TABSTOP,3,3,344,155
+    PUSHBUTTON      "&New...",IDC_NEW,3,163,45,14
+    PUSHBUTTON      "&Edit...",IDC_EDIT,53,163,45,14
+    PUSHBUTTON      "&Delete",IDC_DELETE,103,163,45,14
 END
 
 IDD_TITLE DIALOG DISCARDABLE  0, 0, 210, 130
@@ -726,17 +726,17 @@ BEGIN
     LTEXT           "&Location",IDC_STATIC,7,9,28,8
     COMBOBOX        IDC_LOCATION,40,7,142,125,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "&Notes:",IDC_STATIC,7,23,22,8
+    LTEXT           "N&otes:",IDC_STATIC,7,23,22,8
     EDITTEXT        IDC_NOTES,7,33,175,42,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
     LTEXT           "&Club",IDC_STATIC,7,87,15,8
-    PUSHBUTTON      "New...",IDC_CLUB_NEW,85,82,30,12
-    PUSHBUTTON      "Edit...",IDC_CLUB_EDIT,118,82,30,12
-    PUSHBUTTON      "Delete",IDC_CLUB_DELETE,151,82,30,12
+    PUSHBUTTON      "&New...",IDC_CLUB_NEW,85,82,30,12
+    PUSHBUTTON      "&Edit...",IDC_CLUB_EDIT,118,82,30,12
+    PUSHBUTTON      "&Delete",IDC_CLUB_DELETE,151,82,30,12
     CONTROL         "List1",IDC_CLUBS,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
                     WS_BORDER | WS_TABSTOP,7,97,175,50
-    CONTROL         "Verified",IDC_VERIFIED,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "&Verified",IDC_VERIFIED,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,204,137,39,10
     DEFPUSHBUTTON   "OK",IDOK,193,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,193,24,50,14
@@ -757,115 +757,115 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,143,24,50,14
 END
 
-IDD_RUN_SCORE DIALOG DISCARDABLE  0, 0, 390, 199
+IDD_RUN_SCORE DIALOG DISCARDABLE  0, 0, 390, 190
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Score"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Date",IDC_STATIC,7,9,16,8
+    LTEXT           "&Date",IDC_STATIC,3,5,16,8
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,30,7,60,12
-    LTEXT           "Venue",IDC_VENUE,100,8,50,10,SS_SUNKEN
-    LTEXT           "Club",IDC_CLUB,162,8,100,10,SS_SUNKEN
-    LTEXT           "Location",IDC_LOCATION,274,8,109,10,SS_SUNKEN
-    LTEXT           "Division",IDC_STATIC,7,24,26,8
-    COMBOBOX        IDC_DIVISION,35,22,75,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    DTS_RIGHTALIGN | WS_TABSTOP,25,3,60,12
+    LTEXT           "Venue",IDC_VENUE,97,5,50,10,SS_SUNKEN
+    LTEXT           "Club",IDC_CLUB,160,5,100,10,SS_SUNKEN
+    LTEXT           "Location",IDC_LOCATION,273,5,114,10,SS_SUNKEN
+    LTEXT           "Di&vision",IDC_STATIC,3,24,26,8
+    COMBOBOX        IDC_DIVISION,32,22,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Level",IDC_STATIC,7,41,18,8
-    COMBOBOX        IDC_LEVEL,35,39,75,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Level",IDC_STATIC,3,41,18,8
+    COMBOBOX        IDC_LEVEL,32,39,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Event",IDC_STATIC,7,58,20,8
-    COMBOBOX        IDC_EVENT,35,56,75,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "&Event",IDC_STATIC,3,58,20,8
+    COMBOBOX        IDC_EVENT,32,56,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Height",IDC_STATIC,7,75,22,8
-    COMBOBOX        IDC_HEIGHT,35,73,30,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+    LTEXT           "He&ight",IDC_STATIC,3,75,22,8
+    COMBOBOX        IDC_HEIGHT,32,73,30,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Judge",IDC_STATIC,131,24,20,8
-    COMBOBOX        IDC_JUDGE,156,22,90,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+    LTEXT           "&Judge",IDC_STATIC,134,24,20,8
+    COMBOBOX        IDC_JUDGE,160,22,90,100,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Handler",IDC_STATIC,263,24,26,8
-    COMBOBOX        IDC_HANDLER,294,22,89,75,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
+    LTEXT           "&Handler",IDC_STATIC,267,24,26,8
+    COMBOBOX        IDC_HANDLER,298,22,89,75,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
                     CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "Conditions",IDC_STATIC,117,40,34,8
-    EDITTEXT        IDC_CONDITIONS,156,40,227,31,ES_MULTILINE | 
+    RTEXT           "&Conditions",IDC_STATIC,120,40,34,8
+    EDITTEXT        IDC_CONDITIONS,160,40,227,31,ES_MULTILINE | 
                     ES_WANTRETURN | WS_VSCROLL
-    PUSHBUTTON      "Partners...",IDC_PARTNERS_EDIT,112,75,40,12
-    EDITTEXT        IDC_PARTNER,156,75,227,12,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Course Faults",IDC_STATIC,7,105,44,8
-    EDITTEXT        IDC_FAULTS,55,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Time",IDC_STATIC,27,121,16,8
+    PUSHBUTTON      "Partners...",IDC_PARTNERS_EDIT,109,74,45,14
+    EDITTEXT        IDC_PARTNER,160,75,227,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Course &Faults",IDC_STATIC,3,105,44,8
+    EDITTEXT        IDC_FAULTS,50,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "&Time",IDC_STATIC,27,121,16,8
     EDITTEXT        IDC_TIME,50,119,30,12,ES_AUTOHSCROLL
-    GROUPBOX        "By Score",IDC_STATIC,88,92,103,77
-    LTEXT           "Required Opening",IDC_OPENING_PTS_TEXT,95,105,58,8
-    EDITTEXT        IDC_OPENING_PTS,158,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Required Closing",IDC_CLOSING_PTS_TEXT,95,121,54,8
-    EDITTEXT        IDC_CLOSING_PTS,158,119,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Opening",IDC_OPEN_PTS_TEXT,95,137,28,8
-    EDITTEXT        IDC_OPEN_PTS,158,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Closing",IDC_CLOSE_PTS_TEXT,95,153,24,8
-    EDITTEXT        IDC_CLOSE_PTS,158,151,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    GROUPBOX        "By Time",IDC_STATIC,199,92,85,77
-    LTEXT           "Yards",IDC_YARDS_TEXT,206,105,19,8
-    EDITTEXT        IDC_YARDS,247,103,30,12,ES_AUTOHSCROLL
-    LTEXT           "YPS",IDC_YPS_TEXT,206,121,16,8
-    CTEXT           "",IDC_YPS,247,120,30,10,SS_SUNKEN
-    LTEXT           "SCT",IDC_SCT_TEXT,206,137,15,8
-    EDITTEXT        IDC_SCT,247,135,30,12,ES_AUTOHSCROLL
-    LTEXT           "Total Faults",IDC_TOTAL_FAULTS_TEXT,206,153,38,8
-    CTEXT           "",IDC_TOTAL_FAULTS,247,152,30,10,SS_SUNKEN
-    RTEXT           "Place",IDC_STATIC,308,105,19,8
-    EDITTEXT        IDC_PLACE,332,103,20,12,ES_AUTOHSCROLL | ES_NUMBER
-    CTEXT           "of",IDC_STATIC,353,105,8,8
-    EDITTEXT        IDC_IN_CLASS,363,103,20,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Dogs Q'd",IDC_STATIC,328,121,30,8
-    EDITTEXT        IDC_DOGS_QD,363,119,20,12,ES_AUTOHSCROLL
-    LTEXT           "Q?",IDC_STATIC,344,137,10,8
-    COMBOBOX        IDC_Q,358,135,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    GROUPBOX        "By Score",IDC_STATIC,91,92,109,77
+    LTEXT           "&Required Opening",IDC_OPENING_PTS_TEXT,98,105,58,8
+    EDITTEXT        IDC_OPENING_PTS,166,103,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Req&uired Closing",IDC_CLOSING_PTS_TEXT,98,121,54,8
+    EDITTEXT        IDC_CLOSING_PTS,166,119,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Ope&ning",IDC_OPEN_PTS_TEXT,98,137,28,8
+    EDITTEXT        IDC_OPEN_PTS,166,135,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Closin&g",IDC_CLOSE_PTS_TEXT,98,153,24,8
+    EDITTEXT        IDC_CLOSE_PTS,166,151,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    GROUPBOX        "By Time",IDC_STATIC,212,92,90,77
+    LTEXT           "&Yards",IDC_YARDS_TEXT,219,105,19,8
+    EDITTEXT        IDC_YARDS,265,103,30,12,ES_AUTOHSCROLL
+    LTEXT           "YPS",IDC_YPS_TEXT,219,121,16,8
+    CTEXT           "",IDC_YPS,265,120,30,10,SS_SUNKEN
+    LTEXT           "&SCT",IDC_SCT_TEXT,219,137,15,8
+    EDITTEXT        IDC_SCT,265,135,30,12,ES_AUTOHSCROLL
+    LTEXT           "Total Faults",IDC_TOTAL_FAULTS_TEXT,219,153,38,8
+    CTEXT           "",IDC_TOTAL_FAULTS,265,152,30,10,SS_SUNKEN
+    RTEXT           "Pl&ace",IDC_STATIC,312,105,19,8
+    EDITTEXT        IDC_PLACE,336,103,20,12,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "of",IDC_STATIC,357,105,8,8
+    EDITTEXT        IDC_IN_CLASS,367,103,20,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "D&ogs Q'd",IDC_STATIC,332,121,30,8
+    EDITTEXT        IDC_DOGS_QD,367,119,20,12,ES_AUTOHSCROLL
+    LTEXT           "&Q?",IDC_STATIC,348,137,10,8
+    COMBOBOX        IDC_Q,362,135,25,70,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Score",IDC_STATIC,333,152,20,8
-    CTEXT           "",IDC_SCORE,357,151,25,10,SS_SUNKEN
+    LTEXT           "Score",IDC_STATIC,337,152,20,8
+    CTEXT           "",IDC_SCORE,362,151,25,10,SS_SUNKEN
     CONTROL         "Double Q",IDC_DOUBLE_Q,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,125,182,46,10
-    LTEXT           "Mach Points",IDC_MACHPTS_TEXT,180,183,40,8
-    CTEXT           "",IDC_MACHPTS,225,182,20,10,SS_SUNKEN
-    LTEXT           "Title Points",IDC_TITLE_POINTS_TEXT,255,183,36,8
-    CTEXT           "",IDC_TITLE_POINTS,297,182,20,10,SS_SUNKEN
-    PUSHBUTTON      "Other Points...",IDC_OTHERPOINTS,333,180,50,12
+                    WS_DISABLED | WS_TABSTOP,195,177,46,10
+    LTEXT           "Mach Points",IDC_MACHPTS_TEXT,250,178,40,8
+    CTEXT           "",IDC_MACHPTS,295,177,20,10,SS_SUNKEN
+    LTEXT           "Title Points",IDC_TITLE_POINTS_TEXT,325,178,36,8
+    CTEXT           "",IDC_TITLE_POINTS,367,177,20,10,SS_SUNKEN
+    PUSHBUTTON      "Other &Points...",IDC_OTHERPOINTS,3,173,55,14
 END
 
-IDD_RUN_COMMENTS DIALOG DISCARDABLE  0, 0, 390, 199
+IDD_RUN_COMMENTS DIALOG DISCARDABLE  0, 0, 390, 190
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Comments/Faults"
 FONT 8, "MS Sans Serif"
 BEGIN
-    EDITTEXT        IDC_COMMENTS,7,7,256,185,ES_MULTILINE | ES_WANTRETURN | 
+    EDITTEXT        IDC_COMMENTS,3,3,258,184,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
-    EDITTEXT        IDC_FAULTS_LIST,273,7,110,169,ES_MULTILINE | ES_READONLY | 
+    EDITTEXT        IDC_FAULTS_LIST,270,3,117,163,ES_MULTILINE | ES_READONLY | 
                     WS_VSCROLL
-    PUSHBUTTON      "Faults...",IDC_COMMENTS_FAULTS,273,180,50,12
+    PUSHBUTTON      "&Faults...",IDC_COMMENTS_FAULTS,270,173,50,14
 END
 
-IDD_RUN_REFERENCE DIALOG DISCARDABLE  0, 0, 391, 199
+IDD_RUN_REFERENCE DIALOG DISCARDABLE  0, 0, 391, 190
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Reference Runs"
 FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "List1",IDC_REF_RUNS,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
-                    WS_TABSTOP,7,7,377,165
-    PUSHBUTTON      "New...",IDC_NEW,7,178,50,14
-    PUSHBUTTON      "Edit...",IDC_EDIT,67,178,50,14
-    PUSHBUTTON      "Delete",IDC_DELETE,127,178,50,14
+                    WS_TABSTOP,3,3,385,165
+    PUSHBUTTON      "&New...",IDC_NEW,3,173,50,14
+    PUSHBUTTON      "&Edit...",IDC_EDIT,58,173,50,14
+    PUSHBUTTON      "&Delete",IDC_DELETE,113,173,50,14
 END
 
-IDD_RUN_CRCD DIALOG DISCARDABLE  0, 0, 390, 199
+IDD_RUN_CRCD DIALOG DISCARDABLE  0, 0, 390, 190
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "CRCD"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Paste in the text between ""Begin Course Design"" and ""End Course Design"", inclusive. To view it, copy this text and paste in CRCD.",
-                    IDC_STATIC,7,7,376,16
-    EDITTEXT        IDC_CRCD,7,26,376,166,ES_MULTILINE | ES_WANTRETURN | 
+                    IDC_STATIC,3,3,384,16
+    EDITTEXT        IDC_CRCD,3,21,384,166,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL | WS_HSCROLL
 END
 
@@ -957,25 +957,25 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Calendar"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "First day of week",IDC_STATIC,7,9,54,8
-    COMBOBOX        IDC_DAY_OF_WEEK,71,7,70,91,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    LTEXT           "First day of week",IDC_STATIC,3,5,54,8
+    COMBOBOX        IDC_DAY_OF_WEEK,71,3,70,91,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "Automatically delete past entries",IDC_AUTO_DELETE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,27,117,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,23,117,10
     CONTROL         "Hide past entries",IDC_HIDE_OLD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,41,69,10
-    LTEXT           "Past entry is",IDC_STATIC,20,55,39,8
-    EDITTEXT        IDC_OLD_ENTRY_DAYS,63,53,20,12,ES_AUTOHSCROLL | 
+                    BS_AUTOCHECKBOX | WS_TABSTOP,3,37,69,10
+    LTEXT           "Past entry is",IDC_STATIC,16,51,39,8
+    EDITTEXT        IDC_OLD_ENTRY_DAYS,59,49,20,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
-    LTEXT           "days after event ends.",IDC_STATIC,87,55,71,8
+    LTEXT           "days after event ends.",IDC_STATIC,83,51,71,8
     CONTROL         "Hide entries on dates where you've entered a trial",
-                    IDC_HIDE_OVERLAP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,
-                    69,171,10
-    LTEXT           "Approx size of entry (.01 inches)",IDC_STATIC,7,84,101,
+                    IDC_HIDE_OVERLAP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,
+                    65,171,10
+    LTEXT           "Approx size of entry (.01 inches)",IDC_STATIC,3,80,101,
                     8
-    EDITTEXT        IDC_SIZE_X,115,82,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "x",IDC_STATIC,143,84,8,8
-    EDITTEXT        IDC_SIZE_Y,152,82,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_SIZE_X,111,78,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "x",IDC_STATIC,139,80,8,8
+    EDITTEXT        IDC_SIZE_Y,148,78,25,12,ES_AUTOHSCROLL | ES_NUMBER
 END
 
 IDD_VIEW_OPTIONS_FILTER DIALOG DISCARDABLE  0, 0, 285, 162
@@ -983,37 +983,37 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Trial Filter"
 FONT 8, "MS Sans Serif"
 BEGIN
-    GROUPBOX        "Trials",IDC_STATIC,7,7,132,148
-    CONTROL         "View all venues",IDC_OPTIONS_VENUES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,65,10
-    CONTROL         "View only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
-                    BS_AUTORADIOBUTTON,15,32,48,10
+    GROUPBOX        "Trials",IDC_STATIC,3,3,136,156
+    CONTROL         "&View all venues",IDC_OPTIONS_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10
+    CONTROL         "View &only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,11,28,48,10
     CONTROL         "Tree1",IDC_OPTIONS_VENUES,"SysTreeView32",
                     TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,15,
-                    46,115,102
-    GROUPBOX        "Dates",IDC_STATIC,146,7,132,74
-    CONTROL         "View all dates",IDC_OPTIONS_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,154,20,59,10
-    CONTROL         "View dates in range (inclusive):",
-                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,154,
-                    32,113,10
-    CONTROL         "After",IDC_OPTIONS_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,166,45,31,10
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
+                    42,119,110
+    GROUPBOX        "Dates",IDC_STATIC,146,3,136,74
+    CONTROL         "View all &dates",IDC_OPTIONS_DATES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,158,16,59,10
+    CONTROL         "View dates in &range (inclusive):",
+                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,158,
+                    28,113,10
+    CONTROL         "&After",IDC_OPTIONS_DATE_START_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,170,41,31,10
     CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,207,44,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,40,
                     60,12
-    CONTROL         "Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,166,60,37,10
+    CONTROL         "&Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,170,56,37,10
     CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_END,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,207,59,60,12
-    GROUPBOX        "Qs",IDC_STATIC,146,88,132,54
-    CONTROL         "View all runs",IDC_OPTIONS_RUNS_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,154,101,55,10
-    CONTROL         "View only Qualifying runs",IDC_OPTIONS_RUNS_Q,"Button",
-                    BS_AUTORADIOBUTTON,154,113,94,10
-    CONTROL         "View only Non-Qualifying runs",IDC_OPTIONS_RUNS_NON_Q,
-                    "Button",BS_AUTORADIOBUTTON,154,125,109,10
+                    DTS_RIGHTALIGN | WS_TABSTOP,209,55,60,12
+    GROUPBOX        "Qs",IDC_STATIC,146,81,136,54
+    CONTROL         "V&iew all runs",IDC_OPTIONS_RUNS_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,158,94,55,10
+    CONTROL         "View only &Qualifying runs",IDC_OPTIONS_RUNS_Q,"Button",
+                    BS_AUTORADIOBUTTON,158,106,94,10
+    CONTROL         "View only &Non-Qualifying runs",IDC_OPTIONS_RUNS_NON_Q,
+                    "Button",BS_AUTORADIOBUTTON,158,118,109,10
 END
 
 IDD_VIEW_OPTIONS_FONTS DIALOG DISCARDABLE  0, 0, 285, 162
@@ -1021,24 +1021,24 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Fonts"
 FONT 8, "MS Sans Serif"
 BEGIN
-    GROUPBOX        "Calendar Printing",IDC_STATIC,7,7,174,70
-    CTEXT           "12/28/2002",IDC_FONT_CAL_PRINT_DATE_TEXT,15,23,75,25,
+    GROUPBOX        "Calendar Printing",IDC_STATIC,3,3,178,75
+    CTEXT           "12/28/2002",IDC_FONT_CAL_PRINT_DATE_TEXT,13,19,75,25,
                     SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Date Font...",IDC_FONT_CAL_PRINT_DATE,27,55,50,14
-    CTEXT           "USDAA Hayward, CA",IDC_FONT_CAL_PRINT_TEXT_TEXT,97,23,
+    PUSHBUTTON      "Date Font...",IDC_FONT_CAL_PRINT_DATE,25,53,50,14
+    CTEXT           "USDAA Hayward, CA",IDC_FONT_CAL_PRINT_TEXT_TEXT,95,19,
                     75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Text Font...",IDC_FONT_CAL_PRINT_TEXT,109,55,50,14
-    GROUPBOX        "Calendar Viewing",IDC_STATIC,7,85,174,70
-    CTEXT           "12/28/2002",IDC_FONT_CAL_VIEW_DATE_TEXT,15,101,75,25,
+    PUSHBUTTON      "Text Font...",IDC_FONT_CAL_PRINT_TEXT,107,53,50,14
+    GROUPBOX        "Calendar Viewing",IDC_STATIC,3,84,178,75
+    CTEXT           "12/28/2002",IDC_FONT_CAL_VIEW_DATE_TEXT,13,100,75,25,
                     SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Date Font...",IDC_FONT_CAL_VIEW_DATE,27,133,50,14
-    CTEXT           "USDAA Hayward, CA",IDC_FONT_CAL_VIEW_TEXT_TEXT,97,101,
+    PUSHBUTTON      "Date Font...",IDC_FONT_CAL_VIEW_DATE,25,134,50,14
+    CTEXT           "USDAA Hayward, CA",IDC_FONT_CAL_VIEW_TEXT_TEXT,95,100,
                     75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Text Font...",IDC_FONT_CAL_VIEW_TEXT,109,133,50,14
-    GROUPBOX        "General Printing",IDC_STATIC,189,85,89,70
-    CTEXT           "Printing Text",IDC_FONT_GENERAL_PRINT_TEXT,196,101,75,
+    PUSHBUTTON      "Text Font...",IDC_FONT_CAL_VIEW_TEXT,107,134,50,14
+    GROUPBOX        "General Printing",IDC_STATIC,188,84,94,75
+    CTEXT           "Printing Text",IDC_FONT_GENERAL_PRINT_TEXT,198,100,75,
                     25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Set Font...",IDC_FONT_GENERAL_PRINT,208,133,50,14
+    PUSHBUTTON      "Set Font...",IDC_FONT_GENERAL_PRINT,210,134,50,14
 END
 
 IDD_VIEW_OPTIONS_TRAINING DIALOG DISCARDABLE  0, 0, 285, 162
@@ -1046,30 +1046,30 @@ STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Training Log"
 FONT 8, "MS Sans Serif"
 BEGIN
-    GROUPBOX        "Name",IDC_STATIC,7,7,132,148
-    CONTROL         "View all names",IDC_OPTIONS_VENUES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,20,65,10
-    CONTROL         "View only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
-                    BS_AUTORADIOBUTTON,15,32,48,10
+    GROUPBOX        "Name",IDC_STATIC,3,4,134,155
+    CONTROL         "View all &names",IDC_OPTIONS_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,13,16,65,10
+    CONTROL         "View &only:",IDC_OPTIONS_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,13,28,48,10
     CONTROL         "Tree1",IDC_OPTIONS_VENUES,"SysTreeView32",
                     TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,15,
-                    46,115,102
-    GROUPBOX        "Dates",IDC_STATIC,146,7,132,74
-    CONTROL         "View all dates",IDC_OPTIONS_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,154,20,59,10
-    CONTROL         "View dates in range (inclusive):",
-                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,154,
-                    32,113,10
-    CONTROL         "After",IDC_OPTIONS_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,166,45,31,10
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,13,
+                    42,115,110
+    GROUPBOX        "Dates",IDC_STATIC,148,4,134,74
+    CONTROL         "View all &dates",IDC_OPTIONS_DATES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,156,16,59,10
+    CONTROL         "View dates in &range (inclusive):",
+                    IDC_OPTIONS_DATES_RANGE,"Button",BS_AUTORADIOBUTTON,156,
+                    28,113,10
+    CONTROL         "&After",IDC_OPTIONS_DATE_START_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,168,41,31,10
     CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,207,44,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,40,
                     60,12
-    CONTROL         "Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,166,60,37,10
+    CONTROL         "&Before",IDC_OPTIONS_DATE_END_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,168,56,37,10
     CONTROL         "DateTimePicker2",IDC_OPTIONS_DATE_END,"SysDateTimePick32",
-                    DTS_RIGHTALIGN | WS_TABSTOP,207,59,60,12
+                    DTS_RIGHTALIGN | WS_TABSTOP,209,55,60,12
 END
 
 IDD_DOG_PICKER DIALOG DISCARDABLE  0, 0, 186, 95
@@ -1102,11 +1102,11 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Update Configuration"
 FONT 8, "MS Sans Serif"
 BEGIN
-    CONTROL         "Use Default Configuration",IDC_UPDATE_DEFAULT,"Button",
+    CONTROL         "Use &Default Configuration",IDC_UPDATE_DEFAULT,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,7,10,97,10
-    CONTROL         "Use Existing Configuration",IDC_UPDATE_EXISTING,"Button",
+    CONTROL         "Use &Existing Configuration",IDC_UPDATE_EXISTING,"Button",
                     BS_AUTORADIOBUTTON,7,26,98,10
-    PUSHBUTTON      "Pick File",IDC_NAME,105,24,50,14,WS_GROUP
+    PUSHBUTTON      "&Pick File",IDC_NAME,105,24,50,14,WS_GROUP
     EDITTEXT        IDC_FILENAME,20,43,213,12,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,183,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,183,24,50,14
@@ -1117,9 +1117,9 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Title Points"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Faults Allowed",IDC_STATIC,7,9,46,8
+    LTEXT           "&Faults Allowed",IDC_STATIC,7,9,46,8
     EDITTEXT        IDC_FAULTS,57,7,40,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Points",IDC_STATIC,7,25,20,8
+    LTEXT           "&Points",IDC_STATIC,7,25,20,8
     EDITTEXT        IDC_POINTS,57,23,40,12,ES_AUTOHSCROLL | ES_NUMBER
     DEFPUSHBUTTON   "OK",IDOK,133,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
@@ -1310,31 +1310,31 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Existing Points"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Points Earned by:",IDC_STATIC,7,9,56,8
+    LTEXT           "&Points Earned by:",IDC_STATIC,7,9,56,8
     CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
                     DTS_RIGHTALIGN | WS_TABSTOP,65,7,60,12
-    LTEXT           "Type",IDC_STATIC,7,26,17,8
+    LTEXT           "&Type",IDC_STATIC,7,26,17,8
     COMBOBOX        IDC_TYPE,30,24,95,80,CBS_DROPDOWNLIST | CBS_SORT | 
                     WS_VSCROLL | WS_TABSTOP
-    LTEXT           "&Points",IDC_STATIC,135,9,20,8
+    LTEXT           "Po&ints",IDC_STATIC,135,9,20,8
     EDITTEXT        IDC_POINTS,160,7,30,12,ES_AUTOHSCROLL | ES_NUMBER
     GROUPBOX        "Where Points were earned",IDC_STATIC,7,45,140,115
-    LTEXT           "Other Points",IDC_STATIC,14,61,40,8
+    LTEXT           "&Other Points",IDC_STATIC,14,61,40,8
     COMBOBOX        IDC_OTHERPOINTS,57,59,80,80,CBS_DROPDOWNLIST | CBS_SORT | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "&Venue",IDC_STATIC,14,81,22,8
     COMBOBOX        IDC_VENUES,57,79,80,50,CBS_DROPDOWNLIST | CBS_SORT | 
                     WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Division",IDC_STATIC,14,101,26,8
+    LTEXT           "&Division",IDC_STATIC,14,101,26,8
     COMBOBOX        IDC_DIVISION,57,99,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Level",IDC_STATIC,14,121,18,8
+    LTEXT           "&Level",IDC_STATIC,14,121,18,8
     COMBOBOX        IDC_LEVEL,57,119,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Event",IDC_STATIC,14,141,20,8
+    LTEXT           "&Event",IDC_STATIC,14,141,20,8
     COMBOBOX        IDC_EVENT,57,139,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
-    LTEXT           "Comment",IDC_STATIC,155,45,30,8
+    LTEXT           "&Comment",IDC_STATIC,155,45,30,8
     EDITTEXT        IDC_COMMENTS,155,55,145,105,ES_MULTILINE | ES_WANTRETURN | 
                     WS_VSCROLL
     DEFPUSHBUTTON   "OK",IDOK,250,7,50,14
@@ -1476,26 +1476,34 @@ BEGIN
 
     IDD_DOG_PROP, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 343
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 173
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 347
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 177
     END
 
     IDD_DOG_TITLES, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 343
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 173
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 347
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 177
     END
 
     IDD_DOG_NUMBERS, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 343
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 173
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 347
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 177
+    END
+
+    IDD_DOG_POINTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 347
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 177
     END
 
     IDD_TITLE, DIALOG
@@ -1532,34 +1540,34 @@ BEGIN
 
     IDD_RUN_SCORE, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 383
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 192
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 387
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 187
     END
 
     IDD_RUN_COMMENTS, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 383
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 192
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 387
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 187
     END
 
     IDD_RUN_REFERENCE, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 384
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 192
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 388
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 187
     END
 
     IDD_RUN_CRCD, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 383
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 192
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 387
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 187
     END
 
     IDD_REF_RUN, DIALOG
@@ -1604,26 +1612,34 @@ BEGIN
 
     IDD_VIEW_OPTIONS_CALENDAR, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 278
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 155
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 282
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 159
     END
 
     IDD_VIEW_OPTIONS_FILTER, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 278
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 155
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 282
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 159
     END
 
     IDD_VIEW_OPTIONS_FONTS, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 278
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 155
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 282
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 159
+    END
+
+    IDD_VIEW_OPTIONS_TRAINING, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 282
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 159
     END
 
     IDD_DOG_PICKER, DIALOG
@@ -1971,6 +1987,7 @@ BEGIN
     IDS_COL_DOB             "Birthday"
     IDS_COL_AGE             "Age"
     IDS_COL_TYPE            "Type"
+    IDS_COL_TITLE           "Title"
 END
 
 STRINGTABLE DISCARDABLE 
