@@ -917,14 +917,14 @@ MSA, JM, GM, SM, RM, TM</Titles>
 				<Titles LongName="Performance II Snooker" Name="SPII"/>
 				<Titles LongName="Performance Dog III" Name="PDIII"/>
 				<Titles LongName="Performance III Standard" Name="SAIII"/>
-				<Titles LongName="Performance III Jumper" Name="PJ"/>
-				<Titles LongName="Performance III Gambler" Name="PG"/>
-				<Titles LongName="Performance III Snooker" Name="PS"/>
+				<Titles LongName="Performance III Jumper" Name="JPIII"/>
+				<Titles LongName="Performance III Gambler" Name="GPIII"/>
+				<Titles LongName="Performance III Snooker" Name="SPIII"/>
 				<Titles LongName="Accomplished Performance Dog" Name="APD"/>
-				<Titles LongName="Accomplished Standard" Name="APSA"/>
-				<Titles LongName="Accomplished Jumpers" Name="APJ"/>
-				<Titles LongName="Accomplished Gamblers" Name="APG"/>
-				<Titles LongName="Accomplished Snooker" Name="APS"/>
+				<Titles LongName="Accomplished Standard" Name="SAAP"/>
+				<Titles LongName="Accomplished Jumpers" Name="JAP"/>
+				<Titles LongName="Accomplished Gamblers" Name="GAP"/>
+				<Titles LongName="Accomplished Snooker" Name="SAP"/>
 				<Titles LongName="Accomplished Tournament Performer" Name="APT"/>
 				<Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-B">All Bronze titles</Titles>
 				<Titles LongName="Accomplished Standard - Bronze" Name="APSA-B">15 qualifying scores in PIII Standard</Titles>
