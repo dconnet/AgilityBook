@@ -607,6 +607,7 @@ void CDlgListCtrl::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pDispInfo->item.lParam);
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	if (pDispInfo->item.mask & LVIF_IMAGE)
 	{

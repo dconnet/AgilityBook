@@ -307,6 +307,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 			break;
 		}
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	*pResult = 0;
 }
