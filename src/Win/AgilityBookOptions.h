@@ -111,6 +111,10 @@ public:
 	static void SetViewAllVenues(bool bViewAll);
 	static void GetFilterVenue(std::vector<CVenueFilter>& venues);
 	static void SetFilterVenue(const std::vector<CVenueFilter>& venues);
+	static bool GetViewAllRuns();
+	static void SetViewAllRuns(bool bViewAll);
+	static bool GetViewQRuns(); // Subset of AllRuns
+	static void SetViewQRuns(bool bViewQs);
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(const CFontInfo& info);

@@ -63,6 +63,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(const ARBConfig& config)
 	m_timeEnd = 0;
 	m_bDateEnd = FALSE;
 	m_ViewVenues = -1;
+	m_ViewQs = -1;
 	//}}AFX_DATA_INIT
 }
 
@@ -74,27 +75,31 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsFilter)
-	DDX_Radio(pDX, IDC_VIEW_ALL, m_ViewDates);
-	DDX_Control(pDX, IDC_DATE_START_CHECK, m_ctrlDateStartCheck);
-	DDX_Check(pDX, IDC_DATE_START_CHECK, m_bDateStart);
-	DDX_Control(pDX, IDC_DATE_START, m_ctrlDateStart);
-	DDX_DateTimeCtrl(pDX, IDC_DATE_START, m_timeStart);
-	DDX_Control(pDX, IDC_DATE_END_CHECK, m_ctrlDateEndCheck);
-	DDX_DateTimeCtrl(pDX, IDC_DATE_END, m_timeEnd);
-	DDX_Check(pDX, IDC_DATE_END_CHECK, m_bDateEnd);
-	DDX_Control(pDX, IDC_DATE_END, m_ctrlDateEnd);
-	DDX_Radio(pDX, IDC_ALL_VENUES, m_ViewVenues);
-	DDX_Control(pDX, IDC_VENUES, m_ctrlVenue);
+	DDX_Radio(pDX, IDC_OPTIONS_DATES_ALL, m_ViewDates);
+	DDX_Control(pDX, IDC_OPTIONS_DATE_START_CHECK, m_ctrlDateStartCheck);
+	DDX_Check(pDX, IDC_OPTIONS_DATE_START_CHECK, m_bDateStart);
+	DDX_Control(pDX, IDC_OPTIONS_DATE_START, m_ctrlDateStart);
+	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_DATE_START, m_timeStart);
+	DDX_Control(pDX, IDC_OPTIONS_DATE_END_CHECK, m_ctrlDateEndCheck);
+	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_DATE_END, m_timeEnd);
+	DDX_Check(pDX, IDC_OPTIONS_DATE_END_CHECK, m_bDateEnd);
+	DDX_Control(pDX, IDC_OPTIONS_DATE_END, m_ctrlDateEnd);
+	DDX_Radio(pDX, IDC_OPTIONS_VENUES_ALL, m_ViewVenues);
+	DDX_Control(pDX, IDC_OPTIONS_VENUES, m_ctrlVenue);
+	DDX_Radio(pDX, IDC_OPTIONS_RUNS_ALL, m_ViewQs);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsFilter)
-	ON_BN_CLICKED(IDC_VIEW_ALL, OnViewAll)
-	ON_BN_CLICKED(IDC_VIEW_RANGE, OnViewRange)
-	ON_BN_CLICKED(IDC_ALL_VENUES, OnAllVenues)
-	ON_BN_CLICKED(IDC_VENUE, OnVenue)
-	ON_NOTIFY(TVN_SETDISPINFO, IDC_VENUES, OnSetdispinfoVenues)
+	ON_BN_CLICKED(IDC_OPTIONS_DATES_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_DATES_RANGE, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_VENUES_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_VENUES_SELECTED, OnViewUpdate)
+	ON_NOTIFY(TVN_SETDISPINFO, IDC_OPTIONS_VENUES, OnSetdispinfoVenues)
+	ON_BN_CLICKED(IDC_OPTIONS_RUNS_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_RUNS_Q, OnViewUpdate)
+	ON_BN_CLICKED(IDC_OPTIONS_RUNS_NON_Q, OnViewUpdate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -279,25 +284,7 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgOptionsFilter::OnViewAll() 
-{
-	UpdateData(TRUE);
-	UpdateControls();
-}
-
-void CDlgOptionsFilter::OnViewRange() 
-{
-	UpdateData(TRUE);
-	UpdateControls();
-}
-
-void CDlgOptionsFilter::OnAllVenues() 
-{
-	UpdateData(TRUE);
-	UpdateControls();
-}
-
-void CDlgOptionsFilter::OnVenue() 
+void CDlgOptionsFilter::OnViewUpdate() 
 {
 	UpdateData(TRUE);
 	UpdateControls();

@@ -66,6 +66,7 @@ private:
 	CDateTimeCtrl	m_ctrlDateEnd;
 	int		m_ViewVenues;
 	CCheckTreeCtrl	m_ctrlVenue;
+	int		m_ViewQs;
 	//}}AFX_DATA
 	const ARBConfig& m_Config;
 	std::vector<CVenueFilter> m_VenueFilter;
@@ -87,10 +88,7 @@ private:
 protected:
 	//{{AFX_MSG(CDlgOptionsFilter)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnViewAll();
-	afx_msg void OnViewRange();
-	afx_msg void OnAllVenues();
-	afx_msg void OnVenue();
+	afx_msg void OnViewUpdate();
 	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

@@ -1,5 +1,8 @@
 Last Updated: 8/28/03
 
+- Allow course faults on runs scored by points. For instance, a handler could
+  be faulted for language.
+
 - Add logic to the reorder dialog to know if an item can be reordered around
   an adjacent entry. (For instance, when reordering runs, reordering really
   only applies to runs on a given date. If you attempt to reorder more, the
