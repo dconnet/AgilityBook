@@ -681,7 +681,7 @@ void CDlgConfigEvent::OnSubCatNew()
 			subcat.push_back((LPCSTR)text);
 		}
 		std::string item = dlg.GetName();
-		if (subcat.end() == find(subcat.begin(), subcat.end(), item))
+		if (subcat.end() == std::find(subcat.begin(), subcat.end(), item))
 		{
 			int idx = m_ctrlSubCat.AddString(item.c_str());
 			m_ctrlSubCat.SetCurSel(idx);
@@ -710,7 +710,7 @@ void CDlgConfigEvent::OnSubCatEdit()
 				subcat.push_back((LPCSTR)text);
 			}
 			std::string item = dlg.GetName();
-			if (subcat.end() == find(subcat.begin(), subcat.end(), item))
+			if (subcat.end() == std::find(subcat.begin(), subcat.end(), item))
 			{
 				int idx = m_ctrlSubCat.AddString(item.c_str());
 				m_ctrlSubCat.SetCurSel(idx);
@@ -1137,7 +1137,7 @@ void CDlgConfigEvent::OnOK()
 		CString text;
 		m_ctrlSubCat.GetText(index, text);
 		std::string item = (LPCSTR)text;
-		if (subcat.end() == find(subcat.begin(), subcat.end(), item))
+		if (subcat.end() == std::find(subcat.begin(), subcat.end(), item))
 			subcat.push_back(item);
 	}
 
