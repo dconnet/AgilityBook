@@ -31,12 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-02-18 DRC Remember selected dogs.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgSelectDog.h"
 
+#include <algorithm>
+#include <set>
+#include <string>
 #include "ARBDog.h"
 #include "AgilityBookDoc.h"
 
@@ -89,12 +93,27 @@ END_MESSAGE_MAP()
 BOOL CDlgSelectDog::OnInitDialog() 
 {
 	CDlgBaseDialog::OnInitDialog();
+
+	CWinApp* pApp = AfxGetApp();
+	std::set<std::string> selection;
+	int nDogs = pApp->GetProfileInt("Selection", "nDogs", 0);
+	for (int iDog = 1; iDog <= nDogs; ++iDog)
+	{
+		CString item;
+		item.Format("Dog%d", iDog);
+		CString dog = pApp->GetProfileString("Selection", item, "");
+		if (!dog.IsEmpty())
+			selection.insert((LPCTSTR)dog);
+	}
+
 	ARBDogList const& dogs = m_pDoc->GetDogs();
 	for (ARBDogList::const_iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 	{
 		ARBDog* pDog = *iter;
 		int index = m_ctrlList.AddString(pDog->GetCallName().c_str());
 		m_ctrlList.SetItemDataPtr(index, pDog);
+		if (selection.end() != std::find(selection.begin(), selection.end(), pDog->GetCallName()))
+			m_ctrlList.SetCheck(index, 1);
 	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -102,6 +121,17 @@ BOOL CDlgSelectDog::OnInitDialog()
 
 void CDlgSelectDog::OnOK() 
 {
+	// Erase existing.
+	CWinApp* pApp = AfxGetApp();
+	int nDogs = pApp->GetProfileInt("Selection", "nDogs", 0);
+	for (int iDog = 1; iDog <= nDogs; ++iDog)
+	{
+		CString item;
+		item.Format("Dog%d", iDog);
+		pApp->WriteProfileString("Selection", item, NULL);
+	}
+	// Now commit the selection.
+	nDogs = 0;
 	m_Dogs.clear();
 	for (int index = 0; index < m_ctrlList.GetCount(); ++index)
 	{
@@ -109,7 +139,12 @@ void CDlgSelectDog::OnOK()
 		{
 			ARBDog* pDog = reinterpret_cast<ARBDog*>(m_ctrlList.GetItemDataPtr(index));
 			m_Dogs.push_back(pDog);
+			++nDogs;
+			CString item;
+			item.Format("Dog%d", nDogs);
+			pApp->WriteProfileString("Selection", item, pDog->GetCallName().c_str());
 		}
 	}
+	pApp->WriteProfileInt("Selection", "nDogs", nDogs);
 	CDlgBaseDialog::OnOK();
 }
