@@ -230,8 +230,9 @@ void CDlgRunCRCD::OnCopy()
 				if (bText)
 				{
 					m_ViewText = true;
-					LPCTSTR hData = (LPCTSTR)GetClipboardData(CF_TEXT);
-					CString str(hData);
+					HANDLE hData = GetClipboardData(CF_TEXT);
+					CString str((LPCTSTR)GlobalLock(hData));
+					GlobalUnlock(hData);
 					m_ctrlText.SetWindowText(str);
 					str.Replace("\r\n", "\n");
 					m_Run->SetCRCD((LPCTSTR)str);
