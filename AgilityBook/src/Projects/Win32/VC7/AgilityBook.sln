@@ -13,10 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParseResourceHeader", "..\.
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8} = {ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TroubleReport", "..\..\..\TroubleReport\TroubleReport.vcproj", "{F5C6E82B-F03A-4686-AB67-FBBD6C70ECC6}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -34,10 +30,6 @@ Global
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug.Build.0 = Debug|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release.ActiveCfg = Release|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release.Build.0 = Release|Win32
-		{F5C6E82B-F03A-4686-AB67-FBBD6C70ECC6}.Debug.ActiveCfg = Debug|Win32
-		{F5C6E82B-F03A-4686-AB67-FBBD6C70ECC6}.Debug.Build.0 = Debug|Win32
-		{F5C6E82B-F03A-4686-AB67-FBBD6C70ECC6}.Release.ActiveCfg = Release|Win32
-		{F5C6E82B-F03A-4686-AB67-FBBD6C70ECC6}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

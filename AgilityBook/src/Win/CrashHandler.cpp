@@ -39,48 +39,847 @@
 #include "stdafx.h"
 #include "CrashHandler.h"
 
+#include "SymbolEngine.h"
+
+#include <fstream>
+using namespace std;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#pragma warning ( disable : 4311 4312 )
+// warning C4311: 'type cast' : pointer truncation from 'PVOID' to 'DWORD'
+// warning C4312: 'type cast' : conversion from 'DWORD' to 'HINSTANCE' of greater size
+
 /////////////////////////////////////////////////////////////////////////////
 
-static bool s_bLetItCrash = false;
+static HKEY g_hAppKey = NULL;
 
-static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS ExceptionInfo)
+// The static buffer returned by various functions. This avoids putting
+// things on the stack.
+#define BUFF_SIZE 1024
+static TCHAR g_szBuff[BUFF_SIZE];
+// The static symbol lookup buffer. This gets casted to make it work.
+#define SYM_BUFF_SIZE 512
+static BYTE g_stSymbol[SYM_BUFF_SIZE];
+// The static source and line structure.
+static IMAGEHLP_LINE g_stLine;
+// The stack frame used in walking the stack.
+static STACKFRAME g_stFrame;
+
+static void InitSymEng()
 {
-	static char const* pReason = "Yikes! We're goin' down!";
-	return pReason;
+	static bool g_bSymEngInit = false;
+	if (!g_bSymEngInit)
+	{
+		// Set up the symbol engine.
+		DWORD dwOpts = SymGetOptions();
+		// Always defer loading to make life faster.
+		SymSetOptions(dwOpts | SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES);
+		// Initialize the symbol engine.
+		VERIFY(SymInitialize(GetCurrentProcess(), NULL, TRUE));
+		g_bSymEngInit = true;
+	}
 }
 
-static LPCTSTR GetFirstStackTraceString(LPEXCEPTION_POINTERS ExceptionInfo)
+static DWORD GetModuleBaseNameA(HANDLE hProcess, HMODULE hModule, LPSTR lpBaseName, DWORD nSize)
 {
-	return NULL;
+	// The typedefs for the PSAPI.DLL functions used by this module.
+	typedef DWORD (WINAPI *GETMODULEBASENAME)(HANDLE hProcess,
+		HMODULE hModule, LPTSTR lpBaseName, DWORD nSize);
+	static GETMODULEBASENAME g_pGetModuleBaseName = NULL;
+	static bool bInitialized = false;
+	if (!bInitialized)
+	{
+		// Load up PSAPI.DLL.
+		HINSTANCE hInst = LoadLibraryA("PSAPI.DLL");
+		ASSERT(NULL != hInst);
+		if (NULL == hInst)
+		{
+			TRACE0("Unable to load PSAPI.DLL!\n");
+			SetLastErrorEx(ERROR_DLL_INIT_FAILED, SLE_ERROR);
+			return FALSE;
+		}
+		// Now do the GetProcAddress stuff.
+		g_pGetModuleBaseName = (GETMODULEBASENAME)GetProcAddress(hInst, "GetModuleBaseNameA");
+		ASSERT(NULL != g_pGetModuleBaseName);
+		if (NULL == g_pGetModuleBaseName)
+		{
+			TRACE0("GetProcAddress failed on GetModuleBaseNameA!\n");
+			SetLastErrorEx(ERROR_DLL_INIT_FAILED, SLE_ERROR);
+			return FALSE;
+		}
+		bInitialized = true;
+	}
+	return g_pGetModuleBaseName(hProcess, hModule, lpBaseName, nSize);
 }
 
-static LPCTSTR GetNextStackTraceString(LPEXCEPTION_POINTERS ExceptionInfo)
+static bool IsNT()
 {
-	return NULL;
+	static bool bHasVersion = false;
+	static bool bIsNT = true;
+	if (bHasVersion)
+		return bIsNT;
+	OSVERSIONINFO stOSVI;
+	memset(&stOSVI, NULL, sizeof(OSVERSIONINFO));
+	stOSVI.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	BOOL bRet = GetVersionEx(&stOSVI);
+	ASSERT(TRUE == bRet);
+	if (!bRet)
+	{
+		TRACE0("GetVersionEx failed!\n");
+		return false;
+	}
+	// Check the version and call the appropriate thing.
+	if (VER_PLATFORM_WIN32_NT == stOSVI.dwPlatformId)
+		bIsNT = true;
+	else
+		bIsNT = false;
+	bHasVersion = true;
+	return bIsNT;
+}
+
+static DWORD BSUGetModuleBaseName(HANDLE hProcess,
+	HMODULE hModule, LPTSTR lpBaseName, DWORD nSize)
+{
+	if (IsNT())
+	{
+		// Call the NT version. It is in NT4ProcessInfo because that is
+		// where all the PSAPI wrappers are kept.
+		// NTGetModuleBaseName(hProcess, hModule, lpBaseName, nSize);
+		return GetModuleBaseNameA(hProcess, hModule, lpBaseName, nSize);
+	}
+	else
+	{
+		// Win95GetModuleBaseName(hProcess, hModule, lpBaseName, nSize);
+		ASSERT(!IsBadWritePtr(lpBaseName, nSize));
+		if (IsBadWritePtr(lpBaseName, nSize))
+		{
+			TRACE0("Win95GetModuleBaseName Invalid string buffer\n");
+			SetLastError(ERROR_INVALID_PARAMETER);
+			return 0;
+		}
+
+		// This could blow the stack...
+		char szBuff[MAX_PATH + 1];
+		DWORD dwRet = GetModuleFileName(hModule, szBuff, MAX_PATH);
+		ASSERT(0 != dwRet);
+		if (0 == dwRet)
+			return 0;
+
+		// Find the last '\' mark.
+		char* pStart = strrchr(szBuff, '\\');
+		int iMin ;
+		if (NULL != pStart)
+		{
+			// Move up one character.
+			++pStart;
+			//lint -e666
+			iMin = min((int)nSize, lstrlen(pStart) + 1);
+			//lint +e666
+			lstrcpyn(lpBaseName, pStart, iMin);
+		}
+		else
+		{
+			// Copy the szBuff buffer in.
+			//lint -e666
+			iMin = min((int)nSize, lstrlen(szBuff) + 1);
+			//lint +e666
+			lstrcpyn(lpBaseName, szBuff, iMin);
+		}
+		// Always NULL terminate.
+		lpBaseName[iMin] = '\0';
+		return (DWORD)(iMin - 1);
+	}
+}
+
+static LPCTSTR ConvertSimpleException(DWORD dwExcept)
+{
+	switch (dwExcept)
+	{
+	case EXCEPTION_ACCESS_VIOLATION:
+		return _T("EXCEPTION_ACCESS_VIOLATION");
+	case EXCEPTION_DATATYPE_MISALIGNMENT:
+		return _T("EXCEPTION_DATATYPE_MISALIGNMENT");
+	case EXCEPTION_BREAKPOINT:
+		return _T("EXCEPTION_BREAKPOINT");
+	case EXCEPTION_SINGLE_STEP:
+		return _T("EXCEPTION_SINGLE_STEP");
+	case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
+		return _T("EXCEPTION_ARRAY_BOUNDS_EXCEEDED");
+	case EXCEPTION_FLT_DENORMAL_OPERAND:
+		return _T("EXCEPTION_FLT_DENORMAL_OPERAND");
+	case EXCEPTION_FLT_DIVIDE_BY_ZERO:
+		return _T("EXCEPTION_FLT_DIVIDE_BY_ZERO");
+	case EXCEPTION_FLT_INEXACT_RESULT:
+		return _T("EXCEPTION_FLT_INEXACT_RESULT");
+	case EXCEPTION_FLT_INVALID_OPERATION:
+		return _T("EXCEPTION_FLT_INVALID_OPERATION");
+	case EXCEPTION_FLT_OVERFLOW:
+		return _T("EXCEPTION_FLT_OVERFLOW");
+	case EXCEPTION_FLT_STACK_CHECK:
+		return _T("EXCEPTION_FLT_STACK_CHECK");
+	case EXCEPTION_FLT_UNDERFLOW:
+		return _T("EXCEPTION_FLT_UNDERFLOW");
+	case EXCEPTION_INT_DIVIDE_BY_ZERO:
+		return _T("EXCEPTION_INT_DIVIDE_BY_ZERO");
+	case EXCEPTION_INT_OVERFLOW:
+		return _T("EXCEPTION_INT_OVERFLOW");
+	case EXCEPTION_PRIV_INSTRUCTION:
+		return _T("EXCEPTION_PRIV_INSTRUCTION");
+	case EXCEPTION_IN_PAGE_ERROR:
+		return _T("EXCEPTION_IN_PAGE_ERROR");
+	case EXCEPTION_ILLEGAL_INSTRUCTION:
+		return _T("EXCEPTION_ILLEGAL_INSTRUCTION");
+	case EXCEPTION_NONCONTINUABLE_EXCEPTION:
+		return _T("EXCEPTION_NONCONTINUABLE_EXCEPTION");
+	case EXCEPTION_STACK_OVERFLOW:
+		return _T("EXCEPTION_STACK_OVERFLOW");
+	case EXCEPTION_INVALID_DISPOSITION:
+		return _T("EXCEPTION_INVALID_DISPOSITION");
+	case EXCEPTION_GUARD_PAGE:
+		return _T("EXCEPTION_GUARD_PAGE");
+	case EXCEPTION_INVALID_HANDLE:
+		return _T("EXCEPTION_INVALID_HANDLE");
+	default:
+		return NULL;
+	}
+}
+
+static BOOL InternalSymGetLineFromAddr(HANDLE hProcess,
+	DWORD dwAddr, PDWORD pdwDisplacement, PIMAGEHLP_LINE Line)
+{
+	static bool g_bLookedForSymFuncs = false;
+	static PFNSYMGETLINEFROMADDR g_pfnSymGetLineFromAddr = NULL;
+
+	// Have I already done the GetProcAddress?
+	if (!g_bLookedForSymFuncs)
+	{
+		g_bLookedForSymFuncs = true;
+		g_pfnSymGetLineFromAddr = (PFNSYMGETLINEFROMADDR)GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr");
+	}
+	if (NULL != g_pfnSymGetLineFromAddr)
+	{
+#ifdef WORK_AROUND_SRCLINE_BUG
+		// The problem is that the symbol engine only finds those source
+		// line addresses (after the first lookup) that fall exactly on
+		// a zero displacement. I will walk backwards 100 bytes to
+		// find the line and return the proper displacement.
+		DWORD dwTempDis = 0;
+		while (!g_pfnSymGetLineFromAddr(hProcess, dwAddr - dwTempDis, pdwDisplacement, Line))
+		{
+			dwTempDis += 1;
+			if (100 == dwTempDis)
+				return FALSE;
+		}
+		// It was found and the source line information is correct so
+		// change the displacement if it was looked up multiple times.
+		if (0 != dwTempDis)
+			*pdwDisplacement = dwTempDis;
+		return TRUE;
+#else // WORK_AROUND_SRCLINE_BUG
+		return g_pfnSymGetLineFromAddr(hProcess, dwAddr, pdwDisplacement, Line);
+#endif
+	}
+	return FALSE;
+}
+
+static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
+{
+	ASSERT(FALSE == IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)));
+	if (IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)))
+	{
+		TRACE0("Bad parameter to GetFaultReasonA\n");
+		return NULL;
+	}
+
+	// The value that holds the return.
+	LPCTSTR szRet = NULL;
+	__try
+	{
+		// Initialize the symbol engine in case it is not initialized.
+		InitSymEng();
+
+		// The current position in the buffer.
+		int iCurr = 0;
+		// A temp value holder. This is to keep the stack usage to a
+		// minimum.
+		DWORD dwTemp;
+		iCurr += BSUGetModuleBaseName(GetCurrentProcess(), NULL, g_szBuff, BUFF_SIZE);
+		iCurr += wsprintf(g_szBuff + iCurr , _T(" caused a "));
+
+		dwTemp = (DWORD)ConvertSimpleException(pExPtrs->ExceptionRecord->ExceptionCode);
+
+		if (NULL != dwTemp)
+		{
+			iCurr += wsprintf(g_szBuff + iCurr, _T("%s"), dwTemp);
+		}
+		else
+		{
+			iCurr += (FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS
+				| FORMAT_MESSAGE_FROM_HMODULE,
+				GetModuleHandle(_T("NTDLL.DLL")),
+				pExPtrs->ExceptionRecord->ExceptionCode,
+				0,
+				g_szBuff + iCurr,
+				BUFF_SIZE,
+				0) * sizeof(TCHAR));
+		}
+
+		ASSERT(iCurr < BUFF_SIZE);
+
+		iCurr += wsprintf(g_szBuff + iCurr, _T(" in module "));
+
+		dwTemp = SymGetModuleBase(GetCurrentProcess(),
+			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress);
+
+		ASSERT(NULL != dwTemp);
+
+		if (NULL == dwTemp)
+		{
+			iCurr += wsprintf(g_szBuff + iCurr, _T("<UNKNOWN>"));
+		}
+		else
+		{
+			iCurr += BSUGetModuleBaseName(GetCurrentProcess(),
+				(HINSTANCE)dwTemp, g_szBuff + iCurr, BUFF_SIZE - iCurr);
+		}
+
+#ifdef _ALPHA_
+		iCurr += wsprintf(g_szBuff + iCurr,
+			_T(" at %08X"),
+			pExPtrs->ExceptionRecord->ExceptionAddress);
+#else
+		iCurr += wsprintf(g_szBuff + iCurr,
+			_T(" at %04X:%08X"),
+			pExPtrs->ContextRecord->SegCs,
+			pExPtrs->ExceptionRecord->ExceptionAddress);
+#endif
+		ASSERT(iCurr < BUFF_SIZE);
+
+		// Start looking up the exception address.
+		//lint -e545
+		PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol;
+		//lint +e545
+		ZeroMemory(pSym, SYM_BUFF_SIZE);
+		pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
+		pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL);
+
+		DWORD dwDisp;
+		if (SymGetSymFromAddr(GetCurrentProcess(),
+			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress,
+			&dwDisp, pSym))
+		{
+			iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
+
+			// Copy no more than there is room for.
+			dwTemp = lstrlen(pSym->Name);
+			if ((int)dwTemp > (BUFF_SIZE - iCurr - 20))
+			{
+				lstrcpyn(g_szBuff + iCurr, pSym->Name, BUFF_SIZE - iCurr - 1);
+				// Gotta leave now.
+				szRet = g_szBuff;
+				__leave;
+			}
+			else
+			{
+				if (dwDisp > 0)
+				{
+					iCurr += wsprintf(g_szBuff + iCurr,
+						_T("%s()+%d byte(s)"), pSym->Name, dwDisp);
+				}
+				else
+				{
+					iCurr += wsprintf(g_szBuff + iCurr,
+						_T("%s "), pSym->Name);
+				}
+			}
+		}
+		else
+		{
+			// If the symbol was not found, the source and line will not
+			// be found either so leave now.
+			szRet = g_szBuff;
+			__leave;
+		}
+
+		ASSERT(iCurr < BUFF_SIZE);
+
+		// Do the source and line lookup.
+		ZeroMemory(&g_stLine, sizeof(IMAGEHLP_LINE));
+		g_stLine.SizeOfStruct = sizeof(IMAGEHLP_LINE);
+
+		if (InternalSymGetLineFromAddr(GetCurrentProcess(),
+			(DWORD)pExPtrs->ExceptionRecord->ExceptionAddress,
+			&dwDisp, &g_stLine))
+		{
+			iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
+
+			// Copy no more than there is room for.
+			dwTemp = lstrlen(g_stLine.FileName);
+			if ((int)dwTemp > (BUFF_SIZE - iCurr - 25))
+			{
+				lstrcpyn(g_szBuff + iCurr,
+					g_stLine.FileName,
+					BUFF_SIZE - iCurr - 1);
+				// Gotta leave now.
+				szRet = g_szBuff;
+				__leave;
+			}
+			else
+			{
+				if (dwDisp > 0)
+				{
+					iCurr += wsprintf(g_szBuff + iCurr,
+						_T("%s, line %d+%d byte(s)"),
+						g_stLine.FileName,
+						g_stLine.LineNumber,
+						dwDisp);
+				}
+				else
+				{
+					iCurr += wsprintf(g_szBuff + iCurr,
+						_T("%s, line %d"),
+						g_stLine.FileName,
+						g_stLine.LineNumber);
+				}
+			}
+		}
+		szRet = g_szBuff;
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		ASSERT(FALSE);
+		szRet = NULL;
+	}
+	return szRet;
+}
+
+static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
+{
+	ASSERT(!IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)));
+	if (IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)))
+	{
+		TRACE0("GetStackTraceString - invalid pExPtrs!\n");
+		return NULL;
+	}
+
+	// The value that is returned.
+	LPCTSTR szRet = NULL;
+	// A temporary for all to use. This saves stack space.
+	DWORD dwTemp = 0;
+
+	__try
+	{
+		// Initialize the symbol engine in case it is not initialized.
+		InitSymEng();
+#ifdef _ALPHA_
+#define CH_MACHINE IMAGE_FILE_MACHINE_ALPHA
+#else
+#define CH_MACHINE IMAGE_FILE_MACHINE_I386
+#endif
+		// Note: If the source and line functions are used, then
+		// StackWalk can access violate.
+		BOOL bSWRet = StackWalk(CH_MACHINE,
+			GetCurrentProcess(),
+			GetCurrentThread(),
+			&g_stFrame,
+			pExPtrs->ContextRecord,
+			NULL,
+			SymFunctionTableAccess,
+			SymGetModuleBase,
+			NULL) ;
+		if (!bSWRet || 0 == g_stFrame.AddrFrame.Offset)
+		{
+			szRet = NULL;
+			__leave;
+		}
+
+		int iCurr = 0;
+		// At a minimum, put the address in.
+#ifdef _ALPHA_
+		iCurr += wsprintf(g_szBuff + iCurr, _T("0x%08X"),
+			g_stFrame.AddrPC.Offset);
+#else
+		iCurr += wsprintf(g_szBuff + iCurr, _T("%04X:%08X"),
+			pExPtrs->ContextRecord->SegCs,
+			g_stFrame.AddrPC.Offset);
+#endif
+
+		// Do the parameters?
+		//if (GSTSO_PARAMS == (dwOpts & GSTSO_PARAMS))
+		{
+			iCurr += wsprintf(g_szBuff + iCurr,
+				_T(" (0x%08X 0x%08X 0x%08X 0x%08X)"),
+				g_stFrame.Params[0],
+				g_stFrame.Params[1],
+				g_stFrame.Params[2],
+				g_stFrame.Params[3]);
+		}
+
+		//if (GSTSO_MODULE == (dwOpts & GSTSO_MODULE))
+		{
+			iCurr += wsprintf(g_szBuff + iCurr, _T(" "));
+			dwTemp = SymGetModuleBase(GetCurrentProcess(), g_stFrame.AddrPC.Offset);
+			ASSERT(NULL != dwTemp);
+			if (NULL == dwTemp)
+			{
+				iCurr += wsprintf(g_szBuff + iCurr, _T("<UNKNOWN>"));
+			}
+			else
+			{
+				iCurr += BSUGetModuleBaseName(GetCurrentProcess(),
+					(HINSTANCE)dwTemp,
+					g_szBuff + iCurr,
+					BUFF_SIZE - iCurr);
+			}
+		}
+
+		ASSERT (iCurr < BUFF_SIZE);
+		DWORD dwDisp;
+
+		//if (GSTSO_SYMBOL == (dwOpts & GSTSO_SYMBOL))
+		{
+			// Start looking up the exception address.
+			//lint -e545
+			PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol;
+			//lint +e545
+			ZeroMemory(pSym, SYM_BUFF_SIZE);
+			pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
+			pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL);
+
+			if (SymGetSymFromAddr(GetCurrentProcess(),
+				g_stFrame.AddrPC.Offset, &dwDisp, pSym))
+			{
+				iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
+
+				// Copy no more than there is room for.
+				dwTemp = lstrlen(pSym->Name);
+				if (dwTemp > (DWORD)(BUFF_SIZE - iCurr - 20))
+				{
+					lstrcpyn(g_szBuff + iCurr, pSym->Name, BUFF_SIZE - iCurr - 1);
+					// Gotta leave now.
+					szRet = g_szBuff;
+					__leave;
+				}
+				else
+				{
+					if (dwDisp > 0)
+					{
+						iCurr += wsprintf(g_szBuff + iCurr,
+							_T("%s()+%d byte(s)"),
+							pSym->Name, dwDisp);
+					}
+					else
+					{
+						iCurr += wsprintf(g_szBuff + iCurr,
+							_T("%s"), pSym->Name);
+					}
+				}
+			}
+			else
+			{
+				// If the symbol was not found, the source and line will
+				// not be found either so leave now.
+				szRet = g_szBuff;
+				__leave;
+			}
+
+		}
+
+		//if (GSTSO_SRCLINE == (dwOpts & GSTSO_SRCLINE))
+		{
+			ZeroMemory(&g_stLine, sizeof(IMAGEHLP_LINE));
+			g_stLine.SizeOfStruct = sizeof(IMAGEHLP_LINE);
+
+			if (InternalSymGetLineFromAddr(GetCurrentProcess(),
+				g_stFrame.AddrPC.Offset, &dwDisp, &g_stLine))
+			{
+				iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
+
+				// Copy no more than there is room for.
+				dwTemp = lstrlen(g_stLine.FileName);
+				if (dwTemp > (DWORD)(BUFF_SIZE - iCurr - 25))
+				{
+					lstrcpyn(g_szBuff + iCurr, g_stLine.FileName, BUFF_SIZE - iCurr - 1);
+					// Gotta leave now.
+					szRet = g_szBuff;
+					__leave;
+				}
+				else
+				{
+					if (dwDisp > 0)
+					{
+						iCurr += wsprintf(g_szBuff + iCurr,
+							_T ("%s, line %d+%d byte(s)"),
+							g_stLine.FileName,
+							g_stLine.LineNumber,
+							dwDisp);
+					}
+					else
+					{
+						iCurr += wsprintf(g_szBuff + iCurr,
+							_T("%s, line %d"),
+							g_stLine.FileName,
+							g_stLine.LineNumber);
+					}
+				}
+			}
+		}
+
+		szRet = g_szBuff;
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		ASSERT(FALSE);
+		szRet = NULL;
+	}
+	return szRet;
+}
+
+static LPCTSTR GetFirstStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
+{
+	// All of the error checking is in the InternalGetStackTraceString
+	// function.
+
+	// Initialize the STACKFRAME structure.
+	ZeroMemory(&g_stFrame, sizeof(STACKFRAME));
+#ifdef _X86_
+	g_stFrame.AddrPC.Offset = pExPtrs->ContextRecord->Eip;
+	g_stFrame.AddrPC.Mode = AddrModeFlat;
+	g_stFrame.AddrStack.Offset = pExPtrs->ContextRecord->Esp;
+	g_stFrame.AddrStack.Mode = AddrModeFlat;
+	g_stFrame.AddrFrame.Offset = pExPtrs->ContextRecord->Ebp;
+	g_stFrame.AddrFrame.Mode = AddrModeFlat;
+#else
+	g_stFrame.AddrPC.Offset = (DWORD)pExPtrs->ContextRecord->Fir;
+	g_stFrame.AddrPC.Mode = AddrModeFlat;
+	g_stFrame.AddrReturn.Offset = (DWORD)pExPtrs->ContextRecord->IntRa;
+	g_stFrame.AddrReturn.Mode = AddrModeFlat;
+	g_stFrame.AddrStack.Offset = (DWORD)pExPtrs->ContextRecord->IntSp;
+	g_stFrame.AddrStack.Mode = AddrModeFlat;
+	g_stFrame.AddrFrame.Offset = (DWORD)pExPtrs->ContextRecord->IntFp;
+	g_stFrame.AddrFrame.Mode = AddrModeFlat;
+#endif
+
+	return InternalGetStackTraceString(pExPtrs);
+}
+
+static LPCTSTR GetNextStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
+{
+	// All error checking is in InternalGetStackTraceString.
+	// Assume that GetFirstStackTraceString has already initialized the
+	// stack frame information.
+	return InternalGetStackTraceString(pExPtrs);
+}
+
+// This function does put a bit of data on the stack and heap.
+// Hopefully it won't cause more trouble... So we log this data last.
+static void QueryKey(ofstream& output, HKEY hKey, int indent)
+{
+	CString strIndent(' ', indent);
+	DWORD numSubKeys = 0;
+	DWORD maxSubKeyName = 0;
+	DWORD numValues = 0;
+	DWORD maxValueName = 0;
+	DWORD maxValueData = 0;
+	if (ERROR_SUCCESS == RegQueryInfoKey(hKey, NULL, NULL, NULL,
+		&numSubKeys, &maxSubKeyName,
+		NULL,
+		&numValues, &maxValueName, &maxValueData,
+		NULL, NULL))
+	{
+		// Enumerate the subkeys, recursively.
+		if (0 < numSubKeys)
+		{
+			TCHAR* nameSubKey = new TCHAR[maxSubKeyName+1];
+			for (DWORD i = 0; i < numSubKeys; ++i)
+			{
+				DWORD nameSubKeyLen = maxSubKeyName + 1;
+				if (ERROR_SUCCESS == RegEnumKeyEx(hKey, i,
+					nameSubKey, &nameSubKeyLen, NULL, NULL, NULL, NULL))
+				{
+					HKEY hSubKey;
+					if (ERROR_SUCCESS == RegOpenKeyEx(hKey, nameSubKey, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
+					{
+						output << (LPCTSTR)strIndent << nameSubKey << endl;
+						QueryKey(output, hSubKey, indent + 1);
+						RegCloseKey(hSubKey);
+					}
+				}
+			}
+			delete [] nameSubKey;
+		}
+
+		// Enumerate the key values.
+		if (numValues)
+		{
+			TCHAR* valueName = new TCHAR[maxValueName + 1];
+			TCHAR* valueData = new TCHAR[maxValueData + 2];
+			for (DWORD i = 0; i < numValues; ++i)
+			{
+				valueName[0] = '\0';
+				DWORD dwSize = maxValueName + 1;
+				DWORD type;
+				if (ERROR_SUCCESS == RegEnumValue(hKey, i,
+					valueName, &dwSize, NULL,
+					&type, NULL, NULL))
+				{
+					bool bOk = false;
+					TCHAR* pType = "??";
+					switch (type)
+					{
+					default:
+						break;
+					case REG_BINARY:
+						pType = "BINARY";
+						break;
+					//REG_DWORD_LITTLE_ENDIAN == REG_DWORD
+					case REG_DWORD_BIG_ENDIAN:
+						pType = "DWORD_BIG_ENDIAN";
+						break;
+					case REG_LINK:
+						pType = "LINK";
+						break;
+					case REG_MULTI_SZ:
+						pType = "MULTI_SZ";
+						break;
+					case REG_NONE:
+						pType = "NONE";
+						break;
+					case REG_QWORD:
+					//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
+						pType = "QWORD";
+						break;
+					case REG_DWORD:
+						pType = "DWORD";
+						{
+							DWORD dwVal;
+							dwSize = sizeof(dwVal);
+							if (ERROR_SUCCESS == RegQueryValueEx(hKey, valueName, NULL, &type, (LPBYTE)&dwVal, &dwSize))
+							{
+								bOk = true;
+								output << (LPCTSTR)strIndent
+									<< valueName
+									<< '('
+									<< pType
+									<< "): "
+									<< dwVal
+									<< endl;
+							}
+						}
+						break;
+					case REG_EXPAND_SZ:
+					case REG_SZ:
+						if (REG_EXPAND_SZ == type)
+							pType = "EXPAND_SZ";
+						else
+							pType = "SZ";
+						dwSize = maxValueData + 2;
+						if (ERROR_SUCCESS == RegQueryValueEx(hKey, valueName, NULL, &type, (LPBYTE)valueData, &dwSize))
+						{
+							bOk = true;
+							output << (LPCTSTR)strIndent
+								<< valueName
+								<< '('
+								<< pType
+								<< "): "
+								<< valueData
+								<< endl;
+						}
+						break;
+					}
+					if (!bOk)
+					{
+						output << (LPCTSTR)strIndent
+							<< valueName
+							<< '('
+							<< pType
+							<< ')'
+							<< endl;
+					}
+				}
+			}
+			delete [] valueName;
+			delete [] valueData;
+		}
+	}
 }
 
 /**
  * This function is passed to SetUnhandledExceptionFilter().
  * Note, this function will NOT be called if you are running under a debugger.
  */
-LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS ExceptionInfo)
+LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 {
-	LPCTSTR pReason = GetFaultReason(ExceptionInfo);
-	AfxMessageBox(pReason, MB_ICONSTOP);
-	for (LPCTSTR pStack = GetFirstStackTraceString(ExceptionInfo);
-		pStack;
-		pStack = GetNextStackTraceString(ExceptionInfo))
+	LPCTSTR pReason = GetFaultReason(pExPtrs);
+
+	// Create the log file.
+	static TCHAR buffer[MAX_PATH]; // static to keep off stack
 	{
-		// Dump info
+		GetModuleFileName(NULL, buffer, MAX_PATH);
+		int len = lstrlen(buffer);
+		if (5 > len)
+		{
+			AfxMessageBox(pReason, MB_ICONSTOP);
+			return EXCEPTION_CONTINUE_SEARCH;
+		}
+		lstrcpy(&buffer[len-3], "log");
 	}
-	if (s_bLetItCrash)
-		return EXCEPTION_CONTINUE_SEARCH;
-	else
-		return EXCEPTION_EXECUTE_HANDLER;
+	ofstream output(buffer, ios::app);
+	output.exceptions(ios_base::badbit);
+
+	// Need to copy this since it's sitting in a global buffer.
+	// We don't display it until after we've written the log.
+	static TCHAR reasonBuffer[BUFF_SIZE+MAX_PATH+30];
+	lstrcpy(reasonBuffer, pReason);
+
+	// Now dump the stack.
+	if (!(output.rdstate() & ios::failbit))
+	{
+		lstrcat(reasonBuffer, "\n\nLog written at ");
+		lstrcat(reasonBuffer, buffer);
+
+		time_t t;
+		time(&t);
+		struct tm* local = localtime(&t);
+		_tcsftime(buffer, MAX_PATH, _T("%#c"), local);
+		output << endl << "============================================================" << endl;
+		output << buffer << endl << endl;
+		// Write the reason
+		output << pReason << endl << endl;
+		// Now re-use the variable
+		for (pReason = GetFirstStackTraceString(pExPtrs);
+			pReason;
+			pReason = GetNextStackTraceString(pExPtrs))
+		{
+			output << pReason << endl;
+		}
+		// Since we are handling an unhandled exception, there is a very
+		// real danger that the application is in an extremely unstable
+		// state. So dump the registry settings last just in case we die.
+		output << endl << "Current registry settings:" << endl;
+		QueryKey(output, g_hAppKey, 1);
+		output.close();
+	}
+
+	AfxMessageBox(reasonBuffer, MB_ICONSTOP);
+	return EXCEPTION_EXECUTE_HANDLER;
+}
+
+bool InitCrashHandler(HKEY hAppKey)
+{
+	g_hAppKey = hAppKey;
+	SetUnhandledExceptionFilter(CrashHandler);
+	return true;
+}
+
+bool CleanupCrashHandler()
+{
+	if (g_hAppKey != NULL)
+		RegCloseKey(g_hAppKey);
+	return true;
 }
