@@ -280,7 +280,7 @@ public:
 	int NumMultiHostedTrialsInDivision(
 		ARBConfig const& inConfig,
 		std::string const& inVenue,
-		std::string const& inDiv);
+		std::string const& inDiv) const;
 
 	/**
 	 * Get the number of runs in a division.

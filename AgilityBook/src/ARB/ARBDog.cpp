@@ -415,7 +415,7 @@ int ARBDogList::DeleteOtherPoints(std::string const& inOther)
 int ARBDogList::NumMultiHostedTrialsInDivision(
 	ARBConfig const& inConfig,
 	std::string const& inVenue,
-	std::string const& inDiv)
+	std::string const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)

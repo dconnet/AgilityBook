@@ -393,12 +393,12 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 	return trimmed;
 }
 
-ARBCalendar* ARBCalendarList::FindCalendar(ARBCalendar const* inCal)
+ARBCalendar const* ARBCalendarList::FindCalendar(ARBCalendar const* inCal) const
 {
-	ARBCalendar* pCal = NULL;
+	ARBCalendar const* pCal = NULL;
 	if (inCal)
 	{
-		for (iterator iter = begin(); iter != end(); ++iter)
+		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
 			if (*(*iter) == *inCal)
 			{
