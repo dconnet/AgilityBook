@@ -201,11 +201,15 @@ BOOL CAgilityBookApp::InitInstance()
 	bool bOpeningLast = false;
 	if (CCommandLineInfo::FileNew == cmdInfo.m_nShellCommand)
 	{
-		CString strFile = GetProfileString("Settings", "LastFile", _T(""));
-		if (!strFile.IsEmpty())
+		// Don't open it if the shift key is down.
+		if (0 <= GetKeyState(VK_SHIFT))
 		{
-			bOpeningLast = true;
-			cmdInfo.ParseParam(strFile, FALSE, TRUE);
+			CString strFile = GetProfileString("Settings", "LastFile", _T(""));
+			if (!strFile.IsEmpty())
+			{
+				bOpeningLast = true;
+				cmdInfo.ParseParam(strFile, FALSE, TRUE);
+			}
 		}
 	}
 	// If a file is being opened, verify it exists first!
