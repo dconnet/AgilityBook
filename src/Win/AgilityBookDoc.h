@@ -34,6 +34,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-08-25 DRC Added GetCurrentRun().
  * @li 2003-08-24 DRC Optimized filtering by adding boolean into ARBBase to
  *                    prevent constant re-evaluation.
  */
@@ -72,6 +73,7 @@ public:
 	// Data
 	ARBDog* GetCurrentDog();
 	ARBDogTrial* GetCurrentTrial();
+	ARBDogRun* GetCurrentRun();
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
