@@ -358,6 +358,10 @@ SOURCE=..\..\..\Win\DlgTrial.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\HeaderCtrl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\HyperLink.cpp
 # End Source File
 # Begin Source File
@@ -676,6 +680,10 @@ SOURCE=..\..\..\Win\DlgTraining.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\HeaderCtrl.h
 # End Source File
 # Begin Source File
 

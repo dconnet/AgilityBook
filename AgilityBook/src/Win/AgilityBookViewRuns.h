@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-08-30 DRC Added the ability to copy entries to the clipboard.
@@ -43,6 +44,7 @@
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
+#include "HeaderCtrl.h"
 class CAgilityBookDoc;
 class CAgilityBookViewRuns;
 class CAgilityBookViewRunsData;
@@ -89,6 +91,7 @@ protected:
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
+	virtual void OnInitialUpdate();
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL
@@ -102,6 +105,7 @@ public:
 #endif
 
 private:
+	CHeaderCtrl2 m_SortHeader;
 	CImageList m_ImageList;
 	int m_imgCourse;
 	int m_imgMap;

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-04-15 DRC Added Duplicate menu item.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
@@ -42,6 +43,7 @@
 #include <vector>
 #include "CommonView.h"
 #include "DlgFind.h"
+#include "HeaderCtrl.h"
 #include "ListCtrl.h"
 class ARBDate;
 class ARBTraining;
@@ -90,6 +92,7 @@ protected:
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
+	virtual void OnInitialUpdate(); // called first time after construct
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 	//}}AFX_VIRTUAL
@@ -103,6 +106,7 @@ public:
 #endif
 
 private:
+	CHeaderCtrl2 m_SortHeader;
 	std::vector<int> m_Columns;
 	CFindTraining m_Callback;
 	int m_SortColumn;

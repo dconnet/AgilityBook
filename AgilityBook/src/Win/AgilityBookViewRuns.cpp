@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-06-24 DRC Added a sort header image.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -909,7 +910,7 @@ bool CFindRuns::Search() const
 		}
 		else
 		{
-			int nColumns = m_pView->GetListCtrl().GetHeaderCtrl()->GetItemCount();
+			int nColumns = m_pView->m_SortHeader.GetItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
@@ -1005,12 +1006,15 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT);
-
 	GetListCtrl().SetImageList(&m_ImageList, LVSIL_SMALL);
-
-	SetupColumns();
-
 	return 0;
+}
+
+void CAgilityBookViewRuns::OnInitialUpdate()
+{
+	m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
+	SetupColumns();
+	CListView2::OnInitialUpdate();
 }
 
 void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
@@ -1103,7 +1107,7 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 
 void CAgilityBookViewRuns::SetupColumns()
 {
-	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	int nColumnCount = m_SortHeader.GetItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().DeleteColumn(0);
 	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewRuns, IO_TYPE_VIEW_RUNS_LIST, m_Columns))
@@ -1196,7 +1200,7 @@ void CAgilityBookViewRuns::LoadData()
 			}
 		}
 	}
-	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	int nColumnCount = m_SortHeader.GetItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
@@ -1213,6 +1217,7 @@ void CAgilityBookViewRuns::LoadData()
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+	m_SortHeader.Sort(abs(m_SortColumn), CHeaderCtrl2::eDescending);
 
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);
@@ -1290,6 +1295,7 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	m_SortHeader.Sort(abs(m_SortColumn), CHeaderCtrl2::eNoSort);
 	int nBackwards = 1;
 	if (m_SortColumn == pNMListView->iSubItem)
 		nBackwards = -1;
@@ -1298,6 +1304,8 @@ void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 	info.pThis = this;
 	info.nCol = m_SortColumn;
 	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+	m_SortHeader.Sort(abs(m_SortColumn),
+		nBackwards > 0 ? CHeaderCtrl2::eDescending : CHeaderCtrl2::eAscending);
 	*pResult = 0;
 }
 

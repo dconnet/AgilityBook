@@ -338,6 +338,9 @@
 				RelativePath="..\..\..\Win\DlgTrial.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\HeaderCtrl.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\HyperLink.cpp">
 			</File>
 			<File
@@ -591,6 +594,9 @@
 				RelativePath="..\..\..\Win\DlgTrial.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\HeaderCtrl.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\HyperLink.h">
 			</File>
 			<File
@@ -686,6 +692,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\res\DefaultConfig.xml">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\res\HdrDown.ico">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\res\HdrUp.ico">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\res\hidden.ico">
