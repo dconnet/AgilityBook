@@ -16,6 +16,11 @@
     of sync.
   - Only compute MACH points if time and SCT are greater than zero. Also,
     do not allow negative mach points.
+  - Entering an incomplete run (either the time or SCT left at 0) and
+    marking the run as a 'Q' would generate Mach points (obviously, way too
+    many!). Also, if a run that was over-time was marked as a Q, the program
+    generated a negative number of MACH points. In both cases, it should report
+    zero points.
 
 9/15/2004: v1.3.2.9
 - Bug fix
