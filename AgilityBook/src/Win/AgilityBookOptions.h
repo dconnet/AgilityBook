@@ -78,14 +78,10 @@ public:
 	static bool IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
 		std::string const& venue);
-	static bool IsLevelVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrial const* pTrial,
-		std::string const& level);
 	static bool IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrial const* pTrial);
-	static bool IsRunVisible(
+	static unsigned short IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrial const* pTrial,
 		ARBDogRun const* pRun);

@@ -2,16 +2,13 @@
 - Bumped file Configuration v4:
   - CPE 'CADE' changed to 'C-ATE'.
 - New features / Enhancements:
-  - In the Points view, do not filter individual runs (only venues and titles).
-    This change allows us to show a qualifying percentage.
+  - In the Points view, do not filter individual runs based on Qs (use all
+    other filter criteria). This allows us to show a qualifying percentage.
   - Allow users to specify their own splash screen. Only .bmp files are
     supported (limited to Window's LoadImage API). Set in the Options dialog.
   - After adding a title, display the dog properties on title page. Change the
     behavior in the Options dialog to restore previous program behavior.
     (Too many people were having problems finding the title later.)
-  - When filtering runs, the points view still showed everything (so it could
-    display percentages). Modified this to filter levels - now you can look
-    at only (for instance) Masters runs.
 - Bug fixes
   - Quote exported data so non-tab delimiters work properly if the delimiter
     character is actually part of the output data. Quotes are added if needed.

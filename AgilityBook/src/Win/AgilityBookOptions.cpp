@@ -31,7 +31,6 @@
  * @author David Connet
  *
  * Revision History
- * @li 2004-05-16 DRC Added IsLevelVisible.
  * @li 2004-04-08 DRC Added general program options.
  * @li 2004-03-13 DRC Added GetViewHiddenTitles, updated IsTitleVisible.
  * @li 2004-01-04 DRC Added GetImportExportDateFormat.
@@ -160,41 +159,6 @@ bool CAgilityBookOptions::IsVenueVisible(
 	return true;
 }
 
-bool CAgilityBookOptions::IsLevelVisible(
-	std::vector<CVenueFilter> const& venues,
-	ARBDogTrial const* pTrial,
-	std::string const& level)
-{
-	bool bVisible = false;
-	for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
-		iterClub != pTrial->GetClubs().end();
-		++iterClub)
-	{
-		if (IsVenueVisible(venues, (*iterClub)->GetVenue()))
-		{
-			bVisible = true;
-			break;
-		}
-	}
-	if (!bVisible)
-		return false;
-	if (!CAgilityBookOptions::GetViewAllVenues())
-	{
-		bVisible = false;
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
-		{
-			if ((*iter).level == level)
-			{
-				bVisible = true;
-				break;
-			}
-		}
-	}
-	return bVisible;
-}
-
 bool CAgilityBookOptions::IsTrialVisible(
 	std::vector<CVenueFilter> const& venues,
 	ARBDogTrial const* pTrial)
@@ -216,17 +180,19 @@ bool CAgilityBookOptions::IsTrialVisible(
 	return true;
 }
 
-bool CAgilityBookOptions::IsRunVisible(
+// Return type should be the same as ARBBase::m_nFiltered
+unsigned short CAgilityBookOptions::IsRunVisible(
 	std::vector<CVenueFilter> const& venues,
 	ARBDogTrial const* pTrial,
 	ARBDogRun const* pRun)
 {
+	unsigned short nVisible = 0;
 	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
-		return false;
-	bool bVisible = true;
+		return nVisible;
+	nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
-		bVisible = false;
+		nVisible = 0;
 		if (IsTrialVisible(venues, pTrial))
 		{
 			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
@@ -236,21 +202,23 @@ bool CAgilityBookOptions::IsRunVisible(
 				if (pRun->GetDivision() == (*iter).division
 				&& pRun->GetLevel() == (*iter).level)
 				{
-					bVisible = true;
+					nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
 					break;
 				}
 			}
 		}
 	}
-	if (bVisible && !CAgilityBookOptions::GetViewAllRuns())
+	if ((nVisible & (0x1 << ARBBase::eFilter))
+	&& !CAgilityBookOptions::GetViewAllRuns())
 	{
-		bVisible = false;
+		// Only set the full filter, not the IgnoreQ filter.
+		nVisible &= ~(0x1 << ARBBase::eFilter);
 		bool bQualifying = CAgilityBookOptions::GetViewQRuns();
 		if ((pRun->GetQ().Qualified() && bQualifying)
 		|| (!pRun->GetQ().Qualified() && !bQualifying))
-			bVisible = true;
+			nVisible |= (0x1 << ARBBase::eFilter);
 	}
-	return bVisible;
+	return nVisible;
 }
 
 bool CAgilityBookOptions::IsTrainingLogVisible(
