@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-30 DRC Implemented full column reordering.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
@@ -71,6 +72,7 @@ static char THIS_FILE[] = __FILE__;
 
 class CAgilityBookViewRunsData
 {
+	friend int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 public:
 	CAgilityBookViewRunsData(CAgilityBookViewRuns* pView, ARBDog* pDog, ARBDogTrial* pTrial, ARBDogRun* pRun)
 		: m_RefCount(1)
@@ -366,6 +368,499 @@ int CAgilityBookViewRunsData::OnNeedIcon() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// List sorting
+
+struct SORT_RUN_INFO
+{
+	CAgilityBookViewRuns *pThis;
+	int nCol;
+};
+
+int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+{
+	SORT_RUN_INFO* sortInfo = reinterpret_cast<SORT_RUN_INFO*>(lParam3);
+	if (!sortInfo)
+		return 0;
+	CAgilityBookViewRunsData* pRun1 = reinterpret_cast<CAgilityBookViewRunsData*>(lParam1);
+	CAgilityBookViewRunsData* pRun2 = reinterpret_cast<CAgilityBookViewRunsData*>(lParam2);
+	int nRet = 0;
+	int iCol = abs(sortInfo->nCol);
+	// Col 0 is special: it has the icons. Instead of saving it,
+	// we simply ignore it - so iCol is always off by 1.
+	switch (sortInfo->pThis->m_Columns[iCol - 1])
+	{
+	default:
+		break;
+
+	case IO_RUNS_REG_NAME:
+		if (pRun1->m_pDog->GetRegisteredName() < pRun2->m_pDog->GetRegisteredName())
+			nRet = -1;
+		else if (pRun1->m_pDog->GetRegisteredName() > pRun2->m_pDog->GetRegisteredName())
+			nRet = 1;
+		break;
+	case IO_RUNS_CALL_NAME:
+		if (pRun1->m_pDog->GetCallName() < pRun2->m_pDog->GetCallName())
+			nRet = -1;
+		else if (pRun1->m_pDog->GetCallName() > pRun2->m_pDog->GetCallName())
+			nRet = 1;
+		break;
+	case IO_RUNS_DATE:
+		if (pRun1->m_pRun->GetDate() < pRun2->m_pRun->GetDate())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetDate() > pRun2->m_pRun->GetDate())
+			nRet = 1;
+		break;
+	case IO_RUNS_VENUE:
+		{
+			std::string str1, str2;
+			int i = 0;
+			ARBDogClubList::const_iterator iter;
+			for (iter = pRun1->m_pTrial->GetClubs().begin();
+				iter != pRun1->m_pTrial->GetClubs().end();
+				++iter, ++i)
+			{
+				if (0 < i)
+					str1 += "/";
+				str1 += (*iter)->GetVenue();
+			}
+			for (i = 0, iter = pRun2->m_pTrial->GetClubs().begin();
+				iter != pRun2->m_pTrial->GetClubs().end();
+				++iter, ++i)
+			{
+				if (0 < i)
+					str2 += "/";
+				str2 += (*iter)->GetVenue();
+			}
+			if (str1 < str2)
+				nRet = -1;
+			else if (str1 > str2)
+				nRet = 1;
+		}
+		break;
+	case IO_RUNS_CLUB:
+		{
+			std::string str1, str2;
+			int i = 0;
+			ARBDogClubList::const_iterator iter;
+			for (iter = pRun1->m_pTrial->GetClubs().begin();
+				iter != pRun1->m_pTrial->GetClubs().end();
+				++iter, ++i)
+			{
+				if (0 < i)
+					str1 += "/";
+				str1 += (*iter)->GetName();
+			}
+			for (i = 0, iter = pRun2->m_pTrial->GetClubs().begin();
+				iter != pRun2->m_pTrial->GetClubs().end();
+				++iter, ++i)
+			{
+				if (0 < i)
+					str2 += "/";
+				str2 += (*iter)->GetName();
+			}
+			if (str1 < str2)
+				nRet = -1;
+			else if (str1 > str2)
+				nRet = 1;
+		}
+		break;
+	case IO_RUNS_LOCATION:
+		if (pRun1->m_pTrial->GetLocation() < pRun2->m_pTrial->GetLocation())
+			nRet = -1;
+		else if (pRun1->m_pTrial->GetLocation() > pRun2->m_pTrial->GetLocation())
+			nRet = 1;
+		break;
+	case IO_RUNS_TRIAL_NOTES:
+		if (pRun1->m_pTrial->GetNote() < pRun2->m_pTrial->GetNote())
+			nRet = -1;
+		else if (pRun1->m_pTrial->GetNote() > pRun2->m_pTrial->GetNote())
+			nRet = 1;
+		break;
+	case IO_RUNS_DIVISION:
+		if (pRun1->m_pRun->GetDivision() < pRun2->m_pRun->GetDivision())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetDivision() > pRun2->m_pRun->GetDivision())
+			nRet = 1;
+		break;
+	case IO_RUNS_LEVEL:
+		if (pRun1->m_pRun->GetLevel() < pRun2->m_pRun->GetLevel())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetLevel() > pRun2->m_pRun->GetLevel())
+			nRet = 1;
+		break;
+	case IO_RUNS_EVENT:
+		if (pRun1->m_pRun->GetEvent() < pRun2->m_pRun->GetEvent())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetEvent() > pRun2->m_pRun->GetEvent())
+			nRet = 1;
+		break;
+	case IO_RUNS_HEIGHT:
+		if (pRun1->m_pRun->GetHeight() < pRun2->m_pRun->GetHeight())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetHeight() > pRun2->m_pRun->GetHeight())
+			nRet = 1;
+		break;
+	case IO_RUNS_JUDGE:
+		if (pRun1->m_pRun->GetJudge() < pRun2->m_pRun->GetJudge())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetJudge() > pRun2->m_pRun->GetJudge())
+			nRet = 1;
+		break;
+	case IO_RUNS_HANDLER:
+		if (pRun1->m_pRun->GetHandler() < pRun2->m_pRun->GetHandler())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetHandler() > pRun2->m_pRun->GetHandler())
+			nRet = 1;
+		break;
+	case IO_RUNS_CONDITIONS:
+		if (pRun1->m_pRun->GetConditions() < pRun2->m_pRun->GetConditions())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetConditions() > pRun2->m_pRun->GetConditions())
+			nRet = 1;
+		break;
+	case IO_RUNS_COURSE_FAULTS:
+		if (pRun1->m_pRun->GetScoring().GetCourseFaults() < pRun2->m_pRun->GetScoring().GetCourseFaults())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetScoring().GetCourseFaults() > pRun2->m_pRun->GetScoring().GetCourseFaults())
+			nRet = 1;
+		break;
+	case IO_RUNS_TIME:
+		if (pRun1->m_pRun->GetScoring().GetTime() < pRun2->m_pRun->GetScoring().GetTime())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetScoring().GetTime() > pRun2->m_pRun->GetScoring().GetTime())
+			nRet = 1;
+		break;
+	case IO_RUNS_YARDS:
+		{
+			bool bRun1 = (ARBDogRunScoring::eTypeByTime == pRun1->m_pRun->GetScoring().GetType()
+				&& 0.0 < pRun1->m_pRun->GetScoring().GetYards());
+			bool bRun2 = (ARBDogRunScoring::eTypeByTime == pRun2->m_pRun->GetScoring().GetType()
+				&& 0.0 < pRun2->m_pRun->GetScoring().GetYards());
+			if (bRun1 && bRun2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetYards() < pRun2->m_pRun->GetScoring().GetYards())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetYards() > pRun2->m_pRun->GetScoring().GetYards())
+					nRet = 1;
+			}
+			else if (bRun1)
+				nRet = 1;
+			else if (bRun2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_YPS:
+		{
+			double yps1, yps2;
+			bool bOk1 = pRun1->m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps1);
+			bool bOk2 = pRun2->m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps2);
+			if (bOk1 && bOk2)
+			{
+				if (yps1 < yps2)
+					nRet = -1;
+				else if (yps1 > yps2)
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_SCT:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByTime == pRun1->m_pRun->GetScoring().GetType()
+				&& 0.0 < pRun1->m_pRun->GetScoring().GetSCT();
+			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->m_pRun->GetScoring().GetType()
+				&& 0.0 < pRun2->m_pRun->GetScoring().GetSCT();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetSCT() < pRun2->m_pRun->GetScoring().GetSCT())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetSCT() > pRun2->m_pRun->GetScoring().GetSCT())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_TOTAL_FAULTS:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByTime == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				double faults1 = pRun1->m_pRun->GetScoring().GetCourseFaults() + pRun1->m_pRun->GetScoring().GetTimeFaults();
+				double faults2 = pRun2->m_pRun->GetScoring().GetCourseFaults() + pRun2->m_pRun->GetScoring().GetTimeFaults();
+				if (faults1 < faults2)
+					nRet = -1;
+				else if (faults1 > faults2)
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_REQ_OPENING:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetNeedOpenPts() < pRun2->m_pRun->GetScoring().GetNeedOpenPts())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetNeedOpenPts() > pRun2->m_pRun->GetScoring().GetNeedOpenPts())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_REQ_CLOSING:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetNeedClosePts() < pRun2->m_pRun->GetScoring().GetNeedClosePts())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetNeedClosePts() > pRun2->m_pRun->GetScoring().GetNeedClosePts())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_OPENING:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetOpenPts() < pRun2->m_pRun->GetScoring().GetOpenPts())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetOpenPts() > pRun2->m_pRun->GetScoring().GetOpenPts())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_CLOSING:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByOpenClose == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByOpenClose == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetClosePts() < pRun2->m_pRun->GetScoring().GetClosePts())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetClosePts() > pRun2->m_pRun->GetScoring().GetClosePts())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_REQ_POINTS:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByPoints == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByPoints == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetNeedOpenPts() < pRun2->m_pRun->GetScoring().GetNeedOpenPts())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetNeedOpenPts() > pRun2->m_pRun->GetScoring().GetNeedOpenPts())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_POINTS:
+		{
+			bool bOk1 = ARBDogRunScoring::eTypeByPoints == pRun1->m_pRun->GetScoring().GetType();
+			bool bOk2 = ARBDogRunScoring::eTypeByPoints == pRun2->m_pRun->GetScoring().GetType();
+			if (bOk1 && bOk2)
+			{
+				if (pRun1->m_pRun->GetScoring().GetOpenPts() < pRun2->m_pRun->GetScoring().GetOpenPts())
+					nRet = -1;
+				else if (pRun1->m_pRun->GetScoring().GetOpenPts() > pRun2->m_pRun->GetScoring().GetOpenPts())
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_PLACE:
+		{
+			short p1 = pRun1->m_pRun->GetPlace();
+			short p2 = pRun2->m_pRun->GetPlace();
+			if (p1 > p2)
+			{
+				if (p2 <= 0)
+					nRet = -1;
+				else
+					nRet = 1;
+			}
+			else if (p1 < p2)
+			{
+				if (p1 <= 0)
+					nRet = 1;
+				else
+					nRet = -1;
+			}
+		}
+		break;
+	case IO_RUNS_IN_CLASS:
+		{
+			short p1 = pRun1->m_pRun->GetInClass();
+			short p2 = pRun2->m_pRun->GetInClass();
+			if (p1 < p2)
+				nRet = -1;
+			else if (p1 > p2)
+				nRet = 1;
+		}
+		break;
+	case IO_RUNS_DOGSQD:
+		{
+			short p1 = pRun1->m_pRun->GetDogsQd();
+			short p2 = pRun2->m_pRun->GetDogsQd();
+			if (p1 < p2)
+				nRet = -1;
+			else if (p1 > p2)
+				nRet = 1;
+		}
+		break;
+	case IO_RUNS_Q:
+		if (pRun1->m_pRun->GetQ() < pRun2->m_pRun->GetQ())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetQ() > pRun2->m_pRun->GetQ())
+			nRet = 1;
+		break;
+	case IO_RUNS_SCORE:
+		{
+			bool bOk1 = (pRun1->m_pRun->GetQ().Qualified() || ARB_Q::eQ_NQ == pRun1->m_pRun->GetQ());
+			bool bOk2 = (pRun2->m_pRun->GetQ().Qualified() || ARB_Q::eQ_NQ == pRun2->m_pRun->GetQ());
+			if (bOk1 && bOk2)
+			{
+				ARBConfigScoring const* pScoring1 = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun1->m_pRun->GetEvent(),
+					pRun1->m_pRun->GetDivision(),
+					pRun1->m_pRun->GetLevel(),
+					pRun1->m_pRun->GetDate());
+				ARBConfigScoring const* pScoring2 = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pRun->GetEvent(),
+					pRun2->m_pRun->GetDivision(),
+					pRun2->m_pRun->GetLevel(),
+					pRun2->m_pRun->GetDate());
+				if (pScoring1 && pScoring2)
+				{
+					if (pRun1->m_pRun->GetScore(pScoring1) < pRun2->m_pRun->GetScore(pScoring2))
+						nRet = -1;
+					else if (pRun1->m_pRun->GetScore(pScoring1) > pRun2->m_pRun->GetScore(pScoring2))
+						nRet = 1;
+				}
+				else if (pScoring1)
+					nRet = -1;
+				else if (pScoring2)
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_TITLE_POINTS:
+		{
+			short pts1 = 0;
+			short pts2 = 0;
+			if (pRun1->m_pRun->GetQ().Qualified())
+			{
+				ARBConfigScoring const* pScoring = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun1->m_pRun->GetEvent(),
+					pRun1->m_pRun->GetDivision(),
+					pRun1->m_pRun->GetLevel(),
+					pRun1->m_pRun->GetDate());
+				if (pScoring)
+					pts1 = pRun1->m_pRun->GetTitlePoints(pScoring);
+			}
+			if (pRun2->m_pRun->GetQ().Qualified())
+			{
+				ARBConfigScoring const* pScoring = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pRun->GetEvent(),
+					pRun2->m_pRun->GetDivision(),
+					pRun2->m_pRun->GetLevel(),
+					pRun2->m_pRun->GetDate());
+				if (pScoring)
+					pts2 = pRun2->m_pRun->GetTitlePoints(pScoring);
+			}
+			if (pts1 < pts2)
+				nRet = -1;
+			else if (pts1 > pts2)
+				nRet = 1;
+		}
+		break;
+	case IO_RUNS_COMMENTS:
+		if (pRun1->m_pRun->GetNote() < pRun2->m_pRun->GetNote())
+			nRet = -1;
+		else if (pRun1->m_pRun->GetNote() > pRun2->m_pRun->GetNote())
+			nRet = 1;
+		break;
+	case IO_RUNS_FAULTS:
+		{
+			std::string str1, str2;
+			ARBDogFaultList::const_iterator iter;
+			int i = 0;
+			for (iter = pRun1->m_pRun->GetFaults().begin();
+				iter != pRun1->m_pRun->GetFaults().end();
+				++i, ++iter)
+			{
+				if (0 < i)
+					str1 += ", ";
+				str1 += *iter;
+			}
+			for (i = 0, iter = pRun2->m_pRun->GetFaults().begin();
+				iter != pRun2->m_pRun->GetFaults().end();
+				++i, ++iter)
+			{
+				if (0 < i)
+					str2 += ", ";
+				str2 += *iter;
+			}
+			if (str1 < str2)
+				nRet = -1;
+			else if (str1 > str2)
+				nRet = 1;
+		}
+		break;
+	}
+	if (0 > sortInfo->nCol)
+		nRet *= -1;
+	return nRet;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // Find
 
 bool CFindRuns::Search() const
@@ -435,6 +930,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
+	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemchanged)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
@@ -464,6 +960,7 @@ END_MESSAGE_MAP()
 CAgilityBookViewRuns::CAgilityBookViewRuns()
 	: m_bSuppressSelect(false)
 	, m_Callback(this)
+	, m_SortColumn(0)
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
 	CWinApp* app = AfxGetApp();
@@ -478,7 +975,7 @@ CAgilityBookViewRuns::~CAgilityBookViewRuns()
 
 BOOL CAgilityBookViewRuns::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -666,6 +1163,11 @@ void CAgilityBookViewRuns::LoadData()
 	if (GetMessage(msg) && IsWindowVisible())
 		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
+	SORT_RUN_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
@@ -737,6 +1239,20 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 		ASSERT(pMenu != NULL);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
+}
+
+void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	int nBackwards = 1;
+	if (m_SortColumn == pNMListView->iSubItem)
+		nBackwards = -1;
+	m_SortColumn = pNMListView->iSubItem * nBackwards;
+	SORT_RUN_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+	*pResult = 0;
 }
 
 void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 

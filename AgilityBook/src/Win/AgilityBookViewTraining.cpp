@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2004-04-06 DRC Added simple sorting by column.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-27 DRC Implemented Find/FindNext.
  * @li 2003-12-14 DRC Re-sort items after editing an existing one.
@@ -64,6 +65,7 @@ static char THIS_FILE[] = __FILE__;
 
 class CAgilityBookViewTrainingData
 {
+	friend int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
 public:
 	CAgilityBookViewTrainingData(CAgilityBookViewTraining* pView, ARBTraining* pTraining)
 		: m_RefCount(1)
@@ -125,6 +127,50 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 		}
 	}
 	return str;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// List sorting
+
+struct SORT_TRAINING_INFO
+{
+	CAgilityBookViewTraining *pThis;
+	int nCol;
+};
+
+int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+{
+	SORT_TRAINING_INFO* sortInfo = reinterpret_cast<SORT_TRAINING_INFO*>(lParam3);
+	if (!sortInfo || 0 == sortInfo->nCol)
+		return 0;
+	CAgilityBookViewTrainingData* pItem1 = reinterpret_cast<CAgilityBookViewTrainingData*>(lParam1);
+	CAgilityBookViewTrainingData* pItem2 = reinterpret_cast<CAgilityBookViewTrainingData*>(lParam2);
+	int nRet = 0;
+	int iCol = abs(sortInfo->nCol);
+	switch (sortInfo->pThis->m_Columns[iCol-1])
+	{
+	case IO_LOG_DATE:
+		if (pItem1->m_pTraining->GetDate() < pItem2->m_pTraining->GetDate())
+			nRet = -1;
+		else if (pItem1->m_pTraining->GetDate() > pItem2->m_pTraining->GetDate())
+			nRet = 1;
+		break;
+	case IO_LOG_NAME:
+		if (pItem1->m_pTraining->GetName() < pItem2->m_pTraining->GetName())
+			nRet = -1;
+		else if (pItem1->m_pTraining->GetName() > pItem2->m_pTraining->GetName())
+			nRet = 1;
+		break;
+	case IO_LOG_NOTES:
+		if (pItem1->m_pTraining->GetNote() < pItem2->m_pTraining->GetNote())
+			nRet = -1;
+		else if (pItem1->m_pTraining->GetNote() > pItem2->m_pTraining->GetNote())
+			nRet = 1;
+		break;
+	}
+	if (0 > sortInfo->nCol)
+		nRet *= -1;
+	return nRet;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,6 +243,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
+	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
@@ -219,6 +266,7 @@ END_MESSAGE_MAP()
 #pragma warning ( disable : 4355 )
 CAgilityBookViewTraining::CAgilityBookViewTraining()
 	: m_Callback(this)
+	, m_SortColumn(0)
 {
 }
 #pragma warning (pop)
@@ -230,7 +278,7 @@ CAgilityBookViewTraining::~CAgilityBookViewTraining()
 BOOL CAgilityBookViewTraining::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// This is actually set in TabView.cpp.
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -409,6 +457,11 @@ void CAgilityBookViewTraining::LoadData()
 	if (GetMessage(msg) && IsWindowVisible())
 		((CMainFrame*)AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 
+	SORT_TRAINING_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	GetListCtrl().SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
+
 	// Cleanup.
 	if (pCurData)
 		pCurData->Release();
@@ -473,6 +526,20 @@ void CAgilityBookViewTraining::OnContextMenu(CWnd* pWnd, CPoint point)
 		ASSERT(pMenu != NULL);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
+}
+
+void CAgilityBookViewTraining::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	int nBackwards = 1;
+	if (m_SortColumn == pNMListView->iSubItem + 1)
+		nBackwards = -1;
+	m_SortColumn = (pNMListView->iSubItem + 1) * nBackwards;
+	SORT_TRAINING_INFO info;
+	info.pThis = this;
+	info.nCol = m_SortColumn;
+	GetListCtrl().SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
+	*pResult = 0;
 }
 
 void CAgilityBookViewTraining::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
