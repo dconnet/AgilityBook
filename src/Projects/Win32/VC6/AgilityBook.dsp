@@ -150,6 +150,10 @@ SOURCE=..\..\..\Win\ColumnOrder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgAssignColumns.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgCalendar.cpp
 # End Source File
 # Begin Source File
@@ -317,6 +321,22 @@ SOURCE=..\..\..\stdafx.cpp
 
 SOURCE=..\..\..\Win\TabView.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\Wizard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardExport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardImport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardStart.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -376,6 +396,10 @@ SOURCE=..\..\..\Win\ColumnOrder.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\CommonView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgAssignColumns.h
 # End Source File
 # Begin Source File
 
@@ -548,6 +572,22 @@ SOURCE=..\..\..\stdafx.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\TabView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\Wizard.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardExport.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardImport.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\WizardStart.h
 # End Source File
 # End Group
 # Begin Group "ARB"

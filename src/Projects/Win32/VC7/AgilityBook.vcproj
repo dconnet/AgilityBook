@@ -181,6 +181,9 @@
 				RelativePath="..\..\..\Win\ColumnOrder.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgAssignColumns.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgCalendar.cpp">
 			</File>
 			<File
@@ -318,6 +321,18 @@
 			<File
 				RelativePath="..\..\..\Win\TabView.cpp">
 			</File>
+			<File
+				RelativePath="..\..\..\Win\Wizard.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardExport.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardImport.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardStart.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -363,6 +378,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\CommonView.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgAssignColumns.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgCalendar.h">
@@ -492,6 +510,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\TabView.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\Wizard.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardExport.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardImport.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\WizardStart.h">
 			</File>
 		</Filter>
 		<Filter
