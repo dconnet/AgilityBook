@@ -1,18 +1,17 @@
 <!--
-An AgilityRecordBook file is made up of 2 main sections, the
-configuration area, and the dog's runs. Multiple dogs may be
-contained within a file, as this DTD defines below.
+An AgilityRecordBook file is made up of several main sections, see
+below for more details.  Multiple dogs may be contained within a file.
 
 In general, all fields are free form. Exceptions will be noted.
  All date attributes are in the form "YYYY-MM-DD".
 
 See comments in DefaultConfig.xml for configuration changes.
 
-Note: When updating file version number, see notes in
-src/ARB/ARBAgilityRecordBook.cpp.
+Note: When updating the file version number,
+see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-01-10 DRC File version 10.1.
+2005-01-21 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
                Renamed 'machPts' to 'speedPts', 'Mach' to 'Speed'.
@@ -78,6 +77,8 @@ This section defines the rules for the calendar cribsheet.
 		Entered (E|P|N) 'N'
 		>
 
+<!-- End of Calendar -->
+
 <!--
 This section defines the rules for the training log.
 -->
@@ -88,12 +89,14 @@ This section defines the rules for the training log.
 		SubName CDATA #IMPLIED
 		>
 
+<!-- End of Training -->
+
 <!--
-This section defines the rules of each venue.
+This section defines the rules of each venue (the Configuration).
  'version' is used to auto-update a data file. The program will only prompt
  to do so - it will not do anything behind-the-back. Once a config version is
  set, the user could still modify things. But we won't automatically prompt
- to upgrade. The user can merge the configuration at any number of times.
+ to upgrade. The user can merge the configuration any number of times.
 -->
 <!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
 	<!ATTLIST Configuration
@@ -253,9 +256,10 @@ If there are no 'TitlePoints', then the class is non-titling.
 		Faults CDATA #REQUIRED
 		>
 
+<!-- End of Configuration -->
+
 <!--
 This section adds optional data.
-Currently the only thing it tracks is comments about a judge.
 -->
 
 <!ELEMENT Info (ClubInfo*, JudgeInfo*, LocationInfo*) >
@@ -272,6 +276,8 @@ Currently the only thing it tracks is comments about a judge.
 	<!ATTLIST LocationInfo
 		Name CDATA #REQUIRED
 		>
+
+<!-- End of Info -->
 
 <!--
 This section defines a dog's runs. The way the data is interpretted
@@ -456,3 +462,5 @@ entries are just for reference, hence the data is not interpreted.
 	>
 <!ELEMENT Name (#PCDATA) >
 <!ELEMENT ScoreOrFaults (#PCDATA) >
+
+<!-- End of Dog -->

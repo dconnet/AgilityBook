@@ -98,8 +98,8 @@
                         coll[i].style.display="none"
                 }
             }
-        }        
-    }   
+        }
+    }
 	function dynOutline()
 	{
 		var ms = navigator.appVersion.indexOf("MSIE");
@@ -130,11 +130,11 @@ initOutline()
 </script>
 </HEAD>
 <BODY onclick="dynOutline()">
-<h1>History of releases</h1>
-<p>(Click on each entry to expand it.)</p>
-<ul dynamicoutline initcollapsed>
-	<li><b>1/20/2005: v1.5.0.10</b>
-		<ul type="disc">
+<h1 align="center">History of releases</h1>
+<p>(Click on an entry to expand it.)</p>
+<ul dynamicoutline initcollapsed type="circle">
+	<li><b><a name="v1.5.0.10">1/21/2005: v1.5.0.10</a></b>
+		<ul>
 			<li>Bumped file version to 10.1, Configuration v7
 				<ul type="disc">
 					<li>Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.</li>
@@ -204,8 +204,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>10/31/2004: v1.4.0.10</b>
-		<ul type="disc">
+	<li><b><a name="v1.4.0.10">10/31/2004: v1.4.0.10</a></b>
+		<ul>
 			<li>Bumped file version to 10.0, Configuration v6
 				<ul type="disc">
 					<li>Added 'Height' to 'ReferenceRun'.</li>
@@ -265,8 +265,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>9/15/2004: v1.3.2.9</b>
-		<ul type="disc">
+	<li><b><a name="v1.3.2.9">9/15/2004: v1.3.2.9</a></b>
+		<ul>
 			<li>Bug Fixes:
 				<ul type="disc">
 					<li>If a trial has no clubs associated with it, attempting
@@ -279,8 +279,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>9/12/2004: v1.3.1.9</b>
-		<ul type="disc">
+	<li><b><a name="v1.3.1.9">9/12/2004: v1.3.1.9</a></b>
+		<ul>
 			<li>Bug Fixes:
 				<ul type="disc">
 					<li>My ISP host is no longer allowing direct access to
@@ -291,8 +291,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>9/12/2004: v1.3.0.9</b>
-		<ul type="disc">
+	<li><b><a name="v1.3.0.9">9/12/2004: v1.3.0.9</a></b>
+		<ul>
 			<li>Bumped Configuration to v5
 				<ul type="disc">
 					<li>Updated USDAA configuration to remove titling points
@@ -338,14 +338,14 @@ initOutline()
 					other points entries. This resulted in too many points on
 					the Points tab.</li>
 					<li>Up/Down sort icons on lists were backwards.</li>
-					<li>Changing the scoring type of an existing event did not
+					<li type="circle">Changing the scoring type of an existing event did not
 					ripple out to existing runs. This could cause a run to be
 					stored with the wrong type so when it is read back in, the
 					scoring type never got set - which then prevents the file
 					from being saved again.
 						<ul type="disc">
 							<li>In 1.2.1.8, to recreate:</li>
-							<li>Create a new file, create a dog, create a 
+							<li>Create a new file, create a dog, create a
 							rial.</li>
 							<li>Edit the configuration to change gamblers to
 							faults/time.</li>
@@ -370,8 +370,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>7/3/2004: v1.2.1.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.2.1.8">7/3/2004: v1.2.1.8</a></b>
+		<ul>
 			<li>Bug Fixes
 				<ul type="disc">
 					<li>Some systems were crashing when the program started.
@@ -381,8 +381,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>7/3/2004: v1.2.0.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.2.0.8">7/3/2004: v1.2.0.8</a></b>
+		<ul>
 			<li>Bumped file version to 9.0, Configuration v4
 				<ul type="disc">
 					<li>Added 'SubName' to 'Training'.</li>
@@ -450,8 +450,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>4/30/2004: v1.1.0.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.1.0.8">4/30/2004: v1.1.0.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.6, configuration to version 3.</li>
 				<ul type="disc">
 					<li>Changed 'TableInYPS' to 'hasTable', added 'hasTable'
@@ -526,8 +526,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>3/21/2004: v1.0.4.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.0.4.8">3/21/2004: v1.0.4.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.5
 				<ul type="disc">
 					<li>Added 'isHidden' to 'Title'.</li>
@@ -560,8 +560,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>3/8/2004: v1.0.3.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.0.3.8">3/8/2004: v1.0.3.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.4
 				<ul type="disc">
 					<li>Added table-in-yps flag (default is true for backwards
@@ -602,8 +602,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>2/9/2004: v1.0.2.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.0.2.8">2/9/2004: v1.0.2.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.3
 				<ul type="disc">
 					<li>Added Existing Points to dog properties.</li>
@@ -633,7 +633,7 @@ initOutline()
 					false-positive messages that things had changed. This was
 					due to the order of items being different (which we don't
 					care about).</li>
-					<li>In the Run dialog
+					<li type="circle">In the Run dialog
 						<ul type="disc">
 							<li>update the YPS when the time is changed.</li>
 							<li>update controls when date changes (in case different rules are in effect)</li>
@@ -645,8 +645,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>1/26/2004: v1.0.1.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.0.1.8">1/26/2004: v1.0.1.8</a></b>
+		<ul>
 			<li>New features / Enhancements
 				<ul type="disc">
 					<li>When starting the program, holding the SHIFT key down
@@ -665,8 +665,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>1/21/2004: v1.0.0.8</b>
-		<ul type="disc">
+	<li><b><a name="v1.0.0.8">1/21/2004: v1.0.0.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.2
 				<ul type="disc">
 					<li>Added a new "Long Name" to the titles configuration.</li>
@@ -709,8 +709,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>12/28/2003: v0.9.5.8</b>
-		<ul type="disc">
+	<li><b><a name="v0.9.5.8">12/28/2003: v0.9.5.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.1
 				<ul type="disc">
 					<li>Added 'ValidFrom' and 'ValidTo' dates to an events
@@ -731,7 +731,7 @@ initOutline()
 					<li>SpreadSheet Export: Can now export Calendar/TrainingLog</li>
 					<li>ARB Import: Can now import TrainingLog</li>
 					<li>ARB Export: Can now export TrainingLog</li>
-					<li>Added some new accelerators
+					<li type="circle">Added some new accelerators
 						<ul type="disc">
 							<li>Ctrl+E: Import/Export Wizard</li>
 							<li>Ctrl+F: Find (Find does not work in the points or calendar view)</li>
@@ -756,8 +756,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>12/13/2003: v0.9.4.8</b>
-		<ul type="disc">
+	<li><b><a name="v0.9.4.8">12/13/2003: v0.9.4.8</a></b>
+		<ul>
 			<li>Bumped file version to 8.0
 				<ul type="disc">
 					<li>Modified version number for better backwards
@@ -813,8 +813,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>10/15/2003: v0.9.3.7</b>
-		<ul type="disc">
+	<li><b><a name="v0.9.3.7">10/15/2003: v0.9.3.7</a></b>
+		<ul>
 			<li>Bumped file version to 7
 				<ul type="disc">
 					<li>Allow course faults on runs scored by points. For
@@ -840,8 +840,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>9/29/2003: v0.9.2.6</b>
-		<ul type="disc">
+	<li><b><a name="v0.9.2.6">9/29/2003: v0.9.2.6</a></b>
+		<ul>
 			<li>Bug fixes
 				<ul type="disc">
 					<li>Required points in the Runs dialog were being
@@ -851,8 +851,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>9/21/2003: v0.9.1.6</b>
-		<ul type="disc">
+	<li><b><a name="v0.9.1.6">9/21/2003: v0.9.1.6</a></b>
+		<ul>
 			<li>Bumped file version to 6
 				<ul type="disc">
 					<li>Added the Training Log.</li>
@@ -889,8 +889,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>9/3/2003: v0.9.0.5</b>
-		<ul type="disc">
+	<li><b><a name="v0.9.0.5">9/3/2003: v0.9.0.5</a></b>
+		<ul>
 			<li>New features / Enhancements
 				<ul type="disc">
 					<li>Added a 'deceased' date to the dogs info. (This is a
@@ -932,8 +932,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>8/16/2003: v0.4.2.5</b>
-		<ul type="disc">
+	<li><b><a name="v0.4.2.5">8/16/2003: v0.4.2.5</a></b>
+		<ul>
 			<li>New features / Enhancements
 				<ul type="disc">
 					<li>Added printing for runs (not tree though), points and
@@ -969,8 +969,8 @@ initOutline()
 			Releases are now done on both Yahoo and SourceForge.</li>
 		</ul>
 	</li>
-	<li><b>7/16/2003: v0.4.1.5</b>
-		<ul type="disc">
+	<li><b><a name="v0.4.1.5">7/16/2003: v0.4.1.5</a></b>
+		<ul>
 			<li>Bumped file version to 5
 				<ul type="disc">
 					<li>Added 'Note' and 'Verified' to trials.</li>
@@ -1035,8 +1035,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>6/15/2003: v0.3.0.2</b>
-		<ul type="disc">
+	<li><b><a name="v0.3.0.2">6/15/2003: v0.3.0.2</a></b>
+		<ul>
 			<li>Bumped file version to 4
 				<ul type="disc">
 					<li>Added item to configuration scoring methods to drop
@@ -1068,8 +1068,8 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>6/2/2003: v0.3.0.1</b>
-		<ul type="disc">
+	<li><b><a name="v0.3.0.1">6/2/2003: v0.3.0.1</a></b>
+		<ul>
 			<li>Bumped file version to 3
 				<ul type="disc">
 					<li>Add notes to configuration events specifically for
@@ -1143,9 +1143,9 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>4/3/2003: v0.2.0.3</b>
+	<li><b><a name="v0.2.0.3">4/3/2003: v0.2.0.3</a></b>
 		<ul type="disc">
-			<li>Updated default configuration rules to include more
+			<li type="circle">Updated default configuration rules to include more
 			description in titles
 				<ul type="disc">
 					<li>Changed title configuration dialog to allow editing
@@ -1165,7 +1165,7 @@ initOutline()
 			the file format (and prevent file corruption)</li>
 			<li>In run entry dialog, show total faults.</li>
 			<li>Add support for bold/italic options in fonts</li>
-			<li>Bug fixes
+			<li type="circle">Bug fixes
 				<ul type="disc">
 					<li>Initial dates could end up with really odd values</li>
 					<li>Comboboxes that allow data entry do not scroll.</li>
@@ -1179,9 +1179,9 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>2/23/2003: v0.2.0.2</b>
-		<ul type="disc">
-			<li>Modified default rules to add USDAA's Tournament classes.
+	<li><b><a name="v0.2.0.2">2/23/2003: v0.2.0.2</a></b>
+		<ul>
+			<li type="circle">Modified default rules to add USDAA's Tournament classes.
 				<ul type="disc">
 					<li>If you have an existing file, the only way to get the
 					new default rules is to hand edit. A future enhancement is
@@ -1206,9 +1206,9 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>2/21/2003: v0.2.0.1</b>
-		<ul type="disc">
-			<li>Updated xerces dll from 2.1.0 to 2.2.0.</li>
+	<li><b><a name="v0.2.0.1">2/21/2003: v0.2.0.1</a></b>
+		<ul>
+			<li type="disc">Updated xerces dll from 2.1.0 to 2.2.0.</li>
 			<li>ARB file version 2
 				<ul type="disc">
 					<li>Removed Calendar 'PlanOn'(y|n) attribute, replaced
@@ -1246,19 +1246,19 @@ initOutline()
 			</li>
 		</ul>
 	</li>
-	<li><b>1/22/2003: v0.1.0.1</b>
+	<li><b><a name="v0.1.0.1">1/22/2003: v0.1.0.1</a></b>
 		<ul type="disc">
 			<li>Major data entry dialogs completed.</li>
 			<li>Main views on the data are still incomplete. Program options
 			still need implementing. Lots of outstanding tidbits.</li>
 		</ul>
 	</li>
-	<li><b>12/31/2002: v0.0.0.2</b>
+	<li><b><a name="v0.0.0.2">12/31/2002: v0.0.0.2</a></b>
 		<ul type="disc">
 			<li>Re-released v0.0.0.1 using MSVC6.</li>
 		</ul>
 	</li>
-	<li><b>12/28/2002: v0.0.0.1</b>
+	<li><b><a name="v0.0.0.1">12/28/2002: v0.0.0.1</a></b>
 		<ul type="disc">
 			<li>First release using MSVC7.</li>
 		</ul>
