@@ -49,6 +49,8 @@ static char THIS_FILE[] = __FILE__;
 
 // As long as sizeof(void*) == sizeof(DWORD), we're ok...
 // VC7's default warns about 64bit compatibility issues.
+// All of the Sym* routines take/return a DWORD which is a handle
+// (which in vc7, may be larger)
 // warning C4311: 'type cast' : pointer truncation from 'PVOID' to 'DWORD'
 // warning C4312: 'type cast' : conversion from 'DWORD' to 'HINSTANCE' of greater size
 #pragma warning ( disable : 4311 4312 )
@@ -261,7 +263,8 @@ static LPCTSTR ConvertSimpleException(DWORD dwExcept)
 	case EXCEPTION_INVALID_HANDLE:
 		return _T("EXCEPTION_INVALID_HANDLE");
 	default:
-		return NULL;
+		wsprintf(g_szBuff2, "Unknown Exception (%08x)", dwExcept);
+		return g_szBuff2;
 	}
 }
 
