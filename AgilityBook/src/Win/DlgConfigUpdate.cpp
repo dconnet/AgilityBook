@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  */
 
 #include "stdafx.h"
@@ -109,7 +110,7 @@ bool CDlgConfigUpdate::LoadConfig(const char* pFile)
 			AfxMessageBox(AFX_IDP_FAILED_TO_OPEN_DOC);
 			return false;
 		}
-		if (!m_Book.Load(tree, false, false, true, false))
+		if (!m_Book.Load(tree, false, false, true, false, false))
 			return false;
 	}
 	return true;

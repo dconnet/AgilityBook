@@ -194,6 +194,10 @@ SOURCE=..\..\..\Win\DlgFixup.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgInfoJudge.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgListCtrl.cpp
 # End Source File
 # Begin Source File
@@ -416,6 +420,10 @@ SOURCE=..\..\..\Win\DlgFault.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgFixup.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgInfoJudge.h
 # End Source File
 # Begin Source File
 
@@ -752,6 +760,22 @@ SOURCE=..\..\..\ARB\ARBDogTrial.cpp
 # Begin Source File
 
 SOURCE=..\..\..\ARB\ARBDogTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBInfoJudge.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBInfoJudge.h
 # End Source File
 # Begin Source File
 

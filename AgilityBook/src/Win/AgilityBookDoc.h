@@ -85,6 +85,7 @@ public:
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
 	ARBTrainingList& GetTraining()			{return m_Records.GetTraining();}
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
+	ARBInfo& GetInfo()						{return m_Records.GetInfo();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
 	size_t GetAllClubNames(std::set<std::string>& clubs) const
 	{
@@ -98,9 +99,9 @@ public:
 	{
 		return m_Records.GetAllHeights(judges);
 	}
-	size_t GetAllJudges(std::set<std::string>& judges) const
+	size_t GetAllJudges(std::set<std::string>& judges, bool bInfo = true) const
 	{
-		return m_Records.GetAllJudges(judges);
+		return m_Records.GetAllJudges(judges, bInfo);
 	}
 	size_t GetAllHandlers(std::set<std::string>& handlers) const
 	{
@@ -165,6 +166,8 @@ protected:
 	afx_msg void OnFileExportDTD();
 	afx_msg void OnFileExportXML();
 	afx_msg void OnEditConfiguration();
+	afx_msg void OnUpdateEditJudges(CCmdUI* pCmdUI);
+	afx_msg void OnEditJudges();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
 	afx_msg void OnAgilityNewTraining();

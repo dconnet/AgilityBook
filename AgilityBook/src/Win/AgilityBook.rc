@@ -137,7 +137,8 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "C&onfiguration...",           ID_FILE_EXPORT_CONFIG
             MENUITEM SEPARATOR
-            MENUITEM "&DTD (Document Type Definition)...",ID_FILE_EXPORT_DTD
+            MENUITEM "&DTD (Document Type Definition)...", 
+                                                    ID_FILE_EXPORT_DTD
             MENUITEM "As &XML...",                  ID_FILE_EXPORT_XML
         END
         MENUITEM SEPARATOR
@@ -160,6 +161,8 @@ BEGIN
         MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
         MENUITEM SEPARATOR
         MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
+        MENUITEM SEPARATOR
+        MENUITEM "&Judges...",                  ID_EDIT_JUDGES
     END
     POPUP "&Agility"
     BEGIN
@@ -1086,6 +1089,20 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,243,24,50,14
 END
 
+IDD_JUDGE_INFO DIALOG DISCARDABLE  0, 0, 225, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Judge's Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+    COMBOBOX        IDC_JUDGE,7,7,90,100,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add Judge",IDC_ADD,106,7,50,12
+    EDITTEXT        IDC_COMMENTS,7,24,150,64,ES_MULTILINE | ES_AUTOHSCROLL | 
+                    ES_WANTRETURN
+    DEFPUSHBUTTON   "OK",IDOK,168,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,168,24,50,14
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -1393,6 +1410,14 @@ BEGIN
         RIGHTMARGIN, 293
         TOPMARGIN, 7
         BOTTOMMARGIN, 194
+    END
+
+    IDD_JUDGE_INFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 218
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1733,6 +1758,10 @@ BEGIN
     IDS_FILEEXT_DEF_XML     "xml"
     IDS_FILEEXT_FNAME_XML   "*.xml"
     IDS_FILEEXT_FILTER_XML  "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_ADDED_CAL_ITEMS     "Added %d new calendar items."
 END
 
@@ -1782,6 +1811,7 @@ BEGIN
     ID_FILE_IMPORT_CALENDAR "Import another Calendar\nImport Calendar"
     ID_FILE_EXPORT_CALENDAR "Export your Calendar\nExport Calendar"
     ID_FILE_EXPORT_CONFIG   "Export your Configuration\nExport Configuration"
+    ID_EDIT_JUDGES          "Edit Judge information\nJudges"
 END
 
 #endif    // English (U.S.) resources

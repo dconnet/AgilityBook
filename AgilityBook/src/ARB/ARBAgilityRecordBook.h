@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2003-12-07 DRC Added Info section.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-31 DRC Added options to Save() to allow partial saves.
  * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
@@ -58,6 +59,8 @@
 #define TREE_TITLE_POINTS					"TitlePoints"
 #define TREE_FAULTTYPE						"FaultType"
 #define TREE_OTHERPTS						"OtherPts"
+#define TREE_INFO							"Info"
+#define TREE_JUDGEINFO						"JudgeInfo"
 #define TREE_DOG							"Dog"
 #define TREE_REGNAME						"RegisteredName"
 #define TREE_BREED							"Breed"
@@ -119,6 +122,7 @@
 #define ATTRIB_SCORING_MACHPTS				"machPts"
 #define ATTRIB_TITLE_POINTS_POINTS			"Points"
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
+#define ATTRIB_JUDGEINFO_NAME				"Name"
 #define ATTRIB_DOG_CALLNAME					"CallName"
 #define ATTRIB_DOG_DOB						"DOB"
 #define ATTRIB_DOG_DECEASED					"Deceased"
@@ -215,6 +219,7 @@
 #include "ARBCalendar.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
+#include "ARBInfo.h"
 #include "ARBTraining.h"
 class ARBConfigOtherPoints;
 class ARBVersion;
@@ -249,10 +254,11 @@ public:
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
+		bool inInfo,
 		bool inDogs);
 	bool Load(const CElement& inTree)
 	{
-		return Load(inTree, true, true, true, true);
+		return Load(inTree, true, true, true, true, true);
 	}
 	/**
 	 * Save a document.
@@ -267,6 +273,7 @@ public:
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
+		bool inInfo,
 		bool inDogs) const;
 
 	/**
@@ -290,7 +297,7 @@ public:
 	/**
 	 * Get all judges in use from existing runs.
 	 */
-	size_t GetAllJudges(std::set<std::string>& outJudges) const;
+	size_t GetAllJudges(std::set<std::string>& outJudges, bool bInfo = true) const;
 	/**
 	 * Get all handlers in use from existing runs.
 	 */
@@ -306,6 +313,8 @@ public:
 	ARBTrainingList& GetTraining();
 	const ARBConfig& GetConfig() const;
 	ARBConfig& GetConfig();
+	const ARBInfo& GetInfo() const;
+	ARBInfo& GetInfo();
 	const ARBDogList& GetDogs() const;
 	ARBDogList& GetDogs();
 
@@ -318,6 +327,7 @@ private:
 	ARBCalendarList m_Calendar;
 	ARBTrainingList m_Training;
 	ARBConfig m_Config;
+	ARBInfo m_Info;
 	ARBDogList m_Dogs;
 };
 
@@ -349,6 +359,16 @@ inline const ARBConfig& ARBAgilityRecordBook::GetConfig() const
 inline ARBConfig& ARBAgilityRecordBook::GetConfig()
 {
 	return m_Config;
+}
+
+inline const ARBInfo& ARBAgilityRecordBook::GetInfo() const
+{
+	return m_Info;
+}
+
+inline ARBInfo& ARBAgilityRecordBook::GetInfo()
+{
+	return m_Info;
 }
 
 inline const ARBDogList& ARBAgilityRecordBook::GetDogs() const
