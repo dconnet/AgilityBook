@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="5">
+<DefaultConfig Book="6">
 	<Configuration>
 		<Venue Name="AKC">
 			<Desc>http://www.akc.org/</Desc>
@@ -870,6 +870,7 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 (500pts): 50 std, 50 jumpers, 50 gamblers, 50 snooker, 50 pairs</Titles>
 			</Division>
 			<Division Name="Performance">
+				<Level Name="Tournament"/>
 				<Level Name="PI"/>
 				<Level Name="PII"/>
 				<Level Name="PIII"/>
@@ -960,7 +961,11 @@ MAD, JM, GM, SM, RM plus 4 Standard Qs</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Grand Prix">
+				<Desc>Effective starting in 2004</Desc>
 				<Scoring Division="Championship" Level="Tournament" type="FaultsThenTime">
+					<TitlePoints Faults="7" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="FaultsThenTime">
 					<TitlePoints Faults="7" Points="1"/>
 				</Scoring>
 			</Event>
