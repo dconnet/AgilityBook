@@ -145,10 +145,10 @@ std::string PointsDataDog::OnNeedText(size_t index) const
 	{
 		switch (index)
 		{
-		case 0: // Call name
+		case 1: // Call name
 			str = m_pDog->GetCallName();
 			break;
-		case 1: // Full name
+		case 2: // Full name
 			str = m_pDog->GetRegisteredName();
 			break;
 		case 7: // Current date

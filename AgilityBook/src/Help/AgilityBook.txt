@@ -622,8 +622,10 @@ Number of dogs that qualified. Enter -1 if not known.
 Indicates this run is part of a double Q.
 
 .topic HIDC_RUNSCORE_EVENT
-Type of run. This list is filled in based on data in the Division and Level
-lists. The event selected will control what fields are enabled on this dialog.
+Type of run.
+This list is filled in based on the selection in the Level list.
+If this is empty, a Level has not yet been selected.
+This selection will control what fields are enabled on this dialog.
 
 .topic HIDC_RUNSCORE_FAULTS
 Number of faults in this run.
@@ -643,7 +645,8 @@ List of judges previously entered. You may enter any text you want.
 
 .topic HIDC_RUNSCORE_LEVEL
 Level of this run.
-This list is filled in based on the data in the Division list.
+This list is filled in based on the selection in the Division list.
+If this is empty, a Division has not yet been selected.
 
 .topic HIDC_RUNSCORE_OPENING_PTS
 Number of points required in the opening sequence.

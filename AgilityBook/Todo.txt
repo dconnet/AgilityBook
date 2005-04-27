@@ -1,4 +1,13 @@
-Last Updated: 1/25/2005
+Last Updated: 4/23/2005
+
+- Sub-total lifetime by division.
+
+- Add help about why an event may not be in the run dialog list. (Wrong
+  division selected) Also note that the entries should be selected from top
+  to bottom.
+
+- Fix Point view so when it refreshes, it sets the current visible items
+  visible again.
 
 - Fix printing so it wraps multi-line text.
 
