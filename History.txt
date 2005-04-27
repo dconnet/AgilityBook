@@ -1,6 +1,7 @@
-4/1/2005: v1.5.3.10 <in development>
+4/23/2005: v1.5.3.10 <in development>
 - New features / Enhancements:
   - Made the hyperlinks on the About box accessible by keyboard.
+  - Shifted dog's name one column in points view to help with column sizing.
 
 3/29/2005: v1.5.2.10
 - Bumped to Configuration v8:
