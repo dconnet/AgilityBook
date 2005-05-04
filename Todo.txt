@@ -1,5 +1,7 @@
 Last Updated: 4/23/2005
 
+- Add ability to paste only CRCD text and not the image.
+
 - Sub-total lifetime by division.
 
 - Add help about why an event may not be in the run dialog list. (Wrong

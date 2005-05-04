@@ -812,11 +812,13 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	CWaitCursor wait;
 
+	CVersionNum ver;
+	std::string verstr = (LPCTSTR)ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	BOOL bOk = FALSE;
 	Element tree;
 	// First, we have to push all the class data into a tree.
-	if (m_Records.Save(tree, true, true, true, true, true))
+	if (m_Records.Save(tree, verstr, true, true, true, true, true))
 	{
 		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
