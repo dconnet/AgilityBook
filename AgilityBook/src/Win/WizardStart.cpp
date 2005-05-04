@@ -683,8 +683,10 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					CVersionNum ver;
+					std::string verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
-					if (m_pDoc->GetARB().Save(tree, true, false, false, false, false))
+					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
@@ -768,8 +770,10 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					CVersionNum ver;
+					std::string verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
-					if (m_pDoc->GetARB().Save(tree, false, true, false, false, false))
+					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
@@ -799,8 +803,10 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					CVersionNum ver;
+					std::string verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
-					if (m_pDoc->GetARB().Save(tree, false, false, true, false, false))
+					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
@@ -845,8 +851,10 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					CVersionNum ver;
+					std::string verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
-					if (m_pDoc->GetARB().Save(tree, true, true, true, true, true))
+					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))
 					{
 						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);

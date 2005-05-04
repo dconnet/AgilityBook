@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2005-04-26 DRC Added 'ver' to 'AgilityBook'
  * @li 2005-01-11 DRC Added 'Multiple' to 'Titles', 'instance' to 'Title'.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -116,6 +117,7 @@
 #define TREE_REF_SCORE						"ScoreOrFaults"
 #define TREE_REF_NOTE						"Note"
 #define ATTRIB_BOOK_VERSION					"Book"
+#define ATTRIB_BOOK_PGM_VERSION				"ver"
 #define ATTRIB_CONFIG_VERSION				"version"
 #define ATTRIB_CAL_START					"DateStart"
 #define ATTRIB_CAL_END						"DateEnd"
@@ -407,6 +409,7 @@ public:
 	/**
 	 * Save a document.
 	 * @param outTree XML structure to write ARB to.
+	 * @param inPgmVer Program version.
 	 * @param inCalendar Save calendar info.
 	 * @param inTraining Save training info.
 	 * @param inConfig Save config info.
@@ -416,6 +419,7 @@ public:
 	 */
 	bool Save(
 		Element& outTree,
+		std::string const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,

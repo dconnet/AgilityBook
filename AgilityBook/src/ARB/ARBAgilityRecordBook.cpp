@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2005-04-26 DRC File version 10.2. Added 'ver' to 'AgilityBook'
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-11-15 DRC File version 10.1. Added 'underTF'/'overTF' to 'Scoring'.
  * @li 2004-10-06 DRC File version 10. Added 'Height' to 'ReferenceRun'
@@ -299,6 +300,7 @@ bool ARBAgilityRecordBook::Load(
 }
 
 bool ARBAgilityRecordBook::Save(Element& outTree,
+	std::string const& inPgmVer,
 	bool inCalendar,
 	bool inTraining,
 	bool inConfig,
@@ -308,6 +310,7 @@ bool ARBAgilityRecordBook::Save(Element& outTree,
 	outTree.clear();
 	outTree.SetName(TREE_BOOK);
 	outTree.AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
+	outTree.AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
 	if (inCalendar)
 	{
 		if (!m_Calendar.Save(outTree))

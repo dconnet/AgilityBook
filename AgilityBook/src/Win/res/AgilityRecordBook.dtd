@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2005-04-26 DRC File version 10.2.
+               Added 'ver' to 'AgilityBook'
 2005-02-07 DRC File version 10.1.
                Added 'underTF'/'overTF', 'timeFault' to 'Scoring'.
                Added 'ClubInfo', 'LocationInfo'.
@@ -56,9 +58,13 @@ Revision History:
 <!--
  Book is a simple integer in versions 1 thru 7.
  It then changes to a more complex value ("major.minor"), starting with "8.0"
+ ver: Version of program that created file. Used for debugging purposes.
 -->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
-	<!ATTLIST AgilityBook Book CDATA #REQUIRED >
+	<!ATTLIST AgilityBook
+		Book CDATA #REQUIRED
+		ver CDATA #IMPLIED
+		>
 
 <!--
 This section defines the rules for the calendar cribsheet.
