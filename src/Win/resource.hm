@@ -257,6 +257,7 @@
 #define HIDC_RUNCRCD_CRCD               0x80e4055d    // IDD_RUN_CRCD
 #define HIDC_RUNCRCD_DESC               0x80e4055e    // IDD_RUN_CRCD
 #define HIDC_RUNCRCD_EDIT               0x80e4055a    // IDD_RUN_CRCD
+#define HIDC_RUNCRCD_IMAGE              0x80e4055f    // IDD_RUN_CRCD
 #define HIDC_RUNCRCD_VIEW               0x80e4055b    // IDD_RUN_CRCD
 #define HIDC_RUNLINK_DELETE             0x80e50567    // IDD_RUN_LINK
 #define HIDC_RUNLINK_EDIT               0x80e50566    // IDD_RUN_LINK

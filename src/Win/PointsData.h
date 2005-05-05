@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -223,6 +224,24 @@ protected:
 	std::list<LifeTimePointInfo> m_Data;
 	int m_Lifetime; //< Total lifetime points.
 	int m_Filtered; //< Points that are filtered out.
+};
+
+/**
+ * Subtotal lifetime points by division.
+ */
+class PointsDataLifetimeDiv : public PointsDataLifetime
+{
+public:
+	PointsDataLifetimeDiv(CAgilityBookViewPoints* pView,
+		std::string const& inVenue,
+		std::string const& inDiv);
+
+	void AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered);
+
+	virtual std::string OnNeedText(size_t index) const;
+
+protected:
+	std::string m_Div;
 };
 
 /////////////////////////////////////////////////////////////////////////////

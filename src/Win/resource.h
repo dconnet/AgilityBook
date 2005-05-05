@@ -319,6 +319,7 @@
 #define IDC_RUNCRCD_COPY                1372
 #define IDC_RUNCRCD_CRCD                1373
 #define IDC_RUNCRCD_DESC                1374
+#define IDC_RUNCRCD_IMAGE               1375
 #define IDC_RUNLINK_LIST                1380
 #define IDC_RUNLINK_NEW                 1381
 #define IDC_RUNLINK_EDIT                1382
@@ -450,6 +451,7 @@
 #define IDC_PROGRESS_MESSAGE            1620
 #define IDC_PROGRESS_BAR1               1621
 #define IDC_PROGRESS_BAR2               1622
+#define IDC_BUTTON1                     1630
 #define IDS_COL_BREED                   4000
 #define IDS_COL_CLOSES                  4001
 #define IDS_COL_CLUB                    4002
@@ -703,7 +705,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        250
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1630
+#define _APS_NEXT_CONTROL_VALUE         1631
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif
