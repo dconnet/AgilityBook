@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
@@ -411,9 +412,9 @@ std::string PointsDataLifetime::OnNeedText(size_t index) const
 		{
 			CString str2;
 			if (0 < m_Filtered)
-				str2.Format("%d (%d)", m_Lifetime - m_Filtered, m_Lifetime);
+				str2.Format("Total: %d (%d)", m_Lifetime - m_Filtered, m_Lifetime);
 			else
-				str2.Format("%d", m_Lifetime);
+				str2.Format("Total: %d", m_Lifetime);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -427,6 +428,45 @@ void PointsDataLifetime::OnDblClick() const
 	caption += " Lifetime Points";
 	CDlgListViewer dlg(m_pView->GetDocument(), caption, m_Data, m_pView);
 	dlg.DoModal();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+PointsDataLifetimeDiv::PointsDataLifetimeDiv(CAgilityBookViewPoints* pView,
+	std::string const& inVenue,
+	std::string const& inDiv)
+	: PointsDataLifetime(pView, inVenue)
+	, m_Div(inDiv)
+{
+}
+
+void PointsDataLifetimeDiv::AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered)
+{
+	if (inDiv == m_Div)
+	{
+		m_Data.push_back(LifeTimePointInfo(inDiv, inLevel, inLifetime, inFiltered));
+		m_Lifetime += inLifetime;
+		m_Filtered += inFiltered;
+	}
+}
+
+std::string PointsDataLifetimeDiv::OnNeedText(size_t index) const
+{
+	std::string str;
+	switch (index)
+	{
+	case 2:
+		{
+			CString str2;
+			if (0 < m_Filtered)
+				str2.Format("%s: %d (%d)", m_Div.c_str(), m_Lifetime - m_Filtered, m_Lifetime);
+			else
+				str2.Format("%s: %d", m_Div.c_str(), m_Lifetime);
+			str = (LPCTSTR)str2;
+		}
+		break;
+	}
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////

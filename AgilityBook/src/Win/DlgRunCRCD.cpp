@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-05-04 DRC Added ability to suppress metafile.
  * @li 2004-04-27 DRC Added some error recovery.
  */
 
@@ -38,6 +39,7 @@
 #include "AgilityBook.h"
 #include "DlgRunCRCD.h"
 
+#include "AgilityBookOptions.h"
 #include "ARBDogRun.h"
 #include "Base64.h"
 #include "DlgCRCDViewer.h"
@@ -78,6 +80,7 @@ void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNCRCD_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_RUNCRCD_VIEW, m_ctrlView);
 	DDX_Control(pDX, IDC_RUNCRCD_COPY, m_ctrlInsert);
+	DDX_Control(pDX, IDC_RUNCRCD_IMAGE, m_ctrlImage);
 	DDX_Control(pDX, IDC_RUNCRCD_DESC, m_ctrlText);
 	DDX_Control(pDX, IDC_RUNCRCD_CRCD, m_ctrlCRCD);
 	//}}AFX_DATA_MAP
@@ -89,6 +92,7 @@ BEGIN_MESSAGE_MAP(CDlgRunCRCD, CDlgBasePropertyPage)
 	ON_BN_CLICKED(IDC_RUNCRCD_EDIT, OnEdit)
 	ON_BN_CLICKED(IDC_RUNCRCD_VIEW, OnView)
 	ON_BN_CLICKED(IDC_RUNCRCD_COPY, OnCopy)
+	ON_BN_CLICKED(IDC_RUNCRCD_IMAGE, OnImage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -185,6 +189,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 			}
 		}
 	}
+	m_ctrlImage.SetCheck(CAgilityBookOptions::GetIncludeCRCDImage() ? 1 : 0);
 	SetView();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -221,6 +226,8 @@ void CDlgRunCRCD::OnCopy()
 	{
 		BOOL bText = ::IsClipboardFormatAvailable(CF_TEXT);
 		BOOL bMeta = ::IsClipboardFormatAvailable(CF_ENHMETAFILE);
+		if (!m_ctrlImage.GetCheck())
+			bMeta = FALSE;
 		if (bText || bMeta)
 		{
 			if (AfxGetMainWnd()->OpenClipboard())
@@ -237,11 +244,15 @@ void CDlgRunCRCD::OnCopy()
 					HANDLE hData = GetClipboardData(CF_TEXT);
 					CString str(reinterpret_cast<LPCTSTR>(GlobalLock(hData)));
 					GlobalUnlock(hData);
-					m_ctrlText.SetWindowText(str);
 					str.TrimRight();
 					str.TrimLeft();
+					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
+					// First standardize to \n, store it, then replace the
+					// other way for windows display.
 					str.Replace("\r\n", "\n");
 					m_Run->SetCRCD((LPCTSTR)str);
+					str.Replace("\n", "\r\n");
+					m_ctrlText.SetWindowText(str);
 					if (0 < str.GetLength())
 						m_Insert = false;
 					// Only create the metafile if we pasted text. Otherwise
@@ -290,4 +301,9 @@ void CDlgRunCRCD::OnCopy()
 		m_Run->SetCRCDMetaFile("");
 		SetView();
 	}
+}
+
+void CDlgRunCRCD::OnImage()
+{
+	CAgilityBookOptions::SetIncludeCRCDImage(0 != m_ctrlImage.GetCheck());
 }

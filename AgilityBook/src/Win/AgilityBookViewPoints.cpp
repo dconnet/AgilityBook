@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-11 DRC Mark the document dirty when creating a title.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -782,10 +783,24 @@ void CAgilityBookViewPoints::LoadData()
 				PointsDataLifetime* pData = new PointsDataLifetime(this, pVenue->GetName());
 				int pts = 0;
 				int ptFiltered = 0;
+				typedef std::map<std::string, PointsDataLifetimeDiv*> DivLifetime;
+				DivLifetime divs;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
 					iter != lifetime.end();
 					++iter)
 				{
+					PointsDataLifetimeDiv* pDivData = NULL;
+					DivLifetime::iterator it = divs.find(iter->pDiv->GetName());
+					if (divs.end() != it)
+					{
+						pDivData = it->second;
+					}
+					else
+					{
+						pDivData = new PointsDataLifetimeDiv(this, pVenue->GetName(), iter->pDiv->GetName());
+						divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
+					}
+
 					int pts2 = 0;
 					int ptFiltered2 = 0;
 					for (LifeTimePointList::iterator iter2 = (*iter).ptList.begin();
@@ -796,8 +811,10 @@ void CAgilityBookViewPoints::LoadData()
 						if ((*iter2).bFiltered)
 							ptFiltered2 += (*iter2).points;
 					}
+
 					pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
-					pts += pts;
+					pDivData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+					pts += pts2;
 					ptFiltered += ptFiltered2;
 				}
 				LVITEM item;
@@ -808,6 +825,23 @@ void CAgilityBookViewPoints::LoadData()
 				item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
 				GetListCtrl().InsertItem(&item);
 				++idxInsertItem;
+				if (1 < divs.size())
+				{
+					for (DivLifetime::iterator it = divs.begin();
+						it != divs.end();
+						++it)
+					{
+						item.iItem = idxInsertItem;
+						item.iSubItem = 0;
+						item.mask = LVIF_TEXT | LVIF_PARAM;
+						item.pszText = LPSTR_TEXTCALLBACK;
+						item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(it->second));
+						GetListCtrl().InsertItem(&item);
+						++idxInsertItem;
+					}
+				}
+				else if (1 == divs.size())
+					divs.begin()->second->Release();
 			}
 		}
 

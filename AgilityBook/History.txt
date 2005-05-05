@@ -1,10 +1,13 @@
-4/26/2005: v1.5.3.10 <in development>
+5/4/2005: v1.5.3.10 <in development>
 - Bumped file version to 10.2:
   - Added 'ver' to 'AgilityBook'.
 - New features / Enhancements:
   - Made the hyperlinks on the About box accessible by keyboard.
   - Shifted dog's name one column in points view to help with column sizing.
   - Updated the F1 help on the Run dialog combo boxes.
+  - Sub-total Lifetime points by division.
+  - Add the ability to paste a CRCD course without the image (text only).
+    This will help keep the .arb file size from becoming too bloated.
 
 3/29/2005: v1.5.2.10
 - Bumped to Configuration v8:

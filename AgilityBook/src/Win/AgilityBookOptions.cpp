@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-05-04 DRC Added IncludeCRCDImage
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added AutoShowSplashScreen
  * @li 2004-06-16 DRC Added options to remember date formats.
@@ -639,6 +640,17 @@ bool CAgilityBookOptions::GetTableInYPS()
 void CAgilityBookOptions::SetTableInYPS(bool bSet)
 {
 	AfxGetApp()->WriteProfileInt("Common", "TableInYPS", bSet ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetIncludeCRCDImage()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "CRCDImage", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "CRCDImage", bSet ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

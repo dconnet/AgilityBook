@@ -570,6 +570,10 @@ Display the course in a resizeable viewing window.
 .topic HIDC_RUNCRCD_VIEW
 Toggle the course view between the image and text.
 
+.topic HIDC_RUNCRCD_IMAGE
+Include the course image in the file.
+This will significantly increase the file size.
+
 .topic HIDC_RUNLINK_DELETE
 Delete the selected link from this list.
 

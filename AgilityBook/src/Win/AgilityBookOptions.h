@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-05-04 DRC Added IncludeCRCDImage
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added AutoShowSplashScreen
  * @li 2004-06-16 DRC Added options to remember date formats.
@@ -186,6 +187,8 @@ public:
 	static void SetViewHiddenTitles(bool bSet);
 	static bool GetTableInYPS();
 	static void SetTableInYPS(bool bSet);
+	static bool GetIncludeCRCDImage();
+	static void SetIncludeCRCDImage(bool bSet);
 	// Training Log options
 	static bool GetTrainingViewAllDates();
 	static void SetTrainingViewAllDates(bool bViewAll);

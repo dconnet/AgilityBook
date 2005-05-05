@@ -1287,7 +1287,7 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "CRCD"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Create a course in CRCD and copy it (ctrl+C). Insert it here with the Paste button.\nTo edit the course, view the text, copy it and paste into CRCD.",
+    LTEXT           "Create a course in CRCD and copy it (ctrl+C). Insert it here with the Insert button.\nTo edit the course, view the text, copy it and paste into CRCD.",
                     IDC_STATIC,3,3,255,16
     PUSHBUTTON      "Course Viewer",IDC_RUNCRCD_EDIT,337,3,50,14,0,0,
                     HIDC_RUNCRCD_EDIT
@@ -1295,6 +1295,11 @@ BEGIN
                     HIDC_RUNCRCD_VIEW
     PUSHBUTTON      "Paste Course",IDC_RUNCRCD_COPY,337,50,50,14,0,0,
                     HIDC_RUNCRCD_COPY
+    CONTROL         "Include Image",IDC_RUNCRCD_IMAGE,"Button",
+                    BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,337,65,50,20,
+                    0,HIDC_RUNCRCD_IMAGE
+    LTEXT           "Note: Including the image will make the file significantly larger.",
+                    IDC_STATIC,337,85,50,45
     CONTROL         "",IDC_RUNCRCD_CRCD,"Static",SS_ENHMETAFILE | NOT 
                     WS_VISIBLE | WS_BORDER,3,21,329,166,0,HIDC_RUNCRCD_CRCD
     EDITTEXT        IDC_RUNCRCD_DESC,3,21,329,166,ES_MULTILINE | ES_READONLY | 

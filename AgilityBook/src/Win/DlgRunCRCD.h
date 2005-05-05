@@ -51,6 +51,7 @@ private:
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlView;
 	CButton	m_ctrlInsert;
+	CButton	m_ctrlImage;
 	CEdit	m_ctrlText;
 	CStatic	m_ctrlCRCD;
 	//}}AFX_DATA
@@ -76,6 +77,7 @@ protected:
 	afx_msg void OnEdit();
 	afx_msg void OnView();
 	afx_msg void OnCopy();
+	afx_msg void OnImage();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
