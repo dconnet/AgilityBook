@@ -153,6 +153,12 @@ BOOL CHeaderCtrl2::PreTranslateMessage(MSG* pMsg)
 	return CHeaderCtrl::PreTranslateMessage(pMsg);
 }
 
+void CHeaderCtrl2::OnDestroy()
+{
+	CHeaderCtrl::OnDestroy();
+	m_ToolTip.DestroyWindow();
+}
+
 void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 {
 	CHeaderCtrl::OnSize(nType, cx, cy);
@@ -289,7 +295,6 @@ BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 END_MESSAGE_MAP()
 
 CListCtrl2::CListCtrl2()
-	: m_bInit(false)
 {
 }
 
@@ -300,15 +305,12 @@ CListCtrl2::~CListCtrl2()
 /// Returns whether we ran the initialization.
 bool CListCtrl2::Init()
 {
-	if (!m_bInit)
+	if (::IsWindow(GetHeaderCtrl()->GetSafeHwnd())
+	&& (!m_SortHeader.GetSafeHwnd() || !::IsWindow(m_SortHeader.GetSafeHwnd())))
 	{
-		if (::IsWindow(GetHeaderCtrl()->GetSafeHwnd()))
-		{
-			m_bInit = true;
-			m_SortHeader.SubclassWindow(GetHeaderCtrl()->GetSafeHwnd());
-			m_SortHeader.FixTooltips();
-			return true;
-		}
+		m_SortHeader.SubclassWindow(GetHeaderCtrl()->GetSafeHwnd());
+		m_SortHeader.FixTooltips();
+		return true;
 	}
 	return false;
 }
@@ -430,7 +432,6 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 END_MESSAGE_MAP()
 
 CListView2::CListView2()
-	: m_bInit(false)
 {
 }
 
@@ -440,15 +441,12 @@ CListView2::~CListView2()
 
 bool CListView2::Init()
 {
-	if (!m_bInit)
+	if (::IsWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd())
+	&& (!m_SortHeader.GetSafeHwnd() || !::IsWindow(m_SortHeader.GetSafeHwnd())))
 	{
-		if (::IsWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd()))
-		{
-			m_bInit = true;
-			m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
-			m_SortHeader.FixTooltips();
-			return true;
-		}
+		m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
+		m_SortHeader.FixTooltips();
+		return true;
 	}
 	return false;
 }
