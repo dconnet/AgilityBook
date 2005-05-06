@@ -78,6 +78,7 @@ protected:
 
 protected:
 	//{{AFX_MSG(CHeaderCtrl2)
+	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
@@ -125,7 +126,6 @@ public:
 
 protected:
 	bool Init();
-	bool m_bInit;
 	CHeaderCtrl2 m_SortHeader;
 // Overrides
 	//{{AFX_VIRTUAL(CListCtrl2)
@@ -180,7 +180,6 @@ public:
 
 protected:
 	bool Init();
-	bool m_bInit;
 	CHeaderCtrl2 m_SortHeader;
 	//{{AFX_VIRTUAL(CListView2)
 	protected:
