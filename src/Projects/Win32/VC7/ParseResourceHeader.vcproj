@@ -13,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\bin\Win32\VC7\Debug"
-			IntermediateDirectory="..\..\bin\Win32\VC7\Debug\ParseResourceHeader"
+			OutputDirectory="..\..\..\..\bin\Win32\VC7\Debug"
+			IntermediateDirectory="..\..\..\..\bin\Win32\VC7\Debug\ParseResourceHeader"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="2">
@@ -27,6 +27,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
+				WarnAsError="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"/>
 			<Tool
@@ -43,7 +44,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..
+				CommandLine="cd $(ProjectDir)..\..\..
 BuildHelp.bat $(ConfigurationName)
 "/>
 			<Tool
@@ -65,8 +66,8 @@ BuildHelp.bat $(ConfigurationName)
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\bin\Win32\VC7\Release"
-			IntermediateDirectory="..\..\bin\Win32\VC7\Release\ParseResourceHeader"
+			OutputDirectory="..\..\..\..\bin\Win32\VC7\Release"
+			IntermediateDirectory="..\..\..\..\bin\Win32\VC7\Release\ParseResourceHeader"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="2">
@@ -76,6 +77,7 @@ BuildHelp.bat $(ConfigurationName)
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
+				WarnAsError="TRUE"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
 			<Tool
@@ -93,7 +95,7 @@ BuildHelp.bat $(ConfigurationName)
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..
+				CommandLine="cd $(ProjectDir)..\..\..
 BuildHelp.bat $(ConfigurationName)
 "/>
 			<Tool
@@ -122,7 +124,7 @@ BuildHelp.bat $(ConfigurationName)
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\ParseResourceHeader.cpp">
+				RelativePath="..\..\..\ParseResourceHeader\ParseResourceHeader.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -130,10 +132,10 @@ BuildHelp.bat $(ConfigurationName)
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\Win\resource.h">
+				RelativePath="..\..\..\Win\resource.h">
 			</File>
 			<File
-				RelativePath="..\Win\resource.hm">
+				RelativePath="..\..\..\Win\resource.hm">
 			</File>
 		</Filter>
 	</Files>

@@ -1,4 +1,6 @@
-Last Updated: 5/4/2005
+Last Updated: 5/16/2005
+
+- Make TopTen (OtherPoint) visible in the Runs view.
 
 - Fix Point view so when it refreshes, it sets the current visible items
   visible again.
