@@ -191,8 +191,7 @@ BOOL CDlgMessageBox::OnInitDialog()
 	*pStr = 0;       // no suffix
 	pStr = strrchr(szExeName, '\\');
 	ASSERT(pStr);
-	strcpy(szExeName, pStr+1);
-	SetWindowText(szExeName);
+	SetWindowText(pStr+1);
 
 	// Set the text.
 	m_ctrlText.SetWindowText(m_Text);
