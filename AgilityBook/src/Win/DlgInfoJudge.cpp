@@ -31,9 +31,13 @@
  * @author David Connet
  *
  * Note, this class also deals with adding notes on Clubs and Locations,
- * in addition to judges.
+ * in addition to judges. It probably should be renamed...
+ *
+ * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2005-24-05 DRC If there were 0 items in the list, it crashed.
+ *                    Allow saving an entry with no comment.
  * @li 2004-12-11 DRC Added indicators if item is added and/or has comments.
  *                    Merged in club/location support (was in separate files
  *                    that were added 11/18/04.
@@ -214,6 +218,9 @@ int CDlgInfoJudge::OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemSt
 
 void CDlgInfoJudge::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
+	if (-1 == lpDrawItemStruct->itemID)
+		return;
+
 	ASSERT(lpDrawItemStruct->CtlType == ODT_COMBOBOX);
 	CDC dc;
 	dc.Attach(lpDrawItemStruct->hDC);
@@ -320,6 +327,7 @@ void CDlgInfoJudge::OnNew()
 				++m_nAdded;
 				m_ctrlNames.AddString((LPCTSTR)idx);
 				m_ctrlComment.SetWindowText("");
+				m_Info.AddItem(m_Names[idx].m_Name);
 			}
 		}
 		else
@@ -331,9 +339,9 @@ void CDlgInfoJudge::OnNew()
 			++m_nAdded;
 			m_ctrlNames.AddString((LPCTSTR)idx);
 			m_ctrlComment.SetWindowText("");
+			m_Info.AddItem(m_Names[idx].m_Name);
 		}
 		m_ctrlNames.Invalidate();
-		// Don't bother adding anything in m_Items yet...
 		m_ctrlNames.SelectString(-1, name.c_str());
 		OnSelchangeName();
 	}
