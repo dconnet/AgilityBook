@@ -1,4 +1,4 @@
-5/4/2005: v1.5.3.10 <in development>
+5/24/2005: v1.5.3.10 <in development>
 - Bumped file version to 10.2:
   - Added 'ver' to 'AgilityBook'.
 - New features / Enhancements:
@@ -8,6 +8,10 @@
   - Sub-total Lifetime points by division.
   - Add the ability to paste a CRCD course without the image (text only).
     This will help keep the .arb file size from becoming too bloated.
+- Bug fixes
+  - Accessing the Notes (club/judge/location) information dialog before any
+    information exists caused the program to crash.
+  - An entry added in the Notes dialog without a comment did not get saved.
 
 3/29/2005: v1.5.2.10
 - Bumped to Configuration v8:
