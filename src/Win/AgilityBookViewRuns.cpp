@@ -1093,7 +1093,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	//{{AFX_MSG_MAP(CAgilityBookViewRuns)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
-	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
@@ -1394,24 +1393,6 @@ void CAgilityBookViewRuns::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 1;
 }
 
-void CAgilityBookViewRuns::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
-{
-	CListView2::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
-	CCmdUI cmdUI;
-	// (This may have changed for VC7+, but as of MFC4.2 it was required)
-	// Hack to make this code work!!!!
-	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
-	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
-	{
-		cmdUI.m_nIndex = n;
-		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
-		cmdUI.m_pMenu = pPopupMenu;
-		CCmdTarget* pTarget = this;
-		// Undocumented MFC cmd calls the ON_UPDATE_COMMAND_UI funcs.
-		cmdUI.DoUpdate(pTarget, FALSE);
-	}
-}
-
 void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	int index = GetSelection();
@@ -1440,7 +1421,7 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 		menu.LoadMenu(idMenu);
 		CMenu* pMenu = menu.GetSubMenu(0);
 		ASSERT(pMenu != NULL);
-		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, AfxGetMainWnd());
 	}
 }
 

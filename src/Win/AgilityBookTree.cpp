@@ -189,7 +189,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	//{{AFX_MSG_MAP(CAgilityBookTree)
 	ON_WM_DESTROY()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
-	ON_WM_INITMENUPOPUP()
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(TVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(TVN_GETDISPINFO, OnGetdispinfo)
@@ -748,24 +747,6 @@ void CAgilityBookTree::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 1;
 }
 
-void CAgilityBookTree::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
-{
-	CTreeView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
-	CCmdUI cmdUI;
-	// (This may have changed for VC7+, but as of MFC4.2 it was required)
-	// Hack to make this code work!!!!
-	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
-	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
-	{
-		cmdUI.m_nIndex = n;
-		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
-		cmdUI.m_pMenu = pPopupMenu;
-		CCmdTarget* pTarget = this;
-		// Undocumented MFC cmd calls the ON_UPDATE_COMMAND_UI funcs.
-		cmdUI.DoUpdate(pTarget, FALSE);
-	}
-}
-
 void CAgilityBookTree::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	HTREEITEM hCurItem = GetTreeCtrl().GetSelectedItem();
@@ -797,7 +778,7 @@ void CAgilityBookTree::OnContextMenu(CWnd* pWnd, CPoint point)
 		menu.LoadMenu(idMenu);
 		CMenu* pMenu = menu.GetSubMenu(0);
 		ASSERT(pMenu != NULL);
-		UINT id = pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD, point.x, point.y, this);
+		UINT id = pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD, point.x, point.y, AfxGetMainWnd());
 		// By processing the menu id ourselves, we can control the selection
 		// item. Otherwise, the menu id gets posted and arrives back to the
 		// dialog after we reset the select (in case the right click was done

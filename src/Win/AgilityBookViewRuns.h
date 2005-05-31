@@ -131,7 +131,6 @@ protected:
 	//{{AFX_MSG(CAgilityBookViewRuns)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);

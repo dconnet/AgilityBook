@@ -160,7 +160,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
 	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
-	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TABLE_IN_YPS, OnUpdateViewTableInYPS)
 	ON_COMMAND(ID_VIEW_TABLE_IN_YPS, OnViewTableInYPS)
 	//}}AFX_MSG_MAP
@@ -1164,17 +1163,6 @@ void CAgilityBookDoc::OnViewRunsByTrial()
 void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
-}
-
-void CAgilityBookDoc::OnViewHiddenTitles()
-{
-	CAgilityBookOptions::SetViewHiddenTitles(!CAgilityBookOptions::GetViewHiddenTitles());
-	std::vector<CVenueFilter> venues;
-	CAgilityBookOptions::GetFilterVenue(venues);
-	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
-		for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
-			ResetVisibility(venues, *iterTitle);
-	UpdateAllViews(NULL, UPDATE_POINTS_VIEW); // Titles aren't visible anywhere else
 }
 
 void CAgilityBookDoc::OnUpdateViewTableInYPS(CCmdUI* pCmdUI)
