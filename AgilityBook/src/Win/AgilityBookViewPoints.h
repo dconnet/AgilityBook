@@ -145,6 +145,8 @@ protected:
 	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityNewTitle();
+	afx_msg void OnUpdateViewHiddenTitles(CCmdUI* pCmdUI);
+	afx_msg void OnViewHiddenTitles();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

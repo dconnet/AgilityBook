@@ -140,7 +140,6 @@ protected:
 	//{{AFX_MSG(CAgilityBookTree)
 	afx_msg void OnDestroy();
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
