@@ -43,6 +43,7 @@
 #include "StdAfx.h"
 #include "ARBDogTitle.h"
 #include <algorithm>
+#include <sstream>
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
@@ -240,10 +241,10 @@ inline std::string ARBDogTitle::GetGenericName() const
 	name = m_Name;
 	if (1 < m_Instance)
 	{
-		char buffer[20];
+		std::ostringstream buffer;
 		// Keep sync'd with ARBConfigTitle
-		sprintf(buffer, " %hd", m_Instance);
-		name += buffer;
+		buffer << " " << m_Instance;
+		name += buffer.str();
 	}
 	return name;
 }

@@ -40,6 +40,7 @@
 
 #include "StdAfx.h"
 #include "ARBConfigTitle.h"
+#include <sstream>
 
 #include "ARBAgilityRecordBook.h"
 #include "Element.h"
@@ -145,16 +146,21 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 
 std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst) const
 {
-	char buffer[20];
-	buffer[0] = 0;
+	std::string buffer;
 	if (1 < inInstance)
 	{
 		// Keep sync'd with ARBDogTitle
-		sprintf(buffer, " %hd", inInstance);
+		std::ostringstream str;
+		str << " " << inInstance;
+		buffer = str.str();
 	}
 	// Special formatting used in configuration dialogs.
 	else if (0 > inInstance && 0 < m_Multiple)
-		strcpy(buffer, "+");
+	{
+		std::ostringstream str;
+		str << "+";
+		buffer = str.str();
+	}
 	std::string name;
 	if (0 < m_LongName.length())
 	{
@@ -162,7 +168,7 @@ std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst)
 		{
 			name += "[";
 			name += m_Name;
-			if (buffer[0])
+			if (0 < buffer.length())
 				name += buffer;
 			name += "] ";
 		}
@@ -171,7 +177,7 @@ std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst)
 		{
 			name += " [";
 			name += m_Name;
-			if (buffer[0])
+			if (0 < buffer.length())
 				name += buffer;
 			name += "]";
 		}
@@ -179,7 +185,7 @@ std::string ARBConfigTitle::GetCompleteName(short inInstance, bool bAbbrevFirst)
 	else
 	{
 		name = m_Name;
-		if (buffer[0])
+		if (0 < buffer.length())
 			name += buffer;
 	}
 	return name;
