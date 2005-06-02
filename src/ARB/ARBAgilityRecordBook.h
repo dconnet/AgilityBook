@@ -269,19 +269,77 @@
 #define VALID_VALUES_SCORE		"Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'"
 
 // Strings for formatting the information returned when updating configurations.
-#define UPDATE_FORMAT_FAULTS	"Faults: %d added, %d identical\n"
-#define UPDATE_FORMAT_OTHERPTS	"Other Points: %d added, %d updated, %d identical\n"
-#define UPDATE_FORMAT_VENUES	"Venues: %d added, %d updated, %d identical"
-#define UPDATE_FORMAT_DIVISIONS	"Divisions: %d added, %d updated, %d identical\n"
-#define UPDATE_FORMAT_EVENTS	"Events: %d added, %d updated, %d identical\n"
-#define UPDATE_FORMAT_LEVELS	"Levels: %d added, %d updated, %d identical\n"
-#define UPDATE_FORMAT_TITLES	"Titles: %d added, %d updated, %d identical\n"
-#define UPDATE_FORMAT_SUBLEVELS	"%d new sub-levels\n"
-#define UPDATE_FORMAT_RULES		" rules: %d added, %d deleted, %d updated, %d identical\n"
+// - Changed to inline functions in order to remove sprintf style formatting.
+#include <sstream>
+#include <string>
+inline std::string UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Faults: " << nNew << " added, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Other Points: " << nNew << " added, " << nUpdated << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Venues: " << nNew << " added, " << nUpdated << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Divisions: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Events: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Levels: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "Titles: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_SUBLEVELS(int nAdded)
+{
+	std::ostringstream buffer;
+	buffer << nAdded << " new sub-levels" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << " rules: " << nAdded << " added, " << nDeleted << " deleted, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
 
 // Used in ARBConfigTitlePoints.cpp
-#define TITLE_POINTS_NAME_FORMAT	"%hd points with %hd faults"
-#define LIFETIME_POINTS_NAME_FORMAT	"%hd lifetime points with %hd faults"
+inline std::string TITLE_POINTS_NAME_FORMAT(short points, short faults)
+{
+	std::ostringstream buffer;
+	buffer << points << " points with " << faults << " faults";
+	return buffer.str();
+}
+inline std::string LIFETIME_POINTS_NAME_FORMAT(short points, short faults)
+{
+	std::ostringstream buffer;
+	buffer << points << " lifetime points with " << faults << " faults";
+	return buffer.str();
+}
 
 // Used in ARBConfigScoring.cpp
 #define SCORE_STYLE_UNKNOWN			"Unknown"

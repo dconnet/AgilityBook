@@ -293,7 +293,6 @@ std::string ARBConfig::GetTitleCompleteName(
 
 bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& ioInfo)
 {
-	char buffer[1000];
 	std::string info;
 
 	int nChanges = 0;
@@ -317,8 +316,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		sprintf(buffer, UPDATE_FORMAT_FAULTS, nNew, nSkipped);
-		info += buffer;
+		info += UPDATE_FORMAT_FAULTS(nNew, nSkipped);
 	}
 
 	// Update OtherPoints.
@@ -352,8 +350,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		sprintf(buffer, UPDATE_FORMAT_OTHERPTS, nNew, nUpdated, nSkipped);
-		info += buffer;
+		info += UPDATE_FORMAT_OTHERPTS(nNew, nUpdated, nSkipped);
 	}
 
 	// Update Venues.
@@ -391,8 +388,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		sprintf(buffer, UPDATE_FORMAT_VENUES, nNew, nUpdated, nSkipped);
-		info += buffer;
+		info += UPDATE_FORMAT_VENUES(nNew, nUpdated, nSkipped);
 	}
 	if (0 < venueInfo.length())
 	{

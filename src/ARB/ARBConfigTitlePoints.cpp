@@ -100,9 +100,7 @@ bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
 
 std::string ARBConfigTitlePoints::GetGenericName() const
 {
-	char buffer[100];
-	sprintf(buffer, TITLE_POINTS_NAME_FORMAT, m_Points, m_Faults);
-	return buffer;
+	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
 
 size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) const

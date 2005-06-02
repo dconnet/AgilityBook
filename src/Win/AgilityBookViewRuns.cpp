@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-02 DRC OnNeedText was quietly referencing m_Columns[-1]. Oops.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-31 DRC Make F1 invoke context help.
@@ -143,7 +144,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 {
 	short val;
 	CString str;
-	if (m_pRun)
+	if (0 < iCol && m_pRun)
 	{
 		// Col 0 is special: it has the icons. Instead of saving it,
 		// we simply ignore it - so iCol is always off by 1.
