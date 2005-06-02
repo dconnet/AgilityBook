@@ -860,27 +860,28 @@ Element::~Element()
 // Then they are only trimmed if all zero (and inPrec=2).
 static std::string ConvertDouble(double inValue, int inPrec)
 {
-	char buffer[100];
-	sprintf(buffer, "%.*f", inPrec, inValue);
-	char* pos = NULL;
-	std::string retVal(buffer);
-	if (NULL != (pos = strchr(buffer, '.')))
+	std::ostringstream buffer;
+	buffer.precision(inPrec);
+	buffer << inValue;
+	std::string retVal(buffer.str());
+	std::string::size_type pos;
+	if (std::string::npos != (pos = retVal.find('.')))
 	{
 		if (2 == inPrec)
 		{
-			if (0 == strcmp(pos, ".00"))
+			if (retVal.substr(pos) == ".00")
 			{
-				if (pos == buffer)
+				// Input is ".00", so simplify
+				if (retVal.substr(pos) == buffer.str())
 					retVal = "0";
+				// Strip the ".00".
 				else
-				{
-					*pos = '\0';
-					retVal = buffer;
-				}
+					retVal = retVal.substr(0, pos);
 			}
 		}
 		else
 		{
+			// Strip trailing 0s.
 			size_t len;
 			while (0 < (len = retVal.length()) && retVal[len-1] == '0')
 				retVal = retVal.substr(0, len-1);
