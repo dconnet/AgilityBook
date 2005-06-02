@@ -265,10 +265,8 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
-			char buffer[1000];
-			sprintf(buffer, UPDATE_FORMAT_DIVISIONS, nAdded, nChanged, nSkipped);
 			info += indentBuffer;
-			info += buffer;
+			info += UPDATE_FORMAT_DIVISIONS(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
 	}
@@ -307,10 +305,8 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
-			char buffer[1000];
-			sprintf(buffer, UPDATE_FORMAT_EVENTS, nAdded, nChanged, nSkipped);
 			info += indentBuffer;
-			info += buffer;
+			info += UPDATE_FORMAT_EVENTS(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
 	}

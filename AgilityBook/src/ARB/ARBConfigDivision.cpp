@@ -192,10 +192,8 @@ bool ARBConfigDivision::Update(int indent, ARBConfigDivision const* inDivNew, st
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
-			char buffer[1000];
-			sprintf(buffer, UPDATE_FORMAT_LEVELS, nAdded, nChanged, nSkipped);
 			info += indentBuffer;
-			info += buffer;
+			info += UPDATE_FORMAT_LEVELS(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
 	}
@@ -231,10 +229,8 @@ bool ARBConfigDivision::Update(int indent, ARBConfigDivision const* inDivNew, st
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
-			char buffer[1000];
-			sprintf(buffer, UPDATE_FORMAT_TITLES, nAdded, nChanged, nSkipped);
 			info += indentBuffer;
-			info += buffer;
+			info += UPDATE_FORMAT_TITLES(nAdded, nChanged, nSkipped);
 		}
 	}
 	bool bChanges = false;

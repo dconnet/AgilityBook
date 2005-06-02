@@ -827,7 +827,19 @@ LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 		}
 		lstrcpy(&g_szBuff2[len-3], "log");
 	}
+#if _MSC_VER >= 1400
+	FILE* output = NULL;
+	if (0 != fopen_s(&output, g_szBuff2, "a+"))
+	{
+		if (output)
+		{
+			fclose(output);
+			output = NULL;
+		}
+	}
+#else
 	FILE* output = fopen(g_szBuff2, "a+");
+#endif
 
 	// Need to copy pReason since it's sitting in a global buffer.
 	// We don't display it until after we've written the log.
@@ -843,7 +855,13 @@ LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 
 		time_t t;
 		time(&t);
+#if _MSC_VER < 1400
 		struct tm* local = localtime(&t);
+#else
+		struct tm l;
+		_localtime64_s(&l, &t);
+		struct tm* local = &l;
+#endif
 		_tcsftime(g_szBuff2, MAX_PATH, _T("%#c"), local);
 		fputs("\n============================================================\n", output);
 		fputs(g_szBuff2, output);

@@ -95,9 +95,7 @@ bool ARBConfigLifetimePoints::operator!=(ARBConfigLifetimePoints const& rhs) con
 
 std::string ARBConfigLifetimePoints::GetGenericName() const
 {
-	char buffer[100];
-	sprintf(buffer, LIFETIME_POINTS_NAME_FORMAT, m_Points, m_Faults);
-	return buffer;
+	return LIFETIME_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
 
 size_t ARBConfigLifetimePoints::GetSearchStrings(std::set<std::string>& ioStrings) const

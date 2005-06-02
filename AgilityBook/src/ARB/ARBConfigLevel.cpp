@@ -157,10 +157,8 @@ bool ARBConfigLevel::Update(int indent, ARBConfigLevel const* inLevelNew, std::s
 		}
 		if (0 < nAdded)
 		{
-			char buffer[100];
-			sprintf(buffer, UPDATE_FORMAT_SUBLEVELS, nAdded);
 			info += indentBuffer;
-			info += buffer;
+			info += UPDATE_FORMAT_SUBLEVELS(nAdded);
 		}
 	}
 	bool bChanges = false;

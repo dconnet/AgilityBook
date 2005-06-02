@@ -67,6 +67,10 @@ typedef std::pair<ARBDogTrial const*, ARBDogRun const*> RunInfo;
  */
 class LifeTimePointInfo
 {
+#if _MSC_VER >= 1400
+private:
+	LifeTimePointInfo(); // Not implemented, needed for <list>
+#endif
 public:
 	LifeTimePointInfo(std::string const& inDiv, std::string const& inLevel, int inPoints, int inFiltered);
 	std::string div;
@@ -80,6 +84,10 @@ public:
  */
 class OtherPtInfo
 {
+#if _MSC_VER >= 1400
+private:
+	OtherPtInfo(); // Not implemented, needed for <list>
+#endif
 public:
 	OtherPtInfo(ARBDogTrial const* pTrial, ARBDogRun const* pRun, int score);
 	OtherPtInfo(ARBDogExistingPoints const* pExisting);

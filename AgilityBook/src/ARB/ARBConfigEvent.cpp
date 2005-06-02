@@ -291,11 +291,9 @@ bool ARBConfigEvent::Update(int indent, ARBConfigEvent const* inEventNew, std::s
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nDeleted || 0 < nChanged)
 		{
-			char buffer[1000];
-			sprintf(buffer, UPDATE_FORMAT_RULES, nAdded, nDeleted, nChanged, nSkipped);
 			info += indentBuffer;
 			info += GetName();
-			info += buffer;
+			info += UPDATE_FORMAT_RULES(nAdded, nDeleted, nChanged, nSkipped);
 		}
 	}
 	if (0 < info.length())
