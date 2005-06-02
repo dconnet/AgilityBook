@@ -156,6 +156,9 @@ protected:
 	afx_msg void OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityDeleteRun();
 	afx_msg void OnViewCustomize();
+	afx_msg void OnViewSortruns();
+	afx_msg void OnViewRunsByTrial();
+	afx_msg void OnViewTableInYPS();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

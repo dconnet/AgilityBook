@@ -228,8 +228,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND_EX(ID_AGILITY_NEW_RUN, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_DOG, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_EDIT_DOG, OnDogCmd)
-	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_TITLE, OnUpdateDogCmd)
-	ON_COMMAND_EX(ID_AGILITY_EDIT_TITLE, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_TRIAL, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_EDIT_TRIAL, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_RUN, OnUpdateDogCmd)
@@ -238,13 +236,14 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND_EX(ID_REORDER, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_DOG, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_DOG, OnDogCmd)
-	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_TITLE, OnUpdateDogCmd)
-	ON_COMMAND_EX(ID_AGILITY_DELETE_TITLE, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_TRIAL, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_TRIAL, OnDogCmd)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateDogCmd)
 	ON_COMMAND_EX(ID_AGILITY_DELETE_RUN, OnDogCmd)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
+	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
+	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
+	ON_COMMAND(ID_VIEW_TABLE_IN_YPS, OnViewTableInYPS)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(PM_DELAY_MESSAGE, OnDelayedMessage)
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -1020,4 +1019,23 @@ void CAgilityBookTree::OnViewCustomize()
 		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
 		Invalidate();
 	}
+}
+
+void CAgilityBookTree::OnViewSortruns()
+{
+	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
+	GetDocument()->SortDates();
+	LoadData();
+}
+
+void CAgilityBookTree::OnViewRunsByTrial()
+{
+	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
+	LoadData();
+}
+
+void CAgilityBookTree::OnViewTableInYPS()
+{
+	CAgilityBookOptions::SetTableInYPS(!CAgilityBookOptions::GetTableInYPS());
+	AfxGetMainWnd()->Invalidate();
 }
