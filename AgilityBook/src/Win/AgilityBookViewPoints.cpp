@@ -133,7 +133,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
 	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -1062,11 +1061,6 @@ void CAgilityBookViewPoints::OnAgilityNewTitle()
 		if (data.OnCmd(ID_AGILITY_NEW_TITLE, NULL))
 			GetDocument()->SetModifiedFlag();
 	}
-}
-
-void CAgilityBookViewPoints::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
 }
 
 void CAgilityBookViewPoints::OnViewHiddenTitles()

@@ -156,12 +156,9 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_NOTES_SEARCH, OnNotesSearch)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
-	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
-	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TABLE_IN_YPS, OnUpdateViewTableInYPS)
-	ON_COMMAND(ID_VIEW_TABLE_IN_YPS, OnViewTableInYPS)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1142,22 +1139,9 @@ void CAgilityBookDoc::OnUpdateViewSortruns(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
 }
 
-void CAgilityBookDoc::OnViewSortruns() 
-{
-	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
-	SortDates();
-	UpdateAllViews(NULL, UPDATE_OPTIONS);
-}
-
 void CAgilityBookDoc::OnUpdateViewRunsByTrial(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
-}
-
-void CAgilityBookDoc::OnViewRunsByTrial()
-{
-	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
-	UpdateAllViews(NULL, UPDATE_OPTIONS);
 }
 
 void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
@@ -1168,10 +1152,4 @@ void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
 void CAgilityBookDoc::OnUpdateViewTableInYPS(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetTableInYPS() ? 1 : 0);
-}
-
-void CAgilityBookDoc::OnViewTableInYPS()
-{
-	CAgilityBookOptions::SetTableInYPS(!CAgilityBookOptions::GetTableInYPS());
-	AfxGetMainWnd()->Invalidate();
 }

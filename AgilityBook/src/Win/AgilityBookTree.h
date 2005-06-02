@@ -160,6 +160,9 @@ protected:
 	afx_msg void OnUpdateCollapseAll(CCmdUI* pCmdUI);
 	afx_msg void OnCollapseAll();
 	afx_msg void OnViewCustomize();
+	afx_msg void OnViewSortruns();
+	afx_msg void OnViewRunsByTrial();
+	afx_msg void OnViewTableInYPS();
 	//}}AFX_MSG
 	afx_msg LRESULT OnDelayedMessage(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()

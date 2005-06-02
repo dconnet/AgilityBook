@@ -1118,6 +1118,9 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_DELETE_RUN, OnUpdateAgilityDeleteRun)
 	ON_COMMAND(ID_AGILITY_DELETE_RUN, OnAgilityDeleteRun)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
+	ON_COMMAND(ID_VIEW_SORTRUNS, OnViewSortruns)
+	ON_COMMAND(ID_VIEW_RUNS_BY_TRIAL, OnViewRunsByTrial)
+	ON_COMMAND(ID_VIEW_TABLE_IN_YPS, OnViewTableInYPS)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1704,4 +1707,23 @@ void CAgilityBookViewRuns::OnViewCustomize()
 		SetupColumns();
 		LoadData();
 	}
+}
+
+void CAgilityBookViewRuns::OnViewSortruns() 
+{
+	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
+	GetDocument()->SortDates();
+	LoadData();
+}
+
+void CAgilityBookViewRuns::OnViewRunsByTrial()
+{
+	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
+	LoadData();
+}
+
+void CAgilityBookViewRuns::OnViewTableInYPS()
+{
+	CAgilityBookOptions::SetTableInYPS(!CAgilityBookOptions::GetTableInYPS());
+	AfxGetMainWnd()->Invalidate();
 }

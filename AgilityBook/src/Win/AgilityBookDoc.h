@@ -213,12 +213,9 @@ protected:
 	afx_msg void OnNotesSearch();
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
-	afx_msg void OnViewSortruns();
 	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
-	afx_msg void OnViewRunsByTrial();
 	afx_msg void OnUpdateViewHiddenTitles(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewTableInYPS(CCmdUI* pCmdUI);
-	afx_msg void OnViewTableInYPS();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
