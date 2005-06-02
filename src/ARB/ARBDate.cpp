@@ -38,6 +38,7 @@
 
 #include "StdAfx.h"
 #include "ARBDate.h"
+#include <sstream>
 #include <time.h>
 
 #include "Element.h"
@@ -272,7 +273,7 @@ ARBDate::ARBDate(time_t inTime)
 	}
 }
 
-#if _WIN32 && _MSC_VER >= 1300
+#if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
 ARBDate::ARBDate(__time64_t inTime)
 	: m_Julian(0)
 {
@@ -326,84 +327,84 @@ std::string ARBDate::GetString(DateFormat inFormat) const
 	{
 		int yr, mon, day;
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-		char sYr[10], sMon[10], sDay[10];
+		std::ostringstream str;
 		switch (inFormat)
 		{
-		default:
-		case eDashMMDDYYYY:
-		case eSlashMMDDYYYY:
-		case eDashYYYYMMDD:
-		case eSlashYYYYMMDD:
-		case eDashDDMMYYYY:
-		case eSlashDDMMYYYY:
-			sprintf(sYr, "%04d", yr);
-			sprintf(sMon, "%02d", mon);
-			sprintf(sDay, "%02d", day);
+		case eDashMMDDYYYY:		///< MM-DD-YYYY
+			str.fill('0');
+			str.width(2);
+			str << mon << "-";
+			str.width(2);
+			str << day << "-";
+			str.width(4);
+			str << yr;
 			break;
-		case eDashMDY:
-		case eSlashMDY:
-		case eDashYMD:
-		case eSlashYMD:
-		case eDashDMY:
-		case eSlashDMY:
-			sprintf(sYr, "%d", yr);
-			sprintf(sMon, "%d", mon);
-			sprintf(sDay, "%d", day);
+		default:				///< YYYY-MM-DD or MM/DD/YYYY
+		case eSlashMMDDYYYY:	///< MM/DD/YYYY
+			str.fill('0');
+			str.width(2);
+			str << mon << "/";
+			str.width(2);
+			str << day << "/";
+			str.width(4);
+			str << yr;
+			break;
+		case eDashYYYYMMDD:		///< YYYY-MM-DD
+			str.fill('0');
+			str.width(4);
+			str << yr << "-";
+			str.width(2);
+			str << mon << "-";
+			str.width(2);
+			str << day;
+			break;
+		case eSlashYYYYMMDD:	///< YYYY/MM/DD
+			str.fill('0');
+			str.width(4);
+			str << yr << "/";
+			str.width(2);
+			str << mon << "/";
+			str.width(2);
+			str << day;
+			break;
+		case eDashDDMMYYYY:		///< DD-MM-YYYY
+			str.fill('0');
+			str.width(2);
+			str << day << "-";
+			str.width(2);
+			str << mon << "-";
+			str.width(4);
+			str << yr;
+			break;
+		case eSlashDDMMYYYY:	///< DD/MM/YYYY
+			str.fill('0');
+			str.width(2);
+			str << day << "/";
+			str.width(2);
+			str << mon << "/";
+			str.width(4);
+			str << yr;
+			break;
+		case eDashMDY:	///< M-D-Y
+			str << mon << "-" << day << "-" << yr;
+			break;
+		case eSlashMDY:	///< M/D/Y
+			str << mon << "/" << day << "/" << yr;
+			break;
+		case eDashYMD:	///< Y-M-D
+			str << yr << "-" << mon << "-" << day;
+			break;
+		case eSlashYMD:	///< Y/M/D
+			str << yr << "/" << mon << "/" << day;
+			break;
+		case eDashDMY:	///< D-M-Y
+			str << day << "-" << mon << "-" << yr;
+			break;
+		case eSlashDMY:	///< D/M/Y
+			str << day << "/" << mon << "/" << yr;
 			break;
 		}
-		char sep = '?';
-		switch (inFormat)
-		{
-		case eDashMMDDYYYY:
-		case eDashYYYYMMDD:
-		case eDashDDMMYYYY:
-		case eDashMDY:
-		case eDashYMD:
-		case eDashDMY:
-			sep = '-';
-			break;
-		case eSlashMMDDYYYY:
-		case eSlashYYYYMMDD:
-		case eSlashDDMMYYYY:
-		case eSlashMDY:
-		case eSlashYMD:
-		case eSlashDMY:
-			sep = '/';
-			break;
-		}
-		switch (inFormat)
-		{
-		case eDashMMDDYYYY:
-		case eSlashMMDDYYYY:
-		case eDashMDY:
-		case eSlashMDY:
-			date = sMon;
-			date += sep;
-			date += sDay;
-			date += sep;
-			date += sYr;
-			break;
-		case eDashYYYYMMDD:
-		case eSlashYYYYMMDD:
-		case eDashYMD:
-		case eSlashYMD:
-			date = sYr;
-			date += sep;
-			date += sMon;
-			date += sep;
-			date += sDay;
-			break;
-		case eDashDDMMYYYY:
-		case eSlashDDMMYYYY:
-		case eDashDMY:
-		case eSlashDMY:
-			date = sDay;
-			date += sep;
-			date += sMon;
-			date += sep;
-			date += sYr;
-			break;
-		}
+		date = str.str();
 	}
 	return date;
 }

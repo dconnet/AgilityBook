@@ -37,6 +37,7 @@
 
 #include "StdAfx.h"
 #include "ARBTypes.h"
+#include <sstream>
 #include <time.h>
 
 #include "ARBAgilityRecordBook.h"
@@ -52,9 +53,9 @@ static char THIS_FILE[] = __FILE__;
 
 std::string ARBVersion::str() const
 {
-	char buffer[100];
-	sprintf(buffer, "%hd.%hd", Major(), Minor());
-	return buffer;
+	std::ostringstream buffer;
+	buffer << Major() << "." << Minor();
+	return buffer.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////

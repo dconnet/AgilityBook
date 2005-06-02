@@ -652,49 +652,46 @@ void SAXImportHandlers::resetDocument()
 void SAXImportHandlers::warning(SAXParseException const& toCatch)
 {
 	++m_Warnings;
-	char tmp[20];
-	m_Msg += "Warning in file '";
-	m_Msg += toCatch.getSystemId();
-	m_Msg += "', line ";
-	sprintf(tmp, "%d", toCatch.getLineNumber());
-	m_Msg += tmp;
-	m_Msg += ", column ";
-	sprintf(tmp, "%d", toCatch.getColumnNumber());
-	m_Msg += tmp;
-	m_Msg += ".  Message: ";
-	m_Msg += toCatch.getMessage();
+	std::ostringstream tmp;
+	tmp << "Warning in file '"
+		<< toCatch.getSystemId()
+		<< "', line "
+		<< toCatch.getLineNumber()
+		<< ", column "
+		<< toCatch.getColumnNumber()
+		<< ".  Message: "
+		<< toCatch.getMessage();
+	m_Msg += tmp.str();
 }
 
 void SAXImportHandlers::error(SAXParseException const& toCatch)
 {
 	++m_Errors;
-	char tmp[20];
-	m_Msg += "Error in file '";
-	m_Msg += toCatch.getSystemId();
-	m_Msg += "', line ";
-	sprintf(tmp, "%d", toCatch.getLineNumber());
-	m_Msg += tmp;
-	m_Msg += ", column ";
-	sprintf(tmp, "%d", toCatch.getColumnNumber());
-	m_Msg += tmp;
-	m_Msg += ".  Message: ";
-	m_Msg += toCatch.getMessage();
+	std::ostringstream tmp;
+	tmp << "Error in file '"
+		<< toCatch.getSystemId()
+		<< "', line "
+		<< toCatch.getLineNumber()
+		<< ", column "
+		<< toCatch.getColumnNumber()
+		<< ".  Message: "
+		<< toCatch.getMessage();
+	m_Msg += tmp.str();
 }
 
 void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 {
 	++m_FatalErrors;
-	char tmp[20];
-	m_Msg += "Fatal Error in file '";
-	m_Msg += toCatch.getSystemId();
-	m_Msg += "', line ";
-	sprintf(tmp, "%d", toCatch.getLineNumber());
-	m_Msg += tmp;
-	m_Msg += ", column ";
-	sprintf(tmp, "%d", toCatch.getColumnNumber());
-	m_Msg += tmp;
-	m_Msg += ".  Message: ";
-	m_Msg += toCatch.getMessage();
+	std::ostringstream tmp;
+	tmp << "Fatal Error in file '"
+		<< toCatch.getSystemId()
+		<< "', line "
+		<< toCatch.getLineNumber()
+		<< ", column "
+		<< toCatch.getColumnNumber()
+		<< ".  Message: "
+		<< toCatch.getMessage();
+	m_Msg += tmp.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////

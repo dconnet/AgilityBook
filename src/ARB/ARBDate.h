@@ -57,7 +57,7 @@ public:
 	typedef enum
 	{
 		// Leading zeros
-		eDefault		= 0,	///< YYYY-MM-DD or MM/DD/YYYY
+		eDefault		= 0,	///< YYYY-MM-DD or MM/DD/YYYY (input), =2 (output)
 		eDashMMDDYYYY	= 1,	///< MM-DD-YYYY
 		eSlashMMDDYYYY	= 2,	///< MM/DD/YYYY
 		eDashYYYYMMDD	= 3,	///< YYYY-MM-DD
@@ -89,7 +89,8 @@ public:
 	ARBDate();
 	ARBDate(ARBDate const& rhs);
 	ARBDate(time_t inTime);
-#if _WIN32 && _MSC_VER >= 1300
+#if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
+	// VC6 doesn't have this and VC8's time_t is 64bit.
 	ARBDate(__time64_t inTime);
 #endif
 	ARBDate(int inYr, int inMon, int inDay);
