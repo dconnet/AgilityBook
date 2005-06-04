@@ -88,8 +88,9 @@ public:
 	// Filtered state
 	typedef enum
 	{
-		eFilter = 0x0,	// Full filter
-		eIgnoreQ = 0x1,	// Ignore Q status when filtering
+		eFilter = 0,	// Full filter
+		eIgnoreQ = 1,	// Ignore Q status when filtering
+		eNumFilters = 2	// Number of filter types
 	} FilterType;
 
 	/**
@@ -127,20 +128,17 @@ protected:
 	 */
 	virtual ~ARBBase();
 	unsigned int m_RefCount;
-	unsigned short m_nFiltered;
+	bool m_bFiltered[eNumFilters];
 };
 
 inline bool ARBBase::IsFiltered(FilterType inFilterType) const
 {
-	return (m_nFiltered & (0x1 << inFilterType)) ? true : false;
+	return m_bFiltered[inFilterType];
 }
 
 inline void ARBBase::SetFiltered(FilterType inFilterType, bool bFiltered)
 {
-	if (bFiltered)
-		m_nFiltered |= (0x1 << inFilterType);
-	else
-		m_nFiltered &= ~(0x1 << inFilterType);
+	m_bFiltered[inFilterType] = bFiltered;
 }
 
 inline bool ARBBase::IsFiltered() const
