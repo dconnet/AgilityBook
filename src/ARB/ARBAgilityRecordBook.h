@@ -265,7 +265,7 @@
 #define VALID_VALUES			"Valid values: "
 #define VALID_VALUES_BOOL		"Valid values: 'y', 'n'"
 #define VALID_VALUES_ENTRY		"Valid values: 'E', 'P', 'N'"
-#define VALID_VALUES_OTHERPT	"Valid values: All, AllByEvent, Level, LevelByEvent"
+#define VALID_VALUES_OTHERPT	"Valid values: 'All', 'AllByEvent', 'Level', 'LevelByEvent'"
 #define VALID_VALUES_SCORE		"Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'"
 
 // Strings for formatting the information returned when updating configurations.
@@ -497,7 +497,7 @@ public:
 	/**
 	 * Get all club names in use from existing trials and calendar entries.
 	 * @param outClubs List of clubs.
-	 * @param bInfo Include judges from the ARBInfo.
+	 * @param bInfo Include clubs from the ARBInfo.
 	 * @return Number of clubs.
 	 */
 	size_t GetAllClubNames(std::set<std::string>& outClubs, bool bInfo = true) const;
@@ -505,7 +505,7 @@ public:
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
 	 * @param outLocations List of locations.
-	 * @param bInfo Include judges from the ARBInfo.
+	 * @param bInfo Include locations from the ARBInfo.
 	 * @return Number of locations.
 	 */
 	size_t GetAllTrialLocations(std::set<std::string>& outLocations, bool bInfo = true) const;
