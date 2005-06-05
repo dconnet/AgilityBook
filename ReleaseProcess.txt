@@ -4,7 +4,6 @@ Files to change before marking files for release:
 - If file version has changed:
   - If major version has changed, make sure last part of pgm version agrees.
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
-  - Archive Megan.arb as TestVn.n.arb and add to CVS
   - Update the version in DefaultConfig.xml
   - Plus: Make sure that the Update() methods have been updated!
     If this is missed, the new data will not be merged.
@@ -28,12 +27,12 @@ Do a full rebuild and verify it.
 Tag CVS repository "vn_n_n_n"
 
 Create the files to be distributed (make sure you archive them too)
-- AgilityBook_n_n_n_nsrc.zip [distrib/]
-- AgilityBook_n_n_n_n.msi [distrib/Win32/vc7/]
-- AgilityBook_n_n_n_n.zip (AgilityBook.exe/.chm) [distrib/Win32/vc6/] 
-- Megan.zip [Megan.arb] - Only update on file version changes
 - Any extra readme files required
 - Copy a backup vc6/7 .exe image to \AgilityBook\testVC[67]
+- AgilityBook_n_n_n_n.msi [distrib/Win32/vc7/]
+- AgilityBook_n_n_n_n.zip (AgilityBook.exe/.chm) [distrib/Win32/vc6/] 
+- Clean out all build artifacts.
+- AgilityBook_n_n_n_nsrc.zip [distrib/]
 
 In SourceForge, enter the File Releases section in Admin.
 - At the bottom of the page, 'Add Release' to 'agilitybook' package.
@@ -51,7 +50,6 @@ In Yahoo
 - Upload all new files.
   - [files/release] History.txt
   - [files/release] Todo.txt
-  - [files/release] Megan.zip [Desc: Sample file]
   - [files/release/alternate] AgilityBook_n_n_n_n.zip
   - [files/release/alternate] MFC6.zip, already there, shouldn't need changing
   - [files/release/alternate] SupportDLLs.zip, already there
