@@ -1,4 +1,4 @@
-5/26/2005: v1.5.3.10 <in development>
+6/5/2005: v1.5.3.10
 - Bumped file version to 10.2:
   - Added 'ver' to 'AgilityBook'.
 - New features / Enhancements:
