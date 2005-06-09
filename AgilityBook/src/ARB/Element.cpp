@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces 2.2.0.
  *
  * Revision History
+ * @li 2005-06-09 DRC Numbers were being stored/shown in scientific notation.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Moved date parsing code to ARBDate::FromString.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -862,7 +863,8 @@ static std::string ConvertDouble(double inValue, int inPrec)
 {
 	std::ostringstream buffer;
 	buffer.precision(inPrec);
-	buffer << inValue;
+	// 6/9/05: Make sure floating point numbers are shown in fixed form.
+	buffer << std::fixed << inValue;
 	std::string retVal(buffer.str());
 	std::string::size_type pos;
 	if (std::string::npos != (pos = retVal.find('.')))

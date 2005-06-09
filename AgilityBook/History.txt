@@ -1,4 +1,6 @@
-6/5/2005: v1.5.4.10 <in development>
+6/9/2005: v1.5.4.10 <in development>
+- Bug fixes
+  - Some numbers were being stored/shown in scientific notation.
 
 6/5/2005: v1.5.3.10
 - Bumped file version to 10.2:
