@@ -119,6 +119,16 @@
 			<param name="Local" value="Help\html\Misc.html#CoSanction">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Entering a NADAC Gamblers run">
+			<param name="Local" value="Help\html\Misc.html#NADACgamblers">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Entering a non-traditional Gamble/Jackpot run">
+			<param name="Local" value="Help\html\Misc.html#NonTradGamblers">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Program Overview">
