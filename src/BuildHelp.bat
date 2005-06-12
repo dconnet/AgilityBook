@@ -10,8 +10,11 @@ if ("%1")==("Release") goto doit
 goto usage
 
 :doit
-if not exist "..\bin\Win32\VC7\%1\ParseResourceHeader.exe" goto usage
+if exist "..\bin\Win32\VC7\%1\ParseResourceHeader.exe" goto doit2
+echo Error: "..\bin\Win32\VC7\%1\ParseResourceHeader.exe" is missing
+goto usage
 
+:doit2
 set OLDPATH=%PATH%
 set PATH=c:\Program Files\HTML Help Workshop;%PATH%
 
