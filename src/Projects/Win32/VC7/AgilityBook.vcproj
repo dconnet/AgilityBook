@@ -23,11 +23,11 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="../../..;../../../ARB;../../../Win;../../../../../xml-xerces/c/src"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
+				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="TRUE"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="TRUE"
 				EnableFunctionLevelLinking="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
@@ -84,9 +84,7 @@
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zi"
 				Optimization="3"
-				InlineFunctionExpansion="1"
 				OmitFramePointers="TRUE"
 				AdditionalIncludeDirectories="../../..;../../../ARB;../../../Win;../../../../../xml-xerces/c/src"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"

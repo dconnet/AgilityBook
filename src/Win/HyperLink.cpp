@@ -300,6 +300,7 @@ UINT CHyperLink::OnGetDlgCode()
 
 HBRUSH CHyperLink::CtlColor(CDC* pDC, UINT nCtlColor)
 {
+	UNUSED(nCtlColor);
 	ASSERT(nCtlColor == CTLCOLOR_STATIC);
 	if (m_bOverControl)
 		pDC->SetTextColor(m_crHoverColor);
@@ -322,12 +323,12 @@ BOOL CHyperLink::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-void CHyperLink::OnSetFocus(CWnd* pOldWnd)
+void CHyperLink::OnSetFocus(CWnd* /*pOldWnd*/)
 {
 	DrawFocusRect();
 }
 
-void CHyperLink::OnKillFocus(CWnd* pNewWnd)
+void CHyperLink::OnKillFocus(CWnd* /*pNewWnd*/)
 {
 	DrawFocusRect();
 }

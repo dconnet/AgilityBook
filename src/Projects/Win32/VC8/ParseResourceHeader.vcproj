@@ -20,8 +20,7 @@
 			OutputDirectory="..\..\..\..\bin\Win32\VC8\Debug"
 			IntermediateDirectory="..\..\..\..\bin\Win32\VC8\Debug\ParseResourceHeader"
 			ConfigurationType="1"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
-			UseOfMFC="2"
+			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
@@ -43,13 +42,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
-				MinimalRebuild="true"
+				StringPooling="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
+				WarnAsError="true"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -62,12 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/ParseResourceHeader.exe"
 				LinkIncremental="2"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/ParseResourceHeader.pdb"
 				SubSystem="1"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -92,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)..\..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -100,8 +97,7 @@
 			OutputDirectory="..\..\..\..\bin\Win32\VC8\Release"
 			IntermediateDirectory="..\..\..\..\bin\Win32\VC8\Release\ParseResourceHeader"
 			ConfigurationType="1"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
-			UseOfMFC="2"
+			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
@@ -122,11 +118,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				StringPooling="true"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
+				WarnAsError="true"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -139,13 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/ParseResourceHeader.exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="true"
+				GenerateManifest="false"
 				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -170,7 +163,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)..\..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
