@@ -61,13 +61,21 @@
 #define HIDC_ABOUT_UPDATE 2160591854
 #endif
 
-#include "../stdafx.h"
-#include <afxpriv.h>
+#include <atlstr.h>
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <string>
 #include <tchar.h>
+
+// From afxpriv.h, this eliminated the dependency on mfc.
+// Help ID bases
+#define HID_BASE_COMMAND    0x00010000UL        // ID and IDM
+#define HID_BASE_RESOURCE   0x00020000UL        // IDR and IDD
+#define HID_BASE_PROMPT     0x00030000UL        // IDP
+#define HID_BASE_NCAREAS    0x00040000UL
+#define HID_BASE_CONTROL    0x00050000UL        // IDC
+#define HID_BASE_DISPATCH   0x00060000UL        // IDispatch help codes
 
 // Include these simply for re-compile and to cause the post-build event.
 #include "../Win/resource.h"
