@@ -478,11 +478,11 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoring const* inScoring) const
 	{
 		if (GetQ().Qualified())
 		{
-			ARBDouble time = GetScoring().GetTime();
-			ARBDouble sct = GetScoring().GetSCT();
+			double time = GetScoring().GetTime();
+			double sct = GetScoring().GetSCT();
 			if (0.0 < time && 0.0 < sct)
 			{
-				ARBDouble diff = sct - time;
+				double diff = sct - time;
 				pts = static_cast<short>(diff);
 				if (0 > pts)
 					pts = 0;
@@ -562,9 +562,9 @@ short ARBDogRun::GetTitlePoints(
 	return pts;
 }
 
-ARBDouble ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
+double ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
 {
-	ARBDouble pts = 0.0;
+	double pts = 0.0;
 	switch (m_Scoring.GetType())
 	{
 	default:

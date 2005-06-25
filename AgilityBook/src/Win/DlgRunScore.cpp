@@ -642,7 +642,7 @@ void CDlgRunScore::SetYPS()
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 	{
-		str.Format("%.3f", yps);
+		str = ARBDouble::str(yps, 3).c_str();
 	}
 	m_ctrlYPS.SetWindowText(str);
 }
@@ -653,7 +653,7 @@ void CDlgRunScore::SetTotalFaults()
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
 		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(GetScoring());
-		total.Format("%.3f", faults);
+		total = ARBDouble::str(faults, 3).c_str();
 	}
 	m_ctrlTotalFaults.SetWindowText(total);
 }
@@ -745,7 +745,7 @@ void CDlgRunScore::SetTitlePoints()
 		if (q.Qualified()
 		|| ARB_Q::eQ_NQ == q
 		|| (ARB_Q::eQ_NA == q && 0 == pScoring->GetTitlePoints().size()))
-			strScore = m_Run->GetScore(pScoring).str().c_str();
+			strScore = ARBDouble::str(m_Run->GetScore(pScoring)).c_str();
 	}
 	// Doesn't matter if they're hidden,..
 	m_ctrlSpeedPts.SetWindowText(strSpeed);

@@ -484,37 +484,29 @@ void CWizardExport::UpdatePreview()
 										}
 										break;
 									case IO_RUNS_TIME:
-										data += AddPreviewData(iLine, idx, pRun->GetScoring().GetTime().str().c_str());
+										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetTime()).c_str());
 										break;
 									case IO_RUNS_YARDS:
-										{
-											CString str;
-											str.Format("%.3f", pRun->GetScoring().GetYards());
-											data += AddPreviewData(iLine, idx, str);
-										}
+										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetYards(), 3).c_str());
 										break;
 									case IO_RUNS_YPS:
 										{
 											double yps;
 											if (pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 											{
-												CString str;
-												str.Format("%.3f", yps);
-												data += AddPreviewData(iLine, idx, str);
+												data += AddPreviewData(iLine, idx, ARBDouble::str(yps, 3).c_str());
 											}
 										}
 										break;
 									case IO_RUNS_SCT:
-										data += AddPreviewData(iLine, idx, pRun->GetScoring().GetSCT().str().c_str());
+										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetSCT()).c_str());
 										break;
 									case IO_RUNS_TOTAL_FAULTS:
 										{
 											if (ARBDogRunScoring::eTypeByTime == pRun->GetScoring().GetType())
 											{
-												CString str;
 												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults(pScoring);
-												str.Format("%.3f", faults);
-												data += AddPreviewData(iLine, idx, str);
+												data += AddPreviewData(iLine, idx, ARBDouble::str(faults, 3).c_str());
 											}
 										}
 										break;
@@ -618,7 +610,7 @@ void CWizardExport::UpdatePreview()
 										if (pRun->GetQ().Qualified()
 										|| ARB_Q::eQ_NQ == pRun->GetQ())
 										{
-											data += AddPreviewData(iLine, idx, pRun->GetScore(pScoring).str().c_str());
+											data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScore(pScoring)).c_str());
 										}
 										break;
 									case IO_RUNS_TITLE_POINTS:

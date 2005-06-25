@@ -106,8 +106,8 @@ public:
 	void SetHeight(std::string const& inHeight);
 	std::string const& GetBreed() const;
 	void SetBreed(std::string const& inBreed);
-	ARBDouble GetTime() const;
-	void SetTime(ARBDouble inTime);
+	double GetTime() const;
+	void SetTime(double inTime);
 	std::string const& GetScore() const;
 	void SetScore(std::string const& inScore);
 	std::string const& GetNote() const;
@@ -120,7 +120,7 @@ private:
 	std::string m_Name;
 	std::string m_Height;
 	std::string m_Breed;
-	ARBDouble m_Time;
+	double m_Time;
 	std::string m_Score;
 	std::string m_Note;
 };
@@ -180,12 +180,12 @@ inline void ARBDogReferenceRun::SetBreed(std::string const& inBreed)
 	m_Breed = inBreed;
 }
 
-inline ARBDouble ARBDogReferenceRun::GetTime() const
+inline double ARBDogReferenceRun::GetTime() const
 {
 	return m_Time;
 }
 
-inline void ARBDogReferenceRun::SetTime(ARBDouble inTime)
+inline void ARBDogReferenceRun::SetTime(double inTime)
 {
 	m_Time = inTime;
 }

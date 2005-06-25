@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Removed ARBDouble.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-04-06 DRC Added op< to ARB_Q.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -245,96 +246,12 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 /**
- * Double class with some formatting.
- * In XML/Element, this class is only used as an attribute, never an element.
+ * Helper functions for quickly/easily converting doubles to strings.
  */
 class ARBDouble
 {
+	ARBDouble();
+	~ARBDouble();
 public:
-	ARBDouble()
-		: m_Prec(2)
-		, m_Val(0.0)
-	{
-	}
-	ARBDouble(double rhs)
-		: m_Prec(2)
-		, m_Val(rhs)
-	{
-	}
-	ARBDouble(ARBDouble const& rhs)
-		: m_Prec(rhs.m_Prec)
-		, m_Val(rhs.m_Val)
-	{
-	}
-	~ARBDouble()
-	{
-	}
-
-	ARBDouble& operator=(ARBDouble const& rhs)
-	{
-		if (this != &rhs)
-		{
-			m_Prec = rhs.m_Prec;
-			m_Val = rhs.m_Val;
-		}
-		return *this;
-	}
-	ARBDouble& operator+=(ARBDouble const& rhs)
-	{
-		m_Val += rhs.m_Val;
-		if (m_Prec < rhs.m_Prec)
-			m_Prec = rhs.m_Prec;
-		return *this;
-	}
-	ARBDouble& operator-=(ARBDouble const& rhs)
-	{
-		m_Val -= rhs.m_Val;
-		return *this;
-	}
-	bool operator==(ARBDouble const& rhs) const
-	{
-		return m_Prec == rhs.m_Prec
-			&& m_Val == rhs.m_Val;
-	}
-	bool operator!=(ARBDouble const& rhs) const
-	{
-		return !operator==(rhs);
-	}
-
-	operator double() const
-	{
-		return m_Val;
-	}
-
-	/**
-	 * Translate the double to a string with the desired precision.
-	 */
-	std::string str() const;
-
-	/**
-	 * Load a double
-	 * @param inAttrib Name of attribute containing value to parse.
-	 * @param inVersion Version of the document being read.
-	 * @param ioCallback Error processing callback.
-	 * @return Success
-	 */
-	bool Load(
-		std::string const& inAttrib,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
-
-	/**
-	 * Save a document.
-	 * @param ioTree Element.
-	 * @param inAttribName Name of attribute to write Q to.
-	 * @return Success
-	 * @post The double attribute will be added to ioTree.
-	 */
-	bool Save(
-		Element& ioTree,
-		char const* const inAttribName) const;
-
-private:
-	int m_Prec;		///< Precision for display.
-	double m_Val;	///< Actual value.
+	static std::string str(double inValue, int inPrec = 2);
 };

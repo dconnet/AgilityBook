@@ -107,14 +107,14 @@ public:
 	 */
 	ScoringType GetType() const;
 	void SetType(ScoringType inType, bool inRound);
-	ARBDouble GetSCT() const;
-	void SetSCT(ARBDouble inSCT);
-	ARBDouble GetSCT2() const;
-	void SetSCT2(ARBDouble inSCT);
+	double GetSCT() const;
+	void SetSCT(double inSCT);
+	double GetSCT2() const;
+	void SetSCT2(double inSCT);
 	double GetYards() const;
 	void SetYards(double inYards);
-	ARBDouble GetTime() const;
-	void SetTime(ARBDouble inTime);
+	double GetTime() const;
+	void SetTime(double inTime);
 	bool HasTable() const;
 	void SetHasTable(bool inInc);
 	bool TableNeedsConverting() const;
@@ -133,10 +133,10 @@ public:
 private:
 	ScoringType m_type;
 	bool m_bRoundTimeFaults;
-	ARBDouble m_SCT;
-	ARBDouble m_SCT2;
+	double m_SCT;
+	double m_SCT2;
 	double m_Yards;
-	ARBDouble m_Time;
+	double m_Time;
 	bool m_Table;
 	bool m_ConvertTable; ///< Used to update table setting when upgrading
 	short m_CourseFaults;
@@ -159,22 +159,22 @@ inline void ARBDogRunScoring::SetType(
 	m_bRoundTimeFaults = inRound;
 }
 
-inline ARBDouble ARBDogRunScoring::GetSCT() const
+inline double ARBDogRunScoring::GetSCT() const
 {
 	return m_SCT;
 }
 
-inline void ARBDogRunScoring::SetSCT(ARBDouble inSCT)
+inline void ARBDogRunScoring::SetSCT(double inSCT)
 {
 	m_SCT = inSCT;
 }
 
-inline ARBDouble ARBDogRunScoring::GetSCT2() const
+inline double ARBDogRunScoring::GetSCT2() const
 {
 	return m_SCT2;
 }
 
-inline void ARBDogRunScoring::SetSCT2(ARBDouble inSCT)
+inline void ARBDogRunScoring::SetSCT2(double inSCT)
 {
 	m_SCT2 = inSCT;
 }
@@ -189,12 +189,12 @@ inline void ARBDogRunScoring::SetYards(double inYards)
 	m_Yards = inYards;
 }
 
-inline ARBDouble ARBDogRunScoring::GetTime() const
+inline double ARBDogRunScoring::GetTime() const
 {
 	return m_Time;
 }
 
-inline void ARBDogRunScoring::SetTime(ARBDouble inTime)
+inline void ARBDogRunScoring::SetTime(double inTime)
 {
 	m_Time = inTime;
 }

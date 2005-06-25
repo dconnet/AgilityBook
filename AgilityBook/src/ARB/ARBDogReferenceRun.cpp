@@ -57,7 +57,7 @@ ARBDogReferenceRun::ARBDogReferenceRun()
 	, m_Name()
 	, m_Height()
 	, m_Breed()
-	, m_Time(0)
+	, m_Time(0.0)
 	, m_Score()
 	, m_Note()
 {
@@ -162,10 +162,7 @@ bool ARBDogReferenceRun::Load(
 		return false;
 	}
 
-	double d;
-	if (Element::eFound == inTree.GetAttrib(ATTRIB_REF_RUN_TIME, d))
-		m_Time = d;
-
+	inTree.GetAttrib(ATTRIB_REF_RUN_TIME, m_Time);
 	inTree.GetAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
 	inTree.GetAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
 
@@ -215,7 +212,7 @@ bool ARBDogReferenceRun::Save(Element& ioTree) const
 		Element& element = refRun.AddElement(TREE_REF_SCORE);
 		element.SetValue(m_Score);
 	}
-	m_Time.Save(refRun, ATTRIB_REF_RUN_TIME);
+	refRun.AddAttrib(ATTRIB_REF_RUN_TIME, m_Time);
 	if (0 < m_Note.length())
 	{
 		Element& element = refRun.AddElement(TREE_REF_NOTE);
