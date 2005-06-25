@@ -333,7 +333,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 			str = pRef->GetScore().c_str();
 			break;
 		case 3: // Time
-			str = pRef->GetTime().str().c_str();
+			str = ARBDouble::str(pRef->GetTime()).c_str();
 			break;
 		case 4: // Name
 			str = pRef->GetName().c_str();

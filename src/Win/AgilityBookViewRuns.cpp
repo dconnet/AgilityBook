@@ -221,13 +221,13 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str.Format("%hd", m_pRun->GetScoring().GetCourseFaults());
 			break;
 		case IO_RUNS_TIME:
-			str = m_pRun->GetScoring().GetTime().str().c_str();
+			str = ARBDouble::str(m_pRun->GetScoring().GetTime()).c_str();
 			break;
 		case IO_RUNS_YARDS:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetYards())
 			{
-				str.Format("%g", m_pRun->GetScoring().GetYards());
+				str = ARBDouble::str(m_pRun->GetScoring().GetYards(), 0).c_str();
 			}
 			break;
 		case IO_RUNS_YPS:
@@ -235,7 +235,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				double yps;
 				if (m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 				{
-					str.Format("%.3f", yps);
+					str = ARBDouble::str(yps, 3).c_str();
 				}
 			}
 			break;
@@ -243,7 +243,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetSCT())
 			{
-				str = m_pRun->GetScoring().GetSCT().str().c_str();
+				str = ARBDouble::str(m_pRun->GetScoring().GetSCT()).c_str();
 			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
@@ -258,7 +258,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pRun->GetLevel(),
 						m_pRun->GetDate());
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
-				str.Format("%g", faults);
+				str = ARBDouble::str(faults, 0).c_str();
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
@@ -349,7 +349,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pRun->GetLevel(),
 						m_pRun->GetDate());
 				if (pScoring)
-					str = m_pRun->GetScore(pScoring).str().c_str();
+					str = ARBDouble::str(m_pRun->GetScore(pScoring)).c_str();
 			}
 			break;
 		case IO_RUNS_TITLE_POINTS:

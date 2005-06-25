@@ -82,10 +82,10 @@ ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(
 ARBDogRunScoring::ARBDogRunScoring()
 	: m_type(eTypeUnknown)
 	, m_bRoundTimeFaults(false)
-	, m_SCT(0)
-	, m_SCT2(0)
-	, m_Yards(0)
-	, m_Time(0)
+	, m_SCT(0.0)
+	, m_SCT2(0.0)
+	, m_Yards(0.0)
+	, m_Time(0.0)
 	, m_Table(false)
 	, m_ConvertTable(false)
 	, m_CourseFaults(0)
@@ -168,9 +168,7 @@ bool ARBDogRunScoring::Load(
 
 	m_bRoundTimeFaults = inEvent->DropFractions();
 	std::string const& name = inTree.GetName();
-	double d;
-	if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_TIME, d))
-		m_Time = d;
+	inTree.GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEvent->GetScoringStyle());
 	switch (m_type)
@@ -211,8 +209,7 @@ bool ARBDogRunScoring::Load(
 					m_Table = false;
 				}
 			}
-			if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_SCT, d))
-				m_SCT = d;
+			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			inTree.GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 			return true;
 		}
@@ -221,10 +218,8 @@ bool ARBDogRunScoring::Load(
 	case eTypeByOpenClose:
 		if (name == TREE_BY_OPENCLOSE)
 		{
-			if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_SCT, d))
-				m_SCT = d;
-			if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_SCT2, d))
-				m_SCT2 = d;
+			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
+			inTree.GetAttrib(ATTRIB_SCORING_SCT2, m_SCT2);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
 			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
@@ -236,8 +231,7 @@ bool ARBDogRunScoring::Load(
 	case eTypeByPoints:
 		if (name == TREE_BY_POINTS)
 		{
-			if (Element::eFound == inTree.GetAttrib(ATTRIB_SCORING_SCT, d))
-				m_SCT = d;
+			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			inTree.GetAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
 			inTree.GetAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
 			return true;
@@ -259,7 +253,7 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 			if (m_Table) // Default is no
 				scoring.AddAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table);
 			scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
+			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring.AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 		}
@@ -269,7 +263,7 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 			Element& scoring = ioTree.AddElement(TREE_BY_OPENCLOSE);
 			if (0 < m_CourseFaults)
 				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
+			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			if (0 < m_SCT)
 				scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			if (0 < m_SCT2)
@@ -285,7 +279,7 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 			Element& scoring = ioTree.AddElement(TREE_BY_POINTS);
 			if (0 < m_CourseFaults)
 				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-			m_Time.Save(scoring, ATTRIB_SCORING_TIME);
+			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			if (0 < m_SCT)
 				scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring.AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);

@@ -156,7 +156,7 @@ public:
 	 * @param inScoring Scoring method used.
 	 * @return Total score for this run. The meaning of a score varies by event.
 	 */
-	ARBDouble GetScore(ARBConfigScoring const* inScoring) const;
+	double GetScore(ARBConfigScoring const* inScoring) const;
 
 	/*
 	 * Getters/setters.

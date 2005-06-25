@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Removed ARBDouble.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
@@ -162,32 +163,48 @@ bool ARB_Q::Save(Element& ioTree, char const* const inAttribName) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ARBDouble::str() const
+// Trailing zeros are trimmed unless inPrec=2.
+// Then they are only trimmed if all zero (and inPrec=2).
+std::string ARBDouble::str(double inValue, int inPrec)
 {
-	// It's a little odd to do it this way,
-	// but we'll always get consistent output!
-	Element element;
-	element.AddAttrib("temp", m_Val, m_Prec);
-	std::string val;
-	if (Element::eFound != element.GetAttrib("temp", val))
-		val = "?";
-	return val;
-}
-
-bool ARBDouble::Load(
-	std::string const& inAttrib,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
-{
-	if (0 < inAttrib.length())
-		m_Val = strtod(inAttrib.c_str(), NULL);
-	else
-		m_Val = 0.0;
-	return true;
-}
-
-bool ARBDouble::Save(Element& ioTree, char const* const inAttribName) const
-{
-	ioTree.AddAttrib(inAttribName, m_Val, m_Prec);
-	return true;
+	std::ostringstream str;
+	if (0 < inPrec)
+		str.precision(inPrec);
+	str << std::fixed << inValue;
+	std::string retVal = str.str();
+	std::string::size_type pos = retVal.find('.');
+	if (std::string::npos != pos)
+	{
+		// Strip trailing zeros iff they are all 0.
+		if (2 == inPrec)
+		{
+			if (retVal.substr(pos) == ".00")
+			{
+				// Input is ".00", so simplify
+				if (0 == pos)
+					retVal = "0";
+				// Strip the ".00".
+				else
+					retVal = retVal.substr(0, pos);
+			}
+		}
+		// Strip all trailing 0s.
+		else
+		{
+			pos = retVal.find_last_not_of('0');
+			if (std::string::npos != pos)
+			{
+				if (retVal[pos-1] == '.')
+					--pos;
+			}
+			else
+			{
+				if (retVal[retVal.length()-1] == '.')
+					pos = retVal.length() - 1;
+			}
+			if (std::string::npos != pos)
+				retVal = retVal.substr(0, pos);
+		}
+	}
+	return retVal;
 }

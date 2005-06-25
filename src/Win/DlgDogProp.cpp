@@ -138,9 +138,7 @@ void CDlgDogProperties::UpdateAge()
 	if (BST_CHECKED == m_ctrlDeceased.GetCheck())
 		m_ctrlDateDeceased.GetTime(current);
 	CTimeSpan age = current - dob;
-	CString str;
-	str.Format("%.1f", age.GetDays()/365.0);
-	m_ctrlAge.SetWindowText(str);
+	m_ctrlAge.SetWindowText(ARBDouble::str(age.GetDays()/365.0, 1).c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////

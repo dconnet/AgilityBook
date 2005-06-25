@@ -857,43 +857,6 @@ Element::~Element()
 {
 }
 
-// Trailing zeros are trimmed unless inPrec=2.
-// Then they are only trimmed if all zero (and inPrec=2).
-static std::string ConvertDouble(double inValue, int inPrec)
-{
-	std::ostringstream buffer;
-	buffer.precision(inPrec);
-	// 6/9/05: Make sure floating point numbers are shown in fixed form.
-	buffer << std::fixed << inValue;
-	std::string retVal(buffer.str());
-	std::string::size_type pos;
-	if (std::string::npos != (pos = retVal.find('.')))
-	{
-		if (2 == inPrec)
-		{
-			if (retVal.substr(pos) == ".00")
-			{
-				// Input is ".00", so simplify
-				if (retVal.substr(pos) == buffer.str())
-					retVal = "0";
-				// Strip the ".00".
-				else
-					retVal = retVal.substr(0, pos);
-			}
-		}
-		else
-		{
-			// Strip trailing 0s.
-			size_t len;
-			while (0 < (len = retVal.length()) && retVal[len-1] == '0')
-				retVal = retVal.substr(0, len-1);
-			if (0 < (len = retVal.length()) && retVal[len-1] == '.')
-				retVal = retVal.substr(0, len-1);
-		}
-	}
-	return retVal;
-}
-
 void Element::Dump(int inLevel) const
 {
 	int i;
@@ -967,7 +930,7 @@ void Element::SetValue(short inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
-	str << inValue << std::ends;
+	str << inValue;
 	m_Value = str.str();
 }
 
@@ -975,14 +938,14 @@ void Element::SetValue(long inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
-	str << inValue << std::ends;
+	str << inValue;
 	m_Value = str.str();
 }
 
 void Element::SetValue(double inValue, int inPrec)
 {
 	ASSERT(0 == m_Elements.size());
-	m_Value = ConvertDouble(inValue, inPrec);
+	m_Value = ARBDouble::str(inValue, inPrec);
 }
 
 int Element::GetAttribCount() const
@@ -1156,7 +1119,7 @@ bool Element::AddAttrib(std::string const& inName, bool inValue)
 bool Element::AddAttrib(std::string const& inName, short inValue)
 {
 	std::stringstream str;
-	str << inValue << std::ends;
+	str << inValue;
 	m_Attribs[inName] = str.str();
 	return true;
 }
@@ -1164,14 +1127,14 @@ bool Element::AddAttrib(std::string const& inName, short inValue)
 bool Element::AddAttrib(std::string const& inName, long inValue)
 {
 	std::stringstream str;
-	str << inValue << std::ends;
+	str << inValue;
 	m_Attribs[inName] = str.str();
 	return true;
 }
 
 bool Element::AddAttrib(std::string const& inName, double inValue, int inPrec)
 {
-	m_Attribs[inName] = ConvertDouble(inValue, inPrec);
+	m_Attribs[inName] = ARBDouble::str(inValue, inPrec);
 	return true;
 }
 
