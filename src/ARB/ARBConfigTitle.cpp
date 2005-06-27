@@ -62,7 +62,7 @@ ARBConfigTitle::ARBConfigTitle()
 }
 
 ARBConfigTitle::ARBConfigTitle(
-	ARBConfigTitle const& rhs)
+		ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Multiple(rhs.m_Multiple)
@@ -75,7 +75,7 @@ ARBConfigTitle::~ARBConfigTitle()
 }
 
 ARBConfigTitle& ARBConfigTitle::operator=(
-	ARBConfigTitle const& rhs)
+		ARBConfigTitle const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -88,7 +88,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(
 }
 
 bool ARBConfigTitle::operator==(
-	ARBConfigTitle const& rhs) const
+		ARBConfigTitle const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
@@ -97,7 +97,7 @@ bool ARBConfigTitle::operator==(
 }
 
 bool ARBConfigTitle::operator!=(
-	ARBConfigTitle const& rhs) const
+		ARBConfigTitle const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -111,16 +111,16 @@ void ARBConfigTitle::clear()
 }
 
 size_t ARBConfigTitle::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
 }
 
 bool ARBConfigTitle::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
@@ -137,7 +137,7 @@ bool ARBConfigTitle::Load(
 }
 
 bool ARBConfigTitle::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_TITLES);
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
@@ -151,8 +151,8 @@ bool ARBConfigTitle::Save(
 }
 
 std::string ARBConfigTitle::GetCompleteName(
-	short inInstance,
-	bool bAbbrevFirst) const
+		short inInstance,
+		bool bAbbrevFirst) const
 {
 	std::string buffer;
 	if (1 < inInstance)
@@ -202,10 +202,10 @@ std::string ARBConfigTitle::GetCompleteName(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitleList::FindTitleCompleteName(
-	std::string const& inName,
-	short inInstance,
-	bool bAbbrevFirst,
-	ARBConfigTitle** outTitle) const
+		std::string const& inName,
+		short inInstance,
+		bool bAbbrevFirst,
+		ARBConfigTitle** outTitle) const
 {
 	if (outTitle)
 		*outTitle = NULL;
@@ -225,8 +225,8 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 }
 
 bool ARBConfigTitleList::FindTitle(
-	std::string const& inName,
-	ARBConfigTitle** outTitle) const
+		std::string const& inName,
+		ARBConfigTitle** outTitle) const
 {
 	if (outTitle)
 		*outTitle = NULL;
@@ -246,8 +246,8 @@ bool ARBConfigTitleList::FindTitle(
 }
 
 bool ARBConfigTitleList::AddTitle(
-	std::string const& inName,
-	ARBConfigTitle** outTitle)
+		std::string const& inName,
+		ARBConfigTitle** outTitle)
 {
 	if (outTitle)
 		*outTitle = NULL;
@@ -267,7 +267,7 @@ bool ARBConfigTitleList::AddTitle(
 }
 
 bool ARBConfigTitleList::AddTitle(
-	ARBConfigTitle* inTitle)
+		ARBConfigTitle* inTitle)
 {
 	if (!inTitle || 0 == inTitle->GetName().length())
 		return false;
@@ -279,7 +279,7 @@ bool ARBConfigTitleList::AddTitle(
 }
 
 bool ARBConfigTitleList::DeleteTitle(
-	std::string const& inName)
+		std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

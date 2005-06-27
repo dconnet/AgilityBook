@@ -86,7 +86,8 @@ std::string ARB_Q::GetValidTypes()
 	return types;
 }
 
-void ARB_Q::GetValidTypes(std::vector<std::string>& outTypes)
+void ARB_Q::GetValidTypes(
+		std::vector<std::string>& outTypes)
 {
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
@@ -100,7 +101,8 @@ int ARB_Q::GetNumValidTypes()
 	return sc_nQs;
 }
 
-ARB_Q ARB_Q::GetValidType(int inIndex)
+ARB_Q ARB_Q::GetValidType(
+		int inIndex)
 {
 	ARB_Q q;
 	if (0 <= inIndex && inIndex < sc_nQs)
@@ -125,9 +127,9 @@ std::string ARB_Q::str() const
 }
 
 bool ARB_Q::Load(
-	std::string const& inAttrib,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		std::string const& inAttrib,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < sc_nQs; ++i)
 	{
@@ -142,7 +144,9 @@ bool ARB_Q::Load(
 	return false;
 }
 
-bool ARB_Q::Save(Element& ioTree, char const* const inAttribName) const
+bool ARB_Q::Save(
+		Element& ioTree,
+		char const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
@@ -165,7 +169,9 @@ bool ARB_Q::Save(Element& ioTree, char const* const inAttribName) const
 
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
-std::string ARBDouble::str(double inValue, int inPrec)
+std::string ARBDouble::str(
+		double inValue,
+		int inPrec)
 {
 	std::ostringstream str;
 	if (0 < inPrec)

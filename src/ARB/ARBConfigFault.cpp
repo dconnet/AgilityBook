@@ -56,7 +56,7 @@ ARBConfigFault::ARBConfigFault()
 }
 
 ARBConfigFault::ARBConfigFault(
-	ARBConfigFault const& rhs)
+		ARBConfigFault const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
@@ -66,7 +66,7 @@ ARBConfigFault::~ARBConfigFault()
 }
 
 ARBConfigFault& ARBConfigFault::operator=(
-	ARBConfigFault const& rhs)
+		ARBConfigFault const& rhs)
 {
 	if (this != &rhs)
 		m_Name = rhs.m_Name;
@@ -74,28 +74,28 @@ ARBConfigFault& ARBConfigFault::operator=(
 }
 
 bool ARBConfigFault::operator==(
-	ARBConfigFault const& rhs) const
+		ARBConfigFault const& rhs) const
 {
 	return m_Name == rhs.m_Name;
 }
 
 bool ARBConfigFault::operator!=(
-	ARBConfigFault const& rhs) const
+		ARBConfigFault const& rhs) const
 {
 	return !operator==(rhs);
 }
 
 size_t ARBConfigFault::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
 }
 
 bool ARBConfigFault::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (inVersion == ARBVersion(1,0))
 	{
@@ -112,7 +112,7 @@ bool ARBConfigFault::Load(
 }
 
 bool ARBConfigFault::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& element = ioTree.AddElement(TREE_FAULTTYPE);
 	element.SetValue(m_Name);
@@ -122,8 +122,8 @@ bool ARBConfigFault::Save(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigFaultList::FindFault(
-	std::string const& inName,
-	ARBConfigFault** outFault) const
+		std::string const& inName,
+		ARBConfigFault** outFault) const
 {
 	if (outFault)
 		*outFault = NULL;
@@ -143,8 +143,8 @@ bool ARBConfigFaultList::FindFault(
 }
 
 bool ARBConfigFaultList::AddFault(
-	std::string const& inName,
-	ARBConfigFault** outFault)
+		std::string const& inName,
+		ARBConfigFault** outFault)
 {
 	if (outFault)
 		*outFault = NULL;
@@ -162,7 +162,7 @@ bool ARBConfigFaultList::AddFault(
 }
 
 bool ARBConfigFaultList::DeleteFault(
-	std::string const& inName)
+		std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

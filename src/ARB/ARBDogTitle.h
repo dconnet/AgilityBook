@@ -308,16 +308,16 @@ public:
 		std::string const& inNewTitle);
 
 	/**
-	 * Delete a title, remove any dependent objects.
-	 * @param inTitle Title being deleted.
-	 * @return Was it removed?
-	 */
-	bool DeleteTitle(ARBDogTitle const* inTitle);
-
-	/**
 	 * Add a title.
 	 * @param inTitle Title to add.
 	 * @return Whether the object was added.
 	 */
 	bool AddTitle(ARBDogTitle* inTitle);
+
+	/**
+	 * Delete a title, remove any dependent objects.
+	 * @param inTitle Title being deleted.
+	 * @return Was it removed?
+	 */
+	bool DeleteTitle(ARBDogTitle const* inTitle);
 };

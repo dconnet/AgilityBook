@@ -57,15 +57,15 @@ ARBConfigLifetimePoints::ARBConfigLifetimePoints()
 }
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints(
-	short inPoints,
-	short inFaults)
+		short inPoints,
+		short inFaults)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
 {
 }
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints(
-	ARBConfigLifetimePoints const& rhs)
+		ARBConfigLifetimePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
 {
@@ -76,7 +76,7 @@ ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 }
 
 ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(
-	ARBConfigLifetimePoints const& rhs)
+		ARBConfigLifetimePoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -87,14 +87,14 @@ ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(
 }
 
 bool ARBConfigLifetimePoints::operator==(
-	ARBConfigLifetimePoints const& rhs) const
+		ARBConfigLifetimePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
 		&& m_Faults == rhs.m_Faults;
 }
 
 bool ARBConfigLifetimePoints::operator!=(
-	ARBConfigLifetimePoints const& rhs) const
+		ARBConfigLifetimePoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -105,16 +105,16 @@ std::string ARBConfigLifetimePoints::GetGenericName() const
 }
 
 size_t ARBConfigLifetimePoints::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
 }
 
 bool ARBConfigLifetimePoints::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
 	{
@@ -130,7 +130,7 @@ bool ARBConfigLifetimePoints::Load(
 }
 
 bool ARBConfigLifetimePoints::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& life = ioTree.AddElement(TREE_LIFETIME_POINTS);
 	life.AddAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points);
@@ -158,7 +158,7 @@ void ARBConfigLifetimePointsList::sort()
 }
 
 short ARBConfigLifetimePointsList::GetLifetimePoints(
-	double inFaults) const
+		double inFaults) const
 {
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -170,8 +170,8 @@ short ARBConfigLifetimePointsList::GetLifetimePoints(
 }
 
 bool ARBConfigLifetimePointsList::FindLifetimePoints(
-	short inFaults,
-	ARBConfigLifetimePoints** outPoints) const
+		short inFaults,
+		ARBConfigLifetimePoints** outPoints) const
 {
 	if (outPoints)
 		*outPoints = NULL;
@@ -191,9 +191,9 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 }
 
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
-	short inPoints,
-	short inFaults,
-	ARBConfigLifetimePoints** outPoints)
+		short inPoints,
+		short inFaults,
+		ARBConfigLifetimePoints** outPoints)
 {
 	if (outPoints)
 		*outPoints = NULL;
@@ -211,7 +211,7 @@ bool ARBConfigLifetimePointsList::AddLifetimePoints(
 }
 
 bool ARBConfigLifetimePointsList::DeleteLifetimePoints(
-	short inFaults)
+		short inFaults)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{

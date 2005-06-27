@@ -69,7 +69,7 @@ ARBDogTrial::ARBDogTrial()
 }
 
 ARBDogTrial::ARBDogTrial(
-	ARBCalendar const& inCal)
+		ARBCalendar const& inCal)
 	: m_Location(inCal.GetLocation())
 	, m_Note(inCal.GetNote())
 	, m_Verified(false)
@@ -80,7 +80,7 @@ ARBDogTrial::ARBDogTrial(
 }
 
 ARBDogTrial::ARBDogTrial(
-	ARBDogTrial const& rhs)
+		ARBDogTrial const& rhs)
 	: m_Location(rhs.m_Location)
 	, m_Note(rhs.m_Note)
 	, m_Verified(rhs.m_Verified)
@@ -94,7 +94,7 @@ ARBDogTrial::~ARBDogTrial()
 }
 
 ARBDogTrial& ARBDogTrial::operator=(
-	ARBDogTrial const& rhs)
+		ARBDogTrial const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -108,7 +108,7 @@ ARBDogTrial& ARBDogTrial::operator=(
 }
 
 bool ARBDogTrial::operator==(
-	ARBDogTrial const& rhs) const
+		ARBDogTrial const& rhs) const
 {
 	return m_Location == rhs.m_Location
 		&& m_Note == rhs.m_Note
@@ -118,7 +118,7 @@ bool ARBDogTrial::operator==(
 }
 
 bool ARBDogTrial::operator!=(
-	ARBDogTrial const& rhs) const
+		ARBDogTrial const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -130,7 +130,7 @@ std::string ARBDogTrial::GetGenericName() const
 }
 
 size_t ARBDogTrial::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -152,10 +152,10 @@ size_t ARBDogTrial::GetSearchStrings(
 }
 
 bool ARBDogTrial::Load(
-	ARBConfig const& inConfig,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
@@ -192,7 +192,7 @@ bool ARBDogTrial::Load(
 }
 
 bool ARBDogTrial::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& trial = ioTree.AddElement(TREE_TRIAL);
 	if (m_Verified) // Default is no
@@ -216,10 +216,10 @@ bool ARBDogTrial::Save(
 
 // This level is the true level (ie: sublevel), not the config level.
 bool ARBDogTrial::HasQQ(
-	ARBDate const& inDate,
-	ARBConfig const& inConfig,
-	std::string const& inDiv,
-	std::string const& inLevel) const
+		ARBDate const& inDate,
+		ARBConfig const& inConfig,
+		std::string const& inDiv,
+		std::string const& inLevel) const
 {
 	if (!GetClubs().GetPrimaryClub())
 		return false;
@@ -251,9 +251,9 @@ bool ARBDogTrial::HasQQ(
 }
 
 short ARBDogTrial::GetSpeedPoints(
-	ARBConfig const& inConfig,
-	std::string const& inDiv,
-	std::string const& inLevel) const
+		ARBConfig const& inConfig,
+		std::string const& inDiv,
+		std::string const& inLevel) const
 {
 	if (!GetClubs().GetPrimaryClub())
 		return 0;
@@ -282,7 +282,7 @@ short ARBDogTrial::GetSpeedPoints(
 }
 
 bool ARBDogTrial::HasVenue(
-	std::string const& inVenue) const
+		std::string const& inVenue) const
 {
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
 	{
@@ -315,7 +315,7 @@ private:
 };
 
 void ARBDogTrialList::sort(
-	bool inDescending)
+		bool inDescending)
 {
 	if (2 > size())
 		return;
@@ -323,7 +323,7 @@ void ARBDogTrialList::sort(
 }
 
 int ARBDogTrialList::NumTrialsInVenue(
-	std::string const& inVenue) const
+		std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -342,8 +342,8 @@ int ARBDogTrialList::NumTrialsInVenue(
 }
 
 int ARBDogTrialList::RenameVenue(
-	std::string const& inOldVenue,
-	std::string const& inNewVenue)
+		std::string const& inOldVenue,
+		std::string const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -361,7 +361,7 @@ int ARBDogTrialList::RenameVenue(
 }
 
 int ARBDogTrialList::DeleteVenue(
-	std::string const& inVenue)
+		std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	int count = 0;
@@ -386,7 +386,7 @@ int ARBDogTrialList::DeleteVenue(
 }
 
 int ARBDogTrialList::NumOtherPointsInUse(
-	std::string const& inOther) const
+		std::string const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -400,8 +400,8 @@ int ARBDogTrialList::NumOtherPointsInUse(
 }
 
 int ARBDogTrialList::RenameOtherPoints(
-	std::string const& inOldOther,
-	std::string const& inNewOther)
+		std::string const& inOldOther,
+		std::string const& inNewOther)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -415,7 +415,7 @@ int ARBDogTrialList::RenameOtherPoints(
 }
 
 int ARBDogTrialList::DeleteOtherPoints(
-	std::string const& inOther)
+		std::string const& inOther)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -429,9 +429,9 @@ int ARBDogTrialList::DeleteOtherPoints(
 }
 
 int ARBDogTrialList::NumMultiHostedTrialsInDivision(
-	ARBConfig const& inConfig,
-	std::string const& inVenue,
-	std::string const& inDiv) const
+		ARBConfig const& inConfig,
+		std::string const& inVenue,
+		std::string const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -458,8 +458,8 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 }
 
 int ARBDogTrialList::NumRunsInDivision(
-	ARBConfigVenue const* inVenue,
-	std::string const& inDiv) const
+		ARBConfigVenue const* inVenue,
+		std::string const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -477,9 +477,9 @@ int ARBDogTrialList::NumRunsInDivision(
 }
 
 int ARBDogTrialList::RenameDivision(
-	ARBConfigVenue const* inVenue,
-	std::string const& inOldDiv,
-	std::string const& inNewDiv)
+		ARBConfigVenue const* inVenue,
+		std::string const& inOldDiv,
+		std::string const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -500,9 +500,9 @@ int ARBDogTrialList::RenameDivision(
 }
 
 int ARBDogTrialList::DeleteDivision(
-	ARBConfig const& inConfig,
-	std::string const& inVenue,
-	std::string const& inDiv)
+		ARBConfig const& inConfig,
+		std::string const& inVenue,
+		std::string const& inDiv)
 {
 	std::string venue(inVenue);
 	std::string div(inDiv);
@@ -549,9 +549,9 @@ int ARBDogTrialList::DeleteDivision(
 }
 
 int ARBDogTrialList::NumLevelsInUse(
-	std::string const& inVenue,
-	std::string const& inDiv,
-	std::string const& inLevel) const
+		std::string const& inVenue,
+		std::string const& inDiv,
+		std::string const& inLevel) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -570,10 +570,10 @@ int ARBDogTrialList::NumLevelsInUse(
 }
 
 int ARBDogTrialList::RenameLevel(
-	std::string const& inVenue,
-	std::string const& inDiv,
-	std::string const& inOldLevel,
-	std::string const& inNewLevel)
+		std::string const& inVenue,
+		std::string const& inDiv,
+		std::string const& inOldLevel,
+		std::string const& inNewLevel)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -595,9 +595,9 @@ int ARBDogTrialList::RenameLevel(
 }
 
 int ARBDogTrialList::DeleteLevel(
-	std::string const& inVenue,
-	std::string const& inDiv,
-	std::string const& inLevel)
+		std::string const& inVenue,
+		std::string const& inDiv,
+		std::string const& inLevel)
 {
 	std::string venue(inVenue);
 	std::string div(inDiv);
@@ -628,8 +628,8 @@ int ARBDogTrialList::DeleteLevel(
 }
 
 int ARBDogTrialList::NumEventsInUse(
-	std::string const& inVenue,
-	std::string const& inEvent) const
+		std::string const& inVenue,
+		std::string const& inEvent) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -647,9 +647,9 @@ int ARBDogTrialList::NumEventsInUse(
 }
 
 int ARBDogTrialList::RenameEvent(
-	std::string const& inVenue,
-	std::string const& inOldEvent,
-	std::string const& inNewEvent)
+		std::string const& inVenue,
+		std::string const& inOldEvent,
+		std::string const& inNewEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -670,8 +670,8 @@ int ARBDogTrialList::RenameEvent(
 }
 
 int ARBDogTrialList::DeleteEvent(
-	std::string const& inVenue,
-	std::string const& inEvent)
+		std::string const& inVenue,
+		std::string const& inEvent)
 {
 	std::string venue(inVenue);
 	std::string event(inEvent);
@@ -700,7 +700,7 @@ int ARBDogTrialList::DeleteEvent(
 }
 
 bool ARBDogTrialList::AddTrial(
-	ARBDogTrial* inTrial)
+		ARBDogTrial* inTrial)
 {
 	bool bAdded = false;
 	if (inTrial)
@@ -713,7 +713,7 @@ bool ARBDogTrialList::AddTrial(
 }
 
 bool ARBDogTrialList::DeleteTrial(
-	ARBDogTrial const* inTrial)
+		ARBDogTrial const* inTrial)
 {
 	if (inTrial)
 	{

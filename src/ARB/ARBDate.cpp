@@ -76,7 +76,11 @@ static char THIS_FILE[] = __FILE__;
 #define DAYS_PER_4_YEARS	1461
 #define DAYS_PER_400_YEARS	146097
 
-static void SdnToGregorian(long int sdn, int *pYear, int *pMonth, int *pDay)
+static void SdnToGregorian(
+		long int sdn,
+		int *pYear,
+		int *pMonth,
+		int *pDay)
 {
 	if (sdn <= 0)
 	{
@@ -120,7 +124,10 @@ static void SdnToGregorian(long int sdn, int *pYear, int *pMonth, int *pDay)
 	*pDay = day;
 }
 
-static long int GregorianToSdn(int inputYear, int inputMonth, int inputDay)
+static long int GregorianToSdn(
+		int inputYear,
+		int inputMonth,
+		int inputDay)
 {
 	int year;
 	int month;
@@ -174,7 +181,12 @@ ARBDate ARBDate::Today()
 	return today;
 }
 
-static int ParseFields(std::string inDate, char sep, int& val1, int& val2, int& val3)
+static int ParseFields(
+		std::string inDate,
+		char sep,
+		int& val1,
+		int& val2,
+		int& val3)
 {
 	int nVals = 0;
 	std::string::size_type pos = inDate.find(sep);
@@ -197,7 +209,9 @@ static int ParseFields(std::string inDate, char sep, int& val1, int& val2, int& 
 }
 
 // static
-ARBDate ARBDate::FromString(std::string const& inDate, ARBDate::DateFormat inFormat)
+ARBDate ARBDate::FromString(
+		std::string const& inDate,
+		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
 	std::string value(inDate);
@@ -255,12 +269,14 @@ ARBDate::ARBDate()
 {
 }
 
-ARBDate::ARBDate(ARBDate const& rhs)
+ARBDate::ARBDate(
+		ARBDate const& rhs)
 	: m_Julian(rhs.m_Julian)
 {
 }
 
-ARBDate::ARBDate(time_t inTime)
+ARBDate::ARBDate(
+		time_t inTime)
 	: m_Julian(0)
 {
 	if (0 != inTime)
@@ -280,7 +296,8 @@ ARBDate::ARBDate(time_t inTime)
 }
 
 #if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
-ARBDate::ARBDate(__time64_t inTime)
+ARBDate::ARBDate(
+		__time64_t inTime)
 	: m_Julian(0)
 {
 	if (0 != inTime)
@@ -294,19 +311,26 @@ ARBDate::ARBDate(__time64_t inTime)
 }
 #endif
 
-ARBDate::ARBDate(int inYr, int inMon, int inDay)
+ARBDate::ARBDate(
+		int inYr,
+		int inMon,
+		int inDay)
 	: m_Julian(0)
 {
 	SetDate(inYr, inMon, inDay);
 }
 
-void ARBDate::SetJulianDay(long inJulian)
+void ARBDate::SetJulianDay(
+		long inJulian)
 {
 	if (0 < inJulian)
 		m_Julian = inJulian;
 }
 
-void ARBDate::SetDate(int inYr, int inMon, int inDay)
+void ARBDate::SetDate(
+		int inYr,
+		int inMon,
+		int inDay)
 {
 	m_Julian = GregorianToSdn(inYr, inMon, inDay);
 	int yr, mon, day;
@@ -332,7 +356,8 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-std::string ARBDate::GetString(DateFormat inFormat) const
+std::string ARBDate::GetString(
+		DateFormat inFormat) const
 {
 	std::string date;
 	if (IsValid())
@@ -443,7 +468,10 @@ time_t ARBDate::GetDate() const
 	return t;
 }
 
-void ARBDate::GetDate(int& outYr, int& outMon, int& outDay) const
+void ARBDate::GetDate(
+		int& outYr,
+		int& outMon,
+		int& outDay) const
 {
 	SdnToGregorian(m_Julian, &outYr, &outMon, &outDay);
 }
@@ -469,7 +497,8 @@ int ARBDate::GetYear() const
 	return yr;
 }
 
-int ARBDate::GetDayOfWeek(DayOfWeek inFirstDay) const
+int ARBDate::GetDayOfWeek(
+		DayOfWeek inFirstDay) const
 {
 	// This was copied from another source, but I don't remember where...
 	// I suspect it won't work properly on dates before 1752 (start of

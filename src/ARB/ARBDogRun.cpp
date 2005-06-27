@@ -89,7 +89,7 @@ ARBDogRun::ARBDogRun()
 }
 
 ARBDogRun::ARBDogRun(
-	ARBDogRun const& rhs)
+		ARBDogRun const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
@@ -117,7 +117,7 @@ ARBDogRun::~ARBDogRun()
 }
 
 ARBDogRun& ARBDogRun::operator=(
-	ARBDogRun const& rhs)
+		ARBDogRun const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -145,7 +145,7 @@ ARBDogRun& ARBDogRun::operator=(
 }
 
 bool ARBDogRun::operator==(
-	ARBDogRun const& rhs) const
+		ARBDogRun const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Division == rhs.m_Division
@@ -169,7 +169,7 @@ bool ARBDogRun::operator==(
 }
 
 bool ARBDogRun::operator!=(
-	ARBDogRun const& rhs) const
+		ARBDogRun const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -192,7 +192,7 @@ std::string ARBDogRun::GetGenericName() const
 }
 
 size_t ARBDogRun::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -259,11 +259,11 @@ size_t ARBDogRun::GetSearchStrings(
 }
 
 bool ARBDogRun::Load(
-	ARBConfig const& inConfig,
-	ARBDogClubList const& inClubs,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		ARBDogClubList const& inClubs,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
@@ -389,7 +389,7 @@ bool ARBDogRun::Load(
 }
 
 bool ARBDogRun::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& run = ioTree.AddElement(TREE_RUN);
 	run.AddAttrib(ATTRIB_RUN_DATE, m_Date);
@@ -438,7 +438,7 @@ bool ARBDogRun::Save(
 }
 
 int ARBDogRun::NumOtherPointsInUse(
-	std::string const& inOther) const
+		std::string const& inOther) const
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::const_iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -450,8 +450,8 @@ int ARBDogRun::NumOtherPointsInUse(
 }
 
 int ARBDogRun::RenameOtherPoints(
-	std::string const& inOldName,
-	std::string const& inNewName)
+		std::string const& inOldName,
+		std::string const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -466,7 +466,7 @@ int ARBDogRun::RenameOtherPoints(
 }
 
 int ARBDogRun::DeleteOtherPoints(
-	std::string const& inName)
+		std::string const& inName)
 {
 	std::string name(inName);
 	int count = 0;
@@ -484,7 +484,7 @@ int ARBDogRun::DeleteOtherPoints(
 }
 
 short ARBDogRun::GetSpeedPoints(
-	ARBConfigScoring const* inScoring) const
+		ARBConfigScoring const* inScoring) const
 {
 	short pts = 0;
 	if (inScoring && inScoring->HasSpeedPts())
@@ -510,9 +510,9 @@ short ARBDogRun::GetSpeedPoints(
 }
 
 short ARBDogRun::GetTitlePoints(
-	ARBConfigScoring const* inScoring,
-	bool* outClean,
-	short* outLifeTime) const
+		ARBConfigScoring const* inScoring,
+		bool* outClean,
+		short* outLifeTime) const
 {
 	short pts = 0;
 	if (outClean)
@@ -576,7 +576,7 @@ short ARBDogRun::GetTitlePoints(
 }
 
 double ARBDogRun::GetScore(
-	ARBConfigScoring const* inScoring) const
+		ARBConfigScoring const* inScoring) const
 {
 	double pts = 0.0;
 	switch (m_Scoring.GetType())
@@ -604,7 +604,7 @@ double ARBDogRun::GetScore(
 }
 
 size_t ARBDogRun::GetLinks(
-	std::set<std::string>& outLinks) const
+		std::set<std::string>& outLinks) const
 {
 	outLinks.clear();
 	outLinks = m_Links;
@@ -612,19 +612,19 @@ size_t ARBDogRun::GetLinks(
 }
 
 bool ARBDogRun::HasLink(
-	std::string const& inLink) const
+		std::string const& inLink) const
 {
 	return m_Links.find(inLink) != m_Links.end();
 }
 
 void ARBDogRun::AddLink(
-	std::string const& inLink)
+		std::string const& inLink)
 {
 	m_Links.insert(inLink);
 }
 
 void ARBDogRun::RemoveLink(
-	std::string const& inLink)
+		std::string const& inLink)
 {
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())
@@ -634,11 +634,11 @@ void ARBDogRun::RemoveLink(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRunList::Load(
-	ARBConfig const& inConfig,
-	ARBDogClubList const& inClubs,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		ARBDogClubList const& inClubs,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	ARBDogRun* thing = new ARBDogRun();
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioCallback))
@@ -695,7 +695,7 @@ ARBDate ARBDogRunList::GetEndDate() const
 }
 
 bool ARBDogRunList::AddRun(
-	ARBDogRun* inRun)
+		ARBDogRun* inRun)
 {
 	bool bAdded = false;
 	if (inRun)
@@ -708,7 +708,7 @@ bool ARBDogRunList::AddRun(
 }
 
 bool ARBDogRunList::DeleteRun(
-	ARBDogRun const* inRun)
+		ARBDogRun const* inRun)
 {
 	if (inRun)
 	{

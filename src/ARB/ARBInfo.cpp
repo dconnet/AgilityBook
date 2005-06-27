@@ -56,7 +56,8 @@ ARBInfo::ARBInfo()
 {
 }
 
-ARBInfo::ARBInfo(ARBInfo const& rhs)
+ARBInfo::ARBInfo(
+		ARBInfo const& rhs)
 	: m_ClubInfo(rhs.m_ClubInfo)
 	, m_JudgeInfo(rhs.m_JudgeInfo)
 	, m_LocationInfo(rhs.m_LocationInfo)
@@ -68,7 +69,8 @@ ARBInfo::~ARBInfo()
 	clear();
 }
 
-ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
+ARBInfo& ARBInfo::operator=(
+		ARBInfo const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -79,14 +81,16 @@ ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 	return *this;
 }
 
-bool ARBInfo::operator==(ARBInfo const& rhs) const
+bool ARBInfo::operator==(
+		ARBInfo const& rhs) const
 {
 	return m_ClubInfo == rhs.m_ClubInfo
 		&& m_JudgeInfo == rhs.m_JudgeInfo
 		&& m_LocationInfo == rhs.m_LocationInfo;
 }
 
-bool ARBInfo::operator!=(ARBInfo const& rhs) const
+bool ARBInfo::operator!=(
+		ARBInfo const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -99,9 +103,9 @@ void ARBInfo::clear()
 }
 
 bool ARBInfo::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -126,7 +130,8 @@ bool ARBInfo::Load(
 	return true;
 }
 
-bool ARBInfo::Save(Element& ioTree) const
+bool ARBInfo::Save(
+		Element& ioTree) const
 {
 	Element& info = ioTree.AddElement(TREE_INFO);
 	if (!m_ClubInfo.Save(info))

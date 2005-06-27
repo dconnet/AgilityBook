@@ -63,7 +63,7 @@ ARBConfigDivision::ARBConfigDivision()
 }
 
 ARBConfigDivision::ARBConfigDivision(
-	ARBConfigDivision const& rhs)
+		ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Levels(rhs.m_Levels)
 	, m_Titles(rhs.m_Titles)
@@ -75,7 +75,7 @@ ARBConfigDivision::~ARBConfigDivision()
 }
 
 ARBConfigDivision& ARBConfigDivision::operator=(
-	ARBConfigDivision const& rhs)
+		ARBConfigDivision const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -87,7 +87,7 @@ ARBConfigDivision& ARBConfigDivision::operator=(
 }
 
 bool ARBConfigDivision::operator==(
-	ARBConfigDivision const& rhs) const
+		ARBConfigDivision const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Levels == rhs.m_Levels
@@ -95,7 +95,7 @@ bool ARBConfigDivision::operator==(
 }
 
 bool ARBConfigDivision::operator!=(
-	ARBConfigDivision const& rhs) const
+		ARBConfigDivision const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -108,16 +108,16 @@ void ARBConfigDivision::clear()
 }
 
 size_t ARBConfigDivision::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
 }
 
 bool ARBConfigDivision::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
@@ -143,7 +143,7 @@ bool ARBConfigDivision::Load(
 }
 
 bool ARBConfigDivision::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& division = ioTree.AddElement(TREE_DIVISION);
 	division.AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
@@ -155,9 +155,9 @@ bool ARBConfigDivision::Save(
 }
 
 bool ARBConfigDivision::Update(
-	int indent,
-	ARBConfigDivision const* inDivNew,
-	std::string& ioInfo)
+		int indent,
+		ARBConfigDivision const* inDivNew,
+		std::string& ioInfo)
 {
 	std::string info;
 
@@ -256,9 +256,9 @@ bool ARBConfigDivision::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigDivisionList::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	ARBConfigDivision* thing = new ARBConfigDivision();
 	if (!thing->Load(inTree, inVersion, ioCallback))
@@ -271,8 +271,8 @@ bool ARBConfigDivisionList::Load(
 }
 
 bool ARBConfigDivisionList::VerifyLevel(
-	std::string const& inDiv,
-	std::string const& inLevel) const
+		std::string const& inDiv,
+		std::string const& inLevel) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	bool bWildCard = (inDiv == WILDCARD_DIVISION);
@@ -290,8 +290,8 @@ bool ARBConfigDivisionList::VerifyLevel(
 }
 
 bool ARBConfigDivisionList::FindDivision(
-	std::string const& inDiv,
-	ARBConfigDivision** outDiv) const
+		std::string const& inDiv,
+		ARBConfigDivision** outDiv) const
 {
 	if (outDiv)
 		*outDiv = NULL;
@@ -311,8 +311,8 @@ bool ARBConfigDivisionList::FindDivision(
 }
 
 bool ARBConfigDivisionList::AddDivision(
-	std::string const& inDiv,
-	ARBConfigDivision** outDiv)
+		std::string const& inDiv,
+		ARBConfigDivision** outDiv)
 {
 	if (outDiv)
 		*outDiv = NULL;
@@ -332,7 +332,7 @@ bool ARBConfigDivisionList::AddDivision(
 }
 
 bool ARBConfigDivisionList::AddDivision(
-	ARBConfigDivision* inDiv)
+		ARBConfigDivision* inDiv)
 {
 	if (!inDiv
 	|| 0 == inDiv->GetName().length()
@@ -344,8 +344,8 @@ bool ARBConfigDivisionList::AddDivision(
 }
 
 int ARBConfigDivisionList::DeleteDivision(
-	std::string const& inDiv,
-	ARBConfigEventList& ioEvents)
+		std::string const& inDiv,
+		ARBConfigEventList& ioEvents)
 {
 	std::string div(inDiv);
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -361,9 +361,9 @@ int ARBConfigDivisionList::DeleteDivision(
 }
 
 bool ARBConfigDivisionList::FindTitleCompleteName(
-	std::string const& inName,
-	bool bAbbrevFirst,
-	ARBConfigTitle** outTitle) const
+		std::string const& inName,
+		bool bAbbrevFirst,
+		ARBConfigTitle** outTitle) const
 {
 	if (outTitle)
 		*outTitle = NULL;
@@ -384,8 +384,8 @@ bool ARBConfigDivisionList::FindTitleCompleteName(
 }
 
 bool ARBConfigDivisionList::FindTitle(
-	std::string const& inTitle,
-	ARBConfigTitle** outTitle) const
+		std::string const& inTitle,
+		ARBConfigTitle** outTitle) const
 {
 	if (outTitle)
 		*outTitle = NULL;
@@ -398,7 +398,7 @@ bool ARBConfigDivisionList::FindTitle(
 }
 
 bool ARBConfigDivisionList::DeleteTitle(
-	std::string const& inTitle)
+		std::string const& inTitle)
 {
 	bool bDeleted = false;
 	for (iterator iter = begin(); iter != end(); ++iter)

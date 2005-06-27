@@ -60,7 +60,7 @@ ARBDogClub::ARBDogClub()
 }
 
 ARBDogClub::ARBDogClub(
-	ARBDogClub const& rhs)
+		ARBDogClub const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Venue(rhs.m_Venue)
 {
@@ -71,7 +71,7 @@ ARBDogClub::~ARBDogClub()
 }
 
 ARBDogClub& ARBDogClub::operator=(
-	ARBDogClub const& rhs)
+		ARBDogClub const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -82,20 +82,20 @@ ARBDogClub& ARBDogClub::operator=(
 }
 
 bool ARBDogClub::operator==(
-	ARBDogClub const& rhs) const
+		ARBDogClub const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
 }
 
 bool ARBDogClub::operator!=(
-	ARBDogClub const& rhs) const
+		ARBDogClub const& rhs) const
 {
 	return !operator==(rhs);
 }
 
 size_t ARBDogClub::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -115,10 +115,10 @@ size_t ARBDogClub::GetSearchStrings(
 }
 
 bool ARBDogClub::Load(
-	ARBConfig const& inConfig,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (inVersion == ARBVersion(1,0))
 	{
@@ -151,7 +151,7 @@ bool ARBDogClub::Load(
 }
 
 bool ARBDogClub::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& club = ioTree.AddElement(TREE_CLUB);
 	club.AddAttrib(ATTRIB_CLUB_VENUE, m_Venue);
@@ -162,7 +162,7 @@ bool ARBDogClub::Save(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogClubList::GetPrimaryClub(
-	ARBDogClub** outClub) const
+		ARBDogClub** outClub) const
 {
 	if (outClub)
 		*outClub = NULL;
@@ -203,13 +203,13 @@ std::string ARBDogClubList::GetPrimaryClubVenue() const
 }
 
 bool ARBDogClubList::FindEvent(
-	ARBConfig const* inConfig,
-	std::string const& inEvent,
-	std::string const& inDivision,
-	std::string const& inLevel,
-	ARBDate const& inDate,
-	ARBErrorCallback& ioCallback,
-	ARBConfigScoring** outScoring) const
+		ARBConfig const* inConfig,
+		std::string const& inEvent,
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate,
+		ARBErrorCallback& ioCallback,
+		ARBConfigScoring** outScoring) const
 {
 	if (outScoring)
 		*outScoring = NULL;
@@ -252,8 +252,8 @@ bool ARBDogClubList::FindEvent(
 }
 
 bool ARBDogClubList::FindVenue(
-	std::string const& inVenue,
-	ARBDogClub** outClub) const
+		std::string const& inVenue,
+		ARBDogClub** outClub) const
 {
 	if (outClub)
 		*outClub = NULL;
@@ -270,9 +270,9 @@ bool ARBDogClubList::FindVenue(
 }
 
 bool ARBDogClubList::AddClub(
-	std::string const& inName,
-	std::string const& inVenue,
-	ARBDogClub** outClub)
+		std::string const& inName,
+		std::string const& inVenue,
+		ARBDogClub** outClub)
 {
 	ARBDogClub* pClub = new ARBDogClub();
 	pClub->SetName(inName);
@@ -287,8 +287,8 @@ bool ARBDogClubList::AddClub(
 }
 
 bool ARBDogClubList::DeleteClub(
-	std::string const& inName,
-	std::string const& inVenue)
+		std::string const& inName,
+		std::string const& inVenue)
 {
 	std::string name(inName);
 	std::string venue(inVenue);
