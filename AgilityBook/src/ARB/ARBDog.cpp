@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -75,7 +76,8 @@ ARBDog::ARBDog()
 {
 }
 
-ARBDog::ARBDog(ARBDog const& rhs)
+ARBDog::ARBDog(
+	ARBDog const& rhs)
 	: m_CallName(rhs.m_CallName)
 	, m_DOB(rhs.m_DOB)
 	, m_Deceased(rhs.m_Deceased)
@@ -93,7 +95,8 @@ ARBDog::~ARBDog()
 {
 }
 
-ARBDog& ARBDog::operator=(ARBDog const& rhs)
+ARBDog& ARBDog::operator=(
+	ARBDog const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -111,7 +114,8 @@ ARBDog& ARBDog::operator=(ARBDog const& rhs)
 	return *this;
 }
 
-bool ARBDog::operator==(ARBDog const& rhs) const
+bool ARBDog::operator==(
+	ARBDog const& rhs) const
 {
 	return m_CallName == rhs.m_CallName
 		&& m_DOB == rhs.m_DOB
@@ -125,12 +129,14 @@ bool ARBDog::operator==(ARBDog const& rhs) const
 		&& m_Trials == rhs.m_Trials;
 }
 
-bool ARBDog::operator!=(ARBDog const& rhs) const
+bool ARBDog::operator!=(
+	ARBDog const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBDog::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDog::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -252,7 +258,8 @@ bool ARBDog::Load(
 	return true;
 }
 
-bool ARBDog::Save(Element& ioTree) const
+bool ARBDog::Save(
+	Element& ioTree) const
 {
 	Element& dog = ioTree.AddElement(TREE_DOG);
 	dog.AddAttrib(ATTRIB_DOG_CALLNAME, m_CallName);
@@ -285,7 +292,9 @@ bool ARBDog::Save(Element& ioTree) const
 	return true;
 }
 
-int ARBDog::RenameVenue(std::string const& inOldVenue, std::string const& inNewVenue)
+int ARBDog::RenameVenue(
+	std::string const& inOldVenue,
+	std::string const& inNewVenue)
 {
 	int count = m_ExistingPoints.RenameVenue(inOldVenue, inNewVenue);
 	count = m_RegNums.RenameVenue(inOldVenue, inNewVenue);
@@ -294,7 +303,8 @@ int ARBDog::RenameVenue(std::string const& inOldVenue, std::string const& inNewV
 	return count;
 }
 
-int ARBDog::DeleteVenue(std::string const& inVenue)
+int ARBDog::DeleteVenue(
+	std::string const& inVenue)
 {
 	int count = m_ExistingPoints.DeleteVenue(inVenue);
 	count = m_RegNums.DeleteVenue(inVenue);
@@ -303,7 +313,10 @@ int ARBDog::DeleteVenue(std::string const& inVenue)
 	return count;
 }
 
-int ARBDog::RenameDivision(ARBConfigVenue const* inVenue, std::string const& inOldDiv, std::string const& inNewDiv)
+int ARBDog::RenameDivision(
+	ARBConfigVenue const* inVenue,
+	std::string const& inOldDiv,
+	std::string const& inNewDiv)
 {
 	int count = m_ExistingPoints.RenameDivision(inVenue->GetName(), inOldDiv, inNewDiv);
 	count = m_Titles.RenameDivision(inVenue, inOldDiv, inNewDiv);
@@ -311,7 +324,10 @@ int ARBDog::RenameDivision(ARBConfigVenue const* inVenue, std::string const& inO
 	return count;
 }
 
-int ARBDog::DeleteDivision(ARBConfig const& inConfig, std::string const& inVenue, std::string const& inDiv)
+int ARBDog::DeleteDivision(
+	ARBConfig const& inConfig,
+	std::string const& inVenue,
+	std::string const& inDiv)
 {
 	int count = m_ExistingPoints.DeleteDivision(inVenue, inDiv);
 	count = m_Titles.DeleteDivision(inConfig, inVenue, inDiv);
@@ -321,7 +337,8 @@ int ARBDog::DeleteDivision(ARBConfig const& inConfig, std::string const& inVenue
 
 /////////////////////////////////////////////////////////////////////////////
 
-int ARBDogList::NumExistingPointsInVenue(std::string const& inVenue) const
+int ARBDogList::NumExistingPointsInVenue(
+	std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -329,7 +346,8 @@ int ARBDogList::NumExistingPointsInVenue(std::string const& inVenue) const
 	return count;
 }
 
-int ARBDogList::NumRegNumsInVenue(std::string const& inVenue) const
+int ARBDogList::NumRegNumsInVenue(
+	std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -337,7 +355,8 @@ int ARBDogList::NumRegNumsInVenue(std::string const& inVenue) const
 	return count;
 }
 
-int ARBDogList::NumTitlesInVenue(std::string const& inVenue) const
+int ARBDogList::NumTitlesInVenue(
+	std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -345,7 +364,8 @@ int ARBDogList::NumTitlesInVenue(std::string const& inVenue) const
 	return count;
 }
 
-int ARBDogList::NumTrialsInVenue(std::string const& inVenue) const
+int ARBDogList::NumTrialsInVenue(
+	std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -366,7 +386,8 @@ int ARBDogList::RenameVenue(
 	return count;
 }
 
-int ARBDogList::DeleteVenue(std::string const& inVenue)
+int ARBDogList::DeleteVenue(
+	std::string const& inVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -377,7 +398,8 @@ int ARBDogList::DeleteVenue(std::string const& inVenue)
 	return count;
 }
 
-int ARBDogList::NumOtherPointsInUse(std::string const& inOther) const
+int ARBDogList::NumOtherPointsInUse(
+	std::string const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -401,7 +423,8 @@ int ARBDogList::RenameOtherPoints(
 	return count;
 }
 
-int ARBDogList::DeleteOtherPoints(std::string const& inOther)
+int ARBDogList::DeleteOtherPoints(
+	std::string const& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -546,12 +569,14 @@ int ARBDogList::DeleteTitle(
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBDogTitle const* pTitle = (*iter)->GetTitles().FindTitle(inVenue, inTitle);
+		ARBDogTitle* pTitle;
+		(*iter)->GetTitles().FindTitle(inVenue, inTitle, &pTitle);
 		while (pTitle)
 		{
 			++count;
 			(*iter)->GetTitles().DeleteTitle(pTitle);
-			pTitle = (*iter)->GetTitles().FindTitle(inVenue, inTitle);
+			pTitle->Release();
+			(*iter)->GetTitles().FindTitle(inVenue, inTitle, &pTitle);
 		}
 	}
 	return count;
@@ -597,17 +622,21 @@ int ARBDogList::DeleteEvent(
 	return count;
 }
 
-ARBDog* ARBDogList::AddDog(ARBDog* inDog)
+bool ARBDogList::AddDog(
+	ARBDog* inDog)
 {
+	bool bAdded = false;
 	if (inDog)
 	{
+		bAdded = true;
 		inDog->AddRef();
 		push_back(inDog);
 	}
-	return inDog;
+	return bAdded;
 }
 
-bool ARBDogList::DeleteDog(ARBDog const* inDog)
+bool ARBDogList::DeleteDog(
+	ARBDog const* inDog)
 {
 	if (inDog)
 	{

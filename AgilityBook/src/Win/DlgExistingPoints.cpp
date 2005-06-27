@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-02-03 DRC Created
  */
@@ -500,18 +501,20 @@ void CDlgExistingPoints::OnOK()
 	else
 	{
 		ARBDogExistingPoints* pPoints = new ARBDogExistingPoints();
-		ARBDogExistingPoints* pNewPoints = m_PointsList.AddExistingPoints(pPoints);
+		if (m_PointsList.AddExistingPoints(pPoints))
+		{
+			pPoints->SetDate(m_Date);
+			pPoints->SetType(type);
+			pPoints->SetOtherPoints(other);
+			pPoints->SetVenue(venue);
+			pPoints->SetDivision(div);
+			pPoints->SetLevel(level);
+			pPoints->SetEvent(event);
+			pPoints->SetSubName((LPCSTR)m_SubName);
+			pPoints->SetComment((LPCSTR)m_Comments);
+			pPoints->SetPoints(m_Points);
+		}
 		pPoints->Release();
-		pNewPoints->SetDate(m_Date);
-		pNewPoints->SetType(type);
-		pNewPoints->SetOtherPoints(other);
-		pNewPoints->SetVenue(venue);
-		pNewPoints->SetDivision(div);
-		pNewPoints->SetLevel(level);
-		pNewPoints->SetEvent(event);
-		pNewPoints->SetSubName((LPCSTR)m_SubName);
-		pNewPoints->SetComment((LPCSTR)m_Comments);
-		pNewPoints->SetPoints(m_Points);
 	}
 
 	ClearLevels();

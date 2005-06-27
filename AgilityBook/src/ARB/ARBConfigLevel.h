@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -104,7 +105,10 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigLevel const* inLevelNew, std::string& ioInfo);
+	bool Update(
+		int indent,
+		ARBConfigLevel const* inLevelNew,
+		std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -167,45 +171,40 @@ public:
 	/**
 	 * Find a level.
 	 * @param inName Name of level to find.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outLevel Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigLevel* FindLevel(std::string const& inName);
+	bool FindLevel(
+		std::string const& inName,
+		ARBConfigLevel** outLevel = NULL);
 
 	/**
 	 * Find a level, only looks at leaf nodes.
 	 * (if there are sub-levels, the level name is ignored).
 	 * @param inName Name of level/sublevel to find.
-	 * @return Whether name exists.
+	 * @param outLevel Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	bool FindTrueLevel(std::string const& inName) const;
-
-	/**
-	 * Find a level, only looks at leaf nodes.
-	 * (if there are sub-levels, the level name is ignored).
-	 * @param inName Name of level/sublevel to find.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 */
-	ARBConfigLevel const* FindSubLevel(std::string const& inName) const;
+	bool FindSubLevel(
+		std::string const& inName,
+		ARBConfigLevel** outLevel = NULL) const;
 
 	/**
 	 * Add a level.
 	 * @param inName Level to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @param outLevel Pointer to new object, NULL if name already exists or is empty.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigLevel* AddLevel(std::string const& inName);
+	bool AddLevel(
+		std::string const& inName,
+		ARBConfigLevel** outLevel = NULL);
 
 	/**
 	 * Add a level.
 	 * @param inLevel Level to add.
-	 * @return Pointer to object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigLevel* AddLevel(ARBConfigLevel* inLevel);
+	bool AddLevel(ARBConfigLevel* inLevel);
 
 	/**
 	 * Delete a level.

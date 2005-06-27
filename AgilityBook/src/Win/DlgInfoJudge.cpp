@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-24-05 DRC If there were 0 items in the list, it crashed.
  *                    Allow saving an entry with no comment.
  * @li 2004-12-11 DRC Added indicators if item is added and/or has comments.
@@ -155,7 +156,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 			m_pDoc->GetAllClubNames(names);
 			ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
 			if (pTrial)
-				select = pTrial->GetClubs().GetPrimaryClub()->GetName();
+				select = pTrial->GetClubs().GetPrimaryClubName();
 		}
 		break;
 	case ARBInfo::eJudgeInfo:
@@ -183,9 +184,14 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		NameInfo data(*iter);
-		ARBInfoItem* item = m_Info.FindItem(data.m_Name);
-		if (item && 0 < item->GetComment().length())
-			data.m_bHasData = true;
+		ARBInfoItem* item;
+		if (m_Info.FindItem(data.m_Name, &item))
+		{
+			if (0 < item->GetComment().length())
+				data.m_bHasData = true;
+			item->Release();
+			item = NULL;
+		}
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_Name))
 			data.m_eInUse = NameInfo::eInUse;
 		else
@@ -276,9 +282,13 @@ void CDlgInfoJudge::OnSelchangeName()
 	if (CB_ERR != index)
 	{
 		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
-		ARBInfoItem* item = m_Info.FindItem(m_Names[idx].m_Name);
-		if (item)
+		ARBInfoItem* item;
+		if (m_Info.FindItem(m_Names[idx].m_Name, &item))
+		{
 			data = item->GetComment().c_str();
+			item->Release();
+			item = NULL;
+		}
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 			bEnable = TRUE;
 	}
@@ -297,12 +307,14 @@ void CDlgInfoJudge::OnKillfocusComments()
 		m_ctrlComment.GetWindowText(data);
 		data.TrimRight();
 		data.Replace("\r\n", "\n");
-		ARBInfoItem* item = m_Info.FindItem(m_Names[idx].m_Name);
-		if (!item)
-			item = m_Info.AddItem(m_Names[idx].m_Name);
+		ARBInfoItem* item;
+		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
+			m_Info.AddItem(m_Names[idx].m_Name, &item);
 		if (!item)
 			return;
 		item->SetComment((LPCTSTR)data);
+		item->Release();
+		item = NULL;
 		m_Names[idx].m_bHasData = (0 < data.GetLength());
 		m_ctrlNames.Invalidate();
 	}
@@ -356,9 +368,13 @@ void CDlgInfoJudge::OnDelete()
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 		{
 			m_ctrlNames.DeleteString(index);
-			ARBInfoItem* item = m_Info.FindItem(m_Names[idx].m_Name);
-			if (item)
+			ARBInfoItem* item;
+			if (m_Info.FindItem(m_Names[idx].m_Name, &item))
+			{
 				m_Info.DeleteItem(item);
+				item->Release();
+				item = NULL;
+			}
 			if (index == m_ctrlNames.GetCount())
 				--index;
 			if (0 <= index)

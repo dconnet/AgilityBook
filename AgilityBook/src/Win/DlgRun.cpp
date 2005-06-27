@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
@@ -70,9 +71,12 @@ CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CW
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 
-	ARBDogClub const* pClub = pTrial->GetClubs().GetPrimaryClub();
+	ARBDogClub* pClub;
+	pTrial->GetClubs().GetPrimaryClub(&pClub);
 	ASSERT(NULL != pClub);
-	ARBConfigVenue const* pVenue = pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue());
+	ARBConfigVenue* pVenue;
+	pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
+	pClub->Release();
 	ASSERT(NULL != pVenue);
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
@@ -85,6 +89,7 @@ CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CW
 	AddPage(m_pageReference);
 	AddPage(m_pageCRCD);
 	AddPage(m_pageLink);
+	pVenue->Release();
 }
 
 CDlgRun::~CDlgRun()

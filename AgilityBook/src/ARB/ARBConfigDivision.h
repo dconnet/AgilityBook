@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Added DeleteTitle.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -107,7 +108,10 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigDivision const* inDivNew, std::string& ioInfo);
+	bool Update(
+		int indent,
+		ARBConfigDivision const* inDivNew,
+		std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -195,19 +199,22 @@ public:
 	/**
 	 * Find the named division.
 	 * @param inDiv Division to find.
-	 * @return Object that was found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outDiv Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigDivision const* FindDivision(std::string const& inDiv) const;
-	ARBConfigDivision* FindDivision(std::string const& inDiv);
+	bool FindDivision(
+		std::string const& inDiv,
+		ARBConfigDivision** outDiv = NULL) const;
 
 	/**
 	 * Add a division.
 	 * @param inDiv Name of division to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outDiv Pointer to new object, NULL if name already exists or is empty.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigDivision* AddDivision(std::string const& inDiv);
+	bool AddDivision(
+		std::string const& inDiv,
+		ARBConfigDivision** outDiv = NULL);
 
 	/**
 	 * Add a division.
@@ -216,7 +223,7 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 *       The pointer is added to the list and its ref count is incremented.
 	 */
-	ARBConfigDivision* AddDivision(ARBConfigDivision* inDiv);
+	bool AddDivision(ARBConfigDivision* inDiv);
 
 	/**
 	 * Delete the division.
@@ -233,19 +240,23 @@ public:
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inName Complete name of title to find.
 	 * @param bAbbrevFirst Name is before or after Longname.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigTitle const* FindTitleCompleteName(std::string const& inName, bool bAbbrevFirst = true) const;
+	bool FindTitleCompleteName(
+		std::string const& inName,
+		bool bAbbrevFirst = true,
+		ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find a title.
 	 * @param inTitle Name of title to find.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigTitle const* FindTitle(std::string const& inTitle) const;
-	ARBConfigTitle* FindTitle(std::string const& inTitle);
+	bool FindTitle(
+		std::string const& inTitle,
+		ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Delete a title.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-05-10 DRC Place quotes are field on output as needed.
@@ -373,14 +374,15 @@ void CWizardExport::UpdatePreview()
 					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
 					{
 						ARBDogRun const* pRun = *iterRun;
-						ARBConfigScoring const* pScoring = NULL;
+						ARBConfigScoring* pScoring = NULL;
 						if (pTrial->GetClubs().GetPrimaryClub())
-							pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
-								pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+							m_pDoc->GetConfig().GetVenues().FindEvent(
+								pTrial->GetClubs().GetPrimaryClubVenue(),
 								pRun->GetEvent(),
 								pRun->GetDivision(),
 								pRun->GetLevel(),
-								pRun->GetDate());
+								pRun->GetDate(),
+								&pScoring);
 						ASSERT(pScoring);
 						if (pScoring)
 						{
@@ -647,6 +649,7 @@ void CWizardExport::UpdatePreview()
 									m_ctrlPreview.InsertItem(iLine, data);
 								++iLine;
 							}
+							pScoring->Release();
 						}
 					}
 				}

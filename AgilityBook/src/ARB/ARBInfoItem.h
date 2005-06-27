@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-11 DRC Merged separate club/judge/location classes.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -93,7 +94,8 @@ public:
 	 * @param ioTree Parent element.
 	 * @param inItemName Name of collection being saved.
 	 */
-	bool ARBInfoItem::Save(Element& ioTree,
+	bool ARBInfoItem::Save(
+		Element& ioTree,
 		std::string const& inItemName) const;
 
 	/**
@@ -174,7 +176,8 @@ public:
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
-	bool Load(Element const& inTree,
+	bool Load(
+		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback);
 
@@ -206,26 +209,29 @@ public:
 	/**
 	 * Find a item.
 	 * @param inName Item to find.
-	 * @return Object matching item.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outItem Found item.
+	 * @return Whether the object was found.
 	 */
-	ARBInfoItem* FindItem(std::string const& inName) const;
+	bool FindItem(
+		std::string const& inName,
+		ARBInfoItem** outItem = NULL) const;
 
 	/**
 	 * Add a new item.
 	 * @param inItem Name of item to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outItem New object, NULL if name already exists or is empty.
+	 * @return Whether object was added.
 	 */
-	ARBInfoItem* AddItem(std::string const& inItem);
+	bool AddItem(
+		std::string const& inItem,
+		ARBInfoItem** outItem = NULL);
 
 	/**
 	 * Add a new item.
 	 * @param inItem Item to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @return Whether the object was added.
 	 */
-	ARBInfoItem* AddItem(ARBInfoItem* inItem);
+	bool AddItem(ARBInfoItem* inItem);
 
 	/**
 	 * Delete a item.

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -134,10 +135,12 @@ public:
 	/**
 	 * Find a sublevel.
 	 * @param inName Name of sublevel to find.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outLevel Pointer to object, NULL if not found.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigSubLevel* AddSubLevel(std::string const& inName);
+	bool AddSubLevel(
+		std::string const& inName,
+		ARBConfigSubLevel** outLevel = NULL);
 
 	/**
 	 * Delete a sublevel.

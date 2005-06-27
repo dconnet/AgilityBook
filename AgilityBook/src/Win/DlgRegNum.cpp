@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-06-29 DRC Added Note to regnum.
  */
 
@@ -146,10 +147,13 @@ void CDlgRegNum::OnOK()
 	}
 	else
 	{
-		ARBDogRegNum* pRegNum = m_RegNums.AddRegNum((LPCSTR)venue, (LPCSTR)m_RegNum);
-		pRegNum->SetHeight((LPCSTR)m_Height);
-		pRegNum->SetReceived(m_bReceived ? true : false);
-		pRegNum->SetNote((LPCSTR)m_Note);
+		ARBDogRegNum* pRegNum;
+		if (m_RegNums.AddRegNum((LPCSTR)venue, (LPCSTR)m_RegNum, &pRegNum))
+		{
+			pRegNum->SetHeight((LPCSTR)m_Height);
+			pRegNum->SetReceived(m_bReceived ? true : false);
+			pRegNum->SetNote((LPCSTR)m_Note);
+		}
 	}
 	CDlgBaseDialog::OnOK();
 }

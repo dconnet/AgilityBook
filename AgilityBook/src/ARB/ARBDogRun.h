@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -492,11 +493,9 @@ public:
 	/**
 	 * Add a run.
 	 * @param inRun Run to add.
-	 * @return Pointer to object.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBDogRun* AddRun(ARBDogRun* inRun);
+	bool AddRun(ARBDogRun* inRun);
 
 	/**
 	 * Delete a run.

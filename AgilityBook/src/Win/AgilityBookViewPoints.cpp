@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-11 DRC Mark the document dirty when creating a title.
@@ -351,17 +352,17 @@ int CAgilityBookViewPoints::DoEvents(
 		bool bHasExistingLifetimePoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, true);
 
 		// Don't tally runs that have no titling points.
-		std::vector<ARBConfigScoring const*> scoringItems;
+		ARBConfigScoringObjects scoringItems;
 		if (0 == pEvent->FindAllEvents(inDiv->GetName(), inLevel->GetName(), true, scoringItems))
 			continue;
 		// Iterate across each scoring method separately. This means it is
 		// possible to have multiple lines show up for a given event. But if
 		// that happens, it means the events were scored differently.
-		for (std::vector<ARBConfigScoring const*>::iterator iterScoring = scoringItems.begin();
+		for (ARBConfigScoringObjects::iterator iterScoring = scoringItems.begin();
 			iterScoring != scoringItems.end();
 			++iterScoring)
 		{
-			ARBConfigScoring const* pScoringMethod = *iterScoring;
+			ARBConfigScoring* pScoringMethod = *iterScoring;
 			int SQs = 0;
 			int speedPtsEvent = 0;
 			list<RunInfo> matching;
@@ -391,15 +392,16 @@ int CAgilityBookViewPoints::DoEvents(
 								ARBDogRun const* pRun = (*iterRun);
 								// This extra test only looks at runs that are
 								// QQing. Otherwise a 3rd NA run throws things off.
-								ARBConfigScoring const* pScoring = NULL;
+								ARBConfigScoring* pScoring = NULL;
 								if (pTrial->GetClubs().GetPrimaryClub())
 								{
-									pScoring = GetDocument()->GetConfig().GetVenues().FindEvent(
-										pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+									GetDocument()->GetConfig().GetVenues().FindEvent(
+										pTrial->GetClubs().GetPrimaryClubVenue(),
 										pRun->GetEvent(),
 										pRun->GetDivision(),
 										pRun->GetLevel(),
-										pRun->GetDate());
+										pRun->GetDate(),
+										&pScoring);
 								}
 								if (pScoring && pScoring->HasDoubleQ()
 								&& date == pRun->GetDate()
@@ -408,6 +410,8 @@ int CAgilityBookViewPoints::DoEvents(
 								{
 									++nVisible;
 								}
+								if (pScoring)
+									pScoring->Release();
 							}
 							if (2 == nVisible)
 								QQs.insert(DoubleQdata(date, pTrial));
@@ -423,11 +427,16 @@ int CAgilityBookViewPoints::DoEvents(
 					|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
 					|| pRun->GetEvent() != pEvent->GetName())
 						continue;
-					ARBConfigScoring const* pScoring = pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate());
+					ARBConfigScoring* pScoring;
+					pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate(), &pScoring);
 					ASSERT(pScoring);
 					if (!pScoring) continue; // Shouldn't need it...
 					if (*pScoring != *pScoringMethod)
+					{
+						pScoring->Release();
 						continue;
+					}
+					pScoring->Release();
 					bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
 					&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun));
 					if (bRunVisible)

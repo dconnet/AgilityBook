@@ -69,7 +69,8 @@ ARBConfigVenue::ARBConfigVenue()
 {
 }
 
-ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
+ARBConfigVenue::ARBConfigVenue(
+	ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
@@ -82,7 +83,8 @@ ARBConfigVenue::~ARBConfigVenue()
 {
 }
 
-ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
+ARBConfigVenue& ARBConfigVenue::operator=(
+	ARBConfigVenue const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -95,7 +97,8 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 	return *this;
 }
 
-bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
+bool ARBConfigVenue::operator==(
+	ARBConfigVenue const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
@@ -104,7 +107,8 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_Events == rhs.m_Events;
 }
 
-bool ARBConfigVenue::operator!=(ARBConfigVenue const& rhs) const
+bool ARBConfigVenue::operator!=(
+	ARBConfigVenue const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -118,7 +122,8 @@ void ARBConfigVenue::clear()
 	m_Events.clear();
 }
 
-size_t ARBConfigVenue::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigVenue::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -188,7 +193,8 @@ bool ARBConfigVenue::Load(
 	return true;
 }
 
-bool ARBConfigVenue::Save(Element& ioTree) const
+bool ARBConfigVenue::Save(
+	Element& ioTree) const
 {
 	Element& venue = ioTree.AddElement(TREE_VENUE);
 	venue.AddAttrib(ATTRIB_VENUE_NAME, m_Name);
@@ -206,7 +212,10 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 	return true;
 }
 
-bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::string& ioInfo)
+bool ARBConfigVenue::Update(
+	int indent,
+	ARBConfigVenue const* inVenueNew,
+	std::string& ioInfo)
 {
 	std::string info;
 	if (GetName() != inVenueNew->GetName())
@@ -241,8 +250,8 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 			iterDiv != inVenueNew->GetDivisions().end();
 			++iterDiv)
 		{
-			ARBConfigDivision* pDiv = GetDivisions().FindDivision((*iterDiv)->GetName());
-			if (pDiv)
+			ARBConfigDivision* pDiv;
+			if (GetDivisions().FindDivision((*iterDiv)->GetName(), &pDiv))
 			{
 				if (*(*iterDiv) == *pDiv)
 					++nSkipped;
@@ -251,6 +260,7 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 					if (pDiv->Update(indent+1, (*iterDiv), info2))
 						++nChanged;
 				}
+				pDiv->Release();
 			}
 			else
 			{
@@ -281,8 +291,8 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 			iterEvent != inVenueNew->GetEvents().end();
 			++iterEvent)
 		{
-			ARBConfigEvent* pEvent = GetEvents().FindEvent((*iterEvent)->GetName());
-			if (pEvent)
+			ARBConfigEvent* pEvent;
+			if (GetEvents().FindEvent((*iterEvent)->GetName(), &pEvent))
 			{
 				if (*(*iterEvent) == *pEvent)
 					++nSkipped;
@@ -291,6 +301,7 @@ bool ARBConfigVenue::Update(int indent, ARBConfigVenue const* inVenueNew, std::s
 					if (pEvent->Update(indent+1, (*iterEvent), info2))
 						++nChanged;
 				}
+				pEvent->Release();
 			}
 			else
 			{
@@ -351,14 +362,16 @@ private:
 	bool m_bDescending;
 };
 
-void ARBConfigVenueList::sort(bool inDescending)
+void ARBConfigVenueList::sort(
+	bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigVenue(inDescending));
 }
 
-bool ARBConfigVenueList::VerifyVenue(std::string const& inVenue) const
+bool ARBConfigVenueList::VerifyVenue(
+	std::string const& inVenue) const
 {
 	return NULL != FindVenue(inVenue);
 }
@@ -368,10 +381,14 @@ bool ARBConfigVenueList::VerifyLevel(
 	std::string const& inDivision,
 	std::string const& inLevel) const
 {
-	ARBConfigVenue const* pVenue = FindVenue(inVenue);
-	if (pVenue)
-		return pVenue->GetDivisions().VerifyLevel(inDivision, inLevel);
-	return false;
+	bool bFound = false;
+	ARBConfigVenue* pVenue;
+	if (FindVenue(inVenue, &pVenue))
+	{
+		bFound = pVenue->GetDivisions().VerifyLevel(inDivision, inLevel);
+		pVenue->Release();
+	}
+	return bFound;
 }
 
 bool ARBConfigVenueList::VerifyEvent(
@@ -381,88 +398,120 @@ bool ARBConfigVenueList::VerifyEvent(
 	std::string const& inEvent
 	) const
 {
-	ARBConfigVenue const* pVenue = FindVenue(inVenue);
-	if (pVenue)
+	ARBConfigVenue* pVenue;
+	bool bFound = false;
+	if (FindVenue(inVenue, &pVenue))
 	{
 		// Translate the sublevel to level.
-		ARBConfigDivision const* pDiv = pVenue->GetDivisions().FindDivision(inDivision);
-		if (pDiv)
+		ARBConfigDivision* pDiv;
+		if (pVenue->GetDivisions().FindDivision(inDivision, &pDiv))
 		{
-			ARBConfigLevel const* pLevel = pDiv->GetLevels().FindSubLevel(inLevel);
-			if (pLevel)
-				return pVenue->GetEvents().VerifyEvent(inEvent, inDivision, pLevel->GetName());
+			ARBConfigLevel* pLevel;
+			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
+			{
+				bFound = pVenue->GetEvents().VerifyEvent(inEvent, inDivision, pLevel->GetName());
+				pLevel->Release();
+			}
+			pDiv->Release();
 		}
+		pVenue->Release();
 	}
-	return NULL;
+	return bFound;
 }
 
-ARBConfigTitle const* ARBConfigVenueList::FindTitleCompleteName(
+bool ARBConfigVenueList::FindTitleCompleteName(
 	std::string const& inVenue,
 	std::string const& inName,
-	bool bAbbrevFirst) const
+	bool bAbbrevFirst,
+	ARBConfigTitle** outTitle) const
 {
-	ARBConfigVenue const* pVenue = FindVenue(inVenue);
-	if (pVenue)
-		return pVenue->GetDivisions().FindTitleCompleteName(inName, bAbbrevFirst);
-	return NULL;
+	if (outTitle)
+		*outTitle = NULL;
+	bool bFound = false;
+	ARBConfigVenue* pVenue;
+	if (FindVenue(inVenue, &pVenue))
+	{
+		bFound = pVenue->GetDivisions().FindTitleCompleteName(inName, bAbbrevFirst, outTitle);
+		pVenue->Release();
+	}
+	return bFound;
 }
 
-ARBConfigTitle const* ARBConfigVenueList::FindTitle(
+bool ARBConfigVenueList::FindTitle(
 	std::string const& inVenue,
-	std::string const& inTitle) const
+	std::string const& inTitle,
+	ARBConfigTitle** outTitle) const
 {
-	ARBConfigVenue const* pVenue = FindVenue(inVenue);
-	if (pVenue)
-		return pVenue->GetDivisions().FindTitle(inTitle);
-	return NULL;
+	if (outTitle)
+		*outTitle = NULL;
+	bool bFound = false;
+	ARBConfigVenue* pVenue;
+	if (FindVenue(inVenue, &pVenue))
+	{
+		bFound = pVenue->GetDivisions().FindTitle(inTitle, outTitle);
+		pVenue->Release();
+	}
+	return bFound;
 }
 
-ARBConfigVenue const* ARBConfigVenueList::FindVenue(std::string const& inVenue) const
+bool ARBConfigVenueList::FindVenue(
+	std::string const& inVenue,
+	ARBConfigVenue** outVenue) const
 {
+	if (outVenue)
+		*outVenue = NULL;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inVenue)
-			return (*iter);
+		{
+			if (outVenue)
+			{
+				*outVenue = *iter;
+				(*outVenue)->AddRef();
+			}
+			return true;
+		}
 	}
-	return NULL;
+	return false;
 }
 
-ARBConfigVenue* ARBConfigVenueList::FindVenue(std::string const& inVenue)
+bool ARBConfigVenueList::AddVenue(
+	std::string const& inVenue,
+	ARBConfigVenue** outVenue)
 {
-	for (iterator iter = begin(); iter != end(); ++iter)
-	{
-		if ((*iter)->GetName() == inVenue)
-			return (*iter);
-	}
-	return NULL;
-}
-
-ARBConfigVenue* ARBConfigVenueList::AddVenue(std::string const& inVenue)
-{
+	if (outVenue)
+		*outVenue = NULL;
 	if (0 == inVenue.length())
-		return NULL;
+		return false;
 	if (NULL != FindVenue(inVenue))
-		return NULL;
+		return false;
 	ARBConfigVenue* pVenue = new ARBConfigVenue();
 	pVenue->SetName(inVenue);
 	push_back(pVenue);
 	sort();
-	return pVenue;
+	if (outVenue)
+	{
+		*outVenue = pVenue;
+		(*outVenue)->AddRef();
+	}
+	return true;
 }
 
-ARBConfigVenue* ARBConfigVenueList::AddVenue(ARBConfigVenue* inVenue)
+bool ARBConfigVenueList::AddVenue(
+	ARBConfigVenue* inVenue)
 {
 	if (!inVenue)
-		return NULL;
+		return false;
 	if (NULL != FindVenue(inVenue->GetName()))
-		return NULL;
+		return false;
 	inVenue->AddRef();
 	push_back(inVenue);
 	sort();
-	return inVenue;
+	return true;
 }
 
-int ARBConfigVenueList::DeleteVenue(std::string const& inVenue)
+int ARBConfigVenueList::DeleteVenue(
+	std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -479,26 +528,37 @@ int ARBConfigVenueList::DeleteVenue(std::string const& inVenue)
 // inLevel is the true (ie: sub) level.
 // This is the only 'FindEvent' that takes a true level. All others take
 // a ARBConfigLevel.
-ARBConfigScoring const* ARBConfigVenueList::FindEvent(
+bool ARBConfigVenueList::FindEvent(
 	std::string const& inVenue,
 	std::string const& inEvent,
 	std::string const& inDivision,
 	std::string const& inLevel,
-	ARBDate const& inDate) const
+	ARBDate const& inDate,
+	ARBConfigScoring** outScoring) const
 {
-	ARBConfigVenue const* pVenue = FindVenue(inVenue);
-	if (pVenue)
+	if (outScoring)
+		*outScoring = NULL;
+	bool bFound = false;
+	ARBConfigVenue* pVenue;
+	if (FindVenue(inVenue, &pVenue))
 	{
 		// Translate the sublevel to level.
-		ARBConfigDivision const* pDiv = pVenue->GetDivisions().FindDivision(inDivision);
-		ASSERT(pDiv);
-		if (!pDiv)
-			return NULL;
-		ARBConfigLevel const* pLevel = pDiv->GetLevels().FindSubLevel(inLevel);
-		ASSERT(pLevel);
-		if (!pLevel)
-			return NULL;
-		return pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate);
+		ARBConfigDivision* pDiv;
+		if (pVenue->GetDivisions().FindDivision(inDivision, &pDiv))
+		{
+			ARBConfigLevel* pLevel;
+			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
+			{
+				bFound = pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outScoring);
+				pLevel->Release();
+			}
+			else
+				ASSERT(pLevel);
+			pDiv->Release();
+		}
+		else
+			ASSERT(pDiv);
+		pVenue->Release();
 	}
-	return NULL;
+	return bFound;
 }

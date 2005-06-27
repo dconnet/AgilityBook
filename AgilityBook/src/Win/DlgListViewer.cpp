@@ -37,6 +37,7 @@
  * this dialog.
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  *                    Added subnames to events.
@@ -190,7 +191,7 @@ public:
 		ARBDog const* inDog,
 		ARBDogTrial const* inTrial,
 		ARBDogRun const* inRun,
-		ARBConfigScoring const* inScoring,
+		ARBConfigScoring* inScoring,
 		ScoringRunInfo::eScoringDetail inScoringDetail)
 		: m_ColData(inColData)
 		, m_Dog(inDog)
@@ -202,11 +203,16 @@ public:
 		ASSERT(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
+		ASSERT(inScoring);
+		if (m_Scoring)
+			m_Scoring->AddRef();
 	}
 	virtual ~CDlgListViewerDataRun()
 	{
 		if (m_ColData)
 			m_ColData->Release();
+		if (m_Scoring)
+			m_Scoring->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
 	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
@@ -215,7 +221,7 @@ private:
 	ARBDog const* m_Dog;
 	ARBDogTrial const* m_Trial;
 	ARBDogRun const* m_Run;
-	ARBConfigScoring const* m_Scoring;
+	ARBConfigScoring* m_Scoring;
 	ScoringRunInfo::eScoringDetail m_ScoringDetail;
 };
 
@@ -357,7 +363,7 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 		break;
 	case COL_RUN_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
-			str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
+			str = m_Trial->GetClubs().GetPrimaryClubName().c_str();
 		break;
 	case COL_RUN_JUDGE:
 		str = m_Run->GetJudge().c_str();
@@ -571,7 +577,7 @@ CString CDlgListViewerDataDblQ::OnNeedText(int iCol) const
 		break;
 	case COL_QQ_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
-			str = m_Trial->GetClubs().GetPrimaryClub()->GetName().c_str();
+			str = m_Trial->GetClubs().GetPrimaryClubName().c_str();
 		break;
 	}
 	return str;
@@ -599,9 +605,9 @@ int CDlgListViewerDataDblQ::Compare(CDlgListViewerData const* pRow2, int inCol) 
 		break;
 	case COL_QQ_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
-			str1 = m_Trial->GetClubs().GetPrimaryClub()->GetName();
+			str1 = m_Trial->GetClubs().GetPrimaryClubName();
 		if (pData->m_Trial->GetClubs().GetPrimaryClub())
-			str2 = pData->m_Trial->GetClubs().GetPrimaryClub()->GetName();
+			str2 = pData->m_Trial->GetClubs().GetPrimaryClubName();
 		break;
 	}
 	if (str1 < str2)
@@ -741,7 +747,7 @@ CString CDlgListViewerDataOther::OnNeedText(int iCol) const
 		break;
 	case COL_OTHER_CLUB:
 		if (!m_info.m_pExisting && m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str = m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName().c_str();
+			str = m_info.m_pTrial->GetClubs().GetPrimaryClubName().c_str();
 		break;
 	case COL_OTHER_VENUE:
 		str = m_info.m_Venue.c_str();
@@ -801,9 +807,9 @@ int CDlgListViewerDataOther::Compare(CDlgListViewerData const* pRow2, int inCol)
 		break;
 	case COL_OTHER_CLUB:
 		if (!m_info.m_pExisting && m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str1 = m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName();
+			str1 = m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		if (!pData->m_info.m_pExisting && pData->m_info.m_pTrial->GetClubs().GetPrimaryClub())
-			str2 = pData->m_info.m_pTrial->GetClubs().GetPrimaryClub()->GetName();
+			str2 = pData->m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		break;
 	case COL_OTHER_VENUE:
 		str1 = m_info.m_Venue;
@@ -1151,16 +1157,20 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 	ARBDogRun const* pRun,
 	ScoringRunInfo::eScoringDetail scoringDetail)
 {
-	ARBConfigScoring const* pScoring = NULL;
+	ARBConfigScoring* pScoring = NULL;
 	if (pTrial->GetClubs().GetPrimaryClub())
-		pScoring = pDoc->GetConfig().GetVenues().FindEvent(
-			pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+		 pDoc->GetConfig().GetVenues().FindEvent(
+			pTrial->GetClubs().GetPrimaryClubVenue(),
 			pRun->GetEvent(),
 			pRun->GetDivision(),
 			pRun->GetLevel(),
-			pRun->GetDate());
-	if (pScoring && pScoring->HasSpeedPts())
-		pColData->InsertColumn(ctrlList, COL_RUN_SPEED, IDS_SPEEDPTS);
+			pRun->GetDate(),
+			&pScoring);
+	if (pScoring)
+	{
+		if (pScoring->HasSpeedPts())
+			pColData->InsertColumn(ctrlList, COL_RUN_SPEED, IDS_SPEEDPTS);
+	}
 	if (0 < pRun->GetPartners().size())
 		pColData->InsertColumn(ctrlList, COL_RUN_PARTNERS, IDS_PARTNERS);
 
@@ -1172,6 +1182,9 @@ static void InsertRun(CAgilityBookDoc* pDoc,
 	item.pszText = LPSTR_TEXTCALLBACK;
 	item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
 	ctrlList.InsertItem(&item);
+
+	if (pScoring)
+		pScoring->Release();
 }
 
 BOOL CDlgListViewer::OnInitDialog() 

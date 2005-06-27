@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-14 DRC Added FindTraining to support importing data.
@@ -210,19 +211,18 @@ public:
 	/**
 	 * Find a training object.
 	 * @param inTraining Object to search for.
-	 * @return Matching object.
-	 * @post The returned object is <i>not</i> reference counted.
+	 * @return Whether object is in the list.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	ARBTraining const* FindTraining(ARBTraining const* inTraining) const;
+	bool FindTraining(ARBTraining const* inTraining) const;
 
 	/**
 	 * Add a training object to the list.
 	 * @param inTraining Object to add.
-	 * @return Returns the added object.
+	 * @return Whether the object was added.
 	 * @post The pointer is added to the list and its ref count is incremented.
 	 */
-	ARBTraining* AddTraining(ARBTraining* inTraining);
+	bool AddTraining(ARBTraining* inTraining);
 
 	/**
 	 * Delete a training object.

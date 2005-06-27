@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-11 DRC Fix runs when scoring methods change.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */
@@ -75,7 +76,12 @@ void CDlgFixupDeleteOtherPoints::Commit(ARBAgilityRecordBook& book)
 
 void CDlgFixupRenameDivision::Commit(ARBAgilityRecordBook& book)
 {
-	book.GetDogs().RenameDivision(book.GetConfig().GetVenues().FindVenue(m_Venue), m_oldName, m_newName);
+	ARBConfigVenue* pVenue;
+	if (book.GetConfig().GetVenues().FindVenue(m_Venue, &pVenue))
+	{
+		book.GetDogs().RenameDivision(pVenue, m_oldName, m_newName);
+		pVenue->Release();
+	}
 }
 
 void CDlgFixupDeleteDivision::Commit(ARBAgilityRecordBook& book)
@@ -138,23 +144,25 @@ void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
 				)
 			{
 				ARBDogRun* pRun = *iterRun;
-				ARBConfigScoring const* pScoring = book.GetConfig().GetVenues().FindEvent(
+				ARBConfigScoring* pScoring;
+				if (book.GetConfig().GetVenues().FindEvent(
 					m_Venue,
 					m_Event,
 					pRun->GetDivision(),
 					pRun->GetLevel(),
-					pRun->GetDate());
-				if (!pScoring)
-				{
-					iterRun = pTrial->GetRuns().erase(iterRun);
-				}
-				else
+					pRun->GetDate(),
+					&pScoring))
 				{
 					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
 						!= pRun->GetScoring().GetType())
 					{
 						pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
 					}
+					pScoring->Release();
+				}
+				else
+				{
+					iterRun = pTrial->GetRuns().erase(iterRun);
 				}
 				++iterRun;
 			}

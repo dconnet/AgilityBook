@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-13 DRC Added ability to hide titles, including unearned ones.
@@ -215,10 +216,12 @@ public:
 	 * Find a title
 	 * @param inVenue Venue name.
 	 * @param inTitle Name of title.
+	 * @param outTitle Pointer to found title.
 	 */
-	ARBDogTitle const* FindTitle(
+	bool FindTitle(
 		std::string const& inVenue,
-		std::string const& inTitle) const;
+		std::string const& inTitle,
+		ARBDogTitle** outTitle = NULL) const;
 
 	/**
 	 * Find the maximum instance of a title
@@ -314,9 +317,7 @@ public:
 	/**
 	 * Add a title.
 	 * @param inTitle Title to add.
-	 * @return Pointer to object.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBDogTitle* AddTitle(ARBDogTitle* inTitle);
+	bool AddTitle(ARBDogTitle* inTitle);
 };

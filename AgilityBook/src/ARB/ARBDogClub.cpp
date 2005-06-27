@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -58,7 +59,8 @@ ARBDogClub::ARBDogClub()
 {
 }
 
-ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
+ARBDogClub::ARBDogClub(
+	ARBDogClub const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Venue(rhs.m_Venue)
 {
@@ -68,7 +70,8 @@ ARBDogClub::~ARBDogClub()
 {
 }
 
-ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
+ARBDogClub& ARBDogClub::operator=(
+	ARBDogClub const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -78,18 +81,21 @@ ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 	return *this;
 }
 
-bool ARBDogClub::operator==(ARBDogClub const& rhs) const
+bool ARBDogClub::operator==(
+	ARBDogClub const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
 }
 
-bool ARBDogClub::operator!=(ARBDogClub const& rhs) const
+bool ARBDogClub::operator!=(
+	ARBDogClub const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBDogClub::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogClub::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -144,7 +150,8 @@ bool ARBDogClub::Load(
 	return true;
 }
 
-bool ARBDogClub::Save(Element& ioTree) const
+bool ARBDogClub::Save(
+	Element& ioTree) const
 {
 	Element& club = ioTree.AddElement(TREE_CLUB);
 	club.AddAttrib(ATTRIB_CLUB_VENUE, m_Venue);
@@ -154,31 +161,75 @@ bool ARBDogClub::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBDogClub const* ARBDogClubList::GetPrimaryClub() const
+bool ARBDogClubList::GetPrimaryClub(
+	ARBDogClub** outClub) const
+{
+	if (outClub)
+		*outClub = NULL;
+	if (0 < size())
+	{
+		const_iterator iter = begin();
+		if (outClub)
+		{
+			*outClub = *iter;
+			(*outClub)->AddRef();
+		}
+		return true;
+	}
+	else
+		return false;
+}
+
+std::string ARBDogClubList::GetPrimaryClubName() const
 {
 	if (0 < size())
 	{
 		const_iterator iter = begin();
-		return (*iter);
+		return (*begin())->GetName();
 	}
 	else
-		return NULL;
+		return "";
 }
 
-ARBConfigScoring const* ARBDogClubList::FindEvent(
+std::string ARBDogClubList::GetPrimaryClubVenue() const
+{
+	if (0 < size())
+	{
+		const_iterator iter = begin();
+		return (*begin())->GetVenue();
+	}
+	else
+		return "";
+}
+
+bool ARBDogClubList::FindEvent(
 	ARBConfig const* inConfig,
 	std::string const& inEvent,
 	std::string const& inDivision,
 	std::string const& inLevel,
 	ARBDate const& inDate,
-	ARBErrorCallback& ioCallback) const
+	ARBErrorCallback& ioCallback,
+	ARBConfigScoring** outScoring) const
 {
-	ARBConfigScoring const* pEvent = NULL;
+	if (outScoring)
+		*outScoring = NULL;
+	ARBConfigScoring* pEvent = NULL;
 	for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
 	{
-		pEvent = inConfig->GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate);
+		inConfig->GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent);
 	}
-	if (!pEvent)
+	bool bFound = false;
+	if (pEvent)
+	{
+		bFound = true;
+		if (outScoring)
+		{
+			*outScoring = pEvent;
+			(*outScoring)->AddRef();
+		}
+		pEvent->Release();
+	}
+	else
 	{
 		std::string msg(INVALID_EVENT);
 		msg += inEvent;
@@ -197,29 +248,47 @@ ARBConfigScoring const* ARBDogClubList::FindEvent(
 		}
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str()));
 	}
-	return pEvent;
+	return bFound;
 }
 
-ARBDogClub const* ARBDogClubList::FindVenue(std::string const& inVenue) const
+bool ARBDogClubList::FindVenue(
+	std::string const& inVenue,
+	ARBDogClub** outClub) const
 {
+	if (outClub)
+		*outClub = NULL;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue)
-			return (*iter);
+		{
+			*outClub = *iter;
+			(*outClub)->AddRef();
+			return true;
+		}
 	}
-	return NULL;
+	return false;
 }
 
-ARBDogClub* ARBDogClubList::AddClub(std::string const& inName, std::string const& inVenue)
+bool ARBDogClubList::AddClub(
+	std::string const& inName,
+	std::string const& inVenue,
+	ARBDogClub** outClub)
 {
 	ARBDogClub* pClub = new ARBDogClub();
 	pClub->SetName(inName);
 	pClub->SetVenue(inVenue);
 	push_back(pClub);
-	return pClub;
+	if (outClub)
+	{
+		*outClub = pClub;
+		(*outClub)->AddRef();
+	}
+	return true;
 }
 
-bool ARBDogClubList::DeleteClub(std::string const& inName, std::string const& inVenue)
+bool ARBDogClubList::DeleteClub(
+	std::string const& inName,
+	std::string const& inVenue)
 {
 	std::string name(inName);
 	std::string venue(inVenue);

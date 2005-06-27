@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -330,20 +331,20 @@ public:
 	/**
 	 * Find a calendar entry.
 	 * @param inCal Object to search for.
-	 * @return Identical object.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outCal The object that was found.
+	 * @return Whether the object was found.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	ARBCalendar const* FindCalendar(ARBCalendar const* inCal) const;
+	bool FindCalendar(
+		ARBCalendar const* inCal,
+		ARBCalendar** outCal = NULL) const;
 
 	/**
 	 * Add a calendar entry to the list.
 	 * @param inCal Entry to add.
-	 * @return Returns the added object.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBCalendar* AddCalendar(ARBCalendar* inCal);
+	bool AddCalendar(ARBCalendar* inCal);
 
 	/**
 	 * Delete a calendar entry.

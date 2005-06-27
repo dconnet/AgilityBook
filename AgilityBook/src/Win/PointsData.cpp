@@ -76,12 +76,10 @@ OtherPtInfo::OtherPtInfo(ARBDogTrial const* pTrial, ARBDogRun const* pRun, int s
 	, m_pExisting(NULL)
 	, m_Score(score)
 {
-	ARBDogClub const* pClub = NULL;
 	if (pTrial)
-		pClub = pTrial->GetClubs().GetPrimaryClub();
-	if (pClub)
+		m_Venue = pTrial->GetClubs().GetPrimaryClubVenue();
+	if (pRun)
 	{
-		m_Venue = pClub->GetVenue();
 		m_Div = pRun->GetDivision();
 		m_Level = pRun->GetLevel();
 		m_Event = pRun->GetEvent();
@@ -210,10 +208,11 @@ std::string PointsDataVenue::OnNeedText(size_t index) const
 		case 1:
 			if (m_pDog)
 			{
-				ARBDogRegNum const* pRegNum = m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName());
-				if (pRegNum)
+				ARBDogRegNum* pRegNum;
+				if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 				{
 					str = "[" + pRegNum->GetNumber() + "]";
+					pRegNum->Release();
 				}
 			}
 			break;
@@ -226,8 +225,8 @@ void PointsDataVenue::OnDblClick() const
 {
 	if (m_pDog && m_pVenue)
 	{
-		ARBDogRegNum const* pRegNum = m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName());
-		if (pRegNum)
+		ARBDogRegNum* pRegNum;
+		if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 		{
 			// CDlgDog will cause an update msg to occur which will delete us.
 			// So we need to cache the document in a stack variable.
@@ -238,6 +237,7 @@ void PointsDataVenue::OnDblClick() const
 				pDoc->SetModifiedFlag();
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
+			pRegNum->Release();
 		}
 		else
 			MessageBeep(0);

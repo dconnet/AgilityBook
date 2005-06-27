@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-04-15 DRC Added Duplicate menu item.
@@ -902,9 +903,9 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 			if (IDOK == dlg.DoModal())
 			{
 				GetDocument()->SetModifiedFlag();
-				ARBDog* pNewDog = GetDocument()->GetDogs().AddDog(dog);
-				InsertDog(pNewDog, true);
-				// For some reason, the first dog isnt' showing up.
+				if (GetDocument()->GetDogs().AddDog(dog))
+					InsertDog(dog, true);
+				// For some reason, the first dog isn't showing up.
 				if (1 == GetDocument()->GetDogs().size())
 					LoadData();
 			}

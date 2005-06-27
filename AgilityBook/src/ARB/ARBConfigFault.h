@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -127,19 +128,22 @@ public:
 	/**
 	 * Find a fault.
 	 * @param inName Name of fault to find.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outFault Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigFault const* FindFault(std::string const& inName) const;
+	bool FindFault(
+		std::string const& inName,
+		ARBConfigFault** outFault = NULL) const;
 
 	/**
 	 * Add a fault.
 	 * @param inName Fault to add.
-	 * @return Pointer to object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @param outFault Pointer to object, NULL if name already exists or is empty.
+	 * @return Whether the fault was added.
 	 */
-	ARBConfigFault* AddFault(std::string const& inName);
+	bool AddFault(
+		std::string const& inName,
+		ARBConfigFault** outFault = NULL);
 
 	/**
 	 * Delete the fault.

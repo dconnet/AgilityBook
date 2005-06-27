@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation on T+F.
@@ -361,6 +362,13 @@ inline ARBConfigLifetimePointsList& ARBConfigScoring::GetLifetimePoints()
 /////////////////////////////////////////////////////////////////////////////
 
 /**
+ * A managed list of scoring objects.
+ */
+class ARBConfigScoringObjects : public ARBVector<ARBConfigScoring>
+{
+};
+
+/**
  * List of ARBConfigScoring objects.
  */
 class ARBConfigScoringList : public ARBVector<ARBConfigScoring>
@@ -393,20 +401,21 @@ public:
 		std::string const& inDivision,
 		std::string const& inLevel,
 		bool inTitlePoints,
-		std::vector<ARBConfigScoring const*>& outList) const;
+		ARBConfigScoringObjects& outList) const;
 
 	/**
 	 * Find an event.
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level (NOT sublevel) event exists in.
 	 * @param inDate Date for requested scoring.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outEvent Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigScoring const* FindEvent(
+	bool FindEvent(
 		std::string const& inDivision,
 		std::string const& inLevel,
-		ARBDate const& inDate) const;
+		ARBDate const& inDate,
+		ARBConfigScoring** outEvent = NULL) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -421,7 +430,6 @@ public:
 	/**
 	 * Create a new scoring method.
 	 * @return Pointer to a new method.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	ARBConfigScoring* AddScoring();
 };

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -147,10 +148,22 @@ class ARBDogClubList : public ARBVectorLoad2<ARBDogClub>
 public:
 	/**
 	 * Get the primary club, used to establish rules.
-	 * @return Pointer to first club.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outClub Pointer to first club.
+	 * @return Whether there is a primary club.
 	 */
-	ARBDogClub const* GetPrimaryClub() const;
+	bool GetPrimaryClub(ARBDogClub** outClub = NULL) const;
+
+	/**
+	 * Get the primary club's name.
+	 * @return Name of primary club, empty is none.
+	 */
+	std::string GetPrimaryClubName() const;
+
+	/**
+	 * Get the primary club's venue.
+	 * @return Venue of primary club, empty is none.
+	 */
+	std::string GetPrimaryClubVenue() const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -161,35 +174,39 @@ public:
 	 * @param inLevel Level to search for.
 	 * @param inDate Date of event.
 	 * @param ioCallback Error processing callback.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outScoring Pointer to object, NULL if not found.
+	 * @return Whether an event was found.
 	 */
-	ARBConfigScoring const* FindEvent(
+	bool FindEvent(
 		ARBConfig const* inConfig,
 		std::string const& inEvent,
 		std::string const& inDivision,
 		std::string const& inLevel,
 		ARBDate const& inDate,
-		ARBErrorCallback& ioCallback) const;
+		ARBErrorCallback& ioCallback,
+		ARBConfigScoring** outScoring = NULL) const;
 
 	/**
 	 * Find a club that uses the specified venue.
 	 * @param inVenue Venue to search for.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outClub Found club.
+	 * @return Whether the club was found.
 	 */
-	ARBDogClub const* FindVenue(std::string const& inVenue) const;
+	bool FindVenue(
+		std::string const& inVenue,
+		ARBDogClub** outClub = NULL) const;
 
 	/**
 	 * Add a club.
 	 * @param inName Name of club to add.
 	 * @param inVenue Venue of club.
-	 * @return Pointer to object.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outClub Added club.
+	 * @return Whether the club was added.
 	 */
-	ARBDogClub* AddClub(
+	bool AddClub(
 		std::string const& inName,
-		std::string const& inVenue);
+		std::string const& inVenue,
+		ARBDogClub** outClub = NULL);
 
 	/**
 	 * Delete a club.

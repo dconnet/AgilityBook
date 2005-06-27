@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -67,7 +68,8 @@ ARBDogTrial::ARBDogTrial()
 {
 }
 
-ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
+ARBDogTrial::ARBDogTrial(
+	ARBCalendar const& inCal)
 	: m_Location(inCal.GetLocation())
 	, m_Note(inCal.GetNote())
 	, m_Verified(false)
@@ -77,7 +79,8 @@ ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 	m_Clubs.AddClub(inCal.GetClub(), inCal.GetVenue());
 }
 
-ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
+ARBDogTrial::ARBDogTrial(
+	ARBDogTrial const& rhs)
 	: m_Location(rhs.m_Location)
 	, m_Note(rhs.m_Note)
 	, m_Verified(rhs.m_Verified)
@@ -90,7 +93,8 @@ ARBDogTrial::~ARBDogTrial()
 {
 }
 
-ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
+ARBDogTrial& ARBDogTrial::operator=(
+	ARBDogTrial const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -103,7 +107,8 @@ ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 	return *this;
 }
 
-bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
+bool ARBDogTrial::operator==(
+	ARBDogTrial const& rhs) const
 {
 	return m_Location == rhs.m_Location
 		&& m_Note == rhs.m_Note
@@ -112,7 +117,8 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 		&& m_Runs == rhs.m_Runs;
 }
 
-bool ARBDogTrial::operator!=(ARBDogTrial const& rhs) const
+bool ARBDogTrial::operator!=(
+	ARBDogTrial const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -123,7 +129,8 @@ std::string ARBDogTrial::GetGenericName() const
 	return name;
 }
 
-size_t ARBDogTrial::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogTrial::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -184,7 +191,8 @@ bool ARBDogTrial::Load(
 	return true;
 }
 
-bool ARBDogTrial::Save(Element& ioTree) const
+bool ARBDogTrial::Save(
+	Element& ioTree) const
 {
 	Element& trial = ioTree.AddElement(TREE_TRIAL);
 	if (m_Verified) // Default is no
@@ -224,14 +232,19 @@ bool ARBDogTrial::HasQQ(
 		&& pRun->GetLevel() == inLevel
 		&& pRun->GetQ().Qualified())
 		{
-			ARBConfigScoring const* pScoring = inConfig.GetVenues().FindEvent(
-				GetClubs().GetPrimaryClub()->GetVenue(),
+			ARBConfigScoring* pScoring;
+			if (inConfig.GetVenues().FindEvent(
+				GetClubs().GetPrimaryClubVenue(),
 				pRun->GetEvent(),
 				pRun->GetDivision(),
 				pRun->GetLevel(),
-				pRun->GetDate());
-			if (pScoring && pScoring->HasDoubleQ())
-				++nQs;
+				pRun->GetDate(),
+				&pScoring))
+			{
+				if (pScoring->HasDoubleQ())
+					++nQs;
+				pScoring->Release();
+			}
 		}
 	}
 	return 2 == nQs;
@@ -251,19 +264,25 @@ short ARBDogTrial::GetSpeedPoints(
 		if (pRun->GetDivision() == inDiv
 		&& pRun->GetLevel() == inLevel)
 		{
-			ARBConfigScoring const* pScoring = inConfig.GetVenues().FindEvent(
-				GetClubs().GetPrimaryClub()->GetVenue(),
+			ARBConfigScoring* pScoring;
+			if (inConfig.GetVenues().FindEvent(
+				GetClubs().GetPrimaryClubVenue(),
 				pRun->GetEvent(),
 				pRun->GetDivision(),
 				pRun->GetLevel(),
-				pRun->GetDate());
-			speed = speed + pRun->GetSpeedPoints(pScoring);
+				pRun->GetDate(),
+				&pScoring))
+			{
+				speed = speed + pRun->GetSpeedPoints(pScoring);
+				pScoring->Release();
+			}
 		}
 	}
 	return speed;
 }
 
-bool ARBDogTrial::HasVenue(std::string const& inVenue) const
+bool ARBDogTrial::HasVenue(
+	std::string const& inVenue) const
 {
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
 	{
@@ -295,14 +314,16 @@ private:
 	bool m_bDescending;
 };
 
-void ARBDogTrialList::sort(bool inDescending)
+void ARBDogTrialList::sort(
+	bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortTrials(inDescending));
 }
 
-int ARBDogTrialList::NumTrialsInVenue(std::string const& inVenue) const
+int ARBDogTrialList::NumTrialsInVenue(
+	std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -339,7 +360,8 @@ int ARBDogTrialList::RenameVenue(
 	return count;
 }
 
-int ARBDogTrialList::DeleteVenue(std::string const& inVenue)
+int ARBDogTrialList::DeleteVenue(
+	std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	int count = 0;
@@ -363,7 +385,8 @@ int ARBDogTrialList::DeleteVenue(std::string const& inVenue)
 	return count;
 }
 
-int ARBDogTrialList::NumOtherPointsInUse(std::string const& inOther) const
+int ARBDogTrialList::NumOtherPointsInUse(
+	std::string const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -391,7 +414,8 @@ int ARBDogTrialList::RenameOtherPoints(
 	return count;
 }
 
-int ARBDogTrialList::DeleteOtherPoints(std::string const& inOther)
+int ARBDogTrialList::DeleteOtherPoints(
+	std::string const& inOther)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -418,9 +442,13 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 			int nDivCount = 0;
 			for (ARBDogClubList::const_iterator iterClub = (*iter)->GetClubs().begin(); iterClub != (*iter)->GetClubs().end(); ++iterClub)
 			{
-				ARBConfigVenue const* pVenue = inConfig.GetVenues().FindVenue((*iterClub)->GetVenue());
-				if (pVenue->GetDivisions().FindDivision(inDiv))
-					++nDivCount;
+				ARBConfigVenue* pVenue;
+				if (inConfig.GetVenues().FindVenue((*iterClub)->GetVenue(), &pVenue))
+				{
+					if (pVenue->GetDivisions().FindDivision(inDiv))
+						++nDivCount;
+					pVenue->Release();
+				}
 			}
 			if (1 < nDivCount)
 				++count;
@@ -488,9 +516,13 @@ int ARBDogTrialList::DeleteDivision(
 			// clubs we need to look for the division name within each.
 			for (ARBDogClubList::const_iterator iterClub = (*iter)->GetClubs().begin(); iterClub != (*iter)->GetClubs().end(); ++iterClub)
 			{
-				ARBConfigVenue const* pVenue = inConfig.GetVenues().FindVenue((*iterClub)->GetVenue());
-				if (pVenue->GetDivisions().FindDivision(div))
-					++nDivCount;
+				ARBConfigVenue* pVenue;
+				if (inConfig.GetVenues().FindVenue((*iterClub)->GetVenue(), &pVenue))
+				{
+					if (pVenue->GetDivisions().FindDivision(div))
+						++nDivCount;
+					pVenue->Release();
+				}
 			}
 			// If more than one hosting club has this division, no need to go
 			// across the runs - we're not going to delete anything!
@@ -667,17 +699,21 @@ int ARBDogTrialList::DeleteEvent(
 	return count;
 }
 
-ARBDogTrial* ARBDogTrialList::AddTrial(ARBDogTrial* inTrial)
+bool ARBDogTrialList::AddTrial(
+	ARBDogTrial* inTrial)
 {
+	bool bAdded = false;
 	if (inTrial)
 	{
+		bAdded = true;
 		inTrial->AddRef();
 		push_back(inTrial);
 	}
-	return inTrial;
+	return bAdded;
 }
 
-bool ARBDogTrialList::DeleteTrial(ARBDogTrial const* inTrial)
+bool ARBDogTrialList::DeleteTrial(
+	ARBDogTrial const* inTrial)
 {
 	if (inTrial)
 	{

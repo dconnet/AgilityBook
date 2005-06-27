@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-05 DRC Added LongName.
@@ -110,7 +111,9 @@ public:
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @return The complete name.
 	 */
-	std::string GetCompleteName(short inInstance = 0, bool bAbbrevFirst = true) const;
+	std::string GetCompleteName(
+		short inInstance = 0,
+		bool bAbbrevFirst = true) const;
 
 	/*
 	 * Getters/setters.
@@ -199,35 +202,41 @@ public:
 	 * @param inName Complete name of title to find.
 	 * @param inInstance Instance of the title to allow for multiple.
 	 * @param bAbbrevFirst Name is before or after Longname.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigTitle const* FindTitleCompleteName(std::string const& inName, short inInstance, bool bAbbrevFirst = true) const;
+	bool FindTitleCompleteName(
+		std::string const& inName,
+		short inInstance,
+		bool bAbbrevFirst = true,
+		ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find a title.
 	 * @param inName Name of title to find.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigTitle const* FindTitle(std::string const& inName) const;
-	ARBConfigTitle* FindTitle(std::string const& inName);
+	bool FindTitle(
+		std::string const& inName,
+		ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Add a title.
 	 * @param inName Name of title to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to new object, NULL if name already exists or is empty.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigTitle* AddTitle(std::string const& inName);
+	bool AddTitle(
+		std::string const& inName,
+		ARBConfigTitle** outTitle = NULL);
 
 	/**
 	 * Add a title.
 	 * @param inTitle Title to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigTitle* AddTitle(ARBConfigTitle* inTitle);
+	bool AddTitle(ARBConfigTitle* inTitle);
 
 	/**
 	 * Delete a title.

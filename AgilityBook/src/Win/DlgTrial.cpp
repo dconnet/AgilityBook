@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-19 DRC Added Location/Club note information.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  */
@@ -119,11 +120,13 @@ void CDlgTrial::UpdateNotes(bool bLocation, bool bClub)
 	if (bLocation)
 	{
 		CString str;
-		ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location);
-		if (pItem)
+		ARBInfoItem* pItem;
+		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace("\n", "\r\n");
+			pItem->Release();
+			pItem = NULL;
 		}
 		m_ctrlLocationInfo.SetWindowText(str);
 	}
@@ -136,11 +139,13 @@ void CDlgTrial::UpdateNotes(bool bLocation, bool bClub)
 			ARBDogClub* pClub = reinterpret_cast<ARBDogClub*>(m_ctrlClubs.GetItemData(index));
 			if (pClub)
 			{
-				ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName());
-				if (pItem)
+				ARBInfoItem* pItem;
+				if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
 				{
 					str = pItem->GetComment().c_str();
 					str.Replace("\n", "\r\n");
+					pItem->Release();
+					pItem = NULL;
 				}
 			}
 		}

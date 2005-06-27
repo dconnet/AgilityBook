@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
@@ -48,7 +49,7 @@ class CAgilityBookDoc;
 class CDlgRunReference : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun);
+	CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue, ARBDogRun* pRun);
 	~CDlgRunReference();
 
 private:
@@ -61,7 +62,7 @@ private:
 	CButton	m_ctrlDelete;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigVenue const* m_Venue;
+	ARBConfigVenue* m_Venue;
 	ARBDogRun* m_Run;
 	CColumnOrder m_sortRefRuns;
 
