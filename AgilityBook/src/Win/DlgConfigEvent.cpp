@@ -818,6 +818,7 @@ void CDlgConfigEvent::OnBnClickedNew()
 	m_idxMethod = m_ctrlMethods.AddString(str);
 	m_ctrlMethods.SetItemDataPtr(m_idxMethod, pScoring);
 	m_ctrlMethods.SetCurSel(m_idxMethod);
+	pScoring->Release();
 	FillMethodList();
 	FillControls();
 }
@@ -835,6 +836,7 @@ void CDlgConfigEvent::OnBnClickedCopy()
 		m_idxMethod = m_ctrlMethods.AddString(str);
 		m_ctrlMethods.SetItemDataPtr(m_idxMethod, pNewScoring);
 		m_ctrlMethods.SetCurSel(m_idxMethod);
+		pNewScoring->Release();
 		FillMethodList();
 		FillControls();
 	}
@@ -1145,6 +1147,7 @@ void CDlgConfigEvent::OnOK()
 					pScoring2 = items.AddScoring();
 					*pScoring2 = *(*iter);
 					iter = scorings.erase(iter);
+					pScoring2->Release();
 				}
 				else
 					++iter;
@@ -1170,6 +1173,7 @@ void CDlgConfigEvent::OnOK()
 				}
 				items.erase(items.begin());
 			}
+			pScoring->Release();
 		}
 	}
 	if (bOverlap)
