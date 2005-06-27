@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Accumulate all heights for refrun dlg.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
@@ -148,13 +149,15 @@ int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunReference dialog
 
-CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue, ARBDogRun* pRun)
+CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue, ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunReference::IDD)
 	, m_pDoc(pDoc)
 	, m_Venue(pVenue)
 	, m_Run(pRun)
 	, m_sortRefRuns("RefRuns")
 {
+	ASSERT(NULL != m_Venue);
+	m_Venue->AddRef();
 	m_sortRefRuns.Initialize(scNumColumns);
 	//{{AFX_DATA_INIT(CDlgRunReference)
 	//}}AFX_DATA_INIT
@@ -162,6 +165,7 @@ CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue const* 
 
 CDlgRunReference::~CDlgRunReference()
 {
+	m_Venue->Release();
 }
 
 void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
@@ -386,13 +390,14 @@ void CDlgRunReference::OnRefRunNew()
 	ARBDogReferenceRun* ref = new ARBDogReferenceRun();
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
-		ARBConfigScoring const* pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+		ARBConfigScoring* pScoring;
+		if (m_pDoc->GetConfig().GetVenues().FindEvent(
 			m_Venue->GetName(),
 			m_Run->GetEvent(),
 			m_Run->GetDivision(),
 			m_Run->GetLevel(),
-			m_Run->GetDate());
-		if (pScoring)
+			m_Run->GetDate(),
+			&pScoring))
 		{
 			std::string nScore;
 			switch (pScoring->GetScoringStyle())
@@ -408,6 +413,7 @@ void CDlgRunReference::OnRefRunNew()
 				break;
 			}
 			ref->SetScore(nScore);
+			pScoring->Release();
 		}
 	}
 	std::set<std::string> names;
@@ -415,16 +421,18 @@ void CDlgRunReference::OnRefRunNew()
 	CDlgReferenceRun dlg(m_pDoc, names, ref, this);
 	if (IDOK == dlg.DoModal())
 	{
-		ARBDogReferenceRun* pRef = m_Run->GetReferenceRuns().AddReferenceRun(ref);
-		LV_ITEM item;
-		item.mask = LVIF_TEXT | LVIF_PARAM;
-		item.pszText = LPSTR_TEXTCALLBACK;
-		item.iItem = m_ctrlRefRuns.GetItemCount();
-		item.iSubItem = 0;
-		item.lParam = reinterpret_cast<LPARAM>(pRef);
-		int index = m_ctrlRefRuns.InsertItem(&item);
-		m_ctrlRefRuns.SetSelection(index);
-		ListRuns();
+		if (m_Run->GetReferenceRuns().AddReferenceRun(ref))
+		{
+			LV_ITEM item;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.iItem = m_ctrlRefRuns.GetItemCount();
+			item.iSubItem = 0;
+			item.lParam = reinterpret_cast<LPARAM>(ref);
+			int index = m_ctrlRefRuns.InsertItem(&item);
+			m_ctrlRefRuns.SetSelection(index);
+			ListRuns();
+		}
 	}
 	ref->Release();
 }

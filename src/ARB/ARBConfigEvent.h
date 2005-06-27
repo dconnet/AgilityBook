@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Added 'hasTable'. Used to set default when creating a run.
@@ -106,7 +107,10 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigEvent const* inEventNew, std::string& ioInfo);
+	bool Update(
+		int indent,
+		ARBConfigEvent const* inEventNew,
+		std::string& ioInfo);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -120,7 +124,7 @@ public:
 		std::string const& inDivision,
 		std::string const& inLevel,
 		bool inTitlePoints,
-		std::vector<ARBConfigScoring const*>& outList) const;
+		ARBConfigScoringObjects& outList) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -137,13 +141,14 @@ public:
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level (NOT sublevel) event exists in.
 	 * @param inDate Date for requested scoring.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outEvent Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigScoring const* FindEvent(
+	bool FindEvent(
 		std::string const& inDivision,
 		std::string const& inLevel,
-		ARBDate const& inDate) const;
+		ARBDate const& inDate,
+		ARBConfigScoring** outEvent = NULL) const;
 
 	/*
 	 * Getters/setters.
@@ -280,14 +285,15 @@ public:
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level event exists in.
 	 * @param inDate Date for requested scoring.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outScoring Pointer to object, NULL if not found.
+	 * @return Whether the event was found.
 	 */
-	ARBConfigScoring const* FindEvent(
+	 bool FindEvent(
 		std::string const& inEvent,
 		std::string const& inDivision,
 		std::string const& inLevel,
-		ARBDate const& inDate) const;
+		ARBDate const& inDate,
+		ARBConfigScoring** outScoring = NULL) const;
 
 	/**
 	 * Rename a division.
@@ -326,20 +332,19 @@ public:
 	/**
 	 * Find an event.
 	 * @param inEvent Name of event to find.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outEvent Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigEvent const* FindEvent(std::string const& inEvent) const;
-	ARBConfigEvent* FindEvent(std::string const& inEvent);
+	bool FindEvent(
+		std::string const& inEvent,
+		ARBConfigEvent** outEvent = NULL) const;
 
 	/**
 	 * Add an event.
 	 * @param inEvent Event to add.
-	 * @return Pointer to object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigEvent* AddEvent(ARBConfigEvent* inEvent);
+	bool AddEvent(ARBConfigEvent* inEvent);
 
 	/**
 	 * Delete an event.

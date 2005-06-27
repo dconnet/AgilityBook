@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -173,19 +174,25 @@ public:
 	/**
 	 * Find a points object.
 	 * @param inFaults Number of faults to find.
-	 * @return Pointer to found object, NULL if not found.
+	 * @param outPoints Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
-	ARBConfigTitlePoints const* FindTitlePoints(short inFaults) const;
+	bool FindTitlePoints(
+		short inFaults,
+		ARBConfigTitlePoints** outPoints = NULL) const;
 
 	/**
 	 * Add an object.
 	 * @param inPoints Number of title points.
 	 * @param inFaults Number of faults.
-	 * @return Pointer to new object, NULL if it already exists.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outPoints Pointer to new object, NULL if it already exists.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigTitlePoints* AddTitlePoints(short inPoints, short inFaults);
+	bool AddTitlePoints(
+		short inPoints,
+		short inFaults,
+		ARBConfigTitlePoints** outPoints = NULL);
 
 	/**
 	 * Delete an object.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
  * @li 2004-11-15 DRC Added time fault computation on T+F.
@@ -61,7 +62,8 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
+std::string ARBConfigScoring::GetScoringStyleStr(
+	ScoringStyle inStyle)
 {
 	std::string style;
 	switch (inStyle)
@@ -113,7 +115,8 @@ ARBConfigScoring::ARBConfigScoring()
 {
 }
 
-ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
+ARBConfigScoring::ARBConfigScoring(
+	ARBConfigScoring const& rhs)
 	: m_ValidFrom(rhs.m_ValidFrom)
 	, m_ValidTo(rhs.m_ValidTo)
 	, m_Division(rhs.m_Division)
@@ -138,7 +141,8 @@ ARBConfigScoring::~ARBConfigScoring()
 {
 }
 
-ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
+ARBConfigScoring& ARBConfigScoring::operator=(
+	ARBConfigScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -163,7 +167,8 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 	return *this;
 }
 
-bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
+bool ARBConfigScoring::operator==(
+	ARBConfigScoring const& rhs) const
 {
 	return m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
@@ -184,7 +189,8 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_LifePoints == rhs.m_LifePoints;
 }
 
-bool ARBConfigScoring::operator!=(ARBConfigScoring const& rhs) const
+bool ARBConfigScoring::operator!=(
+	ARBConfigScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -197,7 +203,8 @@ std::string ARBConfigScoring::GetGenericName() const
 	return name;
 }
 
-size_t ARBConfigScoring::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigScoring::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -387,7 +394,8 @@ bool ARBConfigScoring::Load(
 	return true;
 }
 
-bool ARBConfigScoring::Save(Element& ioTree) const
+bool ARBConfigScoring::Save(
+	Element& ioTree) const
 {
 	Element& scoring = ioTree.AddElement(TREE_SCORING);
 	if (m_ValidFrom.IsValid())
@@ -500,20 +508,24 @@ size_t ARBConfigScoringList::FindAllEvents(
 	std::string const& inDivision,
 	std::string const& inLevel,
 	bool inTitlePoints,
-	std::vector<ARBConfigScoring const*>& outList) const
+	ARBConfigScoringObjects& outList) const
 {
 	outList.clear();
 	const_iterator iter;
 	for (iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == inLevel)
+		{
+			(*iter)->AddRef();
 			outList.push_back(*iter);
+		}
 	}
 	// It failed, try wildcards...
 	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == WILDCARD_LEVEL)
 		{
+			(*iter)->AddRef();
 			outList.push_back(*iter);
 			break;
 		}
@@ -522,6 +534,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == inLevel)
 		{
+			(*iter)->AddRef();
 			outList.push_back(*iter);
 			break;
 		}
@@ -530,6 +543,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == WILDCARD_LEVEL)
 		{
+			(*iter)->AddRef();
 			outList.push_back(*iter);
 			break;
 		}
@@ -537,7 +551,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 	if (inTitlePoints)
 	{
-		std::vector<ARBConfigScoring const*>::iterator iter;
+		ARBConfigScoringObjects::iterator iter;
 		for (iter = outList.begin(); iter != outList.end(); )
 		{
 			if (0 < (*iter)->GetTitlePoints().size())
@@ -549,20 +563,24 @@ size_t ARBConfigScoringList::FindAllEvents(
 	return outList.size();
 }
 
-ARBConfigScoring const* ARBConfigScoringList::FindEvent(
+bool ARBConfigScoringList::FindEvent(
 	std::string const& inDivision,
 	std::string const& inLevel,
-	ARBDate const& inDate) const
+	ARBDate const& inDate,
+	ARBConfigScoring** outEvent) const
 {
-	std::vector<ARBConfigScoring const*> items;
+	if (outEvent)
+		*outEvent = NULL;
+	ARBConfigScoringObjects items;
 	FindAllEvents(inDivision, inLevel, false, items);
 	if (0 == items.size())
-		return NULL;
-	else if (1 == items.size())
-		return *(items.begin());
+		return false;
+	ARBConfigScoring* pEvent = NULL;
+	if (1 == items.size())
+		pEvent = *(items.begin());
 	else
 	{
-		std::vector<ARBConfigScoring const*>::iterator iter;
+		ARBConfigScoringObjects::iterator iter;
 		for (iter = items.begin(); iter != items.end(); )
 		{
 			ARBConfigScoring const* pScoring = *iter;
@@ -574,25 +592,34 @@ ARBConfigScoring const* ARBConfigScoringList::FindEvent(
 			else
 				++iter;
 		}
-		if (0 == items.size())
-			return NULL;
-		else if (1 == items.size())
-			return *(items.begin());
-		else
+		if (1 == items.size())
+			pEvent = *(items.begin());
+		else if (1 < items.size())
 		{
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
 			TRACE0("Warning: Overlapping date ranges\n");
-			return *(items.begin());
+			pEvent = *(items.begin());
 		}
 	}
+	if (pEvent)
+	{
+		if (outEvent)
+		{
+			*outEvent = pEvent;
+			(*outEvent)->AddRef();
+		}
+		return true;
+	}
+	else
+		return false;
 }
 
 bool ARBConfigScoringList::VerifyEvent(
 	std::string const& inDivision,
 	std::string const& inLevel) const
 {
-	std::vector<ARBConfigScoring const*> items;
+	ARBConfigScoringObjects items;
 	FindAllEvents(inDivision, inLevel, false, items);
 	return (0 < items.size());
 }
@@ -604,5 +631,6 @@ ARBConfigScoring* ARBConfigScoringList::AddScoring()
 	pScoring->SetLevel(WILDCARD_LEVEL);
 	pScoring->SetScoringStyle(ARBConfigScoring::eFaultsThenTime);
 	push_back(pScoring);
+	pScoring->AddRef();
 	return pScoring;
 }

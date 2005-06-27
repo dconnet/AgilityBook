@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-02-02 DRC Created
@@ -53,7 +54,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 // static
-std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
+std::string ARBDogExistingPoints::GetPointTypeName(
+	ARBDogExistingPoints::PointType inType)
 {
 	std::string str;
 	switch (inType)
@@ -93,7 +95,8 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 {
 }
 
-ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
+ARBDogExistingPoints::ARBDogExistingPoints(
+	ARBDogExistingPoints const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Comment(rhs.m_Comment)
 	, m_Type(rhs.m_Type)
@@ -111,7 +114,8 @@ ARBDogExistingPoints::~ARBDogExistingPoints()
 {
 }
 
-ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const& rhs)
+ARBDogExistingPoints& ARBDogExistingPoints::operator=(
+	ARBDogExistingPoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -129,7 +133,8 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const
 	return *this;
 }
 
-bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
+bool ARBDogExistingPoints::operator==(
+	ARBDogExistingPoints const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Comment == rhs.m_Comment
@@ -143,7 +148,8 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 		&& m_Points == rhs.m_Points;
 }
 
-bool ARBDogExistingPoints::operator!=(ARBDogExistingPoints const& rhs) const
+bool ARBDogExistingPoints::operator!=(
+	ARBDogExistingPoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -158,7 +164,8 @@ std::string ARBDogExistingPoints::GetGenericName() const
 	return name;
 }
 
-size_t ARBDogExistingPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogExistingPoints::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	return 0;
 }
@@ -309,7 +316,8 @@ bool ARBDogExistingPoints::Load(
 	return true;
 }
 
-bool ARBDogExistingPoints::Save(Element& ioTree) const
+bool ARBDogExistingPoints::Save(
+	Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_EXISTING_PTS);
 	title.AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
@@ -397,7 +405,8 @@ void ARBDogExistingPointsList::sort()
 	std::stable_sort(begin(), end(), SortExistingPoints());
 }
 
-bool ARBDogExistingPointsList::HasPoints(std::string const& inVenue) const
+bool ARBDogExistingPointsList::HasPoints(
+	std::string const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -431,9 +440,16 @@ bool ARBDogExistingPointsList::HasPoints(
 				{
 					if (inHasLifetime)
 					{
-						const ARBConfigScoring* pScoring = inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate());
-						if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(0.0))
-							return true;
+						ARBConfigScoring* pScoring;
+						if (inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate(), &pScoring))
+						{
+							if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(0.0))
+							{
+								pScoring->Release();
+								return true;
+							}
+							pScoring->Release();
+						}
 					}
 					else
 						return true;
@@ -473,7 +489,8 @@ short ARBDogExistingPointsList::ExistingPoints(
 	return pts;
 }
 
-int ARBDogExistingPointsList::NumExistingPointsInVenue(std::string const& inVenue) const
+int ARBDogExistingPointsList::NumExistingPointsInVenue(
+	std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -500,7 +517,8 @@ int ARBDogExistingPointsList::RenameVenue(
 	return count;
 }
 
-int ARBDogExistingPointsList::DeleteVenue(std::string const& inVenue)
+int ARBDogExistingPointsList::DeleteVenue(
+	std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	int count = 0;
@@ -674,7 +692,8 @@ int ARBDogExistingPointsList::DeleteEvent(
 	return count;
 }
 
-int ARBDogExistingPointsList::NumOtherPointsInUse(std::string const& inOther) const
+int ARBDogExistingPointsList::NumOtherPointsInUse(
+	std::string const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -701,7 +720,8 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	return count;
 }
 
-int ARBDogExistingPointsList::DeleteOtherPoints(std::string const& inOther)
+int ARBDogExistingPointsList::DeleteOtherPoints(
+	std::string const& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -717,17 +737,21 @@ int ARBDogExistingPointsList::DeleteOtherPoints(std::string const& inOther)
 	return count;
 }
 
-ARBDogExistingPoints* ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPoints* inExistingPoints)
+bool ARBDogExistingPointsList::AddExistingPoints(
+	ARBDogExistingPoints* inExistingPoints)
 {
+	bool bAdded = false;
 	if (inExistingPoints)
 	{
+		bAdded = true;
 		inExistingPoints->AddRef();
 		push_back(inExistingPoints);
 	}
-	return inExistingPoints;
+	return bAdded;
 }
 
-bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPoints const* inExistingPoints)
+bool ARBDogExistingPointsList::DeleteExistingPoints(
+	ARBDogExistingPoints const* inExistingPoints)
 {
 	if (inExistingPoints)
 	{

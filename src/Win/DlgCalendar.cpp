@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
@@ -143,11 +144,13 @@ void CDlgCalendar::UpdateLocationInfo(char const* pLocation)
 	CString str;
 	if (pLocation && *pLocation)
 	{
-		ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation);
-		if (pItem)
+		ARBInfoItem* pItem;
+		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace("\n", "\r\n");
+			pItem->Release();
+			pItem = NULL;
 		}
 	}
 	m_ctrlLocationInfo.SetWindowText(str);
@@ -158,11 +161,13 @@ void CDlgCalendar::UpdateClubInfo(char const* pClub)
 	CString str;
 	if (pClub && *pClub)
 	{
-		ARBInfoItem* pItem = m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub);
-		if (pItem)
+		ARBInfoItem* pItem;
+		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace("\n", "\r\n");
+			pItem->Release();
+			pItem = NULL;
 		}
 	}
 	m_ctrlClubInfo.SetWindowText(str);

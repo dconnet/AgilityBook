@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added VerifyEvent.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -258,50 +259,53 @@ public:
 	 * @param inVenue Venue title is in.
 	 * @param inName Complete name of title to find.
 	 * @param bAbbrevFirst Name is before or after Longname.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigTitle const* FindTitleCompleteName(
+	bool FindTitleCompleteName(
 		std::string const& inVenue,
 		std::string const& inName,
-		bool bAbbrevFirst = true) const;
+		bool bAbbrevFirst = true,
+		ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find a title.
 	 * @param inVenue Venue title is in.
 	 * @param inTitle Name of title to find.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outTitle Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigTitle const* FindTitle(
+	bool FindTitle(
 		std::string const& inVenue,
-		std::string const& inTitle) const;
+		std::string const& inTitle,
+		ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find the named venue.
 	 * @param inVenue Venue to find.
-	 * @return Object that was found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outVenue Object that was found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigVenue const* FindVenue(std::string const& inVenue) const;
-	ARBConfigVenue* FindVenue(std::string const& inVenue);
+	bool FindVenue(
+		std::string const& inVenue,
+		ARBConfigVenue** outVenue = NULL) const;
 
 	/**
 	 * Add a venue.
 	 * @param inVenue Name of venue to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outVenue Pointer to new object, NULL if name already exists or is empty.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigVenue* AddVenue(std::string const& inVenue);
+	bool AddVenue(
+		std::string const& inVenue,
+		ARBConfigVenue** outVenue = NULL);
 
 	/**
 	 * Add a venue.
 	 * @param inVenue Venue to add.
-	 * @return Pointer to object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigVenue* AddVenue(ARBConfigVenue* inVenue);
+	bool AddVenue(ARBConfigVenue* inVenue);
 
 	/**
 	 * Delete a venue.
@@ -317,13 +321,14 @@ public:
 	 * @param inDivision Division name
 	 * @param inLevel True Level name (sublevel)
 	 * @param inDate Date for requested scoring.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outScoring Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigScoring const* FindEvent(
+	bool FindEvent(
 		std::string const& inVenue,
 		std::string const& inEvent,
 		std::string const& inDivision,
 		std::string const& inLevel,
-		ARBDate const& inDate) const;
+		ARBDate const& inDate,
+		ARBConfigScoring** outScoring = NULL) const;
 };

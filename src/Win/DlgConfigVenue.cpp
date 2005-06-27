@@ -56,6 +56,7 @@
  *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-12-10 DRC Enable duplication of a title.
  * @li 2004-08-14 DRC Fixed a problem dbl-clicking when nothing was selected.
@@ -761,8 +762,8 @@ void CDlgConfigVenue::OnNew()
 					AfxMessageBox(IDS_NAME_IN_USE);
 					continue;
 				}
-				ARBConfigDivision* pNewDiv = m_pVenue->GetDivisions().AddDivision(name);
-				if (pNewDiv)
+				ARBConfigDivision* pNewDiv;
+				if (m_pVenue->GetDivisions().AddDivision(name, &pNewDiv))
 				{
 					int nInsertAt = m_ctrlDivisions.GetSelection();
 					if (0 > nInsertAt)
@@ -774,6 +775,7 @@ void CDlgConfigVenue::OnNew()
 						reinterpret_cast<LPARAM>(new CDlgConfigureDataDivision(pNewDiv)));
 					m_ctrlDivisions.SetSelection(index);
 					FindCurrentDivision(pNewDiv, true);
+					pNewDiv->Release();
 				}
 			}
 		}
@@ -811,7 +813,7 @@ void CDlgConfigVenue::OnNew()
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
-					if (pDivData->GetDivision()->GetLevels().FindTrueLevel(name))
+					if (pDivData->GetDivision()->GetLevels().FindSubLevel(name))
 					{
 						done = false;
 						AfxMessageBox(IDS_NAME_IN_USE);
@@ -819,8 +821,8 @@ void CDlgConfigVenue::OnNew()
 					}
 					if (IDS_LEVEL_NAME == id)
 					{
-						ARBConfigLevel* pNewLevel = pDivData->GetDivision()->GetLevels().AddLevel(name);
-						if (pNewLevel)
+						ARBConfigLevel* pNewLevel;
+						if (pDivData->GetDivision()->GetLevels().AddLevel(name, &pNewLevel))
 						{
 							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 								0, 0, 0, 0,
@@ -829,12 +831,13 @@ void CDlgConfigVenue::OnNew()
 										new CDlgConfigureDataLevel(pDivData->GetDivision(), pNewLevel))),
 								hParentItem, hItem);
 							FindCurrentLevel(pNewLevel, true);
+							pNewLevel->Release();
 						}
 					}
 					else
 					{
-						ARBConfigSubLevel* pNewSubLevel = pLevel->GetSubLevels().AddSubLevel(name);
-						if (pNewSubLevel)
+						ARBConfigSubLevel* pNewSubLevel;
+						if (pLevel->GetSubLevels().AddSubLevel(name, &pNewSubLevel))
 						{
 							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 								0, 0, 0, 0,
@@ -843,6 +846,7 @@ void CDlgConfigVenue::OnNew()
 										new CDlgConfigureDataSubLevel(pDivData->GetDivision(), pLevel, pNewSubLevel))),
 								hParentItem, hItem);
 							FindCurrentSubLevel(pNewSubLevel, true);
+							pNewSubLevel->Release();
 						}
 					}
 				}
@@ -868,12 +872,12 @@ void CDlgConfigVenue::OnNew()
 						AfxMessageBox(IDS_NAME_IN_USE);
 						continue;
 					}
-					ARBConfigTitle* pTitle = pDivData->GetDivision()->GetTitles().AddTitle(name);
-					pTitle->SetMultiple(dlg.GetMultiple());
-					pTitle->SetLongName(dlg.GetLongName());
-					pTitle->SetDescription(dlg.GetDesc());
-					if (pTitle)
+					ARBConfigTitle* pTitle;
+					if (pDivData->GetDivision()->GetTitles().AddTitle(name, &pTitle))
 					{
+						pTitle->SetMultiple(dlg.GetMultiple());
+						pTitle->SetLongName(dlg.GetLongName());
+						pTitle->SetDescription(dlg.GetDesc());
 						int nInsertAt = m_ctrlTitles.GetSelection();
 						if (0 > nInsertAt)
 							nInsertAt = m_ctrlTitles.GetItemCount();
@@ -886,6 +890,7 @@ void CDlgConfigVenue::OnNew()
 						m_ctrlTitles.SetSelection(index);
 						m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 						m_ctrlTitles.Invalidate();
+						pTitle->Release();
 					}
 				}
 			}
@@ -899,11 +904,10 @@ void CDlgConfigVenue::OnNew()
 			CDlgConfigEvent dlg(m_pDoc, NULL, NULL, m_pVenue, event, this);
 			if (IDOK == dlg.DoModal())
 			{
-				ARBConfigEvent* pEvent = m_pVenue->GetEvents().AddEvent(event);
-				if (pEvent)
+				if (m_pVenue->GetEvents().AddEvent(event))
 				{
 					LoadEventData();
-					FindCurrentEvent(pEvent, true);
+					FindCurrentEvent(event, true);
 				}
 			}
 			event->Release();
@@ -1178,7 +1182,7 @@ void CDlgConfigVenue::OnEdit()
 							bool bInUse = false;
 							if (0 == pLevelData->GetLevel()->GetSubLevels().size())
 							{
-								if (pLevelData->GetDivision()->GetLevels().FindTrueLevel(name))
+								if (pLevelData->GetDivision()->GetLevels().FindSubLevel(name))
 									bInUse = true;
 							}
 							else
@@ -1223,7 +1227,7 @@ void CDlgConfigVenue::OnEdit()
 						name = dlg.GetName();
 						if (oldName != name)
 						{
-							if (pSubLevelData->GetDivision()->GetLevels().FindTrueLevel(name))
+							if (pSubLevelData->GetDivision()->GetLevels().FindSubLevel(name))
 							{
 								done = false;
 								AfxMessageBox(IDS_NAME_IN_USE);
@@ -1357,11 +1361,10 @@ void CDlgConfigVenue::OnCopy()
 				ARBConfigTitle* title = new ARBConfigTitle(*(pData->GetTitle()));
 				title->SetName(name);
 				title->SetLongName(longname);
-				ARBConfigTitle* pNewTitle = pData->GetDivision()->GetTitles().AddTitle(title);
-				if (pNewTitle)
+				if (pData->GetDivision()->GetTitles().AddTitle(title))
 				{
 					LoadTitleData();
-					FindCurrentTitle(pNewTitle, true);
+					FindCurrentTitle(title, true);
 				}
 				title->Release();
 			}
@@ -1384,11 +1387,10 @@ void CDlgConfigVenue::OnCopy()
 				}
 				ARBConfigEvent* event = new ARBConfigEvent(*(pEventData->GetEvent()));
 				event->SetName(name);
-				ARBConfigEvent* pNewEvent = m_pVenue->GetEvents().AddEvent(event);
-				if (pNewEvent)
+				if (m_pVenue->GetEvents().AddEvent(event))
 				{
 					LoadEventData();
-					FindCurrentEvent(pNewEvent, true);
+					FindCurrentEvent(event, true);
 				}
 				event->Release();
 			}

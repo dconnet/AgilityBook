@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-05-10 DRC Process quoted fields in input (like Excel).
@@ -585,17 +586,18 @@ BOOL CWizardImport::OnWizardFinish()
 							idxEvent[i] = static_cast<int>(iCol);
 					}
 				}
-				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigScoring* pScoring = NULL;
 				for (i = 0; !pScoring && i < 4; ++i)
 				{
 					if (0 <= idxVenue[i] && 0 <= idxEvent[i] && 0 <= idxDiv[i] && 0 <= idxLevel[i] && 0 <= idxDate[i])
 					{
-						pScoring = m_pDoc->GetConfig().GetVenues().FindEvent(
+						m_pDoc->GetConfig().GetVenues().FindEvent(
 							GetPrimaryVenue(entry[idxVenue[i]]),
 							entry[idxEvent[i]],
 							entry[idxDiv[i]],
 							entry[idxLevel[i]],
-							ARBDate::FromString(entry[idxDate[i]], format));
+							ARBDate::FromString(entry[idxDate[i]], format),
+							&pScoring);
 					}
 				}
 				// It's conceivable that we could have more than one match.
@@ -796,6 +798,8 @@ BOOL CWizardImport::OnWizardFinish()
 						break;
 					}
 				}
+				pScoring->Release();
+				pScoring = NULL;
 				// Now that we've created a run, we have to put it somewhere.
 				if (pRun)
 				{
@@ -1138,7 +1142,7 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				if (pLog)
 				{
-					if (NULL == m_pDoc->GetTraining().FindTraining(pLog))
+					if (!m_pDoc->GetTraining().FindTraining(pLog))
 					{
 						m_pDoc->GetTraining().AddTraining(pLog);
 						m_pDoc->GetTraining().sort();

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -176,20 +177,19 @@ public:
 	/**
 	 * Find an otherpoints object.
 	 * @param inName Name of object to find.
-	 * @return Pointer to object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outPoints Pointer to object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigOtherPoints const* FindOtherPoints(std::string const& inName) const;
-	ARBConfigOtherPoints* FindOtherPoints(std::string const& inName);
+	bool FindOtherPoints(
+		std::string const& inName,
+		ARBConfigOtherPoints** outPoints = NULL) const;
 
 	/**
 	 * Add an otherpoints object.
 	 * @param inOther Name of OtherPoints to add.
-	 * @return Pointer to new object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigOtherPoints* AddOtherPoints(ARBConfigOtherPoints* inOther);
+	bool AddOtherPoints(ARBConfigOtherPoints* inOther);
 
 	/**
 	 * Delete an object.

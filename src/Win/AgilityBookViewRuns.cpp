@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-06-02 DRC OnNeedText was quietly referencing m_Columns[-1]. Oops.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -249,16 +250,19 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 		case IO_RUNS_TOTAL_FAULTS:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 			{
-				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigScoring* pScoring = NULL;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
-                    pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+                    m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
-						m_pRun->GetDate());
+						m_pRun->GetDate(),
+						&pScoring);
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
 				str = ARBDouble::str(faults, 0).c_str();
+				if (pScoring)
+					pScoring->Release();
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
@@ -340,16 +344,20 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			if (m_pRun->GetQ().Qualified()
 			|| ARB_Q::eQ_NQ == m_pRun->GetQ())
 			{
-				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigScoring* pScoring = NULL;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
-					pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
-						m_pRun->GetDate());
+						m_pRun->GetDate(),
+						&pScoring);
 				if (pScoring)
+				{
 					str = ARBDouble::str(m_pRun->GetScore(pScoring)).c_str();
+					pScoring->Release();
+				}
 			}
 			break;
 		case IO_RUNS_TITLE_POINTS:
@@ -357,16 +365,20 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				short pts = 0;
 				if (m_pRun->GetQ().Qualified())
 				{
-					ARBConfigScoring const* pScoring = NULL;
+					ARBConfigScoring* pScoring = NULL;
 					if (m_pTrial->GetClubs().GetPrimaryClub())
-						pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-							m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+						m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+							m_pTrial->GetClubs().GetPrimaryClubVenue(),
 							m_pRun->GetEvent(),
 							m_pRun->GetDivision(),
 							m_pRun->GetLevel(),
-							m_pRun->GetDate());
+							m_pRun->GetDate(),
+							&pScoring);
 					if (pScoring)
+					{
 						pts = m_pRun->GetTitlePoints(pScoring);
+						pScoring->Release();
+					}
 				}
 				str.Format("%hd", pts);
 			}
@@ -391,18 +403,23 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			break;
 		case IO_RUNS_SPEED:
 			{
-				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigScoring* pScoring = NULL;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
-                    pScoring = m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+                    m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
-						m_pRun->GetDate());
-				if (pScoring && pScoring->HasSpeedPts())
+						m_pRun->GetDate(),
+						&pScoring);
+				if (pScoring)
 				{
-					int pts = m_pRun->GetSpeedPoints(pScoring);
-					str.Format("%d", pts);
+					if (pScoring->HasSpeedPts())
+					{
+						int pts = m_pRun->GetSpeedPoints(pScoring);
+						str.Format("%d", pts);
+					}
+					pScoring->Release();
 				}
 			}
 			break;
@@ -700,28 +717,34 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->m_pRun->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
-				ARBConfigScoring const* pScoring1 = NULL;
+				ARBConfigScoring* pScoring1 = NULL;
 				if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
-					pScoring1 = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						pRun1->m_pRun->GetEvent(),
 						pRun1->m_pRun->GetDivision(),
 						pRun1->m_pRun->GetLevel(),
-						pRun1->m_pRun->GetDate());
-				ARBConfigScoring const* pScoring2 = NULL;
+						pRun1->m_pRun->GetDate(),
+						&pScoring1);
+				ARBConfigScoring* pScoring2 = NULL;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
-					pScoring2 = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						pRun2->m_pRun->GetEvent(),
 						pRun2->m_pRun->GetDivision(),
 						pRun2->m_pRun->GetLevel(),
-						pRun2->m_pRun->GetDate());
+						pRun2->m_pRun->GetDate(),
+						&pScoring2);
 				double faults1 = pRun1->m_pRun->GetScoring().GetCourseFaults() + pRun1->m_pRun->GetScoring().GetTimeFaults(pScoring1);
 				double faults2 = pRun2->m_pRun->GetScoring().GetCourseFaults() + pRun2->m_pRun->GetScoring().GetTimeFaults(pScoring2);
 				if (faults1 < faults2)
 					nRet = -1;
 				else if (faults1 > faults2)
 					nRet = 1;
+				if (pScoring1)
+					pScoring1->Release();
+				if (pScoring2)
+					pScoring2->Release();
 			}
 			else if (bOk1)
 				nRet = 1;
@@ -883,22 +906,24 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			bool bOk2 = (pRun2->m_pRun->GetQ().Qualified() || ARB_Q::eQ_NQ == pRun2->m_pRun->GetQ());
 			if (bOk1 && bOk2)
 			{
-				ARBConfigScoring const* pScoring1 = NULL;
+				ARBConfigScoring* pScoring1 = NULL;
 				if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
-					pScoring1 = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						pRun1->m_pRun->GetEvent(),
 						pRun1->m_pRun->GetDivision(),
 						pRun1->m_pRun->GetLevel(),
-						pRun1->m_pRun->GetDate());
-				ARBConfigScoring const* pScoring2 = NULL;
+						pRun1->m_pRun->GetDate(),
+						&pScoring1);
+				ARBConfigScoring* pScoring2 = NULL;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
-					pScoring2 = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						pRun2->m_pRun->GetEvent(),
 						pRun2->m_pRun->GetDivision(),
 						pRun2->m_pRun->GetLevel(),
-						pRun2->m_pRun->GetDate());
+						pRun2->m_pRun->GetDate(),
+						&pScoring2);
 				if (pScoring1 && pScoring2)
 				{
 					if (pRun1->m_pRun->GetScore(pScoring1) < pRun2->m_pRun->GetScore(pScoring2))
@@ -910,6 +935,10 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 					nRet = -1;
 				else if (pScoring2)
 					nRet = 1;
+				if (pScoring1)
+					pScoring1->Release();
+				if (pScoring2)
+					pScoring2->Release();
 			}
 			else if (bOk1)
 				nRet = 1;
@@ -923,29 +952,37 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 			short pts2 = 0;
 			if (pRun1->m_pRun->GetQ().Qualified())
 			{
-				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigScoring* pScoring = NULL;
 				if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
-					 pScoring = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					 pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						pRun1->m_pRun->GetEvent(),
 						pRun1->m_pRun->GetDivision(),
 						pRun1->m_pRun->GetLevel(),
-						pRun1->m_pRun->GetDate());
+						pRun1->m_pRun->GetDate(),
+						&pScoring);
 				if (pScoring)
+				{
 					pts1 = pRun1->m_pRun->GetTitlePoints(pScoring);
+					pScoring->Release();
+				}
 			}
 			if (pRun2->m_pRun->GetQ().Qualified())
 			{
-				ARBConfigScoring const* pScoring = NULL;
+				ARBConfigScoring* pScoring = NULL;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
-					pScoring = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-						pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+					pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+						pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						pRun2->m_pRun->GetEvent(),
 						pRun2->m_pRun->GetDivision(),
 						pRun2->m_pRun->GetLevel(),
-						pRun2->m_pRun->GetDate());
+						pRun2->m_pRun->GetDate(),
+						&pScoring);
 				if (pScoring)
+				{
 					pts2 = pRun2->m_pRun->GetTitlePoints(pScoring);
+					pScoring->Release();
+				}
 			}
 			if (pts1 < pts2)
 				nRet = -1;
@@ -988,22 +1025,24 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 		break;
 	case IO_RUNS_SPEED:
 		{
-			ARBConfigScoring const* pScoring1 = NULL;
+			ARBConfigScoring* pScoring1 = NULL;
 			if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
-				pScoring1 = pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-					pRun1->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+				pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 					pRun1->m_pRun->GetEvent(),
 					pRun1->m_pRun->GetDivision(),
 					pRun1->m_pRun->GetLevel(),
-					pRun1->m_pRun->GetDate());
-			ARBConfigScoring const* pScoring2 = NULL;
+					pRun1->m_pRun->GetDate(),
+					&pScoring1);
+			ARBConfigScoring* pScoring2 = NULL;
 			if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
-				pScoring2 = pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
-					pRun2->m_pTrial->GetClubs().GetPrimaryClub()->GetVenue(),
+				pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+					pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
 					pRun2->m_pRun->GetEvent(),
 					pRun2->m_pRun->GetDivision(),
 					pRun2->m_pRun->GetLevel(),
-					pRun2->m_pRun->GetDate());
+					pRun2->m_pRun->GetDate(),
+					&pScoring2);
 			int pts1 = -1;
 			int pts2 = -1;
 			if (pScoring1 && pScoring2)
@@ -1017,6 +1056,10 @@ int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 				nRet = 1;
 			else if (pts1 < pts2)
 				nRet = -1;
+			if (pScoring1)
+				pScoring1->Release();
+			if (pScoring2)
+				pScoring2->Release();
 		}
 		break;
 	}

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2004-10-21 DRC When an item is inserted in the tree, the text callback
  *                    can actually occur BEFORE we set the HTREEITEM.
@@ -110,14 +111,13 @@ static bool EditDog(
 		bOk = true;
 		if (bAdd)
 		{
-			ARBDog* pNewDog = pTree->GetDocument()->GetDogs().AddDog(pDog);
-			if (!pNewDog)
+			if (!pTree->GetDocument()->GetDogs().AddDog(pDog))
 			{
 				bOk = false;
 			}
 			else
 			{
-				HTREEITEM hItem = pTree->InsertDog(pNewDog);
+				HTREEITEM hItem = pTree->InsertDog(pDog);
 				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
 				if (bTreeSelectionSet)
 					*bTreeSelectionSet = true;
@@ -162,8 +162,7 @@ static bool EditTrial(
 		CAgilityBookOptions::GetFilterVenue(venues);
 		if (bAdd)
 		{
-			ARBDogTrial* pNewTrial = pDogData->GetDog()->GetTrials().AddTrial(pTrial);
-			if (!pNewTrial)
+			if (!pDogData->GetDog()->GetTrials().AddTrial(pTrial))
 			{
 				bOk = false;
 				AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
@@ -171,11 +170,11 @@ static bool EditTrial(
 			else
 			{
 				pDogData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+				pTree->GetDocument()->ResetVisibility(venues, pTrial);
 				// Even though we will reset the tree, go ahead and add/select
 				// the item into the tree here. That will make sure when the
 				// tree is reloaded, that the new item is selected.
-				HTREEITEM hItem = pTree->InsertTrial(pNewTrial, pDogData->GetHTreeItem());
+				HTREEITEM hItem = pTree->InsertTrial(pTrial, pDogData->GetHTreeItem());
 				if (NULL == hItem)
 				{
 					AfxMessageBox(IDS_CREATETRIAL_FILTERED, MB_ICONSTOP);
@@ -225,20 +224,20 @@ static bool EditRun(
 		pRun->AddRef();
 	else
 	{
-		ARBDogClub const* pClub = pTrialData->GetTrial()->GetClubs().GetPrimaryClub();
-		if (!pClub)
+		ARBDogClub* pClub;
+		if (!pTrialData->GetTrial()->GetClubs().GetPrimaryClub(&pClub))
 		{
 			AfxMessageBox(IDS_NEED_CLUB, MB_ICONEXCLAMATION);
 			return false;
 		}
-		ARBConfigVenue const* pVenue = pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue());
-		if (!pVenue)
+		if (!pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
 		{
 			CString msg;
 			msg.FormatMessage(IDS_VENUE_CONFIG_MISSING, pClub->GetVenue().c_str());
 			AfxMessageBox(msg, MB_ICONSTOP);
 			return false;
 		}
+		pClub->Release();
 		bAdd = true;
 		pRun = new ARBDogRun();
 		pRun->SetDate(pTrialData->GetTrial()->GetRuns().GetEndDate());
@@ -252,8 +251,7 @@ static bool EditRun(
 		CAgilityBookOptions::GetFilterVenue(venues);
 		if (bAdd)
 		{
-			ARBDogRun* pNewRun = pTrialData->GetTrial()->GetRuns().AddRun(pRun);
-			if (!pNewRun)
+			if (!pTrialData->GetTrial()->GetRuns().AddRun(pRun))
 			{
 				bOk = false;
 				AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
@@ -262,11 +260,11 @@ static bool EditRun(
 			{
 				pTrialData->GetTrial()->GetRuns().sort();
 				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pNewRun);
+				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
 				// Even though we will reset the tree, go ahead and add/select
 				// the item into the tree here. That will make sure when the
 				// tree is reloaded, that the new item is selected.
-				HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pNewRun, pTrialData->GetHTreeItem());
+				HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pRun, pTrialData->GetHTreeItem());
 				if (NULL == hItem)
 				{
 					if (CAgilityBookOptions::IsFilterEnabled())
@@ -417,17 +415,16 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
 					CAgilityBookOptions::GetFilterVenue(venues);
-					ARBDog* pNewDog = m_pTree->GetDocument()->GetDogs().AddDog(pDog);
-					if (!pNewDog)
+					if (!m_pTree->GetDocument()->GetDogs().AddDog(pDog))
 					{
 						bLoaded = false;
 						AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
 					}
 					else
 					{
-						m_pTree->GetDocument()->ResetVisibility(venues, pNewDog);
+						m_pTree->GetDocument()->ResetVisibility(venues, pDog);
 						m_pTree->SetRedraw(FALSE);
-						m_pTree->InsertDog(pNewDog, true);
+						m_pTree->InsertDog(pDog, true);
 						m_pTree->SetRedraw(TRUE);
 						m_pTree->Invalidate();
 						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
@@ -454,8 +451,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
 					CAgilityBookOptions::GetFilterVenue(venues);
-					ARBDogRun* pNewRun = pTrial->GetRuns().AddRun(pRun);
-					if (!pNewRun)
+					if (!pTrial->GetRuns().AddRun(pRun))
 					{
 						bLoaded = false;
 						AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
@@ -464,9 +460,9 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					{
 						pTrial->GetRuns().sort();
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pNewRun);
+						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
 						m_pTree->SetRedraw(FALSE);
-						HTREEITEM hItem = m_pTree->InsertRun(pTrial, pNewRun, GetDataTrial()->GetHTreeItem());
+						HTREEITEM hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetHTreeItem());
 						m_pTree->SetRedraw(TRUE);
 						m_pTree->Invalidate();
 						bool bOk = true;
@@ -509,8 +505,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
 					CAgilityBookOptions::GetFilterVenue(venues);
-					ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pTrial);
-					if (!pNewTrial)
+					if (!pDog->GetTrials().AddTrial(pTrial))
 					{
 						bLoaded = false;
 						AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
@@ -518,9 +513,9 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					else
 					{
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
+						m_pTree->GetDocument()->ResetVisibility(venues, pTrial);
 						m_pTree->SetRedraw(FALSE);
-						HTREEITEM hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetHTreeItem());
+						HTREEITEM hItem = m_pTree->InsertTrial(pTrial, GetDataDog()->GetHTreeItem());
 						m_pTree->SetRedraw(TRUE);
 						m_pTree->Invalidate();
 						bool bOk = true;

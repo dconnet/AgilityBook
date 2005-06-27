@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -59,7 +60,8 @@ ARBDogRunPartner::ARBDogRunPartner()
 {
 }
 
-ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner const& rhs)
+ARBDogRunPartner::ARBDogRunPartner(
+	ARBDogRunPartner const& rhs)
 	: m_Handler(rhs.m_Handler)
 	, m_Dog(rhs.m_Dog)
 	, m_RegNum(rhs.m_RegNum)
@@ -70,7 +72,8 @@ ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
 
-ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
+ARBDogRunPartner& ARBDogRunPartner::operator=(
+	ARBDogRunPartner const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -81,19 +84,22 @@ ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 	return *this;
 }
 
-bool ARBDogRunPartner::operator==(ARBDogRunPartner const& rhs) const
+bool ARBDogRunPartner::operator==(
+	ARBDogRunPartner const& rhs) const
 {
 	return m_Handler == rhs.m_Handler
 		&& m_Dog == rhs.m_Dog
 		&& m_RegNum == rhs.m_RegNum;
 }
 
-bool ARBDogRunPartner::operator!=(ARBDogRunPartner const& rhs) const
+bool ARBDogRunPartner::operator!=(
+	ARBDogRunPartner const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBDogRunPartner::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogRunPartner::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -143,7 +149,8 @@ bool ARBDogRunPartner::Load(
 	return true;
 }
 
-bool ARBDogRunPartner::Save(Element& ioTree) const
+bool ARBDogRunPartner::Save(
+	Element& ioTree) const
 {
 	Element& partner = ioTree.AddElement(TREE_PARTNER);
 	partner.AddAttrib(ATTRIB_PARTNER_HANDLER, m_Handler);
@@ -155,12 +162,15 @@ bool ARBDogRunPartner::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBDogRunPartner* ARBDogRunPartnerList::AddPartner(ARBDogRunPartner* inPartner)
+bool ARBDogRunPartnerList::AddPartner(
+	ARBDogRunPartner* inPartner)
 {
+	bool bAdded = false;
 	if (inPartner)
 	{
+		bAdded = true;
 		inPartner->AddRef();
 		push_back(inPartner);
 	}
-	return inPartner;
+	return bAdded;
 }

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  * @li 2004-02-18 DRC Added 'DeleteTitle' configuration action.
  * @li 2004-01-21 DRC Implemented Action items in configuration update.
@@ -185,7 +186,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 				continue;
 			if (!pTrial->GetClubs().GetPrimaryClub())
 				continue;
-			if (pTrial->GetClubs().GetPrimaryClub()->GetVenue() != inVenue->GetName())
+			if (pTrial->GetClubs().GetPrimaryClubVenue() != inVenue->GetName())
 				continue;
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
@@ -195,18 +196,23 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 				if (pRun->GetEvent() != inEvent)
 					continue;
 				// Translate a sub-level to level
-				ARBConfigScoring const* pScoring = NULL;
-				ARBConfigDivision const* pDiv = inVenue->GetDivisions().FindDivision(pRun->GetDivision());
-				if (pDiv) // Should never be null...
+				ARBConfigScoring* pScoring = NULL;
+				ARBConfigDivision* pDiv;
+				// Should never be null...
+				if (inVenue->GetDivisions().FindDivision(pRun->GetDivision(), &pDiv))
 				{
-					ARBConfigLevel const* pLevel = pDiv->GetLevels().FindSubLevel(pRun->GetLevel());
-					if (pLevel) // Again, should never be null...
+					ARBConfigLevel* pLevel;
+					// Again, should never be null...
+					if (pDiv->GetLevels().FindSubLevel(pRun->GetLevel(), &pLevel))
 					{
-						pScoring = inVenue->GetEvents().FindEvent(inEvent,
+						inVenue->GetEvents().FindEvent(inEvent,
 							pRun->GetDivision(),
 							pLevel->GetName(),
-							pRun->GetDate());
+							pRun->GetDate(),
+							&pScoring);
+						pLevel->Release();
 					}
+					pDiv->Release();
 				}
 				if (!pScoring)
 				{
@@ -233,6 +239,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 							inScoringRuns->push_back(info);
 						scoringRuns.push_back(info);
 					}
+					pScoring->Release();
 				}
 			}
 		}
@@ -608,17 +615,16 @@ void CDlgConfigure::OnNew()
 			CDlgConfigVenue dlg(m_pDoc, m_Book, m_Config, pVenue, this);
 			if (IDOK == dlg.DoModal())
 			{
-				ARBConfigVenue* pNewVenue = m_Config.GetVenues().AddVenue(pVenue);
-				if (pNewVenue)
+				if (m_Config.GetVenues().AddVenue(pVenue))
 				{
 					dlg.GetFixups(m_DlgFixup);
 					m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
 						LPSTR_TEXTCALLBACK, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
 							static_cast<CDlgConfigureData*>(
-								new CDlgConfigureDataVenue(pNewVenue))));
+								new CDlgConfigureDataVenue(pVenue))));
 					m_ctrlVenues.SortItems(CompareItems, 0);
-					FindCurrentVenue(pNewVenue, true);
+					FindCurrentVenue(pVenue, true);
 				}
 			}
 			pVenue->Release();
@@ -636,8 +642,8 @@ void CDlgConfigure::OnNew()
 				// are only "helper" items to fill in other data.
 				if (0 < name.length())
 				{
-					ARBConfigFault* pNewFault = m_Config.GetFaults().AddFault(name);
-					if (pNewFault)
+					ARBConfigFault* pNewFault;
+					if (m_Config.GetFaults().AddFault(name, &pNewFault))
 					{
 						m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlFaults.GetItemCount(),
 							LPSTR_TEXTCALLBACK, 0, 0, 0,
@@ -646,6 +652,7 @@ void CDlgConfigure::OnNew()
 									new CDlgConfigureDataFault(pNewFault))));
 						m_ctrlFaults.SortItems(CompareItems, 0);
 						FindCurrentFault(pNewFault, true);
+						pNewFault->Release();
 					}
 				}
 			}
@@ -659,16 +666,15 @@ void CDlgConfigure::OnNew()
 			CDlgConfigOtherPoints dlg(m_Config, pOther, this);
 			if (IDOK == dlg.DoModal())
 			{
-				ARBConfigOtherPoints* pNewOther = m_Config.GetOtherPoints().AddOtherPoints(pOther);
-				if (pOther)
+				if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 				{
 					m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlOthers.GetItemCount(),
 						LPSTR_TEXTCALLBACK, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
 							static_cast<CDlgConfigureData*>(
-								new CDlgConfigureDataOtherPoints(pNewOther))));
+								new CDlgConfigureDataOtherPoints(pOther))));
 					m_ctrlOthers.SortItems(CompareItems, 0);
-					FindCurrentOtherPoints(pNewOther, true);
+					FindCurrentOtherPoints(pOther, true);
 				}
 			}
 			pOther->Release();
@@ -863,8 +869,8 @@ void CDlgConfigure::OnCopy()
 			{
 				name = (LPCSTR)copyOf + name;
 			}
-			ARBConfigVenue* pNewVenue = m_Config.GetVenues().AddVenue(name);
-			if (pNewVenue)
+			ARBConfigVenue* pNewVenue;
+			if (m_Config.GetVenues().AddVenue(name, &pNewVenue))
 			{
 				*pNewVenue = *pVenueData->GetVenue();
 				pNewVenue->SetName(name); // Put the name back.
@@ -875,6 +881,7 @@ void CDlgConfigure::OnCopy()
 						static_cast<CDlgConfigureData*>(pNewData)));
 				pCtrl->SortItems(CompareItems, 0);
 				FindCurrentVenue(pNewVenue, true);
+				pNewVenue->Release();
 			}
 		}
 		break;
@@ -884,8 +891,8 @@ void CDlgConfigure::OnCopy()
 			nColumns = 1;
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			std::string name(pFaultData->GetFault()->GetName());
-			ARBConfigFault* pNewFault = m_Config.GetFaults().AddFault(name);
-			if (pNewFault)
+			ARBConfigFault* pNewFault;
+			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
 				pNewData = new CDlgConfigureDataFault(pNewFault);
 				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
@@ -894,6 +901,7 @@ void CDlgConfigure::OnCopy()
 						static_cast<CDlgConfigureData*>(pNewData)));
 				pCtrl->SortItems(CompareItems, 0);
 				FindCurrentFault(pNewFault, true);
+				pNewFault->Release();
 			}
 		}
 		break;
@@ -909,18 +917,17 @@ void CDlgConfigure::OnCopy()
 			}
 			ARBConfigOtherPoints* pOther = new ARBConfigOtherPoints(*(pOtherData->GetOtherPoints()));
 			pOther->SetName(name);
-			ARBConfigOtherPoints* pNewOther = m_Config.GetOtherPoints().AddOtherPoints(pOther);
-			pOther->Release();
-			if (pNewOther)
+			if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 			{
-				pNewData = new CDlgConfigureDataOtherPoints(pNewOther);
+				pNewData = new CDlgConfigureDataOtherPoints(pOther);
 				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
 					LPSTR_TEXTCALLBACK, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(pNewData)));
+						static_cast<CDlgConfigureData*>(pData)));
 				pCtrl->SortItems(CompareItems, 0);
-				FindCurrentOtherPoints(pNewOther, true);
+				FindCurrentOtherPoints(pOther, true);
 			}
+			pOther->Release();
 		}
 		break;
 	}
@@ -943,12 +950,12 @@ void CDlgConfigure::OnUpdate()
 			if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 			{
 				// Find the venue.
-				ARBConfigVenue* venue = m_Config.GetVenues().FindVenue(action->GetVenue());
-				if (venue)
+				ARBConfigVenue* venue;
+				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
 				{
 					// Find the title we're renaming.
-					ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
-					if (oldTitle)
+					ARBConfigTitle* oldTitle;
+					if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
 					{
 						CString tmp;
 						tmp.Format("Action: Renaming title [%s] to [%s]",
@@ -966,23 +973,24 @@ void CDlgConfigure::OnUpdate()
 							tmp = "\n";
 						msg += tmp;
 						// If the new title exists, just delete the old. Otherwise, rename the old to new.
-						ARBConfigTitle const* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
-						if (newTitle)
+						if (venue->GetDivisions().FindTitle(action->GetNewName()))
 							venue->GetDivisions().DeleteTitle(action->GetOldName());
 						else
 							oldTitle->SetName(action->GetNewName());
+						oldTitle->Release();
 					}
+					venue->Release();
 				}
 			}
 			else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
 			{
 				// Find the venue.
-				ARBConfigVenue* venue = m_Config.GetVenues().FindVenue(action->GetVenue());
-				if (venue)
+				ARBConfigVenue* venue;
+				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
 				{
 					// Find the title we're renaming.
-					ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
-					if (oldTitle)
+					ARBConfigTitle* oldTitle;
+					if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
 					{
 						CString tmp;
 						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
@@ -1011,7 +1019,9 @@ void CDlgConfigure::OnUpdate()
 							action->GetOldName().c_str());
 						msg += tmp;
 						venue->GetDivisions().DeleteTitle(action->GetOldName());
+						oldTitle->Release();
 					}
+					venue->Release();
 				}
 			}
 		}

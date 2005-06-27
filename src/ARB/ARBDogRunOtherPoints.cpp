@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -56,7 +57,8 @@ ARBDogRunOtherPoints::ARBDogRunOtherPoints()
 {
 }
 
-ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs)
+ARBDogRunOtherPoints::ARBDogRunOtherPoints(
+	ARBDogRunOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Points(rhs.m_Points)
 {
@@ -66,7 +68,8 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
 
-ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const& rhs)
+ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(
+	ARBDogRunOtherPoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -76,18 +79,21 @@ ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const
 	return *this;
 }
 
-bool ARBDogRunOtherPoints::operator==(ARBDogRunOtherPoints const& rhs) const
+bool ARBDogRunOtherPoints::operator==(
+	ARBDogRunOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Points == rhs.m_Points;
 }
 
-bool ARBDogRunOtherPoints::operator!=(ARBDogRunOtherPoints const& rhs) const
+bool ARBDogRunOtherPoints::operator!=(
+	ARBDogRunOtherPoints const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogRunOtherPoints::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	ioStrings.insert(m_Name);
 	return 1;
@@ -113,7 +119,8 @@ bool ARBDogRunOtherPoints::Load(
 	return true;
 }
 
-bool ARBDogRunOtherPoints::Save(Element& ioTree) const
+bool ARBDogRunOtherPoints::Save(
+	Element& ioTree) const
 {
 	Element& other = ioTree.AddElement(TREE_PLACEMENT_OTHERPOINTS);
 	other.AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name);
@@ -123,12 +130,15 @@ bool ARBDogRunOtherPoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBDogRunOtherPoints* ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPoints* inOther)
+bool ARBDogRunOtherPointsList::AddOtherPoints(
+	ARBDogRunOtherPoints* inOther)
 {
+	bool bAdded = false;
 	if (inOther)
 	{
+		bAdded = true;
 		inOther->AddRef();
 		push_back(inOther);
 	}
-	return inOther;
+	return bAdded;
 }

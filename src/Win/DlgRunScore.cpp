@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-11-13 DRC Also compute score for NA runs that have no titling pts.
@@ -103,7 +104,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunScore dialog
 
-CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
+CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue,
 	ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunScore::IDD)
 	, m_pDoc(pDoc)
@@ -112,8 +113,11 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
 	, m_pRealRun(pRealRun)
 	, m_Run(pRun)
 {
+	ASSERT(NULL != m_pVenue);
+	m_pVenue->AddRef();
 	ASSERT(NULL != m_pTrial);
-	ARBDogClub const* pClub = m_pTrial->GetClubs().GetPrimaryClub();
+	ARBDogClub* pClub;
+	m_pTrial->GetClubs().GetPrimaryClub(&pClub);
 	ASSERT(NULL != pClub);
 	//{{AFX_DATA_INIT(CDlgRunScore)
 	m_Venue = m_pVenue->GetName().c_str();
@@ -137,10 +141,12 @@ CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
 	m_DogsQd = m_Run->GetDogsQd();
 	//}}AFX_DATA_INIT
 	m_Conditions.Replace("\n", "\r\n");
+	pClub->Release();
 }
 
 CDlgRunScore::~CDlgRunScore()
 {
+	m_pVenue->Release();
 }
 
 void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
@@ -309,7 +315,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
 		pDX->PrepareCtrl(m_ctrlEvents.GetDlgCtrlID());
-		ARBConfigEvent const* pEvent = m_pVenue->GetEvents().FindEvent(event);
+		ARBConfigEvent* pEvent;
+		m_pVenue->GetEvents().FindEvent(event, &pEvent);
 		if (!pEvent)
 		{
 			AfxMessageBox(IDS_BAD_EVENT, MB_ICONSTOP);
@@ -318,7 +325,10 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 
 		pDX->PrepareCtrl(m_ctrlLevels.GetDlgCtrlID());
-		ARBConfigScoring const* pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
+		ARBConfigScoring* pScoring;
+		pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate(), &pScoring);
+		pEvent->Release();
+		pEvent = NULL;
 		if (!pScoring)
 		{
 			AfxMessageBox(IDS_BAD_SCORINGMETHOD, MB_ICONSTOP);
@@ -370,6 +380,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 			m_Run->GetScoring().SetCourseFaults(m_Faults);
 			break;
 		}
+		pScoring->Release();
+		pScoring = NULL;
 		m_Run->SetPlace(m_Place);
 		m_Run->SetInClass(m_InClass);
 		m_Run->SetDogsQd(m_DogsQd);
@@ -423,21 +435,25 @@ bool CDlgRunScore::GetText(CEdit* pEdit, double& val) const
 	return true;
 }
 
-ARBConfigEvent const* CDlgRunScore::GetEvent() const
+bool CDlgRunScore::GetEvent(ARBConfigEvent** outEvent) const
 {
+	if (outEvent)
+		*outEvent = NULL;
 	CString str;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR == index)
-		return NULL;
+		return false;
 	m_ctrlEvents.GetLBText(index, str);
 	if (str.IsEmpty())
-		return NULL;
+		return false;
 	std::string event = (LPCSTR)str;
-	return m_pVenue->GetEvents().FindEvent(event);
+	return m_pVenue->GetEvents().FindEvent(event, outEvent);
 }
 
-ARBConfigScoring const* CDlgRunScore::GetScoring() const
+bool CDlgRunScore::GetScoring(ARBConfigScoring** outScoring) const
 {
+	if (outScoring)
+		*outScoring = NULL;
 	std::string div, level;
 	CString str;
 	int index = m_ctrlDivisions.GetCurSel();
@@ -454,13 +470,17 @@ ARBConfigScoring const* CDlgRunScore::GetScoring() const
 		if (!str.IsEmpty())
 			level = (LPCSTR)str;
 	}
+	bool bFound = false;
 	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
 	ASSERT(pLevel);
-	ARBConfigEvent const* pEvent = GetEvent();
-	ARBConfigScoring const* pScoring = NULL;
-	if (0 < div.length() && 0 < level.length() && pEvent)
-		pScoring = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate());
-	return pScoring;
+	ARBConfigEvent* pEvent;
+	if (GetEvent(&pEvent))
+	{
+		if (0 < div.length() && 0 < level.length())
+			bFound = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate(), outScoring);
+		pEvent->Release();
+	}
+	return bFound;
 }
 
 void CDlgRunScore::ClearLevels()
@@ -579,20 +599,24 @@ void CDlgRunScore::FillEvents()
 
 void CDlgRunScore::FillSubNames()
 {
-	ARBConfigEvent const* pEvent = GetEvent();
-	if (pEvent && pEvent->HasSubNames())
+	ARBConfigEvent* pEvent;
+	if (GetEvent(&pEvent))
 	{
-		std::set<std::string> names;
-		m_pDoc->GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
-		m_ctrlSubNames.ResetContent();
-		for (std::set<std::string>::const_iterator iter = names.begin();
-			iter != names.end();
-			++iter)
+		if (pEvent->HasSubNames())
 		{
-			m_ctrlSubNames.AddString(iter->c_str());
+			std::set<std::string> names;
+			m_pDoc->GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
+			m_ctrlSubNames.ResetContent();
+			for (std::set<std::string>::const_iterator iter = names.begin();
+				iter != names.end();
+				++iter)
+			{
+				m_ctrlSubNames.AddString(iter->c_str());
+			}
+			m_ctrlSubNamesText.ShowWindow(SW_SHOW);
+			m_ctrlSubNames.ShowWindow(SW_SHOW);
 		}
-		m_ctrlSubNamesText.ShowWindow(SW_SHOW);
-		m_ctrlSubNames.ShowWindow(SW_SHOW);
+		pEvent->Release();
 	}
 	else
 	{
@@ -606,13 +630,14 @@ void CDlgRunScore::SetEventDesc(ARBConfigEvent const* inEvent)
 	CString desc;
 	if (inEvent)
 		desc += inEvent->GetDesc().c_str();
-	ARBConfigScoring const* pScoring = GetScoring();
-	if (pScoring)
+	ARBConfigScoring* pScoring;
+	if (GetScoring(&pScoring))
 	{
 		std::string const& note = pScoring->GetNote();
 		if (!desc.IsEmpty() && 0 < note.length())
 			desc += "\n==========\n";
 		desc += note.c_str();
+		pScoring->Release();
 	}
 	desc.Replace("\n", "\r\n");
 	m_ctrlDesc.SetWindowText(desc);
@@ -621,17 +646,21 @@ void CDlgRunScore::SetEventDesc(ARBConfigEvent const* inEvent)
 void CDlgRunScore::SetPartnerText()
 {
 	CString partners;
-	ARBConfigEvent const* pEvent = GetEvent();
-	if (pEvent && pEvent->HasPartner())
+	ARBConfigEvent* pEvent;
+	if (GetEvent(&pEvent))
 	{
-		for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
+		if (pEvent->HasPartner())
 		{
-			if (!partners.IsEmpty())
-				partners += ", ";
-			partners += (*iter)->GetHandler().c_str();
-			partners += "/";
-			partners += (*iter)->GetDog().c_str();
+			for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
+			{
+				if (!partners.IsEmpty())
+					partners += ", ";
+				partners += (*iter)->GetHandler().c_str();
+				partners += "/";
+				partners += (*iter)->GetDog().c_str();
+			}
 		}
+		pEvent->Release();
 	}
 	m_ctrlPartner.SetWindowText(partners);
 }
@@ -652,8 +681,12 @@ void CDlgRunScore::SetTotalFaults()
 	CString total;
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
-		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(GetScoring());
+		ARBConfigScoring* pScoring;
+		GetScoring(&pScoring);
+		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(pScoring);
 		total = ARBDouble::str(faults, 3).c_str();
+		if (pScoring)
+			pScoring->Release();
 	}
 	m_ctrlTotalFaults.SetWindowText(total);
 }
@@ -728,8 +761,8 @@ void CDlgRunScore::SetTitlePoints()
 	CString strSpeed("0");
 	CString strTitle("0");
 	CString strScore("");
-	ARBConfigScoring const* pScoring = GetScoring();
-	if (pScoring)
+	ARBConfigScoring* pScoring;
+	if (GetScoring(&pScoring))
 	{
 		// 8/17/03: Only compute title points on Q runs.
 		if (q.Qualified())
@@ -746,6 +779,7 @@ void CDlgRunScore::SetTitlePoints()
 		|| ARB_Q::eQ_NQ == q
 		|| (ARB_Q::eQ_NA == q && 0 == pScoring->GetTitlePoints().size()))
 			strScore = ARBDouble::str(m_Run->GetScore(pScoring)).c_str();
+		pScoring->Release();
 	}
 	// Doesn't matter if they're hidden,..
 	m_ctrlSpeedPts.SetWindowText(strSpeed);
@@ -794,14 +828,16 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
 	m_ctrlTitlePoints.ShowWindow(SW_HIDE);
 
-	ARBConfigScoring const* pScoring = GetScoring();
-	if (!pScoring)
+	ARBConfigScoring* pScoring;
+	if (!GetScoring(&pScoring))
 	{
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeUnknown, false);
 		return;
 	}
 
-	ARBConfigEvent const* pEvent = GetEvent();
+	ARBConfigEvent* pEvent;
+	if (!GetEvent(&pEvent))
+		return;
 
 	CString str;
 	m_ctrlHeight.GetWindowText(str);
@@ -947,6 +983,9 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		SetDoubleQ();
 	}
 	SetTitlePoints();
+
+	pScoring->Release();
+	pEvent->Release();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1089,7 +1128,11 @@ void CDlgRunScore::OnSelchangeEvent()
 {
 	FillSubNames();
 	UpdateControls(true);
-	SetEventDesc(GetEvent());
+	ARBConfigEvent* pEvent;
+	GetEvent(&pEvent);
+	SetEventDesc(pEvent);
+	if (pEvent)
+		pEvent->Release();
 }
 
 void CDlgRunScore::OnPartnersEdit() 

@@ -67,7 +67,8 @@ ARBConfig::ARBConfig()
 {
 }
 
-ARBConfig::ARBConfig(ARBConfig const& rhs)
+ARBConfig::ARBConfig(
+		ARBConfig const& rhs)
 	: m_Version(rhs.m_Version)
 	, m_Actions(rhs.m_Actions)
 	, m_Venues(rhs.m_Venues)
@@ -81,7 +82,8 @@ ARBConfig::~ARBConfig()
 	clear();
 }
 
-ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
+ARBConfig& ARBConfig::operator=(
+		ARBConfig const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -94,7 +96,8 @@ ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 	return *this;
 }
 
-bool ARBConfig::operator==(ARBConfig const& rhs) const
+bool ARBConfig::operator==(
+		ARBConfig const& rhs) const
 {
 	return m_Version == rhs.m_Version
 		&& m_Actions == rhs.m_Actions
@@ -103,7 +106,8 @@ bool ARBConfig::operator==(ARBConfig const& rhs) const
 		&& m_OtherPoints == rhs.m_OtherPoints;
 }
 
-bool ARBConfig::operator!=(ARBConfig const& rhs) const
+bool ARBConfig::operator!=(
+		ARBConfig const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -122,9 +126,9 @@ void ARBConfig::clear()
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadFault(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (inTree.GetName() == TREE_FAULTTYPE
 	&& m_FaultTypes.Load(inTree, inVersion, ioCallback))
@@ -138,9 +142,9 @@ bool ARBConfig::LoadFault(
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadOtherPoints(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (inTree.GetName() == TREE_OTHERPTS
 	&& m_OtherPoints.Load(inTree, inVersion, ioCallback))
@@ -150,9 +154,9 @@ bool ARBConfig::LoadOtherPoints(
 }
 
 bool ARBConfig::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -186,7 +190,8 @@ bool ARBConfig::Load(
 	return true;
 }
 
-bool ARBConfig::Save(Element& ioTree) const
+bool ARBConfig::Save(
+		Element& ioTree) const
 {
 	Element& config = ioTree.AddElement(TREE_CONFIG);
 	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
@@ -268,30 +273,41 @@ std::string ARBConfig::GetDTD()
 }
 
 std::string ARBConfig::GetTitleNiceName(
-	std::string const& inVenue,
-	std::string const& inTitle) const
+		std::string const& inVenue,
+		std::string const& inTitle) const
 {
-	ARBConfigTitle const* pTitle = m_Venues.FindTitle(inVenue, inTitle);
-	if (pTitle)
-		return pTitle->GetNiceName();
+	ARBConfigTitle* pTitle;
+	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
+	{
+		std::string name = pTitle->GetNiceName();
+		pTitle->Release();
+		return name;
+	}
 	else
 		return inTitle;
 }
 
 std::string ARBConfig::GetTitleCompleteName(
-	ARBDogTitle const* inTitle,
-	bool bAbbrevFirst) const
+		ARBDogTitle const* inTitle,
+		bool bAbbrevFirst) const
 {
 	if (!inTitle)
 		return "";
-	ARBConfigTitle const* pTitle = m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName());
-	if (pTitle)
-		return pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
+	ARBConfigTitle* pTitle;
+	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
+	{
+		std::string name = pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
+		pTitle->Release();
+		return name;
+	}
 	else
 		return inTitle->GetGenericName();
 }
 
-bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& ioInfo)
+bool ARBConfig::Update(
+		int indent,
+		ARBConfig const& inConfigNew,
+		std::string& ioInfo)
 {
 	std::string info;
 
@@ -327,8 +343,8 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	iterOther != inConfigNew.GetOtherPoints().end();
 	++iterOther)
 	{
-		ARBConfigOtherPoints* pOther = GetOtherPoints().FindOtherPoints((*iterOther)->GetName());
-		if (pOther)
+		ARBConfigOtherPoints* pOther;
+		if (GetOtherPoints().FindOtherPoints((*iterOther)->GetName(), &pOther))
 		{
 			if (*pOther != *(*iterOther))
 			{
@@ -340,6 +356,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 			}
 			else
 				++nSkipped;
+			pOther->Release();
 		}
 		else
 		{
@@ -362,8 +379,8 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 	iterVenue != inConfigNew.GetVenues().end();
 	++iterVenue)
 	{
-		ARBConfigVenue* pVenue = GetVenues().FindVenue((*iterVenue)->GetName());
-		if (pVenue)
+		ARBConfigVenue* pVenue;
+		if (GetVenues().FindVenue((*iterVenue)->GetName(), &pVenue))
 		{
 			if (*pVenue != *(*iterVenue))
 			{
@@ -375,6 +392,7 @@ bool ARBConfig::Update(int indent, ARBConfig const& inConfigNew, std::string& io
 			}
 			else
 				++nSkipped;
+			pVenue->Release();
 		}
 		else
 		{

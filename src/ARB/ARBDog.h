@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added ExistingPoints.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -547,11 +548,9 @@ public:
 	/**
 	 * Add a dog.
 	 * @param inDog Dog to add.
-	 * @return Pointer to object.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
+	 * @return Whetehr the object was added.
 	 */
-	ARBDog* AddDog(ARBDog* inDog);
+	bool AddDog(ARBDog* inDog);
 
 	/**
 	 * Delete a dog.

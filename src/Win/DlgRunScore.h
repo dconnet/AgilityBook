@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
@@ -54,7 +55,7 @@ class CAgilityBookDoc;
 class CDlgRunScore : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue const* pVenue,
+	CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue,
 		ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun);
 	~CDlgRunScore();
 
@@ -131,7 +132,7 @@ private:
 	CButton	m_ctrlOtherPoints;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigVenue const* m_pVenue;
+	ARBConfigVenue* m_pVenue;
 	ARBDogTrial const* m_pTrial;
 	ARBDogRun const* m_pRealRun;
 	ARBDogRun* m_Run;
@@ -147,8 +148,8 @@ protected:
 private:
 	bool GetText(CEdit* pEdit, short& val) const;
 	bool GetText(CEdit* pEdit, double& val) const;
-	ARBConfigEvent const* GetEvent() const;
-	ARBConfigScoring const* GetScoring() const;
+	bool GetEvent(ARBConfigEvent** outEvent) const;
+	bool GetScoring(ARBConfigScoring** outScoring) const;
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();

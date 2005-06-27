@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-19 DRC Changed sort-newest to only do trials, not runs.
  * @li 2004-12-18 DRC Added an extra check before posting the new dog msg.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -300,14 +301,14 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* 
 				// MUST make a copy. Otherwise the trial will be the same trial
 				// for both dogs and all changes will be reflected from one to
 				// the other - until you save, exit and reload the program.
-				ARBDogTrial* pCopyTrial = new ARBDogTrial(*pTrial);
-				ARBDogTrial* pNewTrial = pDog->GetTrials().AddTrial(pCopyTrial);
-				pCopyTrial->Release();
+				ARBDogTrial* pNewTrial = new ARBDogTrial(*pTrial);
+				pDog->GetTrials().AddTrial(pNewTrial);
 				SetModifiedFlag();
 				// This is pure evil - casting ARBDogTrial* to a CObject*.
 				// On the other side, we reinterpret right back to ARBDogTrial*
 				// Definite abuse of this parameter.
 				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(pNewTrial));
+				pNewTrial->Release();
 			}
 			pTabView->SetCurSel(0);
 		}
@@ -335,12 +336,12 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 		{
 			// Find the venue.
-			ARBConfigVenue* venue = GetConfig().GetVenues().FindVenue(action->GetVenue());
-			if (venue)
+			ARBConfigVenue* venue;
+			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
 				// Find the title we're renaming.
-				ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
-				if (oldTitle)
+				ARBConfigTitle* oldTitle;
+				if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					CString tmp;
 					tmp.Format("Action: Renaming title [%s] to [%s]",
@@ -358,23 +359,24 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						tmp = "\n";
 					msg += tmp;
 					// If the new title exists, just delete the old. Otherwise, rename the old to new.
-					ARBConfigTitle const* newTitle = venue->GetDivisions().FindTitle(action->GetNewName());
-					if (newTitle)
+					if (venue->GetDivisions().FindTitle(action->GetNewName()))
 						venue->GetDivisions().DeleteTitle(action->GetOldName());
 					else
 						oldTitle->SetName(action->GetNewName());
+					oldTitle->Release();
 				}
+				venue->Release();
 			}
 		}
 		else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
 		{
 			// Find the venue.
-			ARBConfigVenue* venue = GetConfig().GetVenues().FindVenue(action->GetVenue());
-			if (venue)
+			ARBConfigVenue* venue;
+			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
 				// Find the title we're renaming.
-				ARBConfigTitle* oldTitle = venue->GetDivisions().FindTitle(action->GetOldName());
-				if (oldTitle)
+				ARBConfigTitle* oldTitle;
+				if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					CString tmp;
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
@@ -403,7 +405,9 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						action->GetOldName().c_str());
 					msg += tmp;
 					venue->GetDivisions().DeleteTitle(action->GetOldName());
+					oldTitle->Release();
 				}
+				venue->Release();
 			}
 		}
 	}
@@ -920,8 +924,8 @@ void CAgilityBookDoc::OnAgilityNewDog()
 			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
 			pFrame->SetCurTab(0);
 			SetModifiedFlag();
-			ARBDog* pNewDog = GetDogs().AddDog(dog);
-			pTree->InsertDog(pNewDog, true);
+			if (!GetDogs().AddDog(dog))
+				pTree->InsertDog(dog, true);
 		}
 	}
 	dog->Release();

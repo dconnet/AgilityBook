@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -71,7 +72,8 @@ ARBCalendar::ARBCalendar()
 {
 }
 
-ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
+ARBCalendar::ARBCalendar(
+	ARBCalendar const& rhs)
 	: m_DateStart(rhs.m_DateStart)
 	, m_DateEnd(rhs.m_DateEnd)
 	, m_DateOpening(rhs.m_DateOpening)
@@ -89,7 +91,8 @@ ARBCalendar::~ARBCalendar()
 {
 }
 
-ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
+ARBCalendar& ARBCalendar::operator=(
+	ARBCalendar const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -107,7 +110,8 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 	return *this;
 }
 
-bool ARBCalendar::operator==(ARBCalendar const& rhs) const
+bool ARBCalendar::operator==(
+	ARBCalendar const& rhs) const
 {
 	return m_DateStart == rhs.m_DateStart
 		&& m_DateEnd == rhs.m_DateEnd
@@ -121,7 +125,8 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBCalendar::operator!=(ARBCalendar const& rhs) const
+bool ARBCalendar::operator!=(
+	ARBCalendar const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -136,7 +141,8 @@ std::string ARBCalendar::GetGenericName() const
 	return name;
 }
 
-size_t ARBCalendar::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBCalendar::GetSearchStrings(
+	std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -185,17 +191,21 @@ size_t ARBCalendar::GetSearchStrings(std::set<std::string>& ioStrings) const
 	return nItems;
 }
 
-bool ARBCalendar::IsBefore(ARBDate const& inDate) const
+bool ARBCalendar::IsBefore(
+	ARBDate const& inDate) const
 {
 	return (m_DateStart < inDate && m_DateEnd < inDate);
 }
 
-bool ARBCalendar::InRange(ARBDate const& inDate) const
+bool ARBCalendar::InRange(
+	ARBDate const& inDate) const
 {
 	return inDate.isBetween(m_DateStart, m_DateEnd);
 }
 
-bool ARBCalendar::IsRangeOverlapped(ARBDate const& inDate1, ARBDate const& inDate2) const
+bool ARBCalendar::IsRangeOverlapped(
+	ARBDate const& inDate1,
+	ARBDate const& inDate2) const
 {
 	if (m_DateStart.isBetween(inDate1, inDate2)
 	|| m_DateEnd.isBetween(inDate1, inDate2))
@@ -305,7 +315,8 @@ bool ARBCalendar::Load(
 	return true;
 }
 
-bool ARBCalendar::Save(Element& ioTree) const
+bool ARBCalendar::Save(
+	Element& ioTree) const
 {
 	Element& cal = ioTree.AddElement(TREE_CALENDAR);
 	cal.AddAttrib(ATTRIB_CAL_START, m_DateStart);
@@ -354,14 +365,16 @@ private:
 	bool m_bDescending;
 };
 
-void ARBCalendarList::sort(bool inDescending)
+void ARBCalendarList::sort(
+	bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortCalendar(inDescending));
 }
 
-size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendar const*>& outEntered) const
+size_t ARBCalendarList::GetAllEntered(
+	std::vector<ARBCalendar const*>& outEntered) const
 {
 	outEntered.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -373,7 +386,8 @@ size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendar const*>& outEntere
 	return outEntered.size();
 }
 
-int ARBCalendarList::TrimEntries(ARBDate const& inDate)
+int ARBCalendarList::TrimEntries(
+	ARBDate const& inDate)
 {
 	int trimmed = 0;
 	if (inDate.IsValid())
@@ -393,34 +407,45 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 	return trimmed;
 }
 
-ARBCalendar const* ARBCalendarList::FindCalendar(ARBCalendar const* inCal) const
+bool ARBCalendarList::FindCalendar(
+	ARBCalendar const* inCal,
+	ARBCalendar** outCal) const
 {
-	ARBCalendar const* pCal = NULL;
+	if (outCal)
+		*outCal = NULL;
 	if (inCal)
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
 			if (*(*iter) == *inCal)
 			{
-				pCal = *iter;
-				break;
+				if (outCal)
+				{
+					*outCal = *iter;
+					(*outCal)->AddRef();
+				}
+				return true;
 			}
 		}
 	}
-	return pCal;
+	return false;
 }
 
-ARBCalendar* ARBCalendarList::AddCalendar(ARBCalendar* inCal)
+bool ARBCalendarList::AddCalendar(
+	ARBCalendar* inCal)
 {
+	bool bAdded = false;
 	if (inCal)
 	{
+		bAdded = true;
 		inCal->AddRef();
 		push_back(inCal);
 	}
-	return inCal;
+	return bAdded;
 }
 
-bool ARBCalendarList::DeleteCalendar(ARBCalendar const* inCal)
+bool ARBCalendarList::DeleteCalendar(
+	ARBCalendar const* inCal)
 {
 	if (inCal)
 	{

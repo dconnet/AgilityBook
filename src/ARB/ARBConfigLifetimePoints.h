@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-10-06 DRC Added as part of file version 10.
  */
 
@@ -155,19 +156,24 @@ public:
 	/**
 	 * Find a points object.
 	 * @param inFaults Number of faults to find.
-	 * @return Pointer to found object, NULL if not found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outPoints Pointer to found object, NULL if not found.
+	 * @return Whether the object was found.
 	 */
-	ARBConfigLifetimePoints const* FindLifetimePoints(short inFaults) const;
+	bool FindLifetimePoints(
+		short inFaults,
+		ARBConfigLifetimePoints** outPoints = NULL) const;
 
 	/**
 	 * Add an object.
 	 * @param inPoints Number of lifetime points.
 	 * @param inFaults Number of faults.
-	 * @return Pointer to new object, NULL if it already exists.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
+	 * @param outPoints Pointer to new object, NULL if it already exists.
+	 * @return Whether the object was added.
 	 */
-	ARBConfigLifetimePoints* AddLifetimePoints(short inPoints, short inFaults);
+	bool AddLifetimePoints(
+		short inPoints,
+		short inFaults,
+		ARBConfigLifetimePoints** outPoints = NULL);
 
 	/**
 	 * Delete an object.

@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
@@ -853,6 +854,7 @@ void CDlgConfigEvent::OnBnClickedDelete()
 			if ((*iter) == pScoring)
 			{
 				m_Scorings.erase(iter);
+				pScoring->Release();
 				break;
 			}
 		}
