@@ -61,7 +61,8 @@ ARBDogNotes::ARBDogNotes()
 {
 }
 
-ARBDogNotes::ARBDogNotes(ARBDogNotes const& rhs)
+ARBDogNotes::ARBDogNotes(
+		ARBDogNotes const& rhs)
 	: m_Faults(rhs.m_Faults)
 	, m_CRCD(rhs.m_CRCD)
 	, m_CRCDMeta(rhs.m_CRCDMeta)
@@ -73,7 +74,8 @@ ARBDogNotes::~ARBDogNotes()
 {
 }
 
-ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes const& rhs)
+ARBDogNotes& ARBDogNotes::operator=(
+		ARBDogNotes const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -85,7 +87,8 @@ ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes const& rhs)
 	return *this;
 }
 
-bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
+bool ARBDogNotes::operator==(
+		ARBDogNotes const& rhs) const
 {
 	return m_Faults == rhs.m_Faults
 		&& m_CRCD == rhs.m_CRCD
@@ -93,12 +96,14 @@ bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBDogNotes::operator!=(ARBDogNotes const& rhs) const
+bool ARBDogNotes::operator!=(
+		ARBDogNotes const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBDogNotes::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogNotes::GetSearchStrings(
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
@@ -115,10 +120,10 @@ size_t ARBDogNotes::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBDogNotes::Load(
-	ARBConfig const& inConfig,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -143,7 +148,8 @@ bool ARBDogNotes::Load(
 	return true;
 }
 
-bool ARBDogNotes::Save(Element& ioTree) const
+bool ARBDogNotes::Save(
+		Element& ioTree) const
 {
 	if (0 < m_Faults.size()
 	|| 0 < m_CRCD.length()

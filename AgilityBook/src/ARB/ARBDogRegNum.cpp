@@ -64,7 +64,7 @@ ARBDogRegNum::ARBDogRegNum()
 }
 
 ARBDogRegNum::ARBDogRegNum(
-	ARBDogRegNum const& rhs)
+		ARBDogRegNum const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Number(rhs.m_Number)
 	, m_Height(rhs.m_Height)
@@ -78,7 +78,7 @@ ARBDogRegNum::~ARBDogRegNum()
 }
 
 ARBDogRegNum& ARBDogRegNum::operator=(
-	ARBDogRegNum const& rhs)
+		ARBDogRegNum const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -92,7 +92,7 @@ ARBDogRegNum& ARBDogRegNum::operator=(
 }
 
 bool ARBDogRegNum::operator==(
-	ARBDogRegNum const& rhs) const
+		ARBDogRegNum const& rhs) const
 {
 	return m_Venue == rhs.m_Venue
 		&& m_Number == rhs.m_Number
@@ -102,7 +102,7 @@ bool ARBDogRegNum::operator==(
 }
 
 bool ARBDogRegNum::operator!=(
-	ARBDogRegNum const& rhs) const
+		ARBDogRegNum const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -113,7 +113,7 @@ std::string ARBDogRegNum::GetGenericName() const
 }
 
 size_t ARBDogRegNum::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	ioStrings.insert(GetGenericName());
 	ioStrings.insert(GetNote());
@@ -121,10 +121,10 @@ size_t ARBDogRegNum::GetSearchStrings(
 }
 
 bool ARBDogRegNum::Load(
-	ARBConfig const& inConfig,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
@@ -176,7 +176,7 @@ bool ARBDogRegNum::Load(
 }
 
 bool ARBDogRegNum::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_REG_NUM);
 	title.AddAttrib(ATTRIB_REG_NUM_VENUE, m_Venue);
@@ -207,7 +207,7 @@ private:
 };
 
 void ARBDogRegNumList::sort(
-	bool inDescending)
+		bool inDescending)
 {
 	if (2 > size())
 		return;
@@ -215,7 +215,7 @@ void ARBDogRegNumList::sort(
 }
 
 int ARBDogRegNumList::NumRegNumsInVenue(
-	std::string const& inVenue) const
+		std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -227,8 +227,8 @@ int ARBDogRegNumList::NumRegNumsInVenue(
 }
 
 int ARBDogRegNumList::RenameVenue(
-	std::string const& inOldVenue,
-	std::string const& inNewVenue)
+		std::string const& inOldVenue,
+		std::string const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -243,7 +243,7 @@ int ARBDogRegNumList::RenameVenue(
 }
 
 int ARBDogRegNumList::DeleteVenue(
-	std::string const& inVenue)
+		std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	int count = 0;
@@ -261,8 +261,8 @@ int ARBDogRegNumList::DeleteVenue(
 }
 
 bool ARBDogRegNumList::FindRegNum(
-	std::string const& inVenue,
-	ARBDogRegNum** outRegNum) const
+		std::string const& inVenue,
+		ARBDogRegNum** outRegNum) const
 {
 	if (outRegNum)
 		*outRegNum = NULL;
@@ -282,9 +282,9 @@ bool ARBDogRegNumList::FindRegNum(
 }
 
 bool ARBDogRegNumList::AddRegNum(
-	std::string const& inVenue,
-	std::string const& inNumber,
-	ARBDogRegNum** outRegNum)
+		std::string const& inVenue,
+		std::string const& inNumber,
+		ARBDogRegNum** outRegNum)
 {
 	ARBDogRegNum* pRegNum = new ARBDogRegNum();
 	pRegNum->SetVenue(inVenue);
@@ -299,7 +299,7 @@ bool ARBDogRegNumList::AddRegNum(
 }
 
 bool ARBDogRegNumList::AddRegNum(
-	ARBDogRegNum* inRegNum)
+		ARBDogRegNum* inRegNum)
 {
 	bool bAdded = false;
 	if (inRegNum)
@@ -312,8 +312,8 @@ bool ARBDogRegNumList::AddRegNum(
 }
 
 int ARBDogRegNumList::DeleteRegNum(
-	std::string const& inVenue,
-	std::string const& inNumber)
+		std::string const& inVenue,
+		std::string const& inNumber)
 {
 	std::string venue(inVenue);
 	std::string number(inNumber);

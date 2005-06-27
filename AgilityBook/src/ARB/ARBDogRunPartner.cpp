@@ -61,7 +61,7 @@ ARBDogRunPartner::ARBDogRunPartner()
 }
 
 ARBDogRunPartner::ARBDogRunPartner(
-	ARBDogRunPartner const& rhs)
+		ARBDogRunPartner const& rhs)
 	: m_Handler(rhs.m_Handler)
 	, m_Dog(rhs.m_Dog)
 	, m_RegNum(rhs.m_RegNum)
@@ -73,7 +73,7 @@ ARBDogRunPartner::~ARBDogRunPartner()
 }
 
 ARBDogRunPartner& ARBDogRunPartner::operator=(
-	ARBDogRunPartner const& rhs)
+		ARBDogRunPartner const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -85,7 +85,7 @@ ARBDogRunPartner& ARBDogRunPartner::operator=(
 }
 
 bool ARBDogRunPartner::operator==(
-	ARBDogRunPartner const& rhs) const
+		ARBDogRunPartner const& rhs) const
 {
 	return m_Handler == rhs.m_Handler
 		&& m_Dog == rhs.m_Dog
@@ -93,13 +93,13 @@ bool ARBDogRunPartner::operator==(
 }
 
 bool ARBDogRunPartner::operator!=(
-	ARBDogRunPartner const& rhs) const
+		ARBDogRunPartner const& rhs) const
 {
 	return !operator==(rhs);
 }
 
 size_t ARBDogRunPartner::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -125,10 +125,10 @@ size_t ARBDogRunPartner::GetSearchStrings(
 }
 
 bool ARBDogRunPartner::Load(
-	ARBConfig const& inConfig,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())
@@ -150,7 +150,7 @@ bool ARBDogRunPartner::Load(
 }
 
 bool ARBDogRunPartner::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& partner = ioTree.AddElement(TREE_PARTNER);
 	partner.AddAttrib(ATTRIB_PARTNER_HANDLER, m_Handler);
@@ -163,7 +163,7 @@ bool ARBDogRunPartner::Save(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogRunPartnerList::AddPartner(
-	ARBDogRunPartner* inPartner)
+		ARBDogRunPartner* inPartner)
 {
 	bool bAdded = false;
 	if (inPartner)

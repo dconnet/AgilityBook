@@ -63,7 +63,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 std::string ARBConfigScoring::GetScoringStyleStr(
-	ScoringStyle inStyle)
+		ScoringStyle inStyle)
 {
 	std::string style;
 	switch (inStyle)
@@ -116,7 +116,7 @@ ARBConfigScoring::ARBConfigScoring()
 }
 
 ARBConfigScoring::ARBConfigScoring(
-	ARBConfigScoring const& rhs)
+		ARBConfigScoring const& rhs)
 	: m_ValidFrom(rhs.m_ValidFrom)
 	, m_ValidTo(rhs.m_ValidTo)
 	, m_Division(rhs.m_Division)
@@ -142,7 +142,7 @@ ARBConfigScoring::~ARBConfigScoring()
 }
 
 ARBConfigScoring& ARBConfigScoring::operator=(
-	ARBConfigScoring const& rhs)
+		ARBConfigScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -168,7 +168,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(
 }
 
 bool ARBConfigScoring::operator==(
-	ARBConfigScoring const& rhs) const
+		ARBConfigScoring const& rhs) const
 {
 	return m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
@@ -190,7 +190,7 @@ bool ARBConfigScoring::operator==(
 }
 
 bool ARBConfigScoring::operator!=(
-	ARBConfigScoring const& rhs) const
+		ARBConfigScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -204,17 +204,17 @@ std::string ARBConfigScoring::GetGenericName() const
 }
 
 size_t ARBConfigScoring::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
 }
 
 bool ARBConfigScoring::Load(
-	ARBConfigDivisionList const& inDivisions,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfigDivisionList const& inDivisions,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
@@ -395,7 +395,7 @@ bool ARBConfigScoring::Load(
 }
 
 bool ARBConfigScoring::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& scoring = ioTree.AddElement(TREE_SCORING);
 	if (m_ValidFrom.IsValid())
@@ -489,10 +489,10 @@ std::string ARBConfigScoring::GetScoringStyleStr() const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigScoringList::Load(
-	ARBConfigDivisionList const& inDivisions,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfigDivisionList const& inDivisions,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	ARBConfigScoring* thing = new ARBConfigScoring();
 	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
@@ -505,10 +505,10 @@ bool ARBConfigScoringList::Load(
 }
 
 size_t ARBConfigScoringList::FindAllEvents(
-	std::string const& inDivision,
-	std::string const& inLevel,
-	bool inTitlePoints,
-	ARBConfigScoringObjects& outList) const
+		std::string const& inDivision,
+		std::string const& inLevel,
+		bool inTitlePoints,
+		ARBConfigScoringObjects& outList) const
 {
 	outList.clear();
 	const_iterator iter;
@@ -564,10 +564,10 @@ size_t ARBConfigScoringList::FindAllEvents(
 }
 
 bool ARBConfigScoringList::FindEvent(
-	std::string const& inDivision,
-	std::string const& inLevel,
-	ARBDate const& inDate,
-	ARBConfigScoring** outEvent) const
+		std::string const& inDivision,
+		std::string const& inLevel,
+		ARBDate const& inDate,
+		ARBConfigScoring** outEvent) const
 {
 	if (outEvent)
 		*outEvent = NULL;
@@ -616,8 +616,8 @@ bool ARBConfigScoringList::FindEvent(
 }
 
 bool ARBConfigScoringList::VerifyEvent(
-	std::string const& inDivision,
-	std::string const& inLevel) const
+		std::string const& inDivision,
+		std::string const& inLevel) const
 {
 	ARBConfigScoringObjects items;
 	FindAllEvents(inDivision, inLevel, false, items);

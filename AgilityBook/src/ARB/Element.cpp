@@ -96,11 +96,20 @@ static char THIS_FILE[] = __FILE__;
 // those types constants directly.
 // ---------------------------------------------------------------------------
 ///< Data: </
-static XMLCh const gEndElement[] = { chOpenAngle, chForwardSlash, chNull };
+static XMLCh const gEndElement[] =
+{
+	chOpenAngle, chForwardSlash, chNull
+};
 ///< Data: ?>
-static XMLCh const gEndPI[] = { chQuestion, chCloseAngle, chNull };
+static XMLCh const gEndPI[] =
+{
+	chQuestion, chCloseAngle, chNull
+};
 ///< Data: <?
-static XMLCh const gStartPI[] = { chOpenAngle, chQuestion, chNull };
+static XMLCh const gStartPI[] =
+{
+	chOpenAngle, chQuestion, chNull
+};
 ///< Data: <?xml version="
 static XMLCh const gXMLDecl1[] =
 {
@@ -194,17 +203,20 @@ public:
 	{
 	}
 	/// Copy constructor
-	XMLstring(XMLstring const& str)
+	XMLstring(
+			XMLstring const& str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
 	/// XMLCh string constructor
-	XMLstring(XMLCh const* str)
+	XMLstring(
+			XMLCh const* str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
 	/// string->XMLCh translation constuctor
-	XMLstring(std::string const& str)
+	XMLstring(
+			std::string const& str)
 	{
 		if (0 < str.length())
 		{
@@ -214,7 +226,8 @@ public:
 		}
 	}
 	/// char->XMLCh translation constuctor
-	XMLstring(char const* str)
+	XMLstring(
+			char const* str)
 	{
 		if (str && *str)
 		{
@@ -228,7 +241,8 @@ public:
 	//  XMLCh*
 	//  std::string
 	//  char*
-	XMLstring& operator=(XMLstring const& str)
+	XMLstring& operator=(
+			XMLstring const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -238,7 +252,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(XMLCh const* str)
+	XMLstring& operator=(
+			XMLCh const* str)
 	{
 #if _MSC_VER < 1300
 		basic_string<XMLCh>::operator=(str);
@@ -247,7 +262,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(std::string const& str)
+	XMLstring& operator=(
+			std::string const& str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -257,7 +273,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(char const* str)
+	XMLstring& operator=(
+			char const* str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -267,7 +284,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(XMLstring const& str)
+	XMLstring& operator+=(
+			XMLstring const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -277,7 +295,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(XMLCh const* str)
+	XMLstring& operator+=(
+			XMLCh const* str)
 	{
 #if _MSC_VER < 1300
 		basic_string<XMLCh>::operator+=(str);
@@ -286,7 +305,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(std::string const& str)
+	XMLstring& operator+=(
+			std::string const& str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -296,7 +316,8 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(char const* str)
+	XMLstring& operator+=(
+			char const* str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -325,7 +346,8 @@ public:
 	{
 	}
 	/// Copy constructor
-	StringDOM(StringDOM const& str)
+	StringDOM(
+			StringDOM const& str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -334,7 +356,8 @@ public:
 	{
 	}
 	/// Copy constructor
-	StringDOM(std::string const& str)
+	StringDOM(
+			std::string const& str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -343,7 +366,8 @@ public:
 	{
 	}
 	/// char string constructor
-	StringDOM(char const* str)
+	StringDOM(
+			char const* str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -352,7 +376,8 @@ public:
 	{
 	}
 	/// XMLCh->string translation constuctor
-	StringDOM(XMLCh const* str)
+	StringDOM(
+			XMLCh const* str)
 	{
 		if (str && XMLString::stringLen(str))
 		{
@@ -365,7 +390,8 @@ public:
 			delete [] pStr;
 		}
 	}
-	StringDOM& operator=(StringDOM const& str)
+	StringDOM& operator=(
+			StringDOM const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -375,7 +401,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(std::string const& str)
+	StringDOM& operator=(
+			std::string const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator=(str);
@@ -384,7 +411,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(char const* str)
+	StringDOM& operator=(
+			char const* str)
 	{
 #if _MSC_VER < 1300
 		string::operator=(str);
@@ -393,7 +421,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(XMLCh const* str)
+	StringDOM& operator=(
+			XMLCh const* str)
 	{
 		StringDOM data(str);
 #if _MSC_VER < 1300
@@ -403,7 +432,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(StringDOM const& str)
+	StringDOM& operator+=(
+			StringDOM const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -412,7 +442,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(std::string const& str)
+	StringDOM& operator+=(
+			std::string const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -421,7 +452,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(char const* str)
+	StringDOM& operator+=(
+			char const* str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -430,7 +462,8 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(XMLCh const* str)
+	StringDOM& operator+=(
+			XMLCh const* str)
 	{
 		if (str && XMLString::stringLen(str))
 		{
@@ -480,10 +513,12 @@ public:
 	 * @param xmlStr The incoming name from SAX to transcode.
 	 * @return The transcoded string.
 	 */
-	char const* TranscodeElement(XMLCh const* const xmlStr);
+	char const* TranscodeElement(
+			XMLCh const* const xmlStr);
 };
 
-char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
+char const* StringTranscode::TranscodeElement(
+		XMLCh const* const xmlStr)
 {
 	XMLstring str(xmlStr);
 	StringTranscode::iterator iter = find(str);
@@ -524,17 +559,29 @@ public:
 	// -----------------------------------------------------------------------
 	//  Handlers for the SAX DocumentHandler interface
 	// -----------------------------------------------------------------------
-	void startElement(XMLCh const* const uri, XMLCh const* const localname, XMLCh const* const qname, Attributes const& attrs);
-	void endElement(XMLCh const* const uri, XMLCh const* const localname, XMLCh const* const qname);
-	void characters(XMLCh const* const chars, unsigned int const length);
+	void startElement(
+			XMLCh const* const uri,
+			XMLCh const* const localname,
+			XMLCh const* const qname,
+			Attributes const& attrs);
+	void endElement(
+			XMLCh const* const uri,
+			XMLCh const* const localname,
+			XMLCh const* const qname);
+	void characters(
+			XMLCh const* const chars,
+			unsigned int const length);
 	void resetDocument();
 
 	// -----------------------------------------------------------------------
 	//  Handlers for the SAX ErrorHandler interface
 	// -----------------------------------------------------------------------
-	void warning(SAXParseException const& exception);
-	void error(SAXParseException const& exception);
-	void fatalError(SAXParseException const& exception);
+	void warning(
+			SAXParseException const& exception);
+	void error(
+			SAXParseException const& exception);
+	void fatalError(
+			SAXParseException const& exception);
 
 private:
 	Element& m_Tree; ///< Parsed XML data
@@ -548,7 +595,9 @@ private:
 	class CurrentAttrib
 	{
 	public:
-		CurrentAttrib(std::string const& name, XMLCh const* const value)
+		CurrentAttrib(
+				std::string const& name,
+				XMLCh const* const value)
 			: m_Name(name)
 			, m_Value(value)
 		{}
@@ -559,7 +608,11 @@ private:
 	StringTranscode m_ElementNames; ///< Reduce the number of transcodings on element names.
 };
 
-void SAXImportHandlers::startElement(XMLCh const* const /*uri*/, XMLCh const* const localname, XMLCh const* const /*qname*/, Attributes const& attrs)
+void SAXImportHandlers::startElement(
+		XMLCh const* const /*uri*/,
+		XMLCh const* const localname,
+		XMLCh const* const /*qname*/,
+		Attributes const& attrs)
 {
 	// If the name is non-zero, we're caching an element. This startElement is
 	// starting inside the current element. Since we don't allow mixing data
@@ -600,7 +653,10 @@ void SAXImportHandlers::startElement(XMLCh const* const /*uri*/, XMLCh const* co
 	}
 }
 
-void SAXImportHandlers::endElement(XMLCh const* const /*uri*/, XMLCh const* const /*localname*/, XMLCh const* const /*qname*/)
+void SAXImportHandlers::endElement(
+		XMLCh const* const /*uri*/,
+		XMLCh const* const /*localname*/,
+		XMLCh const* const /*qname*/)
 {
 	// Insert the element.
 	if (0 < m_CurrentName.length())
@@ -638,7 +694,9 @@ void SAXImportHandlers::endElement(XMLCh const* const /*uri*/, XMLCh const* cons
 	m_CurrentAttribs.clear();
 }
 
-void SAXImportHandlers::characters(XMLCh const* const chars, unsigned int const length)
+void SAXImportHandlers::characters(
+		XMLCh const* const chars,
+		unsigned int const length)
 {
 	m_CurrentData.append(chars, length);
 }
@@ -650,7 +708,8 @@ void SAXImportHandlers::resetDocument()
 	m_FatalErrors = 0;
 }
 
-void SAXImportHandlers::warning(SAXParseException const& toCatch)
+void SAXImportHandlers::warning(
+		SAXParseException const& toCatch)
 {
 	++m_Warnings;
 	std::ostringstream tmp;
@@ -665,7 +724,8 @@ void SAXImportHandlers::warning(SAXParseException const& toCatch)
 	m_Msg += tmp.str();
 }
 
-void SAXImportHandlers::error(SAXParseException const& toCatch)
+void SAXImportHandlers::error(
+		SAXParseException const& toCatch)
 {
 	++m_Errors;
 	std::ostringstream tmp;
@@ -680,7 +740,8 @@ void SAXImportHandlers::error(SAXParseException const& toCatch)
 	m_Msg += tmp.str();
 }
 
-void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
+void SAXImportHandlers::fatalError(
+		SAXParseException const& toCatch)
 {
 	++m_FatalErrors;
 	std::ostringstream tmp;
@@ -708,7 +769,8 @@ static XMLFormatter* gFormatter = NULL;
 class CXMLFormatTarget : public XMLFormatTarget
 {
 public:
-	CXMLFormatTarget(std::ostream& out)
+	CXMLFormatTarget(
+			std::ostream& out)
 		: m_out(out)
 	{
 	}
@@ -716,9 +778,9 @@ public:
 	{
 	}
 	void writeChars(
-		XMLByte const* const toWrite
-		, unsigned int const count
-		, XMLFormatter* const /*formatter*/)
+		XMLByte const* const toWrite,
+		unsigned int const count,
+		XMLFormatter* const /*formatter*/)
 	{
 		m_out.write(reinterpret_cast<char const* const>(toWrite), count);
 	}
@@ -727,7 +789,9 @@ private:
 	CXMLFormatTarget(CXMLFormatTarget const& other); ///< Unimplemented method.
 };
 
-XMLFormatter& operator<< (XMLFormatter& strm, XMLstring const& s)
+XMLFormatter& operator<<(
+		XMLFormatter& strm,
+		XMLstring const& s)
 {
 	size_t lent = s.length();
 	if (0 < lent)
@@ -748,7 +812,9 @@ XMLFormatter& operator<< (XMLFormatter& strm, XMLstring const& s)
 	return strm;
 }
 
-static void Indent(std::ostream& target, int indentLevel)
+static void Indent(
+		std::ostream& target,
+		int indentLevel)
 {
 	if (0 < indentLevel)
 	{
@@ -757,7 +823,9 @@ static void Indent(std::ostream& target, int indentLevel)
 	}
 }
 
-std::ostream& operator<<(std::ostream& target, Element const& toWrite)
+std::ostream& operator<<(
+		std::ostream& target,
+		Element const& toWrite)
 {
 	Indent(target, gIndentLevel);
 	XMLstring nodeName(toWrite.GetName().c_str());
@@ -827,13 +895,15 @@ Element::Element()
 {
 }
 
-Element::Element(std::string const& inName)
+Element::Element(
+		std::string const& inName)
 	: m_Name(inName)
 	, m_Value("")
 {
 }
 
-Element::Element(Element const& rhs)
+Element::Element(
+		Element const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Value(rhs.m_Value)
 {
@@ -841,7 +911,8 @@ Element::Element(Element const& rhs)
 	m_Elements = rhs.m_Elements;
 }
 
-Element& Element::operator=(Element const& rhs)
+Element& Element::operator=(
+		Element const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -857,7 +928,8 @@ Element::~Element()
 {
 }
 
-void Element::Dump(int inLevel) const
+void Element::Dump(
+		int inLevel) const
 {
 	int i;
 	CString msg;
@@ -901,7 +973,8 @@ std::string const& Element::GetName() const
 	return m_Name;
 }
 
-void Element::SetName(std::string const& inName)
+void Element::SetName(
+		std::string const& inName)
 {
 	m_Name = inName;
 }
@@ -911,13 +984,15 @@ std::string const& Element::GetValue() const
 	return m_Value;
 }
 
-void Element::SetValue(std::string const& inValue)
+void Element::SetValue(
+		std::string const& inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = inValue;
 }
 
-void Element::SetValue(char const* const inValue)
+void Element::SetValue(
+		char const* const inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	if (inValue)
@@ -926,7 +1001,8 @@ void Element::SetValue(char const* const inValue)
 		m_Value.erase();
 }
 
-void Element::SetValue(short inValue)
+void Element::SetValue(
+		short inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -934,7 +1010,8 @@ void Element::SetValue(short inValue)
 	m_Value = str.str();
 }
 
-void Element::SetValue(long inValue)
+void Element::SetValue(
+		long inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -942,7 +1019,9 @@ void Element::SetValue(long inValue)
 	m_Value = str.str();
 }
 
-void Element::SetValue(double inValue, int inPrec)
+void Element::SetValue(
+		double inValue,
+		int inPrec)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = ARBDouble::str(inValue, inPrec);
@@ -953,7 +1032,10 @@ int Element::GetAttribCount() const
 	return static_cast<int>(m_Attribs.size());
 }
 
-Element::AttribLookup Element::GetNthAttrib(int inIndex, std::string& outName, std::string& outValue) const
+Element::AttribLookup Element::GetNthAttrib(
+		int inIndex,
+		std::string& outName,
+		std::string& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
@@ -971,7 +1053,9 @@ Element::AttribLookup Element::GetNthAttrib(int inIndex, std::string& outName, s
 		return eNotFound;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, std::string& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		std::string& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -983,7 +1067,9 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, std::string&
 		return eNotFound;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, ARBVersion& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		ARBVersion& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1007,7 +1093,9 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, ARBVersion& 
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, ARBDate& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		ARBDate& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1022,7 +1110,9 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, ARBDate& out
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, bool& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		bool& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1038,7 +1128,9 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, bool& outVal
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, short& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		short& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1052,7 +1144,9 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, short& outVa
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, long& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		long& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1066,7 +1160,9 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, long& outVal
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(std::string const& inName, double& outValue) const
+Element::AttribLookup Element::GetAttrib(
+		std::string const& inName,
+		double& outValue) const
 {
 	std::string value;
 	AttribLookup rc = GetAttrib(inName, value);
@@ -1080,13 +1176,17 @@ Element::AttribLookup Element::GetAttrib(std::string const& inName, double& outV
 	return rc;
 }
 
-bool Element::AddAttrib(std::string const& inName, std::string const& inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		std::string const& inValue)
 {
 	m_Attribs[inName] = inValue;
 	return true;
 }
 
-bool Element::AddAttrib(std::string const& inName, char const* const inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		char const* const inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = inValue;
@@ -1095,19 +1195,25 @@ bool Element::AddAttrib(std::string const& inName, char const* const inValue)
 	return true;
 }
 
-bool Element::AddAttrib(std::string const& inName, ARBVersion const& inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
 }
 
-bool Element::AddAttrib(std::string const& inName, ARBDate const& inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		ARBDate const& inValue)
 {
 	if (inValue.IsValid())
 		AddAttrib(inName, inValue.GetString(ARBDate::eDashYMD));
 	return true;
 }
 
-bool Element::AddAttrib(std::string const& inName, bool inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		bool inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = "y";
@@ -1116,7 +1222,9 @@ bool Element::AddAttrib(std::string const& inName, bool inValue)
 	return true;
 }
 
-bool Element::AddAttrib(std::string const& inName, short inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		short inValue)
 {
 	std::stringstream str;
 	str << inValue;
@@ -1124,7 +1232,9 @@ bool Element::AddAttrib(std::string const& inName, short inValue)
 	return true;
 }
 
-bool Element::AddAttrib(std::string const& inName, long inValue)
+bool Element::AddAttrib(
+		std::string const& inName,
+		long inValue)
 {
 	std::stringstream str;
 	str << inValue;
@@ -1132,13 +1242,17 @@ bool Element::AddAttrib(std::string const& inName, long inValue)
 	return true;
 }
 
-bool Element::AddAttrib(std::string const& inName, double inValue, int inPrec)
+bool Element::AddAttrib(
+		std::string const& inName,
+		double inValue,
+		int inPrec)
 {
 	m_Attribs[inName] = ARBDouble::str(inValue, inPrec);
 	return true;
 }
 
-bool Element::RemoveAttrib(std::string const& inName)
+bool Element::RemoveAttrib(
+		std::string const& inName)
 {
 	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1160,17 +1274,21 @@ int Element::GetElementCount() const
 	return static_cast<int>(m_Elements.size());
 }
 
-Element const& Element::GetElement(int inIndex) const
+Element const& Element::GetElement(
+		int inIndex) const
 {
 	return m_Elements[inIndex];
 }
 
-Element& Element::GetElement(int inIndex)
+Element& Element::GetElement(
+		int inIndex)
 {
 	return m_Elements[inIndex];
 }
 
-Element& Element::AddElement(std::string const& inName, int inAt)
+Element& Element::AddElement(
+		std::string const& inName,
+		int inAt)
 {
 	ASSERT(0 == m_Value.length());
 	size_t index;
@@ -1190,7 +1308,8 @@ Element& Element::AddElement(std::string const& inName, int inAt)
 	return m_Elements[index];
 }
 
-bool Element::RemoveElement(int inIndex)
+bool Element::RemoveElement(
+		int inIndex)
 {
 	bool bOk = false;
 	if (0 <= inIndex && inIndex < static_cast<int>(m_Elements.size()))
@@ -1208,7 +1327,9 @@ void Element::RemoveAllElements()
 	m_Elements.clear();
 }
 
-int Element::FindElement(std::string const& inName, int inStartFrom) const
+int Element::FindElement(
+		std::string const& inName,
+		int inStartFrom) const
 {
 	if (0 > inStartFrom)
 		inStartFrom = 0;
@@ -1221,7 +1342,9 @@ int Element::FindElement(std::string const& inName, int inStartFrom) const
 }
 
 //private
-bool Element::LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource, std::string& ioErrMsg)
+bool Element::LoadXML(
+		XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
+		std::string& ioErrMsg)
 {
 	clear();
 	bool bOk = false;
@@ -1269,20 +1392,27 @@ bool Element::LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource
 	return bOk;
 }
 
-bool Element::LoadXMLBuffer(char const* inData, unsigned int nData, std::string& ioErrMsg)
+bool Element::LoadXMLBuffer(
+		char const* inData,
+		unsigned int nData,
+		std::string& ioErrMsg)
 {
 	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
 	return LoadXML(source, ioErrMsg);
 }
 
-bool Element::LoadXMLFile(char const* inFileName, std::string& ioErrMsg)
+bool Element::LoadXMLFile(
+		char const* inFileName,
+		std::string& ioErrMsg)
 {
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
 	return LoadXML(source, ioErrMsg);
 }
 
-bool Element::SaveXML(std::ostream& outOutput, std::string const* inDTD) const
+bool Element::SaveXML(
+		std::ostream& outOutput,
+		std::string const* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");

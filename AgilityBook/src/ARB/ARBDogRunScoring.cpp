@@ -59,7 +59,7 @@ static char THIS_FILE[] = __FILE__;
 // static
 
 ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(
-	ARBConfigScoring::ScoringStyle inType)
+		ARBConfigScoring::ScoringStyle inType)
 {
 	switch (inType)
 	{
@@ -96,7 +96,8 @@ ARBDogRunScoring::ARBDogRunScoring()
 {
 }
 
-ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
+ARBDogRunScoring::ARBDogRunScoring(
+		ARBDogRunScoring const& rhs)
 	: m_type(rhs.m_type)
 	, m_bRoundTimeFaults(rhs.m_bRoundTimeFaults)
 	, m_SCT(rhs.m_SCT)
@@ -117,7 +118,8 @@ ARBDogRunScoring::~ARBDogRunScoring()
 {
 }
 
-ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
+ARBDogRunScoring& ARBDogRunScoring::operator=(
+		ARBDogRunScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -137,7 +139,8 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 	return *this;
 }
 
-bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
+bool ARBDogRunScoring::operator==(
+		ARBDogRunScoring const& rhs) const
 {
 	return m_type == rhs.m_type
 		&& m_bRoundTimeFaults == rhs.m_bRoundTimeFaults
@@ -153,16 +156,17 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 		&& m_ClosePts == rhs.m_ClosePts;
 }
 
-bool ARBDogRunScoring::operator!=(ARBDogRunScoring const& rhs) const
+bool ARBDogRunScoring::operator!=(
+		ARBDogRunScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
 
 bool ARBDogRunScoring::Load(
-	ARBConfigScoring const* inEvent,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfigScoring const* inEvent,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	std::string attrib;
 
@@ -241,7 +245,8 @@ bool ARBDogRunScoring::Load(
 	return false;
 }
 
-bool ARBDogRunScoring::Save(Element& ioTree) const
+bool ARBDogRunScoring::Save(
+		Element& ioTree) const
 {
 	switch (m_type)
 	{
@@ -290,7 +295,9 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 	return false;
 }
 
-bool ARBDogRunScoring::GetYPS(bool inTableInYPS, double& outYPS) const
+bool ARBDogRunScoring::GetYPS(
+		bool inTableInYPS,
+		double& outYPS) const
 {
 	bool bOk = false;
 	if (eTypeByTime == GetType()
@@ -305,7 +312,8 @@ bool ARBDogRunScoring::GetYPS(bool inTableInYPS, double& outYPS) const
 	return bOk;
 }
 
-double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
+double ARBDogRunScoring::GetTimeFaults(
+		ARBConfigScoring const* inScoring) const
 {
 	double timeFaults = 0.0;
 	if (ARBDogRunScoring::eTypeByTime == m_type)

@@ -68,7 +68,8 @@ ARBConfigAction::ARBConfigAction()
 {
 }
 
-ARBConfigAction::ARBConfigAction(ARBConfigAction const& rhs)
+ARBConfigAction::ARBConfigAction(
+		ARBConfigAction const& rhs)
 	: m_Verb(rhs.m_Verb)
 	, m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
@@ -80,7 +81,8 @@ ARBConfigAction::~ARBConfigAction()
 {
 }
 
-ARBConfigAction& ARBConfigAction::operator=(ARBConfigAction const& rhs)
+ARBConfigAction& ARBConfigAction::operator=(
+		ARBConfigAction const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -92,7 +94,8 @@ ARBConfigAction& ARBConfigAction::operator=(ARBConfigAction const& rhs)
 	return *this;
 }
 
-bool ARBConfigAction::operator==(ARBConfigAction const& rhs) const
+bool ARBConfigAction::operator==(
+		ARBConfigAction const& rhs) const
 {
 	return m_Verb == rhs.m_Verb
 		&& m_Venue == rhs.m_Venue
@@ -100,21 +103,23 @@ bool ARBConfigAction::operator==(ARBConfigAction const& rhs) const
 		&& m_NewName == rhs.m_NewName;
 }
 
-bool ARBConfigAction::operator!=(ARBConfigAction const& rhs) const
+bool ARBConfigAction::operator!=(
+		ARBConfigAction const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBConfigAction::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigAction::GetSearchStrings(
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
 }
 
 bool ARBConfigAction::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_ACTION_VERB, m_Verb)
 	|| 0 == m_Verb.length())
@@ -130,7 +135,8 @@ bool ARBConfigAction::Load(
 	return true;
 }
 
-bool ARBConfigAction::Save(Element& ioTree) const
+bool ARBConfigAction::Save(
+		Element& ioTree) const
 {
 	Element& action = ioTree.AddElement(TREE_ACTION);
 	action.AddAttrib(ATTRIB_ACTION_VERB, m_Verb);

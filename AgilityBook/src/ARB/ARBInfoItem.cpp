@@ -60,7 +60,7 @@ ARBInfoItem::ARBInfoItem()
 }
 
 ARBInfoItem::ARBInfoItem(
-	ARBInfoItem const& rhs)
+		ARBInfoItem const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Comment(rhs.m_Comment)
 {
@@ -71,7 +71,7 @@ ARBInfoItem::~ARBInfoItem()
 }
 
 ARBInfoItem& ARBInfoItem::operator=(
-	ARBInfoItem const& rhs)
+		ARBInfoItem const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -82,14 +82,14 @@ ARBInfoItem& ARBInfoItem::operator=(
 }
 
 bool ARBInfoItem::operator==(
-	ARBInfoItem const& rhs) const
+		ARBInfoItem const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Comment == rhs.m_Comment;
 }
 
 bool ARBInfoItem::operator!=(
-	ARBInfoItem const& rhs) const
+		ARBInfoItem const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -100,7 +100,7 @@ std::string ARBInfoItem::GetGenericName() const
 }
 
 size_t ARBInfoItem::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -117,10 +117,10 @@ size_t ARBInfoItem::GetSearchStrings(
 }
 
 bool ARBInfoItem::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback,
-	std::string const& inItemName)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback,
+		std::string const& inItemName)
 {
 	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
@@ -132,8 +132,8 @@ bool ARBInfoItem::Load(
 }
 
 bool ARBInfoItem::Save(
-	Element& ioTree,
-	std::string const& inItemName) const
+		Element& ioTree,
+		std::string const& inItemName) const
 {
 	Element& info = ioTree.AddElement(inItemName);
 	info.AddAttrib(ATTRIB_INFO_NAME, m_Name);
@@ -144,20 +144,20 @@ bool ARBInfoItem::Save(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBInfoItemList::ARBInfoItemList(
-	std::string const& inItemName)
+		std::string const& inItemName)
 	: m_ItemName(inItemName)
 {
 }
 
 ARBInfoItemList::ARBInfoItemList(
-	ARBInfoItemList const& rhs)
+		ARBInfoItemList const& rhs)
 	: ARBVector<ARBInfoItem>(rhs)
 	, m_ItemName(rhs.m_ItemName)
 {
 }
 
 ARBInfoItemList& ARBInfoItemList::operator=(
-	ARBInfoItemList const& rhs)
+		ARBInfoItemList const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -168,9 +168,9 @@ ARBInfoItemList& ARBInfoItemList::operator=(
 }
 
 bool ARBInfoItemList::Load(
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	ARBInfoItem* item = new ARBInfoItem();
 	if (!item->Load(inTree, inVersion, ioCallback, m_ItemName))
@@ -183,7 +183,7 @@ bool ARBInfoItemList::Load(
 }
 
 bool ARBInfoItemList::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -211,7 +211,7 @@ private:
 };
 
 void ARBInfoItemList::sort(
-	bool inDescending)
+		bool inDescending)
 {
 	if (2 > size())
 		return;
@@ -219,7 +219,7 @@ void ARBInfoItemList::sort(
 }
 
 size_t ARBInfoItemList::GetAllItems(
-	std::set<std::string>& outNames) const
+		std::set<std::string>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -231,7 +231,7 @@ size_t ARBInfoItemList::GetAllItems(
 }
 
 void ARBInfoItemList::CondenseContent(
-	std::set<std::string> const& inNamesInUse)
+		std::set<std::string> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
@@ -251,8 +251,8 @@ void ARBInfoItemList::CondenseContent(
 }
 
 bool ARBInfoItemList::FindItem(
-	std::string const& inName,
-	ARBInfoItem** outItem) const
+		std::string const& inName,
+		ARBInfoItem** outItem) const
 {
 	if (outItem)
 		*outItem = NULL;
@@ -273,8 +273,8 @@ bool ARBInfoItemList::FindItem(
 }
 
 bool ARBInfoItemList::AddItem(
-	std::string const& inItem,
-	ARBInfoItem** outItem)
+		std::string const& inItem,
+		ARBInfoItem** outItem)
 {
 	if (outItem)
 		*outItem = NULL;
@@ -297,7 +297,7 @@ bool ARBInfoItemList::AddItem(
 }
 
 bool ARBInfoItemList::AddItem(
-	ARBInfoItem* inItem)
+		ARBInfoItem* inItem)
 {
 	bool bAdded = false;
 	if (inItem && !FindItem(inItem->GetName()))
@@ -310,7 +310,7 @@ bool ARBInfoItemList::AddItem(
 }
 
 bool ARBInfoItemList::DeleteItem(
-	ARBInfoItem const* inItem)
+		ARBInfoItem const* inItem)
 {
 	if (inItem)
 	{

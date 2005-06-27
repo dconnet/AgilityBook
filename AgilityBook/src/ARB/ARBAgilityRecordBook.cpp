@@ -99,7 +99,8 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ErrorInvalidDocStructure(char const* const inMsg)
+std::string ErrorInvalidDocStructure(
+		char const* const inMsg)
 {
 	std::stringstream str;
 	str << INVALID_DOC_STRUCTURE;
@@ -109,9 +110,9 @@ std::string ErrorInvalidDocStructure(char const* const inMsg)
 }
 
 std::string ErrorMissingAttribute(
-	char const* const inElement,
-	char const* const inAttrib,
-	char const* const inMsg)
+		char const* const inElement,
+		char const* const inAttrib,
+		char const* const inMsg)
 {
 	std::stringstream str;
 	str << INVALID_FILE_FORMAT
@@ -125,9 +126,9 @@ std::string ErrorMissingAttribute(
 }
 
 std::string ErrorInvalidAttributeValue(
-	char const* const inElement,
-	char const* const inAttrib,
-	char const* const inMsg)
+		char const* const inElement,
+		char const* const inAttrib,
+		char const* const inMsg)
 {
 	std::stringstream str;
 	str << INVALID_FILE_FORMAT
@@ -160,13 +161,13 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // @todo: Relax strictness when reading data and handle errors better.
 //  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
-	Element const& inTree,
-	bool inCalendar,
-	bool inTraining,
-	bool inConfig,
-	bool inInfo,
-	bool inDogs,
-	ARBErrorCallback& ioCallback)
+		Element const& inTree,
+		bool inCalendar,
+		bool inTraining,
+		bool inConfig,
+		bool inInfo,
+		bool inDogs,
+		ARBErrorCallback& ioCallback)
 {
 	// Get the records ready.
 	clear();
@@ -300,12 +301,12 @@ bool ARBAgilityRecordBook::Load(
 }
 
 bool ARBAgilityRecordBook::Save(Element& outTree,
-	std::string const& inPgmVer,
-	bool inCalendar,
-	bool inTraining,
-	bool inConfig,
-	bool inInfo,
-	bool inDogs) const
+		std::string const& inPgmVer,
+		bool inCalendar,
+		bool inTraining,
+		bool inConfig,
+		bool inInfo,
+		bool inDogs) const
 {
 	outTree.clear();
 	outTree.SetName(TREE_BOOK);
@@ -354,7 +355,9 @@ void ARBAgilityRecordBook::Default()
 	m_Config.Default();
 }
 
-size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs, bool bInfo) const
+size_t ARBAgilityRecordBook::GetAllClubNames(
+		std::set<std::string>& outClubs,
+		bool bInfo) const
 {
 	outClubs.clear();
 	if (bInfo)
@@ -390,7 +393,9 @@ size_t ARBAgilityRecordBook::GetAllClubNames(std::set<std::string>& outClubs, bo
 	return outClubs.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLocations, bool bInfo) const
+size_t ARBAgilityRecordBook::GetAllTrialLocations(
+		std::set<std::string>& outLocations,
+		bool bInfo) const
 {
 	outLocations.clear();
 	if (bInfo)
@@ -420,9 +425,10 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(std::set<std::string>& outLoca
 	return outLocations.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllEventSubNames(std::string const& inVenue,
-	ARBConfigEvent const* inEvent,
-	std::set<std::string>& outNames) const
+size_t ARBAgilityRecordBook::GetAllEventSubNames(
+		std::string const& inVenue,
+		ARBConfigEvent const* inEvent,
+		std::set<std::string>& outNames) const
 {
 	outNames.clear();
 	if (!inEvent || !inEvent->HasSubNames())
@@ -457,7 +463,8 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(std::string const& inVenue,
 	return outNames.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) const
+size_t ARBAgilityRecordBook::GetAllHeights(
+		std::set<std::string>& outHeights) const
 {
 	outHeights.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -491,7 +498,9 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) co
 	return outHeights.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::string>& outJudges, bool bInfo) const
+size_t ARBAgilityRecordBook::GetAllJudges(
+		std::set<std::string>& outJudges,
+		bool bInfo) const
 {
 	outJudges.clear();
 	if (bInfo)
@@ -519,7 +528,8 @@ size_t ARBAgilityRecordBook::GetAllJudges(std::set<std::string>& outJudges, bool
 	return outJudges.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllHandlers(std::set<std::string>& outHandlers) const
+size_t ARBAgilityRecordBook::GetAllHandlers(
+		std::set<std::string>& outHandlers) const
 {
 	outHandlers.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -545,7 +555,8 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<std::string>& outHandlers) 
 	return outHandlers.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<std::string>& outFaults) const
+size_t ARBAgilityRecordBook::GetAllFaultTypes(
+		std::set<std::string>& outFaults) const
 {
 	outFaults.clear();
 	for (ARBConfigFaultList::const_iterator iterFault = m_Config.GetFaults().begin();

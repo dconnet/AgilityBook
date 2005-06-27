@@ -65,7 +65,7 @@ ARBDogReferenceRun::ARBDogReferenceRun()
 }
 
 ARBDogReferenceRun::ARBDogReferenceRun(
-	ARBDogReferenceRun const& rhs)
+		ARBDogReferenceRun const& rhs)
 	: m_Q(rhs.m_Q)
 	, m_Place(rhs.m_Place)
 	, m_Name(rhs.m_Name)
@@ -82,7 +82,7 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 }
 
 ARBDogReferenceRun& ARBDogReferenceRun::operator=(
-	ARBDogReferenceRun const& rhs)
+		ARBDogReferenceRun const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -99,7 +99,7 @@ ARBDogReferenceRun& ARBDogReferenceRun::operator=(
 }
 
 bool ARBDogReferenceRun::operator==(
-	ARBDogReferenceRun const& rhs) const
+		ARBDogReferenceRun const& rhs) const
 {
 	return m_Q == rhs.m_Q
 		&& m_Place == rhs.m_Place
@@ -112,13 +112,13 @@ bool ARBDogReferenceRun::operator==(
 }
 
 bool ARBDogReferenceRun::operator!=(
-	ARBDogReferenceRun const& rhs) const
+		ARBDogReferenceRun const& rhs) const
 {
 	return !operator==(rhs);
 }
 
 size_t ARBDogReferenceRun::GetSearchStrings(
-	std::set<std::string>& ioStrings) const
+		std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -150,10 +150,10 @@ size_t ARBDogReferenceRun::GetSearchStrings(
 }
 
 bool ARBDogReferenceRun::Load(
-	ARBConfig const& inConfig,
-	Element const& inTree,
-	ARBVersion const& inVersion,
-	ARBErrorCallback& ioCallback)
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
 {
 	std::string attrib;
 
@@ -197,7 +197,7 @@ bool ARBDogReferenceRun::Load(
 }
 
 bool ARBDogReferenceRun::Save(
-	Element& ioTree) const
+		Element& ioTree) const
 {
 	Element& refRun = ioTree.AddElement(TREE_REF_RUN);
 	m_Q.Save(refRun, ATTRIB_REF_RUN_Q);
@@ -231,7 +231,7 @@ bool ARBDogReferenceRun::Save(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogReferenceRunList::AddReferenceRun(
-	ARBDogReferenceRun* inRef)
+		ARBDogReferenceRun* inRef)
 {
 	bool bAdded = false;
 	if (inRef)
@@ -244,7 +244,7 @@ bool ARBDogReferenceRunList::AddReferenceRun(
 }
 
 bool ARBDogReferenceRunList::DeleteReferenceRun(
-	ARBDogReferenceRun const* inRef)
+		ARBDogReferenceRun const* inRef)
 {
 	if (inRef)
 	{
