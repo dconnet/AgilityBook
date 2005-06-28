@@ -45,10 +45,11 @@ class CAgilityBookDoc;
 class CDlgExistingPoints : public CDlgBaseDialog
 {
 public:
-	CDlgExistingPoints(CAgilityBookDoc* pDoc,
-		ARBDogExistingPointsList& points,
-		ARBDogExistingPoints* pExistingPoints,
-		CWnd* pParent = NULL);
+	CDlgExistingPoints(
+			CAgilityBookDoc* pDoc,
+			ARBDogExistingPointsList& points,
+			ARBDogExistingPoints* pExistingPoints,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

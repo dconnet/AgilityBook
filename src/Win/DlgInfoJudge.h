@@ -46,7 +46,10 @@ class CDlgInfoJudge : public CDlgBaseDialog
 {
 // Construction
 public:
-	CDlgInfoJudge(CAgilityBookDoc* pDoc, ARBInfo::eInfoType inType, CWnd* pParent = NULL);
+	CDlgInfoJudge(
+			CAgilityBookDoc* pDoc,
+			ARBInfo::eInfoType inType,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

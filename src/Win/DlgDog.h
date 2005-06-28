@@ -52,7 +52,11 @@ class CDlgDog : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgDog)
 public:
-	CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent = NULL, UINT iSelectPage = 0);
+	CDlgDog(
+			CAgilityBookDoc* pDoc,
+			ARBDog* pDog,
+			CWnd* pParent = NULL,
+			UINT iSelectPage = 0);
 	virtual ~CDlgDog();
 
 private:

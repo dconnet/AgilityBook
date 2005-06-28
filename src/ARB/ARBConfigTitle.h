@@ -87,9 +87,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -112,8 +112,8 @@ public:
 	 * @return The complete name.
 	 */
 	std::string GetCompleteName(
-		short inInstance = 0,
-		bool bAbbrevFirst = true) const;
+			short inInstance = 0,
+			bool bAbbrevFirst = true) const;
 
 	/*
 	 * Getters/setters.
@@ -206,10 +206,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-		std::string const& inName,
-		short inInstance,
-		bool bAbbrevFirst = true,
-		ARBConfigTitle** outTitle = NULL) const;
+			std::string const& inName,
+			short inInstance,
+			bool bAbbrevFirst = true,
+			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find a title.
@@ -218,8 +218,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-		std::string const& inName,
-		ARBConfigTitle** outTitle = NULL) const;
+			std::string const& inName,
+			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Add a title.
@@ -228,8 +228,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTitle(
-		std::string const& inName,
-		ARBConfigTitle** outTitle = NULL);
+			std::string const& inName,
+			ARBConfigTitle** outTitle = NULL);
 
 	/**
 	 * Add a title.

@@ -77,9 +77,11 @@ static char THIS_FILE[] = __FILE__;
 
 class CAgilityBookViewTrainingData
 {
-	friend int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
+	friend int CALLBACK CompareTraining(LPARAM, LPARAM, LPARAM);
 public:
-	CAgilityBookViewTrainingData(CAgilityBookViewTraining* pView, ARBTraining* pTraining)
+	CAgilityBookViewTrainingData(
+			CAgilityBookViewTraining* pView,
+			ARBTraining* pTraining)
 		: m_RefCount(1)
 		, m_pView(pView)
 		, m_pTraining(pTraining)
@@ -204,7 +206,10 @@ struct SORT_TRAINING_INFO
 	int nCol;
 };
 
-int CALLBACK CompareTraining(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareTraining(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	SORT_TRAINING_INFO* sortInfo = reinterpret_cast<SORT_TRAINING_INFO*>(lParam3);
 	if (!sortInfo || 0 == sortInfo->nCol)
@@ -388,7 +393,10 @@ void CAgilityBookViewTraining::OnInitialUpdate()
 	CListView2::OnInitialUpdate();
 }
 
-void CAgilityBookViewTraining::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void CAgilityBookViewTraining::OnActivateView(
+		BOOL bActivate,
+		CView* pActivateView,
+		CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
@@ -401,7 +409,10 @@ void CAgilityBookViewTraining::OnActivateView(BOOL bActivate, CView* pActivateVi
 	}
 }
 
-void CAgilityBookViewTraining::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+void CAgilityBookViewTraining::OnUpdate(
+		CView* pSender,
+		LPARAM lHint,
+		CObject* pHint)
 {
 	if (0 == lHint || ((UPDATE_TRAINING_VIEW | UPDATE_OPTIONS) & lHint))
 		LoadData();
@@ -429,7 +440,9 @@ CAgilityBookDoc* CAgilityBookViewTraining::GetDocument() const // non-debug vers
 /////////////////////////////////////////////////////////////////////////////
 // Printing
 
-void CAgilityBookViewTraining::GetPrintLine(int nItem, CStringArray& line)
+void CAgilityBookViewTraining::GetPrintLine(
+		int nItem,
+		CStringArray& line)
 {
 	CListView2::GetPrintLine(nItem, line);
 }
@@ -579,14 +592,18 @@ void CAgilityBookViewTraining::LoadData()
 
 // CAgilityBookViewTraining message handlers
 
-void CAgilityBookViewTraining::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewTraining::OnRclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
 
-void CAgilityBookViewTraining::OnContextMenu(CWnd* pWnd, CPoint point)
+void CAgilityBookViewTraining::OnContextMenu(
+		CWnd* pWnd,
+		CPoint point)
 {
 	int index = GetSelection();
 	if (0 > index)
@@ -618,7 +635,9 @@ void CAgilityBookViewTraining::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CAgilityBookViewTraining::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewTraining::OnColumnclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	HeaderSort(abs(m_SortColumn.GetColumn())-1, CHeaderCtrl2::eNoSort);
@@ -635,7 +654,9 @@ void CAgilityBookViewTraining::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewTraining::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewTraining::OnGetdispinfo(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -648,7 +669,9 @@ void CAgilityBookViewTraining::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewTraining::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewTraining::OnDeleteitem(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CAgilityBookViewTrainingData *pData = reinterpret_cast<CAgilityBookViewTrainingData*>(pNMListView->lParam);
@@ -658,13 +681,17 @@ void CAgilityBookViewTraining::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewTraining::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewTraining::OnDblclk(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnTrainingEdit();
 	*pResult = 0;
 }
 
-void CAgilityBookViewTraining::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewTraining::OnKeydown(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)

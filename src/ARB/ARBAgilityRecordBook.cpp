@@ -99,8 +99,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ErrorInvalidDocStructure(
-		char const* const inMsg)
+std::string ErrorInvalidDocStructure(char const* const inMsg)
 {
 	std::stringstream str;
 	str << INVALID_DOC_STRUCTURE;
@@ -463,8 +462,7 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(
 	return outNames.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllHeights(
-		std::set<std::string>& outHeights) const
+size_t ARBAgilityRecordBook::GetAllHeights(std::set<std::string>& outHeights) const
 {
 	outHeights.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -528,8 +526,7 @@ size_t ARBAgilityRecordBook::GetAllJudges(
 	return outJudges.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllHandlers(
-		std::set<std::string>& outHandlers) const
+size_t ARBAgilityRecordBook::GetAllHandlers(std::set<std::string>& outHandlers) const
 {
 	outHandlers.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -555,8 +552,7 @@ size_t ARBAgilityRecordBook::GetAllHandlers(
 	return outHandlers.size();
 }
 
-size_t ARBAgilityRecordBook::GetAllFaultTypes(
-		std::set<std::string>& outFaults) const
+size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<std::string>& outFaults) const
 {
 	outFaults.clear();
 	for (ARBConfigFaultList::const_iterator iterFault = m_Config.GetFaults().begin();

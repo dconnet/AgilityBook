@@ -67,7 +67,9 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CWizardExport, CDlgBasePropertyPage)
 
-CWizardExport::CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc)
+CWizardExport::CWizardExport(
+		CWizard* pSheet,
+		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardExport::IDD)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
@@ -230,7 +232,10 @@ void CWizardExport::UpdateButtons()
 	m_pSheet->SetWizardButtons(dwWiz);
 }
 
-CString CWizardExport::AddPreviewData(int inLine, int inCol, CString inData)
+CString CWizardExport::AddPreviewData(
+		int inLine,
+		int inCol,
+		CString inData)
 {
 	// TODO: Add option to allow CRs?
 	inData.Replace("\n", " ");

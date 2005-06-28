@@ -66,7 +66,9 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CWizardImport, CDlgBasePropertyPage)
 
-CWizardImport::CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc)
+CWizardImport::CWizardImport(
+		CWizard* pSheet,
+		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardImport::IDD)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
@@ -208,7 +210,12 @@ void CWizardImport::UpdateButtons()
 	m_pSheet->SetWizardButtons(dwWiz);
 }
 
-static bool GetField(const CString& delim, CString& ioStr, CString& outFld, int curFld, INT_PTR maxFlds)
+static bool GetField(
+		const CString& delim,
+		CString& ioStr,
+		CString& outFld,
+		int curFld,
+		INT_PTR maxFlds)
 {
 	outFld.Empty();
 	if (ioStr.IsEmpty())
@@ -437,7 +444,9 @@ LRESULT CWizardImport::OnWizardBack()
 	return IDD_WIZARD_START;
 }
 
-static ARBDogRun* CreateRun(ARBDogRun* pRun, ARBConfigScoring const* pScoring)
+static ARBDogRun* CreateRun(
+		ARBDogRun* pRun,
+		ARBConfigScoring const* pScoring)
 {
 	if (!pRun)
 	{
@@ -459,7 +468,10 @@ static std::string GetPrimaryVenue(std::string const& venues)
 	return venue;
 }
 
-static void BreakLine(char inSep, std::string inStr, std::vector<std::string>& outFields)
+static void BreakLine(
+		char inSep,
+		std::string inStr,
+		std::vector<std::string>& outFields)
 {
 	outFields.clear();
 	std::string::size_type pos = inStr.find(inSep);
@@ -1184,7 +1196,9 @@ void CWizardImport::OnImportKillFocus()
 		UpdatePreview();
 }
 
-void CWizardImport::OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult) 
+void CWizardImport::OnDeltaposImportRowSpin(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_UPDOWN* pNMUpDown = reinterpret_cast<NM_UPDOWN*>(pNMHDR);
 	// There is no "changed" msg, only the "changing".

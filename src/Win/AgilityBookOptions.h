@@ -61,8 +61,13 @@ struct CFontInfo
 	int size;
 	bool italic;
 	bool bold;
-	void CreateFont(CFont& font, CDC* pDC = NULL);
-	void CreateFont(CFontDialog const& dlg, CFont& font, CDC* pDC = NULL);
+	void CreateFont(
+			CFont& font,
+			CDC* pDC = NULL);
+	void CreateFont(
+			CFontDialog const& dlg,
+			CFont& font,
+			CDC* pDC = NULL);
 };
 
 struct CVenueFilter
@@ -117,28 +122,30 @@ class CAgilityBookOptions
 public:
 	// Helper functions
 	static bool IsFilterEnabled();
-	static bool IsDateVisible(ARBDate const& startDate, ARBDate const& endDate);
+	static bool IsDateVisible(
+			ARBDate const& startDate,
+			ARBDate const& endDate);
 	static bool IsTitleVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTitle const* pTitle);
+			std::vector<CVenueFilter> const& venues,
+			ARBDogTitle const* pTitle);
 	static bool IsVenueVisible(
-		std::vector<CVenueFilter> const& venues,
-		std::string const& venue);
+			std::vector<CVenueFilter> const& venues,
+			std::string const& venue);
 	static bool IsTrialVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrial const* pTrial);
+			std::vector<CVenueFilter> const& venues,
+			ARBDogTrial const* pTrial);
 	static unsigned short IsRunVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrial const* pTrial,
-		ARBDogRun const* pRun);
+			std::vector<CVenueFilter> const& venues,
+			ARBDogTrial const* pTrial,
+			ARBDogRun const* pRun);
 	static bool IsRunVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBConfigVenue const* pVenue,
-		ARBDogTrial const* pTrial,
-		ARBDogRun const* pRun);
+			std::vector<CVenueFilter> const& venues,
+			ARBConfigVenue const* pVenue,
+			ARBDogTrial const* pTrial,
+			ARBDogRun const* pRun);
 	static bool IsTrainingLogVisible(
-		std::set<std::string> const& names,
-		ARBTraining const* pTraining);
+			std::set<std::string> const& names,
+			ARBTraining const* pTraining);
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
 	static void SetAutoDeleteCalendarEntries(bool bAuto);
@@ -207,10 +214,18 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
-	static void GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting);
-	static void SetCalendarDateFontInfo(CFontInfo const& info, BOOL bPrinting);
-	static void GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting);
-	static void SetCalendarTextFontInfo(CFontInfo const& info, BOOL bPrinting);
+	static void GetCalendarDateFontInfo(
+			CFontInfo& info,
+			BOOL bPrinting);
+	static void SetCalendarDateFontInfo(
+			CFontInfo const& info,
+			BOOL bPrinting);
+	static void GetCalendarTextFontInfo(
+			CFontInfo& info,
+			BOOL bPrinting);
+	static void SetCalendarTextFontInfo(
+			CFontInfo const& info,
+			BOOL bPrinting);
 	// Last entered options
 	static CString GetLastEnteredDivision();
 	static void SetLastEnteredDivision(char const* inLast);
@@ -234,10 +249,20 @@ public:
 	};
 	static int GetImportStartRow();
 	static void SetImportStartRow(int row);
-	static void GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter);
-	static void SetImportExportDelimiters(bool bImport, int delim, CString const& delimiter);
-	static void GetImportExportDateFormat(bool bImport, ARBDate::DateFormat& outFormat);
-	static void SetImportExportDateFormat(bool bImport, ARBDate::DateFormat inFormat);
+	static void GetImportExportDelimiters(
+			bool bImport,
+			int& delim,
+			CString& delimiter);
+	static void SetImportExportDelimiters(
+			bool bImport,
+			int delim,
+			CString const& delimiter);
+	static void GetImportExportDateFormat(
+			bool bImport,
+			ARBDate::DateFormat& outFormat);
+	static void SetImportExportDateFormat(
+			bool bImport,
+			ARBDate::DateFormat inFormat);
 	typedef enum
 	{
 		eUnknown	= 0x0000,
@@ -260,7 +285,7 @@ public:
 	static bool AutoShowSplashScreen();
 	static void AutoShowSplashScreen(bool bAutoShow);
 	static CString GetSplashImage();
-	static void SetSplashImage(const CString& filename);
+	static void SetSplashImage(CString const& filename);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
 	typedef enum
@@ -273,13 +298,21 @@ public:
 		eTraining	= 5,
 	} FormattedDate;
 	static ARBDate::DateFormat GetDateFormat(FormattedDate inItem);
-	static void SetDateFormat(FormattedDate inItem, ARBDate::DateFormat inFormat);
+	static void SetDateFormat(
+			FormattedDate inItem,
+			ARBDate::DateFormat inFormat);
 
 protected:
 	friend class CDlgAssignColumns;
 	// CDlgAssignColumns has some structs for used to ensure validity.
-	static void GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int>& outValues);
-	static void SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int> const& inValues);
+	static void GetColumnOrder(
+			ColumnOrder eOrder,
+			size_t idxColumn,
+			std::vector<int>& outValues);
+	static void SetColumnOrder(
+			ColumnOrder eOrder,
+			size_t idxColumn,
+			std::vector<int> const& inValues);
 public:
 	// Special clipboard formats
 	typedef enum

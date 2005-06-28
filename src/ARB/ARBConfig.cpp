@@ -67,8 +67,7 @@ ARBConfig::ARBConfig()
 {
 }
 
-ARBConfig::ARBConfig(
-		ARBConfig const& rhs)
+ARBConfig::ARBConfig(ARBConfig const& rhs)
 	: m_Version(rhs.m_Version)
 	, m_Actions(rhs.m_Actions)
 	, m_Venues(rhs.m_Venues)
@@ -82,8 +81,7 @@ ARBConfig::~ARBConfig()
 	clear();
 }
 
-ARBConfig& ARBConfig::operator=(
-		ARBConfig const& rhs)
+ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -96,8 +94,7 @@ ARBConfig& ARBConfig::operator=(
 	return *this;
 }
 
-bool ARBConfig::operator==(
-		ARBConfig const& rhs) const
+bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
 	return m_Version == rhs.m_Version
 		&& m_Actions == rhs.m_Actions
@@ -106,8 +103,7 @@ bool ARBConfig::operator==(
 		&& m_OtherPoints == rhs.m_OtherPoints;
 }
 
-bool ARBConfig::operator!=(
-		ARBConfig const& rhs) const
+bool ARBConfig::operator!=(ARBConfig const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -190,8 +186,7 @@ bool ARBConfig::Load(
 	return true;
 }
 
-bool ARBConfig::Save(
-		Element& ioTree) const
+bool ARBConfig::Save(Element& ioTree) const
 {
 	Element& config = ioTree.AddElement(TREE_CONFIG);
 	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);

@@ -41,7 +41,9 @@ class ARBDogRunPartner;
 class CDlgPartner : public CDlgBaseDialog
 {
 public:
-	CDlgPartner(ARBDogRunPartner* partner, CWnd* pParent = NULL);
+	CDlgPartner(
+			ARBDogRunPartner* partner,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

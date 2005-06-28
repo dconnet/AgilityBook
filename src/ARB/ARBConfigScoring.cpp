@@ -62,8 +62,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ARBConfigScoring::GetScoringStyleStr(
-		ScoringStyle inStyle)
+std::string ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 {
 	std::string style;
 	switch (inStyle)
@@ -115,8 +114,7 @@ ARBConfigScoring::ARBConfigScoring()
 {
 }
 
-ARBConfigScoring::ARBConfigScoring(
-		ARBConfigScoring const& rhs)
+ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	: m_ValidFrom(rhs.m_ValidFrom)
 	, m_ValidTo(rhs.m_ValidTo)
 	, m_Division(rhs.m_Division)
@@ -141,8 +139,7 @@ ARBConfigScoring::~ARBConfigScoring()
 {
 }
 
-ARBConfigScoring& ARBConfigScoring::operator=(
-		ARBConfigScoring const& rhs)
+ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -167,8 +164,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(
 	return *this;
 }
 
-bool ARBConfigScoring::operator==(
-		ARBConfigScoring const& rhs) const
+bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 {
 	return m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
@@ -189,8 +185,7 @@ bool ARBConfigScoring::operator==(
 		&& m_LifePoints == rhs.m_LifePoints;
 }
 
-bool ARBConfigScoring::operator!=(
-		ARBConfigScoring const& rhs) const
+bool ARBConfigScoring::operator!=(ARBConfigScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -203,8 +198,7 @@ std::string ARBConfigScoring::GetGenericName() const
 	return name;
 }
 
-size_t ARBConfigScoring::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigScoring::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -394,8 +388,7 @@ bool ARBConfigScoring::Load(
 	return true;
 }
 
-bool ARBConfigScoring::Save(
-		Element& ioTree) const
+bool ARBConfigScoring::Save(Element& ioTree) const
 {
 	Element& scoring = ioTree.AddElement(TREE_SCORING);
 	if (m_ValidFrom.IsValid())

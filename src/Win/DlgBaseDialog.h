@@ -40,8 +40,12 @@ class CDlgBaseDialog : public CDialog
 {
 	DECLARE_DYNAMIC(CDlgBaseDialog)
 public:
-	explicit CDlgBaseDialog(LPCTSTR lpszTemplateName, CWnd* pParentWnd = NULL);
-	explicit CDlgBaseDialog(UINT nIDTemplate, CWnd* pParentWnd = NULL);
+	explicit CDlgBaseDialog(
+			LPCTSTR lpszTemplateName,
+			CWnd* pParentWnd = NULL);
+	explicit CDlgBaseDialog(
+			UINT nIDTemplate,
+			CWnd* pParentWnd = NULL);
 
 private:
 // Dialog Data

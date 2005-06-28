@@ -40,7 +40,6 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgOptionsCalendar.h"
-#include ".\dlgoptionscalendar.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -113,7 +112,9 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgOptionsCalendar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CDlgOptionsCalendar::OnDrawItem(
+		int nIDCtl,
+		LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CStatic* pCtrl = NULL;
 	COLORREF color = 0;

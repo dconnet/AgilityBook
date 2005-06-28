@@ -72,7 +72,11 @@ private:
 	LifeTimePointInfo(); // Not implemented, needed for <list>
 #endif
 public:
-	LifeTimePointInfo(std::string const& inDiv, std::string const& inLevel, int inPoints, int inFiltered);
+	LifeTimePointInfo(
+			std::string const& inDiv,
+			std::string const& inLevel,
+			int inPoints,
+			int inFiltered);
 	std::string div;
 	std::string level;
 	int points;
@@ -89,7 +93,10 @@ private:
 	OtherPtInfo(); // Not implemented, needed for <list>
 #endif
 public:
-	OtherPtInfo(ARBDogTrial const* pTrial, ARBDogRun const* pRun, int score);
+	OtherPtInfo(
+			ARBDogTrial const* pTrial,
+			ARBDogRun const* pRun,
+			int score);
 	OtherPtInfo(ARBDogExistingPoints const* pExisting);
 	ARBDogTrial const* m_pTrial;
 	ARBDogRun const* m_pRun;
@@ -127,7 +134,9 @@ protected:
 class PointsDataDog : public PointsDataBase
 {
 public:
-	PointsDataDog(CAgilityBookViewPoints* pView, ARBDog* pDog);
+	PointsDataDog(
+			CAgilityBookViewPoints* pView,
+			ARBDog* pDog);
 	~PointsDataDog();
 
 	virtual std::string OnNeedText(size_t index) const;
@@ -145,7 +154,10 @@ protected:
 class PointsDataVenue : public PointsDataBase
 {
 public:
-	PointsDataVenue(CAgilityBookViewPoints* pView, ARBDog* pDog, ARBConfigVenue* pVenue);
+	PointsDataVenue(
+			CAgilityBookViewPoints* pView,
+			ARBDog* pDog,
+			ARBConfigVenue* pVenue);
 	~PointsDataVenue();
 
 	virtual std::string OnNeedText(size_t index) const;
@@ -164,7 +176,10 @@ protected:
 class PointsDataTitle : public PointsDataBase
 {
 public:
-	PointsDataTitle(CAgilityBookViewPoints* pView, ARBDog* pDog, ARBDogTitle* pTitle);
+	PointsDataTitle(
+			CAgilityBookViewPoints* pView,
+			ARBDog* pDog,
+			ARBDogTitle* pTitle);
 	~PointsDataTitle();
 
 	virtual std::string OnNeedText(size_t index) const;
@@ -183,18 +198,19 @@ protected:
 class PointsDataEvent : public PointsDataBase
 {
 public:
-	PointsDataEvent(CAgilityBookViewPoints* pView,
-		ARBDog const* inDog,
-		std::list<RunInfo>& inMatching,
-		ARBConfigVenue const* inVenue,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		ARBConfigEvent const* inEvent,
-		std::string const& inRunCount,
-		std::string const& inQcount,
-		std::string const& inPts,
-		std::string const& inSuperQ,
-		std::string const& inSpeed);
+	PointsDataEvent(
+			CAgilityBookViewPoints* pView,
+			ARBDog const* inDog,
+			std::list<RunInfo>& inMatching,
+			ARBConfigVenue const* inVenue,
+			ARBConfigDivision const* inDiv,
+			ARBConfigLevel const* inLevel,
+			ARBConfigEvent const* inEvent,
+			std::string const& inRunCount,
+			std::string const& inQcount,
+			std::string const& inPts,
+			std::string const& inSuperQ,
+			std::string const& inSpeed);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -221,8 +237,14 @@ protected:
 class PointsDataLifetime : public PointsDataBase
 {
 public:
-	PointsDataLifetime(CAgilityBookViewPoints* pView, std::string const& inVenue);
-	void AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered);
+	PointsDataLifetime(
+			CAgilityBookViewPoints* pView,
+			std::string const& inVenue);
+	void AddLifetimeInfo(
+			std::string const& inDiv,
+			std::string const& inLevel,
+			int inLifetime,
+			int inFiltered);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -240,11 +262,16 @@ protected:
 class PointsDataLifetimeDiv : public PointsDataLifetime
 {
 public:
-	PointsDataLifetimeDiv(CAgilityBookViewPoints* pView,
-		std::string const& inVenue,
-		std::string const& inDiv);
+	PointsDataLifetimeDiv(
+			CAgilityBookViewPoints* pView,
+			std::string const& inVenue,
+			std::string const& inDiv);
 
-	void AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered);
+	void AddLifetimeInfo(
+			std::string const& inDiv,
+			std::string const& inLevel,
+			int inLifetime,
+			int inFiltered);
 
 	virtual std::string OnNeedText(size_t index) const;
 
@@ -260,7 +287,10 @@ protected:
 class PointsDataDoubleQs : public PointsDataBase
 {
 public:
-	PointsDataDoubleQs(CAgilityBookViewPoints* pView, int inExistingDblQs, std::set<DoubleQdata> const& inQQs);
+	PointsDataDoubleQs(
+			CAgilityBookViewPoints* pView,
+			int inExistingDblQs,
+			std::set<DoubleQdata> const& inQQs);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -278,7 +308,9 @@ protected:
 class PointsDataSpeedPts : public PointsDataBase
 {
 public:
-	PointsDataSpeedPts(CAgilityBookViewPoints* pView, int inPts);
+	PointsDataSpeedPts(
+			CAgilityBookViewPoints* pView,
+			int inPts);
 
 	virtual std::string OnNeedText(size_t index) const;
 
@@ -294,7 +326,9 @@ protected:
 class PointsDataOtherPoints : public PointsDataBase
 {
 public:
-	PointsDataOtherPoints(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList);
+	PointsDataOtherPoints(
+			CAgilityBookViewPoints* pView,
+			std::list<OtherPtInfo> const& inRunList);
 
 protected:
 	int m_Score;
@@ -304,7 +338,10 @@ protected:
 class PointsDataOtherPointsTallyAll : public PointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyAll(CAgilityBookViewPoints* pView, std::string const& inName, std::list<OtherPtInfo> const& inRunList);
+	PointsDataOtherPointsTallyAll(
+			CAgilityBookViewPoints* pView,
+			std::string const& inName,
+			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -316,7 +353,9 @@ protected:
 class PointsDataOtherPointsTallyAllByEvent : public PointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyAllByEvent(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList);
+	PointsDataOtherPointsTallyAllByEvent(
+			CAgilityBookViewPoints* pView,
+			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -325,7 +364,9 @@ public:
 class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyLevel(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList);
+	PointsDataOtherPointsTallyLevel(
+			CAgilityBookViewPoints* pView,
+			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
@@ -334,7 +375,9 @@ public:
 class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyLevelByEvent(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList);
+	PointsDataOtherPointsTallyLevelByEvent(
+			CAgilityBookViewPoints* pView,
+			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;

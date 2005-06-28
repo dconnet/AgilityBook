@@ -69,8 +69,7 @@ ARBConfigTitlePoints::ARBConfigTitlePoints(
 {
 }
 
-ARBConfigTitlePoints::ARBConfigTitlePoints(
-		ARBConfigTitlePoints const& rhs)
+ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
 {
@@ -80,8 +79,7 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
 
-ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(
-		ARBConfigTitlePoints const& rhs)
+ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -91,15 +89,13 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(
 	return *this;
 }
 
-bool ARBConfigTitlePoints::operator==(
-		ARBConfigTitlePoints const& rhs) const
+bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
 		&& m_Faults == rhs.m_Faults;
 }
 
-bool ARBConfigTitlePoints::operator!=(
-		ARBConfigTitlePoints const& rhs) const
+bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -109,8 +105,7 @@ std::string ARBConfigTitlePoints::GetGenericName() const
 	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
 
-size_t ARBConfigTitlePoints::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -146,8 +141,7 @@ bool ARBConfigTitlePoints::Load(
 	return true;
 }
 
-bool ARBConfigTitlePoints::Save(
-		Element& ioTree) const
+bool ARBConfigTitlePoints::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_TITLE_POINTS);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points);
@@ -190,8 +184,7 @@ void ARBConfigTitlePointsList::sort()
 	std::stable_sort(begin(), end(), SortConfigTitlePoints());
 }
 
-short ARBConfigTitlePointsList::GetTitlePoints(
-		double inFaults) const
+short ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 {
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -241,8 +234,7 @@ bool ARBConfigTitlePointsList::AddTitlePoints(
 	return true;
 }
 
-bool ARBConfigTitlePointsList::DeleteTitlePoints(
-		short inFaults)
+bool ARBConfigTitlePointsList::DeleteTitlePoints(short inFaults)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{

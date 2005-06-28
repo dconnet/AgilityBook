@@ -118,7 +118,7 @@ bool ShowContextHelp(HELPINFO* pHelpInfo)
 	return bOk;
 }
 
-void RunCommand(char const* pCmd)
+void RunCommand(char const* const pCmd)
 {
 	if (pCmd)
 	{
@@ -177,7 +177,10 @@ void RunCommand(char const* pCmd)
 	}
 }
 
-void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code)
+void ExpandAll(
+		CTreeCtrl& ctrl,
+		HTREEITEM hItem,
+		UINT code)
 {
 	if (NULL == hItem)
 		return;
@@ -428,7 +431,9 @@ int CAgilityBookApp::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
-void CAgilityBookApp::WinHelp(DWORD_PTR dwData, UINT nCmd)
+void CAgilityBookApp::WinHelp(
+		DWORD_PTR dwData,
+		UINT nCmd)
 {
 #if _MSC_VER < 1300
 	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, nCmd, dwData);

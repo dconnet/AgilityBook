@@ -54,7 +54,9 @@ protected:
 	bool ReadVersionFile(bool bVerbose);
 	bool IsOutOfDate();
 	bool CheckProgram();
-	void CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose);
+	void CheckConfig(
+			CAgilityBookDoc* pDoc,
+			bool bVerbose);
 
 public:
 	/**

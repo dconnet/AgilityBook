@@ -55,7 +55,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static size_t GetSelection(CListCtrl& list, std::vector<int>& indices)
+static size_t GetSelection(
+		CListCtrl& list,
+		std::vector<int>& indices)
 {
 	indices.clear();
 	POSITION pos = list.GetFirstSelectedItemPosition();
@@ -66,7 +68,10 @@ static size_t GetSelection(CListCtrl& list, std::vector<int>& indices)
 	return indices.size();
 }
 
-static void SetSelection(CListCtrl& list, std::vector<int>& indices, bool bEnsureVisible)
+static void SetSelection(
+		CListCtrl& list,
+		std::vector<int>& indices,
+		bool bEnsureVisible)
 {
 	// Clear everything.
 	POSITION pos = list.GetFirstSelectedItemPosition();
@@ -88,7 +93,10 @@ static void SetSelection(CListCtrl& list, std::vector<int>& indices, bool bEnsur
 	}
 }
 
-static void GetPrintLineImp(CListCtrl& list, int nItem, CStringArray& line)
+static void GetPrintLineImp(
+		CListCtrl& list,
+		int nItem,
+		CStringArray& line)
 {
 	line.RemoveAll();
 	int nColumns = list.GetHeaderCtrl()->GetItemCount();
@@ -165,7 +173,9 @@ void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 	FixTooltips();
 }
 
-void CHeaderCtrl2::OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult)
+void CHeaderCtrl2::OnHdnItemChanged(
+		NMHDR *pNMHDR,
+		LRESULT *pResult)
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
 	// In theory, we could just adjust the column that changed. But that
@@ -261,7 +271,9 @@ CHeaderCtrl2::SortOrder CHeaderCtrl2::GetSortOrder(int iCol) const
 	return eNoSort;
 }
 
-void CHeaderCtrl2::Sort(int iCol, SortOrder eOrder)
+void CHeaderCtrl2::Sort(
+		int iCol,
+		SortOrder eOrder)
 {
 	if (0 > iCol || iCol >= GetItemCount())
 		return;
@@ -333,13 +345,17 @@ CHeaderCtrl2::SortOrder CListCtrl2::HeaderSortOrder(int iCol) const
 	return m_SortHeader.GetSortOrder(iCol);
 }
 
-void CListCtrl2::HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder)
+void CListCtrl2::HeaderSort(
+		int iCol,
+		CHeaderCtrl2::SortOrder eOrder)
 {
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
 }
 
-int CListCtrl2::InsertColumn(int nCol, LVCOLUMN const* pColumn)
+int CListCtrl2::InsertColumn(
+		int nCol,
+		LVCOLUMN const* pColumn)
 {
 	int rc = CListCtrl::InsertColumn(nCol, pColumn);
 	if (0 <= rc && !Init())
@@ -347,7 +363,12 @@ int CListCtrl2::InsertColumn(int nCol, LVCOLUMN const* pColumn)
 	return rc;
 }
 
-int CListCtrl2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, int nWidth, int nSubItem)
+int CListCtrl2::InsertColumn(
+		int nCol,
+		LPCTSTR lpszColumnHeading,
+		int nFormat,
+		int nWidth,
+		int nSubItem)
 {
 	int rc = CListCtrl::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
 	if (0 <= rc && !Init())
@@ -355,7 +376,9 @@ int CListCtrl2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, i
 	return rc;
 }
 
-BOOL CListCtrl2::SetColumnWidth(int nCol, int cx)
+BOOL CListCtrl2::SetColumnWidth(
+		int nCol,
+		int cx)
 {
 	BOOL rc = CListCtrl::SetColumnWidth(nCol, cx);
 	if (rc && !Init())
@@ -388,20 +411,26 @@ size_t CListCtrl2::GetSelection(std::vector<int>& indices)
 	return ::GetSelection(*this, indices);
 }
 
-void CListCtrl2::SetSelection(int index, bool bEnsureVisible)
+void CListCtrl2::SetSelection(
+		int index,
+		bool bEnsureVisible)
 {
 	std::vector<int> indices;
 	indices.push_back(index);
 	::SetSelection(*this, indices, bEnsureVisible);
 }
 
-void CListCtrl2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
+void CListCtrl2::SetSelection(
+		std::vector<int>& indices,
+		bool bEnsureVisible)
 {
 	::SetSelection(*this, indices, bEnsureVisible);
 }
 
 // This allows a derived class to print a subset of columns if it wants.
-void CListCtrl2::GetPrintLine(int nItem, CStringArray& line)
+void CListCtrl2::GetPrintLine(
+		int nItem,
+		CStringArray& line)
 {
 	GetPrintLineImp(*this, nItem, line);
 }
@@ -469,13 +498,17 @@ CHeaderCtrl2::SortOrder CListView2::HeaderSortOrder(int iCol) const
 	return m_SortHeader.GetSortOrder(iCol);
 }
 
-void CListView2::HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder)
+void CListView2::HeaderSort(
+		int iCol,
+		CHeaderCtrl2::SortOrder eOrder)
 {
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
 }
 
-int CListView2::InsertColumn(int nCol, LVCOLUMN const* pColumn)
+int CListView2::InsertColumn(
+		int nCol,
+		LVCOLUMN const* pColumn)
 {
 	int rc = GetListCtrl().InsertColumn(nCol, pColumn);
 	if (0 <= rc && !Init())
@@ -483,7 +516,12 @@ int CListView2::InsertColumn(int nCol, LVCOLUMN const* pColumn)
 	return rc;
 }
 
-int CListView2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, int nWidth, int nSubItem)
+int CListView2::InsertColumn(
+		int nCol,
+		LPCTSTR lpszColumnHeading,
+		int nFormat,
+		int nWidth,
+		int nSubItem)
 {
 	int rc = GetListCtrl().InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
 	if (0 <= rc && !Init())
@@ -491,7 +529,9 @@ int CListView2::InsertColumn(int nCol, LPCTSTR lpszColumnHeading, int nFormat, i
 	return rc;
 }
 
-BOOL CListView2::SetColumnWidth(int nCol, int cx)
+BOOL CListView2::SetColumnWidth(
+		int nCol,
+		int cx)
 {
 	BOOL rc = GetListCtrl().SetColumnWidth(nCol, cx);
 	if (rc && !Init())
@@ -524,20 +564,26 @@ size_t CListView2::GetSelection(std::vector<int>& indices)
 	return ::GetSelection(GetListCtrl(), indices);
 }
 
-void CListView2::SetSelection(int index, bool bEnsureVisible)
+void CListView2::SetSelection(
+		int index,
+		bool bEnsureVisible)
 {
 	std::vector<int> indices;
 	indices.push_back(index);
 	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
 }
 
-void CListView2::SetSelection(std::vector<int>& indices, bool bEnsureVisible)
+void CListView2::SetSelection(
+		std::vector<int>& indices,
+		bool bEnsureVisible)
 {
 	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
 }
 
 // This allows a derived class to print a subset of columns if it wants.
-void CListView2::GetPrintLine(int nItem, CStringArray& line)
+void CListView2::GetPrintLine(
+		int nItem,
+		CStringArray& line)
 {
 	GetPrintLineImp(GetListCtrl(), nItem, line);
 }
@@ -567,7 +613,9 @@ BOOL CListView2::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CListView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
+void CListView2::OnBeginPrinting(
+		CDC* pDC,
+		CPrintInfo* pInfo)
 {
 	CListPrintData *pData = new CListPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
@@ -618,13 +666,17 @@ void CListView2::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	pInfo->SetMaxPage(pData->nPages);
 }
 
-void CListView2::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
+void CListView2::OnEndPrinting(
+		CDC* pDC,
+		CPrintInfo* pInfo)
 {
 	CListPrintData* pData = reinterpret_cast<CListPrintData*>(pInfo->m_lpUserData);
 	delete pData;
 }
 
-void CListView2::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+void CListView2::OnPrint(
+		CDC* pDC,
+		CPrintInfo* pInfo)
 {
 	CFontInfo fontInfo;
 	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);

@@ -69,7 +69,11 @@ CSplitter::~CSplitter()
 // CSplitter message handlers
 
 // Route messages into ALL child views, not just the active one.
-BOOL CSplitter::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
+BOOL CSplitter::OnCmdMsg(
+		UINT nID,
+		int nCode,
+		void* pExtra,
+		AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	int nRows = GetRowCount();
 	int nCols = GetColumnCount();

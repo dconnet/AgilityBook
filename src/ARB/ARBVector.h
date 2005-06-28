@@ -176,7 +176,9 @@ public:
 #endif
 	}
 
-	iterator erase(iterator inFirst, iterator inLast)
+	iterator erase(
+			iterator inFirst,
+			iterator inLast)
 	{
 		if (inFirst == inLast)
 			return inFirst;
@@ -195,7 +197,9 @@ public:
 	 * @param inMove Number of positions to move object.
 	 * @return Whether or not object was moved.
 	 */
-	bool Move(T* inItem, int inMove)
+	bool Move(
+			T* inItem,
+			int inMove)
 	{
 		bool bOk = false;
 		if (inItem)
@@ -266,9 +270,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback)
 	{
 		T* thing = new T();
 		if (!thing->Load(inTree, inVersion, ioCallback))
@@ -298,10 +302,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback)
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback)
 	{
 		T* thing = new T();
 		if (!thing->Load(inConfig, inTree, inVersion, ioCallback))

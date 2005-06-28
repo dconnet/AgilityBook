@@ -318,7 +318,10 @@ CString CDlgAssignColumns::GetNameFromColumnID(int column)
 	return name;
 }
 
-bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, std::vector<int>& values)
+bool CDlgAssignColumns::GetColumnOrder(
+		CAgilityBookOptions::ColumnOrder eOrder,
+		size_t idxColumn,
+		std::vector<int>& values)
 {
 	bool bOk = false;
 	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
@@ -332,7 +335,10 @@ bool CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, 
 	return bOk;
 }
 
-bool CDlgAssignColumns::SetColumnOrder(CAgilityBookOptions::ColumnOrder eOrder, size_t idxColumn, std::vector<int> const& values)
+bool CDlgAssignColumns::SetColumnOrder(
+		CAgilityBookOptions::ColumnOrder eOrder,
+		size_t idxColumn,
+		std::vector<int> const& values)
 {
 	bool bOk = false;
 	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
@@ -459,7 +465,9 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
-CDlgAssignColumns::CDlgAssignColumns(CAgilityBookOptions::ColumnOrder eOrder, CWnd* pParent /*=NULL*/)
+CDlgAssignColumns::CDlgAssignColumns(
+		CAgilityBookOptions::ColumnOrder eOrder,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgAssignColumns::IDD, pParent)
 	, m_eOrder(eOrder)
 	, m_bIncludeBlank(false)

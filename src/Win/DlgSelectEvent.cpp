@@ -59,7 +59,9 @@ public:
 		, m_pSubLevel(NULL)
 	{
 	}
-	CDlgSelectEventDataLevel(ARBConfigLevel const* pLevel, ARBConfigSubLevel const* pSubLevel)
+	CDlgSelectEventDataLevel(
+			ARBConfigLevel const* pLevel,
+			ARBConfigSubLevel const* pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
@@ -71,7 +73,9 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // CDlgSelectEvent dialog
 
-CDlgSelectEvent::CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent)
+CDlgSelectEvent::CDlgSelectEvent(
+		ARBConfigVenue const* pVenue,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgSelectEvent::IDD, pParent)
 	, m_pVenue(pVenue)
 {

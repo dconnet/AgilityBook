@@ -49,7 +49,9 @@ class CDlgDogPoints : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogPoints(CAgilityBookDoc* pDoc, ARBDogExistingPointsList const& points);
+	CDlgDogPoints(
+			CAgilityBookDoc* pDoc,
+			ARBDogExistingPointsList const& points);
 
 private:
 // Dialog Data

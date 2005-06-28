@@ -45,7 +45,9 @@ class CDlgReorder : public CDlgBaseDialog
 {
 // Construction
 public:
-	CDlgReorder(std::vector<ARBBase*>& items, CWnd* pParent = NULL);
+	CDlgReorder(
+			std::vector<ARBBase*>& items,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

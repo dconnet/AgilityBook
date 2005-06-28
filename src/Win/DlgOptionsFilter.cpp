@@ -106,9 +106,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 
 bool CDlgOptionsFilter::Find(
-	std::string const& venue,
-	std::string const& div,
-	std::string const& level) const
+		std::string const& venue,
+		std::string const& div,
+		std::string const& level) const
 {
 	for (std::vector<CVenueFilter>::const_iterator iter = m_VenueFilter.begin();
 		iter != m_VenueFilter.end();
@@ -122,7 +122,9 @@ bool CDlgOptionsFilter::Find(
 	return false;
 }
 
-void CDlgOptionsFilter::FillFilter(HTREEITEM hItem, CString path)
+void CDlgOptionsFilter::FillFilter(
+		HTREEITEM hItem,
+		CString path)
 {
 	if (TVI_ROOT != hItem)
 	{
@@ -296,7 +298,9 @@ void CDlgOptionsFilter::OnViewUpdate()
 	UpdateControls();
 }
 
-void CDlgOptionsFilter::OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgOptionsFilter::OnSetdispinfoVenues(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	//TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	// We could probably do this by just watching what changed. but this

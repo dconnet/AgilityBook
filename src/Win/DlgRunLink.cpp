@@ -51,7 +51,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunLink dialog
 
-CDlgRunLink::CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun)
+CDlgRunLink::CDlgRunLink(
+		CAgilityBookDoc* pDoc,
+		ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunLink::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
@@ -174,13 +176,17 @@ BOOL CDlgRunLink::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgRunLink::OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgRunLink::OnDblclkList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnEdit();
 	*pResult = 0;
 }
 
-void CDlgRunLink::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgRunLink::OnItemchangedList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();

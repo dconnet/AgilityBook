@@ -59,8 +59,7 @@ ARBDogClub::ARBDogClub()
 {
 }
 
-ARBDogClub::ARBDogClub(
-		ARBDogClub const& rhs)
+ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Venue(rhs.m_Venue)
 {
@@ -70,8 +69,7 @@ ARBDogClub::~ARBDogClub()
 {
 }
 
-ARBDogClub& ARBDogClub::operator=(
-		ARBDogClub const& rhs)
+ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -81,21 +79,18 @@ ARBDogClub& ARBDogClub::operator=(
 	return *this;
 }
 
-bool ARBDogClub::operator==(
-		ARBDogClub const& rhs) const
+bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
 }
 
-bool ARBDogClub::operator!=(
-		ARBDogClub const& rhs) const
+bool ARBDogClub::operator!=(ARBDogClub const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBDogClub::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBDogClub::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -150,8 +145,7 @@ bool ARBDogClub::Load(
 	return true;
 }
 
-bool ARBDogClub::Save(
-		Element& ioTree) const
+bool ARBDogClub::Save(Element& ioTree) const
 {
 	Element& club = ioTree.AddElement(TREE_CLUB);
 	club.AddAttrib(ATTRIB_CLUB_VENUE, m_Venue);
@@ -161,8 +155,7 @@ bool ARBDogClub::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBDogClubList::GetPrimaryClub(
-		ARBDogClub** outClub) const
+bool ARBDogClubList::GetPrimaryClub(ARBDogClub** outClub) const
 {
 	if (outClub)
 		*outClub = NULL;

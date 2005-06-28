@@ -48,7 +48,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPartner dialog
 
-CDlgPartner::CDlgPartner(ARBDogRunPartner* partner, CWnd* pParent)
+CDlgPartner::CDlgPartner(
+		ARBDogRunPartner* partner,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgPartner::IDD, pParent)
 	, m_Partner(partner)
 {

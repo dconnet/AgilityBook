@@ -90,7 +90,10 @@ bool CDlgInfoJudge::NameInfo::operator==(NameInfo const& rhs)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoJudge dialog
 
-CDlgInfoJudge::CDlgInfoJudge(CAgilityBookDoc* pDoc, ARBInfo::eInfoType inType, CWnd* pParent /*=NULL*/)
+CDlgInfoJudge::CDlgInfoJudge(
+		CAgilityBookDoc* pDoc,
+		ARBInfo::eInfoType inType,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Type(inType)
@@ -211,7 +214,9 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-int CDlgInfoJudge::OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
+int CDlgInfoJudge::OnCompareItem(
+		int nIDCtl,
+		LPCOMPAREITEMSTRUCT lpCompareItemStruct)
 {
 	CString str1;
 	if (-1 == lpCompareItemStruct->itemID1)
@@ -222,7 +227,9 @@ int CDlgInfoJudge::OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemSt
 	return str1.CollateNoCase(str2);
 }
 
-void CDlgInfoJudge::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CDlgInfoJudge::OnDrawItem(
+		int nIDCtl,
+		LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if (-1 == lpDrawItemStruct->itemID)
 		return;

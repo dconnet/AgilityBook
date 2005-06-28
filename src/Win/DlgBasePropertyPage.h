@@ -41,32 +41,36 @@ class CDlgBasePropertyPage : public CPropertyPage
 	DECLARE_DYNAMIC(CDlgBasePropertyPage)
 public:
 #if _MSC_VER < 1300
-	CDlgBasePropertyPage(UINT nIDTemplate, UINT nIDCaption = 0);
-	CDlgBasePropertyPage(LPCTSTR lpszTemplateName, UINT nIDCaption = 0);
+	CDlgBasePropertyPage(
+			UINT nIDTemplate,
+			UINT nIDCaption = 0);
+	CDlgBasePropertyPage(
+			LPCTSTR lpszTemplateName,
+			UINT nIDCaption = 0);
 #else
 	explicit CDlgBasePropertyPage(
-		UINT nIDTemplate,
-		UINT nIDCaption = 0,
-		DWORD dwSize = sizeof(PROPSHEETPAGE)
+			UINT nIDTemplate,
+			UINT nIDCaption = 0,
+			DWORD dwSize = sizeof(PROPSHEETPAGE)
 	);
 	explicit CDlgBasePropertyPage(
-		LPCTSTR lpszTemplateName,
-		UINT nIDCaption = 0,
-		DWORD dwSize = sizeof(PROPSHEETPAGE)
+			LPCTSTR lpszTemplateName,
+			UINT nIDCaption = 0,
+			DWORD dwSize = sizeof(PROPSHEETPAGE)
 	);
 	CDlgBasePropertyPage(
-		UINT nIDTemplate,
-		UINT nIDCaption,
-		UINT nIDHeaderTitle,
-		UINT nIDHeaderSubTitle = 0,
-		DWORD dwSize = sizeof(PROPSHEETPAGE)
+			UINT nIDTemplate,
+			UINT nIDCaption,
+			UINT nIDHeaderTitle,
+			UINT nIDHeaderSubTitle = 0,
+			DWORD dwSize = sizeof(PROPSHEETPAGE)
 	);
 	CDlgBasePropertyPage(
-		LPCTSTR lpszTemplateName,
-		UINT nIDCaption,
-		UINT nIDHeaderTitle,
-		UINT nIDHeaderSubTitle = 0,
-		DWORD dwSize = sizeof(PROPSHEETPAGE)
+			LPCTSTR lpszTemplateName,
+			UINT nIDCaption,
+			UINT nIDHeaderTitle,
+			UINT nIDHeaderSubTitle = 0,
+			DWORD dwSize = sizeof(PROPSHEETPAGE)
 	);
 #endif
 	~CDlgBasePropertyPage();

@@ -111,10 +111,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfigDivisionList const& inDivisions,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfigDivisionList const& inDivisions,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -362,7 +362,7 @@ inline ARBConfigLifetimePointsList& ARBConfigScoring::GetLifetimePoints()
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * A managed list of scoring objects.
+ * A managed list of scoring objects (for auto-reference counting).
  */
 class ARBConfigScoringObjects : public ARBVector<ARBConfigScoring>
 {
@@ -384,10 +384,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfigDivisionList const& inDivisions,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfigDivisionList const& inDivisions,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -398,10 +398,10 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-		std::string const& inDivision,
-		std::string const& inLevel,
-		bool inTitlePoints,
-		ARBConfigScoringObjects& outList) const;
+			std::string const& inDivision,
+			std::string const& inLevel,
+			bool inTitlePoints,
+			ARBConfigScoringObjects& outList) const;
 
 	/**
 	 * Find an event.
@@ -412,10 +412,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-		std::string const& inDivision,
-		std::string const& inLevel,
-		ARBDate const& inDate,
-		ARBConfigScoring** outEvent = NULL) const;
+			std::string const& inDivision,
+			std::string const& inLevel,
+			ARBDate const& inDate,
+			ARBConfigScoring** outEvent = NULL) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -424,8 +424,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-		std::string const& inDivision,
-		std::string const& inLevel) const;
+			std::string const& inDivision,
+			std::string const& inLevel) const;
 
 	/**
 	 * Create a new scoring method.

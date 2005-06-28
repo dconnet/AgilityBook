@@ -42,7 +42,10 @@
 class CDlgFault : public CDlgBaseDialog
 {
 public:
-	CDlgFault(std::set<std::string>& faults, LPCTSTR pFault, CWnd* pParent = NULL);
+	CDlgFault(
+			std::set<std::string>& faults,
+			LPCTSTR pFault,
+			CWnd* pParent = NULL);
 	CString GetFault() const		{return m_Faults;}
 
 private:

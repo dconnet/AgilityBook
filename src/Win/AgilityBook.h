@@ -58,7 +58,9 @@ public:
 	 * need to call help, that you use the HtmlHelp api. Overriding this
 	 * api allows MFC contexthelp to work properly.
 	 */
-	virtual void WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
+	virtual void WinHelp(
+			DWORD_PTR dwData,
+			UINT nCmd = HELP_CONTEXT);
 
 private:
 	CSingleDocTemplate* m_pDocTemplateTree;
@@ -90,5 +92,8 @@ extern CAgilityBookApp theApp;
 // Some global functions.
 class CAgilityBookDoc;
 extern bool ShowContextHelp(HELPINFO* pHelpInfo);
-extern void RunCommand(char const* pCmd);
-extern void ExpandAll(CTreeCtrl& ctrl, HTREEITEM hItem, UINT code);
+extern void RunCommand(char const* const pCmd);
+extern void ExpandAll(
+		CTreeCtrl& ctrl,
+		HTREEITEM hItem,
+		UINT code);

@@ -50,7 +50,9 @@ class CDlgDogTitles : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogTitles(CAgilityBookDoc* pDoc, ARBDogTitleList const& titles);
+	CDlgDogTitles(
+			CAgilityBookDoc* pDoc,
+			ARBDogTitleList const& titles);
 
 private:
 // Dialog Data

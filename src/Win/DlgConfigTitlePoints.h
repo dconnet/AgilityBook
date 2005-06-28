@@ -41,7 +41,11 @@
 class CDlgConfigTitlePoints : public CDlgBaseDialog
 {
 public:
-	CDlgConfigTitlePoints(short inPoints, short inFaults, BOOL bLifetime, CWnd* pParent = NULL);
+	CDlgConfigTitlePoints(
+			short inPoints,
+			short inFaults,
+			BOOL bLifetime,
+			CWnd* pParent = NULL);
 	short GetPoints() const		{return m_Points;}
 	short GetFaults() const		{return m_Faults;}
 	BOOL IsLifetime() const		{return m_LifeTime;}

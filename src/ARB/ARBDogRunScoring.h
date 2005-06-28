@@ -81,10 +81,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfigScoring const* inEvent,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfigScoring const* inEvent,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -100,13 +100,17 @@ public:
 	 * @param outYPS YPS for the run.
 	 * @return Indicates whether outYPS is valid, not all runs have YPS.
 	 */
-	bool GetYPS(bool inTableInYPS, double& outYPS) const;
+	bool GetYPS(
+			bool inTableInYPS,
+			double& outYPS) const;
 
 	/**
 	 * Getters/setters.
 	 */
 	ScoringType GetType() const;
-	void SetType(ScoringType inType, bool inRound);
+	void SetType(
+			ScoringType inType,
+			bool inRound);
 	double GetSCT() const;
 	void SetSCT(double inSCT);
 	double GetSCT2() const;
@@ -152,8 +156,8 @@ inline ARBDogRunScoring::ScoringType ARBDogRunScoring::GetType() const
 }
 
 inline void ARBDogRunScoring::SetType(
-	ARBDogRunScoring::ScoringType inType,
-	bool inRound)
+		ARBDogRunScoring::ScoringType inType,
+		bool inRound)
 {
 	m_type = inType;
 	m_bRoundTimeFaults = inRound;

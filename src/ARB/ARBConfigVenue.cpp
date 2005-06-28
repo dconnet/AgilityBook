@@ -69,8 +69,7 @@ ARBConfigVenue::ARBConfigVenue()
 {
 }
 
-ARBConfigVenue::ARBConfigVenue(
-		ARBConfigVenue const& rhs)
+ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
@@ -83,8 +82,7 @@ ARBConfigVenue::~ARBConfigVenue()
 {
 }
 
-ARBConfigVenue& ARBConfigVenue::operator=(
-		ARBConfigVenue const& rhs)
+ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -97,8 +95,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(
 	return *this;
 }
 
-bool ARBConfigVenue::operator==(
-		ARBConfigVenue const& rhs) const
+bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
@@ -107,8 +104,7 @@ bool ARBConfigVenue::operator==(
 		&& m_Events == rhs.m_Events;
 }
 
-bool ARBConfigVenue::operator!=(
-		ARBConfigVenue const& rhs) const
+bool ARBConfigVenue::operator!=(ARBConfigVenue const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -122,8 +118,7 @@ void ARBConfigVenue::clear()
 	m_Events.clear();
 }
 
-size_t ARBConfigVenue::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigVenue::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -193,8 +188,7 @@ bool ARBConfigVenue::Load(
 	return true;
 }
 
-bool ARBConfigVenue::Save(
-		Element& ioTree) const
+bool ARBConfigVenue::Save(Element& ioTree) const
 {
 	Element& venue = ioTree.AddElement(TREE_VENUE);
 	venue.AddAttrib(ATTRIB_VENUE_NAME, m_Name);
@@ -362,16 +356,14 @@ private:
 	bool m_bDescending;
 };
 
-void ARBConfigVenueList::sort(
-		bool inDescending)
+void ARBConfigVenueList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigVenue(inDescending));
 }
 
-bool ARBConfigVenueList::VerifyVenue(
-		std::string const& inVenue) const
+bool ARBConfigVenueList::VerifyVenue(std::string const& inVenue) const
 {
 	return NULL != FindVenue(inVenue);
 }
@@ -496,8 +488,7 @@ bool ARBConfigVenueList::AddVenue(
 	return true;
 }
 
-bool ARBConfigVenueList::AddVenue(
-		ARBConfigVenue* inVenue)
+bool ARBConfigVenueList::AddVenue(ARBConfigVenue* inVenue)
 {
 	if (!inVenue)
 		return false;
@@ -509,8 +500,7 @@ bool ARBConfigVenueList::AddVenue(
 	return true;
 }
 
-int ARBConfigVenueList::DeleteVenue(
-		std::string const& inVenue)
+int ARBConfigVenueList::DeleteVenue(std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)

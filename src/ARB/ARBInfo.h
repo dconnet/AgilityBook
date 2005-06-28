@@ -79,9 +79,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.

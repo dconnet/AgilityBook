@@ -49,7 +49,10 @@ class CAgilityBookDoc;
 class CDlgRunReference : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue, ARBDogRun* pRun);
+	CDlgRunReference(
+			CAgilityBookDoc* pDoc,
+			ARBConfigVenue* pVenue,
+			ARBDogRun* pRun);
 	~CDlgRunReference();
 
 private:

@@ -87,10 +87,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -113,7 +113,9 @@ public:
 	void SetVenue(std::string const& inVenue);
 	std::string const& GetRawName() const;
 	short GetInstance() const;
-	void SetName(std::string const& inName, short inInstance);
+	void SetName(
+			std::string const& inName,
+			short inInstance);
 	bool GetReceived() const;
 	void SetReceived(bool inReceived);
 	bool IsHidden() const;
@@ -161,7 +163,9 @@ inline short ARBDogTitle::GetInstance() const
 	return m_Instance;
 }
 
-inline void ARBDogTitle::SetName(std::string const& inName, short inInstance)
+inline void ARBDogTitle::SetName(
+		std::string const& inName,
+		short inInstance)
 {
 	m_Name = inName;
 	m_Instance = inInstance;
@@ -219,9 +223,9 @@ public:
 	 * @param outTitle Pointer to found title.
 	 */
 	bool FindTitle(
-		std::string const& inVenue,
-		std::string const& inTitle,
-		ARBDogTitle** outTitle = NULL) const;
+			std::string const& inVenue,
+			std::string const& inTitle,
+			ARBDogTitle** outTitle = NULL) const;
 
 	/**
 	 * Find the maximum instance of a title
@@ -229,8 +233,8 @@ public:
 	 * @param inTitle Name of title.
 	 */
 	short FindMaxInstance(
-		std::string const& inVenue,
-		std::string const& inTitle) const;
+			std::string const& inVenue,
+			std::string const& inTitle) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -239,8 +243,8 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-		std::string const& inOldVenue,
-		std::string const& inNewVenue);
+			std::string const& inOldVenue,
+			std::string const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
@@ -257,8 +261,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInDivision(
-		ARBConfigVenue const* inVenue,
-		std::string const& inDiv) const;
+			ARBConfigVenue const* inVenue,
+			std::string const& inDiv) const;
 
 	/**
 	 * Rename a division, rename any dependent objects.
@@ -268,9 +272,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameDivision(
-		ARBConfigVenue const* inVenue,
-		std::string const& inOldDiv,
-		std::string const& inNewDiv);
+			ARBConfigVenue const* inVenue,
+			std::string const& inOldDiv,
+			std::string const& inNewDiv);
 
 	/**
 	 * Delete a division, remove any dependent objects.
@@ -280,9 +284,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteDivision(
-		ARBConfig const& inConfig,
-		std::string const& inVenue,
-		std::string const& inDiv);
+			ARBConfig const& inConfig,
+			std::string const& inVenue,
+			std::string const& inDiv);
 
 	/**
 	 * Number of titles in use.
@@ -292,8 +296,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-		std::string const& inVenue,
-		std::string const& inTitle) const;
+			std::string const& inVenue,
+			std::string const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -303,9 +307,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-		std::string const& inVenue,
-		std::string const& inOldTitle,
-		std::string const& inNewTitle);
+			std::string const& inVenue,
+			std::string const& inOldTitle,
+			std::string const& inNewTitle);
 
 	/**
 	 * Add a title.

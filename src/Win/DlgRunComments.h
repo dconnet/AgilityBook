@@ -42,7 +42,9 @@ class CAgilityBookDoc;
 class CDlgRunComments : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunComments(CAgilityBookDoc* pDoc, ARBDogRun* pRun);
+	CDlgRunComments(
+			CAgilityBookDoc* pDoc,
+			ARBDogRun* pRun);
 	~CDlgRunComments();
 
 private:

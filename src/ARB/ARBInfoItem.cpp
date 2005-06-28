@@ -59,8 +59,7 @@ ARBInfoItem::ARBInfoItem()
 {
 }
 
-ARBInfoItem::ARBInfoItem(
-		ARBInfoItem const& rhs)
+ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Comment(rhs.m_Comment)
 {
@@ -70,8 +69,7 @@ ARBInfoItem::~ARBInfoItem()
 {
 }
 
-ARBInfoItem& ARBInfoItem::operator=(
-		ARBInfoItem const& rhs)
+ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -81,15 +79,13 @@ ARBInfoItem& ARBInfoItem::operator=(
 	return *this;
 }
 
-bool ARBInfoItem::operator==(
-		ARBInfoItem const& rhs) const
+bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Comment == rhs.m_Comment;
 }
 
-bool ARBInfoItem::operator!=(
-		ARBInfoItem const& rhs) const
+bool ARBInfoItem::operator!=(ARBInfoItem const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -99,8 +95,7 @@ std::string ARBInfoItem::GetGenericName() const
 	return m_Name;
 }
 
-size_t ARBInfoItem::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBInfoItem::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -143,21 +138,18 @@ bool ARBInfoItem::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBInfoItemList::ARBInfoItemList(
-		std::string const& inItemName)
+ARBInfoItemList::ARBInfoItemList(std::string const& inItemName)
 	: m_ItemName(inItemName)
 {
 }
 
-ARBInfoItemList::ARBInfoItemList(
-		ARBInfoItemList const& rhs)
+ARBInfoItemList::ARBInfoItemList(ARBInfoItemList const& rhs)
 	: ARBVector<ARBInfoItem>(rhs)
 	, m_ItemName(rhs.m_ItemName)
 {
 }
 
-ARBInfoItemList& ARBInfoItemList::operator=(
-		ARBInfoItemList const& rhs)
+ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -182,8 +174,7 @@ bool ARBInfoItemList::Load(
 	return true;
 }
 
-bool ARBInfoItemList::Save(
-		Element& ioTree) const
+bool ARBInfoItemList::Save(Element& ioTree) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -210,16 +201,14 @@ private:
 	bool m_bDescending;
 };
 
-void ARBInfoItemList::sort(
-		bool inDescending)
+void ARBInfoItemList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortInfoItem(inDescending));
 }
 
-size_t ARBInfoItemList::GetAllItems(
-		std::set<std::string>& outNames) const
+size_t ARBInfoItemList::GetAllItems(std::set<std::string>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -230,8 +219,7 @@ size_t ARBInfoItemList::GetAllItems(
 	return outNames.size();
 }
 
-void ARBInfoItemList::CondenseContent(
-		std::set<std::string> const& inNamesInUse)
+void ARBInfoItemList::CondenseContent(std::set<std::string> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
@@ -296,8 +284,7 @@ bool ARBInfoItemList::AddItem(
 	return false;
 }
 
-bool ARBInfoItemList::AddItem(
-		ARBInfoItem* inItem)
+bool ARBInfoItemList::AddItem(ARBInfoItem* inItem)
 {
 	bool bAdded = false;
 	if (inItem && !FindItem(inItem->GetName()))
@@ -309,8 +296,7 @@ bool ARBInfoItemList::AddItem(
 	return bAdded;
 }
 
-bool ARBInfoItemList::DeleteItem(
-		ARBInfoItem const* inItem)
+bool ARBInfoItemList::DeleteItem(ARBInfoItem const* inItem)
 {
 	if (inItem)
 	{

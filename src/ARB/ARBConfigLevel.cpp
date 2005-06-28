@@ -59,8 +59,7 @@ ARBConfigLevel::ARBConfigLevel()
 {
 }
 
-ARBConfigLevel::ARBConfigLevel(
-		ARBConfigLevel const& rhs)
+ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_SubLevels(rhs.m_SubLevels)
 {
@@ -70,8 +69,7 @@ ARBConfigLevel::~ARBConfigLevel()
 {
 }
 
-ARBConfigLevel& ARBConfigLevel::operator=(
-		ARBConfigLevel const& rhs)
+ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -81,21 +79,18 @@ ARBConfigLevel& ARBConfigLevel::operator=(
 	return *this;
 }
 
-bool ARBConfigLevel::operator==(
-		ARBConfigLevel const& rhs) const
+bool ARBConfigLevel::operator==(ARBConfigLevel const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_SubLevels == rhs.m_SubLevels;
 }
 
-bool ARBConfigLevel::operator!=(
-		ARBConfigLevel const& rhs) const
+bool ARBConfigLevel::operator!=(ARBConfigLevel const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBConfigLevel::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigLevel::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -124,8 +119,7 @@ bool ARBConfigLevel::Load(
 	return true;
 }
 
-bool ARBConfigLevel::Save(
-		Element& ioTree) const
+bool ARBConfigLevel::Save(Element& ioTree) const
 {
 	Element& level = ioTree.AddElement(TREE_LEVEL);
 	level.AddAttrib(ATTRIB_LEVEL_NAME, m_Name);
@@ -280,8 +274,7 @@ bool ARBConfigLevelList::AddLevel(
 	return true;
 }
 
-bool ARBConfigLevelList::AddLevel(
-		ARBConfigLevel* inLevel)
+bool ARBConfigLevelList::AddLevel(ARBConfigLevel* inLevel)
 {
 	if (!inLevel || 0 == inLevel->GetName().length())
 		return false;

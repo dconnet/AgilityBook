@@ -55,7 +55,9 @@ public:
 // Implementation
 public:
 	virtual ~CMainFrame();
-	void SetStatusText(CString const& msg, bool bFiltered);
+	void SetStatusText(
+			CString const& msg,
+			bool bFiltered);
 	void SetStatusText2(CString const& msg);
 	int GetCurTab() const;
 	void SetCurTab(int tab);
@@ -66,7 +68,10 @@ public:
 #endif
 
 protected:  // control bar embedded members
-	BOOL ReplaceView(CRuntimeClass* pViewClass, int row, int col);
+	BOOL ReplaceView(
+			CRuntimeClass* pViewClass,
+			int row,
+			int col);
 	CTabView*	m_pView;
 	CStatusBar  m_wndStatusBar;
 	CToolBar    m_wndToolBar;

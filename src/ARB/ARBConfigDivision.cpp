@@ -62,8 +62,7 @@ ARBConfigDivision::ARBConfigDivision()
 {
 }
 
-ARBConfigDivision::ARBConfigDivision(
-		ARBConfigDivision const& rhs)
+ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Levels(rhs.m_Levels)
 	, m_Titles(rhs.m_Titles)
@@ -74,8 +73,7 @@ ARBConfigDivision::~ARBConfigDivision()
 {
 }
 
-ARBConfigDivision& ARBConfigDivision::operator=(
-		ARBConfigDivision const& rhs)
+ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -86,16 +84,14 @@ ARBConfigDivision& ARBConfigDivision::operator=(
 	return *this;
 }
 
-bool ARBConfigDivision::operator==(
-		ARBConfigDivision const& rhs) const
+bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Levels == rhs.m_Levels
 		&& m_Titles == rhs.m_Titles;
 }
 
-bool ARBConfigDivision::operator!=(
-		ARBConfigDivision const& rhs) const
+bool ARBConfigDivision::operator!=(ARBConfigDivision const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -107,8 +103,7 @@ void ARBConfigDivision::clear()
 	m_Titles.clear();
 }
 
-size_t ARBConfigDivision::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigDivision::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -142,8 +137,7 @@ bool ARBConfigDivision::Load(
 	return true;
 }
 
-bool ARBConfigDivision::Save(
-		Element& ioTree) const
+bool ARBConfigDivision::Save(Element& ioTree) const
 {
 	Element& division = ioTree.AddElement(TREE_DIVISION);
 	division.AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
@@ -331,8 +325,7 @@ bool ARBConfigDivisionList::AddDivision(
 	return true;
 }
 
-bool ARBConfigDivisionList::AddDivision(
-		ARBConfigDivision* inDiv)
+bool ARBConfigDivisionList::AddDivision(ARBConfigDivision* inDiv)
 {
 	if (!inDiv
 	|| 0 == inDiv->GetName().length()
@@ -397,8 +390,7 @@ bool ARBConfigDivisionList::FindTitle(
 	return false;
 }
 
-bool ARBConfigDivisionList::DeleteTitle(
-		std::string const& inTitle)
+bool ARBConfigDivisionList::DeleteTitle(std::string const& inTitle)
 {
 	bool bDeleted = false;
 	for (iterator iter = begin(); iter != end(); ++iter)

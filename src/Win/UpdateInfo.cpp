@@ -62,7 +62,9 @@ static char THIS_FILE[] = __FILE__;
 /**
  * Read a file from the internet and return the data.
  */
-static bool ReadHttpFile(CString const& inURL, CString& outData)
+static bool ReadHttpFile(
+		CString const& inURL,
+		CString& outData)
 {
 	CWaitCursor wait;
 	outData.Empty();
@@ -233,7 +235,9 @@ bool CUpdateInfo::IsOutOfDate()
 		return false;
 }
 
-void CUpdateInfo::CheckConfig(CAgilityBookDoc* pDoc, bool bVerbose)
+void CUpdateInfo::CheckConfig(
+		CAgilityBookDoc* pDoc,
+		bool bVerbose)
 {
 	// If the parse was successful, check for the posted config version.
 	bool bUpToDate = true;

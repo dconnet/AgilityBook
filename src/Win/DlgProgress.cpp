@@ -61,12 +61,23 @@ public:
 	virtual bool SetNumProgressBars(short nBars);
 
 	// Progress bar interface (these are thin wrappers on the progress bar)
-	virtual bool SetRange(short inBar, int inLower, int inUpper);
-	virtual bool SetStep(short inBar, int inStep);
+	virtual bool SetRange(
+			short inBar,
+			int inLower,
+			int inUpper);
+	virtual bool SetStep(
+			short inBar,
+			int inStep);
 	virtual bool StepIt(short inBar);
-	virtual bool OffsetPos(short inBar, int inDelta);
-	virtual bool SetPos(short inBar, int inPos);
-	virtual bool GetPos(short inBar, int& outPos);
+	virtual bool OffsetPos(
+			short inBar,
+			int inDelta);
+	virtual bool SetPos(
+			short inBar,
+			int inPos);
+	virtual bool GetPos(
+			short inBar,
+			int& outPos);
 
 	/// Show/hide the dialog.
 	virtual void Show(bool bShow = true);
@@ -166,7 +177,10 @@ bool CDlgProgress::SetNumProgressBars(short nBars)
 	return true;
 }
 
-bool CDlgProgress::SetRange(short inBar, int inLower, int inUpper)
+bool CDlgProgress::SetRange(
+		short inBar,
+		int inLower,
+		int inUpper)
 {
 	bool bOk = false;
 	CProgressCtrl* pBar = GetBar(inBar);
@@ -178,7 +192,9 @@ bool CDlgProgress::SetRange(short inBar, int inLower, int inUpper)
 	return bOk;
 }
 
-bool CDlgProgress::SetStep(short inBar, int inStep)
+bool CDlgProgress::SetStep(
+		short inBar,
+		int inStep)
 {
 	bool bOk = false;
 	CProgressCtrl* pBar = GetBar(inBar);
@@ -202,7 +218,9 @@ bool CDlgProgress::StepIt(short inBar)
 	return bOk;
 }
 
-bool CDlgProgress::OffsetPos(short inBar, int inDelta)
+bool CDlgProgress::OffsetPos(
+		short inBar,
+		int inDelta)
 {
 	bool bOk = false;
 	CProgressCtrl* pBar = GetBar(inBar);
@@ -214,7 +232,9 @@ bool CDlgProgress::OffsetPos(short inBar, int inDelta)
 	return bOk;
 }
 
-bool CDlgProgress::SetPos(short inBar, int inPos)
+bool CDlgProgress::SetPos(
+		short inBar,
+		int inPos)
 {
 	bool bOk = false;
 	CProgressCtrl* pBar = GetBar(inBar);
@@ -226,7 +246,9 @@ bool CDlgProgress::SetPos(short inBar, int inPos)
 	return bOk;
 }
 
-bool CDlgProgress::GetPos(short inBar, int& outPos)
+bool CDlgProgress::GetPos(
+		short inBar,
+		int& outPos)
 {
 	bool bOk = false;
 	CProgressCtrl* pBar = GetBar(inBar);

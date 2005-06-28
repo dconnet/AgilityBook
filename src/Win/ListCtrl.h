@@ -56,9 +56,16 @@ public:
 	/// This function must be called whenever columns are added/removed/sized
 	void FixTooltips();
 
-	typedef enum { eNoSort, eAscending, eDescending } SortOrder;
+	typedef enum
+	{
+		eNoSort,
+		eAscending,
+		eDescending
+	} SortOrder;
 	SortOrder GetSortOrder(int iCol) const;
-	void Sort(int iCol, SortOrder eOrder);
+	void Sort(
+			int iCol,
+			SortOrder eOrder);
 
 // Overrides
 	//{{AFX_VIRTUAL(CHeaderCtrl2)
@@ -97,16 +104,26 @@ public:
 	void FixTooltips();
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
-	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
+	void HeaderSort(
+			int iCol,
+			CHeaderCtrl2::SortOrder eOrder);
 
 	/**
 	 * Override column insertion/removal so we can deal with tooltips.
 	 * Note, this must be called directly, not thru the base class.
 	 */
-	int InsertColumn(int nCol, LVCOLUMN const* pColumn);
-	int InsertColumn(int nCol, LPCTSTR lpszColumnHeading,
-		int nFormat = LVCFMT_LEFT, int nWidth = -1, int nSubItem = -1);
-	BOOL SetColumnWidth(int nCol, int cx);
+	int InsertColumn(
+			int nCol,
+			LVCOLUMN const* pColumn);
+	int InsertColumn(
+			int nCol,
+			LPCTSTR lpszColumnHeading,
+			int nFormat = LVCFMT_LEFT,
+			int nWidth = -1,
+			int nSubItem = -1);
+	BOOL SetColumnWidth(
+			int nCol,
+			int cx);
 	BOOL DeleteColumn(int nCol);
 
 	/**
@@ -117,12 +134,18 @@ public:
 	 * Returns the number of selected items.
 	 */
 	size_t GetSelection(std::vector<int>& indices);
-	void SetSelection(int index, bool bEnsureVisible = false);
-	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
+	void SetSelection(
+			int index,
+			bool bEnsureVisible = false);
+	void SetSelection(
+			std::vector<int>& indices,
+			bool bEnsureVisible = false);
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
-	virtual void GetPrintLine(int nItem, CStringArray& line);
+	virtual void GetPrintLine(
+			int nItem,
+			CStringArray& line);
 
 protected:
 	bool Init();
@@ -150,17 +173,27 @@ public:
 	void FixTooltips();
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
-	void HeaderSort(int iCol, CHeaderCtrl2::SortOrder eOrder);
+	void HeaderSort(
+			int iCol,
+			CHeaderCtrl2::SortOrder eOrder);
 
 	/**
 	 * For views, these functions should be used to insert/remove the
 	 * columns instead of calling GetListCtrl. That way we can automagically
 	 * fix the tooltips for these headers.
 	 */
-	int InsertColumn(int nCol, LVCOLUMN const* pColumn);
-	int InsertColumn(int nCol, LPCTSTR lpszColumnHeading,
-		int nFormat = LVCFMT_LEFT, int nWidth = -1, int nSubItem = -1);
-	BOOL SetColumnWidth(int nCol, int cx);
+	int InsertColumn(
+			int nCol,
+			LVCOLUMN const* pColumn);
+	int InsertColumn(
+			int nCol,
+			LPCTSTR lpszColumnHeading,
+			int nFormat = LVCFMT_LEFT,
+			int nWidth = -1,
+			int nSubItem = -1);
+	BOOL SetColumnWidth(
+			int nCol,
+			int cx);
 	BOOL DeleteColumn(int nCol);
 
 	/**
@@ -171,12 +204,18 @@ public:
 	 * Returns the number of selected items.
 	 */
 	size_t GetSelection(std::vector<int>& indices);
-	void SetSelection(int index, bool bEnsureVisible = false);
-	void SetSelection(std::vector<int>& indices, bool bEnsureVisible = false);
+	void SetSelection(
+			int index,
+			bool bEnsureVisible = false);
+	void SetSelection(
+			std::vector<int>& indices,
+			bool bEnsureVisible = false);
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
-	virtual void GetPrintLine(int nItem, CStringArray& line);
+	virtual void GetPrintLine(
+			int nItem,
+			CStringArray& line);
 
 protected:
 	bool Init();

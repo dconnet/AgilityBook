@@ -55,8 +55,12 @@ class CAgilityBookDoc;
 class CDlgRunScore : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue,
-		ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun);
+	CDlgRunScore(
+			CAgilityBookDoc* pDoc,
+			ARBConfigVenue* pVenue,
+			ARBDogTrial const* pTrial,
+			ARBDogRun const* pRealRun,
+			ARBDogRun* pRun);
 	~CDlgRunScore();
 
 private:
@@ -146,8 +150,12 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
-	bool GetText(CEdit* pEdit, short& val) const;
-	bool GetText(CEdit* pEdit, double& val) const;
+	bool GetText(
+			CEdit* pEdit,
+			short& val) const;
+	bool GetText(
+			CEdit* pEdit,
+			double& val) const;
 	bool GetEvent(ARBConfigEvent** outEvent) const;
 	bool GetScoring(ARBConfigScoring** outScoring) const;
 	void ClearLevels();

@@ -50,14 +50,18 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgBaseDialog, CDialog)
 
-CDlgBaseDialog::CDlgBaseDialog(LPCTSTR lpszTemplateName, CWnd* pParentWnd)
+CDlgBaseDialog::CDlgBaseDialog(
+		LPCTSTR lpszTemplateName,
+		CWnd* pParentWnd)
 	: CDialog(lpszTemplateName, pParentWnd)
 {
 	//{{AFX_DATA_INIT(CDlgBaseDialog)
 	//}}AFX_DATA_INIT
 }
 
-CDlgBaseDialog::CDlgBaseDialog(UINT nIDTemplate, CWnd* pParentWnd)
+CDlgBaseDialog::CDlgBaseDialog(
+		UINT nIDTemplate,
+		CWnd* pParentWnd)
 	: CDialog(nIDTemplate, pParentWnd)
 {
 }

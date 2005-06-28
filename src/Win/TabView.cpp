@@ -266,7 +266,10 @@ void CTabView::SetActiveView()
 /////////////////////////////////////////////////////////////////////////////
 // CTabView message handlers
 
-void CTabView::OnSize(UINT nType, int cx, int cy)
+void CTabView::OnSize(
+		UINT nType,
+		int cx,
+		int cy)
 {
 	CCtrlView::OnSize(nType, cx, cy);
 	if (!m_Panes.empty())
@@ -300,7 +303,9 @@ void CTabView::OnSetFocus(CWnd* pOldWnd)
 	//CCtrlView::OnSetFocus(pOldWnd);
 }
 
-void CTabView::OnSelChanging(NMHDR* pNMHDR, LRESULT* pResult)
+void CTabView::OnSelChanging(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	int nIndex = GetTabCtrl().GetCurSel();
 	if (0 > nIndex || nIndex >= GetTabCtrl().GetItemCount())
@@ -326,7 +331,9 @@ void CTabView::OnSelChanging(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CTabView::OnSelChange(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+void CTabView::OnSelChange(
+		NMHDR* /*pNMHDR*/,
+		LRESULT* pResult)
 {
 	int nIndex = GetTabCtrl().GetCurSel();
 	if (0 > nIndex || nIndex >= GetTabCtrl().GetItemCount())

@@ -41,7 +41,9 @@
 class CDlgCRCDViewer : public CDlgBaseDialog
 {
 public:
-	CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent = NULL);
+	CDlgCRCDViewer(
+			HENHMETAFILE inMetaFile,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

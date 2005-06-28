@@ -94,11 +94,11 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		ARBDogClubList const& inClubs,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig const& inConfig,
+			ARBDogClubList const& inClubs,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -123,8 +123,8 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-		std::string const& inOldName,
-		std::string const& inNewName);
+			std::string const& inOldName,
+			std::string const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
@@ -148,9 +148,9 @@ public:
 	 * @return Number of title points earned.
 	 */
 	short GetTitlePoints(
-		ARBConfigScoring const* inScoring,
-		bool* outClean = NULL,
-		short* outLifeTime = NULL) const;
+			ARBConfigScoring const* inScoring,
+			bool* outClean = NULL,
+			short* outLifeTime = NULL) const;
 
 	/**
 	 * Get the score for this run.
@@ -468,11 +468,11 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		ARBDogClubList const& inClubs,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig const& inConfig,
+			ARBDogClubList const& inClubs,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by date in ascending order. The user interface handles

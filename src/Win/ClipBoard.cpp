@@ -49,7 +49,10 @@ static char THIS_FILE[] = __FILE__;
 
 ////////////////////////////////////////////////////////////////////////////
 
-bool CopyDataToClipboard(UINT clpFmt, Element const& tree, CString const& txtForm)
+bool CopyDataToClipboard(
+		UINT clpFmt,
+		Element const& tree,
+		CString const& txtForm)
 {
 	if (!AfxGetMainWnd()->OpenClipboard())
 		return false;
@@ -90,7 +93,9 @@ bool CopyDataToClipboard(UINT clpFmt, Element const& tree, CString const& txtFor
 	return true;
 }
 
-bool GetDataFromClipboard(UINT clpFmt, Element& tree)
+bool GetDataFromClipboard(
+		UINT clpFmt,
+		Element& tree)
 {
 	bool bOk = false;
 	if (IsClipboardFormatAvailable(clpFmt))

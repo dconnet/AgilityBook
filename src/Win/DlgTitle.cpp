@@ -52,7 +52,11 @@ static char THIS_FILE[] = __FILE__;
 // CDlgTitle dialog
 
 // If pTitle is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgTitle::CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent)
+CDlgTitle::CDlgTitle(
+		ARBConfig const& config,
+		ARBDogTitleList& titles,
+		ARBDogTitle* pTitle,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTitle::IDD, pParent)
 	, m_Config(config)
 	, m_Titles(titles)

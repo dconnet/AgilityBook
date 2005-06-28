@@ -64,7 +64,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CFontInfo::CreateFont(CFont& font, CDC* pDC)
+void CFontInfo::CreateFont(
+		CFont& font,
+		CDC* pDC)
 {
 	font.DeleteObject();
 	LOGFONT logFont;
@@ -91,7 +93,10 @@ void CFontInfo::CreateFont(CFont& font, CDC* pDC)
 		font.CreatePointFontIndirect(&logFont);
 }
 
-void CFontInfo::CreateFont(CFontDialog const& dlg, CFont& font, CDC* pDC)
+void CFontInfo::CreateFont(
+		CFontDialog const& dlg,
+		CFont& font,
+		CDC* pDC)
 {
 	size = dlg.GetSize();
 	name = dlg.GetFaceName();
@@ -114,8 +119,8 @@ bool CAgilityBookOptions::IsFilterEnabled()
 }
 
 bool CAgilityBookOptions::IsDateVisible(
-	ARBDate const& startDate,
-	ARBDate const& endDate)
+		ARBDate const& startDate,
+		ARBDate const& endDate)
 {
 	if (!CAgilityBookOptions::GetViewAllDates())
 	{
@@ -136,8 +141,8 @@ bool CAgilityBookOptions::IsDateVisible(
 }
 
 bool CAgilityBookOptions::IsTitleVisible(
-	std::vector<CVenueFilter> const& venues,
-	ARBDogTitle const* pTitle)
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTitle const* pTitle)
 {
 	if (!GetViewHiddenTitles() && pTitle->IsHidden())
 		return false;
@@ -148,8 +153,8 @@ bool CAgilityBookOptions::IsTitleVisible(
 }
 
 bool CAgilityBookOptions::IsVenueVisible(
-	std::vector<CVenueFilter> const& venues,
-	std::string const& venue)
+		std::vector<CVenueFilter> const& venues,
+		std::string const& venue)
 {
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
@@ -166,8 +171,8 @@ bool CAgilityBookOptions::IsVenueVisible(
 }
 
 bool CAgilityBookOptions::IsTrialVisible(
-	std::vector<CVenueFilter> const& venues,
-	ARBDogTrial const* pTrial)
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTrial const* pTrial)
 {
 	// Yes, it seems backwards, but it is correct.
 	if (!IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
@@ -188,9 +193,9 @@ bool CAgilityBookOptions::IsTrialVisible(
 
 // Return type should be the same as ARBBase::m_nFiltered
 unsigned short CAgilityBookOptions::IsRunVisible(
-	std::vector<CVenueFilter> const& venues,
-	ARBDogTrial const* pTrial,
-	ARBDogRun const* pRun)
+		std::vector<CVenueFilter> const& venues,
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRun)
 {
 	unsigned short nVisible = 0;
 	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
@@ -250,10 +255,10 @@ unsigned short CAgilityBookOptions::IsRunVisible(
 // set the filtering to hide NADAC novice runs, the asca visibility caused
 // the novice run to appear in the nadac points listing when it shouldn't.
 bool CAgilityBookOptions::IsRunVisible(
-	std::vector<CVenueFilter> const& venues,
-	ARBConfigVenue const* pVenue,
-	ARBDogTrial const* pTrial,
-	ARBDogRun const* pRun)
+		std::vector<CVenueFilter> const& venues,
+		ARBConfigVenue const* pVenue,
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRun)
 {
 	if (1 >= pTrial->GetClubs().size())
 		return true;
@@ -279,8 +284,8 @@ bool CAgilityBookOptions::IsRunVisible(
 }
 
 bool CAgilityBookOptions::IsTrainingLogVisible(
-	std::set<std::string> const& names,
-	ARBTraining const* pTraining)
+		std::set<std::string> const& names,
+		ARBTraining const* pTraining)
 {
 	if (!CAgilityBookOptions::GetTrainingViewAllDates())
 	{
@@ -778,7 +783,9 @@ void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 	AfxGetApp()->WriteProfileInt("Common", item + "Bold", info.bold ? 1 : 0);
 }
 
-void CAgilityBookOptions::GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrinting)
+void CAgilityBookOptions::GetCalendarDateFontInfo(
+		CFontInfo& info,
+		BOOL bPrinting)
 {
 	info.name = "Times New Roman";
 	info.size = 100;
@@ -797,7 +804,9 @@ void CAgilityBookOptions::GetCalendarDateFontInfo(CFontInfo& info, BOOL bPrintin
 	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
-void CAgilityBookOptions::SetCalendarDateFontInfo(CFontInfo const& info, BOOL bPrinting)
+void CAgilityBookOptions::SetCalendarDateFontInfo(
+		CFontInfo const& info,
+		BOOL bPrinting)
 {
 	CString item("Font");
 	if (bPrinting)
@@ -809,7 +818,9 @@ void CAgilityBookOptions::SetCalendarDateFontInfo(CFontInfo const& info, BOOL bP
 	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
 }
 
-void CAgilityBookOptions::GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrinting)
+void CAgilityBookOptions::GetCalendarTextFontInfo(
+		CFontInfo& info,
+		BOOL bPrinting)
 {
 	info.name = "Times New Roman";
 	info.size = 100;
@@ -828,7 +839,9 @@ void CAgilityBookOptions::GetCalendarTextFontInfo(CFontInfo& info, BOOL bPrintin
 	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
-void CAgilityBookOptions::SetCalendarTextFontInfo(CFontInfo const& info, BOOL bPrinting)
+void CAgilityBookOptions::SetCalendarTextFontInfo(
+		CFontInfo const& info,
+		BOOL bPrinting)
 {
 	CString item("Font");
 	if (bPrinting)
@@ -909,7 +922,10 @@ void CAgilityBookOptions::SetImportStartRow(int row)
 	AfxGetApp()->WriteProfileInt("Import", "row", row);
 }
 
-void CAgilityBookOptions::GetImportExportDelimiters(bool bImport, int& delim, CString& delimiter)
+void CAgilityBookOptions::GetImportExportDelimiters(
+		bool bImport,
+		int& delim,
+		CString& delimiter)
 {
 	CString section;
 	if (bImport)
@@ -924,7 +940,10 @@ void CAgilityBookOptions::GetImportExportDelimiters(bool bImport, int& delim, CS
 		delimiter = delimiter.Left(1);
 }
 
-void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, CString const& delimiter)
+void CAgilityBookOptions::SetImportExportDelimiters(
+		bool bImport,
+		int delim,
+		CString const& delimiter)
 {
 	CString section;
 	if (bImport)
@@ -935,7 +954,9 @@ void CAgilityBookOptions::SetImportExportDelimiters(bool bImport, int delim, CSt
 	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
 }
 
-void CAgilityBookOptions::GetImportExportDateFormat(bool bImport, ARBDate::DateFormat& outFormat)
+void CAgilityBookOptions::GetImportExportDateFormat(
+		bool bImport,
+		ARBDate::DateFormat& outFormat)
 {
 	CString section;
 	if (bImport)
@@ -945,7 +966,9 @@ void CAgilityBookOptions::GetImportExportDateFormat(bool bImport, ARBDate::DateF
 	outFormat = static_cast<ARBDate::DateFormat>(AfxGetApp()->GetProfileInt(section, "dateformat", static_cast<int>(ARBDate::eDashYYYYMMDD)));
 }
 
-void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDate::DateFormat inFormat)
+void CAgilityBookOptions::SetImportExportDateFormat(
+		bool bImport,
+		ARBDate::DateFormat inFormat)
 {
 	CString section;
 	if (bImport)
@@ -955,7 +978,10 @@ void CAgilityBookOptions::SetImportExportDateFormat(bool bImport, ARBDate::DateF
 	AfxGetApp()->WriteProfileInt(section, "dateformat", static_cast<int>(inFormat));
 }
 
-void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int>& outValues)
+void CAgilityBookOptions::GetColumnOrder(
+		ColumnOrder eOrder,
+		size_t idxColumn,
+		std::vector<int>& outValues)
 {
 	CString section;
 	switch (eOrder)
@@ -1180,7 +1206,10 @@ void CAgilityBookOptions::GetColumnOrder(ColumnOrder eOrder, size_t idxColumn, s
 	}
 }
 
-void CAgilityBookOptions::SetColumnOrder(ColumnOrder eOrder, size_t idxColumn, std::vector<int> const& inValues)
+void CAgilityBookOptions::SetColumnOrder(
+		ColumnOrder eOrder,
+		size_t idxColumn,
+		std::vector<int> const& inValues)
 {
 	CString section;
 	switch (eOrder)
@@ -1250,7 +1279,7 @@ CString CAgilityBookOptions::GetSplashImage()
 	return AfxGetApp()->GetProfileString("Settings", "Splash", "");
 }
 
-void CAgilityBookOptions::SetSplashImage(const CString& filename)
+void CAgilityBookOptions::SetSplashImage(CString const& filename)
 {
 	AfxGetApp()->WriteProfileString("Settings", "Splash", filename);
 }
@@ -1285,7 +1314,9 @@ ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 	return static_cast<ARBDate::DateFormat>(val);
 }
 
-void CAgilityBookOptions::SetDateFormat(FormattedDate inItem, ARBDate::DateFormat inFormat)
+void CAgilityBookOptions::SetDateFormat(
+		FormattedDate inItem,
+		ARBDate::DateFormat inFormat)
 {
 	CString section;
 	section.Format("dateFormat%d", static_cast<int>(inItem));

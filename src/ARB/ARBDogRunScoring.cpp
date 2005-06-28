@@ -58,8 +58,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // static
 
-ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(
-		ARBConfigScoring::ScoringStyle inType)
+ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType)
 {
 	switch (inType)
 	{
@@ -96,8 +95,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 {
 }
 
-ARBDogRunScoring::ARBDogRunScoring(
-		ARBDogRunScoring const& rhs)
+ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	: m_type(rhs.m_type)
 	, m_bRoundTimeFaults(rhs.m_bRoundTimeFaults)
 	, m_SCT(rhs.m_SCT)
@@ -118,8 +116,7 @@ ARBDogRunScoring::~ARBDogRunScoring()
 {
 }
 
-ARBDogRunScoring& ARBDogRunScoring::operator=(
-		ARBDogRunScoring const& rhs)
+ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -139,8 +136,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(
 	return *this;
 }
 
-bool ARBDogRunScoring::operator==(
-		ARBDogRunScoring const& rhs) const
+bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 {
 	return m_type == rhs.m_type
 		&& m_bRoundTimeFaults == rhs.m_bRoundTimeFaults
@@ -156,8 +152,7 @@ bool ARBDogRunScoring::operator==(
 		&& m_ClosePts == rhs.m_ClosePts;
 }
 
-bool ARBDogRunScoring::operator!=(
-		ARBDogRunScoring const& rhs) const
+bool ARBDogRunScoring::operator!=(ARBDogRunScoring const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -245,8 +240,7 @@ bool ARBDogRunScoring::Load(
 	return false;
 }
 
-bool ARBDogRunScoring::Save(
-		Element& ioTree) const
+bool ARBDogRunScoring::Save(Element& ioTree) const
 {
 	switch (m_type)
 	{
@@ -312,8 +306,7 @@ bool ARBDogRunScoring::GetYPS(
 	return bOk;
 }
 
-double ARBDogRunScoring::GetTimeFaults(
-		ARBConfigScoring const* inScoring) const
+double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
 {
 	double timeFaults = 0.0;
 	if (ARBDogRunScoring::eTypeByTime == m_type)

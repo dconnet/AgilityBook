@@ -50,7 +50,9 @@ class CWizardExport : public CDlgBasePropertyPage
 
 // Construction
 public:
-	CWizardExport(CWizard* pSheet, CAgilityBookDoc* pDoc);
+	CWizardExport(
+			CWizard* pSheet,
+			CAgilityBookDoc* pDoc);
 	~CWizardExport();
 
 private:
@@ -71,7 +73,10 @@ private:
 	CString GetDelim() const;
 	CString PrepFieldOutput(LPCTSTR inStr) const;
 	void UpdateButtons();
-	CString AddPreviewData(int inLine, int inCol, CString inData);
+	CString AddPreviewData(
+			int inLine,
+			int inCol,
+			CString inData);
 	void UpdatePreview();
 
 // Overrides

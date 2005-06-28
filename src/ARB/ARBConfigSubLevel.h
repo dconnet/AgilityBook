@@ -79,9 +79,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -139,8 +139,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddSubLevel(
-		std::string const& inName,
-		ARBConfigSubLevel** outLevel = NULL);
+			std::string const& inName,
+			ARBConfigSubLevel** outLevel = NULL);
 
 	/**
 	 * Delete a sublevel.

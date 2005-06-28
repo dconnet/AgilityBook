@@ -51,7 +51,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgFault dialog
 
-CDlgFault::CDlgFault(std::set<std::string>& faults, LPCTSTR pFault, CWnd* pParent)
+CDlgFault::CDlgFault(
+		std::set<std::string>& faults,
+		LPCTSTR pFault,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFault::IDD, pParent)
 	, m_setFaults(faults)
 {

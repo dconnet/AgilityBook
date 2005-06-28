@@ -50,7 +50,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOtherPoint dialog
 
-CDlgOtherPoint::CDlgOtherPoint(ARBConfig const& config, ARBDogRunOtherPoints* pOther, CWnd* pParent)
+CDlgOtherPoint::CDlgOtherPoint(
+		ARBConfig const& config,
+		ARBDogRunOtherPoints* pOther,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgOtherPoint::IDD, pParent)
 	, m_Config(config)
 	, m_pOther(pOther)

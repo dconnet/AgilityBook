@@ -41,7 +41,9 @@
 class CDlgSelectURL : public CDlgBaseDialog
 {
 public:
-	CDlgSelectURL(LPCTSTR name, CWnd* pParent = NULL);
+	CDlgSelectURL(
+			LPCTSTR name,
+			CWnd* pParent = NULL);
 	virtual ~CDlgSelectURL();
 	char const* GetName() const	{return (LPCSTR)m_Name;}
 

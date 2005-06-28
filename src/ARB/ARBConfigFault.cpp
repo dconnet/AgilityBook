@@ -55,8 +55,7 @@ ARBConfigFault::ARBConfigFault()
 {
 }
 
-ARBConfigFault::ARBConfigFault(
-		ARBConfigFault const& rhs)
+ARBConfigFault::ARBConfigFault(ARBConfigFault const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
@@ -65,28 +64,24 @@ ARBConfigFault::~ARBConfigFault()
 {
 }
 
-ARBConfigFault& ARBConfigFault::operator=(
-		ARBConfigFault const& rhs)
+ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 {
 	if (this != &rhs)
 		m_Name = rhs.m_Name;
 	return *this;
 }
 
-bool ARBConfigFault::operator==(
-		ARBConfigFault const& rhs) const
+bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 {
 	return m_Name == rhs.m_Name;
 }
 
-bool ARBConfigFault::operator!=(
-		ARBConfigFault const& rhs) const
+bool ARBConfigFault::operator!=(ARBConfigFault const& rhs) const
 {
 	return !operator==(rhs);
 }
 
-size_t ARBConfigFault::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigFault::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -111,8 +106,7 @@ bool ARBConfigFault::Load(
 	return true;
 }
 
-bool ARBConfigFault::Save(
-		Element& ioTree) const
+bool ARBConfigFault::Save(Element& ioTree) const
 {
 	Element& element = ioTree.AddElement(TREE_FAULTTYPE);
 	element.SetValue(m_Name);
@@ -161,8 +155,7 @@ bool ARBConfigFaultList::AddFault(
 	return true;
 }
 
-bool ARBConfigFaultList::DeleteFault(
-		std::string const& inName)
+bool ARBConfigFaultList::DeleteFault(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

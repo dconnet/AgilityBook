@@ -87,10 +87,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -109,10 +109,10 @@ public:
 	 * @return Whether a QQ was earned on inDate.
 	 */
 	bool HasQQ(
-		ARBDate const& inDate,
-		ARBConfig const& inConfig,
-		std::string const& inDiv,
-		std::string const& inLevel) const;
+			ARBDate const& inDate,
+			ARBConfig const& inConfig,
+			std::string const& inDiv,
+			std::string const& inLevel) const;
 
 	/**
 	 * Get the Speed points earned for this trial.
@@ -122,9 +122,9 @@ public:
 	 * @return Number of Speed points earned.
 	 */
 	short GetSpeedPoints(
-		ARBConfig const& inConfig,
-		std::string const& inDiv,
-		std::string const& inLevel) const;
+			ARBConfig const& inConfig,
+			std::string const& inDiv,
+			std::string const& inLevel) const;
 
 	/**
 	 * Does this trial have a hosting club in the specified venue?
@@ -235,8 +235,8 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-		std::string const& inOldVenue,
-		std::string const& inNewVenue);
+			std::string const& inOldVenue,
+			std::string const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
@@ -260,8 +260,8 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-		std::string const& inOldOther,
-		std::string const& inNewOther);
+			std::string const& inOldOther,
+			std::string const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
@@ -279,9 +279,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumMultiHostedTrialsInDivision(
-		ARBConfig const& inConfig,
-		std::string const& inVenue,
-		std::string const& inDiv) const;
+			ARBConfig const& inConfig,
+			std::string const& inVenue,
+			std::string const& inDiv) const;
 
 	/**
 	 * Get the number of runs in a division.
@@ -291,8 +291,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumRunsInDivision(
-		ARBConfigVenue const* inVenue,
-		std::string const& inDiv) const;
+			ARBConfigVenue const* inVenue,
+			std::string const& inDiv) const;
 
 	/**
 	 * Rename a division, rename any dependent objects.
@@ -302,9 +302,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameDivision(
-		ARBConfigVenue const* inVenue,
-		std::string const& inOldDiv,
-		std::string const& inNewDiv);
+			ARBConfigVenue const* inVenue,
+			std::string const& inOldDiv,
+			std::string const& inNewDiv);
 
 	/**
 	 * Delete a division, remove any dependent objects.
@@ -314,9 +314,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteDivision(
-		ARBConfig const& inConfig,
-		std::string const& inVenue,
-		std::string const& inDiv);
+			ARBConfig const& inConfig,
+			std::string const& inVenue,
+			std::string const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -327,9 +327,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-		std::string const& inVenue,
-		std::string const& inDiv,
-		std::string const& inLevel) const;
+			std::string const& inVenue,
+			std::string const& inDiv,
+			std::string const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -340,10 +340,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-		std::string const& inVenue,
-		std::string const& inDiv,
-		std::string const& inOldLevel,
-		std::string const& inNewLevel);
+			std::string const& inVenue,
+			std::string const& inDiv,
+			std::string const& inOldLevel,
+			std::string const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -353,9 +353,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-		std::string const& inVenue,
-		std::string const& inDiv,
-		std::string const& inLevel);
+			std::string const& inVenue,
+			std::string const& inDiv,
+			std::string const& inLevel);
 
 	/**
 	 * Number of events in use.
@@ -365,8 +365,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-		std::string const& inVenue,
-		std::string const& inEvent) const;
+			std::string const& inVenue,
+			std::string const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -376,9 +376,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-		std::string const& inVenue,
-		std::string const& inOldEvent,
-		std::string const& inNewEvent);
+			std::string const& inVenue,
+			std::string const& inOldEvent,
+			std::string const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -387,8 +387,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-		std::string const& inVenue,
-		std::string const& inEvent);
+			std::string const& inVenue,
+			std::string const& inEvent);
 
 	/**
 	 * Add a trial.

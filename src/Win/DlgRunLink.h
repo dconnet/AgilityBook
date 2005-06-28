@@ -46,7 +46,9 @@ class CAgilityBookDoc;
 class CDlgRunLink : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunLink(CAgilityBookDoc* pDoc, ARBDogRun* pRun);
+	CDlgRunLink(
+			CAgilityBookDoc* pDoc,
+			ARBDogRun* pRun);
 	~CDlgRunLink();
 
 private:

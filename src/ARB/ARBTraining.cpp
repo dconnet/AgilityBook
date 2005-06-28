@@ -64,8 +64,7 @@ ARBTraining::ARBTraining()
 {
 }
 
-ARBTraining::ARBTraining(
-		ARBTraining const& rhs)
+ARBTraining::ARBTraining(ARBTraining const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Name(rhs.m_Name)
 	, m_SubName(rhs.m_SubName)
@@ -77,8 +76,7 @@ ARBTraining::~ARBTraining()
 {
 }
 
-ARBTraining& ARBTraining::operator=(
-		ARBTraining const& rhs)
+ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -90,8 +88,7 @@ ARBTraining& ARBTraining::operator=(
 	return *this;
 }
 
-bool ARBTraining::operator==(
-		ARBTraining const& rhs) const
+bool ARBTraining::operator==(ARBTraining const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Name == rhs.m_Name
@@ -99,8 +96,7 @@ bool ARBTraining::operator==(
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBTraining::operator!=(
-		ARBTraining const& rhs) const
+bool ARBTraining::operator!=(ARBTraining const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -110,8 +106,7 @@ std::string ARBTraining::GetGenericName() const
 	return m_Date.GetString(ARBDate::eSlashMDY);
 }
 
-size_t ARBTraining::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBTraining::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -167,8 +162,7 @@ bool ARBTraining::Load(
 	return true;
 }
 
-bool ARBTraining::Save(
-		Element& ioTree) const
+bool ARBTraining::Save(Element& ioTree) const
 {
 	Element& training = ioTree.AddElement(TREE_TRAINING);
 	training.AddAttrib(ATTRIB_TRAINING_DATE, m_Date);
@@ -200,16 +194,14 @@ private:
 	bool m_bDescending;
 };
 
-void ARBTrainingList::sort(
-		bool inDescending)
+void ARBTrainingList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortTraining(inDescending));
 }
 
-size_t ARBTrainingList::GetAllNames(
-		std::set<std::string>& outNames) const
+size_t ARBTrainingList::GetAllNames(std::set<std::string>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -221,8 +213,7 @@ size_t ARBTrainingList::GetAllNames(
 	return outNames.size();
 }
 
-size_t ARBTrainingList::GetAllSubNames(
-		std::set<std::string>& outSubNames) const
+size_t ARBTrainingList::GetAllSubNames(std::set<std::string>& outSubNames) const
 {
 	outSubNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -234,8 +225,7 @@ size_t ARBTrainingList::GetAllSubNames(
 	return outSubNames.size();
 }
 
-bool ARBTrainingList::FindTraining(
-		ARBTraining const* inTraining) const
+bool ARBTrainingList::FindTraining(ARBTraining const* inTraining) const
 {
 	if (inTraining)
 	{
@@ -248,8 +238,7 @@ bool ARBTrainingList::FindTraining(
 	return false;
 }
 
-bool ARBTrainingList::AddTraining(
-		ARBTraining* inTraining)
+bool ARBTrainingList::AddTraining(ARBTraining* inTraining)
 {
 	bool bAdded = false;
 	if (inTraining)
@@ -261,8 +250,7 @@ bool ARBTrainingList::AddTraining(
 	return bAdded;
 }
 
-bool ARBTrainingList::DeleteTraining(
-		ARBTraining const* inTraining)
+bool ARBTrainingList::DeleteTraining(ARBTraining const* inTraining)
 {
 	if (inTraining)
 	{

@@ -45,15 +45,28 @@ public:
 	virtual ~CWizardExcelExport();
 
 	virtual bool ArrayOkay() const = 0;
-	virtual bool CreateArray(long inRows, long inCols) = 0;
-	virtual bool InsertArrayData(long inRow, long inCol, CString const& inData) = 0;
-	virtual bool ExportDataArray(long inRowTop = 0, long inColLeft = 0) = 0;
+	virtual bool CreateArray(
+			long inRows,
+			long inCols) = 0;
+	virtual bool InsertArrayData(
+			long inRow,
+			long inCol,
+			CString const& inData) = 0;
+	virtual bool ExportDataArray(
+			long inRowTop = 0,
+			long inColLeft = 0) = 0;
 
 	virtual bool AllowAccess(bool bAllow) = 0;
-	virtual bool InsertData(long inRow, long inCol, COleVariant const& inData) = 0;
-	virtual bool InsertFormula(long inRowFrom, long inColFrom,
-		long inRowTo, long inColTo,
-		CString const& inFormula) = 0;
+	virtual bool InsertData(
+			long inRow,
+			long inCol,
+			COleVariant const& inData) = 0;
+	virtual bool InsertFormula(
+			long inRowFrom,
+			long inColFrom,
+			long inRowTo,
+			long inColTo,
+			CString const& inFormula) = 0;
 };
 
 class CWizardExcelImport
@@ -63,7 +76,9 @@ public:
 	virtual ~CWizardExcelImport();
 
 	virtual bool OpenFile(CString const& inFilename) = 0;
-	virtual bool GetData(std::vector< std::vector<CString> >& outData, IDlgProgress* ioProgress = NULL) = 0;
+	virtual bool GetData(
+			std::vector< std::vector<CString> >& outData,
+			IDlgProgress* ioProgress = NULL) = 0;
 };
 
 class CWizardExcelImpl;
@@ -75,7 +90,10 @@ public:
 	/// Get the maximum number of columns Excel can handle.
 	static long GetMaxCols();
 	/// Translate a given row/col into Excel notation: (0,0) -> "A1"
-	static bool GetRowCol(long inRow, long inCol, CString& outCell);
+	static bool GetRowCol(
+			long inRow,
+			long inCol,
+			CString& outCell);
 
 	CWizardExcel();
 	~CWizardExcel();

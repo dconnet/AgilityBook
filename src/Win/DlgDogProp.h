@@ -47,7 +47,9 @@ class CDlgDogProperties : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
 public:
-	CDlgDogProperties(CAgilityBookDoc* pDoc, ARBDog* pDog);
+	CDlgDogProperties(
+			CAgilityBookDoc* pDoc,
+			ARBDog* pDog);
 	~CDlgDogProperties();
 
 private:

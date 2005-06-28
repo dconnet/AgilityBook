@@ -84,10 +84,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -194,8 +194,8 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-		std::string const& inOldVenue,
-		std::string const& inNewVenue);
+			std::string const& inOldVenue,
+			std::string const& inNewVenue);
 
 	/**
 	 * Delete a venue.
@@ -211,8 +211,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindRegNum(
-		std::string const& inVenue,
-		ARBDogRegNum** outRegNum = NULL) const;
+			std::string const& inVenue,
+			ARBDogRegNum** outRegNum = NULL) const;
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -222,9 +222,9 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddRegNum(
-		std::string const& inVenue,
-		std::string const& inNumber,
-		ARBDogRegNum** outRegNum = NULL);
+			std::string const& inVenue,
+			std::string const& inNumber,
+			ARBDogRegNum** outRegNum = NULL);
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -240,6 +240,6 @@ public:
 	 * @return Number of objects deleted.
 	 */
 	int DeleteRegNum(
-		std::string const& inVenue,
-		std::string const& inNumber);
+			std::string const& inVenue,
+			std::string const& inNumber);
 };

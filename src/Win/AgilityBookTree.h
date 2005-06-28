@@ -85,13 +85,28 @@ protected: // create from serialization only
 public:
 	CAgilityBookDoc* GetDocument() const;
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBBase const* pBase) const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBDog const* pDog) const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBDogTrial const* pTrial) const;
-	CAgilityBookTreeData* FindData(HTREEITEM hItem, ARBDogRun const* pRun) const;
-	HTREEITEM InsertDog(ARBDog* pDog, bool bSelect = false);
-	HTREEITEM InsertTrial(ARBDogTrial* pTrial, HTREEITEM hParent);
-	HTREEITEM InsertRun(ARBDogTrial* pTrial, ARBDogRun* pRun, HTREEITEM hParent);
+	CAgilityBookTreeData* FindData(
+			HTREEITEM hItem,
+			ARBBase const* pBase) const;
+	CAgilityBookTreeData* FindData(
+			HTREEITEM hItem,
+			ARBDog const* pDog) const;
+	CAgilityBookTreeData* FindData(
+			HTREEITEM hItem,
+			ARBDogTrial const* pTrial) const;
+	CAgilityBookTreeData* FindData(
+			HTREEITEM hItem,
+			ARBDogRun const* pRun) const;
+	HTREEITEM InsertDog(
+			ARBDog* pDog,
+			bool bSelect = false);
+	HTREEITEM InsertTrial(
+			ARBDogTrial* pTrial,
+			HTREEITEM hParent);
+	HTREEITEM InsertRun(
+			ARBDogTrial* pTrial,
+			ARBDogRun* pRun,
+			HTREEITEM hParent);
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
@@ -105,12 +120,24 @@ public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
 	virtual void OnInitialUpdate(); // called first time after construct
-	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnActivateView(
+			BOOL bActivate,
+			CView* pActivateView,
+			CView* pDeactiveView);
+	virtual void OnUpdate(
+			CView* pSender,
+			LPARAM lHint,
+			CObject* pHint);
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnPrint(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(
+			CDC* pDC,
+			CPrintInfo* pInfo);
+	virtual void OnEndPrinting(
+			CDC* pDC,
+			CPrintInfo* pInfo);
+	virtual void OnPrint(
+			CDC* pDC,
+			CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -127,7 +154,11 @@ public:
 private:
 	void LoadData();
 	CAgilityBookTreeData* GetItemData(HTREEITEM hItem) const;
-	void PrintLine(CDC* pDC, CTreePrintData *pData, HTREEITEM hItem, int indent) const;
+	void PrintLine(
+			CDC* pDC,
+			CTreePrintData *pData,
+			HTREEITEM hItem,
+			int indent) const;
 	std::vector<int> m_Columns[3];
 	bool m_bReset;
 	bool m_bSuppressSelect;

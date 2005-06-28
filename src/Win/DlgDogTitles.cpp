@@ -82,7 +82,10 @@ typedef struct
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareTitles(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	ARBDogTitle const* pTitle1 = reinterpret_cast<ARBDogTitle const*>(lParam1);
 	ARBDogTitle const* pTitle2 = reinterpret_cast<ARBDogTitle const*>(lParam2);
@@ -149,7 +152,9 @@ int CALLBACK CompareTitles(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogTitles dialog
 
-CDlgDogTitles::CDlgDogTitles(CAgilityBookDoc* pDoc, ARBDogTitleList const& titles)
+CDlgDogTitles::CDlgDogTitles(
+		CAgilityBookDoc* pDoc,
+		ARBDogTitleList const& titles)
 	: CDlgBasePropertyPage(CDlgDogTitles::IDD)
 	, m_pDoc(pDoc)
 	, m_sortTitles("Titles")
@@ -330,7 +335,9 @@ BOOL CDlgDogTitles::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgDogTitles::OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDogTitles::OnColumnclickTitles(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
@@ -343,13 +350,17 @@ void CDlgDogTitles::OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgDogTitles::OnDblclkTitles(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgDogTitles::OnDblclkTitles(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnTitleEdit();
 	*pResult = 0;
 }
 
-void CDlgDogTitles::OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDogTitles::OnItemchangedTitles(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();

@@ -108,17 +108,22 @@ public:
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBInfo& GetInfo()						{return m_Records.GetInfo();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
-	size_t GetAllClubNames(std::set<std::string>& clubs, bool bInfo = true) const
+	size_t GetAllClubNames(
+			std::set<std::string>& clubs,
+			bool bInfo = true) const
 	{
 		return m_Records.GetAllClubNames(clubs, bInfo);
 	}
-	size_t GetAllTrialLocations(std::set<std::string>& locations, bool bInfo = true) const
+	size_t GetAllTrialLocations(
+			std::set<std::string>& locations,
+			bool bInfo = true) const
 	{
 		return m_Records.GetAllTrialLocations(locations, bInfo);
 	}
-	size_t GetAllEventSubNames(std::string const& inVenue,
-		ARBConfigEvent const* inEvent,
-		std::set<std::string>& outNames) const
+	size_t GetAllEventSubNames(
+			std::string const& inVenue,
+			ARBConfigEvent const* inEvent,
+			std::set<std::string>& outNames) const
 	{
 		return m_Records.GetAllEventSubNames(inVenue, inEvent, outNames);
 	}
@@ -126,7 +131,9 @@ public:
 	{
 		return m_Records.GetAllHeights(judges);
 	}
-	size_t GetAllJudges(std::set<std::string>& judges, bool bInfo = true) const
+	size_t GetAllJudges(
+			std::set<std::string>& judges,
+			bool bInfo = true) const
 	{
 		return m_Records.GetAllJudges(judges, bInfo);
 	}
@@ -150,7 +157,9 @@ public:
 	void EditRun(ARBDogRun* pRun);
 	void DeleteRun(ARBDogRun* pRun);
 
-	bool CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView);
+	bool CreateTrialFromCalendar(
+			ARBCalendar const& cal,
+			CTabView* pTabView);
 	void SortDates();
 	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
@@ -162,11 +171,22 @@ public:
 	 *       object!
 	 */
 	void ResetVisibility();
-	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog);
-	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial);
-	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun);
-	void ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle);
-	void ResetVisibility(std::set<std::string>& names, ARBTraining* pTraining);
+	void ResetVisibility(
+			std::vector<CVenueFilter>& venues,
+			ARBDog* pDog);
+	void ResetVisibility(
+			std::vector<CVenueFilter>& venues,
+			ARBDogTrial* pTrial);
+	void ResetVisibility(
+			std::vector<CVenueFilter>& venues,
+			ARBDogTrial* pTrial,
+			ARBDogRun* pRun);
+	void ResetVisibility(
+			std::vector<CVenueFilter>& venues,
+			ARBDogTitle* pTitle);
+	void ResetVisibility(
+			std::set<std::string>& names,
+			ARBTraining* pTraining);
 
 	CAgilityBookTree* GetTreeView() const;
 	CAgilityBookViewCalendarList* GetCalendarListView() const;

@@ -87,9 +87,12 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigVenue dialog
 
-CDlgConfigVenue::CDlgConfigVenue(CAgilityBookDoc* pDoc,
-	ARBAgilityRecordBook& book, ARBConfig& config,
-	ARBConfigVenue* pVenue, CWnd* pParent)
+CDlgConfigVenue::CDlgConfigVenue(
+		CAgilityBookDoc* pDoc,
+		ARBAgilityRecordBook& book,
+		ARBConfig& config,
+		ARBConfigVenue* pVenue,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigVenue::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Book(book)
@@ -420,7 +423,9 @@ void CDlgConfigVenue::LoadEventData()
 		pOldEvent->Release();
 }
 
-int CDlgConfigVenue::FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSet)
+int CDlgConfigVenue::FindCurrentDivision(
+		ARBConfigDivision const* pDiv,
+		bool bSet)
 {
 	int idxCurrent = -1;
 	if (pDiv)
@@ -444,7 +449,9 @@ int CDlgConfigVenue::FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSe
 	return idxCurrent;
 }
 
-HTREEITEM CDlgConfigVenue::FindCurrentLevel(ARBConfigLevel const* pLevel, bool bSet)
+HTREEITEM CDlgConfigVenue::FindCurrentLevel(
+		ARBConfigLevel const* pLevel,
+		bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
 	if (pLevel)
@@ -472,7 +479,9 @@ HTREEITEM CDlgConfigVenue::FindCurrentLevel(ARBConfigLevel const* pLevel, bool b
 	return hCurrent;
 }
 
-HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(ARBConfigSubLevel const* pSubLevel, bool bSet)
+HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(
+		ARBConfigSubLevel const* pSubLevel,
+		bool bSet)
 {
 	HTREEITEM hCurrent = NULL;
 	if (pSubLevel)
@@ -508,7 +517,9 @@ HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(ARBConfigSubLevel const* pSubLeve
 	return hCurrent;
 }
 
-int CDlgConfigVenue::FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet)
+int CDlgConfigVenue::FindCurrentTitle(
+		ARBConfigTitle const* pTitle,
+		bool bSet)
 {
 	int idxCurrent = -1;
 	if (pTitle)
@@ -533,7 +544,9 @@ int CDlgConfigVenue::FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet)
 	return idxCurrent;
 }
 
-int CDlgConfigVenue::FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet)
+int CDlgConfigVenue::FindCurrentEvent(
+		ARBConfigEvent const* pEvent,
+		bool bSet)
 {
 	int idxCurrent = -1;
 	if (pEvent)
@@ -642,7 +655,9 @@ void CDlgConfigVenue::OnDestroy()
 	CDlgBaseDialog::OnDestroy();
 }
 
-void CDlgConfigVenue::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnGetdispinfoList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -658,7 +673,9 @@ void CDlgConfigVenue::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnGetdispinfoTree(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	if (pTVDispInfo->item.mask & TVIF_TEXT)
@@ -674,7 +691,9 @@ void CDlgConfigVenue::OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnDeleteitemList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMListView->lParam);
@@ -683,7 +702,9 @@ void CDlgConfigVenue::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnDeleteitemTree(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMTreeView->itemOld.lParam);
@@ -692,13 +713,17 @@ void CDlgConfigVenue::OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnDblclk(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnEdit();
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnItemchangedDivision(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnItemchangedDivision(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LoadLevelData();
 	LoadTitleData();
@@ -706,37 +731,49 @@ void CDlgConfigVenue::OnItemchangedDivision(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnItemchangedList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	UpdateButtons();
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnItemchanged(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	UpdateButtons();
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnSetfocusDivision(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnSetfocusDivision(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eDivisions);
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnSetfocusLevel(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnSetfocusLevel(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eLevels);
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnSetfocusTitles(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnSetfocusTitles(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eTitles);
 	*pResult = 0;
 }
 
-void CDlgConfigVenue::OnSetfocusEvent(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigVenue::OnSetfocusEvent(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eEvents);
 	*pResult = 0;

@@ -59,7 +59,12 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgRun, CDlgBaseSheet)
 
-CDlgRun::CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CWnd* pParent, UINT iSelectPage)
+CDlgRun::CDlgRun(
+		CAgilityBookDoc* pDoc,
+		ARBDogTrial* pTrial,
+		ARBDogRun* pRun,
+		CWnd* pParent,
+		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_RUN_PROPERTIES, pParent, iSelectPage)
 	, m_pRealRun(pRun)
 	, m_Run(new ARBDogRun(*pRun))

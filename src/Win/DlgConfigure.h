@@ -71,11 +71,12 @@ public:
 	 * @param ioDlgFixup Fixup commands to update existing runs.
 	 * @param bCommitChanges Changes cannot be cancelled.
 	 */
-	static eCheck CheckExistingRuns(CAgilityBookDoc* inDoc,
-		ARBDogList const& inDogs,
-		ARBConfig const& inConfig,
-		std::vector<CDlgFixup*>& ioDlgFixup,
-		bool bCommitChanges);
+	static eCheck CheckExistingRuns(
+			CAgilityBookDoc* inDoc,
+			ARBDogList const& inDogs,
+			ARBConfig const& inConfig,
+			std::vector<CDlgFixup*>& ioDlgFixup,
+			bool bCommitChanges);
 	/**
 	 * Update existing runs in case event scoring methods have changed.
 	 * @param inDoc MFC Document
@@ -88,16 +89,21 @@ public:
 	 * @param inRunsChanged Used only when checking all venues.
 	 * @param inScoringRuns Used only when checking all venues.
 	 */
-	static eCheck CheckExistingRuns(CAgilityBookDoc* inDoc,
-		ARBDogList const& inDogs,
-		ARBConfigVenue const* inVenue, std::string const& inEvent,
-		ARBConfigScoringList const& inScorings,
-		std::vector<CDlgFixup*>& ioDlgFixup,
-		// These settings are only used from the preceeding api.
-		int* inRunsDeleted = NULL, int* inRunsChanged = NULL,
-		std::list<ScoringRunInfo>* inScoringRuns = NULL);
+	static eCheck CheckExistingRuns(
+			CAgilityBookDoc* inDoc,
+			ARBDogList const& inDogs,
+			ARBConfigVenue const* inVenue,
+			std::string const& inEvent,
+			ARBConfigScoringList const& inScorings,
+			std::vector<CDlgFixup*>& ioDlgFixup,
+			// These settings are only used from the preceeding api.
+			int* inRunsDeleted = NULL,
+			int* inRunsChanged = NULL,
+			std::list<ScoringRunInfo>* inScoringRuns = NULL);
 
-	CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book);
+	CDlgConfigure(
+			CAgilityBookDoc* pDoc,
+			ARBAgilityRecordBook& book);
 	virtual ~CDlgConfigure();
 
 private:
@@ -117,7 +123,13 @@ private:
 	ARBAgilityRecordBook& m_Book;
 	ARBConfig m_Config;
 	std::vector<CDlgFixup*> m_DlgFixup;
-	typedef enum {eNone, eVenues, eFaults, eOtherPoints} eAction;
+	typedef enum
+	{
+		eNone,
+		eVenues,
+		eFaults,
+		eOtherPoints
+	} eAction;
 	eAction m_Action;
 
 	//{{AFX_VIRTUAL(CDlgConfigure)
@@ -127,12 +139,21 @@ protected:
 
 private:
 	void SetAction(eAction inAction);
-	bool GetActionData(CListCtrl2*& pCtrl, int& index, CDlgConfigureData*& pData);
+	bool GetActionData(
+			CListCtrl2*& pCtrl,
+			int& index,
+			CDlgConfigureData*& pData);
 	void UpdateButtons();
 	void LoadData();
-	int FindCurrentVenue(ARBConfigVenue const* pVenue, bool bSet);
-	int FindCurrentFault(ARBConfigFault const* pFault, bool bSet);
-	int FindCurrentOtherPoints(ARBConfigOtherPoints const* pOther, bool bSet);
+	int FindCurrentVenue(
+			ARBConfigVenue const* pVenue,
+			bool bSet);
+	int FindCurrentFault(
+			ARBConfigFault const* pFault,
+			bool bSet);
+	int FindCurrentOtherPoints(
+			ARBConfigOtherPoints const* pOther,
+			bool bSet);
 
 protected:
 	//{{AFX_MSG(CDlgConfigure)

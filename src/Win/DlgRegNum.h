@@ -44,7 +44,11 @@ class ARBDogRegNumList;
 class CDlgRegNum : public CDlgBaseDialog
 {
 public:
-	CDlgRegNum(ARBConfig const& config, ARBDogRegNumList& regnums, ARBDogRegNum* pRegNum, CWnd* pParent = NULL);
+	CDlgRegNum(
+			ARBConfig const& config,
+			ARBDogRegNumList& regnums,
+			ARBDogRegNum* pRegNum,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

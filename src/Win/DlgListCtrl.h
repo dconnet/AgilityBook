@@ -50,13 +50,26 @@ class CDlgListCtrl : public CDlgBaseDialog
 {
 public:
 	// Calendar
-	CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vector<ARBCalendar*> const* entries, CTabView* pTabView, CWnd* pParent = NULL);
+	CDlgListCtrl(
+			CAgilityBookDoc* pDoc,
+			ARBDate const& date,
+			std::vector<ARBCalendar*> const* entries,
+			CTabView* pTabView,
+			CWnd* pParent = NULL);
 	// Faults
-	CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent = NULL);
+	CDlgListCtrl(
+			CAgilityBookDoc* pDoc,
+			ARBDogRun* run,
+			CWnd* pParent = NULL);
 	// OtherPoints
-	CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pParent = NULL);
+	CDlgListCtrl(
+			ARBConfig const* pConfig,
+			ARBDogRun* run,
+			CWnd* pParent = NULL);
 	// Partners
-	CDlgListCtrl(ARBDogRun* run, CWnd* pParent = NULL);
+	CDlgListCtrl(
+			ARBDogRun* run,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data
@@ -99,7 +112,9 @@ protected:
 
 protected:
 	void UpdateControls();
-	void SwapEntries(int oldIndex, int newIndex);
+	void SwapEntries(
+			int oldIndex,
+			int newIndex);
 
 // Implementation
 protected:

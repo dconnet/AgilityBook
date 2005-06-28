@@ -69,8 +69,9 @@ static char THIS_FILE[] = __FILE__;
 class CDetails : public IMessageBoxCallback
 {
 public:
-	CDetails(CAgilityBookDoc* inDoc,
-		std::list<ScoringRunInfo> const& inScoringRuns)
+	CDetails(
+			CAgilityBookDoc* inDoc,
+			std::list<ScoringRunInfo> const& inScoringRuns)
 		: m_pDoc(inDoc)
 		, m_ScoringRuns(inScoringRuns)
 	{
@@ -87,11 +88,12 @@ void CDetails::OnDetails(CWnd* pParent)
 	dlg.DoModal();
 }
 
-CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
-	ARBDogList const& inDogs,
-	ARBConfig const& inConfig,
-	std::vector<CDlgFixup*>& ioDlgFixup,
-	bool bCommitChanges)
+CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(
+		CAgilityBookDoc* inDoc,
+		ARBDogList const& inDogs,
+		ARBConfig const& inConfig,
+		std::vector<CDlgFixup*>& ioDlgFixup,
+		bool bCommitChanges)
 {
 	CWaitCursor wait;
 	std::vector<CDlgFixup*> dlgFixup;
@@ -160,13 +162,16 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 		return CDlgConfigure::eNoChange;
 }
 
-CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
-	ARBDogList const& inDogs,
-	ARBConfigVenue const* inVenue, std::string const& inEvent,
-	ARBConfigScoringList const& inScorings,
-	std::vector<CDlgFixup*>& ioDlgFixup,
-	int* inRunsDeleted, int* inRunsChanged,
-	std::list<ScoringRunInfo>* inScoringRuns)
+CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(
+		CAgilityBookDoc* inDoc,
+		ARBDogList const& inDogs,
+		ARBConfigVenue const* inVenue,
+		std::string const& inEvent,
+		ARBConfigScoringList const& inScorings,
+		std::vector<CDlgFixup*>& ioDlgFixup,
+		int* inRunsDeleted,
+		int* inRunsChanged,
+		std::list<ScoringRunInfo>* inScoringRuns)
 {
 	bool bQuiet = (NULL != inScoringRuns);
 	CWaitCursor wait;
@@ -276,7 +281,10 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(CAgilityBookDoc* inDoc,
 		return CDlgConfigure::eNoChange;
 }
 
-int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+int CALLBACK CompareItems(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParamSort)
 {
 	CDlgConfigureData* item1 = reinterpret_cast<CDlgConfigureData*>(lParam1);
 	CDlgConfigureData* item2 = reinterpret_cast<CDlgConfigureData*>(lParam2);
@@ -287,7 +295,9 @@ int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigure dialog
 
-CDlgConfigure::CDlgConfigure(CAgilityBookDoc* pDoc, ARBAgilityRecordBook& book)
+CDlgConfigure::CDlgConfigure(
+		CAgilityBookDoc* pDoc,
+		ARBAgilityRecordBook& book)
 	: CDlgBaseDialog(CDlgConfigure::IDD)
 	, m_pDoc(pDoc)
 	, m_Book(book)
@@ -374,7 +384,10 @@ void CDlgConfigure::SetAction(eAction inAction)
 	UpdateButtons();
 }
 
-bool CDlgConfigure::GetActionData(CListCtrl2*& pCtrl, int& index, CDlgConfigureData*& pData)
+bool CDlgConfigure::GetActionData(
+		CListCtrl2*& pCtrl,
+		int& index,
+		CDlgConfigureData*& pData)
 {
 	bool bOk = false;
 	pCtrl = NULL;
@@ -466,7 +479,9 @@ void CDlgConfigure::LoadData()
 	m_ctrlOthers.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 }
 
-int CDlgConfigure::FindCurrentVenue(ARBConfigVenue const* pVenue, bool bSet)
+int CDlgConfigure::FindCurrentVenue(
+		ARBConfigVenue const* pVenue,
+		bool bSet)
 {
 	int idxCurrent = -1;
 	for (int index = 0; index < m_ctrlVenues.GetItemCount(); ++index)
@@ -487,7 +502,9 @@ int CDlgConfigure::FindCurrentVenue(ARBConfigVenue const* pVenue, bool bSet)
 	return idxCurrent;
 }
 
-int CDlgConfigure::FindCurrentFault(ARBConfigFault const* pFault, bool bSet)
+int CDlgConfigure::FindCurrentFault(
+		ARBConfigFault const* pFault,
+		bool bSet)
 {
 	int idxCurrent = -1;
 	for (int index = 0; index < m_ctrlFaults.GetItemCount(); ++index)
@@ -508,7 +525,9 @@ int CDlgConfigure::FindCurrentFault(ARBConfigFault const* pFault, bool bSet)
 	return idxCurrent;
 }
 
-int CDlgConfigure::FindCurrentOtherPoints(ARBConfigOtherPoints const* pOther, bool bSet)
+int CDlgConfigure::FindCurrentOtherPoints(
+		ARBConfigOtherPoints const* pOther,
+		bool bSet)
 {
 	int idxCurrent = -1;
 	for (int index = 0; index < m_ctrlOthers.GetItemCount(); ++index)
@@ -550,7 +569,9 @@ BOOL CDlgConfigure::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgConfigure::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnGetdispinfo(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -566,7 +587,9 @@ void CDlgConfigure::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnDeleteitem(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgConfigureData *pData = reinterpret_cast<CDlgConfigureData*>(pNMListView->lParam);
@@ -575,31 +598,41 @@ void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnDblclk(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnEdit();
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnItemchanged(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	UpdateButtons();
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnSetfocusVenues(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnSetfocusVenues(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eVenues);
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnSetfocusFaults(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnSetfocusFaults(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eFaults);
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnSetfocusOtherpoints(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigure::OnSetfocusOtherpoints(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SetAction(eOtherPoints);
 	*pResult = 0;

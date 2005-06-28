@@ -75,7 +75,10 @@ typedef struct
 	CColumnOrder *pCols;
 } SORTINFO;
 
-int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareRefRuns(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	ARBDogReferenceRun const* pTitle1 = reinterpret_cast<ARBDogReferenceRun const*>(lParam1);
 	ARBDogReferenceRun const* pTitle2 = reinterpret_cast<ARBDogReferenceRun const*>(lParam2);
@@ -149,7 +152,10 @@ int CALLBACK CompareRefRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunReference dialog
 
-CDlgRunReference::CDlgRunReference(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue, ARBDogRun* pRun)
+CDlgRunReference::CDlgRunReference(
+		CAgilityBookDoc* pDoc,
+		ARBConfigVenue* pVenue,
+		ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunReference::IDD)
 	, m_pDoc(pDoc)
 	, m_Venue(pVenue)
@@ -316,7 +322,9 @@ BOOL CDlgRunReference::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgRunReference::OnGetdispinfoRefRuns(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -359,7 +367,9 @@ void CDlgRunReference::OnGetdispinfoRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgRunReference::OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgRunReference::OnColumnclickRefRuns(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
@@ -372,14 +382,18 @@ void CDlgRunReference::OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgRunReference::OnItemchangedRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgRunReference::OnItemchangedRefRuns(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
 	*pResult = 0;
 }
 
-void CDlgRunReference::OnDblclkRefRuns(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgRunReference::OnDblclkRefRuns(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnRefRunEdit();
 	*pResult = 0;

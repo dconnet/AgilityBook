@@ -54,7 +54,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogProperties dialog
 
-CDlgDogProperties::CDlgDogProperties(CAgilityBookDoc* pDoc, ARBDog* pDog)
+CDlgDogProperties::CDlgDogProperties(
+		CAgilityBookDoc* pDoc,
+		ARBDog* pDog)
 	: CDlgBasePropertyPage(CDlgDogProperties::IDD)
 	, m_pDoc(pDoc)
 	, m_pDog(pDog)
@@ -170,7 +172,9 @@ BOOL CDlgDogProperties::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgDogProperties::OnDatetimechange(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDogProperties::OnDatetimechange(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	UpdateAge();
 	*pResult = 0;

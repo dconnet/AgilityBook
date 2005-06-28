@@ -61,7 +61,9 @@ public:
 	{
 	}
 
-	ARBVersion(unsigned short major, unsigned short minor)
+	ARBVersion(
+			unsigned short major,
+			unsigned short minor)
 		: m_Version((major<<8) | minor)
 	{
 	}
@@ -225,9 +227,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		std::string const& inAttrib,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			std::string const& inAttrib,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -237,8 +239,8 @@ public:
 	 * @post The ARB_Q attribute will be added to ioTree.
 	 */
 	bool Save(
-		Element& ioTree,
-		char const* const inAttribName) const;
+			Element& ioTree,
+			char const* const inAttribName) const;
 
 private:
 	eQ m_Q;
@@ -253,5 +255,7 @@ class ARBDouble
 	ARBDouble();
 	~ARBDouble();
 public:
-	static std::string str(double inValue, int inPrec = 2);
+	static std::string str(
+			double inValue,
+			int inPrec = 2);
 };

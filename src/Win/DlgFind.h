@@ -81,7 +81,9 @@ class CDlgFind : public CDlgBaseDialog
 {
 // Construction
 public:
-	CDlgFind(IFindCallback& callback, CWnd* pParent = NULL);   // standard constructor
+	CDlgFind(
+			IFindCallback& callback,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

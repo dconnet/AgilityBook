@@ -44,7 +44,10 @@ class CDlgTraining : public CDlgBaseDialog
 {
 // Construction
 public:
-	CDlgTraining(ARBTraining* pTraining, CAgilityBookDoc* pDoc, CWnd* pParent = NULL);
+	CDlgTraining(
+			ARBTraining* pTraining,
+			CAgilityBookDoc* pDoc,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

@@ -84,10 +84,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		std::string const& inItemName);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback,
+			std::string const& inItemName);
 
 	/**
 	 * Save a items entry
@@ -95,8 +95,8 @@ public:
 	 * @param inItemName Name of collection being saved.
 	 */
 	bool ARBInfoItem::Save(
-		Element& ioTree,
-		std::string const& inItemName) const;
+			Element& ioTree,
+			std::string const& inItemName) const;
 
 	/**
 	 * Save a document.
@@ -177,9 +177,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a items entry
@@ -213,8 +213,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindItem(
-		std::string const& inName,
-		ARBInfoItem** outItem = NULL) const;
+			std::string const& inName,
+			ARBInfoItem** outItem = NULL) const;
 
 	/**
 	 * Add a new item.
@@ -223,8 +223,8 @@ public:
 	 * @return Whether object was added.
 	 */
 	bool AddItem(
-		std::string const& inItem,
-		ARBInfoItem** outItem = NULL);
+			std::string const& inItem,
+			ARBInfoItem** outItem = NULL);
 
 	/**
 	 * Add a new item.

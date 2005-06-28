@@ -106,8 +106,7 @@ static char const base64map[] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-Base64::Base64(
-		bool bDeleteDecodeBuffer)
+Base64::Base64(bool bDeleteDecodeBuffer)
 	: m_DeleteDecodeBuffer(bDeleteDecodeBuffer)
 	, m_DecodeBuffer(NULL)
 {
@@ -118,8 +117,7 @@ Base64::~Base64()
 	SetBuffer(NULL);
 }
 
-void Base64::SetBuffer(
-		char* inBuffer)
+void Base64::SetBuffer(char* inBuffer)
 {
 	if (m_DeleteDecodeBuffer)
 	{

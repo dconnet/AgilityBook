@@ -89,9 +89,11 @@ const int OFFSET_OTHER = 6;
 
 class CAgilityBookViewCalendarData
 {
-	friend int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
+	friend int CALLBACK CompareCalendar(LPARAM, LPARAM, LPARAM);
 public:
-	CAgilityBookViewCalendarData(CAgilityBookViewCalendarList* pView, ARBCalendar* pCal)
+	CAgilityBookViewCalendarData(
+			CAgilityBookViewCalendarList* pView,
+			ARBCalendar* pCal)
 		: m_RefCount(1)
 		, m_pView(pView)
 		, m_pCal(pCal)
@@ -109,8 +111,12 @@ public:
 	CString OnNeedText(int iCol) const;
 	int GetIcon() const;
 
-	COLORREF GetTextColor(int iCol, bool bSelected) const;
-	COLORREF GetBackgroundColor(int iCol, bool bSelected) const;
+	COLORREF GetTextColor(
+			int iCol,
+			bool bSelected) const;
+	COLORREF GetBackgroundColor(
+			int iCol,
+			bool bSelected) const;
 
 private:
 	~CAgilityBookViewCalendarData()
@@ -118,6 +124,7 @@ private:
 		if (m_pCal)
 			m_pCal->Release();
 	}
+	bool HighlightOpeningNear(int iCol) const;
 	bool HighlightClosingNear(int iCol) const;
 	UINT m_RefCount;
 	CAgilityBookViewCalendarList* m_pView;
@@ -203,19 +210,26 @@ int CAgilityBookViewCalendarData::GetIcon() const
 	return idxImage;
 }
 
-COLORREF CAgilityBookViewCalendarData::GetTextColor(int iCol, bool bSelected) const
+COLORREF CAgilityBookViewCalendarData::GetTextColor(
+		int iCol,
+		bool bSelected) const
 {
 	if (HighlightClosingNear(iCol))
 		return RGB(255, 0, 0);
+	else if (HighlightOpeningNear(iCol))
+		return RGB(0, 0, 127);
 	if (bSelected)
 		return ::GetSysColor(COLOR_HIGHLIGHTTEXT);
 	else
 		return ::GetSysColor(COLOR_WINDOWTEXT);
 }
 
-COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(int iCol, bool bSelected) const
+COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(
+		int iCol,
+		bool bSelected) const
 {
-	if (HighlightClosingNear(iCol))
+	if (HighlightOpeningNear(iCol)
+	|| HighlightClosingNear(iCol))
 		return ::GetSysColor(COLOR_WINDOW);
 	if (bSelected)
 		return ::GetSysColor(COLOR_HIGHLIGHT);
@@ -223,20 +237,43 @@ COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(int iCol, bool bSelect
 		return ::GetSysColor(COLOR_WINDOW);
 }
 
+bool CAgilityBookViewCalendarData::HighlightOpeningNear(int iCol) const
+{
+	bool bHighlight = false;
+	if (0 <= iCol
+	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
+	&& m_pCal->GetOpeningDate().IsValid())
+	{
+		ARBDate today = ARBDate::Today();
+		// If 'interval' is less than 0, then the date has passed.
+		long interval = m_pCal->GetOpeningDate() - today;
+		if (10 >= interval)
+		{
+			bHighlight = true;
+			if (0 > interval
+			&& m_pCal->GetClosingDate().IsValid()
+			&& m_pCal->GetClosingDate() < today)
+				bHighlight = false;
+		}
+	}
+	return bHighlight;
+}
+
 bool CAgilityBookViewCalendarData::HighlightClosingNear(int iCol) const
 {
+	bool bHighlight = false;
 	if (0 <= iCol
 	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
 	&& m_pCal->GetClosingDate().IsValid())
 	{
-		ARBDate date = m_pCal->GetClosingDate();
-		ARBDate today = ARBDate::Today();
-		if (10 >= today - date)
+		// If 'interval' is less than 0, then the date has passed.
+		long interval = m_pCal->GetClosingDate() - ARBDate::Today();
+		if (interval >= 0 && interval <= 10)
 		{
-			return true;
+			bHighlight = true;
 		}
 	}
-	return false;
+	return bHighlight;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -299,7 +336,10 @@ struct SORT_CAL_INFO
 	int nCol;
 };
 
-int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareCalendar(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	SORT_CAL_INFO* sortInfo = reinterpret_cast<SORT_CAL_INFO*>(lParam3);
 	if (!sortInfo || 0 == sortInfo->nCol)
@@ -659,7 +699,10 @@ void CAgilityBookViewCalendarList::OnInitialUpdate()
 	CListView2::OnInitialUpdate();
 }
 
-void CAgilityBookViewCalendarList::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void CAgilityBookViewCalendarList::OnActivateView(
+		BOOL bActivate,
+		CView* pActivateView,
+		CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
@@ -672,7 +715,10 @@ void CAgilityBookViewCalendarList::OnActivateView(BOOL bActivate, CView* pActiva
 	}
 }
 
-void CAgilityBookViewCalendarList::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+void CAgilityBookViewCalendarList::OnUpdate(
+		CView* pSender,
+		LPARAM lHint,
+		CObject* pHint)
 {
 	if (0 == lHint || (UPDATE_CALENDAR_VIEW & lHint) || (UPDATE_OPTIONS & lHint))
 		LoadData();
@@ -700,7 +746,9 @@ CAgilityBookDoc* CAgilityBookViewCalendarList::GetDocument() const // non-debug 
 /////////////////////////////////////////////////////////////////////////////
 // Printing
 
-void CAgilityBookViewCalendarList::GetPrintLine(int nItem, CStringArray& line)
+void CAgilityBookViewCalendarList::GetPrintLine(
+		int nItem,
+		CStringArray& line)
 {
 	CListView2::GetPrintLine(nItem, line);
 }
@@ -867,14 +915,18 @@ void CAgilityBookViewCalendarList::LoadData()
 
 // CAgilityBookViewCalendarList message handlers
 
-void CAgilityBookViewCalendarList::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewCalendarList::OnRclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
 
-void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
+void CAgilityBookViewCalendarList::OnContextMenu(
+		CWnd* pWnd,
+		CPoint point)
 {
 	int index = GetSelection();
 	if (0 > index)
@@ -906,7 +958,9 @@ void CAgilityBookViewCalendarList::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewCalendarList::OnColumnclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	HeaderSort(abs(m_SortColumn.GetColumn())-1, CHeaderCtrl2::eNoSort);
@@ -923,7 +977,9 @@ void CAgilityBookViewCalendarList::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult
 	*pResult = 0;
 }
 
-void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewCalendarList::OnGetdispinfo(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -942,7 +998,9 @@ void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult
 	*pResult = 0;
 }
 
-void CAgilityBookViewCalendarList::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewCalendarList::OnItemChanged(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NMLISTVIEW* pNMListView = reinterpret_cast<NMLISTVIEW*>(pNMHDR);
 	// I only care about the item being selected.
@@ -966,7 +1024,9 @@ void CAgilityBookViewCalendarList::OnItemChanged(NMHDR* pNMHDR, LRESULT* pResult
 	*pResult = 0;
 }
 
-void CAgilityBookViewCalendarList::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewCalendarList::OnDeleteitem(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pNMListView->lParam);
@@ -976,13 +1036,17 @@ void CAgilityBookViewCalendarList::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewCalendarList::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewCalendarList::OnDblclk(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnCalendarEdit();
 	*pResult = 0;
 }
 
-void CAgilityBookViewCalendarList::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewCalendarList::OnKeydown(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)

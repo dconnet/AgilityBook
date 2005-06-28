@@ -44,9 +44,11 @@ class CAgilityBookDoc;
 class CDlgReferenceRun : public CDlgBaseDialog
 {
 public:
-	CDlgReferenceRun(CAgilityBookDoc* pDoc,
-		std::set<std::string> const& inNames,
-		ARBDogReferenceRun* ref, CWnd* pParent = NULL);
+	CDlgReferenceRun(
+			CAgilityBookDoc* pDoc,
+			std::set<std::string> const& inNames,
+			ARBDogReferenceRun* ref,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

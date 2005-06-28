@@ -46,12 +46,16 @@ class Element;
  * @param tree Tree to save to clipboard
  * @param txtForm Text form to include on clipboard
  */
-extern bool CopyDataToClipboard(UINT clpFmt, Element const& tree,
-	CString const& txtForm);
+extern bool CopyDataToClipboard(
+		UINT clpFmt,
+		Element const& tree,
+		CString const& txtForm);
 
 /**
  * Get the data from the clipboard.
  * @param clpFmt Special registered clipboard format
  * @param tree Tree to return.
  */
-extern bool GetDataFromClipboard(UINT clpFmt, Element& tree);
+extern bool GetDataFromClipboard(
+		UINT clpFmt,
+		Element& tree);

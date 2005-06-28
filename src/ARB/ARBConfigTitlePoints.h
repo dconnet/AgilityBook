@@ -86,10 +86,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		ARBConfigLifetimePointsList& ioLifetimePoints);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback,
+			ARBConfigLifetimePointsList& ioLifetimePoints);
 
 	/**
 	 * Save a document.
@@ -154,10 +154,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback,
-		ARBConfigLifetimePointsList& ioLifetimePoints);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback,
+			ARBConfigLifetimePointsList& ioLifetimePoints);
 
 	/**
 	 * Sort the title point objects by faults.
@@ -179,8 +179,8 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	bool FindTitlePoints(
-		short inFaults,
-		ARBConfigTitlePoints** outPoints = NULL) const;
+			short inFaults,
+			ARBConfigTitlePoints** outPoints = NULL) const;
 
 	/**
 	 * Add an object.
@@ -190,9 +190,9 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTitlePoints(
-		short inPoints,
-		short inFaults,
-		ARBConfigTitlePoints** outPoints = NULL);
+			short inPoints,
+			short inFaults,
+			ARBConfigTitlePoints** outPoints = NULL);
 
 	/**
 	 * Delete an object.

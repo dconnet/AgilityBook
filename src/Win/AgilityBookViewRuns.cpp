@@ -87,9 +87,13 @@ static char THIS_FILE[] = __FILE__;
 
 class CAgilityBookViewRunsData
 {
-	friend int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
+	friend int CALLBACK CompareRuns(LPARAM, LPARAM, LPARAM);
 public:
-	CAgilityBookViewRunsData(CAgilityBookViewRuns* pView, ARBDog* pDog, ARBDogTrial* pTrial, ARBDogRun* pRun)
+	CAgilityBookViewRunsData(
+			CAgilityBookViewRuns* pView,
+			ARBDog* pDog,
+			ARBDogTrial* pTrial,
+			ARBDogRun* pRun)
 		: m_RefCount(1)
 		, m_pView(pView)
 		, m_pDog(pDog)
@@ -501,7 +505,10 @@ struct SORT_RUN_INFO
 	int nCol;
 };
 
-int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareRuns(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	SORT_RUN_INFO* sortInfo = reinterpret_cast<SORT_RUN_INFO*>(lParam3);
 	if (!sortInfo)
@@ -1215,7 +1222,10 @@ void CAgilityBookViewRuns::OnInitialUpdate()
 	CListView2::OnInitialUpdate();
 }
 
-void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void CAgilityBookViewRuns::OnActivateView(
+		BOOL bActivate,
+		CView* pActivateView,
+		CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
@@ -1228,7 +1238,10 @@ void CAgilityBookViewRuns::OnActivateView(BOOL bActivate, CView* pActivateView, 
 	}
 }
 
-void CAgilityBookViewRuns::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+void CAgilityBookViewRuns::OnUpdate(
+		CView* pSender,
+		LPARAM lHint,
+		CObject* pHint)
 {
 	if (0 == lHint || (UPDATE_RUNS_VIEW & lHint) || (UPDATE_OPTIONS & lHint) || (UPDATE_CONFIG & lHint))
 		LoadData();
@@ -1256,7 +1269,9 @@ CAgilityBookDoc* CAgilityBookViewRuns::GetDocument() const // non-debug version 
 /////////////////////////////////////////////////////////////////////////////
 // Printing
 
-void CAgilityBookViewRuns::GetPrintLine(int nItem, CStringArray& line)
+void CAgilityBookViewRuns::GetPrintLine(
+		int nItem,
+		CStringArray& line)
 {
 	CListView2::GetPrintLine(nItem, line);
 }
@@ -1433,14 +1448,18 @@ void CAgilityBookViewRuns::LoadData()
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRuns message handlers
 
-void CAgilityBookViewRuns::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewRuns::OnRclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	// Send WM_CONTEXTMENU to self (done according to Q222905)
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
 
-void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
+void CAgilityBookViewRuns::OnContextMenu(
+		CWnd* pWnd,
+		CPoint point)
 {
 	int index = GetSelection();
 	if (0 > index)
@@ -1472,7 +1491,9 @@ void CAgilityBookViewRuns::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewRuns::OnColumnclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	if (0 != pNMListView->iSubItem)
@@ -1492,7 +1513,9 @@ void CAgilityBookViewRuns::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewRuns::OnGetdispinfo(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -1510,7 +1533,9 @@ void CAgilityBookViewRuns::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewRuns::OnItemchanged(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	// I only care about the item being selected.
@@ -1537,7 +1562,9 @@ void CAgilityBookViewRuns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewRuns::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewRuns::OnDeleteitem(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
@@ -1547,7 +1574,9 @@ void CAgilityBookViewRuns::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewRuns::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewRuns::OnDblclk(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
 	if (pData)
@@ -1555,7 +1584,9 @@ void CAgilityBookViewRuns::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewRuns::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAgilityBookViewRuns::OnKeydown(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)

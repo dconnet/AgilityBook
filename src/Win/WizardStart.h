@@ -47,7 +47,9 @@ class CWizardStart : public CDlgBasePropertyPage
 
 // Construction
 public:
-	CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc);
+	CWizardStart(
+			CWizard* pSheet,
+			CAgilityBookDoc* pDoc);
 	~CWizardStart();
 
 private:
