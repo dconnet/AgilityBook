@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-27 DRC Add color coding to calendar for entries that need attention.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -79,6 +80,10 @@ using namespace std;
 static char THIS_FILE[] = __FILE__;
 #endif
 
+// Offsets for first and other columns.
+const int OFFSET_FIRST = 2;
+const int OFFSET_OTHER = 6;
+
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendarData
 
@@ -102,6 +107,10 @@ public:
 
 	ARBCalendar* GetCalendar()	{return m_pCal;}
 	CString OnNeedText(int iCol) const;
+	int GetIcon() const;
+
+	COLORREF GetTextColor(int iCol, bool bSelected) const;
+	COLORREF GetBackgroundColor(int iCol, bool bSelected) const;
 
 private:
 	~CAgilityBookViewCalendarData()
@@ -109,6 +118,7 @@ private:
 		if (m_pCal)
 			m_pCal->Release();
 	}
+	bool HighlightClosingNear(int iCol) const;
 	UINT m_RefCount;
 	CAgilityBookViewCalendarList* m_pView;
 	ARBCalendar* m_pCal;
@@ -164,6 +174,69 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 		}
 	}
 	return str;
+}
+
+int CAgilityBookViewCalendarData::GetIcon() const
+{
+	int idxImage = -1;
+	switch (m_pCal->GetEntered())
+	{
+	default:
+		if (m_pCal->IsTentative())
+			idxImage = m_pView->m_imgTentative;
+		else
+			idxImage = m_pView->m_imgEmpty;
+		break;
+	case ARBCalendar::ePlanning:
+		if (m_pCal->IsTentative())
+			idxImage = m_pView->m_imgPlanTentative;
+		else
+			idxImage = m_pView->m_imgPlan;
+		break;
+	case ARBCalendar::eEntered:
+		if (m_pCal->IsTentative())
+			idxImage = m_pView->m_imgEnteredTentative;
+		else
+			idxImage = m_pView->m_imgEntered;
+		break;
+	}
+	return idxImage;
+}
+
+COLORREF CAgilityBookViewCalendarData::GetTextColor(int iCol, bool bSelected) const
+{
+	if (HighlightClosingNear(iCol))
+		return RGB(255, 0, 0);
+	if (bSelected)
+		return ::GetSysColor(COLOR_HIGHLIGHTTEXT);
+	else
+		return ::GetSysColor(COLOR_WINDOWTEXT);
+}
+
+COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(int iCol, bool bSelected) const
+{
+	if (HighlightClosingNear(iCol))
+		return ::GetSysColor(COLOR_WINDOW);
+	if (bSelected)
+		return ::GetSysColor(COLOR_HIGHLIGHT);
+	else
+		return ::GetSysColor(COLOR_WINDOW);
+}
+
+bool CAgilityBookViewCalendarData::HighlightClosingNear(int iCol) const
+{
+	if (0 <= iCol
+	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
+	&& m_pCal->GetClosingDate().IsValid())
+	{
+		ARBDate date = m_pCal->GetClosingDate();
+		ARBDate today = ARBDate::Today();
+		if (10 >= today - date)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -437,7 +510,7 @@ CAgilityBookViewCalendarList::~CAgilityBookViewCalendarList()
 
 BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS;
+	cs.style |= LVS_REPORT | LVS_SHOWSELALWAYS | LVS_OWNERDRAWFIXED;
 	return CListView2::PreCreateWindow(cs);
 }
 
@@ -460,6 +533,124 @@ void CAgilityBookViewCalendarList::OnDestroy()
 {
 	GetListCtrl().DeleteAllItems();
 	CListView2::OnDestroy();
+}
+
+DWORD CAgilityBookViewCalendarList::GetFormatFlags(int iCol) const
+{
+	DWORD dwFlags = DT_NOPREFIX | DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS;
+	DWORD dwFormat = DT_LEFT;
+	CHeaderCtrl* pHdr = GetListCtrl().GetHeaderCtrl();
+	if (pHdr)
+	{
+		HDITEM info;
+		info.mask = HDI_FORMAT;
+		if (pHdr->GetItem(iCol, &info))
+		{
+			switch (info.fmt & HDF_JUSTIFYMASK)
+			{
+			default:
+				break;
+			case HDF_CENTER:
+				dwFormat = DT_CENTER;
+				break;
+			case HDF_RIGHT:
+				dwFormat = DT_RIGHT;
+				break;
+			}
+		}
+	}
+	return dwFlags | dwFormat;
+}
+
+void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	if (!GetListCtrl().GetHeaderCtrl() || lpDrawItemStruct->itemID < 0)
+	{
+		// No header control or no items in list.
+		return;
+	}
+	int nColumns = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	if (0 >= nColumns)
+	{
+		// No columns...
+		return;
+	}
+
+	UINT state = GetListCtrl().GetItemState(lpDrawItemStruct->itemID, static_cast<UINT>(-1));
+	bool bFocused = (GetFocus() == this);
+	bool bSelected = ((LVIS_SELECTED & state) && (bFocused || GetListCtrl().GetStyle() & LVS_SHOWSELALWAYS));
+	bSelected = bSelected || (state & LVIS_DROPHILITED);
+
+	CAgilityBookViewCalendarData* pData = reinterpret_cast<CAgilityBookViewCalendarData*>(lpDrawItemStruct->itemData);
+
+	CRect rLineFull; // Entire line (of data)
+	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineFull, LVIR_BOUNDS);
+	CRect rLineIcon; // Icon area
+	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineIcon, LVIR_ICON);
+	CRect rLineLabel; // Area of first column
+	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineLabel, LVIR_LABEL);
+	CRect rLine(rLineFull);
+	rLine.left = rLineLabel.left;
+
+	CDC dc;
+	dc.Attach(lpDrawItemStruct->hDC);
+	int saveOrigDc = dc.SaveDC();
+
+	dc.SelectObject(GetFont());
+	/*int oldMode =*/ dc.SetBkMode(OPAQUE /*TRANSPARENT*/);
+
+	// Draw the background of the row.
+	dc.SetBkColor(pData->GetBackgroundColor(-1, bSelected));
+	if (GetListCtrl().GetExtendedStyle() & LVS_EX_FULLROWSELECT)
+		dc.ExtTextOut(0, 0, ETO_OPAQUE, rLine, NULL, 0, NULL);
+	else
+		dc.ExtTextOut(0, 0, ETO_OPAQUE, rLineLabel, NULL, 0, NULL);
+
+	// Now the icons.
+	CSize szIcon(GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON));
+	CRect rIconPos(rLineIcon);
+	rIconPos.OffsetRect(0, (rLineIcon.Height() - szIcon.cy) / 2);
+	CImageList* pImageStateList = GetListCtrl().GetImageList(LVSIL_STATE);
+	if (pImageStateList)
+	{
+		int idxImage = (LVIS_STATEIMAGEMASK & state) >> 12;
+		if (0 < idxImage)
+			pImageStateList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+	}
+	CImageList* pImageList = GetListCtrl().GetImageList(LVSIL_SMALL);
+	if (pData && pImageList)
+	{
+		int idxImage = pData->GetIcon();
+		if (0 <= idxImage)
+		{
+			pImageList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+			idxImage = (LVIS_OVERLAYMASK & state) >> 8;
+			if (0 < idxImage)
+				pImageList->Draw(&dc, 0, rIconPos.TopLeft(), (LVIS_OVERLAYMASK & state));
+		}
+	}
+
+	// Finally the text.
+	rLineLabel.InflateRect(-OFFSET_FIRST, 0);
+	dc.SetTextColor(pData->GetTextColor(0, bSelected));
+	dc.SetBkColor(pData->GetBackgroundColor(0, bSelected));
+	dc.DrawText(pData->OnNeedText(0), rLineLabel, GetFormatFlags(0));
+	for (int i = 1; i < nColumns; ++i)
+	{
+		CRect r;
+		GetListCtrl().GetSubItemRect(lpDrawItemStruct->itemID, i, LVIR_BOUNDS, r);
+		r.InflateRect(-OFFSET_OTHER, 0);
+		dc.SetTextColor(pData->GetTextColor(i, bSelected));
+		dc.SetBkColor(pData->GetBackgroundColor(i, bSelected));
+		dc.DrawText(pData->OnNeedText(i), r, GetFormatFlags(i));
+	}
+
+	if ((LVIS_FOCUSED & state) && bFocused)
+		dc.DrawFocusRect(rLine);
+
+	if (0 != saveOrigDc)
+		dc.RestoreDC(saveOrigDc);
+	dc.Detach();
 }
 
 void CAgilityBookViewCalendarList::OnInitialUpdate()
@@ -746,29 +937,7 @@ void CAgilityBookViewCalendarList::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult
 	{
 		CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pDispInfo->item.lParam);
 		if (pData)
-		{
-			switch (pData->GetCalendar()->GetEntered())
-			{
-			default:
-				if (pData->GetCalendar()->IsTentative())
-					pDispInfo->item.iImage = m_imgTentative;
-				else
-					pDispInfo->item.iImage = m_imgEmpty;
-				break;
-			case ARBCalendar::ePlanning:
-				if (pData->GetCalendar()->IsTentative())
-					pDispInfo->item.iImage = m_imgPlanTentative;
-				else
-					pDispInfo->item.iImage = m_imgPlan;
-				break;
-			case ARBCalendar::eEntered:
-				if (pData->GetCalendar()->IsTentative())
-					pDispInfo->item.iImage = m_imgEnteredTentative;
-				else
-					pDispInfo->item.iImage = m_imgEntered;
-				break;
-			}
-		}
+			pDispInfo->item.iImage = pData->GetIcon();
 	}
 	*pResult = 0;
 }
