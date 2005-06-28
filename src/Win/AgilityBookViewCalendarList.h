@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-27 DRC Add color coding to calendar for entries that need attention.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-06-24 DRC Added a sort header image.
@@ -111,6 +112,7 @@ protected:
 	//{{AFX_VIRTUAL(CAgilityBookViewCalendarList)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
 	protected:
 	virtual void OnInitialUpdate();
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
@@ -126,6 +128,7 @@ public:
 #endif
 
 private:
+	DWORD GetFormatFlags(int iCol) const;
 	std::vector<int> m_Columns;
 	bool m_bSuppressSelect;
 	CFindCalendar m_Callback;
