@@ -217,7 +217,7 @@ COLORREF CAgilityBookViewCalendarData::GetTextColor(
 	if (HighlightClosingNear(iCol))
 		return RGB(255, 0, 0);
 	else if (HighlightOpeningNear(iCol))
-		return RGB(0, 0, 127);
+		return RGB(0, 0, 255);
 	if (bSelected)
 		return ::GetSysColor(COLOR_HIGHLIGHTTEXT);
 	else

@@ -202,7 +202,7 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 		ARBCalendar const* pCal = *iter;
 		if (filter.ViewNormal() && pCal->InRange(date))
 			entries.push_back((*iter));
-		// Only show opening/closing dates if we've planning on entering
+		// Only show opening/closing dates if we're planning on entering
 		else if (ARBCalendar::ePlanning == pCal->GetEntered())
 		{
 			if ((filter.ViewOpening() && pCal->GetOpeningDate() == date)
@@ -280,21 +280,24 @@ void CAgilityBookViewCalendar::LoadData()
 				f = pCal->GetStartDate();
 				l = pCal->GetEndDate();
 			}
-			if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
+			if (ARBCalendar::ePlanning == pCal->GetEntered())
 			{
-				bAdd = true;
-				if (!f.IsValid() || pCal->GetOpeningDate() < f)
-					f = pCal->GetOpeningDate();
-				if (!l.IsValid() || pCal->GetOpeningDate() > l)
-					l = pCal->GetOpeningDate();
-			}
-			if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
-			{
-				bAdd = true;
-				if (!f.IsValid() || pCal->GetClosingDate() < f)
-					f = pCal->GetClosingDate();
-				if (!l.IsValid() || pCal->GetClosingDate() > l)
-					l = pCal->GetClosingDate();
+				if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
+				{
+					bAdd = true;
+					if (!f.IsValid() || pCal->GetOpeningDate() < f)
+						f = pCal->GetOpeningDate();
+					if (!l.IsValid() || pCal->GetOpeningDate() > l)
+						l = pCal->GetOpeningDate();
+				}
+				if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
+				{
+					bAdd = true;
+					if (!f.IsValid() || pCal->GetClosingDate() < f)
+						f = pCal->GetClosingDate();
+					if (!l.IsValid() || pCal->GetClosingDate() > l)
+						l = pCal->GetClosingDate();
+				}
 			}
 			if (f.IsValid() && (!m_First.IsValid() || f < m_First))
 				m_First = f;
@@ -410,12 +413,9 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 	{
 		TEXTMETRIC tm;
 		pDC->GetTextMetrics(&tm);
-		if (!pDC->IsPrinting())
-		{
-			pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
-			pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
-			pDC->SetBkMode(TRANSPARENT);
-		}
+		pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
+		pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
+		pDC->SetBkMode(TRANSPARENT);
 		bool bActive = (reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->GetActiveView() == this);
 		CBrush brCurrentActive(GetSysColor(COLOR_HIGHLIGHT));
 		CBrush brCurrentInActive(GetSysColor(COLOR_MENU));
@@ -431,6 +431,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		CPen* pOldPen = pDC->SelectObject(&pen);
 
 		CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+		COLORREF clrNormal = CAgilityBookOptions::CalendarNormalColor();
 		COLORREF clrOpening = CAgilityBookOptions::CalendarOpeningColor();
 		COLORREF clrClosing = CAgilityBookOptions::CalendarClosingColor();
 
@@ -448,11 +449,12 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				CRect rFull(r);
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
 				CString str(date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)).c_str());
+				pDC->SetTextColor(clrNormal);
 				if (!pDC->IsPrinting())
 				{
+					// Change the colors for the currently selected date.
 					if (m_Current == date)
 					{
-						// This is where we 'paint' the background.
 						CBrush* oldBrush = NULL;
 						if (bActive)
 						{
@@ -467,8 +469,6 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						pDC->PatBlt(rFull.left, rFull.top, rFull.Width(), rFull.Height(), PATCOPY);
 						pDC->SelectObject(oldBrush);
 					}
-					else
-						pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
 				}
 				pDC->DrawText(str, r, DT_NOPREFIX|DT_SINGLELINE|DT_BOTTOM|DT_CENTER);
 			}
@@ -512,6 +512,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			// Then for each date, get all the events on that date to print.
 			if (0 < GetEntriesOn(date, entries, false))
 			{
+				pDC->SetTextColor(clrNormal);
 				if (!pDC->IsPrinting())
 				{
 					if (m_Current == date)
@@ -521,8 +522,6 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						else
 							pDC->SetTextColor(GetSysColor(COLOR_MENUTEXT));
 					}
-					else
-						pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
 				}
 				CRect r = GetDateRect(date, true);
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
@@ -548,7 +547,9 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						str += loc.c_str();
 					bool bReset = false;
 					COLORREF oldText = 0;
-					if (!pDC->IsPrinting())
+					// Don't change the color on the selected day.
+					// (That whole foreground/background thing)
+					if (m_Current != date)
 					{
 						if (filter.ViewOpening() && pCal->GetOpeningDate() == date)
 						{

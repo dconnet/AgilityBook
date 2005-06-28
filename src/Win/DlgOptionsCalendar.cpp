@@ -87,6 +87,7 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_OPTIONS_CAL_SIZE_Y, m_sizeY);
 	DDV_MinMaxInt(pDX, m_sizeY, 10, 1000);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_NORMAL, m_bNormal);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_NORMAL, m_Normal);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_OPENING, m_bOpening);
 	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPEN, m_Opening);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_CLOSING, m_bClosing);
@@ -97,6 +98,7 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
 	ON_WM_DRAWITEM()
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_NORMAL_SET, OnOptionsCalColorNormal)
 	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_OPEN_SET, OnOptionsCalColorOpen)
 	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_CLOSE_SET, OnOptionsCalColorClose)
 	//}}AFX_MSG_MAP
@@ -120,6 +122,10 @@ void CDlgOptionsCalendar::OnDrawItem(
 	COLORREF color = 0;
 	switch (nIDCtl)
 	{
+	case IDC_OPTIONS_CAL_COLOR_NORMAL:
+		pCtrl = &m_Normal;
+		color = CAgilityBookOptions::CalendarNormalColor();
+		break;
 	case IDC_OPTIONS_CAL_COLOR_OPEN:
 		pCtrl = &m_Opening;
 		color = CAgilityBookOptions::CalendarOpeningColor();
@@ -138,6 +144,16 @@ void CDlgOptionsCalendar::OnDrawItem(
 		dc.SetBkColor(color);
 		dc.ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
 		dc.Detach();
+	}
+}
+
+void CDlgOptionsCalendar::OnOptionsCalColorNormal()
+{
+	CColorDialog dlg(CAgilityBookOptions::CalendarNormalColor(), CC_ANYCOLOR, this);
+	if (IDOK == dlg.DoModal())
+	{
+		CAgilityBookOptions::SetCalendarNormalColor(dlg.GetColor());
+		m_Normal.Invalidate();
 	}
 }
 

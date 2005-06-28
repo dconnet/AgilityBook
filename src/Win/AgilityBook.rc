@@ -1488,6 +1488,10 @@ BEGIN
     CONTROL         "Normal Entries",IDC_OPTIONS_CAL_NORMAL,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,106,61,10,0,
                     HIDC_OPTIONS_CAL_NORMAL
+    CONTROL         "",IDC_OPTIONS_CAL_COLOR_NORMAL,"Static",SS_OWNERDRAW | 
+                    SS_SUNKEN,123,106,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_NORMAL_SET,145,105,
+                    40,12,0,0,HIDC_OPTIONS_CAL_COLOR_NORMAL_SET
     CONTROL         "Entries with Opening Dates",IDC_OPTIONS_CAL_OPENING,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,120,
                     101,10,0,HIDC_OPTIONS_CAL_OPENING

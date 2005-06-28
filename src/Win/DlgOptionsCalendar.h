@@ -60,6 +60,7 @@ private:
 	int		m_sizeX;
 	int		m_sizeY;
 	BOOL	m_bNormal;
+	CStatic	m_Normal;
 	BOOL	m_bOpening;
 	CStatic	m_Opening;
 	BOOL	m_bClosing;
@@ -77,6 +78,7 @@ private:
 protected:
 	//{{AFX_MSG(CDlgOptionsCalendar)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnOptionsCalColorNormal();
 	afx_msg void OnOptionsCalColorOpen();
 	afx_msg void OnOptionsCalColorClose();
 	//}}AFX_MSG
