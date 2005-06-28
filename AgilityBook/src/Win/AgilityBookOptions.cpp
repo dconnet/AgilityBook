@@ -395,9 +395,19 @@ void CAgilityBookOptions::SetFilterCalendarView(CCalendarViewFilter inFilter)
 	AfxGetApp()->WriteProfileInt("Calendar", "Filter", inFilter.m_Filter);
 }
 
+COLORREF CAgilityBookOptions::CalendarNormalColor()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "NormalColor", ::GetSysColor(COLOR_WINDOWTEXT));
+}
+
+void CAgilityBookOptions::SetCalendarNormalColor(COLORREF inColor)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "NormalColor", inColor);
+}
+
 COLORREF CAgilityBookOptions::CalendarOpeningColor()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "OpenColor", RGB(255,0,0));
+	return AfxGetApp()->GetProfileInt("Calendar", "OpenColor", RGB(0,128,0));
 }
 
 void CAgilityBookOptions::SetCalendarOpeningColor(COLORREF inColor)
@@ -407,7 +417,7 @@ void CAgilityBookOptions::SetCalendarOpeningColor(COLORREF inColor)
 
 COLORREF CAgilityBookOptions::CalendarClosingColor()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "CloseColor", RGB(255,0,255));
+	return AfxGetApp()->GetProfileInt("Calendar", "CloseColor", RGB(255,0,0));
 }
 
 void CAgilityBookOptions::SetCalendarClosingColor(COLORREF inColor)

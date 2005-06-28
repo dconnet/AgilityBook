@@ -167,6 +167,8 @@
 #define HIDC_OPTIONS_CAL_CLOSING        0x80ed05bd    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_COLOR_CLOSE_SET \
                                         0x80ed05b3    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_COLOR_NORMAL_SET \
+                                        0x80ed05af    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_COLOR_OPEN_SET \
                                         0x80ed05b1    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_DAY_OF_WEEK    0x80ed05b4    // IDD_VIEW_OPTIONS_CALENDAR

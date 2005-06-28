@@ -160,6 +160,8 @@ public:
 	static void SetCalendarEntrySize(CSize const& sz);
 	static CCalendarViewFilter FilterCalendarView();
 	static void SetFilterCalendarView(CCalendarViewFilter inFilter);
+	static COLORREF CalendarNormalColor();
+	static void SetCalendarNormalColor(COLORREF inColor);
 	static COLORREF CalendarOpeningColor();
 	static void SetCalendarOpeningColor(COLORREF inColor);
 	static COLORREF CalendarClosingColor();
