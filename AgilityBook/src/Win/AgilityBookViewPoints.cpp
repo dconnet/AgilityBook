@@ -183,7 +183,9 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CAgilityBookViewPoints::OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
+void CAgilityBookViewPoints::OnLvnDeleteitem(
+		NMHDR *pNMHDR,
+		LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	PointsDataBase *pData = reinterpret_cast<PointsDataBase*>(pNMLV->lParam);
@@ -193,7 +195,9 @@ void CAgilityBookViewPoints::OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewPoints::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
+void CAgilityBookViewPoints::OnNMDblclk(
+		NMHDR *pNMHDR,
+		LRESULT *pResult)
 {
 	PointsDataBase* pData = GetItemData(GetSelection());
 	if (pData)
@@ -203,7 +207,9 @@ void CAgilityBookViewPoints::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewPoints::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
+void CAgilityBookViewPoints::OnKeydown(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
@@ -224,7 +230,9 @@ void CAgilityBookViewPoints::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewPoints::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
+void CAgilityBookViewPoints::OnLvnGetdispinfo(
+		NMHDR *pNMHDR,
+		LRESULT *pResult)
 {
 	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -242,7 +250,10 @@ void CAgilityBookViewPoints::OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CAgilityBookViewPoints::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void CAgilityBookViewPoints::OnActivateView(
+		BOOL bActivate,
+		CView* pActivateView,
+		CView* pDeactiveView) 
 {
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
@@ -255,7 +266,10 @@ void CAgilityBookViewPoints::OnActivateView(BOOL bActivate, CView* pActivateView
 	}
 }
 
-void CAgilityBookViewPoints::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+void CAgilityBookViewPoints::OnUpdate(
+		CView* pSender,
+		LPARAM lHint,
+		CObject* pHint)
 {
 	if (0 == lHint
 	|| (UPDATE_POINTS_VIEW & lHint)
@@ -286,7 +300,9 @@ CAgilityBookDoc* CAgilityBookViewPoints::GetDocument() const // non-debug versio
 /////////////////////////////////////////////////////////////////////////////
 // Printing
 
-void CAgilityBookViewPoints::GetPrintLine(int nItem, CStringArray& line)
+void CAgilityBookViewPoints::GetPrintLine(
+		int nItem,
+		CStringArray& line)
 {
 	CListView2::GetPrintLine(nItem, line);
 }
@@ -329,14 +345,14 @@ PointsDataBase* CAgilityBookViewPoints::GetItemData(int index) const
 // Entering this function, we know the venue is visible.
 // We don't know if the trial or individual runs are.
 int CAgilityBookViewPoints::DoEvents(
-	ARBDog const* inDog,
-	std::vector<CVenueFilter> const& venues,
-	int index,
-	std::list<ARBDogTrial const*> const& trials,
-	ARBConfigVenue const* inVenue,
-	ARBConfigDivision const* inDiv,
-	ARBConfigLevel const* inLevel,
-	LifeTimePointList& inLifetime)
+		ARBDog const* inDog,
+		std::vector<CVenueFilter> const& venues,
+		int index,
+		std::list<ARBDogTrial const*> const& trials,
+		ARBConfigVenue const* inVenue,
+		ARBConfigDivision const* inDiv,
+		ARBConfigLevel const* inLevel,
+		LifeTimePointList& inLifetime)
 {
 	int nAdded = 0;
 	int speedPts = 0;
@@ -619,11 +635,11 @@ int CAgilityBookViewPoints::DoEvents(
 }
 
 size_t CAgilityBookViewPoints::FindMatchingRuns(
-	std::list<RunInfo> const& runs,
-	std::string const& div,
-	std::string const& level,
-	std::string const& event,
-	std::list<RunInfo>& matching)
+		std::list<RunInfo> const& runs,
+		std::string const& div,
+		std::string const& level,
+		std::string const& event,
+		std::list<RunInfo>& matching)
 {
 	matching.clear();
 	for (list<RunInfo>::const_iterator iterRun = runs.begin();
@@ -638,10 +654,10 @@ size_t CAgilityBookViewPoints::FindMatchingRuns(
 }
 
 int CAgilityBookViewPoints::TallyPoints(
-	std::list<RunInfo> const& runs,
-	ARBConfigScoring const* pScoringMethod,
-	int& nCleanQ,
-	int& nNotCleanQ)
+		std::list<RunInfo> const& runs,
+		ARBConfigScoring const* pScoringMethod,
+		int& nCleanQ,
+		int& nNotCleanQ)
 {
 	nCleanQ = 0;
 	nNotCleanQ = 0;

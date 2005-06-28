@@ -47,7 +47,9 @@ public:
 		WORD part4;
 	} VERSION_NUMBER;
 
-	CVersionNum(WORD inwLangID = 0, WORD inwCharSet = 0);
+	CVersionNum(
+			WORD inwLangID = 0,
+			WORD inwCharSet = 0);
 	/**
 	 * Used to translate the "version.txt" on www.agilityrecordbook.com
 	 */

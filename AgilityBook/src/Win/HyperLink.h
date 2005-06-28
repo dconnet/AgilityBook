@@ -65,15 +65,21 @@ public:
 	virtual ~CHyperLink();
 
 public:
-	enum UnderLineOptions { ulHover = -1, ulNone = 0, ulAlways = 1};
+	enum UnderLineOptions
+	{
+		ulHover = -1,
+		ulNone = 0,
+		ulAlways = 1
+	};
 
 public:
 	void SetURL(CString const& strURL);
 	CString GetURL() const					{return m_strURL;}
 
-	void SetColors(COLORREF crLinkColor,
-		COLORREF crVisitedColor,
-		COLORREF crHoverColor = -1);
+	void SetColors(
+			COLORREF crLinkColor,
+			COLORREF crVisitedColor,
+			COLORREF crHoverColor = -1);
 	COLORREF GetLinkColor() const			{return m_crLinkColor;}
 	COLORREF GetVisitedColor() const		{return m_crVisitedColor;}
 	COLORREF GetHoverColor() const			{return m_crHoverColor;}

@@ -269,14 +269,12 @@ ARBDate::ARBDate()
 {
 }
 
-ARBDate::ARBDate(
-		ARBDate const& rhs)
+ARBDate::ARBDate(ARBDate const& rhs)
 	: m_Julian(rhs.m_Julian)
 {
 }
 
-ARBDate::ARBDate(
-		time_t inTime)
+ARBDate::ARBDate(time_t inTime)
 	: m_Julian(0)
 {
 	if (0 != inTime)
@@ -296,8 +294,7 @@ ARBDate::ARBDate(
 }
 
 #if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
-ARBDate::ARBDate(
-		__time64_t inTime)
+ARBDate::ARBDate(__time64_t inTime)
 	: m_Julian(0)
 {
 	if (0 != inTime)
@@ -320,8 +317,7 @@ ARBDate::ARBDate(
 	SetDate(inYr, inMon, inDay);
 }
 
-void ARBDate::SetJulianDay(
-		long inJulian)
+void ARBDate::SetJulianDay(long inJulian)
 {
 	if (0 < inJulian)
 		m_Julian = inJulian;
@@ -356,8 +352,7 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-std::string ARBDate::GetString(
-		DateFormat inFormat) const
+std::string ARBDate::GetString(DateFormat inFormat) const
 {
 	std::string date;
 	if (IsValid())
@@ -497,8 +492,7 @@ int ARBDate::GetYear() const
 	return yr;
 }
 
-int ARBDate::GetDayOfWeek(
-		DayOfWeek inFirstDay) const
+int ARBDate::GetDayOfWeek(DayOfWeek inFirstDay) const
 {
 	// This was copied from another source, but I don't remember where...
 	// I suspect it won't work properly on dates before 1752 (start of

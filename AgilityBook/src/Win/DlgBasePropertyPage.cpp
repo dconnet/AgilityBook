@@ -50,12 +50,16 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CDlgBasePropertyPage, CPropertyPage)
 
 #if _MSC_VER < 1300
-CDlgBasePropertyPage::CDlgBasePropertyPage(UINT nIDTemplate, UINT nIDCaption)
+CDlgBasePropertyPage::CDlgBasePropertyPage(
+		UINT nIDTemplate,
+		UINT nIDCaption)
 	: CPropertyPage(nIDTemplate, nIDCaption)
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
-CDlgBasePropertyPage::CDlgBasePropertyPage(LPCTSTR lpszTemplateName, UINT nIDCaption)
+CDlgBasePropertyPage::CDlgBasePropertyPage(
+		LPCTSTR lpszTemplateName,
+		UINT nIDCaption)
 	: CPropertyPage(lpszTemplateName, nIDCaption)
 {
 	m_psp.dwFlags |= PSP_HASHELP;
@@ -63,7 +67,9 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(LPCTSTR lpszTemplateName, UINT nIDCap
 
 #else
 CDlgBasePropertyPage::CDlgBasePropertyPage(
-		UINT nIDTemplate, UINT nIDCaption, DWORD dwSize)
+		UINT nIDTemplate,
+		UINT nIDCaption,
+		DWORD dwSize)
 	: CPropertyPage(nIDTemplate, nIDCaption, dwSize)
 {
 	m_psp.dwFlags |= PSP_HASHELP;
@@ -71,21 +77,29 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 	//}}AFX_DATA_INIT
 }
 CDlgBasePropertyPage::CDlgBasePropertyPage(
-		LPCTSTR lpszTemplateName, UINT nIDCaption, DWORD dwSize)
+		LPCTSTR lpszTemplateName,
+		UINT nIDCaption,
+		DWORD dwSize)
 	: CPropertyPage(lpszTemplateName, nIDCaption, dwSize)
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
 CDlgBasePropertyPage::CDlgBasePropertyPage(
-		UINT nIDTemplate, UINT nIDCaption,
-		UINT nIDHeaderTitle, UINT nIDHeaderSubTitle, DWORD dwSize)
+		UINT nIDTemplate,
+		UINT nIDCaption,
+		UINT nIDHeaderTitle,
+		UINT nIDHeaderSubTitle,
+		DWORD dwSize)
 	: CPropertyPage(nIDTemplate, nIDCaption, nIDHeaderTitle, nIDHeaderSubTitle, dwSize)
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
 CDlgBasePropertyPage::CDlgBasePropertyPage(
-		LPCTSTR lpszTemplateName, UINT nIDCaption, UINT nIDHeaderTitle,
-		UINT nIDHeaderSubTitle, DWORD dwSize)
+		LPCTSTR lpszTemplateName,
+		UINT nIDCaption,
+		UINT nIDHeaderTitle,
+		UINT nIDHeaderSubTitle,
+		DWORD dwSize)
 	: CPropertyPage(lpszTemplateName, nIDCaption, nIDHeaderTitle, nIDHeaderSubTitle, dwSize)
 {
 	m_psp.dwFlags |= PSP_HASHELP;

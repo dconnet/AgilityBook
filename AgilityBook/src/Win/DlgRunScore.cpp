@@ -92,7 +92,9 @@ public:
 		, m_pSubLevel(NULL)
 	{
 	}
-	CDlgRunDataLevel(ARBConfigLevel const* pLevel, ARBConfigSubLevel const* pSubLevel)
+	CDlgRunDataLevel(
+			ARBConfigLevel const* pLevel,
+			ARBConfigSubLevel const* pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
@@ -104,8 +106,12 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunScore dialog
 
-CDlgRunScore::CDlgRunScore(CAgilityBookDoc* pDoc, ARBConfigVenue* pVenue,
-	ARBDogTrial const* pTrial, ARBDogRun const* pRealRun, ARBDogRun* pRun)
+CDlgRunScore::CDlgRunScore(
+		CAgilityBookDoc* pDoc,
+		ARBConfigVenue* pVenue,
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRealRun,
+		ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunScore::IDD)
 	, m_pDoc(pDoc)
 	, m_pVenue(pVenue)
@@ -416,7 +422,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 
 // Helper functions to avoid UpdateData. Used during KillFocus events.
-bool CDlgRunScore::GetText(CEdit* pEdit, short& val) const
+bool CDlgRunScore::GetText(
+		CEdit* pEdit,
+		short& val) const
 {
 	if (!pEdit)
 		return false;
@@ -425,7 +433,9 @@ bool CDlgRunScore::GetText(CEdit* pEdit, short& val) const
 	val = static_cast<short>(atoi((LPCTSTR)str));
 	return true;
 }
-bool CDlgRunScore::GetText(CEdit* pEdit, double& val) const
+bool CDlgRunScore::GetText(
+		CEdit* pEdit,
+		double& val) const
 {
 	if (!pEdit)
 		return false;
@@ -1104,7 +1114,9 @@ void CDlgRunScore::OnDestroy()
 	CDlgBasePropertyPage::OnDestroy();
 }
 
-void CDlgRunScore::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgRunScore::OnDatetimechangeDate(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	// Do not call UpdateData, it causes too much validation
 	CTime time;

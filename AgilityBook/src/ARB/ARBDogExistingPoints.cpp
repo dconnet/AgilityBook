@@ -54,8 +54,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 // static
-std::string ARBDogExistingPoints::GetPointTypeName(
-		ARBDogExistingPoints::PointType inType)
+std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
 {
 	std::string str;
 	switch (inType)
@@ -95,8 +94,7 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 {
 }
 
-ARBDogExistingPoints::ARBDogExistingPoints(
-		ARBDogExistingPoints const& rhs)
+ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Comment(rhs.m_Comment)
 	, m_Type(rhs.m_Type)
@@ -114,8 +112,7 @@ ARBDogExistingPoints::~ARBDogExistingPoints()
 {
 }
 
-ARBDogExistingPoints& ARBDogExistingPoints::operator=(
-		ARBDogExistingPoints const& rhs)
+ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -133,8 +130,7 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(
 	return *this;
 }
 
-bool ARBDogExistingPoints::operator==(
-		ARBDogExistingPoints const& rhs) const
+bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 {
 	return m_Date == rhs.m_Date
 		&& m_Comment == rhs.m_Comment
@@ -148,8 +144,7 @@ bool ARBDogExistingPoints::operator==(
 		&& m_Points == rhs.m_Points;
 }
 
-bool ARBDogExistingPoints::operator!=(
-		ARBDogExistingPoints const& rhs) const
+bool ARBDogExistingPoints::operator!=(ARBDogExistingPoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -164,8 +159,7 @@ std::string ARBDogExistingPoints::GetGenericName() const
 	return name;
 }
 
-size_t ARBDogExistingPoints::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBDogExistingPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	return 0;
 }
@@ -316,8 +310,7 @@ bool ARBDogExistingPoints::Load(
 	return true;
 }
 
-bool ARBDogExistingPoints::Save(
-		Element& ioTree) const
+bool ARBDogExistingPoints::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_EXISTING_PTS);
 	title.AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
@@ -405,8 +398,7 @@ void ARBDogExistingPointsList::sort()
 	std::stable_sort(begin(), end(), SortExistingPoints());
 }
 
-bool ARBDogExistingPointsList::HasPoints(
-		std::string const& inVenue) const
+bool ARBDogExistingPointsList::HasPoints(std::string const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -489,8 +481,7 @@ short ARBDogExistingPointsList::ExistingPoints(
 	return pts;
 }
 
-int ARBDogExistingPointsList::NumExistingPointsInVenue(
-		std::string const& inVenue) const
+int ARBDogExistingPointsList::NumExistingPointsInVenue(std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -517,8 +508,7 @@ int ARBDogExistingPointsList::RenameVenue(
 	return count;
 }
 
-int ARBDogExistingPointsList::DeleteVenue(
-		std::string const& inVenue)
+int ARBDogExistingPointsList::DeleteVenue(std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	int count = 0;
@@ -692,8 +682,7 @@ int ARBDogExistingPointsList::DeleteEvent(
 	return count;
 }
 
-int ARBDogExistingPointsList::NumOtherPointsInUse(
-		std::string const& inOther) const
+int ARBDogExistingPointsList::NumOtherPointsInUse(std::string const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -720,8 +709,7 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	return count;
 }
 
-int ARBDogExistingPointsList::DeleteOtherPoints(
-		std::string const& inOther)
+int ARBDogExistingPointsList::DeleteOtherPoints(std::string const& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -737,8 +725,7 @@ int ARBDogExistingPointsList::DeleteOtherPoints(
 	return count;
 }
 
-bool ARBDogExistingPointsList::AddExistingPoints(
-		ARBDogExistingPoints* inExistingPoints)
+bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPoints* inExistingPoints)
 {
 	bool bAdded = false;
 	if (inExistingPoints)
@@ -750,8 +737,7 @@ bool ARBDogExistingPointsList::AddExistingPoints(
 	return bAdded;
 }
 
-bool ARBDogExistingPointsList::DeleteExistingPoints(
-		ARBDogExistingPoints const* inExistingPoints)
+bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPoints const* inExistingPoints)
 {
 	if (inExistingPoints)
 	{

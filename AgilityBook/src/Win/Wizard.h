@@ -67,7 +67,9 @@ class CWizard : public CDlgBaseSheet
 
 // Construction
 public:
-	CWizard(CAgilityBookDoc* pDoc, CWnd* pParentWnd = NULL);
+	CWizard(
+			CAgilityBookDoc* pDoc,
+			CWnd* pParentWnd = NULL);
 
 // Attributes
 private:
@@ -93,7 +95,9 @@ public:
 	/**
 	 * Only CWizardStart should call this.
 	 */
-	void SetImportExportItem(int item, int style)
+	void SetImportExportItem(
+			int item,
+			int style)
 	{
 		m_ImportExportItem = item;
 		m_ImportExportStyle = style;

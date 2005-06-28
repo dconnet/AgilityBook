@@ -79,7 +79,9 @@ public:
 	 * @param inFormat Parse using this format
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
-	static ARBDate FromString(std::string const& inDate, DateFormat inFormat);
+	static ARBDate FromString(
+			std::string const& inDate,
+			DateFormat inFormat);
 
 	/**
 	 * Get the current date.
@@ -93,7 +95,10 @@ public:
 	// VC6 doesn't have this and VC8's time_t is 64bit.
 	ARBDate(__time64_t inTime);
 #endif
-	ARBDate(int inYr, int inMon, int inDay);
+	ARBDate(
+			int inYr,
+			int inMon,
+			int inDay);
 	~ARBDate();
 
 	/**
@@ -127,7 +132,10 @@ public:
 	 * @param inMon Current month.
 	 * @param inDay Current day.
 	 */
-	void SetDate(int inYr, int inMon, int inDay);
+	void SetDate(
+			int inYr,
+			int inMon,
+			int inDay);
 
 	ARBDate& operator=(ARBDate const& rhs);
 	bool operator==(ARBDate const& rhs) const;
@@ -147,7 +155,9 @@ public:
 	/**
 	 * Test if date is between two dates (inclusive)
 	 */
-	bool isBetween(ARBDate const& inDate1, ARBDate const& inDate2) const;
+	bool isBetween(
+			ARBDate const& inDate1,
+			ARBDate const& inDate2) const;
 
 	bool isLeap() const; ///< Is this a leap year?
 
@@ -172,7 +182,10 @@ public:
 	 * @param outMon Current month.
 	 * @param outDay Current day.
 	 */
-	void GetDate(int& outYr, int& outMon, int& outDay) const;
+	void GetDate(
+			int& outYr,
+			int& outMon,
+			int& outDay) const;
 
 	int GetDay() const;		///< Get the current day.
 	int GetMonth() const;	///< Get the current month.
@@ -303,7 +316,9 @@ inline ARBDate& ARBDate::operator-=(int inD)
 	return *this;
 }
 
-inline bool ARBDate::isBetween(ARBDate const& inDate1, ARBDate const& inDate2) const
+inline bool ARBDate::isBetween(
+		ARBDate const& inDate1,
+		ARBDate const& inDate2) const
 {
 	return m_Julian >= inDate1.m_Julian && m_Julian <= inDate2.m_Julian;
 }

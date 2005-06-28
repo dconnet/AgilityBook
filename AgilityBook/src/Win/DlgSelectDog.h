@@ -50,7 +50,10 @@ class CDlgSelectDog : public CDlgBaseDialog
 {
 // Construction
 public:
-	CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDog*>& dogs, CWnd* pParent = NULL);
+	CDlgSelectDog(
+			CAgilityBookDoc* pDoc,
+			std::vector<ARBDog*>& dogs,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

@@ -89,10 +89,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig& ioConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig& ioConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -109,7 +109,10 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfigVenue const* inVenueNew, std::string& ioInfo);
+	bool Update(
+			int indent,
+			ARBConfigVenue const* inVenueNew,
+			std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -207,10 +210,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig& ioConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig& ioConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Sort the list by name.
@@ -233,10 +236,9 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-		std::string const& inVenue,
-		std::string const& inDivision,
-		std::string const& inLevel
-		) const;
+			std::string const& inVenue,
+			std::string const& inDivision,
+			std::string const& inLevel) const;
 
 	/**
 	 * Verify an event exists.
@@ -247,11 +249,10 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-		std::string const& inVenue,
-		std::string const& inDivision,
-		std::string const& inLevel,
-		std::string const& inEvent
-		) const;
+			std::string const& inVenue,
+			std::string const& inDivision,
+			std::string const& inLevel,
+			std::string const& inEvent) const;
 
 	/**
 	 * Find a title by the complete name.
@@ -263,10 +264,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-		std::string const& inVenue,
-		std::string const& inName,
-		bool bAbbrevFirst = true,
-		ARBConfigTitle** outTitle = NULL) const;
+			std::string const& inVenue,
+			std::string const& inName,
+			bool bAbbrevFirst = true,
+			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find a title.
@@ -276,9 +277,9 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-		std::string const& inVenue,
-		std::string const& inTitle,
-		ARBConfigTitle** outTitle = NULL) const;
+			std::string const& inVenue,
+			std::string const& inTitle,
+			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find the named venue.
@@ -287,8 +288,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindVenue(
-		std::string const& inVenue,
-		ARBConfigVenue** outVenue = NULL) const;
+			std::string const& inVenue,
+			ARBConfigVenue** outVenue = NULL) const;
 
 	/**
 	 * Add a venue.
@@ -297,8 +298,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddVenue(
-		std::string const& inVenue,
-		ARBConfigVenue** outVenue = NULL);
+			std::string const& inVenue,
+			ARBConfigVenue** outVenue = NULL);
 
 	/**
 	 * Add a venue.
@@ -325,10 +326,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-		std::string const& inVenue,
-		std::string const& inEvent,
-		std::string const& inDivision,
-		std::string const& inLevel,
-		ARBDate const& inDate,
-		ARBConfigScoring** outScoring = NULL) const;
+			std::string const& inVenue,
+			std::string const& inEvent,
+			std::string const& inDivision,
+			std::string const& inLevel,
+			ARBDate const& inDate,
+			ARBConfigScoring** outScoring = NULL) const;
 };

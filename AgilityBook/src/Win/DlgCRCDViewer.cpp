@@ -47,7 +47,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCRCDViewer dialog
 
-CDlgCRCDViewer::CDlgCRCDViewer(HENHMETAFILE inMetaFile, CWnd* pParent)
+CDlgCRCDViewer::CDlgCRCDViewer(
+		HENHMETAFILE inMetaFile,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgCRCDViewer::IDD, pParent)
 	, m_metaFile(inMetaFile)
 	, m_rWin(0,0,0,0)
@@ -137,7 +139,10 @@ BOOL CDlgCRCDViewer::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-HBRUSH CDlgCRCDViewer::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+HBRUSH CDlgCRCDViewer::OnCtlColor(
+		CDC* pDC,
+		CWnd* pWnd,
+		UINT nCtlColor)
 {
 	HBRUSH hbr = NULL;
 	if (pWnd->GetDlgCtrlID() == IDC_VIEWER_CRCD)
@@ -154,7 +159,10 @@ void CDlgCRCDViewer::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
 
-void CDlgCRCDViewer::OnSize(UINT nType, int cx, int cy)
+void CDlgCRCDViewer::OnSize(
+		UINT nType,
+		int cx,
+		int cy)
 {
 	CDlgBaseDialog::OnSize(nType, cx, cy);
 	if (::IsWindow(m_ctrlCRCD.GetSafeHwnd()))

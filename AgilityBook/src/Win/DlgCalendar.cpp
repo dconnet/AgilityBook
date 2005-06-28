@@ -55,7 +55,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCalendar dialog
 
-CDlgCalendar::CDlgCalendar(ARBCalendar* pCal, CAgilityBookDoc* pDoc, CWnd* pParent)
+CDlgCalendar::CDlgCalendar(
+		ARBCalendar* pCal,
+		CAgilityBookDoc* pDoc,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)

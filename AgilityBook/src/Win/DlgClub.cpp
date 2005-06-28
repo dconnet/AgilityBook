@@ -52,7 +52,11 @@ static char THIS_FILE[] = __FILE__;
 // CDlgClub dialog
 
 // If pClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgClub::CDlgClub(CAgilityBookDoc* pDoc, ARBDogClubList& clubs, ARBDogClub* pClub, CWnd* pParent)
+CDlgClub::CDlgClub(
+		CAgilityBookDoc* pDoc,
+		ARBDogClubList& clubs,
+		ARBDogClub* pClub,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgClub::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Clubs(clubs)

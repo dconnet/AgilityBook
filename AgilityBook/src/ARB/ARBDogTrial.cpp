@@ -68,8 +68,7 @@ ARBDogTrial::ARBDogTrial()
 {
 }
 
-ARBDogTrial::ARBDogTrial(
-		ARBCalendar const& inCal)
+ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 	: m_Location(inCal.GetLocation())
 	, m_Note(inCal.GetNote())
 	, m_Verified(false)
@@ -79,8 +78,7 @@ ARBDogTrial::ARBDogTrial(
 	m_Clubs.AddClub(inCal.GetClub(), inCal.GetVenue());
 }
 
-ARBDogTrial::ARBDogTrial(
-		ARBDogTrial const& rhs)
+ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 	: m_Location(rhs.m_Location)
 	, m_Note(rhs.m_Note)
 	, m_Verified(rhs.m_Verified)
@@ -93,8 +91,7 @@ ARBDogTrial::~ARBDogTrial()
 {
 }
 
-ARBDogTrial& ARBDogTrial::operator=(
-		ARBDogTrial const& rhs)
+ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -107,8 +104,7 @@ ARBDogTrial& ARBDogTrial::operator=(
 	return *this;
 }
 
-bool ARBDogTrial::operator==(
-		ARBDogTrial const& rhs) const
+bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 {
 	return m_Location == rhs.m_Location
 		&& m_Note == rhs.m_Note
@@ -117,8 +113,7 @@ bool ARBDogTrial::operator==(
 		&& m_Runs == rhs.m_Runs;
 }
 
-bool ARBDogTrial::operator!=(
-		ARBDogTrial const& rhs) const
+bool ARBDogTrial::operator!=(ARBDogTrial const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -129,8 +124,7 @@ std::string ARBDogTrial::GetGenericName() const
 	return name;
 }
 
-size_t ARBDogTrial::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBDogTrial::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -191,8 +185,7 @@ bool ARBDogTrial::Load(
 	return true;
 }
 
-bool ARBDogTrial::Save(
-		Element& ioTree) const
+bool ARBDogTrial::Save(Element& ioTree) const
 {
 	Element& trial = ioTree.AddElement(TREE_TRIAL);
 	if (m_Verified) // Default is no
@@ -281,8 +274,7 @@ short ARBDogTrial::GetSpeedPoints(
 	return speed;
 }
 
-bool ARBDogTrial::HasVenue(
-		std::string const& inVenue) const
+bool ARBDogTrial::HasVenue(std::string const& inVenue) const
 {
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
 	{
@@ -314,16 +306,14 @@ private:
 	bool m_bDescending;
 };
 
-void ARBDogTrialList::sort(
-		bool inDescending)
+void ARBDogTrialList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortTrials(inDescending));
 }
 
-int ARBDogTrialList::NumTrialsInVenue(
-		std::string const& inVenue) const
+int ARBDogTrialList::NumTrialsInVenue(std::string const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -360,8 +350,7 @@ int ARBDogTrialList::RenameVenue(
 	return count;
 }
 
-int ARBDogTrialList::DeleteVenue(
-		std::string const& inVenue)
+int ARBDogTrialList::DeleteVenue(std::string const& inVenue)
 {
 	std::string venue(inVenue);
 	int count = 0;
@@ -385,8 +374,7 @@ int ARBDogTrialList::DeleteVenue(
 	return count;
 }
 
-int ARBDogTrialList::NumOtherPointsInUse(
-		std::string const& inOther) const
+int ARBDogTrialList::NumOtherPointsInUse(std::string const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -414,8 +402,7 @@ int ARBDogTrialList::RenameOtherPoints(
 	return count;
 }
 
-int ARBDogTrialList::DeleteOtherPoints(
-		std::string const& inOther)
+int ARBDogTrialList::DeleteOtherPoints(std::string const& inOther)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -699,8 +686,7 @@ int ARBDogTrialList::DeleteEvent(
 	return count;
 }
 
-bool ARBDogTrialList::AddTrial(
-		ARBDogTrial* inTrial)
+bool ARBDogTrialList::AddTrial(ARBDogTrial* inTrial)
 {
 	bool bAdded = false;
 	if (inTrial)
@@ -712,8 +698,7 @@ bool ARBDogTrialList::AddTrial(
 	return bAdded;
 }
 
-bool ARBDogTrialList::DeleteTrial(
-		ARBDogTrial const* inTrial)
+bool ARBDogTrialList::DeleteTrial(ARBDogTrial const* inTrial)
 {
 	if (inTrial)
 	{

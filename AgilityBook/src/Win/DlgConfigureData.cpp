@@ -154,7 +154,9 @@ CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataLevel::CDlgConfigureDataLevel(ARBConfigDivision* div, ARBConfigLevel* level)
+CDlgConfigureDataLevel::CDlgConfigureDataLevel(
+		ARBConfigDivision* div,
+		ARBConfigLevel* level)
 	: CDlgConfigureData()
 	, m_Division(div)
 	, m_Level(level)
@@ -176,7 +178,10 @@ CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(ARBConfigDivision* div, ARBConfigLevel* level, ARBConfigSubLevel* subLevel)
+CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
+		ARBConfigDivision* div,
+		ARBConfigLevel* level,
+		ARBConfigSubLevel* subLevel)
 	: CDlgConfigureData()
 	, m_Division(div)
 	, m_Level(level)
@@ -201,7 +206,9 @@ CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataTitle::CDlgConfigureDataTitle(ARBConfigDivision* div, ARBConfigTitle* title)
+CDlgConfigureDataTitle::CDlgConfigureDataTitle(
+		ARBConfigDivision* div,
+		ARBConfigTitle* title)
 	: CDlgConfigureData()
 	, m_Division(div)
 	, m_Title(title)

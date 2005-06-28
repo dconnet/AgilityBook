@@ -47,7 +47,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-CVersionNum::CVersionNum(WORD inwLangID, WORD inwCharSet)
+CVersionNum::CVersionNum(
+		WORD inwLangID,
+		WORD inwCharSet)
 	: m_Valid(false)
 {
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;

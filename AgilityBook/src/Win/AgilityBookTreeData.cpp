@@ -88,10 +88,10 @@ static char THIS_FILE[] = __FILE__;
 ////////////////////////////////////////////////////////////////////////////
 
 static bool EditDog(
-	CAgilityBookTreeDataDog* pDogData,
-	CAgilityBookTree* pTree,
-	bool* bTreeSelectionSet,
-	int nPage = 0)
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTree* pTree,
+		bool* bTreeSelectionSet,
+		int nPage = 0)
 {
 	bool bAdd = false;
 	ARBDog* pDog = NULL;
@@ -136,10 +136,10 @@ static bool EditDog(
 }
 
 static bool EditTrial(
-	CAgilityBookTreeDataDog* pDogData,
-	CAgilityBookTreeDataTrial* pTrialData,
-	CAgilityBookTree* pTree,
-	bool* bTreeSelectionSet)
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTreeDataTrial* pTrialData,
+		CAgilityBookTree* pTree,
+		bool* bTreeSelectionSet)
 {
 	ASSERT(pDogData && pDogData->GetDog());
 	bool bAdd = false;
@@ -208,11 +208,11 @@ static bool EditTrial(
 }
 
 static bool EditRun(
-	CAgilityBookTreeDataDog* pDogData,
-	CAgilityBookTreeDataTrial* pTrialData,
-	CAgilityBookTreeDataRun* pRunData,
-	CAgilityBookTree* pTree,
-	bool* bTreeSelectionSet)
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTreeDataTrial* pTrialData,
+		CAgilityBookTreeDataRun* pRunData,
+		CAgilityBookTree* pTree,
+		bool* bTreeSelectionSet)
 {
 	ASSERT(pDogData && pDogData->GetDog());
 	ASSERT(pTrialData && pTrialData->GetTrial());
@@ -293,8 +293,8 @@ static bool EditRun(
 }
 
 static bool ReOrderDogs(
-	ARBDogList& dogs,
-	CAgilityBookTree* pTree)
+		ARBDogList& dogs,
+		CAgilityBookTree* pTree)
 {
 	bool bOk = false;
 	std::vector<ARBBase*> items;
@@ -326,8 +326,8 @@ static bool ReOrderDogs(
 }
 
 static bool ReOrderTrial(
-	ARBDogTrial* pTrial,
-	CAgilityBookTree* pTree)
+		ARBDogTrial* pTrial,
+		CAgilityBookTree* pTree)
 {
 	bool bOk = false;
 	if (pTrial)
@@ -363,8 +363,8 @@ static bool ReOrderTrial(
 }
 
 static bool AddTitle(
-	CAgilityBookTreeDataDog* pDogData,
-	CAgilityBookTree* pTree)
+		CAgilityBookTreeDataDog* pDogData,
+		CAgilityBookTree* pTree)
 {
 	ASSERT(pDogData && pDogData->GetDog());
 	CDlgTitle dlg(pTree->GetDocument()->GetConfig(), pDogData->GetDog()->GetTitles(), NULL, pTree);
@@ -562,7 +562,9 @@ std::vector<int> const& CAgilityBookTreeData::GetRunColumns() const
 
 ////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(CAgilityBookTree* pTree, ARBDog* pDog)
+CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
+		CAgilityBookTree* pTree,
+		ARBDog* pDog)
 	: CAgilityBookTreeData(pTree)
 	, m_pDog(pDog)
 {
@@ -623,7 +625,9 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 	return bEnable;
 }
 
-bool CAgilityBookTreeDataDog::OnCmd(UINT id, bool* bTreeSelectionSet)
+bool CAgilityBookTreeDataDog::OnCmd(
+		UINT id,
+		bool* bTreeSelectionSet)
 {
 	static bool bPrompt = true;
 	bool bModified = false;
@@ -783,7 +787,9 @@ void CAgilityBookTreeDataDog::Properties()
 
 /////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(CAgilityBookTree* pTree, ARBDogTrial* pTrial)
+CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
+		CAgilityBookTree* pTree,
+		ARBDogTrial* pTrial)
 	: CAgilityBookTreeData(pTree)
 	, m_pTrial(pTrial)
 {
@@ -867,7 +873,9 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 	return bEnable;
 }
 
-bool CAgilityBookTreeDataTrial::OnCmd(UINT id, bool* bTreeSelectionSet)
+bool CAgilityBookTreeDataTrial::OnCmd(
+		UINT id,
+		bool* bTreeSelectionSet)
 {
 	static bool bPrompt = true;
 	bool bModified = false;
@@ -1030,7 +1038,9 @@ void CAgilityBookTreeDataTrial::Properties()
 
 /////////////////////////////////////////////////////////////////////////////
 
-CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(CAgilityBookTree* pTree, ARBDogRun* pRun)
+CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
+		CAgilityBookTree* pTree,
+		ARBDogRun* pRun)
 	: CAgilityBookTreeData(pTree)
 	, m_pRun(pRun)
 {
@@ -1150,7 +1160,9 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 	return bEnable;
 }
 
-bool CAgilityBookTreeDataRun::OnCmd(UINT id, bool* bTreeSelectionSet)
+bool CAgilityBookTreeDataRun::OnCmd(
+		UINT id,
+		bool* bTreeSelectionSet)
 {
 	static bool bPrompt = true;
 	bool bModified = false;

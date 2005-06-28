@@ -41,7 +41,9 @@ class ARBConfigVenue;
 class CDlgSelectEvent : publicCDlgBaseDialog 
 {
 public:
-	CDlgSelectEvent(ARBConfigVenue const* pVenue, CWnd* pParent = NULL);
+	CDlgSelectEvent(
+			ARBConfigVenue const* pVenue,
+			CWnd* pParent = NULL);
 	char const* GetDivision() const		{return (LPCTSTR)m_Division;}
 	char const* GetLevel() const		{return (LPCTSTR)m_Level;}
 	char const* GetEvent() const		{return (LPCTSTR)m_Event;}

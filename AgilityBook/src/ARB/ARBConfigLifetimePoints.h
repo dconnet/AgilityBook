@@ -56,7 +56,9 @@ class ARBConfigLifetimePoints : public ARBBase
 {
 public:
 	ARBConfigLifetimePoints();
-	ARBConfigLifetimePoints(short inPoints, short inFaults);
+	ARBConfigLifetimePoints(
+			short inPoints,
+			short inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
 	bool operator==(ARBConfigLifetimePoints const& rhs) const;
@@ -84,9 +86,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -160,8 +162,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLifetimePoints(
-		short inFaults,
-		ARBConfigLifetimePoints** outPoints = NULL) const;
+			short inFaults,
+			ARBConfigLifetimePoints** outPoints = NULL) const;
 
 	/**
 	 * Add an object.
@@ -171,9 +173,9 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLifetimePoints(
-		short inPoints,
-		short inFaults,
-		ARBConfigLifetimePoints** outPoints = NULL);
+			short inPoints,
+			short inFaults,
+			ARBConfigLifetimePoints** outPoints = NULL);
 
 	/**
 	 * Delete an object.

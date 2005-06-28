@@ -46,7 +46,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgName dialog
 
-CDlgName::CDlgName(LPCTSTR name, UINT caption, CWnd* pParent)
+CDlgName::CDlgName(
+		LPCTSTR name,
+		UINT caption,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgName::IDD, pParent)
 	, m_Name(name)
 {
@@ -56,7 +59,10 @@ CDlgName::CDlgName(LPCTSTR name, UINT caption, CWnd* pParent)
 	//}}AFX_DATA_INIT
 }
 
-CDlgName::CDlgName(LPCTSTR name, LPCTSTR pCaption, CWnd* pParent)
+CDlgName::CDlgName(
+		LPCTSTR name,
+		LPCTSTR pCaption,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgName::IDD, pParent)
 	, m_Name(name)
 	, m_Caption(pCaption)

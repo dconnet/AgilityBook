@@ -133,7 +133,9 @@ LRESULT CAgilityBookViewCalendar::OnCommandHelp(WPARAM, LPARAM)
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CAgilityBookViewCalendar::SetCurrentDate(ARBDate const& date, bool bEnsureVisible)
+bool CAgilityBookViewCalendar::SetCurrentDate(
+		ARBDate const& date,
+		bool bEnsureVisible)
 {
 	bool bSet = false;
 	if (date != m_Current && date >= m_First && date <= m_Last)
@@ -188,9 +190,10 @@ bool CAgilityBookViewCalendar::GetMessage2(CString& msg) const
 	return true;
 }
 
-size_t CAgilityBookViewCalendar::GetEntriesOn(ARBDate const& date,
-	std::vector<ARBCalendar*>& entries,
-	bool bGetHidden) const
+size_t CAgilityBookViewCalendar::GetEntriesOn(
+		ARBDate const& date,
+		std::vector<ARBCalendar*>& entries,
+		bool bGetHidden) const
 {
 	entries.clear();
 	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
@@ -330,7 +333,9 @@ void CAgilityBookViewCalendar::LoadData()
 /**
  * Returns the working rect for a date. Borders are handled entirely separately.
  */
-CRect CAgilityBookViewCalendar::GetDateRect(ARBDate const& date, bool bLogical) const
+CRect CAgilityBookViewCalendar::GetDateRect(
+		ARBDate const& date,
+		bool bLogical) const
 {
 	CRect r(0, 0, m_szEntry.cx, -m_szEntry.cy);
 	int nWeek = (date - m_First) / 7;
@@ -348,7 +353,9 @@ CRect CAgilityBookViewCalendar::GetDateRect(ARBDate const& date, bool bLogical) 
 	return r;
 }
 
-void CAgilityBookViewCalendar::GetDateFromPoint(CPoint pt, ARBDate& date)
+void CAgilityBookViewCalendar::GetDateFromPoint(
+		CPoint pt,
+		ARBDate& date)
 {
 	date.clear();
 	CSize sz = GetTotalSize();
@@ -364,7 +371,10 @@ void CAgilityBookViewCalendar::GetDateFromPoint(CPoint pt, ARBDate& date)
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CAgilityBookViewCalendar::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
+void CAgilityBookViewCalendar::OnActivateView(
+		BOOL bActivate,
+		CView* pActivateView,
+		CView* pDeactiveView) 
 {
 	CScrollView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
@@ -382,7 +392,10 @@ void CAgilityBookViewCalendar::OnActivateView(BOOL bActivate, CView* pActivateVi
 	}
 }
 
-void CAgilityBookViewCalendar::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+void CAgilityBookViewCalendar::OnUpdate(
+		CView* pSender,
+		LPARAM lHint,
+		CObject* pHint)
 {
 	if (0 == lHint || (UPDATE_CALENDAR_VIEW & lHint) || (UPDATE_OPTIONS & lHint))
 		LoadData();
@@ -582,7 +595,9 @@ struct CPrintData
 	CSize sz;
 };
 
-void CAgilityBookViewCalendar::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
+void CAgilityBookViewCalendar::OnBeginPrinting(
+		CDC* pDC,
+		CPrintInfo* pInfo)
 {
 	pDC->SetMapMode(MM_LOENGLISH);
 	CSize szDevice(pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
@@ -603,13 +618,17 @@ void CAgilityBookViewCalendar::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	pInfo->SetMaxPage(nMax);
 }
 
-void CAgilityBookViewCalendar::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* pInfo)
+void CAgilityBookViewCalendar::OnEndPrinting(
+		CDC* /*pDC*/,
+		CPrintInfo* pInfo)
 {
 	CPrintData* pData = reinterpret_cast<CPrintData*>(pInfo->m_lpUserData);
 	delete pData;
 }
 
-void CAgilityBookViewCalendar::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+void CAgilityBookViewCalendar::OnPrint(
+		CDC* pDC,
+		CPrintInfo* pInfo)
 {
 	pDC->SetMapMode(MM_LOENGLISH);
 
@@ -653,7 +672,9 @@ CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug vers
 
 // CAgilityBookViewCalendar message handlers
 
-void CAgilityBookViewCalendar::OnRButtonDown(UINT nFlags, CPoint point) 
+void CAgilityBookViewCalendar::OnRButtonDown(
+		UINT nFlags,
+		CPoint point) 
 {
 	CClientDC dc(this);
 	dc.SetMapMode(MM_LOENGLISH);
@@ -666,7 +687,9 @@ void CAgilityBookViewCalendar::OnRButtonDown(UINT nFlags, CPoint point)
 	CScrollView::OnRButtonDown(nFlags, point);
 }
 
-void CAgilityBookViewCalendar::OnContextMenu(CWnd* pWnd, CPoint point)
+void CAgilityBookViewCalendar::OnContextMenu(
+		CWnd* pWnd,
+		CPoint point)
 {
 	if (!m_Current.IsValid())
 		return;
@@ -706,7 +729,9 @@ BOOL CAgilityBookViewCalendar::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-void CAgilityBookViewCalendar::OnLButtonDown(UINT nFlags, CPoint point) 
+void CAgilityBookViewCalendar::OnLButtonDown(
+		UINT nFlags,
+		CPoint point) 
 {
 	CClientDC dc(this);
 	dc.SetMapMode(MM_LOENGLISH);
@@ -719,13 +744,18 @@ void CAgilityBookViewCalendar::OnLButtonDown(UINT nFlags, CPoint point)
 	CScrollView::OnLButtonDown(nFlags, point);
 }
 
-void CAgilityBookViewCalendar::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CAgilityBookViewCalendar::OnLButtonDblClk(
+		UINT nFlags,
+		CPoint point) 
 {
 	OnCalendarEdit();
 	CScrollView::OnLButtonDblClk(nFlags, point);
 }
 
-BOOL CAgilityBookViewCalendar::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+BOOL CAgilityBookViewCalendar::OnMouseWheel(
+		UINT nFlags,
+		short zDelta,
+		CPoint pt) 
 {
 	int nLines = zDelta / WHEEL_DELTA;
 	if (0 == nLines)
@@ -739,7 +769,10 @@ BOOL CAgilityBookViewCalendar::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt
 	return TRUE;
 }
 
-void CAgilityBookViewCalendar::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CAgilityBookViewCalendar::OnKeyDown(
+		UINT nChar,
+		UINT nRepCnt,
+		UINT nFlags) 
 {
 	bool bHandled = false;
 	if (m_Current.IsValid())

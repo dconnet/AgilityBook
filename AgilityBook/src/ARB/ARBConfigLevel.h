@@ -86,9 +86,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -106,9 +106,9 @@ public:
 	 * @return Whether or not changes have occurred.
 	 */
 	bool Update(
-		int indent,
-		ARBConfigLevel const* inLevelNew,
-		std::string& ioInfo);
+			int indent,
+			ARBConfigLevel const* inLevelNew,
+			std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -165,8 +165,8 @@ public:
 	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
-		std::string const& inName,
-		bool inAllowWildCard = true) const;
+			std::string const& inName,
+			bool inAllowWildCard = true) const;
 
 	/**
 	 * Find a level.
@@ -175,8 +175,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLevel(
-		std::string const& inName,
-		ARBConfigLevel** outLevel = NULL);
+			std::string const& inName,
+			ARBConfigLevel** outLevel = NULL);
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -186,8 +186,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindSubLevel(
-		std::string const& inName,
-		ARBConfigLevel** outLevel = NULL) const;
+			std::string const& inName,
+			ARBConfigLevel** outLevel = NULL) const;
 
 	/**
 	 * Add a level.
@@ -196,8 +196,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLevel(
-		std::string const& inName,
-		ARBConfigLevel** outLevel = NULL);
+			std::string const& inName,
+			ARBConfigLevel** outLevel = NULL);
 
 	/**
 	 * Add a level.
@@ -213,8 +213,8 @@ public:
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
-		std::string const& inName,
-		ARBConfigEventList& ioEvents);
+			std::string const& inName,
+			ARBConfigEventList& ioEvents);
 
 	/**
 	 * Delete a sublevel.
@@ -224,6 +224,6 @@ public:
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
 	bool DeleteSubLevel(
-		std::string const& inName,
-		bool& outLevelModified);
+			std::string const& inName,
+			bool& outLevelModified);
 };

@@ -42,14 +42,21 @@ class CCheckTreeCtrl : public CTreeCtrl
 public:
 	CCheckTreeCtrl();
 
-	void ShowCheckbox(HTREEITEM hItem, bool bShow = true);
+	void ShowCheckbox(
+			HTREEITEM hItem,
+			bool bShow = true);
 	bool IsCheckVisible(HTREEITEM hItem) const;
 	bool GetChecked(HTREEITEM hItem) const;
-	bool SetChecked(HTREEITEM hItem, bool bChecked, bool bCascade = true);
+	bool SetChecked(
+			HTREEITEM hItem,
+			bool bChecked,
+			bool bCascade = true);
 
 private:
 	void CheckParentCheck(HTREEITEM hItem);
-	int Cascade(HTREEITEM hItem, bool bChecked);
+	int Cascade(
+			HTREEITEM hItem,
+			bool bChecked);
 	void SendDispInfo(HTREEITEM hItem);
 	// Hide the standard versions to make sure any usage to this tree
 	// shows/hides the checkboxes properly.
@@ -57,9 +64,14 @@ private:
 	// These are not virtual, so access via CTreeCtrl is possible.
 	// Don't do that!
 	BOOL GetCheck(HTREEITEM hItem) const;
-	BOOL SetCheck(HTREEITEM hItem, BOOL fCheck = TRUE);
+	BOOL SetCheck(
+			HTREEITEM hItem,
+			BOOL fCheck = TRUE);
 	// No one should be setting the state directly.
-	BOOL SetItemState(HTREEITEM hItem, UINT nState, UINT nStateMask);
+	BOOL SetItemState(
+			HTREEITEM hItem,
+			UINT nState,
+			UINT nStateMask);
 
 protected:
 	CImageList m_stateList;

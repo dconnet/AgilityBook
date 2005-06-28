@@ -57,8 +57,7 @@ ARBConfigOtherPoints::ARBConfigOtherPoints()
 {
 }
 
-ARBConfigOtherPoints::ARBConfigOtherPoints(
-		ARBConfigOtherPoints const& rhs)
+ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Tally(rhs.m_Tally)
 	, m_Desc(rhs.m_Desc)
@@ -69,8 +68,7 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
 
-ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(
-		ARBConfigOtherPoints const& rhs)
+ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -81,16 +79,14 @@ ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(
 	return *this;
 }
 
-bool ARBConfigOtherPoints::operator==(
-		ARBConfigOtherPoints const& rhs) const
+bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Tally == rhs.m_Tally
 		&& m_Desc == rhs.m_Desc;
 }
 
-bool ARBConfigOtherPoints::operator!=(
-		ARBConfigOtherPoints const& rhs) const
+bool ARBConfigOtherPoints::operator!=(ARBConfigOtherPoints const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -102,8 +98,7 @@ void ARBConfigOtherPoints::clear()
 	m_Desc.erase();
 }
 
-size_t ARBConfigOtherPoints::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -148,8 +143,7 @@ bool ARBConfigOtherPoints::Load(
 	return true;
 }
 
-bool ARBConfigOtherPoints::Save(
-		Element& ioTree) const
+bool ARBConfigOtherPoints::Save(Element& ioTree) const
 {
 	Element& other = ioTree.AddElement(TREE_OTHERPTS);
 	other.AddAttrib(ATTRIB_OTHERPTS_NAME, m_Name);
@@ -176,8 +170,7 @@ bool ARBConfigOtherPoints::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigOtherPointsList::VerifyOtherPoints(
-		std::string const& inName) const
+bool ARBConfigOtherPointsList::VerifyOtherPoints(std::string const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -208,8 +201,7 @@ bool ARBConfigOtherPointsList::FindOtherPoints(
 	return false;
 }
 
-bool ARBConfigOtherPointsList::AddOtherPoints(
-		ARBConfigOtherPoints* inOther)
+bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPoints* inOther)
 {
 	// Global uniqueness must be ensured by the calling function.
 	bool bAdded = false;
@@ -222,8 +214,7 @@ bool ARBConfigOtherPointsList::AddOtherPoints(
 	return bAdded;
 }
 
-bool ARBConfigOtherPointsList::DeleteOtherPoints(
-		std::string const& inName)
+bool ARBConfigOtherPointsList::DeleteOtherPoints(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

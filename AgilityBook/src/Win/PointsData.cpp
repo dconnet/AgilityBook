@@ -60,7 +60,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-LifeTimePointInfo::LifeTimePointInfo(std::string const& inDiv, std::string const& inLevel, int inPoints, int inFiltered)
+LifeTimePointInfo::LifeTimePointInfo(
+		std::string const& inDiv,
+		std::string const& inLevel,
+		int inPoints,
+		int inFiltered)
 	: div(inDiv)
 	, level(inLevel)
 	, points(inPoints)
@@ -70,7 +74,10 @@ LifeTimePointInfo::LifeTimePointInfo(std::string const& inDiv, std::string const
 
 /////////////////////////////////////////////////////////////////////////////
 
-OtherPtInfo::OtherPtInfo(ARBDogTrial const* pTrial, ARBDogRun const* pRun, int score)
+OtherPtInfo::OtherPtInfo(
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRun,
+		int score)
 	: m_pTrial(pTrial)
 	, m_pRun(pRun)
 	, m_pExisting(NULL)
@@ -123,7 +130,9 @@ void PointsDataBase::Release()
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataDog::PointsDataDog(CAgilityBookViewPoints* pView, ARBDog* pDog)
+PointsDataDog::PointsDataDog(
+		CAgilityBookViewPoints* pView,
+		ARBDog* pDog)
 	: PointsDataBase(pView)
 	, m_pDog(pDog)
 {
@@ -176,7 +185,10 @@ void PointsDataDog::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataVenue::PointsDataVenue(CAgilityBookViewPoints* pView, ARBDog* pDog, ARBConfigVenue* pVenue)
+PointsDataVenue::PointsDataVenue(
+		CAgilityBookViewPoints* pView,
+		ARBDog* pDog,
+		ARBConfigVenue* pVenue)
 	: PointsDataBase(pView)
 	, m_pDog(pDog)
 	, m_pVenue(pVenue)
@@ -248,7 +260,10 @@ void PointsDataVenue::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataTitle::PointsDataTitle(CAgilityBookViewPoints* pView, ARBDog* pDog, ARBDogTitle* pTitle)
+PointsDataTitle::PointsDataTitle(
+		CAgilityBookViewPoints* pView,
+		ARBDog* pDog,
+		ARBDogTitle* pTitle)
 	: PointsDataBase(pView)
 	, m_pDog(pDog)
 	, m_pTitle(pTitle)
@@ -303,7 +318,8 @@ void PointsDataTitle::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataEvent::PointsDataEvent(CAgilityBookViewPoints* pView,
+PointsDataEvent::PointsDataEvent(
+		CAgilityBookViewPoints* pView,
 		ARBDog const* inDog,
 		std::list<RunInfo>& inMatching,
 		ARBConfigVenue const* inVenue,
@@ -381,7 +397,9 @@ void PointsDataEvent::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataLifetime::PointsDataLifetime(CAgilityBookViewPoints* pView, std::string const& inVenue)
+PointsDataLifetime::PointsDataLifetime(
+		CAgilityBookViewPoints* pView,
+		std::string const& inVenue)
 	: PointsDataBase(pView)
 	, m_Venue(inVenue.c_str())
 	, m_Lifetime(0)
@@ -389,7 +407,11 @@ PointsDataLifetime::PointsDataLifetime(CAgilityBookViewPoints* pView, std::strin
 {
 }
 
-void PointsDataLifetime::AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered)
+void PointsDataLifetime::AddLifetimeInfo(
+		std::string const& inDiv,
+		std::string const& inLevel,
+		int inLifetime,
+		int inFiltered)
 {
 	m_Data.push_back(LifeTimePointInfo(inDiv, inLevel, inLifetime, inFiltered));
 	m_Lifetime += inLifetime;
@@ -432,15 +454,20 @@ void PointsDataLifetime::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataLifetimeDiv::PointsDataLifetimeDiv(CAgilityBookViewPoints* pView,
-	std::string const& inVenue,
-	std::string const& inDiv)
+PointsDataLifetimeDiv::PointsDataLifetimeDiv(
+		CAgilityBookViewPoints* pView,
+		std::string const& inVenue,
+		std::string const& inDiv)
 	: PointsDataLifetime(pView, inVenue)
 	, m_Div(inDiv)
 {
 }
 
-void PointsDataLifetimeDiv::AddLifetimeInfo(std::string const& inDiv, std::string const& inLevel, int inLifetime, int inFiltered)
+void PointsDataLifetimeDiv::AddLifetimeInfo(
+		std::string const& inDiv,
+		std::string const& inLevel,
+		int inLifetime,
+		int inFiltered)
 {
 	if (inDiv == m_Div)
 	{
@@ -471,7 +498,10 @@ std::string PointsDataLifetimeDiv::OnNeedText(size_t index) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataDoubleQs::PointsDataDoubleQs(CAgilityBookViewPoints* pView, int inExistingDblQs, std::set<DoubleQdata> const& inQQs)
+PointsDataDoubleQs::PointsDataDoubleQs(
+		CAgilityBookViewPoints* pView,
+		int inExistingDblQs,
+		std::set<DoubleQdata> const& inQQs)
 	: PointsDataBase(pView)
 	, m_ExistingDblQs(inExistingDblQs)
 	, m_QQs(inQQs)
@@ -498,7 +528,9 @@ void PointsDataDoubleQs::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataSpeedPts::PointsDataSpeedPts(CAgilityBookViewPoints* pView, int inPts)
+PointsDataSpeedPts::PointsDataSpeedPts(
+		CAgilityBookViewPoints* pView,
+		int inPts)
 	: PointsDataBase(pView)
 	, m_Pts(inPts)
 {
@@ -518,7 +550,9 @@ std::string PointsDataSpeedPts::OnNeedText(size_t index) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPoints::PointsDataOtherPoints(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList)
+PointsDataOtherPoints::PointsDataOtherPoints(
+		CAgilityBookViewPoints* pView,
+		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataBase(pView)
 	, m_Score(0)
 	, m_RunList(inRunList)
@@ -533,7 +567,10 @@ PointsDataOtherPoints::PointsDataOtherPoints(CAgilityBookViewPoints* pView, std:
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyAll::PointsDataOtherPointsTallyAll(CAgilityBookViewPoints* pView, std::string const& inName, std::list<OtherPtInfo> const& inRunList)
+PointsDataOtherPointsTallyAll::PointsDataOtherPointsTallyAll(
+		CAgilityBookViewPoints* pView,
+		std::string const& inName,
+		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 	, m_Name(inName)
 {
@@ -566,7 +603,9 @@ void PointsDataOtherPointsTallyAll::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyAllByEvent::PointsDataOtherPointsTallyAllByEvent(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList)
+PointsDataOtherPointsTallyAllByEvent::PointsDataOtherPointsTallyAllByEvent(
+		CAgilityBookViewPoints* pView,
+		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 {
 }
@@ -598,7 +637,9 @@ void PointsDataOtherPointsTallyAllByEvent::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyLevel::PointsDataOtherPointsTallyLevel(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList)
+PointsDataOtherPointsTallyLevel::PointsDataOtherPointsTallyLevel(
+		CAgilityBookViewPoints* pView,
+		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 {
 }
@@ -630,7 +671,9 @@ void PointsDataOtherPointsTallyLevel::OnDblClick() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(CAgilityBookViewPoints* pView, std::list<OtherPtInfo> const& inRunList)
+PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(
+		CAgilityBookViewPoints* pView,
+		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 {
 }

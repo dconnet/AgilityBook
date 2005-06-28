@@ -203,20 +203,17 @@ public:
 	{
 	}
 	/// Copy constructor
-	XMLstring(
-			XMLstring const& str)
+	XMLstring(XMLstring const& str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
 	/// XMLCh string constructor
-	XMLstring(
-			XMLCh const* str)
+	XMLstring(XMLCh const* str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
 	/// string->XMLCh translation constuctor
-	XMLstring(
-			std::string const& str)
+	XMLstring(std::string const& str)
 	{
 		if (0 < str.length())
 		{
@@ -226,8 +223,7 @@ public:
 		}
 	}
 	/// char->XMLCh translation constuctor
-	XMLstring(
-			char const* str)
+	XMLstring(char const* str)
 	{
 		if (str && *str)
 		{
@@ -241,8 +237,7 @@ public:
 	//  XMLCh*
 	//  std::string
 	//  char*
-	XMLstring& operator=(
-			XMLstring const& str)
+	XMLstring& operator=(XMLstring const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -252,8 +247,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(
-			XMLCh const* str)
+	XMLstring& operator=(XMLCh const* str)
 	{
 #if _MSC_VER < 1300
 		basic_string<XMLCh>::operator=(str);
@@ -262,8 +256,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(
-			std::string const& str)
+	XMLstring& operator=(std::string const& str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -273,8 +266,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator=(
-			char const* str)
+	XMLstring& operator=(char const* str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -284,8 +276,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(
-			XMLstring const& str)
+	XMLstring& operator+=(XMLstring const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -295,8 +286,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(
-			XMLCh const* str)
+	XMLstring& operator+=(XMLCh const* str)
 	{
 #if _MSC_VER < 1300
 		basic_string<XMLCh>::operator+=(str);
@@ -305,8 +295,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(
-			std::string const& str)
+	XMLstring& operator+=(std::string const& str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -316,8 +305,7 @@ public:
 #endif
 		return *this;
 	}
-	XMLstring& operator+=(
-			char const* str)
+	XMLstring& operator+=(char const* str)
 	{
 		XMLstring data(str);
 #if _MSC_VER < 1300
@@ -346,8 +334,7 @@ public:
 	{
 	}
 	/// Copy constructor
-	StringDOM(
-			StringDOM const& str)
+	StringDOM(StringDOM const& str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -356,8 +343,7 @@ public:
 	{
 	}
 	/// Copy constructor
-	StringDOM(
-			std::string const& str)
+	StringDOM(std::string const& str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -366,8 +352,7 @@ public:
 	{
 	}
 	/// char string constructor
-	StringDOM(
-			char const* str)
+	StringDOM(char const* str)
 #if _MSC_VER < 1300
 		: string(str)
 #else
@@ -376,8 +361,7 @@ public:
 	{
 	}
 	/// XMLCh->string translation constuctor
-	StringDOM(
-			XMLCh const* str)
+	StringDOM(XMLCh const* str)
 	{
 		if (str && XMLString::stringLen(str))
 		{
@@ -390,8 +374,7 @@ public:
 			delete [] pStr;
 		}
 	}
-	StringDOM& operator=(
-			StringDOM const& str)
+	StringDOM& operator=(StringDOM const& str)
 	{
 		if (this != &str)
 #if _MSC_VER < 1300
@@ -401,8 +384,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(
-			std::string const& str)
+	StringDOM& operator=(std::string const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator=(str);
@@ -411,8 +393,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(
-			char const* str)
+	StringDOM& operator=(char const* str)
 	{
 #if _MSC_VER < 1300
 		string::operator=(str);
@@ -421,8 +402,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator=(
-			XMLCh const* str)
+	StringDOM& operator=(XMLCh const* str)
 	{
 		StringDOM data(str);
 #if _MSC_VER < 1300
@@ -432,8 +412,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(
-			StringDOM const& str)
+	StringDOM& operator+=(StringDOM const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -442,8 +421,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(
-			std::string const& str)
+	StringDOM& operator+=(std::string const& str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -452,8 +430,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(
-			char const* str)
+	StringDOM& operator+=(char const* str)
 	{
 #if _MSC_VER < 1300
 		string::operator+=(str);
@@ -462,8 +439,7 @@ public:
 #endif
 		return *this;
 	}
-	StringDOM& operator+=(
-			XMLCh const* str)
+	StringDOM& operator+=(XMLCh const* str)
 	{
 		if (str && XMLString::stringLen(str))
 		{
@@ -513,12 +489,10 @@ public:
 	 * @param xmlStr The incoming name from SAX to transcode.
 	 * @return The transcoded string.
 	 */
-	char const* TranscodeElement(
-			XMLCh const* const xmlStr);
+	char const* TranscodeElement(XMLCh const* const xmlStr);
 };
 
-char const* StringTranscode::TranscodeElement(
-		XMLCh const* const xmlStr)
+char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 {
 	XMLstring str(xmlStr);
 	StringTranscode::iterator iter = find(str);
@@ -576,12 +550,9 @@ public:
 	// -----------------------------------------------------------------------
 	//  Handlers for the SAX ErrorHandler interface
 	// -----------------------------------------------------------------------
-	void warning(
-			SAXParseException const& exception);
-	void error(
-			SAXParseException const& exception);
-	void fatalError(
-			SAXParseException const& exception);
+	void warning(SAXParseException const& exception);
+	void error(SAXParseException const& exception);
+	void fatalError(SAXParseException const& exception);
 
 private:
 	Element& m_Tree; ///< Parsed XML data
@@ -708,8 +679,7 @@ void SAXImportHandlers::resetDocument()
 	m_FatalErrors = 0;
 }
 
-void SAXImportHandlers::warning(
-		SAXParseException const& toCatch)
+void SAXImportHandlers::warning(SAXParseException const& toCatch)
 {
 	++m_Warnings;
 	std::ostringstream tmp;
@@ -724,8 +694,7 @@ void SAXImportHandlers::warning(
 	m_Msg += tmp.str();
 }
 
-void SAXImportHandlers::error(
-		SAXParseException const& toCatch)
+void SAXImportHandlers::error(SAXParseException const& toCatch)
 {
 	++m_Errors;
 	std::ostringstream tmp;
@@ -740,8 +709,7 @@ void SAXImportHandlers::error(
 	m_Msg += tmp.str();
 }
 
-void SAXImportHandlers::fatalError(
-		SAXParseException const& toCatch)
+void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 {
 	++m_FatalErrors;
 	std::ostringstream tmp;
@@ -769,8 +737,7 @@ static XMLFormatter* gFormatter = NULL;
 class CXMLFormatTarget : public XMLFormatTarget
 {
 public:
-	CXMLFormatTarget(
-			std::ostream& out)
+	CXMLFormatTarget(std::ostream& out)
 		: m_out(out)
 	{
 	}
@@ -895,15 +862,13 @@ Element::Element()
 {
 }
 
-Element::Element(
-		std::string const& inName)
+Element::Element(std::string const& inName)
 	: m_Name(inName)
 	, m_Value("")
 {
 }
 
-Element::Element(
-		Element const& rhs)
+Element::Element(Element const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Value(rhs.m_Value)
 {
@@ -911,8 +876,7 @@ Element::Element(
 	m_Elements = rhs.m_Elements;
 }
 
-Element& Element::operator=(
-		Element const& rhs)
+Element& Element::operator=(Element const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -928,8 +892,7 @@ Element::~Element()
 {
 }
 
-void Element::Dump(
-		int inLevel) const
+void Element::Dump(int inLevel) const
 {
 	int i;
 	CString msg;
@@ -973,8 +936,7 @@ std::string const& Element::GetName() const
 	return m_Name;
 }
 
-void Element::SetName(
-		std::string const& inName)
+void Element::SetName(std::string const& inName)
 {
 	m_Name = inName;
 }
@@ -984,15 +946,13 @@ std::string const& Element::GetValue() const
 	return m_Value;
 }
 
-void Element::SetValue(
-		std::string const& inValue)
+void Element::SetValue(std::string const& inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = inValue;
 }
 
-void Element::SetValue(
-		char const* const inValue)
+void Element::SetValue(char const* const inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	if (inValue)
@@ -1001,8 +961,7 @@ void Element::SetValue(
 		m_Value.erase();
 }
 
-void Element::SetValue(
-		short inValue)
+void Element::SetValue(short inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -1010,8 +969,7 @@ void Element::SetValue(
 	m_Value = str.str();
 }
 
-void Element::SetValue(
-		long inValue)
+void Element::SetValue(long inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	std::stringstream str;
@@ -1251,8 +1209,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::RemoveAttrib(
-		std::string const& inName)
+bool Element::RemoveAttrib(std::string const& inName)
 {
 	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1274,14 +1231,12 @@ int Element::GetElementCount() const
 	return static_cast<int>(m_Elements.size());
 }
 
-Element const& Element::GetElement(
-		int inIndex) const
+Element const& Element::GetElement(int inIndex) const
 {
 	return m_Elements[inIndex];
 }
 
-Element& Element::GetElement(
-		int inIndex)
+Element& Element::GetElement(int inIndex)
 {
 	return m_Elements[inIndex];
 }
@@ -1308,8 +1263,7 @@ Element& Element::AddElement(
 	return m_Elements[index];
 }
 
-bool Element::RemoveElement(
-		int inIndex)
+bool Element::RemoveElement(int inIndex)
 {
 	bool bOk = false;
 	if (0 <= inIndex && inIndex < static_cast<int>(m_Elements.size()))

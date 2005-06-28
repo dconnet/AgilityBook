@@ -89,9 +89,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -109,9 +109,9 @@ public:
 	 * @return Whether or not changes have occurred.
 	 */
 	bool Update(
-		int indent,
-		ARBConfigDivision const* inDivNew,
-		std::string& ioInfo);
+			int indent,
+			ARBConfigDivision const* inDivNew,
+			std::string& ioInfo);
 
 	/*
 	 * Getters/setters.
@@ -182,9 +182,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Verify a level exists.
@@ -193,8 +193,8 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-		std::string const& inDiv,
-		std::string const& inLevel) const;
+			std::string const& inDiv,
+			std::string const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -203,8 +203,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindDivision(
-		std::string const& inDiv,
-		ARBConfigDivision** outDiv = NULL) const;
+			std::string const& inDiv,
+			ARBConfigDivision** outDiv = NULL) const;
 
 	/**
 	 * Add a division.
@@ -213,8 +213,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddDivision(
-		std::string const& inDiv,
-		ARBConfigDivision** outDiv = NULL);
+			std::string const& inDiv,
+			ARBConfigDivision** outDiv = NULL);
 
 	/**
 	 * Add a division.
@@ -232,8 +232,8 @@ public:
 	 * @return Number of divisions deleted (0 or 1).
 	 */
 	int DeleteDivision(
-		std::string const& inDiv,
-		ARBConfigEventList& ioEvents);
+			std::string const& inDiv,
+			ARBConfigEventList& ioEvents);
 
 	/**
 	 * Find a title by the complete name.
@@ -244,9 +244,9 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-		std::string const& inName,
-		bool bAbbrevFirst = true,
-		ARBConfigTitle** outTitle = NULL) const;
+			std::string const& inName,
+			bool bAbbrevFirst = true,
+			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Find a title.
@@ -255,8 +255,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-		std::string const& inTitle,
-		ARBConfigTitle** outTitle = NULL) const;
+			std::string const& inTitle,
+			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
 	 * Delete a title.

@@ -52,7 +52,12 @@ class CDlgRun : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgRun)
 public:
-	CDlgRun(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, ARBDogRun* pRun, CWnd* pParent = NULL, UINT iSelectPage = 0);
+	CDlgRun(
+			CAgilityBookDoc* pDoc,
+			ARBDogTrial* pTrial,
+			ARBDogRun* pRun,
+			CWnd* pParent = NULL,
+			UINT iSelectPage = 0);
 	virtual ~CDlgRun();
 
 // Attributes

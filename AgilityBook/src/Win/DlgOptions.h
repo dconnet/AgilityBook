@@ -50,7 +50,10 @@ class CDlgOptions : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgOptions)
 public:
-	CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	CDlgOptions(
+			CAgilityBookDoc* pDoc,
+			CWnd* pParentWnd = NULL,
+			UINT iSelectPage = 0);
 	virtual ~CDlgOptions();
 
 // Attributes

@@ -42,9 +42,12 @@
 class CDlgConfigTitle : public CDlgBaseDialog
 {
 public:
-	CDlgConfigTitle(LPCTSTR name, LPCTSTR longname,
-		LPCTSTR desc, short inMultiple,
-		CWnd* pParent = NULL);
+	CDlgConfigTitle(
+			LPCTSTR name,
+			LPCTSTR longname,
+			LPCTSTR desc,
+			short inMultiple,
+			CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
 	char const* GetName() const		{return (LPCSTR)m_Name;}
 	char const* GetLongName() const	{return (LPCSTR)m_LongName;}

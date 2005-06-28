@@ -83,10 +83,10 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		ARBConfig const& inConfig,
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -178,13 +178,13 @@ public:
 	 * @return Whether an event was found.
 	 */
 	bool FindEvent(
-		ARBConfig const* inConfig,
-		std::string const& inEvent,
-		std::string const& inDivision,
-		std::string const& inLevel,
-		ARBDate const& inDate,
-		ARBErrorCallback& ioCallback,
-		ARBConfigScoring** outScoring = NULL) const;
+			ARBConfig const* inConfig,
+			std::string const& inEvent,
+			std::string const& inDivision,
+			std::string const& inLevel,
+			ARBDate const& inDate,
+			ARBErrorCallback& ioCallback,
+			ARBConfigScoring** outScoring = NULL) const;
 
 	/**
 	 * Find a club that uses the specified venue.
@@ -193,8 +193,8 @@ public:
 	 * @return Whether the club was found.
 	 */
 	bool FindVenue(
-		std::string const& inVenue,
-		ARBDogClub** outClub = NULL) const;
+			std::string const& inVenue,
+			ARBDogClub** outClub = NULL) const;
 
 	/**
 	 * Add a club.
@@ -204,9 +204,9 @@ public:
 	 * @return Whether the club was added.
 	 */
 	bool AddClub(
-		std::string const& inName,
-		std::string const& inVenue,
-		ARBDogClub** outClub = NULL);
+			std::string const& inName,
+			std::string const& inVenue,
+			ARBDogClub** outClub = NULL);
 
 	/**
 	 * Delete a club.
@@ -215,6 +215,6 @@ public:
 	 * @return Whether club was deleted.
 	 */
 	bool DeleteClub(
-		std::string const& inName,
-		std::string const& inVenue);
+			std::string const& inName,
+			std::string const& inVenue);
 };

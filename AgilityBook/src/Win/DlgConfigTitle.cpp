@@ -49,8 +49,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitle dialog
 
-CDlgConfigTitle::CDlgConfigTitle(LPCTSTR name, LPCTSTR longname,
-		LPCTSTR desc, short inMultiple,
+CDlgConfigTitle::CDlgConfigTitle(
+		LPCTSTR name,
+		LPCTSTR longname,
+		LPCTSTR desc,
+		short inMultiple,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
 	, m_Name(name)

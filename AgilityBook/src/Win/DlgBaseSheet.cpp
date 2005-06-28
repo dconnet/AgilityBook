@@ -50,13 +50,19 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgBaseSheet, CPropertySheet)
 
-CDlgBaseSheet::CDlgBaseSheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
+CDlgBaseSheet::CDlgBaseSheet(
+		UINT nIDCaption,
+		CWnd* pParentWnd,
+		UINT iSelectPage)
 	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	m_psh.dwFlags |= PSH_HASHELP;
 }
 
-CDlgBaseSheet::CDlgBaseSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
+CDlgBaseSheet::CDlgBaseSheet(
+		LPCTSTR pszCaption,
+		CWnd* pParentWnd,
+		UINT iSelectPage)
 	: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 	m_psh.dwFlags |= PSH_HASHELP;

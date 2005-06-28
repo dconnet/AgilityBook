@@ -55,7 +55,11 @@ BEGIN_MESSAGE_MAP(CRichEditCtrl2, CRichEditCtrl)
 	ON_NOTIFY_REFLECT(EN_LINK, OnEnLink)
 END_MESSAGE_MAP()
 
-BOOL CRichEditCtrl2::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
+BOOL CRichEditCtrl2::Create(
+		DWORD dwStyle,
+		const RECT& rect,
+		CWnd* pParentWnd,
+		UINT nID)
 {
 	if (!CRichEditCtrl::Create(dwStyle, rect, pParentWnd, nID))
 		return FALSE;
@@ -64,7 +68,12 @@ BOOL CRichEditCtrl2::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, U
 }
 
 #if _MSC_VER >= 1300
-BOOL CRichEditCtrl2::CreateEx(DWORD dwExStyle, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
+BOOL CRichEditCtrl2::CreateEx(
+		DWORD dwExStyle,
+		DWORD dwStyle,
+		const RECT& rect,
+		CWnd* pParentWnd,
+		UINT nID)
 {
 	if (!CRichEditCtrl::CreateEx(dwExStyle, dwStyle, rect, pParentWnd, nID))
 		return FALSE;
@@ -93,7 +102,9 @@ void CRichEditCtrl2::Setup()
 #endif
 }
 
-void CRichEditCtrl2::OnEnLink(NMHDR *pNMHDR, LRESULT *pResult)
+void CRichEditCtrl2::OnEnLink(
+		NMHDR *pNMHDR,
+		LRESULT *pResult)
 {
 	ENLINK *pEnLink = reinterpret_cast<ENLINK *>(pNMHDR);
 	*pResult = 0;

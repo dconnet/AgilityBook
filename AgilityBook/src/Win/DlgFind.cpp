@@ -47,7 +47,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgFind dialog
 
-CDlgFind::CDlgFind(IFindCallback& callback, CWnd* pParent /*=NULL*/)
+CDlgFind::CDlgFind(
+		IFindCallback& callback,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFind::IDD, pParent)
 	, m_Callback(callback)
 {

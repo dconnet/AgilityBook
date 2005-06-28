@@ -49,7 +49,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgReorder dialog
 
-CDlgReorder::CDlgReorder(std::vector<ARBBase*>& items, CWnd* pParent /*=NULL*/)
+CDlgReorder::CDlgReorder(
+		std::vector<ARBBase*>& items,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReorder::IDD, pParent)
 	, m_Items(items)
 {

@@ -44,7 +44,11 @@ class ARBDogTitleList;
 class CDlgTitle : public CDlgBaseDialog
 {
 public:
-	CDlgTitle(ARBConfig const& config, ARBDogTitleList& titles, ARBDogTitle* pTitle, CWnd* pParent = NULL);
+	CDlgTitle(
+			ARBConfig const& config,
+			ARBDogTitleList& titles,
+			ARBDogTitle* pTitle,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

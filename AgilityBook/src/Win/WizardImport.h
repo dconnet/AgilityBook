@@ -50,7 +50,9 @@ class CWizardImport : public CDlgBasePropertyPage
 
 // Construction
 public:
-	CWizardImport(CWizard* pSheet, CAgilityBookDoc* pDoc);
+	CWizardImport(
+			CWizard* pSheet,
+			CAgilityBookDoc* pDoc);
 	~CWizardImport();
 	void ResetData();
 
@@ -101,5 +103,4 @@ protected:
 	afx_msg void OnImportFile();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };

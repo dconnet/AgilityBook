@@ -51,9 +51,13 @@ class CDlgFixup;
 class CDlgConfigEvent : public CDlgBaseDialog
 {
 public:
-	CDlgConfigEvent(CAgilityBookDoc* pDoc,
-		ARBAgilityRecordBook* book, ARBConfig* config,
-		ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent = NULL);
+	CDlgConfigEvent(
+			CAgilityBookDoc* pDoc,
+			ARBAgilityRecordBook* book,
+			ARBConfig* config,
+			ARBConfigVenue* pVenue,
+			ARBConfigEvent* pEvent,
+			CWnd* pParent = NULL);
 	virtual ~CDlgConfigEvent();
 	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
 

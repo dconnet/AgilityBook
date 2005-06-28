@@ -53,10 +53,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgFindLinks::CDlgFindLinksData::CDlgFindLinksData(
-	ARBDog* pDog,
-	ARBDogTrial* pTrial,
-	ARBDogRun* pRun,
-	std::string const& inLink)
+		ARBDog* pDog,
+		ARBDogTrial* pTrial,
+		ARBDogRun* pRun,
+		std::string const& inLink)
 	: m_pDog(pDog)
 	, m_pTrial(pTrial)
 	, m_pRun(pRun)
@@ -91,7 +91,10 @@ typedef struct
 	CColumnOrder *pCols;
 } SORTINFO;
 
-int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareLinks(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	int rc = 0;
 	int data1 = static_cast<int>(lParam1);
@@ -138,7 +141,9 @@ int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgFindLinks dialog
 
-CDlgFindLinks::CDlgFindLinks(ARBDogList& inDogs, CWnd* pParent)
+CDlgFindLinks::CDlgFindLinks(
+		ARBDogList& inDogs,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFindLinks::IDD, pParent)
 	, m_sortLinks("Links")
 	, m_Session("findLink")
@@ -325,7 +330,9 @@ BOOL CDlgFindLinks::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgFindLinks::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgFindLinks::OnColumnclickList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
@@ -338,7 +345,9 @@ void CDlgFindLinks::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgFindLinks::OnGetdispinfoList(NMHDR *pNMHDR, LRESULT *pResult)
+void CDlgFindLinks::OnGetdispinfoList(
+		NMHDR *pNMHDR,
+		LRESULT *pResult)
 {
 	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
 	int index = static_cast<int>(pDispInfo->item.lParam);
@@ -366,13 +375,17 @@ void CDlgFindLinks::OnGetdispinfoList(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CDlgFindLinks::OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgFindLinks::OnDblclkList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	OnEdit();
 	*pResult = 0;
 }
 
-void CDlgFindLinks::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgFindLinks::OnItemchangedList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();

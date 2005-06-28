@@ -95,9 +95,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -181,8 +181,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindOtherPoints(
-		std::string const& inName,
-		ARBConfigOtherPoints** outPoints = NULL) const;
+			std::string const& inName,
+			ARBConfigOtherPoints** outPoints = NULL) const;
 
 	/**
 	 * Add an otherpoints object.

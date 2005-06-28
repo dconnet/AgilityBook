@@ -58,9 +58,12 @@ class CDlgFixup;
 class CDlgConfigVenue : public CDlgBaseDialog
 {
 public:
-	CDlgConfigVenue(CAgilityBookDoc* pDoc,
-		ARBAgilityRecordBook& book, ARBConfig& config,
-		ARBConfigVenue* pVenue, CWnd* pParent = NULL);
+	CDlgConfigVenue(
+			CAgilityBookDoc* pDoc,
+			ARBAgilityRecordBook& book,
+			ARBConfig& config,
+			ARBConfigVenue* pVenue,
+			CWnd* pParent = NULL);
 	virtual ~CDlgConfigVenue();
 	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
 
@@ -88,7 +91,14 @@ private:
 	ARBConfig& m_Config;
 	ARBConfigVenue* m_pVenue;
 	std::vector<CDlgFixup*> m_DlgFixup;
-	typedef enum {eNone, eDivisions, eLevels, eTitles, eEvents} eAction;
+	typedef enum
+	{
+		eNone,
+		eDivisions,
+		eLevels,
+		eTitles,
+		eEvents
+	} eAction;
 	eAction m_Action;
 
 	//{{AFX_VIRTUAL(CDlgConfigVenue)
@@ -103,11 +113,21 @@ private:
 	void LoadLevelData();
 	void LoadTitleData();
 	void LoadEventData();
-	int FindCurrentDivision(ARBConfigDivision const* pDiv, bool bSet);
-	HTREEITEM FindCurrentLevel(ARBConfigLevel const* pLevel, bool bSet);
-	HTREEITEM FindCurrentSubLevel(ARBConfigSubLevel const* pSubLevel, bool bSet);
-	int FindCurrentTitle(ARBConfigTitle const* pTitle, bool bSet);
-	int FindCurrentEvent(ARBConfigEvent const* pEvent, bool bSet);
+	int FindCurrentDivision(
+			ARBConfigDivision const* pDiv,
+			bool bSet);
+	HTREEITEM FindCurrentLevel(
+			ARBConfigLevel const* pLevel,
+			bool bSet);
+	HTREEITEM FindCurrentSubLevel(
+			ARBConfigSubLevel const* pSubLevel,
+			bool bSet);
+	int FindCurrentTitle(
+			ARBConfigTitle const* pTitle,
+			bool bSet);
+	int FindCurrentEvent(
+			ARBConfigEvent const* pEvent,
+			bool bSet);
 	CDlgConfigureDataDivision* GetCurrentDivisionData();
 	CDlgConfigureDataLevel* GetCurrentLevelData();
 	CDlgConfigureDataSubLevel* GetCurrentSubLevelData();

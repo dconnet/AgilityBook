@@ -50,9 +50,11 @@ class ARBDogTrial;
 
 class CDlgFindLinks : public CDlgBaseDialog
 {
-	friend int CALLBACK CompareLinks(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
+	friend int CALLBACK CompareLinks(LPARAM, LPARAM, LPARAM);
 public:
-	CDlgFindLinks(ARBDogList& inDogs, CWnd* pParent = NULL);
+	CDlgFindLinks(
+			ARBDogList& inDogs,
+			CWnd* pParent = NULL);
 	virtual ~CDlgFindLinks();
 	size_t GetNumLinks() const		{return m_Data.size();}
 
@@ -74,7 +76,11 @@ private:
 	class CDlgFindLinksData
 	{
 	public:
-		CDlgFindLinksData(ARBDog* pDog, ARBDogTrial* pTrial, ARBDogRun* pRun, std::string const& inLink);
+		CDlgFindLinksData(
+				ARBDog* pDog,
+				ARBDogTrial* pTrial,
+				ARBDogRun* pRun,
+				std::string const& inLink);
 		~CDlgFindLinksData();
 		ARBDog* m_pDog;
 		ARBDogTrial* m_pTrial;

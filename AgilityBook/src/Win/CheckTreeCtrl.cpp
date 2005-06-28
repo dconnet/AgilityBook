@@ -80,7 +80,9 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CCheckTreeCtrl::ShowCheckbox(HTREEITEM hItem, bool bShow)
+void CCheckTreeCtrl::ShowCheckbox(
+		HTREEITEM hItem,
+		bool bShow)
 {
 	if (IsCheckVisible(hItem))
 	{
@@ -106,7 +108,10 @@ bool CCheckTreeCtrl::GetChecked(HTREEITEM hItem) const
 	return m_stateChecked == state;
 }
 
-bool CCheckTreeCtrl::SetChecked(HTREEITEM hItem, bool bChecked, bool bCascade)
+bool CCheckTreeCtrl::SetChecked(
+		HTREEITEM hItem,
+		bool bChecked,
+		bool bCascade)
 {
 	if (IsCheckVisible(hItem))
 	{
@@ -150,7 +155,9 @@ void CCheckTreeCtrl::CheckParentCheck(HTREEITEM hItem)
 }
 
 // Cascade to children (don't do hItem)
-int CCheckTreeCtrl::Cascade(HTREEITEM hItem, bool bChecked)
+int CCheckTreeCtrl::Cascade(
+		HTREEITEM hItem,
+		bool bChecked)
 {
 	if (NULL == hItem)
 		return 0;
@@ -213,7 +220,9 @@ int CCheckTreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CCheckTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CCheckTreeCtrl::OnLButtonDown(
+		UINT nFlags,
+		CPoint point) 
 {
 	UINT flags;
 	HTREEITEM hItem = HitTest(point, &flags);
@@ -226,7 +235,9 @@ void CCheckTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	CTreeCtrl::OnLButtonDown(nFlags, point);
 }
 
-BOOL CCheckTreeCtrl::OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult) 
+BOOL CCheckTreeCtrl::OnKeyDown(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	TV_KEYDOWN* pTVKeyDown = reinterpret_cast<TV_KEYDOWN*>(pNMHDR);
 	LRESULT res = 0;

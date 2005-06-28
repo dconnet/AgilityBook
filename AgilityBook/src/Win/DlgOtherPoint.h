@@ -43,7 +43,10 @@ class ARBDogRunOtherPoints;
 class CDlgOtherPoint : public CDlgBaseDialog
 {
 public:
-	CDlgOtherPoint(ARBConfig const& config, ARBDogRunOtherPoints* pOther, CWnd* pParent = NULL);
+	CDlgOtherPoint(
+			ARBConfig const& config,
+			ARBDogRunOtherPoints* pOther,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

@@ -59,7 +59,9 @@ public:
 	 * auto-file-open. If not, when the splash screen goes away, any dialogs
 	 * currently up automatically go away. (not sure why yet)
 	 */
-	static void ShowSplashScreen(CWnd* pParentWnd = NULL, bool bTimed = true);
+	static void ShowSplashScreen(
+			CWnd* pParentWnd = NULL,
+			bool bTimed = true);
 	static void HideSplashScreen();
 	static BOOL PreTranslateAppMessage(MSG* pMsg);
 

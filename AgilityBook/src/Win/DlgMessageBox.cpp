@@ -56,10 +56,10 @@ class CDlgMessageBox : public CDialog
 {
 public:
 	CDlgMessageBox(
-		CString const& inText,
-		UINT inType,
-		IMessageBoxCallback* inCallback,
-		CWnd* inParent);
+			CString const& inText,
+			UINT inType,
+			IMessageBoxCallback* inCallback,
+			CWnd* inParent);
 
 private:
 // Dialog Data
@@ -93,7 +93,10 @@ protected:
 
 // Since we display a variable number of buttons (max of 4),
 // this aids in modifying a button's behavior to match what we want.
-static void SetButtonInfo(CString const& strDetails, CButton& ctrlButton, UINT id)
+static void SetButtonInfo(
+		CString const& strDetails,
+		CButton& ctrlButton,
+		UINT id)
 {
 	CString text;
 	switch (id)
@@ -134,10 +137,10 @@ static void SetButtonInfo(CString const& strDetails, CButton& ctrlButton, UINT i
 // Protected dialog.
 
 CDlgMessageBox::CDlgMessageBox(
-	CString const& inText,
-	UINT inType,
-	IMessageBoxCallback* inCallback,
-	CWnd* inParent)
+		CString const& inText,
+		UINT inType,
+		IMessageBoxCallback* inCallback,
+		CWnd* inParent)
 	: CDialog(CDlgMessageBox::IDD, inParent)
 	, m_Text(inText)
 	, m_Type(inType)
@@ -432,16 +435,22 @@ BOOL CDlgMessageBox::OnCmd(UINT id)
 
 /////////////////////////////////////////////////////////////////////////////
 
-int AfxMessageBox2(UINT inIDText, UINT inType,
-	IMessageBoxCallback* inCallback, CWnd* inParent)
+int AfxMessageBox2(
+		UINT inIDText,
+		UINT inType,
+		IMessageBoxCallback* inCallback,
+		CWnd* inParent)
 {
 	CString str;
 	str.LoadString(inIDText);
 	return AfxMessageBox2(str, inType, inCallback, inParent);
 }
 
-int AfxMessageBox2(CString const& inText, UINT inType,
-	IMessageBoxCallback* inCallback, CWnd* inParent)
+int AfxMessageBox2(
+		CString const& inText,
+		UINT inType,
+		IMessageBoxCallback* inCallback,
+		CWnd* inParent)
 {
 	CDlgMessageBox dlg(inText, inType, inCallback, inParent);
 	return static_cast<int>(dlg.DoModal());

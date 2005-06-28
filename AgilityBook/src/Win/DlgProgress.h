@@ -54,12 +54,23 @@ public:
 	virtual bool SetNumProgressBars(short nBars) = 0;
 
 	// Progress bar interface (these are thin wrappers on the progress bar)
-	virtual bool SetRange(short inBar, int inLower, int inUpper) = 0;
-	virtual bool SetStep(short inBar, int inStep) = 0;
+	virtual bool SetRange(
+			short inBar,
+			int inLower,
+			int inUpper) = 0;
+	virtual bool SetStep(
+			short inBar,
+			int inStep) = 0;
 	virtual bool StepIt(short inBar) = 0;
-	virtual bool OffsetPos(short inBar, int inDelta) = 0;
-	virtual bool SetPos(short inBar, int inPos) = 0;
-	virtual bool GetPos(short inBar, int& outPos) = 0;
+	virtual bool OffsetPos(
+			short inBar,
+			int inDelta) = 0;
+	virtual bool SetPos(
+			short inBar,
+			int inPos) = 0;
+	virtual bool GetPos(
+			short inBar,
+			int& outPos) = 0;
 
 	/// Show/hide the dialog.
 	virtual void Show(bool bShow = true) = 0;

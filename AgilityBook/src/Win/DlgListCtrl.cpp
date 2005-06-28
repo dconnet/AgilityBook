@@ -67,7 +67,11 @@ static char THIS_FILE[] = __FILE__;
 class CDlgListCtrlData
 {
 public:
-	CDlgListCtrlData(CListCtrl& list) : m_List(list), m_RefCount(1) {}
+	CDlgListCtrlData(CListCtrl& list)
+		: m_List(list)
+		, m_RefCount(1)
+	{
+	}
 	void AddRef() {++m_RefCount;}
 	void Release()
 	{
@@ -91,7 +95,10 @@ protected:
 class CDlgListCtrlDataCalendar : public CDlgListCtrlData
 {
 public:
-	CDlgListCtrlDataCalendar(CListCtrl& list, CAgilityBookDoc* pDoc, ARBCalendar* pCal)
+	CDlgListCtrlDataCalendar(
+			CListCtrl& list,
+			CAgilityBookDoc* pDoc,
+			ARBCalendar* pCal)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pCal(pCal)
@@ -162,8 +169,16 @@ void CDlgListCtrlDataCalendar::Apply()
 class CDlgListCtrlDataFaults : public CDlgListCtrlData
 {
 public:
-	static void GetAllFaults(CListCtrl& ctrl, CAgilityBookDoc* pDoc, ARBDogRun* pRun, std::set<std::string>& faults);
-	CDlgListCtrlDataFaults(CListCtrl& list, CAgilityBookDoc* pDoc, ARBDogRun* pRun, std::string fault)
+	static void GetAllFaults(
+			CListCtrl& ctrl,
+			CAgilityBookDoc* pDoc,
+			ARBDogRun* pRun,
+			std::set<std::string>& faults);
+	CDlgListCtrlDataFaults(
+			CListCtrl& list,
+			CAgilityBookDoc* pDoc,
+			ARBDogRun* pRun,
+			std::string fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pRun(pRun)
@@ -183,7 +198,11 @@ private:
 	std::string m_Fault;
 };
 
-void CDlgListCtrlDataFaults::GetAllFaults(CListCtrl& ctrl, CAgilityBookDoc* pDoc, ARBDogRun* pRun, std::set<std::string>& faults)
+void CDlgListCtrlDataFaults::GetAllFaults(
+		CListCtrl& ctrl,
+		CAgilityBookDoc* pDoc,
+		ARBDogRun* pRun,
+		std::set<std::string>& faults)
 {
 	faults.clear();
 	pDoc->GetAllFaultTypes(faults);
@@ -231,7 +250,11 @@ void CDlgListCtrlDataFaults::Apply()
 class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 {
 public:
-	CDlgListCtrlDataOtherPoints(CListCtrl& list, ARBConfig const* config, ARBDogRun* pRun, ARBDogRunOtherPoints* pOther)
+	CDlgListCtrlDataOtherPoints(
+			CListCtrl& list,
+			ARBConfig const* config,
+			ARBDogRun* pRun,
+			ARBDogRunOtherPoints* pOther)
 		: CDlgListCtrlData(list)
 		, m_pConfig(config)
 		, m_pRun(pRun)
@@ -288,7 +311,10 @@ void CDlgListCtrlDataOtherPoints::Apply()
 class CDlgListCtrlDataPartners : public CDlgListCtrlData
 {
 public:
-	CDlgListCtrlDataPartners(CListCtrl& list, ARBDogRun* pRun, ARBDogRunPartner* pPartner)
+	CDlgListCtrlDataPartners(
+			CListCtrl& list,
+			ARBDogRun* pRun,
+			ARBDogRunPartner* pPartner)
 		: CDlgListCtrlData(list)
 		, m_pRun(pRun)
 		, m_Partner(pPartner)
@@ -346,7 +372,12 @@ void CDlgListCtrlDataPartners::Apply()
 // CDlgListCtrl dialog
 
 // Calendar
-CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vector<ARBCalendar*> const* entries, CTabView* pTabView, CWnd* pParent)
+CDlgListCtrl::CDlgListCtrl(
+		CAgilityBookDoc* pDoc,
+		ARBDate const& date,
+		std::vector<ARBCalendar*> const* entries,
+		CTabView* pTabView,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eCalendar)
 	, m_pDoc(pDoc)
@@ -361,7 +392,10 @@ CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDate const& date, std::vect
 }
 
 // Faults
-CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent)
+CDlgListCtrl::CDlgListCtrl(
+		CAgilityBookDoc* pDoc,
+		ARBDogRun* run,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eFaults)
 	, m_pDoc(pDoc)
@@ -373,7 +407,10 @@ CDlgListCtrl::CDlgListCtrl(CAgilityBookDoc* pDoc, ARBDogRun* run, CWnd* pParent)
 }
 
 // OtherPoints
-CDlgListCtrl::CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pParent)
+CDlgListCtrl::CDlgListCtrl(
+		ARBConfig const* pConfig,
+		ARBDogRun* run,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(eOtherPoints)
 	, m_pDoc(NULL)
@@ -385,7 +422,9 @@ CDlgListCtrl::CDlgListCtrl(ARBConfig const* pConfig, ARBDogRun* run, CWnd* pPare
 }
 
 // Partners
-CDlgListCtrl::CDlgListCtrl(ARBDogRun* run, CWnd* pParent)
+CDlgListCtrl::CDlgListCtrl(
+		ARBDogRun* run,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_What(ePartners)
 	, m_pDoc(NULL)
@@ -465,7 +504,9 @@ void CDlgListCtrl::UpdateControls()
 	m_ctrlDown.EnableWindow(bEnableDown);
 }
 
-void CDlgListCtrl::SwapEntries(int oldIndex, int newIndex)
+void CDlgListCtrl::SwapEntries(
+		int oldIndex,
+		int newIndex)
 {
 	LPARAM data1 = m_ctrlList.GetItemData(oldIndex);
 	LPARAM data2 = m_ctrlList.GetItemData(newIndex);
@@ -600,7 +641,9 @@ BOOL CDlgListCtrl::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgListCtrl::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgListCtrl::OnGetdispinfoList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -642,14 +685,18 @@ void CDlgListCtrl::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgListCtrl::OnItemchangedList(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
+void CDlgListCtrl::OnItemchangedList(
+		NMHDR* /*pNMHDR*/,
+		LRESULT* pResult) 
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateControls();
 	*pResult = 0;
 }
 
-void CDlgListCtrl::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgListCtrl::OnDeleteitemList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pNMListView->lParam);
@@ -659,7 +706,9 @@ void CDlgListCtrl::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgListCtrl::OnDblclkList(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
+void CDlgListCtrl::OnDblclkList(
+		NMHDR* /*pNMHDR*/,
+		LRESULT* pResult) 
 {
 	OnEdit();
 	*pResult = 0;

@@ -64,7 +64,9 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CWizardStart, CDlgBasePropertyPage)
 
-CWizardStart::CWizardStart(CWizard* pSheet, CAgilityBookDoc* pDoc)
+CWizardStart::CWizardStart(
+		CWizard* pSheet,
+		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardStart::IDD)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)

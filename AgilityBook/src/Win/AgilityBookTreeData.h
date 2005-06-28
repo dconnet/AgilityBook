@@ -56,26 +56,73 @@ public:
 	{}
 	virtual ~CAgilityBookTreeData() {}
 
-	HTREEITEM GetHTreeItem() const									{return m_hItem;}
-	void SetHTreeItem(HTREEITEM hItem)								{m_hItem = hItem;}
+	HTREEITEM GetHTreeItem() const
+	{
+		return m_hItem;
+	}
+	void SetHTreeItem(HTREEITEM hItem)
+	{
+		m_hItem = hItem;
+	}
 	virtual CAgilityBookTreeData const* GetParent() const = 0;
-	virtual ARBBase const* GetARBBase() const						{return NULL;}
-	virtual ARBDog const* GetDog() const							{return NULL;}
-	virtual ARBDogTrial const* GetTrial() const						{return NULL;}
-	virtual ARBDogRun const* GetRun() const							{return NULL;}
-	virtual ARBDog* GetDog()										{return NULL;}
-	virtual ARBDogTrial* GetTrial()									{return NULL;}
-	virtual ARBDogRun* GetRun()										{return NULL;}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const		{return NULL;}
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const	{return NULL;}
-	virtual CAgilityBookTreeDataRun const* GetDataRun() const		{return NULL;}
-	virtual CAgilityBookTreeDataDog* GetDataDog()					{return NULL;}
-	virtual CAgilityBookTreeDataTrial* GetDataTrial()				{return NULL;}
-	virtual CAgilityBookTreeDataRun* GetDataRun()					{return NULL;}
+	virtual ARBBase const* GetARBBase() const
+	{
+		return NULL;
+	}
+	virtual ARBDog const* GetDog() const
+	{
+		return NULL;
+	}
+	virtual ARBDogTrial const* GetTrial() const
+	{
+		return NULL;
+	}
+	virtual ARBDogRun const* GetRun() const
+	{
+		return NULL;
+	}
+	virtual ARBDog* GetDog()
+	{
+		return NULL;
+	}
+	virtual ARBDogTrial* GetTrial()
+	{
+		return NULL;
+	}
+	virtual ARBDogRun* GetRun()
+	{
+		return NULL;
+	}
+	virtual CAgilityBookTreeDataDog const* GetDataDog() const
+	{
+		return NULL;
+	}
+	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
+	{
+		return NULL;
+	}
+	virtual CAgilityBookTreeDataRun const* GetDataRun() const
+	{
+		return NULL;
+	}
+	virtual CAgilityBookTreeDataDog* GetDataDog()
+	{
+		return NULL;
+	}
+	virtual CAgilityBookTreeDataTrial* GetDataTrial()
+	{
+		return NULL;
+	}
+	virtual CAgilityBookTreeDataRun* GetDataRun()
+	{
+		return NULL;
+	}
 
 	virtual UINT GetMenuID() const = 0;
 	virtual bool OnUpdateCmd(UINT id) const = 0;
-	virtual bool OnCmd(UINT id, bool* bTreeSelectionSet) = 0; // Returns true if data modified
+	virtual bool OnCmd(
+			UINT id,
+			bool* bTreeSelectionSet) = 0; // Returns true if data modified
 	virtual CString OnNeedText() const = 0;
 
 	virtual void Properties() = 0;
@@ -96,19 +143,44 @@ protected:
 class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 {
 public:
-	CAgilityBookTreeDataDog(CAgilityBookTree* pTree, ARBDog* pDog);
+	CAgilityBookTreeDataDog(
+			CAgilityBookTree* pTree,
+			ARBDog* pDog);
 	~CAgilityBookTreeDataDog();
 
-	virtual CAgilityBookTreeData const* GetParent() const		{return NULL;}
-	virtual ARBBase const* GetARBBase() const					{return m_pDog;}
-	virtual ARBDog const* GetDog() const						{return m_pDog;}
-	virtual ARBDog* GetDog()									{return m_pDog;}
-	virtual CAgilityBookTreeDataDog const* GetDataDog() const	{return this;}
-	virtual CAgilityBookTreeDataDog* GetDataDog()				{return this;}
+	virtual CAgilityBookTreeData const* GetParent() const
+	{
+		return NULL;
+	}
+	virtual ARBBase const* GetARBBase() const
+	{
+		return m_pDog;
+	}
+	virtual ARBDog const* GetDog() const
+	{
+		return m_pDog;
+	}
+	virtual ARBDog* GetDog()
+	{
+		return m_pDog;
+	}
+	virtual CAgilityBookTreeDataDog const* GetDataDog() const
+	{
+		return this;
+	}
+	virtual CAgilityBookTreeDataDog* GetDataDog()
+	{
+		return this;
+	}
 
-	virtual UINT GetMenuID() const								{return IDR_DOG;}
+	virtual UINT GetMenuID() const
+	{
+		return IDR_DOG;
+	}
 	virtual bool OnUpdateCmd(UINT id) const;
-	virtual bool OnCmd(UINT id, bool* bTreeSelectionSet);
+	virtual bool OnCmd(
+			UINT id,
+			bool* bTreeSelectionSet);
 	virtual CString OnNeedText() const;
 
 	virtual void Properties();
@@ -122,23 +194,48 @@ private:
 class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 {
 public:
-	CAgilityBookTreeDataTrial(CAgilityBookTree* pTree, ARBDogTrial* pTrial);
+	CAgilityBookTreeDataTrial(
+			CAgilityBookTree* pTree,
+			ARBDogTrial* pTrial);
 	~CAgilityBookTreeDataTrial();
 
-	virtual CAgilityBookTreeData const* GetParent() const			{return GetDataDog();}
-	virtual ARBBase const* GetARBBase() const						{return m_pTrial;}
+	virtual CAgilityBookTreeData const* GetParent() const
+	{
+		return GetDataDog();
+	}
+	virtual ARBBase const* GetARBBase() const
+	{
+		return m_pTrial;
+	}
 	virtual ARBDog const* GetDog() const;
-	virtual ARBDogTrial const* GetTrial() const						{return m_pTrial;}
+	virtual ARBDogTrial const* GetTrial() const
+	{
+		return m_pTrial;
+	}
 	virtual ARBDog* GetDog();
-	virtual ARBDogTrial* GetTrial()									{return m_pTrial;}
+	virtual ARBDogTrial* GetTrial()
+	{
+		return m_pTrial;
+	}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
-	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const	{return this;}
+	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const
+	{
+		return this;
+	}
 	virtual CAgilityBookTreeDataDog* GetDataDog();
-	virtual CAgilityBookTreeDataTrial* GetDataTrial()				{return this;}
+	virtual CAgilityBookTreeDataTrial* GetDataTrial()
+	{
+		return this;
+	}
 
-	virtual UINT GetMenuID() const									{return IDR_TRIAL;}
+	virtual UINT GetMenuID() const
+	{
+		return IDR_TRIAL;
+	}
 	virtual bool OnUpdateCmd(UINT id) const;
-	virtual bool OnCmd(UINT id, bool* bTreeSelectionSet);
+	virtual bool OnCmd(
+			UINT id,
+			bool* bTreeSelectionSet);
 	virtual CString OnNeedText() const;
 
 	virtual void Properties();
@@ -152,27 +249,52 @@ private:
 class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 {
 public:
-	CAgilityBookTreeDataRun(CAgilityBookTree* pTree, ARBDogRun* pRun);
+	CAgilityBookTreeDataRun(
+			CAgilityBookTree* pTree,
+			ARBDogRun* pRun);
 	~CAgilityBookTreeDataRun();
 
-	virtual CAgilityBookTreeData const* GetParent() const			{return GetDataTrial();}
-	virtual ARBBase const* GetARBBase() const						{return m_pRun;}
+	virtual CAgilityBookTreeData const* GetParent() const
+	{
+		return GetDataTrial();
+	}
+	virtual ARBBase const* GetARBBase() const
+	{
+		return m_pRun;
+	}
 	virtual ARBDog const* GetDog() const;
 	virtual ARBDogTrial const* GetTrial() const;
-	virtual ARBDogRun const* GetRun() const							{return m_pRun;}
+	virtual ARBDogRun const* GetRun() const
+	{
+		return m_pRun;
+	}
 	virtual ARBDog* GetDog();
 	virtual ARBDogTrial* GetTrial();
-	virtual ARBDogRun* GetRun()										{return m_pRun;}
+	virtual ARBDogRun* GetRun()
+	{
+		return m_pRun;
+	}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const;
 	virtual CAgilityBookTreeDataTrial const* GetDataTrial() const;
-	virtual CAgilityBookTreeDataRun const* GetDataRun() const		{return this;}
+	virtual CAgilityBookTreeDataRun const* GetDataRun() const
+	{
+		return this;
+	}
 	virtual CAgilityBookTreeDataDog* GetDataDog();
 	virtual CAgilityBookTreeDataTrial* GetDataTrial();
-	virtual CAgilityBookTreeDataRun* GetDataRun()					{return this;}
+	virtual CAgilityBookTreeDataRun* GetDataRun()
+	{
+		return this;
+	}
 
-	virtual UINT GetMenuID() const									{return IDR_RUN;}
+	virtual UINT GetMenuID() const
+	{
+		return IDR_RUN;
+	}
 	virtual bool OnUpdateCmd(UINT id) const;
-	virtual bool OnCmd(UINT id, bool* bTreeSelectionSet);
+	virtual bool OnCmd(
+			UINT id,
+			bool* bTreeSelectionSet);
 	virtual CString OnNeedText() const;
 
 	virtual void Properties();

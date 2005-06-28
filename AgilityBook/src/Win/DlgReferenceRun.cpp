@@ -51,9 +51,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgReferenceRun dialog
 
-CDlgReferenceRun::CDlgReferenceRun(CAgilityBookDoc* pDoc,
+CDlgReferenceRun::CDlgReferenceRun(
+		CAgilityBookDoc* pDoc,
 		std::set<std::string> const& inNames,
-		ARBDogReferenceRun* ref, CWnd* pParent)
+		ARBDogReferenceRun* ref,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Names(inNames)

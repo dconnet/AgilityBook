@@ -74,36 +74,55 @@ static STACKFRAME g_stFrame;
 
 static bool g_bSymEngInit = false;
 // From ImageHlp.dll
-typedef BOOL (__stdcall *PFNSYMGETLINEFROMADDR)(IN HANDLE hProcess, IN DWORD dwAddr, OUT PDWORD pdwDisplacement, OUT PIMAGEHLP_LINE Line);
+typedef BOOL (__stdcall *PFNSYMGETLINEFROMADDR)(
+		IN HANDLE hProcess,
+		IN DWORD dwAddr,
+		OUT PDWORD pdwDisplacement,
+		OUT PIMAGEHLP_LINE Line);
 static PFNSYMGETLINEFROMADDR g_pfnSymGetLineFromAddr = NULL;
 // From DbgHelp.dll
 typedef DWORD (__stdcall *PFNSYMGETOPTIONS)(VOID);
 static PFNSYMGETOPTIONS g_SymGetOptions = NULL;
 typedef DWORD (__stdcall *PFNSYMSETOPTIONS)(IN DWORD SymOptions);
 static PFNSYMSETOPTIONS g_SymSetOptions = NULL;
-typedef BOOL (__stdcall *PFNSYMINITIALIZE)(IN HANDLE hProcess, IN PSTR UserSearchPath, IN BOOL fInvadeProcess);
+typedef BOOL (__stdcall *PFNSYMINITIALIZE)(
+		IN HANDLE hProcess,
+		IN PSTR UserSearchPath,
+		IN BOOL fInvadeProcess);
 static PFNSYMINITIALIZE g_SymInitialize = NULL;
-typedef DWORD (__stdcall *PFNSYMGETMODULEBASE)(IN HANDLE hProcess, IN DWORD dwAddr);
+typedef DWORD (__stdcall *PFNSYMGETMODULEBASE)(
+		IN HANDLE hProcess,
+		IN DWORD dwAddr);
 static PFNSYMGETMODULEBASE g_SymGetModuleBase = NULL;
-typedef BOOL (__stdcall *PFNSYMGETSYMFROMADDR)(IN HANDLE hProcess, IN DWORD dwAddr, OUT PDWORD pdwDisplacement, OUT PIMAGEHLP_SYMBOL Symbol);
+typedef BOOL (__stdcall *PFNSYMGETSYMFROMADDR)(
+		IN HANDLE hProcess,
+		IN DWORD dwAddr,
+		OUT PDWORD pdwDisplacement,
+		OUT PIMAGEHLP_SYMBOL Symbol);
 static PFNSYMGETSYMFROMADDR g_SymGetSymFromAddr = NULL;
-typedef PVOID (__stdcall *PFNSYMFUNCTIONTABLEACCESS)(HANDLE hProcess, DWORD AddrBase);
+typedef PVOID (__stdcall *PFNSYMFUNCTIONTABLEACCESS)(
+		HANDLE hProcess,
+		DWORD AddrBase);
 static PFNSYMFUNCTIONTABLEACCESS g_SymFunctionTableAccess = NULL;
 typedef BOOL (__stdcall *PFNSTACKWALK)(
-	DWORD                             MachineType,
-	HANDLE                            hProcess,
-	HANDLE                            hThread,
-	LPSTACKFRAME                      StackFrame,
-	PVOID                             ContextRecord,
-	PREAD_PROCESS_MEMORY_ROUTINE      ReadMemoryRoutine,
-	PFUNCTION_TABLE_ACCESS_ROUTINE    FunctionTableAccessRoutine,
-	PGET_MODULE_BASE_ROUTINE          GetModuleBaseRoutine,
-	PTRANSLATE_ADDRESS_ROUTINE        TranslateAddress
-	);
+		DWORD                             MachineType,
+		HANDLE                            hProcess,
+		HANDLE                            hThread,
+		LPSTACKFRAME                      StackFrame,
+		PVOID                             ContextRecord,
+		PREAD_PROCESS_MEMORY_ROUTINE      ReadMemoryRoutine,
+		PFUNCTION_TABLE_ACCESS_ROUTINE    FunctionTableAccessRoutine,
+		PGET_MODULE_BASE_ROUTINE          GetModuleBaseRoutine,
+		PTRANSLATE_ADDRESS_ROUTINE        TranslateAddress
+		);
 static PFNSTACKWALK g_StackWalk = NULL;
 
 
-static DWORD GetModuleBaseNameA(HANDLE hProcess, HMODULE hModule, LPSTR lpBaseName, DWORD nSize)
+static DWORD GetModuleBaseNameA(
+		HANDLE hProcess,
+		HMODULE hModule,
+		LPSTR lpBaseName,
+		DWORD nSize)
 {
 	// The typedefs for the PSAPI.DLL functions used by this module.
 	typedef DWORD (WINAPI *GETMODULEBASENAME)(HANDLE hProcess,
@@ -160,8 +179,11 @@ static bool IsNT()
 	return bIsNT;
 }
 
-static DWORD BSUGetModuleBaseName(HANDLE hProcess,
-	HMODULE hModule, LPTSTR lpBaseName, DWORD nSize)
+static DWORD BSUGetModuleBaseName(
+		HANDLE hProcess,
+		HMODULE hModule,
+		LPTSTR lpBaseName,
+		DWORD nSize)
 {
 	if (IsNT())
 	{
@@ -268,8 +290,11 @@ static LPCTSTR ConvertSimpleException(DWORD dwExcept)
 	}
 }
 
-static BOOL InternalSymGetLineFromAddr(HANDLE hProcess,
-	DWORD dwAddr, PDWORD pdwDisplacement, PIMAGEHLP_LINE Line)
+static BOOL InternalSymGetLineFromAddr(
+		HANDLE hProcess,
+		DWORD dwAddr,
+		PDWORD pdwDisplacement,
+		PIMAGEHLP_LINE Line)
 {
 	if (NULL != g_pfnSymGetLineFromAddr)
 	{
@@ -685,7 +710,10 @@ static LPCTSTR GetNextStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 
 // This function does put a bit of data on the stack and heap.
 // Hopefully it won't cause more trouble... So we log this data last.
-static void QueryKey(FILE* output, HKEY hKey, int inIndent)
+static void QueryKey(
+		FILE* output,
+		HKEY hKey,
+		int inIndent)
 {
 	if (!hKey)
 		return;

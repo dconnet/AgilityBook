@@ -80,7 +80,9 @@ public:
 			delete this;
 	}
 	virtual CString OnNeedText(int iCol) const = 0;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const = 0;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const = 0;
 protected:
 	virtual ~CDlgListViewerData() {}
 	UINT m_RefCount;
@@ -123,14 +125,25 @@ public:
 			m_Columns.reserve(inInitSize);
 	}
 	virtual CString OnNeedText(int iCol) const {return "";}
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const {return 0;}
-	bool InsertColumn(CListCtrl2& inList, int inIndex, UINT inName)
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const
+	{
+		return 0;
+	}
+	bool InsertColumn(
+			CListCtrl2& inList,
+			int inIndex,
+			UINT inName)
 	{
 		CString name;
 		name.LoadString(inName);
 		return InsertColumn(inList, inIndex, (LPCTSTR)name);
 	}
-	bool InsertColumn(CListCtrl2& inList, int inIndex, LPCTSTR inName)
+	bool InsertColumn(
+			CListCtrl2& inList,
+			int inIndex,
+			LPCTSTR inName)
 	{
 		int col = static_cast<int>(m_Columns.size());
 		for (int i = 0; i < col; ++i)
@@ -162,8 +175,9 @@ class CDlgListViewerDataExisting : public CDlgListViewerData
 {
 	friend class CDlgListViewerDataRun;
 public:
-	CDlgListViewerDataExisting(CDlgListViewerDataColumns* inColData,
-		ARBDogExistingPoints const* inExisting)
+	CDlgListViewerDataExisting(
+			CDlgListViewerDataColumns* inColData,
+			ARBDogExistingPoints const* inExisting)
 		: m_ColData(inColData)
 		, m_Existing(inExisting)
 	{
@@ -177,7 +191,9 @@ public:
 			m_ColData->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	ARBDogExistingPoints const* m_Existing;
@@ -187,12 +203,13 @@ class CDlgListViewerDataRun : public CDlgListViewerData
 {
 	friend class CDlgListViewerDataExisting;
 public:
-	CDlgListViewerDataRun(CDlgListViewerDataColumns* inColData,
-		ARBDog const* inDog,
-		ARBDogTrial const* inTrial,
-		ARBDogRun const* inRun,
-		ARBConfigScoring* inScoring,
-		ScoringRunInfo::eScoringDetail inScoringDetail)
+	CDlgListViewerDataRun(
+			CDlgListViewerDataColumns* inColData,
+			ARBDog const* inDog,
+			ARBDogTrial const* inTrial,
+			ARBDogRun const* inRun,
+			ARBConfigScoring* inScoring,
+			ScoringRunInfo::eScoringDetail inScoringDetail)
 		: m_ColData(inColData)
 		, m_Dog(inDog)
 		, m_Trial(inTrial)
@@ -215,7 +232,9 @@ public:
 			m_Scoring->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	ARBDog const* m_Dog;
@@ -249,7 +268,9 @@ CString CDlgListViewerDataExisting::OnNeedText(int iCol) const
 	return str;
 }
 
-int CDlgListViewerDataExisting::Compare(CDlgListViewerData const* pRow2, int inCol) const
+int CDlgListViewerDataExisting::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
 {
 	CDlgListViewerDataExisting const* pDataExisting = dynamic_cast<CDlgListViewerDataExisting const*>(pRow2);
 	CDlgListViewerDataRun const* pDataRun = dynamic_cast<CDlgListViewerDataRun const*>(pRow2);
@@ -397,7 +418,9 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 	return str;
 }
 
-int CDlgListViewerDataRun::Compare(CDlgListViewerData const* pRow2, int inCol) const
+int CDlgListViewerDataRun::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
 {
 	CDlgListViewerDataExisting const* pDataExisting = dynamic_cast<CDlgListViewerDataExisting const*>(pRow2);
 	CDlgListViewerDataRun const* pDataRun = dynamic_cast<CDlgListViewerDataRun const*>(pRow2);
@@ -540,9 +563,10 @@ int CDlgListViewerDataRun::Compare(CDlgListViewerData const* pRow2, int inCol) c
 class CDlgListViewerDataDblQ : public CDlgListViewerData
 {
 public:
-	CDlgListViewerDataDblQ(CDlgListViewerDataColumns* inColData,
-		ARBDate const& inDate,
-		ARBDogTrial const* inTrial)
+	CDlgListViewerDataDblQ(
+			CDlgListViewerDataColumns* inColData,
+			ARBDate const& inDate,
+			ARBDogTrial const* inTrial)
 		: m_ColData(inColData)
 		, m_Date(inDate)
 		, m_Trial(inTrial)
@@ -557,7 +581,9 @@ public:
 			m_ColData->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	ARBDate m_Date;
@@ -583,7 +609,9 @@ CString CDlgListViewerDataDblQ::OnNeedText(int iCol) const
 	return str;
 }
 
-int CDlgListViewerDataDblQ::Compare(CDlgListViewerData const* pRow2, int inCol) const
+int CDlgListViewerDataDblQ::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
 {
 	CDlgListViewerDataDblQ const* pData = dynamic_cast<CDlgListViewerDataDblQ const*>(pRow2);
 	if (!pData)
@@ -623,8 +651,9 @@ int CDlgListViewerDataDblQ::Compare(CDlgListViewerData const* pRow2, int inCol) 
 class CDlgListViewerDataLifetime : public CDlgListViewerData
 {
 public:
-	CDlgListViewerDataLifetime(CDlgListViewerDataColumns* inColData,
-		LifeTimePointInfo const& info)
+	CDlgListViewerDataLifetime(
+			CDlgListViewerDataColumns* inColData,
+			LifeTimePointInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
@@ -638,7 +667,9 @@ public:
 			m_ColData->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	LifeTimePointInfo m_info;
@@ -669,7 +700,9 @@ CString CDlgListViewerDataLifetime::OnNeedText(int iCol) const
 	return str;
 }
 
-int CDlgListViewerDataLifetime::Compare(CDlgListViewerData const* pRow2, int inCol) const
+int CDlgListViewerDataLifetime::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
 {
 	CDlgListViewerDataLifetime const* pData = dynamic_cast<CDlgListViewerDataLifetime const*>(pRow2);
 	if (!pData)
@@ -707,8 +740,9 @@ int CDlgListViewerDataLifetime::Compare(CDlgListViewerData const* pRow2, int inC
 class CDlgListViewerDataOther : public CDlgListViewerData
 {
 public:
-	CDlgListViewerDataOther(CDlgListViewerDataColumns* inColData,
-		OtherPtInfo const& info)
+	CDlgListViewerDataOther(
+			CDlgListViewerDataColumns* inColData,
+			OtherPtInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
@@ -722,7 +756,9 @@ public:
 			m_ColData->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	OtherPtInfo m_info;
@@ -768,7 +804,9 @@ CString CDlgListViewerDataOther::OnNeedText(int iCol) const
 	return str;
 }
 
-int CDlgListViewerDataOther::Compare(CDlgListViewerData const* pRow2, int inCol) const
+int CDlgListViewerDataOther::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
 {
 	CDlgListViewerDataOther const* pData = dynamic_cast<CDlgListViewerDataOther const*>(pRow2);
 	if (!pData)
@@ -848,8 +886,9 @@ int CDlgListViewerDataOther::Compare(CDlgListViewerData const* pRow2, int inCol)
 class CDlgListViewerDataItem : public CDlgListViewerData
 {
 public:
-	CDlgListViewerDataItem(CDlgListViewerDataColumns* inColData,
-		CFindItemInfo const& info)
+	CDlgListViewerDataItem(
+			CDlgListViewerDataColumns* inColData,
+			CFindItemInfo const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
@@ -863,7 +902,9 @@ public:
 			m_ColData->Release();
 	}
 	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(CDlgListViewerData const* pRow2, int inCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	CFindItemInfo m_info;
@@ -901,7 +942,9 @@ CString CDlgListViewerDataItem::OnNeedText(int iCol) const
 	return str;
 }
 
-int CDlgListViewerDataItem::Compare(CDlgListViewerData const* pRow2, int inCol) const
+int CDlgListViewerDataItem::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
 {
 	CDlgListViewerDataItem const* pData = dynamic_cast<CDlgListViewerDataItem const*>(pRow2);
 	if (!pData)
@@ -969,7 +1012,10 @@ struct SORT_COL_INFO
 	int nCol;
 };
 
-int CALLBACK CompareRows(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK CompareRows(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	SORT_COL_INFO* sortInfo = reinterpret_cast<SORT_COL_INFO*>(lParam3);
 	if (!sortInfo)
@@ -987,9 +1033,11 @@ int CALLBACK CompareRows(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 
 /////////////////////////////////////////////////////////////////////////////
 // Viewing runs
-CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+CDlgListViewer::CDlgListViewer(
+		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
-		RunInfoData const* inData, std::list<RunInfo> const& inRuns,
+		RunInfoData const* inData,
+		std::list<RunInfo> const& inRuns,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
@@ -1011,7 +1059,8 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 	//}}AFX_DATA_INIT
 }
 
-CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+CDlgListViewer::CDlgListViewer(
+		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
 		std::list<ScoringRunInfo> const& inScoringRuns,
 		CWnd* pParent)
@@ -1034,7 +1083,8 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 }
 
 // Viewing double-Qs
-CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+CDlgListViewer::CDlgListViewer(
+		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
 		std::set<DoubleQdata> const& inQQs,
 		CWnd* pParent)
@@ -1057,7 +1107,8 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 }
 
 // Viewing lifetime data
-CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+CDlgListViewer::CDlgListViewer(
+		CAgilityBookDoc* inDoc,
 	CString const& inCaption,
 	std::list<LifeTimePointInfo> const& inLifetime,
 	CWnd* pParent)
@@ -1080,7 +1131,8 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 }
 
 // Viewing other points
-CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+CDlgListViewer::CDlgListViewer(
+		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
 		std::list<OtherPtInfo> const& inRunList,
 		CWnd* pParent)
@@ -1102,7 +1154,8 @@ CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
 {
 }
 
-CDlgListViewer::CDlgListViewer(CAgilityBookDoc* inDoc,
+CDlgListViewer::CDlgListViewer(
+		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
 		std::vector<CFindItemInfo> const& inItems,
 		CWnd* pParent)
@@ -1148,14 +1201,15 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListViewer message handlers
 
-static void InsertRun(CAgilityBookDoc* pDoc,
-	CListCtrl2& ctrlList,
-	CDlgListViewerDataColumns* pColData,
-	int& iItem,
-	ARBDog const* pDog,
-	ARBDogTrial const* pTrial,
-	ARBDogRun const* pRun,
-	ScoringRunInfo::eScoringDetail scoringDetail)
+static void InsertRun(
+		CAgilityBookDoc* pDoc,
+		CListCtrl2& ctrlList,
+		CDlgListViewerDataColumns* pColData,
+		int& iItem,
+		ARBDog const* pDog,
+		ARBDogTrial const* pTrial,
+		ARBDogRun const* pRun,
+		ScoringRunInfo::eScoringDetail scoringDetail)
 {
 	ARBConfigScoring* pScoring = NULL;
 	if (pTrial->GetClubs().GetPrimaryClub())
@@ -1425,7 +1479,9 @@ BOOL CDlgListViewer::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgListViewer::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgListViewer::OnGetdispinfoList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -1443,7 +1499,9 @@ void CDlgListViewer::OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgListViewer::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgListViewer::OnDeleteitemList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	CDlgListViewerData *pData = reinterpret_cast<CDlgListViewerData*>(pNMListView->lParam);
@@ -1453,7 +1511,9 @@ void CDlgListViewer::OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgListViewer::OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgListViewer::OnColumnclickList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	m_ctrlList.HeaderSort(abs(m_SortColumn) - 1, CHeaderCtrl2::eNoSort);
@@ -1477,7 +1537,10 @@ void CDlgListViewer::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
 
-void CDlgListViewer::OnSize(UINT nType, int cx, int cy)
+void CDlgListViewer::OnSize(
+		UINT nType,
+		int cx,
+		int cy)
 {
 	CDlgBaseDialog::OnSize(nType, cx, cy);
 	if (::IsWindow(m_ctrlList.GetSafeHwnd()))

@@ -77,7 +77,9 @@ void CSplashWnd::EnableSplashScreen(BOOL bEnable)
 	c_bShowSplashWnd = bEnable;
 }
 
-void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd, bool bTimed)
+void CSplashWnd::ShowSplashScreen(
+		CWnd* pParentWnd,
+		bool bTimed)
 {
 	CSingleLock singleLock(&s_Crit);
 	singleLock.Lock();

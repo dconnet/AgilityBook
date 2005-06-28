@@ -71,9 +71,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigEvent dialog
 
-CDlgConfigEvent::CDlgConfigEvent(CAgilityBookDoc* pDoc,
-	ARBAgilityRecordBook* book, ARBConfig* config,
-	ARBConfigVenue* pVenue, ARBConfigEvent* pEvent, CWnd* pParent)
+CDlgConfigEvent::CDlgConfigEvent(
+		CAgilityBookDoc* pDoc,
+		ARBAgilityRecordBook* book,
+		ARBConfig* config,
+		ARBConfigVenue* pVenue,
+		ARBConfigEvent* pEvent,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigEvent::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Book(book)
@@ -928,7 +932,9 @@ void CDlgConfigEvent::OnValidFrom()
 	FillMethodList();
 }
 
-void CDlgConfigEvent::OnDatetimechangeDate(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgConfigEvent::OnDatetimechangeDate(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	SaveControls();
 	FillMethodList();

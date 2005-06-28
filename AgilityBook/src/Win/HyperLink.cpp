@@ -71,7 +71,10 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-static LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
+static LONG GetRegKey(
+		HKEY key,
+		LPCTSTR subkey,
+		LPTSTR retdata)
 {
 	HKEY hkey;
 	LONG retval = RegOpenKeyEx(key, subkey, 0, KEY_QUERY_VALUE, &hkey);
@@ -298,7 +301,9 @@ UINT CHyperLink::OnGetDlgCode()
 	return DLGC_WANTCHARS;
 }
 
-HBRUSH CHyperLink::CtlColor(CDC* pDC, UINT nCtlColor)
+HBRUSH CHyperLink::CtlColor(
+		CDC* pDC,
+		UINT nCtlColor)
 {
 	UNUSED(nCtlColor);
 	ASSERT(nCtlColor == CTLCOLOR_STATIC);
@@ -333,7 +338,9 @@ void CHyperLink::OnKillFocus(CWnd* /*pNewWnd*/)
 	DrawFocusRect();
 }
 
-void CHyperLink::OnMouseMove(UINT nFlags, CPoint point)
+void CHyperLink::OnMouseMove(
+		UINT nFlags,
+		CPoint point)
 {
 	if (!m_bOverControl)	// Cursor has just moved over control
 	{
@@ -364,7 +371,10 @@ void CHyperLink::OnTimer(UINT nIDEvent)
 	CStatic::OnTimer(nIDEvent);
 }
 
-BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/)
+BOOL CHyperLink::OnSetCursor(
+		CWnd* /*pWnd*/,
+		UINT /*nHitTest*/,
+		UINT /*message*/)
 {
 	if (m_hLinkCursor)
 	{
@@ -374,7 +384,10 @@ BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/
 	return FALSE;
 }
 
-void CHyperLink::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CHyperLink::OnChar(
+		UINT nChar,
+		UINT nRepCnt,
+		UINT nFlags)
 {
 	if (VK_SPACE == nChar)
 	{
@@ -406,9 +419,9 @@ void CHyperLink::SetURL(CString const& strURL)
 }
 
 void CHyperLink::SetColors(
-	COLORREF crLinkColor,
-	COLORREF crVisitedColor,
-	COLORREF crHoverColor)
+		COLORREF crLinkColor,
+		COLORREF crVisitedColor,
+		COLORREF crHoverColor)
 {
 	m_crLinkColor = crLinkColor;
 	m_crVisitedColor = crVisitedColor;

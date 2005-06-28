@@ -56,7 +56,10 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgOptions, CDlgBaseSheet)
 
-CDlgOptions::CDlgOptions(CAgilityBookDoc* pDoc, CWnd* pParentWnd, UINT iSelectPage)
+CDlgOptions::CDlgOptions(
+		CAgilityBookDoc* pDoc,
+		CWnd* pParentWnd,
+		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_VIEWING_OPTIONS, pParentWnd, iSelectPage)
 	, m_pDoc(pDoc)
 	, m_pageFilter(pDoc->GetConfig())

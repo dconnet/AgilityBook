@@ -60,7 +60,11 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgDog, CDlgBaseSheet)
 
-CDlgDog::CDlgDog(CAgilityBookDoc* pDoc, ARBDog* pDog, CWnd* pParent, UINT iSelectPage)
+CDlgDog::CDlgDog(
+		CAgilityBookDoc* pDoc,
+		ARBDog* pDog,
+		CWnd* pParent,
+		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_COL_DOG, pParent, iSelectPage)
 	, m_pDoc(pDoc)
 	, m_pDog(pDog)

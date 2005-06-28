@@ -280,7 +280,9 @@ void CAgilityBookDoc::DeleteRun(ARBDogRun* pRun)
 	}
 }
 
-bool CAgilityBookDoc::CreateTrialFromCalendar(ARBCalendar const& cal, CTabView* pTabView)
+bool CAgilityBookDoc::CreateTrialFromCalendar(
+		ARBCalendar const& cal,
+		CTabView* pTabView)
 {
 	if (!GetConfig().GetVenues().FindVenue(cal.GetVenue()))
 		return false;
@@ -500,7 +502,9 @@ void CAgilityBookDoc::ResetVisibility()
 		UpdateAllViews(NULL, UPDATE_OPTIONS);
 }
 
-void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog* pDog)
+void CAgilityBookDoc::ResetVisibility(
+		std::vector<CVenueFilter>& venues,
+		ARBDog* pDog)
 {
 	for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
 		ResetVisibility(venues, *iterTrial);
@@ -509,7 +513,9 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDog*
 		ResetVisibility(venues, *iterTitle);
 }
 
-void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial)
+void CAgilityBookDoc::ResetVisibility(
+		std::vector<CVenueFilter>& venues,
+		ARBDogTrial* pTrial)
 {
 	bool bVisTrial = CAgilityBookOptions::IsTrialVisible(venues, pTrial);
 	pTrial->SetFiltered(!bVisTrial);
@@ -524,20 +530,27 @@ void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogT
 		pTrial->SetFiltered(true);
 }
 
-void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTrial* pTrial, ARBDogRun* pRun)
+void CAgilityBookDoc::ResetVisibility(
+		std::vector<CVenueFilter>& venues,
+		ARBDogTrial* pTrial,
+		ARBDogRun* pRun)
 {
 	unsigned short nVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
 	pRun->SetFiltered(ARBBase::eFilter, (nVisRun & (0x1 << ARBBase::eFilter)) ? false : true);
 	pRun->SetFiltered(ARBBase::eIgnoreQ, (nVisRun & (0x1 << ARBBase::eIgnoreQ)) ? false : true);
 }
 
-void CAgilityBookDoc::ResetVisibility(std::vector<CVenueFilter>& venues, ARBDogTitle* pTitle)
+void CAgilityBookDoc::ResetVisibility(
+		std::vector<CVenueFilter>& venues,
+		ARBDogTitle* pTitle)
 {
 	bool bVisTitle = CAgilityBookOptions::IsTitleVisible(venues, pTitle);
 	pTitle->SetFiltered(!bVisTitle);
 }
 
-void CAgilityBookDoc::ResetVisibility(std::set<std::string>& names, ARBTraining* pTraining)
+void CAgilityBookDoc::ResetVisibility(
+		std::set<std::string>& names,
+		ARBTraining* pTraining)
 {
 	bool bVisTraining = CAgilityBookOptions::IsTrainingLogVisible(names, pTraining);
 	pTraining->SetFiltered(!bVisTraining);
@@ -1020,10 +1033,10 @@ public:
 private:
 	CAgilityBookDoc* m_pDoc;
 	void Search(
-		CString const& search,
-		ARBInfo::eInfoType inType,
-		std::set<std::string> const& inUse,
-		ARBInfo const& info) const;
+			CString const& search,
+			ARBInfo::eInfoType inType,
+			std::set<std::string> const& inUse,
+			ARBInfo const& info) const;
 };
 
 bool CFindInfo::Search(CDlgFind* pDlg) const
@@ -1055,10 +1068,10 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 }
 
 void CFindInfo::Search(
-	CString const& search,
-	ARBInfo::eInfoType inType,
-	std::set<std::string> const& inUse,
-	ARBInfo const& info) const
+		CString const& search,
+		ARBInfo::eInfoType inType,
+		std::set<std::string> const& inUse,
+		ARBInfo const& info) const
 {
 	for (std::set<std::string>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
 	{

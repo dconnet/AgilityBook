@@ -57,10 +57,10 @@ public:
 		eScoringChanged
 	} eScoringDetail;
 	ScoringRunInfo(
-		ARBDog const* inDog,
-		ARBDogTrial const* inTrial,
-		ARBDogRun const* inRun,
-		eScoringDetail inScoringDetail)
+			ARBDog const* inDog,
+			ARBDogTrial const* inTrial,
+			ARBDogRun const* inRun,
+			eScoringDetail inScoringDetail)
 		: m_Dog(inDog)
 		, m_Trial(inTrial)
 		, m_Run(inRun)
@@ -77,11 +77,12 @@ class RunInfoData
 {
 	friend class CDlgListViewer;
 public:
-	RunInfoData(ARBDog const* inDog,
-		ARBConfigVenue const* inVenue,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		ARBConfigEvent const* inEvent)
+	RunInfoData(
+			ARBDog const* inDog,
+			ARBConfigVenue const* inVenue,
+			ARBConfigDivision const* inDiv,
+			ARBConfigLevel const* inLevel,
+			ARBConfigEvent const* inEvent)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_Div(inDiv)
@@ -107,29 +108,42 @@ class CDlgListViewer : public CDlgBaseDialog
 {
 public:
 	// Viewing runs
-	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		RunInfoData const* inData, std::list<RunInfo> const& inRuns,
-		CWnd* pParent = NULL);
+	CDlgListViewer(
+			CAgilityBookDoc* inDoc,
+			CString const& inCaption,
+			RunInfoData const* inData,
+			std::list<RunInfo> const& inRuns,
+			CWnd* pParent = NULL);
 	// Viewing runs affected by configuration changes
-	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::list<ScoringRunInfo> const& inScoringRuns,
-		CWnd* pParent = NULL);
+	CDlgListViewer(
+			CAgilityBookDoc* inDoc,
+			CString const& inCaption,
+			std::list<ScoringRunInfo> const& inScoringRuns,
+			CWnd* pParent = NULL);
 	// Viewing double-Qs
-	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::set<DoubleQdata> const& inQQs,
-		CWnd* pParent = NULL);
+	CDlgListViewer(
+			CAgilityBookDoc* inDoc,
+			CString const& inCaption,
+			std::set<DoubleQdata> const& inQQs,
+			CWnd* pParent = NULL);
 	// Viewing lifetime data
-	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::list<LifeTimePointInfo> const& inLifetime,
-		CWnd* pParent = NULL);
+	CDlgListViewer(
+			CAgilityBookDoc* inDoc,
+			CString const& inCaption,
+			std::list<LifeTimePointInfo> const& inLifetime,
+			CWnd* pParent = NULL);
 	// Viewing other points
-	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::list<OtherPtInfo> const& inRunList,
-		CWnd* pParent = NULL);
+	CDlgListViewer(
+			CAgilityBookDoc* inDoc,
+			CString const& inCaption,
+			std::list<OtherPtInfo> const& inRunList,
+			CWnd* pParent = NULL);
 	// Viewing Info
-	CDlgListViewer(CAgilityBookDoc* inDoc, CString const& inCaption,
-		std::vector<CFindItemInfo> const& inItems,
-		CWnd* pParent = NULL);
+	CDlgListViewer(
+			CAgilityBookDoc* inDoc,
+			CString const& inCaption,
+			std::vector<CFindItemInfo> const& inItems,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

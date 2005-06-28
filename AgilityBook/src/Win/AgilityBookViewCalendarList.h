@@ -68,7 +68,7 @@ class CAgilityBookViewCalendarList : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewCalendarData;
 	friend class CFindCalendar;
-	friend int CALLBACK CompareCalendar(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
+	friend int CALLBACK CompareCalendar(LPARAM, LPARAM, LPARAM);
 protected: // create from serialization only
 	CAgilityBookViewCalendarList();
 	DECLARE_DYNCREATE(CAgilityBookViewCalendarList)
@@ -108,15 +108,23 @@ private:
 	} m_SortColumn;
 
 protected:
-	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
+	virtual void GetPrintLine(
+			int nItem,
+			CStringArray& line); // CListView2 override
 	//{{AFX_VIRTUAL(CAgilityBookViewCalendarList)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
 	protected:
 	virtual void OnInitialUpdate();
-	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnActivateView(
+			BOOL bActivate,
+			CView* pActivateView,
+			CView* pDeactiveView);
+	virtual void OnUpdate(
+			CView* pSender,
+			LPARAM lHint,
+			CObject* pHint);
 	//}}AFX_VIRTUAL
 
 // Implementation

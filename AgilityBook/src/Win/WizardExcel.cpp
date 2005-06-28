@@ -77,16 +77,29 @@ public:
 	// Safe array is ready for use
 	virtual bool ArrayOkay() const	{return 0 < m_Rows && 0 < m_Cols;}
 	// Create the safe array.
-	virtual bool CreateArray(long inRows, long inCols);
+	virtual bool CreateArray(
+			long inRows,
+			long inCols);
 	// Insert data into the safe array.
-	virtual bool InsertArrayData(long inRow, long inCol, CString const& inData);
+	virtual bool InsertArrayData(
+			long inRow,
+			long inCol,
+			CString const& inData);
 	// Copy the safe array to excel (safe array is reset)
-	virtual bool ExportDataArray(long inRowTop = 0, long inColLeft = 0);
+	virtual bool ExportDataArray(
+			long inRowTop = 0,
+			long inColLeft = 0);
 	virtual bool AllowAccess(bool bAllow);
-	virtual bool InsertData(long nRow, long nCol, COleVariant const& inData);
-	virtual bool InsertFormula(long inRowFrom, long inColFrom,
-		long inRowTo, long inColTo,
-		CString const& inFormula);
+	virtual bool InsertData(
+			long nRow,
+			long nCol,
+			COleVariant const& inData);
+	virtual bool InsertFormula(
+			long inRowFrom,
+			long inColFrom,
+			long inRowTo,
+			long inColTo,
+			CString const& inFormula);
 
 private:
 	_Application& m_App;
@@ -122,7 +135,9 @@ CWizardExcelExportImpl::~CWizardExcelExportImpl()
 		m_App.Quit();
 }
 
-bool CWizardExcelExportImpl::CreateArray(long inRows, long inCols)
+bool CWizardExcelExportImpl::CreateArray(
+		long inRows,
+		long inCols)
 {
 	if (ArrayOkay())
 		return false;
@@ -139,7 +154,10 @@ bool CWizardExcelExportImpl::CreateArray(long inRows, long inCols)
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertArrayData(long inRow, long inCol, CString const& inData)
+bool CWizardExcelExportImpl::InsertArrayData(
+		long inRow,
+		long inCol,
+		CString const& inData)
 {
 	if (!ArrayOkay())
 		return false;
@@ -159,7 +177,9 @@ bool CWizardExcelExportImpl::InsertArrayData(long inRow, long inCol, CString con
 	return true;
 }
 
-bool CWizardExcelExportImpl::ExportDataArray(long inRowTop, long inColLeft)
+bool CWizardExcelExportImpl::ExportDataArray(
+		long inRowTop,
+		long inColLeft)
 {
 	if (!ArrayOkay())
 		return false;
@@ -202,7 +222,10 @@ bool CWizardExcelExportImpl::AllowAccess(bool bAllow)
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertData(long inRow, long inCol, COleVariant const& inData)
+bool CWizardExcelExportImpl::InsertData(
+		long inRow,
+		long inCol,
+		COleVariant const& inData)
 {
 	CString cell1;
 	if (!CWizardExcel::GetRowCol(inRow, inCol, cell1))
@@ -212,9 +235,12 @@ bool CWizardExcelExportImpl::InsertData(long inRow, long inCol, COleVariant cons
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertFormula(long inRowFrom, long inColFrom,
-	long inRowTo, long inColTo,
-	CString const& inFormula)
+bool CWizardExcelExportImpl::InsertFormula(
+		long inRowFrom,
+		long inColFrom,
+		long inRowTo,
+		long inColTo,
+		CString const& inFormula)
 {
 	CString cell1, cell2;
 	if (!CWizardExcel::GetRowCol(inRowFrom, inColFrom, cell1))
@@ -236,7 +262,9 @@ public:
 	bool IsOkay() const		{return NULL != m_Worksheet.m_lpDispatch;}
 
 	virtual bool OpenFile(CString const& inFilename);
-	virtual bool GetData(std::vector< std::vector<CString> >& outData, IDlgProgress* ioProgress);
+	virtual bool GetData(
+			std::vector< std::vector<CString> >& outData,
+			IDlgProgress* ioProgress);
 
 private:
 	_Application& m_App;
@@ -279,7 +307,9 @@ bool CWizardExcelImportImpl::OpenFile(CString const& inFilename)
 	return IsOkay();
 }
 
-bool CWizardExcelImportImpl::GetData(std::vector< std::vector<CString> >& outData, IDlgProgress* ioProgress)
+bool CWizardExcelImportImpl::GetData(
+		std::vector< std::vector<CString> >& outData,
+		IDlgProgress* ioProgress)
 {
 	outData.clear();
 	if (!IsOkay())
@@ -406,7 +436,10 @@ long CWizardExcel::GetMaxCols()
 {
 	return 256;
 }
-bool CWizardExcel::GetRowCol(long inRow, long inCol, CString& outCell)
+bool CWizardExcel::GetRowCol(
+		long inRow,
+		long inCol,
+		CString& outCell)
 {
 	// Lookup tables are nice!
 	static const char* const sc_ColumnNames[256] =

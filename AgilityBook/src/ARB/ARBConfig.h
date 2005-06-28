@@ -77,9 +77,9 @@ public:
 	 * @return Success
 	 */
 	bool LoadFault(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load an OtherPoint object.
@@ -92,9 +92,9 @@ public:
 	 * @return Success
 	 */
 	bool LoadOtherPoints(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Load the configuration.
@@ -105,9 +105,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -134,8 +134,8 @@ public:
 	 * @return Nice name (longname) of a title.
 	 */
 	std::string GetTitleNiceName(
-		std::string const& inVenue,
-		std::string const& inTitle) const;
+			std::string const& inVenue,
+			std::string const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -144,8 +144,8 @@ public:
 	 * @return Complete name of title (name + longname).
 	 */
 	std::string GetTitleCompleteName(
-		ARBDogTitle const* inTitle,
-		bool bAbbrevFirst = true) const;
+			ARBDogTitle const* inTitle,
+			bool bAbbrevFirst = true) const;
 
 	/**
 	 * Update this configuration from inConfigNew.
@@ -154,7 +154,10 @@ public:
 	 * @param ioInfo Accumulated messages about changes that have happened.
 	 * @return Whether or not changes have occurred.
 	 */
-	bool Update(int indent, ARBConfig const& inConfigNew, std::string& ioInfo);
+	bool Update(
+			int indent,
+			ARBConfig const& inConfigNew,
+			std::string& ioInfo);
 
 	/*
 	 * Getters.

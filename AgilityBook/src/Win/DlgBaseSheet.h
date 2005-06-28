@@ -42,10 +42,14 @@ class CDlgBaseSheet : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CDlgBaseSheet)
 public:
-	explicit CDlgBaseSheet(UINT nIDCaption, CWnd* pParentWnd = NULL,
-		UINT iSelectPage = 0);
-	explicit CDlgBaseSheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL,
-		UINT iSelectPage = 0);
+	explicit CDlgBaseSheet(
+			UINT nIDCaption,
+			CWnd* pParentWnd = NULL,
+			UINT iSelectPage = 0);
+	explicit CDlgBaseSheet(
+			LPCTSTR pszCaption,
+			CWnd* pParentWnd = NULL,
+			UINT iSelectPage = 0);
 	virtual ~CDlgBaseSheet();
 
 private:

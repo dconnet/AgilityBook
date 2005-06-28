@@ -56,8 +56,7 @@ ARBInfo::ARBInfo()
 {
 }
 
-ARBInfo::ARBInfo(
-		ARBInfo const& rhs)
+ARBInfo::ARBInfo(ARBInfo const& rhs)
 	: m_ClubInfo(rhs.m_ClubInfo)
 	, m_JudgeInfo(rhs.m_JudgeInfo)
 	, m_LocationInfo(rhs.m_LocationInfo)
@@ -69,8 +68,7 @@ ARBInfo::~ARBInfo()
 	clear();
 }
 
-ARBInfo& ARBInfo::operator=(
-		ARBInfo const& rhs)
+ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -81,16 +79,14 @@ ARBInfo& ARBInfo::operator=(
 	return *this;
 }
 
-bool ARBInfo::operator==(
-		ARBInfo const& rhs) const
+bool ARBInfo::operator==(ARBInfo const& rhs) const
 {
 	return m_ClubInfo == rhs.m_ClubInfo
 		&& m_JudgeInfo == rhs.m_JudgeInfo
 		&& m_LocationInfo == rhs.m_LocationInfo;
 }
 
-bool ARBInfo::operator!=(
-		ARBInfo const& rhs) const
+bool ARBInfo::operator!=(ARBInfo const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -130,8 +126,7 @@ bool ARBInfo::Load(
 	return true;
 }
 
-bool ARBInfo::Save(
-		Element& ioTree) const
+bool ARBInfo::Save(Element& ioTree) const
 {
 	Element& info = ioTree.AddElement(TREE_INFO);
 	if (!m_ClubInfo.Save(info))

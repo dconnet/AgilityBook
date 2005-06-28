@@ -70,7 +70,10 @@ static int const nColInfo1 = sizeof(colInfo1) / sizeof(colInfo1[0]);
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTrial dialog
 
-CDlgTrial::CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent)
+CDlgTrial::CDlgTrial(
+		CAgilityBookDoc* pDoc,
+		ARBDogTrial* pTrial,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTrial::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
@@ -115,7 +118,9 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDlgTrial::UpdateNotes(bool bLocation, bool bClub)
+void CDlgTrial::UpdateNotes(
+		bool bLocation,
+		bool bClub)
 {
 	if (bLocation)
 	{
@@ -223,7 +228,9 @@ void CDlgTrial::OnKillfocusLocation()
 	UpdateNotes(true, false);
 }
 
-void CDlgTrial::OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgTrial::OnItemchangedClubs(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	//NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UINT selected = m_ctrlClubs.GetSelectedCount();
@@ -242,7 +249,9 @@ void CDlgTrial::OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgTrial::OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgTrial::OnDblclkClubs(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	OnClubEdit();
 	*pResult = 0;

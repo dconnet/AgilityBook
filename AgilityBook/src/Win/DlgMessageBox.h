@@ -46,11 +46,13 @@ public:
 	virtual void OnDetails(CWnd* pParent) = 0;
 };
 
-extern int AfxMessageBox2(UINT inIDText,
-	UINT inType = MB_OK,
-	IMessageBoxCallback* inCallback = NULL,
-	CWnd* inParent = NULL);
-extern int AfxMessageBox2(CString const& inText,
-	UINT inType = MB_OK,
-	IMessageBoxCallback* inCallback = NULL,
-	CWnd* inParent = NULL);
+extern int AfxMessageBox2(
+		UINT inIDText,
+		UINT inType = MB_OK,
+		IMessageBoxCallback* inCallback = NULL,
+		CWnd* inParent = NULL);
+extern int AfxMessageBox2(
+		CString const& inText,
+		UINT inType = MB_OK,
+		IMessageBoxCallback* inCallback = NULL,
+		CWnd* inParent = NULL);

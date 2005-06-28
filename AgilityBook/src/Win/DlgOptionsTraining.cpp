@@ -173,7 +173,9 @@ void CDlgOptionsTraining::OnViewUpdate()
 	UpdateControls();
 }
 
-void CDlgOptionsTraining::OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgOptionsTraining::OnSetdispinfoNames(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	m_filterNames.clear();
 	HTREEITEM hItem = m_ctrlNames.GetRootItem();

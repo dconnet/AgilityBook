@@ -61,8 +61,7 @@ ARBConfigTitle::ARBConfigTitle()
 {
 }
 
-ARBConfigTitle::ARBConfigTitle(
-		ARBConfigTitle const& rhs)
+ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Multiple(rhs.m_Multiple)
@@ -74,8 +73,7 @@ ARBConfigTitle::~ARBConfigTitle()
 {
 }
 
-ARBConfigTitle& ARBConfigTitle::operator=(
-		ARBConfigTitle const& rhs)
+ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -87,8 +85,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(
 	return *this;
 }
 
-bool ARBConfigTitle::operator==(
-		ARBConfigTitle const& rhs) const
+bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
@@ -96,8 +93,7 @@ bool ARBConfigTitle::operator==(
 		&& m_Desc == rhs.m_Desc;
 }
 
-bool ARBConfigTitle::operator!=(
-		ARBConfigTitle const& rhs) const
+bool ARBConfigTitle::operator!=(ARBConfigTitle const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -110,8 +106,7 @@ void ARBConfigTitle::clear()
 	m_Desc.erase();
 }
 
-size_t ARBConfigTitle::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -136,8 +131,7 @@ bool ARBConfigTitle::Load(
 	return true;
 }
 
-bool ARBConfigTitle::Save(
-		Element& ioTree) const
+bool ARBConfigTitle::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_TITLES);
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
@@ -266,8 +260,7 @@ bool ARBConfigTitleList::AddTitle(
 	return true;
 }
 
-bool ARBConfigTitleList::AddTitle(
-		ARBConfigTitle* inTitle)
+bool ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
 {
 	if (!inTitle || 0 == inTitle->GetName().length())
 		return false;
@@ -278,8 +271,7 @@ bool ARBConfigTitleList::AddTitle(
 	return true;
 }
 
-bool ARBConfigTitleList::DeleteTitle(
-		std::string const& inName)
+bool ARBConfigTitleList::DeleteTitle(std::string const& inName)
 {
 	std::string name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)

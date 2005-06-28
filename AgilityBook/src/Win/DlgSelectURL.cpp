@@ -47,7 +47,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgSelectURL dialog
 
-CDlgSelectURL::CDlgSelectURL(LPCTSTR name, CWnd* pParent)
+CDlgSelectURL::CDlgSelectURL(
+		LPCTSTR name,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgSelectURL::IDD, pParent)
 	, m_Name(name)
 {

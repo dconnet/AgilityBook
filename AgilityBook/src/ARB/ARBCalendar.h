@@ -102,9 +102,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -138,8 +138,8 @@ public:
 	 * @retval false There is no overlap
 	 */
 	bool IsRangeOverlapped(
-		ARBDate const& inDate1,
-		ARBDate const& inDate2) const;
+			ARBDate const& inDate1,
+			ARBDate const& inDate2) const;
 
 	/*
 	 * Getters/setters.
@@ -336,8 +336,8 @@ public:
 	 * @note Equality is tested by value, not pointer.
 	 */
 	bool FindCalendar(
-		ARBCalendar const* inCal,
-		ARBCalendar** outCal = NULL) const;
+			ARBCalendar const* inCal,
+			ARBCalendar** outCal = NULL) const;
 
 	/**
 	 * Add a calendar entry to the list.

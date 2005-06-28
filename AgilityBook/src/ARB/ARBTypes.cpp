@@ -86,8 +86,7 @@ std::string ARB_Q::GetValidTypes()
 	return types;
 }
 
-void ARB_Q::GetValidTypes(
-		std::vector<std::string>& outTypes)
+void ARB_Q::GetValidTypes(std::vector<std::string>& outTypes)
 {
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
@@ -101,8 +100,7 @@ int ARB_Q::GetNumValidTypes()
 	return sc_nQs;
 }
 
-ARB_Q ARB_Q::GetValidType(
-		int inIndex)
+ARB_Q ARB_Q::GetValidType(int inIndex)
 {
 	ARB_Q q;
 	if (0 <= inIndex && inIndex < sc_nQs)

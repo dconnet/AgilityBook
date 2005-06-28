@@ -60,7 +60,9 @@ public:
 		, m_pSubLevel(NULL)
 	{
 	}
-	CDlgPointsDataLevel(ARBConfigLevel const* pLevel, ARBConfigSubLevel const* pSubLevel)
+	CDlgPointsDataLevel(
+			ARBConfigLevel const* pLevel,
+			ARBConfigSubLevel const* pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
@@ -73,9 +75,11 @@ public:
 // CDlgExistingPoints dialog
 
 // If pExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
-CDlgExistingPoints::CDlgExistingPoints(CAgilityBookDoc* pDoc,
-	ARBDogExistingPointsList& points,
-	ARBDogExistingPoints* pExistingPoints, CWnd* pParent)
+CDlgExistingPoints::CDlgExistingPoints(
+		CAgilityBookDoc* pDoc,
+		ARBDogExistingPointsList& points,
+		ARBDogExistingPoints* pExistingPoints,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgExistingPoints::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_PointsList(points)

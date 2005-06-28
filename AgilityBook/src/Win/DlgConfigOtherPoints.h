@@ -42,7 +42,10 @@ class ARBConfigOtherPoints;
 class CDlgConfigOtherPoints : public CDlgBaseDialog
 {
 public:
-	CDlgConfigOtherPoints(ARBConfig& config, ARBConfigOtherPoints* pOther, CWnd* pParent = NULL);
+	CDlgConfigOtherPoints(
+			ARBConfig& config,
+			ARBConfigOtherPoints* pOther,
+			CWnd* pParent = NULL);
 	virtual ~CDlgConfigOtherPoints();
 
 private:

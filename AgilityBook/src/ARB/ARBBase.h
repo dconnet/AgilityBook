@@ -106,7 +106,9 @@ public:
 	 * @param inFilterType The filtered type to set.
 	 * @param bFiltered Filtered state of the object.
 	 */
-	virtual void SetFiltered(FilterType inFilterType, bool bFiltered);
+	virtual void SetFiltered(
+			FilterType inFilterType,
+			bool bFiltered);
 
 	/**
 	 * Get the filtered state of this object.
@@ -136,7 +138,9 @@ inline bool ARBBase::IsFiltered(FilterType inFilterType) const
 	return m_bFiltered[inFilterType];
 }
 
-inline void ARBBase::SetFiltered(FilterType inFilterType, bool bFiltered)
+inline void ARBBase::SetFiltered(
+		FilterType inFilterType,
+		bool bFiltered)
 {
 	m_bFiltered[inFilterType] = bFiltered;
 }

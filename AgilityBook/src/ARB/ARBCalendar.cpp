@@ -72,8 +72,7 @@ ARBCalendar::ARBCalendar()
 {
 }
 
-ARBCalendar::ARBCalendar(
-		ARBCalendar const& rhs)
+ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 	: m_DateStart(rhs.m_DateStart)
 	, m_DateEnd(rhs.m_DateEnd)
 	, m_DateOpening(rhs.m_DateOpening)
@@ -91,8 +90,7 @@ ARBCalendar::~ARBCalendar()
 {
 }
 
-ARBCalendar& ARBCalendar::operator=(
-		ARBCalendar const& rhs)
+ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 {
 	if (this != &rhs)
 	{
@@ -110,8 +108,7 @@ ARBCalendar& ARBCalendar::operator=(
 	return *this;
 }
 
-bool ARBCalendar::operator==(
-		ARBCalendar const& rhs) const
+bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 {
 	return m_DateStart == rhs.m_DateStart
 		&& m_DateEnd == rhs.m_DateEnd
@@ -125,8 +122,7 @@ bool ARBCalendar::operator==(
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBCalendar::operator!=(
-		ARBCalendar const& rhs) const
+bool ARBCalendar::operator!=(ARBCalendar const& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -141,8 +137,7 @@ std::string ARBCalendar::GetGenericName() const
 	return name;
 }
 
-size_t ARBCalendar::GetSearchStrings(
-		std::set<std::string>& ioStrings) const
+size_t ARBCalendar::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -191,14 +186,12 @@ size_t ARBCalendar::GetSearchStrings(
 	return nItems;
 }
 
-bool ARBCalendar::IsBefore(
-		ARBDate const& inDate) const
+bool ARBCalendar::IsBefore(ARBDate const& inDate) const
 {
 	return (m_DateStart < inDate && m_DateEnd < inDate);
 }
 
-bool ARBCalendar::InRange(
-		ARBDate const& inDate) const
+bool ARBCalendar::InRange(ARBDate const& inDate) const
 {
 	return inDate.isBetween(m_DateStart, m_DateEnd);
 }
@@ -315,8 +308,7 @@ bool ARBCalendar::Load(
 	return true;
 }
 
-bool ARBCalendar::Save(
-		Element& ioTree) const
+bool ARBCalendar::Save(Element& ioTree) const
 {
 	Element& cal = ioTree.AddElement(TREE_CALENDAR);
 	cal.AddAttrib(ATTRIB_CAL_START, m_DateStart);
@@ -365,16 +357,14 @@ private:
 	bool m_bDescending;
 };
 
-void ARBCalendarList::sort(
-		bool inDescending)
+void ARBCalendarList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortCalendar(inDescending));
 }
 
-size_t ARBCalendarList::GetAllEntered(
-		std::vector<ARBCalendar const*>& outEntered) const
+size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendar const*>& outEntered) const
 {
 	outEntered.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -386,8 +376,7 @@ size_t ARBCalendarList::GetAllEntered(
 	return outEntered.size();
 }
 
-int ARBCalendarList::TrimEntries(
-		ARBDate const& inDate)
+int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 {
 	int trimmed = 0;
 	if (inDate.IsValid())
@@ -431,8 +420,7 @@ bool ARBCalendarList::FindCalendar(
 	return false;
 }
 
-bool ARBCalendarList::AddCalendar(
-		ARBCalendar* inCal)
+bool ARBCalendarList::AddCalendar(ARBCalendar* inCal)
 {
 	bool bAdded = false;
 	if (inCal)
@@ -444,8 +432,7 @@ bool ARBCalendarList::AddCalendar(
 	return bAdded;
 }
 
-bool ARBCalendarList::DeleteCalendar(
-		ARBCalendar const* inCal)
+bool ARBCalendarList::DeleteCalendar(ARBCalendar const* inCal)
 {
 	if (inCal)
 	{

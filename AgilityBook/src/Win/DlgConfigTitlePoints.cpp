@@ -47,7 +47,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitlePoints dialog
 
-CDlgConfigTitlePoints::CDlgConfigTitlePoints(short inPoints, short inFaults, BOOL bLifetime, CWnd* pParent)
+CDlgConfigTitlePoints::CDlgConfigTitlePoints(
+		short inPoints,
+		short inFaults,
+		BOOL bLifetime,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)
 	, m_Points(inPoints)
 	, m_Faults(inFaults)

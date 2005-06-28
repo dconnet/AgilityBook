@@ -43,9 +43,18 @@ public:
 
 	//{{AFX_VIRTUAL(CRichEditCtrl2)
 public:
-	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+	virtual BOOL Create(
+			DWORD dwStyle,
+			const RECT& rect,
+			CWnd* pParentWnd,
+			UINT nID);
 #if _MSC_VER >= 1300
-	virtual BOOL CreateEx(DWORD dwExStyle, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+	virtual BOOL CreateEx(
+			DWORD dwExStyle,
+			DWORD dwStyle,
+			const RECT& rect,
+			CWnd* pParentWnd,
+			UINT nID);
 #endif
 protected:
 	virtual void PreSubclassWindow();

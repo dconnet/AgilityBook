@@ -56,7 +56,9 @@ IMPLEMENT_DYNAMIC(CWizard, CDlgBaseSheet)
 #pragma warning( push )
 // Disable "warning C4355: 'this' : used in base member initializer list"
 #pragma warning( disable : 4355 )
-CWizard::CWizard(CAgilityBookDoc* pDoc, CWnd* pParentWnd)
+CWizard::CWizard(
+		CAgilityBookDoc* pDoc,
+		CWnd* pParentWnd)
 	: CDlgBaseSheet("", pParentWnd, 0)
 	, m_pDoc(pDoc)
 	, m_pageStart(NULL)

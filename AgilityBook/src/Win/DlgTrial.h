@@ -46,7 +46,10 @@ class CAgilityBookDoc;
 class CDlgTrial : public CDlgBaseDialog
 {
 public:
-	CDlgTrial(CAgilityBookDoc* pDoc, ARBDogTrial* pTrial, CWnd* pParent = NULL);
+	CDlgTrial(
+			CAgilityBookDoc* pDoc,
+			ARBDogTrial* pTrial,
+			CWnd* pParent = NULL);
 	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
 
 private:
@@ -74,7 +77,9 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
-	void UpdateNotes(bool bLocation, bool bClub);
+	void UpdateNotes(
+			bool bLocation,
+			bool bClub);
 	void ListClubs();
 
 // Implementation

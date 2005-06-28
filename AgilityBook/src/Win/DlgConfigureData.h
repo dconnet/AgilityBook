@@ -120,7 +120,9 @@ protected:
 class CDlgConfigureDataLevel : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataLevel(ARBConfigDivision* div, ARBConfigLevel* level);
+	CDlgConfigureDataLevel(
+			ARBConfigDivision* div,
+			ARBConfigLevel* level);
 	~CDlgConfigureDataLevel();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Division;}
@@ -135,7 +137,10 @@ protected:
 class CDlgConfigureDataSubLevel : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataSubLevel(ARBConfigDivision* div, ARBConfigLevel* level, ARBConfigSubLevel* subLevel);
+	CDlgConfigureDataSubLevel(
+			ARBConfigDivision* div,
+			ARBConfigLevel* level,
+			ARBConfigSubLevel* subLevel);
 	~CDlgConfigureDataSubLevel();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Division;}
@@ -152,7 +157,9 @@ protected:
 class CDlgConfigureDataTitle : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataTitle(ARBConfigDivision* div, ARBConfigTitle* title);
+	CDlgConfigureDataTitle(
+			ARBConfigDivision* div,
+			ARBConfigTitle* title);
 	~CDlgConfigureDataTitle();
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivision* GetDivision() const	{return m_Division;}

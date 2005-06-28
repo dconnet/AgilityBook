@@ -39,17 +39,17 @@ END_MESSAGE_MAP()
 BOOL CScrollHotStatic::m_bVisited = FALSE;
 #endif
 
-CScrollHotStatic::CScrollHotStatic():
-	m_colorUnvisited(UNVISITED_COLOR),
-	m_colorVisited(VISITED_COLOR),
-	m_colorHighlited(RGB(255,0,0)),
-	m_colorBlack(RGB(0,0,0)),
-	m_bSunken(FALSE),
-	m_bBorder(TRUE),
-	m_nFontHeight(-1),
-	m_nRedrawTimer(-1),
+CScrollHotStatic::CScrollHotStatic()
+	: m_colorUnvisited(UNVISITED_COLOR)
+	, m_colorVisited(VISITED_COLOR)
+	, m_colorHighlited(RGB(255,0,0))
+	, m_colorBlack(RGB(0,0,0))
+	, m_bSunken(FALSE)
+	, m_bBorder(TRUE)
+	, m_nFontHeight(-1)
+	, m_nRedrawTimer(-1)
 #ifndef GLOBAL_VISITED_INFORMATION
-	m_bVisited(FALSE)
+	, m_bVisited(FALSE)
 #endif
 {
 	m_hHandCursor = AfxGetApp()->LoadCursor(MAKEINTRESOURCE(IDC_CROSS /*IDC_HAND*/));
@@ -61,12 +61,15 @@ CScrollHotStatic::~CScrollHotStatic()
 {
 }
 
-void CScrollHotStatic::AddText(LPCTSTR lpStrText, LPCTSTR lpStrLink, DWORD dwStartXPos)
+void CScrollHotStatic::AddText(
+		LPCTSTR lpStrText,
+		LPCTSTR lpStrLink,
+		DWORD dwStartXPos)
 {
 	STATICITEM	item;
 
-	if( lpStrLink != NULL )
-		strcpy(item.m_strLink,lpStrLink);
+	if (lpStrLink != NULL)
+		strcpy(item.m_strLink, lpStrLink);
 	else
 		item.m_strLink[0] = 0;
 
@@ -76,17 +79,18 @@ void CScrollHotStatic::AddText(LPCTSTR lpStrText, LPCTSTR lpStrLink, DWORD dwSta
 	m_ItemVector.push_back(item);
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Handle mouse click: open URL/file.
 //
 void CScrollHotStatic::OnClicked()
 {
 	int j = m_ItemVector.size();
-	for(int i = 0; i < j && !(m_ItemVector[i].m_dwFlag & ITEM_CHOOSED); i ++);
+	for (int i = 0; i < j && !(m_ItemVector[i].m_dwFlag & ITEM_CHOOSED); ++i)
+		;
 
-	if( i == j ) return;
-	
+	if (i == j)
+		return;
+
 	HINSTANCE h = ShellExecute(NULL, "open", m_ItemVector[i].m_strLink, NULL, NULL, SW_SHOWNORMAL);
 	if (static_cast<UINT>(h) > 32)
 	{
@@ -101,9 +105,11 @@ void CScrollHotStatic::OnClicked()
 	}
 }
 
-void CScrollHotStatic::OnMouseMove(UINT nFlags, CPoint point)
+void CScrollHotStatic::OnMouseMove(
+		UINT nFlags,
+		CPoint point)
 {
-	if(g_bMoveControl)
+	if (g_bMoveControl)
 	{
 		KillTimer(m_nRedrawTimer);
 
@@ -117,19 +123,21 @@ void CScrollHotStatic::OnMouseMove(UINT nFlags, CPoint point)
 	else
 	{
 		int nHeight = point.y + g_nMemHeight - g_nMemOffset;
-
 		int bSelected = FALSE;
-		for( int i = 0; i < m_ItemVector.size(); i++ )
+		for (int i = 0; i < m_ItemVector.size(); ++i)
 		{
 			m_ItemVector[i].m_dwFlag &= ~ITEM_CHOOSED;
-			if( m_ItemVector[i].m_strLink[0] != 0 && m_nFontHeight != -1 && nHeight < m_nFontHeight * (i+1) && nHeight >= m_nFontHeight * i )
+			if (m_ItemVector[i].m_strLink[0] != 0
+			&& m_nFontHeight != -1
+			&& nHeight < m_nFontHeight * (i+1)
+			&& nHeight >= m_nFontHeight * i)
 			{
 				m_ItemVector[i].m_dwFlag |= ITEM_CHOOSED;
 				bSelected = TRUE;
 			}
 		}
 
-		if( bSelected )
+		if (bSelected)
 			::SetCursor(m_hHandCursor);
 		else
 			::SetCursor(m_hArrowCursor);
@@ -138,12 +146,14 @@ void CScrollHotStatic::OnMouseMove(UINT nFlags, CPoint point)
 	}
 }
 
-LPARAM  CScrollHotStatic::OnMouseLeave(WPARAM wp, LPARAM lp)
+LPARAM CScrollHotStatic::OnMouseLeave(
+		WPARAM wp,
+		LPARAM lp)
 {
 	g_bMoveControl = TRUE;
-	SetTimer(m_nRedrawTimer,30,NULL);
+	SetTimer(m_nRedrawTimer, 30, NULL);
 	::SetCursor(m_hArrowCursor);
-	for( int i = 0; i < m_ItemVector.size(); i++ )
+	for (int i = 0; i < m_ItemVector.size(); ++i)
 		m_ItemVector[i].m_dwFlag &= ~ITEM_CHOOSED;
 
 	return 0;
@@ -151,9 +161,9 @@ LPARAM  CScrollHotStatic::OnMouseLeave(WPARAM wp, LPARAM lp)
 
 void CScrollHotStatic::OnPaint()
 {
-	if( g_bFirstTime )
+	if (g_bFirstTime)
 	{
-		::SetClassLong(m_hWnd,GCL_HCURSOR,NULL);
+		::SetClassLong(m_hWnd, GCL_HCURSOR, NULL);
 		g_bFirstTime = FALSE;
 	}
 
@@ -161,13 +171,13 @@ void CScrollHotStatic::OnPaint()
 	CScrollMemDC dc(&PaintDC);
 	BOOL bPic = FALSE;
 
-	if( m_nRedrawTimer == -1 )
-		m_nRedrawTimer = SetTimer(1000,30,NULL);
+	if (m_nRedrawTimer == -1)
+		m_nRedrawTimer = SetTimer(1000, 30, NULL);
 
 	if (!reinterpret_cast<HFONT>(m_font))
 	{
 		CFont *pFont = GetFont();
-		if(pFont)
+		if (pFont)
 		{
 			LOGFONT lf;
 			pFont->GetObject(sizeof(lf), &lf);
@@ -175,14 +185,14 @@ void CScrollHotStatic::OnPaint()
 			m_font.CreateFontIndirect(&lf);
 		}
 		CSize size;
-		GetTextExtentPoint32(dc.GetSafeHdc(),"A",1,&size);
+		GetTextExtentPoint32(dc.GetSafeHdc(), "A", 1, &size);
 		m_nFontHeight = size.cy;
 	}
 
 	if (!reinterpret_cast<HFONT>(m_NoUnderLineFont))
 	{
 		CFont *pFont = GetFont();
-		if(pFont)
+		if (pFont)
 		{
 			LOGFONT lf;
 			pFont->GetObject(sizeof(lf), &lf);
@@ -190,15 +200,17 @@ void CScrollHotStatic::OnPaint()
 			m_NoUnderLineFont.CreateFontIndirect(&lf);
 		}
 	}
-	
+
 	CRect rect;
 	GetClientRect(&rect);
-	for( int i = 0 ; i < m_ItemVector.size(); i ++ )
+	for (int i = 0 ; i < m_ItemVector.size(); ++i)
 	{
-		if( m_ItemVector[i].m_strLink[0] != 0 )
+		if (m_ItemVector[i].m_strLink[0] != 0)
 		{
 			dc.SelectObject(&m_font);
-			dc.SetTextColor((m_ItemVector[i].m_dwFlag & ITEM_CHOOSED)?m_colorHighlited:((m_ItemVector[i].m_dwFlag & ITEM_VISITED)?m_colorVisited:m_colorUnvisited));
+			dc.SetTextColor((m_ItemVector[i].m_dwFlag & ITEM_CHOOSED)
+				? m_colorHighlited : ((m_ItemVector[i].m_dwFlag & ITEM_VISITED)
+					? m_colorVisited : m_colorUnvisited));
 		}
 		else
 		{
@@ -208,40 +220,40 @@ void CScrollHotStatic::OnPaint()
 
 		dc.SetBkMode(TRANSPARENT);
 		rect.left = m_ItemVector[i].m_dwStartXPos;
-		dc.DrawText(m_ItemVector[i].m_strText, rect, DT_LEFT | DT_WORDBREAK );
+		dc.DrawText(m_ItemVector[i].m_strText, rect, DT_LEFT | DT_WORDBREAK);
 		rect.top += m_nFontHeight;
 	}
 }
 
-void CScrollHotStatic::OnTimer(UINT nIDEvent) 
+void CScrollHotStatic::OnTimer(UINT nIDEvent)
 {
-	if( nIDEvent == m_nRedrawTimer )
+	if (nIDEvent == m_nRedrawTimer)
 	{
 		Invalidate(FALSE);
 		UpdateWindow();
 	}
-
 	CStatic::OnTimer(nIDEvent);
 }
 
-void CScrollHotStatic::OnDestroy() 
+void CScrollHotStatic::OnDestroy()
 {
-	KillTimer(m_nRedrawTimer);	
-
-	if( m_hHandCursor )
+	KillTimer(m_nRedrawTimer);
+	if (m_hHandCursor)
 		::DestroyCursor(m_hHandCursor);
-
-	if( m_hArrowCursor )
+	if (m_hArrowCursor)
 		::DestroyCursor(m_hArrowCursor);
 	CStatic::OnDestroy();
 }
 
-BOOL CScrollHotStatic::OnEraseBkgnd(CDC* pDC) 
+BOOL CScrollHotStatic::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
 
-BOOL CScrollHotStatic::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CScrollHotStatic::OnSetCursor(
+		CWnd* /*pWnd*/,
+		UINT /*nHitTest*/,
+		UINT /*message*/)
 {
-	return TRUE;	
+	return TRUE;
 }

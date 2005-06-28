@@ -44,7 +44,10 @@ class CAgilityBookDoc;
 class CDlgCalendar : public CDlgBaseDialog
 {
 public:
-	CDlgCalendar(ARBCalendar* pCal, CAgilityBookDoc* pDoc, CWnd* pParent = NULL);
+	CDlgCalendar(
+			ARBCalendar* pCal,
+			CAgilityBookDoc* pDoc,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

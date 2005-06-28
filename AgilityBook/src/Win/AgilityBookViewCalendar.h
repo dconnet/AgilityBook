@@ -55,7 +55,9 @@ protected: // create from serialization only
 
 public:
 	CAgilityBookDoc* GetDocument() const;
-	bool SetCurrentDate(ARBDate const& date, bool bEnsureVisible);
+	bool SetCurrentDate(
+			ARBDate const& date,
+			bool bEnsureVisible);
 
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
@@ -66,12 +68,16 @@ public:
 
 private:
 	size_t GetEntriesOn(
-		ARBDate const& date,
-		std::vector<ARBCalendar*>& entries,
-		bool bGetHidden) const;
+			ARBDate const& date,
+			std::vector<ARBCalendar*>& entries,
+			bool bGetHidden) const;
 	void LoadData();
-	CRect GetDateRect(ARBDate const& date, bool bLogical) const;
-	void GetDateFromPoint(CPoint pt, ARBDate& date);
+	CRect GetDateRect(
+			ARBDate const& date,
+			bool bLogical) const;
+	void GetDateFromPoint(
+			CPoint pt,
+			ARBDate& date);
 	std::vector<ARBCalendar*> m_Calendar;
 	std::vector<ARBCalendar*> m_CalendarHidden;
 	ARBDate m_First;	///< First date, adjusted to Mon of that week.
@@ -85,13 +91,25 @@ private:
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
-	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnActivateView(
+			BOOL bActivate,
+			CView* pActivateView,
+			CView* pDeactiveView);
+	virtual void OnUpdate(
+			CView* pSender,
+			LPARAM lHint,
+			CObject* pHint);
 	virtual void OnDraw(CDC* pDC);
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnPrint(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(
+			CDC* pDC,
+			CPrintInfo* pInfo);
+	virtual void OnEndPrinting(
+			CDC* pDC,
+			CPrintInfo* pInfo);
+	virtual void OnPrint(
+			CDC* pDC,
+			CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
 
 // Implementation

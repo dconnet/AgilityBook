@@ -79,9 +79,9 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
-		ARBVersion const& inVersion,
-		ARBErrorCallback& ioCallback);
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 
 	/**
 	 * Save a document.
@@ -132,8 +132,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindFault(
-		std::string const& inName,
-		ARBConfigFault** outFault = NULL) const;
+			std::string const& inName,
+			ARBConfigFault** outFault = NULL) const;
 
 	/**
 	 * Add a fault.
@@ -142,8 +142,8 @@ public:
 	 * @return Whether the fault was added.
 	 */
 	bool AddFault(
-		std::string const& inName,
-		ARBConfigFault** outFault = NULL);
+			std::string const& inName,
+			ARBConfigFault** outFault = NULL);
 
 	/**
 	 * Delete the fault.

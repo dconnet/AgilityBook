@@ -195,7 +195,10 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-HBRUSH CDlgRunCRCD::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+HBRUSH CDlgRunCRCD::OnCtlColor(
+		CDC* pDC,
+		CWnd* pWnd,
+		UINT nCtlColor)
 {
 	HBRUSH hbr = NULL;
 	if (pWnd->GetDlgCtrlID() == IDC_RUNCRCD_CRCD)

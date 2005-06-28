@@ -40,8 +40,14 @@
 class CDlgName : public CDlgBaseDialog
 {
 public:
-	CDlgName(LPCTSTR name, UINT caption = 0, CWnd* pParent = NULL);
-	CDlgName(LPCTSTR name, LPCTSTR pCaption = NULL, CWnd* pParent = NULL);
+	CDlgName(
+			LPCTSTR name,
+			UINT caption = 0,
+			CWnd* pParent = NULL);
+	CDlgName(
+			LPCTSTR name,
+			LPCTSTR pCaption = NULL,
+			CWnd* pParent = NULL);
 	virtual ~CDlgName();
 	char const* GetName() const	{return (LPCSTR)m_Name;}
 

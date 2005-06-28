@@ -75,9 +75,9 @@ private:
 		int points;
 		bool bFiltered;
 		LifeTimePoint(
-			const std::string inEvent,
-			int inPoints,
-			bool inFiltered)
+				const std::string inEvent,
+				int inPoints,
+				bool inFiltered)
 			: event(inEvent)
 			, points(inPoints)
 			, bFiltered(inFiltered)
@@ -95,35 +95,43 @@ private:
 
 	PointsDataBase* GetItemData(int index) const;
 	int DoEvents(
-		ARBDog const* inDog,
-		std::vector<CVenueFilter> const& venues,
-		int index,
-		std::list<ARBDogTrial const*> const& trials,
-		ARBConfigVenue const* inVenue,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		LifeTimePointList& inLifetime);
+			ARBDog const* inDog,
+			std::vector<CVenueFilter> const& venues,
+			int index,
+			std::list<ARBDogTrial const*> const& trials,
+			ARBConfigVenue const* inVenue,
+			ARBConfigDivision const* inDiv,
+			ARBConfigLevel const* inLevel,
+			LifeTimePointList& inLifetime);
 	size_t FindMatchingRuns(
-		std::list<RunInfo> const& runs,
-		std::string const& div,
-		std::string const& level,
-		std::string const& event,
-		std::list<RunInfo>& matching);
+			std::list<RunInfo> const& runs,
+			std::string const& div,
+			std::string const& level,
+			std::string const& event,
+			std::list<RunInfo>& matching);
 	int TallyPoints(
-		std::list<RunInfo> const& runs,
-		ARBConfigScoring const* pScoringMethod,
-		int& nCleanQ,
-		int& nNotCleanQ);
+			std::list<RunInfo> const& runs,
+			ARBConfigScoring const* pScoringMethod,
+			int& nCleanQ,
+			int& nNotCleanQ);
 	void LoadData();
 
 protected:
-	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
+	virtual void GetPrintLine(
+			int nItem,
+			CStringArray& line); // CListView2 override
 	//{{AFX_VIRTUAL(CAgilityBookViewPoints)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
-	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnActivateView(
+			BOOL bActivate,
+			CView* pActivateView,
+			CView* pDeactiveView);
+	virtual void OnUpdate(
+			CView* pSender,
+			LPARAM lHint,
+			CObject* pHint);
 	//}}AFX_VIRTUAL
 
 // Implementation

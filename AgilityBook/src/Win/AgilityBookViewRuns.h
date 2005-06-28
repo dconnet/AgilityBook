@@ -66,7 +66,7 @@ class CAgilityBookViewRuns : public CListView2, public ICommonView
 {
 	friend class CAgilityBookViewRunsData;
 	friend class CFindRuns;
-	friend int CALLBACK CompareRuns(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3);
+	friend int CALLBACK CompareRuns(LPARAM, LPARAM, LPARAM);
 protected: // create from serialization only
 	CAgilityBookViewRuns();
 	DECLARE_DYNCREATE(CAgilityBookViewRuns)
@@ -87,14 +87,22 @@ private:
 	void LoadData();
 
 protected:
-	virtual void GetPrintLine(int nItem, CStringArray& line); // CListView2 override
+	virtual void GetPrintLine(
+			int nItem,
+			CStringArray& line); // CListView2 override
 	//{{AFX_VIRTUAL(CAgilityBookViewRuns)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
 	virtual void OnInitialUpdate();
-	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnActivateView(
+			BOOL bActivate,
+			CView* pActivateView,
+			CView* pDeactiveView);
+	virtual void OnUpdate(
+			CView* pSender,
+			LPARAM lHint,
+			CObject* pHint);
 	//}}AFX_VIRTUAL
 
 // Implementation

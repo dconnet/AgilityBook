@@ -43,7 +43,11 @@ class ARBDogClubList;
 class CDlgClub : public CDlgBaseDialog
 {
 public:
-	CDlgClub(CAgilityBookDoc* pDoc, ARBDogClubList& clubs, ARBDogClub* pClub, CWnd* pParent = NULL);
+	CDlgClub(
+			CAgilityBookDoc* pDoc,
+			ARBDogClubList& clubs,
+			ARBDogClub* pClub,
+			CWnd* pParent = NULL);
 
 private:
 // Dialog Data

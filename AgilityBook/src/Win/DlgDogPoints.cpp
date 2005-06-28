@@ -80,7 +80,10 @@ typedef struct
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CALLBACK ComparePoints(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+int CALLBACK ComparePoints(
+		LPARAM lParam1,
+		LPARAM lParam2,
+		LPARAM lParam3)
 {
 	ARBDogExistingPoints* pExistingPoints1 = reinterpret_cast<ARBDogExistingPoints*>(lParam1);
 	ARBDogExistingPoints* pExistingPoints2 = reinterpret_cast<ARBDogExistingPoints*>(lParam2);
@@ -161,7 +164,9 @@ int CALLBACK ComparePoints(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDogPoints dialog
 
-CDlgDogPoints::CDlgDogPoints(CAgilityBookDoc* pDoc, ARBDogExistingPointsList const& points)
+CDlgDogPoints::CDlgDogPoints(
+		CAgilityBookDoc* pDoc,
+		ARBDogExistingPointsList const& points)
 	: CDlgBasePropertyPage(CDlgDogPoints::IDD)
 	, m_pDoc(pDoc)
 	, m_sortPoints("ExistingPoints")
@@ -298,7 +303,9 @@ BOOL CDlgDogPoints::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgDogPoints::OnColumnclickExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDogPoints::OnColumnclickExistingPoints(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
@@ -311,13 +318,17 @@ void CDlgDogPoints::OnColumnclickExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgDogPoints::OnDblclkExistingPoints(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDlgDogPoints::OnDblclkExistingPoints(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
 {
 	OnEdit();
 	*pResult = 0;
 }
 
-void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDogPoints::OnGetdispinfoExistingPoints(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -364,7 +375,9 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CDlgDogPoints::OnItemchangedExistingPoints(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgDogPoints::OnItemchangedExistingPoints(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();

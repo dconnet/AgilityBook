@@ -75,7 +75,9 @@ private:
 	bool Find(std::string const& venue,
 		std::string const& div,
 		std::string const& level) const;
-	void FillFilter(HTREEITEM hItem, CString path);
+	void FillFilter(
+			HTREEITEM hItem,
+			CString path);
 	void UpdateControls();
 
 // Overrides

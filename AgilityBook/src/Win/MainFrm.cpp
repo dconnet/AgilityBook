@@ -166,7 +166,9 @@ void CMainFrame::Dump(CDumpContext& dc) const
 }
 #endif //_DEBUG
 
-void CMainFrame::SetStatusText(CString const& msg, bool bFiltered)
+void CMainFrame::SetStatusText(
+		CString const& msg,
+		bool bFiltered)
 {
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
 	UINT nId, nStyle;

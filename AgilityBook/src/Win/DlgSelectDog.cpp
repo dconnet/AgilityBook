@@ -53,7 +53,10 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgSelectDog dialog
 
-CDlgSelectDog::CDlgSelectDog(CAgilityBookDoc* pDoc, std::vector<ARBDog*>& dogs, CWnd* pParent /*=NULL*/)
+CDlgSelectDog::CDlgSelectDog(
+		CAgilityBookDoc* pDoc,
+		std::vector<ARBDog*>& dogs,
+		CWnd* pParent)
 	: CDlgBaseDialog(CDlgSelectDog::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Dogs(dogs)

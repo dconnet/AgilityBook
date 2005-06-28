@@ -50,7 +50,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunComments dialog
 
-CDlgRunComments::CDlgRunComments(CAgilityBookDoc* pDoc, ARBDogRun* pRun)
+CDlgRunComments::CDlgRunComments(
+		CAgilityBookDoc* pDoc,
+		ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunComments::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
