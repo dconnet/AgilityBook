@@ -395,16 +395,6 @@ void CAgilityBookOptions::SetFilterCalendarView(CCalendarViewFilter inFilter)
 	AfxGetApp()->WriteProfileInt("Calendar", "Filter", inFilter.m_Filter);
 }
 
-COLORREF CAgilityBookOptions::CalendarNormalColor()
-{
-	return AfxGetApp()->GetProfileInt("Calendar", "NormalColor", ::GetSysColor(COLOR_WINDOWTEXT));
-}
-
-void CAgilityBookOptions::SetCalendarNormalColor(COLORREF inColor)
-{
-	AfxGetApp()->WriteProfileInt("Calendar", "NormalColor", inColor);
-}
-
 COLORREF CAgilityBookOptions::CalendarOpeningColor()
 {
 	return AfxGetApp()->GetProfileInt("Calendar", "OpenColor", RGB(0,128,0));
@@ -423,6 +413,46 @@ COLORREF CAgilityBookOptions::CalendarClosingColor()
 void CAgilityBookOptions::SetCalendarClosingColor(COLORREF inColor)
 {
 	AfxGetApp()->WriteProfileInt("Calendar", "CloseColor", inColor);
+}
+
+int CAgilityBookOptions::CalendarOpeningNear()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "OpenNear", 5);
+}
+
+void CAgilityBookOptions::SetCalendarOpeningNear(int inDays)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "OpenNear", inDays);
+}
+
+int CAgilityBookOptions::CalendarClosingNear()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "CloseNear", 10);
+}
+
+void CAgilityBookOptions::SetCalendarClosingNear(int inDays)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "CloseNear", inDays);
+}
+
+COLORREF CAgilityBookOptions::CalendarOpeningNearColor()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "OpenNearColor", RGB(0,0,255));
+}
+
+void CAgilityBookOptions::SetCalendarOpeningNearColor(COLORREF inColor)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "OpenNearColor", inColor);
+}
+
+COLORREF CAgilityBookOptions::CalendarClosingNearColor()
+{
+	return AfxGetApp()->GetProfileInt("Calendar", "CloseNearColor", RGB(255,0,0));
+}
+
+void CAgilityBookOptions::SetCalendarClosingNearColor(COLORREF inColor)
+{
+	AfxGetApp()->WriteProfileInt("Calendar", "CloseNearColor", inColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////

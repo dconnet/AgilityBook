@@ -76,6 +76,14 @@ CDlgOptions::CDlgOptions(
 	m_pageCalendar.m_sizeX = CAgilityBookOptions::GetCalendarEntrySize().cx;
 	m_pageCalendar.m_sizeY = CAgilityBookOptions::GetCalendarEntrySize().cy;
 	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+	m_pageCalendar.m_bOpeningNear = CAgilityBookOptions::CalendarOpeningNear() >= 0;
+	m_pageCalendar.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
+	if (0 > m_pageCalendar.m_nOpeningNear)
+		m_pageCalendar.m_nOpeningNear = 0;
+	m_pageCalendar.m_bClosingNear = CAgilityBookOptions::CalendarClosingNear() >= 0;
+	m_pageCalendar.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
+	if (0 > m_pageCalendar.m_nClosingNear)
+		m_pageCalendar.m_nClosingNear = 0;
 	m_pageCalendar.m_bNormal = filter.ViewNormal();
 	m_pageCalendar.m_bOpening = filter.ViewOpening();
 	m_pageCalendar.m_bClosing = filter.ViewClosing();
@@ -148,6 +156,12 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCalendar.m_Days);
 		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCalendar.m_bHideOverlapping ? true : false);
 		CAgilityBookOptions::SetCalendarEntrySize(CSize(m_pageCalendar.m_sizeX, m_pageCalendar.m_sizeY));
+		if (!m_pageCalendar.m_bOpeningNear)
+			m_pageCalendar.m_nOpeningNear = -1;
+		CAgilityBookOptions::SetCalendarOpeningNear(m_pageCalendar.m_nOpeningNear);
+		if (!m_pageCalendar.m_bClosingNear)
+			m_pageCalendar.m_nClosingNear = -1;
+		CAgilityBookOptions::SetCalendarClosingNear(m_pageCalendar.m_nClosingNear);
 		CCalendarViewFilter filter;
 		if (m_pageCalendar.m_bNormal)
 			filter.AddNormal();

@@ -43,7 +43,6 @@
 #include "AgilityBookDoc.h"
 #include "ARBDogTrial.h"
 #include "DlgClub.h"
-#include ".\dlgtrial.h"
 
 using namespace std;
 

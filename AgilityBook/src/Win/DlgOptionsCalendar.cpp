@@ -63,6 +63,10 @@ CDlgOptionsCalendar::CDlgOptionsCalendar()
 	m_bHideOverlapping = FALSE;
 	m_sizeX = 0;
 	m_sizeY = 0;
+	m_bOpeningNear = TRUE;
+	m_nOpeningNear = -1;
+	m_bClosingNear = TRUE;
+	m_nClosingNear = -1;
 	m_bNormal = TRUE;
 	m_bOpening = FALSE;
 	m_bClosing = FALSE;
@@ -86,23 +90,59 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_sizeX, 10, 1000);
 	DDX_Text(pDX, IDC_OPTIONS_CAL_SIZE_Y, m_sizeY);
 	DDV_MinMaxInt(pDX, m_sizeY, 10, 1000);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_WARN_OPENNEAR, m_bOpeningNear);
+	DDX_Text(pDX, IDC_OPTIONS_CAL_OPENNEAR, m_nOpeningNear);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_OPENNEAR, m_ctrlOpeningNear);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPENNEAR, m_ctrlOpeningNearColor);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPENNEAR_SET, m_ctrlOpeningNearSet);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_WARN_CLOSENEAR, m_bClosingNear);
+	DDX_Text(pDX, IDC_OPTIONS_CAL_CLOSENEAR, m_nClosingNear);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_CLOSENEAR, m_ctrlClosingNear);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSENEAR, m_ctrlClosingNearColor);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET, m_ctrlClosingNearSet);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_NORMAL, m_bNormal);
-	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_NORMAL, m_Normal);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_OPENING, m_bOpening);
-	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPEN, m_Opening);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPEN, m_ctrlOpeningColor);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_CLOSING, m_bClosing);
-	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSE, m_Closing);
+	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSE, m_ctrlClosingColor);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
 	ON_WM_DRAWITEM()
-	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_NORMAL_SET, OnOptionsCalColorNormal)
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_WARN_OPENNEAR, OnOptionsCalOpeningNear)
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_WARN_CLOSENEAR, OnOptionsCalClosingNear)
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_OPENNEAR_SET, OnOptionsCalColorOpeningNear)
+	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET, OnOptionsCalColorClosingNear)
 	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_OPEN_SET, OnOptionsCalColorOpen)
 	ON_BN_CLICKED(IDC_OPTIONS_CAL_COLOR_CLOSE_SET, OnOptionsCalColorClose)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
+void CDlgOptionsCalendar::EnableControls()
+{
+	if (m_bOpeningNear)
+	{
+		m_ctrlOpeningNear.EnableWindow(TRUE);
+		m_ctrlOpeningNearSet.EnableWindow(TRUE);
+	}
+	else
+	{
+		m_ctrlOpeningNear.EnableWindow(FALSE);
+		m_ctrlOpeningNearSet.EnableWindow(FALSE);
+	}
+	if (m_bClosingNear)
+	{
+		m_ctrlClosingNear.EnableWindow(TRUE);
+		m_ctrlClosingNearSet.EnableWindow(TRUE);
+	}
+	else
+	{
+		m_ctrlClosingNear.EnableWindow(FALSE);
+		m_ctrlClosingNearSet.EnableWindow(FALSE);
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsCalendar message handlers
@@ -110,6 +150,7 @@ END_MESSAGE_MAP()
 BOOL CDlgOptionsCalendar::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
+	EnableControls();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -122,16 +163,20 @@ void CDlgOptionsCalendar::OnDrawItem(
 	COLORREF color = 0;
 	switch (nIDCtl)
 	{
-	case IDC_OPTIONS_CAL_COLOR_NORMAL:
-		pCtrl = &m_Normal;
-		color = CAgilityBookOptions::CalendarNormalColor();
+	case IDC_OPTIONS_CAL_COLOR_OPENNEAR:
+		pCtrl = &m_ctrlOpeningNearColor;
+		color = CAgilityBookOptions::CalendarOpeningNearColor();
+		break;
+	case IDC_OPTIONS_CAL_COLOR_CLOSENEAR:
+		pCtrl = &m_ctrlClosingNearColor;
+		color = CAgilityBookOptions::CalendarClosingNearColor();
 		break;
 	case IDC_OPTIONS_CAL_COLOR_OPEN:
-		pCtrl = &m_Opening;
+		pCtrl = &m_ctrlOpeningColor;
 		color = CAgilityBookOptions::CalendarOpeningColor();
 		break;
 	case IDC_OPTIONS_CAL_COLOR_CLOSE:
-		pCtrl = &m_Closing;
+		pCtrl = &m_ctrlClosingColor;
 		color = CAgilityBookOptions::CalendarClosingColor();
 		break;
 	}
@@ -147,13 +192,35 @@ void CDlgOptionsCalendar::OnDrawItem(
 	}
 }
 
-void CDlgOptionsCalendar::OnOptionsCalColorNormal()
+void CDlgOptionsCalendar::OnOptionsCalOpeningNear()
 {
-	CColorDialog dlg(CAgilityBookOptions::CalendarNormalColor(), CC_ANYCOLOR, this);
+	UpdateData(TRUE);
+	EnableControls();
+}
+
+void CDlgOptionsCalendar::OnOptionsCalClosingNear()
+{
+	UpdateData(TRUE);
+	EnableControls();
+}
+
+void CDlgOptionsCalendar::OnOptionsCalColorOpeningNear()
+{
+	CColorDialog dlg(CAgilityBookOptions::CalendarOpeningNearColor(), CC_ANYCOLOR, this);
 	if (IDOK == dlg.DoModal())
 	{
-		CAgilityBookOptions::SetCalendarNormalColor(dlg.GetColor());
-		m_Normal.Invalidate();
+		CAgilityBookOptions::SetCalendarOpeningNearColor(dlg.GetColor());
+		m_ctrlOpeningNearColor.Invalidate();
+	}
+}
+
+void CDlgOptionsCalendar::OnOptionsCalColorClosingNear()
+{
+	CColorDialog dlg(CAgilityBookOptions::CalendarClosingNearColor(), CC_ANYCOLOR, this);
+	if (IDOK == dlg.DoModal())
+	{
+		CAgilityBookOptions::SetCalendarClosingNearColor(dlg.GetColor());
+		m_ctrlClosingNearColor.Invalidate();
 	}
 }
 
@@ -163,7 +230,7 @@ void CDlgOptionsCalendar::OnOptionsCalColorOpen()
 	if (IDOK == dlg.DoModal())
 	{
 		CAgilityBookOptions::SetCalendarOpeningColor(dlg.GetColor());
-		m_Opening.Invalidate();
+		m_ctrlOpeningColor.Invalidate();
 	}
 }
 
@@ -173,6 +240,6 @@ void CDlgOptionsCalendar::OnOptionsCalColorClose()
 	if (IDOK == dlg.DoModal())
 	{
 		CAgilityBookOptions::SetCalendarClosingColor(dlg.GetColor());
-		m_Closing.Invalidate();
+		m_ctrlClosingColor.Invalidate();
 	}
 }

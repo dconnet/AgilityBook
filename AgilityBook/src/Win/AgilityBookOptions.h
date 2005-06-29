@@ -160,12 +160,18 @@ public:
 	static void SetCalendarEntrySize(CSize const& sz);
 	static CCalendarViewFilter FilterCalendarView();
 	static void SetFilterCalendarView(CCalendarViewFilter inFilter);
-	static COLORREF CalendarNormalColor();
-	static void SetCalendarNormalColor(COLORREF inColor);
 	static COLORREF CalendarOpeningColor();
 	static void SetCalendarOpeningColor(COLORREF inColor);
 	static COLORREF CalendarClosingColor();
 	static void SetCalendarClosingColor(COLORREF inColor);
+	static int CalendarOpeningNear();
+	static void SetCalendarOpeningNear(int inDays);
+	static int CalendarClosingNear();
+	static void SetCalendarClosingNear(int inDays);
+	static COLORREF CalendarOpeningNearColor();
+	static void SetCalendarOpeningNearColor(COLORREF inColor);
+	static COLORREF CalendarClosingNearColor();
+	static void SetCalendarClosingNearColor(COLORREF inColor);
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);

@@ -431,7 +431,6 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		CPen* pOldPen = pDC->SelectObject(&pen);
 
 		CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
-		COLORREF clrNormal = CAgilityBookOptions::CalendarNormalColor();
 		COLORREF clrOpening = CAgilityBookOptions::CalendarOpeningColor();
 		COLORREF clrClosing = CAgilityBookOptions::CalendarClosingColor();
 
@@ -449,7 +448,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				CRect rFull(r);
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
 				CString str(date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)).c_str());
-				pDC->SetTextColor(clrNormal);
+				pDC->SetTextColor(::GetSysColor(COLOR_WINDOWTEXT));
 				if (!pDC->IsPrinting())
 				{
 					// Change the colors for the currently selected date.
@@ -512,7 +511,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			// Then for each date, get all the events on that date to print.
 			if (0 < GetEntriesOn(date, entries, false))
 			{
-				pDC->SetTextColor(clrNormal);
+				pDC->SetTextColor(::GetSysColor(COLOR_WINDOWTEXT));
 				if (!pDC->IsPrinting())
 				{
 					if (m_Current == date)

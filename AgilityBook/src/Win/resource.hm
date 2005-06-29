@@ -164,11 +164,14 @@
 #define HIDC_LIST_VIEWER                0x80ca03fc    // IDD_LIST_VIEWER
 #define HIDC_NAME                       0x80c903f2    // IDD_NAME
 #define HIDC_OPTIONS_CAL_AUTO_DELETE    0x80ed05b5    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_CLOSENEAR      0x80ed05ab    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_CLOSING        0x80ed05bd    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET \
+                                        0x80ed05ad    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_COLOR_CLOSE_SET \
                                         0x80ed05b3    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPTIONS_CAL_COLOR_NORMAL_SET \
-                                        0x80ed05af    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_COLOR_OPENNEAR_SET \
+                                        0x80ed05a9    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_COLOR_OPEN_SET \
                                         0x80ed05b1    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_DAY_OF_WEEK    0x80ed05b4    // IDD_VIEW_OPTIONS_CALENDAR
@@ -178,8 +181,12 @@
 #define HIDC_OPTIONS_CAL_OLD_ENTRY_DAYS \
                                         0x80ed05b7    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_OPENING        0x80ed05bc    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_OPENNEAR       0x80ed05a7    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_SIZE_X         0x80ed05b9    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_CAL_SIZE_Y         0x80ed05ba    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_WARN_CLOSENEAR \
+                                        0x80ed05aa    // IDD_VIEW_OPTIONS_CALENDAR
+#define HIDC_OPTIONS_CAL_WARN_OPENNEAR  0x80ed05a6    // IDD_VIEW_OPTIONS_CALENDAR
 #define HIDC_OPTIONS_FILTER_DATES_ALL   0x80ee05c1    // IDD_VIEW_OPTIONS_FILTER
 #define HIDC_OPTIONS_FILTER_DATES_RANGE \
                                         0x80ee05c2    // IDD_VIEW_OPTIONS_FILTER
@@ -298,8 +305,8 @@
 #define HIDC_RUNSCORE_TABLE             0x80e10526    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_TIME              0x80e10525    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_YARDS             0x80e10530    // IDD_RUN_SCORE
-#define HIDC_SELECTURL_FILENAME         0x80ec05ab    // IDD_SELECT_URL
-#define HIDC_SELECTURL_NAME             0x80ec05aa    // IDD_SELECT_URL
+#define HIDC_SELECTURL_FILENAME         0x80ec05a2    // IDD_SELECT_URL
+#define HIDC_SELECTURL_NAME             0x80ec05a1    // IDD_SELECT_URL
 #define HIDC_TITLE_DATE                 0x80dd04ed    // IDD_TITLE
 #define HIDC_TITLE_DESC                 0x80dd04f2    // IDD_TITLE
 #define HIDC_TITLE_EARNED               0x80dd04ec    // IDD_TITLE

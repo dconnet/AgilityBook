@@ -215,9 +215,9 @@ COLORREF CAgilityBookViewCalendarData::GetTextColor(
 		bool bSelected) const
 {
 	if (HighlightClosingNear(iCol))
-		return RGB(255, 0, 0);
+		return CAgilityBookOptions::CalendarClosingNearColor();
 	else if (HighlightOpeningNear(iCol))
-		return RGB(0, 0, 255);
+		return CAgilityBookOptions::CalendarOpeningNearColor();
 	if (bSelected)
 		return ::GetSysColor(COLOR_HIGHLIGHTTEXT);
 	else
@@ -240,14 +240,15 @@ COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(
 bool CAgilityBookViewCalendarData::HighlightOpeningNear(int iCol) const
 {
 	bool bHighlight = false;
-	if (0 <= iCol
+	int nearDays = CAgilityBookOptions::CalendarOpeningNear();
+	if (0 <= iCol && 0 <= nearDays
 	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
 	&& m_pCal->GetOpeningDate().IsValid())
 	{
 		ARBDate today = ARBDate::Today();
 		// If 'interval' is less than 0, then the date has passed.
 		long interval = m_pCal->GetOpeningDate() - today;
-		if (10 >= interval)
+		if (interval <= nearDays)
 		{
 			bHighlight = true;
 			if (0 > interval
@@ -262,13 +263,14 @@ bool CAgilityBookViewCalendarData::HighlightOpeningNear(int iCol) const
 bool CAgilityBookViewCalendarData::HighlightClosingNear(int iCol) const
 {
 	bool bHighlight = false;
-	if (0 <= iCol
+	int nearDays = CAgilityBookOptions::CalendarClosingNear();
+	if (0 <= iCol && 0 <= nearDays
 	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
 	&& m_pCal->GetClosingDate().IsValid())
 	{
 		// If 'interval' is less than 0, then the date has passed.
 		long interval = m_pCal->GetClosingDate() - ARBDate::Today();
-		if (interval >= 0 && interval <= 10)
+		if (interval >= 0 && interval <= nearDays)
 		{
 			bHighlight = true;
 		}

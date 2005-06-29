@@ -1454,7 +1454,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,128,26,50,14
 END
 
-IDD_VIEW_OPTIONS_CALENDAR DIALOGEX 0, 0, 285, 162
+IDD_VIEW_OPTIONS_CALENDAR DIALOGEX 0, 0, 298, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Calendar"
@@ -1477,44 +1477,63 @@ BEGIN
     CONTROL         "Hide entries on dates where you've entered a trial",
                     IDC_OPTIONS_CAL_HIDE_OVERLAP,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,3,65,171,10,0,HIDC_OPTIONS_CAL_HIDE_OVERLAP
-    LTEXT           "Approx size of entry (.01 inches)",IDC_STATIC,3,80,101,
-                    8
-    EDITTEXT        IDC_OPTIONS_CAL_SIZE_X,111,78,25,12,ES_AUTOHSCROLL | 
+    LTEXT           "Approximate size of Calendar View entry (in .01 inch increments)",
+                    IDC_STATIC,175,3,120,16
+    EDITTEXT        IDC_OPTIONS_CAL_SIZE_X,175,21,25,12,ES_AUTOHSCROLL | 
                     ES_NUMBER,0,HIDC_OPTIONS_CAL_SIZE_X
-    LTEXT           "x",IDC_STATIC,139,80,8,8
-    EDITTEXT        IDC_OPTIONS_CAL_SIZE_Y,148,78,25,12,ES_AUTOHSCROLL | 
+    LTEXT           "x",IDC_STATIC,203,23,8,8
+    EDITTEXT        IDC_OPTIONS_CAL_SIZE_Y,212,21,25,12,ES_AUTOHSCROLL | 
                     ES_NUMBER,0,HIDC_OPTIONS_CAL_SIZE_Y
-    LTEXT           "Entries in Calendar View",IDC_STATIC,3,95,77,8
-    CONTROL         "Normal Entries",IDC_OPTIONS_CAL_NORMAL,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,106,61,10,0,
+    GROUPBOX        "Calendar List",IDC_STATIC,3,80,165,79
+    CONTROL         "Warn when Opening date is near",
+                    IDC_OPTIONS_CAL_WARN_OPENNEAR,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,14,95,120,10,0,
+                    HIDC_OPTIONS_CAL_WARN_OPENNEAR
+    EDITTEXT        IDC_OPTIONS_CAL_OPENNEAR,26,106,25,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER,0,HIDC_OPTIONS_CAL_OPENNEAR
+    LTEXT           "days before",IDC_STATIC,53,108,38,8
+    CONTROL         "",IDC_OPTIONS_CAL_COLOR_OPENNEAR,"Static",SS_OWNERDRAW | 
+                    SS_SUNKEN,98,107,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_OPENNEAR_SET,118,
+                    106,40,12,0,0,HIDC_OPTIONS_CAL_COLOR_OPENNEAR_SET
+    CONTROL         "Warn when Closing date is near",
+                    IDC_OPTIONS_CAL_WARN_CLOSENEAR,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,14,125,116,10,0,
+                    HIDC_OPTIONS_CAL_WARN_CLOSENEAR
+    EDITTEXT        IDC_OPTIONS_CAL_CLOSENEAR,26,136,25,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER,0,HIDC_OPTIONS_CAL_CLOSENEAR
+    LTEXT           "days before",IDC_STATIC,53,137,38,8
+    CONTROL         "",IDC_OPTIONS_CAL_COLOR_CLOSENEAR,"Static",SS_OWNERDRAW | 
+                    SS_SUNKEN,98,136,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET,118,
+                    135,40,12,0,0,HIDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET
+    GROUPBOX        "Calendar View",IDC_STATIC,175,80,120,79
+    CONTROL         "Normal entries",IDC_OPTIONS_CAL_NORMAL,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,187,92,61,10,0,
                     HIDC_OPTIONS_CAL_NORMAL
-    CONTROL         "",IDC_OPTIONS_CAL_COLOR_NORMAL,"Static",SS_OWNERDRAW | 
-                    SS_SUNKEN,123,106,15,10
-    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_NORMAL_SET,145,105,
-                    40,12,0,0,HIDC_OPTIONS_CAL_COLOR_NORMAL_SET
-    CONTROL         "Entries with Opening Dates",IDC_OPTIONS_CAL_OPENING,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,120,
-                    101,10,0,HIDC_OPTIONS_CAL_OPENING
+    CONTROL         "Entries with Opening dates",IDC_OPTIONS_CAL_OPENING,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,187,104,
+                    100,10,0,HIDC_OPTIONS_CAL_OPENING
     CONTROL         "",IDC_OPTIONS_CAL_COLOR_OPEN,"Static",SS_OWNERDRAW | 
-                    SS_SUNKEN,123,120,15,10
-    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_OPEN_SET,145,119,40,
+                    SS_SUNKEN,200,116,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_OPEN_SET,220,115,40,
                     12,0,0,HIDC_OPTIONS_CAL_COLOR_OPEN_SET
-    CONTROL         "Entries with Closing Dates",IDC_OPTIONS_CAL_CLOSING,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,134,
-                    97,10,0,HIDC_OPTIONS_CAL_CLOSING
+    CONTROL         "Entries with Closing dates",IDC_OPTIONS_CAL_CLOSING,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,187,131,
+                    96,10,0,HIDC_OPTIONS_CAL_CLOSING
     CONTROL         "",IDC_OPTIONS_CAL_COLOR_CLOSE,"Static",SS_OWNERDRAW | 
-                    SS_SUNKEN,123,134,15,10
-    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSE_SET,145,133,
+                    SS_SUNKEN,200,143,15,10
+    PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSE_SET,220,142,
                     40,12,0,0,HIDC_OPTIONS_CAL_COLOR_CLOSE_SET
 END
 
-IDD_VIEW_OPTIONS_FILTER DIALOGEX 0, 0, 285, 162
+IDD_VIEW_OPTIONS_FILTER DIALOGEX 0, 0, 298, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Trial Filter"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Trials",IDC_STATIC,3,3,136,156
+    GROUPBOX        "Trials",IDC_STATIC,3,3,142,156
     CONTROL         "&View all venues",IDC_OPTIONS_FILTER_VENUES_ALL,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
                     HIDC_OPTIONS_FILTER_VENUES_ALL
@@ -1524,41 +1543,41 @@ BEGIN
     CONTROL         "Tree1",IDC_OPTIONS_FILTER_VENUES,"SysTreeView32",
                     TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
                     TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
-                    42,119,110,0,HIDC_OPTIONS_FILTER_VENUES
-    GROUPBOX        "Dates",IDC_STATIC,146,3,136,74
+                    42,125,110,0,HIDC_OPTIONS_FILTER_VENUES
+    GROUPBOX        "Dates",IDC_STATIC,152,3,143,74
     CONTROL         "View all &dates",IDC_OPTIONS_FILTER_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,158,16,59,10,0,
+                    BS_AUTORADIOBUTTON | WS_GROUP,160,16,59,10,0,
                     HIDC_OPTIONS_FILTER_DATES_ALL
     CONTROL         "View dates in &range (inclusive):",
                     IDC_OPTIONS_FILTER_DATES_RANGE,"Button",
-                    BS_AUTORADIOBUTTON,158,28,113,10,0,
+                    BS_AUTORADIOBUTTON,160,28,113,10,0,
                     HIDC_OPTIONS_FILTER_DATES_RANGE
     CONTROL         "&After",IDC_OPTIONS_FILTER_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,170,41,31,10,0,
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,172,41,31,10,0,
                     HIDC_OPTIONS_FILTER_DATE_START_CHECK
     CONTROL         "DateTimePicker2",IDC_OPTIONS_FILTER_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,40,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,40,
                     60,12,0,HIDC_OPTIONS_FILTER_DATE_START
     CONTROL         "&Before",IDC_OPTIONS_FILTER_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,170,56,37,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,172,56,37,10,0,
                     HIDC_OPTIONS_FILTER_DATE_END_CHECK
     CONTROL         "DateTimePicker2",IDC_OPTIONS_FILTER_DATE_END,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,55,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,55,
                     60,12,0,HIDC_OPTIONS_FILTER_DATE_END
-    GROUPBOX        "Qs",IDC_STATIC,146,81,136,54
+    GROUPBOX        "Qs",IDC_STATIC,152,81,143,54
     CONTROL         "V&iew all runs",IDC_OPTIONS_FILTER_RUNS_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,158,94,55,10,0,
+                    BS_AUTORADIOBUTTON | WS_GROUP,160,94,55,10,0,
                     HIDC_OPTIONS_FILTER_RUNS_ALL
     CONTROL         "View only &Qualifying runs",IDC_OPTIONS_FILTER_RUNS_Q,
-                    "Button",BS_AUTORADIOBUTTON,158,106,94,10,0,
+                    "Button",BS_AUTORADIOBUTTON,160,106,94,10,0,
                     HIDC_OPTIONS_FILTER_RUNS_Q
     CONTROL         "View only &Non-Qualifying runs",
                     IDC_OPTIONS_FILTER_RUNS_NON_Q,"Button",
-                    BS_AUTORADIOBUTTON,158,118,109,10,0,
+                    BS_AUTORADIOBUTTON,160,118,109,10,0,
                     HIDC_OPTIONS_FILTER_RUNS_NON_Q
 END
 
-IDD_VIEW_OPTIONS_FONTS DIALOGEX 0, 0, 285, 162
+IDD_VIEW_OPTIONS_FONTS DIALOGEX 0, 0, 298, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Fonts"
@@ -1582,20 +1601,20 @@ BEGIN
                     95,100,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
     PUSHBUTTON      "Text Font...",IDC_OPTIONS_FONT_CAL_VIEW_TEXT,107,134,50,
                     14,0,0,HIDC_OPTIONS_FONT_CAL_VIEW_TEXT
-    GROUPBOX        "General Printing",IDC_STATIC,188,84,94,75
-    CTEXT           "Printing Text",IDC_OPTIONS_FONT_GENERAL_PRINT_TEXT,198,
+    GROUPBOX        "General Printing",IDC_STATIC,188,84,107,75
+    CTEXT           "Printing Text",IDC_OPTIONS_FONT_GENERAL_PRINT_TEXT,204,
                     100,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Set Font...",IDC_OPTIONS_FONT_GENERAL_PRINT,210,134,50,
+    PUSHBUTTON      "Set Font...",IDC_OPTIONS_FONT_GENERAL_PRINT,216,134,50,
                     14,0,0,HIDC_OPTIONS_FONT_GENERAL_PRINT
 END
 
-IDD_VIEW_OPTIONS_TRAINING DIALOGEX 0, 0, 285, 162
+IDD_VIEW_OPTIONS_TRAINING DIALOGEX 0, 0, 298, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Training Log"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Name",IDC_STATIC,3,3,136,156
+    GROUPBOX        "Name",IDC_STATIC,3,3,142,156
     CONTROL         "View all &names",IDC_OPTIONS_TRAINING_VENUES_ALL,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
                     HIDC_OPTIONS_TRAINING_VENUES_ALL
@@ -1605,30 +1624,30 @@ BEGIN
     CONTROL         "Tree1",IDC_OPTIONS_TRAINING_VENUES,"SysTreeView32",
                     TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
                     TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
-                    42,119,110,0,HIDC_OPTIONS_TRAINING_VENUES
-    GROUPBOX        "Dates",IDC_STATIC,146,3,136,75
+                    42,125,110,0,HIDC_OPTIONS_TRAINING_VENUES
+    GROUPBOX        "Dates",IDC_STATIC,152,3,143,75
     CONTROL         "View all &dates",IDC_OPTIONS_TRAINING_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,158,16,59,10,0,
+                    BS_AUTORADIOBUTTON | WS_GROUP,160,16,59,10,0,
                     HIDC_OPTIONS_TRAINING_DATES_ALL
     CONTROL         "View dates in &range (inclusive):",
                     IDC_OPTIONS_TRAINING_DATES_RANGE,"Button",
-                    BS_AUTORADIOBUTTON,158,28,113,10,0,
+                    BS_AUTORADIOBUTTON,160,28,113,10,0,
                     HIDC_OPTIONS_TRAINING_DATES_RANGE
     CONTROL         "&After",IDC_OPTIONS_TRAINING_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,170,41,31,10,0,
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,172,41,31,10,0,
                     HIDC_OPTIONS_TRAINING_DATE_START_CHECK
     CONTROL         "DateTimePicker2",IDC_OPTIONS_TRAINING_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,40,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,40,
                     60,12,0,HIDC_OPTIONS_TRAINING_DATE_START
     CONTROL         "&Before",IDC_OPTIONS_TRAINING_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,170,56,37,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,172,56,37,10,0,
                     HIDC_OPTIONS_TRAINING_DATE_END_CHECK
     CONTROL         "DateTimePicker2",IDC_OPTIONS_TRAINING_DATE_END,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,209,55,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,55,
                     60,12,0,HIDC_OPTIONS_TRAINING_DATE_END
 END
 
-IDD_VIEW_OPTIONS_PROGRAM DIALOGEX 0, 0, 285, 162
+IDD_VIEW_OPTIONS_PROGRAM DIALOGEX 0, 0, 298, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Program"
@@ -1643,7 +1662,7 @@ BEGIN
     EDITTEXT        IDC_OPTIONS_PGM_EDIT,88,40,20,12,ES_AUTOHSCROLL,0,
                     HIDC_OPTIONS_PGM_EDIT
     LTEXT           "Each time you save a file, a backup is made before saving the new file. Set to 0 to prevent backups.",
-                    IDC_STATIC,115,38,167,16
+                    IDC_STATIC,128,38,167,16
     CONTROL         "Automatically show Dog Properties after adding a title.",
                     IDC_OPTIONS_PGM_AUTOSHOW,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,3,60,185,10,0,HIDC_OPTIONS_PGM_AUTOSHOW
@@ -2211,7 +2230,7 @@ BEGIN
     IDD_VIEW_OPTIONS_CALENDAR, DIALOG
     BEGIN
         LEFTMARGIN, 3
-        RIGHTMARGIN, 282
+        RIGHTMARGIN, 295
         TOPMARGIN, 3
         BOTTOMMARGIN, 159
     END
@@ -2219,7 +2238,7 @@ BEGIN
     IDD_VIEW_OPTIONS_FILTER, DIALOG
     BEGIN
         LEFTMARGIN, 3
-        RIGHTMARGIN, 282
+        RIGHTMARGIN, 295
         TOPMARGIN, 3
         BOTTOMMARGIN, 159
     END
@@ -2227,7 +2246,7 @@ BEGIN
     IDD_VIEW_OPTIONS_FONTS, DIALOG
     BEGIN
         LEFTMARGIN, 3
-        RIGHTMARGIN, 282
+        RIGHTMARGIN, 295
         TOPMARGIN, 3
         BOTTOMMARGIN, 159
     END
@@ -2235,7 +2254,7 @@ BEGIN
     IDD_VIEW_OPTIONS_TRAINING, DIALOG
     BEGIN
         LEFTMARGIN, 3
-        RIGHTMARGIN, 282
+        RIGHTMARGIN, 295
         TOPMARGIN, 3
         BOTTOMMARGIN, 159
     END
@@ -2243,7 +2262,7 @@ BEGIN
     IDD_VIEW_OPTIONS_PROGRAM, DIALOG
     BEGIN
         LEFTMARGIN, 3
-        RIGHTMARGIN, 282
+        RIGHTMARGIN, 295
         TOPMARGIN, 3
         BOTTOMMARGIN, 159
     END

@@ -59,12 +59,21 @@ private:
 	BOOL	m_bHideOverlapping;
 	int		m_sizeX;
 	int		m_sizeY;
+	BOOL	m_bOpeningNear;
+	int		m_nOpeningNear;
+	CEdit	m_ctrlOpeningNear;
+	CStatic	m_ctrlOpeningNearColor;
+	CButton	m_ctrlOpeningNearSet;
+	BOOL	m_bClosingNear;
+	int		m_nClosingNear;
+	CEdit	m_ctrlClosingNear;
+	CStatic	m_ctrlClosingNearColor;
+	CButton	m_ctrlClosingNearSet;
 	BOOL	m_bNormal;
-	CStatic	m_Normal;
 	BOOL	m_bOpening;
-	CStatic	m_Opening;
+	CStatic	m_ctrlOpeningColor;
 	BOOL	m_bClosing;
-	CStatic	m_Closing;
+	CStatic	m_ctrlClosingColor;
 	//}}AFX_DATA
 
 // Overrides
@@ -76,9 +85,13 @@ private:
 
 // Implementation
 protected:
+	void EnableControls();
 	//{{AFX_MSG(CDlgOptionsCalendar)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnOptionsCalColorNormal();
+	afx_msg void OnOptionsCalOpeningNear();
+	afx_msg void OnOptionsCalClosingNear();
+	afx_msg void OnOptionsCalColorOpeningNear();
+	afx_msg void OnOptionsCalColorClosingNear();
 	afx_msg void OnOptionsCalColorOpen();
 	afx_msg void OnOptionsCalColorClose();
 	//}}AFX_MSG
