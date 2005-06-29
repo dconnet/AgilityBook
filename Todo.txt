@@ -1,4 +1,12 @@
-Last Updated: 5/16/2005
+Last Updated: 6/29/2005
+
+- Add Calendar export to Outlook. This can be CSV, TSV, Excel
+  For Calendar entries:
+  "Subject","Start Date","Start Time","End Date","End Time","All day event","Reminder on/off","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Optional Attendees","Meeting Resources","Billing Information","Categories","Description","Location","Mileage","Priority","Private","Sensitivity","Show time as"
+  For Tasks:
+  "Subject","Start Date","Due Date","Reminder On/Off","Reminder Date","Reminder Time","Date Completed","% Complete","Total Work","Actual Work","Billing Information","Categories","Companies","Contacts","Mileage","Notes","Priority","Private","Role","Schedule+ Priority","Sensitivity","Status"
+
+- Actions on multiple selected list items only act on the first item.
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 

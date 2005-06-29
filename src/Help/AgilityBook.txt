@@ -784,8 +784,23 @@ Width of a day in the calendar view.
 .topic HIDC_OPTIONS_CAL_SIZE_Y
 Height of a day in the calendar view.
 
-.topic HIDC_OPTIONS_CAL_COLOR_NORMAL_SET
-Use this to change the color used for drawing a trial's text.
+.topic HIDC_OPTIONS_CAL_WARN_OPENNEAR
+Highlight an entry when the current date is near the opening date.
+
+.topic HIDC_OPTIONS_CAL_OPENNEAR
+Number of dates before the opening date that is considered 'near'.
+
+.topic HIDC_OPTIONS_CAL_WARN_CLOSENEAR
+Highlight an entry when the current date is near the closing date.
+
+.topic HIDC_OPTIONS_CAL_CLOSENEAR
+Number of dates before the closing date that is considered 'near'.
+
+.topic HIDC_OPTIONS_CAL_COLOR_OPENNEAR_SET
+Use this to change the color used for drawing an entry whose opening date is near.
+
+.topic HIDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET
+Use this to change the color used for drawing an entry whose closing date is near.
 
 .topic HIDC_OPTIONS_CAL_COLOR_OPEN_SET
 Use this to change the color used for drawing the opening date text.

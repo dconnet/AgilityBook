@@ -38,7 +38,6 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgConfigTitle.h"
-#include ".\dlgconfigtitle.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
