@@ -199,7 +199,7 @@ void CAgilityBookViewPoints::OnNMDblclk(
 		NMHDR *pNMHDR,
 		LRESULT *pResult)
 {
-	PointsDataBase* pData = GetItemData(GetSelection());
+	PointsDataBase* pData = GetItemData(GetSelection(true));
 	if (pData)
 		pData->OnDblClick();
 	else
@@ -219,7 +219,7 @@ void CAgilityBookViewPoints::OnKeydown(
 	case VK_SPACE:
 	case VK_RETURN:
 		{
-			PointsDataBase* pData = GetItemData(GetSelection());
+			PointsDataBase* pData = GetItemData(GetSelection(true));
 			if (pData)
 				pData->OnDblClick();
 			else

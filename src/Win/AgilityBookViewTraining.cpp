@@ -605,21 +605,16 @@ void CAgilityBookViewTraining::OnContextMenu(
 		CWnd* pWnd,
 		CPoint point)
 {
-	int index = GetSelection();
-	if (0 > index)
-	{
-		MessageBeep(0);
-		return;
-	}
-	CAgilityBookViewTrainingData* pData = GetItemData(index);
-	if (!pData)
-		return;
 	// Point is (-1,-1) on the context menu button.
 	if (0 > point.x || 0 > point.y)
 	{
 		// Adjust the menu position so it's on the selected item.
 		CRect rect;
-		GetListCtrl().GetItemRect(index, &rect, FALSE);
+		int index = GetSelection();
+		if (0 <= index)
+			GetListCtrl().GetItemRect(index, &rect, FALSE);
+		else
+			GetListCtrl().GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -733,14 +728,14 @@ void CAgilityBookViewTraining::OnEditFindPrevious()
 void CAgilityBookViewTraining::OnUpdateTrainingEdit(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (GetItemData(GetSelection()))
+	if (GetItemData(GetSelection(true)))
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
 
 void CAgilityBookViewTraining::OnTrainingEdit()
 {
-	CAgilityBookViewTrainingData* pData = GetItemData(GetSelection());
+	CAgilityBookViewTrainingData* pData = GetItemData(GetSelection(true));
 	if (pData)
 	{
 		CDlgTraining dlg(pData->GetTraining(), GetDocument());
@@ -778,26 +773,41 @@ void CAgilityBookViewTraining::OnTrainingNew()
 void CAgilityBookViewTraining::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (GetItemData(GetSelection()))
+	if (0 < GetListCtrl().GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
 
 void CAgilityBookViewTraining::OnEditDuplicate()
 {
-	CAgilityBookViewTrainingData* pData = GetItemData(GetSelection());
-	if (pData)
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
 	{
-		// Currently, we don't need to worry if this is visible. The only filtering
-		// is on name/date. So they can see the item that's being duped, which means
-		// the new one is visible too.
-		ARBTraining* training = new ARBTraining(*(pData->GetTraining()));
-		GetDocument()->GetTraining().AddTraining(training);
-		GetDocument()->GetTraining().sort();
-		LoadData();
-		GetDocument()->SetModifiedFlag();
-		SetCurrentDate(training->GetDate());
-		training->Release();
+		std::vector<CAgilityBookViewTrainingData*> items;
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
+			if (pData)
+				items.push_back(pData);
+		}
+		ARBDate date;
+		for (std::vector<CAgilityBookViewTrainingData*>::iterator iter = items.begin(); iter != items.end(); ++iter)
+		{
+			// Currently, we don't need to worry if this is visible. The only filtering
+			// is on name/date. So they can see the item that's being duped, which means
+			// the new one is visible too.
+			ARBTraining* training = new ARBTraining(*((*iter)->GetTraining()));
+			GetDocument()->GetTraining().AddTraining(training);
+			GetDocument()->GetTraining().sort();
+			date = training->GetDate();
+			training->Release();
+		}
+		if (0 < items.size())
+		{
+			LoadData();
+			GetDocument()->SetModifiedFlag();
+			SetCurrentDate(date);
+		}
 	}
 }
 
@@ -912,23 +922,25 @@ void CAgilityBookViewTraining::OnEditPaste()
 void CAgilityBookViewTraining::OnUpdateTrainingDelete(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (GetItemData(GetSelection()))
+	if (0 < GetListCtrl().GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
 
 void CAgilityBookViewTraining::OnTrainingDelete()
 {
-	int index = GetSelection();
-	if (0 <= index)
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
 	{
-		CAgilityBookViewTrainingData* pData = GetItemData(index);
-		if (pData)
+		std::vector<CAgilityBookViewTrainingData*> items;
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			GetDocument()->GetTraining().DeleteTraining(pData->GetTraining());
-			GetListCtrl().DeleteItem(GetSelection());
-			GetDocument()->SetModifiedFlag();
+			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
+			if (pData)
+				GetDocument()->GetTraining().DeleteTraining(pData->GetTraining());
 		}
+		GetDocument()->SetModifiedFlag();
+		LoadData();
 	}
 }
 
