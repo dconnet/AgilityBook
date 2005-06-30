@@ -160,6 +160,8 @@ protected:
 	afx_msg void OnEditFindPrevious();
 	afx_msg void OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarCreateEntry();
+	afx_msg void OnUpdateCalendarExport(CCmdUI* pCmdUI);
+	afx_msg void OnCalendarExport();
 	afx_msg void OnUpdateCalendarEdit(CCmdUI* pCmdUI);
 	afx_msg void OnCalendarEdit();
 	afx_msg void OnCalendarNew();

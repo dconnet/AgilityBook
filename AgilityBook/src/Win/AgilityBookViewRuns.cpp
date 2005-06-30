@@ -1461,21 +1461,16 @@ void CAgilityBookViewRuns::OnContextMenu(
 		CWnd* pWnd,
 		CPoint point)
 {
-	int index = GetSelection();
-	if (0 > index)
-	{
-		MessageBeep(0);
-		return;
-	}
-	CAgilityBookViewRunsData* pData = GetItemData(index);
-	if (!pData)
-		return;
 	// Point is (-1,-1) on the context menu button.
 	if (0 > point.x || 0 > point.y)
 	{
 		// Adjust the menu position so it's on the selected item.
 		CRect rect;
-		GetListCtrl().GetItemRect(index, &rect, FALSE);
+		int index = GetSelection();
+		if (0 <= index)
+			GetListCtrl().GetItemRect(index, &rect, FALSE);
+		else
+			GetListCtrl().GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -1578,9 +1573,11 @@ void CAgilityBookViewRuns::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->EditRun(pData->GetRun());
+	else
+		MessageBeep(0);
 	*pResult = 0;
 }
 
@@ -1596,7 +1593,7 @@ void CAgilityBookViewRuns::OnKeydown(
 	case VK_SPACE:
 	case VK_RETURN:
 		{
-			CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+			CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 			if (pData)
 				GetDocument()->EditRun(pData->GetRun());
 		}
@@ -1632,7 +1629,7 @@ void CAgilityBookViewRuns::OnEditFindPrevious()
 void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1640,7 +1637,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityEditRun() 
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->EditRun(pData->GetRun());
 }
@@ -1648,7 +1645,7 @@ void CAgilityBookViewRuns::OnAgilityEditRun()
 void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1656,7 +1653,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityNewTitle()
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddTitle(pData->GetRun());
 }
@@ -1664,7 +1661,7 @@ void CAgilityBookViewRuns::OnAgilityNewTitle()
 void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1672,7 +1669,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityNewTrial()
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddTrial(pData->GetRun());
 }
@@ -1680,7 +1677,7 @@ void CAgilityBookViewRuns::OnAgilityNewTrial()
 void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1688,20 +1685,28 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityNewRun()
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddRun(pData->GetRun());
 }
 
 void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)
 {
-	OnUpdateEditCopy(pCmdUI);
+	if (1 == GetListCtrl().GetSelectedCount())
+		OnUpdateEditCopy(pCmdUI);
+	else
+		pCmdUI->Enable(FALSE);
 }
 
 void CAgilityBookViewRuns::OnEditCut()
 {
-	OnEditCopy();
-	OnAgilityDeleteRun();
+	if (1 == GetListCtrl().GetSelectedCount())
+	{
+		OnEditCopy();
+		OnAgilityDeleteRun();
+	}
+	else
+		MessageBeep(0);
 }
 
 void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
@@ -1761,7 +1766,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1769,7 +1774,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityDeleteRun() 
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection());
+	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
 }

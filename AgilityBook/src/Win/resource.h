@@ -685,6 +685,7 @@
 #define ID_AGILITY_DELETE_TRIAL         32806
 #define ID_AGILITY_DELETE_RUN           32807
 #define ID_AGILITY_CREATEENTRY_CALENDAR 32808
+#define ID_AGILITY_EXPORT_CALENDAR      32809
 #define ID_NOTES_CLUBS                  32810
 #define ID_NOTES_JUDGES                 32811
 #define ID_NOTES_LOCATIONS              32812

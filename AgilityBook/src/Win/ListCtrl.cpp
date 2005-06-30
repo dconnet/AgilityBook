@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
  * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
  * @li 2004-09-09 DRC Added tooltips to header control.
@@ -394,11 +395,11 @@ BOOL CListCtrl2::DeleteColumn(int nCol)
 	return rc;
 }
 
-int CListCtrl2::GetSelection()
+int CListCtrl2::GetSelection(bool bRestricted)
 {
 	std::vector<int> indices;
 	::GetSelection(*this, indices);
-	bool bSingle = (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL));
+	bool bSingle = (bRestricted || (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL)));
 	if ((bSingle && 1 == indices.size())
 	|| (!bSingle && 0 < indices.size()))
 		return indices[0];
@@ -547,11 +548,11 @@ BOOL CListView2::DeleteColumn(int nCol)
 	return rc;
 }
 
-int CListView2::GetSelection()
+int CListView2::GetSelection(bool bRestricted)
 {
 	std::vector<int> indices;
 	::GetSelection(GetListCtrl(), indices);
-	bool bSingle = (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL));
+	bool bSingle = (bRestricted || (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL)));
 	if ((bSingle && 1 == indices.size())
 	|| (!bSingle && 0 < indices.size()))
 		return indices[0];

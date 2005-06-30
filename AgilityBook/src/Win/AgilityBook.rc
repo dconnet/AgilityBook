@@ -206,6 +206,8 @@ BEGIN
             MENUITEM "&Delete",                     ID_AGILITY_DELETE_CALENDAR
 
             MENUITEM SEPARATOR
+            MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
+            MENUITEM SEPARATOR
             MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
         END
@@ -347,6 +349,8 @@ BEGIN
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete...",                  ID_AGILITY_DELETE_CALENDAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
@@ -2770,6 +2774,7 @@ BEGIN
     ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
     ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
     ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
+    ID_AGILITY_EXPORT_CALENDAR "Export Calendar entries\nExport"
     ID_NOTES_CLUBS          "Edit club information\nClubs"
     ID_NOTES_JUDGES         "Edit judge information\nJudges"
     ID_NOTES_LOCATIONS      "Edit location information\nLocations"

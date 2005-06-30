@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
  * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
  * @li 2004-09-09 DRC Added tooltips to header control.
  * @li 2004-08-26 DRC Added GetPrintLine to CListCtrl2.
@@ -128,8 +129,9 @@ public:
 
 	/**
 	 * Returns the first selected item.
+	 * @param bRestricted In multi-select lists, only allow a single selection.
 	 */
-	int GetSelection();
+	int GetSelection(bool bRestricted = false);
 	/**
 	 * Returns the number of selected items.
 	 */
@@ -198,8 +200,9 @@ public:
 
 	/**
 	 * Returns the first selected item.
+	 * @param bRestricted In multi-select lists, only allow a single selection.
 	 */
-	int GetSelection();
+	int GetSelection(bool bRestricted = false);
 	/**
 	 * Returns the number of selected items.
 	 */

@@ -113,10 +113,12 @@ public:
 
 	COLORREF GetTextColor(
 			int iCol,
-			bool bSelected) const;
+			bool bSelected,
+			bool bFocused) const;
 	COLORREF GetBackgroundColor(
 			int iCol,
-			bool bSelected) const;
+			bool bSelected,
+			bool bFocused) const;
 
 private:
 	~CAgilityBookViewCalendarData()
@@ -212,27 +214,39 @@ int CAgilityBookViewCalendarData::GetIcon() const
 
 COLORREF CAgilityBookViewCalendarData::GetTextColor(
 		int iCol,
-		bool bSelected) const
+		bool bSelected,
+		bool bFocused) const
 {
 	if (HighlightClosingNear(iCol))
 		return CAgilityBookOptions::CalendarClosingNearColor();
 	else if (HighlightOpeningNear(iCol))
 		return CAgilityBookOptions::CalendarOpeningNearColor();
 	if (bSelected)
-		return ::GetSysColor(COLOR_HIGHLIGHTTEXT);
+	{
+		if (bFocused)
+			return ::GetSysColor(COLOR_HIGHLIGHTTEXT);
+		else
+			return ::GetSysColor(COLOR_MENUTEXT);
+	}
 	else
 		return ::GetSysColor(COLOR_WINDOWTEXT);
 }
 
 COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(
 		int iCol,
-		bool bSelected) const
+		bool bSelected,
+		bool bFocused) const
 {
 	if (HighlightOpeningNear(iCol)
 	|| HighlightClosingNear(iCol))
 		return ::GetSysColor(COLOR_WINDOW);
 	if (bSelected)
-		return ::GetSysColor(COLOR_HIGHLIGHT);
+	{
+		if (bFocused)
+			return ::GetSysColor(COLOR_HIGHLIGHT);
+		else
+			return ::GetSysColor(COLOR_MENU);
+	}
 	else
 		return ::GetSysColor(COLOR_WINDOW);
 }
@@ -509,6 +523,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_COMMAND(ID_EDIT_FIND_PREVIOUS, OnEditFindPrevious)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_CREATEENTRY_CALENDAR, OnUpdateCalendarCreateEntry)
 	ON_COMMAND(ID_AGILITY_CREATEENTRY_CALENDAR, OnCalendarCreateEntry)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_EXPORT_CALENDAR, OnUpdateCalendarExport)
+	ON_COMMAND(ID_AGILITY_EXPORT_CALENDAR, OnCalendarExport)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_EDIT_CALENDAR, OnUpdateCalendarEdit)
 	ON_COMMAND(ID_AGILITY_EDIT_CALENDAR, OnCalendarEdit)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnCalendarNew)
@@ -642,7 +658,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	/*int oldMode =*/ dc.SetBkMode(OPAQUE /*TRANSPARENT*/);
 
 	// Draw the background of the row.
-	dc.SetBkColor(pData->GetBackgroundColor(-1, bSelected));
+	dc.SetBkColor(pData->GetBackgroundColor(-1, bSelected, bFocused));
 	if (GetListCtrl().GetExtendedStyle() & LVS_EX_FULLROWSELECT)
 		dc.ExtTextOut(0, 0, ETO_OPAQUE, rLine, NULL, 0, NULL);
 	else
@@ -674,16 +690,16 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	// Finally the text.
 	rLineLabel.InflateRect(-OFFSET_FIRST, 0);
-	dc.SetTextColor(pData->GetTextColor(0, bSelected));
-	dc.SetBkColor(pData->GetBackgroundColor(0, bSelected));
+	dc.SetTextColor(pData->GetTextColor(0, bSelected, bFocused));
+	dc.SetBkColor(pData->GetBackgroundColor(0, bSelected, bFocused));
 	dc.DrawText(pData->OnNeedText(0), rLineLabel, GetFormatFlags(0));
 	for (int i = 1; i < nColumns; ++i)
 	{
 		CRect r;
 		GetListCtrl().GetSubItemRect(lpDrawItemStruct->itemID, i, LVIR_BOUNDS, r);
 		r.InflateRect(-OFFSET_OTHER, 0);
-		dc.SetTextColor(pData->GetTextColor(i, bSelected));
-		dc.SetBkColor(pData->GetBackgroundColor(i, bSelected));
+		dc.SetTextColor(pData->GetTextColor(i, bSelected, bFocused));
+		dc.SetBkColor(pData->GetBackgroundColor(i, bSelected, bFocused));
 		dc.DrawText(pData->OnNeedText(i), r, GetFormatFlags(i));
 	}
 
@@ -930,21 +946,16 @@ void CAgilityBookViewCalendarList::OnContextMenu(
 		CWnd* pWnd,
 		CPoint point)
 {
-	int index = GetSelection();
-	if (0 > index)
-	{
-		MessageBeep(0);
-		return;
-	}
-	CAgilityBookViewCalendarData* pData = GetItemData(index);
-	if (!pData)
-		return;
 	// Point is (-1,-1) on the context menu button.
 	if (0 > point.x || 0 > point.y)
 	{
 		// Adjust the menu position so it's on the selected item.
 		CRect rect;
-		GetListCtrl().GetItemRect(index, &rect, FALSE);
+		int index = GetSelection();
+		if (0 <= index)
+			GetListCtrl().GetItemRect(index, &rect, FALSE);
+		else
+			GetListCtrl().GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -1013,7 +1024,7 @@ void CAgilityBookViewCalendarList::OnItemChanged(
 	{
 		if (!m_bSuppressSelect)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+			CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 			if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
 			{
 				CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
@@ -1090,7 +1101,7 @@ void CAgilityBookViewCalendarList::OnEditFindPrevious()
 void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1100,7 +1111,7 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 {
 	if (0 == GetDocument()->GetDogs().size())
 		return;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 	if (pData)
 	{
 		ARBCalendar* pCal = pData->GetCalendar();
@@ -1111,10 +1122,23 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 	}
 }
 
+void CAgilityBookViewCalendarList::OnUpdateCalendarExport(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetSelectedCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewCalendarList::OnCalendarExport()
+{
+	AfxMessageBox("TODO");
+}
+
 void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 	if (pData && pData->CanEdit())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1122,7 +1146,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendarList::OnCalendarEdit()
 {
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
+	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 	if (pData && pData->CanEdit())
 	{
 		if (pData->CanEdit())
@@ -1166,33 +1190,48 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 void CAgilityBookViewCalendarList::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (GetItemData(GetSelection()))
+	if (0 < GetListCtrl().GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
 
 void CAgilityBookViewCalendarList::OnEditDuplicate()
 {
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
-	if (pData)
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
 	{
-		// We need to warn the user if the duplicated entry is not visible.
-		// This will happen if the source is marked as entered and they have
-		// selected the option to hide dates.
-		ARBCalendar* cal = new ARBCalendar(*(pData->GetCalendar()));
-		bool bNewIsNotVisible =
-			(pData->GetCalendar()->GetEntered() == ARBCalendar::eEntered
-			&& CAgilityBookOptions::HideOverlappingCalendarEntries());
-		cal->SetEntered(ARBCalendar::eNot);
-		GetDocument()->GetCalendar().AddCalendar(cal);
+		std::vector<CAgilityBookViewCalendarData*> items;
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			if (pData)
+				items.push_back(pData);
+		}
+		int nNewIsNotVisible = 0;
+		for (std::vector<CAgilityBookViewCalendarData*>::iterator iter = items.begin(); iter != items.end(); ++iter)
+		{
+			// We need to warn the user if the duplicated entry is not visible.
+			// This will happen if the source is marked as entered and they have
+			// selected the option to hide dates.
+			ARBCalendar* cal = new ARBCalendar(*((*iter)->GetCalendar()));
+			if ((*iter)->GetCalendar()->GetEntered() == ARBCalendar::eEntered
+			&& CAgilityBookOptions::HideOverlappingCalendarEntries())
+			{
+				++nNewIsNotVisible;
+			}
+			cal->SetEntered(ARBCalendar::eNot);
+			GetDocument()->GetCalendar().AddCalendar(cal);
+			cal->Release();
+		}
 		GetDocument()->GetCalendar().sort();
 		LoadData();
 		GetDocument()->SetModifiedFlag();
 		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
-		cal->Release();
-		if (bNewIsNotVisible)
+		if (0 < nNewIsNotVisible)
 		{
-			AfxMessageBox("Warning: The entry you have just created is not visible due to your viewing options.", MB_ICONWARNING);
+			CString str;
+			str.Format("Warning: %d new entries are not visible due to your viewing options.", nNewIsNotVisible);
+			AfxMessageBox(str, MB_ICONWARNING);
 		}
 	}
 }
@@ -1308,38 +1347,47 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 void CAgilityBookViewCalendarList::OnUpdateCalendarDelete(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
-	if (pData && pData->CanDelete())
-		bEnable = TRUE;
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
+	{
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			if (pData && pData->CanDelete())
+			{
+				bEnable = TRUE;
+				break;
+			}
+		}
+	}
 	pCmdUI->Enable(bEnable);
 }
 
 void CAgilityBookViewCalendarList::OnCalendarDelete()
 {
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection());
-	if (pData && pData->CanDelete())
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
 	{
-		if (pData->CanDelete())
+		std::vector<CAgilityBookViewCalendarData*> items;
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			ARBCalendar* cal = new ARBCalendar(*pData->GetCalendar()); // Make a copy
-			for (int index = 0; index < GetListCtrl().GetItemCount(); ++index)
-			{
-				CAgilityBookViewCalendarData* pFind = GetItemData(index);
-				// It's okay to just compare pointers here. This is being called
-				// from the item being deleted, so we know the items are the same.
-				if (pFind->GetCalendar()
-				&& (pFind->GetCalendar() == pData->GetCalendar()))
-				{
-					// This will cause pData to be deleted.
-					GetListCtrl().DeleteItem(index);
-					pData = NULL;
-					break;
-				}
-			}
-			GetDocument()->GetCalendar().DeleteCalendar(cal);
+			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			if (pData && pData->CanDelete())
+				items.push_back(pData);
+		}
+		for (std::vector<CAgilityBookViewCalendarData*>::iterator iter = items.begin(); iter != items.end(); ++iter)
+		{
+			GetDocument()->GetCalendar().DeleteCalendar((*iter)->GetCalendar());
+		}
+		if (0 < items.size())
+		{
+			LoadData();
+			int index = indices[0];
+			if (index >= GetListCtrl().GetItemCount())
+				index = GetListCtrl().GetItemCount() - 1;
+			SetSelection(index);
 			GetDocument()->SetModifiedFlag();
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
-			cal->Release();
 		}
 	}
 }
