@@ -195,19 +195,14 @@ std::string ARBDouble::str(
 		// Strip all trailing 0s.
 		else
 		{
-			pos = retVal.find_last_not_of('0');
-			if (std::string::npos != pos)
-			{
-				if (retVal[pos-1] == '.')
-					--pos;
-			}
-			else
-			{
-				if (retVal[retVal.length()-1] == '.')
-					pos = retVal.length() - 1;
-			}
-			if (std::string::npos != pos)
-				retVal = retVal.substr(0, pos);
+			size_t len = retVal.length();
+			size_t oldLen = len;
+			while (0 < len && retVal[len-1] == '0')
+				--len;
+			if (0 < len && retVal[len-1] == '.')
+				--len;
+			if (len != oldLen)
+				retVal = retVal.substr(0, len);
 		}
 	}
 	return retVal;
