@@ -318,7 +318,7 @@ public:
 	 * @param outEntered Entered trials.
 	 * @return Number of entered trials.
 	 */
-	size_t GetAllEntered(std::vector<ARBCalendar const*>& outEntered) const;
+	size_t GetAllEntered(ARBVectorBase<ARBCalendar>& outEntered) const;
 
 	/**
 	 * Trim all calendar entries before inDate.

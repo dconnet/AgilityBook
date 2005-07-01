@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <vector>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigLifetimePoints.h"
@@ -362,13 +361,6 @@ inline ARBConfigLifetimePointsList& ARBConfigScoring::GetLifetimePoints()
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * A managed list of scoring objects (for auto-reference counting).
- */
-class ARBConfigScoringObjects : public ARBVector<ARBConfigScoring>
-{
-};
-
-/**
  * List of ARBConfigScoring objects.
  */
 class ARBConfigScoringList : public ARBVector<ARBConfigScoring>
@@ -401,7 +393,7 @@ public:
 			std::string const& inDivision,
 			std::string const& inLevel,
 			bool inTitlePoints,
-			ARBConfigScoringObjects& outList) const;
+			ARBVector<ARBConfigScoring>& outList) const;
 
 	/**
 	 * Find an event.

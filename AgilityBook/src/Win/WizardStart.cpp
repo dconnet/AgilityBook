@@ -182,6 +182,31 @@ static struct
 		}
 		}
 	},
+	{WIZ_EXPORT_CALENDAR_APPT, {
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Calendar (MS Outlook Appointment)",
+			"Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Calendar (MS Outlook Appointment)",
+			"Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments."
+		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		}
+	},
+	{WIZ_EXPORT_CALENDAR_TASK, {
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Calendar (MS Outlook Task)",
+			"Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			"Export Calendar (MS Outlook Task)",
+			"Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		}
+	},
+
 	{WIZ_IMPORT_LOG, {
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			"Import Training Log",
@@ -258,8 +283,15 @@ void CWizardStart::UpdateList()
 	for (int i = 0; i < sc_nItems; ++i)
 	{
 		ASSERT(sc_Items[i].index == i);
+		bool bAdd = true;
+		if (m_pSheet->GetCalendarEntries()
+		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_APPT
+		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_TASK)
+			bAdd = false;
+		if (bAdd && NULL == sc_Items[i].data[m_Style].item)
+			bAdd = false;
 		int index = LB_ERR;
-		if (NULL != sc_Items[i].data[m_Style].item)
+		if (bAdd)
 			index = m_ctrlList.AddString(sc_Items[i].data[m_Style].item);
 		if (LB_ERR != index)
 			m_ctrlList.SetItemData(index, i);

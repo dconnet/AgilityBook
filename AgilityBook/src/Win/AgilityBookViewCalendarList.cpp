@@ -71,6 +71,7 @@
 #include "Element.h"
 #include "MainFrm.h"
 #include "TabView.h"
+#include "Wizard.h"
 
 using namespace std;
 
@@ -842,7 +843,7 @@ void CAgilityBookViewCalendarList::LoadData()
 
 	// Add items.
 	int i = 0;
-	vector<ARBCalendar const*> entered;
+	ARBVectorBase<ARBCalendar> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
@@ -858,11 +859,11 @@ void CAgilityBookViewCalendarList::LoadData()
 		if (bHide)
 		{
 			bool bSuppress = false;
-			for (vector<ARBCalendar const*>::const_iterator iterE = entered.begin();
+			for (ARBVectorBase<ARBCalendar>::const_iterator iterE = entered.begin();
 			!bSuppress && iterE != entered.end();
 			++iterE)
 			{
-				ARBCalendar const* pEntered = (*iterE);
+				ARBCalendar* pEntered = (*iterE);
 				if (pCal != pEntered
 				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{
@@ -1132,7 +1133,26 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarExport(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendarList::OnCalendarExport()
 {
-	AfxMessageBox("TODO");
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
+	{
+		ARBVectorBase<ARBCalendar> items;
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			if (pData)
+			{
+				ARBCalendar* pCal = pData->GetCalendar();
+				pCal->AddRef();
+				items.push_back(pCal);
+			}
+		}
+		ARBVectorBase<ARBCalendar>* exportItems = NULL;
+		if (0 < items.size())
+			exportItems = &items;
+		CWizard wiz(GetDocument(), exportItems);
+		wiz.DoModal();
+	}
 }
 
 void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)

@@ -240,7 +240,7 @@ void CAgilityBookViewCalendar::LoadData()
 	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
 
 	// Add items.
-	vector<ARBCalendar const*> entered;
+	ARBVectorBase<ARBCalendar> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
@@ -256,11 +256,11 @@ void CAgilityBookViewCalendar::LoadData()
 		}
 		if (!bSuppress && bHide)
 		{
-			for (vector<ARBCalendar const*>::const_iterator iterE = entered.begin();
+			for (ARBVectorBase<ARBCalendar>::const_iterator iterE = entered.begin();
 				!bSuppress && iterE != entered.end();
 				++iterE)
 			{
-				ARBCalendar const* pEntered = (*iterE);
+				ARBCalendar* pEntered = (*iterE);
 				if (pCal != pEntered
 				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{

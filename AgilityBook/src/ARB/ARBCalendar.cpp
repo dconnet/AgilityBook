@@ -364,14 +364,17 @@ void ARBCalendarList::sort(bool inDescending)
 	std::stable_sort(begin(), end(), SortCalendar(inDescending));
 }
 
-size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendar const*>& outEntered) const
+size_t ARBCalendarList::GetAllEntered(ARBVectorBase<ARBCalendar>& outEntered) const
 {
 	outEntered.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBCalendar const* pCal = (*iter);
+		ARBCalendar * pCal = (*iter);
 		if (ARBCalendar::eEntered == pCal->GetEntered())
+		{
+			pCal->AddRef();
 			outEntered.push_back(pCal);
+		}
 	}
 	return outEntered.size();
 }

@@ -131,9 +131,21 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 	switch (m_pSheet->GetImportExportItem())
 	{
 	default: break;
-	case WIZ_EXPORT_RUNS: order = CAgilityBookOptions::eRunsExport; break;
-	case WIZ_EXPORT_CALENDAR: order = CAgilityBookOptions::eCalExport; break;
-	case WIZ_EXPORT_LOG: order = CAgilityBookOptions::eLogExport; break;
+	case WIZ_EXPORT_RUNS:
+		order = CAgilityBookOptions::eRunsExport;
+		break;
+	case WIZ_EXPORT_CALENDAR:
+		order = CAgilityBookOptions::eCalExport;
+		break;
+	case WIZ_EXPORT_CALENDAR_APPT:
+		order = CAgilityBookOptions::eCalExportAppt;
+		break;
+	case WIZ_EXPORT_CALENDAR_TASK:
+		order = CAgilityBookOptions::eCalExportTask;
+		break;
+	case WIZ_EXPORT_LOG:
+		order = CAgilityBookOptions::eLogExport;
+		break;
 	}
 	return order;
 }
@@ -195,6 +207,12 @@ void CWizardExport::UpdateButtons()
 		break;
 	case WIZ_EXPORT_CALENDAR:
 		order = CAgilityBookOptions::eCalExport;
+		break;
+	case WIZ_EXPORT_CALENDAR_APPT:
+		order = CAgilityBookOptions::eCalExportAppt;
+		break;
+	case WIZ_EXPORT_CALENDAR_TASK:
+		order = CAgilityBookOptions::eCalExportTask;
 		break;
 	case WIZ_EXPORT_LOG:
 		order = CAgilityBookOptions::eLogExport;
@@ -329,6 +347,21 @@ void CWizardExport::UpdatePreview()
 			cols.Add(str);
 		}
 		break;
+	case WIZ_EXPORT_CALENDAR_APPT:
+		for (index = 0; index < columns[IO_TYPE_CALENDAR_APPT].size(); ++index)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_APPT][index]);
+			cols.Add(str);
+		}
+		break;
+	case WIZ_EXPORT_CALENDAR_TASK:
+		for (index = 0; index < columns[IO_TYPE_CALENDAR_TASK].size(); ++index)
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_TASK][index]);
+			cols.Add(str);
+		}
+		break;
+
 	case WIZ_EXPORT_LOG:
 		for (index = 0; index < columns[IO_TYPE_TRAINING].size(); ++index)
 		{
@@ -671,8 +704,6 @@ void CWizardExport::UpdatePreview()
 				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++idx)
 				{
 					ARBDate date;
-					if (0 < idx)
-						data += delim;
 					switch (columns[IO_TYPE_CALENDAR][idx])
 					{
 					case IO_CAL_START_DATE:
@@ -730,6 +761,271 @@ void CWizardExport::UpdatePreview()
 		}
 		break;
 
+	case WIZ_EXPORT_CALENDAR_APPT:
+		{
+			ARBVectorBase<ARBCalendar> allEntries;
+			ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
+			if (!entries)
+			{
+				allEntries.reserve(m_pDoc->GetCalendar().size());
+				for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+				{
+					(*iterCal)->AddRef();
+					allEntries.push_back(*iterCal);
+				}
+				entries = &allEntries;
+			}
+			for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
+			{
+				CString data;
+				ARBCalendar const* pCal = *iterCal;
+				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR_APPT].size()); ++idx)
+				{
+					ARBDate date;
+					switch (columns[IO_TYPE_CALENDAR_APPT][idx])
+					{
+					case IO_CAL_APPT_SUBJECT:
+						data += AddPreviewData(iLine, idx, pCal->GetGenericName().c_str());
+						break;
+					case IO_CAL_APPT_START_DATE:
+						data += AddPreviewData(iLine, idx, pCal->GetStartDate().GetString(format).c_str());
+						break;
+					case IO_CAL_APPT_START_TIME:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_END_DATE:
+						data += AddPreviewData(iLine, idx, pCal->GetEndDate().GetString(format).c_str());
+						break;
+					case IO_CAL_APPT_END_TIME:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_ALLDAY:
+						data += "1";
+						break;
+					case IO_CAL_APPT_REMINDER:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_REMINDER_DATE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_REMINDER_TIME:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_ORGANIZER:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_REQ_ATTENDEES:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_OPT_ATTENDEES:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_RESOURCES:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_BILLING:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_CATEGORIES:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_DESCRIPTION:
+						{
+							CString tmp;
+							if (pCal->IsTentative())
+								tmp += "Information is tentative. ";
+							switch (pCal->GetEntered())
+							{
+							default:
+							case ARBCalendar::eNot:
+								tmp += "Status: Not entered. ";
+								break;
+							case ARBCalendar::eEntered:
+								tmp += "Status: Entered. ";
+								break;
+							case ARBCalendar::ePlanning:
+								tmp += "Status: Planning. ";
+								break;
+							}
+							date = pCal->GetOpeningDate();
+							if (date.IsValid())
+							{
+								tmp += "Trial opens: ";
+								tmp += date.GetString(format).c_str();
+								tmp += " ";
+							}
+							date = pCal->GetClosingDate();
+							if (date.IsValid())
+							{
+								tmp += "Trial closes: ";
+								tmp += date.GetString(format).c_str();
+								tmp += " ";
+							}
+							tmp += pCal->GetNote().c_str();
+							data += AddPreviewData(iLine, idx, tmp);
+						}
+						break;
+					case IO_CAL_APPT_LOCATION:
+						data += AddPreviewData(iLine, idx, pCal->GetLocation().c_str());
+						break;
+					case IO_CAL_APPT_MILEAGE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_PRIORITY:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_PRIVATE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_SENSITIVITY:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_APPT_SHOW_TIME_AS:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					}
+				}
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+					m_ctrlPreview.InsertItem(iLine, data);
+				++iLine;
+			}
+		}
+		break;
+
+	case WIZ_EXPORT_CALENDAR_TASK:
+		{
+			ARBVectorBase<ARBCalendar> allEntries;
+			ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
+			if (!entries)
+			{
+				allEntries.reserve(m_pDoc->GetCalendar().size());
+				for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+				{
+					(*iterCal)->AddRef();
+					allEntries.push_back(*iterCal);
+				}
+				entries = &allEntries;
+			}
+			for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
+			{
+				CString data;
+				ARBCalendar const* pCal = *iterCal;
+				if (ARBCalendar::ePlanning != pCal->GetEntered())
+					continue;
+				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR_TASK].size()); ++idx)
+				{
+					ARBDate date;
+					ARBDate dateStart = pCal->GetOpeningDate();
+					if (!dateStart.IsValid())
+						dateStart = pCal->GetStartDate();
+					ARBDate dateDue = pCal->GetClosingDate();
+					if (!dateDue.IsValid())
+						dateDue = pCal->GetStartDate();
+					if (dateStart > dateDue)
+						dateStart = dateDue;
+					dateStart -= CAgilityBookOptions::CalendarOpeningNear();
+					switch (columns[IO_TYPE_CALENDAR_TASK][idx])
+					{
+					case IO_CAL_TASK_SUBJECT:
+						data += AddPreviewData(iLine, idx, pCal->GetGenericName().c_str());
+						break;
+					case IO_CAL_TASK_START_DATE:
+						data += AddPreviewData(iLine, idx, dateStart.GetString(format).c_str());
+						break;
+					case IO_CAL_TASK_DUE_DATE:
+						data += AddPreviewData(iLine, idx, dateDue.GetString(format).c_str());
+						break;
+					case IO_CAL_TASK_REMINDER:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_REMINDER_DATE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_REMINDER_TIME:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_COMPLETED_DATE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_COMPLETE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_TOTAL_WORK:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_ACTUAL_WORK:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_BILLING:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_CATEGORIES:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_COMPANIES:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_CONTACTS:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_MILEAGE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_NOTES:
+						{
+							CString tmp;
+							if (pCal->IsTentative())
+								tmp += "Information is tentative. ";
+							date = pCal->GetOpeningDate();
+							if (date.IsValid())
+							{
+								tmp += "Trial opens: ";
+								tmp += date.GetString(format).c_str();
+								tmp += " ";
+							}
+							date = pCal->GetClosingDate();
+							if (date.IsValid())
+							{
+								tmp += "Trial closes: ";
+								tmp += date.GetString(format).c_str();
+								tmp += " ";
+							}
+							tmp += "Trial dates: ";
+							tmp += pCal->GetStartDate().GetString(format).c_str();
+							tmp += " to ";
+							tmp += pCal->GetEndDate().GetString(format).c_str();
+							tmp += " ";
+							tmp += pCal->GetNote().c_str();
+							data += AddPreviewData(iLine, idx, tmp);
+						}
+						break;
+					case IO_CAL_TASK_PRIORITY:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_PRIVATE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_ROLE:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_SCH_PRIORITY:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_SENSITIVITY:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					case IO_CAL_TASK_STATUS:
+						data += AddPreviewData(iLine, idx, "");
+						break;
+					}
+				}
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+					m_ctrlPreview.InsertItem(iLine, data);
+				++iLine;
+			}
+		}
+		break;
+
 	case WIZ_EXPORT_LOG:
 		{
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
@@ -738,8 +1034,6 @@ void CWizardExport::UpdatePreview()
 				ARBTraining const* pLog = *iterLog;
 				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++idx)
 				{
-					if (0 < idx)
-						data += delim;
 					switch (columns[IO_TYPE_TRAINING][idx])
 					{
 					case IO_LOG_DATE:
@@ -904,10 +1198,23 @@ void CWizardExport::OnExportAssign()
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
 	switch (m_pSheet->GetImportExportItem())
 	{
-	default: break;
-	case WIZ_EXPORT_RUNS: order = CAgilityBookOptions::eRunsExport; break;
-	case WIZ_EXPORT_CALENDAR: order = CAgilityBookOptions::eCalExport; break;
-	case WIZ_EXPORT_LOG: order = CAgilityBookOptions::eLogExport; break;
+	default:
+		break;
+	case WIZ_EXPORT_RUNS:
+		order = CAgilityBookOptions::eRunsExport;
+		break;
+	case WIZ_EXPORT_CALENDAR:
+		order = CAgilityBookOptions::eCalExport;
+		break;
+	case WIZ_EXPORT_CALENDAR_APPT:
+		order = CAgilityBookOptions::eCalExportAppt;
+		break;
+	case WIZ_EXPORT_CALENDAR_TASK:
+		order = CAgilityBookOptions::eCalExportTask;
+		break;
+	case WIZ_EXPORT_LOG:
+		order = CAgilityBookOptions::eLogExport;
+		break;
 	}
 	if (CAgilityBookOptions::eUnknown != order)
 	{

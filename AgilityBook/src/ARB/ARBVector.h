@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-01 DRC Separated ARBVector into ref counting / other stuff.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-16 DRC Made copy ctor and operator= safer.
  * @li 2004-01-25 DRC Added Move().
@@ -39,6 +40,7 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
+#include <set>
 #include <vector>
 class ARBConfig;
 class ARBErrorCallback;
@@ -54,7 +56,7 @@ using std::vector;
 #endif
 
 /**
- * Base collection template for loading/saving data.
+ * Base collection template for reference counting.
  *
  * I wanted to hide as much implementation as possible - so this template hides
  * the fact that we are actually using arrays of pointers. The only place
@@ -62,16 +64,13 @@ using std::vector;
  * were to change to a full object, we'd really still want to return a pointer
  * on most functions - so the api itself would not actually change.
  *
- * The base template handles all the copy/cleanup necessary. In addition,
- * the Save functionality is the same for all classes, so that is here too.
- * Load functionality varies slightly from class to class, so that is handled
- * by several ARBVector derivations.
+ * The base template handles all the copy/cleanup necessary.
  */
 template <typename T>
-class ARBVector : public std::vector<T*>
+class ARBVectorBase : public std::vector<T*>
 {
 public:
-	ARBVector()
+	ARBVectorBase()
 	{
 	}
 
@@ -80,11 +79,11 @@ public:
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVector(ARBVector<T> const& rhs)
+	ARBVectorBase(ARBVectorBase<T> const& rhs)
 	{
 		// Make a copy first. Then if we throw an exception during
 		// the copy, we won't clobber the existing data.
-		ARBVector<T> tmp;
+		ARBVectorBase<T> tmp;
 		tmp.reserve(rhs.size());
 		for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 		{
@@ -95,7 +94,7 @@ public:
 		swap(tmp);
 	}
 
-	virtual ~ARBVector()
+	virtual ~ARBVectorBase()
 	{
 		clear();
 	}
@@ -105,11 +104,11 @@ public:
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVector<T>& operator=(ARBVector<T> const& rhs)
+	ARBVectorBase<T>& operator=(ARBVectorBase<T> const& rhs)
 	{
 		if (this != &rhs)
 		{
-			ARBVector<T> tmp;
+			ARBVectorBase<T> tmp;
 			tmp.reserve(rhs.size());
 			for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 			{
@@ -124,7 +123,7 @@ public:
 	/**
 	 * Equality test.
 	 */
-	bool operator==(ARBVector<T> const& rhs) const
+	bool operator==(ARBVectorBase<T> const& rhs) const
 	{
 		if (this == &rhs)
 			return true;
@@ -138,22 +137,9 @@ public:
 		}
 		return true;
 	}
-	bool operator!=(ARBVector<T> const& rhs) const
+	bool operator!=(ARBVectorBase<T> const& rhs) const
 	{
 		return !operator==(rhs);
-	}
-
-	/**
-	 * Get all the strings to search in this list.
-	 * @param ioStrings Accumulated list of strings to be used during a search.
-	 * @return Number of strings accumulated in this object.
-	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const
-	{
-		size_t nItems = 0;
-		for (const_iterator iter = begin(); iter != end(); ++iter)
-			nItems += (*iter)->GetSearchStrings(ioStrings);
-		return nItems;
 	}
 
 	/**
@@ -189,6 +175,30 @@ public:
 #else
 		return std::vector<T*>::erase(inFirst, inLast);
 #endif
+	}
+};
+
+/**
+ * Added functionality
+ * This template adds Save functionality since it is the same for all classes.
+ * Load functionality varies slightly from class to class, so that is handled
+ * by several ARBVector derivations.
+ */
+template <typename T>
+class ARBVector : public ARBVectorBase<T>
+{
+public:
+	/**
+	 * Get all the strings to search in this list.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
+	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const
+	{
+		size_t nItems = 0;
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+			nItems += (*iter)->GetSearchStrings(ioStrings);
+		return nItems;
 	}
 
 	/**

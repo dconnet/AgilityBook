@@ -1018,31 +1018,45 @@ void CAgilityBookOptions::SetImportExportDateFormat(
 	AfxGetApp()->WriteProfileInt(section, "dateformat", static_cast<int>(inFormat));
 }
 
+static char const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
+{
+	switch (eOrder)
+	{
+	default:
+		return "Unknown";
+	case CAgilityBookOptions::eRunsImport:
+		return "Import";
+	case CAgilityBookOptions::eRunsExport:
+		return "Export";
+	case CAgilityBookOptions::eCalImport:
+		return "ImportCal";
+	case CAgilityBookOptions::eCalExport:
+		return "ExportCal";
+	case CAgilityBookOptions::eCalExportAppt:
+		return "ExportCalAppt";
+	case CAgilityBookOptions::eCalExportTask:
+		return "ExportCalTask";
+	case CAgilityBookOptions::eLogImport:
+		return "ImportLog";
+	case CAgilityBookOptions::eLogExport:
+		return "ExportLog";
+	case CAgilityBookOptions::eViewTree:
+	case CAgilityBookOptions::eViewRuns:
+	case CAgilityBookOptions::eViewCal:
+	case CAgilityBookOptions::eViewLog:
+		return "Columns";
+	}
+}
+
 void CAgilityBookOptions::GetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
 		std::vector<int>& outValues)
 {
-	CString section;
-	switch (eOrder)
-	{
-	default:			section = "Unknown"; break;
-	case eRunsImport:	section = "Import"; break;
-	case eRunsExport:	section = "Export"; break;
-	case eCalImport:	section = "ImportCal"; break;
-	case eCalExport:	section = "ExportCal"; break;
-	case eLogImport:	section = "ImportLog"; break;
-	case eLogExport:	section = "ExportLog"; break;
-	case eViewTree:
-	case eViewRuns:
-	case eViewCal:
-	case eViewLog:
-		section = "Columns"; break;
-	}
 	outValues.clear();
 	CString item;
 	item.Format("col%d", idxColumn);
-	CString data = AfxGetApp()->GetProfileString(section, item, "");
+	CString data = AfxGetApp()->GetProfileString(GetColumnName(eOrder), item, "");
 	int idx = data.Find(',');
 	while (0 <= idx)
 	{
@@ -1175,6 +1189,60 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_CAL_NOTES);
 			}
 			break;
+		case eCalExportAppt:
+			if (IO_TYPE_CALENDAR_APPT == idxColumn)
+			{
+				outValues.push_back(IO_CAL_APPT_SUBJECT);
+				outValues.push_back(IO_CAL_APPT_START_DATE);
+				outValues.push_back(IO_CAL_APPT_START_TIME);
+				outValues.push_back(IO_CAL_APPT_END_DATE);
+				outValues.push_back(IO_CAL_APPT_END_TIME);
+				outValues.push_back(IO_CAL_APPT_ALLDAY);
+				outValues.push_back(IO_CAL_APPT_REMINDER);
+				outValues.push_back(IO_CAL_APPT_REMINDER_DATE);
+				outValues.push_back(IO_CAL_APPT_REMINDER_TIME);
+				outValues.push_back(IO_CAL_APPT_ORGANIZER);
+				outValues.push_back(IO_CAL_APPT_REQ_ATTENDEES);
+				outValues.push_back(IO_CAL_APPT_OPT_ATTENDEES);
+				outValues.push_back(IO_CAL_APPT_RESOURCES);
+				outValues.push_back(IO_CAL_APPT_BILLING);
+				outValues.push_back(IO_CAL_APPT_CATEGORIES);
+				outValues.push_back(IO_CAL_APPT_DESCRIPTION);
+				outValues.push_back(IO_CAL_APPT_LOCATION);
+				outValues.push_back(IO_CAL_APPT_MILEAGE);
+				outValues.push_back(IO_CAL_APPT_PRIORITY);
+				outValues.push_back(IO_CAL_APPT_PRIVATE);
+				outValues.push_back(IO_CAL_APPT_SENSITIVITY);
+				outValues.push_back(IO_CAL_APPT_SHOW_TIME_AS);
+			}
+			break;
+		case eCalExportTask:
+			if (IO_TYPE_CALENDAR_TASK == idxColumn)
+			{
+				outValues.push_back(IO_CAL_TASK_SUBJECT);
+				outValues.push_back(IO_CAL_TASK_START_DATE);
+				outValues.push_back(IO_CAL_TASK_DUE_DATE);
+				outValues.push_back(IO_CAL_TASK_REMINDER);
+				outValues.push_back(IO_CAL_TASK_REMINDER_DATE);
+				outValues.push_back(IO_CAL_TASK_REMINDER_TIME);
+				outValues.push_back(IO_CAL_TASK_COMPLETED_DATE);
+				outValues.push_back(IO_CAL_TASK_COMPLETE);
+				outValues.push_back(IO_CAL_TASK_TOTAL_WORK);
+				outValues.push_back(IO_CAL_TASK_ACTUAL_WORK);
+				outValues.push_back(IO_CAL_TASK_BILLING);
+				outValues.push_back(IO_CAL_TASK_CATEGORIES);
+				outValues.push_back(IO_CAL_TASK_COMPANIES);
+				outValues.push_back(IO_CAL_TASK_CONTACTS);
+				outValues.push_back(IO_CAL_TASK_MILEAGE);
+				outValues.push_back(IO_CAL_TASK_NOTES);
+				outValues.push_back(IO_CAL_TASK_PRIORITY);
+				outValues.push_back(IO_CAL_TASK_PRIVATE);
+				outValues.push_back(IO_CAL_TASK_ROLE);
+				outValues.push_back(IO_CAL_TASK_SCH_PRIORITY);
+				outValues.push_back(IO_CAL_TASK_SENSITIVITY);
+				outValues.push_back(IO_CAL_TASK_STATUS);
+			}
+			break;
 		case eLogImport:
 		case eLogExport:
 			if (IO_TYPE_TRAINING == idxColumn)
@@ -1251,22 +1319,6 @@ void CAgilityBookOptions::SetColumnOrder(
 		size_t idxColumn,
 		std::vector<int> const& inValues)
 {
-	CString section;
-	switch (eOrder)
-	{
-	default:			section = "Unknown"; break;
-	case eRunsImport:	section = "Import"; break;
-	case eRunsExport:	section = "Export"; break;
-	case eCalImport:	section = "ImportCal"; break;
-	case eCalExport:	section = "ExportCal"; break;
-	case eLogImport:	section = "ImportLog"; break;
-	case eLogExport:	section = "ExportLog"; break;
-	case eViewTree:
-	case eViewRuns:
-	case eViewCal:
-	case eViewLog:
-		section = "Columns"; break;
-	}
 	CString item;
 	CString data;
 	for (size_t i = 0; i < inValues.size(); ++i)
@@ -1277,7 +1329,7 @@ void CAgilityBookOptions::SetColumnOrder(
 		data += item;
 	}
 	item.Format("col%d", idxColumn);
-	AfxGetApp()->WriteProfileString(section, item, data);
+	AfxGetApp()->WriteProfileString(GetColumnName(eOrder), item, data);
 }
 
 /////////////////////////////////////////////////////////////////////////////
