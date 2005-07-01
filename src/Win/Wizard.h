@@ -36,6 +36,8 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include "ARBCalendar.h"
+#include "ARBVector.h"
 #include "DlgBaseSheet.h"
 #include "WizardExcel.h"
 class CAgilityBookDoc;
@@ -49,12 +51,14 @@ class CWizardStart;
 #define WIZ_EXPORT_RUNS				1
 #define WIZ_IMPORT_CALENDAR			2
 #define WIZ_EXPORT_CALENDAR			3
-#define WIZ_IMPORT_LOG				4
-#define WIZ_EXPORT_LOG				5
-#define WIZ_IMPORT_CONFIGURATION	6
-#define WIZ_EXPORT_CONFIGURATION	7
-#define WIZ_EXPORT_DTD				8
-#define WIZ_EXPORT_XML				9
+#define WIZ_EXPORT_CALENDAR_APPT	4
+#define WIZ_EXPORT_CALENDAR_TASK	5
+#define WIZ_IMPORT_LOG				6
+#define WIZ_EXPORT_LOG				7
+#define WIZ_IMPORT_CONFIGURATION	8
+#define WIZ_EXPORT_CONFIGURATION	9
+#define WIZ_EXPORT_DTD				10
+#define WIZ_EXPORT_XML				11
 
 // These must agree with the radio button ordering in WizardStart.cpp
 #define WIZARD_RADIO_EXCEL			0
@@ -69,11 +73,13 @@ class CWizard : public CDlgBaseSheet
 public:
 	CWizard(
 			CAgilityBookDoc* pDoc,
+			ARBVectorBase<ARBCalendar>* pCalEntries = NULL,
 			CWnd* pParentWnd = NULL);
 
 // Attributes
 private:
 	CAgilityBookDoc* m_pDoc;
+	ARBVectorBase<ARBCalendar>* m_CalEntries;
 	CWizardStart* m_pageStart;
 	CWizardImport* m_pageImport;
 	CWizardExport* m_pageExport;
@@ -83,6 +89,13 @@ private:
 
 // Operations
 public:
+	/**
+	 * Get selected entries for export. If NULL, we're exporting everything.
+	 */
+	ARBVectorBase<ARBCalendar>* GetCalendarEntries() const
+	{
+		return m_CalEntries;
+	}
 	/**
 	 * Get the Excel wrapper.
 	 */

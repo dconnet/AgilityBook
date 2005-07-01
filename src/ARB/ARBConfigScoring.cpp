@@ -501,7 +501,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 		std::string const& inDivision,
 		std::string const& inLevel,
 		bool inTitlePoints,
-		ARBConfigScoringObjects& outList) const
+		ARBVector<ARBConfigScoring>& outList) const
 {
 	outList.clear();
 	const_iterator iter;
@@ -544,7 +544,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 	if (inTitlePoints)
 	{
-		ARBConfigScoringObjects::iterator iter;
+		ARBVector<ARBConfigScoring>::iterator iter;
 		for (iter = outList.begin(); iter != outList.end(); )
 		{
 			if (0 < (*iter)->GetTitlePoints().size())
@@ -564,7 +564,7 @@ bool ARBConfigScoringList::FindEvent(
 {
 	if (outEvent)
 		*outEvent = NULL;
-	ARBConfigScoringObjects items;
+	ARBVector<ARBConfigScoring> items;
 	FindAllEvents(inDivision, inLevel, false, items);
 	if (0 == items.size())
 		return false;
@@ -573,7 +573,7 @@ bool ARBConfigScoringList::FindEvent(
 		pEvent = *(items.begin());
 	else
 	{
-		ARBConfigScoringObjects::iterator iter;
+		ARBVector<ARBConfigScoring>::iterator iter;
 		for (iter = items.begin(); iter != items.end(); )
 		{
 			ARBConfigScoring const* pScoring = *iter;
@@ -612,7 +612,7 @@ bool ARBConfigScoringList::VerifyEvent(
 		std::string const& inDivision,
 		std::string const& inLevel) const
 {
-	ARBConfigScoringObjects items;
+	ARBVector<ARBConfigScoring> items;
 	FindAllEvents(inDivision, inLevel, false, items);
 	return (0 < items.size());
 }

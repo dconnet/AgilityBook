@@ -124,7 +124,7 @@ public:
 			std::string const& inDivision,
 			std::string const& inLevel,
 			bool inTitlePoints,
-			ARBConfigScoringObjects& outList) const;
+			ARBVector<ARBConfigScoring>& outList) const;
 
 	/**
 	 * Verify a scoring method exists.

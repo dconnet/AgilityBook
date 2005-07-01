@@ -311,7 +311,7 @@ size_t ARBConfigEvent::FindAllEvents(
 		std::string const& inDivision,
 		std::string const& inLevel,
 		bool inTitlePoints,
-		ARBConfigScoringObjects& outList) const
+		ARBVector<ARBConfigScoring>& outList) const
 {
 	return m_Scoring.FindAllEvents(inDivision, inLevel, inTitlePoints, outList);
 }

@@ -368,13 +368,13 @@ int CAgilityBookViewPoints::DoEvents(
 		bool bHasExistingLifetimePoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, true);
 
 		// Don't tally runs that have no titling points.
-		ARBConfigScoringObjects scoringItems;
+		ARBVector<ARBConfigScoring> scoringItems;
 		if (0 == pEvent->FindAllEvents(inDiv->GetName(), inLevel->GetName(), true, scoringItems))
 			continue;
 		// Iterate across each scoring method separately. This means it is
 		// possible to have multiple lines show up for a given event. But if
 		// that happens, it means the events were scored differently.
-		for (ARBConfigScoringObjects::iterator iterScoring = scoringItems.begin();
+		for (ARBVector<ARBConfigScoring>::iterator iterScoring = scoringItems.begin();
 			iterScoring != scoringItems.end();
 			++iterScoring)
 		{

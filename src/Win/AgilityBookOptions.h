@@ -273,17 +273,19 @@ public:
 			ARBDate::DateFormat inFormat);
 	typedef enum
 	{
-		eUnknown	= 0x0000,
-		eRunsImport	= 0x0001,
-		eRunsExport	= 0x0002,
-		eCalImport	= 0x0004,
-		eCalExport	= 0x0008,
-		eLogImport	= 0x0010,
-		eLogExport	= 0x0020,
-		eViewTree	= 0x0040,
-		eViewRuns	= 0x0080,
-		eViewCal	= 0x0100,
-		eViewLog	= 0x0200,
+		eUnknown		= 0x0000,
+		eRunsImport		= 0x0001,
+		eRunsExport		= 0x0002,
+		eCalImport		= 0x0004,
+		eCalExport		= 0x0008,
+		eCalExportAppt	= 0x0010,
+		eCalExportTask	= 0x0020,
+		eLogImport		= 0x0040,
+		eLogExport		= 0x0080,
+		eViewTree		= 0x0100,
+		eViewRuns		= 0x0200,
+		eViewCal		= 0x0400,
+		eViewLog		= 0x0800,
 	} ColumnOrder;
 	// General program options
 	static bool GetAutoUpdateCheck();

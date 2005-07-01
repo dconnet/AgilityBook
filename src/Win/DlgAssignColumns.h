@@ -40,9 +40,10 @@
  */
 
 /*
- * If columns are added/removed, do not change these numbers. These numbers
- * are stored in a users registry for the order. If a column is removed,
- * then the number must be reserved.
+ * If types/columns are added/removed, do not change these numbers.
+ * These numbers are stored in a users registry for the order.
+ * If a column is removed, then the number must be reserved.
+ * (types are stored as a key name "colN", the others are the value of the key)
  */
 #define IO_TYPE_RUNS_FAULTS_TIME	0
 #define IO_TYPE_RUNS_TIME_FAULTS	1
@@ -56,7 +57,9 @@
 #define IO_TYPE_VIEW_RUNS_LIST		9
 #define IO_TYPE_VIEW_CALENDAR_LIST	10
 #define IO_TYPE_VIEW_TRAINING_LIST	11
-#define IO_TYPE_MAX					12
+#define IO_TYPE_CALENDAR_APPT		12
+#define IO_TYPE_CALENDAR_TASK		13
+#define IO_TYPE_MAX					14
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1
@@ -123,9 +126,53 @@
 #define IO_TREE_RUN_LEVEL			62
 #define IO_TREE_RUN_HEIGHT			63
 #define IO_LOG_SUBNAME				64
-#define IO_TREE_TRIAL_VERIFIED      65
+#define IO_TREE_TRIAL_VERIFIED    	65
 #define IO_RUNS_SPEED               66
-#define IO_MAX						67
+#define IO_CAL_APPT_SUBJECT			67
+#define IO_CAL_APPT_START_DATE		68
+#define IO_CAL_APPT_START_TIME		69
+#define IO_CAL_APPT_END_DATE		70
+#define IO_CAL_APPT_END_TIME		71
+#define IO_CAL_APPT_ALLDAY			72
+#define IO_CAL_APPT_REMINDER		73
+#define IO_CAL_APPT_REMINDER_DATE	74
+#define IO_CAL_APPT_REMINDER_TIME	75
+#define IO_CAL_APPT_ORGANIZER		76
+#define IO_CAL_APPT_REQ_ATTENDEES	77
+#define IO_CAL_APPT_OPT_ATTENDEES	78
+#define IO_CAL_APPT_RESOURCES		79
+#define IO_CAL_APPT_BILLING			80
+#define IO_CAL_APPT_CATEGORIES		81
+#define IO_CAL_APPT_DESCRIPTION		82
+#define IO_CAL_APPT_LOCATION		83
+#define IO_CAL_APPT_MILEAGE			84
+#define IO_CAL_APPT_PRIORITY		85
+#define IO_CAL_APPT_PRIVATE			86
+#define IO_CAL_APPT_SENSITIVITY		87
+#define IO_CAL_APPT_SHOW_TIME_AS	88
+#define IO_CAL_TASK_SUBJECT			89
+#define IO_CAL_TASK_START_DATE		90
+#define IO_CAL_TASK_DUE_DATE		91
+#define IO_CAL_TASK_REMINDER		92
+#define IO_CAL_TASK_REMINDER_DATE	93
+#define IO_CAL_TASK_REMINDER_TIME	94
+#define IO_CAL_TASK_COMPLETED_DATE	95
+#define IO_CAL_TASK_COMPLETE		96
+#define IO_CAL_TASK_TOTAL_WORK		97
+#define IO_CAL_TASK_ACTUAL_WORK		98
+#define IO_CAL_TASK_BILLING			99
+#define IO_CAL_TASK_CATEGORIES		100
+#define IO_CAL_TASK_COMPANIES		101
+#define IO_CAL_TASK_CONTACTS		102
+#define IO_CAL_TASK_MILEAGE			103
+#define IO_CAL_TASK_NOTES			104
+#define IO_CAL_TASK_PRIORITY		105
+#define IO_CAL_TASK_PRIVATE			106
+#define IO_CAL_TASK_ROLE			107
+#define IO_CAL_TASK_SCH_PRIORITY	108
+#define IO_CAL_TASK_SENSITIVITY		109
+#define IO_CAL_TASK_STATUS			110
+#define IO_MAX						111
 
 #include <vector>
 #include "AgilityBookOptions.h"
