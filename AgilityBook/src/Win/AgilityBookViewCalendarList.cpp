@@ -674,7 +674,15 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	{
 		int idxImage = (LVIS_STATEIMAGEMASK & state) >> 12;
 		if (0 < idxImage)
+		{
+#if _MSC_VER < 1300
+			ImageList_DrawEx(pImageStateList->m_hImageList, idxImage,
+				dc.GetSafeHdc(), rIconPos.left, rIconPos.top, szIcon.cx, szIcon.cy,
+				CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#else
 			pImageStateList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#endif
+		}
 	}
 	CImageList* pImageList = GetListCtrl().GetImageList(LVSIL_SMALL);
 	if (pData && pImageList)
@@ -682,7 +690,13 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		int idxImage = pData->GetIcon();
 		if (0 <= idxImage)
 		{
+#if _MSC_VER < 1300
+			ImageList_DrawEx(pImageList->m_hImageList, idxImage,
+				dc.GetSafeHdc(), rIconPos.left, rIconPos.top, szIcon.cx, szIcon.cy,
+				CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#else
 			pImageList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#endif
 			idxImage = (LVIS_OVERLAYMASK & state) >> 8;
 			if (0 < idxImage)
 				pImageList->Draw(&dc, 0, rIconPos.TopLeft(), (LVIS_OVERLAYMASK & state));
@@ -1221,9 +1235,9 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 	if (0 < GetSelection(indices))
 	{
 		std::vector<CAgilityBookViewCalendarData*> items;
-		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		for (std::vector<int>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			CAgilityBookViewCalendarData* pData = GetItemData(*iterData);
 			if (pData)
 				items.push_back(pData);
 		}
@@ -1389,9 +1403,9 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 	if (0 < GetSelection(indices))
 	{
 		std::vector<CAgilityBookViewCalendarData*> items;
-		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		for (std::vector<int>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			CAgilityBookViewCalendarData* pData = GetItemData(*iterData);
 			if (pData && pData->CanDelete())
 				items.push_back(pData);
 		}
