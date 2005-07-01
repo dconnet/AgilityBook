@@ -784,9 +784,9 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 	if (0 < GetSelection(indices))
 	{
 		std::vector<CAgilityBookViewTrainingData*> items;
-		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		for (std::vector<int>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 		{
-			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
+			CAgilityBookViewTrainingData* pData = GetItemData(*iterData);
 			if (pData)
 				items.push_back(pData);
 		}
