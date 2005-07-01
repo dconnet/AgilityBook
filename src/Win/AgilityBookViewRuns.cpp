@@ -418,7 +418,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						&pScoring);
 				if (pScoring)
 				{
-					if (pScoring->HasSpeedPts())
+					if (pScoring->HasSpeedPts() && m_pRun->GetQ().Qualified())
 					{
 						int pts = m_pRun->GetSpeedPoints(pScoring);
 						str.Format("%d", pts);
