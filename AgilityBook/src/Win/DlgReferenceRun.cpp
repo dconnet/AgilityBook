@@ -40,6 +40,7 @@
 #include <string>
 
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "ARBDogReferenceRun.h"
 
 #ifdef _DEBUG
