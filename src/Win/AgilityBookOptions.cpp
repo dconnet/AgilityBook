@@ -926,6 +926,16 @@ void CAgilityBookOptions::SetLastEnteredHeight(char const* inLast)
 	AfxGetApp()->WriteProfileString("Last", "Height", inLast);
 }
 
+CString CAgilityBookOptions::GetLastEnteredRefHeight()
+{
+	return AfxGetApp()->GetProfileString("Last", "RefHeight", "");
+}
+
+void CAgilityBookOptions::SetLastEnteredRefHeight(char const* inLast)
+{
+	AfxGetApp()->WriteProfileString("Last", "RefHeight", inLast);
+}
+
 CString CAgilityBookOptions::GetLastEnteredJudge()
 {
 	return AfxGetApp()->GetProfileString("Last", "Judge", "");

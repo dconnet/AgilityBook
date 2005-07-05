@@ -241,6 +241,8 @@ public:
 	static void SetLastEnteredLevel(char const* inLast);
 	static CString GetLastEnteredHeight();
 	static void SetLastEnteredHeight(char const* inLast);
+	static CString GetLastEnteredRefHeight();
+	static void SetLastEnteredRefHeight(char const* inLast);
 	static CString GetLastEnteredJudge();
 	static void SetLastEnteredJudge(char const* inLast);
 	static CString GetLastEnteredHandler();
