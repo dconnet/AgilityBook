@@ -74,6 +74,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	if (m_Points.IsEmpty())
 		m_Points = "0";
 	m_Notes.Replace("\n", "\r\n");
+	if (m_Height.IsEmpty())
+		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
 }
 
 void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
@@ -145,6 +147,8 @@ void CDlgReferenceRun::OnOK()
 		return;
 	}
 	ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
+
+	CAgilityBookOptions::SetLastEnteredRefHeight(m_Height);
 
 	m_Ref->SetQ(q);
 	m_Ref->SetPlace(m_Place);

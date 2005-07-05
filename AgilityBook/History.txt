@@ -1,8 +1,9 @@
-6/27/2005: v1.5.5.10 <in development>
+7/5/2005: v1.5.5.10 <in development>
 - New features / Enhancements:
   - Removed ARBDouble as a class, created a to-string helper function.
   - Cleaned up some reference counting APIs.
   - Add color coding to calendar for entries that need attention.
+  - Remember the last entered height in the reference runs dialog.
 
 6/11/2005: v1.5.4.10
 - Bug fixes
