@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-05 DRC Added a new formatting option.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-03-21 DRC Fixed up some operators.
@@ -52,7 +53,7 @@ class ARBDate
 {
 public:
 	/**
-	 * Output date format
+	 * Output date format (do not change the values!)
 	 */
 	typedef enum
 	{
@@ -71,6 +72,8 @@ public:
 		eSlashYMD		= 10,	///< Y/M/D
 		eDashDMY		= 11,	///< D-M-Y
 		eSlashDMY		= 12,	///< D/M/Y
+		// New formats...
+		eYYYYMMDD		= 13,	///< YYYYMMDD (output only)
 	} DateFormat;
 
 	/**
@@ -192,7 +195,7 @@ public:
 	int GetYear() const;	///< Get the current year.
 
 	/**
-	 * Days of the week
+	 * Days of the week (do not change the values!)
 	 */
 	typedef enum
 	{
