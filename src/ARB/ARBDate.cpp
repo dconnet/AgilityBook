@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-05 DRC Added a new formatting option.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Added FromString().
@@ -370,6 +371,15 @@ std::string ARBDate::GetString(DateFormat inFormat) const
 			str << day << "-";
 			str.width(4);
 			str << yr;
+			break;
+		case eYYYYMMDD:
+			str.fill('0');
+			str.width(4);
+			str << yr;
+			str.width(2);
+			str << mon;
+			str.width(2);
+			str << day;
 			break;
 		default:				///< YYYY-MM-DD or MM/DD/YYYY
 		case eSlashMMDDYYYY:	///< MM/DD/YYYY
