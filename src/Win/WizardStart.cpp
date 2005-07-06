@@ -125,7 +125,8 @@ static struct
 	} data[3]; // Data must agree with WIZARD_RADIO_* defines.
 } const sc_Items[] =
 {
-	{WIZ_IMPORT_RUNS, {
+	{WIZ_IMPORT_RUNS,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			"Import Trials and Runs",
 			"Import trial and run information from Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
@@ -138,9 +139,9 @@ static struct
 			"Import Dogs, Trials, Runs and Judges",
 			"Import dog, trial, run and judge information from Agility Record Book."
 		}
-		}
-	},
-	{WIZ_EXPORT_RUNS, {
+	} },
+	{WIZ_EXPORT_RUNS,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			"Export Runs",
 			"Export trial and run information to Excel."
@@ -150,9 +151,9 @@ static struct
 			"Export trial and run information so it can be imported into a spreadsheet."
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
-		}
-	},
-	{WIZ_IMPORT_CALENDAR, {
+	} },
+	{WIZ_IMPORT_CALENDAR,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			"Import Calendar",
 			"Import a calendar listing from Excel."
@@ -165,9 +166,9 @@ static struct
 			"Import Calendar",
 			"Import a calendar listing that was exported from Agility Record Book."
 		}
-		}
-	},
-	{WIZ_EXPORT_CALENDAR, {
+	} },
+	{WIZ_EXPORT_CALENDAR,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			"Export Calendar",
 			"Export your calendar listing to Excel."
@@ -180,9 +181,18 @@ static struct
 			"Export Calendar",
 			"Export your calendar listing so it can be imported into Agility Record Book."
 		}
-		}
-	},
-	{WIZ_EXPORT_CALENDAR_APPT, {
+	} },
+	{WIZ_EXPORT_CALENDAR_ICAL,
+	{
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_FINISH, -1,
+			"Export Calendar (iCalendar)",
+			"Export calendar entries in iCalendar (.ics) format so they can be imported into other programs."
+		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+	} },
+	{WIZ_EXPORT_CALENDAR_APPT,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			"Export Calendar (MS Outlook Appointment)",
 			"Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments."
@@ -192,9 +202,9 @@ static struct
 			"Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments."
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
-		}
-	},
-	{WIZ_EXPORT_CALENDAR_TASK, {
+	} },
+	{WIZ_EXPORT_CALENDAR_TASK,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			"Export Calendar (MS Outlook Task)",
 			"Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
@@ -204,10 +214,9 @@ static struct
 			"Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
-		}
-	},
-
-	{WIZ_IMPORT_LOG, {
+	} },
+	{WIZ_IMPORT_LOG,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			"Import Training Log",
 			"Import a Training Log from Excel."
@@ -220,9 +229,9 @@ static struct
 			"Import Training Log",
 			"Import a Training Log that was exported from Agility Record Book."
 		}
-		}
-	},
-	{WIZ_EXPORT_LOG, {
+	} },
+	{WIZ_EXPORT_LOG,
+	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			"Export Training Log",
 			"Export your Training Log to Excel."
@@ -235,44 +244,43 @@ static struct
 			"Export Training Log",
 			"Export your Training Log so it can be imported into Agility Record Book."
 		}
-		}
-	},
-	{WIZ_IMPORT_CONFIGURATION, {
+	} },
+	{WIZ_IMPORT_CONFIGURATION,
+	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			"Import Configuration",
 			"Update your configuration to support new and/or updated venues."
 		}
-		}
-	},
-	{WIZ_EXPORT_CONFIGURATION, {
+	} },
+	{WIZ_EXPORT_CONFIGURATION,
+	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			"Export Configuration",
 			"Export your configuration so it can be imported into Agility Record Book."
 		}
-		}
-	},
-	{WIZ_EXPORT_DTD, {
+	} },
+	{WIZ_EXPORT_DTD,
+	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			"Export DTD",
 			"Export the Document Type Definition. This data describes the XML format of the data file."
 		}
-		}
-	},
-	{WIZ_EXPORT_XML, {
+	} },
+	{WIZ_EXPORT_XML,
+	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			"Export File as XML",
 			"Export your data file as an XML file. The DTD will be contained within this file."
 		}
-		}
-	},
+	} },
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
@@ -285,6 +293,7 @@ void CWizardStart::UpdateList()
 		ASSERT(sc_Items[i].index == i);
 		bool bAdd = true;
 		if (m_pSheet->GetCalendarEntries()
+		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_ICAL
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_APPT
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_TASK)
 			bAdd = false;
@@ -729,6 +738,46 @@ BOOL CWizardStart::OnWizardFinish()
 							tree.SaveXML(output);
 							output.close();
 						}
+					}
+					bOk = true;
+				}
+			}
+			break;
+
+		case WIZ_EXPORT_CALENDAR_ICAL:
+			{
+				CString def, fname, filter;
+				def.LoadString(IDS_FILEEXT_DEF_ICS);
+				fname.LoadString(IDS_FILEEXT_FNAME_ICS);
+				filter.LoadString(IDS_FILEEXT_FILTER_ICS);
+				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
+				if (IDOK == file.DoModal())
+				{
+					ARBVectorBase<ARBCalendar> allEntries;
+					ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
+					if (!entries)
+					{
+						allEntries.reserve(m_pDoc->GetCalendar().size());
+						for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+						{
+							(*iterCal)->AddRef();
+							allEntries.push_back(*iterCal);
+						}
+						entries = &allEntries;
+					}
+					std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+					output.exceptions(std::ios_base::badbit);
+					if (output.is_open())
+					{
+						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
+						ARBCalendar::iCalendarBegin(output);
+						for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
+						{
+							ARBCalendar const* pCal = *iterCal;
+							pCal->iCalendar(output, nWarning);
+						}
+						ARBCalendar::iCalendarEnd(output);
+						output.close();
 					}
 					bOk = true;
 				}

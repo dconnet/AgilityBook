@@ -333,6 +333,7 @@ public:
 		eFormatTrial,
 		eFormatRun,
 		eFormatCalendar,
+		eFormatiCalendar,
 		eFormatLog,
 	} eClipFormat;
 	static UINT GetClipboardFormat(eClipFormat fmt);

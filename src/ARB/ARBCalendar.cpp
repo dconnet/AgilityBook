@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-05 DRC Added iCalendar support.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -55,6 +56,34 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+// Static functions (for iCalendar/vCalender)
+// See RFC2445.
+
+void ARBCalendar::iCalendarBegin(std::ostream& ioStream)
+{
+	ioStream << "BEGIN:VCALENDAR" << std::endl;
+	ioStream << "VERSION:2.0" << std::endl;
+}
+
+void ARBCalendar::iCalendarEnd(std::ostream& ioStream)
+{
+	ioStream << "END:VCALENDAR" << std::endl;
+}
+
+static void iCalendarLine(std::ostream& ioStream,
+		char const* const inField,
+		char const* const inStr = NULL)
+{
+	ioStream << inField;
+	if (inStr)
+	{
+		// TODO: Lines should not be longer than 75 chars.
+		ioStream << inStr;
+	}
+	ioStream << "\r\n";
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -336,6 +365,106 @@ bool ARBCalendar::Save(Element& ioTree) const
 	if (0 < m_Note.length())
 		cal.SetValue(m_Note);
 	return true;
+}
+
+void ARBCalendar::iCalendar(std::ostream& ioStream, int inAlarm) const
+{
+	ARBDate date;
+	ARBDate dateStart = GetOpeningDate();
+	if (!dateStart.IsValid())
+		dateStart = GetStartDate();
+	ARBDate dateDue = GetClosingDate();
+	if (!dateDue.IsValid())
+		dateDue = GetStartDate();
+	if (dateStart > dateDue)
+		dateStart = dateDue;
+	//dateStart -= CAgilityBookOptions::CalendarOpeningNear();
+
+	//TODO
+	iCalendarLine(ioStream, "BEGIN:VEVENT");
+	iCalendarLine(ioStream, "DTSTART:", m_DateStart.GetString(ARBDate::eYYYYMMDD).c_str());
+	iCalendarLine(ioStream, "DTEND:", m_DateEnd.GetString(ARBDate::eYYYYMMDD).c_str());
+	iCalendarLine(ioStream, "SUMMARY:", GetGenericName().c_str());
+	iCalendarLine(ioStream, "LOCATION:", m_Location.c_str());
+
+	std::ostringstream str;
+	if (IsTentative())
+		str << "Information is tentative. ";
+	switch (GetEntered())
+	{
+	default:
+	case ARBCalendar::eNot:
+		str << "Status: Not entered. ";
+		break;
+	case ARBCalendar::eEntered:
+		str << "Status: Entered. ";
+		break;
+	case ARBCalendar::ePlanning:
+		str << "Status: Planning. ";
+		break;
+	}
+	if (m_DateOpening.IsValid())
+	{
+		str << "Trial opens: ";
+		str << m_DateOpening.GetString(ARBDate::eDefault).c_str();
+		str << " ";
+	}
+	if (m_DateClosing.IsValid())
+	{
+		str << "Trial closes: ";
+		str << m_DateClosing.GetString(ARBDate::eDefault).c_str();
+		str << " ";
+	}
+	str << GetNote() << std::endl;
+	iCalendarLine(ioStream, "DESCRIPTION:", str.str().c_str());
+	iCalendarLine(ioStream, "END:VEVENT");
+
+	if (ePlanning == m_eEntered)
+	{
+#if 0
+		ioStream << "BEGIN:VTODO" << std::endl;
+{
+	case IO_CAL_TASK_SUBJECT:
+		data += AddPreviewData(iLine, idx, pCal->GetGenericName().c_str());
+		break;
+	case IO_CAL_TASK_START_DATE:
+		data += AddPreviewData(iLine, idx, dateStart.GetString(format).c_str());
+		break;
+	case IO_CAL_TASK_DUE_DATE:
+		data += AddPreviewData(iLine, idx, dateDue.GetString(format).c_str());
+		break;
+	case IO_CAL_TASK_NOTES:
+		{
+			CString tmp;
+			if (pCal->IsTentative())
+				tmp += "Information is tentative. ";
+			date = pCal->GetOpeningDate();
+			if (date.IsValid())
+			{
+				tmp += "Trial opens: ";
+				tmp += date.GetString(format).c_str();
+				tmp += " ";
+			}
+			date = pCal->GetClosingDate();
+			if (date.IsValid())
+			{
+				tmp += "Trial closes: ";
+				tmp += date.GetString(format).c_str();
+				tmp += " ";
+			}
+			tmp += "Trial dates: ";
+			tmp += pCal->GetStartDate().GetString(format).c_str();
+			tmp += " to ";
+			tmp += pCal->GetEndDate().GetString(format).c_str();
+			tmp += " ";
+			tmp += pCal->GetNote().c_str();
+			data += AddPreviewData(iLine, idx, tmp);
+		}
+		break;
+	}
+		ioStream << "END:VTODO" << std::endl;
+#endif
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

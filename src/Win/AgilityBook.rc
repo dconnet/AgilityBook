@@ -207,6 +207,7 @@ BEGIN
 
             MENUITEM SEPARATOR
             MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
+
             MENUITEM SEPARATOR
             MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
 
@@ -2475,6 +2476,12 @@ BEGIN
     IDS_BUTTON_ABORT        "Abort"
     IDS_BUTTON_IGNORE       "Ignore"
     IDS_BUTTON_RETRY        "Retry"
+    IDS_COL_BREED           "Breed"
+    IDS_COL_CLOSES          "Closes"
+    IDS_COL_CLUB            "Club"
+    IDS_COL_DATE            "Date"
+    IDS_COL_DIVISION        "Division"
+    IDS_COL_DOG             "Dog"
 END
 
 STRINGTABLE 
@@ -2518,12 +2525,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_BREED           "Breed"
-    IDS_COL_CLOSES          "Closes"
-    IDS_COL_CLUB            "Club"
-    IDS_COL_DATE            "Date"
-    IDS_COL_DIVISION        "Division"
-    IDS_COL_DOG             "Dog"
     IDS_COL_END_DATE        "End Date"
     IDS_COL_EVENT           "Event"
     IDS_COL_FAULT           "Fault"
@@ -2534,16 +2535,16 @@ BEGIN
     IDS_COL_LOCATION        "Location"
     IDS_COL_NAME            "Name"
     IDS_COL_NOTE            "Note"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_COL_NOTES           "Notes"
     IDS_COL_NUMBER          "Number"
     IDS_COL_OPENS           "Opens"
     IDS_COL_PLACE           "Place"
     IDS_COL_POINTS          "Points"
     IDS_COL_PTS             "Pts"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_Q               "Q"
     IDS_COL_Q_D             "Q'd"
     IDS_COL_RECEIVED        "Received"
@@ -2554,16 +2555,16 @@ BEGIN
     IDS_COL_HEIGHT          "Height"
     IDS_COL_REG_NAME        "Registered Name"
     IDS_COL_CALLNAME        "Call Name"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_COL_TRIALNOTES      "Trial Notes"
     IDS_COL_CONDITIONS      "Conditions"
     IDS_COL_COURSEFAULTS    "Course Faults"
     IDS_COL_YARDS           "Yards"
     IDS_COL_YPS             "YPS"
     IDS_COL_SCT             "SCT"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_TOTAL_FAULTS    "Total Faults"
     IDS_COL_REQ_OPENING     "Required Opening"
     IDS_COL_REQ_CLOSING     "Required Closing"
@@ -2574,16 +2575,16 @@ BEGIN
     IDS_COL_COMMENTS        "Comments"
     IDS_COL_FAULTS          "Faults"
     IDS_COL_TENTATIVE       "Tentative"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_COL_ENTERED         "Entered"
     IDS_COL_DOB             "Birthday"
     IDS_COL_AGE             "Age"
     IDS_COL_TYPE            "Type"
     IDS_COL_TITLE           "Title"
     IDS_COL_TRIAL           "Trial"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_SUBNAME         "SubName"
     IDS_COL_VERIFIED        "Verified"
     IDS_COL_SPEED           "Speed"
@@ -2600,6 +2601,10 @@ BEGIN
     IDS_COL_RESOURCES       "Meeting Resources"
     IDS_COL_BILLING         "Billing Information"
     IDS_COL_CATEGORIES      "Categories"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_DESCRIPTION     "Description"
     IDS_COL_MILEAGE         "Mileage"
     IDS_COL_PRIORITY        "Priority"
@@ -2743,6 +2748,14 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_INFO_LOCATION       "Location Information"
+    IDS_FILEEXT_DEF_ICS     "ics"
+    IDS_FILEEXT_FNAME_ICS   "*.ics"
+    IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_BLANK_COLUMN        "<Blank Column>"
     IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
     IDS_LIFETIME_POINTS     "LifeTime Points"
@@ -2759,11 +2772,6 @@ BEGIN
     IDS_ADDED_LOCATIONS     "%1!d! locations"
     IDS_INFO_CLUB           "Club's Information"
     IDS_INFO_JUDGE          "Judge's Information"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_INFO_LOCATION       "Location Information"
 END
 
 STRINGTABLE 

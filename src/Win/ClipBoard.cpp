@@ -39,6 +39,7 @@
 #include "AgilityBook.h"
 #include "ClipBoard.h"
 
+#include "AgilityBookOptions.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -49,48 +50,85 @@ static char THIS_FILE[] = __FILE__;
 
 ////////////////////////////////////////////////////////////////////////////
 
-bool CopyDataToClipboard(
-		UINT clpFmt,
-		Element const& tree,
-		CString const& txtForm)
+CClipboardDataWriter::CClipboardDataWriter()
+	: m_bOkay(false)
 {
-	if (!AfxGetMainWnd()->OpenClipboard())
-		return false;
-	if (!EmptyClipboard())
+	if (AfxGetMainWnd()->OpenClipboard())
 	{
-		CloseClipboard();
-		return false;
+		if (EmptyClipboard())
+			m_bOkay = true;
+		else
+			CloseClipboard();
 	}
-	std::ostringstream out;
-	tree.SaveXML(out);
-	std::string data = out.str();
+}
 
+CClipboardDataWriter::~CClipboardDataWriter()
+{
+	if (m_bOkay)
+		CloseClipboard();
+}
+
+bool CClipboardDataWriter::SetData(
+		UINT clpFmt,
+		Element const& inTree)
+{
+	bool bOk = false;
+	std::ostringstream out;
+	inTree.SaveXML(out);
+	std::string data = out.str();
 	// alloc mem block & copy text in
 	HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
 	if (NULL != temp)
 	{
+		bOk = true;
 		LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
 		lstrcpy(str, data.c_str());
 		GlobalUnlock(reinterpret_cast<void*>(temp));
 		// send data to clipbard
 		SetClipboardData(clpFmt, temp);
+	}
+	return bOk;
+}
 
-		if (!txtForm.IsEmpty())
+bool CClipboardDataWriter::SetData(
+		UINT clpFmt,
+		char const* const inData,
+		size_t inLen)
+{
+	bool bOk = false;
+	if (0 < inLen && inData)
+	{
+		HGLOBAL temp = GlobalAlloc(GHND, inLen+1);
+		if (NULL != temp)
 		{
-			temp = GlobalAlloc(GHND, txtForm.GetLength()+1);
-			if (NULL != temp)
-			{
-				LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-				lstrcpy(str, (LPCTSTR)txtForm);
-				GlobalUnlock(reinterpret_cast<void*>(temp));
-				// send data to clipbard
-				SetClipboardData(CF_TEXT, temp);
-			}
+			bOk = true;
+			void* pData = GlobalLock(temp);
+			memcpy(pData, inData, inLen);
+			GlobalUnlock(temp);
+			// send data to clipbard
+			SetClipboardData(clpFmt, temp);
 		}
 	}
+	return bOk;
+}
 
-	CloseClipboard();
-	return true;
+////////////////////////////////////////////////////////////////////////////
+
+bool CopyDataToClipboard(
+		UINT clpFmt,
+		Element const& tree,
+		CString const& txtForm)
+{
+	CClipboardDataWriter data;
+	if (!data.isOkay())
+		return false;
+
+	bool bOk = data.SetData(clpFmt, tree);
+	if (!txtForm.IsEmpty())
+		if (data.SetData(CF_TEXT, (LPCTSTR)txtForm, txtForm.GetLength()))
+			bOk = true;
+
+	return bOk;
 }
 
 bool GetDataFromClipboard(
