@@ -1435,6 +1435,7 @@ UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
 	static UINT uTrial = 0;
 	static UINT uRun = 0;
 	static UINT uCal = 0;
+	static UINT uiCal = 0;
 	static UINT uLog = 0;
 	if (!bInitialized)
 	{
@@ -1443,6 +1444,7 @@ UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
 		uTrial = RegisterClipboardFormat("ARB-Trial");
 		uRun = RegisterClipboardFormat("ARB-Run");
 		uCal = RegisterClipboardFormat("ARB-Cal");
+		uiCal = RegisterClipboardFormat("+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
 		uLog = RegisterClipboardFormat("ARB-Log");
 	}
 	switch (fmt)
@@ -1452,6 +1454,7 @@ UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
 	case eFormatTrial:		return uTrial;
 	case eFormatRun:		return uRun;
 	case eFormatCalendar:	return uCal;
+	case eFormatiCalendar:	return uiCal;
 	case eFormatLog:		return uLog;
 	}
 }

@@ -50,6 +50,26 @@ extern bool CopyDataToClipboard(
 		UINT clpFmt,
 		Element const& tree,
 		CString const& txtForm);
+//TODO: Remove the above call and use only class
+class CClipboardDataWriter
+{
+public:
+	CClipboardDataWriter();
+	~CClipboardDataWriter();
+
+	bool isOkay() const	{return m_bOkay;}
+
+	bool SetData(
+			UINT clpFmt,
+			Element const& inTree);
+	bool SetData(
+			UINT clpFmt,
+			char const* const inData,
+			size_t inLen);
+
+private:
+	bool m_bOkay;
+};
 
 /**
  * Get the data from the clipboard.

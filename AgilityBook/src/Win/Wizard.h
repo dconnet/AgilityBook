@@ -51,14 +51,15 @@ class CWizardStart;
 #define WIZ_EXPORT_RUNS				1
 #define WIZ_IMPORT_CALENDAR			2
 #define WIZ_EXPORT_CALENDAR			3
-#define WIZ_EXPORT_CALENDAR_APPT	4
-#define WIZ_EXPORT_CALENDAR_TASK	5
-#define WIZ_IMPORT_LOG				6
-#define WIZ_EXPORT_LOG				7
-#define WIZ_IMPORT_CONFIGURATION	8
-#define WIZ_EXPORT_CONFIGURATION	9
-#define WIZ_EXPORT_DTD				10
-#define WIZ_EXPORT_XML				11
+#define WIZ_EXPORT_CALENDAR_ICAL	4
+#define WIZ_EXPORT_CALENDAR_APPT	5
+#define WIZ_EXPORT_CALENDAR_TASK	6
+#define WIZ_IMPORT_LOG				7
+#define WIZ_EXPORT_LOG				8
+#define WIZ_IMPORT_CONFIGURATION	9
+#define WIZ_EXPORT_CONFIGURATION	10
+#define WIZ_EXPORT_DTD				11
+#define WIZ_EXPORT_XML				12
 
 // These must agree with the radio button ordering in WizardStart.cpp
 #define WIZARD_RADIO_EXCEL			0

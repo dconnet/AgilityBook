@@ -688,6 +688,9 @@
 #define IDS_INFO_CLUB                   5182
 #define IDS_INFO_JUDGE                  5183
 #define IDS_INFO_LOCATION               5184
+#define IDS_FILEEXT_DEF_ICS             5185
+#define IDS_FILEEXT_FNAME_ICS           5186
+#define IDS_FILEEXT_FILTER_ICS          5187
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780

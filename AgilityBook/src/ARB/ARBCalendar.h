@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-05 DRC Added iCalendar support.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -60,6 +61,17 @@ class Element;
 class ARBCalendar : public ARBBase
 {
 public:
+	/**
+	 * Generate the beginning of a iCalendar
+	 * @param ioStream Stream to place data.
+	 */
+	static void iCalendarBegin(std::ostream& ioStream);
+	/**
+	 * Generate the closing of a iCalendar
+	 * @param ioStream Stream to place data.
+	 */
+	static void iCalendarEnd(std::ostream& ioStream);
+
 	/**
 	 * Various states an entry may be in.
 	 */
@@ -113,6 +125,13 @@ public:
 	 * @post The ARBCalendar element will be created in ioTree.
 	 */
 	bool Save(Element& ioTree) const;
+
+	/**
+	 * Generate vEvent/vTask entries for iCalendar.
+	 * @param ioStream Stream to place data.
+	 * @param inAlarm Number of days before opening to set an alarm.
+	 */
+	void iCalendar(std::ostream& ioStream, int inAlarm) const;
 
 	/**
 	 * Is this calendar entry (start and end dates) before a given date?
