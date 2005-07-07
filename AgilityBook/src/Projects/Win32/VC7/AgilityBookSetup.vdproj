@@ -15,7 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0C4C2D6ED2DE4F56BDCE0AEDEBDC280D"
+        "MsmKey" = "8:_0BBAE4234AC24B86A043EC4CF7D84FB6"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1DCD267AAB7442BB81B088A621C796BA"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,26 +39,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_46AE9DB8C74F45998041175AC476996C"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_5E446DC8AA924BA6B5BCC12DD868C8B9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_5F079144C6B04D48A6AE96A93E6AB3AA"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_939A27674E71431D9F07E7734CDD65EB"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -106,7 +106,7 @@
         "CertificateFile" = "8:"
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
-        "InstallerBootstrapper" = "3:1"
+        "InstallerBootstrapper" = "3:2"
         }
     }
     "Deployable"
@@ -356,7 +356,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
         "ProductCode" = "8:{D9A5C163-9C63-4CB0-A992-5E34A00D3D6C}"
-        "PackageCode" = "8:{2BA5853E-EF51-4434-9388-68AB8CD480C5}"
+        "PackageCode" = "8:{ABEF8C77-14BB-4E42-85DE-45C5F9D1FA0B}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -965,7 +965,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_0C4C2D6ED2DE4F56BDCE0AEDEBDC280D"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_0BBAE4234AC24B86A043EC4CF7D84FB6"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -979,7 +979,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_46AE9DB8C74F45998041175AC476996C"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_1DCD267AAB7442BB81B088A621C796BA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -993,7 +993,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_939A27674E71431D9F07E7734CDD65EB"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_5F079144C6B04D48A6AE96A93E6AB3AA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
