@@ -684,13 +684,13 @@ void SAXImportHandlers::warning(SAXParseException const& toCatch)
 	++m_Warnings;
 	std::ostringstream tmp;
 	tmp << "Warning in file '"
-		<< toCatch.getSystemId()
+		<< StringDOM(toCatch.getSystemId())
 		<< "', line "
 		<< toCatch.getLineNumber()
 		<< ", column "
 		<< toCatch.getColumnNumber()
 		<< ".  Message: "
-		<< toCatch.getMessage();
+		<< StringDOM(toCatch.getMessage());
 	m_Msg += tmp.str();
 }
 
@@ -699,13 +699,13 @@ void SAXImportHandlers::error(SAXParseException const& toCatch)
 	++m_Errors;
 	std::ostringstream tmp;
 	tmp << "Error in file '"
-		<< toCatch.getSystemId()
+		<< StringDOM(toCatch.getSystemId())
 		<< "', line "
 		<< toCatch.getLineNumber()
 		<< ", column "
 		<< toCatch.getColumnNumber()
 		<< ".  Message: "
-		<< toCatch.getMessage();
+		<< StringDOM(toCatch.getMessage());
 	m_Msg += tmp.str();
 }
 
@@ -714,13 +714,13 @@ void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 	++m_FatalErrors;
 	std::ostringstream tmp;
 	tmp << "Fatal Error in file '"
-		<< toCatch.getSystemId()
+		<< StringDOM(toCatch.getSystemId())
 		<< "', line "
 		<< toCatch.getLineNumber()
 		<< ", column "
 		<< toCatch.getColumnNumber()
 		<< ".  Message: "
-		<< toCatch.getMessage();
+		<< StringDOM(toCatch.getMessage());
 	m_Msg += tmp.str();
 }
 
