@@ -690,7 +690,8 @@ void SAXImportHandlers::warning(SAXParseException const& toCatch)
 		<< ", column "
 		<< toCatch.getColumnNumber()
 		<< ".  Message: "
-		<< StringDOM(toCatch.getMessage());
+		<< StringDOM(toCatch.getMessage())
+		<< std::endl;
 	m_Msg += tmp.str();
 }
 
@@ -705,7 +706,8 @@ void SAXImportHandlers::error(SAXParseException const& toCatch)
 		<< ", column "
 		<< toCatch.getColumnNumber()
 		<< ".  Message: "
-		<< StringDOM(toCatch.getMessage());
+		<< StringDOM(toCatch.getMessage())
+		<< std::endl;
 	m_Msg += tmp.str();
 }
 
@@ -720,7 +722,8 @@ void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 		<< ", column "
 		<< toCatch.getColumnNumber()
 		<< ".  Message: "
-		<< StringDOM(toCatch.getMessage());
+		<< StringDOM(toCatch.getMessage())
+		<< std::endl;
 	m_Msg += tmp.str();
 }
 
