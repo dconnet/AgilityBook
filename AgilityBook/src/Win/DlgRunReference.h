@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
@@ -44,6 +45,7 @@
 #include <string>
 class ARBConfigVenue;
 class ARBDogRun;
+class ARBDogReferenceRun;
 class CAgilityBookDoc;
 
 class CDlgRunReference : public CDlgBasePropertyPage
@@ -60,6 +62,7 @@ private:
 	//{{AFX_DATA(CDlgRunReference)
 	enum { IDD = IDD_RUN_REFERENCE };
 	CListCtrl2	m_ctrlRefRuns;
+	CButton	m_ctrlAdd;
 	CButton	m_ctrlNew;
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
@@ -67,6 +70,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBConfigVenue* m_Venue;
 	ARBDogRun* m_Run;
+	ARBDogReferenceRun* m_pRefRunMe;
 	CColumnOrder m_sortRefRuns;
 
 	//{{AFX_VIRTUAL(CDlgRunReference)
@@ -87,6 +91,7 @@ protected:
 	afx_msg void OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnRefRunAdd();
 	afx_msg void OnRefRunNew();
 	afx_msg void OnRefRunEdit();
 	afx_msg void OnRefRunDelete();

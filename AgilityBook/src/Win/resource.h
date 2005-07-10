@@ -314,6 +314,7 @@
 #define IDC_RUNREF_NEW                  1361
 #define IDC_RUNREF_EDIT                 1362
 #define IDC_RUNREF_DELETE               1363
+#define IDC_RUNREF_ADDDOG               1364
 #define IDC_RUNCRCD_EDIT                1370
 #define IDC_RUNCRCD_VIEW                1371
 #define IDC_RUNCRCD_COPY                1372

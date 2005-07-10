@@ -273,6 +273,7 @@
 #define HIDC_RUNLINK_LIST               0x80e50564    // IDD_RUN_LINK
 #define HIDC_RUNLINK_NEW                0x80e50565    // IDD_RUN_LINK
 #define HIDC_RUNLINK_OPEN               0x80e50568    // IDD_RUN_LINK
+#define HIDC_RUNREF_ADDDOG              0x80e30554    // IDD_RUN_REFERENCE
 #define HIDC_RUNREF_DELETE              0x80e30553    // IDD_RUN_REFERENCE
 #define HIDC_RUNREF_EDIT                0x80e30552    // IDD_RUN_REFERENCE
 #define HIDC_RUNREF_NEW                 0x80e30551    // IDD_RUN_REFERENCE

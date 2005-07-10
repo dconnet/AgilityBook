@@ -601,6 +601,9 @@ Create a new reference run.
 .topic HIDC_RUNREF_REF_RUNS
 List of reference runs.
 
+.topic HIDC_RUNREF_ADDDOG
+Add your dog as a reference run.
+
 .topic HIDC_RUNSCORE_CLOSE_PTS
 Number of points earned in the closing sequence.
 
