@@ -163,6 +163,9 @@ public:
 	ARB_Q() : m_Q(eQ_NA)
 	{
 	}
+	ARB_Q(eQ inQ) : m_Q(inQ)
+	{
+	}
 	ARB_Q(ARB_Q const& rhs) : m_Q(rhs.m_Q)
 	{
 	}
@@ -179,6 +182,10 @@ public:
 	bool operator==(ARB_Q const& rhs) const
 	{
 		return m_Q == rhs.m_Q;
+	}
+	bool operator==(eQ rhs) const
+	{
+		return m_Q == rhs;
 	}
 	bool operator!=(ARB_Q const& rhs) const
 	{

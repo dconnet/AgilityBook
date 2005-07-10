@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
+ *                    Make default ref-run a 'Q'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Accumulate all heights for refrun dlg.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -160,17 +162,60 @@ CDlgRunReference::CDlgRunReference(
 	, m_pDoc(pDoc)
 	, m_Venue(pVenue)
 	, m_Run(pRun)
+	, m_pRefRunMe(NULL)
 	, m_sortRefRuns("RefRuns")
 {
 	ASSERT(NULL != m_Venue);
 	m_Venue->AddRef();
 	m_sortRefRuns.Initialize(scNumColumns);
+
+	// Create the 'me' reference run.
+	m_pRefRunMe = new ARBDogReferenceRun();
+	m_pRefRunMe->SetQ(m_Run->GetQ());
+	m_pRefRunMe->SetPlace(m_Run->GetPlace());
+	m_pRefRunMe->SetName(m_pDoc->GetCurrentDog()->GetCallName());
+	m_pRefRunMe->SetHeight(m_Run->GetHeight());
+	m_pRefRunMe->SetBreed(m_pDoc->GetCurrentDog()->GetBreed());
+	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
+	ARBConfigScoring* pScoring;
+	if (m_pDoc->GetConfig().GetVenues().FindEvent(
+		m_Venue->GetName(),
+		m_Run->GetEvent(),
+		m_Run->GetDivision(),
+		m_Run->GetLevel(),
+		m_Run->GetDate(),
+		&pScoring))
+	{
+		m_pRefRunMe->SetScore(ARBDouble::str(m_Run->GetScore(pScoring)));
+		pScoring->Release();
+	}
+	// Now see if I'm already in there.
+	// Only compare: Q/Place/Name/Time/Score.
+	for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+		iterRef != m_Run->GetReferenceRuns().end();
+		++iterRef)
+	{
+		ARBDogReferenceRun* pRef = *iterRef;
+		if (pRef->GetQ() == m_pRefRunMe->GetQ()
+		&& pRef->GetPlace() == m_pRefRunMe->GetPlace()
+		&& pRef->GetName() == m_pRefRunMe->GetName()
+		&& pRef->GetTime() == m_pRefRunMe->GetTime()
+		&& pRef->GetScore() == m_pRefRunMe->GetScore())
+		{
+			m_pRefRunMe->Release();
+			m_pRefRunMe = pRef;
+			m_pRefRunMe->AddRef();
+			break;
+		}
+	}
 	//{{AFX_DATA_INIT(CDlgRunReference)
 	//}}AFX_DATA_INIT
 }
 
 CDlgRunReference::~CDlgRunReference()
 {
+	if (m_pRefRunMe)
+		m_pRefRunMe->Release();
 	m_Venue->Release();
 }
 
@@ -179,6 +224,7 @@ void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
 	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgRunReference)
 	DDX_Control(pDX, IDC_RUNREF_REF_RUNS, m_ctrlRefRuns);
+	DDX_Control(pDX, IDC_RUNREF_ADDDOG, m_ctrlAdd);
 	DDX_Control(pDX, IDC_RUNREF_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_RUNREF_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_RUNREF_DELETE, m_ctrlDelete);
@@ -191,6 +237,7 @@ BEGIN_MESSAGE_MAP(CDlgRunReference, CDlgBasePropertyPage)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_RUNREF_REF_RUNS, OnColumnclickRefRuns)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RUNREF_REF_RUNS, OnItemchangedRefRuns)
 	ON_NOTIFY(NM_DBLCLK, IDC_RUNREF_REF_RUNS, OnDblclkRefRuns)
+	ON_BN_CLICKED(IDC_RUNREF_ADDDOG, OnRefRunAdd)
 	ON_BN_CLICKED(IDC_RUNREF_NEW, OnRefRunNew)
 	ON_BN_CLICKED(IDC_RUNREF_EDIT, OnRefRunEdit)
 	ON_BN_CLICKED(IDC_RUNREF_DELETE, OnRefRunDelete)
@@ -201,6 +248,22 @@ END_MESSAGE_MAP()
 
 void CDlgRunReference::UpdateButtons()
 {
+	BOOL bEnableAdd = FALSE;
+	if (m_pRefRunMe)
+	{
+		bEnableAdd = TRUE;
+		for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+			iterRef != m_Run->GetReferenceRuns().end();
+			++iterRef)
+		{
+			if (*iterRef == m_pRefRunMe)
+			{
+				bEnableAdd = FALSE;
+				break;
+			}
+		}
+	}
+	m_ctrlAdd.EnableWindow(bEnableAdd);
 	if (0 <= m_ctrlRefRuns.GetSelection())
 	{
 		m_ctrlEdit.EnableWindow(TRUE);
@@ -399,6 +462,40 @@ void CDlgRunReference::OnDblclkRefRuns(
 	*pResult = 0;
 }
 
+void CDlgRunReference::OnRefRunAdd()
+{
+	bool bOkToAdd = false;
+	if (m_pRefRunMe)
+	{
+		bOkToAdd = true;
+		for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+			iterRef != m_Run->GetReferenceRuns().end();
+			++iterRef)
+		{
+			if (*iterRef == m_pRefRunMe)
+			{
+				bOkToAdd = false;
+				break;
+			}
+		}
+	}
+	if (bOkToAdd)
+	{
+		if (m_Run->GetReferenceRuns().AddReferenceRun(m_pRefRunMe))
+		{
+			LV_ITEM item;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.iItem = m_ctrlRefRuns.GetItemCount();
+			item.iSubItem = 0;
+			item.lParam = reinterpret_cast<LPARAM>(m_pRefRunMe);
+			int index = m_ctrlRefRuns.InsertItem(&item);
+			m_ctrlRefRuns.SetSelection(index);
+			ListRuns();
+		}
+	}
+}
+
 void CDlgRunReference::OnRefRunNew() 
 {
 	ARBDogReferenceRun* ref = new ARBDogReferenceRun();
@@ -430,6 +527,7 @@ void CDlgRunReference::OnRefRunNew()
 			pScoring->Release();
 		}
 	}
+	ref->SetQ(ARB_Q::eQ_Q);
 	std::set<std::string> names;
 	GetAllHeights(names);
 	CDlgReferenceRun dlg(m_pDoc, names, ref, this);
