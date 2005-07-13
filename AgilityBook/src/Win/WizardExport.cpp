@@ -800,7 +800,7 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, "");
 						break;
 					case IO_CAL_APPT_ALLDAY:
-						data += "1";
+						data += AddPreviewData(iLine, idx, "1");
 						break;
 					case IO_CAL_APPT_REMINDER:
 						data += AddPreviewData(iLine, idx, "");
