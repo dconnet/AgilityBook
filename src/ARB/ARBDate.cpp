@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-13 DRC Added inForceOutput to GetString.
  * @li 2005-07-05 DRC Added a new formatting option.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -353,101 +354,105 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-std::string ARBDate::GetString(DateFormat inFormat) const
+std::string ARBDate::GetString(
+	DateFormat inFormat,
+	bool inForceOutput) const
 {
+	if (!inForceOutput && !IsValid())
+		return "";
 	std::string date;
+	int yr = 0;
+	int mon = 0;
+	int day = 0;
 	if (IsValid())
-	{
-		int yr, mon, day;
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-		std::ostringstream str;
-		switch (inFormat)
-		{
-		case eDashMMDDYYYY:		///< MM-DD-YYYY
-			str.fill('0');
-			str.width(2);
-			str << mon << "-";
-			str.width(2);
-			str << day << "-";
-			str.width(4);
-			str << yr;
-			break;
-		case eYYYYMMDD:
-			str.fill('0');
-			str.width(4);
-			str << yr;
-			str.width(2);
-			str << mon;
-			str.width(2);
-			str << day;
-			break;
-		default:				///< YYYY-MM-DD or MM/DD/YYYY
-		case eSlashMMDDYYYY:	///< MM/DD/YYYY
-			str.fill('0');
-			str.width(2);
-			str << mon << "/";
-			str.width(2);
-			str << day << "/";
-			str.width(4);
-			str << yr;
-			break;
-		case eDashYYYYMMDD:		///< YYYY-MM-DD
-			str.fill('0');
-			str.width(4);
-			str << yr << "-";
-			str.width(2);
-			str << mon << "-";
-			str.width(2);
-			str << day;
-			break;
-		case eSlashYYYYMMDD:	///< YYYY/MM/DD
-			str.fill('0');
-			str.width(4);
-			str << yr << "/";
-			str.width(2);
-			str << mon << "/";
-			str.width(2);
-			str << day;
-			break;
-		case eDashDDMMYYYY:		///< DD-MM-YYYY
-			str.fill('0');
-			str.width(2);
-			str << day << "-";
-			str.width(2);
-			str << mon << "-";
-			str.width(4);
-			str << yr;
-			break;
-		case eSlashDDMMYYYY:	///< DD/MM/YYYY
-			str.fill('0');
-			str.width(2);
-			str << day << "/";
-			str.width(2);
-			str << mon << "/";
-			str.width(4);
-			str << yr;
-			break;
-		case eDashMDY:	///< M-D-Y
-			str << mon << "-" << day << "-" << yr;
-			break;
-		case eSlashMDY:	///< M/D/Y
-			str << mon << "/" << day << "/" << yr;
-			break;
-		case eDashYMD:	///< Y-M-D
-			str << yr << "-" << mon << "-" << day;
-			break;
-		case eSlashYMD:	///< Y/M/D
-			str << yr << "/" << mon << "/" << day;
-			break;
-		case eDashDMY:	///< D-M-Y
-			str << day << "-" << mon << "-" << yr;
-			break;
-		case eSlashDMY:	///< D/M/Y
-			str << day << "/" << mon << "/" << yr;
-			break;
-		}
-		date = str.str();
+	std::ostringstream str;
+	switch (inFormat)
+	{
+	case eDashMMDDYYYY:		///< MM-DD-YYYY
+		str.fill('0');
+		str.width(2);
+		str << mon << "-";
+		str.width(2);
+		str << day << "-";
+		str.width(4);
+		str << yr;
+		break;
+	case eYYYYMMDD:
+		str.fill('0');
+		str.width(4);
+		str << yr;
+		str.width(2);
+		str << mon;
+		str.width(2);
+		str << day;
+		break;
+	default:				///< YYYY-MM-DD or MM/DD/YYYY
+	case eSlashMMDDYYYY:	///< MM/DD/YYYY
+		str.fill('0');
+		str.width(2);
+		str << mon << "/";
+		str.width(2);
+		str << day << "/";
+		str.width(4);
+		str << yr;
+		break;
+	case eDashYYYYMMDD:		///< YYYY-MM-DD
+		str.fill('0');
+		str.width(4);
+		str << yr << "-";
+		str.width(2);
+		str << mon << "-";
+		str.width(2);
+		str << day;
+		break;
+	case eSlashYYYYMMDD:	///< YYYY/MM/DD
+		str.fill('0');
+		str.width(4);
+		str << yr << "/";
+		str.width(2);
+		str << mon << "/";
+		str.width(2);
+		str << day;
+		break;
+	case eDashDDMMYYYY:		///< DD-MM-YYYY
+		str.fill('0');
+		str.width(2);
+		str << day << "-";
+		str.width(2);
+		str << mon << "-";
+		str.width(4);
+		str << yr;
+		break;
+	case eSlashDDMMYYYY:	///< DD/MM/YYYY
+		str.fill('0');
+		str.width(2);
+		str << day << "/";
+		str.width(2);
+		str << mon << "/";
+		str.width(4);
+		str << yr;
+		break;
+	case eDashMDY:	///< M-D-Y
+		str << mon << "-" << day << "-" << yr;
+		break;
+	case eSlashMDY:	///< M/D/Y
+		str << mon << "/" << day << "/" << yr;
+		break;
+	case eDashYMD:	///< Y-M-D
+		str << yr << "-" << mon << "-" << day;
+		break;
+	case eSlashYMD:	///< Y/M/D
+		str << yr << "/" << mon << "/" << day;
+		break;
+	case eDashDMY:	///< D-M-Y
+		str << day << "-" << mon << "-" << yr;
+		break;
+	case eSlashDMY:	///< D/M/Y
+		str << day << "/" << mon << "/" << yr;
+		break;
 	}
+	date = str.str();
 	return date;
 }
 

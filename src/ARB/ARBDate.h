@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-13 DRC Added inForceOutput to GetString.
  * @li 2005-07-05 DRC Added a new formatting option.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -167,9 +168,12 @@ public:
 	/**
 	 * Return the date as a string.
 	 * @param inFormat Format of date string.
+	 * @param inForceOutput Always return a string, even if the date is not valid.
 	 * @return Date in the format defined by inFormat.
 	 */
-	std::string GetString(DateFormat inFormat) const;
+	std::string GetString(
+			DateFormat inFormat,
+			bool inForceOutput = false) const;
 
 	/**
 	 * Convert the date to a time.
