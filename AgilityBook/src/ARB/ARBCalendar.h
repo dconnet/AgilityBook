@@ -69,20 +69,9 @@ public:
 			int inVersion);
 
 	/**
-	 * Cleanup the iCalendar object and write the final iCal lines.
+	 * Write the final iCal lines and delete the iCalendar object.
 	 */
 	virtual void Release() = 0;
-
-	virtual void BeginEvent() = 0;
-	virtual void DoUID(std::string const& inUID) = 0;
-	virtual void DoDTSTAMP() = 0;
-	virtual void DoDTSTART(ARBDate inDate) = 0;
-	virtual void DoDTEND(ARBDate inDate) = 0;
-	virtual void DoSUMMARY(std::string const& inStr) = 0;
-	virtual void DoLOCATION(std::string const& inStr) = 0;
-	virtual void DoDESCRIPTION(std::string const& inStr) = 0;
-	virtual void DoAlarm(int inDaysBefore) = 0;
-	virtual void EndEvent() = 0;
 };
 
 /**
@@ -169,10 +158,13 @@ public:
 
 	/**
 	 * Generate vEvent/vTask entries for iCalendar.
-	 * @param ioStream Stream to place data.
-	 * @param inAlarm Number of days before opening to set an alarm.
+	 * @param inIoStream Stream to place data.
+	 * @param inAlarm Set an alaram inAlarm days before trial start if entered
+	 *                or before trial opening if planning to enter.
 	 */
-	void iCalendar(ICalendar* ioStream, int inAlarm) const;
+	void iCalendar(
+			ICalendar* inIoStream,
+			int inAlarm) const;
 
 	/**
 	 * Is this calendar entry (start and end dates) before a given date?
