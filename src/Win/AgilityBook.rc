@@ -2752,6 +2752,9 @@ END
 STRINGTABLE 
 BEGIN
     IDS_INFO_LOCATION       "Location Information"
+    IDS_FILEEXT_DEF_VCS     "vcs"
+    IDS_FILEEXT_FNAME_VCS   "*.vcs"
+    IDS_FILEEXT_FILTER_VCS  "vCalendar (*.vcs)|*.vcs|All Files (*.*)|*.*||"
     IDS_FILEEXT_DEF_ICS     "ics"
     IDS_FILEEXT_FNAME_ICS   "*.ics"
     IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"

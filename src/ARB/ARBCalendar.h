@@ -50,6 +50,42 @@ class ARBVersion;
 class Element;
 
 /**
+ * iCalendar interface
+ */
+class ICalendar
+{
+protected:
+	ICalendar();
+	virtual ~ICalendar();
+
+public:
+	/**
+	 * Create an iCalendar interface and generate the beginning lines.
+	 * @param ioStream Stream to write data to.
+	 * @param inVersion Either 1 (vCal) or 2 (iCal).
+	 */
+	static ICalendar* iCalendarBegin(
+			std::ostream& ioStream,
+			int inVersion);
+
+	/**
+	 * Cleanup the iCalendar object and write the final iCal lines.
+	 */
+	virtual void Release() = 0;
+
+	virtual void BeginEvent() = 0;
+	virtual void DoUID(std::string const& inUID) = 0;
+	virtual void DoDTSTAMP() = 0;
+	virtual void DoDTSTART(ARBDate inDate) = 0;
+	virtual void DoDTEND(ARBDate inDate) = 0;
+	virtual void DoSUMMARY(std::string const& inStr) = 0;
+	virtual void DoLOCATION(std::string const& inStr) = 0;
+	virtual void DoDESCRIPTION(std::string const& inStr) = 0;
+	virtual void DoAlarm(int inDaysBefore) = 0;
+	virtual void EndEvent() = 0;
+};
+
+/**
  * The calendar cribsheet.
  *
  * @note A venue name in a calendar entry may be any name, including multiple
@@ -61,16 +97,6 @@ class Element;
 class ARBCalendar : public ARBBase
 {
 public:
-	/**
-	 * Generate the beginning of a iCalendar
-	 * @param ioStream Stream to place data.
-	 */
-	static void iCalendarBegin(std::ostream& ioStream);
-	/**
-	 * Generate the closing of a iCalendar
-	 * @param ioStream Stream to place data.
-	 */
-	static void iCalendarEnd(std::ostream& ioStream);
 
 	/**
 	 * Various states an entry may be in.
@@ -91,6 +117,21 @@ public:
 	bool operator>(ARBCalendar const& rhs) const;
 	bool operator<(ARBDate const& rhs) const;
 	bool operator>(ARBDate const& rhs) const;
+
+	/**
+	 *
+	 */
+	typedef enum
+	{
+		eUIDvEvent,
+		eUIDvTodo
+	} eUidType;
+
+	/**
+	 * Get a UID. Used when generating iCalendar entries.
+	 * @param inType UID type to generate.
+	 */
+	std::string GetUID(eUidType inType) const;
 
 	/**
 	 * Get the generic name of this object.
@@ -131,7 +172,7 @@ public:
 	 * @param ioStream Stream to place data.
 	 * @param inAlarm Number of days before opening to set an alarm.
 	 */
-	void iCalendar(std::ostream& ioStream, int inAlarm) const;
+	void iCalendar(ICalendar* ioStream, int inAlarm) const;
 
 	/**
 	 * Is this calendar entry (start and end dates) before a given date?

@@ -1,10 +1,11 @@
-7/10/2005: v1.5.5.10 <in development>
+7/13/2005: v1.5.5.10 <in development>
 - New features / Enhancements:
   - Removed ARBDouble as a class, created a to-string helper function.
   - Cleaned up some object reference counting APIs.
   - Added color coding to calendar for entries that need attention.
   - Added ability to export Calendar entries to Outlook as appointments
-	and/or tasks.
+    and/or tasks.
+    - Added vCal/iCal export formats.
   - Remember the last entered height in the reference runs dialog.
   - Re-worked layout in Reference Run dialog to make it flow better.
   - Changed default Qing in Reference Run dialog to a 'Q'.

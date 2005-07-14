@@ -2,7 +2,9 @@ Last Updated: 7/10/2005
 
 - The UKC configuration isn't quite right.
 
-- Add Calendar export to in vCalendar format.
+- Clean up the iCalendar VALARM so it makes use of the opening date.
+
+- Remember last-used items in the export wizard.
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 

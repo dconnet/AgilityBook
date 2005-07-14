@@ -1321,14 +1321,14 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		// Now all the data.
 		int nWarning = CAgilityBookOptions::CalendarOpeningNear();
-		ARBCalendar::iCalendarBegin(iCal);
+		ICalendar* iCalendar = ICalendar::iCalendarBegin(iCal, 2);
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
 			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
 			if (pData)
 			{
 				pData->GetCalendar()->Save(tree);
-				pData->GetCalendar()->iCalendar(iCal, nWarning);
+				pData->GetCalendar()->iCalendar(iCalendar, nWarning);
 			}
 			CStringArray line;
 			GetPrintLine((*iter), line);
@@ -1340,7 +1340,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 			}
 			data += "\r\n";
 		}
-		ARBCalendar::iCalendarEnd(iCal);
+		iCalendar->Release();
 
 		clpData.SetData(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar), tree);
 		clpData.SetData(CF_TEXT, (LPCTSTR)data, data.GetLength());

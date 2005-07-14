@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-13 DRC Added vCalendar support, finished iCalendar.
  * @li 2005-07-05 DRC Added iCalendar support.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -60,29 +61,268 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
 // See RFC2445.
+// Note: EOL sequence is defined as "\r\n"
 
-void ARBCalendar::iCalendarBegin(std::ostream& ioStream)
+class ARBiCal : public ICalendar
 {
-	ioStream << "BEGIN:VCALENDAR" << std::endl;
-	ioStream << "VERSION:2.0" << std::endl;
-}
+public:
+	ARBiCal(
+			std::ostream& ioStream,
+			int inVersion);
+	virtual ~ARBiCal();
 
-void ARBCalendar::iCalendarEnd(std::ostream& ioStream)
-{
-	ioStream << "END:VCALENDAR" << std::endl;
-}
+	virtual void Release();
 
-static void iCalendarLine(std::ostream& ioStream,
-		char const* const inField,
-		char const* const inStr = NULL)
+	virtual void BeginEvent();
+	virtual void DoUID(std::string const& inUID);
+	virtual void DoDTSTAMP();
+	virtual void DoDTSTART(ARBDate inDate);
+	virtual void DoDTEND(ARBDate inDate);
+	virtual void DoSUMMARY(std::string const& inStr);
+	virtual void DoLOCATION(std::string const& inStr);
+	virtual void DoDESCRIPTION(std::string const& inStr);
+	virtual void DoAlarm(int inDaysBefore);
+	virtual void EndEvent();
+
+private:
+	void Write(
+			char const* const inVal,
+			ARBDate inDate,
+			bool inStartOfDay);
+	void WriteSafeChar(std::string const& inText);
+	void WriteText(
+			char const* const inToken,
+			std::string const& inText,
+			bool bQuotedPrint);
+
+	std::ostream& m_ioStream;
+	int m_Version;
+};
+
+ARBiCal::ARBiCal(
+		std::ostream& ioStream,
+		int inVersion)
+	: m_ioStream(ioStream)
+	, m_Version(inVersion)
 {
-	ioStream << inField;
-	if (inStr)
+	// All V1.0 syntax was figured out by exporting an entry from Outlook2003.
+	m_ioStream << "BEGIN:VCALENDAR\r\n";
+	m_ioStream << "PRODID:-//dcon Software//Agility Record Book//EN\r\n";
+	switch (m_Version)
 	{
-		// TODO: Lines should not be longer than 75 chars.
-		ioStream << inStr;
+	case 1:
+		m_ioStream << "VERSION:1.0\r\n";
+		break;
+	case 2:
+		m_ioStream << "VERSION:2.0\r\n";
+		// Figured this out thru trial/error with Outlook2003.
+		m_ioStream << "METHOD:PUBLISH\r\n";
+		break;
 	}
-	ioStream << "\r\n";
+}
+
+ARBiCal::~ARBiCal()
+{
+	m_ioStream << "END:VCALENDAR\r\n";
+}
+
+void ARBiCal::Release()
+{
+	delete this;
+}
+
+void ARBiCal::Write(
+			char const* const inVal,
+			ARBDate inDate,
+			bool inStartOfDay)
+{
+	if (inVal)
+	{
+		m_ioStream << inVal;
+		if (1 < m_Version)
+			m_ioStream << ";VALUE=DATE";
+		m_ioStream << ':';
+	}
+	m_ioStream << inDate.GetString(ARBDate::eYYYYMMDD);
+	if (1 == m_Version)
+	{
+		if (inStartOfDay)
+			m_ioStream << "T070000";
+		else
+			m_ioStream << "T180000";
+	}
+	if (inVal)
+		m_ioStream << "\r\n";
+}
+
+void ARBiCal::WriteSafeChar(std::string const& inText)
+{
+	for (std::string::const_iterator iter = inText.begin();
+		iter != inText.end();
+		++iter)
+	{
+		char c = *iter;
+		// See the RFC...
+		if ((0x21 <= c && c <= 0x7e) // ASCII
+		|| (0x80 <= c && c <= 0xf8) // NON-US-ASCII
+		|| 0x20 == c || 0x09 == c) // WSP
+		{
+			if (1 == m_Version && '=' == c)
+				m_ioStream << "=3D";
+			else if (1 < m_Version
+			&& (';' == c || ',' == c || '\\' == c))
+				m_ioStream << '\\';
+			else
+				m_ioStream << c;
+		}
+		else if ('\n' == c)
+		{
+			if (1 == m_Version)
+				m_ioStream << "=0A";
+			else
+				m_ioStream << "\\n";
+		}
+		else
+			m_ioStream << '?';
+	}
+}
+
+void ARBiCal::WriteText(
+		char const* const inToken,
+		std::string const& inText,
+		bool bQuotedPrint)
+{
+	if (0 < inText.length())
+	{
+		size_t nLineLength = 75 - strlen(inToken);
+		m_ioStream << inToken;
+		if (1 == m_Version && bQuotedPrint)
+		{
+			m_ioStream << ";ENCODING=QUOTED-PRINTABLE";
+			nLineLength -= 26;
+		}
+		m_ioStream << ':';
+		// "Fold" a long line. RFC 2445, section 4.1
+		std::string tmp(inText);
+		while (nLineLength < tmp.length())
+		{
+			// Version 1 stuff is a best-guess.
+			WriteSafeChar(tmp.substr(0, nLineLength));
+			if (1 == m_Version)
+				m_ioStream << "=\r\n";
+			else
+				m_ioStream << "\r\n\t";
+			tmp = tmp.substr(nLineLength);
+			nLineLength = 75;
+		}
+		if (0 < tmp.length())
+			WriteSafeChar(tmp);
+		m_ioStream << "\r\n";
+	}
+}
+
+void ARBiCal::BeginEvent()
+{
+	m_ioStream << "BEGIN:VEVENT" << "\r\n";
+}
+
+void ARBiCal::DoUID(std::string const& inUID)
+{
+	WriteText("UID", inUID, false);
+}
+
+void ARBiCal::DoDTSTAMP()
+{
+	if (1 < m_Version)
+	{
+		time_t t;
+		time(&t);
+#if _MSC_VER < 1400
+		struct tm* pTime = localtime(&t);
+#else
+		struct tm l;
+		_localtime64_s(&l, &t);
+		struct tm* pTime = &l;
+#endif
+		std::ostringstream str;
+		str.fill('0');
+		str.width(4);
+		str << pTime->tm_year + 1900;
+		str.width(2);
+		str << pTime->tm_mon + 1;
+		str.width(2);
+		str << pTime->tm_mday << 'T';
+		str.width(2);
+		str << pTime->tm_hour;
+		str.width(2);
+		str << pTime->tm_min;
+		str.width(2);
+		str << pTime->tm_sec;
+		m_ioStream << "DTSTAMP:" << str.str() << "\r\n";
+	}
+}
+
+void ARBiCal::DoDTSTART(ARBDate inDate)
+{
+	Write("DTSTART", inDate, true);
+}
+
+void ARBiCal::DoDTEND(ARBDate inDate)
+{
+	// Note, DTEND is the non-inclusive end
+	if (1 < m_Version)
+		inDate += 1;
+	Write("DTEND", inDate, false);
+}
+
+void ARBiCal::DoSUMMARY(std::string const& inStr)
+{
+	WriteText("SUMMARY", inStr, true);
+}
+
+void ARBiCal::DoLOCATION(std::string const& inStr)
+{
+	WriteText("LOCATION", inStr, true);
+}
+
+void ARBiCal::DoDESCRIPTION(std::string const& inStr)
+{
+	WriteText("DESCRIPTION", inStr, true);
+}
+
+void ARBiCal::DoAlarm(int inDaysBefore)
+{
+	if (1 < m_Version)
+	{
+		m_ioStream << "BEGIN:VALARM\r\n";
+		m_ioStream << "ACTION:DISPLAY\r\n";
+		m_ioStream << "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n";
+		m_ioStream << "DESCRIPTION:Reminder\r\n";
+		m_ioStream << "END:VALARM\r\n";
+	}
+}
+
+void ARBiCal::EndEvent()
+{
+	m_ioStream << "END:VEVENT" << "\r\n";
+}
+
+ICalendar::ICalendar()
+{
+}
+
+ICalendar::~ICalendar()
+{
+}
+
+ICalendar* ICalendar::iCalendarBegin(
+		std::ostream& ioStream,
+		int inVersion)
+{
+	ICalendar* pCal = NULL;
+	if (1 == inVersion || 2 == inVersion)
+		pCal = new ARBiCal(ioStream, inVersion);
+	return pCal;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -154,6 +394,29 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 bool ARBCalendar::operator!=(ARBCalendar const& rhs) const
 {
 	return !operator==(rhs);
+}
+
+std::string ARBCalendar::GetUID(eUidType inType) const
+{
+	std::ostringstream str;
+	switch (inType)
+	{
+	default:
+		ASSERT(0);
+		str << "u";
+		break;
+	case eUIDvEvent:
+		str << "e";
+		break;
+	case eUIDvTodo:
+		str << "t";
+		break;
+	}
+	str << m_DateStart.GetString(ARBDate::eYYYYMMDD);
+	str << m_DateEnd.GetString(ARBDate::eYYYYMMDD);
+	str << m_DateOpening.GetString(ARBDate::eYYYYMMDD, true);
+	str << m_DateClosing.GetString(ARBDate::eYYYYMMDD, true);
+	return str.str();
 }
 
 std::string ARBCalendar::GetGenericName() const
@@ -367,104 +630,53 @@ bool ARBCalendar::Save(Element& ioTree) const
 	return true;
 }
 
-void ARBCalendar::iCalendar(std::ostream& ioStream, int inAlarm) const
+void ARBCalendar::iCalendar(ICalendar* ioStream, int inAlarm) const
 {
-	ARBDate date;
-	ARBDate dateStart = GetOpeningDate();
-	if (!dateStart.IsValid())
-		dateStart = GetStartDate();
-	ARBDate dateDue = GetClosingDate();
-	if (!dateDue.IsValid())
-		dateDue = GetStartDate();
-	if (dateStart > dateDue)
-		dateStart = dateDue;
-	//dateStart -= CAgilityBookOptions::CalendarOpeningNear();
-
-	//TODO
-	iCalendarLine(ioStream, "BEGIN:VEVENT");
-	iCalendarLine(ioStream, "DTSTART:", m_DateStart.GetString(ARBDate::eYYYYMMDD).c_str());
-	iCalendarLine(ioStream, "DTEND:", m_DateEnd.GetString(ARBDate::eYYYYMMDD).c_str());
-	iCalendarLine(ioStream, "SUMMARY:", GetGenericName().c_str());
-	iCalendarLine(ioStream, "LOCATION:", m_Location.c_str());
-
-	std::ostringstream str;
-	if (IsTentative())
-		str << "Information is tentative. ";
-	switch (GetEntered())
+	ioStream->BeginEvent();
+	ioStream->DoUID(GetUID(eUIDvEvent));
+	ioStream->DoDTSTAMP();
+	ioStream->DoDTSTART(m_DateStart);
+	ioStream->DoDTEND(m_DateEnd);
+	ioStream->DoSUMMARY(GetGenericName());
+	ioStream->DoLOCATION(m_Location);
 	{
-	default:
-	case ARBCalendar::eNot:
-		str << "Status: Not entered. ";
-		break;
-	case ARBCalendar::eEntered:
-		str << "Status: Entered. ";
-		break;
-	case ARBCalendar::ePlanning:
-		str << "Status: Planning. ";
-		break;
+		std::ostringstream str;
+		if (IsTentative())
+			str << "Information is tentative. ";
+		switch (GetEntered())
+		{
+		default:
+		case ARBCalendar::eNot:
+			str << "Status: Not entered. ";
+			break;
+		case ARBCalendar::eEntered:
+			str << "Status: Entered. ";
+			break;
+		case ARBCalendar::ePlanning:
+			str << "Status: Planning. ";
+			break;
+		}
+		if (m_DateOpening.IsValid())
+		{
+			str << "Trial opens: ";
+			str << m_DateOpening.GetString(ARBDate::eDefault);
+			str << " ";
+		}
+		if (m_DateClosing.IsValid())
+		{
+			str << "Trial closes: ";
+			str << m_DateClosing.GetString(ARBDate::eDefault);
+			str << " ";
+		}
+		str << GetNote();
+		ioStream->DoDESCRIPTION(str.str());
 	}
-	if (m_DateOpening.IsValid())
-	{
-		str << "Trial opens: ";
-		str << m_DateOpening.GetString(ARBDate::eDefault).c_str();
-		str << " ";
-	}
-	if (m_DateClosing.IsValid())
-	{
-		str << "Trial closes: ";
-		str << m_DateClosing.GetString(ARBDate::eDefault).c_str();
-		str << " ";
-	}
-	str << GetNote() << std::endl;
-	iCalendarLine(ioStream, "DESCRIPTION:", str.str().c_str());
-	iCalendarLine(ioStream, "END:VEVENT");
-
 	if (ePlanning == m_eEntered)
 	{
-#if 0
-		ioStream << "BEGIN:VTODO" << std::endl;
-{
-	case IO_CAL_TASK_SUBJECT:
-		data += AddPreviewData(iLine, idx, pCal->GetGenericName().c_str());
-		break;
-	case IO_CAL_TASK_START_DATE:
-		data += AddPreviewData(iLine, idx, dateStart.GetString(format).c_str());
-		break;
-	case IO_CAL_TASK_DUE_DATE:
-		data += AddPreviewData(iLine, idx, dateDue.GetString(format).c_str());
-		break;
-	case IO_CAL_TASK_NOTES:
-		{
-			CString tmp;
-			if (pCal->IsTentative())
-				tmp += "Information is tentative. ";
-			date = pCal->GetOpeningDate();
-			if (date.IsValid())
-			{
-				tmp += "Trial opens: ";
-				tmp += date.GetString(format).c_str();
-				tmp += " ";
-			}
-			date = pCal->GetClosingDate();
-			if (date.IsValid())
-			{
-				tmp += "Trial closes: ";
-				tmp += date.GetString(format).c_str();
-				tmp += " ";
-			}
-			tmp += "Trial dates: ";
-			tmp += pCal->GetStartDate().GetString(format).c_str();
-			tmp += " to ";
-			tmp += pCal->GetEndDate().GetString(format).c_str();
-			tmp += " ";
-			tmp += pCal->GetNote().c_str();
-			data += AddPreviewData(iLine, idx, tmp);
-		}
-		break;
+//TODO: 
 	}
-		ioStream << "END:VTODO" << std::endl;
-#endif
-	}
+	ioStream->DoAlarm(inAlarm);
+	ioStream->EndEvent();
 }
 
 /////////////////////////////////////////////////////////////////////////////
