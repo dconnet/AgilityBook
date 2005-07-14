@@ -182,6 +182,15 @@ static struct
 			"Export your calendar listing so it can be imported into Agility Record Book."
 		}
 	} },
+	{WIZ_EXPORT_CALENDAR_VCAL,
+	{
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_FINISH, -1,
+			"Export Calendar (vCalendar)",
+			"Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs."
+		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+	} },
 	{WIZ_EXPORT_CALENDAR_ICAL,
 	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
@@ -293,6 +302,7 @@ void CWizardStart::UpdateList()
 		ASSERT(sc_Items[i].index == i);
 		bool bAdd = true;
 		if (m_pSheet->GetCalendarEntries()
+		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_VCAL
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_ICAL
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_APPT
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_TASK)
@@ -744,12 +754,22 @@ BOOL CWizardStart::OnWizardFinish()
 			}
 			break;
 
+		case WIZ_EXPORT_CALENDAR_VCAL:
 		case WIZ_EXPORT_CALENDAR_ICAL:
 			{
 				CString def, fname, filter;
-				def.LoadString(IDS_FILEEXT_DEF_ICS);
-				fname.LoadString(IDS_FILEEXT_FNAME_ICS);
-				filter.LoadString(IDS_FILEEXT_FILTER_ICS);
+				if (WIZ_EXPORT_CALENDAR_VCAL == data)
+				{
+					def.LoadString(IDS_FILEEXT_DEF_VCS);
+					fname.LoadString(IDS_FILEEXT_FNAME_VCS);
+					filter.LoadString(IDS_FILEEXT_FILTER_VCS);
+				}
+				else
+				{
+					def.LoadString(IDS_FILEEXT_DEF_ICS);
+					fname.LoadString(IDS_FILEEXT_FNAME_ICS);
+					filter.LoadString(IDS_FILEEXT_FILTER_ICS);
+				}
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
@@ -770,13 +790,13 @@ BOOL CWizardStart::OnWizardFinish()
 					if (output.is_open())
 					{
 						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
-						ARBCalendar::iCalendarBegin(output);
+						ICalendar* iCalendar = ICalendar::iCalendarBegin(output, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
 						for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 						{
 							ARBCalendar const* pCal = *iterCal;
-							pCal->iCalendar(output, nWarning);
+							pCal->iCalendar(iCalendar, nWarning);
 						}
-						ARBCalendar::iCalendarEnd(output);
+						iCalendar->Release();
 						output.close();
 					}
 					bOk = true;
