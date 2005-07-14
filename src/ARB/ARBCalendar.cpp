@@ -73,16 +73,16 @@ public:
 
 	virtual void Release();
 
-	virtual void BeginEvent();
-	virtual void DoUID(std::string const& inUID);
-	virtual void DoDTSTAMP();
-	virtual void DoDTSTART(ARBDate inDate);
-	virtual void DoDTEND(ARBDate inDate);
-	virtual void DoSUMMARY(std::string const& inStr);
-	virtual void DoLOCATION(std::string const& inStr);
-	virtual void DoDESCRIPTION(std::string const& inStr);
-	virtual void DoAlarm(int inDaysBefore);
-	virtual void EndEvent();
+	void BeginEvent();
+	void DoUID(std::string const& inUID);
+	void DoDTSTAMP();
+	void DoDTSTART(ARBDate inDate);
+	void DoDTEND(ARBDate inDate);
+	void DoSUMMARY(std::string const& inStr);
+	void DoLOCATION(std::string const& inStr);
+	void DoDESCRIPTION(std::string const& inStr);
+	void DoAlarm(int inDaysBefore);
+	void EndEvent();
 
 private:
 	void Write(
@@ -630,8 +630,9 @@ bool ARBCalendar::Save(Element& ioTree) const
 	return true;
 }
 
-void ARBCalendar::iCalendar(ICalendar* ioStream, int inAlarm) const
+void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 {
+	ARBiCal* ioStream = dynamic_cast<ARBiCal*>(inIoStream);
 	ioStream->BeginEvent();
 	ioStream->DoUID(GetUID(eUIDvEvent));
 	ioStream->DoDTSTAMP();
@@ -671,11 +672,10 @@ void ARBCalendar::iCalendar(ICalendar* ioStream, int inAlarm) const
 		str << GetNote();
 		ioStream->DoDESCRIPTION(str.str());
 	}
-	if (ePlanning == m_eEntered)
-	{
-//TODO: 
-	}
-	ioStream->DoAlarm(inAlarm);
+	if (ePlanning == m_eEntered && m_DateOpening.IsValid())
+		inAlarm += m_DateStart - m_DateOpening;
+	if (ePlanning == m_eEntered || eEntered == m_eEntered)
+		ioStream->DoAlarm(inAlarm);
 	ioStream->EndEvent();
 }
 

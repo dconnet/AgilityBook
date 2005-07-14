@@ -63,6 +63,7 @@ class CWizardStart;
 #define WIZ_EXPORT_XML				13
 
 // These must agree with the radio button ordering in WizardStart.cpp
+// Note: These number should not be changed - they are stored in the registry
 #define WIZARD_RADIO_EXCEL			0
 #define WIZARD_RADIO_SPREADSHEET	1
 #define WIZARD_RADIO_ARB			2

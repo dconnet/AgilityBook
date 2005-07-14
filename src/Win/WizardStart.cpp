@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-14 DRC Remember selected export item.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -59,6 +60,11 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+// Registry settings in "Last"
+#define LAST_SECTION	"Last"
+#define LAST_STYLE			"WizStyle"
+#define LAST_STYLEITEM		"WizSubStyle" // A number will be appended
+
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
 
@@ -76,6 +82,7 @@ CWizardStart::CWizardStart(
 	//}}AFX_DATA_INIT
 	if (!m_pSheet->ExcelHelper().IsAvailable())
 		m_Style = WIZARD_RADIO_SPREADSHEET;
+	m_Style = AfxGetApp()->GetProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
 }
 
 CWizardStart::~CWizardStart()
@@ -315,7 +322,10 @@ void CWizardStart::UpdateList()
 		if (LB_ERR != index)
 			m_ctrlList.SetItemData(index, i);
 	}
-	m_ctrlList.SetCurSel(-1);
+	CString str;
+	str.Format("%s%d", LAST_STYLEITEM, m_Style);
+	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str, -1);
+	m_ctrlList.SetCurSel(idx);
 	UpdateButtons();
 }
 
@@ -983,6 +993,7 @@ BOOL CWizardStart::OnWizardFinish()
 void CWizardStart::OnWizardStyle() 
 {
 	UpdateData(TRUE);
+	AfxGetApp()->WriteProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
 	m_pSheet->ResetData();
 	UpdateList();
 }
@@ -996,6 +1007,8 @@ void CWizardStart::OnSelchangeExportList()
 		str = sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc;
 	}
 	m_ctrlDesc.SetWindowText(str);
+	str.Format("%s%d", LAST_STYLEITEM, m_Style);
+	AfxGetApp()->WriteProfileInt(LAST_SECTION, str, index);
 	UpdateButtons();
 }
 

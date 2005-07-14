@@ -1,10 +1,6 @@
-Last Updated: 7/10/2005
+Last Updated: 7/14/2005
 
 - The UKC configuration isn't quite right.
-
-- Clean up the iCalendar VALARM so it makes use of the opening date.
-
-- Remember last-used items in the export wizard.
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 
