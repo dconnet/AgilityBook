@@ -15,6 +15,7 @@
   - When multiple items are selected in the main list views, the right-click
     menu doesn't properly work on all the items.
   - When an error occured while reading a file, the error message was mangled.
+  - Fixed configuration for UKC.
 
 6/11/2005: v1.5.4.10
 - Bug fixes
