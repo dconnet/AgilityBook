@@ -5,6 +5,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2005-07-14 DRC Configuration version 9.
+               UKC: Fixed up rules. Added new title.
 2005-03-28 DRC Configuration version 8.
                AAC: Updated 2005 rules.
 2005-02-07 DRC Configuration version 7.
@@ -31,7 +33,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="8">
+	<Configuration version="9">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -48,6 +50,9 @@ Revision History:
 		<Action NewName="AMBOR Triple Superior Open" OldName="A-OTS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Action NewName="AMBOR Triple Superior Elite" OldName="A-ETS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Action NewName="AMBOR Triple Triple Superior" OldName="A-TTS" Venue="AMBOR" Verb="RenameTitle"/>
+		<Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
+		<Action NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
+		<Action NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
 		<Venue LongName="Agility Association of Canada" Name="AAC">
 			<Desc>http://www.aac.ca/
 
@@ -1397,25 +1402,52 @@ TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 					<SubLevel Name="Agility II B"/>
 				</Level>
 				<Level Name="Agility III"/>
-				<Titles LongName="UKC Agility I" Name="UAgI">3 Qs</Titles>
-				<Titles LongName="UKC Agility II" Name="UAgII">3 Qs</Titles>
-				<Titles LongName="UKC Agility Champion" Name="UACH">100 pts, 40 must be from UAgII</Titles>
-				<Titles LongName="UKC Agility Champion Excellent" Name="UACHX">5 Qs</Titles>
+				<Titles LongName="United Agility I" Name="UAGI">3 Qs in either A or B.</Titles>
+				<Titles LongName="United Agility II" Name="UAGII">3 Qs in either A or B.</Titles>
+				<Titles LongName="United Agility Champion" Name="UACH">100 pts from B, 40 must be from AgI, 40 must be from AgII</Titles>
+				<Titles LongName="United Agility Champion Excellent" Name="UACHX">5 Qs</Titles>
+				<Titles LongName="United Grand Agility Champion" Name="UGRACH">5 triple-Qs with a combined score of 588 or higher, 2 of the combined wins must be under at least 2 different judges.</Titles>
 			</Division>
-			<Event Name="Standard">
-				<Scoring Division="*" Level="*" type="Faults200ThenTime">
+			<Event Name="Agility I">
+				<Scoring Division="*" Level="Agility I" type="Faults200ThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="1" Points="6"/>
 					<TitlePoints Faults="2" Points="4"/>
 					<TitlePoints Faults="3" Points="2"/>
 					<TitlePoints Faults="30" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
 				</Scoring>
-				<Scoring Division="*" Level="Agility III" type="FaultsThenTime">
+			</Event>
+			<Event Name="Agility II">
+				<Scoring Division="*" Level="Agility II" type="Faults200ThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="1" Points="6"/>
+					<TitlePoints Faults="2" Points="4"/>
+					<TitlePoints Faults="3" Points="2"/>
+					<TitlePoints Faults="30" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Agility III">
+				<Scoring Division="*" Level="Agility III" dropFractions="y" type="Faults200ThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="1" Points="6"/>
 					<TitlePoints Faults="2" Points="4"/>
 					<TitlePoints Faults="3" Points="2"/>
 					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
 				</Scoring>
 			</Event>
 		</Venue>
