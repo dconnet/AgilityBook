@@ -358,7 +358,7 @@ int CAgilityBookViewPoints::DoEvents(
 	int speedPts = 0;
 	bool bHasSpeedPts = false;
 	std::set<DoubleQdata> QQs;
-	bool bHasDoubleQs = false;
+	bool bHasDoubleQs = inVenue->HasMultiQs();
 	for (ARBConfigEventList::const_iterator iterEvent = inVenue->GetEvents().begin();
 		iterEvent != inVenue->GetEvents().end();
 		++iterEvent)
@@ -391,13 +391,13 @@ int CAgilityBookViewPoints::DoEvents(
 				++iterTrial)
 			{
 				ARBDogTrial const* pTrial = (*iterTrial);
-				if (pScoringMethod->HasDoubleQ())
+				if (bHasDoubleQs)
 				{
 					for (ARBDate date = pTrial->GetRuns().GetStartDate();
 						date <= pTrial->GetRuns().GetEndDate();
 						++date)
 					{
-						if (pTrial->HasQQ(date, GetDocument()->GetConfig(), inDiv->GetName(), inLevel->GetName()))
+						if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL))
 						{
 							int nVisible = 0;
 							// But first, make sure all the runs are visible.
@@ -408,26 +408,13 @@ int CAgilityBookViewPoints::DoEvents(
 								ARBDogRun const* pRun = (*iterRun);
 								// This extra test only looks at runs that are
 								// QQing. Otherwise a 3rd NA run throws things off.
-								ARBConfigScoring* pScoring = NULL;
-								if (pTrial->GetClubs().GetPrimaryClub())
-								{
-									GetDocument()->GetConfig().GetVenues().FindEvent(
-										pTrial->GetClubs().GetPrimaryClubVenue(),
-										pRun->GetEvent(),
-										pRun->GetDivision(),
-										pRun->GetLevel(),
-										pRun->GetDate(),
-										&pScoring);
-								}
-								if (pScoring && pScoring->HasDoubleQ()
+								if (bHasDoubleQs
 								&& date == pRun->GetDate()
 								&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
 								&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun))
 								{
 									++nVisible;
 								}
-								if (pScoring)
-									pScoring->Release();
 							}
 							if (2 == nVisible)
 								QQs.insert(DoubleQdata(date, pTrial));
@@ -568,8 +555,6 @@ int CAgilityBookViewPoints::DoEvents(
 					strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
 				}
 				CString strSpeed;
-				if (pScoringMethod->HasDoubleQ())
-					bHasDoubleQs = true;
 				if (pScoringMethod->HasSpeedPts())
 				{
 					bHasSpeedPts = true;

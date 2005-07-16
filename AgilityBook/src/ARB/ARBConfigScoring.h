@@ -154,14 +154,18 @@ public:
 	void SetNote(std::string const& inNote);
 	bool HasSuperQ() const;
 	void SetHasSuperQ(bool inBool);
-	bool HasDoubleQ() const;
-	void SetHasDoubleQ(bool inBool);
 	bool HasSpeedPts() const;
 	void SetHasSpeedPts(bool inBool);
 	ARBConfigTitlePointsList const& GetTitlePoints() const;
 	ARBConfigTitlePointsList& GetTitlePoints();
 	ARBConfigLifetimePointsList const& GetLifetimePoints() const;
 	ARBConfigLifetimePointsList& GetLifetimePoints();
+
+	/**
+	 * Obsolete, used only for converting old files.
+	 * This information is now contained in the venue (see ARBConfigMultiQ).
+	 */
+	bool ConvertDoubleQ() const;
 
 private:
 	~ARBConfigScoring();
@@ -318,16 +322,6 @@ inline void ARBConfigScoring::SetHasSuperQ(bool inBool)
 	m_bSuperQ = inBool;
 }
 
-inline bool ARBConfigScoring::HasDoubleQ() const
-{
-	return m_bDoubleQ;
-}
-
-inline void ARBConfigScoring::SetHasDoubleQ(bool inBool)
-{
-	m_bDoubleQ = inBool;
-}
-
 inline bool ARBConfigScoring::HasSpeedPts() const
 {
 	return m_bSpeedPts;
@@ -356,6 +350,11 @@ inline ARBConfigLifetimePointsList const& ARBConfigScoring::GetLifetimePoints() 
 inline ARBConfigLifetimePointsList& ARBConfigScoring::GetLifetimePoints()
 {
 	return m_LifePoints;
+}
+
+inline bool ARBConfigScoring::ConvertDoubleQ() const
+{
+	return m_bDoubleQ;
 }
 
 /////////////////////////////////////////////////////////////////////////////

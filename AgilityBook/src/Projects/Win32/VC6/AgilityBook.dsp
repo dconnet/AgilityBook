@@ -879,11 +879,19 @@ SOURCE=..\..\..\ARB\ARBConfigLevel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\Arb\ARBConfigLifetimePoints.cpp
+SOURCE=..\..\..\ARB\ARBConfigLifetimePoints.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\Arb\ARBConfigLifetimePoints.h
+SOURCE=..\..\..\ARB\ARBConfigLifetimePoints.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigMultiQ.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\ARB\ARBConfigMultiQ.h
 # End Source File
 # Begin Source File
 

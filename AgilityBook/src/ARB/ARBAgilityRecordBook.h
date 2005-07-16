@@ -69,6 +69,8 @@
 #define TREE_ACTION							"Action"
 #define TREE_VENUE							"Venue"
 #define TREE_VENUE_DESC						"Desc"
+#define TREE_MULTIQ							"MultiQ"
+#define TREE_MULTIQ_ITEM					"MultiQItem"
 #define TREE_DIVISION						"Division"
 #define TREE_LEVEL							"Level"
 #define TREE_TITLES							"Titles"
@@ -140,6 +142,11 @@
 #define ATTRIB_ACTION_NEWNAME				"NewName"
 #define ATTRIB_VENUE_NAME					"Name"
 #define ATTRIB_VENUE_LONGNAME				"LongName"
+#define ATTRIB_MULTIQ_VALID_FROM			"ValidFrom"
+#define ATTRIB_MULTIQ_VALID_TO				"ValidTo"
+#define ATTRIB_MULTIQ_ITEM_DIV				"Div"
+#define ATTRIB_MULTIQ_ITEM_LEVEL			"Level"
+#define ATTRIB_MULTIQ_ITEM_EVENT			"Event"
 #define ATTRIB_OTHERPTS_NAME				"Name"
 #define ATTRIB_OTHERPTS_COUNT				"Count"
 #define ATTRIB_DIVISION_NAME				"Name"
@@ -163,7 +170,6 @@
 #define ATTRIB_SCORING_OPENINGPTS			"OpeningPts"
 #define ATTRIB_SCORING_CLOSINGPTS			"ClosingPts"
 #define ATTRIB_SCORING_SUPERQ				"superQ"
-#define ATTRIB_SCORING_DOUBLEQ				"doubleQ"
 #define ATTRIB_SCORING_SPEEDPTS				"speedPts"
 #define ATTRIB_TITLE_POINTS_POINTS			"Points"
 #define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
@@ -254,6 +260,7 @@
 #define INVALID_DATE			"Invalid date: "
 #define INVALID_VALUE			"Invalid value: "
 #define INVALID_DIV_LEVEL		"Division/level pair has not been defined: "
+#define INVALID_EVENT_NAME		"Event has not been defined: "
 #define INVALID_ROOT			"'" TREE_BOOK "' must be the root element."
 #define MISSING_CONFIG			"Missing '" TREE_CONFIG "' section."
 #define INVALID_CONFIG			"Only one '" TREE_CONFIG "' section is allowed."
@@ -300,6 +307,12 @@ inline std::string UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
 {
 	std::ostringstream buffer;
 	buffer << "Events: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	return buffer.str();
+}
+inline std::string UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
+{
+	std::ostringstream buffer;
+	buffer << "MultiQs: " << nAdded << " added, " << nDeleted << " deleted, " << nSkipped << " identical" << std::endl;
 	return buffer.str();
 }
 inline std::string UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)

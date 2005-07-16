@@ -154,7 +154,6 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_OVER, m_ctrlTimeFaultsOver);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SPEED, m_ctrlSpeedPts);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DOUBLEQ, m_ctrlDoubleQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT, m_ctrlMultiplyText);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_ctrlMultiply);
@@ -280,10 +279,6 @@ void CDlgConfigEvent::FillControls()
 			m_ctrlSpeedPts.SetCheck(1);
 		else
 			m_ctrlSpeedPts.SetCheck(0);
-		if (pScoring->HasDoubleQ())
-			m_ctrlDoubleQ.SetCheck(1);
-		else
-			m_ctrlDoubleQ.SetCheck(0);
 		str = pScoring->GetNote().c_str();
 		str.Replace("\n", "\r\n");
 		m_ctrlNote.SetWindowText(str);
@@ -303,7 +298,6 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlTimeFaultsOver.SetCheck(0);
 		m_ctrlPointsList.ResetContent();
 		m_ctrlSpeedPts.SetCheck(0);
-		m_ctrlDoubleQ.SetCheck(0);
 		m_ctrlSuperQ.SetCheck(0);
 		m_ctrlMultiply.SetWindowText("1");
 		m_ctrlNote.SetWindowText("");
@@ -320,7 +314,6 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlTimeFaultsUnder.EnableWindow(bEnable);
 	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
 	m_ctrlSpeedPts.EnableWindow(bEnable);
-	m_ctrlDoubleQ.EnableWindow(bEnable);
 	m_ctrlSuperQ.EnableWindow(bEnable);
 	m_ctrlMultiply.EnableWindow(bEnable);
 	m_ctrlCopy.EnableWindow(bEnable);
@@ -707,10 +700,6 @@ bool CDlgConfigEvent::SaveControls()
 			pScoring->SetHasSpeedPts(true);
 		else
 			pScoring->SetHasSpeedPts(false);
-		if (m_ctrlDoubleQ.GetCheck())
-			pScoring->SetHasDoubleQ(true);
-		else
-			pScoring->SetHasDoubleQ(false);
 		// Point/faults are already up-to-date.
 	}
 	return true;

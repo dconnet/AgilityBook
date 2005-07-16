@@ -632,11 +632,10 @@ void CWizardExport::UpdatePreview()
 											CString str = pRun->GetQ().str().c_str();
 											if (pRun->GetQ().Qualified())
 											{
-												if (pTrial->HasQQ(
+												if (pTrial->HasMultiQ(
 													pRun->GetDate(),
 													m_pDoc->GetConfig(),
-													pRun->GetDivision(),
-													pRun->GetLevel()))
+													pRun))
 												{
 													str.LoadString(IDS_QQ);
 												}

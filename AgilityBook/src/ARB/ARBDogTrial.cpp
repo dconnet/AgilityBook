@@ -208,14 +208,15 @@ bool ARBDogTrial::Save(Element& ioTree) const
 }
 
 // This level is the true level (ie: sublevel), not the config level.
-bool ARBDogTrial::HasQQ(
+bool ARBDogTrial::HasMultiQ(
 		ARBDate const& inDate,
 		ARBConfig const& inConfig,
-		std::string const& inDiv,
-		std::string const& inLevel) const
+		ARBDogRun const* inRun) const
 {
 	if (!GetClubs().GetPrimaryClub())
 		return false;
+/* TODO
+ * inRun may be NULL
 	int nQs = 0;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 	{
@@ -225,14 +226,10 @@ bool ARBDogTrial::HasQQ(
 		&& pRun->GetLevel() == inLevel
 		&& pRun->GetQ().Qualified())
 		{
-			ARBConfigScoring* pScoring;
-			if (inConfig.GetVenues().FindEvent(
+			ARBConfigVenue* pVenue;
+			if (inConfig.GetVenues().FindVenue(
 				GetClubs().GetPrimaryClubVenue(),
-				pRun->GetEvent(),
-				pRun->GetDivision(),
-				pRun->GetLevel(),
-				pRun->GetDate(),
-				&pScoring))
+				&pVenue))
 			{
 				if (pScoring->HasDoubleQ())
 					++nQs;
@@ -241,6 +238,9 @@ bool ARBDogTrial::HasQQ(
 		}
 	}
 	return 2 == nQs;
+*/
+	//TODO
+	return false;
 }
 
 short ARBDogTrial::GetSpeedPoints(

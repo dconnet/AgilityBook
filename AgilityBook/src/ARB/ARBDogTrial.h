@@ -101,18 +101,16 @@ public:
 	bool Save(Element& ioTree) const;
 
 	/**
-	 * Does this trial have a QQ on the given date?
+	 * Does this trial have a multiQ on the given date for the given run?
 	 * @param inDate Date to check.
 	 * @param inConfig Configuration for looking up information.
-	 * @param inDiv Division to check.
-	 * @param inLevel Level to check.
-	 * @return Whether a QQ was earned on inDate.
+	 * @param inRun Run that should match a multiQ.
+	 * @return Whether a multiQ was earned on inDate.
 	 */
-	bool HasQQ(
+	bool HasMultiQ(
 			ARBDate const& inDate,
 			ARBConfig const& inConfig,
-			std::string const& inDiv,
-			std::string const& inLevel) const;
+			ARBDogRun const* inRun) const;
 
 	/**
 	 * Get the Speed points earned for this trial.

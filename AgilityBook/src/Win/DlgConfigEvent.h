@@ -98,7 +98,6 @@ private:
 	CButton	m_ctrlTimeFaultsOver;
 	CEdit	m_ctrlNote;
 	CButton m_ctrlSpeedPts;
-	CButton m_ctrlDoubleQ;
 	CButton m_ctrlSuperQ;
 	CStatic	m_ctrlMultiplyText;
 	CEdit	m_ctrlMultiply;
