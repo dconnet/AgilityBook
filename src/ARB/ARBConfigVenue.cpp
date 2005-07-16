@@ -66,6 +66,7 @@ ARBConfigVenue::ARBConfigVenue()
 	, m_Desc()
 	, m_Divisions()
 	, m_Events()
+	, m_MultiQs()
 {
 }
 
@@ -75,6 +76,7 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	, m_Desc(rhs.m_Desc)
 	, m_Divisions(rhs.m_Divisions)
 	, m_Events(rhs.m_Events)
+	, m_MultiQs(rhs.m_MultiQs)
 {
 }
 
@@ -91,6 +93,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		m_Desc = rhs.m_Desc;
 		m_Divisions = rhs.m_Divisions;
 		m_Events = rhs.m_Events;
+		m_MultiQs = rhs.m_MultiQs;
 	}
 	return *this;
 }
@@ -101,7 +104,8 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_LongName == rhs.m_LongName
 		&& m_Desc == rhs.m_Desc
 		&& m_Divisions == rhs.m_Divisions
-		&& m_Events == rhs.m_Events;
+		&& m_Events == rhs.m_Events
+		&& m_MultiQs == rhs.m_MultiQs;
 }
 
 bool ARBConfigVenue::operator!=(ARBConfigVenue const& rhs) const
@@ -116,6 +120,7 @@ void ARBConfigVenue::clear()
 	m_Desc.erase();
 	m_Divisions.clear();
 	m_Events.clear();
+	m_MultiQs.clear();
 }
 
 size_t ARBConfigVenue::GetSearchStrings(std::set<std::string>& ioStrings) const
@@ -162,6 +167,11 @@ bool ARBConfigVenue::Load(
 			// Ignore any errors...
 			m_Events.Load(m_Divisions, element, inVersion, ioCallback);
 		}
+		else if (name == TREE_MULTIQ)
+		{
+			// Ignore any errors...
+			m_MultiQs.Load(m_Divisions, m_Events, element, inVersion, ioCallback);
+		}
 		if (inVersion < ARBVersion(3,0))
 		{
 			if (name == TREE_FAULTTYPE)
@@ -185,6 +195,33 @@ bool ARBConfigVenue::Load(
 			}
 		}
 	}
+
+	// Convert old double Qs into new ones.
+	if (inVersion < ARBVersion(11, 0))
+	{
+		ARBConfigMultiQ* pMulti = NULL;
+		for (ARBConfigEventList::iterator iter = m_Events.begin();
+			iter != m_Events.end();
+			++iter)
+		{
+			for (ARBConfigScoringList::iterator iterS = (*iter)->GetScorings().begin();
+				iterS != (*iter)->GetScorings().end();
+				++iterS)
+			{
+				if ((*iterS)->ConvertDoubleQ())
+				{
+					if (!pMulti)
+						pMulti = new ARBConfigMultiQ();
+					pMulti->AddEvent((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
+				}
+			}
+		}
+		if (pMulti && 1 < pMulti->GetNumEvents())
+			m_MultiQs.AddMultiQ(pMulti);
+		if (pMulti)
+			pMulti->Release();
+	}
+
 	return true;
 }
 
@@ -202,6 +239,8 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 	if (!m_Divisions.Save(venue))
 		return false;
 	if (!m_Events.Save(venue))
+		return false;
+	if (!m_MultiQs.Save(venue))
 		return false;
 	return true;
 }
@@ -315,6 +354,54 @@ bool ARBConfigVenue::Update(
 			info += info2;
 		}
 	}
+
+	// If the order is different, we will fall into this...
+	if (GetMultiQs() != inVenueNew->GetMultiQs())
+	{
+		int nAdded, nDeleted, nChanged, nSkipped;
+		nAdded = nDeleted = nChanged = nSkipped = 0;
+		ARBConfigMultiQList::iterator iter1;
+		ARBConfigMultiQList::const_iterator iter2;
+		// Look for items that will be removed.
+		for (iter1 = GetMultiQs().begin(); iter1 != GetMultiQs().end(); ++iter1)
+		{
+			bool bFound = false;
+			for (iter2 = inVenueNew->GetMultiQs().begin(); iter2 != inVenueNew->GetMultiQs().end(); ++iter2)
+			{
+				if (*(*iter1) == *(*iter2))
+				{
+					bFound = true;
+					++nSkipped;
+					break;
+				}
+			}
+			if (!bFound)
+				++nDeleted;
+		}
+		// Now look for items that will be added.
+		for (iter2 = inVenueNew->GetMultiQs().begin(); iter2 != inVenueNew->GetMultiQs().end(); ++iter2)
+		{
+			bool bFound = false;
+			for (iter1 = GetMultiQs().begin(); iter1 != GetMultiQs().end(); ++iter1)
+			{
+				if (*(*iter1) == *(*iter2))
+				{
+					bFound = true;
+					break;
+				}
+			}
+			if (!bFound)
+				++nAdded;
+		}
+		GetMultiQs() = inVenueNew->GetMultiQs();
+		if (0 < nAdded || 0 < nDeleted)
+		{
+			info += indentBuffer;
+			info += GetName();
+			info += UPDATE_FORMAT_MULTIQS(nAdded, nDeleted, nSkipped);
+		}
+	}
+
 	if (0 < info.length())
 	{
 		bChanges = true;

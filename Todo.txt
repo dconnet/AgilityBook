@@ -1,6 +1,11 @@
 Last Updated: 7/14/2005
 
 - The UKC configuration isn't quite right.
+  - Fix ARBDogTrial::HasMultiQ
+  - Fix DlgRunScore to show whether a double Q worked
+  - Modify HasMultiQ to take optional param that receives ARBConfigMultiQ match
+    (see comments in code to be reworked in DlgRunScore)
+  - Modify DlgConfigVenue to add configuration of mulitQs
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 

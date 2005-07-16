@@ -901,7 +901,6 @@ void CAgilityBookDoc::OnFileLinked()
 	CDlgFindLinks dlg(GetDogs());
 	if (0 == dlg.GetNumLinks())
 	{
-		//TODO
 		AfxMessageBox("No linked files found.", MB_ICONINFORMATION);
 	}
 	else

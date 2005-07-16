@@ -1264,11 +1264,10 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 					q = m_pRun->GetQ().str().c_str();
 					if (m_pRun->GetQ().Qualified())
 					{
-						if (GetTrial()->HasQQ(
+						if (GetTrial()->HasMultiQ(
 							m_pRun->GetDate(),
 							m_pTree->GetDocument()->GetConfig(),
-							m_pRun->GetDivision(),
-							m_pRun->GetLevel()))
+							m_pRun))
 						{
 							q.LoadString(IDS_QQ);
 						}

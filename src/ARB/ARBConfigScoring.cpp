@@ -310,10 +310,13 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DOUBLEQ, m_bDoubleQ))
+	if (inVersion < ARBVersion(11, 0))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DOUBLEQ, VALID_VALUES_BOOL));
-		return false;
+		if (Element::eInvalidValue == inTree.GetAttrib("doubleQ", m_bDoubleQ))
+		{
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, "doubleQ", VALID_VALUES_BOOL));
+			return false;
+		}
 	}
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
@@ -443,8 +446,6 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 	if (m_bSuperQ)
 		scoring.AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
-	if (m_bDoubleQ)
-		scoring.AddAttrib(ATTRIB_SCORING_DOUBLEQ, m_bDoubleQ);
 	if (m_bSpeedPts)
 		scoring.AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
 	if (!m_TitlePoints.Save(scoring))

@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2005-07-15 DRC File version 11.
+               Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
 2005-04-26 DRC File version 10.2.
                Added 'ver' to 'AgilityBook'
 2005-02-07 DRC File version 10.1.
@@ -154,12 +156,27 @@ top-ten points. The 'Count' value is how they are accumulated
 		Count (All|AllByEvent|Level|LevelByEvent) #REQUIRED
 		>
 
-<!ELEMENT Venue (Desc?, Division+, Event+) >
+<!ELEMENT Venue (Desc?, Division+, Event+, MultiQ*) >
 	<!ATTLIST Venue
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
 		>
 <!ELEMENT Desc (#PCDATA) >
+<!--
+This allows for multiple multiQs within a venue. Currently, I only
+know of 2 venues - each has 1: AKC/QQ and UKC/QQQ
+-->
+<!ELEMENT MultiQ (MultiQItem+) >
+	<!ATTLIST MultiQ
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
+		>
+<!ELEMENT MultiQItem EMPTY >
+	<!ATTLIST MultiQItem
+		Div CDATA #REQUIRED
+		Level CDATA #REQUIRED
+		Event CDATA #REQUIRED
+		>
 
 <!--
 When 'Multiple' is greater than 1, a title is considered to be recurring,
@@ -207,9 +224,8 @@ dropped. (AKC and CPE do this.)
 'underTF' and 'overTF' are used to cause time faults to be computed on
 Time+Faults style events (USDAA Time Gamble)
 
-The 'superQ', 'doubleQ' and 'speedPts' attributes enable built-in
-features for an event. If 'doubleQ' is enabled, the program will
-automatically determine if a double Q occurs on a given date.
+The 'superQ', and 'speedPts' attributes enable built-in
+features for an event.
 
 'hasTable' specifies that this run might have a table. This is used as the
 default when creating a run.
@@ -244,7 +260,6 @@ If there are no 'TitlePoints', then the class is non-titling.
 		underTF (y|n) 'n'
 		overTF (y|n) 'n'
 		superQ (y|n) 'n'
-		doubleQ (y|n) 'n'
 		speedPts (y|n) 'n'
 		hasTable (y|n) 'n'
 		timeFault CDATA #IMPLIED

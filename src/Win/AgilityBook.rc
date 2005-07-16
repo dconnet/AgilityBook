@@ -704,13 +704,10 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,190,218,109,10,0,
                     HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
     CONTROL         "Speed Points?",IDC_CONFIG_EVENT_SPEED,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,174,62,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,322,179,62,10,0,
                     HIDC_CONFIG_EVENT_SPEED
-    CONTROL         "Double Q?",IDC_CONFIG_EVENT_DOUBLEQ,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,186,49,10,0,
-                    HIDC_CONFIG_EVENT_DOUBLEQ
     CONTROL         "Super Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,322,198,45,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,322,193,45,10,0,
                     HIDC_CONFIG_EVENT_SUPERQ
     LTEXT           "Time Fault Multiplier",
                     IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT,317,211,34,16

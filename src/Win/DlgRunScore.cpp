@@ -738,18 +738,18 @@ void CDlgRunScore::SetDoubleQ()
 	int nQs = 0;
 	if (0 < div.length() && 0 < level.length())
 	{
+//TODO: Wrong!
+/*
 		ARBDate date(m_Run->GetDate());
 		// Get all Qs for the trial date.
-		if (m_pTrial->HasQQ(date, m_pDoc->GetConfig(), div, level))
-			nQs = 2;
-		// Subtract us.
-		if (m_pRealRun->GetQ().Qualified()
-		&& m_pRealRun->GetDivision() == div
-		&& m_pRealRun->GetLevel() == level)
-			--nQs;
-		// Now re-add us based on UI.
-		if (m_Run->GetQ().Qualified())
-			++nQs;
+		ARBConfigMultiQ* pMulti;
+use pRun for query - if pRun!=pRealRun(div/level/event), don't include realrun
+
+		if (m_pTrial->HasMultiQ(date, m_pDoc->GetConfig(), pRun, m_pRealRun, &pMulti))
+		{
+			nQs = pMulti->GetNumEvents();
+		}
+*/
 	}
 	// And set it.
 	if (2 == nQs)
@@ -987,11 +987,14 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlSpeedPtsText.ShowWindow(SW_SHOW);
 		m_ctrlSpeedPts.ShowWindow(SW_SHOW);
 	}
-	if (pScoring->HasDoubleQ())
+	//TODO
+	/*
+	if (m_pVenue->HasMultiQ())
 	{
 		m_ctrlDoubleQ.ShowWindow(SW_SHOW);
 		SetDoubleQ();
 	}
+	*/
 	SetTitlePoints();
 
 	pScoring->Release();

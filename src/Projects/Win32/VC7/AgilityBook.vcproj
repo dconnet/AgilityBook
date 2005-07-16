@@ -831,10 +831,16 @@
 				RelativePath="..\..\..\ARB\ARBConfigLevel.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBConfigLifetimePoints.cpp">
+				RelativePath="..\..\..\ARB\ARBConfigLifetimePoints.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBConfigLifetimePoints.h">
+				RelativePath="..\..\..\ARB\ARBConfigLifetimePoints.h">
+			</File>
+			<File
+				RelativePath="..\..\..\ARB\ARBConfigMultiQ.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\ARB\ARBConfigMultiQ.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBConfigOtherPoints.cpp">
@@ -957,10 +963,10 @@
 				RelativePath="..\..\..\ARB\ARBInfo.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfoItem.cpp">
+				RelativePath="..\..\..\ARB\ARBInfoItem.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Arb\ARBInfoItem.h">
+				RelativePath="..\..\..\ARB\ARBInfoItem.h">
 			</File>
 			<File
 				RelativePath="..\..\..\ARB\ARBTraining.cpp">

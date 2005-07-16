@@ -44,6 +44,7 @@
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
+#include "ARBConfigMultiQ.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -127,6 +128,9 @@ public:
 	ARBConfigDivisionList& GetDivisions();
 	ARBConfigEventList const& GetEvents() const;
 	ARBConfigEventList& GetEvents();
+	bool HasMultiQs() const;
+	ARBConfigMultiQList const& GetMultiQs() const;
+	ARBConfigMultiQList& GetMultiQs();
 
 private:
 	~ARBConfigVenue();
@@ -135,6 +139,7 @@ private:
 	std::string m_Desc;
 	ARBConfigDivisionList m_Divisions;
 	ARBConfigEventList m_Events;
+	ARBConfigMultiQList m_MultiQs;
 };
 
 inline std::string ARBConfigVenue::GetGenericName() const
@@ -190,6 +195,21 @@ inline ARBConfigEventList const& ARBConfigVenue::GetEvents() const
 inline ARBConfigEventList& ARBConfigVenue::GetEvents()
 {
 	return m_Events;
+}
+
+inline bool ARBConfigVenue::HasMultiQs() const
+{
+	return 0 < m_MultiQs.size();
+}
+
+inline ARBConfigMultiQList const& ARBConfigVenue::GetMultiQs() const
+{
+	return m_MultiQs;
+}
+
+inline ARBConfigMultiQList& ARBConfigVenue::GetMultiQs()
+{
+	return m_MultiQs;
 }
 
 /////////////////////////////////////////////////////////////////////////////

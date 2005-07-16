@@ -332,11 +332,10 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pRun->GetQ().str().c_str();
 			if (m_pRun->GetQ().Qualified())
 			{
-				if (m_pTrial->HasQQ(
+				if (m_pTrial->HasMultiQ(
 					m_pRun->GetDate(),
 					m_pView->GetDocument()->GetConfig(),
-					m_pRun->GetDivision(),
-					m_pRun->GetLevel()))
+					m_pRun))
 				{
 					str.LoadString(IDS_QQ);
 				}
