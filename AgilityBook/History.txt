@@ -1,4 +1,4 @@
-7/14/2005: v1.5.5.10 <in development>
+7/21/2005: v1.5.5.10 <in development>
 - New features / Enhancements:
   - Removed ARBDouble as a class, created a to-string helper function.
   - Cleaned up some object reference counting APIs.
@@ -15,6 +15,8 @@
   - When multiple items are selected in the main list views, the right-click
     menu doesn't properly work on all the items.
   - When an error occured while reading a file, the error message was mangled.
+  - Fixed a problem where the UI didn't reflect a change in the trial date
+    ordering.
   - Fixed configuration for UKC.
 
 6/11/2005: v1.5.4.10
