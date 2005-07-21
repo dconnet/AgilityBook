@@ -1792,7 +1792,8 @@ void CAgilityBookViewRuns::OnViewSortruns()
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
 	GetDocument()->SortDates();
-	LoadData();
+	// Note, sorting the trials doesn't affect this view.
+	GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW);
 }
 
 void CAgilityBookViewRuns::OnViewRunsByTrial()
