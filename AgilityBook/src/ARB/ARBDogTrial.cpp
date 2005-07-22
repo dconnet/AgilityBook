@@ -207,24 +207,42 @@ bool ARBDogTrial::Save(Element& ioTree) const
 	return true;
 }
 
-// This level is the true level (ie: sublevel), not the config level.
 bool ARBDogTrial::HasMultiQ(
 		ARBDate const& inDate,
 		ARBConfig const& inConfig,
-		ARBDogRun const* inRun) const
+		ARBDogRun const* inRealRun,
+		ARBDogRun const* inRun,
+		ARBVectorBase<ARBConfigMultiQ>* outMultiQs) const
 {
+	if (outMultiQs)
+		outMultiQs->clear();
 	if (!GetClubs().GetPrimaryClub())
 		return false;
+	// First, get all the qualifying runs for the given date.
+	std::vector<ARBDogRun*> runs;
+	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
+	{
+		ARBDogRun* pRun = (*iterRun);
+		if (pRun->GetDate() == inDate
+		&& pRun->GetQ().Qualified())
+		{
+			runs.push_back(pRun);
+		}
+	}
+	size_t nMatches = 0;
+	// Now, see if any combo of these runs matches a multiQ config.
+	if (1 < runs.size())
+	{
+		//if (inRun)
 /* TODO
+ * inRealRun may be NULL - then we're counting across the whole trial
  * inRun may be NULL
 	int nQs = 0;
-	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 	{
 		ARBDogRun* pRun = (*iterRun);
 		if (pRun->GetDate() == inDate
 		&& pRun->GetDivision() == inDiv
 		&& pRun->GetLevel() == inLevel
-		&& pRun->GetQ().Qualified())
 		{
 			ARBConfigVenue* pVenue;
 			if (inConfig.GetVenues().FindVenue(
@@ -239,8 +257,8 @@ bool ARBDogTrial::HasMultiQ(
 	}
 	return 2 == nQs;
 */
-	//TODO
-	return false;
+	}
+	return 0 < nMatches;
 }
 
 short ARBDogTrial::GetSpeedPoints(

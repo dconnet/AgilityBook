@@ -128,7 +128,7 @@ private:
 	short	m_DogsQd;
 	CComboBox	m_ctrlQ;
 	CStatic	m_ctrlScore;
-	CButton	m_ctrlDoubleQ;
+	CButton	m_ctrlMultiQ;
 	CStatic	m_ctrlSpeedPtsText;
 	CStatic	m_ctrlSpeedPts;
 	CStatic	m_ctrlTitlePointsText;

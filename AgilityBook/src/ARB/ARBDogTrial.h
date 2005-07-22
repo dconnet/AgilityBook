@@ -45,6 +45,7 @@
 #include "ARBVector.h"
 class ARBCalendar;
 class ARBConfig;
+class ARBConfigMultiQ;
 class ARBConfigVenue;
 class ARBDate;
 class ARBErrorCallback;
@@ -102,15 +103,23 @@ public:
 
 	/**
 	 * Does this trial have a multiQ on the given date for the given run?
+	 *
 	 * @param inDate Date to check.
 	 * @param inConfig Configuration for looking up information.
-	 * @param inRun Run that should match a multiQ.
+	 * @param inRealRun Existing run in trial to match a multiQ.
+	 * @param inRun Modified copy of inRealRun (see Notes)
+	 * @param outMultiQs MultiQ configurations that match.
 	 * @return Whether a multiQ was earned on inDate.
+	 * @note If inRun is specified, it is assumed to be logically the same
+	 * run as inRealRun, but just not committed yet. This allows us to show
+	 * the user whether a run is a multiQ while editing that run.
 	 */
 	bool HasMultiQ(
 			ARBDate const& inDate,
 			ARBConfig const& inConfig,
-			ARBDogRun const* inRun) const;
+			ARBDogRun const* inRealRun,
+			ARBDogRun const* inRun = NULL,
+			ARBVectorBase<ARBConfigMultiQ>* outMultiQs = NULL) const;
 
 	/**
 	 * Get the Speed points earned for this trial.

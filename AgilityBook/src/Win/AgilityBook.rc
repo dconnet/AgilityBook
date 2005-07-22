@@ -1240,9 +1240,9 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_Q
     LTEXT           "Score",IDC_STATIC,258,175,20,8
     CTEXT           "",IDC_RUNSCORE_SCORE,282,174,25,10,SS_SUNKEN
-    CONTROL         "Double Q",IDC_RUNSCORE_DOUBLE_Q,"Button",
+    CONTROL         "Double Q",IDC_RUNSCORE_MULTI_Q,"Button",
                     BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,341,125,46,10,
-                    0,HIDC_RUNSCORE_DOUBLE_Q
+                    0,HIDC_RUNSCORE_MULTI_Q
     RTEXT           "Speed Points",IDC_RUNSCORE_SPEEDPTS_TEXT,318,142,45,8
     CTEXT           "",IDC_RUNSCORE_SPEEDPTS,367,141,20,10,SS_SUNKEN
     RTEXT           "Title Points",IDC_RUNSCORE_TITLE_POINTS_TEXT,318,158,45,
@@ -2517,8 +2517,8 @@ BEGIN
     IDS_Q                   "Q"
     IDS_SQ                  "SQ"
     IDS_SUPER_Q             "SuperQ"
-    IDS_QQ                  "QQ"
-    IDS_DOUBLE_Q            "DoubleQ"
+    IDS_QQ                  "Q*"
+    IDS_MULTI_Q             "MultiQ"
     IDS_SPEEDPTS            "SpeedPts"
     IDS_EXISTING_POINTS     "Existing Points"
 END
