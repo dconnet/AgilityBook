@@ -298,7 +298,7 @@
 #define IDC_RUNSCORE_DOGS_QD            1339
 #define IDC_RUNSCORE_Q                  1340
 #define IDC_RUNSCORE_SCORE              1341
-#define IDC_RUNSCORE_DOUBLE_Q           1342
+#define IDC_RUNSCORE_MULTI_Q            1342
 #define IDC_RUNSCORE_SPEEDPTS_TEXT      1343
 #define IDC_RUNSCORE_SPEEDPTS           1344
 #define IDC_RUNSCORE_TITLE_POINTS_TEXT  1345
@@ -578,7 +578,7 @@
 #define IDS_SQ                          5028
 #define IDS_SUPER_Q                     5029
 #define IDS_QQ                          5030
-#define IDS_DOUBLE_Q                    5031
+#define IDS_MULTI_Q                     5031
 #define IDS_SPEEDPTS                    5032
 #define IDS_EXISTING_POINTS             5033
 #define IDS_ARE_YOU_SURE                5078

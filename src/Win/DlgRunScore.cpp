@@ -220,7 +220,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RUNSCORE_DOGS_QD, m_DogsQd);
 	DDX_Control(pDX, IDC_RUNSCORE_Q, m_ctrlQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SCORE, m_ctrlScore);
-	DDX_Control(pDX, IDC_RUNSCORE_DOUBLE_Q, m_ctrlDoubleQ);
+	DDX_Control(pDX, IDC_RUNSCORE_MULTI_Q, m_ctrlMultiQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS_TEXT, m_ctrlSpeedPtsText);
 	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS, m_ctrlSpeedPts);
 	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
@@ -735,27 +735,21 @@ void CDlgRunScore::SetDoubleQ()
 		if (!str.IsEmpty())
 			level = (LPCSTR)str;
 	}
-	int nQs = 0;
+	bool multiQ = false;
 	if (0 < div.length() && 0 < level.length())
 	{
-//TODO: Wrong!
-/*
-		ARBDate date(m_Run->GetDate());
-		// Get all Qs for the trial date.
-		ARBConfigMultiQ* pMulti;
-use pRun for query - if pRun!=pRealRun(div/level/event), don't include realrun
-
-		if (m_pTrial->HasMultiQ(date, m_pDoc->GetConfig(), pRun, m_pRealRun, &pMulti))
+		ARBVectorBase<ARBConfigMultiQ> multiQs;
+		if (m_pTrial->HasMultiQ(m_Run->GetDate(), m_pDoc->GetConfig(), m_pRealRun, m_Run, &multiQs))
 		{
-			nQs = pMulti->GetNumEvents();
+			if (0 < multiQs.size())
+				multiQ = true;
 		}
-*/
 	}
 	// And set it.
-	if (2 == nQs)
-		m_ctrlDoubleQ.SetCheck(1);
+	if (multiQ)
+		m_ctrlMultiQ.SetCheck(1);
 	else
-		m_ctrlDoubleQ.SetCheck(0);
+		m_ctrlMultiQ.SetCheck(0);
 }
 
 void CDlgRunScore::SetTitlePoints()
@@ -832,7 +826,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlInClass.EnableWindow(FALSE);
 	m_ctrlDogsQd.EnableWindow(FALSE);
 	m_ctrlQ.EnableWindow(FALSE);
-	m_ctrlDoubleQ.ShowWindow(SW_HIDE);
+	m_ctrlMultiQ.ShowWindow(SW_HIDE);
 	m_ctrlSpeedPtsText.ShowWindow(SW_HIDE);
 	m_ctrlSpeedPts.ShowWindow(SW_HIDE);
 	m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
@@ -987,14 +981,11 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlSpeedPtsText.ShowWindow(SW_SHOW);
 		m_ctrlSpeedPts.ShowWindow(SW_SHOW);
 	}
-	//TODO
-	/*
-	if (m_pVenue->HasMultiQ())
+	if (m_pVenue->HasMultiQs())
 	{
-		m_ctrlDoubleQ.ShowWindow(SW_SHOW);
+		m_ctrlMultiQ.ShowWindow(SW_SHOW);
 		SetDoubleQ();
 	}
-	*/
 	SetTitlePoints();
 
 	pScoring->Release();
