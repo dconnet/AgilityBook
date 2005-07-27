@@ -50,14 +50,18 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigMultiQ::ARBConfigMultiQ()
-	: m_ValidFrom()
+	: m_Name()
+	, m_ShortName()
+	, m_ValidFrom()
 	, m_ValidTo()
 	, m_Items()
 {
 }
 
 ARBConfigMultiQ::ARBConfigMultiQ(ARBConfigMultiQ const& rhs)
-	: m_ValidFrom(rhs.m_ValidFrom)
+	: m_Name(rhs.m_Name)
+	, m_ShortName(rhs.m_ShortName)
+	, m_ValidFrom(rhs.m_ValidFrom)
 	, m_ValidTo(rhs.m_ValidTo)
 	, m_Items(rhs.m_Items)
 {
@@ -71,6 +75,8 @@ ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)
 {
 	if (this != &rhs)
 	{
+		m_Name = rhs.m_Name;
+		m_ShortName = rhs.m_ShortName;
 		m_ValidFrom = rhs.m_ValidFrom;
 		m_ValidTo = rhs.m_ValidTo;
 		m_Items = rhs.m_Items;
@@ -80,7 +86,9 @@ ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)
 
 bool ARBConfigMultiQ::operator==(ARBConfigMultiQ const& rhs) const
 {
-	return m_ValidFrom == rhs.m_ValidFrom
+	return m_Name == rhs.m_Name
+		&& m_ShortName == rhs.m_ShortName
+		&& m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
 		&& m_Items == rhs.m_Items;
 }
@@ -113,12 +121,21 @@ size_t ARBConfigMultiQ::GetSearchStrings(std::set<std::string>& ioStrings) const
 }
 
 bool ARBConfigMultiQ::Load(
-		ARBConfigDivisionList const& inDivisions,
-		ARBConfigEventList const& inEvents,
+		ARBConfigVenue const& inVenue,
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
+	{
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_NAME));
+		return false;
+	}
+	if (Element::eFound != inTree.GetAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName))
+	{
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_SHORTNAME));
+		return false;
+	}
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom))
 	{
 		std::string attrib;
@@ -144,42 +161,67 @@ bool ARBConfigMultiQ::Load(
 		if (element.GetName() == TREE_MULTIQ_ITEM)
 		{
 			MultiQItem item;
+			// Read the data.
 			if (Element::eFound != element.GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
 			|| 0 == item.m_Div.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV));
 				return false;
 			}
-
 			if (Element::eFound != element.GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
 			|| 0 == item.m_Level.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
 				return false;
 			}
-			if (!inDivisions.VerifyLevel(item.m_Div, item.m_Level))
-			{
-				std::string msg(INVALID_DIV_LEVEL);
-				msg += item.m_Div;
-				msg += "/";
-				msg += item.m_Level;
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
-				return false;
-			}
-
 			if (Element::eFound != element.GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
 			|| 0 == item.m_Event.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));
 				return false;
 			}
-			if (!inEvents.FindEvent(item.m_Event))
+
+			// Now verify it.
+			ARBConfigDivision* pDiv;
+			if (!inVenue.GetDivisions().FindDivision(item.m_Div, &pDiv))
+			{
+				std::string msg(INVALID_DIV_NAME);
+				msg += item.m_Div;
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV, msg.c_str()));
+				return false;
+			}
+
+			// Translate the sublevel to level.
+			ARBConfigLevel* pLevel;
+			if (!pDiv->GetLevels().FindSubLevel(item.m_Level, &pLevel))
+			{
+				std::string msg(INVALID_DIV_LEVEL);
+				msg += item.m_Div;
+				msg += "/";
+				msg += item.m_Level;
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
+				pDiv->Release();
+				return false;
+			}
+			pDiv->Release();
+			pDiv = NULL;
+			std::string level = pLevel->GetName();
+			pLevel->Release();
+			pLevel = NULL;
+
+			// Now we can verify the event.
+			if (!inVenue.GetEvents().VerifyEvent(item.m_Event, item.m_Div, level))
 			{
 				std::string msg(INVALID_EVENT_NAME);
+				msg += item.m_Div;
+				msg += "/";
+				msg += item.m_Level;
+				msg += "/";
 				msg += item.m_Event;
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT, msg.c_str()));
 				return false;
 			}
+
 			m_Items.insert(item);
 		}
 	}
@@ -190,6 +232,8 @@ bool ARBConfigMultiQ::Load(
 bool ARBConfigMultiQ::Save(Element& ioTree) const
 {
 	Element& multiQ = ioTree.AddElement(TREE_MULTIQ);
+	multiQ.AddAttrib(ATTRIB_MULTIQ_NAME, m_Name);
+	multiQ.AddAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName);
 	if (m_ValidFrom.IsValid())
 		multiQ.AddAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom);
 	if (m_ValidTo.IsValid())
@@ -370,14 +414,13 @@ bool ARBConfigMultiQ::AddEvent(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigMultiQList::Load(
-		ARBConfigDivisionList const& inDivisions,
-		ARBConfigEventList const& inEvents,
+		ARBConfigVenue const& inVenue,
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
 	ARBConfigMultiQ* thing = new ARBConfigMultiQ();
-	if (!thing->Load(inDivisions, inEvents, inTree, inVersion, ioCallback))
+	if (!thing->Load(inVenue, inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;

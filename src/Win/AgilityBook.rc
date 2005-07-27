@@ -2717,7 +2717,7 @@ BEGIN
     IDS_POINTS_QS           "%1!d! Qs (%2!d!%%)"
     IDS_POINTS_CLEAN        ", (%1!d! clean)"
     IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "[%1!d! Q+]"
+    IDS_POINTS_SQS          "[%1!d! SQ]"
     IDS_POINTS_SPEED_SUBTOTAL "[%1!d! speed]"
     IDS_POINTS_QQS          "%1!d! QQ"
     IDS_POINTS_SPEED        "%1!d! Speed"

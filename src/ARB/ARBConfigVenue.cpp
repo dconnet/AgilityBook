@@ -170,7 +170,7 @@ bool ARBConfigVenue::Load(
 		else if (name == TREE_MULTIQ)
 		{
 			// Ignore any errors...
-			m_MultiQs.Load(m_Divisions, m_Events, element, inVersion, ioCallback);
+			m_MultiQs.Load(*this, element, inVersion, ioCallback);
 		}
 		if (inVersion < ARBVersion(3,0))
 		{
