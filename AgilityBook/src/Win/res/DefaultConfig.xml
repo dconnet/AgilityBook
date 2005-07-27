@@ -266,7 +266,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<Desc>Hybrid, Challenger and Final Rounds</Desc>
 				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime"/>
 			</Event>
-			<MultiQ>
+			<MultiQ Name="Double Q" SName="QQ">
 				<MultiQItem Div="Standard" Level="Excellent B" Event="Standard"/>
 				<MultiQItem Div="Standard" Level="Excellent B" Event="JWW"/>
 			</MultiQ>
@@ -1455,7 +1455,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 					<LifeTime Faults="4" Points="1"/>
 				</Scoring>
 			</Event>
-			<MultiQ>
+			<MultiQ Name="Triple Q" SName="QQQ">
 				<MultiQItem Div="Standard" Level="Agility I B" Event="Agility I"/>
 				<MultiQItem Div="Standard" Level="Agility II B" Event="Agility II"/>
 				<MultiQItem Div="Standard" Level="Agility III" Event="Agility III"/>

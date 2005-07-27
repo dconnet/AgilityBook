@@ -168,6 +168,8 @@ know of 2 venues - each has 1: AKC/QQ and UKC/QQQ
 -->
 <!ELEMENT MultiQ (MultiQItem+) >
 	<!ATTLIST MultiQ
+		Name CDATA #REQUIRED
+		SName CDATA #REQUIRED
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
 		>

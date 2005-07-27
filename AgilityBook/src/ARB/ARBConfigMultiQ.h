@@ -74,16 +74,14 @@ public:
 	/**
 	 * Load a multiQ configuration.
 	 * @pre inTree is the actual ARBConfigMultiQ element.
-	 * @param inDivisions Used to verify division/level during load.
-	 * @param inEvents Used to verify event during load.
+	 * @param inVenue Used to verify division/level/event during load.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ARBConfigEventList const& inEvents,
+			ARBConfigVenue const& inVenue,
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
@@ -169,6 +167,10 @@ public:
 	/*
 	 * Getters/setters.
 	 */
+	std::string GetName() const;
+	void SetName(std::string const& inName);
+	std::string GetShortName() const;
+	void SetShortName(std::string const& inName);
 	ARBDate GetValidFrom() const;
 	void SetValidFrom(ARBDate const& inDate);
 	ARBDate GetValidTo() const;
@@ -199,10 +201,32 @@ private:
 		}
 	};
 
+	std::string m_Name;
+	std::string m_ShortName;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
 	std::set<MultiQItem> m_Items;
 };
+
+inline std::string ARBConfigMultiQ::GetName() const
+{
+	return m_Name;
+}
+
+inline void ARBConfigMultiQ::SetName(std::string const& inName)
+{
+	m_Name = inName;
+}
+
+inline std::string ARBConfigMultiQ::GetShortName() const
+{
+	return m_ShortName;
+}
+
+inline void ARBConfigMultiQ::SetShortName(std::string const& inName)
+{
+	m_ShortName = inName;
+}
 
 inline ARBDate ARBConfigMultiQ::GetValidFrom() const
 {
@@ -240,16 +264,14 @@ public:
 	/**
 	 * Load a multiQ configuration.
 	 * @pre inTree is the actual ARBConfigMultiQ element.
-	 * @param inDivisions Configurate division used for verification.
-	 * @param inEvents Used to verify event during load.
+	 * @param inVenue Used to verify division/level/event during load.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ARBConfigEventList const& inEvents,
+			ARBConfigVenue const& inVenue,
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
