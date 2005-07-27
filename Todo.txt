@@ -1,4 +1,4 @@
-Last Updated: 7/14/2005
+Last Updated: 7/26/2005
 
 - The UKC configuration isn't quite right.
   - Fix ARBDogTrial::HasMultiQ
@@ -6,6 +6,8 @@ Last Updated: 7/14/2005
   - Modify HasMultiQ to take optional param that receives ARBConfigMultiQ match
     (see comments in code to be reworked in DlgRunScore)
   - Modify DlgConfigVenue to add configuration of mulitQs
+  - Change existing points to work only on the venue.
+  - MultiQ level -> real level, or sublevel? If real, A/B in UKC needs to become real level, not sub.
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 

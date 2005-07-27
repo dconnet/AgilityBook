@@ -57,7 +57,7 @@ class ARBDogTitle;
 class ARBDogTrial;
 class CAgilityBookViewPoints;
 
-typedef std::pair<ARBDate, ARBDogTrial const*> DoubleQdata;
+typedef std::pair<ARBDate, ARBDogTrial const*> MultiQdata;
 typedef std::pair<ARBDogTrial const*, ARBDogRun const*> RunInfo;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -284,19 +284,19 @@ protected:
 /**
  * Keeps track of all double Qs
  */
-class PointsDataDoubleQs : public PointsDataBase
+class PointsDataMultiQs : public PointsDataBase
 {
 public:
-	PointsDataDoubleQs(
+	PointsDataMultiQs(
 			CAgilityBookViewPoints* pView,
 			int inExistingDblQs,
-			std::set<DoubleQdata> const& inQQs);
+			std::set<MultiQdata> const& inQQs);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
 
 protected:
-	std::set<DoubleQdata> m_QQs;
+	std::set<MultiQdata> m_QQs;
 	int m_ExistingDblQs;
 };
 

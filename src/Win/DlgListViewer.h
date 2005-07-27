@@ -124,7 +124,7 @@ public:
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			CString const& inCaption,
-			std::set<DoubleQdata> const& inQQs,
+			std::set<MultiQdata> const& inQQs,
 			CWnd* pParent = NULL);
 	// Viewing lifetime data
 	CDlgListViewer(
@@ -158,7 +158,7 @@ private:
 	RunInfoData const* m_Data;
 	std::list<RunInfo> const* m_Runs;
 	std::list<ScoringRunInfo> const* m_ScoringRuns;
-	std::set<DoubleQdata> const* m_DoubleQData;
+	std::set<MultiQdata> const* m_MultiQdata;
 	std::list<LifeTimePointInfo> const* m_Lifetime;
 	std::list<OtherPtInfo> const* m_OtherData;
 	std::vector<CFindItemInfo> const* m_Items;

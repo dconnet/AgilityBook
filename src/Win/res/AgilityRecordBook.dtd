@@ -171,6 +171,9 @@ know of 2 venues - each has 1: AKC/QQ and UKC/QQQ
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
 		>
+<!--
+Note, 'Level' is the entered level, in other words, it may be the sublevel.
+-->
 <!ELEMENT MultiQItem EMPTY >
 	<!ATTLIST MultiQItem
 		Div CDATA #REQUIRED
@@ -323,7 +326,7 @@ depends on how a venue has been defined above.
   'Other': Other Points [Other, Venue, Div, Level, Event]
   'Run': Runs           [       Venue, Div, Level, Event]
   'Speed': Speed points [       Venue, Div, Level]
-  'QQ': Double Q        [       Venue, Div, Level]
+  'QQ': Double Q        [       Venue]
   'SQ': Super Q         [       Venue, Div, Level, Event]
 -->
 <!ELEMENT ExistingPoints (#PCDATA) >

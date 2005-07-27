@@ -94,15 +94,6 @@ private:
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
 
 	PointsDataBase* GetItemData(int index) const;
-	int DoEvents(
-			ARBDog const* inDog,
-			std::vector<CVenueFilter> const& venues,
-			int index,
-			std::list<ARBDogTrial const*> const& trials,
-			ARBConfigVenue const* inVenue,
-			ARBConfigDivision const* inDiv,
-			ARBConfigLevel const* inLevel,
-			LifeTimePointList& inLifetime);
 	size_t FindMatchingRuns(
 			std::list<RunInfo> const& runs,
 			std::string const& div,
@@ -114,6 +105,7 @@ private:
 			ARBConfigScoring const* pScoringMethod,
 			int& nCleanQ,
 			int& nNotCleanQ);
+	void InsertData(int& ioIndex, PointsDataBase* inData);
 	void LoadData();
 
 protected:

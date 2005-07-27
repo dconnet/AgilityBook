@@ -204,6 +204,36 @@ bool ARBConfigMultiQ::Save(Element& ioTree) const
 	return true;
 }
 
+bool ARBConfigMultiQ::Match(ARBVectorBase<ARBDogRun> const& inRuns) const
+{
+	if (inRuns.size() < m_Items.size())
+		return false;
+	// One assumption we are making is that a given run can only match one
+	// multi-q definition.
+	std::vector<bool> bItems;
+	bItems.insert(bItems.begin(), m_Items.size(), false);
+	for (ARBVectorBase<ARBDogRun>::const_iterator iterR = inRuns.begin();
+		iterR != inRuns.end();
+		++iterR)
+	{
+		int idx = 0;
+		for (std::set<MultiQItem>::const_iterator iter = m_Items.begin(); iter != m_Items.end(); ++idx, ++iter)
+		{
+			if ((*iter).m_Div == (*iterR)->GetDivision()
+			&& (*iter).m_Level == (*iterR)->GetLevel()
+			&& (*iter).m_Event == (*iterR)->GetEvent())
+			{
+				bItems[idx] = true;
+			}
+		}
+	}
+	size_t nMatch = 0;
+	for (std::vector<bool>::iterator iterB = bItems.begin(); iterB != bItems.end(); ++iterB)
+		if (*iterB)
+			++nMatch;
+	return nMatch == m_Items.size();
+}
+
 int ARBConfigMultiQ::RenameDivision(
 		std::string const& inOldDiv,
 		std::string const& inNewDiv)

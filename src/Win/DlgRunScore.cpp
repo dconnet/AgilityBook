@@ -561,7 +561,7 @@ void CDlgRunScore::FillLevels()
 		}
 	}
 	FillEvents();
-	SetDoubleQ();
+	SetMultiQ();
 	SetTitlePoints();
 }
 
@@ -717,7 +717,7 @@ void CDlgRunScore::FillQ(bool bHasSuperQ)
 	}
 }
 
-void CDlgRunScore::SetDoubleQ()
+void CDlgRunScore::SetMultiQ()
 {
 	std::string div, level;
 	CString str;
@@ -984,7 +984,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	if (m_pVenue->HasMultiQs())
 	{
 		m_ctrlMultiQ.ShowWindow(SW_SHOW);
-		SetDoubleQ();
+		SetMultiQ();
 	}
 	SetTitlePoints();
 
@@ -1245,6 +1245,6 @@ void CDlgRunScore::OnSelchangeQ()
 	if (CB_ERR != index)
 		q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 	m_Run->SetQ(q);
-	SetDoubleQ();
+	SetMultiQ();
 	SetTitlePoints();
 }
