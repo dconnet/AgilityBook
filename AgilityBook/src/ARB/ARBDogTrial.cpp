@@ -211,21 +211,26 @@ bool ARBDogTrial::HasMultiQ(
 		ARBDate const& inDate,
 		ARBConfig const& inConfig,
 		ARBDogRun const* inRealRun,
-		ARBDogRun const* inRun,
+		ARBDogRun* inRun,
 		ARBVectorBase<ARBConfigMultiQ>* outMultiQs) const
 {
 	if (outMultiQs)
 		outMultiQs->clear();
-	if (!GetClubs().GetPrimaryClub())
+	ARBDogClub* pClub;
+	if (!GetClubs().GetPrimaryClub(&pClub))
 		return false;
 	// First, get all the qualifying runs for the given date.
-	std::vector<ARBDogRun*> runs;
+	ARBVectorBase<ARBDogRun> runs;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 	{
 		ARBDogRun* pRun = (*iterRun);
+		// If this is the one being edited, use the edited version.
+		if (inRealRun == pRun && inRun)
+			pRun = inRun;
 		if (pRun->GetDate() == inDate
 		&& pRun->GetQ().Qualified())
 		{
+			pRun->AddRef();
 			runs.push_back(pRun);
 		}
 	}
@@ -233,31 +238,55 @@ bool ARBDogTrial::HasMultiQ(
 	// Now, see if any combo of these runs matches a multiQ config.
 	if (1 < runs.size())
 	{
-		//if (inRun)
-/* TODO
- * inRealRun may be NULL - then we're counting across the whole trial
- * inRun may be NULL
-	int nQs = 0;
-	{
-		ARBDogRun* pRun = (*iterRun);
-		if (pRun->GetDate() == inDate
-		&& pRun->GetDivision() == inDiv
-		&& pRun->GetLevel() == inLevel
+		std::vector<std::string> venues;
+		if (inRealRun)
+			venues.push_back(pClub->GetVenue());
+		else
+		{
+			for (ARBConfigVenueList::const_iterator iter = inConfig.GetVenues().begin();
+				iter != inConfig.GetVenues().end();
+				++iter)
+			{
+				venues.push_back((*iter)->GetName());
+			}
+		}
+		bool bContinue = true;
+		for (std::vector<std::string>::iterator iter = venues.begin();
+			bContinue && iter != venues.end();
+			++iter)
 		{
 			ARBConfigVenue* pVenue;
-			if (inConfig.GetVenues().FindVenue(
-				GetClubs().GetPrimaryClubVenue(),
-				&pVenue))
+			if (inConfig.GetVenues().FindVenue(*iter, &pVenue))
 			{
-				if (pScoring->HasDoubleQ())
-					++nQs;
-				pScoring->Release();
+				TRACE("%d\n", pVenue->GetMultiQs().size());
+				for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
+					bContinue && iterM != pVenue->GetMultiQs().end();
+					++iterM)
+				{
+					ARBConfigMultiQ* pMultiQ = *iterM;
+					if (pMultiQ->Match(runs))
+					{
+						++nMatches;
+						if (outMultiQs)
+						{
+							pMultiQ->AddRef();
+							outMultiQs->push_back(pMultiQ);
+						}
+						else
+						{
+							// If we're not accumulating the matches,
+							// there's no need to continue looking.
+							bContinue = false;
+						}
+					}
+				}
+				if (pVenue)
+					pVenue->Release();
 			}
 		}
 	}
-	return 2 == nQs;
-*/
-	}
+	if (pClub)
+		pClub->Release();
 	return 0 < nMatches;
 }
 

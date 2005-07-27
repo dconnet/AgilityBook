@@ -1,4 +1,7 @@
-7/21/2005: v1.5.5.10 <in development>
+7/26/2005: v1.5.5.10 <in development>
+- Bumped file version to 11.0, Configuration v9:
+  - Changed how double-Qs are tallied in order to support QQQs in UKC.
+  - Fixed configuration for UKC.
 - New features / Enhancements:
   - Removed ARBDouble as a class, created a to-string helper function.
   - Cleaned up some object reference counting APIs.
@@ -17,7 +20,6 @@
   - When an error occured while reading a file, the error message was mangled.
   - Fixed a problem where the UI didn't reflect a change in the trial date
     ordering.
-  - Fixed configuration for UKC.
 
 6/11/2005: v1.5.4.10
 - Bug fixes

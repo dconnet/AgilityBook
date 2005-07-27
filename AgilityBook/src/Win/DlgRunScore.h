@@ -167,7 +167,7 @@ private:
 	void SetYPS();
 	void SetTotalFaults();
 	void FillQ(bool bHasSuperQ);
-	void SetDoubleQ();
+	void SetMultiQ();
 	void SetTitlePoints();
 	void UpdateControls(bool bOnEventChange = false);
 

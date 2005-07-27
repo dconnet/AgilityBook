@@ -118,7 +118,7 @@ public:
 			ARBDate const& inDate,
 			ARBConfig const& inConfig,
 			ARBDogRun const* inRealRun,
-			ARBDogRun const* inRun = NULL,
+			ARBDogRun* inRun = NULL,
 			ARBVectorBase<ARBConfigMultiQ>* outMultiQs = NULL) const;
 
 	/**

@@ -41,6 +41,7 @@
 #include "ARBConfigDivision.h"
 #include "ARBDate.h"
 #include "ARBVector.h"
+class ARBDogRun;
 class ARBErrorCallback;
 class ARBVersion;
 class Element;
@@ -94,6 +95,13 @@ public:
 	 * @post The ARBConfigMultiQ element will be created in ioTree.
 	 */
 	bool Save(Element& ioTree) const;
+
+	/**
+	 * Does this multi-q configuration match the given set of runs?
+	 * @param inRuns Runs to check.
+	 * @return There is a match.
+	 */
+	bool Match(ARBVectorBase<ARBDogRun> const& inRuns) const;
 
 	/**
 	 * Rename a division.
@@ -177,7 +185,13 @@ private:
 		std::string m_Event;
 		bool operator<(MultiQItem const& rhs) const
 		{
-			return m_Div < rhs.m_Div;
+			if (m_Div < rhs.m_Div)
+				return true;
+			if (m_Level < rhs.m_Level)
+				return true;
+			if (m_Event < rhs.m_Event)
+				return true;
+			return false;
 		}
 		bool operator==(MultiQItem const& rhs) const
 		{

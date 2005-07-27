@@ -1045,7 +1045,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(inData)
 	, m_Runs(&inRuns)
 	, m_ScoringRuns(NULL)
-	, m_DoubleQData(NULL)
+	, m_MultiQdata(NULL)
 	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
@@ -1070,7 +1070,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(&inScoringRuns)
-	, m_DoubleQData(NULL)
+	, m_MultiQdata(NULL)
 	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
@@ -1086,7 +1086,7 @@ CDlgListViewer::CDlgListViewer(
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
-		std::set<DoubleQdata> const& inQQs,
+		std::set<MultiQdata> const& inQQs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
@@ -1094,7 +1094,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
-	, m_DoubleQData(&inQQs)
+	, m_MultiQdata(&inQQs)
 	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
@@ -1118,7 +1118,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
-	, m_DoubleQData(NULL)
+	, m_MultiQdata(NULL)
 	, m_Lifetime(&inLifetime)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
@@ -1142,7 +1142,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
-	, m_DoubleQData(NULL)
+	, m_MultiQdata(NULL)
 	, m_Lifetime(NULL)
 	, m_OtherData(&inRunList)
 	, m_Items(NULL)
@@ -1165,7 +1165,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
-	, m_DoubleQData(NULL)
+	, m_MultiQdata(NULL)
 	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(&inItems)
@@ -1364,7 +1364,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
-	else if (m_DoubleQData)
+	else if (m_MultiQdata)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
 		pColData->InsertColumn(m_ctrlList, COL_QQ_DATE, IDS_COL_DATE);
@@ -1372,8 +1372,8 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->InsertColumn(m_ctrlList, COL_QQ_LOCATION, IDS_COL_LOCATION);
 		pColData->InsertColumn(m_ctrlList, COL_QQ_CLUB, IDS_COL_CLUB);
 		int iItem = 0;
-		for (std::set<DoubleQdata>::const_iterator iter = m_DoubleQData->begin();
-			iter != m_DoubleQData->end();
+		for (std::set<MultiQdata>::const_iterator iter = m_MultiQdata->begin();
+			iter != m_MultiQdata->end();
 			++iter)
 		{
 			CDlgListViewerDataDblQ* pData = new CDlgListViewerDataDblQ(pColData, iter->first, iter->second);

@@ -498,17 +498,17 @@ std::string PointsDataLifetimeDiv::OnNeedText(size_t index) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataDoubleQs::PointsDataDoubleQs(
+PointsDataMultiQs::PointsDataMultiQs(
 		CAgilityBookViewPoints* pView,
 		int inExistingDblQs,
-		std::set<DoubleQdata> const& inQQs)
+		std::set<MultiQdata> const& inQQs)
 	: PointsDataBase(pView)
 	, m_ExistingDblQs(inExistingDblQs)
 	, m_QQs(inQQs)
 {
 }
 
-std::string PointsDataDoubleQs::OnNeedText(size_t index) const
+std::string PointsDataMultiQs::OnNeedText(size_t index) const
 {
 	std::string str;
 	if (7 == index)
@@ -520,7 +520,7 @@ std::string PointsDataDoubleQs::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataDoubleQs::OnDblClick() const
+void PointsDataMultiQs::OnDblClick() const
 {
 	CDlgListViewer dlg(m_pView->GetDocument(), "Double Qs", m_QQs, m_pView);
 	dlg.DoModal();

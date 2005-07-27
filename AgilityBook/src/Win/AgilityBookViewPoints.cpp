@@ -342,283 +342,6 @@ PointsDataBase* CAgilityBookViewPoints::GetItemData(int index) const
 	return pData;
 }
 
-// Entering this function, we know the venue is visible.
-// We don't know if the trial or individual runs are.
-int CAgilityBookViewPoints::DoEvents(
-		ARBDog const* inDog,
-		std::vector<CVenueFilter> const& venues,
-		int index,
-		std::list<ARBDogTrial const*> const& trials,
-		ARBConfigVenue const* inVenue,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		LifeTimePointList& inLifetime)
-{
-	int nAdded = 0;
-	int speedPts = 0;
-	bool bHasSpeedPts = false;
-	std::set<DoubleQdata> QQs;
-	bool bHasDoubleQs = inVenue->HasMultiQs();
-	for (ARBConfigEventList::const_iterator iterEvent = inVenue->GetEvents().begin();
-		iterEvent != inVenue->GetEvents().end();
-		++iterEvent)
-	{
-		ARBConfigEvent const* pEvent = (*iterEvent);
-		bool bHasExistingPoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, false);
-		bool bHasExistingLifetimePoints = inDog->GetExistingPoints().HasPoints(inVenue, inDiv, inLevel, pEvent, true);
-
-		// Don't tally runs that have no titling points.
-		ARBVector<ARBConfigScoring> scoringItems;
-		if (0 == pEvent->FindAllEvents(inDiv->GetName(), inLevel->GetName(), true, scoringItems))
-			continue;
-		// Iterate across each scoring method separately. This means it is
-		// possible to have multiple lines show up for a given event. But if
-		// that happens, it means the events were scored differently.
-		for (ARBVector<ARBConfigScoring>::iterator iterScoring = scoringItems.begin();
-			iterScoring != scoringItems.end();
-			++iterScoring)
-		{
-			ARBConfigScoring* pScoringMethod = *iterScoring;
-			int SQs = 0;
-			int speedPtsEvent = 0;
-			list<RunInfo> matching;
-			set<std::string> judges;
-			set<std::string> judgesQ;
-			set<std::string> partners;
-			set<std::string> partnersQ;
-			for (list<ARBDogTrial const*>::const_iterator iterTrial = trials.begin();
-				iterTrial != trials.end();
-				++iterTrial)
-			{
-				ARBDogTrial const* pTrial = (*iterTrial);
-				if (bHasDoubleQs)
-				{
-					for (ARBDate date = pTrial->GetRuns().GetStartDate();
-						date <= pTrial->GetRuns().GetEndDate();
-						++date)
-					{
-						if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL))
-						{
-							int nVisible = 0;
-							// But first, make sure all the runs are visible.
-							for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-								iterRun != pTrial->GetRuns().end();
-								++iterRun)
-							{
-								ARBDogRun const* pRun = (*iterRun);
-								// This extra test only looks at runs that are
-								// QQing. Otherwise a 3rd NA run throws things off.
-								if (bHasDoubleQs
-								&& date == pRun->GetDate()
-								&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
-								&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun))
-								{
-									++nVisible;
-								}
-							}
-							if (2 == nVisible)
-								QQs.insert(DoubleQdata(date, pTrial));
-						}
-					}
-				}
-				for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-					iterRun != pTrial->GetRuns().end();
-					++iterRun)
-				{
-					ARBDogRun const* pRun = (*iterRun);
-					if (pRun->GetDivision() != inDiv->GetName()
-					|| (pRun->GetLevel() != inLevel->GetName() && !inLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
-					|| pRun->GetEvent() != pEvent->GetName())
-						continue;
-					ARBConfigScoring* pScoring;
-					pEvent->FindEvent(inDiv->GetName(), inLevel->GetName(), pRun->GetDate(), &pScoring);
-					ASSERT(pScoring);
-					if (!pScoring) continue; // Shouldn't need it...
-					if (*pScoring != *pScoringMethod)
-					{
-						pScoring->Release();
-						continue;
-					}
-					pScoring->Release();
-					bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
-					&& CAgilityBookOptions::IsRunVisible(venues, inVenue, pTrial, pRun));
-					if (bRunVisible)
-					{
-						// Don't tally NA runs for titling events.
-						if (pRun->GetQ() == ARB_Q::eQ_NA)
-							continue;
-						matching.push_back(RunInfo(pTrial, pRun));
-						judges.insert(pRun->GetJudge());
-						if (pRun->GetQ().Qualified())
-							judgesQ.insert(pRun->GetJudge());
-						if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
-							++SQs;
-						if (pScoringMethod->HasSpeedPts())
-						{
-							int pts = pRun->GetSpeedPoints(pScoringMethod);
-							speedPts += pts;
-							speedPtsEvent += pts;
-						}
-						// Only tally partners for pairs. In USDAA DAM, pairs is
-						// actually a 3-dog relay.
-						if (pEvent->HasPartner() && 1 == pRun->GetPartners().size())
-						{
-							for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
-								iterPartner != pRun->GetPartners().end();
-								++iterPartner)
-							{
-								string p = (*iterPartner)->GetDog();
-								p += (*iterPartner)->GetRegNum();
-								partners.insert(p);
-								if (pRun->GetQ().Qualified())
-									partnersQ.insert(p);
-							}
-						}
-					}
-					// Tally lifetime points, regardless of visibility.
-					if (0 < pScoringMethod->GetLifetimePoints().size()
-					&& pRun->GetQ().Qualified())
-					{
-						short nLifetime;
-						pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime);
-						if (0 < nLifetime)
-						{
-							inLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
-						}
-					}
-				}
-			}
-			int nExistingPts = 0;
-			int nExistingSQ = 0;
-			// Accumulate existing points - used for both lifetime and
-			// normal runs.
-			if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
-			{
-				nExistingPts = inDog->GetExistingPoints().ExistingPoints(
-					ARBDogExistingPoints::eRuns,
-					inVenue, inDiv, inLevel, pEvent);
-				if (pScoringMethod->HasSuperQ())
-					nExistingSQ += inDog->GetExistingPoints().ExistingPoints(
-						ARBDogExistingPoints::eSQ,
-						inVenue, inDiv, inLevel, pEvent);
-			}
-			// Now add the existing lifetime points
-			if (bHasExistingLifetimePoints && 0 < nExistingPts + nExistingSQ)
-			{
-				inLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
-			}
-			// Now we deal with the visible runs.
-			if (bHasExistingPoints || 0 < matching.size())
-			{
-				int nCleanQ, nNotCleanQ;
-				int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
-				pts += nExistingPts;
-				CString strRunCount;
-				strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
-					matching.size(),
-					judges.size());
-				if (pEvent->HasPartner() && 0 < partners.size())
-				{
-					CString str2;
-					str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
-					strRunCount += str2;
-				}
-				double percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
-				CString strQcount;
-				strQcount.FormatMessage(IDS_POINTS_QS,
-					nCleanQ + nNotCleanQ,
-					static_cast<int>(percentQs));
-				if (0 < nCleanQ)
-				{
-					CString str2;
-					str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
-					strQcount += str2;
-				}
-				if (0 < judgesQ.size())
-				{
-					CString str2;
-					str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
-					strQcount += str2;
-				}
-				if (pEvent->HasPartner() && 0 < partnersQ.size())
-				{
-					CString str2;
-					str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
-					strQcount += str2;
-				}
-				CString strPts;
-				CString strSuperQ;
-				strPts.Format("%d", pts + nExistingSQ);
-				if (pScoringMethod->HasSuperQ())
-				{
-					SQs += nExistingSQ;
-					strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
-				}
-				CString strSpeed;
-				if (pScoringMethod->HasSpeedPts())
-				{
-					bHasSpeedPts = true;
-					if (0 < speedPtsEvent)
-					{
-						strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
-					}
-				}
-				PointsDataEvent* pData = new PointsDataEvent(this,
-					0 < nExistingPts + nExistingSQ ? inDog : NULL,
-					matching,
-					inVenue, inDiv, inLevel, pEvent,
-					(LPCTSTR)strRunCount,
-					(LPCTSTR)strQcount,
-					(LPCTSTR)strPts,
-					(LPCTSTR)strSuperQ,
-					(LPCTSTR)strSpeed);
-				LVITEM item;
-				item.iItem = index + nAdded;
-				item.iSubItem = 0;
-				item.mask = LVIF_TEXT | LVIF_PARAM;
-				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-				GetListCtrl().InsertItem(&item);
-				++nAdded;
-			}
-		}
-	}
-
-	// Information that is tallied after all a venue's events.
-	if (bHasDoubleQs)
-	{
-		speedPts += inDog->GetExistingPoints().ExistingPoints(
-			ARBDogExistingPoints::eSpeed,
-			inVenue, inDiv, inLevel, NULL);
-		int existingDblQs = inDog->GetExistingPoints().ExistingPoints(
-			ARBDogExistingPoints::eQQ,
-			inVenue, inDiv, inLevel, NULL);
-
-		PointsDataDoubleQs* pData = new PointsDataDoubleQs(this, existingDblQs, QQs);
-		LVITEM item;
-		item.iItem = index + nAdded;
-		item.iSubItem = 0;
-		item.mask = LVIF_TEXT | LVIF_PARAM;
-		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-		GetListCtrl().InsertItem(&item);
-		++nAdded;
-	}
-	if (bHasSpeedPts)
-	{
-		PointsDataSpeedPts* pData = new PointsDataSpeedPts(this, speedPts);
-		LVITEM item;
-		item.iItem = index + nAdded;
-		item.iSubItem = 0;
-		item.mask = LVIF_TEXT | LVIF_PARAM;
-		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-		GetListCtrl().InsertItem(&item);
-		++nAdded;
-	}
-	return nAdded;
-}
-
 size_t CAgilityBookViewPoints::FindMatchingRuns(
 		std::list<RunInfo> const& runs,
 		std::string const& div,
@@ -665,6 +388,21 @@ int CAgilityBookViewPoints::TallyPoints(
 	return score;
 }
 
+void CAgilityBookViewPoints::InsertData(int& ioIndex, PointsDataBase* inData)
+{
+	if (inData)
+	{
+		LVITEM item;
+		item.iItem = ioIndex;
+		item.iSubItem = 0;
+		item.mask = LVIF_TEXT | LVIF_PARAM;
+		item.pszText = LPSTR_TEXTCALLBACK;
+		item.lParam = reinterpret_cast<LPARAM>(inData);
+		GetListCtrl().InsertItem(&item);
+		++ioIndex;
+	}
+}
+
 void CAgilityBookViewPoints::LoadData()
 {
 	CWaitCursor wait;
@@ -684,15 +422,7 @@ void CAgilityBookViewPoints::LoadData()
 		int idxInsertItem = 0;
 
 		// Put general info about the dog in...
-		PointsDataDog* pData = new PointsDataDog(this, pDog);
-		LVITEM item;
-		item.iItem = idxInsertItem;
-		item.iSubItem = 0;
-		item.mask = LVIF_TEXT | LVIF_PARAM;
-		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-		GetListCtrl().InsertItem(&item);
-		++idxInsertItem;
+		InsertData(idxInsertItem, new PointsDataDog(this, pDog));
 
 		// For each venue...
 		for (ARBConfigVenueList::const_iterator iterVenue = GetDocument()->GetConfig().GetVenues().begin();
@@ -702,8 +432,6 @@ void CAgilityBookViewPoints::LoadData()
 			ARBConfigVenue* pVenue = (*iterVenue);
 			if (!CAgilityBookOptions::IsVenueVisible(venues, pVenue->GetName()))
 				continue;
-
-			LifeTimePointsList lifetime;
 
 			// First, titles.
 			bool bHeaderInserted = false;
@@ -719,27 +447,13 @@ void CAgilityBookViewPoints::LoadData()
 					{
 						bHeaderInserted = true;
 						GetListCtrl().InsertItem(idxInsertItem++, "");
-						PointsDataVenue* pData = new PointsDataVenue(this, pDog, pVenue);
-						LVITEM item;
-						item.iItem = idxInsertItem;
-						item.iSubItem = 0;
-						item.mask = LVIF_TEXT | LVIF_PARAM;
-						item.pszText = LPSTR_TEXTCALLBACK;
-						item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-						GetListCtrl().InsertItem(&item);
-						++idxInsertItem;
+						InsertData(idxInsertItem, new PointsDataVenue(this, pDog, pVenue));
 					}
-					PointsDataTitle* pData = new PointsDataTitle(this, pDog, pTitle);
-					LVITEM item;
-					item.iItem = idxInsertItem;
-					item.iSubItem = 0;
-					item.mask = LVIF_TEXT | LVIF_PARAM;
-					item.pszText = LPSTR_TEXTCALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-					GetListCtrl().InsertItem(&item);
-					++idxInsertItem;
+					InsertData(idxInsertItem, new PointsDataTitle(this, pDog, pTitle));
 				}
 			}
+
+			LifeTimePointsList lifetime;
 
 			// Then the runs.
 			list<ARBDogTrial const*> trialsInVenue;
@@ -756,20 +470,16 @@ void CAgilityBookViewPoints::LoadData()
 			if (pDog->GetExistingPoints().HasPoints(pVenue->GetName())
 			|| 0 < trialsInVenue.size())
 			{
+				// Ok, we have some trials in the venue to process...
 				if (!bHeaderInserted)
 				{
 					bHeaderInserted = true;
 					GetListCtrl().InsertItem(idxInsertItem++, "");
-					PointsDataVenue* pData = new PointsDataVenue(this, pDog, pVenue);
-					LVITEM item;
-					item.iItem = idxInsertItem;
-					item.iSubItem = 0;
-					item.mask = LVIF_TEXT | LVIF_PARAM;
-					item.pszText = LPSTR_TEXTCALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-					GetListCtrl().InsertItem(&item);
-					++idxInsertItem;
+					InsertData(idxInsertItem, new PointsDataVenue(this, pDog, pVenue));
 				}
+				int speedPts = 0;
+				bool bHasSpeedPts = false;
+				// Show events sorted out by division/level.
 				for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 					iterDiv != pVenue->GetDivisions().end();
 					++iterDiv)
@@ -783,12 +493,241 @@ void CAgilityBookViewPoints::LoadData()
 						LifeTimePoints pts;
 						pts.pDiv = pDiv;
 						pts.pLevel = pLevel;
-						idxInsertItem += DoEvents(pDog, venues, idxInsertItem, trialsInVenue, pVenue, pDiv, pLevel, pts.ptList);
+						// We know the venue is visible,
+						// we don't know if the trial or individual runs are.
+						for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
+							iterEvent != pVenue->GetEvents().end();
+							++iterEvent)
+						{
+							ARBConfigEvent const* pEvent = (*iterEvent);
+							bool bHasExistingPoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, false);
+							bool bHasExistingLifetimePoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, true);
+
+							// Don't tally runs that have no titling points.
+							ARBVector<ARBConfigScoring> scoringItems;
+							if (0 == pEvent->FindAllEvents(pDiv->GetName(), pLevel->GetName(), true, scoringItems))
+								continue;
+							// Iterate across each scoring method separately. This means it is
+							// possible to have multiple lines show up for a given event. But if
+							// that happens, it means the events were scored differently.
+							for (ARBVector<ARBConfigScoring>::iterator iterScoring = scoringItems.begin();
+								iterScoring != scoringItems.end();
+								++iterScoring)
+							{
+								ARBConfigScoring* pScoringMethod = *iterScoring;
+								int SQs = 0;
+								int speedPtsEvent = 0;
+								list<RunInfo> matching;
+								set<std::string> judges;
+								set<std::string> judgesQ;
+								set<std::string> partners;
+								set<std::string> partnersQ;
+								for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
+									iterTrial != trialsInVenue.end();
+									++iterTrial)
+								{
+									ARBDogTrial const* pTrial = (*iterTrial);
+									for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+										iterRun != pTrial->GetRuns().end();
+										++iterRun)
+									{
+										ARBDogRun const* pRun = (*iterRun);
+										if (pRun->GetDivision() != pDiv->GetName()
+										|| (pRun->GetLevel() != pLevel->GetName() && !pLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
+										|| pRun->GetEvent() != pEvent->GetName())
+											continue;
+										ARBConfigScoring* pScoring;
+										pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
+										ASSERT(pScoring);
+										if (!pScoring) continue; // Shouldn't need it...
+										if (*pScoring != *pScoringMethod)
+										{
+											pScoring->Release();
+											continue;
+										}
+										pScoring->Release();
+										bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
+										&& CAgilityBookOptions::IsRunVisible(venues, pVenue, pTrial, pRun));
+										if (bRunVisible)
+										{
+											// Don't tally NA runs for titling events.
+											if (pRun->GetQ() == ARB_Q::eQ_NA)
+												continue;
+											matching.push_back(RunInfo(pTrial, pRun));
+											judges.insert(pRun->GetJudge());
+											if (pRun->GetQ().Qualified())
+												judgesQ.insert(pRun->GetJudge());
+											if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
+												++SQs;
+											if (pScoringMethod->HasSpeedPts())
+											{
+												int pts = pRun->GetSpeedPoints(pScoringMethod);
+												speedPts += pts;
+												speedPtsEvent += pts;
+											}
+											// Only tally partners for pairs. In USDAA DAM, pairs is
+											// actually a 3-dog relay.
+											if (pEvent->HasPartner() && 1 == pRun->GetPartners().size())
+											{
+												for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
+													iterPartner != pRun->GetPartners().end();
+													++iterPartner)
+												{
+													string p = (*iterPartner)->GetDog();
+													p += (*iterPartner)->GetRegNum();
+													partners.insert(p);
+													if (pRun->GetQ().Qualified())
+														partnersQ.insert(p);
+												}
+											}
+										}
+										// Tally lifetime points, regardless of visibility.
+										if (0 < pScoringMethod->GetLifetimePoints().size()
+										&& pRun->GetQ().Qualified())
+										{
+											short nLifetime;
+											pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime);
+											if (0 < nLifetime)
+											{
+												pts.ptList.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+											}
+										}
+									}
+								}
+								int nExistingPts = 0;
+								int nExistingSQ = 0;
+								// Accumulate existing points - used for both lifetime and
+								// normal runs.
+								if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
+								{
+									nExistingPts = pDog->GetExistingPoints().ExistingPoints(
+										ARBDogExistingPoints::eRuns,
+										pVenue, pDiv, pLevel, pEvent);
+									if (pScoringMethod->HasSuperQ())
+										nExistingSQ += pDog->GetExistingPoints().ExistingPoints(
+											ARBDogExistingPoints::eSQ,
+											pVenue, pDiv, pLevel, pEvent);
+								}
+								// Now add the existing lifetime points
+								if (bHasExistingLifetimePoints && 0 < nExistingPts + nExistingSQ)
+								{
+									pts.ptList.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
+								}
+								// Now we deal with the visible runs.
+								if (bHasExistingPoints || 0 < matching.size())
+								{
+									int nCleanQ, nNotCleanQ;
+									int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
+									pts += nExistingPts;
+									CString strRunCount;
+									strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
+										matching.size(),
+										judges.size());
+									if (pEvent->HasPartner() && 0 < partners.size())
+									{
+										CString str2;
+										str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
+										strRunCount += str2;
+									}
+									double percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
+									CString strQcount;
+									strQcount.FormatMessage(IDS_POINTS_QS,
+										nCleanQ + nNotCleanQ,
+										static_cast<int>(percentQs));
+									if (0 < nCleanQ)
+									{
+										CString str2;
+										str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
+										strQcount += str2;
+									}
+									if (0 < judgesQ.size())
+									{
+										CString str2;
+										str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
+										strQcount += str2;
+									}
+									if (pEvent->HasPartner() && 0 < partnersQ.size())
+									{
+										CString str2;
+										str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
+										strQcount += str2;
+									}
+									CString strPts;
+									CString strSuperQ;
+									strPts.Format("%d", pts + nExistingSQ);
+									if (pScoringMethod->HasSuperQ())
+									{
+										SQs += nExistingSQ;
+										strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
+									}
+									CString strSpeed;
+									if (pScoringMethod->HasSpeedPts())
+									{
+										bHasSpeedPts = true;
+										if (0 < speedPtsEvent)
+										{
+											strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
+										}
+									}
+									InsertData(idxInsertItem, new PointsDataEvent(this,
+										0 < nExistingPts + nExistingSQ ? pDog : NULL,
+										matching,
+										pVenue, pDiv, pLevel, pEvent,
+										(LPCTSTR)strRunCount,
+										(LPCTSTR)strQcount,
+										(LPCTSTR)strPts,
+										(LPCTSTR)strSuperQ,
+										(LPCTSTR)strSpeed));
+								}
+							}
+						}
+						if (bHasSpeedPts)
+						{
+							speedPts += pDog->GetExistingPoints().ExistingPoints(
+								ARBDogExistingPoints::eSpeed,
+								pVenue, pDiv, pLevel, NULL);
+						}
 						if (0 < pts.ptList.size())
 							lifetime.push_back(pts);
 					}
 				}
+
+				// Information that is tallied after all a venue's events.
+				if (bHasSpeedPts)
+				{
+					InsertData(idxInsertItem, new PointsDataSpeedPts(this, speedPts));
+				}
+
+				// If the venue has multiQs, tally them now.
+				if (pVenue->HasMultiQs())
+				{
+					std::set<MultiQdata> QQs;
+					for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
+						iterTrial != trialsInVenue.end();
+						++iterTrial)
+					{
+						ARBDogTrial const* pTrial = (*iterTrial);
+						for (ARBDate date = pTrial->GetRuns().GetStartDate();
+							date <= pTrial->GetRuns().GetEndDate();
+							++date)
+						{
+							//ARBVectorBase<ARBConfigMultiQ> multiQs;
+							//if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL, NULL, multiQs))
+							if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL))
+							{
+								QQs.insert(MultiQdata(date, pTrial));
+							}
+						}
+					}
+					int existingDblQs = 0;
+//					int existingDblQs = pDog->GetExistingPoints().ExistingPoints(
+//						ARBDogExistingPoints::eQQ,
+//						pVenue, pDiv, pLevel, NULL);
+
+					InsertData(idxInsertItem, new PointsDataMultiQs(this, existingDblQs, QQs));
+				}
 			}
+			// Next comes lifetime points.
 			if (0 < lifetime.size())
 			{
 				PointsDataLifetime* pData = new PointsDataLifetime(this, pVenue->GetName());
@@ -828,27 +767,14 @@ void CAgilityBookViewPoints::LoadData()
 					pts += pts2;
 					ptFiltered += ptFiltered2;
 				}
-				LVITEM item;
-				item.iItem = idxInsertItem;
-				item.iSubItem = 0;
-				item.mask = LVIF_TEXT | LVIF_PARAM;
-				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-				GetListCtrl().InsertItem(&item);
-				++idxInsertItem;
+				InsertData(idxInsertItem, pData);
 				if (1 < divs.size())
 				{
 					for (DivLifetime::iterator it = divs.begin();
 						it != divs.end();
 						++it)
 					{
-						item.iItem = idxInsertItem;
-						item.iSubItem = 0;
-						item.mask = LVIF_TEXT | LVIF_PARAM;
-						item.pszText = LPSTR_TEXTCALLBACK;
-						item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(it->second));
-						GetListCtrl().InsertItem(&item);
-						++idxInsertItem;
+						InsertData(idxInsertItem, it->second);
 					}
 				}
 				else if (1 == divs.size())
@@ -856,7 +782,7 @@ void CAgilityBookViewPoints::LoadData()
 			}
 		}
 
-		// After all that, we do 'other points'.
+		// After all the venues, we do 'other points'.
 		ARBConfigOtherPointsList const& other = GetDocument()->GetConfig().GetOtherPoints();
 		if (0 < other.size())
 		{
@@ -919,16 +845,7 @@ void CAgilityBookViewPoints::LoadData()
 				{
 				default:
 				case ARBConfigOtherPoints::eTallyAll:
-					{
-						PointsDataOtherPointsTallyAll* pData = new PointsDataOtherPointsTallyAll(this, pOther->GetName(), runs);
-						LVITEM item;
-						item.iItem = idxInsertItem++;
-						item.iSubItem = 0;
-						item.mask = LVIF_TEXT | LVIF_PARAM;
-						item.pszText = LPSTR_TEXTCALLBACK;
-						item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-						GetListCtrl().InsertItem(&item);
-					}
+					InsertData(idxInsertItem, new PointsDataOtherPointsTallyAll(this, pOther->GetName(), runs));
 					break;
 
 				case ARBConfigOtherPoints::eTallyAllByEvent:
@@ -951,14 +868,7 @@ void CAgilityBookViewPoints::LoadData()
 								if ((*iter).m_Event == (*iterTally))
 									validRuns.push_back(*iter);
 							}
-							PointsDataOtherPointsTallyAllByEvent* pData = new PointsDataOtherPointsTallyAllByEvent(this, validRuns);
-							LVITEM item;
-							item.iItem = idxInsertItem++;
-							item.iSubItem = 0;
-							item.mask = LVIF_TEXT | LVIF_PARAM;
-							item.pszText = LPSTR_TEXTCALLBACK;
-							item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-							GetListCtrl().InsertItem(&item);
+							InsertData(idxInsertItem, new PointsDataOtherPointsTallyAllByEvent(this, validRuns));
 						}
 					}
 					break;
@@ -983,14 +893,7 @@ void CAgilityBookViewPoints::LoadData()
 								if ((*iter).m_Level == (*iterTally))
 									validRuns.push_back(*iter);
 							}
-							PointsDataOtherPointsTallyLevel* pData = new PointsDataOtherPointsTallyLevel(this, validRuns);
-							LVITEM item;
-							item.iItem = idxInsertItem++;
-							item.iSubItem = 0;
-							item.mask = LVIF_TEXT | LVIF_PARAM;
-							item.pszText = LPSTR_TEXTCALLBACK;
-							item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-							GetListCtrl().InsertItem(&item);
+							InsertData(idxInsertItem, new PointsDataOtherPointsTallyLevel(this, validRuns));
 						}
 					}
 					break;
@@ -1017,14 +920,7 @@ void CAgilityBookViewPoints::LoadData()
 								&& (*iter).m_Event == (*iterTally).second)
 									validRuns.push_back(*iter);
 							}
-							PointsDataOtherPointsTallyLevelByEvent* pData = new PointsDataOtherPointsTallyLevelByEvent(this, validRuns);
-							LVITEM item;
-							item.iItem = idxInsertItem++;
-							item.iSubItem = 0;
-							item.mask = LVIF_TEXT | LVIF_PARAM;
-							item.pszText = LPSTR_TEXTCALLBACK;
-							item.lParam = reinterpret_cast<LPARAM>(static_cast<PointsDataBase*>(pData));
-							GetListCtrl().InsertItem(&item);
+							InsertData(idxInsertItem, new PointsDataOtherPointsTallyLevelByEvent(this, validRuns));
 						}
 					}
 					break;
