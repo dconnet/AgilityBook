@@ -110,9 +110,6 @@ Description of this event.
 .topic HIDC_CONFIG_EVENT_DIVISION
 Division this scoring method applies to.
 
-.topic HIDC_CONFIG_EVENT_DOUBLEQ
-Does this scoring method have double-Qs?
-
 .topic HIDC_CONFIG_EVENT_DROP_FRACTIONS
 When computing time faults, should the fractions be dropped?
 
@@ -625,8 +622,8 @@ Division of this run.
 .topic HIDC_RUNSCORE_DOGS_QD
 Number of dogs that qualified. Enter -1 if not known.
 
-.topic HIDC_RUNSCORE_DOUBLE_Q
-Indicates this run is part of a double Q.
+.topic HIDC_RUNSCORE_MULTI_Q
+Indicates this run is part of a multi Q.
 
 .topic HIDC_RUNSCORE_EVENT
 Type of run.

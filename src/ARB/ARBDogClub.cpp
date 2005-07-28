@@ -254,8 +254,11 @@ bool ARBDogClubList::FindVenue(
 	{
 		if ((*iter)->GetVenue() == inVenue)
 		{
-			*outClub = *iter;
-			(*outClub)->AddRef();
+			if (outClub)
+			{
+				*outClub = *iter;
+				(*outClub)->AddRef();
+			}
 			return true;
 		}
 	}
