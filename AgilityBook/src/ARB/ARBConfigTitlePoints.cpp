@@ -199,6 +199,8 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 		short inFaults,
 		ARBConfigTitlePoints** outTitle) const
 {
+	if (outTitle)
+		*outTitle = NULL;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetFaults() == inFaults)

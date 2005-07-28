@@ -985,6 +985,7 @@ void CDlgConfigVenue::OnDelete()
 					// If we were able to delete it...
 					if (m_pVenue->GetDivisions().DeleteDivision(div, m_pVenue->GetEvents()))
 					{
+						m_pVenue->GetMultiQs().DeleteDivision(div);
 						// Then we commit to fixing the real data.
 						if (0 < nTrials || 0 < nTitles)
 							m_DlgFixup.push_back(new CDlgFixupDeleteDivision(m_pVenue->GetName(), div));
@@ -1023,6 +1024,7 @@ void CDlgConfigVenue::OnDelete()
 					{
 						if (pLevelData->GetDivision()->GetLevels().DeleteLevel(level, m_pVenue->GetEvents()))
 						{
+							m_pVenue->GetMultiQs().DeleteLevel(level);
 							// Then we commit to fixing the real data.
 							if (0 < nLevels)
 								m_DlgFixup.push_back(new CDlgFixupDeleteLevel(
@@ -1056,10 +1058,14 @@ void CDlgConfigVenue::OnDelete()
 						bool bLevelModified = false;
 						if (pSubLevelData->GetDivision()->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
 						{
+							m_pVenue->GetMultiQs().DeleteLevel(subLevel);
 							// Then we commit to fixing the real data.
 							if (bLevelModified)
 							{
 								m_pVenue->GetEvents().RenameLevel(level, pLevelData->GetLevel()->GetName());
+								m_pVenue->GetMultiQs().RenameLevel(
+									pSubLevelData->GetDivision()->GetName(),
+									level, pLevelData->GetLevel()->GetName());
 								m_DlgFixup.push_back(new CDlgFixupRenameLevel(
 									m_pVenue->GetName(),
 									pSubLevelData->GetDivision()->GetName(),
@@ -1133,6 +1139,7 @@ void CDlgConfigVenue::OnDelete()
 				{
 					if (m_pVenue->GetEvents().DeleteEvent(event))
 					{
+						m_pVenue->GetMultiQs().DeleteEvent(event);
 						// Then we commit to fixing the real data.
 						if (0 < nEvents)
 							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(m_pVenue->GetName(), event));
@@ -1179,6 +1186,7 @@ void CDlgConfigVenue::OnEdit()
 						}
 						pDivData->GetDivision()->SetName(name);
 						m_pVenue->GetEvents().RenameDivision(oldName, name);
+						m_pVenue->GetMultiQs().RenameDivision(oldName, name);
 						m_DlgFixup.push_back(new CDlgFixupRenameDivision(m_pVenue->GetName(), oldName, name));
 						m_ctrlDivisions.Invalidate();
 					}
@@ -1235,7 +1243,12 @@ void CDlgConfigVenue::OnEdit()
 							}
 							pLevelData->GetLevel()->SetName(name);
 							if (0 == pLevelData->GetLevel()->GetSubLevels().size())
+							{
 								m_pVenue->GetEvents().RenameLevel(oldName, name);
+								m_pVenue->GetMultiQs().RenameLevel(
+									pLevelData->GetDivision()->GetName(),
+									oldName, name);
+							}
 							m_DlgFixup.push_back(new CDlgFixupRenameLevel(
 								m_pVenue->GetName(),
 								pLevelData->GetDivision()->GetName(),
@@ -1272,6 +1285,9 @@ void CDlgConfigVenue::OnEdit()
 							}
 							pSubLevelData->GetSubLevel()->SetName(name);
 							// No need to fix ARBConfigEventList cause we don't do sublevel names in events.
+							m_pVenue->GetMultiQs().RenameLevel(
+								pSubLevelData->GetDivision()->GetName(),
+								oldName, pSubLevelData->GetSubLevel()->GetName());
 							m_DlgFixup.push_back(new CDlgFixupRenameLevel(
 								m_pVenue->GetName(),
 								pSubLevelData->GetDivision()->GetName(),
@@ -1356,10 +1372,12 @@ void CDlgConfigVenue::OnEdit()
 			if (!pEventData)
 				return;
 			ARBConfigEvent* pEvent = pEventData->GetEvent();
+			std::string oldName = pEvent->GetName();
 			CDlgConfigEvent dlg(m_pDoc, &m_Book, &m_Config, m_pVenue, pEvent, this);
 			pEvent->AddRef();
 			if (IDOK == dlg.DoModal())
 			{
+				m_pVenue->GetMultiQs().RenameEvent(oldName, pEvent->GetName());
 				dlg.GetFixups(m_DlgFixup);
 				LoadEventData();
 				FindCurrentEvent(pEvent, true);

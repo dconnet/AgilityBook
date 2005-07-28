@@ -319,6 +319,7 @@ int ARBConfigMultiQ::DeleteDivision(std::string const& inDiv)
 }
 
 int ARBConfigMultiQ::RenameLevel(
+		std::string const& inDiv,
 		std::string const& inOldLevel,
 		std::string const& inNewLevel)
 {
@@ -327,7 +328,8 @@ int ARBConfigMultiQ::RenameLevel(
 	int count = 0;
 	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); ++iter)
 	{
-		if ((*iter).m_Level == inOldLevel)
+		if ((*iter).m_Div == inDiv
+		&& (*iter).m_Level == inOldLevel)
 		{
 			MultiQItem item = *iter;
 			item.m_Level = inNewLevel;
@@ -433,6 +435,8 @@ bool ARBConfigMultiQList::FindMultiQ(
 	ARBConfigMultiQ const& inMultiQ,
 	ARBConfigMultiQ** outMultiQ)
 {
+	if (outMultiQ)
+		*outMultiQ = NULL;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (*iter && *(*iter) == inMultiQ)
@@ -452,6 +456,8 @@ int ARBConfigMultiQList::RenameDivision(
 		std::string const& inOldDiv,
 		std::string const& inNewDiv)
 {
+	if (inOldDiv == inNewDiv)
+		return 0;
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -471,13 +477,16 @@ int ARBConfigMultiQList::DeleteDivision(std::string const& inDiv)
 }
 
 int ARBConfigMultiQList::RenameLevel(
+		std::string const& inDiv,
 		std::string const& inOldLevel,
 		std::string const& inNewLevel)
 {
+	if (inOldLevel == inNewLevel)
+		return 0;
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		count += (*iter)->RenameLevel(inOldLevel, inNewLevel);
+		count += (*iter)->RenameLevel(inDiv, inOldLevel, inNewLevel);
 	}
 	return count;
 }
@@ -496,6 +505,8 @@ int ARBConfigMultiQList::RenameEvent(
 		std::string const& inOldEvent,
 		std::string const& inNewEvent)
 {
+	if (inOldEvent == inNewEvent)
+		return 0;
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{

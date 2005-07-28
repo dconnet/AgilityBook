@@ -120,11 +120,13 @@ public:
 
 	/**
 	 * Rename a level.
+	 * @param inDiv Division level is in.
 	 * @param inOldLevel Level name being renamed.
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
+			std::string const& inDiv,
 			std::string const& inOldLevel,
 			std::string const& inNewLevel);
 
@@ -304,11 +306,13 @@ public:
 
 	/**
 	 * Rename a level.
+	 * @param inDiv Division level is in.
 	 * @param inOldLevel Level name being renamed.
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
+			std::string const& inDiv,
 			std::string const& inOldLevel,
 			std::string const& inNewLevel);
 
