@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2005 David Connet. All Rights Reserved.
+ * Copyright © 2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,54 +29,69 @@
 /**
  * @file
  *
- * @brief interface of the CDlgSelectEvent class
+ * @brief interface of the CDlgEventSelect class
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-30 DRC Created.
  */
 
+#include "ARBDate.h"
 #include "DlgBaseDialog.h"
 class ARBConfigVenue;
+class ARBConfigMultiQ;
 
-class CDlgSelectEvent : publicCDlgBaseDialog 
+class CDlgEventSelect : public CDlgBaseDialog
 {
 public:
-	CDlgSelectEvent(
-			ARBConfigVenue const* pVenue,
+	CDlgEventSelect(
+			ARBConfigVenue const* inVenue,
+			ARBDate const& inDate,
+			char const* const inDivision,
+			char const* const inLevel,
+			char const* const inEvent,
 			CWnd* pParent = NULL);
-	char const* GetDivision() const		{return (LPCTSTR)m_Division;}
-	char const* GetLevel() const		{return (LPCTSTR)m_Level;}
-	char const* GetEvent() const		{return (LPCTSTR)m_Event;}
+	virtual ~CDlgEventSelect();
+	char const* const GetDivision() const	{return (LPCTSTR)m_Div;}
+	char const* const GetLevel() const		{return (LPCTSTR)m_Lev;}
+	char const* const GetEvent() const		{return (LPCTSTR)m_Evt;}
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgSelectEvent)
-	enum { IDD = IDD_SELECT_EVENT };
-	CComboBox	m_ctrlDivision;
-	CComboBox	m_ctrlLevel;
-	CComboBox	m_ctrlEvent;
+	//{{AFX_DATA(CDlgEventSelect)
+	enum { IDD = IDD_EVENT_SELECT };
+	CString	m_Division;
+	CComboBox	m_ctrlDivisions;
+	CString	m_Level;
+	CComboBox	m_ctrlLevels;
+	CString	m_Event;
+	CComboBox	m_ctrlEvents;
+	CButton	m_ctrlOk;
 	//}}AFX_DATA
 	ARBConfigVenue const* m_pVenue;
-	CString m_Division;
-	CString m_Level;
-	CString m_Event;
+	ARBDate m_Date;
+	char const* m_inDivision;
+	char const* m_inLevel;
+	char const* m_inEvent;
+	CString m_Div;
+	CString m_Lev;
+	CString m_Evt;
 
-	//{{AFX_VIRTUAL(CDlgSelectEvent)
+	//{{AFX_VIRTUAL(CDlgEventSelect)
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-private:
+protected:
+	void UpdateControls();
 	void ClearLevels();
 	void FillLevels();
 	void FillEvents();
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgSelectEvent)
+	//{{AFX_MSG(CDlgEventSelect)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeDivision();
 	afx_msg void OnSelchangeLevel();
+	afx_msg void OnSelchangeEvent();
 	virtual void OnOK();
 	virtual void OnCancel();
 	//}}AFX_MSG

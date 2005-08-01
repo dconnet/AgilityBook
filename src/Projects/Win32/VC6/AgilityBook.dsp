@@ -186,6 +186,10 @@ SOURCE=..\..\..\Win\DlgConfigEvent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgConfigMultiQ.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgConfigOtherPoints.cpp
 # End Source File
 # Begin Source File
@@ -235,6 +239,10 @@ SOURCE=..\..\..\Win\DlgDogProp.cpp
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgDogTitles.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgEventSelect.cpp
 # End Source File
 # Begin Source File
 
@@ -539,6 +547,10 @@ SOURCE=..\..\..\Win\DlgConfigEvent.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgConfigMultiQ.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgConfigOtherPoints.h
 # End Source File
 # Begin Source File
@@ -588,6 +600,10 @@ SOURCE=..\..\..\Win\DlgDogProp.h
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgDogTitles.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgEventSelect.h
 # End Source File
 # Begin Source File
 

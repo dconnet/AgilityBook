@@ -377,7 +377,7 @@ inline std::string LIFETIME_POINTS_NAME_FORMAT(short points, short faults)
 #define EXISTING_POINTS_OTHER		"OtherPoints"
 #define EXISTING_POINTS_RUN			"Run"
 #define EXISTING_POINTS_SPEED		"Speed"
-#define EXISTING_POINTS_QQ			"Double Q"
+#define EXISTING_POINTS_QQ			"Multiple Q"
 #define EXISTING_POINTS_SQ			"SuperQ"
 
 

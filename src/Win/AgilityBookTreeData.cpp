@@ -1264,15 +1264,32 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 					q = m_pRun->GetQ().str().c_str();
 					if (m_pRun->GetQ().Qualified())
 					{
+						ARBVectorBase<ARBConfigMultiQ> multiQs;
 						if (GetTrial()->HasMultiQ(
 							m_pRun->GetDate(),
 							m_pTree->GetDocument()->GetConfig(),
-							m_pRun))
+							m_pRun, NULL,
+							&multiQs))
 						{
-							q.LoadString(IDS_QQ);
+							q.Empty();
+							for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
+								iter != multiQs.end();
+								++iter)
+							{
+								if (!str.IsEmpty())
+									q += "/";
+								q += (*iter)->GetShortName().c_str();
+							}
 						}
 						if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
-							q.LoadString(IDS_SQ);
+						{
+							CString tmp;
+							tmp.LoadString(IDS_SQ);
+							if (0 < multiQs.size())
+								q = tmp + "/" + q;
+							else
+								q = tmp;
+						}
 					}
 					str += q;
 				}

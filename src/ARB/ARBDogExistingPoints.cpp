@@ -286,7 +286,7 @@ bool ARBDogExistingPoints::Load(
 		// Only used in eRuns.
 		inTree.GetAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 	}
-	else
+	else if (eQQ != m_Type)
 	{
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
@@ -344,8 +344,6 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 	case eQQ:
 		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_QQ);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		break;
 	case eSQ:
 		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SQ);
