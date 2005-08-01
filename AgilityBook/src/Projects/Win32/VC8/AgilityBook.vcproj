@@ -289,6 +289,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgConfigMultiQ.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgConfigOtherPoints.cpp"
 				>
 			</File>
@@ -338,6 +342,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgDogTitles.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgEventSelect.cpp"
 				>
 			</File>
 			<File
@@ -662,6 +670,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgConfigMultiQ.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgConfigOtherPoints.h"
 				>
 			</File>
@@ -711,6 +723,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgDogTitles.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgEventSelect.h"
 				>
 			</File>
 			<File

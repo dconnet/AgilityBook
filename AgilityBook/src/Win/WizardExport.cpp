@@ -632,15 +632,32 @@ void CWizardExport::UpdatePreview()
 											CString str = pRun->GetQ().str().c_str();
 											if (pRun->GetQ().Qualified())
 											{
+												ARBVectorBase<ARBConfigMultiQ> multiQs;
 												if (pTrial->HasMultiQ(
 													pRun->GetDate(),
 													m_pDoc->GetConfig(),
-													pRun))
+													pRun, NULL,
+													&multiQs))
 												{
-													str.LoadString(IDS_QQ);
+													str.Empty();
+													for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
+														iter != multiQs.end();
+														++iter)
+													{
+														if (!str.IsEmpty())
+															str += "/";
+														str += (*iter)->GetShortName().c_str();
+													}
 												}
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
-													str.LoadString(IDS_SQ);
+												{
+													CString tmp;
+													tmp.LoadString(IDS_SQ);
+													if (0 < multiQs.size())
+														str = tmp + "/" + str;
+													else
+														str = tmp;
+												}
 											}
 											data += AddPreviewData(iLine, idx, str);
 										}

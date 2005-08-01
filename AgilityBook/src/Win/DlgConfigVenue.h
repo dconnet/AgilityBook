@@ -43,6 +43,7 @@ class ARBAgilityRecordBook;
 class ARBConfigDivision;
 class ARBConfigEvent;
 class ARBConfigLevel;
+class ARBConfigMultiQ;
 class ARBConfigSubLevel;
 class ARBConfigTitle;
 class ARBConfigVenue;
@@ -51,6 +52,7 @@ class CDlgConfigureData;
 class CDlgConfigureDataDivision;
 class CDlgConfigureDataEvent;
 class CDlgConfigureDataLevel;
+class CDlgConfigureDataMultiQ;
 class CDlgConfigureDataSubLevel;
 class CDlgConfigureDataTitle;
 class CDlgFixup;
@@ -77,6 +79,7 @@ private:
 	CListCtrl2	m_ctrlDivisions;
 	CTreeCtrl	m_ctrlLevels;
 	CListCtrl2	m_ctrlEvents;
+	CListCtrl2	m_ctrlMultiQ;
 	CListCtrl2	m_ctrlTitles;
 	CButton	m_ctrlNew;
 	CButton	m_ctrlDelete;
@@ -97,7 +100,8 @@ private:
 		eDivisions,
 		eLevels,
 		eTitles,
-		eEvents
+		eEvents,
+		eMultiQ
 	} eAction;
 	eAction m_Action;
 
@@ -113,6 +117,7 @@ private:
 	void LoadLevelData();
 	void LoadTitleData();
 	void LoadEventData();
+	void LoadMultiQData();
 	int FindCurrentDivision(
 			ARBConfigDivision const* pDiv,
 			bool bSet);
@@ -128,11 +133,15 @@ private:
 	int FindCurrentEvent(
 			ARBConfigEvent const* pEvent,
 			bool bSet);
+	int FindCurrentMultiQ(
+			ARBConfigMultiQ const* pMultiQ,
+			bool bSet);
 	CDlgConfigureDataDivision* GetCurrentDivisionData();
 	CDlgConfigureDataLevel* GetCurrentLevelData();
 	CDlgConfigureDataSubLevel* GetCurrentSubLevelData();
 	CDlgConfigureDataTitle* GetCurrentTitleData();
 	CDlgConfigureDataEvent* GetCurrentEventData();
+	CDlgConfigureDataMultiQ* GetCurrentMultiQData();
 
 protected:
 	//{{AFX_MSG(CDlgConfigVenue)
@@ -150,6 +159,7 @@ protected:
 	afx_msg void OnSetfocusLevel(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSetfocusTitles(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSetfocusEvent(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSetfocusMultiQ(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNew();
 	afx_msg void OnDelete();
 	afx_msg void OnEdit();

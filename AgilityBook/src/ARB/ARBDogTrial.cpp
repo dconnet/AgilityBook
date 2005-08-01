@@ -258,7 +258,6 @@ bool ARBDogTrial::HasMultiQ(
 			ARBConfigVenue* pVenue;
 			if (inConfig.GetVenues().FindVenue(*iter, &pVenue))
 			{
-				TRACE("%d\n", pVenue->GetMultiQs().size());
 				for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
 					bContinue && iterM != pVenue->GetMultiQs().end();
 					++iterM)

@@ -212,11 +212,11 @@ bool ARBConfigVenue::Load(
 				{
 					if (!pMulti)
 						pMulti = new ARBConfigMultiQ();
-					pMulti->AddEvent((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
+					pMulti->AddItem((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
 				}
 			}
 		}
-		if (pMulti && 1 < pMulti->GetNumEvents())
+		if (pMulti && 1 < pMulti->GetNumItems())
 			m_MultiQs.AddMultiQ(pMulti);
 		if (pMulti)
 			pMulti->Release();

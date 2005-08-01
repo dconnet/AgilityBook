@@ -155,16 +155,33 @@ public:
 	int DeleteEvent(std::string const& inEvent);
 
 	/**
-	 * Add an event.
+	 * Add an item.
 	 * @param inDiv Division of event.
 	 * @param inLevel Level of event.
 	 * @param inEvent Event.
 	 * @return Whether object was added.
 	 */
-	bool AddEvent(
+	bool AddItem(
 			std::string const& inDiv,
 			std::string const& inLevel,
 			std::string const& inEvent);
+
+	/**
+	 * Remove an item.
+	 * @param inDiv Division of event.
+	 * @param inLevel Level of event.
+	 * @param inEvent Event.
+	 * @return Whether object was removed.
+	 */
+	bool RemoveItem(
+			std::string const& inDiv,
+			std::string const& inLevel,
+			std::string const& inEvent);
+
+	/**
+	 * Remove all configuration items.
+	 */
+	bool RemoveAllItems();
 
 	/*
 	 * Getters/setters.
@@ -177,7 +194,12 @@ public:
 	void SetValidFrom(ARBDate const& inDate);
 	ARBDate GetValidTo() const;
 	void SetValidTo(ARBDate const& inDate);
-	size_t GetNumEvents() const;
+	size_t GetNumItems() const;
+	bool GetItem(
+			size_t inIndex,
+			std::string& outDivision,
+			std::string& outLevel,
+			std::string& outEvent) const;
 
 private:
 	~ARBConfigMultiQ();
@@ -250,7 +272,7 @@ inline void ARBConfigMultiQ::SetValidTo(ARBDate const& inDate)
 	m_ValidTo = inDate;
 }
 
-inline size_t ARBConfigMultiQ::GetNumEvents() const
+inline size_t ARBConfigMultiQ::GetNumItems() const
 {
 	return m_Items.size();
 }
@@ -280,12 +302,18 @@ public:
 
 	/**
 	 * Find a MultiQ.
+	 * @param inName Multi-Q to find
+	 */
+	bool FindMultiQ(std::string const& inName) const;
+
+	/**
+	 * Find a MultiQ.
 	 * @param inMultiQ Multi-Q definition to find
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
 	bool FindMultiQ(
 		ARBConfigMultiQ const& inMultiQ,
-		ARBConfigMultiQ** outMultiQ = NULL);
+		ARBConfigMultiQ** outMultiQ = NULL) const;
 
 	/**
 	 * Rename a division.

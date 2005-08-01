@@ -128,7 +128,6 @@ public:
 	ARBConfigDivisionList& GetDivisions();
 	ARBConfigEventList const& GetEvents() const;
 	ARBConfigEventList& GetEvents();
-	bool HasMultiQs() const;
 	ARBConfigMultiQList const& GetMultiQs() const;
 	ARBConfigMultiQList& GetMultiQs();
 
@@ -195,11 +194,6 @@ inline ARBConfigEventList const& ARBConfigVenue::GetEvents() const
 inline ARBConfigEventList& ARBConfigVenue::GetEvents()
 {
 	return m_Events;
-}
-
-inline bool ARBConfigVenue::HasMultiQs() const
-{
-	return 0 < m_MultiQs.size();
 }
 
 inline ARBConfigMultiQList const& ARBConfigVenue::GetMultiQs() const

@@ -277,6 +277,9 @@ Create a new item.
 .topic HIDC_CONFIG_VENUE_TITLES
 List of currently configured titles for the selected division.
 
+.topic HIDC_CONFIG_VENUE_MULTIQ
+Configure Multi-Q events (i.e.: AKC QQs and UKC QQQs).
+
 .topic HIDC_CONFIG_COPY
 Copy the selected item.
 
@@ -1001,3 +1004,42 @@ information in the pane to the right.
 
 .topic HIDC_WIZARD_START_SPREADSHEET
 Import data from or export data to a spreadsheet in text form.
+
+.topic HIDC_CONFIG_MULTIQ_SHORTNAME
+Short name of multiple-Q configuration.
+
+.topic HIDC_CONFIG_MULTIQ_NAME
+Full name of multiple-Q configuration.
+
+.topic HIDC_CONFIG_MULTIQ_DATE_VALID_FROM
+Enable/disable the setting of a date. This allows for evolving rule changes.
+
+.topic HIDC_CONFIG_MULTIQ_DATE_START
+Date this multiple-Q becomes valid.
+
+.topic HIDC_CONFIG_MULTIQ_DATE_VALID_TO
+Enable/disable the setting of a date. This allows for evolving rule changes.
+
+.topic HIDC_CONFIG_MULTIQ_DATE_END
+Date this multiple-Q is valid until.
+
+.topic HIDC_CONFIG_MULTIQ_ITEMS
+List of events that define a multiple-Q.
+
+.topic HIDC_CONFIG_MULTIQ_ADD
+Add an event to the multiple-Q configuration.
+
+.topic HIDC_CONFIG_MULTIQ_EDIT
+Edit a selected event.
+
+.topic HIDC_CONFIG_MULTIQ_DELETE
+Delete a selected event.
+
+.topic HIDC_EVENT_SELECT_DIVISION
+Division of this multiple-Q item.
+
+.topic HIDC_EVENT_SELECT_LEVEL
+Level of this multiple-Q item.
+
+.topic HIDC_EVENT_SELECT_EVENT
+Event of this multiple-Q item.

@@ -49,6 +49,7 @@
 class ARBConfigDivision;
 class ARBConfigEvent;
 class ARBConfigLevel;
+class ARBConfigMultiQ;
 class ARBConfigVenue;
 class ARBDog;
 class ARBDogExistingPoints;
@@ -290,12 +291,14 @@ public:
 	PointsDataMultiQs(
 			CAgilityBookViewPoints* pView,
 			int inExistingDblQs,
+			ARBConfigMultiQ const* inMultiQ,
 			std::set<MultiQdata> const& inQQs);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
 
 protected:
+	ARBConfigMultiQ const* m_MultiQ;
 	std::set<MultiQdata> m_QQs;
 	int m_ExistingDblQs;
 };

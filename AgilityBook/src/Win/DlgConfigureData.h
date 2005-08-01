@@ -42,6 +42,7 @@ class ARBConfigDivision;
 class ARBConfigEvent;
 class ARBConfigFault;
 class ARBConfigLevel;
+class ARBConfigMultiQ;
 class ARBConfigOtherPoints;
 class ARBConfigScoring;
 class ARBConfigSubLevel;
@@ -180,4 +181,17 @@ public:
 	ARBConfigEvent* GetEvent() const		{return m_Event;}
 protected:
 	ARBConfigEvent* m_Event;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgConfigureDataMultiQ : public CDlgConfigureData
+{
+public:
+	CDlgConfigureDataMultiQ(ARBConfigMultiQ* multiq);
+	~CDlgConfigureDataMultiQ();
+	virtual CString OnNeedText(int iColumn) const;
+	ARBConfigMultiQ* GetMultiQ() const		{return m_MultiQ;}
+protected:
+	ARBConfigMultiQ* m_MultiQ;
 };

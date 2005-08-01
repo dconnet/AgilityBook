@@ -37,6 +37,7 @@
 #include "StdAfx.h"
 #include "ARBConfigMultiQ.h"
 
+#include <algorithm>
 #include <sstream>
 #include "ARBAgilityRecordBook.h"
 #include "Element.h"
@@ -260,6 +261,10 @@ bool ARBConfigMultiQ::Match(ARBVectorBase<ARBDogRun> const& inRuns) const
 		iterR != inRuns.end();
 		++iterR)
 	{
+		if (m_ValidFrom.IsValid() && (*iterR)->GetDate() < m_ValidFrom)
+			continue;
+		if (m_ValidTo.IsValid() && (*iterR)->GetDate() > m_ValidTo)
+			continue;
 		int idx = 0;
 		for (std::set<MultiQItem>::const_iterator iter = m_Items.begin(); iter != m_Items.end(); ++idx, ++iter)
 		{
@@ -396,7 +401,7 @@ int ARBConfigMultiQ::DeleteEvent(std::string const& inEvent)
 	return count;
 }
 
-bool ARBConfigMultiQ::AddEvent(
+bool ARBConfigMultiQ::AddItem(
 		std::string const& inDiv,
 		std::string const& inLevel,
 		std::string const& inEvent)
@@ -411,6 +416,59 @@ bool ARBConfigMultiQ::AddEvent(
 		bInserted = m_Items.insert(item).second;
 	}
 	return bInserted;
+}
+
+bool ARBConfigMultiQ::RemoveItem(
+		std::string const& inDiv,
+		std::string const& inLevel,
+		std::string const& inEvent)
+{
+	bool bRemoved = false;
+	if (0 < inDiv.length() && 0 < inLevel.length() && 0 < inEvent.length())
+	{
+        MultiQItem item;
+		item.m_Div = inDiv;
+		item.m_Level = inLevel;
+		item.m_Event = inEvent;
+		std::set<MultiQItem>::iterator iter = std::find(m_Items.begin(), m_Items.end(), item);
+		if (iter != m_Items.end())
+		{
+			bRemoved = true;
+			m_Items.erase(iter);
+		}
+	}
+	return bRemoved;
+}
+
+bool ARBConfigMultiQ::RemoveAllItems()
+{
+	if (0 < m_Items.size())
+	{
+		m_Items.clear();
+		return true;
+	}
+	else
+		return false;
+}
+
+bool ARBConfigMultiQ::GetItem(
+		size_t inIndex,
+		std::string& outDivision,
+		std::string& outLevel,
+		std::string& outEvent) const
+{
+	if (inIndex >= m_Items.size())
+		return false;
+	std::set<MultiQItem>::const_iterator iter = m_Items.begin();
+	size_t n = 0;
+	for (; n < inIndex && iter != m_Items.end(); ++n, ++iter)
+		;
+	if (iter == m_Items.end())
+		return false;
+	outDivision = (*iter).m_Div;
+	outLevel = (*iter).m_Level;
+	outEvent = (*iter).m_Event;
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -431,13 +489,21 @@ bool ARBConfigMultiQList::Load(
 	return true;
 }
 
+bool ARBConfigMultiQList::FindMultiQ(std::string const& inName) const
+{
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+		if (*iter && (*iter)->GetName() == inName)
+			return true;
+	return false;
+}
+
 bool ARBConfigMultiQList::FindMultiQ(
 	ARBConfigMultiQ const& inMultiQ,
-	ARBConfigMultiQ** outMultiQ)
+	ARBConfigMultiQ** outMultiQ) const
 {
 	if (outMultiQ)
 		*outMultiQ = NULL;
-	for (iterator iter = begin(); iter != end(); ++iter)
+	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (*iter && *(*iter) == inMultiQ)
 		{

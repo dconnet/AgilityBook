@@ -332,15 +332,32 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pRun->GetQ().str().c_str();
 			if (m_pRun->GetQ().Qualified())
 			{
+				ARBVectorBase<ARBConfigMultiQ> multiQs;
 				if (m_pTrial->HasMultiQ(
 					m_pRun->GetDate(),
 					m_pView->GetDocument()->GetConfig(),
-					m_pRun))
+					m_pRun, NULL,
+					&multiQs))
 				{
-					str.LoadString(IDS_QQ);
+					str.Empty();
+					for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
+						iter != multiQs.end();
+						++iter)
+					{
+						if (!str.IsEmpty())
+							str += "/";
+						str += (*iter)->GetShortName().c_str();
+					}
 				}
 				if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
-					str.LoadString(IDS_SQ);
+				{
+					CString tmp;
+					tmp.LoadString(IDS_SQ);
+					if (0 < multiQs.size())
+						str = tmp + "/" + str;
+					else
+						str = tmp;
+				}
 			}
 			break;
 		case IO_RUNS_SCORE:

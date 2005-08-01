@@ -981,7 +981,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlSpeedPtsText.ShowWindow(SW_SHOW);
 		m_ctrlSpeedPts.ShowWindow(SW_SHOW);
 	}
-	if (m_pVenue->HasMultiQs())
+	if (0 < m_pVenue->GetMultiQs().size())
 	{
 		m_ctrlMultiQ.ShowWindow(SW_SHOW);
 		SetMultiQ();

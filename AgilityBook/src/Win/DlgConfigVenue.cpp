@@ -71,9 +71,10 @@
 #include "DlgConfigVenue.h"
 
 #include "ARBAgilityRecordBook.h"
-#include "DlgConfigEvent.h"
-#include "DlgConfigTitle.h"
 #include "ARBConfigVenue.h"
+#include "DlgConfigEvent.h"
+#include "DlgConfigMultiQ.h"
+#include "DlgConfigTitle.h"
 #include "DlgConfigureData.h"
 #include "DlgFixup.h"
 #include "DlgName.h"
@@ -130,6 +131,7 @@ void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_VENUE_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_TITLES, m_ctrlTitles);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_EVENT, m_ctrlEvents);
+	DDX_Control(pDX, IDC_CONFIG_VENUE_MULTIQ, m_ctrlMultiQ);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_EDIT, m_ctrlEdit);
@@ -151,11 +153,13 @@ BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_DIVISION, OnItemchangedDivision)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_TITLES, OnItemchangedList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_EVENT, OnItemchangedList)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_MULTIQ, OnItemchangedList)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_CONFIG_VENUE_LEVEL, OnItemchanged)
 	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_DIVISION, OnSetfocusDivision)
 	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_LEVEL, OnSetfocusLevel)
 	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_TITLES, OnSetfocusTitles)
 	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_EVENT, OnSetfocusEvent)
+	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_MULTIQ, OnSetfocusMultiQ)
 	ON_BN_CLICKED(IDC_CONFIG_VENUE_NEW, OnNew)
 	ON_BN_CLICKED(IDC_CONFIG_VENUE_DELETE, OnDelete)
 	ON_BN_CLICKED(IDC_CONFIG_VENUE_EDIT, OnEdit)
@@ -166,9 +170,12 @@ BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_CONFIG_VENUE_TITLES, OnDeleteitemList)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_EVENT, OnGetdispinfoList)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_CONFIG_VENUE_EVENT, OnDeleteitemList)
+	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_MULTIQ, OnGetdispinfoList)
+	ON_NOTIFY(LVN_DELETEITEM, IDC_CONFIG_VENUE_MULTIQ, OnDeleteitemList)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_LEVEL, OnDblclk)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_TITLES, OnDblclk)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_EVENT, OnDblclk)
+	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_MULTIQ, OnDblclk)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -195,6 +202,9 @@ void CDlgConfigVenue::SetAction(eAction inAction)
 			break;
 		case eEvents:
 			m_ctrlComments.SetWindowText("Buttons: Events");
+			break;
+		case eMultiQ:
+			m_ctrlComments.SetWindowText("Buttons: MultiQs");
 			break;
 		}
 	}
@@ -278,6 +288,26 @@ void CDlgConfigVenue::UpdateButtons()
 					if (0 < index)
 						bMoveUp = TRUE;
 					if (index < m_ctrlEvents.GetItemCount() - 1)
+						bMoveDown = TRUE;
+				}
+			}
+		}
+		break;
+
+	case eMultiQ:
+		{
+			bNew = TRUE;
+			int index = m_ctrlMultiQ.GetSelection();
+			if (0 <= index)
+			{
+				bDelete = bEdit = TRUE;
+				CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
+				if (pData)
+				{
+					bCopy = TRUE;
+					if (0 < index)
+						bMoveUp = TRUE;
+					if (index < m_ctrlMultiQ.GetItemCount() - 1)
 						bMoveDown = TRUE;
 				}
 			}
@@ -421,6 +451,30 @@ void CDlgConfigVenue::LoadEventData()
 	FindCurrentEvent(pOldEvent, true);
 	if (pOldEvent)
 		pOldEvent->Release();
+}
+
+void CDlgConfigVenue::LoadMultiQData()
+{
+	ARBConfigMultiQ* pOldMultiQ = NULL;
+	CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
+	if (pData)
+	{
+		pOldMultiQ = pData->GetMultiQ();
+		pOldMultiQ->AddRef();
+	}
+	m_ctrlMultiQ.DeleteAllItems();
+	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin();
+		iter != m_pVenue->GetMultiQs().end();
+		++iter)
+	{
+		m_ctrlMultiQ.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlMultiQ.GetItemCount(),
+			LPSTR_TEXTCALLBACK, 0, 0, 0,
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataMultiQ(*iter)));
+	}
+	m_ctrlMultiQ.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	FindCurrentMultiQ(pOldMultiQ, true);
+	if (pOldMultiQ)
+		pOldMultiQ->Release();
 }
 
 int CDlgConfigVenue::FindCurrentDivision(
@@ -571,6 +625,33 @@ int CDlgConfigVenue::FindCurrentEvent(
 	return idxCurrent;
 }
 
+int CDlgConfigVenue::FindCurrentMultiQ(
+		ARBConfigMultiQ const* pMultiQ,
+		bool bSet)
+{
+	int idxCurrent = -1;
+	if (pMultiQ)
+	{
+		for (int index = 0; index < m_ctrlMultiQ.GetItemCount(); ++index)
+		{
+			CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
+			if (pData->GetMultiQ() == pMultiQ)
+			{
+				idxCurrent = index;
+				break;
+			}
+		}
+	}
+	if (bSet)
+	{
+		m_ctrlMultiQ.SetSelection(idxCurrent);
+		if (0 < idxCurrent)
+			m_ctrlMultiQ.EnsureVisible(idxCurrent, FALSE);
+		UpdateButtons();
+	}
+	return idxCurrent;
+}
+
 CDlgConfigureDataDivision* CDlgConfigVenue::GetCurrentDivisionData()
 {
 	int index = m_ctrlDivisions.GetSelection();
@@ -622,6 +703,15 @@ CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
 		return NULL;
 }
 
+CDlgConfigureDataMultiQ* CDlgConfigVenue::GetCurrentMultiQData()
+{
+	int index = m_ctrlMultiQ.GetSelection();
+	if (0 <= index)
+		return reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
+	else
+		return NULL;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigVenue message handlers
 
@@ -630,10 +720,12 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 	m_ctrlDivisions.SetExtendedStyle(m_ctrlDivisions.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlEvents.SetExtendedStyle(m_ctrlEvents.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlMultiQ.SetExtendedStyle(m_ctrlMultiQ.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlDivisions.InsertColumn(0, "Divisions");
 	m_ctrlTitles.InsertColumn(0, "Titles");
 	m_ctrlEvents.InsertColumn(0, "Events");
+	m_ctrlMultiQ.InsertColumn(0, "MultiQ");
 
 	m_ctrlName.SetWindowText(m_pVenue->GetName().c_str());
 	m_ctrlLongName.SetWindowText(m_pVenue->GetLongName().c_str());
@@ -643,6 +735,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 
 	LoadDivisionData();
 	LoadEventData();
+	LoadMultiQData();
 	SetAction(eDivisions);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -776,6 +869,14 @@ void CDlgConfigVenue::OnSetfocusEvent(
 		LRESULT* pResult) 
 {
 	SetAction(eEvents);
+	*pResult = 0;
+}
+
+void CDlgConfigVenue::OnSetfocusMultiQ(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	SetAction(eMultiQ);
 	*pResult = 0;
 }
 
@@ -948,6 +1049,23 @@ void CDlgConfigVenue::OnNew()
 				}
 			}
 			event->Release();
+		}
+		break;
+
+	case eMultiQ:
+		{
+			// The dialog will ensure uniqueness.
+			ARBConfigMultiQ* multiq = new ARBConfigMultiQ();
+			CDlgConfigMultiQ dlg(m_pVenue, multiq, this);
+			if (IDOK == dlg.DoModal())
+			{
+				if (m_pVenue->GetMultiQs().AddMultiQ(multiq))
+				{
+					LoadMultiQData();
+					FindCurrentMultiQ(multiq, true);
+				}
+			}
+			multiq->Release();
 		}
 		break;
 	}
@@ -1145,6 +1263,21 @@ void CDlgConfigVenue::OnDelete()
 							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(m_pVenue->GetName(), event));
 						m_ctrlEvents.DeleteItem(index);
 					}
+				}
+			}
+		}
+		break;
+
+	case eMultiQ:
+		{
+			int index;
+			if (0 <= (index = m_ctrlMultiQ.GetSelection()))
+			{
+				CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
+				ASSERT(NULL != pData);
+				if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
+				{
+					m_ctrlMultiQ.DeleteItem(index);
 				}
 			}
 		}
@@ -1385,6 +1518,25 @@ void CDlgConfigVenue::OnEdit()
 			pEvent->Release();
 		}
 		break;
+
+	case eMultiQ:
+		{
+			CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
+			if (!pData)
+				return;
+			ARBConfigMultiQ* pMultiQ = pData->GetMultiQ();
+			std::string oldName = pMultiQ->GetName();
+			CDlgConfigMultiQ dlg(m_pVenue, pMultiQ, this);
+			pMultiQ->AddRef();
+			if (IDOK == dlg.DoModal())
+			{
+				LoadMultiQData();
+				FindCurrentMultiQ(pMultiQ, true);
+			}
+			pMultiQ->Release();
+		}
+		break;
+
 	}
 }
 
@@ -1448,6 +1600,32 @@ void CDlgConfigVenue::OnCopy()
 					FindCurrentEvent(event, true);
 				}
 				event->Release();
+			}
+		}
+		break;
+
+	case eMultiQ:
+		{
+			int index;
+			if (0 <= (index = m_ctrlMultiQ.GetSelection()))
+			{
+				// Since index is valid, I know pData will be too.
+				CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
+				CString copyOf;
+				copyOf.LoadString(IDS_COPYOF);
+				std::string name(pData->GetMultiQ()->GetName());
+				while (m_pVenue->GetMultiQs().FindMultiQ(name))
+				{
+					name = (LPCSTR)copyOf + name;
+				}
+				ARBConfigMultiQ* multiq = new ARBConfigMultiQ(*(pData->GetMultiQ()));
+				multiq->SetName(name);
+				if (m_pVenue->GetMultiQs().AddMultiQ(multiq))
+				{
+					LoadMultiQData();
+					FindCurrentMultiQ(multiq, true);
+				}
+				multiq->Release();
 			}
 		}
 		break;
@@ -1544,6 +1722,22 @@ void CDlgConfigVenue::OnMoveUp()
 			}
 		}
 		break;
+	case eMultiQ:
+		{
+			int index = m_ctrlMultiQ.GetSelection();
+			if (0 < index)
+			{
+				CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
+				ARBConfigMultiQ* pMultiQ = pData->GetMultiQ();
+				pMultiQ->AddRef();
+				m_pVenue->GetMultiQs().Move(pMultiQ, -1);
+				LoadMultiQData();
+				UpdateButtons();
+				FindCurrentMultiQ(pMultiQ, true);
+				pMultiQ->Release();
+			}
+		}
+		break;
 	}
 }
 
@@ -1637,6 +1831,23 @@ void CDlgConfigVenue::OnMoveDown()
 			}
 		}
 		break;
+	case eMultiQ:
+		{
+			int index = m_ctrlMultiQ.GetSelection();
+			if (index < m_ctrlMultiQ.GetItemCount() - 1)
+			{
+				CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
+				ARBConfigMultiQ* pMultiQ = pData->GetMultiQ();
+				pMultiQ->AddRef();
+				m_pVenue->GetMultiQs().Move(pMultiQ, 1);
+				LoadMultiQData();
+				UpdateButtons();
+				FindCurrentMultiQ(pMultiQ, true);
+				pMultiQ->Release();
+			}
+		}
+		break;
+
 	}
 }
 

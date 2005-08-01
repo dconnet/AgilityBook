@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-07-31 DRC Changed how QQs are done.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-02-03 DRC Created
@@ -70,6 +71,57 @@ public:
 	ARBConfigLevel const* m_pLevel;
 	ARBConfigSubLevel const* m_pSubLevel;
 };
+
+static void GetEnableLists(
+		ARBDogExistingPoints::PointType inType,
+		BOOL& outOther,
+		BOOL& outVenue,
+		BOOL& outDiv,
+		BOOL& outLevel,
+		BOOL& outEvent,
+		BOOL& outSubName)
+{
+	outOther = FALSE;
+	outVenue = FALSE;
+	outDiv = FALSE;
+	outLevel = FALSE;
+	outEvent = FALSE;
+	outSubName = FALSE;
+	switch (inType)
+	{
+	default:
+		ASSERT(0);
+		break;
+	case ARBDogExistingPoints::eOtherPoints:
+		outOther = TRUE;
+		outVenue = TRUE;
+		outDiv = TRUE;
+		outLevel = TRUE;
+		outEvent = TRUE;
+		break;
+	case ARBDogExistingPoints::eRuns:
+		outVenue = TRUE;
+		outDiv = TRUE;
+		outLevel = TRUE;
+		outEvent = TRUE;
+		outSubName = TRUE;
+		break;
+	case ARBDogExistingPoints::eSpeed:
+		outVenue = TRUE;
+		outDiv = TRUE;
+		outLevel = TRUE;
+		break;
+	case ARBDogExistingPoints::eQQ:
+		outVenue = TRUE;
+		break;
+	case ARBDogExistingPoints::eSQ:
+		outVenue = TRUE;
+		outDiv = TRUE;
+		outLevel = TRUE;
+		outEvent = TRUE;
+		break;
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgExistingPoints dialog
@@ -148,32 +200,28 @@ void CDlgExistingPoints::ClearLevels()
 void CDlgExistingPoints::UpdateControls()
 {
 	int index = m_ctrlType.GetCurSel();
-	BOOL bEnableOther = FALSE;
-	BOOL bEnableEvent = FALSE;
-	BOOL bEnableSubName = FALSE;
+	BOOL bOther = FALSE;
+	BOOL bVenue = FALSE;
+	BOOL bDiv = FALSE;
+	BOOL bLevel = FALSE;
+	BOOL bEvent = FALSE;
+	BOOL bSubName = FALSE;
 	if (CB_ERR == index)
 	{
 		GetDlgItem(IDOK)->EnableWindow(FALSE);
 	}
 	else
 	{
-		bEnableOther = TRUE;
-		bEnableEvent = TRUE;
 		GetDlgItem(IDOK)->EnableWindow(TRUE);
 		ARBDogExistingPoints::PointType type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
-		if (ARBDogExistingPoints::eSpeed == type
-		|| ARBDogExistingPoints::eQQ == type)
-		{
-			bEnableEvent = FALSE;
-		}
-		if (ARBDogExistingPoints::eOtherPoints != type)
-			bEnableOther = FALSE;
-		if (ARBDogExistingPoints::eRuns == type)
-			bEnableSubName = TRUE;
+		GetEnableLists(type, bOther, bVenue, bDiv, bLevel, bEvent, bSubName);
 	}
-	m_ctrlOther.EnableWindow(bEnableOther);
-	m_ctrlEvents.EnableWindow(bEnableEvent);
-	m_ctrlSubNames.EnableWindow(bEnableSubName);
+	m_ctrlOther.EnableWindow(bOther);
+	m_ctrlVenues.EnableWindow(bVenue);
+	m_ctrlDivisions.EnableWindow(bDiv);
+	m_ctrlLevels.EnableWindow(bLevel);
+	m_ctrlEvents.EnableWindow(bEvent);
+	m_ctrlSubNames.EnableWindow(bSubName);
 }
 
 void CDlgExistingPoints::FillDivisions()
@@ -431,63 +479,85 @@ void CDlgExistingPoints::OnOK()
 	}
 	ARBDogExistingPoints::PointType type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
 
-	index = m_ctrlOther.GetCurSel();
+	BOOL bOther, bVenue, bDiv, bLevel, bEvent, bSubName;
+	GetEnableLists(type, bOther, bVenue, bDiv, bLevel, bEvent, bSubName);
+
 	std::string other;
-	if (CB_ERR != index)
+	if (bOther)
 	{
+		index = m_ctrlOther.GetCurSel();
+		if (CB_ERR == index)
+		{
+			GotoDlgCtrl(&m_ctrlOther);
+			return;
+		}
 		ARBConfigOtherPoints const* pOther = reinterpret_cast<ARBConfigOtherPoints const*>(m_ctrlOther.GetItemDataPtr(index));
 		other = pOther->GetName();
 	}
 
-	index = m_ctrlVenues.GetCurSel();
-	if (CB_ERR == index)
+	std::string venue;
+	if (bVenue)
 	{
-		GotoDlgCtrl(&m_ctrlVenues);
-		return;
+		index = m_ctrlVenues.GetCurSel();
+		if (CB_ERR == index)
+		{
+			GotoDlgCtrl(&m_ctrlVenues);
+			return;
+		}
+		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
+		venue = pVenue->GetName();
 	}
-	ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
-	std::string venue = pVenue->GetName();
 
-	index = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR == index)
+	std::string div;
+	if (bDiv)
 	{
-		GotoDlgCtrl(&m_ctrlDivisions);
-		return;
+		index = m_ctrlDivisions.GetCurSel();
+		if (CB_ERR == index)
+		{
+			GotoDlgCtrl(&m_ctrlDivisions);
+			return;
+		}
+		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(index));
+		div = pDiv->GetName();
 	}
-	ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(index));
-	std::string div = pDiv->GetName();
 
-	index = m_ctrlLevels.GetCurSel();
-	if (CB_ERR == index)
+	std::string level;
+	if (bLevel)
 	{
-		GotoDlgCtrl(&m_ctrlLevels);
-		return;
+		index = m_ctrlLevels.GetCurSel();
+		if (CB_ERR == index)
+		{
+			GotoDlgCtrl(&m_ctrlLevels);
+			return;
+		}
+		CDlgPointsDataLevel const* pData = reinterpret_cast<CDlgPointsDataLevel const*>(m_ctrlLevels.GetItemDataPtr(index));
+		level = pData->m_pLevel->GetName();
+		if (pData->m_pSubLevel)
+			level = pData->m_pSubLevel->GetName();
 	}
-	CDlgPointsDataLevel const* pData = reinterpret_cast<CDlgPointsDataLevel const*>(m_ctrlLevels.GetItemDataPtr(index));
-	std::string level = pData->m_pLevel->GetName();
-	if (pData->m_pSubLevel)
-		level = pData->m_pSubLevel->GetName();
 
-	index = m_ctrlEvents.GetCurSel();
 	std::string event;
-	if (CB_ERR != index)
+	if (bEvent)
 	{
+		index = m_ctrlEvents.GetCurSel();
+		if (CB_ERR == index)
+		{
+			GotoDlgCtrl(&m_ctrlEvents);
+			return;
+		}
 		ARBConfigEvent const* pEvent = reinterpret_cast<ARBConfigEvent const*>(m_ctrlEvents.GetItemDataPtr(index));
 		event = pEvent->GetName();
 	}
 
-	m_SubName.TrimRight();
-	m_SubName.TrimLeft();
+	std::string subName;
+	if (bSubName)
+	{
+		m_SubName.TrimRight();
+		m_SubName.TrimLeft();
+		subName = (LPCTSTR)m_SubName;
+	}
 
 	m_Comments.Replace("\r\n", "\n");
-
-	if (ARBDogExistingPoints::eSpeed == type
-	|| ARBDogExistingPoints::eQQ == type)
-	{
-		event.erase();
-	}
-	if (ARBDogExistingPoints::eOtherPoints != type)
-		other.erase();
 
 	if (m_pExistingPoints)
 	{
@@ -498,7 +568,7 @@ void CDlgExistingPoints::OnOK()
 		m_pExistingPoints->SetDivision(div);
 		m_pExistingPoints->SetLevel(level);
 		m_pExistingPoints->SetEvent(event);
-		m_pExistingPoints->SetSubName((LPCSTR)m_SubName);
+		m_pExistingPoints->SetSubName(subName);
 		m_pExistingPoints->SetComment((LPCSTR)m_Comments);
 		m_pExistingPoints->SetPoints(m_Points);
 	}
@@ -514,7 +584,7 @@ void CDlgExistingPoints::OnOK()
 			pPoints->SetDivision(div);
 			pPoints->SetLevel(level);
 			pPoints->SetEvent(event);
-			pPoints->SetSubName((LPCSTR)m_SubName);
+			pPoints->SetSubName(subName);
 			pPoints->SetComment((LPCSTR)m_Comments);
 			pPoints->SetPoints(m_Points);
 		}

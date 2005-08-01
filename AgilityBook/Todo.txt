@@ -1,13 +1,10 @@
-Last Updated: 7/26/2005
+Last Updated: 7/31/2005
 
-- The UKC configuration isn't quite right.
-  - Fix ARBDogTrial::HasMultiQ
-  - Fix DlgRunScore to show whether a double Q worked
-  - Modify HasMultiQ to take optional param that receives ARBConfigMultiQ match
-    (see comments in code to be reworked in DlgRunScore)
-  - Modify DlgConfigVenue to add configuration of mulitQs
-  - Change existing points to work only on the venue for QQ.
-  - Modify PointsView to use names from ConfigMultiQ.
+- Need to add Multi-Q selection to existing points so we know which multiq
+  the points go with.
+- tabulation of multiq is wrong - it is assuming that if a multiq exists on
+  a date, all runs that q'd match that. also need extra work for cross
+  over events - for instance, if a 3rd std was run in akc.
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 

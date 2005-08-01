@@ -246,3 +246,22 @@ CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
 	return m_Event->GetName().c_str();
 }
+
+/////////////////////////////////////////////////////////////////////////////
+
+CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQ* multiq)
+	: CDlgConfigureData()
+	, m_MultiQ(multiq)
+{
+	m_MultiQ->AddRef();
+}
+
+CDlgConfigureDataMultiQ::~CDlgConfigureDataMultiQ()
+{
+	m_MultiQ->Release();
+}
+
+CString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
+{
+	return m_MultiQ->GetName().c_str();
+}

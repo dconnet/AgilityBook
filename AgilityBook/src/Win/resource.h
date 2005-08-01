@@ -79,6 +79,8 @@
 #define IDD_FIND_LINKS                  247
 #define IDD_MESSAGE_BOX                 248
 #define IDD_PROGRESS_DLG                249
+#define IDD_CONFIG_MULTI_Q              250
+#define IDD_EVENT_SELECT                251
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -127,6 +129,7 @@
 #define IDC_CONFIG_VENUE_EVENT          1081
 #define IDC_CONFIG_VENUE_TITLES         1082
 #define IDC_CONFIG_VENUE_LONGNAME       1083
+#define IDC_CONFIG_VENUE_MULTIQ         1084
 #define IDC_CONFIG_EVENT                1090
 #define IDC_CONFIG_EVENT_TABLE          1091
 #define IDC_CONFIG_EVENT_PARTNER        1092
@@ -461,6 +464,19 @@
 #define IDC_PROGRESS_MESSAGE            1620
 #define IDC_PROGRESS_BAR1               1621
 #define IDC_PROGRESS_BAR2               1622
+#define IDC_CONFIG_MULTIQ_SHORTNAME     1630
+#define IDC_CONFIG_MULTIQ_NAME          1631
+#define IDC_CONFIG_MULTIQ_DATE_VALID_FROM 1632
+#define IDC_CONFIG_MULTIQ_DATE_START    1633
+#define IDC_CONFIG_MULTIQ_DATE_VALID_TO 1634
+#define IDC_CONFIG_MULTIQ_DATE_END      1635
+#define IDC_CONFIG_MULTIQ_ITEMS         1636
+#define IDC_CONFIG_MULTIQ_ADD           1637
+#define IDC_CONFIG_MULTIQ_EDIT          1638
+#define IDC_CONFIG_MULTIQ_DELETE        1639
+#define IDC_EVENT_SELECT_DIVISION       1640
+#define IDC_EVENT_SELECT_LEVEL          1641
+#define IDC_EVENT_SELECT_EVENT          1642
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -577,8 +593,6 @@
 #define IDS_Q                           5027
 #define IDS_SQ                          5028
 #define IDS_SUPER_Q                     5029
-#define IDS_QQ                          5030
-#define IDS_MULTI_Q                     5031
 #define IDS_SPEEDPTS                    5032
 #define IDS_EXISTING_POINTS             5033
 #define IDS_ARE_YOU_SURE                5078
@@ -652,7 +666,6 @@
 #define IDS_POINTS_JUDGES               5146
 #define IDS_POINTS_SQS                  5147
 #define IDS_POINTS_SPEED_SUBTOTAL       5148
-#define IDS_POINTS_QQS                  5149
 #define IDS_POINTS_SPEED                5150
 #define IDS_CONFIG_TITLEPTS             5151
 #define IDS_FILEEXT_DEF_ARB             5152
@@ -750,7 +763,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        250
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1630
+#define _APS_NEXT_CONTROL_VALUE         1650
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif
