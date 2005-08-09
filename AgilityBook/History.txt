@@ -21,6 +21,9 @@
   - When an error occured while reading a file, the error message was mangled.
   - Fixed a problem where the UI didn't reflect a change in the trial date
     ordering.
+  - Added validation during import to make sure venue names are correct. It
+    was possible to import bad data which when we attempted to edit later
+    caused the program to crash.
 
 6/11/2005: v1.5.4.10
 - Bug fixes

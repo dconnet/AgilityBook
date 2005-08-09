@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-08 DRC Added validation during import to make sure names are
+ *                    correct.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -812,6 +814,40 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				pScoring->Release();
 				pScoring = NULL;
+
+				// Verify data: venue is not necessarily valid!
+				// When importing multiple types of data and only one type was
+				// actually set, the other types will attempt to import because
+				// we matched pScoring on that first entry. But when we
+				// actually parse the data, the venue name is not what we
+				// matched for pScoring! So check v/d/l/e again.
+				if (pRun)
+				{
+					if (!m_pDoc->GetConfig().GetVenues().FindVenue(trialVenue))
+					{
+						CString str;
+						str.Format("Warning: Line %d: Skipped entry, invalid venue name: %s\n",
+							nItem + 1, trialVenue.c_str());
+						errLog += str;
+						pRun->Release();
+						pRun = NULL;
+					}
+					else if (!m_pDoc->GetConfig().GetVenues().FindEvent(
+						trialVenue,
+						pRun->GetEvent(),
+						pRun->GetDivision(),
+						pRun->GetLevel(),
+						pRun->GetDate()))
+					{
+						CString str;
+						str.Format("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n",
+							nItem + 1);
+						errLog += str;
+						pRun->Release();
+						pRun = NULL;
+					}
+				}
+
 				// Now that we've created a run, we have to put it somewhere.
 				if (pRun)
 				{
