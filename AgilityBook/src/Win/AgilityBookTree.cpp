@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-09 DRC The wrong item in the tree was selected after reordering.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-10-04 DRC Added div-by-0 tests.
@@ -710,10 +711,10 @@ void CAgilityBookTree::LoadData()
 	{
 		strCallName = AfxGetApp()->GetProfileString("Settings", "LastDog", "");
 	}
-	std::vector<ARBBase const*> baseItems;
+	std::list<ARBBase const*> baseItems;
 	while (pData)
 	{
-		baseItems.push_back(pData->GetARBBase());
+		baseItems.push_front(pData->GetARBBase());
 		pData = pData->GetParent();
 	}
 	// Load the data
@@ -728,13 +729,21 @@ void CAgilityBookTree::LoadData()
 		if (0 < strCallName.length() && (*iterDog)->GetCallName() == strCallName)
 			hItem = hItem2;
 	}
-	for (std::vector<ARBBase const*>::iterator iter = baseItems.begin();
-		NULL == hItem && iter != baseItems.end();
-		++iter)
+	if (!hItem)
 	{
-		pData = FindData(TVI_ROOT, (*iter));
-		if (pData)
-			hItem = pData->GetHTreeItem();
+		// Work thru all the base items...
+		// Otherwise, after a reorder, the wrong item is selected.
+		hItem = TVI_ROOT;
+		for (std::list<ARBBase const*>::iterator iter = baseItems.begin();
+			iter != baseItems.end();
+			++iter)
+		{
+			pData = FindData(hItem, (*iter));
+			if (pData)
+				hItem = pData->GetHTreeItem();
+		}
+		if (hItem == TVI_ROOT)
+			hItem = NULL;
 	}
 	if (NULL == hItem)
 		hItem = tree.GetRootItem();
