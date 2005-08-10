@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-09 DRC When importing ARB files, update regnum and titles
+ *                    that are different.
  * @li 2005-07-14 DRC Remember selected export item.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
@@ -418,9 +420,11 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < err.m_ErrMsg.length())
 								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
 							int countDog = 0;
-							int countRegNums = 0;
+							int countRegNumsAdded = 0;
+							int countRegNumsUpdated = 0;
 							int countExistingPts = 0;
-							int countTitles = 0;
+							int countTitlesAdded = 0;
+							int countTitlesUpdated = 0;
 							int countTrials = 0;
 							int countClubs = 0;
 							int countJudges = 0;
@@ -457,10 +461,21 @@ BOOL CWizardStart::OnWizardFinish()
 											iter != pDog->GetRegNums().end();
 											++iter)
 										{
-											if (!pExisting->GetRegNums().FindRegNum((*iter)->GetVenue()))
+											ARBDogRegNum* pRegNum = *iter;
+											ARBDogRegNum* pRegExist;
+											if (pExisting->GetRegNums().FindRegNum(pRegNum->GetVenue(), &pRegExist))
 											{
-												++countRegNums;
-												pExisting->GetRegNums().AddRegNum((*iter));
+												if (*pRegExist != *pRegNum)
+												{
+													++countRegNumsUpdated;
+													*pRegExist = *pRegNum;
+												}
+												pRegExist->Release();
+											}
+											else
+											{
+												++countRegNumsAdded;
+												pExisting->GetRegNums().AddRegNum(pRegNum);
 											}
 										}
 									}
@@ -494,10 +509,21 @@ BOOL CWizardStart::OnWizardFinish()
 											iter != pDog->GetTitles().end();
 											++iter)
 										{
-											if (!pExisting->GetTitles().FindTitle((*iter)->GetVenue(), (*iter)->GetRawName()))
+											ARBDogTitle* pTitle = *iter;
+											ARBDogTitle* pTitleExist;
+											if (pExisting->GetTitles().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pTitleExist))
 											{
-												++countTitles;
-												ARBDogTitle* pNewTitle = new ARBDogTitle(*(*iter));
+												if (*pTitle != *pTitleExist)
+												{
+													++countTitlesUpdated;
+													*pTitleExist = *pTitle;
+												}
+												pTitleExist->Release();
+											}
+											else
+											{
+												++countTitlesAdded;
+												ARBDogTitle* pNewTitle = new ARBDogTitle(*pTitle);
 												pExisting->GetTitles().AddTitle(pNewTitle);
 												pNewTitle->Release();
 											}
@@ -563,9 +589,9 @@ BOOL CWizardStart::OnWizardFinish()
 								}
 							}
 							if (0 < countDog
-							|| 0 < countRegNums
+							|| 0 < countRegNumsAdded || 0 < countRegNumsUpdated
 							|| 0 < countExistingPts
-							|| 0 < countTitles
+							|| 0 < countTitlesAdded || 0 < countTitlesUpdated
 							|| 0 < countTrials)
 							{
 								m_pDoc->UpdateAllViews(NULL, UPDATE_ALL_VIEW);
@@ -601,13 +627,13 @@ BOOL CWizardStart::OnWizardFinish()
 								str2.FormatMessage(IDS_ADDED_DOGS, countDog);
 								str += str2;
 							}
-							if (0 < countRegNums)
+							if (0 < countRegNumsAdded)
 							{
 								if (bAdded)
 									str += ", ";
 								bAdded = true;
 								CString str2;
-								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNums);
+								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsAdded);
 								str += str2;
 							}
 							if (0 < countExistingPts)
@@ -619,13 +645,13 @@ BOOL CWizardStart::OnWizardFinish()
 								str2.FormatMessage(IDS_ADDED_EXISTINGPTS, countExistingPts);
 								str += str2;
 							}
-							if (0 < countTitles)
+							if (0 < countTitlesAdded)
 							{
 								if (bAdded)
 									str += ", ";
 								bAdded = true;
 								CString str2;
-								str2.FormatMessage(IDS_ADDED_TITLES, countTitles);
+								str2.FormatMessage(IDS_ADDED_TITLES, countTitlesAdded);
 								str += str2;
 							}
 							if (0 < countTrials)
@@ -662,6 +688,29 @@ BOOL CWizardStart::OnWizardFinish()
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_LOCATIONS, countLocations);
+								str += str2;
+							}
+							bAdded = false;
+							if (0 < countRegNumsUpdated)
+							{
+								if (bAdded)
+									str += ", ";
+								else
+									str += "\nUpdated ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsUpdated);
+								str += str2;
+							}
+							if (0 < countTitlesUpdated)
+							{
+								if (bAdded)
+									str += ", ";
+								else
+									str += "\nUpdated ";
+								bAdded = true;
+								CString str2;
+								str2.FormatMessage(IDS_ADDED_TITLES, countTitlesUpdated);
 								str += str2;
 							}
 							AfxMessageBox(str, MB_ICONINFORMATION);
