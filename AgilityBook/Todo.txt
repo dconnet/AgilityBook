@@ -1,13 +1,11 @@
 Last Updated: 8/9/2005
 
-- Add some comments to the import to make things clearer that there are 4
-  entries that need to be set.
-
 - Need to add Multi-Q selection to existing points so we know which multiq
   the points go with.
 - tabulation of multiq is wrong - it is assuming that if a multiq exists on
   a date, all runs that q'd match that. also need extra work for cross
   over events - for instance, if a 3rd std was run in akc.
+- When adding a new multiQ config, make sure an existing rule isn't there.
 
 - Make TopTen (OtherPoint) visible in the Runs view.
 

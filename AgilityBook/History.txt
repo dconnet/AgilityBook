@@ -11,7 +11,7 @@
     - Added vCal/iCal export formats.
   - Remember the last entered height in the reference runs dialog.
   - Re-worked layout in Reference Run dialog to make it flow better.
-  - Changed default Qing in Reference Run dialog to a 'Q'.
+  - Changed default Qing in Reference Run dialog to a 'Q' (was NA).
   - Added a button in the Reference Runs page to add yourself.
   - Remember the type of import/export last done.
   - Changed the term 'Double-Q' to 'Multiple-Q' to handle UKC's TripleQ.

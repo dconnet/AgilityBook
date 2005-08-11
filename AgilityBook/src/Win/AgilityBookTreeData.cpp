@@ -1268,7 +1268,7 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 						if (GetTrial()->HasMultiQ(
 							m_pRun->GetDate(),
 							m_pTree->GetDocument()->GetConfig(),
-							m_pRun, NULL,
+							m_pRun,
 							&multiQs))
 						{
 							q.Empty();

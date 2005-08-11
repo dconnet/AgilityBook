@@ -712,7 +712,7 @@ void CAgilityBookViewPoints::LoadData()
 							++date)
 						{
 							ARBVectorBase<ARBConfigMultiQ> multiQs;
-							if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL, NULL, &multiQs))
+							if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL, &multiQs))
 							{
 								for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
 									iter != multiQs.end();
