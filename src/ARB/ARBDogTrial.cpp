@@ -233,31 +233,34 @@ bool ARBDogTrial::HasMultiQ(
 	// Now, see if any combo of these runs matches a multiQ config.
 	if (1 < runs.size())
 	{
+		bool bGotIt = NULL == inRun ? true : false;
 		ARBConfigVenue* pVenue;
 		if (inConfig.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 		{
-			bool bContinue = true;
 			for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
-				bContinue && iterM != pVenue->GetMultiQs().end();
+				iterM != pVenue->GetMultiQs().end();
 				++iterM)
 			{
 				ARBConfigMultiQ* pMultiQ = *iterM;
-				if (pMultiQ->Match(runs))
+				std::vector<ARBDogRun const*> matchedRuns;
+				if (pMultiQ->Match(runs, matchedRuns))
 				{
 					++nMatches;
+					if (!bGotIt)
+					{
+						// Comparing by ptr is fine...
+						if (matchedRuns.end() != std::find(matchedRuns.begin(), matchedRuns.end(), inRun))
+							bGotIt = true;
+					}
 					if (outMultiQs)
 					{
 						pMultiQ->AddRef();
 						outMultiQs->push_back(pMultiQ);
 					}
-					else
-					{
-						// If we're not accumulating the matches,
-						// there's no need to continue looking.
-						bContinue = false;
-					}
 				}
 			}
+			if (!bGotIt)
+				nMatches = 0;
 		}
 		if (pVenue)
 			pVenue->Release();

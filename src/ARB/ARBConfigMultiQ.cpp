@@ -250,8 +250,11 @@ bool ARBConfigMultiQ::Save(Element& ioTree) const
 }
 
 // Note, this is only called from ARBDogTrial
-bool ARBConfigMultiQ::Match(std::vector<ARBDogRun const*>& ioRuns) const
+bool ARBConfigMultiQ::Match(
+		std::vector<ARBDogRun const*>& ioRuns,
+		std::vector<ARBDogRun const*>& outRuns) const
 {
+	outRuns.clear();
 	if (ioRuns.size() < m_Items.size())
 		return false;
 	// One assumption we are making is that a given run can only match one
@@ -302,6 +305,7 @@ bool ARBConfigMultiQ::Match(std::vector<ARBDogRun const*>& ioRuns) const
 				&& (*iter).m_Event == (*iterR)->GetEvent())
 				{
 					bInc = false;
+					outRuns.push_back(*iterR);
 					iterR = ioRuns.erase(iterR);
 				}
 			}

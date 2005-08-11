@@ -97,9 +97,12 @@ public:
 	/**
 	 * Does this multi-q configuration match the given set of runs?
 	 * @param ioRuns Runs to check.
+	 * @param outRuns Runs that were removed from ioRuns.
 	 * @return There is a match. Matching runs are removed from the vector.
 	 */
-	bool Match(std::vector<ARBDogRun const*>& ioRuns) const;
+	bool Match(
+			std::vector<ARBDogRun const*>& ioRuns,
+			std::vector<ARBDogRun const*>& outRuns) const;
 
 	/**
 	 * Rename a division.
