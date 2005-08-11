@@ -116,36 +116,51 @@ static struct
 	WORD bValid;
 	int index;
 	char const* name;
+	char const* desc;
 } const sc_Types[] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_FAULTS_TIME,   "Faults Then Time"},
+		IO_TYPE_RUNS_FAULTS_TIME,   "Faults Then Time",
+		"Runs like Standard and Jumpers"},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_TIME_FAULTS,   "Time Plus Faults"},
+		IO_TYPE_RUNS_TIME_FAULTS,   "Time Plus Faults",
+		"Runs like Steeplechase"},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_OPEN_CLOSE,    "Opening/Closing Points Then Time"},
+		IO_TYPE_RUNS_OPEN_CLOSE,    "Opening/Closing Points Then Time",
+		"Runs like Gamblers and Jackpot"},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_POINTS,        "Points Then Time"},
+		IO_TYPE_RUNS_POINTS,        "Points Then Time",
+		"Runs like Snooker"},
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
-		IO_TYPE_CALENDAR,           "Calendar"},
+		IO_TYPE_CALENDAR,           "Calendar",
+		"Importing andf exporting Calendar entries"},
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
-		IO_TYPE_TRAINING,           "Training Log"},
+		IO_TYPE_TRAINING,           "Training Log",
+		"Importing and exporting Training entries"},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_DOG,      "Tree - Dog"},
+		IO_TYPE_VIEW_TREE_DOG,      "Tree - Dog",
+		"Display of dogs in the Runs tree"},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_TRIAL,    "Tree - Trial"},
+		IO_TYPE_VIEW_TREE_TRIAL,    "Tree - Trial",
+		"Display of trials in the Runs tree"},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_RUN,      "Tree - Run"},
+		IO_TYPE_VIEW_TREE_RUN,      "Tree - Run",
+		"Display of runs in the Runs tree"},
 	{CAgilityBookOptions::eViewRuns,
-		IO_TYPE_VIEW_RUNS_LIST,     "Runs"},
+		IO_TYPE_VIEW_RUNS_LIST,     "Runs",
+		"Display of runs in the Runs view"},
 	{CAgilityBookOptions::eViewCal,
-		IO_TYPE_VIEW_CALENDAR_LIST, "Calendar"},
+		IO_TYPE_VIEW_CALENDAR_LIST, "Calendar",
+		"Display of entries in the Calendar view"},
 	{CAgilityBookOptions::eViewLog,
-		IO_TYPE_VIEW_TRAINING_LIST, "Training Log"},
+		IO_TYPE_VIEW_TRAINING_LIST, "Training Log",
+		"Display of entries in the Training Log"},
 	{CAgilityBookOptions::eCalExportAppt,
-		IO_TYPE_CALENDAR_APPT,      "Calendar (MS Outlook Appointment)"},
+		IO_TYPE_CALENDAR_APPT,      "Calendar (MS Outlook Appointment)",
+		"Exporting Calendar entries for importing into MS Outlook as Appointments"},
 	{CAgilityBookOptions::eCalExportTask,
-		IO_TYPE_CALENDAR_TASK,      "Calendar (MS Outlook Task)"},
+		IO_TYPE_CALENDAR_TASK,      "Calendar (MS Outlook Task)",
+		"Exporting Calendar entries for importing into MS Outlook as Tasks"},
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
@@ -734,7 +749,7 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgAssignColumns)
-	ON_CBN_SELCHANGE(IDC_ASSIGN_TYPE, OnSelchangeType)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_ASSIGN_TYPE, OnItemchanged)
 	ON_LBN_SELCHANGE(IDC_ASSIGN_AVAILABLE, OnSelchangeAvailable)
 	ON_LBN_SELCHANGE(IDC_ASSIGN_COLUMNS, OnSelchangeColumns)
 	ON_BN_CLICKED(IDC_ASSIGN_ADD, OnAdd)
@@ -750,9 +765,9 @@ void CDlgAssignColumns::FillColumns()
 {
 	m_ctrlAvailable.ResetContent();
 	m_ctrlColumns.ResetContent();
-	int index = m_ctrlType.GetCurSel();
+	int index = m_ctrlType.GetSelection();
 	int idxType = -1;
-	if (CB_ERR != index)
+	if (0 <= index)
 		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
 	if (0 <= idxType)
 	{
@@ -809,9 +824,9 @@ void CDlgAssignColumns::FillColumns()
 
 void CDlgAssignColumns::UpdateColumnVector()
 {
-	int index = m_ctrlType.GetCurSel();
+	int index = m_ctrlType.GetSelection();
 	int idxType = -1;
-	if (CB_ERR != index)
+	if (0 <= index)
 		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
 	if (0 <= idxType)
 	{
@@ -840,6 +855,9 @@ void CDlgAssignColumns::UpdateButtons()
 BOOL CDlgAssignColumns::OnInitDialog() 
 {
 	CDlgBaseDialog::OnInitDialog();
+	m_ctrlType.SetExtendedStyle(m_ctrlType.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlType.InsertColumn(0, "Run Type");
+	m_ctrlType.InsertColumn(1, "Description");
 	int index;
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)
@@ -852,19 +870,25 @@ BOOL CDlgAssignColumns::OnInitDialog()
 		ASSERT(sc_Types[index].index == index);
 		if (!(sc_Types[index].bValid & m_eOrder))
 			continue;
-		int idx = m_ctrlType.AddString(sc_Types[index].name);
-		if (CB_ERR != idx)
+		int idx = m_ctrlType.InsertItem(index, sc_Types[index].name);
+		if (0 <= idx)
+		{
+			m_ctrlType.SetItemText(idx, 1, sc_Types[index].desc);
 			m_ctrlType.SetItemData(idx, index);
+		}
 	}
-	m_ctrlType.SetCurSel(0);
-	FillColumns();
+	m_ctrlType.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlType.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlType.SetSelection(0);
+	//FillColumns();
 	return TRUE;	// return TRUE unless you set the focus to a control
 					// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgAssignColumns::OnSelchangeType() 
+void CDlgAssignColumns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	FillColumns();
+	*pResult;
 }
 
 void CDlgAssignColumns::OnSelchangeAvailable() 

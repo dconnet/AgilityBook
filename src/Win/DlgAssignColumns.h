@@ -178,6 +178,7 @@
 #include "AgilityBookOptions.h"
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
+#include "ListCtrl.h"
 
 class CDlgAssignColumns : public CDlgBaseDialog
 {
@@ -202,7 +203,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgAssignColumns)
 	enum { IDD = IDD_ASSIGN_COLUMNS };
-	CComboBox	m_ctrlType;
+	CListCtrl2	m_ctrlType;
 	CListBox2	m_ctrlAvailable;
 	CListBox2	m_ctrlColumns;
 	CButton	m_ctrlAdd;
@@ -229,7 +230,7 @@ private:
 protected:
 	//{{AFX_MSG(CDlgAssignColumns)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeType();
+	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelchangeAvailable();
 	afx_msg void OnSelchangeColumns();
 	afx_msg void OnAdd();
