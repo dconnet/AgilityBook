@@ -249,16 +249,17 @@ bool ARBConfigMultiQ::Save(Element& ioTree) const
 	return true;
 }
 
-bool ARBConfigMultiQ::Match(ARBVectorBase<ARBDogRun> const& inRuns) const
+// Note, this is only called from ARBDogTrial
+bool ARBConfigMultiQ::Match(std::vector<ARBDogRun const*>& ioRuns) const
 {
-	if (inRuns.size() < m_Items.size())
+	if (ioRuns.size() < m_Items.size())
 		return false;
 	// One assumption we are making is that a given run can only match one
 	// multi-q definition.
 	std::vector<bool> bItems;
 	bItems.insert(bItems.begin(), m_Items.size(), false);
-	for (ARBVectorBase<ARBDogRun>::const_iterator iterR = inRuns.begin();
-		iterR != inRuns.end();
+	for (std::vector<ARBDogRun const*>::iterator iterR = ioRuns.begin();
+		iterR != ioRuns.end();
 		++iterR)
 	{
 		if (m_ValidFrom.IsValid() && (*iterR)->GetDate() < m_ValidFrom)
@@ -280,7 +281,35 @@ bool ARBConfigMultiQ::Match(ARBVectorBase<ARBDogRun> const& inRuns) const
 	for (std::vector<bool>::iterator iterB = bItems.begin(); iterB != bItems.end(); ++iterB)
 		if (*iterB)
 			++nMatch;
-	return nMatch == m_Items.size();
+	bool bOk = false;
+	if (nMatch == m_Items.size())
+	{
+		bOk = true;
+		for (std::vector<ARBDogRun const*>::iterator iterR = ioRuns.begin();
+			iterR != ioRuns.end();
+			)
+		{
+			bool bInc = true;
+			if (m_ValidFrom.IsValid() && (*iterR)->GetDate() < m_ValidFrom)
+				continue;
+			if (m_ValidTo.IsValid() && (*iterR)->GetDate() > m_ValidTo)
+				continue;
+			int idx = 0;
+			for (std::set<MultiQItem>::const_iterator iter = m_Items.begin(); iter != m_Items.end(); ++idx, ++iter)
+			{
+				if ((*iter).m_Div == (*iterR)->GetDivision()
+				&& (*iter).m_Level == (*iterR)->GetLevel()
+				&& (*iter).m_Event == (*iterR)->GetEvent())
+				{
+					bInc = false;
+					iterR = ioRuns.erase(iterR);
+				}
+			}
+			if (bInc)
+				++iterR;
+		}
+	}
+	return bOk;
 }
 
 int ARBConfigMultiQ::RenameDivision(

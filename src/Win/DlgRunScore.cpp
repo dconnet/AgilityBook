@@ -220,7 +220,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RUNSCORE_DOGS_QD, m_DogsQd);
 	DDX_Control(pDX, IDC_RUNSCORE_Q, m_ctrlQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SCORE, m_ctrlScore);
-	DDX_Control(pDX, IDC_RUNSCORE_MULTI_Q, m_ctrlMultiQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS_TEXT, m_ctrlSpeedPtsText);
 	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS, m_ctrlSpeedPts);
 	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
@@ -561,7 +560,6 @@ void CDlgRunScore::FillLevels()
 		}
 	}
 	FillEvents();
-	SetMultiQ();
 	SetTitlePoints();
 }
 
@@ -717,41 +715,6 @@ void CDlgRunScore::FillQ(bool bHasSuperQ)
 	}
 }
 
-void CDlgRunScore::SetMultiQ()
-{
-	std::string div, level;
-	CString str;
-	int index = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlDivisions.GetLBText(index, str);
-		if (!str.IsEmpty())
-			div = (LPCSTR)str;
-	}
-	index = m_ctrlLevels.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlLevels.GetLBText(index, str);
-		if (!str.IsEmpty())
-			level = (LPCSTR)str;
-	}
-	bool multiQ = false;
-	if (0 < div.length() && 0 < level.length())
-	{
-		ARBVectorBase<ARBConfigMultiQ> multiQs;
-		if (m_pTrial->HasMultiQ(m_Run->GetDate(), m_pDoc->GetConfig(), m_pRealRun, m_Run, &multiQs))
-		{
-			if (0 < multiQs.size())
-				multiQ = true;
-		}
-	}
-	// And set it.
-	if (multiQ)
-		m_ctrlMultiQ.SetCheck(1);
-	else
-		m_ctrlMultiQ.SetCheck(0);
-}
-
 void CDlgRunScore::SetTitlePoints()
 {
 	int index = m_ctrlQ.GetCurSel();
@@ -826,7 +789,6 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlInClass.EnableWindow(FALSE);
 	m_ctrlDogsQd.EnableWindow(FALSE);
 	m_ctrlQ.EnableWindow(FALSE);
-	m_ctrlMultiQ.ShowWindow(SW_HIDE);
 	m_ctrlSpeedPtsText.ShowWindow(SW_HIDE);
 	m_ctrlSpeedPts.ShowWindow(SW_HIDE);
 	m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
@@ -980,11 +942,6 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	{
 		m_ctrlSpeedPtsText.ShowWindow(SW_SHOW);
 		m_ctrlSpeedPts.ShowWindow(SW_SHOW);
-	}
-	if (0 < m_pVenue->GetMultiQs().size())
-	{
-		m_ctrlMultiQ.ShowWindow(SW_SHOW);
-		SetMultiQ();
 	}
 	SetTitlePoints();
 
@@ -1245,6 +1202,5 @@ void CDlgRunScore::OnSelchangeQ()
 	if (CB_ERR != index)
 		q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 	m_Run->SetQ(q);
-	SetMultiQ();
 	SetTitlePoints();
 }

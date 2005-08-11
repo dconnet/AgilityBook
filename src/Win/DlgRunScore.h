@@ -128,7 +128,6 @@ private:
 	short	m_DogsQd;
 	CComboBox	m_ctrlQ;
 	CStatic	m_ctrlScore;
-	CButton	m_ctrlMultiQ;
 	CStatic	m_ctrlSpeedPtsText;
 	CStatic	m_ctrlSpeedPts;
 	CStatic	m_ctrlTitlePointsText;
@@ -167,7 +166,6 @@ private:
 	void SetYPS();
 	void SetTotalFaults();
 	void FillQ(bool bHasSuperQ);
-	void SetMultiQ();
 	void SetTitlePoints();
 	void UpdateControls(bool bOnEventChange = false);
 

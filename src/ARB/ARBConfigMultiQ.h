@@ -96,10 +96,10 @@ public:
 
 	/**
 	 * Does this multi-q configuration match the given set of runs?
-	 * @param inRuns Runs to check.
-	 * @return There is a match.
+	 * @param ioRuns Runs to check.
+	 * @return There is a match. Matching runs are removed from the vector.
 	 */
-	bool Match(ARBVectorBase<ARBDogRun> const& inRuns) const;
+	bool Match(std::vector<ARBDogRun const*>& ioRuns) const;
 
 	/**
 	 * Rename a division.

@@ -636,7 +636,7 @@ void CWizardExport::UpdatePreview()
 												if (pTrial->HasMultiQ(
 													pRun->GetDate(),
 													m_pDoc->GetConfig(),
-													pRun, NULL,
+													pRun,
 													&multiQs))
 												{
 													str.Empty();

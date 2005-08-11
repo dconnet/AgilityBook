@@ -106,20 +106,15 @@ public:
 	 *
 	 * @param inDate Date to check.
 	 * @param inConfig Configuration for looking up information.
-	 * @param inRealRun Existing run in trial to match a multiQ.
-	 * @param inRun Modified copy of inRealRun (see Notes)
+	 * @param inRun Existing run in trial to match a multiQ.
 	 * @param outMultiQs MultiQ configurations that match.
 	 * @return Whether a multiQ was earned on inDate.
-	 * @note If inRun is specified, it is assumed to be logically the same
-	 * run as inRealRun, but just not committed yet. This allows us to show
-	 * the user whether a run is a multiQ while editing that run.
 	 */
 	bool HasMultiQ(
 			ARBDate const& inDate,
 			ARBConfig const& inConfig,
-			ARBDogRun const* inRealRun,
-			ARBDogRun* inRun = NULL,
-			ARBVectorBase<ARBConfigMultiQ>* outMultiQs = NULL) const;
+			ARBDogRun const* inRun,
+			ARBVectorBase<ARBConfigMultiQ>* outMultiQs) const;
 
 	/**
 	 * Get the Speed points earned for this trial.
