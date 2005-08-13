@@ -217,6 +217,9 @@ void CDlgConfigMultiQ::OnAdd()
 			int idx = m_ctrlItems.InsertItem(m_ctrlItems.GetItemCount(), dlg.GetDivision());
 			m_ctrlItems.SetItemText(idx, 1, dlg.GetLevel());
 			m_ctrlItems.SetItemText(idx, 2, dlg.GetEvent());
+			m_ctrlItems.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlItems.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlItems.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
 		}
 		else
 			MessageBeep(MB_ICONEXCLAMATION);
@@ -248,6 +251,9 @@ void CDlgConfigMultiQ::OnEdit()
 				idx = m_ctrlItems.InsertItem(idx,dlg.GetDivision());
 				m_ctrlItems.SetItemText(idx, 1, dlg.GetLevel());
 				m_ctrlItems.SetItemText(idx, 2, dlg.GetEvent());
+				m_ctrlItems.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+				m_ctrlItems.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+				m_ctrlItems.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
 			}
 			else
 				MessageBeep(MB_ICONEXCLAMATION);

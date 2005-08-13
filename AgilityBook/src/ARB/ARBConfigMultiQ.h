@@ -304,19 +304,24 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
-	 * Find a MultiQ.
+	 * Find a MultiQ by name.
 	 * @param inName Multi-Q to find
+	 * @param inShortName Search by shortname instead of longname.
+	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
-	bool FindMultiQ(std::string const& inName) const;
+	bool FindMultiQ(
+			std::string const& inName,
+			bool bUseShortName = false,
+			ARBConfigMultiQ** outMultiQ = NULL) const;
 
 	/**
-	 * Find a MultiQ.
+	 * Find a MultiQ by value.
 	 * @param inMultiQ Multi-Q definition to find
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
 	bool FindMultiQ(
-		ARBConfigMultiQ const& inMultiQ,
-		ARBConfigMultiQ** outMultiQ = NULL) const;
+			ARBConfigMultiQ const& inMultiQ,
+			ARBConfigMultiQ** outMultiQ = NULL) const;
 
 	/**
 	 * Rename a division.
