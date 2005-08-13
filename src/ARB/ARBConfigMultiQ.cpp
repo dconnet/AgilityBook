@@ -522,11 +522,26 @@ bool ARBConfigMultiQList::Load(
 	return true;
 }
 
-bool ARBConfigMultiQList::FindMultiQ(std::string const& inName) const
+bool ARBConfigMultiQList::FindMultiQ(
+		std::string const& inName,
+		bool bUseShortName,
+		ARBConfigMultiQ** outMultiQ) const
 {
+	if (outMultiQ)
+		*outMultiQ = NULL;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
-		if (*iter && (*iter)->GetName() == inName)
+	{
+		if ((!bUseShortName && *iter && (*iter)->GetName() == inName)
+		|| (bUseShortName && *iter && (*iter)->GetShortName() == inName))
+		{
+			if (outMultiQ)
+			{
+				*outMultiQ = *iter;
+				(*outMultiQ)->AddRef();
+			}
 			return true;
+		}
+	}
 	return false;
 }
 
