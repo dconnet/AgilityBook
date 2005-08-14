@@ -292,14 +292,14 @@ public:
 			CAgilityBookViewPoints* pView,
 			int inExistingDblQs,
 			ARBConfigMultiQ const* inMultiQ,
-			std::set<MultiQdata> const& inQQs);
+			std::set<MultiQdata> const& inMQs);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual void OnDblClick() const;
 
 protected:
 	ARBConfigMultiQ const* m_MultiQ;
-	std::set<MultiQdata> m_QQs;
+	std::set<MultiQdata> m_MQs;
 	int m_ExistingDblQs;
 };
 

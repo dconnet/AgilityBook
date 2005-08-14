@@ -502,11 +502,11 @@ PointsDataMultiQs::PointsDataMultiQs(
 		CAgilityBookViewPoints* pView,
 		int inExistingDblQs,
 		ARBConfigMultiQ const* inMultiQ,
-		std::set<MultiQdata> const& inQQs)
+		std::set<MultiQdata> const& inMQs)
 	: PointsDataBase(pView)
 	, m_ExistingDblQs(inExistingDblQs)
 	, m_MultiQ(inMultiQ)
-	, m_QQs(inQQs)
+	, m_MQs(inMQs)
 {
 }
 
@@ -516,7 +516,7 @@ std::string PointsDataMultiQs::OnNeedText(size_t index) const
 	if (7 == index)
 	{
 		CString str2;
-		str2.FormatMessage("%1!d! %2", m_ExistingDblQs + m_QQs.size(), m_MultiQ->GetShortName().c_str());
+		str2.FormatMessage("%1!d! %2", m_ExistingDblQs + m_MQs.size(), m_MultiQ->GetShortName().c_str());
 		str = (LPCTSTR)str2;
 	}
 	return str;
@@ -524,7 +524,7 @@ std::string PointsDataMultiQs::OnNeedText(size_t index) const
 
 void PointsDataMultiQs::OnDblClick() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), m_MultiQ->GetName().c_str(), m_QQs, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), m_MultiQ->GetName().c_str(), m_MQs, m_pView);
 	dlg.DoModal();
 }
 
