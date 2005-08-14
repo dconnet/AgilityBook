@@ -102,9 +102,9 @@ protected:
 #define COL_RUN_QD			11
 #define COL_RUN_SPEED		12
 #define COL_RUN_PARTNERS	13
-#define COL_QQ_DATE			0
-#define COL_QQ_LOCATION		1
-#define COL_QQ_CLUB			2
+#define COL_MQ_DATE			0
+#define COL_MQ_LOCATION		1
+#define COL_MQ_CLUB			2
 #define COL_OTHER_DATE		0
 #define COL_OTHER_NAME		1 // Trial, existing pt
 #define COL_OTHER_CLUB		2
@@ -595,13 +595,13 @@ CString CDlgListViewerDataDblQ::OnNeedText(int iCol) const
 	CString str;
 	switch (m_ColData->GetIndex(iCol))
 	{
-	case COL_QQ_DATE:
+	case COL_MQ_DATE:
 		str = m_Date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
 		break;
-	case COL_QQ_LOCATION:
+	case COL_MQ_LOCATION:
 		str = m_Trial->GetLocation().c_str();
 		break;
-	case COL_QQ_CLUB:
+	case COL_MQ_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
 			str = m_Trial->GetClubs().GetPrimaryClubName().c_str();
 		break;
@@ -620,18 +620,18 @@ int CDlgListViewerDataDblQ::Compare(
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
-	case COL_QQ_DATE:
+	case COL_MQ_DATE:
 		if (m_Date < pData->m_Date)
 			return -1;
 		else if (m_Date > pData->m_Date)
 			return 1;
 		else
 			return 0;
-	case COL_QQ_LOCATION:
+	case COL_MQ_LOCATION:
 		str1 = m_Trial->GetLocation();
 		str2 = pData->m_Trial->GetLocation();
 		break;
-	case COL_QQ_CLUB:
+	case COL_MQ_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
 			str1 = m_Trial->GetClubs().GetPrimaryClubName();
 		if (pData->m_Trial->GetClubs().GetPrimaryClub())
@@ -1086,7 +1086,7 @@ CDlgListViewer::CDlgListViewer(
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
-		std::set<MultiQdata> const& inQQs,
+		std::set<MultiQdata> const& inMQs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
@@ -1094,7 +1094,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_Data(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
-	, m_MultiQdata(&inQQs)
+	, m_MultiQdata(&inMQs)
 	, m_Lifetime(NULL)
 	, m_OtherData(NULL)
 	, m_Items(NULL)
@@ -1367,10 +1367,10 @@ BOOL CDlgListViewer::OnInitDialog()
 	else if (m_MultiQdata)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
-		pColData->InsertColumn(m_ctrlList, COL_QQ_DATE, IDS_COL_DATE);
+		pColData->InsertColumn(m_ctrlList, COL_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_QQ_LOCATION, IDS_COL_LOCATION);
-		pColData->InsertColumn(m_ctrlList, COL_QQ_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_MQ_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_MQ_CLUB, IDS_COL_CLUB);
 		int iItem = 0;
 		for (std::set<MultiQdata>::const_iterator iter = m_MultiQdata->begin();
 			iter != m_MultiQdata->end();

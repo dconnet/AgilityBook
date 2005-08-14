@@ -120,11 +120,11 @@ public:
 			CString const& inCaption,
 			std::list<ScoringRunInfo> const& inScoringRuns,
 			CWnd* pParent = NULL);
-	// Viewing double-Qs
+	// Viewing multi-Qs
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			CString const& inCaption,
-			std::set<MultiQdata> const& inQQs,
+			std::set<MultiQdata> const& inMQs,
 			CWnd* pParent = NULL);
 	// Viewing lifetime data
 	CDlgListViewer(

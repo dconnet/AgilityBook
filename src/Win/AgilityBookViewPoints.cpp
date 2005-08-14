@@ -111,7 +111,7 @@ static char THIS_FILE[] = __FILE__;
 // 5: n Runs, n Judges, n Partners
 // 6: n Qs (x %), (n clean), n Judges, n Partners
 // 7: Points
-// 8: SuperQs/SpeedPts(per run), total QQs/speedpts
+// 8: SuperQs/SpeedPts(per run), total MQs/speedpts
 // 9: SpeedPts (if SuperQs too) [possible, but an event like this doesn't exist]
 //
 // 1: Other Points
@@ -701,7 +701,7 @@ void CAgilityBookViewPoints::LoadData()
 				// If the venue has multiQs, tally them now.
 				if (0 < pVenue->GetMultiQs().size())
 				{
-					std::map<ARBConfigMultiQ*, std::set<MultiQdata> > QQs;
+					std::map<ARBConfigMultiQ*, std::set<MultiQdata> > MQs;
 					for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
 						iterTrial != trialsInVenue.end();
 						++iterTrial)
@@ -718,13 +718,13 @@ void CAgilityBookViewPoints::LoadData()
 									iter != multiQs.end();
 									++iter)
 								{
-									QQs[*iter].insert(MultiQdata(date, pTrial));
+									MQs[*iter].insert(MultiQdata(date, pTrial));
 								}
 							}
 						}
 					}
-					for (std::map<ARBConfigMultiQ*, std::set<MultiQdata> >::iterator iter = QQs.begin();
-						iter != QQs.end();
+					for (std::map<ARBConfigMultiQ*, std::set<MultiQdata> >::iterator iter = MQs.begin();
+						iter != MQs.end();
 						++iter)
 					{
 						int existingDblQs = pDog->GetExistingPoints().ExistingPoints(
