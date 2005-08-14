@@ -218,6 +218,18 @@ bool ARBDogTrial::HasMultiQ(
 	ARBDogClub* pClub;
 	if (!GetClubs().GetPrimaryClub(&pClub))
 		return false;
+	ARBConfigVenue* pVenue;
+	if (!inConfig.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
+	{
+		pClub->Release();
+		return false;
+	}
+	pClub->Release();
+	if (0 == pVenue->GetMultiQs().size())
+	{
+		pVenue->Release();
+		return false;
+	}
 	// First, get all the qualifying runs for the given date.
 	std::vector<ARBDogRun const*> runs;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
@@ -234,39 +246,32 @@ bool ARBDogTrial::HasMultiQ(
 	if (1 < runs.size())
 	{
 		bool bGotIt = NULL == inRun ? true : false;
-		ARBConfigVenue* pVenue;
-		if (inConfig.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
+		for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
+			iterM != pVenue->GetMultiQs().end();
+			++iterM)
 		{
-			for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
-				iterM != pVenue->GetMultiQs().end();
-				++iterM)
+			ARBConfigMultiQ* pMultiQ = *iterM;
+			std::vector<ARBDogRun const*> matchedRuns;
+			if (pMultiQ->Match(runs, matchedRuns))
 			{
-				ARBConfigMultiQ* pMultiQ = *iterM;
-				std::vector<ARBDogRun const*> matchedRuns;
-				if (pMultiQ->Match(runs, matchedRuns))
+				++nMatches;
+				if (!bGotIt)
 				{
-					++nMatches;
-					if (!bGotIt)
-					{
-						// Comparing by ptr is fine...
-						if (matchedRuns.end() != std::find(matchedRuns.begin(), matchedRuns.end(), inRun))
-							bGotIt = true;
-					}
-					if (outMultiQs)
-					{
-						pMultiQ->AddRef();
-						outMultiQs->push_back(pMultiQ);
-					}
+					// Comparing by ptr is fine...
+					if (matchedRuns.end() != std::find(matchedRuns.begin(), matchedRuns.end(), inRun))
+						bGotIt = true;
+				}
+				if (outMultiQs)
+				{
+					pMultiQ->AddRef();
+					outMultiQs->push_back(pMultiQ);
 				}
 			}
-			if (!bGotIt)
-				nMatches = 0;
 		}
-		if (pVenue)
-			pVenue->Release();
+		if (!bGotIt)
+			nMatches = 0;
 	}
-	if (pClub)
-		pClub->Release();
+	pVenue->Release();
 	return 0 < nMatches;
 }
 
