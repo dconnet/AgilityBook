@@ -13,19 +13,20 @@
   - Re-worked layout in Reference Run dialog to make it flow better.
   - Changed default Qing in Reference Run dialog to a 'Q' (was NA).
   - Added a button in the Reference Runs page to add yourself.
-  - Remember the type of import/export last done.
+  - Remember the type of last import/export done.
   - Changed the term 'Double-Q' to 'Multiple-Q' to handle UKC's TripleQ.
-  - When importing ARB files, update regnum and titles that are different.
+  - When importing ARB files, update Registration Numbers and Titles that
+    are different.
 - Bug fixes
   - When multiple items are selected in the main list views, the right-click
     menu doesn't properly work on all the items.
   - When an error occured while reading a file, the error message was mangled.
   - Fixed a problem where the UI didn't reflect a change in the trial date
     ordering.
+  - The wrong item in the tree was selected after reordering.
   - Added validation during import to make sure venue names are correct. It
     was possible to import bad data which when we attempted to edit later
     caused the program to crash.
-  - The wrong item in the tree was selected after reordering.
 
 6/11/2005: v1.5.4.10
 - Bug fixes
