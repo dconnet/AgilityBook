@@ -625,9 +625,6 @@ Division of this run.
 .topic HIDC_RUNSCORE_DOGS_QD
 Number of dogs that qualified. Enter -1 if not known.
 
-.topic HIDC_RUNSCORE_MULTI_Q
-Indicates this run is part of a multi Q.
-
 .topic HIDC_RUNSCORE_EVENT
 Type of run.
 This list is filled in based on the selection in the Level list.
@@ -820,40 +817,40 @@ Display opening dates of calendar entries, if applicable.
 .topic HIDC_OPTIONS_CAL_CLOSING
 Display closing dates of calendar entries, if applicable.
 
-.topic HIDC_OPTIONS_FILTER_DATES_ALL
+.topic HIDC_FILTER_DATE_ALL
 View all dates.
 
-.topic HIDC_OPTIONS_FILTER_DATES_RANGE
+.topic HIDC_FILTER_DATE_RANGE
 View only runs falling in the defined date range.
 
-.topic HIDC_OPTIONS_FILTER_DATE_END
+.topic HIDC_FILTER_DATE_END
 View any runs before (inclusive) the specified date.
 
-.topic HIDC_OPTIONS_FILTER_DATE_END_CHECK
+.topic HIDC_FILTER_DATE_END_CHECK
 View any runs before (inclusive) the specified date.
 
-.topic HIDC_OPTIONS_FILTER_DATE_START
+.topic HIDC_FILTER_DATE_START
 View any runs after (inclusive) the specified date.
 
-.topic HIDC_OPTIONS_FILTER_DATE_START_CHECK
+.topic HIDC_FILTER_DATE_START_CHECK
 View any runs after (inclusive) the specified date.
 
-.topic HIDC_OPTIONS_FILTER_RUNS_ALL
+.topic HIDC_FILTER_RUN_RUNS_ALL
 View both qualifying and non-qualifying runs.
 
-.topic HIDC_OPTIONS_FILTER_RUNS_NON_Q
+.topic HIDC_FILTER_RUN_RUNS_NON_Q
 View only non-qualifying runs.
 
-.topic HIDC_OPTIONS_FILTER_RUNS_Q
+.topic HIDC_FILTER_RUN_RUNS_Q
 View only qualifying runs.
 
-.topic HIDC_OPTIONS_FILTER_VENUES
+.topic HIDC_FILTER_RUN_VENUES
 Select the levels within each venue that you wish to view.
 
-.topic HIDC_OPTIONS_FILTER_VENUES_ALL
+.topic HIDC_FILTER_RUN_VENUES_ALL
 View all levels in all venues.
 
-.topic HIDC_OPTIONS_FILTER_VENUES_SELECTED
+.topic HIDC_FILTER_RUN_VENUES_SELECTED
 View only the levels selected below.
 
 .topic HIDC_OPTIONS_FONT_CAL_PRINT_DATE
@@ -892,31 +889,13 @@ is empty, the default splash screen will be used.
 .topic HIDC_OPTIONS_PGM_SHOW_SPLASH
 Show the splash screen when the program starts.
 
-.topic HIDC_OPTIONS_TRAINING_DATES_ALL
-View all dates.
-
-.topic HIDC_OPTIONS_TRAINING_DATES_RANGE
-View only log entries falling in the defined date range.
-
-.topic HIDC_OPTIONS_TRAINING_DATE_END
-View any entries before (inclusive) the specified date.
-
-.topic HIDC_OPTIONS_TRAINING_DATE_END_CHECK
-View any entries before (inclusive) the specified date.
-
-.topic HIDC_OPTIONS_TRAINING_DATE_START
-View any entries after (inclusive) the specified date.
-
-.topic HIDC_OPTIONS_TRAINING_DATE_START_CHECK
-View any entries after (inclusive) the specified date.
-
-.topic HIDC_OPTIONS_TRAINING_VENUES
+.topic HIDC_FILTER_TRAINING_VENUES
 Names in existing training log entries.
 
-.topic HIDC_OPTIONS_TRAINING_VENUES_ALL
+.topic HIDC_FILTER_TRAINING_VENUES_ALL
 View all names.
 
-.topic HIDC_OPTIONS_TRAINING_VENUES_SELECTED
+.topic HIDC_FILTER_TRAINING_VENUES_SELECTED
 View only the selected names.
 
 .topic HIDC_WIZARD_EXPORT_ASSIGN

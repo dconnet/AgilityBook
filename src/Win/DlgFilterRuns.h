@@ -29,53 +29,62 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptions class
+ * @brief interface of the CDlgFilterRuns class
  * @author David Connet
  *
  * Revision History
- * @li 2005-08-18 DRC Separated options and filters into two dialogs.
+ * @li 2005-08-18 DRC Separated options and filters.
  */
 
-#include "DlgBaseSheet.h"
-#include "DlgOptionsCalendar.h"
-#include "DlgOptionsFonts.h"
-#include "DlgOptionsProgram.h"
-class CAgilityBookDoc;
+#include <string>
+#include <vector>
+#include "ARBDate.h"
+#include "AgilityBookOptions.h"
+#include "CheckTreeCtrl.h"
+#include "DlgBasePropertyPage.h"
+class ARBConfig;
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
-
-class CDlgOptions : public CDlgBaseSheet
+class CDlgFilterRuns : public CDlgBasePropertyPage
 {
-	DECLARE_DYNAMIC(CDlgOptions)
+	friend class CDlgFilter;
+	DECLARE_DYNAMIC(CDlgFilterRuns)
 public:
-	static int GetProgramPage()		{return 0;}
-	static int GetFontPage()		{return 1;}
-	static int GetCalendarPage()	{return 2;}
+	CDlgFilterRuns(ARBConfig const& config);
+	~CDlgFilterRuns();
 
-	CDlgOptions(
-			CWnd* pParentWnd = NULL,
-			UINT iSelectPage = 0);
-	virtual ~CDlgOptions();
+private:
+// Dialog Data
+	//{{AFX_DATA(CDlgFilterRuns)
+	enum { IDD = IDD_VIEW_FILTER_RUNS };
+	int		m_ViewVenues;
+	CCheckTreeCtrl	m_ctrlVenue;
+	int		m_ViewQs;
+	//}}AFX_DATA
+	ARBConfig const& m_Config;
+	std::vector<CVenueFilter> m_VenueFilter;
 
-// Attributes
-public:
-	CDlgOptionsProgram m_pageProgram;
-	CDlgOptionsFonts m_pageFonts;
-	CDlgOptionsCalendar m_pageCalendar;
-
-// Operations
-public:
+private:
+	bool Find(std::string const& venue,
+		std::string const& div,
+		std::string const& level) const;
+	void FillFilter(
+			HTREEITEM hItem,
+			CString path);
+	void UpdateControls();
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptions)
+	//{{AFX_VIRTUAL(CDlgFilterRuns)
 	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
+// Implementation
 protected:
-	//{{AFX_MSG(CDlgOptions)
-	afx_msg void OnOK();
+	//{{AFX_MSG(CDlgFilterRuns)
+	virtual BOOL OnInitDialog();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
+	afx_msg void OnViewUpdate();
+	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

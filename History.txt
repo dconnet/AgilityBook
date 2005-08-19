@@ -1,4 +1,4 @@
-8/9/2005: v1.6.0.11 <in development>
+8/18/2005: v1.6.0.11 <in development>
 - Bumped file version to 11.0, Configuration v9:
   - Changed how double-Qs are tallied in order to support QQQs in UKC.
   - Fixed configuration for UKC.
@@ -17,6 +17,8 @@
   - Changed the term 'Double-Q' to 'Multiple-Q' to handle UKC's TripleQ.
   - When importing ARB files, update Registration Numbers and Titles that
     are different.
+  - Split Options and Filters (F7). Added date filtering on calendar. The
+    same date filter is applied to all items.
 - Bug fixes
   - When multiple items are selected in the main list views, the right-click
     menu doesn't properly work on all the items.

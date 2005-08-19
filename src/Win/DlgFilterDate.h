@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2005 David Connet. All Rights Reserved.
+ * Copyright © 2003-2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,70 +29,53 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptionsFilter class
+ * @brief interface of the CDlgFilterDate class
  * @author David Connet
  *
  * Revision History
+ * 2005-08-18 DRC Created
  */
 
-#include <string>
-#include <vector>
-#include "ARBDate.h"
-#include "AgilityBookOptions.h"
-#include "CheckTreeCtrl.h"
 #include "DlgBasePropertyPage.h"
-class ARBConfig;
+class CAgilityBookDoc;
 
-class CDlgOptionsFilter : public CDlgBasePropertyPage
+class CDlgFilterDate : public CDlgBasePropertyPage
 {
-	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgOptionsFilter)
+	friend class CDlgFilter;
+	DECLARE_DYNAMIC(CDlgFilterDate)
 public:
-	CDlgOptionsFilter(ARBConfig const& config);
-	~CDlgOptionsFilter();
+	CDlgFilterDate();
+	~CDlgFilterDate();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgOptionsFilter)
-	enum { IDD = IDD_VIEW_OPTIONS_FILTER };
+	//{{AFX_DATA(CDlgFilterDate)
+	enum { IDD = IDD_VIEW_FILTER_DATE };
 	int		m_ViewDates;
 	CButton	m_ctrlDateStartCheck;
 	BOOL	m_bDateStart;
 	CDateTimeCtrl	m_ctrlDateStart;
 	CTime	m_timeStart;
 	CButton	m_ctrlDateEndCheck;
-	CTime	m_timeEnd;
 	BOOL	m_bDateEnd;
 	CDateTimeCtrl	m_ctrlDateEnd;
-	int		m_ViewVenues;
-	CCheckTreeCtrl	m_ctrlVenue;
-	int		m_ViewQs;
+	CTime	m_timeEnd;
 	//}}AFX_DATA
-	ARBConfig const& m_Config;
-	std::vector<CVenueFilter> m_VenueFilter;
 
 private:
-	bool Find(std::string const& venue,
-		std::string const& div,
-		std::string const& level) const;
-	void FillFilter(
-			HTREEITEM hItem,
-			CString path);
 	void UpdateControls();
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsFilter)
+	//{{AFX_VIRTUAL(CDlgFilterDate)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgOptionsFilter)
+	//{{AFX_MSG(CDlgFilterDate)
 	virtual BOOL OnInitDialog();
-	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	afx_msg void OnViewUpdate();
-	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -1,4 +1,4 @@
-Last Updated: 8/9/2005
+Last Updated: 8/18/2005
 
 [internal stuff, not released on website]
 - Need to add Multi-Q selection to existing points so we know which multiq
@@ -8,8 +8,6 @@ Last Updated: 8/9/2005
   over events - for instance, if a 3rd std was run in akc.
   - I believe this is done - need to check performance since this computation
     is done each time the time draws in the Runs tab.
-
-- Add a date filter on the calendar.
 
 - Possibly change calendar view to display by separate months. Maybe bolder
   lines between the months?

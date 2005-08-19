@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-18 DRC Separated options and filters into two dialogs.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
@@ -42,7 +43,6 @@
 #include "AgilityBook.h"
 #include "DlgOptions.h"
 
-#include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 
 #ifdef _DEBUG
@@ -57,15 +57,25 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CDlgOptions, CDlgBaseSheet)
 
 CDlgOptions::CDlgOptions(
-		CAgilityBookDoc* pDoc,
 		CWnd* pParentWnd,
 		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_VIEWING_OPTIONS, pParentWnd, iSelectPage)
-	, m_pDoc(pDoc)
-	, m_pageFilter(pDoc->GetConfig())
-	, m_pageTraining(pDoc)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
+
+	// Program options
+	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
+	m_pageProgram.m_Backups = CAgilityBookOptions::GetNumBackupFiles();
+	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
+	m_pageProgram.m_bShowSplash = CAgilityBookOptions::AutoShowSplashScreen() ? TRUE : FALSE;
+	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
+
+	// Fonts
+	CAgilityBookOptions::GetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
+	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
+	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
+	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
+	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
 
 	// Calendar
 	m_pageCalendar.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
@@ -87,42 +97,13 @@ CDlgOptions::CDlgOptions(
 	m_pageCalendar.m_bNormal = filter.ViewNormal();
 	m_pageCalendar.m_bOpening = filter.ViewOpening();
 	m_pageCalendar.m_bClosing = filter.ViewClosing();
-	// Filter
-	m_pageFilter.m_ViewDates = CAgilityBookOptions::GetViewAllDates() ? 0 : 1;
-	m_pageFilter.m_timeStart = CAgilityBookOptions::GetStartFilterDate().GetDate();
-	m_pageFilter.m_bDateStart = CAgilityBookOptions::GetStartFilterDateSet();
-	m_pageFilter.m_timeEnd = CAgilityBookOptions::GetEndFilterDate().GetDate();
-	m_pageFilter.m_bDateEnd = CAgilityBookOptions::GetEndFilterDateSet();
-	m_pageFilter.m_ViewVenues = CAgilityBookOptions::GetViewAllVenues() ? 0 : 1;
-	CAgilityBookOptions::GetFilterVenue(m_pageFilter.m_VenueFilter);
-	m_pageFilter.m_ViewQs = CAgilityBookOptions::GetViewAllRuns() ? 0
-		: CAgilityBookOptions::GetViewQRuns() ? 1 : 2;
-	// Training
-	m_pageTraining.m_ViewDates = CAgilityBookOptions::GetTrainingViewAllDates() ? 0 : 1;
-	m_pageTraining.m_timeStart = CAgilityBookOptions::GetTrainingStartFilterDate().GetDate();
-	m_pageTraining.m_bDateStart = CAgilityBookOptions::GetTrainingStartFilterDateSet();
-	m_pageTraining.m_timeEnd = CAgilityBookOptions::GetTrainingEndFilterDate().GetDate();
-	m_pageTraining.m_bDateEnd = CAgilityBookOptions::GetTrainingEndFilterDateSet();
-	m_pageTraining.m_ViewNames = CAgilityBookOptions::GetTrainingViewAllNames() ? 0 : 1;
-	CAgilityBookOptions::GetTrainingFilterNames(m_pageTraining.m_filterNames);
-	// Fonts
-	CAgilityBookOptions::GetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
-	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
-	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
-	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
-	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
-	// Program options
-	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
-	m_pageProgram.m_Backups = CAgilityBookOptions::GetNumBackupFiles();
-	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
-	m_pageProgram.m_bShowSplash = CAgilityBookOptions::AutoShowSplashScreen() ? TRUE : FALSE;
-	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
 
-	AddPage(&m_pageFilter);
-	AddPage(&m_pageCalendar);
-	AddPage(&m_pageTraining);
-	AddPage(&m_pageFonts);
 	AddPage(&m_pageProgram);
+	ASSERT(0 == GetProgramPage());
+	AddPage(&m_pageFonts);
+	ASSERT(1 == GetFontPage());
+	AddPage(&m_pageCalendar);
+	ASSERT(2 == GetCalendarPage());
 }
 
 CDlgOptions::~CDlgOptions()
@@ -148,7 +129,21 @@ void CDlgOptions::OnOK()
 	if (GetActivePage()->UpdateData(TRUE))
 	{
 		CWaitCursor wait;
-		bool bOldNewest = CAgilityBookOptions::GetNewestDatesFirst();
+
+		// Program options
+		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
+		CAgilityBookOptions::SetNumBackupFiles(m_pageProgram.m_Backups);
+		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
+		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
+		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
+
+		// Fonts
+		CAgilityBookOptions::SetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
+		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
+		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
+		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
+		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
+
 		// Calendar
 		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCalendar.m_DayOfWeek));
 		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCalendar.m_bAutoDelete ? true : false);
@@ -170,76 +165,7 @@ void CDlgOptions::OnOK()
 		if (m_pageCalendar.m_bClosing)
 			filter.AddClosing();
 		CAgilityBookOptions::SetFilterCalendarView(filter);
-		// Runs
-		CAgilityBookOptions::SetViewAllDates(m_pageFilter.m_ViewDates == 0);
-		CAgilityBookOptions::SetStartFilterDate(m_pageFilter.m_timeStart.GetTime());
-		CAgilityBookOptions::SetStartFilterDateSet(m_pageFilter.m_bDateStart ? true : false);
-		CAgilityBookOptions::SetEndFilterDate(m_pageFilter.m_timeEnd.GetTime());
-		CAgilityBookOptions::SetEndFilterDateSet(m_pageFilter.m_bDateEnd ? true : false);
-		CAgilityBookOptions::SetViewAllVenues(m_pageFilter.m_ViewVenues == 0);
-		CAgilityBookOptions::SetFilterVenue(m_pageFilter.m_VenueFilter);
-		if (m_pageFilter.m_ViewDates != 0
-		&& !m_pageFilter.m_bDateStart 
-		&& !m_pageFilter.m_bDateEnd)
-		{
-			CAgilityBookOptions::SetViewAllDates(true);
-		}
-		if (m_pageFilter.m_ViewVenues != 0
-		&& 0 == m_pageFilter.m_VenueFilter.size())
-		{
-			CAgilityBookOptions::SetViewAllVenues(true);
-		}
-		switch (m_pageFilter.m_ViewQs)
-		{
-		default:
-		case 0:
-			CAgilityBookOptions::SetViewAllRuns(true);
-			CAgilityBookOptions::SetViewQRuns(true);
-			break;
-		case 1:
-			CAgilityBookOptions::SetViewAllRuns(false);
-			CAgilityBookOptions::SetViewQRuns(true);
-			break;
-		case 2:
-			CAgilityBookOptions::SetViewAllRuns(false);
-			CAgilityBookOptions::SetViewQRuns(false);
-			break;
-		}
-		if (bOldNewest != CAgilityBookOptions::GetNewestDatesFirst())
-			m_pDoc->SortDates();
-		// Training
-		CAgilityBookOptions::SetTrainingViewAllDates(m_pageTraining.m_ViewDates == 0);
-		CAgilityBookOptions::SetTrainingStartFilterDate(m_pageTraining.m_timeStart.GetTime());
-		CAgilityBookOptions::SetTrainingStartFilterDateSet(m_pageTraining.m_bDateStart ? true : false);
-		CAgilityBookOptions::SetTrainingEndFilterDate(m_pageTraining.m_timeEnd.GetTime());
-		CAgilityBookOptions::SetTrainingEndFilterDateSet(m_pageTraining.m_bDateEnd ? true : false);
-		CAgilityBookOptions::SetTrainingViewAllNames(m_pageTraining.m_ViewNames == 0);
-		CAgilityBookOptions::SetTrainingFilterNames(m_pageTraining.m_filterNames);
-		if (m_pageTraining.m_ViewDates != 0
-		&& !m_pageTraining.m_bDateStart 
-		&& !m_pageTraining.m_bDateEnd)
-		{
-			CAgilityBookOptions::SetTrainingViewAllDates(true);
-		}
-		if (m_pageTraining.m_ViewNames != 0
-		&& 0 == m_pageTraining.m_filterNames.size())
-		{
-			CAgilityBookOptions::SetTrainingViewAllNames(true);
-		}
-		// Fonts
-		CAgilityBookOptions::SetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
-		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
-		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
-		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
-		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
-		// Program options
-		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
-		CAgilityBookOptions::SetNumBackupFiles(m_pageProgram.m_Backups);
-		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
-		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
-		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
-		// Update
-		m_pDoc->ResetVisibility();
+
 		EndDialog(IDOK);
 	}
 }

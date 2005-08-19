@@ -49,6 +49,7 @@
 #include <string>
 #include <vector>
 #include "ARBDate.h"
+class ARBCalendar;
 class ARBConfigVenue;
 class ARBDogRun;
 class ARBDogTitle;
@@ -143,6 +144,7 @@ public:
 			ARBConfigVenue const* pVenue,
 			ARBDogTrial const* pTrial,
 			ARBDogRun const* pRun);
+	static bool IsCalendarVisible(ARBCalendar const* pCal);
 	static bool IsTrainingLogVisible(
 			std::set<std::string> const& names,
 			ARBTraining const* pTraining);
@@ -175,11 +177,7 @@ public:
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
-	// Runs/points options
-	static bool GetViewRunsByTrial();
-	static void SetViewRunsByTrial(bool bView);
-	static bool GetNewestDatesFirst();
-	static void SetNewestDatesFirst(bool bNewest);
+	// Filtering: Date
 	static bool GetViewAllDates();
 	static void SetViewAllDates(bool bViewAll);
 	static ARBDate GetStartFilterDate();
@@ -190,6 +188,7 @@ public:
 	static void SetEndFilterDate(ARBDate const& date);
 	static bool GetEndFilterDateSet();
 	static void SetEndFilterDateSet(bool bSet);
+	// Filtering: Runs
 	static bool GetViewAllVenues();
 	static void SetViewAllVenues(bool bViewAll);
 	static void GetFilterVenue(std::vector<CVenueFilter>& venues);
@@ -198,27 +197,22 @@ public:
 	static void SetViewAllRuns(bool bViewAll);
 	static bool GetViewQRuns(); // Subset of AllRuns
 	static void SetViewQRuns(bool bViewQs);
+	// Filtering: Training Log
+	static bool GetTrainingViewAllNames();
+	static void SetTrainingViewAllNames(bool bViewAll);
+	static void GetTrainingFilterNames(std::set<std::string>& outNames);
+	static void SetTrainingFilterNames(std::set<std::string> const& inNames);
+	// Runs/points options
+	static bool GetViewRunsByTrial();
+	static void SetViewRunsByTrial(bool bView);
+	static bool GetNewestDatesFirst();
+	static void SetNewestDatesFirst(bool bNewest);
 	static bool GetViewHiddenTitles();
 	static void SetViewHiddenTitles(bool bSet);
 	static bool GetTableInYPS();
 	static void SetTableInYPS(bool bSet);
 	static bool GetIncludeCRCDImage();
 	static void SetIncludeCRCDImage(bool bSet);
-	// Training Log options
-	static bool GetTrainingViewAllDates();
-	static void SetTrainingViewAllDates(bool bViewAll);
-	static ARBDate GetTrainingStartFilterDate();
-	static void SetTrainingStartFilterDate(ARBDate const& date);
-	static bool GetTrainingStartFilterDateSet();
-	static void SetTrainingStartFilterDateSet(bool bSet);
-	static ARBDate GetTrainingEndFilterDate();
-	static void SetTrainingEndFilterDate(ARBDate const& date);
-	static bool GetTrainingEndFilterDateSet();
-	static void SetTrainingEndFilterDateSet(bool bSet);
-	static bool GetTrainingViewAllNames();
-	static void SetTrainingViewAllNames(bool bViewAll);
-	static void GetTrainingFilterNames(std::set<std::string>& outNames);
-	static void SetTrainingFilterNames(std::set<std::string> const& inNames);
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);

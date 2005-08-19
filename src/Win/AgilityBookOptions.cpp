@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-18 DRC Changed how filter options are done.
  * @li 2005-05-04 DRC Added IncludeCRCDImage
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added AutoShowSplashScreen
@@ -51,6 +52,7 @@
 #include "AgilityBookOptions.h"
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBCalendar.h"
 #include "ARBDate.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
@@ -61,6 +63,14 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+// Obsolete registry entries
+// bool GetProfileInt("Common", "TrainingViewAllDates", 1)
+// ARBDate(julian) GetProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay()))
+// bool GetProfileInt("Common", "TrainingStartFilter", 0);
+// ARBDate(julian) GetProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay()));
+// bool GetProfileInt("Common", "TrainingEndFilter", 0);
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -283,21 +293,41 @@ bool CAgilityBookOptions::IsRunVisible(
 	return bVisible;
 }
 
+bool CAgilityBookOptions::IsCalendarVisible(ARBCalendar const* pCal)
+{
+	if (!CAgilityBookOptions::GetViewAllDates())
+	{
+		if (CAgilityBookOptions::GetStartFilterDateSet())
+		{
+			ARBDate date = CAgilityBookOptions::GetStartFilterDate();
+			if (pCal->GetEndDate() < date)
+				return false;
+		}
+		if (CAgilityBookOptions::GetEndFilterDateSet())
+		{
+			ARBDate date = CAgilityBookOptions::GetEndFilterDate();
+			if (pCal->GetStartDate() > date)
+				return false;
+		}
+	}
+	return true;
+}
+
 bool CAgilityBookOptions::IsTrainingLogVisible(
 		std::set<std::string> const& names,
 		ARBTraining const* pTraining)
 {
-	if (!CAgilityBookOptions::GetTrainingViewAllDates())
+	if (!CAgilityBookOptions::GetViewAllDates())
 	{
-		if (CAgilityBookOptions::GetTrainingStartFilterDateSet())
+		if (CAgilityBookOptions::GetStartFilterDateSet())
 		{
-			ARBDate date = CAgilityBookOptions::GetTrainingStartFilterDate();
+			ARBDate date = CAgilityBookOptions::GetStartFilterDate();
 			if (pTraining->GetDate() < date)
 				return false;
 		}
-		if (CAgilityBookOptions::GetTrainingEndFilterDateSet())
+		if (CAgilityBookOptions::GetEndFilterDateSet())
 		{
-			ARBDate date = CAgilityBookOptions::GetTrainingEndFilterDate();
+			ARBDate date = CAgilityBookOptions::GetEndFilterDate();
 			if (pTraining->GetDate() > date)
 				return false;
 		}
@@ -472,29 +502,7 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Runs/points options
-
-bool CAgilityBookOptions::GetViewRunsByTrial()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewRunsByTrial", 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
-{
-	AfxGetApp()->WriteProfileInt("Common", "ViewRunsByTrial", bView ? 1 : 0);
-}
-
-bool CAgilityBookOptions::GetNewestDatesFirst()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewNewestFirst", 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
-{
-	AfxGetApp()->WriteProfileInt("Common", "ViewNewestFirst", bNewest ? 1 : 0);
-}
+// Filtering: Date
 
 bool CAgilityBookOptions::GetViewAllDates()
 {
@@ -552,6 +560,9 @@ void CAgilityBookOptions::SetEndFilterDateSet(bool bSet)
 {
 	AfxGetApp()->WriteProfileInt("Common", "EndFilter", bSet ? 1 : 0);
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Filtering: Runs
 
 bool CAgilityBookOptions::GetViewAllVenues()
 {
@@ -665,98 +676,8 @@ void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
 	AfxGetApp()->WriteProfileInt("Common", "ViewQRuns", bViewQs ? 1 : 0);
 }
 
-bool CAgilityBookOptions::GetViewHiddenTitles()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewHiddenTitles", 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt("Common", "ViewHiddenTitles", bSet ? 1 : 0);
-}
-
-bool CAgilityBookOptions::GetTableInYPS()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "TableInYPS", 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetTableInYPS(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt("Common", "TableInYPS", bSet ? 1 : 0);
-}
-
-bool CAgilityBookOptions::GetIncludeCRCDImage()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "CRCDImage", 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt("Common", "CRCDImage", bSet ? 1 : 0);
-}
-
 /////////////////////////////////////////////////////////////////////////////
-// Training Log options
-
-bool CAgilityBookOptions::GetTrainingViewAllDates()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "TrainingViewAllDates", 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetTrainingViewAllDates(bool bViewAll)
-{
-	AfxGetApp()->WriteProfileInt("Common", "TrainingViewAllDates", bViewAll ? 1 : 0);
-}
-
-ARBDate CAgilityBookOptions::GetTrainingStartFilterDate()
-{
-	ARBDate date(ARBDate::Today());
-	date.SetJulianDay(AfxGetApp()->GetProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay()));
-	return date;
-}
-
-void CAgilityBookOptions::SetTrainingStartFilterDate(ARBDate const& date)
-{
-	AfxGetApp()->WriteProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay());
-}
-
-bool CAgilityBookOptions::GetTrainingStartFilterDateSet()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "TrainingStartFilter", 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetTrainingStartFilterDateSet(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt("Common", "TrainingStartFilter", bSet ? 1 : 0);
-}
-
-ARBDate CAgilityBookOptions::GetTrainingEndFilterDate()
-{
-	ARBDate date(ARBDate::Today());
-	date.SetJulianDay(AfxGetApp()->GetProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay()));
-	return date;
-}
-
-void CAgilityBookOptions::SetTrainingEndFilterDate(ARBDate const& date)
-{
-	AfxGetApp()->WriteProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay());
-}
-
-bool CAgilityBookOptions::GetTrainingEndFilterDateSet()
-{
-	int val = AfxGetApp()->GetProfileInt("Common", "TrainingEndFilter", 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetTrainingEndFilterDateSet(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt("Common", "TrainingEndFilter", bSet ? 1 : 0);
-}
+// Filtering: Training Log
 
 bool CAgilityBookOptions::GetTrainingViewAllNames()
 {
@@ -796,6 +717,64 @@ void CAgilityBookOptions::SetTrainingFilterNames(std::set<std::string> const& in
 		names += (*iter).c_str();
 	}
 	AfxGetApp()->WriteProfileString("Common", "FilterTrainingNames", names);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Runs/points options
+
+bool CAgilityBookOptions::GetViewRunsByTrial()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewRunsByTrial", 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewRunsByTrial", bView ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetNewestDatesFirst()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewNewestFirst", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewNewestFirst", bNewest ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetViewHiddenTitles()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "ViewHiddenTitles", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "ViewHiddenTitles", bSet ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetTableInYPS()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "TableInYPS", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetTableInYPS(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "TableInYPS", bSet ? 1 : 0);
+}
+
+bool CAgilityBookOptions::GetIncludeCRCDImage()
+{
+	int val = AfxGetApp()->GetProfileInt("Common", "CRCDImage", 0);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt("Common", "CRCDImage", bSet ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -251,7 +251,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			id |= 0x80000000;
 			if (outValue != id)
 			{
-				cerr << "Warning: " << outDefine << " value (" << outValue << ") is not correct (" << id << ")." << endl;
+				cerr << "Warning: " << outDefine << " value (0x" << hex << outValue << ") is not correct (0x" << hex << id << ")" << endl;
 			}
 		}
 	}

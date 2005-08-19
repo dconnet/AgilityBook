@@ -790,7 +790,7 @@ void CAgilityBookViewCalendarList::GetPrintLine(
 
 bool CAgilityBookViewCalendarList::IsFiltered() const
 {
-	return false;
+	return !CAgilityBookOptions::GetViewAllDates();
 }
 
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
@@ -865,6 +865,8 @@ void CAgilityBookViewCalendarList::LoadData()
 	++iter)
 	{
 		ARBCalendar* pCal = (*iter);
+		if (pCal->IsFiltered())
+			continue;
 		if (!bViewAll)
 		{
 			if (pCal->IsBefore(today))

@@ -27,15 +27,16 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgOptionsFilter class
+ * @brief implementation of the CDlgFilterRuns class
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-18 DRC Separated options and filters.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
-#include "DlgOptionsFilter.h"
+#include "DlgFilterRuns.h"
 
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
@@ -47,65 +48,49 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsFilter property page
+// CDlgFilterRuns property page
 
-IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CDlgBasePropertyPage)
+IMPLEMENT_DYNAMIC(CDlgFilterRuns, CDlgBasePropertyPage)
 
-CDlgOptionsFilter::CDlgOptionsFilter(ARBConfig const& config)
-	: CDlgBasePropertyPage(CDlgOptionsFilter::IDD)
+CDlgFilterRuns::CDlgFilterRuns(ARBConfig const& config)
+	: CDlgBasePropertyPage(CDlgFilterRuns::IDD)
 	, m_Config(config)
 {
-	//{{AFX_DATA_INIT(CDlgOptionsFilter)
-	m_ViewDates = -1;
-	m_bDateStart = FALSE;
-	m_timeStart = 0;
-	m_timeEnd = 0;
-	m_bDateEnd = FALSE;
+	//{{AFX_DATA_INIT(CDlgFilterRuns)
 	m_ViewVenues = -1;
 	m_ViewQs = -1;
 	//}}AFX_DATA_INIT
 }
 
-CDlgOptionsFilter::~CDlgOptionsFilter()
+CDlgFilterRuns::~CDlgFilterRuns()
 {
 }
 
-void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
+void CDlgFilterRuns::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgOptionsFilter)
-	DDX_Radio(pDX, IDC_OPTIONS_FILTER_DATES_ALL, m_ViewDates);
-	DDX_Control(pDX, IDC_OPTIONS_FILTER_DATE_START_CHECK, m_ctrlDateStartCheck);
-	DDX_Check(pDX, IDC_OPTIONS_FILTER_DATE_START_CHECK, m_bDateStart);
-	DDX_Control(pDX, IDC_OPTIONS_FILTER_DATE_START, m_ctrlDateStart);
-	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_FILTER_DATE_START, m_timeStart);
-	DDX_Control(pDX, IDC_OPTIONS_FILTER_DATE_END_CHECK, m_ctrlDateEndCheck);
-	DDX_DateTimeCtrl(pDX, IDC_OPTIONS_FILTER_DATE_END, m_timeEnd);
-	DDX_Check(pDX, IDC_OPTIONS_FILTER_DATE_END_CHECK, m_bDateEnd);
-	DDX_Control(pDX, IDC_OPTIONS_FILTER_DATE_END, m_ctrlDateEnd);
-	DDX_Radio(pDX, IDC_OPTIONS_FILTER_VENUES_ALL, m_ViewVenues);
-	DDX_Control(pDX, IDC_OPTIONS_FILTER_VENUES, m_ctrlVenue);
-	DDX_Radio(pDX, IDC_OPTIONS_FILTER_RUNS_ALL, m_ViewQs);
+	//{{AFX_DATA_MAP(CDlgFilterRuns)
+	DDX_Radio(pDX, IDC_FILTER_RUN_VENUES_ALL, m_ViewVenues);
+	DDX_Control(pDX, IDC_FILTER_RUN_VENUES, m_ctrlVenue);
+	DDX_Radio(pDX, IDC_FILTER_RUN_RUNS_ALL, m_ViewQs);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CDlgBasePropertyPage)
-	//{{AFX_MSG_MAP(CDlgOptionsFilter)
+BEGIN_MESSAGE_MAP(CDlgFilterRuns, CDlgBasePropertyPage)
+	//{{AFX_MSG_MAP(CDlgFilterRuns)
 	ON_WM_HELPINFO()
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_DATES_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_DATES_RANGE, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_VENUES_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_VENUES_SELECTED, OnViewUpdate)
-	ON_NOTIFY(TVN_SETDISPINFO, IDC_OPTIONS_FILTER_VENUES, OnSetdispinfoVenues)
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_RUNS_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_RUNS_Q, OnViewUpdate)
-	ON_BN_CLICKED(IDC_OPTIONS_FILTER_RUNS_NON_Q, OnViewUpdate)
+	ON_BN_CLICKED(IDC_FILTER_RUN_VENUES_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_FILTER_RUN_VENUES_SELECTED, OnViewUpdate)
+	ON_NOTIFY(TVN_SETDISPINFO, IDC_FILTER_RUN_VENUES, OnSetdispinfoVenues)
+	ON_BN_CLICKED(IDC_FILTER_RUN_RUNS_ALL, OnViewUpdate)
+	ON_BN_CLICKED(IDC_FILTER_RUN_RUNS_Q, OnViewUpdate)
+	ON_BN_CLICKED(IDC_FILTER_RUN_RUNS_NON_Q, OnViewUpdate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CDlgOptionsFilter::Find(
+bool CDlgFilterRuns::Find(
 		std::string const& venue,
 		std::string const& div,
 		std::string const& level) const
@@ -122,7 +107,7 @@ bool CDlgOptionsFilter::Find(
 	return false;
 }
 
-void CDlgOptionsFilter::FillFilter(
+void CDlgFilterRuns::FillFilter(
 		HTREEITEM hItem,
 		CString path)
 {
@@ -180,22 +165,8 @@ void CDlgOptionsFilter::FillFilter(
 	}
 }
 
-void CDlgOptionsFilter::UpdateControls()
+void CDlgFilterRuns::UpdateControls()
 {
-	if (0 == m_ViewDates)
-	{
-		m_ctrlDateStartCheck.EnableWindow(FALSE);
-		m_ctrlDateStart.EnableWindow(FALSE);
-		m_ctrlDateEndCheck.EnableWindow(FALSE);
-		m_ctrlDateEnd.EnableWindow(FALSE);
-	}
-	else
-	{
-		m_ctrlDateStartCheck.EnableWindow(TRUE);
-		m_ctrlDateStart.EnableWindow(TRUE);
-		m_ctrlDateEndCheck.EnableWindow(TRUE);
-		m_ctrlDateEnd.EnableWindow(TRUE);
-	}
 	if (0 == m_ViewVenues)
 	{
 		m_ctrlVenue.EnableWindow(FALSE);
@@ -207,9 +178,9 @@ void CDlgOptionsFilter::UpdateControls()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsFilter message handlers
+// CDlgFilterRuns message handlers
 
-BOOL CDlgOptionsFilter::OnInitDialog() 
+BOOL CDlgFilterRuns::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
 
@@ -286,19 +257,19 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-BOOL CDlgOptionsFilter::OnHelpInfo(HELPINFO* pHelpInfo)
+BOOL CDlgFilterRuns::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	ShowContextHelp(pHelpInfo);
 	return TRUE;
 }
 
-void CDlgOptionsFilter::OnViewUpdate() 
+void CDlgFilterRuns::OnViewUpdate() 
 {
 	UpdateData(TRUE);
 	UpdateControls();
 }
 
-void CDlgOptionsFilter::OnSetdispinfoVenues(
+void CDlgFilterRuns::OnSetdispinfoVenues(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
