@@ -1642,14 +1642,14 @@ BEGIN
     CONTROL         "Warn when Closing date is near",
                     IDC_OPTIONS_CAL_WARN_CLOSENEAR,"Button",BS_AUTOCHECKBOX | 
                     WS_GROUP | WS_TABSTOP,14,125,116,10,0,
-                    HIDC_FILTER_DATE_ALL
+                    HIDC_OPTIONS_CAL_WARN_CLOSENEAR
     EDITTEXT        IDC_OPTIONS_CAL_CLOSENEAR,26,136,25,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER,0,HIDC_FILTER_DATE_RANGE
+                    ES_NUMBER,0,HIDC_OPTIONS_CAL_CLOSENEAR
     LTEXT           "days before",IDC_STATIC,53,137,38,8
     CONTROL         "",IDC_OPTIONS_CAL_COLOR_CLOSENEAR,"Static",SS_OWNERDRAW | 
                     SS_SUNKEN,98,136,15,10
     PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET,118,
-                    135,40,12,0,0,HIDC_FILTER_DATE_START
+                    135,40,12,0,0,HIDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET
     GROUPBOX        "Calendar View",IDC_STATIC,175,80,120,79
     CONTROL         "Normal entries",IDC_OPTIONS_CAL_NORMAL,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,187,92,61,10,0,

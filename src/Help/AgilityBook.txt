@@ -883,7 +883,7 @@ Number of backup copies to keep. Each time you save the file, a new backup will
 be made. Setting this to 0 turns the feature off.
 
 .topic HIDC_OPTIONS_PGM_FILENAME
-.BMP file to use as the splash screen. If the file does not exist or the entry
+BMP file to use as the splash screen. If the file does not exist or the entry
 is empty, the default splash screen will be used.
 
 .topic HIDC_OPTIONS_PGM_SHOW_SPLASH

@@ -1,7 +1,6 @@
 // Microsoft Visual C++ generated Help ID include file.
 // Used by AgilityBook.rc
 //
-
 #define HIDC_ABOUT_UPDATE               0x80c803ee    // IDD_ABOUTBOX
 #define HIDC_ASSIGN_ADD                 0x80f70638    // IDD_ASSIGN_COLUMNS
 #define HIDC_ASSIGN_AVAILABLE           0x80f70637    // IDD_ASSIGN_COLUMNS
