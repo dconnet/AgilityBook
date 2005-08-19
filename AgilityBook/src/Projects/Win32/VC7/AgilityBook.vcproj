@@ -261,6 +261,18 @@
 				RelativePath="..\..\..\Win\DlgFault.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgFilter.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFilterDate.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFilterRuns.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFilterTraining.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgFind.cpp">
 			</File>
 			<File
@@ -294,16 +306,10 @@
 				RelativePath="..\..\..\Win\DlgOptionsCalendar.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\Win\DlgOptionsFilter.cpp">
-			</File>
-			<File
 				RelativePath="..\..\..\Win\DlgOptionsFonts.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOptionsProgram.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\Win\DlgOptionsTraining.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.cpp">
@@ -547,6 +553,18 @@
 				RelativePath="..\..\..\Win\DlgFault.h">
 			</File>
 			<File
+				RelativePath="..\..\..\Win\DlgFilter.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFilterDate.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFilterRuns.h">
+			</File>
+			<File
+				RelativePath="..\..\..\Win\DlgFilterTraining.h">
+			</File>
+			<File
 				RelativePath="..\..\..\Win\DlgFind.h">
 			</File>
 			<File
@@ -580,16 +598,10 @@
 				RelativePath="..\..\..\Win\DlgOptionsCalendar.h">
 			</File>
 			<File
-				RelativePath="..\..\..\Win\DlgOptionsFilter.h">
-			</File>
-			<File
 				RelativePath="..\..\..\Win\DlgOptionsFonts.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOptionsProgram.h">
-			</File>
-			<File
-				RelativePath="..\..\..\Win\DlgOptionsTraining.h">
 			</File>
 			<File
 				RelativePath="..\..\..\Win\DlgOtherPoint.h">

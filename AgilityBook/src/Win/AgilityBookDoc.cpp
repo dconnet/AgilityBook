@@ -80,6 +80,7 @@
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
+#include "DlgFilter.h"
 #include "DlgFindLinks.h"
 #include "DlgFixup.h"
 #include "DlgInfoJudge.h"
@@ -155,6 +156,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_NOTES_JUDGES, OnNotesJudges)
 	ON_COMMAND(ID_NOTES_LOCATIONS, OnNotesLocations)
 	ON_COMMAND(ID_NOTES_SEARCH, OnNotesSearch)
+	ON_COMMAND(ID_VIEW_FILTER, OnViewFilter)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
@@ -492,11 +494,12 @@ void CAgilityBookDoc::ResetVisibility()
 		ResetVisibility(names, *iterTraining);
 	}
 
-// Currently, calendar entries are not filtered.
-	//for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
-	//{
-	//	ARBCalendar* pCal = *iterCal;
-	//}
+	for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
+	{
+		ARBCalendar* pCal = *iterCal;
+		bool bVis = CAgilityBookOptions::IsCalendarVisible(pCal);
+		pCal->SetFiltered(!bVis);
+	}
 
 	if (!m_SuppressUpdates)
 		UpdateAllViews(NULL, UPDATE_OPTIONS);
@@ -1138,15 +1141,34 @@ void CAgilityBookDoc::OnNotesSearch()
 	}
 }
 
+void CAgilityBookDoc::OnViewFilter()
+{
+	int nPage;
+	CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
+	switch (pFrame->GetCurTab())
+	{
+	default:
+		nPage = CDlgFilter::GetDatePage();
+		break;
+	case 0: // Runs
+	case 1: // Points
+		nPage = CDlgFilter::GetRunsPage();
+		break;
+	case 3: // Training
+		nPage = CDlgFilter::GetTrainingPage();
+		break;
+	}
+	CDlgFilter options(this, AfxGetMainWnd(), nPage);
+	options.DoModal();
+}
+
 void CAgilityBookDoc::OnViewOptions()
 {
-	int nPage = 0;
+	int nPage = CDlgOptions::GetProgramPage();
 	CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
-	if (2 == pFrame->GetCurTab())
-		nPage = 1;
-	else if (3 == pFrame->GetCurTab())
-		nPage = 2;
-	CDlgOptions options(this, AfxGetMainWnd(), nPage);
+	if (2 == pFrame->GetCurTab()) // Calendar
+		nPage = CDlgOptions::GetCalendarPage();
+	CDlgOptions options(AfxGetMainWnd(), nPage);
 	options.DoModal();
 }
 

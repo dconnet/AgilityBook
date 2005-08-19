@@ -231,7 +231,8 @@ BEGIN
     END
     POPUP "&View"
     BEGIN
-        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...",                 ID_VIEW_OPTIONS
         MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
         MENUITEM SEPARATOR
         MENUITEM "Show &Newest Trials First",   ID_VIEW_SORTRUNS
@@ -400,7 +401,7 @@ BEGIN
     VK_F3,          ID_EDIT_FIND_PREVIOUS,  VIRTKEY, SHIFT, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
-    VK_F7,          ID_VIEW_OPTIONS,        VIRTKEY, NOINVERT
+    VK_F7,          ID_VIEW_FILTER,         VIRTKEY, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
@@ -1460,6 +1461,142 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,128,26,50,14
 END
 
+IDD_VIEW_FILTER_DATE DIALOGEX 0, 0, 298, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Dates"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Dates",IDC_STATIC,3,3,142,75
+    CONTROL         "View all &dates",IDC_FILTER_DATE_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,59,10,0,
+                    HIDC_FILTER_DATE_ALL
+    CONTROL         "View dates in &range (inclusive):",
+                    IDC_FILTER_DATE_RANGE,"Button",BS_AUTORADIOBUTTON,11,28,
+                    113,10,0,HIDC_FILTER_DATE_RANGE
+    CONTROL         "&After",IDC_FILTER_DATE_START_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,23,41,31,10,0,
+                    HIDC_FILTER_DATE_START_CHECK
+    CONTROL         "DateTimePicker2",IDC_FILTER_DATE_START,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,63,40,60,
+                    12,0,HIDC_FILTER_DATE_START
+    CONTROL         "&Before",IDC_FILTER_DATE_END_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,23,56,37,10,0,
+                    HIDC_FILTER_DATE_END_CHECK
+    CONTROL         "DateTimePicker2",IDC_FILTER_DATE_END,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,63,55,60,12,0,
+                    HIDC_FILTER_DATE_END
+END
+
+IDD_VIEW_FILTER_RUNS DIALOGEX 0, 0, 298, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Trials / Runs"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Trials",IDC_STATIC,3,3,142,156
+    CONTROL         "&View all venues",IDC_FILTER_RUN_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
+                    HIDC_FILTER_RUN_VENUES_ALL
+    CONTROL         "View &only:",IDC_FILTER_RUN_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,11,28,48,10,0,
+                    HIDC_FILTER_RUN_VENUES_SELECTED
+    CONTROL         "Tree1",IDC_FILTER_RUN_VENUES,"SysTreeView32",
+                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
+                    42,125,110,0,HIDC_FILTER_RUN_VENUES
+    GROUPBOX        "Qs",IDC_STATIC,152,3,143,54
+    CONTROL         "V&iew all runs",IDC_FILTER_RUN_RUNS_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,160,16,55,10,0,
+                    HIDC_FILTER_RUN_RUNS_ALL
+    CONTROL         "View only &Qualifying runs",IDC_FILTER_RUN_RUNS_Q,
+                    "Button",BS_AUTORADIOBUTTON,160,28,94,10,0,
+                    HIDC_FILTER_RUN_RUNS_Q
+    CONTROL         "View only &Non-Qualifying runs",
+                    IDC_FILTER_RUN_RUNS_NON_Q,"Button",BS_AUTORADIOBUTTON,
+                    160,40,109,10,0,HIDC_FILTER_RUN_RUNS_NON_Q
+END
+
+IDD_VIEW_FILTER_TRAINING DIALOGEX 0, 0, 298, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Training Log"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Name",IDC_STATIC,3,3,142,156
+    CONTROL         "View all &names",IDC_FILTER_TRAINING_VENUES_ALL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
+                    HIDC_FILTER_TRAINING_VENUES_ALL
+    CONTROL         "View &only:",IDC_FILTER_TRAINING_VENUES_SELECTED,"Button",
+                    BS_AUTORADIOBUTTON,11,28,48,10,0,
+                    HIDC_FILTER_TRAINING_VENUES_SELECTED
+    CONTROL         "Tree1",IDC_FILTER_TRAINING_VENUES,"SysTreeView32",
+                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
+                    42,125,110,0,HIDC_FILTER_TRAINING_VENUES
+END
+
+IDD_VIEW_OPTIONS_PROGRAM DIALOGEX 0, 0, 298, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Program"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "Automatically check for updates once a month.",
+                    IDC_OPTIONS_PGM_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,3,3,164,10,0,HIDC_OPTIONS_PGM_AUTO_CHECK
+    LTEXT           "Note: This only >checks< for updates. It will not download the update, nor will it install the new version after you download it. You must do that.",
+                    IDC_STATIC,15,13,260,16
+    LTEXT           "Number of backup copies",IDC_STATIC,3,42,82,8
+    EDITTEXT        IDC_OPTIONS_PGM_EDIT,88,40,20,12,ES_AUTOHSCROLL,0,
+                    HIDC_OPTIONS_PGM_EDIT
+    LTEXT           "Each time you save a file, a backup is made before saving the new file. Set to 0 to prevent backups.",
+                    IDC_STATIC,128,38,167,16
+    CONTROL         "Automatically show Dog Properties after adding a title.",
+                    IDC_OPTIONS_PGM_AUTOSHOW,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,3,60,185,10,0,HIDC_OPTIONS_PGM_AUTOSHOW
+    CONTROL         "Show splash screen at startup.",
+                    IDC_OPTIONS_PGM_SHOW_SPLASH,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,3,77,113,10,0,HIDC_OPTIONS_PGM_SHOW_SPLASH
+    LTEXT           "Splash screen image (clear to use default)",IDC_STATIC,
+                    15,88,132,8
+    EDITTEXT        IDC_OPTIONS_PGM_FILENAME,15,98,180,12,ES_AUTOHSCROLL,0,
+                    HIDC_OPTIONS_PGM_FILENAME
+    PUSHBUTTON      "Browse...",IDC_OPTIONS_PGM_BROWSE,200,98,40,12,0,0,
+                    HIDC_OPTIONS_PGM_BROWSE
+END
+
+IDD_VIEW_OPTIONS_FONTS DIALOGEX 0, 0, 298, 162
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Fonts"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Calendar Printing",IDC_STATIC,3,3,178,75
+    CTEXT           "12/28/2002",IDC_OPTIONS_FONT_CAL_PRINT_DATE_TEXT,13,19,
+                    75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Date Font...",IDC_OPTIONS_FONT_CAL_PRINT_DATE,25,53,50,
+                    14,0,0,HIDC_OPTIONS_FONT_CAL_PRINT_DATE
+    CTEXT           "USDAA Hayward, CA",IDC_OPTIONS_FONT_CAL_PRINT_TEXT_TEXT,
+                    95,19,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Text Font...",IDC_OPTIONS_FONT_CAL_PRINT_TEXT,107,53,50,
+                    14,0,0,HIDC_OPTIONS_FONT_CAL_PRINT_TEXT
+    GROUPBOX        "Calendar Viewing",IDC_STATIC,3,84,178,75
+    CTEXT           "12/28/2002",IDC_OPTIONS_FONT_CAL_VIEW_DATE_TEXT,13,100,
+                    75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Date Font...",IDC_OPTIONS_FONT_CAL_VIEW_DATE,25,134,50,
+                    14,0,0,HIDC_OPTIONS_FONT_CAL_VIEW_DATE
+    CTEXT           "USDAA Hayward, CA",IDC_OPTIONS_FONT_CAL_VIEW_TEXT_TEXT,
+                    95,100,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Text Font...",IDC_OPTIONS_FONT_CAL_VIEW_TEXT,107,134,50,
+                    14,0,0,HIDC_OPTIONS_FONT_CAL_VIEW_TEXT
+    GROUPBOX        "General Printing",IDC_STATIC,188,84,107,75
+    CTEXT           "Printing Text",IDC_OPTIONS_FONT_GENERAL_PRINT_TEXT,204,
+                    100,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
+    PUSHBUTTON      "Set Font...",IDC_OPTIONS_FONT_GENERAL_PRINT,216,134,50,
+                    14,0,0,HIDC_OPTIONS_FONT_GENERAL_PRINT
+END
+
 IDD_VIEW_OPTIONS_CALENDAR DIALOGEX 0, 0, 298, 162
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
@@ -1505,14 +1642,14 @@ BEGIN
     CONTROL         "Warn when Closing date is near",
                     IDC_OPTIONS_CAL_WARN_CLOSENEAR,"Button",BS_AUTOCHECKBOX | 
                     WS_GROUP | WS_TABSTOP,14,125,116,10,0,
-                    HIDC_OPTIONS_CAL_WARN_CLOSENEAR
+                    HIDC_FILTER_DATE_ALL
     EDITTEXT        IDC_OPTIONS_CAL_CLOSENEAR,26,136,25,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER,0,HIDC_OPTIONS_CAL_CLOSENEAR
+                    ES_NUMBER,0,HIDC_FILTER_DATE_RANGE
     LTEXT           "days before",IDC_STATIC,53,137,38,8
     CONTROL         "",IDC_OPTIONS_CAL_COLOR_CLOSENEAR,"Static",SS_OWNERDRAW | 
                     SS_SUNKEN,98,136,15,10
     PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET,118,
-                    135,40,12,0,0,HIDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET
+                    135,40,12,0,0,HIDC_FILTER_DATE_START
     GROUPBOX        "Calendar View",IDC_STATIC,175,80,120,79
     CONTROL         "Normal entries",IDC_OPTIONS_CAL_NORMAL,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,187,92,61,10,0,
@@ -1531,156 +1668,6 @@ BEGIN
                     SS_SUNKEN,200,143,15,10
     PUSHBUTTON      "Set Color...",IDC_OPTIONS_CAL_COLOR_CLOSE_SET,220,142,
                     40,12,0,0,HIDC_OPTIONS_CAL_COLOR_CLOSE_SET
-END
-
-IDD_VIEW_OPTIONS_FILTER DIALOGEX 0, 0, 298, 162
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Trial Filter"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    GROUPBOX        "Trials",IDC_STATIC,3,3,142,156
-    CONTROL         "&View all venues",IDC_OPTIONS_FILTER_VENUES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
-                    HIDC_OPTIONS_FILTER_VENUES_ALL
-    CONTROL         "View &only:",IDC_OPTIONS_FILTER_VENUES_SELECTED,"Button",
-                    BS_AUTORADIOBUTTON,11,28,48,10,0,
-                    HIDC_OPTIONS_FILTER_VENUES_SELECTED
-    CONTROL         "Tree1",IDC_OPTIONS_FILTER_VENUES,"SysTreeView32",
-                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
-                    42,125,110,0,HIDC_OPTIONS_FILTER_VENUES
-    GROUPBOX        "Dates",IDC_STATIC,152,3,143,74
-    CONTROL         "View all &dates",IDC_OPTIONS_FILTER_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,160,16,59,10,0,
-                    HIDC_OPTIONS_FILTER_DATES_ALL
-    CONTROL         "View dates in &range (inclusive):",
-                    IDC_OPTIONS_FILTER_DATES_RANGE,"Button",
-                    BS_AUTORADIOBUTTON,160,28,113,10,0,
-                    HIDC_OPTIONS_FILTER_DATES_RANGE
-    CONTROL         "&After",IDC_OPTIONS_FILTER_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,172,41,31,10,0,
-                    HIDC_OPTIONS_FILTER_DATE_START_CHECK
-    CONTROL         "DateTimePicker2",IDC_OPTIONS_FILTER_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,40,
-                    60,12,0,HIDC_OPTIONS_FILTER_DATE_START
-    CONTROL         "&Before",IDC_OPTIONS_FILTER_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,172,56,37,10,0,
-                    HIDC_OPTIONS_FILTER_DATE_END_CHECK
-    CONTROL         "DateTimePicker2",IDC_OPTIONS_FILTER_DATE_END,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,55,
-                    60,12,0,HIDC_OPTIONS_FILTER_DATE_END
-    GROUPBOX        "Qs",IDC_STATIC,152,81,143,54
-    CONTROL         "V&iew all runs",IDC_OPTIONS_FILTER_RUNS_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,160,94,55,10,0,
-                    HIDC_OPTIONS_FILTER_RUNS_ALL
-    CONTROL         "View only &Qualifying runs",IDC_OPTIONS_FILTER_RUNS_Q,
-                    "Button",BS_AUTORADIOBUTTON,160,106,94,10,0,
-                    HIDC_OPTIONS_FILTER_RUNS_Q
-    CONTROL         "View only &Non-Qualifying runs",
-                    IDC_OPTIONS_FILTER_RUNS_NON_Q,"Button",
-                    BS_AUTORADIOBUTTON,160,118,109,10,0,
-                    HIDC_OPTIONS_FILTER_RUNS_NON_Q
-END
-
-IDD_VIEW_OPTIONS_FONTS DIALOGEX 0, 0, 298, 162
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Fonts"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    GROUPBOX        "Calendar Printing",IDC_STATIC,3,3,178,75
-    CTEXT           "12/28/2002",IDC_OPTIONS_FONT_CAL_PRINT_DATE_TEXT,13,19,
-                    75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Date Font...",IDC_OPTIONS_FONT_CAL_PRINT_DATE,25,53,50,
-                    14,0,0,HIDC_OPTIONS_FONT_CAL_PRINT_DATE
-    CTEXT           "USDAA Hayward, CA",IDC_OPTIONS_FONT_CAL_PRINT_TEXT_TEXT,
-                    95,19,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Text Font...",IDC_OPTIONS_FONT_CAL_PRINT_TEXT,107,53,50,
-                    14,0,0,HIDC_OPTIONS_FONT_CAL_PRINT_TEXT
-    GROUPBOX        "Calendar Viewing",IDC_STATIC,3,84,178,75
-    CTEXT           "12/28/2002",IDC_OPTIONS_FONT_CAL_VIEW_DATE_TEXT,13,100,
-                    75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Date Font...",IDC_OPTIONS_FONT_CAL_VIEW_DATE,25,134,50,
-                    14,0,0,HIDC_OPTIONS_FONT_CAL_VIEW_DATE
-    CTEXT           "USDAA Hayward, CA",IDC_OPTIONS_FONT_CAL_VIEW_TEXT_TEXT,
-                    95,100,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Text Font...",IDC_OPTIONS_FONT_CAL_VIEW_TEXT,107,134,50,
-                    14,0,0,HIDC_OPTIONS_FONT_CAL_VIEW_TEXT
-    GROUPBOX        "General Printing",IDC_STATIC,188,84,107,75
-    CTEXT           "Printing Text",IDC_OPTIONS_FONT_GENERAL_PRINT_TEXT,204,
-                    100,75,25,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
-    PUSHBUTTON      "Set Font...",IDC_OPTIONS_FONT_GENERAL_PRINT,216,134,50,
-                    14,0,0,HIDC_OPTIONS_FONT_GENERAL_PRINT
-END
-
-IDD_VIEW_OPTIONS_TRAINING DIALOGEX 0, 0, 298, 162
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Training Log"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    GROUPBOX        "Name",IDC_STATIC,3,3,142,156
-    CONTROL         "View all &names",IDC_OPTIONS_TRAINING_VENUES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,11,16,65,10,0,
-                    HIDC_OPTIONS_TRAINING_VENUES_ALL
-    CONTROL         "View &only:",IDC_OPTIONS_TRAINING_VENUES_SELECTED,
-                    "Button",BS_AUTORADIOBUTTON,11,28,48,10,0,
-                    HIDC_OPTIONS_TRAINING_VENUES_SELECTED
-    CONTROL         "Tree1",IDC_OPTIONS_TRAINING_VENUES,"SysTreeView32",
-                    TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,
-                    42,125,110,0,HIDC_OPTIONS_TRAINING_VENUES
-    GROUPBOX        "Dates",IDC_STATIC,152,3,143,75
-    CONTROL         "View all &dates",IDC_OPTIONS_TRAINING_DATES_ALL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,160,16,59,10,0,
-                    HIDC_OPTIONS_TRAINING_DATES_ALL
-    CONTROL         "View dates in &range (inclusive):",
-                    IDC_OPTIONS_TRAINING_DATES_RANGE,"Button",
-                    BS_AUTORADIOBUTTON,160,28,113,10,0,
-                    HIDC_OPTIONS_TRAINING_DATES_RANGE
-    CONTROL         "&After",IDC_OPTIONS_TRAINING_DATE_START_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,172,41,31,10,0,
-                    HIDC_OPTIONS_TRAINING_DATE_START_CHECK
-    CONTROL         "DateTimePicker2",IDC_OPTIONS_TRAINING_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,40,
-                    60,12,0,HIDC_OPTIONS_TRAINING_DATE_START
-    CONTROL         "&Before",IDC_OPTIONS_TRAINING_DATE_END_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,172,56,37,10,0,
-                    HIDC_OPTIONS_TRAINING_DATE_END_CHECK
-    CONTROL         "DateTimePicker2",IDC_OPTIONS_TRAINING_DATE_END,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,211,55,
-                    60,12,0,HIDC_OPTIONS_TRAINING_DATE_END
-END
-
-IDD_VIEW_OPTIONS_PROGRAM DIALOGEX 0, 0, 298, 162
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Program"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
-BEGIN
-    CONTROL         "Automatically check for updates once a month.",
-                    IDC_OPTIONS_PGM_AUTO_CHECK,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,3,3,164,10,0,HIDC_OPTIONS_PGM_AUTO_CHECK
-    LTEXT           "Note: This only >checks< for updates. It will not download the update, nor will it install the new version after you download it. You must do that.",
-                    IDC_STATIC,15,13,260,16
-    LTEXT           "Number of backup copies",IDC_STATIC,3,42,82,8
-    EDITTEXT        IDC_OPTIONS_PGM_EDIT,88,40,20,12,ES_AUTOHSCROLL,0,
-                    HIDC_OPTIONS_PGM_EDIT
-    LTEXT           "Each time you save a file, a backup is made before saving the new file. Set to 0 to prevent backups.",
-                    IDC_STATIC,128,38,167,16
-    CONTROL         "Automatically show Dog Properties after adding a title.",
-                    IDC_OPTIONS_PGM_AUTOSHOW,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,3,60,185,10,0,HIDC_OPTIONS_PGM_AUTOSHOW
-    CONTROL         "Show splash screen at startup.",
-                    IDC_OPTIONS_PGM_SHOW_SPLASH,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,3,77,113,10,0,HIDC_OPTIONS_PGM_SHOW_SPLASH
-    LTEXT           "Splash screen image (clear to use default)",IDC_STATIC,
-                    15,88,132,8
-    EDITTEXT        IDC_OPTIONS_PGM_FILENAME,15,98,180,12,ES_AUTOHSCROLL,0,
-                    HIDC_OPTIONS_PGM_FILENAME
-    PUSHBUTTON      "Browse...",IDC_OPTIONS_PGM_BROWSE,200,98,40,12,0,0,
-                    HIDC_OPTIONS_PGM_BROWSE
 END
 
 IDD_REORDER DIALOGEX 0, 0, 297, 106
@@ -2287,7 +2274,7 @@ BEGIN
         BOTTOMMARGIN, 40
     END
 
-    IDD_VIEW_OPTIONS_CALENDAR, DIALOG
+    IDD_VIEW_FILTER_DATE, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 295
@@ -2295,7 +2282,23 @@ BEGIN
         BOTTOMMARGIN, 159
     END
 
-    IDD_VIEW_OPTIONS_FILTER, DIALOG
+    IDD_VIEW_FILTER_RUNS, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 295
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 159
+    END
+
+    IDD_VIEW_FILTER_TRAINING, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 295
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 159
+    END
+
+    IDD_VIEW_OPTIONS_PROGRAM, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 295
@@ -2311,15 +2314,7 @@ BEGIN
         BOTTOMMARGIN, 159
     END
 
-    IDD_VIEW_OPTIONS_TRAINING, DIALOG
-    BEGIN
-        LEFTMARGIN, 3
-        RIGHTMARGIN, 295
-        TOPMARGIN, 3
-        BOTTOMMARGIN, 159
-    END
-
-    IDD_VIEW_OPTIONS_PROGRAM, DIALOG
+    IDD_VIEW_OPTIONS_CALENDAR, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 295
@@ -2737,7 +2732,8 @@ BEGIN
     IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
     IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
     IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
-    IDS_VIEWING_OPTIONS     "Viewing Options"
+    IDS_VIEWING_FILTERS     "Filters"
+    IDS_VIEWING_OPTIONS     "Options"
     IDS_RUN_PROPERTIES      "Run Properties"
     IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_SELECT_DIVISION     "Please select a division."
@@ -2749,11 +2745,11 @@ BEGIN
     IDS_SELECT_Q            "Please select a 'Q'."
     IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
     IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
-    IDS_SCORING_REQUIRED_POINTS "Required Points"
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_SCORING_REQUIRED_POINTS "Required Points"
     IDS_SCORING_POINTS      "Points"
     IDS_NUM_EVENTS          "%1!d! events"
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
@@ -2771,11 +2767,11 @@ BEGIN
     IDS_CHANGESUBLEVEL_ISSUES 
                             "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_NOCONFIGDATA_FOUND  "No configuration data found."
-    IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
 END
 
 STRINGTABLE 
 BEGIN
+    IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
     IDS_OTHERPTS_ALL        "All Events"
     IDS_OTHERPTS_EVENT      "Tally by Event"
     IDS_OTHERPTS_LEVEL      "Tally by Level"
@@ -2891,6 +2887,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    ID_VIEW_FILTER          "Change filter options\nFilter"
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
     ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
     ID_VIEW_SORTRUNS        "Sort newest trials first\nSort runs"

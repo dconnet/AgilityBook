@@ -254,6 +254,22 @@ SOURCE=..\..\..\Win\DlgFault.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgFilter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFilterDate.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFilterRuns.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFilterTraining.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgFind.cpp
 # End Source File
 # Begin Source File
@@ -298,19 +314,11 @@ SOURCE=..\..\..\Win\DlgOptionsCalendar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\Win\DlgOptionsFilter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\Win\DlgOptionsFonts.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgOptionsProgram.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\Win\DlgOptionsTraining.cpp
 # End Source File
 # Begin Source File
 
@@ -615,6 +623,22 @@ SOURCE=..\..\..\Win\DlgFault.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\Win\DlgFilter.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFilterDate.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFilterRuns.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\Win\DlgFilterTraining.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\Win\DlgFind.h
 # End Source File
 # Begin Source File
@@ -659,19 +683,11 @@ SOURCE=..\..\..\Win\DlgOptionsCalendar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\Win\DlgOptionsFilter.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\Win\DlgOptionsFonts.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\Win\DlgOptionsProgram.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\Win\DlgOptionsTraining.h
 # End Source File
 # Begin Source File
 

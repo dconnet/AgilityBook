@@ -716,6 +716,7 @@ void CDlgListCtrl::OnDblclkList(
 
 void CDlgListCtrl::OnNew() 
 {
+	bool bUpdate = false;
 	switch (m_What)
 	{
 	default:
@@ -731,6 +732,7 @@ void CDlgListCtrl::OnNew()
 			{
 				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 				{
+					bUpdate = true;
 					CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, cal);
 					LV_ITEM item;
 					item.mask = LVIF_TEXT | LVIF_PARAM;
@@ -755,6 +757,7 @@ void CDlgListCtrl::OnNew()
 			CDlgFault dlg(faults, NULL, this);
 			if (IDOK == dlg.DoModal())
 			{
+				bUpdate = true;
 				CDlgListCtrlDataFaults* pData = new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, (LPCSTR)dlg.GetFault());
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
@@ -776,6 +779,7 @@ void CDlgListCtrl::OnNew()
 			CDlgOtherPoint dlg(*m_pConfig, pOther, this);
 			if (IDOK == dlg.DoModal())
 			{
+				bUpdate = true;
 				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, m_pConfig, m_pRun, pOther);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
@@ -798,6 +802,7 @@ void CDlgListCtrl::OnNew()
 			CDlgPartner dlg(partner, this);
 			if (IDOK == dlg.DoModal())
 			{
+				bUpdate = true;
 				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, partner);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
@@ -813,6 +818,12 @@ void CDlgListCtrl::OnNew()
 			partner->Release();
 		}
 		break;
+	}
+	if (bUpdate)
+	{
+		int nColumns = m_ctrlList.GetHeaderCtrl()->GetItemCount();
+		for (int i = 0; i < nColumns; ++i)
+			m_ctrlList.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}
 	UpdateControls();
 }

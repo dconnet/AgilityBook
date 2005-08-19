@@ -29,10 +29,11 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptionsTraining class
+ * @brief interface of the CDlgFilterTraining class
  * @author David Connet
  *
  * Revision History
+ * @li 2005-08-18 DRC Separated options and filters.
  */
 
 #include <set>
@@ -42,29 +43,20 @@
 #include "DlgBasePropertyPage.h"
 class CAgilityBookDoc;
 
-class CDlgOptionsTraining : public CDlgBasePropertyPage
+class CDlgFilterTraining : public CDlgBasePropertyPage
 {
-	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgOptionsTraining)
+	friend class CDlgFilter;
+	DECLARE_DYNAMIC(CDlgFilterTraining)
 public:
-	CDlgOptionsTraining(CAgilityBookDoc* pDoc);
-	~CDlgOptionsTraining();
+	CDlgFilterTraining(CAgilityBookDoc* pDoc);
+	~CDlgFilterTraining();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgOptionsTraining)
-	enum { IDD = IDD_VIEW_OPTIONS_TRAINING };
+	//{{AFX_DATA(CDlgFilterTraining)
+	enum { IDD = IDD_VIEW_FILTER_TRAINING };
 	int		m_ViewNames;
 	CCheckTreeCtrl	m_ctrlNames;
-	int		m_ViewDates;
-	CButton	m_ctrlDateStartCheck;
-	BOOL	m_bDateStart;
-	CDateTimeCtrl	m_ctrlDateStart;
-	CTime	m_timeStart;
-	CButton	m_ctrlDateEndCheck;
-	BOOL	m_bDateEnd;
-	CDateTimeCtrl	m_ctrlDateEnd;
-	CTime	m_timeEnd;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	std::set<std::string> m_filterNames;
@@ -73,14 +65,14 @@ private:
 	void UpdateControls();
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsTraining)
+	//{{AFX_VIRTUAL(CDlgFilterTraining)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgOptionsTraining)
+	//{{AFX_MSG(CDlgFilterTraining)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnViewUpdate();
 	afx_msg void OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult);

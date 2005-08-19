@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2005 David Connet. All Rights Reserved.
+ * Copyright © 2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptions class
+ * @brief interface of the CDlgFilter class
  * @author David Connet
  *
  * Revision History
@@ -37,44 +37,46 @@
  */
 
 #include "DlgBaseSheet.h"
-#include "DlgOptionsCalendar.h"
-#include "DlgOptionsFonts.h"
-#include "DlgOptionsProgram.h"
+#include "DlgFilterDate.h"
+#include "DlgFilterRuns.h"
+#include "DlgFilterTraining.h"
 class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
+// CDlgFilter
 
-class CDlgOptions : public CDlgBaseSheet
+class CDlgFilter : public CDlgBaseSheet
 {
-	DECLARE_DYNAMIC(CDlgOptions)
+	DECLARE_DYNAMIC(CDlgFilter)
 public:
-	static int GetProgramPage()		{return 0;}
-	static int GetFontPage()		{return 1;}
-	static int GetCalendarPage()	{return 2;}
+	static int GetDatePage()		{return 0;}
+	static int GetRunsPage()		{return 1;}
+	static int GetTrainingPage()	{return 2;}
 
-	CDlgOptions(
+	CDlgFilter(
+			CAgilityBookDoc* pDoc,
 			CWnd* pParentWnd = NULL,
 			UINT iSelectPage = 0);
-	virtual ~CDlgOptions();
+	virtual ~CDlgFilter();
 
 // Attributes
 public:
-	CDlgOptionsProgram m_pageProgram;
-	CDlgOptionsFonts m_pageFonts;
-	CDlgOptionsCalendar m_pageCalendar;
+	CAgilityBookDoc* m_pDoc;
+	CDlgFilterDate m_pageDate;
+	CDlgFilterRuns m_pageRuns;
+	CDlgFilterTraining m_pageTraining;
 
 // Operations
 public:
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgOptions)
+	//{{AFX_VIRTUAL(CDlgFilter)
 	protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 
 protected:
-	//{{AFX_MSG(CDlgOptions)
+	//{{AFX_MSG(CDlgFilter)
 	afx_msg void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
