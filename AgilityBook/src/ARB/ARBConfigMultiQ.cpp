@@ -307,6 +307,7 @@ bool ARBConfigMultiQ::Match(
 					bInc = false;
 					outRuns.push_back(*iterR);
 					iterR = ioRuns.erase(iterR);
+					break;
 				}
 			}
 			if (bInc)
