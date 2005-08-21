@@ -288,6 +288,16 @@ void CDlgConfigMultiQ::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_SHORTNAME));
 		return;
 	}
+	if (m_pMultiQ->GetName() != (LPCTSTR)m_Name)
+	{
+		if (m_pVenue->GetMultiQs().FindMultiQ((LPCTSTR)m_Name))
+		{
+			AfxMessageBox(IDS_NAME_IN_USE);
+			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_NAME));
+			return;
+		}
+	}
+
 	m_pMultiQ->SetName((LPCTSTR)m_Name);
 	m_pMultiQ->SetShortName((LPCTSTR)m_ShortName);
 	if (!m_bFrom)

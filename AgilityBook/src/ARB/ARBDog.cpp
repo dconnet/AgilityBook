@@ -421,6 +421,43 @@ int ARBDogList::DeleteOtherPoints(std::string const& inOther)
 	return count;
 }
 
+int ARBDogList::NumMultiQsInUse(
+		std::string const& inVenue,
+		std::string const& inMultiQ) const
+{
+	int count = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().NumMultiQsInUse(inVenue, inMultiQ);
+	}
+	return count;
+}
+
+int ARBDogList::RenameMultiQs(
+		std::string const& inVenue,
+		std::string const& inOldMultiQ,
+		std::string const& inNewMultiQ)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().RenameMultiQs(inVenue, inOldMultiQ, inNewMultiQ);
+	}
+	return count;
+}
+
+int ARBDogList::DeleteMultiQs(
+		ARBConfig const& inConfig,
+		std::string const& inVenue)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		count += (*iter)->GetExistingPoints().DeleteMultiQs(inConfig, inVenue);
+	}
+	return count;
+}
+
 int ARBDogList::NumMultiHostedTrialsInDivision(
 		ARBConfig const& inConfig,
 		std::string const& inVenue,

@@ -1103,7 +1103,8 @@ void CDlgConfigVenue::OnDelete()
 					// If we were able to delete it...
 					if (m_pVenue->GetDivisions().DeleteDivision(div, m_pVenue->GetEvents()))
 					{
-						m_pVenue->GetMultiQs().DeleteDivision(div);
+						if (m_pVenue->GetMultiQs().DeleteDivision(div))
+							m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
 						// Then we commit to fixing the real data.
 						if (0 < nTrials || 0 < nTitles)
 							m_DlgFixup.push_back(new CDlgFixupDeleteDivision(m_pVenue->GetName(), div));
@@ -1142,7 +1143,8 @@ void CDlgConfigVenue::OnDelete()
 					{
 						if (pLevelData->GetDivision()->GetLevels().DeleteLevel(level, m_pVenue->GetEvents()))
 						{
-							m_pVenue->GetMultiQs().DeleteLevel(level);
+							if (m_pVenue->GetMultiQs().DeleteLevel(level))
+								m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
 							// Then we commit to fixing the real data.
 							if (0 < nLevels)
 								m_DlgFixup.push_back(new CDlgFixupDeleteLevel(
@@ -1176,7 +1178,8 @@ void CDlgConfigVenue::OnDelete()
 						bool bLevelModified = false;
 						if (pSubLevelData->GetDivision()->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
 						{
-							m_pVenue->GetMultiQs().DeleteLevel(subLevel);
+							if (m_pVenue->GetMultiQs().DeleteLevel(subLevel))
+								m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
 							// Then we commit to fixing the real data.
 							if (bLevelModified)
 							{
@@ -1257,7 +1260,8 @@ void CDlgConfigVenue::OnDelete()
 				{
 					if (m_pVenue->GetEvents().DeleteEvent(event))
 					{
-						m_pVenue->GetMultiQs().DeleteEvent(event);
+						if (m_pVenue->GetMultiQs().DeleteEvent(event))
+							m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
 						// Then we commit to fixing the real data.
 						if (0 < nEvents)
 							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(m_pVenue->GetName(), event));
@@ -1275,9 +1279,24 @@ void CDlgConfigVenue::OnDelete()
 			{
 				CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
 				ASSERT(NULL != pData);
-				if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
+				std::string multiQ = pData->GetMultiQ()->GetName();
+				int nMultiQs = m_Book.GetDogs().NumMultiQsInUse(m_pVenue->GetName(), multiQ);
+				if (0 < nMultiQs)
 				{
-					m_ctrlMultiQ.DeleteItem(index);
+					CString msg;
+					msg.FormatMessage(IDS_DELETE_MULTIQ,
+						multiQ.c_str(),
+						nMultiQs);
+					if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
+						bDelete = false;
+				}
+				if (bDelete)
+				{
+					if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
+					{
+						m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
+						m_ctrlMultiQ.DeleteItem(index);
+					}
 				}
 			}
 		}
@@ -1526,12 +1545,20 @@ void CDlgConfigVenue::OnEdit()
 				return;
 			ARBConfigMultiQ* pMultiQ = pData->GetMultiQ();
 			std::string oldName = pMultiQ->GetName();
-			CDlgConfigMultiQ dlg(m_pVenue, pMultiQ, this);
-			pMultiQ->AddRef();
-			if (IDOK == dlg.DoModal())
+			bool done = false;
+			while (!done)
 			{
-				LoadMultiQData();
-				FindCurrentMultiQ(pMultiQ, true);
+				done = true;
+				CDlgConfigMultiQ dlg(m_pVenue, pMultiQ, this);
+				pMultiQ->AddRef();
+				if (IDOK == dlg.DoModal())
+				{
+					std::string name = pMultiQ->GetName();
+					if (name != oldName)
+						m_DlgFixup.push_back(new CDlgFixupRenameMultiQ(m_pVenue->GetName(), oldName, name));
+					LoadMultiQData();
+					FindCurrentMultiQ(pMultiQ, true);
+				}
 			}
 			pMultiQ->Release();
 		}

@@ -116,6 +116,39 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
+class CDlgFixupRenameMultiQ : public CDlgFixup
+{
+public:
+	CDlgFixupRenameMultiQ(
+			std::string const& inVenue,
+			std::string const& oldName,
+			std::string const& newName)
+		: m_Venue(inVenue)
+		, m_oldName(oldName)
+		, m_newName(newName)
+	{
+	}
+	virtual void Commit(ARBAgilityRecordBook& book);
+protected:
+	std::string m_Venue;
+	std::string m_oldName;
+	std::string m_newName;
+};
+
+class CDlgFixupDeleteMultiQ : public CDlgFixup
+{
+public:
+	CDlgFixupDeleteMultiQ(std::string const& inVenue)
+		: m_Venue(inVenue)
+	{
+	}
+	virtual void Commit(ARBAgilityRecordBook& book);
+protected:
+	std::string m_Venue;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
 class CDlgFixupRenameDivision : public CDlgFixup
 {
 public:

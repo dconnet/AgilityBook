@@ -105,10 +105,11 @@ public:
 	 */
 	typedef enum
 	{
+		eUnknown,
 		eOtherPoints,	///< OtherPoint points.
 		eRuns,			///< Number of titling points for a run.
 		eSpeed,			///< Number of Speed points.
-		eQQ,			///< Number of double Qs.
+		eMQ,			///< Number of multi Qs.
 		eSQ				///< Number of Super Qs.
 	} PointType;
 
@@ -130,6 +131,8 @@ public:
 	void SetOtherPoints(std::string const& inOther);
 	std::string const& GetVenue() const;
 	void SetVenue(std::string const& inVenue);
+	std::string const& GetMultiQ() const;
+	void SetMultiQ(std::string const& inMultiQ);
 	std::string const& GetDivision() const;
 	void SetDivision(std::string const& inDiv);
 	std::string const& GetLevel() const;
@@ -148,6 +151,7 @@ private:
 	PointType m_Type;
 	std::string m_Other;
 	std::string m_Venue;
+	std::string m_MultiQ;
 	std::string m_Div;
 	std::string m_Level;
 	std::string m_Event;
@@ -203,6 +207,16 @@ inline std::string const& ARBDogExistingPoints::GetVenue() const
 inline void ARBDogExistingPoints::SetVenue(std::string const& inVenue)
 {
 	m_Venue = inVenue;
+}
+
+inline std::string const& ARBDogExistingPoints::GetMultiQ() const
+{
+	return m_MultiQ;
+}
+
+inline void ARBDogExistingPoints::SetMultiQ(std::string const& inMultiQ)
+{
+	m_MultiQ = inMultiQ;
 }
 
 inline std::string const& ARBDogExistingPoints::GetDivision() const
@@ -460,6 +474,39 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteOtherPoints(std::string const& inOther);
+
+	/**
+	 * Number of MultiQ objects in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue MultiQ is in.
+	 * @param inMultiQ Name of item to look for.
+	 * @return Number of objects, not points.
+	 */
+	int NumMultiQsInUse(
+			std::string const& inVenue,
+			std::string const& inMultiQ) const;
+
+	/**
+	 * Rename a MultiQ, rename any dependent objects.
+	 * @param inVenue Venue MultiQ is in.
+	 * @param inOldMultiQ MultiQ name being renamed.
+	 * @param inNewMultiQ New MultiQ name.
+	 * @return Number of items changed.
+	 */
+	int RenameMultiQs(
+			std::string const& inVenue,
+			std::string const& inOldMultiQ,
+			std::string const& inNewMultiQ);
+
+	/**
+	 * Delete an MultiQ, remove any dependent objects.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inVenue Venue in which MultiQ was deleted.
+	 * @return Number of items removed.
+	 */
+	int DeleteMultiQs(
+			ARBConfig const& inConfig,
+			std::string const& inVenue);
 
 	/**
 	 * Add an existing point object.

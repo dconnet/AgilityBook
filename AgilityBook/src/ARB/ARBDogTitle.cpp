@@ -189,7 +189,7 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (NULL == inConfig.GetVenues().FindTitle(m_Venue, m_Name))
+	if (!inConfig.GetVenues().FindTitle(m_Venue, m_Name))
 	{
 		// This fixes a bug in v1.0.0.8 where the 'nice' name was being written
 		// as the title name.

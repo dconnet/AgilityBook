@@ -243,6 +243,17 @@ public:
 	bool VerifyVenue(std::string const& inVenue) const;
 
 	/**
+	 * Verify a multiQ exists.
+	 * @param inVenue Venue to verify.
+	 * @param inMultiQ MultiQ to verify.
+	 * @return MultiQ exists.
+	 */
+	bool VerifyMultiQ(
+			std::string const& inVenue,
+			std::string const& inMultiQ,
+			bool bUseShortName = false) const;
+
+	/**
 	 * Verify a level exists.
 	 * @param inVenue Venue level exists in.
 	 * @param inDivision Division level exists in.

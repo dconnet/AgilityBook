@@ -312,7 +312,7 @@ bool ARBConfigDivisionList::AddDivision(
 		*outDiv = NULL;
 	if (0 == inDiv.length())
 		return false;
-	if (NULL != FindDivision(inDiv))
+	if (FindDivision(inDiv))
 		return false;
 	ARBConfigDivision* pDiv = new ARBConfigDivision();
 	pDiv->SetName(inDiv);

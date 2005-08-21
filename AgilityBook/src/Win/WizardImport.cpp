@@ -1127,7 +1127,7 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				if (pCal)
 				{
-					if (NULL == m_pDoc->GetCalendar().FindCalendar(pCal))
+					if (!m_pDoc->GetCalendar().FindCalendar(pCal))
 					{
 						m_pDoc->GetCalendar().AddCalendar(pCal);
 						m_pDoc->GetCalendar().sort();

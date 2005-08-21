@@ -386,6 +386,9 @@ Event these points were earned in.
 .topic HIDC_EXISTING_LEVEL
 Level these points were earned in.
 
+.topic HIDC_EXISTING_MULTIQ
+Multiple Q that was earned.
+
 .topic HIDC_EXISTING_OTHERPOINTS
 Other Points these points were earned in.
 
