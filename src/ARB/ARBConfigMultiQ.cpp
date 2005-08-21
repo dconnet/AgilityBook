@@ -99,21 +99,10 @@ bool ARBConfigMultiQ::operator!=(ARBConfigMultiQ const& rhs) const
 	return !operator==(rhs);
 }
 
-#if _MSC_VER >= 1300
-// VC7's stream is trying to use the 'unsigned int' method. While
-// technically this is ok, 64bit compatibility trips on it!
-#pragma warning ( push )
-#pragma warning ( disable : 4267)
-#endif
 std::string ARBConfigMultiQ::GetGenericName() const
 {
-	std::ostringstream str;
-	str << m_Items.size() << 'Q';
-	return str.str();
+	return m_ShortName;
 }
-#if _MSC_VER >= 1300
-#pragma warning ( pop )
-#endif
 
 size_t ARBConfigMultiQ::GetSearchStrings(std::set<std::string>& ioStrings) const
 {
