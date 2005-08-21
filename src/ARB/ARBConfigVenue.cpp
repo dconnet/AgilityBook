@@ -181,7 +181,7 @@ bool ARBConfigVenue::Load(
 				bool bOk = pFault->Load(element, inVersion, ioCallback);
 				// When migrating, avoid duplicate fault names.
 				// We do allow the user have duplicates. (just not here)
-				bool bExists = (bOk && NULL != ioConfig.GetFaults().FindFault(pFault->GetName()));
+				bool bExists = (bOk && ioConfig.GetFaults().FindFault(pFault->GetName()));
 				pFault->Release();
 				if (bOk && !bExists)
 				{
@@ -452,7 +452,22 @@ void ARBConfigVenueList::sort(bool inDescending)
 
 bool ARBConfigVenueList::VerifyVenue(std::string const& inVenue) const
 {
-	return NULL != FindVenue(inVenue);
+	return FindVenue(inVenue);
+}
+
+bool ARBConfigVenueList::VerifyMultiQ(
+		std::string const& inVenue,
+		std::string const& inMultiQ,
+		bool bUseShortName) const
+{
+	bool bOk = false;
+	ARBConfigVenue* pVenue;
+	if (FindVenue(inVenue, &pVenue))
+	{
+		bOk = pVenue->GetMultiQs().FindMultiQ(inMultiQ, bUseShortName);
+		pVenue->Release();
+	}
+	return bOk;
 }
 
 bool ARBConfigVenueList::VerifyLevel(
@@ -561,7 +576,7 @@ bool ARBConfigVenueList::AddVenue(
 		*outVenue = NULL;
 	if (0 == inVenue.length())
 		return false;
-	if (NULL != FindVenue(inVenue))
+	if (FindVenue(inVenue))
 		return false;
 	ARBConfigVenue* pVenue = new ARBConfigVenue();
 	pVenue->SetName(inVenue);
@@ -579,7 +594,7 @@ bool ARBConfigVenueList::AddVenue(ARBConfigVenue* inVenue)
 {
 	if (!inVenue)
 		return false;
-	if (NULL != FindVenue(inVenue->GetName()))
+	if (FindVenue(inVenue->GetName()))
 		return false;
 	inVenue->AddRef();
 	push_back(inVenue);

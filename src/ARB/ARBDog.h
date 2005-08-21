@@ -371,6 +371,39 @@ public:
 	int DeleteOtherPoints(std::string const& inOther);
 
 	/**
+	 * Number of MultiQ objects in use.
+	 * Used to warning about impending configuration changes.
+	 * @param inVenue Venue MultiQ is in.
+	 * @param inMultiQ Name of item to look for.
+	 * @return Number of objects, not points.
+	 */
+	int NumMultiQsInUse(
+			std::string const& inVenue,
+			std::string const& inMultiQ) const;
+
+	/**
+	 * Rename a MultiQ, rename any dependent objects.
+	 * @param inVenue Venue MultiQ is in.
+	 * @param inOldMultiQ MultiQ name being renamed.
+	 * @param inNewMultiQ New MultiQ name.
+	 * @return Number of items changed.
+	 */
+	int RenameMultiQs(
+			std::string const& inVenue,
+			std::string const& inOldMultiQ,
+			std::string const& inNewMultiQ);
+
+	/**
+	 * Delete an MultiQ, remove any dependent objects.
+	 * @param inConfig Configuration for looking up information.
+	 * @param inVenue Venue in which MultiQ was deleted.
+	 * @return Number of items removed.
+	 */
+	int DeleteMultiQs(
+			ARBConfig const& inConfig,
+			std::string const& inVenue);
+
+	/**
 	 * Number of multiple hosted trials in a division.
 	 * Used to warning about impending configuration changes.
 	 * @param inConfig Configuration for looking up information.

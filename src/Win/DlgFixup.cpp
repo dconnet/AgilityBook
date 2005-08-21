@@ -72,6 +72,18 @@ void CDlgFixupDeleteOtherPoints::Commit(ARBAgilityRecordBook& book)
 	book.GetDogs().DeleteOtherPoints(m_Name);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+
+void CDlgFixupRenameMultiQ::Commit(ARBAgilityRecordBook& book)
+{
+	book.GetDogs().RenameMultiQs(m_Venue, m_oldName, m_newName);
+}
+
+void CDlgFixupDeleteMultiQ::Commit(ARBAgilityRecordBook& book)
+{
+	book.GetDogs().DeleteMultiQs(book.GetConfig(), m_Venue);
+}
+
 ////////////////////////////////////////////////////////////////////////////
 
 void CDlgFixupRenameDivision::Commit(ARBAgilityRecordBook& book)

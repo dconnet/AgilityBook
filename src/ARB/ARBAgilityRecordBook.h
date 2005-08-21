@@ -186,10 +186,11 @@
 	#define EXISTING_PTS_TYPE_OTHER				"Other"
 	#define EXISTING_PTS_TYPE_RUNS				"Run"
 	#define EXISTING_PTS_TYPE_SPEED				"Speed"
-	#define EXISTING_PTS_TYPE_QQ				"QQ"
+	#define EXISTING_PTS_TYPE_MQ				"MQ"
 	#define EXISTING_PTS_TYPE_SQ				"SQ"
 #define ATTRIB_EXISTING_PTS_OTHER			"Other"
 #define ATTRIB_EXISTING_PTS_VENUE			"Venue"
+#define ATTRIB_EXISTING_PTS_MULTIQ			"MultiQ"
 #define ATTRIB_EXISTING_PTS_DIV				"Div"
 #define ATTRIB_EXISTING_PTS_LEVEL			"Level"
 #define ATTRIB_EXISTING_PTS_EVENT			"Event"
@@ -270,6 +271,8 @@
 #define INVALID_DIV_NAME		"Invalid division name: "
 #define INVALID_VENUE_NAME		"Invalid venue name: "
 #define INVALID_OTHER_PTS_NAME	"Invalid Other Points name: "
+#define INVALID_MULTIQ_NAME		"Invalid Multiple Q name: "
+#define INVALID_MULTIQ_CONVERSION	"Unable to convert Existing QQ Points"
 #define INVALID_EVENT			"Unable to locate an event description in any of the venues of the affiliated clubs: "
 #define INVALID_TITLE			"Title is not defined in the Venue description: "
 #define VALID_VALUES			"Valid values: "
@@ -377,7 +380,7 @@ inline std::string LIFETIME_POINTS_NAME_FORMAT(short points, short faults)
 #define EXISTING_POINTS_OTHER		"OtherPoints"
 #define EXISTING_POINTS_RUN			"Run"
 #define EXISTING_POINTS_SPEED		"Speed"
-#define EXISTING_POINTS_QQ			"Multiple Q"
+#define EXISTING_POINTS_MQ			"Multiple Q"
 #define EXISTING_POINTS_SQ			"SuperQ"
 
 
@@ -654,7 +657,7 @@ extern std::string ErrorInvalidDocStructure(char const* const inMsg);
 
 /**
  * Return an error message about a missing required attribute.
- *  
+ *
  * @param inElement Element containing missing attribute.
  * @param inAttrib Attribute name that is missing.
  * @param inMsg Additional error information.

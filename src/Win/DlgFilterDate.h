@@ -33,7 +33,7 @@
  * @author David Connet
  *
  * Revision History
- * 2005-08-18 DRC Created
+ * @li 2005-08-18 DRC Created
  */
 
 #include "DlgBasePropertyPage.h"

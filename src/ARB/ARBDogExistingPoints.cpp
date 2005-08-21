@@ -68,8 +68,8 @@ std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointTy
 	case eSpeed:
 		str = EXISTING_POINTS_SPEED;
 		break;
-	case eQQ:
-		str = EXISTING_POINTS_QQ;
+	case eMQ:
+		str = EXISTING_POINTS_MQ;
 		break;
 	case eSQ:
 		str = EXISTING_POINTS_SQ;
@@ -86,6 +86,7 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 	, m_Type(eRuns)
 	, m_Other()
 	, m_Venue()
+	, m_MultiQ()
 	, m_Div()
 	, m_Level()
 	, m_Event()
@@ -100,6 +101,7 @@ ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 	, m_Type(rhs.m_Type)
 	, m_Other(rhs.m_Other)
 	, m_Venue(rhs.m_Venue)
+	, m_MultiQ(rhs.m_MultiQ)
 	, m_Div(rhs.m_Div)
 	, m_Level(rhs.m_Level)
 	, m_Event(rhs.m_Event)
@@ -121,6 +123,7 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const
 		m_Type = rhs.m_Type;
 		m_Other = rhs.m_Other;
 		m_Venue = rhs.m_Venue;
+		m_MultiQ = rhs.m_MultiQ;
 		m_Div = rhs.m_Div;
 		m_Level = rhs.m_Level;
 		m_Event = rhs.m_Event;
@@ -137,6 +140,7 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 		&& m_Type == rhs.m_Type
 		&& m_Other == rhs.m_Other
 		&& m_Venue == rhs.m_Venue
+		&& m_MultiQ == rhs.m_MultiQ
 		&& m_Div == rhs.m_Div
 		&& m_Level == rhs.m_Level
 		&& m_Event == rhs.m_Event
@@ -187,19 +191,26 @@ bool ARBDogExistingPoints::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE));
 		return false;
 	}
+	bool bConvertedQQ = false;
 	if (attrib == EXISTING_PTS_TYPE_OTHER)
 		m_Type = eOtherPoints;
 	else if (attrib == EXISTING_PTS_TYPE_RUNS)
 		m_Type = eRuns;
 	else if (attrib == EXISTING_PTS_TYPE_SPEED)
 		m_Type = eSpeed;
-	else if (attrib == EXISTING_PTS_TYPE_QQ)
-		m_Type = eQQ;
+	else if (attrib == EXISTING_PTS_TYPE_MQ)
+		m_Type = eMQ;
 	else if (attrib == EXISTING_PTS_TYPE_SQ)
 		m_Type = eSQ;
 	// Changed attribute from 'Mach' to 'Speed' in 10.1
 	else if (inVersion < ARBVersion(10,1) && attrib == "Mach")
 		m_Type = eSpeed;
+	// Changed QQ to MQ (multi Q)
+	else if (inVersion < ARBVersion(11,0) && attrib == "QQ")
+	{
+		m_Type = eMQ;
+		bConvertedQQ = true;
+	}
 	else
 	{
 		std::string msg(INVALID_VALUE);
@@ -212,7 +223,7 @@ bool ARBDogExistingPoints::Load(
 		msg += ", ";
 		msg += EXISTING_PTS_TYPE_SPEED;
 		msg += ", ";
-		msg += EXISTING_PTS_TYPE_QQ;
+		msg += EXISTING_PTS_TYPE_MQ;
 		msg += ", ";
 		msg += EXISTING_PTS_TYPE_SQ;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
@@ -239,31 +250,108 @@ bool ARBDogExistingPoints::Load(
 		}
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
-	|| 0 == m_Venue.length())
+	if (Element::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
+	&& 0 < m_Venue.length())
+	{
+		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
+		{
+			std::string msg(INVALID_VENUE_NAME);
+			msg += m_Venue;
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
+			return false;
+		}
+	}
+	else
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE));
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
-	|| 0 == m_Div.length())
+	if (eMQ == m_Type)
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
-		return false;
+		if (bConvertedQQ)
+		{
+			bConvertedQQ = false;
+			ARBConfigVenue* pVenue;
+			// Note, m_Venue should be "AKC".
+			// Otherwise, we're dealing with a venue I don't know.
+			if (inConfig.GetVenues().FindVenue(m_Venue, &pVenue))
+			{
+				ARBConfigMultiQ* pMulti;
+				// If this isn't "AKC", or someone has edited the multiQ name,
+				// this will fail.
+				if (pVenue->GetMultiQs().FindMultiQ("QQ", true, &pMulti))
+				{
+					bConvertedQQ = true;
+					m_MultiQ = pMulti->GetName();
+					pMulti->Release();
+				}
+				// If we don't find it, assume AKC and hard code this in.
+				// The problem is when we read this into the 11.0 file version,
+				// the configuration hasn't been updated yet - so the multiQ
+				// info doesn't exist yet!
+				else
+				{
+					bConvertedQQ = true;
+					m_MultiQ = "Double Q";
+				}
+				pVenue->Release();
+			}
+			if (!bConvertedQQ)
+			{
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, INVALID_MULTIQ_CONVERSION));
+				return false;
+			}
+		}
+		else
+		{
+			if (Element::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ)
+			&& 0 < m_MultiQ.length())
+			{
+				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
+				{
+					std::string msg(INVALID_MULTIQ_NAME);
+					msg += m_Venue;
+					msg += "/";
+					msg += m_MultiQ;
+					ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg.c_str()));
+					return false;
+				}
+			}
+			else
+			{
+				ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ));
+				return false;
+			}
+		}
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
-	|| 0 == m_Level.length())
+	else
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
-		return false;
+		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
+		|| 0 == m_Div.length())
+		{
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
+			return false;
+		}
+
+		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
+		|| 0 == m_Level.length())
+		{
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
+			return false;
+		}
 	}
 
-	// I could add additional verification to make sure it's a valid SQ/Speed/QQ
+	// I could add additional verification to make sure it's a valid SQ/Speed/MQ
 	// event... but let the UI handle that...
-	if (eOtherPoints == m_Type || eRuns == m_Type || eSQ == m_Type)
+	switch (m_Type)
 	{
+	case eMQ:
+		break;
+	case eOtherPoints:
+	case eRuns:
+	case eSQ:
 		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
 		|| 0 == m_Event.length())
 		{
@@ -272,7 +360,7 @@ bool ARBDogExistingPoints::Load(
 		}
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
 		{
-			std::string msg(INVALID_VENUE_NAME);
+			std::string msg(INVALID_EVENT_NAME);
 			msg += m_Venue;
 			msg += "/";
 			msg += m_Div;
@@ -280,14 +368,13 @@ bool ARBDogExistingPoints::Load(
 			msg += m_Level;
 			msg += "/";
 			msg += m_Event;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str()));
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg.c_str()));
 			return false;
 		}
 		// Only used in eRuns.
 		inTree.GetAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
-	}
-	else if (eQQ != m_Type)
-	{
+		break;
+	default:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
 			std::string msg(INVALID_VENUE_NAME);
@@ -296,11 +383,10 @@ bool ARBDogExistingPoints::Load(
 			msg += m_Div;
 			msg += "/";
 			msg += m_Level;
-			msg += "/";
-			msg += m_Event;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_REG_NUM_VENUE, msg.c_str()));
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
+		break;
 	}
 
 	inTree.GetAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
@@ -341,9 +427,10 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		break;
-	case eQQ:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_QQ);
+	case eMQ:
+		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MQ);
 		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title.AddAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ);
 		break;
 	case eSQ:
 		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SQ);
@@ -685,7 +772,8 @@ int ARBDogExistingPointsList::NumOtherPointsInUse(std::string const& inOther) co
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetOtherPoints() == inOther)
+		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
+		&& (*iter)->GetOtherPoints() == inOther)
 			++count;
 	}
 	return count;
@@ -698,7 +786,8 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetOtherPoints() == inOldOther)
+		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
+		&& (*iter)->GetOtherPoints() == inOldOther)
 		{
 			(*iter)->SetOtherPoints(inNewOther);
 			++count;
@@ -712,13 +801,72 @@ int ARBDogExistingPointsList::DeleteOtherPoints(std::string const& inOther)
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
-		if ((*iter)->GetOtherPoints() == inOther)
+		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
+		&& (*iter)->GetOtherPoints() == inOther)
 		{
 			iter = erase(iter);
 			++count;
 		}
 		else
 			++iter;
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::NumMultiQsInUse(
+		std::string const& inVenue,
+		std::string const& inMultiQ) const
+{
+	int count = 0;
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
+		&& (*iter)->GetVenue() == inVenue
+		&& (*iter)->GetMultiQ() == inMultiQ)
+			++count;
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::RenameMultiQs(
+		std::string const& inVenue,
+		std::string const& inOldMultiQ,
+		std::string const& inNewMultiQ)
+{
+	int count = 0;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
+		&& (*iter)->GetVenue() == inVenue
+		&& (*iter)->GetMultiQ() == inOldMultiQ)
+		{
+			(*iter)->SetMultiQ(inNewMultiQ);
+			++count;
+		}
+	}
+	return count;
+}
+
+int ARBDogExistingPointsList::DeleteMultiQs(
+		ARBConfig const& inConfig,
+		std::string const& inVenue)
+{
+	int count = 0;
+	ARBConfigVenue* pVenue;
+	if (inConfig.GetVenues().FindVenue(inVenue, &pVenue))
+	{
+		for (iterator iter = begin(); iter != end(); )
+		{
+			if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
+			&& !pVenue->GetMultiQs().FindMultiQ((*iter)->GetMultiQ(), true))
+			{
+				iter = erase(iter);
+				++count;
+			}
+			else
+				++iter;
+		}
+		pVenue->Release();
 	}
 	return count;
 }

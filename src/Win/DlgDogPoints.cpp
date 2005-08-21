@@ -64,6 +64,7 @@ static struct
 	{LVCFMT_LEFT, 50, IDS_COL_POINTS},
 	{LVCFMT_LEFT, 50, IDS_OTHERPOINTS},
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
+	{LVCFMT_LEFT, 50, IDS_COL_MULTIQ},
 	{LVCFMT_LEFT, 50, IDS_COL_DIVISION},
 	{LVCFMT_LEFT, 50, IDS_COL_LEVEL},
 	{LVCFMT_LEFT, 50, IDS_COL_EVENT},
@@ -126,25 +127,37 @@ int CALLBACK ComparePoints(
 			else if (pExistingPoints1->GetVenue() > pExistingPoints2->GetVenue())
 				rc = 1;
 			break;
-		case 5: // Division
+		case 5: // MultiQ
+			if (pExistingPoints1->GetMultiQ() < pExistingPoints2->GetMultiQ())
+				rc = -1;
+			else if (pExistingPoints1->GetMultiQ() > pExistingPoints2->GetMultiQ())
+				rc = 1;
+			break;
+		case 6: // Division
 			if (pExistingPoints1->GetDivision() < pExistingPoints2->GetDivision())
 				rc = -1;
 			else if (pExistingPoints1->GetDivision() > pExistingPoints2->GetDivision())
 				rc = 1;
 			break;
-		case 6: // Level
+		case 7: // Level
 			if (pExistingPoints1->GetLevel() < pExistingPoints2->GetLevel())
 				rc = -1;
 			else if (pExistingPoints1->GetLevel() > pExistingPoints2->GetLevel())
 				rc = 1;
 			break;
-		case 7: // Event
+		case 8: // Event
 			if (pExistingPoints1->GetEvent() < pExistingPoints2->GetEvent())
 				rc = -1;
 			else if (pExistingPoints1->GetEvent() > pExistingPoints2->GetEvent())
 				rc = 1;
 			break;
-		case 8: // Comment
+		case 9: // Subname
+			if (pExistingPoints1->GetSubName() < pExistingPoints2->GetSubName())
+				rc = -1;
+			else if (pExistingPoints1->GetSubName() > pExistingPoints2->GetSubName())
+				rc = 1;
+			break;
+		case 10: // Comment
 			if (pExistingPoints1->GetComment() < pExistingPoints2->GetComment())
 				rc = -1;
 			else if (pExistingPoints1->GetComment() > pExistingPoints2->GetComment())
@@ -352,19 +365,22 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 		case 4: // Venue
 			str = pData->GetVenue().c_str();
 			break;
-		case 5: // Division
+		case 5: // MultiQ
+			str = pData->GetMultiQ().c_str();
+			break;
+		case 6: // Division
 			str = pData->GetDivision().c_str();
 			break;
-		case 6: // Level
+		case 7: // Level
 			str = pData->GetLevel().c_str();
 			break;
-		case 7: // Event
+		case 8: // Event
 			str = pData->GetEvent().c_str();
 			break;
-		case 8: // SubName
+		case 9: // SubName
 			str = pData->GetSubName().c_str();
 			break;
-		case 9: // Comment
+		case 10: // Comment
 			str = pData->GetComment().c_str();
 			str.Replace("\n", " ");
 			break;

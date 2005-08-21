@@ -326,9 +326,9 @@ depends on how a venue has been defined above.
 <!--
  Type: [required items..]
   'Other': Other Points [Other, Venue, Div, Level, Event]
-  'Run': Runs           [       Venue, Div, Level, Event]
+  'Run': Runs           [       Venue, Div, Level, Event, SubName]
   'Speed': Speed points [       Venue, Div, Level]
-  'QQ': Double Q        [       Venue]
+  'MQ': Multiple Q      [       Venue, MultiQ]
   'SQ': Super Q         [       Venue, Div, Level, Event]
 -->
 <!ELEMENT ExistingPoints (#PCDATA) >
@@ -337,6 +337,7 @@ depends on how a venue has been defined above.
 		Type CDATA #REQUIRED
 		Other CDATA #IMPLIED
 		Venue CDATA #IMPLIED
+		MultiQ CDATA #IMPLIED
 		Div CDATA #IMPLIED
 		Level CDATA #IMPLIED
 		Event CDATA #IMPLIED

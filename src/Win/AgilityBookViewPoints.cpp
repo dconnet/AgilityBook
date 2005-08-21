@@ -728,7 +728,7 @@ void CAgilityBookViewPoints::LoadData()
 						++iter)
 					{
 						int existingDblQs = pDog->GetExistingPoints().ExistingPoints(
-							ARBDogExistingPoints::eQQ,
+							ARBDogExistingPoints::eMQ,
 							pVenue, NULL, NULL, NULL);
 						InsertData(idxInsertItem, new PointsDataMultiQs(this, existingDblQs, (*iter).first, (*iter).second));
 					}

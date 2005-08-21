@@ -6,6 +6,7 @@
 	ProjectGUID="{E608D05A-7F1D-4C1C-867D-EA699DCAB177}"
 	RootNamespace="ParseResourceHeader"
 	Keyword="Win32Proj"
+	SignManifests="true"
 	>
 	<Platforms>
 		<Platform
@@ -62,7 +63,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
@@ -137,7 +137,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
-				GenerateManifest="false"
 				SubSystem="1"
 			/>
 			<Tool

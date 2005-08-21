@@ -1,13 +1,14 @@
 Last Updated: 8/18/2005
 
 [internal stuff, not released on website]
-- Need to add Multi-Q selection to existing points so we know which multiq
-  the points go with.
 - tabulation of multiq is wrong - it is assuming that if a multiq exists on
   a date, all runs that q'd match that. also need extra work for cross
   over events - for instance, if a 3rd std was run in akc.
   - I believe this is done - need to check performance since this computation
     is done each time the time draws in the Runs tab.
+  - next note: it's not quite right - if there are >1 multiQs, only one is
+    showing up on runs page, also existing pts are tabulated right - it's
+	putting all of them into a single entry on the points page.
 
 - Possibly change calendar view to display by separate months. Maybe bolder
   lines between the months?

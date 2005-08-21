@@ -57,19 +57,29 @@ private:
 	enum { IDD = IDD_EXISTING_POINTS };
 	CDateTimeCtrl	m_ctrlDate;
 	CComboBox	m_ctrlType;
+	CStatic	m_ctrlOtherText;
 	CComboBox	m_ctrlOther;
+	CStatic	m_ctrlMultiQText;
+	CComboBox	m_ctrlMultiQ;
+	CStatic	m_ctrlVenuesText;
 	CComboBox	m_ctrlVenues;
+	CStatic	m_ctrlDivisionsText;
 	CComboBox	m_ctrlDivisions;
+	CStatic	m_ctrlLevelsText;
 	CComboBox	m_ctrlLevels;
+	CStatic	m_ctrlEventsText;
 	CComboBox	m_ctrlEvents;
+	CStatic	m_ctrlSubNamesText;
 	CComboBox	m_ctrlSubNames;
 	CString	m_SubName;
 	short	m_Points;
 	CString	m_Comments;
+	CButton	m_ctrlOk;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogExistingPointsList& m_PointsList;
 	ARBDogExistingPoints* m_pExistingPoints;
+	CPoint m_ptControls[2][5];
 	ARBDate m_Date;
 
 	//{{AFX_VIRTUAL(CDlgExistingPoints)
@@ -79,9 +89,20 @@ protected:
 
 // Implementation
 protected:
+	void GetEnableLists(
+			int index,
+			BOOL& outOther,
+			BOOL& outMQ,
+			BOOL& outVenue,
+			BOOL& outDiv,
+			BOOL& outLevel,
+			BOOL& outEvent,
+			BOOL& outSubName,
+			bool bSet);
 	void UpdateControls();
 	void ClearLevels();
-	void FillDivisions();
+	void FillVenues();
+	void FillFromVenue();
 	void FillLevels();
 	void FillEvents();
 	void FillSubNames();
