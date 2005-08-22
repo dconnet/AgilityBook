@@ -211,7 +211,8 @@ bool ARBDogTrial::Save(Element& ioTree) const
 void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 {
 	// First clear all settings.
-	for (ARBDate date = m_Runs.GetStartDate();
+	ARBDate date;
+	for (date = m_Runs.GetStartDate();
 		date <= m_Runs.GetEndDate();
 		++date)
 	{
@@ -239,7 +240,7 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 	}
 
 	// Then for each day in the trial, look for multiQs.
-	for (ARBDate date = m_Runs.GetStartDate();
+	for (date = m_Runs.GetStartDate();
 		date <= m_Runs.GetEndDate();
 		++date)
 	{
