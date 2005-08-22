@@ -297,6 +297,13 @@ class ARBDogList : public ARBVectorLoad2<ARBDog>
 {
 public:
 	/**
+	 * Set the MultiQ settings on individual runs. See ARBDogRun::GetMultiQ.
+	 *
+	 * @param inConfig Configuration for looking up information.
+	 */
+	void SetMultiQs(ARBConfig const& inConfig);
+
+	/**
 	 * Get the number of existing point entries in a venue.
 	 * Used to warning about impending configuration changes.
 	 * @param inVenue Venue to tally.

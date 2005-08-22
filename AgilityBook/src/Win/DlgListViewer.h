@@ -97,6 +97,24 @@ public:
 	ARBConfigEvent const* m_Event;
 };
 
+class MultiQInfoData
+{
+	friend class CDlgListViewer;
+public:
+	MultiQInfoData(
+			ARBDog const* inDog,
+			ARBConfigVenue const* inVenue,
+			ARBConfigMultiQ const* inMultiQ)
+		: m_Dog(inDog)
+		, m_Venue(inVenue)
+		, m_MultiQ(inMultiQ)
+	{
+	}
+	ARBDog const* m_Dog;
+	ARBConfigVenue const* m_Venue;
+	ARBConfigMultiQ const* m_MultiQ;
+};
+
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
@@ -124,6 +142,7 @@ public:
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
 			CString const& inCaption,
+			MultiQInfoData const* inData,
 			std::set<MultiQdata> const& inMQs,
 			CWnd* pParent = NULL);
 	// Viewing lifetime data
@@ -155,7 +174,8 @@ private:
 	//}}AFX_DATA
 	CString m_Caption;
 	CAgilityBookDoc* m_pDoc;
-	RunInfoData const* m_Data;
+	RunInfoData const* m_DataRun;
+	MultiQInfoData const* m_DataMultiQ;
 	std::list<RunInfo> const* m_Runs;
 	std::list<ScoringRunInfo> const* m_ScoringRuns;
 	std::set<MultiQdata> const* m_MultiQdata;

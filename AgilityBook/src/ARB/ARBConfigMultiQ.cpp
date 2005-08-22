@@ -240,8 +240,8 @@ bool ARBConfigMultiQ::Save(Element& ioTree) const
 
 // Note, this is only called from ARBDogTrial
 bool ARBConfigMultiQ::Match(
-		std::vector<ARBDogRun const*>& ioRuns,
-		std::vector<ARBDogRun const*>& outRuns) const
+		std::vector<ARBDogRun*>& ioRuns,
+		std::vector<ARBDogRun*>& outRuns) const
 {
 	outRuns.clear();
 	if (ioRuns.size() < m_Items.size())
@@ -250,7 +250,7 @@ bool ARBConfigMultiQ::Match(
 	// multi-q definition.
 	std::vector<bool> bItems;
 	bItems.insert(bItems.begin(), m_Items.size(), false);
-	for (std::vector<ARBDogRun const*>::iterator iterR = ioRuns.begin();
+	for (std::vector<ARBDogRun*>::iterator iterR = ioRuns.begin();
 		iterR != ioRuns.end();
 		++iterR)
 	{
@@ -277,7 +277,7 @@ bool ARBConfigMultiQ::Match(
 	if (nMatch == m_Items.size())
 	{
 		bOk = true;
-		for (std::vector<ARBDogRun const*>::iterator iterR = ioRuns.begin();
+		for (std::vector<ARBDogRun*>::iterator iterR = ioRuns.begin();
 			iterR != ioRuns.end();
 			)
 		{

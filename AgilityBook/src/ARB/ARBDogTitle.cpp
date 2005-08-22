@@ -257,31 +257,26 @@ inline std::string ARBDogTitle::GetGenericName() const
 class SortTitle
 {
 public:
-	SortTitle(bool bDescending) : m_bDescending(bDescending) {}
+	SortTitle() {}
 	bool operator()(ARBDogTitle* one, ARBDogTitle* two) const
 	{
-		if (one->GetDate() < two->GetDate())
-			return m_bDescending;
-		else if (one->GetDate() > two->GetDate())
-			return !m_bDescending;
-		else if (one->GetVenue() < two->GetVenue())
-			return m_bDescending;
-		else if (one->GetVenue() > two->GetVenue())
-			return !m_bDescending;
-		else if (one->GetRawName() < two->GetRawName())
-			return m_bDescending;
+		if (one->GetDate() == two->GetDate())
+		{
+			if (one->GetVenue() == two->GetVenue())
+				return one->GetRawName() < two->GetRawName();
+			else
+				return one->GetVenue() == two->GetVenue();
+		}
 		else
-			return !m_bDescending;
+			return one->GetDate() < two->GetDate();
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBDogTitleList::sort(bool inDescending)
+void ARBDogTitleList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortTitle(inDescending));
+	std::stable_sort(begin(), end(), SortTitle());
 }
 
 int ARBDogTitleList::NumTitlesInVenue(std::string const& inVenue) const

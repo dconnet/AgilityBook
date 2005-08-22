@@ -236,17 +236,23 @@ void CDlgExistingPoints::GetEnableLists(
 				m_ctrlDivisions.SetWindowPos(NULL,
 					m_ptControls[1][1].x, m_ptControls[1][1].y,
 					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEventsText.SetWindowPos(NULL,
+				m_ctrlLevelsText.SetWindowPos(NULL,
 					m_ptControls[0][2].x, m_ptControls[0][2].y,
 					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEvents.SetWindowPos(NULL,
+				m_ctrlLevels.SetWindowPos(NULL,
 					m_ptControls[1][2].x, m_ptControls[1][2].y,
 					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlSubNamesText.SetWindowPos(NULL,
+				m_ctrlEventsText.SetWindowPos(NULL,
 					m_ptControls[0][3].x, m_ptControls[0][3].y,
 					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlSubNames.SetWindowPos(NULL,
+				m_ctrlEvents.SetWindowPos(NULL,
 					m_ptControls[1][3].x, m_ptControls[1][3].y,
+					0, 0, SWP_NOZORDER | SWP_NOSIZE);
+				m_ctrlSubNamesText.SetWindowPos(NULL,
+					m_ptControls[0][4].x, m_ptControls[0][4].y,
+					0, 0, SWP_NOZORDER | SWP_NOSIZE);
+				m_ctrlSubNames.SetWindowPos(NULL,
+					m_ptControls[1][4].x, m_ptControls[1][4].y,
 					0, 0, SWP_NOZORDER | SWP_NOSIZE);
 			}
 			break;

@@ -188,23 +188,18 @@ bool ARBDogRegNum::Save(Element& ioTree) const
 class SortRegNum
 {
 public:
-	SortRegNum(bool bDescending) : m_bDescending(bDescending) {}
+	SortRegNum() {}
 	bool operator()(ARBDogRegNum* one, ARBDogRegNum* two) const
 	{
-		if (one->GetVenue() < two->GetVenue())
-			return m_bDescending;
-		else
-			return !m_bDescending;
+		return one->GetVenue() < two->GetVenue();
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBDogRegNumList::sort(bool inDescending)
+void ARBDogRegNumList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortRegNum(inDescending));
+	std::stable_sort(begin(), end(), SortRegNum());
 }
 
 int ARBDogRegNumList::NumRegNumsInVenue(std::string const& inVenue) const

@@ -500,14 +500,20 @@ std::string PointsDataLifetimeDiv::OnNeedText(size_t index) const
 
 PointsDataMultiQs::PointsDataMultiQs(
 		CAgilityBookViewPoints* pView,
-		int inExistingDblQs,
+		ARBDog* inDog,
+		ARBConfigVenue* inVenue,
 		ARBConfigMultiQ const* inMultiQ,
 		std::set<MultiQdata> const& inMQs)
 	: PointsDataBase(pView)
-	, m_ExistingDblQs(inExistingDblQs)
+	, m_Dog(inDog)
+	, m_Venue(inVenue)
 	, m_MultiQ(inMultiQ)
 	, m_MQs(inMQs)
+	, m_ExistingDblQs(0)
 {
+	m_ExistingDblQs = m_Dog->GetExistingPoints().ExistingPoints(
+		ARBDogExistingPoints::eMQ,
+		m_Venue, m_MultiQ, NULL, NULL, NULL);
 }
 
 std::string PointsDataMultiQs::OnNeedText(size_t index) const
@@ -524,7 +530,8 @@ std::string PointsDataMultiQs::OnNeedText(size_t index) const
 
 void PointsDataMultiQs::OnDblClick() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), m_MultiQ->GetName().c_str(), m_MQs, m_pView);
+	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
+	CDlgListViewer dlg(m_pView->GetDocument(), m_MultiQ->GetName().c_str(), &data, m_MQs, m_pView);
 	dlg.DoModal();
 }
 

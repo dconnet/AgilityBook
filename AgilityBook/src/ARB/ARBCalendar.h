@@ -361,9 +361,8 @@ class ARBCalendarList : public ARBVectorLoad1<ARBCalendar>
 public:
 	/**
 	 * Sort the list by date.
-	 * @param inDescending Sort in descending or ascending order.
 	 */
-	void sort(bool inDescending = true);
+	void sort();
 
 	/**
 	 * Get a list of all the trials that have been entered.

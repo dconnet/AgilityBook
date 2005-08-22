@@ -181,6 +181,7 @@ bool ARBDogTrial::Load(
 			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioCallback);
 		}
 	}
+	SetMultiQs(inConfig);
 	m_Runs.sort();
 	return true;
 }
@@ -207,72 +208,74 @@ bool ARBDogTrial::Save(Element& ioTree) const
 	return true;
 }
 
-bool ARBDogTrial::HasMultiQ(
-		ARBDate const& inDate,
-		ARBConfig const& inConfig,
-		ARBDogRun const* inRun,
-		ARBVectorBase<ARBConfigMultiQ>* outMultiQs) const
+void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 {
-	if (outMultiQs)
-		outMultiQs->clear();
+	// First clear all settings.
+	for (ARBDate date = m_Runs.GetStartDate();
+		date <= m_Runs.GetEndDate();
+		++date)
+	{
+		for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
+		{
+			(*iterRun)->SetMultiQ(NULL);
+		}
+	}
+
+	// Now get some needed info...
 	ARBDogClub* pClub;
 	if (!GetClubs().GetPrimaryClub(&pClub))
-		return false;
+		return;
 	ARBConfigVenue* pVenue;
 	if (!inConfig.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 	{
 		pClub->Release();
-		return false;
+		return;
 	}
 	pClub->Release();
 	if (0 == pVenue->GetMultiQs().size())
 	{
 		pVenue->Release();
-		return false;
+		return;
 	}
-	// First, get all the qualifying runs for the given date.
-	std::vector<ARBDogRun const*> runs;
-	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
+
+	// Then for each day in the trial, look for multiQs.
+	for (ARBDate date = m_Runs.GetStartDate();
+		date <= m_Runs.GetEndDate();
+		++date)
 	{
-		ARBDogRun* pRun = (*iterRun);
-		if (pRun->GetDate() == inDate
-		&& pRun->GetQ().Qualified())
+		std::vector<ARBDogRun*> runs;
+		for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 		{
-			runs.push_back(pRun);
-		}
-	}
-	size_t nMatches = 0;
-	// Now, see if any combo of these runs matches a multiQ config.
-	if (1 < runs.size())
-	{
-		bool bGotIt = NULL == inRun ? true : false;
-		for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
-			iterM != pVenue->GetMultiQs().end();
-			++iterM)
-		{
-			ARBConfigMultiQ* pMultiQ = *iterM;
-			std::vector<ARBDogRun const*> matchedRuns;
-			if (pMultiQ->Match(runs, matchedRuns))
+			ARBDogRun* pRun = (*iterRun);
+			if (pRun->GetDate() == date
+			&& pRun->GetQ().Qualified())
 			{
-				++nMatches;
-				if (!bGotIt)
+				runs.push_back(pRun);
+			}
+		}
+		// Now, see if any combo of these runs matches a multiQ config.
+		if (1 < runs.size())
+		{
+			for (ARBConfigMultiQList::iterator iterM = pVenue->GetMultiQs().begin();
+				iterM != pVenue->GetMultiQs().end();
+				++iterM)
+			{
+				ARBConfigMultiQ* pMultiQ = *iterM;
+				std::vector<ARBDogRun*> matchedRuns;
+				if (pMultiQ->Match(runs, matchedRuns))
 				{
-					// Comparing by ptr is fine...
-					if (matchedRuns.end() != std::find(matchedRuns.begin(), matchedRuns.end(), inRun))
-						bGotIt = true;
-				}
-				if (outMultiQs)
-				{
-					pMultiQ->AddRef();
-					outMultiQs->push_back(pMultiQ);
+					for (std::vector<ARBDogRun*>::iterator iter = matchedRuns.begin();
+						iter != matchedRuns.end();
+						++iter)
+					{
+						TRACE("Setting %s\n", (*iter)->GetGenericName().c_str());
+						(*iter)->SetMultiQ(pMultiQ);
+					}
 				}
 			}
 		}
-		if (!bGotIt)
-			nMatches = 0;
 	}
 	pVenue->Release();
-	return 0 < nMatches;
 }
 
 short ARBDogTrial::GetSpeedPoints(
@@ -328,7 +331,7 @@ public:
 		if (0 < one->GetRuns().size()
 		&& 0 < two->GetRuns().size())
 		{
-			if ((*(one->GetRuns().begin()))->GetDate() <
+			if ((*(one->GetRuns().begin()))->GetDate() <=
 			(*(two->GetRuns().begin()))->GetDate())
 				bSorted = m_bDescending;
 		}

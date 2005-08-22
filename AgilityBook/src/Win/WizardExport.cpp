@@ -629,37 +629,24 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_Q:
 										{
-											CString str = pRun->GetQ().str().c_str();
+											CString q;
 											if (pRun->GetQ().Qualified())
 											{
-												ARBVectorBase<ARBConfigMultiQ> multiQs;
-												if (pTrial->HasMultiQ(
-													pRun->GetDate(),
-													m_pDoc->GetConfig(),
-													pRun,
-													&multiQs))
-												{
-													str.Empty();
-													for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
-														iter != multiQs.end();
-														++iter)
-													{
-														if (!str.IsEmpty())
-															str += "/";
-														str += (*iter)->GetShortName().c_str();
-													}
-												}
+												if (pRun->GetMultiQ())
+													q += pRun->GetMultiQ()->GetShortName().c_str();
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 												{
 													CString tmp;
 													tmp.LoadString(IDS_SQ);
-													if (0 < multiQs.size())
-														str = tmp + "/" + str;
+													if (!q.IsEmpty())
+														q = tmp + "/" + q;
 													else
-														str = tmp;
+														q = tmp;
 												}
 											}
-											data += AddPreviewData(iLine, idx, str);
+											if (q.IsEmpty())
+												q = pRun->GetQ().str().c_str();
+											data += AddPreviewData(iLine, idx, q);
 										}
 										break;
 									case IO_RUNS_SCORE:

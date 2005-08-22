@@ -190,9 +190,8 @@ class ARBTrainingList : public ARBVectorLoad1<ARBTraining>
 public:
 	/**
 	 * Sort the list by date.
-	 * @param inDescending Sort in descending or ascending order.
 	 */
-	void sort(bool inDescending = true);
+	void sort();
 
 	/**
 	 * Get a list of all the different names in the list.

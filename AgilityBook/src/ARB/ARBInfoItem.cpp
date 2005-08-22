@@ -187,25 +187,18 @@ bool ARBInfoItemList::Save(Element& ioTree) const
 class SortInfoItem
 {
 public:
-	SortInfoItem(bool bDescending) : m_bDescending(bDescending) {}
+	SortInfoItem() {}
 	bool operator()(ARBInfoItem* one, ARBInfoItem* two) const
 	{
-		if (one->GetName() < two->GetName())
-			return m_bDescending;
-		else if (one->GetName() > two->GetName())
-			return !m_bDescending;
-		else
-			return !m_bDescending;
+		return one->GetName() < two->GetName();
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBInfoItemList::sort(bool inDescending)
+void ARBInfoItemList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortInfoItem(inDescending));
+	std::stable_sort(begin(), end(), SortInfoItem());
 }
 
 size_t ARBInfoItemList::GetAllItems(std::set<std::string>& outNames) const

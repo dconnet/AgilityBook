@@ -189,9 +189,8 @@ public:
 
 	/**
 	 * Sort the list by name.
-	 * @param inDescending Sort in descending or ascending order.
 	 */
-	void sort(bool inDescending = true);
+	void sort();
 
 	/**
 	 * Get the names of all the items.

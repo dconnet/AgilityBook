@@ -62,6 +62,8 @@ public:
 
 // Attributes
 private:
+	CAgilityBookDoc* m_pDoc;
+	ARBDogTrial* m_pTrial;
 	ARBDogRun* m_pRealRun;
 	ARBDogRun* m_Run;
 	CDlgRunScore* m_pageScore;

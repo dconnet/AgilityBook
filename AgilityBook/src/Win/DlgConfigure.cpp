@@ -1111,6 +1111,7 @@ void CDlgConfigure::OnOK()
 		m_DlgFixup.clear();
 		// Fixup is done, now assign the new config info.
 		m_Book.GetConfig() = m_Config;
+		m_pDoc->GetDogs().SetMultiQs(m_pDoc->GetConfig());
 		m_pDoc->SetModifiedFlag();
 		m_pDoc->UpdateAllViews(NULL, UPDATE_CONFIG);
 	}

@@ -47,6 +47,7 @@ class ARBConfig;
 class ARBConfigDivision;
 class ARBConfigEvent;
 class ARBConfigLevel;
+class ARBConfigMultiQ;
 class ARBConfigVenue;
 class ARBErrorCallback;
 class ARBVersion;
@@ -309,6 +310,7 @@ public:
 	 * Get the number of existing points.
 	 * @param inType Type of existing points to tally.
 	 * @param inVenue Venue to search for.
+	 * @param inMultiQ MultiQ to search for.
 	 * @param inDiv Division to search for.
 	 * @param inLevel Level to search for.
 	 * @param inEvent Event to search for.
@@ -317,6 +319,7 @@ public:
 	short ExistingPoints(
 			ARBDogExistingPoints::PointType inType,
 			ARBConfigVenue const* inVenue,
+			ARBConfigMultiQ const* inMultiQ,
 			ARBConfigDivision const* inDiv,
 			ARBConfigLevel const* inLevel,
 			ARBConfigEvent const* inEvent) const;

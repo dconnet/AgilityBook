@@ -431,23 +431,18 @@ bool ARBConfigVenueList::Load(
 class SortConfigVenue
 {
 public:
-	SortConfigVenue(bool bDescending) : m_bDescending(bDescending) {}
+	SortConfigVenue() {}
 	bool operator()(ARBConfigVenue* one, ARBConfigVenue* two) const
 	{
-		if (one->GetName() < two->GetName())
-			return m_bDescending;
-		else
-			return !m_bDescending;
+		return one->GetName() < two->GetName();
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBConfigVenueList::sort(bool inDescending)
+void ARBConfigVenueList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortConfigVenue(inDescending));
+	std::stable_sort(begin(), end(), SortConfigVenue());
 }
 
 bool ARBConfigVenueList::VerifyVenue(std::string const& inVenue) const
