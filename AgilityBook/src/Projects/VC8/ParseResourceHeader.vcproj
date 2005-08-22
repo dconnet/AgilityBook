@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\..\bin\Win32\VC8\Debug"
-			IntermediateDirectory="..\..\..\..\bin\Win32\VC8\Debug\ParseResourceHeader"
+			OutputDirectory="..\..\..\bin\Win32\VC8\Debug"
+			IntermediateDirectory="..\..\..\bin\Win32\VC8\Debug\ParseResourceHeader"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			CharacterSet="2"
@@ -89,13 +89,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\..\bin\Win32\VC8\Release"
-			IntermediateDirectory="..\..\..\..\bin\Win32\VC8\Release\ParseResourceHeader"
+			OutputDirectory="..\..\..\bin\Win32\VC8\Release"
+			IntermediateDirectory="..\..\..\bin\Win32\VC8\Release\ParseResourceHeader"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			CharacterSet="2"
@@ -162,7 +162,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -175,7 +175,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\ParseResourceHeader\ParseResourceHeader.cpp"
+				RelativePath="..\..\ParseResourceHeader\ParseResourceHeader.cpp"
 				>
 			</File>
 		</Filter>
@@ -185,11 +185,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\Win\resource.h"
+				RelativePath="..\..\Win\resource.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\Win\resource.hm"
+				RelativePath="..\..\Win\resource.hm"
 				>
 			</File>
 		</Filter>
