@@ -13,8 +13,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\bin\Win32\VC7\Debug"
-			IntermediateDirectory="..\..\..\bin\Win32\VC7\Debug\obj"
+			OutputDirectory="..\..\..\bin\VC7\Debug"
+			IntermediateDirectory="..\..\..\bin\VC7\Debug\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="2">
@@ -45,7 +45,7 @@
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="../../../lib/Win32/VC7"
+				AdditionalLibraryDirectories="../../../lib/VC7"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"/>
 			<Tool
@@ -76,8 +76,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\bin\Win32\VC7\Release"
-			IntermediateDirectory="..\..\..\bin\Win32\VC7\Release\obj"
+			OutputDirectory="..\..\..\bin\VC7\Release"
+			IntermediateDirectory="..\..\..\bin\VC7\Release\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="2"
@@ -105,7 +105,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="../../../lib/Win32/VC7"
+				AdditionalLibraryDirectories="../../../lib/VC7"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"

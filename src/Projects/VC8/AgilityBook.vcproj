@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\bin\Win32\VC8\Debug"
-			IntermediateDirectory="..\..\..\bin\Win32\VC8\Debug\obj"
+			OutputDirectory="..\..\..\bin\VC8\Debug"
+			IntermediateDirectory="..\..\..\bin\VC8\Debug\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="2"
@@ -76,7 +76,7 @@
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../../../lib/Win32/VC8"
+				AdditionalLibraryDirectories="../../../lib/VC8"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 			/>
@@ -107,8 +107,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\bin\Win32\VC8\Release"
-			IntermediateDirectory="..\..\..\bin\Win32\VC8\Release\obj"
+			OutputDirectory="..\..\..\bin\VC8\Release"
+			IntermediateDirectory="..\..\..\bin\VC8\Release\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
 			CharacterSet="2"
@@ -161,7 +161,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../../../lib/Win32/VC8"
+				AdditionalLibraryDirectories="../../../lib/VC8"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

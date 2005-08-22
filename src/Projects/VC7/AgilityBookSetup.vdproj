@@ -81,7 +81,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\..\\..\\bin\\Win32\\VC7\\Debug\\AgilityBookSetup.msi"
+        "OutputFilename" = "8:..\\..\\..\\bin\\VC7\\Debug\\AgilityBookSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -97,7 +97,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\..\\..\\bin\\Win32\\VC7\\Release\\AgilityBookSetup.msi"
+        "OutputFilename" = "8:..\\..\\..\\bin\\VC7\\Release\\AgilityBookSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -253,7 +253,7 @@
             }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_B5336E9DBB224077831DEE4A70999CF4"
             {
-            "SourcePath" = "8:..\\..\\..\\bin\\Win32\\pre-Win2K\\DbgHelp.Dll"
+            "SourcePath" = "8:..\\..\\..\\bin\\pre-Win2K\\DbgHelp.Dll"
             "TargetName" = "8:DbgHelp.Dll"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
@@ -1058,7 +1058,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_6ECEE00896D64C0EB4B463E926655387"
             {
-            "SourcePath" = "8:..\\..\\..\\bin\\Win32\\Vc7\\Release\\AgilityBook.exe"
+            "SourcePath" = "8:..\\..\\..\\bin\\Vc7\\Release\\AgilityBook.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"

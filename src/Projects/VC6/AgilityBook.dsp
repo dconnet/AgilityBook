@@ -38,8 +38,8 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 2
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "../../../bin/Win32/VC6/Release"
-# PROP Intermediate_Dir "../../../bin/Win32/VC6/Release/obj"
+# PROP Output_Dir "../../../bin/VC6/Release"
+# PROP Intermediate_Dir "../../../bin/VC6/Release/obj"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib htmlhelp.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../lib/Win32/VC6"
+# ADD LINK32 version.lib htmlhelp.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../lib/VC6"
 # SUBTRACT LINK32 /debug
 
 !ELSEIF  "$(CFG)" == "AgilityBook - Win32 Debug"
@@ -66,8 +66,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 2
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "../../../bin/Win32/VC6/Debug"
-# PROP Intermediate_Dir "../../../bin/Win32/VC6/Debug/obj"
+# PROP Output_Dir "../../../bin/VC6/Debug"
+# PROP Intermediate_Dir "../../../bin/VC6/Debug/obj"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib htmlhelp.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../lib/Win32/VC6"
+# ADD LINK32 version.lib htmlhelp.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../lib/VC6"
 
 !ENDIF 
 
