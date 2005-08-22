@@ -66,7 +66,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBDogRun::ARBDogRun()
-	: m_Date()
+	: m_pMultiQ(NULL)
+	, m_Date()
 	, m_Division()
 	, m_Level()
 	, m_Height()
@@ -89,7 +90,8 @@ ARBDogRun::ARBDogRun()
 }
 
 ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
-	: m_Date(rhs.m_Date)
+	: m_pMultiQ(NULL)
+	, m_Date(rhs.m_Date)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
 	, m_Height(rhs.m_Height)
@@ -113,6 +115,11 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 
 ARBDogRun::~ARBDogRun()
 {
+	if (m_pMultiQ)
+	{
+		m_pMultiQ->Release();
+		m_pMultiQ = NULL;
+	}
 }
 
 ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
@@ -429,6 +436,15 @@ bool ARBDogRun::Save(Element& ioTree) const
 		element.SetValue(*iterLink);
 	}
 	return true;
+}
+
+void ARBDogRun::SetMultiQ(ARBConfigMultiQ* inMultiQ)
+{
+	if (m_pMultiQ)
+		m_pMultiQ->Release();
+	m_pMultiQ = inMultiQ;
+	if (m_pMultiQ)
+		m_pMultiQ->AddRef();
 }
 
 int ARBDogRun::NumOtherPointsInUse(std::string const& inOther) const

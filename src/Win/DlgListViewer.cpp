@@ -88,34 +88,33 @@ protected:
 	UINT m_RefCount;
 };
 
-#define COL_RUN_DATE		0
-#define COL_RUN_STATUS		1
-#define COL_RUN_DOG			2
-#define COL_RUN_Q			3
-#define COL_RUN_TITLE_PTS	4
-#define COL_RUN_SUBNAME		5
-#define COL_RUN_LOCATION	6
-#define COL_RUN_CLUB		7
-#define COL_RUN_JUDGE		8
-#define COL_RUN_PLACE		9
-#define COL_RUN_INCLASS		10
-#define COL_RUN_QD			11
-#define COL_RUN_SPEED		12
-#define COL_RUN_PARTNERS	13
-#define COL_MQ_DATE			0
-#define COL_MQ_LOCATION		1
-#define COL_MQ_CLUB			2
-#define COL_OTHER_DATE		0
-#define COL_OTHER_NAME		1 // Trial, existing pt
-#define COL_OTHER_CLUB		2
-#define COL_OTHER_VENUE		3
-#define COL_OTHER_DIV		4
-#define COL_OTHER_LEVEL		5
-#define COL_OTHER_EVENT		6
-#define COL_OTHER_PTS		7
-#define COL_ITEM_TYPE		0
-#define COL_ITEM_NAME		1
-#define COL_ITEM_COMMENT	2
+// Run/MQ are shared in the DataExisting class, hence they need to use
+// the same column values.
+#define COL_RUN_MQ_DATE			0
+#define COL_RUN_MQ_STATUS		1
+#define COL_RUN_MQ_DOG			2
+#define COL_RUN_MQ_Q			3
+#define COL_RUN_MQ_TITLE_PTS	4
+#define COL_RUN_MQ_SUBNAME		5
+#define COL_RUN_MQ_LOCATION		6
+#define COL_RUN_MQ_CLUB			7
+#define COL_RUN_MQ_JUDGE		8
+#define COL_RUN_MQ_PLACE		9
+#define COL_RUN_MQ_INCLASS		10
+#define COL_RUN_MQ_QD			11
+#define COL_RUN_MQ_SPEED		12
+#define COL_RUN_MQ_PARTNERS		13
+#define COL_OTHER_DATE			0
+#define COL_OTHER_NAME			1 // Trial, existing pt
+#define COL_OTHER_CLUB			2
+#define COL_OTHER_VENUE			3
+#define COL_OTHER_DIV			4
+#define COL_OTHER_LEVEL			5
+#define COL_OTHER_EVENT			6
+#define COL_OTHER_PTS			7
+#define COL_ITEM_TYPE			0
+#define COL_ITEM_NAME			1
+#define COL_ITEM_COMMENT		2
 class CDlgListViewerDataColumns : public CDlgListViewerData
 {
 public:
@@ -174,6 +173,7 @@ private:
 class CDlgListViewerDataExisting : public CDlgListViewerData
 {
 	friend class CDlgListViewerDataRun;
+	friend class CDlgListViewerDataMultiQ;
 public:
 	CDlgListViewerDataExisting(
 			CDlgListViewerDataColumns* inColData,
@@ -198,6 +198,32 @@ private:
 	CDlgListViewerDataColumns* m_ColData;
 	ARBDogExistingPoints const* m_Existing;
 };
+
+CString CDlgListViewerDataExisting::OnNeedText(int iCol) const
+{
+	CString str;
+	switch (m_ColData->GetIndex(iCol))
+	{
+	case COL_RUN_MQ_DATE:
+		str = m_Existing->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
+		break;
+	case COL_RUN_MQ_TITLE_PTS:
+		{
+			short pts = m_Existing->GetPoints();
+			str.Format("%hd", pts);
+		}
+		break;
+	case COL_RUN_MQ_SUBNAME:
+		str = m_Existing->GetSubName().c_str();
+		break;
+	case COL_RUN_MQ_LOCATION:
+		str.LoadString(IDS_EXISTING_POINTS);
+		break;
+	}
+	return str;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 class CDlgListViewerDataRun : public CDlgListViewerData
 {
@@ -244,111 +270,15 @@ private:
 	ScoringRunInfo::eScoringDetail m_ScoringDetail;
 };
 
-CString CDlgListViewerDataExisting::OnNeedText(int iCol) const
-{
-	CString str;
-	switch (m_ColData->GetIndex(iCol))
-	{
-	case COL_RUN_DATE:
-		str = m_Existing->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
-		break;
-	case COL_RUN_TITLE_PTS:
-		{
-			short pts = m_Existing->GetPoints();
-			str.Format("%hd", pts);
-		}
-		break;
-	case COL_RUN_SUBNAME:
-		str = m_Existing->GetSubName().c_str();
-		break;
-	case COL_RUN_LOCATION:
-		str.LoadString(IDS_EXISTING_POINTS);
-		break;
-	}
-	return str;
-}
-
-int CDlgListViewerDataExisting::Compare(
-		CDlgListViewerData const* pRow2,
-		int inCol) const
-{
-	CDlgListViewerDataExisting const* pDataExisting = dynamic_cast<CDlgListViewerDataExisting const*>(pRow2);
-	CDlgListViewerDataRun const* pDataRun = dynamic_cast<CDlgListViewerDataRun const*>(pRow2);
-	if (!pDataExisting && !pDataRun)
-		return 0;
-	std::string str1, str2;
-	switch (m_ColData->GetIndex(inCol))
-	{
-	default:
-	case COL_RUN_DATE:
-		{
-			ARBDate date1 = m_Existing->GetDate();
-			ARBDate date2;
-			if (pDataExisting)
-				date2 = pDataExisting->m_Existing->GetDate();
-			else
-				date2 = pDataRun->m_Run->GetDate();
-			if (date1 < date2)
-				return -1;
-			else if (date1 > date2)
-				return 1;
-			else
-				return 0;
-		}
-		break;
-	case COL_RUN_TITLE_PTS:
-		{
-			short pts1 = m_Existing->GetPoints();
-			short pts2 = 0;
-			if (pDataExisting)
-				pts2 = pDataExisting->m_Existing->GetPoints();
-			else
-			{
-				if (pDataRun->m_Run->GetQ().Qualified() && pDataRun->m_Scoring)
-					pts2 = pDataRun->m_Run->GetTitlePoints(pDataRun->m_Scoring);
-			}
-			if (pts1 < pts2)
-				return -1;
-			else if (pts1 > pts2)
-				return 1;
-			else
-				return 0;
-		}
-		break;
-
-	case COL_RUN_STATUS:
-	case COL_RUN_DOG:
-	case COL_RUN_Q:
-	case COL_RUN_SUBNAME:
-	case COL_RUN_LOCATION:
-	case COL_RUN_CLUB:
-	case COL_RUN_JUDGE:
-	case COL_RUN_PLACE:
-	case COL_RUN_INCLASS:
-	case COL_RUN_QD:
-	case COL_RUN_SPEED:
-	case COL_RUN_PARTNERS:
-		str1 = OnNeedText(inCol);
-		str2 = pRow2->OnNeedText(inCol);
-		break;
-	}
-	if (str1 < str2)
-		return -1;
-	else if (str1 > str2)
-		return 1;
-	else
-		return 0;
-}
-
 CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 {
 	CString str;
 	switch (m_ColData->GetIndex(iCol))
 	{
-	case COL_RUN_DATE:
+	case COL_RUN_MQ_DATE:
 		str = m_Run->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
 		break;
-	case COL_RUN_STATUS: // Only happens for scoring detail items.
+	case COL_RUN_MQ_STATUS: // Only happens for scoring detail items.
 		switch (m_ScoringDetail)
 		{
 		default:
@@ -361,14 +291,14 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 			break;
 		}
 		break;
-	case COL_RUN_DOG: // Only happens for scoring detail items.
+	case COL_RUN_MQ_DOG: // Only happens for scoring detail items.
 		if (m_Dog)
 			str = m_Dog->GetCallName().c_str();
 		break;
-	case COL_RUN_Q:
+	case COL_RUN_MQ_Q:
 		str = m_Run->GetQ().str().c_str();
 		break;
-	case COL_RUN_TITLE_PTS:
+	case COL_RUN_MQ_TITLE_PTS:
 		{
 			short pts = 0;
 			if (m_Run->GetQ().Qualified() && m_Scoring)
@@ -376,33 +306,33 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 			str.Format("%hd", pts);
 		}
 		break;
-	case COL_RUN_SUBNAME:
+	case COL_RUN_MQ_SUBNAME:
 		str = m_Run->GetSubName().c_str();
 		break;
-	case COL_RUN_LOCATION:
+	case COL_RUN_MQ_LOCATION:
 		str = m_Trial->GetLocation().c_str();
 		break;
-	case COL_RUN_CLUB:
+	case COL_RUN_MQ_CLUB:
 		if (m_Trial->GetClubs().GetPrimaryClub())
 			str = m_Trial->GetClubs().GetPrimaryClubName().c_str();
 		break;
-	case COL_RUN_JUDGE:
+	case COL_RUN_MQ_JUDGE:
 		str = m_Run->GetJudge().c_str();
 		break;
-	case COL_RUN_PLACE:
+	case COL_RUN_MQ_PLACE:
 		str.Format("%hd", m_Run->GetPlace());
 		break;
-	case COL_RUN_INCLASS:
+	case COL_RUN_MQ_INCLASS:
 		str.Format("%hd", m_Run->GetInClass());
 		break;
-	case COL_RUN_QD:
+	case COL_RUN_MQ_QD:
 		str.Format("%hd", m_Run->GetDogsQd());
 		break;
-	case COL_RUN_SPEED:
+	case COL_RUN_MQ_SPEED:
 		if (m_Scoring)
 			str.Format("%hd", m_Run->GetSpeedPoints(m_Scoring));
 		break;
-	case COL_RUN_PARTNERS:
+	case COL_RUN_MQ_PARTNERS:
 		for (ARBDogRunPartnerList::const_iterator iter2 = m_Run->GetPartners().begin();
 			iter2 != m_Run->GetPartners().end();
 			++iter2)
@@ -418,6 +348,144 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 	return str;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgListViewerDataMultiQ : public CDlgListViewerData
+{
+	friend class CDlgListViewerDataExisting;
+public:
+	CDlgListViewerDataMultiQ(
+			CDlgListViewerDataColumns* inColData,
+			ARBDate const& inDate,
+			ARBDogTrial const* inTrial)
+		: m_ColData(inColData)
+		, m_Date(inDate)
+		, m_Trial(inTrial)
+	{
+		ASSERT(m_ColData);
+		if (m_ColData)
+			m_ColData->AddRef();
+	}
+	virtual ~CDlgListViewerDataMultiQ()
+	{
+		if (m_ColData)
+			m_ColData->Release();
+	}
+	virtual CString OnNeedText(int iCol) const;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const;
+private:
+	CDlgListViewerDataColumns* m_ColData;
+	ARBDate m_Date;
+	ARBDogTrial const* m_Trial;
+};
+
+CString CDlgListViewerDataMultiQ::OnNeedText(int iCol) const
+{
+	CString str;
+	switch (m_ColData->GetIndex(iCol))
+	{
+	case COL_RUN_MQ_DATE:
+		str = m_Date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
+		break;
+	case COL_RUN_MQ_TITLE_PTS:
+		str = "1";
+		break;
+	case COL_RUN_MQ_LOCATION:
+		str = m_Trial->GetLocation().c_str();
+		break;
+	case COL_RUN_MQ_CLUB:
+		if (m_Trial->GetClubs().GetPrimaryClub())
+			str = m_Trial->GetClubs().GetPrimaryClubName().c_str();
+		break;
+	}
+	return str;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+int CDlgListViewerDataExisting::Compare(
+		CDlgListViewerData const* pRow2,
+		int inCol) const
+{
+	CDlgListViewerDataExisting const* pDataExisting = dynamic_cast<CDlgListViewerDataExisting const*>(pRow2);
+	CDlgListViewerDataRun const* pDataRun = dynamic_cast<CDlgListViewerDataRun const*>(pRow2);
+	CDlgListViewerDataMultiQ const* pDataMultiQ = dynamic_cast<CDlgListViewerDataMultiQ const*>(pRow2);
+	if (!pDataExisting && !pDataRun && !pDataMultiQ)
+		return 0;
+	std::string str1, str2;
+	switch (m_ColData->GetIndex(inCol))
+	{
+	case COL_RUN_MQ_DATE:
+		{
+			ARBDate date1 = m_Existing->GetDate();
+			ARBDate date2;
+			if (pDataExisting)
+				date2 = pDataExisting->m_Existing->GetDate();
+			else if (pDataRun)
+				date2 = pDataRun->m_Run->GetDate();
+			else if (pDataMultiQ)
+				date2 = pDataMultiQ->m_Date;
+			if (date1 < date2)
+				return -1;
+			else if (date1 > date2)
+				return 1;
+			else
+				return 0;
+		}
+		break;
+	case COL_RUN_MQ_TITLE_PTS:
+		{
+			short pts1 = m_Existing->GetPoints();
+			short pts2 = 0;
+			if (pDataExisting)
+				pts2 = pDataExisting->m_Existing->GetPoints();
+			else if (pDataRun)
+			{
+				if (pDataRun->m_Run->GetQ().Qualified() && pDataRun->m_Scoring)
+					pts2 = pDataRun->m_Run->GetTitlePoints(pDataRun->m_Scoring);
+			}
+			else if (pDataMultiQ)
+			{
+				pts2 = 1;
+			}
+			if (pts1 < pts2)
+				return -1;
+			else if (pts1 > pts2)
+				return 1;
+			else
+				return 0;
+		}
+		break;
+
+	default:
+	case COL_RUN_MQ_STATUS:
+	case COL_RUN_MQ_DOG:
+	case COL_RUN_MQ_Q:
+	case COL_RUN_MQ_SUBNAME:
+	case COL_RUN_MQ_LOCATION:
+	case COL_RUN_MQ_CLUB:
+	case COL_RUN_MQ_JUDGE:
+	case COL_RUN_MQ_PLACE:
+	case COL_RUN_MQ_INCLASS:
+	case COL_RUN_MQ_QD:
+	case COL_RUN_MQ_SPEED:
+	case COL_RUN_MQ_PARTNERS:
+		str1 = OnNeedText(inCol);
+		str2 = pRow2->OnNeedText(inCol);
+		break;
+	}
+	if (str1 < str2)
+		return -1;
+	else if (str1 > str2)
+		return 1;
+	else
+		return 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 int CDlgListViewerDataRun::Compare(
 		CDlgListViewerData const* pRow2,
 		int inCol) const
@@ -429,8 +497,7 @@ int CDlgListViewerDataRun::Compare(
 	std::string str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
-	default:
-	case COL_RUN_DATE:
+	case COL_RUN_MQ_DATE:
 		{
 			ARBDate date1 = m_Run->GetDate();
 			ARBDate date2;
@@ -446,7 +513,7 @@ int CDlgListViewerDataRun::Compare(
 				return 0;
 		}
 		break;
-	case COL_RUN_Q:
+	case COL_RUN_MQ_Q:
 		if (pDataRun)
 		{
 			if (m_Run->GetQ() < pDataRun->m_Run->GetQ())
@@ -459,7 +526,7 @@ int CDlgListViewerDataRun::Compare(
 		else
 			return 1;
 		break;
-	case COL_RUN_TITLE_PTS:
+	case COL_RUN_MQ_TITLE_PTS:
 		{
 			short pts1 = 0;
 			if (m_Run->GetQ().Qualified() && m_Scoring)
@@ -480,7 +547,7 @@ int CDlgListViewerDataRun::Compare(
 				return 0;
 		}
 		break;
-	case COL_RUN_PLACE:
+	case COL_RUN_MQ_PLACE:
 		if (pDataRun)
 		{
 			if (m_Run->GetPlace() < pDataRun->m_Run->GetPlace())
@@ -493,7 +560,7 @@ int CDlgListViewerDataRun::Compare(
 		else
 			return 1;
 		break;
-	case COL_RUN_INCLASS:
+	case COL_RUN_MQ_INCLASS:
 		if (pDataRun)
 		{
 			if (m_Run->GetInClass() < pDataRun->m_Run->GetInClass())
@@ -506,7 +573,7 @@ int CDlgListViewerDataRun::Compare(
 		else
 			return 1;
 		break;
-	case COL_RUN_QD:
+	case COL_RUN_MQ_QD:
 		if (pDataRun)
 		{
 			if (m_Run->GetDogsQd() < pDataRun->m_Run->GetDogsQd())
@@ -519,7 +586,7 @@ int CDlgListViewerDataRun::Compare(
 		else
 			return 1;
 		break;
-	case COL_RUN_SPEED:
+	case COL_RUN_MQ_SPEED:
 		if (pDataRun)
 		{
 			if (m_Scoring && !pDataRun->m_Scoring)
@@ -541,11 +608,12 @@ int CDlgListViewerDataRun::Compare(
 		else
 			return 1;
 		break;
-	case COL_RUN_SUBNAME:
-	case COL_RUN_LOCATION:
-	case COL_RUN_CLUB:
-	case COL_RUN_JUDGE:
-	case COL_RUN_PARTNERS:
+	default:
+	case COL_RUN_MQ_SUBNAME:
+	case COL_RUN_MQ_LOCATION:
+	case COL_RUN_MQ_CLUB:
+	case COL_RUN_MQ_JUDGE:
+	case COL_RUN_MQ_PARTNERS:
 		str1 = OnNeedText(inCol);
 		str2 = pRow2->OnNeedText(inCol);
 		break;
@@ -558,84 +626,38 @@ int CDlgListViewerDataRun::Compare(
 		return 0;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
-class CDlgListViewerDataDblQ : public CDlgListViewerData
-{
-public:
-	CDlgListViewerDataDblQ(
-			CDlgListViewerDataColumns* inColData,
-			ARBDate const& inDate,
-			ARBDogTrial const* inTrial)
-		: m_ColData(inColData)
-		, m_Date(inDate)
-		, m_Trial(inTrial)
-	{
-		ASSERT(m_ColData);
-		if (m_ColData)
-			m_ColData->AddRef();
-	}
-	virtual ~CDlgListViewerDataDblQ()
-	{
-		if (m_ColData)
-			m_ColData->Release();
-	}
-	virtual CString OnNeedText(int iCol) const;
-	virtual int Compare(
-			CDlgListViewerData const* pRow2,
-			int inCol) const;
-private:
-	CDlgListViewerDataColumns* m_ColData;
-	ARBDate m_Date;
-	ARBDogTrial const* m_Trial;
-};
-
-CString CDlgListViewerDataDblQ::OnNeedText(int iCol) const
-{
-	CString str;
-	switch (m_ColData->GetIndex(iCol))
-	{
-	case COL_MQ_DATE:
-		str = m_Date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)).c_str();
-		break;
-	case COL_MQ_LOCATION:
-		str = m_Trial->GetLocation().c_str();
-		break;
-	case COL_MQ_CLUB:
-		if (m_Trial->GetClubs().GetPrimaryClub())
-			str = m_Trial->GetClubs().GetPrimaryClubName().c_str();
-		break;
-	}
-	return str;
-}
-
-int CDlgListViewerDataDblQ::Compare(
+int CDlgListViewerDataMultiQ::Compare(
 		CDlgListViewerData const* pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataDblQ const* pData = dynamic_cast<CDlgListViewerDataDblQ const*>(pRow2);
-	if (!pData)
+	CDlgListViewerDataExisting const* pDataExisting = dynamic_cast<CDlgListViewerDataExisting const*>(pRow2);
+	CDlgListViewerDataMultiQ const* pData = dynamic_cast<CDlgListViewerDataMultiQ const*>(pRow2);
+	if (!pDataExisting && !pData)
 		return 0;
 	std::string str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
-	default:
-	case COL_MQ_DATE:
-		if (m_Date < pData->m_Date)
-			return -1;
-		else if (m_Date > pData->m_Date)
-			return 1;
-		else
-			return 0;
-	case COL_MQ_LOCATION:
-		str1 = m_Trial->GetLocation();
-		str2 = pData->m_Trial->GetLocation();
+	case COL_RUN_MQ_DATE:
+		{
+			ARBDate date1 = m_Date;
+			ARBDate date2;
+			if (pDataExisting)
+				date2 = pDataExisting->m_Existing->GetDate();
+			else
+				date2 = pData->m_Date;
+			if (date1 < date2)
+				return -1;
+			else if (date1 > date2)
+				return 1;
+			else
+				return 0;
+		}
 		break;
-	case COL_MQ_CLUB:
-		if (m_Trial->GetClubs().GetPrimaryClub())
-			str1 = m_Trial->GetClubs().GetPrimaryClubName();
-		if (pData->m_Trial->GetClubs().GetPrimaryClub())
-			str2 = pData->m_Trial->GetClubs().GetPrimaryClubName();
+	default:
+	case COL_RUN_MQ_CLUB:
+	case COL_RUN_MQ_LOCATION:
+		str1 = OnNeedText(inCol);
+		str2 = pRow2->OnNeedText(inCol);
 		break;
 	}
 	if (str1 < str2)
@@ -1042,7 +1064,8 @@ CDlgListViewer::CDlgListViewer(
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Data(inData)
+	, m_DataRun(inData)
+	, m_DataMultiQ(NULL)
 	, m_Runs(&inRuns)
 	, m_ScoringRuns(NULL)
 	, m_MultiQdata(NULL)
@@ -1059,6 +1082,7 @@ CDlgListViewer::CDlgListViewer(
 	//}}AFX_DATA_INIT
 }
 
+// Viewing runs affected by configuration changes
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
@@ -1067,7 +1091,8 @@ CDlgListViewer::CDlgListViewer(
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Data(NULL)
+	, m_DataRun(NULL)
+	, m_DataMultiQ(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(&inScoringRuns)
 	, m_MultiQdata(NULL)
@@ -1082,16 +1107,18 @@ CDlgListViewer::CDlgListViewer(
 {
 }
 
-// Viewing double-Qs
+// Viewing multi-Qs
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
+		MultiQInfoData const* inData,
 		std::set<MultiQdata> const& inMQs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Data(NULL)
+	, m_DataRun(NULL)
+	, m_DataMultiQ(inData)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_MultiQdata(&inMQs)
@@ -1115,7 +1142,8 @@ CDlgListViewer::CDlgListViewer(
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Data(NULL)
+	, m_DataRun(NULL)
+	, m_DataMultiQ(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_MultiQdata(NULL)
@@ -1139,7 +1167,8 @@ CDlgListViewer::CDlgListViewer(
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Data(NULL)
+	, m_DataRun(NULL)
+	, m_DataMultiQ(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_MultiQdata(NULL)
@@ -1162,7 +1191,8 @@ CDlgListViewer::CDlgListViewer(
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
-	, m_Data(NULL)
+	, m_DataRun(NULL)
+	, m_DataMultiQ(NULL)
 	, m_Runs(NULL)
 	, m_ScoringRuns(NULL)
 	, m_MultiQdata(NULL)
@@ -1223,10 +1253,10 @@ static void InsertRun(
 	if (pScoring)
 	{
 		if (pScoring->HasSpeedPts())
-			pColData->InsertColumn(ctrlList, COL_RUN_SPEED, IDS_SPEEDPTS);
+			pColData->InsertColumn(ctrlList, COL_RUN_MQ_SPEED, IDS_SPEEDPTS);
 	}
 	if (0 < pRun->GetPartners().size())
-		pColData->InsertColumn(ctrlList, COL_RUN_PARTNERS, IDS_PARTNERS);
+		pColData->InsertColumn(ctrlList, COL_RUN_MQ_PARTNERS, IDS_PARTNERS);
 
 	CDlgListViewerDataRun* pData = new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail);
 	LVITEM item;
@@ -1271,19 +1301,19 @@ BOOL CDlgListViewer::OnInitDialog()
 				names.insert((iter->second)->GetSubName());
 		}
 		std::vector<ARBDogExistingPoints const*> existingRuns;
-		if (m_Data)
+		if (m_DataRun)
 		{
-			for (ARBDogExistingPointsList::const_iterator iter = m_Data->m_Dog->GetExistingPoints().begin();
-				iter != m_Data->m_Dog->GetExistingPoints().end();
+			for (ARBDogExistingPointsList::const_iterator iter = m_DataRun->m_Dog->GetExistingPoints().begin();
+				iter != m_DataRun->m_Dog->GetExistingPoints().end();
 				++iter)
 			{
 				ARBDogExistingPoints const* pExisting = *iter;
 				if (ARBDogExistingPoints::eRuns == pExisting->GetType()
-				&& pExisting->GetVenue() == m_Data->m_Venue->GetName()
-				&& pExisting->GetDivision() == m_Data->m_Div->GetName()
-				&& (pExisting->GetLevel() == m_Data->m_Level->GetName()
-				|| m_Data->m_Level->GetSubLevels().FindSubLevel(pExisting->GetLevel()))
-				&& pExisting->GetEvent() == m_Data->m_Event->GetName())
+				&& pExisting->GetVenue() == m_DataRun->m_Venue->GetName()
+				&& pExisting->GetDivision() == m_DataRun->m_Div->GetName()
+				&& (pExisting->GetLevel() == m_DataRun->m_Level->GetName()
+				|| m_DataRun->m_Level->GetSubLevels().FindSubLevel(pExisting->GetLevel()))
+				&& pExisting->GetEvent() == m_DataRun->m_Event->GetName())
 				{
 					existingRuns.push_back(pExisting);
 					if (0 < pExisting->GetSubName().length())
@@ -1293,20 +1323,20 @@ BOOL CDlgListViewer::OnInitDialog()
 		}
 
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, IDS_COL_DATE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, IDS_COL_Q);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, IDS_COL_TITLE_PTS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_Q, IDS_COL_Q);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, IDS_COL_TITLE_PTS);
 		if (0 < names.size())
-			pColData->InsertColumn(m_ctrlList, COL_RUN_SUBNAME, IDS_COL_SUBNAME);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, IDS_COL_LOCATION);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, IDS_COL_CLUB);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, IDS_COL_JUDGE);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, IDS_COL_PLACE);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, IDS_COL_IN_CLASS);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, IDS_COL_Q_D);
+			pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_SUBNAME, IDS_COL_SUBNAME);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_JUDGE, IDS_COL_JUDGE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_PLACE, IDS_COL_PLACE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_INCLASS, IDS_COL_IN_CLASS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_QD, IDS_COL_Q_D);
 		int iItem = 0;
-		if (m_Data)
+		if (m_DataRun)
 		{
 			for (std::vector<ARBDogExistingPoints const*>::iterator iter = existingRuns.begin();
 				iter != existingRuns.end();
@@ -1337,21 +1367,22 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
+
 	else if (m_ScoringRuns)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(12);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_STATUS, "Status");
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DOG, IDS_COL_DOG);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_DATE, IDS_COL_DATE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_STATUS, "Status");
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DOG, IDS_COL_DOG);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_RUN_Q, IDS_COL_Q);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_TITLE_PTS, IDS_COL_TITLE_PTS);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_LOCATION, IDS_COL_LOCATION);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_CLUB, IDS_COL_CLUB);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_JUDGE, IDS_COL_JUDGE);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_PLACE, IDS_COL_PLACE);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_INCLASS, IDS_COL_IN_CLASS);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_QD, IDS_COL_Q_D);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_Q, IDS_COL_Q);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, IDS_COL_TITLE_PTS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_JUDGE, IDS_COL_JUDGE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_PLACE, IDS_COL_PLACE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_INCLASS, IDS_COL_IN_CLASS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_QD, IDS_COL_Q_D);
 		int iItem = 0;
 		for (std::list<ScoringRunInfo>::const_iterator iter = m_ScoringRuns->begin();
 			iter != m_ScoringRuns->end();
@@ -1364,19 +1395,54 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
+
 	else if (m_MultiQdata)
 	{
+		std::vector<ARBDogExistingPoints const*> existingRuns;
+		if (m_DataMultiQ)
+		{
+			for (ARBDogExistingPointsList::const_iterator iter = m_DataMultiQ->m_Dog->GetExistingPoints().begin();
+				iter != m_DataMultiQ->m_Dog->GetExistingPoints().end();
+				++iter)
+			{
+				ARBDogExistingPoints const* pExisting = *iter;
+				if (ARBDogExistingPoints::eMQ == pExisting->GetType()
+				&& pExisting->GetVenue() == m_DataMultiQ->m_Venue->GetName()
+				&& pExisting->GetMultiQ() == m_DataMultiQ->m_MultiQ->GetName())
+				{
+					existingRuns.push_back(pExisting);
+				}
+			}
+		}
+
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
-		pColData->InsertColumn(m_ctrlList, COL_MQ_DATE, IDS_COL_DATE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_MQ_LOCATION, IDS_COL_LOCATION);
-		pColData->InsertColumn(m_ctrlList, COL_MQ_CLUB, IDS_COL_CLUB);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, IDS_COL_TITLE_PTS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LOCATION, IDS_COL_LOCATION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, IDS_COL_CLUB);
 		int iItem = 0;
+		if (m_DataMultiQ)
+		{
+			for (std::vector<ARBDogExistingPoints const*>::iterator iter = existingRuns.begin();
+				iter != existingRuns.end();
+				++iter)
+			{
+				CDlgListViewerDataExisting* pData = new CDlgListViewerDataExisting(pColData, *iter);
+				LVITEM item;
+				item.mask = LVIF_TEXT | LVIF_PARAM;
+				item.iItem = iItem++;
+				item.iSubItem = 0;
+				item.pszText = LPSTR_TEXTCALLBACK;
+				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+				m_ctrlList.InsertItem(&item);
+			}
+		}
 		for (std::set<MultiQdata>::const_iterator iter = m_MultiQdata->begin();
 			iter != m_MultiQdata->end();
 			++iter)
 		{
-			CDlgListViewerDataDblQ* pData = new CDlgListViewerDataDblQ(pColData, iter->first, iter->second);
+			CDlgListViewerDataMultiQ* pData = new CDlgListViewerDataMultiQ(pColData, iter->first, iter->second);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;
@@ -1388,6 +1454,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
+
 	else if (m_Lifetime)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
@@ -1412,6 +1479,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
+
 	else if (m_OtherData)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(8);
@@ -1442,6 +1510,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
 	}
+
 	else if (m_Items)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);

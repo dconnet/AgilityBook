@@ -204,9 +204,8 @@ class ARBDogTitleList : public ARBVectorLoad2<ARBDogTitle>
 public:
 	/**
 	 * Sort the list by date.
-	 * @param inDescending Sort in descending or ascending order.
 	 */
-	void sort(bool inDescending = true);
+	void sort();
 
 	/**
 	 * Get the number of titles in a venue.

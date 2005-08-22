@@ -602,11 +602,11 @@ void CAgilityBookViewPoints::LoadData()
 								{
 									nExistingPts = pDog->GetExistingPoints().ExistingPoints(
 										ARBDogExistingPoints::eRuns,
-										pVenue, pDiv, pLevel, pEvent);
+										pVenue, NULL, pDiv, pLevel, pEvent);
 									if (pScoringMethod->HasSuperQ())
 										nExistingSQ += pDog->GetExistingPoints().ExistingPoints(
 											ARBDogExistingPoints::eSQ,
-											pVenue, pDiv, pLevel, pEvent);
+											pVenue, NULL, pDiv, pLevel, pEvent);
 								}
 								// Now add the existing lifetime points
 								if (bHasExistingLifetimePoints && 0 < nExistingPts + nExistingSQ)
@@ -685,7 +685,7 @@ void CAgilityBookViewPoints::LoadData()
 						{
 							speedPts += pDog->GetExistingPoints().ExistingPoints(
 								ARBDogExistingPoints::eSpeed,
-								pVenue, pDiv, pLevel, NULL);
+								pVenue, NULL, pDiv, pLevel, NULL);
 						}
 						if (0 < pts.ptList.size())
 							lifetime.push_back(pts);
@@ -701,36 +701,30 @@ void CAgilityBookViewPoints::LoadData()
 				// If the venue has multiQs, tally them now.
 				if (0 < pVenue->GetMultiQs().size())
 				{
-					std::map<ARBConfigMultiQ*, std::set<MultiQdata> > MQs;
+					std::map<ARBConfigMultiQ const*, std::set<MultiQdata> > MQs;
 					for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
 						iterTrial != trialsInVenue.end();
 						++iterTrial)
 					{
 						ARBDogTrial const* pTrial = (*iterTrial);
-						for (ARBDate date = pTrial->GetRuns().GetStartDate();
-							date <= pTrial->GetRuns().GetEndDate();
-							++date)
+						for (ARBDogRunList::const_iterator iterR = pTrial->GetRuns().begin();
+							iterR != pTrial->GetRuns().end();
+							++iterR)
 						{
-							ARBVectorBase<ARBConfigMultiQ> multiQs;
-							if (pTrial->HasMultiQ(date, GetDocument()->GetConfig(), NULL, &multiQs))
+							ARBDogRun const* pRun = *iterR;
+							if (pRun->GetMultiQ())
 							{
-								for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
-									iter != multiQs.end();
-									++iter)
-								{
-									MQs[*iter].insert(MultiQdata(date, pTrial));
-								}
+								MQs[pRun->GetMultiQ()].insert(MultiQdata(pRun->GetDate(), pTrial));
 							}
 						}
 					}
-					for (std::map<ARBConfigMultiQ*, std::set<MultiQdata> >::iterator iter = MQs.begin();
+					for (std::map<ARBConfigMultiQ const*, std::set<MultiQdata> >::iterator iter = MQs.begin();
 						iter != MQs.end();
 						++iter)
 					{
-						int existingDblQs = pDog->GetExistingPoints().ExistingPoints(
-							ARBDogExistingPoints::eMQ,
-							pVenue, NULL, NULL, NULL);
-						InsertData(idxInsertItem, new PointsDataMultiQs(this, existingDblQs, (*iter).first, (*iter).second));
+						InsertData(idxInsertItem,
+							new PointsDataMultiQs(this,
+								pDog, pVenue, (*iter).first, (*iter).second));
 					}
 				}
 			}

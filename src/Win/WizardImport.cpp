@@ -961,6 +961,7 @@ BOOL CWizardImport::OnWizardFinish()
 						pTrial->Release();
 					}
 					pTrial->GetRuns().AddRun(pRun);
+					pTrial->SetMultiQs(m_pDoc->GetConfig());
 					pTrial->GetRuns().sort();
 					pRun->Release();
 					++nAdded;

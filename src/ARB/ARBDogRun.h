@@ -54,6 +54,7 @@
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBConfig;
+class ARBConfigMultiQ;
 class ARBConfigScoring;
 class ARBDogClubList;
 class ARBDogTrial;
@@ -162,6 +163,8 @@ public:
 	/*
 	 * Getters/setters.
 	 */
+	ARBConfigMultiQ const* GetMultiQ() const;
+	void SetMultiQ(ARBConfigMultiQ* inMultiQ);
 	ARBDate const& GetDate() const;
 	void SetDate(ARBDate const& inDate);
 	std::string const& GetDivision() const;
@@ -212,6 +215,7 @@ public:
 
 private:
 	~ARBDogRun();
+	ARBConfigMultiQ* m_pMultiQ; //< Not persisted.
 	ARBDate m_Date;
 	std::string m_Division;
 	std::string m_Level;
@@ -233,6 +237,11 @@ private:
 	typedef std::set<std::string> ARBDogRunLinks;
 	ARBDogRunLinks m_Links;
 };
+
+inline ARBConfigMultiQ const* ARBDogRun::GetMultiQ() const
+{
+	return m_pMultiQ;
+}
 
 inline ARBDate const& ARBDogRun::GetDate() const
 {

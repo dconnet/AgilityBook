@@ -329,35 +329,25 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				str.Format("%hd", m_pRun->GetDogsQd());
 			break;
 		case IO_RUNS_Q:
-			str = m_pRun->GetQ().str().c_str();
-			if (m_pRun->GetQ().Qualified())
 			{
-				ARBVectorBase<ARBConfigMultiQ> multiQs;
-				if (m_pTrial->HasMultiQ(
-					m_pRun->GetDate(),
-					m_pView->GetDocument()->GetConfig(),
-					m_pRun,
-					&multiQs))
+				CString q;
+				if (m_pRun->GetQ().Qualified())
 				{
-					str.Empty();
-					for (ARBVectorBase<ARBConfigMultiQ>::iterator iter = multiQs.begin();
-						iter != multiQs.end();
-						++iter)
+					if (m_pRun->GetMultiQ())
+						q = m_pRun->GetMultiQ()->GetShortName().c_str();
+					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					{
-						if (!str.IsEmpty())
-							str += "/";
-						str += (*iter)->GetShortName().c_str();
+						CString tmp;
+						tmp.LoadString(IDS_SQ);
+						if (!q.IsEmpty())
+							q = tmp + "/" + q;
+						else
+							q = tmp;
 					}
 				}
-				if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
-				{
-					CString tmp;
-					tmp.LoadString(IDS_SQ);
-					if (0 < multiQs.size())
-						str = tmp + "/" + str;
-					else
-						str = tmp;
-				}
+				if (q.IsEmpty())
+					q = m_pRun->GetQ().str().c_str();
+				str += q;
 			}
 			break;
 		case IO_RUNS_SCORE:

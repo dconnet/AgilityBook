@@ -290,7 +290,8 @@ class PointsDataMultiQs : public PointsDataBase
 public:
 	PointsDataMultiQs(
 			CAgilityBookViewPoints* pView,
-			int inExistingDblQs,
+			ARBDog* inDog,
+			ARBConfigVenue* inVenue,
 			ARBConfigMultiQ const* inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
@@ -298,6 +299,8 @@ public:
 	virtual void OnDblClick() const;
 
 protected:
+	ARBDog* m_Dog;
+	ARBConfigVenue* m_Venue;
 	ARBConfigMultiQ const* m_MultiQ;
 	std::set<MultiQdata> m_MQs;
 	int m_ExistingDblQs;

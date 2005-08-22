@@ -684,25 +684,18 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 class SortCalendar
 {
 public:
-	SortCalendar(bool bDescending) : m_bDescending(bDescending) {}
+	SortCalendar() {}
 	bool operator()(ARBCalendar* one, ARBCalendar* two) const
 	{
-		if (one->GetStartDate() < two->GetStartDate())
-			return m_bDescending;
-		else if (one->GetStartDate() > two->GetStartDate())
-			return !m_bDescending;
-		else
-			return !m_bDescending;
+		return one->GetStartDate() < two->GetStartDate();
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBCalendarList::sort(bool inDescending)
+void ARBCalendarList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortCalendar(inDescending));
+	std::stable_sort(begin(), end(), SortCalendar());
 }
 
 size_t ARBCalendarList::GetAllEntered(ARBVectorBase<ARBCalendar>& outEntered) const

@@ -180,25 +180,18 @@ bool ARBTraining::Save(Element& ioTree) const
 class SortTraining
 {
 public:
-	SortTraining(bool bDescending) : m_bDescending(bDescending) {}
+	SortTraining() {}
 	bool operator()(ARBTraining* one, ARBTraining* two) const
 	{
-		if (one->GetDate() < two->GetDate())
-			return m_bDescending;
-		else if (one->GetDate() > two->GetDate())
-			return !m_bDescending;
-		else
-			return !m_bDescending;
+		return one->GetDate() < two->GetDate();
 	}
-private:
-	bool m_bDescending;
 };
 
-void ARBTrainingList::sort(bool inDescending)
+void ARBTrainingList::sort()
 {
 	if (2 > size())
 		return;
-	std::stable_sort(begin(), end(), SortTraining(inDescending));
+	std::stable_sort(begin(), end(), SortTraining());
 }
 
 size_t ARBTrainingList::GetAllNames(std::set<std::string>& outNames) const

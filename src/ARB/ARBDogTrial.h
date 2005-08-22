@@ -102,19 +102,11 @@ public:
 	bool Save(Element& ioTree) const;
 
 	/**
-	 * Does this trial have a multiQ on the given date for the given run?
+	 * Set the MultiQ settings on individual runs. See ARBDogRun::GetMultiQ.
 	 *
-	 * @param inDate Date to check.
 	 * @param inConfig Configuration for looking up information.
-	 * @param inRun Existing run in trial to match a multiQ.
-	 * @param outMultiQs MultiQ configurations that match.
-	 * @return Whether a multiQ was earned on inDate.
 	 */
-	bool HasMultiQ(
-			ARBDate const& inDate,
-			ARBConfig const& inConfig,
-			ARBDogRun const* inRun,
-			ARBVectorBase<ARBConfigMultiQ>* outMultiQs) const;
+	void SetMultiQs(ARBConfig const& inConfig);
 
 	/**
 	 * Get the Speed points earned for this trial.

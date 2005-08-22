@@ -101,8 +101,8 @@ public:
 	 * @return There is a match. Matching runs are removed from the vector.
 	 */
 	bool Match(
-			std::vector<ARBDogRun const*>& ioRuns,
-			std::vector<ARBDogRun const*>& outRuns) const;
+			std::vector<ARBDogRun*>& ioRuns,
+			std::vector<ARBDogRun*>& outRuns) const;
 
 	/**
 	 * Rename a division.

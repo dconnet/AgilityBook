@@ -178,7 +178,10 @@ inline void ARBDogRegNum::SetNote(std::string const& inNote)
 class ARBDogRegNumList : public ARBVectorLoad2<ARBDogRegNum>
 {
 public:
-	void sort(bool inDescending = true);
+	/**
+	 * Sort registration numbers by name.
+	 */
+	void sort();
 
 	/**
 	 * Number of registration numbers for a venue.

@@ -66,6 +66,8 @@ CDlgRun::CDlgRun(
 		CWnd* pParent,
 		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_RUN_PROPERTIES, pParent, iSelectPage)
+	, m_pDoc(pDoc)
+	, m_pTrial(pTrial)
 	, m_pRealRun(pRun)
 	, m_Run(new ARBDogRun(*pRun))
 	, m_pageScore(NULL)
@@ -122,6 +124,7 @@ void CDlgRun::OnOK()
 	if (GetActivePage()->UpdateData(TRUE))
 	{
 		*m_pRealRun = *m_Run;
+		m_pTrial->SetMultiQs(m_pDoc->GetConfig());
 		CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision().c_str());
 		CAgilityBookOptions::SetLastEnteredLevel(m_Run->GetLevel().c_str());
 		CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight().c_str());

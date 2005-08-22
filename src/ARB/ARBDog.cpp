@@ -330,6 +330,19 @@ int ARBDog::DeleteDivision(
 
 /////////////////////////////////////////////////////////////////////////////
 
+void ARBDogList::SetMultiQs(ARBConfig const& inConfig)
+{
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		for (ARBDogTrialList::iterator iterT = (*iter)->GetTrials().begin();
+			iterT != (*iter)->GetTrials().end();
+			++iterT)
+		{
+			(*iterT)->SetMultiQs(inConfig);
+		}
+	}
+}
+
 int ARBDogList::NumExistingPointsInVenue(std::string const& inVenue) const
 {
 	int count = 0;

@@ -231,9 +231,8 @@ public:
 
 	/**
 	 * Sort the list by name.
-	 * @param inDescending Sort in descending or ascending order.
 	 */
-	void sort(bool inDescending = true);
+	void sort();
 
 	/**
 	 * Verify a venue exists.
