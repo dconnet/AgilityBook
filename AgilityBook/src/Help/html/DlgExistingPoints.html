@@ -5,7 +5,7 @@
 </HEAD>
 <BODY>
 <h1>Existing Points Dialog</h1>
-<p>The Existing Points dialog allows you to create or edit a points that you
+<p>The Existing Points dialog allows you to create or edit points that you
 have already earned in a specific venue. This allows you to create a dog in
 Agility Record Book that has been competing for a long time and not have to
 enter every run they have done. (Though some people have commented that doing
@@ -15,11 +15,13 @@ so was a fun jaunt down memory lane...)
 <p>The <b>Points Earned by</b> field is the date the points you are entered 
 where earned by, not necessarily on. <b>Points</b> is the under of points you 
 earned.</p>
-<p>The <b>Type</b> of points will affect which fields are active:</p>
+<p>The <b>Type</b> of points will affect which fields are active
+(these will appear in the <b>Where Points were earned</b> area when you
+select a type):</p>
 <table border="1" cellspacing="1">
   <tr>
     <td><p align="right"><b>Type</b></td>
-    <td><b>Double Q</b></td>
+    <td><b>Multiple Q</b></td>
     <td><b>Speed</b></td>
     <td><b>OtherPoints</b></td>
     <td><b>Run</b></td>
@@ -40,6 +42,14 @@ earned.</p>
     <td>List of configured venues</td>
     <td>List of configured venues</td>
     <td>List of configured venues</td>
+  </tr>
+  <tr>
+    <td>Multiple Q</td>
+    <td>List of configured Multiple Qs</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
   </tr>
   <tr>
     <td>Division</td>
@@ -75,7 +85,7 @@ earned.</p>
     <td>N/A</td>
   </tr>
 </table>
-<p>Note, this dialog does not do any integrity checking, so it is possible you 
+<p>Note, this dialog does little integrity checking, so it is possible you 
 could create an entry with no meaning.</p>
 </BODY>
 </HTML>

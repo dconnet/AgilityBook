@@ -1436,6 +1436,17 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
 END
 
+IDD_DOWNLOAD DIALOGEX 0, 0, 250, 45
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Update Download"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CTEXT           "Version %1 is available. Would you like to download it?",IDC_DOWNLOAD_TEXT,7,7,236,8,SS_NOPREFIX
+    DEFPUSHBUTTON   "From Yahoo...",IDC_DOWNLOAD_YAHOO,13,24,75,14
+    PUSHBUTTON      "From SourceForge...",IDC_DOWNLOAD_SOURCEFORGE,100,24,75,14
+    PUSHBUTTON      "Cancel",IDCANCEL,187,24,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1679,7 +1690,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 300
         TOPMARGIN, 7
-        BOTTOMMARGIN, 160
     END
 
     IDD_TRIAL, DIALOG
@@ -1896,6 +1906,14 @@ BEGIN
         RIGHTMARGIN, 183
         TOPMARGIN, 7
         BOTTOMMARGIN, 49
+    END
+
+    IDD_DOWNLOAD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 38
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2205,6 +2223,10 @@ BEGIN
     IDS_COL_ROLE            "Role"
     IDS_COL_SCH_PRIORITY    "Schedule+ Priority"
     IDS_COL_STATUS          "Status"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_MULTIQ          "MultiQ"
 END
 
@@ -2220,8 +2242,6 @@ BEGIN
     IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
     IDS_ABOUT_LINK_SOURCEFORGE 
                             "Source Forge (downloads and source code)\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
-    IDS_UPDATE_NEWER_VERSION 
-                            "Version %1 is available. Would you like to download it?"
     IDS_UPDATE_CURRENT      "No updates are available at this time."
 END
 

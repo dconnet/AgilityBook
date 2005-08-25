@@ -22,6 +22,7 @@ Help\html\Contact.html
 Help\html\Copyright.html
 Help\html\Dialogs.html
 Help\html\DialogsConfig.html
+Help\html\DialogsFilters.html
 Help\html\DialogsMisc.html
 Help\html\DialogsOptions.html
 Help\html\DialogsProp.html
@@ -35,6 +36,9 @@ Help\html\DlgCRCDViewer.html
 Help\html\DlgDogPicker.html
 Help\html\DlgExistingPoints.html
 Help\html\DlgFault.html
+Help\html\DlgFilterDate.html
+Help\html\DlgFilterLog.html
+Help\html\DlgFilterTrial.html
 Help\html\DlgFind.html
 Help\html\DlgFindLinks.html
 Help\html\DlgJudgeInfo.html
@@ -44,9 +48,7 @@ Help\html\DlgMessages.html
 Help\html\DlgName.html
 Help\html\DlgOptionsCal.html
 Help\html\DlgOptionsFonts.html
-Help\html\DlgOptionsLog.html
 Help\html\DlgOptionsPgm.html
-Help\html\DlgOptionsTrial.html
 Help\html\DlgOtherPoints.html
 Help\html\DlgPartner.html
 Help\html\DlgRefRun.html
@@ -127,11 +129,12 @@ HIDD_SELECT_URL=Help\html\DlgSelectUrl.html
 HIDD_TITLE=Help\html\DlgTitle.html
 HIDD_TRAINING=Help\html\PropLog.html
 HIDD_TRIAL=Help\html\PropTrial.html
+HIDD_VIEW_FILTER_DATE=Help\html\DlgFilterDate.html
+HIDD_VIEW_FILTER_TRAINING=Help\html\DlgFilterLog.html
+HIDD_VIEW_FILTER_RUNS=Help\html\DlgFilterTrial.html
 HIDD_VIEW_OPTIONS_CALENDAR=Help\html\DlgOptionsCal.html
-HIDD_VIEW_OPTIONS_FILTER=Help\html\DlgOptionsTrial.html
 HIDD_VIEW_OPTIONS_FONTS=Help\html\DlgOptionsFonts.html
 HIDD_VIEW_OPTIONS_PROGRAM=Help\html\DlgOptionsPgm.html
-HIDD_VIEW_OPTIONS_TRAINING=Help\html\DlgOptionsLog.html
 HIDD_WIZARD_EXPORT=Help\html\DlgWizardExport.html
 HIDD_WIZARD_IMPORT=Help\html\DlgWizardImport.html
 HIDD_WIZARD_START=Help\html\DlgWizardStart.html

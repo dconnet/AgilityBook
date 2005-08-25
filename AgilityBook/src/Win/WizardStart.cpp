@@ -328,6 +328,7 @@ void CWizardStart::UpdateList()
 	str.Format("%s%d", LAST_STYLEITEM, m_Style);
 	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str, -1);
 	m_ctrlList.SetCurSel(idx);
+	OnSelchangeExportList();
 	UpdateButtons();
 }
 
