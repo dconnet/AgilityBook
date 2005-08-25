@@ -1025,3 +1025,11 @@ Level of this multiple-Q item.
 
 .topic HIDC_EVENT_SELECT_EVENT
 Event of this multiple-Q item.
+
+.topic HIDC_DOWNLOAD_YAHOO
+Download the new version from Yahoo.
+This link is also available in the About box.
+
+.topic HIDC_DOWNLOAD_SOURCEFORGE
+Download the new version from SourceForge.
+This link is also available in the About box.
