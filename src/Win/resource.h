@@ -82,6 +82,7 @@
 #define IDD_PROGRESS_DLG                250
 #define IDD_CONFIG_MULTI_Q              251
 #define IDD_EVENT_SELECT                252
+#define IDD_DOWNLOAD                    253
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -477,6 +478,9 @@
 #define IDC_EVENT_SELECT_DIVISION       1640
 #define IDC_EVENT_SELECT_LEVEL          1641
 #define IDC_EVENT_SELECT_EVENT          1642
+#define IDC_DOWNLOAD_TEXT               1650
+#define IDC_DOWNLOAD_YAHOO              1651
+#define IDC_DOWNLOAD_SOURCEFORGE        1652
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -604,7 +608,6 @@
 #define IDS_ABOUT_LINK_EMAILHELP        5083
 #define IDS_ABOUT_LINK_ARB              5084
 #define IDS_ABOUT_LINK_SOURCEFORGE      5085
-#define IDS_UPDATE_NEWER_VERSION        5086
 #define IDS_UPDATE_CURRENT              5087
 #define IDS_UPDATE_UNKNOWN              5088
 #define IDS_DELETE_EVENT_SCORING_INFO   5089
@@ -765,9 +768,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        250
+#define _APS_NEXT_RESOURCE_VALUE        254
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1650
+#define _APS_NEXT_CONTROL_VALUE         1660
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

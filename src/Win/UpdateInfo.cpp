@@ -45,6 +45,7 @@
 #include "AgilityBook.h"
 
 #include "AgilityBookDoc.h"
+#include "DlgBaseDialog.h"
 #include "Element.h"
 #include "HyperLink.h"
 #include "Splash.h"
@@ -92,6 +93,81 @@ static bool ReadHttpFile(
 		outData.Empty();
 	}
 	return (outData.GetLength() > 0);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDownloadDialog : public CDlgBaseDialog
+{
+public:
+	CDownloadDialog(CVersionNum inVersionNum, CWnd* pParent = NULL)
+		: CDlgBaseDialog(CDownloadDialog::IDD, pParent)
+		, m_VersionNum(inVersionNum)
+	{
+	}
+
+private:
+// Dialog Data
+	enum { IDD = IDD_DOWNLOAD };
+	CStatic m_ctrlText;
+	CVersionNum m_VersionNum;
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
+	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedYahoo();
+	afx_msg void OnBnClickedSourceForge();
+	DECLARE_MESSAGE_MAP()
+};
+
+void CDownloadDialog::DoDataExchange(CDataExchange* pDX)
+{
+	CDlgBaseDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CDlgName)
+	DDX_Control(pDX, IDC_DOWNLOAD_TEXT, m_ctrlText);
+	//}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(CDownloadDialog, CDlgBaseDialog)
+	ON_BN_CLICKED(IDC_DOWNLOAD_YAHOO, OnBnClickedYahoo)
+	ON_BN_CLICKED(IDC_DOWNLOAD_SOURCEFORGE, OnBnClickedSourceForge)
+END_MESSAGE_MAP()
+
+BOOL CDownloadDialog::OnInitDialog()
+{
+	CDlgBaseDialog::OnInitDialog();
+
+	CString msg;
+	m_ctrlText.GetWindowText(msg);
+	CString ver;
+	ver.FormatMessage(msg, (LPCTSTR)m_VersionNum.GetVersionString());
+	m_ctrlText.SetWindowText(ver);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDownloadDialog::OnBnClickedYahoo()
+{
+	CString url;
+	url.LoadString(IDS_ABOUT_LINK_YAHOO_FILES);
+	int nTab = url.Find('\t');
+	if (0 < nTab)
+		url = url.Mid(nTab+1);
+	CHyperLink::GotoURL(url);
+	CDlgBaseDialog::OnOK();
+}
+
+void CDownloadDialog::OnBnClickedSourceForge()
+{
+	CString url;
+	url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
+	int nTab = url.Find('\t');
+	if (0 < nTab)
+		url = url.Mid(nTab+1);
+	CHyperLink::GotoURL(url);
+	CDlgBaseDialog::OnOK();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -202,17 +278,8 @@ bool CUpdateInfo::CheckProgram()
 		bNeedsUpdating = true;
 		CSplashWnd::HideSplashScreen();
 		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
-		CString ver;
-		ver.FormatMessage(IDS_UPDATE_NEWER_VERSION, (LPCTSTR)m_VersionNum.GetVersionString());
-		if (IDYES == AfxMessageBox(ver, MB_ICONQUESTION | MB_YESNO))
-		{
-			CString url;
-			url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
-			int nTab = url.Find('\t');
-			if (0 < nTab)
-				url = url.Mid(nTab+1);
-			CHyperLink::GotoURL(url);
-		}
+		CDownloadDialog dlg(m_VersionNum);
+		dlg.DoModal();
 	}
 	else
 		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
