@@ -269,7 +269,6 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 						iter != matchedRuns.end();
 						++iter)
 					{
-						TRACE("Setting %s\n", (*iter)->GetGenericName().c_str());
 						(*iter)->SetMultiQ(pMultiQ);
 					}
 				}
