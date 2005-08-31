@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-08-09 DRC The wrong item in the tree was selected after reordering.
+ * @li 2005-08-31 DRC The wrong item in the tree was selected after reordering.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-10-04 DRC Added div-by-0 tests.
@@ -749,6 +749,9 @@ void CAgilityBookTree::LoadData()
 		hItem = tree.GetRootItem();
 	tree.SelectItem(hItem);
 	tree.Expand(hItem, TVE_EXPAND);
+	// Reset the context menu reset.
+	// We may have reloaded during a context menu operation.
+	m_bReset = false;
 
 	SetRedraw(TRUE);
 	Invalidate();
