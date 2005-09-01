@@ -1,4 +1,4 @@
-# Doxyfile 1.4.1
+# Doxyfile 1.4.4
 
 #---------------------------------------------------------------------------
 # Project related configuration options
@@ -23,6 +23,7 @@ MULTILINE_CPP_IS_BRIEF = YES
 DETAILS_AT_TOP         = YES
 INHERIT_DOCS           = YES
 DISTRIBUTE_GROUP_DOC   = NO
+SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 4
 ALIASES                = 
 OPTIMIZE_OUTPUT_FOR_C  = NO
@@ -73,7 +74,10 @@ WARN_LOGFILE           = DoxWarnings.log
 INPUT                  = src
 FILE_PATTERNS          = 
 RECURSIVE              = YES
-EXCLUDE                = src/Win/excel8.h
+EXCLUDE                = src/Win/excel8.h \
+                         src/Help \
+                         src/ParseResourceHeader \
+                         src/Projects
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 
 EXAMPLE_PATH           = 
@@ -91,6 +95,7 @@ INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = YES
 REFERENCES_RELATION    = YES
+USE_HTAGS              = NO
 VERBATIM_HEADERS       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the alphabetical class index
