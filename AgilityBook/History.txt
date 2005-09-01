@@ -1,10 +1,10 @@
 8/24/2005: v1.6.0.11 <in development>
 - Bumped file version to 11.0, Configuration v9:
-  - Changed how double-Qs are tallied in order to support QQQs in UKC.
+  - Changed how double-Qs are tallied in order to support triple-Qs in UKC.
   - Fixed configuration for UKC.
+  - Updated comments in configuration for NADAC (titling points) and
+    USDAA (Grand Prix)
 - New features / Enhancements:
-  - Removed ARBDouble as a class, created a to-string helper function.
-  - Cleaned up some object reference counting APIs.
   - Added color coding to calendar for entries that need attention.
   - Added ability to export Calendar entries to Outlook as appointments
     and/or tasks.
