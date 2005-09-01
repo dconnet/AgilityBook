@@ -30,7 +30,7 @@
  * @author David Connet
  *
  * This parses the auto-generated resource.hm in order to convert the hex
- * #defines into decimal so the hhc compiler will work with the text popups.
+ * defines into decimal so the hhc compiler will work with the text popups.
  * It also translates the IDD_ defines from resource.h into contextid.h
  * as id+HID_BASE_RESOURCE.
  *

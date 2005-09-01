@@ -245,12 +245,13 @@ public:
 	 * Verify a multiQ exists.
 	 * @param inVenue Venue to verify.
 	 * @param inMultiQ MultiQ to verify.
+	 * @param inUseShortName Search by shortname instead of longname.
 	 * @return MultiQ exists.
 	 */
 	bool VerifyMultiQ(
 			std::string const& inVenue,
 			std::string const& inMultiQ,
-			bool bUseShortName = false) const;
+			bool inUseShortName = false) const;
 
 	/**
 	 * Verify a level exists.
