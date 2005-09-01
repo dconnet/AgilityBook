@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="10.2">
+<DefaultConfig Book="11.0">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
 2005-07-26 DRC Configuration version 9.
-               Changed how QQs are configured.
+               Changed how QQs to MultiQs.
+               NADAC: Updated comments in Jumpers/Gambles title requirements.
                UKC: Fixed up rules. Added new title.
+               USDAA: Updated some comments in GP.
 2005-03-28 DRC Configuration version 8.
                AAC: Updated 2005 rules.
 2005-02-07 DRC Configuration version 7.
@@ -1103,22 +1105,22 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				<Titles LongName="Elite Agility Certificate" Name="EAC">30 points</Titles>
 				<Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
 				<Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
-				<Titles LongName="Novice Jumpers Certificate" Name="NJC">20 points</Titles>
+				<Titles LongName="Novice Jumpers Certificate" Name="NJC">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Novice Jumpers Certificate Outstanding Performance" Name="O-NJC">50 points</Titles>
 				<Titles LongName="Novice Jumpers Certificate Superior Performance" Name="S-NJC">100 points</Titles>
-				<Titles LongName="Open Jumpers Certificate" Name="OJC">20 points</Titles>
+				<Titles LongName="Open Jumpers Certificate" Name="OJC">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Open Jumpers Certificate Outstanding Performance" Name="O-OJC">50 points</Titles>
 				<Titles LongName="Open Jumpers Certificate Superior Performance" Name="S-OJC">100 points</Titles>
-				<Titles LongName="Elite Jumpers Certificate" Name="EJC">20 points</Titles>
+				<Titles LongName="Elite Jumpers Certificate" Name="EJC">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Elite Jumpers Certificate Outstanding Performance" Name="O-EJC">100 points</Titles>
 				<Titles LongName="Elite Jumpers Certificate Superior Performance" Name="S-EJC">200 points</Titles>
-				<Titles LongName="Novice Gamblers Certificate" Name="NGC">20 points</Titles>
+				<Titles LongName="Novice Gamblers Certificate" Name="NGC">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC">50 points</Titles>
 				<Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC">100 points</Titles>
-				<Titles LongName="Open Gamblers Certificate" Name="OGC">20 points</Titles>
+				<Titles LongName="Open Gamblers Certificate" Name="OGC">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC">50 points</Titles>
 				<Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC">100 points</Titles>
-				<Titles LongName="Elite Gamblers Certificate" Name="EGC">20 points</Titles>
+				<Titles LongName="Elite Gamblers Certificate" Name="EGC">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC">100 points</Titles>
 				<Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC">200 points</Titles>
 				<Titles LongName="Novice Tunnelers Certificate" Name="TN-N">30 points</Titles>
@@ -1202,22 +1204,22 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="Elite Agility Certificate-Veterans" Name="EAC-V">30 points</Titles>
 				<Titles LongName="Elite Agility Certificate-Veterans Outstanding Performance" Name="O-EAC-V"/>
 				<Titles LongName="Elite Agility Certificate-Veterans Superior Performance" Name="S-EAC-V"/>
-				<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V">20 points</Titles>
+				<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Novice Jumpers Certificate-Veterans Outstanding Performance" Name="O-NJC-V"/>
 				<Titles LongName="Novice Jumpers Certificate-Veterans Superior Performance" Name="S-NJC-V"/>
-				<Titles LongName="Open Jumpers Certificate-Veterans" Name="OJC-V">20 points</Titles>
+				<Titles LongName="Open Jumpers Certificate-Veterans" Name="OJC-V">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Open Jumpers Certificate-Veterans Outstanding Performance" Name="O-OJC-V"/>
 				<Titles LongName="Open Jumpers Certificate-Veterans Superior Performance" Name="S-OJC-V"/>
-				<Titles LongName="Elite Jumpers Certificate-Veterans" Name="EJC-V">20 points</Titles>
+				<Titles LongName="Elite Jumpers Certificate-Veterans" Name="EJC-V">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Elite Jumpers Certificate-Veterans Outstanding Performance" Name="O-EJC-V"/>
 				<Titles LongName="Elite Jumpers Certificate-Veterans Superior Performance" Name="S-EJC-V"/>
-				<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V">20 points</Titles>
+				<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Novice Gamblers Certificate-Veterans Outstanding Performance" Name="O-NGC-V"/>
 				<Titles LongName="Novice Gamblers Certificate-Veterans Superior Performance" Name="S-NGC-V"/>
-				<Titles LongName="Open Gamblers Certificate-Veterans" Name="OGC-V">20 points</Titles>
+				<Titles LongName="Open Gamblers Certificate-Veterans" Name="OGC-V">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Open Gamblers Certificate-Veterans Outstanding Performance" Name="O-OGC-V"/>
 				<Titles LongName="Open Gamblers Certificate-Veterans Superior Performance" Name="S-OGC-V"/>
-				<Titles LongName="Elite Gamblers Certificate-Veterans" Name="EGC-V">20 points</Titles>
+				<Titles LongName="Elite Gamblers Certificate-Veterans" Name="EGC-V">30 points (20 pts before 8/1/2005)</Titles>
 				<Titles LongName="Elite Gamblers Certificate-Veterans Outstanding Performance" Name="O-EGC-V"/>
 				<Titles LongName="Elite Gamblers Certificate-Veterans Superior Performance" Name="S-EGC-V"/>
 				<Titles LongName="Novice Triple Superior Performance Dog" Name="Novice Triple Superior Performance Dog">S-NAC-V, S-NGC-V, S-NJC-V</Titles>
@@ -1762,9 +1764,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 					<TitlePoints Faults="7" Points="1"/>
 					<LifeTime Faults="7" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime"/>
+				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime">
+					<Note>For tracking purposes, you can use this to record Veterans GP also. (More notes in the Tournament scoring method)</Note>
+				</Scoring>
 				<Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" type="FaultsThenTime">
-					<Note>Effective starting in 2004</Note>
+					<Note>Effective starting in 2004
+Known as "Performance Grand Prix" (2004) and "Performance National Standard" (2005)</Note>
 					<TitlePoints Faults="7" Points="1"/>
 					<LifeTime Faults="7" Points="1"/>
 				</Scoring>

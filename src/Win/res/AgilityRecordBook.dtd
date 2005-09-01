@@ -11,7 +11,7 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-07-15 DRC File version 11.
+2005-07-15 DRC File version 11.0.
                Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
 2005-04-26 DRC File version 10.2.
                Added 'ver' to 'AgilityBook'
