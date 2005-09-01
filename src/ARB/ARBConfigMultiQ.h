@@ -306,12 +306,12 @@ public:
 	/**
 	 * Find a MultiQ by name.
 	 * @param inName Multi-Q to find
-	 * @param inShortName Search by shortname instead of longname.
+	 * @param inUseShortName Search by shortname instead of longname.
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
 	bool FindMultiQ(
 			std::string const& inName,
-			bool bUseShortName = false,
+			bool inUseShortName = false,
 			ARBConfigMultiQ** outMultiQ = NULL) const;
 
 	/**

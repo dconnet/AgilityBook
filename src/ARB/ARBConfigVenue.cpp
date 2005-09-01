@@ -453,13 +453,13 @@ bool ARBConfigVenueList::VerifyVenue(std::string const& inVenue) const
 bool ARBConfigVenueList::VerifyMultiQ(
 		std::string const& inVenue,
 		std::string const& inMultiQ,
-		bool bUseShortName) const
+		bool inUseShortName) const
 {
 	bool bOk = false;
 	ARBConfigVenue* pVenue;
 	if (FindVenue(inVenue, &pVenue))
 	{
-		bOk = pVenue->GetMultiQs().FindMultiQ(inMultiQ, bUseShortName);
+		bOk = pVenue->GetMultiQs().FindMultiQ(inMultiQ, inUseShortName);
 		pVenue->Release();
 	}
 	return bOk;

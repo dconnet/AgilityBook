@@ -514,15 +514,15 @@ bool ARBConfigMultiQList::Load(
 
 bool ARBConfigMultiQList::FindMultiQ(
 		std::string const& inName,
-		bool bUseShortName,
+		bool inUseShortName,
 		ARBConfigMultiQ** outMultiQ) const
 {
 	if (outMultiQ)
 		*outMultiQ = NULL;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((!bUseShortName && *iter && (*iter)->GetName() == inName)
-		|| (bUseShortName && *iter && (*iter)->GetShortName() == inName))
+		if ((!inUseShortName && *iter && (*iter)->GetName() == inName)
+		|| (inUseShortName && *iter && (*iter)->GetShortName() == inName))
 		{
 			if (outMultiQ)
 			{
