@@ -535,7 +535,7 @@ short ARBDogRun::GetTitlePoints(
 			double faults = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
 			{
-				if (0 == m_Scoring.GetSCT() || faults <= m_Scoring.GetSCT())
+				if (ARBDouble::equal(m_Scoring.GetSCT(), 0) || faults <= m_Scoring.GetSCT())
 				{
 					if (outClean)
 						*outClean = true;
@@ -546,7 +546,7 @@ short ARBDogRun::GetTitlePoints(
 			}
 			else
 			{
-				if (0 == faults)
+				if (ARBDouble::equal(faults, 0))
 				{
 					if (outClean)
 						*outClean = true;

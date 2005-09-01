@@ -265,4 +265,9 @@ public:
 	static std::string str(
 			double inValue,
 			int inPrec = 2);
+
+	/**
+	 * Compare two doubles, allowing for DBL_EPSILON error.
+	 */
+	static bool equal(double const& inVal1, double const& inVal2);
 };

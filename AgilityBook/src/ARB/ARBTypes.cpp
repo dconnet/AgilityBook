@@ -39,6 +39,7 @@
 #include "StdAfx.h"
 #include "ARBTypes.h"
 #include <sstream>
+#include <float.h>
 #include <time.h>
 
 #include "ARBAgilityRecordBook.h"
@@ -206,4 +207,10 @@ std::string ARBDouble::str(
 		}
 	}
 	return retVal;
+}
+
+bool ARBDouble::equal(double const& inVal1, double const& inVal2)
+{
+	double diff = inVal1 - inVal2;
+	return diff <= DBL_EPSILON;
 }
