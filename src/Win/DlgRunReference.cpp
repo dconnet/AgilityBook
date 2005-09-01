@@ -199,7 +199,7 @@ CDlgRunReference::CDlgRunReference(
 		if (pRef->GetQ() == m_pRefRunMe->GetQ()
 		&& pRef->GetPlace() == m_pRefRunMe->GetPlace()
 		&& pRef->GetName() == m_pRefRunMe->GetName()
-		&& pRef->GetTime() == m_pRefRunMe->GetTime()
+		&& ARBDouble::equal(pRef->GetTime(), m_pRefRunMe->GetTime())
 		&& pRef->GetScore() == m_pRefRunMe->GetScore())
 		{
 			m_pRefRunMe->Release();
