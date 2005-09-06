@@ -1,29 +1,55 @@
 <p>(Click on an entry to expand it.)</p>
 <ul dynamicoutline initcollapsed type="circle">
-	<li><b><a name="v1.5.5.10">7/10/2005: v1.5.5.10 (in development)</a></b>
+	<li><b><a name="v1.6.0.11">9/6/2005: v1.6.0.11</a></b>
 		<ul>
+			<li>Bumped file version to 11, Configuration v9
+				<ul type="disc">
+					<li>Changed how double-Qs are tallied in order to support
+					triple-Qs in UKC.</li>
+					<li>Fixed configuration for UKC.</li>
+					<li>Updated comments in configuration for NADAC (titling
+					points) and USDAA (Grand Prix)</li>
+				</ul>
+			</li>
 			<li>New features / Enhancements:
 				<ul type="disc">
 					<li>Added color coding to calendar for entries that need
 					attention.</li>
 					<li>Added ability to export Calendar entries to Outlook
 					as appointments and/or tasks.</li>
+					<li>Added ability to export Calendar entries in vCal/iCal
+					format.</li>
 					<li>Remember the last entered height in the Reference Run
 					dialog.</li>
 					<li>Re-worked layout in Reference Run dialog to make it
 					flow better.</li>
 					<li>Changed default Qing in Reference Run dialog to a 'Q'.</li>
 					<li>Added a button in the Reference Runs page to add yourself.</li>
+					<li>Remember the type of last import/export done.</li>
+					<li>Changed the term 'Double-Q' to 'Multiple-Q' to handle
+					UKC's TripleQ.</li>
+					<li>When importing ARB files, update Registration Numbers
+					and Titles that are different.</li>
+					<li>Split Options and Filters (F7). Added date filtering on
+					calendar. The same date filter is applied to all items.</li>
+					<li>When a new version is detected, offer a choice of
+					Yahoo or SourceForge to download from.</li>
 				</ul>
 			</li>
-		</ul>
-		<ul>
 			<li>Bug fixes
 				<ul type="disc">
 					<li>When multiple items are selected in the main list views,
 					the right-click menu doesn't properly work on all the items.</li>
 					<li>When an error occured while reading a file,
 					the error message was mangled.</li>
+					<li>Fixed a problem where the UI didn't reflect a change
+					in the trial date ordering.</li>
+					<li>The wrong item in the tree was selected after
+					reordering in the tree.</li>
+					<li>Added validation during import to make sure venue
+					names are correct. It was possible to import bad data
+					which, when we attempted to edit later, caused the program
+					to crash.</li>
 				</ul>
 			</li>
 		</ul>
@@ -47,8 +73,6 @@
 					<li>Added 'ver' to 'AgilityBook'.</li>
 				</ul>
 			</li>
-		</ul>
-		<ul>
 			<li>New features / Enhancements:
 				<ul type="disc">
 					<li>Made the hyperlinks on the About box accessible by
@@ -64,8 +88,6 @@
 					works properly.</li>
 				</ul>
 			</li>
-		</ul>
-		<ul>
 			<li>Bug fixes
 				<ul type="disc">
 					<li>Accessing the Notes (club/judge/location) information

@@ -1,4 +1,4 @@
-8/24/2005: v1.6.0.11 <in development>
+9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:
   - Changed how double-Qs are tallied in order to support triple-Qs in UKC.
   - Fixed configuration for UKC.
@@ -27,9 +27,9 @@
   - When an error occured while reading a file, the error message was mangled.
   - Fixed a problem where the UI didn't reflect a change in the trial date
     ordering.
-  - The wrong item in the tree was selected after reordering.
+  - The wrong item in the tree was selected after reordering in the tree.
   - Added validation during import to make sure venue names are correct. It
-    was possible to import bad data which when we attempted to edit later
+    was possible to import bad data which, when we attempted to edit later,
     caused the program to crash.
 
 6/11/2005: v1.5.4.10
