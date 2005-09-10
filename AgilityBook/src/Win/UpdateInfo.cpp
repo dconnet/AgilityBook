@@ -36,6 +36,8 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
+ *                    I can now advertise the url as "www.agilityrecordbook.com"
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-08-03 DRC Created
  */
@@ -60,37 +62,142 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+static DWORD dwHttpRequestFlags = INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
+static const TCHAR szHeaders[] = _T("Accept: text\r\n");
+
 /**
  * Read a file from the internet and return the data.
  */
 static bool ReadHttpFile(
 		CString const& inURL,
-		CString& outData)
+		CString& outData,
+		CString& outErrMsg)
 {
 	CWaitCursor wait;
 	outData.Empty();
+	outErrMsg.Empty();
 	try
 	{
-		CInternetSession session("my version");
-		CStdioFile* pFile = session.OpenURL(inURL);
-		if (pFile)
+		// Code is based on the MSDN 'TEAR' sample.
+		// Simply using OpenURL() is easier, but it doesn't handle redirection.
+		DWORD dwRet;
+		CString strServerName;
+		CString strObject;
+		INTERNET_PORT nPort;
+		DWORD dwServiceType;
+
+		if (AfxParseURL(inURL, dwServiceType, strServerName, strObject, nPort)
+		&& dwServiceType == INTERNET_SERVICE_HTTP)
 		{
-			char buffer[1025];
-			UINT nChars;
-			while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
+			CInternetSession session("my version");
+
+			CHttpConnection* pServer = session.GetHttpConnection(strServerName, nPort);
+			CHttpFile* pFile = pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
+				strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
+			pFile->AddRequestHeaders(szHeaders);
+			pFile->SendRequest();
+			pFile->QueryInfoStatusCode(dwRet);
+			// If we've been redirected, re-parse. In theory SendRequest()
+			// should do this if NO_AUTO_REDIRECT is not specified. I haven't
+			// figured out how yet...
+			if (dwRet == HTTP_STATUS_MOVED
+			|| dwRet == HTTP_STATUS_REDIRECT
+			|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
 			{
-				buffer[nChars] = 0;
-				outData += buffer;
+				CString strNewLocation;
+				pFile->QueryInfo(HTTP_QUERY_RAW_HEADERS_CRLF, strNewLocation);
+				int nPlace = strNewLocation.Find(_T("Location: "));
+				if (-1 == nPlace)
+				{
+					outErrMsg += "\nInvalid Header query: " + strNewLocation;
+					strNewLocation.Empty();
+				}
+				else
+				{
+					strNewLocation = strNewLocation.Mid(nPlace + 10);
+					nPlace = strNewLocation.Find('\n');
+					if (nPlace > 0)
+						strNewLocation = strNewLocation.Left(nPlace);
+					// Put what we're accessing back into the url.
+					strNewLocation += strObject;
+				}
+				// Now close the existing connections...
+				pFile->Close();
+				delete pFile;
+				pFile = NULL;
+				pServer->Close();
+				delete pServer;
+				pServer = NULL;
+				// And reopen them.
+				if (!strNewLocation.IsEmpty()
+				&& AfxParseURL(strNewLocation, dwServiceType, strServerName, strObject, nPort))
+				{
+					// try again at the new location
+					pServer = session.GetHttpConnection(strServerName, nPort);
+					pFile = pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
+						strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
+					pFile->AddRequestHeaders(szHeaders);
+					pFile->SendRequest();
+					pFile->QueryInfoStatusCode(dwRet);
+					if (dwRet == HTTP_STATUS_MOVED
+					|| dwRet == HTTP_STATUS_REDIRECT
+					|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
+					{
+						outErrMsg += "\nURL Redirection: " + inURL;
+						outErrMsg += "\nInvalid URL (2nd redirection): " + strNewLocation;
+						pFile->Close();
+						delete pFile;
+						pFile = NULL;
+					}
+					else if (dwRet != HTTP_STATUS_OK)
+					{
+						outErrMsg += "\nInvalid URL: " + strNewLocation;
+						pFile->Close();
+						delete pFile;
+						pFile = NULL;
+					}
+				}
+				else
+				{
+					outErrMsg += "\nInvalid URL: " + strNewLocation;
+				}
 			}
-			pFile->Close();
-			delete pFile;
+			else if (dwRet != HTTP_STATUS_OK)
+			{
+				outErrMsg += "\nInvalid URL: " + inURL;
+				pFile->Close();
+				delete pFile;
+				pFile = NULL;
+			}
+			if (pFile)
+			{
+				char buffer[1025];
+				UINT nChars;
+				while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
+				{
+					buffer[nChars] = 0;
+					outData += buffer;
+				}
+				pFile->Close();
+				delete pFile;
+			}
+			if (pServer)
+			{
+				pServer->Close();
+				delete pServer;
+			}
+			session.Close();
 		}
-		session.Close();
+		else
+		{
+			outErrMsg += "\nInvalid URL: " + inURL;
+		}
 	}
 	catch (CInternetException* ex)
 	{
 		ex->Delete();
 		outData.Empty();
+		outErrMsg += "\nError: Is your internet connection active?";
 	}
 	return (outData.GetLength() > 0);
 }
@@ -197,13 +304,16 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	CString url;
 	url.LoadString(IDS_HELP_UPDATE);
 	url += "/version.txt";
-	CString data;
-	if (!ReadHttpFile(url, data))
+	CString data, errMsg;
+	if (!ReadHttpFile(url, data, errMsg))
 	{
 		if (bVerbose)
 		{
 			CSplashWnd::HideSplashScreen();
-			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
+			data.LoadString(IDS_UPDATE_UNKNOWN);
+			if (!errMsg.IsEmpty())
+				data += errMsg;
+			AfxMessageBox(data, MB_ICONEXCLAMATION);
 		}
 		return false;
 	}
@@ -332,8 +442,8 @@ void CUpdateInfo::CheckConfig(
 			url.LoadString(IDS_HELP_UPDATE);
 			url += "/";
 			url += m_FileName.c_str();
-			CString strConfig;
-			if (ReadHttpFile(url, strConfig))
+			CString strConfig, errMsg;
+			if (ReadHttpFile(url, strConfig, errMsg))
 			{
 				Element tree;
 				std::string errMsg;
