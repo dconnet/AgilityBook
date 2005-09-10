@@ -1941,8 +1941,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,6,0,11
- PRODUCTVERSION 1,6,0,11
+ FILEVERSION 1,6,1,11
+ PRODUCTVERSION 1,6,1,11
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1959,12 +1959,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "dcon Software"
             VALUE "FileDescription", "Agility Record Book"
-            VALUE "FileVersion", "1.6.0.11"
+            VALUE "FileVersion", "1.6.1.11"
             VALUE "InternalName", "AgilityBook.exe"
             VALUE "LegalCopyright", "Copyright © 2002-2005 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
-            VALUE "ProductVersion", "1.6.0.11"
+            VALUE "ProductVersion", "1.6.1.11"
         END
     END
     BLOCK "VarFileInfo"
@@ -2722,7 +2722,7 @@ BEGIN
     IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
     IDS_ABOUT_VERSION       "Version %1"
     IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
-    IDS_HELP_UPDATE         "http://dconnet.home.comcast.net"
+    IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
     IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
     IDS_ABOUT_LINK_EMAILHELP 
                             "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
@@ -2734,7 +2734,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_UPDATE_UNKNOWN      "Unable to determine current released version. (Is your internet connection alive?)"
+    IDS_UPDATE_UNKNOWN      "Unable to determine current released version."
     IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
     IDS_DELETE_EVENT_SCORING 
                             "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."

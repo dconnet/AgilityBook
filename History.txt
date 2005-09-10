@@ -1,3 +1,8 @@
+9/9/2005: v1.6.1.11 <in development>
+- New features / Enhancements:
+  - Changed how URLs are accessed to allow for redirection. The program now
+    only knows about agilityrecordbook.com, not where that is hosted.
+
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:
   - Changed how double-Qs are tallied in order to support triple-Qs in UKC.
