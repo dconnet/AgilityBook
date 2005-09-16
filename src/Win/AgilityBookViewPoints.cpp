@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-09-15 DRC Added code to filter multi-Qs by date (forgot it - oops!)
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
@@ -712,7 +713,9 @@ void CAgilityBookViewPoints::LoadData()
 							++iterR)
 						{
 							ARBDogRun const* pRun = *iterR;
-							if (pRun->GetMultiQ())
+							if (pRun->GetMultiQ()
+							&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
+							&& CAgilityBookOptions::IsRunVisible(venues, pVenue, pTrial, pRun))
 							{
 								MQs[pRun->GetMultiQ()].insert(MultiQdata(pRun->GetDate(), pTrial));
 							}
