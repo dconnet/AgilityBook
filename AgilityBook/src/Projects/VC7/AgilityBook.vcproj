@@ -177,6 +177,9 @@
 				RelativePath="..\..\Win\AgilityBookViewTraining.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\CheckLink.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\CheckTreeCtrl.cpp">
 			</File>
 			<File
@@ -464,6 +467,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewTraining.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\CheckLink.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\CheckTreeCtrl.h">

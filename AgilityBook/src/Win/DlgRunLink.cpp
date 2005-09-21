@@ -40,6 +40,7 @@
 #include "DlgRunLink.h"
 
 #include "ARBDogRun.h"
+#include "CheckLink.h"
 #include "DlgSelectURL.h"
 
 #ifdef _DEBUG
@@ -132,32 +133,10 @@ int CDlgRunLink::GetImageIndex(std::string const& inLink)
 	int img = m_imgEmpty;
 	if (0 < inLink.length())
 	{
-		img = m_imgMissing;
-		try
-		{
-			CStdioFile* pFile = m_Session.OpenURL(inLink.c_str());
-			if (pFile)
-			{
-				img = m_imgOk;
-				pFile->Close();
-				delete pFile;
-			}
-		}
-		catch (CFileException* ex)
-		{
-			ex->Delete();
-			// If the session threw, try normal file access apis...
-			CFileStatus status;
-			if (CFile::GetStatus(inLink.c_str(), status))
-				img = m_imgOk;
-		}
-		catch (CInternetException* ex)
-		{
-			// I'm not sure how to tell if the url is bad or
-			// the connection doesn't exist...
-			ex->Delete();
+		if (CheckLink(m_Session, inLink))
+			img = m_imgOk;
+		else
 			img = m_imgMissing;
-		}
 	}
 	return img;
 }

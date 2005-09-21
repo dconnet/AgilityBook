@@ -6,6 +6,7 @@
 	ProjectGUID="{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 	RootNamespace="AgilityBook"
 	Keyword="MFCProj"
+	SignManifests="true"
 	>
 	<Platforms>
 		<Platform
@@ -241,6 +242,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewTraining.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CheckLink.h"
 				>
 			</File>
 			<File
@@ -1031,6 +1036,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewTraining.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CheckLink.cpp"
 				>
 			</File>
 			<File
