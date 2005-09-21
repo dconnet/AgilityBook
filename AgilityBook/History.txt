@@ -1,9 +1,11 @@
-9/15/2005: v1.6.1.11 <in development>
+9/20/2005: v1.6.1.11 <in development>
 - New features / Enhancements:
   - Changed how URLs are accessed to allow for redirection. The program now
     only knows about agilityrecordbook.com, not where that is hosted.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
+  - Adding yourself as a reference run was not obtaining up-to-date
+    information from the scoring tab.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:
