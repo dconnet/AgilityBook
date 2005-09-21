@@ -42,6 +42,7 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "CheckLink.h"
 #include "DlgSelectURL.h"
 
 #ifdef _DEBUG
@@ -148,7 +149,6 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_sortLinks("Links")
 	, m_Session("findLink")
 {
-	m_Session.EnableStatusCallback();
 	m_sortLinks.Initialize(nColLinkInfo);
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
 	CWinApp* app = AfxGetApp();
@@ -188,7 +188,6 @@ CDlgFindLinks::CDlgFindLinks(
 
 CDlgFindLinks::~CDlgFindLinks()
 {
-	m_Session.Close();
 }
 
 void CDlgFindLinks::DoDataExchange(CDataExchange* pDX)
@@ -221,32 +220,10 @@ int CDlgFindLinks::GetImageIndex(std::string const& inLink)
 	int img = m_imgEmpty;
 	if (0 < inLink.length())
 	{
-		img = m_imgMissing;
-		try
-		{
-			CStdioFile* pFile = m_Session.OpenURL(inLink.c_str());
-			if (pFile)
-			{
-				img = m_imgOk;
-				pFile->Close();
-				delete pFile;
-			}
-		}
-		catch (CFileException* ex)
-		{
-			ex->Delete();
-			// If the session threw, try normal file access apis...
-			CFileStatus status;
-			if (CFile::GetStatus(inLink.c_str(), status))
-				img = m_imgOk;
-		}
-		catch (CInternetException* ex)
-		{
-			// I'm not sure how to tell if the url is bad or
-			// the connection doesn't exist...
-			ex->Delete();
+		if (CheckLink(m_Session, inLink))
+			img = m_imgOk;
+		else
 			img = m_imgMissing;
-		}
 	}
 	return img;
 }

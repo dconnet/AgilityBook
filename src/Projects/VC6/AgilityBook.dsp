@@ -142,6 +142,10 @@ SOURCE=..\..\Win\AgilityBookViewTraining.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\CheckLink.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\CheckTreeCtrl.cpp
 # End Source File
 # Begin Source File
@@ -504,6 +508,10 @@ SOURCE=..\..\Win\AgilityBookViewRuns.h
 # Begin Source File
 
 SOURCE=..\..\Win\AgilityBookViewTraining.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\CheckLink.h
 # End Source File
 # Begin Source File
 
