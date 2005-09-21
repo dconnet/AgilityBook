@@ -76,10 +76,13 @@ private:
 	//{{AFX_VIRTUAL(CDlgRunReference)
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual BOOL OnSetActive();
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
+	bool IsRefRunMe();
+	void CreateRefRunMe();
 	void UpdateButtons();
 	void SetColumnHeaders();
 	void ListRuns();

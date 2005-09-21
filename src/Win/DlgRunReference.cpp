@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-09-20 DRC Added yourself was not getting up-to-date scoring info.
  * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
  *                    Make default ref-run a 'Q'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -46,6 +47,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBDogRun.h"
 #include "DlgReferenceRun.h"
+#include ".\dlgrunreference.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -169,45 +171,6 @@ CDlgRunReference::CDlgRunReference(
 	m_Venue->AddRef();
 	m_sortRefRuns.Initialize(scNumColumns);
 
-	// Create the 'me' reference run.
-	m_pRefRunMe = new ARBDogReferenceRun();
-	m_pRefRunMe->SetQ(m_Run->GetQ());
-	m_pRefRunMe->SetPlace(m_Run->GetPlace());
-	m_pRefRunMe->SetName(m_pDoc->GetCurrentDog()->GetCallName());
-	m_pRefRunMe->SetHeight(m_Run->GetHeight());
-	m_pRefRunMe->SetBreed(m_pDoc->GetCurrentDog()->GetBreed());
-	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
-	ARBConfigScoring* pScoring;
-	if (m_pDoc->GetConfig().GetVenues().FindEvent(
-		m_Venue->GetName(),
-		m_Run->GetEvent(),
-		m_Run->GetDivision(),
-		m_Run->GetLevel(),
-		m_Run->GetDate(),
-		&pScoring))
-	{
-		m_pRefRunMe->SetScore(ARBDouble::str(m_Run->GetScore(pScoring)));
-		pScoring->Release();
-	}
-	// Now see if I'm already in there.
-	// Only compare: Q/Place/Name/Time/Score.
-	for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
-		iterRef != m_Run->GetReferenceRuns().end();
-		++iterRef)
-	{
-		ARBDogReferenceRun* pRef = *iterRef;
-		if (pRef->GetQ() == m_pRefRunMe->GetQ()
-		&& pRef->GetPlace() == m_pRefRunMe->GetPlace()
-		&& pRef->GetName() == m_pRefRunMe->GetName()
-		&& ARBDouble::equal(pRef->GetTime(), m_pRefRunMe->GetTime())
-		&& pRef->GetScore() == m_pRefRunMe->GetScore())
-		{
-			m_pRefRunMe->Release();
-			m_pRefRunMe = pRef;
-			m_pRefRunMe->AddRef();
-			break;
-		}
-	}
 	//{{AFX_DATA_INIT(CDlgRunReference)
 	//}}AFX_DATA_INIT
 }
@@ -246,24 +209,72 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDlgRunReference::UpdateButtons()
+bool CDlgRunReference::IsRefRunMe()
 {
-	BOOL bEnableAdd = FALSE;
 	if (m_pRefRunMe)
 	{
-		bEnableAdd = TRUE;
 		for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
 			iterRef != m_Run->GetReferenceRuns().end();
 			++iterRef)
 		{
 			if (*iterRef == m_pRefRunMe)
 			{
-				bEnableAdd = FALSE;
-				break;
+				return true;
 			}
 		}
 	}
-	m_ctrlAdd.EnableWindow(bEnableAdd);
+	return false;
+}
+
+void CDlgRunReference::CreateRefRunMe()
+{
+	// Create the 'me' reference run.
+	if (m_pRefRunMe)
+		m_pRefRunMe->Release();
+	m_pRefRunMe = new ARBDogReferenceRun();
+	m_pRefRunMe->SetQ(m_Run->GetQ());
+	m_pRefRunMe->SetPlace(m_Run->GetPlace());
+	m_pRefRunMe->SetName(m_pDoc->GetCurrentDog()->GetCallName());
+	m_pRefRunMe->SetHeight(m_Run->GetHeight());
+	m_pRefRunMe->SetBreed(m_pDoc->GetCurrentDog()->GetBreed());
+	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
+	ARBConfigScoring* pScoring;
+	if (m_pDoc->GetConfig().GetVenues().FindEvent(
+		m_Venue->GetName(),
+		m_Run->GetEvent(),
+		m_Run->GetDivision(),
+		m_Run->GetLevel(),
+		m_Run->GetDate(),
+		&pScoring))
+	{
+		m_pRefRunMe->SetScore(ARBDouble::str(m_Run->GetScore(pScoring)));
+		pScoring->Release();
+	}
+
+	// Now see if I'm already in there.
+	// Only compare: Q/Place/Name/Time/Score.
+	for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+		iterRef != m_Run->GetReferenceRuns().end();
+		++iterRef)
+	{
+		ARBDogReferenceRun* pRef = *iterRef;
+		if (pRef->GetQ() == m_pRefRunMe->GetQ()
+		&& pRef->GetPlace() == m_pRefRunMe->GetPlace()
+		&& pRef->GetName() == m_pRefRunMe->GetName()
+		&& ARBDouble::equal(pRef->GetTime(), m_pRefRunMe->GetTime())
+		&& pRef->GetScore() == m_pRefRunMe->GetScore())
+		{
+			m_pRefRunMe->Release();
+			m_pRefRunMe = pRef;
+			m_pRefRunMe->AddRef();
+			break;
+		}
+	}
+}
+
+void CDlgRunReference::UpdateButtons()
+{
+	m_ctrlAdd.EnableWindow(IsRefRunMe() ? FALSE : TRUE);
 	if (0 <= m_ctrlRefRuns.GetSelection())
 	{
 		m_ctrlEdit.EnableWindow(TRUE);
@@ -385,6 +396,13 @@ BOOL CDlgRunReference::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+BOOL CDlgRunReference::OnSetActive()
+{
+	CreateRefRunMe();
+	UpdateButtons();
+	return CDlgBasePropertyPage::OnSetActive();
+}
+
 void CDlgRunReference::OnGetdispinfoRefRuns(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -464,22 +482,7 @@ void CDlgRunReference::OnDblclkRefRuns(
 
 void CDlgRunReference::OnRefRunAdd()
 {
-	bool bOkToAdd = false;
-	if (m_pRefRunMe)
-	{
-		bOkToAdd = true;
-		for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
-			iterRef != m_Run->GetReferenceRuns().end();
-			++iterRef)
-		{
-			if (*iterRef == m_pRefRunMe)
-			{
-				bOkToAdd = false;
-				break;
-			}
-		}
-	}
-	if (bOkToAdd)
+	if (!IsRefRunMe())
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(m_pRefRunMe))
 		{
@@ -569,8 +572,15 @@ void CDlgRunReference::OnRefRunDelete()
 	if (0 <= nItem)
 	{
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(nItem));
-		if (m_Run->GetReferenceRuns().DeleteReferenceRun(pRef))
-			m_ctrlRefRuns.DeleteItem(nItem);
+		if (pRef)
+		{
+			pRef->AddRef();
+			if (m_Run->GetReferenceRuns().DeleteReferenceRun(pRef))
+				m_ctrlRefRuns.DeleteItem(nItem);
+			if (m_pRefRunMe && m_pRefRunMe == pRef)
+				CreateRefRunMe();
+			pRef->Release();
+		}
 		UpdateButtons();
 	}
 }

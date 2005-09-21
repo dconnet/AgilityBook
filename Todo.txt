@@ -1,4 +1,7 @@
-Last Updated: 9/15/2005
+Last Updated: 9/20/2005
+
+- The 'Include Image' checkbox in the CRCD tab of a Run is misleading
+  after a course is inserted.
 
 - Create a way to add a note directly from Calendar/Trial/etc entries for
   judges/clubs/locations.
