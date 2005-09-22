@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2005-09-20 DRC Created
+ * @li 2005-09-20 DRC Created, fixed a problem with GetStatus throwing.
  */
 
 #include "stdafx.h"
@@ -47,7 +47,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-	
+
 bool CheckLink(
 		CInternetSession& inSession,
 		std::string const& inLink)
@@ -55,9 +55,9 @@ bool CheckLink(
 	bool bOk = false;
 	if (0 < inLink.length())
 	{
+		bool bTryGetStatus = false;
 		try
 		{
-			// Source for OpenURL is located in 'atlmfc/src/mfc/inet.cpp' 
 			CStdioFile* pFile = inSession.OpenURL(inLink.c_str(), 1, INTERNET_FLAG_TRANSFER_BINARY);
 			if (pFile)
 			{
@@ -68,18 +68,37 @@ bool CheckLink(
 		}
 		catch (CFileException* ex)
 		{
+			// Even after selecting a file via the browse dialog, some systems
+			// are throwing an exception if the file is on a CD. GetStatus
+			// also threw causing us not to be able to select that file.
+			// Since we now catch the exception, the file can at least be
+			// selected, however we will see a not-available icon.
 			ex->Delete();
 			// If the session threw, try normal file access apis...
-			CFileStatus status;
-			if (CFile::GetStatus(inLink.c_str(), status))
-				bOk = true;
+			bTryGetStatus = true;
 		}
 		catch (CInternetException* ex)
 		{
 			// I'm not sure how to tell if the url is bad or
 			// the connection doesn't exist...
 			ex->Delete();
-			bOk = false;
+			// But try the normal apis in case the user specified a local file.
+			bTryGetStatus = true;
+		}
+		if (bTryGetStatus)
+		{
+			try
+			{
+				// for 'c:\*.txt', vc7 will throw, vc6 returns the 1st .txt
+				// Ahh, consistency... sigh.
+				CFileStatus status;
+				if (CFile::GetStatus(inLink.c_str(), status))
+					bOk = true;
+			}
+			catch (CException* ex)
+			{
+				ex->Delete();
+			}
 		}
 	}
 	return bOk;
