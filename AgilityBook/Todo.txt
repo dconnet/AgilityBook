@@ -1,5 +1,9 @@
 Last Updated: 9/20/2005
 
+- Add display name to configuration items.
+
+- Make the Run dialog combo boxes check the filter to 'hide' levels/etc.
+
 - The 'Include Image' checkbox in the CRCD tab of a Run is misleading
   after a course is inserted.
 
