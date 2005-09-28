@@ -8,6 +8,9 @@
     information from the scoring tab.
   - On some systems, attempting to link to a file on a CD causes a problem
     making it impossible to select that file.
+  - Empty trials were sorting inconsistently.
+  - Saving a v10 file in v11 without updating the configuration creates
+    an unnamed MultiQ for AKC. (This did get updated properly later.)
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:

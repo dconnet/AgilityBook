@@ -212,6 +212,8 @@ bool ARBConfigVenue::Load(
 				{
 					if (!pMulti)
 						pMulti = new ARBConfigMultiQ();
+					pMulti->SetName("Double Q");
+					pMulti->SetShortName("QQ");
 					pMulti->AddItem((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
 				}
 			}
