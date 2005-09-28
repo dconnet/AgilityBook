@@ -95,15 +95,19 @@ protected:
 #define COL_RUN_MQ_DOG			2
 #define COL_RUN_MQ_Q			3
 #define COL_RUN_MQ_TITLE_PTS	4
-#define COL_RUN_MQ_SUBNAME		5
-#define COL_RUN_MQ_LOCATION		6
-#define COL_RUN_MQ_CLUB			7
-#define COL_RUN_MQ_JUDGE		8
-#define COL_RUN_MQ_PLACE		9
-#define COL_RUN_MQ_INCLASS		10
-#define COL_RUN_MQ_QD			11
-#define COL_RUN_MQ_SPEED		12
-#define COL_RUN_MQ_PARTNERS		13
+#define COL_RUN_MQ_VENUE		5
+#define COL_RUN_MQ_DIV			6
+#define COL_RUN_MQ_LEVEL		7
+#define COL_RUN_MQ_EVENT		8
+#define COL_RUN_MQ_SUBNAME		9
+#define COL_RUN_MQ_LOCATION		10
+#define COL_RUN_MQ_CLUB			11
+#define COL_RUN_MQ_JUDGE		12
+#define COL_RUN_MQ_PLACE		13
+#define COL_RUN_MQ_INCLASS		14
+#define COL_RUN_MQ_QD			15
+#define COL_RUN_MQ_SPEED		16
+#define COL_RUN_MQ_PARTNERS		17
 #define COL_OTHER_DATE			0
 #define COL_OTHER_NAME			1 // Trial, existing pt
 #define COL_OTHER_CLUB			2
@@ -213,6 +217,18 @@ CString CDlgListViewerDataExisting::OnNeedText(int iCol) const
 			str.Format("%hd", pts);
 		}
 		break;
+	case COL_RUN_MQ_VENUE:
+		str = m_Existing->GetVenue().c_str();
+		break;
+	case COL_RUN_MQ_DIV:
+		str = m_Existing->GetDivision().c_str();
+		break;
+	case COL_RUN_MQ_LEVEL:
+		str = m_Existing->GetLevel().c_str();
+		break;
+	case COL_RUN_MQ_EVENT:
+		str = m_Existing->GetEvent().c_str();
+		break;
 	case COL_RUN_MQ_SUBNAME:
 		str = m_Existing->GetSubName().c_str();
 		break;
@@ -246,7 +262,10 @@ public:
 		ASSERT(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
-		ASSERT(inScoring);
+		// Note, some users have changed NADAC to remove Novice A/B and only
+		// have Novice (no sublevels). This means during a config update,
+		// all hell will break loose. Don't bother asserting here...
+		//ASSERT(inScoring);
 		if (m_Scoring)
 			m_Scoring->AddRef();
 	}
@@ -305,6 +324,18 @@ CString CDlgListViewerDataRun::OnNeedText(int iCol) const
 				pts = m_Run->GetTitlePoints(m_Scoring);
 			str.Format("%hd", pts);
 		}
+		break;
+	case COL_RUN_MQ_VENUE:
+		str = m_Trial->GetClubs().GetPrimaryClubVenue().c_str();
+		break;
+	case COL_RUN_MQ_DIV:
+		str = m_Run->GetDivision().c_str();
+		break;
+	case COL_RUN_MQ_LEVEL:
+		str = m_Run->GetLevel().c_str();
+		break;
+	case COL_RUN_MQ_EVENT:
+		str = m_Run->GetEvent().c_str();
 		break;
 	case COL_RUN_MQ_SUBNAME:
 		str = m_Run->GetSubName().c_str();
@@ -463,6 +494,10 @@ int CDlgListViewerDataExisting::Compare(
 	case COL_RUN_MQ_STATUS:
 	case COL_RUN_MQ_DOG:
 	case COL_RUN_MQ_Q:
+	case COL_RUN_MQ_VENUE:
+	case COL_RUN_MQ_DIV:
+	case COL_RUN_MQ_LEVEL:
+	case COL_RUN_MQ_EVENT:
 	case COL_RUN_MQ_SUBNAME:
 	case COL_RUN_MQ_LOCATION:
 	case COL_RUN_MQ_CLUB:
@@ -609,6 +644,10 @@ int CDlgListViewerDataRun::Compare(
 			return 1;
 		break;
 	default:
+	case COL_RUN_MQ_VENUE:
+	case COL_RUN_MQ_DIV:
+	case COL_RUN_MQ_LEVEL:
+	case COL_RUN_MQ_EVENT:
 	case COL_RUN_MQ_SUBNAME:
 	case COL_RUN_MQ_LOCATION:
 	case COL_RUN_MQ_CLUB:
@@ -1291,16 +1330,29 @@ BOOL CDlgListViewer::OnInitDialog()
 	ScreenToClient(m_rOK);
 
 	SetWindowText(m_Caption);
-	if (m_Runs)
+
+	std::set<std::string> subNames;
+	std::vector<ARBDogExistingPoints const*> existingRuns;
+	if (m_Runs || m_ScoringRuns)
 	{
-		std::set<std::string> names;
-		std::list<RunInfo>::const_iterator iter;
-		for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
+		if (m_Runs)
 		{
-			if ((iter->second)->GetSubName().length())
-				names.insert((iter->second)->GetSubName());
+			std::list<RunInfo>::const_iterator iter;
+			for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
+			{
+				if ((iter->second)->GetSubName().length())
+					subNames.insert((iter->second)->GetSubName());
+			}
 		}
-		std::vector<ARBDogExistingPoints const*> existingRuns;
+		else if (m_ScoringRuns)
+		{
+			std::list<ScoringRunInfo>::const_iterator iter;
+			for (iter = m_ScoringRuns->begin(); iter != m_ScoringRuns->end(); ++iter)
+			{
+				if ((iter->m_Run)->GetSubName().length())
+					subNames.insert((iter->m_Run)->GetSubName());
+			}
+		}
 		if (m_DataRun)
 		{
 			for (ARBDogExistingPointsList::const_iterator iter = m_DataRun->m_Dog->GetExistingPoints().begin();
@@ -1317,17 +1369,24 @@ BOOL CDlgListViewer::OnInitDialog()
 				{
 					existingRuns.push_back(pExisting);
 					if (0 < pExisting->GetSubName().length())
-						names.insert(pExisting->GetSubName());
+						subNames.insert(pExisting->GetSubName());
 				}
 			}
 		}
+	}
 
+	if (m_Runs)
+	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_Q, IDS_COL_Q);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, IDS_COL_TITLE_PTS);
-		if (0 < names.size())
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_VENUE, IDS_COL_VENUE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DIV, IDS_COL_DIVISION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LEVEL, IDS_COL_LEVEL);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_EVENT, IDS_COL_EVENT);
+		if (0 < subNames.size())
 			pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_SUBNAME, IDS_COL_SUBNAME);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LOCATION, IDS_COL_LOCATION);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, IDS_COL_CLUB);
@@ -1352,6 +1411,7 @@ BOOL CDlgListViewer::OnInitDialog()
 				m_ctrlList.InsertItem(&item);
 			}
 		}
+		std::list<RunInfo>::const_iterator iter;
 		for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
 		{
 			ARBDogTrial const* pTrial = iter->first;
@@ -1377,6 +1437,12 @@ BOOL CDlgListViewer::OnInitDialog()
 		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_Q, IDS_COL_Q);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, IDS_COL_TITLE_PTS);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_VENUE, IDS_COL_VENUE);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DIV, IDS_COL_DIVISION);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LEVEL, IDS_COL_LEVEL);
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_EVENT, IDS_COL_EVENT);
+		if (0 < subNames.size())
+			pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_SUBNAME, IDS_COL_SUBNAME);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LOCATION, IDS_COL_LOCATION);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, IDS_COL_CLUB);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_JUDGE, IDS_COL_JUDGE);

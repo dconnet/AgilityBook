@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-09-28 DRC Fixed a problem when updating runs that didn't match.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-11 DRC Fix runs when scoring methods change.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
@@ -151,32 +152,35 @@ void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
 			++iterTrial)
 		{
 			ARBDogTrial* pTrial = *iterTrial;
-			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
-				iterRun != pTrial->GetRuns().end();
-				)
+			if (pTrial->GetClubs().FindVenue(m_Venue))
 			{
-				ARBDogRun* pRun = *iterRun;
-				ARBConfigScoring* pScoring;
-				if (book.GetConfig().GetVenues().FindEvent(
-					m_Venue,
-					m_Event,
-					pRun->GetDivision(),
-					pRun->GetLevel(),
-					pRun->GetDate(),
-					&pScoring))
+				for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+					iterRun != pTrial->GetRuns().end();
+					)
 				{
-					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
-						!= pRun->GetScoring().GetType())
+					ARBDogRun* pRun = *iterRun;
+					ARBConfigScoring* pScoring;
+					if (book.GetConfig().GetVenues().FindEvent(
+						m_Venue,
+						m_Event,
+						pRun->GetDivision(),
+						pRun->GetLevel(),
+						pRun->GetDate(),
+						&pScoring))
 					{
-						pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
+						if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
+							!= pRun->GetScoring().GetType())
+						{
+							pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
+						}
+						pScoring->Release();
+						++iterRun;
 					}
-					pScoring->Release();
+					else
+					{
+						iterRun = pTrial->GetRuns().erase(iterRun);
+					}
 				}
-				else
-				{
-					iterRun = pTrial->GetRuns().erase(iterRun);
-				}
-				++iterRun;
 			}
 		}
 	}
