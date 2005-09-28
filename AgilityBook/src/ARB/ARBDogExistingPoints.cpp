@@ -461,18 +461,18 @@ public:
 				if (one->GetDivision() == two->GetDivision())
 				{
 					if (one->GetLevel() == two->GetLevel())
-						return (one->GetEvent() < two->GetEvent());
+						return one->GetEvent() < two->GetEvent();
 					else
-						return (one->GetLevel() < two->GetLevel());
+						return one->GetLevel() < two->GetLevel();
 				}
 				else
-					return (one->GetDivision() < two->GetDivision());
+					return one->GetDivision() < two->GetDivision();
 			}
 			else
-				return (one->GetVenue() < two->GetVenue());
+				return one->GetVenue() < two->GetVenue();
 		}
 		else
-			return (one->GetOtherPoints() < two->GetOtherPoints());
+			return one->GetOtherPoints() < two->GetOtherPoints();
 	}
 };
 
