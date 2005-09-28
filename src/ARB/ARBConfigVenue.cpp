@@ -640,8 +640,11 @@ bool ARBConfigVenueList::FindEvent(
 				bFound = pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outScoring);
 				pLevel->Release();
 			}
-			else
-				ASSERT(pLevel);
+			// Note, some users have changed NADAC to remove Novice A/B and only
+			// have Novice (no sublevels). This means during a config update,
+			// all hell will break loose. Don't bother asserting here...
+			//else
+			//	ASSERT(pLevel);
 			pDiv->Release();
 		}
 		else
