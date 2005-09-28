@@ -658,10 +658,7 @@ public:
 	SortRun() {}
 	bool operator()(ARBDogRun* one, ARBDogRun* two) const
 	{
-		if (one->GetDate() < two->GetDate())
-			return true;
-		else
-			return false;
+		return one->GetDate() < two->GetDate();
 	}
 };
 

@@ -265,7 +265,7 @@ public:
 			if (one->GetVenue() == two->GetVenue())
 				return one->GetRawName() < two->GetRawName();
 			else
-				return one->GetVenue() == two->GetVenue();
+				return one->GetVenue() < two->GetVenue();
 		}
 		else
 			return one->GetDate() < two->GetDate();

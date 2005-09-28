@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-09-27 DRC Fixed sorting of trials.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -331,10 +332,18 @@ public:
 		if (0 < one->GetRuns().size()
 		&& 0 < two->GetRuns().size())
 		{
-			if ((*(one->GetRuns().begin()))->GetDate() <=
-			(*(two->GetRuns().begin()))->GetDate())
+			ARBDate d1 = (*(one->GetRuns().begin()))->GetDate();
+			ARBDate d2 = (*(two->GetRuns().begin()))->GetDate();
+			if ((d1 < d2)
+			|| (d1 == d2 && one->GetGenericName() < two->GetGenericName()))
 				bSorted = m_bDescending;
+
 		}
+		else if (0 < one->GetRuns().size())
+			bSorted = !m_bDescending;
+		else if ((0 < two->GetRuns().size())
+		|| (one->GetGenericName() < two->GetGenericName()))
+			bSorted = m_bDescending;
 		return bSorted;
 	}
 private:
