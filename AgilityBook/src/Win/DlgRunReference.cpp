@@ -200,6 +200,7 @@ BEGIN_MESSAGE_MAP(CDlgRunReference, CDlgBasePropertyPage)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_RUNREF_REF_RUNS, OnColumnclickRefRuns)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RUNREF_REF_RUNS, OnItemchangedRefRuns)
 	ON_NOTIFY(NM_DBLCLK, IDC_RUNREF_REF_RUNS, OnDblclkRefRuns)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_RUNREF_REF_RUNS, OnKeydownRefRuns)
 	ON_BN_CLICKED(IDC_RUNREF_ADDDOG, OnRefRunAdd)
 	ON_BN_CLICKED(IDC_RUNREF_NEW, OnRefRunNew)
 	ON_BN_CLICKED(IDC_RUNREF_EDIT, OnRefRunEdit)
@@ -477,6 +478,22 @@ void CDlgRunReference::OnDblclkRefRuns(
 		LRESULT* pResult) 
 {
 	OnRefRunEdit();
+	*pResult = 0;
+}
+
+void CDlgRunReference::OnKeydownRefRuns(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnRefRunEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

@@ -187,6 +187,7 @@ BEGIN_MESSAGE_MAP(CDlgDogTitles, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogTitles)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOG_TITLE_TITLES, OnColumnclickTitles)
 	ON_NOTIFY(NM_DBLCLK, IDC_DOG_TITLE_TITLES, OnDblclkTitles)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_DOG_TITLE_TITLES, OnKeydownTitles)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DOG_TITLE_TITLES, OnItemchangedTitles)
 	ON_BN_CLICKED(IDC_DOG_TITLE_NEW, OnTitleNew)
 	ON_BN_CLICKED(IDC_DOG_TITLE_EDIT, OnTitleEdit)
@@ -355,6 +356,22 @@ void CDlgDogTitles::OnDblclkTitles(
 		LRESULT* pResult) 
 {
 	OnTitleEdit();
+	*pResult = 0;
+}
+
+void CDlgDogTitles::OnKeydownTitles(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnTitleEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

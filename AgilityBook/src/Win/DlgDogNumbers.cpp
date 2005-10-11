@@ -161,6 +161,7 @@ BEGIN_MESSAGE_MAP(CDlgDogNumbers, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogNumbers)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOGNUM_REG_NUMS, OnColumnclickRegNums)
 	ON_NOTIFY(NM_DBLCLK, IDC_DOGNUM_REG_NUMS, OnDblclkRegNums)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_DOGNUM_REG_NUMS, OnKeydownRegNums)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DOGNUM_REG_NUMS, OnItemchangedRegNums)
 	ON_BN_CLICKED(IDC_DOGNUM_NEW, OnRegNew)
 	ON_BN_CLICKED(IDC_DOGNUM_EDIT, OnRegEdit)
@@ -297,6 +298,22 @@ void CDlgDogNumbers::OnDblclkRegNums(
 		LRESULT* pResult) 
 {
 	OnRegEdit();
+	*pResult = 0;
+}
+
+void CDlgDogNumbers::OnKeydownRegNums(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnRegEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

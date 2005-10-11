@@ -205,6 +205,7 @@ BEGIN_MESSAGE_MAP(CDlgFindLinks, CDlgBaseDialog)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_FINDLINKS_LIST, OnColumnclickList)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_FINDLINKS_LIST, OnGetdispinfoList)
 	ON_NOTIFY(NM_DBLCLK, IDC_FINDLINKS_LIST, OnDblclkList)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_FINDLINKS_LIST, OnKeydownList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_FINDLINKS_LIST, OnItemchangedList)
 	ON_BN_CLICKED(IDC_FINDLINKS_COPY, OnCopy)
 	ON_BN_CLICKED(IDC_FINDLINKS_EDIT, OnEdit)
@@ -357,6 +358,22 @@ void CDlgFindLinks::OnDblclkList(
 		LRESULT* pResult)
 {
 	OnEdit();
+	*pResult = 0;
+}
+
+void CDlgFindLinks::OnKeydownList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

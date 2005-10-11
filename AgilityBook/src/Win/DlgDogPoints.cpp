@@ -204,6 +204,7 @@ BEGIN_MESSAGE_MAP(CDlgDogPoints, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogPoints)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_DOGPTS_POINTS, OnColumnclickExistingPoints)
 	ON_NOTIFY(NM_DBLCLK, IDC_DOGPTS_POINTS, OnDblclkExistingPoints)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_DOGPTS_POINTS, OnKeydownExistingPoints)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_DOGPTS_POINTS, OnGetdispinfoExistingPoints)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_DOGPTS_POINTS, OnItemchangedExistingPoints)
 	ON_BN_CLICKED(IDC_DOGPTS_NEW, OnNew)
@@ -336,6 +337,22 @@ void CDlgDogPoints::OnDblclkExistingPoints(
 		LRESULT* pResult) 
 {
 	OnEdit();
+	*pResult = 0;
+}
+
+void CDlgDogPoints::OnKeydownExistingPoints(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

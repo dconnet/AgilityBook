@@ -83,6 +83,7 @@ protected:
 	//{{AFX_MSG(CDlgRunLink)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydownList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNew();
 	afx_msg void OnEdit();

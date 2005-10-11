@@ -90,6 +90,7 @@ protected:
 	afx_msg void OnKillfocusLocation();
 	afx_msg void OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydownClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnClubNew();
 	afx_msg void OnClubEdit();
 	afx_msg void OnClubDelete();
