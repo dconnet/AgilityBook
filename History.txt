@@ -1,9 +1,10 @@
-9/28/2005: v1.6.1.11 <in development>
+10/10/2005: v1.6.1.11 <in development>
 - New features / Enhancements:
   - Changed how URLs are accessed to allow for redirection. The program now
     only knows about agilityrecordbook.com, not where that is hosted.
   - In details dialog for listing runs, added venue, division, level
     and event columns.
+  - Space now acts like dbl-click in lists.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date

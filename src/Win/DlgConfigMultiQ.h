@@ -80,6 +80,7 @@ protected:
 	//{{AFX_MSG(CDlgConfigMultiQ)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnNMDblclk(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnClickFrom();
 	afx_msg void OnClickTo();

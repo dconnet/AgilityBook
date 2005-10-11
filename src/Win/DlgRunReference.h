@@ -94,6 +94,7 @@ protected:
 	afx_msg void OnColumnclickRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydownRefRuns(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnRefRunAdd();
 	afx_msg void OnRefRunNew();
 	afx_msg void OnRefRunEdit();

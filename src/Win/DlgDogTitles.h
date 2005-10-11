@@ -87,6 +87,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnColumnclickTitles(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkTitles(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydownTitles(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedTitles(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnTitleNew();
 	afx_msg void OnTitleEdit();

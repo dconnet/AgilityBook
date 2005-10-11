@@ -109,6 +109,7 @@ BEGIN_MESSAGE_MAP(CDlgTrial, CDlgBaseDialog)
 	ON_CBN_KILLFOCUS(IDC_TRIAL_LOCATION, OnKillfocusLocation)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TRIAL_CLUBS, OnItemchangedClubs)
 	ON_NOTIFY(NM_DBLCLK, IDC_TRIAL_CLUBS, OnDblclkClubs)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_TRIAL_CLUBS, OnKeydownClubs)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_NEW, OnClubNew)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_EDIT, OnClubEdit)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_DELETE, OnClubDelete)
@@ -253,6 +254,22 @@ void CDlgTrial::OnDblclkClubs(
 		LRESULT* pResult)
 {
 	OnClubEdit();
+	*pResult = 0;
+}
+
+void CDlgTrial::OnKeydownClubs(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnClubEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

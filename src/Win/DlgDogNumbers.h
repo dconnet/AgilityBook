@@ -82,6 +82,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnColumnclickRegNums(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkRegNums(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydownRegNums(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedRegNums(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnRegNew();
 	afx_msg void OnRegEdit();

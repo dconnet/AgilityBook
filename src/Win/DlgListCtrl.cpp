@@ -454,6 +454,7 @@ BEGIN_MESSAGE_MAP(CDlgListCtrl, CDlgBaseDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
 	ON_NOTIFY(LVN_DELETEITEM, IDC_LIST, OnDeleteitemList)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_LIST, OnKeydownList)
 	ON_BN_CLICKED(IDC_LIST_NEW, OnNew)
 	ON_BN_CLICKED(IDC_LIST_EDIT, OnEdit)
 	ON_BN_CLICKED(IDC_LIST_DELETE, OnDelete)
@@ -711,6 +712,22 @@ void CDlgListCtrl::OnDblclkList(
 		LRESULT* pResult) 
 {
 	OnEdit();
+	*pResult = 0;
+}
+
+void CDlgListCtrl::OnKeydownList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

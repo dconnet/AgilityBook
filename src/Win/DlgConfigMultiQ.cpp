@@ -104,6 +104,7 @@ void CDlgConfigMultiQ::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgConfigMultiQ, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigMultiQ)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_MULTIQ_ITEMS, OnNMDblclk)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_MULTIQ_ITEMS, OnKeydown)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_MULTIQ_ITEMS, OnItemchanged)
 	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_DATE_VALID_FROM, OnClickFrom)
 	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_DATE_VALID_TO, OnClickTo)
@@ -173,13 +174,33 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgConfigMultiQ::OnNMDblclk(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+void CDlgConfigMultiQ::OnNMDblclk(
+		NMHDR* /*pNMHDR*/,
+		LRESULT* pResult)
 {
 	OnEdit();
 	*pResult = 0;
 }
 
-void CDlgConfigMultiQ::OnItemchanged(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+void CDlgConfigMultiQ::OnKeydown(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnEdit();
+		break;
+	}
+	*pResult = 0;
+}
+
+void CDlgConfigMultiQ::OnItemchanged(
+		NMHDR* /*pNMHDR*/,
+		LRESULT* pResult)
 {
 	//LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	UpdateControls();

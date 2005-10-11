@@ -88,6 +88,7 @@ void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgRunLink, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunLink)
 	ON_NOTIFY(NM_DBLCLK, IDC_RUNLINK_LIST, OnDblclkList)
+	ON_NOTIFY(LVN_KEYDOWN, IDC_RUNLINK_LIST, OnKeydownList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RUNLINK_LIST, OnItemchangedList)
 	ON_BN_CLICKED(IDC_RUNLINK_NEW, OnNew)
 	ON_BN_CLICKED(IDC_RUNLINK_EDIT, OnEdit)
@@ -160,6 +161,22 @@ void CDlgRunLink::OnDblclkList(
 		LRESULT* pResult) 
 {
 	OnEdit();
+	*pResult = 0;
+}
+
+void CDlgRunLink::OnKeydownList(
+		NMHDR* pNMHDR,
+		LRESULT* pResult) 
+{
+	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
+	switch (pLVKeyDown->wVKey)
+	{
+	default:
+		break;
+	case VK_SPACE:
+		OnEdit();
+		break;
+	}
 	*pResult = 0;
 }
 

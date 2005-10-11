@@ -81,6 +81,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnColumnclickExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnKeydownExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfoExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedExistingPoints(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNew();
