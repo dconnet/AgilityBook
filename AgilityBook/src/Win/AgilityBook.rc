@@ -339,6 +339,17 @@ BEGIN
     END
 END
 
+IDR_POINTS MENU 
+BEGIN
+    POPUP "Training"
+    BEGIN
+        MENUITEM "&Details...",                 ID_DETAILS
+        MENUITEM SEPARATOR
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "Copy &Titles",                ID_COPY_TITLES_LIST
+    END
+END
+
 IDR_CALENDAR MENU 
 BEGIN
     POPUP "Calendar"
@@ -355,7 +366,6 @@ BEGIN
         MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
-
     END
 END
 
@@ -2935,6 +2945,8 @@ END
 STRINGTABLE 
 BEGIN
     ID_REORDER              "Reorder items\nReorder"
+	ID_DETAILS              "Display details\nDetails"
+    ID_COPY_TITLES_LIST     "Copy titles\nCopy Titles"
 END
 
 #endif    // English (U.S.) resources

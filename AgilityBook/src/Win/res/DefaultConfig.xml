@@ -5,6 +5,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2005-10-14 DRC Configuration version 10.
+               Added prefix notation on some titles.
 2005-07-26 DRC Configuration version 9.
                Changed how QQs to MultiQs.
                NADAC: Updated comments in Jumpers/Gambles title requirements.
@@ -69,7 +71,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
 				<Titles LongName="Advanced Games Dog of Canada" Name="AGDC">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
 				<Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+				<Titles LongName="Agility Trial Champion of Canada" Name="ATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 				<Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">3 qualifying scores under at least 2 different judges</Titles>
 				<Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">3 qualifying scores under at least 2 different judges</Titles>
 				<Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">3 qualifying scores under at least 2 different judges</Titles>
@@ -94,7 +96,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<Titles LongName="Veteran Masters Team Relay Dog of Canada" Name="VMTRDC">3 qualifying scores under at least 2 different judges</Titles>
 				<Titles LongName="Veteran Masters Jumpers Dog of Canada" Name="VMJDC">3 qualifying scores under at least 2 different judges</Titles>
 				<Titles LongName="Veteran Masters Snooker Dog of Canada" Name="VMSDC">3 qualifying scores under at least 2 different judges</Titles>
-				<Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+				<Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 			</Division>
 			<Division Name="Special">
 				<Level Name="Starters"/>
@@ -110,7 +112,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<Titles LongName="Special Masters Team Relay Dog of Canada" Name="SMTRDC">3 qualifying scores under at least 2 different judges</Titles>
 				<Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC">3 qualifying scores under at least 2 different judges</Titles>
 				<Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC">3 qualifying scores under at least 2 different judges</Titles>
-				<Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+				<Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
 			</Division>
 			<Event Name="Standard" hasTable="y">
 				<Scoring Division="*" Level="Masters" type="FaultsThenTime">
@@ -205,7 +207,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<Titles LongName="Open JWW" Name="OAJ">3 Qs</Titles>
 				<Titles LongName="Agility Excellent JWW" Name="AXJ">3 Qs</Titles>
 				<Titles LongName="Master Excellent JWW" Name="MXJ">10 Qs</Titles>
-				<Titles LongName="Master Agility Champion" Multiple="2" Name="MACH">20 Double Qs, 750 Mach points</Titles>
+				<Titles LongName="Master Agility Champion" Multiple="2" Name="MACH" Prefix="y">20 Double Qs, 750 Mach points</Titles>
 			</Division>
 			<Division Name="Preferred">
 				<Level Name="Novice">
@@ -346,12 +348,12 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="AMBOR Elite Versatility" Name="A-EV"/>
 				<Titles LongName="AMBOR Elite Versatility Outstanding" Name="A-EVO"/>
 				<Titles LongName="AMBOR Elite Versatility Superior" Name="A-EVS"/>
-				<Titles LongName="AMBOR Agility Trial Champion" Name="A-ATCH"/>
-				<Titles LongName="AMBOR Outstanding Agility Trial Champion" Name="A-OATCH"/>
-				<Titles LongName="AMBOR Superior Agility Trial Champion" Name="A-SATCH"/>
-				<Titles LongName="AMBOR Versatile Agility Trial Champion" Name="A-VATCH"/>
-				<Titles LongName="AMBOR Outstanding Versatile Agility Trial Champion" Name="A-OVATCH"/>
-				<Titles LongName="AMBOR Superior Versatile Agility Trial Champion" Name="A-SVATCH"/>
+				<Titles LongName="AMBOR Agility Trial Champion" Name="A-ATCH" Prefix="y"/>
+				<Titles LongName="AMBOR Outstanding Agility Trial Champion" Name="A-OATCH" Prefix="y"/>
+				<Titles LongName="AMBOR Superior Agility Trial Champion" Name="A-SATCH" Prefix="y"/>
+				<Titles LongName="AMBOR Versatile Agility Trial Champion" Name="A-VATCH" Prefix="y"/>
+				<Titles LongName="AMBOR Outstanding Versatile Agility Trial Champion" Name="A-OVATCH" Prefix="y"/>
+				<Titles LongName="AMBOR Superior Versatile Agility Trial Champion" Name="A-SVATCH" Prefix="y"/>
 				<Titles Name="AMBOR Triple Superior Novice"/>
 				<Titles Name="AMBOR Triple Superior Open"/>
 				<Titles Name="AMBOR Triple Superior Elite"/>
@@ -391,9 +393,9 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="AMBOR Elite Gambler Veteran" Name="A-EG-V"/>
 				<Titles LongName="AMBOR Outstanding Elite Gambler Veteran" Name="A-OEG-V"/>
 				<Titles LongName="AMBOR Superior Elite Gambler Veteran" Name="A-SEG-V"/>
-				<Titles LongName="AMBOR Agility Trial Champion Veteran" Name="A-ATCH-V"/>
-				<Titles LongName="AMBOR Agility Trial Champion Outstanding Performance Veteran" Name="A-OATCH-V"/>
-				<Titles LongName="AMBOR Agility Trial Champion Superior Performance Veteran" Name="A-SATCH-V"/>
+				<Titles LongName="AMBOR Agility Trial Champion Veteran" Name="A-ATCH-V" Prefix="y"/>
+				<Titles LongName="AMBOR Agility Trial Champion Outstanding Performance Veteran" Name="A-OATCH-V" Prefix="y"/>
+				<Titles LongName="AMBOR Agility Trial Champion Superior Performance Veteran" Name="A-SATCH-V" Prefix="y"/>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
@@ -420,9 +422,9 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="AMBOR Elite Jumper Jr. Handler" Name="A-EJ-JH"/>
 				<Titles LongName="AMBOR Outstanding Elite Jumper Jr. Handler" Name="A-OEJ-JH"/>
 				<Titles LongName="AMBOR Superior Elite Jumper Jr. Handler" Name="A-SEJ-JH"/>
-				<Titles LongName="AMBOR Agility Trial Champion Jr. Handler" Name="A-ATCH-JH"/>
-				<Titles LongName="AMBOR Agility Trial Champion Outstanding Performance Jr. Handler" Name="A-OATCH-JH"/>
-				<Titles LongName="AMBOR Agility Trial Champion Superior Performance Jr. Handler" Name="A-SATCH-JH"/>
+				<Titles LongName="AMBOR Agility Trial Champion Jr. Handler" Name="A-ATCH-JH" Prefix="y"/>
+				<Titles LongName="AMBOR Agility Trial Champion Outstanding Performance Jr. Handler" Name="A-OATCH-JH" Prefix="y"/>
+				<Titles LongName="AMBOR Agility Trial Champion Superior Performance Jr. Handler" Name="A-SATCH-JH" Prefix="y"/>
 			</Division>
 			<Event Name="Regular">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
@@ -508,10 +510,10 @@ Events and titles are based on NADAC</Desc>
 				<Titles LongName="Elite Gamblers" Name="GS-E"/>
 				<Titles LongName="Elite Gamblers Outstanding Performance" Name="GS-E-OP"/>
 				<Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP"/>
-				<Titles LongName="Agility Trial Champion" Multiple="4" Name="ATCH">RS-E plus 200 pts, GS-E plus 100 pts, JS-E plus 100 pts
+				<Titles LongName="Agility Trial Champion" Multiple="4" Name="ATCH" Prefix="y">RS-E plus 200 pts, GS-E plus 100 pts, JS-E plus 100 pts
 Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
-				<Titles LongName="Outstanding Performance Agility Trial Champion" Name="ATCH-OP">RS-E plus 400 pts, GS-E plus 200 pts, JS-E plus 200 pts</Titles>
-				<Titles LongName="Superior Performance Agility Trial Champion" Name="ATCH-SP">RS-E plus 600 pts, GS-E plus 300 pts, JS-E plus 300 pts</Titles>
+				<Titles LongName="Outstanding Performance Agility Trial Champion" Name="ATCH-OP" Prefix="y">RS-E plus 400 pts, GS-E plus 200 pts, JS-E plus 200 pts</Titles>
+				<Titles LongName="Superior Performance Agility Trial Champion" Name="ATCH-SP" Prefix="y">RS-E plus 600 pts, GS-E plus 300 pts, JS-E plus 300 pts</Titles>
 			</Division>
 			<Division Name="Veterans">
 				<Level Name="Novice">
@@ -687,7 +689,7 @@ Earned under at least 2 different judges for the 4 legs combined.</Titles>
 Earned under at least 2 different judges for the 4 legs combined.</Titles>
 				<Titles Name="CL4">CL4-R, CL4-H, CL4-S, CL4-F
 This "title" is just an abbreviation of the above. It is not a actual title.</Titles>
-				<Titles LongName="CPE Agility Trial Champion" Name="C-ATCH">Standard:
+				<Titles LongName="CPE Agility Trial Champion" Name="C-ATCH" Prefix="y">Standard:
   8 Clean Q Legs or 10 Qualifying Legs
   Earned under at least 4 different judges
 Games:
@@ -700,7 +702,7 @@ Games:
 				<Titles LongName="Champion Jackpot" Name="ChJP">15 Qs earned in Level 5</Titles>
 				<Titles LongName="Champion FullHouse" Name="ChFH">15 Qs earned in Level 5</Titles>
 				<Titles LongName="Champion Jumpers" Name="ChJU">15 Qs earned in Level 5</Titles>
-				<Titles LongName="CPE Agility Team Extraordinaire" Name="C-ATE">5000 points, 3000 by class requirements, 2000 by handler choice.
+				<Titles LongName="CPE Agility Team Extraordinaire" Name="C-ATE" Prefix="y">5000 points, 3000 by class requirements, 2000 by handler choice.
 Standard: 500 pts (20 legs)
 Colors: 300 pts (20 legs)
 Wildcard: 400 pts (20 legs)
@@ -1165,12 +1167,12 @@ S-EAC, S-EGC, S-EJC</Titles>
 				<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility">EAC, EGC, EJC, TN-E, TG-E, WV-E</Titles>
 				<Titles LongName="Elite Versatility Certificate Outstanding Performance" Name="Outstanding Elite Versatility">O-EAC, O-EGC, O-EJC, O-TN-E, O-TG-E, O-WV-E</Titles>
 				<Titles LongName="Elite Versatility Certificate Superior Performance" Name="Superior Elite Versatility">S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
-				<Titles LongName="NADAC Agility Trial Champion" Multiple="4" Name="NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.
+				<Titles LongName="NADAC Agility Trial Champion" Multiple="4" Name="NATCH" Prefix="y">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.
 Multiple copies start at 4 because of the O- and S- titles.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH">430 Elite Regular points
+				<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH" Prefix="y">430 Elite Regular points
 220 Elite Gambler points
 220 Elite Jumper points</Titles>
-				<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH">630 Elite Regular points
+				<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH" Prefix="y">630 Elite Regular points
 320 Elite Gambler points
 320 Elite Jumper points</Titles>
 				<Titles LongName="NADAC Versatility Champion" Multiple="4" Name="Versatility NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.
@@ -1228,9 +1230,9 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple Superior Performance">S-NAC-V, S-NGC-V, S-NJC-V,
 S-OAC-V, S-OGC-V, S-OJC-V,
 S-EAC-V, S-EGC-V, S-EJC-V</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran" Multiple="4" Name="V-NATCH">Points are the same as NATCH.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH"/>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH"/>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran" Multiple="4" Name="V-NATCH" Prefix="y">Points are the same as NATCH.</Titles>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH" Prefix="y"/>
+				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH" Prefix="y"/>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
@@ -1257,9 +1259,9 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				<Titles LongName="Elite Jumpers Certificate-Jr. Handler" Name="EJC-JH"/>
 				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-EJC-JH"/>
 				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Superior Performance" Name="S-EJC-JH"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH">Points are the same as NATCH.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH"/>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH" Prefix="y">Points are the same as NATCH.</Titles>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y"/>
+				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y"/>
 			</Division>
 			<Event Name="Regular">
 				<Scoring Division="*" Level="*" type="FaultsThenTime">
@@ -1347,7 +1349,7 @@ S-EAC-V, S-EGC-V, S-EJC-V</Titles>
 				<Titles LongName="Teacup Games I" Name="TG1">3 Qs in at least 2 different games under 2 different judges</Titles>
 				<Titles LongName="Teacup Games II" Name="TG2">3 Qs in at least 3 different games under 2 different judges</Titles>
 				<Titles LongName="Teacup Games III" Name="TG3">5 Qs in at least 5 different games under 3 different judges</Titles>
-				<Titles LongName="Teacup Agile Dog Champion" Name="TACh">TSAD + 10 Qs in Superior with 3 wins
+				<Titles LongName="Teacup Agile Dog Champion" Name="TACh" Prefix="y">TSAD + 10 Qs in Superior with 3 wins
 TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 			</Division>
 			<Event Name="Petit Prix">
@@ -1494,13 +1496,13 @@ TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 				<Titles LongName="Gamblers Master" Name="GM">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Snooker Master" Name="SM">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
 				<Titles LongName="Relay Master" Name="RM">5 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-				<Titles LongName="Agility Dog Champion®" Name="ADCH">SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at least 1 qualifying score in each tournament
+				<Titles LongName="Agility Dog Champion®" Name="ADCH" Prefix="y">SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at least 1 qualifying score in each tournament
 [Earned MAD before 1/1/2005] MAD, JM, GM, SM, RM, plus 4 Standard Qs
 [Earned MAD before 1/1/2000] MAD, JM, GM, SM, RM</Titles>
-				<Titles LongName="Agility Dog Champion® - Bronze" Name="ADCH-Bronze">All Bronze titles</Titles>
-				<Titles LongName="Agility Dog Champion® - Silver" Name="ADCH-Silver">All Silver titles</Titles>
-				<Titles LongName="Agility Dog Champion® - Gold" Name="ADCH-Gold">All Gold titles</Titles>
-				<Titles LongName="Agility Dog Champion® - Platinum" Name="ADCH-Platinum">All Platinum titles</Titles>
+				<Titles LongName="Agility Dog Champion® - Bronze" Name="ADCH-Bronze" Prefix="y">All Bronze titles</Titles>
+				<Titles LongName="Agility Dog Champion® - Silver" Name="ADCH-Silver" Prefix="y">All Silver titles</Titles>
+				<Titles LongName="Agility Dog Champion® - Gold" Name="ADCH-Gold" Prefix="y">All Gold titles</Titles>
+				<Titles LongName="Agility Dog Champion® - Platinum" Name="ADCH-Platinum" Prefix="y">All Platinum titles</Titles>
 				<Titles LongName="Tournament Master" Name="TM">10 qualifying scores in tournament competition with at least 2 qualifying scores in each tournament.</Titles>
 				<Titles LongName="Tournament Master - Bronze" Name="TM-Bronze">15 qualifying scores in tournament competition with at least 3 qualifying scores in each tournament.</Titles>
 				<Titles LongName="Tournament Master - Silver" Name="TM-Silver">25 qualifying scores in tournament competition with at least 5 qualifying scores in each tournament.</Titles>
@@ -1560,13 +1562,13 @@ TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
 				<Titles LongName="Performance Gambler III" Name="PG3">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Jumper III" Name="PJ3">5 qualifying scores earned under at least 2 different judges.</Titles>
 				<Titles LongName="Performance Snooker III" Name="PK3">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
-				<Titles LongName="Accomplished Performance Dog" Name="APD">PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
+				<Titles LongName="Accomplished Performance Dog" Name="APD" Prefix="y">PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
 [Earned PD3 before 1/1/2005] PD3, PG3, PJ3, PK3, plus 2 Standard Qs
 [Earned PD3 before 1/1/2000] PD3</Titles>
-				<Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-Bronze">All Bronze titles</Titles>
-				<Titles LongName="Accomplished Performance Dog - Silver" Name="APD-Silver">All Silver titles</Titles>
-				<Titles LongName="Accomplished Performance Dog - Gold" Name="APD-Gold">All Gold titles</Titles>
-				<Titles LongName="Accomplished Performance Dog - Platinum" Name="APD-Platinum">All Platinum titles</Titles>
+				<Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-Bronze" Prefix="y">All Bronze titles</Titles>
+				<Titles LongName="Accomplished Performance Dog - Silver" Name="APD-Silver" Prefix="y">All Silver titles</Titles>
+				<Titles LongName="Accomplished Performance Dog - Gold" Name="APD-Gold" Prefix="y">All Gold titles</Titles>
+				<Titles LongName="Accomplished Performance Dog - Platinum" Name="APD-Platinum" Prefix="y">All Platinum titles</Titles>
 				<Titles LongName="Accomplished Standard Dog" Name="ASD">PS3 plus 5 additional qualifying scores in Performance III Standard class</Titles>
 				<Titles LongName="Accomplished Standard Dog - Bronze" Name="ASD-Bronze">15 qualifying scores in Performance III Standard</Titles>
 				<Titles LongName="Accomplished Standard Dog - Silver" Name="ASD-Silver">25 qualifying scores in Performance III Standard</Titles>
