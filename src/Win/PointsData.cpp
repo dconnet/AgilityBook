@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
@@ -170,7 +171,7 @@ std::string PointsDataDog::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataDog::OnDblClick() const
+void PointsDataDog::Details() const
 {
 	// CDlgDog will cause an update msg to occur which will delete us.
 	// So we need to cache the document in a stack variable.
@@ -233,7 +234,7 @@ std::string PointsDataVenue::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataVenue::OnDblClick() const
+void PointsDataVenue::Details() const
 {
 	if (m_pDog && m_pVenue)
 	{
@@ -302,7 +303,7 @@ std::string PointsDataTitle::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataTitle::OnDblClick() const
+void PointsDataTitle::Details() const
 {
 	CAgilityBookDoc* pDoc = m_pView->GetDocument();
 	CDlgTitle dlg(pDoc->GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pView);
@@ -382,7 +383,7 @@ std::string PointsDataEvent::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataEvent::OnDblClick() const
+void PointsDataEvent::Details() const
 {
 	std::string str("Runs: ");
 	str += m_Div->GetName();
@@ -444,7 +445,7 @@ std::string PointsDataLifetime::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataLifetime::OnDblClick() const
+void PointsDataLifetime::Details() const
 {
 	CString caption(m_Venue);
 	caption += " Lifetime Points";
@@ -528,7 +529,7 @@ std::string PointsDataMultiQs::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataMultiQs::OnDblClick() const
+void PointsDataMultiQs::Details() const
 {
 	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
 	CDlgListViewer dlg(m_pView->GetDocument(), m_MultiQ->GetName().c_str(), &data, m_MQs, m_pView);
@@ -604,7 +605,7 @@ std::string PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyAll::OnDblClick() const
+void PointsDataOtherPointsTallyAll::Details() const
 {
 	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
@@ -638,7 +639,7 @@ std::string PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyAllByEvent::OnDblClick() const
+void PointsDataOtherPointsTallyAllByEvent::Details() const
 {
 	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
@@ -672,7 +673,7 @@ std::string PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyLevel::OnDblClick() const
+void PointsDataOtherPointsTallyLevel::Details() const
 {
 	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
@@ -709,7 +710,7 @@ std::string PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) con
 	return str;
 }
 
-void PointsDataOtherPointsTallyLevelByEvent::OnDblClick() const
+void PointsDataOtherPointsTallyLevelByEvent::Details() const
 {
 	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();

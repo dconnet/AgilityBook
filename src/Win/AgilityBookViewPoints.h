@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-14 DRC Added a context menu.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-12-03 DRC Show all lifetime points when filtering.
  * @li 2004-08-12 DRC Allow creating a new title.
@@ -139,13 +140,19 @@ protected:
 	afx_msg LRESULT OnCommandHelp(WPARAM, LPARAM);
 	//{{AFX_MSG(CAgilityBookViewPoints)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnUpdateDetails(CCmdUI* pCmdUI);
+	afx_msg void OnDetails();
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityNewTitle();
 	afx_msg void OnViewHiddenTitles();
+	afx_msg void OnUpdateCopyTitles(CCmdUI* pCmdUI);
+	afx_msg void OnCopyTitles();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

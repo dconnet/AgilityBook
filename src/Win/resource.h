@@ -760,6 +760,8 @@
 #define ID_COLLAPSE                     32852
 #define ID_EXPAND_ALL                   32853
 #define ID_COLLAPSE_ALL                 32854
+#define ID_DETAILS                      32855
+#define ID_COPY_TITLES_LIST             32856
 #define ID_INDICATOR_STATUS             59142
 #define ID_INDICATOR_FILTERED           59143
 #define ID_INDICATOR_DOG                59144

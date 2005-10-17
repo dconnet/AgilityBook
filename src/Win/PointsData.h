@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
@@ -119,7 +120,8 @@ public:
 	void Release();
 
 	virtual std::string OnNeedText(size_t index) const = 0;
-	virtual void OnDblClick() const {}
+	virtual bool HasDetails() const {return false;}
+	virtual void Details() const {}
 
 protected:
 	virtual ~PointsDataBase();
@@ -141,7 +143,8 @@ public:
 	~PointsDataDog();
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	ARBDog* m_pDog;
@@ -162,7 +165,8 @@ public:
 	~PointsDataVenue();
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	ARBDog* m_pDog;
@@ -184,7 +188,8 @@ public:
 	~PointsDataTitle();
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	ARBDog* m_pDog;
@@ -214,7 +219,8 @@ public:
 			std::string const& inSpeed);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	ARBDog const* m_Dog;
@@ -248,7 +254,8 @@ public:
 			int inFiltered);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	CString m_Venue;
@@ -296,7 +303,8 @@ public:
 			std::set<MultiQdata> const& inMQs);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	ARBDog* m_Dog;
@@ -350,7 +358,8 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 
 protected:
 	std::string m_Name;
@@ -364,7 +373,8 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 };
 
 class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
@@ -375,7 +385,8 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 };
 
 class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
@@ -386,5 +397,6 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
-	virtual void OnDblClick() const;
+	virtual bool HasDetails() const {return true;}
+	virtual void Details() const;
 };

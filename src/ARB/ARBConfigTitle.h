@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-14 DRC Added option to prefix a title.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -124,6 +125,8 @@ public:
 	void SetLongName(std::string const& inName);
 	short GetMultiple() const;
 	void SetMultiple(short inMultiple);
+	bool GetPrefix() const;
+	void SetPrefix(bool inPrefix);
 	std::string const& GetDescription() const;
 	void SetDescription(std::string const& inDesc);
 
@@ -132,6 +135,7 @@ private:
 	std::string m_Name;
 	std::string m_LongName;
 	short m_Multiple;
+	bool m_Prefix;
 	std::string m_Desc;
 };
 
@@ -176,6 +180,16 @@ inline short ARBConfigTitle::GetMultiple() const
 inline void ARBConfigTitle::SetMultiple(short inMultiple)
 {
 	m_Multiple = inMultiple;
+}
+
+inline bool ARBConfigTitle::GetPrefix() const
+{
+	return m_Prefix;
+}
+
+inline void ARBConfigTitle::SetPrefix(bool inPrefix)
+{
+	m_Prefix = inPrefix;
 }
 
 inline std::string const& ARBConfigTitle::GetDescription() const

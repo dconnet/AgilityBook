@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2005-10-14 DRC File version 11.1.
+               Added 'Prefix' to 'Titles'.
 2005-07-15 DRC File version 11.0.
                Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
 2005-04-26 DRC File version 10.2.
@@ -195,6 +197,7 @@ used to determine the starting point for the first recurance.
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
 		Multiple CDATA #IMPLIED
+		Prefix (y|n) 'n'
 		>
 
 <!--

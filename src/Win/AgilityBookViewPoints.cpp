@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-09-15 DRC Added code to filter multi-Qs by date (forgot it - oops!)
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
@@ -129,13 +130,19 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewPoints)
 	ON_WM_CREATE()
+	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
+	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnLvnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
+	ON_UPDATE_COMMAND_UI(ID_DETAILS, OnUpdateDetails)
+	ON_COMMAND(ID_DETAILS, OnDetails)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
 	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
+	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
+	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -184,6 +191,44 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+void CAgilityBookViewPoints::OnRclick(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
+{
+	// Send WM_CONTEXTMENU to self (done according to Q222905)
+	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
+	*pResult = 1;
+}
+
+void CAgilityBookViewPoints::OnContextMenu(
+		CWnd* pWnd,
+		CPoint point)
+{
+	// Point is (-1,-1) on the context menu button.
+	if (0 > point.x || 0 > point.y)
+	{
+		// Adjust the menu position so it's on the selected item.
+		CRect rect;
+		int index = GetSelection();
+		if (0 <= index)
+			GetListCtrl().GetItemRect(index, &rect, FALSE);
+		else
+			GetListCtrl().GetClientRect(&rect);
+		point.x = rect.left + rect.Width() / 3;
+		point.y = rect.top + rect.Height() / 2;
+		ClientToScreen(&point);
+	}
+	UINT idMenu = IDR_POINTS;
+	if (0 != idMenu)
+	{
+		CMenu menu;
+		menu.LoadMenu(idMenu);
+		CMenu* pMenu = menu.GetSubMenu(0);
+		ASSERT(pMenu != NULL);
+		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, AfxGetMainWnd());
+	}
+}
+
 void CAgilityBookViewPoints::OnLvnDeleteitem(
 		NMHDR *pNMHDR,
 		LRESULT *pResult)
@@ -202,7 +247,7 @@ void CAgilityBookViewPoints::OnNMDblclk(
 {
 	PointsDataBase* pData = GetItemData(GetSelection(true));
 	if (pData)
-		pData->OnDblClick();
+		pData->Details();
 	else
 		MessageBeep(0);
 	*pResult = 0;
@@ -222,7 +267,7 @@ void CAgilityBookViewPoints::OnKeydown(
 		{
 			PointsDataBase* pData = GetItemData(GetSelection(true));
 			if (pData)
-				pData->OnDblClick();
+				pData->Details();
 			else
 				MessageBeep(0);
 		}
@@ -952,6 +997,22 @@ void CAgilityBookViewPoints::LoadData()
 
 // CAgilityBookViewPoints message handlers
 
+void CAgilityBookViewPoints::OnUpdateDetails(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	PointsDataBase* pData = GetItemData(GetSelection(true));
+	if (pData && pData->HasDetails())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewPoints::OnDetails()
+{
+	PointsDataBase* pData = GetItemData(GetSelection(true));
+	if (pData)
+		pData->Details();
+}
+
 void CAgilityBookViewPoints::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -982,4 +1043,111 @@ void CAgilityBookViewPoints::OnViewHiddenTitles()
 		for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
 			GetDocument()->ResetVisibility(venues, *iterTitle);
 	LoadData();
+}
+
+void CAgilityBookViewPoints::OnUpdateCopyTitles(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	if (pDog && 0 < pDog->GetTitles().size())
+	{
+		int count = 0;
+		for (ARBDogTitleList::const_iterator iter = pDog->GetTitles().begin();
+			iter != pDog->GetTitles().end();
+			++iter)
+		{
+			if ((*iter)->GetDate().IsValid()
+			&& !(*iter)->IsHidden())
+				++count;
+		}
+		if (0 < count)
+			bEnable = TRUE;
+	}
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewPoints::OnCopyTitles()
+{
+	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	if (pDog && 0 < pDog->GetTitles().size())
+	{
+		std::string preTitles, postTitles;
+		for (ARBConfigVenueList::const_iterator iVenue = GetDocument()->GetConfig().GetVenues().begin();
+			iVenue != GetDocument()->GetConfig().GetVenues().end();
+			++iVenue)
+		{
+			// TODO: Add checks for filtering
+			std::string preTitles2, postTitles2;
+			for (ARBConfigDivisionList::const_iterator iDiv = (*iVenue)->GetDivisions().begin();
+				iDiv != (*iVenue)->GetDivisions().end();
+				++iDiv)
+			{
+				for (ARBConfigTitleList::const_iterator iTitle = (*iDiv)->GetTitles().begin();
+					iTitle != (*iDiv)->GetTitles().end();
+					++iTitle)
+				{
+					ARBDogTitle* pTitle;
+					if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
+					{
+						if (pTitle->GetDate().IsValid()
+						&& !pTitle->IsHidden())
+						{
+							if ((*iTitle)->GetPrefix())
+							{
+								if (!preTitles2.empty())
+									preTitles2 += ' ';
+								preTitles2 += (*iTitle)->GetName();
+							}
+							else
+							{
+								if (!postTitles2.empty())
+									postTitles2 += ' ';
+								postTitles2 += (*iTitle)->GetName();
+							}
+						}
+						pTitle->Release();
+					}
+				}
+			}
+			if (!preTitles2.empty())
+			{
+				if (!preTitles.empty())
+					preTitles += ' ';
+				preTitles += preTitles2;
+			}
+			if (!postTitles2.empty())
+			{
+				if (!postTitles.empty())
+					postTitles += "; ";
+				postTitles += postTitles2;
+			}
+		}
+		if (!preTitles.empty() || !postTitles.empty())
+		{
+			CString data(preTitles.c_str());
+			data += ' ';
+			data += pDog->GetCallName().c_str();
+			data += ": ";
+			data += postTitles.c_str();
+
+			// Now, copy to the clipboard
+			if (AfxGetMainWnd()->OpenClipboard())
+			{
+				EmptyClipboard();
+
+				// alloc mem block & copy text in
+				HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
+				if (NULL != temp)
+				{
+					LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
+					lstrcpy(str, (LPCTSTR)data);
+					GlobalUnlock(temp);
+					// send data to clipbard
+					SetClipboardData(CF_TEXT, temp);
+				}
+
+				CloseClipboard();
+			}
+		}
+	}
 }

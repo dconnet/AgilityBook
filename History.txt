@@ -1,9 +1,11 @@
-10/10/2005: v1.6.1.11 <in development>
+10/14/2005: v1.6.1.11 <in development>
+- Bumped file version to 11.1, Configuration v10:
+  - Added option to prefix a title when listed on configuration titles.
 - New features / Enhancements:
   - Changed how URLs are accessed to allow for redirection. The program now
     only knows about agilityrecordbook.com, not where that is hosted.
-  - In details dialog for listing runs, added venue, division, level
-    and event columns.
+  - In details dialog for listing runs (in the Points view), added venue,
+    division, level and event columns.
   - Space now acts like dbl-click in lists.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
@@ -14,7 +16,7 @@
   - Empty trials were sorting inconsistently.
   - Saving a v10 file in v11 without updating the configuration creates
     an unnamed MultiQ for AKC. (This did get updated properly later.)
-  - Fixed a crash that could occur when updating a modified configuration.
+  - Updating a modified configuration could crash the program.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:

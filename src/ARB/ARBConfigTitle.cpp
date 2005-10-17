@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-14 DRC Added option to prefix a title.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-05 DRC Added LongName.
@@ -57,6 +58,7 @@ ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
 	, m_Multiple(0)
+	, m_Prefix(false)
 	, m_Desc()
 {
 }
@@ -65,6 +67,7 @@ ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Multiple(rhs.m_Multiple)
+	, m_Prefix(rhs.m_Prefix)
 	, m_Desc(rhs.m_Desc)
 {
 }
@@ -80,6 +83,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
 		m_Multiple = rhs.m_Multiple;
+		m_Prefix = rhs.m_Prefix;
 		m_Desc = rhs.m_Desc;
 	}
 	return *this;
@@ -90,6 +94,7 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
 		&& m_Multiple == rhs.m_Multiple
+		&& m_Prefix == rhs.m_Prefix
 		&& m_Desc == rhs.m_Desc;
 }
 
@@ -103,6 +108,7 @@ void ARBConfigTitle::clear()
 	m_Name.erase();
 	m_LongName.erase();
 	m_Multiple = 0;
+	m_Prefix = false;
 	m_Desc.erase();
 }
 
@@ -126,6 +132,11 @@ bool ARBConfigTitle::Load(
 
 	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	inTree.GetAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, VALID_VALUES_BOOL));
+		return false;
+	}
 
 	m_Desc = inTree.GetValue();
 	return true;
@@ -137,6 +148,8 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
 	if (0 < m_Multiple)
 		title.AddAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
+	if (m_Prefix)
+		title.AddAttrib(ATTRIB_TITLES_PREFIX, m_Prefix);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	if (0 < m_Desc.length())
