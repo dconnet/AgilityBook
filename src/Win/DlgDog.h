@@ -66,6 +66,7 @@ private:
 	CDlgDogTitles* m_pageTitles;
 	CDlgDogNumbers* m_pageRegNums;
 	CDlgDogPoints* m_pagePoints;
+	bool m_viewHidden;
 
 	//{{AFX_VIRTUAL(CDlgDog)
 	//}}AFX_VIRTUAL
