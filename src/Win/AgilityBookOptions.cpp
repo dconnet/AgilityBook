@@ -180,6 +180,26 @@ bool CAgilityBookOptions::IsVenueVisible(
 	return true;
 }
 
+bool CAgilityBookOptions::IsVenueDivisionVisible(
+		std::vector<CVenueFilter> const& venues,
+		std::string const& venue,
+		std::string const& div)
+{
+	if (!CAgilityBookOptions::GetViewAllVenues())
+	{
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+			iter != venues.end();
+			++iter)
+		{
+			if ((*iter).venue == venue
+			&& (*iter).division == div)
+				return true;
+		}
+		return false;
+	}
+	return true;
+}
+
 bool CAgilityBookOptions::IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrial const* pTrial)

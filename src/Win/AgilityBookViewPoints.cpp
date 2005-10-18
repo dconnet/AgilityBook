@@ -1071,17 +1071,23 @@ void CAgilityBookViewPoints::OnCopyTitles()
 	ARBDog* pDog = GetDocument()->GetCurrentDog();
 	if (pDog && 0 < pDog->GetTitles().size())
 	{
+		std::vector<CVenueFilter> venues;
+		CAgilityBookOptions::GetFilterVenue(venues);
+
 		std::string preTitles, postTitles;
 		for (ARBConfigVenueList::const_iterator iVenue = GetDocument()->GetConfig().GetVenues().begin();
 			iVenue != GetDocument()->GetConfig().GetVenues().end();
 			++iVenue)
 		{
-			// TODO: Add checks for filtering
+			if (!CAgilityBookOptions::IsVenueVisible(venues, (*iVenue)->GetName()))
+				continue;
 			std::string preTitles2, postTitles2;
 			for (ARBConfigDivisionList::const_iterator iDiv = (*iVenue)->GetDivisions().begin();
 				iDiv != (*iVenue)->GetDivisions().end();
 				++iDiv)
 			{
+				if (!CAgilityBookOptions::IsVenueDivisionVisible(venues, (*iVenue)->GetName(), (*iDiv)->GetName()))
+					continue;
 				for (ARBConfigTitleList::const_iterator iTitle = (*iDiv)->GetTitles().begin();
 					iTitle != (*iDiv)->GetTitles().end();
 					++iTitle)
@@ -1149,5 +1155,7 @@ void CAgilityBookViewPoints::OnCopyTitles()
 				CloseClipboard();
 			}
 		}
+		else
+			AfxMessageBox("No titles to copy.", MB_ICONINFORMATION);
 	}
 }
