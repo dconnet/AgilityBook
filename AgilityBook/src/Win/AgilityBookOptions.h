@@ -132,6 +132,10 @@ public:
 	static bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
 			std::string const& venue);
+	static bool IsVenueDivisionVisible(
+			std::vector<CVenueFilter> const& venues,
+			std::string const& venue,
+			std::string const& div);
 	static bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBDogTrial const* pTrial);
