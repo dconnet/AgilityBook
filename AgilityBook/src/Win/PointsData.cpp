@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
@@ -184,6 +185,15 @@ void PointsDataDog::Details() const
 	}
 }
 
+bool PointsDataDog::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataDog const* inDog = dynamic_cast<PointsDataDog const*>(inData);
+	if (inDog)
+		return m_pDog->GetCallName() == inDog->m_pDog->GetCallName();
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataVenue::PointsDataVenue(
@@ -259,6 +269,15 @@ void PointsDataVenue::Details() const
 		MessageBeep(0);
 }
 
+bool PointsDataVenue::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataVenue const* inVenue = dynamic_cast<PointsDataVenue const*>(inData);
+	if (inVenue)
+		return m_pVenue->GetName() == inVenue->m_pVenue->GetName();
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataTitle::PointsDataTitle(
@@ -315,6 +334,16 @@ void PointsDataTitle::Details() const
 		pDoc->ResetVisibility(venues, m_pTitle);
 		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
 	}
+}
+
+bool PointsDataTitle::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataTitle const* inTitle = dynamic_cast<PointsDataTitle const*>(inData);
+	if (inTitle)
+		return m_pTitle->GetVenue() == inTitle->m_pTitle->GetVenue()
+			&& m_pTitle->GetRawName() == inTitle->m_pTitle->GetRawName();
+	else
+		return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -396,6 +425,18 @@ void PointsDataEvent::Details() const
 	dlg.DoModal();
 }
 
+bool PointsDataEvent::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataEvent const* inEvent = dynamic_cast<PointsDataEvent const*>(inData);
+	if (inEvent)
+		return m_Venue->GetName() == inEvent->m_Venue->GetName()
+			&& m_Div->GetName() == inEvent->m_Div->GetName()
+			&& m_Level->GetName() == inEvent->m_Level->GetName()
+			&& m_Event->GetName() == inEvent->m_Event->GetName();
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataLifetime::PointsDataLifetime(
@@ -453,6 +494,15 @@ void PointsDataLifetime::Details() const
 	dlg.DoModal();
 }
 
+bool PointsDataLifetime::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataLifetime const* inLife = dynamic_cast<PointsDataLifetime const*>(inData);
+	if (inLife)
+		return m_Venue == inLife->m_Venue;
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataLifetimeDiv::PointsDataLifetimeDiv(
@@ -497,6 +547,16 @@ std::string PointsDataLifetimeDiv::OnNeedText(size_t index) const
 	return str;
 }
 
+bool PointsDataLifetimeDiv::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataLifetimeDiv const* inLife = dynamic_cast<PointsDataLifetimeDiv const*>(inData);
+	if (inLife)
+		return PointsDataLifetimeDiv::IsEqual(inData)
+			&& m_Div == inLife->m_Div;
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataMultiQs::PointsDataMultiQs(
@@ -536,12 +596,24 @@ void PointsDataMultiQs::Details() const
 	dlg.DoModal();
 }
 
+bool PointsDataMultiQs::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataMultiQs const* inMulti = dynamic_cast<PointsDataMultiQs const*>(inData);
+	if (inMulti)
+		return m_Venue->GetName() == inMulti->m_Venue->GetName()
+			&& m_MultiQ->GetName() == inMulti->m_MultiQ->GetName();
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataSpeedPts::PointsDataSpeedPts(
 		CAgilityBookViewPoints* pView,
+		ARBConfigVenue* inVenue,
 		int inPts)
 	: PointsDataBase(pView)
+	, m_Venue(inVenue)
 	, m_Pts(inPts)
 {
 }
@@ -556,6 +628,15 @@ std::string PointsDataSpeedPts::OnNeedText(size_t index) const
 		str = (LPCTSTR)str2;
 	}
 	return str;
+}
+
+bool PointsDataSpeedPts::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataSpeedPts const* inPts = dynamic_cast<PointsDataSpeedPts const*>(inData);
+	if (inPts)
+		return m_Venue->GetName() == inPts->m_Venue->GetName();
+	else
+		return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -611,12 +692,23 @@ void PointsDataOtherPointsTallyAll::Details() const
 	dlg.DoModal();
 }
 
+bool PointsDataOtherPointsTallyAll::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataOtherPointsTallyAll const* inPts = dynamic_cast<PointsDataOtherPointsTallyAll const*>(inData);
+	if (inPts)
+		return m_Name == inPts->m_Name;
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataOtherPointsTallyAllByEvent::PointsDataOtherPointsTallyAllByEvent(
 		CAgilityBookViewPoints* pView,
+		std::string const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
+	, m_Event(inEvent)
 {
 }
 
@@ -645,12 +737,23 @@ void PointsDataOtherPointsTallyAllByEvent::Details() const
 	dlg.DoModal();
 }
 
+bool PointsDataOtherPointsTallyAllByEvent::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataOtherPointsTallyAllByEvent const* inPts = dynamic_cast<PointsDataOtherPointsTallyAllByEvent const*>(inData);
+	if (inPts)
+		return m_Event == inPts->m_Event;
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataOtherPointsTallyLevel::PointsDataOtherPointsTallyLevel(
 		CAgilityBookViewPoints* pView,
+		std::string const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
+	, m_Level(inLevel)
 {
 }
 
@@ -679,12 +782,25 @@ void PointsDataOtherPointsTallyLevel::Details() const
 	dlg.DoModal();
 }
 
+bool PointsDataOtherPointsTallyLevel::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataOtherPointsTallyLevel const* inPts = dynamic_cast<PointsDataOtherPointsTallyLevel const*>(inData);
+	if (inPts)
+		return m_Level == inPts->m_Level;
+	else
+		return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(
 		CAgilityBookViewPoints* pView,
+		std::string const& inLevel,
+		std::string const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
+	, m_Level(inLevel)
+	, m_Event(inEvent)
 {
 }
 
@@ -714,4 +830,14 @@ void PointsDataOtherPointsTallyLevelByEvent::Details() const
 {
 	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
 	dlg.DoModal();
+}
+
+bool PointsDataOtherPointsTallyLevelByEvent::IsEqual(PointsDataBase const* inData)
+{
+	PointsDataOtherPointsTallyLevelByEvent const* inPts = dynamic_cast<PointsDataOtherPointsTallyLevelByEvent const*>(inData);
+	if (inPts)
+		return m_Level == inPts->m_Level
+			&& m_Event == inPts->m_Event;
+	else
+		return false;
 }

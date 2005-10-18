@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
@@ -122,6 +123,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const = 0;
 	virtual bool HasDetails() const {return false;}
 	virtual void Details() const {}
+	virtual bool IsEqual(PointsDataBase const* inData) = 0;
 
 protected:
 	virtual ~PointsDataBase();
@@ -145,6 +147,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	ARBDog* m_pDog;
@@ -167,6 +170,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	ARBDog* m_pDog;
@@ -190,6 +194,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	ARBDog* m_pDog;
@@ -221,6 +226,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	ARBDog const* m_Dog;
@@ -256,6 +262,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	CString m_Venue;
@@ -282,6 +289,7 @@ public:
 			int inFiltered);
 
 	virtual std::string OnNeedText(size_t index) const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	std::string m_Div;
@@ -305,6 +313,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	ARBDog* m_Dog;
@@ -324,18 +333,21 @@ class PointsDataSpeedPts : public PointsDataBase
 public:
 	PointsDataSpeedPts(
 			CAgilityBookViewPoints* pView,
+			ARBConfigVenue* inVenue,
 			int inPts);
 
 	virtual std::string OnNeedText(size_t index) const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
+	ARBConfigVenue* m_Venue;
 	int m_Pts;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * Other points data.
+ * Other points data base class.
  */
 class PointsDataOtherPoints : public PointsDataBase
 {
@@ -360,6 +372,7 @@ public:
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
 	std::string m_Name;
@@ -370,11 +383,16 @@ class PointsDataOtherPointsTallyAllByEvent : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyAllByEvent(
 			CAgilityBookViewPoints* pView,
+			std::string const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
+
+protected:
+	std::string m_Event;
 };
 
 class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
@@ -382,11 +400,16 @@ class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyLevel(
 			CAgilityBookViewPoints* pView,
+			std::string const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
+
+protected:
+	std::string m_Level;
 };
 
 class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
@@ -394,9 +417,16 @@ class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyLevelByEvent(
 			CAgilityBookViewPoints* pView,
+			std::string const& inLevel,
+			std::string const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual std::string OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
+	virtual bool IsEqual(PointsDataBase const* inData);
+
+protected:
+	std::string m_Level;
+	std::string m_Event;
 };

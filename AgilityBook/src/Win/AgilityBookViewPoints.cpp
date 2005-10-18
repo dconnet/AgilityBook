@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-09-15 DRC Added code to filter multi-Qs by date (forgot it - oops!)
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -456,6 +457,11 @@ void CAgilityBookViewPoints::LoadData()
 	// Reduce flicker
 	GetListCtrl().SetRedraw(FALSE);
 
+	// Get the current item.
+	PointsDataBase* pCurData = GetItemData(GetSelection(true));
+	if (pCurData)
+		pCurData->AddRef();
+
 	// Clear everything.
 	GetListCtrl().DeleteAllItems();
 
@@ -741,7 +747,7 @@ void CAgilityBookViewPoints::LoadData()
 				// Information that is tallied after all a venue's events.
 				if (bHasSpeedPts)
 				{
-					InsertData(idxInsertItem, new PointsDataSpeedPts(this, speedPts));
+					InsertData(idxInsertItem, new PointsDataSpeedPts(this, pVenue, speedPts));
 				}
 
 				// If the venue has multiQs, tally them now.
@@ -917,7 +923,7 @@ void CAgilityBookViewPoints::LoadData()
 								if ((*iter).m_Event == (*iterTally))
 									validRuns.push_back(*iter);
 							}
-							InsertData(idxInsertItem, new PointsDataOtherPointsTallyAllByEvent(this, validRuns));
+							InsertData(idxInsertItem, new PointsDataOtherPointsTallyAllByEvent(this, (*iterTally), validRuns));
 						}
 					}
 					break;
@@ -942,7 +948,7 @@ void CAgilityBookViewPoints::LoadData()
 								if ((*iter).m_Level == (*iterTally))
 									validRuns.push_back(*iter);
 							}
-							InsertData(idxInsertItem, new PointsDataOtherPointsTallyLevel(this, validRuns));
+							InsertData(idxInsertItem, new PointsDataOtherPointsTallyLevel(this, (*iterTally), validRuns));
 						}
 					}
 					break;
@@ -969,7 +975,7 @@ void CAgilityBookViewPoints::LoadData()
 								&& (*iter).m_Event == (*iterTally).second)
 									validRuns.push_back(*iter);
 							}
-							InsertData(idxInsertItem, new PointsDataOtherPointsTallyLevelByEvent(this, validRuns));
+							InsertData(idxInsertItem, new PointsDataOtherPointsTallyLevelByEvent(this, (*iterTally).first, (*iterTally).second, validRuns));
 						}
 					}
 					break;
@@ -989,6 +995,25 @@ void CAgilityBookViewPoints::LoadData()
 			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
 			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
+	}
+
+	if (pCurData)
+	{
+		int n = GetListCtrl().GetItemCount();
+		for (int i = 0; i < n; ++i)
+		{
+			PointsDataBase* pBase = GetItemData(i);
+			if (pBase)
+			{
+				if (pBase->IsEqual(pCurData))
+				{
+					SetSelection(i);
+					GetListCtrl().EnsureVisible(i, FALSE);
+					break;
+				}
+			}
+		}
+		pCurData->Release();
 	}
 
 	GetListCtrl().SetRedraw(TRUE);

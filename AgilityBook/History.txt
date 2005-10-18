@@ -9,6 +9,7 @@
   - Space now acts like dbl-click in lists.
   - Added a context menu to the Points view. Includes creating a list of
     titles for use as a .sig.
+  - Remember last selected item in Points view when reloading data.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
