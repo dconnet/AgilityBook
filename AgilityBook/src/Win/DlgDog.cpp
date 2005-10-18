@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-17 DRC Points view didn't update 'View Hidden' after canceling.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
@@ -41,6 +42,7 @@
 #include "DlgDog.h"
 
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "ARBDog.h"
 #include "DlgDogNumbers.h"
 #include "DlgDogPoints.h"
@@ -72,6 +74,7 @@ CDlgDog::CDlgDog(
 	, m_pageTitles(NULL)
 	, m_pageRegNums(NULL)
 	, m_pagePoints(NULL)
+	, m_viewHidden(CAgilityBookOptions::GetViewHiddenTitles())
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 	m_pageProp = new CDlgDogProperties(m_pDoc, pDog);
@@ -86,6 +89,16 @@ CDlgDog::CDlgDog(
 
 CDlgDog::~CDlgDog()
 {
+	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
+	{
+		std::vector<CVenueFilter> venues;
+		CAgilityBookOptions::GetFilterVenue(venues);
+		for (ARBDogList::iterator iterDogs = m_pDoc->GetDogs().begin(); iterDogs != m_pDoc->GetDogs().end(); ++iterDogs)
+			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
+				m_pDoc->ResetVisibility(venues, *iterTitle);
+		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
+	}
+
 	delete m_pageProp;
 	delete m_pageTitles;
 	delete m_pageRegNums;

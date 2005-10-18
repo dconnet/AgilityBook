@@ -1,4 +1,4 @@
-10/14/2005: v1.6.1.11 <in development>
+10/17/2005: v1.6.1.11 <in development>
 - Bumped file version to 11.1, Configuration v10:
   - Added option to prefix a title when listed on configuration titles.
 - New features / Enhancements:
@@ -7,6 +7,8 @@
   - In details dialog for listing runs (in the Points view), added venue,
     division, level and event columns.
   - Space now acts like dbl-click in lists.
+  - Added a context menu to the Points view. Includes creating a list of
+    titles for use as a .sig.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
@@ -17,6 +19,7 @@
   - Saving a v10 file in v11 without updating the configuration creates
     an unnamed MultiQ for AKC. (This did get updated properly later.)
   - Updating a modified configuration could crash the program.
+  - Points view didn't update 'View Hidden' after canceling dog properties.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:
