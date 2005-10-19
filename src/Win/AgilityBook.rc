@@ -345,8 +345,10 @@ BEGIN
     BEGIN
         MENUITEM "&Details...",                 ID_DETAILS
         MENUITEM SEPARATOR
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Copy Selection\tCtrl+C",     ID_EDIT_COPY
         MENUITEM "Copy &Titles",                ID_COPY_TITLES_LIST
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
     END
 END
 
