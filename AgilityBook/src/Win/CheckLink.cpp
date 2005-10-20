@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-09-20 DRC Created, fixed a problem with GetStatus throwing.
  */
 
@@ -91,8 +92,10 @@ bool CheckLink(
 			{
 				// for 'c:\*.txt', vc7 will throw, vc6 returns the 1st .txt
 				// Ahh, consistency... sigh.
+				// Note: I think the GetLocalStatus change probably handles
+				// the problem this try/catch was attempting to handle.
 				CFileStatus status;
-				if (CFile::GetStatus(inLink.c_str(), status))
+				if (GetLocalStatus(inLink.c_str(), status))
 					bOk = true;
 			}
 			catch (CException* ex)

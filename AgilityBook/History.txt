@@ -1,4 +1,4 @@
-10/17/2005: v1.6.1.11 <in development>
+10/19/2005: v1.6.1.11 <in development>
 - Bumped file version to 11.1, Configuration v10:
   - Added option to prefix a title when listed on configuration titles.
 - New features / Enhancements:
@@ -14,7 +14,8 @@
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
     information from the scoring tab.
-  - On some systems, attempting to link to a file on a CD causes a problem
+  - Attempting to open or link to a file on a CD or NAS can crash the program
+    if that file has an invalid creation date.
     making it impossible to select that file.
   - Empty trials were sorting inconsistently.
   - Saving a v10 file in v11 without updating the configuration creates

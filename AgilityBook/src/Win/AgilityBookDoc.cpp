@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-19 DRC Changed sort-newest to only do trials, not runs.
  * @li 2004-12-18 DRC Added an extra check before posting the new dog msg.
@@ -700,7 +701,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	CFileStatus status;
-	if (!CFile::GetStatus(lpszPathName, status))
+	if (!GetLocalStatus(lpszPathName, status))
 	{
 		CSplashWnd::HideSplashScreen();
 		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
@@ -1007,7 +1008,7 @@ void CAgilityBookDoc::OnNotesClubs()
 	dlg.DoModal();
 }
 
-void CAgilityBookDoc::OnNotesJudges() 
+void CAgilityBookDoc::OnNotesJudges()
 {
 	CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo);
 	dlg.DoModal();
@@ -1172,7 +1173,7 @@ void CAgilityBookDoc::OnViewOptions()
 	options.DoModal();
 }
 
-void CAgilityBookDoc::OnUpdateViewSortruns(CCmdUI* pCmdUI) 
+void CAgilityBookDoc::OnUpdateViewSortruns(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
 }
