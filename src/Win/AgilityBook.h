@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2004-06-02 DRC Moved ShellExecute code here.
  */
 
@@ -97,3 +98,6 @@ extern void ExpandAll(
 		CTreeCtrl& ctrl,
 		HTREEITEM hItem,
 		UINT code);
+extern BOOL GetLocalStatus(
+		LPCTSTR lpszFileName,
+		CFileStatus& rStatus);

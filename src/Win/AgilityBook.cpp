@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-02-10 DRC There was a problem initializing RICHED*.DLL on Win98.
  * @li 2004-07-20 DRC Changed the updating to auto-update configurations also.
  *                    Moved the user-request updates to the document.
@@ -192,6 +193,77 @@ void ExpandAll(
 		ExpandAll(ctrl, hChildItem, code);
 		hChildItem = ctrl.GetNextItem(hChildItem, TVGN_NEXT);
 	}
+}
+
+// Copy of CFile::GetStatus, changes are commented below.
+// For some reason the timestamp on files can be totally messed up.
+// It happens in the FILETIME to CTime conversion (throws a COleException)
+// This has occurred with files on a NAS and CD.
+BOOL GetLocalStatus(
+		LPCTSTR lpszFileName,
+		CFileStatus& rStatus)
+{
+	if ( lpszFileName == NULL )
+	{
+		return FALSE;
+	}
+
+	if ( lstrlen(lpszFileName) >= _MAX_PATH )
+	{
+		ASSERT(FALSE); // MFC requires paths with length < _MAX_PATH
+		return FALSE;
+	}
+
+// CHANGE: No idea where AfxFullPath is...
+	// attempt to fully qualify path first
+	//if (!AfxFullPath(rStatus.m_szFullName, lpszFileName))
+	//{
+	//	rStatus.m_szFullName[0] = '\0';
+	//	return FALSE;
+	//}
+
+	WIN32_FIND_DATA findFileData;
+	HANDLE hFind = FindFirstFile((LPTSTR)lpszFileName, &findFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+		return FALSE;
+	VERIFY(FindClose(hFind));
+
+	// strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
+// CHANGE: Added '0xff' due to runtime cast check option
+	rStatus.m_attribute = (BYTE)
+		(0xff & (findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL));
+
+	// get just the low DWORD of the file size
+	ASSERT(findFileData.nFileSizeHigh == 0);
+	rStatus.m_size = (LONG)findFileData.nFileSizeLow;
+
+	// convert times as appropriate
+// CHANGE: handle COleException
+	//rStatus.m_ctime = CTime(findFileData.ftCreationTime);
+	//rStatus.m_atime = CTime(findFileData.ftLastAccessTime);
+	//rStatus.m_mtime = CTime(findFileData.ftLastWriteTime);
+	CTime* times[3]; times[0] = &rStatus.m_ctime; times[1] = &rStatus.m_atime; times[2] = &rStatus.m_mtime;
+	FILETIME* ft[3]; ft[0] = &findFileData.ftCreationTime; ft[1] = &findFileData.ftLastAccessTime; ft[2] = &findFileData.ftLastWriteTime;
+	for (int i = 0; i < 3; ++i)
+	{
+		try
+		{
+			*(times[i]) = CTime(*(ft[i]));
+		}
+		catch (COleException* pe)
+		{
+			pe->Delete();
+			*(times[i]) = 0;
+		}
+	}
+
+	if (rStatus.m_ctime.GetTime() == 0)
+		rStatus.m_ctime = rStatus.m_mtime;
+
+	if (rStatus.m_atime.GetTime() == 0)
+		rStatus.m_atime = rStatus.m_mtime;
+
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -369,7 +441,7 @@ BOOL CAgilityBookApp::InitInstance()
 	if (CCommandLineInfo::FileOpen == cmdInfo.m_nShellCommand)
 	{
 		CFileStatus rStatus;
-		if (!CFile::GetStatus(cmdInfo.m_strFileName, rStatus)
+		if (!GetLocalStatus(cmdInfo.m_strFileName, rStatus)
 		|| 0 == rStatus.m_size)
 		{
 			cmdInfo.m_strFileName = _T("");
