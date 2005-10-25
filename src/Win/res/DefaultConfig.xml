@@ -730,8 +730,8 @@ Jumpers: 400 pts (20 legs)</Titles>
 			</Division>
 			<Division Name="Specialist">
 				<Level Name="Level 3"/>
-				<Titles LongName="Specialist Champion" Name="SpCh">Will need to obtain a total of 750 points, which must include at least 4 legs in 4 of the 7 classes offered by CPE, handler choice.</Titles>
-				<Titles LongName="Specialist Extraordinaire" Name="SpEx">Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
+				<Titles LongName="Specialist Champion" Name="SpCh" Prefix="y">Will need to obtain a total of 750 points, which must include at least 4 legs in 4 of the 7 classes offered by CPE, handler choice.</Titles>
+				<Titles LongName="Specialist Extraordinaire" Name="SpEx" Prefix="y">Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
