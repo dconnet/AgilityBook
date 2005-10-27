@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2005-10-26 DRC Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
  * @li 2005-04-26 DRC Added 'ver' to 'AgilityBook'
  * @li 2005-01-11 DRC Added 'Multiple' to 'Titles', 'instance' to 'Title'.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -121,6 +122,7 @@
 #define ATTRIB_BOOK_VERSION					"Book"
 #define ATTRIB_BOOK_PGM_VERSION				"ver"
 #define ATTRIB_CONFIG_VERSION				"version"
+#define ATTRIB_CONFIG_UPDATE				"update"
 #define ATTRIB_CAL_START					"DateStart"
 #define ATTRIB_CAL_END						"DateEnd"
 #define ATTRIB_CAL_OPENING					"DateOpening"
@@ -138,6 +140,7 @@
 	#define ACTION_VERB_DELETE_TITLE			"DeleteTitle"
 	#define ACTION_VERB_RENAME_TITLE			"RenameTitle"
 #define ATTRIB_ACTION_VENUE					"Venue"
+#define ATTRIB_ACTION_DIVISION				"Div"
 #define ATTRIB_ACTION_OLDNAME				"OldName"
 #define ATTRIB_ACTION_NEWNAME				"NewName"
 #define ATTRIB_VENUE_NAME					"Name"

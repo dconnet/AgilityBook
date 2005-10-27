@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-26 DRC Added version number to configuration.
@@ -162,6 +163,8 @@ public:
 	/*
 	 * Getters.
 	 */
+	bool GetUpdateStatus() const;
+	void SetUpdateStatus(bool inUpdate);
 	short GetVersion() const;
 	ARBConfigActionList const& GetActions() const;
 	ARBConfigActionList& GetActions();
@@ -173,12 +176,23 @@ public:
 	ARBConfigOtherPointsList& GetOtherPoints();
 
 private:
+	bool m_bUpdate;
 	short m_Version;
 	ARBConfigActionList m_Actions;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;
 };
+
+inline bool ARBConfig::GetUpdateStatus() const
+{
+	return m_bUpdate;
+}
+
+inline void ARBConfig::SetUpdateStatus(bool inUpdate)
+{
+	m_bUpdate = inUpdate;
+}
 
 inline short ARBConfig::GetVersion() const
 {

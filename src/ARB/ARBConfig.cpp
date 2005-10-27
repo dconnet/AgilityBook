@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-12-18 DRC Don't set version number lower when merging.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -59,7 +60,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfig::ARBConfig()
-	: m_Version(0)
+	: m_bUpdate(true)
+	, m_Version(0)
 	, m_Actions()
 	, m_Venues()
 	, m_FaultTypes()
@@ -68,7 +70,8 @@ ARBConfig::ARBConfig()
 }
 
 ARBConfig::ARBConfig(ARBConfig const& rhs)
-	: m_Version(rhs.m_Version)
+: m_bUpdate(rhs.m_bUpdate)
+	, m_Version(rhs.m_Version)
 	, m_Actions(rhs.m_Actions)
 	, m_Venues(rhs.m_Venues)
 	, m_FaultTypes(rhs.m_FaultTypes)
@@ -85,6 +88,7 @@ ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 {
 	if (this != &rhs)
 	{
+		m_bUpdate = rhs.m_bUpdate;
 		m_Version = rhs.m_Version;
 		m_Actions = rhs.m_Actions;
 		m_Venues = rhs.m_Venues;
@@ -96,7 +100,8 @@ ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 
 bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
-	return m_Version == rhs.m_Version
+	return m_bUpdate == rhs.m_bUpdate
+		&& m_Version == rhs.m_Version
 		&& m_Actions == rhs.m_Actions
 		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
@@ -110,6 +115,7 @@ bool ARBConfig::operator!=(ARBConfig const& rhs) const
 
 void ARBConfig::clear()
 {
+	m_bUpdate = true;
 	m_Version = 0;
 	m_Actions.clear();
 	m_Venues.clear();
@@ -154,6 +160,11 @@ bool ARBConfig::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, VALID_VALUES_BOOL));
+		return false;
+	}
 	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
@@ -189,6 +200,8 @@ bool ARBConfig::Load(
 bool ARBConfig::Save(Element& ioTree) const
 {
 	Element& config = ioTree.AddElement(TREE_CONFIG);
+	if (!m_bUpdate)
+		config.AddAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate);
 	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	if (!m_Actions.Save(config))
 		return false;
@@ -420,6 +433,7 @@ bool ARBConfig::Update(
 	}
 	else
 	{
+		m_bUpdate = true;
 		ioInfo += info;
 	}
 	return bChanges;

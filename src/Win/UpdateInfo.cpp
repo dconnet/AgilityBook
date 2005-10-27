@@ -36,6 +36,7 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
  *                    I can now advertise the url as "www.agilityrecordbook.com"
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -59,6 +60,32 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+bool CUpdateInfo::UpdateConfig(
+		CAgilityBookDoc* ioDoc,
+		char const* inMsg)
+{
+	CSplashWnd::HideSplashScreen();
+
+	CString msg("The configuration has been updated. Would you like to merge the new one with your data?");
+	if (inMsg && *inMsg)
+	{
+		msg += "\n\n";
+		msg += inMsg;
+	}
+
+	bool b = (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO));
+	/* TODO: Change to include 'never' option
+	if (!b)
+	{
+		ioDoc->GetConfig().SetUpdateStatus(false);
+		ioDoc->SetModifiedFlag(TRUE);
+	}
+	*/
+	return b;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -422,7 +449,7 @@ void CUpdateInfo::CheckConfig(
 	if (0 < m_FileName.length() && m_VerConfig > pDoc->GetConfig().GetVersion())
 	{
 		bUpToDate = false;
-		CString msg("The configuration has been updated. Would you like to merge the new one with your data?");
+		CString msg;
 		if (0 < m_InfoMsg.length())
 		{
 			// If the info contains a note, append it.
@@ -431,11 +458,9 @@ void CUpdateInfo::CheckConfig(
 			// titling pts were removed from Tournament Jumpers and
 			// Snooker to allow for non-titling runs. In case the
 			// user saved some that way, we need to warn them.
-			msg += "\n\n";
 			msg += m_InfoMsg.c_str();
 		}
-		CSplashWnd::HideSplashScreen();
-		if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
+		if (UpdateConfig(pDoc, msg))
 		{
 			// Load the config.
 			CString url;

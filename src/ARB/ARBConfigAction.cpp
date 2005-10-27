@@ -42,6 +42,7 @@
  * via import, which means actions are live.)
  *
  * Revision History
+ * @li 2005-10-26 DRC Added optional 'Div' to DeleteTitle.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Created
  */
@@ -63,6 +64,7 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigAction::ARBConfigAction()
 	: m_Verb()
 	, m_Venue()
+	, m_Div()
 	, m_OldName()
 	, m_NewName()
 {
@@ -71,6 +73,7 @@ ARBConfigAction::ARBConfigAction()
 ARBConfigAction::ARBConfigAction(ARBConfigAction const& rhs)
 	: m_Verb(rhs.m_Verb)
 	, m_Venue(rhs.m_Venue)
+	, m_Div(rhs.m_Div)
 	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
@@ -86,6 +89,7 @@ ARBConfigAction& ARBConfigAction::operator=(ARBConfigAction const& rhs)
 	{
 		m_Verb = rhs.m_Verb;
 		m_Venue = rhs.m_Venue;
+		m_Div = rhs.m_Div;
 		m_OldName = rhs.m_OldName;
 		m_NewName = rhs.m_NewName;
 	}
@@ -96,6 +100,7 @@ bool ARBConfigAction::operator==(ARBConfigAction const& rhs) const
 {
 	return m_Verb == rhs.m_Verb
 		&& m_Venue == rhs.m_Venue
+		&& m_Div == rhs.m_Div
 		&& m_OldName == rhs.m_OldName
 		&& m_NewName == rhs.m_NewName;
 }
@@ -123,6 +128,7 @@ bool ARBConfigAction::Load(
 		return false;
 	}
 	inTree.GetAttrib(ATTRIB_ACTION_VENUE, m_Venue);
+	inTree.GetAttrib(ATTRIB_ACTION_DIVISION, m_Div);
 	inTree.GetAttrib(ATTRIB_ACTION_OLDNAME, m_OldName);
 	inTree.GetAttrib(ATTRIB_ACTION_NEWNAME, m_NewName);
 	//Value is not currently used, though the DTD supports it.
@@ -136,6 +142,8 @@ bool ARBConfigAction::Save(Element& ioTree) const
 	action.AddAttrib(ATTRIB_ACTION_VERB, m_Verb);
 	if (0 < m_Venue.length())
 		action.AddAttrib(ATTRIB_ACTION_VENUE, m_Venue);
+	if (0 < m_Div.length())
+		action.AddAttrib(ATTRIB_ACTION_DIVISION, m_Div);
 	if (0 < m_OldName.length())
 		action.AddAttrib(ATTRIB_ACTION_OLDNAME, m_OldName);
 	if (0 < m_NewName.length())

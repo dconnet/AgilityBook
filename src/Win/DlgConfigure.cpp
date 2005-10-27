@@ -1041,8 +1041,18 @@ void CDlgConfigure::OnUpdate()
 				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
 				{
 					// Find the title we're renaming.
-					ARBConfigTitle* oldTitle;
-					if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
+					ARBConfigTitle* oldTitle = NULL;
+					ARBConfigDivision* pDiv = NULL;
+					if (action->GetDivision().length())
+					{
+						if (venue->GetDivisions().FindDivision(action->GetDivision(), &pDiv))
+							pDiv->GetTitles().FindTitle(action->GetOldName(), &oldTitle);
+					}
+					else
+					{
+						venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle);
+					}
+					if (oldTitle)
 					{
 						CString tmp;
 						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
@@ -1067,11 +1077,21 @@ void CDlgConfigure::OnUpdate()
 								m_DlgFixup.push_back(new CDlgFixupDeleteTitle(action->GetVenue(), action->GetOldName()));
 							}
 						}
-						tmp.Format("Action: Deleting title [%s]\n",
-							action->GetOldName().c_str());
+						if (pDiv)
+							tmp.Format("Action: Deleting title [%s/%s]\n",
+								pDiv->GetName().c_str(),
+								action->GetOldName().c_str());
+						else
+							tmp.Format("Action: Deleting title [%s]\n",
+								action->GetOldName().c_str());
 						msg += tmp;
-						venue->GetDivisions().DeleteTitle(action->GetOldName());
+						if (pDiv)
+							pDiv->GetTitles().DeleteTitle(action->GetOldName());
+						else
+							venue->GetDivisions().DeleteTitle(action->GetOldName());
 						oldTitle->Release();
+						if (pDiv)
+							pDiv->Release();
 					}
 					venue->Release();
 				}
