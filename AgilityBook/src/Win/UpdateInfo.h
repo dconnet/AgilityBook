@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2004-08-03 DRC Created
  */
 
 #include <string>
 #include "Element.h"
 #include "VersionNum.h"
+class ARBConfig;
 class CAgilityBookDoc;
 
 /**
@@ -59,6 +61,17 @@ protected:
 			bool bVerbose);
 
 public:
+	/**
+	 * Ask the user if they wish to update the configuration. This is a
+	 * yes/no/don't-ask-me-again question.
+	 * @param ioDoc Configuration/document to update.
+	 * @param inMsg Addition text to append to the question. If specified,
+	 *              2 newlines will be inserted first.
+	 */
+	static bool UpdateConfig(
+			CAgilityBookDoc* ioDoc,
+			char const* inMsg = NULL);
+
 	/**
 	 * Called when the program does its monthly auto-check.
 	 * This only checks the program version.

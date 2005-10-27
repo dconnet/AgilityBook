@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-19 DRC Changed sort-newest to only do trials, not runs.
@@ -380,8 +381,18 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
 				// Find the title we're renaming.
-				ARBConfigTitle* oldTitle;
-				if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
+				ARBConfigTitle* oldTitle = NULL;
+				ARBConfigDivision* pDiv = NULL;
+				if (action->GetDivision().length())
+				{
+					if (venue->GetDivisions().FindDivision(action->GetDivision(), &pDiv))
+						pDiv->GetTitles().FindTitle(action->GetOldName(), &oldTitle);
+				}
+				else
+				{
+					venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle);
+				}
+				if (oldTitle)
 				{
 					CString tmp;
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
@@ -406,11 +417,21 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 							GetDogs().DeleteTitle(action->GetVenue(), action->GetOldName());
 						}
 					}
-					tmp.Format("Action: Deleting title [%s]\n",
-						action->GetOldName().c_str());
+					if (pDiv)
+						tmp.Format("Action: Deleting title [%s/%s]\n",
+							pDiv->GetName().c_str(),
+							action->GetOldName().c_str());
+					else
+						tmp.Format("Action: Deleting title [%s]\n",
+							action->GetOldName().c_str());
 					msg += tmp;
-					venue->GetDivisions().DeleteTitle(action->GetOldName());
+					if (pDiv)
+						pDiv->GetTitles().DeleteTitle(action->GetOldName());
+					else
+						venue->GetDivisions().DeleteTitle(action->GetOldName());
 					oldTitle->Release();
+					if (pDiv)
+						pDiv->Release();
 				}
 				venue->Release();
 			}
@@ -784,10 +805,10 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	AfxGetApp()->WriteProfileString("Settings", "LastFile", lpszPathName);
 
 	// Check our internal config.
-	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion())
+	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
+	&& m_Records.GetConfig().GetUpdateStatus())
 	{
-		CSplashWnd::HideSplashScreen();
-		if (IDYES == AfxMessageBox("The configuration has been updated. Would you like to merge the new one with your data?", MB_ICONQUESTION | MB_YESNO))
+		if (CUpdateInfo::UpdateConfig(this))
 		{
 			if (ImportConfiguration(true))
 				SetModifiedFlag(TRUE);

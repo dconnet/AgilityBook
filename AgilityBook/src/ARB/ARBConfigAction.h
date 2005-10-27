@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-26 DRC Added optional 'Div' to DeleteTitle.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Created
  */
@@ -106,6 +107,7 @@ public:
 	 */
 	std::string const& GetVerb() const;
 	std::string const& GetVenue() const;
+	std::string const& GetDivision() const;
 	std::string const& GetOldName() const;
 	std::string const& GetNewName() const;
 
@@ -113,6 +115,7 @@ private:
 	~ARBConfigAction();
 	std::string m_Verb;
 	std::string m_Venue;
+	std::string m_Div;
 	std::string m_OldName;
 	std::string m_NewName;
 };
@@ -130,6 +133,11 @@ inline std::string const& ARBConfigAction::GetVerb() const
 inline std::string const& ARBConfigAction::GetVenue() const
 {
 	return m_Venue;
+}
+
+inline std::string const& ARBConfigAction::GetDivision() const
+{
+	return m_Div;
 }
 
 inline std::string const& ARBConfigAction::GetOldName() const

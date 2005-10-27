@@ -12,7 +12,8 @@ see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
 2005-10-14 DRC File version 11.1.
-               Added 'Prefix' to 'Titles'.
+               Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
+               Update Action for DeleteTitle.
 2005-07-15 DRC File version 11.0.
                Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
 2005-04-26 DRC File version 10.2.
@@ -107,10 +108,12 @@ This section defines the rules of each venue (the Configuration).
  to do so - it will not do anything behind-the-back. Once a config version is
  set, the user could still modify things. But we won't automatically prompt
  to upgrade. The user can merge the configuration any number of times.
+ If 'update' is set to 'n', this file will no longer prompt to update the config
 -->
 <!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
 	<!ATTLIST Configuration
 		version CDATA #IMPLIED
+		update (y|n) 'y'
 		>
 
 <!--
@@ -120,10 +123,12 @@ for renaming titles.
  Verb: Supported actions (determines usage of other attributes):
   'RenameTitle':
     Venue: Venue that contains title
+	Div: Unused
     OldName: Title to be renamed.
     NewName: New name.
   'DeleteTitle': (I added ASCA titles that shouldn't be there)
     Venue: Venue that contains title
+	Div: If set, limit delete to this division (I created dup names in NADAC)
     OldName: Title to be removed.
 	NewName: If set, rename any existing titles, otherwise titles are deleted.
  pcdata: currently unused, defined to allow future expansion.
@@ -132,6 +137,7 @@ for renaming titles.
 	<!ATTLIST Action
 		Verb CDATA #REQUIRED
 		Venue CDATA #IMPLIED
+		Div CDATA #IMPLIED
 		OldName CDATA #IMPLIED
 		NewName CDATA #IMPLIED
 		>
