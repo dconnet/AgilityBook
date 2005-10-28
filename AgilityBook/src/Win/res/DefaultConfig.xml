@@ -1805,11 +1805,13 @@ Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This i
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
-			<Event Name="Gamblers">
+			<Event Name="Gamblers" hasSubNames="y">
 				<Desc>Traditional: Opening time is always 25 seconds
 Strategic Time: Opening time is always 30 seconds
  t &lt;= 2.0 == Q
  2 &lt; t &lt;= 3.0 == 1/2 Q</Desc>
+				<SubName>Strategic Time</SubName>
+				<SubName>Traditional</SubName>
 				<Scoring Division="*" Level="*" OpeningPts="19" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
