@@ -544,7 +544,7 @@ bool CDlgAssignColumns::GetColumnOrder(
 		std::vector<int>& values)
 {
 	bool bOk = false;
-	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
+	if (0 <= idxColumn && idxColumn < IO_TYPE_MAX)
 	{
 		if (sc_Types[idxColumn].bValid & eOrder)
 		{
@@ -561,7 +561,7 @@ bool CDlgAssignColumns::SetColumnOrder(
 		std::vector<int> const& values)
 {
 	bool bOk = false;
-	if (0 <= idxColumn && 0 < IO_TYPE_MAX)
+	if (0 <= idxColumn && idxColumn < IO_TYPE_MAX)
 	{
 		if (sc_Types[idxColumn].bValid & eOrder)
 		{
