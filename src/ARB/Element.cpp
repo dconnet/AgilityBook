@@ -566,6 +566,11 @@ private:
 	class CurrentAttrib
 	{
 	public:
+		CurrentAttrib()
+			: m_Name()
+			, m_Value()
+		{
+		}
 		CurrentAttrib(
 				std::string const& name,
 				XMLCh const* const value)

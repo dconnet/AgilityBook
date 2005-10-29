@@ -75,6 +75,12 @@ private:
 		std::string event;
 		int points;
 		bool bFiltered;
+		LifeTimePoint()
+			: event()
+			, points(0)
+			, bFiltered(false)
+		{
+		}
 		LifeTimePoint(
 				const std::string inEvent,
 				int inPoints,

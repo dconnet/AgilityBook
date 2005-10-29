@@ -56,6 +56,13 @@ public:
 		eScoringDeleted,
 		eScoringChanged
 	} eScoringDetail;
+	ScoringRunInfo()
+		: m_Dog(NULL)
+		, m_Trial(NULL)
+		, m_Run(NULL)
+		, m_ScoringDetail(eNotScoringDetail)
+	{
+	}
 	ScoringRunInfo(
 			ARBDog const* inDog,
 			ARBDogTrial const* inTrial,
