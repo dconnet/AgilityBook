@@ -46,9 +46,9 @@
  */
 
 #include <set>
-#include <string>
 #include <vector>
 #include "ARBDate.h"
+#include "ARBTypes.h"
 class ARBCalendar;
 class ARBConfigVenue;
 class ARBDogRun;
@@ -73,9 +73,9 @@ struct CFontInfo
 
 struct CVenueFilter
 {
-	std::string venue;
-	std::string division;
-	std::string level;
+	ARBString venue;
+	ARBString division;
+	ARBString level;
 };
 
 class CCalendarViewFilter
@@ -131,11 +131,11 @@ public:
 			ARBDogTitle const* pTitle);
 	static bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
-			std::string const& venue);
+			ARBString const& venue);
 	static bool IsVenueDivisionVisible(
 			std::vector<CVenueFilter> const& venues,
-			std::string const& venue,
-			std::string const& div);
+			ARBString const& venue,
+			ARBString const& div);
 	static bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBDogTrial const* pTrial);
@@ -150,7 +150,7 @@ public:
 			ARBDogRun const* pRun);
 	static bool IsCalendarVisible(ARBCalendar const* pCal);
 	static bool IsTrainingLogVisible(
-			std::set<std::string> const& names,
+			std::set<ARBString> const& names,
 			ARBTraining const* pTraining);
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
@@ -204,8 +204,8 @@ public:
 	// Filtering: Training Log
 	static bool GetTrainingViewAllNames();
 	static void SetTrainingViewAllNames(bool bViewAll);
-	static void GetTrainingFilterNames(std::set<std::string>& outNames);
-	static void SetTrainingFilterNames(std::set<std::string> const& inNames);
+	static void GetTrainingFilterNames(std::set<ARBString>& outNames);
+	static void SetTrainingFilterNames(std::set<ARBString> const& inNames);
 	// Runs/points options
 	static bool GetViewRunsByTrial();
 	static void SetViewRunsByTrial(bool bView);
@@ -234,17 +234,17 @@ public:
 			BOOL bPrinting);
 	// Last entered options
 	static CString GetLastEnteredDivision();
-	static void SetLastEnteredDivision(char const* inLast);
+	static void SetLastEnteredDivision(TCHAR const* inLast);
 	static CString GetLastEnteredLevel();
-	static void SetLastEnteredLevel(char const* inLast);
+	static void SetLastEnteredLevel(TCHAR const* inLast);
 	static CString GetLastEnteredHeight();
-	static void SetLastEnteredHeight(char const* inLast);
+	static void SetLastEnteredHeight(TCHAR const* inLast);
 	static CString GetLastEnteredRefHeight();
-	static void SetLastEnteredRefHeight(char const* inLast);
+	static void SetLastEnteredRefHeight(TCHAR const* inLast);
 	static CString GetLastEnteredJudge();
-	static void SetLastEnteredJudge(char const* inLast);
+	static void SetLastEnteredJudge(TCHAR const* inLast);
 	static CString GetLastEnteredHandler();
-	static void SetLastEnteredHandler(char const* inLast);
+	static void SetLastEnteredHandler(TCHAR const* inLast);
 	// Import/Export options
 	enum
 	{

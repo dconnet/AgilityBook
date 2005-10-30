@@ -54,9 +54,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 // static
-std::string ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
+ARBString ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
 {
-	std::string str;
+	ARBString str;
 	switch (inType)
 	{
 	case eOtherPoints:
@@ -153,9 +153,9 @@ bool ARBDogExistingPoints::operator!=(ARBDogExistingPoints const& rhs) const
 	return !operator==(rhs);
 }
 
-std::string ARBDogExistingPoints::GetGenericName() const
+ARBString ARBDogExistingPoints::GetGenericName() const
 {
-	std::string name;
+	ARBString name;
 	if (0 < m_Other.length())
 		name = m_Other;
 	else
@@ -163,7 +163,7 @@ std::string ARBDogExistingPoints::GetGenericName() const
 	return name;
 }
 
-size_t ARBDogExistingPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogExistingPoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	return 0;
 }
@@ -174,12 +174,12 @@ bool ARBDogExistingPoints::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	std::string attrib;
+	ARBString attrib;
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
 		inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
-		std::string msg(INVALID_DATE);
+		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
 		return false;
@@ -203,28 +203,28 @@ bool ARBDogExistingPoints::Load(
 	else if (attrib == EXISTING_PTS_TYPE_SQ)
 		m_Type = eSQ;
 	// Changed attribute from 'Mach' to 'Speed' in 10.1
-	else if (inVersion < ARBVersion(10,1) && attrib == "Mach")
+	else if (inVersion < ARBVersion(10,1) && attrib == _T("Mach"))
 		m_Type = eSpeed;
 	// Changed QQ to MQ (multi Q)
-	else if (inVersion < ARBVersion(11,0) && attrib == "QQ")
+	else if (inVersion < ARBVersion(11,0) && attrib == _T("QQ"))
 	{
 		m_Type = eMQ;
 		bConvertedQQ = true;
 	}
 	else
 	{
-		std::string msg(INVALID_VALUE);
+		ARBString msg(INVALID_VALUE);
 		msg += attrib;
-		msg += "\n";
+		msg += _T("\n");
 		msg += VALID_VALUES;
 		msg += EXISTING_PTS_TYPE_OTHER;
-		msg += ", ";
+		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_RUNS;
-		msg += ", ";
+		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_SPEED;
-		msg += ", ";
+		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_MQ;
-		msg += ", ";
+		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_SQ;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
 		return false;
@@ -237,7 +237,7 @@ bool ARBDogExistingPoints::Load(
 		{
 			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
 			{
-				std::string msg(INVALID_OTHER_PTS_NAME);
+				ARBString msg(INVALID_OTHER_PTS_NAME);
 				msg += m_Other;
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str()));
 				return false;
@@ -255,7 +255,7 @@ bool ARBDogExistingPoints::Load(
 	{
 		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 		{
-			std::string msg(INVALID_VENUE_NAME);
+			ARBString msg(INVALID_VENUE_NAME);
 			msg += m_Venue;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
@@ -280,7 +280,7 @@ bool ARBDogExistingPoints::Load(
 				ARBConfigMultiQ* pMulti;
 				// If this isn't "AKC", or someone has edited the multiQ name,
 				// this will fail.
-				if (pVenue->GetMultiQs().FindMultiQ("QQ", true, &pMulti))
+				if (pVenue->GetMultiQs().FindMultiQ(_T("QQ"), true, &pMulti))
 				{
 					bConvertedQQ = true;
 					m_MultiQ = pMulti->GetName();
@@ -293,7 +293,7 @@ bool ARBDogExistingPoints::Load(
 				else
 				{
 					bConvertedQQ = true;
-					m_MultiQ = "Double Q";
+					m_MultiQ = _T("Double Q");
 				}
 				pVenue->Release();
 			}
@@ -310,9 +310,9 @@ bool ARBDogExistingPoints::Load(
 			{
 				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
 				{
-					std::string msg(INVALID_MULTIQ_NAME);
+					ARBString msg(INVALID_MULTIQ_NAME);
 					msg += m_Venue;
-					msg += "/";
+					msg += _T("/");
 					msg += m_MultiQ;
 					ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg.c_str()));
 					return false;
@@ -360,13 +360,13 @@ bool ARBDogExistingPoints::Load(
 		}
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
 		{
-			std::string msg(INVALID_EVENT_NAME);
+			ARBString msg(INVALID_EVENT_NAME);
 			msg += m_Venue;
-			msg += "/";
+			msg += _T("/");
 			msg += m_Div;
-			msg += "/";
+			msg += _T("/");
 			msg += m_Level;
-			msg += "/";
+			msg += _T("/");
 			msg += m_Event;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg.c_str()));
 			return false;
@@ -377,11 +377,11 @@ bool ARBDogExistingPoints::Load(
 	default:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
-			std::string msg(INVALID_VENUE_NAME);
+			ARBString msg(INVALID_VENUE_NAME);
 			msg += m_Venue;
-			msg += "/";
+			msg += _T("/");
 			msg += m_Div;
-			msg += "/";
+			msg += _T("/");
 			msg += m_Level;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
@@ -483,7 +483,7 @@ void ARBDogExistingPointsList::sort()
 	std::stable_sort(begin(), end(), SortExistingPoints());
 }
 
-bool ARBDogExistingPointsList::HasPoints(std::string const& inVenue) const
+bool ARBDogExistingPointsList::HasPoints(ARBString const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -569,7 +569,7 @@ short ARBDogExistingPointsList::ExistingPoints(
 	return pts;
 }
 
-int ARBDogExistingPointsList::NumExistingPointsInVenue(std::string const& inVenue) const
+int ARBDogExistingPointsList::NumExistingPointsInVenue(ARBString const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -581,8 +581,8 @@ int ARBDogExistingPointsList::NumExistingPointsInVenue(std::string const& inVenu
 }
 
 int ARBDogExistingPointsList::RenameVenue(
-		std::string const& inOldVenue,
-		std::string const& inNewVenue)
+		ARBString const& inOldVenue,
+		ARBString const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -596,9 +596,9 @@ int ARBDogExistingPointsList::RenameVenue(
 	return count;
 }
 
-int ARBDogExistingPointsList::DeleteVenue(std::string const& inVenue)
+int ARBDogExistingPointsList::DeleteVenue(ARBString const& inVenue)
 {
-	std::string venue(inVenue);
+	ARBString venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -615,7 +615,7 @@ int ARBDogExistingPointsList::DeleteVenue(std::string const& inVenue)
 
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
 		ARBConfigVenue const* inVenue,
-		std::string const& inDiv) const
+		ARBString const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -628,9 +628,9 @@ int ARBDogExistingPointsList::NumExistingPointsInDivision(
 }
 
 int ARBDogExistingPointsList::RenameDivision(
-		std::string const& inVenue,
-		std::string const& inOldDiv,
-		std::string const& inNewDiv)
+		ARBString const& inVenue,
+		ARBString const& inOldDiv,
+		ARBString const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -645,8 +645,8 @@ int ARBDogExistingPointsList::RenameDivision(
 }
 
 int ARBDogExistingPointsList::DeleteDivision(
-		std::string const& inVenue,
-		std::string const& inDiv)
+		ARBString const& inVenue,
+		ARBString const& inDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -663,9 +663,9 @@ int ARBDogExistingPointsList::DeleteDivision(
 }
 
 int ARBDogExistingPointsList::NumLevelsInUse(
-		std::string const& inVenue,
-		std::string const& inDiv,
-		std::string const& inLevel) const
+		ARBString const& inVenue,
+		ARBString const& inDiv,
+		ARBString const& inLevel) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -679,10 +679,10 @@ int ARBDogExistingPointsList::NumLevelsInUse(
 }
 
 int ARBDogExistingPointsList::RenameLevel(
-		std::string const& inVenue,
-		std::string const& inDiv,
-		std::string const& inOldLevel,
-		std::string const& inNewLevel)
+		ARBString const& inVenue,
+		ARBString const& inDiv,
+		ARBString const& inOldLevel,
+		ARBString const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -699,9 +699,9 @@ int ARBDogExistingPointsList::RenameLevel(
 }
 
 int ARBDogExistingPointsList::DeleteLevel(
-		std::string const& inVenue,
-		std::string const& inDiv,
-		std::string const& inLevel)
+		ARBString const& inVenue,
+		ARBString const& inDiv,
+		ARBString const& inLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -720,8 +720,8 @@ int ARBDogExistingPointsList::DeleteLevel(
 }
 
 int ARBDogExistingPointsList::NumEventsInUse(
-		std::string const& inVenue,
-		std::string const& inEvent) const
+		ARBString const& inVenue,
+		ARBString const& inEvent) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -734,9 +734,9 @@ int ARBDogExistingPointsList::NumEventsInUse(
 }
 
 int ARBDogExistingPointsList::RenameEvent(
-		std::string const& inVenue,
-		std::string const& inOldEvent,
-		std::string const& inNewEvent)
+		ARBString const& inVenue,
+		ARBString const& inOldEvent,
+		ARBString const& inNewEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -752,8 +752,8 @@ int ARBDogExistingPointsList::RenameEvent(
 }
 
 int ARBDogExistingPointsList::DeleteEvent(
-		std::string const& inVenue,
-		std::string const& inEvent)
+		ARBString const& inVenue,
+		ARBString const& inEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -770,7 +770,7 @@ int ARBDogExistingPointsList::DeleteEvent(
 	return count;
 }
 
-int ARBDogExistingPointsList::NumOtherPointsInUse(std::string const& inOther) const
+int ARBDogExistingPointsList::NumOtherPointsInUse(ARBString const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -783,8 +783,8 @@ int ARBDogExistingPointsList::NumOtherPointsInUse(std::string const& inOther) co
 }
 
 int ARBDogExistingPointsList::RenameOtherPoints(
-		std::string const& inOldOther,
-		std::string const& inNewOther)
+		ARBString const& inOldOther,
+		ARBString const& inNewOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -799,7 +799,7 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	return count;
 }
 
-int ARBDogExistingPointsList::DeleteOtherPoints(std::string const& inOther)
+int ARBDogExistingPointsList::DeleteOtherPoints(ARBString const& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -817,8 +817,8 @@ int ARBDogExistingPointsList::DeleteOtherPoints(std::string const& inOther)
 }
 
 int ARBDogExistingPointsList::NumMultiQsInUse(
-		std::string const& inVenue,
-		std::string const& inMultiQ) const
+		ARBString const& inVenue,
+		ARBString const& inMultiQ) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -832,9 +832,9 @@ int ARBDogExistingPointsList::NumMultiQsInUse(
 }
 
 int ARBDogExistingPointsList::RenameMultiQs(
-		std::string const& inVenue,
-		std::string const& inOldMultiQ,
-		std::string const& inNewMultiQ)
+		ARBString const& inVenue,
+		ARBString const& inOldMultiQ,
+		ARBString const& inNewMultiQ)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -852,7 +852,7 @@ int ARBDogExistingPointsList::RenameMultiQs(
 
 int ARBDogExistingPointsList::DeleteMultiQs(
 		ARBConfig const& inConfig,
-		std::string const& inVenue)
+		ARBString const& inVenue)
 {
 	int count = 0;
 	ARBConfigVenue* pVenue;

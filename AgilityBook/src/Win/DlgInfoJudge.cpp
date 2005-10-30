@@ -68,7 +68,7 @@ CDlgInfoJudge::NameInfo::NameInfo()
 {
 }
 
-CDlgInfoJudge::NameInfo::NameInfo(std::string const& inName)
+CDlgInfoJudge::NameInfo::NameInfo(ARBString const& inName)
 	: m_Name(inName)
 	, m_eInUse(eNotInUse)
 	, m_bHasData(false)
@@ -97,8 +97,8 @@ CDlgInfoJudge::CDlgInfoJudge(
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Type(inType)
-	, m_InfoOrig("") // We don't care about setting the infoname here
-	, m_Info("") // We don't care about setting the infoname here
+	, m_InfoOrig(_T("")) // We don't care about setting the infoname here
+	, m_Info(_T("")) // We don't care about setting the infoname here
 	, m_nAdded(0)
 {
 	switch (m_Type)
@@ -149,8 +149,8 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	ASSERT(m_ctrlNames.GetStyle() & CBS_OWNERDRAWFIXED);
 
 	CString caption;
-	std::set<std::string> names;
-	std::string select;
+	std::set<ARBString> names;
+	ARBString select;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
@@ -184,7 +184,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	SetWindowText(caption);
 	m_Names.clear();
 	m_Names.reserve(names.size());
-	for (std::set<std::string>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (std::set<ARBString>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItem* item;
@@ -260,12 +260,12 @@ void CDlgInfoJudge::OnDrawItem(
 	dc.GetTextMetrics(&tm);
 	CRect rect(lpDrawItemStruct->rcItem);
 	if (m_Names[lpDrawItemStruct->itemData].m_bHasData)
-		dc.DrawText("*", 1, rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
+		dc.DrawText(_T("*"), 1, rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
 	rect.left += 3 * tm.tmAveCharWidth / 2;
 	if (0 < m_nAdded)
 	{
 		if (NameInfo::eNotInUse == m_Names[lpDrawItemStruct->itemData].m_eInUse)
-			dc.DrawText("+", 1, rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
+			dc.DrawText(_T("+"), 1, rect, DT_LEFT|DT_SINGLELINE|DT_VCENTER);
 		rect.left += 3 * tm.tmAveCharWidth / 2;
 	}
 	rect.left += tm.tmAveCharWidth / 2;
@@ -299,7 +299,7 @@ void CDlgInfoJudge::OnSelchangeName()
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 			bEnable = TRUE;
 	}
-	data.Replace("\n", "\r\n");
+	data.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlComment.SetWindowText(data);
 	m_ctrlDelete.EnableWindow(bEnable);
 }
@@ -313,7 +313,7 @@ void CDlgInfoJudge::OnKillfocusComments()
 		CString data;
 		m_ctrlComment.GetWindowText(data);
 		data.TrimRight();
-		data.Replace("\r\n", "\n");
+		data.Replace(_T("\r\n"), _T("\n"));
 		ARBInfoItem* item;
 		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
 			m_Info.AddItem(m_Names[idx].m_Name, &item);
@@ -329,10 +329,10 @@ void CDlgInfoJudge::OnKillfocusComments()
 
 void CDlgInfoJudge::OnNew()
 {
-	CDlgName dlg("", "", this);
+	CDlgName dlg(_T(""), _T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
-		std::string name = (LPCTSTR)dlg.GetName();
+		ARBString name = (LPCTSTR)dlg.GetName();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
 		if (iter != m_Names.end())
@@ -345,7 +345,7 @@ void CDlgInfoJudge::OnNew()
 				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
 				++m_nAdded;
 				m_ctrlNames.AddString((LPCTSTR)idx);
-				m_ctrlComment.SetWindowText("");
+				m_ctrlComment.SetWindowText(_T(""));
 				m_Info.AddItem(m_Names[idx].m_Name);
 			}
 		}
@@ -357,7 +357,7 @@ void CDlgInfoJudge::OnNew()
 			size_t idx = m_Names.size() - 1;
 			++m_nAdded;
 			m_ctrlNames.AddString((LPCTSTR)idx);
-			m_ctrlComment.SetWindowText("");
+			m_ctrlComment.SetWindowText(_T(""));
 			m_Info.AddItem(m_Names[idx].m_Name);
 		}
 		m_ctrlNames.Invalidate();

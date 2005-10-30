@@ -132,7 +132,7 @@ BOOL CDlgTitle::OnInitDialog()
 			nReceived = 1;
 	}
 	else
-		m_ctrlDesc.SetWindowText("");
+		m_ctrlDesc.SetWindowText(_T(""));
 	m_ctrlEarned.SetCheck(nEarned);
 	m_ctrlHidden.SetCheck(nHidden);
 	m_ctrlReceived.SetCheck(nReceived);
@@ -200,7 +200,7 @@ void CDlgTitle::OnSelchangeTitles()
 		ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
 		str = pTitle->GetDescription().c_str();
 	}
-	str.Replace("\n", "\r\n");
+	str.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlDesc.SetWindowText(str);
 }
 

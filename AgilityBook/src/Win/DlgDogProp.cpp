@@ -69,7 +69,7 @@ CDlgDogProperties::CDlgDogProperties(
 	m_Breed = pDog->GetBreed().c_str();
 	m_Notes = pDog->GetNote().c_str();
 	//}}AFX_DATA_INIT
-	m_Notes.Replace("\n", "\r\n");
+	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
 CDlgDogProperties::~CDlgDogProperties()
@@ -103,7 +103,7 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 		pDX->PrepareCtrl(IDC_DOG_CALLNAME);
 		if (m_CallName.IsEmpty())
 		{
-			AfxMessageBox("Callname may not be blank.");
+			AfxMessageBox(_T("Callname may not be blank."));
 			pDX->Fail();
 			return;
 		}

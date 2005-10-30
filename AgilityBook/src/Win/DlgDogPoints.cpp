@@ -182,7 +182,7 @@ CDlgDogPoints::CDlgDogPoints(
 		ARBDogExistingPointsList const& points)
 	: CDlgBasePropertyPage(CDlgDogPoints::IDD)
 	, m_pDoc(pDoc)
-	, m_sortPoints("ExistingPoints")
+	, m_sortPoints(_T("ExistingPoints"))
 	, m_ExistingPoints(points)
 {
 	m_sortPoints.Initialize(nColExistingPointsInfo);
@@ -374,7 +374,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 			str = ARBDogExistingPoints::GetPointTypeName(pData->GetType()).c_str();
 			break;
 		case 2: // Points
-			str.Format("%hd", pData->GetPoints());
+			str.Format(_T("%hd"), pData->GetPoints());
 			break;
 		case 3: // Other Points
 			str = pData->GetOtherPoints().c_str();
@@ -399,7 +399,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 			break;
 		case 10: // Comment
 			str = pData->GetComment().c_str();
-			str.Replace("\n", " ");
+			str.Replace(_T("\n"), _T(" "));
 			break;
 		}
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);

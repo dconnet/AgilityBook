@@ -49,10 +49,10 @@ public:
 			short inMultiple,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
-	char const* GetName() const		{return (LPCSTR)m_Name;}
-	char const* GetLongName() const	{return (LPCSTR)m_LongName;}
-	char const* GetDesc() const		{return (LPCSTR)m_Desc;}
-	short GetMultiple() const		{return m_Multiple;}
+	LPCTSTR GetName() const		{return (LPCTSTR)m_Name;}
+	LPCTSTR GetLongName() const	{return (LPCTSTR)m_LongName;}
+	LPCTSTR GetDesc() const		{return (LPCTSTR)m_Desc;}
+	short GetMultiple() const	{return m_Multiple;}
 
 private:
 // Dialog Data

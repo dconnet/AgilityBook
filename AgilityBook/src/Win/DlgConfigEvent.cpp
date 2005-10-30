@@ -94,7 +94,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	ASSERT(m_pEvent);
 	m_Name = m_pEvent->GetName().c_str();
 	m_Desc = m_pEvent->GetDesc().c_str();
-	m_Desc.Replace("\n", "\r\n");
+	m_Desc.Replace(_T("\n"), _T("\r\n"));
 	m_bHasTable = m_pEvent->HasTable() ? TRUE : FALSE;
 	m_bHasPartners = m_pEvent->HasPartner() ? TRUE : FALSE;
 	m_bHasSubNames = m_pEvent->HasSubNames() ? TRUE : FALSE;
@@ -210,12 +210,12 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoring* pScoring) const
 		str = all;
 	else
 		str = pScoring->GetDivision().c_str();
-	str += " / ";
+	str += _T(" / ");
 	if (pScoring->GetLevel() == WILDCARD_LEVEL)
 		str += all;
 	else
 		str += pScoring->GetLevel().c_str();
-	std::string validStr = pScoring->GetValidDateString();
+	ARBString validStr = pScoring->GetValidDateString();
 	if (0 < validStr.length())
 	{
 		str += ' ';
@@ -280,7 +280,7 @@ void CDlgConfigEvent::FillControls()
 		else
 			m_ctrlSpeedPts.SetCheck(0);
 		str = pScoring->GetNote().c_str();
-		str.Replace("\n", "\r\n");
+		str.Replace(_T("\n"), _T("\r\n"));
 		m_ctrlNote.SetWindowText(str);
 	}
 	else
@@ -299,8 +299,8 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlPointsList.ResetContent();
 		m_ctrlSpeedPts.SetCheck(0);
 		m_ctrlSuperQ.SetCheck(0);
-		m_ctrlMultiply.SetWindowText("1");
-		m_ctrlNote.SetWindowText("");
+		m_ctrlMultiply.SetWindowText(_T("1"));
+		m_ctrlNote.SetWindowText(_T(""));
 		FillRequiredPoints();
 	}
 	m_ctrlValidFrom.EnableWindow(bEnable);
@@ -336,9 +336,9 @@ void CDlgConfigEvent::FillSubNames(bool bInit)
 		if (bInit)
 		{
 			m_ctrlSubNames.ResetContent();
-			std::set<std::string> subNames;
+			std::set<ARBString> subNames;
 			m_pEvent->GetSubNames(subNames);
-			for (std::set<std::string>::const_iterator iter = subNames.begin();
+			for (std::set<ARBString>::const_iterator iter = subNames.begin();
 				iter != subNames.end();
 				++iter)
 			{
@@ -382,7 +382,7 @@ void CDlgConfigEvent::FillMethodList()
 				if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
 				str = (*iterDiv)->GetName().c_str();
-				str += " / ";
+				str += _T(" / ");
 				str += (*iterLevel)->GetName().c_str();
 				m_ctrlUnused.AddString(str);
 			}
@@ -644,12 +644,12 @@ bool CDlgConfigEvent::SaveControls()
 			str = WILDCARD_DIVISION;
 		else
 			m_ctrlDivision.GetLBText(idxDiv, str);
-		pScoring->SetDivision((LPCSTR)str);
+		pScoring->SetDivision((LPCTSTR)str);
 		if (0 == idxLevel)
 			str = WILDCARD_LEVEL;
 		else
 			m_ctrlLevel.GetLBText(idxLevel, str);
-		pScoring->SetLevel((LPCSTR)str);
+		pScoring->SetLevel((LPCTSTR)str);
 		ARBConfigScoring::ScoringStyle style = static_cast<ARBConfigScoring::ScoringStyle>(m_ctrlType.GetItemData(idxType));
 		pScoring->SetScoringStyle(style);
 		switch (style)
@@ -689,9 +689,9 @@ bool CDlgConfigEvent::SaveControls()
 			break;
 		}
 		m_ctrlNote.GetWindowText(str);
-		str.Replace("\r\n", "\n");
+		str.Replace(_T("\r\n"), _T("\n"));
 		str.TrimRight();
-		pScoring->SetNote((LPCSTR)str);
+		pScoring->SetNote((LPCTSTR)str);
 		if (m_ctrlSuperQ.GetCheck())
 			pScoring->SetHasSuperQ(true);
 		else
@@ -729,7 +729,7 @@ BOOL CDlgConfigEvent::OnInitDialog()
 	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (int index = 0; index < nStyles; ++index)
 	{
-		std::string str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
+		ARBString str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
 		int idx = m_ctrlType.AddString(str.c_str());
 		m_ctrlType.SetItemData(idx, Styles[index]);
 	}
@@ -783,7 +783,7 @@ void CDlgConfigEvent::OnLbnSelchangeSubnames()
 
 void CDlgConfigEvent::OnBnClickedSubNamesNew()
 {
-	CDlgName dlg("", static_cast<UINT>(0), this);
+	CDlgName dlg(_T(""), static_cast<UINT>(0), this);
 	if (IDOK == dlg.DoModal())
 	{
 		int idx = m_ctrlSubNames.AddString(dlg.GetName());
@@ -1116,7 +1116,7 @@ void CDlgConfigEvent::OnOK()
 			m_ctrlMethods.SetCurSel(index);
 			m_idxMethod = index;
 			FillControls();
-			AfxMessageBox("Valid From date is before the Valid To date");
+			AfxMessageBox(_T("Valid From date is before the Valid To date"));
 			GotoDlgCtrl(&m_ctrlDateTo);
 			return;
 		}
@@ -1173,22 +1173,22 @@ void CDlgConfigEvent::OnOK()
 	}
 	if (bOverlap)
 	{
-		if (IDYES != AfxMessageBox("Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?", MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+		if (IDYES != AfxMessageBox(_T("Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?"), MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
 			return;
 	}
 
 	ClearFixups();
-	if (m_pEvent->GetName() != (LPCSTR)m_Name)
+	if (m_pEvent->GetName() != (LPCTSTR)m_Name)
 	{
-		if (m_pVenue->GetEvents().FindEvent((LPCSTR)m_Name))
+		if (m_pVenue->GetEvents().FindEvent((LPCTSTR)m_Name))
 		{
 			AfxMessageBox(IDS_NAME_IN_USE);
 			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
 			return;
 		}
 		if (m_Book)
-			m_DlgFixup.push_back(new CDlgFixupRenameEvent(m_pVenue->GetName(), (LPCSTR)m_Name, m_pEvent->GetName()));
-		m_pEvent->SetName((LPCSTR)m_Name);
+			m_DlgFixup.push_back(new CDlgFixupRenameEvent(m_pVenue->GetName(), (LPCTSTR)m_Name, m_pEvent->GetName()));
+		m_pEvent->SetName((LPCTSTR)m_Name);
 	}
 	// m_Book and m_Config are only valid when editing an existing entry.
 	if (m_Book)
@@ -1208,14 +1208,14 @@ void CDlgConfigEvent::OnOK()
 		}
 	}
 
-	m_Desc.Replace("\r\n", "\n");
-	m_pEvent->SetDesc((LPCSTR)m_Desc);
+	m_Desc.Replace(_T("\r\n"), _T("\n"));
+	m_pEvent->SetDesc((LPCTSTR)m_Desc);
 	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
 	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
 	m_pEvent->SetHasSubNames(m_bHasSubNames == TRUE ? true : false);
 	if (m_bHasSubNames)
 	{
-		std::set<std::string> subNames;
+		std::set<ARBString> subNames;
 		int nCount = m_ctrlSubNames.GetCount();
 		for (int i = 0; i < nCount; ++i)
 		{

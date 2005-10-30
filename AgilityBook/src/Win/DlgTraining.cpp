@@ -67,7 +67,7 @@ CDlgTraining::CDlgTraining(
 	//}}AFX_DATA_INIT
 	if (pTraining->GetDate().IsValid())
 		m_date = CTime(pTraining->GetDate().GetDate());
-	m_Notes.Replace("\n", "\r\n");
+	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
 void CDlgTraining::DoDataExchange(CDataExchange* pDX)
@@ -95,9 +95,9 @@ BOOL CDlgTraining::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	std::set<std::string> names;
+	std::set<ARBString> names;
 	m_pDoc->GetTraining().GetAllNames(names);
-	std::set<std::string>::iterator iter;
+	std::set<ARBString>::iterator iter;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		int index = m_ctrlNames.AddString((*iter).c_str());
@@ -127,7 +127,7 @@ void CDlgTraining::OnOK()
 	m_Name.TrimLeft();
 	m_SubName.TrimRight();
 	m_SubName.TrimLeft();
-	m_Notes.Replace("\r\n", "\n");
+	m_Notes.Replace(_T("\r\n"), _T("\n"));
 
 	m_pTraining->SetDate(date);
 	m_pTraining->SetName((LPCTSTR)m_Name);

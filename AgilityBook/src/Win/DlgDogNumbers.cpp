@@ -139,7 +139,7 @@ CDlgDogNumbers::CDlgDogNumbers(
 		ARBDogRegNumList const& regnums)
 	: CDlgBasePropertyPage(CDlgDogNumbers::IDD)
 	, m_pDoc(pDoc)
-	, m_sortRegNums("RegNums")
+	, m_sortRegNums(_T("RegNums"))
 	, m_RegNums(regnums)
 {
 	m_sortRegNums.Initialize(nColRegNumInfo);
@@ -207,9 +207,9 @@ void CDlgDogNumbers::ListRegNums()
 		int nItem = m_ctrlRegNums.InsertItem(i, pRegNum->GetVenue().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 1, pRegNum->GetNumber().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 2, pRegNum->GetHeight().c_str());
-		m_ctrlRegNums.SetItemText(nItem, 3, pRegNum->GetReceived() ? "x" : "");
+		m_ctrlRegNums.SetItemText(nItem, 3, pRegNum->GetReceived() ? _T("x") : _T(""));
 		CString str(pRegNum->GetNote().c_str());
-		str.Replace("\n", " ");
+		str.Replace(_T("\n"), _T(" "));
 		m_ctrlRegNums.SetItemText(nItem, 4, str);
 		m_ctrlRegNums.SetItemData(nItem, reinterpret_cast<LPARAM>(pRegNum));
 	}

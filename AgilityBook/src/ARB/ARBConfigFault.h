@@ -38,8 +38,8 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -61,14 +61,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a fault.
@@ -94,25 +94,25 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
 
 private:
 	~ARBConfigFault();
-	std::string m_Name;
+	ARBString m_Name;
 };
 
-inline std::string ARBConfigFault::GetGenericName() const
+inline ARBString ARBConfigFault::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBConfigFault::GetName() const
+inline ARBString const& ARBConfigFault::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigFault::SetName(std::string const& inName)
+inline void ARBConfigFault::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
@@ -132,7 +132,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindFault(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigFault** outFault = NULL) const;
 
 	/**
@@ -142,7 +142,7 @@ public:
 	 * @return Whether the fault was added.
 	 */
 	bool AddFault(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigFault** outFault = NULL);
 
 	/**
@@ -150,5 +150,5 @@ public:
 	 * @param inName Name of fault to delete.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteFault(std::string const& inName);
+	bool DeleteFault(ARBString const& inName);
 };

@@ -106,7 +106,7 @@ bool ARBInfo::Load(
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
-		std::string const& name = element.GetName();
+		ARBString const& name = element.GetName();
 		if (name == TREE_CLUBINFO)
 		{
 			// Ignore any errors.

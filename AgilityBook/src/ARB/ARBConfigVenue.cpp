@@ -123,7 +123,7 @@ void ARBConfigVenue::clear()
 	m_MultiQs.clear();
 }
 
-size_t ARBConfigVenue::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigVenue::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -147,7 +147,7 @@ bool ARBConfigVenue::Load(
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
-		std::string const& name = element.GetName();
+		ARBString const& name = element.GetName();
 		if (name == TREE_VENUE_DESC)
 		{
 			m_Desc = element.GetValue();
@@ -212,8 +212,8 @@ bool ARBConfigVenue::Load(
 				{
 					if (!pMulti)
 						pMulti = new ARBConfigMultiQ();
-					pMulti->SetName("Double Q");
-					pMulti->SetShortName("QQ");
+					pMulti->SetName(_T("Double Q"));
+					pMulti->SetShortName(_T("QQ"));
 					pMulti->AddItem((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
 				}
 			}
@@ -250,17 +250,17 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 bool ARBConfigVenue::Update(
 		int indent,
 		ARBConfigVenue const* inVenueNew,
-		std::string& ioInfo)
+		ARBString& ioInfo)
 {
-	std::string info;
+	ARBString info;
 	if (GetName() != inVenueNew->GetName())
 		return false;
 
-	std::string indentBuffer, indentName;
+	ARBString indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += "   ";
-	indentBuffer = indentName + "   ";
-	indentName += "-";
+		indentName += _T("   ");
+	indentBuffer = indentName + _T("   ");
+	indentName += _T("-");
 
 	bool bChanges = false;
 	if (GetLongName() != inVenueNew->GetLongName())
@@ -278,7 +278,7 @@ bool ARBConfigVenue::Update(
 	// If the order is different, we will fall into this...
 	if (GetDivisions() != inVenueNew->GetDivisions())
 	{
-		std::string info2;
+		ARBString info2;
 		int nChanged, nAdded, nSkipped;
 		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigDivisionList::const_iterator iterDiv = inVenueNew->GetDivisions().begin();
@@ -302,9 +302,9 @@ bool ARBConfigVenue::Update(
 				++nAdded;
 				GetDivisions().AddDivision((*iterDiv));
 				info2 += indentBuffer;
-				info2 += "+";
+				info2 += _T("+");
 				info2 += (*iterDiv)->GetName();
-				info2 += "\n";
+				info2 += _T("\n");
 			}
 		}
 		// ... so only generate a message if we added or changed.
@@ -319,7 +319,7 @@ bool ARBConfigVenue::Update(
 	// If the order is different, we will fall into this...
 	if (GetEvents() != inVenueNew->GetEvents())
 	{
-		std::string info2;
+		ARBString info2;
 		int nChanged, nAdded, nSkipped;
 		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigEventList::const_iterator iterEvent = inVenueNew->GetEvents().begin();
@@ -343,9 +343,9 @@ bool ARBConfigVenue::Update(
 				++nAdded;
 				GetEvents().AddEvent((*iterEvent));
 				info2 += indentBuffer;
-				info2 += "+";
+				info2 += _T("+");
 				info2 += (*iterEvent)->GetName();
-				info2 += "\n";
+				info2 += _T("\n");
 			}
 		}
 		// ... so only generate a message if we added or changed.
@@ -407,7 +407,7 @@ bool ARBConfigVenue::Update(
 	if (0 < info.length())
 	{
 		bChanges = true;
-		ioInfo += indentName + GetName() + "\n" + info;
+		ioInfo += indentName + GetName() + _T("\n") + info;
 	}
 	return bChanges;
 }
@@ -447,14 +447,14 @@ void ARBConfigVenueList::sort()
 	std::stable_sort(begin(), end(), SortConfigVenue());
 }
 
-bool ARBConfigVenueList::VerifyVenue(std::string const& inVenue) const
+bool ARBConfigVenueList::VerifyVenue(ARBString const& inVenue) const
 {
 	return FindVenue(inVenue);
 }
 
 bool ARBConfigVenueList::VerifyMultiQ(
-		std::string const& inVenue,
-		std::string const& inMultiQ,
+		ARBString const& inVenue,
+		ARBString const& inMultiQ,
 		bool inUseShortName) const
 {
 	bool bOk = false;
@@ -468,9 +468,9 @@ bool ARBConfigVenueList::VerifyMultiQ(
 }
 
 bool ARBConfigVenueList::VerifyLevel(
-		std::string const& inVenue,
-		std::string const& inDivision,
-		std::string const& inLevel) const
+		ARBString const& inVenue,
+		ARBString const& inDivision,
+		ARBString const& inLevel) const
 {
 	bool bFound = false;
 	ARBConfigVenue* pVenue;
@@ -483,10 +483,10 @@ bool ARBConfigVenueList::VerifyLevel(
 }
 
 bool ARBConfigVenueList::VerifyEvent(
-		std::string const& inVenue,
-		std::string const& inDivision,
-		std::string const& inLevel,
-		std::string const& inEvent) const
+		ARBString const& inVenue,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
+		ARBString const& inEvent) const
 {
 	ARBConfigVenue* pVenue;
 	bool bFound = false;
@@ -510,8 +510,8 @@ bool ARBConfigVenueList::VerifyEvent(
 }
 
 bool ARBConfigVenueList::FindTitleCompleteName(
-		std::string const& inVenue,
-		std::string const& inName,
+		ARBString const& inVenue,
+		ARBString const& inName,
 		bool bAbbrevFirst,
 		ARBConfigTitle** outTitle) const
 {
@@ -528,8 +528,8 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 }
 
 bool ARBConfigVenueList::FindTitle(
-		std::string const& inVenue,
-		std::string const& inTitle,
+		ARBString const& inVenue,
+		ARBString const& inTitle,
 		ARBConfigTitle** outTitle) const
 {
 	if (outTitle)
@@ -545,7 +545,7 @@ bool ARBConfigVenueList::FindTitle(
 }
 
 bool ARBConfigVenueList::FindVenue(
-		std::string const& inVenue,
+		ARBString const& inVenue,
 		ARBConfigVenue** outVenue) const
 {
 	if (outVenue)
@@ -566,7 +566,7 @@ bool ARBConfigVenueList::FindVenue(
 }
 
 bool ARBConfigVenueList::AddVenue(
-		std::string const& inVenue,
+		ARBString const& inVenue,
 		ARBConfigVenue** outVenue)
 {
 	if (outVenue)
@@ -599,9 +599,9 @@ bool ARBConfigVenueList::AddVenue(ARBConfigVenue* inVenue)
 	return true;
 }
 
-int ARBConfigVenueList::DeleteVenue(std::string const& inVenue)
+int ARBConfigVenueList::DeleteVenue(ARBString const& inVenue)
 {
-	std::string venue(inVenue);
+	ARBString venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == venue)
@@ -617,10 +617,10 @@ int ARBConfigVenueList::DeleteVenue(std::string const& inVenue)
 // This is the only 'FindEvent' that takes a true level. All others take
 // a ARBConfigLevel.
 bool ARBConfigVenueList::FindEvent(
-		std::string const& inVenue,
-		std::string const& inEvent,
-		std::string const& inDivision,
-		std::string const& inLevel,
+		ARBString const& inVenue,
+		ARBString const& inEvent,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigScoring** outScoring) const
 {

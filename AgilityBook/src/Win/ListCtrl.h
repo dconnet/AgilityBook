@@ -82,7 +82,7 @@ protected:
 	int m_sortDescending;
 	CToolTipCtrl m_ToolTip;
 	int fBufferSize;
-	char* fpBuffer;
+	TCHAR* fpBuffer;
 
 protected:
 	//{{AFX_MSG(CHeaderCtrl2)

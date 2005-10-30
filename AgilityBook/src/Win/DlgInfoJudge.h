@@ -37,8 +37,8 @@
  */
 
 #include <set>
-#include <string>
 #include "ARBInfo.h"
+#include "ARBTypes.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -61,7 +61,7 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
-	std::set<std::string> m_NamesInUse;
+	std::set<ARBString> m_NamesInUse;
 	ARBInfoItemList m_InfoOrig;
 	ARBInfoItemList m_Info;
 	class NameInfo
@@ -74,10 +74,10 @@ private:
 			eDeleted
 		} eUsage;
 		NameInfo();
-		NameInfo(std::string const& inName);
+		NameInfo(ARBString const& inName);
 		NameInfo(NameInfo const& rhs);
 		bool operator==(NameInfo const& rhs);
-		std::string m_Name;
+		ARBString m_Name;
 		eUsage m_eInUse;
 		bool m_bHasData;
 	};

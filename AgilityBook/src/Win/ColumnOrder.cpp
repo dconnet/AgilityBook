@@ -83,7 +83,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	}
 	bool rc = false;
 	// Load last settings.
-	CString str = AfxGetApp()->GetProfileString("Sorting", m_Item + "Order", _T(""));
+	CString str = AfxGetApp()->GetProfileString(_T("Sorting"), m_Item + _T("Order"), _T(""));
 	int i;
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
@@ -95,7 +95,7 @@ bool CColumnOrder::Initialize(int nColumns)
 		else
 			str.Empty();
 	}
-	str = AfxGetApp()->GetProfileString("Sorting", m_Item + "Sort", _T(""));
+	str = AfxGetApp()->GetProfileString(_T("Sorting"), m_Item + _T("Sort"), _T(""));
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
@@ -121,7 +121,7 @@ void CColumnOrder::Save()
 			str += ',';
 		str += tmp;
 	}
-	AfxGetApp()->WriteProfileString("Sorting", m_Item + "Order", str);
+	AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str);
 	str.Empty();
 	for (i = 0; i < m_nColumns; ++i)
 	{
@@ -130,7 +130,7 @@ void CColumnOrder::Save()
 			str += ',';
 		str += tmp;
 	}
-	AfxGetApp()->WriteProfileString("Sorting", m_Item + "Sort", str);
+	AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Sort"), str);
 }
 
 int CColumnOrder::FindColumnOrder(int column) const

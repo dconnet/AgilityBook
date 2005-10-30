@@ -36,10 +36,10 @@
  */
 
 #include <set>
-#include <string>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBDate.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBDogRun;
 class ARBErrorCallback;
@@ -62,14 +62,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a multiQ configuration.
@@ -111,15 +111,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-			std::string const& inOldDiv,
-			std::string const& inNewDiv);
+			ARBString const& inOldDiv,
+			ARBString const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(std::string const& inDiv);
+	int DeleteDivision(ARBString const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -129,16 +129,16 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-			std::string const& inDiv,
-			std::string const& inOldLevel,
-			std::string const& inNewLevel);
+			ARBString const& inDiv,
+			ARBString const& inOldLevel,
+			ARBString const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(std::string const& inLevel);
+	int DeleteLevel(ARBString const& inLevel);
 
 	/**
 	 * Rename an event.
@@ -147,15 +147,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameEvent(
-			std::string const& inOldEvent,
-			std::string const& inNewEvent);
+			ARBString const& inOldEvent,
+			ARBString const& inNewEvent);
 
 	/**
 	 * Delete an event.
 	 * @param inEvent Event name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteEvent(std::string const& inEvent);
+	int DeleteEvent(ARBString const& inEvent);
 
 	/**
 	 * Add an item.
@@ -165,9 +165,9 @@ public:
 	 * @return Whether object was added.
 	 */
 	bool AddItem(
-			std::string const& inDiv,
-			std::string const& inLevel,
-			std::string const& inEvent);
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inEvent);
 
 	/**
 	 * Remove an item.
@@ -177,9 +177,9 @@ public:
 	 * @return Whether object was removed.
 	 */
 	bool RemoveItem(
-			std::string const& inDiv,
-			std::string const& inLevel,
-			std::string const& inEvent);
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inEvent);
 
 	/**
 	 * Remove all configuration items.
@@ -189,10 +189,10 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string GetName() const;
-	void SetName(std::string const& inName);
-	std::string GetShortName() const;
-	void SetShortName(std::string const& inName);
+	ARBString GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString GetShortName() const;
+	void SetShortName(ARBString const& inName);
 	ARBDate GetValidFrom() const;
 	void SetValidFrom(ARBDate const& inDate);
 	ARBDate GetValidTo() const;
@@ -200,18 +200,18 @@ public:
 	size_t GetNumItems() const;
 	bool GetItem(
 			size_t inIndex,
-			std::string& outDivision,
-			std::string& outLevel,
-			std::string& outEvent) const;
+			ARBString& outDivision,
+			ARBString& outLevel,
+			ARBString& outEvent) const;
 
 private:
 	~ARBConfigMultiQ();
 
 	struct MultiQItem
 	{
-		std::string m_Div;
-		std::string m_Level;
-		std::string m_Event;
+		ARBString m_Div;
+		ARBString m_Level;
+		ARBString m_Event;
 		bool operator<(MultiQItem const& rhs) const
 		{
 			if (m_Div < rhs.m_Div)
@@ -228,29 +228,29 @@ private:
 		}
 	};
 
-	std::string m_Name;
-	std::string m_ShortName;
+	ARBString m_Name;
+	ARBString m_ShortName;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
 	std::set<MultiQItem> m_Items;
 };
 
-inline std::string ARBConfigMultiQ::GetName() const
+inline ARBString ARBConfigMultiQ::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigMultiQ::SetName(std::string const& inName)
+inline void ARBConfigMultiQ::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string ARBConfigMultiQ::GetShortName() const
+inline ARBString ARBConfigMultiQ::GetShortName() const
 {
 	return m_ShortName;
 }
 
-inline void ARBConfigMultiQ::SetShortName(std::string const& inName)
+inline void ARBConfigMultiQ::SetShortName(ARBString const& inName)
 {
 	m_ShortName = inName;
 }
@@ -310,7 +310,7 @@ public:
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
 	bool FindMultiQ(
-			std::string const& inName,
+			ARBString const& inName,
 			bool inUseShortName = false,
 			ARBConfigMultiQ** outMultiQ = NULL) const;
 
@@ -330,15 +330,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-			std::string const& inOldDiv,
-			std::string const& inNewDiv);
+			ARBString const& inOldDiv,
+			ARBString const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(std::string const& inDiv);
+	int DeleteDivision(ARBString const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -348,16 +348,16 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-			std::string const& inDiv,
-			std::string const& inOldLevel,
-			std::string const& inNewLevel);
+			ARBString const& inDiv,
+			ARBString const& inOldLevel,
+			ARBString const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(std::string const& inLevel);
+	int DeleteLevel(ARBString const& inLevel);
 
 	/**
 	 * Rename an event.
@@ -366,15 +366,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameEvent(
-			std::string const& inOldEvent,
-			std::string const& inNewEvent);
+			ARBString const& inOldEvent,
+			ARBString const& inNewEvent);
 
 	/**
 	 * Delete an event.
 	 * @param inEvent Event name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteEvent(std::string const& inEvent);
+	int DeleteEvent(ARBString const& inEvent);
 
 	/**
 	 * Add a MultiQ.

@@ -163,10 +163,10 @@ bool ARBDogRunScoring::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	std::string attrib;
+	ARBString attrib;
 
 	m_bRoundTimeFaults = inEvent->DropFractions();
-	std::string const& name = inTree.GetName();
+	ARBString const& name = inTree.GetName();
 	inTree.GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEvent->GetScoringStyle());
@@ -190,7 +190,7 @@ bool ARBDogRunScoring::Load(
 				// level.
 				m_ConvertTable = true;
 				bool bTableInYPS = true;
-				if (Element::eFound == inTree.GetAttrib("TableInYPS", bTableInYPS))
+				if (Element::eFound == inTree.GetAttrib(_T("TableInYPS"), bTableInYPS))
 				{
 					if (!bTableInYPS)
 					{

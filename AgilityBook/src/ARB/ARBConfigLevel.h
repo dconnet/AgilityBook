@@ -38,9 +38,9 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBConfigSubLevel.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBConfigEventList;
 class ARBErrorCallback;
@@ -68,14 +68,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a level configuration.
@@ -108,33 +108,33 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigLevel const* inLevelNew,
-			std::string& ioInfo);
+			ARBString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
 	ARBConfigSubLevelList const& GetSubLevels() const;
 	ARBConfigSubLevelList& GetSubLevels();
 
 private:
 	~ARBConfigLevel();
-	std::string m_Name;
+	ARBString m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
 
-inline std::string ARBConfigLevel::GetGenericName() const
+inline ARBString ARBConfigLevel::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBConfigLevel::GetName() const
+inline ARBString const& ARBConfigLevel::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigLevel::SetName(std::string const& inName)
+inline void ARBConfigLevel::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
@@ -165,7 +165,7 @@ public:
 	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			bool inAllowWildCard = true) const;
 
 	/**
@@ -175,7 +175,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigLevel** outLevel = NULL);
 
 	/**
@@ -186,7 +186,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindSubLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigLevel** outLevel = NULL) const;
 
 	/**
@@ -196,7 +196,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigLevel** outLevel = NULL);
 
 	/**
@@ -213,7 +213,7 @@ public:
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigEventList& ioEvents);
 
 	/**
@@ -224,6 +224,6 @@ public:
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
 	bool DeleteSubLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			bool& outLevelModified);
 };

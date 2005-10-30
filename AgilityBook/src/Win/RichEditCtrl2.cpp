@@ -125,9 +125,9 @@ void CRichEditCtrl2::OnEnLink(
 			sei.fMask = SEE_MASK_FLAG_DDEWAIT;
 			sei.hwnd = AfxGetMainWnd()->GetSafeHwnd();
 			//sei.lpVerb = NULL;
-			//sei.lpVerb = "opennew";
-			sei.lpVerb = "open";
-			//sei.lpVerb = "edit";
+			//sei.lpVerb = _T("opennew");
+			sei.lpVerb = _T("open");
+			//sei.lpVerb = _T("edit");
 			sei.lpFile = (LPCTSTR)URL;
 			sei.lpParameters = NULL;
 			sei.lpDirectory = NULL;

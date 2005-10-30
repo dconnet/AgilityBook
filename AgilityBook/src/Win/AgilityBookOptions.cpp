@@ -164,7 +164,7 @@ bool CAgilityBookOptions::IsTitleVisible(
 
 bool CAgilityBookOptions::IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
-		std::string const& venue)
+		ARBString const& venue)
 {
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
@@ -182,8 +182,8 @@ bool CAgilityBookOptions::IsVenueVisible(
 
 bool CAgilityBookOptions::IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
-		std::string const& venue,
-		std::string const& div)
+		ARBString const& venue,
+		ARBString const& div)
 {
 	if (!CAgilityBookOptions::GetViewAllVenues())
 	{
@@ -334,7 +334,7 @@ bool CAgilityBookOptions::IsCalendarVisible(ARBCalendar const* pCal)
 }
 
 bool CAgilityBookOptions::IsTrainingLogVisible(
-		std::set<std::string> const& names,
+		std::set<ARBString> const& names,
 		ARBTraining const* pTraining)
 {
 	if (!CAgilityBookOptions::GetViewAllDates())
@@ -356,7 +356,7 @@ bool CAgilityBookOptions::IsTrainingLogVisible(
 	if (!CAgilityBookOptions::GetTrainingViewAllNames())
 	{
 		bVisible = false;
-		for (std::set<std::string>::const_iterator iter = names.begin();
+		for (std::set<ARBString>::const_iterator iter = names.begin();
 			iter != names.end();
 			++iter)
 		{
@@ -375,134 +375,134 @@ bool CAgilityBookOptions::IsTrainingLogVisible(
 
 bool CAgilityBookOptions::AutoDeleteCalendarEntries()
 {
-	int val = AfxGetApp()->GetProfileInt("Calendar", "AutoDelete", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("AutoDelete"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetAutoDeleteCalendarEntries(bool bAuto)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "AutoDelete", bAuto ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("AutoDelete"), bAuto ? 1 : 0);
 }
 
 bool CAgilityBookOptions::ViewAllCalendarEntries()
 {
-	int val = AfxGetApp()->GetProfileInt("Calendar", "ViewAll", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("ViewAll"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewAllCalendarEntries(bool bView)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "ViewAll", bView ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("ViewAll"), bView ? 1 : 0);
 }
 
 int CAgilityBookOptions::DaysTillEntryIsPast()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "PastEntry", 5);
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("PastEntry"), 5);
 }
 
 void CAgilityBookOptions::SetDaysTillEntryIsPast(int nDays)
 {
 	if (0 > nDays)
 		nDays = 0;
-	AfxGetApp()->WriteProfileInt("Calendar", "PastEntry", nDays);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("PastEntry"), nDays);
 }
 
 bool CAgilityBookOptions::HideOverlappingCalendarEntries()
 {
-	int val = AfxGetApp()->GetProfileInt("Calendar", "HideOverlapping", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("HideOverlapping"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "HideOverlapping", bHide ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("HideOverlapping"), bHide ? 1 : 0);
 }
 
 CSize CAgilityBookOptions::GetCalendarEntrySize()
 {
 	CSize szInches(100, 70);
-	if (10 > (szInches.cx = abs(static_cast<LONG>(AfxGetApp()->GetProfileInt("Calendar", "EntrySize.cx", szInches.cx)))))
+	if (10 > (szInches.cx = abs(static_cast<LONG>(AfxGetApp()->GetProfileInt(_T("Calendar"), _T("EntrySize.cx"), szInches.cx)))))
 		szInches.cx = 10;
-	if (10 > (szInches.cy = abs(static_cast<LONG>(AfxGetApp()->GetProfileInt("Calendar", "EntrySize.cy", szInches.cy)))))
+	if (10 > (szInches.cy = abs(static_cast<LONG>(AfxGetApp()->GetProfileInt(_T("Calendar"), _T("EntrySize.cy"), szInches.cy)))))
 		szInches.cy = 10;
 	return szInches;
 }
 
 void CAgilityBookOptions::SetCalendarEntrySize(CSize const& sz)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "EntrySize.cx", sz.cx);
-	AfxGetApp()->WriteProfileInt("Calendar", "EntrySize.cy", sz.cy);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("EntrySize.cx"), sz.cx);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("EntrySize.cy"), sz.cy);
 }
 
 CCalendarViewFilter CAgilityBookOptions::FilterCalendarView()
 {
-	unsigned short uVal = static_cast<unsigned short>(AfxGetApp()->GetProfileInt("Calendar", "Filter", CCalendarViewFilter::eViewNormal));
+	unsigned short uVal = static_cast<unsigned short>(AfxGetApp()->GetProfileInt(_T("Calendar"), _T("Filter"), CCalendarViewFilter::eViewNormal));
 	return uVal;
 }
 
 void CAgilityBookOptions::SetFilterCalendarView(CCalendarViewFilter inFilter)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "Filter", inFilter.m_Filter);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("Filter"), inFilter.m_Filter);
 }
 
 COLORREF CAgilityBookOptions::CalendarOpeningColor()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "OpenColor", RGB(0,128,0));
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("OpenColor"), RGB(0,128,0));
 }
 
 void CAgilityBookOptions::SetCalendarOpeningColor(COLORREF inColor)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "OpenColor", inColor);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("OpenColor"), inColor);
 }
 
 COLORREF CAgilityBookOptions::CalendarClosingColor()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "CloseColor", RGB(255,0,0));
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("CloseColor"), RGB(255,0,0));
 }
 
 void CAgilityBookOptions::SetCalendarClosingColor(COLORREF inColor)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "CloseColor", inColor);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("CloseColor"), inColor);
 }
 
 int CAgilityBookOptions::CalendarOpeningNear()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "OpenNear", 5);
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("OpenNear"), 5);
 }
 
 void CAgilityBookOptions::SetCalendarOpeningNear(int inDays)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "OpenNear", inDays);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("OpenNear"), inDays);
 }
 
 int CAgilityBookOptions::CalendarClosingNear()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "CloseNear", 10);
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("CloseNear"), 10);
 }
 
 void CAgilityBookOptions::SetCalendarClosingNear(int inDays)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "CloseNear", inDays);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("CloseNear"), inDays);
 }
 
 COLORREF CAgilityBookOptions::CalendarOpeningNearColor()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "OpenNearColor", RGB(0,0,255));
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("OpenNearColor"), RGB(0,0,255));
 }
 
 void CAgilityBookOptions::SetCalendarOpeningNearColor(COLORREF inColor)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "OpenNearColor", inColor);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("OpenNearColor"), inColor);
 }
 
 COLORREF CAgilityBookOptions::CalendarClosingNearColor()
 {
-	return AfxGetApp()->GetProfileInt("Calendar", "CloseNearColor", RGB(255,0,0));
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("CloseNearColor"), RGB(255,0,0));
 }
 
 void CAgilityBookOptions::SetCalendarClosingNearColor(COLORREF inColor)
 {
-	AfxGetApp()->WriteProfileInt("Calendar", "CloseNearColor", inColor);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("CloseNearColor"), inColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -510,7 +510,7 @@ void CAgilityBookOptions::SetCalendarClosingNearColor(COLORREF inColor)
 
 ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "FirstDayOfWeek", static_cast<int>(ARBDate::eSunday));
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("FirstDayOfWeek"), static_cast<int>(ARBDate::eSunday));
 	if (val < 0 || val > 6)
 		val = static_cast<int>(ARBDate::eSunday);
 	return static_cast<ARBDate::DayOfWeek>(val);
@@ -518,7 +518,7 @@ ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 
 void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 {
-	AfxGetApp()->WriteProfileInt("Common", "FirstDayOfWeek", static_cast<int>(day));
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("FirstDayOfWeek"), static_cast<int>(day));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -526,59 +526,59 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 
 bool CAgilityBookOptions::GetViewAllDates()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewAllDates", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllDates"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewAllDates(bool bViewAll)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewAllDates", bViewAll ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllDates"), bViewAll ? 1 : 0);
 }
 
 ARBDate CAgilityBookOptions::GetStartFilterDate()
 {
 	ARBDate date(ARBDate::Today());
-	date.SetJulianDay(AfxGetApp()->GetProfileInt("Common", "StartFilterJDay", date.GetJulianDay()));
+	date.SetJulianDay(AfxGetApp()->GetProfileInt(_T("Common"), _T("StartFilterJDay"), date.GetJulianDay()));
 	return date;
 }
 
 void CAgilityBookOptions::SetStartFilterDate(ARBDate const& date)
 {
-	AfxGetApp()->WriteProfileInt("Common", "StartFilterJDay", date.GetJulianDay());
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("StartFilterJDay"), date.GetJulianDay());
 }
 
 bool CAgilityBookOptions::GetStartFilterDateSet()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "StartFilter", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("StartFilter"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetStartFilterDateSet(bool bSet)
 {
-	AfxGetApp()->WriteProfileInt("Common", "StartFilter", bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("StartFilter"), bSet ? 1 : 0);
 }
 
 ARBDate CAgilityBookOptions::GetEndFilterDate()
 {
 	ARBDate date(ARBDate::Today());
-	date.SetJulianDay(AfxGetApp()->GetProfileInt("Common", "EndFilterJDay", date.GetJulianDay()));
+	date.SetJulianDay(AfxGetApp()->GetProfileInt(_T("Common"), _T("EndFilterJDay"), date.GetJulianDay()));
 	return date;
 }
 
 void CAgilityBookOptions::SetEndFilterDate(ARBDate const& date)
 {
-	AfxGetApp()->WriteProfileInt("Common", "EndFilterJDay", date.GetJulianDay());
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("EndFilterJDay"), date.GetJulianDay());
 }
 
 bool CAgilityBookOptions::GetEndFilterDateSet()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "EndFilter", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("EndFilter"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetEndFilterDateSet(bool bSet)
 {
-	AfxGetApp()->WriteProfileInt("Common", "EndFilter", bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("EndFilter"), bSet ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -586,13 +586,13 @@ void CAgilityBookOptions::SetEndFilterDateSet(bool bSet)
 
 bool CAgilityBookOptions::GetViewAllVenues()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewAllVenues", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllVenues"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewAllVenues(bool bViewAll)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewAllVenues", bViewAll ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllVenues"), bViewAll ? 1 : 0);
 }
 
 static bool s_venueCacheInit = false;
@@ -608,7 +608,7 @@ void CAgilityBookOptions::GetFilterVenue(std::vector<CVenueFilter>& venues)
 	else
 	{
 		CString venue;
-		venue = AfxGetApp()->GetProfileString("Common", "FilterVenue", "");
+		venue = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
 		if (!venue.IsEmpty())
 		{
 			CStringArray raw;
@@ -636,13 +636,13 @@ void CAgilityBookOptions::GetFilterVenue(std::vector<CVenueFilter>& venues)
 					{
 					default:
 					case 3:
-						filter.level = (LPCSTR)rawFilter[2];
+						filter.level = (LPCTSTR)rawFilter[2];
 						// fallthru
 					case 2:
-						filter.division = (LPCSTR)rawFilter[1];
+						filter.division = (LPCTSTR)rawFilter[1];
 						// fallthru
 					case 1:
-						filter.venue = (LPCSTR)rawFilter[0];
+						filter.venue = (LPCTSTR)rawFilter[0];
 					}
 					venues.push_back(filter);
 				}
@@ -663,37 +663,37 @@ void CAgilityBookOptions::SetFilterVenue(std::vector<CVenueFilter> const& venues
 		if (!venue.IsEmpty())
 			venue += ':';
 		venue += (*iter).venue.c_str();
-		venue += "/";
+		venue += _T("/");
 		venue += (*iter).division.c_str();
-		venue += "/";
+		venue += _T("/");
 		venue += (*iter).level.c_str();
 	}
-	AfxGetApp()->WriteProfileString("Common", "FilterVenue", venue);
+	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterVenue"), venue);
 	s_venueCacheInit = true;
 	s_venueCache = venues;
 }
 
 bool CAgilityBookOptions::GetViewAllRuns()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewAllRuns", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllRuns"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewAllRuns(bool bViewAll)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewAllRuns", bViewAll ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllRuns"), bViewAll ? 1 : 0);
 }
 
 // Subset of AllRuns
 bool CAgilityBookOptions::GetViewQRuns()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewQRuns", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewQRuns"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewQRuns", bViewQs ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewQRuns"), bViewQs ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -701,42 +701,42 @@ void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
 
 bool CAgilityBookOptions::GetTrainingViewAllNames()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewAllNames", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllNames"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetTrainingViewAllNames(bool bViewAll)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewAllNames", bViewAll ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllNames"), bViewAll ? 1 : 0);
 }
 
-void CAgilityBookOptions::GetTrainingFilterNames(std::set<std::string>& outNames)
+void CAgilityBookOptions::GetTrainingFilterNames(std::set<ARBString>& outNames)
 {
 	outNames.clear();
 	CString names;
-	names = AfxGetApp()->GetProfileString("Common", "FilterTrainingNames", "");
+	names = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
 	if (!names.IsEmpty())
 	{
 		int pos;
 		while (0 <= (pos = names.Find(':')))
 		{
-			outNames.insert((LPCSTR)names.Left(pos));
+			outNames.insert((LPCTSTR)names.Left(pos));
 			names = names.Mid(pos+1);
 		}
-		outNames.insert((LPCSTR)names);
+		outNames.insert((LPCTSTR)names);
 	}
 }
 
-void CAgilityBookOptions::SetTrainingFilterNames(std::set<std::string> const& inNames)
+void CAgilityBookOptions::SetTrainingFilterNames(std::set<ARBString> const& inNames)
 {
 	CString names;
-	for (std::set<std::string>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	for (std::set<ARBString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		if (!names.IsEmpty())
 			names += ':';
 		names += (*iter).c_str();
 	}
-	AfxGetApp()->WriteProfileString("Common", "FilterTrainingNames", names);
+	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterTrainingNames"), names);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -744,57 +744,57 @@ void CAgilityBookOptions::SetTrainingFilterNames(std::set<std::string> const& in
 
 bool CAgilityBookOptions::GetViewRunsByTrial()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewRunsByTrial", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewRunsByTrial"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewRunsByTrial", bView ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewRunsByTrial"), bView ? 1 : 0);
 }
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewNewestFirst", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewNewestFirst"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewNewestFirst", bNewest ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewNewestFirst"), bNewest ? 1 : 0);
 }
 
 bool CAgilityBookOptions::GetViewHiddenTitles()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "ViewHiddenTitles", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewHiddenTitles"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 {
-	AfxGetApp()->WriteProfileInt("Common", "ViewHiddenTitles", bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewHiddenTitles"), bSet ? 1 : 0);
 }
 
 bool CAgilityBookOptions::GetTableInYPS()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "TableInYPS", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("TableInYPS"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetTableInYPS(bool bSet)
 {
-	AfxGetApp()->WriteProfileInt("Common", "TableInYPS", bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("TableInYPS"), bSet ? 1 : 0);
 }
 
 bool CAgilityBookOptions::GetIncludeCRCDImage()
 {
-	int val = AfxGetApp()->GetProfileInt("Common", "CRCDImage", 0);
+	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("CRCDImage"), 0);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 {
-	AfxGetApp()->WriteProfileInt("Common", "CRCDImage", bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("CRCDImage"), bSet ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -802,94 +802,94 @@ void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 
 void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 {
-	info.name = "Times New Roman";
+	info.name = _T("Times New Roman");
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	CString item("PrintFontList");
-	info.name = AfxGetApp()->GetProfileString("Common", item + "Name", info.name);
-	info.size = AfxGetApp()->GetProfileInt("Common", item + "Size", info.size);
-	info.italic = (AfxGetApp()->GetProfileInt("Common", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt("Common", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+	CString item(_T("PrintFontList"));
+	info.name = AfxGetApp()->GetProfileString(_T("Common"), item + _T("Name"), info.name);
+	info.size = AfxGetApp()->GetProfileInt(_T("Common"), item + _T("Size"), info.size);
+	info.italic = (AfxGetApp()->GetProfileInt(_T("Common"), item + _T("Italic"), info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt(_T("Common"), item + _T("Bold"), info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 {
-	CString item("PrintFontList");
-	AfxGetApp()->WriteProfileString("Common", item + "Name", info.name);
-	AfxGetApp()->WriteProfileInt("Common", item + "Size", info.size);
-	AfxGetApp()->WriteProfileInt("Common", item + "Italic", info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt("Common", item + "Bold", info.bold ? 1 : 0);
+	CString item(_T("PrintFontList"));
+	AfxGetApp()->WriteProfileString(_T("Common"), item + _T("Name"), info.name);
+	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Size"), info.size);
+	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Italic"), info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Bold"), info.bold ? 1 : 0);
 }
 
 void CAgilityBookOptions::GetCalendarDateFontInfo(
 		CFontInfo& info,
 		BOOL bPrinting)
 {
-	info.name = "Times New Roman";
+	info.name = _T("Times New Roman");
 	info.size = 100;
 	info.italic = false;
 	info.bold = false;
-	CString item("Font");
+	CString item(_T("Font"));
 	if (bPrinting)
 	{
-		item = "PrintFont";
+		item = _T("PrintFont");
 		info.size = 80;
 	}
-	item += "Date";
-	info.name = AfxGetApp()->GetProfileString("Calendar", item + "Name", info.name);
-	info.size = AfxGetApp()->GetProfileInt("Calendar", item + "Size", info.size);
-	info.italic = (AfxGetApp()->GetProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+	item += _T("Date");
+	info.name = AfxGetApp()->GetProfileString(_T("Calendar"), item + _T("Name"), info.name);
+	info.size = AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Size"), info.size);
+	info.italic = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetCalendarDateFontInfo(
 		CFontInfo const& info,
 		BOOL bPrinting)
 {
-	CString item("Font");
+	CString item(_T("Font"));
 	if (bPrinting)
-		item = "PrintFont";
-	item += "Date";
-	AfxGetApp()->WriteProfileString("Calendar", item + "Name", info.name);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Size", info.size);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
+		item = _T("PrintFont");
+	item += _T("Date");
+	AfxGetApp()->WriteProfileString(_T("Calendar"), item + _T("Name"), info.name);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Size"), info.size);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0);
 }
 
 void CAgilityBookOptions::GetCalendarTextFontInfo(
 		CFontInfo& info,
 		BOOL bPrinting)
 {
-	info.name = "Times New Roman";
+	info.name = _T("Times New Roman");
 	info.size = 100;
 	info.italic = false;
 	info.bold = false;
-	CString item("Font");
+	CString item(_T("Font"));
 	if (bPrinting)
 	{
-		item = "PrintFont";
+		item = _T("PrintFont");
 		info.size = 80;
 	}
-	item += "Text";
-	info.name = AfxGetApp()->GetProfileString("Calendar", item + "Name", info.name);
-	info.size = AfxGetApp()->GetProfileInt("Calendar", item + "Size", info.size);
-	info.italic = (AfxGetApp()->GetProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0)) == 1 ? true : false;
+	item += _T("Text");
+	info.name = AfxGetApp()->GetProfileString(_T("Calendar"), item + _T("Name"), info.name);
+	info.size = AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Size"), info.size);
+	info.italic = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetCalendarTextFontInfo(
 		CFontInfo const& info,
 		BOOL bPrinting)
 {
-	CString item("Font");
+	CString item(_T("Font"));
 	if (bPrinting)
-		item = "PrintFont";
-	item += "Text";
-	AfxGetApp()->WriteProfileString("Calendar", item + "Name", info.name);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Size", info.size);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Italic", info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt("Calendar", item + "Bold", info.bold ? 1 : 0);
+		item = _T("PrintFont");
+	item += _T("Text");
+	AfxGetApp()->WriteProfileString(_T("Calendar"), item + _T("Name"), info.name);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Size"), info.size);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -897,62 +897,62 @@ void CAgilityBookOptions::SetCalendarTextFontInfo(
 
 CString CAgilityBookOptions::GetLastEnteredDivision()
 {
-	return AfxGetApp()->GetProfileString("Last", "Division", "");
+	return AfxGetApp()->GetProfileString(_T("Last"), _T("Division"), _T(""));
 }
 
-void CAgilityBookOptions::SetLastEnteredDivision(char const* inLast)
+void CAgilityBookOptions::SetLastEnteredDivision(TCHAR const* inLast)
 {
-	AfxGetApp()->WriteProfileString("Last", "Division", inLast);
+	AfxGetApp()->WriteProfileString(_T("Last"), _T("Division"), inLast);
 }
 
 CString CAgilityBookOptions::GetLastEnteredLevel()
 {
-	return AfxGetApp()->GetProfileString("Last", "Level", "");
+	return AfxGetApp()->GetProfileString(_T("Last"), _T("Level"), _T(""));
 }
 
-void CAgilityBookOptions::SetLastEnteredLevel(char const* inLast)
+void CAgilityBookOptions::SetLastEnteredLevel(TCHAR const* inLast)
 {
-	AfxGetApp()->WriteProfileString("Last", "Level", inLast);
+	AfxGetApp()->WriteProfileString(_T("Last"), _T("Level"), inLast);
 }
 
 CString CAgilityBookOptions::GetLastEnteredHeight()
 {
-	return AfxGetApp()->GetProfileString("Last", "Height", "");
+	return AfxGetApp()->GetProfileString(_T("Last"), _T("Height"), _T(""));
 }
 
-void CAgilityBookOptions::SetLastEnteredHeight(char const* inLast)
+void CAgilityBookOptions::SetLastEnteredHeight(TCHAR const* inLast)
 {
-	AfxGetApp()->WriteProfileString("Last", "Height", inLast);
+	AfxGetApp()->WriteProfileString(_T("Last"), _T("Height"), inLast);
 }
 
 CString CAgilityBookOptions::GetLastEnteredRefHeight()
 {
-	return AfxGetApp()->GetProfileString("Last", "RefHeight", "");
+	return AfxGetApp()->GetProfileString(_T("Last"), _T("RefHeight"), _T(""));
 }
 
-void CAgilityBookOptions::SetLastEnteredRefHeight(char const* inLast)
+void CAgilityBookOptions::SetLastEnteredRefHeight(TCHAR const* inLast)
 {
-	AfxGetApp()->WriteProfileString("Last", "RefHeight", inLast);
+	AfxGetApp()->WriteProfileString(_T("Last"), _T("RefHeight"), inLast);
 }
 
 CString CAgilityBookOptions::GetLastEnteredJudge()
 {
-	return AfxGetApp()->GetProfileString("Last", "Judge", "");
+	return AfxGetApp()->GetProfileString(_T("Last"), _T("Judge"), _T(""));
 }
 
-void CAgilityBookOptions::SetLastEnteredJudge(char const* inLast)
+void CAgilityBookOptions::SetLastEnteredJudge(TCHAR const* inLast)
 {
-	AfxGetApp()->WriteProfileString("Last", "Judge", inLast);
+	AfxGetApp()->WriteProfileString(_T("Last"), _T("Judge"), inLast);
 }
 
 CString CAgilityBookOptions::GetLastEnteredHandler()
 {
-	return AfxGetApp()->GetProfileString("Last", "Handler", "");
+	return AfxGetApp()->GetProfileString(_T("Last"), _T("Handler"), _T(""));
 }
 
-void CAgilityBookOptions::SetLastEnteredHandler(char const* inLast)
+void CAgilityBookOptions::SetLastEnteredHandler(TCHAR const* inLast)
 {
-	AfxGetApp()->WriteProfileString("Last", "Handler", inLast);
+	AfxGetApp()->WriteProfileString(_T("Last"), _T("Handler"), inLast);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -960,7 +960,7 @@ void CAgilityBookOptions::SetLastEnteredHandler(char const* inLast)
 
 int CAgilityBookOptions::GetImportStartRow()
 {
-	int row = AfxGetApp()->GetProfileInt("Import", "row", 1);
+	int row = AfxGetApp()->GetProfileInt(_T("Import"), _T("row"), 1);
 	if (0 > row)
 		row = 1;
 	return row;
@@ -968,7 +968,7 @@ int CAgilityBookOptions::GetImportStartRow()
 
 void CAgilityBookOptions::SetImportStartRow(int row)
 {
-	AfxGetApp()->WriteProfileInt("Import", "row", row);
+	AfxGetApp()->WriteProfileInt(_T("Import"), _T("row"), row);
 }
 
 void CAgilityBookOptions::GetImportExportDelimiters(
@@ -978,13 +978,13 @@ void CAgilityBookOptions::GetImportExportDelimiters(
 {
 	CString section;
 	if (bImport)
-		section = "Import";
+		section = _T("Import");
 	else
-		section = "Export";
+		section = _T("Export");
 	delim = eDelimTab;
 	delimiter.Empty();
-	delim = AfxGetApp()->GetProfileInt(section, "delim", delim);
-	delimiter = AfxGetApp()->GetProfileString(section, "delimiter", delimiter);
+	delim = AfxGetApp()->GetProfileInt(section, _T("delim"), delim);
+	delimiter = AfxGetApp()->GetProfileString(section, _T("delimiter"), delimiter);
 	if (1 < delimiter.GetLength())
 		delimiter = delimiter.Left(1);
 }
@@ -996,11 +996,11 @@ void CAgilityBookOptions::SetImportExportDelimiters(
 {
 	CString section;
 	if (bImport)
-		section = "Import";
+		section = _T("Import");
 	else
-		section = "Export";
-	AfxGetApp()->WriteProfileInt(section, "delim", delim);
-	AfxGetApp()->WriteProfileString(section, "delimiter", delimiter);
+		section = _T("Export");
+	AfxGetApp()->WriteProfileInt(section, _T("delim"), delim);
+	AfxGetApp()->WriteProfileString(section, _T("delimiter"), delimiter);
 }
 
 void CAgilityBookOptions::GetImportExportDateFormat(
@@ -1009,10 +1009,10 @@ void CAgilityBookOptions::GetImportExportDateFormat(
 {
 	CString section;
 	if (bImport)
-		section = "Import";
+		section = _T("Import");
 	else
-		section = "Export";
-	outFormat = static_cast<ARBDate::DateFormat>(AfxGetApp()->GetProfileInt(section, "dateformat", static_cast<int>(ARBDate::eDashYYYYMMDD)));
+		section = _T("Export");
+	outFormat = static_cast<ARBDate::DateFormat>(AfxGetApp()->GetProfileInt(section, _T("dateformat"), static_cast<int>(ARBDate::eDashYYYYMMDD)));
 }
 
 void CAgilityBookOptions::SetImportExportDateFormat(
@@ -1021,39 +1021,39 @@ void CAgilityBookOptions::SetImportExportDateFormat(
 {
 	CString section;
 	if (bImport)
-		section = "Import";
+		section = _T("Import");
 	else
-		section = "Export";
-	AfxGetApp()->WriteProfileInt(section, "dateformat", static_cast<int>(inFormat));
+		section = _T("Export");
+	AfxGetApp()->WriteProfileInt(section, _T("dateformat"), static_cast<int>(inFormat));
 }
 
-static char const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
+static TCHAR const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 {
 	switch (eOrder)
 	{
 	default:
-		return "Unknown";
+		return _T("Unknown");
 	case CAgilityBookOptions::eRunsImport:
-		return "Import";
+		return _T("Import");
 	case CAgilityBookOptions::eRunsExport:
-		return "Export";
+		return _T("Export");
 	case CAgilityBookOptions::eCalImport:
-		return "ImportCal";
+		return _T("ImportCal");
 	case CAgilityBookOptions::eCalExport:
-		return "ExportCal";
+		return _T("ExportCal");
 	case CAgilityBookOptions::eCalExportAppt:
-		return "ExportCalAppt";
+		return _T("ExportCalAppt");
 	case CAgilityBookOptions::eCalExportTask:
-		return "ExportCalTask";
+		return _T("ExportCalTask");
 	case CAgilityBookOptions::eLogImport:
-		return "ImportLog";
+		return _T("ImportLog");
 	case CAgilityBookOptions::eLogExport:
-		return "ExportLog";
+		return _T("ExportLog");
 	case CAgilityBookOptions::eViewTree:
 	case CAgilityBookOptions::eViewRuns:
 	case CAgilityBookOptions::eViewCal:
 	case CAgilityBookOptions::eViewLog:
-		return "Columns";
+		return _T("Columns");
 	}
 }
 
@@ -1064,19 +1064,19 @@ void CAgilityBookOptions::GetColumnOrder(
 {
 	outValues.clear();
 	CString item;
-	item.Format("col%d", idxColumn);
-	CString data = AfxGetApp()->GetProfileString(GetColumnName(eOrder), item, "");
+	item.Format(_T("col%d"), idxColumn);
+	CString data = AfxGetApp()->GetProfileString(GetColumnName(eOrder), item, _T(""));
 	int idx = data.Find(',');
 	while (0 <= idx)
 	{
-		int val = atol((LPCTSTR)data);
+		int val = _tstol((LPCTSTR)data);
 		outValues.push_back(val);
 		data = data.Mid(idx+1);
 		idx = data.Find(',');
 	}
 	if (0 < data.GetLength())
 	{
-		int val = atol((LPCTSTR)data);
+		int val = _tstol((LPCTSTR)data);
 		outValues.push_back(val);
 	}
 	if (0 == outValues.size())
@@ -1332,12 +1332,12 @@ void CAgilityBookOptions::SetColumnOrder(
 	CString data;
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
-		item.Format("%d", inValues[i]);
+		item.Format(_T("%d"), inValues[i]);
 		if (0 < i)
-			data += ",";
+			data += _T(",");
 		data += item;
 	}
-	item.Format("col%d", idxColumn);
+	item.Format(_T("col%d"), idxColumn);
 	AfxGetApp()->WriteProfileString(GetColumnName(eOrder), item, data);
 }
 
@@ -1345,61 +1345,61 @@ void CAgilityBookOptions::SetColumnOrder(
 
 bool CAgilityBookOptions::GetAutoUpdateCheck()
 {
-	int val = AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Settings"), _T("autoCheck"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
 {
-	AfxGetApp()->WriteProfileInt("Settings", "autoCheck", bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("autoCheck"), bSet ? 1 : 0);
 }
 
 int CAgilityBookOptions::GetNumBackupFiles()
 {
-	return AfxGetApp()->GetProfileInt("Settings", "BackupFiles", 3);
+	return AfxGetApp()->GetProfileInt(_T("Settings"), _T("BackupFiles"), 3);
 }
 
 void CAgilityBookOptions::SetNumBackupFiles(int nFiles)
 {
-	AfxGetApp()->WriteProfileInt("Settings", "BackupFiles", nFiles);
+	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("BackupFiles"), nFiles);
 }
 
 bool CAgilityBookOptions::AutoShowSplashScreen()
 {
-	int val = AfxGetApp()->GetProfileInt("Settings", "ShowSplash", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Settings"), _T("ShowSplash"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::AutoShowSplashScreen(bool bAutoShow)
 {
-	AfxGetApp()->WriteProfileInt("Settings", "ShowSplash", bAutoShow ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("ShowSplash"), bAutoShow ? 1 : 0);
 }
 
 CString CAgilityBookOptions::GetSplashImage()
 {
-	return AfxGetApp()->GetProfileString("Settings", "Splash", "");
+	return AfxGetApp()->GetProfileString(_T("Settings"), _T("Splash"), _T(""));
 }
 
 void CAgilityBookOptions::SetSplashImage(CString const& filename)
 {
-	AfxGetApp()->WriteProfileString("Settings", "Splash", filename);
+	AfxGetApp()->WriteProfileString(_T("Settings"), _T("Splash"), filename);
 }
 
 bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 {
-	int val = AfxGetApp()->GetProfileInt("Settings", "autoShowTitle", 1);
+	int val = AfxGetApp()->GetProfileInt(_T("Settings"), _T("autoShowTitle"), 1);
 	return val == 1 ? true : false;
 }
 
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
-	AfxGetApp()->WriteProfileInt("Settings", "autoShowTitle", bShow ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("autoShowTitle"), bShow ? 1 : 0);
 }
 
 ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 {
 	CString section;
-	section.Format("dateFormat%d", static_cast<int>(inItem));
+	section.Format(_T("dateFormat%d"), static_cast<int>(inItem));
 	ARBDate::DateFormat def;
 	switch (inItem)
 	{
@@ -1411,7 +1411,7 @@ ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 	case eCalendar: def = ARBDate::eDashYMD; break;
 	case eTraining: def = ARBDate::eDashYMD; break;
 	}
-	int val = AfxGetApp()->GetProfileInt("Settings", section, static_cast<int>(def));
+	int val = AfxGetApp()->GetProfileInt(_T("Settings"), section, static_cast<int>(def));
 	return static_cast<ARBDate::DateFormat>(val);
 }
 
@@ -1420,8 +1420,8 @@ void CAgilityBookOptions::SetDateFormat(
 		ARBDate::DateFormat inFormat)
 {
 	CString section;
-	section.Format("dateFormat%d", static_cast<int>(inItem));
-	AfxGetApp()->WriteProfileInt("Settings", section, static_cast<int>(inFormat));
+	section.Format(_T("dateFormat%d"), static_cast<int>(inItem));
+	AfxGetApp()->WriteProfileInt(_T("Settings"), section, static_cast<int>(inFormat));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1439,12 +1439,12 @@ UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
 	if (!bInitialized)
 	{
 		bInitialized = true;
-		uDog = RegisterClipboardFormat("ARB-Dog");
-		uTrial = RegisterClipboardFormat("ARB-Trial");
-		uRun = RegisterClipboardFormat("ARB-Run");
-		uCal = RegisterClipboardFormat("ARB-Cal");
-		uiCal = RegisterClipboardFormat("+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
-		uLog = RegisterClipboardFormat("ARB-Log");
+		uDog = RegisterClipboardFormat(_T("ARB-Dog"));
+		uTrial = RegisterClipboardFormat(_T("ARB-Trial"));
+		uRun = RegisterClipboardFormat(_T("ARB-Run"));
+		uCal = RegisterClipboardFormat(_T("ARB-Cal"));
+		uiCal = RegisterClipboardFormat(_T("+//ISBN 1-887687-00-9::versit::PDI//vCalendar"));
+		uLog = RegisterClipboardFormat(_T("ARB-Log"));
 	}
 	switch (fmt)
 	{

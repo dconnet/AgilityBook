@@ -39,10 +39,10 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBConfigLevel.h"
 #include "ARBConfigTitle.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBConfigEventList;
@@ -71,14 +71,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a division configuration.
@@ -111,13 +111,13 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigDivision const* inDivNew,
-			std::string& ioInfo);
+			ARBString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
 	ARBConfigLevelList const& GetLevels() const;
 	ARBConfigLevelList& GetLevels();
 	ARBConfigTitleList const& GetTitles() const;
@@ -125,22 +125,22 @@ public:
 
 private:
 	~ARBConfigDivision();
-	std::string m_Name;
+	ARBString m_Name;
 	ARBConfigLevelList m_Levels;
 	ARBConfigTitleList m_Titles;
 };
 
-inline std::string ARBConfigDivision::GetGenericName() const
+inline ARBString ARBConfigDivision::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBConfigDivision::GetName() const
+inline ARBString const& ARBConfigDivision::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigDivision::SetName(std::string const& inName)
+inline void ARBConfigDivision::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
@@ -193,8 +193,8 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-			std::string const& inDiv,
-			std::string const& inLevel) const;
+			ARBString const& inDiv,
+			ARBString const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -203,7 +203,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindDivision(
-			std::string const& inDiv,
+			ARBString const& inDiv,
 			ARBConfigDivision** outDiv = NULL) const;
 
 	/**
@@ -213,7 +213,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddDivision(
-			std::string const& inDiv,
+			ARBString const& inDiv,
 			ARBConfigDivision** outDiv = NULL);
 
 	/**
@@ -232,7 +232,7 @@ public:
 	 * @return Number of divisions deleted (0 or 1).
 	 */
 	int DeleteDivision(
-			std::string const& inDiv,
+			ARBString const& inDiv,
 			ARBConfigEventList& ioEvents);
 
 	/**
@@ -244,7 +244,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			std::string const& inName,
+			ARBString const& inName,
 			bool bAbbrevFirst = true,
 			ARBConfigTitle** outTitle = NULL) const;
 
@@ -255,7 +255,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			std::string const& inTitle,
+			ARBString const& inTitle,
 			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
@@ -263,5 +263,5 @@ public:
 	 * @param inTitle Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(std::string const& inTitle);
+	bool DeleteTitle(ARBString const& inTitle);
 };

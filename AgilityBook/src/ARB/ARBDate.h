@@ -40,7 +40,7 @@
  * @li 2004-01-04 DRC Added FromString().
  */
 
-#include <string>
+#include "ARBTypes.h"
 class Element;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ public:
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
 	static ARBDate FromString(
-			std::string const& inDate,
+			ARBString const& inDate,
 			DateFormat inFormat);
 
 	/**
@@ -171,7 +171,7 @@ public:
 	 * @param inForceOutput Always return a string, even if the date is not valid.
 	 * @return Date in the format defined by inFormat.
 	 */
-	std::string GetString(
+	ARBString GetString(
 			DateFormat inFormat,
 			bool inForceOutput = false) const;
 

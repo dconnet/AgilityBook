@@ -37,7 +37,7 @@
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */
 
-#include <string>
+#include "ARBTypes.h"
 class ARBAgilityRecordBook;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -60,28 +60,28 @@ class CDlgFixupRenameVenue : public CDlgFixup
 {
 public:
 	CDlgFixupRenameVenue(
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_oldName(oldName)
 		, m_newName(newName)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteVenue : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteVenue(std::string const& name)
+	CDlgFixupDeleteVenue(ARBString const& name)
 		: m_Name(name)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Name;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,28 +90,28 @@ class CDlgFixupRenameOtherPoints : public CDlgFixup
 {
 public:
 	CDlgFixupRenameOtherPoints(
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_oldName(oldName)
 		, m_newName(newName)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteOtherPoints : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteOtherPoints(std::string const& name)
+	CDlgFixupDeleteOtherPoints(ARBString const& name)
 		: m_Name(name)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Name;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -120,9 +120,9 @@ class CDlgFixupRenameMultiQ : public CDlgFixup
 {
 public:
 	CDlgFixupRenameMultiQ(
-			std::string const& inVenue,
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& inVenue,
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_Venue(inVenue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -130,21 +130,21 @@ public:
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_Venue;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteMultiQ : public CDlgFixup
 {
 public:
-	CDlgFixupDeleteMultiQ(std::string const& inVenue)
+	CDlgFixupDeleteMultiQ(ARBString const& inVenue)
 		: m_Venue(inVenue)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
+	ARBString m_Venue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -153,9 +153,9 @@ class CDlgFixupRenameDivision : public CDlgFixup
 {
 public:
 	CDlgFixupRenameDivision(
-			std::string const& venue,
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& venue,
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_Venue(venue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -163,25 +163,25 @@ public:
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_Venue;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteDivision : public CDlgFixup
 {
 public:
 	CDlgFixupDeleteDivision(
-			std::string const& venue,
-			std::string const& name)
+			ARBString const& venue,
+			ARBString const& name)
 		: m_Venue(venue)
 		, m_Name(name)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_Name;
+	ARBString m_Venue;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -190,10 +190,10 @@ class CDlgFixupRenameLevel : public CDlgFixup
 {
 public:
 	CDlgFixupRenameLevel(
-			std::string const& venue,
-			std::string const& div,
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& venue,
+			ARBString const& div,
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_Venue(venue)
 		, m_Div(div)
 		, m_oldName(oldName)
@@ -202,19 +202,19 @@ public:
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_Div;
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_Venue;
+	ARBString m_Div;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteLevel : public CDlgFixup
 {
 public:
 	CDlgFixupDeleteLevel(
-			std::string const& venue,
-			std::string const& div,
-			std::string const& name)
+			ARBString const& venue,
+			ARBString const& div,
+			ARBString const& name)
 		: m_Venue(venue)
 		, m_Div(div)
 		, m_Name(name)
@@ -222,9 +222,9 @@ public:
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_Div;
-	std::string m_Name;
+	ARBString m_Venue;
+	ARBString m_Div;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -233,9 +233,9 @@ class CDlgFixupRenameTitle : public CDlgFixup
 {
 public:
 	CDlgFixupRenameTitle(
-			std::string const& venue,
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& venue,
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_Venue(venue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -243,25 +243,25 @@ public:
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_Venue;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteTitle : public CDlgFixup
 {
 public:
 	CDlgFixupDeleteTitle(
-			std::string const& venue,
-			std::string const& name)
+			ARBString const& venue,
+			ARBString const& name)
 		: m_Venue(venue)
 		, m_Name(name)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_Name;
+	ARBString m_Venue;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -270,9 +270,9 @@ class CDlgFixupRenameEvent : public CDlgFixup
 {
 public:
 	CDlgFixupRenameEvent(
-			std::string const& venue,
-			std::string const& oldName,
-			std::string const& newName)
+			ARBString const& venue,
+			ARBString const& oldName,
+			ARBString const& newName)
 		: m_Venue(venue)
 		, m_oldName(oldName)
 		, m_newName(newName)
@@ -280,25 +280,25 @@ public:
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_oldName;
-	std::string m_newName;
+	ARBString m_Venue;
+	ARBString m_oldName;
+	ARBString m_newName;
 };
 
 class CDlgFixupDeleteEvent : public CDlgFixup
 {
 public:
 	CDlgFixupDeleteEvent(
-			std::string const& venue,
-			std::string const& name)
+			ARBString const& venue,
+			ARBString const& name)
 		: m_Venue(venue)
 		, m_Name(name)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_Name;
+	ARBString m_Venue;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -311,16 +311,16 @@ class CDlgFixupEventScoring : public CDlgFixup
 {
 public:
 	CDlgFixupEventScoring(
-			std::string const& inVenue,
-			std::string const& inEvent)
+			ARBString const& inVenue,
+			ARBString const& inEvent)
 		: m_Venue(inVenue)
 		, m_Event(inEvent)
 	{
 	}
 	virtual void Commit(ARBAgilityRecordBook& book);
 protected:
-	std::string m_Venue;
-	std::string m_Event;
+	ARBString m_Venue;
+	ARBString m_Event;
 };
 
 /////////////////////////////////////////////////////////////////////////////

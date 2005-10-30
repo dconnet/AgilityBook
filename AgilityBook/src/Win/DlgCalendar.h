@@ -81,8 +81,8 @@ protected:
 
 // Implementation
 protected:
-	void UpdateLocationInfo(char const* pLocation);
-	void UpdateClubInfo(char const* pClub);
+	void UpdateLocationInfo(TCHAR const* pLocation);
+	void UpdateClubInfo(TCHAR const* pClub);
 	//{{AFX_MSG(CDlgCalendar)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeLocation();

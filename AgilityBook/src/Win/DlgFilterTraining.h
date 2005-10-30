@@ -37,8 +37,8 @@
  */
 
 #include <set>
-#include <string>
 #include "ARBDate.h"
+#include "ARBTypes.h"
 #include "CheckTreeCtrl.h"
 #include "DlgBasePropertyPage.h"
 class CAgilityBookDoc;
@@ -59,7 +59,7 @@ private:
 	CCheckTreeCtrl	m_ctrlNames;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	std::set<std::string> m_filterNames;
+	std::set<ARBString> m_filterNames;
 
 private:
 	void UpdateControls();

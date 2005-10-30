@@ -147,7 +147,7 @@ CDlgRunScore::CDlgRunScore(
 	m_InClass = m_Run->GetInClass();
 	m_DogsQd = m_Run->GetDogsQd();
 	//}}AFX_DATA_INIT
-	m_Conditions.Replace("\n", "\r\n");
+	m_Conditions.Replace(_T("\n"), _T("\r\n"));
 	pClub->Release();
 }
 
@@ -247,7 +247,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Conditions.TrimLeft();
 
 		CString str;
-		std::string div, level, event;
+		ARBString div, level, event;
 
 		pDX->PrepareCtrl(m_ctrlDivisions.GetDlgCtrlID());
 		int index = m_ctrlDivisions.GetCurSel();
@@ -264,7 +264,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 			pDX->Fail();
 			return;
 		}
-		div = (LPCSTR)str;
+		div = (LPCTSTR)str;
 
 		pDX->PrepareCtrl(m_ctrlLevels.GetDlgCtrlID());
 		index = m_ctrlLevels.GetCurSel();
@@ -281,7 +281,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 			pDX->Fail();
 			return;
 		}
-		level = (LPCSTR)str;
+		level = (LPCTSTR)str;
 		CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
 		ASSERT(pLevel);
 
@@ -300,7 +300,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 			pDX->Fail();
 			return;
 		}
-		event = (LPCSTR)str;
+		event = (LPCTSTR)str;
 
 		pDX->PrepareCtrl(m_ctrlJudge.GetDlgCtrlID());
 		if (m_Judge.IsEmpty())
@@ -347,13 +347,13 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetDivision(div);
 		m_Run->SetLevel(level);
 		m_Run->SetEvent(event);
-		m_Run->SetSubName((LPCSTR)m_SubName);
-		m_Run->SetHeight((LPCSTR)m_Height);
-		m_Run->SetJudge((LPCSTR)m_Judge);
-		m_Run->SetHandler((LPCSTR)m_Handler);
+		m_Run->SetSubName((LPCTSTR)m_SubName);
+		m_Run->SetHeight((LPCTSTR)m_Height);
+		m_Run->SetJudge((LPCTSTR)m_Judge);
+		m_Run->SetHandler((LPCTSTR)m_Handler);
 		CString tmp(m_Conditions);
-		tmp.Replace("\r\n", "\n");
-		m_Run->SetConditions((LPCSTR)tmp);
+		tmp.Replace(_T("\r\n"), _T("\n"));
+		m_Run->SetConditions((LPCTSTR)tmp);
 		switch (pScoring->GetScoringStyle())
 		{
 		default:
@@ -430,7 +430,7 @@ bool CDlgRunScore::GetText(
 		return false;
 	CString str;
 	pEdit->GetWindowText(str);
-	val = static_cast<short>(atoi((LPCTSTR)str));
+	val = static_cast<short>(_tstol((LPCTSTR)str));
 	return true;
 }
 bool CDlgRunScore::GetText(
@@ -441,7 +441,7 @@ bool CDlgRunScore::GetText(
 		return false;
 	CString str;
 	pEdit->GetWindowText(str);
-	val = strtod((LPCTSTR)str, NULL);
+	val = _tcstod((LPCTSTR)str, NULL);
 	return true;
 }
 
@@ -456,7 +456,7 @@ bool CDlgRunScore::GetEvent(ARBConfigEvent** outEvent) const
 	m_ctrlEvents.GetLBText(index, str);
 	if (str.IsEmpty())
 		return false;
-	std::string event = (LPCSTR)str;
+	ARBString event = (LPCTSTR)str;
 	return m_pVenue->GetEvents().FindEvent(event, outEvent);
 }
 
@@ -464,21 +464,21 @@ bool CDlgRunScore::GetScoring(ARBConfigScoring** outScoring) const
 {
 	if (outScoring)
 		*outScoring = NULL;
-	std::string div, level;
+	ARBString div, level;
 	CString str;
 	int index = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlDivisions.GetLBText(index, str);
 		if (!str.IsEmpty())
-			div = (LPCSTR)str;
+			div = (LPCTSTR)str;
 	}
 	index = m_ctrlLevels.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlLevels.GetLBText(index, str);
 		if (!str.IsEmpty())
-			level = (LPCSTR)str;
+			level = (LPCTSTR)str;
 	}
 	bool bFound = false;
 	CDlgRunDataLevel* pLevel = reinterpret_cast<CDlgRunDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
@@ -507,12 +507,12 @@ void CDlgRunScore::ClearLevels()
 void CDlgRunScore::FillLevels()
 {
 	CString str;
-	std::string level;
+	ARBString level;
 	int index = m_ctrlLevels.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlLevels.GetLBText(index, str);
-		level = (LPCSTR)str;
+		level = (LPCTSTR)str;
 	}
 	if (str.IsEmpty())
 		level = m_Run->GetLevel();
@@ -567,12 +567,12 @@ void CDlgRunScore::FillLevels()
 void CDlgRunScore::FillEvents()
 {
 	CString str;
-	std::string event;
+	ARBString event;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlEvents.GetLBText(index, str);
-		event = (LPCSTR)str;
+		event = (LPCTSTR)str;
 	}
 	if (str.IsEmpty())
 		event = m_Run->GetEvent();
@@ -613,10 +613,10 @@ void CDlgRunScore::FillSubNames()
 	{
 		if (pEvent->HasSubNames())
 		{
-			std::set<std::string> names;
+			std::set<ARBString> names;
 			m_pDoc->GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
 			m_ctrlSubNames.ResetContent();
-			for (std::set<std::string>::const_iterator iter = names.begin();
+			for (std::set<ARBString>::const_iterator iter = names.begin();
 				iter != names.end();
 				++iter)
 			{
@@ -642,13 +642,13 @@ void CDlgRunScore::SetEventDesc(ARBConfigEvent const* inEvent)
 	ARBConfigScoring* pScoring;
 	if (GetScoring(&pScoring))
 	{
-		std::string const& note = pScoring->GetNote();
+		ARBString const& note = pScoring->GetNote();
 		if (!desc.IsEmpty() && 0 < note.length())
-			desc += "\n==========\n";
+			desc += _T("\n==========\n");
 		desc += note.c_str();
 		pScoring->Release();
 	}
-	desc.Replace("\n", "\r\n");
+	desc.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlDesc.SetWindowText(desc);
 }
 
@@ -663,9 +663,9 @@ void CDlgRunScore::SetPartnerText()
 			for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
 			{
 				if (!partners.IsEmpty())
-					partners += ", ";
+					partners += _T(", ");
 				partners += (*iter)->GetHandler().c_str();
-				partners += "/";
+				partners += _T("/");
 				partners += (*iter)->GetDog().c_str();
 			}
 		}
@@ -726,9 +726,9 @@ void CDlgRunScore::SetTitlePoints()
 	}
 	ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
-	CString strSpeed("0");
-	CString strTitle("0");
-	CString strScore("");
+	CString strSpeed(_T("0"));
+	CString strTitle(_T("0"));
+	CString strScore(_T(""));
 	ARBConfigScoring* pScoring;
 	if (GetScoring(&pScoring))
 	{
@@ -737,9 +737,9 @@ void CDlgRunScore::SetTitlePoints()
 		{
 			if (pScoring->HasSpeedPts())
 			{
-				strSpeed.Format("%hd", m_Run->GetSpeedPoints(pScoring));
+				strSpeed.Format(_T("%hd"), m_Run->GetSpeedPoints(pScoring));
 			}
-			strTitle.Format("%hd", m_Run->GetTitlePoints(pScoring));
+			strTitle.Format(_T("%hd"), m_Run->GetTitlePoints(pScoring));
 		}
 		// 8/17/03: Only compute score on Q and NQ runs.
 		// 11/13/04: Also compute score for NA runs that have no titling pts.
@@ -898,9 +898,9 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlCloseText.ShowWindow(SW_SHOW);
 		m_ctrlClose.ShowWindow(SW_SHOW);
 		// I don't want to call UpdateData here. It could cause a loss of data.
-		str.Format("%hd", m_Opening);
+		str.Format(_T("%hd"), m_Opening);
 		m_ctrlOpening.SetWindowText(str);
-		str.Format("%hd", m_Closing);
+		str.Format(_T("%hd"), m_Closing);
 		m_ctrlClosing.SetWindowText(str);
 		break;
 	case ARBConfigScoring::eScoreThenTime:
@@ -921,7 +921,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlFaultsText.ShowWindow(SW_SHOW);
 		m_ctrlFaults.ShowWindow(SW_SHOW);
 		// I don't want to call UpdateData here. It could cause a loss of data.
-		str.Format("%hd", m_Opening);
+		str.Format(_T("%hd"), m_Opening);
 		m_ctrlOpening.SetWindowText(str);
 		break;
 	}
@@ -993,9 +993,9 @@ BOOL CDlgRunScore::OnInitDialog()
 
 	FillLevels(); // This will call	UpdateControls();
 
-	set<string> names;
+	set<ARBString> names;
 	m_pDoc->GetAllHeights(names);
-	set<string>::const_iterator iter;
+	set<ARBString>::const_iterator iter;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		m_ctrlHeight.AddString((*iter).c_str());

@@ -103,8 +103,8 @@ BOOL CDlgFilterTraining::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 
-	std::set<std::string> names;
-	std::set<std::string>::iterator iter;
+	std::set<ARBString> names;
+	std::set<ARBString>::iterator iter;
 	m_pDoc->GetAllTrainingLogNames(names);
 	for (iter = m_filterNames.begin(); iter != m_filterNames.end(); )
 	{
@@ -159,7 +159,7 @@ void CDlgFilterTraining::OnSetdispinfoNames(
 			str.TrimRight();
 			str.TrimLeft();
 			if (!str.IsEmpty())
-				m_filterNames.insert((LPCSTR)str);
+				m_filterNames.insert((LPCTSTR)str);
 		}
 		hItem = m_ctrlNames.GetNextItem(hItem, TVGN_NEXT);
 	}

@@ -530,20 +530,20 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				{
 					ARBCalendar const* pCal = (*iter);
 					// @todo: Make data in calendar entries user selectable
-					string const& venue = pCal->GetVenue();
-					string const& loc = pCal->GetLocation();
+					ARBString const& venue = pCal->GetVenue();
+					ARBString const& loc = pCal->GetLocation();
 					CString str;
 					if (ARBCalendar::eEntered == pCal->GetEntered())
-						str += "*";
+						str += _T("*");
 					else if (ARBCalendar::ePlanning == pCal->GetEntered())
-						str += "@";
+						str += _T("@");
 					if (0 == venue.length())
-						str += "?";
+						str += _T("?");
 					else
 						str += venue.c_str();
-					str += " ";
+					str += _T(" ");
 					if (0 == loc.length())
-						str += "?";
+						str += _T("?");
 					else
 						str += loc.c_str();
 					bool bReset = false;
@@ -915,7 +915,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		}
 		// The header
 		CString data;
-		data.Format(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
+		data.Format(_T(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s"),
 			maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
 			maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
 			maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
@@ -925,13 +925,13 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			maxLen[COL_CLOSES], (LPCTSTR)columns[COL_CLOSES],
 			maxLen[COL_NOTES], (LPCTSTR)columns[COL_NOTES]);
 		data.TrimRight();
-		data += "\r\n";
+		data += _T("\r\n");
 
 		// The data
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
 			ARBCalendar* cal = *iter;
-			std::string items[scNumColumns];
+			ARBString items[scNumColumns];
 			items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
 			items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
 			items[COL_LOCATION] = cal->GetLocation();
@@ -940,13 +940,13 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			items[COL_OPENS] = cal->GetOpeningDate().GetString(dFmt);
 			items[COL_CLOSES] = cal->GetClosingDate().GetString(dFmt);
 			CString tmp = cal->GetNote().c_str();
-			tmp.Replace("\n", " ");
+			tmp.Replace(_T("\n"), _T(" "));
 			items[COL_NOTES] = (LPCTSTR)tmp;
-			CString tentative(" ");
+			CString tentative(_T(" "));
 			if (cal->IsTentative())
-				tentative = "?";
+				tentative = _T("?");
 			CString str;
-			str.Format("%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s",
+			str.Format(_T("%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s"),
 				(LPCTSTR)tentative,
 				maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
 				maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
@@ -954,11 +954,11 @@ void CAgilityBookViewCalendar::OnEditCopy()
 				maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
 				maxLen[COL_CLUB], items[COL_CLUB].c_str(),
 				maxLen[COL_OPENS], items[COL_OPENS].c_str(),
-				(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? " - " : "   ",
+				(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? _T(" - ") : _T("   "),
 				maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
 				maxLen[COL_NOTES], items[COL_NOTES].c_str());
 			str.TrimRight();
-			data += str + "\r\n";
+			data += str + _T("\r\n");
 		}
 		// alloc mem block & copy text in
 		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);

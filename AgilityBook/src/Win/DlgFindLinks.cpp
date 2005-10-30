@@ -57,7 +57,7 @@ CDlgFindLinks::CDlgFindLinksData::CDlgFindLinksData(
 		ARBDog* pDog,
 		ARBDogTrial* pTrial,
 		ARBDogRun* pRun,
-		std::string const& inLink)
+		ARBString const& inLink)
 	: m_pDog(pDog)
 	, m_pTrial(pTrial)
 	, m_pRun(pRun)
@@ -104,7 +104,7 @@ int CALLBACK CompareLinks(
 
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
 	{
-		std::string str1, str2;
+		ARBString str1, str2;
 		int col = psi->pCols->GetColumnAt(i);
 		switch (col)
 		{
@@ -146,8 +146,8 @@ CDlgFindLinks::CDlgFindLinks(
 		ARBDogList& inDogs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFindLinks::IDD, pParent)
-	, m_sortLinks("Links")
-	, m_Session("findLink")
+	, m_sortLinks(_T("Links"))
+	, m_Session(_T("findLink"))
 {
 	m_sortLinks.Initialize(nColLinkInfo);
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
@@ -173,9 +173,9 @@ CDlgFindLinks::CDlgFindLinks(
 				++iterRun)
 			{
 				ARBDogRun *pRun = *iterRun;
-				std::set<std::string> links;
+				std::set<ARBString> links;
 				pRun->GetLinks(links);
-				for (std::set<std::string>::iterator iter = links.begin();
+				for (std::set<ARBString>::iterator iter = links.begin();
 					iter != links.end();
 					++iter)
 				{
@@ -215,7 +215,7 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CDlgFindLinks::GetImageIndex(std::string const& inLink)
+int CDlgFindLinks::GetImageIndex(ARBString const& inLink)
 {
 	CWaitCursor wait;
 	int img = m_imgEmpty;
@@ -398,11 +398,11 @@ void CDlgFindLinks::OnCopy()
 			return;
 		}
 
-		std::string data;
+		ARBString data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
 			data += m_Data[i].m_OldLink;
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		// alloc mem block & copy text in
@@ -429,7 +429,7 @@ void CDlgFindLinks::OnEdit()
 		CDlgSelectURL dlg(m_Data[index].m_Link.c_str(), this);
 		if (IDOK == dlg.DoModal())
 		{
-			std::string newName = dlg.GetName();
+			ARBString newName = dlg.GetName();
 			if (m_Data[index].m_Link != newName)
 			{
 				m_Data[index].m_Link = newName;

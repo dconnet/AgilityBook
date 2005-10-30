@@ -57,6 +57,8 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+#ifndef UNICODE
+
 static HKEY g_hAppKey = NULL;
 
 // The static buffer returned by various functions. This avoids putting
@@ -961,3 +963,14 @@ bool CleanupCrashHandler()
 	}
 	return true;
 }
+
+#else
+bool InitCrashHandler(HKEY hAppKey)
+{
+	return false;
+}
+bool CleanupCrashHandler()
+{
+	return true;
+}
+#endif

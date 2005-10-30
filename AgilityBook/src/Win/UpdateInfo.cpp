@@ -65,14 +65,14 @@ static char THIS_FILE[] = __FILE__;
 
 bool CUpdateInfo::UpdateConfig(
 		CAgilityBookDoc* ioDoc,
-		char const* inMsg)
+		TCHAR const* inMsg)
 {
 	CSplashWnd::HideSplashScreen();
 
-	CString msg("The configuration has been updated. Would you like to merge the new one with your data?");
+	CString msg(_T("The configuration has been updated. Would you like to merge the new one with your data?"));
 	if (inMsg && *inMsg)
 	{
-		msg += "\n\n";
+		msg += _T("\n\n");
 		msg += inMsg;
 	}
 
@@ -97,8 +97,8 @@ static const TCHAR szHeaders[] = _T("Accept: text\r\n");
  */
 static bool ReadHttpFile(
 		CString const& inURL,
-		CString& outData,
-		CString& outErrMsg)
+		CStringA& outData,
+		CStringA& outErrMsg)
 {
 	CWaitCursor wait;
 	outData.Empty();
@@ -116,7 +116,7 @@ static bool ReadHttpFile(
 		if (AfxParseURL(inURL, dwServiceType, strServerName, strObject, nPort)
 		&& dwServiceType == INTERNET_SERVICE_HTTP)
 		{
-			CInternetSession session("my version");
+			CInternetSession session(_T("my version"));
 
 			CHttpConnection* pServer = session.GetHttpConnection(strServerName, nPort);
 			CHttpFile* pFile = pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
@@ -136,7 +136,7 @@ static bool ReadHttpFile(
 				int nPlace = strNewLocation.Find(_T("Location: "));
 				if (-1 == nPlace)
 				{
-					outErrMsg += "\nInvalid Header query: " + strNewLocation;
+					outErrMsg += _T("\nInvalid Header query: ") + strNewLocation;
 					strNewLocation.Empty();
 				}
 				else
@@ -170,15 +170,15 @@ static bool ReadHttpFile(
 					|| dwRet == HTTP_STATUS_REDIRECT
 					|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
 					{
-						outErrMsg += "\nURL Redirection: " + inURL;
-						outErrMsg += "\nInvalid URL (2nd redirection): " + strNewLocation;
+						outErrMsg += _T("\nURL Redirection: ") + inURL;
+						outErrMsg += _T("\nInvalid URL (2nd redirection): ") + strNewLocation;
 						pFile->Close();
 						delete pFile;
 						pFile = NULL;
 					}
 					else if (dwRet != HTTP_STATUS_OK)
 					{
-						outErrMsg += "\nInvalid URL: " + strNewLocation;
+						outErrMsg += _T("\nInvalid URL: ") + strNewLocation;
 						pFile->Close();
 						delete pFile;
 						pFile = NULL;
@@ -186,21 +186,21 @@ static bool ReadHttpFile(
 				}
 				else
 				{
-					outErrMsg += "\nInvalid URL: " + strNewLocation;
+					outErrMsg += _T("\nInvalid URL: ") + strNewLocation;
 				}
 			}
 			else if (dwRet != HTTP_STATUS_OK)
 			{
-				outErrMsg += "\nInvalid URL: " + inURL;
+				outErrMsg += _T("\nInvalid URL: ") + inURL;
 				pFile->Close();
 				delete pFile;
 				pFile = NULL;
 			}
 			if (pFile)
 			{
-				char buffer[1025];
+				TCHAR buffer[1025];
 				UINT nChars;
-				while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)-1)))
+				while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)/sizeof(buffer[1])-1)))
 				{
 					buffer[nChars] = 0;
 					outData += buffer;
@@ -217,14 +217,14 @@ static bool ReadHttpFile(
 		}
 		else
 		{
-			outErrMsg += "\nInvalid URL: " + inURL;
+			outErrMsg += _T("\nInvalid URL: ") + inURL;
 		}
 	}
 	catch (CInternetException* ex)
 	{
 		ex->Delete();
 		outData.Empty();
-		outErrMsg += "\nError: Is your internet connection active?";
+		outErrMsg += _T("\nError: Is your internet connection active?");
 	}
 	return (outData.GetLength() > 0);
 }
@@ -307,7 +307,7 @@ void CDownloadDialog::OnBnClickedSourceForge()
 /////////////////////////////////////////////////////////////////////////////
 
 CUpdateInfo::CUpdateInfo()
-	: m_VersionNum("")
+	: m_VersionNum(_T(""))
 	, m_VerConfig(0)
 	, m_FileName()
 	, m_InfoMsg()
@@ -330,8 +330,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	// Read the file.
 	CString url;
 	url.LoadString(IDS_HELP_UPDATE);
-	url += "/version.txt";
-	CString data, errMsg;
+	url += _T("/version.txt");
+	CStringA data, errMsg;
 	if (!ReadHttpFile(url, data, errMsg))
 	{
 		if (bVerbose)
@@ -340,13 +340,23 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			data.LoadString(IDS_UPDATE_UNKNOWN);
 			if (!errMsg.IsEmpty())
 				data += errMsg;
+#ifdef UNICODE
+			CString tmp(data);
+			AfxMessageBox(tmp, MB_ICONEXCLAMATION);
+#else
 			AfxMessageBox(data, MB_ICONEXCLAMATION);
+#endif
 		}
 		return false;
 	}
 
 	// Now parse it into the object.
+#ifdef UNICODE
+	CString tmp(data);
+	m_VersionNum = CVersionNum(tmp);
+#else
 	m_VersionNum = CVersionNum(data);
+#endif
 	if (!m_VersionNum.Valid())
 	{
 		if (bVerbose)
@@ -369,16 +379,16 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		// <Data>
 		//   <Config ver="1" file="file">data</Config>
 		// </Data>
-		std::string errMsg;
+		ARBString errMsg;
 		Element tree;
 		if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg))
 		{
 			if (bVerbose)
 			{
-				CString msg("Failed to load 'version.txt'.");
+				CString msg(_T("Failed to load 'version.txt'."));
 				if (0 < errMsg.length())
 				{
-					msg += "\n\n";
+					msg += _T("\n\n");
 					msg += errMsg.c_str();
 				}
 				CSplashWnd::HideSplashScreen();
@@ -387,14 +397,14 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				// The return code is really whether we loaded the pgm verno.
 			}
 		}
-		else if (tree.GetName() == "Data")
+		else if (tree.GetName() == _T("Data"))
 		{
-			int nConfig = tree.FindElement("Config");
+			int nConfig = tree.FindElement(_T("Config"));
 			if (0 <= nConfig)
 			{
 				Element& config = tree.GetElement(nConfig);
-				config.GetAttrib("ver", m_VerConfig);
-				config.GetAttrib("file", m_FileName);
+				config.GetAttrib(_T("ver"), m_VerConfig);
+				config.GetAttrib(_T("file"), m_FileName);
 				m_InfoMsg = config.GetValue();
 			}
 		}
@@ -414,12 +424,12 @@ bool CUpdateInfo::CheckProgram()
 	{
 		bNeedsUpdating = true;
 		CSplashWnd::HideSplashScreen();
-		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
 		CDownloadDialog dlg(m_VersionNum);
 		dlg.DoModal();
 	}
 	else
-		AfxGetApp()->WriteProfileString("Settings", "lastVerCheck", today.GetString(ARBDate::eDashYMD).c_str());
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
 	return bNeedsUpdating;
 }
 
@@ -465,26 +475,26 @@ void CUpdateInfo::CheckConfig(
 			// Load the config.
 			CString url;
 			url.LoadString(IDS_HELP_UPDATE);
-			url += "/";
+			url += _T("/");
 			url += m_FileName.c_str();
-			CString strConfig, errMsg;
+			CStringA strConfig, errMsg;
 			if (ReadHttpFile(url, strConfig, errMsg))
 			{
 				Element tree;
-				std::string errMsg;
+				ARBString errMsg;
 				if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg))
 				{
-					CString msg("Failed to load '");
+					CString msg(_T("Failed to load '"));
 					msg += url;
-					msg += "'.";
+					msg += _T("'.");
 					if (0 < errMsg.length())
 					{
-						msg += "\n\n";
+						msg += _T("\n\n");
 						msg += errMsg.c_str();
 					}
 					AfxMessageBox(msg, MB_ICONEXCLAMATION);
 				}
-				else if (tree.GetName() == "DefaultConfig")
+				else if (tree.GetName() == _T("DefaultConfig"))
 				{
 					strConfig.Empty();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();

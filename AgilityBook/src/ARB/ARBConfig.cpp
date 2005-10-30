@@ -169,7 +169,7 @@ bool ARBConfig::Load(
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
-		std::string const& name = element.GetName();
+		ARBString const& name = element.GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -222,11 +222,11 @@ void ARBConfig::Default()
 	// advantage of Win32 resources and stashing the default config inside
 	// the program.
 	bool bOk = false;
-	std::string errMsg;
+	ARBString errMsg;
 	ARBErrorCallback err(errMsg);
 	Element tree;
 #ifdef WIN32
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), "XML");
+	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
 	{
 		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
@@ -242,9 +242,9 @@ void ARBConfig::Default()
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	bOk = tree.LoadXMLFile("DefaultConfig.xml", errMsg);
+	bOk = tree.LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
 #endif
-	if (bOk && tree.GetName() == "DefaultConfig")
+	if (bOk && tree.GetName() == _T("DefaultConfig"))
 	{
 		ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 		tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
@@ -257,37 +257,42 @@ void ARBConfig::Default()
 }
 
 /* static */
-std::string ARBConfig::GetDTD()
+ARBString ARBConfig::GetDTD()
 {
-	std::string dtd;
+	ARBString dtd;
 #ifdef WIN32
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), "DTD");
+	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
 	{
 		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
 		if (hRes)
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
+#ifdef UNICODE
+			CStringA pData = reinterpret_cast<char const*>(LockResource(hRes));
+			dtd = CString(pData, size);
+#else
 			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			dtd = std::string(pData, size);
+			dtd = ARBString(pData, size);
+#endif
 			FreeResource(hRes);
 		}
 	}
 #else
 	// @todo: Porting issues: Not currently implemented
-	dtd = "<!-- Not implemented on non-win32 platforms -->\n";
+	dtd = _T("<!-- Not implemented on non-win32 platforms -->\n");
 #endif
 	return dtd;
 }
 
-std::string ARBConfig::GetTitleNiceName(
-		std::string const& inVenue,
-		std::string const& inTitle) const
+ARBString ARBConfig::GetTitleNiceName(
+		ARBString const& inVenue,
+		ARBString const& inTitle) const
 {
 	ARBConfigTitle* pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
 	{
-		std::string name = pTitle->GetNiceName();
+		ARBString name = pTitle->GetNiceName();
 		pTitle->Release();
 		return name;
 	}
@@ -295,16 +300,16 @@ std::string ARBConfig::GetTitleNiceName(
 		return inTitle;
 }
 
-std::string ARBConfig::GetTitleCompleteName(
+ARBString ARBConfig::GetTitleCompleteName(
 		ARBDogTitle const* inTitle,
 		bool bAbbrevFirst) const
 {
 	if (!inTitle)
-		return "";
+		return _T("");
 	ARBConfigTitle* pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
 	{
-		std::string name = pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
+		ARBString name = pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
 		pTitle->Release();
 		return name;
 	}
@@ -315,9 +320,9 @@ std::string ARBConfig::GetTitleCompleteName(
 bool ARBConfig::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		std::string& ioInfo)
+		ARBString& ioInfo)
 {
-	std::string info;
+	ARBString info;
 
 	int nChanges = 0;
 	// Update Faults.
@@ -382,7 +387,7 @@ bool ARBConfig::Update(
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;
-	std::string venueInfo;
+	ARBString venueInfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfigNew.GetVenues().begin();
 	iterVenue != inConfigNew.GetVenues().end();
 	++iterVenue)
@@ -407,9 +412,9 @@ bool ARBConfig::Update(
 			++nNew;
 			++nChanges;
 			GetVenues().AddVenue((*iterVenue));
-			venueInfo += "+";
+			venueInfo += _T("+");
 			venueInfo += (*iterVenue)->GetName();
-			venueInfo += "\n";
+			venueInfo += _T("\n");
 		}
 	}
 	if (0 < nNew || 0 < nChanges)
@@ -418,7 +423,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < venueInfo.length())
 	{
-		info += "\n";
+		info += _T("\n");
 		info += venueInfo;
 	}
 	// Even if there are no changes, update the version number so we don't

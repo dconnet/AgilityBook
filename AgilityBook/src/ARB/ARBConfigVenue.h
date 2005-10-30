@@ -40,11 +40,11 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigMultiQ.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -71,14 +71,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a venue configuration.
@@ -113,17 +113,17 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigVenue const* inVenueNew,
-			std::string& ioInfo);
+			ARBString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetLongName() const;
-	void SetLongName(std::string const& inName);
-	std::string const& GetDesc() const;
-	void SetDesc(std::string const& inDesc);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetLongName() const;
+	void SetLongName(ARBString const& inName);
+	ARBString const& GetDesc() const;
+	void SetDesc(ARBString const& inDesc);
 	ARBConfigDivisionList const& GetDivisions() const;
 	ARBConfigDivisionList& GetDivisions();
 	ARBConfigEventList const& GetEvents() const;
@@ -133,45 +133,45 @@ public:
 
 private:
 	~ARBConfigVenue();
-	std::string m_Name;
-	std::string m_LongName;
-	std::string m_Desc;
+	ARBString m_Name;
+	ARBString m_LongName;
+	ARBString m_Desc;
 	ARBConfigDivisionList m_Divisions;
 	ARBConfigEventList m_Events;
 	ARBConfigMultiQList m_MultiQs;
 };
 
-inline std::string ARBConfigVenue::GetGenericName() const
+inline ARBString ARBConfigVenue::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBConfigVenue::GetName() const
+inline ARBString const& ARBConfigVenue::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigVenue::SetName(std::string const& inName)
+inline void ARBConfigVenue::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBConfigVenue::GetLongName() const
+inline ARBString const& ARBConfigVenue::GetLongName() const
 {
 	return m_LongName;
 }
 
-inline void ARBConfigVenue::SetLongName(std::string const& inName)
+inline void ARBConfigVenue::SetLongName(ARBString const& inName)
 {
 	m_LongName = inName;
 }
 
-inline std::string const& ARBConfigVenue::GetDesc() const
+inline ARBString const& ARBConfigVenue::GetDesc() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigVenue::SetDesc(std::string const& inDesc)
+inline void ARBConfigVenue::SetDesc(ARBString const& inDesc)
 {
 	m_Desc = inDesc;
 }
@@ -239,7 +239,7 @@ public:
 	 * @param inVenue Venue to verify.
 	 * @return Venue exists.
 	 */
-	bool VerifyVenue(std::string const& inVenue) const;
+	bool VerifyVenue(ARBString const& inVenue) const;
 
 	/**
 	 * Verify a multiQ exists.
@@ -249,8 +249,8 @@ public:
 	 * @return MultiQ exists.
 	 */
 	bool VerifyMultiQ(
-			std::string const& inVenue,
-			std::string const& inMultiQ,
+			ARBString const& inVenue,
+			ARBString const& inMultiQ,
 			bool inUseShortName = false) const;
 
 	/**
@@ -261,9 +261,9 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-			std::string const& inVenue,
-			std::string const& inDivision,
-			std::string const& inLevel) const;
+			ARBString const& inVenue,
+			ARBString const& inDivision,
+			ARBString const& inLevel) const;
 
 	/**
 	 * Verify an event exists.
@@ -274,10 +274,10 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			std::string const& inVenue,
-			std::string const& inDivision,
-			std::string const& inLevel,
-			std::string const& inEvent) const;
+			ARBString const& inVenue,
+			ARBString const& inDivision,
+			ARBString const& inLevel,
+			ARBString const& inEvent) const;
 
 	/**
 	 * Find a title by the complete name.
@@ -289,8 +289,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			std::string const& inVenue,
-			std::string const& inName,
+			ARBString const& inVenue,
+			ARBString const& inName,
 			bool bAbbrevFirst = true,
 			ARBConfigTitle** outTitle = NULL) const;
 
@@ -302,8 +302,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			std::string const& inVenue,
-			std::string const& inTitle,
+			ARBString const& inVenue,
+			ARBString const& inTitle,
 			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
@@ -313,7 +313,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindVenue(
-			std::string const& inVenue,
+			ARBString const& inVenue,
 			ARBConfigVenue** outVenue = NULL) const;
 
 	/**
@@ -323,7 +323,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddVenue(
-			std::string const& inVenue,
+			ARBString const& inVenue,
 			ARBConfigVenue** outVenue = NULL);
 
 	/**
@@ -338,7 +338,7 @@ public:
 	 * @param inVenue Name of venue to delete.
 	 * @return Number of venues deleted (0 or 1).
 	 */
-	int DeleteVenue(std::string const& inVenue);
+	int DeleteVenue(ARBString const& inVenue);
 
 	/**
 	 * Find an event.
@@ -351,10 +351,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			std::string const& inVenue,
-			std::string const& inEvent,
-			std::string const& inDivision,
-			std::string const& inLevel,
+			ARBString const& inVenue,
+			ARBString const& inEvent,
+			ARBString const& inDivision,
+			ARBString const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoring** outScoring = NULL) const;
 };

@@ -42,6 +42,7 @@
 
 #include <set>
 #include <vector>
+#include "ARBTypes.h"
 class ARBConfig;
 class ARBErrorCallback;
 class ARBVersion;
@@ -51,7 +52,6 @@ class Element;
 // VC6 has problems with std::vector::clear() type syntax.
 // And I really don't want to declare 'using' statements in my headers!
 using std::set;
-using std::string;
 using std::vector;
 #endif
 
@@ -193,7 +193,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
 	{
 		size_t nItems = 0;
 		for (const_iterator iter = begin(); iter != end(); ++iter)

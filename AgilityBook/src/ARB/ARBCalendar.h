@@ -40,7 +40,6 @@
  * @li 2003-10-31 DRC Added FindCalendar.
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
@@ -120,20 +119,20 @@ public:
 	 * Get a UID. Used when generating iCalendar entries.
 	 * @param inType UID type to generate.
 	 */
-	std::string GetUID(eUidType inType) const;
+	ARBString GetUID(eUidType inType) const;
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a calendar entry
@@ -206,16 +205,16 @@ public:
 	void SetClosingDate(ARBDate const& inDate);
 	bool IsTentative() const;
 	void SetIsTentative(bool inTentative);
-	std::string const& GetLocation() const;
-	void SetLocation(std::string const& inLocation);
-	std::string const& GetClub() const;
-	void SetClub(std::string const& inClub);
-	std::string const& GetVenue() const;
-	void SetVenue(std::string const& inVenue);
+	ARBString const& GetLocation() const;
+	void SetLocation(ARBString const& inLocation);
+	ARBString const& GetClub() const;
+	void SetClub(ARBString const& inClub);
+	ARBString const& GetVenue() const;
+	void SetVenue(ARBString const& inVenue);
 	eEntry GetEntered() const;
 	void SetEntered(eEntry inEnter);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 
 private:
 	~ARBCalendar();
@@ -224,11 +223,11 @@ private:
 	ARBDate m_DateOpening;
 	ARBDate m_DateClosing;
 	bool m_bTentative;
-	std::string m_Location;
-	std::string m_Club;
-	std::string m_Venue;
+	ARBString m_Location;
+	ARBString m_Club;
+	ARBString m_Venue;
 	eEntry m_eEntered;
-	std::string m_Note;
+	ARBString m_Note;
 };
 
 inline bool ARBCalendar::operator<(ARBCalendar const& rhs) const
@@ -301,32 +300,32 @@ inline void ARBCalendar::SetIsTentative(bool inTentative)
 	m_bTentative = inTentative;
 }
 
-inline std::string const& ARBCalendar::GetLocation() const
+inline ARBString const& ARBCalendar::GetLocation() const
 {
 	return m_Location;
 }
 
-inline void ARBCalendar::SetLocation(std::string const& inLocation)
+inline void ARBCalendar::SetLocation(ARBString const& inLocation)
 {
 	m_Location = inLocation;
 }
 
-inline std::string const& ARBCalendar::GetClub() const
+inline ARBString const& ARBCalendar::GetClub() const
 {
 	return m_Club;
 }
 
-inline void ARBCalendar::SetClub(std::string const& inClub)
+inline void ARBCalendar::SetClub(ARBString const& inClub)
 {
 	m_Club = inClub;
 }
 
-inline std::string const& ARBCalendar::GetVenue() const
+inline ARBString const& ARBCalendar::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBCalendar::SetVenue(std::string const& inVenue)
+inline void ARBCalendar::SetVenue(ARBString const& inVenue)
 {
 	m_Venue = inVenue;
 }
@@ -341,12 +340,12 @@ inline void ARBCalendar::SetEntered(ARBCalendar::eEntry inEnter)
 	m_eEntered = inEnter;
 }
 
-inline std::string const& ARBCalendar::GetNote() const
+inline ARBString const& ARBCalendar::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBCalendar::SetNote(std::string const& inNote)
+inline void ARBCalendar::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }

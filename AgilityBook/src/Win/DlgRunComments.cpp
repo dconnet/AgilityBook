@@ -60,7 +60,7 @@ CDlgRunComments::CDlgRunComments(
 	//{{AFX_DATA_INIT(CDlgRunComments)
 	m_Comments = m_Run->GetNote().c_str();
 	//}}AFX_DATA_INIT
-	m_Comments.Replace("\n", "\r\n");
+	m_Comments.Replace(_T("\n"), _T("\r\n"));
 }
 
 CDlgRunComments::~CDlgRunComments()
@@ -81,8 +81,8 @@ void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 		m_Comments.TrimRight();
 		m_Comments.TrimLeft();
 		CString tmp(m_Comments);
-		tmp.Replace("\r\n", "\n");
-		m_Run->SetNote((LPCSTR)tmp);
+		tmp.Replace(_T("\r\n"), _T("\n"));
+		m_Run->SetNote((LPCTSTR)tmp);
 	}
 }
 
@@ -100,7 +100,7 @@ void CDlgRunComments::SetFaultsText()
 	for (ARBDogFaultList::const_iterator iter = m_Run->GetFaults().begin(); iter != m_Run->GetFaults().end(); ++iter)
 	{
 		if (!str.IsEmpty())
-			str += "\r\n";
+			str += _T("\r\n");
 		str += (*iter).c_str();
 	}
 	m_ctrlFaultsList.SetWindowText(str);

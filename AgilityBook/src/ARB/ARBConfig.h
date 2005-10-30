@@ -126,7 +126,7 @@ public:
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
 	 */
-	static std::string GetDTD();
+	static ARBString GetDTD();
 
 	/**
 	 * Convenience function to get the nice name of a title.
@@ -134,9 +134,9 @@ public:
 	 * @param inTitle Name of title.
 	 * @return Nice name (longname) of a title.
 	 */
-	std::string GetTitleNiceName(
-			std::string const& inVenue,
-			std::string const& inTitle) const;
+	ARBString GetTitleNiceName(
+			ARBString const& inVenue,
+			ARBString const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -144,7 +144,7 @@ public:
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
-	std::string GetTitleCompleteName(
+	ARBString GetTitleCompleteName(
 			ARBDogTitle const* inTitle,
 			bool bAbbrevFirst = true) const;
 
@@ -158,7 +158,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			std::string& ioInfo);
+			ARBString& ioInfo);
 
 	/*
 	 * Getters.

@@ -62,14 +62,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -101,32 +101,32 @@ public:
 	void SetQ(ARB_Q inQ);
 	short GetPlace() const;
 	void SetPlace(short inPlace);
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetHeight() const;
-	void SetHeight(std::string const& inHeight);
-	std::string const& GetBreed() const;
-	void SetBreed(std::string const& inBreed);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetHeight() const;
+	void SetHeight(ARBString const& inHeight);
+	ARBString const& GetBreed() const;
+	void SetBreed(ARBString const& inBreed);
 	double GetTime() const;
 	void SetTime(double inTime);
-	std::string const& GetScore() const;
-	void SetScore(std::string const& inScore);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetScore() const;
+	void SetScore(ARBString const& inScore);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 
 private:
 	~ARBDogReferenceRun();
 	ARB_Q m_Q;
 	short m_Place;
-	std::string m_Name;
-	std::string m_Height;
-	std::string m_Breed;
+	ARBString m_Name;
+	ARBString m_Height;
+	ARBString m_Breed;
 	double m_Time;
-	std::string m_Score;
-	std::string m_Note;
+	ARBString m_Score;
+	ARBString m_Note;
 };
 
-inline std::string ARBDogReferenceRun::GetGenericName() const
+inline ARBString ARBDogReferenceRun::GetGenericName() const
 {
 	return m_Name;
 }
@@ -151,32 +151,32 @@ inline void ARBDogReferenceRun::SetPlace(short inPlace)
 	m_Place = inPlace;
 }
 
-inline std::string const& ARBDogReferenceRun::GetName() const
+inline ARBString const& ARBDogReferenceRun::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogReferenceRun::SetName(std::string const& inName)
+inline void ARBDogReferenceRun::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBDogReferenceRun::GetHeight() const
+inline ARBString const& ARBDogReferenceRun::GetHeight() const
 {
 	return m_Height;
 }
 
-inline void ARBDogReferenceRun::SetHeight(std::string const& inHeight)
+inline void ARBDogReferenceRun::SetHeight(ARBString const& inHeight)
 {
 	m_Height = inHeight;
 }
 
-inline std::string const& ARBDogReferenceRun::GetBreed() const
+inline ARBString const& ARBDogReferenceRun::GetBreed() const
 {
 	return m_Breed;
 }
 
-inline void ARBDogReferenceRun::SetBreed(std::string const& inBreed)
+inline void ARBDogReferenceRun::SetBreed(ARBString const& inBreed)
 {
 	m_Breed = inBreed;
 }
@@ -191,22 +191,22 @@ inline void ARBDogReferenceRun::SetTime(double inTime)
 	m_Time = inTime;
 }
 
-inline std::string const& ARBDogReferenceRun::GetScore() const
+inline ARBString const& ARBDogReferenceRun::GetScore() const
 {
 	return m_Score;
 }
 
-inline void ARBDogReferenceRun::SetScore(std::string const& inScore)
+inline void ARBDogReferenceRun::SetScore(ARBString const& inScore)
 {
 	m_Score = inScore;
 }
 
-inline std::string const& ARBDogReferenceRun::GetNote() const
+inline ARBString const& ARBDogReferenceRun::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBDogReferenceRun::SetNote(std::string const& inNote)
+inline void ARBDogReferenceRun::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }

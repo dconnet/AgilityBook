@@ -133,7 +133,7 @@ CErrorCallback::CErrorCallback()
 {
 }
 
-bool CErrorCallback::OnError(char const* const pMsg)
+bool CErrorCallback::OnError(TCHAR const* const pMsg)
 {
 	CSplashWnd::HideSplashScreen();
 	return (IDYES == AfxMessageBox(pMsg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2));
@@ -350,7 +350,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 				if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					CString tmp;
-					tmp.Format("Action: Renaming title [%s] to [%s]",
+					tmp.Format(_T("Action: Renaming title [%s] to [%s]"),
 						action->GetOldName().c_str(),
 						action->GetNewName().c_str());
 					msg += tmp;
@@ -358,11 +358,11 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 					if (0 < nTitles)
 					{
-						tmp.Format(", updating %d titles\n", nTitles);
+						tmp.Format(_T(", updating %d titles\n"), nTitles);
 						GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
 					}
 					else
-						tmp = "\n";
+						tmp = _T("\n");
 					msg += tmp;
 					// If the new title exists, just delete the old. Otherwise, rename the old to new.
 					if (venue->GetDivisions().FindTitle(action->GetNewName()))
@@ -401,7 +401,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					{
 						if (0 < action->GetNewName().length())
 						{
-							tmp.Format("Action: Renaming existing %d title(s) [%s] to [%s]\n",
+							tmp.Format(_T("Action: Renaming existing %d title(s) [%s] to [%s]\n"),
 								nTitles,
 								action->GetOldName().c_str(),
 								action->GetNewName().c_str());
@@ -410,7 +410,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						}
 						else
 						{
-							tmp.Format("Action: Deleting existing %d [%s] title(s)\n",
+							tmp.Format(_T("Action: Deleting existing %d [%s] title(s)\n"),
 								nTitles,
 								action->GetOldName().c_str());
 							msg += tmp;
@@ -418,11 +418,11 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						}
 					}
 					if (pDiv)
-						tmp.Format("Action: Deleting title [%s/%s]\n",
+						tmp.Format(_T("Action: Deleting title [%s/%s]\n"),
 							pDiv->GetName().c_str(),
 							action->GetOldName().c_str());
 					else
-						tmp.Format("Action: Deleting title [%s]\n",
+						tmp.Format(_T("Action: Deleting title [%s]\n"),
 							action->GetOldName().c_str());
 					msg += tmp;
 					if (pDiv)
@@ -437,7 +437,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			}
 		}
 	}
-	std::string info;
+	ARBString info;
 	bool bUpdateRuns = false;
 	if (GetConfig().GetVersion() <= 2 && update.GetVersion() == 3)
 		bUpdateRuns = true;
@@ -458,9 +458,9 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		if (0 < fix.RunsUpdated())
 		{
 			if (0 < info.length())
-				msg += "\n\n";
+				msg += _T("\n\n");
 			CString tmp;
-			tmp.Format("Table setting updated in %d runs.", fix.RunsUpdated());
+			tmp.Format(_T("Table setting updated in %d runs."), fix.RunsUpdated());
 			msg += tmp;
 		}
 	}
@@ -503,7 +503,7 @@ void CAgilityBookDoc::ResetVisibility()
 {
 	std::vector<CVenueFilter> venues;
 	CAgilityBookOptions::GetFilterVenue(venues);
-	std::set<std::string> names;
+	std::set<ARBString> names;
 	CAgilityBookOptions::GetTrainingFilterNames(names);
 
 	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
@@ -574,7 +574,7 @@ void CAgilityBookDoc::ResetVisibility(
 }
 
 void CAgilityBookDoc::ResetVisibility(
-		std::set<std::string>& names,
+		std::set<ARBString>& names,
 		ARBTraining* pTraining)
 {
 	bool bVisTraining = CAgilityBookOptions::IsTrainingLogVisible(names, pTraining);
@@ -661,7 +661,7 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			backup.Format("%s.bck%d", lpszPathName, i);
+			backup.Format(_T("%s.bck%d"), lpszPathName, i);
 			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(backup))
 			{
 				nHole = i;
@@ -673,14 +673,14 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			backup.Format("%s.bck%d", lpszPathName, i);
+			backup.Format(_T("%s.bck%d"), lpszPathName, i);
 			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(backup))
 				DeleteFile(backup);
 			CString filename;
-			filename.Format("%s.bck%d", lpszPathName, i-1);
+			filename.Format(_T("%s.bck%d"), lpszPathName, i-1);
 			MoveFile(filename, backup);
 		}
-		backup.Format("%s.bck1", lpszPathName);
+		backup.Format(_T("%s.bck1"), lpszPathName);
 		CopyFile(lpszPathName, backup, FALSE);
 	}
 }
@@ -702,7 +702,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
-	AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
+	AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 	m_Records.Default();
 	m_Records.GetConfig().GetActions().clear();
 
@@ -725,7 +725,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	if (!GetLocalStatus(lpszPathName, status))
 	{
 		CSplashWnd::HideSplashScreen();
-		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
 	}
@@ -735,28 +735,22 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Do standard CDocument stuff.
 	if (IsModified())
 	{
-		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
+		TRACE0(_T("Warning: OnOpenDocument replaces an unsaved document.\n"));
 	}
 	DeleteContents();
 
-	// We need a char*, even in UNICODE.
-#if _MSC_VER < 1300
-	// But since I'm not compiling in unicode...
 	CString source(lpszPathName);
-#else
-	CStringA source(lpszPathName);
-#endif
-	std::string err;
+	ARBString err;
 	Element tree;
 	// Translate the XML to a tree form.
-	if (!tree.LoadXMLFile((char const*)source, err))
+	if (!tree.LoadXMLFile((LPCTSTR)source, err))
 	{
-		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 		if (0 < err.length())
 		{
-			msg += "\n\n";
+			msg += _T("\n\n");
 			msg += err.c_str();
 		}
 		CSplashWnd::HideSplashScreen();
@@ -767,12 +761,12 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	CErrorCallback callback;
 	if (!m_Records.Load(tree, callback))
 	{
-		AfxGetApp()->WriteProfileString("Settings", "LastFile", _T(""));
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 		if (0 < callback.m_ErrMsg.length())
 		{
-			msg += "\n\n";
+			msg += _T("\n\n");
 			msg += callback.m_ErrMsg.c_str();
 		}
 		CSplashWnd::HideSplashScreen();
@@ -781,7 +775,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 	else if (0 < callback.m_ErrMsg.length())
 	{
-		CString msg("Warning: Some non-fatal messages were generated while loading the file:\n\n");
+		CString msg(_T("Warning: Some non-fatal messages were generated while loading the file:\n\n"));
 		msg += callback.m_ErrMsg.c_str();
 		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONINFORMATION);
@@ -802,7 +796,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 			SetModifiedFlag(TRUE);
 	}
 
-	AfxGetApp()->WriteProfileString("Settings", "LastFile", lpszPathName);
+	AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 
 	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
@@ -837,9 +831,9 @@ void CAgilityBookDoc::OnCloseDocument()
 {
 	ARBDog* pDog = GetCurrentDog();
 	if (pDog)
-		AfxGetApp()->WriteProfileString("Settings", "LastDog", pDog->GetCallName().c_str());
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastDog"), pDog->GetCallName().c_str());
 	else
-		AfxGetApp()->WriteProfileString("Settings", "LastDog", "");
+		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastDog"), _T(""));
 	CDocument::OnCloseDocument();
 }
 
@@ -851,7 +845,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	CWaitCursor wait;
 
 	CVersionNum ver;
-	std::string verstr = (LPCTSTR)ver.GetVersionString();
+	ARBString verstr = (LPCTSTR)ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	BOOL bOk = FALSE;
 	Element tree;
@@ -860,13 +854,17 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	{
 		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
+#ifdef UNICODE
+		std::ofstream output(CStringA(lpszPathName), std::ios::out | std::ios::binary);
+#else
 		std::ofstream output(lpszPathName, std::ios::out | std::ios::binary);
+#endif
 		output.exceptions(std::ios_base::badbit);
 		if (output.is_open())
 		{
 			if (tree.SaveXML(output))
 			{
-				AfxGetApp()->WriteProfileString("Settings", "LastFile", lpszPathName);
+				AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 				bOk = TRUE;
 				SetModifiedFlag(FALSE);
 			}
@@ -882,7 +880,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	}
 	if (!bOk && !bAlreadyWarned)
 	{
-		AfxMessageBox("Internal error: File not saved.", MB_ICONSTOP);
+		AfxMessageBox(_T("Internal error: File not saved."), MB_ICONSTOP);
 	}
 	return bOk;
 }
@@ -926,7 +924,7 @@ void CAgilityBookDoc::OnFileLinked()
 	CDlgFindLinks dlg(GetDogs());
 	if (0 == dlg.GetNumLinks())
 	{
-		AfxMessageBox("No linked files found.", MB_ICONINFORMATION);
+		AfxMessageBox(_T("No linked files found."), MB_ICONINFORMATION);
 	}
 	else
 		dlg.DoModal();
@@ -1047,7 +1045,7 @@ public:
 	CFindInfo(CAgilityBookDoc* pDoc)
 		: m_pDoc(pDoc)
 	{
-		m_strCaption = "Search Notes";
+		m_strCaption = _T("Search Notes");
 		m_bEnableSearch = false;
 		m_bSearchAll = true;
 		m_bEnableDirection = false;
@@ -1059,7 +1057,7 @@ private:
 	void Search(
 			CString const& search,
 			ARBInfo::eInfoType inType,
-			std::set<std::string> const& inUse,
+			std::set<ARBString> const& inUse,
 			ARBInfo const& info) const;
 };
 
@@ -1070,7 +1068,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	if (!MatchCase())
 		search.MakeLower();
 	ARBInfo& info = m_pDoc->GetInfo();
-	std::set<std::string> inUse;
+	std::set<ARBString> inUse;
 	m_pDoc->GetAllClubNames(inUse, false);
 	Search(search, ARBInfo::eClubInfo, inUse, info);
 	m_pDoc->GetAllJudges(inUse, false);
@@ -1085,7 +1083,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	else
 	{
 		CString msg;
-		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 		return false;
 	}
@@ -1094,10 +1092,10 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 void CFindInfo::Search(
 		CString const& search,
 		ARBInfo::eInfoType inType,
-		std::set<std::string> const& inUse,
+		std::set<ARBString> const& inUse,
 		ARBInfo const& info) const
 {
-	for (std::set<std::string>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
+	for (std::set<ARBString>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
 	{
 		CString str((*iter).c_str());
 		if (!MatchCase())
@@ -1116,10 +1114,10 @@ void CFindInfo::Search(
 		iterItem != info.GetInfo(inType).end();
 		++iterItem)
 	{
-		std::set<std::string> strings;
+		std::set<ARBString> strings;
 		if (0 < (*iterItem)->GetSearchStrings(strings))
 		{
-			for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+			for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 			{
 				CString str((*iter).c_str());
 				if (!MatchCase())

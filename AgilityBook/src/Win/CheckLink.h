@@ -36,9 +36,9 @@
  * @li 2005-09-20 DRC Created
  */
 
-#include <string>
+#include "ARBTypes.h"
 class CInternetSession;
 
 extern bool CheckLink(
 		CInternetSession& inSession,
-		std::string const& inLink);
+		ARBString const& inLink);

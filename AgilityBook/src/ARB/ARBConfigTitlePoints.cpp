@@ -40,7 +40,6 @@
 
 #include "StdAfx.h"
 #include <algorithm>
-#include <sstream>
 #include "ARBConfigTitlePoints.h"
 
 #include "ARBAgilityRecordBook.h"
@@ -100,12 +99,12 @@ bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
 	return !operator==(rhs);
 }
 
-std::string ARBConfigTitlePoints::GetGenericName() const
+ARBString ARBConfigTitlePoints::GetGenericName() const
 {
 	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
 
-size_t ARBConfigTitlePoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigTitlePoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -130,7 +129,7 @@ bool ARBConfigTitlePoints::Load(
 	if (inVersion < ARBVersion(10,0))
 	{
 		bool bLifetime;
-		if (Element::eFound == inTree.GetAttrib("LifeTime", bLifetime))
+		if (Element::eFound == inTree.GetAttrib(_T("LifeTime"), bLifetime))
 		{
 			if (bLifetime)
 			{

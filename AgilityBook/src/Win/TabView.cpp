@@ -88,12 +88,12 @@ void CTabView::OnDestroy()
 	// If doc fails to open, no window was ever created.
 	if (IsWindow(GetSafeHwnd()) && IsWindow(m_splitterRuns.GetSafeHwnd()) && IsWindow(m_splitterCal.GetSafeHwnd()))
 	{
-		AfxGetApp()->WriteProfileInt("Settings", "View", GetTabCtrl().GetCurSel());
+		AfxGetApp()->WriteProfileInt(_T("Settings"), _T("View"), GetTabCtrl().GetCurSel());
 		int cxCur, cxMin;
 		m_splitterRuns.GetColumnInfo(0, cxCur, cxMin);
-		AfxGetApp()->WriteProfileInt("Settings", "splitCX", cxCur);
+		AfxGetApp()->WriteProfileInt(_T("Settings"), _T("splitCX"), cxCur);
 		m_splitterCal.GetColumnInfo(0, cxCur, cxMin);
-		AfxGetApp()->WriteProfileInt("Settings", "splitCX2", cxCur);
+		AfxGetApp()->WriteProfileInt(_T("Settings"), _T("splitCX2"), cxCur);
 	}
 
 	CCtrlView::OnDestroy();
@@ -135,7 +135,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_splitterRuns.ShowWindow(SW_HIDE);
 	m_splitterRuns.EnableWindow(FALSE);
-	int cx = AfxGetApp()->GetProfileInt("Settings", "splitCX", 100);
+	int cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("splitCX"), 100);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookTree);
 	if (!m_splitterRuns.CreateView(0, 0, RUNTIME_CLASS(CAgilityBookTree), CSize(cx, 100), &context))
 		return;
@@ -156,7 +156,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_splitterCal.ShowWindow(SW_HIDE);
 	m_splitterCal.EnableWindow(FALSE);
-	cx = AfxGetApp()->GetProfileInt("Settings", "splitCX2", 100);
+	cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("splitCX2"), 100);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewCalendarList);
 	if (!m_splitterCal.CreateView(0, 0, RUNTIME_CLASS(CAgilityBookViewCalendarList), CSize(cx, 100), &context))
 		return;
@@ -173,7 +173,7 @@ void CTabView::OnInitialUpdate()
 		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
 		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
 
-	int nSel = AfxGetApp()->GetProfileInt("Settings", "View", 0);
+	int nSel = AfxGetApp()->GetProfileInt(_T("Settings"), _T("View"), 0);
 	// The usage of 'View' has changed. It was cal=1,pts=2,runs=3. (v0.2.0.3)
 	// It is now the index of the tab.
 	if (0 > nSel || nSel > 3)

@@ -147,7 +147,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	while (!bFound && NULL != hItem)
 	{
-		std::set<std::string> strings;
+		std::set<ARBString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTreeData* pData = m_pView->GetItemData(hItem);
@@ -158,7 +158,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		{
 			strings.insert((LPCTSTR)m_pView->GetTreeCtrl().GetItemText(hItem));
 		}
-		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -175,7 +175,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 	if (!bFound)
 	{
 		CString msg;
-		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	return bFound;
@@ -382,7 +382,7 @@ void CAgilityBookTree::PrintLine(
 	{
 		CString str;
 		for (int i = 0; i < indent; ++i)
-			str += "   ";
+			str += _T("   ");
 		str += GetPrintLine(hItem);
 		pData->lines.Add(str);
 		CRect r(0,0,0,0);
@@ -420,7 +420,7 @@ void CAgilityBookTree::OnBeginPrinting(
 	PrintLine(pDC, pData, TVI_ROOT, 0);
 
 	CRect rTest(0,0,0,0);
-	CString strTextForHeight("Testing for height");
+	CString strTextForHeight(_T("Testing for height"));
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	pData->nHeight = 4 * rTest.Height() / 3;
 	if (1 > pData->nHeight)
@@ -429,7 +429,7 @@ void CAgilityBookTree::OnBeginPrinting(
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
 	pData->nPages = (static_cast<int>(pData->lines.GetSize()) + 1) / pData->nLinesPerPage + 1;
-	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
+	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
 	//	pData->nPages);
@@ -705,11 +705,11 @@ void CAgilityBookTree::LoadData()
 
 	CWaitCursor wait;
 	// Remember the currently selected item.
-	std::string strCallName;
+	ARBString strCallName;
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{
-		strCallName = AfxGetApp()->GetProfileString("Settings", "LastDog", "");
+		strCallName = AfxGetApp()->GetProfileString(_T("Settings"), _T("LastDog"), _T(""));
 	}
 	std::list<ARBBase const*> baseItems;
 	while (pData)
@@ -777,7 +777,7 @@ LRESULT CAgilityBookTree::OnDelayedMessage(
 	{
 		CSplashWnd::HideSplashScreen();
 		UpdateWindow();
-		if (IDYES == AfxMessageBox("Would you like to create a dog now?", MB_YESNO | MB_ICONINFORMATION))
+		if (IDYES == AfxMessageBox(_T("Would you like to create a dog now?"), MB_YESNO | MB_ICONINFORMATION))
 		{
 			PostMessage(WM_COMMAND, ID_AGILITY_NEW_DOG);
 		}

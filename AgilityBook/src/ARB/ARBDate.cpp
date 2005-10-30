@@ -40,7 +40,6 @@
 
 #include "StdAfx.h"
 #include "ARBDate.h"
-#include <sstream>
 #include <time.h>
 
 #include "Element.h"
@@ -184,26 +183,26 @@ ARBDate ARBDate::Today()
 }
 
 static int ParseFields(
-		std::string inDate,
+		ARBString inDate,
 		char sep,
 		int& val1,
 		int& val2,
 		int& val3)
 {
 	int nVals = 0;
-	std::string::size_type pos = inDate.find(sep);
-	if (std::string::npos != pos)
+	ARBString::size_type pos = inDate.find(sep);
+	if (ARBString::npos != pos)
 	{
-		val1 = static_cast<short>(atol(inDate.c_str()));
+		val1 = static_cast<short>(_tstol(inDate.c_str()));
 		++nVals;
 		inDate = inDate.substr(pos+1);
 		pos = inDate.find(sep);
-		if (std::string::npos != pos)
+		if (ARBString::npos != pos)
 		{
-			val2 = static_cast<short>(atol(inDate.c_str()));
+			val2 = static_cast<short>(_tstol(inDate.c_str()));
 			++nVals;
 			inDate = inDate.substr(pos+1);
-			val3 = static_cast<short>(atol(inDate.c_str()));
+			val3 = static_cast<short>(_tstol(inDate.c_str()));
 			++nVals;
 		}
 	}
@@ -212,11 +211,11 @@ static int ParseFields(
 
 // static
 ARBDate ARBDate::FromString(
-		std::string const& inDate,
+		ARBString const& inDate,
 		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
-	std::string value(inDate);
+	ARBString value(inDate);
 	if (0 < inDate.length())
 	{
 		int val1 = 0, val2 = 0, val3 = 0;
@@ -354,27 +353,27 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-std::string ARBDate::GetString(
+ARBString ARBDate::GetString(
 	DateFormat inFormat,
 	bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
-		return "";
-	std::string date;
+		return _T("");
+	ARBString date;
 	int yr = 0;
 	int mon = 0;
 	int day = 0;
 	if (IsValid())
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-	std::ostringstream str;
+	ARBostringstream str;
 	switch (inFormat)
 	{
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
 		str.fill('0');
 		str.width(2);
-		str << mon << "-";
+		str << mon << _T("-");
 		str.width(2);
-		str << day << "-";
+		str << day << _T("-");
 		str.width(4);
 		str << yr;
 		break;
@@ -391,65 +390,65 @@ std::string ARBDate::GetString(
 	case eSlashMMDDYYYY:	///< MM/DD/YYYY
 		str.fill('0');
 		str.width(2);
-		str << mon << "/";
+		str << mon << _T("/");
 		str.width(2);
-		str << day << "/";
+		str << day << _T("/");
 		str.width(4);
 		str << yr;
 		break;
 	case eDashYYYYMMDD:		///< YYYY-MM-DD
 		str.fill('0');
 		str.width(4);
-		str << yr << "-";
+		str << yr << _T("-");
 		str.width(2);
-		str << mon << "-";
+		str << mon << _T("-");
 		str.width(2);
 		str << day;
 		break;
 	case eSlashYYYYMMDD:	///< YYYY/MM/DD
 		str.fill('0');
 		str.width(4);
-		str << yr << "/";
+		str << yr << _T("/");
 		str.width(2);
-		str << mon << "/";
+		str << mon << _T("/");
 		str.width(2);
 		str << day;
 		break;
 	case eDashDDMMYYYY:		///< DD-MM-YYYY
 		str.fill('0');
 		str.width(2);
-		str << day << "-";
+		str << day << _T("-");
 		str.width(2);
-		str << mon << "-";
+		str << mon << _T("-");
 		str.width(4);
 		str << yr;
 		break;
 	case eSlashDDMMYYYY:	///< DD/MM/YYYY
 		str.fill('0');
 		str.width(2);
-		str << day << "/";
+		str << day << _T("/");
 		str.width(2);
-		str << mon << "/";
+		str << mon << _T("/");
 		str.width(4);
 		str << yr;
 		break;
 	case eDashMDY:	///< M-D-Y
-		str << mon << "-" << day << "-" << yr;
+		str << mon << _T("-") << day << _T("-") << yr;
 		break;
 	case eSlashMDY:	///< M/D/Y
-		str << mon << "/" << day << "/" << yr;
+		str << mon << _T("/") << day << _T("/") << yr;
 		break;
 	case eDashYMD:	///< Y-M-D
-		str << yr << "-" << mon << "-" << day;
+		str << yr << _T("-") << mon << _T("-") << day;
 		break;
 	case eSlashYMD:	///< Y/M/D
-		str << yr << "/" << mon << "/" << day;
+		str << yr << _T("/") << mon << _T("/") << day;
 		break;
 	case eDashDMY:	///< D-M-Y
-		str << day << "-" << mon << "-" << yr;
+		str << day << _T("-") << mon << _T("-") << yr;
 		break;
 	case eSlashDMY:	///< D/M/Y
-		str << day << "/" << mon << "/" << yr;
+		str << day << _T("/") << mon << _T("/") << yr;
 		break;
 	}
 	date = str.str();

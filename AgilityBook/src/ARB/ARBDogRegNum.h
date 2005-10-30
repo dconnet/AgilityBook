@@ -39,7 +39,6 @@
  * @li 2003-11-22 DRC Added FindRegNum().
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
@@ -65,14 +64,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -100,52 +99,52 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetVenue() const;
-	void SetVenue(std::string const& inVenue);
-	std::string const& GetNumber() const;
-	void SetNumber(std::string const& inNumber);
-	std::string const& GetHeight() const;
-	void SetHeight(std::string const& inHeight);
+	ARBString const& GetVenue() const;
+	void SetVenue(ARBString const& inVenue);
+	ARBString const& GetNumber() const;
+	void SetNumber(ARBString const& inNumber);
+	ARBString const& GetHeight() const;
+	void SetHeight(ARBString const& inHeight);
 	bool GetReceived() const;
 	void SetReceived(bool inReceived);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 
 private:
 	~ARBDogRegNum();
-	std::string m_Venue;
-	std::string m_Number;
-	std::string m_Height;
+	ARBString m_Venue;
+	ARBString m_Number;
+	ARBString m_Height;
 	bool m_bReceived;
-	std::string m_Note;
+	ARBString m_Note;
 };
 
-inline std::string const& ARBDogRegNum::GetVenue() const
+inline ARBString const& ARBDogRegNum::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogRegNum::SetVenue(std::string const& inVenue)
+inline void ARBDogRegNum::SetVenue(ARBString const& inVenue)
 {
 	m_Venue = inVenue;
 }
 
-inline std::string const& ARBDogRegNum::GetNumber() const
+inline ARBString const& ARBDogRegNum::GetNumber() const
 {
 	return m_Number;
 }
 
-inline void ARBDogRegNum::SetNumber(std::string const& inNumber)
+inline void ARBDogRegNum::SetNumber(ARBString const& inNumber)
 {
 	m_Number = inNumber;
 }
 
-inline std::string const& ARBDogRegNum::GetHeight() const
+inline ARBString const& ARBDogRegNum::GetHeight() const
 {
 	return m_Height;
 }
 
-inline void ARBDogRegNum::SetHeight(std::string const& inHeight)
+inline void ARBDogRegNum::SetHeight(ARBString const& inHeight)
 {
 	m_Height = inHeight;
 }
@@ -160,12 +159,12 @@ inline void ARBDogRegNum::SetReceived(bool inReceived)
 	m_bReceived = inReceived;
 }
 
-inline std::string const& ARBDogRegNum::GetNote() const
+inline ARBString const& ARBDogRegNum::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBDogRegNum::SetNote(std::string const& inNote)
+inline void ARBDogRegNum::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }
@@ -188,7 +187,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of registration numbers found.
 	 */
-	int NumRegNumsInVenue(std::string const& inVenue) const;
+	int NumRegNumsInVenue(ARBString const& inVenue) const;
 
 	/**
 	 * Rename a venue.
@@ -197,15 +196,15 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-			std::string const& inOldVenue,
-			std::string const& inNewVenue);
+			ARBString const& inOldVenue,
+			ARBString const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(std::string const& inVenue);
+	int DeleteVenue(ARBString const& inVenue);
 
 	/**
 	 * Find a registration number.
@@ -214,7 +213,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindRegNum(
-			std::string const& inVenue,
+			ARBString const& inVenue,
 			ARBDogRegNum** outRegNum = NULL) const;
 
 	/**
@@ -225,8 +224,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddRegNum(
-			std::string const& inVenue,
-			std::string const& inNumber,
+			ARBString const& inVenue,
+			ARBString const& inNumber,
 			ARBDogRegNum** outRegNum = NULL);
 
 	/**
@@ -243,6 +242,6 @@ public:
 	 * @return Number of objects deleted.
 	 */
 	int DeleteRegNum(
-			std::string const& inVenue,
-			std::string const& inNumber);
+			ARBString const& inVenue,
+			ARBString const& inNumber);
 };

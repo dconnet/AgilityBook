@@ -186,13 +186,13 @@ BOOL CDlgMessageBox::OnInitDialog()
 	m_ctrlButton[3].GetWindowText(strDetails);
 
 	// Set the window caption.
-	char szExeName[_MAX_PATH] = "";
+	TCHAR szExeName[_MAX_PATH] = _T("");
 	::GetModuleFileName(NULL, szExeName, _MAX_PATH);
-	char* pStr = strrchr(szExeName, '.');
+	TCHAR* pStr = _tcsrchr(szExeName, '.');
 	ASSERT(pStr != NULL);
 	ASSERT(*pStr == '.');
 	*pStr = 0;       // no suffix
-	pStr = strrchr(szExeName, '\\');
+	pStr = _tcsrchr(szExeName, '\\');
 	ASSERT(pStr);
 	SetWindowText(pStr+1);
 

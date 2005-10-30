@@ -40,8 +40,8 @@
  */
 
 #include <set>
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -65,14 +65,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a items entry
@@ -87,7 +87,7 @@ public:
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
-			std::string const& inItemName);
+			ARBString const& inItemName);
 
 	/**
 	 * Save a items entry
@@ -96,7 +96,7 @@ public:
 	 */
 	bool ARBInfoItem::Save(
 			Element& ioTree,
-			std::string const& inItemName) const;
+			ARBString const& inItemName) const;
 
 	/**
 	 * Save a document.
@@ -109,15 +109,15 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetComment() const;
-	void SetComment(std::string const& inComment);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetComment() const;
+	void SetComment(ARBString const& inComment);
 
 private:
 	~ARBInfoItem();
-	std::string m_Name;
-	std::string m_Comment;
+	ARBString m_Name;
+	ARBString m_Comment;
 };
 
 inline bool ARBInfoItem::operator<(ARBInfoItem const& rhs) const
@@ -130,22 +130,22 @@ inline bool ARBInfoItem::operator>(ARBInfoItem const& rhs) const
 	return m_Name > rhs.GetName();
 }
 
-inline std::string const& ARBInfoItem::GetName() const
+inline ARBString const& ARBInfoItem::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBInfoItem::SetName(std::string const& inName)
+inline void ARBInfoItem::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBInfoItem::GetComment() const
+inline ARBString const& ARBInfoItem::GetComment() const
 {
 	return m_Comment;
 }
 
-inline void ARBInfoItem::SetComment(std::string const& inComment)
+inline void ARBInfoItem::SetComment(ARBString const& inComment)
 {
 	m_Comment = inComment;
 }
@@ -162,11 +162,11 @@ public:
 	 * Construct a club/judge/location info object.
 	 * @param inItemName Name of elements to be loaded.
 	 */
-	ARBInfoItemList(std::string const& inItemName);
+	ARBInfoItemList(ARBString const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
 
-	std::string const& GetItemName() const;
+	ARBString const& GetItemName() const;
 
 	/**
 	 * Load the information from XML (the tree).
@@ -197,13 +197,13 @@ public:
 	 * @param outNames All the names.
 	 * @return Number of items in list.
 	 */
-	size_t GetAllItems(std::set<std::string>& outNames) const;
+	size_t GetAllItems(std::set<ARBString>& outNames) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
 	 * @param inNamesInUse Names of items from runs.
 	 */
-	void CondenseContent(std::set<std::string> const& inNamesInUse);
+	void CondenseContent(std::set<ARBString> const& inNamesInUse);
 
 	/**
 	 * Find a item.
@@ -212,7 +212,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindItem(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBInfoItem** outItem = NULL) const;
 
 	/**
@@ -222,7 +222,7 @@ public:
 	 * @return Whether object was added.
 	 */
 	bool AddItem(
-			std::string const& inItem,
+			ARBString const& inItem,
 			ARBInfoItem** outItem = NULL);
 
 	/**
@@ -240,10 +240,10 @@ public:
 	bool DeleteItem(ARBInfoItem const* inItem);
 
 private:
-	std::string m_ItemName;
+	ARBString m_ItemName;
 };
 
-inline std::string const& ARBInfoItemList::GetItemName() const
+inline ARBString const& ARBInfoItemList::GetItemName() const
 {
 	return m_ItemName;
 }

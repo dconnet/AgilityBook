@@ -109,7 +109,7 @@ BOOL CDlgRegNum::OnInitDialog()
 		m_Height = m_pRegNum->GetHeight().c_str();
 		m_bReceived = m_pRegNum->GetReceived() ? TRUE : FALSE;
 		m_Note = m_pRegNum->GetNote().c_str();
-		m_Note.Replace("\n", "\r\n");
+		m_Note.Replace(_T("\n"), _T("\r\n"));
 		UpdateData(FALSE);
 	}
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -140,23 +140,23 @@ void CDlgRegNum::OnOK()
 		GotoDlgCtrl(GetDlgItem(IDC_REGNUM_REG_NUM));
 		return;
 	}
-	m_Note.Replace("\r\n", "\n");
+	m_Note.Replace(_T("\r\n"), _T("\n"));
 	if (m_pRegNum)
 	{
-		m_pRegNum->SetNumber((LPCSTR)m_RegNum);
-		m_pRegNum->SetVenue((LPCSTR)venue);
-		m_pRegNum->SetHeight((LPCSTR)m_Height);
+		m_pRegNum->SetNumber((LPCTSTR)m_RegNum);
+		m_pRegNum->SetVenue((LPCTSTR)venue);
+		m_pRegNum->SetHeight((LPCTSTR)m_Height);
 		m_pRegNum->SetReceived(m_bReceived ? true : false);
-		m_pRegNum->SetNote((LPCSTR)m_Note);
+		m_pRegNum->SetNote((LPCTSTR)m_Note);
 	}
 	else
 	{
 		ARBDogRegNum* pRegNum;
-		if (m_RegNums.AddRegNum((LPCSTR)venue, (LPCSTR)m_RegNum, &pRegNum))
+		if (m_RegNums.AddRegNum((LPCTSTR)venue, (LPCTSTR)m_RegNum, &pRegNum))
 		{
-			pRegNum->SetHeight((LPCSTR)m_Height);
+			pRegNum->SetHeight((LPCTSTR)m_Height);
 			pRegNum->SetReceived(m_bReceived ? true : false);
-			pRegNum->SetNote((LPCSTR)m_Note);
+			pRegNum->SetNote((LPCTSTR)m_Note);
 		}
 	}
 	CDlgBaseDialog::OnOK();

@@ -63,193 +63,193 @@
  * Defines that are indented are the valid values for the attribute that
  * was just defined.
  */
-#define TREE_BOOK							"AgilityBook"
-#define TREE_CALENDAR						"Calendar"
-#define TREE_TRAINING						"Training"
-#define TREE_CONFIG							"Configuration"
-#define TREE_ACTION							"Action"
-#define TREE_VENUE							"Venue"
-#define TREE_VENUE_DESC						"Desc"
-#define TREE_MULTIQ							"MultiQ"
-#define TREE_MULTIQ_ITEM					"MultiQItem"
-#define TREE_DIVISION						"Division"
-#define TREE_LEVEL							"Level"
-#define TREE_TITLES							"Titles"
-#define TREE_SUBLEVEL						"SubLevel"
-#define TREE_EVENT							"Event"
-#define TREE_EVENT_DESC						"Desc"
-#define TREE_EVENT_SUBNAME					"SubName"
-#define TREE_SCORING						"Scoring"
-#define TREE_TITLE_POINTS					"TitlePoints"
-#define TREE_LIFETIME_POINTS				"LifeTime"
-#define TREE_FAULTTYPE						"FaultType"
-#define TREE_OTHERPTS						"OtherPts"
-#define TREE_INFO							"Info"
-#define TREE_CLUBINFO						"ClubInfo"
-#define TREE_JUDGEINFO						"JudgeInfo"
-#define TREE_LOCATIONINFO					"LocationInfo"
-#define TREE_DOG							"Dog"
-#define TREE_REGNAME						"RegisteredName"
-#define TREE_BREED							"Breed"
-#define TREE_NOTE							"Note"
-#define TREE_EXISTING_PTS					"ExistingPoints"
-#define TREE_REG_NUM						"RegNum"
-#define TREE_TITLE							"Title"
-#define TREE_TRIAL							"Trial"
-#define TREE_LOCATION						"Location"
-#define TREE_CLUB							"Club"
-#define TREE_RUN							"Run"
-#define TREE_CONDITIONS						"Conditions"
-#define TREE_JUDGE							"Judge"
-#define TREE_HANDLER						"Handler"
-#define TREE_PARTNER						"Partner"
-#define TREE_BY_TIME						"ByTime"
-#define TREE_BY_OPENCLOSE					"ByOpenClose"
-#define TREE_BY_POINTS						"ByPoints"
-#define TREE_PLACEMENT						"Placement"
-#define TREE_PLACEMENT_OTHERPOINTS			"OtherPoints"
-#define TREE_NOTES							"Notes"
-#define TREE_FAULTS							"Faults"
-#define TREE_CRCD							"CRCD"
-#define TREE_CRCD_META						"CRCDMeta"
-#define TREE_OTHER							"Other"
-#define TREE_RUN_LINK						"Link"
-#define TREE_REF_RUN						"ReferenceRun"
-#define TREE_REF_NAME						"Name"
-#define TREE_REF_BREED						"Breed"
-#define TREE_REF_SCORE						"ScoreOrFaults"
-#define TREE_REF_NOTE						"Note"
-#define ATTRIB_BOOK_VERSION					"Book"
-#define ATTRIB_BOOK_PGM_VERSION				"ver"
-#define ATTRIB_CONFIG_VERSION				"version"
-#define ATTRIB_CONFIG_UPDATE				"update"
-#define ATTRIB_CAL_START					"DateStart"
-#define ATTRIB_CAL_END						"DateEnd"
-#define ATTRIB_CAL_OPENING					"DateOpening"
-#define ATTRIB_CAL_CLOSING					"DateClosing"
-#define ATTRIB_CAL_MAYBE					"isTentative"
-#define ATTRIB_CAL_LOCATION					"Location"
-#define ATTRIB_CAL_CLUB						"Club"
-#define ATTRIB_CAL_VENUE					"Venue"
-#define ATTRIB_CAL_ENTERED					"Entered"
-#define ATTRIB_CAL_NOTE						"Note"
-#define ATTRIB_TRAINING_DATE				"Date"
-#define ATTRIB_TRAINING_NAME				"Name"
-#define ATTRIB_TRAINING_SUBNAME				"SubName"
-#define ATTRIB_ACTION_VERB					"Verb"
-	#define ACTION_VERB_DELETE_TITLE			"DeleteTitle"
-	#define ACTION_VERB_RENAME_TITLE			"RenameTitle"
-#define ATTRIB_ACTION_VENUE					"Venue"
-#define ATTRIB_ACTION_DIVISION				"Div"
-#define ATTRIB_ACTION_OLDNAME				"OldName"
-#define ATTRIB_ACTION_NEWNAME				"NewName"
-#define ATTRIB_VENUE_NAME					"Name"
-#define ATTRIB_VENUE_LONGNAME				"LongName"
-#define ATTRIB_MULTIQ_NAME					"Name"
-#define ATTRIB_MULTIQ_SHORTNAME				"SName"
-#define ATTRIB_MULTIQ_VALID_FROM			"ValidFrom"
-#define ATTRIB_MULTIQ_VALID_TO				"ValidTo"
-#define ATTRIB_MULTIQ_ITEM_DIV				"Div"
-#define ATTRIB_MULTIQ_ITEM_LEVEL			"Level"
-#define ATTRIB_MULTIQ_ITEM_EVENT			"Event"
-#define ATTRIB_OTHERPTS_NAME				"Name"
-#define ATTRIB_OTHERPTS_COUNT				"Count"
-#define ATTRIB_DIVISION_NAME				"Name"
-#define ATTRIB_LEVEL_NAME					"Name"
-#define ATTRIB_TITLES_NAME					"Name"
-#define ATTRIB_TITLES_LONGNAME				"LongName"
-#define ATTRIB_TITLES_MULTIPLE				"Multiple"
-#define ATTRIB_TITLES_PREFIX				"Prefix"
-#define ATTRIB_SUBLEVEL_NAME				"Name"
-#define ATTRIB_EVENT_NAME					"Name"
-#define ATTRIB_EVENT_HAS_TABLE				"hasTable"
-#define ATTRIB_EVENT_HASPARTNER				"hasPartner"
-#define ATTRIB_EVENT_HASSUBNAMES			"hasSubNames"
-#define ATTRIB_SCORING_VALIDFROM			"ValidFrom"
-#define ATTRIB_SCORING_VALIDTO				"ValidTo"
-#define ATTRIB_SCORING_DIVISION				"Division"
-#define ATTRIB_SCORING_LEVEL				"Level"
-#define ATTRIB_SCORING_TYPE					"type"
-#define ATTRIB_SCORING_DROPFRACTIONS		"dropFractions"
-#define ATTRIB_SCORING_TIMEFAULTS_UNDER		"underTF"
-#define ATTRIB_SCORING_TIMEFAULTS_OVER		"overTF"
-#define ATTRIB_SCORING_OPENINGPTS			"OpeningPts"
-#define ATTRIB_SCORING_CLOSINGPTS			"ClosingPts"
-#define ATTRIB_SCORING_SUPERQ				"superQ"
-#define ATTRIB_SCORING_SPEEDPTS				"speedPts"
-#define ATTRIB_TITLE_POINTS_POINTS			"Points"
-#define ATTRIB_TITLE_POINTS_FAULTS			"Faults"
-#define ATTRIB_LIFETIME_POINTS_POINTS		"Points"
-#define ATTRIB_LIFETIME_POINTS_FAULTS		"Faults"
-#define ATTRIB_INFO_NAME					"Name"
-#define ATTRIB_DOG_CALLNAME					"CallName"
-#define ATTRIB_DOG_DOB						"DOB"
-#define ATTRIB_DOG_DECEASED					"Deceased"
-#define ATTRIB_EXISTING_PTS_DATE			"Date"
-#define ATTRIB_EXISTING_PTS_TYPE			"Type"
-	#define EXISTING_PTS_TYPE_OTHER				"Other"
-	#define EXISTING_PTS_TYPE_RUNS				"Run"
-	#define EXISTING_PTS_TYPE_SPEED				"Speed"
-	#define EXISTING_PTS_TYPE_MQ				"MQ"
-	#define EXISTING_PTS_TYPE_SQ				"SQ"
-#define ATTRIB_EXISTING_PTS_OTHER			"Other"
-#define ATTRIB_EXISTING_PTS_VENUE			"Venue"
-#define ATTRIB_EXISTING_PTS_MULTIQ			"MultiQ"
-#define ATTRIB_EXISTING_PTS_DIV				"Div"
-#define ATTRIB_EXISTING_PTS_LEVEL			"Level"
-#define ATTRIB_EXISTING_PTS_EVENT			"Event"
-#define ATTRIB_EXISTING_PTS_SUBNAME			"SubName"
-#define ATTRIB_EXISTING_PTS_POINTS			"Pts"
-#define ATTRIB_REG_NUM_VENUE				"Venue"
-#define ATTRIB_REG_NUM_NUMBER				"Number"
-#define ATTRIB_REG_NUM_HEIGHT				"Height"
-#define ATTRIB_REG_NUM_RECEIVED				"isReceived"
-#define ATTRIB_TITLE_VENUE					"Venue"
-#define ATTRIB_TITLE_NAME					"Name"
-#define ATTRIB_TITLE_DATE					"Date"
-#define ATTRIB_TITLE_INSTANCE				"instance"
-#define ATTRIB_TITLE_RECEIVED				"isReceived"
-#define ATTRIB_TITLE_HIDDEN					"isHidden"
-#define ATTRIB_TRIAL_VERIFIED				"Verified"
-#define ATTRIB_CLUB_VENUE					"Venue"
-#define ATTRIB_RUN_DATE						"Date"
-#define ATTRIB_RUN_DIVISION					"Division"
-#define ATTRIB_RUN_LEVEL					"Level"
-#define ATTRIB_RUN_HEIGHT					"Height"
-#define ATTRIB_RUN_EVENT					"Event"
-#define ATTRIB_RUN_SUBNAME					"SubName"
-#define ATTRIB_PARTNER_HANDLER				"Handler"
-#define ATTRIB_PARTNER_DOG					"Dog"
-#define ATTRIB_PARTNER_REGNUM				"RegNum"
-#define ATTRIB_SCORING_FAULTS				"CourseFaults"
-#define ATTRIB_SCORING_TIME					"Time"
-#define ATTRIB_SCORING_HAS_TABLE			"hasTable"
-#define ATTRIB_SCORING_TF_MULTIPLIER		"timeFault"
-#define ATTRIB_SCORING_SCT					"SCT"
-#define ATTRIB_SCORING_SCT2					"SCT2"
-#define ATTRIB_BY_TIME_YARDS				"Yards"
-#define ATTRIB_BY_OPENCLOSE_NEEDOPEN		"NeedOpenPts"
-#define ATTRIB_BY_OPENCLOSE_NEEDCLOSE		"NeedClosePts"
-#define ATTRIB_BY_OPENCLOSE_GOTOPEN			"OpenPts"
-#define ATTRIB_BY_OPENCLOSE_GOTCLOSE		"ClosePts"
-#define ATTRIB_BY_POINTS_NEED				"NeedPts"
-#define ATTRIB_BY_POINTS_GOT				"Points"
-#define ATTRIB_PLACEMENT_Q					"Q"
-#define ATTRIB_PLACEMENT_PLACE				"Place"
-#define ATTRIB_PLACEMENT_INCLASS			"InClass"
-#define ATTRIB_PLACEMENT_DOGSQD				"DogsQd"
-#define ATTRIB_PLACEMENT_OTHERPOINTS_NAME	"Name"
-#define ATTRIB_PLACEMENT_OTHERPOINTS_POINTS	"Points"
-#define ATTRIB_REF_RUN_Q					"Q"
-#define ATTRIB_REF_RUN_PLACE				"Place"
-#define ATTRIB_REF_RUN_TIME					"Time"
-#define ATTRIB_REF_RUN_HEIGHT				"Height"
+#define TREE_BOOK							_T("AgilityBook")
+#define TREE_CALENDAR						_T("Calendar")
+#define TREE_TRAINING						_T("Training")
+#define TREE_CONFIG							_T("Configuration")
+#define TREE_ACTION							_T("Action")
+#define TREE_VENUE							_T("Venue")
+#define TREE_VENUE_DESC						_T("Desc")
+#define TREE_MULTIQ							_T("MultiQ")
+#define TREE_MULTIQ_ITEM					_T("MultiQItem")
+#define TREE_DIVISION						_T("Division")
+#define TREE_LEVEL							_T("Level")
+#define TREE_TITLES							_T("Titles")
+#define TREE_SUBLEVEL						_T("SubLevel")
+#define TREE_EVENT							_T("Event")
+#define TREE_EVENT_DESC						_T("Desc")
+#define TREE_EVENT_SUBNAME					_T("SubName")
+#define TREE_SCORING						_T("Scoring")
+#define TREE_TITLE_POINTS					_T("TitlePoints")
+#define TREE_LIFETIME_POINTS				_T("LifeTime")
+#define TREE_FAULTTYPE						_T("FaultType")
+#define TREE_OTHERPTS						_T("OtherPts")
+#define TREE_INFO							_T("Info")
+#define TREE_CLUBINFO						_T("ClubInfo")
+#define TREE_JUDGEINFO						_T("JudgeInfo")
+#define TREE_LOCATIONINFO					_T("LocationInfo")
+#define TREE_DOG							_T("Dog")
+#define TREE_REGNAME						_T("RegisteredName")
+#define TREE_BREED							_T("Breed")
+#define TREE_NOTE							_T("Note")
+#define TREE_EXISTING_PTS					_T("ExistingPoints")
+#define TREE_REG_NUM						_T("RegNum")
+#define TREE_TITLE							_T("Title")
+#define TREE_TRIAL							_T("Trial")
+#define TREE_LOCATION						_T("Location")
+#define TREE_CLUB							_T("Club")
+#define TREE_RUN							_T("Run")
+#define TREE_CONDITIONS						_T("Conditions")
+#define TREE_JUDGE							_T("Judge")
+#define TREE_HANDLER						_T("Handler")
+#define TREE_PARTNER						_T("Partner")
+#define TREE_BY_TIME						_T("ByTime")
+#define TREE_BY_OPENCLOSE					_T("ByOpenClose")
+#define TREE_BY_POINTS						_T("ByPoints")
+#define TREE_PLACEMENT						_T("Placement")
+#define TREE_PLACEMENT_OTHERPOINTS			_T("OtherPoints")
+#define TREE_NOTES							_T("Notes")
+#define TREE_FAULTS							_T("Faults")
+#define TREE_CRCD							_T("CRCD")
+#define TREE_CRCD_META						_T("CRCDMeta")
+#define TREE_OTHER							_T("Other")
+#define TREE_RUN_LINK						_T("Link")
+#define TREE_REF_RUN						_T("ReferenceRun")
+#define TREE_REF_NAME						_T("Name")
+#define TREE_REF_BREED						_T("Breed")
+#define TREE_REF_SCORE						_T("ScoreOrFaults")
+#define TREE_REF_NOTE						_T("Note")
+#define ATTRIB_BOOK_VERSION					_T("Book")
+#define ATTRIB_BOOK_PGM_VERSION				_T("ver")
+#define ATTRIB_CONFIG_VERSION				_T("version")
+#define ATTRIB_CONFIG_UPDATE				_T("update")
+#define ATTRIB_CAL_START					_T("DateStart")
+#define ATTRIB_CAL_END						_T("DateEnd")
+#define ATTRIB_CAL_OPENING					_T("DateOpening")
+#define ATTRIB_CAL_CLOSING					_T("DateClosing")
+#define ATTRIB_CAL_MAYBE					_T("isTentative")
+#define ATTRIB_CAL_LOCATION					_T("Location")
+#define ATTRIB_CAL_CLUB						_T("Club")
+#define ATTRIB_CAL_VENUE					_T("Venue")
+#define ATTRIB_CAL_ENTERED					_T("Entered")
+#define ATTRIB_CAL_NOTE						_T("Note")
+#define ATTRIB_TRAINING_DATE				_T("Date")
+#define ATTRIB_TRAINING_NAME				_T("Name")
+#define ATTRIB_TRAINING_SUBNAME				_T("SubName")
+#define ATTRIB_ACTION_VERB					_T("Verb")
+	#define ACTION_VERB_DELETE_TITLE			_T("DeleteTitle")
+	#define ACTION_VERB_RENAME_TITLE			_T("RenameTitle")
+#define ATTRIB_ACTION_VENUE					_T("Venue")
+#define ATTRIB_ACTION_DIVISION				_T("Div")
+#define ATTRIB_ACTION_OLDNAME				_T("OldName")
+#define ATTRIB_ACTION_NEWNAME				_T("NewName")
+#define ATTRIB_VENUE_NAME					_T("Name")
+#define ATTRIB_VENUE_LONGNAME				_T("LongName")
+#define ATTRIB_MULTIQ_NAME					_T("Name")
+#define ATTRIB_MULTIQ_SHORTNAME				_T("SName")
+#define ATTRIB_MULTIQ_VALID_FROM			_T("ValidFrom")
+#define ATTRIB_MULTIQ_VALID_TO				_T("ValidTo")
+#define ATTRIB_MULTIQ_ITEM_DIV				_T("Div")
+#define ATTRIB_MULTIQ_ITEM_LEVEL			_T("Level")
+#define ATTRIB_MULTIQ_ITEM_EVENT			_T("Event")
+#define ATTRIB_OTHERPTS_NAME				_T("Name")
+#define ATTRIB_OTHERPTS_COUNT				_T("Count")
+#define ATTRIB_DIVISION_NAME				_T("Name")
+#define ATTRIB_LEVEL_NAME					_T("Name")
+#define ATTRIB_TITLES_NAME					_T("Name")
+#define ATTRIB_TITLES_LONGNAME				_T("LongName")
+#define ATTRIB_TITLES_MULTIPLE				_T("Multiple")
+#define ATTRIB_TITLES_PREFIX				_T("Prefix")
+#define ATTRIB_SUBLEVEL_NAME				_T("Name")
+#define ATTRIB_EVENT_NAME					_T("Name")
+#define ATTRIB_EVENT_HAS_TABLE				_T("hasTable")
+#define ATTRIB_EVENT_HASPARTNER				_T("hasPartner")
+#define ATTRIB_EVENT_HASSUBNAMES			_T("hasSubNames")
+#define ATTRIB_SCORING_VALIDFROM			_T("ValidFrom")
+#define ATTRIB_SCORING_VALIDTO				_T("ValidTo")
+#define ATTRIB_SCORING_DIVISION				_T("Division")
+#define ATTRIB_SCORING_LEVEL				_T("Level")
+#define ATTRIB_SCORING_TYPE					_T("type")
+#define ATTRIB_SCORING_DROPFRACTIONS		_T("dropFractions")
+#define ATTRIB_SCORING_TIMEFAULTS_UNDER		_T("underTF")
+#define ATTRIB_SCORING_TIMEFAULTS_OVER		_T("overTF")
+#define ATTRIB_SCORING_OPENINGPTS			_T("OpeningPts")
+#define ATTRIB_SCORING_CLOSINGPTS			_T("ClosingPts")
+#define ATTRIB_SCORING_SUPERQ				_T("superQ")
+#define ATTRIB_SCORING_SPEEDPTS				_T("speedPts")
+#define ATTRIB_TITLE_POINTS_POINTS			_T("Points")
+#define ATTRIB_TITLE_POINTS_FAULTS			_T("Faults")
+#define ATTRIB_LIFETIME_POINTS_POINTS		_T("Points")
+#define ATTRIB_LIFETIME_POINTS_FAULTS		_T("Faults")
+#define ATTRIB_INFO_NAME					_T("Name")
+#define ATTRIB_DOG_CALLNAME					_T("CallName")
+#define ATTRIB_DOG_DOB						_T("DOB")
+#define ATTRIB_DOG_DECEASED					_T("Deceased")
+#define ATTRIB_EXISTING_PTS_DATE			_T("Date")
+#define ATTRIB_EXISTING_PTS_TYPE			_T("Type")
+	#define EXISTING_PTS_TYPE_OTHER				_T("Other")
+	#define EXISTING_PTS_TYPE_RUNS				_T("Run")
+	#define EXISTING_PTS_TYPE_SPEED				_T("Speed")
+	#define EXISTING_PTS_TYPE_MQ				_T("MQ")
+	#define EXISTING_PTS_TYPE_SQ				_T("SQ")
+#define ATTRIB_EXISTING_PTS_OTHER			_T("Other")
+#define ATTRIB_EXISTING_PTS_VENUE			_T("Venue")
+#define ATTRIB_EXISTING_PTS_MULTIQ			_T("MultiQ")
+#define ATTRIB_EXISTING_PTS_DIV				_T("Div")
+#define ATTRIB_EXISTING_PTS_LEVEL			_T("Level")
+#define ATTRIB_EXISTING_PTS_EVENT			_T("Event")
+#define ATTRIB_EXISTING_PTS_SUBNAME			_T("SubName")
+#define ATTRIB_EXISTING_PTS_POINTS			_T("Pts")
+#define ATTRIB_REG_NUM_VENUE				_T("Venue")
+#define ATTRIB_REG_NUM_NUMBER				_T("Number")
+#define ATTRIB_REG_NUM_HEIGHT				_T("Height")
+#define ATTRIB_REG_NUM_RECEIVED				_T("isReceived")
+#define ATTRIB_TITLE_VENUE					_T("Venue")
+#define ATTRIB_TITLE_NAME					_T("Name")
+#define ATTRIB_TITLE_DATE					_T("Date")
+#define ATTRIB_TITLE_INSTANCE				_T("instance")
+#define ATTRIB_TITLE_RECEIVED				_T("isReceived")
+#define ATTRIB_TITLE_HIDDEN					_T("isHidden")
+#define ATTRIB_TRIAL_VERIFIED				_T("Verified")
+#define ATTRIB_CLUB_VENUE					_T("Venue")
+#define ATTRIB_RUN_DATE						_T("Date")
+#define ATTRIB_RUN_DIVISION					_T("Division")
+#define ATTRIB_RUN_LEVEL					_T("Level")
+#define ATTRIB_RUN_HEIGHT					_T("Height")
+#define ATTRIB_RUN_EVENT					_T("Event")
+#define ATTRIB_RUN_SUBNAME					_T("SubName")
+#define ATTRIB_PARTNER_HANDLER				_T("Handler")
+#define ATTRIB_PARTNER_DOG					_T("Dog")
+#define ATTRIB_PARTNER_REGNUM				_T("RegNum")
+#define ATTRIB_SCORING_FAULTS				_T("CourseFaults")
+#define ATTRIB_SCORING_TIME					_T("Time")
+#define ATTRIB_SCORING_HAS_TABLE			_T("hasTable")
+#define ATTRIB_SCORING_TF_MULTIPLIER		_T("timeFault")
+#define ATTRIB_SCORING_SCT					_T("SCT")
+#define ATTRIB_SCORING_SCT2					_T("SCT2")
+#define ATTRIB_BY_TIME_YARDS				_T("Yards")
+#define ATTRIB_BY_OPENCLOSE_NEEDOPEN		_T("NeedOpenPts")
+#define ATTRIB_BY_OPENCLOSE_NEEDCLOSE		_T("NeedClosePts")
+#define ATTRIB_BY_OPENCLOSE_GOTOPEN			_T("OpenPts")
+#define ATTRIB_BY_OPENCLOSE_GOTCLOSE		_T("ClosePts")
+#define ATTRIB_BY_POINTS_NEED				_T("NeedPts")
+#define ATTRIB_BY_POINTS_GOT				_T("Points")
+#define ATTRIB_PLACEMENT_Q					_T("Q")
+#define ATTRIB_PLACEMENT_PLACE				_T("Place")
+#define ATTRIB_PLACEMENT_INCLASS			_T("InClass")
+#define ATTRIB_PLACEMENT_DOGSQD				_T("DogsQd")
+#define ATTRIB_PLACEMENT_OTHERPOINTS_NAME	_T("Name")
+#define ATTRIB_PLACEMENT_OTHERPOINTS_POINTS	_T("Points")
+#define ATTRIB_REF_RUN_Q					_T("Q")
+#define ATTRIB_REF_RUN_PLACE				_T("Place")
+#define ATTRIB_REF_RUN_TIME					_T("Time")
+#define ATTRIB_REF_RUN_HEIGHT				_T("Height")
 
 /*
  * These defines list any special values.
  */
-#define WILDCARD_DIVISION		"*"
-#define WILDCARD_LEVEL			"*"
+#define WILDCARD_DIVISION		_T("*")
+#define WILDCARD_LEVEL			_T("*")
 
 /*
  * Localization stuff
@@ -258,134 +258,133 @@
  */
 
 // Used when loading data.
-#define UNKNOWN_VERSION			"Unknown document version"
-#define WARNING_NEWER_DOC		"Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?"
-#define INVALID_DOC_STRUCTURE	"Invalid document structure"
-#define INVALID_FILE_FORMAT		"Invalid file format: '"
-#define INVALID_FILE_MISSING_ATTRIB	"' is missing required attribute '"
-#define INVALID_FILE_BAD_ATTRIB	"' has an invalid value for the attribute '"
-#define INVALID_DATE			"Invalid date: "
-#define INVALID_VALUE			"Invalid value: "
-#define INVALID_DIV_LEVEL		"Division/level pair has not been defined: "
-#define INVALID_EVENT_NAME		"Event has not been defined: "
-#define INVALID_ROOT			"'" TREE_BOOK "' must be the root element."
-#define MISSING_CONFIG			"Missing '" TREE_CONFIG "' section."
-#define INVALID_CONFIG			"Only one '" TREE_CONFIG "' section is allowed."
-#define INVALID_VENUE_CONFIG	"All '" TREE_DIVISION "' elements must come before '" TREE_EVENT "' elements."
-#define INVALID_DIV_NAME		"Invalid division name: "
-#define INVALID_VENUE_NAME		"Invalid venue name: "
-#define INVALID_OTHER_PTS_NAME	"Invalid Other Points name: "
-#define INVALID_MULTIQ_NAME		"Invalid Multiple Q name: "
-#define INVALID_MULTIQ_CONVERSION	"Unable to convert Existing QQ Points"
-#define INVALID_EVENT			"Unable to locate an event description in any of the venues of the affiliated clubs: "
-#define INVALID_TITLE			"Title is not defined in the Venue description: "
-#define VALID_VALUES			"Valid values: "
-#define VALID_VALUES_BOOL		"Valid values: 'y', 'n'"
-#define VALID_VALUES_ENTRY		"Valid values: 'E', 'P', 'N'"
-#define VALID_VALUES_OTHERPT	"Valid values: 'All', 'AllByEvent', 'Level', 'LevelByEvent'"
-#define VALID_VALUES_SCORE		"Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'"
+#define UNKNOWN_VERSION			_T("Unknown document version")
+#define WARNING_NEWER_DOC		_T("Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?")
+#define INVALID_DOC_STRUCTURE	_T("Invalid document structure")
+#define INVALID_FILE_FORMAT		_T("Invalid file format: '")
+#define INVALID_FILE_MISSING_ATTRIB	_T("' is missing required attribute '")
+#define INVALID_FILE_BAD_ATTRIB	_T("' has an invalid value for the attribute '")
+#define INVALID_DATE			_T("Invalid date: ")
+#define INVALID_VALUE			_T("Invalid value: ")
+#define INVALID_DIV_LEVEL		_T("Division/level pair has not been defined: ")
+#define INVALID_EVENT_NAME		_T("Event has not been defined: ")
+#define INVALID_ROOT			_T("'") TREE_BOOK _T("' must be the root element.")
+#define MISSING_CONFIG			_T("Missing '") TREE_CONFIG _T("' section.")
+#define INVALID_CONFIG			_T("Only one '") TREE_CONFIG _T("' section is allowed.")
+#define INVALID_VENUE_CONFIG	_T("All '") TREE_DIVISION _T("' elements must come before '") TREE_EVENT _T("' elements.")
+#define INVALID_DIV_NAME		_T("Invalid division name: ")
+#define INVALID_VENUE_NAME		_T("Invalid venue name: ")
+#define INVALID_OTHER_PTS_NAME	_T("Invalid Other Points name: ")
+#define INVALID_MULTIQ_NAME		_T("Invalid Multiple Q name: ")
+#define INVALID_MULTIQ_CONVERSION	_T("Unable to convert Existing QQ Points")
+#define INVALID_EVENT			_T("Unable to locate an event description in any of the venues of the affiliated clubs: ")
+#define INVALID_TITLE			_T("Title is not defined in the Venue description: ")
+#define VALID_VALUES			_T("Valid values: ")
+#define VALID_VALUES_BOOL		_T("Valid values: 'y', 'n'")
+#define VALID_VALUES_ENTRY		_T("Valid values: 'E', 'P', 'N'")
+#define VALID_VALUES_OTHERPT	_T("Valid values: 'All', 'AllByEvent', 'Level', 'LevelByEvent'")
+#define VALID_VALUES_SCORE		_T("Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'")
 
 // Strings for formatting the information returned when updating configurations.
 // - Changed to inline functions in order to remove sprintf style formatting.
-#include <sstream>
-#include <string>
-inline std::string UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
+#include "ARBTypes.h"
+inline ARBString UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Faults: " << nNew << " added, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Faults: ") << nNew << _T(" added, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
+inline ARBString UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Other Points: " << nNew << " added, " << nUpdated << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Other Points: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
+inline ARBString UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Venues: " << nNew << " added, " << nUpdated << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Venues: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
+inline ARBString UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Divisions: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Divisions: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
+inline ARBString UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Events: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Events: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
+inline ARBString UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "MultiQs: " << nAdded << " added, " << nDeleted << " deleted, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("MultiQs: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
+inline ARBString UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Levels: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Levels: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
+inline ARBString UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << "Titles: " << nAdded << " added, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T("Titles: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_SUBLEVELS(int nAdded)
+inline ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded)
 {
-	std::ostringstream buffer;
-	buffer << nAdded << " new sub-levels" << std::endl;
+	ARBostringstream buffer;
+	buffer << nAdded << _T(" new sub-levels") << std::endl;
 	return buffer.str();
 }
-inline std::string UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
+inline ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
 {
-	std::ostringstream buffer;
-	buffer << " rules: " << nAdded << " added, " << nDeleted << " deleted, " << nChanged << " updated, " << nSkipped << " identical" << std::endl;
+	ARBostringstream buffer;
+	buffer << _T(" rules: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
 	return buffer.str();
 }
 
 // Used in ARBConfigTitlePoints.cpp
-inline std::string TITLE_POINTS_NAME_FORMAT(short points, short faults)
+inline ARBString TITLE_POINTS_NAME_FORMAT(short points, short faults)
 {
-	std::ostringstream buffer;
-	buffer << points << " points with " << faults << " faults";
+	ARBostringstream buffer;
+	buffer << points << _T(" points with ") << faults << _T(" faults");
 	return buffer.str();
 }
-inline std::string LIFETIME_POINTS_NAME_FORMAT(short points, short faults)
+inline ARBString LIFETIME_POINTS_NAME_FORMAT(short points, short faults)
 {
-	std::ostringstream buffer;
-	buffer << points << " lifetime points with " << faults << " faults";
+	ARBostringstream buffer;
+	buffer << points << _T(" lifetime points with ") << faults << _T(" faults");
 	return buffer.str();
 }
 
 // Used in ARBConfigScoring.cpp
-#define SCORE_STYLE_UNKNOWN			"Unknown"
-#define SCORE_STYLE_FAULTSTIME		"Faults Then Time"
-#define SCORE_STYLE_FAULTS100TIME	"100 Minus Faults Then Time"
-#define SCORE_STYLE_FAULTS200TIME	"200 Minus Faults Then Time"
-#define SCORE_STYLE_OCSCORETIME		"Opening/Closing Points Then Time"
-#define SCORE_STYLE_SCORETIME		"Points Then Time"
-#define SCORE_STYLE_TIMEPLUSFAULTS	"Time Plus Faults"
+#define SCORE_STYLE_UNKNOWN			_T("Unknown")
+#define SCORE_STYLE_FAULTSTIME		_T("Faults Then Time")
+#define SCORE_STYLE_FAULTS100TIME	_T("100 Minus Faults Then Time")
+#define SCORE_STYLE_FAULTS200TIME	_T("200 Minus Faults Then Time")
+#define SCORE_STYLE_OCSCORETIME		_T("Opening/Closing Points Then Time")
+#define SCORE_STYLE_SCORETIME		_T("Points Then Time")
+#define SCORE_STYLE_TIMEPLUSFAULTS	_T("Time Plus Faults")
 
 // Used in ARBTypes.cpp
-#define ARBQ_TYPE_NA				"NA"
-#define ARBQ_TYPE_Q					"Q"
-#define ARBQ_TYPE_NQ				"NQ"
-#define ARBQ_TYPE_E					"E"
-#define ARBQ_TYPE_SQ				"SQ"
+#define ARBQ_TYPE_NA				_T("NA")
+#define ARBQ_TYPE_Q					_T("Q")
+#define ARBQ_TYPE_NQ				_T("NQ")
+#define ARBQ_TYPE_E					_T("E")
+#define ARBQ_TYPE_SQ				_T("SQ")
 
 // Used in ARBDogExistingPoints.cpp
-#define EXISTING_POINTS_OTHER		"OtherPoints"
-#define EXISTING_POINTS_RUN			"Run"
-#define EXISTING_POINTS_SPEED		"Speed"
-#define EXISTING_POINTS_MQ			"Multiple Q"
-#define EXISTING_POINTS_SQ			"SuperQ"
+#define EXISTING_POINTS_OTHER		_T("OtherPoints")
+#define EXISTING_POINTS_RUN			_T("Run")
+#define EXISTING_POINTS_SPEED		_T("Speed")
+#define EXISTING_POINTS_MQ			_T("Multiple Q")
+#define EXISTING_POINTS_SQ			_T("SuperQ")
 
 
 #include <list>
@@ -405,7 +404,7 @@ class Element;
 class ARBErrorCallback
 {
 public:
-	ARBErrorCallback(std::string& ioErrMsg)
+	ARBErrorCallback(ARBString& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
@@ -416,7 +415,7 @@ public:
 	 * @param pMsg Message to display to user.
 	 * @return True to continue, false to abort.
 	 */
-	virtual bool OnError(char const* const pMsg)
+	virtual bool OnError(TCHAR const* const pMsg)
 	{
 		return false;
 	}
@@ -424,13 +423,13 @@ public:
 	/**
 	 * Log an error message.
 	 */
-	virtual void LogMessage(std::string const& inMsg)
+	virtual void LogMessage(ARBString const& inMsg)
 	{
 		m_ErrMsg += inMsg;
 	}
 
 protected:
-	std::string& m_ErrMsg;
+	ARBString& m_ErrMsg;
 };
 
 /**
@@ -500,7 +499,7 @@ public:
 	 */
 	bool Save(
 		Element& outTree,
-		std::string const& inPgmVer,
+		ARBString const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -523,7 +522,7 @@ public:
 	 * @param bInfo Include clubs from the ARBInfo.
 	 * @return Number of clubs.
 	 */
-	size_t GetAllClubNames(std::set<std::string>& outClubs, bool bInfo = true) const;
+	size_t GetAllClubNames(std::set<ARBString>& outClubs, bool bInfo = true) const;
 
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
@@ -531,7 +530,7 @@ public:
 	 * @param bInfo Include locations from the ARBInfo.
 	 * @return Number of locations.
 	 */
-	size_t GetAllTrialLocations(std::set<std::string>& outLocations, bool bInfo = true) const;
+	size_t GetAllTrialLocations(std::set<ARBString>& outLocations, bool bInfo = true) const;
 
 	/**
 	 * Get all the subnames in use for the given event.
@@ -540,14 +539,14 @@ public:
 	 * @param outNames List of Sub-Names in use.
 	 * @return Number of subnames.
 	 */
-	size_t GetAllEventSubNames(std::string const& inVenue, ARBConfigEvent const* inEvent, std::set<std::string>& outNames) const;
+	size_t GetAllEventSubNames(ARBString const& inVenue, ARBConfigEvent const* inEvent, std::set<ARBString>& outNames) const;
 
 	/**
 	 * Get all heights in use from existing runs.
 	 * @param outHeights List of heights.
 	 * @return Number of heights.
 	 */
-	size_t GetAllHeights(std::set<std::string>& outHeights) const;
+	size_t GetAllHeights(std::set<ARBString>& outHeights) const;
 
 	/**
 	 * Get all judges in use from existing runs and Judges information.
@@ -555,21 +554,21 @@ public:
 	 * @param bInfo Include judges from the ARBInfo.
 	 * @return Number of judges.
 	 */
-	size_t GetAllJudges(std::set<std::string>& outJudges, bool bInfo = true) const;
+	size_t GetAllJudges(std::set<ARBString>& outJudges, bool bInfo = true) const;
 
 	/**
 	 * Get all handlers in use from existing runs.
 	 * @param outHandlers List of handlers.
 	 * @return Number of handlers.
 	 */
-	size_t GetAllHandlers(std::set<std::string>& outHandlers) const;
+	size_t GetAllHandlers(std::set<ARBString>& outHandlers) const;
 
 	/**
 	 * Get all fault types in use from existing runs and configuration.
 	 * @param outFaults List of faults.
 	 * @return Number of faults.
 	 */
-	size_t GetAllFaultTypes(std::set<std::string>& outFaults) const;
+	size_t GetAllFaultTypes(std::set<ARBString>& outFaults) const;
 
 	/*
 	 * Getters.
@@ -657,7 +656,7 @@ inline ARBDogList& ARBAgilityRecordBook::GetDogs()
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern std::string ErrorInvalidDocStructure(char const* const inMsg);
+extern ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg);
 
 /**
  * Return an error message about a missing required attribute.
@@ -667,10 +666,10 @@ extern std::string ErrorInvalidDocStructure(char const* const inMsg);
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern std::string ErrorMissingAttribute(
-	char const* const inElement,
-	char const* const inAttrib,
-	char const* const inMsg = NULL);
+extern ARBString ErrorMissingAttribute(
+	TCHAR const* const inElement,
+	TCHAR const* const inAttrib,
+	TCHAR const* const inMsg = NULL);
 
 /**
  * Return an error message about an invalid value in an attribute.
@@ -680,7 +679,7 @@ extern std::string ErrorMissingAttribute(
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern std::string ErrorInvalidAttributeValue(
-	char const* const inElement,
-	char const* const inAttrib,
-	char const* const inMsg = NULL);
+extern ARBString ErrorInvalidAttributeValue(
+	TCHAR const* const inElement,
+	TCHAR const* const inAttrib,
+	TCHAR const* const inMsg = NULL);

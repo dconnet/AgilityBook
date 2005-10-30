@@ -104,7 +104,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	{
-		TRACE0("Failed to create toolbar\n");
+		TRACE0(_T("Failed to create toolbar\n"));
 		return -1;      // fail to create
 	}
 
@@ -112,11 +112,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		!m_wndStatusBar.SetIndicators(indicators,
 		  sizeof(indicators)/sizeof(UINT)))
 	{
-		TRACE0("Failed to create status bar\n");
+		TRACE0(_T("Failed to create status bar\n"));
 		return -1;      // fail to create
 	}
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
-	m_wndStatusBar.SetPaneText(index, "");
+	m_wndStatusBar.SetPaneText(index, _T(""));
 
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
@@ -130,10 +130,10 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	CRect rWorkArea;
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &rWorkArea, 0);
-	int x = AfxGetApp()->GetProfileInt("Settings", "lastXpos", cs.x);
-	int y = AfxGetApp()->GetProfileInt("Settings", "lastYpos", cs.y);
-	int cx = AfxGetApp()->GetProfileInt("Settings", "lastCX", cs.cx);
-	int cy = AfxGetApp()->GetProfileInt("Settings", "lastCY", cs.cy);
+	int x = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastXpos"), cs.x);
+	int y = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastYpos"), cs.y);
+	int cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastCX"), cs.cx);
+	int cy = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastCY"), cs.cy);
 	if (CW_USEDEFAULT != x && rWorkArea.left <= x && x <= rWorkArea.right)
 		cs.x = x;
 	else
@@ -227,10 +227,10 @@ void CMainFrame::OnClose()
 		{
 			CRect r;
 			GetWindowRect(&r);
-			AfxGetApp()->WriteProfileInt("Settings", "lastXpos", r.left);
-			AfxGetApp()->WriteProfileInt("Settings", "lastYpos", r.top);
-			AfxGetApp()->WriteProfileInt("Settings", "lastCX", r.Width());
-			AfxGetApp()->WriteProfileInt("Settings", "lastCY", r.Height());
+			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastXpos"), r.left);
+			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastYpos"), r.top);
+			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastCX"), r.Width());
+			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastCY"), r.Height());
 		}
 		break;
 	case SW_SHOWMINIMIZED:
@@ -240,7 +240,7 @@ void CMainFrame::OnClose()
 		state = 1;
 		break;
 	}
-	AfxGetApp()->WriteProfileInt("Settings", "lastState", state);
+	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastState"), state);
 
 	CFrameWnd::OnClose();
 }

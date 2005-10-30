@@ -94,7 +94,7 @@ bool ARBDogRunPartner::operator!=(ARBDogRunPartner const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBDogRunPartner::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogRunPartner::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 

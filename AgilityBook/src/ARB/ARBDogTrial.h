@@ -69,14 +69,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a trial.
@@ -117,23 +117,23 @@ public:
 	 */
 	short GetSpeedPoints(
 			ARBConfig const& inConfig,
-			std::string const& inDiv,
-			std::string const& inLevel) const;
+			ARBString const& inDiv,
+			ARBString const& inLevel) const;
 
 	/**
 	 * Does this trial have a hosting club in the specified venue?
 	 * @param inVenue Venue to look for.
 	 * @return This trial is hosted by the venue.
 	 */
-	bool HasVenue(std::string const& inVenue) const;
+	bool HasVenue(ARBString const& inVenue) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetLocation() const;
-	void SetLocation(std::string const& inLoc);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetLocation() const;
+	void SetLocation(ARBString const& inLoc);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 	bool IsVerified() const;
 	void SetVerified(bool inVerified);
 	ARBDogClubList const& GetClubs() const;
@@ -143,29 +143,29 @@ public:
 
 private:
 	~ARBDogTrial();
-	std::string m_Location;
-	std::string m_Note;
+	ARBString m_Location;
+	ARBString m_Note;
 	bool m_Verified;
 	ARBDogClubList m_Clubs;
 	ARBDogRunList m_Runs;
 };
 
-inline std::string const& ARBDogTrial::GetLocation() const
+inline ARBString const& ARBDogTrial::GetLocation() const
 {
 	return m_Location;
 }
 
-inline void ARBDogTrial::SetLocation(std::string const& inLoc)
+inline void ARBDogTrial::SetLocation(ARBString const& inLoc)
 {
 	m_Location = inLoc;
 }
 
-inline std::string const& ARBDogTrial::GetNote() const
+inline ARBString const& ARBDogTrial::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBDogTrial::SetNote(std::string const& inNote)
+inline void ARBDogTrial::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }
@@ -220,7 +220,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTrialsInVenue(std::string const& inVenue) const;
+	int NumTrialsInVenue(ARBString const& inVenue) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -229,15 +229,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			std::string const& inOldVenue,
-			std::string const& inNewVenue);
+			ARBString const& inOldVenue,
+			ARBString const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(std::string const& inVenue);
+	int DeleteVenue(ARBString const& inVenue);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -245,7 +245,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(std::string const& inOther) const;
+	int NumOtherPointsInUse(ARBString const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -254,15 +254,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			std::string const& inOldOther,
-			std::string const& inNewOther);
+			ARBString const& inOldOther,
+			ARBString const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inOther OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(std::string const& inOther);
+	int DeleteOtherPoints(ARBString const& inOther);
 
 	/**
 	 * Number of multiple hosted trials in a division.
@@ -274,8 +274,8 @@ public:
 	 */
 	int NumMultiHostedTrialsInDivision(
 			ARBConfig const& inConfig,
-			std::string const& inVenue,
-			std::string const& inDiv) const;
+			ARBString const& inVenue,
+			ARBString const& inDiv) const;
 
 	/**
 	 * Get the number of runs in a division.
@@ -286,7 +286,7 @@ public:
 	 */
 	int NumRunsInDivision(
 			ARBConfigVenue const* inVenue,
-			std::string const& inDiv) const;
+			ARBString const& inDiv) const;
 
 	/**
 	 * Rename a division, rename any dependent objects.
@@ -297,8 +297,8 @@ public:
 	 */
 	int RenameDivision(
 			ARBConfigVenue const* inVenue,
-			std::string const& inOldDiv,
-			std::string const& inNewDiv);
+			ARBString const& inOldDiv,
+			ARBString const& inNewDiv);
 
 	/**
 	 * Delete a division, remove any dependent objects.
@@ -309,8 +309,8 @@ public:
 	 */
 	int DeleteDivision(
 			ARBConfig const& inConfig,
-			std::string const& inVenue,
-			std::string const& inDiv);
+			ARBString const& inVenue,
+			ARBString const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -321,9 +321,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-			std::string const& inVenue,
-			std::string const& inDiv,
-			std::string const& inLevel) const;
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -334,10 +334,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-			std::string const& inVenue,
-			std::string const& inDiv,
-			std::string const& inOldLevel,
-			std::string const& inNewLevel);
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inOldLevel,
+			ARBString const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -347,9 +347,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-			std::string const& inVenue,
-			std::string const& inDiv,
-			std::string const& inLevel);
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel);
 
 	/**
 	 * Number of events in use.
@@ -359,8 +359,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-			std::string const& inVenue,
-			std::string const& inEvent) const;
+			ARBString const& inVenue,
+			ARBString const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -370,9 +370,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-			std::string const& inVenue,
-			std::string const& inOldEvent,
-			std::string const& inNewEvent);
+			ARBString const& inVenue,
+			ARBString const& inOldEvent,
+			ARBString const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -381,8 +381,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-			std::string const& inVenue,
-			std::string const& inEvent);
+			ARBString const& inVenue,
+			ARBString const& inEvent);
 
 	/**
 	 * Add a trial.

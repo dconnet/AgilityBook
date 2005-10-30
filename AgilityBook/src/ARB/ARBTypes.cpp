@@ -38,7 +38,6 @@
 
 #include "StdAfx.h"
 #include "ARBTypes.h"
-#include <sstream>
 #include <float.h>
 #include <time.h>
 
@@ -53,10 +52,10 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ARBVersion::str() const
+ARBString ARBVersion::str() const
 {
-	std::ostringstream buffer;
-	buffer << Major() << "." << Minor();
+	ARBostringstream buffer;
+	buffer << Major() << _T(".") << Minor();
 	return buffer.str();
 }
 
@@ -64,7 +63,7 @@ std::string ARBVersion::str() const
 
 static struct Q2Enum
 {
-	char const* pQ;
+	TCHAR const* pQ;
 	ARB_Q::eQ q;
 } const sc_Qs[] = {
 	{ARBQ_TYPE_NA, ARB_Q::eQ_NA},
@@ -75,19 +74,19 @@ static struct Q2Enum
 }; ///< This is a list of the various types of "Q"s we support.
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
-std::string ARB_Q::GetValidTypes()
+ARBString ARB_Q::GetValidTypes()
 {
-	std::string types;
+	ARBString types;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (0 < i)
-			types += ", ";
+			types += _T(", ");
 		types += sc_Qs[i].pQ;
 	}
 	return types;
 }
 
-void ARB_Q::GetValidTypes(std::vector<std::string>& outTypes)
+void ARB_Q::GetValidTypes(std::vector<ARBString>& outTypes)
 {
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
@@ -111,9 +110,9 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 	return q;
 }
 
-std::string ARB_Q::str() const
+ARBString ARB_Q::str() const
 {
-	std::string s("?");
+	ARBString s(_T("?"));
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].q == m_Q)
@@ -126,7 +125,7 @@ std::string ARB_Q::str() const
 }
 
 bool ARB_Q::Load(
-		std::string const& inAttrib,
+		ARBString const& inAttrib,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -145,13 +144,13 @@ bool ARB_Q::Load(
 
 bool ARB_Q::Save(
 		Element& ioTree,
-		char const* const inAttribName) const
+		TCHAR const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
 	ASSERT(inAttribName != NULL);
 	bool bOk = false;
-	std::string q("NA");
+	ARBString q(_T("NA"));
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)
@@ -168,26 +167,26 @@ bool ARB_Q::Save(
 
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
-std::string ARBDouble::str(
+ARBString ARBDouble::str(
 		double inValue,
 		int inPrec)
 {
-	std::ostringstream str;
+	ARBostringstream str;
 	if (0 < inPrec)
 		str.precision(inPrec);
 	str << std::fixed << inValue;
-	std::string retVal = str.str();
-	std::string::size_type pos = retVal.find('.');
-	if (std::string::npos != pos)
+	ARBString retVal = str.str();
+	ARBString::size_type pos = retVal.find('.');
+	if (ARBString::npos != pos)
 	{
 		// Strip trailing zeros iff they are all 0.
 		if (2 == inPrec)
 		{
-			if (retVal.substr(pos) == ".00")
+			if (retVal.substr(pos) == _T(".00"))
 			{
 				// Input is ".00", so simplify
 				if (0 == pos)
-					retVal = "0";
+					retVal = _T("0");
 				// Strip the ".00".
 				else
 					retVal = retVal.substr(0, pos);

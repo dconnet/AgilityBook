@@ -62,14 +62,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a partner.
@@ -97,51 +97,51 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetHandler() const;
-	void SetHandler(std::string const& inHandler);
-	std::string const& GetDog() const;
-	void SetDog(std::string const& inDog);
-	std::string const& GetRegNum() const;
-	void SetRegNum(std::string const& inRegNum);
+	ARBString const& GetHandler() const;
+	void SetHandler(ARBString const& inHandler);
+	ARBString const& GetDog() const;
+	void SetDog(ARBString const& inDog);
+	ARBString const& GetRegNum() const;
+	void SetRegNum(ARBString const& inRegNum);
 
 private:
 	~ARBDogRunPartner();
-	std::string m_Handler;
-	std::string m_Dog;
-	std::string m_RegNum;
+	ARBString m_Handler;
+	ARBString m_Dog;
+	ARBString m_RegNum;
 };
 
-inline std::string ARBDogRunPartner::GetGenericName() const
+inline ARBString ARBDogRunPartner::GetGenericName() const
 {
 	return m_Dog;
 }
 
-inline std::string const& ARBDogRunPartner::GetHandler() const
+inline ARBString const& ARBDogRunPartner::GetHandler() const
 {
 	return m_Handler;
 }
 
-inline void ARBDogRunPartner::SetHandler(std::string const& inHandler)
+inline void ARBDogRunPartner::SetHandler(ARBString const& inHandler)
 {
 	m_Handler = inHandler;
 }
 
-inline std::string const& ARBDogRunPartner::GetDog() const
+inline ARBString const& ARBDogRunPartner::GetDog() const
 {
 	return m_Dog;
 }
 
-inline void ARBDogRunPartner::SetDog(std::string const& inDog)
+inline void ARBDogRunPartner::SetDog(ARBString const& inDog)
 {
 	m_Dog = inDog;
 }
 
-inline std::string const& ARBDogRunPartner::GetRegNum() const
+inline ARBString const& ARBDogRunPartner::GetRegNum() const
 {
 	return m_RegNum;
 }
 
-inline void ARBDogRunPartner::SetRegNum(std::string const& inRegNum)
+inline void ARBDogRunPartner::SetRegNum(ARBString const& inRegNum)
 {
 	m_RegNum = inRegNum;
 }

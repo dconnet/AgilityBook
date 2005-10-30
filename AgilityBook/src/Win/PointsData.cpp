@@ -63,8 +63,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 LifeTimePointInfo::LifeTimePointInfo(
-		std::string const& inDiv,
-		std::string const& inLevel,
+		ARBString const& inDiv,
+		ARBString const& inLevel,
 		int inPoints,
 		int inFiltered)
 	: div(inDiv)
@@ -148,9 +148,9 @@ PointsDataDog::~PointsDataDog()
 		m_pDog->Release();
 }
 
-std::string PointsDataDog::OnNeedText(size_t index) const
+ARBString PointsDataDog::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	if (m_pDog)
 	{
 		switch (index)
@@ -218,9 +218,9 @@ PointsDataVenue::~PointsDataVenue()
 		m_pVenue->Release();
 }
 
-std::string PointsDataVenue::OnNeedText(size_t index) const
+ARBString PointsDataVenue::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	if (m_pVenue)
 	{
 		switch (index)
@@ -234,7 +234,7 @@ std::string PointsDataVenue::OnNeedText(size_t index) const
 				ARBDogRegNum* pRegNum;
 				if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 				{
-					str = "[" + pRegNum->GetNumber() + "]";
+					str = _T("[") + pRegNum->GetNumber() + _T("]");
 					pRegNum->Release();
 				}
 			}
@@ -302,9 +302,9 @@ PointsDataTitle::~PointsDataTitle()
 		m_pTitle->Release();
 }
 
-std::string PointsDataTitle::OnNeedText(size_t index) const
+ARBString PointsDataTitle::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	if (m_pTitle)
 	{
 		switch (index)
@@ -315,7 +315,7 @@ std::string PointsDataTitle::OnNeedText(size_t index) const
 		case 2:
 			str = m_pView->GetDocument()->GetConfig().GetTitleCompleteName(m_pTitle, false);
 			if (m_pTitle->GetReceived())
-				str += "*";
+				str += _T("*");
 			break;
 		}
 	}
@@ -356,11 +356,11 @@ PointsDataEvent::PointsDataEvent(
 		ARBConfigDivision const* inDiv,
 		ARBConfigLevel const* inLevel,
 		ARBConfigEvent const* inEvent,
-		std::string const& inRunCount,
-		std::string const& inQcount,
-		std::string const& inPts,
-		std::string const& inSuperQ,
-		std::string const& inSpeed)
+		ARBString const& inRunCount,
+		ARBString const& inQcount,
+		ARBString const& inPts,
+		ARBString const& inSuperQ,
+		ARBString const& inSpeed)
 	: PointsDataBase(pView)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
@@ -376,9 +376,9 @@ PointsDataEvent::PointsDataEvent(
 {
 }
 
-std::string PointsDataEvent::OnNeedText(size_t index) const
+ARBString PointsDataEvent::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 1: // Division
@@ -414,11 +414,11 @@ std::string PointsDataEvent::OnNeedText(size_t index) const
 
 void PointsDataEvent::Details() const
 {
-	std::string str("Runs: ");
+	ARBString str(_T("Runs: "));
 	str += m_Div->GetName();
-	str += "/";
+	str += _T("/");
 	str += m_Level->GetName();
-	str += "/";
+	str += _T("/");
 	str += m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
 	CDlgListViewer dlg(m_pView->GetDocument(), str.c_str(), m_Dog ? &data : NULL, m_Matching, m_pView);
@@ -441,7 +441,7 @@ bool PointsDataEvent::IsEqual(PointsDataBase const* inData)
 
 PointsDataLifetime::PointsDataLifetime(
 		CAgilityBookViewPoints* pView,
-		std::string const& inVenue)
+		ARBString const& inVenue)
 	: PointsDataBase(pView)
 	, m_Venue(inVenue.c_str())
 	, m_Lifetime(0)
@@ -450,8 +450,8 @@ PointsDataLifetime::PointsDataLifetime(
 }
 
 void PointsDataLifetime::AddLifetimeInfo(
-		std::string const& inDiv,
-		std::string const& inLevel,
+		ARBString const& inDiv,
+		ARBString const& inLevel,
 		int inLifetime,
 		int inFiltered)
 {
@@ -460,9 +460,9 @@ void PointsDataLifetime::AddLifetimeInfo(
 	m_Filtered += inFiltered;
 }
 
-std::string PointsDataLifetime::OnNeedText(size_t index) const
+ARBString PointsDataLifetime::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 1:
@@ -476,9 +476,9 @@ std::string PointsDataLifetime::OnNeedText(size_t index) const
 		{
 			CString str2;
 			if (0 < m_Filtered)
-				str2.Format("Total: %d (%d)", m_Lifetime - m_Filtered, m_Lifetime);
+				str2.Format(_T("Total: %d (%d)"), m_Lifetime - m_Filtered, m_Lifetime);
 			else
-				str2.Format("Total: %d", m_Lifetime);
+				str2.Format(_T("Total: %d"), m_Lifetime);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -489,7 +489,7 @@ std::string PointsDataLifetime::OnNeedText(size_t index) const
 void PointsDataLifetime::Details() const
 {
 	CString caption(m_Venue);
-	caption += " Lifetime Points";
+	caption += _T(" Lifetime Points");
 	CDlgListViewer dlg(m_pView->GetDocument(), caption, m_Data, m_pView);
 	dlg.DoModal();
 }
@@ -507,16 +507,16 @@ bool PointsDataLifetime::IsEqual(PointsDataBase const* inData)
 
 PointsDataLifetimeDiv::PointsDataLifetimeDiv(
 		CAgilityBookViewPoints* pView,
-		std::string const& inVenue,
-		std::string const& inDiv)
+		ARBString const& inVenue,
+		ARBString const& inDiv)
 	: PointsDataLifetime(pView, inVenue)
 	, m_Div(inDiv)
 {
 }
 
 void PointsDataLifetimeDiv::AddLifetimeInfo(
-		std::string const& inDiv,
-		std::string const& inLevel,
+		ARBString const& inDiv,
+		ARBString const& inLevel,
 		int inLifetime,
 		int inFiltered)
 {
@@ -528,18 +528,18 @@ void PointsDataLifetimeDiv::AddLifetimeInfo(
 	}
 }
 
-std::string PointsDataLifetimeDiv::OnNeedText(size_t index) const
+ARBString PointsDataLifetimeDiv::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 2:
 		{
 			CString str2;
 			if (0 < m_Filtered)
-				str2.Format("%s: %d (%d)", m_Div.c_str(), m_Lifetime - m_Filtered, m_Lifetime);
+				str2.Format(_T("%s: %d (%d)"), m_Div.c_str(), m_Lifetime - m_Filtered, m_Lifetime);
 			else
-				str2.Format("%s: %d", m_Div.c_str(), m_Lifetime);
+				str2.Format(_T("%s: %d"), m_Div.c_str(), m_Lifetime);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -577,13 +577,13 @@ PointsDataMultiQs::PointsDataMultiQs(
 		m_Venue, m_MultiQ, NULL, NULL, NULL);
 }
 
-std::string PointsDataMultiQs::OnNeedText(size_t index) const
+ARBString PointsDataMultiQs::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	if (7 == index)
 	{
 		CString str2;
-		str2.FormatMessage("%1!d! %2", m_ExistingDblQs + m_MQs.size(), m_MultiQ->GetShortName().c_str());
+		str2.FormatMessage(_T("%1!d! %2"), m_ExistingDblQs + m_MQs.size(), m_MultiQ->GetShortName().c_str());
 		str = (LPCTSTR)str2;
 	}
 	return str;
@@ -618,9 +618,9 @@ PointsDataSpeedPts::PointsDataSpeedPts(
 {
 }
 
-std::string PointsDataSpeedPts::OnNeedText(size_t index) const
+ARBString PointsDataSpeedPts::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	if (7 == index)
 	{
 		CString str2;
@@ -660,16 +660,16 @@ PointsDataOtherPoints::PointsDataOtherPoints(
 
 PointsDataOtherPointsTallyAll::PointsDataOtherPointsTallyAll(
 		CAgilityBookViewPoints* pView,
-		std::string const& inName,
+		ARBString const& inName,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 	, m_Name(inName)
 {
 }
 
-std::string PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
+ARBString PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 1:
@@ -678,7 +678,7 @@ std::string PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 	case 2:
 		{
 			CString str2;
-			str2.Format("%d", m_Score);
+			str2.Format(_T("%d"), m_Score);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -688,7 +688,7 @@ std::string PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 
 void PointsDataOtherPointsTallyAll::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
 	dlg.DoModal();
 }
 
@@ -705,16 +705,16 @@ bool PointsDataOtherPointsTallyAll::IsEqual(PointsDataBase const* inData)
 
 PointsDataOtherPointsTallyAllByEvent::PointsDataOtherPointsTallyAllByEvent(
 		CAgilityBookViewPoints* pView,
-		std::string const& inEvent,
+		ARBString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 	, m_Event(inEvent)
 {
 }
 
-std::string PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
+ARBString PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 2: // Event
@@ -723,7 +723,7 @@ std::string PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 	case 3:
 		{
 			CString str2;
-			str2.Format("%d", m_Score);
+			str2.Format(_T("%d"), m_Score);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -733,7 +733,7 @@ std::string PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 
 void PointsDataOtherPointsTallyAllByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
 	dlg.DoModal();
 }
 
@@ -750,16 +750,16 @@ bool PointsDataOtherPointsTallyAllByEvent::IsEqual(PointsDataBase const* inData)
 
 PointsDataOtherPointsTallyLevel::PointsDataOtherPointsTallyLevel(
 		CAgilityBookViewPoints* pView,
-		std::string const& inLevel,
+		ARBString const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 	, m_Level(inLevel)
 {
 }
 
-std::string PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
+ARBString PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 2: // Level
@@ -768,7 +768,7 @@ std::string PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 	case 3:
 		{
 			CString str2;
-			str2.Format("%d", m_Score);
+			str2.Format(_T("%d"), m_Score);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -778,7 +778,7 @@ std::string PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 
 void PointsDataOtherPointsTallyLevel::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
 	dlg.DoModal();
 }
 
@@ -795,8 +795,8 @@ bool PointsDataOtherPointsTallyLevel::IsEqual(PointsDataBase const* inData)
 
 PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(
 		CAgilityBookViewPoints* pView,
-		std::string const& inLevel,
-		std::string const& inEvent,
+		ARBString const& inLevel,
+		ARBString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataOtherPoints(pView, inRunList)
 	, m_Level(inLevel)
@@ -804,9 +804,9 @@ PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(
 {
 }
 
-std::string PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const
+ARBString PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const
 {
-	std::string str;
+	ARBString str;
 	switch (index)
 	{
 	case 2: // Level
@@ -818,7 +818,7 @@ std::string PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) con
 	case 4:
 		{
 			CString str2;
-			str2.Format("%d", m_Score);
+			str2.Format(_T("%d"), m_Score);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -828,7 +828,7 @@ std::string PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) con
 
 void PointsDataOtherPointsTallyLevelByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), "Other Points", m_RunList, m_pView);
+	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
 	dlg.DoModal();
 }
 

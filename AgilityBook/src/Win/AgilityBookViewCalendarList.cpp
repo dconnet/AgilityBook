@@ -179,7 +179,7 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 			break;
 		case IO_CAL_NOTES:
 			str = m_pCal->GetNote().c_str();
-			str.Replace("\n", " ");
+			str.Replace(_T("\n"), _T(" "));
 			break;
 		}
 	}
@@ -305,7 +305,7 @@ CAgilityBookViewCalendarList::CSortColumn::CSortColumn(std::vector<int>& inColum
 void CAgilityBookViewCalendarList::CSortColumn::Initialize()
 {
 	int realCol = IO_CAL_START_DATE;
-	realCol = AfxGetApp()->GetProfileInt("Sorting", "Calendar", realCol);
+	realCol = AfxGetApp()->GetProfileInt(_T("Sorting"), _T("Calendar"), realCol);
 	int neg = 1;
 	if (0 > realCol)
 	{
@@ -331,7 +331,7 @@ void CAgilityBookViewCalendarList::CSortColumn::SetColumn(int iCol)
 		col = iCol * -1;
 	}
 	int realCol = m_Columns[col-1] * neg;
-	AfxGetApp()->WriteProfileInt("Sorting", "Calendar", realCol);
+	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Calendar"), realCol);
 }
 
 int CAgilityBookViewCalendarList::CSortColumn::LookupColumn(int iCol) const
@@ -466,7 +466,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		std::set<std::string> strings;
+		std::set<ARBString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewCalendarData* pData = m_pView->GetItemData(index);
@@ -481,7 +481,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -496,7 +496,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 	if (!bFound)
 	{
 		CString msg;
-		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	return bFound;
@@ -1266,7 +1266,7 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 		if (0 < nNewIsNotVisible)
 		{
 			CString str;
-			str.Format("Warning: %d new entries are not visible due to your viewing options.", nNewIsNotVisible);
+			str.Format(_T("Warning: %d new entries are not visible due to your viewing options."), nNewIsNotVisible);
 			AfxMessageBox(str, MB_ICONWARNING);
 		}
 	}
@@ -1314,7 +1314,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		std::ostringstream iCal;
@@ -1340,13 +1340,18 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 		iCalendar->Release();
 
 		clpData.SetData(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar), tree);
 		clpData.SetData(CF_TEXT, (LPCTSTR)data, data.GetLength());
-		std::string str_iCal = iCal.str();
+#ifdef UNICODE
+		CStringW tmp(iCal.str().c_str());
+		ARBString str_iCal = tmp;
+#else
+		ARBString str_iCal = iCal.str();
+#endif
 		clpData.SetData(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatiCalendar), str_iCal.c_str(), str_iCal.length());
 	}
 }

@@ -110,7 +110,7 @@ bool ARBConfigAction::operator!=(ARBConfigAction const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBConfigAction::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigAction::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;

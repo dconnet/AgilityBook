@@ -139,7 +139,7 @@ CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 			break;
 		case IO_LOG_NOTES:
 			str = m_pTraining->GetNote().c_str();
-			str.Replace("\n", " ");
+			str.Replace(_T("\n"), _T(" "));
 			break;
 		}
 	}
@@ -158,7 +158,7 @@ CAgilityBookViewTraining::CSortColumn::CSortColumn(std::vector<int>& inColumns)
 void CAgilityBookViewTraining::CSortColumn::Initialize()
 {
 	int realCol = IO_LOG_DATE;
-	realCol = AfxGetApp()->GetProfileInt("Sorting", "Training", realCol);
+	realCol = AfxGetApp()->GetProfileInt(_T("Sorting"), _T("Training"), realCol);
 	int neg = 1;
 	if (0 > realCol)
 	{
@@ -184,7 +184,7 @@ void CAgilityBookViewTraining::CSortColumn::SetColumn(int iCol)
 		col = iCol * -1;
 	}
 	int realCol = m_Columns[col-1] * neg;
-	AfxGetApp()->WriteProfileInt("Sorting", "Training", realCol);
+	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Training"), realCol);
 }
 
 int CAgilityBookViewTraining::CSortColumn::LookupColumn(int iCol) const
@@ -273,7 +273,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		std::set<std::string> strings;
+		std::set<ARBString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewTrainingData* pData = m_pView->GetItemData(index);
@@ -288,7 +288,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -303,7 +303,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 	if (!bFound)
 	{
 		CString msg;
-		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	return bFound;
@@ -849,7 +849,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		Element tree;
@@ -869,7 +869,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog), tree, data);

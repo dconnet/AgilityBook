@@ -95,7 +95,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		m_Date = m_pExistingPoints->GetDate();
 		m_Points = m_pExistingPoints->GetPoints();
 		m_Comments = m_pExistingPoints->GetComment().c_str();
-		m_Comments.Replace("\n", "\r\n");
+		m_Comments.Replace(_T("\n"), _T("\r\n"));
 	}
 }
 
@@ -384,13 +384,13 @@ void CDlgExistingPoints::ClearLevels()
 
 void CDlgExistingPoints::FillVenues()
 {
-	std::string venue;
+	ARBString venue;
 	int index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != index)
 	{
 		CString str;
 		m_ctrlVenues.GetLBText(index, str);
-		venue = (LPCSTR)str;
+		venue = (LPCTSTR)str;
 	}
 	else if (m_pExistingPoints)
 		venue = m_pExistingPoints->GetVenue();
@@ -419,25 +419,25 @@ void CDlgExistingPoints::FillVenues()
 
 void CDlgExistingPoints::FillFromVenue()
 {
-	std::string multiQ;
+	ARBString multiQ;
 	int index = m_ctrlMultiQ.GetCurSel();
 	if (CB_ERR != index)
 	{
 		CString str;
 		m_ctrlMultiQ.GetLBText(index, str);
-		multiQ = (LPCSTR)str;
+		multiQ = (LPCTSTR)str;
 	}
 	else if (m_pExistingPoints)
 		multiQ = m_pExistingPoints->GetMultiQ();
 	m_ctrlMultiQ.ResetContent();
 
-	std::string div;
+	ARBString div;
 	index = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != index)
 	{
 		CString str;
 		m_ctrlDivisions.GetLBText(index, str);
-		div = (LPCSTR)str;
+		div = (LPCTSTR)str;
 	}
 	else if (m_pExistingPoints)
 		div = m_pExistingPoints->GetDivision();
@@ -476,12 +476,12 @@ void CDlgExistingPoints::FillFromVenue()
 void CDlgExistingPoints::FillLevels()
 {
 	CString str;
-	std::string level;
+	ARBString level;
 	int index = m_ctrlLevels.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlLevels.GetLBText(index, str);
-		level = (LPCSTR)str;
+		level = (LPCTSTR)str;
 	}
 	else if (m_pExistingPoints)
 		level = m_pExistingPoints->GetLevel();
@@ -526,12 +526,12 @@ void CDlgExistingPoints::FillLevels()
 void CDlgExistingPoints::FillEvents()
 {
 	CString str;
-	std::string event;
+	ARBString event;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlEvents.GetLBText(index, str);
-		event = (LPCSTR)str;
+		event = (LPCTSTR)str;
 	}
 	else if (m_pExistingPoints)
 		event = m_pExistingPoints->GetEvent();
@@ -583,9 +583,9 @@ void CDlgExistingPoints::FillSubNames()
 		return;
 	ARBConfigEvent const* pEvent = reinterpret_cast<ARBConfigEvent const*>(m_ctrlEvents.GetItemDataPtr(index));
 
-	std::set<std::string> names;
+	std::set<ARBString> names;
 	m_pDoc->GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-	for (std::set<std::string>::const_iterator iter = names.begin();
+	for (std::set<ARBString>::const_iterator iter = names.begin();
 		iter != names.end();
 		++iter)
 	{
@@ -742,7 +742,7 @@ void CDlgExistingPoints::OnOK()
 	BOOL bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName;
 	GetEnableLists(index, bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName, false);
 
-	std::string other;
+	ARBString other;
 	if (bOther)
 	{
 		index = m_ctrlOther.GetCurSel();
@@ -755,7 +755,7 @@ void CDlgExistingPoints::OnOK()
 		other = pOther->GetName();
 	}
 
-	std::string venue;
+	ARBString venue;
 	if (bVenue)
 	{
 		index = m_ctrlVenues.GetCurSel();
@@ -768,7 +768,7 @@ void CDlgExistingPoints::OnOK()
 		venue = pVenue->GetName();
 	}
 
-	std::string multiQ;
+	ARBString multiQ;
 	if (bMQ)
 	{
 		index = m_ctrlMultiQ.GetCurSel();
@@ -781,7 +781,7 @@ void CDlgExistingPoints::OnOK()
 		multiQ = pMultiQ->GetName();
 	}
 
-	std::string div;
+	ARBString div;
 	if (bDiv)
 	{
 		index = m_ctrlDivisions.GetCurSel();
@@ -794,7 +794,7 @@ void CDlgExistingPoints::OnOK()
 		div = pDiv->GetName();
 	}
 
-	std::string level;
+	ARBString level;
 	if (bLevel)
 	{
 		index = m_ctrlLevels.GetCurSel();
@@ -809,7 +809,7 @@ void CDlgExistingPoints::OnOK()
 			level = pData->m_pSubLevel->GetName();
 	}
 
-	std::string event;
+	ARBString event;
 	if (bEvent)
 	{
 		index = m_ctrlEvents.GetCurSel();
@@ -822,7 +822,7 @@ void CDlgExistingPoints::OnOK()
 		event = pEvent->GetName();
 	}
 
-	std::string subName;
+	ARBString subName;
 	if (bSubName)
 	{
 		m_SubName.TrimRight();
@@ -830,7 +830,7 @@ void CDlgExistingPoints::OnOK()
 		subName = (LPCTSTR)m_SubName;
 	}
 
-	m_Comments.Replace("\r\n", "\n");
+	m_Comments.Replace(_T("\r\n"), _T("\n"));
 
 	if (m_pExistingPoints)
 	{
@@ -843,7 +843,7 @@ void CDlgExistingPoints::OnOK()
 		m_pExistingPoints->SetLevel(level);
 		m_pExistingPoints->SetEvent(event);
 		m_pExistingPoints->SetSubName(subName);
-		m_pExistingPoints->SetComment((LPCSTR)m_Comments);
+		m_pExistingPoints->SetComment((LPCTSTR)m_Comments);
 		m_pExistingPoints->SetPoints(m_Points);
 	}
 	else
@@ -860,7 +860,7 @@ void CDlgExistingPoints::OnOK()
 			pPoints->SetLevel(level);
 			pPoints->SetEvent(event);
 			pPoints->SetSubName(subName);
-			pPoints->SetComment((LPCSTR)m_Comments);
+			pPoints->SetComment((LPCTSTR)m_Comments);
 			pPoints->SetPoints(m_Points);
 		}
 		pPoints->Release();

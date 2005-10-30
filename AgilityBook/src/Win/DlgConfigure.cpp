@@ -84,7 +84,7 @@ protected:
 
 void CDetails::OnDetails(CWnd* pParent)
 {
-	CDlgListViewer dlg(m_pDoc, "Runs affected by configuration changes", m_ScoringRuns, pParent);
+	CDlgListViewer dlg(m_pDoc, _T("Runs affected by configuration changes"), m_ScoringRuns, pParent);
 	dlg.DoModal();
 }
 
@@ -140,7 +140,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(
 			flags |= MB_OKCANCEL | MB_DEFBUTTON2;
 			CString str;
 			str.LoadString(IDS_ARE_YOU_SURE);
-			msg += "\n\n" + str;
+			msg += _T("\n\n") + str;
 		}
 		CDetails details(inDoc, scoringRuns);
 		switch (AfxMessageBox2(msg, flags, &details))
@@ -166,7 +166,7 @@ CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(
 		CAgilityBookDoc* inDoc,
 		ARBDogList const& inDogs,
 		ARBConfigVenue const* inVenue,
-		std::string const& inEvent,
+		ARBString const& inEvent,
 		ARBConfigScoringList const& inScorings,
 		std::vector<CDlgFixup*>& ioDlgFixup,
 		int* inRunsDeleted,
@@ -371,16 +371,16 @@ void CDlgConfigure::SetAction(eAction inAction)
 		switch (m_Action)
 		{
 		default:
-			m_ctrlComments.SetWindowText("");
+			m_ctrlComments.SetWindowText(_T(""));
 			break;
 		case eVenues:
-			m_ctrlComments.SetWindowText("Buttons: Venues");
+			m_ctrlComments.SetWindowText(_T("Buttons: Venues"));
 			break;
 		case eFaults:
-			m_ctrlComments.SetWindowText("Buttons: Faults");
+			m_ctrlComments.SetWindowText(_T("Buttons: Faults"));
 			break;
 		case eOtherPoints:
-			m_ctrlComments.SetWindowText("Buttons: Other Points");
+			m_ctrlComments.SetWindowText(_T("Buttons: Other Points"));
 			break;
 		}
 	}
@@ -560,10 +560,10 @@ BOOL CDlgConfigure::OnInitDialog()
 	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlVenues.InsertColumn(0, "Venues");
-	m_ctrlVenues.InsertColumn(1, "Description");
-	m_ctrlFaults.InsertColumn(0, "Faults");
-	m_ctrlOthers.InsertColumn(0, "Other Points");
+	m_ctrlVenues.InsertColumn(0, _T("Venues"));
+	m_ctrlVenues.InsertColumn(1, _T("Description"));
+	m_ctrlFaults.InsertColumn(0, _T("Faults"));
+	m_ctrlOthers.InsertColumn(0, _T("Other Points"));
 
 	LoadData();
 	SetAction(eVenues);
@@ -685,10 +685,10 @@ void CDlgConfigure::OnNew()
 
 	case eFaults:
 		{
-			CDlgName dlg("", IDS_FAULT_TYPE_NAME, this);
+			CDlgName dlg(_T(""), IDS_FAULT_TYPE_NAME, this);
 			if (IDOK == dlg.DoModal())
 			{
-				std::string name = dlg.GetName();
+				ARBString name = dlg.GetName();
 				// We could check for uniqueness, but if the user wants 2
 				// strings the same, why argue! Afterall, these strings
 				// are only "helper" items to fill in other data.
@@ -749,7 +749,7 @@ void CDlgConfigure::OnDelete()
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			std::string venue = pVenueData->GetVenue()->GetName();
+			ARBString venue = pVenueData->GetVenue()->GetName();
 			int nPoints = m_Book.GetDogs().NumExistingPointsInVenue(venue);
 			int nRegNums = m_Book.GetDogs().NumRegNumsInVenue(venue);
 			int nTitles = m_Book.GetDogs().NumTitlesInVenue(venue);
@@ -795,7 +795,7 @@ void CDlgConfigure::OnDelete()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			std::string otherPoints = pOtherData->GetOtherPoints()->GetName();
+			ARBString otherPoints = pOtherData->GetOtherPoints()->GetName();
 			int nOther = m_Book.GetDogs().NumOtherPointsInUse(otherPoints);
 			if (0 < nOther)
 			{
@@ -851,8 +851,8 @@ void CDlgConfigure::OnEdit()
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			bool done = false;
-			std::string oldName = pFaultData->GetFault()->GetName();
-			std::string name(oldName);
+			ARBString oldName = pFaultData->GetFault()->GetName();
+			ARBString name(oldName);
 			while (!done)
 			{
 				done = true;
@@ -881,7 +881,7 @@ void CDlgConfigure::OnEdit()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			std::string oldName = pOtherData->GetOtherPoints()->GetName();
+			ARBString oldName = pOtherData->GetOtherPoints()->GetName();
 			CDlgConfigOtherPoints dlg(m_Config, pOtherData->GetOtherPoints(), this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -916,10 +916,10 @@ void CDlgConfigure::OnCopy()
 		{
 			nColumns = 2;
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			std::string name(pVenueData->GetVenue()->GetName());
+			ARBString name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
 			{
-				name = (LPCSTR)copyOf + name;
+				name = (LPCTSTR)copyOf + name;
 			}
 			ARBConfigVenue* pNewVenue;
 			if (m_Config.GetVenues().AddVenue(name, &pNewVenue))
@@ -942,7 +942,7 @@ void CDlgConfigure::OnCopy()
 		{
 			nColumns = 1;
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
-			std::string name(pFaultData->GetFault()->GetName());
+			ARBString name(pFaultData->GetFault()->GetName());
 			ARBConfigFault* pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
@@ -962,10 +962,10 @@ void CDlgConfigure::OnCopy()
 		{
 			nColumns = 1;
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			std::string name(pOtherData->GetOtherPoints()->GetName());
+			ARBString name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
 			{
-				name = (LPCSTR)copyOf + name;
+				name = (LPCTSTR)copyOf + name;
 			}
 			ARBConfigOtherPoints* pOther = new ARBConfigOtherPoints(*(pOtherData->GetOtherPoints()));
 			pOther->SetName(name);
@@ -1010,7 +1010,7 @@ void CDlgConfigure::OnUpdate()
 					if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
 					{
 						CString tmp;
-						tmp.Format("Action: Renaming title [%s] to [%s]",
+						tmp.Format(_T("Action: Renaming title [%s] to [%s]"),
 							action->GetOldName().c_str(),
 							action->GetNewName().c_str());
 						msg += tmp;
@@ -1018,11 +1018,11 @@ void CDlgConfigure::OnUpdate()
 						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 						if (0 < nTitles)
 						{
-							tmp.Format(", updating %d titles\n", nTitles);
+							tmp.Format(_T(", updating %d titles\n"), nTitles);
 							m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
 						}
 						else
-							tmp = "\n";
+							tmp = _T("\n");
 						msg += tmp;
 						// If the new title exists, just delete the old. Otherwise, rename the old to new.
 						if (venue->GetDivisions().FindTitle(action->GetNewName()))
@@ -1061,7 +1061,7 @@ void CDlgConfigure::OnUpdate()
 						{
 							if (0 < action->GetNewName().length())
 							{
-								tmp.Format("Action: Renaming existing %d title(s) [%s] to [%s]\n",
+								tmp.Format(_T("Action: Renaming existing %d title(s) [%s] to [%s]\n"),
 									nTitles,
 									action->GetOldName().c_str(),
 									action->GetNewName().c_str());
@@ -1070,7 +1070,7 @@ void CDlgConfigure::OnUpdate()
 							}
 							else
 							{
-								tmp.Format("Action: Deleting existing %d [%s] title(s)\n",
+								tmp.Format(_T("Action: Deleting existing %d [%s] title(s)\n"),
 									nTitles,
 									action->GetOldName().c_str());
 								msg += tmp;
@@ -1078,11 +1078,11 @@ void CDlgConfigure::OnUpdate()
 							}
 						}
 						if (pDiv)
-							tmp.Format("Action: Deleting title [%s/%s]\n",
+							tmp.Format(_T("Action: Deleting title [%s/%s]\n"),
 								pDiv->GetName().c_str(),
 								action->GetOldName().c_str());
 						else
-							tmp.Format("Action: Deleting title [%s]\n",
+							tmp.Format(_T("Action: Deleting title [%s]\n"),
 								action->GetOldName().c_str());
 						msg += tmp;
 						if (pDiv)
@@ -1098,7 +1098,7 @@ void CDlgConfigure::OnUpdate()
 			}
 		}
 		update.GetActions().clear();
-		std::string info;
+		ARBString info;
 		bool bUpdateRuns = false;
 		if (m_Config.GetVersion() <= 2 && update.GetVersion() == 3)
 			bUpdateRuns = true;

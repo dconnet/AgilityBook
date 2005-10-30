@@ -86,7 +86,7 @@ BOOL CDlgOtherPoint::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	m_ctrlDesc.SetWindowText("");
+	m_ctrlDesc.SetWindowText(_T(""));
 	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
 	iterOther != m_Config.GetOtherPoints().end();
 	++iterOther)
@@ -98,7 +98,7 @@ BOOL CDlgOtherPoint::OnInitDialog()
 		{
 			m_ctrlOtherPoints.SetCurSel(index);
 			CString str(pOther->GetDescription().c_str());
-			str.Replace("\n", "\r\n");
+			str.Replace(_T("\n"), _T("\r\n"));
 			m_ctrlDesc.SetWindowText(str);
 		}
 	}
@@ -113,7 +113,7 @@ void CDlgOtherPoint::OnSelchangeOtherpoints()
 	{
 		ARBConfigOtherPoints* pOther = reinterpret_cast<ARBConfigOtherPoints*>(m_ctrlOtherPoints.GetItemDataPtr(index));
 		CString str(pOther->GetDescription().c_str());
-		str.Replace("\n", "\r\n");
+		str.Replace(_T("\n"), _T("\r\n"));
 		m_ctrlDesc.SetWindowText(str);
 	}
 }

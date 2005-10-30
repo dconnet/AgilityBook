@@ -41,7 +41,6 @@
 
 #include "StdAfx.h"
 #include "ARBConfigTitle.h"
-#include <sstream>
 
 #include "ARBAgilityRecordBook.h"
 #include "Element.h"
@@ -112,7 +111,7 @@ void ARBConfigTitle::clear()
 	m_Desc.erase();
 }
 
-size_t ARBConfigTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -157,44 +156,44 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 	return true;
 }
 
-std::string ARBConfigTitle::GetCompleteName(
+ARBString ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bAbbrevFirst) const
 {
-	std::string buffer;
+	ARBString buffer;
 	if (1 < inInstance)
 	{
 		// Keep sync'd with ARBDogTitle
-		std::ostringstream str;
-		str << " " << inInstance;
+		ARBostringstream str;
+		str << _T(" ") << inInstance;
 		buffer = str.str();
 	}
 	// Special formatting used in configuration dialogs.
 	else if (0 > inInstance && 0 < m_Multiple)
 	{
-		std::ostringstream str;
-		str << "+";
+		ARBostringstream str;
+		str << _T("+");
 		buffer = str.str();
 	}
-	std::string name;
+	ARBString name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
 		{
-			name += "[";
+			name += _T("[");
 			name += m_Name;
 			if (0 < buffer.length())
 				name += buffer;
-			name += "] ";
+			name += _T("] ");
 		}
 		name += m_LongName;
 		if (!bAbbrevFirst)
 		{
-			name += " [";
+			name += _T(" [");
 			name += m_Name;
 			if (0 < buffer.length())
 				name += buffer;
-			name += "]";
+			name += _T("]");
 		}
 	}
 	else
@@ -209,7 +208,7 @@ std::string ARBConfigTitle::GetCompleteName(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitleList::FindTitleCompleteName(
-		std::string const& inName,
+		ARBString const& inName,
 		short inInstance,
 		bool bAbbrevFirst,
 		ARBConfigTitle** outTitle) const
@@ -232,7 +231,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 }
 
 bool ARBConfigTitleList::FindTitle(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigTitle** outTitle) const
 {
 	if (outTitle)
@@ -253,7 +252,7 @@ bool ARBConfigTitleList::FindTitle(
 }
 
 bool ARBConfigTitleList::AddTitle(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigTitle** outTitle)
 {
 	if (outTitle)
@@ -284,9 +283,9 @@ bool ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
 	return true;
 }
 
-bool ARBConfigTitleList::DeleteTitle(std::string const& inName)
+bool ARBConfigTitleList::DeleteTitle(ARBString const& inName)
 {
-	std::string name(inName);
+	ARBString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

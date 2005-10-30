@@ -102,7 +102,7 @@ CDlgCalendar::CDlgCalendar(
 		m_Entered = 2;
 		break;
 	}
-	m_Notes.Replace("\n", "\r\n");
+	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
 void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
@@ -142,7 +142,7 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDlgCalendar::UpdateLocationInfo(char const* pLocation)
+void CDlgCalendar::UpdateLocationInfo(TCHAR const* pLocation)
 {
 	CString str;
 	if (pLocation && *pLocation)
@@ -151,7 +151,7 @@ void CDlgCalendar::UpdateLocationInfo(char const* pLocation)
 		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
 		{
 			str = pItem->GetComment().c_str();
-			str.Replace("\n", "\r\n");
+			str.Replace(_T("\n"), _T("\r\n"));
 			pItem->Release();
 			pItem = NULL;
 		}
@@ -159,7 +159,7 @@ void CDlgCalendar::UpdateLocationInfo(char const* pLocation)
 	m_ctrlLocationInfo.SetWindowText(str);
 }
 
-void CDlgCalendar::UpdateClubInfo(char const* pClub)
+void CDlgCalendar::UpdateClubInfo(TCHAR const* pClub)
 {
 	CString str;
 	if (pClub && *pClub)
@@ -168,7 +168,7 @@ void CDlgCalendar::UpdateClubInfo(char const* pClub)
 		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
 		{
 			str = pItem->GetComment().c_str();
-			str.Replace("\n", "\r\n");
+			str.Replace(_T("\n"), _T("\r\n"));
 			pItem->Release();
 			pItem = NULL;
 		}
@@ -183,9 +183,9 @@ BOOL CDlgCalendar::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	set<string> locations;
+	set<ARBString> locations;
 	m_pDoc->GetAllTrialLocations(locations);
-	set<string>::const_iterator iter;
+	set<ARBString>::const_iterator iter;
 	for (iter = locations.begin(); iter != locations.end(); ++iter)
 	{
 		int index = m_ctrlLocation.AddString((*iter).c_str());
@@ -204,7 +204,7 @@ BOOL CDlgCalendar::OnInitDialog()
 		if (pVenue->GetName() == m_pCal->GetVenue())
 			m_ctrlVenue.SetCurSel(index);
 	}
-	set<string> clubs;
+	set<ARBString> clubs;
 	m_pDoc->GetAllClubNames(clubs);
 	for (iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{
@@ -328,17 +328,17 @@ void CDlgCalendar::OnOK()
 		break;
 	}
 	m_pCal->SetIsTentative(m_bTentative ? true : false);
-	m_pCal->SetLocation((LPCSTR)m_Location);
-	m_pCal->SetVenue((LPCSTR)m_Venue);
-	m_pCal->SetClub((LPCSTR)m_Club);
+	m_pCal->SetLocation((LPCTSTR)m_Location);
+	m_pCal->SetVenue((LPCTSTR)m_Venue);
+	m_pCal->SetClub((LPCTSTR)m_Club);
 	if (m_bOpeningUnknown)
 		openingDate.clear();
 	if (m_bClosingUnknown)
 		closingDate.clear();
 	m_pCal->SetOpeningDate(openingDate);
 	m_pCal->SetClosingDate(closingDate);
-	m_Notes.Replace("\r\n", "\n");
-	m_pCal->SetNote((LPCSTR)m_Notes);
+	m_Notes.Replace(_T("\r\n"), _T("\n"));
+	m_pCal->SetNote((LPCTSTR)m_Notes);
 
 	CDlgBaseDialog::OnOK();
 }

@@ -36,9 +36,9 @@
  * @li 2005-08-18 DRC Separated options and filters.
  */
 
-#include <string>
 #include <vector>
 #include "ARBDate.h"
+#include "ARBTypes.h"
 #include "AgilityBookOptions.h"
 #include "CheckTreeCtrl.h"
 #include "DlgBasePropertyPage.h"
@@ -64,9 +64,9 @@ private:
 	std::vector<CVenueFilter> m_VenueFilter;
 
 private:
-	bool Find(std::string const& venue,
-		std::string const& div,
-		std::string const& level) const;
+	bool Find(ARBString const& venue,
+		ARBString const& div,
+		ARBString const& level) const;
 	void FillFilter(
 			HTREEITEM hItem,
 			CString path);

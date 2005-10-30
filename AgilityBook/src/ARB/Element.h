@@ -37,9 +37,9 @@
  */
 
 #include <map>
-#include <string>
 #include <vector>
 #include <xercesc/sax/InputSource.hpp>
+#include "ARBTypes.h"
 
 class ARBDate;
 class ARBVersion;
@@ -74,7 +74,7 @@ public:
 	} AttribLookup;
 
 	Element();
-	Element(std::string const& inName);
+	Element(ARBString const& inName);
 	Element(Element const& rhs);
 	Element& operator=(Element const& rhs);
 	~Element();
@@ -93,26 +93,26 @@ public:
 	/**
 	 * Get the name of this element.
 	 */
-	std::string const& GetName() const;
+	ARBString const& GetName() const;
 
 	/**
 	 * Set the name of this element.
 	 * @param inName New name for this element.
 	 */
-	void SetName(std::string const& inName);
+	void SetName(ARBString const& inName);
 
 	/**
 	 * Get the value of this element.
 	 */
-	std::string const& GetValue() const;
+	ARBString const& GetValue() const;
 
 	/**
 	 * Set the value of this element.
 	 * @pre GetElementCount() must be 0.
 	 * @param inValue New value for this element.
 	 */
-	void SetValue(std::string const& inValue);
-	void SetValue(char const* const inValue);
+	void SetValue(ARBString const& inValue);
+	void SetValue(TCHAR const* const inValue);
 	void SetValue(short inValue);
 	void SetValue(long inValue);
 
@@ -143,8 +143,8 @@ public:
 	 */
 	AttribLookup GetNthAttrib(
 			int inIndex,
-			std::string& outName,
-			std::string& outValue) const;
+			ARBString& outName,
+			ARBString& outValue) const;
 
 	/**
 	 * Get the value of an attribute.
@@ -153,25 +153,25 @@ public:
 	 * @return Result of lookup.
 	 */
 	AttribLookup GetAttrib(
-			std::string const& inName,
-			std::string& outValue) const;
+			ARBString const& inName,
+			ARBString& outValue) const;
 	AttribLookup GetAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBVersion& outValue) const;
 	AttribLookup GetAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBDate& outValue) const;
 	AttribLookup GetAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			bool& outValue) const;
 	AttribLookup GetAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			short& outValue) const;
 	AttribLookup GetAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			long& outValue) const;
 	AttribLookup GetAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			double& outValue) const;
 
 	/**
@@ -182,25 +182,25 @@ public:
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(
-			std::string const& inName,
-			std::string const& inValue);
+			ARBString const& inName,
+			ARBString const& inValue);
 	bool AddAttrib(
-			std::string const& inName,
-			char const* const inValue);
+			ARBString const& inName,
+			TCHAR const* const inValue);
 	bool AddAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBVersion const& inValue);
 	bool AddAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBDate const& inValue);
 	bool AddAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			bool inValue);
 	bool AddAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			short inValue);
 	bool AddAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			long inValue);
 
 	/**
@@ -212,7 +212,7 @@ public:
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(
-			std::string const& inName,
+			ARBString const& inName,
 			double inValue,
 			int inPrec = 2);
 
@@ -221,7 +221,7 @@ public:
 	 * @param inName Attribute to remove
 	 * @return Whether or not the attribute was removed.
 	 */
-	bool RemoveAttrib(std::string const& inName);
+	bool RemoveAttrib(ARBString const& inName);
 
 	/**
 	 * Remove all attributes.
@@ -258,7 +258,7 @@ public:
 	 * @return The new element.
 	 */
 	Element& AddElement(
-			std::string const& inName,
+			ARBString const& inName,
 			int inAt = -1);
 
 	/**
@@ -280,7 +280,7 @@ public:
 	 * @return Index of the first element to match the search.
 	 */
 	int FindElement(
-			std::string const& inName,
+			ARBString const& inName,
 			int inStartFrom = 0) const;
 
 	/**
@@ -293,7 +293,7 @@ public:
 	bool LoadXMLBuffer(
 			char const* inData,
 			unsigned int nData,
-			std::string& ioErrMsg);
+			ARBString& ioErrMsg);
 
 	/**
 	 * Populate this element from the given file.
@@ -302,8 +302,8 @@ public:
 	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXMLFile(
-			char const* inFileName,
-			std::string& ioErrMsg);
+			ARBString const& inFileName,
+			ARBString& ioErrMsg);
 
 	/**
 	 * Save this element to the given output stream.
@@ -314,14 +314,14 @@ public:
 	 */
 	bool SaveXML(
 			std::ostream& outStream,
-			std::string const* inDTD = NULL) const;
+			ARBString const* inDTD = NULL) const;
 
 private:
 	bool LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
-		std::string& ioErrMsg);
-	typedef std::map<std::string, std::string> MyAttributes;
-	std::string m_Name;
-	std::string m_Value;
+		ARBString& ioErrMsg);
+	typedef std::map<ARBString, ARBString> MyAttributes;
+	ARBString m_Name;
+	ARBString m_Value;
 	MyAttributes m_Attribs;
 	std::vector<Element> m_Elements;
 };

@@ -116,7 +116,7 @@ bool ARBConfigEvent::operator!=(ARBConfigEvent const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBConfigEvent::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigEvent::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -191,7 +191,7 @@ bool ARBConfigEvent::Save(Element& ioTree) const
 	if (m_bHasSubNames)
 	{
 		event.AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
-		for (std::set<std::string>::const_iterator iter = m_SubNames.begin();
+		for (std::set<ARBString>::const_iterator iter = m_SubNames.begin();
 			iter != m_SubNames.end();
 			++iter)
 		{
@@ -207,15 +207,15 @@ bool ARBConfigEvent::Save(Element& ioTree) const
 bool ARBConfigEvent::Update(
 		int indent,
 		ARBConfigEvent const* inEventNew,
-		std::string& ioInfo)
+		ARBString& ioInfo)
 {
-	std::string info;
+	ARBString info;
 
-	std::string indentBuffer, indentName;
+	ARBString indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += "   ";
-	indentBuffer = indentName + "   ";
-	indentName += "-";
+		indentName += _T("   ");
+	indentBuffer = indentName + _T("   ");
+	indentName += _T("-");
 
 	bool bChanges = false;
 	if (GetDesc() != inEventNew->GetDesc())
@@ -233,7 +233,7 @@ bool ARBConfigEvent::Update(
 		bChanges = true;
 		SetHasSubNames(inEventNew->HasSubNames());
 	}
-	std::set<std::string> oldNames, newNames;
+	std::set<ARBString> oldNames, newNames;
 	GetSubNames(oldNames);
 	inEventNew->GetSubNames(newNames);
 	if (oldNames != newNames)
@@ -307,8 +307,8 @@ bool ARBConfigEvent::Update(
 }
 
 size_t ARBConfigEvent::FindAllEvents(
-		std::string const& inDivision,
-		std::string const& inLevel,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoring>& outList) const
 {
@@ -316,29 +316,29 @@ size_t ARBConfigEvent::FindAllEvents(
 }
 
 bool ARBConfigEvent::VerifyEvent(
-		std::string const& inDivision,
-		std::string const& inLevel) const
+		ARBString const& inDivision,
+		ARBString const& inLevel) const
 {
 	return m_Scoring.VerifyEvent(inDivision, inLevel);
 }
 
 bool ARBConfigEvent::FindEvent(
-		std::string const& inDivision,
-		std::string const& inLevel,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigScoring** outEvent) const
 {
 	return m_Scoring.FindEvent(inDivision, inLevel, inDate, outEvent);
 }
 
-size_t ARBConfigEvent::GetSubNames(std::set<std::string>& outNames) const
+size_t ARBConfigEvent::GetSubNames(std::set<ARBString>& outNames) const
 {
 	outNames.clear();
 	outNames = m_SubNames;
 	return outNames.size();
 }
 
-void ARBConfigEvent::SetSubNames(std::set<std::string> const& inNames)
+void ARBConfigEvent::SetSubNames(std::set<ARBString> const& inNames)
 {
 	m_SubNames.clear();
 	m_SubNames = inNames;
@@ -363,9 +363,9 @@ bool ARBConfigEventList::Load(
 }
 
 bool ARBConfigEventList::VerifyEvent(
-		std::string const& inEvent,
-		std::string const& inDivision,
-		std::string const& inLevel) const
+		ARBString const& inEvent,
+		ARBString const& inDivision,
+		ARBString const& inLevel) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -376,9 +376,9 @@ bool ARBConfigEventList::VerifyEvent(
 }
 
 bool ARBConfigEventList::FindEvent(
-		std::string const& inEvent,
-		std::string const& inDivision,
-		std::string const& inLevel,
+		ARBString const& inEvent,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigScoring** outScoring) const
 {
@@ -395,8 +395,8 @@ bool ARBConfigEventList::FindEvent(
 }
 
 int ARBConfigEventList::RenameDivision(
-		std::string const& inOldDiv,
-		std::string const& inNewDiv)
+		ARBString const& inOldDiv,
+		ARBString const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -414,9 +414,9 @@ int ARBConfigEventList::RenameDivision(
 	return count;
 }
 
-int ARBConfigEventList::DeleteDivision(std::string const& inDiv)
+int ARBConfigEventList::DeleteDivision(ARBString const& inDiv)
 {
-	std::string div(inDiv);
+	ARBString div(inDiv);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -436,8 +436,8 @@ int ARBConfigEventList::DeleteDivision(std::string const& inDiv)
 }
 
 int ARBConfigEventList::RenameLevel(
-		std::string const& inOldLevel,
-		std::string const& inNewLevel)
+		ARBString const& inOldLevel,
+		ARBString const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -455,9 +455,9 @@ int ARBConfigEventList::RenameLevel(
 	return count;
 }
 
-int ARBConfigEventList::DeleteLevel(std::string const& inLevel)
+int ARBConfigEventList::DeleteLevel(ARBString const& inLevel)
 {
-	std::string level(inLevel);
+	ARBString level(inLevel);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -477,7 +477,7 @@ int ARBConfigEventList::DeleteLevel(std::string const& inLevel)
 }
 
 bool ARBConfigEventList::FindEvent(
-		std::string const& inEvent,
+		ARBString const& inEvent,
 		ARBConfigEvent** outEvent) const
 {
 	if (outEvent)
@@ -508,9 +508,9 @@ bool ARBConfigEventList::AddEvent(ARBConfigEvent* inEvent)
 	return true;
 }
 
-bool ARBConfigEventList::DeleteEvent(std::string const& inEvent)
+bool ARBConfigEventList::DeleteEvent(ARBString const& inEvent)
 {
-	std::string event(inEvent);
+	ARBString event(inEvent);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == event)

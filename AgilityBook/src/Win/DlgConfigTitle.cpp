@@ -61,7 +61,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	, m_AllowMany(1 < inMultiple ? TRUE : FALSE)
 	, m_Multiple(inMultiple)
 {
-	m_Desc.Replace("\n", "\r\n");
+	m_Desc.Replace(_T("\n"), _T("\r\n"));
 	//{{AFX_DATA_INIT(CDlgConfigTitle)
 	//}}AFX_DATA_INIT
 }
@@ -150,5 +150,5 @@ void CDlgConfigTitle::OnOK()
 	CDlgBaseDialog::OnOK();
 	// Get rid of the dialog first - either that or we have to UpdateData(FALSE)
 	// since OnOK will UpdateData(TRUE).
-	m_Desc.Replace("\r\n", "\n");
+	m_Desc.Replace(_T("\r\n"), _T("\n"));
 }

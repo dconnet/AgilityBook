@@ -91,9 +91,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 
 bool CDlgFilterRuns::Find(
-		std::string const& venue,
-		std::string const& div,
-		std::string const& level) const
+		ARBString const& venue,
+		ARBString const& div,
+		ARBString const& level) const
 {
 	for (std::vector<CVenueFilter>::const_iterator iter = m_VenueFilter.begin();
 		iter != m_VenueFilter.end();
@@ -121,7 +121,7 @@ void CDlgFilterRuns::FillFilter(
 			if (!m_ctrlVenue.GetChecked(hItem))
 				return;
 			if (!path.IsEmpty())
-				path += "/";
+				path += _T("/");
 			path += m_ctrlVenue.GetItemText(hItem);
 		}
 	}
@@ -144,13 +144,13 @@ void CDlgFilterRuns::FillFilter(
 			{
 			default:
 			case 3:
-				filter.level = (LPCSTR)rawFilter[2];
+				filter.level = (LPCTSTR)rawFilter[2];
 				// fallthru
 			case 2:
-				filter.division = (LPCSTR)rawFilter[1];
+				filter.division = (LPCTSTR)rawFilter[1];
 				// fallthru
 			case 1:
-				filter.venue = (LPCSTR)rawFilter[0];
+				filter.venue = (LPCTSTR)rawFilter[0];
 			}
 			m_VenueFilter.push_back(filter);
 		}
@@ -192,7 +192,7 @@ BOOL CDlgFilterRuns::OnInitDialog()
 			TVI_ROOT,
 			TVI_LAST);
 		m_ctrlVenue.ShowCheckbox(hVenue, true);
-		if (Find(pVenue->GetName(), "", ""))
+		if (Find(pVenue->GetName(), _T(""), _T("")))
 			m_ctrlVenue.SetChecked(hVenue, true);
 		m_ctrlVenue.SetItemData(hVenue, reinterpret_cast<LPARAM>(pVenue));
 		for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
@@ -205,7 +205,7 @@ BOOL CDlgFilterRuns::OnInitDialog()
 				hVenue,
 				TVI_LAST);
 			m_ctrlVenue.ShowCheckbox(hDiv, true);
-			if (Find(pVenue->GetName(), pDiv->GetName(), ""))
+			if (Find(pVenue->GetName(), pDiv->GetName(), _T("")))
 			{
 				m_ctrlVenue.SetChecked(hDiv, true);
 				m_ctrlVenue.EnsureVisible(hDiv);
@@ -277,6 +277,6 @@ void CDlgFilterRuns::OnSetdispinfoVenues(
 	// We could probably do this by just watching what changed. but this
 	// is way easier - no state to keep track of!
 	m_VenueFilter.clear();
-	FillFilter(TVI_ROOT, "");
+	FillFilter(TVI_ROOT, _T(""));
 	*pResult = 0;
 }

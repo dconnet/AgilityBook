@@ -62,9 +62,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
+ARBString ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 {
-	std::string style;
+	ARBString style;
 	switch (inStyle)
 	{
 	default:
@@ -190,15 +190,15 @@ bool ARBConfigScoring::operator!=(ARBConfigScoring const& rhs) const
 	return !operator==(rhs);
 }
 
-std::string ARBConfigScoring::GetGenericName() const
+ARBString ARBConfigScoring::GetGenericName() const
 {
-	std::string name = m_Division;
-	name += " ";
+	ARBString name = m_Division;
+	name += _T(" ");
 	name += m_Level;
 	return name;
 }
 
-size_t ARBConfigScoring::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigScoring::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -212,21 +212,21 @@ bool ARBConfigScoring::Load(
 {
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
-		inTree.GetAttrib("Date", m_ValidFrom);
+		inTree.GetAttrib(_T("Date"), m_ValidFrom);
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
-		std::string attrib;
+		ARBString attrib;
 		inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
-		std::string msg(INVALID_DATE);
+		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str()));
 		return false;
 	}
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
 	{
-		std::string attrib;
+		ARBString attrib;
 		inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
-		std::string msg(INVALID_DATE);
+		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str()));
 		return false;
@@ -247,36 +247,36 @@ bool ARBConfigScoring::Load(
 	}
 	if (!inDivisions.VerifyLevel(m_Division, m_Level))
 	{
-		std::string msg(INVALID_DIV_LEVEL);
+		ARBString msg(INVALID_DIV_LEVEL);
 		msg += m_Division;
-		msg += "/";
+		msg += _T("/");
 		msg += m_Level;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_LEVEL, msg.c_str()));
 		return false;
 	}
 
-	std::string attrib;
+	ARBString attrib;
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE));
 		return false;
 	}
-	if (attrib == "FaultsThenTime")
+	if (attrib == _T("FaultsThenTime"))
 		m_Style = eFaultsThenTime;
-	else if (attrib == "Faults100ThenTime")
+	else if (attrib == _T("Faults100ThenTime"))
 	{
 		m_Style = eFaults100ThenTime;
 		if (inVersion <= ARBVersion(3,0))
 			m_bDropFractions = true;
 	}
-	else if (attrib == "Faults200ThenTime") // Version5.
+	else if (attrib == _T("Faults200ThenTime")) // Version5.
 		m_Style = eFaults200ThenTime;
-	else if (attrib == "OCScoreThenTime")
+	else if (attrib == _T("OCScoreThenTime"))
 		m_Style = eOCScoreThenTime;
-	else if (attrib == "ScoreThenTime")
+	else if (attrib == _T("ScoreThenTime"))
 		m_Style = eScoreThenTime;
-	else if (attrib == "TimePlusFaults")
+	else if (attrib == _T("TimePlusFaults"))
 		m_Style = eTimePlusFaults;
 	else
 	{
@@ -312,9 +312,9 @@ bool ARBConfigScoring::Load(
 
 	if (inVersion < ARBVersion(11, 0))
 	{
-		if (Element::eInvalidValue == inTree.GetAttrib("doubleQ", m_bDoubleQ))
+		if (Element::eInvalidValue == inTree.GetAttrib(_T("doubleQ"), m_bDoubleQ))
 		{
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, "doubleQ", VALID_VALUES_BOOL));
+			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, _T("doubleQ"), VALID_VALUES_BOOL));
 			return false;
 		}
 	}
@@ -330,9 +330,9 @@ bool ARBConfigScoring::Load(
 	{
 		if (inVersion < ARBVersion(10, 1))
 		{
-			if (Element::eInvalidValue == inTree.GetAttrib("machPts", m_bSpeedPts))
+			if (Element::eInvalidValue == inTree.GetAttrib(_T("machPts"), m_bSpeedPts))
 			{
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, "machPts", VALID_VALUES_BOOL));
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, _T("machPts"), VALID_VALUES_BOOL));
 				return false;
 			}
 		}
@@ -365,9 +365,9 @@ bool ARBConfigScoring::Load(
 	else
 	{
 		short ptsWhenClean = 0;
-		if (Element::eFound != inTree.GetAttrib("Clean", ptsWhenClean))
+		if (Element::eFound != inTree.GetAttrib(_T("Clean"), ptsWhenClean))
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, "Clean"));
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, _T("Clean")));
 			return false;
 		}
 		if (0 < ptsWhenClean)
@@ -377,8 +377,8 @@ bool ARBConfigScoring::Load(
 
 		short faultsAllowed = 0;
 		short ptsWhenNotClean = 0;
-		inTree.GetAttrib("FaultsAllowed", faultsAllowed);
-		inTree.GetAttrib("WithFaults", ptsWhenNotClean);
+		inTree.GetAttrib(_T("FaultsAllowed"), faultsAllowed);
+		inTree.GetAttrib(_T("WithFaults"), ptsWhenNotClean);
 		if (0 < faultsAllowed && 0 < ptsWhenNotClean)
 		{
 			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed);
@@ -405,26 +405,26 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 	default:
 		ASSERT(0);
 #ifdef _DEBUG
-		TRACE("%s\n", ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE).c_str());
+		TRACE(_T("%s\n"), ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE).c_str());
 #endif
 		return false;
 	case eFaultsThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, "FaultsThenTime");
+		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("FaultsThenTime"));
 		break;
 	case eFaults100ThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, "Faults100ThenTime");
+		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults100ThenTime"));
 		break;
 	case eFaults200ThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, "Faults200ThenTime");
+		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults200ThenTime"));
 		break;
 	case eOCScoreThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, "OCScoreThenTime");
+		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("OCScoreThenTime"));
 		break;
 	case eScoreThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, "ScoreThenTime");
+		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("ScoreThenTime"));
 		break;
 	case eTimePlusFaults:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, "TimePlusFaults");
+		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("TimePlusFaults"));
 		break;
 	}
 	if (m_bDropFractions)
@@ -455,27 +455,27 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 	return true;
 }
 
-std::string ARBConfigScoring::GetValidDateString() const
+ARBString ARBConfigScoring::GetValidDateString() const
 {
-	std::string str;
+	ARBString str;
 	if (m_ValidFrom.IsValid() || m_ValidTo.IsValid())
 	{
-		str += "[";
+		str += _T("[");
 		if (m_ValidFrom.IsValid())
 			str += m_ValidFrom.GetString(ARBDate::eDashYMD).c_str();
 		else
-			str += "*";
-		str += "-";
+			str += _T("*");
+		str += _T("-");
 		if (m_ValidTo.IsValid())
 			str += m_ValidTo.GetString(ARBDate::eDashYMD).c_str();
 		else
-			str += "*";
-		str += "]";
+			str += _T("*");
+		str += _T("]");
 	}
 	return str;
 }
 
-std::string ARBConfigScoring::GetScoringStyleStr() const
+ARBString ARBConfigScoring::GetScoringStyleStr() const
 {
 	return GetScoringStyleStr(m_Style);
 }
@@ -499,8 +499,8 @@ bool ARBConfigScoringList::Load(
 }
 
 size_t ARBConfigScoringList::FindAllEvents(
-		std::string const& inDivision,
-		std::string const& inLevel,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoring>& outList) const
 {
@@ -558,8 +558,8 @@ size_t ARBConfigScoringList::FindAllEvents(
 }
 
 bool ARBConfigScoringList::FindEvent(
-		std::string const& inDivision,
-		std::string const& inLevel,
+		ARBString const& inDivision,
+		ARBString const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigScoring** outEvent) const
 {
@@ -592,7 +592,7 @@ bool ARBConfigScoringList::FindEvent(
 		{
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
-			TRACE0("Warning: Overlapping date ranges\n");
+			TRACE0(_T("Warning: Overlapping date ranges\n"));
 			pEvent = *(items.begin());
 		}
 	}
@@ -610,8 +610,8 @@ bool ARBConfigScoringList::FindEvent(
 }
 
 bool ARBConfigScoringList::VerifyEvent(
-		std::string const& inDivision,
-		std::string const& inLevel) const
+		ARBString const& inDivision,
+		ARBString const& inLevel) const
 {
 	ARBVector<ARBConfigScoring> items;
 	FindAllEvents(inDivision, inLevel, false, items);

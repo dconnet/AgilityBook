@@ -38,8 +38,8 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBConfig;
 class ARBErrorCallback;
@@ -62,14 +62,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load an other point.
@@ -97,28 +97,28 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
 	short GetPoints() const;
 	void SetPoints(short inPts);
 
 private:
 	~ARBDogRunOtherPoints();
-	std::string m_Name;
+	ARBString m_Name;
 	short m_Points;
 };
 
-inline std::string ARBDogRunOtherPoints::GetGenericName() const
+inline ARBString ARBDogRunOtherPoints::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBDogRunOtherPoints::GetName() const
+inline ARBString const& ARBDogRunOtherPoints::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogRunOtherPoints::SetName(std::string const& inName)
+inline void ARBDogRunOtherPoints::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }

@@ -76,7 +76,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	ASSERT(m_pOther);
 	m_Name = m_pOther->GetName().c_str();
 	m_Desc = m_pOther->GetDescription().c_str();
-	m_Desc.Replace("\n", "\r\n");
+	m_Desc.Replace(_T("\n"), _T("\r\n"));
 	//{{AFX_DATA_INIT(CDlgConfigOtherPoints)
 	//}}AFX_DATA_INIT
 }
@@ -128,27 +128,27 @@ void CDlgConfigOtherPoints::OnOK()
 	m_Name.TrimLeft();
 	m_Desc.TrimRight();
 	m_Desc.TrimLeft();
-	m_Desc.Replace("\r\n", "\n");
+	m_Desc.Replace(_T("\r\n"), _T("\n"));
 	if (m_Name.IsEmpty())
 	{
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
 		return;
 	}
-	if (m_pOther->GetName() != (LPCSTR)m_Name)
+	if (m_pOther->GetName() != (LPCTSTR)m_Name)
 	{
-		if (m_Config.GetOtherPoints().FindOtherPoints((LPCSTR)m_Name))
+		if (m_Config.GetOtherPoints().FindOtherPoints((LPCTSTR)m_Name))
 		{
 			AfxMessageBox(IDS_NAME_IN_USE);
 			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
 			return;
 		}
-		m_pOther->SetName((LPCSTR)m_Name);
+		m_pOther->SetName((LPCTSTR)m_Name);
 	}
 	int index = m_ctrlTally.GetCurSel();
 	if (index != CB_ERR)
 	{
 		m_pOther->SetTally(static_cast<ARBConfigOtherPoints::eOtherPointsTally>(m_ctrlTally.GetItemData(index)));
 	}
-	m_pOther->SetDescription((LPCSTR)m_Desc);
+	m_pOther->SetDescription((LPCTSTR)m_Desc);
 	CDlgBaseDialog::OnOK();
 }

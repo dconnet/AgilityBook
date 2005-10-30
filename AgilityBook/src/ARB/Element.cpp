@@ -45,8 +45,18 @@
 #include <iostream>
 #include <list>
 #include <map>
-#include <sstream>
 
+#include "ARBAgilityRecordBook.h"
+#include "ARBDate.h"
+#include "ARBTypes.h"
+
+#if _MSC_VER >= 1300
+#pragma warning ( push )
+// Since we treat warnings as errors, turn off some xerces warnings.
+// warning C4244: 'return' : conversion from '__w64 int' to 'unsigned long', possible loss of data
+// warning C4267: 'argument' : conversion from 'size_t' to 'const unsigned int', possible loss of data
+#pragma warning ( disable : 4244 4267 )
+#endif
 #include <xercesc/dom/DOMException.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
@@ -60,17 +70,14 @@
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
-
-#include "ARBAgilityRecordBook.h"
-#include "ARBDate.h"
-#include "ARBTypes.h"
+#if _MSC_VER >= 1300
+#pragma warning ( pop )
+#endif
+XERCES_CPP_NAMESPACE_USE
 
 #if _MSC_VER < 1300
 using namespace std;
 #endif
-
-//using namespace std;
-XERCES_CPP_NAMESPACE_USE
 
 // Write the dump and errors to cerr
 #define ERRORS_TO_CERR
@@ -189,6 +196,8 @@ static XMLCh const gNotation[] =
 };
 
 /////////////////////////////////////////////////////////////////////////////
+
+#ifndef UNICODE
 
 /**
  * Provides an easy interface to translate from narrow characters (char)
@@ -455,8 +464,6 @@ public:
 	}
 };
 
-/////////////////////////////////////////////////////////////////////////////
-
 /**
  * @brief Transcoding optimizer
  *
@@ -502,6 +509,12 @@ char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 	}
 	return (*iter).second;
 }
+
+#else
+typedef std::basic_string<XMLCh> XMLstring;
+typedef std::wstring StringDOM;
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -572,16 +585,18 @@ private:
 		{
 		}
 		CurrentAttrib(
-				std::string const& name,
+				ARBString const& name,
 				XMLCh const* const value)
 			: m_Name(name)
 			, m_Value(value)
 		{}
-		std::string m_Name;
+		ARBString m_Name;
 		StringDOM m_Value;
 	};
 	std::list<CurrentAttrib> m_CurrentAttribs; ///< Attributes of the element currently being parsed.
+#ifndef UNICODE
 	StringTranscode m_ElementNames; ///< Reduce the number of transcodings on element names.
+#endif
 };
 
 void SAXImportHandlers::startElement(
@@ -621,11 +636,19 @@ void SAXImportHandlers::startElement(
 	}
 	// Cache the data...
 	m_CurrentData.erase();
+#ifdef UNICODE
+	m_CurrentName = localname;
+#else
 	m_CurrentName = m_ElementNames.TranscodeElement(localname);
+#endif
 	unsigned int nAttribs = attrs.getLength();
 	for (unsigned int i = 0; i < nAttribs; ++i)
 	{
+#ifdef UNICODE
+		m_CurrentAttribs.push_back(CurrentAttrib(attrs.getLocalName(i), attrs.getValue(i)));
+#else
 		m_CurrentAttribs.push_back(CurrentAttrib(m_ElementNames.TranscodeElement(attrs.getLocalName(i)), attrs.getValue(i)));
+#endif
 	}
 }
 
@@ -687,14 +710,14 @@ void SAXImportHandlers::resetDocument()
 void SAXImportHandlers::warning(SAXParseException const& toCatch)
 {
 	++m_Warnings;
-	std::ostringstream tmp;
-	tmp << "Warning in file '"
+	ARBostringstream tmp;
+	tmp << _T("Warning in file '")
 		<< StringDOM(toCatch.getSystemId())
-		<< "', line "
+		<< _T("', line ")
 		<< toCatch.getLineNumber()
-		<< ", column "
+		<< _T(", column ")
 		<< toCatch.getColumnNumber()
-		<< ".  Message: "
+		<< _T(".  Message: ")
 		<< StringDOM(toCatch.getMessage())
 		<< std::endl;
 	m_Msg += tmp.str();
@@ -703,14 +726,14 @@ void SAXImportHandlers::warning(SAXParseException const& toCatch)
 void SAXImportHandlers::error(SAXParseException const& toCatch)
 {
 	++m_Errors;
-	std::ostringstream tmp;
-	tmp << "Error in file '"
+	ARBostringstream tmp;
+	tmp << _T("Error in file '")
 		<< StringDOM(toCatch.getSystemId())
-		<< "', line "
+		<< _T("', line ")
 		<< toCatch.getLineNumber()
-		<< ", column "
+		<< _T(", column ")
 		<< toCatch.getColumnNumber()
-		<< ".  Message: "
+		<< _T(".  Message: ")
 		<< StringDOM(toCatch.getMessage())
 		<< std::endl;
 	m_Msg += tmp.str();
@@ -719,14 +742,14 @@ void SAXImportHandlers::error(SAXParseException const& toCatch)
 void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 {
 	++m_FatalErrors;
-	std::ostringstream tmp;
-	tmp << "Fatal Error in file '"
+	ARBostringstream tmp;
+	tmp << _T("Fatal Error in file '")
 		<< StringDOM(toCatch.getSystemId())
-		<< "', line "
+		<< _T("', line ")
 		<< toCatch.getLineNumber()
-		<< ", column "
+		<< _T(", column ")
 		<< toCatch.getColumnNumber()
-		<< ".  Message: "
+		<< _T(".  Message: ")
 		<< StringDOM(toCatch.getMessage())
 		<< std::endl;
 	m_Msg += tmp.str();
@@ -811,7 +834,7 @@ std::ostream& operator<<(
 	// Output any attributes on this element
 	for (i = 0; i < toWrite.GetAttribCount(); ++i)
 	{
-		std::string name, value;
+		ARBString name, value;
 		toWrite.GetNthAttrib(i, name, value);
 		XMLstring attribName(name);
 		XMLstring attribValue(value);
@@ -870,9 +893,9 @@ Element::Element()
 {
 }
 
-Element::Element(std::string const& inName)
+Element::Element(ARBString const& inName)
 	: m_Name(inName)
-	, m_Value("")
+	, m_Value(_T(""))
 {
 }
 
@@ -904,26 +927,26 @@ void Element::Dump(int inLevel) const
 {
 	int i;
 	CString msg;
-	msg.Format("%*s%s", inLevel, " ", m_Name.c_str());
+	msg.Format(_T("%*s%s"), inLevel, _T(" "), m_Name.c_str());
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
-		std::string name, value;
+		ARBString name, value;
 		GetNthAttrib(i, name, value);
-		msg += " ";
+		msg += _T(" ");
 		msg += name.c_str();
-		msg += "=\"";
+		msg += _T("=\"");
 		msg += value.c_str();
-		msg += "\"";
+		msg += _T("\"");
 	}
 	if (0 < m_Value.length())
 	{
-		msg += ": ";
+		msg += _T(": ");
 		msg += m_Value.c_str();
 	}
 #ifdef ERRORS_TO_CERR
 	cerr << msg << endl;
 #else
-	TRACE1("%s\n", (LPCTSTR)msg);
+	TRACE1(_T("%s\n"), (LPCTSTR)msg);
 #endif
 	for (i = 0; i < GetElementCount(); ++i)
 	{
@@ -939,28 +962,28 @@ void Element::clear()
 	m_Elements.clear();
 }
 
-std::string const& Element::GetName() const
+ARBString const& Element::GetName() const
 {
 	return m_Name;
 }
 
-void Element::SetName(std::string const& inName)
+void Element::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-std::string const& Element::GetValue() const
+ARBString const& Element::GetValue() const
 {
 	return m_Value;
 }
 
-void Element::SetValue(std::string const& inValue)
+void Element::SetValue(ARBString const& inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	m_Value = inValue;
 }
 
-void Element::SetValue(char const* const inValue)
+void Element::SetValue(TCHAR const* const inValue)
 {
 	ASSERT(0 == m_Elements.size());
 	if (inValue)
@@ -972,7 +995,7 @@ void Element::SetValue(char const* const inValue)
 void Element::SetValue(short inValue)
 {
 	ASSERT(0 == m_Elements.size());
-	std::stringstream str;
+	ARBostringstream str;
 	str << inValue;
 	m_Value = str.str();
 }
@@ -980,7 +1003,7 @@ void Element::SetValue(short inValue)
 void Element::SetValue(long inValue)
 {
 	ASSERT(0 == m_Elements.size());
-	std::stringstream str;
+	ARBostringstream str;
 	str << inValue;
 	m_Value = str.str();
 }
@@ -1000,8 +1023,8 @@ int Element::GetAttribCount() const
 
 Element::AttribLookup Element::GetNthAttrib(
 		int inIndex,
-		std::string& outName,
-		std::string& outValue) const
+		ARBString& outName,
+		ARBString& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
@@ -1020,8 +1043,8 @@ Element::AttribLookup Element::GetNthAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
-		std::string& outValue) const
+		ARBString const& inName,
+		ARBString& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1034,25 +1057,25 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBVersion& outValue) const
 {
-	std::string value;
+	ARBString value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
 		unsigned short major = 0;
 		unsigned short minor = 0;
-		std::string::size_type pos = value.find('.');
-		if (std::string::npos != pos)
+		ARBString::size_type pos = value.find('.');
+		if (ARBString::npos != pos)
 		{
-			major = static_cast<unsigned short>(atol(value.c_str()));
+			major = static_cast<unsigned short>(_tstol(value.c_str()));
 			value = value.substr(pos+1);
-			minor = static_cast<unsigned short>(atol(value.c_str()));
+			minor = static_cast<unsigned short>(_tstol(value.c_str()));
 		}
 		else
 		{
-			major = static_cast<unsigned short>(atol(value.c_str()));
+			major = static_cast<unsigned short>(_tstol(value.c_str()));
 		}
 		outValue = ARBVersion(major, minor);
 	}
@@ -1060,10 +1083,10 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBDate& outValue) const
 {
-	std::string value;
+	ARBString value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -1077,16 +1100,16 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		bool& outValue) const
 {
-	std::string value;
+	ARBString value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		if (value == "y")
+		if (value == _T("y"))
 			outValue = true;
-		else if (value == "n")
+		else if (value == _T("n"))
 			outValue = false;
 		else
 			rc = eInvalidValue;
@@ -1095,15 +1118,15 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		short& outValue) const
 {
-	std::string value;
+	ARBString value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = static_cast<short>(atol(value.c_str()));
+			outValue = static_cast<short>(_tstol(value.c_str()));
 		else
 			rc = eInvalidValue;
 	}
@@ -1111,15 +1134,15 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		long& outValue) const
 {
-	std::string value;
+	ARBString value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = atol(value.c_str());
+			outValue = _tstol(value.c_str());
 		else
 			rc = eInvalidValue;
 	}
@@ -1127,15 +1150,15 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 Element::AttribLookup Element::GetAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		double& outValue) const
 {
-	std::string value;
+	ARBString value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = strtod(value.c_str(), NULL);
+			outValue = _tcstod(value.c_str(), NULL);
 		else
 			rc = eInvalidValue;
 	}
@@ -1143,33 +1166,33 @@ Element::AttribLookup Element::GetAttrib(
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
-		std::string const& inValue)
+		ARBString const& inName,
+		ARBString const& inValue)
 {
 	m_Attribs[inName] = inValue;
 	return true;
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
-		char const* const inValue)
+		ARBString const& inName,
+		TCHAR const* const inValue)
 {
 	if (inValue)
 		m_Attribs[inName] = inValue;
 	else
-		m_Attribs[inName] = "";
+		m_Attribs[inName] = _T("");
 	return true;
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBDate const& inValue)
 {
 	if (inValue.IsValid())
@@ -1178,38 +1201,38 @@ bool Element::AddAttrib(
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		bool inValue)
 {
 	if (inValue)
-		m_Attribs[inName] = "y";
+		m_Attribs[inName] = _T("y");
 	else
-		m_Attribs[inName] = "n";
+		m_Attribs[inName] = _T("n");
 	return true;
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		short inValue)
 {
-	std::stringstream str;
+	ARBostringstream str;
 	str << inValue;
 	m_Attribs[inName] = str.str();
 	return true;
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		long inValue)
 {
-	std::stringstream str;
+	ARBostringstream str;
 	str << inValue;
 	m_Attribs[inName] = str.str();
 	return true;
 }
 
 bool Element::AddAttrib(
-		std::string const& inName,
+		ARBString const& inName,
 		double inValue,
 		int inPrec)
 {
@@ -1217,7 +1240,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::RemoveAttrib(std::string const& inName)
+bool Element::RemoveAttrib(ARBString const& inName)
 {
 	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1250,7 +1273,7 @@ Element& Element::GetElement(int inIndex)
 }
 
 Element& Element::AddElement(
-		std::string const& inName,
+		ARBString const& inName,
 		int inAt)
 {
 	ASSERT(0 == m_Value.length());
@@ -1290,7 +1313,7 @@ void Element::RemoveAllElements()
 }
 
 int Element::FindElement(
-		std::string const& inName,
+		ARBString const& inName,
 		int inStartFrom) const
 {
 	if (0 > inStartFrom)
@@ -1306,7 +1329,7 @@ int Element::FindElement(
 //private
 bool Element::LoadXML(
 		XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
-		std::string& ioErrMsg)
+		ARBString& ioErrMsg)
 {
 	clear();
 	bool bOk = false;
@@ -1328,17 +1351,17 @@ bool Element::LoadXML(
 	}
 	catch (DOMException const& e)
 	{
-		eMsg += "An error occured during parsing.  Exception message: ";
+		eMsg += _T("An error occured during parsing.  Exception message: ");
 		eMsg += e.msg;
 	}
 	catch (XMLException const& e)
 	{
-		eMsg += "An error occured during parsing.  Exception message: ";
+		eMsg += _T("An error occured during parsing.  Exception message: ");
 		eMsg += e.getMessage();
 	}
 	catch (SAXException const& e)
 	{
-		eMsg += "An error occured during parsing.  Exception message: ";
+		eMsg += _T("An error occured during parsing.  Exception message: ");
 		eMsg += e.getMessage();
 	}
 	if (bOk && handler.GetWarnings() > 0 || handler.GetErrors() > 0 || handler.GetFatalErrors() > 0)
@@ -1357,24 +1380,24 @@ bool Element::LoadXML(
 bool Element::LoadXMLBuffer(
 		char const* inData,
 		unsigned int nData,
-		std::string& ioErrMsg)
+		ARBString& ioErrMsg)
 {
 	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
 	return LoadXML(source, ioErrMsg);
 }
 
 bool Element::LoadXMLFile(
-		char const* inFileName,
-		std::string& ioErrMsg)
+		ARBString const& inFileName,
+		ARBString& ioErrMsg)
 {
-	XMLstring fileName(inFileName);
+	XMLstring fileName(inFileName.c_str());
 	LocalFileInputSource source(fileName.c_str());
 	return LoadXML(source, ioErrMsg);
 }
 
 bool Element::SaveXML(
 		std::ostream& outOutput,
-		std::string const* inDTD) const
+		ARBString const* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");

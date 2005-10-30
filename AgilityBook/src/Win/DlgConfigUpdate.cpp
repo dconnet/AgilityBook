@@ -99,14 +99,14 @@ void CDlgConfigUpdate::EnableControls()
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool CDlgConfigUpdate::LoadConfig(char const* pFile)
+bool CDlgConfigUpdate::LoadConfig(TCHAR const* pFile)
 {
 	CWaitCursor wait;
 	if (!pFile)
 		m_Book.GetConfig().Default();
 	else
 	{
-		std::string errMsg;
+		ARBString errMsg;
 		Element tree;
 		// Translate the XML to a tree form.
 		if (!tree.LoadXMLFile(pFile, errMsg))
@@ -115,7 +115,7 @@ bool CDlgConfigUpdate::LoadConfig(char const* pFile)
 			msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 			if (0 < errMsg.length())
 			{
-				msg += "\n\n";
+				msg += _T("\n\n");
 				msg += errMsg.c_str();
 			}
 			AfxMessageBox(msg, MB_ICONEXCLAMATION);
@@ -177,16 +177,10 @@ void CDlgConfigUpdate::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
-	char const* pFile = NULL;
-	// We need a char*, even in UNICODE.
-#if _MSC_VER < 1300
-	// But since I'm not compiling in unicode...
+	LPCTSTR pFile = NULL;
 	CString source(m_FileName);
-#else
-	CStringA source(m_FileName);
-#endif
 	if (1 == m_Update)
-		pFile = (char const*)source;
+		pFile = source;
 	if (!LoadConfig(pFile))
 		return;
 	CDlgBaseDialog::OnOK();

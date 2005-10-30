@@ -115,52 +115,52 @@ static struct
 {
 	WORD bValid;
 	int index;
-	char const* name;
-	char const* desc;
+	TCHAR const* name;
+	TCHAR const* desc;
 } const sc_Types[] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_FAULTS_TIME,   "Faults Then Time",
-		"Runs like Standard and Jumpers"},
+		IO_TYPE_RUNS_FAULTS_TIME,   _T("Faults Then Time"),
+		_T("Runs like Standard and Jumpers")},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_TIME_FAULTS,   "Time Plus Faults",
-		"Runs like Steeplechase"},
+		IO_TYPE_RUNS_TIME_FAULTS,   _T("Time Plus Faults"),
+		_T("Runs like Steeplechase")},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_OPEN_CLOSE,    "Opening/Closing Points Then Time",
-		"Runs like Gamblers and Jackpot"},
+		IO_TYPE_RUNS_OPEN_CLOSE,    _T("Opening/Closing Points Then Time"),
+		_T("Runs like Gamblers and Jackpot")},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_POINTS,        "Points Then Time",
-		"Runs like Snooker"},
+		IO_TYPE_RUNS_POINTS,        _T("Points Then Time"),
+		_T("Runs like Snooker")},
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
-		IO_TYPE_CALENDAR,           "Calendar",
-		"Importing andf exporting Calendar entries"},
+		IO_TYPE_CALENDAR,           _T("Calendar"),
+		_T("Importing andf exporting Calendar entries")},
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
-		IO_TYPE_TRAINING,           "Training Log",
-		"Importing and exporting Training entries"},
+		IO_TYPE_TRAINING,           _T("Training Log"),
+		_T("Importing and exporting Training entries")},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_DOG,      "Tree - Dog",
-		"Display of dogs in the Runs tree"},
+		IO_TYPE_VIEW_TREE_DOG,      _T("Tree - Dog"),
+		_T("Display of dogs in the Runs tree")},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_TRIAL,    "Tree - Trial",
-		"Display of trials in the Runs tree"},
+		IO_TYPE_VIEW_TREE_TRIAL,    _T("Tree - Trial"),
+		_T("Display of trials in the Runs tree")},
 	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_RUN,      "Tree - Run",
-		"Display of runs in the Runs tree"},
+		IO_TYPE_VIEW_TREE_RUN,      _T("Tree - Run"),
+		_T("Display of runs in the Runs tree")},
 	{CAgilityBookOptions::eViewRuns,
-		IO_TYPE_VIEW_RUNS_LIST,     "Runs",
-		"Display of runs in the Runs view"},
+		IO_TYPE_VIEW_RUNS_LIST,     _T("Runs"),
+		_T("Display of runs in the Runs view")},
 	{CAgilityBookOptions::eViewCal,
-		IO_TYPE_VIEW_CALENDAR_LIST, "Calendar",
-		"Display of entries in the Calendar view"},
+		IO_TYPE_VIEW_CALENDAR_LIST, _T("Calendar"),
+		_T("Display of entries in the Calendar view")},
 	{CAgilityBookOptions::eViewLog,
-		IO_TYPE_VIEW_TRAINING_LIST, "Training Log",
-		"Display of entries in the Training Log"},
+		IO_TYPE_VIEW_TRAINING_LIST, _T("Training Log"),
+		_T("Display of entries in the Training Log")},
 	{CAgilityBookOptions::eCalExportAppt,
-		IO_TYPE_CALENDAR_APPT,      "Calendar (MS Outlook Appointment)",
-		"Exporting Calendar entries for importing into MS Outlook as Appointments"},
+		IO_TYPE_CALENDAR_APPT,      _T("Calendar (MS Outlook Appointment)"),
+		_T("Exporting Calendar entries for importing into MS Outlook as Appointments")},
 	{CAgilityBookOptions::eCalExportTask,
-		IO_TYPE_CALENDAR_TASK,      "Calendar (MS Outlook Task)",
-		"Exporting Calendar entries for importing into MS Outlook as Tasks"},
+		IO_TYPE_CALENDAR_TASK,      _T("Calendar (MS Outlook Task)"),
+		_T("Exporting Calendar entries for importing into MS Outlook as Tasks")},
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
@@ -176,7 +176,7 @@ static struct
 	bool bImportable;
 	UINT fmt; // Only applicable to eView* items
 	UINT name;
-	char const* desc;
+	TCHAR const* desc;
 } const sc_FieldNames[IO_MAX] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
@@ -856,8 +856,8 @@ BOOL CDlgAssignColumns::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 	m_ctrlType.SetExtendedStyle(m_ctrlType.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlType.InsertColumn(0, "Run Type");
-	m_ctrlType.InsertColumn(1, "Description");
+	m_ctrlType.InsertColumn(0, _T("Run Type"));
+	m_ctrlType.InsertColumn(1, _T("Description"));
 	int index;
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)

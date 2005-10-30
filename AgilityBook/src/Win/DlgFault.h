@@ -36,14 +36,14 @@
  */
 
 #include <set>
-#include <string>
+#include "ARBTypes.h"
 #include "DlgBaseDialog.h"
 
 class CDlgFault : public CDlgBaseDialog
 {
 public:
 	CDlgFault(
-			std::set<std::string>& faults,
+			std::set<ARBString>& faults,
 			LPCTSTR pFault,
 			CWnd* pParent = NULL);
 	CString GetFault() const		{return m_Faults;}
@@ -55,7 +55,7 @@ private:
 	CComboBox	m_ctrlFaults;
 	CString	m_Faults;
 	//}}AFX_DATA
-	std::set<std::string>& m_setFaults;
+	std::set<ARBString>& m_setFaults;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgFault)
