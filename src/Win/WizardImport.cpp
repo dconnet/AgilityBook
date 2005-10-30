@@ -159,11 +159,11 @@ CString CWizardImport::GetDelim() const
 	switch (m_Delim)
 	{
 	default: break;
-	case 0: delim = "\t"; break;
-	case 1: delim = " "; break;
-	case 2: delim = ":"; break;
-	case 3: delim = ";"; break;
-	case 4: delim = ","; break;
+	case 0: delim = _T("\t"); break;
+	case 1: delim = _T(" "); break;
+	case 2: delim = _T(":"); break;
+	case 3: delim = _T(";"); break;
+	case 4: delim = _T(","); break;
 	case 5: delim = m_Delimiter; break;
 	}
 	return delim;
@@ -319,7 +319,7 @@ void CWizardImport::UpdatePreview()
 				else
 				{
 					if (cols[iCol] != str && 0 < str.GetLength())
-						cols[iCol] += "/" + str;
+						cols[iCol] += _T("/") + str;
 				}
 			}
 		}
@@ -406,16 +406,16 @@ BOOL CWizardImport::OnInitDialog()
 	m_ctrlSpin.SetRange(100, 1);
 	static struct
 	{
-		char const* pFormat;
+		TCHAR const* pFormat;
 		ARBDate::DateFormat format;
 	} const sc_Dates[] =
 	{
-		{"MM-DD-YYYY", ARBDate::eDashMMDDYYYY},
-		{"MM/DD/YYYY", ARBDate::eSlashMMDDYYYY},
-		{"YYYY-MM-DD", ARBDate::eDashYYYYMMDD},
-		{"YYYY/MM/DD", ARBDate::eSlashYYYYMMDD},
-		{"DD-MM-YYYY", ARBDate::eDashDDMMYYYY},
-		{"DD/MM/YYYY", ARBDate::eSlashDDMMYYYY},
+		{_T("MM-DD-YYYY"), ARBDate::eDashMMDDYYYY},
+		{_T("MM/DD/YYYY"), ARBDate::eSlashMMDDYYYY},
+		{_T("YYYY-MM-DD"), ARBDate::eDashYYYYMMDD},
+		{_T("YYYY/MM/DD"), ARBDate::eSlashYYYYMMDD},
+		{_T("DD-MM-YYYY"), ARBDate::eDashDDMMYYYY},
+		{_T("DD/MM/YYYY"), ARBDate::eSlashDDMMYYYY},
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
@@ -459,11 +459,11 @@ static ARBDogRun* CreateRun(
 	return pRun;
 }
 
-static std::string GetPrimaryVenue(std::string const& venues)
+static ARBString GetPrimaryVenue(ARBString const& venues)
 {
-	std::string venue;
-	std::string::size_type pos = venues.find('/');
-	if (std::string::npos != pos)
+	ARBString venue;
+	ARBString::size_type pos = venues.find('/');
+	if (ARBString::npos != pos)
 		venue = venues.substr(0, pos);
 	else
 		venue = venues;
@@ -472,12 +472,12 @@ static std::string GetPrimaryVenue(std::string const& venues)
 
 static void BreakLine(
 		char inSep,
-		std::string inStr,
-		std::vector<std::string>& outFields)
+		ARBString inStr,
+		std::vector<ARBString>& outFields)
 {
 	outFields.clear();
-	std::string::size_type pos = inStr.find(inSep);
-	while (std::string::npos != pos)
+	ARBString::size_type pos = inStr.find(inSep);
+	while (ARBString::npos != pos)
 	{
 		outFields.push_back(inStr.substr(0, pos));
 		inStr = inStr.substr(pos+1);
@@ -512,7 +512,7 @@ BOOL CWizardImport::OnWizardFinish()
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR == index)
 	{
-		AfxMessageBox("Please select a date format");
+		AfxMessageBox(_T("Please select a date format"));
 		GotoDlgCtrl(GetDlgItem(IDC_WIZARD_IMPORT_DATE));
 		return FALSE;
 	}
@@ -550,12 +550,12 @@ BOOL CWizardImport::OnWizardFinish()
 	int nColumns = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
 	for (int nItem = 0; nItem < m_ctrlPreview.GetItemCount(); ++nItem)
 	{
-		std::vector<std::string> entry;
+		std::vector<ARBString> entry;
 		entry.reserve(nColumns);
 		for (int i = 0; i < nColumns; ++i)
 		{
 			CString str = m_ctrlPreview.GetItemText(nItem, i);
-			str.Replace("\r\n", "\n");
+			str.Replace(_T("\r\n"), _T("\n"));
 			entry.push_back((LPCTSTR)str);
 		}
 		switch (m_pSheet->GetImportExportItem())
@@ -620,7 +620,7 @@ BOOL CWizardImport::OnWizardFinish()
 				if (!pScoring)
 				{
 					CString str;
-					str.Format("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n",
+					str.Format(_T("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n"),
 						nItem + 1);
 					errLog += str;
 					++nSkipped;
@@ -646,8 +646,8 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				ASSERT(0 <= i);
 
-				std::string nameReg, nameCall;
-				std::string trialVenue, trialClub, trialLocation, trialNotes;
+				ARBString nameReg, nameCall;
+				ARBString trialVenue, trialClub, trialLocation, trialNotes;
 				ARBDogRun* pRun = NULL;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
 				{
@@ -672,7 +672,7 @@ BOOL CWizardImport::OnWizardFinish()
 							else
 							{
 								CString str;
-								str.Format("ERROR: Line %d, Column %d: Invalid run date: %s\n",
+								str.Format(_T("ERROR: Line %d, Column %d: Invalid run date: %s\n"),
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								if (pRun)
@@ -726,68 +726,68 @@ BOOL CWizardImport::OnWizardFinish()
 						break;
 					case IO_RUNS_COURSE_FAULTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetCourseFaults(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetCourseFaults(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_TIME:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetTime(strtod(entry[iCol].c_str(), NULL));
+						pRun->GetScoring().SetTime(_tcstod(entry[iCol].c_str(), NULL));
 						break;
 					case IO_RUNS_YARDS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetYards(strtod(entry[iCol].c_str(), NULL));
+						pRun->GetScoring().SetYards(_tcstod(entry[iCol].c_str(), NULL));
 						break;
 					case IO_RUNS_YPS:
 						// Computed
 						break;
 					case IO_RUNS_SCT:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetSCT(strtod(entry[iCol].c_str(), NULL));
+						pRun->GetScoring().SetSCT(_tcstod(entry[iCol].c_str(), NULL));
 						break;
 					case IO_RUNS_TOTAL_FAULTS:
 						// Computed.
 						break;
 					case IO_RUNS_REQ_OPENING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_REQ_CLOSING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedClosePts(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetNeedClosePts(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_OPENING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetOpenPts(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_CLOSING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetClosePts(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetClosePts(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_REQ_POINTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_POINTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetOpenPts(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->GetScoring().SetOpenPts(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_PLACE:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetPlace(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->SetPlace(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_IN_CLASS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetInClass(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->SetInClass(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_DOGSQD:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetDogsQd(static_cast<short>(atol(entry[iCol].c_str())));
+						pRun->SetDogsQd(static_cast<short>(_tstol(entry[iCol].c_str())));
 						break;
 					case IO_RUNS_Q:
 						{
 							pRun = CreateRun(pRun, pScoring);
 							ARB_Q q;
-							if ("QQ" == entry[iCol])
-								entry[iCol] = "Q";
+							if (_T("QQ") == entry[iCol])
+								entry[iCol] = _T("Q");
 							CErrorCallback err;
 							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion(), err);
 							pRun->SetQ(q);
@@ -803,9 +803,9 @@ BOOL CWizardImport::OnWizardFinish()
 					case IO_RUNS_FAULTS:
 						{
 							pRun = CreateRun(pRun, pScoring);
-							std::string str = pRun->GetNote();
+							ARBString str = pRun->GetNote();
 							if (0 < str.length())
-								str += "\n";
+								str += _T("\n");
 							str += entry[iCol];
 							pRun->SetNote(str);
 						}
@@ -826,7 +826,7 @@ BOOL CWizardImport::OnWizardFinish()
 					if (!m_pDoc->GetConfig().GetVenues().FindVenue(trialVenue))
 					{
 						CString str;
-						str.Format("Warning: Line %d: Skipped entry, invalid venue name: %s\n",
+						str.Format(_T("Warning: Line %d: Skipped entry, invalid venue name: %s\n"),
 							nItem + 1, trialVenue.c_str());
 						errLog += str;
 						pRun->Release();
@@ -840,7 +840,7 @@ BOOL CWizardImport::OnWizardFinish()
 						pRun->GetDate()))
 					{
 						CString str;
-						str.Format("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n",
+						str.Format(_T("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n"),
 							nItem + 1);
 						errLog += str;
 						pRun->Release();
@@ -890,7 +890,7 @@ BOOL CWizardImport::OnWizardFinish()
 						if (m_pDoc->GetDogs().begin() == m_pDoc->GetDogs().end())
 						{
 							pDog = new ARBDog();
-							pDog->SetCallName("?");
+							pDog->SetCallName(_T("?"));
 							m_pDoc->GetDogs().AddDog(pDog);
 							pDog->Release();
 						}
@@ -900,8 +900,8 @@ BOOL CWizardImport::OnWizardFinish()
 					ASSERT(NULL != pDog);
 
 					// Find the trial
-					std::vector<std::string> venues;
-					std::vector<std::string> clubs;
+					std::vector<ARBString> venues;
+					std::vector<ARBString> clubs;
 					if (0 < trialVenue.length())
 						BreakLine('/', trialVenue, venues);
 					if (0 < trialClub.length())
@@ -910,7 +910,7 @@ BOOL CWizardImport::OnWizardFinish()
 					{
 						// Clubs and venues now agree so we can use them together easily.
 						if (0 == clubs.size())
-							clubs.push_back("?");
+							clubs.push_back(_T("?"));
 						while (clubs.size() < venues.size())
 							clubs.push_back(clubs[clubs.size()-1]);
 					}
@@ -993,7 +993,7 @@ BOOL CWizardImport::OnWizardFinish()
 							else
 							{
 								CString str;
-								str.Format("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n",
+								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n"),
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								if (pCal)
@@ -1016,7 +1016,7 @@ BOOL CWizardImport::OnWizardFinish()
 							else
 							{
 								CString str;
-								str.Format("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n",
+								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n"),
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								if (pCal)
@@ -1030,20 +1030,20 @@ BOOL CWizardImport::OnWizardFinish()
 						break;
 					case IO_CAL_TENTATIVE:
 						pCal = CreateCal(pCal);
-						pCal->SetIsTentative(("?" == entry[iCol] || "y" == entry[iCol] || "Y" == entry[iCol]));
+						pCal->SetIsTentative((_T("?") == entry[iCol] || _T("y") == entry[iCol] || _T("Y") == entry[iCol]));
 						break;
 					case IO_CAL_ENTERED:
-						if ("N" == entry[iCol])
+						if (_T("N") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eNot);
 						}
-						else if ("P" == entry[iCol] || "Planning" == entry[iCol])
+						else if (_T("P") == entry[iCol] || _T("Planning") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePlanning);
 						}
-						else if ("E" == entry[iCol] || "Entered" == entry[iCol])
+						else if (_T("E") == entry[iCol] || _T("Entered") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eEntered);
@@ -1051,7 +1051,7 @@ BOOL CWizardImport::OnWizardFinish()
 						else
 						{
 							CString str;
-							str.Format("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n",
+							str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n"),
 								nItem + 1, iCol + 1, entry[iCol].c_str());
 							errLog += str;
 							if (pCal)
@@ -1085,7 +1085,7 @@ BOOL CWizardImport::OnWizardFinish()
 							else
 							{
 								CString str;
-								str.Format("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n",
+								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n"),
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								if (pCal)
@@ -1108,7 +1108,7 @@ BOOL CWizardImport::OnWizardFinish()
 							else
 							{
 								CString str;
-								str.Format("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n",
+								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n"),
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								if (pCal)
@@ -1163,7 +1163,7 @@ BOOL CWizardImport::OnWizardFinish()
 							else
 							{
 								CString str;
-								str.Format("ERROR: Line %d, Column %d: Invalid training log date: %s\n",
+								str.Format(_T("ERROR: Line %d, Column %d: Invalid training log date: %s\n"),
 									nItem + 1, iCol + 1, entry[iCol].c_str());
 								errLog += str;
 								if (pLog)
@@ -1209,8 +1209,8 @@ BOOL CWizardImport::OnWizardFinish()
 	}
 	CString str;
 	if (!errLog.IsEmpty())
-		errLog += "\n";
-	str.Format("%d entries added\n%d duplicates (not added)\n%d entries skipped",
+		errLog += _T("\n");
+	str.Format(_T("%d entries added\n%d duplicates (not added)\n%d entries skipped"),
 		nAdded, nDuplicate, nSkipped);
 	errLog += str;
 	CDlgMessage dlg(errLog, 0, this);
@@ -1282,7 +1282,7 @@ void CWizardImport::OnImportFile()
 		filter.LoadString(IDS_FILEEXT_FILTER_XLS);
 	else
 		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
-	CFileDialog file(TRUE, "", "", OFN_FILEMUSTEXIST, filter, this);
+	CFileDialog file(TRUE, _T(""), _T(""), OFN_FILEMUSTEXIST, filter, this);
 	if (IDOK == file.DoModal())
 	{
 		m_FileName = file.GetPathName();

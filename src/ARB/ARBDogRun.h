@@ -43,7 +43,6 @@
  */
 
 #include <set>
-#include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBDogNotes.h"
@@ -75,14 +74,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a run.
@@ -115,7 +114,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(std::string const& inOther) const;
+	int NumOtherPointsInUse(ARBString const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -124,15 +123,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			std::string const& inOldName,
-			std::string const& inNewName);
+			ARBString const& inOldName,
+			ARBString const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inName OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(std::string const& inName);
+	int DeleteOtherPoints(ARBString const& inName);
 
 	/**
 	 * Get the number of Speed points earned in this run.
@@ -167,22 +166,22 @@ public:
 	void SetMultiQ(ARBConfigMultiQ* inMultiQ);
 	ARBDate const& GetDate() const;
 	void SetDate(ARBDate const& inDate);
-	std::string const& GetDivision() const;
-	void SetDivision(std::string const& inDiv);
-	std::string const& GetLevel() const;
-	void SetLevel(std::string const& inLevel);
-	std::string const& GetEvent() const;
-	void SetEvent(std::string const& inEvent);
-	std::string const& GetSubName() const;
-	void SetSubName(std::string const& inSubName);
-	std::string const& GetHeight() const;
-	void SetHeight(std::string const& inHeight);
-	std::string const& GetConditions() const;
-	void SetConditions(std::string const& inConditions);
-	std::string const& GetJudge() const;
-	void SetJudge(std::string const& inJudge);
-	std::string const& GetHandler() const;
-	void SetHandler(std::string const& inHandler);
+	ARBString const& GetDivision() const;
+	void SetDivision(ARBString const& inDiv);
+	ARBString const& GetLevel() const;
+	void SetLevel(ARBString const& inLevel);
+	ARBString const& GetEvent() const;
+	void SetEvent(ARBString const& inEvent);
+	ARBString const& GetSubName() const;
+	void SetSubName(ARBString const& inSubName);
+	ARBString const& GetHeight() const;
+	void SetHeight(ARBString const& inHeight);
+	ARBString const& GetConditions() const;
+	void SetConditions(ARBString const& inConditions);
+	ARBString const& GetJudge() const;
+	void SetJudge(ARBString const& inJudge);
+	ARBString const& GetHandler() const;
+	void SetHandler(ARBString const& inHandler);
 	ARBDogRunPartnerList const& GetPartners() const;
 	ARBDogRunPartnerList& GetPartners();
 	ARBDogRunScoring const& GetScoring() const;
@@ -199,32 +198,32 @@ public:
 	ARBDogRunOtherPointsList& GetOtherPoints();
 	ARBDogFaultList const& GetFaults() const;
 	ARBDogFaultList& GetFaults();
-	std::string const& GetCRCD() const;
-	void SetCRCD(std::string const& inCRCD);
-	std::string const& GetCRCDMetaFile() const;
-	void SetCRCDMetaFile(std::string const& inCRCDMeta);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetCRCD() const;
+	void SetCRCD(ARBString const& inCRCD);
+	ARBString const& GetCRCDMetaFile() const;
+	void SetCRCDMetaFile(ARBString const& inCRCDMeta);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 	ARBDogReferenceRunList const& GetReferenceRuns() const;
 	ARBDogReferenceRunList& GetReferenceRuns();
 	size_t NumLinks() const;
-	size_t GetLinks(std::set<std::string>& outLinks) const;
-	bool HasLink(std::string const& inLink) const;
-	void AddLink(std::string const& inLink);
-	void RemoveLink(std::string const& inLink);
+	size_t GetLinks(std::set<ARBString>& outLinks) const;
+	bool HasLink(ARBString const& inLink) const;
+	void AddLink(ARBString const& inLink);
+	void RemoveLink(ARBString const& inLink);
 
 private:
 	~ARBDogRun();
 	ARBConfigMultiQ* m_pMultiQ; //< Not persisted.
 	ARBDate m_Date;
-	std::string m_Division;
-	std::string m_Level;
-	std::string m_Height;
-	std::string m_Event;
-	std::string m_SubName; //< Only used if the config supports it.
-	std::string m_Conditions;
-	std::string m_Judge;
-	std::string m_Handler;
+	ARBString m_Division;
+	ARBString m_Level;
+	ARBString m_Height;
+	ARBString m_Event;
+	ARBString m_SubName; //< Only used if the config supports it.
+	ARBString m_Conditions;
+	ARBString m_Judge;
+	ARBString m_Handler;
 	ARBDogRunPartnerList m_Partners;
 	ARBDogRunScoring m_Scoring;
 	ARB_Q m_Q;
@@ -234,7 +233,7 @@ private:
 	ARBDogRunOtherPointsList m_OtherPoints;
 	ARBDogNotes m_Notes;
 	ARBDogReferenceRunList m_RefRuns;
-	typedef std::set<std::string> ARBDogRunLinks;
+	typedef std::set<ARBString> ARBDogRunLinks;
 	ARBDogRunLinks m_Links;
 };
 
@@ -253,82 +252,82 @@ inline void ARBDogRun::SetDate(ARBDate const& inDate)
 	m_Date = inDate;
 }
 
-inline std::string const& ARBDogRun::GetDivision() const
+inline ARBString const& ARBDogRun::GetDivision() const
 {
 	return m_Division;
 }
 
-inline void ARBDogRun::SetDivision(std::string const& inDiv)
+inline void ARBDogRun::SetDivision(ARBString const& inDiv)
 {
 	m_Division = inDiv;
 }
 
-inline std::string const& ARBDogRun::GetLevel() const
+inline ARBString const& ARBDogRun::GetLevel() const
 {
 	return m_Level;
 }
 
-inline void ARBDogRun::SetLevel(std::string const& inLevel)
+inline void ARBDogRun::SetLevel(ARBString const& inLevel)
 {
 	m_Level = inLevel;
 }
 
-inline std::string const& ARBDogRun::GetEvent() const
+inline ARBString const& ARBDogRun::GetEvent() const
 {
 	return m_Event;
 }
 
-inline void ARBDogRun::SetEvent(std::string const& inEvent)
+inline void ARBDogRun::SetEvent(ARBString const& inEvent)
 {
 	m_Event = inEvent;
 }
 
-inline std::string const& ARBDogRun::GetSubName() const
+inline ARBString const& ARBDogRun::GetSubName() const
 {
 	return m_SubName;
 }
 
-inline void ARBDogRun::SetSubName(std::string const& inSubName)
+inline void ARBDogRun::SetSubName(ARBString const& inSubName)
 {
 	m_SubName = inSubName;
 }
 
-inline std::string const& ARBDogRun::GetHeight() const
+inline ARBString const& ARBDogRun::GetHeight() const
 {
 	return m_Height;
 }
 
-inline void ARBDogRun::SetHeight(std::string const& inHeight)
+inline void ARBDogRun::SetHeight(ARBString const& inHeight)
 {
 	m_Height = inHeight;
 }
 
-inline std::string const& ARBDogRun::GetConditions() const
+inline ARBString const& ARBDogRun::GetConditions() const
 {
 	return m_Conditions;
 }
 
-inline void ARBDogRun::SetConditions(std::string const& inConditions)
+inline void ARBDogRun::SetConditions(ARBString const& inConditions)
 {
 	m_Conditions = inConditions;
 }
 
-inline std::string const& ARBDogRun::GetJudge() const
+inline ARBString const& ARBDogRun::GetJudge() const
 {
 	return m_Judge;
 }
 
-inline void ARBDogRun::SetJudge(std::string const& inJudge)
+inline void ARBDogRun::SetJudge(ARBString const& inJudge)
 {
 	m_Judge = inJudge;
 }
 
-inline std::string const& ARBDogRun::GetHandler() const
+inline ARBString const& ARBDogRun::GetHandler() const
 {
 	return m_Handler;
 }
 
-inline void ARBDogRun::SetHandler(std::string const& inHandler)
+inline void ARBDogRun::SetHandler(ARBString const& inHandler)
 {
 	m_Handler = inHandler;
 }
@@ -403,32 +402,32 @@ inline ARBDogFaultList& ARBDogRun::GetFaults()
 	return m_Notes.GetFaults();
 }
 
-inline std::string const& ARBDogRun::GetCRCD() const
+inline ARBString const& ARBDogRun::GetCRCD() const
 {
 	return m_Notes.GetCRCD();
 }
 
-inline void ARBDogRun::SetCRCD(std::string const& inCRCD)
+inline void ARBDogRun::SetCRCD(ARBString const& inCRCD)
 {
 	m_Notes.SetCRCD(inCRCD);
 }
 
-inline std::string const& ARBDogRun::GetCRCDMetaFile() const
+inline ARBString const& ARBDogRun::GetCRCDMetaFile() const
 {
 	return m_Notes.GetCRCDMetaFile();
 }
 
-inline void ARBDogRun::SetCRCDMetaFile(std::string const& inCRCDMeta)
+inline void ARBDogRun::SetCRCDMetaFile(ARBString const& inCRCDMeta)
 {
 	m_Notes.SetCRCDMetaFile(inCRCDMeta);
 }
 
-inline std::string const& ARBDogRun::GetNote() const
+inline ARBString const& ARBDogRun::GetNote() const
 {
 	return m_Notes.GetNote();
 }
 
-inline void ARBDogRun::SetNote(std::string const& inNote)
+inline void ARBDogRun::SetNote(ARBString const& inNote)
 {
 	m_Notes.SetNote(inNote);
 }

@@ -64,14 +64,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a club.
@@ -99,38 +99,38 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetVenue() const;
-	void SetVenue(std::string const& inVenue);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetVenue() const;
+	void SetVenue(ARBString const& inVenue);
 
 private:
 	~ARBDogClub();
-	std::string m_Name;
-	std::string m_Venue;
+	ARBString m_Name;
+	ARBString m_Venue;
 };
 
-inline std::string ARBDogClub::GetGenericName() const
+inline ARBString ARBDogClub::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBDogClub::GetName() const
+inline ARBString const& ARBDogClub::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBDogClub::SetName(std::string const& inName)
+inline void ARBDogClub::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBDogClub::GetVenue() const
+inline ARBString const& ARBDogClub::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogClub::SetVenue(std::string const& inVenue)
+inline void ARBDogClub::SetVenue(ARBString const& inVenue)
 {
 	m_Venue = inVenue;
 }
@@ -157,13 +157,13 @@ public:
 	 * Get the primary club's name.
 	 * @return Name of primary club, empty is none.
 	 */
-	std::string GetPrimaryClubName() const;
+	ARBString GetPrimaryClubName() const;
 
 	/**
 	 * Get the primary club's venue.
 	 * @return Venue of primary club, empty is none.
 	 */
-	std::string GetPrimaryClubVenue() const;
+	ARBString GetPrimaryClubVenue() const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -179,9 +179,9 @@ public:
 	 */
 	bool FindEvent(
 			ARBConfig const* inConfig,
-			std::string const& inEvent,
-			std::string const& inDivision,
-			std::string const& inLevel,
+			ARBString const& inEvent,
+			ARBString const& inDivision,
+			ARBString const& inLevel,
 			ARBDate const& inDate,
 			ARBErrorCallback& ioCallback,
 			ARBConfigScoring** outScoring = NULL) const;
@@ -193,7 +193,7 @@ public:
 	 * @return Whether the club was found.
 	 */
 	bool FindVenue(
-			std::string const& inVenue,
+			ARBString const& inVenue,
 			ARBDogClub** outClub = NULL) const;
 
 	/**
@@ -204,8 +204,8 @@ public:
 	 * @return Whether the club was added.
 	 */
 	bool AddClub(
-			std::string const& inName,
-			std::string const& inVenue,
+			ARBString const& inName,
+			ARBString const& inVenue,
 			ARBDogClub** outClub = NULL);
 
 	/**
@@ -215,6 +215,6 @@ public:
 	 * @return Whether club was deleted.
 	 */
 	bool DeleteClub(
-			std::string const& inName,
-			std::string const& inVenue);
+			ARBString const& inName,
+			ARBString const& inVenue);
 };

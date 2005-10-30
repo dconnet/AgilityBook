@@ -76,7 +76,6 @@
 #include "stdafx.h"
 #include <map>
 #include <set>
-#include <string>
 #include <vector>
 #include "AgilityBook.h"
 #include "AgilityBookViewPoints.h"
@@ -90,6 +89,7 @@
 #include "AgilityBookTreeData.h"
 #include "ARBDogClub.h"
 #include "ARBDogTrial.h"
+#include "ARBTypes.h"
 #include "MainFrm.h"
 #include "PointsData.h"
 
@@ -182,9 +182,9 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		col.fmt = LVCFMT_LEFT;
 		if (1 == i)
-			col.pszText = "Titling Points";
+			col.pszText = _T("Titling Points");
 		else
-			col.pszText = "";
+			col.pszText = _T("");
 		col.iSubItem = i;
 		InsertColumn(i, &col);
 	}
@@ -287,7 +287,7 @@ void CAgilityBookViewPoints::OnLvnGetdispinfo(
 		PointsDataBase *pData = reinterpret_cast<PointsDataBase*>(pDispInfo->item.lParam);
 		if (pData)
 		{
-			string str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}
@@ -391,9 +391,9 @@ PointsDataBase* CAgilityBookViewPoints::GetItemData(int index) const
 
 size_t CAgilityBookViewPoints::FindMatchingRuns(
 		std::list<RunInfo> const& runs,
-		std::string const& div,
-		std::string const& level,
-		std::string const& event,
+		ARBString const& div,
+		ARBString const& level,
+		ARBString const& event,
 		std::list<RunInfo>& matching)
 {
 	matching.clear();
@@ -498,7 +498,7 @@ void CAgilityBookViewPoints::LoadData()
 					if (!bHeaderInserted)
 					{
 						bHeaderInserted = true;
-						GetListCtrl().InsertItem(idxInsertItem++, "");
+						GetListCtrl().InsertItem(idxInsertItem++, _T(""));
 						InsertData(idxInsertItem, new PointsDataVenue(this, pDog, pVenue));
 					}
 					InsertData(idxInsertItem, new PointsDataTitle(this, pDog, pTitle));
@@ -526,7 +526,7 @@ void CAgilityBookViewPoints::LoadData()
 				if (!bHeaderInserted)
 				{
 					bHeaderInserted = true;
-					GetListCtrl().InsertItem(idxInsertItem++, "");
+					GetListCtrl().InsertItem(idxInsertItem++, _T(""));
 					InsertData(idxInsertItem, new PointsDataVenue(this, pDog, pVenue));
 				}
 				int speedPts = 0;
@@ -570,10 +570,10 @@ void CAgilityBookViewPoints::LoadData()
 								int SQs = 0;
 								int speedPtsEvent = 0;
 								list<RunInfo> matching;
-								set<std::string> judges;
-								set<std::string> judgesQ;
-								set<std::string> partners;
-								set<std::string> partnersQ;
+								set<ARBString> judges;
+								set<ARBString> judgesQ;
+								set<ARBString> partners;
+								set<ARBString> partnersQ;
 								for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
 									iterTrial != trialsInVenue.end();
 									++iterTrial)
@@ -625,7 +625,7 @@ void CAgilityBookViewPoints::LoadData()
 													iterPartner != pRun->GetPartners().end();
 													++iterPartner)
 												{
-													string p = (*iterPartner)->GetDog();
+													ARBString p = (*iterPartner)->GetDog();
 													p += (*iterPartner)->GetRegNum();
 													partners.insert(p);
 													if (pRun->GetQ().Qualified())
@@ -706,7 +706,7 @@ void CAgilityBookViewPoints::LoadData()
 									}
 									CString strPts;
 									CString strSuperQ;
-									strPts.Format("%d", pts + nExistingSQ);
+									strPts.Format(_T("%d"), pts + nExistingSQ);
 									if (pScoringMethod->HasSuperQ())
 									{
 										SQs += nExistingSQ;
@@ -788,7 +788,7 @@ void CAgilityBookViewPoints::LoadData()
 				PointsDataLifetime* pData = new PointsDataLifetime(this, pVenue->GetName());
 				int pts = 0;
 				int ptFiltered = 0;
-				typedef std::map<std::string, PointsDataLifetimeDiv*> DivLifetime;
+				typedef std::map<ARBString, PointsDataLifetimeDiv*> DivLifetime;
 				DivLifetime divs;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
 					iter != lifetime.end();
@@ -842,7 +842,7 @@ void CAgilityBookViewPoints::LoadData()
 		if (0 < other.size())
 		{
 			CString str;
-			GetListCtrl().InsertItem(idxInsertItem++, "");
+			GetListCtrl().InsertItem(idxInsertItem++, _T(""));
 			str.LoadString(IDS_OTHERPOINTS);
 			GetListCtrl().InsertItem(idxInsertItem++, str);
 			for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin();
@@ -904,16 +904,16 @@ void CAgilityBookViewPoints::LoadData()
 					break;
 
 				case ARBConfigOtherPoints::eTallyAllByEvent:
-					GetListCtrl().InsertItem(idxInsertItem, "");
+					GetListCtrl().InsertItem(idxInsertItem, _T(""));
 					GetListCtrl().SetItemText(idxInsertItem++, 1, pOther->GetName().c_str());
 					{
-						std::set<std::string> tally;
+						std::set<ARBString> tally;
 						std::list<OtherPtInfo>::iterator iter;
 						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
 							tally.insert((*iter).m_Event);
 						}
-						for (std::set<std::string>::iterator iterTally = tally.begin();
+						for (std::set<ARBString>::iterator iterTally = tally.begin();
 							iterTally != tally.end();
 							++iterTally)
 						{
@@ -929,16 +929,16 @@ void CAgilityBookViewPoints::LoadData()
 					break;
 
 				case ARBConfigOtherPoints::eTallyLevel:
-					GetListCtrl().InsertItem(idxInsertItem, "");
+					GetListCtrl().InsertItem(idxInsertItem, _T(""));
 					GetListCtrl().SetItemText(idxInsertItem++, 1, pOther->GetName().c_str());
 					{
-						std::set<std::string> tally;
+						std::set<ARBString> tally;
 						std::list<OtherPtInfo>::iterator iter;
 						for (iter = runs.begin(); iter != runs.end(); ++iter)
 						{
 							tally.insert((*iter).m_Level);
 						}
-						for (std::set<std::string>::iterator iterTally = tally.begin();
+						for (std::set<ARBString>::iterator iterTally = tally.begin();
 							iterTally != tally.end();
 							++iterTally)
 						{
@@ -954,10 +954,10 @@ void CAgilityBookViewPoints::LoadData()
 					break;
 
 				case ARBConfigOtherPoints::eTallyLevelByEvent:
-					GetListCtrl().InsertItem(idxInsertItem, "");
+					GetListCtrl().InsertItem(idxInsertItem, _T(""));
 					GetListCtrl().SetItemText(idxInsertItem++, 1, pOther->GetName().c_str());
 					{
-						typedef std::pair<std::string, std::string> LevelEvent;
+						typedef std::pair<ARBString, ARBString> LevelEvent;
 						std::set<LevelEvent> tally;
 						std::list<OtherPtInfo>::iterator iter;
 						for (iter = runs.begin(); iter != runs.end(); ++iter)
@@ -1099,14 +1099,14 @@ void CAgilityBookViewPoints::OnCopyTitles()
 		std::vector<CVenueFilter> venues;
 		CAgilityBookOptions::GetFilterVenue(venues);
 
-		std::string preTitles, postTitles;
+		ARBString preTitles, postTitles;
 		for (ARBConfigVenueList::const_iterator iVenue = GetDocument()->GetConfig().GetVenues().begin();
 			iVenue != GetDocument()->GetConfig().GetVenues().end();
 			++iVenue)
 		{
 			if (!CAgilityBookOptions::IsVenueVisible(venues, (*iVenue)->GetName()))
 				continue;
-			std::string preTitles2, postTitles2;
+			ARBString preTitles2, postTitles2;
 			for (ARBConfigDivisionList::const_iterator iDiv = (*iVenue)->GetDivisions().begin();
 				iDiv != (*iVenue)->GetDivisions().end();
 				++iDiv)
@@ -1149,7 +1149,7 @@ void CAgilityBookViewPoints::OnCopyTitles()
 			if (!postTitles2.empty())
 			{
 				if (!postTitles.empty())
-					postTitles += "; ";
+					postTitles += _T("; ");
 				postTitles += postTitles2;
 			}
 		}
@@ -1158,7 +1158,7 @@ void CAgilityBookViewPoints::OnCopyTitles()
 			CString data(preTitles.c_str());
 			data += ' ';
 			data += pDog->GetCallName().c_str();
-			data += ": ";
+			data += _T(": ");
 			data += postTitles.c_str();
 
 			// Now, copy to the clipboard
@@ -1181,6 +1181,6 @@ void CAgilityBookViewPoints::OnCopyTitles()
 			}
 		}
 		else
-			AfxMessageBox("No titles to copy.", MB_ICONINFORMATION);
+			AfxMessageBox(_T("No titles to copy."), MB_ICONINFORMATION);
 	}
 }

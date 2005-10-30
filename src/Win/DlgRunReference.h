@@ -38,11 +38,11 @@
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
+#include <set>
+#include "ARBTypes.h"
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-#include <set>
-#include <string>
 class ARBConfigVenue;
 class ARBDogRun;
 class ARBDogReferenceRun;
@@ -86,7 +86,7 @@ protected:
 	void UpdateButtons();
 	void SetColumnHeaders();
 	void ListRuns();
-	void GetAllHeights(std::set<std::string>& ioNames);
+	void GetAllHeights(std::set<ARBString>& ioNames);
 
 	//{{AFX_MSG(CDlgRunReference)
 	virtual BOOL OnInitDialog();

@@ -37,8 +37,8 @@
  * @li 2004-01-21 DRC Created
  */
 
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -71,7 +71,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
@@ -79,7 +79,7 @@ public:
 	 * @return Number of strings accumulated in this object.
 	 * @note There are no strings to search in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a calendar entry
@@ -105,47 +105,47 @@ public:
 	/*
 	 * Getters.
 	 */
-	std::string const& GetVerb() const;
-	std::string const& GetVenue() const;
-	std::string const& GetDivision() const;
-	std::string const& GetOldName() const;
-	std::string const& GetNewName() const;
+	ARBString const& GetVerb() const;
+	ARBString const& GetVenue() const;
+	ARBString const& GetDivision() const;
+	ARBString const& GetOldName() const;
+	ARBString const& GetNewName() const;
 
 private:
 	~ARBConfigAction();
-	std::string m_Verb;
-	std::string m_Venue;
-	std::string m_Div;
-	std::string m_OldName;
-	std::string m_NewName;
+	ARBString m_Verb;
+	ARBString m_Venue;
+	ARBString m_Div;
+	ARBString m_OldName;
+	ARBString m_NewName;
 };
 
-inline std::string ARBConfigAction::GetGenericName() const
+inline ARBString ARBConfigAction::GetGenericName() const
 {
 	return m_Verb;
 }
 
-inline std::string const& ARBConfigAction::GetVerb() const
+inline ARBString const& ARBConfigAction::GetVerb() const
 {
 	return m_Verb;
 }
 
-inline std::string const& ARBConfigAction::GetVenue() const
+inline ARBString const& ARBConfigAction::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline std::string const& ARBConfigAction::GetDivision() const
+inline ARBString const& ARBConfigAction::GetDivision() const
 {
 	return m_Div;
 }
 
-inline std::string const& ARBConfigAction::GetOldName() const
+inline ARBString const& ARBConfigAction::GetOldName() const
 {
 	return m_OldName;
 }
 
-inline std::string const& ARBConfigAction::GetNewName() const
+inline ARBString const& ARBConfigAction::GetNewName() const
 {
 	return m_NewName;
 }

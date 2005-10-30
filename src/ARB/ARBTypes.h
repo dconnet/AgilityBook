@@ -39,10 +39,20 @@
  * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
+#include <sstream>
 #include <string>
 #include <vector>
 class ARBErrorCallback;
 class Element;
+
+// Note, for non-Windows systems, see stdafx.h for additional requirements.
+#ifdef UNICODE
+typedef std::wstring ARBString;
+typedef std::wostringstream ARBostringstream;
+#else
+typedef std::string ARBString;
+typedef std::ostringstream ARBostringstream;
+#endif
 
 /**
  * A version has a major and minor number.
@@ -110,7 +120,7 @@ public:
 	{
 		return static_cast<unsigned short>(m_Version & 0xff);
 	}
-	std::string str() const;
+	ARBString str() const;
 
 private:
 	unsigned long m_Version;
@@ -143,12 +153,12 @@ public:
 	/**
 	 * Get a single string listing all valid types.
 	 */
-	static std::string GetValidTypes();
+	static ARBString GetValidTypes();
 
 	/**
 	 * Get a list of all valid types.
 	 */
-	static void GetValidTypes(std::vector<std::string>& outTypes);
+	static void GetValidTypes(std::vector<ARBString>& outTypes);
 
 	/**
 	 * Get the number of valid types.
@@ -224,7 +234,7 @@ public:
 	/**
 	 * Translate the enum value to a string
 	 */
-	std::string str() const;
+	ARBString str() const;
 
 	/**
 	 * Load a Q
@@ -234,7 +244,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			std::string const& inAttrib,
+			ARBString const& inAttrib,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -247,7 +257,7 @@ public:
 	 */
 	bool Save(
 			Element& ioTree,
-			char const* const inAttribName) const;
+			TCHAR const* const inAttribName) const;
 
 private:
 	eQ m_Q;
@@ -262,7 +272,7 @@ class ARBDouble
 	ARBDouble();
 	~ARBDouble();
 public:
-	static std::string str(
+	static ARBString str(
 			double inValue,
 			int inPrec = 2);
 

@@ -88,7 +88,7 @@ bool ARBDogRunOtherPoints::operator!=(ARBDogRunOtherPoints const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	ioStrings.insert(m_Name);
 	return 1;

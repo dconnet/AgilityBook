@@ -142,7 +142,7 @@ CString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 		break;
 	case 6: // Notes
 		str = m_pCal->GetNote().c_str();
-		str.Replace("\n", " ");
+		str.Replace(_T("\n"), _T(" "));
 		break;
 	}
 	return str;
@@ -173,12 +173,12 @@ public:
 			CListCtrl& ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRun* pRun,
-			std::set<std::string>& faults);
+			std::set<ARBString>& faults);
 	CDlgListCtrlDataFaults(
 			CListCtrl& list,
 			CAgilityBookDoc* pDoc,
 			ARBDogRun* pRun,
-			std::string fault)
+			ARBString fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pRun(pRun)
@@ -195,14 +195,14 @@ protected:
 private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogRun* m_pRun;
-	std::string m_Fault;
+	ARBString m_Fault;
 };
 
 void CDlgListCtrlDataFaults::GetAllFaults(
 		CListCtrl& ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRun* pRun,
-		std::set<std::string>& faults)
+		std::set<ARBString>& faults)
 {
 	faults.clear();
 	pDoc->GetAllFaultTypes(faults);
@@ -224,7 +224,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 
 bool CDlgListCtrlDataFaults::OnEdit()
 {
-	std::set<std::string> faults;
+	std::set<ARBString> faults;
 	CDlgListCtrlDataFaults::GetAllFaults(m_List, m_pDoc, m_pRun, faults);
 	CDlgFault dlg(faults, m_Fault.c_str());
 	if (IDOK == dlg.DoModal())
@@ -232,7 +232,7 @@ bool CDlgListCtrlDataFaults::OnEdit()
 		CString fault = dlg.GetFault();
 		fault.TrimRight();
 		fault.TrimLeft();
-		m_Fault = (LPCSTR)fault;
+		m_Fault = (LPCTSTR)fault;
 		return true;
 	}
 	else
@@ -286,7 +286,7 @@ CString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 		str = m_Other->GetName().c_str();
 		break;
 	case 1:
-		str.Format("%hd", m_Other->GetPoints());
+		str.Format(_T("%hd"), m_Other->GetPoints());
 		break;
 	}
 	return str;
@@ -550,7 +550,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		caption.LoadString(IDS_CALENDAR);
 		m_ctrlCreateTrial.ShowWindow(SW_SHOW);
 		m_ctrlList.SetImageList(&m_ImageList, LVSIL_SMALL); // We 'know' only this one has icons.
-		m_ctrlList.InsertColumn(0, "");
+		m_ctrlList.InsertColumn(0, _T(""));
 		str.LoadString(IDS_COL_START_DATE); m_ctrlList.InsertColumn(1, str);
 		str.LoadString(IDS_COL_END_DATE); m_ctrlList.InsertColumn(2, str);
 		str.LoadString(IDS_COL_LOCATION); m_ctrlList.InsertColumn(3, str);
@@ -769,13 +769,13 @@ void CDlgListCtrl::OnNew()
 
 	case eFaults:
 		{
-			std::set<std::string> faults;
+			std::set<ARBString> faults;
 			CDlgListCtrlDataFaults::GetAllFaults(m_ctrlList, m_pDoc, m_pRun, faults);
 			CDlgFault dlg(faults, NULL, this);
 			if (IDOK == dlg.DoModal())
 			{
 				bUpdate = true;
-				CDlgListCtrlDataFaults* pData = new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, (LPCSTR)dlg.GetFault());
+				CDlgListCtrlDataFaults* pData = new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, (LPCTSTR)dlg.GetFault());
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				if (pData->HasIcon())

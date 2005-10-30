@@ -90,7 +90,7 @@ bool ARBConfigLevel::operator!=(ARBConfigLevel const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBConfigLevel::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigLevel::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -131,17 +131,17 @@ bool ARBConfigLevel::Save(Element& ioTree) const
 bool ARBConfigLevel::Update(
 		int indent,
 		ARBConfigLevel const* inLevelNew,
-		std::string& ioInfo)
+		ARBString& ioInfo)
 {
-	std::string info;
+	ARBString info;
 	if (GetName() != inLevelNew->GetName())
 		return false;
 
-	std::string indentBuffer, indentName;
+	ARBString indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += "   ";
-	indentBuffer = indentName + "   ";
-	indentName += "-";
+		indentName += _T("   ");
+	indentBuffer = indentName + _T("   ");
+	indentName += _T("-");
 
 	// If the order is different, we will fall into this...
 	if (GetSubLevels() != inLevelNew->GetSubLevels())
@@ -168,7 +168,7 @@ bool ARBConfigLevel::Update(
 	if (0 < info.length())
 	{
 		bChanges = true;
-		ioInfo += indentName + GetName() + "\n" + info;
+		ioInfo += indentName + GetName() + _T("\n") + info;
 	}
 	return bChanges;
 }
@@ -182,7 +182,7 @@ void ARBConfigLevel::clear()
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLevelList::VerifyLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		bool inAllowWildCard) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
@@ -197,7 +197,7 @@ bool ARBConfigLevelList::VerifyLevel(
 }
 
 bool ARBConfigLevelList::FindLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigLevel** outLevel)
 {
 	if (outLevel)
@@ -218,7 +218,7 @@ bool ARBConfigLevelList::FindLevel(
 }
 
 bool ARBConfigLevelList::FindSubLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigLevel** outLevel) const
 {
 	if (outLevel)
@@ -254,7 +254,7 @@ bool ARBConfigLevelList::FindSubLevel(
 }
 
 bool ARBConfigLevelList::AddLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigLevel** outLevel)
 {
 	if (outLevel)
@@ -286,10 +286,10 @@ bool ARBConfigLevelList::AddLevel(ARBConfigLevel* inLevel)
 }
 
 bool ARBConfigLevelList::DeleteLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigEventList& ioEvents)
 {
-	std::string name(inName);
+	ARBString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)
@@ -305,10 +305,10 @@ bool ARBConfigLevelList::DeleteLevel(
 }
 
 bool ARBConfigLevelList::DeleteSubLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		bool& outLevelModified)
 {
-	std::string name(inName);
+	ARBString name(inName);
 	outLevelModified = false;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -333,11 +333,11 @@ bool ARBConfigLevelList::DeleteSubLevel(
 					// So, before deleting the node, search for a leaf of the
 					// level that is about to become a leaf - if we find one,
 					// we'll get creative and auto-rename.
-					std::string newName = (*iter)->GetName();
+					ARBString newName = (*iter)->GetName();
 					while (FindSubLevel(newName))
 					{
 						outLevelModified = true;
-						newName += "?";
+						newName += _T("?");
 						(*iter)->SetName(newName);
 					}
 				}

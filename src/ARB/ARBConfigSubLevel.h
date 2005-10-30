@@ -38,8 +38,8 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -61,14 +61,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a sublevel configuration.
@@ -94,25 +94,25 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
 
 private:
 	~ARBConfigSubLevel();
-	std::string m_Name;
+	ARBString m_Name;
 };
 
-inline std::string ARBConfigSubLevel::GetGenericName() const
+inline ARBString ARBConfigSubLevel::GetGenericName() const
 {
 	return m_Name;
 }
 
-inline std::string const& ARBConfigSubLevel::GetName() const
+inline ARBString const& ARBConfigSubLevel::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigSubLevel::SetName(std::string const& inName)
+inline void ARBConfigSubLevel::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
@@ -130,7 +130,7 @@ public:
 	 * @param inName Name of sublevel to find.
 	 * @return Whether name exists.
 	 */
-	bool FindSubLevel(std::string const& inName) const;
+	bool FindSubLevel(ARBString const& inName) const;
 
 	/**
 	 * Find a sublevel.
@@ -139,7 +139,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddSubLevel(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigSubLevel** outLevel = NULL);
 
 	/**
@@ -147,5 +147,5 @@ public:
 	 * @param inName Name of sublevel to delete.
 	 * @return Whether sublevel was deleted or not.
 	 */
-	bool DeleteSubLevel(std::string const& inName);
+	bool DeleteSubLevel(ARBString const& inName);
 };

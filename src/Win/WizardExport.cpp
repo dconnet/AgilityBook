@@ -153,16 +153,16 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 CString CWizardExport::GetDelim() const
 {
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
-		return "";
+		return _T("");
 	CString delim;
 	switch (m_Delim)
 	{
 	default: break;
-	case 0: delim = "\t"; break;
-	case 1: delim = " "; break;
-	case 2: delim = ":"; break;
-	case 3: delim = ";"; break;
-	case 4: delim = ","; break;
+	case 0: delim = _T("\t"); break;
+	case 1: delim = _T(" "); break;
+	case 2: delim = _T(":"); break;
+	case 3: delim = _T(";"); break;
+	case 4: delim = _T(","); break;
 	case 5: delim = m_Delimiter; break;
 	}
 	return delim;
@@ -177,12 +177,12 @@ CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
 	{
 		bAddQuotes = true;
 		if (0 <= fld.Find('"'))
-			fld.Replace("\"", "\"\"");
+			fld.Replace(_T("\""), _T("\"\""));
 	}
 	if (bAddQuotes)
 	{
-		fld = "\"" + fld;
-		fld += "\"";
+		fld = _T("\"") + fld;
+		fld += _T("\"");
 	}
 	return fld;
 }
@@ -256,7 +256,7 @@ CString CWizardExport::AddPreviewData(
 		CString inData)
 {
 	// TODO: Add option to allow CRs?
-	inData.Replace("\n", " ");
+	inData.Replace(_T("\n"), _T(" "));
 	CString data;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
@@ -296,8 +296,8 @@ void CWizardExport::UpdatePreview()
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 	&& delim.IsEmpty())
 	{
-		m_ctrlPreview.InsertColumn(0, "");
-		m_ctrlPreview.InsertItem(0, "No delimiter specified. Unable to preview data.");
+		m_ctrlPreview.InsertColumn(0, _T(""));
+		m_ctrlPreview.InsertItem(0, _T("No delimiter specified. Unable to preview data."));
 		m_ctrlPreview.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 		m_ctrlPreview.SetRedraw(TRUE);
 		m_ctrlPreview.Invalidate();
@@ -314,9 +314,9 @@ void CWizardExport::UpdatePreview()
 	}
 
 	// Now generate the header information.
-	CString hdrSep("/");
+	CString hdrSep(_T("/"));
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
-		hdrSep = "\n";
+		hdrSep = _T("\n");
 	CStringArray cols;
 	switch (m_pSheet->GetImportExportItem())
 	{
@@ -375,7 +375,7 @@ void CWizardExport::UpdatePreview()
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 	{
 		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
-			m_ctrlPreview.InsertColumn(iCol, "");
+			m_ctrlPreview.InsertColumn(iCol, _T(""));
 		m_ctrlPreview.InsertItem(iLine, cols[0]);
 		for (iCol = 1; iCol < cols.GetSize(); ++iCol)
 			m_ctrlPreview.SetItemText(iLine, iCol, cols[iCol]);
@@ -383,7 +383,7 @@ void CWizardExport::UpdatePreview()
 	}
 	else
 	{
-		m_ctrlPreview.InsertColumn(0, "");
+		m_ctrlPreview.InsertColumn(0, _T(""));
 		CString data;
 		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
 		{
@@ -468,7 +468,7 @@ void CWizardExport::UpdatePreview()
 												++iter, ++i)
 											{
 												if (0 < i)
-													fld += "/";
+													fld += _T("/");
 												fld += (*iter)->GetVenue().c_str();
 											}
 											data += AddPreviewData(iLine, idx, fld);
@@ -483,7 +483,7 @@ void CWizardExport::UpdatePreview()
 												++iter, ++i)
 											{
 												if (0 < i)
-													fld += "/";
+													fld += _T("/");
 												fld += (*iter)->GetName().c_str();
 											}
 											data += AddPreviewData(iLine, idx, fld);
@@ -519,7 +519,7 @@ void CWizardExport::UpdatePreview()
 									case IO_RUNS_COURSE_FAULTS:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetCourseFaults());
+											str.Format(_T("%hd"), pRun->GetScoring().GetCourseFaults());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
@@ -553,42 +553,42 @@ void CWizardExport::UpdatePreview()
 									case IO_RUNS_REQ_OPENING:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
+											str.Format(_T("%hd"), pRun->GetScoring().GetNeedOpenPts());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_REQ_CLOSING:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetNeedClosePts());
+											str.Format(_T("%hd"), pRun->GetScoring().GetNeedClosePts());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_OPENING:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetOpenPts());
+											str.Format(_T("%hd"), pRun->GetScoring().GetOpenPts());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_CLOSING:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetClosePts());
+											str.Format(_T("%hd"), pRun->GetScoring().GetClosePts());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_REQ_POINTS:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetNeedOpenPts());
+											str.Format(_T("%hd"), pRun->GetScoring().GetNeedOpenPts());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
 									case IO_RUNS_POINTS:
 										{
 											CString str;
-											str.Format("%hd", pRun->GetScoring().GetOpenPts());
+											str.Format(_T("%hd"), pRun->GetScoring().GetOpenPts());
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
@@ -597,11 +597,11 @@ void CWizardExport::UpdatePreview()
 											CString str;
 											short place = pRun->GetPlace();
 											if (0 > place)
-												str = "?";
+												str = _T("?");
 											else if (0 == place)
-												str = "-";
+												str = _T("-");
 											else
-												str.Format("%hd", place);
+												str.Format(_T("%hd"), place);
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
@@ -610,9 +610,9 @@ void CWizardExport::UpdatePreview()
 											CString str;
 											short inClass = pRun->GetInClass();
 											if (0 >= inClass)
-												str = "?";
+												str = _T("?");
 											else
-												str.Format("%hd", inClass);
+												str.Format(_T("%hd"), inClass);
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
@@ -621,9 +621,9 @@ void CWizardExport::UpdatePreview()
 											CString str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
-												str = "?";
+												str = _T("?");
 											else
-												str.Format("%hd", qd);
+												str.Format(_T("%hd"), qd);
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
@@ -639,7 +639,7 @@ void CWizardExport::UpdatePreview()
 													CString tmp;
 													tmp.LoadString(IDS_SQ);
 													if (!q.IsEmpty())
-														q = tmp + "/" + q;
+														q = tmp + _T("/") + q;
 													else
 														q = tmp;
 												}
@@ -662,7 +662,7 @@ void CWizardExport::UpdatePreview()
 											short pts = 0;
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
-											str.Format("%hd", pts);
+											str.Format(_T("%hd"), pts);
 											data += AddPreviewData(iLine, idx, str);
 										}
 										break;
@@ -678,7 +678,7 @@ void CWizardExport::UpdatePreview()
 												++iter)
 											{
 												if (0 < i)
-													fld += "/";
+													fld += _T("/");
 												fld += (*iter).c_str();
 											}
 											data += AddPreviewData(iLine, idx, fld);
@@ -717,7 +717,7 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_TENTATIVE:
 						if (pCal->IsTentative())
-							data += AddPreviewData(iLine, idx, "?");
+							data += AddPreviewData(iLine, idx, _T("?"));
 						break;
 					case IO_CAL_ENTERED:
 						switch (pCal->GetEntered())
@@ -726,10 +726,10 @@ void CWizardExport::UpdatePreview()
 						case ARBCalendar::eNot:
 							break;
 						case ARBCalendar::eEntered:
-							data += AddPreviewData(iLine, idx, "Entered");
+							data += AddPreviewData(iLine, idx, _T("Entered"));
 							break;
 						case ARBCalendar::ePlanning:
-							data += AddPreviewData(iLine, idx, "Planning");
+							data += AddPreviewData(iLine, idx, _T("Planning"));
 							break;
 						}
 						break;
@@ -794,75 +794,75 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, pCal->GetStartDate().GetString(format).c_str());
 						break;
 					case IO_CAL_APPT_START_TIME:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_END_DATE:
 						data += AddPreviewData(iLine, idx, pCal->GetEndDate().GetString(format).c_str());
 						break;
 					case IO_CAL_APPT_END_TIME:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_ALLDAY:
-						data += AddPreviewData(iLine, idx, "1");
+						data += AddPreviewData(iLine, idx, _T("1"));
 						break;
 					case IO_CAL_APPT_REMINDER:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_REMINDER_DATE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_REMINDER_TIME:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_ORGANIZER:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_REQ_ATTENDEES:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_OPT_ATTENDEES:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_RESOURCES:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_BILLING:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_CATEGORIES:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_DESCRIPTION:
 						{
 							CString tmp;
 							if (pCal->IsTentative())
-								tmp += "Information is tentative. ";
+								tmp += _T("Information is tentative. ");
 							switch (pCal->GetEntered())
 							{
 							default:
 							case ARBCalendar::eNot:
-								tmp += "Status: Not entered. ";
+								tmp += _T("Status: Not entered. ");
 								break;
 							case ARBCalendar::eEntered:
-								tmp += "Status: Entered. ";
+								tmp += _T("Status: Entered. ");
 								break;
 							case ARBCalendar::ePlanning:
-								tmp += "Status: Planning. ";
+								tmp += _T("Status: Planning. ");
 								break;
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += "Trial opens: ";
+								tmp += _T("Trial opens: ");
 								tmp += date.GetString(format).c_str();
-								tmp += " ";
+								tmp += _T(" ");
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += "Trial closes: ";
+								tmp += _T("Trial closes: ");
 								tmp += date.GetString(format).c_str();
-								tmp += " ";
+								tmp += _T(" ");
 							}
 							tmp += pCal->GetNote().c_str();
 							data += AddPreviewData(iLine, idx, tmp);
@@ -872,19 +872,19 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, pCal->GetLocation().c_str());
 						break;
 					case IO_CAL_APPT_MILEAGE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_PRIORITY:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_PRIVATE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_SENSITIVITY:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_APPT_SHOW_TIME_AS:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					}
 				}
@@ -939,86 +939,86 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, dateDue.GetString(format).c_str());
 						break;
 					case IO_CAL_TASK_REMINDER:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_REMINDER_DATE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_REMINDER_TIME:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_COMPLETED_DATE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_COMPLETE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_TOTAL_WORK:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_ACTUAL_WORK:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_BILLING:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_CATEGORIES:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_COMPANIES:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_CONTACTS:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_MILEAGE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_NOTES:
 						{
 							CString tmp;
 							if (pCal->IsTentative())
-								tmp += "Information is tentative. ";
+								tmp += _T("Information is tentative. ");
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += "Trial opens: ";
+								tmp += _T("Trial opens: ");
 								tmp += date.GetString(format).c_str();
-								tmp += " ";
+								tmp += _T(" ");
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += "Trial closes: ";
+								tmp += _T("Trial closes: ");
 								tmp += date.GetString(format).c_str();
-								tmp += " ";
+								tmp += _T(" ");
 							}
-							tmp += "Trial dates: ";
+							tmp += _T("Trial dates: ");
 							tmp += pCal->GetStartDate().GetString(format).c_str();
-							tmp += " to ";
+							tmp += _T(" to ");
 							tmp += pCal->GetEndDate().GetString(format).c_str();
-							tmp += " ";
+							tmp += _T(" ");
 							tmp += pCal->GetNote().c_str();
 							data += AddPreviewData(iLine, idx, tmp);
 						}
 						break;
 					case IO_CAL_TASK_PRIORITY:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_PRIVATE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_ROLE:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_SCH_PRIORITY:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_SENSITIVITY:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					case IO_CAL_TASK_STATUS:
-						data += AddPreviewData(iLine, idx, "");
+						data += AddPreviewData(iLine, idx, _T(""));
 						break;
 					}
 				}
@@ -1074,16 +1074,16 @@ BOOL CWizardExport::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	static struct
 	{
-		char const* pFormat;
+		TCHAR const* pFormat;
 		ARBDate::DateFormat format;
 	} const sc_Dates[] =
 	{
-		{"M-D-Y", ARBDate::eDashMDY},
-		{"M/D/Y", ARBDate::eSlashMDY},
-		{"Y-M-D", ARBDate::eDashYMD},
-		{"Y/M/D", ARBDate::eSlashYMD},
-		{"D-M-Y", ARBDate::eDashDMY},
-		{"D/M/Y", ARBDate::eSlashDMY},
+		{_T("M-D-Y"), ARBDate::eDashMDY},
+		{_T("M/D/Y"), ARBDate::eSlashMDY},
+		{_T("Y-M-D"), ARBDate::eDashYMD},
+		{_T("Y/M/D"), ARBDate::eSlashYMD},
+		{_T("D-M-Y"), ARBDate::eDashDMY},
+		{_T("D/M/Y"), ARBDate::eSlashDMY},
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
@@ -1159,7 +1159,7 @@ BOOL CWizardExport::OnWizardFinish()
 		}
 		else
 		{
-			AfxMessageBox("Failed to write data to Excel");
+			AfxMessageBox(_T("Failed to write data to Excel"));
 			return FALSE;
 		}
 	}
@@ -1167,10 +1167,11 @@ BOOL CWizardExport::OnWizardFinish()
 	{
 		CString filter;
 		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
-		CFileDialog file(FALSE, "", "", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
+		CFileDialog file(FALSE, _T(""), _T(""), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 		if (IDOK == file.DoModal())
 		{
-			std::ofstream output(file.GetFileName(), std::ios::out);
+			CStringA filename(file.GetFileName());
+			std::ofstream output(filename, std::ios::out);
 			output.exceptions(std::ios_base::badbit);
 			if (output.is_open())
 			{

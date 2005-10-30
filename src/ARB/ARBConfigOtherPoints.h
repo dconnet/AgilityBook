@@ -38,8 +38,8 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -77,14 +77,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load an otherpoint configuration.
@@ -110,41 +110,41 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetDescription() const;
-	void SetDescription(std::string const& inDesc);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetDescription() const;
+	void SetDescription(ARBString const& inDesc);
 	eOtherPointsTally GetTally() const;
 	void SetTally(eOtherPointsTally inTally);
 
 private:
 	~ARBConfigOtherPoints();
-	std::string m_Name;
+	ARBString m_Name;
 	eOtherPointsTally m_Tally;
-	std::string m_Desc;
+	ARBString m_Desc;
 };
 
-inline std::string ARBConfigOtherPoints::GetGenericName() const
+inline ARBString ARBConfigOtherPoints::GetGenericName() const
 {
 	return GetName();
 }
 
-inline std::string const& ARBConfigOtherPoints::GetName() const
+inline ARBString const& ARBConfigOtherPoints::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigOtherPoints::SetName(std::string const& inName)
+inline void ARBConfigOtherPoints::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBConfigOtherPoints::GetDescription() const
+inline ARBString const& ARBConfigOtherPoints::GetDescription() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigOtherPoints::SetDescription(std::string const& inDesc)
+inline void ARBConfigOtherPoints::SetDescription(ARBString const& inDesc)
 {
 	m_Desc = inDesc;
 }
@@ -172,7 +172,7 @@ public:
 	 * @param inName Name to verify.
 	 * @return Whether the OtherPoints exists.
 	 */
-	bool VerifyOtherPoints(std::string const& inName) const;
+	bool VerifyOtherPoints(ARBString const& inName) const;
 
 	/**
 	 * Find an otherpoints object.
@@ -181,7 +181,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindOtherPoints(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigOtherPoints** outPoints = NULL) const;
 
 	/**
@@ -196,5 +196,5 @@ public:
 	 * @param inName Name of object to delete.
 	 * @return Whether the object was deleted or not.
 	 */
-	bool DeleteOtherPoints(std::string const& inName);
+	bool DeleteOtherPoints(ARBString const& inName);
 };

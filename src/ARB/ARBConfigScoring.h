@@ -44,12 +44,12 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigLifetimePoints.h"
 #include "ARBConfigTitlePoints.h"
 #include "ARBDate.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBConfigEvent;
 class ARBErrorCallback;
@@ -79,7 +79,7 @@ public:
 	/**
 	 * Translate the enum to a string.
 	 */
-	static std::string GetScoringStyleStr(ScoringStyle inStyle);
+	static ARBString GetScoringStyleStr(ScoringStyle inStyle);
 
 	ARBConfigScoring();
 	ARBConfigScoring(ARBConfigScoring const& rhs);
@@ -91,14 +91,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a scoring configuration.
@@ -130,13 +130,13 @@ public:
 	void SetValidFrom(ARBDate const& inDate);
 	ARBDate const& GetValidTo() const;
 	void SetValidTo(ARBDate const& inDate);
-	std::string GetValidDateString() const;
-	std::string const& GetDivision() const;
-	void SetDivision(std::string const& inDiv);
-	std::string const& GetLevel() const;
-	void SetLevel(std::string const& inLevel);
+	ARBString GetValidDateString() const;
+	ARBString const& GetDivision() const;
+	void SetDivision(ARBString const& inDiv);
+	ARBString const& GetLevel() const;
+	void SetLevel(ARBString const& inLevel);
 	ScoringStyle GetScoringStyle() const;
-	std::string GetScoringStyleStr() const;
+	ARBString GetScoringStyleStr() const;
 	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle);
 	bool DropFractions() const; ///< Only valid for F/T, T+F
 	void SetDropFractions(bool inBool); ///< Only valid for F/T, T+F
@@ -150,8 +150,8 @@ public:
 	void SetRequiredOpeningPoints(short inPoints); ///< Only valid for point-based
 	short GetRequiredClosingPoints() const; ///< Only valid for point-based
 	void SetRequiredClosingPoints(short inPoints); ///< Only valid for point-based
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 	bool HasSuperQ() const;
 	void SetHasSuperQ(bool inBool);
 	bool HasSpeedPts() const;
@@ -171,14 +171,14 @@ private:
 	~ARBConfigScoring();
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	std::string m_Division;
-	std::string m_Level;
+	ARBString m_Division;
+	ARBString m_Level;
 	ScoringStyle m_Style;
 	bool m_bDropFractions;
 	bool m_bTimeFaultsUnder;
 	bool m_bTimeFaultsOver;
 	short m_TimeFaultMultiplier;
-	std::string m_Note;
+	ARBString m_Note;
 	short m_OpeningPts;
 	short m_ClosingPts;
 	bool m_bSuperQ;
@@ -208,22 +208,22 @@ inline void ARBConfigScoring::SetValidTo(ARBDate const& inDate)
 	m_ValidTo = inDate;
 }
 
-inline std::string const& ARBConfigScoring::GetDivision() const
+inline ARBString const& ARBConfigScoring::GetDivision() const
 {
 	return m_Division;
 }
 
-inline void ARBConfigScoring::SetDivision(std::string const& inDiv)
+inline void ARBConfigScoring::SetDivision(ARBString const& inDiv)
 {
 	m_Division = inDiv;
 }
 
-inline std::string const& ARBConfigScoring::GetLevel() const
+inline ARBString const& ARBConfigScoring::GetLevel() const
 {
 	return m_Level;
 }
 
-inline void ARBConfigScoring::SetLevel(std::string const& inLevel)
+inline void ARBConfigScoring::SetLevel(ARBString const& inLevel)
 {
 	m_Level = inLevel;
 }
@@ -282,12 +282,12 @@ inline void ARBConfigScoring::SetTimeFaultMultiplier(short inMultiplier)
 		m_TimeFaultMultiplier = 1;
 }
 
-inline std::string const& ARBConfigScoring::GetNote() const
+inline ARBString const& ARBConfigScoring::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBConfigScoring::SetNote(std::string const& inNote)
+inline void ARBConfigScoring::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }
@@ -389,8 +389,8 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			std::string const& inDivision,
-			std::string const& inLevel,
+			ARBString const& inDivision,
+			ARBString const& inLevel,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoring>& outList) const;
 
@@ -403,8 +403,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			std::string const& inDivision,
-			std::string const& inLevel,
+			ARBString const& inDivision,
+			ARBString const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoring** outEvent = NULL) const;
 
@@ -415,8 +415,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-			std::string const& inDivision,
-			std::string const& inLevel) const;
+			ARBString const& inDivision,
+			ARBString const& inLevel) const;
 
 	/**
 	 * Create a new scoring method.

@@ -57,7 +57,7 @@ CDlgMessage::CDlgMessage(
 	//{{AFX_DATA_INIT(CDlgMessage)
 	m_Message = msg;
 	//}}AFX_DATA_INIT
-	m_Message.Replace("\n", "\r\n");
+	m_Message.Replace(_T("\n"), _T("\r\n"));
 }
 
 void CDlgMessage::DoDataExchange(CDataExchange* pDX)

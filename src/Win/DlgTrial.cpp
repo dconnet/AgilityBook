@@ -84,7 +84,7 @@ CDlgTrial::CDlgTrial(
 	m_Location = pTrial->GetLocation().c_str();
 	m_Notes = pTrial->GetNote().c_str();
 	//}}AFX_DATA_INIT
-	m_Notes.Replace("\n", "\r\n");
+	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
 void CDlgTrial::DoDataExchange(CDataExchange* pDX)
@@ -129,7 +129,7 @@ void CDlgTrial::UpdateNotes(
 		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location, &pItem))
 		{
 			str = pItem->GetComment().c_str();
-			str.Replace("\n", "\r\n");
+			str.Replace(_T("\n"), _T("\r\n"));
 			pItem->Release();
 			pItem = NULL;
 		}
@@ -148,7 +148,7 @@ void CDlgTrial::UpdateNotes(
 				if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
 				{
 					str = pItem->GetComment().c_str();
-					str.Replace("\n", "\r\n");
+					str.Replace(_T("\n"), _T("\r\n"));
 					pItem->Release();
 					pItem = NULL;
 				}
@@ -196,9 +196,9 @@ BOOL CDlgTrial::OnInitDialog()
 		str.ReleaseBuffer();
 	}
 
-	set<string> locations;
+	set<ARBString> locations;
 	m_pDoc->GetAllTrialLocations(locations);
-	for (set<string>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	for (set<ARBString>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
 		int index = m_ctrlLocation.AddString((*iter).c_str());
 		if ((*iter) == m_pTrial->GetLocation())
@@ -324,8 +324,8 @@ void CDlgTrial::OnOK()
 	m_bRunsDeleted = false;
 	if (0 < m_pTrial->GetRuns().size())
 	{
-		std::set<std::string> oldVenues;
-		std::set<std::string> newVenues;
+		std::set<ARBString> oldVenues;
+		std::set<ARBString> newVenues;
 		ARBDogClubList::iterator iterClub;
 		for (iterClub = m_pTrial->GetClubs().begin(); iterClub != m_pTrial->GetClubs().end(); ++iterClub)
 		{
@@ -338,7 +338,7 @@ void CDlgTrial::OnOK()
 			newVenues.insert(pClub->GetVenue());
 		}
 		bool bAllThere = true;
-		for (std::set<std::string>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
+		for (std::set<ARBString>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
 		{
 			if (newVenues.end() == newVenues.find((*iterVenues)))
 			{
@@ -355,7 +355,7 @@ void CDlgTrial::OnOK()
 			{
 				ARBDogRun const* pRun = *iterRun;
 				bool bFound = false;
-				for (std::set<std::string>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
+				for (std::set<ARBString>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
 				{
 					if (m_pDoc->GetConfig().GetVenues().FindEvent(
 						(*iterVenues),
@@ -385,9 +385,9 @@ void CDlgTrial::OnOK()
 		}
 	}
 
-	m_pTrial->SetLocation((LPCSTR)m_Location);
-	m_Notes.Replace("\r\n", "\n");
-	m_pTrial->SetNote((LPCSTR)m_Notes);
+	m_pTrial->SetLocation((LPCTSTR)m_Location);
+	m_Notes.Replace(_T("\r\n"), _T("\n"));
+	m_pTrial->SetNote((LPCTSTR)m_Notes);
 	m_pTrial->SetVerified(m_Verified ? true : false);
 	m_pTrial->GetClubs() = m_Clubs;
 	CDlgBaseDialog::OnOK();

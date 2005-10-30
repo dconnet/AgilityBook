@@ -130,20 +130,20 @@ void CDlgRunCRCD::SetView()
 {
 	if (m_ViewText)
 	{
-		m_ctrlView.SetWindowText("View Image");
+		m_ctrlView.SetWindowText(_T("View Image"));
 		m_ctrlText.ShowWindow(SW_SHOW);
 		m_ctrlCRCD.ShowWindow(SW_HIDE);
 	}
 	else
 	{
-		m_ctrlView.SetWindowText("View Text");
+		m_ctrlView.SetWindowText(_T("View Text"));
 		m_ctrlText.ShowWindow(SW_HIDE);
 		m_ctrlCRCD.ShowWindow(SW_SHOW);
 	}
 	if (m_Insert)
-		m_ctrlInsert.SetWindowText("Insert Course");
+		m_ctrlInsert.SetWindowText(_T("Insert Course"));
 	else
-		m_ctrlInsert.SetWindowText("Clear Course");
+		m_ctrlInsert.SetWindowText(_T("Clear Course"));
 	if (m_metaFile)
 	{
 		m_ctrlEdit.EnableWindow(TRUE);
@@ -166,7 +166,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	m_ctrlCRCD.GetClientRect(m_rCRCDclient);
 	m_ctrlCRCD.MapWindowPoints(this, m_rCRCDclient);
 	CString str = m_Run->GetCRCD().c_str();
-	str.Replace("\n", "\r\n");
+	str.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlText.SetWindowText(str);
 	if (0 < str.GetLength())
 		m_Insert = false;
@@ -178,7 +178,12 @@ BOOL CDlgRunCRCD::OnInitDialog()
 		Base64 decode;
 		char* pOutput;
 		size_t len;
+#ifdef UNICODE
+		std::string data = CStringA(m_Run->GetCRCDMetaFile().c_str());
+		if (decode.Decode(data, pOutput, len))
+#else
 		if (decode.Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
+#endif
 		{
 			m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(len), reinterpret_cast<LPBYTE>(pOutput));
 			if (m_metaFile)
@@ -235,7 +240,7 @@ void CDlgRunCRCD::OnCopy()
 		{
 			if (AfxGetMainWnd()->OpenClipboard())
 			{
-				m_ctrlText.SetWindowText("");
+				m_ctrlText.SetWindowText(_T(""));
 				if (m_metaFile)
 				{
 					DeleteEnhMetaFile(m_metaFile);
@@ -252,9 +257,9 @@ void CDlgRunCRCD::OnCopy()
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
 					// First standardize to \n, store it, then replace the
 					// other way for windows display.
-					str.Replace("\r\n", "\n");
+					str.Replace(_T("\r\n"), _T("\n"));
 					m_Run->SetCRCD((LPCTSTR)str);
-					str.Replace("\n", "\r\n");
+					str.Replace(_T("\n"), _T("\r\n"));
 					m_ctrlText.SetWindowText(str);
 					if (0 < str.GetLength())
 						m_Insert = false;
@@ -273,7 +278,12 @@ void CDlgRunCRCD::OnCopy()
 						GetEnhMetaFileBits(m_metaFile, nSize, bits);
 						Base64 encode;
 						ASSERT(sizeof(BYTE) == sizeof(char));
-						std::string moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
+#ifdef UNICODE
+						CString tmp(encode.Encode(reinterpret_cast<char const*>(bits), nSize).c_str());
+						ARBString moreBits = tmp;
+#else
+						ARBString moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
+#endif
 						m_Run->SetCRCDMetaFile(moreBits);
 						delete [] bits;
 						AdjustCRCD();
@@ -294,14 +304,14 @@ void CDlgRunCRCD::OnCopy()
 	{
 		m_Insert = true;
 		m_ViewText = true;
-		m_ctrlText.SetWindowText("");
+		m_ctrlText.SetWindowText(_T(""));
 		if (m_metaFile)
 		{
 			DeleteEnhMetaFile(m_metaFile);
 			m_metaFile = NULL;
 		}
-		m_Run->SetCRCD("");
-		m_Run->SetCRCDMetaFile("");
+		m_Run->SetCRCD(_T(""));
+		m_Run->SetCRCDMetaFile(_T(""));
 		SetView();
 	}
 }

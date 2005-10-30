@@ -41,8 +41,8 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
+#include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
 class ARBVersion;
@@ -70,14 +70,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a title configuration.
@@ -104,7 +104,7 @@ public:
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
-	std::string const& GetNiceName() const;
+	ARBString const& GetNiceName() const;
 
 	/**
 	 * Get the complete name (name + nicename).
@@ -112,39 +112,39 @@ public:
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @return The complete name.
 	 */
-	std::string GetCompleteName(
+	ARBString GetCompleteName(
 			short inInstance = 0,
 			bool bAbbrevFirst = true) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetLongName() const;
-	void SetLongName(std::string const& inName);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetLongName() const;
+	void SetLongName(ARBString const& inName);
 	short GetMultiple() const;
 	void SetMultiple(short inMultiple);
 	bool GetPrefix() const;
 	void SetPrefix(bool inPrefix);
-	std::string const& GetDescription() const;
-	void SetDescription(std::string const& inDesc);
+	ARBString const& GetDescription() const;
+	void SetDescription(ARBString const& inDesc);
 
 private:
 	~ARBConfigTitle();
-	std::string m_Name;
-	std::string m_LongName;
+	ARBString m_Name;
+	ARBString m_LongName;
 	short m_Multiple;
 	bool m_Prefix;
-	std::string m_Desc;
+	ARBString m_Desc;
 };
 
-inline std::string ARBConfigTitle::GetGenericName() const
+inline ARBString ARBConfigTitle::GetGenericName() const
 {
 	return GetNiceName();
 }
 
-inline std::string const& ARBConfigTitle::GetNiceName() const
+inline ARBString const& ARBConfigTitle::GetNiceName() const
 {
 	if (0 == m_LongName.length())
 		return m_Name;
@@ -152,22 +152,22 @@ inline std::string const& ARBConfigTitle::GetNiceName() const
 		return m_LongName;
 }
 
-inline std::string const& ARBConfigTitle::GetName() const
+inline ARBString const& ARBConfigTitle::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBConfigTitle::SetName(std::string const& inName)
+inline void ARBConfigTitle::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBConfigTitle::GetLongName() const
+inline ARBString const& ARBConfigTitle::GetLongName() const
 {
 	return m_LongName;
 }
 
-inline void ARBConfigTitle::SetLongName(std::string const& inName)
+inline void ARBConfigTitle::SetLongName(ARBString const& inName)
 {
 	m_LongName = inName;
 }
@@ -192,12 +192,12 @@ inline void ARBConfigTitle::SetPrefix(bool inPrefix)
 	m_Prefix = inPrefix;
 }
 
-inline std::string const& ARBConfigTitle::GetDescription() const
+inline ARBString const& ARBConfigTitle::GetDescription() const
 {
 	return m_Desc;
 }
 
-inline void ARBConfigTitle::SetDescription(std::string const& inDesc)
+inline void ARBConfigTitle::SetDescription(ARBString const& inDesc)
 {
 	m_Desc = inDesc;
 }
@@ -220,7 +220,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			std::string const& inName,
+			ARBString const& inName,
 			short inInstance,
 			bool bAbbrevFirst = true,
 			ARBConfigTitle** outTitle = NULL) const;
@@ -232,7 +232,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigTitle** outTitle = NULL) const;
 
 	/**
@@ -242,7 +242,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTitle(
-			std::string const& inName,
+			ARBString const& inName,
 			ARBConfigTitle** outTitle = NULL);
 
 	/**
@@ -257,5 +257,5 @@ public:
 	 * @param inName Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(std::string const& inName);
+	bool DeleteTitle(ARBString const& inName);
 };

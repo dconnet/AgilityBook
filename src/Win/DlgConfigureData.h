@@ -36,7 +36,6 @@
  * @li 2004-04-02 DRC Up the ref count to prevent problems.
  */
 
-#include <string>
 #include <vector>
 class ARBConfigDivision;
 class ARBConfigEvent;

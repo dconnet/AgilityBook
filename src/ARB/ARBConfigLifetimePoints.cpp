@@ -36,7 +36,6 @@
 
 #include "StdAfx.h"
 #include <algorithm>
-#include <sstream>
 #include "ARBConfigLifetimePoints.h"
 
 #include "ARBAgilityRecordBook.h"
@@ -95,12 +94,12 @@ bool ARBConfigLifetimePoints::operator!=(ARBConfigLifetimePoints const& rhs) con
 	return !operator==(rhs);
 }
 
-std::string ARBConfigLifetimePoints::GetGenericName() const
+ARBString ARBConfigLifetimePoints::GetGenericName() const
 {
 	return LIFETIME_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
 
-size_t ARBConfigLifetimePoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigLifetimePoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;

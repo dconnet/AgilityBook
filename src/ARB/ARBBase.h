@@ -39,7 +39,7 @@
  */
 
 #include <set>
-#include <string>
+#include "ARBTypes.h"
 
 /**
  * @brief Base class for reference counting and other common functionality.
@@ -76,14 +76,14 @@ public:
 	 * without knowing what the objects actually are.
 	 * @return Name of the object.
 	 */
-	virtual std::string GetGenericName() const = 0;
+	virtual ARBString GetGenericName() const = 0;
 
 	/**
 	 * Get all the strings to search in an object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const = 0;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const = 0;
 
 	// Filtered state
 	typedef enum

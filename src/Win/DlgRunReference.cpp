@@ -47,7 +47,6 @@
 #include "AgilityBookDoc.h"
 #include "ARBDogRun.h"
 #include "DlgReferenceRun.h"
-#include ".\dlgrunreference.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -165,7 +164,7 @@ CDlgRunReference::CDlgRunReference(
 	, m_Venue(pVenue)
 	, m_Run(pRun)
 	, m_pRefRunMe(NULL)
-	, m_sortRefRuns("RefRuns")
+	, m_sortRefRuns(_T("RefRuns"))
 {
 	ASSERT(NULL != m_Venue);
 	m_Venue->AddRef();
@@ -352,7 +351,7 @@ void CDlgRunReference::ListRuns()
 	UpdateButtons();
 }
 
-void CDlgRunReference::GetAllHeights(std::set<std::string>& ioNames)
+void CDlgRunReference::GetAllHeights(std::set<ARBString>& ioNames)
 {
 	m_pDoc->GetAllHeights(ioNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
@@ -360,7 +359,7 @@ void CDlgRunReference::GetAllHeights(std::set<std::string>& ioNames)
 		ARBDogReferenceRun const* pRefRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
 		if (pRefRun)
 		{
-			std::string const& ht = pRefRun->GetHeight();
+			ARBString const& ht = pRefRun->GetHeight();
 			if (0 < ht.length())
 				ioNames.insert(ht);
 		}
@@ -412,7 +411,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(pDispInfo->item.lParam);
-		CString str("");
+		CString str(_T(""));
 		switch (pDispInfo->item.iSubItem)
 		{
 		default:
@@ -421,7 +420,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 			str = pRef->GetQ().str().c_str();
 			break;
 		case 1: // Place
-			str.Format("%hd", pRef->GetPlace());
+			str.Format(_T("%hd"), pRef->GetPlace());
 			break;
 		case 2: // Score
 			str = pRef->GetScore().c_str();
@@ -440,7 +439,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 			break;
 		case 7: // Note
 			str = pRef->GetNote().c_str();
-			str.Replace("\n", " ");
+			str.Replace(_T("\n"), _T(" "));
 			break;
 		}
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
@@ -530,17 +529,17 @@ void CDlgRunReference::OnRefRunNew()
 			m_Run->GetDate(),
 			&pScoring))
 		{
-			std::string nScore;
+			ARBString nScore;
 			switch (pScoring->GetScoringStyle())
 			{
 			default:
-				nScore = "0";
+				nScore = _T("0");
 				break;
 			case ARBConfigScoring::eFaults100ThenTime:
-				nScore = "100";
+				nScore = _T("100");
 				break;
 			case ARBConfigScoring::eFaults200ThenTime:
-				nScore = "200";
+				nScore = _T("200");
 				break;
 			}
 			ref->SetScore(nScore);
@@ -548,7 +547,7 @@ void CDlgRunReference::OnRefRunNew()
 		}
 	}
 	ref->SetQ(ARB_Q::eQ_Q);
-	std::set<std::string> names;
+	std::set<ARBString> names;
 	GetAllHeights(names);
 	CDlgReferenceRun dlg(m_pDoc, names, ref, this);
 	if (IDOK == dlg.DoModal())
@@ -574,7 +573,7 @@ void CDlgRunReference::OnRefRunEdit()
 	int nItem = m_ctrlRefRuns.GetSelection();
 	if (0 <= nItem)
 	{
-		std::set<std::string> names;
+		std::set<ARBString> names;
 		GetAllHeights(names);
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(nItem));
 		CDlgReferenceRun dlg(m_pDoc, names, pRef, this);

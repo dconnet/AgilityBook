@@ -63,9 +63,9 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 // Registry settings in "Last"
-#define LAST_SECTION	"Last"
-#define LAST_STYLE			"WizStyle"
-#define LAST_STYLEITEM		"WizSubStyle" // A number will be appended
+#define LAST_SECTION	_T("Last")
+#define LAST_STYLE			_T("WizStyle")
+#define LAST_STYLEITEM		_T("WizSubStyle") // A number will be appended
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
@@ -128,75 +128,75 @@ static struct
 		// other: ID of dialog
 		LRESULT nextPage;
 		// Listing (NULL denotes no entry)
-		char const* item;
+		TCHAR const* item;
 		// Description shown when listing is selected.
-		char const* desc;
+		TCHAR const* desc;
 	} data[3]; // Data must agree with WIZARD_RADIO_* defines.
 } const sc_Items[] =
 {
 	{WIZ_IMPORT_RUNS,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			"Import Trials and Runs",
-			"Import trial and run information from Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+			_T("Import Trials and Runs"),
+			_T("Import trial and run information from Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			"Import Trials and Runs",
-			"Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+			_T("Import Trials and Runs"),
+			_T("Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
 		},
 		{PSWIZB_FINISH, -1,
-			"Import Dogs, Trials, Runs and Judges",
-			"Import dog, trial, run and judge information from Agility Record Book."
+			_T("Import Dogs, Trials, Runs and Judges"),
+			_T("Import dog, trial, run and judge information from Agility Record Book.")
 		}
 	} },
 	{WIZ_EXPORT_RUNS,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Runs",
-			"Export trial and run information to Excel."
+			_T("Export Runs"),
+			_T("Export trial and run information to Excel.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Runs",
-			"Export trial and run information so it can be imported into a spreadsheet."
+			_T("Export Runs"),
+			_T("Export trial and run information so it can be imported into a spreadsheet.")
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 	} },
 	{WIZ_IMPORT_CALENDAR,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			"Import Calendar",
-			"Import a calendar listing from Excel."
+			_T("Import Calendar"),
+			_T("Import a calendar listing from Excel.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			"Import Calendar",
-			"Import a calendar listing from a spreadsheet."
+			_T("Import Calendar"),
+			_T("Import a calendar listing from a spreadsheet.")
 		},
 		{PSWIZB_FINISH, -1,
-			"Import Calendar",
-			"Import a calendar listing that was exported from Agility Record Book."
+			_T("Import Calendar"),
+			_T("Import a calendar listing that was exported from Agility Record Book.")
 		}
 	} },
 	{WIZ_EXPORT_CALENDAR,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Calendar",
-			"Export your calendar listing to Excel."
+			_T("Export Calendar"),
+			_T("Export your calendar listing to Excel.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Calendar",
-			"Export your calendar listing to a spreadsheet."
+			_T("Export Calendar"),
+			_T("Export your calendar listing to a spreadsheet.")
 		},
 		{PSWIZB_FINISH, -1,
-			"Export Calendar",
-			"Export your calendar listing so it can be imported into Agility Record Book."
+			_T("Export Calendar"),
+			_T("Export your calendar listing so it can be imported into Agility Record Book.")
 		}
 	} },
 	{WIZ_EXPORT_CALENDAR_VCAL,
 	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
-			"Export Calendar (vCalendar)",
-			"Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs."
+			_T("Export Calendar (vCalendar)"),
+			_T("Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs.")
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 	} },
@@ -204,63 +204,63 @@ static struct
 	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
-			"Export Calendar (iCalendar)",
-			"Export calendar entries in iCalendar (.ics) format so they can be imported into other programs."
+			_T("Export Calendar (iCalendar)"),
+			_T("Export calendar entries in iCalendar (.ics) format so they can be imported into other programs.")
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 	} },
 	{WIZ_EXPORT_CALENDAR_APPT,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Calendar (MS Outlook Appointment)",
-			"Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments."
+			_T("Export Calendar (MS Outlook Appointment)"),
+			_T("Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Calendar (MS Outlook Appointment)",
-			"Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments."
+			_T("Export Calendar (MS Outlook Appointment)"),
+			_T("Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments.")
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 	} },
 	{WIZ_EXPORT_CALENDAR_TASK,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Calendar (MS Outlook Task)",
-			"Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+			_T("Export Calendar (MS Outlook Task)"),
+			_T("Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Calendar (MS Outlook Task)",
-			"Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+			_T("Export Calendar (MS Outlook Task)"),
+			_T("Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported.")
 		},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
 	} },
 	{WIZ_IMPORT_LOG,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			"Import Training Log",
-			"Import a Training Log from Excel."
+			_T("Import Training Log"),
+			_T("Import a Training Log from Excel.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			"Import Training Log",
-			"Import a Training Log from a spreadsheet."
+			_T("Import Training Log"),
+			_T("Import a Training Log from a spreadsheet.")
 		},
 		{PSWIZB_FINISH, -1,
-			"Import Training Log",
-			"Import a Training Log that was exported from Agility Record Book."
+			_T("Import Training Log"),
+			_T("Import a Training Log that was exported from Agility Record Book.")
 		}
 	} },
 	{WIZ_EXPORT_LOG,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Training Log",
-			"Export your Training Log to Excel."
+			_T("Export Training Log"),
+			_T("Export your Training Log to Excel.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			"Export Training Log",
-			"Export your Training Log to a spreadsheet."
+			_T("Export Training Log"),
+			_T("Export your Training Log to a spreadsheet.")
 		},
 		{PSWIZB_FINISH, -1,
-			"Export Training Log",
-			"Export your Training Log so it can be imported into Agility Record Book."
+			_T("Export Training Log"),
+			_T("Export your Training Log so it can be imported into Agility Record Book.")
 		}
 	} },
 	{WIZ_IMPORT_CONFIGURATION,
@@ -268,8 +268,8 @@ static struct
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
-			"Import Configuration",
-			"Update your configuration to support new and/or updated venues."
+			_T("Import Configuration"),
+			_T("Update your configuration to support new and/or updated venues.")
 		}
 	} },
 	{WIZ_EXPORT_CONFIGURATION,
@@ -277,8 +277,8 @@ static struct
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
-			"Export Configuration",
-			"Export your configuration so it can be imported into Agility Record Book."
+			_T("Export Configuration"),
+			_T("Export your configuration so it can be imported into Agility Record Book.")
 		}
 	} },
 	{WIZ_EXPORT_DTD,
@@ -286,8 +286,8 @@ static struct
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
-			"Export DTD",
-			"Export the Document Type Definition. This data describes the XML format of the data file."
+			_T("Export DTD"),
+			_T("Export the Document Type Definition. This data describes the XML format of the data file.")
 		}
 	} },
 	{WIZ_EXPORT_XML,
@@ -295,8 +295,8 @@ static struct
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
-			"Export File as XML",
-			"Export your data file as an XML file. The DTD will be contained within this file."
+			_T("Export File as XML"),
+			_T("Export your data file as an XML file. The DTD will be contained within this file.")
 		}
 	} },
 };
@@ -305,7 +305,7 @@ static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 void CWizardStart::UpdateList()
 {
 	m_ctrlList.ResetContent();
-	m_ctrlDesc.SetWindowText("");
+	m_ctrlDesc.SetWindowText(_T(""));
 	for (int i = 0; i < sc_nItems; ++i)
 	{
 		ASSERT(sc_Items[i].index == i);
@@ -325,7 +325,7 @@ void CWizardStart::UpdateList()
 			m_ctrlList.SetItemData(index, i);
 	}
 	CString str;
-	str.Format("%s%d", LAST_STYLEITEM, m_Style);
+	str.Format(_T("%s%d"), LAST_STYLEITEM, m_Style);
 	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str, -1);
 	m_ctrlList.SetCurSel(idx);
 	OnSelchangeExportList();
@@ -399,15 +399,15 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					std::string errMsg;
+					ARBString errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile(file.GetPathName(), errMsg))
+					if (!tree.LoadXMLFile((LPCTSTR)file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 						if (0 < errMsg.length())
 						{
-							msg += "\n\n";
+							msg += _T("\n\n");
 							msg += errMsg.c_str();
 						}
 						AfxMessageBox(msg, MB_ICONEXCLAMATION);
@@ -600,29 +600,29 @@ BOOL CWizardStart::OnWizardFinish()
 							}
 							if (0 < countClubs)
 							{
-								std::set<std::string> namesInUse;
+								std::set<ARBString> namesInUse;
 								m_pDoc->GetAllClubNames(namesInUse, false);
 								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
 							}
 							if (0 < countJudges)
 							{
-								std::set<std::string> namesInUse;
+								std::set<ARBString> namesInUse;
 								m_pDoc->GetAllJudges(namesInUse, false);
 								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
 							}
 							if (0 < countLocations)
 							{
-								std::set<std::string> namesInUse;
+								std::set<ARBString> namesInUse;
 								m_pDoc->GetAllTrialLocations(namesInUse, false);
 								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 							}
 							//"Added %1!d! new dogs, updated %2!d! dogs and added %3!d! judges."
-							CString str("Added ");
+							CString str(_T("Added "));
 							bool bAdded = false;
 							if (0 < countDog)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_DOGS, countDog);
@@ -631,7 +631,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countRegNumsAdded)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsAdded);
@@ -640,7 +640,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countExistingPts)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_EXISTINGPTS, countExistingPts);
@@ -649,7 +649,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countTitlesAdded)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_TITLES, countTitlesAdded);
@@ -658,7 +658,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countTrials)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_TRIALS, countTrials);
@@ -667,7 +667,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countClubs)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_CLUBS, countClubs);
@@ -676,7 +676,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countJudges)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_JUDGES, countJudges);
@@ -685,7 +685,7 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countLocations)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_LOCATIONS, countLocations);
@@ -695,9 +695,9 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countRegNumsUpdated)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								else
-									str += "\nUpdated ";
+									str += _T("\nUpdated ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsUpdated);
@@ -706,9 +706,9 @@ BOOL CWizardStart::OnWizardFinish()
 							if (0 < countTitlesUpdated)
 							{
 								if (bAdded)
-									str += ", ";
+									str += _T(", ");
 								else
-									str += "\nUpdated ";
+									str += _T("\nUpdated ");
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_TITLES, countTitlesUpdated);
@@ -735,15 +735,15 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					std::string errMsg;
+					ARBString errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile(file.GetPathName(), errMsg))
+					if (!tree.LoadXMLFile((LPCTSTR)file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 						if (0 < errMsg.length())
 						{
-							msg += "\n\n";
+							msg += _T("\n\n");
 							msg += errMsg.c_str();
 						}
 						AfxMessageBox(msg, MB_ICONEXCLAMATION);
@@ -797,11 +797,12 @@ BOOL CWizardStart::OnWizardFinish()
 				if (IDOK == file.DoModal())
 				{
 					CVersionNum ver;
-					std::string verstr = (LPCTSTR)ver.GetVersionString();
+					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
 					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
 					{
-						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+						CStringA filename(file.GetFileName());
+						std::ofstream output(filename, std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
 						if (output.is_open())
 						{
@@ -845,7 +846,8 @@ BOOL CWizardStart::OnWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+					CStringA filename(file.GetFileName());
+					std::ofstream output(filename, std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
 					{
@@ -875,15 +877,15 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					std::string errMsg;
+					ARBString errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile(file.GetPathName(), errMsg))
+					if (!tree.LoadXMLFile((LPCTSTR)file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 						if (0 < errMsg.length())
 						{
-							msg += "\n\n";
+							msg += _T("\n\n");
 							msg += errMsg.c_str();
 						}
 						AfxMessageBox(msg, MB_ICONEXCLAMATION);
@@ -934,11 +936,12 @@ BOOL CWizardStart::OnWizardFinish()
 				if (IDOK == file.DoModal())
 				{
 					CVersionNum ver;
-					std::string verstr = (LPCTSTR)ver.GetVersionString();
+					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
 					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
 					{
-						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+						CStringA filename(file.GetFileName());
+						std::ofstream output(filename, std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
 						if (output.is_open())
 						{
@@ -967,11 +970,12 @@ BOOL CWizardStart::OnWizardFinish()
 				if (IDOK == file.DoModal())
 				{
 					CVersionNum ver;
-					std::string verstr = (LPCTSTR)ver.GetVersionString();
+					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
 					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
 					{
-						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+						CStringA filename(file.GetFileName());
+						std::ofstream output(filename, std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
 						if (output.is_open())
 						{
@@ -989,11 +993,11 @@ BOOL CWizardStart::OnWizardFinish()
 				CString def, fname, filter;
 				def.LoadString(IDS_FILEEXT_DEF_DTD);
 				filter.LoadString(IDS_FILEEXT_FILTER_DTD);
-				CFileDialog file(FALSE, def, "AgilityRecordBook.dtd", OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
+				CFileDialog file(FALSE, def, _T("AgilityRecordBook.dtd"), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
 					CStdioFile output(file.GetFileName(), CFile::modeCreate | CFile::modeWrite | CFile::typeBinary);
-					std::string dtd = ARBConfig::GetDTD();
+					ARBString dtd = ARBConfig::GetDTD();
 					output.WriteString(dtd.c_str());
 					output.Close();
 					bOk = true;
@@ -1005,9 +1009,9 @@ BOOL CWizardStart::OnWizardFinish()
 			{
 				CString name = m_pDoc->GetPathName();
 				if (name.IsEmpty())
-					name = "AgilityRecordBook.xml";
+					name = _T("AgilityRecordBook.xml");
 				else
-					name = name.Left(name.ReverseFind('.')) + ".xml";
+					name = name.Left(name.ReverseFind('.')) + _T(".xml");
 				CString def, fname, filter;
 				def.LoadString(IDS_FILEEXT_DEF_XML);
 				filter.LoadString(IDS_FILEEXT_FILTER_XML);
@@ -1015,15 +1019,16 @@ BOOL CWizardStart::OnWizardFinish()
 				if (IDOK == file.DoModal())
 				{
 					CVersionNum ver;
-					std::string verstr = (LPCTSTR)ver.GetVersionString();
+					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
 					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))
 					{
-						std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+						CStringA filename(file.GetFileName());
+						std::ofstream output(filename, std::ios::out | std::ios::binary);
 						output.exceptions(std::ios_base::badbit);
 						if (output.is_open())
 						{
-							std::string dtd = ARBConfig::GetDTD();
+							ARBString dtd = ARBConfig::GetDTD();
 							tree.SaveXML(output, &dtd);
 							output.close();
 						}
@@ -1057,7 +1062,7 @@ void CWizardStart::OnSelchangeExportList()
 		str = sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc;
 	}
 	m_ctrlDesc.SetWindowText(str);
-	str.Format("%s%d", LAST_STYLEITEM, m_Style);
+	str.Format(_T("%s%d"), LAST_STYLEITEM, m_Style);
 	AfxGetApp()->WriteProfileInt(LAST_SECTION, str, index);
 	UpdateButtons();
 }

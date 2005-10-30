@@ -91,7 +91,7 @@ void CScrollHotStatic::OnClicked()
 	if (i == j)
 		return;
 
-	HINSTANCE h = ShellExecute(NULL, "open", m_ItemVector[i].m_strLink, NULL, NULL, SW_SHOWNORMAL);
+	HINSTANCE h = ShellExecute(NULL, _T("open"), m_ItemVector[i].m_strLink, NULL, NULL, SW_SHOWNORMAL);
 	if (static_cast<UINT>(h) > 32)
 	{
 		m_bVisited = TRUE;
@@ -185,7 +185,7 @@ void CScrollHotStatic::OnPaint()
 			m_font.CreateFontIndirect(&lf);
 		}
 		CSize size;
-		GetTextExtentPoint32(dc.GetSafeHdc(), "A", 1, &size);
+		GetTextExtentPoint32(dc.GetSafeHdc(), _T("A"), 1, &size);
 		m_nFontHeight = size.cy;
 	}
 

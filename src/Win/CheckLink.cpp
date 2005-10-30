@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 bool CheckLink(
 		CInternetSession& inSession,
-		std::string const& inLink)
+		ARBString const& inLink)
 {
 	bool bOk = false;
 	if (0 < inLink.length())

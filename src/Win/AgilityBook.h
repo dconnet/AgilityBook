@@ -93,7 +93,7 @@ extern CAgilityBookApp theApp;
 // Some global functions.
 class CAgilityBookDoc;
 extern bool ShowContextHelp(HELPINFO* pHelpInfo);
-extern void RunCommand(char const* const pCmd);
+extern void RunCommand(TCHAR const* const pCmd);
 extern void ExpandAll(
 		CTreeCtrl& ctrl,
 		HTREEITEM hItem,

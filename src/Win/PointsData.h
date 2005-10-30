@@ -45,9 +45,9 @@
 
 #include <list>
 #include <set>
-#include <string>
 #include <vector>
 #include "ARBDate.h"
+#include "ARBTypes.h"
 class ARBConfigDivision;
 class ARBConfigEvent;
 class ARBConfigLevel;
@@ -76,12 +76,12 @@ private:
 #endif
 public:
 	LifeTimePointInfo(
-			std::string const& inDiv,
-			std::string const& inLevel,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
 			int inPoints,
 			int inFiltered);
-	std::string div;
-	std::string level;
+	ARBString div;
+	ARBString level;
 	int points;
 	int filtered;
 };
@@ -104,10 +104,10 @@ public:
 	ARBDogTrial const* m_pTrial;
 	ARBDogRun const* m_pRun;
 	ARBDogExistingPoints const* m_pExisting;
-	std::string m_Venue;
-	std::string m_Div;
-	std::string m_Level;
-	std::string m_Event;
+	ARBString m_Venue;
+	ARBString m_Div;
+	ARBString m_Level;
+	ARBString m_Event;
 	int m_Score;
 };
 
@@ -120,7 +120,7 @@ public:
 	void AddRef();
 	void Release();
 
-	virtual std::string OnNeedText(size_t index) const = 0;
+	virtual ARBString OnNeedText(size_t index) const = 0;
 	virtual bool HasDetails() const {return false;}
 	virtual void Details() const {}
 	virtual bool IsEqual(PointsDataBase const* inData) = 0;
@@ -144,7 +144,7 @@ public:
 			ARBDog* pDog);
 	~PointsDataDog();
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -167,7 +167,7 @@ public:
 			ARBConfigVenue* pVenue);
 	~PointsDataVenue();
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -191,7 +191,7 @@ public:
 			ARBDogTitle* pTitle);
 	~PointsDataTitle();
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -217,13 +217,13 @@ public:
 			ARBConfigDivision const* inDiv,
 			ARBConfigLevel const* inLevel,
 			ARBConfigEvent const* inEvent,
-			std::string const& inRunCount,
-			std::string const& inQcount,
-			std::string const& inPts,
-			std::string const& inSuperQ,
-			std::string const& inSpeed);
+			ARBString const& inRunCount,
+			ARBString const& inQcount,
+			ARBString const& inPts,
+			ARBString const& inSuperQ,
+			ARBString const& inSpeed);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -235,11 +235,11 @@ protected:
 	ARBConfigDivision const* m_Div;
 	ARBConfigLevel const* m_Level;
 	ARBConfigEvent const* m_Event;
-	std::string m_RunCount;
-	std::string m_Qcount;
-	std::string m_Pts;
-	std::string m_SuperQ;
-	std::string m_Speed;
+	ARBString m_RunCount;
+	ARBString m_Qcount;
+	ARBString m_Pts;
+	ARBString m_SuperQ;
+	ARBString m_Speed;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -252,14 +252,14 @@ class PointsDataLifetime : public PointsDataBase
 public:
 	PointsDataLifetime(
 			CAgilityBookViewPoints* pView,
-			std::string const& inVenue);
+			ARBString const& inVenue);
 	void AddLifetimeInfo(
-			std::string const& inDiv,
-			std::string const& inLevel,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
 			int inLifetime,
 			int inFiltered);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -279,20 +279,20 @@ class PointsDataLifetimeDiv : public PointsDataLifetime
 public:
 	PointsDataLifetimeDiv(
 			CAgilityBookViewPoints* pView,
-			std::string const& inVenue,
-			std::string const& inDiv);
+			ARBString const& inVenue,
+			ARBString const& inDiv);
 
 	void AddLifetimeInfo(
-			std::string const& inDiv,
-			std::string const& inLevel,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
 			int inLifetime,
 			int inFiltered);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	std::string m_Div;
+	ARBString m_Div;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -310,7 +310,7 @@ public:
 			ARBConfigMultiQ const* inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -336,7 +336,7 @@ public:
 			ARBConfigVenue* inVenue,
 			int inPts);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
@@ -366,16 +366,16 @@ class PointsDataOtherPointsTallyAll : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyAll(
 			CAgilityBookViewPoints* pView,
-			std::string const& inName,
+			ARBString const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	std::string m_Name;
+	ARBString m_Name;
 };
 
 class PointsDataOtherPointsTallyAllByEvent : public PointsDataOtherPoints
@@ -383,16 +383,16 @@ class PointsDataOtherPointsTallyAllByEvent : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyAllByEvent(
 			CAgilityBookViewPoints* pView,
-			std::string const& inEvent,
+			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	std::string m_Event;
+	ARBString m_Event;
 };
 
 class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
@@ -400,16 +400,16 @@ class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyLevel(
 			CAgilityBookViewPoints* pView,
-			std::string const& inLevel,
+			ARBString const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	std::string m_Level;
+	ARBString m_Level;
 };
 
 class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
@@ -417,16 +417,16 @@ class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
 public:
 	PointsDataOtherPointsTallyLevelByEvent(
 			CAgilityBookViewPoints* pView,
-			std::string const& inLevel,
-			std::string const& inEvent,
+			ARBString const& inLevel,
+			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual std::string OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	std::string m_Level;
-	std::string m_Event;
+	ARBString m_Level;
+	ARBString m_Event;
 };

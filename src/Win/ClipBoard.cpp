@@ -75,7 +75,12 @@ bool CClipboardDataWriter::SetData(
 	bool bOk = false;
 	std::ostringstream out;
 	inTree.SaveXML(out);
-	std::string data = out.str();
+#ifdef UNICODE
+	CStringW tmp(out.str().c_str());
+	ARBString data = tmp;
+#else
+	ARBString data = out.str();
+#endif
 	// alloc mem block & copy text in
 	HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
 	if (NULL != temp)
@@ -92,7 +97,7 @@ bool CClipboardDataWriter::SetData(
 
 bool CClipboardDataWriter::SetData(
 		UINT clpFmt,
-		char const* const inData,
+		TCHAR const* const inData,
 		size_t inLen)
 {
 	bool bOk = false;
@@ -142,10 +147,10 @@ bool GetDataFromClipboard(
 			return false;
 		tree.clear();
 		HANDLE hData = GetClipboardData(clpFmt);
-		CString data(reinterpret_cast<LPCTSTR>(GlobalLock(hData)));
+		CStringA data(reinterpret_cast<LPCSTR>(GlobalLock(hData)));
 		GlobalUnlock(hData);
 		CloseClipboard();
-		std::string err;
+		ARBString err;
 		bOk = tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
 		if (!bOk && 0 < err.length())
 		{

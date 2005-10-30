@@ -44,7 +44,6 @@
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
 #include "DlgEventSelect.h"
-#include ".\dlgconfigmultiq.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -149,14 +148,14 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 		t = m_DateTo.GetDate();
 	m_ctrlDateTo.SetTime(&t);
 
-	m_ctrlItems.InsertColumn(0, "Division");
-	m_ctrlItems.InsertColumn(1, "Level");
-	m_ctrlItems.InsertColumn(2, "Event");
+	m_ctrlItems.InsertColumn(0, _T("Division"));
+	m_ctrlItems.InsertColumn(1, _T("Level"));
+	m_ctrlItems.InsertColumn(2, _T("Event"));
 
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
 	{
-		std::string div, level, event;
+		ARBString div, level, event;
 		if (m_pMultiQ->GetItem(i, div, level, event))
 		{
 			int idx = m_ctrlItems.InsertItem(static_cast<int>(i), div.c_str());
@@ -297,7 +296,7 @@ void CDlgConfigMultiQ::OnOK()
 	m_Name.TrimLeft();
 	if (m_Name.IsEmpty())
 	{
-		AfxMessageBox("Please enter a name.", MB_ICONINFORMATION);
+		AfxMessageBox(_T("Please enter a name."), MB_ICONINFORMATION);
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_NAME));
 		return;
 	}
@@ -305,7 +304,7 @@ void CDlgConfigMultiQ::OnOK()
 	m_ShortName.TrimLeft();
 	if (m_ShortName.IsEmpty())
 	{
-		AfxMessageBox("Please enter a short name.", MB_ICONINFORMATION);
+		AfxMessageBox(_T("Please enter a short name."), MB_ICONINFORMATION);
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_SHORTNAME));
 		return;
 	}

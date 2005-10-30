@@ -98,7 +98,7 @@ void ARBConfigOtherPoints::clear()
 	m_Desc.erase();
 }
 
-size_t ARBConfigOtherPoints::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigOtherPoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -115,26 +115,26 @@ bool ARBConfigOtherPoints::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
 		return false;
 	}
-	std::string attrib;
+	ARBString attrib;
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
 		return false;
 	}
-	if (attrib == "All")
+	if (attrib == _T("All"))
 		m_Tally = eTallyAll;
-	else if (attrib == "AllByEvent")
+	else if (attrib == _T("AllByEvent"))
 		m_Tally = eTallyAllByEvent;
-	else if (attrib == "Level")
+	else if (attrib == _T("Level"))
 		m_Tally = eTallyLevel;
-	else if (attrib == "LevelByEvent")
+	else if (attrib == _T("LevelByEvent"))
 		m_Tally = eTallyLevelByEvent;
 	else
 	{
-		std::string msg(INVALID_VALUE);
+		ARBString msg(INVALID_VALUE);
 		msg += attrib;
-		msg += "\n";
+		msg += _T("\n");
 		msg += VALID_VALUES_OTHERPT;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;
@@ -151,16 +151,16 @@ bool ARBConfigOtherPoints::Save(Element& ioTree) const
 	{
 	default:
 	case eTallyAll:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, "All");
+		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
 		break;
 	case eTallyAllByEvent:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, "AllByEvent");
+		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("AllByEvent"));
 		break;
 	case eTallyLevel:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, "Level");
+		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("Level"));
 		break;
 	case eTallyLevelByEvent:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, "LevelByEvent");
+		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("LevelByEvent"));
 		break;
 	}
 	if (0 < m_Desc.length())
@@ -170,7 +170,7 @@ bool ARBConfigOtherPoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigOtherPointsList::VerifyOtherPoints(std::string const& inName) const
+bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -181,7 +181,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(std::string const& inName) cons
 }
 
 bool ARBConfigOtherPointsList::FindOtherPoints(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigOtherPoints** outPoints) const
 {
 	if (outPoints)
@@ -214,9 +214,9 @@ bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPoints* inOther)
 	return bAdded;
 }
 
-bool ARBConfigOtherPointsList::DeleteOtherPoints(std::string const& inName)
+bool ARBConfigOtherPointsList::DeleteOtherPoints(ARBString const& inName)
 {
-	std::string name(inName);
+	ARBString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

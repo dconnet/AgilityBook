@@ -63,13 +63,23 @@
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/util/XMLString.hpp>
-
 XERCES_CPP_NAMESPACE_USE
-
-#ifdef _DEBUG
-#pragma comment(lib, "xerces-c_2D.lib")
+#ifdef _AFXDLL
+	#ifdef _DEBUG
+		#pragma message ( "Linking with xerces-c_2D.lib" )
+		#pragma comment(lib, "xerces-c_2D.lib")
+	#else
+		#pragma message ( "Linking with xerces-c_2.lib" )
+		#pragma comment(lib, "xerces-c_2.lib")
+	#endif
 #else
-#pragma comment(lib, "xerces-c_2.lib")
+	#ifdef _DEBUG
+		#pragma message ( "Linking with xerces-c_static_2D.lib" )
+		#pragma comment(lib, "xerces-c_static_2D.lib")
+	#else
+		#pragma message ( "Linking with xerces-c_static_2.lib" )
+		#pragma comment(lib, "xerces-c_static_2.lib")
+	#endif
 #endif
 
 #ifdef _DEBUG
@@ -102,7 +112,7 @@ bool ShowContextHelp(HELPINFO* pHelpInfo)
 		popup.cbStruct = sizeof(HH_POPUP);
 		popup.hinst = 0;
 		popup.idString = static_cast<UINT>(pHelpInfo->dwContextId);
-		popup.pszText = "";
+		popup.pszText = _T("");
 		popup.pt = pt;
 		popup.clrForeground = GetSysColor(COLOR_INFOTEXT);
 		popup.clrBackground = GetSysColor(COLOR_INFOBK);
@@ -110,16 +120,16 @@ bool ShowContextHelp(HELPINFO* pHelpInfo)
 		popup.rcMargins.top = -1;
 		popup.rcMargins.right = -1;
 		popup.rcMargins.bottom = -1;
-		popup.pszFont = "Arial, 8, ascii, , , ";
+		popup.pszFont = _T("Arial, 8, ascii, , , ");
 
 		CString name(AfxGetApp()->m_pszHelpFilePath);
-		name += "::/Help/AgilityBook.txt";
+		name += _T("::/Help/AgilityBook.txt");
 		::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
 	}
 	return bOk;
 }
 
-void RunCommand(char const* const pCmd)
+void RunCommand(TCHAR const* const pCmd)
 {
 	if (pCmd)
 	{
@@ -130,49 +140,49 @@ void RunCommand(char const* const pCmd)
 			switch (result)
 			{
 			case 0:
-				str = "The operating system is out of memory or resources.";
+				str = _T("The operating system is out of memory or resources.");
 				break;
 			case SE_ERR_PNF:
-				str = "The specified path was not found.";
+				str = _T("The specified path was not found.");
 				break;
 			case SE_ERR_FNF:
-				str = "The specified file was not found.";
+				str = _T("The specified file was not found.");
 				break;
 			case ERROR_BAD_FORMAT:
-				str = "The .EXE file is invalid (non-Win32 .EXE or error in .EXE image).";
+				str = _T("The .EXE file is invalid (non-Win32 .EXE or error in .EXE image).");
 				break;
 			case SE_ERR_ACCESSDENIED:
-				str = "The operating system denied access to the specified file.";
+				str = _T("The operating system denied access to the specified file.");
 				break;
 			case SE_ERR_ASSOCINCOMPLETE:
-				str = "The filename association is incomplete or invalid.";
+				str = _T("The filename association is incomplete or invalid.");
 				break;
 			case SE_ERR_DDEBUSY:
-				str = "The DDE transaction could not be completed because other DDE transactions were being processed.";
+				str = _T("The DDE transaction could not be completed because other DDE transactions were being processed.");
 				break;
 			case SE_ERR_DDEFAIL:
-				str = "The DDE transaction failed.";
+				str = _T("The DDE transaction failed.");
 				break;
 			case SE_ERR_DDETIMEOUT:
-				str = "The DDE transaction could not be completed because the request timed out.";
+				str = _T("The DDE transaction could not be completed because the request timed out.");
 				break;
 			case SE_ERR_DLLNOTFOUND:
-				str = "The specified dynamic-link library was not found.";
+				str = _T("The specified dynamic-link library was not found.");
 				break;
 			case SE_ERR_NOASSOC:
-				str = "There is no application associated with the given filename extension.";
+				str = _T("There is no application associated with the given filename extension.");
 				break;
 			case SE_ERR_OOM:
-				str = "There was not enough memory to complete the operation.";
+				str = _T("There was not enough memory to complete the operation.");
 				break;
 			case SE_ERR_SHARE:
-				str = "A sharing violation occurred. ";
+				str = _T("A sharing violation occurred. ");
 				break;
 			default:
 				str.Format(_T("Unknown Error (%d) occurred."), result);
 				break;
 			}
-			str = "Unable to open " + str;
+			str = _T("Unable to open ") + str;
 			AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
 		}
 	}
@@ -297,7 +307,7 @@ BOOL CAgilityBookApp::InitInstance()
 {
 	if (!AfxOleInit())
 	{
-		AfxMessageBox("ERROR: Cannot initialize COM", MB_ICONSTOP);
+		AfxMessageBox(_T("ERROR: Cannot initialize COM"), MB_ICONSTOP);
 		return FALSE;
 	}
 	CWinApp::InitInstance();
@@ -307,12 +317,12 @@ BOOL CAgilityBookApp::InitInstance()
 	// load that too.
 	if (!AfxInitRichEdit())
 	{
-		AfxMessageBox("ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem.", MB_ICONSTOP);
+		AfxMessageBox(_T("ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."), MB_ICONSTOP);
 		return FALSE;
 	}
 	if (NULL == LoadLibrary(_T("RICHED20.DLL")))
 	{
-		AfxMessageBox("ERROR: Unable to initialize RICHED20.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem.", MB_ICONSTOP);
+		AfxMessageBox(_T("ERROR: Unable to initialize RICHED20.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."), MB_ICONSTOP);
 		return FALSE;
 	}
 
@@ -324,9 +334,13 @@ BOOL CAgilityBookApp::InitInstance()
 	{
 		CString msg;
 		msg.LoadString(IDS_XERCES_ERROR);
+#ifdef UNICODE
+		msg += toCatch.getMessage();
+#else
 		char *pStr = XMLString::transcode(toCatch.getMessage());
 		msg += pStr;
 		delete [] pStr;
+#endif
 		AfxMessageBox(msg, MB_ICONSTOP);
 		return FALSE;
 	}
@@ -336,7 +350,7 @@ BOOL CAgilityBookApp::InitInstance()
 	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
 	if (!InitCommonControlsEx(&icc))
 	{
-		AfxMessageBox("ERROR: Unable to initialize the common controls.", MB_ICONSTOP);
+		AfxMessageBox(_T("ERROR: Unable to initialize the common controls."), MB_ICONSTOP);
 		return FALSE;
 	}
 
@@ -415,8 +429,8 @@ BOOL CAgilityBookApp::InitInstance()
 #if _MSC_VER >= 1300
 	EnableHtmlHelp();
 #endif
-	char* chmFile = _tcsdup(m_pszHelpFilePath);
-	lstrcpy(&chmFile[lstrlen(chmFile)-3], "chm");
+	TCHAR* chmFile = _tcsdup(m_pszHelpFilePath);
+	lstrcpy(&chmFile[lstrlen(chmFile)-3], _T("chm"));
 	m_pszHelpFilePath = chmFile;
 
 	// Should we open the last open file?
@@ -426,7 +440,7 @@ BOOL CAgilityBookApp::InitInstance()
 		// Don't open it if the shift key is down.
 		if (0 <= GetKeyState(VK_SHIFT))
 		{
-			CString strFile = GetProfileString("Settings", "LastFile", _T(""));
+			CString strFile = GetProfileString(_T("Settings"), _T("LastFile"), _T(""));
 			if (!strFile.IsEmpty())
 			{
 				bOpeningLast = true;
@@ -473,10 +487,10 @@ BOOL CAgilityBookApp::InitInstance()
 	m_pMainWnd->DragAcceptFiles();
 
 	// Check for updates every 30 days.
-	if (AfxGetApp()->GetProfileInt("Settings", "autoCheck", 1))
+	if (AfxGetApp()->GetProfileInt(_T("Settings"), _T("autoCheck"), 1))
 	{
-		CString ver = AfxGetApp()->GetProfileString("Settings", "lastVerCheck", "");
-		ARBDate date = ARBDate::FromString((LPCSTR)ver, ARBDate::eDashYYYYMMDD);
+		CString ver = AfxGetApp()->GetProfileString(_T("Settings"), _T("lastVerCheck"), _T(""));
+		ARBDate date = ARBDate::FromString((LPCTSTR)ver, ARBDate::eDashYYYYMMDD);
 		if (date.IsValid())
 		{
 			ARBDate today = ARBDate::Today();

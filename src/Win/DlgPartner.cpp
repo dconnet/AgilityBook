@@ -98,8 +98,8 @@ void CDlgPartner::OnOK()
 	m_RegNum.TrimRight();
 	m_RegNum.TrimLeft();
 
-	m_Partner->SetHandler((LPCSTR)m_Handler);
-	m_Partner->SetDog((LPCSTR)m_Dog);
-	m_Partner->SetRegNum((LPCSTR)m_RegNum);
+	m_Partner->SetHandler((LPCTSTR)m_Handler);
+	m_Partner->SetDog((LPCTSTR)m_Dog);
+	m_Partner->SetRegNum((LPCTSTR)m_RegNum);
 	CDlgBaseDialog::OnOK();
 }

@@ -58,7 +58,7 @@ CDlgRunLink::CDlgRunLink(
 	: CDlgBasePropertyPage(CDlgRunLink::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
-	, m_Session("runLink")
+	, m_Session(_T("runLink"))
 {
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
 	CWinApp* app = AfxGetApp();
@@ -109,14 +109,14 @@ void CDlgRunLink::UpdateButtons()
 	m_ctrlOpen.EnableWindow(bEnable);
 }
 
-void CDlgRunLink::ListFiles(char const* pItem)
+void CDlgRunLink::ListFiles(TCHAR const* pItem)
 {
 	CWaitCursor wait;
 	m_ctrlLinks.DeleteAllItems();
-	std::set<std::string> links;
+	std::set<ARBString> links;
 	m_Run->GetLinks(links);
 	int i = 0;
-	for (std::set<std::string>::iterator iter = links.begin();
+	for (std::set<ARBString>::iterator iter = links.begin();
 		iter != links.end();
 		++iter)
 	{
@@ -128,7 +128,7 @@ void CDlgRunLink::ListFiles(char const* pItem)
 	UpdateButtons();
 }
 
-int CDlgRunLink::GetImageIndex(std::string const& inLink)
+int CDlgRunLink::GetImageIndex(ARBString const& inLink)
 {
 	CWaitCursor wait;
 	int img = m_imgEmpty;
@@ -150,7 +150,7 @@ BOOL CDlgRunLink::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
-	m_ctrlLinks.InsertColumn(0, "");
+	m_ctrlLinks.InsertColumn(0, _T(""));
 	ListFiles(NULL);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -191,10 +191,10 @@ void CDlgRunLink::OnItemchangedList(
 
 void CDlgRunLink::OnNew() 
 {
-	CDlgSelectURL dlg("", this);
+	CDlgSelectURL dlg(_T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
-		std::string newName = dlg.GetName();
+		ARBString newName = dlg.GetName();
 		if (0 < newName.length())
 		{
 			m_Run->AddLink(newName);
@@ -208,11 +208,11 @@ void CDlgRunLink::OnEdit()
 	int nItem = m_ctrlLinks.GetSelection();
 	if (0 <= nItem)
 	{
-		std::string name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
+		ARBString name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
 		CDlgSelectURL dlg(name.c_str(), this);
 		if (IDOK == dlg.DoModal())
 		{
-			std::string newName = dlg.GetName();
+			ARBString newName = dlg.GetName();
 			if (name != newName)
 			{
 				m_Run->RemoveLink(name);
@@ -229,7 +229,7 @@ void CDlgRunLink::OnDelete()
 	int nItem = m_ctrlLinks.GetSelection();
 	if (0 <= nItem)
 	{
-		std::string name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
+		ARBString name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
 		m_Run->RemoveLink(name);
 		ListFiles(NULL);
 	}

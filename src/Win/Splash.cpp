@@ -309,7 +309,7 @@ void CSplashWnd::OnPaint()
 		memset(&lf, 0, sizeof(lf));
 		lf.lfHeight = 100;
 		lf.lfWeight = FW_BOLD;
-		lstrcpy(lf.lfFaceName, "Comic Sans MS");
+		lstrcpy(lf.lfFaceName, _T("Comic Sans MS"));
 		font.CreatePointFontIndirect(&lf, &dc);
 		CFont* pOldFont = dc.SelectObject(&font);
 		TEXTMETRIC tm;

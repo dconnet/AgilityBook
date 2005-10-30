@@ -50,6 +50,7 @@
 #include <algorithm>
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBTypes.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -74,10 +75,18 @@ public:
 	virtual void Release();
 
 	void BeginEvent();
+#ifdef UNICODE
+	void DoUID(std::wstring const& inUID);
+#endif
 	void DoUID(std::string const& inUID);
 	void DoDTSTAMP();
 	void DoDTSTART(ARBDate inDate);
 	void DoDTEND(ARBDate inDate);
+#ifdef UNICODE
+	void DoSUMMARY(std::wstring const& inStr);
+	void DoLOCATION(std::wstring const& inStr);
+	void DoDESCRIPTION(std::wstring const& inStr);
+#endif
 	void DoSUMMARY(std::string const& inStr);
 	void DoLOCATION(std::string const& inStr);
 	void DoDESCRIPTION(std::string const& inStr);
@@ -143,7 +152,12 @@ void ARBiCal::Write(
 			m_ioStream << ";VALUE=DATE";
 		m_ioStream << ':';
 	}
+#ifdef UNICODE
+	CStringA tmp(inDate.GetString(ARBDate::eYYYYMMDD).c_str());
+	m_ioStream << tmp;
+#else
 	m_ioStream << inDate.GetString(ARBDate::eYYYYMMDD);
+#endif
 	if (1 == m_Version)
 	{
 		if (inStartOfDay)
@@ -223,8 +237,16 @@ void ARBiCal::WriteText(
 
 void ARBiCal::BeginEvent()
 {
-	m_ioStream << "BEGIN:VEVENT" << "\r\n";
+	m_ioStream << "BEGIN:VEVENT\r\n";
 }
+
+#ifdef UNICODE
+void ARBiCal::DoUID(std::wstring const& inUID)
+{
+	CStringA convert(inUID.c_str());
+	DoUID(std::string(convert));
+}
+#endif
 
 void ARBiCal::DoUID(std::string const& inUID)
 {
@@ -274,6 +296,24 @@ void ARBiCal::DoDTEND(ARBDate inDate)
 		inDate += 1;
 	Write("DTEND", inDate, false);
 }
+
+#ifdef UNICODE
+void ARBiCal::DoSUMMARY(std::wstring const& inStr)
+{
+	CStringA convert(inStr.c_str());
+	DoSUMMARY(std::string(convert));
+}
+void ARBiCal::DoLOCATION(std::wstring const& inStr)
+{
+	CStringA convert(inStr.c_str());
+	DoLOCATION(std::string(convert));
+}
+void ARBiCal::DoDESCRIPTION(std::wstring const& inStr)
+{
+	CStringA convert(inStr.c_str());
+	DoDESCRIPTION(std::string(convert));
+}
+#endif
 
 void ARBiCal::DoSUMMARY(std::string const& inStr)
 {
@@ -396,20 +436,20 @@ bool ARBCalendar::operator!=(ARBCalendar const& rhs) const
 	return !operator==(rhs);
 }
 
-std::string ARBCalendar::GetUID(eUidType inType) const
+ARBString ARBCalendar::GetUID(eUidType inType) const
 {
-	std::ostringstream str;
+	ARBostringstream str;
 	switch (inType)
 	{
 	default:
 		ASSERT(0);
-		str << "u";
+		str << _T("u");
 		break;
 	case eUIDvEvent:
-		str << "e";
+		str << _T("e");
 		break;
 	case eUIDvTodo:
-		str << "t";
+		str << _T("t");
 		break;
 	}
 	str << m_DateStart.GetString(ARBDate::eYYYYMMDD);
@@ -419,17 +459,17 @@ std::string ARBCalendar::GetUID(eUidType inType) const
 	return str.str();
 }
 
-std::string ARBCalendar::GetGenericName() const
+ARBString ARBCalendar::GetGenericName() const
 {
-	std::string name = m_Venue;
-	name += " ";
+	ARBString name = m_Venue;
+	name += _T(" ");
 	name += m_Club;
-	name += " ";
+	name += _T(" ");
 	name += m_Location;
 	return name;
 }
 
-size_t ARBCalendar::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -511,9 +551,9 @@ bool ARBCalendar::Load(
 		return false;
 	case Element::eInvalidValue:
 		{
-			std::string attrib;
+			ARBString attrib;
 			inTree.GetAttrib(ATTRIB_CAL_START, attrib);
-			std::string msg(INVALID_DATE);
+			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
 		}
@@ -527,9 +567,9 @@ bool ARBCalendar::Load(
 		return false;
 	case Element::eInvalidValue:
 		{
-			std::string attrib;
+			ARBString attrib;
 			inTree.GetAttrib(ATTRIB_CAL_END, attrib);
-			std::string msg(INVALID_DATE);
+			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
 			return false;
@@ -538,9 +578,9 @@ bool ARBCalendar::Load(
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
 	{
-		std::string attrib;
+		ARBString attrib;
 		inTree.GetAttrib(ATTRIB_CAL_OPENING, attrib);
-		std::string msg(INVALID_DATE);
+		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
 		return false;
@@ -548,9 +588,9 @@ bool ARBCalendar::Load(
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
 	{
-		std::string attrib;
+		ARBString attrib;
 		inTree.GetAttrib(ATTRIB_CAL_CLOSING, attrib);
-		std::string msg(INVALID_DATE);
+		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
 		return false;
@@ -568,10 +608,10 @@ bool ARBCalendar::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		std::string attrib;
-		if (Element::eFound == inTree.GetAttrib("PlanOn", attrib))
+		ARBString attrib;
+		if (Element::eFound == inTree.GetAttrib(_T("PlanOn"), attrib))
 		{
-			if (attrib == "y")
+			if (attrib == _T("y"))
 				m_eEntered = ePlanning;
 			else
 				m_eEntered = eNot;
@@ -579,14 +619,14 @@ bool ARBCalendar::Load(
 	}
 	else if (inVersion >= ARBVersion(2,0))
 	{
-		std::string attrib;
+		ARBString attrib;
 		if (Element::eFound == inTree.GetAttrib(ATTRIB_CAL_ENTERED, attrib))
 		{
-			if (attrib == "E")
+			if (attrib == _T("E"))
 				m_eEntered = eEntered;
-			else if (attrib == "P")
+			else if (attrib == _T("P"))
 				m_eEntered = ePlanning;
-			else if (attrib == "N")
+			else if (attrib == _T("N"))
 				m_eEntered = eNot;
 			else
 			{
@@ -612,16 +652,16 @@ bool ARBCalendar::Save(Element& ioTree) const
 	cal.AddAttrib(ATTRIB_CAL_LOCATION, m_Location);
 	cal.AddAttrib(ATTRIB_CAL_CLUB, m_Club);
 	cal.AddAttrib(ATTRIB_CAL_VENUE, m_Venue);
-	std::string entered("N");
+	ARBString entered(_T("N"));
 	switch (m_eEntered)
 	{
 	default:
 		break;
 	case eEntered:
-		entered = "E";
+		entered = _T("E");
 		break;
 	case ePlanning:
-		entered = "P";
+		entered = _T("P");
 		break;
 	}
 	cal.AddAttrib(ATTRIB_CAL_ENTERED, entered);
@@ -641,33 +681,33 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	ioStream->DoSUMMARY(GetGenericName());
 	ioStream->DoLOCATION(m_Location);
 	{
-		std::ostringstream str;
+		ARBostringstream str;
 		if (IsTentative())
-			str << "Information is tentative. ";
+			str << _T("Information is tentative. ");
 		switch (GetEntered())
 		{
 		default:
 		case ARBCalendar::eNot:
-			str << "Status: Not entered. ";
+			str << _T("Status: Not entered. ");
 			break;
 		case ARBCalendar::eEntered:
-			str << "Status: Entered. ";
+			str << _T("Status: Entered. ");
 			break;
 		case ARBCalendar::ePlanning:
-			str << "Status: Planning. ";
+			str << _T("Status: Planning. ");
 			break;
 		}
 		if (m_DateOpening.IsValid())
 		{
-			str << "Trial opens: ";
+			str << _T("Trial opens: ");
 			str << m_DateOpening.GetString(ARBDate::eDefault);
-			str << " ";
+			str << _T(" ");
 		}
 		if (m_DateClosing.IsValid())
 		{
-			str << "Trial closes: ";
+			str << _T("Trial closes: ");
 			str << m_DateClosing.GetString(ARBDate::eDefault);
-			str << " ";
+			str << _T(" ");
 		}
 		str << GetNote();
 		ioStream->DoDESCRIPTION(str.str());

@@ -49,7 +49,7 @@ public:
 			LPCTSTR pCaption = NULL,
 			CWnd* pParent = NULL);
 	virtual ~CDlgName();
-	char const* GetName() const	{return (LPCSTR)m_Name;}
+	LPCTSTR GetName() const	{return (LPCTSTR)m_Name;}
 
 private:
 // Dialog Data

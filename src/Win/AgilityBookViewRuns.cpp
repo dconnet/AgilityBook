@@ -176,7 +176,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str += "/";
+						str += _T("/");
 					str += (*iter)->GetVenue().c_str();
 				}
 			}
@@ -190,7 +190,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str += "/";
+						str += _T("/");
 					str += (*iter)->GetName().c_str();
 				}
 			}
@@ -223,7 +223,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			str = m_pRun->GetConditions().c_str();
 			break;
 		case IO_RUNS_COURSE_FAULTS:
-			str.Format("%hd", m_pRun->GetScoring().GetCourseFaults());
+			str.Format(_T("%hd"), m_pRun->GetScoring().GetCourseFaults());
 			break;
 		case IO_RUNS_TIME:
 			str = ARBDouble::str(m_pRun->GetScoring().GetTime()).c_str();
@@ -272,61 +272,61 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 		case IO_RUNS_REQ_OPENING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str.Format("%hd", m_pRun->GetScoring().GetNeedOpenPts());
+				str.Format(_T("%hd"), m_pRun->GetScoring().GetNeedOpenPts());
 			}
 			break;
 		case IO_RUNS_REQ_CLOSING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str.Format("%hd", m_pRun->GetScoring().GetNeedClosePts());
+				str.Format(_T("%hd"), m_pRun->GetScoring().GetNeedClosePts());
 			}
 			break;
 		case IO_RUNS_OPENING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str.Format("%hd", m_pRun->GetScoring().GetOpenPts());
+				str.Format(_T("%hd"), m_pRun->GetScoring().GetOpenPts());
 			}
 			break;
 		case IO_RUNS_CLOSING:
 			if (ARBDogRunScoring::eTypeByOpenClose == m_pRun->GetScoring().GetType())
 			{
-				str.Format("%hd", m_pRun->GetScoring().GetClosePts());
+				str.Format(_T("%hd"), m_pRun->GetScoring().GetClosePts());
 			}
 			break;
 		case IO_RUNS_REQ_POINTS:
 			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				str.Format("%hd", m_pRun->GetScoring().GetNeedOpenPts());
+				str.Format(_T("%hd"), m_pRun->GetScoring().GetNeedOpenPts());
 			}
 			break;
 		case IO_RUNS_POINTS:
 			if (ARBDogRunScoring::eTypeByPoints == m_pRun->GetScoring().GetType())
 			{
-				str.Format("%hd", m_pRun->GetScoring().GetOpenPts());
+				str.Format(_T("%hd"), m_pRun->GetScoring().GetOpenPts());
 			}
 			break;
 		case IO_RUNS_PLACE:
 			val = m_pRun->GetPlace();
 			if (0 > val)
-				str = "?";
+				str = _T("?");
 			else if (0 == val)
-				str = "-";
+				str = _T("-");
 			else
-				str.Format("%hd", val);
+				str.Format(_T("%hd"), val);
 			break;
 		case IO_RUNS_IN_CLASS:
 			val = m_pRun->GetInClass();
 			if (0 >= val)
-				str = "?";
+				str = _T("?");
 			else
-				str.Format("%hd", val);
+				str.Format(_T("%hd"), val);
 			break;
 		case IO_RUNS_DOGSQD:
 			val = m_pRun->GetDogsQd();
 			if (0 > val)
-				str = "?";
+				str = _T("?");
 			else
-				str.Format("%hd", m_pRun->GetDogsQd());
+				str.Format(_T("%hd"), m_pRun->GetDogsQd());
 			break;
 		case IO_RUNS_Q:
 			{
@@ -340,7 +340,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						CString tmp;
 						tmp.LoadString(IDS_SQ);
 						if (!q.IsEmpty())
-							q = tmp + "/" + q;
+							q = tmp + _T("/") + q;
 						else
 							q = tmp;
 					}
@@ -390,12 +390,12 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						pScoring->Release();
 					}
 				}
-				str.Format("%hd", pts);
+				str.Format(_T("%hd"), pts);
 			}
 			break;
 		case IO_RUNS_COMMENTS:
 			str = m_pRun->GetNote().c_str();
-			str.Replace("\n", " ");
+			str.Replace(_T("\n"), _T(" "));
 			break;
 		case IO_RUNS_FAULTS:
 			{
@@ -406,7 +406,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					++i, ++iter)
 				{
 					if (0 < i)
-						str += ", ";
+						str += _T(", ");
 					str += (*iter).c_str();
 				}
 			}
@@ -427,7 +427,7 @@ CString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					if (pScoring->HasSpeedPts() && m_pRun->GetQ().Qualified())
 					{
 						int pts = m_pRun->GetSpeedPoints(pScoring);
-						str.Format("%d", pts);
+						str.Format(_T("%d"), pts);
 					}
 					pScoring->Release();
 				}
@@ -463,7 +463,7 @@ CAgilityBookViewRuns::CSortColumn::CSortColumn(std::vector<int>& inColumns)
 void CAgilityBookViewRuns::CSortColumn::Initialize()
 {
 	int realCol = IO_RUNS_DATE;
-	realCol = AfxGetApp()->GetProfileInt("Sorting", "Runs", realCol);
+	realCol = AfxGetApp()->GetProfileInt(_T("Sorting"), _T("Runs"), realCol);
 	int neg = 1;
 	if (0 > realCol)
 	{
@@ -489,7 +489,7 @@ void CAgilityBookViewRuns::CSortColumn::SetColumn(int iCol)
 		col = iCol * -1;
 	}
 	int realCol = m_Columns[col-1] * neg;
-	AfxGetApp()->WriteProfileInt("Sorting", "Runs", realCol);
+	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Runs"), realCol);
 }
 
 int CAgilityBookViewRuns::CSortColumn::LookupColumn(int iCol) const
@@ -550,7 +550,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_VENUE:
 		{
-			std::string str1, str2;
+			ARBString str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->m_pTrial->GetClubs().begin();
@@ -558,7 +558,7 @@ int CALLBACK CompareRuns(
 				++iter, ++i)
 			{
 				if (0 < i)
-					str1 += "/";
+					str1 += _T("/");
 				str1 += (*iter)->GetVenue();
 			}
 			for (i = 0, iter = pRun2->m_pTrial->GetClubs().begin();
@@ -566,7 +566,7 @@ int CALLBACK CompareRuns(
 				++iter, ++i)
 			{
 				if (0 < i)
-					str2 += "/";
+					str2 += _T("/");
 				str2 += (*iter)->GetVenue();
 			}
 			if (str1 < str2)
@@ -577,7 +577,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_CLUB:
 		{
-			std::string str1, str2;
+			ARBString str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->m_pTrial->GetClubs().begin();
@@ -585,7 +585,7 @@ int CALLBACK CompareRuns(
 				++iter, ++i)
 			{
 				if (0 < i)
-					str1 += "/";
+					str1 += _T("/");
 				str1 += (*iter)->GetName();
 			}
 			for (i = 0, iter = pRun2->m_pTrial->GetClubs().begin();
@@ -593,7 +593,7 @@ int CALLBACK CompareRuns(
 				++iter, ++i)
 			{
 				if (0 < i)
-					str2 += "/";
+					str2 += _T("/");
 				str2 += (*iter)->GetName();
 			}
 			if (str1 < str2)
@@ -1011,7 +1011,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_FAULTS:
 		{
-			std::string str1, str2;
+			ARBString str1, str2;
 			ARBDogFaultList::const_iterator iter;
 			int i = 0;
 			for (iter = pRun1->m_pRun->GetFaults().begin();
@@ -1019,7 +1019,7 @@ int CALLBACK CompareRuns(
 				++i, ++iter)
 			{
 				if (0 < i)
-					str1 += ", ";
+					str1 += _T(", ");
 				str1 += *iter;
 			}
 			for (i = 0, iter = pRun2->m_pRun->GetFaults().begin();
@@ -1027,7 +1027,7 @@ int CALLBACK CompareRuns(
 				++i, ++iter)
 			{
 				if (0 < i)
-					str2 += ", ";
+					str2 += _T(", ");
 				str2 += *iter;
 			}
 			if (str1 < str2)
@@ -1104,7 +1104,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		std::set<std::string> strings;
+		std::set<ARBString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewRunsData* pData = m_pView->GetItemData(index);
@@ -1119,7 +1119,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (std::set<std::string>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -1134,7 +1134,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 	if (!bFound)
 	{
 		CString msg;
-		msg.Format("Cannot find \"%s\"", (LPCTSTR)m_strSearch);
+		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
 		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	return bFound;
@@ -1335,7 +1335,7 @@ void CAgilityBookViewRuns::SetupColumns()
 		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
 		for (size_t iCol = 0; iCol <= m_Columns.size(); ++iCol)
 		{
-			CString str("");
+			CString str(_T(""));
 			if (0 < iCol)
 			{
 				str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol-1]);
@@ -1742,7 +1742,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		Element tree;
@@ -1762,7 +1762,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, data);

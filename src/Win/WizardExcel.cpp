@@ -330,7 +330,7 @@ bool CWizardExcelImportImpl::GetData(
 			else
 				msg = m_FileName;
 			ioProgress->SetCaption(msg);
-			msg.Format("Reading %ld rows and %ld columns", nRows, nCols);
+			msg.Format(_T("Reading %ld rows and %ld columns"), nRows, nCols);
 			ioProgress->SetMessage(msg);
 			ioProgress->SetNumProgressBars(1);
 			ioProgress->SetRange(1, 0, nRows);
@@ -442,28 +442,44 @@ bool CWizardExcel::GetRowCol(
 		CString& outCell)
 {
 	// Lookup tables are nice!
-	static const char* const sc_ColumnNames[256] =
+	static const TCHAR* const sc_ColumnNames[256] =
 	{
-		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-		"Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA","AB","AC","AD","AE","AF",
-		"AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
-		"AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL",
-		"BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB",
-		"CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR",
-		"CS","CT","CU","CV","CW","CX","CY","CZ","DA","DB","DC","DD","DE","DF","DG","DH",
-		"DI","DJ","DK","DL","DM","DN","DO","DP","DQ","DR","DS","DT","DU","DV","DW","DX",
-		"DY","DZ","EA","EB","EC","ED","EE","EF","EG","EH","EI","EJ","EK","EL","EM","EN",
-		"EO","EP","EQ","ER","ES","ET","EU","EV","EW","EX","EY","EZ","FA","FB","FC","FD",
-		"FE","FF","FG","FH","FI","FJ","FK","FL","FM","FN","FO","FP","FQ","FR","FS","FT",
-		"FU","FV","FW","FX","FY","FZ","GA","GB","GC","GD","GE","GF","GG","GH","GI","GJ",
-		"GK","GL","GM","GN","GO","GP","GQ","GR","GS","GT","GU","GV","GW","GX","GY","GZ",
-		"HA","HB","HC","HD","HE","HF","HG","HH","HI","HJ","HK","HL","HM","HN","HO","HP",
-		"HQ","HR","HS","HT","HU","HV","HW","HX","HY","HZ","IA","IB","IC","ID","IE","IF",
-		"IG","IH","II","IJ","IK","IL","IM","IN","IO","IP","IQ","IR","IS","IT","IU","IV",
+		_T("A"), _T("B"), _T("C"), _T("D"), _T("E"), _T("F"), _T("G"), _T("H"),
+		_T("I"), _T("J"), _T("K"), _T("L"), _T("M"), _T("N"), _T("O"), _T("P"),
+		_T("Q"), _T("R"), _T("S"), _T("T"), _T("U"), _T("V"), _T("W"), _T("X"),
+		_T("Y"), _T("Z"), _T("AA"),_T("AB"),_T("AC"),_T("AD"),_T("AE"),_T("AF"),
+		_T("AG"),_T("AH"),_T("AI"),_T("AJ"),_T("AK"),_T("AL"),_T("AM"),_T("AN"),
+		_T("AO"),_T("AP"),_T("AQ"),_T("AR"),_T("AS"),_T("AT"),_T("AU"),_T("AV"),
+		_T("AW"),_T("AX"),_T("AY"),_T("AZ"),_T("BA"),_T("BB"),_T("BC"),_T("BD"),
+		_T("BE"),_T("BF"),_T("BG"),_T("BH"),_T("BI"),_T("BJ"),_T("BK"),_T("BL"),
+		_T("BM"),_T("BN"),_T("BO"),_T("BP"),_T("BQ"),_T("BR"),_T("BS"),_T("BT"),
+		_T("BU"),_T("BV"),_T("BW"),_T("BX"),_T("BY"),_T("BZ"),_T("CA"),_T("CB"),
+		_T("CC"),_T("CD"),_T("CE"),_T("CF"),_T("CG"),_T("CH"),_T("CI"),_T("CJ"),
+		_T("CK"),_T("CL"),_T("CM"),_T("CN"),_T("CO"),_T("CP"),_T("CQ"),_T("CR"),
+		_T("CS"),_T("CT"),_T("CU"),_T("CV"),_T("CW"),_T("CX"),_T("CY"),_T("CZ"),
+		_T("DA"),_T("DB"),_T("DC"),_T("DD"),_T("DE"),_T("DF"),_T("DG"),_T("DH"),
+		_T("DI"),_T("DJ"),_T("DK"),_T("DL"),_T("DM"),_T("DN"),_T("DO"),_T("DP"),
+		_T("DQ"),_T("DR"),_T("DS"),_T("DT"),_T("DU"),_T("DV"),_T("DW"),_T("DX"),
+		_T("DY"),_T("DZ"),_T("EA"),_T("EB"),_T("EC"),_T("ED"),_T("EE"),_T("EF"),
+		_T("EG"),_T("EH"),_T("EI"),_T("EJ"),_T("EK"),_T("EL"),_T("EM"),_T("EN"),
+		_T("EO"),_T("EP"),_T("EQ"),_T("ER"),_T("ES"),_T("ET"),_T("EU"),_T("EV"),
+		_T("EW"),_T("EX"),_T("EY"),_T("EZ"),_T("FA"),_T("FB"),_T("FC"),_T("FD"),
+		_T("FE"),_T("FF"),_T("FG"),_T("FH"),_T("FI"),_T("FJ"),_T("FK"),_T("FL"),
+		_T("FM"),_T("FN"),_T("FO"),_T("FP"),_T("FQ"),_T("FR"),_T("FS"),_T("FT"),
+		_T("FU"),_T("FV"),_T("FW"),_T("FX"),_T("FY"),_T("FZ"),_T("GA"),_T("GB"),
+		_T("GC"),_T("GD"),_T("GE"),_T("GF"),_T("GG"),_T("GH"),_T("GI"),_T("GJ"),
+		_T("GK"),_T("GL"),_T("GM"),_T("GN"),_T("GO"),_T("GP"),_T("GQ"),_T("GR"),
+		_T("GS"),_T("GT"),_T("GU"),_T("GV"),_T("GW"),_T("GX"),_T("GY"),_T("GZ"),
+		_T("HA"),_T("HB"),_T("HC"),_T("HD"),_T("HE"),_T("HF"),_T("HG"),_T("HH"),
+		_T("HI"),_T("HJ"),_T("HK"),_T("HL"),_T("HM"),_T("HN"),_T("HO"),_T("HP"),
+		_T("HQ"),_T("HR"),_T("HS"),_T("HT"),_T("HU"),_T("HV"),_T("HW"),_T("HX"),
+		_T("HY"),_T("HZ"),_T("IA"),_T("IB"),_T("IC"),_T("ID"),_T("IE"),_T("IF"),
+		_T("IG"),_T("IH"),_T("II"),_T("IJ"),_T("IK"),_T("IL"),_T("IM"),_T("IN"),
+		_T("IO"),_T("IP"),_T("IQ"),_T("IR"),_T("IS"),_T("IT"),_T("IU"),_T("IV"),
 	};
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		outCell.Format("%s%ld", sc_ColumnNames[inCol], inRow+1);
+		outCell.Format(_T("%s%ld"), sc_ColumnNames[inCol], inRow+1);
 		return true;
 	}
 	else

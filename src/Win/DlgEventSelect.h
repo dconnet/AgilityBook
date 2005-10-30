@@ -47,14 +47,14 @@ public:
 	CDlgEventSelect(
 			ARBConfigVenue const* inVenue,
 			ARBDate const& inDate,
-			char const* const inDivision,
-			char const* const inLevel,
-			char const* const inEvent,
+			TCHAR const* const inDivision,
+			TCHAR const* const inLevel,
+			TCHAR const* const inEvent,
 			CWnd* pParent = NULL);
 	virtual ~CDlgEventSelect();
-	char const* const GetDivision() const	{return (LPCTSTR)m_Div;}
-	char const* const GetLevel() const		{return (LPCTSTR)m_Lev;}
-	char const* const GetEvent() const		{return (LPCTSTR)m_Evt;}
+	TCHAR const* const GetDivision() const	{return (LPCTSTR)m_Div;}
+	TCHAR const* const GetLevel() const		{return (LPCTSTR)m_Lev;}
+	TCHAR const* const GetEvent() const		{return (LPCTSTR)m_Evt;}
 
 private:
 // Dialog Data
@@ -70,9 +70,9 @@ private:
 	//}}AFX_DATA
 	ARBConfigVenue const* m_pVenue;
 	ARBDate m_Date;
-	char const* m_inDivision;
-	char const* m_inLevel;
-	char const* m_inEvent;
+	TCHAR const* m_inDivision;
+	TCHAR const* m_inLevel;
+	TCHAR const* m_inEvent;
 	CString m_Div;
 	CString m_Lev;
 	CString m_Evt;

@@ -38,7 +38,6 @@
  * @li 2003-02-02 DRC Created
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
@@ -69,14 +68,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -117,7 +116,7 @@ public:
 	/**
 	 * Translate the enum to a string.
 	 */
-	static std::string GetPointTypeName(PointType inType);
+	static ARBString GetPointTypeName(PointType inType);
 
 	/*
 	 * Getters/setters.
@@ -126,37 +125,37 @@ public:
 	void SetType(PointType inType);
 	ARBDate const& GetDate() const;
 	void SetDate(ARBDate const& inDate);
-	std::string const& GetComment() const;
-	void SetComment(std::string const& inComment);
-	std::string const& GetOtherPoints() const;
-	void SetOtherPoints(std::string const& inOther);
-	std::string const& GetVenue() const;
-	void SetVenue(std::string const& inVenue);
-	std::string const& GetMultiQ() const;
-	void SetMultiQ(std::string const& inMultiQ);
-	std::string const& GetDivision() const;
-	void SetDivision(std::string const& inDiv);
-	std::string const& GetLevel() const;
-	void SetLevel(std::string const& inLevel);
-	std::string const& GetEvent() const;
-	void SetEvent(std::string const& inEvent);
-	std::string const& GetSubName() const;
-	void SetSubName(std::string const& inSubName);
+	ARBString const& GetComment() const;
+	void SetComment(ARBString const& inComment);
+	ARBString const& GetOtherPoints() const;
+	void SetOtherPoints(ARBString const& inOther);
+	ARBString const& GetVenue() const;
+	void SetVenue(ARBString const& inVenue);
+	ARBString const& GetMultiQ() const;
+	void SetMultiQ(ARBString const& inMultiQ);
+	ARBString const& GetDivision() const;
+	void SetDivision(ARBString const& inDiv);
+	ARBString const& GetLevel() const;
+	void SetLevel(ARBString const& inLevel);
+	ARBString const& GetEvent() const;
+	void SetEvent(ARBString const& inEvent);
+	ARBString const& GetSubName() const;
+	void SetSubName(ARBString const& inSubName);
 	short GetPoints() const;
 	void SetPoints(short inPoints);
 
 private:
 	~ARBDogExistingPoints();
 	ARBDate m_Date;
-	std::string m_Comment;
+	ARBString m_Comment;
 	PointType m_Type;
-	std::string m_Other;
-	std::string m_Venue;
-	std::string m_MultiQ;
-	std::string m_Div;
-	std::string m_Level;
-	std::string m_Event;
-	std::string m_SubName;
+	ARBString m_Other;
+	ARBString m_Venue;
+	ARBString m_MultiQ;
+	ARBString m_Div;
+	ARBString m_Level;
+	ARBString m_Event;
+	ARBString m_SubName;
 	short m_Points;
 };
 
@@ -180,82 +179,82 @@ inline void ARBDogExistingPoints::SetDate(ARBDate const& inDate)
 	m_Date = inDate;
 }
 
-inline std::string const& ARBDogExistingPoints::GetComment() const
+inline ARBString const& ARBDogExistingPoints::GetComment() const
 {
 	return m_Comment;
 }
 
-inline void ARBDogExistingPoints::SetComment(std::string const& inComment)
+inline void ARBDogExistingPoints::SetComment(ARBString const& inComment)
 {
 	m_Comment = inComment;
 }
 
-inline std::string const& ARBDogExistingPoints::GetOtherPoints() const
+inline ARBString const& ARBDogExistingPoints::GetOtherPoints() const
 {
 	return m_Other;
 }
 
-inline void ARBDogExistingPoints::SetOtherPoints(std::string const& inOther)
+inline void ARBDogExistingPoints::SetOtherPoints(ARBString const& inOther)
 {
 	m_Other = inOther;
 }
 
-inline std::string const& ARBDogExistingPoints::GetVenue() const
+inline ARBString const& ARBDogExistingPoints::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogExistingPoints::SetVenue(std::string const& inVenue)
+inline void ARBDogExistingPoints::SetVenue(ARBString const& inVenue)
 {
 	m_Venue = inVenue;
 }
 
-inline std::string const& ARBDogExistingPoints::GetMultiQ() const
+inline ARBString const& ARBDogExistingPoints::GetMultiQ() const
 {
 	return m_MultiQ;
 }
 
-inline void ARBDogExistingPoints::SetMultiQ(std::string const& inMultiQ)
+inline void ARBDogExistingPoints::SetMultiQ(ARBString const& inMultiQ)
 {
 	m_MultiQ = inMultiQ;
 }
 
-inline std::string const& ARBDogExistingPoints::GetDivision() const
+inline ARBString const& ARBDogExistingPoints::GetDivision() const
 {
 	return m_Div;
 }
 
-inline void ARBDogExistingPoints::SetDivision(std::string const& inDiv)
+inline void ARBDogExistingPoints::SetDivision(ARBString const& inDiv)
 {
 	m_Div = inDiv;
 }
 
-inline std::string const& ARBDogExistingPoints::GetLevel() const
+inline ARBString const& ARBDogExistingPoints::GetLevel() const
 {
 	return m_Level;
 }
 
-inline void ARBDogExistingPoints::SetLevel(std::string const& inLevel)
+inline void ARBDogExistingPoints::SetLevel(ARBString const& inLevel)
 {
 	m_Level = inLevel;
 }
 
-inline std::string const& ARBDogExistingPoints::GetEvent() const
+inline ARBString const& ARBDogExistingPoints::GetEvent() const
 {
 	return m_Event;
 }
 
-inline void ARBDogExistingPoints::SetEvent(std::string const& inEvent)
+inline void ARBDogExistingPoints::SetEvent(ARBString const& inEvent)
 {
 	m_Event = inEvent;
 }
 
-inline std::string const& ARBDogExistingPoints::GetSubName() const
+inline ARBString const& ARBDogExistingPoints::GetSubName() const
 {
 	return m_SubName;
 }
 
-inline void ARBDogExistingPoints::SetSubName(std::string const& inSubName)
+inline void ARBDogExistingPoints::SetSubName(ARBString const& inSubName)
 {
 	m_SubName = inSubName;
 }
@@ -288,7 +287,7 @@ public:
 	 * @param inVenue Venue to search for.
 	 * @return Whether any existing points exist.
 	 */
-	bool HasPoints(std::string const& inVenue) const;
+	bool HasPoints(ARBString const& inVenue) const;
 
 	/**
 	 * Are there any existing points?
@@ -329,7 +328,7 @@ public:
 	 * @param inVenue Venue to search for.
 	 * @return Number of objects, not points.
 	 */
-	int NumExistingPointsInVenue(std::string const& inVenue) const;
+	int NumExistingPointsInVenue(ARBString const& inVenue) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -338,15 +337,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			std::string const& inOldVenue,
-			std::string const& inNewVenue);
+			ARBString const& inOldVenue,
+			ARBString const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(std::string const& inVenue);
+	int DeleteVenue(ARBString const& inVenue);
 
 	/**
 	 * Get the number of existing point entries in a division.
@@ -357,7 +356,7 @@ public:
 	 */
 	int NumExistingPointsInDivision(
 			ARBConfigVenue const* inVenue,
-			std::string const& inDiv) const;
+			ARBString const& inDiv) const;
 
 	/**
 	 * Rename a division.
@@ -367,9 +366,9 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameDivision(
-			std::string const& inVenue,
-			std::string const& inOldDiv,
-			std::string const& inNewDiv);
+			ARBString const& inVenue,
+			ARBString const& inOldDiv,
+			ARBString const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -378,8 +377,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteDivision(
-			std::string const& inVenue,
-			std::string const& inDiv);
+			ARBString const& inVenue,
+			ARBString const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -390,9 +389,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-			std::string const& inVenue,
-			std::string const& inDiv,
-			std::string const& inLevel) const;
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -403,10 +402,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-			std::string const& inVenue,
-			std::string const& inDiv,
-			std::string const& inOldLevel,
-			std::string const& inNewLevel);
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inOldLevel,
+			ARBString const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -416,9 +415,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-			std::string const& inVenue,
-			std::string const& inDiv,
-			std::string const& inLevel);
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel);
 
 	/**
 	 * Number of events in use.
@@ -428,8 +427,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-			std::string const& inVenue,
-			std::string const& inEvent) const;
+			ARBString const& inVenue,
+			ARBString const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -439,9 +438,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-			std::string const& inVenue,
-			std::string const& inOldEvent,
-			std::string const& inNewEvent);
+			ARBString const& inVenue,
+			ARBString const& inOldEvent,
+			ARBString const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -450,8 +449,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-			std::string const& inVenue,
-			std::string const& inEvent);
+			ARBString const& inVenue,
+			ARBString const& inEvent);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -459,7 +458,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(std::string const& inOther) const;
+	int NumOtherPointsInUse(ARBString const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -468,15 +467,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			std::string const& inOldOther,
-			std::string const& inNewOther);
+			ARBString const& inOldOther,
+			ARBString const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inOther OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(std::string const& inOther);
+	int DeleteOtherPoints(ARBString const& inOther);
 
 	/**
 	 * Number of MultiQ objects in use.
@@ -486,8 +485,8 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumMultiQsInUse(
-			std::string const& inVenue,
-			std::string const& inMultiQ) const;
+			ARBString const& inVenue,
+			ARBString const& inMultiQ) const;
 
 	/**
 	 * Rename a MultiQ, rename any dependent objects.
@@ -497,9 +496,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameMultiQs(
-			std::string const& inVenue,
-			std::string const& inOldMultiQ,
-			std::string const& inNewMultiQ);
+			ARBString const& inVenue,
+			ARBString const& inOldMultiQ,
+			ARBString const& inNewMultiQ);
 
 	/**
 	 * Delete an MultiQ, remove any dependent objects.
@@ -509,7 +508,7 @@ public:
 	 */
 	int DeleteMultiQs(
 			ARBConfig const& inConfig,
-			std::string const& inVenue);
+			ARBString const& inVenue);
 
 	/**
 	 * Add an existing point object.

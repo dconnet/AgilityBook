@@ -98,7 +98,7 @@ bool ARBDogNotes::operator!=(ARBDogNotes const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBDogNotes::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogNotes::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)

@@ -81,7 +81,7 @@ bool ARBConfigFault::operator!=(ARBConfigFault const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBConfigFault::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigFault::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -94,10 +94,10 @@ bool ARBConfigFault::Load(
 {
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (Element::eFound != inTree.GetAttrib("Name", m_Name)
+		if (Element::eFound != inTree.GetAttrib(_T("Name"), m_Name)
 		|| 0 == m_Name.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_FAULTTYPE, "Name"));
+			ioCallback.LogMessage(ErrorMissingAttribute(TREE_FAULTTYPE, _T("Name")));
 			return false;
 		}
 	}
@@ -116,7 +116,7 @@ bool ARBConfigFault::Save(Element& ioTree) const
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigFaultList::FindFault(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigFault** outFault) const
 {
 	if (outFault)
@@ -137,7 +137,7 @@ bool ARBConfigFaultList::FindFault(
 }
 
 bool ARBConfigFaultList::AddFault(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigFault** outFault)
 {
 	if (outFault)
@@ -155,9 +155,9 @@ bool ARBConfigFaultList::AddFault(
 	return true;
 }
 
-bool ARBConfigFaultList::DeleteFault(std::string const& inName)
+bool ARBConfigFaultList::DeleteFault(ARBString const& inName)
 {
-	std::string name(inName);
+	ARBString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

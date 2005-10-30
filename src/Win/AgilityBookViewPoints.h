@@ -42,6 +42,7 @@
 
 #include <list>
 #include <vector>
+#include "ARBTypes.h"
 #include "CommonView.h"
 #include "ListCtrl.h"
 #include "PointsData.h"
@@ -72,7 +73,7 @@ public:
 private:
 	struct LifeTimePoint
 	{
-		std::string event;
+		ARBString event;
 		int points;
 		bool bFiltered;
 		LifeTimePoint()
@@ -82,7 +83,7 @@ private:
 		{
 		}
 		LifeTimePoint(
-				const std::string inEvent,
+				const ARBString inEvent,
 				int inPoints,
 				bool inFiltered)
 			: event(inEvent)
@@ -103,9 +104,9 @@ private:
 	PointsDataBase* GetItemData(int index) const;
 	size_t FindMatchingRuns(
 			std::list<RunInfo> const& runs,
-			std::string const& div,
-			std::string const& level,
-			std::string const& event,
+			ARBString const& div,
+			ARBString const& level,
+			ARBString const& event,
 			std::list<RunInfo>& matching);
 	int TallyPoints(
 			std::list<RunInfo> const& runs,

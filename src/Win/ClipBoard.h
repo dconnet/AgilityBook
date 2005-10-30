@@ -36,7 +36,7 @@
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
  */
 
-#define CLIPDATA	"ClipData"
+#define CLIPDATA	_T("ClipData")
 
 class Element;
 
@@ -64,7 +64,7 @@ public:
 			Element const& inTree);
 	bool SetData(
 			UINT clpFmt,
-			char const* const inData,
+			TCHAR const* const inData,
 			size_t inLen);
 
 private:

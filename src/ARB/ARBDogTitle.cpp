@@ -44,7 +44,6 @@
 #include "StdAfx.h"
 #include "ARBDogTitle.h"
 #include <algorithm>
-#include <sstream>
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
@@ -111,7 +110,7 @@ bool ARBDogTitle::operator!=(ARBDogTitle const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBDogTitle::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBDogTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -141,9 +140,9 @@ bool ARBDogTitle::Load(
 	}
 	if (!inConfig.GetVenues().FindVenue(m_Venue))
 	{
-		std::string msg("Unknown venue name: '");
+		ARBString msg(_T("Unknown venue name: '"));
 		msg += m_Venue;
-		msg += "'";
+		msg += _T("'");
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
 		return false;
 	}
@@ -172,9 +171,9 @@ bool ARBDogTitle::Load(
 		break;
 	case Element::eInvalidValue:
 		{
-			std::string attrib;
+			ARBString attrib;
 			inTree.GetAttrib(ATTRIB_TITLE_DATE, attrib);
-			std::string msg(INVALID_DATE);
+			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
 			return false;
@@ -203,9 +202,9 @@ bool ARBDogTitle::Load(
 		}
 		else
 		{
-			std::string msg(INVALID_TITLE);
+			ARBString msg(INVALID_TITLE);
 			msg += m_Venue;
-			msg += "/";
+			msg += _T("/");
 			msg += m_Name;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
 			return false;
@@ -238,15 +237,15 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	return true;
 }
 
-inline std::string ARBDogTitle::GetGenericName() const
+inline ARBString ARBDogTitle::GetGenericName() const
 {
-	std::string name;
+	ARBString name;
 	name = m_Name;
 	if (1 < m_Instance)
 	{
-		std::ostringstream buffer;
+		ARBostringstream buffer;
 		// Keep sync'd with ARBConfigTitle
-		buffer << " " << m_Instance;
+		buffer << _T(" ") << m_Instance;
 		name += buffer.str();
 	}
 	return name;
@@ -279,7 +278,7 @@ void ARBDogTitleList::sort()
 	std::stable_sort(begin(), end(), SortTitle());
 }
 
-int ARBDogTitleList::NumTitlesInVenue(std::string const& inVenue) const
+int ARBDogTitleList::NumTitlesInVenue(ARBString const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -291,8 +290,8 @@ int ARBDogTitleList::NumTitlesInVenue(std::string const& inVenue) const
 }
 
 bool ARBDogTitleList::FindTitle(
-		std::string const& inVenue,
-		std::string const& inTitle,
+		ARBString const& inVenue,
+		ARBString const& inTitle,
 		ARBDogTitle** outTitle) const
 {
 	if (outTitle)
@@ -314,8 +313,8 @@ bool ARBDogTitleList::FindTitle(
 }
 
 short ARBDogTitleList::FindMaxInstance(
-		std::string const& inVenue,
-		std::string const& inTitle) const
+		ARBString const& inVenue,
+		ARBString const& inTitle) const
 {
 	short inst = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -331,8 +330,8 @@ short ARBDogTitleList::FindMaxInstance(
 }
 
 int ARBDogTitleList::RenameVenue(
-		std::string const& inOldVenue,
-		std::string const& inNewVenue)
+		ARBString const& inOldVenue,
+		ARBString const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -346,9 +345,9 @@ int ARBDogTitleList::RenameVenue(
 	return count;
 }
 
-int ARBDogTitleList::DeleteVenue(std::string const& inVenue)
+int ARBDogTitleList::DeleteVenue(ARBString const& inVenue)
 {
-	std::string venue(inVenue);
+	ARBString venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -365,7 +364,7 @@ int ARBDogTitleList::DeleteVenue(std::string const& inVenue)
 
 int ARBDogTitleList::NumTitlesInDivision(
 		ARBConfigVenue const* inVenue,
-		std::string const& inDiv) const
+		ARBString const& inDiv) const
 {
 	ASSERT(inVenue);
 	int count = 0;
@@ -390,8 +389,8 @@ int ARBDogTitleList::NumTitlesInDivision(
 
 int ARBDogTitleList::RenameDivision(
 		ARBConfigVenue const* inVenue,
-		std::string const& inOldDiv,
-		std::string const& inNewDiv)
+		ARBString const& inOldDiv,
+		ARBString const& inNewDiv)
 {
 	// Nothing to do here. Since the division name simply changed and we don't
 	// track that here, there's nothing to update.
@@ -400,11 +399,11 @@ int ARBDogTitleList::RenameDivision(
 
 int ARBDogTitleList::DeleteDivision(
 		ARBConfig const& inConfig,
-		std::string const& inVenue,
-		std::string const& inDiv)
+		ARBString const& inVenue,
+		ARBString const& inDiv)
 {
-	std::string venue(inVenue);
-	std::string div(inDiv);
+	ARBString venue(inVenue);
+	ARBString div(inDiv);
 	ARBConfigVenue* pVenue;
 	if (!inConfig.GetVenues().FindVenue(venue, &pVenue))
 	{
@@ -441,8 +440,8 @@ int ARBDogTitleList::DeleteDivision(
 }
 
 int ARBDogTitleList::NumTitlesInUse(
-		std::string const& inVenue,
-		std::string const& inTitle) const
+		ARBString const& inVenue,
+		ARBString const& inTitle) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -454,9 +453,9 @@ int ARBDogTitleList::NumTitlesInUse(
 }
 
 int ARBDogTitleList::RenameTitle(
-		std::string const& inVenue,
-		std::string const& inOldTitle,
-		std::string const& inNewTitle)
+		ARBString const& inVenue,
+		ARBString const& inOldTitle,
+		ARBString const& inNewTitle)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)

@@ -36,9 +36,9 @@
  */
 
 #include <list>
-#include <string>
 #include <vector>
 #include "ARBConfig.h"
+#include "ARBTypes.h"
 #include "DlgBaseDialog.h"
 #include "DlgListViewer.h"
 #include "ListCtrl.h"
@@ -93,7 +93,7 @@ public:
 			CAgilityBookDoc* inDoc,
 			ARBDogList const& inDogs,
 			ARBConfigVenue const* inVenue,
-			std::string const& inEvent,
+			ARBString const& inEvent,
 			ARBConfigScoringList const& inScorings,
 			std::vector<CDlgFixup*>& ioDlgFixup,
 			// These settings are only used from the preceeding api.

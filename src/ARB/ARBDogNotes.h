@@ -38,15 +38,15 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include <set>
 #include <vector>
+#include "ARBTypes.h"
 class ARBConfig;
 class ARBErrorCallback;
 class ARBVersion;
 class Element;
 
-typedef std::vector<std::string> ARBDogFaultList;
+typedef std::vector<ARBString> ARBDogFaultList;
 
 /**
  * Various notes about a run.
@@ -66,7 +66,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -96,18 +96,18 @@ public:
 	 */
 	ARBDogFaultList const& GetFaults() const;
 	ARBDogFaultList& GetFaults();
-	std::string const& GetCRCD() const;
-	void SetCRCD(std::string const& inCRCD);
-	std::string const& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanced Metafile.
-	void SetCRCDMetaFile(std::string const& inCRCDMeta);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetCRCD() const;
+	void SetCRCD(ARBString const& inCRCD);
+	ARBString const& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanced Metafile.
+	void SetCRCDMetaFile(ARBString const& inCRCDMeta);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 
 private:
 	ARBDogFaultList m_Faults;
-	std::string m_CRCD;
-	std::string m_CRCDMeta;
-	std::string m_Note;
+	ARBString m_CRCD;
+	ARBString m_CRCDMeta;
+	ARBString m_Note;
 };
 
 inline ARBDogFaultList const& ARBDogNotes::GetFaults() const
@@ -120,32 +120,32 @@ inline ARBDogFaultList& ARBDogNotes::GetFaults()
 	return m_Faults;
 }
 
-inline std::string const& ARBDogNotes::GetCRCD() const
+inline ARBString const& ARBDogNotes::GetCRCD() const
 {
 	return m_CRCD;
 }
 
-inline void ARBDogNotes::SetCRCD(std::string const& inCRCD)
+inline void ARBDogNotes::SetCRCD(ARBString const& inCRCD)
 {
 	m_CRCD = inCRCD;
 }
 
-inline std::string const& ARBDogNotes::GetCRCDMetaFile() const
+inline ARBString const& ARBDogNotes::GetCRCDMetaFile() const
 {
 	return m_CRCDMeta;
 }
 
-inline void ARBDogNotes::SetCRCDMetaFile(std::string const& inCRCDMeta)
+inline void ARBDogNotes::SetCRCDMetaFile(ARBString const& inCRCDMeta)
 {
 	m_CRCDMeta = inCRCDMeta;
 }
 
-inline std::string const& ARBDogNotes::GetNote() const
+inline ARBString const& ARBDogNotes::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBDogNotes::SetNote(std::string const& inNote)
+inline void ARBDogNotes::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }

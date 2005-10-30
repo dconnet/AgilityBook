@@ -88,7 +88,7 @@ BOOL CDlgSelectURL::OnInitDialog()
 void CDlgSelectURL::OnBnClickedFilename()
 {
 	UpdateData(TRUE);
-	CFileDialog dlg(TRUE, NULL, m_Name, OFN_FILEMUSTEXIST, "All Files (*.*)|*.*||", this);
+	CFileDialog dlg(TRUE, NULL, m_Name, OFN_FILEMUSTEXIST, _T("All Files (*.*)|*.*||"), this);
 	if (IDOK == dlg.DoModal())
 	{
 		m_Name = dlg.GetPathName();

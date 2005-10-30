@@ -158,26 +158,26 @@ CVersionNum::CVersionNum(CString inVer)
 {
 	m_Name.Empty();
 	// This is a static string in "version.txt"
-	static CString const idStr("ARB Version ");
+	static CString const idStr(_T("ARB Version "));
 	if (0 == inVer.Find(idStr))
 	{
 		inVer = inVer.Mid(idStr.GetLength());
 		int pos = inVer.Find('.');
 		if (0 <= pos)
 		{
-			m_Version.part1 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+			m_Version.part1 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 			inVer = inVer.Mid(pos+1);
 			int pos = inVer.Find('.');
 			if (0 <= pos)
 			{
-				m_Version.part2 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+				m_Version.part2 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 				inVer = inVer.Mid(pos+1);
 				int pos = inVer.Find('.');
 				if (0 <= pos)
 				{
-					m_Version.part3 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+					m_Version.part3 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 					inVer = inVer.Mid(pos+1);
-					m_Version.part4 = static_cast<WORD>(atoi((LPCTSTR)inVer));
+					m_Version.part4 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 					m_Valid = true;
 				}
 			}

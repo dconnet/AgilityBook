@@ -90,12 +90,12 @@ bool ARBInfoItem::operator!=(ARBInfoItem const& rhs) const
 	return !operator==(rhs);
 }
 
-std::string ARBInfoItem::GetGenericName() const
+ARBString ARBInfoItem::GetGenericName() const
 {
 	return m_Name;
 }
 
-size_t ARBInfoItem::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBInfoItem::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -115,7 +115,7 @@ bool ARBInfoItem::Load(
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
-		std::string const& inItemName)
+		ARBString const& inItemName)
 {
 	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
@@ -128,7 +128,7 @@ bool ARBInfoItem::Load(
 
 bool ARBInfoItem::Save(
 		Element& ioTree,
-		std::string const& inItemName) const
+		ARBString const& inItemName) const
 {
 	Element& info = ioTree.AddElement(inItemName);
 	info.AddAttrib(ATTRIB_INFO_NAME, m_Name);
@@ -138,7 +138,7 @@ bool ARBInfoItem::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBInfoItemList::ARBInfoItemList(std::string const& inItemName)
+ARBInfoItemList::ARBInfoItemList(ARBString const& inItemName)
 	: m_ItemName(inItemName)
 {
 }
@@ -201,7 +201,7 @@ void ARBInfoItemList::sort()
 	std::stable_sort(begin(), end(), SortInfoItem());
 }
 
-size_t ARBInfoItemList::GetAllItems(std::set<std::string>& outNames) const
+size_t ARBInfoItemList::GetAllItems(std::set<ARBString>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -212,7 +212,7 @@ size_t ARBInfoItemList::GetAllItems(std::set<std::string>& outNames) const
 	return outNames.size();
 }
 
-void ARBInfoItemList::CondenseContent(std::set<std::string> const& inNamesInUse)
+void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
@@ -232,7 +232,7 @@ void ARBInfoItemList::CondenseContent(std::set<std::string> const& inNamesInUse)
 }
 
 bool ARBInfoItemList::FindItem(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBInfoItem** outItem) const
 {
 	if (outItem)
@@ -254,7 +254,7 @@ bool ARBInfoItemList::FindItem(
 }
 
 bool ARBInfoItemList::AddItem(
-		std::string const& inItem,
+		ARBString const& inItem,
 		ARBInfoItem** outItem)
 {
 	if (outItem)

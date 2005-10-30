@@ -81,7 +81,7 @@ bool ARBConfigSubLevel::operator!=(ARBConfigSubLevel const& rhs) const
 	return !operator==(rhs);
 }
 
-size_t ARBConfigSubLevel::GetSearchStrings(std::set<std::string>& ioStrings) const
+size_t ARBConfigSubLevel::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
 	return nItems;
@@ -110,7 +110,7 @@ bool ARBConfigSubLevel::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBConfigSubLevelList::FindSubLevel(std::string const& inName) const
+bool ARBConfigSubLevelList::FindSubLevel(ARBString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -121,7 +121,7 @@ bool ARBConfigSubLevelList::FindSubLevel(std::string const& inName) const
 }
 
 bool ARBConfigSubLevelList::AddSubLevel(
-		std::string const& inName,
+		ARBString const& inName,
 		ARBConfigSubLevel** outLevel)
 {
 	if (outLevel)
@@ -140,9 +140,9 @@ bool ARBConfigSubLevelList::AddSubLevel(
 	return true;
 }
 
-bool ARBConfigSubLevelList::DeleteSubLevel(std::string const& inName)
+bool ARBConfigSubLevelList::DeleteSubLevel(ARBString const& inName)
 {
-	std::string name(inName);
+	ARBString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

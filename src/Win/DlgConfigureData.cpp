@@ -89,7 +89,7 @@ CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 		break;
 	case 1:
 		str = m_Venue->GetDesc().c_str();
-		str.Replace("\n", " ");
+		str.Replace(_T("\n"), _T(" "));
 		break;
 	}
 	return str;

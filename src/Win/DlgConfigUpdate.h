@@ -47,7 +47,7 @@ public:
 	// to allow loading config data without flying the dialog (for instance,
 	// from the import menu item).
 	// NULL will load the default configuration.
-	bool LoadConfig(char const* pFile);
+	bool LoadConfig(TCHAR const* pFile);
 
 private:
 // Dialog Data

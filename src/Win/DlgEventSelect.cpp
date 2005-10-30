@@ -77,9 +77,9 @@ public:
 CDlgEventSelect::CDlgEventSelect(
 		ARBConfigVenue const* inVenue,
 		ARBDate const& inDate,
-		char const* const inDivision,
-		char const* const inLevel,
-		char const* const inEvent,
+		TCHAR const* const inDivision,
+		TCHAR const* const inLevel,
+		TCHAR const* const inEvent,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgEventSelect::IDD, pParent)
 	, m_pVenue(inVenue)
@@ -147,12 +147,12 @@ void CDlgEventSelect::ClearLevels()
 void CDlgEventSelect::FillLevels()
 {
 	CString str;
-	std::string level;
+	ARBString level;
 	int index = m_ctrlLevels.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlLevels.GetLBText(index, str);
-		level = (LPCSTR)str;
+		level = (LPCTSTR)str;
 	}
 	if (m_inLevel)
 	{
@@ -199,12 +199,12 @@ void CDlgEventSelect::FillLevels()
 void CDlgEventSelect::FillEvents()
 {
 	CString str;
-	std::string event;
+	ARBString event;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlEvents.GetLBText(index, str);
-		event = (LPCSTR)str;
+		event = (LPCTSTR)str;
 	}
 	if (m_inEvent)
 	{

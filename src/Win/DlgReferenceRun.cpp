@@ -37,11 +37,11 @@
 #include "AgilityBook.h"
 #include "DlgReferenceRun.h"
 #include <set>
-#include <string>
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogReferenceRun.h"
+#include "ARBTypes.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
-		std::set<std::string> const& inNames,
+		std::set<ARBString> const& inNames,
 		ARBDogReferenceRun* ref,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
@@ -73,8 +73,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	m_Notes = m_Ref->GetNote().c_str();
 	//}}AFX_DATA_INIT
 	if (m_Points.IsEmpty())
-		m_Points = "0";
-	m_Notes.Replace("\n", "\r\n");
+		m_Points = _T("0");
+	m_Notes.Replace(_T("\n"), _T("\r\n"));
 	if (m_Height.IsEmpty())
 		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
 }
@@ -116,7 +116,7 @@ BOOL CDlgReferenceRun::OnInitDialog()
 			m_ctrlQ.SetCurSel(idx);
 	}
 
-	std::set<std::string>::const_iterator iter;
+	std::set<ARBString>::const_iterator iter;
 	for (iter = m_Names.begin(); iter != m_Names.end(); ++iter)
 	{
 		m_ctrlHeight.AddString((*iter).c_str());
@@ -153,13 +153,13 @@ void CDlgReferenceRun::OnOK()
 
 	m_Ref->SetQ(q);
 	m_Ref->SetPlace(m_Place);
-	m_Ref->SetScore((LPCSTR)m_Points);
+	m_Ref->SetScore((LPCTSTR)m_Points);
 	m_Ref->SetTime(m_Time); // Letting the prec default to 2 is fine.
-	m_Ref->SetName((LPCSTR)m_Name);
-	m_Ref->SetHeight((LPCSTR)m_Height);
-	m_Ref->SetBreed((LPCSTR)m_Breed);
-	m_Notes.Replace("\r\n", "\n");
-	m_Ref->SetNote((LPCSTR)m_Notes);
+	m_Ref->SetName((LPCTSTR)m_Name);
+	m_Ref->SetHeight((LPCTSTR)m_Height);
+	m_Ref->SetBreed((LPCTSTR)m_Breed);
+	m_Notes.Replace(_T("\r\n"), _T("\n"));
+	m_Ref->SetNote((LPCTSTR)m_Notes);
 
 	CDlgBaseDialog::OnOK();
 }

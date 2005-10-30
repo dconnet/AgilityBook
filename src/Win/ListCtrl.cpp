@@ -105,11 +105,11 @@ static void GetPrintLineImp(
 	{
 		if (0 > nItem)
 		{
-			char buffer[1000];
+			TCHAR buffer[1000];
 			HDITEM hdr;
 			hdr.mask = HDI_TEXT;
 			hdr.pszText = buffer;
-			hdr.cchTextMax = sizeof(buffer) / sizeof(char);
+			hdr.cchTextMax = sizeof(buffer) / sizeof(TCHAR);
 			list.GetHeaderCtrl()->GetItem(i, &hdr);
 			line.Add(buffer);
 		}
@@ -136,7 +136,7 @@ CHeaderCtrl2::CHeaderCtrl2()
 	CWinApp* app = AfxGetApp();
 	m_sortAscending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_UP));
 	m_sortDescending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_DOWN));
-	fpBuffer = new char[fBufferSize];
+	fpBuffer = new TCHAR[fBufferSize];
 }
 
 CHeaderCtrl2::~CHeaderCtrl2()
@@ -218,7 +218,7 @@ void CHeaderCtrl2::FixTooltips()
 			{
 				delete [] fpBuffer;
 				fBufferSize *= 2;
-				fpBuffer = new char[fBufferSize];
+				fpBuffer = new TCHAR[fBufferSize];
 				item.pszText = fpBuffer;
 				item.cchTextMax = fBufferSize;
 				GetItem(iCol, &item);
@@ -243,7 +243,7 @@ void CHeaderCtrl2::FixTooltips()
 				{
 					// A tooltip can only display 260 chars.
 					if (str.GetLength() >= 260)
-						str = "..." + str.Right(256);
+						str = _T("...") + str.Right(256);
 					m_ToolTip.AddTool(this, str, rColumn, iCol+1);
 					bDelTip = false;
 				}
@@ -639,7 +639,7 @@ void CListView2::OnBeginPrinting(
 		GetPrintLine(i, line);
 		for (size_t nCol = 0; nCol < static_cast<size_t>(line.GetSize()); ++nCol)
 		{
-			line[nCol] += " ";
+			line[nCol] += _T(" ");
 			if (nCol == pData->nMaxWidth.size())
 				pData->nMaxWidth.push_back(0);
 			CRect r(0,0,0,0);
@@ -650,7 +650,7 @@ void CListView2::OnBeginPrinting(
 	}
 
 	CRect rTest(0,0,0,0);
-	CString strTextForHeight("Testing for height");
+	CString strTextForHeight(_T("Testing for height"));
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	pData->nHeight = 4 * rTest.Height() / 3;
 	if (1 > pData->nHeight)
@@ -659,7 +659,7 @@ void CListView2::OnBeginPrinting(
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
 	pData->nPages = (GetListCtrl().GetItemCount() + 1) / pData->nLinesPerPage + 1;
-	//TRACE("Lines per page: %d\nLines: %d\nPages: %d\n",
+	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
 	//	pData->nPages);
@@ -735,7 +735,7 @@ void CListView2::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		// Now all the data.
@@ -749,7 +749,7 @@ void CListView2::OnEditCopy()
 					data += '\t';
 				data += line[i];
 			}
-			data += "\r\n";
+			data += _T("\r\n");
 		}
 
 		// alloc mem block & copy text in

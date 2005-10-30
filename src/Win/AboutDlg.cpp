@@ -132,7 +132,7 @@ BOOL CAboutDlg::OnInitDialog()
 		else
 			url = name;
 		idLinkControls[i].pCtrl->SetWindowText(name);
-		if (0 <= (nTab = url.Find("%VERSION%")))
+		if (0 <= (nTab = url.Find(_T("%VERSION%"))))
 		{
 			CString tmp = url.Left(nTab) + version + url.Mid(nTab+9);
 			url = tmp;

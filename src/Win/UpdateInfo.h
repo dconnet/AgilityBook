@@ -37,7 +37,7 @@
  * @li 2004-08-03 DRC Created
  */
 
-#include <string>
+#include "ARBTypes.h"
 #include "Element.h"
 #include "VersionNum.h"
 class ARBConfig;
@@ -70,7 +70,7 @@ public:
 	 */
 	static bool UpdateConfig(
 			CAgilityBookDoc* ioDoc,
-			char const* inMsg = NULL);
+			TCHAR const* inMsg = NULL);
 
 	/**
 	 * Called when the program does its monthly auto-check.
@@ -94,6 +94,6 @@ public:
 private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
-	std::string m_FileName;
-	std::string m_InfoMsg;
+	ARBString m_FileName;
+	ARBString m_InfoMsg;
 };

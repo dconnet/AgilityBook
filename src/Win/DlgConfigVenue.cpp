@@ -194,22 +194,22 @@ void CDlgConfigVenue::SetAction(eAction inAction)
 		switch (m_Action)
 		{
 		default:
-			m_ctrlComments.SetWindowText("");
+			m_ctrlComments.SetWindowText(_T(""));
 			break;
 		case eDivisions:
-			m_ctrlComments.SetWindowText("Buttons: Divisions");
+			m_ctrlComments.SetWindowText(_T("Buttons: Divisions"));
 			break;
 		case eLevels:
-			m_ctrlComments.SetWindowText("Buttons: Levels");
+			m_ctrlComments.SetWindowText(_T("Buttons: Levels"));
 			break;
 		case eTitles:
-			m_ctrlComments.SetWindowText("Buttons: Titles");
+			m_ctrlComments.SetWindowText(_T("Buttons: Titles"));
 			break;
 		case eEvents:
-			m_ctrlComments.SetWindowText("Buttons: Events");
+			m_ctrlComments.SetWindowText(_T("Buttons: Events"));
 			break;
 		case eMultiQ:
-			m_ctrlComments.SetWindowText("Buttons: MultiQs");
+			m_ctrlComments.SetWindowText(_T("Buttons: MultiQs"));
 			break;
 		}
 	}
@@ -727,15 +727,15 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	m_ctrlEvents.SetExtendedStyle(m_ctrlEvents.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlMultiQ.SetExtendedStyle(m_ctrlMultiQ.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlDivisions.InsertColumn(0, "Divisions");
-	m_ctrlTitles.InsertColumn(0, "Titles");
-	m_ctrlEvents.InsertColumn(0, "Events");
-	m_ctrlMultiQ.InsertColumn(0, "MultiQ");
+	m_ctrlDivisions.InsertColumn(0, _T("Divisions"));
+	m_ctrlTitles.InsertColumn(0, _T("Titles"));
+	m_ctrlEvents.InsertColumn(0, _T("Events"));
+	m_ctrlMultiQ.InsertColumn(0, _T("MultiQ"));
 
 	m_ctrlName.SetWindowText(m_pVenue->GetName().c_str());
 	m_ctrlLongName.SetWindowText(m_pVenue->GetLongName().c_str());
 	CString str(m_pVenue->GetDesc().c_str());
-	str.Replace("\n", "\r\n");
+	str.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlDesc.SetWindowText(str);
 
 	LoadDivisionData();
@@ -904,7 +904,7 @@ void CDlgConfigVenue::OnSetfocusMultiQ(
 void CDlgConfigVenue::OnNew() 
 {
 	bool done = false;
-	std::string name;
+	ARBString name;
 	switch (m_Action)
 	{
 	case eDivisions:
@@ -952,7 +952,7 @@ void CDlgConfigVenue::OnNew()
 			HTREEITEM hParentItem = TVI_ROOT;
 			ARBConfigLevel* pLevel = NULL;
 			if (pLevelData
-			&& IDNO == AfxMessageBox("Would you like to create a Level? (Answer 'No' to create a sub-level)", MB_YESNO | MB_ICONQUESTION))
+			&& IDNO == AfxMessageBox(_T("Would you like to create a Level? (Answer 'No' to create a sub-level)"), MB_YESNO | MB_ICONQUESTION))
 			{
 				id = IDS_SUBLEVEL_NAME;
 				hParentItem = hItem;
@@ -1021,7 +1021,7 @@ void CDlgConfigVenue::OnNew()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(), "", "", 0, this);
+				CDlgConfigTitle dlg(name.c_str(), _T(""), _T(""), 0, this);
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
@@ -1104,7 +1104,7 @@ void CDlgConfigVenue::OnDelete()
 			{
 				CDlgConfigureDataDivision* pDivData = reinterpret_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetItemData(index));
 				ASSERT(NULL != pDivData);
-				std::string div = pDivData->GetDivision()->GetName();
+				ARBString div = pDivData->GetDivision()->GetName();
 				int nPoints = m_Book.GetDogs().NumExistingPointsInDivision(m_pVenue, div);
 				int nTrials = m_Book.GetDogs().NumRunsInDivision(m_pVenue, div);
 				int nTitles = m_Book.GetDogs().NumTitlesInDivision(m_pVenue, div);
@@ -1146,7 +1146,7 @@ void CDlgConfigVenue::OnDelete()
 				CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
 				if (pLevelData)
 				{
-					std::string level = pLevelData->GetLevel()->GetName();
+					ARBString level = pLevelData->GetLevel()->GetName();
 					int nLevels = m_Book.GetDogs().NumLevelsInUse(
 						m_pVenue->GetName(),
 						pLevelData->GetDivision()->GetName(),
@@ -1178,9 +1178,9 @@ void CDlgConfigVenue::OnDelete()
 				}
 				else if (pSubLevelData)
 				{
-					std::string level = pSubLevelData->GetLevel()->GetName();
+					ARBString level = pSubLevelData->GetLevel()->GetName();
 					bool bDelete = true;
-					std::string subLevel = pSubLevelData->GetSubLevel()->GetName();
+					ARBString subLevel = pSubLevelData->GetSubLevel()->GetName();
 					int nLevels = m_Book.GetDogs().NumLevelsInUse(
 						m_pVenue->GetName(),
 						pSubLevelData->GetDivision()->GetName(),
@@ -1234,7 +1234,7 @@ void CDlgConfigVenue::OnDelete()
 			{
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
 				ASSERT(NULL != pTitleData);
-				std::string title = pTitleData->GetTitle()->GetName();
+				ARBString title = pTitleData->GetTitle()->GetName();
 				int nTitles = m_Book.GetDogs().NumTitlesInUse(m_pVenue->GetName(), title);
 				if (0 < nTitles)
 				{
@@ -1266,7 +1266,7 @@ void CDlgConfigVenue::OnDelete()
 			{
 				CDlgConfigureDataEvent* pEventData = reinterpret_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetItemData(index));
 				ASSERT(NULL != pEventData);
-				std::string event = pEventData->GetEvent()->GetName();
+				ARBString event = pEventData->GetEvent()->GetName();
 				int nEvents = m_Book.GetDogs().NumEventsInUse(m_pVenue->GetName(), event);
 				if (0 < nEvents)
 				{
@@ -1300,7 +1300,7 @@ void CDlgConfigVenue::OnDelete()
 			{
 				CDlgConfigureDataMultiQ* pData = reinterpret_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetItemData(index));
 				ASSERT(NULL != pData);
-				std::string multiQ = pData->GetMultiQ()->GetName();
+				ARBString multiQ = pData->GetMultiQ()->GetName();
 				int nMultiQs = m_Book.GetDogs().NumMultiQsInUse(m_pVenue->GetName(), multiQ);
 				if (0 < nMultiQs)
 				{
@@ -1335,8 +1335,8 @@ void CDlgConfigVenue::OnEdit()
 			if (!pDivData)
 				return;
 			bool done = false;
-			std::string oldName = pDivData->GetDivision()->GetName();
-			std::string name(oldName);
+			ARBString oldName = pDivData->GetDivision()->GetName();
+			ARBString name(oldName);
 			if (0 < m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_Book.GetConfig(), m_pVenue->GetName(), name))
 			{
 				if (IDYES != AfxMessageBox(IDS_CHANGEDIV_ISSUES, MB_ICONQUESTION | MB_YESNO))
@@ -1375,8 +1375,8 @@ void CDlgConfigVenue::OnEdit()
 			if (pLevelData)
 			{
 				bool done = false;
-				std::string oldName = pLevelData->GetLevel()->GetName();
-				std::string name(oldName);
+				ARBString oldName = pLevelData->GetLevel()->GetName();
+				ARBString name(oldName);
 				// If there are sublevels, don't ask the following question. If a level has
 				// sublevels, the level name isn't allowed to be used for an event.
 				if (0 == pLevelData->GetLevel()->GetSubLevels().size())
@@ -1434,8 +1434,8 @@ void CDlgConfigVenue::OnEdit()
 			else if (pSubLevelData)
 			{
 				bool done = false;
-				std::string oldName = pSubLevelData->GetSubLevel()->GetName();
-				std::string name(oldName);
+				ARBString oldName = pSubLevelData->GetSubLevel()->GetName();
+				ARBString name(oldName);
 				if (0 < m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_Book.GetConfig(), m_pVenue->GetName(), pSubLevelData->GetDivision()->GetName()))
 				{
 					if (IDYES != AfxMessageBox(IDS_CHANGESUBLEVEL_ISSUES, MB_ICONQUESTION | MB_YESNO))
@@ -1479,10 +1479,10 @@ void CDlgConfigVenue::OnEdit()
 			if (!pTitleData)
 				return;
 			bool done = false;
-			std::string oldName = pTitleData->GetTitle()->GetName();
-			std::string oldLongName = pTitleData->GetTitle()->GetLongName();
-			std::string name(oldName);
-			std::string longname(oldLongName);
+			ARBString oldName = pTitleData->GetTitle()->GetName();
+			ARBString oldLongName = pTitleData->GetTitle()->GetLongName();
+			ARBString name(oldName);
+			ARBString longname(oldLongName);
 			while (!done)
 			{
 				done = true;
@@ -1503,7 +1503,7 @@ void CDlgConfigVenue::OnEdit()
 							bool bInUse = true;
 							if (0 < nTitles)
 							{
-								if (IDYES == AfxMessageBox("This name is currently in use. Do you want to merge your data into this existing name?", MB_YESNO | MB_ICONQUESTION))
+								if (IDYES == AfxMessageBox(_T("This name is currently in use. Do you want to merge your data into this existing name?"), MB_YESNO | MB_ICONQUESTION))
 								{
 									bInUse = false;
 									m_DlgFixup.push_back(new CDlgFixupRenameTitle(m_pVenue->GetName(), oldName, name));
@@ -1545,7 +1545,7 @@ void CDlgConfigVenue::OnEdit()
 			if (!pEventData)
 				return;
 			ARBConfigEvent* pEvent = pEventData->GetEvent();
-			std::string oldName = pEvent->GetName();
+			ARBString oldName = pEvent->GetName();
 			CDlgConfigEvent dlg(m_pDoc, &m_Book, &m_Config, m_pVenue, pEvent, this);
 			pEvent->AddRef();
 			if (IDOK == dlg.DoModal())
@@ -1565,7 +1565,7 @@ void CDlgConfigVenue::OnEdit()
 			if (!pData)
 				return;
 			ARBConfigMultiQ* pMultiQ = pData->GetMultiQ();
-			std::string oldName = pMultiQ->GetName();
+			ARBString oldName = pMultiQ->GetName();
 			bool done = false;
 			while (!done)
 			{
@@ -1574,7 +1574,7 @@ void CDlgConfigVenue::OnEdit()
 				pMultiQ->AddRef();
 				if (IDOK == dlg.DoModal())
 				{
-					std::string name = pMultiQ->GetName();
+					ARBString name = pMultiQ->GetName();
 					if (name != oldName)
 						m_DlgFixup.push_back(new CDlgFixupRenameMultiQ(m_pVenue->GetName(), oldName, name));
 					LoadMultiQData();
@@ -1606,12 +1606,12 @@ void CDlgConfigVenue::OnCopy()
 				CDlgConfigureDataTitle* pData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
 				CString copyOf;
 				copyOf.LoadString(IDS_COPYOF);
-				std::string name(pData->GetTitle()->GetName());
-				std::string longname(pData->GetTitle()->GetLongName());
+				ARBString name(pData->GetTitle()->GetName());
+				ARBString longname(pData->GetTitle()->GetLongName());
 				while (m_pVenue->GetDivisions().FindTitle(name))
 				{
-					name = (LPCSTR)copyOf + name;
-					longname = (LPCSTR)copyOf + longname;
+					name = (LPCTSTR)copyOf + name;
+					longname = (LPCTSTR)copyOf + longname;
 				}
 				ARBConfigTitle* title = new ARBConfigTitle(*(pData->GetTitle()));
 				title->SetName(name);
@@ -1635,10 +1635,10 @@ void CDlgConfigVenue::OnCopy()
 				CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
 				CString copyOf;
 				copyOf.LoadString(IDS_COPYOF);
-				std::string name(pEventData->GetEvent()->GetName());
+				ARBString name(pEventData->GetEvent()->GetName());
 				while (m_pVenue->GetEvents().FindEvent(name))
 				{
-					name = (LPCSTR)copyOf + name;
+					name = (LPCTSTR)copyOf + name;
 				}
 				ARBConfigEvent* event = new ARBConfigEvent(*(pEventData->GetEvent()));
 				event->SetName(name);
@@ -1661,10 +1661,10 @@ void CDlgConfigVenue::OnCopy()
 				CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
 				CString copyOf;
 				copyOf.LoadString(IDS_COPYOF);
-				std::string name(pData->GetMultiQ()->GetName());
+				ARBString name(pData->GetMultiQ()->GetName());
 				while (m_pVenue->GetMultiQs().FindMultiQ(name))
 				{
-					name = (LPCSTR)copyOf + name;
+					name = (LPCTSTR)copyOf + name;
 				}
 				ARBConfigMultiQ* multiq = new ARBConfigMultiQ(*(pData->GetMultiQ()));
 				multiq->SetName(name);
@@ -1910,12 +1910,12 @@ void CDlgConfigVenue::OnOK()
 	str.TrimLeft();
 	if (0 == str.GetLength())
 	{
-		AfxMessageBox("Invalidate name");
+		AfxMessageBox(_T("Invalidate name"));
 		GotoDlgCtrl(&m_ctrlName);
 		return;
 	}
-	std::string name((LPCTSTR)str);
-	std::string oldName = m_pVenue->GetName();
+	ARBString name((LPCTSTR)str);
+	ARBString oldName = m_pVenue->GetName();
 	if (oldName != name)
 	{
 		if (m_Config.GetVenues().FindVenue(name))
@@ -1929,7 +1929,7 @@ void CDlgConfigVenue::OnOK()
 	m_pVenue->SetLongName((LPCTSTR)str);
 	m_ctrlDesc.GetWindowText(str);
 	str.TrimRight();
-	str.Replace("\r\n", "\n");
+	str.Replace(_T("\r\n"), _T("\n"));
 	m_pVenue->SetDesc((LPCTSTR)str);
 	if (oldName != name)
 		m_DlgFixup.push_back(new CDlgFixupRenameVenue(oldName, name));

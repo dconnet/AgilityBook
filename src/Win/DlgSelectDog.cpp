@@ -40,8 +40,8 @@
 
 #include <algorithm>
 #include <set>
-#include <string>
 #include "ARBDog.h"
+#include "ARBTypes.h"
 #include "AgilityBookDoc.h"
 
 #ifdef _DEBUG
@@ -98,13 +98,13 @@ BOOL CDlgSelectDog::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 
 	CWinApp* pApp = AfxGetApp();
-	std::set<std::string> selection;
-	int nDogs = pApp->GetProfileInt("Selection", "nDogs", 0);
+	std::set<ARBString> selection;
+	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
 		CString item;
-		item.Format("Dog%d", iDog);
-		CString dog = pApp->GetProfileString("Selection", item, "");
+		item.Format(_T("Dog%d"), iDog);
+		CString dog = pApp->GetProfileString(_T("Selection"), item, _T(""));
 		if (!dog.IsEmpty())
 			selection.insert((LPCTSTR)dog);
 	}
@@ -126,12 +126,12 @@ void CDlgSelectDog::OnOK()
 {
 	// Erase existing.
 	CWinApp* pApp = AfxGetApp();
-	int nDogs = pApp->GetProfileInt("Selection", "nDogs", 0);
+	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
 		CString item;
-		item.Format("Dog%d", iDog);
-		pApp->WriteProfileString("Selection", item, NULL);
+		item.Format(_T("Dog%d"), iDog);
+		pApp->WriteProfileString(_T("Selection"), item, NULL);
 	}
 	// Now commit the selection.
 	nDogs = 0;
@@ -144,10 +144,10 @@ void CDlgSelectDog::OnOK()
 			m_Dogs.push_back(pDog);
 			++nDogs;
 			CString item;
-			item.Format("Dog%d", nDogs);
-			pApp->WriteProfileString("Selection", item, pDog->GetCallName().c_str());
+			item.Format(_T("Dog%d"), nDogs);
+			pApp->WriteProfileString(_T("Selection"), item, pDog->GetCallName().c_str());
 		}
 	}
-	pApp->WriteProfileInt("Selection", "nDogs", nDogs);
+	pApp->WriteProfileInt(_T("Selection"), _T("nDogs"), nDogs);
 	CDlgBaseDialog::OnOK();
 }

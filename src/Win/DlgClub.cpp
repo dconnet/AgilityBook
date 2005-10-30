@@ -89,9 +89,9 @@ BOOL CDlgClub::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	set<string> clubs;
+	set<ARBString> clubs;
 	m_pDoc->GetAllClubNames(clubs);
-	for (set<string>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
+	for (set<ARBString>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{
 		m_ctrlClubs.AddString((*iter).c_str());
 	}
@@ -141,10 +141,10 @@ void CDlgClub::OnOK()
 
 	if (m_pClub)
 	{
-		m_pClub->SetName((LPCSTR)m_Club);
-		m_pClub->SetVenue((LPCSTR)venue);
+		m_pClub->SetName((LPCTSTR)m_Club);
+		m_pClub->SetVenue((LPCTSTR)venue);
 	}
 	else
-		m_Clubs.AddClub((LPCSTR)m_Club, (LPCSTR)venue);
+		m_Clubs.AddClub((LPCTSTR)m_Club, (LPCTSTR)venue);
 	CDlgBaseDialog::OnOK();
 }

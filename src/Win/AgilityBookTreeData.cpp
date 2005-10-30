@@ -77,8 +77,6 @@
 #include "DlgTrial.h"
 #include "Element.h"
 
-#define CLIPDATA	"ClipData"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -768,7 +766,7 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 						current = m_pDog->GetDeceased().GetDate();
 					CTimeSpan age = current - dob;
 					str += ARBDouble::str(age.GetDays()/365.0, 1).c_str();
-					str += " yrs";
+					str += _T(" yrs");
 				}
 				break;
 			}
@@ -991,7 +989,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 						++iter, ++i)
 					{
 						if (0 < i)
-							str += "/";
+							str += _T("/");
 						str += (*iter)->GetName().c_str();
 					}
 				}
@@ -1004,7 +1002,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 						++iter, ++i)
 					{
 						if (0 < i)
-							str += "/";
+							str += _T("/");
 						str += (*iter)->GetVenue().c_str();
 					}
 				}
@@ -1014,13 +1012,13 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 				break;
 			case IO_TREE_TRIAL_NOTES:
 				str += m_pTrial->GetNote().c_str();
-				str.Replace("\n", " ");
+				str.Replace(_T("\n"), _T(" "));
 				break;
 			case IO_TREE_TRIAL_VERIFIED:
 				if (m_pTrial->IsVerified())
-					str += "*";
+					str += _T("*");
 				else
-					str += " ";
+					str += _T(" ");
 				break;
 			}
 		}
@@ -1270,7 +1268,7 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 							CString tmp;
 							tmp.LoadString(IDS_SQ);
 							if (!q.IsEmpty())
-								q = tmp + "/" + q;
+								q = tmp + _T("/") + q;
 							else
 								q = tmp;
 						}

@@ -35,9 +35,9 @@
  * Revision History
  */
 
-#include "DlgBaseDialog.h"
 #include <set>
-#include <string>
+#include "ARBTypes.h"
+#include "DlgBaseDialog.h"
 class ARBDogReferenceRun;
 class CAgilityBookDoc;
 
@@ -46,7 +46,7 @@ class CDlgReferenceRun : public CDlgBaseDialog
 public:
 	CDlgReferenceRun(
 			CAgilityBookDoc* pDoc,
-			std::set<std::string> const& inNames,
+			std::set<ARBString> const& inNames,
 			ARBDogReferenceRun* ref,
 			CWnd* pParent = NULL);
 
@@ -66,7 +66,7 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogReferenceRun* m_Ref;
-	std::set<std::string> const& m_Names;
+	std::set<ARBString> const& m_Names;
 
 	//{{AFX_VIRTUAL(CDlgReferenceRun)
 protected:

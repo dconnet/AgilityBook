@@ -36,11 +36,12 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * @li 2005-10-30 DRC Added static xerces library support.
  */
 
 #ifdef WIN32
 
-// Vc7 == _MSC_VER=1300
+// VC6
 #if _MSC_VER < 1300
 #if defined(UNICODE) || defined(_UNICODE)
 	#error In order to compile with UNICODE in VC6, the code needs a lot of work!
@@ -48,6 +49,21 @@
 // Turn off some warnings in vc6.
 #pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
 //#pragma warning( disable : 4503 )
+
+// VC7
+#elif _MSC_VER >= 1300 && _MSC_VER < 1400
+// warning C4702: unreachable code (generated during link from STL code)
+#pragma warning ( disable : 4100 4702 )
+
+// VC8
+#elif _MSC_VER >= 1400
+#pragma warning ( disable : 4100 )
+#endif
+
+// Assume that if we're using the static MFC library,
+// we're also using the static xerces lib.
+#if !defined(_AFXDLL) && !defined(XML_LIBRARY)
+#define XML_LIBRARY
 #endif
 
 #ifndef VC_EXTRALEAN
@@ -102,8 +118,11 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
 
+// Some minor tweaks to allow VC6 support while using new features.
 #if _MSC_VER < 1300
+#define CStringA CString
 typedef DWORD DWORD_PTR;
+#define _tstol _ttol
 #endif
 
 #else
@@ -111,5 +130,21 @@ typedef DWORD DWORD_PTR;
 // Include other platform common files here. This way we can continue to
 // include 'stdafx.h' as the first header in all .cpp files so win32
 // pre-compiled headers work properly.
+
+// These are some examples of some things that MUST be defined in order to
+// compile ARB. I am making use of Window's tchar.h mappings.
+// Obviously, much more work is required for the 'Win' directory!
+#ifdef UNICODE
+typedef wchar_t	TCHAR;
+#define _T(x)	L##x
+#define _tstol	atol
+#define _tcstod	strtod
+
+#else
+typedef char	TCHAR;
+#define _T(x)	x
+#define _tstol	atol
+#define _tcstod	strtod
+#endif // UNICODE
 
 #endif // WIN32

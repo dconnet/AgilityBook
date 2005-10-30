@@ -120,8 +120,8 @@ int CALLBACK CompareTitles(
 			break;
 		case 3: // name
 			{
-				std::string n1 = pTitle1->GetGenericName();
-				std::string n2 = pTitle2->GetGenericName();
+				ARBString n1 = pTitle1->GetGenericName();
+				ARBString n2 = pTitle2->GetGenericName();
 				if (n1 < n2)
 					rc = -1;
 				else if (n1 > n2)
@@ -130,8 +130,8 @@ int CALLBACK CompareTitles(
 			break;
 		case 4: // nice name
 			{
-				std::string name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				std::string name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+				ARBString name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				ARBString name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -157,7 +157,7 @@ CDlgDogTitles::CDlgDogTitles(
 		ARBDogTitleList const& titles)
 	: CDlgBasePropertyPage(CDlgDogTitles::IDD)
 	, m_pDoc(pDoc)
-	, m_sortTitles("Titles")
+	, m_sortTitles(_T("Titles"))
 	, m_Titles(titles)
 {
 	m_sortTitles.Initialize(nColTitleInfo);
@@ -263,7 +263,7 @@ void CDlgDogTitles::ListTitles()
 		if (pTitle->GetDate().IsValid())
 			m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetDate().GetString(ARBDate::eDashYYYYMMDD).c_str());
 		else
-			m_ctrlTitles.SetItemText(nItem, 1, "<Unearned>");
+			m_ctrlTitles.SetItemText(nItem, 1, _T("<Unearned>"));
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());
 		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetGenericName().c_str());
 		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetRawName()).c_str());

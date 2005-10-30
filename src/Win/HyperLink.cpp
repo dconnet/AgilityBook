@@ -135,49 +135,49 @@ bool CHyperLink::GotoURL(CString const& url)
 		switch (result)
 		{
 		case 0:
-			str = "The operating system is out\nof memory or resources.";
+			str = _T("The operating system is out\nof memory or resources.");
 			break;
 		case SE_ERR_PNF:
-			str = "The specified path was not found.";
+			str = _T("The specified path was not found.");
 			break;
 		case SE_ERR_FNF:
-			str = "The specified file was not found.";
+			str = _T("The specified file was not found.");
 			break;
 		case ERROR_BAD_FORMAT:
-			str = "The .EXE file is invalid\n(non-Win32 .EXE or error in .EXE image).";
+			str = _T("The .EXE file is invalid\n(non-Win32 .EXE or error in .EXE image).");
 			break;
 		case SE_ERR_ACCESSDENIED:
-			str = "The operating system denied\naccess to the specified file.";
+			str = _T("The operating system denied\naccess to the specified file.");
 			break;
 		case SE_ERR_ASSOCINCOMPLETE:
-			str = "The filename association is\nincomplete or invalid.";
+			str = _T("The filename association is\nincomplete or invalid.");
 			break;
 		case SE_ERR_DDEBUSY:
-			str = "The DDE transaction could not\nbe completed because other DDE transactions\nwere being processed.";
+			str = _T("The DDE transaction could not\nbe completed because other DDE transactions\nwere being processed.");
 			break;
 		case SE_ERR_DDEFAIL:
-			str = "The DDE transaction failed.";
+			str = _T("The DDE transaction failed.");
 			break;
 		case SE_ERR_DDETIMEOUT:
-			str = "The DDE transaction could not\nbe completed because the request timed out.";
+			str = _T("The DDE transaction could not\nbe completed because the request timed out.");
 			break;
 		case SE_ERR_DLLNOTFOUND:
-			str = "The specified dynamic-link library was not found.";
+			str = _T("The specified dynamic-link library was not found.");
 			break;
 		case SE_ERR_NOASSOC:
-			str = "There is no application associated\nwith the given filename extension.";
+			str = _T("There is no application associated\nwith the given filename extension.");
 			break;
 		case SE_ERR_OOM:
-			str = "There was not enough memory to complete the operation.";
+			str = _T("There was not enough memory to complete the operation.");
 			break;
 		case SE_ERR_SHARE:
-			str = "A sharing violation occurred. ";
+			str = _T("A sharing violation occurred. ");
 			break;
 		default:
 			str.Format(_T("Unknown Error (%d) occurred."), result);
 			break;
 		}
-		str = "Unable to open hyperlink:\n\n" + str;
+		str = _T("Unable to open hyperlink:\n\n") + str;
 		AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
 		return false;
 	}
@@ -196,7 +196,7 @@ CHyperLink::CHyperLink()
 	, m_bVisited(false)					// Hasn't been visited yet.
 	, m_nUnderline(ulHover)				// Underline the link?
 	, m_bAdjustToFit(true)				// Resize the window to fit the text?
-	, m_strURL("")						// hyperlink URL
+	, m_strURL(_T(""))					// hyperlink URL
 	, m_UnderlineFont()					// Font for underline display
 	, m_StdFont()						// Standard font
 	, m_hLinkCursor(NULL)				// Cursor for hyperlink

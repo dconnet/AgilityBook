@@ -60,7 +60,7 @@ CWizard::CWizard(
 		CAgilityBookDoc* pDoc,
 		ARBVectorBase<ARBCalendar>* pCalEntries,
 		CWnd* pParentWnd)
-	: CDlgBaseSheet("", pParentWnd, 0)
+	: CDlgBaseSheet(_T(""), pParentWnd, 0)
 	, m_pDoc(pDoc)
 	, m_CalEntries(pCalEntries)
 	, m_pageStart(NULL)

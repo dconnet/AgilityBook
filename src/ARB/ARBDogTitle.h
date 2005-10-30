@@ -41,7 +41,6 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
@@ -68,14 +67,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a title.
@@ -109,12 +108,12 @@ public:
 	 *       will hide the entry, a valid date will unhide.
 	 */
 	void SetDate(ARBDate const& inDate);
-	std::string const& GetVenue() const;
-	void SetVenue(std::string const& inVenue);
-	std::string const& GetRawName() const;
+	ARBString const& GetVenue() const;
+	void SetVenue(ARBString const& inVenue);
+	ARBString const& GetRawName() const;
 	short GetInstance() const;
 	void SetName(
-			std::string const& inName,
+			ARBString const& inName,
 			short inInstance);
 	bool GetReceived() const;
 	void SetReceived(bool inReceived);
@@ -124,8 +123,8 @@ public:
 private:
 	~ARBDogTitle();
 	ARBDate m_Date;
-	std::string m_Venue;
-	std::string m_Name;
+	ARBString m_Venue;
+	ARBString m_Name;
 	short m_Instance;
 	bool m_bReceived;
 	bool m_bHidden;
@@ -143,17 +142,17 @@ inline void ARBDogTitle::SetDate(ARBDate const& inDate)
 		m_bHidden = true;
 }
 
-inline std::string const& ARBDogTitle::GetVenue() const
+inline ARBString const& ARBDogTitle::GetVenue() const
 {
 	return m_Venue;
 }
 
-inline void ARBDogTitle::SetVenue(std::string const& inVenue)
+inline void ARBDogTitle::SetVenue(ARBString const& inVenue)
 {
 	m_Venue = inVenue;
 }
 
-inline std::string const& ARBDogTitle::GetRawName() const
+inline ARBString const& ARBDogTitle::GetRawName() const
 {
 	return m_Name;
 }
@@ -164,7 +163,7 @@ inline short ARBDogTitle::GetInstance() const
 }
 
 inline void ARBDogTitle::SetName(
-		std::string const& inName,
+		ARBString const& inName,
 		short inInstance)
 {
 	m_Name = inName;
@@ -213,7 +212,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInVenue(std::string const& inVenue) const;
+	int NumTitlesInVenue(ARBString const& inVenue) const;
 
 	/**
 	 * Find a title
@@ -222,8 +221,8 @@ public:
 	 * @param outTitle Pointer to found title.
 	 */
 	bool FindTitle(
-			std::string const& inVenue,
-			std::string const& inTitle,
+			ARBString const& inVenue,
+			ARBString const& inTitle,
 			ARBDogTitle** outTitle = NULL) const;
 
 	/**
@@ -232,8 +231,8 @@ public:
 	 * @param inTitle Name of title.
 	 */
 	short FindMaxInstance(
-			std::string const& inVenue,
-			std::string const& inTitle) const;
+			ARBString const& inVenue,
+			ARBString const& inTitle) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -242,15 +241,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			std::string const& inOldVenue,
-			std::string const& inNewVenue);
+			ARBString const& inOldVenue,
+			ARBString const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(std::string const& inVenue);
+	int DeleteVenue(ARBString const& inVenue);
 
 	/**
 	 * Get the number of titles in a division.
@@ -261,7 +260,7 @@ public:
 	 */
 	int NumTitlesInDivision(
 			ARBConfigVenue const* inVenue,
-			std::string const& inDiv) const;
+			ARBString const& inDiv) const;
 
 	/**
 	 * Rename a division, rename any dependent objects.
@@ -272,8 +271,8 @@ public:
 	 */
 	int RenameDivision(
 			ARBConfigVenue const* inVenue,
-			std::string const& inOldDiv,
-			std::string const& inNewDiv);
+			ARBString const& inOldDiv,
+			ARBString const& inNewDiv);
 
 	/**
 	 * Delete a division, remove any dependent objects.
@@ -284,8 +283,8 @@ public:
 	 */
 	int DeleteDivision(
 			ARBConfig const& inConfig,
-			std::string const& inVenue,
-			std::string const& inDiv);
+			ARBString const& inVenue,
+			ARBString const& inDiv);
 
 	/**
 	 * Number of titles in use.
@@ -295,8 +294,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-			std::string const& inVenue,
-			std::string const& inTitle) const;
+			ARBString const& inVenue,
+			ARBString const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -306,9 +305,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-			std::string const& inVenue,
-			std::string const& inOldTitle,
-			std::string const& inNewTitle);
+			ARBString const& inVenue,
+			ARBString const& inOldTitle,
+			ARBString const& inNewTitle);
 
 	/**
 	 * Add a title.

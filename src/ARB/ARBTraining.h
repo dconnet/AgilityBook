@@ -41,7 +41,6 @@
  */
 
 #include <set>
-#include <string>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
@@ -70,14 +69,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual std::string GetGenericName() const;
+	virtual ARBString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<std::string>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
 
 	/**
 	 * Load a training entry
@@ -105,19 +104,19 @@ public:
 	 */
 	ARBDate const& GetDate() const;
 	void SetDate(ARBDate const& inDate);
-	std::string const& GetName() const;
-	void SetName(std::string const& inName);
-	std::string const& GetSubName() const;
-	void SetSubName(std::string const& inName);
-	std::string const& GetNote() const;
-	void SetNote(std::string const& inNote);
+	ARBString const& GetName() const;
+	void SetName(ARBString const& inName);
+	ARBString const& GetSubName() const;
+	void SetSubName(ARBString const& inName);
+	ARBString const& GetNote() const;
+	void SetNote(ARBString const& inNote);
 
 private:
 	~ARBTraining();
 	ARBDate m_Date;
-	std::string m_Name;
-	std::string m_SubName;
-	std::string m_Note;
+	ARBString m_Name;
+	ARBString m_SubName;
+	ARBString m_Note;
 };
 
 inline bool ARBTraining::operator<(ARBTraining const& rhs) const
@@ -150,32 +149,32 @@ inline void ARBTraining::SetDate(ARBDate const& inDate)
 	m_Date = inDate;
 }
 
-inline std::string const& ARBTraining::GetName() const
+inline ARBString const& ARBTraining::GetName() const
 {
 	return m_Name;
 }
 
-inline void ARBTraining::SetName(std::string const& inName)
+inline void ARBTraining::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-inline std::string const& ARBTraining::GetSubName() const
+inline ARBString const& ARBTraining::GetSubName() const
 {
 	return m_SubName;
 }
 
-inline void ARBTraining::SetSubName(std::string const& inName)
+inline void ARBTraining::SetSubName(ARBString const& inName)
 {
 	m_SubName = inName;
 }
 
-inline std::string const& ARBTraining::GetNote() const
+inline ARBString const& ARBTraining::GetNote() const
 {
 	return m_Note;
 }
 
-inline void ARBTraining::SetNote(std::string const& inNote)
+inline void ARBTraining::SetNote(ARBString const& inNote)
 {
 	m_Note = inNote;
 }
@@ -198,14 +197,14 @@ public:
 	 * @param outNames A list of the unique training names.
 	 * @return Number of unique names.
 	 */
-	size_t GetAllNames(std::set<std::string>& outNames) const;
+	size_t GetAllNames(std::set<ARBString>& outNames) const;
 
 	/**
 	 * Get a list of all the different sub-names in the list.
 	 * @param outSubNames A list of the unique training sub-names.
 	 * @return Number of unique sub-names.
 	 */
-	size_t GetAllSubNames(std::set<std::string>& outSubNames) const;
+	size_t GetAllSubNames(std::set<ARBString>& outSubNames) const;
 
 	/**
 	 * Find a training object.
