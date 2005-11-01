@@ -25,6 +25,8 @@
     an unnamed MultiQ for AKC. (This did get updated properly later.)
   - Updating a modified configuration could crash the program.
   - Points view didn't update 'View Hidden' after canceling dog properties.
+  - Time+Fault runs still awarded titling points when over time if the run
+    were marked as a Q (Fault/Time runs properly gave 0 title points).
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:
