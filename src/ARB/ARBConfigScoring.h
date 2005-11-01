@@ -140,6 +140,8 @@ public:
 	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle);
 	bool DropFractions() const; ///< Only valid for F/T, T+F
 	void SetDropFractions(bool inBool); ///< Only valid for F/T, T+F
+	bool QsMustBeClean() const; ///< Only valid for T+F
+	void SetQsMustBeClean(bool inBool); ///< Only valid for T+F
 	bool ComputeTimeFaultsUnder() const; ///< Only valid for T+F
 	void SetComputeTimeFaultsUnder(bool inBool); ///< Only valid for T+F
 	bool ComputeTimeFaultsOver() const; ///< Only valid for T+F
@@ -175,6 +177,7 @@ private:
 	ARBString m_Level;
 	ScoringStyle m_Style;
 	bool m_bDropFractions;
+	bool m_bCleanQ;
 	bool m_bTimeFaultsUnder;
 	bool m_bTimeFaultsOver;
 	short m_TimeFaultMultiplier;
@@ -248,6 +251,16 @@ inline bool ARBConfigScoring::DropFractions() const
 inline void ARBConfigScoring::SetDropFractions(bool inBool)
 {
 	m_bDropFractions = inBool;
+}
+
+inline bool ARBConfigScoring::QsMustBeClean() const
+{
+	return m_bCleanQ;
+}
+
+inline void ARBConfigScoring::SetQsMustBeClean(bool inBool)
+{
+	m_bCleanQ = inBool;
 }
 
 inline bool ARBConfigScoring::ComputeTimeFaultsUnder() const

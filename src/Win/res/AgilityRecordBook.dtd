@@ -11,8 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-10-14 DRC File version 11.1.
+2005-10-31 DRC File version 11.1.
                Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
+			   Added 'cleanQ' to 'Scoring'.
                Update Action for DeleteTitle.
 2005-07-15 DRC File version 11.0.
                Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
@@ -235,6 +236,8 @@ enumerated, the event will not be offered for that division/level pair.
 'dropFractions' means that when computing time faults, fractions are
 dropped. (AKC and CPE do this.)
 
+'cleanQ' is used to determine titling points on T+F runs.
+
 'underTF' and 'overTF' are used to cause time faults to be computed on
 Time+Faults style events (USDAA Time Gamble)
 
@@ -271,6 +274,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		Level CDATA #REQUIRED
 		type (FaultsThenTime|Faults100ThenTime|Faults200ThenTime|OCScoreThenTime|ScoreThenTime|TimePlusFaults) #REQUIRED
 		dropFractions (y|n) 'n'
+		cleanQ (y|n) 'n'
 		underTF (y|n) 'n'
 		overTF (y|n) 'n'
 		superQ (y|n) 'n'

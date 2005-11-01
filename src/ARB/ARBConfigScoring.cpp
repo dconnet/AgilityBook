@@ -100,6 +100,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_Level()
 	, m_Style(eUnknown)
 	, m_bDropFractions(false)
+	, m_bCleanQ(false)
 	, m_bTimeFaultsUnder(false)
 	, m_bTimeFaultsOver(false)
 	, m_TimeFaultMultiplier(1)
@@ -121,6 +122,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_Level(rhs.m_Level)
 	, m_Style(rhs.m_Style)
 	, m_bDropFractions(rhs.m_bDropFractions)
+	, m_bCleanQ(rhs.m_bCleanQ)
 	, m_bTimeFaultsUnder(rhs.m_bTimeFaultsUnder)
 	, m_bTimeFaultsOver(rhs.m_bTimeFaultsOver)
 	, m_TimeFaultMultiplier(rhs.m_TimeFaultMultiplier)
@@ -149,6 +151,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_Level = rhs.m_Level;
 		m_Style = rhs.m_Style;
 		m_bDropFractions = rhs.m_bDropFractions;
+		m_bCleanQ = rhs.m_bCleanQ;
 		m_bTimeFaultsUnder = rhs.m_bTimeFaultsUnder;
 		m_bTimeFaultsOver = rhs.m_bTimeFaultsOver;
 		m_TimeFaultMultiplier = rhs.m_TimeFaultMultiplier;
@@ -172,6 +175,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_Level == rhs.m_Level
 		&& m_Style == rhs.m_Style
 		&& m_bDropFractions == rhs.m_bDropFractions
+		&& m_bCleanQ == rhs.m_bCleanQ
 		&& m_bTimeFaultsUnder == rhs.m_bTimeFaultsUnder
 		&& m_bTimeFaultsOver == rhs.m_bTimeFaultsOver
 		&& m_TimeFaultMultiplier == rhs.m_TimeFaultMultiplier
@@ -290,6 +294,11 @@ bool ARBConfigScoring::Load(
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, VALID_VALUES_BOOL));
+		return false;
+	}
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, VALID_VALUES_BOOL));
 		return false;
 	}
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
@@ -429,6 +438,8 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 	}
 	if (m_bDropFractions)
 		scoring.AddAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions);
+	if (m_bCleanQ)
+		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ);
 	if (m_bTimeFaultsUnder)
 		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
 	if (m_bTimeFaultsOver)

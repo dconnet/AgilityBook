@@ -1796,12 +1796,12 @@ Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This i
 				<Titles LongName="Double Platinum Junior Handler Specialist North America Challenge Award" Name="Double Platinum-JH-SNACA">25 Qs</Titles>
 			</Division>
 			<Event Name="Standard">
-				<Scoring Division="*" Level="*" type="TimePlusFaults">
+				<Scoring cleanQ="y" Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
-				<Scoring Division="*" Level="*" type="TimePlusFaults">
+				<Scoring cleanQ="y" Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
@@ -1812,23 +1812,23 @@ Strategic Time: Opening time is always 30 seconds
  2 &lt; t &lt;= 3.0 == 1/2 Q</Desc>
 				<SubName>Strategic Time</SubName>
 				<SubName>Traditional</SubName>
-				<Scoring Division="*" Level="*" OpeningPts="19" type="OCScoreThenTime">
+				<Scoring cleanQ="y" Division="*" Level="*" OpeningPts="19" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Snakes N Ladders">
-				<Scoring Division="*" Level="*" type="TimePlusFaults">
+				<Scoring cleanQ="y" Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Trigility" hasPartner="y">
-				<Scoring Division="*" Level="*" type="TimePlusFaults">
+				<Scoring cleanQ="y" Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Challenge">
-				<Scoring Division="*" Level="Intern" type="FaultsThenTime"/>
-				<Scoring Division="*" Level="Specialist" type="TimePlusFaults">
+				<Scoring cleanQ="y" Division="*" Level="Intern" type="FaultsThenTime"/>
+				<Scoring cleanQ="y" Division="*" Level="Specialist" type="TimePlusFaults">
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>

@@ -55,6 +55,7 @@
 // Since we treat warnings as errors, turn off some xerces warnings.
 // warning C4244: 'return' : conversion from '__w64 int' to 'unsigned long', possible loss of data
 // warning C4267: 'argument' : conversion from 'size_t' to 'const unsigned int', possible loss of data
+#pragma warning ( disable : 4127 ) // for xerces2.2, 2.7 doesn't require it
 #pragma warning ( disable : 4244 4267 )
 #endif
 #include <xercesc/dom/DOMException.hpp>
