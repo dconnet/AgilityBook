@@ -91,8 +91,8 @@ BOOL CAboutDlg::OnInitDialog()
 	if (ver.Valid())
 	{
 		version = ver.GetVersionString();
-		SetWindowText(ver.GetName());
-		info.FormatMessage(IDS_ABOUT_TEXT, (LPCTSTR)version, (LPCTSTR)ver.GetName());
+		SetWindowText(ver.GetProductName());
+		info.FormatMessage(IDS_ABOUT_TEXT, (LPCTSTR)version, (LPCTSTR)ver.GetProductName());
 	}
 	m_ctrlText.SetWindowText(info);
 

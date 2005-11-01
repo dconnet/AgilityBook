@@ -84,6 +84,7 @@ private:
 	afx_msg void OnHelpContents();
 	afx_msg void OnHelpIndex();
 	afx_msg void OnHelpSplash();
+	afx_msg void OnHelpSysinfo();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

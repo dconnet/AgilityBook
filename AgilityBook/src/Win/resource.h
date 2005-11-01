@@ -754,6 +754,7 @@
 #define ID_HELP_CONTENTS                32830
 #define ID_HELP_UPDATE                  32831
 #define ID_HELP_SPLASH                  32832
+#define ID_HELP_SYSINFO                 32833
 #define ID_NEXT_TAB                     32840
 #define ID_PREV_TAB                     32841
 #define ID_REORDER                      32850
