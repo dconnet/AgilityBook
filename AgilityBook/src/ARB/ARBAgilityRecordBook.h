@@ -171,6 +171,7 @@
 #define ATTRIB_SCORING_LEVEL				_T("Level")
 #define ATTRIB_SCORING_TYPE					_T("type")
 #define ATTRIB_SCORING_DROPFRACTIONS		_T("dropFractions")
+#define ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q	_T("cleanQ")
 #define ATTRIB_SCORING_TIMEFAULTS_UNDER		_T("underTF")
 #define ATTRIB_SCORING_TIMEFAULTS_OVER		_T("overTF")
 #define ATTRIB_SCORING_OPENINGPTS			_T("OpeningPts")
