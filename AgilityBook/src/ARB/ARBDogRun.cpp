@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-10-31 DRC Time+Fault runs didn't compute titling points right.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -498,8 +499,8 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoring const* inScoring) const
 	{
 		if (GetQ().Qualified())
 		{
-			double time = GetScoring().GetTime();
-			double sct = GetScoring().GetSCT();
+			double time = m_Scoring.GetTime();
+			double sct = m_Scoring.GetSCT();
 			if (0.0 < time && 0.0 < sct)
 			{
 				double diff = sct - time;
@@ -532,10 +533,11 @@ short ARBDogRun::GetTitlePoints(
 		break;
 	case ARBDogRunScoring::eTypeByTime:
 		{
-			double faults = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
 			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
 			{
-				if (ARBDouble::equal(m_Scoring.GetSCT(), 0) || faults <= m_Scoring.GetSCT())
+				score += m_Scoring.GetTime();
+				if (ARBDouble::equal(m_Scoring.GetSCT(), 0) || score <= m_Scoring.GetSCT())
 				{
 					if (outClean)
 						*outClean = true;
@@ -546,14 +548,14 @@ short ARBDogRun::GetTitlePoints(
 			}
 			else
 			{
-				if (ARBDouble::equal(faults, 0))
+				if (ARBDouble::equal(score, 0))
 				{
 					if (outClean)
 						*outClean = true;
 				}
-				pts = inScoring->GetTitlePoints().GetTitlePoints(faults);
+				pts = inScoring->GetTitlePoints().GetTitlePoints(score);
 				if (outLifeTime)
-					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(faults);
+					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score);
 			}
 		}
 		break;
@@ -594,7 +596,7 @@ double ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
 		switch (inScoring->GetScoringStyle())
 		{
 		default: break;
-		case ARBConfigScoring::eTimePlusFaults: pts += GetScoring().GetTime(); break;
+		case ARBConfigScoring::eTimePlusFaults: pts += m_Scoring.GetTime(); break;
 		case ARBConfigScoring::eFaults100ThenTime: pts = 100 - pts; break;
 		case ARBConfigScoring::eFaults200ThenTime: pts = 200 - pts; break;
 		}
