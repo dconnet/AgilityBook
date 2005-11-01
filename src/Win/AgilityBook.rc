@@ -250,6 +250,7 @@ BEGIN
         MENUITEM "&Index",                      ID_HELP_INDEX
         MENUITEM SEPARATOR
         MENUITEM "Check for &Updates...",       ID_HELP_UPDATE
+        MENUITEM "&System Information...",      ID_HELP_SYSINFO
         MENUITEM SEPARATOR
         MENUITEM "S&how Splash Screen...",      ID_HELP_SPLASH
         MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
@@ -2458,6 +2459,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_HELP_SPLASH          "Show the initial splash screen\nSplash"
+    ID_HELP_SYSINFO         "Display information about the system\nSysInfo"
 END
 
 STRINGTABLE 

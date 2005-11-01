@@ -56,6 +56,7 @@
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
+#include "DlgMessage.h"
 #include "Element.h"
 #include "Splash.h"
 #include "TabView.h"
@@ -284,6 +285,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	ON_COMMAND(ID_HELP_CONTENTS, OnHelpContents)
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
 	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
+	ON_COMMAND(ID_HELP_SYSINFO, OnHelpSysinfo)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 	// Standard file based document commands
@@ -554,4 +556,107 @@ BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
 	if (CSplashWnd::PreTranslateAppMessage(pMsg))
 		return TRUE;
 	return CWinApp::PreTranslateMessage(pMsg);
+}
+
+void CAgilityBookApp::OnHelpSysinfo()
+{
+	ARBostringstream info;
+
+	// Windows version
+	OSVERSIONINFO os;
+	os.dwOSVersionInfoSize = sizeof(os);
+	GetVersionEx(&os);
+	switch (os.dwPlatformId)
+	{
+	default: // Win32s
+		info << _T("Windows32s ")
+			<< os.dwMajorVersion
+			<< '.'
+			<< os.dwMinorVersion
+			<< ' '
+			<< os.szCSDVersion
+			<< std::endl;
+		break;
+	case VER_PLATFORM_WIN32_WINDOWS: // Win95/98
+		if (0 == os.dwMinorVersion)
+			info << _T("Windows 95 ")
+				<< os.dwMajorVersion
+				<< '.'
+				<< os.dwMinorVersion
+				<< '.'
+				<< int(LOWORD(os.dwBuildNumber))
+				<< ' '
+				<< os.szCSDVersion
+				<< std::endl;
+		else
+			info << _T("Windows 98 ")
+				<< os.dwMajorVersion
+				<< '.'
+				<< os.dwMinorVersion
+				<< '.'
+				<< int(LOWORD(os.dwBuildNumber))
+				<< ' '
+				<< os.szCSDVersion
+				<< std::endl;
+		break;
+	case VER_PLATFORM_WIN32_NT: // NT/Win2000
+		info << _T("Windows ")
+			<< os.dwMajorVersion
+			<< '.'
+			<< os.dwMinorVersion
+			<< '.'
+			<< os.dwBuildNumber
+			<< ' '
+			<< os.szCSDVersion
+			<< std::endl;
+		break;
+	}
+
+	// Me.
+	{
+		CVersionNum ver;
+		info << (LPCTSTR)ver.GetFileName();
+		info << ": ";
+		if (ver.Valid())
+			info << (LPCTSTR)ver.GetVersionString();
+		else
+			info << _T("Unable to determine version information");
+		info << std::endl;
+	}
+
+	// Common controls.
+	HINSTANCE hCommCtrl = LoadLibrary(_T("comctl32.dll"));
+	if (hCommCtrl)
+	{
+		CVersionNum ver(hCommCtrl);
+		info << (LPCTSTR)ver.GetFileName();
+		info << ": ";
+		if (ver.Valid())
+			info << (LPCTSTR)ver.GetVersionString();
+		else
+			info << _T("Unable to determine version information");
+		info << std::endl;
+		FreeLibrary(hCommCtrl);
+		hCommCtrl = NULL;
+	}
+
+	// Internet Explorer.
+	HINSTANCE hShellDocObj = LoadLibrary("shdocvw.dll");
+	if (hShellDocObj)
+	{
+		CVersionNum ver(hShellDocObj);
+		info << (LPCTSTR)ver.GetFileName();
+		info << ": ";
+		if (ver.Valid())
+			info << (LPCTSTR)ver.GetVersionString();
+		else
+			info << _T("Unable to determine version information");
+		info << std::endl;
+		FreeLibrary(hShellDocObj);
+		hShellDocObj = NULL;
+	}
+
+	CString msg(info.str().c_str());
+	CDlgMessage dlg(msg);
+	dlg.DoModal();
 }

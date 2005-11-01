@@ -48,6 +48,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 CVersionNum::CVersionNum(
+		HMODULE inModule,
 		WORD inwLangID,
 		WORD inwCharSet)
 	: m_Valid(false)
@@ -55,21 +56,20 @@ CVersionNum::CVersionNum(
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
 
 	// Get the filename and other info...
-	CString appFName;
-	LPTSTR tp = appFName.GetBuffer(MAX_PATH);
-	::GetModuleFileName(NULL, tp, MAX_PATH);
-	appFName.ReleaseBuffer();
+	LPTSTR tp = m_FileName.GetBuffer(MAX_PATH);
+	::GetModuleFileName(inModule, tp, MAX_PATH);
+	m_FileName.ReleaseBuffer();
 #ifndef _UNICODE
-	appFName.OemToAnsi();
+	m_FileName.OemToAnsi();
 #endif
 
 	// Get the version information size for allocate the buffer
-	LPTSTR pAppName = appFName.GetBuffer(0);
+	LPTSTR pAppName = m_FileName.GetBuffer(0);
 	DWORD fvHandle;
 	DWORD dwSize = ::GetFileVersionInfoSize(pAppName, &fvHandle);
 	if (0 == dwSize)
 	{
-		appFName.ReleaseBuffer();
+		m_FileName.ReleaseBuffer();
 		return;
 	}
 
@@ -77,10 +77,10 @@ CVersionNum::CVersionNum(
 	BYTE* pFVData = new BYTE[dwSize];
 	if (!::GetFileVersionInfo(pAppName, fvHandle, dwSize, pFVData))
 	{
-		appFName.ReleaseBuffer();
+		m_FileName.ReleaseBuffer();
 		return;
 	}
-	appFName.ReleaseBuffer();
+	m_FileName.ReleaseBuffer();
 	// Retrieve the language and character-set identifier
 	UINT nQuerySize;
 	DWORD* pTransBlock;
@@ -123,7 +123,7 @@ CVersionNum::CVersionNum(
 	// Date didn't get set. Get the create date.
 	if (0 == pffi->dwFileDateLS && 0 == pffi->dwFileDateMS)
 	{
-		HANDLE hFile = CreateFile(appFName, GENERIC_READ, FILE_SHARE_READ, NULL,
+		HANDLE hFile = CreateFile(m_FileName, GENERIC_READ, FILE_SHARE_READ, NULL,
 			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		if (hFile)
 		{
@@ -141,7 +141,7 @@ CVersionNum::CVersionNum(
 	void* pValue = NULL;
 	UINT vSize;
 	::VerQueryValue(pFVData, subBlockName, &pValue, &vSize);
-	m_Name = reinterpret_cast<LPCTSTR>(pValue);
+	m_ProdName = reinterpret_cast<LPCTSTR>(pValue);
 
 	m_Version.part1 = HIWORD(pffi->dwProductVersionMS);
 	m_Version.part2 = LOWORD(pffi->dwProductVersionMS);
@@ -156,7 +156,8 @@ CVersionNum::CVersionNum(
 CVersionNum::CVersionNum(CString inVer)
 	: m_Valid(false)
 {
-	m_Name.Empty();
+	m_FileName.Empty();
+	m_ProdName.Empty();
 	// This is a static string in "version.txt"
 	static CString const idStr(_T("ARB Version "));
 	if (0 == inVer.Find(idStr))
@@ -216,7 +217,8 @@ bool CVersionNum::operator>(CVersionNum const& rhs) const
 void CVersionNum::clear()
 {
 	m_Valid = false;
-	m_Name.Empty();
+	m_FileName.Empty();
+	m_ProdName.Empty();
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
 }
 

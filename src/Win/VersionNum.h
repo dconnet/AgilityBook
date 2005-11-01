@@ -48,6 +48,7 @@ public:
 	} VERSION_NUMBER;
 
 	CVersionNum(
+			HMODULE inModule = NULL,
 			WORD inwLangID = 0,
 			WORD inwCharSet = 0);
 	/**
@@ -61,12 +62,14 @@ public:
 
 	void clear();
 	bool Valid() const						{return m_Valid;}
-	CString GetName() const					{return m_Name;}
+	CString GetFileName() const				{return m_FileName;}
+	CString GetProductName() const			{return m_ProdName;}
 	CString GetVersionString() const;
 	void GetVersion(VERSION_NUMBER& outVer) const; 
 
 private:
 	bool m_Valid;
-	CString m_Name;
+	CString m_FileName;
+	CString m_ProdName;
 	VERSION_NUMBER m_Version;
 };
