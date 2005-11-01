@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3E0AB2A9D2F048C2B34B2F2D327D0AC6"
+        "MsmKey" = "8:_47D6F293FF6E487D896449C14341855A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AD55B96CEAA4D281294D8350EE662811"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
@@ -52,12 +58,6 @@
         "Entry"
         {
         "MsmKey" = "8:_B5336E9DBB224077831DEE4A70999CF4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D856BA91561A4C9CBFC70DA37046D394"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -179,12 +179,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3E0AB2A9D2F048C2B34B2F2D327D0AC6"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_47D6F293FF6E487D896449C14341855A"
             {
-            "SourcePath" = "8:..\\..\\Yahoo Discussion Group.html"
-            "TargetName" = "8:Yahoo Discussion Group.html"
+            "SourcePath" = "8:..\\..\\Yahoo Discussion Group.url"
+            "TargetName" = "8:Yahoo Discussion Group.url"
             "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Folder" = "8:_7712E18D533D459E81C03445D6CEB786"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -239,6 +239,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A765D78B34674811B1D173537F93A4AA"
+            {
+            "SourcePath" = "8:..\\..\\Agility Record Book Web Site.url"
+            "TargetName" = "8:Agility Record Book Web Site.url"
+            "Tag" = "8:"
+            "Folder" = "8:_7712E18D533D459E81C03445D6CEB786"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AD55B96CEAA4D281294D8350EE662811"
             {
             "SourcePath" = "8:comdlg32.dll"
@@ -266,26 +286,6 @@
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
             "Condition" = "8:DBGHELP"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D856BA91561A4C9CBFC70DA37046D394"
-            {
-            "SourcePath" = "8:..\\..\\Agility Record Book Web Site.html"
-            "TargetName" = "8:Agility Record Book Web Site.html"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
@@ -424,7 +424,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
         "ProductCode" = "8:{390C247C-C74D-4636-906C-8DCA7F55733D}"
-        "PackageCode" = "8:{8F2742AE-3C73-4E57-BAA0-7DF062DD2FDD}"
+        "PackageCode" = "8:{DD1EFB24-6E3B-4424-89F9-60A441F0B8FF}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -585,20 +585,6 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_5194902FE5834247AB4800BD31C7C191"
-            {
-            "Name" = "8:Agility Record Book Web Site"
-            "Arguments" = "8:"
-            "Description" = "8:http://www.agilityrecordbook.com"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_D856BA91561A4C9CBFC70DA37046D394"
-            "Folder" = "8:_7712E18D533D459E81C03445D6CEB786"
-            "WorkingFolder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7030E878ABA042CBB20D39727892053F"
             {
             "Name" = "8:Agility Record Book"
@@ -625,20 +611,6 @@
             "Folder" = "8:_7712E18D533D459E81C03445D6CEB786"
             "WorkingFolder" = "8:_F729B3A8627441008E7C4A17F498D67F"
             "Icon" = "8:_6ECEE00896D64C0EB4B463E926655387"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C6A3D37EEE774F948AE76C6FEA876880"
-            {
-            "Name" = "8:Yahoo Discussion Group"
-            "Arguments" = "8:"
-            "Description" = "8:http://groups.yahoo.com/group/AgilityRecordBook"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_3E0AB2A9D2F048C2B34B2F2D327D0AC6"
-            "Folder" = "8:_7712E18D533D459E81C03445D6CEB786"
-            "WorkingFolder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Icon" = "8:"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FB8CF0B5324142CBAF8B449C817E631D"
