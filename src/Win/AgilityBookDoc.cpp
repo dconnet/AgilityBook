@@ -430,9 +430,9 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					else
 						venue->GetDivisions().DeleteTitle(action->GetOldName());
 					oldTitle->Release();
-					if (pDiv)
-						pDiv->Release();
 				}
+				if (pDiv)
+					pDiv->Release();
 				venue->Release();
 			}
 		}
