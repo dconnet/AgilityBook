@@ -64,6 +64,9 @@ Revision History:
 		<Action Div="Veterans" OldName="Elite Triple Superior Performance Dog" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action Div="Veterans" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action NewName="Triple Triple" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Triple Superior-Novice" OldName="Novice Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Triple Superior-Open" OldName="Open Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Triple Superior-Elite" OldName="Elite Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="Vers-NATCH" OldName="Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="O-Vers-NATCH" OldName="Outstanding Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="S-Vers-NATCH" OldName="Superior Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
@@ -1891,7 +1894,8 @@ Strategic Time: Opening: 30 seconds, 20 points
 				<Titles LongName="Novice Tunnelers Certificate Superior Performance" Name="S-TN-N">100 points</Titles>
 				<Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
 				<Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
-				<Titles LongName="Novice Triple Superior Performance Dog" Name="Novice Triple Superior Performance Dog">S-NAC, S-NGC, S-NJC</Titles>
+				<Titles LongName="Novice Triple Superior Performance Dog" Name="Triple Superior-Novice">S-NAC, S-NGC, S-NJC
+After 1/1/2006: S-NAC, S-NJC and one of S-NGC, S-TN-N, S-TG-N, S-WV-N</Titles>
 				<Titles LongName="Novice Versatility Certificate Superior Performance" Name="Superior Novice Versatility">S-NAC, S-NGC, S-NJC, S-TN-N, S-TG-N, S-WV-N</Titles>
 				<Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
 				<Titles LongName="Open Jumpers Certificate Superior Performance" Name="S-OJC">100 points</Titles>
@@ -1899,7 +1903,8 @@ Strategic Time: Opening: 30 seconds, 20 points
 				<Titles LongName="Open Tunnelers Certificate Superior Performance" Name="S-TN-O">100 points</Titles>
 				<Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
 				<Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
-				<Titles LongName="Open Triple Superior Performance Dog" Name="Open Triple Superior Performance Dog">S-OAC, S-OGC, S-OJC</Titles>
+				<Titles LongName="Open Triple Superior Performance Dog" Name="Triple Superior-Open">S-OAC, S-OGC, S-OJC
+After 1/1/2006: S-OAC, S-OJC and one of S-OGC, S-TG-O, S-WV-O</Titles>
 				<Titles LongName="Open Versatility Certificate Superior Performance" Name="Superior Open Versatility">E-OAC, E-OGC, E-OJC, E-TN-O, E-TG-O, E-WV-O</Titles>
 				<Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
 				<Titles LongName="Elite Jumpers Certificate Superior Performance" Name="S-EJC">200 points</Titles>
@@ -1907,7 +1912,8 @@ Strategic Time: Opening: 30 seconds, 20 points
 				<Titles LongName="Elite Tunnelers Certificate Superior Performance" Name="S-TN-E">200 points</Titles>
 				<Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
 				<Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
-				<Titles LongName="Elite Triple Superior Performance Dog" Name="Elite Triple Superior Performance Dog">S-EAC, S-EGC, S-EJC</Titles>
+				<Titles LongName="Elite Triple Superior Performance Dog" Name="Triple Superior-Elite">S-EAC, S-EGC, S-EJC
+After 1/1/2006: S-EAC, S-EJC and one of S-EGC, S-TG-E, S-WV-E</Titles>
 				<Titles LongName="Elite Versatility Certificate Superior Performance" Name="Superior Elite Versatility">S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 				<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple">S-NAC, S-NGC, S-NJC,
 S-OAC, S-OGC, S-OJC,

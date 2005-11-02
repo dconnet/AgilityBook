@@ -346,9 +346,23 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
 				// Find the title we're renaming.
-				ARBConfigTitle* oldTitle;
-				if (venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle))
+				ARBConfigTitle* oldTitle = NULL;
+				ARBConfigDivision* pDiv = NULL;
+				if (action->GetDivision().length())
 				{
+					if (venue->GetDivisions().FindDivision(action->GetDivision(), &pDiv))
+						pDiv->GetTitles().FindTitle(action->GetOldName(), &oldTitle);
+				}
+				else
+				{
+					venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle);
+				}
+				if (oldTitle)
+				{
+					// Note: If we are deleting/renaming a title due
+					// to an error in the config (same title in multiple
+					// divisions), all we can do is rename ALL of them.
+					// There's no way to differentiate existing titles.
 					CString tmp;
 					tmp.Format(_T("Action: Renaming title [%s] to [%s]"),
 						action->GetOldName().c_str(),
@@ -364,13 +378,16 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					else
 						tmp = _T("\n");
 					msg += tmp;
-					// If the new title exists, just delete the old. Otherwise, rename the old to new.
+					// If the new title exists, just delete the old.
+					// Otherwise, rename the old to new.
 					if (venue->GetDivisions().FindTitle(action->GetNewName()))
 						venue->GetDivisions().DeleteTitle(action->GetOldName());
 					else
 						oldTitle->SetName(action->GetNewName());
 					oldTitle->Release();
 				}
+				if (pDiv)
+					pDiv->Release();
 				venue->Release();
 			}
 		}
@@ -380,7 +397,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			ARBConfigVenue* venue;
 			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
-				// Find the title we're renaming.
+				// Find the title we're deleting.
 				ARBConfigTitle* oldTitle = NULL;
 				ARBConfigDivision* pDiv = NULL;
 				if (action->GetDivision().length())
@@ -399,6 +416,10 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					// If any titles are in use, create a fixup action.
 					if (0 < nTitles)
 					{
+						// Note: If we are deleting/renaming a title due
+						// to an error in the config (same title in multiple
+						// divisions), all we can do is rename ALL of them.
+						// There's no way to differentiate existing titles.
 						if (0 < action->GetNewName().length())
 						{
 							tmp.Format(_T("Action: Renaming existing %d title(s) [%s] to [%s]\n"),
