@@ -737,15 +737,21 @@ void CDlgRunScore::SetTitlePoints()
 		{
 			if (pScoring->HasSpeedPts())
 			{
-				strSpeed.Format(_T("%hd"), m_Run->GetSpeedPoints(pScoring));
+				ARBostringstream str;
+				str << m_Run->GetSpeedPoints(pScoring);
+				strSpeed = str.str().c_str();
 			}
-			strTitle.Format(_T("%hd"), m_Run->GetTitlePoints(pScoring));
+			{
+				ARBostringstream str;
+				str << m_Run->GetTitlePoints(pScoring);
+				strTitle = str.str().c_str();
+			}
 		}
 		// 8/17/03: Only compute score on Q and NQ runs.
 		// 11/13/04: Also compute score for NA runs that have no titling pts.
 		if (q.Qualified()
 		|| ARB_Q::eQ_NQ == q
-		|| (ARB_Q::eQ_NA == q && 0 == pScoring->GetTitlePoints().size()))
+		|| (ARB_Q::eQ_NA == q && ARBDouble::equal(0.0, pScoring->GetTitlePoints().size())))
 			strScore = ARBDouble::str(m_Run->GetScore(pScoring)).c_str();
 		pScoring->Release();
 	}
@@ -898,10 +904,16 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlCloseText.ShowWindow(SW_SHOW);
 		m_ctrlClose.ShowWindow(SW_SHOW);
 		// I don't want to call UpdateData here. It could cause a loss of data.
-		str.Format(_T("%hd"), m_Opening);
-		m_ctrlOpening.SetWindowText(str);
-		str.Format(_T("%hd"), m_Closing);
-		m_ctrlClosing.SetWindowText(str);
+		{
+			ARBostringstream tmp;
+			tmp << m_Opening;
+			m_ctrlOpening.SetWindowText(tmp.str().c_str());
+		}
+		{
+			ARBostringstream tmp;
+			tmp << m_Closing;
+			m_ctrlClosing.SetWindowText(tmp.str().c_str());
+		}
 		break;
 	case ARBConfigScoring::eScoreThenTime:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
@@ -921,8 +933,11 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlFaultsText.ShowWindow(SW_SHOW);
 		m_ctrlFaults.ShowWindow(SW_SHOW);
 		// I don't want to call UpdateData here. It could cause a loss of data.
-		str.Format(_T("%hd"), m_Opening);
-		m_ctrlOpening.SetWindowText(str);
+		{
+			ARBostringstream tmp;
+			tmp << m_Opening;
+			m_ctrlOpening.SetWindowText(tmp.str().c_str());
+		}
 		break;
 	}
 

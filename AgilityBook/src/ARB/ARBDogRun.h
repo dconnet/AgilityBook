@@ -147,10 +147,10 @@ public:
 	 * @param outLifeTime Lifetime points earned in this run.
 	 * @return Number of title points earned.
 	 */
-	short GetTitlePoints(
+	double GetTitlePoints(
 			ARBConfigScoring const* inScoring,
 			bool* outClean = NULL,
-			short* outLifeTime = NULL) const;
+			double* outLifeTime = NULL) const;
 
 	/**
 	 * Get the score for this run.
@@ -162,7 +162,7 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBConfigMultiQ const* GetMultiQ() const;
+	ARBConfigMultiQ* GetMultiQ() const; ///< Note, this ptr is not AddRef'd
 	void SetMultiQ(ARBConfigMultiQ* inMultiQ);
 	ARBDate const& GetDate() const;
 	void SetDate(ARBDate const& inDate);
@@ -237,7 +237,7 @@ private:
 	ARBDogRunLinks m_Links;
 };
 
-inline ARBConfigMultiQ const* ARBDogRun::GetMultiQ() const
+inline ARBConfigMultiQ* ARBDogRun::GetMultiQ() const
 {
 	return m_pMultiQ;
 }

@@ -50,13 +50,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints()
-	: m_Points(0)
+	: m_Points(0.0)
 	, m_Faults(0)
 {
 }
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints(
-		short inPoints,
+		double inPoints,
 		short inFaults)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
@@ -150,7 +150,7 @@ void ARBConfigLifetimePointsList::sort()
 	std::stable_sort(begin(), end(), SortConfigLifetimePoints());
 }
 
-short ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
+double ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
 {
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -158,7 +158,7 @@ short ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
 		if (inFaults <= static_cast<double>((*iter)->GetFaults()))
 			return (*iter)->GetPoints();
 	}
-	return 0;
+	return 0.0;
 }
 
 bool ARBConfigLifetimePointsList::FindLifetimePoints(
@@ -183,7 +183,7 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 }
 
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
-		short inPoints,
+		double inPoints,
 		short inFaults,
 		ARBConfigLifetimePoints** outPoints)
 {

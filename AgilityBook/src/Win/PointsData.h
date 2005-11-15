@@ -78,12 +78,12 @@ public:
 	LifeTimePointInfo(
 			ARBString const& inDiv,
 			ARBString const& inLevel,
-			int inPoints,
-			int inFiltered);
+			double inPoints,
+			double inFiltered);
 	ARBString div;
 	ARBString level;
-	int points;
-	int filtered;
+	double points;
+	double filtered;
 };
 
 /**
@@ -99,8 +99,9 @@ public:
 	OtherPtInfo(
 			ARBDogTrial const* pTrial,
 			ARBDogRun const* pRun,
-			int score);
+			double score);
 	OtherPtInfo(ARBDogExistingPoints const* pExisting);
+	~OtherPtInfo();
 	ARBDogTrial const* m_pTrial;
 	ARBDogRun const* m_pRun;
 	ARBDogExistingPoints const* m_pExisting;
@@ -108,7 +109,7 @@ public:
 	ARBString m_Div;
 	ARBString m_Level;
 	ARBString m_Event;
-	int m_Score;
+	double m_Score;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -222,6 +223,7 @@ public:
 			ARBString const& inPts,
 			ARBString const& inSuperQ,
 			ARBString const& inSpeed);
+	~PointsDataEvent();
 
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
@@ -256,8 +258,8 @@ public:
 	void AddLifetimeInfo(
 			ARBString const& inDiv,
 			ARBString const& inLevel,
-			int inLifetime,
-			int inFiltered);
+			double inLifetime,
+			double inFiltered);
 
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
@@ -267,8 +269,8 @@ public:
 protected:
 	CString m_Venue;
 	std::list<LifeTimePointInfo> m_Data;
-	int m_Lifetime; //< Total lifetime points.
-	int m_Filtered; //< Points that are filtered out.
+	double m_Lifetime; //< Total lifetime points.
+	double m_Filtered; //< Points that are filtered out.
 };
 
 /**
@@ -285,8 +287,8 @@ public:
 	void AddLifetimeInfo(
 			ARBString const& inDiv,
 			ARBString const& inLevel,
-			int inLifetime,
-			int inFiltered);
+			double inLifetime,
+			double inFiltered);
 
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool IsEqual(PointsDataBase const* inData);
@@ -309,6 +311,7 @@ public:
 			ARBConfigVenue* inVenue,
 			ARBConfigMultiQ const* inMultiQ,
 			std::set<MultiQdata> const& inMQs);
+	~PointsDataMultiQs();
 
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
@@ -320,7 +323,7 @@ protected:
 	ARBConfigVenue* m_Venue;
 	ARBConfigMultiQ const* m_MultiQ;
 	std::set<MultiQdata> m_MQs;
-	int m_ExistingDblQs;
+	double m_ExistingDblQs;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -333,14 +336,15 @@ class PointsDataSpeedPts : public PointsDataBase
 public:
 	PointsDataSpeedPts(
 			CAgilityBookViewPoints* pView,
-			ARBConfigVenue* inVenue,
+			ARBConfigVenue const* inVenue,
 			int inPts);
+	~PointsDataSpeedPts();
 
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBConfigVenue* m_Venue;
+	ARBConfigVenue const* m_Venue;
 	int m_Pts;
 };
 
@@ -357,7 +361,7 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 protected:
-	int m_Score;
+	double m_Score;
 	std::list<OtherPtInfo> m_RunList;
 };
 

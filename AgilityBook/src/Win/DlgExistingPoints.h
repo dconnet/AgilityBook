@@ -72,7 +72,7 @@ private:
 	CStatic	m_ctrlSubNamesText;
 	CComboBox	m_ctrlSubNames;
 	CString	m_SubName;
-	short	m_Points;
+	double	m_Points;
 	CString	m_Comments;
 	CButton	m_ctrlOk;
 	//}}AFX_DATA

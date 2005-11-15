@@ -295,10 +295,9 @@ void CDlgRunReference::SetColumnHeaders()
 	{
 		CString str;
 		str.LoadString(scColumns[i].idText);
-		CString order;
-		order.Format(_T("%s (%d)"),
-			(LPCTSTR)str,
-			m_sortRefRuns.FindColumnOrder(i) + 1);
+		ARBostringstream tmp;
+		tmp << (LPCTSTR)str << _T(" (" << m_sortRefRuns.FindColumnOrder(i) + 1) << ')';
+		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlRefRuns.SetColumn(i, &col);
@@ -420,7 +419,11 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 			str = pRef->GetQ().str().c_str();
 			break;
 		case 1: // Place
-			str.Format(_T("%hd"), pRef->GetPlace());
+			{
+				ARBostringstream tmp;
+				tmp << pRef->GetPlace();
+				str = tmp.str().c_str();
+			}
 			break;
 		case 2: // Score
 			str = pRef->GetScore().c_str();

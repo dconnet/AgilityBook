@@ -539,7 +539,7 @@ bool ARBDogExistingPointsList::HasPoints(
 	return false;
 }
 
-short ARBDogExistingPointsList::ExistingPoints(
+double ARBDogExistingPointsList::ExistingPoints(
 		ARBDogExistingPoints::PointType inType,
 		ARBConfigVenue const* inVenue,
 		ARBConfigMultiQ const* inMultiQ,
@@ -547,7 +547,7 @@ short ARBDogExistingPointsList::ExistingPoints(
 		ARBConfigLevel const* inLevel,
 		ARBConfigEvent const* inEvent) const
 {
-	short pts = 0;
+	double pts = 0.0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetType() == inType)
@@ -563,7 +563,7 @@ short ARBDogExistingPointsList::ExistingPoints(
 				continue;
 			if (inEvent && (*iter)->GetEvent() != inEvent->GetName())
 				continue;
-			pts = pts + (*iter)->GetPoints();
+			pts += (*iter)->GetPoints();
 		}
 	}
 	return pts;

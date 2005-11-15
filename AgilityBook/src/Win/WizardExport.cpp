@@ -518,9 +518,9 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_COURSE_FAULTS:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetCourseFaults());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetCourseFaults();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_TIME:
@@ -552,79 +552,79 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_REQ_OPENING:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetNeedOpenPts());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetNeedOpenPts();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_REQ_CLOSING:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetNeedClosePts());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetNeedClosePts();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_OPENING:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetOpenPts());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetOpenPts();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_CLOSING:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetClosePts());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetClosePts();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_REQ_POINTS:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetNeedOpenPts());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetNeedOpenPts();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_POINTS:
 										{
-											CString str;
-											str.Format(_T("%hd"), pRun->GetScoring().GetOpenPts());
-											data += AddPreviewData(iLine, idx, str);
+											ARBostringstream str;
+											str << pRun->GetScoring().GetOpenPts();
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_PLACE:
 										{
-											CString str;
+											ARBostringstream str;
 											short place = pRun->GetPlace();
 											if (0 > place)
-												str = _T("?");
+												str << '?';
 											else if (0 == place)
-												str = _T("-");
+												str << '-';
 											else
-												str.Format(_T("%hd"), place);
-											data += AddPreviewData(iLine, idx, str);
+												str << place;
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_IN_CLASS:
 										{
-											CString str;
+											ARBostringstream str;
 											short inClass = pRun->GetInClass();
 											if (0 >= inClass)
-												str = _T("?");
+												str << '?';
 											else
-												str.Format(_T("%hd"), inClass);
-											data += AddPreviewData(iLine, idx, str);
+												str << inClass;
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_DOGSQD:
 										{
-											CString str;
+											ARBostringstream str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
-												str = _T("?");
+												str << '?';
 											else
-												str.Format(_T("%hd"), qd);
-											data += AddPreviewData(iLine, idx, str);
+												str << qd;
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_Q:
@@ -658,12 +658,12 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_TITLE_POINTS:
 										{
-											CString str;
-											short pts = 0;
+											ARBostringstream str;
+											double pts = 0.0;
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
-											str.Format(_T("%hd"), pts);
-											data += AddPreviewData(iLine, idx, str);
+											str << pts;
+											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_COMMENTS:

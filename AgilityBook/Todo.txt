@@ -1,10 +1,14 @@
-Last Updated: 9/20/2005
+Last Updated: 11/11/2005
 
-- DOCNA: Add support for 1/2 point runs - this is needed to support Time Gambles
+- NA runs (non-titling) need ability to mark as E
+
+- DOCNA: Add support for Time Gambles (1 / .5 pt Qs)
 
 - NADAC: Add support for categories: Proficient, Skilled.
   Add support for 15pt "bonus box" runs (all events).
   "Wild Card" will not be added: use "Gamblers".
+
+- Create named import/export settings.
 
 - Add display name to configuration items.
 

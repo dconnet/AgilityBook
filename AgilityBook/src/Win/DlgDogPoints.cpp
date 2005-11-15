@@ -223,10 +223,9 @@ void CDlgDogPoints::SetColumnHeaders()
 	{
 		CString str;
 		str.LoadString(colExistingPointsInfo[i].idText);
-		CString order;
-		order.Format(_T("%s (%d)"),
-			(LPCTSTR)str,
-			m_sortPoints.FindColumnOrder(i) + 1);
+		ARBostringstream tmp;
+		tmp << (LPCTSTR)str << _T(" (") << m_sortPoints.FindColumnOrder(i) + 1 <<')';
+		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlPoints.SetColumn(i, &col);
@@ -374,7 +373,11 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 			str = ARBDogExistingPoints::GetPointTypeName(pData->GetType()).c_str();
 			break;
 		case 2: // Points
-			str.Format(_T("%hd"), pData->GetPoints());
+			{
+				ARBostringstream tmp;
+				tmp << pData->GetPoints();
+				str = tmp.str().c_str();
+			}
 			break;
 		case 3: // Other Points
 			str = pData->GetOtherPoints().c_str();

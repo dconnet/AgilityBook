@@ -87,7 +87,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	, m_pExistingPoints(pExistingPoints)
 {
 	//{{AFX_DATA_INIT(CDlgExistingPoints)
-	m_Points = 0;
+	m_Points = 0.0;
 	m_Comments = _T("");
 	//}}AFX_DATA_INIT
 	if (m_pExistingPoints)
