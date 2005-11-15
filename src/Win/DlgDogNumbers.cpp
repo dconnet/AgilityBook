@@ -179,10 +179,9 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 	{
 		CString str;
 		str.LoadString(colRegNumInfo[i].idText);
-		CString order;
-		order.Format(_T("%s (%d)"),
-			(LPCTSTR)str,
-			m_sortRegNums.FindColumnOrder(i) + 1);
+		ARBostringstream tmp;
+		tmp << (LPCTSTR)str << _T(" (") << m_sortRegNums.FindColumnOrder(i) + 1 << ')';
+		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlRegNums.SetColumn(i, &col);

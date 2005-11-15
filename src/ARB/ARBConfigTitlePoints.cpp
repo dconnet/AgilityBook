@@ -55,13 +55,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigTitlePoints::ARBConfigTitlePoints()
-	: m_Points(0)
+	: m_Points(0.0)
 	, m_Faults(0)
 {
 }
 
 ARBConfigTitlePoints::ARBConfigTitlePoints(
-		short inPoints,
+		double inPoints,
 		short inFaults)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
@@ -183,7 +183,7 @@ void ARBConfigTitlePointsList::sort()
 	std::stable_sort(begin(), end(), SortConfigTitlePoints());
 }
 
-short ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
+double ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 {
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -216,7 +216,7 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 }
 
 bool ARBConfigTitlePointsList::AddTitlePoints(
-		short inPoints,
+		double inPoints,
 		short inFaults,
 		ARBConfigTitlePoints** outTitle)
 {

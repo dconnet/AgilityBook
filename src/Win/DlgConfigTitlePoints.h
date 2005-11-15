@@ -42,11 +42,11 @@ class CDlgConfigTitlePoints : public CDlgBaseDialog
 {
 public:
 	CDlgConfigTitlePoints(
-			short inPoints,
+			double inPoints,
 			short inFaults,
 			BOOL bLifetime,
 			CWnd* pParent = NULL);
-	short GetPoints() const		{return m_Points;}
+	double GetPoints() const	{return m_Points;}
 	short GetFaults() const		{return m_Faults;}
 	BOOL IsLifetime() const		{return m_LifeTime;}
 
@@ -54,7 +54,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgConfigTitlePoints)
 	enum { IDD = IDD_CONFIG_TITLE_POINTS };
-	short	m_Points;
+	double	m_Points;
 	short	m_Faults;
 	BOOL	m_LifeTime;
 	//}}AFX_DATA

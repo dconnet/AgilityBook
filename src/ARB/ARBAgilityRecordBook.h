@@ -351,13 +351,13 @@ inline ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int
 }
 
 // Used in ARBConfigTitlePoints.cpp
-inline ARBString TITLE_POINTS_NAME_FORMAT(short points, short faults)
+inline ARBString TITLE_POINTS_NAME_FORMAT(double points, short faults)
 {
 	ARBostringstream buffer;
 	buffer << points << _T(" points with ") << faults << _T(" faults");
 	return buffer.str();
 }
-inline ARBString LIFETIME_POINTS_NAME_FORMAT(short points, short faults)
+inline ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults)
 {
 	ARBostringstream buffer;
 	buffer << points << _T(" lifetime points with ") << faults << _T(" faults");

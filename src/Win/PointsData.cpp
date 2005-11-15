@@ -65,8 +65,8 @@ static char THIS_FILE[] = __FILE__;
 LifeTimePointInfo::LifeTimePointInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
-		int inPoints,
-		int inFiltered)
+		double inPoints,
+		double inFiltered)
 	: div(inDiv)
 	, level(inLevel)
 	, points(inPoints)
@@ -79,19 +79,21 @@ LifeTimePointInfo::LifeTimePointInfo(
 OtherPtInfo::OtherPtInfo(
 		ARBDogTrial const* pTrial,
 		ARBDogRun const* pRun,
-		int score)
+		double score)
 	: m_pTrial(pTrial)
 	, m_pRun(pRun)
 	, m_pExisting(NULL)
 	, m_Score(score)
 {
-	if (pTrial)
-		m_Venue = pTrial->GetClubs().GetPrimaryClubVenue();
-	if (pRun)
+	if (m_pTrial)
 	{
-		m_Div = pRun->GetDivision();
-		m_Level = pRun->GetLevel();
-		m_Event = pRun->GetEvent();
+		m_Venue = m_pTrial->GetClubs().GetPrimaryClubVenue();
+	}
+	if (m_pRun)
+	{
+		m_Div = m_pRun->GetDivision();
+		m_Level = m_pRun->GetLevel();
+		m_Event = m_pRun->GetEvent();
 	}
 }
 
@@ -104,6 +106,10 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPoints const* pExisting)
 	, m_Level(pExisting->GetLevel())
 	, m_Event(pExisting->GetEvent())
 	, m_Score(pExisting->GetPoints())
+{
+}
+
+OtherPtInfo::~OtherPtInfo()
 {
 }
 
@@ -376,6 +382,10 @@ PointsDataEvent::PointsDataEvent(
 {
 }
 
+PointsDataEvent::~PointsDataEvent()
+{
+}
+
 ARBString PointsDataEvent::OnNeedText(size_t index) const
 {
 	ARBString str;
@@ -444,16 +454,16 @@ PointsDataLifetime::PointsDataLifetime(
 		ARBString const& inVenue)
 	: PointsDataBase(pView)
 	, m_Venue(inVenue.c_str())
-	, m_Lifetime(0)
-	, m_Filtered(0)
+	, m_Lifetime(0.0)
+	, m_Filtered(0.0)
 {
 }
 
 void PointsDataLifetime::AddLifetimeInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
-		int inLifetime,
-		int inFiltered)
+		double inLifetime,
+		double inFiltered)
 {
 	m_Data.push_back(LifeTimePointInfo(inDiv, inLevel, inLifetime, inFiltered));
 	m_Lifetime += inLifetime;
@@ -474,12 +484,13 @@ ARBString PointsDataLifetime::OnNeedText(size_t index) const
 		break;
 	case 2:
 		{
-			CString str2;
+			ARBostringstream str2;
+			str2 << _T("Total: ");
 			if (0 < m_Filtered)
-				str2.Format(_T("Total: %d (%d)"), m_Lifetime - m_Filtered, m_Lifetime);
+				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
 			else
-				str2.Format(_T("Total: %d"), m_Lifetime);
-			str = (LPCTSTR)str2;
+				str2 << m_Lifetime;
+			str = str2.str();
 		}
 		break;
 	}
@@ -517,8 +528,8 @@ PointsDataLifetimeDiv::PointsDataLifetimeDiv(
 void PointsDataLifetimeDiv::AddLifetimeInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
-		int inLifetime,
-		int inFiltered)
+		double inLifetime,
+		double inFiltered)
 {
 	if (inDiv == m_Div)
 	{
@@ -535,12 +546,13 @@ ARBString PointsDataLifetimeDiv::OnNeedText(size_t index) const
 	{
 	case 2:
 		{
-			CString str2;
+			ARBostringstream str2;
+			str2 << m_Div << _T(": ");
 			if (0 < m_Filtered)
-				str2.Format(_T("%s: %d (%d)"), m_Div.c_str(), m_Lifetime - m_Filtered, m_Lifetime);
+				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
 			else
-				str2.Format(_T("%s: %d"), m_Div.c_str(), m_Lifetime);
-			str = (LPCTSTR)str2;
+				str2 << m_Lifetime;
+			str = str2.str();
 		}
 		break;
 	}
@@ -577,14 +589,18 @@ PointsDataMultiQs::PointsDataMultiQs(
 		m_Venue, m_MultiQ, NULL, NULL, NULL);
 }
 
+PointsDataMultiQs::~PointsDataMultiQs()
+{
+}
+
 ARBString PointsDataMultiQs::OnNeedText(size_t index) const
 {
 	ARBString str;
 	if (7 == index)
 	{
-		CString str2;
-		str2.FormatMessage(_T("%1!d! %2"), m_ExistingDblQs + m_MQs.size(), m_MultiQ->GetShortName().c_str());
-		str = (LPCTSTR)str2;
+		ARBostringstream str2;
+		str2 << m_ExistingDblQs + m_MQs.size() << ' ' << m_MultiQ->GetShortName();
+		str = str2.str();
 	}
 	return str;
 }
@@ -610,11 +626,15 @@ bool PointsDataMultiQs::IsEqual(PointsDataBase const* inData)
 
 PointsDataSpeedPts::PointsDataSpeedPts(
 		CAgilityBookViewPoints* pView,
-		ARBConfigVenue* inVenue,
+		ARBConfigVenue const* inVenue,
 		int inPts)
 	: PointsDataBase(pView)
 	, m_Venue(inVenue)
 	, m_Pts(inPts)
+{
+}
+
+PointsDataSpeedPts::~PointsDataSpeedPts()
 {
 }
 
@@ -645,7 +665,7 @@ PointsDataOtherPoints::PointsDataOtherPoints(
 		CAgilityBookViewPoints* pView,
 		std::list<OtherPtInfo> const& inRunList)
 	: PointsDataBase(pView)
-	, m_Score(0)
+	, m_Score(0.0)
 	, m_RunList(inRunList)
 {
 	for (std::list<OtherPtInfo>::iterator iter = m_RunList.begin();
@@ -677,9 +697,9 @@ ARBString PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 		break;
 	case 2:
 		{
-			CString str2;
-			str2.Format(_T("%d"), m_Score);
-			str = (LPCTSTR)str2;
+			ARBostringstream str2;
+			str2<< m_Score;
+			str = str2.str();
 		}
 		break;
 	}
@@ -722,9 +742,9 @@ ARBString PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 		break;
 	case 3:
 		{
-			CString str2;
-			str2.Format(_T("%d"), m_Score);
-			str = (LPCTSTR)str2;
+			ARBostringstream str2;
+			str2 << m_Score;
+			str = str2.str();
 		}
 		break;
 	}
@@ -767,9 +787,9 @@ ARBString PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 		break;
 	case 3:
 		{
-			CString str2;
-			str2.Format(_T("%d"), m_Score);
-			str = (LPCTSTR)str2;
+			ARBostringstream str2;
+			str2 << m_Score;
+			str = str2.str();
 		}
 		break;
 	}
@@ -817,9 +837,9 @@ ARBString PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const
 		break;
 	case 4:
 		{
-			CString str2;
-			str2.Format(_T("%d"), m_Score);
-			str = (LPCTSTR)str2;
+			ARBostringstream str2;
+			str2 << m_Score;
+			str = str2.str();
 		}
 		break;
 	}

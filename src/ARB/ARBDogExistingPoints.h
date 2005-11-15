@@ -141,8 +141,8 @@ public:
 	void SetEvent(ARBString const& inEvent);
 	ARBString const& GetSubName() const;
 	void SetSubName(ARBString const& inSubName);
-	short GetPoints() const;
-	void SetPoints(short inPoints);
+	double GetPoints() const;
+	void SetPoints(double inPoints);
 
 private:
 	~ARBDogExistingPoints();
@@ -156,7 +156,7 @@ private:
 	ARBString m_Level;
 	ARBString m_Event;
 	ARBString m_SubName;
-	short m_Points;
+	double m_Points;
 };
 
 inline ARBDogExistingPoints::PointType ARBDogExistingPoints::GetType() const
@@ -259,12 +259,12 @@ inline void ARBDogExistingPoints::SetSubName(ARBString const& inSubName)
 	m_SubName = inSubName;
 }
 
-inline short ARBDogExistingPoints::GetPoints() const
+inline double ARBDogExistingPoints::GetPoints() const
 {
 	return m_Points;
 }
 
-inline void ARBDogExistingPoints::SetPoints(short inPoints)
+inline void ARBDogExistingPoints::SetPoints(double inPoints)
 {
 	m_Points = inPoints;
 }
@@ -315,7 +315,7 @@ public:
 	 * @param inEvent Event to search for.
 	 * @return The number of existing points.
 	 */
-	short ExistingPoints(
+	double ExistingPoints(
 			ARBDogExistingPoints::PointType inType,
 			ARBConfigVenue const* inVenue,
 			ARBConfigMultiQ const* inMultiQ,

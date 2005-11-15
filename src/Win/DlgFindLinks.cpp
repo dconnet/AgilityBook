@@ -241,10 +241,9 @@ void CDlgFindLinks::SetColumnHeaders()
 			str.LoadString(colLinkInfo[i].idText);
 			str += ' ';
 		}
-		CString order;
-		order.Format(_T("%s(%d)"),
-			(LPCTSTR)str,
-			m_sortLinks.FindColumnOrder(i) + 1);
+		ARBostringstream tmp;
+		tmp << (LPCTSTR)str << '(' << m_sortLinks.FindColumnOrder(i) + 1 << ')';
+		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
 		m_ctrlLinks.SetColumn(i, &col);

@@ -74,17 +74,17 @@ private:
 	struct LifeTimePoint
 	{
 		ARBString event;
-		int points;
+		double points;
 		bool bFiltered;
 		LifeTimePoint()
 			: event()
-			, points(0)
+			, points(0.0)
 			, bFiltered(false)
 		{
 		}
 		LifeTimePoint(
 				const ARBString inEvent,
-				int inPoints,
+				double inPoints,
 				bool inFiltered)
 			: event(inEvent)
 			, points(inPoints)
@@ -108,7 +108,7 @@ private:
 			ARBString const& level,
 			ARBString const& event,
 			std::list<RunInfo>& matching);
-	int TallyPoints(
+	double TallyPoints(
 			std::list<RunInfo> const& runs,
 			ARBConfigScoring const* pScoringMethod,
 			int& nCleanQ,

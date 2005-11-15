@@ -57,7 +57,7 @@ class ARBConfigTitlePoints : public ARBBase
 {
 public:
 	ARBConfigTitlePoints();
-	ARBConfigTitlePoints(short inPoints, short inFaults);
+	ARBConfigTitlePoints(double inPoints, short inFaults);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
 	bool operator==(ARBConfigTitlePoints const& rhs) const;
@@ -102,8 +102,8 @@ public:
 	/*
 	 * Setters/getters.
 	 */
-	short GetPoints() const;
-	void SetPoints(short inPoints);
+	double GetPoints() const;
+	void SetPoints(double inPoints);
 	short GetFaults() const;
 	/**
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigTitlePointsList::sort.
@@ -112,16 +112,16 @@ public:
 
 private:
 	~ARBConfigTitlePoints();
-	short m_Points;
+	double m_Points;
 	short m_Faults;
 };
 
-inline short ARBConfigTitlePoints::GetPoints() const
+inline double ARBConfigTitlePoints::GetPoints() const
 {
 	return m_Points;
 }
 
-inline void ARBConfigTitlePoints::SetPoints(short inPoints)
+inline void ARBConfigTitlePoints::SetPoints(double inPoints)
 {
 	m_Points = inPoints;
 }
@@ -169,7 +169,7 @@ public:
 	 * @param inFaults Number of faults in the run.
 	 * @return Number of titling points.
 	 */
-	short GetTitlePoints(double inFaults) const;
+	double GetTitlePoints(double inFaults) const;
 
 	/**
 	 * Find a points object.
@@ -190,7 +190,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTitlePoints(
-			short inPoints,
+			double inPoints,
 			short inFaults,
 			ARBConfigTitlePoints** outPoints = NULL);
 

@@ -408,7 +408,7 @@ size_t CAgilityBookViewPoints::FindMatchingRuns(
 	return matching.size();
 }
 
-int CAgilityBookViewPoints::TallyPoints(
+double CAgilityBookViewPoints::TallyPoints(
 		std::list<RunInfo> const& runs,
 		ARBConfigScoring const* pScoringMethod,
 		int& nCleanQ,
@@ -416,7 +416,7 @@ int CAgilityBookViewPoints::TallyPoints(
 {
 	nCleanQ = 0;
 	nNotCleanQ = 0;
-	int score = 0;
+	double score = 0.0;
 	for (list<RunInfo>::const_iterator iterRun = runs.begin();
 		iterRun != runs.end();
 		++iterRun)
@@ -637,7 +637,7 @@ void CAgilityBookViewPoints::LoadData()
 										if (0 < pScoringMethod->GetLifetimePoints().size()
 										&& pRun->GetQ().Qualified())
 										{
-											short nLifetime;
+											double nLifetime;
 											pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime);
 											if (0 < nLifetime)
 											{
@@ -646,7 +646,7 @@ void CAgilityBookViewPoints::LoadData()
 										}
 									}
 								}
-								int nExistingPts = 0;
+								double nExistingPts = 0;
 								int nExistingSQ = 0;
 								// Accumulate existing points - used for both lifetime and
 								// normal runs.
@@ -656,12 +656,12 @@ void CAgilityBookViewPoints::LoadData()
 										ARBDogExistingPoints::eRuns,
 										pVenue, NULL, pDiv, pLevel, pEvent);
 									if (pScoringMethod->HasSuperQ())
-										nExistingSQ += pDog->GetExistingPoints().ExistingPoints(
+										nExistingSQ += static_cast<int>(pDog->GetExistingPoints().ExistingPoints(
 											ARBDogExistingPoints::eSQ,
-											pVenue, NULL, pDiv, pLevel, pEvent);
+											pVenue, NULL, pDiv, pLevel, pEvent));
 								}
 								// Now add the existing lifetime points
-								if (bHasExistingLifetimePoints && 0 < nExistingPts + nExistingSQ)
+								if (bHasExistingLifetimePoints && 0.0 < nExistingPts + nExistingSQ)
 								{
 									pts.ptList.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
 								}
@@ -669,7 +669,7 @@ void CAgilityBookViewPoints::LoadData()
 								if (bHasExistingPoints || 0 < matching.size())
 								{
 									int nCleanQ, nNotCleanQ;
-									int pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
+									double pts = TallyPoints(matching, pScoringMethod, nCleanQ, nNotCleanQ);
 									pts += nExistingPts;
 									CString strRunCount;
 									strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
@@ -704,9 +704,9 @@ void CAgilityBookViewPoints::LoadData()
 										str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
 										strQcount += str2;
 									}
-									CString strPts;
+									ARBostringstream strPts;
 									CString strSuperQ;
-									strPts.Format(_T("%d"), pts + nExistingSQ);
+									strPts << pts + nExistingSQ;
 									if (pScoringMethod->HasSuperQ())
 									{
 										SQs += nExistingSQ;
@@ -727,7 +727,7 @@ void CAgilityBookViewPoints::LoadData()
 										pVenue, pDiv, pLevel, pEvent,
 										(LPCTSTR)strRunCount,
 										(LPCTSTR)strQcount,
-										(LPCTSTR)strPts,
+										strPts.str().c_str(),
 										(LPCTSTR)strSuperQ,
 										(LPCTSTR)strSpeed));
 								}
@@ -735,9 +735,9 @@ void CAgilityBookViewPoints::LoadData()
 						}
 						if (bHasSpeedPts)
 						{
-							speedPts += pDog->GetExistingPoints().ExistingPoints(
+							speedPts += static_cast<int>(pDog->GetExistingPoints().ExistingPoints(
 								ARBDogExistingPoints::eSpeed,
-								pVenue, NULL, pDiv, pLevel, NULL);
+								pVenue, NULL, pDiv, pLevel, NULL));
 						}
 						if (0 < pts.ptList.size())
 							lifetime.push_back(pts);
@@ -786,8 +786,8 @@ void CAgilityBookViewPoints::LoadData()
 			if (0 < lifetime.size())
 			{
 				PointsDataLifetime* pData = new PointsDataLifetime(this, pVenue->GetName());
-				int pts = 0;
-				int ptFiltered = 0;
+				double pts = 0;
+				double ptFiltered = 0;
 				typedef std::map<ARBString, PointsDataLifetimeDiv*> DivLifetime;
 				DivLifetime divs;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
@@ -806,8 +806,8 @@ void CAgilityBookViewPoints::LoadData()
 						divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
 					}
 
-					int pts2 = 0;
-					int ptFiltered2 = 0;
+					double pts2 = 0.0;
+					double ptFiltered2 = 0;
 					for (LifeTimePointList::iterator iter2 = (*iter).ptList.begin();
 						iter2 != (*iter).ptList.end();
 						++iter2)

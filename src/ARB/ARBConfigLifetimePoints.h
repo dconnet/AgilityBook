@@ -57,7 +57,7 @@ class ARBConfigLifetimePoints : public ARBBase
 public:
 	ARBConfigLifetimePoints();
 	ARBConfigLifetimePoints(
-			short inPoints,
+			double inPoints,
 			short inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
@@ -101,8 +101,8 @@ public:
 	/*
 	 * Setters/getters.
 	 */
-	short GetPoints() const;
-	void SetPoints(short inPoints);
+	double GetPoints() const;
+	void SetPoints(double inPoints);
 	short GetFaults() const;
 	/**
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigLifetimePointsList::sort.
@@ -111,16 +111,16 @@ public:
 
 private:
 	~ARBConfigLifetimePoints();
-	short m_Points;
+	double m_Points;
 	short m_Faults;
 };
 
-inline short ARBConfigLifetimePoints::GetPoints() const
+inline double ARBConfigLifetimePoints::GetPoints() const
 {
 	return m_Points;
 }
 
-inline void ARBConfigLifetimePoints::SetPoints(short inPoints)
+inline void ARBConfigLifetimePoints::SetPoints(double inPoints)
 {
 	m_Points = inPoints;
 }
@@ -153,7 +153,7 @@ public:
 	 * @param inFaults Number of faults in the run.
 	 * @return Number of lifetime titling points.
 	 */
-	short GetLifetimePoints(double inFaults) const;
+	double GetLifetimePoints(double inFaults) const;
 
 	/**
 	 * Find a points object.
@@ -173,7 +173,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLifetimePoints(
-			short inPoints,
+			double inPoints,
 			short inFaults,
 			ARBConfigLifetimePoints** outPoints = NULL);
 

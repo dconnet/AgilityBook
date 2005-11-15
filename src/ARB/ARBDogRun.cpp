@@ -517,16 +517,16 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoring const* inScoring) const
 	return pts;
 }
 
-short ARBDogRun::GetTitlePoints(
+double ARBDogRun::GetTitlePoints(
 		ARBConfigScoring const* inScoring,
 		bool* outClean,
-		short* outLifeTime) const
+		double* outLifeTime) const
 {
-	short pts = 0;
+	double pts = 0.0;
 	if (outClean)
 		*outClean = false;
 	if (outLifeTime)
-		*outLifeTime = 0;
+		*outLifeTime = 0.0;
 	switch (m_Scoring.GetType())
 	{
 	default:

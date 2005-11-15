@@ -80,7 +80,7 @@ public:
 			delete this;
 	}
 	virtual bool HasIcon() const					{return false;}
-	virtual CString OnNeedText(int iCol) = 0;
+	virtual ARBString OnNeedText(int iCol) = 0;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
 	virtual ARBCalendar const* GetCalendar() const	{return NULL;}
@@ -106,7 +106,7 @@ public:
 		m_pCal->AddRef();
 	}
 	virtual bool HasIcon() const					{return true;}
-	virtual CString OnNeedText(int iCol);
+	virtual ARBString OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
 	virtual ARBCalendar const* GetCalendar() const	{return m_pCal;}
@@ -120,29 +120,32 @@ private:
 	ARBCalendar* m_pCal;
 };
 
-CString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
+ARBString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 {
-	CString str;
+	ARBString str;
 	switch (iCol)
 	{
 	case 1: // Start Date
-		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD).c_str();
+		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD);
 		break;
 	case 2: // End Date
-		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD).c_str();
+		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD);
 		break;
 	case 3: // Location
-		str = m_pCal->GetLocation().c_str();
+		str = m_pCal->GetLocation();
 		break;
 	case 4: // Club
-		str = m_pCal->GetClub().c_str();
+		str = m_pCal->GetClub();
 		break;
 	case 5: // Venue
-		str = m_pCal->GetVenue().c_str();
+		str = m_pCal->GetVenue();
 		break;
 	case 6: // Notes
-		str = m_pCal->GetNote().c_str();
-		str.Replace(_T("\n"), _T(" "));
+		{
+			CString tmp(m_pCal->GetNote().c_str());
+			tmp.Replace(_T("\n"), _T(" "));
+			str = (LPCTSTR)tmp;
+		}
 		break;
 	}
 	return str;
@@ -185,7 +188,7 @@ public:
 		, m_Fault(fault)
 	{
 	}
-	virtual CString OnNeedText(int iCol)	{return m_Fault.c_str();}
+	virtual ARBString OnNeedText(int iCol)	{return m_Fault;}
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -262,7 +265,7 @@ public:
 	{
 		m_Other->AddRef();
 	}
-	virtual CString OnNeedText(int iCol);
+	virtual ARBString OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -276,17 +279,21 @@ private:
 	ARBDogRunOtherPoints* m_Other;
 };
 
-CString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
+ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 {
-	CString str;
+	ARBString str;
 	switch (iCol)
 	{
 	default:
 	case 0:
-		str = m_Other->GetName().c_str();
+		str = m_Other->GetName();
 		break;
 	case 1:
-		str.Format(_T("%hd"), m_Other->GetPoints());
+		{
+			ARBostringstream tmp;
+			tmp << m_Other->GetPoints();
+			str = tmp.str();
+		}
 		break;
 	}
 	return str;
@@ -321,7 +328,7 @@ public:
 	{
 		m_Partner->AddRef();
 	}
-	virtual CString OnNeedText(int iCol);
+	virtual ARBString OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -334,20 +341,20 @@ private:
 	ARBDogRunPartner* m_Partner;
 };
 
-CString CDlgListCtrlDataPartners::OnNeedText(int iCol)
+ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
 {
-	CString str;
+	ARBString str;
 	switch (iCol)
 	{
 	default:
 	case 0:
-		str = m_Partner->GetDog().c_str();
+		str = m_Partner->GetDog();
 		break;
 	case 1:
-		str = m_Partner->GetRegNum().c_str();
+		str = m_Partner->GetRegNum();
 		break;
 	case 2:
-		str = m_Partner->GetHandler().c_str();
+		str = m_Partner->GetHandler();
 		break;
 	}
 	return str;
@@ -650,8 +657,8 @@ void CDlgListCtrl::OnGetdispinfoList(
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
 		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pDispInfo->item.lParam);
-		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
-		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+		ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	if (pDispInfo->item.mask & LVIF_IMAGE)

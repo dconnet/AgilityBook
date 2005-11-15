@@ -989,7 +989,7 @@ void CDlgConfigEvent::OnPointsNew()
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(0, 0, false, this);
+			CDlgConfigTitlePoints dlg(0.0, 0, false, this);
 			if (IDOK == dlg.DoModal())
 			{
 				// The only reason this fails is if the faults entry exists.
@@ -1022,7 +1022,8 @@ void CDlgConfigEvent::OnPointsEdit()
 		ARBConfigLifetimePoints* pLife = dynamic_cast<ARBConfigLifetimePoints*>(pBase);
 		if (pScoring && (pTitle || pLife))
 		{
-			short pts, faults;
+			double pts;
+			short faults;
 			BOOL bLifetime;
 			if (pTitle)
 			{
