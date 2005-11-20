@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-11-20 DRC Allow 'E's on non-titling runs.
  * @li 2005-08-11 DRC Removed QQ checkbox.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -700,20 +701,26 @@ void CDlgRunScore::SetTotalFaults()
 	m_ctrlTotalFaults.SetWindowText(total);
 }
 
-void CDlgRunScore::FillQ(bool bHasSuperQ)
+void CDlgRunScore::FillQ(ARBConfigScoring const* inScoring)
 {
 	m_ctrlQ.ResetContent();
+	bool bHasTitling = (0 < inScoring->GetTitlePoints().size());
 	int nQs = ARB_Q::GetNumValidTypes();
 	for (int index = 0; index < nQs; ++index)
 	{
 		ARB_Q q = ARB_Q::GetValidType(index);
-		if (ARB_Q::eQ_SuperQ == q && !bHasSuperQ)
+		if (ARB_Q::eQ_SuperQ == q && !inScoring->HasSuperQ())
+			continue;
+		// Allow non-titling runs to only have 'NA' and 'E'
+		if (!bHasTitling && !(ARB_Q::eQ_E == q || ARB_Q::eQ_NA == q))
 			continue;
 		int idx = m_ctrlQ.AddString(q.str().c_str());
 		m_ctrlQ.SetItemData(idx, index);
 		if (m_Run->GetQ() == q)
 			m_ctrlQ.SetCurSel(idx);
 	}
+	if (0 < m_ctrlQ.GetCount())
+		m_ctrlQ.EnableWindow(TRUE);
 }
 
 void CDlgRunScore::SetTitlePoints()
@@ -945,10 +952,9 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlInClass.EnableWindow(TRUE);
 	if (0 < pScoring->GetTitlePoints().size())
 	{
-		m_ctrlQ.EnableWindow(TRUE);
 		m_ctrlDogsQd.EnableWindow(TRUE);
 	}
-	FillQ(pScoring->HasSuperQ());
+	FillQ(pScoring);
 	if (0 < pScoring->GetTitlePoints().size())
 	{
 		m_ctrlTitlePointsText.ShowWindow(SW_SHOW);

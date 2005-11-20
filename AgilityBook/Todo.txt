@@ -1,6 +1,4 @@
-Last Updated: 11/11/2005
-
-- NA runs (non-titling) need ability to mark as E
+Last Updated: 11/20/2005
 
 - DOCNA: Add support for Time Gambles (1 / .5 pt Qs)
 

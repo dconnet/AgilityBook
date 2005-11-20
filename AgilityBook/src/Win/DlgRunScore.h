@@ -165,7 +165,7 @@ private:
 	void SetPartnerText();
 	void SetYPS();
 	void SetTotalFaults();
-	void FillQ(bool bHasSuperQ);
+	void FillQ(ARBConfigScoring const* inScoring);
 	void SetTitlePoints();
 	void UpdateControls(bool bOnEventChange = false);
 
