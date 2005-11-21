@@ -309,32 +309,48 @@ bool ARBDogRunScoring::GetYPS(
 double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
 {
 	double timeFaults = 0.0;
-	if (ARBDogRunScoring::eTypeByTime == m_type)
+	if (ARBDogRunScoring::eTypeByTime == m_type
+	|| ARBDogRunScoring::eTypeByOpenClose == m_type
+	|| ARBDogRunScoring::eTypeByPoints == m_type)
 	{
+		double timeSCT = m_SCT;
 		bool bAddTimeFaultsUnder = false;
 		bool bAddTimeFaultsOver = true;
-		if (inScoring && ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+		if (ARBDogRunScoring::eTypeByTime != m_type)
+			bAddTimeFaultsOver = false;
+		if (inScoring)
 		{
-			bAddTimeFaultsUnder = inScoring->ComputeTimeFaultsUnder();
-			bAddTimeFaultsOver = inScoring->ComputeTimeFaultsOver();
+			// Compute time faults on gamble-style events now.
+			// This currently applies only to DOCNA strategic time gamble
+			if (ARBDogRunScoring::eTypeByTime != m_type)
+			{
+				timeSCT += m_SCT2;
+				bAddTimeFaultsUnder = inScoring->ComputeTimeFaultsUnder();
+				bAddTimeFaultsOver = inScoring->ComputeTimeFaultsOver();
+			}
+			else if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
+			{
+				bAddTimeFaultsUnder = inScoring->ComputeTimeFaultsUnder();
+				bAddTimeFaultsOver = inScoring->ComputeTimeFaultsOver();
+			}
 		}
-		if (0.0 < m_SCT)
+		if (0.0 < timeSCT)
 		{
 			if (bAddTimeFaultsUnder)
 			{
 				double time = m_Time;
 				if (m_bRoundTimeFaults)
 					time = ceil(m_Time);
-				if (time < m_SCT)
-					timeFaults = m_SCT - time;
+				if (time < timeSCT)
+					timeFaults = timeSCT - time;
 			}
 			if (bAddTimeFaultsOver)
 			{
 				double time = m_Time;
 				if (m_bRoundTimeFaults)
 					time = floor(m_Time);
-				if (time > m_SCT)
-					timeFaults = time - m_SCT;
+				if (time > timeSCT)
+					timeFaults = time - timeSCT;
 			}
 		}
 	}

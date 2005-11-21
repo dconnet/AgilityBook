@@ -1,6 +1,8 @@
 11/20/2005: v1.6.1.11 <in development>
 - Bumped file version to 11.1, Configuration v10:
   - Added option to prefix a title when listed on configuration titles.
+  - Updated comments in CPE titles (no minimum number of judges anymore)
+  - Added DOCNA.
   - Updated NADAC titles.
 - New features / Enhancements:
   - Changed how URLs are accessed to allow for redirection. The program now

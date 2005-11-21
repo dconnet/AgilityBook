@@ -1,6 +1,6 @@
 Last Updated: 11/20/2005
 
-- DOCNA: Add support for Time Gambles (1 / .5 pt Qs)
+- After adding a trial, it is selected, but not visible.
 
 - NADAC: Add support for categories: Proficient, Skilled.
   Add support for 15pt "bonus box" runs (all events).
@@ -22,9 +22,6 @@ Last Updated: 11/20/2005
   lines between the months?
 
 - Make TopTen (OtherPoint) visible in the Runs view.
-
-- Fix Point view so when it refreshes, it sets the current visible items
-  visible again.
 
 - Fix printing so it wraps multi-line text.
   Possibly have printed columns managed separately from viewed columns.

@@ -166,6 +166,11 @@
 				<param name="ImageNumber" value="11">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Context Menu: Points">
+				<param name="Local" value="Help\html\MenuPoints.html">
+				<param name="ImageNumber" value="11">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Context Menu: Calendar">
 				<param name="Local" value="Help\html\MenuCalendar.html">
 				<param name="ImageNumber" value="11">
