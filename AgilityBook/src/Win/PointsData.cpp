@@ -30,6 +30,12 @@
  * @brief Data classes behind the points view items.
  * @author David Connet
  *
+ * Note: Not all ptrs are AddRef'd - I had some problems in freeing all the
+ * memory when I did. At a minimum, anything referenced in the IsEqual method
+ * MUST be AddRef'd - otherwise when we try to re-select the last selected
+ * item in the points view and we are opening a new file, we would attempt
+ * to follow a deleted pointer.
+ *
  * Revision History
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
@@ -358,10 +364,10 @@ PointsDataEvent::PointsDataEvent(
 		CAgilityBookViewPoints* pView,
 		ARBDog const* inDog,
 		std::list<RunInfo>& inMatching,
-		ARBConfigVenue const* inVenue,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		ARBConfigEvent const* inEvent,
+		ARBConfigVenue* inVenue,
+		ARBConfigDivision* inDiv,
+		ARBConfigLevel* inLevel,
+		ARBConfigEvent* inEvent,
 		ARBString const& inRunCount,
 		ARBString const& inQcount,
 		ARBString const& inPts,
@@ -380,10 +386,26 @@ PointsDataEvent::PointsDataEvent(
 	, m_SuperQ(inSuperQ)
 	, m_Speed(inSpeed)
 {
+	if (m_Venue)
+		m_Venue->AddRef();
+	if (m_Div)
+		m_Div->AddRef();
+	if (m_Level)
+		m_Level->AddRef();
+	if (m_Event)
+		m_Event->AddRef();
 }
 
 PointsDataEvent::~PointsDataEvent()
 {
+	if (m_Venue)
+		m_Venue->Release();
+	if (m_Div)
+		m_Div->Release();
+	if (m_Level)
+		m_Level->Release();
+	if (m_Event)
+		m_Event->Release();
 }
 
 ARBString PointsDataEvent::OnNeedText(size_t index) const
@@ -575,7 +597,7 @@ PointsDataMultiQs::PointsDataMultiQs(
 		CAgilityBookViewPoints* pView,
 		ARBDog* inDog,
 		ARBConfigVenue* inVenue,
-		ARBConfigMultiQ const* inMultiQ,
+		ARBConfigMultiQ* inMultiQ,
 		std::set<MultiQdata> const& inMQs)
 	: PointsDataBase(pView)
 	, m_Dog(inDog)
@@ -587,10 +609,18 @@ PointsDataMultiQs::PointsDataMultiQs(
 	m_ExistingDblQs = m_Dog->GetExistingPoints().ExistingPoints(
 		ARBDogExistingPoints::eMQ,
 		m_Venue, m_MultiQ, NULL, NULL, NULL);
+	if (m_Venue)
+		m_Venue->AddRef();
+	if (m_MultiQ)
+		m_MultiQ->AddRef();
 }
 
 PointsDataMultiQs::~PointsDataMultiQs()
 {
+	if (m_Venue)
+		m_Venue->Release();
+	if (m_MultiQ)
+		m_MultiQ->Release();
 }
 
 ARBString PointsDataMultiQs::OnNeedText(size_t index) const
@@ -626,16 +656,20 @@ bool PointsDataMultiQs::IsEqual(PointsDataBase const* inData)
 
 PointsDataSpeedPts::PointsDataSpeedPts(
 		CAgilityBookViewPoints* pView,
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenue* inVenue,
 		int inPts)
 	: PointsDataBase(pView)
 	, m_Venue(inVenue)
 	, m_Pts(inPts)
 {
+	if (m_Venue)
+		m_Venue->AddRef();
 }
 
 PointsDataSpeedPts::~PointsDataSpeedPts()
 {
+	if (m_Venue)
+		m_Venue->Release();
 }
 
 ARBString PointsDataSpeedPts::OnNeedText(size_t index) const
