@@ -337,6 +337,7 @@ void CAgilityBookTree::OnUpdate(
 		ASSERT(pTrial);
 		CAgilityBookTreeData* pData = FindData(TVI_ROOT, pTrial);
 		ASSERT(pData);
+		GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
 		GetTreeCtrl().Select(pData->GetHTreeItem(), TVGN_CARET);
 	}
 }

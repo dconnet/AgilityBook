@@ -117,6 +117,7 @@ static bool EditDog(
 			{
 				HTREEITEM hItem = pTree->InsertDog(pDog);
 				pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+				pTree->GetTreeCtrl().EnsureVisible(hItem);
 				if (bTreeSelectionSet)
 					*bTreeSelectionSet = true;
 			}
@@ -180,6 +181,7 @@ static bool EditTrial(
 				else
 				{
 					pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					pTree->GetTreeCtrl().EnsureVisible(hItem);
 					if (bTreeSelectionSet)
 						*bTreeSelectionSet = true;
 				}
@@ -271,6 +273,7 @@ static bool EditRun(
 				else
 				{
 					pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+					pTree->GetTreeCtrl().EnsureVisible(hItem);
 					if (bTreeSelectionSet)
 						*bTreeSelectionSet = true;
 				}
@@ -473,6 +476,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						else
 						{
 							m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+							m_pTree->GetTreeCtrl().EnsureVisible(hItem);
 							if (bTreeSelectionSet)
 								*bTreeSelectionSet = true;
 						}
@@ -525,6 +529,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						else
 						{
 							m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+							m_pTree->GetTreeCtrl().EnsureVisible(hItem);
 							if (bTreeSelectionSet)
 								*bTreeSelectionSet = true;
 						}
