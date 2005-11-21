@@ -11,7 +11,7 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-10-31 DRC File version 11.1.
+2005-11-20 DRC File version 11.1.
                Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
 			   Added 'cleanQ' to 'Scoring'.
                Update Action for DeleteTitle.
@@ -239,7 +239,8 @@ dropped. (AKC and CPE do this.)
 'cleanQ' is used to determine titling points on T+F runs.
 
 'underTF' and 'overTF' are used to cause time faults to be computed on
-Time+Faults style events (USDAA Time Gamble)
+Time+Faults style events (USDAA Time Gamble). They are also used to specify
+faults in ScoreThenTime events (DOCNA Strategic gamble).
 
 The 'superQ', and 'speedPts' attributes enable built-in
 features for an event.

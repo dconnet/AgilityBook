@@ -124,6 +124,11 @@
 			<param name="Local" value="Help\html\MenuRuns.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Points">
+			<param name="Name" value="Points">
+			<param name="Local" value="Help\html\MenuPoints.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Training Log">
 			<param name="Name" value="Training Log">
 			<param name="Local" value="Help\html\MenuTrainingLog.html">

@@ -142,10 +142,10 @@ public:
 	void SetDropFractions(bool inBool); ///< Only valid for F/T, T+F
 	bool QsMustBeClean() const; ///< Only valid for T+F
 	void SetQsMustBeClean(bool inBool); ///< Only valid for T+F
-	bool ComputeTimeFaultsUnder() const; ///< Only valid for T+F
-	void SetComputeTimeFaultsUnder(bool inBool); ///< Only valid for T+F
-	bool ComputeTimeFaultsOver() const; ///< Only valid for T+F
-	void SetComputeTimeFaultsOver(bool inBool); ///< Only valid for T+F
+	bool ComputeTimeFaultsUnder() const;
+	void SetComputeTimeFaultsUnder(bool inBool);
+	bool ComputeTimeFaultsOver() const;
+	void SetComputeTimeFaultsOver(bool inBool);
 	short TimeFaultMultiplier() const;
 	void SetTimeFaultMultiplier(short inMultiplier);
 	short GetRequiredOpeningPoints() const; ///< Only valid for point-based

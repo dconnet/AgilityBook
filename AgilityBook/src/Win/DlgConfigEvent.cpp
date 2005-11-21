@@ -529,11 +529,19 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_SHOW);
 			m_ctrlDropFractions.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
 			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[0]);
+			if (pScoring->ComputeTimeFaultsUnder())
+				m_ctrlTimeFaultsUnder.SetCheck(1);
+			else
+				m_ctrlTimeFaultsUnder.SetCheck(0);
+			if (pScoring->ComputeTimeFaultsOver())
+				m_ctrlTimeFaultsOver.SetCheck(1);
+			else
+				m_ctrlTimeFaultsOver.SetCheck(0);
 			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
 			m_ClosingPts = pScoring->GetRequiredClosingPoints();
 			UpdateData(FALSE);
@@ -545,11 +553,19 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
 			m_ctrlDropFractions.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
+			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
+			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
 			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[1]);
+			if (pScoring->ComputeTimeFaultsUnder())
+				m_ctrlTimeFaultsUnder.SetCheck(1);
+			else
+				m_ctrlTimeFaultsUnder.SetCheck(0);
+			if (pScoring->ComputeTimeFaultsOver())
+				m_ctrlTimeFaultsOver.SetCheck(1);
+			else
+				m_ctrlTimeFaultsOver.SetCheck(0);
 			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
 			UpdateData(FALSE);
 			break;
@@ -681,9 +697,25 @@ bool CDlgConfigEvent::SaveControls()
 		case ARBConfigScoring::eOCScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
 			pScoring->SetRequiredClosingPoints(m_ClosingPts);
+			if (m_ctrlTimeFaultsUnder.GetCheck())
+				pScoring->SetComputeTimeFaultsUnder(true);
+			else
+				pScoring->SetComputeTimeFaultsUnder(false);
+			if (m_ctrlTimeFaultsOver.GetCheck())
+				pScoring->SetComputeTimeFaultsOver(true);
+			else
+				pScoring->SetComputeTimeFaultsOver(false);
 			break;
 		case ARBConfigScoring::eScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
+			if (m_ctrlTimeFaultsUnder.GetCheck())
+				pScoring->SetComputeTimeFaultsUnder(true);
+			else
+				pScoring->SetComputeTimeFaultsUnder(false);
+			if (m_ctrlTimeFaultsOver.GetCheck())
+				pScoring->SetComputeTimeFaultsOver(true);
+			else
+				pScoring->SetComputeTimeFaultsOver(false);
 			break;
 		case ARBConfigScoring::eTimePlusFaults:
 			if (m_ctrlDropFractions.GetCheck())
