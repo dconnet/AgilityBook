@@ -536,12 +536,12 @@ void CAgilityBookViewPoints::LoadData()
 					iterDiv != pVenue->GetDivisions().end();
 					++iterDiv)
 				{
-					ARBConfigDivision const* pDiv = (*iterDiv);
+					ARBConfigDivision* pDiv = (*iterDiv);
 					for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
 						iterLevel != pDiv->GetLevels().end();
 						++iterLevel)
 					{
-						ARBConfigLevel const* pLevel = (*iterLevel);
+						ARBConfigLevel* pLevel = (*iterLevel);
 						LifeTimePoints pts;
 						pts.pDiv = pDiv;
 						pts.pLevel = pLevel;
@@ -551,7 +551,7 @@ void CAgilityBookViewPoints::LoadData()
 							iterEvent != pVenue->GetEvents().end();
 							++iterEvent)
 						{
-							ARBConfigEvent const* pEvent = (*iterEvent);
+							ARBConfigEvent* pEvent = (*iterEvent);
 							bool bHasExistingPoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, false);
 							bool bHasExistingLifetimePoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, true);
 
@@ -753,7 +753,7 @@ void CAgilityBookViewPoints::LoadData()
 				// If the venue has multiQs, tally them now.
 				if (0 < pVenue->GetMultiQs().size())
 				{
-					std::map<ARBConfigMultiQ const*, std::set<MultiQdata> > MQs;
+					std::map<ARBConfigMultiQ*, std::set<MultiQdata> > MQs;
 					for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
 						iterTrial != trialsInVenue.end();
 						++iterTrial)
@@ -772,7 +772,7 @@ void CAgilityBookViewPoints::LoadData()
 							}
 						}
 					}
-					for (std::map<ARBConfigMultiQ const*, std::set<MultiQdata> >::iterator iter = MQs.begin();
+					for (std::map<ARBConfigMultiQ*, std::set<MultiQdata> >::iterator iter = MQs.begin();
 						iter != MQs.end();
 						++iter)
 					{
