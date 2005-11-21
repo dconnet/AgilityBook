@@ -328,6 +328,13 @@ public:
 	SortTrials(bool bDescending) : m_bDescending(bDescending) {}
 	bool operator()(ARBDogTrial* one, ARBDogTrial* two) const
 	{
+		// Note: if a club is added with the same location/club/venue as
+		// an existing trial, debug will assert during sort because
+		// a < b and b < a are true.
+		ARBDogClub* club1 = NULL;
+		ARBDogClub* club2 = NULL;
+		one->GetClubs().GetPrimaryClub(&club1);
+		two->GetClubs().GetPrimaryClub(&club2);
 		bool bSorted = !m_bDescending;
 		if (0 < one->GetRuns().size()
 		&& 0 < two->GetRuns().size())
@@ -335,15 +342,37 @@ public:
 			ARBDate d1 = (*(one->GetRuns().begin()))->GetDate();
 			ARBDate d2 = (*(two->GetRuns().begin()))->GetDate();
 			if ((d1 < d2)
-			|| (d1 == d2 && one->GetGenericName() < two->GetGenericName()))
+			|| (d1 == d2 && one->GetGenericName() < two->GetGenericName())
+			|| (d1 == d2 && one->GetGenericName() == two->GetGenericName()
+				&& club1 && club2 && club1->GetName() < club2->GetName())
+			|| (d1 == d2 && one->GetGenericName() == two->GetGenericName()
+				&& club1 && club2 && club1->GetName() == club2->GetName()
+				&& club1->GetVenue() < club2->GetVenue()))
+			{
 				bSorted = m_bDescending;
+			}
 
 		}
 		else if (0 < one->GetRuns().size())
 			bSorted = !m_bDescending;
-		else if ((0 < two->GetRuns().size())
-		|| (one->GetGenericName() < two->GetGenericName()))
+		else if (0 < two->GetRuns().size())
 			bSorted = m_bDescending;
+		else
+		{
+			if ((one->GetGenericName() < two->GetGenericName())
+			|| (one->GetGenericName() == two->GetGenericName()
+				&& club1 && club2 && club1->GetName() < club2->GetName())
+			|| (one->GetGenericName() == two->GetGenericName()
+				&& club1 && club2 && club1->GetName() == club2->GetName()
+				&& club1->GetVenue() < club2->GetVenue()))
+			{
+				bSorted = m_bDescending;
+			}
+		}
+		if (club1)
+			club1->Release();
+		if (club2)
+			club2->Release();
 		return bSorted;
 	}
 private:
