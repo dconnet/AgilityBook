@@ -1087,136 +1087,75 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				<Level Name="Beginner"/>
 				<Level Name="Intern"/>
 				<Level Name="Specialist"/>
-				<Titles LongName="Competition - Beginner Standard Award" Name="C-BSA">3 Qs</Titles>
-				<Titles LongName="Competition - Beginner Gamblers Award" Name="C-BGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Competition - Beginner Standard Agility Award" Name="C-BSA">3 Qs</Titles>
+				<Titles LongName="Competition - Beginner Gamblers Award" Name="C-BGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Competition - Beginner Jumpers Award" Name="C-BJA">3 Qs</Titles>
-				<Titles LongName="Competition - Beginner Snakes N Ladders Award" Name="C-BSLA">2 Qs</Titles>
-				<Titles LongName="Competition - Beginner Trigility Award" Name="C-BTA">2 Qs</Titles>
-				<Titles LongName="Competition - Beginner Agility Performance Award" Name="C-BAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Competition - Beginner Standard Merit Award" Name="C-BSMA">10 Qs</Titles>
-				<Titles LongName="Competition - Beginner Gamblers Merit Award" Name="C-BGMA">5 Qs</Titles>
-				<Titles LongName="Competition - Beginner Jumpers Merit Award" Name="C-BJMA">5 Qs</Titles>
-				<Titles LongName="Competition - Beginner Snakes N Ladders Merit Award" Name="C-BSLMA">5 Qs</Titles>
-				<Titles LongName="Competition - Beginner Trigility Merit Award" Name="C-BTMA">3 Qs</Titles>
-				<Titles LongName="Competition - Beginner Merit Award" Name="C-BMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Competition - Beginner Standard Merit Award" Name="Bronze-C-BSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Competition - Beginner Gamblers Merit Award" Name="Bronze-C-BGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Competition - Beginner Jumpers Merit Award" Name="Bronze-C-BJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Competition - Beginner Snakes N Ladders Merit Award" Name="Bronze-C-BSLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Competition - Beginner Trigility Merit Award" Name="Bronze-C-BTMA">5 Qs</Titles>
-				<Titles LongName="Bronze Competition - Beginner Merit Award" Name="Bronze-C-BMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Competition - Beginner Standard Merit Award" Name="Silver-C-BSMA">25 Qs</Titles>
-				<Titles LongName="Silver Competition - Beginner Gamblers Merit Award" Name="Silver-C-BGMA">20 Qs</Titles>
-				<Titles LongName="Silver Competition - Beginner Jumpers Merit Award" Name="Silver-C-BJMA">20 Qs</Titles>
-				<Titles LongName="Silver Competition - Beginner Snakes N Ladders Merit Award" Name="Silver-C-BSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Competition - Beginner Trigility Merit Award" Name="Silver-C-BTMA">7 Qs</Titles>
-				<Titles LongName="Silver Competition - Beginner Merit Award" Name="Silver-C-BMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Competition - Beginner Standard Merit Award" Name="Gold-C-BSMA">50 Qs</Titles>
-				<Titles LongName="Gold Competition - Beginner Gamblers Merit Award" Name="Gold-C-BGMA">30 Qs</Titles>
-				<Titles LongName="Gold Competition - Beginner Jumpers Merit Award" Name="Gold-C-BJMA">30 Qs</Titles>
-				<Titles LongName="Gold Competition - Beginner Snakes N Ladders Merit Award" Name="Gold-C-BSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Competition - Beginner Trigility Merit Award" Name="Gold-C-BTMA">10 Qs</Titles>
-				<Titles LongName="Gold Competition - Beginner Merit Award" Name="Gold-C-BMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Competition - Beginner Standard Merit Award" Name="Platinum-C-BSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Competition - Beginner Gamblers Merit Award" Name="Platinum-C-BGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Competition - Beginner Jumpers Merit Award" Name="Platinum-C-BJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Competition - Beginner Snakes N Ladders Merit Award" Name="Platinum-C-BSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Competition - Beginner Trigility Merit Award" Name="Platinum-C-BTMA">15 Qs</Titles>
-				<Titles LongName="Platinum Competition - Beginner Merit Award" Name="Platinum-C-BMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Competition - Beginner Standard Merit Award" Name="Double Platinum-C-BSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Beginner Gamblers Merit Award" Name="Double Platinum-C-BGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Beginner Jumpers Merit Award" Name="Double Platinum-C-BJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Beginner Snakes N Ladders Merit Award" Name="Double Platinum-C-BSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Beginner Trigility Merit Award" Name="Double Platinum-C-BTMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Beginner Merit Award" Name="Double Platinum-C-BMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
-				<Titles LongName="Competition - Intern Standard Award" Name="C-ISA">3 Qs</Titles>
-				<Titles LongName="Competition - Intern Gamblers Award" Name="C-IGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Competition - Beginner Snakes N Ladders Award" Name="C-BSLA">1 Q</Titles>
+				<Titles LongName="Competition - Beginner Trigility Award" Name="C-BTA">1 Qs</Titles>
+				<Titles LongName="Competition - Beginner Agility Award" Name="C-BAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Competition - Beginner Agility Merit Award" Name="C-BAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Competition - Beginner Agility Merit Award" Name="Bronze-C-BAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Competition - Beginner Agility Merit Award" Name="Silver-C-BAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Competition - Beginner Agility Merit Award" Name="Gold-C-BAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Competition - Beginner Agility Merit Award" Name="Platinum-C-BAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Competition - Beginner Agility Merit Award" Name="Double Platinum-C-BAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Competition - Intern Standard Agility Award" Name="C-ISA">3 Qs</Titles>
+				<Titles LongName="Competition - Intern Gamblers Award" Name="C-IGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Competition - Intern Jumpers Award" Name="C-IJA">3 Qs</Titles>
-				<Titles LongName="Competition - Intern Snakes N Ladders Award" Name="C-ISLA">2 Qs</Titles>
-				<Titles LongName="Competition - Intern Trigility Award" Name="C-ITA">2 Qs</Titles>
-				<Titles LongName="Competition - Intern Agility Performance Award" Name="C-IAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Competition - Intern Standard Merit Award" Name="C-ISMA">10 Qs</Titles>
-				<Titles LongName="Competition - Intern Gamblers Merit Award" Name="C-IGMA">5 Qs</Titles>
-				<Titles LongName="Competition - Intern Jumpers Merit Award" Name="C-IJMA">5 Qs</Titles>
-				<Titles LongName="Competition - Intern Snakes N Ladders Merit Award" Name="C-ISLMA">5 Qs</Titles>
-				<Titles LongName="Competition - Intern Trigility Merit Award" Name="C-ITMA">3 Qs</Titles>
-				<Titles LongName="Competition - Intern Merit Award" Name="C-IMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Competition - Intern Standard Merit Award" Name="Bronze-C-ISMA">15 Qs</Titles>
-				<Titles LongName="Bronze Competition - Intern Gamblers Merit Award" Name="Bronze-C-IGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Competition - Intern Jumpers Merit Award" Name="Bronze-C-IJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Competition - Intern Snakes N Ladders Merit Award" Name="Bronze-C-ISLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Competition - Intern Trigility Merit Award" Name="Bronze-C-ITMA">5 Qs</Titles>
-				<Titles LongName="Bronze Competition - Intern Merit Award" Name="Bronze-C-IMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Competition - Intern Standard Merit Award" Name="Silver-C-ISMA">25 Qs</Titles>
-				<Titles LongName="Silver Competition - Intern Gamblers Merit Award" Name="Silver-C-IGMA">20 Qs</Titles>
-				<Titles LongName="Silver Competition - Intern Jumpers Merit Award" Name="Silver-C-IJMA">20 Qs</Titles>
-				<Titles LongName="Silver Competition - Intern Snakes N Ladders Merit Award" Name="Silver-C-ISLMA">10 Qs</Titles>
-				<Titles LongName="Silver Competition - Intern Trigility Merit Award" Name="Silver-C-ITMA">7 Qs</Titles>
-				<Titles LongName="Silver Competition - Intern Merit Award" Name="Silver-C-IMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Competition - Intern Standard Merit Award" Name="Gold-C-ISMA">50 Qs</Titles>
-				<Titles LongName="Gold Competition - Intern Gamblers Merit Award" Name="Gold-C-IGMA">30 Qs</Titles>
-				<Titles LongName="Gold Competition - Intern Jumpers Merit Award" Name="Gold-C-IJMA">30 Qs</Titles>
-				<Titles LongName="Gold Competition - Intern Snakes N Ladders Merit Award" Name="Gold-C-ISLMA">15 Qs</Titles>
-				<Titles LongName="Gold Competition - Intern Trigility Merit Award" Name="Gold-C-ITMA">10 Qs</Titles>
-				<Titles LongName="Gold Competition - Intern Merit Award" Name="Gold-C-IMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Competition - Intern Standard Merit Award" Name="Platinum-C-ISMA">75 Qs</Titles>
-				<Titles LongName="Platinum Competition - Intern Gamblers Merit Award" Name="Platinum-C-IGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Competition - Intern Jumpers Merit Award" Name="Platinum-C-IJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Competition - Intern Snakes N Ladders Merit Award" Name="Platinum-C-ISLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Competition - Intern Trigility Merit Award" Name="Platinum-C-ITMA">15 Qs</Titles>
-				<Titles LongName="Platinum Competition - Intern Merit Award" Name="Platinum-C-IMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Competition - Intern Standard Merit Award" Name="Double Platinum-C-ISMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Intern Gamblers Merit Award" Name="Double Platinum-C-IGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Intern Jumpers Merit Award" Name="Double Platinum-C-IJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Intern Snakes N Ladders Merit Award" Name="Double Platinum-C-ISLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Intern Trigility Merit Award" Name="Double Platinum-C-ITMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Intern Merit Award" Name="Double Platinum-C-IMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
+				<Titles LongName="Competition - Intern Snakes N Ladders Award" Name="C-ISLA">1 Qs</Titles>
+				<Titles LongName="Competition - Intern Trigility Award" Name="C-ITA">1 Qs</Titles>
+				<Titles LongName="Competition - Intern Agility Award" Name="C-IAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Competition - Intern Agility Merit Award" Name="C-IAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Competition - Intern Agility Merit Award" Name="Bronze-C-IAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Competition - Intern Agility Merit Award" Name="Silver-C-IAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Competition - Intern Agility Merit Award" Name="Gold-C-IAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Competition - Intern Agility Merit Award" Name="Platinum-C-IAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Competition - Intern Agility Merit Award" Name="Double Platinum-C-IAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Competition - Specialist Standard Agility Award" Name="C-SSA">5 Qs</Titles>
+				<Titles LongName="Competition - Specialist Gamblers Award" Name="C-SGA">5 Qs, any combination of Gambles</Titles>
+				<Titles LongName="Competition - Specialist Jumpers Award" Name="C-SJA">5 Qs</Titles>
+				<Titles LongName="Competition - Specialist Snakes N Ladders Award" Name="C-SSLA">3 Qs</Titles>
+				<Titles LongName="Competition - Specialist Trigility Award" Name="C-STA">2 Qs</Titles>
+				<Titles LongName="Competition - Specialist Agility Award" Name="C-SAA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Competition - Specialist Standard Agility Merit Award" Name="C-SSMA">15 Qs</Titles>
+				<Titles LongName="Competition - Specialist Gamblers Merit Award" Name="C-SGMA">10 Qs</Titles>
+				<Titles LongName="Competition - Specialist Jumpers Merit Award" Name="C-SJMA">10 Qs</Titles>
+				<Titles LongName="Competition - Merit of Excellence Award" Name="C-MEX">15-S, 10-G, 10-J</Titles>
+				<Titles LongName="Bronze - Competition - Specialist Standard Merit Award" Name="Bronze-C-SSMA">20 Qs</Titles>
+				<Titles LongName="Bronze - Competition - Specialist Gamblers Merit Award" Name="Bronze-C-SGMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Competition - Specialist Jumpers Merit Award" Name="Bronze-C-SJMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Competition - Specialist Snakes N Ladders Merit Award" Name="Bronze-C-SSLMA">7 Qs</Titles>
+				<Titles LongName="Bronze - Competition - Specialist Trigility Merit Award" Name="Bronze-C-STMA">5 Qs</Titles>
+				<Titles LongName="Bronze - Competition - Merit of Excellence Award" Name="Bronze-C-MEX">20-S, 15-G, 15-J, 7-SNL, 5-Tri</Titles>
+				<Titles LongName="Silver - Competition - Specialist Standard Merit Award" Name="Silver-C-SSMA">30 Qs</Titles>
+				<Titles LongName="Silver - Competition - Specialist Gamblers Merit Award" Name="Silver-C-SGMA">20 Qs</Titles>
+				<Titles LongName="Silver - Competition - Specialist Jumpers Merit Award" Name="Silver-C-SJMA">20 Qs</Titles>
+				<Titles LongName="Silver - Competition - Specialist Snakes N Ladders Merit Award" Name="Silver-C-SSLMA">10 Qs</Titles>
+				<Titles LongName="Silver - Competition - Specialist Trigility Merit Award" Name="Silver-C-STMA">7 Qs</Titles>
+				<Titles LongName="Silver - Competition - Merit of Excellence Award" Name="Silver-C-MEX">30-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
+				<Titles LongName="Gold - Competition - Specialist Standard Merit Award" Name="Gold-C-SSMA">50 Qs</Titles>
+				<Titles LongName="Gold - Competition - Specialist Gamblers Merit Award" Name="Gold-C-SGMA">30 Qs</Titles>
+				<Titles LongName="Gold - Competition - Specialist Jumpers Merit Award" Name="Gold-C-SJMA">30 Qs</Titles>
+				<Titles LongName="Gold - Competition - Specialist Snakes N Ladders Merit Award" Name="Gold-C-SSLMA">15 Qs</Titles>
+				<Titles LongName="Gold - Competition - Specialist Trigility Merit Award" Name="Gold-C-STMA">10 Qs</Titles>
+				<Titles LongName="Gold - Competition - Merit of Excellence Award" Name="Gold-C-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
+				<Titles LongName="Platinum - Competition - Specialist Standard Merit Award" Name="Platinum-C-SSMA">75 Qs</Titles>
+				<Titles LongName="Platinum - Competition - Specialist Gamblers Merit Award" Name="Platinum-C-SGMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Competition - Specialist Jumpers Merit Award" Name="Platinum-C-SJMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Competition - Specialist Snakes N Ladders Merit Award" Name="Platinum-C-SSLMA">20 Qs</Titles>
+				<Titles LongName="Platinum - Competition - Specialist Trigility Merit Award" Name="Platinum-C-STMA">15 Qs</Titles>
+				<Titles LongName="Platinum - Competition - Merit of Excellence Award" Name="Platinum-C-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
+				<Titles LongName="Double Platinum - Competition - Specialist Standard Merit Award" Name="Double Platinum-C-SSMA">100 Qs</Titles>
+				<Titles LongName="Double Platinum - Competition - Specialist Gamblers Merit Award" Name="Double Platinum-C-SGMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Competition - Specialist Jumpers Merit Award" Name="Double Platinum-C-SJMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Competition - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-C-SSLMA">25 Qs</Titles>
+				<Titles LongName="Double Platinum - Competition - Specialist Trigility Merit Award" Name="Double Platinum-C-STMA">20 Qs</Titles>
+				<Titles LongName="Double Platinum - Competition - Merit of Excellence Award" Name="Double Platinum-C-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Competition Intern North America Challenge Award" Name="Bronze-C-INACA">5 Qs</Titles>
 				<Titles LongName="Silver Competition Intern North America Challenge Award" Name="Silver-C-INACA">10 Qs</Titles>
 				<Titles LongName="Gold Competition Intern North America Challenge Award" Name="Gold-C-INACA">15 Qs</Titles>
 				<Titles LongName="Platinum Competition Intern North America Challenge Award" Name="Platinum-C-INACA">20 Qs</Titles>
 				<Titles LongName="Double Platinum Competition Intern North America Challenge Award" Name="Double Platinum-C-INACA">25 Qs</Titles>
-				<Titles LongName="Competition - Specialist Standard Award" Name="C-SSA">5 Qs</Titles>
-				<Titles LongName="Competition - Specialist Gamblers Award" Name="C-SGA">5 Qs, any combo to Traditional and Time</Titles>
-				<Titles LongName="Competition - Specialist Jumpers Award" Name="C-SJA">5 Qs</Titles>
-				<Titles LongName="Competition - Specialist Snakes N Ladders Award" Name="C-SSLA">3 Qs</Titles>
-				<Titles LongName="Competition - Specialist Trigility Award" Name="C-STA">2 Qs</Titles>
-				<Titles LongName="Competition - Specialist Agility Performance Award" Name="C-SAPA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
-				<Titles LongName="Competition - Specialist Standard Merit Award" Name="C-SSMA">15 Qs</Titles>
-				<Titles LongName="Competition - Specialist Gamblers Merit Award" Name="C-SGMA">10 Qs</Titles>
-				<Titles LongName="Competition - Specialist Jumpers Merit Award" Name="C-SJMA">10 Qs</Titles>
-				<Titles LongName="Competition - Merit of Excellence Award" Name="C-MEX">15-S, 10-G, 10-J</Titles>
-				<Titles LongName="Bronze Competition - Specialist Standard Merit Award" Name="Bronze-C-SSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Competition - Specialist Gamblers Merit Award" Name="Bronze-C-SGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Competition - Specialist Jumpers Merit Award" Name="Bronze-C-SJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Competition - Specialist Snakes N Ladders Merit Award" Name="Bronze-C-SSLMA">5 Qs</Titles>
-				<Titles LongName="Bronze Competition - Specialist Trigility Merit Award" Name="Bronze-C-STMA">5 Qs</Titles>
-				<Titles LongName="Bronze Competition - Merit of Excellence Award" Name="Bronze-C-MEX">15-S, 10-G, 10-J, 5-SNL, 5-Tri
-Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This is for grandfathering ASCA titles.</Titles>
-				<Titles LongName="Silver Competition - Specialist Standard Merit Award" Name="Silver-C-SSMA">25 Qs</Titles>
-				<Titles LongName="Silver Competition - Specialist Gamblers Merit Award" Name="Silver-C-SGMA">20 Qs</Titles>
-				<Titles LongName="Silver Competition - Specialist Jumpers Merit Award" Name="Silver-C-SJMA">20 Qs</Titles>
-				<Titles LongName="Silver Competition - Specialist Snakes N Ladders Merit Award" Name="Silver-C-SSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Competition - Specialist Trigility Merit Award" Name="Silver-C-STMA">7 Qs</Titles>
-				<Titles LongName="Silver Competition - Merit of Excellence Award" Name="Silver-C-MEX">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Competition - Specialist Standard Merit Award" Name="Gold-C-SSMA">50 Qs</Titles>
-				<Titles LongName="Gold Competition - Specialist Gamblers Merit Award" Name="Gold-C-SGMA">30 Qs</Titles>
-				<Titles LongName="Gold Competition - Specialist Jumpers Merit Award" Name="Gold-C-SJMA">30 Qs</Titles>
-				<Titles LongName="Gold Competition - Specialist Snakes N Ladders Merit Award" Name="Gold-C-SSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Competition - Specialist Trigility Merit Award" Name="Gold-C-STMA">10 Qs</Titles>
-				<Titles LongName="Gold Competition - Merit of Excellence Award" Name="Gold-C-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Competition - Specialist Standard Merit Award" Name="Platinum-C-SSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Competition - Specialist Gamblers Merit Award" Name="Platinum-C-SGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Competition - Specialist Jumpers Merit Award" Name="Platinum-C-SJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Competition - Specialist Snakes N Ladders Merit Award" Name="Platinum-C-SSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Competition - Specialist Trigility Merit Award" Name="Platinum-C-STMA">15 Qs</Titles>
-				<Titles LongName="Platinum Competition - Merit of Excellence Award" Name="Platinum-C-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Competition - Specialist Standard Merit Award" Name="Double Platinum-C-SSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Specialist Gamblers Merit Award" Name="Double Platinum-C-SGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Specialist Jumpers Merit Award" Name="Double Platinum-C-SJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-C-SSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Specialist Trigility Merit Award" Name="Double Platinum-C-STMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Competition - Merit of Excellence Award" Name="Double Platinum-C-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Competition Specialist North America Challenge Award" Name="Bronze-C-SNACA">5 Qs</Titles>
 				<Titles LongName="Silver Competition Specialist North America Challenge Award" Name="Silver-C-SNACA">10 Qs</Titles>
 				<Titles LongName="Gold Competition Specialist North America Challenge Award" Name="Gold-C-SNACA">15 Qs</Titles>
@@ -1227,135 +1166,75 @@ Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This i
 				<Level Name="Beginner"/>
 				<Level Name="Intern"/>
 				<Level Name="Specialist"/>
-				<Titles LongName="Select - Beginner Standard Award" Name="S-BSA">3 Qs</Titles>
-				<Titles LongName="Select - Beginner Gamblers Award" Name="S-BGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Select - Beginner Standard Agility Award" Name="S-BSA">3 Qs</Titles>
+				<Titles LongName="Select - Beginner Gamblers Award" Name="S-BGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Select - Beginner Jumpers Award" Name="S-BJA">3 Qs</Titles>
-				<Titles LongName="Select - Beginner Snakes N Ladders Award" Name="S-BSLA">2 Qs</Titles>
-				<Titles LongName="Select - Beginner Trigility Award" Name="S-BTA">2 Qs</Titles>
-				<Titles LongName="Select - Beginner Agility Performance Award" Name="S-BAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Select - Beginner Standard Merit Award" Name="S-BSMA">10 Qs</Titles>
-				<Titles LongName="Select - Beginner Gamblers Merit Award" Name="S-BGMA">5 Qs</Titles>
-				<Titles LongName="Select - Beginner Jumpers Merit Award" Name="S-BJMA">5 Qs</Titles>
-				<Titles LongName="Select - Beginner Snakes N Ladders Merit Award" Name="S-BSLMA">5 Qs</Titles>
-				<Titles LongName="Select - Beginner Trigility Merit Award" Name="S-BTMA">3 Qs</Titles>
-				<Titles LongName="Select - Beginner Merit Award" Name="S-BMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Select - Beginner Standard Merit Award" Name="Bronze-S-BSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Select - Beginner Gamblers Merit Award" Name="Bronze-S-BGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Select - Beginner Jumpers Merit Award" Name="Bronze-S-BJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Select - Beginner Snakes N Ladders Merit Award" Name="Bronze-S-BSLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Select - Beginner Trigility Merit Award" Name="Bronze-S-BTMA">5 Qs</Titles>
-				<Titles LongName="Bronze Select - Beginner Merit Award" Name="Bronze-S-BMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Select - Beginner Standard Merit Award" Name="Silver-S-BSMA">25 Qs</Titles>
-				<Titles LongName="Silver Select - Beginner Gamblers Merit Award" Name="Silver-S-BGMA">20 Qs</Titles>
-				<Titles LongName="Silver Select - Beginner Jumpers Merit Award" Name="Silver-S-BJMA">20 Qs</Titles>
-				<Titles LongName="Silver Select - Beginner Snakes N Ladders Merit Award" Name="Silver-S-BSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Select - Beginner Trigility Merit Award" Name="Silver-S-BTMA">7 Qs</Titles>
-				<Titles LongName="Silver Select - Beginner Merit Award" Name="Silver-S-BMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Select - Beginner Standard Merit Award" Name="Gold-S-BSMA">50 Qs</Titles>
-				<Titles LongName="Gold Select - Beginner Gamblers Merit Award" Name="Gold-S-BGMA">30 Qs</Titles>
-				<Titles LongName="Gold Select - Beginner Jumpers Merit Award" Name="Gold-S-BJMA">30 Qs</Titles>
-				<Titles LongName="Gold Select - Beginner Snakes N Ladders Merit Award" Name="Gold-S-BSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Select - Beginner Trigility Merit Award" Name="Gold-S-BTMA">10 Qs</Titles>
-				<Titles LongName="Gold Select - Beginner Merit Award" Name="Gold-S-BMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Select - Beginner Standard Merit Award" Name="Platinum-S-BSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Select - Beginner Gamblers Merit Award" Name="Platinum-S-BGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Select - Beginner Jumpers Merit Award" Name="Platinum-S-BJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Select - Beginner Snakes N Ladders Merit Award" Name="Platinum-S-BSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Select - Beginner Trigility Merit Award" Name="Platinum-S-BTMA">15 Qs</Titles>
-				<Titles LongName="Platinum Select - Beginner Merit Award" Name="Platinum-S-BMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Select - Beginner Standard Merit Award" Name="Double Platinum-S-BSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Beginner Gamblers Merit Award" Name="Double Platinum-S-BGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Beginner Jumpers Merit Award" Name="Double Platinum-S-BJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Beginner Snakes N Ladders Merit Award" Name="Double Platinum-S-BSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Beginner Trigility Merit Award" Name="Double Platinum-S-BTMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Beginner Merit Award" Name="Double Platinum-S-BMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
-				<Titles LongName="Select - Intern Standard Award" Name="S-ISA">3 Qs</Titles>
-				<Titles LongName="Select - Intern Gamblers Award" Name="S-IGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Select - Beginner Snakes N Ladders Award" Name="S-BSLA">1 Q</Titles>
+				<Titles LongName="Select - Beginner Trigility Award" Name="S-BTA">1 Qs</Titles>
+				<Titles LongName="Select - Beginner Agility Award" Name="S-BAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Select - Beginner Agility Merit Award" Name="S-BAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Select - Beginner Agility Merit Award" Name="Bronze-S-BAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Select - Beginner Agility Merit Award" Name="Silver-S-BAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Select - Beginner Agility Merit Award" Name="Gold-S-BAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Select - Beginner Agility Merit Award" Name="Platinum-S-BAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Select - Beginner Agility Merit Award" Name="Double Platinum-S-BAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Select - Intern Standard Agility Award" Name="S-ISA">3 Qs</Titles>
+				<Titles LongName="Select - Intern Gamblers Award" Name="S-IGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Select - Intern Jumpers Award" Name="S-IJA">3 Qs</Titles>
-				<Titles LongName="Select - Intern Snakes N Ladders Award" Name="S-ISLA">2 Qs</Titles>
-				<Titles LongName="Select - Intern Trigility Award" Name="S-ITA">2 Qs</Titles>
-				<Titles LongName="Select - Intern Agility Performance Award" Name="S-IAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Select - Intern Standard Merit Award" Name="S-ISMA">10 Qs</Titles>
-				<Titles LongName="Select - Intern Gamblers Merit Award" Name="S-IGMA">5 Qs</Titles>
-				<Titles LongName="Select - Intern Jumpers Merit Award" Name="S-IJMA">5 Qs</Titles>
-				<Titles LongName="Select - Intern Snakes N Ladders Merit Award" Name="S-ISLMA">5 Qs</Titles>
-				<Titles LongName="Select - Intern Trigility Merit Award" Name="S-ITMA">3 Qs</Titles>
-				<Titles LongName="Select - Intern Merit Award" Name="S-IMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Select - Intern Standard Merit Award" Name="Bronze-S-ISMA">15 Qs</Titles>
-				<Titles LongName="Bronze Select - Intern Gamblers Merit Award" Name="Bronze-S-IGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Select - Intern Jumpers Merit Award" Name="Bronze-S-IJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Select - Intern Snakes N Ladders Merit Award" Name="Bronze-S-ISLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Select - Intern Trigility Merit Award" Name="Bronze-S-ITMA">5 Qs</Titles>
-				<Titles LongName="Bronze Select - Intern Merit Award" Name="Bronze-S-IMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Select - Intern Standard Merit Award" Name="Silver-S-ISMA">25 Qs</Titles>
-				<Titles LongName="Silver Select - Intern Gamblers Merit Award" Name="Silver-S-IGMA">20 Qs</Titles>
-				<Titles LongName="Silver Select - Intern Jumpers Merit Award" Name="Silver-S-IJMA">20 Qs</Titles>
-				<Titles LongName="Silver Select - Intern Snakes N Ladders Merit Award" Name="Silver-S-ISLMA">10 Qs</Titles>
-				<Titles LongName="Silver Select - Intern Trigility Merit Award" Name="Silver-S-ITMA">7 Qs</Titles>
-				<Titles LongName="Silver Select - Intern Merit Award" Name="Silver-S-IMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Select - Intern Standard Merit Award" Name="Gold-S-ISMA">50 Qs</Titles>
-				<Titles LongName="Gold Select - Intern Gamblers Merit Award" Name="Gold-S-IGMA">30 Qs</Titles>
-				<Titles LongName="Gold Select - Intern Jumpers Merit Award" Name="Gold-S-IJMA">30 Qs</Titles>
-				<Titles LongName="Gold Select - Intern Snakes N Ladders Merit Award" Name="Gold-S-ISLMA">15 Qs</Titles>
-				<Titles LongName="Gold Select - Intern Trigility Merit Award" Name="Gold-S-ITMA">10 Qs</Titles>
-				<Titles LongName="Gold Select - Intern Merit Award" Name="Gold-S-IMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Select - Intern Standard Merit Award" Name="Platinum-S-ISMA">75 Qs</Titles>
-				<Titles LongName="Platinum Select - Intern Gamblers Merit Award" Name="Platinum-S-IGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Select - Intern Jumpers Merit Award" Name="Platinum-S-IJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Select - Intern Snakes N Ladders Merit Award" Name="Platinum-S-ISLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Select - Intern Trigility Merit Award" Name="Platinum-S-ITMA">15 Qs</Titles>
-				<Titles LongName="Platinum Select - Intern Merit Award" Name="Platinum-S-IMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Select - Intern Standard Merit Award" Name="Double Platinum-S-ISMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Intern Gamblers Merit Award" Name="Double Platinum-S-IGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Intern Jumpers Merit Award" Name="Double Platinum-S-IJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Intern Snakes N Ladders Merit Award" Name="Double Platinum-S-ISLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Intern Trigility Merit Award" Name="Double Platinum-S-ITMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Intern Merit Award" Name="Double Platinum-S-IMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
+				<Titles LongName="Select - Intern Snakes N Ladders Award" Name="S-ISLA">1 Qs</Titles>
+				<Titles LongName="Select - Intern Trigility Award" Name="S-ITA">1 Qs</Titles>
+				<Titles LongName="Select - Intern Agility Award" Name="S-IAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Select - Intern Agility Merit Award" Name="S-IAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Select - Intern Agility Merit Award" Name="Bronze-S-IAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Select - Intern Agility Merit Award" Name="Silver-S-IAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Select - Intern Agility Merit Award" Name="Gold-S-IAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Select - Intern Agility Merit Award" Name="Platinum-S-IAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Select - Intern Agility Merit Award" Name="Double Platinum-S-IAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Select - Specialist Standard Agility Award" Name="S-SSA">5 Qs</Titles>
+				<Titles LongName="Select - Specialist Gamblers Award" Name="S-SGA">5 Qs, any combination of Gambles</Titles>
+				<Titles LongName="Select - Specialist Jumpers Award" Name="S-SJA">5 Qs</Titles>
+				<Titles LongName="Select - Specialist Snakes N Ladders Award" Name="S-SSLA">3 Qs</Titles>
+				<Titles LongName="Select - Specialist Trigility Award" Name="S-STA">2 Qs</Titles>
+				<Titles LongName="Select - Specialist Agility Award" Name="S-SAA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Select - Specialist Standard Agility Merit Award" Name="S-SSMA">15 Qs</Titles>
+				<Titles LongName="Select - Specialist Gamblers Merit Award" Name="S-SGMA">10 Qs</Titles>
+				<Titles LongName="Select - Specialist Jumpers Merit Award" Name="S-SJMA">10 Qs</Titles>
+				<Titles LongName="Select - Merit of Excellence Award" Name="S-MEX">15-S, 10-G, 10-J</Titles>
+				<Titles LongName="Bronze - Select - Specialist Standard Merit Award" Name="Bronze-S-SSMA">20 Qs</Titles>
+				<Titles LongName="Bronze - Select - Specialist Gamblers Merit Award" Name="Bronze-S-SGMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Select - Specialist Jumpers Merit Award" Name="Bronze-S-SJMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Select - Specialist Snakes N Ladders Merit Award" Name="Bronze-S-SSLMA">7 Qs</Titles>
+				<Titles LongName="Bronze - Select - Specialist Trigility Merit Award" Name="Bronze-S-STMA">5 Qs</Titles>
+				<Titles LongName="Bronze - Select - Merit of Excellence Award" Name="Bronze-S-MEX">20-S, 15-G, 15-J, 7-SNL, 5-Tri</Titles>
+				<Titles LongName="Silver - Select - Specialist Standard Merit Award" Name="Silver-S-SSMA">30 Qs</Titles>
+				<Titles LongName="Silver - Select - Specialist Gamblers Merit Award" Name="Silver-S-SGMA">20 Qs</Titles>
+				<Titles LongName="Silver - Select - Specialist Jumpers Merit Award" Name="Silver-S-SJMA">20 Qs</Titles>
+				<Titles LongName="Silver - Select - Specialist Snakes N Ladders Merit Award" Name="Silver-S-SSLMA">10 Qs</Titles>
+				<Titles LongName="Silver - Select - Specialist Trigility Merit Award" Name="Silver-S-STMA">7 Qs</Titles>
+				<Titles LongName="Silver - Select - Merit of Excellence Award" Name="Silver-S-MEX">30-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
+				<Titles LongName="Gold - Select - Specialist Standard Merit Award" Name="Gold-S-SSMA">50 Qs</Titles>
+				<Titles LongName="Gold - Select - Specialist Gamblers Merit Award" Name="Gold-S-SGMA">30 Qs</Titles>
+				<Titles LongName="Gold - Select - Specialist Jumpers Merit Award" Name="Gold-S-SJMA">30 Qs</Titles>
+				<Titles LongName="Gold - Select - Specialist Snakes N Ladders Merit Award" Name="Gold-S-SSLMA">15 Qs</Titles>
+				<Titles LongName="Gold - Select - Specialist Trigility Merit Award" Name="Gold-S-STMA">10 Qs</Titles>
+				<Titles LongName="Gold - Select - Merit of Excellence Award" Name="Gold-S-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
+				<Titles LongName="Platinum - Select - Specialist Standard Merit Award" Name="Platinum-S-SSMA">75 Qs</Titles>
+				<Titles LongName="Platinum - Select - Specialist Gamblers Merit Award" Name="Platinum-S-SGMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Select - Specialist Jumpers Merit Award" Name="Platinum-S-SJMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Select - Specialist Snakes N Ladders Merit Award" Name="Platinum-S-SSLMA">20 Qs</Titles>
+				<Titles LongName="Platinum - Select - Specialist Trigility Merit Award" Name="Platinum-S-STMA">15 Qs</Titles>
+				<Titles LongName="Platinum - Select - Merit of Excellence Award" Name="Platinum-S-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
+				<Titles LongName="Double Platinum - Select - Specialist Standard Merit Award" Name="Double Platinum-S-SSMA">100 Qs</Titles>
+				<Titles LongName="Double Platinum - Select - Specialist Gamblers Merit Award" Name="Double Platinum-S-SGMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Select - Specialist Jumpers Merit Award" Name="Double Platinum-S-SJMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Select - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-S-SSLMA">25 Qs</Titles>
+				<Titles LongName="Double Platinum - Select - Specialist Trigility Merit Award" Name="Double Platinum-S-STMA">20 Qs</Titles>
+				<Titles LongName="Double Platinum - Select - Merit of Excellence Award" Name="Double Platinum-S-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Select Intern North America Challenge Award" Name="Bronze-S-INACA">5 Qs</Titles>
 				<Titles LongName="Silver Select Intern North America Challenge Award" Name="Silver-S-INACA">10 Qs</Titles>
 				<Titles LongName="Gold Select Intern North America Challenge Award" Name="Gold-S-INACA">15 Qs</Titles>
 				<Titles LongName="Platinum Select Intern North America Challenge Award" Name="Platinum-S-INACA">20 Qs</Titles>
 				<Titles LongName="Double Platinum Select Intern North America Challenge Award" Name="Double Platinum-S-INACA">25 Qs</Titles>
-				<Titles LongName="Select - Specialist Standard Award" Name="S-SSA">5 Qs</Titles>
-				<Titles LongName="Select - Specialist Gamblers Award" Name="S-SGA">5 Qs, any combo to Traditional and Time</Titles>
-				<Titles LongName="Select - Specialist Jumpers Award" Name="S-SJA">5 Qs</Titles>
-				<Titles LongName="Select - Specialist Snakes N Ladders Award" Name="S-SSLA">3 Qs</Titles>
-				<Titles LongName="Select - Specialist Trigility Award" Name="S-STA">2 Qs</Titles>
-				<Titles LongName="Select - Specialist Agility Performance Award" Name="S-SAPA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
-				<Titles LongName="Select - Specialist Standard Merit Award" Name="S-SSMA">15 Qs</Titles>
-				<Titles LongName="Select - Specialist Gamblers Merit Award" Name="S-SGMA">10 Qs</Titles>
-				<Titles LongName="Select - Specialist Jumpers Merit Award" Name="S-SJMA">10 Qs</Titles>
-				<Titles LongName="Select - Merit of Excellence Award" Name="S-MEX">15-S, 10-G, 10-J</Titles>
-				<Titles LongName="Bronze Select - Specialist Standard Merit Award" Name="Bronze-S-SSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Select - Specialist Gamblers Merit Award" Name="Bronze-S-SGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Select - Specialist Jumpers Merit Award" Name="Bronze-S-SJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Select - Specialist Snakes N Ladders Merit Award" Name="Bronze-S-SSLMA">5 Qs</Titles>
-				<Titles LongName="Bronze Select - Specialist Trigility Merit Award" Name="Bronze-S-STMA">5 Qs</Titles>
-				<Titles LongName="Bronze Select - Merit of Excellence Award" Name="Bronze-S-MEX">15-S, 10-G, 10-J, 5-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Select - Specialist Standard Merit Award" Name="Silver-S-SSMA">25 Qs</Titles>
-				<Titles LongName="Silver Select - Specialist Gamblers Merit Award" Name="Silver-S-SGMA">20 Qs</Titles>
-				<Titles LongName="Silver Select - Specialist Jumpers Merit Award" Name="Silver-S-SJMA">20 Qs</Titles>
-				<Titles LongName="Silver Select - Specialist Snakes N Ladders Merit Award" Name="Silver-S-SSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Select - Specialist Trigility Merit Award" Name="Silver-S-STMA">7 Qs</Titles>
-				<Titles LongName="Silver Select - Merit of Excellence Award" Name="Silver-S-MEX">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Select - Specialist Standard Merit Award" Name="Gold-S-SSMA">50 Qs</Titles>
-				<Titles LongName="Gold Select - Specialist Gamblers Merit Award" Name="Gold-S-SGMA">30 Qs</Titles>
-				<Titles LongName="Gold Select - Specialist Jumpers Merit Award" Name="Gold-S-SJMA">30 Qs</Titles>
-				<Titles LongName="Gold Select - Specialist Snakes N Ladders Merit Award" Name="Gold-S-SSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Select - Specialist Trigility Merit Award" Name="Gold-S-STMA">10 Qs</Titles>
-				<Titles LongName="Gold Select - Merit of Excellence Award" Name="Gold-S-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Select - Specialist Standard Merit Award" Name="Platinum-S-SSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Select - Specialist Gamblers Merit Award" Name="Platinum-S-SGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Select - Specialist Jumpers Merit Award" Name="Platinum-S-SJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Select - Specialist Snakes N Ladders Merit Award" Name="Platinum-S-SSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Select - Specialist Trigility Merit Award" Name="Platinum-S-STMA">15 Qs</Titles>
-				<Titles LongName="Platinum Select - Merit of Excellence Award" Name="Platinum-S-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Select - Specialist Standard Merit Award" Name="Double Platinum-S-SSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Specialist Gamblers Merit Award" Name="Double Platinum-S-SGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Specialist Jumpers Merit Award" Name="Double Platinum-S-SJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-S-SSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Specialist Trigility Merit Award" Name="Double Platinum-S-STMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Select - Merit of Excellence Award" Name="Double Platinum-S-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Select Specialist North America Challenge Award" Name="Bronze-S-SNACA">5 Qs</Titles>
 				<Titles LongName="Silver Select Specialist North America Challenge Award" Name="Silver-S-SNACA">10 Qs</Titles>
 				<Titles LongName="Gold Select Specialist North America Challenge Award" Name="Gold-S-SNACA">15 Qs</Titles>
@@ -1366,135 +1245,75 @@ Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This i
 				<Level Name="Beginner"/>
 				<Level Name="Intern"/>
 				<Level Name="Specialist"/>
-				<Titles LongName="Veterans - Beginner Standard Award" Name="V-BSA">3 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Gamblers Award" Name="V-BGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Veterans - Beginner Standard Agility Award" Name="V-BSA">3 Qs</Titles>
+				<Titles LongName="Veterans - Beginner Gamblers Award" Name="V-BGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Veterans - Beginner Jumpers Award" Name="V-BJA">3 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Snakes N Ladders Award" Name="V-BSLA">2 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Trigility Award" Name="V-BTA">2 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Agility Performance Award" Name="V-BAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Veterans - Beginner Standard Merit Award" Name="V-BSMA">10 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Gamblers Merit Award" Name="V-BGMA">5 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Jumpers Merit Award" Name="V-BJMA">5 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Snakes N Ladders Merit Award" Name="V-BSLMA">5 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Trigility Merit Award" Name="V-BTMA">3 Qs</Titles>
-				<Titles LongName="Veterans - Beginner Merit Award" Name="V-BMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Veterans - Beginner Standard Merit Award" Name="Bronze-V-BSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Beginner Gamblers Merit Award" Name="Bronze-V-BGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Beginner Jumpers Merit Award" Name="Bronze-V-BJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Beginner Snakes N Ladders Merit Award" Name="Bronze-V-BSLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Beginner Trigility Merit Award" Name="Bronze-V-BTMA">5 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Beginner Merit Award" Name="Bronze-V-BMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Veterans - Beginner Standard Merit Award" Name="Silver-V-BSMA">25 Qs</Titles>
-				<Titles LongName="Silver Veterans - Beginner Gamblers Merit Award" Name="Silver-V-BGMA">20 Qs</Titles>
-				<Titles LongName="Silver Veterans - Beginner Jumpers Merit Award" Name="Silver-V-BJMA">20 Qs</Titles>
-				<Titles LongName="Silver Veterans - Beginner Snakes N Ladders Merit Award" Name="Silver-V-BSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Veterans - Beginner Trigility Merit Award" Name="Silver-V-BTMA">7 Qs</Titles>
-				<Titles LongName="Silver Veterans - Beginner Merit Award" Name="Silver-V-BMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Veterans - Beginner Standard Merit Award" Name="Gold-V-BSMA">50 Qs</Titles>
-				<Titles LongName="Gold Veterans - Beginner Gamblers Merit Award" Name="Gold-V-BGMA">30 Qs</Titles>
-				<Titles LongName="Gold Veterans - Beginner Jumpers Merit Award" Name="Gold-V-BJMA">30 Qs</Titles>
-				<Titles LongName="Gold Veterans - Beginner Snakes N Ladders Merit Award" Name="Gold-V-BSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Veterans - Beginner Trigility Merit Award" Name="Gold-V-BTMA">10 Qs</Titles>
-				<Titles LongName="Gold Veterans - Beginner Merit Award" Name="Gold-V-BMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Veterans - Beginner Standard Merit Award" Name="Platinum-V-BSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Beginner Gamblers Merit Award" Name="Platinum-V-BGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Beginner Jumpers Merit Award" Name="Platinum-V-BJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Beginner Snakes N Ladders Merit Award" Name="Platinum-V-BSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Beginner Trigility Merit Award" Name="Platinum-V-BTMA">15 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Beginner Merit Award" Name="Platinum-V-BMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Veterans - Beginner Standard Merit Award" Name="Double Platinum-V-BSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Beginner Gamblers Merit Award" Name="Double Platinum-V-BGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Beginner Jumpers Merit Award" Name="Double Platinum-V-BJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Beginner Snakes N Ladders Merit Award" Name="Double Platinum-V-BSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Beginner Trigility Merit Award" Name="Double Platinum-V-BTMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Beginner Merit Award" Name="Double Platinum-V-BMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
-				<Titles LongName="Veterans - Intern Standard Award" Name="V-ISA">3 Qs</Titles>
-				<Titles LongName="Veterans - Intern Gamblers Award" Name="V-IGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Veterans - Beginner Snakes N Ladders Award" Name="V-BSLA">1 Q</Titles>
+				<Titles LongName="Veterans - Beginner Trigility Award" Name="V-BTA">1 Qs</Titles>
+				<Titles LongName="Veterans - Beginner Agility Award" Name="V-BAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Veterans - Beginner Agility Merit Award" Name="V-BAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Veterans - Beginner Agility Merit Award" Name="Bronze-V-BAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Veterans - Beginner Agility Merit Award" Name="Silver-V-BAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Veterans - Beginner Agility Merit Award" Name="Gold-V-BAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Veterans - Beginner Agility Merit Award" Name="Platinum-V-BAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Veterans - Beginner Agility Merit Award" Name="Double Platinum-V-BAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Veterans - Intern Standard Agility Award" Name="V-ISA">3 Qs</Titles>
+				<Titles LongName="Veterans - Intern Gamblers Award" Name="V-IGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Veterans - Intern Jumpers Award" Name="V-IJA">3 Qs</Titles>
-				<Titles LongName="Veterans - Intern Snakes N Ladders Award" Name="V-ISLA">2 Qs</Titles>
-				<Titles LongName="Veterans - Intern Trigility Award" Name="V-ITA">2 Qs</Titles>
-				<Titles LongName="Veterans - Intern Agility Performance Award" Name="V-IAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Veterans - Intern Standard Merit Award" Name="V-ISMA">10 Qs</Titles>
-				<Titles LongName="Veterans - Intern Gamblers Merit Award" Name="V-IGMA">5 Qs</Titles>
-				<Titles LongName="Veterans - Intern Jumpers Merit Award" Name="V-IJMA">5 Qs</Titles>
-				<Titles LongName="Veterans - Intern Snakes N Ladders Merit Award" Name="V-ISLMA">5 Qs</Titles>
-				<Titles LongName="Veterans - Intern Trigility Merit Award" Name="V-ITMA">3 Qs</Titles>
-				<Titles LongName="Veterans - Intern Merit Award" Name="V-IMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Veterans - Intern Standard Merit Award" Name="Bronze-V-ISMA">15 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Intern Gamblers Merit Award" Name="Bronze-V-IGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Intern Jumpers Merit Award" Name="Bronze-V-IJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Intern Snakes N Ladders Merit Award" Name="Bronze-V-ISLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Intern Trigility Merit Award" Name="Bronze-V-ITMA">5 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Intern Merit Award" Name="Bronze-V-IMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Veterans - Intern Standard Merit Award" Name="Silver-V-ISMA">25 Qs</Titles>
-				<Titles LongName="Silver Veterans - Intern Gamblers Merit Award" Name="Silver-V-IGMA">20 Qs</Titles>
-				<Titles LongName="Silver Veterans - Intern Jumpers Merit Award" Name="Silver-V-IJMA">20 Qs</Titles>
-				<Titles LongName="Silver Veterans - Intern Snakes N Ladders Merit Award" Name="Silver-V-ISLMA">10 Qs</Titles>
-				<Titles LongName="Silver Veterans - Intern Trigility Merit Award" Name="Silver-V-ITMA">7 Qs</Titles>
-				<Titles LongName="Silver Veterans - Intern Merit Award" Name="Silver-V-IMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Veterans - Intern Standard Merit Award" Name="Gold-V-ISMA">50 Qs</Titles>
-				<Titles LongName="Gold Veterans - Intern Gamblers Merit Award" Name="Gold-V-IGMA">30 Qs</Titles>
-				<Titles LongName="Gold Veterans - Intern Jumpers Merit Award" Name="Gold-V-IJMA">30 Qs</Titles>
-				<Titles LongName="Gold Veterans - Intern Snakes N Ladders Merit Award" Name="Gold-V-ISLMA">15 Qs</Titles>
-				<Titles LongName="Gold Veterans - Intern Trigility Merit Award" Name="Gold-V-ITMA">10 Qs</Titles>
-				<Titles LongName="Gold Veterans - Intern Merit Award" Name="Gold-V-IMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Veterans - Intern Standard Merit Award" Name="Platinum-V-ISMA">75 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Intern Gamblers Merit Award" Name="Platinum-V-IGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Intern Jumpers Merit Award" Name="Platinum-V-IJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Intern Snakes N Ladders Merit Award" Name="Platinum-V-ISLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Intern Trigility Merit Award" Name="Platinum-V-ITMA">15 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Intern Merit Award" Name="Platinum-V-IMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Veterans - Intern Standard Merit Award" Name="Double Platinum-V-ISMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Intern Gamblers Merit Award" Name="Double Platinum-V-IGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Intern Jumpers Merit Award" Name="Double Platinum-V-IJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Intern Snakes N Ladders Merit Award" Name="Double Platinum-V-ISLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Intern Trigility Merit Award" Name="Double Platinum-V-ITMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Intern Merit Award" Name="Double Platinum-V-IMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
+				<Titles LongName="Veterans - Intern Snakes N Ladders Award" Name="V-ISLA">1 Qs</Titles>
+				<Titles LongName="Veterans - Intern Trigility Award" Name="V-ITA">1 Qs</Titles>
+				<Titles LongName="Veterans - Intern Agility Award" Name="V-IAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Veterans - Intern Agility Merit Award" Name="V-IAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Veterans - Intern Agility Merit Award" Name="Bronze-V-IAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Veterans - Intern Agility Merit Award" Name="Silver-V-IAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Veterans - Intern Agility Merit Award" Name="Gold-V-IAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Veterans - Intern Agility Merit Award" Name="Platinum-V-IAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Veterans - Intern Agility Merit Award" Name="Double Platinum-V-IAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Veterans - Specialist Standard Agility Award" Name="V-SSA">5 Qs</Titles>
+				<Titles LongName="Veterans - Specialist Gamblers Award" Name="V-SGA">5 Qs, any combination of Gambles</Titles>
+				<Titles LongName="Veterans - Specialist Jumpers Award" Name="V-SJA">5 Qs</Titles>
+				<Titles LongName="Veterans - Specialist Snakes N Ladders Award" Name="V-SSLA">3 Qs</Titles>
+				<Titles LongName="Veterans - Specialist Trigility Award" Name="V-STA">2 Qs</Titles>
+				<Titles LongName="Veterans - Specialist Agility Award" Name="V-SAA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Veterans - Specialist Standard Agility Merit Award" Name="V-SSMA">15 Qs</Titles>
+				<Titles LongName="Veterans - Specialist Gamblers Merit Award" Name="V-SGMA">10 Qs</Titles>
+				<Titles LongName="Veterans - Specialist Jumpers Merit Award" Name="V-SJMA">10 Qs</Titles>
+				<Titles LongName="Veterans - Merit of Excellence Award" Name="V-MEX">15-S, 10-G, 10-J</Titles>
+				<Titles LongName="Bronze - Veterans - Specialist Standard Merit Award" Name="Bronze-V-SSMA">20 Qs</Titles>
+				<Titles LongName="Bronze - Veterans - Specialist Gamblers Merit Award" Name="Bronze-V-SGMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Veterans - Specialist Jumpers Merit Award" Name="Bronze-V-SJMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Veterans - Specialist Snakes N Ladders Merit Award" Name="Bronze-V-SSLMA">7 Qs</Titles>
+				<Titles LongName="Bronze - Veterans - Specialist Trigility Merit Award" Name="Bronze-V-STMA">5 Qs</Titles>
+				<Titles LongName="Bronze - Veterans - Merit of Excellence Award" Name="Bronze-V-MEX">20-S, 15-G, 15-J, 7-SNL, 5-Tri</Titles>
+				<Titles LongName="Silver - Veterans - Specialist Standard Merit Award" Name="Silver-V-SSMA">30 Qs</Titles>
+				<Titles LongName="Silver - Veterans - Specialist Gamblers Merit Award" Name="Silver-V-SGMA">20 Qs</Titles>
+				<Titles LongName="Silver - Veterans - Specialist Jumpers Merit Award" Name="Silver-V-SJMA">20 Qs</Titles>
+				<Titles LongName="Silver - Veterans - Specialist Snakes N Ladders Merit Award" Name="Silver-V-SSLMA">10 Qs</Titles>
+				<Titles LongName="Silver - Veterans - Specialist Trigility Merit Award" Name="Silver-V-STMA">7 Qs</Titles>
+				<Titles LongName="Silver - Veterans - Merit of Excellence Award" Name="Silver-V-MEX">30-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
+				<Titles LongName="Gold - Veterans - Specialist Standard Merit Award" Name="Gold-V-SSMA">50 Qs</Titles>
+				<Titles LongName="Gold - Veterans - Specialist Gamblers Merit Award" Name="Gold-V-SGMA">30 Qs</Titles>
+				<Titles LongName="Gold - Veterans - Specialist Jumpers Merit Award" Name="Gold-V-SJMA">30 Qs</Titles>
+				<Titles LongName="Gold - Veterans - Specialist Snakes N Ladders Merit Award" Name="Gold-V-SSLMA">15 Qs</Titles>
+				<Titles LongName="Gold - Veterans - Specialist Trigility Merit Award" Name="Gold-V-STMA">10 Qs</Titles>
+				<Titles LongName="Gold - Veterans - Merit of Excellence Award" Name="Gold-V-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
+				<Titles LongName="Platinum - Veterans - Specialist Standard Merit Award" Name="Platinum-V-SSMA">75 Qs</Titles>
+				<Titles LongName="Platinum - Veterans - Specialist Gamblers Merit Award" Name="Platinum-V-SGMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Veterans - Specialist Jumpers Merit Award" Name="Platinum-V-SJMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Veterans - Specialist Snakes N Ladders Merit Award" Name="Platinum-V-SSLMA">20 Qs</Titles>
+				<Titles LongName="Platinum - Veterans - Specialist Trigility Merit Award" Name="Platinum-V-STMA">15 Qs</Titles>
+				<Titles LongName="Platinum - Veterans - Merit of Excellence Award" Name="Platinum-V-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
+				<Titles LongName="Double Platinum - Veterans - Specialist Standard Merit Award" Name="Double Platinum-V-SSMA">100 Qs</Titles>
+				<Titles LongName="Double Platinum - Veterans - Specialist Gamblers Merit Award" Name="Double Platinum-V-SGMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Veterans - Specialist Jumpers Merit Award" Name="Double Platinum-V-SJMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Veterans - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-V-SSLMA">25 Qs</Titles>
+				<Titles LongName="Double Platinum - Veterans - Specialist Trigility Merit Award" Name="Double Platinum-V-STMA">20 Qs</Titles>
+				<Titles LongName="Double Platinum - Veterans - Merit of Excellence Award" Name="Double Platinum-V-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Veterans Intern North America Challenge Award" Name="Bronze-V-INACA">5 Qs</Titles>
 				<Titles LongName="Silver Veterans Intern North America Challenge Award" Name="Silver-V-INACA">10 Qs</Titles>
 				<Titles LongName="Gold Veterans Intern North America Challenge Award" Name="Gold-V-INACA">15 Qs</Titles>
 				<Titles LongName="Platinum Veterans Intern North America Challenge Award" Name="Platinum-V-INACA">20 Qs</Titles>
 				<Titles LongName="Double Platinum Veterans Intern North America Challenge Award" Name="Double Platinum-V-INACA">25 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Standard Award" Name="V-SSA">5 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Gamblers Award" Name="V-SGA">5 Qs, any combo to Traditional and Time</Titles>
-				<Titles LongName="Veterans - Specialist Jumpers Award" Name="V-SJA">5 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Snakes N Ladders Award" Name="V-SSLA">3 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Trigility Award" Name="V-STA">2 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Agility Performance Award" Name="V-SAPA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
-				<Titles LongName="Veterans - Specialist Standard Merit Award" Name="V-SSMA">15 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Gamblers Merit Award" Name="V-SGMA">10 Qs</Titles>
-				<Titles LongName="Veterans - Specialist Jumpers Merit Award" Name="V-SJMA">10 Qs</Titles>
-				<Titles LongName="Veterans - Merit of Excellence Award" Name="V-MEX">15-S, 10-G, 10-J</Titles>
-				<Titles LongName="Bronze Veterans - Specialist Standard Merit Award" Name="Bronze-V-SSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Specialist Gamblers Merit Award" Name="Bronze-V-SGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Specialist Jumpers Merit Award" Name="Bronze-V-SJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Specialist Snakes N Ladders Merit Award" Name="Bronze-V-SSLMA">5 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Specialist Trigility Merit Award" Name="Bronze-V-STMA">5 Qs</Titles>
-				<Titles LongName="Bronze Veterans - Merit of Excellence Award" Name="Bronze-V-MEX">15-S, 10-G, 10-J, 5-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Veterans - Specialist Standard Merit Award" Name="Silver-V-SSMA">25 Qs</Titles>
-				<Titles LongName="Silver Veterans - Specialist Gamblers Merit Award" Name="Silver-V-SGMA">20 Qs</Titles>
-				<Titles LongName="Silver Veterans - Specialist Jumpers Merit Award" Name="Silver-V-SJMA">20 Qs</Titles>
-				<Titles LongName="Silver Veterans - Specialist Snakes N Ladders Merit Award" Name="Silver-V-SSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Veterans - Specialist Trigility Merit Award" Name="Silver-V-STMA">7 Qs</Titles>
-				<Titles LongName="Silver Veterans - Merit of Excellence Award" Name="Silver-V-MEX">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Veterans - Specialist Standard Merit Award" Name="Gold-V-SSMA">50 Qs</Titles>
-				<Titles LongName="Gold Veterans - Specialist Gamblers Merit Award" Name="Gold-V-SGMA">30 Qs</Titles>
-				<Titles LongName="Gold Veterans - Specialist Jumpers Merit Award" Name="Gold-V-SJMA">30 Qs</Titles>
-				<Titles LongName="Gold Veterans - Specialist Snakes N Ladders Merit Award" Name="Gold-V-SSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Veterans - Specialist Trigility Merit Award" Name="Gold-V-STMA">10 Qs</Titles>
-				<Titles LongName="Gold Veterans - Merit of Excellence Award" Name="Gold-V-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Veterans - Specialist Standard Merit Award" Name="Platinum-V-SSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Specialist Gamblers Merit Award" Name="Platinum-V-SGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Specialist Jumpers Merit Award" Name="Platinum-V-SJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Specialist Snakes N Ladders Merit Award" Name="Platinum-V-SSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Specialist Trigility Merit Award" Name="Platinum-V-STMA">15 Qs</Titles>
-				<Titles LongName="Platinum Veterans - Merit of Excellence Award" Name="Platinum-V-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Veterans - Specialist Standard Merit Award" Name="Double Platinum-V-SSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Specialist Gamblers Merit Award" Name="Double Platinum-V-SGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Specialist Jumpers Merit Award" Name="Double Platinum-V-SJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-V-SSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Specialist Trigility Merit Award" Name="Double Platinum-V-STMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Veterans - Merit of Excellence Award" Name="Double Platinum-V-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Veterans Specialist North America Challenge Award" Name="Bronze-V-SNACA">5 Qs</Titles>
 				<Titles LongName="Silver Veterans Specialist North America Challenge Award" Name="Silver-V-SNACA">10 Qs</Titles>
 				<Titles LongName="Gold Veterans Specialist North America Challenge Award" Name="Gold-V-SNACA">15 Qs</Titles>
@@ -1505,135 +1324,75 @@ Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This i
 				<Level Name="Beginner"/>
 				<Level Name="Intern"/>
 				<Level Name="Specialist"/>
-				<Titles LongName="Grand Veterans - Beginner Standard Award" Name="GV-BSA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Gamblers Award" Name="GV-BGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Grand Veterans - Beginner Standard Agility Award" Name="GV-BSA">3 Qs</Titles>
+				<Titles LongName="Grand Veterans - Beginner Gamblers Award" Name="GV-BGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Grand Veterans - Beginner Jumpers Award" Name="GV-BJA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Snakes N Ladders Award" Name="GV-BSLA">2 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Trigility Award" Name="GV-BTA">2 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Agility Performance Award" Name="GV-BAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Grand Veterans - Beginner Standard Merit Award" Name="GV-BSMA">10 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Gamblers Merit Award" Name="GV-BGMA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Jumpers Merit Award" Name="GV-BJMA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Snakes N Ladders Merit Award" Name="GV-BSLMA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Trigility Merit Award" Name="GV-BTMA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Beginner Merit Award" Name="GV-BMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Grand Veterans - Beginner Standard Merit Award" Name="Bronze-GV-BSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Beginner Gamblers Merit Award" Name="Bronze-GV-BGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Beginner Jumpers Merit Award" Name="Bronze-GV-BJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Beginner Snakes N Ladders Merit Award" Name="Bronze-GV-BSLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Beginner Trigility Merit Award" Name="Bronze-GV-BTMA">5 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Beginner Merit Award" Name="Bronze-GV-BMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Grand Veterans - Beginner Standard Merit Award" Name="Silver-GV-BSMA">25 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Beginner Gamblers Merit Award" Name="Silver-GV-BGMA">20 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Beginner Jumpers Merit Award" Name="Silver-GV-BJMA">20 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Beginner Snakes N Ladders Merit Award" Name="Silver-GV-BSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Beginner Trigility Merit Award" Name="Silver-GV-BTMA">7 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Beginner Merit Award" Name="Silver-GV-BMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Grand Veterans - Beginner Standard Merit Award" Name="Gold-GV-BSMA">50 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Beginner Gamblers Merit Award" Name="Gold-GV-BGMA">30 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Beginner Jumpers Merit Award" Name="Gold-GV-BJMA">30 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Beginner Snakes N Ladders Merit Award" Name="Gold-GV-BSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Beginner Trigility Merit Award" Name="Gold-GV-BTMA">10 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Beginner Merit Award" Name="Gold-GV-BMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Grand Veterans - Beginner Standard Merit Award" Name="Platinum-GV-BSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Beginner Gamblers Merit Award" Name="Platinum-GV-BGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Beginner Jumpers Merit Award" Name="Platinum-GV-BJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Beginner Snakes N Ladders Merit Award" Name="Platinum-GV-BSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Beginner Trigility Merit Award" Name="Platinum-GV-BTMA">15 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Beginner Merit Award" Name="Platinum-GV-BMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Beginner Standard Merit Award" Name="Double Platinum-GV-BSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Beginner Gamblers Merit Award" Name="Double Platinum-GV-BGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Beginner Jumpers Merit Award" Name="Double Platinum-GV-BJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Beginner Snakes N Ladders Merit Award" Name="Double Platinum-GV-BSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Beginner Trigility Merit Award" Name="Double Platinum-GV-BTMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Beginner Merit Award" Name="Double Platinum-GV-BMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
-				<Titles LongName="Grand Veterans - Intern Standard Award" Name="GV-ISA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Gamblers Award" Name="GV-IGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Grand Veterans - Beginner Snakes N Ladders Award" Name="GV-BSLA">1 Q</Titles>
+				<Titles LongName="Grand Veterans - Beginner Trigility Award" Name="GV-BTA">1 Qs</Titles>
+				<Titles LongName="Grand Veterans - Beginner Agility Award" Name="GV-BAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Grand Veterans - Beginner Agility Merit Award" Name="GV-BAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Beginner Agility Merit Award" Name="Bronze-GV-BAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Grand Veterans - Beginner Agility Merit Award" Name="Silver-GV-BAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Grand Veterans - Beginner Agility Merit Award" Name="Gold-GV-BAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Beginner Agility Merit Award" Name="Platinum-GV-BAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Beginner Agility Merit Award" Name="Double Platinum-GV-BAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Grand Veterans - Intern Standard Agility Award" Name="GV-ISA">3 Qs</Titles>
+				<Titles LongName="Grand Veterans - Intern Gamblers Award" Name="GV-IGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Grand Veterans - Intern Jumpers Award" Name="GV-IJA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Snakes N Ladders Award" Name="GV-ISLA">2 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Trigility Award" Name="GV-ITA">2 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Agility Performance Award" Name="GV-IAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Grand Veterans - Intern Standard Merit Award" Name="GV-ISMA">10 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Gamblers Merit Award" Name="GV-IGMA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Jumpers Merit Award" Name="GV-IJMA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Snakes N Ladders Merit Award" Name="GV-ISLMA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Trigility Merit Award" Name="GV-ITMA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Intern Merit Award" Name="GV-IMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Grand Veterans - Intern Standard Merit Award" Name="Bronze-GV-ISMA">15 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Intern Gamblers Merit Award" Name="Bronze-GV-IGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Intern Jumpers Merit Award" Name="Bronze-GV-IJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Intern Snakes N Ladders Merit Award" Name="Bronze-GV-ISLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Intern Trigility Merit Award" Name="Bronze-GV-ITMA">5 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Intern Merit Award" Name="Bronze-GV-IMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Grand Veterans - Intern Standard Merit Award" Name="Silver-GV-ISMA">25 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Intern Gamblers Merit Award" Name="Silver-GV-IGMA">20 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Intern Jumpers Merit Award" Name="Silver-GV-IJMA">20 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Intern Snakes N Ladders Merit Award" Name="Silver-GV-ISLMA">10 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Intern Trigility Merit Award" Name="Silver-GV-ITMA">7 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Intern Merit Award" Name="Silver-GV-IMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Grand Veterans - Intern Standard Merit Award" Name="Gold-GV-ISMA">50 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Intern Gamblers Merit Award" Name="Gold-GV-IGMA">30 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Intern Jumpers Merit Award" Name="Gold-GV-IJMA">30 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Intern Snakes N Ladders Merit Award" Name="Gold-GV-ISLMA">15 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Intern Trigility Merit Award" Name="Gold-GV-ITMA">10 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Intern Merit Award" Name="Gold-GV-IMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Grand Veterans - Intern Standard Merit Award" Name="Platinum-GV-ISMA">75 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Intern Gamblers Merit Award" Name="Platinum-GV-IGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Intern Jumpers Merit Award" Name="Platinum-GV-IJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Intern Snakes N Ladders Merit Award" Name="Platinum-GV-ISLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Intern Trigility Merit Award" Name="Platinum-GV-ITMA">15 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Intern Merit Award" Name="Platinum-GV-IMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Intern Standard Merit Award" Name="Double Platinum-GV-ISMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Intern Gamblers Merit Award" Name="Double Platinum-GV-IGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Intern Jumpers Merit Award" Name="Double Platinum-GV-IJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Intern Snakes N Ladders Merit Award" Name="Double Platinum-GV-ISLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Intern Trigility Merit Award" Name="Double Platinum-GV-ITMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Intern Merit Award" Name="Double Platinum-GV-IMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
+				<Titles LongName="Grand Veterans - Intern Snakes N Ladders Award" Name="GV-ISLA">1 Qs</Titles>
+				<Titles LongName="Grand Veterans - Intern Trigility Award" Name="GV-ITA">1 Qs</Titles>
+				<Titles LongName="Grand Veterans - Intern Agility Award" Name="GV-IAA">3-S, 3-G, 3-J, 1-SNL, 1-Tri</Titles>
+				<Titles LongName="Grand Veterans - Intern Agility Merit Award" Name="GV-IAMA">10-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Intern Agility Merit Award" Name="Bronze-GV-IAMA">15-S, 10-G, 10-J, 5-SNL, 3-Tri</Titles>
+				<Titles LongName="Silver - Grand Veterans - Intern Agility Merit Award" Name="Silver-GV-IAMA">20-S, 15-G, 15-J, 7-SNL, 4-Tri</Titles>
+				<Titles LongName="Gold - Grand Veterans - Intern Agility Merit Award" Name="Gold-GV-IAMA">30-S, 20-G, 20-J, 9-SNL, 5-Tri</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Intern Agility Merit Award" Name="Platinum-GV-IAMA">40-S, 25-G, 25-J, 12-SNL, 6-Tri</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Intern Agility Merit Award" Name="Double Platinum-GV-IAMA">50-S, 30-G, 30-J, 15-SNL, 7-Tri</Titles>
+				<Titles LongName="Grand Veterans - Specialist Standard Agility Award" Name="GV-SSA">5 Qs</Titles>
+				<Titles LongName="Grand Veterans - Specialist Gamblers Award" Name="GV-SGA">5 Qs, any combination of Gambles</Titles>
+				<Titles LongName="Grand Veterans - Specialist Jumpers Award" Name="GV-SJA">5 Qs</Titles>
+				<Titles LongName="Grand Veterans - Specialist Snakes N Ladders Award" Name="GV-SSLA">3 Qs</Titles>
+				<Titles LongName="Grand Veterans - Specialist Trigility Award" Name="GV-STA">2 Qs</Titles>
+				<Titles LongName="Grand Veterans - Specialist Agility Award" Name="GV-SAA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
+				<Titles LongName="Grand Veterans - Specialist Standard Agility Merit Award" Name="GV-SSMA">15 Qs</Titles>
+				<Titles LongName="Grand Veterans - Specialist Gamblers Merit Award" Name="GV-SGMA">10 Qs</Titles>
+				<Titles LongName="Grand Veterans - Specialist Jumpers Merit Award" Name="GV-SJMA">10 Qs</Titles>
+				<Titles LongName="Grand Veterans - Merit of Excellence Award" Name="GV-MEX">15-S, 10-G, 10-J</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Specialist Standard Merit Award" Name="Bronze-GV-SSMA">20 Qs</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Specialist Gamblers Merit Award" Name="Bronze-GV-SGMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Specialist Jumpers Merit Award" Name="Bronze-GV-SJMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Bronze-GV-SSLMA">7 Qs</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Specialist Trigility Merit Award" Name="Bronze-GV-STMA">5 Qs</Titles>
+				<Titles LongName="Bronze - Grand Veterans - Merit of Excellence Award" Name="Bronze-GV-MEX">20-S, 15-G, 15-J, 7-SNL, 5-Tri</Titles>
+				<Titles LongName="Silver - Grand Veterans - Specialist Standard Merit Award" Name="Silver-GV-SSMA">30 Qs</Titles>
+				<Titles LongName="Silver - Grand Veterans - Specialist Gamblers Merit Award" Name="Silver-GV-SGMA">20 Qs</Titles>
+				<Titles LongName="Silver - Grand Veterans - Specialist Jumpers Merit Award" Name="Silver-GV-SJMA">20 Qs</Titles>
+				<Titles LongName="Silver - Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Silver-GV-SSLMA">10 Qs</Titles>
+				<Titles LongName="Silver - Grand Veterans - Specialist Trigility Merit Award" Name="Silver-GV-STMA">7 Qs</Titles>
+				<Titles LongName="Silver - Grand Veterans - Merit of Excellence Award" Name="Silver-GV-MEX">30-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
+				<Titles LongName="Gold - Grand Veterans - Specialist Standard Merit Award" Name="Gold-GV-SSMA">50 Qs</Titles>
+				<Titles LongName="Gold - Grand Veterans - Specialist Gamblers Merit Award" Name="Gold-GV-SGMA">30 Qs</Titles>
+				<Titles LongName="Gold - Grand Veterans - Specialist Jumpers Merit Award" Name="Gold-GV-SJMA">30 Qs</Titles>
+				<Titles LongName="Gold - Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Gold-GV-SSLMA">15 Qs</Titles>
+				<Titles LongName="Gold - Grand Veterans - Specialist Trigility Merit Award" Name="Gold-GV-STMA">10 Qs</Titles>
+				<Titles LongName="Gold - Grand Veterans - Merit of Excellence Award" Name="Gold-GV-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Specialist Standard Merit Award" Name="Platinum-GV-SSMA">75 Qs</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Specialist Gamblers Merit Award" Name="Platinum-GV-SGMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Specialist Jumpers Merit Award" Name="Platinum-GV-SJMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Platinum-GV-SSLMA">20 Qs</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Specialist Trigility Merit Award" Name="Platinum-GV-STMA">15 Qs</Titles>
+				<Titles LongName="Platinum - Grand Veterans - Merit of Excellence Award" Name="Platinum-GV-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Specialist Standard Merit Award" Name="Double Platinum-GV-SSMA">100 Qs</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Specialist Gamblers Merit Award" Name="Double Platinum-GV-SGMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Specialist Jumpers Merit Award" Name="Double Platinum-GV-SJMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-GV-SSLMA">25 Qs</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Specialist Trigility Merit Award" Name="Double Platinum-GV-STMA">20 Qs</Titles>
+				<Titles LongName="Double Platinum - Grand Veterans - Merit of Excellence Award" Name="Double Platinum-GV-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Grand Veterans Intern North America Challenge Award" Name="Bronze-GV-INACA">5 Qs</Titles>
 				<Titles LongName="Silver Grand Veterans Intern North America Challenge Award" Name="Silver-GV-INACA">10 Qs</Titles>
 				<Titles LongName="Gold Grand Veterans Intern North America Challenge Award" Name="Gold-GV-INACA">15 Qs</Titles>
 				<Titles LongName="Platinum Grand Veterans Intern North America Challenge Award" Name="Platinum-GV-INACA">20 Qs</Titles>
 				<Titles LongName="Double Platinum Grand Veterans Intern North America Challenge Award" Name="Double Platinum-GV-INACA">25 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Standard Award" Name="GV-SSA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Gamblers Award" Name="GV-SGA">5 Qs, any combo to Traditional and Time</Titles>
-				<Titles LongName="Grand Veterans - Specialist Jumpers Award" Name="GV-SJA">5 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Snakes N Ladders Award" Name="GV-SSLA">3 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Trigility Award" Name="GV-STA">2 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Agility Performance Award" Name="GV-SAPA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
-				<Titles LongName="Grand Veterans - Specialist Standard Merit Award" Name="GV-SSMA">15 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Gamblers Merit Award" Name="GV-SGMA">10 Qs</Titles>
-				<Titles LongName="Grand Veterans - Specialist Jumpers Merit Award" Name="GV-SJMA">10 Qs</Titles>
-				<Titles LongName="Grand Veterans - Merit of Excellence Award" Name="GV-MEX">15-S, 10-G, 10-J</Titles>
-				<Titles LongName="Bronze Grand Veterans - Specialist Standard Merit Award" Name="Bronze-GV-SSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Specialist Gamblers Merit Award" Name="Bronze-GV-SGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Specialist Jumpers Merit Award" Name="Bronze-GV-SJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Bronze-GV-SSLMA">5 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Specialist Trigility Merit Award" Name="Bronze-GV-STMA">5 Qs</Titles>
-				<Titles LongName="Bronze Grand Veterans - Merit of Excellence Award" Name="Bronze-GV-MEX">15-S, 10-G, 10-J, 5-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Grand Veterans - Specialist Standard Merit Award" Name="Silver-GV-SSMA">25 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Specialist Gamblers Merit Award" Name="Silver-GV-SGMA">20 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Specialist Jumpers Merit Award" Name="Silver-GV-SJMA">20 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Silver-GV-SSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Specialist Trigility Merit Award" Name="Silver-GV-STMA">7 Qs</Titles>
-				<Titles LongName="Silver Grand Veterans - Merit of Excellence Award" Name="Silver-GV-MEX">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Grand Veterans - Specialist Standard Merit Award" Name="Gold-GV-SSMA">50 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Specialist Gamblers Merit Award" Name="Gold-GV-SGMA">30 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Specialist Jumpers Merit Award" Name="Gold-GV-SJMA">30 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Gold-GV-SSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Specialist Trigility Merit Award" Name="Gold-GV-STMA">10 Qs</Titles>
-				<Titles LongName="Gold Grand Veterans - Merit of Excellence Award" Name="Gold-GV-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Grand Veterans - Specialist Standard Merit Award" Name="Platinum-GV-SSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Specialist Gamblers Merit Award" Name="Platinum-GV-SGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Specialist Jumpers Merit Award" Name="Platinum-GV-SJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Platinum-GV-SSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Specialist Trigility Merit Award" Name="Platinum-GV-STMA">15 Qs</Titles>
-				<Titles LongName="Platinum Grand Veterans - Merit of Excellence Award" Name="Platinum-GV-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Specialist Standard Merit Award" Name="Double Platinum-GV-SSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Specialist Gamblers Merit Award" Name="Double Platinum-GV-SGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Specialist Jumpers Merit Award" Name="Double Platinum-GV-SJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-GV-SSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Specialist Trigility Merit Award" Name="Double Platinum-GV-STMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Grand Veterans - Merit of Excellence Award" Name="Double Platinum-GV-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Grand Veterans Specialist North America Challenge Award" Name="Bronze-GV-SNACA">5 Qs</Titles>
 				<Titles LongName="Silver Grand Veterans Specialist North America Challenge Award" Name="Silver-GV-SNACA">10 Qs</Titles>
 				<Titles LongName="Gold Grand Veterans Specialist North America Challenge Award" Name="Gold-GV-SNACA">15 Qs</Titles>
@@ -1644,135 +1403,75 @@ Note: Qs needed for Standard, Jumpers and Gamblers are the same as C-MEX. This i
 				<Level Name="Beginner"/>
 				<Level Name="Intern"/>
 				<Level Name="Specialist"/>
-				<Titles LongName="Junior Handler - Beginner Standard Award" Name="JH-BSA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Gamblers Award" Name="JH-BGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Junior Handler - Beginner Standard Agility Award" Name="JH-BSA">3 Qs</Titles>
+				<Titles LongName="Junior Handler - Beginner Gamblers Award" Name="JH-BGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Junior Handler - Beginner Jumpers Award" Name="JH-BJA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Snakes N Ladders Award" Name="JH-BSLA">2 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Trigility Award" Name="JH-BTA">2 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Agility Performance Award" Name="JH-BAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Junior Handler - Beginner Standard Merit Award" Name="JH-BSMA">10 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Gamblers Merit Award" Name="JH-BGMA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Jumpers Merit Award" Name="JH-BJMA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Snakes N Ladders Merit Award" Name="JH-BSLMA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Trigility Merit Award" Name="JH-BTMA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Beginner Merit Award" Name="JH-BMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Junior Handler - Beginner Standard Merit Award" Name="Bronze-JH-BSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Beginner Gamblers Merit Award" Name="Bronze-JH-BGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Beginner Jumpers Merit Award" Name="Bronze-JH-BJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Beginner Snakes N Ladders Merit Award" Name="Bronze-JH-BSLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Beginner Trigility Merit Award" Name="Bronze-JH-BTMA">5 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Beginner Merit Award" Name="Bronze-JH-BMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Junior Handler - Beginner Standard Merit Award" Name="Silver-JH-BSMA">25 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Beginner Gamblers Merit Award" Name="Silver-JH-BGMA">20 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Beginner Jumpers Merit Award" Name="Silver-JH-BJMA">20 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Beginner Snakes N Ladders Merit Award" Name="Silver-JH-BSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Beginner Trigility Merit Award" Name="Silver-JH-BTMA">7 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Beginner Merit Award" Name="Silver-JH-BMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Junior Handler - Beginner Standard Merit Award" Name="Gold-JH-BSMA">50 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Beginner Gamblers Merit Award" Name="Gold-JH-BGMA">30 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Beginner Jumpers Merit Award" Name="Gold-JH-BJMA">30 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Beginner Snakes N Ladders Merit Award" Name="Gold-JH-BSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Beginner Trigility Merit Award" Name="Gold-JH-BTMA">10 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Beginner Merit Award" Name="Gold-JH-BMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Junior Handler - Beginner Standard Merit Award" Name="Platinum-JH-BSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Beginner Gamblers Merit Award" Name="Platinum-JH-BGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Beginner Jumpers Merit Award" Name="Platinum-JH-BJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Beginner Snakes N Ladders Merit Award" Name="Platinum-JH-BSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Beginner Trigility Merit Award" Name="Platinum-JH-BTMA">15 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Beginner Merit Award" Name="Platinum-JH-BMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Beginner Standard Merit Award" Name="Double Platinum-JH-BSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Beginner Gamblers Merit Award" Name="Double Platinum-JH-BGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Beginner Jumpers Merit Award" Name="Double Platinum-JH-BJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Beginner Snakes N Ladders Merit Award" Name="Double Platinum-JH-BSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Beginner Trigility Merit Award" Name="Double Platinum-JH-BTMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Beginner Merit Award" Name="Double Platinum-JH-BMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
-				<Titles LongName="Junior Handler - Intern Standard Award" Name="JH-ISA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Gamblers Award" Name="JH-IGA">3 Qs, any combo to Traditional and Time</Titles>
+				<Titles LongName="Junior Handler - Beginner Snakes N Ladders Award" Name="JH-BSLA">1 Q</Titles>
+				<Titles LongName="Junior Handler - Beginner Trigility Award" Name="JH-BTA">1 Qs (optional award)</Titles>
+				<Titles LongName="Junior Handler - Beginner Agility Award" Name="JH-BAA">3-S, 3-G, 3-J, 1-SNL</Titles>
+				<Titles LongName="Junior Handler - Beginner Agility Merit Award" Name="JH-BAMA">10-S, 5-G, 5-J, 3-SNL</Titles>
+				<Titles LongName="Bronze - Junior Handler - Beginner Agility Merit Award" Name="Bronze-JH-BAMA">15-S, 10-G, 10-J, 5-SNL</Titles>
+				<Titles LongName="Silver - Junior Handler - Beginner Agility Merit Award" Name="Silver-JH-BAMA">20-S, 15-G, 15-J, 7-SNL</Titles>
+				<Titles LongName="Gold - Junior Handler - Beginner Agility Merit Award" Name="Gold-JH-BAMA">30-S, 20-G, 20-J, 9-SNL</Titles>
+				<Titles LongName="Platinum - Junior Handler - Beginner Agility Merit Award" Name="Platinum-JH-BAMA">40-S, 25-G, 25-J, 12-SNL</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Beginner Agility Merit Award" Name="Double Platinum-JH-BAMA">50-S, 30-G, 30-J, 15-SNL</Titles>
+				<Titles LongName="Junior Handler - Intern Standard Agility Award" Name="JH-ISA">3 Qs</Titles>
+				<Titles LongName="Junior Handler - Intern Gamblers Award" Name="JH-IGA">3 Qs, any combination of Gambles</Titles>
 				<Titles LongName="Junior Handler - Intern Jumpers Award" Name="JH-IJA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Snakes N Ladders Award" Name="JH-ISLA">2 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Trigility Award" Name="JH-ITA">2 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Agility Performance Award" Name="JH-IAPA">3-S, 3-G, 3-J, 2-SNL, 2-Tri</Titles>
-				<Titles LongName="Junior Handler - Intern Standard Merit Award" Name="JH-ISMA">10 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Gamblers Merit Award" Name="JH-IGMA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Jumpers Merit Award" Name="JH-IJMA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Snakes N Ladders Merit Award" Name="JH-ISLMA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Trigility Merit Award" Name="JH-ITMA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Intern Merit Award" Name="JH-IMA">10-S, 5-G, 5-J, 5-SNL, 3-Tri</Titles>
-				<Titles LongName="Bronze Junior Handler - Intern Standard Merit Award" Name="Bronze-JH-ISMA">15 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Intern Gamblers Merit Award" Name="Bronze-JH-IGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Intern Jumpers Merit Award" Name="Bronze-JH-IJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Intern Snakes N Ladders Merit Award" Name="Bronze-JH-ISLMA">7 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Intern Trigility Merit Award" Name="Bronze-JH-ITMA">5 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Intern Merit Award" Name="Bronze-JH-IMA">15-S, 10-G, 10-J, 7-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Junior Handler - Intern Standard Merit Award" Name="Silver-JH-ISMA">25 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Intern Gamblers Merit Award" Name="Silver-JH-IGMA">20 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Intern Jumpers Merit Award" Name="Silver-JH-IJMA">20 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Intern Snakes N Ladders Merit Award" Name="Silver-JH-ISLMA">10 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Intern Trigility Merit Award" Name="Silver-JH-ITMA">7 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Intern Merit Award" Name="Silver-JH-IMA">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Junior Handler - Intern Standard Merit Award" Name="Gold-JH-ISMA">50 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Intern Gamblers Merit Award" Name="Gold-JH-IGMA">30 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Intern Jumpers Merit Award" Name="Gold-JH-IJMA">30 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Intern Snakes N Ladders Merit Award" Name="Gold-JH-ISLMA">15 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Intern Trigility Merit Award" Name="Gold-JH-ITMA">10 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Intern Merit Award" Name="Gold-JH-IMA">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Junior Handler - Intern Standard Merit Award" Name="Platinum-JH-ISMA">75 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Intern Gamblers Merit Award" Name="Platinum-JH-IGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Intern Jumpers Merit Award" Name="Platinum-JH-IJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Intern Snakes N Ladders Merit Award" Name="Platinum-JH-ISLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Intern Trigility Merit Award" Name="Platinum-JH-ITMA">15 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Intern Merit Award" Name="Platinum-JH-IMA">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Intern Standard Merit Award" Name="Double Platinum-JH-ISMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Intern Gamblers Merit Award" Name="Double Platinum-JH-IGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Intern Jumpers Merit Award" Name="Double Platinum-JH-IJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Intern Snakes N Ladders Merit Award" Name="Double Platinum-JH-ISLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Intern Trigility Merit Award" Name="Double Platinum-JH-ITMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Intern Merit Award" Name="Double Platinum-JH-IMA">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
+				<Titles LongName="Junior Handler - Intern Snakes N Ladders Award" Name="JH-ISLA">1 Qs</Titles>
+				<Titles LongName="Junior Handler - Intern Trigility Award" Name="JH-ITA">1 Qs (optional award)</Titles>
+				<Titles LongName="Junior Handler - Intern Agility Award" Name="JH-IAA">3-S, 3-G, 3-J, 1-SNL</Titles>
+				<Titles LongName="Junior Handler - Intern Agility Merit Award" Name="JH-IAMA">10-S, 5-G, 5-J, 3-SNL</Titles>
+				<Titles LongName="Bronze - Junior Handler - Intern Agility Merit Award" Name="Bronze-JH-IAMA">15-S, 10-G, 10-J, 5-SNL</Titles>
+				<Titles LongName="Silver - Junior Handler - Intern Agility Merit Award" Name="Silver-JH-IAMA">20-S, 15-G, 15-J, 7-SNL</Titles>
+				<Titles LongName="Gold - Junior Handler - Intern Agility Merit Award" Name="Gold-JH-IAMA">30-S, 20-G, 20-J, 9-SNL</Titles>
+				<Titles LongName="Platinum - Junior Handler - Intern Agility Merit Award" Name="Platinum-JH-IAMA">40-S, 25-G, 25-J, 12-SNL</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Intern Agility Merit Award" Name="Double Platinum-JH-IAMA">50-S, 30-G, 30-J, 15-SNL</Titles>
+				<Titles LongName="Junior Handler - Specialist Standard Agility Award" Name="JH-SSA">5 Qs</Titles>
+				<Titles LongName="Junior Handler - Specialist Gamblers Award" Name="JH-SGA">5 Qs, any combination of Gambles</Titles>
+				<Titles LongName="Junior Handler - Specialist Jumpers Award" Name="JH-SJA">5 Qs</Titles>
+				<Titles LongName="Junior Handler - Specialist Snakes N Ladders Award" Name="JH-SSLA">3 Qs</Titles>
+				<Titles LongName="Junior Handler - Specialist Trigility Award" Name="JH-STA">2 Qs (optional award)</Titles>
+				<Titles LongName="Junior Handler - Specialist Agility Award" Name="JH-SAA">5-S, 5-G, 5-J, 3-SNL</Titles>
+				<Titles LongName="Junior Handler - Specialist Standard Agility Merit Award" Name="JH-SSMA">15 Qs</Titles>
+				<Titles LongName="Junior Handler - Specialist Gamblers Merit Award" Name="JH-SGMA">10 Qs</Titles>
+				<Titles LongName="Junior Handler - Specialist Jumpers Merit Award" Name="JH-SJMA">10 Qs</Titles>
+				<Titles LongName="Junior Handler - Merit of Excellence Award" Name="JH-MEX">15-S, 10-G, 10-J</Titles>
+				<Titles LongName="Bronze - Junior Handler - Specialist Standard Merit Award" Name="Bronze-JH-SSMA">20 Qs</Titles>
+				<Titles LongName="Bronze - Junior Handler - Specialist Gamblers Merit Award" Name="Bronze-JH-SGMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Junior Handler - Specialist Jumpers Merit Award" Name="Bronze-JH-SJMA">15 Qs</Titles>
+				<Titles LongName="Bronze - Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Bronze-JH-SSLMA">7 Qs</Titles>
+				<Titles LongName="Bronze - Junior Handler - Specialist Trigility Merit Award" Name="Bronze-JH-STMA">5 Qs (optional award)</Titles>
+				<Titles LongName="Bronze - Junior Handler - Merit of Excellence Award" Name="Bronze-JH-MEX">20-S, 15-G, 15-J, 7-SNL</Titles>
+				<Titles LongName="Silver - Junior Handler - Specialist Standard Merit Award" Name="Silver-JH-SSMA">30 Qs</Titles>
+				<Titles LongName="Silver - Junior Handler - Specialist Gamblers Merit Award" Name="Silver-JH-SGMA">20 Qs</Titles>
+				<Titles LongName="Silver - Junior Handler - Specialist Jumpers Merit Award" Name="Silver-JH-SJMA">20 Qs</Titles>
+				<Titles LongName="Silver - Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Silver-JH-SSLMA">10 Qs</Titles>
+				<Titles LongName="Silver - Junior Handler - Specialist Trigility Merit Award" Name="Silver-JH-STMA">7 Qs (optional award)</Titles>
+				<Titles LongName="Silver - Junior Handler - Merit of Excellence Award" Name="Silver-JH-MEX">30-S, 20-G, 20-J, 10-SNL</Titles>
+				<Titles LongName="Gold - Junior Handler - Specialist Standard Merit Award" Name="Gold-JH-SSMA">50 Qs</Titles>
+				<Titles LongName="Gold - Junior Handler - Specialist Gamblers Merit Award" Name="Gold-JH-SGMA">30 Qs</Titles>
+				<Titles LongName="Gold - Junior Handler - Specialist Jumpers Merit Award" Name="Gold-JH-SJMA">30 Qs</Titles>
+				<Titles LongName="Gold - Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Gold-JH-SSLMA">15 Qs</Titles>
+				<Titles LongName="Gold - Junior Handler - Specialist Trigility Merit Award" Name="Gold-JH-STMA">10 Qs (optional award)</Titles>
+				<Titles LongName="Gold - Junior Handler - Merit of Excellence Award" Name="Gold-JH-MEX">50-S, 30-G, 30-J, 15-SNL</Titles>
+				<Titles LongName="Platinum - Junior Handler - Specialist Standard Merit Award" Name="Platinum-JH-SSMA">75 Qs</Titles>
+				<Titles LongName="Platinum - Junior Handler - Specialist Gamblers Merit Award" Name="Platinum-JH-SGMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Junior Handler - Specialist Jumpers Merit Award" Name="Platinum-JH-SJMA">40 Qs</Titles>
+				<Titles LongName="Platinum - Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Platinum-JH-SSLMA">20 Qs</Titles>
+				<Titles LongName="Platinum - Junior Handler - Specialist Trigility Merit Award" Name="Platinum-JH-STMA">15 Qs (optional award)</Titles>
+				<Titles LongName="Platinum - Junior Handler - Merit of Excellence Award" Name="Platinum-JH-MEX">75-S, 40-G, 40-J, 20-SNL</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Specialist Standard Merit Award" Name="Double Platinum-JH-SSMA">100 Qs</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Specialist Gamblers Merit Award" Name="Double Platinum-JH-SGMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Specialist Jumpers Merit Award" Name="Double Platinum-JH-SJMA">50 Qs</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-JH-SSLMA">25 Qs</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Specialist Trigility Merit Award" Name="Double Platinum-JH-STMA">20 Qs (optional award)</Titles>
+				<Titles LongName="Double Platinum - Junior Handler - Merit of Excellence Award" Name="Double Platinum-JH-MEX">100-S, 50-G, 50-J, 25-SNL</Titles>
 				<Titles LongName="Bronze Junior Handler Intern North America Challenge Award" Name="Bronze-JH-INACA">5 Qs</Titles>
 				<Titles LongName="Silver Junior Handler Intern North America Challenge Award" Name="Silver-JH-INACA">10 Qs</Titles>
 				<Titles LongName="Gold Junior Handler Intern North America Challenge Award" Name="Gold-JH-INACA">15 Qs</Titles>
 				<Titles LongName="Platinum Junior Handler Intern North America Challenge Award" Name="Platinum-JH-INACA">20 Qs</Titles>
 				<Titles LongName="Double Platinum Junior Handler Intern North America Challenge Award" Name="Double Platinum-JH-INACA">25 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Standard Award" Name="JH-SSA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Gamblers Award" Name="JH-SGA">5 Qs, any combo to Traditional and Time</Titles>
-				<Titles LongName="Junior Handler - Specialist Jumpers Award" Name="JH-SJA">5 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Snakes N Ladders Award" Name="JH-SSLA">3 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Trigility Award" Name="JH-STA">2 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Agility Performance Award" Name="JH-SAPA">5-S, 5-G, 5-J, 3-SNL, 2-Tri</Titles>
-				<Titles LongName="Junior Handler - Specialist Standard Merit Award" Name="JH-SSMA">15 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Gamblers Merit Award" Name="JH-SGMA">10 Qs</Titles>
-				<Titles LongName="Junior Handler - Specialist Jumpers Merit Award" Name="JH-SJMA">10 Qs</Titles>
-				<Titles LongName="Junior Handler - Merit of Excellence Award" Name="JH-MEX">15-S, 10-G, 10-J</Titles>
-				<Titles LongName="Bronze Junior Handler - Specialist Standard Merit Award" Name="Bronze-JH-SSMA">15 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Specialist Gamblers Merit Award" Name="Bronze-JH-SGMA">10 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Specialist Jumpers Merit Award" Name="Bronze-JH-SJMA">10 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Bronze-JH-SSLMA">5 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Specialist Trigility Merit Award" Name="Bronze-JH-STMA">5 Qs</Titles>
-				<Titles LongName="Bronze Junior Handler - Merit of Excellence Award" Name="Bronze-JH-MEX">15-S, 10-G, 10-J, 5-SNL, 5-Tri</Titles>
-				<Titles LongName="Silver Junior Handler - Specialist Standard Merit Award" Name="Silver-JH-SSMA">25 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Specialist Gamblers Merit Award" Name="Silver-JH-SGMA">20 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Specialist Jumpers Merit Award" Name="Silver-JH-SJMA">20 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Silver-JH-SSLMA">10 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Specialist Trigility Merit Award" Name="Silver-JH-STMA">7 Qs</Titles>
-				<Titles LongName="Silver Junior Handler - Merit of Excellence Award" Name="Silver-JH-MEX">25-S, 20-G, 20-J, 10-SNL, 7-Tri</Titles>
-				<Titles LongName="Gold Junior Handler - Specialist Standard Merit Award" Name="Gold-JH-SSMA">50 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Specialist Gamblers Merit Award" Name="Gold-JH-SGMA">30 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Specialist Jumpers Merit Award" Name="Gold-JH-SJMA">30 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Gold-JH-SSLMA">15 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Specialist Trigility Merit Award" Name="Gold-JH-STMA">10 Qs</Titles>
-				<Titles LongName="Gold Junior Handler - Merit of Excellence Award" Name="Gold-JH-MEX">50-S, 30-G, 30-J, 15-SNL, 10-Tri</Titles>
-				<Titles LongName="Platinum Junior Handler - Specialist Standard Merit Award" Name="Platinum-JH-SSMA">75 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Specialist Gamblers Merit Award" Name="Platinum-JH-SGMA">40 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Specialist Jumpers Merit Award" Name="Platinum-JH-SJMA">40 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Platinum-JH-SSLMA">20 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Specialist Trigility Merit Award" Name="Platinum-JH-STMA">15 Qs</Titles>
-				<Titles LongName="Platinum Junior Handler - Merit of Excellence Award" Name="Platinum-JH-MEX">75-S, 40-G, 40-J, 20-SNL, 15-Tri</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Specialist Standard Merit Award" Name="Double Platinum-JH-SSMA">100 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Specialist Gamblers Merit Award" Name="Double Platinum-JH-SGMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Specialist Jumpers Merit Award" Name="Double Platinum-JH-SJMA">50 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Specialist Snakes N Ladders Merit Award" Name="Double Platinum-JH-SSLMA">25 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Specialist Trigility Merit Award" Name="Double Platinum-JH-STMA">20 Qs</Titles>
-				<Titles LongName="Double Platinum Junior Handler - Merit of Excellence Award" Name="Double Platinum-JH-MEX">100-S, 50-G, 50-J, 25-SNL, 20-Tri</Titles>
 				<Titles LongName="Bronze Junior Handler Specialist North America Challenge Award" Name="Bronze-JH-SNACA">5 Qs</Titles>
 				<Titles LongName="Silver Junior Handler Specialist North America Challenge Award" Name="Silver-JH-SNACA">10 Qs</Titles>
 				<Titles LongName="Gold Junior Handler Specialist North America Challenge Award" Name="Gold-JH-SNACA">15 Qs</Titles>
