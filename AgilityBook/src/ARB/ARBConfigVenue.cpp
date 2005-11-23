@@ -486,7 +486,8 @@ bool ARBConfigVenueList::VerifyEvent(
 		ARBString const& inVenue,
 		ARBString const& inDivision,
 		ARBString const& inLevel,
-		ARBString const& inEvent) const
+		ARBString const& inEvent,
+		ARBDate const& inDate) const
 {
 	ARBConfigVenue* pVenue;
 	bool bFound = false;
@@ -499,7 +500,7 @@ bool ARBConfigVenueList::VerifyEvent(
 			ARBConfigLevel* pLevel;
 			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
 			{
-				bFound = pVenue->GetEvents().VerifyEvent(inEvent, inDivision, pLevel->GetName());
+				bFound = pVenue->GetEvents().VerifyEvent(inEvent, inDivision, pLevel->GetName(), inDate);
 				pLevel->Release();
 			}
 			pDiv->Release();

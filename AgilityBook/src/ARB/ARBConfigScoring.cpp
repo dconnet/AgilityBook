@@ -466,6 +466,17 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 	return true;
 }
 
+bool ARBConfigScoring::IsValidOn(ARBDate inDate) const
+{
+	if (inDate.IsValid()
+	&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
+	|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
+	{
+		return false;
+	}
+	return true;
+}
+
 ARBString ARBConfigScoring::GetValidDateString() const
 {
 	ARBString str;
@@ -512,6 +523,7 @@ bool ARBConfigScoringList::Load(
 size_t ARBConfigScoringList::FindAllEvents(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
+		ARBDate const& inDate,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoring>& outList) const
 {
@@ -521,8 +533,11 @@ size_t ARBConfigScoringList::FindAllEvents(
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == inLevel)
 		{
-			(*iter)->AddRef();
-			outList.push_back(*iter);
+			if ((*iter)->IsValidOn(inDate))
+			{
+				(*iter)->AddRef();
+				outList.push_back(*iter);
+			}
 		}
 	}
 	// It failed, try wildcards...
@@ -530,27 +545,36 @@ size_t ARBConfigScoringList::FindAllEvents(
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == WILDCARD_LEVEL)
 		{
-			(*iter)->AddRef();
-			outList.push_back(*iter);
-			break;
+			if ((*iter)->IsValidOn(inDate))
+			{
+				(*iter)->AddRef();
+				outList.push_back(*iter);
+				break;
+			}
 		}
 	}
 	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == inLevel)
 		{
-			(*iter)->AddRef();
-			outList.push_back(*iter);
-			break;
+			if ((*iter)->IsValidOn(inDate))
+			{
+				(*iter)->AddRef();
+				outList.push_back(*iter);
+				break;
+			}
 		}
 	}
 	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == WILDCARD_LEVEL)
 		{
-			(*iter)->AddRef();
-			outList.push_back(*iter);
-			break;
+			if ((*iter)->IsValidOn(inDate))
+			{
+				(*iter)->AddRef();
+				outList.push_back(*iter);
+				break;
+			}
 		}
 	}
 
@@ -577,7 +601,7 @@ bool ARBConfigScoringList::FindEvent(
 	if (outEvent)
 		*outEvent = NULL;
 	ARBVector<ARBConfigScoring> items;
-	FindAllEvents(inDivision, inLevel, false, items);
+	FindAllEvents(inDivision, inLevel, inDate, false, items);
 	if (0 == items.size())
 		return false;
 	ARBConfigScoring* pEvent = NULL;
@@ -589,10 +613,7 @@ bool ARBConfigScoringList::FindEvent(
 		for (iter = items.begin(); iter != items.end(); )
 		{
 			ARBConfigScoring const* pScoring = *iter;
-			ARBDate const& validFrom = pScoring->GetValidFrom();
-			ARBDate const& validTo = pScoring->GetValidTo();
-			if ((validFrom.IsValid() && inDate < validFrom)
-			|| (validTo.IsValid() && inDate > validTo))
+			if (!pScoring->IsValidOn(inDate))
 				iter = items.erase(iter);
 			else
 				++iter;
@@ -622,10 +643,11 @@ bool ARBConfigScoringList::FindEvent(
 
 bool ARBConfigScoringList::VerifyEvent(
 		ARBString const& inDivision,
-		ARBString const& inLevel) const
+		ARBString const& inLevel,
+		ARBDate const& inDate) const
 {
 	ARBVector<ARBConfigScoring> items;
-	FindAllEvents(inDivision, inLevel, false, items);
+	FindAllEvents(inDivision, inLevel, inDate, false, items);
 	return (0 < items.size());
 }
 

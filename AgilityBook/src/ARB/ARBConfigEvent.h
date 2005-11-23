@@ -116,6 +116,7 @@ public:
 	 * Find all the scoring methods that match.
 	 * @param inDivision Division event is in.
 	 * @param inLevel Level (NOT sublevel) event is in.
+	 * @param inDate Date for matching methods.
 	 * @param inTitlePoints Only return scoring methods that have title points.
 	 * @param outList List of scoring methods found.
 	 * @return Number of items found.
@@ -123,6 +124,7 @@ public:
 	size_t FindAllEvents(
 			ARBString const& inDivision,
 			ARBString const& inLevel,
+			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoring>& outList) const;
 
@@ -130,11 +132,13 @@ public:
 	 * Verify a scoring method exists.
 	 * @param inDivision Division event is in.
 	 * @param inLevel Level event is in.
+	 * @param inDate Date for matching methods.
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
 			ARBString const& inDivision,
-			ARBString const& inLevel) const;
+			ARBString const& inLevel,
+			ARBDate const& inDate) const;
 
 	/**
 	 * Find an event.
@@ -272,12 +276,14 @@ public:
 	 * @param inEvent Event to verify.
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level event exists in.
+	 * @param inDate Date for matching methods.
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
 			ARBString const& inEvent,
 			ARBString const& inDivision,
-			ARBString const& inLevel) const;
+			ARBString const& inLevel,
+			ARBDate const& inDate) const;
 
 	/**
 	 * Find an event.

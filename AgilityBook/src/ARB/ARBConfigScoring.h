@@ -123,6 +123,12 @@ public:
 	 */
 	bool Save(Element& ioTree) const;
 
+	/**
+	 * Determine if this method is valid on the given date.
+	 * @param inDate Date to check, if not valid, this method is valid.
+	 */
+	bool IsValidOn(ARBDate inDate) const;
+
 	/*
 	 * Getters/setters.
 	 */
@@ -397,6 +403,7 @@ public:
 	 * Find all the scoring methods that match.
 	 * @param inDivision Division event is in.
 	 * @param inLevel Level (NOT sublevel) event is in.
+	 * @param inDate Date for matching methods.
 	 * @param inTitlePoints Only return scoring methods that have title points.
 	 * @param outList List of scoring methods found.
 	 * @return Number of items found.
@@ -404,6 +411,7 @@ public:
 	size_t FindAllEvents(
 			ARBString const& inDivision,
 			ARBString const& inLevel,
+			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoring>& outList) const;
 
@@ -425,11 +433,13 @@ public:
 	 * Verify a scoring method exists.
 	 * @param inDivision Division event is in.
 	 * @param inLevel Level event is in.
+	 * @param inDate Date for requested scoring.
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
 			ARBString const& inDivision,
-			ARBString const& inLevel) const;
+			ARBString const& inLevel,
+			ARBDate const& inDate) const;
 
 	/**
 	 * Create a new scoring method.

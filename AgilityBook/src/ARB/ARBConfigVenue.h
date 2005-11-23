@@ -271,13 +271,15 @@ public:
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level event exists in.
 	 * @param inEvent Event to verify.
+	 * @param inDate Date for matching methods.
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
 			ARBString const& inVenue,
 			ARBString const& inDivision,
 			ARBString const& inLevel,
-			ARBString const& inEvent) const;
+			ARBString const& inEvent,
+			ARBDate const& inDate) const;
 
 	/**
 	 * Find a title by the complete name.

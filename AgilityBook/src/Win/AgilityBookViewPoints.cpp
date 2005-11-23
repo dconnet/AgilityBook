@@ -557,7 +557,7 @@ void CAgilityBookViewPoints::LoadData()
 
 							// Don't tally runs that have no titling points.
 							ARBVector<ARBConfigScoring> scoringItems;
-							if (0 == pEvent->FindAllEvents(pDiv->GetName(), pLevel->GetName(), true, scoringItems))
+							if (0 == pEvent->FindAllEvents(pDiv->GetName(), pLevel->GetName(), ARBDate(), true, scoringItems))
 								continue;
 							// Iterate across each scoring method separately. This means it is
 							// possible to have multiple lines show up for a given event. But if
