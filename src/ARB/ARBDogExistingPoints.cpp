@@ -358,7 +358,7 @@ bool ARBDogExistingPoints::Load(
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
 			return false;
 		}
-		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event))
+		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event, m_Date))
 		{
 			ARBString msg(INVALID_EVENT_NAME);
 			msg += m_Venue;

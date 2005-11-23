@@ -199,7 +199,7 @@ bool ARBConfigMultiQ::Load(
 			pLevel = NULL;
 
 			// Now we can verify the event.
-			if (!inVenue.GetEvents().VerifyEvent(item.m_Event, item.m_Div, level))
+			if (!inVenue.GetEvents().VerifyEvent(item.m_Event, item.m_Div, level, ARBDate()))
 			{
 				ARBString msg(INVALID_EVENT_NAME);
 				msg += item.m_Div;

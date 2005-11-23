@@ -309,17 +309,19 @@ bool ARBConfigEvent::Update(
 size_t ARBConfigEvent::FindAllEvents(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
+		ARBDate const& inDate,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoring>& outList) const
 {
-	return m_Scoring.FindAllEvents(inDivision, inLevel, inTitlePoints, outList);
+	return m_Scoring.FindAllEvents(inDivision, inLevel, inDate, inTitlePoints, outList);
 }
 
 bool ARBConfigEvent::VerifyEvent(
 		ARBString const& inDivision,
-		ARBString const& inLevel) const
+		ARBString const& inLevel,
+		ARBDate const& inDate) const
 {
-	return m_Scoring.VerifyEvent(inDivision, inLevel);
+	return m_Scoring.VerifyEvent(inDivision, inLevel, inDate);
 }
 
 bool ARBConfigEvent::FindEvent(
@@ -365,12 +367,13 @@ bool ARBConfigEventList::Load(
 bool ARBConfigEventList::VerifyEvent(
 		ARBString const& inEvent,
 		ARBString const& inDivision,
-		ARBString const& inLevel) const
+		ARBString const& inLevel,
+		ARBDate const& inDate) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inEvent)
-			return (*iter)->VerifyEvent(inDivision, inLevel);
+			return (*iter)->VerifyEvent(inDivision, inLevel, inDate);
 	}
 	return false;
 }
