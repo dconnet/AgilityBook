@@ -1116,14 +1116,14 @@ void CDlgConfigEvent::OnPointsDelete()
 	{
 		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
 		ARBBase* pBase = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idx));
-		ARBConfigTitlePoints* pTitle = reinterpret_cast<ARBConfigTitlePoints*>(pBase);
-		ARBConfigLifetimePoints* pLife = reinterpret_cast<ARBConfigLifetimePoints*>(pBase);
+		ARBConfigTitlePoints* pTitle = dynamic_cast<ARBConfigTitlePoints*>(pBase);
+		ARBConfigLifetimePoints* pLife = dynamic_cast<ARBConfigLifetimePoints*>(pBase);
 		if (pScoring && (pTitle || pLife))
 		{
 			if (pTitle)
 				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
 			else
-				pScoring->GetLifetimePoints().DeleteLifetimePoints(pTitle->GetFaults());
+				pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
 			m_ctrlPointsList.DeleteString(idx);
 			m_ctrlPointsEdit.EnableWindow(FALSE);
 			m_ctrlPointsDelete.EnableWindow(FALSE);
