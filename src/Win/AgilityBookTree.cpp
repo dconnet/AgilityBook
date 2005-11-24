@@ -337,8 +337,8 @@ void CAgilityBookTree::OnUpdate(
 		ASSERT(pTrial);
 		CAgilityBookTreeData* pData = FindData(TVI_ROOT, pTrial);
 		ASSERT(pData);
-		GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
 		GetTreeCtrl().Select(pData->GetHTreeItem(), TVGN_CARET);
+		GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
 	}
 }
 
@@ -749,6 +749,7 @@ void CAgilityBookTree::LoadData()
 	if (NULL == hItem)
 		hItem = tree.GetRootItem();
 	tree.SelectItem(hItem);
+	tree.EnsureVisible(hItem);
 	tree.Expand(hItem, TVE_EXPAND);
 	// Reset the context menu reset.
 	// We may have reloaded during a context menu operation.
