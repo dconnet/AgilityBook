@@ -39,10 +39,10 @@ xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC7\Release\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC7\Debug\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8\Release\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8\Debug\"
-goto done
 
 set PATH=%OLDPATH%
 set OLDPATH=
+goto done
 
 :usage
 echo Usage: BuildHelp.bat [Release or Debug] [VC7 or VC8]
