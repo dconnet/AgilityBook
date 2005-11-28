@@ -626,6 +626,11 @@ void CDlgRunScore::FillSubNames()
 			m_ctrlSubNamesText.ShowWindow(SW_SHOW);
 			m_ctrlSubNames.ShowWindow(SW_SHOW);
 		}
+		else
+		{
+			m_ctrlSubNamesText.ShowWindow(SW_HIDE);
+			m_ctrlSubNames.ShowWindow(SW_HIDE);
+		}
 		pEvent->Release();
 	}
 	else

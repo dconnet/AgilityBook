@@ -34,6 +34,7 @@
   - Removing a lifetime point entry from the event configuration didn't
     always work.
   - Ranged event methods weren't probably filtered in Run dialog.
+  - Subnames were enabled when they shouldn't have been.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:
