@@ -1,7 +1,5 @@
 Last Updated: 11/20/2005
 
-- After adding a trial, it is selected, but not visible.
-
 - NADAC: Add support for categories: Proficient, Skilled.
   Add support for 15pt "bonus box" runs (all events).
   "Wild Card" will not be added: use "Gamblers".
