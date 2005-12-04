@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
@@ -100,6 +101,7 @@ private:
 	CEdit	m_ctrlNote;
 	CButton m_ctrlSpeedPts;
 	CButton m_ctrlSuperQ;
+	CButton	m_ctrlBonus;
 	CStatic	m_ctrlMultiplyText;
 	CEdit	m_ctrlMultiply;
 	short	m_Multiply;

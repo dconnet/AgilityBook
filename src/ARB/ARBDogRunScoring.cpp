@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2004-11-15 DRC Changed time fault computation on T+F events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
@@ -92,6 +93,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 	, m_NeedClosePts(0)
 	, m_OpenPts(0)
 	, m_ClosePts(0)
+	, m_BonusPts(0)
 {
 }
 
@@ -109,6 +111,7 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	, m_NeedClosePts(rhs.m_NeedClosePts)
 	, m_OpenPts(rhs.m_OpenPts)
 	, m_ClosePts(rhs.m_ClosePts)
+	, m_BonusPts(rhs.m_BonusPts)
 {
 }
 
@@ -132,6 +135,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 		m_NeedClosePts = rhs.m_NeedClosePts;
 		m_OpenPts = rhs.m_OpenPts;
 		m_ClosePts = rhs.m_ClosePts;
+		m_BonusPts = rhs.m_BonusPts;
 	}
 	return *this;
 }
@@ -149,7 +153,8 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 		&& m_NeedOpenPts == rhs.m_NeedOpenPts
 		&& m_NeedClosePts == rhs.m_NeedClosePts
 		&& m_OpenPts == rhs.m_OpenPts
-		&& m_ClosePts == rhs.m_ClosePts;
+		&& m_ClosePts == rhs.m_ClosePts
+		&& m_BonusPts == rhs.m_BonusPts;
 }
 
 bool ARBDogRunScoring::operator!=(ARBDogRunScoring const& rhs) const
@@ -169,6 +174,7 @@ bool ARBDogRunScoring::Load(
 	ARBString const& name = inTree.GetName();
 	inTree.GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+	inTree.GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEvent->GetScoringStyle());
 	switch (m_type)
 	{
@@ -255,6 +261,7 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring.AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 		}
 		return true;
 	case eTypeByOpenClose:
@@ -271,6 +278,7 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
 			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
+			scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 		}
 		return true;
 	case eTypeByPoints:
@@ -283,6 +291,7 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 				scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring.AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
 			scoring.AddAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
+			scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 		}
 		return true;
 	}

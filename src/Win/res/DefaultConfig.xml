@@ -1869,31 +1869,31 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y"/>
 			</Division>
 			<Event Name="Regular">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
-					<LifeTime Faults="0" Points="10"/>
+				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Junior" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
-					<LifeTime Faults="0" Points="10"/>
+				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Junior" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -1919,31 +1919,31 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Junior" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Junior" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="5" Points="5"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="5" Points="5"/>
+				</Scoring>
+				<Scoring Division="Skilled Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2015,21 +2015,21 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Tunnelers">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2041,21 +2041,21 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="TouchNGo">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2067,21 +2067,21 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Weavers">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2093,31 +2093,31 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Championship">
-				<Scoring Division="Proficient Standard" Level="Elite" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Standard" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="Elite" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Veterans" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Junior" Level="Elite" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Proficient Junior" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Skilled Standard" Level="Elite" ValidFrom="2006-1-1" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="Elite" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Standard" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Skilled Junior" Level="Elite" ValidFrom="2006-1-1" type="FaultsThenTime">
+				<Scoring Division="Skilled Veterans" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="5" Points="5"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="5" Points="5"/>
+				</Scoring>
+				<Scoring Division="Skilled Junior" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>

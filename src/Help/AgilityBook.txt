@@ -161,6 +161,10 @@ Does this scoring method have Speed points? (In AKC, these are MACH points.)
 Speed points are computed as full seconds under SCT. First place earns 2x.
 Second place earns 1.5x. All other places earn 1 point per second.
 
+.topic HIDC_CONFIG_EVENT_BONUS
+Does this scoring method have extra titling points? This would apply to venues
+like NADAC that have a bonus feature that allows the dog to earn 15 point Qs.
+
 .topic HIDC_CONFIG_EVENT_SUBNAMES
 Pre-configured event sub-names.
 
@@ -678,6 +682,10 @@ Placement earned. Enter 0 if not known or doesn't apply.
 
 .topic HIDC_RUNSCORE_Q
 Qualifying status of run.
+
+.topic HIDC_RUNSCORE_BONUSPTS
+Number of extra points earned.
+Enter 5 in NADAC on a 0-fault qualifying run where you completed the bonus box in order to earn 15 title points.
 
 .topic HIDC_RUNSCORE_SCT
 Standard Course Time (or opening time for point-based events)

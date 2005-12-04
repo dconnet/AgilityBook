@@ -11,9 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-11-20 DRC File version 11.1.
+2005-12-04 DRC File version 11.1.
                Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
-               Added 'cleanQ' to 'Scoring'.
+               Added 'cleanQ','bonusPts' to 'Scoring','Run'(scoring).
                Update Action for DeleteTitle.
 2005-07-15 DRC File version 11.0.
                Added 'MultiQ' to 'Venue', removed 'doubleQ' from 'Event'.
@@ -242,7 +242,7 @@ dropped. (AKC and CPE do this.)
 Time+Faults style events (USDAA Time Gamble). They are also used to specify
 faults in ScoreThenTime events (DOCNA Strategic gamble).
 
-The 'superQ', and 'speedPts' attributes enable built-in
+The 'superQ', 'speedPts' and 'bonusPts' attributes enable built-in
 features for an event.
 
 'hasTable' specifies that this run might have a table. This is used as the
@@ -280,6 +280,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		overTF (y|n) 'n'
 		superQ (y|n) 'n'
 		speedPts (y|n) 'n'
+		bonusPts (y|n) 'n'
 		timeFault CDATA #IMPLIED
 		OpeningPts CDATA #IMPLIED
 		ClosingPts CDATA #IMPLIED
@@ -426,7 +427,7 @@ These 3 elements define the major scoring mechanisms.
  ByOpenClose: OCScoreThenTime
  ByPoints: ScoreThenTime
 
- Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points
+ Integer: CourseFaults,NeedOpenPts,NeedClosePts,OpenPts,ClosePts,NeedPts,Points,bonusPts
  Decimal: Time,SCT,SCT2,Yards
  Boolean: hasTable
 -->
@@ -437,6 +438,7 @@ These 3 elements define the major scoring mechanisms.
 		SCT CDATA #IMPLIED
 		Yards CDATA #IMPLIED
 		hasTable (y|n) 'n'
+		bonusPts CDATA #IMPLIED
 		>
 <!ELEMENT ByOpenClose EMPTY >
 	<!ATTLIST ByOpenClose
@@ -448,6 +450,7 @@ These 3 elements define the major scoring mechanisms.
 		NeedClosePts CDATA #REQUIRED
 		OpenPts CDATA #REQUIRED
 		ClosePts CDATA #REQUIRED
+		bonusPts CDATA #IMPLIED
 		>
 <!ELEMENT ByPoints EMPTY >
 	<!ATTLIST ByPoints
@@ -456,6 +459,7 @@ These 3 elements define the major scoring mechanisms.
 		SCT CDATA #IMPLIED
 		NeedPts CDATA #REQUIRED
 		Points CDATA #REQUIRED
+		bonusPts CDATA #IMPLIED
 		>
 
 <!--

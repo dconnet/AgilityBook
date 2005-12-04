@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
@@ -164,6 +165,8 @@ public:
 	void SetHasSuperQ(bool inBool);
 	bool HasSpeedPts() const;
 	void SetHasSpeedPts(bool inBool);
+	bool HasBonusPts() const;
+	void SetHasBonusPts(bool inBool);
 	ARBConfigTitlePointsList const& GetTitlePoints() const;
 	ARBConfigTitlePointsList& GetTitlePoints();
 	ARBConfigLifetimePointsList const& GetLifetimePoints() const;
@@ -193,6 +196,7 @@ private:
 	bool m_bSuperQ;
 	bool m_bDoubleQ;
 	bool m_bSpeedPts;
+	bool m_bBonusPts;
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;
 };
@@ -349,6 +353,16 @@ inline bool ARBConfigScoring::HasSpeedPts() const
 inline void ARBConfigScoring::SetHasSpeedPts(bool inBool)
 {
 	m_bSpeedPts = inBool;
+}
+
+inline bool ARBConfigScoring::HasBonusPts() const
+{
+	return m_bBonusPts;
+}
+
+inline void ARBConfigScoring::SetHasBonusPts(bool inBool)
+{
+	m_bBonusPts = inBool;
 }
 
 inline ARBConfigTitlePointsList const& ARBConfigScoring::GetTitlePoints() const

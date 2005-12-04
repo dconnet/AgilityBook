@@ -1,9 +1,5 @@
 Last Updated: 11/20/2005
 
-- NADAC: Add support for categories: Proficient, Skilled.
-  Add support for 15pt "bonus box" runs (all events).
-  "Wild Card" will not be added: use "Gamblers".
-
 - Create named import/export settings.
 
 - Add display name to configuration items.

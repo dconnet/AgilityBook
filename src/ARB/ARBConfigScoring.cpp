@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-12-18 DRC Added a time fault multiplier.
@@ -110,6 +111,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bSuperQ(false)
 	, m_bDoubleQ(false)
 	, m_bSpeedPts(false)
+	, m_bBonusPts(false)
 	, m_TitlePoints()
 	, m_LifePoints()
 {
@@ -132,6 +134,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bSuperQ(rhs.m_bSuperQ)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
 	, m_bSpeedPts(rhs.m_bSpeedPts)
+	, m_bBonusPts(rhs.m_bBonusPts)
 	, m_TitlePoints(rhs.m_TitlePoints)
 	, m_LifePoints(rhs.m_LifePoints)
 {
@@ -161,6 +164,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bSuperQ = rhs.m_bSuperQ;
 		m_bDoubleQ = rhs.m_bDoubleQ;
 		m_bSpeedPts = rhs.m_bSpeedPts;
+		m_bBonusPts = rhs.m_bBonusPts;
 		m_TitlePoints = rhs.m_TitlePoints;
 		m_LifePoints = rhs.m_LifePoints;
 	}
@@ -185,6 +189,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bSuperQ == rhs.m_bSuperQ
 		&& m_bDoubleQ == rhs.m_bDoubleQ
 		&& m_bSpeedPts == rhs.m_bSpeedPts
+		&& m_bBonusPts == rhs.m_bBonusPts
 		&& m_TitlePoints == rhs.m_TitlePoints
 		&& m_LifePoints == rhs.m_LifePoints;
 }
@@ -334,6 +339,12 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSPTS, VALID_VALUES_BOOL));
+		return false;
+	}
+
 	bool bVer10orMore = (inVersion >= ARBVersion(10, 0));
 	if (inVersion >= ARBVersion(5,0))
 	{
@@ -459,6 +470,8 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
 	if (m_bSpeedPts)
 		scoring.AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
+	if (m_bBonusPts)
+		scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts);
 	if (!m_TitlePoints.Save(scoring))
 		return false;
 	if (!m_LifePoints.Save(scoring))
