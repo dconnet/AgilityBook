@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-11-20 DRC Allow 'E's on non-titling runs.
  * @li 2005-08-11 DRC Removed QQ checkbox.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -145,6 +146,7 @@ CDlgRunScore::CDlgRunScore(
 	m_Faults = 0;
 	m_Close = 0;
 	m_Place = m_Run->GetPlace();
+	m_BonusPts = 0;
 	m_InClass = m_Run->GetInClass();
 	m_DogsQd = m_Run->GetDogsQd();
 	//}}AFX_DATA_INIT
@@ -222,6 +224,9 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RUNSCORE_DOGS_QD, m_DogsQd);
 	DDX_Control(pDX, IDC_RUNSCORE_Q, m_ctrlQ);
 	DDX_Control(pDX, IDC_RUNSCORE_SCORE, m_ctrlScore);
+	DDX_Control(pDX, IDC_RUNSCORE_BONUSPTS_TEXT, m_ctrlBonusPtsText);
+	DDX_Control(pDX, IDC_RUNSCORE_BONUSPTS, m_ctrlBonusPts);
+	DDX_Text(pDX, IDC_RUNSCORE_BONUSPTS, m_BonusPts);
 	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS_TEXT, m_ctrlSpeedPtsText);
 	DDX_Control(pDX, IDC_RUNSCORE_SPEEDPTS, m_ctrlSpeedPts);
 	DDX_Control(pDX, IDC_RUNSCORE_TITLE_POINTS_TEXT, m_ctrlTitlePointsText);
@@ -393,6 +398,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetInClass(m_InClass);
 		m_Run->SetDogsQd(m_DogsQd);
 		m_Run->SetQ(q);
+		m_Run->GetScoring().SetBonusPts(m_BonusPts);
 	}
 }
 
@@ -415,6 +421,7 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPEN_PTS, OnKillfocusOpen)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_CLOSE_PTS, OnKillfocusClose)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_PLACE, OnKillfocusPlace)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_BONUSPTS, OnKillfocusBonus)
 	ON_BN_CLICKED(IDC_RUNSCORE_TABLE, OnBnClickedTableYps)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_Q, OnSelchangeQ)
 	//}}AFX_MSG_MAP
@@ -738,6 +745,7 @@ void CDlgRunScore::SetTitlePoints()
 	}
 	ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
+	CString strBonus(_T("0"));
 	CString strSpeed(_T("0"));
 	CString strTitle(_T("0"));
 	CString strScore(_T(""));
@@ -747,6 +755,12 @@ void CDlgRunScore::SetTitlePoints()
 		// 8/17/03: Only compute title points on Q runs.
 		if (q.Qualified())
 		{
+			if (pScoring->HasBonusPts())
+			{
+				ARBostringstream str;
+				str << m_Run->GetScoring().GetBonusPts();
+				strBonus = str.str().c_str();
+			}
 			if (pScoring->HasSpeedPts())
 			{
 				ARBostringstream str;
@@ -768,6 +782,7 @@ void CDlgRunScore::SetTitlePoints()
 		pScoring->Release();
 	}
 	// Doesn't matter if they're hidden,..
+	m_ctrlBonusPts.SetWindowText(strBonus);
 	m_ctrlSpeedPts.SetWindowText(strSpeed);
 	m_ctrlTitlePoints.SetWindowText(strTitle);
 	m_ctrlScore.SetWindowText(strScore);
@@ -808,6 +823,8 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlInClass.EnableWindow(FALSE);
 	m_ctrlDogsQd.EnableWindow(FALSE);
 	m_ctrlQ.EnableWindow(FALSE);
+	m_ctrlBonusPtsText.ShowWindow(SW_HIDE);
+	m_ctrlBonusPts.ShowWindow(SW_HIDE);
 	m_ctrlSpeedPtsText.ShowWindow(SW_HIDE);
 	m_ctrlSpeedPts.ShowWindow(SW_HIDE);
 	m_ctrlTitlePointsText.ShowWindow(SW_HIDE);
@@ -965,6 +982,11 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlTitlePointsText.ShowWindow(SW_SHOW);
 		m_ctrlTitlePoints.ShowWindow(SW_SHOW);
 	}
+	if (pScoring->HasBonusPts())
+	{
+		m_ctrlBonusPtsText.ShowWindow(SW_SHOW);
+		m_ctrlBonusPts.ShowWindow(SW_SHOW);
+	}
 	if (pScoring->HasSpeedPts())
 	{
 		m_ctrlSpeedPtsText.ShowWindow(SW_SHOW);
@@ -1074,6 +1096,7 @@ BOOL CDlgRunScore::OnInitDialog()
 		m_SCT = m_Run->GetScoring().GetSCT();
 		break;
 	}
+	m_BonusPts = m_Run->GetScoring().GetBonusPts();
 
 	if (0 < m_pDoc->GetConfig().GetOtherPoints().size())
 		m_ctrlOtherPoints.EnableWindow(TRUE);
@@ -1213,6 +1236,13 @@ void CDlgRunScore::OnKillfocusPlace()
 {
 	GetText(&m_ctrlPlace, m_Place);
 	m_Run->SetPlace(m_Place);
+	SetTitlePoints();
+}
+
+void CDlgRunScore::OnKillfocusBonus()
+{
+	GetText(&m_ctrlBonusPts, m_BonusPts);
+	m_Run->GetScoring().SetBonusPts(m_BonusPts);
 	SetTitlePoints();
 }
 

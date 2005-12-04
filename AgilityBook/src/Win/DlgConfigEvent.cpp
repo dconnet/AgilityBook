@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -156,6 +157,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SPEED, m_ctrlSpeedPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_BONUS, m_ctrlBonus);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT, m_ctrlMultiplyText);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_ctrlMultiply);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_Multiply);
@@ -280,6 +282,10 @@ void CDlgConfigEvent::FillControls()
 			m_ctrlSpeedPts.SetCheck(1);
 		else
 			m_ctrlSpeedPts.SetCheck(0);
+		if (pScoring->HasBonusPts())
+			m_ctrlBonus.SetCheck(1);
+		else
+			m_ctrlBonus.SetCheck(0);
 		str = pScoring->GetNote().c_str();
 		str.Replace(_T("\n"), _T("\r\n"));
 		m_ctrlNote.SetWindowText(str);
@@ -301,6 +307,7 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlPointsList.ResetContent();
 		m_ctrlSpeedPts.SetCheck(0);
 		m_ctrlSuperQ.SetCheck(0);
+		m_ctrlBonus.SetCheck(0);
 		m_ctrlMultiply.SetWindowText(_T("1"));
 		m_ctrlNote.SetWindowText(_T(""));
 		FillRequiredPoints();
@@ -318,6 +325,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
 	m_ctrlSpeedPts.EnableWindow(bEnable);
 	m_ctrlSuperQ.EnableWindow(bEnable);
+	m_ctrlBonus.EnableWindow(bEnable);
 	m_ctrlMultiply.EnableWindow(bEnable);
 	m_ctrlCopy.EnableWindow(bEnable);
 	m_ctrlDelete.EnableWindow(bEnable);
@@ -749,6 +757,10 @@ bool CDlgConfigEvent::SaveControls()
 			pScoring->SetHasSpeedPts(true);
 		else
 			pScoring->SetHasSpeedPts(false);
+		if (m_ctrlBonus.GetCheck())
+			pScoring->SetHasBonusPts(true);
+		else
+			pScoring->SetHasBonusPts(false);
 		// Point/faults are already up-to-date.
 	}
 	return true;

@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2005-12-04 DRC Added 'bonusPts' to 'Scoring','Run'(scoring)
  * @li 2005-10-26 DRC Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
  * @li 2005-04-26 DRC Added 'ver' to 'AgilityBook'
  * @li 2005-01-11 DRC Added 'Multiple' to 'Titles', 'instance' to 'Title'.
@@ -178,6 +179,7 @@
 #define ATTRIB_SCORING_CLOSINGPTS			_T("ClosingPts")
 #define ATTRIB_SCORING_SUPERQ				_T("superQ")
 #define ATTRIB_SCORING_SPEEDPTS				_T("speedPts")
+#define ATTRIB_SCORING_BONUSPTS				_T("bonusPts")
 #define ATTRIB_TITLE_POINTS_POINTS			_T("Points")
 #define ATTRIB_TITLE_POINTS_FAULTS			_T("Faults")
 #define ATTRIB_LIFETIME_POINTS_POINTS		_T("Points")

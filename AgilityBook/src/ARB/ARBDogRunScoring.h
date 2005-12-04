@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-03-26 DRC Changed Table-in-YPS to hasTable.
@@ -133,6 +134,8 @@ public:
 	void SetOpenPts(short inOpenPts);
 	short GetClosePts() const;
 	void SetClosePts(short inClosePts);
+	short GetBonusPts() const;
+	void SetBonusPts(short inBonusPts);
 
 private:
 	ScoringType m_type;
@@ -148,6 +151,7 @@ private:
 	short m_NeedClosePts;
 	short m_OpenPts;
 	short m_ClosePts;
+	short m_BonusPts;
 };
 
 inline ARBDogRunScoring::ScoringType ARBDogRunScoring::GetType() const
@@ -267,4 +271,14 @@ inline short ARBDogRunScoring::GetClosePts() const
 inline void ARBDogRunScoring::SetClosePts(short inClosePts)
 {
 	m_ClosePts = inClosePts;
+}
+
+inline short ARBDogRunScoring::GetBonusPts() const
+{
+	return m_BonusPts;
+}
+
+inline void ARBDogRunScoring::SetBonusPts(short inBonusPts)
+{
+	m_BonusPts = inBonusPts;
 }

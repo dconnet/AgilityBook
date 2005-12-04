@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-10-31 DRC Time+Fault runs didn't compute titling points right.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
@@ -527,6 +528,7 @@ double ARBDogRun::GetTitlePoints(
 		*outClean = false;
 	if (outLifeTime)
 		*outLifeTime = 0.0;
+	short bonusPts = inScoring->HasBonusPts() ? m_Scoring.GetBonusPts() : 0;
 	switch (m_Scoring.GetType())
 	{
 	default:
@@ -545,9 +547,9 @@ double ARBDogRun::GetTitlePoints(
 				{
 					if (outClean)
 						*outClean = true;
-					pts = inScoring->GetTitlePoints().GetTitlePoints(0);
+					pts = inScoring->GetTitlePoints().GetTitlePoints(0) + bonusPts;
 					if (outLifeTime)
-						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(0);
+						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(0) + bonusPts;
 				}
 			}
 			else
@@ -557,9 +559,9 @@ double ARBDogRun::GetTitlePoints(
 					if (outClean)
 						*outClean = true;
 				}
-				pts = inScoring->GetTitlePoints().GetTitlePoints(score);
+				pts = inScoring->GetTitlePoints().GetTitlePoints(score) + bonusPts;
 				if (outLifeTime)
-					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score);
+					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusPts;
 			}
 		}
 		break;
@@ -573,9 +575,9 @@ double ARBDogRun::GetTitlePoints(
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults);
+			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults) + bonusPts;
 			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults);
+				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusPts;
 		}
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
@@ -587,9 +589,9 @@ double ARBDogRun::GetTitlePoints(
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
 			if (outClean)
 				*outClean = true;
-			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults);
+			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults) + bonusPts;
 			if (outLifeTime)
-				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults);
+				*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(timeFaults) + bonusPts;
 		}
 		break;
 	}

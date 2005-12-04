@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -128,6 +129,9 @@ private:
 	short	m_DogsQd;
 	CComboBox	m_ctrlQ;
 	CStatic	m_ctrlScore;
+	CStatic	m_ctrlBonusPtsText;
+	CEdit	m_ctrlBonusPts;
+	short	m_BonusPts;
 	CStatic	m_ctrlSpeedPtsText;
 	CStatic	m_ctrlSpeedPts;
 	CStatic	m_ctrlTitlePointsText;
@@ -190,6 +194,7 @@ protected:
 	afx_msg void OnKillfocusOpen();
 	afx_msg void OnKillfocusClose();
 	afx_msg void OnKillfocusPlace();
+	afx_msg void OnKillfocusBonus();
 	afx_msg void OnBnClickedTableYps();
 	afx_msg void OnSelchangeQ();
 	//}}AFX_MSG
