@@ -57,6 +57,7 @@ private:
 	//}}AFX_DATA
 	ARBDogRun* m_Run;
 	HENHMETAFILE m_metaFile;
+	HENHMETAFILE m_metaFileBack;
 	bool m_ViewText;
 	bool m_Insert;
 	CRect m_rCRCDwin; // Original CRCD rectangle.
@@ -69,8 +70,10 @@ protected:
 
 // Implementation
 protected:
+	void DeleteMetaFile();
 	void AdjustCRCD();
 	void SetView();
+	void SetCRCDData();
 	//{{AFX_MSG(CDlgRunCRCD)
 	virtual BOOL OnInitDialog();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);

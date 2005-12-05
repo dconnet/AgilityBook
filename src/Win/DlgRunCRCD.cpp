@@ -57,6 +57,7 @@ CDlgRunCRCD::CDlgRunCRCD(ARBDogRun* pRun)
 	: CDlgBasePropertyPage(CDlgRunCRCD::IDD)
 	, m_Run(pRun)
 	, m_metaFile(NULL)
+	, m_metaFileBack(NULL)
 	, m_ViewText(false)
 	, m_Insert(true)
 {
@@ -66,11 +67,7 @@ CDlgRunCRCD::CDlgRunCRCD(ARBDogRun* pRun)
 
 CDlgRunCRCD::~CDlgRunCRCD()
 {
-	if (m_metaFile)
-	{
-		DeleteEnhMetaFile(m_metaFile);
-		m_metaFile = NULL;
-	}
+	DeleteMetaFile();
 }
 
 void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
@@ -97,6 +94,18 @@ BEGIN_MESSAGE_MAP(CDlgRunCRCD, CDlgBasePropertyPage)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
+
+void CDlgRunCRCD::DeleteMetaFile()
+{
+	if (!m_metaFile && m_metaFileBack)
+		m_metaFile = m_metaFileBack;
+	if (m_metaFile)
+	{
+		DeleteEnhMetaFile(m_metaFile);
+		m_metaFile = NULL;
+		m_metaFileBack = NULL;
+	}
+}
 
 void CDlgRunCRCD::AdjustCRCD()
 {
@@ -156,6 +165,30 @@ void CDlgRunCRCD::SetView()
 	}
 }
 
+void CDlgRunCRCD::SetCRCDData()
+{
+	if (m_metaFile)
+	{
+		ENHMETAHEADER header;
+		GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
+		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
+		LPBYTE bits = new BYTE[nSize+1];
+		GetEnhMetaFileBits(m_metaFile, nSize, bits);
+		Base64 encode;
+		ASSERT(sizeof(BYTE) == sizeof(char));
+#ifdef UNICODE
+		CString tmp(encode.Encode(reinterpret_cast<char const*>(bits), nSize).c_str());
+		ARBString moreBits = tmp;
+#else
+		ARBString moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
+#endif
+		m_Run->SetCRCDMetaFile(moreBits);
+		delete [] bits;
+	}
+	else
+		m_Run->SetCRCDMetaFile(_T(""));
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunCRCD message handlers
 
@@ -186,6 +219,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 #endif
 		{
 			m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(len), reinterpret_cast<LPBYTE>(pOutput));
+			m_metaFileBack = m_metaFile;
 			if (m_metaFile)
 			{
 				m_ViewText = false;
@@ -194,7 +228,10 @@ BOOL CDlgRunCRCD::OnInitDialog()
 			}
 		}
 	}
-	m_ctrlImage.SetCheck(CAgilityBookOptions::GetIncludeCRCDImage() ? 1 : 0);
+	int nSetCheck = CAgilityBookOptions::GetIncludeCRCDImage() ? 1 : 0;
+	if (m_metaFile)
+		nSetCheck = 1;
+	m_ctrlImage.SetCheck(nSetCheck);
 	SetView();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -241,11 +278,7 @@ void CDlgRunCRCD::OnCopy()
 			if (AfxGetMainWnd()->OpenClipboard())
 			{
 				m_ctrlText.SetWindowText(_T(""));
-				if (m_metaFile)
-				{
-					DeleteEnhMetaFile(m_metaFile);
-					m_metaFile = NULL;
-				}
+				DeleteMetaFile();
 				if (bText)
 				{
 					m_ViewText = true;
@@ -271,21 +304,8 @@ void CDlgRunCRCD::OnCopy()
 					{
 						HENHMETAFILE hData = reinterpret_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
 						m_metaFile = CopyEnhMetaFile(hData, NULL);
-						ENHMETAHEADER header;
-						GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
-						UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
-						LPBYTE bits = new BYTE[nSize+1];
-						GetEnhMetaFileBits(m_metaFile, nSize, bits);
-						Base64 encode;
-						ASSERT(sizeof(BYTE) == sizeof(char));
-#ifdef UNICODE
-						CString tmp(encode.Encode(reinterpret_cast<char const*>(bits), nSize).c_str());
-						ARBString moreBits = tmp;
-#else
-						ARBString moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
-#endif
-						m_Run->SetCRCDMetaFile(moreBits);
-						delete [] bits;
+						m_metaFileBack = m_metaFile;
+						SetCRCDData();
 						AdjustCRCD();
 						m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
 						if (m_metaFile)
@@ -305,11 +325,7 @@ void CDlgRunCRCD::OnCopy()
 		m_Insert = true;
 		m_ViewText = true;
 		m_ctrlText.SetWindowText(_T(""));
-		if (m_metaFile)
-		{
-			DeleteEnhMetaFile(m_metaFile);
-			m_metaFile = NULL;
-		}
+		DeleteMetaFile();
 		m_Run->SetCRCD(_T(""));
 		m_Run->SetCRCDMetaFile(_T(""));
 		SetView();
@@ -319,4 +335,28 @@ void CDlgRunCRCD::OnCopy()
 void CDlgRunCRCD::OnImage()
 {
 	CAgilityBookOptions::SetIncludeCRCDImage(0 != m_ctrlImage.GetCheck());
+	if (m_ctrlImage.GetCheck())
+	{
+		if (!m_metaFile && m_metaFileBack)
+			m_metaFile = m_metaFileBack;
+	}
+	else
+	{
+		if (m_metaFile)
+		{
+			m_metaFileBack = m_metaFile;
+			m_metaFile = NULL;
+		}
+	}
+	AdjustCRCD();
+	m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
+	SetCRCDData();
+	if (m_metaFile)
+	{
+		m_ViewText = false;
+		m_Insert = false;
+	}
+	else
+		m_ViewText = true;
+	SetView();
 }
