@@ -1,13 +1,10 @@
-Last Updated: 11/20/2005
+Last Updated: 12/4/2005
 
 - Create named import/export settings.
 
 - Add display name to configuration items.
 
 - Make the Run dialog combo boxes check the filter to 'hide' levels/etc.
-
-- The 'Include Image' checkbox in the CRCD tab of a Run is misleading
-  after a course is inserted.
 
 - Create a way to add a note directly from Calendar/Trial/etc entries for
   judges/clubs/locations.

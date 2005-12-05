@@ -1,4 +1,4 @@
-11/22/2005: v1.6.1.11 <in development>
+12/4/2005: v1.6.1.11 <in development>
 - Bumped file version to 11.1, Configuration v10:
   - Added option to prefix a title when listed on configuration titles.
   - Updated comments in CPE titles (no minimum number of judges anymore)
@@ -16,6 +16,8 @@
   - Added option to no longer prompt to update configuration. This will be
     reset the next time you manually update the configuration.
   - Added ability to have fractional titling points.
+  - Made the 'Include Image' checkbox in the CRCD tab of a Run is behave
+    more logically.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
