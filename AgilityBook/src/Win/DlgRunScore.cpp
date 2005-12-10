@@ -1123,6 +1123,7 @@ void CDlgRunScore::OnDatetimechangeDate(
 	CTime time;
 	m_ctrlDate.GetTime(time);
 	m_Run->SetDate(ARBDate(time.GetYear(), time.GetMonth(), time.GetDay()));
+	FillEvents();
 	UpdateControls();
 	*pResult = 0;
 }
