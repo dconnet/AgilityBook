@@ -1997,7 +1997,12 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="*" Level="*" ValidFrom="2005-1-1" ValidTo="2005-12-31" type="OCScoreThenTime">
+				<Scoring Division="Standard" Level="*" ValidFrom="2005-1-1" ValidTo="2005-12-31" type="OCScoreThenTime">
+					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring Division="Veterans" Level="*" ValidFrom="2005-1-1" ValidTo="2005-12-31" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
