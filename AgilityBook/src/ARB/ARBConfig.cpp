@@ -257,7 +257,7 @@ void ARBConfig::Default()
 }
 
 /* static */
-ARBString ARBConfig::GetDTD()
+ARBString ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
 	ARBString dtd;
 #ifdef WIN32
@@ -270,9 +270,13 @@ ARBString ARBConfig::GetDTD()
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
 #ifdef UNICODE
 			CStringA pData = reinterpret_cast<char const*>(LockResource(hRes));
+			if (bNormalizeCRNL)
+				pData.Replace("\r\n", "\n");
 			dtd = CString(pData, size);
 #else
-			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
+			CString pData = reinterpret_cast<char const*>(LockResource(hRes));
+			if (bNormalizeCRNL)
+				pData.Replace("\r\n", "\n");
 			dtd = ARBString(pData, size);
 #endif
 			FreeResource(hRes);

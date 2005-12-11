@@ -796,6 +796,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
@@ -834,6 +836,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
 					ARBVectorBase<ARBCalendar> allEntries;
 					ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
 					if (!entries)
@@ -935,6 +939,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
@@ -969,6 +975,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;
@@ -996,8 +1004,10 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, _T("AgilityRecordBook.dtd"), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
 					CStdioFile output(file.GetFileName(), CFile::modeCreate | CFile::modeWrite | CFile::typeBinary);
-					ARBString dtd = ARBConfig::GetDTD();
+					ARBString dtd = ARBConfig::GetDTD(false);
 					output.WriteString(dtd.c_str());
 					output.Close();
 					bOk = true;
@@ -1018,6 +1028,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
+					AfxGetMainWnd()->UpdateWindow();
+					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
 					Element tree;

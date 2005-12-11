@@ -126,7 +126,7 @@ public:
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
 	 */
-	static ARBString GetDTD();
+	static ARBString GetDTD(bool bNormalizeCRNL = true);
 
 	/**
 	 * Convenience function to get the nice name of a title.
