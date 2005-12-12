@@ -268,16 +268,14 @@ ARBString ARBConfig::GetDTD(bool bNormalizeCRNL)
 		if (hRes)
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
+			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
+			CStringA data(pData, size);
+			if (bNormalizeCRNL)
+				data.Replace("\r\n", "\n");
 #ifdef UNICODE
-			CStringA pData = reinterpret_cast<char const*>(LockResource(hRes));
-			if (bNormalizeCRNL)
-				pData.Replace("\r\n", "\n");
-			dtd = CString(pData, size);
+			dtd = CString(data);
 #else
-			CString pData = reinterpret_cast<char const*>(LockResource(hRes));
-			if (bNormalizeCRNL)
-				pData.Replace("\r\n", "\n");
-			dtd = ARBString(pData, size);
+			dtd = ARBString(data, data.GetLength());
 #endif
 			FreeResource(hRes);
 		}
