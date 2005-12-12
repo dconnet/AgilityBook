@@ -1,4 +1,4 @@
-Last Updated: 12/4/2005
+Last Updated: 12/11/2005
 
 - Create named import/export settings.
 
@@ -8,6 +8,10 @@ Last Updated: 12/4/2005
 
 - Create a way to add a note directly from Calendar/Trial/etc entries for
   judges/clubs/locations.
+  - Calendar (IDD_CALENDAR): Location(btn), Club(btn)
+  - Trial (IDD_TRIAL): Location(btn)
+  - Club (IDD_CLUB): Club(ctrl)
+  - Run (IDD_RUN_SCORE): Judge(btn)
 
 - Possibly change calendar view to display by separate months. Maybe bolder
   lines between the months?
