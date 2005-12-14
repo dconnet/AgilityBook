@@ -11,6 +11,7 @@
 #define HIDC_ASSIGN_TYPE                0x80f70636    // IDD_ASSIGN_COLUMNS
 #define HIDC_CAL_CLUB                   0x80d4048f    // IDD_CALENDAR
 #define HIDC_CAL_CLUB_NOTE              0x80d40497    // IDD_CALENDAR
+#define HIDC_CAL_CLUB_NOTES             0x80d40499    // IDD_CALENDAR
 #define HIDC_CAL_DATE_CLOSES            0x80d40493    // IDD_CALENDAR
 #define HIDC_CAL_DATE_CLOSES_UNKNOWN    0x80d40494    // IDD_CALENDAR
 #define HIDC_CAL_DATE_END               0x80d40489    // IDD_CALENDAR
@@ -22,6 +23,7 @@
 #define HIDC_CAL_ENTER_PLANNING         0x80d4048c    // IDD_CALENDAR
 #define HIDC_CAL_LOCATION               0x80d4048e    // IDD_CALENDAR
 #define HIDC_CAL_LOCATION_NOTE          0x80d40496    // IDD_CALENDAR
+#define HIDC_CAL_LOCATION_NOTES         0x80d40498    // IDD_CALENDAR
 #define HIDC_CAL_NOTES                  0x80d40495    // IDD_CALENDAR
 #define HIDC_CAL_TENTATIVE              0x80d4048a    // IDD_CALENDAR
 #define HIDC_CAL_VENUE                  0x80d40490    // IDD_CALENDAR
@@ -299,6 +301,7 @@
 #define HIDC_RUNSCORE_HEIGHT            0x80e1051c    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_IN_CLASS          0x80e1053a    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_JUDGE             0x80e1051d    // IDD_RUN_SCORE
+#define HIDC_RUNSCORE_JUDGE_NOTES       0x80e1054b    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_LEVEL             0x80e10519    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_OPENING_PTS       0x80e10528    // IDD_RUN_SCORE
 #define HIDC_RUNSCORE_OPEN_PTS          0x80e1052c    // IDD_RUN_SCORE
@@ -331,8 +334,10 @@
 #define HIDC_TRIAL_CLUB_EDIT            0x80df0503    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_INFO            0x80df0508    // IDD_TRIAL
 #define HIDC_TRIAL_CLUB_NEW             0x80df0502    // IDD_TRIAL
+#define HIDC_TRIAL_CLUB_NOTES           0x80df04ff    // IDD_TRIAL
 #define HIDC_TRIAL_LOCATION             0x80df0500    // IDD_TRIAL
 #define HIDC_TRIAL_LOCATION_INFO        0x80df0507    // IDD_TRIAL
+#define HIDC_TRIAL_LOCATION_NOTES       0x80df04fe    // IDD_TRIAL
 #define HIDC_TRIAL_NOTES                0x80df0501    // IDD_TRIAL
 #define HIDC_TRIAL_VERIFIED             0x80df0506    // IDD_TRIAL
 #define HIDC_WIZARD_EXPORT_ASSIGN       0x80f6062b    // IDD_WIZARD_EXPORT

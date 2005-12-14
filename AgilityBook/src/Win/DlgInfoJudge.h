@@ -49,6 +49,7 @@ public:
 	CDlgInfoJudge(
 			CAgilityBookDoc* pDoc,
 			ARBInfo::eInfoType inType,
+			ARBString const& inSelect,
 			CWnd* pParent = NULL);
 
 private:
@@ -61,6 +62,7 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
+	ARBString m_Select;
 	std::set<ARBString> m_NamesInUse;
 	ARBInfoItemList m_InfoOrig;
 	ARBInfoItemList m_Info;

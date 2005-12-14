@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-19 DRC Added Location/Club note information.
  * @li 2003-12-27 DRC Changed FindEvent to take a date.
@@ -43,6 +44,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBDogTrial.h"
 #include "DlgClub.h"
+#include "DlgInfoJudge.h"
 
 using namespace std;
 
@@ -95,10 +97,12 @@ void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_TRIAL_LOCATION, m_Location);
 	DDX_Control(pDX, IDC_TRIAL_LOCATION, m_ctrlLocation);
 	DDX_Text(pDX, IDC_TRIAL_NOTES, m_Notes);
+	DDX_Control(pDX, IDC_TRIAL_LOCATION_NOTES, m_ctrlLocationNotes);
 	DDX_Control(pDX, IDC_TRIAL_LOCATION_INFO, m_ctrlLocationInfo);
 	DDX_Control(pDX, IDC_TRIAL_CLUB_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_TRIAL_CLUB_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_TRIAL_CLUBS, m_ctrlClubs);
+	DDX_Control(pDX, IDC_TRIAL_CLUB_NOTES, m_ctrlClubNotes);
 	DDX_Control(pDX, IDC_TRIAL_CLUB_INFO, m_ctrlClubInfo);
 	//}}AFX_DATA_MAP
 }
@@ -110,6 +114,8 @@ BEGIN_MESSAGE_MAP(CDlgTrial, CDlgBaseDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TRIAL_CLUBS, OnItemchangedClubs)
 	ON_NOTIFY(NM_DBLCLK, IDC_TRIAL_CLUBS, OnDblclkClubs)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_TRIAL_CLUBS, OnKeydownClubs)
+	ON_BN_CLICKED(IDC_TRIAL_LOCATION_NOTES, OnLocationNotes)
+	ON_BN_CLICKED(IDC_TRIAL_CLUB_NOTES, OnClubNotes)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_NEW, OnClubNew)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_EDIT, OnClubEdit)
 	ON_BN_CLICKED(IDC_TRIAL_CLUB_DELETE, OnClubDelete)
@@ -195,6 +201,9 @@ BOOL CDlgTrial::OnInitDialog()
 		m_ctrlClubs.InsertColumn(i, &col);
 		str.ReleaseBuffer();
 	}
+	m_ctrlEdit.EnableWindow(FALSE);
+	m_ctrlClubNotes.EnableWindow(FALSE);
+	m_ctrlDelete.EnableWindow(FALSE);
 
 	set<ARBString> locations;
 	m_pDoc->GetAllTrialLocations(locations);
@@ -238,11 +247,13 @@ void CDlgTrial::OnItemchangedClubs(
 	if (0 == selected)
 	{
 		m_ctrlEdit.EnableWindow(FALSE);
+		m_ctrlClubNotes.EnableWindow(FALSE);
 		m_ctrlDelete.EnableWindow(FALSE);
 	}
 	else
 	{
 		m_ctrlEdit.EnableWindow(TRUE);
+		m_ctrlClubNotes.EnableWindow(TRUE);
 		m_ctrlDelete.EnableWindow(TRUE);
 	}
 	UpdateNotes(false, true);
@@ -271,6 +282,33 @@ void CDlgTrial::OnKeydownClubs(
 		break;
 	}
 	*pResult = 0;
+}
+
+void CDlgTrial::OnLocationNotes()
+{
+	UpdateData(TRUE);
+	m_Location.TrimRight();
+	m_Location.TrimLeft();
+	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
+	if (IDOK == dlg.DoModal())
+	{
+		UpdateNotes(true, false);
+	}
+}
+
+void CDlgTrial::OnClubNotes()
+{
+	UpdateData(TRUE);
+	int index = m_ctrlClubs.GetSelection();
+	if (0 <= index)
+	{
+		ARBDogClub* pClub = reinterpret_cast<ARBDogClub*>(m_ctrlClubs.GetItemData(index));
+		CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
+		if (IDOK == dlg.DoModal())
+		{
+			UpdateNotes(false, true);
+		}
+	}
 }
 
 void CDlgTrial::OnClubNew()

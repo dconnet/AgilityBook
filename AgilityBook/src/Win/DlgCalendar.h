@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
 #include "DlgBaseDialog.h"
+#include "NoteButton.h"
 #include "RichEditCtrl2.h"
 class ARBCalendar;
 class CAgilityBookDoc;
@@ -59,11 +61,13 @@ private:
 	int		m_Entered;
 	CComboBox	m_ctrlLocation;
 	CString	m_Location;
+	CNoteButton	m_ctrlLocationNotes;
 	CRichEditCtrl2	m_ctrlLocationInfo;
 	CComboBox	m_ctrlVenue;
 	CString	m_Venue;
 	CComboBox	m_ctrlClub;
 	CString	m_Club;
+	CNoteButton	m_ctrlClubNotes;
 	CRichEditCtrl2	m_ctrlClubInfo;
 	CTime	m_dateOpens;
 	BOOL	m_bOpeningUnknown;
@@ -89,6 +93,8 @@ protected:
 	afx_msg void OnKillfocusLocation();
 	afx_msg void OnSelchangeClub();
 	afx_msg void OnKillfocusClub();
+	afx_msg void OnLocationNotes();
+	afx_msg void OnClubNotes();
 	afx_msg void OnDateOpensUnknown();
 	afx_msg void OnDateClosesUnknown();
 	virtual void OnOK();

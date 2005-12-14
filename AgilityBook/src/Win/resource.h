@@ -29,6 +29,7 @@
 #define IDI_HEADER_UP                   163
 #define IDI_HEADER_DOWN                 164
 #define IDI_HELP                        165
+#define IDI_NOTEBTN                     166
 #define IDD_ABOUTBOX                    200
 #define IDD_NAME                        201
 #define IDD_LIST_VIEWER                 202
@@ -200,6 +201,8 @@
 #define IDC_CAL_NOTES                   1173
 #define IDC_CAL_LOCATION_NOTE           1174
 #define IDC_CAL_CLUB_NOTE               1175
+#define IDC_CAL_LOCATION_NOTES          1176
+#define IDC_CAL_CLUB_NOTES              1177
 #define IDC_TRAINING_DATE               1180
 #define IDC_TRAINING_NAME               1181
 #define IDC_TRAINING_NOTES              1182
@@ -260,6 +263,8 @@
 #define IDC_EXISTING_SUBNAME_TEXT       1275
 #define IDC_EXISTING_SUBNAME            1276
 #define IDC_EXISTING_COMMENTS           1277
+#define IDC_TRIAL_LOCATION_NOTES        1278
+#define IDC_TRIAL_CLUB_NOTES            1279
 #define IDC_TRIAL_LOCATION              1280
 #define IDC_TRIAL_NOTES                 1281
 #define IDC_TRIAL_CLUB_NEW              1282
@@ -325,6 +330,7 @@
 #define IDC_RUNCOMMENT_COMMENTS_FAULTS  1352
 #define IDC_RUNSCORE_BONUSPTS_TEXT      1353
 #define IDC_RUNSCORE_BONUSPTS           1354
+#define IDC_RUNSCORE_JUDGE_NOTES        1355
 #define IDC_RUNREF_REF_RUNS             1360
 #define IDC_RUNREF_NEW                  1361
 #define IDC_RUNREF_EDIT                 1362

@@ -519,6 +519,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\NoteButton.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\PointsData.h"
 				>
 			</File>
@@ -673,6 +677,22 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\res\Logo.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\Note.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\NoteF.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\NoteU.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\NoteX.ico"
 				>
 			</File>
 			<File
@@ -1306,6 +1326,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\MainFrm.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\NoteButton.cpp"
 				>
 			</File>
 			<File
