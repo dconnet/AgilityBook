@@ -1044,19 +1044,31 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 
 void CAgilityBookDoc::OnNotesClubs()
 {
-	CDlgInfoJudge dlg(this, ARBInfo::eClubInfo);
+	ARBString select;
+	ARBDogTrial const* pTrial = GetCurrentTrial();
+	if (pTrial)
+		select = pTrial->GetClubs().GetPrimaryClubName();
+	CDlgInfoJudge dlg(this, ARBInfo::eClubInfo, select);
 	dlg.DoModal();
 }
 
 void CAgilityBookDoc::OnNotesJudges()
 {
-	CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo);
+	ARBString select;
+	ARBDogRun const* pRun = GetCurrentRun();
+	if (pRun)
+		select = pRun->GetJudge();
+	CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo, select);
 	dlg.DoModal();
 }
 
 void CAgilityBookDoc::OnNotesLocations()
 {
-	CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo);
+	ARBString select;
+	ARBDogTrial const* pTrial = GetCurrentTrial();
+	if (pTrial)
+		select = pTrial->GetLocation();
+	CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo, select);
 	dlg.DoModal();
 }
 

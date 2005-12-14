@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
@@ -43,6 +44,7 @@
 #include "AgilityBookOptions.h"
 #include "ARBCalendar.h"
 #include "ARBConfig.h"
+#include "DlgInfoJudge.h"
 
 using namespace std;
 
@@ -115,11 +117,13 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_CAL_ENTER_NOT, m_Entered);
 	DDX_Control(pDX, IDC_CAL_LOCATION, m_ctrlLocation);
 	DDX_CBString(pDX, IDC_CAL_LOCATION, m_Location);
+	DDX_Control(pDX, IDC_CAL_LOCATION_NOTES, m_ctrlLocationNotes);
 	DDX_Control(pDX, IDC_CAL_LOCATION_NOTE, m_ctrlLocationInfo);
 	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
 	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
 	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
 	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
+	DDX_Control(pDX, IDC_CAL_CLUB_NOTES, m_ctrlClubNotes);
 	DDX_Control(pDX, IDC_CAL_CLUB_NOTE, m_ctrlClubInfo);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_OPENS, m_dateOpens);
 	DDX_Check(pDX, IDC_CAL_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
@@ -135,6 +139,8 @@ BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	ON_CBN_KILLFOCUS(IDC_CAL_LOCATION, OnKillfocusLocation)
 	ON_CBN_SELCHANGE(IDC_CAL_CLUB, OnSelchangeClub)
 	ON_CBN_KILLFOCUS(IDC_CAL_CLUB, OnKillfocusClub)
+	ON_BN_CLICKED(IDC_CAL_LOCATION_NOTES, OnLocationNotes)
+	ON_BN_CLICKED(IDC_CAL_CLUB_NOTES, OnClubNotes)
 	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
 	//}}AFX_MSG_MAP
@@ -256,6 +262,30 @@ void CDlgCalendar::OnKillfocusClub()
 {
 	UpdateData(TRUE);
 	UpdateClubInfo((LPCTSTR)m_Club);
+}
+
+void CDlgCalendar::OnLocationNotes()
+{
+	UpdateData(TRUE);
+	m_Location.TrimRight();
+	m_Location.TrimLeft();
+	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
+	if (IDOK == dlg.DoModal())
+	{
+		UpdateLocationInfo((LPCTSTR)m_Location);
+	}
+}
+
+void CDlgCalendar::OnClubNotes()
+{
+	UpdateData(TRUE);
+	m_Club.TrimRight();
+	m_Club.TrimLeft();
+	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
+	if (IDOK == dlg.DoModal())
+	{
+		UpdateClubInfo((LPCTSTR)m_Club);
+	}
 }
 
 void CDlgCalendar::OnDateOpensUnknown() 

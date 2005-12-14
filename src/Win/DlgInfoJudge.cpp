@@ -36,6 +36,8 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2005-12-13 DRC SelectString doesn't work in ownerdraw combo. Changed
+ *                    ctor interface for more versatility.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-24-05 DRC If there were 0 items in the list, it crashed.
  *                    Allow saving an entry with no comment.
@@ -93,10 +95,12 @@ bool CDlgInfoJudge::NameInfo::operator==(NameInfo const& rhs)
 CDlgInfoJudge::CDlgInfoJudge(
 		CAgilityBookDoc* pDoc,
 		ARBInfo::eInfoType inType,
+		ARBString const& inSelect,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_pDoc(pDoc)
 	, m_Type(inType)
+	, m_Select(inSelect)
 	, m_InfoOrig(_T("")) // We don't care about setting the infoname here
 	, m_Info(_T("")) // We don't care about setting the infoname here
 	, m_nAdded(0)
@@ -115,8 +119,6 @@ CDlgInfoJudge::CDlgInfoJudge(
 	}
 	m_InfoOrig = m_pDoc->GetInfo().GetInfo(m_Type);
 	m_Info = m_InfoOrig;
-	//{{AFX_DATA_INIT(CDlgInfoJudge)
-	//}}AFX_DATA_INIT
 }
 
 void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
@@ -150,39 +152,23 @@ BOOL CDlgInfoJudge::OnInitDialog()
 
 	CString caption;
 	std::set<ARBString> names;
-	ARBString select;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
-		{
-			caption.LoadString(IDS_INFO_CLUB);
-			m_pDoc->GetAllClubNames(names);
-			ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
-			if (pTrial)
-				select = pTrial->GetClubs().GetPrimaryClubName();
-		}
+		m_pDoc->GetAllClubNames(names);
+		caption.LoadString(IDS_INFO_CLUB);
 		break;
 	case ARBInfo::eJudgeInfo:
-		{
-			caption.LoadString(IDS_INFO_JUDGE);
-			m_pDoc->GetAllJudges(names);
-			ARBDogRun const* pRun = m_pDoc->GetCurrentRun();
-			if (pRun)
-				select = pRun->GetJudge();
-		}
+		m_pDoc->GetAllJudges(names);
+		caption.LoadString(IDS_INFO_JUDGE);
 		break;
 	case ARBInfo::eLocationInfo:
-		{
-			caption.LoadString(IDS_INFO_LOCATION);
-			m_pDoc->GetAllTrialLocations(names);
-			ARBDogTrial const* pTrial = m_pDoc->GetCurrentTrial();
-			if (pTrial)
-				select = pTrial->GetLocation();
-		}
+		m_pDoc->GetAllTrialLocations(names);
+		caption.LoadString(IDS_INFO_LOCATION);
 		break;
 	}
 	SetWindowText(caption);
-	m_Names.clear();
+
 	m_Names.reserve(names.size());
 	for (std::set<ARBString>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
@@ -201,12 +187,22 @@ BOOL CDlgInfoJudge::OnInitDialog()
 			++m_nAdded;
 		m_Names.push_back(data);
 	}
+
+	bool bSet = false;
 	for (size_t idx = 0; idx < m_Names.size(); ++idx)
 	{
 		// Combo box is ownerdraw.
-		m_ctrlNames.AddString((LPCTSTR)idx);
+		int index = m_ctrlNames.AddString((LPCTSTR)idx);
+		if (!bSet && 0 < m_Select.length())
+		{
+			if (0 == m_Names[idx].m_Name.find(m_Select))
+			{
+				m_ctrlNames.SetCurSel(index);
+				bSet = true;
+			}
+		}
 	}
-	if (0 == select.length() || 0 > m_ctrlNames.SelectString(-1, select.c_str()))
+	if (0 == m_Select.length() || !bSet)
 		m_ctrlNames.SetCurSel(0);
 	OnSelchangeName();
 
@@ -329,9 +325,10 @@ void CDlgInfoJudge::OnKillfocusComments()
 
 void CDlgInfoJudge::OnNew()
 {
-	CDlgName dlg(_T(""), _T(""), this);
+	CDlgName dlg(m_Select.c_str(), _T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
+		m_Select.clear();
 		ARBString name = (LPCTSTR)dlg.GetName();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);

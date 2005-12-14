@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2004-12-19 DRC Added Location/Club note information.
  */
 
 #include "ARBDogClub.h"
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
+#include "NoteButton.h"
 #include "RichEditCtrl2.h"
 class ARBDogTrial;
 class CAgilityBookDoc;
@@ -60,10 +62,12 @@ private:
 	CComboBox	m_ctrlLocation;
 	BOOL	m_Verified;
 	CString	m_Notes;
+	CNoteButton	m_ctrlLocationNotes;
 	CRichEditCtrl2	m_ctrlLocationInfo;
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
 	CListCtrl2	m_ctrlClubs;
+	CNoteButton	m_ctrlClubNotes;
 	CRichEditCtrl2	m_ctrlClubInfo;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
@@ -91,6 +95,8 @@ protected:
 	afx_msg void OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydownClubs(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnLocationNotes();
+	afx_msg void OnClubNotes();
 	afx_msg void OnClubNew();
 	afx_msg void OnClubEdit();
 	afx_msg void OnClubDelete();

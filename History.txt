@@ -1,4 +1,4 @@
-12/4/2005: v1.6.1.11 <in development>
+12/13/2005: v1.7.0.11 <in development>
 - Bumped file version to 11.1, Configuration v10:
   - Added option to prefix a title when listed on configuration titles.
   - Updated comments in CPE titles (no minimum number of judges anymore)
@@ -18,6 +18,8 @@
   - Added ability to have fractional titling points.
   - Made the 'Include Image' checkbox in the CRCD tab of a Run is behave
     more logically.
+  - Added a way to create a note directly from Calendar/Trial/etc entries for
+    judges/clubs/locations.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
@@ -37,6 +39,7 @@
     always work.
   - Ranged event methods weren't probably filtered in Run dialog.
   - Subnames were enabled when they shouldn't have been.
+  - The Notes dialog was not properly selecting the text for the related item.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:

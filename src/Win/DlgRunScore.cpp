@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-11-20 DRC Allow 'E's on non-titling runs.
  * @li 2005-08-11 DRC Removed QQ checkbox.
@@ -75,6 +76,7 @@
 #include "ARBDogClub.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "DlgInfoJudge.h"
 #include "DlgListCtrl.h"
 
 using namespace std;
@@ -178,6 +180,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_RUNSCORE_HEIGHT, m_Height);
 	DDX_Control(pDX, IDC_RUNSCORE_JUDGE, m_ctrlJudge);
 	DDX_CBString(pDX, IDC_RUNSCORE_JUDGE, m_Judge);
+	DDX_Control(pDX, IDC_RUNSCORE_JUDGE_NOTES, m_ctrlJudgeNotes);
 	DDX_Control(pDX, IDC_RUNSCORE_HANDLER, m_ctrlHandler);
 	DDX_CBString(pDX, IDC_RUNSCORE_HANDLER, m_Handler);
 	DDX_Control(pDX, IDC_RUNSCORE_CONDITIONS, m_ctrlConditions);
@@ -409,6 +412,7 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_DIVISION, OnSelchangeDivision)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_LEVEL, OnSelchangeLevel)
 	ON_CBN_SELCHANGE(IDC_RUNSCORE_EVENT, OnSelchangeEvent)
+	ON_BN_CLICKED(IDC_RUNSCORE_JUDGE_NOTES, OnJudgeNotes)
 	ON_BN_CLICKED(IDC_RUNSCORE_PARTNERS_EDIT, OnPartnersEdit)
 	ON_BN_CLICKED(IDC_RUNSCORE_OTHERPOINTS, OnOtherpoints)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_FAULTS, OnKillfocusFaults)
@@ -1147,6 +1151,15 @@ void CDlgRunScore::OnSelchangeEvent()
 	SetEventDesc(pEvent);
 	if (pEvent)
 		pEvent->Release();
+}
+
+void CDlgRunScore::OnJudgeNotes()
+{
+	UpdateData(TRUE);
+	m_Judge.TrimRight();
+	m_Judge.TrimLeft();
+	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eJudgeInfo, (LPCTSTR)m_Judge, this);
+	dlg.DoModal();
 }
 
 void CDlgRunScore::OnPartnersEdit() 

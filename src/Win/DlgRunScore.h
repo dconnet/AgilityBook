@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -43,6 +44,7 @@
 
 #include <vector>
 #include "DlgBasePropertyPage.h"
+#include "NoteButton.h"
 #include "RichEditCtrl2.h"
 class ARBConfigEvent;
 class ARBConfigOtherPoints;
@@ -83,6 +85,7 @@ private:
 	CString	m_Height;
 	CComboBox	m_ctrlJudge;
 	CString	m_Judge;
+	CNoteButton	m_ctrlJudgeNotes;
 	CComboBox	m_ctrlHandler;
 	CString	m_Handler;
 	CEdit	m_ctrlConditions;
@@ -182,6 +185,7 @@ protected:
 	afx_msg void OnSelchangeDivision();
 	afx_msg void OnSelchangeLevel();
 	afx_msg void OnSelchangeEvent();
+	afx_msg void OnJudgeNotes();
 	afx_msg void OnPartnersEdit();
 	afx_msg void OnOtherpoints();
 	afx_msg void OnKillfocusFaults();

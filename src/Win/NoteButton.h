@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2005 David Connet. All Rights Reserved.
+ * Copyright © 2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,47 +29,34 @@
 /**
  * @file
  *
- * @brief interface of the CAboutDlg class
+ * @brief Special button for invoking notes.
  * @author David Connet
  *
  * Revision History
- * @li 2005-02-08 DRC Added another link.
- * @li 2004-07-20 DRC Added a note for updating information.
- * @li 2003-09-17 DRC Added a 'check for updates' control.
+ * @li 2005-12-12 DRC Created
  */
 
-#include "DlgBaseDialog.h"
-#include "HyperLink.h"
-class CAgilityBookDoc;
-
-class CAboutDlg : public CDlgBaseDialog
+class CNoteButton : public CButton
 {
+	DECLARE_DYNAMIC(CNoteButton)
+
 public:
-	CAboutDlg(CAgilityBookDoc* pDoc);
+	CNoteButton();
+	CNoteButton(UINT idIcon);
+	virtual ~CNoteButton();
 
-private:
-	// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	CStatic	m_ctrlText;
-	CHyperLink	m_ctrlLink1;
-	CHyperLink	m_ctrlLink2;
-	CHyperLink	m_ctrlLink3;
-	CHyperLink	m_ctrlLink4;
-	CHyperLink	m_ctrlLink5;
-	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-
-	//{{AFX_VIRTUAL(CAboutDlg)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    /// DDX/DDV support
-	//}}AFX_VIRTUAL
+	void Load(UINT idIcon);
 
-// Implementation
-protected:
-	//{{AFX_MSG(CAboutDlg)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedUpdate();
-	//}}AFX_MSG
+	CImageList m_ImageList;
+	int m_idxNormal;
+
+	virtual void PreSubclassWindow();
+	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
+
 	DECLARE_MESSAGE_MAP()
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };

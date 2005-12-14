@@ -6,13 +6,6 @@ Last Updated: 12/11/2005
 
 - Make the Run dialog combo boxes check the filter to 'hide' levels/etc.
 
-- Create a way to add a note directly from Calendar/Trial/etc entries for
-  judges/clubs/locations.
-  - Calendar (IDD_CALENDAR): Location(btn), Club(btn)
-  - Trial (IDD_TRIAL): Location(btn)
-  - Club (IDD_CLUB): Club(ctrl)
-  - Run (IDD_RUN_SCORE): Judge(btn)
-
 - Possibly change calendar view to display by separate months. Maybe bolder
   lines between the months?
 
