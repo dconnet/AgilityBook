@@ -42,6 +42,7 @@
  */
 
 #include "ARBBase.h"
+#include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
@@ -101,6 +102,17 @@ public:
 	bool Save(Element& ioTree) const;
 
 	/**
+	 * Determine if this method is valid on the given date.
+	 * @param inDate Date to check, if not valid, this method is valid.
+	 */
+	bool IsValidOn(ARBDate inDate) const;
+
+	/**
+	 * Get a string showing the valid date range (if set)
+	 */
+	ARBString GetValidDateString() const;
+
+	/**
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
@@ -127,6 +139,10 @@ public:
 	void SetMultiple(short inMultiple);
 	bool GetPrefix() const;
 	void SetPrefix(bool inPrefix);
+	ARBDate const& GetValidFrom() const;
+	void SetValidFrom(ARBDate const& inDate);
+	ARBDate const& GetValidTo() const;
+	void SetValidTo(ARBDate const& inDate);
 	ARBString const& GetDescription() const;
 	void SetDescription(ARBString const& inDesc);
 
@@ -136,6 +152,8 @@ private:
 	ARBString m_LongName;
 	short m_Multiple;
 	bool m_Prefix;
+	ARBDate m_ValidFrom;
+	ARBDate m_ValidTo;
 	ARBString m_Desc;
 };
 
@@ -190,6 +208,26 @@ inline bool ARBConfigTitle::GetPrefix() const
 inline void ARBConfigTitle::SetPrefix(bool inPrefix)
 {
 	m_Prefix = inPrefix;
+}
+
+inline ARBDate const& ARBConfigTitle::GetValidFrom() const
+{
+	return m_ValidFrom;
+}
+
+inline void ARBConfigTitle::SetValidFrom(ARBDate const& inDate)
+{
+	m_ValidFrom = inDate;
+}
+
+inline ARBDate const& ARBConfigTitle::GetValidTo() const
+{
+	return m_ValidTo;
+}
+
+inline void ARBConfigTitle::SetValidTo(ARBDate const& inDate)
+{
+	m_ValidTo = inDate;
 }
 
 inline ARBString const& ARBConfigTitle::GetDescription() const

@@ -58,6 +58,8 @@ ARBConfigTitle::ARBConfigTitle()
 	, m_LongName()
 	, m_Multiple(0)
 	, m_Prefix(false)
+	, m_ValidFrom()
+	, m_ValidTo()
 	, m_Desc()
 {
 }
@@ -67,6 +69,8 @@ ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	, m_LongName(rhs.m_LongName)
 	, m_Multiple(rhs.m_Multiple)
 	, m_Prefix(rhs.m_Prefix)
+	, m_ValidFrom(rhs.m_ValidFrom)
+	, m_ValidTo(rhs.m_ValidTo)
 	, m_Desc(rhs.m_Desc)
 {
 }
@@ -83,6 +87,8 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 		m_LongName = rhs.m_LongName;
 		m_Multiple = rhs.m_Multiple;
 		m_Prefix = rhs.m_Prefix;
+		m_ValidFrom = rhs.m_ValidFrom;
+		m_ValidTo = rhs.m_ValidTo;
 		m_Desc = rhs.m_Desc;
 	}
 	return *this;
@@ -94,6 +100,8 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 		&& m_LongName == rhs.m_LongName
 		&& m_Multiple == rhs.m_Multiple
 		&& m_Prefix == rhs.m_Prefix
+		&& m_ValidFrom == rhs.m_ValidFrom
+		&& m_ValidTo == rhs.m_ValidTo
 		&& m_Desc == rhs.m_Desc;
 }
 
@@ -108,6 +116,8 @@ void ARBConfigTitle::clear()
 	m_LongName.erase();
 	m_Multiple = 0;
 	m_Prefix = false;
+	m_ValidFrom.clear();
+	m_ValidTo.clear();
 	m_Desc.erase();
 }
 
@@ -137,6 +147,25 @@ bool ARBConfigTitle::Load(
 		return false;
 	}
 
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
+	{
+		ARBString attrib;
+		inTree.GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
+		ARBString msg(INVALID_DATE);
+		msg += attrib;
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
+		return false;
+	}
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
+	{
+		ARBString attrib;
+		inTree.GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
+		ARBString msg(INVALID_DATE);
+		msg += attrib;
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
+		return false;
+	}
+
 	m_Desc = inTree.GetValue();
 	return true;
 }
@@ -151,9 +180,44 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_TITLES_PREFIX, m_Prefix);
 	if (0 < m_LongName.length())
 		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
+	if (m_ValidFrom.IsValid())
+		title.AddAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom);
+	if (m_ValidTo.IsValid())
+		title.AddAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo);
 	if (0 < m_Desc.length())
 		title.SetValue(m_Desc);
 	return true;
+}
+
+bool ARBConfigTitle::IsValidOn(ARBDate inDate) const
+{
+	if (inDate.IsValid()
+	&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
+	|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
+	{
+		return false;
+	}
+	return true;
+}
+
+ARBString ARBConfigTitle::GetValidDateString() const
+{
+	ARBString str;
+	if (m_ValidFrom.IsValid() || m_ValidTo.IsValid())
+	{
+		str += _T("[");
+		if (m_ValidFrom.IsValid())
+			str += m_ValidFrom.GetString(ARBDate::eDashYMD).c_str();
+		else
+			str += _T("*");
+		str += _T("-");
+		if (m_ValidTo.IsValid())
+			str += m_ValidTo.GetString(ARBDate::eDashYMD).c_str();
+		else
+			str += _T("*");
+		str += _T("]");
+	}
+	return str;
 }
 
 ARBString ARBConfigTitle::GetCompleteName(

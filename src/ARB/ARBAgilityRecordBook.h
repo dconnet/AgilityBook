@@ -161,6 +161,8 @@
 #define ATTRIB_TITLES_LONGNAME				_T("LongName")
 #define ATTRIB_TITLES_MULTIPLE				_T("Multiple")
 #define ATTRIB_TITLES_PREFIX				_T("Prefix")
+#define ATTRIB_TITLES_VALIDFROM				_T("ValidFrom")
+#define ATTRIB_TITLES_VALIDTO				_T("ValidTo")
 #define ATTRIB_SUBLEVEL_NAME				_T("Name")
 #define ATTRIB_EVENT_NAME					_T("Name")
 #define ATTRIB_EVENT_HAS_TABLE				_T("hasTable")
