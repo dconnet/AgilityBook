@@ -35,6 +35,7 @@ Microsoft Visual Studio 6 + Service Pack 5 (VC6)
      lib/VC6/xerces-c_2D.lib
      bin/VC6/Release/xerces-c_2_2_0.dll
      lib/VC6/xerces-c_2.lib
+   Xerces 2.7 will work with no changes.
 
 Microsoft Visual Studio .NET (VC7)
 ==================================
@@ -50,15 +51,17 @@ Microsoft Visual Studio .NET 2003 (VC7.1)
      lib/VC7/xerces-c_2D.lib
      bin/VC7/Release/xerces-c_2_2_0.dll
      lib/VC7/xerces-c_2.lib
+   Xerces 2.7 will work with no changes.
 
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
 
-   Xerces: The binaries are NOT currently checked in source control
-   due to their size. We are now using Xerces 2.7.
+   Xerces: The binaries are NOT currently checked in source control.
+   We are now using Xerces 2.7.
      lib/VC8/Xerces-c_static_2.lib  (58.9M)
-     lib/VC8/Xerces-c_static_2D.lib (63.9M)
+     bin/VC8/Release/xerces-c_2_7D.dll
+     lib/VC8/xerces-c_2D.lib
 
 If you want a pre-compiled version of xerces, contact me directly
 and I can get you a zip file of all the source. For Xerces2.7, the

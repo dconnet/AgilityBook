@@ -205,6 +205,8 @@ used to determine the starting point for the first recurance.
 		LongName CDATA #IMPLIED
 		Multiple CDATA #IMPLIED
 		Prefix (y|n) 'n'
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
 		>
 
 <!--
