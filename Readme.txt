@@ -29,8 +29,12 @@ Microsoft Visual Studio 6 + Service Pack 5 (VC6)
    Make sure you have updated the STL files with the patches noted at
    http://www.dinkumware.com/vc_fixes.html. (Last updated Nov 10, 2002)
 
-   Xerces: The binaries (lib/dll) that are currently checked in the
-   source control are for Xerces 2.2. (Linked to dll)
+   Xerces: The binaries that are currently checked in source control
+   are for Xerces 2.2.
+     bin/VC6/Debug/xerces-c_2_2_0D.dll
+     lib/VC6/xerces-c_2D.lib
+     bin/VC6/Release/xerces-c_2_2_0.dll
+     lib/VC6/xerces-c_2.lib
 
 Microsoft Visual Studio .NET (VC7)
 ==================================
@@ -40,12 +44,23 @@ Microsoft Visual Studio .NET 2003 (VC7.1)
 =========================================
    It works, no additional notes.
 
-   Xerces: The binaries (lib/dll) that are currently checked in the
-   source control are for Xerces 2.2. (Linked to dll)
+   Xerces: The binaries that are currently checked in source control
+   are for Xerces 2.2.
+     bin/VC7/Debug/xerces-c_2_2_0D.dll
+     lib/VC7/xerces-c_2D.lib
+     bin/VC7/Release/xerces-c_2_2_0.dll
+     lib/VC7/xerces-c_2.lib
 
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
 
-   Xerces: The binaries (lib) that are currently checked in the
-   source control are for Xerces 2.7. (Linked to static library)
+   Xerces: The binaries are NOT currently checked in source control
+   due to their size. We are now using Xerces 2.7.
+     lib/VC8/Xerces-c_static_2.lib  (58.9M)
+     lib/VC8/Xerces-c_static_2D.lib (63.9M)
+
+If you want a pre-compiled version of xerces, contact me directly
+and I can get you a zip file of all the source. For Xerces2.7, the
+file is 56.8M and includes binaries for both VC7.1 and VC8 for both
+the DLLs and StaticLib (both compilers).
