@@ -1521,8 +1521,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			</Event>
 		</Venue>
 		<Venue LongName="North American Dog Agility Council" Name="NADAC">
-			<Desc>http://www.nadac.com/</Desc>
-			<Division Name="Proficient Standard">
+			<Desc>http://www.nadac.com/
+Note: As of 12/13/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
+			<Division Name="Proficient">
 				<Level Name="Novice">
 					<SubLevel Name="Novice A"/>
 					<SubLevel Name="Novice B"/>
@@ -1604,86 +1605,11 @@ S-EAC, S-EGC, S-EJC</Titles>
 				<Titles LongName="Triple Superior Versatility" Name="Triple Superior Versatility">S-NAC, S-NGC, S-NJC, S-TN-N, S-TG-N, S-WV-N,
 S-OAC, S-OGC, S-OJC, S-TN-O, S-TG-O, S-WV-O,
 S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
-				<Titles LongName="NADAC Agility Trial Champion" Multiple="4" Name="NATCH" Prefix="y">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.
-Multiple copies start at 4 because of the O- and S- titles.</Titles>
-				<Titles LongName="NADAC Versatility Champion" Multiple="4" Name="Vers-NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.
-Multiple copies start at 4 because of the O- and S- titles.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH" Prefix="y">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts.</Titles>
-				<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="O-Vers-NATCH">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts, TG-E plus 200 pts, TN-E plus 200 pts, WV-E plus 200 pts.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH" Prefix="y">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts.</Titles>
-				<Titles LongName="NADAC Versatility Champion Superior Performance" Name="S-Vers-NATCH">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts, TG-E plus 300 pts, TN-E plus 300 pts, WV-E plus 300 pts.</Titles>
+				<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.</Titles>
+				<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.</Titles>
 				<Titles LongName="Proficient Championship" Name="CHC">50 points</Titles>
 			</Division>
-			<Division Name="Proficient Veterans">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-				<Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V">30 points</Titles>
-				<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Open Agility Certificate-Veterans" Name="OAC-V">30 points</Titles>
-				<Titles LongName="Open Jumpers Certificate-Veterans" Name="OJC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Open Gamblers Certificate-Veterans" Name="OGC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Elite Agility Certificate-Veterans" Name="EAC-V">30 points</Titles>
-				<Titles LongName="Elite Jumpers Certificate-Veterans" Name="EJC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Elite Gamblers Certificate-Veterans" Name="EGC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Novice Agility Certificate-Veterans Outstanding Performance" Name="O-NAC-V"/>
-				<Titles LongName="Novice Jumpers Certificate-Veterans Outstanding Performance" Name="O-NJC-V"/>
-				<Titles LongName="Novice Gamblers Certificate-Veterans Outstanding Performance" Name="O-NGC-V"/>
-				<Titles LongName="Open Agility Certificate-Veterans Outstanding Performance" Name="O-OAC-V"/>
-				<Titles LongName="Open Jumpers Certificate-Veterans Outstanding Performance" Name="O-OJC-V"/>
-				<Titles LongName="Open Gamblers Certificate-Veterans Outstanding Performance" Name="O-OGC-V"/>
-				<Titles LongName="Elite Agility Certificate-Veterans Outstanding Performance" Name="O-EAC-V"/>
-				<Titles LongName="Elite Jumpers Certificate-Veterans Outstanding Performance" Name="O-EJC-V"/>
-				<Titles LongName="Elite Gamblers Certificate-Veterans Outstanding Performance" Name="O-EGC-V"/>
-				<Titles LongName="Novice Agility Certificate-Veterans Superior Performance" Name="S-NAC-V"/>
-				<Titles LongName="Novice Jumpers Certificate-Veterans Superior Performance" Name="S-NJC-V"/>
-				<Titles LongName="Novice Gamblers Certificate-Veterans Superior Performance" Name="S-NGC-V"/>
-				<Titles LongName="Open Agility Certificate-Veterans Superior Performance" Name="S-OAC-V"/>
-				<Titles LongName="Open Jumpers Certificate-Veterans Superior Performance" Name="S-OJC-V"/>
-				<Titles LongName="Open Gamblers Certificate-Veterans Superior Performance" Name="S-OGC-V"/>
-				<Titles LongName="Elite Agility Certificate-Veterans Superior Performance" Name="S-EAC-V"/>
-				<Titles LongName="Elite Jumpers Certificate-Veterans Superior Performance" Name="S-EJC-V"/>
-				<Titles LongName="Elite Gamblers Certificate-Veterans Superior Performance" Name="S-EGC-V"/>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran" Multiple="4" Name="V-NATCH" Prefix="y">Points are the same as NATCH.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH" Prefix="y"/>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH" Prefix="y"/>
-				<Titles LongName="Proficient Championship-Veteran" Name="CHC-V">50 points</Titles>
-			</Division>
-			<Division Name="Proficient Junior">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-				<Titles LongName="Novice Agility Certificate-Jr. Handler" Name="NAC-JH"/>
-				<Titles LongName="Novice Jumpers Certificate-Jr. Handler" Name="NJC-JH"/>
-				<Titles LongName="Open Agility Certificate-Jr. Handler" Name="OAC-JH"/>
-				<Titles LongName="Open Jumpers Certificate-Jr. Handler" Name="OJC-JH"/>
-				<Titles LongName="Elite Agility Certificate-Jr. Handler" Name="EAC-JH"/>
-				<Titles LongName="Elite Jumpers Certificate-Jr. Handler" Name="EJC-JH"/>
-				<Titles LongName="Novice Agility Certificate-Jr. Handler Outstanding Performance" Name="O-NAC-JH"/>
-				<Titles LongName="Novice Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-NJC-JH"/>
-				<Titles LongName="Open Agility Certificate-Jr. Handler Outstanding Performance" Name="O-OAC-JH"/>
-				<Titles LongName="Open Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-OJC-JH"/>
-				<Titles LongName="Elite Agility Certificate-Jr. Handler Outstanding Performance" Name="O-EAC-JH"/>
-				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-EJC-JH"/>
-				<Titles LongName="Novice Agility Certificate-Jr. Handler Superior Performance" Name="S-NAC-JH"/>
-				<Titles LongName="Novice Jumpers Certificate-Jr. Handler Superior Performance" Name="S-NJC-JH"/>
-				<Titles LongName="Open Agility Certificate-Jr. Handler Superior Performance" Name="S-OAC-JH"/>
-				<Titles LongName="Open Jumpers Certificate-Jr. Handler Superior Performance" Name="S-OJC-JH"/>
-				<Titles LongName="Elite Agility Certificate-Jr. Handler Superior Performance" Name="S-EAC-JH"/>
-				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Superior Performance" Name="S-EJC-JH"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH" Prefix="y">Points are the same as NATCH.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y"/>
-				<Titles LongName="Proficient Championship-Jr. Handler" Name="CHC-JH">50 points</Titles>
-			</Division>
-			<Division Name="Skilled Standard">
+			<Division Name="Skilled">
 				<Level Name="Novice">
 					<SubLevel Name="Novice A"/>
 					<SubLevel Name="Novice B"/>
@@ -1691,24 +1617,6 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
 				<Titles LongName="Skilled Championship" Name="CHS">50 points</Titles>
-			</Division>
-			<Division Name="Skilled Veterans">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-				<Titles LongName="Skilled Championship-Veteran" Name="CHS-V">50 points</Titles>
-			</Division>
-			<Division Name="Skilled Junior">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-				<Titles LongName="Skilled Championship-Jr. Handler" Name="CHS-JH">50 points</Titles>
 			</Division>
 			<Division Name="Standard">
 				<Level Name="Novice">
@@ -1792,14 +1700,8 @@ S-EAC, S-EGC, S-EJC</Titles>
 				<Titles LongName="Triple Superior Versatility" Name="Triple Superior Versatility">S-NAC, S-NGC, S-NJC, S-TN-N, S-TG-N, S-WV-N,
 S-OAC, S-OGC, S-OJC, S-TN-O, S-TG-O, S-WV-O,
 S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
-				<Titles LongName="NADAC Agility Trial Champion" Multiple="4" Name="NATCH" Prefix="y">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.
-Multiple copies start at 4 because of the O- and S- titles.</Titles>
-				<Titles LongName="NADAC Versatility Champion" Multiple="4" Name="Vers-NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.
-Multiple copies start at 4 because of the O- and S- titles.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH" Prefix="y">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts.</Titles>
-				<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="O-Vers-NATCH">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts, TG-E plus 200 pts, TN-E plus 200 pts, WV-E plus 200 pts.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH" Prefix="y">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts.</Titles>
-				<Titles LongName="NADAC Versatility Champion Superior Performance" Name="S-Vers-NATCH">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts, TG-E plus 300 pts, TN-E plus 300 pts, WV-E plus 300 pts.</Titles>
+				<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.</Titles>
+				<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.</Titles>
 			</Division>
 			<Division Name="Veterans">
 				<Level Name="Novice">
@@ -1808,36 +1710,6 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V">30 points</Titles>
-				<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Open Agility Certificate-Veterans" Name="OAC-V">30 points</Titles>
-				<Titles LongName="Open Jumpers Certificate-Veterans" Name="OJC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Open Gamblers Certificate-Veterans" Name="OGC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Elite Agility Certificate-Veterans" Name="EAC-V">30 points</Titles>
-				<Titles LongName="Elite Jumpers Certificate-Veterans" Name="EJC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Elite Gamblers Certificate-Veterans" Name="EGC-V">30 points (20 pts before 8/1/2005)</Titles>
-				<Titles LongName="Novice Agility Certificate-Veterans Outstanding Performance" Name="O-NAC-V"/>
-				<Titles LongName="Novice Jumpers Certificate-Veterans Outstanding Performance" Name="O-NJC-V"/>
-				<Titles LongName="Novice Gamblers Certificate-Veterans Outstanding Performance" Name="O-NGC-V"/>
-				<Titles LongName="Open Agility Certificate-Veterans Outstanding Performance" Name="O-OAC-V"/>
-				<Titles LongName="Open Jumpers Certificate-Veterans Outstanding Performance" Name="O-OJC-V"/>
-				<Titles LongName="Open Gamblers Certificate-Veterans Outstanding Performance" Name="O-OGC-V"/>
-				<Titles LongName="Elite Agility Certificate-Veterans Outstanding Performance" Name="O-EAC-V"/>
-				<Titles LongName="Elite Jumpers Certificate-Veterans Outstanding Performance" Name="O-EJC-V"/>
-				<Titles LongName="Elite Gamblers Certificate-Veterans Outstanding Performance" Name="O-EGC-V"/>
-				<Titles LongName="Novice Agility Certificate-Veterans Superior Performance" Name="S-NAC-V"/>
-				<Titles LongName="Novice Jumpers Certificate-Veterans Superior Performance" Name="S-NJC-V"/>
-				<Titles LongName="Novice Gamblers Certificate-Veterans Superior Performance" Name="S-NGC-V"/>
-				<Titles LongName="Open Agility Certificate-Veterans Superior Performance" Name="S-OAC-V"/>
-				<Titles LongName="Open Jumpers Certificate-Veterans Superior Performance" Name="S-OJC-V"/>
-				<Titles LongName="Open Gamblers Certificate-Veterans Superior Performance" Name="S-OGC-V"/>
-				<Titles LongName="Elite Agility Certificate-Veterans Superior Performance" Name="S-EAC-V"/>
-				<Titles LongName="Elite Jumpers Certificate-Veterans Superior Performance" Name="S-EJC-V"/>
-				<Titles LongName="Elite Gamblers Certificate-Veterans Superior Performance" Name="S-EGC-V"/>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran" Multiple="4" Name="V-NATCH" Prefix="y">Points are the same as NATCH.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran Outstanding Performance" Name="O-V-NATCH" Prefix="y"/>
-				<Titles LongName="NADAC Agility Trial Champion-Veteran Superior Performance" Name="S-V-NATCH" Prefix="y"/>
 			</Division>
 			<Division Name="Junior">
 				<Level Name="Novice">
@@ -1846,54 +1718,13 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Level>
 				<Level Name="Open"/>
 				<Level Name="Elite"/>
-				<Titles LongName="Novice Agility Certificate-Jr. Handler" Name="NAC-JH"/>
-				<Titles LongName="Novice Jumpers Certificate-Jr. Handler" Name="NJC-JH"/>
-				<Titles LongName="Open Agility Certificate-Jr. Handler" Name="OAC-JH"/>
-				<Titles LongName="Open Jumpers Certificate-Jr. Handler" Name="OJC-JH"/>
-				<Titles LongName="Elite Agility Certificate-Jr. Handler" Name="EAC-JH"/>
-				<Titles LongName="Elite Jumpers Certificate-Jr. Handler" Name="EJC-JH"/>
-				<Titles LongName="Novice Agility Certificate-Jr. Handler Outstanding Performance" Name="O-NAC-JH"/>
-				<Titles LongName="Novice Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-NJC-JH"/>
-				<Titles LongName="Open Agility Certificate-Jr. Handler Outstanding Performance" Name="O-OAC-JH"/>
-				<Titles LongName="Open Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-OJC-JH"/>
-				<Titles LongName="Elite Agility Certificate-Jr. Handler Outstanding Performance" Name="O-EAC-JH"/>
-				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Outstanding Performance" Name="O-EJC-JH"/>
-				<Titles LongName="Novice Agility Certificate-Jr. Handler Superior Performance" Name="S-NAC-JH"/>
-				<Titles LongName="Novice Jumpers Certificate-Jr. Handler Superior Performance" Name="S-NJC-JH"/>
-				<Titles LongName="Open Agility Certificate-Jr. Handler Superior Performance" Name="S-OAC-JH"/>
-				<Titles LongName="Open Jumpers Certificate-Jr. Handler Superior Performance" Name="S-OJC-JH"/>
-				<Titles LongName="Elite Agility Certificate-Jr. Handler Superior Performance" Name="S-EAC-JH"/>
-				<Titles LongName="Elite Jumpers Certificate-Jr. Handler Superior Performance" Name="S-EJC-JH"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH" Prefix="y">Points are the same as NATCH.</Titles>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y"/>
-				<Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y"/>
 			</Division>
 			<Event Name="Regular">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Proficient Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -1919,31 +1750,11 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Proficient Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Junior" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2020,21 +1831,11 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Tunnelers">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2046,21 +1847,11 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="TouchNGo">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2072,21 +1863,11 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Weavers">
-				<Scoring Division="Proficient Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Skilled Standard" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2098,31 +1879,11 @@ Multiple copies start at 4 because of the O- and S- titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Championship">
-				<Scoring Division="Proficient Standard" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Proficient" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Proficient Veterans" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Proficient Junior" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<LifeTime Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring Division="Skilled Standard" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Veterans" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
-				</Scoring>
-				<Scoring Division="Skilled Junior" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+				<Scoring Division="Skilled" Level="Elite" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
