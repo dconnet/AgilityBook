@@ -235,6 +235,7 @@ static bool EditRun(
 			CString msg;
 			msg.FormatMessage(IDS_VENUE_CONFIG_MISSING, pClub->GetVenue().c_str());
 			AfxMessageBox(msg, MB_ICONSTOP);
+			pClub->Release();
 			return false;
 		}
 		pClub->Release();

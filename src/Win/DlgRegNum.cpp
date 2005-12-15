@@ -157,6 +157,7 @@ void CDlgRegNum::OnOK()
 			pRegNum->SetHeight((LPCTSTR)m_Height);
 			pRegNum->SetReceived(m_bReceived ? true : false);
 			pRegNum->SetNote((LPCTSTR)m_Note);
+			pRegNum->Release();
 		}
 	}
 	CDlgBaseDialog::OnOK();
