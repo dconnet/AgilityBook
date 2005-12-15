@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added VerifyEvent.
@@ -44,6 +45,7 @@
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigMultiQ.h"
+#include "ARBConfigTitle.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
@@ -124,6 +126,8 @@ public:
 	void SetLongName(ARBString const& inName);
 	ARBString const& GetDesc() const;
 	void SetDesc(ARBString const& inDesc);
+	ARBConfigTitleList const& GetTitles() const;
+	ARBConfigTitleList& GetTitles();
 	ARBConfigDivisionList const& GetDivisions() const;
 	ARBConfigDivisionList& GetDivisions();
 	ARBConfigEventList const& GetEvents() const;
@@ -136,6 +140,7 @@ private:
 	ARBString m_Name;
 	ARBString m_LongName;
 	ARBString m_Desc;
+	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;
 	ARBConfigEventList m_Events;
 	ARBConfigMultiQList m_MultiQs;
@@ -174,6 +179,16 @@ inline ARBString const& ARBConfigVenue::GetDesc() const
 inline void ARBConfigVenue::SetDesc(ARBString const& inDesc)
 {
 	m_Desc = inDesc;
+}
+
+inline ARBConfigTitleList const& ARBConfigVenue::GetTitles() const
+{
+	return m_Titles;
+}
+
+inline ARBConfigTitleList& ARBConfigVenue::GetTitles()
+{
+	return m_Titles;
 }
 
 inline ARBConfigDivisionList const& ARBConfigVenue::GetDivisions() const
@@ -307,6 +322,13 @@ public:
 			ARBString const& inVenue,
 			ARBString const& inTitle,
 			ARBConfigTitle** outTitle = NULL) const;
+
+	/**
+	 * Delete a title.
+	 * @param inTitle Name of title to delete.
+	 * @return Whether title was deleted.
+	 */
+	bool DeleteTitle(ARBString const& inTitle);
 
 	/**
 	 * Find the named venue.

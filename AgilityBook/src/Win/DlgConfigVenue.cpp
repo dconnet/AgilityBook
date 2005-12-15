@@ -56,6 +56,7 @@
  *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-12-10 DRC Enable duplication of a title.
@@ -260,8 +261,7 @@ void CDlgConfigVenue::UpdateButtons()
 
 	case eTitles:
 		{
-			if (GetCurrentDivisionData())
-				bNew = TRUE;
+			bNew = TRUE;
 			int index = m_ctrlTitles.GetSelection();
 			if (0 <= index)
 			{
@@ -349,7 +349,6 @@ void CDlgConfigVenue::LoadDivisionData()
 	if (pDiv)
 		pDiv->Release();
 	LoadLevelData();
-	LoadTitleData();
 }
 
 void CDlgConfigVenue::LoadLevelData()
@@ -419,16 +418,13 @@ void CDlgConfigVenue::LoadTitleData()
 		pTitle->AddRef();
 	}
 	m_ctrlTitles.DeleteAllItems();
-	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
-	if (!pDivData)
-		return;
-	for (ARBConfigTitleList::iterator iterTitle = pDivData->GetDivision()->GetTitles().begin();
-	iterTitle != pDivData->GetDivision()->GetTitles().end();
-	++iterTitle)
+	for (ARBConfigTitleList::iterator iterTitle = m_pVenue->GetTitles().begin();
+		iterTitle != m_pVenue->GetTitles().end();
+		++iterTitle)
 	{
 		m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlTitles.GetItemCount(),
 			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(new CDlgConfigureDataTitle(pDivData->GetDivision(), *iterTitle)));
+			reinterpret_cast<LPARAM>(new CDlgConfigureDataTitle(*iterTitle)));
 	}
 	m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	FindCurrentTitle(pTitle, true);
@@ -740,6 +736,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 
 	LoadDivisionData();
 	LoadEventData();
+	LoadTitleData();
 	LoadMultiQData();
 	SetAction(eDivisions);
 
@@ -840,7 +837,6 @@ void CDlgConfigVenue::OnItemchangedDivision(
 		LRESULT* pResult) 
 {
 	LoadLevelData();
-	LoadTitleData();
 	UpdateButtons();
 	*pResult = 0;
 }
@@ -1015,9 +1011,6 @@ void CDlgConfigVenue::OnNew()
 
 	case eTitles:
 		{
-			CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
-			if (!pDivData)
-				return;
 			while (!done)
 			{
 				done = true;
@@ -1025,14 +1018,14 @@ void CDlgConfigVenue::OnNew()
 				if (IDOK == dlg.DoModal())
 				{
 					name = dlg.GetName();
-					if (m_pVenue->GetDivisions().FindTitle(name))
+					if (m_pVenue->GetTitles().FindTitle(name))
 					{
 						done = false;
 						AfxMessageBox(IDS_NAME_IN_USE);
 						continue;
 					}
 					ARBConfigTitle* pTitle;
-					if (pDivData->GetDivision()->GetTitles().AddTitle(name, &pTitle))
+					if (m_pVenue->GetTitles().AddTitle(name, &pTitle))
 					{
 						pTitle->SetMultiple(dlg.GetMultiple());
 						pTitle->SetLongName(dlg.GetLongName());
@@ -1045,7 +1038,7 @@ void CDlgConfigVenue::OnNew()
 						int index = m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, nInsertAt,
 							LPSTR_TEXTCALLBACK, 0, 0, 0,
 							reinterpret_cast<LPARAM>(
-								new CDlgConfigureDataTitle(pDivData->GetDivision(), pTitle)));
+								new CDlgConfigureDataTitle(pTitle)));
 						m_ctrlTitles.SetSelection(index);
 						m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 						m_ctrlTitles.Invalidate();
@@ -1107,14 +1100,12 @@ void CDlgConfigVenue::OnDelete()
 				ARBString div = pDivData->GetDivision()->GetName();
 				int nPoints = m_Book.GetDogs().NumExistingPointsInDivision(m_pVenue, div);
 				int nTrials = m_Book.GetDogs().NumRunsInDivision(m_pVenue, div);
-				int nTitles = m_Book.GetDogs().NumTitlesInDivision(m_pVenue, div);
-				if (0 < nTrials || 0 < nTitles)
+				if (0 < nTrials)
 				{
 					CString msg;
 					msg.FormatMessage(IDS_DELETE_DIVISION,
 						div.c_str(),
 						nPoints,
-						nTitles,
 						nTrials);
 					if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
 						bDelete = false;
@@ -1127,7 +1118,7 @@ void CDlgConfigVenue::OnDelete()
 						if (m_pVenue->GetMultiQs().DeleteDivision(div))
 							m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
 						// Then we commit to fixing the real data.
-						if (0 < nTrials || 0 < nTitles)
+						if (0 < nTrials)
 							m_DlgFixup.push_back(new CDlgFixupDeleteDivision(m_pVenue->GetName(), div));
 						m_ctrlDivisions.DeleteItem(index);
 					}
@@ -1247,7 +1238,7 @@ void CDlgConfigVenue::OnDelete()
 				}
 				if (bDelete)
 				{
-					if (pTitleData->GetDivision()->GetTitles().DeleteTitle(title))
+					if (m_pVenue->GetTitles().DeleteTitle(title))
 					{
 						// Then we commit to fixing the real data.
 						if (0 < nTitles)
@@ -1497,7 +1488,7 @@ void CDlgConfigVenue::OnEdit()
 					longname = dlg.GetLongName();
 					if (oldName != name)
 					{
-						if (m_pVenue->GetDivisions().FindTitle(name))
+						if (m_pVenue->GetTitles().FindTitle(name))
 						{
 							int nTitles = m_Book.GetDogs().NumTitlesInUse(m_pVenue->GetName(), oldName);
 							bool bInUse = true;
@@ -1507,7 +1498,7 @@ void CDlgConfigVenue::OnEdit()
 								{
 									bInUse = false;
 									m_DlgFixup.push_back(new CDlgFixupRenameTitle(m_pVenue->GetName(), oldName, name));
-									if (pTitleData->GetDivision()->GetTitles().DeleteTitle(oldName))
+									if (m_pVenue->GetTitles().DeleteTitle(oldName))
 									{
 										m_ctrlTitles.DeleteItem(m_ctrlTitles.GetSelection());
 										// This will break out of the loop on the 'continue';
@@ -1580,8 +1571,8 @@ void CDlgConfigVenue::OnEdit()
 					LoadMultiQData();
 					FindCurrentMultiQ(pMultiQ, true);
 				}
+				pMultiQ->Release();
 			}
-			pMultiQ->Release();
 		}
 		break;
 
@@ -1608,7 +1599,7 @@ void CDlgConfigVenue::OnCopy()
 				copyOf.LoadString(IDS_COPYOF);
 				ARBString name(pData->GetTitle()->GetName());
 				ARBString longname(pData->GetTitle()->GetLongName());
-				while (m_pVenue->GetDivisions().FindTitle(name))
+				while (m_pVenue->GetTitles().FindTitle(name))
 				{
 					name = (LPCTSTR)copyOf + name;
 					longname = (LPCTSTR)copyOf + longname;
@@ -1616,7 +1607,7 @@ void CDlgConfigVenue::OnCopy()
 				ARBConfigTitle* title = new ARBConfigTitle(*(pData->GetTitle()));
 				title->SetName(name);
 				title->SetLongName(longname);
-				if (pData->GetDivision()->GetTitles().AddTitle(title))
+				if (m_pVenue->GetTitles().AddTitle(title))
 				{
 					LoadTitleData();
 					FindCurrentTitle(title, true);
@@ -1746,7 +1737,7 @@ void CDlgConfigVenue::OnMoveUp()
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
 				ARBConfigTitle* pTitle = pTitleData->GetTitle();
 				pTitle->AddRef();
-				pTitleData->GetDivision()->GetTitles().Move(pTitle, -1);
+				m_pVenue->GetTitles().Move(pTitle, -1);
 				LoadTitleData();
 				UpdateButtons();
 				FindCurrentTitle(pTitle, true);
@@ -1855,7 +1846,7 @@ void CDlgConfigVenue::OnMoveDown()
 				CDlgConfigureDataTitle* pTitleData = reinterpret_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetItemData(index));
 				ARBConfigTitle* pTitle = pTitleData->GetTitle();
 				pTitle->AddRef();
-				pTitleData->GetDivision()->GetTitles().Move(pTitle, 1);
+				m_pVenue->GetTitles().Move(pTitle, 1);
 				LoadTitleData();
 				UpdateButtons();
 				FindCurrentTitle(pTitle, true);

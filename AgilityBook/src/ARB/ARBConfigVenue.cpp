@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-01-01 DRC Added a long name to the venue.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-26 DRC Update didn't save desc changes if nothing else changed.
@@ -64,6 +65,7 @@ ARBConfigVenue::ARBConfigVenue()
 	: m_Name()
 	, m_LongName()
 	, m_Desc()
+	, m_Titles()
 	, m_Divisions()
 	, m_Events()
 	, m_MultiQs()
@@ -74,6 +76,7 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
+	, m_Titles(rhs.m_Titles)
 	, m_Divisions(rhs.m_Divisions)
 	, m_Events(rhs.m_Events)
 	, m_MultiQs(rhs.m_MultiQs)
@@ -91,6 +94,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
 		m_Desc = rhs.m_Desc;
+		m_Titles = rhs.m_Titles;
 		m_Divisions = rhs.m_Divisions;
 		m_Events = rhs.m_Events;
 		m_MultiQs = rhs.m_MultiQs;
@@ -103,6 +107,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
 		&& m_Desc == rhs.m_Desc
+		&& m_Titles == rhs.m_Titles
 		&& m_Divisions == rhs.m_Divisions
 		&& m_Events == rhs.m_Events
 		&& m_MultiQs == rhs.m_MultiQs;
@@ -118,6 +123,7 @@ void ARBConfigVenue::clear()
 	m_Name.erase();
 	m_LongName.erase();
 	m_Desc.erase();
+	m_Titles.clear();
 	m_Divisions.clear();
 	m_Events.clear();
 	m_MultiQs.clear();
@@ -152,6 +158,11 @@ bool ARBConfigVenue::Load(
 		{
 			m_Desc = element.GetValue();
 		}
+		else if (element.GetName() == TREE_TITLES)
+		{
+			// Ignore any errors...
+			m_Titles.Load(element, inVersion, ioCallback);
+		}
 		else if (name == TREE_DIVISION)
 		{
 			if (0 < m_Events.size())
@@ -160,7 +171,7 @@ bool ARBConfigVenue::Load(
 				return false;
 			}
 			// Ignore any errors...
-			m_Divisions.Load(element, inVersion, ioCallback);
+			m_Divisions.Load(*this, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_EVENT)
 		{
@@ -238,6 +249,8 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 		Element& desc = venue.AddElement(TREE_VENUE_DESC);
 		desc.SetValue(m_Desc);
 	}
+	if (!m_Titles.Save(venue))
+		return false;
 	if (!m_Divisions.Save(venue))
 		return false;
 	if (!m_Events.Save(venue))
@@ -273,6 +286,44 @@ bool ARBConfigVenue::Update(
 	{
 		bChanges = true;
 		SetDesc(inVenueNew->GetDesc());
+	}
+
+	// If the order is different, we will fall into this...
+	if (GetTitles() != inVenueNew->GetTitles())
+	{
+		int nChanged, nAdded, nSkipped;
+		nChanged = nAdded = nSkipped = 0;
+		for (ARBConfigTitleList::const_iterator iterTitle = inVenueNew->GetTitles().begin();
+			iterTitle != inVenueNew->GetTitles().end();
+			++iterTitle)
+		{
+			ARBConfigTitle* pTitle;
+			if (GetTitles().FindTitle((*iterTitle)->GetName(), &pTitle))
+			{
+				if (*(*iterTitle) == *pTitle)
+					++nSkipped;
+				else
+				{
+					++nChanged;
+					pTitle->SetMultiple((*iterTitle)->GetMultiple());
+					pTitle->SetPrefix((*iterTitle)->GetPrefix());
+					pTitle->SetLongName((*iterTitle)->GetLongName());
+					pTitle->SetDescription((*iterTitle)->GetDescription());
+				}
+				pTitle->Release();
+			}
+			else
+			{
+				++nAdded;
+				GetTitles().AddTitle((*iterTitle));
+			}
+		}
+		// ... so only generate a message if we added or changed.
+		if (0 < nAdded || 0 < nChanged)
+		{
+			info += indentBuffer;
+			info += UPDATE_FORMAT_TITLES(nAdded, nChanged, nSkipped);
+		}
 	}
 
 	// If the order is different, we will fall into this...
@@ -522,7 +573,17 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 	ARBConfigVenue* pVenue;
 	if (FindVenue(inVenue, &pVenue))
 	{
-		bFound = pVenue->GetDivisions().FindTitleCompleteName(inName, bAbbrevFirst, outTitle);
+		ARBConfigTitle* pTitle;
+		if (pVenue->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst, true, &pTitle))
+		{
+			if (outTitle)
+			{
+				*outTitle = pTitle;
+				(*outTitle)->AddRef();
+			}
+			bFound = true;
+			pTitle->Release();
+		}
 		pVenue->Release();
 	}
 	return bFound;
@@ -539,10 +600,24 @@ bool ARBConfigVenueList::FindTitle(
 	ARBConfigVenue* pVenue;
 	if (FindVenue(inVenue, &pVenue))
 	{
-		bFound = pVenue->GetDivisions().FindTitle(inTitle, outTitle);
+		bFound = pVenue->GetTitles().FindTitle(inTitle, outTitle);
 		pVenue->Release();
 	}
 	return bFound;
+}
+
+bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
+{
+	bool bDeleted = false;
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetTitles().FindTitle(inTitle))
+		{
+			bDeleted = (*iter)->GetTitles().DeleteTitle(inTitle);
+			break;
+		}
+	}
+	return bDeleted;
 }
 
 bool ARBConfigVenueList::FindVenue(

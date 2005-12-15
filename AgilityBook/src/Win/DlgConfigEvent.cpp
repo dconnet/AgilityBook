@@ -390,7 +390,7 @@ void CDlgConfigEvent::FillMethodList()
 			iterLevel != (*iterDiv)->GetLevels().end();
 			++iterLevel)
 		{
-				if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
+			if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
 				str = (*iterDiv)->GetName().c_str();
 				str += _T(" / ");

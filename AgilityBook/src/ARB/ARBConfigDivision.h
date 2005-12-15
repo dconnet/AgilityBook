@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Added DeleteTitle.
@@ -41,7 +42,6 @@
 
 #include "ARBBase.h"
 #include "ARBConfigLevel.h"
-#include "ARBConfigTitle.h"
 #include "ARBTypes.h"
 #include "ARBVector.h"
 class ARBErrorCallback;
@@ -83,12 +83,14 @@ public:
 	/**
 	 * Load a division configuration.
 	 * @pre inTree is the actual ARBConfigDivision element.
+	 * @param ioVenue Venue to update when migrating on old file.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
+			ARBConfigVenue& ioVenue,
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
@@ -120,14 +122,11 @@ public:
 	void SetName(ARBString const& inName);
 	ARBConfigLevelList const& GetLevels() const;
 	ARBConfigLevelList& GetLevels();
-	ARBConfigTitleList const& GetTitles() const;
-	ARBConfigTitleList& GetTitles();
 
 private:
 	~ARBConfigDivision();
 	ARBString m_Name;
 	ARBConfigLevelList m_Levels;
-	ARBConfigTitleList m_Titles;
 };
 
 inline ARBString ARBConfigDivision::GetGenericName() const
@@ -155,16 +154,6 @@ inline ARBConfigLevelList& ARBConfigDivision::GetLevels()
 	return m_Levels;
 }
 
-inline ARBConfigTitleList const& ARBConfigDivision::GetTitles() const
-{
-	return m_Titles;
-}
-
-inline ARBConfigTitleList& ARBConfigDivision::GetTitles()
-{
-	return m_Titles;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -176,12 +165,14 @@ public:
 	/**
 	 * Load a division configuration.
 	 * @pre inTree is the actual ARBConfigDivision element.
+	 * @param ioVenue Venue to update when migrating on old file.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
+			ARBConfigVenue& ioVenue,
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
@@ -234,34 +225,4 @@ public:
 	int DeleteDivision(
 			ARBString const& inDiv,
 			ARBConfigEventList& ioEvents);
-
-	/**
-	 * Find a title by the complete name.
-	 * This api is used to fix a problem introduced in v1.0.0.8.
-	 * @param inName Complete name of title to find.
-	 * @param bAbbrevFirst Name is before or after Longname.
-	 * @param outTitle Pointer to found object, NULL if not found.
-	 * @return Whether the object was found.
-	 */
-	bool FindTitleCompleteName(
-			ARBString const& inName,
-			bool bAbbrevFirst = true,
-			ARBConfigTitle** outTitle = NULL) const;
-
-	/**
-	 * Find a title.
-	 * @param inTitle Name of title to find.
-	 * @param outTitle Pointer to found object, NULL if not found.
-	 * @return Whether the object was found.
-	 */
-	bool FindTitle(
-			ARBString const& inTitle,
-			ARBConfigTitle** outTitle = NULL) const;
-
-	/**
-	 * Delete a title.
-	 * @param inTitle Name of title to delete.
-	 * @return Whether title was deleted.
-	 */
-	bool DeleteTitle(ARBString const& inTitle);
 };

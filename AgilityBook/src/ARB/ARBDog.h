@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-02-02 DRC Added ExistingPoints.
@@ -430,17 +431,6 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumExistingPointsInDivision(
-			ARBConfigVenue const* inVenue,
-			ARBString const& inDiv) const;
-
-	/**
-	 * Get the number of titles in a division.
-	 * Used to warning about impending configuration changes.
-	 * @param inVenue Venue to tally.
-	 * @param inDiv Division to tally.
-	 * @return Number of objects.
-	 */
-	int NumTitlesInDivision(
 			ARBConfigVenue const* inVenue,
 			ARBString const& inDiv) const;
 

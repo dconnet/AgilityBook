@@ -158,14 +158,11 @@ class CDlgConfigureDataTitle : public CDlgConfigureData
 {
 public:
 	CDlgConfigureDataTitle(
-			ARBConfigDivision* div,
 			ARBConfigTitle* title);
 	~CDlgConfigureDataTitle();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigDivision* GetDivision() const	{return m_Division;}
 	ARBConfigTitle* GetTitle() const		{return m_Title;}
 protected:
-	ARBConfigDivision* m_Division;
 	ARBConfigTitle* m_Title;
 };
 

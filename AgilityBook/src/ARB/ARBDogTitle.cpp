@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -358,83 +359,6 @@ int ARBDogTitleList::DeleteVenue(ARBString const& inVenue)
 		}
 		else
 			++iter;
-	}
-	return count;
-}
-
-int ARBDogTitleList::NumTitlesInDivision(
-		ARBConfigVenue const* inVenue,
-		ARBString const& inDiv) const
-{
-	ASSERT(inVenue);
-	int count = 0;
-	ARBConfigDivision* pDiv;
-	if (inVenue->GetDivisions().FindDivision(inDiv, &pDiv))
-	{
-		for (const_iterator iter = begin(); iter != end(); ++iter)
-		{
-			if ((*iter)->GetVenue() == inVenue->GetName())
-			{
-				for (ARBConfigTitleList::const_iterator iterTitles = pDiv->GetTitles().begin(); iterTitles != pDiv->GetTitles().end(); ++iterTitles)
-				{
-					if ((*iter)->GetRawName() == (*iterTitles)->GetName())
-						++count;
-				}
-			}
-		}
-		pDiv->Release();
-	}
-	return count;
-}
-
-int ARBDogTitleList::RenameDivision(
-		ARBConfigVenue const* inVenue,
-		ARBString const& inOldDiv,
-		ARBString const& inNewDiv)
-{
-	// Nothing to do here. Since the division name simply changed and we don't
-	// track that here, there's nothing to update.
-	return 0;
-}
-
-int ARBDogTitleList::DeleteDivision(
-		ARBConfig const& inConfig,
-		ARBString const& inVenue,
-		ARBString const& inDiv)
-{
-	ARBString venue(inVenue);
-	ARBString div(inDiv);
-	ARBConfigVenue* pVenue;
-	if (!inConfig.GetVenues().FindVenue(venue, &pVenue))
-	{
-		ASSERT(pVenue);
-		return 0;
-	}
-	int count = 0;
-	ARBConfigDivision* pDiv;
-	if (pVenue->GetDivisions().FindDivision(div, &pDiv))
-	{
-		for (iterator iter = begin(); iter != end(); )
-		{
-			bool bFound = false;
-			if ((*iter)->GetVenue() == pVenue->GetName())
-			{
-				for (ARBConfigTitleList::const_iterator iterTitles = pDiv->GetTitles().begin();
-					!bFound && iterTitles != pDiv->GetTitles().end();
-					++iterTitles)
-				{
-					if ((*iter)->GetRawName() == (*iterTitles)->GetName())
-					{
-						++count;
-						iter = erase(iter);
-						bFound = true;
-					}
-				}
-			}
-			if (!bFound)
-				++iter;
-		}
-		pDiv->Release();
 	}
 	return count;
 }
