@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -347,17 +348,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			{
 				// Find the title we're renaming.
 				ARBConfigTitle* oldTitle = NULL;
-				ARBConfigDivision* pDiv = NULL;
-				if (action->GetDivision().length())
-				{
-					if (venue->GetDivisions().FindDivision(action->GetDivision(), &pDiv))
-						pDiv->GetTitles().FindTitle(action->GetOldName(), &oldTitle);
-				}
-				else
-				{
-					venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle);
-				}
-				if (oldTitle)
+				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					// Note: If we are deleting/renaming a title due
 					// to an error in the config (same title in multiple
@@ -380,14 +371,12 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					msg += tmp;
 					// If the new title exists, just delete the old.
 					// Otherwise, rename the old to new.
-					if (venue->GetDivisions().FindTitle(action->GetNewName()))
-						venue->GetDivisions().DeleteTitle(action->GetOldName());
+					if (venue->GetTitles().FindTitle(action->GetNewName()))
+						venue->GetTitles().DeleteTitle(action->GetOldName());
 					else
 						oldTitle->SetName(action->GetNewName());
 					oldTitle->Release();
 				}
-				if (pDiv)
-					pDiv->Release();
 				venue->Release();
 			}
 		}
@@ -399,17 +388,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 			{
 				// Find the title we're deleting.
 				ARBConfigTitle* oldTitle = NULL;
-				ARBConfigDivision* pDiv = NULL;
-				if (action->GetDivision().length())
-				{
-					if (venue->GetDivisions().FindDivision(action->GetDivision(), &pDiv))
-						pDiv->GetTitles().FindTitle(action->GetOldName(), &oldTitle);
-				}
-				else
-				{
-					venue->GetDivisions().FindTitle(action->GetOldName(), &oldTitle);
-				}
-				if (oldTitle)
+				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					CString tmp;
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
@@ -438,22 +417,12 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 							GetDogs().DeleteTitle(action->GetVenue(), action->GetOldName());
 						}
 					}
-					if (pDiv)
-						tmp.Format(_T("Action: Deleting title [%s/%s]\n"),
-							pDiv->GetName().c_str(),
-							action->GetOldName().c_str());
-					else
-						tmp.Format(_T("Action: Deleting title [%s]\n"),
-							action->GetOldName().c_str());
+					tmp.Format(_T("Action: Deleting title [%s]\n"),
+						action->GetOldName().c_str());
 					msg += tmp;
-					if (pDiv)
-						pDiv->GetTitles().DeleteTitle(action->GetOldName());
-					else
-						venue->GetDivisions().DeleteTitle(action->GetOldName());
+					venue->GetTitles().DeleteTitle(action->GetOldName());
 					oldTitle->Release();
 				}
-				if (pDiv)
-					pDiv->Release();
 				venue->Release();
 			}
 		}

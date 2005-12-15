@@ -207,19 +207,15 @@ CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataTitle::CDlgConfigureDataTitle(
-		ARBConfigDivision* div,
 		ARBConfigTitle* title)
 	: CDlgConfigureData()
-	, m_Division(div)
 	, m_Title(title)
 {
-	m_Division->AddRef();
 	m_Title->AddRef();
 }
 
 CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 {
-	m_Division->Release();
 	m_Title->Release();
 }
 

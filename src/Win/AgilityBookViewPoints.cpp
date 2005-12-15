@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-09-15 DRC Added code to filter multi-Qs by date (forgot it - oops!)
@@ -1107,37 +1108,30 @@ void CAgilityBookViewPoints::OnCopyTitles()
 			if (!CAgilityBookOptions::IsVenueVisible(venues, (*iVenue)->GetName()))
 				continue;
 			ARBString preTitles2, postTitles2;
-			for (ARBConfigDivisionList::const_iterator iDiv = (*iVenue)->GetDivisions().begin();
-				iDiv != (*iVenue)->GetDivisions().end();
-				++iDiv)
+			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
+				iTitle != (*iVenue)->GetTitles().end();
+				++iTitle)
 			{
-				if (!CAgilityBookOptions::IsVenueDivisionVisible(venues, (*iVenue)->GetName(), (*iDiv)->GetName()))
-					continue;
-				for (ARBConfigTitleList::const_iterator iTitle = (*iDiv)->GetTitles().begin();
-					iTitle != (*iDiv)->GetTitles().end();
-					++iTitle)
+				ARBDogTitle* pTitle;
+				if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
 				{
-					ARBDogTitle* pTitle;
-					if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
+					if (pTitle->GetDate().IsValid()
+					&& !pTitle->IsHidden())
 					{
-						if (pTitle->GetDate().IsValid()
-						&& !pTitle->IsHidden())
+						if ((*iTitle)->GetPrefix())
 						{
-							if ((*iTitle)->GetPrefix())
-							{
-								if (!preTitles2.empty())
-									preTitles2 += ' ';
-								preTitles2 += (*iTitle)->GetName();
-							}
-							else
-							{
-								if (!postTitles2.empty())
-									postTitles2 += ' ';
-								postTitles2 += (*iTitle)->GetName();
-							}
+							if (!preTitles2.empty())
+								preTitles2 += ' ';
+							preTitles2 += (*iTitle)->GetName();
 						}
-						pTitle->Release();
+						else
+						{
+							if (!postTitles2.empty())
+								postTitles2 += ' ';
+							postTitles2 += (*iTitle)->GetName();
+						}
 					}
+					pTitle->Release();
 				}
 			}
 			if (!preTitles2.empty())

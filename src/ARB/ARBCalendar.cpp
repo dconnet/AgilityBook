@@ -743,7 +743,7 @@ size_t ARBCalendarList::GetAllEntered(ARBVectorBase<ARBCalendar>& outEntered) co
 	outEntered.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBCalendar * pCal = (*iter);
+		ARBCalendar* pCal = (*iter);
 		if (ARBCalendar::eEntered == pCal->GetEntered())
 		{
 			pCal->AddRef();

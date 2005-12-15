@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-14 DRC Added option to prefix a title.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -59,14 +60,12 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigDivision::ARBConfigDivision()
 	: m_Name()
 	, m_Levels()
-	, m_Titles()
 {
 }
 
 ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Levels(rhs.m_Levels)
-	, m_Titles(rhs.m_Titles)
 {
 }
 
@@ -80,7 +79,6 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_Levels = rhs.m_Levels;
-		m_Titles = rhs.m_Titles;
 	}
 	return *this;
 }
@@ -88,8 +86,7 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 {
 	return m_Name == rhs.m_Name
-		&& m_Levels == rhs.m_Levels
-		&& m_Titles == rhs.m_Titles;
+		&& m_Levels == rhs.m_Levels;
 }
 
 bool ARBConfigDivision::operator!=(ARBConfigDivision const& rhs) const
@@ -101,7 +98,6 @@ void ARBConfigDivision::clear()
 {
 	m_Name.erase();
 	m_Levels.clear();
-	m_Titles.clear();
 }
 
 size_t ARBConfigDivision::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -111,6 +107,7 @@ size_t ARBConfigDivision::GetSearchStrings(std::set<ARBString>& ioStrings) const
 }
 
 bool ARBConfigDivision::Load(
+		ARBConfigVenue& ioVenue,
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
@@ -131,8 +128,10 @@ bool ARBConfigDivision::Load(
 		}
 		else if (element.GetName() == TREE_TITLES)
 		{
-			// Ignore any errors...
-			m_Titles.Load(element, inVersion, ioCallback);
+			if (inVersion < ARBVersion(12,0))
+			{
+				ioVenue.GetTitles().Load(element, inVersion, ioCallback, true);
+			}
 		}
 	}
 	return true;
@@ -143,8 +142,6 @@ bool ARBConfigDivision::Save(Element& ioTree) const
 	Element& division = ioTree.AddElement(TREE_DIVISION);
 	division.AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
 	if (!m_Levels.Save(division))
-		return false;
-	if (!m_Titles.Save(division))
 		return false;
 	return true;
 }
@@ -203,43 +200,6 @@ bool ARBConfigDivision::Update(
 		}
 	}
 
-	// If the order is different, we will fall into this...
-	if (GetTitles() != inDivNew->GetTitles())
-	{
-		int nChanged, nAdded, nSkipped;
-		nChanged = nAdded = nSkipped = 0;
-		for (ARBConfigTitleList::const_iterator iterTitle = inDivNew->GetTitles().begin();
-			iterTitle != inDivNew->GetTitles().end();
-			++iterTitle)
-		{
-			ARBConfigTitle* pTitle;
-			if (GetTitles().FindTitle((*iterTitle)->GetName(), &pTitle))
-			{
-				if (*(*iterTitle) == *pTitle)
-					++nSkipped;
-				else
-				{
-					++nChanged;
-					pTitle->SetMultiple((*iterTitle)->GetMultiple());
-					pTitle->SetPrefix((*iterTitle)->GetPrefix());
-					pTitle->SetLongName((*iterTitle)->GetLongName());
-					pTitle->SetDescription((*iterTitle)->GetDescription());
-				}
-				pTitle->Release();
-			}
-			else
-			{
-				++nAdded;
-				GetTitles().AddTitle((*iterTitle));
-			}
-		}
-		// ... so only generate a message if we added or changed.
-		if (0 < nAdded || 0 < nChanged)
-		{
-			info += indentBuffer;
-			info += UPDATE_FORMAT_TITLES(nAdded, nChanged, nSkipped);
-		}
-	}
 	bool bChanges = false;
 	if (0 < info.length())
 	{
@@ -252,12 +212,13 @@ bool ARBConfigDivision::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigDivisionList::Load(
+		ARBConfigVenue& ioVenue,
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
 	ARBConfigDivision* thing = new ARBConfigDivision();
-	if (!thing->Load(inTree, inVersion, ioCallback))
+	if (!thing->Load(ioVenue, inTree, inVersion, ioCallback))
 	{
 		thing->Release();
 		return false;
@@ -353,56 +314,4 @@ int ARBConfigDivisionList::DeleteDivision(
 		}
 	}
 	return 0;
-}
-
-bool ARBConfigDivisionList::FindTitleCompleteName(
-		ARBString const& inName,
-		bool bAbbrevFirst,
-		ARBConfigTitle** outTitle) const
-{
-	if (outTitle)
-		*outTitle = NULL;
-	for (const_iterator iter = begin(); iter != end(); ++iter)
-	{
-		ARBConfigTitle* pTitle;
-		if ((*iter)->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst, true, &pTitle))
-		{
-			if (outTitle)
-			{
-				*outTitle = pTitle;
-				(*outTitle)->AddRef();
-			}
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ARBConfigDivisionList::FindTitle(
-		ARBString const& inTitle,
-		ARBConfigTitle** outTitle) const
-{
-	if (outTitle)
-		*outTitle = NULL;
-	for (const_iterator iter = begin(); iter != end(); ++iter)
-	{
-		if ((*iter)->GetTitles().FindTitle(inTitle, outTitle))
-			return true;
-	}
-	return false;
-}
-
-bool ARBConfigDivisionList::DeleteTitle(ARBString const& inTitle)
-{
-	bool bDeleted = false;
-	for (iterator iter = begin(); iter != end(); ++iter)
-	{
-		ARBConfigDivision* div = *iter;
-		if (div->GetTitles().FindTitle(inTitle))
-		{
-			bDeleted = div->GetTitles().DeleteTitle(inTitle);
-			break;
-		}
-	}
-	return bDeleted;
 }

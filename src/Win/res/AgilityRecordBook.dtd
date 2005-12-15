@@ -11,7 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2005-12-04 DRC File version 11.1.
+2005-12-14 DRC File version 12.0
+               Moved Titles from Division to Venue.
                Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
                Added 'cleanQ','bonusPts' to 'Scoring','Run'(scoring).
                Update Action for DeleteTitle.
@@ -165,12 +166,23 @@ top-ten points. The 'Count' value is how they are accumulated
 		Count (All|AllByEvent|Level|LevelByEvent) #REQUIRED
 		>
 
-<!ELEMENT Venue (Desc?, Division+, Event+, MultiQ*) >
+<!ELEMENT Venue (Desc?, Titles*, Division+, Event+, MultiQ*) >
 	<!ATTLIST Venue
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
 		>
 <!ELEMENT Desc (#PCDATA) >
+
+<!ELEMENT Titles (#PCDATA) >
+	<!ATTLIST Titles
+		Name CDATA #REQUIRED
+		LongName CDATA #IMPLIED
+		Multiple CDATA #IMPLIED
+		Prefix (y|n) 'n'
+		ValidFrom CDATA #IMPLIED
+		ValidTo CDATA #IMPLIED
+		>
+
 <!--
 This allows for multiple multiQs within a venue. Currently, I only
 know of 2 venues - each has 1: AKC/QQ and UKC/QQQ
@@ -197,17 +209,8 @@ When 'Multiple' is greater than 1, a title is considered to be recurring,
 meaning it can be entered multiple times. The value in this attribute is
 used to determine the starting point for the first recurance.
 -->
-<!ELEMENT Division (Level+, Titles*) >
+<!ELEMENT Division (Level+) >
 	<!ATTLIST Division Name CDATA #REQUIRED >
-<!ELEMENT Titles (#PCDATA) >
-	<!ATTLIST Titles
-		Name CDATA #REQUIRED
-		LongName CDATA #IMPLIED
-		Multiple CDATA #IMPLIED
-		Prefix (y|n) 'n'
-		ValidFrom CDATA #IMPLIED
-		ValidTo CDATA #IMPLIED
-		>
 
 <!--
 Rules for levels are based on the level name. A level may be

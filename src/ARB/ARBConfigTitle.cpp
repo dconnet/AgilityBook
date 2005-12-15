@@ -271,6 +271,23 @@ ARBString ARBConfigTitle::GetCompleteName(
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBConfigTitleList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback,
+		bool inCheckDups)
+{
+	ARBConfigTitle* thing = new ARBConfigTitle();
+	if (!thing->Load(inTree, inVersion, ioCallback)
+	|| (inCheckDups && FindTitle(thing->GetName())))
+	{
+		thing->Release();
+		return false;
+	}
+	push_back(thing);
+	return true;
+}
+
 bool ARBConfigTitleList::FindTitleCompleteName(
 		ARBString const& inName,
 		short inInstance,

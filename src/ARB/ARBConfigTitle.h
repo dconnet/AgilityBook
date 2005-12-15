@@ -245,9 +245,24 @@ inline void ARBConfigTitle::SetDescription(ARBString const& inDesc)
 /**
  * List of ARBConfigTitle objects.
  */
-class ARBConfigTitleList : public ARBVectorLoad1<ARBConfigTitle>
+class ARBConfigTitleList : public ARBVector<ARBConfigTitle>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @param inCheckDups Check for duplicate title names during upgrade.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback,
+			bool inCheckDups = false);
+
 	/**
 	 * Find a title by the complete name.
 	 * This api is used to fix a problem introduced in v1.0.0.8.

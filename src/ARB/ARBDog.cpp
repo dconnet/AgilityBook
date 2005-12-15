@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -291,7 +292,7 @@ int ARBDog::RenameVenue(
 		ARBString const& inNewVenue)
 {
 	int count = m_ExistingPoints.RenameVenue(inOldVenue, inNewVenue);
-	count = m_RegNums.RenameVenue(inOldVenue, inNewVenue);
+	count += m_RegNums.RenameVenue(inOldVenue, inNewVenue);
 	count += m_Titles.RenameVenue(inOldVenue, inNewVenue);
 	count += m_Trials.RenameVenue(inOldVenue, inNewVenue);
 	return count;
@@ -300,7 +301,7 @@ int ARBDog::RenameVenue(
 int ARBDog::DeleteVenue(ARBString const& inVenue)
 {
 	int count = m_ExistingPoints.DeleteVenue(inVenue);
-	count = m_RegNums.DeleteVenue(inVenue);
+	count += m_RegNums.DeleteVenue(inVenue);
 	count += m_Titles.DeleteVenue(inVenue);
 	count += m_Trials.DeleteVenue(inVenue);
 	return count;
@@ -312,7 +313,6 @@ int ARBDog::RenameDivision(
 		ARBString const& inNewDiv)
 {
 	int count = m_ExistingPoints.RenameDivision(inVenue->GetName(), inOldDiv, inNewDiv);
-	count = m_Titles.RenameDivision(inVenue, inOldDiv, inNewDiv);
 	count += m_Trials.RenameDivision(inVenue, inOldDiv, inNewDiv);
 	return count;
 }
@@ -323,7 +323,6 @@ int ARBDog::DeleteDivision(
 		ARBString const& inDiv)
 {
 	int count = m_ExistingPoints.DeleteDivision(inVenue, inDiv);
-	count = m_Titles.DeleteDivision(inConfig, inVenue, inDiv);
 	count += m_Trials.DeleteDivision(inConfig, inVenue, inDiv);
 	return count;
 }
@@ -489,16 +488,6 @@ int ARBDogList::NumExistingPointsInDivision(
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 		count += (*iter)->GetExistingPoints().NumExistingPointsInDivision(inVenue, inDiv);
-	return count;
-}
-
-int ARBDogList::NumTitlesInDivision(
-		ARBConfigVenue const* inVenue,
-		ARBString const& inDiv) const
-{
-	int count = 0;
-	for (const_iterator iter = begin(); iter != end(); ++iter)
-		count += (*iter)->GetTitles().NumTitlesInDivision(inVenue, inDiv);
 	return count;
 }
 

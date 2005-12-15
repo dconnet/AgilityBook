@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -250,41 +251,6 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteVenue(ARBString const& inVenue);
-
-	/**
-	 * Get the number of titles in a division.
-	 * Used to warning about impending configuration changes.
-	 * @param inVenue Venue to tally.
-	 * @param inDiv Division to tally.
-	 * @return Number of objects.
-	 */
-	int NumTitlesInDivision(
-			ARBConfigVenue const* inVenue,
-			ARBString const& inDiv) const;
-
-	/**
-	 * Rename a division, rename any dependent objects.
-	 * @param inVenue Venue division is in.
-	 * @param inOldDiv Division name being renamed.
-	 * @param inNewDiv New division name.
-	 * @return Number of items changed.
-	 */
-	int RenameDivision(
-			ARBConfigVenue const* inVenue,
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
-
-	/**
-	 * Delete a division, remove any dependent objects.
-	 * @param inConfig Configuration for looking up information.
-	 * @param inVenue Venue division is in.
-	 * @param inDiv Division name being deleted.
-	 * @return Number of items removed.
-	 */
-	int DeleteDivision(
-			ARBConfig const& inConfig,
-			ARBString const& inVenue,
-			ARBString const& inDiv);
 
 	/**
 	 * Number of titles in use.

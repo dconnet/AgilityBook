@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-26 DRC The wrong name was saved into the ARBDogTitle object.
  */
@@ -163,28 +164,22 @@ void CDlgTitle::OnSelchangeVenues()
 	{
 		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
 		ASSERT(pVenue);
-		for (ARBConfigDivisionList::const_iterator iter = pVenue->GetDivisions().begin();
-			iter != pVenue->GetDivisions().end();
-			++iter)
+		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
+			iterTitle != pVenue->GetTitles().end();
+			++iterTitle)
 		{
-			ARBConfigDivision* pDiv = (*iter);
-			for (ARBConfigTitleList::const_iterator iterTitle = pDiv->GetTitles().begin();
-				iterTitle != pDiv->GetTitles().end();
-				++iterTitle)
+			ARBConfigTitle* pTitle = (*iterTitle);
+			// Suppress any titles we already have.
+			if (1 < pTitle->GetMultiple()
+			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
+			|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 			{
-				ARBConfigTitle* pTitle = (*iterTitle);
-				// Suppress any titles we already have.
-				if (1 < pTitle->GetMultiple()
-				|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
-				|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
+				int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
+				m_ctrlTitles.SetItemDataPtr(idx, pTitle);
+				if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 				{
-					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
-					m_ctrlTitles.SetItemDataPtr(idx, pTitle);
-					if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
-					{
-						m_ctrlTitles.SetCurSel(idx);
-						OnSelchangeTitles();
-					}
+					m_ctrlTitles.SetCurSel(idx);
+					OnSelchangeTitles();
 				}
 			}
 		}
