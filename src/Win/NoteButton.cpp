@@ -155,7 +155,7 @@ void CNoteButton::DrawItem(LPDRAWITEMSTRUCT lpDIS)
 		style = ILD_BLEND25;
 	}
 #if _MSC_VER < 1300
-	ImageList_DrawEx(m_ImageList.m_hImageList, image,
+	ImageList_DrawEx(m_ImageList.m_hImageList, m_idxNormal,
 		lpDIS->hDC, pt.x, pt.y, szIcon.cx, szIcon.cy,
 		CLR_NONE, crFg, style);
 #else
