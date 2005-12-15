@@ -379,6 +379,9 @@
 				RelativePath="..\..\Win\MainFrm.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\NoteButton.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\PointsData.cpp">
 			</File>
 			<File
@@ -666,6 +669,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\MainFrm.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\NoteButton.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\PointsData.h">
