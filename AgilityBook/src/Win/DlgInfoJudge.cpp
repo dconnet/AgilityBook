@@ -328,7 +328,7 @@ void CDlgInfoJudge::OnNew()
 	CDlgName dlg(m_Select.c_str(), _T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
-		m_Select.clear();
+		m_Select.erase();
 		ARBString name = (LPCTSTR)dlg.GetName();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
