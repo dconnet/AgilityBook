@@ -352,6 +352,7 @@ bool ARBDogRun::Load(
 			|| 0 == attrib.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
+				pEvent->Release();
 				return false;
 			}
 			if (!m_Q.Load(attrib, inVersion, ioCallback))
@@ -359,6 +360,7 @@ bool ARBDogRun::Load(
 				ARBString msg(VALID_VALUES);
 				msg += ARB_Q::GetValidTypes();
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
+				pEvent->Release();
 				return false;
 			}
 			element.GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
