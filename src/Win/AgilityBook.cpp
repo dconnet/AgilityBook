@@ -61,27 +61,36 @@
 #include "Splash.h"
 #include "TabView.h"
 
+#include <xercesc/util/XercesVersion.hpp>
+#if _XERCES_VERSION < 20200
+#error Minimum version of Xerces is 2.2.
+#elif _XERCES_VERSION > 20700
+#pragma message ( "Warning: Untested version of Xerces" )
+#endif
+#pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/util/XMLString.hpp>
 XERCES_CPP_NAMESPACE_USE
+// Note, see XercesVersion.hpp for how to use the version macros.
+// Currently, we've used versions 2.2 and 2.7. There were no source code
+// changes needed between the two, hence we haven't needed to do any
+// funny stuff!
 #ifdef _AFXDLL
 	#ifdef _DEBUG
-		#pragma message ( "Linking with xerces-c_2D.lib" )
-		#pragma comment(lib, "xerces-c_2D.lib")
+		#define XERCES_LIB	"xerces-c_2D.lib"
 	#else
-		#pragma message ( "Linking with xerces-c_2.lib" )
-		#pragma comment(lib, "xerces-c_2.lib")
+		#define XERCES_LIB	"xerces-c_2.lib"
 	#endif
 #else
 	#ifdef _DEBUG
-		#pragma message ( "Linking with xerces-c_static_2D.lib" )
-		#pragma comment(lib, "xerces-c_static_2D.lib")
+		#define XERCES_LIB	"xerces-c_static_2D.lib"
 	#else
-		#pragma message ( "Linking with xerces-c_static_2.lib" )
-		#pragma comment(lib, "xerces-c_static_2.lib")
+		#define XERCES_LIB	"xerces-c_static_2.lib"
 	#endif
 #endif
+#pragma message ( "Linking with " XERCES_LIB )
+#pragma comment(lib, XERCES_LIB)
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
