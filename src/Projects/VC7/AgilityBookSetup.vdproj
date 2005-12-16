@@ -233,8 +233,8 @@
             }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_E5DC81D450447C4CFADF28C50C835156"
             {
-            "SourcePath" = "8:xerces-c_2_2_0.dll"
-            "TargetName" = "8:xerces-c_2_2_0.dll"
+            "SourcePath" = "8:xerces-c_2_7_0.dll"
+            "TargetName" = "8:xerces-c_2_7_0.dll"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
             "Condition" = "8:"
