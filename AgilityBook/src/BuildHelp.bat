@@ -25,7 +25,7 @@ set OLDPATH=%PATH%
 set PATH=c:\Program Files\HTML Help Workshop;%PATH%
 
 REM Generate the context header files from the windows code
-"..\bin\%2\%1\ParseResourceHeader.exe" Win\resource.h Win\resource.hm Help\AgilityBook.h Help\contextid.h
+"..\bin\%2\%1\ParseResourceHeader.exe" Win\resource.h Win\resource.hm Help\AgilityBook.txt Help\AgilityBook.h Help\contextid.h
 REM Generate History.html
 UpdateHistory.py -h
 REM Now generate the chm file
