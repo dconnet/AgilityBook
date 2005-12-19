@@ -108,11 +108,6 @@ public:
 	bool IsValidOn(ARBDate inDate) const;
 
 	/**
-	 * Get a string showing the valid date range (if set)
-	 */
-	ARBString GetValidDateString() const;
-
-	/**
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */

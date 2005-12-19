@@ -137,7 +137,6 @@ public:
 	void SetValidFrom(ARBDate const& inDate);
 	ARBDate const& GetValidTo() const;
 	void SetValidTo(ARBDate const& inDate);
-	ARBString GetValidDateString() const;
 	ARBString const& GetDivision() const;
 	void SetDivision(ARBString const& inDiv);
 	ARBString const& GetLevel() const;

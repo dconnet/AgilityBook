@@ -263,6 +263,7 @@ BEGIN
     POPUP "Dog"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
         MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
@@ -291,6 +292,7 @@ BEGIN
     POPUP "Trial"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
         MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
@@ -318,6 +320,7 @@ BEGIN
     POPUP "Run"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
         MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
@@ -342,6 +345,7 @@ BEGIN
     POPUP "Points"
     BEGIN
         MENUITEM "&Details...",                 ID_DETAILS
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
         MENUITEM SEPARATOR
         MENUITEM "&Copy Selection\tCtrl+C",     ID_EDIT_COPY
         MENUITEM "Copy &Titles",                ID_COPY_TITLES_LIST
@@ -355,6 +359,7 @@ BEGIN
     POPUP "Calendar"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
@@ -374,6 +379,7 @@ BEGIN
     POPUP "Training"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
