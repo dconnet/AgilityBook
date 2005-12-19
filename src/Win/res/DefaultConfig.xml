@@ -217,6 +217,12 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 			<Titles LongName="Open JWW Preferred" Name="OJP">3 Qs</Titles>
 			<Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
 			<Titles LongName="Master Excellent JWW Preferred" Multiple="2" Name="MJP">10 Qs</Titles>
+			<Titles LongName="Preferred Agility Excellent" Multiple="2" Name="PAX">20 Double Qs</Titles>
+			<Titles LongName="Novice Fast Title" Name="NF">3 Qs under at least 2 different judges</Titles>
+			<Titles LongName="Open Fast Title" Name="OF">3 Qs under at least 2 different judges</Titles>
+			<Titles LongName="Excellent Fast Title" Name="XF">3 Qs under at least 2 different judges</Titles>
+			<Titles LongName="Master Excellent Fast Title" Name="MF">XF plus 10 Qs</Titles>
+			<Titles LongName="FAST Century Title" Name="FTC">MF plus 100 Qs (FTC2 == 200Qs)</Titles>
 			<Division Name="ISC">
 				<Level Name="Excellent B"/>
 			</Division>
@@ -282,9 +288,48 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<Desc>Hybrid, Challenger and Final Rounds</Desc>
 				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime"/>
 			</Event>
+			<Event Name="FAST">
+				<Desc>Fifteen and Send Time</Desc>
+				<Scoring Division="Standard" Level="Novice" OpeningPts="50" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 38/35/32</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Preferred" Level="Novice" OpeningPts="50" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 41/38/35</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Standard" Level="Open" OpeningPts="55" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 38/35/32</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Preferred" Level="Open" OpeningPts="55" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 41/38/35</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Standard" Level="Excellent A" OpeningPts="60" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 38/35/32</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Preferred" Level="Excellent A" OpeningPts="60" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 41/38/35</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Standard" Level="Excellent B" OpeningPts="60" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 38/35/32</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Preferred" Level="Excellent B" OpeningPts="60" overTF="y" type="ScoreThenTime">
+					<Note>SCT: 41/38/35</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+			</Event>
 			<MultiQ Name="Double Q" SName="QQ">
 				<MultiQItem Div="Standard" Event="JWW" Level="Excellent B"/>
 				<MultiQItem Div="Standard" Event="Standard" Level="Excellent B"/>
+			</MultiQ>
+			<MultiQ Name="Preferred Double Q" SName="QQ">
+				<MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
+				<MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
 			</MultiQ>
 		</Venue>
 		<Venue LongName="American Mixed Breed Obedience Registration" Name="AMBOR">
@@ -1523,7 +1568,6 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 		<Venue LongName="North American Dog Agility Council" Name="NADAC">
 			<Desc>http://www.nadac.com/
 Note: As of 12/13/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
-
 			<Titles LongName="Novice Agility Certificate" Name="NAC">30 points</Titles>
 			<Titles LongName="Novice Jumpers Certificate" Name="NJC">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Gamblers Certificate" Name="NGC">30 points (20 pts before 8/1/2005)</Titles>
