@@ -218,7 +218,7 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoring* pScoring) const
 		str += all;
 	else
 		str += pScoring->GetLevel().c_str();
-	ARBString validStr = pScoring->GetValidDateString();
+	ARBString validStr = ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo());
 	if (0 < validStr.length())
 	{
 		str += ' ';

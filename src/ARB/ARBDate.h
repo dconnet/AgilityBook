@@ -88,6 +88,18 @@ public:
 			DateFormat inFormat);
 
 	/**
+	 * Get a string showing the valid date range (if set)
+	 * @param inFrom Valid from date.
+	 * @param inTo Valid to date.
+	 * @param inFormat Date format.
+	 * @return Date range string
+	 */
+	static ARBString GetValidDateString(
+			ARBDate const& inFrom,
+			ARBDate const& inTo,
+			DateFormat inFormat = eDashYMD);
+
+	/**
 	 * Get the current date.
 	 */
 	static ARBDate Today();

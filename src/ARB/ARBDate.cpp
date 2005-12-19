@@ -265,6 +265,30 @@ ARBDate ARBDate::FromString(
 	return date;
 }
 
+// static
+ARBString ARBDate::GetValidDateString(
+		ARBDate const& inFrom,
+		ARBDate const& inTo,
+		DateFormat inFormat)
+{
+	ARBString str;
+	if (inFrom.IsValid() || inTo.IsValid())
+	{
+		str += _T("[");
+		if (inFrom.IsValid())
+			str += inFrom.GetString(inFormat).c_str();
+		else
+			str += _T("*");
+		str += _T("-");
+		if (inTo.IsValid())
+			str += inTo.GetString(inFormat).c_str();
+		else
+			str += _T("*");
+		str += _T("]");
+	}
+	return str;
+}
+
 ARBDate::ARBDate()
 	: m_Julian(0)
 {

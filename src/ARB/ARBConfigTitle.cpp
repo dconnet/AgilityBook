@@ -200,26 +200,6 @@ bool ARBConfigTitle::IsValidOn(ARBDate inDate) const
 	return true;
 }
 
-ARBString ARBConfigTitle::GetValidDateString() const
-{
-	ARBString str;
-	if (m_ValidFrom.IsValid() || m_ValidTo.IsValid())
-	{
-		str += _T("[");
-		if (m_ValidFrom.IsValid())
-			str += m_ValidFrom.GetString(ARBDate::eDashYMD).c_str();
-		else
-			str += _T("*");
-		str += _T("-");
-		if (m_ValidTo.IsValid())
-			str += m_ValidTo.GetString(ARBDate::eDashYMD).c_str();
-		else
-			str += _T("*");
-		str += _T("]");
-	}
-	return str;
-}
-
 ARBString ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bAbbrevFirst) const
