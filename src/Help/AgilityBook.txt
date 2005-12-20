@@ -222,10 +222,22 @@ Long name of the title.
 
 .topic HIDC_CONFIG_TITLE_ALLOW_MULTIPLE
 Allow the title to be created multiple times. For instance, MACH, MACH-2, etc.
-Usually the requirements are a multiple of listed requirements for a single title.
+Usually, this will be 2. In some cases, like NADAC, it may start higher.
 
-.topic HIDC_CONFIG_TITLE_MULTIPLE
-Starting number when multiple titles are allowed. Usually, this will be 2. In some cases, like NADAC, it may start higher.
+.topic HIDC_CONFIG_TITLE_PREFIX
+Is this title listed before a dog's name?
+
+.topic HIDC_CONFIG_TITLE_VALID_FROM
+Enable/disable the setting of a date. This allows for evolving title changes.
+
+.topic HIDC_CONFIG_TITLE_VALID_FROM_DATE
+Date this title becomes valid.
+
+.topic HIDC_CONFIG_TITLE_VALID_TO
+Enable/disable the setting of a date. This allows for evolving title changes.
+
+.topic HIDC_CONFIG_TITLE_VALID_TO_DATE
+Date this title is valid until.
 
 .topic HIDC_CONFIG_TITLE_NAME
 Title abbreviation.

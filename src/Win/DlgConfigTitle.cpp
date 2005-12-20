@@ -39,6 +39,8 @@
 #include "AgilityBook.h"
 #include "DlgConfigTitle.h"
 
+#include "ARBConfigTitle.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -49,17 +51,18 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigTitle dialog
 
 CDlgConfigTitle::CDlgConfigTitle(
-		LPCTSTR name,
-		LPCTSTR longname,
-		LPCTSTR desc,
-		short inMultiple,
+		ARBConfigTitle* inTitle,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
-	, m_Name(name)
-	, m_LongName(longname)
-	, m_Desc(desc)
-	, m_AllowMany(1 < inMultiple ? TRUE : FALSE)
-	, m_Multiple(inMultiple)
+	, m_Title(inTitle)
+	, m_Name(inTitle->GetName().c_str())
+	, m_LongName(inTitle->GetLongName().c_str())
+	, m_Desc(inTitle->GetDescription().c_str())
+	, m_Prefix(inTitle->GetPrefix() ? TRUE : FALSE)
+	, m_AllowMany(1 < inTitle->GetMultiple() ? TRUE : FALSE)
+	, m_Multiple(inTitle->GetMultiple())
+	, m_DateFrom(inTitle->GetValidFrom().IsValid() ? TRUE : FALSE)
+	, m_DateTo(inTitle->GetValidTo().IsValid() ? TRUE : FALSE)
 {
 	m_Desc.Replace(_T("\n"), _T("\r\n"));
 	//{{AFX_DATA_INIT(CDlgConfigTitle)
@@ -77,24 +80,53 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CONFIG_TITLE_NAME, m_Name);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_LONG_NAME, m_LongName);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_DESC, m_Desc);
+	DDX_Check(pDX, IDC_CONFIG_TITLE_PREFIX, m_Prefix);
 	DDX_Check(pDX, IDC_CONFIG_TITLE_ALLOW_MULTIPLE, m_AllowMany);
 	DDX_Control(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_ctrlMultiple);
 	DDX_Text(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_Multiple);
+	DDX_Check(pDX, IDC_CONFIG_TITLE_VALID_FROM, m_DateFrom);
+	DDX_Control(pDX, IDC_CONFIG_TITLE_VALID_FROM_DATE, m_ctrlDateFrom);
+	DDX_Check(pDX, IDC_CONFIG_TITLE_VALID_TO, m_DateTo);
+	DDX_Control(pDX, IDC_CONFIG_TITLE_VALID_TO_DATE, m_ctrlDateTo);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitle)
 	ON_BN_CLICKED(IDC_CONFIG_TITLE_ALLOW_MULTIPLE, OnAllowMultiple)
+	ON_BN_CLICKED(IDC_CONFIG_TITLE_VALID_FROM, OnCheck)
+	ON_BN_CLICKED(IDC_CONFIG_TITLE_VALID_TO, OnCheck)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
+void CDlgConfigTitle::UpdateButtons()
+{
+	m_ctrlDateFrom.EnableWindow(m_DateFrom);
+	m_ctrlDateTo.EnableWindow(m_DateTo);
+}
 
 // CDlgConfigTitle message handlers
 
 BOOL CDlgConfigTitle::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
+
 	m_ctrlMultiple.EnableWindow(m_AllowMany);
+
+	CTime t;
+	if (m_DateFrom)
+		t = m_Title->GetValidFrom().IsValid();
+	else
+		t = CTime(1990, 1, 1, 0, 0, 0);
+	m_ctrlDateFrom.SetTime(&t);
+	if (m_DateTo)
+		t = m_Title->GetValidTo().IsValid();
+	else
+		t = CTime(1990, 1, 1, 0, 0, 0);
+	m_ctrlDateTo.SetTime(&t);
+
+	UpdateButtons();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -109,6 +141,12 @@ void CDlgConfigTitle::OnAllowMultiple()
 		UpdateData(FALSE);
 	}
 	m_ctrlMultiple.EnableWindow(m_AllowMany);
+}
+
+void CDlgConfigTitle::OnCheck()
+{
+	UpdateData(TRUE);
+	UpdateButtons();
 }
 
 void CDlgConfigTitle::OnOK()
@@ -127,15 +165,16 @@ void CDlgConfigTitle::OnOK()
 	m_Desc.TrimRight();
 	m_Desc.TrimLeft();
 #endif
-	UpdateData(FALSE); // Stuff what we did back.
 	if (m_Name.IsEmpty())
 	{
+		UpdateData(FALSE); // Stuff what we did back.
 		MessageBeep(0);
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_TITLE_NAME));
 		return;
 	}
 	if (m_AllowMany && 1 > m_Multiple)
 	{
+		UpdateData(FALSE); // Stuff what we did back.
 		MessageBeep(0);
 		m_Multiple = 2;
 		UpdateData(FALSE);
@@ -145,10 +184,33 @@ void CDlgConfigTitle::OnOK()
 	else if (!m_AllowMany && 0 != m_Multiple)
 	{
 		m_Multiple = 0;
-		UpdateData(FALSE);
 	}
-	CDlgBaseDialog::OnOK();
-	// Get rid of the dialog first - either that or we have to UpdateData(FALSE)
-	// since OnOK will UpdateData(TRUE).
 	m_Desc.Replace(_T("\r\n"), _T("\n"));
+
+	m_Title->SetName((LPCTSTR)m_Name);
+	m_Title->SetLongName((LPCTSTR)m_LongName);
+	m_Title->SetDescription((LPCTSTR)m_Desc);
+	m_Title->SetPrefix(m_Prefix ? true : false);
+	m_Title->SetMultiple(m_Multiple);
+	ARBDate date;
+	if (m_DateFrom)
+	{
+		CTime time;
+		if (GDT_VALID == m_ctrlDateFrom.GetTime(time))
+			date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+	}
+	else
+		date.clear();
+	m_Title->SetValidFrom(date);
+	if (m_DateTo)
+	{
+		CTime time;
+		if (GDT_VALID == m_ctrlDateTo.GetTime(time))
+			date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+	}
+	else
+		date.clear();
+	m_Title->SetValidTo(date);
+
+	CDlgBaseDialog::OnOK();
 }
