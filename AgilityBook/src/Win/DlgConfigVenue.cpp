@@ -1014,10 +1014,12 @@ void CDlgConfigVenue::OnNew()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(), _T(""), _T(""), 0, this);
+				ARBConfigTitle* title = new ARBConfigTitle();
+				title->SetName(name);
+				CDlgConfigTitle dlg(title, this);
 				if (IDOK == dlg.DoModal())
 				{
-					name = dlg.GetName();
+					name = title->GetName();
 					if (m_pVenue->GetTitles().FindTitle(name))
 					{
 						done = false;
@@ -1027,9 +1029,10 @@ void CDlgConfigVenue::OnNew()
 					ARBConfigTitle* pTitle;
 					if (m_pVenue->GetTitles().AddTitle(name, &pTitle))
 					{
-						pTitle->SetMultiple(dlg.GetMultiple());
-						pTitle->SetLongName(dlg.GetLongName());
-						pTitle->SetDescription(dlg.GetDesc());
+						*pTitle = *title;
+						//pTitle->SetMultiple(dlg.GetMultiple());
+						//pTitle->SetLongName(dlg.GetLongName());
+						//pTitle->SetDescription(dlg.GetDesc());
 						int nInsertAt = m_ctrlTitles.GetSelection();
 						if (0 > nInsertAt)
 							nInsertAt = m_ctrlTitles.GetItemCount();
@@ -1045,6 +1048,7 @@ void CDlgConfigVenue::OnNew()
 						pTitle->Release();
 					}
 				}
+				title->Release();
 			}
 		}
 		break;
@@ -1477,15 +1481,12 @@ void CDlgConfigVenue::OnEdit()
 			while (!done)
 			{
 				done = true;
-				CDlgConfigTitle dlg(name.c_str(),
-					pTitleData->GetTitle()->GetLongName().c_str(),
-					pTitleData->GetTitle()->GetDescription().c_str(),
-					pTitleData->GetTitle()->GetMultiple(),
-					this);
+				ARBConfigTitle* title = new ARBConfigTitle(*(pTitleData->GetTitle()));
+				CDlgConfigTitle dlg(title, this);
 				if (IDOK == dlg.DoModal())
 				{
-					name = dlg.GetName();
-					longname = dlg.GetLongName();
+					name = title->GetName();
+					longname = title->GetLongName();
 					if (oldName != name)
 					{
 						if (m_pVenue->GetTitles().FindTitle(name))
@@ -1512,11 +1513,9 @@ void CDlgConfigVenue::OnEdit()
 							}
 							continue;
 						}
-						pTitleData->GetTitle()->SetName(name);
+						title->SetName(name);
 					}
-					pTitleData->GetTitle()->SetMultiple(dlg.GetMultiple());
-					pTitleData->GetTitle()->SetLongName(longname);
-					pTitleData->GetTitle()->SetDescription(dlg.GetDesc());
+					*(pTitleData->GetTitle()) = *title;
 					m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 					m_ctrlTitles.Invalidate();
 					if (name != oldName || longname != oldLongName)
@@ -1526,6 +1525,7 @@ void CDlgConfigVenue::OnEdit()
 						m_ctrlTitles.Invalidate();
 					}
 				}
+				title->Release();
 			}
 		}
 		break;

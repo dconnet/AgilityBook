@@ -38,21 +38,15 @@
  */
 
 #include "DlgBaseDialog.h"
+class ARBConfigTitle;
 
 class CDlgConfigTitle : public CDlgBaseDialog
 {
 public:
 	CDlgConfigTitle(
-			LPCTSTR name,
-			LPCTSTR longname,
-			LPCTSTR desc,
-			short inMultiple,
+			ARBConfigTitle* inTitle,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
-	LPCTSTR GetName() const		{return (LPCTSTR)m_Name;}
-	LPCTSTR GetLongName() const	{return (LPCTSTR)m_LongName;}
-	LPCTSTR GetDesc() const		{return (LPCTSTR)m_Desc;}
-	short GetMultiple() const	{return m_Multiple;}
 
 private:
 // Dialog Data
@@ -61,10 +55,16 @@ private:
 	CString m_Name;
 	CString m_LongName;
 	CString m_Desc;
+	BOOL	m_Prefix;
 	BOOL	m_AllowMany;
 	CEdit	m_ctrlMultiple;
 	short	m_Multiple;
+	BOOL	m_DateFrom;
+	CDateTimeCtrl	m_ctrlDateFrom;
+	BOOL	m_DateTo;
+	CDateTimeCtrl	m_ctrlDateTo;
 	//}}AFX_DATA
+	ARBConfigTitle* m_Title;
 
 	//{{AFX_VIRTUAL(CDlgConfigTitle)
 protected:
@@ -72,9 +72,11 @@ protected:
 	//}}AFX_VIRTUAL
 
 protected:
+	void UpdateButtons();
 	//{{AFX_MSG(CDlgConfigTitle)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnAllowMultiple();
+	afx_msg void OnCheck();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
