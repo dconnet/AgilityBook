@@ -499,6 +499,73 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<ARBString>& outHeights) cons
 	return outHeights.size();
 }
 
+size_t ARBAgilityRecordBook::GetAllCallNames(std::set<ARBString>& outNames) const
+{
+	outNames.clear();
+	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
+		iterDog != m_Dogs.end();
+		++iterDog)
+	{
+		ARBDog const* pDog = (*iterDog);
+		outNames.insert(pDog->GetCallName());
+		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrial const* pTrial = (*iterTrial);
+			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				++iterRun)
+			{
+				ARBDogRun const* pRun = (*iterRun);
+				for (ARBDogReferenceRunList::const_iterator iterRef = pRun->GetReferenceRuns().begin();
+					iterRef != pRun->GetReferenceRuns().end();
+					++iterRef)
+				{
+					ARBDogReferenceRun const* pRef = *iterRef;
+					if (0 < pRef->GetName().length())
+						outNames.insert(pRef->GetName());
+				}
+			}
+		}
+	}
+	return outNames.size();
+}
+
+size_t ARBAgilityRecordBook::GetAllBreeds(std::set<ARBString>& outBreeds) const
+{
+	outBreeds.clear();
+	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
+		iterDog != m_Dogs.end();
+		++iterDog)
+	{
+		ARBDog const* pDog = (*iterDog);
+		if (0 < pDog->GetBreed().length())
+			outBreeds.insert(pDog->GetBreed());
+		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrial const* pTrial = (*iterTrial);
+			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				++iterRun)
+			{
+				ARBDogRun const* pRun = (*iterRun);
+				for (ARBDogReferenceRunList::const_iterator iterRef = pRun->GetReferenceRuns().begin();
+					iterRef != pRun->GetReferenceRuns().end();
+					++iterRef)
+				{
+					ARBDogReferenceRun const* pRef = *iterRef;
+					if (0 < pRef->GetBreed().length())
+						outBreeds.insert(pRef->GetBreed());
+				}
+			}
+		}
+	}
+	return outBreeds.size();
+}
+
 size_t ARBAgilityRecordBook::GetAllJudges(
 		std::set<ARBString>& outJudges,
 		bool bInfo) const

@@ -54,12 +54,16 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
+		std::set<ARBString> const& inHeights,
 		std::set<ARBString> const& inNames,
+		std::set<ARBString> const& inBreeds,
 		ARBDogReferenceRun* ref,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
 	, m_pDoc(pDoc)
+	, m_Heights(inHeights)
 	, m_Names(inNames)
+	, m_Breeds(inBreeds)
 	, m_Ref(ref)
 {
 	ASSERT(m_Ref);
@@ -87,10 +91,12 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_REFRUN_Q, m_ctrlQ);
 	DDX_Text(pDX, IDC_REFRUN_POINTS, m_Points);
 	DDX_Text(pDX, IDC_REFRUN_TIME, m_Time);
-	DDX_Text(pDX, IDC_REFRUN_NAME, m_Name);
 	DDX_Control(pDX, IDC_REFRUN_HEIGHT, m_ctrlHeight);
 	DDX_CBString(pDX, IDC_REFRUN_HEIGHT, m_Height);
-	DDX_Text(pDX, IDC_REFRUN_BREED, m_Breed);
+	DDX_Control(pDX, IDC_REFRUN_NAME, m_ctrlName);
+	DDX_CBString(pDX, IDC_REFRUN_NAME, m_Name);
+	DDX_Control(pDX, IDC_REFRUN_BREED, m_ctrlBreed);
+	DDX_CBString(pDX, IDC_REFRUN_BREED, m_Breed);
 	DDX_Text(pDX, IDC_REFRUN_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
@@ -117,9 +123,18 @@ BOOL CDlgReferenceRun::OnInitDialog()
 	}
 
 	std::set<ARBString>::const_iterator iter;
-	for (iter = m_Names.begin(); iter != m_Names.end(); ++iter)
+
+	for (iter = m_Heights.begin(); iter != m_Heights.end(); ++iter)
 	{
 		m_ctrlHeight.AddString((*iter).c_str());
+	}
+	for (iter = m_Names.begin(); iter != m_Names.end(); ++iter)
+	{
+		m_ctrlName.AddString((*iter).c_str());
+	}
+	for (iter = m_Breeds.begin(); iter != m_Breeds.end(); ++iter)
+	{
+		m_ctrlBreed.AddString((*iter).c_str());
 	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -132,10 +147,10 @@ void CDlgReferenceRun::OnOK()
 		return;
 	m_Points.TrimRight();
 	m_Points.TrimLeft();
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
 	m_Height.TrimRight();
 	m_Height.TrimLeft();
+	m_Name.TrimRight();
+	m_Name.TrimLeft();
 	m_Breed.TrimRight();
 	m_Breed.TrimLeft();
 	m_Notes.TrimRight();

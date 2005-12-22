@@ -109,17 +109,18 @@ public:
 	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
 	ARBInfo& GetInfo()						{return m_Records.GetInfo();}
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
+
 	size_t GetAllClubNames(
-			std::set<ARBString>& clubs,
+			std::set<ARBString>& outClubs,
 			bool bInfo = true) const
 	{
-		return m_Records.GetAllClubNames(clubs, bInfo);
+		return m_Records.GetAllClubNames(outClubs, bInfo);
 	}
 	size_t GetAllTrialLocations(
-			std::set<ARBString>& locations,
+			std::set<ARBString>& outLocations,
 			bool bInfo = true) const
 	{
-		return m_Records.GetAllTrialLocations(locations, bInfo);
+		return m_Records.GetAllTrialLocations(outLocations, bInfo);
 	}
 	size_t GetAllEventSubNames(
 			ARBString const& inVenue,
@@ -128,23 +129,31 @@ public:
 	{
 		return m_Records.GetAllEventSubNames(inVenue, inEvent, outNames);
 	}
-	size_t GetAllHeights(std::set<ARBString>& judges) const
+	size_t GetAllHeights(std::set<ARBString>& ouHeights) const
 	{
-		return m_Records.GetAllHeights(judges);
+		return m_Records.GetAllHeights(ouHeights);
+	}
+	size_t GetAllCallNames(std::set<ARBString>& outNames) const
+	{
+		return m_Records.GetAllCallNames(outNames);
+	}
+	size_t GetAllBreeds(std::set<ARBString>& outBreeds) const
+	{
+		return m_Records.GetAllBreeds(outBreeds);
 	}
 	size_t GetAllJudges(
-			std::set<ARBString>& judges,
+			std::set<ARBString>& outJudges,
 			bool bInfo = true) const
 	{
-		return m_Records.GetAllJudges(judges, bInfo);
+		return m_Records.GetAllJudges(outJudges, bInfo);
 	}
-	size_t GetAllHandlers(std::set<ARBString>& handlers) const
+	size_t GetAllHandlers(std::set<ARBString>& outHandlers) const
 	{
-		return m_Records.GetAllHandlers(handlers);
+		return m_Records.GetAllHandlers(outHandlers);
 	}
-	size_t GetAllFaultTypes(std::set<ARBString>& faults) const
+	size_t GetAllFaultTypes(std::set<ARBString>& outFaults) const
 	{
-		return m_Records.GetAllFaultTypes(faults);
+		return m_Records.GetAllFaultTypes(outFaults);
 	}
 	size_t GetAllTrainingLogNames(std::set<ARBString>& outNames) const
 	{

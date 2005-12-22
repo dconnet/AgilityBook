@@ -1,7 +1,5 @@
 Last Updated: 12/22/2005
 
-- Add dog name / breed memory into reference runs.
-
 - Add drag-drop support in the runs view to move/copy runs.
 
 - Possibly change calendar view to display by separate months. Maybe bolder
