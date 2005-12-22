@@ -350,9 +350,9 @@ void CDlgRunReference::ListRuns()
 	UpdateButtons();
 }
 
-void CDlgRunReference::GetAllHeights(std::set<ARBString>& ioNames)
+void CDlgRunReference::GetAllHeights(std::set<ARBString>& outNames)
 {
-	m_pDoc->GetAllHeights(ioNames);
+	m_pDoc->GetAllHeights(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
 	{
 		ARBDogReferenceRun const* pRefRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
@@ -360,7 +360,37 @@ void CDlgRunReference::GetAllHeights(std::set<ARBString>& ioNames)
 		{
 			ARBString const& ht = pRefRun->GetHeight();
 			if (0 < ht.length())
-				ioNames.insert(ht);
+				outNames.insert(ht);
+		}
+	}
+}
+
+void CDlgRunReference::GetAllCallNames(std::set<ARBString>& outNames)
+{
+	m_pDoc->GetAllCallNames(outNames);
+	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
+	{
+		ARBDogReferenceRun const* pRefRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
+		if (pRefRun)
+		{
+			ARBString const& ht = pRefRun->GetName();
+			if (0 < ht.length())
+				outNames.insert(ht);
+		}
+	}
+}
+
+void CDlgRunReference::GetAllBreeds(std::set<ARBString>& outNames)
+{
+	m_pDoc->GetAllBreeds(outNames);
+	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
+	{
+		ARBDogReferenceRun const* pRefRun = reinterpret_cast<ARBDogReferenceRun const*>(m_ctrlRefRuns.GetItemData(index));
+		if (pRefRun)
+		{
+			ARBString const& ht = pRefRun->GetBreed();
+			if (0 < ht.length())
+				outNames.insert(ht);
 		}
 	}
 }
@@ -550,9 +580,11 @@ void CDlgRunReference::OnRefRunNew()
 		}
 	}
 	ref->SetQ(ARB_Q::eQ_Q);
-	std::set<ARBString> names;
-	GetAllHeights(names);
-	CDlgReferenceRun dlg(m_pDoc, names, ref, this);
+	std::set<ARBString> heights, names, breeds;
+	GetAllHeights(heights);
+	GetAllCallNames(names);
+	GetAllBreeds(breeds);
+	CDlgReferenceRun dlg(m_pDoc, heights, names, breeds, ref, this);
 	if (IDOK == dlg.DoModal())
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(ref))
@@ -576,10 +608,12 @@ void CDlgRunReference::OnRefRunEdit()
 	int nItem = m_ctrlRefRuns.GetSelection();
 	if (0 <= nItem)
 	{
-		std::set<ARBString> names;
-		GetAllHeights(names);
+		std::set<ARBString> heights, names, breeds;
+		GetAllHeights(heights);
+		GetAllCallNames(names);
+		GetAllBreeds(breeds);
 		ARBDogReferenceRun *pRef = reinterpret_cast<ARBDogReferenceRun*>(m_ctrlRefRuns.GetItemData(nItem));
-		CDlgReferenceRun dlg(m_pDoc, names, pRef, this);
+		CDlgReferenceRun dlg(m_pDoc, heights, names, breeds, pRef, this);
 		if (IDOK == dlg.DoModal())
 			ListRuns();
 	}

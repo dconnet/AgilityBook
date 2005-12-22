@@ -86,7 +86,9 @@ protected:
 	void UpdateButtons();
 	void SetColumnHeaders();
 	void ListRuns();
-	void GetAllHeights(std::set<ARBString>& ioNames);
+	void GetAllHeights(std::set<ARBString>& outNames);
+	void GetAllCallNames(std::set<ARBString>& outNames);
+	void GetAllBreeds(std::set<ARBString>& outNames);
 
 	//{{AFX_MSG(CDlgRunReference)
 	virtual BOOL OnInitDialog();

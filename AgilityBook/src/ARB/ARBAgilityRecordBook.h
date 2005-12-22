@@ -554,6 +554,20 @@ public:
 	size_t GetAllHeights(std::set<ARBString>& outHeights) const;
 
 	/**
+	 * Get all callnames in use from existing runs.
+	 * @param outNames List of names.
+	 * @return Number of names.
+	 */
+	size_t GetAllCallNames(std::set<ARBString>& outNames) const;
+
+	/**
+	 * Get all breeds in use from existing runs.
+	 * @param outBreeds List of breeds.
+	 * @return Number of breeds.
+	 */
+	size_t GetAllBreeds(std::set<ARBString>& outBreeds) const;
+
+	/**
 	 * Get all judges in use from existing runs and Judges information.
 	 * @param outJudges List of judges.
 	 * @param bInfo Include judges from the ARBInfo.

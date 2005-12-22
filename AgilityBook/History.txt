@@ -23,6 +23,8 @@
     judges/clubs/locations.
   - Added the ability to phase titles in and out with valid dates to support
     evolving venue rules.
+  - List all the dog names and breeds that have been used in the reference
+    runs dialog.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
@@ -43,6 +45,8 @@
   - Ranged event methods weren't probably filtered in Run dialog.
   - Subnames were enabled when they shouldn't have been.
   - The Notes dialog was not properly selecting the text for the related item.
+  - Pasting (copy/paste) a dog into a new file required at least one dog to
+    already exist.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:

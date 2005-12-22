@@ -46,7 +46,9 @@ class CDlgReferenceRun : public CDlgBaseDialog
 public:
 	CDlgReferenceRun(
 			CAgilityBookDoc* pDoc,
+			std::set<ARBString> const& inHeights,
 			std::set<ARBString> const& inNames,
+			std::set<ARBString> const& inBreeds,
 			ARBDogReferenceRun* ref,
 			CWnd* pParent = NULL);
 
@@ -58,15 +60,19 @@ private:
 	CComboBox	m_ctrlQ;
 	CString	m_Points;
 	double	m_Time;
-	CString	m_Name;
 	CComboBox	m_ctrlHeight;
 	CString	m_Height;
+	CComboBox	m_ctrlName;
+	CString	m_Name;
+	CComboBox	m_ctrlBreed;
 	CString	m_Breed;
 	CString	m_Notes;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogReferenceRun* m_Ref;
+	std::set<ARBString> const& m_Heights;
 	std::set<ARBString> const& m_Names;
+	std::set<ARBString> const& m_Breeds;
 
 	//{{AFX_VIRTUAL(CDlgReferenceRun)
 protected:

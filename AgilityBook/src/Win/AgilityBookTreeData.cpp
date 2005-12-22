@@ -405,40 +405,9 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	Element tree;
 	ARBDogTrial* pTrial = GetTrial();
 	ARBDog* pDog = GetDog();
-	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog), tree))
+	if (m_pTree->PasteDog(bLoaded))
 	{
-		if (CLIPDATA == tree.GetName())
-		{
-			ARBDog* pDog = new ARBDog();
-			if (pDog)
-			{
-				CErrorCallback err;
-				if (pDog->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
-				{
-					bLoaded = true;
-					std::vector<CVenueFilter> venues;
-					CAgilityBookOptions::GetFilterVenue(venues);
-					if (!m_pTree->GetDocument()->GetDogs().AddDog(pDog))
-					{
-						bLoaded = false;
-						AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
-					}
-					else
-					{
-						m_pTree->GetDocument()->ResetVisibility(venues, pDog);
-						m_pTree->SetRedraw(FALSE);
-						m_pTree->InsertDog(pDog, true);
-						m_pTree->SetRedraw(TRUE);
-						m_pTree->Invalidate();
-						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-					}
-				}
-				else if (0 < err.m_ErrMsg.length())
-					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
-				pDog->Release();
-				pDog = NULL;
-			}
-		}
+		// Done.
 	}
 	else if (pTrial
 	&& GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree))

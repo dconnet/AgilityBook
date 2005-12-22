@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2005-12-22 DRC Support pasting a dog when no dogs exist in file.
  * @li 2005-08-31 DRC The wrong item in the tree was selected after reordering.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-31 DRC Make F1 invoke context help.
@@ -60,6 +61,7 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgFind.h"
@@ -673,6 +675,50 @@ HTREEITEM CAgilityBookTree::InsertRun(
 	return hRun;
 }
 
+bool CAgilityBookTree::PasteDog(bool& bLoaded)
+{
+	Element tree;
+	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog), tree))
+	{
+		if (CLIPDATA == tree.GetName())
+		{
+			ARBDog* pDog = new ARBDog();
+			if (pDog)
+			{
+				CErrorCallback err;
+				if (pDog->Load(GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				{
+					bLoaded = true;
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					std::vector<CVenueFilter> venues;
+					CAgilityBookOptions::GetFilterVenue(venues);
+					if (!GetDocument()->GetDogs().AddDog(pDog))
+					{
+						bLoaded = false;
+						AfxMessageBox(IDS_CREATEDOG_FAILED, MB_ICONSTOP);
+					}
+					else
+					{
+						GetDocument()->SetModifiedFlag();
+						GetDocument()->ResetVisibility(venues, pDog);
+						SetRedraw(FALSE);
+						InsertDog(pDog, true);
+						SetRedraw(TRUE);
+						Invalidate();
+						GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
+					}
+				}
+				else if (0 < err.m_ErrMsg.length())
+					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+				pDog->Release();
+				pDog = NULL;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
 bool CAgilityBookTree::IsFiltered() const
 {
 	return CAgilityBookOptions::IsFilterEnabled();
@@ -938,10 +984,20 @@ void CAgilityBookTree::OnUpdateDogCmd(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
 	CAgilityBookTreeData* pData = GetCurrentTreeItem();
-	if (pData && pData->OnUpdateCmd(pCmdUI->m_nID))
-		bEnable = TRUE;
-	else if (!pData && ID_AGILITY_NEW_DOG == pCmdUI->m_nID)
-		bEnable = TRUE;
+	if (pData)
+	{
+		if (pData->OnUpdateCmd(pCmdUI->m_nID))
+			bEnable = TRUE;
+	}
+	else
+	{
+		if (ID_AGILITY_NEW_DOG == pCmdUI->m_nID
+		|| (ID_EDIT_PASTE == pCmdUI->m_nID
+			&& IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog))))
+		{
+			bEnable = TRUE;
+		}
+	}
 	pCmdUI->Enable(bEnable);
 }
 
@@ -972,6 +1028,12 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 			}
 			dog->Release();
 			bHandled = TRUE;
+		}
+		else if (ID_EDIT_PASTE == id)
+		{
+			CWaitCursor wait;
+			bool bLoaded = false;
+			PasteDog(bLoaded);
 		}
 	}
 	return bHandled;

@@ -107,6 +107,7 @@ public:
 			ARBDogTrial* pTrial,
 			ARBDogRun* pRun,
 			HTREEITEM hParent);
+	bool PasteDog(bool& bLoaded);
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
 	// ICommonView interface
