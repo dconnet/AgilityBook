@@ -245,7 +245,7 @@ void CDlgConfigEvent::FillControls()
 		else
 		{
 			m_ctrlValidFrom.SetCheck(0);
-			t = CTime(1990, 1, 1, 0, 0, 0);
+			t = CTime::GetCurrentTime();
 		}
 		m_ctrlDateFrom.SetTime(&t);
 		if (pScoring->GetValidTo().IsValid())
@@ -256,7 +256,7 @@ void CDlgConfigEvent::FillControls()
 		else
 		{
 			m_ctrlValidTo.SetCheck(0);
-			t = CTime(1990, 1, 1, 0, 0, 0);
+			t = CTime::GetCurrentTime();
 		}
 		m_ctrlDateTo.SetTime(&t);
 
@@ -292,7 +292,7 @@ void CDlgConfigEvent::FillControls()
 	}
 	else
 	{
-		CTime t(1990, 1, 1, 0, 0, 0);
+		CTime t = CTime::GetCurrentTime();
 		m_ctrlValidFrom.SetCheck(0);
 		m_ctrlDateFrom.SetTime(&t);
 		m_ctrlValidTo.SetCheck(0);
@@ -331,10 +331,11 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlDelete.EnableWindow(bEnable);
 	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
 	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
+	int idxTitle = m_ctrlPointsList.GetCurSel();
 	m_ctrlPointsList.EnableWindow(bEnable);
 	m_ctrlPointsNew.EnableWindow(bEnable);
-	m_ctrlPointsEdit.EnableWindow(bEnable);
-	m_ctrlPointsDelete.EnableWindow(bEnable);
+	m_ctrlPointsEdit.EnableWindow(bEnable && 0 <= idxTitle);
+	m_ctrlPointsDelete.EnableWindow(bEnable && 0 <= idxTitle);
 }
 
 void CDlgConfigEvent::FillSubNames(bool bInit)
