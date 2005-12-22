@@ -139,11 +139,11 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 	m_ctrlItems.SetExtendedStyle(m_ctrlItems.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
-	CTime t = CTime(1990, 1, 1, 0, 0, 0);
+	CTime t = CTime::GetCurrentTime();
 	if (m_DateFrom.IsValid())
 		t = m_DateFrom.GetDate();
 	m_ctrlDateFrom.SetTime(&t);
-	t = CTime(1990, 1, 1, 0, 0, 0);
+	t = CTime::GetCurrentTime();
 	if (m_DateTo.IsValid())
 		t = m_DateTo.GetDate();
 	m_ctrlDateTo.SetTime(&t);

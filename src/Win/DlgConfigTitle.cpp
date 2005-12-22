@@ -115,14 +115,14 @@ BOOL CDlgConfigTitle::OnInitDialog()
 
 	CTime t;
 	if (m_DateFrom)
-		t = m_Title->GetValidFrom().IsValid();
+		t = m_Title->GetValidFrom().GetDate();
 	else
-		t = CTime(1990, 1, 1, 0, 0, 0);
+		t = CTime::GetCurrentTime();
 	m_ctrlDateFrom.SetTime(&t);
 	if (m_DateTo)
-		t = m_Title->GetValidTo().IsValid();
+		t = m_Title->GetValidTo().GetDate();
 	else
-		t = CTime(1990, 1, 1, 0, 0, 0);
+		t = CTime::GetCurrentTime();
 	m_ctrlDateTo.SetTime(&t);
 
 	UpdateButtons();

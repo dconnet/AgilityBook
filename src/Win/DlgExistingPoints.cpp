@@ -681,7 +681,7 @@ BOOL CDlgExistingPoints::OnInitDialog()
 	{
 		if (m_Date.IsValid())
 		{
-			CTime t(m_Date.GetYear(), m_Date.GetMonth(), m_Date.GetDay(), 0, 0, 0);
+			CTime t = m_Date.GetDate();
 			m_ctrlDate.SetTime(&t);
 		}
 		int index = m_ctrlType.FindStringExact(0,

@@ -116,12 +116,13 @@ public:
 	/**
 	 * Get the complete name (name + nicename).
 	 * @param inInstance Instance of the title to allow for multiple.
-	 * @param bAbbrevFirst Name is before or after Longname.
+	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
 	ARBString GetCompleteName(
 			short inInstance = 0,
-			bool bAbbrevFirst = true) const;
+			bool bAbbrevFirst = true,
+			bool bAddDates = false) const;
 
 	/*
 	 * Getters/setters.

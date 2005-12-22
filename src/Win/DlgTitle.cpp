@@ -117,8 +117,7 @@ BOOL CDlgTitle::OnInitDialog()
 	{
 		if (m_pTitle->GetDate().IsValid())
 		{
-			ARBDate const& date = m_pTitle->GetDate();
-			CTime t(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
+			CTime t = m_pTitle->GetDate().GetDate();
 			m_ctrlDate.SetTime(&t);
 		}
 		else

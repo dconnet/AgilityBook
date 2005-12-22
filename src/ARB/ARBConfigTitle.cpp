@@ -202,7 +202,8 @@ bool ARBConfigTitle::IsValidOn(ARBDate inDate) const
 
 ARBString ARBConfigTitle::GetCompleteName(
 		short inInstance,
-		bool bAbbrevFirst) const
+		bool bAbbrevFirst,
+		bool bAddDates) const
 {
 	ARBString buffer;
 	if (1 < inInstance)
@@ -219,34 +220,38 @@ ARBString ARBConfigTitle::GetCompleteName(
 		str << _T("+");
 		buffer = str.str();
 	}
-	ARBString name;
+	ARBostringstream name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
 		{
-			name += _T("[");
-			name += m_Name;
+			name << _T("[") << m_Name;
 			if (0 < buffer.length())
-				name += buffer;
-			name += _T("] ");
+				name << buffer;
+			name << _T("] ");
 		}
-		name += m_LongName;
+		name << m_LongName;
 		if (!bAbbrevFirst)
 		{
-			name += _T(" [");
-			name += m_Name;
+			name << _T(" [") << m_Name;
 			if (0 < buffer.length())
-				name += buffer;
-			name += _T("]");
+				name << buffer;
+			name << _T("]");
 		}
 	}
 	else
 	{
-		name = m_Name;
+		name << m_Name;
 		if (0 < buffer.length())
-			name += buffer;
+			name << buffer;
 	}
-	return name;
+	if (bAddDates)
+	{
+		ARBString dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
+		if (!dates.empty())
+			name << _T(" ") << dates;
+	}
+	return name.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
