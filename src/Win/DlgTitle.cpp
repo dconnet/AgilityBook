@@ -84,11 +84,73 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_TITLE_DATE, &CDlgTitle::OnDtnDatetimechangeTitleDate)
 	ON_BN_CLICKED(IDC_TITLE_EARNED, OnBnClickedEarned)
 	ON_CBN_SELCHANGE(IDC_TITLE_VENUES, OnSelchangeVenues)
 	ON_CBN_SELCHANGE(IDC_TITLE_TITLES, OnSelchangeTitles)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+
+ARBDate CDlgTitle::GetDate()
+{
+	ARBDate date;
+	if (m_ctrlEarned.GetCheck() == 1)
+	{
+		CTime time;
+		m_ctrlDate.GetTime(time);
+		date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+	}
+	return date;
+}
+
+void CDlgTitle::FillTitles()
+{
+	m_ctrlTitles.ResetContent();
+	int index = m_ctrlVenues.GetCurSel();
+	if (CB_ERR != index)
+	{
+		ARBDate date = GetDate();
+		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
+		ASSERT(pVenue);
+		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
+			iterTitle != pVenue->GetTitles().end();
+			++iterTitle)
+		{
+			ARBConfigTitle* pTitle = (*iterTitle);
+			// Suppress any titles we already have.
+			if (1 < pTitle->GetMultiple()
+			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
+			|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
+			{
+				if (pTitle->IsValidOn(date))
+				{
+					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
+					m_ctrlTitles.SetItemDataPtr(idx, pTitle);
+					if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
+					{
+						m_ctrlTitles.SetCurSel(idx);
+						FillTitleInfo();
+					}
+				}
+			}
+		}
+	}
+}
+
+void CDlgTitle::FillTitleInfo()
+{
+	int index = m_ctrlTitles.GetCurSel();
+	CString str;
+	if (CB_ERR != index)
+	{
+		ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
+		str = pTitle->GetDescription().c_str();
+	}
+	str.Replace(_T("\n"), _T("\r\n"));
+	m_ctrlDesc.SetWindowText(str);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTitle message handlers
@@ -107,7 +169,7 @@ BOOL CDlgTitle::OnInitDialog()
 		if (m_pTitle && m_pTitle->GetVenue() == pVenue->GetName())
 		{
 			m_ctrlVenues.SetCurSel(index);
-			OnSelchangeVenues();
+			FillTitles();
 		}
 	}
 	int nEarned = 1;
@@ -141,6 +203,13 @@ BOOL CDlgTitle::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+void CDlgTitle::OnDtnDatetimechangeTitleDate(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	//LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
+	FillTitles();
+	*pResult = 0;
+}
+
 void CDlgTitle::OnBnClickedEarned()
 {
 	if (m_ctrlEarned.GetCheck() == 1)
@@ -153,49 +222,17 @@ void CDlgTitle::OnBnClickedEarned()
 		m_ctrlDate.EnableWindow(FALSE);
 		m_ctrlReceived.EnableWindow(FALSE);
 	}
+	FillTitles();
 }
 
 void CDlgTitle::OnSelchangeVenues()
 {
-	m_ctrlTitles.ResetContent();
-	int index = m_ctrlVenues.GetCurSel();
-	if (CB_ERR != index)
-	{
-		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
-		ASSERT(pVenue);
-		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
-			iterTitle != pVenue->GetTitles().end();
-			++iterTitle)
-		{
-			ARBConfigTitle* pTitle = (*iterTitle);
-			// Suppress any titles we already have.
-			if (1 < pTitle->GetMultiple()
-			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
-			|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
-			{
-				int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
-				m_ctrlTitles.SetItemDataPtr(idx, pTitle);
-				if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
-				{
-					m_ctrlTitles.SetCurSel(idx);
-					OnSelchangeTitles();
-				}
-			}
-		}
-	}
+	FillTitles();
 }
 
 void CDlgTitle::OnSelchangeTitles() 
 {
-	int index = m_ctrlTitles.GetCurSel();
-	CString str;
-	if (CB_ERR != index)
-	{
-		ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
-		str = pTitle->GetDescription().c_str();
-	}
-	str.Replace(_T("\n"), _T("\r\n"));
-	m_ctrlDesc.SetWindowText(str);
+	FillTitleInfo();
 }
 
 void CDlgTitle::OnOK()
@@ -224,16 +261,10 @@ void CDlgTitle::OnOK()
 	CString name;
 	m_ctrlTitles.GetLBText(index, name);
 
+	ARBDate date = GetDate();
 	bool bHidden = (m_ctrlHidden.GetCheck() == 1);
 	bool bReceived = (m_ctrlReceived.GetCheck() == 1);
-	ARBDate date;
-	if (m_ctrlEarned.GetCheck() == 1)
-	{
-		CTime time;
-		m_ctrlDate.GetTime(time);
-		date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
-	}
-	else
+	if (m_ctrlEarned.GetCheck() != 1)
 	{
 		bHidden = true;
 		bReceived = false;

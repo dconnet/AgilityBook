@@ -74,8 +74,13 @@ protected:
 
 // Implementation
 protected:
+	ARBDate GetDate();
+	void FillTitles();
+	void FillTitleInfo();
+
 	//{{AFX_MSG(CDlgTitle)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDtnDatetimechangeTitleDate(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedEarned();
 	afx_msg void OnSelchangeVenues();
 	afx_msg void OnSelchangeTitles();
