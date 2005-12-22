@@ -12,7 +12,7 @@ see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
 2005-12-14 DRC File version 12.0
-               Moved Titles from Division to Venue.
+               Moved Titles from Division to Venue, added Valid dates on them.
                Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
                Added 'cleanQ','bonusPts' to 'Scoring','Run'(scoring).
                Update Action for DeleteTitle.

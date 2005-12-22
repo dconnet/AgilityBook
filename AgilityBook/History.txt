@@ -1,4 +1,4 @@
-12/21/2005: v1.7.0.11 <in development>
+12/21/2005: v1.7.0.12 <in development>
 - Bumped file version to 12.0, Configuration v10:
   - Moved Titles from Division to Venue, added valid dates on titles.
   - Added option to prefix a title when listed on configuration titles.
