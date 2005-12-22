@@ -1,6 +1,6 @@
-12/14/2005: v1.7.0.11 <in development>
+12/21/2005: v1.7.0.11 <in development>
 - Bumped file version to 12.0, Configuration v10:
-  - Moved Titles from Division to Venue.
+  - Moved Titles from Division to Venue, added valid dates on titles.
   - Added option to prefix a title when listed on configuration titles.
   - Updated comments in CPE titles (no minimum number of judges anymore)
   - Added DOCNA.
@@ -17,10 +17,12 @@
   - Added option to no longer prompt to update configuration. This will be
     reset the next time you manually update the configuration.
   - Added ability to have fractional titling points.
-  - Made the 'Include Image' checkbox in the CRCD tab of a Run is behave
+  - Made the 'Include Image' checkbox in the CRCD tab of a Run behave
     more logically.
   - Added a way to create a note directly from Calendar/Trial/etc entries for
     judges/clubs/locations.
+  - Added the ability to phase titles in and out with valid dates to support
+    evolving venue rules.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date
