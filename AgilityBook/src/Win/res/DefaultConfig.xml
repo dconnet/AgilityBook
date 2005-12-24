@@ -217,7 +217,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 			<Titles LongName="Open JWW Preferred" Name="OJP">3 Qs</Titles>
 			<Titles LongName="Agility Excellent JWW Preferred" Name="AJP">3 Qs</Titles>
 			<Titles LongName="Master Excellent JWW Preferred" Multiple="2" Name="MJP">10 Qs</Titles>
-			<Titles LongName="Preferred Agility Excellent" Multiple="2" Name="PAX" ValidFrom="2006-9-1">20 Double Qs</Titles>
+			<Titles LongName="Preferred Agility Excellent" Multiple="2" Name="PAX">20 Double Qs</Titles>
 			<Titles LongName="Novice Fast Title" Name="NF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
 			<Titles LongName="Open Fast Title" Name="OF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
 			<Titles LongName="Excellent Fast Title" Name="XF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
@@ -328,7 +328,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<MultiQItem Div="Standard" Event="JWW" Level="Excellent B"/>
 				<MultiQItem Div="Standard" Event="Standard" Level="Excellent B"/>
 			</MultiQ>
-			<MultiQ Name="Preferred Double Q" SName="QQ" ValidFrom="2006-9-1">
+			<MultiQ Name="Preferred Double Q" SName="QQ">
 				<MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
 				<MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
 			</MultiQ>
@@ -1898,11 +1898,8 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
-			<Event Name="Wild Card" hasSubNames="y">
+			<Event Name="Wild Card">
 				<Desc>Transition Gamblers class</Desc>
-				<SubName>Contacts</SubName>
-				<SubName>Jumps</SubName>
-				<SubName>Weaves</SubName>
 				<Scoring Division="*" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>
