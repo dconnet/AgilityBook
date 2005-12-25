@@ -1,4 +1,4 @@
-12/21/2005: v1.7.0.12 <in development>
+12/24/2005: v1.7.0.12 <in development>
 - Bumped file version to 12.0, Configuration v10:
   - Moved Titles from Division to Venue, added valid dates on titles.
   - Added option to prefix a title when listed on configuration titles.
@@ -47,6 +47,10 @@
   - The Notes dialog was not properly selecting the text for the related item.
   - Pasting (copy/paste) a dog into a new file required at least one dog to
     already exist.
+  - When multiple runs are copied in the Runs list view, only one would paste.
+  - When the 'Hide entries on dates where you've entered a trial' option is
+    turned on and a Calendar entry that was marked as Entered was copied and
+    pasted, both entries disappeared.
 
 9/6/2005: v1.6.0.11
 - Bumped file version to 11.0, Configuration v9:

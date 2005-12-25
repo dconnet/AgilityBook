@@ -1,16 +1,10 @@
-Last Updated: 12/22/2005
+Last Updated: 12/24/2005
 
 - Add drag-drop support in the runs view to move/copy runs.
 
 - Possibly change calendar view to display by separate months. Maybe bolder
-  lines between the months? See email from Kelly on 12/22/05 that was some
+  lines between the months? See email from Kelly on 12/22/05 that has some
   really good ideas.
-
-- Bug: copy multiple runs in the runs list view, only 1 will paste.
-
-- Bug: Cal: Copy/paste existing entered trial, entry vanishes. Resetting the
-  the 'hide entries on dates where youve entered a trial' doesn't redisplay.
-  Editing the date from the calview and oking does redisplay.
 
 - Create named import/export settings.
 
