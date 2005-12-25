@@ -872,7 +872,7 @@ void CAgilityBookViewCalendarList::LoadData()
 			if (pCal->IsBefore(today))
 				continue;
 		}
-		if (bHide)
+		if (bHide && ARBCalendar::eEntered != pCal->GetEntered())
 		{
 			bool bSuppress = false;
 			for (ARBVectorBase<ARBCalendar>::const_iterator iterE = entered.begin();

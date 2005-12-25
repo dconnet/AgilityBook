@@ -414,54 +414,73 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDogRun* pRun = new ARBDogRun();
-			if (pRun)
+			CErrorCallback err;
+			ARBVectorBase<ARBDogRun> runs;
+			for (int iRun = 0; iRun < tree.GetElementCount(); ++iRun)
 			{
-				CErrorCallback err;
-				if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				ARBDogRun* pRun = new ARBDogRun();
+				if (pRun)
 				{
-					bLoaded = true;
-					std::vector<CVenueFilter> venues;
-					CAgilityBookOptions::GetFilterVenue(venues);
+					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(iRun), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+						runs.push_back(pRun);
+					else
+						pRun->Release();
+				}
+			}
+			if (0 < runs.size())
+			{
+				size_t nFailed = 0;
+				bLoaded = true;
+				std::vector<CVenueFilter> venues;
+				CAgilityBookOptions::GetFilterVenue(venues);
+				for (ARBVectorBase<ARBDogRun>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+				{
+					ARBDogRun* pRun = *iter;
 					if (!pTrial->GetRuns().AddRun(pRun))
 					{
-						bLoaded = false;
+						++nFailed;
 						AfxMessageBox(IDS_CREATERUN_FAILED, MB_ICONSTOP);
 					}
 					else
-					{
-						pTrial->GetRuns().sort();
-						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
-						m_pTree->SetRedraw(FALSE);
-						HTREEITEM hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetHTreeItem());
-						m_pTree->SetRedraw(TRUE);
-						m_pTree->Invalidate();
-						bool bOk = true;
-						if (NULL == hItem)
-						{
-							bOk = false;
-							if (CAgilityBookOptions::IsFilterEnabled())
-								AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
-						}
-						else
-						{
-							m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
-							m_pTree->GetTreeCtrl().EnsureVisible(hItem);
-							if (bTreeSelectionSet)
-								*bTreeSelectionSet = true;
-						}
-						if (bOk)
-						{
-							m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-						}
+				}
+				if (runs.size() == nFailed)
+					bLoaded = false;
+				else
+				{
+					pTrial->GetRuns().sort();
+					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+					m_pTree->SetRedraw(FALSE);
+					HTREEITEM hItem = NULL;
+					for (ARBVectorBase<ARBDogRun>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
+					{
+						ARBDogRun* pRun = *iter;
+						hItem = m_pTree->InsertRun(pTrial, pRun, GetDataTrial()->GetHTreeItem());
+					}
+					m_pTree->SetRedraw(TRUE);
+					m_pTree->Invalidate();
+					bool bOk = true;
+					if (NULL == hItem)
+					{
+						bOk = false;
+						if (CAgilityBookOptions::IsFilterEnabled())
+							AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
+					}
+					else
+					{
+						m_pTree->GetTreeCtrl().Select(hItem, TVGN_CARET);
+						m_pTree->GetTreeCtrl().EnsureVisible(hItem);
+						if (bTreeSelectionSet)
+							*bTreeSelectionSet = true;
+					}
+					if (bOk)
+					{
+						m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 					}
 				}
-				else if (0 < err.m_ErrMsg.length())
-					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
-				pRun->Release();
-				pRun = NULL;
 			}
+			if (!bLoaded && 0 < err.m_ErrMsg.length())
+				AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 		}
 	}
 	else if (pDog
