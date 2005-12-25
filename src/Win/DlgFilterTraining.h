@@ -45,7 +45,7 @@ class CAgilityBookDoc;
 
 class CDlgFilterTraining : public CDlgBasePropertyPage
 {
-	friend class CDlgFilter;
+	friend class CDlgOptions;
 	DECLARE_DYNAMIC(CDlgFilterTraining)
 public:
 	CDlgFilterTraining(CAgilityBookDoc* pDoc);

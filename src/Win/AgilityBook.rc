@@ -228,8 +228,7 @@ BEGIN
     END
     POPUP "&View"
     BEGIN
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
-        MENUITEM "&Options...",                 ID_VIEW_OPTIONS
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
         MENUITEM SEPARATOR
         MENUITEM "Show &Newest Trials First",   ID_VIEW_SORTRUNS
@@ -263,7 +262,7 @@ BEGIN
     POPUP "Dog"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
@@ -292,7 +291,7 @@ BEGIN
     POPUP "Trial"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
@@ -320,7 +319,7 @@ BEGIN
     POPUP "Run"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
@@ -345,7 +344,7 @@ BEGIN
     POPUP "Points"
     BEGIN
         MENUITEM "&Details...",                 ID_DETAILS
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "&Copy Selection\tCtrl+C",     ID_EDIT_COPY
         MENUITEM "Copy &Titles",                ID_COPY_TITLES_LIST
@@ -359,7 +358,7 @@ BEGIN
     POPUP "Calendar"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
@@ -379,7 +378,7 @@ BEGIN
     POPUP "Training"
     BEGIN
         MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
-        MENUITEM "&Filter...\tF7",              ID_VIEW_FILTER
+        MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
         MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
@@ -417,7 +416,7 @@ BEGIN
     VK_F3,          ID_EDIT_FIND_PREVIOUS,  VIRTKEY, SHIFT, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
-    VK_F7,          ID_VIEW_FILTER,         VIRTKEY, NOINVERT
+    VK_F7,          ID_VIEW_OPTIONS,        VIRTKEY, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     VK_TAB,         ID_NEXT_TAB,            VIRTKEY, CONTROL, NOINVERT
@@ -2467,7 +2466,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    ID_VIEW_FILTER          "Change filter options\nFilter"
     ID_VIEW_OPTIONS         "Change viewing options\nOptions"
     ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
     ID_VIEW_SORTRUNS        "Sort newest trials first\nSort runs"

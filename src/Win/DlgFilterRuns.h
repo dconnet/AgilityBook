@@ -46,7 +46,7 @@ class ARBConfig;
 
 class CDlgFilterRuns : public CDlgBasePropertyPage
 {
-	friend class CDlgFilter;
+	friend class CDlgOptions;
 	DECLARE_DYNAMIC(CDlgFilterRuns)
 public:
 	CDlgFilterRuns(ARBConfig const& config);

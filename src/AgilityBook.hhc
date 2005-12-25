@@ -50,11 +50,6 @@
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Filtering Preferences">
-			<param name="Local" value="Help\html\DialogsFilters.html">
-			<param name="ImageNumber" value="11">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Viewing Preferences">
 			<param name="Local" value="Help\html\DialogsOptions.html">
 			<param name="ImageNumber" value="11">
@@ -280,27 +275,6 @@
 					</OBJECT>
 			</UL>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Filter Dialogs">
-				<param name="Local" value="Help\html\DialogsFilters.html">
-				</OBJECT>
-			<UL>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Dates">
-					<param name="Local" value="Help\html\DlgFilterDate.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Trials / Runs">
-					<param name="Local" value="Help\html\DlgFilterTrial.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Training Log">
-					<param name="Local" value="Help\html\DlgFilterLog.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-			</UL>
-			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Options Dialogs">
 				<param name="Local" value="Help\html\DialogsOptions.html">
 				</OBJECT>
@@ -316,8 +290,23 @@
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Dates">
+					<param name="Local" value="Help\html\DlgFilterDate.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Trials / Runs">
+					<param name="Local" value="Help\html\DlgFilterTrial.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Calendar">
 					<param name="Local" value="Help\html\DlgOptionsCal.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Training Log">
+					<param name="Local" value="Help\html\DlgFilterLog.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 			</UL>

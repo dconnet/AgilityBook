@@ -37,6 +37,9 @@
  */
 
 #include "DlgBaseSheet.h"
+#include "DlgFilterDate.h"
+#include "DlgFilterRuns.h"
+#include "DlgFilterTraining.h"
 #include "DlgOptionsCalendar.h"
 #include "DlgOptionsFonts.h"
 #include "DlgOptionsProgram.h"
@@ -51,18 +54,26 @@ class CDlgOptions : public CDlgBaseSheet
 public:
 	static int GetProgramPage()		{return 0;}
 	static int GetFontPage()		{return 1;}
-	static int GetCalendarPage()	{return 2;}
+	static int GetDatePage()		{return 2;}
+	static int GetRunsPage()		{return 3;}
+	static int GetCalendarPage()	{return 4;}
+	static int GetTrainingPage()	{return 5;}
 
 	CDlgOptions(
+			CAgilityBookDoc* pDoc,
 			CWnd* pParentWnd = NULL,
 			UINT iSelectPage = 0);
 	virtual ~CDlgOptions();
 
 // Attributes
 public:
+	CAgilityBookDoc* m_pDoc;
 	CDlgOptionsProgram m_pageProgram;
 	CDlgOptionsFonts m_pageFonts;
+	CDlgFilterDate m_pageDate;
+	CDlgFilterRuns m_pageRuns;
 	CDlgOptionsCalendar m_pageCalendar;
+	CDlgFilterTraining m_pageTraining;
 
 // Operations
 public:

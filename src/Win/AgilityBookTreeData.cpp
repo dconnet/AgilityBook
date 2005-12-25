@@ -71,7 +71,7 @@
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
-#include "DlgFilter.h"
+#include "DlgOptions.h"
 #include "DlgReorder.h"
 #include "DlgRun.h"
 #include "DlgTitle.h"
@@ -628,9 +628,9 @@ bool CAgilityBookTreeDataDog::OnCmd(
 	{
 	default:
 		break;
-	case ID_VIEW_FILTER:
+	case ID_VIEW_OPTIONS:
 		{
-			CDlgFilter options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgFilter::GetRunsPage());
+			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetRunsPage());
 			options.DoModal();
 		}
 		break;
@@ -882,9 +882,9 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	{
 	default:
 		break;
-	case ID_VIEW_FILTER:
+	case ID_VIEW_OPTIONS:
 		{
-			CDlgFilter options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgFilter::GetRunsPage());
+			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetRunsPage());
 			options.DoModal();
 		}
 		break;
@@ -1175,9 +1175,9 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	{
 	default:
 		break;
-	case ID_VIEW_FILTER:
+	case ID_VIEW_OPTIONS:
 		{
-			CDlgFilter options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgFilter::GetRunsPage());
+			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetRunsPage());
 			options.DoModal();
 		}
 		break;
