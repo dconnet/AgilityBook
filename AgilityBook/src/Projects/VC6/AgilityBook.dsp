@@ -258,10 +258,6 @@ SOURCE=..\..\Win\DlgFault.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgFilter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\DlgFilterDate.cpp
 # End Source File
 # Begin Source File
@@ -632,10 +628,6 @@ SOURCE=..\..\Win\DlgExistingPoints.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgFault.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgFilter.h
 # End Source File
 # Begin Source File
 

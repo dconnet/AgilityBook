@@ -241,7 +241,6 @@ protected:
 	afx_msg void OnNotesJudges();
 	afx_msg void OnNotesLocations();
 	afx_msg void OnNotesSearch();
-	afx_msg void OnViewFilter();
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);

@@ -758,7 +758,6 @@
 #define ID_NOTES_JUDGES                 32811
 #define ID_NOTES_LOCATIONS              32812
 #define ID_NOTES_SEARCH                 32813
-#define ID_VIEW_FILTER                  32819
 #define ID_VIEW_OPTIONS                 32820
 #define ID_VIEW_CUSTOMIZE               32821
 #define ID_VIEW_SORTRUNS                32822

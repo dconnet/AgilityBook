@@ -83,7 +83,6 @@
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
 #include "DlgDog.h"
-#include "DlgFilter.h"
 #include "DlgFindLinks.h"
 #include "DlgFixup.h"
 #include "DlgInfoJudge.h"
@@ -159,7 +158,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_NOTES_JUDGES, OnNotesJudges)
 	ON_COMMAND(ID_NOTES_LOCATIONS, OnNotesLocations)
 	ON_COMMAND(ID_NOTES_SEARCH, OnNotesSearch)
-	ON_COMMAND(ID_VIEW_FILTER, OnViewFilter)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
@@ -1163,34 +1161,27 @@ void CAgilityBookDoc::OnNotesSearch()
 	}
 }
 
-void CAgilityBookDoc::OnViewFilter()
+void CAgilityBookDoc::OnViewOptions()
 {
 	int nPage;
 	CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
 	switch (pFrame->GetCurTab())
 	{
 	default:
-		nPage = CDlgFilter::GetDatePage();
+		nPage = CDlgOptions::GetProgramPage();
 		break;
 	case 0: // Runs
 	case 1: // Points
-		nPage = CDlgFilter::GetRunsPage();
+		nPage = CDlgOptions::GetRunsPage();
+		break;
+	case 2: // Calendar
+		nPage = CDlgOptions::GetCalendarPage();
 		break;
 	case 3: // Training
-		nPage = CDlgFilter::GetTrainingPage();
+		nPage = CDlgOptions::GetTrainingPage();
 		break;
 	}
-	CDlgFilter options(this, AfxGetMainWnd(), nPage);
-	options.DoModal();
-}
-
-void CAgilityBookDoc::OnViewOptions()
-{
-	int nPage = CDlgOptions::GetProgramPage();
-	CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
-	if (2 == pFrame->GetCurTab()) // Calendar
-		nPage = CDlgOptions::GetCalendarPage();
-	CDlgOptions options(AfxGetMainWnd(), nPage);
+	CDlgOptions options(this, AfxGetMainWnd(), nPage);
 	options.DoModal();
 }
 

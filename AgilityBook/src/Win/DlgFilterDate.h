@@ -41,7 +41,7 @@ class CAgilityBookDoc;
 
 class CDlgFilterDate : public CDlgBasePropertyPage
 {
-	friend class CDlgFilter;
+	friend class CDlgOptions;
 	DECLARE_DYNAMIC(CDlgFilterDate)
 public:
 	CDlgFilterDate();

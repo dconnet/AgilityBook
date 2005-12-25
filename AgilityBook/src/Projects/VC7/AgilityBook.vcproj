@@ -262,9 +262,6 @@
 				RelativePath="..\..\Win\DlgFault.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgFilter.cpp">
-			</File>
-			<File
 				RelativePath="..\..\Win\DlgFilterDate.cpp">
 			</File>
 			<File
@@ -558,9 +555,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgFault.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgFilter.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgFilterDate.h">
