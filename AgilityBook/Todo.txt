@@ -1,5 +1,8 @@
 Last Updated: 12/24/2005
 
+- Remember printer page orientation. (See KB166130: "How To Overriding
+  Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
+
 - Add drag-drop support in the runs view to move/copy runs.
 
 - Possibly change calendar view to display by separate months. Maybe bolder
