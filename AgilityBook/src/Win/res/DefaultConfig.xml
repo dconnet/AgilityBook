@@ -1975,8 +1975,11 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 			<Titles LongName="Teacup Games I" Name="TG1">3 Qs in at least 2 different games under 2 different judges</Titles>
 			<Titles LongName="Teacup Games II" Name="TG2">3 Qs in at least 3 different games under 2 different judges</Titles>
 			<Titles LongName="Teacup Games III" Name="TG3">5 Qs in at least 5 different games under 3 different judges</Titles>
-			<Titles LongName="Teacup Agile Dog Champion" Name="TACh" Prefix="y">TSAD + 10 Qs in Superior with 3 wins
-TG3 + 10 Qs in at least 5 games with 3 wins</Titles>
+			<Titles LongName="Teacup Agile Dog Champion" Multiple="2" Name="TACh" Prefix="y">TSAD + 10 Qs in Superior with 3 wins
+TG3 + 10 Qs in at least 5 games with 3 wins
+(Each successive title is +5Qs and +2 wins</Titles>
+			<Titles LongName="Teacup Master Agility Dog" Multiple="2" Name="TMAD">TSAD + 10 Qs</Titles>
+			<Titles LongName="Teacup Master Agility Games Dog" Multiple="2" Name="TMAG">TG3 + 10 Qs</Titles>
 			<Division Name="Standard">
 				<Level Name="Beginner"/>
 				<Level Name="Intermediate"/>
