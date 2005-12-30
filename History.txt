@@ -5,6 +5,7 @@
   - Updated comments in CPE titles (no minimum number of judges anymore)
   - Added DOCNA.
   - Updated NADAC titles, added support for Proficient, Skilled and Bonus Box.
+  - Updated TDAA titles.
 - New features / Enhancements:
   - Changed how URLs are accessed to allow for redirection. The program now
     only knows about agilityrecordbook.com, not where that is hosted.

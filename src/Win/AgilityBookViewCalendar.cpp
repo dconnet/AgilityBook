@@ -175,7 +175,10 @@ bool CAgilityBookViewCalendar::SetCurrentDate(
 
 bool CAgilityBookViewCalendar::IsFiltered() const
 {
-	return !CAgilityBookOptions::GetViewAllDates();
+	if (!CAgilityBookOptions::GetViewAllDates())
+		return true;
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+	return filter.IsFiltered();
 }
 
 bool CAgilityBookViewCalendar::GetMessage(CString& msg) const
@@ -200,10 +203,16 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 	for (vector<ARBCalendar*>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendar const* pCal = *iter;
-		if (filter.ViewNormal() && pCal->InRange(date))
+		if (pCal->InRange(date)
+		&& ((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
+		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
+		|| (ARBCalendar::eEntered == pCal->GetEntered() && filter.ViewEntered())))
+		{
 			entries.push_back((*iter));
+		}
 		// Only show opening/closing dates if we're planning on entering
-		else if (ARBCalendar::ePlanning == pCal->GetEntered())
+		else if (ARBCalendar::ePlanning == pCal->GetEntered()
+		&& filter.ViewPlanning())
 		{
 			if ((filter.ViewOpening() && pCal->GetOpeningDate() == date)
 			|| (filter.ViewClosing() && pCal->GetClosingDate() == date))
@@ -276,13 +285,16 @@ void CAgilityBookViewCalendar::LoadData()
 		{
 			bool bAdd = false;
 			ARBDate f, l;
-			if (filter.ViewNormal())
+			if (filter.ViewNotEntered()
+			|| filter.ViewPlanning()
+			|| filter.ViewEntered())
 			{
 				bAdd = true;
 				f = pCal->GetStartDate();
 				l = pCal->GetEndDate();
 			}
-			if (ARBCalendar::ePlanning == pCal->GetEntered())
+			if (ARBCalendar::ePlanning == pCal->GetEntered()
+			&& filter.ViewPlanning())
 			{
 				if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
 				{
@@ -493,13 +505,17 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
 			ARBCalendar const* pCal = (*iter);
-			if (filter.ViewNormal())
+			if (filter.ViewNotEntered()
+			|| filter.ViewPlanning()
+			|| filter.ViewEntered())
 			{
 				for (ARBDate date = pCal->GetStartDate(); date <= pCal->GetEndDate(); ++date)
 				{
 					dates.insert(date);
 				}
 			}
+			// No additional Planning checks needed as that's already been
+			// filtered in the m_Calendar list.
 			if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
 				dates.insert(pCal->GetOpeningDate());
 			if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
