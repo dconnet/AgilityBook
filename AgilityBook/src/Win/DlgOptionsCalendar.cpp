@@ -67,7 +67,9 @@ CDlgOptionsCalendar::CDlgOptionsCalendar()
 	m_nOpeningNear = -1;
 	m_bClosingNear = TRUE;
 	m_nClosingNear = -1;
-	m_bNormal = TRUE;
+	m_bNotEntered = TRUE;
+	m_bPlanning = TRUE;
+	m_bEntered = TRUE;
 	m_bOpening = FALSE;
 	m_bClosing = FALSE;
 	//}}AFX_DATA_INIT
@@ -100,7 +102,9 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_OPTIONS_CAL_CLOSENEAR, m_ctrlClosingNear);
 	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSENEAR, m_ctrlClosingNearColor);
 	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_CLOSENEAR_SET, m_ctrlClosingNearSet);
-	DDX_Check(pDX, IDC_OPTIONS_CAL_NORMAL, m_bNormal);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_NOT_ENTERED, m_bNotEntered);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_PLANNING, m_bPlanning);
+	DDX_Check(pDX, IDC_OPTIONS_CAL_ENTERED, m_bEntered);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_OPENING, m_bOpening);
 	DDX_Control(pDX, IDC_OPTIONS_CAL_COLOR_OPEN, m_ctrlOpeningColor);
 	DDX_Check(pDX, IDC_OPTIONS_CAL_CLOSING, m_bClosing);

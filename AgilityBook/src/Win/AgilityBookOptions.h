@@ -84,15 +84,39 @@ class CCalendarViewFilter
 public:
 	typedef enum
 	{
-		eViewNormal = 0x1,
-		eViewOpening = 0x2,
-		eViewClosing = 0x4
+		eReserved =			0x01, // No longer used - implies not+plan+enter
+		eViewOpening =		0x02,
+		eViewClosing =		0x04,
+		eViewNotEntered =	0x08,
+		eViewPlanning =		0x10,
+		eViewEntered =		0x20,
+		eViewNormal =		eViewNotEntered | eViewPlanning | eViewEntered
 	} eViewFilter;
 	CCalendarViewFilter() : m_Filter(0) {}
-	CCalendarViewFilter(unsigned short inFilter) : m_Filter(inFilter) {}
-	bool ViewNormal() const
+	CCalendarViewFilter(unsigned short inFilter) : m_Filter(inFilter)
 	{
-		return 0 == m_Filter || eViewNormal == (m_Filter & eViewNormal);
+		if (m_Filter & 0x01)
+		{
+			// Transition existing registry entries.
+			m_Filter &= ~0x01;
+			m_Filter |= eViewNormal;
+		}
+	}
+	bool IsFiltered() const
+	{
+		return eViewNormal != (m_Filter & eViewNormal);
+	}
+	bool ViewNotEntered() const
+	{
+		return 0 == m_Filter || eViewNotEntered == (m_Filter & eViewNotEntered);
+	}
+	bool ViewPlanning() const
+	{
+		return 0 == m_Filter || eViewPlanning == (m_Filter & eViewPlanning);
+	}
+	bool ViewEntered() const
+	{
+		return 0 == m_Filter || eViewEntered == (m_Filter & eViewEntered);
 	}
 	bool ViewOpening() const
 	{
@@ -102,9 +126,17 @@ public:
 	{
 		return eViewClosing == (m_Filter & eViewClosing);
 	}
-	void AddNormal()
+	void AddNotEntered()
 	{
-		m_Filter |= eViewNormal;
+		m_Filter |= eViewNotEntered;
+	}
+	void AddPlanning()
+	{
+		m_Filter |= eViewPlanning;
+	}
+	void AddEntered()
+	{
+		m_Filter |= eViewEntered;
 	}
 	void AddOpening()
 	{

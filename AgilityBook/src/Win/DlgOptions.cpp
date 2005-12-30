@@ -112,7 +112,9 @@ CDlgOptions::CDlgOptions(
 	m_pageCalendar.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
 	if (0 > m_pageCalendar.m_nClosingNear)
 		m_pageCalendar.m_nClosingNear = 0;
-	m_pageCalendar.m_bNormal = filter.ViewNormal();
+	m_pageCalendar.m_bNotEntered = filter.ViewNotEntered();
+	m_pageCalendar.m_bPlanning = filter.ViewPlanning();
+	m_pageCalendar.m_bEntered = filter.ViewEntered();
 	m_pageCalendar.m_bOpening = filter.ViewOpening();
 	m_pageCalendar.m_bClosing = filter.ViewClosing();
 
@@ -227,8 +229,12 @@ void CDlgOptions::OnOK()
 			m_pageCalendar.m_nClosingNear = -1;
 		CAgilityBookOptions::SetCalendarClosingNear(m_pageCalendar.m_nClosingNear);
 		CCalendarViewFilter filter;
-		if (m_pageCalendar.m_bNormal)
-			filter.AddNormal();
+		if (m_pageCalendar.m_bNotEntered)
+			filter.AddNotEntered();
+		if (m_pageCalendar.m_bPlanning)
+			filter.AddPlanning();
+		if (m_pageCalendar.m_bEntered)
+			filter.AddEntered();
 		if (m_pageCalendar.m_bOpening)
 			filter.AddOpening();
 		if (m_pageCalendar.m_bClosing)

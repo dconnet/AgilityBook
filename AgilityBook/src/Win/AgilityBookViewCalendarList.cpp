@@ -280,17 +280,11 @@ bool CAgilityBookViewCalendarData::HighlightClosingNear(int iCol) const
 	bool bHighlight = false;
 	int nearDays = CAgilityBookOptions::CalendarClosingNear();
 	if (0 <= iCol && 0 <= nearDays
-	&& (ARBCalendar::ePlanning == m_pCal->GetEntered()
+	&& ARBCalendar::ePlanning == m_pCal->GetEntered()
 	&& m_pCal->GetClosingDate().IsValid())
-	|| (ARBCalendar::eEntered == m_pCal->GetEntered()
-	&& m_pCal->GetEndDate().IsValid()))
 	{
 		// If 'interval' is less than 0, then the date has passed.
-		long interval;
-		if (ARBCalendar::eEntered == m_pCal->GetEntered())
-			interval = m_pCal->GetEndDate() - ARBDate::Today();
-		else
-			interval = m_pCal->GetClosingDate() - ARBDate::Today();
+		long interval = m_pCal->GetClosingDate() - ARBDate::Today();
 		if (interval >= 0 && interval <= nearDays)
 		{
 			bHighlight = true;
@@ -796,7 +790,10 @@ void CAgilityBookViewCalendarList::GetPrintLine(
 
 bool CAgilityBookViewCalendarList::IsFiltered() const
 {
-	return !CAgilityBookOptions::GetViewAllDates();
+	if (!CAgilityBookOptions::GetViewAllDates())
+		return true;
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+	return filter.IsFiltered();
 }
 
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
@@ -866,12 +863,18 @@ void CAgilityBookViewCalendarList::LoadData()
 	ARBVectorBase<ARBCalendar> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
 	iter != GetDocument()->GetCalendar().end();
 	++iter)
 	{
 		ARBCalendar* pCal = (*iter);
 		if (pCal->IsFiltered())
+			continue;
+		// Additional filtering
+		if (!((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
+		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
+		|| (ARBCalendar::eEntered == pCal->GetEntered() && filter.ViewEntered())))
 			continue;
 		if (!bViewAll)
 		{

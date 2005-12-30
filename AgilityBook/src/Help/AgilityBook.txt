@@ -834,8 +834,7 @@ Number of dates before the opening date that is considered 'near'.
 
 .topic HIDC_OPTIONS_CAL_WARN_CLOSENEAR
 Highlight an entry when the current date is near the closing date and you
-have indicated that you are planning on entering the trial. Also, highlight
-an 'Entered' entry when close to the trial date.
+have indicated that you are planning on entering the trial.
 
 .topic HIDC_OPTIONS_CAL_CLOSENEAR
 Number of dates before the closing (or trial) date that is considered 'near'.
@@ -852,14 +851,20 @@ Use this to change the color used for drawing the opening date text.
 .topic HIDC_OPTIONS_CAL_COLOR_CLOSE_SET
 Use this to change the color used for drawing the closing date text.
 
-.topic HIDC_OPTIONS_CAL_NORMAL
-Display normal calendar entries.
+.topic HIDC_OPTIONS_CAL_NOT_ENTERED
+Display calendar entries that you have not entered.
+
+.topic HIDC_OPTIONS_CAL_PLANNING
+Display calendar entries you are planning on entering.
+
+.topic HIDC_OPTIONS_CAL_ENTERED
+Display calendar entries you have already entered.
 
 .topic HIDC_OPTIONS_CAL_OPENING
-Display opening dates of calendar entries, if applicable.
+Display opening dates of calendar entries on entries you are planning on entering.
 
 .topic HIDC_OPTIONS_CAL_CLOSING
-Display closing dates of calendar entries, if applicable.
+Display closing dates of calendar entries on entries you are planning on entering.
 
 .topic HIDC_FILTER_DATE_ALL
 View all dates.

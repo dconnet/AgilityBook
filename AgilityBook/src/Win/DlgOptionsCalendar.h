@@ -69,7 +69,9 @@ private:
 	CEdit	m_ctrlClosingNear;
 	CStatic	m_ctrlClosingNearColor;
 	CButton	m_ctrlClosingNearSet;
-	BOOL	m_bNormal;
+	BOOL	m_bNotEntered;
+	BOOL	m_bPlanning;
+	BOOL	m_bEntered;
 	BOOL	m_bOpening;
 	CStatic	m_ctrlOpeningColor;
 	BOOL	m_bClosing;
