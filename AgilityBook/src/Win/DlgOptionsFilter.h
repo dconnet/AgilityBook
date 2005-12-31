@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2003-2005 David Connet. All Rights Reserved.
+ * Copyright © 2002-2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,28 +29,32 @@
 /**
  * @file
  *
- * @brief interface of the CDlgFilterDate class
+ * @brief interface of the CDlgOptionsFilter class
  * @author David Connet
  *
  * Revision History
- * @li 2005-08-18 DRC Created
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
+ * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
+#include <set>
+#include "AgilityBookOptions.h"
+#include "CheckTreeCtrl.h"
 #include "DlgBasePropertyPage.h"
-class CAgilityBookDoc;
+class ARBConfig;
 
-class CDlgFilterDate : public CDlgBasePropertyPage
+class CDlgOptionsFilter : public CDlgBasePropertyPage
 {
 	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgFilterDate)
+	DECLARE_DYNAMIC(CDlgOptionsFilter)
 public:
-	CDlgFilterDate();
-	~CDlgFilterDate();
+	CDlgOptionsFilter(CAgilityBookDoc* pDoc);
+	~CDlgOptionsFilter();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgFilterDate)
-	enum { IDD = IDD_VIEW_FILTER_DATE };
+	//{{AFX_DATA(CDlgOptionsFilter)
+	enum { IDD = IDD_VIEW_OPTIONS_FILTER };
 	int		m_ViewDates;
 	CButton	m_ctrlDateStartCheck;
 	BOOL	m_bDateStart;
@@ -60,22 +64,40 @@ private:
 	BOOL	m_bDateEnd;
 	CDateTimeCtrl	m_ctrlDateEnd;
 	CTime	m_timeEnd;
+	int		m_ViewNames;
+	CCheckTreeCtrl	m_ctrlNames;
+	BOOL	m_bNotEntered;
+	BOOL	m_bPlanning;
+	BOOL	m_bEntered;
+	int		m_ViewVenues;
+	CCheckTreeCtrl	m_ctrlVenue;
+	int		m_ViewQs;
 	//}}AFX_DATA
-
-private:
-	void UpdateControls();
+	CAgilityBookDoc* m_pDoc;
+	std::set<ARBString> m_NameFilter;
+	std::vector<CVenueFilter> m_VenueFilter;
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgFilterDate)
+	//{{AFX_VIRTUAL(CDlgOptionsFilter)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgFilterDate)
+	bool Find(ARBString const& venue,
+			ARBString const& div,
+			ARBString const& level) const;
+	void FillFilter(
+			HTREEITEM hItem,
+			CString path);
+	void UpdateControls();
+	//{{AFX_MSG(CDlgOptionsFilter)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnViewUpdate();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
+	afx_msg void OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnUpdateFilters();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

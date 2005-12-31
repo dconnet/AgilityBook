@@ -63,10 +63,10 @@ CDlgOptions::CDlgOptions(
 		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_VIEWING_OPTIONS, pParentWnd, iSelectPage)
 	, m_pDoc(pDoc)
-	, m_pageRuns(pDoc->GetConfig())
-	, m_pageTraining(pDoc)
+	, m_pageFilter(pDoc)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
+	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
 
 	// Program options
 	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
@@ -75,65 +75,57 @@ CDlgOptions::CDlgOptions(
 	m_pageProgram.m_bShowSplash = CAgilityBookOptions::AutoShowSplashScreen() ? TRUE : FALSE;
 	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
 
-	// Fonts
-	CAgilityBookOptions::GetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
-	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
-	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
-	CAgilityBookOptions::GetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
-	CAgilityBookOptions::GetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
-
-	// Date
-	m_pageDate.m_ViewDates = CAgilityBookOptions::GetViewAllDates() ? 0 : 1;
-	m_pageDate.m_timeStart = CAgilityBookOptions::GetStartFilterDate().GetDate();
-	m_pageDate.m_bDateStart = CAgilityBookOptions::GetStartFilterDateSet();
-	m_pageDate.m_timeEnd = CAgilityBookOptions::GetEndFilterDate().GetDate();
-	m_pageDate.m_bDateEnd = CAgilityBookOptions::GetEndFilterDateSet();
-
-	// Runs
-	m_pageRuns.m_ViewVenues = CAgilityBookOptions::GetViewAllVenues() ? 0 : 1;
-	CAgilityBookOptions::GetFilterVenue(m_pageRuns.m_VenueFilter);
-	m_pageRuns.m_ViewQs = CAgilityBookOptions::GetViewAllRuns() ? 0
+	// Filters
+	m_pageFilter.m_ViewDates = CAgilityBookOptions::GetViewAllDates() ? 0 : 1;
+	m_pageFilter.m_timeStart = CAgilityBookOptions::GetStartFilterDate().GetDate();
+	m_pageFilter.m_bDateStart = CAgilityBookOptions::GetStartFilterDateSet();
+	m_pageFilter.m_timeEnd = CAgilityBookOptions::GetEndFilterDate().GetDate();
+	m_pageFilter.m_bDateEnd = CAgilityBookOptions::GetEndFilterDateSet();
+	m_pageFilter.m_ViewNames = CAgilityBookOptions::GetTrainingViewAllNames() ? 0 : 1;
+	CAgilityBookOptions::GetTrainingFilterNames(m_pageFilter.m_NameFilter);
+	m_pageFilter.m_bNotEntered = filter.ViewNotEntered();
+	m_pageFilter.m_bPlanning = filter.ViewPlanning();
+	m_pageFilter.m_bEntered = filter.ViewEntered();
+	m_pageFilter.m_ViewVenues = CAgilityBookOptions::GetViewAllVenues() ? 0 : 1;
+	CAgilityBookOptions::GetFilterVenue(m_pageFilter.m_VenueFilter);
+	m_pageFilter.m_ViewQs = CAgilityBookOptions::GetViewAllRuns() ? 0
 		: CAgilityBookOptions::GetViewQRuns() ? 1 : 2;
 
-	// Calendar
-	m_pageCalendar.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
-	m_pageCalendar.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
-	m_pageCalendar.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
-	m_pageCalendar.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
-	m_pageCalendar.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
-	m_pageCalendar.m_sizeX = CAgilityBookOptions::GetCalendarEntrySize().cx;
-	m_pageCalendar.m_sizeY = CAgilityBookOptions::GetCalendarEntrySize().cy;
-	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
-	m_pageCalendar.m_bOpeningNear = CAgilityBookOptions::CalendarOpeningNear() >= 0;
-	m_pageCalendar.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
-	if (0 > m_pageCalendar.m_nOpeningNear)
-		m_pageCalendar.m_nOpeningNear = 0;
-	m_pageCalendar.m_bClosingNear = CAgilityBookOptions::CalendarClosingNear() >= 0;
-	m_pageCalendar.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
-	if (0 > m_pageCalendar.m_nClosingNear)
-		m_pageCalendar.m_nClosingNear = 0;
-	m_pageCalendar.m_bNotEntered = filter.ViewNotEntered();
-	m_pageCalendar.m_bPlanning = filter.ViewPlanning();
-	m_pageCalendar.m_bEntered = filter.ViewEntered();
-	m_pageCalendar.m_bOpening = filter.ViewOpening();
-	m_pageCalendar.m_bClosing = filter.ViewClosing();
-
-	// Training
-	m_pageTraining.m_ViewNames = CAgilityBookOptions::GetTrainingViewAllNames() ? 0 : 1;
-	CAgilityBookOptions::GetTrainingFilterNames(m_pageTraining.m_filterNames);
+	// Views
+	m_pageView.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
+	if (0 > m_pageView.m_nOpeningNear)
+	{
+		m_pageView.m_bOpeningNear = FALSE;
+		m_pageView.m_nOpeningNear = 0;
+	}
+	else
+		m_pageView.m_bOpeningNear = TRUE;
+	m_pageView.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
+	if (0 > m_pageView.m_nClosingNear)
+	{
+		m_pageView.m_bClosingNear = FALSE;
+		m_pageView.m_nClosingNear = 0;
+	}
+	else
+		m_pageView.m_bClosingNear = TRUE;
+	m_pageView.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
+	m_pageView.m_sizeX = CAgilityBookOptions::GetCalendarEntrySize().cx;
+	m_pageView.m_sizeY = CAgilityBookOptions::GetCalendarEntrySize().cy;
+	m_pageView.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
+	m_pageView.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
+	m_pageView.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
+	m_pageView.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
+	m_pageView.m_bOpening = filter.ViewOpening();
+	m_pageView.m_bClosing = filter.ViewClosing();
+	CAgilityBookOptions::GetPrinterFontInfo(m_pageView.m_fontPrintInfo);
+	CAgilityBookOptions::GetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
 
 	AddPage(&m_pageProgram);
 	ASSERT(0 == GetProgramPage());
-	AddPage(&m_pageFonts);
-	ASSERT(1 == GetFontPage());
-	AddPage(&m_pageDate);
-	ASSERT(2 == GetDatePage());
-	AddPage(&m_pageRuns);
-	ASSERT(3 == GetRunsPage());
-	AddPage(&m_pageCalendar);
-	ASSERT(4 == GetCalendarPage());
-	AddPage(&m_pageTraining);
-	ASSERT(5 == GetTrainingPage());
+	AddPage(&m_pageFilter);
+	ASSERT(1 == GetFilterPage());
+	AddPage(&m_pageView);
+	ASSERT(2 == GetViewPage());
 }
 
 CDlgOptions::~CDlgOptions()
@@ -160,6 +152,7 @@ void CDlgOptions::OnOK()
 	{
 		CWaitCursor wait;
 		bool bOldNewest = CAgilityBookOptions::GetNewestDatesFirst();
+		CCalendarViewFilter filter;
 
 		// Program options
 		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
@@ -168,35 +161,39 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
 
-		// Fonts
-		CAgilityBookOptions::SetPrinterFontInfo(m_pageFonts.m_fontGeneralPrintInfo);
-		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[0], false);
-		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[0], false);
-		CAgilityBookOptions::SetCalendarDateFontInfo(m_pageFonts.m_fontDateInfo[1], true);
-		CAgilityBookOptions::SetCalendarTextFontInfo(m_pageFonts.m_fontTextInfo[1], true);
-
-		// Date
-		CAgilityBookOptions::SetViewAllDates(m_pageDate.m_ViewDates == 0);
-		CAgilityBookOptions::SetStartFilterDate(m_pageDate.m_timeStart.GetTime());
-		CAgilityBookOptions::SetStartFilterDateSet(m_pageDate.m_bDateStart ? true : false);
-		CAgilityBookOptions::SetEndFilterDate(m_pageDate.m_timeEnd.GetTime());
-		CAgilityBookOptions::SetEndFilterDateSet(m_pageDate.m_bDateEnd ? true : false);
-		if (m_pageDate.m_ViewDates != 0
-		&& !m_pageDate.m_bDateStart 
-		&& !m_pageDate.m_bDateEnd)
+		// Filters
+		CAgilityBookOptions::SetViewAllDates(m_pageFilter.m_ViewDates == 0);
+		CAgilityBookOptions::SetStartFilterDate(m_pageFilter.m_timeStart.GetTime());
+		CAgilityBookOptions::SetStartFilterDateSet(m_pageFilter.m_bDateStart ? true : false);
+		CAgilityBookOptions::SetEndFilterDate(m_pageFilter.m_timeEnd.GetTime());
+		CAgilityBookOptions::SetEndFilterDateSet(m_pageFilter.m_bDateEnd ? true : false);
+		if (m_pageFilter.m_ViewDates != 0
+		&& !m_pageFilter.m_bDateStart 
+		&& !m_pageFilter.m_bDateEnd)
 		{
 			CAgilityBookOptions::SetViewAllDates(true);
 		}
-
-		// Runs
-		CAgilityBookOptions::SetViewAllVenues(m_pageRuns.m_ViewVenues == 0);
-		CAgilityBookOptions::SetFilterVenue(m_pageRuns.m_VenueFilter);
-		if (m_pageRuns.m_ViewVenues != 0
-		&& 0 == m_pageRuns.m_VenueFilter.size())
+		CAgilityBookOptions::SetTrainingViewAllNames(m_pageFilter.m_ViewNames == 0);
+		CAgilityBookOptions::SetTrainingFilterNames(m_pageFilter.m_NameFilter);
+		if (m_pageFilter.m_ViewNames != 0
+		&& 0 == m_pageFilter.m_NameFilter.size())
+		{
+			CAgilityBookOptions::SetTrainingViewAllNames(true);
+		}
+		if (m_pageFilter.m_bNotEntered)
+			filter.AddNotEntered();
+		if (m_pageFilter.m_bPlanning)
+			filter.AddPlanning();
+		if (m_pageFilter.m_bEntered)
+			filter.AddEntered();
+		CAgilityBookOptions::SetViewAllVenues(m_pageFilter.m_ViewVenues == 0);
+		CAgilityBookOptions::SetFilterVenue(m_pageFilter.m_VenueFilter);
+		if (m_pageFilter.m_ViewVenues != 0
+		&& 0 == m_pageFilter.m_VenueFilter.size())
 		{
 			CAgilityBookOptions::SetViewAllVenues(true);
 		}
-		switch (m_pageRuns.m_ViewQs)
+		switch (m_pageFilter.m_ViewQs)
 		{
 		default:
 		case 0:
@@ -215,40 +212,27 @@ void CDlgOptions::OnOK()
 		if (bOldNewest != CAgilityBookOptions::GetNewestDatesFirst())
 			m_pDoc->SortDates();
 
-		// Calendar
-		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCalendar.m_DayOfWeek));
-		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCalendar.m_bAutoDelete ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCalendar.m_bHideOld ? false : true);
-		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCalendar.m_Days);
-		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCalendar.m_bHideOverlapping ? true : false);
-		CAgilityBookOptions::SetCalendarEntrySize(CSize(m_pageCalendar.m_sizeX, m_pageCalendar.m_sizeY));
-		if (!m_pageCalendar.m_bOpeningNear)
-			m_pageCalendar.m_nOpeningNear = -1;
-		CAgilityBookOptions::SetCalendarOpeningNear(m_pageCalendar.m_nOpeningNear);
-		if (!m_pageCalendar.m_bClosingNear)
-			m_pageCalendar.m_nClosingNear = -1;
-		CAgilityBookOptions::SetCalendarClosingNear(m_pageCalendar.m_nClosingNear);
-		CCalendarViewFilter filter;
-		if (m_pageCalendar.m_bNotEntered)
-			filter.AddNotEntered();
-		if (m_pageCalendar.m_bPlanning)
-			filter.AddPlanning();
-		if (m_pageCalendar.m_bEntered)
-			filter.AddEntered();
-		if (m_pageCalendar.m_bOpening)
+		// Views
+		if (!m_pageView.m_bOpeningNear)
+			m_pageView.m_nOpeningNear = -1;
+		CAgilityBookOptions::SetCalendarOpeningNear(m_pageView.m_nOpeningNear);
+		if (!m_pageView.m_bClosingNear)
+			m_pageView.m_nClosingNear = -1;
+		CAgilityBookOptions::SetCalendarClosingNear(m_pageView.m_nClosingNear);
+		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageView.m_DayOfWeek));
+		CAgilityBookOptions::SetCalendarEntrySize(CSize(m_pageView.m_sizeX, m_pageView.m_sizeY));
+		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageView.m_bAutoDelete ? true : false);
+		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageView.m_bHideOld ? false : true);
+		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageView.m_Days);
+		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageView.m_bHideOverlapping ? true : false);
+		if (m_pageView.m_bOpening)
 			filter.AddOpening();
-		if (m_pageCalendar.m_bClosing)
+		if (m_pageView.m_bClosing)
 			filter.AddClosing();
-		CAgilityBookOptions::SetFilterCalendarView(filter);
+		CAgilityBookOptions::SetPrinterFontInfo(m_pageView.m_fontPrintInfo);
+		CAgilityBookOptions::SetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
 
-		// Training
-		CAgilityBookOptions::SetTrainingViewAllNames(m_pageTraining.m_ViewNames == 0);
-		CAgilityBookOptions::SetTrainingFilterNames(m_pageTraining.m_filterNames);
-		if (m_pageTraining.m_ViewNames != 0
-		&& 0 == m_pageTraining.m_filterNames.size())
-		{
-			CAgilityBookOptions::SetTrainingViewAllNames(true);
-		}
+		CAgilityBookOptions::SetFilterCalendarView(filter);
 
 		// Update
 		m_pDoc->ResetVisibility();

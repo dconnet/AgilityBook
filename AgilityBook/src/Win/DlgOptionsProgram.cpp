@@ -71,18 +71,18 @@ void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgOptionsProgram)
-	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTO_CHECK, m_bAutoCheck);
-	DDX_Text(pDX, IDC_OPTIONS_PGM_EDIT, m_Backups);
-	DDX_Check(pDX, IDC_OPTIONS_PGM_AUTOSHOW, m_bAutoShow);
-	DDX_Check(pDX, IDC_OPTIONS_PGM_SHOW_SPLASH, m_bShowSplash);
-	DDX_Text(pDX, IDC_OPTIONS_PGM_FILENAME, m_Splash);
+	DDX_Check(pDX, IDC_OPT_PGM_AUTO_CHECK, m_bAutoCheck);
+	DDX_Text(pDX, IDC_OPT_PGM_EDIT, m_Backups);
+	DDX_Check(pDX, IDC_OPT_PGM_AUTOSHOW, m_bAutoShow);
+	DDX_Check(pDX, IDC_OPT_PGM_SHOW_SPLASH, m_bShowSplash);
+	DDX_Text(pDX, IDC_OPT_PGM_FILENAME, m_Splash);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptionsProgram, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsProgram)
-	ON_BN_CLICKED(IDC_OPTIONS_PGM_SHOW_SPLASH, OnShowSplash)
-	ON_BN_CLICKED(IDC_OPTIONS_PGM_BROWSE, OnBrowse)
+	ON_BN_CLICKED(IDC_OPT_PGM_SHOW_SPLASH, OnShowSplash)
+	ON_BN_CLICKED(IDC_OPT_PGM_BROWSE, OnBrowse)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -90,8 +90,8 @@ END_MESSAGE_MAP()
 
 void CDlgOptionsProgram::UpdateButtons()
 {
-	GetDlgItem(IDC_OPTIONS_PGM_FILENAME)->EnableWindow(m_bShowSplash);
-	GetDlgItem(IDC_OPTIONS_PGM_BROWSE)->EnableWindow(m_bShowSplash);
+	GetDlgItem(IDC_OPT_PGM_FILENAME)->EnableWindow(m_bShowSplash);
+	GetDlgItem(IDC_OPT_PGM_BROWSE)->EnableWindow(m_bShowSplash);
 }
 
 /////////////////////////////////////////////////////////////////////////////

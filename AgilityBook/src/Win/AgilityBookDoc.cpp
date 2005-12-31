@@ -1172,13 +1172,13 @@ void CAgilityBookDoc::OnViewOptions()
 		break;
 	case 0: // Runs
 	case 1: // Points
-		nPage = CDlgOptions::GetRunsPage();
+		nPage = CDlgOptions::GetFilterPage();
 		break;
 	case 2: // Calendar
-		nPage = CDlgOptions::GetCalendarPage();
+		nPage = CDlgOptions::GetFilterPage();
 		break;
 	case 3: // Training
-		nPage = CDlgOptions::GetTrainingPage();
+		nPage = CDlgOptions::GetFilterPage();
 		break;
 	}
 	CDlgOptions options(this, AfxGetMainWnd(), nPage);

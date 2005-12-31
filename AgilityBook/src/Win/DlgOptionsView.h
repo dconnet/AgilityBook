@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2003-2005 David Connet. All Rights Reserved.
+ * Copyright © 2002-2005 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,53 +29,78 @@
 /**
  * @file
  *
- * @brief interface of the CDlgFilterTraining class
+ * @brief interface of the CDlgOptionsView class
  * @author David Connet
  *
  * Revision History
- * @li 2005-08-18 DRC Separated options and filters.
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
+ * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
-#include <set>
-#include "ARBDate.h"
-#include "ARBTypes.h"
-#include "CheckTreeCtrl.h"
+#include "AgilityBookOptions.h"
 #include "DlgBasePropertyPage.h"
-class CAgilityBookDoc;
 
-class CDlgFilterTraining : public CDlgBasePropertyPage
+class CDlgOptionsView : public CDlgBasePropertyPage
 {
 	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgFilterTraining)
+	DECLARE_DYNAMIC(CDlgOptionsView)
 public:
-	CDlgFilterTraining(CAgilityBookDoc* pDoc);
-	~CDlgFilterTraining();
+	CDlgOptionsView();
+	~CDlgOptionsView();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgFilterTraining)
-	enum { IDD = IDD_VIEW_FILTER_TRAINING };
-	int		m_ViewNames;
-	CCheckTreeCtrl	m_ctrlNames;
+	//{{AFX_DATA(CDlgOptionsView)
+	enum { IDD = IDD_VIEW_OPTIONS_VIEWING };
+	CStatic	m_ctrlFontPrint;
+	BOOL	m_bOpeningNear;
+	CEdit	m_ctrlOpeningNear;
+	int		m_nOpeningNear;
+	CStatic	m_ctrlOpeningNearColor;
+	CButton	m_ctrlOpeningNearSet;
+	BOOL	m_bClosingNear;
+	CEdit	m_ctrlClosingNear;
+	int		m_nClosingNear;
+	CStatic	m_ctrlClosingNearColor;
+	CButton	m_ctrlClosingNearSet;
+	int		m_DayOfWeek;
+	int		m_sizeX;
+	int		m_sizeY;
+	BOOL	m_bAutoDelete;
+	BOOL	m_bHideOld;
+	UINT	m_Days;
+	BOOL	m_bHideOverlapping;
+	BOOL	m_bOpening;
+	BOOL	m_bClosing;
+	CComboBox	m_ctrlCalEntries;
+	CStatic	m_ctrlColor;
+	CStatic	m_ctrlCalView;
 	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-	std::set<ARBString> m_filterNames;
-
-private:
-	void UpdateControls();
+	CFontInfo m_fontPrintInfo;
+	CFontInfo m_fontCalViewInfo;
+	CFont m_fontPrint;
+	CFont m_fontCalView;
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgFilterTraining)
+	//{{AFX_VIRTUAL(CDlgOptionsView)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgFilterTraining)
+	void UpdateControls();
+	//{{AFX_MSG(CDlgOptionsView)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnViewUpdate();
-	afx_msg void OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSelchangeCalEntries();
+	afx_msg void OnKillfocusSize();
+	afx_msg void OnFontPrint();
+	afx_msg void OnCalNear();
+	afx_msg void OnCalColorOpeningNear();
+	afx_msg void OnCalColorClosingNear();
+	afx_msg void OnCalColors();
+	afx_msg void OnFontCalView();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

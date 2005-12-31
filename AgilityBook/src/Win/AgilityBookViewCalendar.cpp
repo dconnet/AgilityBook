@@ -433,20 +433,21 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		bool bActive = (reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->GetActiveView() == this);
 		CBrush brCurrentActive(GetSysColor(COLOR_HIGHLIGHT));
 		CBrush brCurrentInActive(GetSysColor(COLOR_MENU));
-		CFont fontDate, fontText;
 		CFontInfo fontInfo;
-		CAgilityBookOptions::GetCalendarDateFontInfo(fontInfo, pDC->IsPrinting());
-		fontInfo.CreateFont(fontDate, NULL);
-		CAgilityBookOptions::GetCalendarTextFontInfo(fontInfo, pDC->IsPrinting());
-		fontInfo.CreateFont(fontText, NULL);
+		CAgilityBookOptions::GetCalendarFontInfo(fontInfo);
+		CFont font;
+		fontInfo.CreateFont(font, NULL);
 		CPen pen;
 		pen.CreatePen(PS_SOLID, DAY_BORDER, GetSysColor(COLOR_WINDOWTEXT));
-		CFont* pOldFont = pDC->SelectObject(&fontDate);
+		CFont* pOldFont = pDC->SelectObject(&font);
 		CPen* pOldPen = pDC->SelectObject(&pen);
 
 		CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
-		COLORREF clrOpening = CAgilityBookOptions::CalendarOpeningColor();
-		COLORREF clrClosing = CAgilityBookOptions::CalendarClosingColor();
+		COLORREF clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
+		COLORREF clrPlanning = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning);
+		COLORREF clrOpening = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening);
+		COLORREF clrClosing = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing);
+		COLORREF clrEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered);
 
 		// Draw the calendar framework.
 		int i;
@@ -521,7 +522,6 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
 				dates.insert(pCal->GetClosingDate());
 		}
-		pDC->SelectObject(&fontText);
 		for (set<ARBDate>::iterator iterDate = dates.begin(); iterDate != dates.end(); ++iterDate)
 		{
 			ARBDate date = (*iterDate);
@@ -549,10 +549,6 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 					ARBString const& venue = pCal->GetVenue();
 					ARBString const& loc = pCal->GetLocation();
 					CString str;
-					if (ARBCalendar::eEntered == pCal->GetEntered())
-						str += _T("*");
-					else if (ARBCalendar::ePlanning == pCal->GetEntered())
-						str += _T("@");
 					if (0 == venue.length())
 						str += _T("?");
 					else
@@ -577,6 +573,18 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						{
 							bReset = true;
 							oldText = pDC->SetTextColor(clrClosing);
+						}
+						else switch (pCal->GetEntered())
+						{
+						case ARBCalendar::eNot:
+							oldText = pDC->SetTextColor(clrNotEntered);
+							break;
+						case ARBCalendar::ePlanning:
+							oldText = pDC->SetTextColor(clrPlanning);
+							break;
+						case ARBCalendar::eEntered:
+							oldText = pDC->SetTextColor(clrEntered);
+							break;
 						}
 					}
 					pDC->DrawText(str, r, DT_NOPREFIX);

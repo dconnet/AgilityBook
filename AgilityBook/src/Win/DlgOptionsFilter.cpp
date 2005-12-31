@@ -27,17 +27,22 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgFilterRuns class
+ * @brief implementation of the CDlgOptionsFilter class
  * @author David Connet
  *
  * Revision History
- * @li 2005-08-18 DRC Separated options and filters.
+ * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
+ * @li 2003-08-09 DRC Moved fonts to new page.
+ * @li 2003-07-31 DRC Allow screen fonts for printer font selection. Also, the
+ *                    wrong font was created for the printer date font.
  */
 
 #include "stdafx.h"
 #include "AgilityBook.h"
-#include "DlgFilterRuns.h"
+#include "DlgOptionsFilter.h"
 
+#include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
 
@@ -48,49 +53,75 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgFilterRuns property page
+// CDlgOptionsFilter property page
 
-IMPLEMENT_DYNAMIC(CDlgFilterRuns, CDlgBasePropertyPage)
+IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CDlgBasePropertyPage)
 
-CDlgFilterRuns::CDlgFilterRuns(ARBConfig const& config)
-	: CDlgBasePropertyPage(CDlgFilterRuns::IDD)
-	, m_Config(config)
+CDlgOptionsFilter::CDlgOptionsFilter(CAgilityBookDoc* pDoc)
+	: CDlgBasePropertyPage(CDlgOptionsFilter::IDD)
+	, m_pDoc(pDoc)
 {
-	//{{AFX_DATA_INIT(CDlgFilterRuns)
+	//{{AFX_DATA_INIT(CDlgOptionsFilter)
+	m_ViewDates = -1;
+	m_bDateStart = FALSE;
+	m_timeStart = 0;
+	m_bDateEnd = FALSE;
+	m_timeEnd = 0;
+	m_ViewNames = -1;
+	m_bNotEntered = TRUE;
+	m_bPlanning = TRUE;
+	m_bEntered = TRUE;
 	m_ViewVenues = -1;
 	m_ViewQs = -1;
 	//}}AFX_DATA_INIT
 }
 
-CDlgFilterRuns::~CDlgFilterRuns()
+CDlgOptionsFilter::~CDlgOptionsFilter()
 {
 }
 
-void CDlgFilterRuns::DoDataExchange(CDataExchange* pDX)
+void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgFilterRuns)
-	DDX_Radio(pDX, IDC_FILTER_RUN_VENUES_ALL, m_ViewVenues);
-	DDX_Control(pDX, IDC_FILTER_RUN_VENUES, m_ctrlVenue);
-	DDX_Radio(pDX, IDC_FILTER_RUN_RUNS_ALL, m_ViewQs);
+	//{{AFX_DATA_MAP(CDlgOptionsFilter)
+	DDX_Radio(pDX, IDC_OPT_FILTER_DATE_ALL, m_ViewDates);
+	DDX_Control(pDX, IDC_OPT_FILTER_DATE_START_CHECK, m_ctrlDateStartCheck);
+	DDX_Check(pDX, IDC_OPT_FILTER_DATE_START_CHECK, m_bDateStart);
+	DDX_Control(pDX, IDC_OPT_FILTER_DATE_START, m_ctrlDateStart);
+	DDX_DateTimeCtrl(pDX, IDC_OPT_FILTER_DATE_START, m_timeStart);
+	DDX_Control(pDX, IDC_OPT_FILTER_DATE_END_CHECK, m_ctrlDateEndCheck);
+	DDX_DateTimeCtrl(pDX, IDC_OPT_FILTER_DATE_END, m_timeEnd);
+	DDX_Check(pDX, IDC_OPT_FILTER_DATE_END_CHECK, m_bDateEnd);
+	DDX_Control(pDX, IDC_OPT_FILTER_DATE_END, m_ctrlDateEnd);
+	DDX_Radio(pDX, IDC_OPT_FILTER_LOG_NAME_ALL, m_ViewNames);
+	DDX_Control(pDX, IDC_OPT_FILTER_LOG_NAME, m_ctrlNames);
+	DDX_Check(pDX, IDC_OPT_FILTER_CAL_NOT_ENTERED, m_bNotEntered);
+	DDX_Check(pDX, IDC_OPT_FILTER_CAL_PLANNING, m_bPlanning);
+	DDX_Check(pDX, IDC_OPT_FILTER_CAL_ENTERED, m_bEntered);
+	DDX_Radio(pDX, IDC_OPT_FILTER_RUN_VENUES_ALL, m_ViewVenues);
+	DDX_Control(pDX, IDC_OPT_FILTER_RUN_VENUES, m_ctrlVenue);
+	DDX_Radio(pDX, IDC_OPT_FILTER_RUN_RUNS_ALL, m_ViewQs);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgFilterRuns, CDlgBasePropertyPage)
-	//{{AFX_MSG_MAP(CDlgFilterRuns)
+BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CDlgBasePropertyPage)
+	//{{AFX_MSG_MAP(CDlgOptionsFilter)
 	ON_WM_HELPINFO()
-	ON_BN_CLICKED(IDC_FILTER_RUN_VENUES_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_FILTER_RUN_VENUES_SELECTED, OnViewUpdate)
-	ON_NOTIFY(TVN_SETDISPINFO, IDC_FILTER_RUN_VENUES, OnSetdispinfoVenues)
-	ON_BN_CLICKED(IDC_FILTER_RUN_RUNS_ALL, OnViewUpdate)
-	ON_BN_CLICKED(IDC_FILTER_RUN_RUNS_Q, OnViewUpdate)
-	ON_BN_CLICKED(IDC_FILTER_RUN_RUNS_NON_Q, OnViewUpdate)
+	ON_NOTIFY(TVN_SETDISPINFO, IDC_OPT_FILTER_LOG_NAME, OnSetdispinfoNames)
+	ON_NOTIFY(TVN_SETDISPINFO, IDC_OPT_FILTER_RUN_VENUES, OnSetdispinfoVenues)
+	ON_BN_CLICKED(IDC_OPT_FILTER_DATE_ALL, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_DATE_RANGE, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_LOG_NAME_ALL, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_LOG_NAME_SELECTED, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_RUN_VENUES_ALL, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_RUN_VENUES_SELECTED, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_RUN_RUNS_ALL, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_RUN_RUNS_Q, OnUpdateFilters)
+	ON_BN_CLICKED(IDC_OPT_FILTER_RUN_RUNS_NON_Q, OnUpdateFilters)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-
-bool CDlgFilterRuns::Find(
+bool CDlgOptionsFilter::Find(
 		ARBString const& venue,
 		ARBString const& div,
 		ARBString const& level) const
@@ -107,7 +138,7 @@ bool CDlgFilterRuns::Find(
 	return false;
 }
 
-void CDlgFilterRuns::FillFilter(
+void CDlgOptionsFilter::FillFilter(
 		HTREEITEM hItem,
 		CString path)
 {
@@ -165,8 +196,30 @@ void CDlgFilterRuns::FillFilter(
 	}
 }
 
-void CDlgFilterRuns::UpdateControls()
+void CDlgOptionsFilter::UpdateControls()
 {
+	if (0 == m_ViewDates)
+	{
+		m_ctrlDateStartCheck.EnableWindow(FALSE);
+		m_ctrlDateStart.EnableWindow(FALSE);
+		m_ctrlDateEndCheck.EnableWindow(FALSE);
+		m_ctrlDateEnd.EnableWindow(FALSE);
+	}
+	else
+	{
+		m_ctrlDateStartCheck.EnableWindow(TRUE);
+		m_ctrlDateStart.EnableWindow(TRUE);
+		m_ctrlDateEndCheck.EnableWindow(TRUE);
+		m_ctrlDateEnd.EnableWindow(TRUE);
+	}
+	if (0 == m_ViewNames)
+	{
+		m_ctrlNames.EnableWindow(FALSE);
+	}
+	else
+	{
+		m_ctrlNames.EnableWindow(TRUE);
+	}
 	if (0 == m_ViewVenues)
 	{
 		m_ctrlVenue.EnableWindow(FALSE);
@@ -178,13 +231,43 @@ void CDlgFilterRuns::UpdateControls()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgFilterRuns message handlers
+// CDlgOptionsFilter message handlers
 
-BOOL CDlgFilterRuns::OnInitDialog() 
+BOOL CDlgOptionsFilter::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
 
-	for (ARBConfigVenueList::const_iterator iter = m_Config.GetVenues().begin(); iter != m_Config.GetVenues().end(); ++iter)
+	std::set<ARBString> names;
+	std::set<ARBString>::iterator iter;
+	m_pDoc->GetAllTrainingLogNames(names);
+	for (iter = m_NameFilter.begin(); iter != m_NameFilter.end(); )
+	{
+		if (names.end() == names.find((*iter)))
+			iter = m_NameFilter.erase(iter);
+		else
+			++iter;
+	}
+	if (0 == names.size())
+	{
+		m_ViewNames = 0;
+		GetDlgItem(IDC_OPT_FILTER_LOG_NAME_SELECTED)->EnableWindow(FALSE);
+		UpdateData(FALSE);
+	}
+	else
+	{
+		for (iter = names.begin(); iter != names.end(); ++iter)
+		{
+			HTREEITEM hItem = m_ctrlNames.InsertItem(
+				(*iter).c_str(),
+				TVI_ROOT,
+				TVI_LAST);
+			m_ctrlNames.ShowCheckbox(hItem, true);
+			if (m_NameFilter.end() != m_NameFilter.find((*iter)))
+				m_ctrlNames.SetChecked(hItem, true);
+		}
+	}
+
+	for (ARBConfigVenueList::const_iterator iter = m_pDoc->GetConfig().GetVenues().begin(); iter != m_pDoc->GetConfig().GetVenues().end(); ++iter)
 	{
 		ARBConfigVenue* pVenue = (*iter);
 		HTREEITEM hVenue = m_ctrlVenue.InsertItem(
@@ -257,19 +340,35 @@ BOOL CDlgFilterRuns::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-BOOL CDlgFilterRuns::OnHelpInfo(HELPINFO* pHelpInfo)
+BOOL CDlgOptionsFilter::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	ShowContextHelp(pHelpInfo);
 	return TRUE;
 }
 
-void CDlgFilterRuns::OnViewUpdate() 
+void CDlgOptionsFilter::OnSetdispinfoNames(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
-	UpdateData(TRUE);
-	UpdateControls();
+	m_NameFilter.clear();
+	HTREEITEM hItem = m_ctrlNames.GetRootItem();
+	while (NULL != hItem)
+	{
+		if (m_ctrlNames.IsCheckVisible(hItem)
+		&& m_ctrlNames.GetChecked(hItem))
+		{
+			CString str = m_ctrlNames.GetItemText(hItem);
+			str.TrimRight();
+			str.TrimLeft();
+			if (!str.IsEmpty())
+				m_NameFilter.insert((LPCTSTR)str);
+		}
+		hItem = m_ctrlNames.GetNextItem(hItem, TVGN_NEXT);
+	}
+	*pResult = 0;
 }
 
-void CDlgFilterRuns::OnSetdispinfoVenues(
+void CDlgOptionsFilter::OnSetdispinfoVenues(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
@@ -279,4 +378,10 @@ void CDlgFilterRuns::OnSetdispinfoVenues(
 	m_VenueFilter.clear();
 	FillFilter(TVI_ROOT, _T(""));
 	*pResult = 0;
+}
+
+void CDlgOptionsFilter::OnUpdateFilters()
+{
+	UpdateData(TRUE);
+	UpdateControls();
 }
