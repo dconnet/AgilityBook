@@ -406,29 +406,14 @@
 			<param name="Local" value="Help\html\DlgOptionsPgm.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Option: Fonts">
-			<param name="Name" value="Option: Fonts">
-			<param name="Local" value="Help\html\DlgOptionsFonts.html">
+			<param name="Name" value="Option: Filters">
+			<param name="Name" value="Option: Filters">
+			<param name="Local" value="Help\html\DlgOptionsFilter.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Filter: Dates">
-			<param name="Name" value="Filter: Dates">
-			<param name="Local" value="Help\html\DlgFilterDate.html">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Filter: Trials / Runs">
-			<param name="Name" value="Filter: Trials / Runs">
-			<param name="Local" value="Help\html\DlgFilterTrial.html">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Option: Calendar">
-			<param name="Name" value="Option: Calendar">
-			<param name="Local" value="Help\html\DlgOptionsCal.html">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Filter: Training Log">
-			<param name="Name" value="Filter: Training Log">
-			<param name="Local" value="Help\html\DlgFilterLog.html">
+			<param name="Name" value="Option: Views">
+			<param name="Name" value="Option: Views">
+			<param name="Local" value="Help\html\DlgOptionsView.html">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">

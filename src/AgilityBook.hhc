@@ -285,28 +285,13 @@
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Fonts">
-					<param name="Local" value="Help\html\DlgOptionsFonts.html">
+					<param name="Name" value="Filters">
+					<param name="Local" value="Help\html\DlgOptionsFilter.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Dates">
-					<param name="Local" value="Help\html\DlgFilterDate.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Trials / Runs">
-					<param name="Local" value="Help\html\DlgFilterTrial.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Calendar">
-					<param name="Local" value="Help\html\DlgOptionsCal.html">
-					<param name="ImageNumber" value="11">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Training Log">
-					<param name="Local" value="Help\html\DlgFilterLog.html">
+					<param name="Name" value="Views">
+					<param name="Local" value="Help\html\DlgOptionsView.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 			</UL>

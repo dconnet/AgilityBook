@@ -37,12 +37,9 @@
  */
 
 #include "DlgBaseSheet.h"
-#include "DlgFilterDate.h"
-#include "DlgFilterRuns.h"
-#include "DlgFilterTraining.h"
-#include "DlgOptionsCalendar.h"
-#include "DlgOptionsFonts.h"
+#include "DlgOptionsFilter.h"
 #include "DlgOptionsProgram.h"
+#include "DlgOptionsView.h"
 class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -53,11 +50,8 @@ class CDlgOptions : public CDlgBaseSheet
 	DECLARE_DYNAMIC(CDlgOptions)
 public:
 	static int GetProgramPage()		{return 0;}
-	static int GetFontPage()		{return 1;}
-	static int GetDatePage()		{return 2;}
-	static int GetRunsPage()		{return 3;}
-	static int GetCalendarPage()	{return 4;}
-	static int GetTrainingPage()	{return 5;}
+	static int GetFilterPage()		{return 1;}
+	static int GetViewPage()		{return 2;}
 
 	CDlgOptions(
 			CAgilityBookDoc* pDoc,
@@ -69,11 +63,8 @@ public:
 public:
 	CAgilityBookDoc* m_pDoc;
 	CDlgOptionsProgram m_pageProgram;
-	CDlgOptionsFonts m_pageFonts;
-	CDlgFilterDate m_pageDate;
-	CDlgFilterRuns m_pageRuns;
-	CDlgOptionsCalendar m_pageCalendar;
-	CDlgFilterTraining m_pageTraining;
+	CDlgOptionsFilter m_pageFilter;
+	CDlgOptionsView m_pageView;
 
 // Operations
 public:

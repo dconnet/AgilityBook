@@ -630,7 +630,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		break;
 	case ID_VIEW_OPTIONS:
 		{
-			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetRunsPage());
+			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetFilterPage());
 			options.DoModal();
 		}
 		break;
@@ -884,7 +884,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		break;
 	case ID_VIEW_OPTIONS:
 		{
-			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetRunsPage());
+			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetFilterPage());
 			options.DoModal();
 		}
 		break;
@@ -1177,7 +1177,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		break;
 	case ID_VIEW_OPTIONS:
 		{
-			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetRunsPage());
+			CDlgOptions options(m_pTree->GetDocument(), AfxGetMainWnd(), CDlgOptions::GetFilterPage());
 			options.DoModal();
 		}
 		break;

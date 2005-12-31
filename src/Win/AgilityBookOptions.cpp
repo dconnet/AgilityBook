@@ -71,6 +71,10 @@ static char THIS_FILE[] = __FILE__;
 // bool GetProfileInt("Common", "TrainingStartFilter", 0);
 // ARBDate(julian) GetProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay()));
 // bool GetProfileInt("Common", "TrainingEndFilter", 0);
+//
+// Calendar/FontDate+Name/Size/Italic/Bold (str,int,int,int)
+// Calendar/PrintFontDate+Name/Size/Italic/Bold
+// Calendar/PrintFontText+Name/Size/Italic/Bold
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -445,24 +449,52 @@ void CAgilityBookOptions::SetFilterCalendarView(CCalendarViewFilter inFilter)
 	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("Filter"), inFilter.m_Filter);
 }
 
-COLORREF CAgilityBookOptions::CalendarOpeningColor()
+static LPCTSTR CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 {
-	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("OpenColor"), RGB(0,128,0));
+	switch (inItem)
+	{
+	case CAgilityBookOptions::eCalColorNotEntered:
+		return _T("NotEnteredColor");
+	case CAgilityBookOptions::eCalColorPlanning:
+		return _T("PlanningColor");
+	case CAgilityBookOptions::eCalColorOpening:
+		return _T("OpenColor");
+	case CAgilityBookOptions::eCalColorClosing:
+		return _T("CloseColor");
+	case CAgilityBookOptions::eCalColorEntered:
+		return _T("EnteredColor");
+	}
+	ASSERT(0);
+	return "";
 }
 
-void CAgilityBookOptions::SetCalendarOpeningColor(COLORREF inColor)
+static COLORREF CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 {
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("OpenColor"), inColor);
+	switch (inItem)
+	{
+	case CAgilityBookOptions::eCalColorNotEntered:
+		return RGB(0,0,0); // Black
+	case CAgilityBookOptions::eCalColorPlanning:
+		return RGB(255,128,0); // Orange
+	case CAgilityBookOptions::eCalColorOpening:
+		return RGB(0,128,0); // Dk Green
+	case CAgilityBookOptions::eCalColorClosing:
+		return RGB(255,0,0); // Red
+	case CAgilityBookOptions::eCalColorEntered:
+		return RGB(0,0,255); // Blue
+	}
+	ASSERT(0);
+	return 0;
 }
 
-COLORREF CAgilityBookOptions::CalendarClosingColor()
+COLORREF CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
 {
-	return AfxGetApp()->GetProfileInt(_T("Calendar"), _T("CloseColor"), RGB(255,0,0));
+	return AfxGetApp()->GetProfileInt(_T("Calendar"), CalItemName(inItem), CalItemColor(inItem));
 }
 
-void CAgilityBookOptions::SetCalendarClosingColor(COLORREF inColor)
+void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, COLORREF inColor)
 {
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("CloseColor"), inColor);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), CalItemName(inItem), inColor);
 }
 
 int CAgilityBookOptions::CalendarOpeningNear()
@@ -822,74 +854,24 @@ void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Bold"), info.bold ? 1 : 0);
 }
 
-void CAgilityBookOptions::GetCalendarDateFontInfo(
-		CFontInfo& info,
-		BOOL bPrinting)
+void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)
 {
 	info.name = _T("Times New Roman");
-	info.size = 100;
+	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	CString item(_T("Font"));
-	if (bPrinting)
-	{
-		item = _T("PrintFont");
-		info.size = 80;
-	}
-	item += _T("Date");
-	info.name = AfxGetApp()->GetProfileString(_T("Calendar"), item + _T("Name"), info.name);
-	info.size = AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Size"), info.size);
-	info.italic = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0)) == 1 ? true : false;
+	info.name = AfxGetApp()->GetProfileString(_T("Calendar"), _T("FontTextName"), info.name);
+	info.size = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("FontTextSize"), info.size);
+	info.italic = (AfxGetApp()->GetProfileInt(_T("Calendar"), _T("FontTextItalic"), info.italic ? 1 : 0)) == 1 ? true : false;
+	info.bold = (AfxGetApp()->GetProfileInt(_T("Calendar"), _T("FontTextBold"), info.bold ? 1 : 0)) == 1 ? true : false;
 }
 
-void CAgilityBookOptions::SetCalendarDateFontInfo(
-		CFontInfo const& info,
-		BOOL bPrinting)
+void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 {
-	CString item(_T("Font"));
-	if (bPrinting)
-		item = _T("PrintFont");
-	item += _T("Date");
-	AfxGetApp()->WriteProfileString(_T("Calendar"), item + _T("Name"), info.name);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Size"), info.size);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0);
-}
-
-void CAgilityBookOptions::GetCalendarTextFontInfo(
-		CFontInfo& info,
-		BOOL bPrinting)
-{
-	info.name = _T("Times New Roman");
-	info.size = 100;
-	info.italic = false;
-	info.bold = false;
-	CString item(_T("Font"));
-	if (bPrinting)
-	{
-		item = _T("PrintFont");
-		info.size = 80;
-	}
-	item += _T("Text");
-	info.name = AfxGetApp()->GetProfileString(_T("Calendar"), item + _T("Name"), info.name);
-	info.size = AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Size"), info.size);
-	info.italic = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (AfxGetApp()->GetProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0)) == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetCalendarTextFontInfo(
-		CFontInfo const& info,
-		BOOL bPrinting)
-{
-	CString item(_T("Font"));
-	if (bPrinting)
-		item = _T("PrintFont");
-	item += _T("Text");
-	AfxGetApp()->WriteProfileString(_T("Calendar"), item + _T("Name"), info.name);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Size"), info.size);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Italic"), info.italic ? 1 : 0);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), item + _T("Bold"), info.bold ? 1 : 0);
+	AfxGetApp()->WriteProfileString(_T("Calendar"), _T("FontTextName"), info.name);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("FontTextSize"), info.size);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("FontTextItalic"), info.italic ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("FontTextBold"), info.bold ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

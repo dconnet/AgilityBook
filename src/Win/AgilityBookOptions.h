@@ -198,8 +198,18 @@ public:
 	static void SetCalendarEntrySize(CSize const& sz);
 	static CCalendarViewFilter FilterCalendarView();
 	static void SetFilterCalendarView(CCalendarViewFilter inFilter);
-	static COLORREF CalendarOpeningColor();
-	static void SetCalendarOpeningColor(COLORREF inColor);
+	typedef enum
+	{
+		eCalColorNotEntered,
+		eCalColorPlanning,
+		eCalColorOpening,
+		eCalColorClosing,
+		eCalColorEntered
+	} CalendarColorItem;
+	static COLORREF CalendarColor(CalendarColorItem inItem);
+	static void SetCalendarColor(
+			CalendarColorItem inItem,
+			COLORREF inColor);
 	static COLORREF CalendarClosingColor();
 	static void SetCalendarClosingColor(COLORREF inColor);
 	static int CalendarOpeningNear();
@@ -252,18 +262,8 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
-	static void GetCalendarDateFontInfo(
-			CFontInfo& info,
-			BOOL bPrinting);
-	static void SetCalendarDateFontInfo(
-			CFontInfo const& info,
-			BOOL bPrinting);
-	static void GetCalendarTextFontInfo(
-			CFontInfo& info,
-			BOOL bPrinting);
-	static void SetCalendarTextFontInfo(
-			CFontInfo const& info,
-			BOOL bPrinting);
+	static void GetCalendarFontInfo(CFontInfo& info);
+	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
 	static CString GetLastEnteredDivision();
 	static void SetLastEnteredDivision(TCHAR const* inLast);
