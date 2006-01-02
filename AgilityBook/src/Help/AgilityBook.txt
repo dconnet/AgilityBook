@@ -705,7 +705,7 @@ Placement earned. Enter 0 if not known or doesn't apply.
 Qualifying status of run.
 
 .topic HIDC_RUNSCORE_BONUSPTS
-Number of extra points earned.
+Number of extra titling and lifetime points earned.
 Enter 5 in NADAC on a 0-fault qualifying run where you completed the bonus box in order to earn 15 title points.
 
 .topic HIDC_RUNSCORE_SCT
