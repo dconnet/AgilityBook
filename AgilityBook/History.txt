@@ -1,4 +1,4 @@
-12/24/2005: v1.7.0.12 <in development>
+1/2/2006: v1.7.0.12
 - Bumped file version to 12.0, Configuration v10:
   - Moved Titles from Division to Venue, added valid dates on titles.
   - Added option to prefix a title when listed on configuration titles.
@@ -26,6 +26,11 @@
     evolving venue rules.
   - List all the dog names and breeds that have been used in the reference
     runs dialog.
+  - Create new calendar entries with the end date one day past the start date.
+    In addition, automatically update the end date when the start date changes.
+  - Allow negative numbers in a run's faults. This allows venues where you can
+    get a better than perfect score to work (APDT Rally). Only makes sense
+    if the scoring is a 100-faults or 200-faults style.
 - Bug fixes
   - Date filtering wasn't working on multiQs.
   - Adding yourself as a reference run was not obtaining up-to-date

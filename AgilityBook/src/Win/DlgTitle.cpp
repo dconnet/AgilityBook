@@ -84,7 +84,7 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_TITLE_DATE, &CDlgTitle::OnDtnDatetimechangeTitleDate)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_TITLE_DATE, OnDtnDatetimechangeTitleDate)
 	ON_BN_CLICKED(IDC_TITLE_EARNED, OnBnClickedEarned)
 	ON_CBN_SELCHANGE(IDC_TITLE_VENUES, OnSelchangeVenues)
 	ON_CBN_SELCHANGE(IDC_TITLE_TITLES, OnSelchangeTitles)

@@ -64,10 +64,11 @@ CDlgCalendar::CDlgCalendar(
 	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)
+	, m_Span(0)
 {
 	//{{AFX_DATA_INIT(CDlgCalendar)
 	m_dateStart = CTime::GetCurrentTime();
-	m_dateEnd = CTime::GetCurrentTime();
+	m_dateEnd = CTime::GetCurrentTime() + CTimeSpan(1, 0, 0, 0);
 	m_bTentative = m_pCal->IsTentative() ? TRUE : FALSE;
 	m_Entered = 0;
 	m_Location = m_pCal->GetLocation().c_str();
@@ -80,7 +81,11 @@ CDlgCalendar::CDlgCalendar(
 	m_Notes = m_pCal->GetNote().c_str();
 	//}}AFX_DATA_INIT
 	if (m_pCal->GetStartDate().IsValid())
+	{
 		m_dateStart = CTime(m_pCal->GetStartDate().GetDate());
+		if (m_pCal->GetEndDate().IsValid())
+			m_Span = m_pCal->GetEndDate() - m_pCal->GetStartDate();
+	}
 	if (m_pCal->GetEndDate().IsValid())
 		m_dateEnd = CTime(m_pCal->GetEndDate().GetDate());
 	if (m_pCal->GetOpeningDate().IsValid())
@@ -135,6 +140,7 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendar)
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CAL_DATE_START, OnDatetimechangeStart)
 	ON_CBN_SELCHANGE(IDC_CAL_LOCATION, OnSelchangeLocation)
 	ON_CBN_KILLFOCUS(IDC_CAL_LOCATION, OnKillfocusLocation)
 	ON_CBN_SELCHANGE(IDC_CAL_CLUB, OnSelchangeClub)
@@ -232,6 +238,21 @@ BOOL CDlgCalendar::OnInitDialog()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgCalendar::OnDatetimechangeStart(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
+	if (0 < m_Span)
+	{
+		if (pDTChange->dwFlags == GDT_VALID)
+		{
+			UpdateData(TRUE);
+			m_dateEnd = CTime(pDTChange->st) + CTimeSpan(m_Span, 0, 0, 0);
+			UpdateData(FALSE);
+		}
+	}
+	*pResult = 0;
 }
 
 void CDlgCalendar::OnSelchangeLocation()

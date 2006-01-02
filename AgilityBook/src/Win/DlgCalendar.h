@@ -77,6 +77,7 @@ private:
 	//}}AFX_DATA
 	ARBCalendar* m_pCal;
 	CAgilityBookDoc* m_pDoc;
+	int m_Span;
 
 	//{{AFX_VIRTUAL(CDlgCalendar)
 protected:
@@ -89,6 +90,7 @@ protected:
 	void UpdateClubInfo(TCHAR const* pClub);
 	//{{AFX_MSG(CDlgCalendar)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDatetimechangeStart(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnSelchangeLocation();
 	afx_msg void OnKillfocusLocation();
 	afx_msg void OnSelchangeClub();

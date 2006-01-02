@@ -167,6 +167,8 @@ public:
 	ARBDate operator--(int); //postfix
 	ARBDate& operator+=(int inD);
 	ARBDate& operator-=(int inD);
+	ARBDate operator+(int inD);
+	ARBDate operator-(int inD);
 
 	/**
 	 * Test if date is between two dates (inclusive)
@@ -333,6 +335,20 @@ inline ARBDate& ARBDate::operator-=(int inD)
 {
 	m_Julian -= inD;
 	return *this;
+}
+
+inline ARBDate ARBDate::operator+(int inD)
+{
+	ARBDate d;
+	d.SetJulianDay(m_Julian + inD);
+	return d;
+}
+
+inline ARBDate ARBDate::operator-(int inD)
+{
+	ARBDate d;
+	d.SetJulianDay(m_Julian - inD);
+	return d;
 }
 
 inline bool ARBDate::isBetween(

@@ -267,9 +267,11 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 		}
 	}
 
-	for (ARBConfigVenueList::const_iterator iter = m_pDoc->GetConfig().GetVenues().begin(); iter != m_pDoc->GetConfig().GetVenues().end(); ++iter)
+	for (ARBConfigVenueList::const_iterator iVenue = m_pDoc->GetConfig().GetVenues().begin();
+		iVenue != m_pDoc->GetConfig().GetVenues().end();
+		++iVenue)
 	{
-		ARBConfigVenue* pVenue = (*iter);
+		ARBConfigVenue* pVenue = (*iVenue);
 		HTREEITEM hVenue = m_ctrlVenue.InsertItem(
 			pVenue->GetName().c_str(),
 			TVI_ROOT,
