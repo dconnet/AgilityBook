@@ -1032,7 +1032,7 @@ void CAgilityBookViewCalendar::OnCalendarNew()
 	if (m_Current.IsValid())
 	{
 		cal->SetStartDate(m_Current);
-		cal->SetEndDate(m_Current);
+		cal->SetEndDate(m_Current + 1);
 	}
 	CDlgCalendar dlg(cal, GetDocument());
 	if (IDOK == dlg.DoModal())

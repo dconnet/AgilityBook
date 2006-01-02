@@ -750,7 +750,7 @@ void CDlgListCtrl::OnNew()
 		{
 			ARBCalendar* cal = new ARBCalendar();
 			cal->SetStartDate(m_Date);
-			cal->SetEndDate(m_Date);
+			cal->SetEndDate(m_Date + 1);
 			CDlgCalendar dlg(cal, m_pDoc);
 			if (IDOK == dlg.DoModal())
 			{
