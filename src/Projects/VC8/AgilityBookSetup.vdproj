@@ -15,25 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_04B1312297FD4CE7984286B44AD80AE0"
-        "OwnerKey" = "8:_0DA31AC0F53F4CC09B9CEB3ABA5551E4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0DA31AC0F53F4CC09B9CEB3ABA5551E4"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_329520F8168C43E8A1F25E7E3CF49239"
+        "MsmKey" = "8:_36AC5D7D79704833AC81A657B2AFA123"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3C4EFF3D19D54BB3A621B80BB65CBBC7"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -63,14 +57,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_981049BDB70F4532889C652512BCB33C"
+        "OwnerKey" = "8:_36AC5D7D79704833AC81A657B2AFA123"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B411CFEAB5B144339019F34D16685DF4"
-        "OwnerKey" = "8:_329520F8168C43E8A1F25E7E3CF49239"
+        "MsmKey" = "8:_C49C8BB803C14089AF82F5C8620C45CB"
+        "OwnerKey" = "8:_3C4EFF3D19D54BB3A621B80BB65CBBC7"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -114,7 +114,7 @@
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
         "OutputFilename" = "8:..\\..\\..\\bin\\VC8\\Release\\AgilityBookSetup.msi"
-        "PackageFilesAs" = "3:2"
+        "PackageFilesAs" = "3:3"
         "PackageFileSize" = "3:1024000"
         "CabType" = "3:2"
         "Compression" = "3:3"
@@ -959,21 +959,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_04B1312297FD4CE7984286B44AD80AE0"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_0DA31AC0F53F4CC09B9CEB3ABA5551E4"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_36AC5D7D79704833AC81A657B2AFA123"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -987,7 +973,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_329520F8168C43E8A1F25E7E3CF49239"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_3C4EFF3D19D54BB3A621B80BB65CBBC7"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1001,7 +987,21 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_B411CFEAB5B144339019F34D16685DF4"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_981049BDB70F4532889C652512BCB33C"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C49C8BB803C14089AF82F5C8620C45CB"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
