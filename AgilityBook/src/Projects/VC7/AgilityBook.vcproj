@@ -44,7 +44,7 @@
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="../../../../xml-xerces/c/Build/Win32//VC7.1/Debug"
+				AdditionalLibraryDirectories="../../../lib/VC7"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"/>
 			<Tool
@@ -103,7 +103,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="../../../../xml-xerces/c/Build/Win32//VC7.1/Release"
+				AdditionalLibraryDirectories="../../../lib/VC7"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
