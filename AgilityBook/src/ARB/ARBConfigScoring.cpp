@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-01-03 DRC FindAllEvents was not working right (see below)
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -533,8 +534,13 @@ size_t ARBConfigScoringList::FindAllEvents(
 			}
 		}
 	}
+	// Note: When the input date is not valid, we want ALL scoring methods
+	// that match, so don't shortcircuit based on outList.size. The problem
+	// showed up in 1.7.0.12 with NADAC Gamblers. All the gambler runs earned
+	// in 2005 were no longer showing up in the points.
+
 	// It failed, try wildcards...
-	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
+	for (iter = begin(); (!inDate.IsValid() || 0 == outList.size()) && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == WILDCARD_LEVEL)
 		{
@@ -546,7 +552,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 			}
 		}
 	}
-	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
+	for (iter = begin(); (!inDate.IsValid() || 0 == outList.size()) && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == inLevel)
 		{
@@ -558,7 +564,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 			}
 		}
 	}
-	for (iter = begin(); 0 == outList.size() && iter != end(); ++iter)
+	for (iter = begin(); (!inDate.IsValid() || 0 == outList.size()) && iter != end(); ++iter)
 	{
 		if ((*iter)->GetDivision() == WILDCARD_DIVISION && (*iter)->GetLevel() == WILDCARD_LEVEL)
 		{
