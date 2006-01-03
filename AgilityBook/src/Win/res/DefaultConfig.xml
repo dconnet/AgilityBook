@@ -681,7 +681,32 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				<Level Name="Excellent A"/>
 				<Level Name="Excellent B"/>
 			</Division>
+			<Division Name="Selected">
+				<Level Name="Novice">
+					<SubLevel Name="Novice A"/>
+					<SubLevel Name="Novice B"/>
+				</Level>
+				<Level Name="Intermediate"/>
+				<Level Name="Excellent A"/>
+				<Level Name="Excellent B"/>
+			</Division>
 			<Event Name="Standard" hasTable="y">
+				<Scoring Division="*" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Intermediate" dropFractions="y" timeFault="2" type="Faults100ThenTime">
+					<Note>1 Refusal allowed</Note>
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+					<Note>2 Refusals allowed</Note>
+					<TitlePoints Faults="15" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="JWW">
 				<Scoring Division="*" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
