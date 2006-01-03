@@ -15,8 +15,20 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_1B1BC72CC45044D89FAFDFA5B3E0BA57"
+        "OwnerKey" = "8:_6E1E759ACB674BFDB12A5DF13FC9B04A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3486EA1B6FBE4BB9BBE31408AF9928E9"
+        "OwnerKey" = "8:_4BC7DB905A2E43A0B175208A81390DC2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -27,8 +39,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4BC7DB905A2E43A0B175208A81390DC2"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5E446DC8AA924BA6B5BCC12DD868C8B9"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6E1E759ACB674BFDB12A5DF13FC9B04A"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,7 +63,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8B5EBC88825CA503AF7274F69C8E9016"
+        "MsmKey" = "8:_953B748B0C343B206B8F13DA147BB762"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -47,24 +71,6 @@
         {
         "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AD55B96CEAA4D281294D8350EE662811"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B5336E9DBB224077831DEE4A70999CF4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EE0F57F62F318543ACC52CDAA3060241"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -109,8 +115,8 @@
         "IsReleaseOnly" = "11:TRUE"
         "OutputFilename" = "8:..\\..\\..\\bin\\VC8\\Release\\AgilityBookSetup.msi"
         "PackageFilesAs" = "3:2"
-        "PackageFileSize" = "3:-2147483648"
-        "CabType" = "3:1"
+        "PackageFileSize" = "3:1024000"
+        "CabType" = "3:2"
         "Compression" = "3:3"
         "SignOutput" = "11:FALSE"
         "CertificateFile" = "8:"
@@ -219,10 +225,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8B5EBC88825CA503AF7274F69C8E9016"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_953B748B0C343B206B8F13DA147BB762"
             {
-            "SourcePath" = "8:WININET.dll"
-            "TargetName" = "8:WININET.dll"
+            "SourcePath" = "8:xerces-c_2_7.dll"
+            "TargetName" = "8:xerces-c_2_7.dll"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
             "Condition" = "8:"
@@ -235,7 +241,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -257,66 +263,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AD55B96CEAA4D281294D8350EE662811"
-            {
-            "SourcePath" = "8:comdlg32.dll"
-            "TargetName" = "8:comdlg32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B5336E9DBB224077831DEE4A70999CF4"
-            {
-            "SourcePath" = "8:..\\..\\..\\bin\\pre-Win2K\\DbgHelp.Dll"
-            "TargetName" = "8:DbgHelp.Dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:DBGHELP"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE0F57F62F318543ACC52CDAA3060241"
-            {
-            "SourcePath" = "8:oledlg.dll"
-            "TargetName" = "8:oledlg.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -424,7 +370,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
         "ProductCode" = "8:{605ABF5C-AB5E-4ED7-A902-ED15A8C05516}"
-        "PackageCode" = "8:{0E6041D3-BBA3-4F74-A6B9-2B5DB78F63C8}"
+        "PackageCode" = "8:{5CF77A13-3606-4F4A-8BDB-BB8F6293CD3C}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -1023,37 +969,65 @@
         }
         "MergeModule"
         {
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1B1BC72CC45044D89FAFDFA5B3E0BA57"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_mfc_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_3486EA1B6FBE4BB9BBE31408AF9928E9"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4BC7DB905A2E43A0B175208A81390DC2"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_6E1E759ACB674BFDB12A5DF13FC9B04A"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3BC5F03519E844D58534E25F0A623E03"
-            {
-            "SourcePath" = "8:"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Symbols"
-            "OutputProjectGuid" = "8:{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6ECEE00896D64C0EB4B463E926655387"
             {
             "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Release\\AgilityBook.exe"
