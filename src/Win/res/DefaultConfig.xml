@@ -5,6 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-01-04 DRC Configuration version 11. Updated CKC.
 2005-11-20 DRC Configuration version 10.
                Added prefix notation on some titles. Updated NADAC titles.
                Added DOCNA. Updated CPE title comments.
@@ -39,7 +40,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="10">
+	<Configuration version="11">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -672,6 +673,19 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 			<Titles LongName="Agility Intermediate" Name="AG.I.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
 			<Titles LongName="Agility Excellent" Name="AG.X.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
 			<Titles LongName="Agility Master" Name="AG.M.X.">Receive 10 qualifying scores.</Titles>
+			<Titles LongName="Agility Novice Jumpers" Name="AG.N.J.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Intermediate Jumpers" Name="AG.I.J.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Excellent Jumpers" Name="AG.X.J.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Master Jumpers" Name="AG.M.X.J.">Receive 10 qualifying scores.</Titles>
+			<Titles LongName="Agility Master Champion" Name="AG.M.CH." Prefix="y">Ag.M.X. and Ag.M.X.J.</Titles>
+			<Titles LongName="Agility Novice Selected" Name="AGNS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Intermediate Selected" Name="AGIS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Excellent Selected" Name="AGXS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Master Agility Excellent Selected" Multiple="2" Name="AGMXS">Receive 10 qualifying scores.</Titles>
+			<Titles LongName="Agility Novice Jumpers Selected" Name="AGNJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Intermediate Jumpers Selected" Name="AGIJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Agility Excellent Jumpers Selected" Name="AGXJS">Receive 3 qualifying scores from at least 2 different judges.</Titles>
+			<Titles LongName="Master Agility Excellent Jumpers Selected" Multiple="2" Name="AGMXJS">Receive 10 qualifying scores.</Titles>
 			<Division Name="Standard">
 				<Level Name="Novice">
 					<SubLevel Name="Novice A"/>
@@ -682,10 +696,7 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				<Level Name="Excellent B"/>
 			</Division>
 			<Division Name="Selected">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
+				<Level Name="Novice"/>
 				<Level Name="Intermediate"/>
 				<Level Name="Excellent A"/>
 				<Level Name="Excellent B"/>
@@ -714,11 +725,9 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Intermediate" dropFractions="y" timeFault="2" type="Faults100ThenTime">
-					<Note>1 Refusal allowed</Note>
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
-					<Note>2 Refusals allowed</Note>
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
