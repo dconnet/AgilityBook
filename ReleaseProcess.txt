@@ -9,14 +9,14 @@ Files to change before marking files for release:
     If this is missed, the new data will not be merged.
 - If configuration has changed:
   - Same as file version changing above
+- Update CD Label (SureThing CD Labeler Deluxe v3.12)
+- Update help\html\images\DlgAbout.gif
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into help/html/HistoryData.html
   - Run "src\UpdateHistory.py -h"
 - Todo.txt
   Any necessary changes...
-- Update CD Label (SureThing CD Labeler Deluxe v3.12)
-- Update help\html\images\DlgAbout.gif
 
 Run Doxygen and fix any warnings/errors it reports.
   - cd ...\AgilityBook
@@ -28,18 +28,21 @@ Tag CVS repository "vn_n_n_n"
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup vc6/7 .exe image to \AgilityBook\testVC[67]
-- AgilityBook_n_n_n_n.msi [distrib/Win32/vc7/]
-- AgilityBook_n_n_n_n.zip (AgilityBook.exe/.chm) [distrib/Win32/vc6/] 
+- Copy a backup vc6/7/8 .exe/chm images to \AgilityBook\test\vc[678]
+- Create AgilityBook_n_n_n_n.zip from msi/cab files in bin\VC8\Release.
+  Copy this to distrib\vN.N.N.N\
+- Create AgilityBook_n_n_n_nALT.zip (VC8 AgilityBook.exe/.chm)
+  Copy this to distrib\vN.N.N.N\
 - Clean out all build artifacts.
-- AgilityBook_n_n_n_nsrc.zip [distrib/]
+- AgilityBook_n_n_n_nsrc.zip
+  Copy this to distrib\vN.N.N.N\
 
 In SourceForge, enter the File Releases section in Admin.
 - At the bottom of the page, 'Add Release' to 'agilitybook' package.
 - Enter all necessary information.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
-  - AgilityBook_n_n_n_nsrc.zip, AgilityBook_n_n_n_n.msi
+  - AgilityBook_n_n_n_nsrc.zip, AgilityBook_n_n_n_n.zip
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
@@ -50,12 +53,12 @@ In Yahoo
 - Upload all new files.
   - [files/release] History.txt
   - [files/release] Todo.txt
-  - [files/release/alternate] AgilityBook_n_n_n_n.zip
-  - [files/release/alternate] MFC6.zip, already there, shouldn't need changing
-  - [files/release/alternate] SupportDLLs.zip, already there
+  - [files/release/alternate] AgilityBook_n_n_n_nALT.zip
+  - [files/release/alternate] [VC8] vcredist_x86.exe, already there, shouldn't need changing
+  - [files/release/alternate] [VC8] xerces-c_2_7.zip, already there
   - [files/release/alternate] Readme.txt, already there
-  - [files/release] AgilityBook_n_n_n_n.msi [Desc: Installation program]
-                    Announce this file (option on file upload)
+  - [files/release] AgilityBook_n_n_n_n.msi/cab [Desc: Installation program]
+    DO NOT Announce this file (option on file upload) since it is now multiple.
 - Send an email announcing it - send as a 'Special Notice' from Yahoo.
 
 Web Site:
@@ -74,8 +77,10 @@ Backup:
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO
 - Update History.txt
-- Update src/Projects/Win32/VC7/AgilityBookSetup.vdproj
-  - Open in VS7, select the setup project on the solutions tab, switch to
+- Update src/Projects/Win32/VC8/AgilityBookSetup.vdproj
+  - Open in VS8, select the setup project on the solutions tab, switch to
     the properties tab and update 'Version'. Say Yes to changing the
-    ProductCode/etc GUIDs. Exit VS7. (Note, if you decide to change the
+    ProductCode/etc GUIDs. Exit VS8. (Note, if you decide to change the
     version number later, do not change the ProductCode again)
+    Note: Often VERSION.DLL gets unmarked for exclusion - watch this and make
+    sure it remains excluded in the install program.

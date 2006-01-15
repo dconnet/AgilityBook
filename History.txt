@@ -1,4 +1,6 @@
-1/3/2006: v1.7.1.12 <development>
+1/15/2006: v1.7.1.12
+- Bumped to Configuration v11:
+  - Updated CKC with JWW and new titles.
 - Bug fixes
   - Points for NADAC/Gamblers weren't displaying properly for gambler runs
     earned in 2005.
