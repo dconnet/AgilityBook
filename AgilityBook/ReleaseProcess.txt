@@ -67,7 +67,7 @@ Web Site:
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update AgilityBook.chm
-  - Run "src\UpdateHistory.py -h" (updates history.html)
+  - Run "src\UpdateHistory.py -w" (updates history.html)
   - Update bugs.html
 
 Backup:
