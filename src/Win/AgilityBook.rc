@@ -1461,8 +1461,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,7,1,12
- PRODUCTVERSION 1,7,1,12
+ FILEVERSION 1,7,2,12
+ PRODUCTVERSION 1,7,2,12
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1479,12 +1479,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "dcon Software"
             VALUE "FileDescription", "Agility Record Book"
-            VALUE "FileVersion", "1.7.1.12"
+            VALUE "FileVersion", "1.7.2.12"
             VALUE "InternalName", "AgilityBook.exe"
             VALUE "LegalCopyright", "Copyright © 2002-2006 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
-            VALUE "ProductVersion", "1.7.1.12"
+            VALUE "ProductVersion", "1.7.2.12"
         END
     END
     BLOCK "VarFileInfo"
