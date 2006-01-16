@@ -1921,12 +1921,12 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="*" ValidFrom="2005-1-1" ValidTo="2005-12-31" type="OCScoreThenTime">
+				<Scoring Division="Standard" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Veterans" Level="*" ValidFrom="2005-1-1" ValidTo="2005-12-31" type="OCScoreThenTime">
+				<Scoring Division="Veterans" Level="*" ValidFrom="2005-1-1" ValidTo="2006-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
