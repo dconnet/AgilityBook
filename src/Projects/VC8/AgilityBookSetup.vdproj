@@ -15,8 +15,8 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0BAFA8F743B04F499A8D92BB87ADF586"
-        "OwnerKey" = "8:_88E1A617F28D4D699E01A3CC23C72088"
+        "MsmKey" = "8:_1EB9292FCDAF41B5A325B64D11201EC2"
+        "OwnerKey" = "8:_94B815D0F3BA4FEB808D1289B41DFC45"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,6 +33,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_542F046E88E84D29B5CA4E129C23FC54"
+        "OwnerKey" = "8:_55CC8D342A274AE5A76DD08C9D15CE62"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_55CC8D342A274AE5A76DD08C9D15CE62"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5E446DC8AA924BA6B5BCC12DD868C8B9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -45,13 +57,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8473B65B10F94E97BCD7E7CF18D70632"
-        "OwnerKey" = "8:_EB4FB5AEBE2C4B63AE37A82E9AEB41FC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_88E1A617F28D4D699E01A3CC23C72088"
+        "MsmKey" = "8:_94B815D0F3BA4FEB808D1289B41DFC45"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -65,12 +71,6 @@
         {
         "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EB4FB5AEBE2C4B63AE37A82E9AEB41FC"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -113,9 +113,9 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\..\\..\\bin\\VC8\\Release\\AgilityBookSetup.msi"
+        "OutputFilename" = "8:..\\..\\..\\bin\\VC8\\Release\\Setup\\AgilityBook.msi"
         "PackageFilesAs" = "3:3"
-        "PackageFileSize" = "3:1024000"
+        "PackageFileSize" = "3:1536000"
         "CabType" = "3:2"
         "Compression" = "3:3"
         "SignOutput" = "11:FALSE"
@@ -125,13 +125,18 @@
         "InstallerBootstrapper" = "3:1"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:FALSE"
+            "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.2.0"
+                    {
+                    "Name" = "8:Windows Installer 2.0"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.2.0"
+                    }
                 }
             }
         }
@@ -360,7 +365,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
         "ProductCode" = "8:{D40D6D69-F169-4396-A212-DA03F57B0259}"
-        "PackageCode" = "8:{43D727F6-5B9B-43EF-811F-D2251DB7839B}"
+        "PackageCode" = "8:{C2FD54D5-65FB-4248-AAF2-FDB55E861348}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -959,7 +964,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_0BAFA8F743B04F499A8D92BB87ADF586"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1EB9292FCDAF41B5A325B64D11201EC2"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -973,7 +978,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_8473B65B10F94E97BCD7E7CF18D70632"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_542F046E88E84D29B5CA4E129C23FC54"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -987,11 +992,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_88E1A617F28D4D699E01A3CC23C72088"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_55CC8D342A274AE5A76DD08C9D15CE62"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
                 "Properties"
                 {
                 }
@@ -1001,11 +1006,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_EB4FB5AEBE2C4B63AE37A82E9AEB41FC"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_94B815D0F3BA4FEB808D1289B41DFC45"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
                 "Properties"
                 {
                 }
