@@ -1843,19 +1843,19 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Veterans" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Veterans" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Junior" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Junior" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -1873,15 +1873,15 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Veterans" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Veterans" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring Division="Junior" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Junior" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
@@ -1951,7 +1951,7 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
@@ -1967,7 +1967,7 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
@@ -1983,7 +1983,7 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="*" ValidTo="2005-12-31" type="FaultsThenTime">
+				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
