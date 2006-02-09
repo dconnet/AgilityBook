@@ -1131,9 +1131,11 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		CString msg;
-		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
-		AfxMessageBox(msg, MB_ICONINFORMATION);
+		ARBostringstream msg;
+		msg << _T("Cannot find \"")
+			<< (LPCTSTR)m_strSearch
+			<< _T("\"");
+		AfxMessageBox(msg.str().c_str(), MB_ICONINFORMATION);
 	}
 	return bFound;
 }

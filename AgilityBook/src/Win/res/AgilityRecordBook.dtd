@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2006-02-08 DRC File version 12.1
+               Added 'RenameEvent'.
 2005-12-14 DRC File version 12.0
                Moved Titles from Division to Venue, added Valid dates on them.
                Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
@@ -133,6 +135,11 @@ for renaming titles.
 	Div: If set, limit delete to this division (I created dup names in NADAC)
     OldName: Title to be removed.
 	NewName: If set, rename any existing titles, otherwise titles are deleted.
+  'RenameEvent': NADAC changed 'Wildcard' to 'Chance'
+    Venue: Venue that contains event
+	Div: Unused
+    OldName: Event to be renamed.
+	NewName: New name.
  pcdata: currently unused, defined to allow future expansion.
 -->
 <!ELEMENT Action (#PCDATA) >

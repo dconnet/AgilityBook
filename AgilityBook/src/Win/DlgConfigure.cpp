@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-08 DRC Added 'RenameEvent' action.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
@@ -1000,7 +1001,44 @@ void CDlgConfigure::OnUpdate()
 		for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
 		{
 			ARBConfigAction const* action = *iterAction;
-			if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
+			if (action->GetVerb() == ACTION_VERB_RENAME_EVENT)
+			{
+				ARBConfigVenue* venue = NULL;
+				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
+				{
+					venue->Release();
+					ARBConfigEvent* oldEvent = NULL;
+					if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
+					{
+						ARBostringstream tmp;
+						tmp << _T("Action: Renaming ")
+							<< action->GetVenue()
+							<< _T(" event [")
+							<< action->GetOldName()
+							<< _T("] to [")
+							<< action->GetNewName()
+							<< _T("]");
+						// If any events are in use, create a fixup action.
+						int nEvents = m_Book.GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
+						if (0 < nEvents)
+						{
+							tmp << _T(", updating ") << nEvents << _T("titles\n");
+							m_DlgFixup.push_back(new CDlgFixupRenameEvent(action->GetVenue(), action->GetOldName(), action->GetNewName()));
+						}
+						else
+							tmp << _T("\n");
+						msg += tmp.str().c_str();
+						// If the new event exists, just delete the old.
+						// Otherwise, rename the old to new.
+						if (venue->GetEvents().FindEvent(action->GetNewName()))
+							venue->GetEvents().DeleteEvent(action->GetOldName());
+						else
+							oldEvent->SetName(action->GetNewName());
+						oldEvent->Release();
+					}
+				}
+			}
+			else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 			{
 				// Find the venue.
 				ARBConfigVenue* venue;
@@ -1014,21 +1052,23 @@ void CDlgConfigure::OnUpdate()
 						// to an error in the config (same title in multiple
 						// divisions), all we can do is rename ALL of them.
 						// There's no way to differentiate existing titles.
-						CString tmp;
-						tmp.Format(_T("Action: Renaming title [%s] to [%s]"),
-							action->GetOldName().c_str(),
-							action->GetNewName().c_str());
-						msg += tmp;
+						ARBostringstream tmp;
+						tmp << _T("Action: Renaming title [")
+							<< action->GetOldName()
+							<< _T("] to [")
+							<< action->GetNewName()
+							<< _T("]");
 						// If any titles are in use, create a fixup action.
 						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 						if (0 < nTitles)
 						{
-							tmp.Format(_T(", updating %d titles\n"), nTitles);
+							tmp << _T(", updating ")
+								<< nTitles
+								<< _T("titles");
 							m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
 						}
-						else
-							tmp = _T("\n");
-						msg += tmp;
+						tmp << _T("\n");
+						msg += tmp.str().c_str();
 						// If the new title exists, just delete the old.
 						// Otherwise, rename the old to new.
 						if (venue->GetTitles().FindTitle(action->GetNewName()))
@@ -1050,7 +1090,7 @@ void CDlgConfigure::OnUpdate()
 					ARBConfigTitle* oldTitle = NULL;
 					if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
 					{
-						CString tmp;
+						ARBostringstream tmp;
 						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 						// If any titles are in use, create a fixup action.
 						if (0 < nTitles)
@@ -1061,31 +1101,37 @@ void CDlgConfigure::OnUpdate()
 							// There's no way to differentiate existing titles.
 							if (0 < action->GetNewName().length())
 							{
-								tmp.Format(_T("Action: Renaming existing %d title(s) [%s] to [%s]\n"),
-									nTitles,
-									action->GetOldName().c_str(),
-									action->GetNewName().c_str());
-								msg += tmp;
+								tmp << _T("Action: Renaming existing ")
+									<< nTitles
+									<< _T(" title(s) [")
+									<< action->GetOldName()
+									<< _T("] to [")
+									<< action->GetNewName()
+									<< _T("]\n");
 								m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
 							}
 							else
 							{
-								tmp.Format(_T("Action: Deleting existing %d [%s] title(s)\n"),
-									nTitles,
-									action->GetOldName().c_str());
-								msg += tmp;
+								tmp << _T("Action: Deleting existing ")
+									<< nTitles
+									<< _T(" [")
+									<< action->GetOldName()
+									<< _T("] title(s)\n");
 								m_DlgFixup.push_back(new CDlgFixupDeleteTitle(action->GetVenue(), action->GetOldName()));
 							}
 						}
-						tmp.Format(_T("Action: Deleting title [%s]\n"),
-							action->GetOldName().c_str());
-						msg += tmp;
+						tmp << _T("Action: Deleting title [")
+							<< action->GetOldName()
+							<< _T("]\n");
+						msg += tmp.str().c_str();
 						venue->GetTitles().DeleteTitle(action->GetOldName());
 						oldTitle->Release();
 					}
 					venue->Release();
 				}
 			}
+			else
+				ASSERT(0);
 		}
 		update.GetActions().clear();
 		ARBString info;

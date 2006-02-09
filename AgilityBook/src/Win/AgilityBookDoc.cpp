@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2006-02-08 DRC Added 'RenameEvent' action.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
@@ -334,11 +335,45 @@ void CAgilityBookDoc::SortDates()
 
 void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
-	CString msg;
+	ARBostringstream msg;
 	for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
 	{
 		ARBConfigAction const* action = *iterAction;
-		if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
+		if (action->GetVerb() == ACTION_VERB_RENAME_EVENT)
+		{
+			ARBConfigVenue* venue = NULL;
+			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
+			{
+				venue->Release();
+				ARBConfigEvent* oldEvent = NULL;
+				if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
+				{
+					msg << _T("Action: Renaming ")
+						<< action->GetVenue()
+						<< _T(" event [")
+						<< action->GetOldName()
+						<< _T("] to [")
+						<< action->GetNewName()
+						<< _T("]");
+					// If any events are in use, create a fixup action.
+					int nEvents = GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
+					if (0 < nEvents)
+					{
+						msg << _T(", updating ") << nEvents << _T("titles");
+						GetDogs().RenameEvent(action->GetVenue(), action->GetOldName(), action->GetNewName());
+					}
+					msg << _T("\n");
+					// If the new event exists, just delete the old.
+					// Otherwise, rename the old to new.
+					if (venue->GetEvents().FindEvent(action->GetNewName()))
+						venue->GetEvents().DeleteEvent(action->GetOldName());
+					else
+						oldEvent->SetName(action->GetNewName());
+					oldEvent->Release();
+				}
+			}
+		}
+		else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 		{
 			// Find the venue.
 			ARBConfigVenue* venue;
@@ -352,21 +387,19 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					// to an error in the config (same title in multiple
 					// divisions), all we can do is rename ALL of them.
 					// There's no way to differentiate existing titles.
-					CString tmp;
-					tmp.Format(_T("Action: Renaming title [%s] to [%s]"),
-						action->GetOldName().c_str(),
-						action->GetNewName().c_str());
-					msg += tmp;
+					msg << _T("Action: Renaming title [")
+						<< action->GetOldName()
+						<< _T("] to [")
+						<< action->GetNewName()
+						<< _T("]");
 					// If any titles are in use, create a fixup action.
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 					if (0 < nTitles)
 					{
-						tmp.Format(_T(", updating %d titles\n"), nTitles);
+						msg << _T(", updating ") << nTitles << _T(" titles");
 						GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
 					}
-					else
-						tmp = _T("\n");
-					msg += tmp;
+					msg << _T("\n");
 					// If the new title exists, just delete the old.
 					// Otherwise, rename the old to new.
 					if (venue->GetTitles().FindTitle(action->GetNewName()))
@@ -388,7 +421,6 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 				ARBConfigTitle* oldTitle = NULL;
 				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
 				{
-					CString tmp;
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 					// If any titles are in use, create a fixup action.
 					if (0 < nTitles)
@@ -399,31 +431,36 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						// There's no way to differentiate existing titles.
 						if (0 < action->GetNewName().length())
 						{
-							tmp.Format(_T("Action: Renaming existing %d title(s) [%s] to [%s]\n"),
-								nTitles,
-								action->GetOldName().c_str(),
-								action->GetNewName().c_str());
-							msg += tmp;
+							msg << _T("Action: Renaming existing ")
+								<< nTitles
+								<< _T(" title(s) [")
+								<< action->GetOldName()
+								<< _T("] to [")
+								<< action->GetNewName()
+								<< _T("]\n");
 							GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
 						}
 						else
 						{
-							tmp.Format(_T("Action: Deleting existing %d [%s] title(s)\n"),
-								nTitles,
-								action->GetOldName().c_str());
-							msg += tmp;
+							msg << _T("Action: Deleting existing ")
+								<< nTitles
+								<< _T(" [")
+								<< action->GetOldName()
+								<< _T("] title(s)\n");
 							GetDogs().DeleteTitle(action->GetVenue(), action->GetOldName());
 						}
 					}
-					tmp.Format(_T("Action: Deleting title [%s]\n"),
-						action->GetOldName().c_str());
-					msg += tmp;
+					msg << _T("Action: Deleting title [")
+						<< action->GetOldName()
+						<< _T("]\n");
 					venue->GetTitles().DeleteTitle(action->GetOldName());
 					oldTitle->Release();
 				}
 				venue->Release();
 			}
 		}
+		else
+			ASSERT(0);
 	}
 	ARBString info;
 	bool bUpdateRuns = false;
@@ -438,7 +475,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		delete (*iter);
 	}
 	fixups.clear();
-	msg += info.c_str();
+	msg << info;
 	if (bUpdateRuns)
 	{
 		CDlgFixupTableInRuns fix;
@@ -446,15 +483,15 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		if (0 < fix.RunsUpdated())
 		{
 			if (0 < info.length())
-				msg += _T("\n\n");
-			CString tmp;
-			tmp.Format(_T("Table setting updated in %d runs."), fix.RunsUpdated());
-			msg += tmp;
+				msg << _T("\n\n");
+			msg << _T("Table setting updated in ")
+				<< fix.RunsUpdated()
+				<< _T(" runs.");
 		}
 	}
-	if (0 < msg.GetLength())
+	if (0 < msg.tellp())
 	{
-		CDlgMessage dlg(msg, 0);
+		CDlgMessage dlg(msg.str().c_str(), 0);
 		dlg.DoModal();
 		SetModifiedFlag();
 		UpdateAllViews(NULL, UPDATE_CONFIG);
@@ -643,14 +680,14 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 	int nBackups = CAgilityBookOptions::GetNumBackupFiles();
 	if (0 < nBackups)
 	{
-		CString backup;
 		// First find a hole.
 		int nHole = -1;
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			backup.Format(_T("%s.bck%d"), lpszPathName, i);
-			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(backup))
+			ARBostringstream backup;
+			backup << lpszPathName << _T(".bck") << i;
+			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(backup.str().c_str()))
 			{
 				nHole = i;
 				break;
@@ -661,15 +698,17 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			backup.Format(_T("%s.bck%d"), lpszPathName, i);
-			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(backup))
-				DeleteFile(backup);
-			CString filename;
-			filename.Format(_T("%s.bck%d"), lpszPathName, i-1);
-			MoveFile(filename, backup);
+			ARBostringstream backup;
+			backup << lpszPathName << _T(".bck") << i;
+			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(backup.str().c_str()))
+				DeleteFile(backup.str().c_str());
+			ARBostringstream filename;
+			filename << lpszPathName << _T(".bck") << i-1;
+			MoveFile(filename.str().c_str(), backup.str().c_str());
 		}
-		backup.Format(_T("%s.bck1"), lpszPathName);
-		CopyFile(lpszPathName, backup, FALSE);
+		ARBostringstream backup;
+		backup << lpszPathName << _T(".bck1");
+		CopyFile(lpszPathName, backup.str().c_str(), FALSE);
 	}
 }
 
@@ -1082,9 +1121,11 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	}
 	else
 	{
-		CString msg;
-		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
-		AfxMessageBox(msg, MB_ICONINFORMATION);
+		ARBostringstream msg;
+		msg << _T("Cannot find \"")
+			<< (LPCTSTR)m_strSearch
+			<< _T("\"");
+		AfxMessageBox(msg.str().c_str(), MB_ICONINFORMATION);
 		return false;
 	}
 }

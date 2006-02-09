@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2006-02-08 DRC File version 12.1. Added 'RenameEvent'.
  * @li 2005-12-14 DRC File version 12.0. Moved 'Titles' to 'Venue'.
  * @li 2005-10-14 DRC File version 11.1. Added 'Prefix' to 'Titles'.
  * @li 2005-07-15 DRC File version 11.0. Changed how Double-Qs are done.
@@ -96,7 +97,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 0);
+	static ARBVersion const curVersion(12, 1);
 	return curVersion;
 }
 
