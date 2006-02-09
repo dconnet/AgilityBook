@@ -324,9 +324,9 @@ void CWizardStart::UpdateList()
 		if (LB_ERR != index)
 			m_ctrlList.SetItemData(index, i);
 	}
-	CString str;
-	str.Format(_T("%s%d"), LAST_STYLEITEM, m_Style);
-	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str, -1);
+	ARBostringstream str;
+	str << LAST_STYLEITEM << m_Style;
+	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str.str().c_str(), -1);
 	m_ctrlList.SetCurSel(idx);
 	OnSelchangeExportList();
 	UpdateButtons();
@@ -1067,15 +1067,16 @@ void CWizardStart::OnWizardStyle()
 
 void CWizardStart::OnSelchangeExportList() 
 {
-	CString str;
+	CString msg;
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
 	{
-		str = sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc;
+		msg = sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc;
 	}
-	m_ctrlDesc.SetWindowText(str);
-	str.Format(_T("%s%d"), LAST_STYLEITEM, m_Style);
-	AfxGetApp()->WriteProfileInt(LAST_SECTION, str, index);
+	m_ctrlDesc.SetWindowText(msg);
+	ARBostringstream str;
+	str << LAST_STYLEITEM << m_Style;
+	AfxGetApp()->WriteProfileInt(LAST_SECTION, str.str().c_str(), index);
 	UpdateButtons();
 }
 

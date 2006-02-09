@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2006-02-08 DRC Added 'RenameEvent'.
  * @li 2005-12-04 DRC Added 'bonusPts' to 'Scoring','Run'(scoring)
  * @li 2005-10-26 DRC Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
  * @li 2005-04-26 DRC Added 'ver' to 'AgilityBook'
@@ -140,6 +141,7 @@
 #define ATTRIB_ACTION_VERB					_T("Verb")
 	#define ACTION_VERB_DELETE_TITLE			_T("DeleteTitle")
 	#define ACTION_VERB_RENAME_TITLE			_T("RenameTitle")
+	#define ACTION_VERB_RENAME_EVENT			_T("RenameEvent")
 #define ATTRIB_ACTION_VENUE					_T("Venue")
 #define ATTRIB_ACTION_DIVISION				_T("Div")
 #define ATTRIB_ACTION_OLDNAME				_T("OldName")

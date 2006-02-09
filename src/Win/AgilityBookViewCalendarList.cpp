@@ -495,9 +495,11 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		CString msg;
-		msg.Format(_T("Cannot find \"%s\""), (LPCTSTR)m_strSearch);
-		AfxMessageBox(msg, MB_ICONINFORMATION);
+		ARBostringstream msg;
+		msg << _T("Cannot find \"")
+			<< (LPCTSTR)m_strSearch
+			<< _T("\"");
+		AfxMessageBox(msg.str().c_str(), MB_ICONINFORMATION);
 	}
 	return bFound;
 }
@@ -1274,9 +1276,11 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 		if (0 < nNewIsNotVisible)
 		{
-			CString str;
-			str.Format(_T("Warning: %d new entries are not visible due to your viewing options."), nNewIsNotVisible);
-			AfxMessageBox(str, MB_ICONWARNING);
+			ARBostringstream str;
+			str << _T("Warning: ")
+				<< nNewIsNotVisible
+				<< _T(" new entries are not visible due to your viewing options.");
+			AfxMessageBox(str.str().c_str(), MB_ICONWARNING);
 		}
 	}
 }

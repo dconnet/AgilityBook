@@ -330,8 +330,9 @@ bool CWizardExcelImportImpl::GetData(
 			else
 				msg = m_FileName;
 			ioProgress->SetCaption(msg);
-			msg.Format(_T("Reading %ld rows and %ld columns"), nRows, nCols);
-			ioProgress->SetMessage(msg);
+			ARBostringstream str;
+			str << _T("Reading ") << nRows << _T(" rows and ") << nCols << _T(" columns");
+			ioProgress->SetMessage(str.str().c_str());
 			ioProgress->SetNumProgressBars(1);
 			ioProgress->SetRange(1, 0, nRows);
 			ioProgress->Show();
@@ -479,7 +480,9 @@ bool CWizardExcel::GetRowCol(
 	};
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		outCell.Format(_T("%s%ld"), sc_ColumnNames[inCol], inRow+1);
+		ARBostringstream str;
+		str << sc_ColumnNames[inCol] << inRow + 1;
+		outCell = str.str().c_str();
 		return true;
 	}
 	else

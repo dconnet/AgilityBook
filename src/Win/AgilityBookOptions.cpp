@@ -1045,9 +1045,9 @@ void CAgilityBookOptions::GetColumnOrder(
 		std::vector<int>& outValues)
 {
 	outValues.clear();
-	CString item;
-	item.Format(_T("col%d"), idxColumn);
-	CString data = AfxGetApp()->GetProfileString(GetColumnName(eOrder), item, _T(""));
+	ARBostringstream item;
+	item << _T("col") << idxColumn;
+	CString data = AfxGetApp()->GetProfileString(GetColumnName(eOrder), item.str().c_str(), _T(""));
 	int idx = data.Find(',');
 	while (0 <= idx)
 	{
@@ -1310,17 +1310,16 @@ void CAgilityBookOptions::SetColumnOrder(
 		size_t idxColumn,
 		std::vector<int> const& inValues)
 {
-	CString item;
-	CString data;
+	ARBostringstream data;
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
-		item.Format(_T("%d"), inValues[i]);
 		if (0 < i)
-			data += _T(",");
-		data += item;
+			data << _T(",");
+		data << inValues[i];
 	}
-	item.Format(_T("col%d"), idxColumn);
-	AfxGetApp()->WriteProfileString(GetColumnName(eOrder), item, data);
+	ARBostringstream item;
+	item << _T("col") << idxColumn;
+	AfxGetApp()->WriteProfileString(GetColumnName(eOrder), item.str().c_str(), data.str().c_str());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1380,8 +1379,8 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 
 ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 {
-	CString section;
-	section.Format(_T("dateFormat%d"), static_cast<int>(inItem));
+	ARBostringstream section;
+	section << _T("dateFormat") << static_cast<int>(inItem);
 	ARBDate::DateFormat def;
 	switch (inItem)
 	{
@@ -1393,7 +1392,7 @@ ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 	case eCalendar: def = ARBDate::eDashYMD; break;
 	case eTraining: def = ARBDate::eDashYMD; break;
 	}
-	int val = AfxGetApp()->GetProfileInt(_T("Settings"), section, static_cast<int>(def));
+	int val = AfxGetApp()->GetProfileInt(_T("Settings"), section.str().c_str(), static_cast<int>(def));
 	return static_cast<ARBDate::DateFormat>(val);
 }
 
@@ -1401,9 +1400,9 @@ void CAgilityBookOptions::SetDateFormat(
 		FormattedDate inItem,
 		ARBDate::DateFormat inFormat)
 {
-	CString section;
-	section.Format(_T("dateFormat%d"), static_cast<int>(inItem));
-	AfxGetApp()->WriteProfileInt(_T("Settings"), section, static_cast<int>(inFormat));
+	ARBostringstream section;
+	section << _T("dateFormat") << static_cast<int>(inItem);
+	AfxGetApp()->WriteProfileInt(_T("Settings"), section.str().c_str(), static_cast<int>(inFormat));
 }
 
 /////////////////////////////////////////////////////////////////////////////

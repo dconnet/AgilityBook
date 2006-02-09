@@ -102,9 +102,9 @@ BOOL CDlgSelectDog::OnInitDialog()
 	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		CString item;
-		item.Format(_T("Dog%d"), iDog);
-		CString dog = pApp->GetProfileString(_T("Selection"), item, _T(""));
+		ARBostringstream item;
+		item << _T("Dog") << iDog;
+		CString dog = pApp->GetProfileString(_T("Selection"), item.str().c_str(), _T(""));
 		if (!dog.IsEmpty())
 			selection.insert((LPCTSTR)dog);
 	}
@@ -129,9 +129,9 @@ void CDlgSelectDog::OnOK()
 	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		CString item;
-		item.Format(_T("Dog%d"), iDog);
-		pApp->WriteProfileString(_T("Selection"), item, NULL);
+		ARBostringstream item;
+		item << _T("Dog") << iDog;
+		pApp->WriteProfileString(_T("Selection"), item.str().c_str(), NULL);
 	}
 	// Now commit the selection.
 	nDogs = 0;
@@ -143,9 +143,9 @@ void CDlgSelectDog::OnOK()
 			ARBDog* pDog = reinterpret_cast<ARBDog*>(m_ctrlList.GetItemDataPtr(index));
 			m_Dogs.push_back(pDog);
 			++nDogs;
-			CString item;
-			item.Format(_T("Dog%d"), nDogs);
-			pApp->WriteProfileString(_T("Selection"), item, pDog->GetCallName().c_str());
+			ARBostringstream item;
+			item << _T("Dog") << nDogs;
+			pApp->WriteProfileString(_T("Selection"), item.str().c_str(), pDog->GetCallName().c_str());
 		}
 	}
 	pApp->WriteProfileInt(_T("Selection"), _T("nDogs"), nDogs);

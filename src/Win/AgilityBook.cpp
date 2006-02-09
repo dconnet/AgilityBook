@@ -146,54 +146,56 @@ void RunCommand(TCHAR const* const pCmd)
 		INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), pCmd, NULL, NULL, SW_SHOW));
 		if (result <= HINSTANCE_ERROR)
 		{
-			CString str;
+			ARBostringstream str;
+			str << _T("Unable to open ");
 			switch (result)
 			{
 			case 0:
-				str = _T("The operating system is out of memory or resources.");
+				str << _T("The operating system is out of memory or resources.");
 				break;
 			case SE_ERR_PNF:
-				str = _T("The specified path was not found.");
+				str << _T("The specified path was not found.");
 				break;
 			case SE_ERR_FNF:
-				str = _T("The specified file was not found.");
+				str << _T("The specified file was not found.");
 				break;
 			case ERROR_BAD_FORMAT:
-				str = _T("The .EXE file is invalid (non-Win32 .EXE or error in .EXE image).");
+				str << _T("The .EXE file is invalid (non-Win32 .EXE or error in .EXE image).");
 				break;
 			case SE_ERR_ACCESSDENIED:
-				str = _T("The operating system denied access to the specified file.");
+				str << _T("The operating system denied access to the specified file.");
 				break;
 			case SE_ERR_ASSOCINCOMPLETE:
-				str = _T("The filename association is incomplete or invalid.");
+				str << _T("The filename association is incomplete or invalid.");
 				break;
 			case SE_ERR_DDEBUSY:
-				str = _T("The DDE transaction could not be completed because other DDE transactions were being processed.");
+				str << _T("The DDE transaction could not be completed because other DDE transactions were being processed.");
 				break;
 			case SE_ERR_DDEFAIL:
-				str = _T("The DDE transaction failed.");
+				str << _T("The DDE transaction failed.");
 				break;
 			case SE_ERR_DDETIMEOUT:
-				str = _T("The DDE transaction could not be completed because the request timed out.");
+				str << _T("The DDE transaction could not be completed because the request timed out.");
 				break;
 			case SE_ERR_DLLNOTFOUND:
-				str = _T("The specified dynamic-link library was not found.");
+				str << _T("The specified dynamic-link library was not found.");
 				break;
 			case SE_ERR_NOASSOC:
-				str = _T("There is no application associated with the given filename extension.");
+				str << _T("There is no application associated with the given filename extension.");
 				break;
 			case SE_ERR_OOM:
-				str = _T("There was not enough memory to complete the operation.");
+				str << _T("There was not enough memory to complete the operation.");
 				break;
 			case SE_ERR_SHARE:
-				str = _T("A sharing violation occurred. ");
+				str << _T("A sharing violation occurred. ");
 				break;
 			default:
-				str.Format(_T("Unknown Error (%d) occurred."), result);
+				// Note, on Win32, the stream auto-casts to an int, which
+				// causes a casting warning.
+				str << _T("Unknown Error (") << (long)result << _T(") occurred.");
 				break;
 			}
-			str = _T("Unable to open ") + str;
-			AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
+			AfxMessageBox(str.str().c_str(), MB_ICONEXCLAMATION | MB_OK);
 		}
 	}
 }

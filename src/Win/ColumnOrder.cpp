@@ -36,6 +36,8 @@
 #include "stdafx.h"
 #include "ColumnOrder.h"
 
+#include "ARBTypes.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -111,26 +113,26 @@ bool CColumnOrder::Initialize(int nColumns)
 
 void CColumnOrder::Save()
 {
-	CString str, tmp;
-	str.Empty();
-	int i;
-	for (i = 0; i < m_nColumns; ++i)
 	{
-		tmp.Format(_T("%d"), m_order[i]);
-		if (!str.IsEmpty())
-			str += ',';
-		str += tmp;
+		ARBostringstream str;
+		for (int i = 0; i < m_nColumns; ++i)
+		{
+			if (0 < i)
+				str << ',';
+			str << m_order[i];
+		}
+		AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str.str().c_str());
 	}
-	AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str);
-	str.Empty();
-	for (i = 0; i < m_nColumns; ++i)
 	{
-		tmp.Format(_T("%d"), static_cast<int>(m_bDescending[i]));
-		if (!str.IsEmpty())
-			str += ',';
-		str += tmp;
+		ARBostringstream str;
+		for (int i = 0; i < m_nColumns; ++i)
+		{
+			if (0 < i)
+				str << ',';
+			str << static_cast<int>(m_bDescending[i]);
+		}
+		AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Sort"), str.str().c_str());
 	}
-	AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Sort"), str);
 }
 
 int CColumnOrder::FindColumnOrder(int column) const

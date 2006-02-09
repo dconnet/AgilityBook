@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="12.0">
+<DefaultConfig Book="12.1">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-02-08 DRC Configuration version 12. NADAC Wildcard is now Chances.
+               Extended Gamblers to 1/1 (long weekend).
 2006-01-04 DRC Configuration version 11. Updated CKC.
 2005-11-20 DRC Configuration version 10.
                Added prefix notation on some titles. Updated NADAC titles.
@@ -40,7 +42,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="11">
+	<Configuration version="12">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -71,6 +73,7 @@ Revision History:
 		<Action NewName="Vers-NATCH" OldName="Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="O-Vers-NATCH" OldName="Outstanding Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="S-Vers-NATCH" OldName="Superior Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
 		<Venue LongName="Agility Association of Canada" Name="AAC">
 			<Desc>http://www.aac.ca/
 
@@ -1663,9 +1666,9 @@ Note: As of 12/13/2005, NADAC no longer tracks points in different divisions. Al
 			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.</Titles>
 			<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="O-Vers-NATCH" ValidTo="2005-12-31">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts, TG-E plus 200 pts, TN-E plus 200 pts, WV-E plus 200 pts.</Titles>
 			<Titles LongName="NADAC Versatility Champion Superior Performance" Name="S-Vers-NATCH" ValidTo="2005-12-31">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts, TG-E plus 300 pts, TN-E plus 300 pts, WV-E plus 300 pts.</Titles>
-			<Titles LongName="Novice Triple Superior Performance Dog" Name="Triple Superior-Novice">Superior Performance in Regular, Jumpers and Wild Card.</Titles>
-			<Titles LongName="Open Triple Superior Performance Dog" Name="Triple Superior-Open">Superior Performance in Regular, Jumpers and Wild Card.</Titles>
-			<Titles LongName="Elite Triple Superior Performance Dog" Name="Triple Superior-Elite">Superior Performance in Regular, Jumpers and Wild Card.</Titles>
+			<Titles LongName="Novice Triple Superior Performance Dog" Name="Triple Superior-Novice">Superior Performance in Regular, Jumpers and Gamblers.</Titles>
+			<Titles LongName="Open Triple Superior Performance Dog" Name="Triple Superior-Open">Superior Performance in Regular, Jumpers and Gamblers.</Titles>
+			<Titles LongName="Elite Triple Superior Performance Dog" Name="Triple Superior-Elite">Superior Performance in Regular, Jumpers and Gamblers.</Titles>
 			<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple">Triple Superior Performance in all 3 levels.</Titles>
 			<Titles LongName="Novice Versatility Certificate" Name="Novice Versatility">NAC, NGC, NJC, TN-N, TG-N, WV-N</Titles>
 			<Titles LongName="Novice Versatility Certificate Outstanding Performance" Name="Outstanding Novice Versatility">O-NAC, O-NGC, O-NJC, O-TN-N, O-TG-N, O-WV-N</Titles>
@@ -1736,11 +1739,11 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 			<Titles LongName="Elite Tunnelers Skilled Superior Performance" Name="S-TNS-E">200 points</Titles>
 			<Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
-			<Titles LongName="Bronze Medal" Name="Bronze Medal">In Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in either Wild Card, TouchNGo or Weavers.</Titles>
-			<Titles LongName="Silver Medal" Name="Silver Medal">In Elite: 230 Regular pts, 130 Jumpers pts, 130 pts Wild Card, and 130 pts in two of the other classes.</Titles>
-			<Titles LongName="Gold Medal" Name="Gold Medal">In Elite: 430 Regular pts, 230 in each of Jumpers, Wild Card, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Platinum Medal" Name="Platinum Medal">In Elite: 630 Regular pts, 330 in each of Jumpers, Wild Card, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Purple Medal" Name="Purple Medal">In Elite: 830 Regular pts, 430 in each of Jumpers, Wild Card, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Bronze Medal" Name="Bronze Medal">In Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in either Gamblers, TouchNGo or Weavers.</Titles>
+			<Titles LongName="Silver Medal" Name="Silver Medal">In Elite: 230 Regular pts, 130 Jumpers pts, 130 pts Gamblers, and 130 pts in two of the other classes.</Titles>
+			<Titles LongName="Gold Medal" Name="Gold Medal">In Elite: 430 Regular pts, 230 in each of Jumpers, Gamblers, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Platinum Medal" Name="Platinum Medal">In Elite: 630 Regular pts, 330 in each of Jumpers, Gamblers, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Purple Medal" Name="Purple Medal">In Elite: 830 Regular pts, 430 in each of Jumpers, Gamblers, Tunnelers, TouchNGo and Weavers.</Titles>
 			<Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V" ValidTo="2005-12-31">30 points</Titles>
 			<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V" ValidTo="2005-12-31">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V" ValidTo="2005-12-31">30 points (20 pts before 8/1/2005)</Titles>
@@ -1932,8 +1935,9 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
-			<Event Name="Wild Card">
-				<Desc>Transition Gamblers class</Desc>
+			<Event Name="Chances">
+				<Desc>Transition Gamblers class
+Was called Wild Card briefly.</Desc>
 				<Scoring Division="*" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>

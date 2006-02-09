@@ -543,7 +543,7 @@ BOOL CWizardImport::OnWizardFinish()
 	{
 		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
 	}
-	CString errLog;
+	ARBostringstream errLog;
 	int nAdded = 0;
 	int nDuplicate = 0;
 	int nSkipped = 0;
@@ -619,10 +619,9 @@ BOOL CWizardImport::OnWizardFinish()
 				// rows/cols has that much overlap, it's just not worth it.
 				if (!pScoring)
 				{
-					CString str;
-					str.Format(_T("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n"),
-						nItem + 1);
-					errLog += str;
+					errLog << _T("Warning: Line ")
+						<< nItem + 1
+						<< _T(": Skipped entry, unable to find a valid configuration entry\n");
 					++nSkipped;
 					continue;
 				}
@@ -671,10 +670,13 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								CString str;
-								str.Format(_T("ERROR: Line %d, Column %d: Invalid run date: %s\n"),
-									nItem + 1, iCol + 1, entry[iCol].c_str());
-								errLog += str;
+								errLog << _T("ERROR: Line ")
+									<< nItem + 1
+									<< _T(", Column ")
+									<< iCol + 1
+									<< _T(": Invalid run date: ")
+									<< entry[iCol]
+									<< _T("\n");
 								if (pRun)
 								{
 									pRun->Release();
@@ -825,10 +827,11 @@ BOOL CWizardImport::OnWizardFinish()
 				{
 					if (!m_pDoc->GetConfig().GetVenues().FindVenue(trialVenue))
 					{
-						CString str;
-						str.Format(_T("Warning: Line %d: Skipped entry, invalid venue name: %s\n"),
-							nItem + 1, trialVenue.c_str());
-						errLog += str;
+						errLog << _T("Warning: Line ")
+							<< nItem + 1
+							<< _T(": Skipped entry, invalid venue name: ")
+							<< trialVenue
+							<< _T("\n");
 						pRun->Release();
 						pRun = NULL;
 					}
@@ -839,10 +842,9 @@ BOOL CWizardImport::OnWizardFinish()
 						pRun->GetLevel(),
 						pRun->GetDate()))
 					{
-						CString str;
-						str.Format(_T("Warning: Line %d: Skipped entry, unable to find a valid configuration entry\n"),
-							nItem + 1);
-						errLog += str;
+						errLog << _T("Warning: Line ")
+							<< nItem + 1
+							<< _T(": Skipped entry, unable to find a valid configuration entry\n");
 						pRun->Release();
 						pRun = NULL;
 					}
@@ -992,10 +994,13 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								CString str;
-								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar start date: %s\n"),
-									nItem + 1, iCol + 1, entry[iCol].c_str());
-								errLog += str;
+								errLog << _T("ERROR: Line ")
+									<< nItem + 1
+									<< _T(", Column ")
+									<< iCol + 1
+									<< _T(": Invalid calendar start date: ")
+									<< entry[iCol]
+									<< _T("\n");
 								if (pCal)
 								{
 									pCal->Release();
@@ -1015,10 +1020,13 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								CString str;
-								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar end date: %s\n"),
-									nItem + 1, iCol + 1, entry[iCol].c_str());
-								errLog += str;
+								errLog << _T("ERROR: Line ")
+									<< nItem + 1
+									<< _T(", Column ")
+										<< iCol + 1
+									<< _T(": Invalid calendar end date: ")
+									<< entry[iCol]
+									<< _T("\n");
 								if (pCal)
 								{
 									pCal->Release();
@@ -1050,10 +1058,13 @@ BOOL CWizardImport::OnWizardFinish()
 						}
 						else
 						{
-							CString str;
-							str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar entered value: %s [N, P or E]\n"),
-								nItem + 1, iCol + 1, entry[iCol].c_str());
-							errLog += str;
+							errLog << _T("ERROR: Line ")
+								<< nItem + 1
+								<< _T(", Column ")
+								<< iCol + 1
+								<< _T(": Invalid calendar entered value: ")
+								<< entry[iCol]
+								<< _T(" [N, P or E]\n");
 							if (pCal)
 							{
 								pCal->Release();
@@ -1084,10 +1095,13 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								CString str;
-								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar opening date: %s\n"),
-									nItem + 1, iCol + 1, entry[iCol].c_str());
-								errLog += str;
+								errLog << _T("ERROR: Line ")
+									<< nItem + 1
+									<< _T(", Column ")
+									<< iCol + 1
+									<< _T(": Invalid calendar opening date: ")
+									<< entry[iCol]
+									<< _T("\n");
 								if (pCal)
 								{
 									pCal->Release();
@@ -1107,10 +1121,13 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								CString str;
-								str.Format(_T("ERROR: Line %d, Column %d: Invalid calendar closing date: %s\n"),
-									nItem + 1, iCol + 1, entry[iCol].c_str());
-								errLog += str;
+								errLog << _T("ERROR: Line ")
+									<< nItem + 1
+									<< _T(", Column ")
+									<< iCol + 1
+									<< _T(": Invalid calendar closing date: ")
+									<< entry[iCol]
+									<< _T("\n");
 								if (pCal)
 								{
 									pCal->Release();
@@ -1162,10 +1179,13 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								CString str;
-								str.Format(_T("ERROR: Line %d, Column %d: Invalid training log date: %s\n"),
-									nItem + 1, iCol + 1, entry[iCol].c_str());
-								errLog += str;
+								errLog << _T("ERROR: Line ")
+									<< nItem + 1
+									<< _T(", Column ")
+									<< iCol + 1
+									<< _T(": Invalid training log date: ")
+									<< entry[iCol]
+									<< _T("\n");
 								if (pLog)
 								{
 									pLog->Release();
@@ -1207,13 +1227,12 @@ BOOL CWizardImport::OnWizardFinish()
 			break;
 		}
 	}
-	CString str;
-	if (!errLog.IsEmpty())
-		errLog += _T("\n");
-	str.Format(_T("%d entries added\n%d duplicates (not added)\n%d entries skipped"),
-		nAdded, nDuplicate, nSkipped);
-	errLog += str;
-	CDlgMessage dlg(errLog, 0, this);
+	if (0 < errLog.tellp())
+		errLog << _T("\n");
+	errLog << nAdded << _T(" entries added\n")
+		<< nDuplicate << _T(" duplicates (not added)\n")
+		<< nSkipped << _T(" entries skipped");
+	CDlgMessage dlg(errLog.str().c_str(), 0, this);
 	dlg.DoModal();
 	if (0 < nAdded)
 	{

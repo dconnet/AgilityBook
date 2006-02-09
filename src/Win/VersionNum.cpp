@@ -224,13 +224,12 @@ void CVersionNum::clear()
 
 CString CVersionNum::GetVersionString() const
 {
-	CString version;
-	version.Format(_T("%hd.%hd.%hd.%hd"),
-		m_Version.part1,
-		m_Version.part2,
-		m_Version.part3,
-		m_Version.part4);
-	return version;
+	ARBostringstream str;
+	str << m_Version.part1
+		<< '.' << m_Version.part2
+		<< '.' << m_Version.part3
+		<< '.' << m_Version.part4;
+	return str.str().c_str();
 }
 
 void CVersionNum::GetVersion(VERSION_NUMBER& outVer) const
