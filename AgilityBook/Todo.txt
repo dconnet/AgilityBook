@@ -1,4 +1,4 @@
-Last Updated: 12/24/2005
+Last Updated: 2/8/2006
 
 - Remember printer page orientation. (See KB166130: "How To Overriding
   Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
@@ -8,6 +8,8 @@ Last Updated: 12/24/2005
 - Possibly change calendar view to display by separate months. Maybe bolder
   lines between the months? See email from Kelly on 12/22/05 that has some
   really good ideas.
+
+- Create named filter settings.
 
 - Create named import/export settings.
 
