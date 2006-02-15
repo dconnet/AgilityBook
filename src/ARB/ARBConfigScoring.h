@@ -403,11 +403,7 @@ inline bool ARBConfigScoring::ConvertDoubleQ() const
  */
 class ARBConfigScoringList : public ARBVector<ARBConfigScoringPtr>
 {
-private:
-	ARBConfigScoringList(ARBConfigScoringList const&);
-	ARBConfigScoringList& operator=(ARBConfigScoringList const&);
 public:
-	ARBConfigScoringList() {}
 	/**
 	 * Load a scoring configuration.
 	 * @pre inTree is the actual ARBConfigScoring element.
