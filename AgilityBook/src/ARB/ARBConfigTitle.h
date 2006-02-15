@@ -55,12 +55,16 @@ class Element;
  */
 class ARBConfigTitle : public ARBBase
 {
-public:
+protected:
 	ARBConfigTitle();
-	~ARBConfigTitle();
 	ARBConfigTitle(ARBConfigTitle const& rhs);
-	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
+
+public:
+	~ARBConfigTitle();
+	static ARBConfigTitlePtr New();
 	ARBConfigTitlePtr Clone() const;
+
+	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
 
 	bool operator==(ARBConfigTitle const& rhs) const;
 	bool operator!=(ARBConfigTitle const& rhs) const;

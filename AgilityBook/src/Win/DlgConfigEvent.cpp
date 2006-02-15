@@ -90,12 +90,13 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_Config(config)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
-	, m_Scorings(pEvent->GetScorings())
+	, m_Scorings()
 	, m_idxMethod(-1)
 	, m_bHasTable(FALSE)
 	, m_bHasPartners(FALSE)
 	, m_bHasSubNames(FALSE)
 {
+	pEvent->GetScorings().Clone(m_Scorings);
 	ASSERT(m_pVenue);
 	ASSERT(m_pEvent);
 	m_Name = m_pEvent->GetName().c_str();
@@ -1248,7 +1249,8 @@ void CDlgConfigEvent::OnOK()
 	// Check if there is any overlap.
 	bool bOverlap = false;
 	{
-		ARBConfigScoringList scorings = m_Scorings;
+		ARBConfigScoringList scorings;
+		m_Scorings.Clone(scorings);
 		while (!bOverlap && 1 < scorings.size())
 		{
 			// Extract all similar methods.
@@ -1350,6 +1352,6 @@ void CDlgConfigEvent::OnOK()
 		}
 		m_pEvent->SetSubNames(subNames);
 	}
-	m_pEvent->GetScorings() = m_Scorings;
+	m_Scorings.Clone(m_pEvent->GetScorings());
 	CDlgBaseDialog::OnOK();
 }

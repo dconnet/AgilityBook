@@ -57,12 +57,16 @@ class Element;
  */
 class ARBDogTitle : public ARBBase
 {
-public:
+protected:
 	ARBDogTitle();
-	~ARBDogTitle();
 	ARBDogTitle(ARBDogTitle const& rhs);
-	ARBDogTitle& operator=(ARBDogTitle const& rhs);
+
+public:
+	~ARBDogTitle();
+	static ARBDogTitlePtr New();
 	ARBDogTitlePtr Clone() const;
+
+	ARBDogTitle& operator=(ARBDogTitle const& rhs);
 
 	bool operator==(ARBDogTitle const& rhs) const;
 	bool operator!=(ARBDogTitle const& rhs) const;

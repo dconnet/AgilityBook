@@ -126,9 +126,9 @@ void CDlgDog::OnOK()
 	m_pDog->SetRegisteredName((LPCTSTR)(m_pageProp->m_RegName));
 	m_pageProp->m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pDog->SetNote((LPCTSTR)(m_pageProp->m_Notes));
-	m_pDog->GetTitles() = m_pageTitles->m_Titles;
-	m_pDog->GetRegNums() = m_pageRegNums->m_RegNums;
-	m_pDog->GetExistingPoints() = m_pagePoints->m_ExistingPoints;
+	m_pageTitles->m_Titles.Clone(m_pDog->GetTitles());
+	m_pageRegNums->m_RegNums.Clone(m_pDog->GetRegNums());
+	m_pagePoints->m_ExistingPoints.Clone(m_pDog->GetExistingPoints());
 
 	m_pDoc->ResetVisibility();
 

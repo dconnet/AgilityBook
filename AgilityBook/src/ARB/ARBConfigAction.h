@@ -60,12 +60,16 @@ class Element;
  */
 class ARBConfigAction : public ARBBase
 {
-public:
+protected:
 	ARBConfigAction();
-	~ARBConfigAction();
 	ARBConfigAction(ARBConfigAction const& rhs);
-	ARBConfigAction& operator=(ARBConfigAction const& rhs);
+
+public:
+	~ARBConfigAction();
+	static ARBConfigActionPtr New();
 	ARBConfigActionPtr Clone() const;
+
+	ARBConfigAction& operator=(ARBConfigAction const& rhs);
 
 	bool operator==(ARBConfigAction const& rhs) const;
 	bool operator!=(ARBConfigAction const& rhs) const;

@@ -55,13 +55,18 @@ class Element;
  */
 class ARBConfigTitlePoints : public ARBBase
 {
-public:
+protected:
 	ARBConfigTitlePoints();
-	~ARBConfigTitlePoints();
 	ARBConfigTitlePoints(double inPoints, short inFaults);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
-	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
+
+public:
+	~ARBConfigTitlePoints();
+	static ARBConfigTitlePointsPtr New();
+	static ARBConfigTitlePointsPtr New(double inPoints, short inFaults);
 	ARBConfigTitlePointsPtr Clone() const;
+
+	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
 
 	bool operator==(ARBConfigTitlePoints const& rhs) const;
 	bool operator!=(ARBConfigTitlePoints const& rhs) const;

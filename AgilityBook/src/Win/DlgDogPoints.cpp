@@ -186,8 +186,9 @@ CDlgDogPoints::CDlgDogPoints(
 	, m_ctrlPoints(true)
 	, m_pDoc(pDoc)
 	, m_sortPoints(_T("ExistingPoints"))
-	, m_ExistingPoints(points)
+	, m_ExistingPoints()
 {
+	points.Clone(m_ExistingPoints);
 	m_sortPoints.Initialize(nColExistingPointsInfo);
 	//{{AFX_DATA_INIT(CDlgDogPoints)
 	//}}AFX_DATA_INIT

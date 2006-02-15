@@ -117,8 +117,8 @@ CDlgInfoJudge::CDlgInfoJudge(
 		m_pDoc->GetAllTrialLocations(m_NamesInUse, false);
 		break;
 	}
-	m_InfoOrig = m_pDoc->GetInfo().GetInfo(m_Type);
-	m_Info = m_InfoOrig;
+	m_pDoc->GetInfo().GetInfo(m_Type).Clone(m_InfoOrig);
+	m_InfoOrig.Clone(m_Info);
 }
 
 void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
@@ -395,7 +395,7 @@ void CDlgInfoJudge::OnOK()
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
 	{
-		m_pDoc->GetInfo().GetInfo(m_Type) = m_Info;
+		m_Info.Clone(m_pDoc->GetInfo().GetInfo(m_Type));
 		m_pDoc->SetModifiedFlag();
 	}
 	CDlgBaseDialog::OnOK();

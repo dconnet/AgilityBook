@@ -51,12 +51,16 @@ class Element;
  */
 class ARBDogRunPartner : public ARBBase
 {
-public:
+protected:
 	ARBDogRunPartner();
-	~ARBDogRunPartner();
 	ARBDogRunPartner(ARBDogRunPartner const& rhs);
-	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
+
+public:
+	~ARBDogRunPartner();
+	static ARBDogRunPartnerPtr New();
 	ARBDogRunPartnerPtr Clone() const;
+
+	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
 
 	bool operator==(ARBDogRunPartner const& rhs) const;
 	bool operator!=(ARBDogRunPartner const& rhs) const;

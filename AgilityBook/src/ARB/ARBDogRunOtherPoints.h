@@ -51,12 +51,16 @@ class Element;
  */
 class ARBDogRunOtherPoints : public ARBBase
 {
-public:
+protected:
 	ARBDogRunOtherPoints();
-	~ARBDogRunOtherPoints();
 	ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs);
-	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
+
+public:
+	~ARBDogRunOtherPoints();
+	static ARBDogRunOtherPointsPtr New();
 	ARBDogRunOtherPointsPtr Clone() const;
+
+	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
 
 	bool operator==(ARBDogRunOtherPoints const& rhs) const;
 	bool operator!=(ARBDogRunOtherPoints const& rhs) const;

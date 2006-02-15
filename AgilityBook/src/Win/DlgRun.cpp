@@ -69,7 +69,7 @@ CDlgRun::CDlgRun(
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
 	, m_pRealRun(pRun)
-	, m_Run(new ARBDogRun(*pRun))
+	, m_Run(pRun->Clone())
 	, m_pageScore(NULL)
 	, m_pageComments(NULL)
 	, m_pageReference(NULL)

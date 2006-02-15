@@ -57,12 +57,16 @@ class Element;
  */
 class ARBDogExistingPoints : public ARBBase
 {
-public:
+protected:
 	ARBDogExistingPoints();
-	~ARBDogExistingPoints();
 	ARBDogExistingPoints(ARBDogExistingPoints const& rhs);
-	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
+
+public:
+	~ARBDogExistingPoints();
+	static ARBDogExistingPointsPtr New();
 	ARBDogExistingPointsPtr Clone() const;
+
+	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
 
 	bool operator==(ARBDogExistingPoints const& rhs) const;
 	bool operator!=(ARBDogExistingPoints const& rhs) const;

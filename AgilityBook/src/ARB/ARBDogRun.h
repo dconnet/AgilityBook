@@ -64,12 +64,16 @@ class Element;
 
 class ARBDogRun : public ARBBase
 {
-public:
+protected:
 	ARBDogRun();
-	~ARBDogRun();
 	ARBDogRun(ARBDogRun const& rhs);
-	ARBDogRun& operator=(ARBDogRun const& rhs);
+
+public:
+	~ARBDogRun();
+	static ARBDogRunPtr New();
 	ARBDogRunPtr Clone() const;
+
+	ARBDogRun& operator=(ARBDogRun const& rhs);
 
 	bool operator==(ARBDogRun const& rhs) const;
 	bool operator!=(ARBDogRun const& rhs) const;

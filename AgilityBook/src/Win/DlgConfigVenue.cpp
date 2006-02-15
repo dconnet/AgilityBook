@@ -988,7 +988,7 @@ void CDlgConfigVenue::OnNew()
 			while (!done)
 			{
 				done = true;
-				ARBConfigTitlePtr title(new ARBConfigTitle());
+				ARBConfigTitlePtr title(ARBConfigTitle::New());
 				title->SetName(name);
 				CDlgConfigTitle dlg(title, this);
 				if (IDOK == dlg.DoModal())
@@ -1029,7 +1029,7 @@ void CDlgConfigVenue::OnNew()
 	case eEvents:
 		{
 			// The dialog will ensure uniqueness.
-			ARBConfigEventPtr pEvent(new ARBConfigEvent());
+			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
 			CDlgConfigEvent dlg(m_pDoc, NULL, NULL, m_pVenue, pEvent, this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -1045,7 +1045,7 @@ void CDlgConfigVenue::OnNew()
 	case eMultiQ:
 		{
 			// The dialog will ensure uniqueness.
-			ARBConfigMultiQPtr multiq(new ARBConfigMultiQ());
+			ARBConfigMultiQPtr multiq(ARBConfigMultiQ::New());
 			CDlgConfigMultiQ dlg(m_pVenue, multiq, this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -1452,7 +1452,7 @@ void CDlgConfigVenue::OnEdit()
 			while (!done)
 			{
 				done = true;
-				ARBConfigTitlePtr title(new ARBConfigTitle(*(pTitleData->GetTitle())));
+				ARBConfigTitlePtr title = pTitleData->GetTitle()->Clone();
 				CDlgConfigTitle dlg(title, this);
 				if (IDOK == dlg.DoModal())
 				{
@@ -1570,7 +1570,7 @@ void CDlgConfigVenue::OnCopy()
 					name = (LPCTSTR)copyOf + name;
 					longname = (LPCTSTR)copyOf + longname;
 				}
-				ARBConfigTitlePtr title(new ARBConfigTitle(*(pData->GetTitle())));
+				ARBConfigTitlePtr title = pData->GetTitle()->Clone();
 				title->SetName(name);
 				title->SetLongName(longname);
 				if (m_pVenue->GetTitles().AddTitle(title))
@@ -1596,7 +1596,7 @@ void CDlgConfigVenue::OnCopy()
 				{
 					name = (LPCTSTR)copyOf + name;
 				}
-				ARBConfigEventPtr pEvent(new ARBConfigEvent(*(pEventData->GetEvent())));
+				ARBConfigEventPtr pEvent = pEventData->GetEvent()->Clone();
 				pEvent->SetName(name);
 				if (m_pVenue->GetEvents().AddEvent(pEvent))
 				{
@@ -1621,7 +1621,7 @@ void CDlgConfigVenue::OnCopy()
 				{
 					name = (LPCTSTR)copyOf + name;
 				}
-				ARBConfigMultiQPtr multiq(new ARBConfigMultiQ(*(pData->GetMultiQ())));
+				ARBConfigMultiQPtr multiq = pData->GetMultiQ()->Clone();
 				multiq->SetName(name);
 				if (m_pVenue->GetMultiQs().AddMultiQ(multiq))
 				{

@@ -453,7 +453,7 @@ static ARBDogRunPtr CreateRun(
 {
 	if (!pRun)
 	{
-		pRun = ARBDogRunPtr(new ARBDogRun());
+		pRun = ARBDogRunPtr(ARBDogRun::New());
 		pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()),
 			pScoring->DropFractions());
 	}
@@ -491,7 +491,7 @@ static ARBCalendarPtr CreateCal(ARBCalendarPtr pCal)
 {
 	if (!pCal)
 	{
-		pCal = ARBCalendarPtr(new ARBCalendar());
+		pCal = ARBCalendarPtr(ARBCalendar::New());
 	}
 	return pCal;
 }
@@ -500,7 +500,7 @@ static ARBTrainingPtr CreateLog(ARBTrainingPtr pLog)
 {
 	if (!pLog)
 	{
-		pLog = ARBTrainingPtr(new ARBTraining());
+		pLog = ARBTrainingPtr(ARBTraining::New());
 		pLog->SetDate(ARBDate::Today());
 	}
 	return pLog;
@@ -674,7 +674,11 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+									<< static_cast<UINT>(iCol + 1)
+#else
 									<< iCol + 1
+#endif
 									<< _T(": Invalid run date: ")
 									<< entry[iCol]
 									<< _T("\n");
@@ -870,7 +874,7 @@ BOOL CWizardImport::OnWizardFinish()
 						// Not found, create it.
 						if (!pDog)
 						{
-							pDog = ARBDogPtr(new ARBDog());
+							pDog = ARBDogPtr(ARBDog::New());
 							if (0 < nameReg.length())
 								pDog->SetRegisteredName(nameReg);
 							if (0 < nameCall.length())
@@ -884,7 +888,7 @@ BOOL CWizardImport::OnWizardFinish()
 					{
 						if (m_pDoc->GetDogs().begin() == m_pDoc->GetDogs().end())
 						{
-							pDog = ARBDogPtr(new ARBDog());
+							pDog = ARBDogPtr(ARBDog::New());
 							pDog->SetCallName(_T("?"));
 							m_pDoc->GetDogs().AddDog(pDog);
 						}
@@ -920,7 +924,7 @@ BOOL CWizardImport::OnWizardFinish()
 							size_t i = 0;
 							for (ARBDogClubList::iterator iterClub = pTrialTmp->GetClubs().begin(); iterClub != pTrialTmp->GetClubs().end(); ++iterClub)
 							{
-								ARBDogClubPtr pClub(new ARBDogClub());
+								ARBDogClubPtr pClub(ARBDogClub::New());
 								pClub->SetName(clubs[i]);
 								pClub->SetVenue(venues[i]);
 								if (*pClub != *(*(iterClub)))
@@ -940,7 +944,7 @@ BOOL CWizardImport::OnWizardFinish()
 					if (!pTrial)
 					{
 						// Couldn't find a trial, so make one.
-						pTrial = ARBDogTrialPtr(new ARBDogTrial());
+						pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 						pDog->GetTrials().AddTrial(pTrial);
 						pDog->GetTrials().sort(true);
 						for (size_t i = 0; i < venues.size(); ++i)
@@ -986,7 +990,11 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+									<< static_cast<UINT>(iCol + 1)
+#else
 									<< iCol + 1
+#endif
 									<< _T(": Invalid calendar start date: ")
 									<< entry[iCol]
 									<< _T("\n");
@@ -1009,7 +1017,11 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-										<< iCol + 1
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+									<< static_cast<UINT>(iCol + 1)
+#else
+									<< iCol + 1
+#endif
 									<< _T(": Invalid calendar end date: ")
 									<< entry[iCol]
 									<< _T("\n");
@@ -1044,7 +1056,11 @@ BOOL CWizardImport::OnWizardFinish()
 							errLog << _T("ERROR: Line ")
 								<< nItem + 1
 								<< _T(", Column ")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+								<< static_cast<UINT>(iCol + 1)
+#else
 								<< iCol + 1
+#endif
 								<< _T(": Invalid calendar entered value: ")
 								<< entry[iCol]
 								<< _T(" [N, P or E]\n");
@@ -1078,7 +1094,11 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+									<< static_cast<UINT>(iCol + 1)
+#else
 									<< iCol + 1
+#endif
 									<< _T(": Invalid calendar opening date: ")
 									<< entry[iCol]
 									<< _T("\n");
@@ -1101,7 +1121,11 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+									<< static_cast<UINT>(iCol + 1)
+#else
 									<< iCol + 1
+#endif
 									<< _T(": Invalid calendar closing date: ")
 									<< entry[iCol]
 									<< _T("\n");
@@ -1155,7 +1179,11 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+									<< static_cast<UINT>(iCol + 1)
+#else
 									<< iCol + 1
+#endif
 									<< _T(": Invalid training log date: ")
 									<< entry[iCol]
 									<< _T("\n");

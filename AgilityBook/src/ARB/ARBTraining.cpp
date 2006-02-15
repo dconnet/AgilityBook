@@ -76,6 +76,12 @@ ARBTraining::~ARBTraining()
 {
 }
 
+//static
+ARBTrainingPtr ARBTraining::New()
+{
+	return ARBTrainingPtr(new ARBTraining());
+}
+
 ARBTrainingPtr ARBTraining::Clone() const
 {
 	return ARBTrainingPtr(new ARBTraining(*this));
@@ -187,7 +193,7 @@ bool ARBTrainingList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBTrainingPtr thing(new ARBTraining());
+	ARBTrainingPtr thing(ARBTraining::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

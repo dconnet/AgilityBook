@@ -64,6 +64,12 @@ ARBConfigSubLevel::~ARBConfigSubLevel()
 {
 }
 
+//static
+ARBConfigSubLevelPtr ARBConfigSubLevel::New()
+{
+	return ARBConfigSubLevelPtr(new ARBConfigSubLevel());
+}
+
 ARBConfigSubLevelPtr ARBConfigSubLevel::Clone() const
 {
 	return ARBConfigSubLevelPtr(new ARBConfigSubLevel(*this));
@@ -120,7 +126,7 @@ bool ARBConfigSubLevelList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigSubLevelPtr thing(new ARBConfigSubLevel());
+	ARBConfigSubLevelPtr thing(ARBConfigSubLevel::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -146,7 +152,7 @@ bool ARBConfigSubLevelList::AddSubLevel(
 	// The calling function must make sure this name is unique within the division.
 	if (0 == inName.length())
 		return false;
-	ARBConfigSubLevelPtr pLevel(new ARBConfigSubLevel());
+	ARBConfigSubLevelPtr pLevel(ARBConfigSubLevel::New());
 	pLevel->SetName(inName);
 	push_back(pLevel);
 	if (outLevel)

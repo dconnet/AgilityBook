@@ -76,6 +76,12 @@ ARBDogRegNum::~ARBDogRegNum()
 {
 }
 
+//static
+ARBDogRegNumPtr ARBDogRegNum::New()
+{
+	return ARBDogRegNumPtr(new ARBDogRegNum());
+}
+
 ARBDogRegNumPtr ARBDogRegNum::Clone() const
 {
 	return ARBDogRegNumPtr(new ARBDogRegNum(*this));
@@ -196,7 +202,7 @@ bool ARBDogRegNumList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogRegNumPtr thing(new ARBDogRegNum());
+	ARBDogRegNumPtr thing(ARBDogRegNum::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -287,7 +293,7 @@ bool ARBDogRegNumList::AddRegNum(
 		ARBString const& inNumber,
 		ARBDogRegNumPtr* outRegNum)
 {
-	ARBDogRegNumPtr pRegNum(new ARBDogRegNum());
+	ARBDogRegNumPtr pRegNum(ARBDogRegNum::New());
 	pRegNum->SetVenue(inVenue);
 	pRegNum->SetNumber(inNumber);
 	push_back(pRegNum);

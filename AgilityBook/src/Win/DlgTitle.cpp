@@ -301,7 +301,7 @@ void CDlgTitle::OnOK()
 		}
 	}
 
-	ARBDogTitlePtr title(new ARBDogTitle());
+	ARBDogTitlePtr title(ARBDogTitle::New());
 	title->SetDate(date);
 	title->SetHidden(bHidden);
 	title->SetVenue(pVenue->GetName());

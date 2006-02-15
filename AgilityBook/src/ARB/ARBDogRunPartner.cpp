@@ -71,6 +71,12 @@ ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
 
+//static
+ARBDogRunPartnerPtr ARBDogRunPartner::New()
+{
+	return ARBDogRunPartnerPtr(new ARBDogRunPartner());
+}
+
 ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
 {
 	return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
@@ -167,7 +173,7 @@ bool ARBDogRunPartnerList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogRunPartnerPtr thing(new ARBDogRunPartner());
+	ARBDogRunPartnerPtr thing(ARBDogRunPartner::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

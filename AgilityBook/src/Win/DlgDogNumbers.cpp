@@ -143,8 +143,9 @@ CDlgDogNumbers::CDlgDogNumbers(
 	, m_ctrlRegNums(true)
 	, m_pDoc(pDoc)
 	, m_sortRegNums(_T("RegNums"))
-	, m_RegNums(regnums)
+	, m_RegNums()
 {
+	regnums.Clone(m_RegNums);
 	m_sortRegNums.Initialize(nColRegNumInfo);
 	//{{AFX_DATA_INIT(CDlgDogNumbers)
 	//}}AFX_DATA_INIT

@@ -73,6 +73,18 @@ ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 {
 }
 
+//static
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
+{
+	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints());
+}
+
+//static
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(double inPoints, short inFaults)
+{
+	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
+}
+
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::Clone() const
 {
 	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
@@ -143,7 +155,7 @@ bool ARBConfigLifetimePointsList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigLifetimePointsPtr thing(new ARBConfigLifetimePoints());
+	ARBConfigLifetimePointsPtr thing(ARBConfigLifetimePoints::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -205,7 +217,7 @@ bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		outPoints->reset();
 	if (FindLifetimePoints(inFaults))
 		return false;
-	ARBConfigLifetimePointsPtr pLife(new ARBConfigLifetimePoints(inPoints, inFaults));
+	ARBConfigLifetimePointsPtr pLife(ARBConfigLifetimePoints::New(inPoints, inFaults));
 	push_back(pLife);
 	sort();
 	if (outPoints)

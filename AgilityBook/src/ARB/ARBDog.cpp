@@ -84,15 +84,25 @@ ARBDog::ARBDog(ARBDog const& rhs)
 	, m_RegName(rhs.m_RegName)
 	, m_Breed(rhs.m_Breed)
 	, m_Note(rhs.m_Note)
-	, m_ExistingPoints(rhs.m_ExistingPoints)
-	, m_RegNums(rhs.m_RegNums)
-	, m_Titles(rhs.m_Titles)
-	, m_Trials(rhs.m_Trials)
+	, m_ExistingPoints()
+	, m_RegNums()
+	, m_Titles()
+	, m_Trials()
 {
+	rhs.m_ExistingPoints.Clone(m_ExistingPoints);
+	rhs.m_RegNums.Clone(m_RegNums);
+	rhs.m_Titles.Clone(m_Titles);
+	rhs.m_Trials.Clone(m_Trials);
 }
 
 ARBDog::~ARBDog()
 {
+}
+
+//static
+ARBDogPtr ARBDog::New()
+{
+	return ARBDogPtr(new ARBDog());
 }
 
 ARBDogPtr ARBDog::Clone() const
@@ -110,10 +120,10 @@ ARBDog& ARBDog::operator=(ARBDog const& rhs)
 		m_RegName = rhs.m_RegName;
 		m_Breed = rhs.m_Breed;
 		m_Note = rhs.m_Note;
-		m_ExistingPoints = rhs.m_ExistingPoints;
-		m_RegNums = rhs.m_RegNums;
-		m_Titles = rhs.m_Titles;
-		m_Trials = rhs.m_Trials;
+		rhs.m_ExistingPoints.Clone(m_ExistingPoints);
+		rhs.m_RegNums.Clone(m_RegNums);
+		rhs.m_Titles.Clone(m_Titles);
+		rhs.m_Trials.Clone(m_Trials);
 	}
 	return *this;
 }
@@ -340,7 +350,7 @@ bool ARBDogList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogPtr thing(new ARBDog());
+	ARBDogPtr thing(ARBDog::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

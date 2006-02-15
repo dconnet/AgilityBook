@@ -55,12 +55,16 @@ class Element;
  */
 class ARBConfigDivision : public ARBBase
 {
-public:
+protected:
 	ARBConfigDivision();
-	~ARBConfigDivision();
 	ARBConfigDivision(ARBConfigDivision const& rhs);
-	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+
+public:
+	~ARBConfigDivision();
+	static ARBConfigDivisionPtr New();
 	ARBConfigDivisionPtr Clone() const;
+
+	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
 
 	bool operator==(ARBConfigDivision const& rhs) const;
 	bool operator!=(ARBConfigDivision const& rhs) const;

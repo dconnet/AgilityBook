@@ -68,6 +68,12 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
 
+//static
+ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
+{
+	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
+}
+
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
 {
 	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
@@ -180,7 +186,7 @@ bool ARBConfigOtherPointsList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigOtherPointsPtr thing(new ARBConfigOtherPoints());
+	ARBConfigOtherPointsPtr thing(ARBConfigOtherPoints::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

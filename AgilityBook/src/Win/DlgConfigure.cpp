@@ -652,7 +652,7 @@ void CDlgConfigure::OnNew()
 	{
 	case eVenues:
 		{
-			ARBConfigVenuePtr pVenue(new ARBConfigVenue());
+			ARBConfigVenuePtr pVenue(ARBConfigVenue::New());
 			CDlgConfigVenue dlg(m_pDoc, m_Book, m_Config, pVenue, this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -700,7 +700,7 @@ void CDlgConfigure::OnNew()
 
 	case eOtherPoints:
 		{
-			ARBConfigOtherPointsPtr pOther(new ARBConfigOtherPoints());
+			ARBConfigOtherPointsPtr pOther(ARBConfigOtherPoints::New());
 			// The dialog will ensure uniqueness.
 			CDlgConfigOtherPoints dlg(m_Config, pOther, this);
 			if (IDOK == dlg.DoModal())
@@ -951,7 +951,7 @@ void CDlgConfigure::OnCopy()
 			{
 				name = (LPCTSTR)copyOf + name;
 			}
-			ARBConfigOtherPointsPtr pOther(new ARBConfigOtherPoints(*(pOtherData->GetOtherPoints())));
+			ARBConfigOtherPointsPtr pOther = pOtherData->GetOtherPoints()->Clone();
 			pOther->SetName(name);
 			if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 			{

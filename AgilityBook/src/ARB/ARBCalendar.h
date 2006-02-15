@@ -95,19 +95,6 @@ public:
 		ePlanning	///< Not entered, but planning on it soon
 	} eEntry;
 
-	ARBCalendar();
-	~ARBCalendar();
-	ARBCalendar(ARBCalendar const& rhs);
-	ARBCalendar& operator=(ARBCalendar const& rhs);
-	ARBCalendarPtr Clone() const;
-
-	bool operator==(ARBCalendar const& rhs) const;
-	bool operator!=(ARBCalendar const& rhs) const;
-	bool operator<(ARBCalendar const& rhs) const;
-	bool operator>(ARBCalendar const& rhs) const;
-	bool operator<(ARBDate const& rhs) const;
-	bool operator>(ARBDate const& rhs) const;
-
 	/**
 	 *
 	 */
@@ -116,6 +103,24 @@ public:
 		eUIDvEvent,
 		eUIDvTodo
 	} eUidType;
+
+protected:
+	ARBCalendar();
+	ARBCalendar(ARBCalendar const& rhs);
+
+public:
+	~ARBCalendar();
+	static ARBCalendarPtr New();
+	ARBCalendarPtr Clone() const;
+
+	ARBCalendar& operator=(ARBCalendar const& rhs);
+
+	bool operator==(ARBCalendar const& rhs) const;
+	bool operator!=(ARBCalendar const& rhs) const;
+	bool operator<(ARBCalendar const& rhs) const;
+	bool operator>(ARBCalendar const& rhs) const;
+	bool operator<(ARBDate const& rhs) const;
+	bool operator>(ARBDate const& rhs) const;
 
 	/**
 	 * Get a UID. Used when generating iCalendar entries.

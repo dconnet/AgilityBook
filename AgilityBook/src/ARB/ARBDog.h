@@ -61,12 +61,16 @@ class Element;
  */
 class ARBDog : public ARBBase
 {
-public:
+protected:
 	ARBDog();
-	~ARBDog();
 	ARBDog(ARBDog const& rhs);
-	ARBDog& operator=(ARBDog const& rhs);
+
+public:
+	~ARBDog();
+	static ARBDogPtr New();
 	ARBDogPtr Clone() const;
+
+	ARBDog& operator=(ARBDog const& rhs);
 
 	bool operator==(ARBDog const& rhs) const;
 	bool operator!=(ARBDog const& rhs) const;

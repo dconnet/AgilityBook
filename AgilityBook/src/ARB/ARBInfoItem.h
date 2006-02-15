@@ -52,12 +52,16 @@ class Element;
  */
 class ARBInfoItem : public ARBBase
 {
-public:
+protected:
 	ARBInfoItem();
-	~ARBInfoItem();
 	ARBInfoItem(ARBInfoItem const& rhs);
-	ARBInfoItem& operator=(ARBInfoItem const& rhs);
+
+public:
+	~ARBInfoItem();
+	static ARBInfoItemPtr New();
 	ARBInfoItemPtr Clone() const;
+
+	ARBInfoItem& operator=(ARBInfoItem const& rhs);
 
 	bool operator==(ARBInfoItem const& rhs) const;
 	bool operator!=(ARBInfoItem const& rhs) const;

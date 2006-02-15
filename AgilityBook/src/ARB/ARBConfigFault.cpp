@@ -64,6 +64,12 @@ ARBConfigFault::~ARBConfigFault()
 {
 }
 
+//static
+ARBConfigFaultPtr ARBConfigFault::New()
+{
+	return ARBConfigFaultPtr(new ARBConfigFault());
+}
+
 ARBConfigFaultPtr ARBConfigFault::Clone() const
 {
 	return ARBConfigFaultPtr(new ARBConfigFault(*this));
@@ -125,7 +131,7 @@ bool ARBConfigFaultList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigFaultPtr thing(new ARBConfigFault());
+	ARBConfigFaultPtr thing(ARBConfigFault::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -158,7 +164,7 @@ bool ARBConfigFaultList::AddFault(
 		outFault->reset();
 	if (0 == inName.length())
 		return false;
-	ARBConfigFaultPtr pFault(new ARBConfigFault());
+	ARBConfigFaultPtr pFault(ARBConfigFault::New());
 	pFault->SetName(inName);
 	push_back(pFault);
 	if (outFault)

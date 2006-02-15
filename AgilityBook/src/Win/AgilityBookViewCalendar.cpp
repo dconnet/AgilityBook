@@ -1028,7 +1028,7 @@ void CAgilityBookViewCalendar::OnCalendarEdit()
 
 void CAgilityBookViewCalendar::OnCalendarNew()
 {
-	ARBCalendarPtr cal(new ARBCalendar());
+	ARBCalendarPtr cal(ARBCalendar::New());
 	if (m_Current.IsValid())
 	{
 		cal->SetStartDate(m_Current);
