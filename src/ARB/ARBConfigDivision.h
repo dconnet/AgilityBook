@@ -57,8 +57,11 @@ class ARBConfigDivision : public ARBBase
 {
 public:
 	ARBConfigDivision();
+	~ARBConfigDivision();
 	ARBConfigDivision(ARBConfigDivision const& rhs);
 	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+	ARBConfigDivisionPtr Clone() const;
+
 	bool operator==(ARBConfigDivision const& rhs) const;
 	bool operator!=(ARBConfigDivision const& rhs) const;
 
@@ -112,7 +115,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigDivision const* inDivNew,
+			ARBConfigDivisionPtr inDivNew,
 			ARBString& ioInfo);
 
 	/*
@@ -124,7 +127,6 @@ public:
 	ARBConfigLevelList& GetLevels();
 
 private:
-	~ARBConfigDivision();
 	ARBString m_Name;
 	ARBConfigLevelList m_Levels;
 };
@@ -159,7 +161,7 @@ inline ARBConfigLevelList& ARBConfigDivision::GetLevels()
 /**
  * List of ARBConfigDivision objects.
  */
-class ARBConfigDivisionList : public ARBVector<ARBConfigDivision>
+class ARBConfigDivisionList : public ARBVector<ARBConfigDivisionPtr>
 {
 public:
 	/**
@@ -195,7 +197,7 @@ public:
 	 */
 	bool FindDivision(
 			ARBString const& inDiv,
-			ARBConfigDivision** outDiv = NULL) const;
+			ARBConfigDivisionPtr* outDiv = NULL) const;
 
 	/**
 	 * Add a division.
@@ -205,7 +207,7 @@ public:
 	 */
 	bool AddDivision(
 			ARBString const& inDiv,
-			ARBConfigDivision** outDiv = NULL);
+			ARBConfigDivisionPtr* outDiv = NULL);
 
 	/**
 	 * Add a division.
@@ -214,7 +216,7 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 *       The pointer is added to the list and its ref count is incremented.
 	 */
-	bool AddDivision(ARBConfigDivision* inDiv);
+	bool AddDivision(ARBConfigDivisionPtr inDiv);
 
 	/**
 	 * Delete the division.

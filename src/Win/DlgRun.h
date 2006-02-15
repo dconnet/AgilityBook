@@ -54,8 +54,8 @@ class CDlgRun : public CDlgBaseSheet
 public:
 	CDlgRun(
 			CAgilityBookDoc* pDoc,
-			ARBDogTrial* pTrial,
-			ARBDogRun* pRun,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun,
 			CWnd* pParent = NULL,
 			UINT iSelectPage = 0);
 	virtual ~CDlgRun();
@@ -63,9 +63,9 @@ public:
 // Attributes
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogTrial* m_pTrial;
-	ARBDogRun* m_pRealRun;
-	ARBDogRun* m_Run;
+	ARBDogTrialPtr m_pTrial;
+	ARBDogRunPtr m_pRealRun;
+	ARBDogRunPtr m_Run;
 	CDlgRunScore* m_pageScore;
 	CDlgRunComments* m_pageComments;
 	CDlgRunReference* m_pageReference;

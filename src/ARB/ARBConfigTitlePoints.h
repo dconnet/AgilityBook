@@ -57,9 +57,12 @@ class ARBConfigTitlePoints : public ARBBase
 {
 public:
 	ARBConfigTitlePoints();
+	~ARBConfigTitlePoints();
 	ARBConfigTitlePoints(double inPoints, short inFaults);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
+	ARBConfigTitlePointsPtr Clone() const;
+
 	bool operator==(ARBConfigTitlePoints const& rhs) const;
 	bool operator!=(ARBConfigTitlePoints const& rhs) const;
 
@@ -111,7 +114,6 @@ public:
 	void SetFaults(short inFaults);
 
 private:
-	~ARBConfigTitlePoints();
 	double m_Points;
 	short m_Faults;
 };
@@ -141,7 +143,7 @@ inline void ARBConfigTitlePoints::SetFaults(short inFaults)
 /**
  * List of ARBConfigTitlePoints objects.
  */
-class ARBConfigTitlePointsList : public ARBVectorLoad1<ARBConfigTitlePoints>
+class ARBConfigTitlePointsList : public ARBVector<ARBConfigTitlePointsPtr>
 {
 public:
 	/**
@@ -180,7 +182,7 @@ public:
 	 */
 	bool FindTitlePoints(
 			short inFaults,
-			ARBConfigTitlePoints** outPoints = NULL) const;
+			ARBConfigTitlePointsPtr* outPoints = NULL) const;
 
 	/**
 	 * Add an object.
@@ -192,7 +194,7 @@ public:
 	bool AddTitlePoints(
 			double inPoints,
 			short inFaults,
-			ARBConfigTitlePoints** outPoints = NULL);
+			ARBConfigTitlePointsPtr* outPoints = NULL);
 
 	/**
 	 * Delete an object.

@@ -173,13 +173,11 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	for (std::set<ARBString>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		NameInfo data(*iter);
-		ARBInfoItem* item;
+		ARBInfoItemPtr item;
 		if (m_Info.FindItem(data.m_Name, &item))
 		{
 			if (0 < item->GetComment().length())
 				data.m_bHasData = true;
-			item->Release();
-			item = NULL;
 		}
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_Name))
 			data.m_eInUse = NameInfo::eInUse;
@@ -285,12 +283,10 @@ void CDlgInfoJudge::OnSelchangeName()
 	if (CB_ERR != index)
 	{
 		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
-		ARBInfoItem* item;
+		ARBInfoItemPtr item;
 		if (m_Info.FindItem(m_Names[idx].m_Name, &item))
 		{
 			data = item->GetComment().c_str();
-			item->Release();
-			item = NULL;
 		}
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 			bEnable = TRUE;
@@ -310,14 +306,12 @@ void CDlgInfoJudge::OnKillfocusComments()
 		m_ctrlComment.GetWindowText(data);
 		data.TrimRight();
 		data.Replace(_T("\r\n"), _T("\n"));
-		ARBInfoItem* item;
+		ARBInfoItemPtr item;
 		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
 			m_Info.AddItem(m_Names[idx].m_Name, &item);
 		if (!item)
 			return;
 		item->SetComment((LPCTSTR)data);
-		item->Release();
-		item = NULL;
 		m_Names[idx].m_bHasData = (0 < data.GetLength());
 		m_ctrlNames.Invalidate();
 	}
@@ -372,12 +366,10 @@ void CDlgInfoJudge::OnDelete()
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 		{
 			m_ctrlNames.DeleteString(index);
-			ARBInfoItem* item;
+			ARBInfoItemPtr item;
 			if (m_Info.FindItem(m_Names[idx].m_Name, &item))
 			{
 				m_Info.DeleteItem(item);
-				item->Release();
-				item = NULL;
 			}
 			if (index == m_ctrlNames.GetCount())
 				--index;

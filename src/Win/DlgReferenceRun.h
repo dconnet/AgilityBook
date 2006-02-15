@@ -49,7 +49,7 @@ public:
 			std::set<ARBString> const& inHeights,
 			std::set<ARBString> const& inNames,
 			std::set<ARBString> const& inBreeds,
-			ARBDogReferenceRun* ref,
+			ARBDogReferenceRunPtr ref,
 			CWnd* pParent = NULL);
 
 private:
@@ -69,7 +69,7 @@ private:
 	CString	m_Notes;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBDogReferenceRun* m_Ref;
+	ARBDogReferenceRunPtr m_Ref;
 	std::set<ARBString> const& m_Heights;
 	std::set<ARBString> const& m_Names;
 	std::set<ARBString> const& m_Breeds;

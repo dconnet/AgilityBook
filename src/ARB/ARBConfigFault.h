@@ -52,8 +52,11 @@ class ARBConfigFault : public ARBBase
 {
 public:
 	ARBConfigFault();
+	~ARBConfigFault();
 	ARBConfigFault(ARBConfigFault const& rhs);
 	ARBConfigFault& operator=(ARBConfigFault const& rhs);
+	ARBConfigFaultPtr Clone() const;
+
 	bool operator==(ARBConfigFault const& rhs) const;
 	bool operator!=(ARBConfigFault const& rhs) const;
 
@@ -98,7 +101,6 @@ public:
 	void SetName(ARBString const& inName);
 
 private:
-	~ARBConfigFault();
 	ARBString m_Name;
 };
 
@@ -122,9 +124,22 @@ inline void ARBConfigFault::SetName(ARBString const& inName)
 /**
  * List of ARBConfigFault objects.
  */
-class ARBConfigFaultList : public ARBVectorLoad1<ARBConfigFault>
+class ARBConfigFaultList : public ARBVector<ARBConfigFaultPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Find a fault.
 	 * @param inName Name of fault to find.
@@ -133,7 +148,7 @@ public:
 	 */
 	bool FindFault(
 			ARBString const& inName,
-			ARBConfigFault** outFault = NULL) const;
+			ARBConfigFaultPtr* outFault = NULL) const;
 
 	/**
 	 * Add a fault.
@@ -143,7 +158,7 @@ public:
 	 */
 	bool AddFault(
 			ARBString const& inName,
-			ARBConfigFault** outFault = NULL);
+			ARBConfigFaultPtr* outFault = NULL);
 
 	/**
 	 * Delete the fault.

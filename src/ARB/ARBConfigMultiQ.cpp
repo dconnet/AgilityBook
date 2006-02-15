@@ -71,6 +71,11 @@ ARBConfigMultiQ::~ARBConfigMultiQ()
 {
 }
 
+ARBConfigMultiQPtr ARBConfigMultiQ::Clone() const
+{
+	return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
+}
+
 ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)
 {
 	if (this != &rhs)
@@ -171,7 +176,7 @@ bool ARBConfigMultiQ::Load(
 			}
 
 			// Now verify it.
-			ARBConfigDivision* pDiv;
+			ARBConfigDivisionPtr pDiv;
 			if (!inVenue.GetDivisions().FindDivision(item.m_Div, &pDiv))
 			{
 				ARBString msg(INVALID_DIV_NAME);
@@ -181,7 +186,7 @@ bool ARBConfigMultiQ::Load(
 			}
 
 			// Translate the sublevel to level.
-			ARBConfigLevel* pLevel;
+			ARBConfigLevelPtr pLevel;
 			if (!pDiv->GetLevels().FindSubLevel(item.m_Level, &pLevel))
 			{
 				ARBString msg(INVALID_DIV_LEVEL);
@@ -189,14 +194,11 @@ bool ARBConfigMultiQ::Load(
 				msg += _T("/");
 				msg += item.m_Level;
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
-				pDiv->Release();
 				return false;
 			}
-			pDiv->Release();
-			pDiv = NULL;
+			pDiv.reset();
 			ARBString level = pLevel->GetName();
-			pLevel->Release();
-			pLevel = NULL;
+			pLevel.reset();
 
 			// Now we can verify the event.
 			if (!inVenue.GetEvents().VerifyEvent(item.m_Event, item.m_Div, level, ARBDate()))
@@ -239,8 +241,8 @@ bool ARBConfigMultiQ::Save(Element& ioTree) const
 
 // Note, this is only called from ARBDogTrial
 bool ARBConfigMultiQ::Match(
-		std::vector<ARBDogRun*>& ioRuns,
-		std::vector<ARBDogRun*>& outRuns) const
+		std::vector<ARBDogRunPtr>& ioRuns,
+		std::vector<ARBDogRunPtr>& outRuns) const
 {
 	outRuns.clear();
 	if (ioRuns.size() < m_Items.size())
@@ -249,7 +251,7 @@ bool ARBConfigMultiQ::Match(
 	// multi-q definition.
 	std::vector<bool> bItems;
 	bItems.insert(bItems.begin(), m_Items.size(), false);
-	for (std::vector<ARBDogRun*>::iterator iterR = ioRuns.begin();
+	for (std::vector<ARBDogRunPtr>::iterator iterR = ioRuns.begin();
 		iterR != ioRuns.end();
 		++iterR)
 	{
@@ -276,7 +278,7 @@ bool ARBConfigMultiQ::Match(
 	if (nMatch == m_Items.size())
 	{
 		bOk = true;
-		for (std::vector<ARBDogRun*>::iterator iterR = ioRuns.begin();
+		for (std::vector<ARBDogRunPtr>::iterator iterR = ioRuns.begin();
 			iterR != ioRuns.end();
 			)
 		{
@@ -501,12 +503,9 @@ bool ARBConfigMultiQList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigMultiQ* thing = new ARBConfigMultiQ();
+	ARBConfigMultiQPtr thing(new ARBConfigMultiQ());
 	if (!thing->Load(inVenue, inTree, inVersion, ioCallback))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -514,20 +513,17 @@ bool ARBConfigMultiQList::Load(
 bool ARBConfigMultiQList::FindMultiQ(
 		ARBString const& inName,
 		bool inUseShortName,
-		ARBConfigMultiQ** outMultiQ) const
+		ARBConfigMultiQPtr* outMultiQ) const
 {
 	if (outMultiQ)
-		*outMultiQ = NULL;
+		outMultiQ->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((!inUseShortName && *iter && (*iter)->GetName() == inName)
 		|| (inUseShortName && *iter && (*iter)->GetShortName() == inName))
 		{
 			if (outMultiQ)
-			{
 				*outMultiQ = *iter;
-				(*outMultiQ)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -536,19 +532,16 @@ bool ARBConfigMultiQList::FindMultiQ(
 
 bool ARBConfigMultiQList::FindMultiQ(
 	ARBConfigMultiQ const& inMultiQ,
-	ARBConfigMultiQ** outMultiQ) const
+	ARBConfigMultiQPtr* outMultiQ) const
 {
 	if (outMultiQ)
-		*outMultiQ = NULL;
+		outMultiQ->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (*iter && *(*iter) == inMultiQ)
 		{
 			if (outMultiQ)
-			{
 				*outMultiQ = *iter;
-				(*outMultiQ)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -628,17 +621,16 @@ int ARBConfigMultiQList::DeleteEvent(ARBString const& inEvent)
 	return count;
 }
 
-bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQ* inMultiQ)
+bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 {
 	if (!inMultiQ
 	|| FindMultiQ(*inMultiQ))
 		return false;
-	inMultiQ->AddRef();
 	push_back(inMultiQ);
 	return true;
 }
 
-bool ARBConfigMultiQList::DeleteMultiQ(ARBConfigMultiQ* inMultiQ)
+bool ARBConfigMultiQList::DeleteMultiQ(ARBConfigMultiQPtr inMultiQ)
 {
 	if (inMultiQ)
 	{

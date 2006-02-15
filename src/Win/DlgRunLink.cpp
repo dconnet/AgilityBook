@@ -54,8 +54,9 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgRunLink::CDlgRunLink(
 		CAgilityBookDoc* pDoc,
-		ARBDogRun* pRun)
+		ARBDogRunPtr pRun)
 	: CDlgBasePropertyPage(CDlgRunLink::IDD)
+	, m_ctrlLinks(false)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
 	, m_Session(_T("runLink"))

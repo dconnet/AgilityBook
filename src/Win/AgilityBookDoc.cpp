@@ -179,9 +179,9 @@ CAgilityBookDoc::~CAgilityBookDoc()
 /**
  * Return the dog associated with the currently selected item in the tree.
  */
-ARBDog* CAgilityBookDoc::GetCurrentDog()
+ARBDogPtr CAgilityBookDoc::GetCurrentDog()
 {
-	ARBDog* pDog = NULL;
+	ARBDogPtr pDog;
 	CAgilityBookTree* pTree = GetTreeView();
 	if (pTree && pTree->GetCurrentTreeItem())
 		pDog = pTree->GetCurrentTreeItem()->GetDog();
@@ -191,9 +191,9 @@ ARBDog* CAgilityBookDoc::GetCurrentDog()
 /**
  * Return the trial associated with the currently selected item in the tree.
  */
-ARBDogTrial* CAgilityBookDoc::GetCurrentTrial()
+ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
 {
-	ARBDogTrial* pTrial = NULL;
+	ARBDogTrialPtr pTrial;
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
@@ -204,9 +204,9 @@ ARBDogTrial* CAgilityBookDoc::GetCurrentTrial()
 /**
  * Return the run associated with the currently selected item in the tree.
  */
-ARBDogRun* CAgilityBookDoc::GetCurrentRun()
+ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
 {
-	ARBDogRun* pRun = NULL;
+	ARBDogRunPtr pRun;
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
@@ -219,7 +219,7 @@ ARBDogRun* CAgilityBookDoc::GetCurrentRun()
  * runs are controlled by the selected item in the tree, 'pData' should never
  * be NULL.
  */
-void CAgilityBookDoc::AddTitle(ARBDogRun* pSelectedRun)
+void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
@@ -232,7 +232,7 @@ void CAgilityBookDoc::AddTitle(ARBDogRun* pSelectedRun)
 	}
 }
 
-void CAgilityBookDoc::AddTrial(ARBDogRun* pSelectedRun)
+void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
@@ -245,7 +245,7 @@ void CAgilityBookDoc::AddTrial(ARBDogRun* pSelectedRun)
 	}
 }
 
-void CAgilityBookDoc::AddRun(ARBDogRun* pSelectedRun)
+void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
@@ -258,7 +258,7 @@ void CAgilityBookDoc::AddRun(ARBDogRun* pSelectedRun)
 	}
 }
 
-void CAgilityBookDoc::EditRun(ARBDogRun* pRun)
+void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
@@ -271,7 +271,7 @@ void CAgilityBookDoc::EditRun(ARBDogRun* pRun)
 	}
 }
 
-void CAgilityBookDoc::DeleteRun(ARBDogRun* pRun)
+void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
 	ASSERT(pTree);
@@ -291,35 +291,33 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 	if (!GetConfig().GetVenues().FindVenue(cal.GetVenue()))
 		return false;
 	bool bCreated = false;
-	ARBDogTrial* pTrial = new ARBDogTrial(cal);
+	ARBDogTrialPtr pTrial(new ARBDogTrial(cal));
 	CDlgTrial dlg(this, pTrial);
 	if (IDOK == dlg.DoModal())
 	{
-		std::vector<ARBDog*> dogs;
+		std::vector<ARBDogPtr> dogs;
 		CDlgSelectDog dlg(this, dogs);
 		if (IDOK == dlg.DoModal() && 0 < dogs.size())
 		{
-			for (std::vector<ARBDog*>::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
+			for (std::vector<ARBDogPtr>::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 			{
 				bCreated = true;
-				ARBDog* pDog = *iter;
+				ARBDogPtr pDog = *iter;
 				// If we're inserting this entry into more than one dog, we
 				// MUST make a copy. Otherwise the trial will be the same trial
 				// for both dogs and all changes will be reflected from one to
 				// the other - until you save, exit and reload the program.
-				ARBDogTrial* pNewTrial = new ARBDogTrial(*pTrial);
+				ARBDogTrialPtr pNewTrial(new ARBDogTrial(*pTrial));
 				pDog->GetTrials().AddTrial(pNewTrial);
 				SetModifiedFlag();
-				// This is pure evil - casting ARBDogTrial* to a CObject*.
-				// On the other side, we reinterpret right back to ARBDogTrial*
+				// This is pure evil - casting ARBDogTrialPtr* to a CObject*.
+				// On the other side, we reinterpret right back to ARBDogTriaPtrl*
 				// Definite abuse of this parameter.
-				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(pNewTrial));
-				pNewTrial->Release();
+				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(&pNewTrial));
 			}
 			pTabView->SetCurSel(0);
 		}
 	}
-	pTrial->Release();
 	return bCreated;
 }
 
@@ -328,7 +326,7 @@ void CAgilityBookDoc::SortDates()
 	bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
 	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
 	{
-		ARBDog* pDog = *iterDogs;
+		ARBDogPtr pDog = *iterDogs;
 		pDog->GetTrials().sort(bDescending);
 	}
 }
@@ -338,14 +336,13 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	ARBostringstream msg;
 	for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
 	{
-		ARBConfigAction const* action = *iterAction;
+		ARBConfigActionPtr action = *iterAction;
 		if (action->GetVerb() == ACTION_VERB_RENAME_EVENT)
 		{
-			ARBConfigVenue* venue = NULL;
+			ARBConfigVenuePtr venue;
 			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
-				venue->Release();
-				ARBConfigEvent* oldEvent = NULL;
+				ARBConfigEventPtr oldEvent;
 				if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
 				{
 					msg << _T("Action: Renaming ")
@@ -369,18 +366,17 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						venue->GetEvents().DeleteEvent(action->GetOldName());
 					else
 						oldEvent->SetName(action->GetNewName());
-					oldEvent->Release();
 				}
 			}
 		}
 		else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 		{
 			// Find the venue.
-			ARBConfigVenue* venue;
+			ARBConfigVenuePtr venue;
 			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
 				// Find the title we're renaming.
-				ARBConfigTitle* oldTitle = NULL;
+				ARBConfigTitlePtr oldTitle;
 				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					// Note: If we are deleting/renaming a title due
@@ -406,19 +402,17 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						venue->GetTitles().DeleteTitle(action->GetOldName());
 					else
 						oldTitle->SetName(action->GetNewName());
-					oldTitle->Release();
 				}
-				venue->Release();
 			}
 		}
 		else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
 		{
 			// Find the venue.
-			ARBConfigVenue* venue;
+			ARBConfigVenuePtr venue;
 			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
 			{
 				// Find the title we're deleting.
-				ARBConfigTitle* oldTitle = NULL;
+				ARBConfigTitlePtr oldTitle;
 				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
 				{
 					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
@@ -454,9 +448,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						<< action->GetOldName()
 						<< _T("]\n");
 					venue->GetTitles().DeleteTitle(action->GetOldName());
-					oldTitle->Release();
 				}
-				venue->Release();
 			}
 		}
 		else
@@ -543,7 +535,7 @@ void CAgilityBookDoc::ResetVisibility()
 
 	for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
 	{
-		ARBCalendar* pCal = *iterCal;
+		ARBCalendarPtr pCal = *iterCal;
 		bool bVis = CAgilityBookOptions::IsCalendarVisible(pCal);
 		pCal->SetFiltered(!bVis);
 	}
@@ -554,7 +546,7 @@ void CAgilityBookDoc::ResetVisibility()
 
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDog* pDog)
+		ARBDogPtr pDog)
 {
 	for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
 		ResetVisibility(venues, *iterTrial);
@@ -565,7 +557,7 @@ void CAgilityBookDoc::ResetVisibility(
 
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogTrial* pTrial)
+		ARBDogTrialPtr pTrial)
 {
 	bool bVisTrial = CAgilityBookOptions::IsTrialVisible(venues, pTrial);
 	pTrial->SetFiltered(!bVisTrial);
@@ -582,8 +574,8 @@ void CAgilityBookDoc::ResetVisibility(
 
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogTrial* pTrial,
-		ARBDogRun* pRun)
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun)
 {
 	unsigned short nVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
 	pRun->SetFiltered(ARBBase::eFilter, (nVisRun & (0x1 << ARBBase::eFilter)) ? false : true);
@@ -592,7 +584,7 @@ void CAgilityBookDoc::ResetVisibility(
 
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
-		ARBDogTitle* pTitle)
+		ARBDogTitlePtr pTitle)
 {
 	bool bVisTitle = CAgilityBookOptions::IsTitleVisible(venues, pTitle);
 	pTitle->SetFiltered(!bVisTitle);
@@ -600,7 +592,7 @@ void CAgilityBookDoc::ResetVisibility(
 
 void CAgilityBookDoc::ResetVisibility(
 		std::set<ARBString>& names,
-		ARBTraining* pTraining)
+		ARBTrainingPtr pTraining)
 {
 	bool bVisTraining = CAgilityBookOptions::IsTrainingLogVisible(names, pTraining);
 	pTraining->SetFiltered(!bVisTraining);
@@ -856,7 +848,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
  */
 void CAgilityBookDoc::OnCloseDocument()
 {
-	ARBDog* pDog = GetCurrentDog();
+	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
 		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastDog"), pDog->GetCallName().c_str());
 	else
@@ -966,7 +958,7 @@ void CAgilityBookDoc::OnEditConfiguration()
 
 void CAgilityBookDoc::OnAgilityNewDog()
 {
-	ARBDog* dog = new ARBDog();
+	ARBDogPtr dog(new ARBDog());
 	CDlgDog dlg(this, dog);
 	if (IDOK == dlg.DoModal())
 	{
@@ -990,12 +982,11 @@ void CAgilityBookDoc::OnAgilityNewDog()
 				pTree->InsertDog(dog, true);
 		}
 	}
-	dog->Release();
 }
 
 void CAgilityBookDoc::OnAgilityNewCalendar()
 {
-	ARBCalendar* cal = new ARBCalendar();
+	ARBCalendarPtr cal(new ARBCalendar());
 	CDlgCalendar dlg(cal, this);
 	if (IDOK == dlg.DoModal())
 	{
@@ -1019,12 +1010,11 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 			}
 		}
 	}
-	cal->Release();
 }
 
 void CAgilityBookDoc::OnAgilityNewTraining()
 {
-	ARBTraining* training = new ARBTraining();
+	ARBTrainingPtr training(new ARBTraining());
 	CDlgTraining dlg(training, this);
 	if (IDOK == dlg.DoModal())
 	{
@@ -1045,13 +1035,12 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 			}
 		}
 	}
-	training->Release();
 }
 
 void CAgilityBookDoc::OnNotesClubs()
 {
 	ARBString select;
-	ARBDogTrial const* pTrial = GetCurrentTrial();
+	ARBDogTrialPtr pTrial = GetCurrentTrial();
 	if (pTrial)
 		select = pTrial->GetClubs().GetPrimaryClubName();
 	CDlgInfoJudge dlg(this, ARBInfo::eClubInfo, select);
@@ -1061,7 +1050,7 @@ void CAgilityBookDoc::OnNotesClubs()
 void CAgilityBookDoc::OnNotesJudges()
 {
 	ARBString select;
-	ARBDogRun const* pRun = GetCurrentRun();
+	ARBDogRunPtr pRun = GetCurrentRun();
 	if (pRun)
 		select = pRun->GetJudge();
 	CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo, select);
@@ -1071,7 +1060,7 @@ void CAgilityBookDoc::OnNotesJudges()
 void CAgilityBookDoc::OnNotesLocations()
 {
 	ARBString select;
-	ARBDogTrial const* pTrial = GetCurrentTrial();
+	ARBDogTrialPtr pTrial = GetCurrentTrial();
 	if (pTrial)
 		select = pTrial->GetLocation();
 	CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo, select);
@@ -1146,7 +1135,7 @@ void CFindInfo::Search(
 			CFindItemInfo item;
 			item.type = inType;
 			item.name = *iter;
-			item.pItem = NULL;
+			item.pItem.reset();
 			m_Items.push_back(item);
 			break;
 		}

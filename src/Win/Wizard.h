@@ -76,13 +76,13 @@ class CWizard : public CDlgBaseSheet
 public:
 	CWizard(
 			CAgilityBookDoc* pDoc,
-			ARBVectorBase<ARBCalendar>* pCalEntries = NULL,
+			std::vector<ARBCalendarPtr>* pCalEntries = NULL,
 			CWnd* pParentWnd = NULL);
 
 // Attributes
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBVectorBase<ARBCalendar>* m_CalEntries;
+	std::vector<ARBCalendarPtr>* m_CalEntries;
 	CWizardStart* m_pageStart;
 	CWizardImport* m_pageImport;
 	CWizardExport* m_pageExport;
@@ -95,7 +95,7 @@ public:
 	/**
 	 * Get selected entries for export. If NULL, we're exporting everything.
 	 */
-	ARBVectorBase<ARBCalendar>* GetCalendarEntries() const
+	std::vector<ARBCalendarPtr>* GetCalendarEntries() const
 	{
 		return m_CalEntries;
 	}

@@ -83,6 +83,11 @@ ARBConfigAction::~ARBConfigAction()
 {
 }
 
+ARBConfigActionPtr ARBConfigAction::Clone() const
+{
+	return ARBConfigActionPtr(new ARBConfigAction(*this));
+}
+
 ARBConfigAction& ARBConfigAction::operator=(ARBConfigAction const& rhs)
 {
 	if (this != &rhs)
@@ -152,3 +157,15 @@ bool ARBConfigAction::Save(Element& ioTree) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+bool ARBConfigActionList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBConfigActionPtr thing(new ARBConfigAction());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}

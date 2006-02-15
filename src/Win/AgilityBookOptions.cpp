@@ -156,7 +156,7 @@ bool CAgilityBookOptions::IsDateVisible(
 
 bool CAgilityBookOptions::IsTitleVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTitle const* pTitle)
+		ARBDogTitlePtr pTitle)
 {
 	if (!GetViewHiddenTitles() && pTitle->IsHidden())
 		return false;
@@ -206,7 +206,7 @@ bool CAgilityBookOptions::IsVenueDivisionVisible(
 
 bool CAgilityBookOptions::IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTrial const* pTrial)
+		ARBDogTrialPtr pTrial)
 {
 	// Yes, it seems backwards, but it is correct.
 	if (!IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
@@ -228,8 +228,8 @@ bool CAgilityBookOptions::IsTrialVisible(
 // Return type should be the same as ARBBase::m_nFiltered
 unsigned short CAgilityBookOptions::IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTrial const* pTrial,
-		ARBDogRun const* pRun)
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun)
 {
 	unsigned short nVisible = 0;
 	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
@@ -290,9 +290,9 @@ unsigned short CAgilityBookOptions::IsRunVisible(
 // the novice run to appear in the nadac points listing when it shouldn't.
 bool CAgilityBookOptions::IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBConfigVenue const* pVenue,
-		ARBDogTrial const* pTrial,
-		ARBDogRun const* pRun)
+		ARBConfigVenuePtr pVenue,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun)
 {
 	if (1 >= pTrial->GetClubs().size())
 		return true;
@@ -317,7 +317,7 @@ bool CAgilityBookOptions::IsRunVisible(
 	return bVisible;
 }
 
-bool CAgilityBookOptions::IsCalendarVisible(ARBCalendar const* pCal)
+bool CAgilityBookOptions::IsCalendarVisible(ARBCalendarPtr pCal)
 {
 	if (!CAgilityBookOptions::GetViewAllDates())
 	{
@@ -339,7 +339,7 @@ bool CAgilityBookOptions::IsCalendarVisible(ARBCalendar const* pCal)
 
 bool CAgilityBookOptions::IsTrainingLogVisible(
 		std::set<ARBString> const& names,
-		ARBTraining const* pTraining)
+		ARBTrainingPtr pTraining)
 {
 	if (!CAgilityBookOptions::GetViewAllDates())
 	{

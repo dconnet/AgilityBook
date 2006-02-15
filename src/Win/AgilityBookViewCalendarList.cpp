@@ -69,6 +69,7 @@
 #include "DlgSelectDog.h"
 #include "DlgTrial.h"
 #include "Element.h"
+#include "ListData.h"
 #include "MainFrm.h"
 #include "TabView.h"
 #include "Wizard.h"
@@ -88,19 +89,17 @@ const int OFFSET_OTHER = 6;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendarData
 
-class CAgilityBookViewCalendarData
+class CAgilityBookViewCalendarData : public CListData
 {
 	friend int CALLBACK CompareCalendar(LPARAM, LPARAM, LPARAM);
 public:
 	CAgilityBookViewCalendarData(
 			CAgilityBookViewCalendarList* pView,
-			ARBCalendar* pCal)
+			ARBCalendarPtr pCal)
 		: m_RefCount(1)
 		, m_pView(pView)
 		, m_pCal(pCal)
 	{
-		if (m_pCal)
-			m_pCal->AddRef();
 	}
 	void AddRef();
 	void Release();
@@ -108,7 +107,7 @@ public:
 	bool CanEdit() const		{return true;}
 	bool CanDelete() const		{return true;}
 
-	ARBCalendar* GetCalendar()	{return m_pCal;}
+	ARBCalendarPtr GetCalendar()	{return m_pCal;}
 	CString OnNeedText(int iCol) const;
 	int GetIcon() const;
 
@@ -124,14 +123,12 @@ public:
 private:
 	~CAgilityBookViewCalendarData()
 	{
-		if (m_pCal)
-			m_pCal->Release();
 	}
 	bool HighlightOpeningNear(int iCol) const;
 	bool HighlightClosingNear(int iCol) const;
 	UINT m_RefCount;
 	CAgilityBookViewCalendarList* m_pView;
-	ARBCalendar* m_pCal;
+	ARBCalendarPtr m_pCal;
 };
 
 void CAgilityBookViewCalendarData::AddRef()
@@ -349,7 +346,7 @@ int CAgilityBookViewCalendarList::CSortColumn::LookupColumn(int iCol) const
 
 struct SORT_CAL_INFO
 {
-	CAgilityBookViewCalendarList *pThis;
+	CAgilityBookViewCalendarList* pThis;
 	int nCol;
 };
 
@@ -361,8 +358,10 @@ int CALLBACK CompareCalendar(
 	SORT_CAL_INFO* sortInfo = reinterpret_cast<SORT_CAL_INFO*>(lParam3);
 	if (!sortInfo || 0 == sortInfo->nCol)
 		return 0;
-	CAgilityBookViewCalendarData* pItem1 = reinterpret_cast<CAgilityBookViewCalendarData*>(lParam1);
-	CAgilityBookViewCalendarData* pItem2 = reinterpret_cast<CAgilityBookViewCalendarData*>(lParam2);
+	CListData* pRawItem1 = reinterpret_cast<CListData*>(lParam1);
+	CListData* pRawItem2 = reinterpret_cast<CListData*>(lParam2);
+	CAgilityBookViewCalendarData* pItem1 = dynamic_cast<CAgilityBookViewCalendarData*>(pRawItem1);
+	CAgilityBookViewCalendarData* pItem2 = dynamic_cast<CAgilityBookViewCalendarData*>(pRawItem2);
 	int nRet = 0;
 	int iCol = abs(sortInfo->nCol);
 	switch (sortInfo->pThis->m_Columns[iCol-1])
@@ -518,7 +517,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemChanged)
-	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
@@ -554,6 +552,7 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	, m_Callback(this)
 	, m_SortColumn(m_Columns)
 {
+	SetAutoDelete(true);
 	m_ImageList.Create(16, 16, ILC_MASK, 6, 0);
 	CWinApp* app = AfxGetApp();
 	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
@@ -642,7 +641,8 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	bool bSelected = ((LVIS_SELECTED & state) && (bFocused || GetListCtrl().GetStyle() & LVS_SHOWSELALWAYS));
 	bSelected = bSelected || (state & LVIS_DROPHILITED);
 
-	CAgilityBookViewCalendarData* pData = reinterpret_cast<CAgilityBookViewCalendarData*>(lpDrawItemStruct->itemData);
+	CListData* pRawData = reinterpret_cast<CListData*>(lpDrawItemStruct->itemData);
+	CAgilityBookViewCalendarData* pData = dynamic_cast<CAgilityBookViewCalendarData*>(pRawData);
 
 	CRect rLineFull; // Entire line (of data)
 	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineFull, LVIR_BOUNDS);
@@ -812,10 +812,7 @@ bool CAgilityBookViewCalendarList::GetMessage2(CString& msg) const
 
 CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int index) const
 {
-	CAgilityBookViewCalendarData *pData = NULL;
-	if (0 <= index && index < GetListCtrl().GetItemCount())
-		pData = reinterpret_cast<CAgilityBookViewCalendarData*>(GetListCtrl().GetItemData(index));
-	return pData;
+	return dynamic_cast<CAgilityBookViewCalendarData*>(GetData(index));
 }
 
 void CAgilityBookViewCalendarList::SetupColumns()
@@ -862,7 +859,7 @@ void CAgilityBookViewCalendarList::LoadData()
 
 	// Add items.
 	int i = 0;
-	ARBVectorBase<ARBCalendar> entered;
+	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
@@ -870,7 +867,7 @@ void CAgilityBookViewCalendarList::LoadData()
 	iter != GetDocument()->GetCalendar().end();
 	++iter)
 	{
-		ARBCalendar* pCal = (*iter);
+		ARBCalendarPtr pCal = (*iter);
 		if (pCal->IsFiltered())
 			continue;
 		// Additional filtering
@@ -886,11 +883,11 @@ void CAgilityBookViewCalendarList::LoadData()
 		if (bHide && ARBCalendar::eEntered != pCal->GetEntered())
 		{
 			bool bSuppress = false;
-			for (ARBVectorBase<ARBCalendar>::const_iterator iterE = entered.begin();
+			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();
 			!bSuppress && iterE != entered.end();
 			++iterE)
 			{
-				ARBCalendar* pEntered = (*iterE);
+				ARBCalendarPtr pEntered = (*iterE);
 				if (pCal != pEntered
 				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{
@@ -900,14 +897,15 @@ void CAgilityBookViewCalendarList::LoadData()
 			if (bSuppress)
 				continue;
 		}
-		CAgilityBookViewCalendarData* pData = new CAgilityBookViewCalendarData(this, pCal);
 		LV_ITEM item;
 		item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.iItem = i;
 		item.iSubItem = 0;
 		item.iImage = I_IMAGECALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(pData);
+		item.lParam = reinterpret_cast<LPARAM>(
+			static_cast<CListData*>(
+				new CAgilityBookViewCalendarData(this, pCal)));
 		int index = GetListCtrl().InsertItem(&item);
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows
@@ -917,7 +915,7 @@ void CAgilityBookViewCalendarList::LoadData()
 		// just modified our own entry.
 		if (pCurData)
 		{
-			ARBCalendar* pCurCal = pCurData->GetCalendar();
+			ARBCalendarPtr pCurCal = pCurData->GetCalendar();
 			if (*pCurCal == *pCal
 			|| (pCurCal->GetStartDate() == pCal->GetStartDate()
 			&& pCurCal->GetEndDate() == pCal->GetEndDate()
@@ -1023,16 +1021,16 @@ void CAgilityBookViewCalendarList::OnGetdispinfo(
 		LRESULT* pResult)
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
+	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+	CAgilityBookViewCalendarData* pData = dynamic_cast<CAgilityBookViewCalendarData*>(pRawData);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pDispInfo->item.lParam);
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	if (pDispInfo->item.mask & LVIF_IMAGE)
 	{
-		CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pDispInfo->item.lParam);
 		if (pData)
 			pDispInfo->item.iImage = pData->GetIcon();
 	}
@@ -1062,18 +1060,6 @@ void CAgilityBookViewCalendarList::OnItemChanged(
 			}
 		}
 	}
-	*pResult = 0;
-}
-
-void CAgilityBookViewCalendarList::OnDeleteitem(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
-	CAgilityBookViewCalendarData *pData = reinterpret_cast<CAgilityBookViewCalendarData*>(pNMListView->lParam);
-	if (pData)
-		pData->Release();
-	pNMListView->lParam = 0;
 	*pResult = 0;
 }
 
@@ -1142,7 +1128,7 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 	if (pData)
 	{
-		ARBCalendar* pCal = pData->GetCalendar();
+		ARBCalendarPtr pCal = pData->GetCalendar();
 		CWnd* pParent = GetParent()->GetParent();
 		ASSERT(pParent->IsKindOf(RUNTIME_CLASS(CTabView)));
 		CTabView* pView = DYNAMIC_DOWNCAST(CTabView, pParent);
@@ -1163,18 +1149,17 @@ void CAgilityBookViewCalendarList::OnCalendarExport()
 	std::vector<int> indices;
 	if (0 < GetSelection(indices))
 	{
-		ARBVectorBase<ARBCalendar> items;
+		std::vector<ARBCalendarPtr> items;
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
 			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
 			if (pData)
 			{
-				ARBCalendar* pCal = pData->GetCalendar();
-				pCal->AddRef();
+				ARBCalendarPtr pCal = pData->GetCalendar();
 				items.push_back(pCal);
 			}
 		}
-		ARBVectorBase<ARBCalendar>* exportItems = NULL;
+		std::vector<ARBCalendarPtr>* exportItems = NULL;
 		if (0 < items.size())
 			exportItems = &items;
 		CWizard wiz(GetDocument(), exportItems);
@@ -1218,7 +1203,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 
 void CAgilityBookViewCalendarList::OnCalendarNew()
 {
-	ARBCalendar* cal = new ARBCalendar();
+	ARBCalendarPtr cal(new ARBCalendar());
 	CDlgCalendar dlg(cal, GetDocument());
 	if (IDOK == dlg.DoModal())
 	{
@@ -1231,7 +1216,6 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 		}
 	}
-	cal->Release();
 }
 
 void CAgilityBookViewCalendarList::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
@@ -1260,7 +1244,7 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 			// We need to warn the user if the duplicated entry is not visible.
 			// This will happen if the source is marked as entered and they have
 			// selected the option to hide dates.
-			ARBCalendar* cal = new ARBCalendar(*((*iter)->GetCalendar()));
+			ARBCalendarPtr cal(new ARBCalendar(*((*iter)->GetCalendar())));
 			if ((*iter)->GetCalendar()->GetEntered() == ARBCalendar::eEntered
 			&& CAgilityBookOptions::HideOverlappingCalendarEntries())
 			{
@@ -1268,7 +1252,6 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 			}
 			cal->SetEntered(ARBCalendar::eNot);
 			GetDocument()->GetCalendar().AddCalendar(cal);
-			cal->Release();
 		}
 		GetDocument()->GetCalendar().sort();
 		LoadData();
@@ -1390,15 +1373,13 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 				Element const& element = tree.GetElement(i);
 				if (element.GetName() == TREE_CALENDAR)
 				{
-					ARBCalendar* pCal = new ARBCalendar();
+					ARBCalendarPtr pCal(new ARBCalendar());
 					CErrorCallback err;
 					if (pCal->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{
 						bLoaded = true;
 						GetDocument()->GetCalendar().AddCalendar(pCal);
 					}
-					pCal->Release();
-					pCal = NULL;
 				}
 			}
 		}

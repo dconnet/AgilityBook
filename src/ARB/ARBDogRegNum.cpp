@@ -76,6 +76,11 @@ ARBDogRegNum::~ARBDogRegNum()
 {
 }
 
+ARBDogRegNumPtr ARBDogRegNum::Clone() const
+{
+	return ARBDogRegNumPtr(new ARBDogRegNum(*this));
+}
+
 ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)
 {
 	if (this != &rhs)
@@ -185,11 +190,24 @@ bool ARBDogRegNum::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBDogRegNumList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogRegNumPtr thing(new ARBDogRegNum());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortRegNum
 {
 public:
 	SortRegNum() {}
-	bool operator()(ARBDogRegNum* one, ARBDogRegNum* two) const
+	bool operator()(ARBDogRegNumPtr one, ARBDogRegNumPtr two) const
 	{
 		return one->GetVenue() < two->GetVenue();
 	}
@@ -248,19 +266,16 @@ int ARBDogRegNumList::DeleteVenue(ARBString const& inVenue)
 
 bool ARBDogRegNumList::FindRegNum(
 		ARBString const& inVenue,
-		ARBDogRegNum** outRegNum) const
+		ARBDogRegNumPtr* outRegNum) const
 {
 	if (outRegNum)
-		*outRegNum = NULL;
+		outRegNum->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue)
 		{
 			if (outRegNum)
-			{
 				*outRegNum = *iter;
-				(*outRegNum)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -270,27 +285,23 @@ bool ARBDogRegNumList::FindRegNum(
 bool ARBDogRegNumList::AddRegNum(
 		ARBString const& inVenue,
 		ARBString const& inNumber,
-		ARBDogRegNum** outRegNum)
+		ARBDogRegNumPtr* outRegNum)
 {
-	ARBDogRegNum* pRegNum = new ARBDogRegNum();
+	ARBDogRegNumPtr pRegNum(new ARBDogRegNum());
 	pRegNum->SetVenue(inVenue);
 	pRegNum->SetNumber(inNumber);
 	push_back(pRegNum);
 	if (outRegNum)
-	{
 		*outRegNum = pRegNum;
-		(*outRegNum)->AddRef();
-	}
 	return true;
 }
 
-bool ARBDogRegNumList::AddRegNum(ARBDogRegNum* inRegNum)
+bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr inRegNum)
 {
 	bool bAdded = false;
 	if (inRegNum)
 	{
 		bAdded = true;
-		inRegNum->AddRef();
 		push_back(inRegNum);
 	}
 	return bAdded;

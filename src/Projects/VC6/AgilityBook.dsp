@@ -158,6 +158,10 @@ SOURCE=..\..\Win\ColumnOrder.cpp
 # End Source File
 # Begin Source File
 
+SORUCE=..\..\Win\ComboBox.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\CrashHandler.cpp
 # End Source File
 # Begin Source File
@@ -390,6 +394,10 @@ SOURCE=..\..\Win\ListCtrl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\ListData.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -512,6 +520,10 @@ SOURCE=..\..\Win\ClipBoard.h
 # Begin Source File
 
 SOURCE=..\..\Win\ColumnOrder.h
+# End Source File
+# Begin Source File
+
+SORUCE=..\..\Win\ComboBox.h
 # End Source File
 # Begin Source File
 
@@ -748,6 +760,10 @@ SOURCE=..\..\Win\ListBox.h
 # Begin Source File
 
 SOURCE=..\..\Win\ListCtrl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\ListData.h
 # End Source File
 # Begin Source File
 

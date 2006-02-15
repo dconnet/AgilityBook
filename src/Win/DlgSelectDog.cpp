@@ -43,6 +43,7 @@
 #include "ARBDog.h"
 #include "ARBTypes.h"
 #include "AgilityBookDoc.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,7 +56,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgSelectDog::CDlgSelectDog(
 		CAgilityBookDoc* pDoc,
-		std::vector<ARBDog*>& dogs,
+		std::vector<ARBDogPtr>& dogs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgSelectDog::IDD, pParent)
 	, m_pDoc(pDoc)
@@ -112,9 +113,10 @@ BOOL CDlgSelectDog::OnInitDialog()
 	ARBDogList const& dogs = m_pDoc->GetDogs();
 	for (ARBDogList::const_iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 	{
-		ARBDog* pDog = *iter;
+		ARBDogPtr pDog = *iter;
 		int index = m_ctrlList.AddString(pDog->GetCallName().c_str());
-		m_ctrlList.SetItemDataPtr(index, pDog);
+		m_ctrlList.SetItemDataPtr(index,
+			new CListPtrData<ARBDogPtr>(pDog));
 		if (selection.end() != std::find(selection.begin(), selection.end(), pDog->GetCallName()))
 			m_ctrlList.SetCheck(index, 1);
 	}
@@ -140,7 +142,7 @@ void CDlgSelectDog::OnOK()
 	{
 		if (m_ctrlList.GetCheck(index))
 		{
-			ARBDog* pDog = reinterpret_cast<ARBDog*>(m_ctrlList.GetItemDataPtr(index));
+			ARBDogPtr pDog = reinterpret_cast<CListPtrData<ARBDogPtr>*>(m_ctrlList.GetItemDataPtr(index))->GetData();
 			m_Dogs.push_back(pDog);
 			++nDogs;
 			ARBostringstream item;

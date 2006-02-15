@@ -37,15 +37,14 @@
  */
 
 #include "ARBDate.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
-class ARBConfigVenue;
-class ARBConfigMultiQ;
 
 class CDlgEventSelect : public CDlgBaseDialog
 {
 public:
 	CDlgEventSelect(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBDate const& inDate,
 			TCHAR const* const inDivision,
 			TCHAR const* const inLevel,
@@ -61,14 +60,14 @@ private:
 	//{{AFX_DATA(CDlgEventSelect)
 	enum { IDD = IDD_EVENT_SELECT };
 	CString	m_Division;
-	CComboBox	m_ctrlDivisions;
+	CComboBox2	m_ctrlDivisions;
 	CString	m_Level;
-	CComboBox	m_ctrlLevels;
+	CComboBox2	m_ctrlLevels;
 	CString	m_Event;
-	CComboBox	m_ctrlEvents;
+	CComboBox2	m_ctrlEvents;
 	CButton	m_ctrlOk;
 	//}}AFX_DATA
-	ARBConfigVenue const* m_pVenue;
+	ARBConfigVenuePtr m_pVenue;
 	ARBDate m_Date;
 	TCHAR const* m_inDivision;
 	TCHAR const* m_inLevel;
@@ -84,7 +83,6 @@ protected:
 
 protected:
 	void UpdateControls();
-	void ClearLevels();
 	void FillLevels();
 	void FillEvents();
 	//{{AFX_MSG(CDlgEventSelect)

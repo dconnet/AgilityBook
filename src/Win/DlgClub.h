@@ -46,7 +46,7 @@ public:
 	CDlgClub(
 			CAgilityBookDoc* pDoc,
 			ARBDogClubList& clubs,
-			ARBDogClub* pClub,
+			ARBDogClubPtr pClub,
 			CWnd* pParent = NULL);
 
 private:
@@ -59,7 +59,7 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubList& m_Clubs;
-	ARBDogClub* m_pClub;
+	ARBDogClubPtr m_pClub;
 
 	//{{AFX_VIRTUAL(CDlgClub)
 protected:

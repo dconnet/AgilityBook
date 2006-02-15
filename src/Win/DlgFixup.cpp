@@ -89,11 +89,10 @@ void CDlgFixupDeleteMultiQ::Commit(ARBAgilityRecordBook& book)
 
 void CDlgFixupRenameDivision::Commit(ARBAgilityRecordBook& book)
 {
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (book.GetConfig().GetVenues().FindVenue(m_Venue, &pVenue))
 	{
 		book.GetDogs().RenameDivision(pVenue, m_oldName, m_newName);
-		pVenue->Release();
 	}
 }
 
@@ -146,20 +145,20 @@ void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
 		iterDog != book.GetDogs().end();
 		++iterDog)
 	{
-		ARBDog* pDog = *iterDog;
+		ARBDogPtr pDog = *iterDog;
 		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial* pTrial = *iterTrial;
+			ARBDogTrialPtr pTrial = *iterTrial;
 			if (pTrial->GetClubs().FindVenue(m_Venue))
 			{
 				for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
 					iterRun != pTrial->GetRuns().end();
 					)
 				{
-					ARBDogRun* pRun = *iterRun;
-					ARBConfigScoring* pScoring;
+					ARBDogRunPtr pRun = *iterRun;
+					ARBConfigScoringPtr pScoring;
 					if (book.GetConfig().GetVenues().FindEvent(
 						m_Venue,
 						m_Event,
@@ -173,7 +172,6 @@ void CDlgFixupEventScoring::Commit(ARBAgilityRecordBook& book)
 						{
 							pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
 						}
-						pScoring->Release();
 						++iterRun;
 					}
 					else
@@ -195,12 +193,12 @@ void CDlgFixupTableInRuns::Commit(ARBAgilityRecordBook& book)
 		iterVenue != book.GetConfig().GetVenues().end();
 		++iterVenue)
 	{
-		ARBConfigVenue* pVenue = *iterVenue;
+		ARBConfigVenuePtr pVenue = *iterVenue;
 		for (ARBConfigEventList::iterator iterEvent = pVenue->GetEvents().begin();
 			iterEvent != pVenue->GetEvents().end();
 			++iterEvent)
 		{
-			ARBConfigEvent* pEvent = *iterEvent;
+			ARBConfigEventPtr pEvent = *iterEvent;
 			// For every event that has a table listed, fix all those runs.
 			if (pEvent->HasTable())
 			{
@@ -208,19 +206,19 @@ void CDlgFixupTableInRuns::Commit(ARBAgilityRecordBook& book)
 					iterDog != book.GetDogs().end();
 					++iterDog)
 				{
-					ARBDog* pDog = *iterDog;
+					ARBDogPtr pDog = *iterDog;
 					for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
 						iterTrial != pDog->GetTrials().end();
 						++iterTrial)
 					{
-						ARBDogTrial* pTrial = *iterTrial;
+						ARBDogTrialPtr pTrial = *iterTrial;
 						if (pTrial->GetClubs().FindVenue(pVenue->GetName()))
 						{
 							for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
 								iterRun != pTrial->GetRuns().end();
 								++iterRun)
 							{
-								ARBDogRun* pRun = *iterRun;
+								ARBDogRunPtr pRun = *iterRun;
 								if (pRun->GetEvent() == pEvent->GetName()
 								&& pRun->GetScoring().TableNeedsConverting())
 								{

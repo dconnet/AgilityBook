@@ -67,7 +67,7 @@ static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		ARBConfig& config,
-		ARBConfigOtherPoints* pOther,
+		ARBConfigOtherPointsPtr pOther,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigOtherPoints::IDD, pParent)
 	, m_Config(config)

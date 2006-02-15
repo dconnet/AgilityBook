@@ -59,8 +59,11 @@ class ARBConfigVenue : public ARBBase
 {
 public:
 	ARBConfigVenue();
+	~ARBConfigVenue();
 	ARBConfigVenue(ARBConfigVenue const& rhs);
 	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
+	ARBConfigVenuePtr Clone() const;
+
 	bool operator==(ARBConfigVenue const& rhs) const;
 	bool operator!=(ARBConfigVenue const& rhs) const;
 
@@ -114,7 +117,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigVenue const* inVenueNew,
+			ARBConfigVenuePtr inVenueNew,
 			ARBString& ioInfo);
 
 	/*
@@ -136,7 +139,6 @@ public:
 	ARBConfigMultiQList& GetMultiQs();
 
 private:
-	~ARBConfigVenue();
 	ARBString m_Name;
 	ARBString m_LongName;
 	ARBString m_Desc;
@@ -226,7 +228,7 @@ inline ARBConfigMultiQList& ARBConfigVenue::GetMultiQs()
 /**
  * List of ARBConfigVenue objects.
  */
-class ARBConfigVenueList : public ARBVector<ARBConfigVenue>
+class ARBConfigVenueList : public ARBVector<ARBConfigVenuePtr>
 {
 public:
 	/**
@@ -309,7 +311,7 @@ public:
 			ARBString const& inVenue,
 			ARBString const& inName,
 			bool bAbbrevFirst = true,
-			ARBConfigTitle** outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
 	 * Find a title.
@@ -321,7 +323,7 @@ public:
 	bool FindTitle(
 			ARBString const& inVenue,
 			ARBString const& inTitle,
-			ARBConfigTitle** outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
 	 * Delete a title.
@@ -338,7 +340,7 @@ public:
 	 */
 	bool FindVenue(
 			ARBString const& inVenue,
-			ARBConfigVenue** outVenue = NULL) const;
+			ARBConfigVenuePtr* outVenue = NULL) const;
 
 	/**
 	 * Add a venue.
@@ -348,14 +350,14 @@ public:
 	 */
 	bool AddVenue(
 			ARBString const& inVenue,
-			ARBConfigVenue** outVenue = NULL);
+			ARBConfigVenuePtr* outVenue = NULL);
 
 	/**
 	 * Add a venue.
 	 * @param inVenue Venue to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddVenue(ARBConfigVenue* inVenue);
+	bool AddVenue(ARBConfigVenuePtr inVenue);
 
 	/**
 	 * Delete a venue.
@@ -380,5 +382,5 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoring** outScoring = NULL) const;
+			ARBConfigScoringPtr* outScoring = NULL) const;
 };

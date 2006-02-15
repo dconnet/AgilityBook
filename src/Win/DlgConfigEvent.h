@@ -43,6 +43,8 @@
 #include "ARBConfigScoring.h"
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
+#include "ListData.h"
+
 class ARBAgilityRecordBook;
 class ARBConfig;
 class ARBConfigEvent;
@@ -56,8 +58,8 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBAgilityRecordBook* book,
 			ARBConfig* config,
-			ARBConfigVenue* pVenue,
-			ARBConfigEvent* pEvent,
+			ARBConfigVenuePtr pVenue,
+			ARBConfigEventPtr pEvent,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigEvent();
 	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
@@ -113,22 +115,25 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook* m_Book;
 	ARBConfig* m_Config;
-	ARBConfigVenue* m_pVenue;
-	ARBConfigEvent* m_pEvent;
+	ARBConfigVenuePtr m_pVenue;
+	ARBConfigEventPtr m_pEvent;
 	std::vector<CDlgFixup*> m_DlgFixup;
 	ARBConfigScoringList m_Scorings;
 	int m_idxMethod;
 	CString m_strOpening[2];
 
+	CListPtrData<ARBConfigScoringPtr>* GetScoringData(int index) const;
+	CListPtrData<ARBConfigTitlePointsPtr>* GetTitleData(int index) const;
+	CListPtrData<ARBConfigLifetimePointsPtr>* GetLifetimeData(int index) const;
 	void ClearFixups();
-	CString GetListName(ARBConfigScoring* pScoring) const;
+	CString GetListName(ARBConfigScoringPtr pScoring) const;
 	void FillControls();
 	void FillSubNames(bool bInit = false);
 	void FillMethodList();
 	void FillDivisionList();
 	void FillLevelList();
 	void FillRequiredPoints();
-	void FillTitlePoints(ARBConfigScoring* pScoring);
+	void FillTitlePoints(ARBConfigScoringPtr pScoring);
 	bool SaveControls();
 
 	//{{AFX_VIRTUAL(CDlgConfigEvent)

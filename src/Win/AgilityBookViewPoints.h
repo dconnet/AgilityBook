@@ -73,11 +73,11 @@ public:
 private:
 	struct LifeTimePoint
 	{
-		ARBString event;
+		ARBString eventName;
 		double points;
 		bool bFiltered;
 		LifeTimePoint()
-			: event()
+			: eventName()
 			, points(0.0)
 			, bFiltered(false)
 		{
@@ -86,7 +86,7 @@ private:
 				const ARBString inEvent,
 				double inPoints,
 				bool inFiltered)
-			: event(inEvent)
+			: eventName(inEvent)
 			, points(inPoints)
 			, bFiltered(inFiltered)
 		{
@@ -95,25 +95,25 @@ private:
 	typedef std::list<LifeTimePoint> LifeTimePointList;
 	struct LifeTimePoints
 	{
-		ARBConfigDivision const* pDiv;
-		ARBConfigLevel const* pLevel;
+		ARBConfigDivisionPtr pDiv;
+		ARBConfigLevelPtr pLevel;
 		LifeTimePointList ptList;
 	};
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
 
 	PointsDataBase* GetItemData(int index) const;
 	size_t FindMatchingRuns(
-			std::list<RunInfo> const& runs,
-			ARBString const& div,
-			ARBString const& level,
-			ARBString const& event,
-			std::list<RunInfo>& matching);
+			std::list<RunInfo> const& inRuns,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inEvent,
+			std::list<RunInfo>& inMatching);
 	double TallyPoints(
 			std::list<RunInfo> const& runs,
-			ARBConfigScoring const* pScoringMethod,
+			ARBConfigScoringPtr pScoringMethod,
 			int& nCleanQ,
 			int& nNotCleanQ);
-	void InsertData(int& ioIndex, PointsDataBase* inData);
+	void InsertData(int& ioIndex, CListData* inData);
 	void LoadData();
 
 protected:
@@ -149,10 +149,9 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	afx_msg void OnLvnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnLvnGetdispinfo(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnUpdateDetails(CCmdUI* pCmdUI);
 	afx_msg void OnDetails();
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);

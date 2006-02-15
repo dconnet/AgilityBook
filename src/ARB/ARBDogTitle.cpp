@@ -82,6 +82,11 @@ ARBDogTitle::~ARBDogTitle()
 {
 }
 
+ARBDogTitlePtr ARBDogTitle::Clone() const
+{
+	return ARBDogTitlePtr(new ARBDogTitle(*this));
+}
+
 ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 {
 	if (this != &rhs)
@@ -193,13 +198,12 @@ bool ARBDogTitle::Load(
 	{
 		// This fixes a bug in v1.0.0.8 where the 'nice' name was being written
 		// as the title name.
-		ARBConfigTitle* pTitle;
+		ARBConfigTitlePtr pTitle;
 		if (!inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, true, &pTitle))
 			inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, false, &pTitle);
 		if (pTitle)
 		{
 			m_Name = pTitle->GetName();
-			pTitle->Release();
 		}
 		else
 		{
@@ -238,7 +242,7 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	return true;
 }
 
-inline ARBString ARBDogTitle::GetGenericName() const
+ARBString ARBDogTitle::GetGenericName() const
 {
 	ARBString name;
 	name = m_Name;
@@ -254,11 +258,24 @@ inline ARBString ARBDogTitle::GetGenericName() const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBDogTitleList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogTitlePtr thing(new ARBDogTitle());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortTitle
 {
 public:
 	SortTitle() {}
-	bool operator()(ARBDogTitle* one, ARBDogTitle* two) const
+	bool operator()(ARBDogTitlePtr one, ARBDogTitlePtr two) const
 	{
 		if (one->GetDate() == two->GetDate())
 		{
@@ -293,20 +310,17 @@ int ARBDogTitleList::NumTitlesInVenue(ARBString const& inVenue) const
 bool ARBDogTitleList::FindTitle(
 		ARBString const& inVenue,
 		ARBString const& inTitle,
-		ARBDogTitle** outTitle) const
+		ARBDogTitlePtr* outTitle) const
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue
 		&& (*iter)->GetRawName() == inTitle)
 		{
 			if (outTitle)
-			{
 				*outTitle = *iter;
-				(*outTitle)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -393,19 +407,18 @@ int ARBDogTitleList::RenameTitle(
 	return count;
 }
 
-bool ARBDogTitleList::AddTitle(ARBDogTitle* inTitle)
+bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
 {
 	bool bAdded = false;
 	if (inTitle)
 	{
 		bAdded = true;
-		inTitle->AddRef();
 		push_back(inTitle);
 	}
 	return bAdded;
 }
 
-bool ARBDogTitleList::DeleteTitle(ARBDogTitle const* inTitle)
+bool ARBDogTitleList::DeleteTitle(ARBDogTitlePtr inTitle)
 {
 	if (!inTitle)
 		return false;

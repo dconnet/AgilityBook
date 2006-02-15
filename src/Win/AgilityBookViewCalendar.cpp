@@ -195,14 +195,14 @@ bool CAgilityBookViewCalendar::GetMessage2(CString& msg) const
 
 size_t CAgilityBookViewCalendar::GetEntriesOn(
 		ARBDate const& date,
-		std::vector<ARBCalendar*>& entries,
+		std::vector<ARBCalendarPtr>& entries,
 		bool bGetHidden) const
 {
 	entries.clear();
 	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
-	for (vector<ARBCalendar*>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
+	for (vector<ARBCalendarPtr>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
-		ARBCalendar const* pCal = *iter;
+		ARBCalendarPtr pCal = *iter;
 		if (pCal->InRange(date)
 		&& ((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
 		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
@@ -221,7 +221,7 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 	}
 	if (bGetHidden)
 	{
-		for (vector<ARBCalendar*>::const_iterator iter = m_CalendarHidden.begin(); iter != m_CalendarHidden.end(); ++iter)
+		for (vector<ARBCalendarPtr>::const_iterator iter = m_CalendarHidden.begin(); iter != m_CalendarHidden.end(); ++iter)
 		{
 			if ((*iter)->InRange(date))
 				entries.push_back((*iter));
@@ -249,7 +249,7 @@ void CAgilityBookViewCalendar::LoadData()
 	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
 
 	// Add items.
-	ARBVectorBase<ARBCalendar> entered;
+	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
@@ -257,7 +257,7 @@ void CAgilityBookViewCalendar::LoadData()
 		++iter)
 	{
 		bool bSuppress = false;
-		ARBCalendar* pCal = (*iter);
+		ARBCalendarPtr pCal = (*iter);
 		if (pCal->IsFiltered())
 			continue;
 		if (!bViewAll)
@@ -267,11 +267,11 @@ void CAgilityBookViewCalendar::LoadData()
 		}
 		if (!bSuppress && bHide)
 		{
-			for (ARBVectorBase<ARBCalendar>::const_iterator iterE = entered.begin();
+			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();
 				!bSuppress && iterE != entered.end();
 				++iterE)
 			{
-				ARBCalendar* pEntered = (*iterE);
+				ARBCalendarPtr pEntered = (*iterE);
 				if (pCal != pEntered
 				&& pCal->IsRangeOverlapped(pEntered->GetStartDate(), pEntered->GetEndDate()))
 				{
@@ -502,10 +502,10 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		// Add the calendar entries.
 		// First, get all the dates with an event.
 		set<ARBDate> dates;
-		vector<ARBCalendar*>::const_iterator iter;
+		vector<ARBCalendarPtr>::const_iterator iter;
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
-			ARBCalendar const* pCal = (*iter);
+			ARBCalendarPtr pCal = (*iter);
 			if (filter.ViewNotEntered()
 			|| filter.ViewPlanning()
 			|| filter.ViewEntered())
@@ -525,7 +525,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		for (set<ARBDate>::iterator iterDate = dates.begin(); iterDate != dates.end(); ++iterDate)
 		{
 			ARBDate date = (*iterDate);
-			vector<ARBCalendar*> entries;
+			vector<ARBCalendarPtr> entries;
 			// Then for each date, get all the events on that date to print.
 			if (0 < GetEntriesOn(date, entries, false))
 			{
@@ -544,7 +544,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
 				for (iter = entries.begin(); iter != entries.end(); ++iter)
 				{
-					ARBCalendar const* pCal = (*iter);
+					ARBCalendarPtr pCal = (*iter);
 					// @todo: Make data in calendar entries user selectable
 					ARBString const& venue = pCal->GetVenue();
 					ARBString const& loc = pCal->GetLocation();
@@ -907,11 +907,11 @@ void CAgilityBookViewCalendar::OnEditCopy()
 			maxLen[index] = str.GetLength();
 			columns[index] = str;
 		}
-		vector<ARBCalendar*>::const_iterator iter;
+		vector<ARBCalendarPtr>::const_iterator iter;
 		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
-			ARBCalendar* cal = *iter;
+			ARBCalendarPtr cal = *iter;
 			size_t len = cal->GetStartDate().GetString(dFmt).length();
 			if (len > maxLen[COL_START_DATE])
 				maxLen[COL_START_DATE] = len;
@@ -954,7 +954,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 		// The data
 		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 		{
-			ARBCalendar* cal = *iter;
+			ARBCalendarPtr cal = *iter;
 			ARBString items[scNumColumns];
 			items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
 			items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
@@ -1014,7 +1014,7 @@ void CAgilityBookViewCalendar::OnCalendarEdit()
 		CWnd* pParent = GetParent()->GetParent();
 		ASSERT(pParent->IsKindOf(RUNTIME_CLASS(CTabView)));
 		CTabView* pView = DYNAMIC_DOWNCAST(CTabView, pParent);
-		vector<ARBCalendar*> entries;
+		vector<ARBCalendarPtr> entries;
 		GetEntriesOn(m_Current, entries, true);
 		CDlgListCtrl dlg(GetDocument(), m_Current, &entries, pView, this);
 		if (IDOK == dlg.DoModal())
@@ -1028,7 +1028,7 @@ void CAgilityBookViewCalendar::OnCalendarEdit()
 
 void CAgilityBookViewCalendar::OnCalendarNew()
 {
-	ARBCalendar* cal = new ARBCalendar();
+	ARBCalendarPtr cal(new ARBCalendar());
 	if (m_Current.IsValid())
 	{
 		cal->SetStartDate(m_Current);
@@ -1046,13 +1046,12 @@ void CAgilityBookViewCalendar::OnCalendarNew()
 			GetDocument()->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
 		}
 	}
-	cal->Release();
 }
 
 void CAgilityBookViewCalendar::OnUpdateCalendarDelete(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	vector<ARBCalendar*> entries;
+	vector<ARBCalendarPtr> entries;
 	GetEntriesOn(m_Current, entries, true);
 	if (0 < entries.size())
 		bEnable = TRUE;
@@ -1061,7 +1060,7 @@ void CAgilityBookViewCalendar::OnUpdateCalendarDelete(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendar::OnAgilityCalendarDelete()
 {
-	vector<ARBCalendar*> entries;
+	vector<ARBCalendarPtr> entries;
 	GetEntriesOn(m_Current, entries, true);
 	if (0 < entries.size())
 		OnCalendarEdit();
@@ -1070,12 +1069,12 @@ void CAgilityBookViewCalendar::OnAgilityCalendarDelete()
 void CAgilityBookViewCalendar::OnUpdateAgilityCreateentryCalendar(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
-	vector<ARBCalendar*> entries;
+	vector<ARBCalendarPtr> entries;
 	GetEntriesOn(m_Current, entries, false);
 	if (1 == entries.size())
 	{
 		// Make sure the venue is recognized.
-		ARBCalendar* pCal = *(entries.begin());
+		ARBCalendarPtr pCal = *(entries.begin());
 		if (GetDocument()->GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
 			bEnable = TRUE;
 	}
@@ -1086,11 +1085,11 @@ void CAgilityBookViewCalendar::OnUpdateAgilityCreateentryCalendar(CCmdUI* pCmdUI
 
 void CAgilityBookViewCalendar::OnAgilityCreateentryCalendar() 
 {
-	vector<ARBCalendar*> entries;
+	vector<ARBCalendarPtr> entries;
 	GetEntriesOn(m_Current, entries, false);
 	if (1 == entries.size())
 	{
-		ARBCalendar* pCal = *(entries.begin());
+		ARBCalendarPtr pCal = *(entries.begin());
 		CWnd* pParent = GetParent()->GetParent();
 		ASSERT(pParent->IsKindOf(RUNTIME_CLASS(CTabView)));
 		CTabView* pView = DYNAMIC_DOWNCAST(CTabView, pParent);

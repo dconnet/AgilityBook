@@ -76,6 +76,11 @@ ARBTraining::~ARBTraining()
 {
 }
 
+ARBTrainingPtr ARBTraining::Clone() const
+{
+	return ARBTrainingPtr(new ARBTraining(*this));
+}
+
 ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 {
 	if (this != &rhs)
@@ -177,11 +182,23 @@ bool ARBTraining::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBTrainingList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBTrainingPtr thing(new ARBTraining());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortTraining
 {
 public:
 	SortTraining() {}
-	bool operator()(ARBTraining* one, ARBTraining* two) const
+	bool operator()(ARBTrainingPtr one, ARBTrainingPtr two) const
 	{
 		return one->GetDate() < two->GetDate();
 	}
@@ -199,7 +216,7 @@ size_t ARBTrainingList::GetAllNames(std::set<ARBString>& outNames) const
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBTraining const* training = *iter;
+		ARBTrainingPtr training = *iter;
 		if (0 < training->GetName().length())
 			outNames.insert(training->GetName());
 	}
@@ -211,14 +228,14 @@ size_t ARBTrainingList::GetAllSubNames(std::set<ARBString>& outSubNames) const
 	outSubNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBTraining const* training = *iter;
+		ARBTrainingPtr training = *iter;
 		if (0 < training->GetSubName().length())
 			outSubNames.insert(training->GetSubName());
 	}
 	return outSubNames.size();
 }
 
-bool ARBTrainingList::FindTraining(ARBTraining const* inTraining) const
+bool ARBTrainingList::FindTraining(ARBTrainingPtr inTraining) const
 {
 	if (inTraining)
 	{
@@ -231,19 +248,18 @@ bool ARBTrainingList::FindTraining(ARBTraining const* inTraining) const
 	return false;
 }
 
-bool ARBTrainingList::AddTraining(ARBTraining* inTraining)
+bool ARBTrainingList::AddTraining(ARBTrainingPtr inTraining)
 {
 	bool bAdded = false;
 	if (inTraining)
 	{
 		bAdded = true;
-		inTraining->AddRef();
 		push_back(inTraining);
 	}
 	return bAdded;
 }
 
-bool ARBTrainingList::DeleteTraining(ARBTraining const* inTraining)
+bool ARBTrainingList::DeleteTraining(ARBTrainingPtr inTraining)
 {
 	if (inTraining)
 	{

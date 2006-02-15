@@ -145,6 +145,11 @@ ARBConfigScoring::~ARBConfigScoring()
 {
 }
 
+ARBConfigScoringPtr ARBConfigScoring::Clone() const
+{
+	return ARBConfigScoringPtr(new ARBConfigScoring(*this));
+}
+
 ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 {
 	if (this != &rhs)
@@ -504,12 +509,9 @@ bool ARBConfigScoringList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigScoring* thing = new ARBConfigScoring();
+	ARBConfigScoringPtr thing(new ARBConfigScoring());
 	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -519,7 +521,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 		ARBString const& inLevel,
 		ARBDate const& inDate,
 		bool inTitlePoints,
-		ARBVector<ARBConfigScoring>& outList) const
+		ARBVector<ARBConfigScoringPtr>& outList) const
 {
 	outList.clear();
 	const_iterator iter;
@@ -528,10 +530,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == inLevel)
 		{
 			if ((*iter)->IsValidOn(inDate))
-			{
-				(*iter)->AddRef();
 				outList.push_back(*iter);
-			}
 		}
 	}
 	// Note: When the input date is not valid, we want ALL scoring methods
@@ -546,7 +545,6 @@ size_t ARBConfigScoringList::FindAllEvents(
 		{
 			if ((*iter)->IsValidOn(inDate))
 			{
-				(*iter)->AddRef();
 				outList.push_back(*iter);
 				break;
 			}
@@ -558,7 +556,6 @@ size_t ARBConfigScoringList::FindAllEvents(
 		{
 			if ((*iter)->IsValidOn(inDate))
 			{
-				(*iter)->AddRef();
 				outList.push_back(*iter);
 				break;
 			}
@@ -570,7 +567,6 @@ size_t ARBConfigScoringList::FindAllEvents(
 		{
 			if ((*iter)->IsValidOn(inDate))
 			{
-				(*iter)->AddRef();
 				outList.push_back(*iter);
 				break;
 			}
@@ -579,7 +575,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 	if (inTitlePoints)
 	{
-		ARBVector<ARBConfigScoring>::iterator iter;
+		ARBVector<ARBConfigScoringPtr>::iterator iter;
 		for (iter = outList.begin(); iter != outList.end(); )
 		{
 			if (0 < (*iter)->GetTitlePoints().size())
@@ -595,23 +591,23 @@ bool ARBConfigScoringList::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
-		ARBConfigScoring** outEvent) const
+		ARBConfigScoringPtr* outEvent) const
 {
 	if (outEvent)
-		*outEvent = NULL;
-	ARBVector<ARBConfigScoring> items;
+		outEvent->reset();
+	ARBVector<ARBConfigScoringPtr> items;
 	FindAllEvents(inDivision, inLevel, inDate, false, items);
 	if (0 == items.size())
 		return false;
-	ARBConfigScoring* pEvent = NULL;
+	ARBConfigScoringPtr pEvent;
 	if (1 == items.size())
 		pEvent = *(items.begin());
 	else
 	{
-		ARBVector<ARBConfigScoring>::iterator iter;
+		ARBVector<ARBConfigScoringPtr>::iterator iter;
 		for (iter = items.begin(); iter != items.end(); )
 		{
-			ARBConfigScoring const* pScoring = *iter;
+			ARBConfigScoringPtr pScoring = *iter;
 			if (!pScoring->IsValidOn(inDate))
 				iter = items.erase(iter);
 			else
@@ -630,10 +626,7 @@ bool ARBConfigScoringList::FindEvent(
 	if (pEvent)
 	{
 		if (outEvent)
-		{
 			*outEvent = pEvent;
-			(*outEvent)->AddRef();
-		}
 		return true;
 	}
 	else
@@ -645,18 +638,17 @@ bool ARBConfigScoringList::VerifyEvent(
 		ARBString const& inLevel,
 		ARBDate const& inDate) const
 {
-	ARBVector<ARBConfigScoring> items;
+	ARBVector<ARBConfigScoringPtr> items;
 	FindAllEvents(inDivision, inLevel, inDate, false, items);
 	return (0 < items.size());
 }
 
-ARBConfigScoring* ARBConfigScoringList::AddScoring()
+ARBConfigScoringPtr ARBConfigScoringList::AddScoring()
 {
-	ARBConfigScoring* pScoring = new ARBConfigScoring();
+	ARBConfigScoringPtr pScoring(new ARBConfigScoring());
 	pScoring->SetDivision(WILDCARD_DIVISION);
 	pScoring->SetLevel(WILDCARD_LEVEL);
 	pScoring->SetScoringStyle(ARBConfigScoring::eFaultsThenTime);
 	push_back(pScoring);
-	pScoring->AddRef();
 	return pScoring;
 }

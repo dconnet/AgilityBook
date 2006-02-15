@@ -79,6 +79,11 @@ ARBConfigTitle::~ARBConfigTitle()
 {
 }
 
+ARBConfigTitlePtr ARBConfigTitle::Clone() const
+{
+	return ARBConfigTitlePtr(new ARBConfigTitle(*this));
+}
+
 ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 {
 	if (this != &rhs)
@@ -262,11 +267,10 @@ bool ARBConfigTitleList::Load(
 		ARBErrorCallback& ioCallback,
 		bool inCheckDups)
 {
-	ARBConfigTitle* thing = new ARBConfigTitle();
+	ARBConfigTitlePtr thing(new ARBConfigTitle());
 	if (!thing->Load(inTree, inVersion, ioCallback)
 	|| (inCheckDups && FindTitle(thing->GetName())))
 	{
-		thing->Release();
 		return false;
 	}
 	push_back(thing);
@@ -277,19 +281,16 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 		ARBString const& inName,
 		short inInstance,
 		bool bAbbrevFirst,
-		ARBConfigTitle** outTitle) const
+		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetCompleteName(inInstance, bAbbrevFirst) == inName)
 		{
 			if (outTitle)
-			{
 				*outTitle = *iter;
-				(*outTitle)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -298,19 +299,16 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 
 bool ARBConfigTitleList::FindTitle(
 		ARBString const& inName,
-		ARBConfigTitle** outTitle) const
+		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName)
 		{
 			if (outTitle)
-			{
 				*outTitle = *iter;
-				(*outTitle)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -319,32 +317,28 @@ bool ARBConfigTitleList::FindTitle(
 
 bool ARBConfigTitleList::AddTitle(
 		ARBString const& inName,
-		ARBConfigTitle** outTitle)
+		ARBConfigTitlePtr* outTitle)
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	if (0 == inName.length())
 		return false;
 	if (FindTitle(inName))
 		return false;
-	ARBConfigTitle* pTitle = new ARBConfigTitle();
+	ARBConfigTitlePtr pTitle(new ARBConfigTitle());
 	pTitle->SetName(inName);
 	push_back(pTitle);
 	if (outTitle)
-	{
 		*outTitle = pTitle;
-		(*outTitle)->AddRef();
-	}
 	return true;
 }
 
-bool ARBConfigTitleList::AddTitle(ARBConfigTitle* inTitle)
+bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
 {
 	if (!inTitle || 0 == inTitle->GetName().length())
 		return false;
 	if (FindTitle(inTitle->GetName()))
 		return false;
-	inTitle->AddRef();
 	push_back(inTitle);
 	return true;
 }

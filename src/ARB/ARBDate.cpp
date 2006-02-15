@@ -79,9 +79,9 @@ static char THIS_FILE[] = __FILE__;
 
 static void SdnToGregorian(
 		long int sdn,
-		int *pYear,
-		int *pMonth,
-		int *pDay)
+		int* pYear,
+		int* pMonth,
+		int* pDay)
 {
 	if (sdn <= 0)
 	{

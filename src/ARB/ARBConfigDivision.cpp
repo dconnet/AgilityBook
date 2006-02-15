@@ -73,6 +73,11 @@ ARBConfigDivision::~ARBConfigDivision()
 {
 }
 
+ARBConfigDivisionPtr ARBConfigDivision::Clone() const
+{
+	return ARBConfigDivisionPtr(new ARBConfigDivision(*this));
+}
+
 ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 {
 	if (this != &rhs)
@@ -148,7 +153,7 @@ bool ARBConfigDivision::Save(Element& ioTree) const
 
 bool ARBConfigDivision::Update(
 		int indent,
-		ARBConfigDivision const* inDivNew,
+		ARBConfigDivisionPtr inDivNew,
 		ARBString& ioInfo)
 {
 	ARBString info;
@@ -169,22 +174,21 @@ bool ARBConfigDivision::Update(
 			iterLevel != inDivNew->GetLevels().end();
 			++iterLevel)
 		{
-			ARBConfigLevel* pLevel;
+			ARBConfigLevelPtr pLevel;
 			if (GetLevels().FindLevel((*iterLevel)->GetName(), &pLevel))
 			{
 				if (*(*iterLevel) == *pLevel)
 					++nSkipped;
 				else
 				{
-					if (pLevel->Update(indent+1, (*iterLevel), info2))
+					if (pLevel->Update(indent+1, *iterLevel, info2))
 						++nChanged;
 				}
-				pLevel->Release();
 			}
 			else
 			{
 				++nAdded;
-				GetLevels().AddLevel((*iterLevel));
+				GetLevels().AddLevel(*iterLevel);
 				info2 += indentBuffer;
 				info2 += _T("+");
 				info2 += (*iterLevel)->GetName();
@@ -217,12 +221,9 @@ bool ARBConfigDivisionList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigDivision* thing = new ARBConfigDivision();
+	ARBConfigDivisionPtr thing(new ARBConfigDivision());
 	if (!thing->Load(ioVenue, inTree, inVersion, ioCallback))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -248,19 +249,16 @@ bool ARBConfigDivisionList::VerifyLevel(
 
 bool ARBConfigDivisionList::FindDivision(
 		ARBString const& inDiv,
-		ARBConfigDivision** outDiv) const
+		ARBConfigDivisionPtr* outDiv) const
 {
 	if (outDiv)
-		*outDiv = NULL;
+		outDiv->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inDiv)
 		{
 			if (outDiv)
-			{
 				*outDiv = *iter;
-				(*outDiv)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -269,32 +267,28 @@ bool ARBConfigDivisionList::FindDivision(
 
 bool ARBConfigDivisionList::AddDivision(
 		ARBString const& inDiv,
-		ARBConfigDivision** outDiv)
+		ARBConfigDivisionPtr* outDiv)
 {
 	if (outDiv)
-		*outDiv = NULL;
+		outDiv->reset();
 	if (0 == inDiv.length())
 		return false;
 	if (FindDivision(inDiv))
 		return false;
-	ARBConfigDivision* pDiv = new ARBConfigDivision();
+	ARBConfigDivisionPtr pDiv(new ARBConfigDivision());
 	pDiv->SetName(inDiv);
 	push_back(pDiv);
 	if (outDiv)
-	{
 		*outDiv = pDiv;
-		(*outDiv)->AddRef();
-	}
 	return true;
 }
 
-bool ARBConfigDivisionList::AddDivision(ARBConfigDivision* inDiv)
+bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr inDiv)
 {
 	if (!inDiv
 	|| 0 == inDiv->GetName().length()
 	|| FindDivision(inDiv->GetName()))
 		return false;
-	inDiv->AddRef();
 	push_back(inDiv);
 	return true;
 }

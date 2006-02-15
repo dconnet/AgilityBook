@@ -62,6 +62,7 @@
 #include "DlgConfigure.h"
 #include "DlgFixup.h"
 #include "DlgName.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -76,10 +77,14 @@ CDlgConfigEvent::CDlgConfigEvent(
 		CAgilityBookDoc* pDoc,
 		ARBAgilityRecordBook* book,
 		ARBConfig* config,
-		ARBConfigVenue* pVenue,
-		ARBConfigEvent* pEvent,
+		ARBConfigVenuePtr pVenue,
+		ARBConfigEventPtr pEvent,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigEvent::IDD, pParent)
+	, m_ctrlSubNames(false)
+	, m_ctrlMethods(true)
+	, m_ctrlUnused(false)
+	, m_ctrlPointsList(true)
 	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(config)
@@ -197,6 +202,24 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+CListPtrData<ARBConfigScoringPtr>* CDlgConfigEvent::GetScoringData(int index) const
+{
+	CListData* pData = m_ctrlMethods.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigScoringPtr>*>(pData);
+}
+
+CListPtrData<ARBConfigTitlePointsPtr>* CDlgConfigEvent::GetTitleData(int index) const
+{
+	CListData* pData = m_ctrlPointsList.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigTitlePointsPtr>*>(pData);
+}
+
+CListPtrData<ARBConfigLifetimePointsPtr>* CDlgConfigEvent::GetLifetimeData(int index) const
+{
+	CListData* pData = m_ctrlPointsList.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigLifetimePointsPtr>*>(pData);
+}
+
 void CDlgConfigEvent::ClearFixups()
 {
 	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
@@ -204,7 +227,7 @@ void CDlgConfigEvent::ClearFixups()
 	m_DlgFixup.clear();
 }
 
-CString CDlgConfigEvent::GetListName(ARBConfigScoring* pScoring) const
+CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 {
 	CString all;
 	all.LoadString(IDS_ALL);
@@ -234,7 +257,8 @@ void CDlgConfigEvent::FillControls()
 	if (LB_ERR != idxMethod)
 	{
 		CString str;
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		bEnable = TRUE;
 		CTime t;
 		if (pScoring->GetValidFrom().IsValid())
@@ -375,10 +399,10 @@ void CDlgConfigEvent::FillMethodList()
 		iter != m_Scorings.end();
 		++iter)
 	{
-		ARBConfigScoring* pScoring = (*iter);
+		ARBConfigScoringPtr pScoring = (*iter);
 		str = GetListName(pScoring);
 		int index = m_ctrlMethods.AddString(str);
-		m_ctrlMethods.SetItemDataPtr(index, pScoring);
+		m_ctrlMethods.SetData(index, new CListPtrData<ARBConfigScoringPtr>(pScoring));
 	}
 	m_ctrlMethods.SetCurSel(m_idxMethod);
 
@@ -405,10 +429,13 @@ void CDlgConfigEvent::FillMethodList()
 
 void CDlgConfigEvent::FillDivisionList()
 {
-	ARBConfigScoring* pScoring = NULL;
+	ARBConfigScoringPtr pScoring;
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
-		pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+	{
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		pScoring = pScoringData->GetData();
+	}
 	m_ctrlDivision.ResetContent();
 	CString all;
 	all.LoadString(IDS_ALL);
@@ -419,9 +446,9 @@ void CDlgConfigEvent::FillDivisionList()
 		iter != m_pVenue->GetDivisions().end();
 		++iter)
 	{
-		ARBConfigDivision* pDiv = (*iter);
+		ARBConfigDivisionPtr pDiv = (*iter);
 		index = m_ctrlDivision.AddString(pDiv->GetName().c_str());
-		m_ctrlDivision.SetItemDataPtr(index, pDiv);
+		m_ctrlDivision.SetItemDataPtr(index, new CListPtrData<ARBConfigDivisionPtr>(pDiv));
 		if (pScoring && pScoring->GetDivision() == pDiv->GetName())
 			m_ctrlDivision.SetCurSel(index);
 	}
@@ -429,10 +456,13 @@ void CDlgConfigEvent::FillDivisionList()
 
 void CDlgConfigEvent::FillLevelList()
 {
-	ARBConfigScoring* pScoring = NULL;
+	ARBConfigScoringPtr pScoring;
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
-		pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+	{
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		pScoring = pScoringData->GetData();
+	}
 	m_ctrlLevel.ResetContent();
 	CString all;
 	all.LoadString(IDS_ALL);
@@ -446,7 +476,7 @@ void CDlgConfigEvent::FillLevelList()
 			iter != m_pVenue->GetDivisions().end();
 			++iter)
 		{
-			ARBConfigDivision* pDiv = (*iter);
+			ARBConfigDivisionPtr pDiv = (*iter);
 			for (ARBConfigLevelList::iterator iterLevel = pDiv->GetLevels().begin();
 				iterLevel != pDiv->GetLevels().end();
 				++iterLevel)
@@ -492,11 +522,14 @@ void CDlgConfigEvent::FillRequiredPoints()
 	}
 	else
 	{
-		ARBConfigScoring* pScoring = NULL;
+		ARBConfigScoringPtr pScoring;
 		int idxMethod = m_ctrlMethods.GetCurSel();
 		// If this isn't set, we've got serious problems!
 		if (LB_ERR != idxMethod)
-			pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		{
+			CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+			pScoring = pScoringData->GetData();
+		}
 		switch (static_cast<ARBConfigScoring::ScoringStyle>(m_ctrlType.GetItemData(idxType)))
 		{
 		default:
@@ -612,23 +645,36 @@ void CDlgConfigEvent::FillRequiredPoints()
 	}
 }
 
-void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
+void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 {
-	ARBBase* pOld = NULL;
+	ARBConfigTitlePointsPtr pOldTitle;
+	ARBConfigLifetimePointsPtr pOldLifetime;
 	int idxTitle = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxTitle)
-		pOld = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idxTitle));
+	{
+		CListPtrData<ARBConfigTitlePointsPtr>* pTitleData = GetTitleData(idxTitle);
+		if (pTitleData)
+		{
+			pOldTitle = pTitleData->GetData();
+		}
+		CListPtrData<ARBConfigLifetimePointsPtr>* pLifeData = GetLifetimeData(idxTitle);
+		if (pLifeData)
+		{
+			pOldLifetime = pLifeData->GetData();
+		}
+	}
 	m_ctrlPointsList.ResetContent();
 	for (ARBConfigTitlePointsList::const_iterator iter = pScoring->GetTitlePoints().begin();
 		iter != pScoring->GetTitlePoints().end();
 		++iter)
 	{
-		ARBConfigTitlePoints* pTitle = (*iter);
+		ARBConfigTitlePointsPtr pTitle = (*iter);
 		int idx = m_ctrlPointsList.AddString(pTitle->GetGenericName().c_str());
 		if (LB_ERR != idx)
 		{
-			m_ctrlPointsList.SetItemDataPtr(idx, static_cast<ARBBase*>(pTitle));
-			if (pOld == pTitle)
+			m_ctrlPointsList.SetData(idx,
+				new CListPtrData<ARBConfigTitlePointsPtr>(pTitle));
+			if (pOldTitle == pTitle)
 				m_ctrlPointsList.SetCurSel(idx);
 		}
 	}
@@ -636,12 +682,13 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoring* pScoring)
 		iter2 != pScoring->GetLifetimePoints().end();
 		++iter2)
 	{
-		ARBConfigLifetimePoints* pLife = (*iter2);
+		ARBConfigLifetimePointsPtr pLife = (*iter2);
 		int idx = m_ctrlPointsList.AddString(pLife->GetGenericName().c_str());
 		if (LB_ERR != idx)
 		{
-			m_ctrlPointsList.SetItemDataPtr(idx, static_cast<ARBBase*>(pLife));
-			if (pOld == pLife)
+			m_ctrlPointsList.SetData(idx,
+				new CListPtrData<ARBConfigLifetimePointsPtr>(pLife));
+			if (pOldLifetime == pLife)
 				m_ctrlPointsList.SetCurSel(idx);
 		}
 	}
@@ -661,7 +708,8 @@ bool CDlgConfigEvent::SaveControls()
 	&& LB_ERR != idxType)
 	{
 		CString str;
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(m_idxMethod));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(m_idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		ARBDate valid;
 		if (m_ctrlValidFrom.GetCheck())
 		{
@@ -868,12 +916,11 @@ void CDlgConfigEvent::OnBnClickedNew()
 {
 	UpdateData(TRUE);
 	SaveControls();
-	ARBConfigScoring* pScoring = m_Scorings.AddScoring();
+	ARBConfigScoringPtr pScoring = m_Scorings.AddScoring();
 	CString str = GetListName(pScoring);
 	m_idxMethod = m_ctrlMethods.AddString(str);
-	m_ctrlMethods.SetItemDataPtr(m_idxMethod, pScoring);
+	m_ctrlMethods.SetData(m_idxMethod, new CListPtrData<ARBConfigScoringPtr>(pScoring));
 	m_ctrlMethods.SetCurSel(m_idxMethod);
-	pScoring->Release();
 	FillMethodList();
 	FillControls();
 }
@@ -884,14 +931,14 @@ void CDlgConfigEvent::OnBnClickedCopy()
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
-		ARBConfigScoring* pNewScoring = m_Scorings.AddScoring();
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		ARBConfigScoringPtr pNewScoring = m_Scorings.AddScoring();
 		*pNewScoring = *pScoring;
 		CString str = GetListName(pNewScoring);
 		m_idxMethod = m_ctrlMethods.AddString(str);
-		m_ctrlMethods.SetItemDataPtr(m_idxMethod, pNewScoring);
+		m_ctrlMethods.SetData(m_idxMethod, new CListPtrData<ARBConfigScoringPtr>(pNewScoring));
 		m_ctrlMethods.SetCurSel(m_idxMethod);
-		pNewScoring->Release();
 		FillMethodList();
 		FillControls();
 	}
@@ -903,7 +950,8 @@ void CDlgConfigEvent::OnBnClickedDelete()
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
 			iter != m_Scorings.end();
 			++iter)
@@ -911,7 +959,6 @@ void CDlgConfigEvent::OnBnClickedDelete()
 			if ((*iter) == pScoring)
 			{
 				m_Scorings.erase(iter);
-				pScoring->Release();
 				break;
 			}
 		}
@@ -926,14 +973,14 @@ void CDlgConfigEvent::OnBnClickedUp()
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod && 0 != idxMethod)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
 			iter != m_Scorings.end();
 			++iter)
 		{
 			if ((*iter) == pScoring)
 			{
-				pScoring->AddRef();
 				iter = m_Scorings.erase(iter);
 				--iter;
 				m_Scorings.insert(iter, pScoring);
@@ -952,14 +999,14 @@ void CDlgConfigEvent::OnBnClickedDown()
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod && idxMethod < m_ctrlMethods.GetCount() - 1)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
 			iter != m_Scorings.end();
 			++iter)
 		{
 			if ((*iter) == pScoring)
 			{
-				pScoring->AddRef();
 				iter = m_Scorings.erase(iter);
 				++iter;
 				m_Scorings.insert(iter, pScoring);
@@ -1031,7 +1078,8 @@ void CDlgConfigEvent::OnPointsNew()
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		if (pScoring)
 		{
 			CDlgConfigTitlePoints dlg(0.0, 0, false, this);
@@ -1061,10 +1109,16 @@ void CDlgConfigEvent::OnPointsEdit()
 	int idx = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxMethod && LB_ERR != idx)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
-		ARBBase* pBase = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idx));
-		ARBConfigTitlePoints* pTitle = dynamic_cast<ARBConfigTitlePoints*>(pBase);
-		ARBConfigLifetimePoints* pLife = dynamic_cast<ARBConfigLifetimePoints*>(pBase);
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		CListPtrData<ARBConfigTitlePointsPtr>* pData1 = GetTitleData(idx);
+		CListPtrData<ARBConfigLifetimePointsPtr>* pData2 = GetLifetimeData(idx);
+		ARBConfigTitlePointsPtr pTitle;
+		ARBConfigLifetimePointsPtr pLife;
+		if (pData1)
+			pTitle = pData1->GetData();
+		if (pData2)
+			pLife = pData2->GetData();
 		if (pScoring && (pTitle || pLife))
 		{
 			double pts;
@@ -1127,10 +1181,16 @@ void CDlgConfigEvent::OnPointsDelete()
 	int idx = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxMethod && LB_ERR != idx)
 	{
-		ARBConfigScoring* pScoring = reinterpret_cast<ARBConfigScoring*>(m_ctrlMethods.GetItemDataPtr(idxMethod));
-		ARBBase* pBase = reinterpret_cast<ARBBase*>(m_ctrlPointsList.GetItemDataPtr(idx));
-		ARBConfigTitlePoints* pTitle = dynamic_cast<ARBConfigTitlePoints*>(pBase);
-		ARBConfigLifetimePoints* pLife = dynamic_cast<ARBConfigLifetimePoints*>(pBase);
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		CListPtrData<ARBConfigTitlePointsPtr>* pData1 = GetTitleData(idx);
+		CListPtrData<ARBConfigLifetimePointsPtr>* pData2 = GetLifetimeData(idx);
+		ARBConfigTitlePointsPtr pTitle;
+		ARBConfigLifetimePointsPtr pLife;
+		if (pData1)
+			pTitle = pData1->GetData();
+		if (pData2)
+			pLife = pData2->GetData();
 		if (pScoring && (pTitle || pLife))
 		{
 			if (pTitle)
@@ -1170,7 +1230,8 @@ void CDlgConfigEvent::OnOK()
 	for (index = 0; index < m_ctrlMethods.GetCount(); ++index)
 	{
 		CString str;
-		ARBConfigScoring const* pScoring = reinterpret_cast<ARBConfigScoring const*>(m_ctrlMethods.GetItemDataPtr(index));
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(index);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		ARBDate validFrom = pScoring->GetValidFrom();
 		ARBDate validTo = pScoring->GetValidTo();
 		if (validFrom.IsValid() && validTo.IsValid()
@@ -1193,19 +1254,18 @@ void CDlgConfigEvent::OnOK()
 			// Extract all similar methods.
 			ARBConfigScoringList items;
 			ARBConfigScoringList::iterator iter = scorings.begin();
-			ARBConfigScoring* pScoring = items.AddScoring();
+			ARBConfigScoringPtr pScoring = items.AddScoring();
 			*pScoring = *(*iter);
 			iter = scorings.erase(scorings.begin());
 			while (iter != scorings.end())
 			{
-				ARBConfigScoring* pScoring2 = *iter;
+				ARBConfigScoringPtr pScoring2 = *iter;
 				if (pScoring->GetDivision() == pScoring2->GetDivision()
 				&& pScoring->GetLevel() == pScoring2->GetLevel())
 				{
 					pScoring2 = items.AddScoring();
 					*pScoring2 = *(*iter);
 					iter = scorings.erase(iter);
-					pScoring2->Release();
 				}
 				else
 					++iter;
@@ -1214,10 +1274,10 @@ void CDlgConfigEvent::OnOK()
 			while (!bOverlap && 1 < items.size())
 			{
 				iter = items.begin();
-				ARBConfigScoring const* pScoring = *iter;
+				ARBConfigScoringPtr pScoring = *iter;
 				for (++iter; !bOverlap && iter != items.end(); ++iter)
 				{
-					ARBConfigScoring const* pScoring2 = *iter;
+					ARBConfigScoringPtr pScoring2 = *iter;
 					if ((!pScoring->GetValidFrom().IsValid()
 					&& !pScoring2->GetValidFrom().IsValid())
 					|| (!pScoring->GetValidTo().IsValid()
@@ -1231,7 +1291,6 @@ void CDlgConfigEvent::OnOK()
 				}
 				items.erase(items.begin());
 			}
-			pScoring->Release();
 		}
 	}
 	if (bOverlap)

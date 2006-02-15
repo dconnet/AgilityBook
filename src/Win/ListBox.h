@@ -35,14 +35,21 @@
  * Revision History
  */
 
-/////////////////////////////////////////////////////////////////////////////
+class CListData;
 
 class CListBox2 : public CListBox
 {
 	DECLARE_DYNAMIC(CListBox2)
 public:
-	CListBox2();
+	CListBox2(bool bAutoDelete);
 	virtual ~CListBox2();
+
+	/*
+	 * Simple wrappers to control data access.
+	 * Only valid if autodelete is set.
+	 */
+	CListData* GetData(int index) const;
+	void SetData(int index, CListData* inData);
 
 protected:
 // Overrides
@@ -51,6 +58,7 @@ protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void ComputeExtent(LPCTSTR lpszItem);
 	//}}AFX_VIRTUAL
+	bool m_bAutoDelete;
 	int m_HorzExtent;
 
 protected:
@@ -58,6 +66,8 @@ protected:
 	LRESULT OnSetFont(WPARAM, LPARAM);
 	LRESULT OnAddString(WPARAM, LPARAM);
 	LRESULT OnInsertString(WPARAM, LPARAM);
+	LRESULT OnResetContent(WPARAM, LPARAM);
+	LRESULT OnDeleteString(WPARAM, LPARAM);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

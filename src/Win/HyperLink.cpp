@@ -109,7 +109,7 @@ bool CHyperLink::GotoURL(CString const& url)
 
 			if (GetRegKey(HKEY_CLASSES_ROOT,key,key) == ERROR_SUCCESS)
 			{
-				TCHAR *pos;
+				TCHAR* pos;
 				pos = _tcsstr(key, _T("\"%1\""));
 				if (pos == NULL) {	// No quotes found
 					pos = _tcsstr(key, _T("%1"));	// Check for %1, without quotes

@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../../../xml-xerces/c/src"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -135,7 +135,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../../../xml-xerces/c/src"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -260,6 +260,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ColumnOrder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ComboBox.h"
 				>
 			</File>
 			<File
@@ -496,6 +500,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ListCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ListData.h"
 				>
 			</File>
 			<File
@@ -1061,6 +1069,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\ComboBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\CrashHandler.cpp"
 				>
 			</File>
@@ -1290,6 +1302,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ListCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ListData.cpp"
 				>
 			</File>
 			<File

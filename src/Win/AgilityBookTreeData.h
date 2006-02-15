@@ -38,16 +38,15 @@
 
 #include <list>
 #include "AgilityBookDoc.h"
-class ARBDog;
-class ARBDogRun;
-class ARBDogTrial;
+#include "ListData.h"
+
 class CAgilityBookTree;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
 class CAgilityBookViewDataCalendar;
 
-class CAgilityBookTreeData
+class CAgilityBookTreeData : public CListData
 {
 public:
 	CAgilityBookTreeData(CAgilityBookTree* pTree)
@@ -65,33 +64,33 @@ public:
 		m_hItem = hItem;
 	}
 	virtual CAgilityBookTreeData const* GetParent() const = 0;
-	virtual ARBBase const* GetARBBase() const
+	virtual ARBBasePtr GetARBBase() const
 	{
-		return NULL;
+		return ARBBasePtr();
 	}
-	virtual ARBDog const* GetDog() const
+	virtual ARBDogPtr GetDog() const
 	{
-		return NULL;
+		return ARBDogPtr();
 	}
-	virtual ARBDogTrial const* GetTrial() const
+	virtual ARBDogTrialPtr GetTrial() const
 	{
-		return NULL;
+		return ARBDogTrialPtr();
 	}
-	virtual ARBDogRun const* GetRun() const
+	virtual ARBDogRunPtr GetRun() const
 	{
-		return NULL;
+		return ARBDogRunPtr();
 	}
-	virtual ARBDog* GetDog()
+	virtual ARBDogPtr GetDog()
 	{
-		return NULL;
+		return ARBDogPtr();
 	}
-	virtual ARBDogTrial* GetTrial()
+	virtual ARBDogTrialPtr GetTrial()
 	{
-		return NULL;
+		return ARBDogTrialPtr();
 	}
-	virtual ARBDogRun* GetRun()
+	virtual ARBDogRunPtr GetRun()
 	{
-		return NULL;
+		return ARBDogRunPtr();
 	}
 	virtual CAgilityBookTreeDataDog const* GetDataDog() const
 	{
@@ -145,22 +144,22 @@ class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataDog(
 			CAgilityBookTree* pTree,
-			ARBDog* pDog);
+			ARBDogPtr pDog);
 	~CAgilityBookTreeDataDog();
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
 		return NULL;
 	}
-	virtual ARBBase const* GetARBBase() const
+	virtual ARBBasePtr GetARBBase() const
 	{
 		return m_pDog;
 	}
-	virtual ARBDog const* GetDog() const
+	virtual ARBDogPtr GetDog() const
 	{
 		return m_pDog;
 	}
-	virtual ARBDog* GetDog()
+	virtual ARBDogPtr GetDog()
 	{
 		return m_pDog;
 	}
@@ -186,7 +185,7 @@ public:
 	virtual void Properties();
 
 private:
-	ARBDog* m_pDog;
+	ARBDogPtr m_pDog;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -196,24 +195,24 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataTrial(
 			CAgilityBookTree* pTree,
-			ARBDogTrial* pTrial);
+			ARBDogTrialPtr pTrial);
 	~CAgilityBookTreeDataTrial();
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
 		return GetDataDog();
 	}
-	virtual ARBBase const* GetARBBase() const
+	virtual ARBBasePtr GetARBBase() const
 	{
 		return m_pTrial;
 	}
-	virtual ARBDog const* GetDog() const;
-	virtual ARBDogTrial const* GetTrial() const
+	virtual ARBDogPtr GetDog() const;
+	virtual ARBDogTrialPtr GetTrial() const
 	{
 		return m_pTrial;
 	}
-	virtual ARBDog* GetDog();
-	virtual ARBDogTrial* GetTrial()
+	virtual ARBDogPtr GetDog();
+	virtual ARBDogTrialPtr GetTrial()
 	{
 		return m_pTrial;
 	}
@@ -241,7 +240,7 @@ public:
 	virtual void Properties();
 
 private:
-	ARBDogTrial* m_pTrial;
+	ARBDogTrialPtr m_pTrial;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -251,26 +250,26 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 public:
 	CAgilityBookTreeDataRun(
 			CAgilityBookTree* pTree,
-			ARBDogRun* pRun);
+			ARBDogRunPtr pRun);
 	~CAgilityBookTreeDataRun();
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
 		return GetDataTrial();
 	}
-	virtual ARBBase const* GetARBBase() const
+	virtual ARBBasePtr GetARBBase() const
 	{
 		return m_pRun;
 	}
-	virtual ARBDog const* GetDog() const;
-	virtual ARBDogTrial const* GetTrial() const;
-	virtual ARBDogRun const* GetRun() const
+	virtual ARBDogPtr GetDog() const;
+	virtual ARBDogTrialPtr GetTrial() const;
+	virtual ARBDogRunPtr GetRun() const
 	{
 		return m_pRun;
 	}
-	virtual ARBDog* GetDog();
-	virtual ARBDogTrial* GetTrial();
-	virtual ARBDogRun* GetRun()
+	virtual ARBDogPtr GetDog();
+	virtual ARBDogTrialPtr GetTrial();
+	virtual ARBDogRunPtr GetRun()
 	{
 		return m_pRun;
 	}
@@ -300,5 +299,5 @@ public:
 	virtual void Properties();
 
 private:
-	ARBDogRun* m_pRun;
+	ARBDogRunPtr m_pRun;
 };

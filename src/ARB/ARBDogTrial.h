@@ -59,9 +59,12 @@ class ARBDogTrial : public ARBBase
 {
 public:
 	ARBDogTrial();
+	~ARBDogTrial();
 	ARBDogTrial(ARBCalendar const& inCal);
 	ARBDogTrial(ARBDogTrial const& rhs);
 	ARBDogTrial& operator=(ARBDogTrial const& rhs);
+	ARBDogTrialPtr Clone() const;
+
 	bool operator==(ARBDogTrial const& rhs) const;
 	bool operator!=(ARBDogTrial const& rhs) const;
 
@@ -142,7 +145,6 @@ public:
 	ARBDogRunList& GetRuns();
 
 private:
-	~ARBDogTrial();
 	ARBString m_Location;
 	ARBString m_Note;
 	bool m_Verified;
@@ -205,9 +207,24 @@ inline ARBDogRunList& ARBDogTrial::GetRuns()
 /**
  * List of ARBDogTrial objects.
  */
-class ARBDogTrialList : public ARBVectorLoad2<ARBDogTrial>
+class ARBDogTrialList : public ARBVector<ARBDogTrialPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort the list by first date.
 	 * @param inDescending Sort in descending or ascending order.
@@ -285,7 +302,7 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumRunsInDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inDiv) const;
 
 	/**
@@ -296,7 +313,7 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inOldDiv,
 			ARBString const& inNewDiv);
 
@@ -389,7 +406,7 @@ public:
 	 * @param inTrial Trial to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddTrial(ARBDogTrial* inTrial);
+	bool AddTrial(ARBDogTrialPtr inTrial);
 
 	/**
 	 * Delete a trial.
@@ -397,5 +414,5 @@ public:
 	 * @return Whether trial was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteTrial(ARBDogTrial const* inTrial);
+	bool DeleteTrial(ARBDogTrialPtr inTrial);
 };

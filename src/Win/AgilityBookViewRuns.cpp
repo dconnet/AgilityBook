@@ -72,6 +72,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "Element.h"
+#include "ListData.h"
 #include "MainFrm.h"
 
 using namespace std;
@@ -85,51 +86,39 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRunsData
 
-class CAgilityBookViewRunsData
+class CAgilityBookViewRunsData : public CListData
 {
 	friend int CALLBACK CompareRuns(LPARAM, LPARAM, LPARAM);
 public:
 	CAgilityBookViewRunsData(
 			CAgilityBookViewRuns* pView,
-			ARBDog* pDog,
-			ARBDogTrial* pTrial,
-			ARBDogRun* pRun)
+			ARBDogPtr pDog,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun)
 		: m_RefCount(1)
 		, m_pView(pView)
 		, m_pDog(pDog)
 		, m_pTrial(pTrial)
 		, m_pRun(pRun)
 	{
-		if (m_pDog)
-			m_pDog->AddRef();
-		if (m_pTrial)
-			m_pTrial->AddRef();
-		if (m_pRun)
-			m_pRun->AddRef();
 	}
 
 	void AddRef();
 	void Release();
 
-	ARBDogRun* GetRun()			{return m_pRun;}
+	ARBDogRunPtr GetRun()			{return m_pRun;}
 	ARBString OnNeedText(int iCol) const;
 	int OnNeedIcon() const;
 
 protected:
 	~CAgilityBookViewRunsData()
 	{
-		if (m_pDog)
-			m_pDog->Release();
-		if (m_pTrial)
-			m_pTrial->Release();
-		if (m_pRun)
-			m_pRun->Release();
 	}
 	UINT m_RefCount;
 	CAgilityBookViewRuns* m_pView;
-	ARBDog* m_pDog;
-	ARBDogTrial* m_pTrial;
-	ARBDogRun* m_pRun;
+	ARBDogPtr m_pDog;
+	ARBDogTrialPtr m_pTrial;
+	ARBDogRunPtr m_pRun;
 };
 
 void CAgilityBookViewRunsData::AddRef()
@@ -251,7 +240,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 		case IO_RUNS_TOTAL_FAULTS:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType())
 			{
-				ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
                     m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -262,8 +251,6 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						&pScoring);
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
 				str << ARBDouble::str(faults, 0);
-				if (pScoring)
-					pScoring->Release();
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
@@ -351,7 +338,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			if (m_pRun->GetQ().Qualified()
 			|| ARB_Q::eQ_NQ == m_pRun->GetQ())
 			{
-				ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
 					m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -363,7 +350,6 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				if (pScoring)
 				{
 					str << ARBDouble::str(m_pRun->GetScore(pScoring));
-					pScoring->Release();
 				}
 			}
 			break;
@@ -372,7 +358,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				double pts = 0;
 				if (m_pRun->GetQ().Qualified())
 				{
-					ARBConfigScoring* pScoring = NULL;
+					ARBConfigScoringPtr pScoring;
 					if (m_pTrial->GetClubs().GetPrimaryClub())
 						m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 							m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -384,7 +370,6 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					if (pScoring)
 					{
 						pts = m_pRun->GetTitlePoints(pScoring);
-						pScoring->Release();
 					}
 				}
 				str << pts;
@@ -412,7 +397,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 			break;
 		case IO_RUNS_SPEED:
 			{
-				ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
                     m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -427,7 +412,6 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					{
 						str << m_pRun->GetSpeedPoints(pScoring);
 					}
-					pScoring->Release();
 				}
 			}
 			break;
@@ -505,7 +489,7 @@ int CAgilityBookViewRuns::CSortColumn::LookupColumn(int iCol) const
 
 struct SORT_RUN_INFO
 {
-	CAgilityBookViewRuns *pThis;
+	CAgilityBookViewRuns* pThis;
 	int nCol;
 };
 
@@ -517,8 +501,10 @@ int CALLBACK CompareRuns(
 	SORT_RUN_INFO* sortInfo = reinterpret_cast<SORT_RUN_INFO*>(lParam3);
 	if (!sortInfo)
 		return 0;
-	CAgilityBookViewRunsData* pRun1 = reinterpret_cast<CAgilityBookViewRunsData*>(lParam1);
-	CAgilityBookViewRunsData* pRun2 = reinterpret_cast<CAgilityBookViewRunsData*>(lParam2);
+	CListData* pRawRun1 = reinterpret_cast<CListData*>(lParam1);
+	CListData* pRawRun2 = reinterpret_cast<CListData*>(lParam2);
+	CAgilityBookViewRunsData* pRun1 = dynamic_cast<CAgilityBookViewRunsData*>(pRawRun1);
+	CAgilityBookViewRunsData* pRun2 = dynamic_cast<CAgilityBookViewRunsData*>(pRawRun2);
 	int nRet = 0;
 	int iCol = abs(sortInfo->nCol);
 	// Col 0 is special: it has the icons. Instead of saving it,
@@ -728,7 +714,7 @@ int CALLBACK CompareRuns(
 			bool bOk2 = ARBDogRunScoring::eTypeByTime == pRun2->m_pRun->GetScoring().GetType();
 			if (bOk1 && bOk2)
 			{
-				ARBConfigScoring* pScoring1 = NULL;
+				ARBConfigScoringPtr pScoring1;
 				if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
 					pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -737,7 +723,7 @@ int CALLBACK CompareRuns(
 						pRun1->m_pRun->GetLevel(),
 						pRun1->m_pRun->GetDate(),
 						&pScoring1);
-				ARBConfigScoring* pScoring2 = NULL;
+				ARBConfigScoringPtr pScoring2;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
 					pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -752,10 +738,6 @@ int CALLBACK CompareRuns(
 					nRet = -1;
 				else if (faults1 > faults2)
 					nRet = 1;
-				if (pScoring1)
-					pScoring1->Release();
-				if (pScoring2)
-					pScoring2->Release();
 			}
 			else if (bOk1)
 				nRet = 1;
@@ -917,7 +899,7 @@ int CALLBACK CompareRuns(
 			bool bOk2 = (pRun2->m_pRun->GetQ().Qualified() || ARB_Q::eQ_NQ == pRun2->m_pRun->GetQ());
 			if (bOk1 && bOk2)
 			{
-				ARBConfigScoring* pScoring1 = NULL;
+				ARBConfigScoringPtr pScoring1;
 				if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
 					pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -926,7 +908,7 @@ int CALLBACK CompareRuns(
 						pRun1->m_pRun->GetLevel(),
 						pRun1->m_pRun->GetDate(),
 						&pScoring1);
-				ARBConfigScoring* pScoring2 = NULL;
+				ARBConfigScoringPtr pScoring2;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
 					pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -946,10 +928,6 @@ int CALLBACK CompareRuns(
 					nRet = -1;
 				else if (pScoring2)
 					nRet = 1;
-				if (pScoring1)
-					pScoring1->Release();
-				if (pScoring2)
-					pScoring2->Release();
 			}
 			else if (bOk1)
 				nRet = 1;
@@ -963,7 +941,7 @@ int CALLBACK CompareRuns(
 			double pts2 = 0;
 			if (pRun1->m_pRun->GetQ().Qualified())
 			{
-				ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoringPtr pScoring;
 				if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
 					 pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -973,14 +951,11 @@ int CALLBACK CompareRuns(
 						pRun1->m_pRun->GetDate(),
 						&pScoring);
 				if (pScoring)
-				{
 					pts1 = pRun1->m_pRun->GetTitlePoints(pScoring);
-					pScoring->Release();
-				}
 			}
 			if (pRun2->m_pRun->GetQ().Qualified())
 			{
-				ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoringPtr pScoring;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
 					pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 						pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -990,10 +965,7 @@ int CALLBACK CompareRuns(
 						pRun2->m_pRun->GetDate(),
 						&pScoring);
 				if (pScoring)
-				{
 					pts2 = pRun2->m_pRun->GetTitlePoints(pScoring);
-					pScoring->Release();
-				}
 			}
 			if (pts1 < pts2)
 				nRet = -1;
@@ -1036,7 +1008,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_SPEED:
 		{
-			ARBConfigScoring* pScoring1 = NULL;
+			ARBConfigScoringPtr pScoring1;
 			if (pRun1->m_pTrial->GetClubs().GetPrimaryClub())
 				pRun1->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 					pRun1->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -1045,7 +1017,7 @@ int CALLBACK CompareRuns(
 					pRun1->m_pRun->GetLevel(),
 					pRun1->m_pRun->GetDate(),
 					&pScoring1);
-			ARBConfigScoring* pScoring2 = NULL;
+			ARBConfigScoringPtr pScoring2;
 			if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
 				pRun2->m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
 					pRun2->m_pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -1067,10 +1039,6 @@ int CALLBACK CompareRuns(
 				nRet = 1;
 			else if (pts1 < pts2)
 				nRet = -1;
-			if (pScoring1)
-				pScoring1->Release();
-			if (pScoring2)
-				pScoring2->Release();
 		}
 		break;
 	}
@@ -1154,7 +1122,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemchanged)
-	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
@@ -1190,6 +1157,7 @@ CAgilityBookViewRuns::CAgilityBookViewRuns()
 	, m_Callback(this)
 	, m_SortColumn(m_Columns)
 {
+	SetAutoDelete(true);
 	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
 	CWinApp* app = AfxGetApp();
 	m_imgCourse = m_ImageList.Add(app->LoadIcon(IDI_AGILITYBOOKDOC));
@@ -1318,10 +1286,7 @@ bool CAgilityBookViewRuns::GetMessage2(CString& msg) const
 
 CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 {
-	CAgilityBookViewRunsData *pData = NULL;
-	if (0 <= index && index < GetListCtrl().GetItemCount())
-		pData = reinterpret_cast<CAgilityBookViewRunsData*>(GetListCtrl().GetItemData(index));
-	return pData;
+	return dynamic_cast<CAgilityBookViewRunsData*>(GetData(index));
 }
 
 void CAgilityBookViewRuns::SetupColumns()
@@ -1357,7 +1322,7 @@ void CAgilityBookViewRuns::LoadData()
 	CWaitCursor wait;
 
 	// Mirror the selection in the tree here.
-	ARBDogRun* pCurRun = GetDocument()->GetCurrentRun();
+	ARBDogRunPtr pCurRun = GetDocument()->GetCurrentRun();
 
 	// Reduce flicker.
 	GetListCtrl().SetRedraw(FALSE);
@@ -1368,9 +1333,9 @@ void CAgilityBookViewRuns::LoadData()
 	// Add items.
 	std::vector<CVenueFilter> venues;
 	CAgilityBookOptions::GetFilterVenue(venues);
-	list<ARBDogTrial*> trials;
-	ARBDog* pDog = GetDocument()->GetCurrentDog();
-	ARBDogTrial* pCurTrial = GetDocument()->GetCurrentTrial();
+	list<ARBDogTrialPtr> trials;
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
+	ARBDogTrialPtr pCurTrial = GetDocument()->GetCurrentTrial();
 	if (pCurTrial && CAgilityBookOptions::GetViewRunsByTrial())
 		trials.push_back(pCurTrial);
 	else
@@ -1381,7 +1346,7 @@ void CAgilityBookViewRuns::LoadData()
 			iter != pDog->GetTrials().end();
 			++iter)
 			{
-				ARBDogTrial* pTrial = (*iter);
+				ARBDogTrialPtr pTrial = (*iter);
 				if (!pTrial->IsFiltered())
 					trials.push_back(pTrial);
 			}
@@ -1391,26 +1356,27 @@ void CAgilityBookViewRuns::LoadData()
 	if (0 < trials.size())
 	{
 		int i = 0;
-		for (list<ARBDogTrial*>::iterator iter = trials.begin(); iter != trials.end(); ++iter)
+		for (list<ARBDogTrialPtr>::iterator iter = trials.begin(); iter != trials.end(); ++iter)
 		{
-			ARBDogTrial* pTrial = (*iter);
+			ARBDogTrialPtr pTrial = (*iter);
 			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
 			iterRun != pTrial->GetRuns().end();
 			++i, ++iterRun)
 			{
-				ARBDogRun* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				if (pRun->IsFiltered())
 					continue;
 				if (pRun->GetQ().Qualified())
 					++nQs;
-				CAgilityBookViewRunsData* pData = new CAgilityBookViewRunsData(this, pDog, pTrial, pRun);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
 				item.pszText = LPSTR_TEXTCALLBACK;
 				item.iImage = I_IMAGECALLBACK;
 				item.iItem = i;
 				item.iSubItem = 0;
-				item.lParam = reinterpret_cast<LPARAM>(pData);
+				item.lParam = reinterpret_cast<LPARAM>(
+					static_cast<CListData*>(
+						new CAgilityBookViewRunsData(this, pDog, pTrial, pRun)));
 				int index = GetListCtrl().InsertItem(&item);
 				// Compare by ptr, not value.
 				if (pCurRun && pCurRun == pRun)
@@ -1519,16 +1485,16 @@ void CAgilityBookViewRuns::OnGetdispinfo(
 		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
+	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+	CAgilityBookViewRunsData* pData = dynamic_cast<CAgilityBookViewRunsData*>(pRawData);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pDispInfo->item.lParam);
 		ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	if (pDispInfo->item.mask & LVIF_IMAGE)
 	{
-		CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pDispInfo->item.lParam);
 		pDispInfo->item.iImage = pData->OnNeedIcon();
 	}
 	*pResult = 0;
@@ -1547,7 +1513,8 @@ void CAgilityBookViewRuns::OnItemchanged(
 	{
 		if (!m_bSuppressSelect && 1 == GetListCtrl().GetSelectedCount())
 		{
-			CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
+			CListData* pRawData = reinterpret_cast<CListData*>(pNMListView->lParam);
+			CAgilityBookViewRunsData* pData = dynamic_cast<CAgilityBookViewRunsData*>(pRawData);
 			if (pData)
 			{
 				CAgilityBookTreeData* pTreeData = GetDocument()->GetTreeView()->FindData(TVI_ROOT, pData->GetRun());
@@ -1560,18 +1527,6 @@ void CAgilityBookViewRuns::OnItemchanged(
 			}
 		}
 	}
-	*pResult = 0;
-}
-
-void CAgilityBookViewRuns::OnDeleteitem(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
-	CAgilityBookViewRunsData *pData = reinterpret_cast<CAgilityBookViewRunsData*>(pNMListView->lParam);
-	if (pData)
-		pData->Release();
-	pNMListView->lParam = 0;
 	*pResult = 0;
 }
 

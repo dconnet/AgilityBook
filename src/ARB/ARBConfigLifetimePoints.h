@@ -56,11 +56,14 @@ class ARBConfigLifetimePoints : public ARBBase
 {
 public:
 	ARBConfigLifetimePoints();
+	~ARBConfigLifetimePoints();
 	ARBConfigLifetimePoints(
 			double inPoints,
 			short inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+	ARBConfigLifetimePointsPtr Clone() const;
+
 	bool operator==(ARBConfigLifetimePoints const& rhs) const;
 	bool operator!=(ARBConfigLifetimePoints const& rhs) const;
 
@@ -110,7 +113,6 @@ public:
 	void SetFaults(short inFaults);
 
 private:
-	~ARBConfigLifetimePoints();
 	double m_Points;
 	short m_Faults;
 };
@@ -140,9 +142,22 @@ inline void ARBConfigLifetimePoints::SetFaults(short inFaults)
 /**
  * List of ARBConfigLifetimePoints objects.
  */
-class ARBConfigLifetimePointsList : public ARBVectorLoad1<ARBConfigLifetimePoints>
+class ARBConfigLifetimePointsList : public ARBVector<ARBConfigLifetimePointsPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort the lifetime point objects by faults.
 	 */
@@ -163,7 +178,7 @@ public:
 	 */
 	bool FindLifetimePoints(
 			short inFaults,
-			ARBConfigLifetimePoints** outPoints = NULL) const;
+			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
 
 	/**
 	 * Add an object.
@@ -175,7 +190,7 @@ public:
 	bool AddLifetimePoints(
 			double inPoints,
 			short inFaults,
-			ARBConfigLifetimePoints** outPoints = NULL);
+			ARBConfigLifetimePointsPtr* outPoints = NULL);
 
 	/**
 	 * Delete an object.

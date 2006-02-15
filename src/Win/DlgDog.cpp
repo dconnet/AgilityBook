@@ -64,7 +64,7 @@ IMPLEMENT_DYNAMIC(CDlgDog, CDlgBaseSheet)
 
 CDlgDog::CDlgDog(
 		CAgilityBookDoc* pDoc,
-		ARBDog* pDog,
+		ARBDogPtr pDog,
 		CWnd* pParent,
 		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_COL_DOG, pParent, iSelectPage)

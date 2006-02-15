@@ -163,7 +163,7 @@ bool ARBDogRunScoring::operator!=(ARBDogRunScoring const& rhs) const
 }
 
 bool ARBDogRunScoring::Load(
-		ARBConfigScoring const* inEvent,
+		ARBConfigScoringPtr inEvent,
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
@@ -315,7 +315,7 @@ bool ARBDogRunScoring::GetYPS(
 	return bOk;
 }
 
-double ARBDogRunScoring::GetTimeFaults(ARBConfigScoring const* inScoring) const
+double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr inScoring) const
 {
 	double timeFaults = 0.0;
 	if (ARBDogRunScoring::eTypeByTime == m_type

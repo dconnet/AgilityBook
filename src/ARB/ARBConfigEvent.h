@@ -59,8 +59,11 @@ class ARBConfigEvent : public ARBBase
 {
 public:
 	ARBConfigEvent();
+	~ARBConfigEvent();
 	ARBConfigEvent(ARBConfigEvent const& rhs);
 	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
+	ARBConfigEventPtr Clone() const;
+
 	bool operator==(ARBConfigEvent const& rhs) const;
 	bool operator!=(ARBConfigEvent const& rhs) const;
 
@@ -109,7 +112,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigEvent const* inEventNew,
+			ARBConfigEventPtr inEventNew,
 			ARBString& ioInfo);
 
 	/**
@@ -126,7 +129,7 @@ public:
 			ARBString const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
-			ARBVector<ARBConfigScoring>& outList) const;
+			ARBVector<ARBConfigScoringPtr>& outList) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -152,7 +155,7 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoring** outEvent = NULL) const;
+			ARBConfigScoringPtr* outEvent = NULL) const;
 
 	/*
 	 * Getters/setters.
@@ -173,7 +176,6 @@ public:
 	ARBConfigScoringList& GetScorings();
 
 private:
-	~ARBConfigEvent();
 	ARBString m_Name;
 	ARBString m_Desc;
 	bool m_bTable;
@@ -253,7 +255,7 @@ inline ARBConfigScoringList& ARBConfigEvent::GetScorings()
 /**
  * List of ARBConfigEvent objects.
  */
-class ARBConfigEventList : public ARBVector<ARBConfigEvent>
+class ARBConfigEventList : public ARBVector<ARBConfigEventPtr>
 {
 public:
 	/**
@@ -299,7 +301,7 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoring** outScoring = NULL) const;
+			ARBConfigScoringPtr* outScoring = NULL) const;
 
 	/**
 	 * Rename a division.
@@ -343,14 +345,14 @@ public:
 	 */
 	bool FindEvent(
 			ARBString const& inEvent,
-			ARBConfigEvent** outEvent = NULL) const;
+			ARBConfigEventPtr* outEvent = NULL) const;
 
 	/**
 	 * Add an event.
 	 * @param inEvent Event to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddEvent(ARBConfigEvent* inEvent);
+	bool AddEvent(ARBConfigEventPtr inEvent);
 
 	/**
 	 * Delete an event.

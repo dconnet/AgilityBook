@@ -55,8 +55,11 @@ class ARBDogClub : public ARBBase
 {
 public:
 	ARBDogClub();
+	~ARBDogClub();
 	ARBDogClub(ARBDogClub const& rhs);
 	ARBDogClub& operator=(ARBDogClub const& rhs);
+	ARBDogClubPtr Clone() const;
+
 	bool operator==(ARBDogClub const& rhs) const;
 	bool operator!=(ARBDogClub const& rhs) const;
 
@@ -105,7 +108,6 @@ public:
 	void SetVenue(ARBString const& inVenue);
 
 private:
-	~ARBDogClub();
 	ARBString m_Name;
 	ARBString m_Venue;
 };
@@ -143,15 +145,30 @@ inline void ARBDogClub::SetVenue(ARBString const& inVenue)
  *       the primary club in a trial. The primary club is the club that is
  *       used to establish the rules used in entering a run.
  */
-class ARBDogClubList : public ARBVectorLoad2<ARBDogClub>
+class ARBDogClubList : public ARBVector<ARBDogClubPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Get the primary club, used to establish rules.
 	 * @param outClub Pointer to first club.
 	 * @return Whether there is a primary club.
 	 */
-	bool GetPrimaryClub(ARBDogClub** outClub = NULL) const;
+	bool GetPrimaryClub(ARBDogClubPtr* outClub = NULL) const;
 
 	/**
 	 * Get the primary club's name.
@@ -178,13 +195,13 @@ public:
 	 * @return Whether an event was found.
 	 */
 	bool FindEvent(
-			ARBConfig const* inConfig,
+			ARBConfig const& inConfig,
 			ARBString const& inEvent,
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
 			ARBErrorCallback& ioCallback,
-			ARBConfigScoring** outScoring = NULL) const;
+			ARBConfigScoringPtr* outScoring = NULL) const;
 
 	/**
 	 * Find a club that uses the specified venue.
@@ -194,7 +211,7 @@ public:
 	 */
 	bool FindVenue(
 			ARBString const& inVenue,
-			ARBDogClub** outClub = NULL) const;
+			ARBDogClubPtr* outClub = NULL) const;
 
 	/**
 	 * Add a club.
@@ -206,7 +223,7 @@ public:
 	bool AddClub(
 			ARBString const& inName,
 			ARBString const& inVenue,
-			ARBDogClub** outClub = NULL);
+			ARBDogClubPtr* outClub = NULL);
 
 	/**
 	 * Delete a club.

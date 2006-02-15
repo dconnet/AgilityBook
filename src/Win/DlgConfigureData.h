@@ -37,23 +37,14 @@
  */
 
 #include <vector>
-class ARBConfigDivision;
-class ARBConfigEvent;
-class ARBConfigFault;
-class ARBConfigLevel;
-class ARBConfigMultiQ;
-class ARBConfigOtherPoints;
-class ARBConfigScoring;
-class ARBConfigSubLevel;
-class ARBConfigTitle;
-class ARBConfigVenue;
+#include "ListData.h"
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * This class and its derivatives are used to keep data associated with controls.
  */
-class CDlgConfigureData
+class CDlgConfigureData : public CListData
 {
 public:
 	CDlgConfigureData()
@@ -68,12 +59,12 @@ public:
 class CDlgConfigureDataVenue : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataVenue(ARBConfigVenue* venue);
+	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
 	~CDlgConfigureDataVenue();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigVenue* GetVenue() const		{return m_Venue;}
+	ARBConfigVenuePtr GetVenue() const		{return m_Venue;}
 protected:
-	ARBConfigVenue* m_Venue;
+	ARBConfigVenuePtr m_Venue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -81,12 +72,12 @@ protected:
 class CDlgConfigureDataFault : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataFault(ARBConfigFault* fault);
+	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
 	~CDlgConfigureDataFault();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigFault* GetFault() const		{return m_Fault;}
+	ARBConfigFaultPtr GetFault() const		{return m_Fault;}
 protected:
-	ARBConfigFault* m_Fault;
+	ARBConfigFaultPtr m_Fault;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -94,12 +85,12 @@ protected:
 class CDlgConfigureDataOtherPoints : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataOtherPoints(ARBConfigOtherPoints* otherPoints);
+	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
 	~CDlgConfigureDataOtherPoints();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigOtherPoints* GetOtherPoints() const	{return m_OtherPoints;}
+	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
 protected:
-	ARBConfigOtherPoints* m_OtherPoints;
+	ARBConfigOtherPointsPtr m_OtherPoints;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -107,12 +98,12 @@ protected:
 class CDlgConfigureDataDivision : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataDivision(ARBConfigDivision* div);
+	CDlgConfigureDataDivision(ARBConfigDivisionPtr div);
 	~CDlgConfigureDataDivision();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigDivision* GetDivision() const	{return m_Div;}
+	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
 protected:
-	ARBConfigDivision* m_Div;
+	ARBConfigDivisionPtr m_Div;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -121,15 +112,15 @@ class CDlgConfigureDataLevel : public CDlgConfigureData
 {
 public:
 	CDlgConfigureDataLevel(
-			ARBConfigDivision* div,
-			ARBConfigLevel* level);
+			ARBConfigDivisionPtr div,
+			ARBConfigLevelPtr level);
 	~CDlgConfigureDataLevel();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigDivision* GetDivision() const	{return m_Division;}
-	ARBConfigLevel* GetLevel() const		{return m_Level;}
+	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
+	ARBConfigLevelPtr GetLevel() const		{return m_Level;}
 protected:
-	ARBConfigDivision* m_Division;
-	ARBConfigLevel* m_Level;
+	ARBConfigDivisionPtr m_Division;
+	ARBConfigLevelPtr m_Level;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -138,18 +129,18 @@ class CDlgConfigureDataSubLevel : public CDlgConfigureData
 {
 public:
 	CDlgConfigureDataSubLevel(
-			ARBConfigDivision* div,
-			ARBConfigLevel* level,
-			ARBConfigSubLevel* subLevel);
+			ARBConfigDivisionPtr div,
+			ARBConfigLevelPtr level,
+			ARBConfigSubLevelPtr subLevel);
 	~CDlgConfigureDataSubLevel();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigDivision* GetDivision() const	{return m_Division;}
-	ARBConfigLevel* GetLevel() const		{return m_Level;}
-	ARBConfigSubLevel* GetSubLevel() const	{return m_SubLevel;}
+	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
+	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
+	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
 protected:
-	ARBConfigDivision* m_Division;
-	ARBConfigLevel* m_Level;
-	ARBConfigSubLevel* m_SubLevel;
+	ARBConfigDivisionPtr m_Division;
+	ARBConfigLevelPtr m_Level;
+	ARBConfigSubLevelPtr m_SubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -158,12 +149,12 @@ class CDlgConfigureDataTitle : public CDlgConfigureData
 {
 public:
 	CDlgConfigureDataTitle(
-			ARBConfigTitle* title);
+			ARBConfigTitlePtr title);
 	~CDlgConfigureDataTitle();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigTitle* GetTitle() const		{return m_Title;}
+	ARBConfigTitlePtr GetTitle() const		{return m_Title;}
 protected:
-	ARBConfigTitle* m_Title;
+	ARBConfigTitlePtr m_Title;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,12 +162,12 @@ protected:
 class CDlgConfigureDataEvent : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataEvent(ARBConfigEvent* event);
+	CDlgConfigureDataEvent(ARBConfigEventPtr inEvent);
 	~CDlgConfigureDataEvent();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigEvent* GetEvent() const		{return m_Event;}
+	ARBConfigEventPtr GetEvent() const		{return m_Event;}
 protected:
-	ARBConfigEvent* m_Event;
+	ARBConfigEventPtr m_Event;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -184,10 +175,10 @@ protected:
 class CDlgConfigureDataMultiQ : public CDlgConfigureData
 {
 public:
-	CDlgConfigureDataMultiQ(ARBConfigMultiQ* multiq);
+	CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq);
 	~CDlgConfigureDataMultiQ();
 	virtual CString OnNeedText(int iColumn) const;
-	ARBConfigMultiQ* GetMultiQ() const		{return m_MultiQ;}
+	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
 protected:
-	ARBConfigMultiQ* m_MultiQ;
+	ARBConfigMultiQPtr m_MultiQ;
 };

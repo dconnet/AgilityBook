@@ -44,6 +44,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -56,20 +57,20 @@ static char THIS_FILE[] = __FILE__;
 class CDlgPointsDataLevel
 {
 public:
-	CDlgPointsDataLevel(ARBConfigLevel const* pLevel)
+	CDlgPointsDataLevel(ARBConfigLevelPtr pLevel)
 		: m_pLevel(pLevel)
-		, m_pSubLevel(NULL)
+		, m_pSubLevel()
 	{
 	}
 	CDlgPointsDataLevel(
-			ARBConfigLevel const* pLevel,
-			ARBConfigSubLevel const* pSubLevel)
+			ARBConfigLevelPtr pLevel,
+			ARBConfigSubLevelPtr pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
 	}
-	ARBConfigLevel const* m_pLevel;
-	ARBConfigSubLevel const* m_pSubLevel;
+	ARBConfigLevelPtr m_pLevel;
+	ARBConfigSubLevelPtr m_pSubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,9 +80,17 @@ public:
 CDlgExistingPoints::CDlgExistingPoints(
 		CAgilityBookDoc* pDoc,
 		ARBDogExistingPointsList& points,
-		ARBDogExistingPoints* pExistingPoints,
+		ARBDogExistingPointsPtr pExistingPoints,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgExistingPoints::IDD, pParent)
+	, m_ctrlType(false)
+	, m_ctrlOther(true)
+	, m_ctrlMultiQ(true)
+	, m_ctrlVenues(true)
+	, m_ctrlDivisions(true)
+	, m_ctrlLevels(true)
+	, m_ctrlEvents(true)
+	, m_ctrlSubNames(false)
 	, m_pDoc(pDoc)
 	, m_PointsList(points)
 	, m_pExistingPoints(pExistingPoints)
@@ -143,6 +152,42 @@ BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDlgBaseDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
+
+CListPtrData<ARBConfigVenuePtr>* CDlgExistingPoints::GetVenueData(int index) const
+{
+	CListData* pData = m_ctrlVenues.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pData);
+}
+
+CListPtrData<ARBConfigDivisionPtr>* CDlgExistingPoints::GetDivisionData(int index) const
+{
+	CListData* pData = m_ctrlDivisions.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigDivisionPtr>*>(pData);
+}
+
+CListPtrData<ARBConfigEventPtr>* CDlgExistingPoints::GetEventData(int index) const
+{
+	CListData* pData = m_ctrlEvents.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigEventPtr>*>(pData);
+}
+
+CDlgPointsDataLevel* CDlgExistingPoints::GetLevelData(int index) const
+{
+	CListData* pData = m_ctrlLevels.GetData(index);
+	return dynamic_cast<CDlgPointsDataLevel*>(pData);
+}
+
+CListPtrData<ARBConfigOtherPointsPtr>* CDlgExistingPoints::GetOtherPointData(int index) const
+{
+	CListData* pData = m_ctrlOther.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData);
+}
+
+CListPtrData<ARBConfigMultiQPtr>* CDlgExistingPoints::GetMultiQData(int index) const
+{
+	CListData* pData = m_ctrlMultiQ.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigMultiQPtr>*>(pData);
+}
 
 // Control order
 //  OtherPoints
@@ -371,17 +416,6 @@ void CDlgExistingPoints::UpdateControls()
 	m_ctrlOk.EnableWindow(bOk);
 }
 
-void CDlgExistingPoints::ClearLevels()
-{
-	for (int index = m_ctrlLevels.GetCount() - 1; 0 <= index; --index)
-	{
-		CDlgPointsDataLevel* pData = reinterpret_cast<CDlgPointsDataLevel*>(m_ctrlLevels.GetItemDataPtr(index));
-		delete pData;
-		m_ctrlLevels.SetItemDataPtr(index, NULL);
-	}
-	m_ctrlLevels.ResetContent();
-}
-
 void CDlgExistingPoints::FillVenues()
 {
 	ARBString venue;
@@ -405,11 +439,12 @@ void CDlgExistingPoints::FillVenues()
 		iterVenue != m_pDoc->GetConfig().GetVenues().end();
 		++iterVenue)
 	{
-		ARBConfigVenue* pVenue = (*iterVenue);
+		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (ARBDogExistingPoints::eMQ != type || 0 < pVenue->GetMultiQs().size())
 		{
 			int index = m_ctrlVenues.AddString(pVenue->GetName().c_str());
-			m_ctrlVenues.SetItemDataPtr(index, pVenue);
+			m_ctrlVenues.SetData(index,
+				new CListPtrData<ARBConfigVenuePtr>(pVenue));
 			if (m_pExistingPoints && venue == pVenue->GetName())
 				m_ctrlVenues.SetCurSel(index);
 		}
@@ -446,15 +481,16 @@ void CDlgExistingPoints::FillFromVenue()
 	int idxVenue = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != idxVenue)
 	{
-		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(idxVenue));
+		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->GetData();
 
 		for (ARBConfigMultiQList::const_iterator iterQ = pVenue->GetMultiQs().begin();
 			iterQ != pVenue->GetMultiQs().end();
 			++iterQ)
 		{
-			ARBConfigMultiQ* pMulti = *iterQ;
+			ARBConfigMultiQPtr pMulti = *iterQ;
 			int index = m_ctrlMultiQ.AddString(pMulti->GetName().c_str());
-			m_ctrlMultiQ.SetItemDataPtr(index, pMulti);
+			m_ctrlMultiQ.SetItemDataPtr(index,
+				new CListPtrData<ARBConfigMultiQPtr>(pMulti));
 			if (m_pExistingPoints && multiQ == pMulti->GetName())
 				m_ctrlMultiQ.SetCurSel(index);
 		}
@@ -463,9 +499,10 @@ void CDlgExistingPoints::FillFromVenue()
 			iterDiv != pVenue->GetDivisions().end();
 			++iterDiv)
 		{
-			ARBConfigDivision* pDiv = (*iterDiv);
+			ARBConfigDivisionPtr pDiv = (*iterDiv);
 			int index = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
-			m_ctrlDivisions.SetItemDataPtr(index, pDiv);
+			m_ctrlDivisions.SetItemDataPtr(index,
+				new CListPtrData<ARBConfigDivisionPtr>(pDiv));
 			if (m_pExistingPoints && div == pDiv->GetName())
 				m_ctrlDivisions.SetCurSel(index);
 		}
@@ -486,23 +523,23 @@ void CDlgExistingPoints::FillLevels()
 	else if (m_pExistingPoints)
 		level = m_pExistingPoints->GetLevel();
 
-	ClearLevels();
+	m_ctrlLevels.ResetContent();
 	int idxDiv = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != idxDiv)
 	{
-		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+		ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->GetData();
 		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
 			iter != pDiv->GetLevels().end();
 			++iter)
 		{
-			ARBConfigLevel* pLevel = (*iter);
+			ARBConfigLevelPtr pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
 				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
 					iterSub != pLevel->GetSubLevels().end();
 					++iterSub)
 				{
-					ARBConfigSubLevel* pSubLevel = (*iterSub);
+					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
 					CDlgPointsDataLevel* pData = new CDlgPointsDataLevel(pLevel, pSubLevel);
 					int index = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
 					m_ctrlLevels.SetItemDataPtr(index, pData);
@@ -512,7 +549,7 @@ void CDlgExistingPoints::FillLevels()
 			}
 			else
 			{
-				CDlgPointsDataLevel *pData = new CDlgPointsDataLevel(pLevel);
+				CDlgPointsDataLevel* pData = new CDlgPointsDataLevel(pLevel);
 				int index = m_ctrlLevels.AddString(pLevel->GetName().c_str());
 				m_ctrlLevels.SetItemDataPtr(index, pData);
 				if (level == pLevel->GetName())
@@ -526,39 +563,40 @@ void CDlgExistingPoints::FillLevels()
 void CDlgExistingPoints::FillEvents()
 {
 	CString str;
-	ARBString event;
+	ARBString evt;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlEvents.GetLBText(index, str);
-		event = (LPCTSTR)str;
+		evt = (LPCTSTR)str;
 	}
 	else if (m_pExistingPoints)
-		event = m_pExistingPoints->GetEvent();
+		evt = m_pExistingPoints->GetEvent();
 	m_ctrlEvents.ResetContent();
 
 	int idxVenue = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != idxVenue)
 	{
-		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(idxVenue));
+		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->GetData();
 		int idxDiv = m_ctrlDivisions.GetCurSel();
 		if (CB_ERR != idxDiv)
 		{
-			ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+			ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->GetData();
 			int idxLevel = m_ctrlLevels.GetCurSel();
 			if (CB_ERR != idxLevel)
 			{
-				CDlgPointsDataLevel const* pData = reinterpret_cast<CDlgPointsDataLevel const*>(m_ctrlLevels.GetItemDataPtr(idxLevel));
+				CDlgPointsDataLevel* pData = GetLevelData(idxLevel);
 				for (ARBConfigEventList::const_iterator iter = pVenue->GetEvents().begin();
 					iter != pVenue->GetEvents().end();
 					++iter)
 				{
-					ARBConfigEvent* pEvent = (*iter);
+					ARBConfigEventPtr pEvent = (*iter);
 					if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Date))
 					{
 						int index = m_ctrlEvents.AddString(pEvent->GetName().c_str());
-						m_ctrlEvents.SetItemDataPtr(index, pEvent);
-						if (event == pEvent->GetName())
+						m_ctrlEvents.SetItemDataPtr(index,
+							new CListPtrData<ARBConfigEventPtr>(pEvent));
+						if (evt == pEvent->GetName())
 							m_ctrlEvents.SetCurSel(index);
 					}
 				}
@@ -576,12 +614,12 @@ void CDlgExistingPoints::FillSubNames()
 	int index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR == index)
 		return;
-	ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
+	ARBConfigVenuePtr pVenue = GetVenueData(index)->GetData();
 
 	index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR == index)
 		return;
-	ARBConfigEvent const* pEvent = reinterpret_cast<ARBConfigEvent const*>(m_ctrlEvents.GetItemDataPtr(index));
+	ARBConfigEventPtr pEvent = GetEventData(index)->GetData();
 
 	std::set<ARBString> names;
 	m_pDoc->GetAllEventSubNames(pVenue->GetName(), pEvent, names);
@@ -655,7 +693,7 @@ BOOL CDlgExistingPoints::OnInitDialog()
 		iterVenue != m_pDoc->GetConfig().GetVenues().end();
 		++iterVenue)
 	{
-		ARBConfigVenue* pVenue = (*iterVenue);
+		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (0 < pVenue->GetMultiQs().size())
 		{
 			int index = m_ctrlType.AddString(ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::eMQ).c_str());
@@ -669,9 +707,10 @@ BOOL CDlgExistingPoints::OnInitDialog()
 		iterOther != m_pDoc->GetConfig().GetOtherPoints().end();
 		++iterOther)
 	{
-		ARBConfigOtherPoints* pOther = (*iterOther);
+		ARBConfigOtherPointsPtr pOther = (*iterOther);
 		int index = m_ctrlOther.AddString(pOther->GetName().c_str());
-		m_ctrlOther.SetItemDataPtr(index, pOther);
+		m_ctrlOther.SetItemDataPtr(index,
+			new CListPtrData<ARBConfigOtherPointsPtr>(pOther));
 	}
 
 	// All other combos are filled based on other content.
@@ -751,7 +790,7 @@ void CDlgExistingPoints::OnOK()
 			GotoDlgCtrl(&m_ctrlOther);
 			return;
 		}
-		ARBConfigOtherPoints const* pOther = reinterpret_cast<ARBConfigOtherPoints const*>(m_ctrlOther.GetItemDataPtr(index));
+		ARBConfigOtherPointsPtr pOther = GetOtherPointData(index)->GetData();
 		other = pOther->GetName();
 	}
 
@@ -764,7 +803,7 @@ void CDlgExistingPoints::OnOK()
 			GotoDlgCtrl(&m_ctrlVenues);
 			return;
 		}
-		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
+		ARBConfigVenuePtr pVenue = GetVenueData(index)->GetData();
 		venue = pVenue->GetName();
 	}
 
@@ -777,7 +816,7 @@ void CDlgExistingPoints::OnOK()
 			GotoDlgCtrl(&m_ctrlMultiQ);
 			return;
 		}
-		ARBConfigMultiQ const* pMultiQ = reinterpret_cast<ARBConfigMultiQ const*>(m_ctrlMultiQ.GetItemDataPtr(index));
+		ARBConfigMultiQPtr pMultiQ = GetMultiQData(index)->GetData();
 		multiQ = pMultiQ->GetName();
 	}
 
@@ -790,7 +829,7 @@ void CDlgExistingPoints::OnOK()
 			GotoDlgCtrl(&m_ctrlDivisions);
 			return;
 		}
-		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(index));
+		ARBConfigDivisionPtr pDiv = GetDivisionData(index)->GetData();
 		div = pDiv->GetName();
 	}
 
@@ -803,13 +842,13 @@ void CDlgExistingPoints::OnOK()
 			GotoDlgCtrl(&m_ctrlLevels);
 			return;
 		}
-		CDlgPointsDataLevel const* pData = reinterpret_cast<CDlgPointsDataLevel const*>(m_ctrlLevels.GetItemDataPtr(index));
+		CDlgPointsDataLevel* pData = GetLevelData(index);
 		level = pData->m_pLevel->GetName();
 		if (pData->m_pSubLevel)
 			level = pData->m_pSubLevel->GetName();
 	}
 
-	ARBString event;
+	ARBString evt;
 	if (bEvent)
 	{
 		index = m_ctrlEvents.GetCurSel();
@@ -818,8 +857,8 @@ void CDlgExistingPoints::OnOK()
 			GotoDlgCtrl(&m_ctrlEvents);
 			return;
 		}
-		ARBConfigEvent const* pEvent = reinterpret_cast<ARBConfigEvent const*>(m_ctrlEvents.GetItemDataPtr(index));
-		event = pEvent->GetName();
+		ARBConfigEventPtr pEvent = GetEventData(index)->GetData();
+		evt = pEvent->GetName();
 	}
 
 	ARBString subName;
@@ -841,14 +880,14 @@ void CDlgExistingPoints::OnOK()
 		m_pExistingPoints->SetMultiQ(multiQ);
 		m_pExistingPoints->SetDivision(div);
 		m_pExistingPoints->SetLevel(level);
-		m_pExistingPoints->SetEvent(event);
+		m_pExistingPoints->SetEvent(evt);
 		m_pExistingPoints->SetSubName(subName);
 		m_pExistingPoints->SetComment((LPCTSTR)m_Comments);
 		m_pExistingPoints->SetPoints(m_Points);
 	}
 	else
 	{
-		ARBDogExistingPoints* pPoints = new ARBDogExistingPoints();
+		ARBDogExistingPointsPtr pPoints(new ARBDogExistingPoints());
 		if (m_PointsList.AddExistingPoints(pPoints))
 		{
 			pPoints->SetDate(m_Date);
@@ -858,20 +897,12 @@ void CDlgExistingPoints::OnOK()
 			pPoints->SetMultiQ(multiQ);
 			pPoints->SetDivision(div);
 			pPoints->SetLevel(level);
-			pPoints->SetEvent(event);
+			pPoints->SetEvent(evt);
 			pPoints->SetSubName(subName);
 			pPoints->SetComment((LPCTSTR)m_Comments);
 			pPoints->SetPoints(m_Points);
 		}
-		pPoints->Release();
 	}
 
-	ClearLevels();
 	CDlgBaseDialog::OnOK();
-}
-
-void CDlgExistingPoints::OnCancel()
-{
-	ClearLevels();
-	CDlgBaseDialog::OnCancel();
 }

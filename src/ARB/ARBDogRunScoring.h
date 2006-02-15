@@ -66,9 +66,10 @@ public:
 	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
 
 	ARBDogRunScoring();
-	ARBDogRunScoring(ARBDogRunScoring const& rhs);
 	~ARBDogRunScoring();
+	ARBDogRunScoring(ARBDogRunScoring const& rhs);
 	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+
 	bool operator==(ARBDogRunScoring const& rhs) const;
 	bool operator!=(ARBDogRunScoring const& rhs) const;
 
@@ -82,7 +83,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigScoring const* inEvent,
+			ARBConfigScoringPtr inEvent,
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
@@ -123,7 +124,7 @@ public:
 	bool HasTable() const;
 	void SetHasTable(bool inInc);
 	bool TableNeedsConverting() const;
-	double GetTimeFaults(ARBConfigScoring const* inScoring) const;
+	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
 	short GetCourseFaults() const;
 	void SetCourseFaults(short inFaults);
 	short GetNeedOpenPts() const;

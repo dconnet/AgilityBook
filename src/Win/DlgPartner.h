@@ -42,7 +42,7 @@ class CDlgPartner : public CDlgBaseDialog
 {
 public:
 	CDlgPartner(
-			ARBDogRunPartner* partner,
+			ARBDogRunPartnerPtr partner,
 			CWnd* pParent = NULL);
 
 private:
@@ -53,7 +53,7 @@ private:
 	CString	m_Dog;
 	CString m_RegNum;
 	//}}AFX_DATA
-	ARBDogRunPartner* m_Partner;
+	ARBDogRunPartnerPtr m_Partner;
 
 	//{{AFX_VIRTUAL(CDlgPartner)
 protected:

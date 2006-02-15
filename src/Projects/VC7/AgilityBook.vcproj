@@ -187,6 +187,9 @@
 				RelativePath="..\..\Win\ColumnOrder.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\ComboBox.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\CrashHandler.cpp">
 			</File>
 			<File
@@ -364,6 +367,9 @@
 				RelativePath="..\..\Win\ListCtrl.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\ListData.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\MainFrm.cpp">
 			</File>
 			<File
@@ -468,6 +474,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ColumnOrder.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\ComboBox.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\CommonView.h">
@@ -642,6 +651,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ListCtrl.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\ListData.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\MainFrm.h">

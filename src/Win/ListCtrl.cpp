@@ -47,6 +47,7 @@
 #include "ListCtrl.h"
 
 #include "AgilityBookOptions.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -175,8 +176,8 @@ void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 }
 
 void CHeaderCtrl2::OnHdnItemChanged(
-		NMHDR *pNMHDR,
-		LRESULT *pResult)
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
 	// In theory, we could just adjust the column that changed. But that
@@ -304,10 +305,14 @@ void CHeaderCtrl2::Sort(
 
 BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 	//{{AFX_MSG_MAP(CListCtrl2)
+	ON_WM_DESTROY()
+	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-CListCtrl2::CListCtrl2()
+CListCtrl2::CListCtrl2(bool bAutoDelete)
+	: m_SortHeader()
+	, m_bAutoDelete(bAutoDelete)
 {
 }
 
@@ -395,6 +400,21 @@ BOOL CListCtrl2::DeleteColumn(int nCol)
 	return rc;
 }
 
+CListData* CListCtrl2::GetData(int index) const
+{
+	ASSERT(0 <= index && index < GetItemCount());
+	if (m_bAutoDelete)
+		return reinterpret_cast<CListData*>(GetItemData(index));
+	return NULL;
+}
+
+void CListCtrl2::SetData(int index, CListData* inData)
+{
+	ASSERT(0 <= index && index < GetItemCount());
+	if (m_bAutoDelete)
+		SetItemData(index, reinterpret_cast<LPARAM>(inData));
+}
+
 int CListCtrl2::GetSelection(bool bRestricted)
 {
 	std::vector<int> indices;
@@ -439,6 +459,24 @@ void CListCtrl2::GetPrintLine(
 /////////////////////////////////////////////////////////////////////////////
 // CListCtrl2 message handlers
 
+void CListCtrl2::OnDestroy()
+{
+	DeleteAllItems();
+	CListCtrl::OnDestroy();
+}
+
+void CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	if (pNMListView && m_bAutoDelete)
+	{
+		CListData* pData = reinterpret_cast<CListData*>(pNMListView->lParam);
+		delete pData;
+		pNMListView->lParam = 0;
+	}
+	*pResult = 0;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CListView2
@@ -447,6 +485,8 @@ IMPLEMENT_DYNCREATE(CListView2, CListView)
 
 BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
+	ON_WM_DESTROY()
+	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECT_ALL, OnUpdateEditSelectAll)
@@ -462,6 +502,8 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 END_MESSAGE_MAP()
 
 CListView2::CListView2()
+	: m_SortHeader()
+	, m_bAutoDelete(true)
 {
 }
 
@@ -548,6 +590,20 @@ BOOL CListView2::DeleteColumn(int nCol)
 	return rc;
 }
 
+CListData* CListView2::GetData(int index) const
+{
+	if (0 <= index && index < GetListCtrl().GetItemCount() && m_bAutoDelete)
+		return reinterpret_cast<CListData*>(GetListCtrl().GetItemData(index));
+	return NULL;
+}
+
+void CListView2::SetData(int index, CListData* inData)
+{
+	ASSERT(0 <= index && index < GetListCtrl().GetItemCount());
+	if (m_bAutoDelete)
+		GetListCtrl().SetItemData(index, reinterpret_cast<LPARAM>(inData));
+}
+
 int CListView2::GetSelection(bool bRestricted)
 {
 	std::vector<int> indices;
@@ -592,6 +648,24 @@ void CListView2::GetPrintLine(
 /////////////////////////////////////////////////////////////////////////////
 // CListView2 message handlers
 
+void CListView2::OnDestroy()
+{
+	GetListCtrl().DeleteAllItems();
+	CListView::OnDestroy();
+}
+
+void CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	if (pNMListView && m_bAutoDelete)
+	{
+		CListData* pData = reinterpret_cast<CListData*>(pNMListView->lParam);
+		delete pData;
+		pNMListView->lParam = 0;
+	}
+	*pResult = 0;
+}
+
 struct CListPrintData
 {
 	CRect r;
@@ -618,7 +692,7 @@ void CListView2::OnBeginPrinting(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
-	CListPrintData *pData = new CListPrintData();
+	CListPrintData* pData = new CListPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
 	// Set the font

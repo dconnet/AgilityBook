@@ -402,42 +402,9 @@ inline ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults)
 #include "ARBInfo.h"
 #include "ARBTraining.h"
 class ARBConfigOtherPoints;
+class ARBErrorCallback;
 class ARBVersion;
 class Element;
-
-/**
- * Error callback class.
- */
-class ARBErrorCallback
-{
-public:
-	ARBErrorCallback(ARBString& ioErrMsg)
-		: m_ErrMsg(ioErrMsg)
-	{
-	}
-	virtual ~ARBErrorCallback() {}
-
-	/**
-	 * Error message that requires a user response.
-	 * @param pMsg Message to display to user.
-	 * @return True to continue, false to abort.
-	 */
-	virtual bool OnError(TCHAR const* const pMsg)
-	{
-		return false;
-	}
-
-	/**
-	 * Log an error message.
-	 */
-	virtual void LogMessage(ARBString const& inMsg)
-	{
-		m_ErrMsg += inMsg;
-	}
-
-protected:
-	ARBString& m_ErrMsg;
-};
 
 /**
  * The main data class.
@@ -529,7 +496,9 @@ public:
 	 * @param bInfo Include clubs from the ARBInfo.
 	 * @return Number of clubs.
 	 */
-	size_t GetAllClubNames(std::set<ARBString>& outClubs, bool bInfo = true) const;
+	size_t GetAllClubNames(
+			std::set<ARBString>& outClubs,
+			bool bInfo = true) const;
 
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
@@ -537,7 +506,9 @@ public:
 	 * @param bInfo Include locations from the ARBInfo.
 	 * @return Number of locations.
 	 */
-	size_t GetAllTrialLocations(std::set<ARBString>& outLocations, bool bInfo = true) const;
+	size_t GetAllTrialLocations(
+			std::set<ARBString>& outLocations,
+			bool bInfo = true) const;
 
 	/**
 	 * Get all the subnames in use for the given event.
@@ -546,7 +517,10 @@ public:
 	 * @param outNames List of Sub-Names in use.
 	 * @return Number of subnames.
 	 */
-	size_t GetAllEventSubNames(ARBString const& inVenue, ARBConfigEvent const* inEvent, std::set<ARBString>& outNames) const;
+	size_t GetAllEventSubNames(
+			ARBString const& inVenue,
+			ARBConfigEventPtr inEvent,
+			std::set<ARBString>& outNames) const;
 
 	/**
 	 * Get all heights in use from existing runs.
@@ -575,7 +549,9 @@ public:
 	 * @param bInfo Include judges from the ARBInfo.
 	 * @return Number of judges.
 	 */
-	size_t GetAllJudges(std::set<ARBString>& outJudges, bool bInfo = true) const;
+	size_t GetAllJudges(
+			std::set<ARBString>& outJudges,
+			bool bInfo = true) const;
 
 	/**
 	 * Get all handlers in use from existing runs.

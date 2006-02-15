@@ -55,9 +55,10 @@ class ARBDogNotes
 {
 public:
 	ARBDogNotes();
-	ARBDogNotes(ARBDogNotes const& rhs);
 	~ARBDogNotes();
+	ARBDogNotes(ARBDogNotes const& rhs);
 	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+
 	bool operator==(ARBDogNotes const& rhs) const;
 	bool operator!=(ARBDogNotes const& rhs) const;
 

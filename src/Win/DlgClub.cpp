@@ -55,7 +55,7 @@ static char THIS_FILE[] = __FILE__;
 CDlgClub::CDlgClub(
 		CAgilityBookDoc* pDoc,
 		ARBDogClubList& clubs,
-		ARBDogClub* pClub,
+		ARBDogClubPtr pClub,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgClub::IDD, pParent)
 	, m_pDoc(pDoc)

@@ -36,9 +36,10 @@
  */
 
 #include <vector>
+#include "ARBTypes.h"
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
-class ARBBase;
+
 class CDlgConfigureData;
 
 class CDlgReorder : public CDlgBaseDialog
@@ -46,7 +47,7 @@ class CDlgReorder : public CDlgBaseDialog
 // Construction
 public:
 	CDlgReorder(
-			std::vector<ARBBase*>& items,
+			std::vector<ARBBasePtr>& items,
 			CWnd* pParent = NULL);
 
 private:
@@ -57,7 +58,7 @@ private:
 	CButton	m_ctrlUp;
 	CButton	m_ctrlDown;
 	//}}AFX_DATA
-	std::vector<ARBBase*>& m_Items;
+	std::vector<ARBBasePtr>& m_Items;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgReorder)

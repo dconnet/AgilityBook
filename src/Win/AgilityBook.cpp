@@ -350,7 +350,7 @@ BOOL CAgilityBookApp::InitInstance()
 #ifdef UNICODE
 		msg += toCatch.getMessage();
 #else
-		char *pStr = XMLString::transcode(toCatch.getMessage());
+		char* pStr = XMLString::transcode(toCatch.getMessage());
 		msg += pStr;
 		delete [] pStr;
 #endif

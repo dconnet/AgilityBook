@@ -160,7 +160,7 @@ public:
 			ARBDate const& endDate);
 	static bool IsTitleVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTitle const* pTitle);
+			ARBDogTitlePtr pTitle);
 	static bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBString const& venue);
@@ -170,20 +170,20 @@ public:
 			ARBString const& div);
 	static bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTrial const* pTrial);
+			ARBDogTrialPtr pTrial);
 	static unsigned short IsRunVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTrial const* pTrial,
-			ARBDogRun const* pRun);
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun);
 	static bool IsRunVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBConfigVenue const* pVenue,
-			ARBDogTrial const* pTrial,
-			ARBDogRun const* pRun);
-	static bool IsCalendarVisible(ARBCalendar const* pCal);
+			ARBConfigVenuePtr pVenue,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun);
+	static bool IsCalendarVisible(ARBCalendarPtr pCal);
 	static bool IsTrainingLogVisible(
 			std::set<ARBString> const& names,
-			ARBTraining const* pTraining);
+			ARBTrainingPtr pTraining);
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
 	static void SetAutoDeleteCalendarEntries(bool bAuto);

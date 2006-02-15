@@ -83,12 +83,12 @@ LifeTimePointInfo::LifeTimePointInfo(
 /////////////////////////////////////////////////////////////////////////////
 
 OtherPtInfo::OtherPtInfo(
-		ARBDogTrial const* pTrial,
-		ARBDogRun const* pRun,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun,
 		double score)
 	: m_pTrial(pTrial)
 	, m_pRun(pRun)
-	, m_pExisting(NULL)
+	, m_pExisting()
 	, m_Score(score)
 {
 	if (m_pTrial)
@@ -103,9 +103,9 @@ OtherPtInfo::OtherPtInfo(
 	}
 }
 
-OtherPtInfo::OtherPtInfo(ARBDogExistingPoints const* pExisting)
-	: m_pTrial(NULL)
-	, m_pRun(NULL)
+OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr pExisting)
+	: m_pTrial()
+	, m_pRun()
 	, m_pExisting(pExisting)
 	, m_Venue(pExisting->GetVenue())
 	, m_Div(pExisting->GetDivision())
@@ -146,18 +146,14 @@ void PointsDataBase::Release()
 
 PointsDataDog::PointsDataDog(
 		CAgilityBookViewPoints* pView,
-		ARBDog* pDog)
+		ARBDogPtr pDog)
 	: PointsDataBase(pView)
 	, m_pDog(pDog)
 {
-	if (m_pDog)
-		m_pDog->AddRef();
 }
 
 PointsDataDog::~PointsDataDog()
 {
-	if (m_pDog)
-		m_pDog->Release();
 }
 
 ARBString PointsDataDog::OnNeedText(size_t index) const
@@ -210,24 +206,16 @@ bool PointsDataDog::IsEqual(PointsDataBase const* inData)
 
 PointsDataVenue::PointsDataVenue(
 		CAgilityBookViewPoints* pView,
-		ARBDog* pDog,
-		ARBConfigVenue* pVenue)
+		ARBDogPtr pDog,
+		ARBConfigVenuePtr pVenue)
 	: PointsDataBase(pView)
 	, m_pDog(pDog)
 	, m_pVenue(pVenue)
 {
-	if (m_pDog)
-		m_pDog->AddRef();
-	if (m_pVenue)
-		m_pVenue->AddRef();
 }
 
 PointsDataVenue::~PointsDataVenue()
 {
-	if (m_pDog)
-		m_pDog->Release();
-	if (m_pVenue)
-		m_pVenue->Release();
 }
 
 ARBString PointsDataVenue::OnNeedText(size_t index) const
@@ -243,11 +231,10 @@ ARBString PointsDataVenue::OnNeedText(size_t index) const
 		case 1:
 			if (m_pDog)
 			{
-				ARBDogRegNum* pRegNum;
+				ARBDogRegNumPtr pRegNum;
 				if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 				{
 					str = _T("[") + pRegNum->GetNumber() + _T("]");
-					pRegNum->Release();
 				}
 			}
 			break;
@@ -260,7 +247,7 @@ void PointsDataVenue::Details() const
 {
 	if (m_pDog && m_pVenue)
 	{
-		ARBDogRegNum* pRegNum;
+		ARBDogRegNumPtr pRegNum;
 		if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 		{
 			// CDlgDog will cause an update msg to occur which will delete us.
@@ -272,7 +259,6 @@ void PointsDataVenue::Details() const
 				pDoc->SetModifiedFlag();
 				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
-			pRegNum->Release();
 		}
 		else
 			MessageBeep(0);
@@ -294,24 +280,16 @@ bool PointsDataVenue::IsEqual(PointsDataBase const* inData)
 
 PointsDataTitle::PointsDataTitle(
 		CAgilityBookViewPoints* pView,
-		ARBDog* pDog,
-		ARBDogTitle* pTitle)
+		ARBDogPtr pDog,
+		ARBDogTitlePtr pTitle)
 	: PointsDataBase(pView)
 	, m_pDog(pDog)
 	, m_pTitle(pTitle)
 {
-	if (m_pDog)
-		m_pDog->AddRef();
-	if (m_pTitle)
-		m_pTitle->AddRef();
 }
 
 PointsDataTitle::~PointsDataTitle()
 {
-	if (m_pDog)
-		m_pDog->Release();
-	if (m_pTitle)
-		m_pTitle->Release();
 }
 
 ARBString PointsDataTitle::OnNeedText(size_t index) const
@@ -362,12 +340,12 @@ bool PointsDataTitle::IsEqual(PointsDataBase const* inData)
 
 PointsDataEvent::PointsDataEvent(
 		CAgilityBookViewPoints* pView,
-		ARBDog const* inDog,
+		ARBDogPtr inDog,
 		std::list<RunInfo>& inMatching,
-		ARBConfigVenue* inVenue,
-		ARBConfigDivision* inDiv,
-		ARBConfigLevel* inLevel,
-		ARBConfigEvent* inEvent,
+		ARBConfigVenuePtr inVenue,
+		ARBConfigDivisionPtr inDiv,
+		ARBConfigLevelPtr inLevel,
+		ARBConfigEventPtr inEvent,
 		ARBString const& inRunCount,
 		ARBString const& inQcount,
 		ARBString const& inPts,
@@ -386,26 +364,10 @@ PointsDataEvent::PointsDataEvent(
 	, m_SuperQ(inSuperQ)
 	, m_Speed(inSpeed)
 {
-	if (m_Venue)
-		m_Venue->AddRef();
-	if (m_Div)
-		m_Div->AddRef();
-	if (m_Level)
-		m_Level->AddRef();
-	if (m_Event)
-		m_Event->AddRef();
 }
 
 PointsDataEvent::~PointsDataEvent()
 {
-	if (m_Venue)
-		m_Venue->Release();
-	if (m_Div)
-		m_Div->Release();
-	if (m_Level)
-		m_Level->Release();
-	if (m_Event)
-		m_Event->Release();
 }
 
 ARBString PointsDataEvent::OnNeedText(size_t index) const
@@ -595,9 +557,9 @@ bool PointsDataLifetimeDiv::IsEqual(PointsDataBase const* inData)
 
 PointsDataMultiQs::PointsDataMultiQs(
 		CAgilityBookViewPoints* pView,
-		ARBDog* inDog,
-		ARBConfigVenue* inVenue,
-		ARBConfigMultiQ* inMultiQ,
+		ARBDogPtr inDog,
+		ARBConfigVenuePtr inVenue,
+		ARBConfigMultiQPtr inMultiQ,
 		std::set<MultiQdata> const& inMQs)
 	: PointsDataBase(pView)
 	, m_Dog(inDog)
@@ -607,20 +569,12 @@ PointsDataMultiQs::PointsDataMultiQs(
 	, m_ExistingDblQs(0)
 {
 	m_ExistingDblQs = m_Dog->GetExistingPoints().ExistingPoints(
-		ARBDogExistingPoints::eMQ,
-		m_Venue, m_MultiQ, NULL, NULL, NULL);
-	if (m_Venue)
-		m_Venue->AddRef();
-	if (m_MultiQ)
-		m_MultiQ->AddRef();
+		ARBDogExistingPoints::eMQ, m_Venue, m_MultiQ,
+		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr());
 }
 
 PointsDataMultiQs::~PointsDataMultiQs()
 {
-	if (m_Venue)
-		m_Venue->Release();
-	if (m_MultiQ)
-		m_MultiQ->Release();
 }
 
 ARBString PointsDataMultiQs::OnNeedText(size_t index) const
@@ -656,20 +610,16 @@ bool PointsDataMultiQs::IsEqual(PointsDataBase const* inData)
 
 PointsDataSpeedPts::PointsDataSpeedPts(
 		CAgilityBookViewPoints* pView,
-		ARBConfigVenue* inVenue,
+		ARBConfigVenuePtr inVenue,
 		int inPts)
 	: PointsDataBase(pView)
 	, m_Venue(inVenue)
 	, m_Pts(inPts)
 {
-	if (m_Venue)
-		m_Venue->AddRef();
 }
 
 PointsDataSpeedPts::~PointsDataSpeedPts()
 {
-	if (m_Venue)
-		m_Venue->Release();
 }
 
 ARBString PointsDataSpeedPts::OnNeedText(size_t index) const

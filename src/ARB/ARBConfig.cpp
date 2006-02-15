@@ -70,7 +70,7 @@ ARBConfig::ARBConfig()
 }
 
 ARBConfig::ARBConfig(ARBConfig const& rhs)
-: m_bUpdate(rhs.m_bUpdate)
+	: m_bUpdate(rhs.m_bUpdate)
 	, m_Version(rhs.m_Version)
 	, m_Actions(rhs.m_Actions)
 	, m_Venues(rhs.m_Venues)
@@ -291,11 +291,10 @@ ARBString ARBConfig::GetTitleNiceName(
 		ARBString const& inVenue,
 		ARBString const& inTitle) const
 {
-	ARBConfigTitle* pTitle;
+	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
 	{
 		ARBString name = pTitle->GetNiceName();
-		pTitle->Release();
 		return name;
 	}
 	else
@@ -303,18 +302,14 @@ ARBString ARBConfig::GetTitleNiceName(
 }
 
 ARBString ARBConfig::GetTitleCompleteName(
-		ARBDogTitle const* inTitle,
+		ARBDogTitlePtr inTitle,
 		bool bAbbrevFirst) const
 {
 	if (!inTitle)
 		return _T("");
-	ARBConfigTitle* pTitle;
+	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
-	{
-		ARBString name = pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
-		pTitle->Release();
-		return name;
-	}
+		return pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
 	else
 		return inTitle->GetGenericName();
 }
@@ -358,7 +353,7 @@ bool ARBConfig::Update(
 	iterOther != inConfigNew.GetOtherPoints().end();
 	++iterOther)
 	{
-		ARBConfigOtherPoints* pOther;
+		ARBConfigOtherPointsPtr pOther;
 		if (GetOtherPoints().FindOtherPoints((*iterOther)->GetName(), &pOther))
 		{
 			if (*pOther != *(*iterOther))
@@ -371,7 +366,6 @@ bool ARBConfig::Update(
 			}
 			else
 				++nSkipped;
-			pOther->Release();
 		}
 		else
 		{
@@ -394,7 +388,7 @@ bool ARBConfig::Update(
 	iterVenue != inConfigNew.GetVenues().end();
 	++iterVenue)
 	{
-		ARBConfigVenue* pVenue;
+		ARBConfigVenuePtr pVenue;
 		if (GetVenues().FindVenue((*iterVenue)->GetName(), &pVenue))
 		{
 			if (*pVenue != *(*iterVenue))
@@ -407,7 +401,6 @@ bool ARBConfig::Update(
 			}
 			else
 				++nSkipped;
-			pVenue->Release();
 		}
 		else
 		{

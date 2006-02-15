@@ -69,6 +69,11 @@ ARBInfoItem::~ARBInfoItem()
 {
 }
 
+ARBInfoItemPtr ARBInfoItem::Clone() const
+{
+	return ARBInfoItemPtr(new ARBInfoItem(*this));
+}
+
 ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 {
 	if (this != &rhs)
@@ -144,7 +149,7 @@ ARBInfoItemList::ARBInfoItemList(ARBString const& inItemName)
 }
 
 ARBInfoItemList::ARBInfoItemList(ARBInfoItemList const& rhs)
-	: ARBVector<ARBInfoItem>(rhs)
+	: ARBVector<ARBInfoItemPtr>(rhs)
 	, m_ItemName(rhs.m_ItemName)
 {
 }
@@ -153,7 +158,7 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 {
 	if (this != &rhs)
 	{
-		ARBVector<ARBInfoItem>::operator=(rhs);
+		ARBVector<ARBInfoItemPtr>::operator=(rhs);
 		m_ItemName = rhs.m_ItemName;
 	}
 	return *this;
@@ -164,12 +169,9 @@ bool ARBInfoItemList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBInfoItem* item = new ARBInfoItem();
+	ARBInfoItemPtr item(new ARBInfoItem());
 	if (!item->Load(inTree, inVersion, ioCallback, m_ItemName))
-	{
-		item->Release();
 		return false;
-	}
 	push_back(item);
 	return true;
 }
@@ -188,7 +190,7 @@ class SortInfoItem
 {
 public:
 	SortInfoItem() {}
-	bool operator()(ARBInfoItem* one, ARBInfoItem* two) const
+	bool operator()(ARBInfoItemPtr one, ARBInfoItemPtr two) const
 	{
 		return one->GetName() < two->GetName();
 	}
@@ -206,7 +208,7 @@ size_t ARBInfoItemList::GetAllItems(std::set<ARBString>& outNames) const
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBInfoItem const* info = *iter;
+		ARBInfoItemPtr info = *iter;
 		outNames.insert(info->GetName());
 	}
 	return outNames.size();
@@ -218,7 +220,7 @@ void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
 	// shown under. This is simply to keep the file size down.
 	for (iterator iter = begin(); iter != end(); )
 	{
-		ARBInfoItem const* item = *iter;
+		ARBInfoItemPtr item = *iter;
 		if (0 == item->GetComment().length())
 		{
 			if (inNamesInUse.end() == inNamesInUse.find(item->GetName()))
@@ -233,20 +235,17 @@ void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
 
 bool ARBInfoItemList::FindItem(
 		ARBString const& inName,
-		ARBInfoItem** outItem) const
+		ARBInfoItemPtr* outItem) const
 {
 	if (outItem)
-		*outItem = NULL;
+		outItem->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBInfoItem* info = *iter;
+		ARBInfoItemPtr info = *iter;
 		if (info->GetName() == inName)
 		{
 			if (outItem)
-			{
 				*outItem = info;
-				(*outItem)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -255,41 +254,37 @@ bool ARBInfoItemList::FindItem(
 
 bool ARBInfoItemList::AddItem(
 		ARBString const& inItem,
-		ARBInfoItem** outItem)
+		ARBInfoItemPtr* outItem)
 {
 	if (outItem)
-		*outItem = NULL;
+		outItem->reset();
 	if (!FindItem(inItem))
 	{
 		if (0 < inItem.length())
 		{
-			ARBInfoItem* item = new ARBInfoItem();
+			ARBInfoItemPtr item(new ARBInfoItem());
 			item->SetName(inItem);
 			push_back(item);
 			if (outItem)
-			{
 				*outItem = item;
-				(*outItem)->AddRef();
-			}
 			return true;
 		}
 	}
 	return false;
 }
 
-bool ARBInfoItemList::AddItem(ARBInfoItem* inItem)
+bool ARBInfoItemList::AddItem(ARBInfoItemPtr inItem)
 {
 	bool bAdded = false;
 	if (inItem && !FindItem(inItem->GetName()))
 	{
 		bAdded = true;
-		inItem->AddRef();
 		push_back(inItem);
 	}
 	return bAdded;
 }
 
-bool ARBInfoItemList::DeleteItem(ARBInfoItem const* inItem)
+bool ARBInfoItemList::DeleteItem(ARBInfoItemPtr inItem)
 {
 	if (inItem)
 	{

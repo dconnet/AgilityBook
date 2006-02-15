@@ -49,7 +49,7 @@ class CDlgDogProperties : public CDlgBasePropertyPage
 public:
 	CDlgDogProperties(
 			CAgilityBookDoc* pDoc,
-			ARBDog* pDog);
+			ARBDogPtr pDog);
 	~CDlgDogProperties();
 
 private:
@@ -66,7 +66,7 @@ private:
 	CString	m_Notes;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBDog* m_pDog;
+	ARBDogPtr m_pDog;
 	ARBDate m_DOB;
 	ARBDate m_Deceased;
 

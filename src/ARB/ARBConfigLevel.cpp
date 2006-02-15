@@ -69,6 +69,11 @@ ARBConfigLevel::~ARBConfigLevel()
 {
 }
 
+ARBConfigLevelPtr ARBConfigLevel::Clone() const
+{
+	return ARBConfigLevelPtr(new ARBConfigLevel(*this));
+}
+
 ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 {
 	if (this != &rhs)
@@ -130,7 +135,7 @@ bool ARBConfigLevel::Save(Element& ioTree) const
 
 bool ARBConfigLevel::Update(
 		int indent,
-		ARBConfigLevel const* inLevelNew,
+		ARBConfigLevelPtr inLevelNew,
 		ARBString& ioInfo)
 {
 	ARBString info;
@@ -181,6 +186,18 @@ void ARBConfigLevel::clear()
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBConfigLevelList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBConfigLevelPtr thing(new ARBConfigLevel());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 bool ARBConfigLevelList::VerifyLevel(
 		ARBString const& inName,
 		bool inAllowWildCard) const
@@ -198,19 +215,16 @@ bool ARBConfigLevelList::VerifyLevel(
 
 bool ARBConfigLevelList::FindLevel(
 		ARBString const& inName,
-		ARBConfigLevel** outLevel)
+		ARBConfigLevelPtr* outLevel)
 {
 	if (outLevel)
-		*outLevel = NULL;
+		outLevel->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName)
 		{
 			if (outLevel)
-			{
 				*outLevel = *iter;
-				(*outLevel)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -219,10 +233,10 @@ bool ARBConfigLevelList::FindLevel(
 
 bool ARBConfigLevelList::FindSubLevel(
 		ARBString const& inName,
-		ARBConfigLevel** outLevel) const
+		ARBConfigLevelPtr* outLevel) const
 {
 	if (outLevel)
-		*outLevel = NULL;
+		outLevel->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (0 < (*iter)->GetSubLevels().size())
@@ -230,10 +244,7 @@ bool ARBConfigLevelList::FindSubLevel(
 			if ((*iter)->GetSubLevels().FindSubLevel(inName))
 			{
 				if (outLevel)
-				{
 					*outLevel = *iter;
-					(*outLevel)->AddRef();
-				}
 				return true;
 			}
 		}
@@ -242,10 +253,7 @@ bool ARBConfigLevelList::FindSubLevel(
 			if ((*iter)->GetName() == inName)
 			{
 				if (outLevel)
-				{
 					*outLevel = *iter;
-					(*outLevel)->AddRef();
-				}
 				return true;
 			}
 		}
@@ -255,32 +263,28 @@ bool ARBConfigLevelList::FindSubLevel(
 
 bool ARBConfigLevelList::AddLevel(
 		ARBString const& inName,
-		ARBConfigLevel** outLevel)
+		ARBConfigLevelPtr* outLevel)
 {
 	if (outLevel)
-		*outLevel = NULL;
+		outLevel->reset();
 	if (0 == inName.length())
 		return false;
 	if (FindSubLevel(inName))
 		return false;
-	ARBConfigLevel* pLevel = new ARBConfigLevel();
+	ARBConfigLevelPtr pLevel(new ARBConfigLevel());
 	pLevel->SetName(inName);
 	push_back(pLevel);
 	if (outLevel)
-	{
 		*outLevel = pLevel;
-		(*outLevel)->AddRef();
-	}
 	return true;
 }
 
-bool ARBConfigLevelList::AddLevel(ARBConfigLevel* inLevel)
+bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr inLevel)
 {
 	if (!inLevel || 0 == inLevel->GetName().length())
 		return false;
 	if (FindSubLevel(inLevel->GetName()))
 		return false;
-	inLevel->AddRef();
 	push_back(inLevel);
 	return true;
 }

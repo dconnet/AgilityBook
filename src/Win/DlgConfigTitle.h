@@ -44,7 +44,7 @@ class CDlgConfigTitle : public CDlgBaseDialog
 {
 public:
 	CDlgConfigTitle(
-			ARBConfigTitle* inTitle,
+			ARBConfigTitlePtr inTitle,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigTitle();
 
@@ -64,7 +64,7 @@ private:
 	BOOL	m_DateTo;
 	CDateTimeCtrl	m_ctrlDateTo;
 	//}}AFX_DATA
-	ARBConfigTitle* m_Title;
+	ARBConfigTitlePtr m_Title;
 
 	//{{AFX_VIRTUAL(CDlgConfigTitle)
 protected:

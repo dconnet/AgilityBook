@@ -271,7 +271,7 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 		iVenue != m_pDoc->GetConfig().GetVenues().end();
 		++iVenue)
 	{
-		ARBConfigVenue* pVenue = (*iVenue);
+		ARBConfigVenuePtr pVenue = (*iVenue);
 		HTREEITEM hVenue = m_ctrlVenue.InsertItem(
 			pVenue->GetName().c_str(),
 			TVI_ROOT,
@@ -279,12 +279,14 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 		m_ctrlVenue.ShowCheckbox(hVenue, true);
 		if (Find(pVenue->GetName(), _T(""), _T("")))
 			m_ctrlVenue.SetChecked(hVenue, true);
-		m_ctrlVenue.SetItemData(hVenue, reinterpret_cast<LPARAM>(pVenue));
+		//m_ctrlVenue.SetItemData(hVenue,
+		//	reinterpret_cast<LPARAM>(
+		//		new CListPtrData<ARBConfigVenuePtr>(pVenue)));
 		for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 			iterDiv != pVenue->GetDivisions().end();
 			++iterDiv)
 		{
-			ARBConfigDivision* pDiv = *iterDiv;
+			ARBConfigDivisionPtr pDiv = *iterDiv;
 			HTREEITEM hDiv = m_ctrlVenue.InsertItem(
 				pDiv->GetName().c_str(),
 				hVenue,
@@ -299,7 +301,7 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 				iterLevel != pDiv->GetLevels().end();
 				++iterLevel)
 			{
-				ARBConfigLevel* pLevel = *iterLevel;
+				ARBConfigLevelPtr pLevel = *iterLevel;
 				HTREEITEM hLevel = m_ctrlVenue.InsertItem(
 					pLevel->GetName().c_str(),
 					hDiv,
@@ -311,7 +313,7 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 						iterSubLevel != pLevel->GetSubLevels().end();
 						++iterSubLevel)
 					{
-						ARBConfigSubLevel* pSubLevel = *iterSubLevel;
+						ARBConfigSubLevelPtr pSubLevel = *iterSubLevel;
 						HTREEITEM hSubLevel = m_ctrlVenue.InsertItem(
 							pSubLevel->GetName().c_str(),
 							hLevel,

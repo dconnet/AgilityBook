@@ -77,14 +77,14 @@ private:
 	{
 	public:
 		CDlgFindLinksData(
-				ARBDog* pDog,
-				ARBDogTrial* pTrial,
-				ARBDogRun* pRun,
+				ARBDogPtr pDog,
+				ARBDogTrialPtr pTrial,
+				ARBDogRunPtr pRun,
 				ARBString const& inLink);
 		~CDlgFindLinksData();
-		ARBDog* m_pDog;
-		ARBDogTrial* m_pTrial;
-		ARBDogRun* m_pRun;
+		ARBDogPtr m_pDog;
+		ARBDogTrialPtr m_pTrial;
+		ARBDogRunPtr m_pRun;
 		ARBString m_OldLink;
 		ARBString m_Link;
 	};
@@ -103,7 +103,7 @@ protected:
 	//{{AFX_MSG(CDlgFindLinks)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnGetdispinfoList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydownList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);

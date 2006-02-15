@@ -375,7 +375,7 @@ public:
 	{
 		if (str && XMLString::stringLen(str))
 		{
-			char *pStr = XMLString::transcode(str);
+			char* pStr = XMLString::transcode(str);
 #if _MSC_VER < 1300
 			string::operator=(pStr);
 #else

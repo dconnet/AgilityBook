@@ -28,7 +28,7 @@
 
 /**
  * @file
- * @brief Utility classes.
+ * @brief Type definitions.
  * @author David Connet
  *
  * Revision History
@@ -42,7 +42,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-class ARBErrorCallback;
+#include <boost/shared_ptr.hpp>
 class Element;
 
 // Note, for non-Windows systems, see stdafx.h for additional requirements.
@@ -53,6 +53,74 @@ typedef std::wostringstream ARBostringstream;
 typedef std::string ARBString;
 typedef std::ostringstream ARBostringstream;
 #endif
+
+#define ARB_TYPEDEF(name) \
+	class name;\
+	typedef boost::shared_ptr<name> name##Ptr;
+
+ARB_TYPEDEF(ARBBase)
+ARB_TYPEDEF(ARBCalendar)
+ARB_TYPEDEF(ARBConfigAction)
+ARB_TYPEDEF(ARBConfigDivision)
+ARB_TYPEDEF(ARBConfigEvent)
+ARB_TYPEDEF(ARBConfigFault)
+ARB_TYPEDEF(ARBConfigLevel)
+ARB_TYPEDEF(ARBConfigLifetimePoints)
+ARB_TYPEDEF(ARBConfigMultiQ)
+ARB_TYPEDEF(ARBConfigOtherPoints)
+ARB_TYPEDEF(ARBConfigScoring)
+ARB_TYPEDEF(ARBConfigSubLevel)
+ARB_TYPEDEF(ARBConfigTitle)
+ARB_TYPEDEF(ARBConfigTitlePoints)
+ARB_TYPEDEF(ARBConfigVenue)
+ARB_TYPEDEF(ARBDog)
+ARB_TYPEDEF(ARBDogClub)
+ARB_TYPEDEF(ARBDogExistingPoints)
+ARB_TYPEDEF(ARBDogReferenceRun)
+ARB_TYPEDEF(ARBDogRegNum)
+ARB_TYPEDEF(ARBDogRun)
+ARB_TYPEDEF(ARBDogRunOtherPoints)
+ARB_TYPEDEF(ARBDogRunPartner)
+ARB_TYPEDEF(ARBDogRunScoring)
+ARB_TYPEDEF(ARBDogTitle)
+ARB_TYPEDEF(ARBDogTrial)
+ARB_TYPEDEF(ARBInfo)
+ARB_TYPEDEF(ARBInfoItem)
+ARB_TYPEDEF(ARBTraining)
+
+/**
+ * Error callback class.
+ */
+class ARBErrorCallback
+{
+public:
+	ARBErrorCallback(ARBString& ioErrMsg)
+		: m_ErrMsg(ioErrMsg)
+	{
+	}
+	virtual ~ARBErrorCallback() {}
+
+	/**
+	 * Error message that requires a user response.
+	 * @param pMsg Message to display to user.
+	 * @return True to continue, false to abort.
+	 */
+	virtual bool OnError(TCHAR const* const pMsg)
+	{
+		return false;
+	}
+
+	/**
+	 * Log an error message.
+	 */
+	virtual void LogMessage(ARBString const& inMsg)
+	{
+		m_ErrMsg += inMsg;
+	}
+
+protected:
+	ARBString& m_ErrMsg;
+};
 
 /**
  * A version has a major and minor number.

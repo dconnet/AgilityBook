@@ -57,16 +57,16 @@ public:
 		eScoringChanged
 	} eScoringDetail;
 	ScoringRunInfo()
-		: m_Dog(NULL)
-		, m_Trial(NULL)
-		, m_Run(NULL)
+		: m_Dog()
+		, m_Trial()
+		, m_Run()
 		, m_ScoringDetail(eNotScoringDetail)
 	{
 	}
 	ScoringRunInfo(
-			ARBDog const* inDog,
-			ARBDogTrial const* inTrial,
-			ARBDogRun const* inRun,
+			ARBDogPtr inDog,
+			ARBDogTrialPtr inTrial,
+			ARBDogRunPtr inRun,
 			eScoringDetail inScoringDetail)
 		: m_Dog(inDog)
 		, m_Trial(inTrial)
@@ -74,9 +74,9 @@ public:
 		, m_ScoringDetail(inScoringDetail)
 	{
 	}
-	ARBDog const* m_Dog;
-	ARBDogTrial const* m_Trial;
-	ARBDogRun const* m_Run;
+	ARBDogPtr m_Dog;
+	ARBDogTrialPtr m_Trial;
+	ARBDogRunPtr m_Run;
 	eScoringDetail m_ScoringDetail;
 };
 
@@ -85,11 +85,11 @@ class RunInfoData
 	friend class CDlgListViewer;
 public:
 	RunInfoData(
-			ARBDog const* inDog,
-			ARBConfigVenue const* inVenue,
-			ARBConfigDivision const* inDiv,
-			ARBConfigLevel const* inLevel,
-			ARBConfigEvent const* inEvent)
+			ARBDogPtr inDog,
+			ARBConfigVenuePtr inVenue,
+			ARBConfigDivisionPtr inDiv,
+			ARBConfigLevelPtr inLevel,
+			ARBConfigEventPtr inEvent)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_Div(inDiv)
@@ -97,11 +97,11 @@ public:
 		, m_Event(inEvent)
 	{
 	}
-	ARBDog const* m_Dog;
-	ARBConfigVenue const* m_Venue;
-	ARBConfigDivision const* m_Div;
-	ARBConfigLevel const* m_Level;
-	ARBConfigEvent const* m_Event;
+	ARBDogPtr m_Dog;
+	ARBConfigVenuePtr m_Venue;
+	ARBConfigDivisionPtr m_Div;
+	ARBConfigLevelPtr m_Level;
+	ARBConfigEventPtr m_Event;
 };
 
 class MultiQInfoData
@@ -109,24 +109,24 @@ class MultiQInfoData
 	friend class CDlgListViewer;
 public:
 	MultiQInfoData(
-			ARBDog const* inDog,
-			ARBConfigVenue const* inVenue,
-			ARBConfigMultiQ const* inMultiQ)
+			ARBDogPtr inDog,
+			ARBConfigVenuePtr inVenue,
+			ARBConfigMultiQPtr inMultiQ)
 		: m_Dog(inDog)
 		, m_Venue(inVenue)
 		, m_MultiQ(inMultiQ)
 	{
 	}
-	ARBDog const* m_Dog;
-	ARBConfigVenue const* m_Venue;
-	ARBConfigMultiQ const* m_MultiQ;
+	ARBDogPtr m_Dog;
+	ARBConfigVenuePtr m_Venue;
+	ARBConfigMultiQPtr m_MultiQ;
 };
 
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
 	ARBString name;
-	ARBInfoItem const* pItem;
+	ARBInfoItemPtr pItem;
 };
 
 class CDlgListViewer : public CDlgBaseDialog
@@ -206,7 +206,6 @@ protected:
 	//{{AFX_MSG(CDlgListViewer)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
 	afx_msg void OnSize(UINT nType, int cx, int cy);

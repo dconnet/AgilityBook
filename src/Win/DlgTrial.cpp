@@ -45,6 +45,7 @@
 #include "ARBDogTrial.h"
 #include "DlgClub.h"
 #include "DlgInfoJudge.h"
+#include "ListData.h"
 
 using namespace std;
 
@@ -73,9 +74,10 @@ static int const nColInfo1 = sizeof(colInfo1) / sizeof(colInfo1[0]);
 
 CDlgTrial::CDlgTrial(
 		CAgilityBookDoc* pDoc,
-		ARBDogTrial* pTrial,
+		ARBDogTrialPtr pTrial,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTrial::IDD, pParent)
+	, m_ctrlClubs(true)
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
 	, m_Clubs(pTrial->GetClubs())
@@ -124,6 +126,12 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogClubPtr CDlgTrial::GetClubData(int index) const
+{
+	CListData* pData = m_ctrlClubs.GetData(index);
+	return dynamic_cast<CListPtrData<ARBDogClubPtr>*>(pData)->GetData();
+}
+
 void CDlgTrial::UpdateNotes(
 		bool bLocation,
 		bool bClub)
@@ -131,13 +139,11 @@ void CDlgTrial::UpdateNotes(
 	if (bLocation)
 	{
 		CString str;
-		ARBInfoItem* pItem;
+		ARBInfoItemPtr pItem;
 		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace(_T("\n"), _T("\r\n"));
-			pItem->Release();
-			pItem = NULL;
 		}
 		m_ctrlLocationInfo.SetWindowText(str);
 	}
@@ -147,16 +153,14 @@ void CDlgTrial::UpdateNotes(
 		int index = m_ctrlClubs.GetSelection();
 		if (0 <= index)
 		{
-			ARBDogClub* pClub = reinterpret_cast<ARBDogClub*>(m_ctrlClubs.GetItemData(index));
+			ARBDogClubPtr pClub = GetClubData(index);
 			if (pClub)
 			{
-				ARBInfoItem* pItem;
+				ARBInfoItemPtr pItem;
 				if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
 				{
 					str = pItem->GetComment().c_str();
 					str.Replace(_T("\n"), _T("\r\n"));
-					pItem->Release();
-					pItem = NULL;
 				}
 			}
 		}
@@ -170,10 +174,11 @@ void CDlgTrial::ListClubs()
 	int i = 0;
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++i, ++iter)
 	{
-		ARBDogClub const* pClub = (*iter);
+		ARBDogClubPtr pClub = (*iter);
 		int nItem = m_ctrlClubs.InsertItem(i, pClub->GetName().c_str());
 		m_ctrlClubs.SetItemText(nItem, 1, pClub->GetVenue().c_str());
-		m_ctrlClubs.SetItemData(nItem, reinterpret_cast<LPARAM>(pClub));
+		m_ctrlClubs.SetData(nItem,
+			new CListPtrData<ARBDogClubPtr>(pClub));
 	}
 	for (i = 0; i < nColInfo1 ; ++i)
 		m_ctrlClubs.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
@@ -302,7 +307,7 @@ void CDlgTrial::OnClubNotes()
 	int index = m_ctrlClubs.GetSelection();
 	if (0 <= index)
 	{
-		ARBDogClub* pClub = reinterpret_cast<ARBDogClub*>(m_ctrlClubs.GetItemData(index));
+		ARBDogClubPtr pClub = GetClubData(index);
 		CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
 		if (IDOK == dlg.DoModal())
 		{
@@ -313,7 +318,7 @@ void CDlgTrial::OnClubNotes()
 
 void CDlgTrial::OnClubNew()
 {
-	CDlgClub dlg(m_pDoc, m_Clubs, NULL, this);
+	CDlgClub dlg(m_pDoc, m_Clubs, ARBDogClubPtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListClubs();
 }
@@ -323,7 +328,7 @@ void CDlgTrial::OnClubEdit()
 	int index = m_ctrlClubs.GetSelection();
 	if (0 <= index)
 	{
-		ARBDogClub* pClub = reinterpret_cast<ARBDogClub*>(m_ctrlClubs.GetItemData(index));
+		ARBDogClubPtr pClub = GetClubData(index);
 		CDlgClub dlg(m_pDoc, m_Clubs, pClub, this);
 		if (IDOK == dlg.DoModal())
 			ListClubs();
@@ -335,7 +340,7 @@ void CDlgTrial::OnClubDelete()
 	int index = m_ctrlClubs.GetSelection();
 	if (0 <= index)
 	{
-		ARBDogClub const* pClub = reinterpret_cast<ARBDogClub const*>(m_ctrlClubs.GetItemData(index));
+		ARBDogClubPtr pClub = GetClubData(index);
 		m_Clubs.DeleteClub(pClub->GetName(), pClub->GetVenue());
 		m_ctrlClubs.DeleteItem(index);
 	}
@@ -367,12 +372,12 @@ void CDlgTrial::OnOK()
 		ARBDogClubList::iterator iterClub;
 		for (iterClub = m_pTrial->GetClubs().begin(); iterClub != m_pTrial->GetClubs().end(); ++iterClub)
 		{
-			ARBDogClub* pClub = *iterClub;
+			ARBDogClubPtr pClub = *iterClub;
 			oldVenues.insert(pClub->GetVenue());
 		}
 		for (iterClub = m_Clubs.begin(); iterClub != m_Clubs.end(); ++iterClub)
 		{
-			ARBDogClub* pClub = *iterClub;
+			ARBDogClubPtr pClub = *iterClub;
 			newVenues.insert(pClub->GetVenue());
 		}
 		bool bAllThere = true;
@@ -391,7 +396,7 @@ void CDlgTrial::OnOK()
 			iterRun != m_pTrial->GetRuns().end();
 			++iterRun)
 			{
-				ARBDogRun const* pRun = *iterRun;
+				ARBDogRunPtr pRun = *iterRun;
 				bool bFound = false;
 				for (std::set<ARBString>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
 				{

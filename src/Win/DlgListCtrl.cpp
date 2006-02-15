@@ -55,6 +55,7 @@
 #include "DlgFault.h"
 #include "DlgOtherPoint.h"
 #include "DlgPartner.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -64,7 +65,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgListCtrlData
+class CDlgListCtrlData : public CListData
 {
 public:
 	CDlgListCtrlData(CListCtrl& list)
@@ -79,11 +80,11 @@ public:
 		if (0 == m_RefCount)
 			delete this;
 	}
-	virtual bool HasIcon() const					{return false;}
+	virtual bool HasIcon() const				{return false;}
 	virtual ARBString OnNeedText(int iCol) = 0;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
-	virtual ARBCalendar const* GetCalendar() const	{return NULL;}
+	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
 protected:
 	virtual ~CDlgListCtrlData() {}
 	CListCtrl& m_List;
@@ -98,26 +99,24 @@ public:
 	CDlgListCtrlDataCalendar(
 			CListCtrl& list,
 			CAgilityBookDoc* pDoc,
-			ARBCalendar* pCal)
+			ARBCalendarPtr pCal)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pCal(pCal)
 	{
-		m_pCal->AddRef();
 	}
-	virtual bool HasIcon() const					{return true;}
+	virtual bool HasIcon() const				{return true;}
 	virtual ARBString OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
-	virtual ARBCalendar const* GetCalendar() const	{return m_pCal;}
+	virtual ARBCalendarPtr GetCalendar() const	{return m_pCal;}
 protected:
 	~CDlgListCtrlDataCalendar()
 	{
-		m_pCal->Release();
 	}
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBCalendar* m_pCal;
+	ARBCalendarPtr m_pCal;
 };
 
 ARBString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
@@ -175,12 +174,12 @@ public:
 	static void GetAllFaults(
 			CListCtrl& ctrl,
 			CAgilityBookDoc* pDoc,
-			ARBDogRun* pRun,
+			ARBDogRunPtr pRun,
 			std::set<ARBString>& faults);
 	CDlgListCtrlDataFaults(
 			CListCtrl& list,
 			CAgilityBookDoc* pDoc,
-			ARBDogRun* pRun,
+			ARBDogRunPtr pRun,
 			ARBString fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
@@ -197,14 +196,14 @@ protected:
 	}
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDogRun* m_pRun;
+	ARBDogRunPtr m_pRun;
 	ARBString m_Fault;
 };
 
 void CDlgListCtrlDataFaults::GetAllFaults(
 		CListCtrl& ctrl,
 		CAgilityBookDoc* pDoc,
-		ARBDogRun* pRun,
+		ARBDogRunPtr pRun,
 		std::set<ARBString>& faults)
 {
 	faults.clear();
@@ -255,15 +254,14 @@ class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 public:
 	CDlgListCtrlDataOtherPoints(
 			CListCtrl& list,
-			ARBConfig const* config,
-			ARBDogRun* pRun,
-			ARBDogRunOtherPoints* pOther)
+			ARBConfig const& config,
+			ARBDogRunPtr pRun,
+			ARBDogRunOtherPointsPtr pOther)
 		: CDlgListCtrlData(list)
 		, m_pConfig(config)
 		, m_pRun(pRun)
 		, m_Other(pOther)
 	{
-		m_Other->AddRef();
 	}
 	virtual ARBString OnNeedText(int iCol);
 	virtual bool OnEdit();
@@ -271,12 +269,11 @@ public:
 protected:
 	~CDlgListCtrlDataOtherPoints()
 	{
-		m_Other->Release();
 	}
 private:
-	ARBConfig const* m_pConfig;
-	ARBDogRun* m_pRun;
-	ARBDogRunOtherPoints* m_Other;
+	ARBConfig const& m_pConfig;
+	ARBDogRunPtr m_pRun;
+	ARBDogRunOtherPointsPtr m_Other;
 };
 
 ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
@@ -301,7 +298,7 @@ ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 
 bool CDlgListCtrlDataOtherPoints::OnEdit()
 {
-	CDlgOtherPoint dlg(*m_pConfig, m_Other);
+	CDlgOtherPoint dlg(m_pConfig, m_Other);
 	if (IDOK == dlg.DoModal())
 		return true;
 	else
@@ -320,13 +317,12 @@ class CDlgListCtrlDataPartners : public CDlgListCtrlData
 public:
 	CDlgListCtrlDataPartners(
 			CListCtrl& list,
-			ARBDogRun* pRun,
-			ARBDogRunPartner* pPartner)
+			ARBDogRunPtr pRun,
+			ARBDogRunPartnerPtr pPartner)
 		: CDlgListCtrlData(list)
 		, m_pRun(pRun)
 		, m_Partner(pPartner)
 	{
-		m_Partner->AddRef();
 	}
 	virtual ARBString OnNeedText(int iCol);
 	virtual bool OnEdit();
@@ -334,11 +330,10 @@ public:
 protected:
 	~CDlgListCtrlDataPartners()
 	{
-		m_Partner->Release();
 	}
 private:
-	ARBDogRun* m_pRun;
-	ARBDogRunPartner* m_Partner;
+	ARBDogRunPtr m_pRun;
+	ARBDogRunPartnerPtr m_Partner;
 };
 
 ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
@@ -382,17 +377,18 @@ void CDlgListCtrlDataPartners::Apply()
 CDlgListCtrl::CDlgListCtrl(
 		CAgilityBookDoc* pDoc,
 		ARBDate const& date,
-		std::vector<ARBCalendar*> const* entries,
+		std::vector<ARBCalendarPtr> const* entries,
 		CTabView* pTabView,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
+	, m_ctrlList(true)
 	, m_What(eCalendar)
 	, m_pDoc(pDoc)
 	, m_Date(date)
 	, m_CalEntries(entries)
 	, m_pTabView(pTabView)
 	, m_pConfig(NULL)
-	, m_pRun(NULL)
+	, m_pRun()
 {
 	//{{AFX_DATA_INIT(CDlgListCtrl)
 	//}}AFX_DATA_INIT
@@ -401,9 +397,10 @@ CDlgListCtrl::CDlgListCtrl(
 // Faults
 CDlgListCtrl::CDlgListCtrl(
 		CAgilityBookDoc* pDoc,
-		ARBDogRun* run,
+		ARBDogRunPtr run,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
+	, m_ctrlList(true)
 	, m_What(eFaults)
 	, m_pDoc(pDoc)
 	, m_CalEntries(NULL)
@@ -415,24 +412,26 @@ CDlgListCtrl::CDlgListCtrl(
 
 // OtherPoints
 CDlgListCtrl::CDlgListCtrl(
-		ARBConfig const* pConfig,
-		ARBDogRun* run,
+		ARBConfig const& pConfig,
+		ARBDogRunPtr run,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
+	, m_ctrlList(true)
 	, m_What(eOtherPoints)
 	, m_pDoc(NULL)
 	, m_CalEntries(NULL)
 	, m_pTabView(NULL)
-	, m_pConfig(pConfig)
+	, m_pConfig(&pConfig)
 	, m_pRun(run)
 {
 }
 
 // Partners
 CDlgListCtrl::CDlgListCtrl(
-		ARBDogRun* run,
+		ARBDogRunPtr run,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
+	, m_ctrlList(true)
 	, m_What(ePartners)
 	, m_pDoc(NULL)
 	, m_CalEntries(NULL)
@@ -459,7 +458,6 @@ BEGIN_MESSAGE_MAP(CDlgListCtrl, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListCtrl)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST, OnGetdispinfoList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
-	ON_NOTIFY(LVN_DELETEITEM, IDC_LIST, OnDeleteitemList)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_LIST, OnKeydownList)
 	ON_BN_CLICKED(IDC_LIST_NEW, OnNew)
@@ -485,10 +483,11 @@ void CDlgListCtrl::UpdateControls()
 	BOOL bEnableCreate = FALSE;
 	if (bEnable && eCalendar == m_What)
 	{
-		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(m_ctrlList.GetItemData(index));
+		CListData* pRawData = m_ctrlList.GetData(index);
+		CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
 		if (pData)
 		{
-			ARBCalendar const* pCal = pData->GetCalendar();
+			ARBCalendarPtr pCal = pData->GetCalendar();
 			if (pCal)
 			{
 				if (m_pDoc->GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
@@ -566,11 +565,10 @@ BOOL CDlgListCtrl::OnInitDialog()
 		str.LoadString(IDS_COL_NOTES); m_ctrlList.InsertColumn(6, str);
 		nCols = 7;
 		{
-			for (std::vector<ARBCalendar*>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
+			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
 			{
-				ARBCalendar* pCal = new ARBCalendar(*(*iter));
+				ARBCalendarPtr pCal(new ARBCalendar(*(*iter)));
 				CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, pCal);
-				pCal->Release();
 				items.push_back(pData);
 			}
 		}
@@ -597,9 +595,8 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunOtherPointsList::const_iterator iter = m_pRun->GetOtherPoints().begin(); iter != m_pRun->GetOtherPoints().end(); ++iter)
 			{
-				ARBDogRunOtherPoints* pOther = new ARBDogRunOtherPoints(*(*iter));
-				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, m_pConfig, m_pRun, pOther);
-				pOther->Release();
+				ARBDogRunOtherPointsPtr pOther(new ARBDogRunOtherPoints(*(*iter)));
+				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, *m_pConfig, m_pRun, pOther);
 				items.push_back(pData);
 			}
 		}
@@ -614,9 +611,8 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunPartnerList::const_iterator iter = m_pRun->GetPartners().begin(); iter != m_pRun->GetPartners().end(); ++iter)
 			{
-				ARBDogRunPartner* pPartner = new ARBDogRunPartner(*(*iter));
+				ARBDogRunPartnerPtr pPartner(new ARBDogRunPartner(*(*iter)));
 				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, pPartner);
-				pPartner->Release();
 				items.push_back(pData);
 			}
 		}
@@ -635,7 +631,9 @@ BOOL CDlgListCtrl::OnInitDialog()
 		item.iItem = i;
 		item.iSubItem = 0;
 		item.iImage = I_IMAGECALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>((*iter));
+		item.lParam = reinterpret_cast<LPARAM>(
+			static_cast<CListData*>(
+				(*iter)));
 		m_ctrlList.InsertItem(&item);
 	}
 	if (0 < i)
@@ -654,17 +652,17 @@ void CDlgListCtrl::OnGetdispinfoList(
 		LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
+	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+	CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pDispInfo->item.lParam);
 		ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
 	if (pDispInfo->item.mask & LVIF_IMAGE)
 	{
-		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pDispInfo->item.lParam);
-		CDlgListCtrlDataCalendar *pCal = dynamic_cast<CDlgListCtrlDataCalendar*>(pData);
+		CDlgListCtrlDataCalendar* pCal = dynamic_cast<CDlgListCtrlDataCalendar*>(pData);
 		if (pCal)
 		{
 			switch (pCal->GetCalendar()->GetEntered())
@@ -702,18 +700,6 @@ void CDlgListCtrl::OnItemchangedList(
 	*pResult = 0;
 }
 
-void CDlgListCtrl::OnDeleteitemList(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
-	CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(pNMListView->lParam);
-	if (pData)
-		pData->Release();
-	pNMListView->lParam = 0;
-	*pResult = 0;
-}
-
 void CDlgListCtrl::OnDblclkList(
 		NMHDR* /*pNMHDR*/,
 		LRESULT* pResult) 
@@ -748,7 +734,7 @@ void CDlgListCtrl::OnNew()
 		break;
 	case eCalendar:
 		{
-			ARBCalendar* cal = new ARBCalendar();
+			ARBCalendarPtr cal(new ARBCalendar());
 			cal->SetStartDate(m_Date);
 			cal->SetEndDate(m_Date + 1);
 			CDlgCalendar dlg(cal, m_pDoc);
@@ -766,11 +752,11 @@ void CDlgListCtrl::OnNew()
 					item.iItem = m_ctrlList.GetItemCount();
 					item.iSubItem = 0;
 					item.iImage = I_IMAGECALLBACK;
-					item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
+					item.lParam = reinterpret_cast<LPARAM>(
+						static_cast<CListData*>(pData));
 					m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 				}
 			}
-			cal->Release();
 		}
 		break;
 
@@ -791,7 +777,8 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.iImage = I_IMAGECALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
+				item.lParam = reinterpret_cast<LPARAM>(
+					static_cast<CListData*>(pData));
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
 		}
@@ -799,12 +786,12 @@ void CDlgListCtrl::OnNew()
 
 	case eOtherPoints:
 		{
-			ARBDogRunOtherPoints* pOther = new ARBDogRunOtherPoints();
+			ARBDogRunOtherPointsPtr pOther(new ARBDogRunOtherPoints());
 			CDlgOtherPoint dlg(*m_pConfig, pOther, this);
 			if (IDOK == dlg.DoModal())
 			{
 				bUpdate = true;
-				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, m_pConfig, m_pRun, pOther);
+				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, *m_pConfig, m_pRun, pOther);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				if (pData->HasIcon())
@@ -813,16 +800,16 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.iImage = I_IMAGECALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
+				item.lParam = reinterpret_cast<LPARAM>(
+					static_cast<CListData*>(pData));
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
-			pOther->Release();
 		}
 		break;
 
 	case ePartners:
 		{
-			ARBDogRunPartner* partner = new ARBDogRunPartner();
+			ARBDogRunPartnerPtr partner(new ARBDogRunPartner());
 			CDlgPartner dlg(partner, this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -836,10 +823,10 @@ void CDlgListCtrl::OnNew()
 				item.iItem = m_ctrlList.GetItemCount();
 				item.iSubItem = 0;
 				item.iImage = I_IMAGECALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListCtrlData*>(pData));
+				item.lParam = reinterpret_cast<LPARAM>(
+					static_cast<CListData*>(pData));
 				m_ctrlList.SetSelection(m_ctrlList.InsertItem(&item));
 			}
-			partner->Release();
 		}
 		break;
 	}
@@ -857,7 +844,8 @@ void CDlgListCtrl::OnEdit()
 	int nItem = m_ctrlList.GetSelection();
 	if (0 <= nItem)
 	{
-		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(m_ctrlList.GetItemData(nItem));
+		CListData* pRawData = m_ctrlList.GetData(nItem);
+		CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
 		if (pData && pData->OnEdit())
 		{
 			m_ctrlList.Invalidate();
@@ -909,10 +897,11 @@ void CDlgListCtrl::OnCreateTrial()
 	int nItem = m_ctrlList.GetSelection();
 	if (0 <= nItem)
 	{
-		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(m_ctrlList.GetItemData(nItem));
+		CListData* pRawData = m_ctrlList.GetData(nItem);
+		CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
 		if (pData)
 		{
-			ARBCalendar const* pCal = pData->GetCalendar();
+			ARBCalendarPtr pCal = pData->GetCalendar();
 			if (pCal)
 			{
 				if (m_pDoc->CreateTrialFromCalendar(*pCal, m_pTabView))
@@ -932,7 +921,7 @@ void CDlgListCtrl::OnOK()
 		break;
 	case eCalendar:
 		{
-			for (std::vector<ARBCalendar*>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
+			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
 				m_pDoc->GetCalendar().DeleteCalendar((*iter));
 		}
 		break;
@@ -950,7 +939,8 @@ void CDlgListCtrl::OnOK()
 	// Apply
 	for (int index = 0; index < m_ctrlList.GetItemCount(); ++index)
 	{
-		CDlgListCtrlData *pData = reinterpret_cast<CDlgListCtrlData*>(m_ctrlList.GetItemData(index));
+		CListData* pRawData = m_ctrlList.GetData(index);
+		CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
 		if (pData)
 			pData->Apply();
 	}

@@ -56,8 +56,11 @@ class ARBTraining : public ARBBase
 {
 public:
 	ARBTraining();
+	~ARBTraining();
 	ARBTraining(ARBTraining const& rhs);
 	ARBTraining& operator=(ARBTraining const& rhs);
+	ARBTrainingPtr Clone() const;
+
 	bool operator==(ARBTraining const& rhs) const;
 	bool operator!=(ARBTraining const& rhs) const;
 	bool operator<(ARBTraining const& rhs) const;
@@ -112,7 +115,6 @@ public:
 	void SetNote(ARBString const& inNote);
 
 private:
-	~ARBTraining();
 	ARBDate m_Date;
 	ARBString m_Name;
 	ARBString m_SubName;
@@ -184,9 +186,22 @@ inline void ARBTraining::SetNote(ARBString const& inNote)
 /**
  * List of ARBTraining objects.
  */
-class ARBTrainingList : public ARBVectorLoad1<ARBTraining>
+class ARBTrainingList : public ARBVector<ARBTrainingPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort the list by date.
 	 */
@@ -212,7 +227,7 @@ public:
 	 * @return Whether object is in the list.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool FindTraining(ARBTraining const* inTraining) const;
+	bool FindTraining(ARBTrainingPtr inTraining) const;
 
 	/**
 	 * Add a training object to the list.
@@ -220,7 +235,7 @@ public:
 	 * @return Whether the object was added.
 	 * @post The pointer is added to the list and its ref count is incremented.
 	 */
-	bool AddTraining(ARBTraining* inTraining);
+	bool AddTraining(ARBTrainingPtr inTraining);
 
 	/**
 	 * Delete a training object.
@@ -228,5 +243,5 @@ public:
 	 * @return Object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteTraining(ARBTraining const* inTraining);
+	bool DeleteTraining(ARBTrainingPtr inTraining);
 };

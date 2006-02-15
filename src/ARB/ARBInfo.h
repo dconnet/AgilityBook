@@ -59,9 +59,10 @@ public:
 	} eInfoType;
 
 	ARBInfo();
-	ARBInfo(ARBInfo const& rhs);
 	~ARBInfo();
+	ARBInfo(ARBInfo const& rhs);
 	ARBInfo& operator=(ARBInfo const& rhs);
+
 	bool operator==(ARBInfo const& rhs) const;
 	bool operator!=(ARBInfo const& rhs) const;
 

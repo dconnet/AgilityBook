@@ -54,8 +54,11 @@ class ARBInfoItem : public ARBBase
 {
 public:
 	ARBInfoItem();
+	~ARBInfoItem();
 	ARBInfoItem(ARBInfoItem const& rhs);
 	ARBInfoItem& operator=(ARBInfoItem const& rhs);
+	ARBInfoItemPtr Clone() const;
+
 	bool operator==(ARBInfoItem const& rhs) const;
 	bool operator!=(ARBInfoItem const& rhs) const;
 	bool operator<(ARBInfoItem const& rhs) const;
@@ -115,7 +118,6 @@ public:
 	void SetComment(ARBString const& inComment);
 
 private:
-	~ARBInfoItem();
 	ARBString m_Name;
 	ARBString m_Comment;
 };
@@ -155,7 +157,7 @@ inline void ARBInfoItem::SetComment(ARBString const& inComment)
 /**
  * List of ARBInfoItem objects.
  */
-class ARBInfoItemList : public ARBVector<ARBInfoItem>
+class ARBInfoItemList : public ARBVector<ARBInfoItemPtr>
 {
 public:
 	/**
@@ -213,7 +215,7 @@ public:
 	 */
 	bool FindItem(
 			ARBString const& inName,
-			ARBInfoItem** outItem = NULL) const;
+			ARBInfoItemPtr* outItem = NULL) const;
 
 	/**
 	 * Add a new item.
@@ -223,21 +225,21 @@ public:
 	 */
 	bool AddItem(
 			ARBString const& inItem,
-			ARBInfoItem** outItem = NULL);
+			ARBInfoItemPtr* outItem = NULL);
 
 	/**
 	 * Add a new item.
 	 * @param inItem Item to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddItem(ARBInfoItem* inItem);
+	bool AddItem(ARBInfoItemPtr inItem);
 
 	/**
 	 * Delete a item.
 	 * @param inItem Object to delete.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteItem(ARBInfoItem const* inItem);
+	bool DeleteItem(ARBInfoItemPtr inItem);
 
 private:
 	ARBString m_ItemName;

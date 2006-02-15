@@ -87,6 +87,11 @@ ARBConfigVenue::~ARBConfigVenue()
 {
 }
 
+ARBConfigVenuePtr ARBConfigVenue::Clone() const
+{
+	return ARBConfigVenuePtr(new ARBConfigVenue(*this));
+}
+
 ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 {
 	if (this != &rhs)
@@ -187,13 +192,12 @@ bool ARBConfigVenue::Load(
 		{
 			if (name == TREE_FAULTTYPE)
 			{
-				ARBConfigFault* pFault = new ARBConfigFault();
+				ARBConfigFaultPtr pFault(new ARBConfigFault());
 				// Kind-of ignore any errors...
 				bool bOk = pFault->Load(element, inVersion, ioCallback);
 				// When migrating, avoid duplicate fault names.
 				// We do allow the user have duplicates. (just not here)
 				bool bExists = (bOk && ioConfig.GetFaults().FindFault(pFault->GetName()));
-				pFault->Release();
 				if (bOk && !bExists)
 				{
 					ioConfig.LoadFault(element, inVersion, ioCallback);
@@ -210,7 +214,7 @@ bool ARBConfigVenue::Load(
 	// Convert old double Qs into new ones.
 	if (inVersion < ARBVersion(11, 0))
 	{
-		ARBConfigMultiQ* pMulti = NULL;
+		ARBConfigMultiQPtr pMulti;
 		for (ARBConfigEventList::iterator iter = m_Events.begin();
 			iter != m_Events.end();
 			++iter)
@@ -222,7 +226,7 @@ bool ARBConfigVenue::Load(
 				if ((*iterS)->ConvertDoubleQ())
 				{
 					if (!pMulti)
-						pMulti = new ARBConfigMultiQ();
+						pMulti = ARBConfigMultiQPtr(new ARBConfigMultiQ());
 					pMulti->SetName(_T("Double Q"));
 					pMulti->SetShortName(_T("QQ"));
 					pMulti->AddItem((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
@@ -231,8 +235,6 @@ bool ARBConfigVenue::Load(
 		}
 		if (pMulti && 1 < pMulti->GetNumItems())
 			m_MultiQs.AddMultiQ(pMulti);
-		if (pMulti)
-			pMulti->Release();
 	}
 
 	return true;
@@ -262,7 +264,7 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 
 bool ARBConfigVenue::Update(
 		int indent,
-		ARBConfigVenue const* inVenueNew,
+		ARBConfigVenuePtr inVenueNew,
 		ARBString& ioInfo)
 {
 	ARBString info;
@@ -297,7 +299,7 @@ bool ARBConfigVenue::Update(
 			iterTitle != inVenueNew->GetTitles().end();
 			++iterTitle)
 		{
-			ARBConfigTitle* pTitle;
+			ARBConfigTitlePtr pTitle;
 			if (GetTitles().FindTitle((*iterTitle)->GetName(), &pTitle))
 			{
 				if (*(*iterTitle) == *pTitle)
@@ -312,7 +314,6 @@ bool ARBConfigVenue::Update(
 					pTitle->SetValidFrom((*iterTitle)->GetValidFrom());
 					pTitle->SetValidTo((*iterTitle)->GetValidTo());
 				}
-				pTitle->Release();
 			}
 			else
 			{
@@ -338,7 +339,7 @@ bool ARBConfigVenue::Update(
 			iterDiv != inVenueNew->GetDivisions().end();
 			++iterDiv)
 		{
-			ARBConfigDivision* pDiv;
+			ARBConfigDivisionPtr pDiv;
 			if (GetDivisions().FindDivision((*iterDiv)->GetName(), &pDiv))
 			{
 				if (*(*iterDiv) == *pDiv)
@@ -348,7 +349,6 @@ bool ARBConfigVenue::Update(
 					if (pDiv->Update(indent+1, (*iterDiv), info2))
 						++nChanged;
 				}
-				pDiv->Release();
 			}
 			else
 			{
@@ -379,7 +379,7 @@ bool ARBConfigVenue::Update(
 			iterEvent != inVenueNew->GetEvents().end();
 			++iterEvent)
 		{
-			ARBConfigEvent* pEvent;
+			ARBConfigEventPtr pEvent;
 			if (GetEvents().FindEvent((*iterEvent)->GetName(), &pEvent))
 			{
 				if (*(*iterEvent) == *pEvent)
@@ -389,7 +389,6 @@ bool ARBConfigVenue::Update(
 					if (pEvent->Update(indent+1, (*iterEvent), info2))
 						++nChanged;
 				}
-				pEvent->Release();
 			}
 			else
 			{
@@ -473,12 +472,9 @@ bool ARBConfigVenueList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigVenue* thing = new ARBConfigVenue();
+	ARBConfigVenuePtr thing(new ARBConfigVenue());
 	if (!thing->Load(ioConfig, inTree, inVersion, ioCallback))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -487,7 +483,7 @@ class SortConfigVenue
 {
 public:
 	SortConfigVenue() {}
-	bool operator()(ARBConfigVenue* one, ARBConfigVenue* two) const
+	bool operator()(ARBConfigVenuePtr one, ARBConfigVenuePtr two) const
 	{
 		return one->GetName() < two->GetName();
 	}
@@ -510,14 +506,10 @@ bool ARBConfigVenueList::VerifyMultiQ(
 		ARBString const& inMultiQ,
 		bool inUseShortName) const
 {
-	bool bOk = false;
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
-	{
-		bOk = pVenue->GetMultiQs().FindMultiQ(inMultiQ, inUseShortName);
-		pVenue->Release();
-	}
-	return bOk;
+		return pVenue->GetMultiQs().FindMultiQ(inMultiQ, inUseShortName);
+	return false;
 }
 
 bool ARBConfigVenueList::VerifyLevel(
@@ -525,14 +517,10 @@ bool ARBConfigVenueList::VerifyLevel(
 		ARBString const& inDivision,
 		ARBString const& inLevel) const
 {
-	bool bFound = false;
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
-	{
-		bFound = pVenue->GetDivisions().VerifyLevel(inDivision, inLevel);
-		pVenue->Release();
-	}
-	return bFound;
+		return pVenue->GetDivisions().VerifyLevel(inDivision, inLevel);
+	return false;
 }
 
 bool ARBConfigVenueList::VerifyEvent(
@@ -542,23 +530,20 @@ bool ARBConfigVenueList::VerifyEvent(
 		ARBString const& inEvent,
 		ARBDate const& inDate) const
 {
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	bool bFound = false;
 	if (FindVenue(inVenue, &pVenue))
 	{
 		// Translate the sublevel to level.
-		ARBConfigDivision* pDiv;
+		ARBConfigDivisionPtr pDiv;
 		if (pVenue->GetDivisions().FindDivision(inDivision, &pDiv))
 		{
-			ARBConfigLevel* pLevel;
+			ARBConfigLevelPtr pLevel;
 			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
 			{
 				bFound = pVenue->GetEvents().VerifyEvent(inEvent, inDivision, pLevel->GetName(), inDate);
-				pLevel->Release();
 			}
-			pDiv->Release();
 		}
-		pVenue->Release();
 	}
 	return bFound;
 }
@@ -567,26 +552,21 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 		ARBString const& inVenue,
 		ARBString const& inName,
 		bool bAbbrevFirst,
-		ARBConfigTitle** outTitle) const
+		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	bool bFound = false;
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
 	{
-		ARBConfigTitle* pTitle;
+		ARBConfigTitlePtr pTitle;
 		if (pVenue->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst, true, &pTitle))
 		{
 			if (outTitle)
-			{
 				*outTitle = pTitle;
-				(*outTitle)->AddRef();
-			}
 			bFound = true;
-			pTitle->Release();
 		}
-		pVenue->Release();
 	}
 	return bFound;
 }
@@ -594,18 +574,14 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 bool ARBConfigVenueList::FindTitle(
 		ARBString const& inVenue,
 		ARBString const& inTitle,
-		ARBConfigTitle** outTitle) const
+		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
-		*outTitle = NULL;
-	bool bFound = false;
-	ARBConfigVenue* pVenue;
+		outTitle->reset();
+	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
-	{
-		bFound = pVenue->GetTitles().FindTitle(inTitle, outTitle);
-		pVenue->Release();
-	}
-	return bFound;
+		return pVenue->GetTitles().FindTitle(inTitle, outTitle);
+	return false;
 }
 
 bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
@@ -624,19 +600,16 @@ bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
 
 bool ARBConfigVenueList::FindVenue(
 		ARBString const& inVenue,
-		ARBConfigVenue** outVenue) const
+		ARBConfigVenuePtr* outVenue) const
 {
 	if (outVenue)
-		*outVenue = NULL;
+		outVenue->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inVenue)
 		{
 			if (outVenue)
-			{
 				*outVenue = *iter;
-				(*outVenue)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -645,33 +618,29 @@ bool ARBConfigVenueList::FindVenue(
 
 bool ARBConfigVenueList::AddVenue(
 		ARBString const& inVenue,
-		ARBConfigVenue** outVenue)
+		ARBConfigVenuePtr* outVenue)
 {
 	if (outVenue)
-		*outVenue = NULL;
+		outVenue->reset();
 	if (0 == inVenue.length())
 		return false;
 	if (FindVenue(inVenue))
 		return false;
-	ARBConfigVenue* pVenue = new ARBConfigVenue();
+	ARBConfigVenuePtr pVenue(new ARBConfigVenue());
 	pVenue->SetName(inVenue);
 	push_back(pVenue);
 	sort();
 	if (outVenue)
-	{
 		*outVenue = pVenue;
-		(*outVenue)->AddRef();
-	}
 	return true;
 }
 
-bool ARBConfigVenueList::AddVenue(ARBConfigVenue* inVenue)
+bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr inVenue)
 {
 	if (!inVenue)
 		return false;
 	if (FindVenue(inVenue->GetName()))
 		return false;
-	inVenue->AddRef();
 	push_back(inVenue);
 	sort();
 	return true;
@@ -700,34 +669,31 @@ bool ARBConfigVenueList::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
-		ARBConfigScoring** outScoring) const
+		ARBConfigScoringPtr* outScoring) const
 {
 	if (outScoring)
-		*outScoring = NULL;
+		outScoring->reset();
 	bool bFound = false;
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
 	{
 		// Translate the sublevel to level.
-		ARBConfigDivision* pDiv;
+		ARBConfigDivisionPtr pDiv;
 		if (pVenue->GetDivisions().FindDivision(inDivision, &pDiv))
 		{
-			ARBConfigLevel* pLevel;
+			ARBConfigLevelPtr pLevel;
 			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
 			{
 				bFound = pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outScoring);
-				pLevel->Release();
 			}
 			// Note, some users have changed NADAC to remove Novice A/B and only
 			// have Novice (no sublevels). This means during a config update,
 			// all hell will break loose. Don't bother asserting here...
 			//else
 			//	ASSERT(pLevel);
-			pDiv->Release();
 		}
 		else
 			ASSERT(pDiv);
-		pVenue->Release();
 	}
 	return bFound;
 }

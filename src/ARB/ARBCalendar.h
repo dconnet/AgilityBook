@@ -85,7 +85,6 @@ public:
 class ARBCalendar : public ARBBase
 {
 public:
-
 	/**
 	 * Various states an entry may be in.
 	 */
@@ -97,8 +96,11 @@ public:
 	} eEntry;
 
 	ARBCalendar();
+	~ARBCalendar();
 	ARBCalendar(ARBCalendar const& rhs);
 	ARBCalendar& operator=(ARBCalendar const& rhs);
+	ARBCalendarPtr Clone() const;
+
 	bool operator==(ARBCalendar const& rhs) const;
 	bool operator!=(ARBCalendar const& rhs) const;
 	bool operator<(ARBCalendar const& rhs) const;
@@ -217,7 +219,6 @@ public:
 	void SetNote(ARBString const& inNote);
 
 private:
-	~ARBCalendar();
 	ARBDate m_DateStart;
 	ARBDate m_DateEnd;
 	ARBDate m_DateOpening;
@@ -355,9 +356,22 @@ inline void ARBCalendar::SetNote(ARBString const& inNote)
 /**
  * List of ARBCalendar objects.
  */
-class ARBCalendarList : public ARBVectorLoad1<ARBCalendar>
+class ARBCalendarList : public ARBVector<ARBCalendarPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort the list by date.
 	 */
@@ -368,7 +382,7 @@ public:
 	 * @param outEntered Entered trials.
 	 * @return Number of entered trials.
 	 */
-	size_t GetAllEntered(ARBVectorBase<ARBCalendar>& outEntered) const;
+	size_t GetAllEntered(std::vector<ARBCalendarPtr>& outEntered) const;
 
 	/**
 	 * Trim all calendar entries before inDate.
@@ -386,15 +400,15 @@ public:
 	 * @note Equality is tested by value, not pointer.
 	 */
 	bool FindCalendar(
-			ARBCalendar const* inCal,
-			ARBCalendar** outCal = NULL) const;
+			ARBCalendarPtr inCal,
+			ARBCalendarPtr* outCal = NULL) const;
 
 	/**
 	 * Add a calendar entry to the list.
 	 * @param inCal Entry to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddCalendar(ARBCalendar* inCal);
+	bool AddCalendar(ARBCalendarPtr inCal);
 
 	/**
 	 * Delete a calendar entry.
@@ -402,5 +416,5 @@ public:
 	 * @return Object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteCalendar(ARBCalendar const* inCal);
+	bool DeleteCalendar(ARBCalendarPtr inCal);
 };

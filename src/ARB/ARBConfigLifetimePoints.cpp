@@ -73,6 +73,11 @@ ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 {
 }
 
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::Clone() const
+{
+	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
+}
+
 ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoints const& rhs)
 {
 	if (this != &rhs)
@@ -133,11 +138,23 @@ bool ARBConfigLifetimePoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBConfigLifetimePointsList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBConfigLifetimePointsPtr thing(new ARBConfigLifetimePoints());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortConfigLifetimePoints
 {
 public:
 	SortConfigLifetimePoints() {}
-	bool operator()(ARBConfigLifetimePoints* one, ARBConfigLifetimePoints* two) const
+	bool operator()(ARBConfigLifetimePointsPtr one, ARBConfigLifetimePointsPtr two) const
 	{
 		return one->GetFaults() < two->GetFaults();
 	}
@@ -163,19 +180,16 @@ double ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
 
 bool ARBConfigLifetimePointsList::FindLifetimePoints(
 		short inFaults,
-		ARBConfigLifetimePoints** outPoints) const
+		ARBConfigLifetimePointsPtr* outPoints) const
 {
 	if (outPoints)
-		*outPoints = NULL;
+		outPoints->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetFaults() == inFaults)
 		{
 			if (outPoints)
-			{
 				*outPoints = *iter;
-				(*outPoints)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -185,20 +199,17 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		double inPoints,
 		short inFaults,
-		ARBConfigLifetimePoints** outPoints)
+		ARBConfigLifetimePointsPtr* outPoints)
 {
 	if (outPoints)
-		*outPoints = NULL;
+		outPoints->reset();
 	if (FindLifetimePoints(inFaults))
 		return false;
-	ARBConfigLifetimePoints* pLife = new ARBConfigLifetimePoints(inPoints, inFaults);
+	ARBConfigLifetimePointsPtr pLife(new ARBConfigLifetimePoints(inPoints, inFaults));
 	push_back(pLife);
 	sort();
 	if (outPoints)
-	{
 		*outPoints = pLife;
-		(*outPoints)->AddRef();
-	}
 	return true;
 }
 

@@ -47,7 +47,7 @@ class CDlgCalendar : public CDlgBaseDialog
 {
 public:
 	CDlgCalendar(
-			ARBCalendar* pCal,
+			ARBCalendarPtr pCal,
 			CAgilityBookDoc* pDoc,
 			CWnd* pParent = NULL);
 
@@ -75,7 +75,7 @@ private:
 	BOOL	m_bClosingUnknown;
 	CString	m_Notes;
 	//}}AFX_DATA
-	ARBCalendar* m_pCal;
+	ARBCalendarPtr m_pCal;
 	CAgilityBookDoc* m_pDoc;
 	int m_Span;
 
@@ -90,7 +90,7 @@ protected:
 	void UpdateClubInfo(TCHAR const* pClub);
 	//{{AFX_MSG(CDlgCalendar)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnDatetimechangeStart(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelchangeLocation();
 	afx_msg void OnKillfocusLocation();
 	afx_msg void OnSelchangeClub();

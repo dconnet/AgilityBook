@@ -80,6 +80,11 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 {
 }
 
+ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
+{
+	return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
+}
+
 ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 {
 	if (this != &rhs)
@@ -224,19 +229,31 @@ bool ARBDogReferenceRun::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRun* inRef)
+bool ARBDogReferenceRunList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogReferenceRunPtr thing(new ARBDogReferenceRun());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
+bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRunPtr inRef)
 {
 	bool bAdded = false;
 	if (inRef)
 	{
 		bAdded = true;
-		inRef->AddRef();
 		push_back(inRef);
 	}
 	return bAdded;
 }
 
-bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRun const* inRef)
+bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRunPtr inRef)
 {
 	if (inRef)
 	{

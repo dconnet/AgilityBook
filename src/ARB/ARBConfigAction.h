@@ -62,8 +62,11 @@ class ARBConfigAction : public ARBBase
 {
 public:
 	ARBConfigAction();
+	~ARBConfigAction();
 	ARBConfigAction(ARBConfigAction const& rhs);
 	ARBConfigAction& operator=(ARBConfigAction const& rhs);
+	ARBConfigActionPtr Clone() const;
+
 	bool operator==(ARBConfigAction const& rhs) const;
 	bool operator!=(ARBConfigAction const& rhs) const;
 
@@ -112,7 +115,6 @@ public:
 	ARBString const& GetNewName() const;
 
 private:
-	~ARBConfigAction();
 	ARBString m_Verb;
 	ARBString m_Venue;
 	ARBString m_Div;
@@ -155,7 +157,19 @@ inline ARBString const& ARBConfigAction::GetNewName() const
 /**
  * List of ARBConfigAction objects.
  */
-class ARBConfigActionList : public ARBVectorLoad1<ARBConfigAction>
+class ARBConfigActionList : public ARBVector<ARBConfigActionPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
 };

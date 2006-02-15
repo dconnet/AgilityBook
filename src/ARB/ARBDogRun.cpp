@@ -68,7 +68,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBDogRun::ARBDogRun()
-	: m_pMultiQ(NULL)
+	: m_pMultiQ()
 	, m_Date()
 	, m_Division()
 	, m_Level()
@@ -92,7 +92,7 @@ ARBDogRun::ARBDogRun()
 }
 
 ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
-	: m_pMultiQ(NULL)
+	: m_pMultiQ()
 	, m_Date(rhs.m_Date)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
@@ -117,11 +117,11 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 
 ARBDogRun::~ARBDogRun()
 {
-	if (m_pMultiQ)
-	{
-		m_pMultiQ->Release();
-		m_pMultiQ = NULL;
-	}
+}
+
+ARBDogRunPtr ARBDogRun::Clone() const
+{
+	return ARBDogRunPtr(new ARBDogRun(*this));
 }
 
 ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
@@ -313,8 +313,8 @@ bool ARBDogRun::Load(
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
-	ARBConfigScoring* pEvent;
-	if (!inClubs.FindEvent(&inConfig, m_Event, m_Division, m_Level, m_Date, ioCallback, &pEvent))
+	ARBConfigScoringPtr pEvent;
+	if (!inClubs.FindEvent(inConfig, m_Event, m_Division, m_Level, m_Date, ioCallback, &pEvent))
 		return false;
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -352,7 +352,6 @@ bool ARBDogRun::Load(
 			|| 0 == attrib.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
-				pEvent->Release();
 				return false;
 			}
 			if (!m_Q.Load(attrib, inVersion, ioCallback))
@@ -360,7 +359,6 @@ bool ARBDogRun::Load(
 				ARBString msg(VALID_VALUES);
 				msg += ARB_Q::GetValidTypes();
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
-				pEvent->Release();
 				return false;
 			}
 			element.GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
@@ -390,7 +388,6 @@ bool ARBDogRun::Load(
 			m_Links.insert(element.GetValue());
 		}
 	}
-	pEvent->Release();
 	return true;
 }
 
@@ -442,13 +439,9 @@ bool ARBDogRun::Save(Element& ioTree) const
 	return true;
 }
 
-void ARBDogRun::SetMultiQ(ARBConfigMultiQ* inMultiQ)
+void ARBDogRun::SetMultiQ(ARBConfigMultiQPtr inMultiQ)
 {
-	if (m_pMultiQ)
-		m_pMultiQ->Release();
 	m_pMultiQ = inMultiQ;
-	if (m_pMultiQ)
-		m_pMultiQ->AddRef();
 }
 
 int ARBDogRun::NumOtherPointsInUse(ARBString const& inOther) const
@@ -495,7 +488,7 @@ int ARBDogRun::DeleteOtherPoints(ARBString const& inName)
 	return count;
 }
 
-short ARBDogRun::GetSpeedPoints(ARBConfigScoring const* inScoring) const
+short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 {
 	short pts = 0;
 	if (inScoring && inScoring->HasSpeedPts())
@@ -521,7 +514,7 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoring const* inScoring) const
 }
 
 double ARBDogRun::GetTitlePoints(
-		ARBConfigScoring const* inScoring,
+		ARBConfigScoringPtr inScoring,
 		bool* outClean,
 		double* outLifeTime) const
 {
@@ -600,7 +593,7 @@ double ARBDogRun::GetTitlePoints(
 	return pts;
 }
 
-double ARBDogRun::GetScore(ARBConfigScoring const* inScoring) const
+double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 {
 	double pts = 0.0;
 	switch (m_Scoring.GetType())
@@ -660,12 +653,9 @@ bool ARBDogRunList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogRun* thing = new ARBDogRun();
+	ARBDogRunPtr thing(new ARBDogRun());
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioCallback))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -674,7 +664,7 @@ class SortRun
 {
 public:
 	SortRun() {}
-	bool operator()(ARBDogRun* one, ARBDogRun* two) const
+	bool operator()(ARBDogRunPtr one, ARBDogRunPtr two) const
 	{
 		return one->GetDate() < two->GetDate();
 	}
@@ -711,19 +701,18 @@ ARBDate ARBDogRunList::GetEndDate() const
 	return date;
 }
 
-bool ARBDogRunList::AddRun(ARBDogRun* inRun)
+bool ARBDogRunList::AddRun(ARBDogRunPtr inRun)
 {
 	bool bAdded = false;
 	if (inRun)
 	{
 		bAdded = true;
-		inRun->AddRef();
 		push_back(inRun);
 	}
 	return bAdded;
 }
 
-bool ARBDogRunList::DeleteRun(ARBDogRun const* inRun)
+bool ARBDogRunList::DeleteRun(ARBDogRunPtr inRun)
 {
 	if (inRun)
 	{

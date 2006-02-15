@@ -41,7 +41,7 @@ class ARBDogRun;
 class CDlgRunCRCD : public CDlgBasePropertyPage
 {
 public:
-	CDlgRunCRCD(ARBDogRun* pRun);
+	CDlgRunCRCD(ARBDogRunPtr pRun);
 	~CDlgRunCRCD();
 
 private:
@@ -55,7 +55,7 @@ private:
 	CEdit	m_ctrlText;
 	CStatic	m_ctrlCRCD;
 	//}}AFX_DATA
-	ARBDogRun* m_Run;
+	ARBDogRunPtr m_Run;
 	HENHMETAFILE m_metaFile;
 	HENHMETAFILE m_metaFileBack;
 	bool m_ViewText;

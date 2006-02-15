@@ -56,7 +56,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgDogProperties::CDlgDogProperties(
 		CAgilityBookDoc* pDoc,
-		ARBDog* pDog)
+		ARBDogPtr pDog)
 	: CDlgBasePropertyPage(CDlgDogProperties::IDD)
 	, m_pDoc(pDoc)
 	, m_pDog(pDog)

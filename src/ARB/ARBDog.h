@@ -63,8 +63,11 @@ class ARBDog : public ARBBase
 {
 public:
 	ARBDog();
+	~ARBDog();
 	ARBDog(ARBDog const& rhs);
 	ARBDog& operator=(ARBDog const& rhs);
+	ARBDogPtr Clone() const;
+
 	bool operator==(ARBDog const& rhs) const;
 	bool operator!=(ARBDog const& rhs) const;
 
@@ -129,7 +132,7 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inOldDiv,
 			ARBString const& inNewDiv);
 
@@ -170,7 +173,6 @@ public:
 	ARBDogTrialList& GetTrials();
 
 private:
-	~ARBDog();
 	ARBString m_CallName;
 	ARBDate m_DOB;
 	ARBDate m_Deceased;
@@ -293,9 +295,24 @@ inline ARBDogTrialList& ARBDog::GetTrials()
 /**
  * List of ARBDog objects.
  */
-class ARBDogList : public ARBVectorLoad2<ARBDog>
+class ARBDogList : public ARBVector<ARBDogPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Set the MultiQ settings on individual runs. See ARBDogRun::GetMultiQ.
 	 *
@@ -431,7 +448,7 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumExistingPointsInDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inDiv) const;
 
 	/**
@@ -442,7 +459,7 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumRunsInDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inDiv) const;
 
 	/**
@@ -453,7 +470,7 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inOldDiv,
 			ARBString const& inNewDiv);
 
@@ -579,7 +596,7 @@ public:
 	 * @param inDog Dog to add.
 	 * @return Whetehr the object was added.
 	 */
-	bool AddDog(ARBDog* inDog);
+	bool AddDog(ARBDogPtr inDog);
 
 	/**
 	 * Delete a dog.
@@ -587,5 +604,5 @@ public:
 	 * @return Whether dog was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteDog(ARBDog const* inDog);
+	bool DeleteDog(ARBDogPtr inDog);
 };

@@ -100,9 +100,9 @@ protected: // create from serialization only
 
 public:
 	// Data
-	ARBDog* GetCurrentDog();
-	ARBDogTrial* GetCurrentTrial();
-	ARBDogRun* GetCurrentRun();
+	ARBDogPtr GetCurrentDog();
+	ARBDogTrialPtr GetCurrentTrial();
+	ARBDogRunPtr GetCurrentRun();
 	ARBAgilityRecordBook& GetARB()			{return m_Records;}
 	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
 	ARBTrainingList& GetTraining()			{return m_Records.GetTraining();}
@@ -124,7 +124,7 @@ public:
 	}
 	size_t GetAllEventSubNames(
 			ARBString const& inVenue,
-			ARBConfigEvent const* inEvent,
+			ARBConfigEventPtr inEvent,
 			std::set<ARBString>& outNames) const
 	{
 		return m_Records.GetAllEventSubNames(inVenue, inEvent, outNames);
@@ -161,11 +161,11 @@ public:
 	}
 
 	// These are called from the Runs view so the tree view can do the add.
-	void AddTitle(ARBDogRun* pSelectedRun);
-	void AddTrial(ARBDogRun* pSelectedRun);
-	void AddRun(ARBDogRun* pSelectedRun);
-	void EditRun(ARBDogRun* pRun);
-	void DeleteRun(ARBDogRun* pRun);
+	void AddTitle(ARBDogRunPtr pSelectedRun);
+	void AddTrial(ARBDogRunPtr pSelectedRun);
+	void AddRun(ARBDogRunPtr pSelectedRun);
+	void EditRun(ARBDogRunPtr pRun);
+	void DeleteRun(ARBDogRunPtr pRun);
 
 	bool CreateTrialFromCalendar(
 			ARBCalendar const& cal,
@@ -183,20 +183,20 @@ public:
 	void ResetVisibility();
 	void ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDog* pDog);
+			ARBDogPtr pDog);
 	void ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogTrial* pTrial);
+			ARBDogTrialPtr pTrial);
 	void ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogTrial* pTrial,
-			ARBDogRun* pRun);
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun);
 	void ResetVisibility(
 			std::vector<CVenueFilter>& venues,
-			ARBDogTitle* pTitle);
+			ARBDogTitlePtr pTitle);
 	void ResetVisibility(
 			std::set<ARBString>& names,
-			ARBTraining* pTraining);
+			ARBTrainingPtr pTraining);
 
 	CAgilityBookTree* GetTreeView() const;
 	CAgilityBookViewCalendarList* GetCalendarListView() const;

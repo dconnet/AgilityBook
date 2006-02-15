@@ -71,6 +71,7 @@ CWizardExport::CWizardExport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardExport::IDD)
+	, m_ctrlPreview(false)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 {
@@ -405,14 +406,14 @@ void CWizardExport::UpdatePreview()
 		{
 			for (ARBDogList::const_iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
 			{
-				ARBDog const* pDog = *iterDog;
+				ARBDogPtr pDog = *iterDog;
 				for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
 				{
-					ARBDogTrial const* pTrial = *iterTrial;
+					ARBDogTrialPtr pTrial = *iterTrial;
 					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
 					{
-						ARBDogRun const* pRun = *iterRun;
-						ARBConfigScoring* pScoring = NULL;
+						ARBDogRunPtr pRun = *iterRun;
+						ARBConfigScoringPtr pScoring;
 						if (pTrial->GetClubs().GetPrimaryClub())
 							m_pDoc->GetConfig().GetVenues().FindEvent(
 								pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -690,7 +691,6 @@ void CWizardExport::UpdatePreview()
 									m_ctrlPreview.InsertItem(iLine, data);
 								++iLine;
 							}
-							pScoring->Release();
 						}
 					}
 				}
@@ -703,7 +703,7 @@ void CWizardExport::UpdatePreview()
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 			{
 				CString data;
-				ARBCalendar const* pCal = *iterCal;
+				ARBCalendarPtr pCal = *iterCal;
 				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++idx)
 				{
 					ARBDate date;
@@ -766,22 +766,21 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_CALENDAR_APPT:
 		{
-			ARBVectorBase<ARBCalendar> allEntries;
-			ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
+			std::vector<ARBCalendarPtr> allEntries;
+			std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
 			if (!entries)
 			{
 				allEntries.reserve(m_pDoc->GetCalendar().size());
 				for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 				{
-					(*iterCal)->AddRef();
 					allEntries.push_back(*iterCal);
 				}
 				entries = &allEntries;
 			}
-			for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
+			for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 			{
 				CString data;
-				ARBCalendar const* pCal = *iterCal;
+				ARBCalendarPtr pCal = *iterCal;
 				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR_APPT].size()); ++idx)
 				{
 					ARBDate date;
@@ -897,22 +896,21 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_CALENDAR_TASK:
 		{
-			ARBVectorBase<ARBCalendar> allEntries;
-			ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
+			std::vector<ARBCalendarPtr> allEntries;
+			std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
 			if (!entries)
 			{
 				allEntries.reserve(m_pDoc->GetCalendar().size());
 				for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 				{
-					(*iterCal)->AddRef();
 					allEntries.push_back(*iterCal);
 				}
 				entries = &allEntries;
 			}
-			for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
+			for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 			{
 				CString data;
-				ARBCalendar const* pCal = *iterCal;
+				ARBCalendarPtr pCal = *iterCal;
 				if (ARBCalendar::ePlanning != pCal->GetEntered())
 					continue;
 				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR_TASK].size()); ++idx)
@@ -1034,7 +1032,7 @@ void CWizardExport::UpdatePreview()
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
 			{
 				CString data;
-				ARBTraining const* pLog = *iterLog;
+				ARBTrainingPtr pLog = *iterLog;
 				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++idx)
 				{
 					switch (columns[IO_TYPE_TRAINING][idx])
