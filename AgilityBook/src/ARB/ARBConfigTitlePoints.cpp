@@ -78,6 +78,11 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
 
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
+{
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
+}
+
 ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const& rhs)
 {
 	if (this != &rhs)
@@ -156,12 +161,9 @@ bool ARBConfigTitlePointsList::Load(
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints)
 {
-	ARBConfigTitlePoints* thing = new ARBConfigTitlePoints();
+	ARBConfigTitlePointsPtr thing(new ARBConfigTitlePoints());
 	if (!thing->Load(inTree, inVersion, ioCallback, ioLifetimePoints))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -170,7 +172,7 @@ class SortConfigTitlePoints
 {
 public:
 	SortConfigTitlePoints() {}
-	bool operator()(ARBConfigTitlePoints* one, ARBConfigTitlePoints* two) const
+	bool operator()(ARBConfigTitlePointsPtr one, ARBConfigTitlePointsPtr two) const
 	{
 		return one->GetFaults() < two->GetFaults();
 	}
@@ -196,19 +198,16 @@ double ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 
 bool ARBConfigTitlePointsList::FindTitlePoints(
 		short inFaults,
-		ARBConfigTitlePoints** outTitle) const
+		ARBConfigTitlePointsPtr* outTitle) const
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetFaults() == inFaults)
 		{
 			if (outTitle)
-			{
 				*outTitle = *iter;
-				(*outTitle)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -218,20 +217,17 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 bool ARBConfigTitlePointsList::AddTitlePoints(
 		double inPoints,
 		short inFaults,
-		ARBConfigTitlePoints** outTitle)
+		ARBConfigTitlePointsPtr* outTitle)
 {
 	if (outTitle)
-		*outTitle = NULL;
+		outTitle->reset();
 	if (FindTitlePoints(inFaults))
 		return false;
-	ARBConfigTitlePoints* pTitle = new ARBConfigTitlePoints(inPoints, inFaults);
+	ARBConfigTitlePointsPtr pTitle(new ARBConfigTitlePoints(inPoints, inFaults));
 	push_back(pTitle);
 	sort();
 	if (outTitle)
-	{
 		*outTitle = pTitle;
-		(*outTitle)->AddRef();
-	}
 	return true;
 }
 

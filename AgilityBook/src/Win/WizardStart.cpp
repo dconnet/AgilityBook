@@ -76,6 +76,7 @@ CWizardStart::CWizardStart(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardStart::IDD)
+	, m_ctrlList(false)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 {
@@ -434,8 +435,8 @@ BOOL CWizardStart::OnWizardFinish()
 								iterDog != book.GetDogs().end();
 								++iterDog)
 							{
-								ARBDog* pDog = *iterDog;
-								ARBDog* pExisting = NULL;
+								ARBDogPtr pDog = *iterDog;
+								ARBDogPtr pExisting;
 								for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin();
 									iterDog != m_pDoc->GetDogs().end();
 									++iterDog)
@@ -462,8 +463,8 @@ BOOL CWizardStart::OnWizardFinish()
 											iter != pDog->GetRegNums().end();
 											++iter)
 										{
-											ARBDogRegNum* pRegNum = *iter;
-											ARBDogRegNum* pRegExist;
+											ARBDogRegNumPtr pRegNum = *iter;
+											ARBDogRegNumPtr pRegExist;
 											if (pExisting->GetRegNums().FindRegNum(pRegNum->GetVenue(), &pRegExist))
 											{
 												if (*pRegExist != *pRegNum)
@@ -471,7 +472,6 @@ BOOL CWizardStart::OnWizardFinish()
 													++countRegNumsUpdated;
 													*pRegExist = *pRegNum;
 												}
-												pRegExist->Release();
 											}
 											else
 											{
@@ -510,8 +510,8 @@ BOOL CWizardStart::OnWizardFinish()
 											iter != pDog->GetTitles().end();
 											++iter)
 										{
-											ARBDogTitle* pTitle = *iter;
-											ARBDogTitle* pTitleExist;
+											ARBDogTitlePtr pTitle = *iter;
+											ARBDogTitlePtr pTitleExist;
 											if (pExisting->GetTitles().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pTitleExist))
 											{
 												if (*pTitle != *pTitleExist)
@@ -519,14 +519,12 @@ BOOL CWizardStart::OnWizardFinish()
 													++countTitlesUpdated;
 													*pTitleExist = *pTitle;
 												}
-												pTitleExist->Release();
 											}
 											else
 											{
 												++countTitlesAdded;
-												ARBDogTitle* pNewTitle = new ARBDogTitle(*pTitle);
+												ARBDogTitlePtr pNewTitle(new ARBDogTitle(*pTitle));
 												pExisting->GetTitles().AddTitle(pNewTitle);
-												pNewTitle->Release();
 											}
 										}
 									}
@@ -560,7 +558,7 @@ BOOL CWizardStart::OnWizardFinish()
 								iterClub != book.GetInfo().GetInfo(ARBInfo::eClubInfo).end();
 								++iterClub)
 							{
-								ARBInfoItem* pClub = *iterClub;
+								ARBInfoItemPtr pClub = *iterClub;
 								// If this fails, it already exists.
 								if (m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eClubInfo).AddItem(pClub))
 								{
@@ -571,7 +569,7 @@ BOOL CWizardStart::OnWizardFinish()
 								iterJudge != book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).end();
 								++iterJudge)
 							{
-								ARBInfoItem* pJudge = *iterJudge;
+								ARBInfoItemPtr pJudge = *iterJudge;
 								// If this fails, it already exists.
 								if (m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eJudgeInfo).AddItem(pJudge))
 								{
@@ -582,7 +580,7 @@ BOOL CWizardStart::OnWizardFinish()
 								iterLocation != book.GetInfo().GetInfo(ARBInfo::eLocationInfo).end();
 								++iterLocation)
 							{
-								ARBInfoItem* pLocation = *iterLocation;
+								ARBInfoItemPtr pLocation = *iterLocation;
 								// If this fails, it already exists.
 								if (m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eLocationInfo).AddItem(pLocation))
 								{
@@ -759,7 +757,7 @@ BOOL CWizardStart::OnWizardFinish()
 							int count = 0;
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
 							{
-								ARBCalendar* cal = *iter;
+								ARBCalendarPtr cal = *iter;
 								if (!m_pDoc->GetARB().GetCalendar().FindCalendar(cal))
 								{
 									if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
@@ -838,14 +836,13 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					ARBVectorBase<ARBCalendar> allEntries;
-					ARBVectorBase<ARBCalendar>* entries = m_pSheet->GetCalendarEntries();
+					std::vector<ARBCalendarPtr> allEntries;
+					std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
 					if (!entries)
 					{
 						allEntries.reserve(m_pDoc->GetCalendar().size());
 						for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
 						{
-							(*iterCal)->AddRef();
 							allEntries.push_back(*iterCal);
 						}
 						entries = &allEntries;
@@ -857,9 +854,9 @@ BOOL CWizardStart::OnWizardFinish()
 					{
 						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
 						ICalendar* iCalendar = ICalendar::iCalendarBegin(output, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
-						for (ARBVectorBase<ARBCalendar>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
+						for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 						{
-							ARBCalendar const* pCal = *iterCal;
+							ARBCalendarPtr pCal = *iterCal;
 							pCal->iCalendar(iCalendar, nWarning);
 						}
 						iCalendar->Release();
@@ -905,7 +902,7 @@ BOOL CWizardStart::OnWizardFinish()
 							int count = 0;
 							for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 							{
-								ARBTraining* item = *iter;
+								ARBTrainingPtr item = *iter;
 								if (!m_pDoc->GetARB().GetTraining().FindTraining(item))
 								{
 									m_pDoc->GetARB().GetTraining().AddTraining(item);

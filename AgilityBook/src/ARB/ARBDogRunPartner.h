@@ -53,8 +53,11 @@ class ARBDogRunPartner : public ARBBase
 {
 public:
 	ARBDogRunPartner();
+	~ARBDogRunPartner();
 	ARBDogRunPartner(ARBDogRunPartner const& rhs);
 	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
+	ARBDogRunPartnerPtr Clone() const;
+
 	bool operator==(ARBDogRunPartner const& rhs) const;
 	bool operator!=(ARBDogRunPartner const& rhs) const;
 
@@ -105,7 +108,6 @@ public:
 	void SetRegNum(ARBString const& inRegNum);
 
 private:
-	~ARBDogRunPartner();
 	ARBString m_Handler;
 	ARBString m_Dog;
 	ARBString m_RegNum;
@@ -151,13 +153,28 @@ inline void ARBDogRunPartner::SetRegNum(ARBString const& inRegNum)
 /**
  * List of ARBDogRunPartner objects.
  */
-class ARBDogRunPartnerList : public ARBVectorLoad2<ARBDogRunPartner>
+class ARBDogRunPartnerList : public ARBVector<ARBDogRunPartnerPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Add a partner.
 	 * @param inPartner Partner to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddPartner(ARBDogRunPartner* inPartner);
+	bool AddPartner(ARBDogRunPartnerPtr inPartner);
 };

@@ -114,6 +114,11 @@ ARBDogExistingPoints::~ARBDogExistingPoints()
 {
 }
 
+ARBDogExistingPointsPtr ARBDogExistingPoints::Clone() const
+{
+	return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
+}
+
 ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const& rhs)
 {
 	if (this != &rhs)
@@ -272,19 +277,18 @@ bool ARBDogExistingPoints::Load(
 		if (bConvertedQQ)
 		{
 			bConvertedQQ = false;
-			ARBConfigVenue* pVenue;
+			ARBConfigVenuePtr pVenue;
 			// Note, m_Venue should be "AKC".
 			// Otherwise, we're dealing with a venue I don't know.
 			if (inConfig.GetVenues().FindVenue(m_Venue, &pVenue))
 			{
-				ARBConfigMultiQ* pMulti;
+				ARBConfigMultiQPtr pMulti;
 				// If this isn't "AKC", or someone has edited the multiQ name,
 				// this will fail.
 				if (pVenue->GetMultiQs().FindMultiQ(_T("QQ"), true, &pMulti))
 				{
 					bConvertedQQ = true;
 					m_MultiQ = pMulti->GetName();
-					pMulti->Release();
 				}
 				// If we don't find it, assume AKC and hard code this in.
 				// The problem is when we read this into the 11.0 file version,
@@ -295,7 +299,6 @@ bool ARBDogExistingPoints::Load(
 					bConvertedQQ = true;
 					m_MultiQ = _T("Double Q");
 				}
-				pVenue->Release();
 			}
 			if (!bConvertedQQ)
 			{
@@ -448,11 +451,24 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBDogExistingPointsList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogExistingPointsPtr thing(new ARBDogExistingPoints());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortExistingPoints
 {
 public:
 	SortExistingPoints() {}
-	bool operator()(ARBDogExistingPoints* one, ARBDogExistingPoints* two) const
+	bool operator()(ARBDogExistingPointsPtr one, ARBDogExistingPointsPtr two) const
 	{
 		if (one->GetOtherPoints() == two->GetOtherPoints())
 		{
@@ -495,10 +511,10 @@ bool ARBDogExistingPointsList::HasPoints(ARBString const& inVenue) const
 }
 
 bool ARBDogExistingPointsList::HasPoints(
-		ARBConfigVenue const* inVenue,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		ARBConfigEvent const* inEvent,
+		ARBConfigVenuePtr inVenue,
+		ARBConfigDivisionPtr inDiv,
+		ARBConfigLevelPtr inLevel,
+		ARBConfigEventPtr inEvent,
 		bool inHasLifetime) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -517,15 +533,11 @@ bool ARBDogExistingPointsList::HasPoints(
 				{
 					if (inHasLifetime)
 					{
-						ARBConfigScoring* pScoring;
+						ARBConfigScoringPtr pScoring;
 						if (inEvent->GetScorings().FindEvent(inDiv->GetName(), inLevel->GetName(), (*iter)->GetDate(), &pScoring))
 						{
 							if (0 < pScoring->GetLifetimePoints().GetLifetimePoints(0.0))
-							{
-								pScoring->Release();
 								return true;
-							}
-							pScoring->Release();
 						}
 					}
 					else
@@ -541,11 +553,11 @@ bool ARBDogExistingPointsList::HasPoints(
 
 double ARBDogExistingPointsList::ExistingPoints(
 		ARBDogExistingPoints::PointType inType,
-		ARBConfigVenue const* inVenue,
-		ARBConfigMultiQ const* inMultiQ,
-		ARBConfigDivision const* inDiv,
-		ARBConfigLevel const* inLevel,
-		ARBConfigEvent const* inEvent) const
+		ARBConfigVenuePtr inVenue,
+		ARBConfigMultiQPtr inMultiQ,
+		ARBConfigDivisionPtr inDiv,
+		ARBConfigLevelPtr inLevel,
+		ARBConfigEventPtr inEvent) const
 {
 	double pts = 0.0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -614,7 +626,7 @@ int ARBDogExistingPointsList::DeleteVenue(ARBString const& inVenue)
 }
 
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
 {
 	int count = 0;
@@ -855,7 +867,7 @@ int ARBDogExistingPointsList::DeleteMultiQs(
 		ARBString const& inVenue)
 {
 	int count = 0;
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (inConfig.GetVenues().FindVenue(inVenue, &pVenue))
 	{
 		for (iterator iter = begin(); iter != end(); )
@@ -869,24 +881,22 @@ int ARBDogExistingPointsList::DeleteMultiQs(
 			else
 				++iter;
 		}
-		pVenue->Release();
 	}
 	return count;
 }
 
-bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPoints* inExistingPoints)
+bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints)
 {
 	bool bAdded = false;
 	if (inExistingPoints)
 	{
 		bAdded = true;
-		inExistingPoints->AddRef();
 		push_back(inExistingPoints);
 	}
 	return bAdded;
 }
 
-bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPoints const* inExistingPoints)
+bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints)
 {
 	if (inExistingPoints)
 	{

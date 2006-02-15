@@ -53,8 +53,11 @@ class ARBDogReferenceRun : public ARBBase
 {
 public:
 	ARBDogReferenceRun();
+	~ARBDogReferenceRun();
 	ARBDogReferenceRun(ARBDogReferenceRun const& rhs);
 	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+	ARBDogReferenceRunPtr Clone() const;
+
 	bool operator==(ARBDogReferenceRun const& rhs) const;
 	bool operator!=(ARBDogReferenceRun const& rhs) const;
 
@@ -115,7 +118,6 @@ public:
 	void SetNote(ARBString const& inNote);
 
 private:
-	~ARBDogReferenceRun();
 	ARB_Q m_Q;
 	short m_Place;
 	ARBString m_Name;
@@ -216,15 +218,30 @@ inline void ARBDogReferenceRun::SetNote(ARBString const& inNote)
 /**
  * List of ARBDogReferenceRun objects.
  */
-class ARBDogReferenceRunList : public ARBVectorLoad2<ARBDogReferenceRun>
+class ARBDogReferenceRunList : public ARBVector<ARBDogReferenceRunPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Add a reference run.
 	 * @param inRef Object to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddReferenceRun(ARBDogReferenceRun* inRef);
+	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
 
 	/**
 	 * Delete a reference run.
@@ -232,5 +249,5 @@ public:
 	 * @return Whether object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteReferenceRun(ARBDogReferenceRun const* inRef);
+	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
 };

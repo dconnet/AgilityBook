@@ -55,8 +55,11 @@ class ARBDogRegNum : public ARBBase
 {
 public:
 	ARBDogRegNum();
+	~ARBDogRegNum();
 	ARBDogRegNum(ARBDogRegNum const& rhs);
 	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+	ARBDogRegNumPtr Clone() const;
+
 	bool operator==(ARBDogRegNum const& rhs) const;
 	bool operator!=(ARBDogRegNum const& rhs) const;
 
@@ -111,7 +114,6 @@ public:
 	void SetNote(ARBString const& inNote);
 
 private:
-	~ARBDogRegNum();
 	ARBString m_Venue;
 	ARBString m_Number;
 	ARBString m_Height;
@@ -174,9 +176,24 @@ inline void ARBDogRegNum::SetNote(ARBString const& inNote)
 /**
  * List of ARBDogRegNum objects.
  */
-class ARBDogRegNumList : public ARBVectorLoad2<ARBDogRegNum>
+class ARBDogRegNumList : public ARBVector<ARBDogRegNumPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort registration numbers by name.
 	 */
@@ -214,7 +231,7 @@ public:
 	 */
 	bool FindRegNum(
 			ARBString const& inVenue,
-			ARBDogRegNum** outRegNum = NULL) const;
+			ARBDogRegNumPtr* outRegNum = NULL) const;
 
 	/**
 	 * Add a registration number, duplicates are allowed.
@@ -226,14 +243,14 @@ public:
 	bool AddRegNum(
 			ARBString const& inVenue,
 			ARBString const& inNumber,
-			ARBDogRegNum** outRegNum = NULL);
+			ARBDogRegNumPtr* outRegNum = NULL);
 
 	/**
 	 * Add a registration number, duplicates are allowed.
 	 * @param inRegNum Registration number object
 	 * @return Whether the object was added.
 	 */
-	bool AddRegNum(ARBDogRegNum* inRegNum);
+	bool AddRegNum(ARBDogRegNumPtr inRegNum);
 
 	/**
 	 * Delete a registration number.

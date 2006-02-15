@@ -43,6 +43,7 @@
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,33 +56,36 @@ static char THIS_FILE[] = __FILE__;
 class CDlgEventSelectData
 {
 public:
-	CDlgEventSelectData(ARBConfigLevel const* pLevel)
+	CDlgEventSelectData(ARBConfigLevelPtr pLevel)
 		: m_pLevel(pLevel)
-		, m_pSubLevel(NULL)
+		, m_pSubLevel()
 	{
 	}
 	CDlgEventSelectData(
-			ARBConfigLevel const* pLevel,
-			ARBConfigSubLevel const* pSubLevel)
+			ARBConfigLevelPtr pLevel,
+			ARBConfigSubLevelPtr pSubLevel)
 		: m_pLevel(pLevel)
 		, m_pSubLevel(pSubLevel)
 	{
 	}
-	ARBConfigLevel const* m_pLevel;
-	ARBConfigSubLevel const* m_pSubLevel;
+	ARBConfigLevelPtr m_pLevel;
+	ARBConfigSubLevelPtr m_pSubLevel;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgEventSelect dialog
 
 CDlgEventSelect::CDlgEventSelect(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBDate const& inDate,
 		TCHAR const* const inDivision,
 		TCHAR const* const inLevel,
 		TCHAR const* const inEvent,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgEventSelect::IDD, pParent)
+	, m_ctrlDivisions(true)
+	, m_ctrlLevels(true)
+	, m_ctrlEvents(false)
 	, m_pVenue(inVenue)
 	, m_Date(inDate)
 	, m_inDivision(inDivision)
@@ -133,17 +137,6 @@ void CDlgEventSelect::UpdateControls()
 	m_ctrlOk.EnableWindow(bEnable);
 }
 
-void CDlgEventSelect::ClearLevels()
-{
-	for (int index = m_ctrlLevels.GetCount() - 1; 0 <= index; --index)
-	{
-		CDlgEventSelectData* pData = reinterpret_cast<CDlgEventSelectData*>(m_ctrlLevels.GetItemDataPtr(index));
-		delete pData;
-		m_ctrlLevels.SetItemDataPtr(index, NULL);
-	}
-	m_ctrlLevels.ResetContent();
-}
-
 void CDlgEventSelect::FillLevels()
 {
 	CString str;
@@ -159,35 +152,36 @@ void CDlgEventSelect::FillLevels()
 		level = m_inLevel;
 		m_inLevel = NULL;
 	}
-	ClearLevels();
+	m_ctrlLevels.ResetContent();
 	index = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != index)
 	{
-		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(index));
+		CListPtrData<ARBConfigDivisionPtr>* pData = reinterpret_cast<CListPtrData<ARBConfigDivisionPtr>*>(m_ctrlDivisions.GetItemDataPtr(index));
+		ARBConfigDivisionPtr pDiv = pData->GetData();
 		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
 			iter != pDiv->GetLevels().end();
 			++iter)
 		{
-			ARBConfigLevel const* pLevel = (*iter);
+			ARBConfigLevelPtr pLevel = (*iter);
 			if (0 < pLevel->GetSubLevels().size())
 			{
 				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
 					iterSub != pLevel->GetSubLevels().end();
 					++iterSub)
 				{
-					ARBConfigSubLevel const* pSubLevel = (*iterSub);
-					CDlgEventSelectData* pData = new CDlgEventSelectData(pLevel, pSubLevel);
+					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
 					int idx = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
-					m_ctrlLevels.SetItemDataPtr(idx, pData);
+					m_ctrlLevels.SetItemDataPtr(idx,
+						new CDlgEventSelectData(pLevel, pSubLevel));
 					if (level == pSubLevel->GetName())
 						m_ctrlLevels.SetCurSel(idx);
 				}
 			}
 			else
 			{
-				CDlgEventSelectData* pData = new CDlgEventSelectData(pLevel);
 				int idx = m_ctrlLevels.AddString(pLevel->GetName().c_str());
-				m_ctrlLevels.SetItemDataPtr(idx, pData);
+				m_ctrlLevels.SetItemDataPtr(idx,
+					new CDlgEventSelectData(pLevel));
 				if (level == pLevel->GetName())
 					m_ctrlLevels.SetCurSel(idx);
 			}
@@ -199,36 +193,37 @@ void CDlgEventSelect::FillLevels()
 void CDlgEventSelect::FillEvents()
 {
 	CString str;
-	ARBString event;
+	ARBString evt;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{
 		m_ctrlEvents.GetLBText(index, str);
-		event = (LPCTSTR)str;
+		evt = (LPCTSTR)str;
 	}
 	if (m_inEvent)
 	{
-		event = m_inEvent;
+		evt = m_inEvent;
 		m_inEvent = NULL;
 	}
 	m_ctrlEvents.ResetContent();
 	int idxDiv = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != idxDiv)
 	{
-		ARBConfigDivision const* pDiv = reinterpret_cast<ARBConfigDivision const*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+		CListPtrData<ARBConfigDivisionPtr>* pData = reinterpret_cast<CListPtrData<ARBConfigDivisionPtr>*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
+		ARBConfigDivisionPtr pDiv = pData->GetData();
 		int idxLevel = m_ctrlLevels.GetCurSel();
 		if (CB_ERR != idxLevel)
 		{
-			CDlgEventSelectData* pData = reinterpret_cast<CDlgEventSelectData*>(m_ctrlLevels.GetItemDataPtr(idxLevel));
+			CDlgEventSelectData* pEvtData = reinterpret_cast<CDlgEventSelectData*>(m_ctrlLevels.GetItemDataPtr(idxLevel));
 			for (ARBConfigEventList::const_iterator iter = m_pVenue->GetEvents().begin();
 				iter != m_pVenue->GetEvents().end();
 				++iter)
 			{
-				ARBConfigEvent const* pEvent = (*iter);
-				if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Date))
+				ARBConfigEventPtr pEvent = (*iter);
+				if (pEvent->FindEvent(pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
 				{
 					int idx = m_ctrlEvents.AddString(pEvent->GetName().c_str());
-					if (event == pEvent->GetName())
+					if (evt == pEvent->GetName())
 					{
 						m_ctrlEvents.SetCurSel(idx);
 					}
@@ -251,9 +246,10 @@ BOOL CDlgEventSelect::OnInitDialog()
 		iterDiv != m_pVenue->GetDivisions().end();
 		++iterDiv)
 	{
-		ARBConfigDivision* pDiv = (*iterDiv);
+		ARBConfigDivisionPtr pDiv = (*iterDiv);
 		index = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
-		m_ctrlDivisions.SetItemDataPtr(index, pDiv);
+		m_ctrlDivisions.SetItemDataPtr(index, 
+			new CListPtrData<ARBConfigDivisionPtr>(pDiv));
 		if (m_inDivision && pDiv->GetName() == m_inDivision)
 			m_ctrlDivisions.SetCurSel(index);
 	}
@@ -292,12 +288,14 @@ void CDlgEventSelect::OnOK()
 	m_Div = m_Division;
 	m_Lev = m_Level;
 	m_Evt = m_Event;
-	ClearLevels();
+	m_ctrlDivisions.ResetContent();
+	m_ctrlLevels.ResetContent();
 	CDlgBaseDialog::OnOK();
 }
 
 void CDlgEventSelect::OnCancel()
 {
-	ClearLevels();
+	m_ctrlDivisions.ResetContent();
+	m_ctrlLevels.ResetContent();
 	CDlgBaseDialog::OnCancel();
 }

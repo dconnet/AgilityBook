@@ -63,8 +63,11 @@ public:
 	} eOtherPointsTally;
 
 	ARBConfigOtherPoints();
+	~ARBConfigOtherPoints();
 	ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs);
 	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
+	ARBConfigOtherPointsPtr Clone() const;
+
 	bool operator==(ARBConfigOtherPoints const& rhs) const;
 	bool operator!=(ARBConfigOtherPoints const& rhs) const;
 
@@ -118,7 +121,6 @@ public:
 	void SetTally(eOtherPointsTally inTally);
 
 private:
-	~ARBConfigOtherPoints();
 	ARBString m_Name;
 	eOtherPointsTally m_Tally;
 	ARBString m_Desc;
@@ -164,9 +166,22 @@ inline void ARBConfigOtherPoints::SetTally(ARBConfigOtherPoints::eOtherPointsTal
 /**
  * List of ARBConfigOtherPoints objects.
  */
-class ARBConfigOtherPointsList : public ARBVectorLoad1<ARBConfigOtherPoints>
+class ARBConfigOtherPointsList : public ARBVector<ARBConfigOtherPointsPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Verify the name exists.
 	 * @param inName Name to verify.
@@ -182,14 +197,14 @@ public:
 	 */
 	bool FindOtherPoints(
 			ARBString const& inName,
-			ARBConfigOtherPoints** outPoints = NULL) const;
+			ARBConfigOtherPointsPtr* outPoints = NULL) const;
 
 	/**
 	 * Add an otherpoints object.
 	 * @param inOther Name of OtherPoints to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddOtherPoints(ARBConfigOtherPoints* inOther);
+	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
 
 	/**
 	 * Delete an object.

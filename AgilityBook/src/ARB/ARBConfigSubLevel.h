@@ -52,8 +52,11 @@ class ARBConfigSubLevel : public ARBBase
 {
 public:
 	ARBConfigSubLevel();
+	~ARBConfigSubLevel();
 	ARBConfigSubLevel(ARBConfigSubLevel const& rhs);
 	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+	ARBConfigSubLevelPtr Clone() const;
+
 	bool operator==(ARBConfigSubLevel const& rhs) const;
 	bool operator!=(ARBConfigSubLevel const& rhs) const;
 
@@ -98,7 +101,6 @@ public:
 	void SetName(ARBString const& inName);
 
 private:
-	~ARBConfigSubLevel();
 	ARBString m_Name;
 };
 
@@ -122,9 +124,22 @@ inline void ARBConfigSubLevel::SetName(ARBString const& inName)
 /**
  * List of ARBConfigSubLevel objects.
  */
-class ARBConfigSubLevelList : public ARBVectorLoad1<ARBConfigSubLevel>
+class ARBConfigSubLevelList : public ARBVector<ARBConfigSubLevelPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Find a sublevel.
 	 * @param inName Name of sublevel to find.
@@ -140,7 +155,7 @@ public:
 	 */
 	bool AddSubLevel(
 			ARBString const& inName,
-			ARBConfigSubLevel** outLevel = NULL);
+			ARBConfigSubLevelPtr* outLevel = NULL);
 
 	/**
 	 * Delete a sublevel.

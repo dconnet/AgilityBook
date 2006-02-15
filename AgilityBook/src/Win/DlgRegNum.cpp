@@ -55,7 +55,7 @@ static char THIS_FILE[] = __FILE__;
 CDlgRegNum::CDlgRegNum(
 		ARBConfig const& config,
 		ARBDogRegNumList& regnums,
-		ARBDogRegNum* pRegNum,
+		ARBDogRegNumPtr pRegNum,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgRegNum::IDD, pParent)
 	, m_Config(config)
@@ -97,7 +97,7 @@ BOOL CDlgRegNum::OnInitDialog()
 		iter != m_Config.GetVenues().end();
 		++iter)
 	{
-		ARBConfigVenue* pVenue = (*iter);
+		ARBConfigVenuePtr pVenue = (*iter);
 		m_ctrlVenues.AddString(pVenue->GetName().c_str());
 	}
 	if (m_pRegNum)
@@ -151,13 +151,12 @@ void CDlgRegNum::OnOK()
 	}
 	else
 	{
-		ARBDogRegNum* pRegNum;
+		ARBDogRegNumPtr pRegNum;
 		if (m_RegNums.AddRegNum((LPCTSTR)venue, (LPCTSTR)m_RegNum, &pRegNum))
 		{
 			pRegNum->SetHeight((LPCTSTR)m_Height);
 			pRegNum->SetReceived(m_bReceived ? true : false);
 			pRegNum->SetNote((LPCTSTR)m_Note);
-			pRegNum->Release();
 		}
 	}
 	CDlgBaseDialog::OnOK();

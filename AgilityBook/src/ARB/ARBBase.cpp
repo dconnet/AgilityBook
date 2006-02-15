@@ -47,7 +47,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBBase::ARBBase()
-	: m_RefCount(1)
 {
 	for (int i = 0; i < eNumFilters; ++i)
 		m_bFiltered[i] = false;
@@ -55,16 +54,4 @@ ARBBase::ARBBase()
 
 ARBBase::~ARBBase()
 {
-}
-
-void ARBBase::AddRef()
-{
-	++m_RefCount;
-}
-
-void ARBBase::Release()
-{
-	--m_RefCount;
-	if (0 == m_RefCount)
-		delete this;
 }

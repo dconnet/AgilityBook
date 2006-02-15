@@ -76,8 +76,8 @@ static int const nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
 typedef struct
 {
-	CAgilityBookDoc *pDoc;
-	CColumnOrder *pCols;
+	CAgilityBookDoc* pDoc;
+	CColumnOrder* pCols;
 } SORTINFO;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -87,9 +87,11 @@ int CALLBACK CompareTitles(
 		LPARAM lParam2,
 		LPARAM lParam3)
 {
-	ARBDogTitle const* pTitle1 = reinterpret_cast<ARBDogTitle const*>(lParam1);
-	ARBDogTitle const* pTitle2 = reinterpret_cast<ARBDogTitle const*>(lParam2);
-	SORTINFO *psi = reinterpret_cast<SORTINFO*>(lParam3);
+	CListData* pRawTitle1 = reinterpret_cast<CListData*>(lParam1);
+	CListData* pRawTitle2 = reinterpret_cast<CListData*>(lParam2);
+	ARBDogTitlePtr pTitle1 = dynamic_cast<CListPtrData<ARBDogTitlePtr>*>(pRawTitle1)->GetData();
+	ARBDogTitlePtr pTitle2 = dynamic_cast<CListPtrData<ARBDogTitlePtr>*>(pRawTitle2)->GetData();
+	SORTINFO* psi = reinterpret_cast<SORTINFO*>(lParam3);
 	int rc = 0;
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
 	{
@@ -156,6 +158,7 @@ CDlgDogTitles::CDlgDogTitles(
 		CAgilityBookDoc* pDoc,
 		ARBDogTitleList const& titles)
 	: CDlgBasePropertyPage(CDlgDogTitles::IDD)
+	, m_ctrlTitles(true)
 	, m_pDoc(pDoc)
 	, m_sortTitles(_T("Titles"))
 	, m_Titles(titles)
@@ -198,6 +201,12 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+CListPtrData<ARBDogTitlePtr>* CDlgDogTitles::GetTitleData(int index) const
+{
+	CListData* pData = m_ctrlTitles.GetData(index);
+	return dynamic_cast<CListPtrData<ARBDogTitlePtr>*>(pData);
+}
+
 void CDlgDogTitles::SetColumnTitleHeaders()
 {
 	LV_COLUMN col;
@@ -223,17 +232,21 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 
 void CDlgDogTitles::ListTitles()
 {
-	ARBDogTitle const* pSelected = NULL;
+	ARBDogTitlePtr pSelected;
 	int i = m_ctrlTitles.GetSelection();
 	if (0 <= i)
-		pSelected = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
+	{
+		CListPtrData<ARBDogTitlePtr>* pData = GetTitleData(i);
+		if (pData)
+			pSelected = pData->GetData();
+	}
 	m_ctrlTitles.DeleteAllItems();
 	i = 0;
 	for (ARBDogTitleList::const_iterator iterTitle = m_Titles.begin();
 		iterTitle != m_Titles.end();
 		++iterTitle)
 	{
-		ARBDogTitle const* pTitle = (*iterTitle);
+		ARBDogTitlePtr pTitle = (*iterTitle);
 		if (!CAgilityBookOptions::GetViewHiddenTitles()
 		&& pTitle->IsHidden())
 		{
@@ -257,7 +270,9 @@ void CDlgDogTitles::ListTitles()
 		}
 		else
 			item.iImage = m_imgEmpty;
-		item.lParam = reinterpret_cast<LPARAM>(pTitle);
+		item.lParam = reinterpret_cast<LPARAM>(
+			static_cast<CListData*>(
+				new CListPtrData<ARBDogTitlePtr>(pTitle)));
 		int nItem = m_ctrlTitles.InsertItem(&item);
 		if (pTitle->GetDate().IsValid())
 			m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetDate().GetString(ARBDate::eDashYYYYMMDD).c_str());
@@ -278,8 +293,8 @@ void CDlgDogTitles::ListTitles()
 	{
 		for (i = 0; i < m_ctrlTitles.GetItemCount(); ++i)
 		{
-			ARBDogTitle const* pTitle = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
-			if (pTitle == pSelected) // compare by ptr is fine.
+			CListPtrData<ARBDogTitlePtr>* pTitle = GetTitleData(i);
+			if (pTitle && pTitle->GetData() == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlTitles.SetSelection(i, true);
 				break;
@@ -385,7 +400,7 @@ void CDlgDogTitles::OnItemchangedTitles(
 
 void CDlgDogTitles::OnTitleNew()
 {
-	CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, NULL, this);
+	CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, ARBDogTitlePtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListTitles();
 }
@@ -395,8 +410,8 @@ void CDlgDogTitles::OnTitleEdit()
 	int i = m_ctrlTitles.GetSelection();
 	if (0 <= i)
 	{
-		ARBDogTitle* pTitle = reinterpret_cast<ARBDogTitle*>(m_ctrlTitles.GetItemData(i));
-		CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, pTitle, this);
+		CListPtrData<ARBDogTitlePtr>* pTitle = GetTitleData(i);
+		CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, pTitle->GetData(), this);
 		if (IDOK == dlg.DoModal())
 			ListTitles();
 	}
@@ -407,8 +422,8 @@ void CDlgDogTitles::OnTitleDelete()
 	int i = m_ctrlTitles.GetSelection();
 	if (0 <= i)
 	{
-		ARBDogTitle const* pTitle = reinterpret_cast<ARBDogTitle const*>(m_ctrlTitles.GetItemData(i));
-		m_Titles.DeleteTitle(pTitle);
+		CListPtrData<ARBDogTitlePtr>* pTitle = GetTitleData(i);
+		m_Titles.DeleteTitle(pTitle->GetData());
 		m_ctrlTitles.DeleteItem(i);
 	}
 }

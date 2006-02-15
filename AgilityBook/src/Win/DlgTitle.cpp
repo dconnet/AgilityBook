@@ -42,6 +42,7 @@
 
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -56,9 +57,11 @@ static char THIS_FILE[] = __FILE__;
 CDlgTitle::CDlgTitle(
 		ARBConfig const& config,
 		ARBDogTitleList& titles,
-		ARBDogTitle* pTitle,
+		ARBDogTitlePtr pTitle,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTitle::IDD, pParent)
+	, m_ctrlVenues(true)
+	, m_ctrlTitles(true)
 	, m_Config(config)
 	, m_Titles(titles)
 	, m_pTitle(pTitle)
@@ -93,6 +96,18 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigVenuePtr CDlgTitle::GetVenueData(int index) const
+{
+	CListData* pData = m_ctrlVenues.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pData)->GetData();
+}
+
+ARBConfigTitlePtr CDlgTitle::GetTitleData(int index) const
+{
+	CListData* pData = m_ctrlTitles.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigTitlePtr>*>(pData)->GetData();
+}
+
 ARBDate CDlgTitle::GetDate()
 {
 	ARBDate date;
@@ -112,13 +127,13 @@ void CDlgTitle::FillTitles()
 	if (CB_ERR != index)
 	{
 		ARBDate date = GetDate();
-		ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
+		ARBConfigVenuePtr pVenue = GetVenueData(index);
 		ASSERT(pVenue);
 		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
 			iterTitle != pVenue->GetTitles().end();
 			++iterTitle)
 		{
-			ARBConfigTitle* pTitle = (*iterTitle);
+			ARBConfigTitlePtr pTitle = (*iterTitle);
 			// Suppress any titles we already have.
 			if (1 < pTitle->GetMultiple()
 			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
@@ -127,7 +142,8 @@ void CDlgTitle::FillTitles()
 				if (pTitle->IsValidOn(date))
 				{
 					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
-					m_ctrlTitles.SetItemDataPtr(idx, pTitle);
+					m_ctrlTitles.SetData(idx,
+						new CListPtrData<ARBConfigTitlePtr>(pTitle));
 					if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 					{
 						m_ctrlTitles.SetCurSel(idx);
@@ -145,7 +161,7 @@ void CDlgTitle::FillTitleInfo()
 	CString str;
 	if (CB_ERR != index)
 	{
-		ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
+		ARBConfigTitlePtr pTitle = GetTitleData(index);
 		str = pTitle->GetDescription().c_str();
 	}
 	str.Replace(_T("\n"), _T("\r\n"));
@@ -163,9 +179,10 @@ BOOL CDlgTitle::OnInitDialog()
 		iter != m_Config.GetVenues().end();
 		++iter)
 	{
-		ARBConfigVenue* pVenue = (*iter);
+		ARBConfigVenuePtr pVenue = (*iter);
 		int index = m_ctrlVenues.AddString(pVenue->GetName().c_str());
-		m_ctrlVenues.SetItemDataPtr(index, pVenue);
+		m_ctrlVenues.SetData(index,
+			new CListPtrData<ARBConfigVenuePtr>(pVenue));
 		if (m_pTitle && m_pTitle->GetVenue() == pVenue->GetName())
 		{
 			m_ctrlVenues.SetCurSel(index);
@@ -203,7 +220,7 @@ BOOL CDlgTitle::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgTitle::OnDtnDatetimechangeTitleDate(NMHDR *pNMHDR, LRESULT *pResult)
+void CDlgTitle::OnDtnDatetimechangeTitleDate(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	//LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
 	FillTitles();
@@ -246,8 +263,8 @@ void CDlgTitle::OnOK()
 		GotoDlgCtrl(&m_ctrlVenues);
 		return;
 	}
-	ARBConfigVenue const* pVenue = reinterpret_cast<ARBConfigVenue const*>(m_ctrlVenues.GetItemDataPtr(index));
-	ASSERT(NULL != pVenue);
+	ARBConfigVenuePtr pVenue = GetVenueData(index);
+	ASSERT(pVenue);
 
 	index = m_ctrlTitles.GetCurSel();
 	if (CB_ERR == index)
@@ -255,8 +272,8 @@ void CDlgTitle::OnOK()
 		GotoDlgCtrl(&m_ctrlTitles);
 		return;
 	}
-	ARBConfigTitle const* pTitle = reinterpret_cast<ARBConfigTitle const*>(m_ctrlTitles.GetItemDataPtr(index));
-	ASSERT(NULL != pTitle);
+	ARBConfigTitlePtr pTitle = GetTitleData(index);
+	ASSERT(pTitle);
 
 	CString name;
 	m_ctrlTitles.GetLBText(index, name);
@@ -284,7 +301,7 @@ void CDlgTitle::OnOK()
 		}
 	}
 
-	ARBDogTitle* title = new ARBDogTitle();
+	ARBDogTitlePtr title(new ARBDogTitle());
 	title->SetDate(date);
 	title->SetHidden(bHidden);
 	title->SetVenue(pVenue->GetName());
@@ -294,6 +311,5 @@ void CDlgTitle::OnOK()
 		*m_pTitle = *title;
 	else
 		m_Titles.AddTitle(title);
-	title->Release();
 	CDlgBaseDialog::OnOK();
 }

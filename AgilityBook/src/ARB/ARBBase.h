@@ -54,21 +54,8 @@
 class ARBBase
 {
 public:
-	/**
-	 * @post Reference count starts at 1.
-	 */
 	ARBBase();
-
-	/**
-	 * Add a reference to the object.
-	 */
-	void AddRef();
-
-	/**
-	 * Remove a reference.
-	 * @post When the reference count goes to 0, the object will be deleted.
-	 */
-	void Release();
+	virtual ~ARBBase();
 
 	/**
 	 * Get the generic name of an object.
@@ -124,12 +111,6 @@ public:
 	virtual void SetFiltered(bool bFiltered);
 
 protected:
-	/**
-	 * Protect the dtor to make sure no one can delete this.
-	 * @note Derived classes should not make their dtors public.
-	 */
-	virtual ~ARBBase();
-	unsigned int m_RefCount;
 	bool m_bFiltered[eNumFilters];
 };
 

@@ -36,6 +36,8 @@
 #include "stdafx.h"
 #include "ListBox.h"
 
+#include "ListData.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -47,13 +49,28 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CListBox2, CListBox)
 
-CListBox2::CListBox2()
-	: m_HorzExtent(0)
+CListBox2::CListBox2(bool bAutoDelete)
+	: m_bAutoDelete(bAutoDelete)
+	, m_HorzExtent(0)
 {
 }
 
 CListBox2::~CListBox2()
 {
+}
+
+CListData* CListBox2::GetData(int index) const
+{
+	if (m_bAutoDelete)
+		return reinterpret_cast<CListData*>(GetItemDataPtr(index));
+	else
+		return NULL;
+}
+
+void CListBox2::SetData(int index, CListData* inData)
+{
+	if (m_bAutoDelete)
+		SetItemDataPtr(index, inData);
 }
 
 BOOL CListBox2::PreCreateWindow(CREATESTRUCT& cs) 
@@ -67,6 +84,8 @@ BEGIN_MESSAGE_MAP(CListBox2, CListBox)
 	ON_MESSAGE(WM_SETFONT, OnSetFont)
 	ON_MESSAGE(LB_ADDSTRING, OnAddString)
 	ON_MESSAGE(LB_INSERTSTRING, OnInsertString)
+	ON_MESSAGE(LB_RESETCONTENT, OnResetContent)
+	ON_MESSAGE(LB_DELETESTRING, OnDeleteString)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -128,5 +147,31 @@ LRESULT CListBox2::OnInsertString(WPARAM, LPARAM lParam)
 {
 	LPCTSTR str = reinterpret_cast<LPCTSTR>(lParam);
 	ComputeExtent(str);
+	return Default();
+}
+
+LRESULT CListBox2::OnResetContent(WPARAM, LPARAM)
+{
+	if (m_bAutoDelete)
+	{
+		for (int i = GetCount() - 1; i >= 0; --i)
+		{
+			CListData* pData = GetData(i);
+			SetItemDataPtr(i, NULL);
+			delete pData;
+		}
+	}
+	return Default();
+}
+
+LRESULT CListBox2::OnDeleteString(WPARAM wParam, LPARAM)
+{
+	if (m_bAutoDelete)
+	{
+		int index = static_cast<int>(wParam);
+		CListData* pData = GetData(index);
+		SetItemDataPtr(index, NULL);
+		delete pData;
+	}
 	return Default();
 }

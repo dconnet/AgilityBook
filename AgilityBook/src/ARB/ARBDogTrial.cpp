@@ -92,6 +92,11 @@ ARBDogTrial::~ARBDogTrial()
 {
 }
 
+ARBDogTrialPtr ARBDogTrial::Clone() const
+{
+	return ARBDogTrialPtr(new ARBDogTrial(*this));
+}
+
 ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 {
 	if (this != &rhs)
@@ -219,36 +224,29 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 	{
 		for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 		{
-			(*iterRun)->SetMultiQ(NULL);
+			(*iterRun)->SetMultiQ(ARBConfigMultiQPtr());
 		}
 	}
 
 	// Now get some needed info...
-	ARBDogClub* pClub;
+	ARBDogClubPtr pClub;
 	if (!GetClubs().GetPrimaryClub(&pClub))
 		return;
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	if (!inConfig.GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
-	{
-		pClub->Release();
 		return;
-	}
-	pClub->Release();
 	if (0 == pVenue->GetMultiQs().size())
-	{
-		pVenue->Release();
 		return;
-	}
 
 	// Then for each day in the trial, look for multiQs.
 	for (date = m_Runs.GetStartDate();
 		date <= m_Runs.GetEndDate();
 		++date)
 	{
-		std::vector<ARBDogRun*> runs;
+		std::vector<ARBDogRunPtr> runs;
 		for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 		{
-			ARBDogRun* pRun = (*iterRun);
+			ARBDogRunPtr pRun = (*iterRun);
 			if (pRun->GetDate() == date
 			&& pRun->GetQ().Qualified())
 			{
@@ -262,11 +260,11 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 				iterM != pVenue->GetMultiQs().end();
 				++iterM)
 			{
-				ARBConfigMultiQ* pMultiQ = *iterM;
-				std::vector<ARBDogRun*> matchedRuns;
+				ARBConfigMultiQPtr pMultiQ = *iterM;
+				std::vector<ARBDogRunPtr> matchedRuns;
 				if (pMultiQ->Match(runs, matchedRuns))
 				{
-					for (std::vector<ARBDogRun*>::iterator iter = matchedRuns.begin();
+					for (std::vector<ARBDogRunPtr>::iterator iter = matchedRuns.begin();
 						iter != matchedRuns.end();
 						++iter)
 					{
@@ -276,7 +274,6 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 			}
 		}
 	}
-	pVenue->Release();
 }
 
 short ARBDogTrial::GetSpeedPoints(
@@ -289,11 +286,11 @@ short ARBDogTrial::GetSpeedPoints(
 	short speed = 0;
 	for (ARBDogRunList::const_iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 	{
-		ARBDogRun* pRun = (*iterRun);
+		ARBDogRunPtr pRun = (*iterRun);
 		if (pRun->GetDivision() == inDiv
 		&& pRun->GetLevel() == inLevel)
 		{
-			ARBConfigScoring* pScoring;
+			ARBConfigScoringPtr pScoring;
 			if (inConfig.GetVenues().FindEvent(
 				GetClubs().GetPrimaryClubVenue(),
 				pRun->GetEvent(),
@@ -303,7 +300,6 @@ short ARBDogTrial::GetSpeedPoints(
 				&pScoring))
 			{
 				speed = speed + pRun->GetSpeedPoints(pScoring);
-				pScoring->Release();
 			}
 		}
 	}
@@ -322,17 +318,30 @@ bool ARBDogTrial::HasVenue(ARBString const& inVenue) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBDogTrialList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogTrialPtr thing(new ARBDogTrial());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortTrials
 {
 public:
 	SortTrials(bool bDescending) : m_bDescending(bDescending) {}
-	bool operator()(ARBDogTrial* one, ARBDogTrial* two) const
+	bool operator()(ARBDogTrialPtr one, ARBDogTrialPtr two) const
 	{
 		// Note: if a club is added with the same location/club/venue as
 		// an existing trial, debug will assert during sort because
 		// a < b and b < a are true.
-		ARBDogClub* club1 = NULL;
-		ARBDogClub* club2 = NULL;
+		ARBDogClubPtr club1;
+		ARBDogClubPtr club2;
 		one->GetClubs().GetPrimaryClub(&club1);
 		two->GetClubs().GetPrimaryClub(&club2);
 		bool bSorted = !m_bDescending;
@@ -369,10 +378,6 @@ public:
 				bSorted = m_bDescending;
 			}
 		}
-		if (club1)
-			club1->Release();
-		if (club2)
-			club2->Release();
 		return bSorted;
 	}
 private:
@@ -502,12 +507,11 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 			int nDivCount = 0;
 			for (ARBDogClubList::const_iterator iterClub = (*iter)->GetClubs().begin(); iterClub != (*iter)->GetClubs().end(); ++iterClub)
 			{
-				ARBConfigVenue* pVenue;
+				ARBConfigVenuePtr pVenue;
 				if (inConfig.GetVenues().FindVenue((*iterClub)->GetVenue(), &pVenue))
 				{
 					if (pVenue->GetDivisions().FindDivision(inDiv))
 						++nDivCount;
-					pVenue->Release();
 				}
 			}
 			if (1 < nDivCount)
@@ -518,7 +522,7 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 }
 
 int ARBDogTrialList::NumRunsInDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
 {
 	int count = 0;
@@ -537,7 +541,7 @@ int ARBDogTrialList::NumRunsInDivision(
 }
 
 int ARBDogTrialList::RenameDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inOldDiv,
 		ARBString const& inNewDiv)
 {
@@ -576,12 +580,11 @@ int ARBDogTrialList::DeleteDivision(
 			// clubs we need to look for the division name within each.
 			for (ARBDogClubList::const_iterator iterClub = (*iter)->GetClubs().begin(); iterClub != (*iter)->GetClubs().end(); ++iterClub)
 			{
-				ARBConfigVenue* pVenue;
+				ARBConfigVenuePtr pVenue;
 				if (inConfig.GetVenues().FindVenue((*iterClub)->GetVenue(), &pVenue))
 				{
 					if (pVenue->GetDivisions().FindDivision(div))
 						++nDivCount;
-					pVenue->Release();
 				}
 			}
 			// If more than one hosting club has this division, no need to go
@@ -734,7 +737,7 @@ int ARBDogTrialList::DeleteEvent(
 		ARBString const& inEvent)
 {
 	ARBString venue(inVenue);
-	ARBString event(inEvent);
+	ARBString pEvent(inEvent);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -742,7 +745,7 @@ int ARBDogTrialList::DeleteEvent(
 		{
 			for (ARBDogRunList::iterator iterRun = (*iter)->GetRuns().begin(); iterRun != (*iter)->GetRuns().end(); )
 			{
-				if ((*iterRun)->GetEvent() == event)
+				if ((*iterRun)->GetEvent() == pEvent)
 				{
 					++count;
 					iterRun = (*iter)->GetRuns().erase(iterRun);
@@ -759,19 +762,18 @@ int ARBDogTrialList::DeleteEvent(
 	return count;
 }
 
-bool ARBDogTrialList::AddTrial(ARBDogTrial* inTrial)
+bool ARBDogTrialList::AddTrial(ARBDogTrialPtr inTrial)
 {
 	bool bAdded = false;
 	if (inTrial)
 	{
 		bAdded = true;
-		inTrial->AddRef();
 		push_back(inTrial);
 	}
 	return bAdded;
 }
 
-bool ARBDogTrialList::DeleteTrial(ARBDogTrial const* inTrial)
+bool ARBDogTrialList::DeleteTrial(ARBDogTrialPtr inTrial)
 {
 	if (inTrial)
 	{

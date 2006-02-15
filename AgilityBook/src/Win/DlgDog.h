@@ -54,14 +54,14 @@ class CDlgDog : public CDlgBaseSheet
 public:
 	CDlgDog(
 			CAgilityBookDoc* pDoc,
-			ARBDog* pDog,
+			ARBDogPtr pDog,
 			CWnd* pParent = NULL,
 			UINT iSelectPage = 0);
 	virtual ~CDlgDog();
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBDog* m_pDog;
+	ARBDogPtr m_pDog;
 	CDlgDogProperties* m_pageProp;
 	CDlgDogTitles* m_pageTitles;
 	CDlgDogNumbers* m_pageRegNums;

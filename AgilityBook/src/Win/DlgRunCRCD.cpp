@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunCRCD dialog
 
-CDlgRunCRCD::CDlgRunCRCD(ARBDogRun* pRun)
+CDlgRunCRCD::CDlgRunCRCD(ARBDogRunPtr pRun)
 	: CDlgBasePropertyPage(CDlgRunCRCD::IDD)
 	, m_Run(pRun)
 	, m_metaFile(NULL)

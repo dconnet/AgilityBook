@@ -44,33 +44,17 @@
 #include <vector>
 #include "ARBTypes.h"
 class ARBConfig;
-class ARBErrorCallback;
-class ARBVersion;
 class Element;
 
-#if _MSC_VER < 1300
-// VC6 has problems with std::vector::clear() type syntax.
-// And I really don't want to declare 'using' statements in my headers!
-using std::set;
-using std::vector;
-#endif
-
 /**
- * Base collection template for reference counting.
- *
- * I wanted to hide as much implementation as possible - so this template hides
- * the fact that we are actually using arrays of pointers. The only place
- * pointers vs. real objects is evident is when we use an iterator. Even if we
- * were to change to a full object, we'd really still want to return a pointer
- * on most functions - so the api itself would not actually change.
- *
+ * Vector for smart pointers.
  * The base template handles all the copy/cleanup necessary.
  */
 template <typename T>
-class ARBVectorBase : public std::vector<T*>
+class ARBVector : public std::vector<T>
 {
 public:
-	ARBVectorBase()
+	ARBVector()
 	{
 	}
 
@@ -79,24 +63,19 @@ public:
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVectorBase(ARBVectorBase<T> const& rhs)
+	ARBVector(ARBVector<T> const& rhs)
 	{
 		// Make a copy first. Then if we throw an exception during
 		// the copy, we won't clobber the existing data.
-		ARBVectorBase<T> tmp;
+		ARBVector<T> tmp;
 		tmp.reserve(rhs.size());
 		for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 		{
-			T* pItem = *iter;
+			T pItem = *iter;
 			if (pItem)
-				tmp.push_back(new T(*pItem));
+				tmp.push_back(pItem->Clone());
 		}
 		swap(tmp);
-	}
-
-	virtual ~ARBVectorBase()
-	{
-		clear();
 	}
 
 	/**
@@ -104,16 +83,17 @@ public:
 	 * @param rhs Object being copied.
 	 * @post A deep copy of rhs.
 	 */
-	ARBVectorBase<T>& operator=(ARBVectorBase<T> const& rhs)
+	ARBVector<T>& operator=(ARBVector<T> const& rhs)
 	{
 		if (this != &rhs)
 		{
-			ARBVectorBase<T> tmp;
+			ARBVector<T> tmp;
 			tmp.reserve(rhs.size());
 			for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
 			{
-				if ((*iter))
-					tmp.push_back(new T(*(*iter)));
+				T pItem = *iter;
+				if (pItem)
+					tmp.push_back(pItem->Clone());
 			}
 			swap(tmp);
 		}
@@ -123,7 +103,7 @@ public:
 	/**
 	 * Equality test.
 	 */
-	bool operator==(ARBVectorBase<T> const& rhs) const
+	bool operator==(ARBVector<T> const& rhs) const
 	{
 		if (this == &rhs)
 			return true;
@@ -137,57 +117,11 @@ public:
 		}
 		return true;
 	}
-	bool operator!=(ARBVectorBase<T> const& rhs) const
+	bool operator!=(ARBVector<T> const& rhs) const
 	{
 		return !operator==(rhs);
 	}
 
-	/**
-	 * Reset the contents of this object and all sub-objects.
-	 * @post All content cleared, including configuration.
-	 */
-	void clear()
-	{
-		if (0 < size())
-			erase(begin(), end());
-	}
-
-	iterator erase(iterator inIter)
-	{
-		(*inIter)->Release();
-#if _MSC_VER < 1300
-		return vector<T*>::erase(inIter);
-#else
-		return std::vector<T*>::erase(inIter);
-#endif
-	}
-
-	iterator erase(
-			iterator inFirst,
-			iterator inLast)
-	{
-		if (inFirst == inLast)
-			return inFirst;
-		for (iterator iter = inFirst; iter < inLast; ++iter)
-			(*iter)->Release();
-#if _MSC_VER < 1300
-		return vector<T*>::erase(inFirst, inLast);
-#else
-		return std::vector<T*>::erase(inFirst, inLast);
-#endif
-	}
-};
-
-/**
- * Added functionality
- * This template adds Save functionality since it is the same for all classes.
- * Load functionality varies slightly from class to class, so that is handled
- * by several ARBVector derivations.
- */
-template <typename T>
-class ARBVector : public ARBVectorBase<T>
-{
-public:
 	/**
 	 * Get all the strings to search in this list.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
@@ -208,7 +142,7 @@ public:
 	 * @return Whether or not object was moved.
 	 */
 	bool Move(
-			T* inItem,
+			T inItem,
 			int inMove)
 	{
 		bool bOk = false;
@@ -251,79 +185,6 @@ public:
 			if (!(*iter)->Save(ioTree))
 				return false;
 		}
-		return true;
-	}
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
-// Load methods are specific to classes. We could implement templates to
-// handle all the different Load styles, but I decided that for those
-// classes that are truly unique, just let them derive from ARBVector and
-// implement Load themselves. The ones below are used by multiple classes.
-// (Theres only a few that derive directly: ARBConfigDivisionList,
-// ARBConfigEventList, ARBConfigScoringList, ARBDogRunList)
-
-/**
- * This load method is used by several of the ARBConfig* classes.
- */
-template <typename T>
-class ARBVectorLoad1 : public ARBVector<T>
-{
-public:
-	/**
-	 * Load the information from XML (the tree).
-	 * @pre inTree is the actual T element.
-	 * @param inTree XML structure to convert into ARB.
-	 * @param inVersion Version of the document being read.
-	 * @param ioCallback Error processing callback.
-	 * @return Success
-	 */
-	bool Load(
-			Element const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback)
-	{
-		T* thing = new T();
-		if (!thing->Load(inTree, inVersion, ioCallback))
-		{
-			thing->Release();
-			return false;
-		}
-		push_back(thing);
-		return true;
-	}
-};
-
-/**
- * This load method is used by several of the ARBDog* classes.
- */
-template <typename T>
-class ARBVectorLoad2 : public ARBVector<T>
-{
-public:
-	/**
-	 * Load the information from XML (the tree).
-	 * @pre inTree is the actual T element.
-	 * @param inConfig Configuration information to verify data to load against.
-	 * @param inTree XML structure to convert into ARB.
-	 * @param inVersion Version of the document being read.
-	 * @param ioCallback Error processing callback.
-	 * @return Success
-	 */
-	bool Load(
-			ARBConfig const& inConfig,
-			Element const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback)
-	{
-		T* thing = new T();
-		if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
-		{
-			thing->Release();
-			return false;
-		}
-		push_back(thing);
 		return true;
 	}
 };

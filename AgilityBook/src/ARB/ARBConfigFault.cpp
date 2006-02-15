@@ -64,6 +64,11 @@ ARBConfigFault::~ARBConfigFault()
 {
 }
 
+ARBConfigFaultPtr ARBConfigFault::Clone() const
+{
+	return ARBConfigFaultPtr(new ARBConfigFault(*this));
+}
+
 ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 {
 	if (this != &rhs)
@@ -115,21 +120,30 @@ bool ARBConfigFault::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBConfigFaultList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBConfigFaultPtr thing(new ARBConfigFault());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 bool ARBConfigFaultList::FindFault(
 		ARBString const& inName,
-		ARBConfigFault** outFault) const
+		ARBConfigFaultPtr* outFault) const
 {
 	if (outFault)
-		*outFault = NULL;
+		outFault->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName)
 		{
 			if (outFault)
-			{
 				*outFault = *iter;
-				(*outFault)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -138,20 +152,17 @@ bool ARBConfigFaultList::FindFault(
 
 bool ARBConfigFaultList::AddFault(
 		ARBString const& inName,
-		ARBConfigFault** outFault)
+		ARBConfigFaultPtr* outFault)
 {
 	if (outFault)
-		*outFault = NULL;
+		outFault->reset();
 	if (0 == inName.length())
 		return false;
-	ARBConfigFault* pFault = new ARBConfigFault;
+	ARBConfigFaultPtr pFault(new ARBConfigFault());
 	pFault->SetName(inName);
 	push_back(pFault);
 	if (outFault)
-	{
 		*outFault = pFault;
-		(*outFault)->AddRef();
-	}
 	return true;
 }
 

@@ -69,6 +69,11 @@ ARBDogClub::~ARBDogClub()
 {
 }
 
+ARBDogClubPtr ARBDogClub::Clone() const
+{
+	return ARBDogClubPtr(new ARBDogClub(*this));
+}
+
 ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 {
 	if (this != &rhs)
@@ -155,18 +160,28 @@ bool ARBDogClub::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBDogClubList::GetPrimaryClub(ARBDogClub** outClub) const
+bool ARBDogClubList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogClubPtr thing(new ARBDogClub());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
+bool ARBDogClubList::GetPrimaryClub(ARBDogClubPtr* outClub) const
 {
 	if (outClub)
-		*outClub = NULL;
+		outClub->reset();
 	if (0 < size())
 	{
 		const_iterator iter = begin();
 		if (outClub)
-		{
 			*outClub = *iter;
-			(*outClub)->AddRef();
-		}
 		return true;
 	}
 	else
@@ -196,31 +211,27 @@ ARBString ARBDogClubList::GetPrimaryClubVenue() const
 }
 
 bool ARBDogClubList::FindEvent(
-		ARBConfig const* inConfig,
+		ARBConfig const& inConfig,
 		ARBString const& inEvent,
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
 		ARBErrorCallback& ioCallback,
-		ARBConfigScoring** outScoring) const
+		ARBConfigScoringPtr* outScoring) const
 {
 	if (outScoring)
-		*outScoring = NULL;
-	ARBConfigScoring* pEvent = NULL;
+		outScoring->reset();
+	ARBConfigScoringPtr pEvent;
 	for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
 	{
-		inConfig->GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent);
+		inConfig.GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent);
 	}
 	bool bFound = false;
 	if (pEvent)
 	{
 		bFound = true;
 		if (outScoring)
-		{
 			*outScoring = pEvent;
-			(*outScoring)->AddRef();
-		}
-		pEvent->Release();
 	}
 	else
 	{
@@ -246,19 +257,16 @@ bool ARBDogClubList::FindEvent(
 
 bool ARBDogClubList::FindVenue(
 		ARBString const& inVenue,
-		ARBDogClub** outClub) const
+		ARBDogClubPtr* outClub) const
 {
 	if (outClub)
-		*outClub = NULL;
+		outClub->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue)
 		{
 			if (outClub)
-			{
 				*outClub = *iter;
-				(*outClub)->AddRef();
-			}
 			return true;
 		}
 	}
@@ -268,17 +276,14 @@ bool ARBDogClubList::FindVenue(
 bool ARBDogClubList::AddClub(
 		ARBString const& inName,
 		ARBString const& inVenue,
-		ARBDogClub** outClub)
+		ARBDogClubPtr* outClub)
 {
-	ARBDogClub* pClub = new ARBDogClub();
+	ARBDogClubPtr pClub(new ARBDogClub());
 	pClub->SetName(inName);
 	pClub->SetVenue(inVenue);
 	push_back(pClub);
 	if (outClub)
-	{
 		*outClub = pClub;
-		(*outClub)->AddRef();
-	}
 	return true;
 }
 

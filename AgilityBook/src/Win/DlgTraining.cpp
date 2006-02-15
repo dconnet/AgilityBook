@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgTraining dialog
 
 CDlgTraining::CDlgTraining(
-		ARBTraining* pTraining,
+		ARBTrainingPtr pTraining,
 		CAgilityBookDoc* pDoc,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTraining::IDD, pParent)

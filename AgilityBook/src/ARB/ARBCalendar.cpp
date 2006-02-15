@@ -417,6 +417,11 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 	return *this;
 }
 
+ARBCalendarPtr ARBCalendar::Clone() const
+{
+	return ARBCalendarPtr(new ARBCalendar(*this));
+}
+
 bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 {
 	return m_DateStart == rhs.m_DateStart
@@ -721,11 +726,23 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBCalendarList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBCalendarPtr thing(new ARBCalendar());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 class SortCalendar
 {
 public:
 	SortCalendar() {}
-	bool operator()(ARBCalendar* one, ARBCalendar* two) const
+	bool operator()(ARBCalendarPtr one, ARBCalendarPtr two) const
 	{
 		return one->GetStartDate() < two->GetStartDate();
 	}
@@ -738,17 +755,14 @@ void ARBCalendarList::sort()
 	std::stable_sort(begin(), end(), SortCalendar());
 }
 
-size_t ARBCalendarList::GetAllEntered(ARBVectorBase<ARBCalendar>& outEntered) const
+size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendarPtr>& outEntered) const
 {
 	outEntered.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBCalendar* pCal = (*iter);
+		ARBCalendarPtr pCal = (*iter);
 		if (ARBCalendar::eEntered == pCal->GetEntered())
-		{
-			pCal->AddRef();
 			outEntered.push_back(pCal);
-		}
 	}
 	return outEntered.size();
 }
@@ -774,11 +788,11 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 }
 
 bool ARBCalendarList::FindCalendar(
-		ARBCalendar const* inCal,
-		ARBCalendar** outCal) const
+		ARBCalendarPtr inCal,
+		ARBCalendarPtr* outCal) const
 {
 	if (outCal)
-		*outCal = NULL;
+		outCal->reset();
 	if (inCal)
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -786,10 +800,7 @@ bool ARBCalendarList::FindCalendar(
 			if (*(*iter) == *inCal)
 			{
 				if (outCal)
-				{
 					*outCal = *iter;
-					(*outCal)->AddRef();
-				}
 				return true;
 			}
 		}
@@ -797,19 +808,18 @@ bool ARBCalendarList::FindCalendar(
 	return false;
 }
 
-bool ARBCalendarList::AddCalendar(ARBCalendar* inCal)
+bool ARBCalendarList::AddCalendar(ARBCalendarPtr inCal)
 {
 	bool bAdded = false;
 	if (inCal)
 	{
 		bAdded = true;
-		inCal->AddRef();
 		push_back(inCal);
 	}
 	return bAdded;
 }
 
-bool ARBCalendarList::DeleteCalendar(ARBCalendar const* inCal)
+bool ARBCalendarList::DeleteCalendar(ARBCalendarPtr inCal)
 {
 	if (inCal)
 	{

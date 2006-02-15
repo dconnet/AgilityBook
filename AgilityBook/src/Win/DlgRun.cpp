@@ -61,8 +61,8 @@ IMPLEMENT_DYNAMIC(CDlgRun, CDlgBaseSheet)
 
 CDlgRun::CDlgRun(
 		CAgilityBookDoc* pDoc,
-		ARBDogTrial* pTrial,
-		ARBDogRun* pRun,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun,
 		CWnd* pParent,
 		UINT iSelectPage)
 	: CDlgBaseSheet(IDS_RUN_PROPERTIES, pParent, iSelectPage)
@@ -78,12 +78,11 @@ CDlgRun::CDlgRun(
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 
-	ARBDogClub* pClub;
+	ARBDogClubPtr pClub;
 	pTrial->GetClubs().GetPrimaryClub(&pClub);
 	ASSERT(NULL != pClub);
-	ARBConfigVenue* pVenue;
+	ARBConfigVenuePtr pVenue;
 	pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-	pClub->Release();
 	ASSERT(NULL != pVenue);
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
@@ -96,13 +95,10 @@ CDlgRun::CDlgRun(
 	AddPage(m_pageReference);
 	AddPage(m_pageCRCD);
 	AddPage(m_pageLink);
-	pVenue->Release();
 }
 
 CDlgRun::~CDlgRun()
 {
-	m_Run->Release();
-	m_Run = NULL;
 	delete m_pageScore;
 	delete m_pageComments;
 	delete m_pageReference;

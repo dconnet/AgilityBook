@@ -68,6 +68,11 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
 
+ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
+{
+	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
+}
+
 ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const& rhs)
 {
 	if (this != &rhs)
@@ -170,6 +175,18 @@ bool ARBConfigOtherPoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
+bool ARBConfigOtherPointsList::Load(
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBConfigOtherPointsPtr thing(new ARBConfigOtherPoints());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
 bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -182,33 +199,29 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
 
 bool ARBConfigOtherPointsList::FindOtherPoints(
 		ARBString const& inName,
-		ARBConfigOtherPoints** outPoints) const
+		ARBConfigOtherPointsPtr* outPoints) const
 {
 	if (outPoints)
-		*outPoints = NULL;
+		outPoints->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName)
 		{
 			if (outPoints)
-			{
 				*outPoints = *iter;
-				(*outPoints)->AddRef();
-			}
 			return true;
 		}
 	}
 	return false;
 }
 
-bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPoints* inOther)
+bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr inOther)
 {
 	// Global uniqueness must be ensured by the calling function.
 	bool bAdded = false;
 	if (inOther)
 	{
 		bAdded = true;
-		inOther->AddRef();
 		push_back(inOther);
 	}
 	return bAdded;

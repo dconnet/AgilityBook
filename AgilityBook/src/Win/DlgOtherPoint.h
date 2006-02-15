@@ -35,29 +35,29 @@
  * Revision History
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "RichEditCtrl2.h"
 class ARBConfig;
-class ARBDogRunOtherPoints;
 
 class CDlgOtherPoint : public CDlgBaseDialog
 {
 public:
 	CDlgOtherPoint(
 			ARBConfig const& config,
-			ARBDogRunOtherPoints* pOther,
+			ARBDogRunOtherPointsPtr pOther,
 			CWnd* pParent = NULL);
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgOtherPoint)
 	enum { IDD = IDD_OTHER_POINT };
-	CComboBox	m_ctrlOtherPoints;
+	CComboBox2	m_ctrlOtherPoints;
 	CRichEditCtrl2	m_ctrlDesc;
 	short	m_Points;
 	//}}AFX_DATA
 	ARBConfig const& m_Config;
-	ARBDogRunOtherPoints* m_pOther;
+	ARBDogRunOtherPointsPtr m_pOther;
 
 	//{{AFX_VIRTUAL(CDlgOtherPoint)
 protected:

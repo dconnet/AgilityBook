@@ -85,6 +85,11 @@ ARBConfigEvent::~ARBConfigEvent()
 {
 }
 
+ARBConfigEventPtr ARBConfigEvent::Clone() const
+{
+	return ARBConfigEventPtr(new ARBConfigEvent(*this));
+}
+
 ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 {
 	if (this != &rhs)
@@ -176,37 +181,37 @@ bool ARBConfigEvent::Load(
 
 bool ARBConfigEvent::Save(Element& ioTree) const
 {
-	Element& event = ioTree.AddElement(TREE_EVENT);
-	event.AddAttrib(ATTRIB_EVENT_NAME, m_Name);
+	Element& evtTree = ioTree.AddElement(TREE_EVENT);
+	evtTree.AddAttrib(ATTRIB_EVENT_NAME, m_Name);
 	if (0 < m_Desc.length())
 	{
-		Element& desc = event.AddElement(TREE_EVENT_DESC);
+		Element& desc = evtTree.AddElement(TREE_EVENT_DESC);
 		desc.SetValue(m_Desc);
 	}
 	// No need to write if not set.
 	if (m_bTable)
-		event.AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
+		evtTree.AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
 	if (m_bHasPartner)
-		event.AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
+		evtTree.AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
 	if (m_bHasSubNames)
 	{
-		event.AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
+		evtTree.AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
 		for (std::set<ARBString>::const_iterator iter = m_SubNames.begin();
 			iter != m_SubNames.end();
 			++iter)
 		{
-			Element& name = event.AddElement(TREE_EVENT_SUBNAME);
+			Element& name = evtTree.AddElement(TREE_EVENT_SUBNAME);
 			name.SetValue(*iter);
 		}
 	}
-	if (!m_Scoring.Save(event))
+	if (!m_Scoring.Save(evtTree))
 		return false;
 	return true;
 }
 
 bool ARBConfigEvent::Update(
 		int indent,
-		ARBConfigEvent const* inEventNew,
+		ARBConfigEventPtr inEventNew,
 		ARBString& ioInfo)
 {
 	ARBString info;
@@ -311,7 +316,7 @@ size_t ARBConfigEvent::FindAllEvents(
 		ARBString const& inLevel,
 		ARBDate const& inDate,
 		bool inTitlePoints,
-		ARBVector<ARBConfigScoring>& outList) const
+		ARBVector<ARBConfigScoringPtr>& outList) const
 {
 	return m_Scoring.FindAllEvents(inDivision, inLevel, inDate, inTitlePoints, outList);
 }
@@ -328,7 +333,7 @@ bool ARBConfigEvent::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
-		ARBConfigScoring** outEvent) const
+		ARBConfigScoringPtr* outEvent) const
 {
 	return m_Scoring.FindEvent(inDivision, inLevel, inDate, outEvent);
 }
@@ -354,12 +359,9 @@ bool ARBConfigEventList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigEvent* thing = new ARBConfigEvent();
+	ARBConfigEventPtr thing(new ARBConfigEvent());
 	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
-	{
-		thing->Release();
 		return false;
-	}
 	push_back(thing);
 	return true;
 }
@@ -383,10 +385,10 @@ bool ARBConfigEventList::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
-		ARBConfigScoring** outScoring) const
+		ARBConfigScoringPtr* outScoring) const
 {
 	if (outScoring)
-		*outScoring = NULL;
+		outScoring->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inEvent)
@@ -481,42 +483,38 @@ int ARBConfigEventList::DeleteLevel(ARBString const& inLevel)
 
 bool ARBConfigEventList::FindEvent(
 		ARBString const& inEvent,
-		ARBConfigEvent** outEvent) const
+		ARBConfigEventPtr* outEvent) const
 {
 	if (outEvent)
-		*outEvent = NULL;
+		outEvent->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inEvent)
 		{
 			if (outEvent)
-			{
 				*outEvent = *iter;
-				(*outEvent)->AddRef();
-			}
 			return true;
 		}
 	}
 	return false;
 }
 
-bool ARBConfigEventList::AddEvent(ARBConfigEvent* inEvent)
+bool ARBConfigEventList::AddEvent(ARBConfigEventPtr inEvent)
 {
 	if (!inEvent
 	|| 0 == inEvent->GetName().length()
 	|| FindEvent(inEvent->GetName()))
 		return false;
-	inEvent->AddRef();
 	push_back(inEvent);
 	return true;
 }
 
 bool ARBConfigEventList::DeleteEvent(ARBString const& inEvent)
 {
-	ARBString event(inEvent);
+	ARBString pEvent(inEvent);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetName() == event)
+		if ((*iter)->GetName() == pEvent)
 		{
 			erase(iter);
 			return true;

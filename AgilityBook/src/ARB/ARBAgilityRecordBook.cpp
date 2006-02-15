@@ -369,17 +369,17 @@ size_t ARBAgilityRecordBook::GetAllClubNames(
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
 				iterClub != pTrial->GetClubs().end();
 				++iterClub)
 			{
-				ARBDogClub const* pClub = (*iterClub);
+				ARBDogClubPtr pClub = (*iterClub);
 				if (0 < pClub->GetName().length())
 					outClubs.insert(pClub->GetName());
 			}
@@ -389,7 +389,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(
 		iterCal != m_Calendar.end();
 		++iterCal)
 	{
-		ARBCalendar const* pCal = *iterCal;
+		ARBCalendarPtr pCal = *iterCal;
 		if (0 < pCal->GetClub().length())
 			outClubs.insert(pCal->GetClub());
 	}
@@ -407,12 +407,12 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			if (0 < pTrial->GetLocation().length())
 				outLocations.insert(pTrial->GetLocation());
 		}
@@ -421,7 +421,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 		iterCal != m_Calendar.end();
 		++iterCal)
 	{
-		ARBCalendar const* pCal = *iterCal;
+		ARBCalendarPtr pCal = *iterCal;
 		if (0 < pCal->GetLocation().length())
 			outLocations.insert(pCal->GetLocation());
 	}
@@ -430,7 +430,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 
 size_t ARBAgilityRecordBook::GetAllEventSubNames(
 		ARBString const& inVenue,
-		ARBConfigEvent const* inEvent,
+		ARBConfigEventPtr inEvent,
 		std::set<ARBString>& outNames) const
 {
 	outNames.clear();
@@ -441,19 +441,19 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			if (pTrial->HasVenue(inVenue))
 			{
 				for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 					iterRun != pTrial->GetRuns().end();
 					++iterRun)
 				{
-					ARBDogRun const* pRun = (*iterRun);
+					ARBDogRunPtr pRun = (*iterRun);
 					if (pRun->GetEvent() == inEvent->GetName())
 					{
 						if (0 < pRun->GetSubName().length())
@@ -473,24 +473,24 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<ARBString>& outHeights) cons
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun const* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				if (0 < pRun->GetHeight().length())
 					outHeights.insert(pRun->GetHeight());
 				for (ARBDogReferenceRunList::const_iterator iterRef = pRun->GetReferenceRuns().begin();
 					iterRef != pRun->GetReferenceRuns().end();
 					++iterRef)
 				{
-					ARBDogReferenceRun const* pRef = *iterRef;
+					ARBDogReferenceRunPtr pRef = *iterRef;
 					if (0 < pRef->GetHeight().length())
 						outHeights.insert(pRef->GetHeight());
 				}
@@ -507,23 +507,23 @@ size_t ARBAgilityRecordBook::GetAllCallNames(std::set<ARBString>& outNames) cons
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		outNames.insert(pDog->GetCallName());
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun const* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				for (ARBDogReferenceRunList::const_iterator iterRef = pRun->GetReferenceRuns().begin();
 					iterRef != pRun->GetReferenceRuns().end();
 					++iterRef)
 				{
-					ARBDogReferenceRun const* pRef = *iterRef;
+					ARBDogReferenceRunPtr pRef = *iterRef;
 					if (0 < pRef->GetName().length())
 						outNames.insert(pRef->GetName());
 				}
@@ -540,24 +540,24 @@ size_t ARBAgilityRecordBook::GetAllBreeds(std::set<ARBString>& outBreeds) const
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		if (0 < pDog->GetBreed().length())
 			outBreeds.insert(pDog->GetBreed());
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun const* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				for (ARBDogReferenceRunList::const_iterator iterRef = pRun->GetReferenceRuns().begin();
 					iterRef != pRun->GetReferenceRuns().end();
 					++iterRef)
 				{
-					ARBDogReferenceRun const* pRef = *iterRef;
+					ARBDogReferenceRunPtr pRef = *iterRef;
 					if (0 < pRef->GetBreed().length())
 						outBreeds.insert(pRef->GetBreed());
 				}
@@ -578,17 +578,17 @@ size_t ARBAgilityRecordBook::GetAllJudges(
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun const* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				if (0 < pRun->GetJudge().length())
 					outJudges.insert(pRun->GetJudge());
 			}
@@ -604,17 +604,17 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<ARBString>& outHandlers) co
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun const* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				if (0 < pRun->GetHandler().length())
 					outHandlers.insert(pRun->GetHandler());
 			}
@@ -630,7 +630,7 @@ size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<ARBString>& outFaults) co
 		iterFault != m_Config.GetFaults().end();
 		++iterFault)
 	{
-		ARBConfigFault const* pFault = (*iterFault);
+		ARBConfigFaultPtr pFault = (*iterFault);
 		if (0 < pFault->GetName().length())
 			outFaults.insert(pFault->GetName());
 	}
@@ -638,17 +638,17 @@ size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<ARBString>& outFaults) co
 		iterDog != m_Dogs.end();
 		++iterDog)
 	{
-		ARBDog const* pDog = (*iterDog);
+		ARBDogPtr pDog = (*iterDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial const* pTrial = (*iterTrial);
+			ARBDogTrialPtr pTrial = (*iterTrial);
 			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun const* pRun = (*iterRun);
+				ARBDogRunPtr pRun = (*iterRun);
 				for (ARBDogFaultList::const_iterator iterDogFault = pRun->GetFaults().begin();
 					iterDogFault != pRun->GetFaults().end();
 					++iterDogFault)

@@ -69,8 +69,8 @@ static int const nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0
 
 typedef struct
 {
-	CDlgDogNumbers *pThis;
-	CColumnOrder *pCols;
+	CDlgDogNumbers* pThis;
+	CColumnOrder* pCols;
 } SORTINFO;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -80,9 +80,11 @@ int CALLBACK CompareRegNums(
 		LPARAM lParam2,
 		LPARAM lParam3)
 {
-	ARBDogRegNum* pRegNum1 = reinterpret_cast<ARBDogRegNum*>(lParam1);
-	ARBDogRegNum* pRegNum2 = reinterpret_cast<ARBDogRegNum*>(lParam2);
-	SORTINFO *psi = reinterpret_cast<SORTINFO*>(lParam3);
+	CListData* pRawRegNum1 = reinterpret_cast<CListData*>(lParam1);
+	CListData* pRawRegNum2 = reinterpret_cast<CListData*>(lParam2);
+	ARBDogRegNumPtr pRegNum1 = dynamic_cast<CListPtrData<ARBDogRegNumPtr>*>(pRawRegNum1)->GetData();
+	ARBDogRegNumPtr pRegNum2 = dynamic_cast<CListPtrData<ARBDogRegNumPtr>*>(pRawRegNum2)->GetData();
+	SORTINFO* psi = reinterpret_cast<SORTINFO*>(lParam3);
 	int rc = 0;
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
 	{
@@ -138,6 +140,7 @@ CDlgDogNumbers::CDlgDogNumbers(
 		CAgilityBookDoc* pDoc,
 		ARBDogRegNumList const& regnums)
 	: CDlgBasePropertyPage(CDlgDogNumbers::IDD)
+	, m_ctrlRegNums(true)
 	, m_pDoc(pDoc)
 	, m_sortRegNums(_T("RegNums"))
 	, m_RegNums(regnums)
@@ -171,6 +174,12 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
+CListPtrData<ARBDogRegNumPtr>* CDlgDogNumbers::GetRegNumData(int index) const
+{
+	CListData* pData = m_ctrlRegNums.GetData(index);
+	return dynamic_cast<CListPtrData<ARBDogRegNumPtr>*>(pData);
+}
+
 void CDlgDogNumbers::SetColumnRegNumHeaders()
 {
 	LV_COLUMN col;
@@ -192,17 +201,21 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 
 void CDlgDogNumbers::ListRegNums()
 {
-	ARBDogRegNum const* pSelected = NULL;
+	ARBDogRegNumPtr pSelected;
 	int i = m_ctrlRegNums.GetSelection();
 	if (0 <= i)
-		pSelected = reinterpret_cast<ARBDogRegNum const*>(m_ctrlRegNums.GetItemData(i));
+	{
+		CListPtrData<ARBDogRegNumPtr>* pData = GetRegNumData(i);
+		if (pData)
+			pSelected = pData->GetData();
+	}
 	m_ctrlRegNums.DeleteAllItems();
 	i = 0;
 	for (ARBDogRegNumList::const_iterator iterRegNum = m_RegNums.begin();
 		iterRegNum != m_RegNums.end();
 		++i, ++iterRegNum)
 	{
-		ARBDogRegNum const* pRegNum = (*iterRegNum);
+		ARBDogRegNumPtr pRegNum = (*iterRegNum);
 		int nItem = m_ctrlRegNums.InsertItem(i, pRegNum->GetVenue().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 1, pRegNum->GetNumber().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 2, pRegNum->GetHeight().c_str());
@@ -210,7 +223,10 @@ void CDlgDogNumbers::ListRegNums()
 		CString str(pRegNum->GetNote().c_str());
 		str.Replace(_T("\n"), _T(" "));
 		m_ctrlRegNums.SetItemText(nItem, 4, str);
-		m_ctrlRegNums.SetItemData(nItem, reinterpret_cast<LPARAM>(pRegNum));
+		m_ctrlRegNums.SetItemData(nItem,
+			reinterpret_cast<LPARAM>(
+				static_cast<CListData*>(
+					new CListPtrData<ARBDogRegNumPtr>(pRegNum))));
 	}
 	for (i = 0; i < nColRegNumInfo; ++i)
 		m_ctrlRegNums.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
@@ -222,8 +238,8 @@ void CDlgDogNumbers::ListRegNums()
 	{
 		for (i = 0; i < m_ctrlRegNums.GetItemCount(); ++i)
 		{
-			ARBDogRegNum const* pRegNum = reinterpret_cast<ARBDogRegNum const*>(m_ctrlRegNums.GetItemData(i));
-			if (pRegNum == pSelected) // compare by ptr is fine.
+			CListPtrData<ARBDogRegNumPtr>* pData = GetRegNumData(i);
+			if (pData && pData->GetData() == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlRegNums.SetSelection(i, true);
 				break;
@@ -327,7 +343,7 @@ void CDlgDogNumbers::OnItemchangedRegNums(
 
 void CDlgDogNumbers::OnRegNew()
 {
-	CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, NULL, this);
+	CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, ARBDogRegNumPtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListRegNums();
 }
@@ -337,7 +353,10 @@ void CDlgDogNumbers::OnRegEdit()
 	int i = m_ctrlRegNums.GetSelection();
 	if (0 <= i)
 	{
-		ARBDogRegNum* pRegNum = reinterpret_cast<ARBDogRegNum*>(m_ctrlRegNums.GetItemData(i));
+		CListPtrData<ARBDogRegNumPtr>* pData = GetRegNumData(i);
+		ARBDogRegNumPtr pRegNum;
+		if (pData)
+			pRegNum = pData->GetData();
 		CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, pRegNum, this);
 		if (IDOK == dlg.DoModal())
 			ListRegNums();
@@ -349,7 +368,10 @@ void CDlgDogNumbers::OnRegDelete()
 	int i = m_ctrlRegNums.GetSelection();
 	if (0 <= i)
 	{
-		ARBDogRegNum const* pRegNum = reinterpret_cast<ARBDogRegNum const*>(m_ctrlRegNums.GetItemData(i));
+		CListPtrData<ARBDogRegNumPtr>* pData = GetRegNumData(i);
+		ARBDogRegNumPtr pRegNum;
+		if (pData)
+			pRegNum = pData->GetData();
 		m_RegNums.DeleteRegNum(pRegNum->GetVenue(), pRegNum->GetNumber());
 		m_ctrlRegNums.DeleteItem(i);
 	}

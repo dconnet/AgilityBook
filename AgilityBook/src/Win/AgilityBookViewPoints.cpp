@@ -134,7 +134,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_WM_CREATE()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_CONTEXTMENU()
-	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnLvnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
@@ -152,6 +151,7 @@ END_MESSAGE_MAP()
 
 CAgilityBookViewPoints::CAgilityBookViewPoints()
 {
+	SetAutoDelete(true);
 }
 
 CAgilityBookViewPoints::~CAgilityBookViewPoints()
@@ -231,21 +231,9 @@ void CAgilityBookViewPoints::OnContextMenu(
 	}
 }
 
-void CAgilityBookViewPoints::OnLvnDeleteitem(
-		NMHDR *pNMHDR,
-		LRESULT *pResult)
-{
-	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	PointsDataBase *pData = reinterpret_cast<PointsDataBase*>(pNMLV->lParam);
-	if (pData)
-		pData->Release();
-	pNMLV->lParam = 0;
-	*pResult = 0;
-}
-
 void CAgilityBookViewPoints::OnNMDblclk(
-		NMHDR *pNMHDR,
-		LRESULT *pResult)
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
 	PointsDataBase* pData = GetItemData(GetSelection(true));
 	if (pData)
@@ -279,13 +267,14 @@ void CAgilityBookViewPoints::OnKeydown(
 }
 
 void CAgilityBookViewPoints::OnLvnGetdispinfo(
-		NMHDR *pNMHDR,
-		LRESULT *pResult)
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
-	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		PointsDataBase *pData = reinterpret_cast<PointsDataBase*>(pDispInfo->item.lParam);
+		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+		PointsDataBase* pData = dynamic_cast<PointsDataBase*>(pRawData);
 		if (pData)
 		{
 			ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
@@ -384,45 +373,42 @@ bool CAgilityBookViewPoints::GetMessage2(CString& msg) const
 
 PointsDataBase* CAgilityBookViewPoints::GetItemData(int index) const
 {
-	PointsDataBase *pData = NULL;
-	if (0 <= index && index < GetListCtrl().GetItemCount())
-		pData = reinterpret_cast<PointsDataBase*>(GetListCtrl().GetItemData(index));
-	return pData;
+	return dynamic_cast<PointsDataBase*>(GetData(index));
 }
 
 size_t CAgilityBookViewPoints::FindMatchingRuns(
-		std::list<RunInfo> const& runs,
-		ARBString const& div,
-		ARBString const& level,
-		ARBString const& event,
-		std::list<RunInfo>& matching)
+		std::list<RunInfo> const& inRuns,
+		ARBString const& inDiv,
+		ARBString const& inLevel,
+		ARBString const& inEvent,
+		std::list<RunInfo>& inMatching)
 {
-	matching.clear();
-	for (list<RunInfo>::const_iterator iterRun = runs.begin();
-		iterRun != runs.end();
+	inMatching.clear();
+	for (list<RunInfo>::const_iterator iterRun = inRuns.begin();
+		iterRun != inRuns.end();
 		++iterRun)
 	{
-		ARBDogRun const* pRun = iterRun->second;
-		if (pRun->GetDivision() == div && pRun->GetLevel() == level && pRun->GetEvent() == event)
-			matching.push_back(*iterRun);
+		ARBDogRunPtr pRun = iterRun->second;
+		if (pRun->GetDivision() == inDiv && pRun->GetLevel() == inLevel && pRun->GetEvent() == inEvent)
+			inMatching.push_back(*iterRun);
 	}
-	return matching.size();
+	return inMatching.size();
 }
 
 double CAgilityBookViewPoints::TallyPoints(
-		std::list<RunInfo> const& runs,
-		ARBConfigScoring const* pScoringMethod,
+		std::list<RunInfo> const& inRuns,
+		ARBConfigScoringPtr pScoringMethod,
 		int& nCleanQ,
 		int& nNotCleanQ)
 {
 	nCleanQ = 0;
 	nNotCleanQ = 0;
 	double score = 0.0;
-	for (list<RunInfo>::const_iterator iterRun = runs.begin();
-		iterRun != runs.end();
+	for (list<RunInfo>::const_iterator iterRun = inRuns.begin();
+		iterRun != inRuns.end();
 		++iterRun)
 	{
-		ARBDogRun const* pRun = iterRun->second;
+		ARBDogRunPtr pRun = iterRun->second;
 		if (pRun->GetQ().Qualified())
 		{
 			bool bClean = false;
@@ -436,7 +422,7 @@ double CAgilityBookViewPoints::TallyPoints(
 	return score;
 }
 
-void CAgilityBookViewPoints::InsertData(int& ioIndex, PointsDataBase* inData)
+void CAgilityBookViewPoints::InsertData(int& ioIndex, CListData* inData)
 {
 	if (inData)
 	{
@@ -467,7 +453,7 @@ void CAgilityBookViewPoints::LoadData()
 	GetListCtrl().DeleteAllItems();
 
 	// Find all visible items and sort them out by venue.
-	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	if (pDog)
 	{
 		std::vector<CVenueFilter> venues;
@@ -482,7 +468,7 @@ void CAgilityBookViewPoints::LoadData()
 			iterVenue != GetDocument()->GetConfig().GetVenues().end();
 			++iterVenue)
 		{
-			ARBConfigVenue* pVenue = (*iterVenue);
+			ARBConfigVenuePtr pVenue = (*iterVenue);
 			if (!CAgilityBookOptions::IsVenueVisible(venues, pVenue->GetName()))
 				continue;
 
@@ -492,7 +478,7 @@ void CAgilityBookViewPoints::LoadData()
 				iterTitle != pDog->GetTitles().end();
 				++iterTitle)
 			{
-				ARBDogTitle* pTitle = (*iterTitle);
+				ARBDogTitlePtr pTitle = (*iterTitle);
 				if (pTitle->GetVenue() == pVenue->GetName()
 				&& !pTitle->IsFiltered())
 				{
@@ -509,12 +495,12 @@ void CAgilityBookViewPoints::LoadData()
 			LifeTimePointsList lifetime;
 
 			// Then the runs.
-			list<ARBDogTrial const*> trialsInVenue;
+			list<ARBDogTrialPtr> trialsInVenue;
 			for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 				iterTrial != pDog->GetTrials().end();
 				++iterTrial)
 			{
-				ARBDogTrial const* pTrial = (*iterTrial);
+				ARBDogTrialPtr pTrial = (*iterTrial);
 				// Don't bother subtracting "hidden" trials. Doing so
 				// will skew the qualifying percentage.
 				if (pTrial->HasVenue(pVenue->GetName()))
@@ -537,12 +523,12 @@ void CAgilityBookViewPoints::LoadData()
 					iterDiv != pVenue->GetDivisions().end();
 					++iterDiv)
 				{
-					ARBConfigDivision* pDiv = (*iterDiv);
+					ARBConfigDivisionPtr pDiv = (*iterDiv);
 					for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
 						iterLevel != pDiv->GetLevels().end();
 						++iterLevel)
 					{
-						ARBConfigLevel* pLevel = (*iterLevel);
+						ARBConfigLevelPtr pLevel = (*iterLevel);
 						LifeTimePoints pts;
 						pts.pDiv = pDiv;
 						pts.pLevel = pLevel;
@@ -552,22 +538,22 @@ void CAgilityBookViewPoints::LoadData()
 							iterEvent != pVenue->GetEvents().end();
 							++iterEvent)
 						{
-							ARBConfigEvent* pEvent = (*iterEvent);
+							ARBConfigEventPtr pEvent = (*iterEvent);
 							bool bHasExistingPoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, false);
 							bool bHasExistingLifetimePoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, true);
 
 							// Don't tally runs that have no titling points.
-							ARBVector<ARBConfigScoring> scoringItems;
+							ARBVector<ARBConfigScoringPtr> scoringItems;
 							if (0 == pEvent->FindAllEvents(pDiv->GetName(), pLevel->GetName(), ARBDate(), true, scoringItems))
 								continue;
 							// Iterate across each scoring method separately. This means it is
 							// possible to have multiple lines show up for a given event. But if
 							// that happens, it means the events were scored differently.
-							for (ARBVector<ARBConfigScoring>::iterator iterScoring = scoringItems.begin();
+							for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
 								iterScoring != scoringItems.end();
 								++iterScoring)
 							{
-								ARBConfigScoring* pScoringMethod = *iterScoring;
+								ARBConfigScoringPtr pScoringMethod = *iterScoring;
 								int SQs = 0;
 								int speedPtsEvent = 0;
 								list<RunInfo> matching;
@@ -575,30 +561,26 @@ void CAgilityBookViewPoints::LoadData()
 								set<ARBString> judgesQ;
 								set<ARBString> partners;
 								set<ARBString> partnersQ;
-								for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
+								for (list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
 									iterTrial != trialsInVenue.end();
 									++iterTrial)
 								{
-									ARBDogTrial const* pTrial = (*iterTrial);
+									ARBDogTrialPtr pTrial = (*iterTrial);
 									for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 										iterRun != pTrial->GetRuns().end();
 										++iterRun)
 									{
-										ARBDogRun const* pRun = (*iterRun);
+										ARBDogRunPtr pRun = (*iterRun);
 										if (pRun->GetDivision() != pDiv->GetName()
 										|| (pRun->GetLevel() != pLevel->GetName() && !pLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
 										|| pRun->GetEvent() != pEvent->GetName())
 											continue;
-										ARBConfigScoring* pScoring;
+										ARBConfigScoringPtr pScoring;
 										pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
 										ASSERT(pScoring);
 										if (!pScoring) continue; // Shouldn't need it...
 										if (*pScoring != *pScoringMethod)
-										{
-											pScoring->Release();
 											continue;
-										}
-										pScoring->Release();
 										bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
 										&& CAgilityBookOptions::IsRunVisible(venues, pVenue, pTrial, pRun));
 										if (bRunVisible)
@@ -655,11 +637,11 @@ void CAgilityBookViewPoints::LoadData()
 								{
 									nExistingPts = pDog->GetExistingPoints().ExistingPoints(
 										ARBDogExistingPoints::eRuns,
-										pVenue, NULL, pDiv, pLevel, pEvent);
+										pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent);
 									if (pScoringMethod->HasSuperQ())
 										nExistingSQ += static_cast<int>(pDog->GetExistingPoints().ExistingPoints(
 											ARBDogExistingPoints::eSQ,
-											pVenue, NULL, pDiv, pLevel, pEvent));
+											pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent));
 								}
 								// Now add the existing lifetime points
 								if (bHasExistingLifetimePoints && 0.0 < nExistingPts + nExistingSQ)
@@ -723,7 +705,7 @@ void CAgilityBookViewPoints::LoadData()
 										}
 									}
 									InsertData(idxInsertItem, new PointsDataEvent(this,
-										0 < nExistingPts + nExistingSQ ? pDog : NULL,
+										0 < nExistingPts + nExistingSQ ? pDog : ARBDogPtr(),
 										matching,
 										pVenue, pDiv, pLevel, pEvent,
 										(LPCTSTR)strRunCount,
@@ -738,7 +720,7 @@ void CAgilityBookViewPoints::LoadData()
 						{
 							speedPts += static_cast<int>(pDog->GetExistingPoints().ExistingPoints(
 								ARBDogExistingPoints::eSpeed,
-								pVenue, NULL, pDiv, pLevel, NULL));
+								pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr()));
 						}
 						if (0 < pts.ptList.size())
 							lifetime.push_back(pts);
@@ -754,17 +736,17 @@ void CAgilityBookViewPoints::LoadData()
 				// If the venue has multiQs, tally them now.
 				if (0 < pVenue->GetMultiQs().size())
 				{
-					std::map<ARBConfigMultiQ*, std::set<MultiQdata> > MQs;
-					for (list<ARBDogTrial const*>::const_iterator iterTrial = trialsInVenue.begin();
+					std::map<ARBConfigMultiQPtr, std::set<MultiQdata> > MQs;
+					for (list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
 						iterTrial != trialsInVenue.end();
 						++iterTrial)
 					{
-						ARBDogTrial const* pTrial = (*iterTrial);
+						ARBDogTrialPtr pTrial = (*iterTrial);
 						for (ARBDogRunList::const_iterator iterR = pTrial->GetRuns().begin();
 							iterR != pTrial->GetRuns().end();
 							++iterR)
 						{
-							ARBDogRun const* pRun = *iterR;
+							ARBDogRunPtr pRun = *iterR;
 							if (pRun->GetMultiQ()
 							&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
 							&& CAgilityBookOptions::IsRunVisible(venues, pVenue, pTrial, pRun))
@@ -773,7 +755,7 @@ void CAgilityBookViewPoints::LoadData()
 							}
 						}
 					}
-					for (std::map<ARBConfigMultiQ*, std::set<MultiQdata> >::iterator iter = MQs.begin();
+					for (std::map<ARBConfigMultiQPtr, std::set<MultiQdata> >::iterator iter = MQs.begin();
 						iter != MQs.end();
 						++iter)
 					{
@@ -834,7 +816,9 @@ void CAgilityBookViewPoints::LoadData()
 					}
 				}
 				else if (1 == divs.size())
-					divs.begin()->second->Release();
+				{
+					delete divs.begin()->second;
+				}
 			}
 		}
 
@@ -853,26 +837,26 @@ void CAgilityBookViewPoints::LoadData()
 				// First, just generate a list of runs with the needed info.
 				std::list<OtherPtInfo> runs;
 
-				ARBConfigOtherPoints* pOther = (*iterOther);
+				ARBConfigOtherPointsPtr pOther = (*iterOther);
 				for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
 					iterTrial != pDog->GetTrials().end();
 					++iterTrial)
 				{
-					ARBDogTrial const* pTrial = (*iterTrial);
+					ARBDogTrialPtr pTrial = (*iterTrial);
 					if (!pTrial->IsFiltered())
 					{
 						for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 							iterRun != pTrial->GetRuns().end();
 							++iterRun)
 						{
-							ARBDogRun const* pRun = (*iterRun);
+							ARBDogRunPtr pRun = (*iterRun);
 							if (!pRun->IsFiltered(ARBBase::eIgnoreQ))
 							{
 								for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
 									iterOtherPts != pRun->GetOtherPoints().end();
 									++iterOtherPts)
 								{
-									ARBDogRunOtherPoints const* pOtherPts = (*iterOtherPts);
+									ARBDogRunOtherPointsPtr pOtherPts = (*iterOtherPts);
 									if (pOtherPts->GetName() == pOther->GetName())
 									{
 										runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
@@ -1014,7 +998,6 @@ void CAgilityBookViewPoints::LoadData()
 				}
 			}
 		}
-		pCurData->Release();
 	}
 
 	GetListCtrl().SetRedraw(TRUE);
@@ -1042,7 +1025,7 @@ void CAgilityBookViewPoints::OnDetails()
 void CAgilityBookViewPoints::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	if (pDog)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1050,7 +1033,7 @@ void CAgilityBookViewPoints::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 
 void CAgilityBookViewPoints::OnAgilityNewTitle()
 {
-	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	if (pDog)
 	{
 		// Convenience! No duplicated code!
@@ -1074,7 +1057,7 @@ void CAgilityBookViewPoints::OnViewHiddenTitles()
 void CAgilityBookViewPoints::OnUpdateCopyTitles(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	if (pDog && 0 < pDog->GetTitles().size())
 	{
 		int count = 0;
@@ -1094,7 +1077,7 @@ void CAgilityBookViewPoints::OnUpdateCopyTitles(CCmdUI* pCmdUI)
 
 void CAgilityBookViewPoints::OnCopyTitles()
 {
-	ARBDog* pDog = GetDocument()->GetCurrentDog();
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	if (pDog && 0 < pDog->GetTitles().size())
 	{
 		std::vector<CVenueFilter> venues;
@@ -1112,7 +1095,7 @@ void CAgilityBookViewPoints::OnCopyTitles()
 				iTitle != (*iVenue)->GetTitles().end();
 				++iTitle)
 			{
-				ARBDogTitle* pTitle;
+				ARBDogTitlePtr pTitle;
 				if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
 				{
 					if (pTitle->GetDate().IsValid()
@@ -1131,7 +1114,6 @@ void CAgilityBookViewPoints::OnCopyTitles()
 							postTitles2 += (*iTitle)->GetName();
 						}
 					}
-					pTitle->Release();
 				}
 			}
 			if (!preTitles2.empty())

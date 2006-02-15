@@ -44,7 +44,7 @@ class CDlgConfigOtherPoints : public CDlgBaseDialog
 public:
 	CDlgConfigOtherPoints(
 			ARBConfig& config,
-			ARBConfigOtherPoints* pOther,
+			ARBConfigOtherPointsPtr pOther,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigOtherPoints();
 
@@ -57,7 +57,7 @@ private:
 	CString m_Desc;
 	//}}AFX_DATA
 	ARBConfig& m_Config;
-	ARBConfigOtherPoints* m_pOther;
+	ARBConfigOtherPointsPtr m_pOther;
 
 	//{{AFX_VIRTUAL(CSelectDlg)
 protected:

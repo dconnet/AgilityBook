@@ -61,6 +61,7 @@
 #include "DlgFind.h"
 #include "DlgTraining.h"
 #include "Element.h"
+#include "ListData.h"
 #include "MainFrm.h"
 #include "TabView.h"
 
@@ -75,38 +76,34 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewTrainingData
 
-class CAgilityBookViewTrainingData
+class CAgilityBookViewTrainingData : public CListData
 {
 	friend int CALLBACK CompareTraining(LPARAM, LPARAM, LPARAM);
 public:
 	CAgilityBookViewTrainingData(
 			CAgilityBookViewTraining* pView,
-			ARBTraining* pTraining)
+			ARBTrainingPtr pTraining)
 		: m_RefCount(1)
 		, m_pView(pView)
 		, m_pTraining(pTraining)
 	{
-		if (m_pTraining)
-			m_pTraining->AddRef();
 	}
 	void AddRef();
 	void Release();
 
-	bool CanEdit() const		{return true;}
-	bool CanDelete() const		{return true;}
+	bool CanEdit() const			{return true;}
+	bool CanDelete() const			{return true;}
 
-	ARBTraining* GetTraining()	{return m_pTraining;}
+	ARBTrainingPtr GetTraining()	{return m_pTraining;}
 	CString OnNeedText(int iCol) const;
 
 private:
 	~CAgilityBookViewTrainingData()
 	{
-		if (m_pTraining)
-			m_pTraining->Release();
 	}
 	UINT m_RefCount;
 	CAgilityBookViewTraining* m_pView;
-	ARBTraining* m_pTraining;
+	ARBTrainingPtr m_pTraining;
 };
 
 void CAgilityBookViewTrainingData::AddRef()
@@ -202,7 +199,7 @@ int CAgilityBookViewTraining::CSortColumn::LookupColumn(int iCol) const
 
 struct SORT_TRAINING_INFO
 {
-	CAgilityBookViewTraining *pThis;
+	CAgilityBookViewTraining* pThis;
 	int nCol;
 };
 
@@ -214,8 +211,10 @@ int CALLBACK CompareTraining(
 	SORT_TRAINING_INFO* sortInfo = reinterpret_cast<SORT_TRAINING_INFO*>(lParam3);
 	if (!sortInfo || 0 == sortInfo->nCol)
 		return 0;
-	CAgilityBookViewTrainingData* pItem1 = reinterpret_cast<CAgilityBookViewTrainingData*>(lParam1);
-	CAgilityBookViewTrainingData* pItem2 = reinterpret_cast<CAgilityBookViewTrainingData*>(lParam2);
+	CListData* pRawItem1 = reinterpret_cast<CListData*>(lParam1);
+	CListData* pRawItem2 = reinterpret_cast<CListData*>(lParam2);
+	CAgilityBookViewTrainingData* pItem1 = dynamic_cast<CAgilityBookViewTrainingData*>(pRawItem1);
+	CAgilityBookViewTrainingData* pItem2 = dynamic_cast<CAgilityBookViewTrainingData*>(pRawItem2);
 	int nRet = 0;
 	int iCol = abs(sortInfo->nCol);
 	switch (sortInfo->pThis->m_Columns[iCol-1])
@@ -324,7 +323,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
-	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
@@ -355,6 +353,7 @@ CAgilityBookViewTraining::CAgilityBookViewTraining()
 	: m_Callback(this)
 	, m_SortColumn(m_Columns)
 {
+	SetAutoDelete(true);
 }
 #pragma warning (pop)
 
@@ -381,12 +380,6 @@ int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	return 0;
-}
-
-void CAgilityBookViewTraining::OnDestroy() 
-{
-	GetListCtrl().DeleteAllItems();
-	CListView2::OnDestroy();
 }
 
 void CAgilityBookViewTraining::OnInitialUpdate()
@@ -489,10 +482,7 @@ bool CAgilityBookViewTraining::GetMessage2(CString& msg) const
 
 CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemData(int index) const
 {
-	CAgilityBookViewTrainingData *pData = NULL;
-	if (0 <= index && index < GetListCtrl().GetItemCount())
-		pData = reinterpret_cast<CAgilityBookViewTrainingData*>(GetListCtrl().GetItemData(index));
-	return pData;
+	return dynamic_cast<CAgilityBookViewTrainingData*>(GetData(index));
 }
 
 void CAgilityBookViewTraining::SetupColumns()
@@ -536,17 +526,18 @@ void CAgilityBookViewTraining::LoadData()
 	iter != GetDocument()->GetTraining().end();
 	++iter)
 	{
-		ARBTraining* pTraining = (*iter);
+		ARBTrainingPtr pTraining = (*iter);
 		if (pTraining->IsFiltered())
 			continue;
-		CAgilityBookViewTrainingData* pData = new CAgilityBookViewTrainingData(this, pTraining);
 		LV_ITEM item;
 		item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.iItem = i;
 		item.iSubItem = 0;
 		item.iImage = I_IMAGECALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(pData);
+		item.lParam = reinterpret_cast<LPARAM>(
+			static_cast<CListData*>(
+				new CAgilityBookViewTrainingData(this, pTraining)));
 		int index = GetListCtrl().InsertItem(&item);
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows
@@ -556,7 +547,7 @@ void CAgilityBookViewTraining::LoadData()
 		// just modified our own entry.
 		if (pCurData)
 		{
-			ARBTraining* pCurTraining = pCurData->GetTraining();
+			ARBTrainingPtr pCurTraining = pCurData->GetTraining();
 			if (*pCurTraining == *pTraining
 			|| pCurTraining->GetDate() == pTraining->GetDate())
 			{
@@ -658,23 +649,12 @@ void CAgilityBookViewTraining::OnGetdispinfo(
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		CAgilityBookViewTrainingData *pData = reinterpret_cast<CAgilityBookViewTrainingData*>(pDispInfo->item.lParam);
+		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+		CAgilityBookViewTrainingData* pData = dynamic_cast<CAgilityBookViewTrainingData*>(pRawData);
 		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
-	*pResult = 0;
-}
-
-void CAgilityBookViewTraining::OnDeleteitem(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
-	CAgilityBookViewTrainingData *pData = reinterpret_cast<CAgilityBookViewTrainingData*>(pNMListView->lParam);
-	if (pData)
-		pData->Release();
-	pNMListView->lParam = 0;
 	*pResult = 0;
 }
 
@@ -756,7 +736,7 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 
 void CAgilityBookViewTraining::OnTrainingNew()
 {
-	ARBTraining* training = new ARBTraining();
+	ARBTrainingPtr training(new ARBTraining());
 	CDlgTraining dlg(training, GetDocument());
 	if (IDOK == dlg.DoModal())
 	{
@@ -769,7 +749,6 @@ void CAgilityBookViewTraining::OnTrainingNew()
 		for (int i = 0; i < nColumnCount; ++i)
 			GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}
-	training->Release();
 }
 
 void CAgilityBookViewTraining::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
@@ -798,11 +777,10 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 			// Currently, we don't need to worry if this is visible. The only filtering
 			// is on name/date. So they can see the item that's being duped, which means
 			// the new one is visible too.
-			ARBTraining* training = new ARBTraining(*((*iter)->GetTraining()));
+			ARBTrainingPtr training(new ARBTraining(*((*iter)->GetTraining())));
 			GetDocument()->GetTraining().AddTraining(training);
 			GetDocument()->GetTraining().sort();
 			date = training->GetDate();
-			training->Release();
 		}
 		if (0 < items.size())
 		{
@@ -899,15 +877,13 @@ void CAgilityBookViewTraining::OnEditPaste()
 				Element const& element = tree.GetElement(i);
 				if (element.GetName() == TREE_TRAINING)
 				{
-					ARBTraining* pLog = new ARBTraining();
+					ARBTrainingPtr pLog(new ARBTraining());
 					CErrorCallback err;
 					if (pLog->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{
 						bLoaded = true;
 						GetDocument()->GetTraining().AddTraining(pLog);
 					}
-					pLog->Release();
-					pLog = NULL;
 				}
 			}
 		}

@@ -45,7 +45,7 @@ class CDlgTraining : public CDlgBaseDialog
 // Construction
 public:
 	CDlgTraining(
-			ARBTraining* pTraining,
+			ARBTrainingPtr pTraining,
 			CAgilityBookDoc* pDoc,
 			CWnd* pParent = NULL);
 
@@ -60,7 +60,7 @@ private:
 	CString	m_SubName;
 	CString	m_Notes;
 	//}}AFX_DATA
-	ARBTraining* m_pTraining;
+	ARBTrainingPtr m_pTraining;
 	CAgilityBookDoc* m_pDoc;
 
 // Overrides

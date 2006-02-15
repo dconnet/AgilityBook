@@ -37,10 +37,13 @@
  */
 
 #include "ARBDate.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
-class ARBDogExistingPoints;
+#include "ListData.h"
+
 class ARBDogExistingPointsList;
 class CAgilityBookDoc;
+class CDlgPointsDataLevel;
 
 class CDlgExistingPoints : public CDlgBaseDialog
 {
@@ -48,7 +51,7 @@ public:
 	CDlgExistingPoints(
 			CAgilityBookDoc* pDoc,
 			ARBDogExistingPointsList& points,
-			ARBDogExistingPoints* pExistingPoints,
+			ARBDogExistingPointsPtr pExistingPoints,
 			CWnd* pParent = NULL);
 
 private:
@@ -56,21 +59,21 @@ private:
 	//{{AFX_DATA(CDlgExistingPoints)
 	enum { IDD = IDD_EXISTING_POINTS };
 	CDateTimeCtrl	m_ctrlDate;
-	CComboBox	m_ctrlType;
+	CComboBox2	m_ctrlType;
 	CStatic	m_ctrlOtherText;
-	CComboBox	m_ctrlOther;
+	CComboBox2	m_ctrlOther;
 	CStatic	m_ctrlMultiQText;
-	CComboBox	m_ctrlMultiQ;
+	CComboBox2	m_ctrlMultiQ;
 	CStatic	m_ctrlVenuesText;
-	CComboBox	m_ctrlVenues;
+	CComboBox2	m_ctrlVenues;
 	CStatic	m_ctrlDivisionsText;
-	CComboBox	m_ctrlDivisions;
+	CComboBox2	m_ctrlDivisions;
 	CStatic	m_ctrlLevelsText;
-	CComboBox	m_ctrlLevels;
+	CComboBox2	m_ctrlLevels;
 	CStatic	m_ctrlEventsText;
-	CComboBox	m_ctrlEvents;
+	CComboBox2	m_ctrlEvents;
 	CStatic	m_ctrlSubNamesText;
-	CComboBox	m_ctrlSubNames;
+	CComboBox2	m_ctrlSubNames;
 	CString	m_SubName;
 	double	m_Points;
 	CString	m_Comments;
@@ -78,7 +81,7 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogExistingPointsList& m_PointsList;
-	ARBDogExistingPoints* m_pExistingPoints;
+	ARBDogExistingPointsPtr m_pExistingPoints;
 	CPoint m_ptControls[2][5];
 	ARBDate m_Date;
 
@@ -89,6 +92,12 @@ protected:
 
 // Implementation
 protected:
+	CListPtrData<ARBConfigVenuePtr>* GetVenueData(int index) const;
+	CListPtrData<ARBConfigDivisionPtr>* GetDivisionData(int index) const;
+	CListPtrData<ARBConfigEventPtr>* GetEventData(int index) const;
+	CDlgPointsDataLevel* GetLevelData(int index) const;
+	CListPtrData<ARBConfigOtherPointsPtr>* GetOtherPointData(int index) const;
+	CListPtrData<ARBConfigMultiQPtr>* GetMultiQData(int index) const;
 	void GetEnableLists(
 			int index,
 			BOOL& outOther,
@@ -100,7 +109,6 @@ protected:
 			BOOL& outSubName,
 			bool bSet);
 	void UpdateControls();
-	void ClearLevels();
 	void FillVenues();
 	void FillFromVenue();
 	void FillLevels();
@@ -114,7 +122,6 @@ protected:
 	afx_msg void OnSelchangeLevel();
 	afx_msg void OnSelchangeEvent();
 	virtual void OnOK();
-	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

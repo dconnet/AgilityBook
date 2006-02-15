@@ -64,7 +64,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBAgilityRecordBook& book,
 			ARBConfig& config,
-			ARBConfigVenue* pVenue,
+			ARBConfigVenuePtr pVenue,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigVenue();
 	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
@@ -92,7 +92,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook& m_Book;
 	ARBConfig& m_Config;
-	ARBConfigVenue* m_pVenue;
+	ARBConfigVenuePtr m_pVenue;
 	std::vector<CDlgFixup*> m_DlgFixup;
 	typedef enum
 	{
@@ -119,22 +119,22 @@ private:
 	void LoadEventData();
 	void LoadMultiQData();
 	int FindCurrentDivision(
-			ARBConfigDivision const* pDiv,
+			ARBConfigDivisionPtr pDiv,
 			bool bSet);
 	HTREEITEM FindCurrentLevel(
-			ARBConfigLevel const* pLevel,
+			ARBConfigLevelPtr pLevel,
 			bool bSet);
 	HTREEITEM FindCurrentSubLevel(
-			ARBConfigSubLevel const* pSubLevel,
+			ARBConfigSubLevelPtr pSubLevel,
 			bool bSet);
 	int FindCurrentTitle(
-			ARBConfigTitle const* pTitle,
+			ARBConfigTitlePtr pTitle,
 			bool bSet);
 	int FindCurrentEvent(
-			ARBConfigEvent const* pEvent,
+			ARBConfigEventPtr pEvent,
 			bool bSet);
 	int FindCurrentMultiQ(
-			ARBConfigMultiQ const* pMultiQ,
+			ARBConfigMultiQPtr pMultiQ,
 			bool bSet);
 	CDlgConfigureDataDivision* GetCurrentDivisionData();
 	CDlgConfigureDataLevel* GetCurrentLevelData();
@@ -149,7 +149,6 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);

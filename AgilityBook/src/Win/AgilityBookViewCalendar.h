@@ -69,7 +69,7 @@ public:
 private:
 	size_t GetEntriesOn(
 			ARBDate const& date,
-			std::vector<ARBCalendar*>& entries,
+			std::vector<ARBCalendarPtr>& entries,
 			bool bGetHidden) const;
 	void LoadData();
 	CRect GetDateRect(
@@ -78,8 +78,8 @@ private:
 	void GetDateFromPoint(
 			CPoint pt,
 			ARBDate& date);
-	std::vector<ARBCalendar*> m_Calendar;
-	std::vector<ARBCalendar*> m_CalendarHidden;
+	std::vector<ARBCalendarPtr> m_Calendar;
+	std::vector<ARBCalendarPtr> m_CalendarHidden;
 	ARBDate m_First;	///< First date, adjusted to Mon of that week.
 	ARBDate m_Last;		///< Last trial date.
 	int m_nWeeks;		///< Number of visible weeks (range of first/last)

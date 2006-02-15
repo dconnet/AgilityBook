@@ -95,6 +95,11 @@ ARBDog::~ARBDog()
 {
 }
 
+ARBDogPtr ARBDog::Clone() const
+{
+	return ARBDogPtr(new ARBDog(*this));
+}
+
 ARBDog& ARBDog::operator=(ARBDog const& rhs)
 {
 	if (this != &rhs)
@@ -308,7 +313,7 @@ int ARBDog::DeleteVenue(ARBString const& inVenue)
 }
 
 int ARBDog::RenameDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inOldDiv,
 		ARBString const& inNewDiv)
 {
@@ -328,6 +333,19 @@ int ARBDog::DeleteDivision(
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+bool ARBDogList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogPtr thing(new ARBDog());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
 
 void ARBDogList::SetMultiQs(ARBConfig const& inConfig)
 {
@@ -482,7 +500,7 @@ int ARBDogList::NumMultiHostedTrialsInDivision(
 }
 
 int ARBDogList::NumExistingPointsInDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
 {
 	int count = 0;
@@ -492,7 +510,7 @@ int ARBDogList::NumExistingPointsInDivision(
 }
 
 int ARBDogList::NumRunsInDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
 {
 	int count = 0;
@@ -502,7 +520,7 @@ int ARBDogList::NumRunsInDivision(
 }
 
 int ARBDogList::RenameDivision(
-		ARBConfigVenue const* inVenue,
+		ARBConfigVenuePtr inVenue,
 		ARBString const& inOldDiv,
 		ARBString const& inNewDiv)
 {
@@ -594,13 +612,12 @@ int ARBDogList::DeleteTitle(
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		ARBDogTitle* pTitle;
+		ARBDogTitlePtr pTitle;
 		(*iter)->GetTitles().FindTitle(inVenue, inTitle, &pTitle);
 		while (pTitle)
 		{
 			++count;
 			(*iter)->GetTitles().DeleteTitle(pTitle);
-			pTitle->Release();
 			(*iter)->GetTitles().FindTitle(inVenue, inTitle, &pTitle);
 		}
 	}
@@ -647,19 +664,18 @@ int ARBDogList::DeleteEvent(
 	return count;
 }
 
-bool ARBDogList::AddDog(ARBDog* inDog)
+bool ARBDogList::AddDog(ARBDogPtr inDog)
 {
 	bool bAdded = false;
 	if (inDog)
 	{
 		bAdded = true;
-		inDog->AddRef();
 		push_back(inDog);
 	}
 	return bAdded;
 }
 
-bool ARBDogList::DeleteDog(ARBDog const* inDog)
+bool ARBDogList::DeleteDog(ARBDogPtr inDog)
 {
 	if (inDog)
 	{

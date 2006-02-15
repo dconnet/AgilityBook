@@ -711,6 +711,9 @@ CDlgAssignColumns::CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgAssignColumns::IDD, pParent)
+	, m_ctrlType(false)
+	, m_ctrlAvailable(false)
+	, m_ctrlColumns(false)
 	, m_eOrder(eOrder)
 	, m_bIncludeBlank(false)
 {

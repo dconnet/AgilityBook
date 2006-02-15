@@ -41,7 +41,8 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBDog;
+#include "ListData.h"
+
 class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,6 +73,7 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
+	CListPtrData<ARBDogRegNumPtr>* GetRegNumData(int index) const;
 	void SetColumnRegNumHeaders();
 	void ListRegNums();
 	void UpdateButtons();

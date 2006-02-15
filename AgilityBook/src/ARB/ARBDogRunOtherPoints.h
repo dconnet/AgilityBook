@@ -53,8 +53,11 @@ class ARBDogRunOtherPoints : public ARBBase
 {
 public:
 	ARBDogRunOtherPoints();
+	~ARBDogRunOtherPoints();
 	ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs);
 	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
+	ARBDogRunOtherPointsPtr Clone() const;
+
 	bool operator==(ARBDogRunOtherPoints const& rhs) const;
 	bool operator!=(ARBDogRunOtherPoints const& rhs) const;
 
@@ -103,7 +106,6 @@ public:
 	void SetPoints(short inPts);
 
 private:
-	~ARBDogRunOtherPoints();
 	ARBString m_Name;
 	short m_Points;
 };
@@ -138,13 +140,28 @@ inline void ARBDogRunOtherPoints::SetPoints(short inPts)
 /**
  * List of ARBDogRunOtherPoints objects.
  */
-class ARBDogRunOtherPointsList : public ARBVectorLoad2<ARBDogRunOtherPoints>
+class ARBDogRunOtherPointsList : public ARBVector<ARBDogRunOtherPointsPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Add an other point.
 	 * @param inOther OtherPoints to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddOtherPoints(ARBDogRunOtherPoints* inOther);
+	bool AddOtherPoints(ARBDogRunOtherPointsPtr inOther);
 };

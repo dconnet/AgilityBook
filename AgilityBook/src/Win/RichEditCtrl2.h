@@ -64,7 +64,7 @@ protected:
 protected:
 	void Setup();
 	//{{AFX_MSG(CRichEditCtrl2)
-	afx_msg void OnEnLink(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEnLink(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

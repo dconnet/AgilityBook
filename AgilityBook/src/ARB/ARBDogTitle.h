@@ -59,8 +59,11 @@ class ARBDogTitle : public ARBBase
 {
 public:
 	ARBDogTitle();
+	~ARBDogTitle();
 	ARBDogTitle(ARBDogTitle const& rhs);
 	ARBDogTitle& operator=(ARBDogTitle const& rhs);
+	ARBDogTitlePtr Clone() const;
+
 	bool operator==(ARBDogTitle const& rhs) const;
 	bool operator!=(ARBDogTitle const& rhs) const;
 
@@ -122,7 +125,6 @@ public:
 	void SetHidden(bool bHidden);
 
 private:
-	~ARBDogTitle();
 	ARBDate m_Date;
 	ARBString m_Venue;
 	ARBString m_Name;
@@ -199,9 +201,24 @@ inline void ARBDogTitle::SetHidden(bool bHidden)
 /**
  * List of ARBDogTitle objects.
  */
-class ARBDogTitleList : public ARBVectorLoad2<ARBDogTitle>
+class ARBDogTitleList : public ARBVector<ARBDogTitlePtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort the list by date.
 	 */
@@ -224,7 +241,7 @@ public:
 	bool FindTitle(
 			ARBString const& inVenue,
 			ARBString const& inTitle,
-			ARBDogTitle** outTitle = NULL) const;
+			ARBDogTitlePtr* outTitle = NULL) const;
 
 	/**
 	 * Find the maximum instance of a title
@@ -280,12 +297,12 @@ public:
 	 * @param inTitle Title to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitle(ARBDogTitle* inTitle);
+	bool AddTitle(ARBDogTitlePtr inTitle);
 
 	/**
 	 * Delete a title, remove any dependent objects.
 	 * @param inTitle Title being deleted.
 	 * @return Was it removed?
 	 */
-	bool DeleteTitle(ARBDogTitle const* inTitle);
+	bool DeleteTitle(ARBDogTitlePtr inTitle);
 };

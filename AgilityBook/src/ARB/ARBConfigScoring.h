@@ -83,8 +83,11 @@ public:
 	static ARBString GetScoringStyleStr(ScoringStyle inStyle);
 
 	ARBConfigScoring();
+	~ARBConfigScoring();
 	ARBConfigScoring(ARBConfigScoring const& rhs);
 	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+	ARBConfigScoringPtr Clone() const;
+
 	bool operator==(ARBConfigScoring const& rhs) const;
 	bool operator!=(ARBConfigScoring const& rhs) const;
 
@@ -178,7 +181,6 @@ public:
 	bool ConvertDoubleQ() const;
 
 private:
-	~ARBConfigScoring();
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
 	ARBString m_Division;
@@ -394,7 +396,7 @@ inline bool ARBConfigScoring::ConvertDoubleQ() const
 /**
  * List of ARBConfigScoring objects.
  */
-class ARBConfigScoringList : public ARBVector<ARBConfigScoring>
+class ARBConfigScoringList : public ARBVector<ARBConfigScoringPtr>
 {
 public:
 	/**
@@ -426,7 +428,7 @@ public:
 			ARBString const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
-			ARBVector<ARBConfigScoring>& outList) const;
+			ARBVector<ARBConfigScoringPtr>& outList) const;
 
 	/**
 	 * Find an event.
@@ -440,7 +442,7 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoring** outEvent = NULL) const;
+			ARBConfigScoringPtr* outEvent = NULL) const;
 
 	/**
 	 * Verify a scoring method exists.
@@ -458,5 +460,5 @@ public:
 	 * Create a new scoring method.
 	 * @return Pointer to a new method.
 	 */
-	ARBConfigScoring* AddScoring();
+	ARBConfigScoringPtr AddScoring();
 };

@@ -265,7 +265,7 @@ CAgilityBookTree::CAgilityBookTree()
 	: m_bReset(false)
 	, m_bSuppressSelect(false)
 	, m_Callback(this)
-	, m_pDog(NULL)
+	, m_pDog()
 {
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
@@ -285,11 +285,6 @@ LRESULT CAgilityBookTree::OnCommandHelp(WPARAM, LPARAM)
 
 void CAgilityBookTree::OnDestroy()
 {
-	if (m_pDog)
-	{
-		m_pDog->Release();
-		m_pDog = NULL;
-	}
 	CTreeView::OnDestroy();
 }
 
@@ -334,10 +329,10 @@ void CAgilityBookTree::OnUpdate(
 	else if (UPDATE_NEW_TRIAL & lHint)
 	{
 		LoadData();
-		// This is pure evil - casting CObject* to a ARBDogTrial*.
+		// This is pure evil - casting CObject* to a ARBDogTrialPtr.
 		// It was reinterpretted on the sending side in the same manner.
 		// Definite abuse of this parameter.
-		ARBDogTrial *pTrial = reinterpret_cast<ARBDogTrial*>(pHint);
+		ARBDogTrialPtr pTrial(*reinterpret_cast<ARBDogTrialPtr*>(pHint));
 		ASSERT(pTrial);
 		CAgilityBookTreeData* pData = FindData(TVI_ROOT, pTrial);
 		ASSERT(pData);
@@ -379,7 +374,7 @@ BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
 
 void CAgilityBookTree::PrintLine(
 		CDC* pDC,
-		CTreePrintData *pData,
+		CTreePrintData* pData,
 		HTREEITEM hItem,
 		int indent) const
 {
@@ -408,7 +403,7 @@ void CAgilityBookTree::OnBeginPrinting(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
-	CTreePrintData *pData = new CTreePrintData();
+	CTreePrintData* pData = new CTreePrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
 	// Set the font
@@ -499,7 +494,7 @@ CAgilityBookTreeData* CAgilityBookTree::GetCurrentTreeItem() const
 
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
-		ARBBase const* pBase) const
+		ARBBasePtr pBase) const
 {
 	if (!pBase)
 		return NULL;
@@ -524,7 +519,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
-		ARBDog const* pDog) const
+		ARBDogPtr pDog) const
 {
 	if (!pDog)
 		return NULL;
@@ -551,7 +546,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
-		ARBDogTrial const* pTrial) const
+		ARBDogTrialPtr pTrial) const
 {
 	if (!pTrial)
 		return NULL;
@@ -576,7 +571,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
-		ARBDogRun const* pRun) const
+		ARBDogRunPtr pRun) const
 {
 	if (!pRun)
 		return NULL;
@@ -600,7 +595,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 }
 
 HTREEITEM CAgilityBookTree::InsertDog(
-		ARBDog* pDog,
+		ARBDogPtr pDog,
 		bool bSelect)
 {
 	if (!pDog)
@@ -611,7 +606,7 @@ HTREEITEM CAgilityBookTree::InsertDog(
 		LPSTR_TEXTCALLBACK,
 		0, 0, //image, selectedimage
 		0, 0, //state, statemask
-		reinterpret_cast<LPARAM>(static_cast<CAgilityBookTreeData*>(pDataDog)),
+		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataDog)),
 		TVI_ROOT,
 		TVI_LAST);
 	// Note, the text callback will occur BEFORE we make the next call!
@@ -631,7 +626,7 @@ HTREEITEM CAgilityBookTree::InsertDog(
 }
 
 HTREEITEM CAgilityBookTree::InsertTrial(
-		ARBDogTrial* pTrial,
+		ARBDogTrialPtr pTrial,
 		HTREEITEM hParent)
 {
 	if (!pTrial || pTrial->IsFiltered())
@@ -642,7 +637,7 @@ HTREEITEM CAgilityBookTree::InsertTrial(
 		LPSTR_TEXTCALLBACK,
 		0, 0, //image, selectedimage
 		0, 0, //state, statemask
-		reinterpret_cast<LPARAM>(static_cast<CAgilityBookTreeData*>(pDataTrial)),
+		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataTrial)),
 		hParent,
 		TVI_LAST);
 	// Note, the text callback will occur BEFORE we make the next call!
@@ -657,8 +652,8 @@ HTREEITEM CAgilityBookTree::InsertTrial(
 }
 
 HTREEITEM CAgilityBookTree::InsertRun(
-		ARBDogTrial* pTrial,
-		ARBDogRun* pRun,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun,
 		HTREEITEM hParent)
 {
 	if (!pRun || pRun->IsFiltered())
@@ -669,7 +664,7 @@ HTREEITEM CAgilityBookTree::InsertRun(
 		LPSTR_TEXTCALLBACK,
 		0, 0, //image, selectedimage
 		0, 0, //state, statemask
-		reinterpret_cast<LPARAM>(static_cast<CAgilityBookTreeData*>(pDataRun)),
+		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataRun)),
 		hParent,
 		TVI_LAST);
 	// Note, the text callback will occur BEFORE we make the next call!
@@ -684,7 +679,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDog* pDog = new ARBDog();
+			ARBDogPtr pDog(new ARBDog());
 			if (pDog)
 			{
 				CErrorCallback err;
@@ -712,8 +707,6 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 				}
 				else if (0 < err.m_ErrMsg.length())
 					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
-				pDog->Release();
-				pDog = NULL;
 			}
 		}
 		return true;
@@ -760,7 +753,7 @@ void CAgilityBookTree::LoadData()
 	{
 		strCallName = AfxGetApp()->GetProfileString(_T("Settings"), _T("LastDog"), _T(""));
 	}
-	std::list<ARBBase const*> baseItems;
+	std::list<ARBBasePtr> baseItems;
 	while (pData)
 	{
 		baseItems.push_front(pData->GetARBBase());
@@ -783,7 +776,7 @@ void CAgilityBookTree::LoadData()
 		// Work thru all the base items...
 		// Otherwise, after a reorder, the wrong item is selected.
 		hItem = TVI_ROOT;
-		for (std::list<ARBBase const*>::iterator iter = baseItems.begin();
+		for (std::list<ARBBasePtr>::iterator iter = baseItems.begin();
 			iter != baseItems.end();
 			++iter)
 		{
@@ -935,17 +928,10 @@ void CAgilityBookTree::OnSelchanged(
 			pData = reinterpret_cast<CAgilityBookTreeData*>(GetTreeCtrl().GetItemData(hItem));
 		}
 		LPARAM lHint = UPDATE_RUNS_VIEW;
-		ARBDog* pDog = pData->GetDog();
+		ARBDogPtr pDog = pData->GetDog();
 		if (!m_pDog || !pDog || m_pDog != pDog)
 			lHint |= UPDATE_POINTS_VIEW;
-		if (m_pDog)
-		{
-			m_pDog->Release();
-			m_pDog = NULL;
-		}
 		m_pDog = pDog;
-		if (m_pDog)
-			m_pDog->AddRef();
 		GetDocument()->UpdateAllViews(this, lHint);
 	}
 	*pResult = 0;
@@ -1017,7 +1003,7 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 	{
 		if (ID_AGILITY_NEW_DOG == id)
 		{
-			ARBDog* dog = new ARBDog();
+			ARBDogPtr dog(new ARBDog());
 			CDlgDog dlg(GetDocument(), dog);
 			if (IDOK == dlg.DoModal())
 			{
@@ -1028,7 +1014,6 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 				if (1 == GetDocument()->GetDogs().size())
 					LoadData();
 			}
-			dog->Release();
 			bHandled = TRUE;
 		}
 		else if (ID_EDIT_PASTE == id)

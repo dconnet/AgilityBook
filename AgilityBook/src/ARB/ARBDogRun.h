@@ -43,6 +43,7 @@
  */
 
 #include <set>
+#include <boost/weak_ptr.hpp>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBDogNotes.h"
@@ -65,8 +66,11 @@ class ARBDogRun : public ARBBase
 {
 public:
 	ARBDogRun();
+	~ARBDogRun();
 	ARBDogRun(ARBDogRun const& rhs);
 	ARBDogRun& operator=(ARBDogRun const& rhs);
+	ARBDogRunPtr Clone() const;
+
 	bool operator==(ARBDogRun const& rhs) const;
 	bool operator!=(ARBDogRun const& rhs) const;
 
@@ -138,7 +142,7 @@ public:
 	 * @param inScoring Scoring method used.
 	 * @return Number of Speed points earned.
 	 */
-	short GetSpeedPoints(ARBConfigScoring const* inScoring) const;
+	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
 
 	/**
 	 * Get the number of title points earned in this run.
@@ -148,7 +152,7 @@ public:
 	 * @return Number of title points earned.
 	 */
 	double GetTitlePoints(
-			ARBConfigScoring const* inScoring,
+			ARBConfigScoringPtr inScoring,
 			bool* outClean = NULL,
 			double* outLifeTime = NULL) const;
 
@@ -157,13 +161,13 @@ public:
 	 * @param inScoring Scoring method used.
 	 * @return Total score for this run. The meaning of a score varies by event.
 	 */
-	double GetScore(ARBConfigScoring const* inScoring) const;
+	double GetScore(ARBConfigScoringPtr inScoring) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBConfigMultiQ* GetMultiQ() const; ///< Note, this ptr is not AddRef'd
-	void SetMultiQ(ARBConfigMultiQ* inMultiQ);
+	ARBConfigMultiQPtr GetMultiQ() const;
+	void SetMultiQ(ARBConfigMultiQPtr inMultiQ);
 	ARBDate const& GetDate() const;
 	void SetDate(ARBDate const& inDate);
 	ARBString const& GetDivision() const;
@@ -213,8 +217,7 @@ public:
 	void RemoveLink(ARBString const& inLink);
 
 private:
-	~ARBDogRun();
-	ARBConfigMultiQ* m_pMultiQ; //< Not persisted.
+	boost::weak_ptr<ARBConfigMultiQ> m_pMultiQ; //< Not persisted.
 	ARBDate m_Date;
 	ARBString m_Division;
 	ARBString m_Level;
@@ -237,9 +240,9 @@ private:
 	ARBDogRunLinks m_Links;
 };
 
-inline ARBConfigMultiQ* ARBDogRun::GetMultiQ() const
+inline ARBConfigMultiQPtr ARBDogRun::GetMultiQ() const
 {
-	return m_pMultiQ;
+	return m_pMultiQ.lock();
 }
 
 inline ARBDate const& ARBDogRun::GetDate() const
@@ -462,7 +465,7 @@ inline size_t ARBDogRun::NumLinks() const
 /**
  * List of ARBDogRun objects.
  */
-class ARBDogRunList : public ARBVector<ARBDogRun>
+class ARBDogRunList : public ARBVector<ARBDogRunPtr>
 {
 public:
 	/**
@@ -503,7 +506,7 @@ public:
 	 * @param inRun Run to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddRun(ARBDogRun* inRun);
+	bool AddRun(ARBDogRunPtr inRun);
 
 	/**
 	 * Delete a run.
@@ -511,5 +514,5 @@ public:
 	 * @return Whether run was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteRun(ARBDogRun const* inRun);
+	bool DeleteRun(ARBDogRunPtr inRun);
 };

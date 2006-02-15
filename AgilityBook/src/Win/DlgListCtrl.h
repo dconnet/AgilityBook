@@ -53,22 +53,22 @@ public:
 	CDlgListCtrl(
 			CAgilityBookDoc* pDoc,
 			ARBDate const& date,
-			std::vector<ARBCalendar*> const* entries,
+			std::vector<ARBCalendarPtr> const* entries,
 			CTabView* pTabView,
 			CWnd* pParent = NULL);
 	// Faults
 	CDlgListCtrl(
 			CAgilityBookDoc* pDoc,
-			ARBDogRun* run,
+			ARBDogRunPtr run,
 			CWnd* pParent = NULL);
 	// OtherPoints
 	CDlgListCtrl(
-			ARBConfig const* pConfig,
-			ARBDogRun* run,
+			ARBConfig const& pConfig,
+			ARBDogRunPtr run,
 			CWnd* pParent = NULL);
 	// Partners
 	CDlgListCtrl(
-			ARBDogRun* run,
+			ARBDogRunPtr run,
 			CWnd* pParent = NULL);
 
 private:
@@ -93,10 +93,10 @@ private:
 	WhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
 	ARBDate m_Date;
-	std::vector<ARBCalendar*> const* m_CalEntries;
+	std::vector<ARBCalendarPtr> const* m_CalEntries;
 	CTabView* m_pTabView;
 	ARBConfig const* m_pConfig;
-	ARBDogRun* m_pRun;
+	ARBDogRunPtr m_pRun;
 	CImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgTentative;
@@ -122,7 +122,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeleteitemList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydownList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNew();

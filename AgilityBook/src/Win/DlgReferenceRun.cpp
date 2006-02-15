@@ -57,7 +57,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		std::set<ARBString> const& inHeights,
 		std::set<ARBString> const& inNames,
 		std::set<ARBString> const& inBreeds,
-		ARBDogReferenceRun* ref,
+		ARBDogReferenceRunPtr ref,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
 	, m_pDoc(pDoc)

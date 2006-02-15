@@ -56,8 +56,8 @@ class ARBConfig
 {
 public:
 	ARBConfig();
-	ARBConfig(ARBConfig const& rhs);
 	~ARBConfig();
+	ARBConfig(ARBConfig const& rhs);
 	ARBConfig& operator=(ARBConfig const& rhs);
 	bool operator==(ARBConfig const& rhs) const;
 	bool operator!=(ARBConfig const& rhs) const;
@@ -145,7 +145,7 @@ public:
 	 * @return Complete name of title (name + longname).
 	 */
 	ARBString GetTitleCompleteName(
-			ARBDogTitle const* inTitle,
+			ARBDogTitlePtr inTitle,
 			bool bAbbrevFirst = true) const;
 
 	/**

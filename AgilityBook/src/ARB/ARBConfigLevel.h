@@ -54,8 +54,11 @@ class ARBConfigLevel : public ARBBase
 {
 public:
 	ARBConfigLevel();
+	~ARBConfigLevel();
 	ARBConfigLevel(ARBConfigLevel const& rhs);
 	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
+	ARBConfigLevelPtr Clone() const;
+
 	bool operator==(ARBConfigLevel const& rhs) const;
 	bool operator!=(ARBConfigLevel const& rhs) const;
 
@@ -107,7 +110,7 @@ public:
 	 */
 	bool Update(
 			int indent,
-			ARBConfigLevel const* inLevelNew,
+			ARBConfigLevelPtr inLevelNew,
 			ARBString& ioInfo);
 
 	/*
@@ -119,7 +122,6 @@ public:
 	ARBConfigSubLevelList& GetSubLevels();
 
 private:
-	~ARBConfigLevel();
 	ARBString m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
@@ -154,9 +156,22 @@ inline ARBConfigSubLevelList& ARBConfigLevel::GetSubLevels()
 /**
  * List of ARBConfigLevel objects.
  */
-class ARBConfigLevelList : public ARBVectorLoad1<ARBConfigLevel>
+class ARBConfigLevelList : public ARBVector<ARBConfigLevelPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Verify this is a valid level (not sublevel).
 	 * Used to verify configuration stuff.
@@ -176,7 +191,7 @@ public:
 	 */
 	bool FindLevel(
 			ARBString const& inName,
-			ARBConfigLevel** outLevel = NULL);
+			ARBConfigLevelPtr* outLevel = NULL);
 
 	/**
 	 * Find a level, only looks at leaf nodes.
@@ -187,7 +202,7 @@ public:
 	 */
 	bool FindSubLevel(
 			ARBString const& inName,
-			ARBConfigLevel** outLevel = NULL) const;
+			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
 	 * Add a level.
@@ -197,14 +212,14 @@ public:
 	 */
 	bool AddLevel(
 			ARBString const& inName,
-			ARBConfigLevel** outLevel = NULL);
+			ARBConfigLevelPtr* outLevel = NULL);
 
 	/**
 	 * Add a level.
 	 * @param inLevel Level to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddLevel(ARBConfigLevel* inLevel);
+	bool AddLevel(ARBConfigLevelPtr inLevel);
 
 	/**
 	 * Delete a level.

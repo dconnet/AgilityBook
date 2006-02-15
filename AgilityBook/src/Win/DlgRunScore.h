@@ -43,27 +43,23 @@
  */
 
 #include <vector>
+#include "ComboBox.h"
 #include "DlgBasePropertyPage.h"
+#include "ListData.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
-class ARBConfigEvent;
-class ARBConfigOtherPoints;
-class ARBConfigScoring;
-class ARBConfigVenue;
-class ARBDogClub;
-class ARBDogRun;
-class ARBDogTrial;
 class CAgilityBookDoc;
+class CDlgRunDataLevel;
 
 class CDlgRunScore : public CDlgBasePropertyPage
 {
 public:
 	CDlgRunScore(
 			CAgilityBookDoc* pDoc,
-			ARBConfigVenue* pVenue,
-			ARBDogTrial const* pTrial,
-			ARBDogRun const* pRealRun,
-			ARBDogRun* pRun);
+			ARBConfigVenuePtr pVenue,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRealRun,
+			ARBDogRunPtr pRun);
 	~CDlgRunScore();
 
 private:
@@ -74,19 +70,19 @@ private:
 	CString	m_Venue;
 	CString	m_Club;
 	CString	m_Location;
-	CComboBox	m_ctrlDivisions;
-	CComboBox	m_ctrlLevels;
-	CComboBox	m_ctrlEvents;
+	CComboBox2	m_ctrlDivisions;
+	CComboBox2	m_ctrlLevels;
+	CComboBox2	m_ctrlEvents;
 	CStatic	m_ctrlSubNamesText;
-	CComboBox	m_ctrlSubNames;
+	CComboBox2	m_ctrlSubNames;
 	CString	m_SubName;
 	CRichEditCtrl2	m_ctrlDesc;
-	CComboBox	m_ctrlHeight;
+	CComboBox2	m_ctrlHeight;
 	CString	m_Height;
-	CComboBox	m_ctrlJudge;
+	CComboBox2	m_ctrlJudge;
 	CString	m_Judge;
 	CNoteButton	m_ctrlJudgeNotes;
-	CComboBox	m_ctrlHandler;
+	CComboBox2	m_ctrlHandler;
 	CString	m_Handler;
 	CEdit	m_ctrlConditions;
 	CString	m_Conditions;
@@ -130,7 +126,7 @@ private:
 	short	m_InClass;
 	CEdit	m_ctrlDogsQd;
 	short	m_DogsQd;
-	CComboBox	m_ctrlQ;
+	CComboBox2	m_ctrlQ;
 	CStatic	m_ctrlScore;
 	CStatic	m_ctrlBonusPtsText;
 	CEdit	m_ctrlBonusPts;
@@ -142,10 +138,10 @@ private:
 	CButton	m_ctrlOtherPoints;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigVenue* m_pVenue;
-	ARBDogTrial const* m_pTrial;
-	ARBDogRun const* m_pRealRun;
-	ARBDogRun* m_Run;
+	ARBConfigVenuePtr m_pVenue;
+	ARBDogTrialPtr m_pTrial;
+	ARBDogRunPtr m_pRealRun;
+	ARBDogRunPtr m_Run;
 	// 0: Current dlg, 1: text for scoring without open/close (like snooker)
 	CString m_strOpening[2];
 	CString m_strOpen[2];
@@ -156,23 +152,24 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
+	CListPtrData<ARBConfigDivisionPtr>* GetDivisionData(int index) const;
+	CDlgRunDataLevel* GetLevelData(int index) const;
 	bool GetText(
 			CEdit* pEdit,
 			short& val) const;
 	bool GetText(
 			CEdit* pEdit,
 			double& val) const;
-	bool GetEvent(ARBConfigEvent** outEvent) const;
-	bool GetScoring(ARBConfigScoring** outScoring) const;
-	void ClearLevels();
+	bool GetEvent(ARBConfigEventPtr* outEvent) const;
+	bool GetScoring(ARBConfigScoringPtr* outScoring) const;
 	void FillLevels();
 	void FillEvents();
 	void FillSubNames();
-	void SetEventDesc(ARBConfigEvent const* inEvent);
+	void SetEventDesc(ARBConfigEventPtr inEvent);
 	void SetPartnerText();
 	void SetYPS();
 	void SetTotalFaults();
-	void FillQ(ARBConfigScoring const* inScoring);
+	void FillQ(ARBConfigScoringPtr inScoring);
 	void SetTitlePoints();
 	void UpdateControls(bool bOnEventChange = false);
 

@@ -55,10 +55,11 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigMultiQ dialog
 
 CDlgConfigMultiQ::CDlgConfigMultiQ(
-		ARBConfigVenue const* inVenue,
-		ARBConfigMultiQ* inMultiQ,
+		ARBConfigVenuePtr inVenue,
+		ARBConfigMultiQPtr inMultiQ,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigMultiQ::IDD, pParent)
+	, m_ctrlItems(false)
 	, m_pVenue(inVenue)
 	, m_pMultiQ(inMultiQ)
 	, m_Name(inMultiQ->GetName().c_str())
@@ -155,12 +156,12 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
 	{
-		ARBString div, level, event;
-		if (m_pMultiQ->GetItem(i, div, level, event))
+		ARBString div, level, evt;
+		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
 			int idx = m_ctrlItems.InsertItem(static_cast<int>(i), div.c_str());
 			m_ctrlItems.SetItemText(idx, 1, level.c_str());
-			m_ctrlItems.SetItemText(idx, 2, event.c_str());
+			m_ctrlItems.SetItemText(idx, 2, evt.c_str());
 		}
 	}
 	m_ctrlItems.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
@@ -255,16 +256,16 @@ void CDlgConfigMultiQ::OnEdit()
 	{
 		CString div = m_ctrlItems.GetItemText(idx, 0);
 		CString level = m_ctrlItems.GetItemText(idx, 1);
-		CString event = m_ctrlItems.GetItemText(idx, 2);
+		CString evt = m_ctrlItems.GetItemText(idx, 2);
 		ARBDate date = ARBDate::Today();
 		if (m_bFrom)
 			date = m_DateFrom;
 		else if (m_bTo)
 			date = m_DateTo;
-		CDlgEventSelect dlg(m_pVenue, date, (LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)event, this);
+		CDlgEventSelect dlg(m_pVenue, date, (LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)evt, this);
 		if (IDOK == dlg.DoModal())
 		{
-			if (m_pMultiQ->RemoveItem((LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)event))
+			if (m_pMultiQ->RemoveItem((LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)evt))
 				m_ctrlItems.DeleteItem(idx);
 			if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 			{
@@ -331,8 +332,8 @@ void CDlgConfigMultiQ::OnOK()
 	{
 		CString div = m_ctrlItems.GetItemText(idx, 0);
 		CString level = m_ctrlItems.GetItemText(idx, 1);
-		CString event = m_ctrlItems.GetItemText(idx, 2);
-		m_pMultiQ->AddItem((LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)event);
+		CString evt = m_ctrlItems.GetItemText(idx, 2);
+		m_pMultiQ->AddItem((LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)evt);
 	}
 	CDlgBaseDialog::OnOK();
 }

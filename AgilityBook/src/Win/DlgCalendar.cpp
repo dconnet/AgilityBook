@@ -58,7 +58,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgCalendar dialog
 
 CDlgCalendar::CDlgCalendar(
-		ARBCalendar* pCal,
+		ARBCalendarPtr pCal,
 		CAgilityBookDoc* pDoc,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
@@ -159,13 +159,11 @@ void CDlgCalendar::UpdateLocationInfo(TCHAR const* pLocation)
 	CString str;
 	if (pLocation && *pLocation)
 	{
-		ARBInfoItem* pItem;
+		ARBInfoItemPtr pItem;
 		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace(_T("\n"), _T("\r\n"));
-			pItem->Release();
-			pItem = NULL;
 		}
 	}
 	m_ctrlLocationInfo.SetWindowText(str);
@@ -176,13 +174,11 @@ void CDlgCalendar::UpdateClubInfo(TCHAR const* pClub)
 	CString str;
 	if (pClub && *pClub)
 	{
-		ARBInfoItem* pItem;
+		ARBInfoItemPtr pItem;
 		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace(_T("\n"), _T("\r\n"));
-			pItem->Release();
-			pItem = NULL;
 		}
 	}
 	m_ctrlClubInfo.SetWindowText(str);
@@ -211,7 +207,7 @@ BOOL CDlgCalendar::OnInitDialog()
 		iterVenue != m_pDoc->GetConfig().GetVenues().end();
 		++iterVenue)
 	{
-		ARBConfigVenue* pVenue = (*iterVenue);
+		ARBConfigVenuePtr pVenue = (*iterVenue);
 		int index = m_ctrlVenue.AddString(pVenue->GetName().c_str());
 		if (pVenue->GetName() == m_pCal->GetVenue())
 			m_ctrlVenue.SetCurSel(index);
@@ -240,7 +236,7 @@ BOOL CDlgCalendar::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgCalendar::OnDatetimechangeStart(NMHDR *pNMHDR, LRESULT *pResult)
+void CDlgCalendar::OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
 	if (0 < m_Span)

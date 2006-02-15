@@ -71,6 +71,11 @@ ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
 
+ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
+{
+	return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
+}
+
 ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 {
 	if (this != &rhs)
@@ -156,13 +161,25 @@ bool ARBDogRunPartner::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBDogRunPartnerList::AddPartner(ARBDogRunPartner* inPartner)
+bool ARBDogRunPartnerList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogRunPartnerPtr thing(new ARBDogRunPartner());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
+bool ARBDogRunPartnerList::AddPartner(ARBDogRunPartnerPtr inPartner)
 {
 	bool bAdded = false;
 	if (inPartner)
 	{
 		bAdded = true;
-		inPartner->AddRef();
 		push_back(inPartner);
 	}
 	return bAdded;

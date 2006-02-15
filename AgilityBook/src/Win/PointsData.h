@@ -48,20 +48,12 @@
 #include <vector>
 #include "ARBDate.h"
 #include "ARBTypes.h"
-class ARBConfigDivision;
-class ARBConfigEvent;
-class ARBConfigLevel;
-class ARBConfigMultiQ;
-class ARBConfigVenue;
-class ARBDog;
-class ARBDogExistingPoints;
-class ARBDogRun;
-class ARBDogTitle;
-class ARBDogTrial;
+#include "ListData.h"
+
 class CAgilityBookViewPoints;
 
-typedef std::pair<ARBDate, ARBDogTrial const*> MultiQdata;
-typedef std::pair<ARBDogTrial const*, ARBDogRun const*> RunInfo;
+typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
+typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -97,14 +89,14 @@ private:
 #endif
 public:
 	OtherPtInfo(
-			ARBDogTrial const* pTrial,
-			ARBDogRun const* pRun,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun,
 			double score);
-	OtherPtInfo(ARBDogExistingPoints const* pExisting);
+	OtherPtInfo(ARBDogExistingPointsPtr pExisting);
 	~OtherPtInfo();
-	ARBDogTrial const* m_pTrial;
-	ARBDogRun const* m_pRun;
-	ARBDogExistingPoints const* m_pExisting;
+	ARBDogTrialPtr m_pTrial;
+	ARBDogRunPtr m_pRun;
+	ARBDogExistingPointsPtr m_pExisting;
 	ARBString m_Venue;
 	ARBString m_Div;
 	ARBString m_Level;
@@ -114,7 +106,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class PointsDataBase
+class PointsDataBase : public CListData
 {
 public:
 	PointsDataBase(CAgilityBookViewPoints* pView);
@@ -142,7 +134,7 @@ class PointsDataDog : public PointsDataBase
 public:
 	PointsDataDog(
 			CAgilityBookViewPoints* pView,
-			ARBDog* pDog);
+			ARBDogPtr pDog);
 	~PointsDataDog();
 
 	virtual ARBString OnNeedText(size_t index) const;
@@ -151,7 +143,7 @@ public:
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBDog* m_pDog;
+	ARBDogPtr m_pDog;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -164,8 +156,8 @@ class PointsDataVenue : public PointsDataBase
 public:
 	PointsDataVenue(
 			CAgilityBookViewPoints* pView,
-			ARBDog* pDog,
-			ARBConfigVenue* pVenue);
+			ARBDogPtr pDog,
+			ARBConfigVenuePtr pVenue);
 	~PointsDataVenue();
 
 	virtual ARBString OnNeedText(size_t index) const;
@@ -174,8 +166,8 @@ public:
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBDog* m_pDog;
-	ARBConfigVenue* m_pVenue;
+	ARBDogPtr m_pDog;
+	ARBConfigVenuePtr m_pVenue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -188,8 +180,8 @@ class PointsDataTitle : public PointsDataBase
 public:
 	PointsDataTitle(
 			CAgilityBookViewPoints* pView,
-			ARBDog* pDog,
-			ARBDogTitle* pTitle);
+			ARBDogPtr pDog,
+			ARBDogTitlePtr pTitle);
 	~PointsDataTitle();
 
 	virtual ARBString OnNeedText(size_t index) const;
@@ -198,8 +190,8 @@ public:
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBDog* m_pDog;
-	ARBDogTitle* m_pTitle;
+	ARBDogPtr m_pDog;
+	ARBDogTitlePtr m_pTitle;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -212,12 +204,12 @@ class PointsDataEvent : public PointsDataBase
 public:
 	PointsDataEvent(
 			CAgilityBookViewPoints* pView,
-			ARBDog const* inDog,
+			ARBDogPtr inDog,
 			std::list<RunInfo>& inMatching,
-			ARBConfigVenue* inVenue,
-			ARBConfigDivision* inDiv,
-			ARBConfigLevel* inLevel,
-			ARBConfigEvent* inEvent,
+			ARBConfigVenuePtr inVenue,
+			ARBConfigDivisionPtr inDiv,
+			ARBConfigLevelPtr inLevel,
+			ARBConfigEventPtr inEvent,
 			ARBString const& inRunCount,
 			ARBString const& inQcount,
 			ARBString const& inPts,
@@ -231,12 +223,12 @@ public:
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBDog const* m_Dog;
+	ARBDogPtr m_Dog;
 	std::list<RunInfo> m_Matching;
-	ARBConfigVenue* m_Venue;
-	ARBConfigDivision* m_Div;
-	ARBConfigLevel* m_Level;
-	ARBConfigEvent* m_Event;
+	ARBConfigVenuePtr m_Venue;
+	ARBConfigDivisionPtr m_Div;
+	ARBConfigLevelPtr m_Level;
+	ARBConfigEventPtr m_Event;
 	ARBString m_RunCount;
 	ARBString m_Qcount;
 	ARBString m_Pts;
@@ -307,9 +299,9 @@ class PointsDataMultiQs : public PointsDataBase
 public:
 	PointsDataMultiQs(
 			CAgilityBookViewPoints* pView,
-			ARBDog* inDog,
-			ARBConfigVenue* inVenue,
-			ARBConfigMultiQ* inMultiQ,
+			ARBDogPtr inDog,
+			ARBConfigVenuePtr inVenue,
+			ARBConfigMultiQPtr inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 	~PointsDataMultiQs();
 
@@ -319,9 +311,9 @@ public:
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBDog* m_Dog;
-	ARBConfigVenue* m_Venue;
-	ARBConfigMultiQ* m_MultiQ;
+	ARBDogPtr m_Dog;
+	ARBConfigVenuePtr m_Venue;
+	ARBConfigMultiQPtr m_MultiQ;
 	std::set<MultiQdata> m_MQs;
 	double m_ExistingDblQs;
 };
@@ -336,7 +328,7 @@ class PointsDataSpeedPts : public PointsDataBase
 public:
 	PointsDataSpeedPts(
 			CAgilityBookViewPoints* pView,
-			ARBConfigVenue* inVenue,
+			ARBConfigVenuePtr inVenue,
 			int inPts);
 	~PointsDataSpeedPts();
 
@@ -344,7 +336,7 @@ public:
 	virtual bool IsEqual(PointsDataBase const* inData);
 
 protected:
-	ARBConfigVenue* m_Venue;
+	ARBConfigVenuePtr m_Venue;
 	int m_Pts;
 };
 

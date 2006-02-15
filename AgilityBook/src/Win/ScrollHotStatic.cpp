@@ -176,7 +176,7 @@ void CScrollHotStatic::OnPaint()
 
 	if (!reinterpret_cast<HFONT>(m_font))
 	{
-		CFont *pFont = GetFont();
+		CFont* pFont = GetFont();
 		if (pFont)
 		{
 			LOGFONT lf;
@@ -191,7 +191,7 @@ void CScrollHotStatic::OnPaint()
 
 	if (!reinterpret_cast<HFONT>(m_NoUnderLineFont))
 	{
-		CFont *pFont = GetFont();
+		CFont* pFont = GetFont();
 		if (pFont)
 		{
 			LOGFONT lf;

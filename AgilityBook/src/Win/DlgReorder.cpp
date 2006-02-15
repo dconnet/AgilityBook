@@ -50,9 +50,10 @@ static char THIS_FILE[] = __FILE__;
 // CDlgReorder dialog
 
 CDlgReorder::CDlgReorder(
-		std::vector<ARBBase*>& items,
+		std::vector<ARBBasePtr>& items,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReorder::IDD, pParent)
+	, m_ctrlList(false)
 	, m_Items(items)
 {
 	//{{AFX_DATA_INIT(CDlgReorder)
@@ -130,7 +131,7 @@ void CDlgReorder::OnMoveUp()
 		int newIndex = index - 1;
 		if (0 <= newIndex)
 		{
-			ARBBase* pTmp = m_Items[index];
+			ARBBasePtr pTmp = m_Items[index];
 			m_Items[index] = m_Items[newIndex];
 			m_Items[newIndex] = pTmp;
 			LoadData();
@@ -148,7 +149,7 @@ void CDlgReorder::OnMoveDown()
 		int newIndex = index + 1;
 		if (newIndex < m_ctrlList.GetCount())
 		{
-			ARBBase* pTmp = m_Items[index];
+			ARBBasePtr pTmp = m_Items[index];
 			m_Items[index] = m_Items[newIndex];
 			m_Items[newIndex] = pTmp;
 			LoadData();

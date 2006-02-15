@@ -50,7 +50,7 @@ class CDlgTrial : public CDlgBaseDialog
 public:
 	CDlgTrial(
 			CAgilityBookDoc* pDoc,
-			ARBDogTrial* pTrial,
+			ARBDogTrialPtr pTrial,
 			CWnd* pParent = NULL);
 	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
 
@@ -71,7 +71,7 @@ private:
 	CRichEditCtrl2	m_ctrlClubInfo;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBDogTrial* m_pTrial;
+	ARBDogTrialPtr m_pTrial;
 	ARBDogClubList m_Clubs;
 	bool m_bRunsDeleted;
 
@@ -81,6 +81,7 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
+	ARBDogClubPtr GetClubData(int index) const;
 	void UpdateNotes(
 			bool bLocation,
 			bool bClub);

@@ -41,7 +41,8 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBDog;
+#include "ListData.h"
+
 class CAgilityBookDoc;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -77,6 +78,7 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
+	CListPtrData<ARBDogTitlePtr>* GetTitleData(int index) const;
 	void SetColumnTitleHeaders();
 	void ListTitles();
 	void UpdateButtons();

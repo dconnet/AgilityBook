@@ -57,8 +57,11 @@ class ARBConfigTitle : public ARBBase
 {
 public:
 	ARBConfigTitle();
+	~ARBConfigTitle();
 	ARBConfigTitle(ARBConfigTitle const& rhs);
 	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
+	ARBConfigTitlePtr Clone() const;
+
 	bool operator==(ARBConfigTitle const& rhs) const;
 	bool operator!=(ARBConfigTitle const& rhs) const;
 
@@ -144,7 +147,6 @@ public:
 	void SetDescription(ARBString const& inDesc);
 
 private:
-	~ARBConfigTitle();
 	ARBString m_Name;
 	ARBString m_LongName;
 	short m_Multiple;
@@ -242,7 +244,7 @@ inline void ARBConfigTitle::SetDescription(ARBString const& inDesc)
 /**
  * List of ARBConfigTitle objects.
  */
-class ARBConfigTitleList : public ARBVector<ARBConfigTitle>
+class ARBConfigTitleList : public ARBVector<ARBConfigTitlePtr>
 {
 public:
 	/**
@@ -273,7 +275,7 @@ public:
 			ARBString const& inName,
 			short inInstance,
 			bool bAbbrevFirst = true,
-			ARBConfigTitle** outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
 	 * Find a title.
@@ -283,7 +285,7 @@ public:
 	 */
 	bool FindTitle(
 			ARBString const& inName,
-			ARBConfigTitle** outTitle = NULL) const;
+			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
 	 * Add a title.
@@ -293,14 +295,14 @@ public:
 	 */
 	bool AddTitle(
 			ARBString const& inName,
-			ARBConfigTitle** outTitle = NULL);
+			ARBConfigTitlePtr* outTitle = NULL);
 
 	/**
 	 * Add a title.
 	 * @param inTitle Title to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddTitle(ARBConfigTitle* inTitle);
+	bool AddTitle(ARBConfigTitlePtr inTitle);
 
 	/**
 	 * Delete a title.

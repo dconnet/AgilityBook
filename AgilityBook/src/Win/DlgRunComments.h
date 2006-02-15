@@ -44,7 +44,7 @@ class CDlgRunComments : public CDlgBasePropertyPage
 public:
 	CDlgRunComments(
 			CAgilityBookDoc* pDoc,
-			ARBDogRun* pRun);
+			ARBDogRunPtr pRun);
 	~CDlgRunComments();
 
 private:
@@ -57,7 +57,7 @@ private:
 	CString	m_Comments;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBDogRun* m_Run;
+	ARBDogRunPtr m_Run;
 
 	//{{AFX_VIRTUAL(CDlgRunComments)
 protected:

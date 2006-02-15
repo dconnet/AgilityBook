@@ -68,7 +68,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgListViewerData
+class CDlgListViewerData : public CListData
 {
 public:
 	CDlgListViewerData() : m_RefCount(1) {}
@@ -181,7 +181,7 @@ class CDlgListViewerDataExisting : public CDlgListViewerData
 public:
 	CDlgListViewerDataExisting(
 			CDlgListViewerDataColumns* inColData,
-			ARBDogExistingPoints const* inExisting)
+			ARBDogExistingPointsPtr inExisting)
 		: m_ColData(inColData)
 		, m_Existing(inExisting)
 	{
@@ -200,7 +200,7 @@ public:
 			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
-	ARBDogExistingPoints const* m_Existing;
+	ARBDogExistingPointsPtr m_Existing;
 };
 
 ARBString CDlgListViewerDataExisting::OnNeedText(int iCol) const
@@ -252,10 +252,10 @@ class CDlgListViewerDataRun : public CDlgListViewerData
 public:
 	CDlgListViewerDataRun(
 			CDlgListViewerDataColumns* inColData,
-			ARBDog const* inDog,
-			ARBDogTrial const* inTrial,
-			ARBDogRun const* inRun,
-			ARBConfigScoring* inScoring,
+			ARBDogPtr inDog,
+			ARBDogTrialPtr inTrial,
+			ARBDogRunPtr inRun,
+			ARBConfigScoringPtr inScoring,
 			ScoringRunInfo::eScoringDetail inScoringDetail)
 		: m_ColData(inColData)
 		, m_Dog(inDog)
@@ -271,15 +271,11 @@ public:
 		// have Novice (no sublevels). This means during a config update,
 		// all hell will break loose. Don't bother asserting here...
 		//ASSERT(inScoring);
-		if (m_Scoring)
-			m_Scoring->AddRef();
 	}
 	virtual ~CDlgListViewerDataRun()
 	{
 		if (m_ColData)
 			m_ColData->Release();
-		if (m_Scoring)
-			m_Scoring->Release();
 	}
 	virtual ARBString OnNeedText(int iCol) const;
 	virtual int Compare(
@@ -287,10 +283,10 @@ public:
 			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
-	ARBDog const* m_Dog;
-	ARBDogTrial const* m_Trial;
-	ARBDogRun const* m_Run;
-	ARBConfigScoring* m_Scoring;
+	ARBDogPtr m_Dog;
+	ARBDogTrialPtr m_Trial;
+	ARBDogRunPtr m_Run;
+	ARBConfigScoringPtr m_Scoring;
 	ScoringRunInfo::eScoringDetail m_ScoringDetail;
 };
 
@@ -391,7 +387,7 @@ public:
 	CDlgListViewerDataMultiQ(
 			CDlgListViewerDataColumns* inColData,
 			ARBDate const& inDate,
-			ARBDogTrial const* inTrial)
+			ARBDogTrialPtr inTrial)
 		: m_ColData(inColData)
 		, m_Date(inDate)
 		, m_Trial(inTrial)
@@ -412,7 +408,7 @@ public:
 private:
 	CDlgListViewerDataColumns* m_ColData;
 	ARBDate m_Date;
-	ARBDogTrial const* m_Trial;
+	ARBDogTrialPtr m_Trial;
 };
 
 ARBString CDlgListViewerDataMultiQ::OnNeedText(int iCol) const
@@ -1072,7 +1068,7 @@ int CDlgListViewerDataItem::Compare(
 
 struct SORT_COL_INFO
 {
-	CDlgListViewer *pThis;
+	CDlgListViewer* pThis;
 	int nCol;
 };
 
@@ -1084,8 +1080,10 @@ int CALLBACK CompareRows(
 	SORT_COL_INFO* sortInfo = reinterpret_cast<SORT_COL_INFO*>(lParam3);
 	if (!sortInfo)
 		return 0;
-	CDlgListViewerData* pRow1 = reinterpret_cast<CDlgListViewerData*>(lParam1);
-	CDlgListViewerData* pRow2 = reinterpret_cast<CDlgListViewerData*>(lParam2);
+	CListData* pRawRow1 = reinterpret_cast<CListData*>(lParam1);
+	CListData* pRawRow2 = reinterpret_cast<CListData*>(lParam2);
+	CDlgListViewerData* pRow1 = dynamic_cast<CDlgListViewerData*>(pRawRow1);
+	CDlgListViewerData* pRow2 = dynamic_cast<CDlgListViewerData*>(pRawRow2);
 	if (!pRow1 || !pRow2)
 		return 0;
 	int iCol = abs(sortInfo->nCol);
@@ -1104,6 +1102,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<RunInfo> const& inRuns,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_DataRun(inData)
@@ -1131,6 +1130,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<ScoringRunInfo> const& inScoringRuns,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_DataRun(NULL)
@@ -1157,6 +1157,7 @@ CDlgListViewer::CDlgListViewer(
 		std::set<MultiQdata> const& inMQs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_DataRun(NULL)
@@ -1182,6 +1183,7 @@ CDlgListViewer::CDlgListViewer(
 	std::list<LifeTimePointInfo> const& inLifetime,
 	CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_DataRun(NULL)
@@ -1207,6 +1209,7 @@ CDlgListViewer::CDlgListViewer(
 		std::list<OtherPtInfo> const& inRunList,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_DataRun(NULL)
@@ -1231,6 +1234,7 @@ CDlgListViewer::CDlgListViewer(
 		std::vector<CFindItemInfo> const& inItems,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(inDoc)
 	, m_Caption(inCaption)
 	, m_DataRun(NULL)
@@ -1262,7 +1266,6 @@ void CDlgListViewer::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgListViewer, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListViewer)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST_VIEWER, OnGetdispinfoList)
-	ON_NOTIFY(LVN_DELETEITEM, IDC_LIST_VIEWER, OnDeleteitemList)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST_VIEWER, OnColumnclickList)
 	ON_WM_GETMINMAXINFO()
 	ON_WM_SIZE()
@@ -1278,12 +1281,12 @@ static void InsertRun(
 		CListCtrl2& ctrlList,
 		CDlgListViewerDataColumns* pColData,
 		int& iItem,
-		ARBDog const* pDog,
-		ARBDogTrial const* pTrial,
-		ARBDogRun const* pRun,
+		ARBDogPtr pDog,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun,
 		ScoringRunInfo::eScoringDetail scoringDetail)
 {
-	ARBConfigScoring* pScoring = NULL;
+	ARBConfigScoringPtr pScoring;
 	if (pTrial->GetClubs().GetPrimaryClub())
 		 pDoc->GetConfig().GetVenues().FindEvent(
 			pTrial->GetClubs().GetPrimaryClubVenue(),
@@ -1300,17 +1303,15 @@ static void InsertRun(
 	if (0 < pRun->GetPartners().size())
 		pColData->InsertColumn(ctrlList, COL_RUN_MQ_PARTNERS, IDS_PARTNERS);
 
-	CDlgListViewerDataRun* pData = new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail);
 	LVITEM item;
 	item.mask = LVIF_TEXT | LVIF_PARAM;
 	item.iItem = iItem++;
 	item.iSubItem = 0;
 	item.pszText = LPSTR_TEXTCALLBACK;
-	item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+	item.lParam = reinterpret_cast<LPARAM>(
+		static_cast<CListData*>(
+			new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail)));
 	ctrlList.InsertItem(&item);
-
-	if (pScoring)
-		pScoring->Release();
 }
 
 BOOL CDlgListViewer::OnInitDialog() 
@@ -1335,7 +1336,7 @@ BOOL CDlgListViewer::OnInitDialog()
 	SetWindowText(m_Caption);
 
 	std::set<ARBString> subNames;
-	std::vector<ARBDogExistingPoints const*> existingRuns;
+	std::vector<ARBDogExistingPointsPtr> existingRuns;
 	if (m_Runs || m_ScoringRuns)
 	{
 		if (m_Runs)
@@ -1362,7 +1363,7 @@ BOOL CDlgListViewer::OnInitDialog()
 				iter != m_DataRun->m_Dog->GetExistingPoints().end();
 				++iter)
 			{
-				ARBDogExistingPoints const* pExisting = *iter;
+				ARBDogExistingPointsPtr pExisting = *iter;
 				if (ARBDogExistingPoints::eRuns == pExisting->GetType()
 				&& pExisting->GetVenue() == m_DataRun->m_Venue->GetName()
 				&& pExisting->GetDivision() == m_DataRun->m_Div->GetName()
@@ -1400,32 +1401,33 @@ BOOL CDlgListViewer::OnInitDialog()
 		int iItem = 0;
 		if (m_DataRun)
 		{
-			for (std::vector<ARBDogExistingPoints const*>::iterator iter = existingRuns.begin();
+			for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns.begin();
 				iter != existingRuns.end();
 				++iter)
 			{
-				CDlgListViewerDataExisting* pData = new CDlgListViewerDataExisting(pColData, *iter);
 				LVITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				item.iItem = iItem++;
 				item.iSubItem = 0;
 				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+				item.lParam = reinterpret_cast<LPARAM>(
+					static_cast<CListData*>(
+						new CDlgListViewerDataExisting(pColData, *iter)));
 				m_ctrlList.InsertItem(&item);
 			}
 		}
 		std::list<RunInfo>::const_iterator iter;
 		for (iter = m_Runs->begin(); iter != m_Runs->end(); ++iter)
 		{
-			ARBDogTrial const* pTrial = iter->first;
-			ARBDogRun const* pRun = iter->second;
+			ARBDogTrialPtr pTrial = iter->first;
+			ARBDogRunPtr pRun = iter->second;
 			if (CAgilityBookOptions::IsFilterEnabled())
 			{
 				if (pRun->IsFiltered())
 					continue;
 			}
 			InsertRun(m_pDoc, m_ctrlList, pColData, iItem,
-				NULL, pTrial, pRun, ScoringRunInfo::eNotScoringDetail);
+				ARBDogPtr(), pTrial, pRun, ScoringRunInfo::eNotScoringDetail);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
 		pColData->Release();
@@ -1467,14 +1469,14 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	else if (m_MultiQdata)
 	{
-		std::vector<ARBDogExistingPoints const*> existingRuns;
+		std::vector<ARBDogExistingPointsPtr> existingRuns;
 		if (m_DataMultiQ)
 		{
 			for (ARBDogExistingPointsList::const_iterator iter = m_DataMultiQ->m_Dog->GetExistingPoints().begin();
 				iter != m_DataMultiQ->m_Dog->GetExistingPoints().end();
 				++iter)
 			{
-				ARBDogExistingPoints const* pExisting = *iter;
+				ARBDogExistingPointsPtr pExisting = *iter;
 				if (ARBDogExistingPoints::eMQ == pExisting->GetType()
 				&& pExisting->GetVenue() == m_DataMultiQ->m_Venue->GetName()
 				&& pExisting->GetMultiQ() == m_DataMultiQ->m_MultiQ->GetName())
@@ -1493,17 +1495,18 @@ BOOL CDlgListViewer::OnInitDialog()
 		int iItem = 0;
 		if (m_DataMultiQ)
 		{
-			for (std::vector<ARBDogExistingPoints const*>::iterator iter = existingRuns.begin();
+			for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns.begin();
 				iter != existingRuns.end();
 				++iter)
 			{
-				CDlgListViewerDataExisting* pData = new CDlgListViewerDataExisting(pColData, *iter);
 				LVITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				item.iItem = iItem++;
 				item.iSubItem = 0;
 				item.pszText = LPSTR_TEXTCALLBACK;
-				item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+				item.lParam = reinterpret_cast<LPARAM>(
+					static_cast<CListData*>(
+						new CDlgListViewerDataExisting(pColData, *iter)));
 				m_ctrlList.InsertItem(&item);
 			}
 		}
@@ -1511,13 +1514,14 @@ BOOL CDlgListViewer::OnInitDialog()
 			iter != m_MultiQdata->end();
 			++iter)
 		{
-			CDlgListViewerDataMultiQ* pData = new CDlgListViewerDataMultiQ(pColData, iter->first, iter->second);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+			item.lParam = reinterpret_cast<LPARAM>(
+				static_cast<CListData*>(
+					new CDlgListViewerDataMultiQ(pColData, iter->first, iter->second)));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1536,13 +1540,14 @@ BOOL CDlgListViewer::OnInitDialog()
 			++iter)
 		{
 			LifeTimePointInfo const& info = *iter;
-			CDlgListViewerDataLifetime* pData = new CDlgListViewerDataLifetime(pColData, info);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+			item.lParam = reinterpret_cast<LPARAM>(
+				static_cast<CListData*>(
+					new CDlgListViewerDataLifetime(pColData, info)));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1567,13 +1572,14 @@ BOOL CDlgListViewer::OnInitDialog()
 			++iter)
 		{
 			OtherPtInfo const& info = *iter;
-			CDlgListViewerDataOther* pData = new CDlgListViewerDataOther(pColData, info);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+			item.lParam = reinterpret_cast<LPARAM>(
+				static_cast<CListData*>(
+					new CDlgListViewerDataOther(pColData, info)));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1593,13 +1599,14 @@ BOOL CDlgListViewer::OnInitDialog()
 			++iter)
 		{
 			CFindItemInfo const& info = *iter;
-			CDlgListViewerDataItem* pData = new CDlgListViewerDataItem(pColData, info);
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;
 			item.iSubItem = 0;
 			item.pszText = LPSTR_TEXTCALLBACK;
-			item.lParam = reinterpret_cast<LPARAM>(static_cast<CDlgListViewerData*>(pData));
+			item.lParam = reinterpret_cast<LPARAM>(
+				static_cast<CListData*>(
+					new CDlgListViewerDataItem(pColData, info)));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
@@ -1624,7 +1631,8 @@ void CDlgListViewer::OnGetdispinfoList(
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		CDlgListViewerData *pData = reinterpret_cast<CDlgListViewerData*>(pDispInfo->item.lParam);
+		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+		CDlgListViewerData* pData = dynamic_cast<CDlgListViewerData*>(pRawData);
 		if (pData)
 		{
 			ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
@@ -1634,18 +1642,6 @@ void CDlgListViewer::OnGetdispinfoList(
 		else
 			pDispInfo->item.pszText[0] = '\0';
 	}
-	*pResult = 0;
-}
-
-void CDlgListViewer::OnDeleteitemList(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
-	CDlgListViewerData *pData = reinterpret_cast<CDlgListViewerData*>(pNMListView->lParam);
-	if (pData)
-		pData->Release();
-	pNMListView->lParam = 0;
 	*pResult = 0;
 }
 

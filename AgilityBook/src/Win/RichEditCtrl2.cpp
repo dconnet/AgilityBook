@@ -103,10 +103,10 @@ void CRichEditCtrl2::Setup()
 }
 
 void CRichEditCtrl2::OnEnLink(
-		NMHDR *pNMHDR,
-		LRESULT *pResult)
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
-	ENLINK *pEnLink = reinterpret_cast<ENLINK *>(pNMHDR);
+	ENLINK* pEnLink = reinterpret_cast<ENLINK*>(pNMHDR);
 	*pResult = 0;
 
 	switch (pEnLink->msg)

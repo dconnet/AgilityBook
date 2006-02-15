@@ -87,25 +87,25 @@ public:
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
 	CAgilityBookTreeData* FindData(
 			HTREEITEM hItem,
-			ARBBase const* pBase) const;
+			ARBBasePtr pBase) const;
 	CAgilityBookTreeData* FindData(
 			HTREEITEM hItem,
-			ARBDog const* pDog) const;
+			ARBDogPtr pDog) const;
 	CAgilityBookTreeData* FindData(
 			HTREEITEM hItem,
-			ARBDogTrial const* pTrial) const;
+			ARBDogTrialPtr pTrial) const;
 	CAgilityBookTreeData* FindData(
 			HTREEITEM hItem,
-			ARBDogRun const* pRun) const;
+			ARBDogRunPtr pRun) const;
 	HTREEITEM InsertDog(
-			ARBDog* pDog,
+			ARBDogPtr pDog,
 			bool bSelect = false);
 	HTREEITEM InsertTrial(
-			ARBDogTrial* pTrial,
+			ARBDogTrialPtr pTrial,
 			HTREEITEM hParent);
 	HTREEITEM InsertRun(
-			ARBDogTrial* pTrial,
-			ARBDogRun* pRun,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun,
 			HTREEITEM hParent);
 	bool PasteDog(bool& bLoaded);
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
@@ -164,7 +164,7 @@ private:
 	bool m_bReset;
 	bool m_bSuppressSelect;
 	CFindTree m_Callback;
-	ARBDog* m_pDog;
+	ARBDogPtr m_pDog;
 
 // Generated message map functions
 protected:

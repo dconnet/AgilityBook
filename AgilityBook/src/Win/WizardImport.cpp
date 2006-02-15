@@ -72,6 +72,7 @@ CWizardImport::CWizardImport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardImport::IDD)
+	, m_ctrlPreview(false)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 {
@@ -446,13 +447,13 @@ LRESULT CWizardImport::OnWizardBack()
 	return IDD_WIZARD_START;
 }
 
-static ARBDogRun* CreateRun(
-		ARBDogRun* pRun,
-		ARBConfigScoring const* pScoring)
+static ARBDogRunPtr CreateRun(
+		ARBDogRunPtr pRun,
+		ARBConfigScoringPtr pScoring)
 {
 	if (!pRun)
 	{
-		pRun = new ARBDogRun();
+		pRun = ARBDogRunPtr(new ARBDogRun());
 		pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()),
 			pScoring->DropFractions());
 	}
@@ -486,20 +487,20 @@ static void BreakLine(
 	outFields.push_back(inStr);
 }
 
-static ARBCalendar* CreateCal(ARBCalendar* pCal)
+static ARBCalendarPtr CreateCal(ARBCalendarPtr pCal)
 {
 	if (!pCal)
 	{
-		pCal = new ARBCalendar();
+		pCal = ARBCalendarPtr(new ARBCalendar());
 	}
 	return pCal;
 }
 
-static ARBTraining* CreateLog(ARBTraining* pLog)
+static ARBTrainingPtr CreateLog(ARBTrainingPtr pLog)
 {
 	if (!pLog)
 	{
-		pLog = new ARBTraining();
+		pLog = ARBTrainingPtr(new ARBTraining());
 		pLog->SetDate(ARBDate::Today());
 	}
 	return pLog;
@@ -600,7 +601,7 @@ BOOL CWizardImport::OnWizardFinish()
 							idxEvent[i] = static_cast<int>(iCol);
 					}
 				}
-				ARBConfigScoring* pScoring = NULL;
+				ARBConfigScoringPtr pScoring;
 				for (i = 0; !pScoring && i < 4; ++i)
 				{
 					if (0 <= idxVenue[i] && 0 <= idxEvent[i] && 0 <= idxDiv[i] && 0 <= idxLevel[i] && 0 <= idxDate[i])
@@ -647,7 +648,7 @@ BOOL CWizardImport::OnWizardFinish()
 
 				ARBString nameReg, nameCall;
 				ARBString trialVenue, trialClub, trialLocation, trialNotes;
-				ARBDogRun* pRun = NULL;
+				ARBDogRunPtr pRun;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
 				{
 					if (0 == entry[iCol].length())
@@ -678,10 +679,7 @@ BOOL CWizardImport::OnWizardFinish()
 									<< entry[iCol]
 									<< _T("\n");
 								if (pRun)
-								{
-									pRun->Release();
-									pRun = NULL;
-								}
+									pRun.reset();
 								iCol = columns[i].size();
 							}
 						}
@@ -814,8 +812,7 @@ BOOL CWizardImport::OnWizardFinish()
 						break;
 					}
 				}
-				pScoring->Release();
-				pScoring = NULL;
+				pScoring.reset();
 
 				// Verify data: venue is not necessarily valid!
 				// When importing multiple types of data and only one type was
@@ -832,8 +829,7 @@ BOOL CWizardImport::OnWizardFinish()
 							<< _T(": Skipped entry, invalid venue name: ")
 							<< trialVenue
 							<< _T("\n");
-						pRun->Release();
-						pRun = NULL;
+						pRun.reset();
 					}
 					else if (!m_pDoc->GetConfig().GetVenues().FindEvent(
 						trialVenue,
@@ -845,8 +841,7 @@ BOOL CWizardImport::OnWizardFinish()
 						errLog << _T("Warning: Line ")
 							<< nItem + 1
 							<< _T(": Skipped entry, unable to find a valid configuration entry\n");
-						pRun->Release();
-						pRun = NULL;
+						pRun.reset();
 					}
 				}
 
@@ -854,13 +849,13 @@ BOOL CWizardImport::OnWizardFinish()
 				if (pRun)
 				{
 					// Find the dog
-					ARBDog* pDog = m_pDoc->GetCurrentDog();
+					ARBDogPtr pDog = m_pDoc->GetCurrentDog();
 					if (0 < nameReg.length() || 0 < nameCall.length())
 					{
-						pDog = NULL;
+						pDog.reset();
 						for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
 						{
-							ARBDog* pDogTmp = *iterDog;
+							ARBDogPtr pDogTmp = *iterDog;
 							if ((0 < nameReg.length() && pDogTmp->GetRegisteredName() == nameReg
 							&& 0 < nameCall.length() && pDogTmp->GetCallName() == nameCall)
 							|| (0 < nameReg.length() && pDogTmp->GetRegisteredName() == nameReg
@@ -875,7 +870,7 @@ BOOL CWizardImport::OnWizardFinish()
 						// Not found, create it.
 						if (!pDog)
 						{
-							pDog = new ARBDog();
+							pDog = ARBDogPtr(new ARBDog());
 							if (0 < nameReg.length())
 								pDog->SetRegisteredName(nameReg);
 							if (0 < nameCall.length())
@@ -883,23 +878,20 @@ BOOL CWizardImport::OnWizardFinish()
 							if (0 == nameCall.length() && 0 < nameReg.length())
 								pDog->SetCallName(nameReg);
 							m_pDoc->GetDogs().AddDog(pDog);
-							pDog->Release();
-							// pDog is still valid until it is actually removed from the doglist.
 						}
 					}
 					if (!pDog)
 					{
 						if (m_pDoc->GetDogs().begin() == m_pDoc->GetDogs().end())
 						{
-							pDog = new ARBDog();
+							pDog = ARBDogPtr(new ARBDog());
 							pDog->SetCallName(_T("?"));
 							m_pDoc->GetDogs().AddDog(pDog);
-							pDog->Release();
 						}
 						else
 							pDog = *(m_pDoc->GetDogs().begin());
 					}
-					ASSERT(NULL != pDog);
+					ASSERT(pDog);
 
 					// Find the trial
 					std::vector<ARBString> venues;
@@ -916,10 +908,10 @@ BOOL CWizardImport::OnWizardFinish()
 						while (clubs.size() < venues.size())
 							clubs.push_back(clubs[clubs.size()-1]);
 					}
-					ARBDogTrial* pTrial = NULL;
+					ARBDogTrialPtr pTrial;
 					for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
 					{
-						ARBDogTrial* pTrialTmp = *iterTrial;
+						ARBDogTrialPtr pTrialTmp = *iterTrial;
 						if (pTrialTmp->GetClubs().size() == venues.size()
 						&& pTrialTmp->GetLocation() == trialLocation
 						&& pRun->GetDate().isBetween(pTrialTmp->GetRuns().GetStartDate(), pTrialTmp->GetRuns().GetEndDate()))
@@ -928,7 +920,7 @@ BOOL CWizardImport::OnWizardFinish()
 							size_t i = 0;
 							for (ARBDogClubList::iterator iterClub = pTrialTmp->GetClubs().begin(); iterClub != pTrialTmp->GetClubs().end(); ++iterClub)
 							{
-								ARBDogClub* pClub = new ARBDogClub();
+								ARBDogClubPtr pClub(new ARBDogClub());
 								pClub->SetName(clubs[i]);
 								pClub->SetVenue(venues[i]);
 								if (*pClub != *(*(iterClub)))
@@ -936,7 +928,6 @@ BOOL CWizardImport::OnWizardFinish()
 									bOk = false;
 									break;
 								}
-								pClub->Release();
 								++i;
 							}
 							if (bOk)
@@ -949,7 +940,7 @@ BOOL CWizardImport::OnWizardFinish()
 					if (!pTrial)
 					{
 						// Couldn't find a trial, so make one.
-						pTrial = new ARBDogTrial();
+						pTrial = ARBDogTrialPtr(new ARBDogTrial());
 						pDog->GetTrials().AddTrial(pTrial);
 						pDog->GetTrials().sort(true);
 						for (size_t i = 0; i < venues.size(); ++i)
@@ -960,12 +951,10 @@ BOOL CWizardImport::OnWizardFinish()
 							pTrial->SetLocation(trialLocation);
 						if (0 < trialNotes.length())
 							pTrial->SetNote(trialNotes);
-						pTrial->Release();
 					}
 					pTrial->GetRuns().AddRun(pRun);
 					pTrial->SetMultiQs(m_pDoc->GetConfig());
 					pTrial->GetRuns().sort();
-					pRun->Release();
 					++nAdded;
 				}
 				else
@@ -977,7 +966,7 @@ BOOL CWizardImport::OnWizardFinish()
 
 		case WIZ_IMPORT_CALENDAR:
 			{
-				ARBCalendar* pCal = NULL;
+				ARBCalendarPtr pCal;
 				for (iCol = 0; iCol < columns[IO_TYPE_CALENDAR].size(); ++iCol)
 				{
 					if (0 == entry[iCol].length())
@@ -1002,10 +991,7 @@ BOOL CWizardImport::OnWizardFinish()
 									<< entry[iCol]
 									<< _T("\n");
 								if (pCal)
-								{
-									pCal->Release();
-									pCal = NULL;
-								}
+									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -1028,10 +1014,7 @@ BOOL CWizardImport::OnWizardFinish()
 									<< entry[iCol]
 									<< _T("\n");
 								if (pCal)
-								{
-									pCal->Release();
-									pCal = NULL;
-								}
+									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -1066,10 +1049,7 @@ BOOL CWizardImport::OnWizardFinish()
 								<< entry[iCol]
 								<< _T(" [N, P or E]\n");
 							if (pCal)
-							{
-								pCal->Release();
-								pCal = NULL;
-							}
+								pCal.reset();
 							iCol = columns[IO_TYPE_CALENDAR].size();
 						}
 						break;
@@ -1103,10 +1083,7 @@ BOOL CWizardImport::OnWizardFinish()
 									<< entry[iCol]
 									<< _T("\n");
 								if (pCal)
-								{
-									pCal->Release();
-									pCal = NULL;
-								}
+									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -1129,10 +1106,7 @@ BOOL CWizardImport::OnWizardFinish()
 									<< entry[iCol]
 									<< _T("\n");
 								if (pCal)
-								{
-									pCal->Release();
-									pCal = NULL;
-								}
+									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
 							}
 						}
@@ -1153,7 +1127,6 @@ BOOL CWizardImport::OnWizardFinish()
 					}
 					else
 						++nDuplicate;
-					pCal->Release();
 				}
 				else
 					++nSkipped;
@@ -1162,7 +1135,7 @@ BOOL CWizardImport::OnWizardFinish()
 
 		case WIZ_IMPORT_LOG:
 			{
-				ARBTraining* pLog = NULL;
+				ARBTrainingPtr pLog;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[IO_TYPE_TRAINING].size(); ++iCol)
 				{
 					if (0 == entry[iCol].length())
@@ -1187,10 +1160,7 @@ BOOL CWizardImport::OnWizardFinish()
 									<< entry[iCol]
 									<< _T("\n");
 								if (pLog)
-								{
-									pLog->Release();
-									pLog = NULL;
-								}
+									pLog.reset();
 								iCol = columns[IO_TYPE_TRAINING].size();
 							}
 						}
@@ -1219,7 +1189,6 @@ BOOL CWizardImport::OnWizardFinish()
 					}
 					else
 						++nDuplicate;
-					pLog->Release();
 				}
 				else
 					++nSkipped;

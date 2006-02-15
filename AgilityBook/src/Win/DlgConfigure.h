@@ -77,6 +77,7 @@ public:
 			ARBConfig const& inConfig,
 			std::vector<CDlgFixup*>& ioDlgFixup,
 			bool bCommitChanges);
+
 	/**
 	 * Update existing runs in case event scoring methods have changed.
 	 * @param inDoc MFC Document
@@ -92,7 +93,7 @@ public:
 	static eCheck CheckExistingRuns(
 			CAgilityBookDoc* inDoc,
 			ARBDogList const& inDogs,
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inEvent,
 			ARBConfigScoringList const& inScorings,
 			std::vector<CDlgFixup*>& ioDlgFixup,
@@ -146,20 +147,19 @@ private:
 	void UpdateButtons();
 	void LoadData();
 	int FindCurrentVenue(
-			ARBConfigVenue const* pVenue,
+			ARBConfigVenuePtr pVenue,
 			bool bSet);
 	int FindCurrentFault(
-			ARBConfigFault const* pFault,
+			ARBConfigFaultPtr pFault,
 			bool bSet);
 	int FindCurrentOtherPoints(
-			ARBConfigOtherPoints const* pOther,
+			ARBConfigOtherPointsPtr pOther,
 			bool bSet);
 
 protected:
 	//{{AFX_MSG(CDlgConfigure)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);

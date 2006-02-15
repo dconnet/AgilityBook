@@ -46,8 +46,8 @@ class CDlgConfigMultiQ : public CDlgBaseDialog
 {
 public:
 	CDlgConfigMultiQ(
-			ARBConfigVenue const* inVenue,
-			ARBConfigMultiQ* inMultiQ,
+			ARBConfigVenuePtr inVenue,
+			ARBConfigMultiQPtr inMultiQ,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigMultiQ();
 
@@ -67,8 +67,8 @@ private:
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlRemove;
 	//}}AFX_DATA
-	ARBConfigVenue const* m_pVenue;
-	ARBConfigMultiQ* m_pMultiQ;
+	ARBConfigVenuePtr m_pVenue;
+	ARBConfigMultiQPtr m_pMultiQ;
 
 	//{{AFX_VIRTUAL(CDlgConfigMultiQ)
 protected:

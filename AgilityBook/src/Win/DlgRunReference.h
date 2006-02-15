@@ -43,9 +43,7 @@
 #include "ColumnOrder.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBConfigVenue;
-class ARBDogRun;
-class ARBDogReferenceRun;
+#include "ListData.h"
 class CAgilityBookDoc;
 
 class CDlgRunReference : public CDlgBasePropertyPage
@@ -53,8 +51,8 @@ class CDlgRunReference : public CDlgBasePropertyPage
 public:
 	CDlgRunReference(
 			CAgilityBookDoc* pDoc,
-			ARBConfigVenue* pVenue,
-			ARBDogRun* pRun);
+			ARBConfigVenuePtr pVenue,
+			ARBDogRunPtr pRun);
 	~CDlgRunReference();
 
 private:
@@ -68,9 +66,9 @@ private:
 	CButton	m_ctrlDelete;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigVenue* m_Venue;
-	ARBDogRun* m_Run;
-	ARBDogReferenceRun* m_pRefRunMe;
+	ARBConfigVenuePtr m_Venue;
+	ARBDogRunPtr m_Run;
+	ARBDogReferenceRunPtr m_pRefRunMe;
 	CColumnOrder m_sortRefRuns;
 
 	//{{AFX_VIRTUAL(CDlgRunReference)
@@ -81,6 +79,7 @@ protected:
 
 // Implementation
 protected:
+	CListPtrData<ARBDogReferenceRunPtr>* GetReferenceData(int index) const;
 	bool IsRefRunMe();
 	void CreateRefRunMe();
 	void UpdateButtons();

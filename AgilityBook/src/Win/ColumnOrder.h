@@ -52,8 +52,8 @@ private:
 	CString m_Item;
 	int m_nColumns;
 	bool m_bDefaultDescending;
-	int *m_order;
-	bool *m_bDescending;
+	int* m_order;
+	bool* m_bDescending;
 };
 
 inline int CColumnOrder::GetSize() const

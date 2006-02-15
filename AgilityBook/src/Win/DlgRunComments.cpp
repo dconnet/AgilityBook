@@ -52,7 +52,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgRunComments::CDlgRunComments(
 		CAgilityBookDoc* pDoc,
-		ARBDogRun* pRun)
+		ARBDogRunPtr pRun)
 	: CDlgBasePropertyPage(CDlgRunComments::IDD)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)

@@ -139,7 +139,7 @@ bool Base64::Decode(
 	size_t bufsize = inBuffer.length();
 	outBuffer = new char[bufsize];
 	SetBuffer(outBuffer);
-	char *result = outBuffer;
+	char* result = outBuffer;
 
 	int std = 0;
 	size_t count = 1;
@@ -219,7 +219,7 @@ std::string Base64::Encode(
 		char const* inBuffer,
 		size_t inLength)
 {
-	char *encoded = NULL;
+	char* encoded = NULL;
 	if (inBuffer != NULL && 0 < inLength)
 	{
 		size_t alsize = (inLength * 4) / 3;
@@ -227,7 +227,7 @@ std::string Base64::Encode(
 		size_t count = 0;
 		size_t LineLen = 0;
 		char* fresult = encoded;
-		char const *s = inBuffer;
+		char const* s = inBuffer;
 		int tmp = 0;
 		//let's step through the buffer and encode it...
 		if (inLength > 2) // A really small buffer causes problems with the logic below

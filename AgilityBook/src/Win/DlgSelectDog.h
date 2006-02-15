@@ -52,7 +52,7 @@ class CDlgSelectDog : public CDlgBaseDialog
 public:
 	CDlgSelectDog(
 			CAgilityBookDoc* pDoc,
-			std::vector<ARBDog*>& dogs,
+			std::vector<ARBDogPtr>& dogs,
 			CWnd* pParent = NULL);
 
 private:
@@ -62,7 +62,7 @@ private:
 	CCheckListBox	m_ctrlList;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	std::vector<ARBDog*>& m_Dogs;
+	std::vector<ARBDogPtr>& m_Dogs;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgSelectDog)

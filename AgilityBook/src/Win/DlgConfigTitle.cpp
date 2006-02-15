@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigTitle dialog
 
 CDlgConfigTitle::CDlgConfigTitle(
-		ARBConfigTitle* inTitle,
+		ARBConfigTitlePtr inTitle,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
 	, m_Title(inTitle)

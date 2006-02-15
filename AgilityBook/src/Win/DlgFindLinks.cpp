@@ -54,9 +54,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgFindLinks::CDlgFindLinksData::CDlgFindLinksData(
-		ARBDog* pDog,
-		ARBDogTrial* pTrial,
-		ARBDogRun* pRun,
+		ARBDogPtr pDog,
+		ARBDogTrialPtr pTrial,
+		ARBDogRunPtr pRun,
 		ARBString const& inLink)
 	: m_pDog(pDog)
 	, m_pTrial(pTrial)
@@ -88,8 +88,8 @@ static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
 
 typedef struct
 {
-	CDlgFindLinks *pThis;
-	CColumnOrder *pCols;
+	CDlgFindLinks* pThis;
+	CColumnOrder* pCols;
 } SORTINFO;
 
 int CALLBACK CompareLinks(
@@ -100,7 +100,7 @@ int CALLBACK CompareLinks(
 	int rc = 0;
 	int data1 = static_cast<int>(lParam1);
 	int data2 = static_cast<int>(lParam2);
-	SORTINFO *psi = reinterpret_cast<SORTINFO*>(lParam3);
+	SORTINFO* psi = reinterpret_cast<SORTINFO*>(lParam3);
 
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
 	{
@@ -146,6 +146,7 @@ CDlgFindLinks::CDlgFindLinks(
 		ARBDogList& inDogs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFindLinks::IDD, pParent)
+	, m_ctrlLinks(false)
 	, m_sortLinks(_T("Links"))
 	, m_Session(_T("findLink"))
 {
@@ -162,17 +163,17 @@ CDlgFindLinks::CDlgFindLinks(
 		iterDog != inDogs.end();
 		++iterDog)
 	{
-		ARBDog* pDog = *iterDog;
+		ARBDogPtr pDog = *iterDog;
 		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)
 		{
-			ARBDogTrial* pTrial = *iterTrial;
+			ARBDogTrialPtr pTrial = *iterTrial;
 			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				++iterRun)
 			{
-				ARBDogRun *pRun = *iterRun;
+				ARBDogRunPtr pRun = *iterRun;
 				std::set<ARBString> links;
 				pRun->GetLinks(links);
 				for (std::set<ARBString>::iterator iter = links.begin();
@@ -323,10 +324,10 @@ void CDlgFindLinks::OnColumnclickList(
 }
 
 void CDlgFindLinks::OnGetdispinfoList(
-		NMHDR *pNMHDR,
-		LRESULT *pResult)
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
 {
-	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
 	int index = static_cast<int>(pDispInfo->item.lParam);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{

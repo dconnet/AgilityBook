@@ -35,10 +35,11 @@
  * Revision History
  */
 
+#include "ARBTypes.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "RichEditCtrl2.h"
 class ARBConfig;
-class ARBDogTitle;
 class ARBDogTitleList;
 
 class CDlgTitle : public CDlgBaseDialog
@@ -47,7 +48,7 @@ public:
 	CDlgTitle(
 			ARBConfig const& config,
 			ARBDogTitleList& titles,
-			ARBDogTitle* pTitle,
+			ARBDogTitlePtr pTitle,
 			CWnd* pParent = NULL);
 
 private:
@@ -57,14 +58,14 @@ private:
 	CButton	m_ctrlEarned;
 	CDateTimeCtrl	m_ctrlDate;
 	CButton	m_ctrlHidden;
-	CComboBox	m_ctrlVenues;
-	CComboBox	m_ctrlTitles;
+	CComboBox2	m_ctrlVenues;
+	CComboBox2	m_ctrlTitles;
 	CButton	m_ctrlReceived;
 	CRichEditCtrl2	m_ctrlDesc;
 	//}}AFX_DATA
 	ARBConfig const& m_Config;
 	ARBDogTitleList& m_Titles;
-	ARBDogTitle* m_pTitle;
+	ARBDogTitlePtr m_pTitle;
 	bool m_bInit;
 
 	//{{AFX_VIRTUAL(CDlgTitle)
@@ -74,13 +75,15 @@ protected:
 
 // Implementation
 protected:
+	ARBConfigVenuePtr GetVenueData(int index) const;
+	ARBConfigTitlePtr GetTitleData(int index) const;
 	ARBDate GetDate();
 	void FillTitles();
 	void FillTitleInfo();
 
 	//{{AFX_MSG(CDlgTitle)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnDtnDatetimechangeTitleDate(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnDtnDatetimechangeTitleDate(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBnClickedEarned();
 	afx_msg void OnSelchangeVenues();
 	afx_msg void OnSelchangeTitles();

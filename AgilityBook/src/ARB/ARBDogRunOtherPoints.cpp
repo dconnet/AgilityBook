@@ -67,6 +67,11 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
 
+ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
+{
+	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
+}
+
 ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const& rhs)
 {
 	if (this != &rhs)
@@ -124,13 +129,25 @@ bool ARBDogRunOtherPoints::Save(Element& ioTree) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPoints* inOther)
+bool ARBDogRunOtherPointsList::Load(
+		ARBConfig const& inConfig,
+		Element const& inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBDogRunOtherPointsPtr thing(new ARBDogRunOtherPoints());
+	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
+bool ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPointsPtr inOther)
 {
 	bool bAdded = false;
 	if (inOther)
 	{
 		bAdded = true;
-		inOther->AddRef();
 		push_back(inOther);
 	}
 	return bAdded;

@@ -48,7 +48,7 @@ class CDlgRunLink : public CDlgBasePropertyPage
 public:
 	CDlgRunLink(
 			CAgilityBookDoc* pDoc,
-			ARBDogRun* pRun);
+			ARBDogRunPtr pRun);
 	~CDlgRunLink();
 
 private:
@@ -62,7 +62,7 @@ private:
 	CButton	m_ctrlOpen;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBDogRun* m_Run;
+	ARBDogRunPtr m_Run;
 	CImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgOk;

@@ -58,7 +58,7 @@ IMPLEMENT_DYNAMIC(CWizard, CDlgBaseSheet)
 #pragma warning( disable : 4355 )
 CWizard::CWizard(
 		CAgilityBookDoc* pDoc,
-		ARBVectorBase<ARBCalendar>* pCalEntries,
+		std::vector<ARBCalendarPtr>* pCalEntries,
 		CWnd* pParentWnd)
 	: CDlgBaseSheet(_T(""), pParentWnd, 0)
 	, m_pDoc(pDoc)

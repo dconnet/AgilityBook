@@ -40,6 +40,7 @@
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBDogRunOtherPoints.h"
+#include "ListData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,9 +53,10 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgOtherPoint::CDlgOtherPoint(
 		ARBConfig const& config,
-		ARBDogRunOtherPoints* pOther,
+		ARBDogRunOtherPointsPtr pOther,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgOtherPoint::IDD, pParent)
+	, m_ctrlOtherPoints(true)
 	, m_Config(config)
 	, m_pOther(pOther)
 {
@@ -91,9 +93,10 @@ BOOL CDlgOtherPoint::OnInitDialog()
 	iterOther != m_Config.GetOtherPoints().end();
 	++iterOther)
 	{
-		ARBConfigOtherPoints* pOther = (*iterOther);
+		ARBConfigOtherPointsPtr pOther = (*iterOther);
 		int index = m_ctrlOtherPoints.AddString(pOther->GetName().c_str());
-		m_ctrlOtherPoints.SetItemDataPtr(index, pOther);
+		m_ctrlOtherPoints.SetData(index,
+			new CListPtrData<ARBConfigOtherPointsPtr>(pOther));
 		if (pOther->GetName() == m_pOther->GetName())
 		{
 			m_ctrlOtherPoints.SetCurSel(index);
@@ -111,7 +114,8 @@ void CDlgOtherPoint::OnSelchangeOtherpoints()
 	int index = m_ctrlOtherPoints.GetCurSel();
 	if (CB_ERR != index)
 	{
-		ARBConfigOtherPoints* pOther = reinterpret_cast<ARBConfigOtherPoints*>(m_ctrlOtherPoints.GetItemDataPtr(index));
+		CListData* pData = m_ctrlOtherPoints.GetData(index);
+		ARBConfigOtherPointsPtr pOther = dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData)->GetData();
 		CString str(pOther->GetDescription().c_str());
 		str.Replace(_T("\n"), _T("\r\n"));
 		m_ctrlDesc.SetWindowText(str);
@@ -128,7 +132,8 @@ void CDlgOtherPoint::OnOK()
 		GotoDlgCtrl(&m_ctrlOtherPoints);
 		return;
 	}
-	ARBConfigOtherPoints* pOther = reinterpret_cast<ARBConfigOtherPoints*>(m_ctrlOtherPoints.GetItemDataPtr(index));
+	CListData* pData = m_ctrlOtherPoints.GetData(index);
+	ARBConfigOtherPointsPtr pOther = dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData)->GetData();
 	m_pOther->SetName(pOther->GetName());
 	m_pOther->SetPoints(m_Points);
 	CDlgBaseDialog::OnOK();

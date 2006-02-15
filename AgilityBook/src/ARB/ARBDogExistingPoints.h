@@ -59,8 +59,11 @@ class ARBDogExistingPoints : public ARBBase
 {
 public:
 	ARBDogExistingPoints();
+	~ARBDogExistingPoints();
 	ARBDogExistingPoints(ARBDogExistingPoints const& rhs);
 	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
+	ARBDogExistingPointsPtr Clone() const;
+
 	bool operator==(ARBDogExistingPoints const& rhs) const;
 	bool operator!=(ARBDogExistingPoints const& rhs) const;
 
@@ -145,7 +148,6 @@ public:
 	void SetPoints(double inPoints);
 
 private:
-	~ARBDogExistingPoints();
 	ARBDate m_Date;
 	ARBString m_Comment;
 	PointType m_Type;
@@ -274,9 +276,24 @@ inline void ARBDogExistingPoints::SetPoints(double inPoints)
 /**
  * List of ARBDogExistingPoints objects.
  */
-class ARBDogExistingPointsList : public ARBVectorLoad2<ARBDogExistingPoints>
+class ARBDogExistingPointsList : public ARBVector<ARBDogExistingPointsPtr>
 {
 public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inConfig Configuration information to verify data to load against.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ARBConfig const& inConfig,
+			Element const& inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
 	/**
 	 * Sort by points/venue/division/level.
 	 */
@@ -299,10 +316,10 @@ public:
 	 * @return Whether any existing points exist.
 	 */
 	bool HasPoints(
-			ARBConfigVenue const* inVenue,
-			ARBConfigDivision const* inDiv,
-			ARBConfigLevel const* inLevel,
-			ARBConfigEvent const* inEvent,
+			ARBConfigVenuePtr inVenue,
+			ARBConfigDivisionPtr inDiv,
+			ARBConfigLevelPtr inLevel,
+			ARBConfigEventPtr inEvent,
 			bool inHasLifetime) const;
 
 	/**
@@ -317,11 +334,11 @@ public:
 	 */
 	double ExistingPoints(
 			ARBDogExistingPoints::PointType inType,
-			ARBConfigVenue const* inVenue,
-			ARBConfigMultiQ const* inMultiQ,
-			ARBConfigDivision const* inDiv,
-			ARBConfigLevel const* inLevel,
-			ARBConfigEvent const* inEvent) const;
+			ARBConfigVenuePtr inVenue,
+			ARBConfigMultiQPtr inMultiQ,
+			ARBConfigDivisionPtr inDiv,
+			ARBConfigLevelPtr inLevel,
+			ARBConfigEventPtr inEvent) const;
 
 	/**
 	 * Get the number of existing point items in a venue.
@@ -355,7 +372,7 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumExistingPointsInDivision(
-			ARBConfigVenue const* inVenue,
+			ARBConfigVenuePtr inVenue,
 			ARBString const& inDiv) const;
 
 	/**
@@ -515,7 +532,7 @@ public:
 	 * @param inExistingPoints Object to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddExistingPoints(ARBDogExistingPoints* inExistingPoints);
+	bool AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
 
 	/**
 	 * Delete an existing point object.
@@ -523,5 +540,5 @@ public:
 	 * @return Whether object was deleted.
 	 * @note Equality is tested by value, not pointer.
 	 */
-	bool DeleteExistingPoints(ARBDogExistingPoints const* inExistingPoints);
+	bool DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
 };

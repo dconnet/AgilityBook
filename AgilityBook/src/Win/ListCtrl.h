@@ -41,6 +41,7 @@
  */
 
 #include <vector>
+class CListData;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +89,7 @@ protected:
 	//{{AFX_MSG(CHeaderCtrl2)
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnHdnItemChanged(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnHdnItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -98,7 +99,7 @@ protected:
 class CListCtrl2 : public CListCtrl
 {
 public:
-	CListCtrl2();
+	CListCtrl2(bool bAutoDelete);
 	virtual ~CListCtrl2();
 
 	// Header functions
@@ -127,6 +128,13 @@ public:
 			int cx);
 	BOOL DeleteColumn(int nCol);
 
+	/*
+	 * Simple wrappers to control data access.
+	 * Only valid if autodelete is set.
+	 */
+	CListData* GetData(int index) const;
+	void SetData(int index, CListData* inData);
+
 	/**
 	 * Returns the first selected item.
 	 * @param bRestricted In multi-select lists, only allow a single selection.
@@ -152,12 +160,16 @@ public:
 protected:
 	bool Init();
 	CHeaderCtrl2 m_SortHeader;
+	bool m_bAutoDelete;
+
 // Overrides
 	//{{AFX_VIRTUAL(CListCtrl2)
 	//}}AFX_VIRTUAL
 
 protected:
 	//{{AFX_MSG(CListCtrl2)
+	afx_msg void OnDestroy();
+	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -170,6 +182,11 @@ class CListView2 : public CListView
 public:
 	CListView2();
 	virtual ~CListView2();
+
+	/**
+	 * @param bAuto Should the list items be automatically deleted?
+	 */
+	void SetAutoDelete(bool bAuto)		{m_bAutoDelete = bAuto;}
 
 	// Header functions
 	void FixTooltips();
@@ -198,6 +215,13 @@ public:
 			int cx);
 	BOOL DeleteColumn(int nCol);
 
+	/*
+	 * Simple wrappers to control data access.
+	 * Only valid if autodelete is set.
+	 */
+	CListData* GetData(int index) const;
+	void SetData(int index, CListData* inData);
+
 	/**
 	 * Returns the first selected item.
 	 * @param bRestricted In multi-select lists, only allow a single selection.
@@ -223,6 +247,8 @@ public:
 protected:
 	bool Init();
 	CHeaderCtrl2 m_SortHeader;
+	bool m_bAutoDelete;
+
 	//{{AFX_VIRTUAL(CListView2)
 	protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
@@ -234,6 +260,8 @@ protected:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CListView2)
+	afx_msg void OnDestroy();
+	afx_msg void OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
 	afx_msg void OnEditCopy();
 	afx_msg void OnUpdateEditSelectAll(CCmdUI* pCmdUI);

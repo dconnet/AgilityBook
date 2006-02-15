@@ -53,8 +53,11 @@ class ARBConfigMultiQ : public ARBBase
 {
 public:
 	ARBConfigMultiQ();
+	~ARBConfigMultiQ();
 	ARBConfigMultiQ(ARBConfigMultiQ const& rhs);
 	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
+	ARBConfigMultiQPtr Clone() const;
+
 	bool operator==(ARBConfigMultiQ const& rhs) const;
 	bool operator!=(ARBConfigMultiQ const& rhs) const;
 
@@ -101,8 +104,8 @@ public:
 	 * @return There is a match. Matching runs are removed from the vector.
 	 */
 	bool Match(
-			std::vector<ARBDogRun*>& ioRuns,
-			std::vector<ARBDogRun*>& outRuns) const;
+			std::vector<ARBDogRunPtr>& ioRuns,
+			std::vector<ARBDogRunPtr>& outRuns) const;
 
 	/**
 	 * Rename a division.
@@ -205,8 +208,6 @@ public:
 			ARBString& outEvent) const;
 
 private:
-	~ARBConfigMultiQ();
-
 	struct MultiQItem
 	{
 		ARBString m_Div;
@@ -285,7 +286,7 @@ inline size_t ARBConfigMultiQ::GetNumItems() const
 /**
  * List of ARBConfigMultiQ objects.
  */
-class ARBConfigMultiQList : public ARBVector<ARBConfigMultiQ>
+class ARBConfigMultiQList : public ARBVector<ARBConfigMultiQPtr>
 {
 public:
 	/**
@@ -312,7 +313,7 @@ public:
 	bool FindMultiQ(
 			ARBString const& inName,
 			bool inUseShortName = false,
-			ARBConfigMultiQ** outMultiQ = NULL) const;
+			ARBConfigMultiQPtr* outMultiQ = NULL) const;
 
 	/**
 	 * Find a MultiQ by value.
@@ -321,7 +322,7 @@ public:
 	 */
 	bool FindMultiQ(
 			ARBConfigMultiQ const& inMultiQ,
-			ARBConfigMultiQ** outMultiQ = NULL) const;
+			ARBConfigMultiQPtr* outMultiQ = NULL) const;
 
 	/**
 	 * Rename a division.
@@ -381,12 +382,12 @@ public:
 	 * @param inMultiQ MultiQ to add.
 	 * @return Whether the object was added.
 	 */
-	bool AddMultiQ(ARBConfigMultiQ* inMultiQ);
+	bool AddMultiQ(ARBConfigMultiQPtr inMultiQ);
 
 	/**
 	 * Delete an MultiQ.
 	 * @param inMultiQ Name of MultiQ to delete.
 	 * @return Whether object was deleted or not.
 	 */
-	bool DeleteMultiQ(ARBConfigMultiQ* inMultiQ);
+	bool DeleteMultiQ(ARBConfigMultiQPtr inMultiQ);
 };

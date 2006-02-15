@@ -47,7 +47,7 @@ public:
 	CDlgRegNum(
 			ARBConfig const& config,
 			ARBDogRegNumList& regnums,
-			ARBDogRegNum* pRegNum,
+			ARBDogRegNumPtr pRegNum,
 			CWnd* pParent = NULL);
 
 private:
@@ -62,7 +62,7 @@ private:
 	//}}AFX_DATA
 	ARBConfig const& m_Config;
 	ARBDogRegNumList& m_RegNums;
-	ARBDogRegNum* m_pRegNum;
+	ARBDogRegNumPtr m_pRegNum;
 
 	//{{AFX_VIRTUAL(CDlgRegNum)
 protected:

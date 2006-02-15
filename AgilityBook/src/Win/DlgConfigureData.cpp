@@ -67,16 +67,14 @@ static char THIS_FILE[] = __FILE__;
 // event object. The GETDISPINFO triggers before we rebuild the tree, causing
 // us to use bad pointers.
 
-CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenue* venue)
+CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
 	: CDlgConfigureData()
 	, m_Venue(venue)
 {
-	m_Venue->AddRef();
 }
 
 CDlgConfigureDataVenue::~CDlgConfigureDataVenue()
 {
-	m_Venue->Release();
 }
 
 CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
@@ -97,16 +95,14 @@ CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFault* fault)
+CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
 	: CDlgConfigureData()
 	, m_Fault(fault)
 {
-	m_Fault->AddRef();
 }
 
 CDlgConfigureDataFault::~CDlgConfigureDataFault()
 {
-	m_Fault->Release();
 }
 
 CString CDlgConfigureDataFault::OnNeedText(int iColumn) const
@@ -116,16 +112,14 @@ CString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPoints* otherPoints)
+CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints)
 	: CDlgConfigureData()
 	, m_OtherPoints(otherPoints)
 {
-	m_OtherPoints->AddRef();
 }
 
 CDlgConfigureDataOtherPoints::~CDlgConfigureDataOtherPoints()
 {
-	m_OtherPoints->Release();
 }
 
 CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
@@ -135,16 +129,14 @@ CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivision* div)
+CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivisionPtr div)
 	: CDlgConfigureData()
 	, m_Div(div)
 {
-	m_Div->AddRef();
 }
 
 CDlgConfigureDataDivision::~CDlgConfigureDataDivision()
 {
-	m_Div->Release();
 }
 
 CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
@@ -155,20 +147,16 @@ CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataLevel::CDlgConfigureDataLevel(
-		ARBConfigDivision* div,
-		ARBConfigLevel* level)
+		ARBConfigDivisionPtr div,
+		ARBConfigLevelPtr level)
 	: CDlgConfigureData()
 	, m_Division(div)
 	, m_Level(level)
 {
-	m_Division->AddRef();
-	m_Level->AddRef();
 }
 
 CDlgConfigureDataLevel::~CDlgConfigureDataLevel()
 {
-	m_Division->Release();
-	m_Level->Release();
 }
 
 CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
@@ -179,24 +167,18 @@ CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
-		ARBConfigDivision* div,
-		ARBConfigLevel* level,
-		ARBConfigSubLevel* subLevel)
+		ARBConfigDivisionPtr div,
+		ARBConfigLevelPtr level,
+		ARBConfigSubLevelPtr subLevel)
 	: CDlgConfigureData()
 	, m_Division(div)
 	, m_Level(level)
 	, m_SubLevel(subLevel)
 {
-	m_Division->AddRef();
-	m_Level->AddRef();
-	m_SubLevel->AddRef();
 }
 
 CDlgConfigureDataSubLevel::~CDlgConfigureDataSubLevel()
 {
-	m_Division->Release();
-	m_Level->Release();
-	m_SubLevel->Release();
 }
 
 CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
@@ -207,16 +189,14 @@ CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataTitle::CDlgConfigureDataTitle(
-		ARBConfigTitle* title)
+		ARBConfigTitlePtr title)
 	: CDlgConfigureData()
 	, m_Title(title)
 {
-	m_Title->AddRef();
 }
 
 CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 {
-	m_Title->Release();
 }
 
 CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
@@ -226,16 +206,14 @@ CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEvent* event)
+CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEventPtr inEvent)
 	: CDlgConfigureData()
-	, m_Event(event)
+	, m_Event(inEvent)
 {
-	m_Event->AddRef();
 }
 
 CDlgConfigureDataEvent::~CDlgConfigureDataEvent()
 {
-	m_Event->Release();
 }
 
 CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
@@ -245,16 +223,14 @@ CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQ* multiq)
+CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq)
 	: CDlgConfigureData()
 	, m_MultiQ(multiq)
 {
-	m_MultiQ->AddRef();
 }
 
 CDlgConfigureDataMultiQ::~CDlgConfigureDataMultiQ()
 {
-	m_MultiQ->Release();
 }
 
 CString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
