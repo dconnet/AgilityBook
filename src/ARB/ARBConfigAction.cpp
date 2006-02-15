@@ -83,6 +83,12 @@ ARBConfigAction::~ARBConfigAction()
 {
 }
 
+//static
+ARBConfigActionPtr ARBConfigAction::New()
+{
+	return ARBConfigActionPtr(new ARBConfigAction());
+}
+
 ARBConfigActionPtr ARBConfigAction::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigAction(*this));
@@ -163,7 +169,7 @@ bool ARBConfigActionList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigActionPtr thing(new ARBConfigAction());
+	ARBConfigActionPtr thing(ARBConfigAction::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

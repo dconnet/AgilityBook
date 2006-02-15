@@ -83,13 +83,27 @@ ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 	: m_Location(rhs.m_Location)
 	, m_Note(rhs.m_Note)
 	, m_Verified(rhs.m_Verified)
-	, m_Clubs(rhs.m_Clubs)
-	, m_Runs(rhs.m_Runs)
+	, m_Clubs()
+	, m_Runs()
 {
+	rhs.m_Clubs.Clone(m_Clubs);
+	rhs.m_Runs.Clone(m_Runs);
 }
 
 ARBDogTrial::~ARBDogTrial()
 {
+}
+
+//static
+ARBDogTrialPtr ARBDogTrial::New()
+{
+	return ARBDogTrialPtr(new ARBDogTrial());
+}
+
+//static
+ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
+{
+	return ARBDogTrialPtr(new ARBDogTrial(inCal));
 }
 
 ARBDogTrialPtr ARBDogTrial::Clone() const
@@ -104,8 +118,8 @@ ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 		m_Location = rhs.m_Location;
 		m_Note = rhs.m_Note;
 		m_Verified = rhs.m_Verified;
-		m_Clubs = rhs.m_Clubs;
-		m_Runs = rhs.m_Runs;
+		rhs.m_Clubs.Clone(m_Clubs);
+		rhs.m_Runs.Clone(m_Runs);
 	}
 	return *this;
 }
@@ -324,7 +338,7 @@ bool ARBDogTrialList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogTrialPtr thing(new ARBDogTrial());
+	ARBDogTrialPtr thing(ARBDogTrial::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

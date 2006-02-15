@@ -69,6 +69,12 @@ ARBInfoItem::~ARBInfoItem()
 {
 }
 
+//static
+ARBInfoItemPtr ARBInfoItem::New()
+{
+	return ARBInfoItemPtr(new ARBInfoItem());
+}
+
 ARBInfoItemPtr ARBInfoItem::Clone() const
 {
 	return ARBInfoItemPtr(new ARBInfoItem(*this));
@@ -169,7 +175,7 @@ bool ARBInfoItemList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBInfoItemPtr item(new ARBInfoItem());
+	ARBInfoItemPtr item(ARBInfoItem::New());
 	if (!item->Load(inTree, inVersion, ioCallback, m_ItemName))
 		return false;
 	push_back(item);
@@ -262,7 +268,7 @@ bool ARBInfoItemList::AddItem(
 	{
 		if (0 < inItem.length())
 		{
-			ARBInfoItemPtr item(new ARBInfoItem());
+			ARBInfoItemPtr item(ARBInfoItem::New());
 			item->SetName(inItem);
 			push_back(item);
 			if (outItem)

@@ -1046,7 +1046,11 @@ void CAgilityBookOptions::GetColumnOrder(
 {
 	outValues.clear();
 	ARBostringstream item;
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+	item << _T("col") << static_cast<UINT>(idxColumn);
+#else
 	item << _T("col") << idxColumn;
+#endif
 	CString data = AfxGetApp()->GetProfileString(GetColumnName(eOrder), item.str().c_str(), _T(""));
 	int idx = data.Find(',');
 	while (0 <= idx)
@@ -1318,7 +1322,11 @@ void CAgilityBookOptions::SetColumnOrder(
 		data << inValues[i];
 	}
 	ARBostringstream item;
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+	item << _T("col") << static_cast<UINT>(idxColumn);
+#else
 	item << _T("col") << idxColumn;
+#endif
 	AfxGetApp()->WriteProfileString(GetColumnName(eOrder), item.str().c_str(), data.str().c_str());
 }
 

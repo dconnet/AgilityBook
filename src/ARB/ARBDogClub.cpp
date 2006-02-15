@@ -69,6 +69,12 @@ ARBDogClub::~ARBDogClub()
 {
 }
 
+//static
+ARBDogClubPtr ARBDogClub::New()
+{
+	return ARBDogClubPtr(new ARBDogClub());
+}
+
 ARBDogClubPtr ARBDogClub::Clone() const
 {
 	return ARBDogClubPtr(new ARBDogClub(*this));
@@ -166,7 +172,7 @@ bool ARBDogClubList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogClubPtr thing(new ARBDogClub());
+	ARBDogClubPtr thing(ARBDogClub::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -222,7 +228,7 @@ bool ARBDogClubList::FindEvent(
 	if (outScoring)
 		outScoring->reset();
 	ARBConfigScoringPtr pEvent;
-	for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
+	for (const_iterator iter = begin(); !pEvent && iter != end(); ++iter)
 	{
 		inConfig.GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent);
 	}
@@ -242,7 +248,7 @@ bool ARBDogClubList::FindEvent(
 		msg += _T("/");
 		msg += inLevel;
 		msg += _T(")");
-		for (const_iterator iter = begin(); NULL == pEvent && iter != end(); ++iter)
+		for (const_iterator iter = begin(); !pEvent && iter != end(); ++iter)
 		{
 			msg += _T("\n");
 			msg += (*iter)->GetName();
@@ -278,7 +284,7 @@ bool ARBDogClubList::AddClub(
 		ARBString const& inVenue,
 		ARBDogClubPtr* outClub)
 {
-	ARBDogClubPtr pClub(new ARBDogClub());
+	ARBDogClubPtr pClub(ARBDogClub::New());
 	pClub->SetName(inName);
 	pClub->SetVenue(inVenue);
 	push_back(pClub);

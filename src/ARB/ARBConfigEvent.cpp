@@ -77,12 +77,19 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	, m_bHasPartner(rhs.m_bHasPartner)
 	, m_bHasSubNames(rhs.m_bHasSubNames)
 	, m_SubNames(rhs.m_SubNames)
-	, m_Scoring(rhs.m_Scoring)
+	, m_Scoring()
 {
+	rhs.m_Scoring.Clone(m_Scoring);
 }
 
 ARBConfigEvent::~ARBConfigEvent()
 {
+}
+
+//static
+ARBConfigEventPtr ARBConfigEvent::New()
+{
+	return ARBConfigEventPtr(new ARBConfigEvent());
 }
 
 ARBConfigEventPtr ARBConfigEvent::Clone() const
@@ -100,7 +107,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 		m_bHasPartner = rhs.m_bHasPartner;
 		m_bHasSubNames = rhs.m_bHasSubNames;
 		m_SubNames = rhs.m_SubNames;
-		m_Scoring = rhs.m_Scoring;
+		rhs.m_Scoring.Clone(m_Scoring);
 	}
 	return *this;
 }
@@ -295,7 +302,7 @@ bool ARBConfigEvent::Update(
 				++nAdded;
 		}
 		// TODO: This can actually invalidate existing runs
-		GetScorings() = inEventNew->GetScorings();
+		inEventNew->GetScorings().Clone(GetScorings());
 		if (0 < nAdded || 0 < nDeleted || 0 < nChanged)
 		{
 			info += indentBuffer;
@@ -359,7 +366,7 @@ bool ARBConfigEventList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigEventPtr thing(new ARBConfigEvent());
+	ARBConfigEventPtr thing(ARBConfigEvent::New());
 	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

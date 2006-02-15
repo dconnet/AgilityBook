@@ -80,6 +80,12 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 {
 }
 
+//static
+ARBDogReferenceRunPtr ARBDogReferenceRun::New()
+{
+	return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
+}
+
 ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
 {
 	return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
@@ -235,7 +241,7 @@ bool ARBDogReferenceRunList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogReferenceRunPtr thing(new ARBDogReferenceRun());
+	ARBDogReferenceRunPtr thing(ARBDogReferenceRun::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

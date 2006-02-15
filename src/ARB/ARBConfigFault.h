@@ -50,12 +50,16 @@ class Element;
  */
 class ARBConfigFault : public ARBBase
 {
-public:
+protected:
 	ARBConfigFault();
-	~ARBConfigFault();
 	ARBConfigFault(ARBConfigFault const& rhs);
-	ARBConfigFault& operator=(ARBConfigFault const& rhs);
+
+public:
+	~ARBConfigFault();
+	static ARBConfigFaultPtr New();
 	ARBConfigFaultPtr Clone() const;
+
+	ARBConfigFault& operator=(ARBConfigFault const& rhs);
 
 	bool operator==(ARBConfigFault const& rhs) const;
 	bool operator!=(ARBConfigFault const& rhs) const;

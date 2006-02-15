@@ -679,7 +679,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDogPtr pDog(new ARBDog());
+			ARBDogPtr pDog(ARBDog::New());
 			if (pDog)
 			{
 				CErrorCallback err;
@@ -1003,7 +1003,7 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 	{
 		if (ID_AGILITY_NEW_DOG == id)
 		{
-			ARBDogPtr dog(new ARBDog());
+			ARBDogPtr dog(ARBDog::New());
 			CDlgDog dlg(GetDocument(), dog);
 			if (IDOK == dlg.DoModal())
 			{

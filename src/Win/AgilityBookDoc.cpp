@@ -291,7 +291,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 	if (!GetConfig().GetVenues().FindVenue(cal.GetVenue()))
 		return false;
 	bool bCreated = false;
-	ARBDogTrialPtr pTrial(new ARBDogTrial(cal));
+	ARBDogTrialPtr pTrial(ARBDogTrial::New(cal));
 	CDlgTrial dlg(this, pTrial);
 	if (IDOK == dlg.DoModal())
 	{
@@ -307,7 +307,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 				// MUST make a copy. Otherwise the trial will be the same trial
 				// for both dogs and all changes will be reflected from one to
 				// the other - until you save, exit and reload the program.
-				ARBDogTrialPtr pNewTrial(new ARBDogTrial(*pTrial));
+				ARBDogTrialPtr pNewTrial = pTrial->Clone();
 				pDog->GetTrials().AddTrial(pNewTrial);
 				SetModifiedFlag();
 				// This is pure evil - casting ARBDogTrialPtr* to a CObject*.
@@ -958,7 +958,7 @@ void CAgilityBookDoc::OnEditConfiguration()
 
 void CAgilityBookDoc::OnAgilityNewDog()
 {
-	ARBDogPtr dog(new ARBDog());
+	ARBDogPtr dog(ARBDog::New());
 	CDlgDog dlg(this, dog);
 	if (IDOK == dlg.DoModal())
 	{
@@ -986,7 +986,7 @@ void CAgilityBookDoc::OnAgilityNewDog()
 
 void CAgilityBookDoc::OnAgilityNewCalendar()
 {
-	ARBCalendarPtr cal(new ARBCalendar());
+	ARBCalendarPtr cal(ARBCalendar::New());
 	CDlgCalendar dlg(cal, this);
 	if (IDOK == dlg.DoModal())
 	{
@@ -1014,7 +1014,7 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 
 void CAgilityBookDoc::OnAgilityNewTraining()
 {
-	ARBTrainingPtr training(new ARBTraining());
+	ARBTrainingPtr training(ARBTraining::New());
 	CDlgTraining dlg(training, this);
 	if (IDOK == dlg.DoModal())
 	{

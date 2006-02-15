@@ -82,11 +82,16 @@ public:
 	 */
 	static ARBString GetScoringStyleStr(ScoringStyle inStyle);
 
+protected:
 	ARBConfigScoring();
-	~ARBConfigScoring();
 	ARBConfigScoring(ARBConfigScoring const& rhs);
-	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+
+public:
+	~ARBConfigScoring();
+	static ARBConfigScoringPtr New();
 	ARBConfigScoringPtr Clone() const;
+
+	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
 
 	bool operator==(ARBConfigScoring const& rhs) const;
 	bool operator!=(ARBConfigScoring const& rhs) const;
@@ -398,7 +403,11 @@ inline bool ARBConfigScoring::ConvertDoubleQ() const
  */
 class ARBConfigScoringList : public ARBVector<ARBConfigScoringPtr>
 {
+private:
+	ARBConfigScoringList(ARBConfigScoringList const&);
+	ARBConfigScoringList& operator=(ARBConfigScoringList const&);
 public:
+	ARBConfigScoringList() {}
 	/**
 	 * Load a scoring configuration.
 	 * @pre inTree is the actual ARBConfigScoring element.

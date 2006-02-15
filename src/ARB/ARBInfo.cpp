@@ -57,10 +57,13 @@ ARBInfo::ARBInfo()
 }
 
 ARBInfo::ARBInfo(ARBInfo const& rhs)
-	: m_ClubInfo(rhs.m_ClubInfo)
-	, m_JudgeInfo(rhs.m_JudgeInfo)
-	, m_LocationInfo(rhs.m_LocationInfo)
+	: m_ClubInfo(TREE_CLUBINFO)
+	, m_JudgeInfo(TREE_JUDGEINFO)
+	, m_LocationInfo(TREE_LOCATIONINFO)
 {
+	rhs.m_ClubInfo.Clone(m_ClubInfo);
+	rhs.m_JudgeInfo.Clone(m_JudgeInfo);
+	rhs.m_LocationInfo.Clone(m_LocationInfo);
 }
 
 ARBInfo::~ARBInfo()
@@ -72,9 +75,9 @@ ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 {
 	if (this != &rhs)
 	{
-		m_ClubInfo = rhs.m_ClubInfo;
-		m_JudgeInfo = rhs.m_JudgeInfo;
-		m_LocationInfo = rhs.m_LocationInfo;
+		rhs.m_ClubInfo.Clone(m_ClubInfo);
+		rhs.m_JudgeInfo.Clone(m_JudgeInfo);
+		rhs.m_LocationInfo.Clone(m_LocationInfo);
 	}
 	return *this;
 }

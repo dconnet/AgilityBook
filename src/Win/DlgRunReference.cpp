@@ -234,7 +234,7 @@ bool CDlgRunReference::IsRefRunMe()
 void CDlgRunReference::CreateRefRunMe()
 {
 	// Create the 'me' reference run.
-	m_pRefRunMe = ARBDogReferenceRunPtr(new ARBDogReferenceRun());
+	m_pRefRunMe = ARBDogReferenceRunPtr(ARBDogReferenceRun::New());
 	m_pRefRunMe->SetQ(m_Run->GetQ());
 	m_pRefRunMe->SetPlace(m_Run->GetPlace());
 	m_pRefRunMe->SetName(m_pDoc->GetCurrentDog()->GetCallName());
@@ -559,7 +559,7 @@ void CDlgRunReference::OnRefRunAdd()
 
 void CDlgRunReference::OnRefRunNew() 
 {
-	ARBDogReferenceRunPtr ref(new ARBDogReferenceRun());
+	ARBDogReferenceRunPtr ref(ARBDogReferenceRun::New());
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
 		ARBConfigScoringPtr pScoring;

@@ -399,6 +399,17 @@ ARBCalendar::~ARBCalendar()
 {
 }
 
+//static
+ARBCalendarPtr ARBCalendar::New()
+{
+	return ARBCalendarPtr(new ARBCalendar());
+}
+
+ARBCalendarPtr ARBCalendar::Clone() const
+{
+	return ARBCalendarPtr(new ARBCalendar(*this));
+}
+
 ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 {
 	if (this != &rhs)
@@ -415,11 +426,6 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 		m_Note = rhs.m_Note;
 	}
 	return *this;
-}
-
-ARBCalendarPtr ARBCalendar::Clone() const
-{
-	return ARBCalendarPtr(new ARBCalendar(*this));
 }
 
 bool ARBCalendar::operator==(ARBCalendar const& rhs) const
@@ -731,7 +737,7 @@ bool ARBCalendarList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBCalendarPtr thing(new ARBCalendar());
+	ARBCalendarPtr thing(ARBCalendar::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

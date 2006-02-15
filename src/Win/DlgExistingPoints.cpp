@@ -887,7 +887,7 @@ void CDlgExistingPoints::OnOK()
 	}
 	else
 	{
-		ARBDogExistingPointsPtr pPoints(new ARBDogExistingPoints());
+		ARBDogExistingPointsPtr pPoints(ARBDogExistingPoints::New());
 		if (m_PointsList.AddExistingPoints(pPoints))
 		{
 			pPoints->SetDate(m_Date);

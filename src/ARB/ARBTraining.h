@@ -54,12 +54,16 @@ class Element;
  */
 class ARBTraining : public ARBBase
 {
-public:
+protected:
 	ARBTraining();
-	~ARBTraining();
 	ARBTraining(ARBTraining const& rhs);
-	ARBTraining& operator=(ARBTraining const& rhs);
+
+public:
+	~ARBTraining();
+	static ARBTrainingPtr New();
 	ARBTrainingPtr Clone() const;
+
+	ARBTraining& operator=(ARBTraining const& rhs);
 
 	bool operator==(ARBTraining const& rhs) const;
 	bool operator!=(ARBTraining const& rhs) const;

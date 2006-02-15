@@ -99,7 +99,7 @@ static bool EditDog(
 	if (!pDog)
 	{
 		bAdd = true;
-		pDog = ARBDogPtr(new ARBDog());
+		pDog = ARBDogPtr(ARBDog::New());
 	}
 	bool bOk = false;
 	CDlgDog dlg(pTree->GetDocument(), pDog, pTree, nPage);
@@ -146,7 +146,7 @@ static bool EditTrial(
 	if (!pTrial)
 	{
 		bAdd = true;
-		pTrial = ARBDogTrialPtr(new ARBDogTrial());
+		pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 	}
 	bool bOk = false;
 	CDlgTrial dlg(pTree->GetDocument(), pTrial, pTree);
@@ -231,7 +231,7 @@ static bool EditRun(
 			return false;
 		}
 		bAdd = true;
-		pRun = ARBDogRunPtr(new ARBDogRun());
+		pRun = ARBDogRunPtr(ARBDogRun::New());
 		pRun->SetDate(pTrialData->GetTrial()->GetRuns().GetEndDate());
 	}
 	bool bOk = false;
@@ -397,7 +397,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			std::vector<ARBDogRunPtr> runs;
 			for (int iRun = 0; iRun < tree.GetElementCount(); ++iRun)
 			{
-				ARBDogRunPtr pRun(new ARBDogRun());
+				ARBDogRunPtr pRun(ARBDogRun::New());
 				if (pRun)
 				{
 					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(iRun), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
@@ -465,7 +465,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDogTrialPtr pTrial(new ARBDogTrial());
+			ARBDogTrialPtr pTrial(ARBDogTrial::New());
 			if (pTrial)
 			{
 				CErrorCallback err;
@@ -611,7 +611,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 	case ID_EDIT_DUPLICATE:
 		if (GetDog())
 		{
-			ARBDogPtr pDog(new ARBDog(*GetDog()));
+			ARBDogPtr pDog = GetDog()->Clone();
 			m_pTree->GetDocument()->GetDogs().AddDog(pDog);
 			bModified = true;
 			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
@@ -862,7 +862,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	case ID_EDIT_DUPLICATE:
 		if (GetTrial())
 		{
-			ARBDogTrialPtr pTrial(new ARBDogTrial(*GetTrial()));
+			ARBDogTrialPtr pTrial = GetTrial()->Clone();
 			GetDog()->GetTrials().AddTrial(pTrial);
 			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
 			GetDog()->GetTrials().sort(bDescending);
@@ -1152,7 +1152,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	case ID_EDIT_DUPLICATE:
 		if (GetRun())
 		{
-			ARBDogRunPtr pRun(new ARBDogRun(*GetRun()));
+			ARBDogRunPtr pRun = GetRun()->Clone();
 			GetTrial()->GetRuns().AddRun(pRun);
 			GetTrial()->GetRuns().sort();
 			bModified = true;

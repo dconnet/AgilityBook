@@ -51,12 +51,16 @@ class Element;
  */
 class ARBConfigMultiQ : public ARBBase
 {
-public:
+protected:
 	ARBConfigMultiQ();
-	~ARBConfigMultiQ();
 	ARBConfigMultiQ(ARBConfigMultiQ const& rhs);
-	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
+
+public:
+	~ARBConfigMultiQ();
+	static ARBConfigMultiQPtr New();
 	ARBConfigMultiQPtr Clone() const;
+
+	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
 
 	bool operator==(ARBConfigMultiQ const& rhs) const;
 	bool operator!=(ARBConfigMultiQ const& rhs) const;

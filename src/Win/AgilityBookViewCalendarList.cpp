@@ -1203,7 +1203,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 
 void CAgilityBookViewCalendarList::OnCalendarNew()
 {
-	ARBCalendarPtr cal(new ARBCalendar());
+	ARBCalendarPtr cal(ARBCalendar::New());
 	CDlgCalendar dlg(cal, GetDocument());
 	if (IDOK == dlg.DoModal())
 	{
@@ -1244,7 +1244,7 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 			// We need to warn the user if the duplicated entry is not visible.
 			// This will happen if the source is marked as entered and they have
 			// selected the option to hide dates.
-			ARBCalendarPtr cal(new ARBCalendar(*((*iter)->GetCalendar())));
+			ARBCalendarPtr cal = (*iter)->GetCalendar()->Clone();
 			if ((*iter)->GetCalendar()->GetEntered() == ARBCalendar::eEntered
 			&& CAgilityBookOptions::HideOverlappingCalendarEntries())
 			{
@@ -1373,7 +1373,7 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 				Element const& element = tree.GetElement(i);
 				if (element.GetName() == TREE_CALENDAR)
 				{
-					ARBCalendarPtr pCal(new ARBCalendar());
+					ARBCalendarPtr pCal(ARBCalendar::New());
 					CErrorCallback err;
 					if (pCal->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{

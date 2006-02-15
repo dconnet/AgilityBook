@@ -72,11 +72,15 @@ ARBConfig::ARBConfig()
 ARBConfig::ARBConfig(ARBConfig const& rhs)
 	: m_bUpdate(rhs.m_bUpdate)
 	, m_Version(rhs.m_Version)
-	, m_Actions(rhs.m_Actions)
-	, m_Venues(rhs.m_Venues)
-	, m_FaultTypes(rhs.m_FaultTypes)
-	, m_OtherPoints(rhs.m_OtherPoints)
+	, m_Actions()
+	, m_Venues()
+	, m_FaultTypes()
+	, m_OtherPoints()
 {
+	rhs.m_Actions.Clone(m_Actions);
+	rhs.m_Venues.Clone(m_Venues);
+	rhs.m_FaultTypes.Clone(m_FaultTypes);
+	rhs.m_OtherPoints.Clone(m_OtherPoints);
 }
 
 ARBConfig::~ARBConfig()
@@ -90,10 +94,10 @@ ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 	{
 		m_bUpdate = rhs.m_bUpdate;
 		m_Version = rhs.m_Version;
-		m_Actions = rhs.m_Actions;
-		m_Venues = rhs.m_Venues;
-		m_FaultTypes = rhs.m_FaultTypes;
-		m_OtherPoints = rhs.m_OtherPoints;
+		rhs.m_Actions.Clone(m_Actions);
+		rhs.m_Venues.Clone(m_Venues);
+		rhs.m_FaultTypes.Clone(m_FaultTypes);
+		rhs.m_OtherPoints.Clone(m_OtherPoints);
 	}
 	return *this;
 }

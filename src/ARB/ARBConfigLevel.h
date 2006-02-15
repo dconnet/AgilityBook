@@ -52,12 +52,16 @@ class Element;
  */
 class ARBConfigLevel : public ARBBase
 {
-public:
+protected:
 	ARBConfigLevel();
-	~ARBConfigLevel();
 	ARBConfigLevel(ARBConfigLevel const& rhs);
-	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
+
+public:
+	~ARBConfigLevel();
+	static ARBConfigLevelPtr New();
 	ARBConfigLevelPtr Clone() const;
+
+	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
 
 	bool operator==(ARBConfigLevel const& rhs) const;
 	bool operator!=(ARBConfigLevel const& rhs) const;

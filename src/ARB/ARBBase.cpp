@@ -55,3 +55,26 @@ ARBBase::ARBBase()
 ARBBase::~ARBBase()
 {
 }
+
+bool ARBBase::IsFiltered(FilterType inFilterType) const
+{
+	return m_bFiltered[inFilterType];
+}
+
+void ARBBase::SetFiltered(
+		FilterType inFilterType,
+		bool bFiltered)
+{
+	m_bFiltered[inFilterType] = bFiltered;
+}
+
+bool ARBBase::IsFiltered() const
+{
+	return IsFiltered(eFilter);
+}
+
+void ARBBase::SetFiltered(bool bFiltered)
+{
+	SetFiltered(eFilter, bFiltered);
+	SetFiltered(eIgnoreQ, bFiltered);
+}

@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../../../xml-xerces/c/src"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -85,7 +85,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../../../xml-xerces/c/src"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"

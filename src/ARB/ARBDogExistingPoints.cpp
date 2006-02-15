@@ -114,6 +114,12 @@ ARBDogExistingPoints::~ARBDogExistingPoints()
 {
 }
 
+//static
+ARBDogExistingPointsPtr ARBDogExistingPoints::New()
+{
+	return ARBDogExistingPointsPtr(new ARBDogExistingPoints());
+}
+
 ARBDogExistingPointsPtr ARBDogExistingPoints::Clone() const
 {
 	return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
@@ -457,7 +463,7 @@ bool ARBDogExistingPointsList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogExistingPointsPtr thing(new ARBDogExistingPoints());
+	ARBDogExistingPointsPtr thing(ARBDogExistingPoints::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

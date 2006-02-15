@@ -80,9 +80,10 @@ CDlgTrial::CDlgTrial(
 	, m_ctrlClubs(true)
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
-	, m_Clubs(pTrial->GetClubs())
+	, m_Clubs()
 	, m_bRunsDeleted(false)
 {
+	pTrial->GetClubs().Clone(m_Clubs);
 	//{{AFX_DATA_INIT(CDlgTrial)
 	m_Verified = pTrial->IsVerified() ? TRUE : FALSE;
 	m_Location = pTrial->GetLocation().c_str();
@@ -432,6 +433,6 @@ void CDlgTrial::OnOK()
 	m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pTrial->SetNote((LPCTSTR)m_Notes);
 	m_pTrial->SetVerified(m_Verified ? true : false);
-	m_pTrial->GetClubs() = m_Clubs;
+	m_Clubs.Clone(m_pTrial->GetClubs());
 	CDlgBaseDialog::OnOK();
 }

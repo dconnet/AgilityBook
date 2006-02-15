@@ -61,12 +61,19 @@ ARBConfigLevel::ARBConfigLevel()
 
 ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 	: m_Name(rhs.m_Name)
-	, m_SubLevels(rhs.m_SubLevels)
+	, m_SubLevels()
 {
+	rhs.m_SubLevels.Clone(m_SubLevels);
 }
 
 ARBConfigLevel::~ARBConfigLevel()
 {
+}
+
+//static
+ARBConfigLevelPtr ARBConfigLevel::New()
+{
+	return ARBConfigLevelPtr(new ARBConfigLevel());
 }
 
 ARBConfigLevelPtr ARBConfigLevel::Clone() const
@@ -79,7 +86,7 @@ ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
-		m_SubLevels = rhs.m_SubLevels;
+		rhs.m_SubLevels.Clone(m_SubLevels);
 	}
 	return *this;
 }
@@ -191,7 +198,7 @@ bool ARBConfigLevelList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigLevelPtr thing(new ARBConfigLevel());
+	ARBConfigLevelPtr thing(ARBConfigLevel::New());
 	if (!thing->Load(inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -271,7 +278,7 @@ bool ARBConfigLevelList::AddLevel(
 		return false;
 	if (FindSubLevel(inName))
 		return false;
-	ARBConfigLevelPtr pLevel(new ARBConfigLevel());
+	ARBConfigLevelPtr pLevel(ARBConfigLevel::New());
 	pLevel->SetName(inName);
 	push_back(pLevel);
 	if (outLevel)

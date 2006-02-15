@@ -71,6 +71,12 @@ ARBConfigMultiQ::~ARBConfigMultiQ()
 {
 }
 
+//static
+ARBConfigMultiQPtr ARBConfigMultiQ::New()
+{
+	return ARBConfigMultiQPtr(new ARBConfigMultiQ());
+}
+
 ARBConfigMultiQPtr ARBConfigMultiQ::Clone() const
 {
 	return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
@@ -503,7 +509,7 @@ bool ARBConfigMultiQList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigMultiQPtr thing(new ARBConfigMultiQ());
+	ARBConfigMultiQPtr thing(ARBConfigMultiQ::New());
 	if (!thing->Load(inVenue, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

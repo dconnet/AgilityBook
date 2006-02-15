@@ -82,6 +82,12 @@ ARBDogTitle::~ARBDogTitle()
 {
 }
 
+//static
+ARBDogTitlePtr ARBDogTitle::New()
+{
+	return ARBDogTitlePtr(new ARBDogTitle());
+}
+
 ARBDogTitlePtr ARBDogTitle::Clone() const
 {
 	return ARBDogTitlePtr(new ARBDogTitle(*this));
@@ -264,7 +270,7 @@ bool ARBDogTitleList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogTitlePtr thing(new ARBDogTitle());
+	ARBDogTitlePtr thing(ARBDogTitle::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

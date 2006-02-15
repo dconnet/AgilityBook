@@ -57,12 +57,16 @@ class Element;
  */
 class ARBConfigVenue : public ARBBase
 {
-public:
+protected:
 	ARBConfigVenue();
-	~ARBConfigVenue();
 	ARBConfigVenue(ARBConfigVenue const& rhs);
-	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
+
+public:
+	~ARBConfigVenue();
+	static ARBConfigVenuePtr New();
 	ARBConfigVenuePtr Clone() const;
+
+	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
 
 	bool operator==(ARBConfigVenue const& rhs) const;
 	bool operator!=(ARBConfigVenue const& rhs) const;

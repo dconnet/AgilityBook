@@ -567,7 +567,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
 			{
-				ARBCalendarPtr pCal(new ARBCalendar(*(*iter)));
+				ARBCalendarPtr pCal = (*iter)->Clone();
 				CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, pCal);
 				items.push_back(pData);
 			}
@@ -595,7 +595,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunOtherPointsList::const_iterator iter = m_pRun->GetOtherPoints().begin(); iter != m_pRun->GetOtherPoints().end(); ++iter)
 			{
-				ARBDogRunOtherPointsPtr pOther(new ARBDogRunOtherPoints(*(*iter)));
+				ARBDogRunOtherPointsPtr pOther = (*iter)->Clone();
 				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, *m_pConfig, m_pRun, pOther);
 				items.push_back(pData);
 			}
@@ -611,7 +611,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunPartnerList::const_iterator iter = m_pRun->GetPartners().begin(); iter != m_pRun->GetPartners().end(); ++iter)
 			{
-				ARBDogRunPartnerPtr pPartner(new ARBDogRunPartner(*(*iter)));
+				ARBDogRunPartnerPtr pPartner = (*iter)->Clone();
 				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, pPartner);
 				items.push_back(pData);
 			}
@@ -734,7 +734,7 @@ void CDlgListCtrl::OnNew()
 		break;
 	case eCalendar:
 		{
-			ARBCalendarPtr cal(new ARBCalendar());
+			ARBCalendarPtr cal(ARBCalendar::New());
 			cal->SetStartDate(m_Date);
 			cal->SetEndDate(m_Date + 1);
 			CDlgCalendar dlg(cal, m_pDoc);
@@ -786,7 +786,7 @@ void CDlgListCtrl::OnNew()
 
 	case eOtherPoints:
 		{
-			ARBDogRunOtherPointsPtr pOther(new ARBDogRunOtherPoints());
+			ARBDogRunOtherPointsPtr pOther(ARBDogRunOtherPoints::New());
 			CDlgOtherPoint dlg(*m_pConfig, pOther, this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -809,7 +809,7 @@ void CDlgListCtrl::OnNew()
 
 	case ePartners:
 		{
-			ARBDogRunPartnerPtr partner(new ARBDogRunPartner());
+			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
 			CDlgPartner dlg(partner, this);
 			if (IDOK == dlg.DoModal())
 			{

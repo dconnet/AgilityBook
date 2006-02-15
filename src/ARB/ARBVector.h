@@ -47,8 +47,7 @@ class ARBConfig;
 class Element;
 
 /**
- * Vector for smart pointers.
- * The base template handles all the copy/cleanup necessary.
+ * Extend some common functionality.
  */
 template <typename T>
 class ARBVector : public std::vector<T>
@@ -56,48 +55,6 @@ class ARBVector : public std::vector<T>
 public:
 	ARBVector()
 	{
-	}
-
-	/**
-	 * Deep copy constructor.
-	 * @param rhs Object being copied.
-	 * @post A deep copy of rhs.
-	 */
-	ARBVector(ARBVector<T> const& rhs)
-	{
-		// Make a copy first. Then if we throw an exception during
-		// the copy, we won't clobber the existing data.
-		ARBVector<T> tmp;
-		tmp.reserve(rhs.size());
-		for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
-		{
-			T pItem = *iter;
-			if (pItem)
-				tmp.push_back(pItem->Clone());
-		}
-		swap(tmp);
-	}
-
-	/**
-	 * Deep assignment operator.
-	 * @param rhs Object being copied.
-	 * @post A deep copy of rhs.
-	 */
-	ARBVector<T>& operator=(ARBVector<T> const& rhs)
-	{
-		if (this != &rhs)
-		{
-			ARBVector<T> tmp;
-			tmp.reserve(rhs.size());
-			for (const_iterator iter = rhs.begin(); iter != rhs.end(); ++iter)
-			{
-				T pItem = *iter;
-				if (pItem)
-					tmp.push_back(pItem->Clone());
-			}
-			swap(tmp);
-		}
-		return *this;
 	}
 
 	/**
@@ -123,11 +80,28 @@ public:
 	}
 
 	/**
+	 * Make a copy of everything.
+	 * @param outList Object being copied to.
+	 */
+	size_t Clone(ARBVector<T>& outList) const
+	{
+		outList.clear();
+		outList.reserve(size());
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+		{
+			T pItem = *iter;
+			if (pItem)
+				outList.push_back(pItem->Clone());
+		}
+		return outList.size();
+	}
+
+	/**
 	 * Get all the strings to search in this list.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
 	{
 		size_t nItems = 0;
 		for (const_iterator iter = begin(); iter != end(); ++iter)

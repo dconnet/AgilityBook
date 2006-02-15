@@ -102,21 +102,30 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	, m_Conditions(rhs.m_Conditions)
 	, m_Judge(rhs.m_Judge)
 	, m_Handler(rhs.m_Handler)
-	, m_Partners(rhs.m_Partners)
+	, m_Partners()
 	, m_Scoring(rhs.m_Scoring)
 	, m_Q(rhs.m_Q)
 	, m_Place(rhs.m_Place)
 	, m_InClass(rhs.m_InClass)
 	, m_DogsQd(rhs.m_DogsQd)
-	, m_OtherPoints(rhs.m_OtherPoints)
+	, m_OtherPoints()
 	, m_Notes(rhs.m_Notes)
-	, m_RefRuns(rhs.m_RefRuns)
+	, m_RefRuns()
 	, m_Links(rhs.m_Links)
 {
+	rhs.m_Partners.Clone(m_Partners);
+	rhs.m_OtherPoints.Clone(m_OtherPoints);
+	rhs.m_RefRuns.Clone(m_RefRuns);
 }
 
 ARBDogRun::~ARBDogRun()
 {
+}
+
+//static
+ARBDogRunPtr ARBDogRun::New()
+{
+	return ARBDogRunPtr(new ARBDogRun());
 }
 
 ARBDogRunPtr ARBDogRun::Clone() const
@@ -137,15 +146,15 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 		m_Conditions = rhs.m_Conditions;
 		m_Judge = rhs.m_Judge;
 		m_Handler = rhs.m_Handler;
-		m_Partners = rhs.m_Partners;
+		rhs.m_Partners.Clone(m_Partners);
 		m_Scoring = rhs.m_Scoring;
 		m_Q = rhs.m_Q;
 		m_Place = rhs.m_Place;
 		m_InClass = rhs.m_InClass;
 		m_DogsQd = rhs.m_DogsQd;
-		m_OtherPoints = rhs.m_OtherPoints;
+		rhs.m_OtherPoints.Clone(m_OtherPoints);
 		m_Notes = rhs.m_Notes;
-		m_RefRuns = rhs.m_RefRuns;
+		rhs.m_RefRuns.Clone(m_RefRuns);
 		m_Links = rhs.m_Links;
 	}
 	return *this;
@@ -653,7 +662,7 @@ bool ARBDogRunList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogRunPtr thing(new ARBDogRun());
+	ARBDogRunPtr thing(ARBDogRun::New());
 	if (!thing->Load(inConfig, inClubs, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

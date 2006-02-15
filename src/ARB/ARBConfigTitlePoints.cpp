@@ -78,6 +78,18 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
 
+//static
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
+{
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
+}
+
+//static
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(double inPoints, short inFaults)
+{
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
+}
+
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
 {
 	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
@@ -161,7 +173,7 @@ bool ARBConfigTitlePointsList::Load(
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints)
 {
-	ARBConfigTitlePointsPtr thing(new ARBConfigTitlePoints());
+	ARBConfigTitlePointsPtr thing(ARBConfigTitlePoints::New());
 	if (!thing->Load(inTree, inVersion, ioCallback, ioLifetimePoints))
 		return false;
 	push_back(thing);
@@ -223,7 +235,7 @@ bool ARBConfigTitlePointsList::AddTitlePoints(
 		outTitle->reset();
 	if (FindTitlePoints(inFaults))
 		return false;
-	ARBConfigTitlePointsPtr pTitle(new ARBConfigTitlePoints(inPoints, inFaults));
+	ARBConfigTitlePointsPtr pTitle(ARBConfigTitlePoints::New(inPoints, inFaults));
 	push_back(pTitle);
 	sort();
 	if (outTitle)

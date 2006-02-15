@@ -136,13 +136,21 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
 	, m_bSpeedPts(rhs.m_bSpeedPts)
 	, m_bBonusPts(rhs.m_bBonusPts)
-	, m_TitlePoints(rhs.m_TitlePoints)
-	, m_LifePoints(rhs.m_LifePoints)
+	, m_TitlePoints()
+	, m_LifePoints()
 {
+	rhs.m_TitlePoints.Clone(m_TitlePoints);
+	rhs.m_LifePoints.Clone(m_LifePoints);
 }
 
 ARBConfigScoring::~ARBConfigScoring()
 {
+}
+
+//static
+ARBConfigScoringPtr ARBConfigScoring::New()
+{
+	return ARBConfigScoringPtr(new ARBConfigScoring());
 }
 
 ARBConfigScoringPtr ARBConfigScoring::Clone() const
@@ -171,8 +179,8 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bDoubleQ = rhs.m_bDoubleQ;
 		m_bSpeedPts = rhs.m_bSpeedPts;
 		m_bBonusPts = rhs.m_bBonusPts;
-		m_TitlePoints = rhs.m_TitlePoints;
-		m_LifePoints = rhs.m_LifePoints;
+		rhs.m_TitlePoints.Clone(m_TitlePoints);
+		rhs.m_LifePoints.Clone(m_LifePoints);
 	}
 	return *this;
 }
@@ -509,7 +517,7 @@ bool ARBConfigScoringList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigScoringPtr thing(new ARBConfigScoring());
+	ARBConfigScoringPtr thing(ARBConfigScoring::New());
 	if (!thing->Load(inDivisions, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -645,7 +653,7 @@ bool ARBConfigScoringList::VerifyEvent(
 
 ARBConfigScoringPtr ARBConfigScoringList::AddScoring()
 {
-	ARBConfigScoringPtr pScoring(new ARBConfigScoring());
+	ARBConfigScoringPtr pScoring(ARBConfigScoring::New());
 	pScoring->SetDivision(WILDCARD_DIVISION);
 	pScoring->SetLevel(WILDCARD_LEVEL);
 	pScoring->SetScoringStyle(ARBConfigScoring::eFaultsThenTime);

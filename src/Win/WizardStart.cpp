@@ -523,7 +523,7 @@ BOOL CWizardStart::OnWizardFinish()
 											else
 											{
 												++countTitlesAdded;
-												ARBDogTitlePtr pNewTitle(new ARBDogTitle(*pTitle));
+												ARBDogTitlePtr pNewTitle = pTitle->Clone();
 												pExisting->GetTitles().AddTitle(pNewTitle);
 											}
 										}

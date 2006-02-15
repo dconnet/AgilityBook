@@ -57,13 +57,18 @@ class Element;
  */
 class ARBDogTrial : public ARBBase
 {
-public:
+protected:
 	ARBDogTrial();
-	~ARBDogTrial();
 	ARBDogTrial(ARBCalendar const& inCal);
 	ARBDogTrial(ARBDogTrial const& rhs);
-	ARBDogTrial& operator=(ARBDogTrial const& rhs);
+
+public:
+	~ARBDogTrial();
+	static ARBDogTrialPtr New();
+	static ARBDogTrialPtr New(ARBCalendar const& inCal);
 	ARBDogTrialPtr Clone() const;
+
+	ARBDogTrial& operator=(ARBDogTrial const& rhs);
 
 	bool operator==(ARBDogTrial const& rhs) const;
 	bool operator!=(ARBDogTrial const& rhs) const;

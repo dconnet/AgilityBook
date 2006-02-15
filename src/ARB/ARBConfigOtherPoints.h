@@ -62,11 +62,16 @@ public:
 		eTallyLevelByEvent	///< Separate runs by event and level.
 	} eOtherPointsTally;
 
+protected:
 	ARBConfigOtherPoints();
-	~ARBConfigOtherPoints();
 	ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs);
-	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
+
+public:
+	~ARBConfigOtherPoints();
+	static ARBConfigOtherPointsPtr New();
 	ARBConfigOtherPointsPtr Clone() const;
+
+	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
 
 	bool operator==(ARBConfigOtherPoints const& rhs) const;
 	bool operator!=(ARBConfigOtherPoints const& rhs) const;

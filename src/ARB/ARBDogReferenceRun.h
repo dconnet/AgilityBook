@@ -51,12 +51,16 @@ class Element;
  */
 class ARBDogReferenceRun : public ARBBase
 {
-public:
+protected:
 	ARBDogReferenceRun();
-	~ARBDogReferenceRun();
 	ARBDogReferenceRun(ARBDogReferenceRun const& rhs);
-	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+
+public:
+	~ARBDogReferenceRun();
+	static ARBDogReferenceRunPtr New();
 	ARBDogReferenceRunPtr Clone() const;
+
+	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
 
 	bool operator==(ARBDogReferenceRun const& rhs) const;
 	bool operator!=(ARBDogReferenceRun const& rhs) const;

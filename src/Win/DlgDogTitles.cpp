@@ -161,8 +161,9 @@ CDlgDogTitles::CDlgDogTitles(
 	, m_ctrlTitles(true)
 	, m_pDoc(pDoc)
 	, m_sortTitles(_T("Titles"))
-	, m_Titles(titles)
+	, m_Titles()
 {
+	titles.Clone(m_Titles);
 	m_sortTitles.Initialize(nColTitleInfo);
 	m_ImageList.Create(16, 16, ILC_MASK, 3, 0);
 	CWinApp* app = AfxGetApp();

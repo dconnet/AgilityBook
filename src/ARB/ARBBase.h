@@ -113,26 +113,3 @@ public:
 protected:
 	bool m_bFiltered[eNumFilters];
 };
-
-inline bool ARBBase::IsFiltered(FilterType inFilterType) const
-{
-	return m_bFiltered[inFilterType];
-}
-
-inline void ARBBase::SetFiltered(
-		FilterType inFilterType,
-		bool bFiltered)
-{
-	m_bFiltered[inFilterType] = bFiltered;
-}
-
-inline bool ARBBase::IsFiltered() const
-{
-	return IsFiltered(eFilter);
-}
-
-inline void ARBBase::SetFiltered(bool bFiltered)
-{
-	SetFiltered(eFilter, bFiltered);
-	SetFiltered(eIgnoreQ, bFiltered);
-}

@@ -65,12 +65,19 @@ ARBConfigDivision::ARBConfigDivision()
 
 ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
-	, m_Levels(rhs.m_Levels)
+	, m_Levels()
 {
+	rhs.m_Levels.Clone(m_Levels);
 }
 
 ARBConfigDivision::~ARBConfigDivision()
 {
+}
+
+//static
+ARBConfigDivisionPtr ARBConfigDivision::New()
+{
+	return ARBConfigDivisionPtr(new ARBConfigDivision());
 }
 
 ARBConfigDivisionPtr ARBConfigDivision::Clone() const
@@ -83,7 +90,7 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 	if (this != &rhs)
 	{
 		m_Name = rhs.m_Name;
-		m_Levels = rhs.m_Levels;
+		rhs.m_Levels.Clone(m_Levels);
 	}
 	return *this;
 }
@@ -221,7 +228,7 @@ bool ARBConfigDivisionList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigDivisionPtr thing(new ARBConfigDivision());
+	ARBConfigDivisionPtr thing(ARBConfigDivision::New());
 	if (!thing->Load(ioVenue, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -275,7 +282,7 @@ bool ARBConfigDivisionList::AddDivision(
 		return false;
 	if (FindDivision(inDiv))
 		return false;
-	ARBConfigDivisionPtr pDiv(new ARBConfigDivision());
+	ARBConfigDivisionPtr pDiv(ARBConfigDivision::New());
 	pDiv->SetName(inDiv);
 	push_back(pDiv);
 	if (outDiv)

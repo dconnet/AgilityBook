@@ -54,15 +54,18 @@ class Element;
  */
 class ARBConfigLifetimePoints : public ARBBase
 {
-public:
+protected:
 	ARBConfigLifetimePoints();
-	~ARBConfigLifetimePoints();
-	ARBConfigLifetimePoints(
-			double inPoints,
-			short inFaults);
+	ARBConfigLifetimePoints(double inPoints, short inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
-	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+
+public:
+	~ARBConfigLifetimePoints();
+	static ARBConfigLifetimePointsPtr New();
+	static ARBConfigLifetimePointsPtr New(double inPoints, short inFaults);
 	ARBConfigLifetimePointsPtr Clone() const;
+
+	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
 
 	bool operator==(ARBConfigLifetimePoints const& rhs) const;
 	bool operator!=(ARBConfigLifetimePoints const& rhs) const;

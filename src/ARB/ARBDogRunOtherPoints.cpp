@@ -67,6 +67,12 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
 
+//static
+ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
+{
+	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
+}
+
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
 {
 	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
@@ -135,7 +141,7 @@ bool ARBDogRunOtherPointsList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBDogRunOtherPointsPtr thing(new ARBDogRunOtherPoints());
+	ARBDogRunOtherPointsPtr thing(ARBDogRunOtherPoints::New());
 	if (!thing->Load(inConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);

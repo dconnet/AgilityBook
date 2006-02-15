@@ -76,15 +76,25 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Desc(rhs.m_Desc)
-	, m_Titles(rhs.m_Titles)
-	, m_Divisions(rhs.m_Divisions)
-	, m_Events(rhs.m_Events)
-	, m_MultiQs(rhs.m_MultiQs)
+	, m_Titles()
+	, m_Divisions()
+	, m_Events()
+	, m_MultiQs()
 {
+	rhs.m_Titles.Clone(m_Titles);
+	rhs.m_Divisions.Clone(m_Divisions);
+	rhs.m_Events.Clone(m_Events);
+	rhs.m_MultiQs.Clone(m_MultiQs);
 }
 
 ARBConfigVenue::~ARBConfigVenue()
 {
+}
+
+//static
+ARBConfigVenuePtr ARBConfigVenue::New()
+{
+	return ARBConfigVenuePtr(new ARBConfigVenue());
 }
 
 ARBConfigVenuePtr ARBConfigVenue::Clone() const
@@ -99,10 +109,10 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
 		m_Desc = rhs.m_Desc;
-		m_Titles = rhs.m_Titles;
-		m_Divisions = rhs.m_Divisions;
-		m_Events = rhs.m_Events;
-		m_MultiQs = rhs.m_MultiQs;
+		rhs.m_Titles.Clone(m_Titles);
+		rhs.m_Divisions.Clone(m_Divisions);
+		rhs.m_Events.Clone(m_Events);
+		rhs.m_MultiQs.Clone(m_MultiQs);
 	}
 	return *this;
 }
@@ -192,7 +202,7 @@ bool ARBConfigVenue::Load(
 		{
 			if (name == TREE_FAULTTYPE)
 			{
-				ARBConfigFaultPtr pFault(new ARBConfigFault());
+				ARBConfigFaultPtr pFault(ARBConfigFault::New());
 				// Kind-of ignore any errors...
 				bool bOk = pFault->Load(element, inVersion, ioCallback);
 				// When migrating, avoid duplicate fault names.
@@ -226,7 +236,7 @@ bool ARBConfigVenue::Load(
 				if ((*iterS)->ConvertDoubleQ())
 				{
 					if (!pMulti)
-						pMulti = ARBConfigMultiQPtr(new ARBConfigMultiQ());
+						pMulti = ARBConfigMultiQPtr(ARBConfigMultiQ::New());
 					pMulti->SetName(_T("Double Q"));
 					pMulti->SetShortName(_T("QQ"));
 					pMulti->AddItem((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
@@ -447,7 +457,7 @@ bool ARBConfigVenue::Update(
 			if (!bFound)
 				++nAdded;
 		}
-		GetMultiQs() = inVenueNew->GetMultiQs();
+		inVenueNew->GetMultiQs().Clone(GetMultiQs());
 		if (0 < nAdded || 0 < nDeleted)
 		{
 			info += indentBuffer;
@@ -472,7 +482,7 @@ bool ARBConfigVenueList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ARBConfigVenuePtr thing(new ARBConfigVenue());
+	ARBConfigVenuePtr thing(ARBConfigVenue::New());
 	if (!thing->Load(ioConfig, inTree, inVersion, ioCallback))
 		return false;
 	push_back(thing);
@@ -626,7 +636,7 @@ bool ARBConfigVenueList::AddVenue(
 		return false;
 	if (FindVenue(inVenue))
 		return false;
-	ARBConfigVenuePtr pVenue(new ARBConfigVenue());
+	ARBConfigVenuePtr pVenue(ARBConfigVenue::New());
 	pVenue->SetName(inVenue);
 	push_back(pVenue);
 	sort();

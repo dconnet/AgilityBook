@@ -79,6 +79,12 @@ ARBConfigTitle::~ARBConfigTitle()
 {
 }
 
+//static
+ARBConfigTitlePtr ARBConfigTitle::New()
+{
+	return ARBConfigTitlePtr(new ARBConfigTitle());
+}
+
 ARBConfigTitlePtr ARBConfigTitle::Clone() const
 {
 	return ARBConfigTitlePtr(new ARBConfigTitle(*this));
@@ -267,7 +273,7 @@ bool ARBConfigTitleList::Load(
 		ARBErrorCallback& ioCallback,
 		bool inCheckDups)
 {
-	ARBConfigTitlePtr thing(new ARBConfigTitle());
+	ARBConfigTitlePtr thing(ARBConfigTitle::New());
 	if (!thing->Load(inTree, inVersion, ioCallback)
 	|| (inCheckDups && FindTitle(thing->GetName())))
 	{
@@ -325,7 +331,7 @@ bool ARBConfigTitleList::AddTitle(
 		return false;
 	if (FindTitle(inName))
 		return false;
-	ARBConfigTitlePtr pTitle(new ARBConfigTitle());
+	ARBConfigTitlePtr pTitle(ARBConfigTitle::New());
 	pTitle->SetName(inName);
 	push_back(pTitle);
 	if (outTitle)

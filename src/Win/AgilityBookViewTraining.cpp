@@ -736,7 +736,7 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 
 void CAgilityBookViewTraining::OnTrainingNew()
 {
-	ARBTrainingPtr training(new ARBTraining());
+	ARBTrainingPtr training(ARBTraining::New());
 	CDlgTraining dlg(training, GetDocument());
 	if (IDOK == dlg.DoModal())
 	{
@@ -777,7 +777,7 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 			// Currently, we don't need to worry if this is visible. The only filtering
 			// is on name/date. So they can see the item that's being duped, which means
 			// the new one is visible too.
-			ARBTrainingPtr training(new ARBTraining(*((*iter)->GetTraining())));
+			ARBTrainingPtr training = (*iter)->GetTraining()->Clone();
 			GetDocument()->GetTraining().AddTraining(training);
 			GetDocument()->GetTraining().sort();
 			date = training->GetDate();
@@ -877,7 +877,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 				Element const& element = tree.GetElement(i);
 				if (element.GetName() == TREE_TRAINING)
 				{
-					ARBTrainingPtr pLog(new ARBTraining());
+					ARBTrainingPtr pLog(ARBTraining::New());
 					CErrorCallback err;
 					if (pLog->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{
