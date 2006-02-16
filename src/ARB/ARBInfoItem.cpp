@@ -101,6 +101,16 @@ bool ARBInfoItem::operator!=(ARBInfoItem const& rhs) const
 	return !operator==(rhs);
 }
 
+bool ARBInfoItem::operator<(ARBInfoItem const& rhs) const
+{
+	return m_Name < rhs.GetName();
+}
+
+bool ARBInfoItem::operator>(ARBInfoItem const& rhs) const
+{
+	return m_Name > rhs.GetName();
+}
+
 ARBString ARBInfoItem::GetGenericName() const
 {
 	return m_Name;
@@ -147,6 +157,26 @@ bool ARBInfoItem::Save(
 	return true;
 }
 
+ARBString const& ARBInfoItem::GetName() const
+{
+	return m_Name;
+}
+
+void ARBInfoItem::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBString const& ARBInfoItem::GetComment() const
+{
+	return m_Comment;
+}
+
+void ARBInfoItem::SetComment(ARBString const& inComment)
+{
+	m_Comment = inComment;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 ARBInfoItemList::ARBInfoItemList(ARBString const& inItemName)
@@ -168,6 +198,11 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 		m_ItemName = rhs.m_ItemName;
 	}
 	return *this;
+}
+
+ARBString const& ARBInfoItemList::GetItemName() const
+{
+	return m_ItemName;
 }
 
 bool ARBInfoItemList::Load(

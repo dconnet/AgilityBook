@@ -36,9 +36,9 @@
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
  */
 
-#define CLIPDATA	_T("ClipData")
-
 class Element;
+
+#define CLIPDATA	_T("ClipData")
 
 /**
  * Copy the given tree to the clipboard, along with a text form if given.

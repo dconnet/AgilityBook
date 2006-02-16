@@ -102,6 +102,17 @@ bool ARBConfigLevel::operator!=(ARBConfigLevel const& rhs) const
 	return !operator==(rhs);
 }
 
+void ARBConfigLevel::clear()
+{
+	m_Name.erase();
+	m_SubLevels.clear();
+}
+
+ARBString ARBConfigLevel::GetGenericName() const
+{
+	return m_Name;
+}
+
 size_t ARBConfigLevel::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -185,10 +196,24 @@ bool ARBConfigLevel::Update(
 	return bChanges;
 }
 
-void ARBConfigLevel::clear()
+ARBString const& ARBConfigLevel::GetName() const
 {
-	m_Name.erase();
-	m_SubLevels.clear();
+	return m_Name;
+}
+
+void ARBConfigLevel::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBConfigSubLevelList const& ARBConfigLevel::GetSubLevels() const
+{
+	return m_SubLevels;
+}
+
+ARBConfigSubLevelList& ARBConfigLevel::GetSubLevels()
+{
+	return m_SubLevels;
 }
 
 /////////////////////////////////////////////////////////////////////////////

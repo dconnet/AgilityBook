@@ -42,11 +42,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfigLifetimePointsList;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Number of title points that can be earned based on number of faults.
@@ -122,26 +117,6 @@ private:
 	double m_Points;
 	short m_Faults;
 };
-
-inline double ARBConfigTitlePoints::GetPoints() const
-{
-	return m_Points;
-}
-
-inline void ARBConfigTitlePoints::SetPoints(double inPoints)
-{
-	m_Points = inPoints;
-}
-
-inline short ARBConfigTitlePoints::GetFaults() const
-{
-	return m_Faults;
-}
-
-inline void ARBConfigTitlePoints::SetFaults(short inFaults)
-{
-	m_Faults = inFaults;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

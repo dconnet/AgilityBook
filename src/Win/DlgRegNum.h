@@ -37,9 +37,6 @@
  */
 
 #include "DlgBaseDialog.h"
-class ARBConfig;
-class ARBDogRegNum;
-class ARBDogRegNumList;
 
 class CDlgRegNum : public CDlgBaseDialog
 {

@@ -37,7 +37,6 @@
  */
 
 #include "ARBCalendar.h"
-#include "ARBVector.h"
 #include "DlgBaseSheet.h"
 #include "WizardExcel.h"
 class CAgilityBookDoc;

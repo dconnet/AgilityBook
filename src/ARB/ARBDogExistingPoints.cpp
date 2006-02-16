@@ -455,6 +455,116 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 	return true;
 }
 
+ARBDogExistingPoints::PointType ARBDogExistingPoints::GetType() const
+{
+	return m_Type;
+}
+
+void ARBDogExistingPoints::SetType(ARBDogExistingPoints::PointType inType)
+{
+	m_Type = inType;
+}
+
+ARBDate const& ARBDogExistingPoints::GetDate() const
+{
+	return m_Date;
+}
+
+void ARBDogExistingPoints::SetDate(ARBDate const& inDate)
+{
+	m_Date = inDate;
+}
+
+ARBString const& ARBDogExistingPoints::GetComment() const
+{
+	return m_Comment;
+}
+
+void ARBDogExistingPoints::SetComment(ARBString const& inComment)
+{
+	m_Comment = inComment;
+}
+
+ARBString const& ARBDogExistingPoints::GetOtherPoints() const
+{
+	return m_Other;
+}
+
+void ARBDogExistingPoints::SetOtherPoints(ARBString const& inOther)
+{
+	m_Other = inOther;
+}
+
+ARBString const& ARBDogExistingPoints::GetVenue() const
+{
+	return m_Venue;
+}
+
+void ARBDogExistingPoints::SetVenue(ARBString const& inVenue)
+{
+	m_Venue = inVenue;
+}
+
+ARBString const& ARBDogExistingPoints::GetMultiQ() const
+{
+	return m_MultiQ;
+}
+
+void ARBDogExistingPoints::SetMultiQ(ARBString const& inMultiQ)
+{
+	m_MultiQ = inMultiQ;
+}
+
+ARBString const& ARBDogExistingPoints::GetDivision() const
+{
+	return m_Div;
+}
+
+void ARBDogExistingPoints::SetDivision(ARBString const& inDiv)
+{
+	m_Div = inDiv;
+}
+
+ARBString const& ARBDogExistingPoints::GetLevel() const
+{
+	return m_Level;
+}
+
+void ARBDogExistingPoints::SetLevel(ARBString const& inLevel)
+{
+	m_Level = inLevel;
+}
+
+ARBString const& ARBDogExistingPoints::GetEvent() const
+{
+	return m_Event;
+}
+
+void ARBDogExistingPoints::SetEvent(ARBString const& inEvent)
+{
+	m_Event = inEvent;
+}
+
+ARBString const& ARBDogExistingPoints::GetSubName() const
+{
+	return m_SubName;
+}
+
+void ARBDogExistingPoints::SetSubName(ARBString const& inSubName)
+{
+	m_SubName = inSubName;
+}
+
+double ARBDogExistingPoints::GetPoints() const
+{
+	return m_Points;
+}
+
+void ARBDogExistingPoints::SetPoints(double inPoints)
+{
+	m_Points = inPoints;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogExistingPointsList::Load(

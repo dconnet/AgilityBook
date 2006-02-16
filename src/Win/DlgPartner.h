@@ -36,7 +36,6 @@
  */
 
 #include "DlgBaseDialog.h"
-class ARBDogRunPartner;
 
 class CDlgPartner : public CDlgBaseDialog
 {

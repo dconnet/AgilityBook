@@ -39,6 +39,12 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include <vector>
+#include "AgilityBookOptions.h"
+#include "DlgBaseDialog.h"
+#include "ListBox.h"
+#include "ListCtrl.h"
+
 /*
  * If types/columns are added/removed, do not change these numbers.
  * These numbers are stored in a users registry for the order.
@@ -173,12 +179,6 @@
 #define IO_CAL_TASK_SENSITIVITY		109
 #define IO_CAL_TASK_STATUS			110
 #define IO_MAX						111
-
-#include <vector>
-#include "AgilityBookOptions.h"
-#include "DlgBaseDialog.h"
-#include "ListBox.h"
-#include "ListCtrl.h"
 
 class CDlgAssignColumns : public CDlgBaseDialog
 {

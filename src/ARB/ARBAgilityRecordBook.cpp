@@ -103,6 +103,81 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBString UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_FAULTS_DEF(nNew, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_OTHERPTS_DEF(nNew, nUpdated, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_VENUES_DEF(nNew, nUpdated, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_DIVISIONS_DEF(nAdded, nChanged, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_EVENTS_DEF(nAdded, nChanged, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_MULTIQS_DEF(nAdded, nDeleted, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_LEVELS_DEF(nAdded, nChanged, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_TITLES_DEF(nAdded, nChanged, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_SUBLEVELS_DEF(nAdded) << std::endl;
+	return buffer.str();
+}
+ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_FORMAT_RULES_DEF(nAdded, nDeleted, nChanged, nSkipped) << std::endl;
+	return buffer.str();
+}
+ARBString TITLE_POINTS_NAME_FORMAT(double points, short faults)
+{
+	ARBostringstream buffer;
+	buffer << TITLE_POINTS_NAME_FORMAT_DEF(points, faults);
+	return buffer.str();
+}
+ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults)
+{
+	ARBostringstream buffer;
+	buffer << LIFETIME_POINTS_NAME_FORMAT_DEF(points, faults);
+	return buffer.str();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg)
 {
 	ARBostringstream str;
@@ -660,4 +735,54 @@ size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<ARBString>& outFaults) co
 		}
 	}
 	return outFaults.size();
+}
+
+ARBCalendarList const& ARBAgilityRecordBook::GetCalendar() const
+{
+	return m_Calendar;
+}
+
+ARBCalendarList& ARBAgilityRecordBook::GetCalendar()
+{
+	return m_Calendar;
+}
+
+ARBTrainingList const& ARBAgilityRecordBook::GetTraining() const
+{
+	return m_Training;
+}
+
+ARBTrainingList& ARBAgilityRecordBook::GetTraining()
+{
+	return m_Training;
+}
+
+ARBConfig const& ARBAgilityRecordBook::GetConfig() const
+{
+	return m_Config;
+}
+
+ARBConfig& ARBAgilityRecordBook::GetConfig()
+{
+	return m_Config;
+}
+
+ARBInfo const& ARBAgilityRecordBook::GetInfo() const
+{
+	return m_Info;
+}
+
+ARBInfo& ARBAgilityRecordBook::GetInfo()
+{
+	return m_Info;
+}
+
+ARBDogList const& ARBAgilityRecordBook::GetDogs() const
+{
+	return m_Dogs;
+}
+
+ARBDogList& ARBAgilityRecordBook::GetDogs()
+{
+	return m_Dogs;
 }

@@ -40,10 +40,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Pre-loaded Fault types.
@@ -107,21 +103,6 @@ public:
 private:
 	ARBString m_Name;
 };
-
-inline ARBString ARBConfigFault::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBConfigFault::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigFault::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

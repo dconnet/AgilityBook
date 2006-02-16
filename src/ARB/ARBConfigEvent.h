@@ -47,10 +47,7 @@
 #include "ARBConfigDivision.h"
 #include "ARBConfigScoring.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
+class ARBDate;
 
 /**
  * Event configuration information.
@@ -188,71 +185,6 @@ private:
 	std::set<ARBString> m_SubNames;
 	ARBConfigScoringList m_Scoring;
 };
-
-inline ARBString ARBConfigEvent::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBConfigEvent::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigEvent::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBConfigEvent::GetDesc() const
-{
-	return m_Desc;
-}
-
-inline void ARBConfigEvent::SetDesc(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
-}
-
-inline bool ARBConfigEvent::HasTable() const
-{
-	return m_bTable;
-}
-
-inline void ARBConfigEvent::SetHasTable(bool inBool)
-{
-	m_bTable = inBool;
-}
-
-inline bool ARBConfigEvent::HasPartner() const
-{
-	return m_bHasPartner;
-}
-
-inline void ARBConfigEvent::SetHasPartner(bool inHas)
-{
-	m_bHasPartner = inHas;
-}
-
-inline bool ARBConfigEvent::HasSubNames() const
-{
-	return m_bHasSubNames;
-}
-
-inline void ARBConfigEvent::SetHasSubNames(bool inHas)
-{
-	m_bHasSubNames = inHas;
-}
-
-inline ARBConfigScoringList const& ARBConfigEvent::GetScorings() const
-{
-	return m_Scoring;
-}
-
-inline ARBConfigScoringList& ARBConfigEvent::GetScorings()
-{
-	return m_Scoring;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

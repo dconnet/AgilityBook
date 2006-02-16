@@ -42,15 +42,6 @@
 #include "ARBBase.h"
 #include "ARBDogClub.h"
 #include "ARBDogRun.h"
-#include "ARBVector.h"
-class ARBCalendar;
-class ARBConfig;
-class ARBConfigMultiQ;
-class ARBConfigVenue;
-class ARBDate;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * All the information about a trial.
@@ -156,56 +147,6 @@ private:
 	ARBDogClubList m_Clubs;
 	ARBDogRunList m_Runs;
 };
-
-inline ARBString const& ARBDogTrial::GetLocation() const
-{
-	return m_Location;
-}
-
-inline void ARBDogTrial::SetLocation(ARBString const& inLoc)
-{
-	m_Location = inLoc;
-}
-
-inline ARBString const& ARBDogTrial::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBDogTrial::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
-
-inline bool ARBDogTrial::IsVerified() const
-{
-	return m_Verified;
-}
-
-inline void ARBDogTrial::SetVerified(bool inVerified)
-{
-	m_Verified = inVerified;
-}
-
-inline ARBDogClubList const& ARBDogTrial::GetClubs() const
-{
-	return m_Clubs;
-}
-
-inline ARBDogClubList& ARBDogTrial::GetClubs()
-{
-	return m_Clubs;
-}
-
-inline ARBDogRunList const& ARBDogTrial::GetRuns() const
-{
-	return m_Runs;
-}
-
-inline ARBDogRunList& ARBDogTrial::GetRuns()
-{
-	return m_Runs;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

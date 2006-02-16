@@ -1111,10 +1111,6 @@ SOURCE=..\..\ARB\ARBTypes.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\ARB\ARBVector.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\ARB\Base64.cpp
 # End Source File
 # Begin Source File

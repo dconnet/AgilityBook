@@ -39,7 +39,6 @@
 #include <list>
 #include "AgilityBookDoc.h"
 #include "ListData.h"
-
 class CAgilityBookTree;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;

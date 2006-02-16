@@ -148,6 +148,26 @@ bool ARBConfigLifetimePoints::Save(Element& ioTree) const
 	return true;
 }
 
+double ARBConfigLifetimePoints::GetPoints() const
+{
+	return m_Points;
+}
+
+void ARBConfigLifetimePoints::SetPoints(double inPoints)
+{
+	m_Points = inPoints;
+}
+
+short ARBConfigLifetimePoints::GetFaults() const
+{
+	return m_Faults;
+}
+
+void ARBConfigLifetimePoints::SetFaults(short inFaults)
+{
+	m_Faults = inFaults;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLifetimePointsList::Load(

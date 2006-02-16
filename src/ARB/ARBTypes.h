@@ -39,26 +39,20 @@
  * @li 2003-09-01 DRC Added 'operator+=' and 'operator-=' to ARBDouble.
  */
 
+#include <set>
 #include <sstream>
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
-class Element;
 
-// Note, for non-Windows systems, see stdafx.h for additional requirements.
-#ifdef UNICODE
-typedef std::wstring ARBString;
-typedef std::wostringstream ARBostringstream;
-#else
-typedef std::string ARBString;
-typedef std::ostringstream ARBostringstream;
-#endif
+class ARBConfig;
+class Element;
 
 #define ARB_TYPEDEF(name) \
 	class name;\
+	class name##List;\
 	typedef boost::shared_ptr<name> name##Ptr;
 
-ARB_TYPEDEF(ARBBase)
 ARB_TYPEDEF(ARBCalendar)
 ARB_TYPEDEF(ARBConfigAction)
 ARB_TYPEDEF(ARBConfigDivision)
@@ -84,10 +78,137 @@ ARB_TYPEDEF(ARBDogRunPartner)
 ARB_TYPEDEF(ARBDogRunScoring)
 ARB_TYPEDEF(ARBDogTitle)
 ARB_TYPEDEF(ARBDogTrial)
-ARB_TYPEDEF(ARBInfo)
 ARB_TYPEDEF(ARBInfoItem)
 ARB_TYPEDEF(ARBTraining)
 
+// Note, for non-Windows systems, see stdafx.h for additional requirements.
+#ifdef UNICODE
+typedef std::wstring ARBString;
+typedef std::wostringstream ARBostringstream;
+#else
+typedef std::string ARBString;
+typedef std::ostringstream ARBostringstream;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+/**
+ * Extend some common functionality.
+ */
+template <typename T>
+class ARBVector : public std::vector<T>
+{
+public:
+	ARBVector()
+	{
+	}
+
+	/**
+	 * Equality test.
+	 */
+	bool operator==(ARBVector<T> const& rhs) const
+	{
+		if (this == &rhs)
+			return true;
+		if (size() != rhs.size())
+			return false;
+		const_iterator iter1, iter2;
+		for (iter1 = begin(), iter2 = rhs.begin(); iter1 != end(); ++iter1, ++iter2)
+		{
+			if (*(*iter1) != *(*iter2))
+				return false;
+		}
+		return true;
+	}
+	bool operator!=(ARBVector<T> const& rhs) const
+	{
+		return !operator==(rhs);
+	}
+
+	/**
+	 * Make a copy of everything.
+	 * @param outList Object being copied to.
+	 */
+	size_t Clone(ARBVector<T>& outList) const
+	{
+		outList.clear();
+		outList.reserve(size());
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+		{
+			T pItem = *iter;
+			if (pItem)
+				outList.push_back(pItem->Clone());
+		}
+		return outList.size();
+	}
+
+	/**
+	 * Get all the strings to search in this list.
+	 * @param ioStrings Accumulated list of strings to be used during a search.
+	 * @return Number of strings accumulated in this object.
+	 */
+	size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		size_t nItems = 0;
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+			nItems += (*iter)->GetSearchStrings(ioStrings);
+		return nItems;
+	}
+
+	/**
+	 * Reorder a list.
+	 * @param inItem Object to be moved.
+	 * @param inMove Number of positions to move object.
+	 * @return Whether or not object was moved.
+	 */
+	bool Move(
+			T inItem,
+			int inMove)
+	{
+		bool bOk = false;
+		if (inItem)
+		{
+			int n = 0;
+			for (iterator iter = begin(); iter != end(); ++iter, ++n)
+			{
+				if (inItem == *iter)
+				{
+					int offset = n + inMove;
+					if (offset < 0)
+						offset = 0;
+					if (offset >= static_cast<int>(size()))
+						offset = static_cast<int>(size()) - 1;
+					if (offset != n)
+					{
+						bOk = true;
+						std::swap(at(n), at(offset));
+						break;
+					}
+				}
+			}
+		}
+		return bOk;
+	}
+
+	/**
+	 * Save a document.
+	 * In general, the vectors themselves are never stored, only the elements.
+	 * (It flattens the tree a little.)
+	 * @param ioTree Parent element.
+	 * @return Success
+	 * @post The T element will be created in ioTree.
+	 */
+	bool Save(Element& ioTree) const
+	{
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+		{
+			if (!(*iter)->Save(ioTree))
+				return false;
+		}
+		return true;
+	}
+};
+
+/////////////////////////////////////////////////////////////////////////////
 /**
  * Error callback class.
  */
@@ -122,6 +243,7 @@ protected:
 	ARBString& m_ErrMsg;
 };
 
+/////////////////////////////////////////////////////////////////////////////
 /**
  * A version has a major and minor number.
  * Differences between major numbers prevents older versions of the program

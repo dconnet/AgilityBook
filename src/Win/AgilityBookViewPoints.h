@@ -46,13 +46,6 @@
 #include "CommonView.h"
 #include "ListCtrl.h"
 #include "PointsData.h"
-class ARBConfigDivision;
-class ARBConfigLevel;
-class ARBConfigScoring;
-class ARBConfigVenue;
-class ARBDog;
-class ARBDogRun;
-class ARBDogTrial;
 class CAgilityBookDoc;
 struct CVenueFilter;
 

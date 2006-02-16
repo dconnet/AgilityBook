@@ -40,7 +40,6 @@
 #include "DlgBaseDialog.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
-class ARBCalendar;
 class CAgilityBookDoc;
 
 class CDlgCalendar : public CDlgBaseDialog

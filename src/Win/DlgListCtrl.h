@@ -39,9 +39,6 @@
 #include "ARBDate.h"
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
-class ARBCalendar;
-class ARBConfig;
-class ARBDogRun;
 class CAgilityBookDoc;
 class CDlgListCtrlData;
 class CTabView;

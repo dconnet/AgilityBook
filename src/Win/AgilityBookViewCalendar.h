@@ -43,7 +43,6 @@
 #include <vector>
 #include "ARBDate.h"
 #include "CommonView.h"
-class ARBCalendar;
 class CAgilityBookDoc;
 
 class CAgilityBookViewCalendar : public CScrollView, public ICommonView

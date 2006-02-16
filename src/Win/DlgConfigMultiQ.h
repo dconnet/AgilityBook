@@ -39,8 +39,6 @@
 #include "ARBDate.h"
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
-class ARBConfigVenue;
-class ARBConfigMultiQ;
 
 class CDlgConfigMultiQ : public CDlgBaseDialog
 {

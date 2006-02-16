@@ -92,6 +92,11 @@ bool ARBConfigFault::operator!=(ARBConfigFault const& rhs) const
 	return !operator==(rhs);
 }
 
+ARBString ARBConfigFault::GetGenericName() const
+{
+	return m_Name;
+}
+
 size_t ARBConfigFault::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -122,6 +127,16 @@ bool ARBConfigFault::Save(Element& ioTree) const
 	Element& element = ioTree.AddElement(TREE_FAULTTYPE);
 	element.SetValue(m_Name);
 	return true;
+}
+
+ARBString const& ARBConfigFault::GetName() const
+{
+	return m_Name;
+}
+
+void ARBConfigFault::SetName(ARBString const& inName)
+{
+	m_Name = inName;
 }
 
 /////////////////////////////////////////////////////////////////////////////

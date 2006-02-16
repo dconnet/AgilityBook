@@ -38,9 +38,7 @@
  */
 
 #include "ARBInfoItem.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
+#include "ARBTypes.h"
 
 /**
  * General information to be tracked.
@@ -103,31 +101,3 @@ private:
 	ARBInfoItemList m_JudgeInfo;
 	ARBInfoItemList m_LocationInfo;
 };
-
-inline ARBInfoItemList const& ARBInfo::GetInfo(ARBInfo::eInfoType inType) const
-{
-	switch (inType)
-	{
-	default:
-	case ARBInfo::eClubInfo:
-		return m_ClubInfo;
-	case ARBInfo::eJudgeInfo:
-		return m_JudgeInfo;
-	case ARBInfo::eLocationInfo:
-		return m_LocationInfo;
-	}
-}
-
-inline ARBInfoItemList& ARBInfo::GetInfo(ARBInfo::eInfoType inType)
-{
-	switch (inType)
-	{
-	default:
-	case ARBInfo::eClubInfo:
-		return m_ClubInfo;
-	case ARBInfo::eJudgeInfo:
-		return m_JudgeInfo;
-	case ARBInfo::eLocationInfo:
-		return m_LocationInfo;
-	}
-}

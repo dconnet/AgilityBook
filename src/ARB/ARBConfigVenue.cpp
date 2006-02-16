@@ -144,6 +144,11 @@ void ARBConfigVenue::clear()
 	m_MultiQs.clear();
 }
 
+ARBString ARBConfigVenue::GetGenericName() const
+{
+	return m_Name;
+}
+
 size_t ARBConfigVenue::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -472,6 +477,76 @@ bool ARBConfigVenue::Update(
 		ioInfo += indentName + GetName() + _T("\n") + info;
 	}
 	return bChanges;
+}
+
+ARBString const& ARBConfigVenue::GetName() const
+{
+	return m_Name;
+}
+
+void ARBConfigVenue::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBString const& ARBConfigVenue::GetLongName() const
+{
+	return m_LongName;
+}
+
+void ARBConfigVenue::SetLongName(ARBString const& inName)
+{
+	m_LongName = inName;
+}
+
+ARBString const& ARBConfigVenue::GetDesc() const
+{
+	return m_Desc;
+}
+
+void ARBConfigVenue::SetDesc(ARBString const& inDesc)
+{
+	m_Desc = inDesc;
+}
+
+ARBConfigTitleList const& ARBConfigVenue::GetTitles() const
+{
+	return m_Titles;
+}
+
+ARBConfigTitleList& ARBConfigVenue::GetTitles()
+{
+	return m_Titles;
+}
+
+ARBConfigDivisionList const& ARBConfigVenue::GetDivisions() const
+{
+	return m_Divisions;
+}
+
+ARBConfigDivisionList& ARBConfigVenue::GetDivisions()
+{
+	return m_Divisions;
+}
+
+ARBConfigEventList const& ARBConfigVenue::GetEvents() const
+{
+	return m_Events;
+}
+
+ARBConfigEventList& ARBConfigVenue::GetEvents()
+{
+	return m_Events;
+}
+
+ARBConfigMultiQList const& ARBConfigVenue::GetMultiQs() const
+{
+	return m_MultiQs;
+}
+
+ARBConfigMultiQList& ARBConfigVenue::GetMultiQs()
+{
+	return m_MultiQs;
 }
 
 /////////////////////////////////////////////////////////////////////////////

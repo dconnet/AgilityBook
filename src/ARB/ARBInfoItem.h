@@ -42,10 +42,6 @@
 #include <set>
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Comments about items
@@ -125,36 +121,6 @@ private:
 	ARBString m_Name;
 	ARBString m_Comment;
 };
-
-inline bool ARBInfoItem::operator<(ARBInfoItem const& rhs) const
-{
-	return m_Name < rhs.GetName();
-}
-
-inline bool ARBInfoItem::operator>(ARBInfoItem const& rhs) const
-{
-	return m_Name > rhs.GetName();
-}
-
-inline ARBString const& ARBInfoItem::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBInfoItem::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBInfoItem::GetComment() const
-{
-	return m_Comment;
-}
-
-inline void ARBInfoItem::SetComment(ARBString const& inComment)
-{
-	m_Comment = inComment;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -248,8 +214,3 @@ public:
 private:
 	ARBString m_ItemName;
 };
-
-inline ARBString const& ARBInfoItemList::GetItemName() const
-{
-	return m_ItemName;
-}

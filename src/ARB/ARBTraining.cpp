@@ -112,6 +112,26 @@ bool ARBTraining::operator!=(ARBTraining const& rhs) const
 	return !operator==(rhs);
 }
 
+bool ARBTraining::operator<(ARBTraining const& rhs) const
+{
+	return m_Date < rhs.GetDate();
+}
+
+bool ARBTraining::operator>(ARBTraining const& rhs) const
+{
+	return m_Date > rhs.GetDate();
+}
+
+bool ARBTraining::operator<(ARBDate const& rhs) const
+{
+	return m_Date < rhs;
+}
+
+bool ARBTraining::operator>(ARBDate const& rhs) const
+{
+	return m_Date > rhs;
+}
+
 ARBString ARBTraining::GetGenericName() const
 {
 	return m_Date.GetString(ARBDate::eSlashMDY);
@@ -184,6 +204,46 @@ bool ARBTraining::Save(Element& ioTree) const
 	if (0 < m_Note.length())
 		training.SetValue(m_Note);
 	return true;
+}
+
+ARBDate const& ARBTraining::GetDate() const
+{
+	return m_Date;
+}
+
+void ARBTraining::SetDate(ARBDate const& inDate)
+{
+	m_Date = inDate;
+}
+
+ARBString const& ARBTraining::GetName() const
+{
+	return m_Name;
+}
+
+void ARBTraining::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBString const& ARBTraining::GetSubName() const
+{
+	return m_SubName;
+}
+
+void ARBTraining::SetSubName(ARBString const& inName)
+{
+	m_SubName = inName;
+}
+
+ARBString const& ARBTraining::GetNote() const
+{
+	return m_Note;
+}
+
+void ARBTraining::SetNote(ARBString const& inNote)
+{
+	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////

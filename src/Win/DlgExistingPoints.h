@@ -40,8 +40,6 @@
 #include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "ListData.h"
-
-class ARBDogExistingPointsList;
 class CAgilityBookDoc;
 class CDlgPointsDataLevel;
 

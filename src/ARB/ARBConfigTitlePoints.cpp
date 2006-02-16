@@ -165,6 +165,26 @@ bool ARBConfigTitlePoints::Save(Element& ioTree) const
 	return true;
 }
 
+double ARBConfigTitlePoints::GetPoints() const
+{
+	return m_Points;
+}
+
+void ARBConfigTitlePoints::SetPoints(double inPoints)
+{
+	m_Points = inPoints;
+}
+
+short ARBConfigTitlePoints::GetFaults() const
+{
+	return m_Faults;
+}
+
+void ARBConfigTitlePoints::SetFaults(short inFaults)
+{
+	m_Faults = inFaults;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitlePointsList::Load(

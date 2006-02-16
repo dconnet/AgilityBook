@@ -38,7 +38,6 @@
  */
 
 #include "DlgBaseDialog.h"
-class ARBConfigTitle;
 
 class CDlgConfigTitle : public CDlgBaseDialog
 {

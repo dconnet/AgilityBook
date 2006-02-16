@@ -43,10 +43,6 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * iCalendar interface
@@ -235,126 +231,6 @@ private:
 	eEntry m_eEntered;
 	ARBString m_Note;
 };
-
-inline bool ARBCalendar::operator<(ARBCalendar const& rhs) const
-{
-	return m_DateStart < rhs.GetStartDate();
-}
-
-inline bool ARBCalendar::operator>(ARBCalendar const& rhs) const
-{
-	return m_DateEnd > rhs.GetEndDate();
-}
-
-inline bool ARBCalendar::operator<(ARBDate const& rhs) const
-{
-	return m_DateStart < rhs;
-}
-
-inline bool ARBCalendar::operator>(ARBDate const& rhs) const
-{
-	return m_DateEnd > rhs;
-}
-
-inline ARBDate const& ARBCalendar::GetStartDate() const
-{
-	return m_DateStart;
-}
-
-inline void ARBCalendar::SetStartDate(ARBDate const& inDate)
-{
-	m_DateStart = inDate;
-}
-
-inline ARBDate const& ARBCalendar::GetEndDate() const
-{
-	return m_DateEnd;
-}
-
-inline void ARBCalendar::SetEndDate(ARBDate const& inDate)
-{
-	m_DateEnd = inDate;
-}
-
-inline ARBDate const& ARBCalendar::GetOpeningDate() const
-{
-	return m_DateOpening;
-}
-
-inline void ARBCalendar::SetOpeningDate(ARBDate const& inDate)
-{
-	m_DateOpening = inDate;
-}
-
-inline ARBDate const& ARBCalendar::GetClosingDate() const
-{
-	return m_DateClosing;
-}
-
-inline void ARBCalendar::SetClosingDate(ARBDate const& inDate)
-{
-	m_DateClosing = inDate;
-}
-
-inline bool ARBCalendar::IsTentative() const
-{
-	return m_bTentative;
-}
-
-inline void ARBCalendar::SetIsTentative(bool inTentative)
-{
-	m_bTentative = inTentative;
-}
-
-inline ARBString const& ARBCalendar::GetLocation() const
-{
-	return m_Location;
-}
-
-inline void ARBCalendar::SetLocation(ARBString const& inLocation)
-{
-	m_Location = inLocation;
-}
-
-inline ARBString const& ARBCalendar::GetClub() const
-{
-	return m_Club;
-}
-
-inline void ARBCalendar::SetClub(ARBString const& inClub)
-{
-	m_Club = inClub;
-}
-
-inline ARBString const& ARBCalendar::GetVenue() const
-{
-	return m_Venue;
-}
-
-inline void ARBCalendar::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-inline ARBCalendar::eEntry ARBCalendar::GetEntered() const
-{
-	return m_eEntered;
-}
-
-inline void ARBCalendar::SetEntered(ARBCalendar::eEntry inEnter)
-{
-	m_eEntered = inEnter;
-}
-
-inline ARBString const& ARBCalendar::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBCalendar::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

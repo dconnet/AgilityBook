@@ -38,15 +38,11 @@
  */
 
 #include "DlgBaseSheet.h"
-class ARBConfig;
-class ARBDog;
 class CAgilityBookDoc;
 class CDlgDogNumbers;
 class CDlgDogPoints;
 class CDlgDogProperties;
 class CDlgDogTitles;
-
-/////////////////////////////////////////////////////////////////////////////
 
 class CDlgDog : public CDlgBaseSheet
 {

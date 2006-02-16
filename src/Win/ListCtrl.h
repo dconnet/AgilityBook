@@ -43,8 +43,6 @@
 #include <vector>
 class CListData;
 
-/////////////////////////////////////////////////////////////////////////////
-
 /**
  * Header control designed for subclassing for use in a ListCtrl.
  */

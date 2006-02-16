@@ -43,15 +43,9 @@
 #include "DlgListViewer.h"
 #include "ListCtrl.h"
 class ARBAgilityRecordBook;
-class ARBConfigScoringList;
-class ARBDog;
-class ARBDogList;
-class ARBDogRun;
-class ARBDogTrial;
 class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgFixup;
-
 
 class CDlgConfigure : public CDlgBaseDialog
 {

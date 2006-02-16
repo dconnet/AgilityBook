@@ -41,7 +41,6 @@
 #include "AgilityBookOptions.h"
 #include "CheckTreeCtrl.h"
 #include "DlgBasePropertyPage.h"
-class ARBConfig;
 
 class CDlgOptionsFilter : public CDlgBasePropertyPage
 {

@@ -7,7 +7,6 @@
 //
 
 #include <vector>
-using namespace std;
 
 /////////////////////////////////////////////////////////////////////////////
 // CScrollHotStatic window
@@ -24,7 +23,7 @@ typedef struct {
 	DWORD	m_dwStartXPos;
 	DWORD	m_dwFlag;
 } STATICITEM;
-typedef vector<STATICITEM> ITEMVECTOR;
+typedef std::vector<STATICITEM> ITEMVECTOR;
 
 extern int	g_nMemOffset, g_nMemHeight, g_bMoveControl;
 extern BOOL g_bControl;

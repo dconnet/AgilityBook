@@ -40,7 +40,6 @@
 #include <afxinet.h>
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-class ARBDogRun;
 class CAgilityBookDoc;
 
 class CDlgRunLink : public CDlgBasePropertyPage

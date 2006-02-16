@@ -447,6 +447,26 @@ bool ARBCalendar::operator!=(ARBCalendar const& rhs) const
 	return !operator==(rhs);
 }
 
+bool ARBCalendar::operator<(ARBCalendar const& rhs) const
+{
+	return m_DateStart < rhs.GetStartDate();
+}
+
+bool ARBCalendar::operator>(ARBCalendar const& rhs) const
+{
+	return m_DateEnd > rhs.GetEndDate();
+}
+
+bool ARBCalendar::operator<(ARBDate const& rhs) const
+{
+	return m_DateStart < rhs;
+}
+
+bool ARBCalendar::operator>(ARBDate const& rhs) const
+{
+	return m_DateEnd > rhs;
+}
+
 ARBString ARBCalendar::GetUID(eUidType inType) const
 {
 	ARBostringstream str;
@@ -527,27 +547,6 @@ size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 	}
 
 	return nItems;
-}
-
-bool ARBCalendar::IsBefore(ARBDate const& inDate) const
-{
-	return (m_DateStart < inDate && m_DateEnd < inDate);
-}
-
-bool ARBCalendar::InRange(ARBDate const& inDate) const
-{
-	return inDate.isBetween(m_DateStart, m_DateEnd);
-}
-
-bool ARBCalendar::IsRangeOverlapped(
-		ARBDate const& inDate1,
-		ARBDate const& inDate2) const
-{
-	if (m_DateStart.isBetween(inDate1, inDate2)
-	|| m_DateEnd.isBetween(inDate1, inDate2))
-		return true;
-	else
-		return false;
 }
 
 bool ARBCalendar::Load(
@@ -728,6 +727,127 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	if (ePlanning == m_eEntered || eEntered == m_eEntered)
 		ioStream->DoAlarm(inAlarm);
 	ioStream->EndEvent();
+}
+
+bool ARBCalendar::IsBefore(ARBDate const& inDate) const
+{
+	return (m_DateStart < inDate && m_DateEnd < inDate);
+}
+
+bool ARBCalendar::InRange(ARBDate const& inDate) const
+{
+	return inDate.isBetween(m_DateStart, m_DateEnd);
+}
+
+bool ARBCalendar::IsRangeOverlapped(
+		ARBDate const& inDate1,
+		ARBDate const& inDate2) const
+{
+	if (m_DateStart.isBetween(inDate1, inDate2)
+	|| m_DateEnd.isBetween(inDate1, inDate2))
+		return true;
+	else
+		return false;
+}
+
+ARBDate const& ARBCalendar::GetStartDate() const
+{
+	return m_DateStart;
+}
+
+void ARBCalendar::SetStartDate(ARBDate const& inDate)
+{
+	m_DateStart = inDate;
+}
+
+ARBDate const& ARBCalendar::GetEndDate() const
+{
+	return m_DateEnd;
+}
+
+void ARBCalendar::SetEndDate(ARBDate const& inDate)
+{
+	m_DateEnd = inDate;
+}
+
+ARBDate const& ARBCalendar::GetOpeningDate() const
+{
+	return m_DateOpening;
+}
+
+void ARBCalendar::SetOpeningDate(ARBDate const& inDate)
+{
+	m_DateOpening = inDate;
+}
+
+ARBDate const& ARBCalendar::GetClosingDate() const
+{
+	return m_DateClosing;
+}
+
+void ARBCalendar::SetClosingDate(ARBDate const& inDate)
+{
+	m_DateClosing = inDate;
+}
+
+bool ARBCalendar::IsTentative() const
+{
+	return m_bTentative;
+}
+
+void ARBCalendar::SetIsTentative(bool inTentative)
+{
+	m_bTentative = inTentative;
+}
+
+ARBString const& ARBCalendar::GetLocation() const
+{
+	return m_Location;
+}
+
+void ARBCalendar::SetLocation(ARBString const& inLocation)
+{
+	m_Location = inLocation;
+}
+
+ARBString const& ARBCalendar::GetClub() const
+{
+	return m_Club;
+}
+
+void ARBCalendar::SetClub(ARBString const& inClub)
+{
+	m_Club = inClub;
+}
+
+ARBString const& ARBCalendar::GetVenue() const
+{
+	return m_Venue;
+}
+
+void ARBCalendar::SetVenue(ARBString const& inVenue)
+{
+	m_Venue = inVenue;
+}
+
+ARBCalendar::eEntry ARBCalendar::GetEntered() const
+{
+	return m_eEntered;
+}
+
+void ARBCalendar::SetEntered(ARBCalendar::eEntry inEnter)
+{
+	m_eEntered = inEnter;
+}
+
+ARBString const& ARBCalendar::GetNote() const
+{
+	return m_Note;
+}
+
+void ARBCalendar::SetNote(ARBString const& inNote)
+{
+	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////

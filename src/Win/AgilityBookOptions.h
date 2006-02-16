@@ -49,12 +49,6 @@
 #include <vector>
 #include "ARBDate.h"
 #include "ARBTypes.h"
-class ARBCalendar;
-class ARBConfigVenue;
-class ARBDogRun;
-class ARBDogTitle;
-class ARBDogTrial;
-class ARBTraining;
 
 struct CFontInfo
 {

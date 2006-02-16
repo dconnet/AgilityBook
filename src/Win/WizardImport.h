@@ -37,10 +37,10 @@
  * @li 2003-12-10 DRC Created
  */
 
+#include <vector>
 #include "AgilityBookOptions.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
-#include <vector>
 class CAgilityBookDoc;
 class CWizard;
 

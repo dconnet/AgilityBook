@@ -37,8 +37,6 @@
 
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
-class ARBDogClub;
-class ARBDogClubList;
 
 class CDlgClub : public CDlgBaseDialog
 {

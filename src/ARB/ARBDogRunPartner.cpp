@@ -105,6 +105,11 @@ bool ARBDogRunPartner::operator!=(ARBDogRunPartner const& rhs) const
 	return !operator==(rhs);
 }
 
+ARBString ARBDogRunPartner::GetGenericName() const
+{
+	return m_Dog;
+}
+
 size_t ARBDogRunPartner::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -163,6 +168,36 @@ bool ARBDogRunPartner::Save(Element& ioTree) const
 	if (0 < m_RegNum.length())
 		partner.AddAttrib(ATTRIB_PARTNER_REGNUM, m_RegNum);
 	return true;
+}
+
+ARBString const& ARBDogRunPartner::GetHandler() const
+{
+	return m_Handler;
+}
+
+void ARBDogRunPartner::SetHandler(ARBString const& inHandler)
+{
+	m_Handler = inHandler;
+}
+
+ARBString const& ARBDogRunPartner::GetDog() const
+{
+	return m_Dog;
+}
+
+void ARBDogRunPartner::SetDog(ARBString const& inDog)
+{
+	m_Dog = inDog;
+}
+
+ARBString const& ARBDogRunPartner::GetRegNum() const
+{
+	return m_RegNum;
+}
+
+void ARBDogRunPartner::SetRegNum(ARBString const& inRegNum)
+{
+	m_RegNum = inRegNum;
 }
 
 /////////////////////////////////////////////////////////////////////////////

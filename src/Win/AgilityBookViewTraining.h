@@ -43,11 +43,10 @@
  */
 
 #include <vector>
+#include "ARBTypes.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
-class ARBDate;
-class ARBTraining;
 class CAgilityBookDoc;
 class CAgilityBookViewTraining;
 

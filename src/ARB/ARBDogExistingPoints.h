@@ -41,16 +41,6 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBConfigDivision;
-class ARBConfigEvent;
-class ARBConfigLevel;
-class ARBConfigMultiQ;
-class ARBConfigVenue;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Initializes the titling points a dog has.
@@ -164,116 +154,6 @@ private:
 	ARBString m_SubName;
 	double m_Points;
 };
-
-inline ARBDogExistingPoints::PointType ARBDogExistingPoints::GetType() const
-{
-	return m_Type;
-}
-
-inline void ARBDogExistingPoints::SetType(ARBDogExistingPoints::PointType inType)
-{
-	m_Type = inType;
-}
-
-inline ARBDate const& ARBDogExistingPoints::GetDate() const
-{
-	return m_Date;
-}
-
-inline void ARBDogExistingPoints::SetDate(ARBDate const& inDate)
-{
-	m_Date = inDate;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetComment() const
-{
-	return m_Comment;
-}
-
-inline void ARBDogExistingPoints::SetComment(ARBString const& inComment)
-{
-	m_Comment = inComment;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetOtherPoints() const
-{
-	return m_Other;
-}
-
-inline void ARBDogExistingPoints::SetOtherPoints(ARBString const& inOther)
-{
-	m_Other = inOther;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetVenue() const
-{
-	return m_Venue;
-}
-
-inline void ARBDogExistingPoints::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetMultiQ() const
-{
-	return m_MultiQ;
-}
-
-inline void ARBDogExistingPoints::SetMultiQ(ARBString const& inMultiQ)
-{
-	m_MultiQ = inMultiQ;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetDivision() const
-{
-	return m_Div;
-}
-
-inline void ARBDogExistingPoints::SetDivision(ARBString const& inDiv)
-{
-	m_Div = inDiv;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetLevel() const
-{
-	return m_Level;
-}
-
-inline void ARBDogExistingPoints::SetLevel(ARBString const& inLevel)
-{
-	m_Level = inLevel;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetEvent() const
-{
-	return m_Event;
-}
-
-inline void ARBDogExistingPoints::SetEvent(ARBString const& inEvent)
-{
-	m_Event = inEvent;
-}
-
-inline ARBString const& ARBDogExistingPoints::GetSubName() const
-{
-	return m_SubName;
-}
-
-inline void ARBDogExistingPoints::SetSubName(ARBString const& inSubName)
-{
-	m_SubName = inSubName;
-}
-
-inline double ARBDogExistingPoints::GetPoints() const
-{
-	return m_Points;
-}
-
-inline void ARBDogExistingPoints::SetPoints(double inPoints)
-{
-	m_Points = inPoints;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

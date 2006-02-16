@@ -37,14 +37,8 @@
 
 #include <set>
 #include "ARBBase.h"
-#include "ARBConfigDivision.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBDogRun;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * MultiQ configuration information.
@@ -239,51 +233,6 @@ private:
 	ARBDate m_ValidTo;
 	std::set<MultiQItem> m_Items;
 };
-
-inline ARBString ARBConfigMultiQ::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigMultiQ::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString ARBConfigMultiQ::GetShortName() const
-{
-	return m_ShortName;
-}
-
-inline void ARBConfigMultiQ::SetShortName(ARBString const& inName)
-{
-	m_ShortName = inName;
-}
-
-inline ARBDate ARBConfigMultiQ::GetValidFrom() const
-{
-	return m_ValidFrom;
-}
-
-inline void ARBConfigMultiQ::SetValidFrom(ARBDate const& inDate)
-{
-	m_ValidFrom = inDate;
-}
-
-inline ARBDate ARBConfigMultiQ::GetValidTo() const
-{
-	return m_ValidTo;
-}
-
-inline void ARBConfigMultiQ::SetValidTo(ARBDate const& inDate)
-{
-	m_ValidTo = inDate;
-}
-
-inline size_t ARBConfigMultiQ::GetNumItems() const
-{
-	return m_Items.size();
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

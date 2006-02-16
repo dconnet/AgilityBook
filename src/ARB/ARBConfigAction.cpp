@@ -121,6 +121,11 @@ bool ARBConfigAction::operator!=(ARBConfigAction const& rhs) const
 	return !operator==(rhs);
 }
 
+ARBString ARBConfigAction::GetGenericName() const
+{
+	return m_Verb;
+}
+
 size_t ARBConfigAction::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -160,6 +165,31 @@ bool ARBConfigAction::Save(Element& ioTree) const
 	if (0 < m_NewName.length())
 		action.AddAttrib(ATTRIB_ACTION_NEWNAME, m_NewName);
 	return true;
+}
+
+ARBString const& ARBConfigAction::GetVerb() const
+{
+	return m_Verb;
+}
+
+ARBString const& ARBConfigAction::GetVenue() const
+{
+	return m_Venue;
+}
+
+ARBString const& ARBConfigAction::GetDivision() const
+{
+	return m_Div;
+}
+
+ARBString const& ARBConfigAction::GetOldName() const
+{
+	return m_OldName;
+}
+
+ARBString const& ARBConfigAction::GetNewName() const
+{
+	return m_NewName;
 }
 
 /////////////////////////////////////////////////////////////////////////////

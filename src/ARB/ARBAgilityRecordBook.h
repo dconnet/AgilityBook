@@ -58,6 +58,14 @@
  * @li 2003-10-13 DRC Made Time/CourseFaults common for all types of scoring.
  */
 
+#include <set>
+#include "ARBCalendar.h"
+#include "ARBConfig.h"
+#include "ARBDog.h"
+#include "ARBInfo.h"
+#include "ARBTraining.h"
+#include "ARBTypes.h"
+
 /*
  * These defines make up the structure of the xml.
  * Make sure these agree with the .dtd.
@@ -293,82 +301,45 @@
 #define VALID_VALUES_SCORE		_T("Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'")
 
 // Strings for formatting the information returned when updating configurations.
-// - Changed to inline functions in order to remove sprintf style formatting.
-#include "ARBTypes.h"
-inline ARBString UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Faults: ") << nNew << _T(" added, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Other Points: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Venues: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Divisions: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Events: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("MultiQs: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Levels: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T("Titles: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded)
-{
-	ARBostringstream buffer;
-	buffer << nAdded << _T(" new sub-levels") << std::endl;
-	return buffer.str();
-}
-inline ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
-{
-	ARBostringstream buffer;
-	buffer << _T(" rules: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical") << std::endl;
-	return buffer.str();
-}
+// - Changed to functions in order to remove sprintf style formatting.
+extern ARBString UPDATE_FORMAT_FAULTS(int nNew, int nSkipped);
+#define UPDATE_FORMAT_FAULTS_DEF(nNew, nSkipped) \
+	_T("Faults: ") << nNew << _T(" added, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped);
+#define UPDATE_FORMAT_OTHERPTS_DEF(nNew, nUpdated, nSkipped) \
+	_T("Other Points: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped);
+#define UPDATE_FORMAT_VENUES_DEF(nNew, nUpdated, nSkipped) \
+	_T("Venues: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped);
+#define UPDATE_FORMAT_DIVISIONS_DEF(nAdded, nChanged, nSkipped) \
+	_T("Divisions: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped);
+#define UPDATE_FORMAT_EVENTS_DEF(nAdded, nChanged, nSkipped) \
+	_T("Events: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped);
+#define UPDATE_FORMAT_MULTIQS_DEF(nAdded, nDeleted, nSkipped) \
+	_T("MultiQs: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped);
+#define UPDATE_FORMAT_LEVELS_DEF(nAdded, nChanged, nSkipped) \
+	_T("Levels: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped);
+#define UPDATE_FORMAT_TITLES_DEF(nAdded, nChanged, nSkipped) \
+	_T("Titles: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded);
+#define UPDATE_FORMAT_SUBLEVELS_DEF(nAdded) \
+	nAdded << _T(" new sub-levels")
+extern ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped);
+#define UPDATE_FORMAT_RULES_DEF(nAdded, nDeleted, nChanged, nSkipped) \
+	_T(" rules: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
 
 // Used in ARBConfigTitlePoints.cpp
-inline ARBString TITLE_POINTS_NAME_FORMAT(double points, short faults)
-{
-	ARBostringstream buffer;
-	buffer << points << _T(" points with ") << faults << _T(" faults");
-	return buffer.str();
-}
-inline ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults)
-{
-	ARBostringstream buffer;
-	buffer << points << _T(" lifetime points with ") << faults << _T(" faults");
-	return buffer.str();
-}
+extern ARBString TITLE_POINTS_NAME_FORMAT(double points, short faults);
+#define TITLE_POINTS_NAME_FORMAT_DEF(points, faults) \
+	points << _T(" points with ") << faults << _T(" faults")
+extern ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults);
+#define LIFETIME_POINTS_NAME_FORMAT_DEF(points, faults) \
+	points << _T(" lifetime points with ") << faults << _T(" faults")
 
 // Used in ARBConfigScoring.cpp
 #define SCORE_STYLE_UNKNOWN			_T("Unknown")
@@ -393,18 +364,6 @@ inline ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults)
 #define EXISTING_POINTS_MQ			_T("Multiple Q")
 #define EXISTING_POINTS_SQ			_T("SuperQ")
 
-
-#include <list>
-#include <set>
-#include "ARBCalendar.h"
-#include "ARBConfig.h"
-#include "ARBDog.h"
-#include "ARBInfo.h"
-#include "ARBTraining.h"
-class ARBConfigOtherPoints;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * The main data class.
@@ -593,56 +552,6 @@ private:
 	ARBInfo m_Info;
 	ARBDogList m_Dogs;
 };
-
-inline ARBCalendarList const& ARBAgilityRecordBook::GetCalendar() const
-{
-	return m_Calendar;
-}
-
-inline ARBCalendarList& ARBAgilityRecordBook::GetCalendar()
-{
-	return m_Calendar;
-}
-
-inline ARBTrainingList const& ARBAgilityRecordBook::GetTraining() const
-{
-	return m_Training;
-}
-
-inline ARBTrainingList& ARBAgilityRecordBook::GetTraining()
-{
-	return m_Training;
-}
-
-inline ARBConfig const& ARBAgilityRecordBook::GetConfig() const
-{
-	return m_Config;
-}
-
-inline ARBConfig& ARBAgilityRecordBook::GetConfig()
-{
-	return m_Config;
-}
-
-inline ARBInfo const& ARBAgilityRecordBook::GetInfo() const
-{
-	return m_Info;
-}
-
-inline ARBInfo& ARBAgilityRecordBook::GetInfo()
-{
-	return m_Info;
-}
-
-inline ARBDogList const& ARBAgilityRecordBook::GetDogs() const
-{
-	return m_Dogs;
-}
-
-inline ARBDogList& ARBAgilityRecordBook::GetDogs()
-{
-	return m_Dogs;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions

@@ -112,6 +112,11 @@ void ARBConfigDivision::clear()
 	m_Levels.clear();
 }
 
+ARBString ARBConfigDivision::GetGenericName() const
+{
+	return m_Name;
+}
+
 size_t ARBConfigDivision::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -218,6 +223,26 @@ bool ARBConfigDivision::Update(
 		ioInfo += indentName + GetName() + _T("\n") + info;
 	}
 	return bChanges;
+}
+
+ARBString const& ARBConfigDivision::GetName() const
+{
+	return m_Name;
+}
+
+void ARBConfigDivision::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBConfigLevelList const& ARBConfigDivision::GetLevels() const
+{
+	return m_Levels;
+}
+
+ARBConfigLevelList& ARBConfigDivision::GetLevels()
+{
+	return m_Levels;
 }
 
 /////////////////////////////////////////////////////////////////////////////

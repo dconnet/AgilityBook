@@ -45,12 +45,9 @@
  */
 
 #include <vector>
+#include "ARBBase.h"
 #include "CommonView.h"
 #include "DlgFind.h"
-class ARBBase;
-class ARBDog;
-class ARBDogRun;
-class ARBDogTrial;
 class CAgilityBookDoc;
 class CAgilityBookTree;
 class CAgilityBookTreeData;

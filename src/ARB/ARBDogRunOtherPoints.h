@@ -40,11 +40,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Other points are accumulated on a per-run basis.
@@ -113,31 +108,6 @@ private:
 	ARBString m_Name;
 	short m_Points;
 };
-
-inline ARBString ARBDogRunOtherPoints::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBDogRunOtherPoints::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBDogRunOtherPoints::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline short ARBDogRunOtherPoints::GetPoints() const
-{
-	return m_Points;
-}
-
-inline void ARBDogRunOtherPoints::SetPoints(short inPts)
-{
-	m_Points = inPts;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

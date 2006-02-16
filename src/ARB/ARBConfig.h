@@ -44,10 +44,7 @@
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
-class ARBDogTitle;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
+#include "ARBTypes.h"
 
 /**
  * The main configuration class.
@@ -183,58 +180,3 @@ private:
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;
 };
-
-inline bool ARBConfig::GetUpdateStatus() const
-{
-	return m_bUpdate;
-}
-
-inline void ARBConfig::SetUpdateStatus(bool inUpdate)
-{
-	m_bUpdate = inUpdate;
-}
-
-inline short ARBConfig::GetVersion() const
-{
-	return m_Version;
-}
-
-inline ARBConfigActionList const& ARBConfig::GetActions() const
-{
-	return m_Actions;
-}
-
-inline ARBConfigActionList& ARBConfig::GetActions()
-{
-	return m_Actions;
-}
-
-inline ARBConfigVenueList const& ARBConfig::GetVenues() const
-{
-	return m_Venues;
-}
-
-inline ARBConfigVenueList& ARBConfig::GetVenues()
-{
-	return m_Venues;
-}
-
-inline ARBConfigFaultList const& ARBConfig::GetFaults() const
-{
-	return m_FaultTypes;
-}
-
-inline ARBConfigFaultList& ARBConfig::GetFaults()
-{
-	return m_FaultTypes;
-}
-
-inline ARBConfigOtherPointsList const& ARBConfig::GetOtherPoints() const
-{
-	return m_OtherPoints;
-}
-
-inline ARBConfigOtherPointsList& ARBConfig::GetOtherPoints()
-{
-	return m_OtherPoints;
-}

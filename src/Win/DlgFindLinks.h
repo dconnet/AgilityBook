@@ -43,11 +43,6 @@
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 
-class ARBDog;
-class ARBDogList;
-class ARBDogRun;
-class ARBDogTrial;
-
 class CDlgFindLinks : public CDlgBaseDialog
 {
 	friend int CALLBACK CompareLinks(LPARAM, LPARAM, LPARAM);

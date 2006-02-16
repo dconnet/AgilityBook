@@ -48,7 +48,6 @@
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "ListCtrl.h"
-class ARBCalendar;
 class CAgilityBookDoc;
 class CAgilityBookViewCalendarList;
 

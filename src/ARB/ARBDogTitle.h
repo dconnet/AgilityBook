@@ -45,12 +45,6 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBConfigVenue;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Titles a dog has earned.
@@ -136,69 +130,6 @@ private:
 	bool m_bReceived;
 	bool m_bHidden;
 };
-
-inline ARBDate const& ARBDogTitle::GetDate() const
-{
-	return m_Date;
-}
-
-inline void ARBDogTitle::SetDate(ARBDate const& inDate)
-{
-	m_Date = inDate;
-	if (!m_Date.IsValid())
-		m_bHidden = true;
-}
-
-inline ARBString const& ARBDogTitle::GetVenue() const
-{
-	return m_Venue;
-}
-
-inline void ARBDogTitle::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-inline ARBString const& ARBDogTitle::GetRawName() const
-{
-	return m_Name;
-}
-
-inline short ARBDogTitle::GetInstance() const
-{
-	return m_Instance;
-}
-
-inline void ARBDogTitle::SetName(
-		ARBString const& inName,
-		short inInstance)
-{
-	m_Name = inName;
-	m_Instance = inInstance;
-}
-
-inline bool ARBDogTitle::GetReceived() const
-{
-	return m_bReceived;
-}
-
-inline void ARBDogTitle::SetReceived(bool inReceived)
-{
-	m_bReceived = inReceived;
-}
-
-inline bool ARBDogTitle::IsHidden() const
-{
-	return m_bHidden;
-}
-
-inline void ARBDogTitle::SetHidden(bool bHidden)
-{
-	if (m_Date.IsValid())
-		m_bHidden = bHidden;
-	else
-		m_bHidden = true;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

@@ -36,8 +36,6 @@
  * @li 2004-06-05 DRC Created
  */
 
-/////////////////////////////////////////////////////////////////////////////
-
 class CDlgBaseSheet : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CDlgBaseSheet)

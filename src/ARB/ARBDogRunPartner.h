@@ -40,11 +40,7 @@
  */
 
 #include "ARBBase.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
+#include "ARBTypes.h"
 
 /**
  * Keeps track of partners in pairs runs.
@@ -116,41 +112,6 @@ private:
 	ARBString m_Dog;
 	ARBString m_RegNum;
 };
-
-inline ARBString ARBDogRunPartner::GetGenericName() const
-{
-	return m_Dog;
-}
-
-inline ARBString const& ARBDogRunPartner::GetHandler() const
-{
-	return m_Handler;
-}
-
-inline void ARBDogRunPartner::SetHandler(ARBString const& inHandler)
-{
-	m_Handler = inHandler;
-}
-
-inline ARBString const& ARBDogRunPartner::GetDog() const
-{
-	return m_Dog;
-}
-
-inline void ARBDogRunPartner::SetDog(ARBString const& inDog)
-{
-	m_Dog = inDog;
-}
-
-inline ARBString const& ARBDogRunPartner::GetRegNum() const
-{
-	return m_RegNum;
-}
-
-inline void ARBDogRunPartner::SetRegNum(ARBString const& inRegNum)
-{
-	m_RegNum = inRegNum;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

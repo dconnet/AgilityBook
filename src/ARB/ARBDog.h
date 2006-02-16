@@ -49,12 +49,6 @@
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBConfigVenue;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Information about a dog, titles, runs, etc.
@@ -188,111 +182,6 @@ private:
 	ARBDogTitleList m_Titles;
 	ARBDogTrialList m_Trials;
 };
-
-inline ARBString ARBDog::GetGenericName() const
-{
-	return m_CallName;
-}
-
-inline ARBString const& ARBDog::GetCallName() const
-{
-	return m_CallName;
-}
-
-inline void ARBDog::SetCallName(ARBString const& inName)
-{
-	m_CallName = inName;
-}
-
-inline ARBDate const& ARBDog::GetDOB() const
-{
-	return m_DOB;
-}
-
-inline void ARBDog::SetDOB(ARBDate const& inDOB)
-{
-	m_DOB = inDOB;
-}
-
-inline ARBDate const& ARBDog::GetDeceased() const
-{
-	return m_Deceased;
-}
-
-inline void ARBDog::SetDeceased(ARBDate const& inDeceased)
-{
-	m_Deceased = inDeceased;
-}
-
-inline ARBString const& ARBDog::GetRegisteredName() const
-{
-	return m_RegName;
-}
-
-inline void ARBDog::SetRegisteredName(ARBString const& inName)
-{
-	m_RegName = inName;
-}
-
-inline ARBString const& ARBDog::GetBreed() const
-{
-	return m_Breed;
-}
-
-inline void ARBDog::SetBreed(ARBString const& inBreed)
-{
-	m_Breed = inBreed;
-}
-
-inline ARBString const& ARBDog::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBDog::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
-
-inline ARBDogExistingPointsList const& ARBDog::GetExistingPoints() const
-{
-	return m_ExistingPoints;
-}
-
-inline ARBDogExistingPointsList& ARBDog::GetExistingPoints()
-{
-	return m_ExistingPoints;
-}
-
-inline ARBDogRegNumList const& ARBDog::GetRegNums() const
-{
-	return m_RegNums;
-}
-
-inline ARBDogRegNumList& ARBDog::GetRegNums()
-{
-	return m_RegNums;
-}
-
-inline ARBDogTitleList const& ARBDog::GetTitles() const
-{
-	return m_Titles;
-}
-
-inline ARBDogTitleList& ARBDog::GetTitles()
-{
-	return m_Titles;
-}
-
-inline ARBDogTrialList const& ARBDog::GetTrials() const
-{
-	return m_Trials;
-}
-
-inline ARBDogTrialList& ARBDog::GetTrials()
-{
-	return m_Trials;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 
