@@ -44,10 +44,6 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Title configuration.
@@ -159,89 +155,6 @@ private:
 	ARBDate m_ValidTo;
 	ARBString m_Desc;
 };
-
-inline ARBString ARBConfigTitle::GetGenericName() const
-{
-	return GetNiceName();
-}
-
-inline ARBString const& ARBConfigTitle::GetNiceName() const
-{
-	if (0 == m_LongName.length())
-		return m_Name;
-	else
-		return m_LongName;
-}
-
-inline ARBString const& ARBConfigTitle::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigTitle::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBConfigTitle::GetLongName() const
-{
-	return m_LongName;
-}
-
-inline void ARBConfigTitle::SetLongName(ARBString const& inName)
-{
-	m_LongName = inName;
-}
-
-inline short ARBConfigTitle::GetMultiple() const
-{
-	return m_Multiple;
-}
-
-inline void ARBConfigTitle::SetMultiple(short inMultiple)
-{
-	m_Multiple = inMultiple;
-}
-
-inline bool ARBConfigTitle::GetPrefix() const
-{
-	return m_Prefix;
-}
-
-inline void ARBConfigTitle::SetPrefix(bool inPrefix)
-{
-	m_Prefix = inPrefix;
-}
-
-inline ARBDate const& ARBConfigTitle::GetValidFrom() const
-{
-	return m_ValidFrom;
-}
-
-inline void ARBConfigTitle::SetValidFrom(ARBDate const& inDate)
-{
-	m_ValidFrom = inDate;
-}
-
-inline ARBDate const& ARBConfigTitle::GetValidTo() const
-{
-	return m_ValidTo;
-}
-
-inline void ARBConfigTitle::SetValidTo(ARBDate const& inDate)
-{
-	m_ValidTo = inDate;
-}
-
-inline ARBString const& ARBConfigTitle::GetDescription() const
-{
-	return m_Desc;
-}
-
-inline void ARBConfigTitle::SetDescription(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

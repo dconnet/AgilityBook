@@ -128,6 +128,11 @@ bool ARBConfigEvent::operator!=(ARBConfigEvent const& rhs) const
 	return !operator==(rhs);
 }
 
+ARBString ARBConfigEvent::GetGenericName() const
+{
+	return m_Name;
+}
+
 size_t ARBConfigEvent::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -356,6 +361,66 @@ void ARBConfigEvent::SetSubNames(std::set<ARBString> const& inNames)
 {
 	m_SubNames.clear();
 	m_SubNames = inNames;
+}
+
+ARBString const& ARBConfigEvent::GetName() const
+{
+	return m_Name;
+}
+
+void ARBConfigEvent::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBString const& ARBConfigEvent::GetDesc() const
+{
+	return m_Desc;
+}
+
+void ARBConfigEvent::SetDesc(ARBString const& inDesc)
+{
+	m_Desc = inDesc;
+}
+
+bool ARBConfigEvent::HasTable() const
+{
+	return m_bTable;
+}
+
+void ARBConfigEvent::SetHasTable(bool inBool)
+{
+	m_bTable = inBool;
+}
+
+bool ARBConfigEvent::HasPartner() const
+{
+	return m_bHasPartner;
+}
+
+void ARBConfigEvent::SetHasPartner(bool inHas)
+{
+	m_bHasPartner = inHas;
+}
+
+bool ARBConfigEvent::HasSubNames() const
+{
+	return m_bHasSubNames;
+}
+
+void ARBConfigEvent::SetHasSubNames(bool inHas)
+{
+	m_bHasSubNames = inHas;
+}
+
+ARBConfigScoringList const& ARBConfigEvent::GetScorings() const
+{
+	return m_Scoring;
+}
+
+ARBConfigScoringList& ARBConfigEvent::GetScorings()
+{
+	return m_Scoring;
 }
 
 /////////////////////////////////////////////////////////////////////////////

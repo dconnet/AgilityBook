@@ -442,3 +442,58 @@ bool ARBConfig::Update(
 	}
 	return bChanges;
 }
+
+bool ARBConfig::GetUpdateStatus() const
+{
+	return m_bUpdate;
+}
+
+void ARBConfig::SetUpdateStatus(bool inUpdate)
+{
+	m_bUpdate = inUpdate;
+}
+
+short ARBConfig::GetVersion() const
+{
+	return m_Version;
+}
+
+ARBConfigActionList const& ARBConfig::GetActions() const
+{
+	return m_Actions;
+}
+
+ARBConfigActionList& ARBConfig::GetActions()
+{
+	return m_Actions;
+}
+
+ARBConfigVenueList const& ARBConfig::GetVenues() const
+{
+	return m_Venues;
+}
+
+ARBConfigVenueList& ARBConfig::GetVenues()
+{
+	return m_Venues;
+}
+
+ARBConfigFaultList const& ARBConfig::GetFaults() const
+{
+	return m_FaultTypes;
+}
+
+ARBConfigFaultList& ARBConfig::GetFaults()
+{
+	return m_FaultTypes;
+}
+
+ARBConfigOtherPointsList const& ARBConfig::GetOtherPoints() const
+{
+	return m_OtherPoints;
+}
+
+ARBConfigOtherPointsList& ARBConfig::GetOtherPoints()
+{
+	return m_OtherPoints;
+}

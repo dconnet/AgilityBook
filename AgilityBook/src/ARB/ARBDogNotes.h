@@ -41,10 +41,6 @@
 #include <set>
 #include <vector>
 #include "ARBTypes.h"
-class ARBConfig;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 typedef std::vector<ARBString> ARBDogFaultList;
 
@@ -110,43 +106,3 @@ private:
 	ARBString m_CRCDMeta;
 	ARBString m_Note;
 };
-
-inline ARBDogFaultList const& ARBDogNotes::GetFaults() const
-{
-	return m_Faults;
-}
-
-inline ARBDogFaultList& ARBDogNotes::GetFaults()
-{
-	return m_Faults;
-}
-
-inline ARBString const& ARBDogNotes::GetCRCD() const
-{
-	return m_CRCD;
-}
-
-inline void ARBDogNotes::SetCRCD(ARBString const& inCRCD)
-{
-	m_CRCD = inCRCD;
-}
-
-inline ARBString const& ARBDogNotes::GetCRCDMetaFile() const
-{
-	return m_CRCDMeta;
-}
-
-inline void ARBDogNotes::SetCRCDMetaFile(ARBString const& inCRCDMeta)
-{
-	m_CRCDMeta = inCRCDMeta;
-}
-
-inline ARBString const& ARBDogNotes::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBDogNotes::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}

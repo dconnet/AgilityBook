@@ -47,10 +47,7 @@
 #include "ARBConfigMultiQ.h"
 #include "ARBConfigTitle.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
+class ARBDate;
 
 /**
  * Venue configuration information.
@@ -151,81 +148,6 @@ private:
 	ARBConfigEventList m_Events;
 	ARBConfigMultiQList m_MultiQs;
 };
-
-inline ARBString ARBConfigVenue::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBConfigVenue::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigVenue::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBConfigVenue::GetLongName() const
-{
-	return m_LongName;
-}
-
-inline void ARBConfigVenue::SetLongName(ARBString const& inName)
-{
-	m_LongName = inName;
-}
-
-inline ARBString const& ARBConfigVenue::GetDesc() const
-{
-	return m_Desc;
-}
-
-inline void ARBConfigVenue::SetDesc(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
-}
-
-inline ARBConfigTitleList const& ARBConfigVenue::GetTitles() const
-{
-	return m_Titles;
-}
-
-inline ARBConfigTitleList& ARBConfigVenue::GetTitles()
-{
-	return m_Titles;
-}
-
-inline ARBConfigDivisionList const& ARBConfigVenue::GetDivisions() const
-{
-	return m_Divisions;
-}
-
-inline ARBConfigDivisionList& ARBConfigVenue::GetDivisions()
-{
-	return m_Divisions;
-}
-
-inline ARBConfigEventList const& ARBConfigVenue::GetEvents() const
-{
-	return m_Events;
-}
-
-inline ARBConfigEventList& ARBConfigVenue::GetEvents()
-{
-	return m_Events;
-}
-
-inline ARBConfigMultiQList const& ARBConfigVenue::GetMultiQs() const
-{
-	return m_MultiQs;
-}
-
-inline ARBConfigMultiQList& ARBConfigVenue::GetMultiQs()
-{
-	return m_MultiQs;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

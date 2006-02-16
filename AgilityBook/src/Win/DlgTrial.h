@@ -42,7 +42,6 @@
 #include "ListCtrl.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
-class ARBDogTrial;
 class CAgilityBookDoc;
 
 class CDlgTrial : public CDlgBaseDialog

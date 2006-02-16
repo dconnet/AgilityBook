@@ -509,6 +509,195 @@ ARBString ARBConfigScoring::GetScoringStyleStr() const
 	return GetScoringStyleStr(m_Style);
 }
 
+ARBDate const& ARBConfigScoring::GetValidFrom() const
+{
+	return m_ValidFrom;
+}
+
+void ARBConfigScoring::SetValidFrom(ARBDate const& inDate)
+{
+	m_ValidFrom = inDate;
+}
+
+ARBDate const& ARBConfigScoring::GetValidTo() const
+{
+	return m_ValidTo;
+}
+
+void ARBConfigScoring::SetValidTo(ARBDate const& inDate)
+{
+	m_ValidTo = inDate;
+}
+
+ARBString const& ARBConfigScoring::GetDivision() const
+{
+	return m_Division;
+}
+
+void ARBConfigScoring::SetDivision(ARBString const& inDiv)
+{
+	m_Division = inDiv;
+}
+
+ARBString const& ARBConfigScoring::GetLevel() const
+{
+	return m_Level;
+}
+
+void ARBConfigScoring::SetLevel(ARBString const& inLevel)
+{
+	m_Level = inLevel;
+}
+
+ARBConfigScoring::ScoringStyle ARBConfigScoring::GetScoringStyle() const
+{
+	return m_Style;
+}
+
+void ARBConfigScoring::SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle)
+{
+	m_Style = inStyle;
+	if (eOCScoreThenTime != m_Style && eScoreThenTime != m_Style)
+		m_OpeningPts = m_ClosingPts = 0;
+}
+
+bool ARBConfigScoring::DropFractions() const
+{
+	return m_bDropFractions;
+}
+
+void ARBConfigScoring::SetDropFractions(bool inBool)
+{
+	m_bDropFractions = inBool;
+}
+
+bool ARBConfigScoring::QsMustBeClean() const
+{
+	return m_bCleanQ;
+}
+
+void ARBConfigScoring::SetQsMustBeClean(bool inBool)
+{
+	m_bCleanQ = inBool;
+}
+
+bool ARBConfigScoring::ComputeTimeFaultsUnder() const
+{
+	return m_bTimeFaultsUnder;
+}
+
+void ARBConfigScoring::SetComputeTimeFaultsUnder(bool inBool)
+{
+	m_bTimeFaultsUnder = inBool;
+}
+
+bool ARBConfigScoring::ComputeTimeFaultsOver() const
+{
+	return m_bTimeFaultsOver;
+}
+
+void ARBConfigScoring::SetComputeTimeFaultsOver(bool inBool)
+{
+	m_bTimeFaultsOver = inBool;
+}
+
+short ARBConfigScoring::TimeFaultMultiplier() const
+{
+	return m_TimeFaultMultiplier;
+}
+
+void ARBConfigScoring::SetTimeFaultMultiplier(short inMultiplier)
+{
+	m_TimeFaultMultiplier = inMultiplier;
+	if (0 >= m_TimeFaultMultiplier)
+		m_TimeFaultMultiplier = 1;
+}
+
+ARBString const& ARBConfigScoring::GetNote() const
+{
+	return m_Note;
+}
+
+void ARBConfigScoring::SetNote(ARBString const& inNote)
+{
+	m_Note = inNote;
+}
+
+short ARBConfigScoring::GetRequiredOpeningPoints() const
+{
+	return m_OpeningPts;
+}
+
+void ARBConfigScoring::SetRequiredOpeningPoints(short inPoints)
+{
+	m_OpeningPts = inPoints;
+}
+
+short ARBConfigScoring::GetRequiredClosingPoints() const
+{
+	return m_ClosingPts;
+}
+
+void ARBConfigScoring::SetRequiredClosingPoints(short inPoints)
+{
+	m_ClosingPts = inPoints;
+}
+
+bool ARBConfigScoring::HasSuperQ() const
+{
+	return m_bSuperQ;
+}
+
+void ARBConfigScoring::SetHasSuperQ(bool inBool)
+{
+	m_bSuperQ = inBool;
+}
+
+bool ARBConfigScoring::HasSpeedPts() const
+{
+	return m_bSpeedPts;
+}
+
+void ARBConfigScoring::SetHasSpeedPts(bool inBool)
+{
+	m_bSpeedPts = inBool;
+}
+
+bool ARBConfigScoring::HasBonusPts() const
+{
+	return m_bBonusPts;
+}
+
+void ARBConfigScoring::SetHasBonusPts(bool inBool)
+{
+	m_bBonusPts = inBool;
+}
+
+ARBConfigTitlePointsList const& ARBConfigScoring::GetTitlePoints() const
+{
+	return m_TitlePoints;
+}
+
+ARBConfigTitlePointsList& ARBConfigScoring::GetTitlePoints()
+{
+	return m_TitlePoints;
+}
+
+ARBConfigLifetimePointsList const& ARBConfigScoring::GetLifetimePoints() const
+{
+	return m_LifePoints;
+}
+
+ARBConfigLifetimePointsList& ARBConfigScoring::GetLifetimePoints()
+{
+	return m_LifePoints;
+}
+
+bool ARBConfigScoring::ConvertDoubleQ() const
+{
+	return m_bDoubleQ;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigScoringList::Load(

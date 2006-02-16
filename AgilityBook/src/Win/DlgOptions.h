@@ -42,9 +42,6 @@
 #include "DlgOptionsView.h"
 class CAgilityBookDoc;
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
-
 class CDlgOptions : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgOptions)

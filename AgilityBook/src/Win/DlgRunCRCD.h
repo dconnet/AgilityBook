@@ -36,7 +36,6 @@
  */
 
 #include "DlgBasePropertyPage.h"
-class ARBDogRun;
 
 class CDlgRunCRCD : public CDlgBasePropertyPage
 {

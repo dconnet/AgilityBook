@@ -40,13 +40,6 @@
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 class ARBAgilityRecordBook;
-class ARBConfigDivision;
-class ARBConfigEvent;
-class ARBConfigLevel;
-class ARBConfigMultiQ;
-class ARBConfigSubLevel;
-class ARBConfigTitle;
-class ARBConfigVenue;
 class CAgilityBookDoc;
 class CDlgConfigureData;
 class CDlgConfigureDataDivision;

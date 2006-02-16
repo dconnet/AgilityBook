@@ -38,10 +38,7 @@
 
 #include "ARBDate.h"
 #include "DlgBasePropertyPage.h"
-class ARBDog;
 class CAgilityBookDoc;
-
-/////////////////////////////////////////////////////////////////////////////
 
 class CDlgDogProperties : public CDlgBasePropertyPage
 {

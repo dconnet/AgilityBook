@@ -40,11 +40,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * How did other dogs perform on the run we did?
@@ -131,91 +126,6 @@ private:
 	ARBString m_Score;
 	ARBString m_Note;
 };
-
-inline ARBString ARBDogReferenceRun::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARB_Q ARBDogReferenceRun::GetQ() const
-{
-	return m_Q;
-}
-
-inline void ARBDogReferenceRun::SetQ(ARB_Q inQ)
-{
-	m_Q = inQ;
-}
-
-inline short ARBDogReferenceRun::GetPlace() const
-{
-	return m_Place;
-}
-
-inline void ARBDogReferenceRun::SetPlace(short inPlace)
-{
-	m_Place = inPlace;
-}
-
-inline ARBString const& ARBDogReferenceRun::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBDogReferenceRun::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBDogReferenceRun::GetHeight() const
-{
-	return m_Height;
-}
-
-inline void ARBDogReferenceRun::SetHeight(ARBString const& inHeight)
-{
-	m_Height = inHeight;
-}
-
-inline ARBString const& ARBDogReferenceRun::GetBreed() const
-{
-	return m_Breed;
-}
-
-inline void ARBDogReferenceRun::SetBreed(ARBString const& inBreed)
-{
-	m_Breed = inBreed;
-}
-
-inline double ARBDogReferenceRun::GetTime() const
-{
-	return m_Time;
-}
-
-inline void ARBDogReferenceRun::SetTime(double inTime)
-{
-	m_Time = inTime;
-}
-
-inline ARBString const& ARBDogReferenceRun::GetScore() const
-{
-	return m_Score;
-}
-
-inline void ARBDogReferenceRun::SetScore(ARBString const& inScore)
-{
-	m_Score = inScore;
-}
-
-inline ARBString const& ARBDogReferenceRun::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBDogReferenceRun::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

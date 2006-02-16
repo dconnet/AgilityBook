@@ -40,8 +40,6 @@
 #include "ARBTypes.h"
 class ARBAgilityRecordBook;
 
-/////////////////////////////////////////////////////////////////////////////
-
 /**
  * This class and its derivatives are used to fix up data on 'ok'. When things
  * are edited/deleted, we may need to clean up existing data.

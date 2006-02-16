@@ -40,9 +40,7 @@
 #include <vector>
 #include <xercesc/sax/InputSource.hpp>
 #include "ARBTypes.h"
-
 class ARBDate;
-class ARBVersion;
 
 /**
  * Tree-like structure to hold XML data.

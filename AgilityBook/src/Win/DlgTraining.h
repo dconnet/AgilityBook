@@ -37,7 +37,6 @@
  */
 
 #include "DlgBaseDialog.h"
-class ARBTraining;
 class CAgilityBookDoc;
 
 class CDlgTraining : public CDlgBaseDialog

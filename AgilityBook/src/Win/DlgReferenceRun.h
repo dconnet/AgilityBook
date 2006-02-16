@@ -38,7 +38,6 @@
 #include <set>
 #include "ARBTypes.h"
 #include "DlgBaseDialog.h"
-class ARBDogReferenceRun;
 class CAgilityBookDoc;
 
 class CDlgReferenceRun : public CDlgBaseDialog

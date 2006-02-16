@@ -92,6 +92,11 @@ bool ARBConfigSubLevel::operator!=(ARBConfigSubLevel const& rhs) const
 	return !operator==(rhs);
 }
 
+ARBString ARBConfigSubLevel::GetGenericName() const
+{
+	return m_Name;
+}
+
 size_t ARBConfigSubLevel::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -117,6 +122,16 @@ bool ARBConfigSubLevel::Save(Element& ioTree) const
 	Element& element = ioTree.AddElement(TREE_SUBLEVEL);
 	element.AddAttrib(ATTRIB_SUBLEVEL_NAME, m_Name);
 	return true;
+}
+
+ARBString const& ARBConfigSubLevel::GetName() const
+{
+	return m_Name;
+}
+
+void ARBConfigSubLevel::SetName(ARBString const& inName)
+{
+	m_Name = inName;
 }
 
 /////////////////////////////////////////////////////////////////////////////

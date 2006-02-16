@@ -50,6 +50,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBCalendar.h"
 #include "ARBConfig.h"
+#include "ARBDate.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -328,6 +329,56 @@ bool ARBDogTrial::HasVenue(ARBString const& inVenue) const
 			return true;
 	}
 	return false;
+}
+
+ARBString const& ARBDogTrial::GetLocation() const
+{
+	return m_Location;
+}
+
+void ARBDogTrial::SetLocation(ARBString const& inLoc)
+{
+	m_Location = inLoc;
+}
+
+ARBString const& ARBDogTrial::GetNote() const
+{
+	return m_Note;
+}
+
+void ARBDogTrial::SetNote(ARBString const& inNote)
+{
+	m_Note = inNote;
+}
+
+bool ARBDogTrial::IsVerified() const
+{
+	return m_Verified;
+}
+
+void ARBDogTrial::SetVerified(bool inVerified)
+{
+	m_Verified = inVerified;
+}
+
+ARBDogClubList const& ARBDogTrial::GetClubs() const
+{
+	return m_Clubs;
+}
+
+ARBDogClubList& ARBDogTrial::GetClubs()
+{
+	return m_Clubs;
+}
+
+ARBDogRunList const& ARBDogTrial::GetRuns() const
+{
+	return m_Runs;
+}
+
+ARBDogRunList& ARBDogTrial::GetRuns()
+{
+	return m_Runs;
 }
 
 /////////////////////////////////////////////////////////////////////////////

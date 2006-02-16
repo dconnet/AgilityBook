@@ -174,3 +174,43 @@ bool ARBDogNotes::Save(Element& ioTree) const
 	}
 	return true;
 }
+
+ARBDogFaultList const& ARBDogNotes::GetFaults() const
+{
+	return m_Faults;
+}
+
+ARBDogFaultList& ARBDogNotes::GetFaults()
+{
+	return m_Faults;
+}
+
+ARBString const& ARBDogNotes::GetCRCD() const
+{
+	return m_CRCD;
+}
+
+void ARBDogNotes::SetCRCD(ARBString const& inCRCD)
+{
+	m_CRCD = inCRCD;
+}
+
+ARBString const& ARBDogNotes::GetCRCDMetaFile() const
+{
+	return m_CRCDMeta;
+}
+
+void ARBDogNotes::SetCRCDMetaFile(ARBString const& inCRCDMeta)
+{
+	m_CRCDMeta = inCRCDMeta;
+}
+
+ARBString const& ARBDogNotes::GetNote() const
+{
+	return m_Note;
+}
+
+void ARBDogNotes::SetNote(ARBString const& inNote)
+{
+	m_Note = inNote;
+}

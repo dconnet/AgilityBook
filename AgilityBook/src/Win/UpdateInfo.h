@@ -40,7 +40,6 @@
 #include "ARBTypes.h"
 #include "Element.h"
 #include "VersionNum.h"
-class ARBConfig;
 class CAgilityBookDoc;
 
 /**

@@ -36,17 +36,12 @@
  */
 
 #include "DlgBaseSheet.h"
-class ARBDogRun;
-class ARBDogTrial;
 class CAgilityBookDoc;
 class CDlgRunScore;
 class CDlgRunComments;
 class CDlgRunReference;
 class CDlgRunCRCD;
 class CDlgRunLink;
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgRun
 
 class CDlgRun : public CDlgBaseSheet
 {

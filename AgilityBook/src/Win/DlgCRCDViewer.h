@@ -73,5 +73,4 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-public:
 };

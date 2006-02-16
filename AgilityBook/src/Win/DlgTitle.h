@@ -39,8 +39,6 @@
 #include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "RichEditCtrl2.h"
-class ARBConfig;
-class ARBDogTitleList;
 
 class CDlgTitle : public CDlgBaseDialog
 {

@@ -501,6 +501,51 @@ bool ARBConfigMultiQ::GetItem(
 	return true;
 }
 
+ARBString ARBConfigMultiQ::GetName() const
+{
+	return m_Name;
+}
+
+void ARBConfigMultiQ::SetName(ARBString const& inName)
+{
+	m_Name = inName;
+}
+
+ARBString ARBConfigMultiQ::GetShortName() const
+{
+	return m_ShortName;
+}
+
+void ARBConfigMultiQ::SetShortName(ARBString const& inName)
+{
+	m_ShortName = inName;
+}
+
+ARBDate ARBConfigMultiQ::GetValidFrom() const
+{
+	return m_ValidFrom;
+}
+
+void ARBConfigMultiQ::SetValidFrom(ARBDate const& inDate)
+{
+	m_ValidFrom = inDate;
+}
+
+ARBDate ARBConfigMultiQ::GetValidTo() const
+{
+	return m_ValidTo;
+}
+
+void ARBConfigMultiQ::SetValidTo(ARBDate const& inDate)
+{
+	m_ValidTo = inDate;
+}
+
+size_t ARBConfigMultiQ::GetNumItems() const
+{
+	return m_Items.size();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigMultiQList::Load(

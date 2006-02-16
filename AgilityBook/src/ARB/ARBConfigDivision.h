@@ -43,12 +43,6 @@
 #include "ARBBase.h"
 #include "ARBConfigLevel.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBConfigEventList;
-class ARBConfigVenue;
-class ARBVersion;
-class Element;
 
 /**
  * Division configuration information.
@@ -134,31 +128,6 @@ private:
 	ARBString m_Name;
 	ARBConfigLevelList m_Levels;
 };
-
-inline ARBString ARBConfigDivision::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBConfigDivision::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigDivision::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBConfigLevelList const& ARBConfigDivision::GetLevels() const
-{
-	return m_Levels;
-}
-
-inline ARBConfigLevelList& ARBConfigDivision::GetLevels()
-{
-	return m_Levels;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

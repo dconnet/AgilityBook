@@ -41,12 +41,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBConfigVenue;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Registration number for a venue.
@@ -124,56 +118,6 @@ private:
 	bool m_bReceived;
 	ARBString m_Note;
 };
-
-inline ARBString const& ARBDogRegNum::GetVenue() const
-{
-	return m_Venue;
-}
-
-inline void ARBDogRegNum::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-inline ARBString const& ARBDogRegNum::GetNumber() const
-{
-	return m_Number;
-}
-
-inline void ARBDogRegNum::SetNumber(ARBString const& inNumber)
-{
-	m_Number = inNumber;
-}
-
-inline ARBString const& ARBDogRegNum::GetHeight() const
-{
-	return m_Height;
-}
-
-inline void ARBDogRegNum::SetHeight(ARBString const& inHeight)
-{
-	m_Height = inHeight;
-}
-
-inline bool ARBDogRegNum::GetReceived() const
-{
-	return m_bReceived;
-}
-
-inline void ARBDogRegNum::SetReceived(bool inReceived)
-{
-	m_bReceived = inReceived;
-}
-
-inline ARBString const& ARBDogRegNum::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBDogRegNum::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

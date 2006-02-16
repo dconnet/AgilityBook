@@ -37,7 +37,6 @@
 
 #include <vector>
 #include "DlgBaseDialog.h"
-class ARBDog;
 class CAgilityBookDoc;
 
 #if _MSC_VER >= 1300

@@ -41,11 +41,6 @@
 #include "ARBBase.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBConfigEventList;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Levels within a division.
@@ -129,31 +124,6 @@ private:
 	ARBString m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
-
-inline ARBString ARBConfigLevel::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBConfigLevel::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigLevel::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBConfigSubLevelList const& ARBConfigLevel::GetSubLevels() const
-{
-	return m_SubLevels;
-}
-
-inline ARBConfigSubLevelList& ARBConfigLevel::GetSubLevels()
-{
-	return m_SubLevels;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

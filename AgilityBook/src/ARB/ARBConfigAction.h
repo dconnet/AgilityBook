@@ -39,10 +39,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Special class that performs actions during ARBConfig::Update.
@@ -125,36 +121,6 @@ private:
 	ARBString m_OldName;
 	ARBString m_NewName;
 };
-
-inline ARBString ARBConfigAction::GetGenericName() const
-{
-	return m_Verb;
-}
-
-inline ARBString const& ARBConfigAction::GetVerb() const
-{
-	return m_Verb;
-}
-
-inline ARBString const& ARBConfigAction::GetVenue() const
-{
-	return m_Venue;
-}
-
-inline ARBString const& ARBConfigAction::GetDivision() const
-{
-	return m_Div;
-}
-
-inline ARBString const& ARBConfigAction::GetOldName() const
-{
-	return m_OldName;
-}
-
-inline ARBString const& ARBConfigAction::GetNewName() const
-{
-	return m_NewName;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

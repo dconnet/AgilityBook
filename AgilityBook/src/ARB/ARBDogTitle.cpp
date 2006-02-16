@@ -262,6 +262,69 @@ ARBString ARBDogTitle::GetGenericName() const
 	return name;
 }
 
+ARBDate const& ARBDogTitle::GetDate() const
+{
+	return m_Date;
+}
+
+void ARBDogTitle::SetDate(ARBDate const& inDate)
+{
+	m_Date = inDate;
+	if (!m_Date.IsValid())
+		m_bHidden = true;
+}
+
+ARBString const& ARBDogTitle::GetVenue() const
+{
+	return m_Venue;
+}
+
+void ARBDogTitle::SetVenue(ARBString const& inVenue)
+{
+	m_Venue = inVenue;
+}
+
+ARBString const& ARBDogTitle::GetRawName() const
+{
+	return m_Name;
+}
+
+short ARBDogTitle::GetInstance() const
+{
+	return m_Instance;
+}
+
+void ARBDogTitle::SetName(
+		ARBString const& inName,
+		short inInstance)
+{
+	m_Name = inName;
+	m_Instance = inInstance;
+}
+
+bool ARBDogTitle::GetReceived() const
+{
+	return m_bReceived;
+}
+
+void ARBDogTitle::SetReceived(bool inReceived)
+{
+	m_bReceived = inReceived;
+}
+
+bool ARBDogTitle::IsHidden() const
+{
+	return m_bHidden;
+}
+
+void ARBDogTitle::SetHidden(bool bHidden)
+{
+	if (m_Date.IsValid())
+		m_bHidden = bHidden;
+	else
+		m_bHidden = true;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBDogTitleList::Load(

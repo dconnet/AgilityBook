@@ -40,10 +40,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * A way to tally points that aren't inheritantly known.
@@ -130,41 +126,6 @@ private:
 	eOtherPointsTally m_Tally;
 	ARBString m_Desc;
 };
-
-inline ARBString ARBConfigOtherPoints::GetGenericName() const
-{
-	return GetName();
-}
-
-inline ARBString const& ARBConfigOtherPoints::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigOtherPoints::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBConfigOtherPoints::GetDescription() const
-{
-	return m_Desc;
-}
-
-inline void ARBConfigOtherPoints::SetDescription(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
-}
-
-inline ARBConfigOtherPoints::eOtherPointsTally ARBConfigOtherPoints::GetTally() const
-{
-	return m_Tally;
-}
-
-inline void ARBConfigOtherPoints::SetTally(ARBConfigOtherPoints::eOtherPointsTally inTally)
-{
-	m_Tally = inTally;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

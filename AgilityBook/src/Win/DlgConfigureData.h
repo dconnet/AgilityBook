@@ -39,8 +39,6 @@
 #include <vector>
 #include "ListData.h"
 
-/////////////////////////////////////////////////////////////////////////////
-
 /**
  * This class and its derivatives are used to keep data associated with controls.
  */

@@ -44,11 +44,7 @@
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
 #include "ListData.h"
-
 class ARBAgilityRecordBook;
-class ARBConfig;
-class ARBConfigEvent;
-class ARBConfigVenue;
 class CDlgFixup;
 
 class CDlgConfigEvent : public CDlgBaseDialog

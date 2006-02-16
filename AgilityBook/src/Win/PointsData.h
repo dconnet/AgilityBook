@@ -49,13 +49,10 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ListData.h"
-
 class CAgilityBookViewPoints;
 
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
-
-/////////////////////////////////////////////////////////////////////////////
 
 /**
  * Used to accumulate lifetime info.

@@ -113,3 +113,4 @@ public:
 protected:
 	bool m_bFiltered[eNumFilters];
 };
+typedef boost::shared_ptr<ARBBase> ARBBasePtr;

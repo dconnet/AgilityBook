@@ -38,7 +38,6 @@
 #include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "RichEditCtrl2.h"
-class ARBConfig;
 
 class CDlgOtherPoint : public CDlgBaseDialog
 {

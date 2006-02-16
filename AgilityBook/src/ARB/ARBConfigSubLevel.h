@@ -40,10 +40,6 @@
 
 #include "ARBBase.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Sublevel, allows a level to be split into A/B groupings.
@@ -107,21 +103,6 @@ public:
 private:
 	ARBString m_Name;
 };
-
-inline ARBString ARBConfigSubLevel::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBConfigSubLevel::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBConfigSubLevel::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

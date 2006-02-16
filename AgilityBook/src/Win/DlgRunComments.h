@@ -36,7 +36,6 @@
  */
 
 #include "DlgBasePropertyPage.h"
-class ARBDogRun;
 class CAgilityBookDoc;
 
 class CDlgRunComments : public CDlgBasePropertyPage

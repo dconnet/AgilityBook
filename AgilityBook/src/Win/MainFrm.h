@@ -35,8 +35,6 @@
  * Revision History
  */
 
-class ARBConfigVenue;
-class ARBConfigVenueList;
 class CTabView;
 
 class CMainFrame : public CFrameWnd

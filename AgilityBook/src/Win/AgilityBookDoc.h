@@ -50,14 +50,6 @@
 #include <set>
 #include "ARBAgilityRecordBook.h"
 #include "ARBTypes.h"
-class ARBCalendar;
-class ARBCalendarList;
-class ARBConfig;
-class ARBDog;
-class ARBDogList;
-class ARBDogRun;
-class ARBDogTrial;
-class ARBTraining;
 class CAgilityBookTree;
 class CAgilityBookViewCalendar;
 class CAgilityBookViewCalendarList;

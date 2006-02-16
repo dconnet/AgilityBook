@@ -42,10 +42,7 @@
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 #include "ListData.h"
-
 class CAgilityBookDoc;
-
-/////////////////////////////////////////////////////////////////////////////
 
 class CDlgDogTitles : public CDlgBasePropertyPage
 {

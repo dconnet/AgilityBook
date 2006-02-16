@@ -44,10 +44,6 @@
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ARBVector.h"
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * The training logbook
@@ -124,66 +120,6 @@ private:
 	ARBString m_SubName;
 	ARBString m_Note;
 };
-
-inline bool ARBTraining::operator<(ARBTraining const& rhs) const
-{
-	return m_Date < rhs.GetDate();
-}
-
-inline bool ARBTraining::operator>(ARBTraining const& rhs) const
-{
-	return m_Date > rhs.GetDate();
-}
-
-inline bool ARBTraining::operator<(ARBDate const& rhs) const
-{
-	return m_Date < rhs;
-}
-
-inline bool ARBTraining::operator>(ARBDate const& rhs) const
-{
-	return m_Date > rhs;
-}
-
-inline ARBDate const& ARBTraining::GetDate() const
-{
-	return m_Date;
-}
-
-inline void ARBTraining::SetDate(ARBDate const& inDate)
-{
-	m_Date = inDate;
-}
-
-inline ARBString const& ARBTraining::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBTraining::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBTraining::GetSubName() const
-{
-	return m_SubName;
-}
-
-inline void ARBTraining::SetSubName(ARBString const& inName)
-{
-	m_SubName = inName;
-}
-
-inline ARBString const& ARBTraining::GetNote() const
-{
-	return m_Note;
-}
-
-inline void ARBTraining::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

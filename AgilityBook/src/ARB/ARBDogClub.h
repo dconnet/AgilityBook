@@ -40,13 +40,8 @@
  */
 
 #include "ARBBase.h"
-#include "ARBVector.h"
-class ARBConfig;
-class ARBConfigScoring;
+#include "ARBTypes.h"
 class ARBDate;
-class ARBErrorCallback;
-class ARBVersion;
-class Element;
 
 /**
  * Dog club.
@@ -115,31 +110,6 @@ private:
 	ARBString m_Name;
 	ARBString m_Venue;
 };
-
-inline ARBString ARBDogClub::GetGenericName() const
-{
-	return m_Name;
-}
-
-inline ARBString const& ARBDogClub::GetName() const
-{
-	return m_Name;
-}
-
-inline void ARBDogClub::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-inline ARBString const& ARBDogClub::GetVenue() const
-{
-	return m_Venue;
-}
-
-inline void ARBDogClub::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 

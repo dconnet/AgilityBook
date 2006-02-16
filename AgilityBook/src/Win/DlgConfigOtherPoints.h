@@ -36,8 +36,6 @@
  */
 
 #include "DlgBaseDialog.h"
-class ARBConfig;
-class ARBConfigOtherPoints;
 
 class CDlgConfigOtherPoints : public CDlgBaseDialog
 {

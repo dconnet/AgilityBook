@@ -1003,9 +1003,6 @@
 				RelativePath="..\..\ARB\ARBTypes.h">
 			</File>
 			<File
-				RelativePath="..\..\ARB\ARBVector.h">
-			</File>
-			<File
 				RelativePath="..\..\ARB\Base64.cpp">
 			</File>
 			<File
