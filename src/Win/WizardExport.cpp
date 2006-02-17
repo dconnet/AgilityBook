@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -71,6 +72,7 @@ CWizardExport::CWizardExport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardExport::IDD)
+	, m_ctrlDateFormat(false)
 	, m_ctrlPreview(false)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)

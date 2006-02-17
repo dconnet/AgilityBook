@@ -33,11 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
 #include "AgilityBookOptions.h"
+#include "ComboBox.h"
 #include "DlgBasePropertyPage.h"
 
 class CDlgOptionsView : public CDlgBasePropertyPage
@@ -72,7 +74,7 @@ private:
 	BOOL	m_bHideOverlapping;
 	BOOL	m_bOpening;
 	BOOL	m_bClosing;
-	CComboBox	m_ctrlCalEntries;
+	CComboBox2	m_ctrlCalEntries;
 	CStatic	m_ctrlColor;
 	CStatic	m_ctrlCalView;
 	//}}AFX_DATA

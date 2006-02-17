@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-27 DRC Add color coding to calendar for entries that need attention.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
@@ -96,13 +97,13 @@ public:
 	CAgilityBookViewCalendarData(
 			CAgilityBookViewCalendarList* pView,
 			ARBCalendarPtr pCal)
-		: m_RefCount(1)
-		, m_pView(pView)
+		: m_pView(pView)
 		, m_pCal(pCal)
 	{
 	}
-	void AddRef();
-	void Release();
+	~CAgilityBookViewCalendarData()
+	{
+	}
 
 	bool CanEdit() const		{return true;}
 	bool CanDelete() const		{return true;}
@@ -121,27 +122,11 @@ public:
 			bool bFocused) const;
 
 private:
-	~CAgilityBookViewCalendarData()
-	{
-	}
 	bool HighlightOpeningNear(int iCol) const;
 	bool HighlightClosingNear(int iCol) const;
-	UINT m_RefCount;
 	CAgilityBookViewCalendarList* m_pView;
 	ARBCalendarPtr m_pCal;
 };
-
-void CAgilityBookViewCalendarData::AddRef()
-{
-	++m_RefCount;
-}
-
-void CAgilityBookViewCalendarData::Release()
-{
-	--m_RefCount;
-	if (0 == m_RefCount)
-		delete this;
-}
 
 CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 {
@@ -842,9 +827,10 @@ void CAgilityBookViewCalendarList::LoadData()
 	m_bSuppressSelect = true;
 
 	// Remember what's selected.
+	ARBCalendarPtr pCurCal;
 	CAgilityBookViewCalendarData* pCurData = GetItemData(GetSelection());
 	if (pCurData)
-		pCurData->AddRef();
+		pCurCal = pCurData->GetCalendar();
 
 	// Reduce flicker
 	GetListCtrl().SetRedraw(FALSE);
@@ -913,9 +899,8 @@ void CAgilityBookViewCalendarList::LoadData()
 		// Note: This is only important when editing the entry from the other
 		// calendar view! If we edit locally, this is not a problem since we
 		// just modified our own entry.
-		if (pCurData)
+		if (pCurCal)
 		{
-			ARBCalendarPtr pCurCal = pCurData->GetCalendar();
 			if (*pCurCal == *pCal
 			|| (pCurCal->GetStartDate() == pCal->GetStartDate()
 			&& pCurCal->GetEndDate() == pCal->GetEndDate()
@@ -948,9 +933,6 @@ void CAgilityBookViewCalendarList::LoadData()
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 
-	// Cleanup.
-	if (pCurData)
-		pCurData->Release();
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
 

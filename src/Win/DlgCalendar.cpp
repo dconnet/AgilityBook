@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-21 DRC Added Location/Club info fields.
@@ -62,6 +63,9 @@ CDlgCalendar::CDlgCalendar(
 		CAgilityBookDoc* pDoc,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
+	, m_ctrlLocation(false)
+	, m_ctrlVenue(false)
+	, m_ctrlClub(false)
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)
 	, m_Span(0)

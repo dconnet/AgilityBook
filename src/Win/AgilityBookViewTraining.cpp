@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -83,13 +84,13 @@ public:
 	CAgilityBookViewTrainingData(
 			CAgilityBookViewTraining* pView,
 			ARBTrainingPtr pTraining)
-		: m_RefCount(1)
-		, m_pView(pView)
+		: m_pView(pView)
 		, m_pTraining(pTraining)
 	{
 	}
-	void AddRef();
-	void Release();
+	~CAgilityBookViewTrainingData()
+	{
+	}
 
 	bool CanEdit() const			{return true;}
 	bool CanDelete() const			{return true;}
@@ -98,25 +99,9 @@ public:
 	CString OnNeedText(int iCol) const;
 
 private:
-	~CAgilityBookViewTrainingData()
-	{
-	}
-	UINT m_RefCount;
 	CAgilityBookViewTraining* m_pView;
 	ARBTrainingPtr m_pTraining;
 };
-
-void CAgilityBookViewTrainingData::AddRef()
-{
-	++m_RefCount;
-}
-
-void CAgilityBookViewTrainingData::Release()
-{
-	--m_RefCount;
-	if (0 == m_RefCount)
-		delete this;
-}
 
 CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 {
@@ -510,9 +495,10 @@ void CAgilityBookViewTraining::SetupColumns()
 void CAgilityBookViewTraining::LoadData()
 {
 	// Remember what's selected.
+	ARBTrainingPtr pCurTraining;
 	CAgilityBookViewTrainingData* pCurData = GetItemData(GetSelection());
 	if (pCurData)
-		pCurData->AddRef();
+		pCurTraining = pCurData->GetTraining();
 
 	// Reduce flicker
 	GetListCtrl().SetRedraw(FALSE);
@@ -545,9 +531,8 @@ void CAgilityBookViewTraining::LoadData()
 		// Note: This is only important when editing the entry from the other
 		// calendar view! If we edit locally, this is not a problem since we
 		// just modified our own entry.
-		if (pCurData)
+		if (pCurTraining)
 		{
-			ARBTrainingPtr pCurTraining = pCurData->GetTraining();
 			if (*pCurTraining == *pTraining
 			|| pCurTraining->GetDate() == pTraining->GetDate())
 			{
@@ -577,8 +562,6 @@ void CAgilityBookViewTraining::LoadData()
 		info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 
 	// Cleanup.
-	if (pCurData)
-		pCurData->Release();
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
 }

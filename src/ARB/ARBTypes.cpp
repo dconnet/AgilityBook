@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Removed ARBDouble.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -39,6 +40,7 @@
 #include "StdAfx.h"
 #include "ARBTypes.h"
 #include <float.h>
+#include <math.h>
 #include <time.h>
 
 #include "ARBAgilityRecordBook.h"
@@ -210,6 +212,6 @@ ARBString ARBDouble::str(
 
 bool ARBDouble::equal(double const& inVal1, double const& inVal2)
 {
-	double diff = inVal1 - inVal2;
+	double diff = abs(inVal1 - inVal2);
 	return diff <= DBL_EPSILON;
 }

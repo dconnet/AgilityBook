@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-10-06 DRC Added as part of file version 10.
  */
@@ -52,13 +53,13 @@ class ARBConfigLifetimePoints : public ARBBase
 {
 protected:
 	ARBConfigLifetimePoints();
-	ARBConfigLifetimePoints(double inPoints, short inFaults);
+	ARBConfigLifetimePoints(double inPoints, double inFaults);
 	ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs);
 
 public:
 	~ARBConfigLifetimePoints();
 	static ARBConfigLifetimePointsPtr New();
-	static ARBConfigLifetimePointsPtr New(double inPoints, short inFaults);
+	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
 	ARBConfigLifetimePointsPtr Clone() const;
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
@@ -105,15 +106,15 @@ public:
 	 */
 	double GetPoints() const;
 	void SetPoints(double inPoints);
-	short GetFaults() const;
+	double GetFaults() const;
 	/**
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigLifetimePointsList::sort.
 	 */
-	void SetFaults(short inFaults);
+	void SetFaults(double inFaults);
 
 private:
 	double m_Points;
-	short m_Faults;
+	double m_Faults;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -156,7 +157,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLifetimePoints(
-			short inFaults,
+			double inFaults,
 			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
 
 	/**
@@ -168,7 +169,7 @@ public:
 	 */
 	bool AddLifetimePoints(
 			double inPoints,
-			short inFaults,
+			double inFaults,
 			ARBConfigLifetimePointsPtr* outPoints = NULL);
 
 	/**
@@ -176,5 +177,5 @@ public:
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteLifetimePoints(short inFaults);
+	bool DeleteLifetimePoints(double inFaults);
 };

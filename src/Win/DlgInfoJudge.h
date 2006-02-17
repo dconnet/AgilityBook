@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-07 DRC Created
  */
 
 #include <set>
 #include "ARBInfo.h"
 #include "ARBTypes.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -57,14 +59,14 @@ private:
 	//{{AFX_DATA(CDlgInfoJudge)
 	enum { IDD = IDD_JUDGE_INFO };
 	CButton	m_ctrlDelete;
-	CComboBox	m_ctrlNames;
+	CComboBox2	m_ctrlNames;
 	CEdit		m_ctrlComment;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
 	ARBString m_Select;
 	std::set<ARBString> m_NamesInUse;
-	ARBInfoItemList m_InfoOrig;
+	ARBInfoItemList const& m_InfoOrig;
 	ARBInfoItemList m_Info;
 	class NameInfo
 	{

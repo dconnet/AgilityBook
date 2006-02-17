@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -75,8 +76,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgConfigEvent::CDlgConfigEvent(
 		CAgilityBookDoc* pDoc,
-		ARBAgilityRecordBook* book,
-		ARBConfig* config,
+		ARBAgilityRecordBook const* book,
 		ARBConfigVenuePtr pVenue,
 		ARBConfigEventPtr pEvent,
 		CWnd* pParent)
@@ -84,10 +84,12 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_ctrlSubNames(false)
 	, m_ctrlMethods(true)
 	, m_ctrlUnused(false)
+	, m_ctrlDivision(true)
+	, m_ctrlLevel(false)
+	, m_ctrlType(false)
 	, m_ctrlPointsList(true)
 	, m_pDoc(pDoc)
 	, m_Book(book)
-	, m_Config(config)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
 	, m_Scorings()
@@ -96,6 +98,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_bHasPartners(FALSE)
 	, m_bHasSubNames(FALSE)
 {
+	// Copy the existing scorings.
 	pEvent->GetScorings().Clone(m_Scorings);
 	ASSERT(m_pVenue);
 	ASSERT(m_pEvent);
@@ -449,7 +452,8 @@ void CDlgConfigEvent::FillDivisionList()
 	{
 		ARBConfigDivisionPtr pDiv = (*iter);
 		index = m_ctrlDivision.AddString(pDiv->GetName().c_str());
-		m_ctrlDivision.SetItemDataPtr(index, new CListPtrData<ARBConfigDivisionPtr>(pDiv));
+		m_ctrlDivision.SetData(index,
+			new CListPtrData<ARBConfigDivisionPtr>(pDiv));
 		if (pScoring && pScoring->GetDivision() == pDiv->GetName())
 			m_ctrlDivision.SetCurSel(index);
 	}
@@ -1083,7 +1087,7 @@ void CDlgConfigEvent::OnPointsNew()
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(0.0, 0, false, this);
+			CDlgConfigTitlePoints dlg(0.0, 0.0, false, this);
 			if (IDOK == dlg.DoModal())
 			{
 				// The only reason this fails is if the faults entry exists.
@@ -1123,7 +1127,7 @@ void CDlgConfigEvent::OnPointsEdit()
 		if (pScoring && (pTitle || pLife))
 		{
 			double pts;
-			short faults;
+			double faults;
 			BOOL bLifetime;
 			if (pTitle)
 			{
@@ -1249,8 +1253,8 @@ void CDlgConfigEvent::OnOK()
 	// Check if there is any overlap.
 	bool bOverlap = false;
 	{
-		ARBConfigScoringList scorings;
-		m_Scorings.Clone(scorings);
+		// No need to clone, we can just copy the pointers
+		ARBConfigScoringList scorings(m_Scorings);
 		while (!bOverlap && 1 < scorings.size())
 		{
 			// Extract all similar methods.
@@ -1314,7 +1318,7 @@ void CDlgConfigEvent::OnOK()
 			m_DlgFixup.push_back(new CDlgFixupRenameEvent(m_pVenue->GetName(), (LPCTSTR)m_Name, m_pEvent->GetName()));
 		m_pEvent->SetName((LPCTSTR)m_Name);
 	}
-	// m_Book and m_Config are only valid when editing an existing entry.
+	// m_Book is only valid when editing an existing entry.
 	if (m_Book)
 	{
 		switch (CDlgConfigure::CheckExistingRuns(m_pDoc, m_Book->GetDogs(),
@@ -1352,6 +1356,7 @@ void CDlgConfigEvent::OnOK()
 		}
 		m_pEvent->SetSubNames(subNames);
 	}
-	m_Scorings.Clone(m_pEvent->GetScorings());
+	// No need to clone them, just move them.
+	m_pEvent->GetScorings() = m_Scorings;
 	CDlgBaseDialog::OnOK();
 }

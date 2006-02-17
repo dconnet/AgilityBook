@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -56,13 +57,13 @@ static char THIS_FILE[] = __FILE__;
 
 ARBConfigTitlePoints::ARBConfigTitlePoints()
 	: m_Points(0.0)
-	, m_Faults(0)
+	, m_Faults(0.0)
 {
 }
 
 ARBConfigTitlePoints::ARBConfigTitlePoints(
 		double inPoints,
-		short inFaults)
+		double inFaults)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
 {
@@ -85,7 +86,7 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 }
 
 //static
-ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(double inPoints, short inFaults)
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(double inPoints, double inFaults)
 {
 	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
 }
@@ -160,8 +161,8 @@ bool ARBConfigTitlePoints::Load(
 bool ARBConfigTitlePoints::Save(Element& ioTree) const
 {
 	Element& title = ioTree.AddElement(TREE_TITLE_POINTS);
-	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points);
-	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults);
+	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
+	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
 	return true;
 }
 
@@ -175,12 +176,12 @@ void ARBConfigTitlePoints::SetPoints(double inPoints)
 	m_Points = inPoints;
 }
 
-short ARBConfigTitlePoints::GetFaults() const
+double ARBConfigTitlePoints::GetFaults() const
 {
 	return m_Faults;
 }
 
-void ARBConfigTitlePoints::SetFaults(short inFaults)
+void ARBConfigTitlePoints::SetFaults(double inFaults)
 {
 	m_Faults = inFaults;
 }
@@ -222,21 +223,21 @@ double ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if (inFaults <= static_cast<double>((*iter)->GetFaults()))
+		if (inFaults <= (*iter)->GetFaults())
 			return (*iter)->GetPoints();
 	}
 	return 0;
 }
 
 bool ARBConfigTitlePointsList::FindTitlePoints(
-		short inFaults,
+		double inFaults,
 		ARBConfigTitlePointsPtr* outTitle) const
 {
 	if (outTitle)
 		outTitle->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetFaults() == inFaults)
+		if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
 		{
 			if (outTitle)
 				*outTitle = *iter;
@@ -248,7 +249,7 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 
 bool ARBConfigTitlePointsList::AddTitlePoints(
 		double inPoints,
-		short inFaults,
+		double inFaults,
 		ARBConfigTitlePointsPtr* outTitle)
 {
 	if (outTitle)
@@ -263,11 +264,11 @@ bool ARBConfigTitlePointsList::AddTitlePoints(
 	return true;
 }
 
-bool ARBConfigTitlePointsList::DeleteTitlePoints(short inFaults)
+bool ARBConfigTitlePointsList::DeleteTitlePoints(double inFaults)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetFaults() == inFaults)
+		if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
 		{
 			erase(iter);
 			return true;

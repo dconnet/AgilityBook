@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-05 DRC Created.
  */

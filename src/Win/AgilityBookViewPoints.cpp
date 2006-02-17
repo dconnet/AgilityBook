@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
@@ -447,7 +448,7 @@ void CAgilityBookViewPoints::LoadData()
 	// Get the current item.
 	PointsDataBase* pCurData = GetItemData(GetSelection(true));
 	if (pCurData)
-		pCurData->AddRef();
+		pCurData = pCurData->Clone();
 
 	// Clear everything.
 	GetListCtrl().DeleteAllItems();
@@ -998,6 +999,7 @@ void CAgilityBookViewPoints::LoadData()
 				}
 			}
 		}
+		delete pCurData;
 	}
 
 	GetListCtrl().SetRedraw(TRUE);

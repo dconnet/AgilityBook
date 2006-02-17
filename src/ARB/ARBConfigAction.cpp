@@ -42,6 +42,7 @@
  * via import, which means actions are live.)
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added optional 'Div' to DeleteTitle.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-21 DRC Created

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-12 DRC Created
  */
 
@@ -61,7 +62,7 @@ CComboBox2::~CComboBox2()
 
 CListData* CComboBox2::GetData(int index) const
 {
-	if (m_bAutoDelete)
+	if (0 <= index && index < GetCount() && m_bAutoDelete)
 		return reinterpret_cast<CListData*>(GetItemDataPtr(index));
 	else
 		return NULL;
@@ -69,8 +70,13 @@ CListData* CComboBox2::GetData(int index) const
 
 void CComboBox2::SetData(int index, CListData* inData)
 {
-	if (m_bAutoDelete)
+	if (0 <= index && index < GetCount() && m_bAutoDelete)
+	{
+		CListData* pData = GetData(index);
+		if (pData)
+			delete pData;
 		SetItemDataPtr(index, inData);
+	}
 }
 
 BEGIN_MESSAGE_MAP(CComboBox2, CComboBox)

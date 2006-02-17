@@ -56,6 +56,7 @@
  *  The scoringmethod vector in the event dialog did seem to show up alot.
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
@@ -91,8 +92,8 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgConfigVenue::CDlgConfigVenue(
 		CAgilityBookDoc* pDoc,
-		ARBAgilityRecordBook& book,
-		ARBConfig& config,
+		ARBAgilityRecordBook const& book,
+		ARBConfig const& config,
 		ARBConfigVenuePtr pVenue,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigVenue::IDD, pParent)
@@ -103,9 +104,11 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(config)
-	, m_pVenue(pVenue)
+	, m_pVenueOrig(pVenue)
+	, m_pVenue(pVenue->Clone())
 	, m_Action(eNone)
 {
+	ASSERT(m_pVenueOrig);
 	ASSERT(m_pVenue);
 	//{{AFX_DATA_INIT(CDlgConfigVenue)
 	//}}AFX_DATA_INIT
@@ -1030,7 +1033,7 @@ void CDlgConfigVenue::OnNew()
 		{
 			// The dialog will ensure uniqueness.
 			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
-			CDlgConfigEvent dlg(m_pDoc, NULL, NULL, m_pVenue, pEvent, this);
+			CDlgConfigEvent dlg(m_pDoc, NULL, m_pVenue, pEvent, this);
 			if (IDOK == dlg.DoModal())
 			{
 				if (m_pVenue->GetEvents().AddEvent(pEvent))
@@ -1507,7 +1510,7 @@ void CDlgConfigVenue::OnEdit()
 				return;
 			ARBConfigEventPtr pEvent = pEventData->GetEvent();
 			ARBString oldName = pEvent->GetName();
-			CDlgConfigEvent dlg(m_pDoc, &m_Book, &m_Config, m_pVenue, pEvent, this);
+			CDlgConfigEvent dlg(m_pDoc, &m_Book, m_pVenue, pEvent, this);
 			if (IDOK == dlg.DoModal())
 			{
 				m_pVenue->GetMultiQs().RenameEvent(oldName, pEvent->GetName());
@@ -1839,7 +1842,7 @@ void CDlgConfigVenue::OnOK()
 	str.TrimLeft();
 	if (0 == str.GetLength())
 	{
-		AfxMessageBox(_T("Invalidate name"));
+		AfxMessageBox(_T("Invalid name"));
 		GotoDlgCtrl(&m_ctrlName);
 		return;
 	}
@@ -1862,6 +1865,9 @@ void CDlgConfigVenue::OnOK()
 	m_pVenue->SetDesc((LPCTSTR)str);
 	if (oldName != name)
 		m_DlgFixup.push_back(new CDlgFixupRenameVenue(oldName, name));
+
+	// Push the copy back.
+	*m_pVenueOrig = *m_pVenue;
 
 	// The rest is already taken care of.
 

@@ -33,8 +33,10 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 
 class CDlgConfigOtherPoints : public CDlgBaseDialog
@@ -51,7 +53,7 @@ private:
 	//{{AFX_DATA(CDlgConfigOtherPoints)
 	enum { IDD = IDD_CONFIG_OTHERPOINTS };
 	CString m_Name;
-	CComboBox m_ctrlTally;
+	CComboBox2 m_ctrlTally;
 	CString m_Desc;
 	//}}AFX_DATA
 	ARBConfig& m_Config;

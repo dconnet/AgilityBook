@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include <set>
 #include "ARBTypes.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 
 class CDlgFault : public CDlgBaseDialog
@@ -52,7 +54,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgFault)
 	enum { IDD = IDD_FAULT };
-	CComboBox	m_ctrlFaults;
+	CComboBox2	m_ctrlFaults;
 	CString	m_Faults;
 	//}}AFX_DATA
 	std::set<ARBString>& m_setFaults;

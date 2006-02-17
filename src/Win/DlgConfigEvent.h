@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -41,6 +42,7 @@
  */
 
 #include "ARBConfigScoring.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
 #include "ListData.h"
@@ -52,8 +54,7 @@ class CDlgConfigEvent : public CDlgBaseDialog
 public:
 	CDlgConfigEvent(
 			CAgilityBookDoc* pDoc,
-			ARBAgilityRecordBook* book,
-			ARBConfig* config,
+			ARBAgilityRecordBook const* book,
 			ARBConfigVenuePtr pVenue,
 			ARBConfigEventPtr pEvent,
 			CWnd* pParent = NULL);
@@ -83,9 +84,9 @@ private:
 	CDateTimeCtrl	m_ctrlDateFrom;
 	CButton	m_ctrlValidTo;
 	CDateTimeCtrl	m_ctrlDateTo;
-	CComboBox m_ctrlDivision;
-	CComboBox m_ctrlLevel;
-	CComboBox m_ctrlType;
+	CComboBox2 m_ctrlDivision;
+	CComboBox2 m_ctrlLevel;
+	CComboBox2 m_ctrlType;
 	CStatic	m_ctrlPointsOpeningText;
 	CEdit	m_ctrlPointsOpening;
 	short	m_OpeningPts;
@@ -109,8 +110,7 @@ private:
 	CButton	m_ctrlPointsDelete;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBAgilityRecordBook* m_Book;
-	ARBConfig* m_Config;
+	ARBAgilityRecordBook const* m_Book;
 	ARBConfigVenuePtr m_pVenue;
 	ARBConfigEventPtr m_pEvent;
 	std::vector<CDlgFixup*> m_DlgFixup;

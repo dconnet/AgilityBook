@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-09-21 DRC Created
  */
 
@@ -56,6 +57,8 @@ CDlgTraining::CDlgTraining(
 		CAgilityBookDoc* pDoc,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTraining::IDD, pParent)
+	, m_ctrlNames(false)
+	, m_ctrlSubNames(false)
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
 {

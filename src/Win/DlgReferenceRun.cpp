@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
@@ -60,6 +61,10 @@ CDlgReferenceRun::CDlgReferenceRun(
 		ARBDogReferenceRunPtr ref,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
+	, m_ctrlQ(false)
+	, m_ctrlHeight(false)
+	, m_ctrlName(false)
+	, m_ctrlBreed(false)
 	, m_pDoc(pDoc)
 	, m_Heights(inHeights)
 	, m_Names(inNames)

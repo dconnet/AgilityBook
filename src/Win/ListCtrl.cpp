@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
  * @li 2004-10-04 DRC Added div-by-0 tests.
  * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
@@ -402,17 +403,20 @@ BOOL CListCtrl2::DeleteColumn(int nCol)
 
 CListData* CListCtrl2::GetData(int index) const
 {
-	ASSERT(0 <= index && index < GetItemCount());
-	if (m_bAutoDelete)
+	if (0 <= index && index < GetItemCount() && m_bAutoDelete)
 		return reinterpret_cast<CListData*>(GetItemData(index));
 	return NULL;
 }
 
 void CListCtrl2::SetData(int index, CListData* inData)
 {
-	ASSERT(0 <= index && index < GetItemCount());
-	if (m_bAutoDelete)
+	if (0 <= index && index < GetItemCount() && m_bAutoDelete)
+	{
+		CListData* pData = GetData(index);
+		if (pData)
+			delete pData;
 		SetItemData(index, reinterpret_cast<LPARAM>(inData));
+	}
 }
 
 int CListCtrl2::GetSelection(bool bRestricted)
@@ -599,9 +603,13 @@ CListData* CListView2::GetData(int index) const
 
 void CListView2::SetData(int index, CListData* inData)
 {
-	ASSERT(0 <= index && index < GetListCtrl().GetItemCount());
-	if (m_bAutoDelete)
+	if (0 <= index && index < GetListCtrl().GetItemCount() && m_bAutoDelete)
+	{
+		CListData* pData = GetData(index);
+		if (pData)
+			delete pData;
 		GetListCtrl().SetItemData(index, reinterpret_cast<LPARAM>(inData));
+	}
 }
 
 int CListView2::GetSelection(bool bRestricted)

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
@@ -107,17 +108,15 @@ class PointsDataBase : public CListData
 {
 public:
 	PointsDataBase(CAgilityBookViewPoints* pView);
-	void AddRef();
-	void Release();
+	virtual ~PointsDataBase();
 
+	virtual PointsDataBase* Clone() const = 0;
 	virtual ARBString OnNeedText(size_t index) const = 0;
 	virtual bool HasDetails() const {return false;}
 	virtual void Details() const {}
 	virtual bool IsEqual(PointsDataBase const* inData) = 0;
 
 protected:
-	virtual ~PointsDataBase();
-	UINT m_RefCount;
 	CAgilityBookViewPoints* m_pView;
 };
 
@@ -134,6 +133,7 @@ public:
 			ARBDogPtr pDog);
 	~PointsDataDog();
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -157,6 +157,7 @@ public:
 			ARBConfigVenuePtr pVenue);
 	~PointsDataVenue();
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -181,6 +182,7 @@ public:
 			ARBDogTitlePtr pTitle);
 	~PointsDataTitle();
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -214,6 +216,7 @@ public:
 			ARBString const& inSpeed);
 	~PointsDataEvent();
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -250,6 +253,7 @@ public:
 			double inLifetime,
 			double inFiltered);
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -279,6 +283,7 @@ public:
 			double inLifetime,
 			double inFiltered);
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
@@ -302,6 +307,7 @@ public:
 			std::set<MultiQdata> const& inMQs);
 	~PointsDataMultiQs();
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -329,6 +335,7 @@ public:
 			int inPts);
 	~PointsDataSpeedPts();
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool IsEqual(PointsDataBase const* inData);
 
@@ -362,6 +369,7 @@ public:
 			ARBString const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -379,6 +387,7 @@ public:
 			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -396,6 +405,7 @@ public:
 			ARBString const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -414,6 +424,7 @@ public:
 			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
+	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;

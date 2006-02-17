@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added inForceOutput to GetString.
  * @li 2005-07-05 DRC Added a new formatting option.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-19 DRC Added Location/Club note information.
@@ -77,6 +78,7 @@ CDlgTrial::CDlgTrial(
 		ARBDogTrialPtr pTrial,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgTrial::IDD, pParent)
+	, m_ctrlLocation(false)
 	, m_ctrlClubs(true)
 	, m_pDoc(pDoc)
 	, m_pTrial(pTrial)
@@ -433,6 +435,6 @@ void CDlgTrial::OnOK()
 	m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pTrial->SetNote((LPCTSTR)m_Notes);
 	m_pTrial->SetVerified(m_Verified ? true : false);
-	m_Clubs.Clone(m_pTrial->GetClubs());
+	m_pTrial->GetClubs() = m_Clubs;
 	CDlgBaseDialog::OnOK();
 }

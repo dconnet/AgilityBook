@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
@@ -43,11 +44,11 @@ class CDlgConfigTitlePoints : public CDlgBaseDialog
 public:
 	CDlgConfigTitlePoints(
 			double inPoints,
-			short inFaults,
+			double inFaults,
 			BOOL bLifetime,
 			CWnd* pParent = NULL);
 	double GetPoints() const	{return m_Points;}
-	short GetFaults() const		{return m_Faults;}
+	double GetFaults() const	{return m_Faults;}
 	BOOL IsLifetime() const		{return m_LifeTime;}
 
 private:
@@ -55,7 +56,7 @@ private:
 	//{{AFX_DATA(CDlgConfigTitlePoints)
 	enum { IDD = IDD_CONFIG_TITLE_POINTS };
 	double	m_Points;
-	short	m_Faults;
+	double	m_Faults;
 	BOOL	m_LifeTime;
 	//}}AFX_DATA
 

@@ -33,9 +33,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-09-21 DRC Created
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -53,9 +55,9 @@ private:
 	//{{AFX_DATA(CDlgTraining)
 	enum { IDD = IDD_TRAINING };
 	CTime	m_date;
-	CComboBox	m_ctrlNames;
+	CComboBox2	m_ctrlNames;
 	CString	m_Name;
-	CComboBox	m_ctrlSubNames;
+	CComboBox2	m_ctrlSubNames;
 	CString	m_SubName;
 	CString	m_Notes;
 	//}}AFX_DATA

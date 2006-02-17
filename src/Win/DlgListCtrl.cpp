@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-12-24 DRC Adding a new calendar item didn't set the icon properly.
@@ -70,25 +71,16 @@ class CDlgListCtrlData : public CListData
 public:
 	CDlgListCtrlData(CListCtrl& list)
 		: m_List(list)
-		, m_RefCount(1)
 	{
 	}
-	void AddRef() {++m_RefCount;}
-	void Release()
-	{
-		--m_RefCount;
-		if (0 == m_RefCount)
-			delete this;
-	}
+	virtual ~CDlgListCtrlData() {}
 	virtual bool HasIcon() const				{return false;}
 	virtual ARBString OnNeedText(int iCol) = 0;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
 	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
 protected:
-	virtual ~CDlgListCtrlData() {}
 	CListCtrl& m_List;
-	UINT m_RefCount;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -567,8 +559,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
 			{
-				ARBCalendarPtr pCal = (*iter)->Clone();
-				CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, pCal);
+				CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, *iter);
 				items.push_back(pData);
 			}
 		}
@@ -595,8 +586,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunOtherPointsList::const_iterator iter = m_pRun->GetOtherPoints().begin(); iter != m_pRun->GetOtherPoints().end(); ++iter)
 			{
-				ARBDogRunOtherPointsPtr pOther = (*iter)->Clone();
-				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, *m_pConfig, m_pRun, pOther);
+				CDlgListCtrlDataOtherPoints* pData = new CDlgListCtrlDataOtherPoints(m_ctrlList, *m_pConfig, m_pRun, *iter);
 				items.push_back(pData);
 			}
 		}
@@ -611,8 +601,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunPartnerList::const_iterator iter = m_pRun->GetPartners().begin(); iter != m_pRun->GetPartners().end(); ++iter)
 			{
-				ARBDogRunPartnerPtr pPartner = (*iter)->Clone();
-				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, pPartner);
+				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, *iter);
 				items.push_back(pData);
 			}
 		}

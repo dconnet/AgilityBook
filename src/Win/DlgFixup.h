@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-11 DRC Fix runs when scoring methods change.
  * @li 2004-03-26 DRC Added code to migrate runs to the new table-in-run form.
  */

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-04-02 DRC Up the ref count to prevent problems. See comments below.
  * @li 2004-01-14 DRC Use complete title name instead of nice name. When

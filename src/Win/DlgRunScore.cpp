@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-11-20 DRC Allow 'E's on non-titling runs.
@@ -487,6 +488,7 @@ bool CDlgRunScore::GetEvent(ARBConfigEventPtr* outEvent) const
 
 bool CDlgRunScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 {
+	bool bFound = false;
 	if (outScoring)
 		outScoring->reset();
 	ARBString div, level;
@@ -504,15 +506,14 @@ bool CDlgRunScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 		m_ctrlLevels.GetLBText(index, str);
 		if (!str.IsEmpty())
 			level = (LPCTSTR)str;
-	}
-	bool bFound = false;
-	CDlgRunDataLevel* pLevel = GetLevelData(index);
-	ASSERT(pLevel);
-	ARBConfigEventPtr pEvent;
-	if (GetEvent(&pEvent))
-	{
-		if (0 < div.length() && 0 < level.length())
-			bFound = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate(), outScoring);
+		CDlgRunDataLevel* pLevel = GetLevelData(index);
+		ASSERT(pLevel);
+		ARBConfigEventPtr pEvent;
+		if (GetEvent(&pEvent))
+		{
+			if (0 < div.length() && 0 < level.length())
+				bFound = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate(), outScoring);
+		}
 	}
 	return bFound;
 }

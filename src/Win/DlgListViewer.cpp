@@ -30,13 +30,8 @@
  * @brief implementation of the CDlgListViewer class
  * @author David Connet
  *
- * In all the derived classes and the main dialog, we do not add references
- * onto the used objects. If we did, we'd have const issues! There is no need
- * to do so since this is a modal dialog. Since these things exist when the
- * dialog is launched, by definition they will exist during the lifetime of
- * this dialog.
- *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
@@ -67,26 +62,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-class CDlgListViewerData : public CListData
-{
-public:
-	CDlgListViewerData() : m_RefCount(1) {}
-	void AddRef() {++m_RefCount;}
-	void Release()
-	{
-		--m_RefCount;
-		if (0 == m_RefCount)
-			delete this;
-	}
-	virtual ARBString OnNeedText(int iCol) const = 0;
-	virtual int Compare(
-			CDlgListViewerData const* pRow2,
-			int inCol) const = 0;
-protected:
-	virtual ~CDlgListViewerData() {}
-	UINT m_RefCount;
-};
 
 // Run/MQ are shared in the DataExisting class, hence they need to use
 // the same column values.
@@ -119,21 +94,25 @@ protected:
 #define COL_ITEM_TYPE			0
 #define COL_ITEM_NAME			1
 #define COL_ITEM_COMMENT		2
-class CDlgListViewerDataColumns : public CDlgListViewerData
+class CDlgListViewerDataColumns
 {
 public:
 	CDlgListViewerDataColumns(size_t inInitSize = 0)
+		: m_RefCount(1)
 	{
 		if (0 < inInitSize)
 			m_Columns.reserve(inInitSize);
 	}
-	virtual ARBString OnNeedText(int iCol) const {return _T("");}
-	virtual int Compare(
-			CDlgListViewerData const* pRow2,
-			int inCol) const
+	void AddRef()
 	{
-		return 0;
+		++m_RefCount;
 	}
+	void Release()
+	{
+		if (--m_RefCount == 0)
+			delete this;
+	}
+
 	bool InsertColumn(
 			CListCtrl2& inList,
 			int inIndex,
@@ -168,8 +147,25 @@ public:
 		return -1;
 	}
 	int NumColumns() const	{return static_cast<int>(m_Columns.size());}
+
 private:
+	~CDlgListViewerDataColumns() {}
 	std::vector<int> m_Columns;
+	UINT m_RefCount;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgListViewerData : public CListData
+{
+public:
+	CDlgListViewerData() {}
+	virtual ~CDlgListViewerData() {}
+
+	virtual ARBString OnNeedText(int iCol) const = 0;
+	virtual int Compare(
+			CDlgListViewerData const* pRow2,
+			int inCol) const = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "NoteButton.h"
 #include "RichEditCtrl2.h"
@@ -58,13 +60,13 @@ private:
 	CTime	m_dateEnd;
 	BOOL	m_bTentative;
 	int		m_Entered;
-	CComboBox	m_ctrlLocation;
+	CComboBox2	m_ctrlLocation;
 	CString	m_Location;
 	CNoteButton	m_ctrlLocationNotes;
 	CRichEditCtrl2	m_ctrlLocationInfo;
-	CComboBox	m_ctrlVenue;
+	CComboBox2	m_ctrlVenue;
 	CString	m_Venue;
-	CComboBox	m_ctrlClub;
+	CComboBox2	m_ctrlClub;
 	CString	m_Club;
 	CNoteButton	m_ctrlClubNotes;
 	CRichEditCtrl2	m_ctrlClubInfo;

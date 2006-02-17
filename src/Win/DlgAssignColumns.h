@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-08-11 DRC Added verified column to trial in tree.
  * @li 2003-12-30 DRC Implemented customized text in tree.

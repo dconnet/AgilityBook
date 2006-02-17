@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
  * @li 2004-03-30 DRC Created
  */

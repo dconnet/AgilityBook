@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-31 DRC Started adding auto-lifetime point accumulation.
@@ -52,13 +53,13 @@ class ARBConfigTitlePoints : public ARBBase
 {
 protected:
 	ARBConfigTitlePoints();
-	ARBConfigTitlePoints(double inPoints, short inFaults);
+	ARBConfigTitlePoints(double inPoints, double inFaults);
 	ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs);
 
 public:
 	~ARBConfigTitlePoints();
 	static ARBConfigTitlePointsPtr New();
-	static ARBConfigTitlePointsPtr New(double inPoints, short inFaults);
+	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
 	ARBConfigTitlePointsPtr Clone() const;
 
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
@@ -107,15 +108,15 @@ public:
 	 */
 	double GetPoints() const;
 	void SetPoints(double inPoints);
-	short GetFaults() const;
+	double GetFaults() const;
 	/**
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigTitlePointsList::sort.
 	 */
-	void SetFaults(short inFaults);
+	void SetFaults(double inFaults);
 
 private:
 	double m_Points;
-	short m_Faults;
+	double m_Faults;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -161,7 +162,7 @@ public:
 	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	bool FindTitlePoints(
-			short inFaults,
+			double inFaults,
 			ARBConfigTitlePointsPtr* outPoints = NULL) const;
 
 	/**
@@ -173,7 +174,7 @@ public:
 	 */
 	bool AddTitlePoints(
 			double inPoints,
-			short inFaults,
+			double inFaults,
 			ARBConfigTitlePointsPtr* outPoints = NULL);
 
 	/**
@@ -181,5 +182,5 @@ public:
 	 * @param inFaults Delete object with the given faults.
 	 * @return Whether object was deleted.
 	 */
-	bool DeleteTitlePoints(short inFaults);
+	bool DeleteTitlePoints(double inFaults);
 };

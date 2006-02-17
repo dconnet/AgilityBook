@@ -30,13 +30,8 @@
  * @brief Data classes behind the points view items.
  * @author David Connet
  *
- * Note: Not all ptrs are AddRef'd - I had some problems in freeing all the
- * memory when I did. At a minimum, anything referenced in the IsEqual method
- * MUST be AddRef'd - otherwise when we try to re-select the last selected
- * item in the points view and we are opening a new file, we would attempt
- * to follow a deleted pointer.
- *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2005-05-04 DRC Added subtotaling by division to lifetime points.
@@ -122,24 +117,12 @@ OtherPtInfo::~OtherPtInfo()
 /////////////////////////////////////////////////////////////////////////////
 
 PointsDataBase::PointsDataBase(CAgilityBookViewPoints* pView)
-	: m_RefCount(1)
-	, m_pView(pView)
+	: m_pView(pView)
 {
 }
 
 PointsDataBase::~PointsDataBase()
 {
-}
-
-void PointsDataBase::AddRef()
-{
-	++m_RefCount;
-}
-
-void PointsDataBase::Release()
-{
-	if (0 == --m_RefCount)
-		delete this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -154,6 +137,11 @@ PointsDataDog::PointsDataDog(
 
 PointsDataDog::~PointsDataDog()
 {
+}
+
+PointsDataBase* PointsDataDog::Clone() const
+{
+	return new PointsDataDog(*this);
 }
 
 ARBString PointsDataDog::OnNeedText(size_t index) const
@@ -216,6 +204,11 @@ PointsDataVenue::PointsDataVenue(
 
 PointsDataVenue::~PointsDataVenue()
 {
+}
+
+PointsDataBase* PointsDataVenue::Clone() const
+{
+	return new PointsDataVenue(*this);
 }
 
 ARBString PointsDataVenue::OnNeedText(size_t index) const
@@ -290,6 +283,11 @@ PointsDataTitle::PointsDataTitle(
 
 PointsDataTitle::~PointsDataTitle()
 {
+}
+
+PointsDataBase* PointsDataTitle::Clone() const
+{
+	return new PointsDataTitle(*this);
 }
 
 ARBString PointsDataTitle::OnNeedText(size_t index) const
@@ -368,6 +366,11 @@ PointsDataEvent::PointsDataEvent(
 
 PointsDataEvent::~PointsDataEvent()
 {
+}
+
+PointsDataBase* PointsDataEvent::Clone() const
+{
+	return new PointsDataEvent(*this);
 }
 
 ARBString PointsDataEvent::OnNeedText(size_t index) const
@@ -454,6 +457,11 @@ void PointsDataLifetime::AddLifetimeInfo(
 	m_Filtered += inFiltered;
 }
 
+PointsDataBase* PointsDataLifetime::Clone() const
+{
+	return new PointsDataLifetime(*this);
+}
+
 ARBString PointsDataLifetime::OnNeedText(size_t index) const
 {
 	ARBString str;
@@ -523,6 +531,11 @@ void PointsDataLifetimeDiv::AddLifetimeInfo(
 	}
 }
 
+PointsDataBase* PointsDataLifetimeDiv::Clone() const
+{
+	return new PointsDataLifetimeDiv(*this);
+}
+
 ARBString PointsDataLifetimeDiv::OnNeedText(size_t index) const
 {
 	ARBString str;
@@ -577,6 +590,11 @@ PointsDataMultiQs::~PointsDataMultiQs()
 {
 }
 
+PointsDataBase* PointsDataMultiQs::Clone() const
+{
+	return new PointsDataMultiQs(*this);
+}
+
 ARBString PointsDataMultiQs::OnNeedText(size_t index) const
 {
 	ARBString str;
@@ -620,6 +638,11 @@ PointsDataSpeedPts::PointsDataSpeedPts(
 
 PointsDataSpeedPts::~PointsDataSpeedPts()
 {
+}
+
+PointsDataBase* PointsDataSpeedPts::Clone() const
+{
+	return new PointsDataSpeedPts(*this);
 }
 
 ARBString PointsDataSpeedPts::OnNeedText(size_t index) const
@@ -671,6 +694,11 @@ PointsDataOtherPointsTallyAll::PointsDataOtherPointsTallyAll(
 {
 }
 
+PointsDataBase* PointsDataOtherPointsTallyAll::Clone() const
+{
+	return new PointsDataOtherPointsTallyAll(*this);
+}
+
 ARBString PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 {
 	ARBString str;
@@ -714,6 +742,11 @@ PointsDataOtherPointsTallyAllByEvent::PointsDataOtherPointsTallyAllByEvent(
 	: PointsDataOtherPoints(pView, inRunList)
 	, m_Event(inEvent)
 {
+}
+
+PointsDataBase* PointsDataOtherPointsTallyAllByEvent::Clone() const
+{
+	return new PointsDataOtherPointsTallyAllByEvent(*this);
 }
 
 ARBString PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
@@ -761,6 +794,11 @@ PointsDataOtherPointsTallyLevel::PointsDataOtherPointsTallyLevel(
 {
 }
 
+PointsDataBase* PointsDataOtherPointsTallyLevel::Clone() const
+{
+	return new PointsDataOtherPointsTallyLevel(*this);
+}
+
 ARBString PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 {
 	ARBString str;
@@ -806,6 +844,11 @@ PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(
 	, m_Level(inLevel)
 	, m_Event(inEvent)
 {
+}
+
+PointsDataBase* PointsDataOtherPointsTallyLevelByEvent::Clone() const
+{
+	return new PointsDataOtherPointsTallyLevelByEvent(*this);
 }
 
 ARBString PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const

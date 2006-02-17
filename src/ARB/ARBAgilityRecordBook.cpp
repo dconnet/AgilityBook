@@ -37,7 +37,9 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2006-02-08 DRC File version 12.1. Added 'RenameEvent'.
+ * @li 2006-02-16 DRC File version 12.1. Added 'RenameEvent'.
+ *                    Allow fractional faults in title points.
+ *                    Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC File version 12.0. Moved 'Titles' to 'Venue'.
  * @li 2005-10-14 DRC File version 11.1. Added 'Prefix' to 'Titles'.
  * @li 2005-07-15 DRC File version 11.0. Changed how Double-Qs are done.
@@ -163,13 +165,13 @@ ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipp
 	buffer << UPDATE_FORMAT_RULES_DEF(nAdded, nDeleted, nChanged, nSkipped) << std::endl;
 	return buffer.str();
 }
-ARBString TITLE_POINTS_NAME_FORMAT(double points, short faults)
+ARBString TITLE_POINTS_NAME_FORMAT(double points, double faults)
 {
 	ARBostringstream buffer;
 	buffer << TITLE_POINTS_NAME_FORMAT_DEF(points, faults);
 	return buffer.str();
 }
-ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults)
+ARBString LIFETIME_POINTS_NAME_FORMAT(double points, double faults)
 {
 	ARBostringstream buffer;
 	buffer << LIFETIME_POINTS_NAME_FORMAT_DEF(points, faults);
