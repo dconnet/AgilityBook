@@ -33,8 +33,10 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -51,9 +53,9 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgClub)
 	enum { IDD = IDD_CLUB };
-	CComboBox	m_ctrlClubs;
+	CComboBox2	m_ctrlClubs;
 	CString	m_Club;
-	CComboBox	m_ctrlVenues;
+	CComboBox2	m_ctrlVenues;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubList& m_Clubs;

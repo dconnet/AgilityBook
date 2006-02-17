@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-10-31 DRC Time+Fault runs didn't compute titling points right.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.

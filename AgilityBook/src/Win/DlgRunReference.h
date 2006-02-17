@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.

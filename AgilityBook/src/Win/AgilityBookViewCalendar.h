@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2003-11-21 DRC Enabled copy and select all.
  * @li 2003-10-29 DRC Support the mouse wheel for scrolling.

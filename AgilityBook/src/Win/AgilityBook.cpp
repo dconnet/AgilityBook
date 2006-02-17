@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-02-10 DRC There was a problem initializing RICHED*.DLL on Win98.
  * @li 2004-07-20 DRC Changed the updating to auto-update configurations also.

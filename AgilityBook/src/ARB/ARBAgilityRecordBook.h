@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent'.
  * @li 2005-12-04 DRC Added 'bonusPts' to 'Scoring','Run'(scoring)
  * @li 2005-10-26 DRC Added 'Prefix' to 'Titles', 'update' to 'Configuration'.
@@ -334,10 +335,10 @@ extern ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int
 	_T(" rules: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
 
 // Used in ARBConfigTitlePoints.cpp
-extern ARBString TITLE_POINTS_NAME_FORMAT(double points, short faults);
+extern ARBString TITLE_POINTS_NAME_FORMAT(double points, double faults);
 #define TITLE_POINTS_NAME_FORMAT_DEF(points, faults) \
 	points << _T(" points with ") << faults << _T(" faults")
-extern ARBString LIFETIME_POINTS_NAME_FORMAT(double points, short faults);
+extern ARBString LIFETIME_POINTS_NAME_FORMAT(double points, double faults);
 #define LIFETIME_POINTS_NAME_FORMAT_DEF(points, faults) \
 	points << _T(" lifetime points with ") << faults << _T(" faults")
 

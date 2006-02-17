@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Added 'Open' button.
  * @li 2004-03-31 DRC Created.
  */

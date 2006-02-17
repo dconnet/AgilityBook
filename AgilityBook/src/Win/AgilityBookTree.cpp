@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-22 DRC Support pasting a dog when no dogs exist in file.
  * @li 2005-08-31 DRC The wrong item in the tree was selected after reordering.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.

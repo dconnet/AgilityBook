@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added vCalendar support, finished iCalendar.
  * @li 2005-07-05 DRC Added iCalendar support.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.

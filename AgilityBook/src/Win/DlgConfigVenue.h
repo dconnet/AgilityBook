@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-01-24 DRC Created
  */
 
@@ -55,8 +56,8 @@ class CDlgConfigVenue : public CDlgBaseDialog
 public:
 	CDlgConfigVenue(
 			CAgilityBookDoc* pDoc,
-			ARBAgilityRecordBook& book,
-			ARBConfig& config,
+			ARBAgilityRecordBook const& book,
+			ARBConfig const& config,
 			ARBConfigVenuePtr pVenue,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigVenue();
@@ -83,8 +84,9 @@ private:
 	CStatic	m_ctrlComments;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBAgilityRecordBook& m_Book;
-	ARBConfig& m_Config;
+	ARBAgilityRecordBook const& m_Book;
+	ARBConfig const& m_Config;
+	ARBConfigVenuePtr m_pVenueOrig;
 	ARBConfigVenuePtr m_pVenue;
 	std::vector<CDlgFixup*> m_DlgFixup;
 	typedef enum

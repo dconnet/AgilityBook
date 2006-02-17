@@ -33,9 +33,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-29 DRC Added Note to regnum.
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 
 class CDlgRegNum : public CDlgBaseDialog
@@ -51,7 +53,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgRegNum)
 	enum { IDD = IDD_REG_NUM };
-	CComboBox	m_ctrlVenues;
+	CComboBox2	m_ctrlVenues;
 	CString	m_RegNum;
 	CString	m_Height;
 	BOOL	m_bReceived;

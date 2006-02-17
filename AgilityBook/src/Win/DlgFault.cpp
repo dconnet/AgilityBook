@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
@@ -56,6 +57,7 @@ CDlgFault::CDlgFault(
 		LPCTSTR pFault,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFault::IDD, pParent)
+	, m_ctrlFaults(false)
 	, m_setFaults(faults)
 {
 	//{{AFX_DATA_INIT(CDlgFault)

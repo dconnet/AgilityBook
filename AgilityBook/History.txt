@@ -1,9 +1,12 @@
-2/8/2006: v1.7.2.12 <development>
-- Bumped to Configuration v12:
+2/16/2006: v1.7.2.12 <development>
+- Bumped file version to 12.1, Configuration v12:
+  - Allow fractional faults in title points.
   - Updated NADAC Gamblers to end on 1/1/06 instead of 12/31/05.
   - NADAC 'Wild Card' changed names to 'Chances'.
+  - DOCNA TimeGamble changed scoring (no 1/2Qs)
 - New features / Enhancements:
   - Change install program to include (and distribute) WinInst 2.0 prerequisite.
+  - Reworked internal memory usage for consistency (smart pointers).
 
 1/15/2006: v1.7.1.12
 - Bumped to Configuration v11:

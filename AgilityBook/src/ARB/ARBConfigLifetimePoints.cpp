@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Added as part of file version 10.
  */
 
@@ -51,13 +52,13 @@ static char THIS_FILE[] = __FILE__;
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints()
 	: m_Points(0.0)
-	, m_Faults(0)
+	, m_Faults(0.0)
 {
 }
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints(
 		double inPoints,
-		short inFaults)
+		double inFaults)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
 {
@@ -80,7 +81,9 @@ ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
 }
 
 //static
-ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(double inPoints, short inFaults)
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
+		double inPoints,
+		double inFaults)
 {
 	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
 }
@@ -143,8 +146,8 @@ bool ARBConfigLifetimePoints::Load(
 bool ARBConfigLifetimePoints::Save(Element& ioTree) const
 {
 	Element& life = ioTree.AddElement(TREE_LIFETIME_POINTS);
-	life.AddAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points);
-	life.AddAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults);
+	life.AddAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points, 0);
+	life.AddAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults, 0);
 	return true;
 }
 
@@ -158,12 +161,12 @@ void ARBConfigLifetimePoints::SetPoints(double inPoints)
 	m_Points = inPoints;
 }
 
-short ARBConfigLifetimePoints::GetFaults() const
+double ARBConfigLifetimePoints::GetFaults() const
 {
 	return m_Faults;
 }
 
-void ARBConfigLifetimePoints::SetFaults(short inFaults)
+void ARBConfigLifetimePoints::SetFaults(double inFaults)
 {
 	m_Faults = inFaults;
 }
@@ -211,14 +214,14 @@ double ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
 }
 
 bool ARBConfigLifetimePointsList::FindLifetimePoints(
-		short inFaults,
+		double inFaults,
 		ARBConfigLifetimePointsPtr* outPoints) const
 {
 	if (outPoints)
 		outPoints->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetFaults() == inFaults)
+		if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
 		{
 			if (outPoints)
 				*outPoints = *iter;
@@ -230,7 +233,7 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		double inPoints,
-		short inFaults,
+		double inFaults,
 		ARBConfigLifetimePointsPtr* outPoints)
 {
 	if (outPoints)
@@ -245,11 +248,11 @@ bool ARBConfigLifetimePointsList::AddLifetimePoints(
 	return true;
 }
 
-bool ARBConfigLifetimePointsList::DeleteLifetimePoints(short inFaults)
+bool ARBConfigLifetimePointsList::DeleteLifetimePoints(double inFaults)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetFaults() == inFaults)
+		if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
 		{
 			erase(iter);
 			return true;

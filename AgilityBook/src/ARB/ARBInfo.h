@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-11-18 DRC Added Club/Location info.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-07 DRC Created

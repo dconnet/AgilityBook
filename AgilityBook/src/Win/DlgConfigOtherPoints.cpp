@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-22 DRC Fixed CRNL sequences.
  */
 
@@ -70,6 +71,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		ARBConfigOtherPointsPtr pOther,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigOtherPoints::IDD, pParent)
+	, m_ctrlTally(false)
 	, m_Config(config)
 	, m_pOther(pOther)
 {

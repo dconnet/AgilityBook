@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-02-18 DRC Remember selected dogs.
  */
 
@@ -59,6 +60,7 @@ CDlgSelectDog::CDlgSelectDog(
 		std::vector<ARBDogPtr>& dogs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgSelectDog::IDD, pParent)
+	, m_ctrlList(true)
 	, m_pDoc(pDoc)
 	, m_Dogs(dogs)
 {

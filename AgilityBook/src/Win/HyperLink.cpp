@@ -50,6 +50,7 @@
  * the tooltip fixed.
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-04-01 DRC Made hyperlinks keyboard-capable.
  * @li 2004-03-05 DRC Made goto-url functionality visible.
  * @li 2003-08-24 DRC Removed 4311 warning in VC7 with HINSTANCE.

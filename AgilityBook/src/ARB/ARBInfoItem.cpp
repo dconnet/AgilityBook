@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-11 DRC Merged separate club/judge/location classes.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.

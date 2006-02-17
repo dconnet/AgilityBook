@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-06-29 DRC Added Note to regnum.
  */
@@ -58,6 +59,7 @@ CDlgRegNum::CDlgRegNum(
 		ARBDogRegNumPtr pRegNum,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgRegNum::IDD, pParent)
+	, m_ctrlVenues(false)
 	, m_Config(config)
 	, m_RegNums(regnums)
 	, m_pRegNum(pRegNum)

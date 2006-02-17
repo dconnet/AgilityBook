@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
@@ -49,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		double inPoints,
-		short inFaults,
+		double inFaults,
 		BOOL bLifetime,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)

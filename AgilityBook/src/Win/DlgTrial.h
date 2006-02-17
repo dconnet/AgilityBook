@@ -33,11 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2004-12-19 DRC Added Location/Club note information.
  */
 
 #include "ARBDogClub.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include "ListCtrl.h"
 #include "NoteButton.h"
@@ -58,7 +60,7 @@ private:
 	//{{AFX_DATA(CDlgTrial)
 	enum { IDD = IDD_TRIAL };
 	CString	m_Location;
-	CComboBox	m_ctrlLocation;
+	CComboBox2	m_ctrlLocation;
 	BOOL	m_Verified;
 	CString	m_Notes;
 	CNoteButton	m_ctrlLocationNotes;

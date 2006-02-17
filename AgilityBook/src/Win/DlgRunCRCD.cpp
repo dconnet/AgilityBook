@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-05-04 DRC Added ability to suppress metafile.
  * @li 2004-04-27 DRC Added some error recovery.
  */

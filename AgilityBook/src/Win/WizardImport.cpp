@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-08 DRC Added validation during import to make sure names are
  *                    correct.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -72,6 +73,7 @@ CWizardImport::CWizardImport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CWizardImport::IDD)
+	, m_ctrlDateFormat(false)
 	, m_ctrlPreview(false)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)

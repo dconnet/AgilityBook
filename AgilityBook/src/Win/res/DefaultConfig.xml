@@ -1578,12 +1578,9 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Time Gamble">
-				<Desc>Strategic Time: Opening: 30 seconds, 20 points
- t &lt;= 2.0 == Q
- 2 &lt; t &lt;= 3.0 == 1/2 Q</Desc>
-				<Scoring Division="*" Level="*" cleanQ="y" type="OCScoreThenTime" underTF="y">
-					<TitlePoints Faults="2" Points="1"/>
-					<TitlePoints Faults="3" Points="0.50"/>
+				<Desc>Strategic Time: Opening: 30 seconds, 20 points</Desc>
+				<Scoring Division="*" Level="*" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+					<TitlePoints Faults="2.5" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Snakes N Ladders">

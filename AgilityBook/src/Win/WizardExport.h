@@ -33,12 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-10 DRC Place quotes are field on output as needed.
  * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-10 DRC Created
  */
 
 #include "AgilityBookOptions.h"
+#include "ComboBox.h"
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 class CAgilityBookDoc;
@@ -62,7 +64,7 @@ private:
 	int	m_Delim;
 	CString	m_Delimiter;
 	CButton	m_ctrlAssign;
-	CComboBox	m_ctrlDateFormat;
+	CComboBox2	m_ctrlDateFormat;
 	CListCtrl2	m_ctrlPreview;
 	//}}AFX_DATA
 	CWizard* m_pSheet;

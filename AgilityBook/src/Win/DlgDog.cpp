@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-17 DRC Points view didn't update 'View Hidden' after canceling.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -126,9 +127,9 @@ void CDlgDog::OnOK()
 	m_pDog->SetRegisteredName((LPCTSTR)(m_pageProp->m_RegName));
 	m_pageProp->m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pDog->SetNote((LPCTSTR)(m_pageProp->m_Notes));
-	m_pageTitles->m_Titles.Clone(m_pDog->GetTitles());
-	m_pageRegNums->m_RegNums.Clone(m_pDog->GetRegNums());
-	m_pagePoints->m_ExistingPoints.Clone(m_pDog->GetExistingPoints());
+	m_pDog->GetTitles() = m_pageTitles->m_Titles;
+	m_pDog->GetRegNums() = m_pageRegNums->m_RegNums;
+	m_pDog->GetExistingPoints() = m_pagePoints->m_ExistingPoints;
 
 	m_pDoc->ResetVisibility();
 

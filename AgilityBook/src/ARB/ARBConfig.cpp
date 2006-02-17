@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-12-18 DRC Don't set version number lower when merging.

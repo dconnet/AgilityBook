@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-06-02 DRC OnNeedText was quietly referencing m_Columns[-1]. Oops.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
@@ -95,43 +96,26 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun)
-		: m_RefCount(1)
-		, m_pView(pView)
+		: m_pView(pView)
 		, m_pDog(pDog)
 		, m_pTrial(pTrial)
 		, m_pRun(pRun)
 	{
 	}
-
-	void AddRef();
-	void Release();
+	~CAgilityBookViewRunsData()
+	{
+	}
 
 	ARBDogRunPtr GetRun()			{return m_pRun;}
 	ARBString OnNeedText(int iCol) const;
 	int OnNeedIcon() const;
 
 protected:
-	~CAgilityBookViewRunsData()
-	{
-	}
-	UINT m_RefCount;
 	CAgilityBookViewRuns* m_pView;
 	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
 };
-
-void CAgilityBookViewRunsData::AddRef()
-{
-	++m_RefCount;
-}
-
-void CAgilityBookViewRunsData::Release()
-{
-	--m_RefCount;
-	if (0 == m_RefCount)
-		delete this;
-}
 
 ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 {

@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include <vector>
 #include "DlgBaseDialog.h"
+#include "ListBox.h"
 class CAgilityBookDoc;
 
 #if _MSC_VER >= 1300
@@ -58,7 +60,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgSelectDog)
 	enum { IDD = IDD_DOG_PICKER };
-	CCheckListBox	m_ctrlList;
+	CCheckListBox2	m_ctrlList;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	std::vector<ARBDogPtr>& m_Dogs;

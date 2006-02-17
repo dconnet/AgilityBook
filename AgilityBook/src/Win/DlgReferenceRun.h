@@ -33,10 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include <set>
 #include "ARBTypes.h"
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
@@ -56,14 +58,14 @@ private:
 	//{{AFX_DATA(CDlgReferenceRun)
 	enum { IDD = IDD_REF_RUN };
 	short	m_Place;
-	CComboBox	m_ctrlQ;
+	CComboBox2	m_ctrlQ;
 	CString	m_Points;
 	double	m_Time;
-	CComboBox	m_ctrlHeight;
+	CComboBox2	m_ctrlHeight;
 	CString	m_Height;
-	CComboBox	m_ctrlName;
+	CComboBox2	m_ctrlName;
 	CString	m_Name;
-	CComboBox	m_ctrlBreed;
+	CComboBox2	m_ctrlBreed;
 	CString	m_Breed;
 	CString	m_Notes;
 	//}}AFX_DATA

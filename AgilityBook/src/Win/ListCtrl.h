@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
  * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
  * @li 2004-09-09 DRC Added tooltips to header control.

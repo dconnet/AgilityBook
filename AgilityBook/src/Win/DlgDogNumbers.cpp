@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.

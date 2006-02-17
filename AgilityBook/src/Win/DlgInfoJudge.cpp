@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC SelectString doesn't work in ownerdraw combo. Changed
  *                    ctor interface for more versatility.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -98,11 +99,12 @@ CDlgInfoJudge::CDlgInfoJudge(
 		ARBString const& inSelect,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
+	, m_ctrlNames(false)
 	, m_pDoc(pDoc)
 	, m_Type(inType)
 	, m_Select(inSelect)
-	, m_InfoOrig(_T("")) // We don't care about setting the infoname here
-	, m_Info(_T("")) // We don't care about setting the infoname here
+	, m_InfoOrig(m_pDoc->GetInfo().GetInfo(m_Type))
+	, m_Info(m_pDoc->GetInfo().GetInfo(m_Type).GetItemName())
 	, m_nAdded(0)
 {
 	switch (m_Type)
@@ -117,7 +119,6 @@ CDlgInfoJudge::CDlgInfoJudge(
 		m_pDoc->GetAllTrialLocations(m_NamesInUse, false);
 		break;
 	}
-	m_pDoc->GetInfo().GetInfo(m_Type).Clone(m_InfoOrig);
 	m_InfoOrig.Clone(m_Info);
 }
 
@@ -395,7 +396,7 @@ void CDlgInfoJudge::OnOK()
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
 	{
-		m_Info.Clone(m_pDoc->GetInfo().GetInfo(m_Type));
+		m_pDoc->GetInfo().GetInfo(m_Type) = m_Info;
 		m_pDoc->SetModifiedFlag();
 	}
 	CDlgBaseDialog::OnOK();
