@@ -58,13 +58,22 @@ protected:
 
 public:
 	~ARBConfigTitle();
-	static ARBConfigTitlePtr New();
-	ARBConfigTitlePtr Clone() const;
+	static ARBConfigTitlePtr New()
+	{
+		return ARBConfigTitlePtr(new ARBConfigTitle());
+	}
+	ARBConfigTitlePtr Clone() const
+	{
+		return ARBConfigTitlePtr(new ARBConfigTitle(*this));
+	}
 
 	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
 
 	bool operator==(ARBConfigTitle const& rhs) const;
-	bool operator!=(ARBConfigTitle const& rhs) const;
+	bool operator!=(ARBConfigTitle const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -75,14 +84,20 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return GetNiceName();
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a title configuration.
@@ -109,13 +124,28 @@ public:
 	 * Determine if this method is valid on the given date.
 	 * @param inDate Date to check, if not valid, this method is valid.
 	 */
-	bool IsValidOn(ARBDate inDate) const;
+	bool IsValidOn(ARBDate inDate) const
+	{
+		if (inDate.IsValid()
+		&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
+		|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
+		{
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
-	ARBString const& GetNiceName() const;
+	ARBString const& GetNiceName() const
+	{
+		if (0 == m_LongName.length())
+			return m_Name;
+		else
+			return m_LongName;
+	}
 
 	/**
 	 * Get the complete name (name + nicename).
@@ -132,20 +162,62 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetLongName() const;
-	void SetLongName(ARBString const& inName);
-	short GetMultiple() const;
-	void SetMultiple(short inMultiple);
-	bool GetPrefix() const;
-	void SetPrefix(bool inPrefix);
-	ARBDate const& GetValidFrom() const;
-	void SetValidFrom(ARBDate const& inDate);
-	ARBDate const& GetValidTo() const;
-	void SetValidTo(ARBDate const& inDate);
-	ARBString const& GetDescription() const;
-	void SetDescription(ARBString const& inDesc);
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetLongName() const
+	{
+		return m_LongName;
+	}
+	void SetLongName(ARBString const& inName)
+	{
+		m_LongName = inName;
+	}
+	short GetMultiple() const
+	{
+		return m_Multiple;
+	}
+	void SetMultiple(short inMultiple)
+	{
+		m_Multiple = inMultiple;
+	}
+	bool GetPrefix() const
+	{
+		return m_Prefix;
+	}
+	void SetPrefix(bool inPrefix)
+	{
+		m_Prefix = inPrefix;
+	}
+	ARBDate const& GetValidFrom() const
+	{
+		return m_ValidFrom;
+	}
+	void SetValidFrom(ARBDate const& inDate)
+	{
+		m_ValidFrom = inDate;
+	}
+	ARBDate const& GetValidTo() const
+	{
+		return m_ValidTo;
+	}
+	void SetValidTo(ARBDate const& inDate)
+	{
+		m_ValidTo = inDate;
+	}
+	ARBString const& GetDescription() const
+	{
+		return m_Desc;
+	}
+	void SetDescription(ARBString const& inDesc)
+	{
+		m_Desc = inDesc;
+	}
 
 private:
 	ARBString m_Name;

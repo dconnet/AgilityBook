@@ -75,17 +75,6 @@ ARBConfigDivision::~ARBConfigDivision()
 {
 }
 
-//static
-ARBConfigDivisionPtr ARBConfigDivision::New()
-{
-	return ARBConfigDivisionPtr(new ARBConfigDivision());
-}
-
-ARBConfigDivisionPtr ARBConfigDivision::Clone() const
-{
-	return ARBConfigDivisionPtr(new ARBConfigDivision(*this));
-}
-
 ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 {
 	if (this != &rhs)
@@ -102,26 +91,10 @@ bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 		&& m_Levels == rhs.m_Levels;
 }
 
-bool ARBConfigDivision::operator!=(ARBConfigDivision const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 void ARBConfigDivision::clear()
 {
 	m_Name.erase();
 	m_Levels.clear();
-}
-
-ARBString ARBConfigDivision::GetGenericName() const
-{
-	return m_Name;
-}
-
-size_t ARBConfigDivision::GetSearchStrings(std::set<ARBString>& ioStrings) const
-{
-	size_t nItems = 0;
-	return nItems;
 }
 
 bool ARBConfigDivision::Load(
@@ -224,26 +197,6 @@ bool ARBConfigDivision::Update(
 		ioInfo += indentName + GetName() + _T("\n") + info;
 	}
 	return bChanges;
-}
-
-ARBString const& ARBConfigDivision::GetName() const
-{
-	return m_Name;
-}
-
-void ARBConfigDivision::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBConfigLevelList const& ARBConfigDivision::GetLevels() const
-{
-	return m_Levels;
-}
-
-ARBConfigLevelList& ARBConfigDivision::GetLevels()
-{
-	return m_Levels;
 }
 
 /////////////////////////////////////////////////////////////////////////////

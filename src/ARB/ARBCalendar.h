@@ -107,17 +107,38 @@ protected:
 
 public:
 	~ARBCalendar();
-	static ARBCalendarPtr New();
-	ARBCalendarPtr Clone() const;
+	static ARBCalendarPtr New()
+	{
+		return ARBCalendarPtr(new ARBCalendar());
+	}
+	ARBCalendarPtr Clone() const
+	{
+		return ARBCalendarPtr(new ARBCalendar(*this));
+	}
 
 	ARBCalendar& operator=(ARBCalendar const& rhs);
 
 	bool operator==(ARBCalendar const& rhs) const;
-	bool operator!=(ARBCalendar const& rhs) const;
-	bool operator<(ARBCalendar const& rhs) const;
-	bool operator>(ARBCalendar const& rhs) const;
-	bool operator<(ARBDate const& rhs) const;
-	bool operator>(ARBDate const& rhs) const;
+	bool operator!=(ARBCalendar const& rhs) const
+	{
+		return !operator==(rhs);
+	}
+	bool operator<(ARBCalendar const& rhs) const
+	{
+		return m_DateStart < rhs.GetStartDate();
+	}
+	bool operator>(ARBCalendar const& rhs) const
+	{
+		return m_DateEnd > rhs.GetEndDate();
+	}
+	bool operator<(ARBDate const& rhs) const
+	{
+		return m_DateStart < rhs;
+	}
+	bool operator>(ARBDate const& rhs) const
+	{
+		return m_DateEnd > rhs;
+	}
 
 	/**
 	 * Get a UID. Used when generating iCalendar entries.
@@ -129,7 +150,10 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Venue + _T(" ") + m_Club + _T(" ") + m_Location;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -175,7 +199,10 @@ public:
 	 * @retval true inDate is before both entry start and end dates.
 	 * @retval false inDate is after one or both the start and end dates.
 	 */
-	bool IsBefore(ARBDate const& inDate) const;
+	bool IsBefore(ARBDate const& inDate) const
+	{
+		return (m_DateStart < inDate && m_DateEnd < inDate);
+	}
 
 	/**
 	 * Is the given date in the range of the calendar entry?
@@ -183,7 +210,10 @@ public:
 	 * @retval true inDate is on one of the dates in the entry range.
 	 * @retval false inDate is outside the calendar entry range.
 	 */
-	bool InRange(ARBDate const& inDate) const;
+	bool InRange(ARBDate const& inDate) const
+	{
+		return inDate.isBetween(m_DateStart, m_DateEnd);
+	}
 
 	/**
 	 * Does the range of inDate1 and inDate2 overlap this calendar entry?
@@ -194,31 +224,98 @@ public:
 	 */
 	bool IsRangeOverlapped(
 			ARBDate const& inDate1,
-			ARBDate const& inDate2) const;
+			ARBDate const& inDate2) const
+	{
+		if (m_DateStart.isBetween(inDate1, inDate2)
+		|| m_DateEnd.isBetween(inDate1, inDate2))
+			return true;
+		else
+			return false;
+	}
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetStartDate() const;
-	void SetStartDate(ARBDate const& inDate);
-	ARBDate const& GetEndDate() const;
-	void SetEndDate(ARBDate const& inDate);
-	ARBDate const& GetOpeningDate() const;
-	void SetOpeningDate(ARBDate const& inDate);
-	ARBDate const& GetClosingDate() const;
-	void SetClosingDate(ARBDate const& inDate);
-	bool IsTentative() const;
-	void SetIsTentative(bool inTentative);
-	ARBString const& GetLocation() const;
-	void SetLocation(ARBString const& inLocation);
-	ARBString const& GetClub() const;
-	void SetClub(ARBString const& inClub);
-	ARBString const& GetVenue() const;
-	void SetVenue(ARBString const& inVenue);
-	eEntry GetEntered() const;
-	void SetEntered(eEntry inEnter);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
+	ARBDate const& GetStartDate() const
+	{
+		return m_DateStart;
+	}
+	void SetStartDate(ARBDate const& inDate)
+	{
+		m_DateStart = inDate;
+	}
+	ARBDate const& GetEndDate() const
+	{
+		return m_DateEnd;
+	}
+	void SetEndDate(ARBDate const& inDate)
+	{
+		m_DateEnd = inDate;
+	}
+	ARBDate const& GetOpeningDate() const
+	{
+		return m_DateOpening;
+	}
+	void SetOpeningDate(ARBDate const& inDate)
+	{
+		m_DateOpening = inDate;
+	}
+	ARBDate const& GetClosingDate() const
+	{
+		return m_DateClosing;
+	}
+	void SetClosingDate(ARBDate const& inDate)
+	{
+		m_DateClosing = inDate;
+	}
+	bool IsTentative() const
+	{
+		return m_bTentative;
+	}
+	void SetIsTentative(bool inTentative)
+	{
+		m_bTentative = inTentative;
+	}
+	ARBString const& GetLocation() const
+	{
+		return m_Location;
+	}
+	void SetLocation(ARBString const& inLocation)
+	{
+		m_Location = inLocation;
+	}
+	ARBString const& GetClub() const
+	{
+		return m_Club;
+	}
+	void SetClub(ARBString const& inClub)
+	{
+		m_Club = inClub;
+	}
+	ARBString const& GetVenue() const
+	{
+		return m_Venue;
+	}
+	void SetVenue(ARBString const& inVenue)
+	{
+		m_Venue = inVenue;
+	}
+	eEntry GetEntered() const
+	{
+		return m_eEntered;
+	}
+	void SetEntered(eEntry inEnter)
+	{
+		m_eEntered = inEnter;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
 
 private:
 	ARBDate m_DateStart;

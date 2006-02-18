@@ -54,26 +54,46 @@ protected:
 
 public:
 	~ARBDogExistingPoints();
-	static ARBDogExistingPointsPtr New();
-	ARBDogExistingPointsPtr Clone() const;
+	static ARBDogExistingPointsPtr New()
+	{
+		return ARBDogExistingPointsPtr(new ARBDogExistingPoints());
+	}
+	ARBDogExistingPointsPtr Clone() const
+	{
+		return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
+	}
 
 	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
 
 	bool operator==(ARBDogExistingPoints const& rhs) const;
-	bool operator!=(ARBDogExistingPoints const& rhs) const;
+	bool operator!=(ARBDogExistingPoints const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		ARBString name;
+		if (0 < m_Other.length())
+			name = m_Other;
+		else
+			name = m_Event;
+		return name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load an existing point.
@@ -119,28 +139,94 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	PointType GetType() const;
-	void SetType(PointType inType);
-	ARBDate const& GetDate() const;
-	void SetDate(ARBDate const& inDate);
-	ARBString const& GetComment() const;
-	void SetComment(ARBString const& inComment);
-	ARBString const& GetOtherPoints() const;
-	void SetOtherPoints(ARBString const& inOther);
-	ARBString const& GetVenue() const;
-	void SetVenue(ARBString const& inVenue);
-	ARBString const& GetMultiQ() const;
-	void SetMultiQ(ARBString const& inMultiQ);
-	ARBString const& GetDivision() const;
-	void SetDivision(ARBString const& inDiv);
-	ARBString const& GetLevel() const;
-	void SetLevel(ARBString const& inLevel);
-	ARBString const& GetEvent() const;
-	void SetEvent(ARBString const& inEvent);
-	ARBString const& GetSubName() const;
-	void SetSubName(ARBString const& inSubName);
-	double GetPoints() const;
-	void SetPoints(double inPoints);
+	PointType GetType() const
+	{
+		return m_Type;
+	}
+	void SetType(PointType inType)
+	{
+		m_Type = inType;
+	}
+	ARBDate const& GetDate() const
+	{
+		return m_Date;
+	}
+	void SetDate(ARBDate const& inDate)
+	{
+		m_Date = inDate;
+	}
+	ARBString const& GetComment() const
+	{
+		return m_Comment;
+	}
+	void SetComment(ARBString const& inComment)
+	{
+		m_Comment = inComment;
+	}
+	ARBString const& GetOtherPoints() const
+	{
+		return m_Other;
+	}
+	void SetOtherPoints(ARBString const& inOther)
+	{
+		m_Other = inOther;
+	}
+	ARBString const& GetVenue() const
+	{
+		return m_Venue;
+	}
+	void SetVenue(ARBString const& inVenue)
+	{
+		m_Venue = inVenue;
+	}
+	ARBString const& GetMultiQ() const
+	{
+		return m_MultiQ;
+	}
+	void SetMultiQ(ARBString const& inMultiQ)
+	{
+		m_MultiQ = inMultiQ;
+	}
+	ARBString const& GetDivision() const
+	{
+		return m_Div;
+	}
+	void SetDivision(ARBString const& inDiv)
+	{
+		m_Div = inDiv;
+	}
+	ARBString const& GetLevel() const
+	{
+		return m_Level;
+	}
+	void SetLevel(ARBString const& inLevel)
+	{
+		m_Level = inLevel;
+	}
+	ARBString const& GetEvent() const
+	{
+		return m_Event;
+	}
+	void SetEvent(ARBString const& inEvent)
+	{
+		m_Event = inEvent;
+	}
+	ARBString const& GetSubName() const
+	{
+		return m_SubName;
+	}
+	void SetSubName(ARBString const& inSubName)
+	{
+		m_SubName = inSubName;
+	}
+	double GetPoints() const
+	{
+		return m_Points;
+	}
+	void SetPoints(double inPoints)
+	{
+		m_Points = inPoints;
+	}
 
 private:
 	ARBDate m_Date;

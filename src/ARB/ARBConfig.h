@@ -58,7 +58,10 @@ public:
 	ARBConfig(ARBConfig const& rhs);
 	ARBConfig& operator=(ARBConfig const& rhs);
 	bool operator==(ARBConfig const& rhs) const;
-	bool operator!=(ARBConfig const& rhs) const;
+	bool operator!=(ARBConfig const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -161,17 +164,50 @@ public:
 	/*
 	 * Getters.
 	 */
-	bool GetUpdateStatus() const;
-	void SetUpdateStatus(bool inUpdate);
-	short GetVersion() const;
-	ARBConfigActionList const& GetActions() const;
-	ARBConfigActionList& GetActions();
-	ARBConfigVenueList const& GetVenues() const;
-	ARBConfigVenueList& GetVenues();
-	ARBConfigFaultList const& GetFaults() const;
-	ARBConfigFaultList& GetFaults();
-	ARBConfigOtherPointsList const& GetOtherPoints() const;
-	ARBConfigOtherPointsList& GetOtherPoints();
+	bool GetUpdateStatus() const
+	{
+		return m_bUpdate;
+	}
+	void SetUpdateStatus(bool inUpdate)
+	{
+		m_bUpdate = inUpdate;
+	}
+	short GetVersion() const
+	{
+		return m_Version;
+	}
+	ARBConfigActionList const& GetActions() const
+	{
+		return m_Actions;
+	}
+	ARBConfigActionList& GetActions()
+	{
+		return m_Actions;
+	}
+	ARBConfigVenueList const& GetVenues() const
+	{
+		return m_Venues;
+	}
+	ARBConfigVenueList& GetVenues()
+	{
+		return m_Venues;
+	}
+	ARBConfigFaultList const& GetFaults() const
+	{
+		return m_FaultTypes;
+	}
+	ARBConfigFaultList& GetFaults()
+	{
+		return m_FaultTypes;
+	}
+	ARBConfigOtherPointsList const& GetOtherPoints() const
+	{
+		return m_OtherPoints;
+	}
+	ARBConfigOtherPointsList& GetOtherPoints()
+	{
+		return m_OtherPoints;
+	}
 
 private:
 	bool m_bUpdate;

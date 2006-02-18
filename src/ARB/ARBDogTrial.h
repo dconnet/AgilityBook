@@ -56,20 +56,35 @@ protected:
 
 public:
 	~ARBDogTrial();
-	static ARBDogTrialPtr New();
-	static ARBDogTrialPtr New(ARBCalendar const& inCal);
-	ARBDogTrialPtr Clone() const;
+	static ARBDogTrialPtr New()
+	{
+		return ARBDogTrialPtr(new ARBDogTrial());
+	}
+	static ARBDogTrialPtr New(ARBCalendar const& inCal)
+	{
+		return ARBDogTrialPtr(new ARBDogTrial(inCal));
+	}
+	ARBDogTrialPtr Clone() const
+	{
+		return ARBDogTrialPtr(new ARBDogTrial(*this));
+	}
 
 	ARBDogTrial& operator=(ARBDogTrial const& rhs);
 
 	bool operator==(ARBDogTrial const& rhs) const;
-	bool operator!=(ARBDogTrial const& rhs) const;
+	bool operator!=(ARBDogTrial const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Location;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -130,16 +145,46 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetLocation() const;
-	void SetLocation(ARBString const& inLoc);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
-	bool IsVerified() const;
-	void SetVerified(bool inVerified);
-	ARBDogClubList const& GetClubs() const;
-	ARBDogClubList& GetClubs();
-	ARBDogRunList const& GetRuns() const;
-	ARBDogRunList& GetRuns();
+	ARBString const& GetLocation() const
+	{
+		return m_Location;
+	}
+	void SetLocation(ARBString const& inLoc)
+	{
+		m_Location = inLoc;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
+	bool IsVerified() const
+	{
+		return m_Verified;
+	}
+	void SetVerified(bool inVerified)
+	{
+		m_Verified = inVerified;
+	}
+	ARBDogClubList const& GetClubs() const
+	{
+		return m_Clubs;
+	}
+	ARBDogClubList& GetClubs()
+	{
+		return m_Clubs;
+	}
+	ARBDogRunList const& GetRuns() const
+	{
+		return m_Runs;
+	}
+	ARBDogRunList& GetRuns()
+	{
+		return m_Runs;
+	}
 
 private:
 	ARBString m_Location;

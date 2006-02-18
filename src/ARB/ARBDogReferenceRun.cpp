@@ -81,17 +81,6 @@ ARBDogReferenceRun::~ARBDogReferenceRun()
 {
 }
 
-//static
-ARBDogReferenceRunPtr ARBDogReferenceRun::New()
-{
-	return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
-}
-
-ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
-{
-	return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
-}
-
 ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 {
 	if (this != &rhs)
@@ -118,16 +107,6 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 		&& m_Time == rhs.m_Time
 		&& m_Score == rhs.m_Score
 		&& m_Note == rhs.m_Note;
-}
-
-bool ARBDogReferenceRun::operator!=(ARBDogReferenceRun const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDogReferenceRun::GetGenericName() const
-{
-	return m_Name;
 }
 
 size_t ARBDogReferenceRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -237,86 +216,6 @@ bool ARBDogReferenceRun::Save(Element& ioTree) const
 		element.SetValue(m_Note);
 	}
 	return true;
-}
-
-ARB_Q ARBDogReferenceRun::GetQ() const
-{
-	return m_Q;
-}
-
-void ARBDogReferenceRun::SetQ(ARB_Q inQ)
-{
-	m_Q = inQ;
-}
-
-short ARBDogReferenceRun::GetPlace() const
-{
-	return m_Place;
-}
-
-void ARBDogReferenceRun::SetPlace(short inPlace)
-{
-	m_Place = inPlace;
-}
-
-ARBString const& ARBDogReferenceRun::GetName() const
-{
-	return m_Name;
-}
-
-void ARBDogReferenceRun::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBString const& ARBDogReferenceRun::GetHeight() const
-{
-	return m_Height;
-}
-
-void ARBDogReferenceRun::SetHeight(ARBString const& inHeight)
-{
-	m_Height = inHeight;
-}
-
-ARBString const& ARBDogReferenceRun::GetBreed() const
-{
-	return m_Breed;
-}
-
-void ARBDogReferenceRun::SetBreed(ARBString const& inBreed)
-{
-	m_Breed = inBreed;
-}
-
-double ARBDogReferenceRun::GetTime() const
-{
-	return m_Time;
-}
-
-void ARBDogReferenceRun::SetTime(double inTime)
-{
-	m_Time = inTime;
-}
-
-ARBString const& ARBDogReferenceRun::GetScore() const
-{
-	return m_Score;
-}
-
-void ARBDogReferenceRun::SetScore(ARBString const& inScore)
-{
-	m_Score = inScore;
-}
-
-ARBString const& ARBDogReferenceRun::GetNote() const
-{
-	return m_Note;
-}
-
-void ARBDogReferenceRun::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////

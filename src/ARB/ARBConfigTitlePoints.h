@@ -58,14 +58,26 @@ protected:
 
 public:
 	~ARBConfigTitlePoints();
-	static ARBConfigTitlePointsPtr New();
-	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
-	ARBConfigTitlePointsPtr Clone() const;
+	static ARBConfigTitlePointsPtr New()
+	{
+		return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
+	}
+	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults)
+	{
+		return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
+	}
+	ARBConfigTitlePointsPtr Clone() const
+	{
+		return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
+	}
 
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
 
 	bool operator==(ARBConfigTitlePoints const& rhs) const;
-	bool operator!=(ARBConfigTitlePoints const& rhs) const;
+	bool operator!=(ARBConfigTitlePoints const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
@@ -78,7 +90,10 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a title configuration.
@@ -106,13 +121,25 @@ public:
 	/*
 	 * Setters/getters.
 	 */
-	double GetPoints() const;
-	void SetPoints(double inPoints);
-	double GetFaults() const;
+	double GetPoints() const
+	{
+		return m_Points;
+	}
+	void SetPoints(double inPoints)
+	{
+		m_Points = inPoints;
+	}
+	double GetFaults() const
+	{
+		return m_Faults;
+	}
 	/**
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigTitlePointsList::sort.
 	 */
-	void SetFaults(double inFaults);
+	void SetFaults(double inFaults)
+	{
+		m_Faults = inFaults;
+	}
 
 private:
 	double m_Points;

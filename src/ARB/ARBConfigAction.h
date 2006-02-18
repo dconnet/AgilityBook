@@ -63,19 +63,31 @@ protected:
 
 public:
 	~ARBConfigAction();
-	static ARBConfigActionPtr New();
-	ARBConfigActionPtr Clone() const;
+	static ARBConfigActionPtr New()
+	{
+		return ARBConfigActionPtr(new ARBConfigAction());
+	}
+	ARBConfigActionPtr Clone() const
+	{
+		return ARBConfigActionPtr(new ARBConfigAction(*this));
+	}
 
 	ARBConfigAction& operator=(ARBConfigAction const& rhs);
 
 	bool operator==(ARBConfigAction const& rhs) const;
-	bool operator!=(ARBConfigAction const& rhs) const;
+	bool operator!=(ARBConfigAction const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Verb;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -83,7 +95,10 @@ public:
 	 * @return Number of strings accumulated in this object.
 	 * @note There are no strings to search in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a calendar entry
@@ -109,11 +124,26 @@ public:
 	/*
 	 * Getters.
 	 */
-	ARBString const& GetVerb() const;
-	ARBString const& GetVenue() const;
-	ARBString const& GetDivision() const;
-	ARBString const& GetOldName() const;
-	ARBString const& GetNewName() const;
+	ARBString const& GetVerb() const
+	{
+		return m_Verb;
+	}
+	ARBString const& GetVenue() const
+	{
+		return m_Venue;
+	}
+	ARBString const& GetDivision() const
+	{
+		return m_Div;
+	}
+	ARBString const& GetOldName() const
+	{
+		return m_OldName;
+	}
+	ARBString const& GetNewName() const
+	{
+		return m_NewName;
+	}
 
 private:
 	ARBString m_Verb;

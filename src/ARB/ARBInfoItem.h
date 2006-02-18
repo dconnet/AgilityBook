@@ -55,21 +55,39 @@ protected:
 
 public:
 	~ARBInfoItem();
-	static ARBInfoItemPtr New();
-	ARBInfoItemPtr Clone() const;
+	static ARBInfoItemPtr New()
+	{
+		return ARBInfoItemPtr(new ARBInfoItem());
+	}
+	ARBInfoItemPtr Clone() const
+	{
+		return ARBInfoItemPtr(new ARBInfoItem(*this));
+	}
 
 	ARBInfoItem& operator=(ARBInfoItem const& rhs);
 
 	bool operator==(ARBInfoItem const& rhs) const;
-	bool operator!=(ARBInfoItem const& rhs) const;
-	bool operator<(ARBInfoItem const& rhs) const;
-	bool operator>(ARBInfoItem const& rhs) const;
+	bool operator!=(ARBInfoItem const& rhs) const
+	{
+		return !operator==(rhs);
+	}
+	bool operator<(ARBInfoItem const& rhs) const
+	{
+		return m_Name < rhs.GetName();
+	}
+	bool operator>(ARBInfoItem const& rhs) const
+	{
+		return m_Name > rhs.GetName();
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -113,10 +131,22 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetComment() const;
-	void SetComment(ARBString const& inComment);
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetComment() const
+	{
+		return m_Comment;
+	}
+	void SetComment(ARBString const& inComment)
+	{
+		m_Comment = inComment;
+	}
 
 private:
 	ARBString m_Name;
@@ -139,7 +169,10 @@ public:
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
 
-	ARBString const& GetItemName() const;
+	ARBString const& GetItemName() const
+	{
+		return m_ItemName;
+	}
 
 	/**
 	 * Load the information from XML (the tree).

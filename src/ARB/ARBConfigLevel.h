@@ -54,13 +54,22 @@ protected:
 
 public:
 	~ARBConfigLevel();
-	static ARBConfigLevelPtr New();
-	ARBConfigLevelPtr Clone() const;
+	static ARBConfigLevelPtr New()
+	{
+		return ARBConfigLevelPtr(new ARBConfigLevel());
+	}
+	ARBConfigLevelPtr Clone() const
+	{
+		return ARBConfigLevelPtr(new ARBConfigLevel(*this));
+	}
 
 	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
 
 	bool operator==(ARBConfigLevel const& rhs) const;
-	bool operator!=(ARBConfigLevel const& rhs) const;
+	bool operator!=(ARBConfigLevel const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -71,14 +80,20 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a level configuration.
@@ -116,10 +131,22 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBConfigSubLevelList const& GetSubLevels() const;
-	ARBConfigSubLevelList& GetSubLevels();
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBConfigSubLevelList const& GetSubLevels() const
+	{
+		return m_SubLevels;
+	}
+	ARBConfigSubLevelList& GetSubLevels()
+	{
+		return m_SubLevels;
+	}
 
 private:
 	ARBString m_Name;

@@ -104,8 +104,14 @@ public:
 	 */
 	static ARBDate Today();
 
-	ARBDate();
-	ARBDate(ARBDate const& rhs);
+	ARBDate()
+		: m_Julian(0)
+	{
+	}
+	ARBDate(ARBDate const& rhs)
+		: m_Julian(rhs.m_Julian)
+	{
+	}
 	ARBDate(time_t inTime);
 #if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
 	// VC6 doesn't have this and VC8's time_t is 64bit.
@@ -114,18 +120,31 @@ public:
 	ARBDate(
 			int inYr,
 			int inMon,
-			int inDay);
-	~ARBDate();
+			int inDay)
+		: m_Julian(0)
+	{
+		SetDate(inYr, inMon, inDay);
+	}
+
+	~ARBDate()
+	{
+	}
 
 	/**
 	 * Is the date valid?
 	 */
-	bool IsValid() const;
+	bool IsValid() const
+	{
+		return (0 < m_Julian);
+	}
 
 	/**
 	 * Set the date to invalid.
 	 */
-	void clear();
+	void clear()
+	{
+		m_Julian = 0;
+	}
 
 	/**
 	 * Set the date to today.
@@ -135,12 +154,19 @@ public:
 	/**
 	 * Get the julian day (not julian date)
 	 */
-	long GetJulianDay() const;
+	long GetJulianDay() const
+	{
+		return m_Julian;
+	}
 
 	/**
 	 * Set the julian day (not julian date)
 	 */
-	void SetJulianDay(long inJulian);
+	void SetJulianDay(long inJulian)
+	{
+		if (0 < inJulian)
+			m_Julian = inJulian;
+	}
 
 	/**
 	 * Set the date
@@ -153,31 +179,102 @@ public:
 			int inMon,
 			int inDay);
 
-	ARBDate& operator=(ARBDate const& rhs);
-	bool operator==(ARBDate const& rhs) const;
-	bool operator!=(ARBDate const& rhs) const;
-	bool operator<(ARBDate const& rhs) const;
-	bool operator>(ARBDate const& rhs) const;
-	bool operator<=(ARBDate const& rhs) const;
-	bool operator>=(ARBDate const& rhs) const;
-	long operator-(ARBDate const& rhs) const;
-	ARBDate& operator++(); //prefix
-	ARBDate operator++(int); //postfix
-	ARBDate& operator--(); //prefix
-	ARBDate operator--(int); //postfix
-	ARBDate& operator+=(int inD);
-	ARBDate& operator-=(int inD);
-	ARBDate operator+(int inD);
-	ARBDate operator-(int inD);
+	ARBDate& operator=(ARBDate const& rhs)
+	{
+		if (this != &rhs)
+		{
+			m_Julian = rhs.m_Julian;
+		}
+		return *this;
+	}
+	bool operator==(ARBDate const& rhs) const
+	{
+		return m_Julian == rhs.m_Julian;
+	}
+	bool operator!=(ARBDate const& rhs) const
+	{
+		return m_Julian != rhs.m_Julian;
+	}
+	bool operator<(ARBDate const& rhs) const
+	{
+		return m_Julian < rhs.m_Julian;
+	}
+	bool operator>(ARBDate const& rhs) const
+	{
+		return m_Julian > rhs.m_Julian;
+	}
+	bool operator<=(ARBDate const& rhs) const
+	{
+		return m_Julian <= rhs.m_Julian;
+	}
+	bool operator>=(ARBDate const& rhs) const
+	{
+		return m_Julian >= rhs.m_Julian;
+	}
+	long operator-(ARBDate const& rhs) const
+	{
+		return m_Julian - rhs.m_Julian;
+	}
+	ARBDate& operator++() //prefix
+	{
+		++m_Julian;
+		return *this;
+	}
+	ARBDate operator++(int) //postfix
+	{
+		ARBDate tmp(*this);
+		++m_Julian;
+		return tmp;
+	}
+	ARBDate& operator--() //prefix
+	{
+		--m_Julian;
+		return *this;
+	}
+	ARBDate operator--(int) //postfix
+	{
+		ARBDate tmp(*this);
+		--m_Julian;
+		return tmp;
+	}
+	ARBDate& operator+=(int inD)
+	{
+		m_Julian += inD;
+		return *this;
+	}
+	ARBDate& operator-=(int inD)
+	{
+		m_Julian -= inD;
+		return *this;
+	}
+	ARBDate operator+(int inD)
+	{
+		ARBDate d;
+		d.SetJulianDay(m_Julian + inD);
+		return d;
+	}
+	ARBDate operator-(int inD)
+	{
+		ARBDate d;
+		d.SetJulianDay(m_Julian - inD);
+		return d;
+	}
 
 	/**
 	 * Test if date is between two dates (inclusive)
 	 */
 	bool isBetween(
 			ARBDate const& inDate1,
-			ARBDate const& inDate2) const;
+			ARBDate const& inDate2) const
+	{
+		return m_Julian >= inDate1.m_Julian && m_Julian <= inDate2.m_Julian;
+	}
 
-	bool isLeap() const; ///< Is this a leap year?
+	bool isLeap() const ///< Is this a leap year?
+	{
+		int yr = GetYear();
+		return (yr & 3) == 0 && yr % 100 != 0 || yr % 400 == 0;
+	}
 
 	/**
 	 * Return the date as a string.
@@ -230,136 +327,15 @@ public:
 	 * Get the day of the week of the current date.
 	 * @param inFirstDay Define what day of week has index 0 (1st day of week).
 	 */
-	int GetDayOfWeek(DayOfWeek inFirstDay = eSunday) const;
+	int GetDayOfWeek(DayOfWeek inFirstDay = eSunday) const
+	{
+		// This was copied from another source, but I don't remember where...
+		// I suspect it won't work properly on dates before 1752 (start of
+		// Gregorian calendar).
+		//return int((((m_Julian+1)%7)+6)%7); // Mon = 0
+		return static_cast<int>((((m_Julian+1)%7)+(7-static_cast<int>(inFirstDay)))%7);
+	}
 
 private:
 	long m_Julian;	///< Julian day, not Julian date.
 };
-
-inline ARBDate::~ARBDate()
-{
-}
-
-inline bool ARBDate::IsValid() const
-{
-	return (0 < m_Julian);
-}
-
-inline void ARBDate::clear()
-{
-	m_Julian = 0;
-}
-
-inline long ARBDate::GetJulianDay() const
-{
-	return m_Julian;
-}
-
-inline ARBDate& ARBDate::operator=(ARBDate const& rhs)
-{
-	if (this != &rhs)
-	{
-		m_Julian = rhs.m_Julian;
-	}
-	return *this;
-}
-
-inline bool ARBDate::operator==(ARBDate const& rhs) const
-{
-	return m_Julian == rhs.m_Julian;
-}
-
-inline bool ARBDate::operator!=(ARBDate const& rhs) const
-{
-	return m_Julian != rhs.m_Julian;
-}
-
-inline bool ARBDate::operator<(ARBDate const& rhs) const
-{
-	return m_Julian < rhs.m_Julian;
-}
-
-inline bool ARBDate::operator>(ARBDate const& rhs) const
-{
-	return m_Julian > rhs.m_Julian;
-}
-
-inline bool ARBDate::operator<=(ARBDate const& rhs) const
-{
-	return m_Julian <= rhs.m_Julian;
-}
-
-inline bool ARBDate::operator>=(ARBDate const& rhs) const
-{
-	return m_Julian >= rhs.m_Julian;
-}
-
-inline long ARBDate::operator-(ARBDate const& rhs) const
-{
-	return m_Julian - rhs.m_Julian;
-}
-
-inline ARBDate& ARBDate::operator++()
-{
-	++m_Julian;
-	return *this;
-}
-
-inline ARBDate ARBDate::operator++(int)
-{
-	ARBDate tmp(*this);
-	++m_Julian;
-	return tmp;
-}
-
-inline ARBDate& ARBDate::operator--()
-{
-	--m_Julian;
-	return *this;
-}
-
-inline ARBDate ARBDate::operator--(int)
-{
-	ARBDate tmp(*this);
-	--m_Julian;
-	return tmp;
-}
-
-inline ARBDate& ARBDate::operator+=(int inD)
-{
-	m_Julian += inD;
-	return *this;
-}
-
-inline ARBDate& ARBDate::operator-=(int inD)
-{
-	m_Julian -= inD;
-	return *this;
-}
-
-inline ARBDate ARBDate::operator+(int inD)
-{
-	ARBDate d;
-	d.SetJulianDay(m_Julian + inD);
-	return d;
-}
-
-inline ARBDate ARBDate::operator-(int inD)
-{
-	ARBDate d;
-	d.SetJulianDay(m_Julian - inD);
-	return d;
-}
-
-inline bool ARBDate::isBetween(
-		ARBDate const& inDate1,
-		ARBDate const& inDate2) const
-{
-	return m_Julian >= inDate1.m_Julian && m_Julian <= inDate2.m_Julian;
-}
-
-inline bool ARBDate::isLeap() const
-{
-	int yr = GetYear();
-	return (yr & 3) == 0 && yr % 100 != 0 || yr % 400 == 0;
-}

@@ -94,11 +94,6 @@ bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBDogNotes::operator!=(ARBDogNotes const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 size_t ARBDogNotes::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	size_t nItems = 0;
@@ -174,44 +169,4 @@ bool ARBDogNotes::Save(Element& ioTree) const
 		}
 	}
 	return true;
-}
-
-ARBDogFaultList const& ARBDogNotes::GetFaults() const
-{
-	return m_Faults;
-}
-
-ARBDogFaultList& ARBDogNotes::GetFaults()
-{
-	return m_Faults;
-}
-
-ARBString const& ARBDogNotes::GetCRCD() const
-{
-	return m_CRCD;
-}
-
-void ARBDogNotes::SetCRCD(ARBString const& inCRCD)
-{
-	m_CRCD = inCRCD;
-}
-
-ARBString const& ARBDogNotes::GetCRCDMetaFile() const
-{
-	return m_CRCDMeta;
-}
-
-void ARBDogNotes::SetCRCDMetaFile(ARBString const& inCRCDMeta)
-{
-	m_CRCDMeta = inCRCDMeta;
-}
-
-ARBString const& ARBDogNotes::GetNote() const
-{
-	return m_Note;
-}
-
-void ARBDogNotes::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
 }

@@ -54,19 +54,31 @@ protected:
 
 public:
 	~ARBDogRunPartner();
-	static ARBDogRunPartnerPtr New();
-	ARBDogRunPartnerPtr Clone() const;
+	static ARBDogRunPartnerPtr New()
+	{
+		return ARBDogRunPartnerPtr(new ARBDogRunPartner());
+	}
+	ARBDogRunPartnerPtr Clone() const
+	{
+		return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
+	}
 
 	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
 
 	bool operator==(ARBDogRunPartner const& rhs) const;
-	bool operator!=(ARBDogRunPartner const& rhs) const;
+	bool operator!=(ARBDogRunPartner const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Dog;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -101,12 +113,30 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetHandler() const;
-	void SetHandler(ARBString const& inHandler);
-	ARBString const& GetDog() const;
-	void SetDog(ARBString const& inDog);
-	ARBString const& GetRegNum() const;
-	void SetRegNum(ARBString const& inRegNum);
+	ARBString const& GetHandler() const
+	{
+		return m_Handler;
+	}
+	void SetHandler(ARBString const& inHandler)
+	{
+		m_Handler = inHandler;
+	}
+	ARBString const& GetDog() const
+	{
+		return m_Dog;
+	}
+	void SetDog(ARBString const& inDog)
+	{
+		m_Dog = inDog;
+	}
+	ARBString const& GetRegNum() const
+	{
+		return m_RegNum;
+	}
+	void SetRegNum(ARBString const& inRegNum)
+	{
+		m_RegNum = inRegNum;
+	}
 
 private:
 	ARBString m_Handler;

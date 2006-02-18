@@ -83,17 +83,6 @@ ARBDogTitle::~ARBDogTitle()
 {
 }
 
-//static
-ARBDogTitlePtr ARBDogTitle::New()
-{
-	return ARBDogTitlePtr(new ARBDogTitle());
-}
-
-ARBDogTitlePtr ARBDogTitle::Clone() const
-{
-	return ARBDogTitlePtr(new ARBDogTitle(*this));
-}
-
 ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 {
 	if (this != &rhs)
@@ -118,9 +107,18 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 		&& m_bHidden == rhs.m_bHidden;
 }
 
-bool ARBDogTitle::operator!=(ARBDogTitle const& rhs) const
+ARBString ARBDogTitle::GetGenericName() const
 {
-	return !operator==(rhs);
+	ARBString name;
+	name = m_Name;
+	if (1 < m_Instance)
+	{
+		ARBostringstream buffer;
+		// Keep sync'd with ARBConfigTitle
+		buffer << _T(" ") << m_Instance;
+		name += buffer.str();
+	}
+	return name;
 }
 
 size_t ARBDogTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -247,83 +245,6 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	if (m_bReceived) // Default is no.
 		title.AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
 	return true;
-}
-
-ARBString ARBDogTitle::GetGenericName() const
-{
-	ARBString name;
-	name = m_Name;
-	if (1 < m_Instance)
-	{
-		ARBostringstream buffer;
-		// Keep sync'd with ARBConfigTitle
-		buffer << _T(" ") << m_Instance;
-		name += buffer.str();
-	}
-	return name;
-}
-
-ARBDate const& ARBDogTitle::GetDate() const
-{
-	return m_Date;
-}
-
-void ARBDogTitle::SetDate(ARBDate const& inDate)
-{
-	m_Date = inDate;
-	if (!m_Date.IsValid())
-		m_bHidden = true;
-}
-
-ARBString const& ARBDogTitle::GetVenue() const
-{
-	return m_Venue;
-}
-
-void ARBDogTitle::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-ARBString const& ARBDogTitle::GetRawName() const
-{
-	return m_Name;
-}
-
-short ARBDogTitle::GetInstance() const
-{
-	return m_Instance;
-}
-
-void ARBDogTitle::SetName(
-		ARBString const& inName,
-		short inInstance)
-{
-	m_Name = inName;
-	m_Instance = inInstance;
-}
-
-bool ARBDogTitle::GetReceived() const
-{
-	return m_bReceived;
-}
-
-void ARBDogTitle::SetReceived(bool inReceived)
-{
-	m_bReceived = inReceived;
-}
-
-bool ARBDogTitle::IsHidden() const
-{
-	return m_bHidden;
-}
-
-void ARBDogTitle::SetHidden(bool bHidden)
-{
-	if (m_Date.IsValid())
-		m_bHidden = bHidden;
-	else
-		m_bHidden = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////

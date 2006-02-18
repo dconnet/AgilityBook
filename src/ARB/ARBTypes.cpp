@@ -212,6 +212,5 @@ ARBString ARBDouble::str(
 
 bool ARBDouble::equal(double const& inVal1, double const& inVal2)
 {
-	double diff = abs(inVal1 - inVal2);
-	return diff <= DBL_EPSILON;
+	return abs(inVal1 - inVal2) <= DBL_EPSILON;
 }

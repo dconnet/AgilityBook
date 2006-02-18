@@ -53,19 +53,31 @@ protected:
 
 public:
 	~ARBDogReferenceRun();
-	static ARBDogReferenceRunPtr New();
-	ARBDogReferenceRunPtr Clone() const;
+	static ARBDogReferenceRunPtr New()
+	{
+		return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
+	}
+	ARBDogReferenceRunPtr Clone() const
+	{
+		return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
+	}
 
 	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
 
 	bool operator==(ARBDogReferenceRun const& rhs) const;
-	bool operator!=(ARBDogReferenceRun const& rhs) const;
+	bool operator!=(ARBDogReferenceRun const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -100,22 +112,70 @@ public:
 	/**
 	 * Getters/setters.
 	 */
-	ARB_Q GetQ() const;
-	void SetQ(ARB_Q inQ);
-	short GetPlace() const;
-	void SetPlace(short inPlace);
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetHeight() const;
-	void SetHeight(ARBString const& inHeight);
-	ARBString const& GetBreed() const;
-	void SetBreed(ARBString const& inBreed);
-	double GetTime() const;
-	void SetTime(double inTime);
-	ARBString const& GetScore() const;
-	void SetScore(ARBString const& inScore);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
+	ARB_Q GetQ() const
+	{
+		return m_Q;
+	}
+	void SetQ(ARB_Q inQ)
+	{
+		m_Q = inQ;
+	}
+	short GetPlace() const
+	{
+		return m_Place;
+	}
+	void SetPlace(short inPlace)
+	{
+		m_Place = inPlace;
+	}
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetHeight() const
+	{
+		return m_Height;
+	}
+	void SetHeight(ARBString const& inHeight)
+	{
+		m_Height = inHeight;
+	}
+	ARBString const& GetBreed() const
+	{
+		return m_Breed;
+	}
+	void SetBreed(ARBString const& inBreed)
+	{
+		m_Breed = inBreed;
+	}
+	double GetTime() const
+	{
+		return m_Time;
+	}
+	void SetTime(double inTime)
+	{
+		m_Time = inTime;
+	}
+	ARBString const& GetScore() const
+	{
+		return m_Score;
+	}
+	void SetScore(ARBString const& inScore)
+	{
+		m_Score = inScore;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
 
 private:
 	ARB_Q m_Q;

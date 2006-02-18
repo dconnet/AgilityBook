@@ -70,17 +70,6 @@ ARBInfoItem::~ARBInfoItem()
 {
 }
 
-//static
-ARBInfoItemPtr ARBInfoItem::New()
-{
-	return ARBInfoItemPtr(new ARBInfoItem());
-}
-
-ARBInfoItemPtr ARBInfoItem::Clone() const
-{
-	return ARBInfoItemPtr(new ARBInfoItem(*this));
-}
-
 ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 {
 	if (this != &rhs)
@@ -95,26 +84,6 @@ bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Comment == rhs.m_Comment;
-}
-
-bool ARBInfoItem::operator!=(ARBInfoItem const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-bool ARBInfoItem::operator<(ARBInfoItem const& rhs) const
-{
-	return m_Name < rhs.GetName();
-}
-
-bool ARBInfoItem::operator>(ARBInfoItem const& rhs) const
-{
-	return m_Name > rhs.GetName();
-}
-
-ARBString ARBInfoItem::GetGenericName() const
-{
-	return m_Name;
 }
 
 size_t ARBInfoItem::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -158,26 +127,6 @@ bool ARBInfoItem::Save(
 	return true;
 }
 
-ARBString const& ARBInfoItem::GetName() const
-{
-	return m_Name;
-}
-
-void ARBInfoItem::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBString const& ARBInfoItem::GetComment() const
-{
-	return m_Comment;
-}
-
-void ARBInfoItem::SetComment(ARBString const& inComment)
-{
-	m_Comment = inComment;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 ARBInfoItemList::ARBInfoItemList(ARBString const& inItemName)
@@ -199,11 +148,6 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 		m_ItemName = rhs.m_ItemName;
 	}
 	return *this;
-}
-
-ARBString const& ARBInfoItemList::GetItemName() const
-{
-	return m_ItemName;
 }
 
 bool ARBInfoItemList::Load(

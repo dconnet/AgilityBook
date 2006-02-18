@@ -63,7 +63,10 @@ public:
 	ARBInfo& operator=(ARBInfo const& rhs);
 
 	bool operator==(ARBInfo const& rhs) const;
-	bool operator!=(ARBInfo const& rhs) const;
+	bool operator!=(ARBInfo const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -94,8 +97,32 @@ public:
 	/*
 	 * Getters.
 	 */
-	ARBInfoItemList const& GetInfo(ARBInfo::eInfoType inType) const;
-	ARBInfoItemList& GetInfo(ARBInfo::eInfoType inType);
+	ARBInfoItemList const& GetInfo(ARBInfo::eInfoType inType) const
+	{
+		switch (inType)
+		{
+		default:
+		case ARBInfo::eClubInfo:
+			return m_ClubInfo;
+		case ARBInfo::eJudgeInfo:
+			return m_JudgeInfo;
+		case ARBInfo::eLocationInfo:
+			return m_LocationInfo;
+		}
+	}
+	ARBInfoItemList& GetInfo(ARBInfo::eInfoType inType)
+	{
+		switch (inType)
+		{
+		default:
+		case ARBInfo::eClubInfo:
+			return m_ClubInfo;
+		case ARBInfo::eJudgeInfo:
+			return m_JudgeInfo;
+		case ARBInfo::eLocationInfo:
+			return m_LocationInfo;
+		}
+	}
 
 private:
 	ARBInfoItemList m_ClubInfo;

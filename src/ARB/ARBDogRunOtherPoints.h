@@ -53,19 +53,31 @@ protected:
 
 public:
 	~ARBDogRunOtherPoints();
-	static ARBDogRunOtherPointsPtr New();
-	ARBDogRunOtherPointsPtr Clone() const;
+	static ARBDogRunOtherPointsPtr New()
+	{
+		return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
+	}
+	ARBDogRunOtherPointsPtr Clone() const
+	{
+		return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
+	}
 
 	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
 
 	bool operator==(ARBDogRunOtherPoints const& rhs) const;
-	bool operator!=(ARBDogRunOtherPoints const& rhs) const;
+	bool operator!=(ARBDogRunOtherPoints const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -100,10 +112,22 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	short GetPoints() const;
-	void SetPoints(short inPts);
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	short GetPoints() const
+	{
+		return m_Points;
+	}
+	void SetPoints(short inPts)
+	{
+		m_Points = inPts;
+	}
 
 private:
 	ARBString m_Name;

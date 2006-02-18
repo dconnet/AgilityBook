@@ -61,26 +61,41 @@ protected:
 
 public:
 	~ARBConfigEvent();
-	static ARBConfigEventPtr New();
-	ARBConfigEventPtr Clone() const;
+	static ARBConfigEventPtr New()
+	{
+		return ARBConfigEventPtr(new ARBConfigEvent());
+	}
+	ARBConfigEventPtr Clone() const
+	{
+		return ARBConfigEventPtr(new ARBConfigEvent(*this));
+	}
 
 	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
 
 	bool operator==(ARBConfigEvent const& rhs) const;
-	bool operator!=(ARBConfigEvent const& rhs) const;
+	bool operator!=(ARBConfigEvent const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a event configuration.
@@ -131,7 +146,10 @@ public:
 			ARBString const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
-			ARBVector<ARBConfigScoringPtr>& outList) const;
+			ARBVector<ARBConfigScoringPtr>& outList) const
+	{
+		return m_Scoring.FindAllEvents(inDivision, inLevel, inDate, inTitlePoints, outList);
+	}
 
 	/**
 	 * Verify a scoring method exists.
@@ -143,7 +161,10 @@ public:
 	bool VerifyEvent(
 			ARBString const& inDivision,
 			ARBString const& inLevel,
-			ARBDate const& inDate) const;
+			ARBDate const& inDate) const
+	{
+		return m_Scoring.VerifyEvent(inDivision, inLevel, inDate);
+	}
 
 	/**
 	 * Find an event.
@@ -157,25 +178,64 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoringPtr* outEvent = NULL) const;
+			ARBConfigScoringPtr* outEvent = NULL) const
+	{
+		return m_Scoring.FindEvent(inDivision, inLevel, inDate, outEvent);
+	}
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetDesc() const;
-	void SetDesc(ARBString const& inDesc);
-	bool HasTable() const;
-	void SetHasTable(bool inBool);
-	bool HasPartner() const;
-	void SetHasPartner(bool inHas);
-	bool HasSubNames() const;
-	void SetHasSubNames(bool inHas);
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetDesc() const
+	{
+		return m_Desc;
+	}
+	void SetDesc(ARBString const& inDesc)
+	{
+		m_Desc = inDesc;
+	}
+	bool HasTable() const
+	{
+		return m_bTable;
+	}
+	void SetHasTable(bool inBool)
+	{
+		m_bTable = inBool;
+	}
+	bool HasPartner() const
+	{
+		return m_bHasPartner;
+	}
+	void SetHasPartner(bool inHas)
+	{
+		m_bHasPartner = inHas;
+	}
+	bool HasSubNames() const
+	{
+		return m_bHasSubNames;
+	}
+	void SetHasSubNames(bool inHas)
+	{
+		m_bHasSubNames = inHas;
+	}
 	size_t GetSubNames(std::set<ARBString>& outNames) const;
 	void SetSubNames(std::set<ARBString> const& inNames);
-	ARBConfigScoringList const& GetScorings() const;
-	ARBConfigScoringList& GetScorings();
+	ARBConfigScoringList const& GetScorings() const
+	{
+		return m_Scoring;
+	}
+	ARBConfigScoringList& GetScorings()
+	{
+		return m_Scoring;
+	}
 
 private:
 	ARBString m_Name;

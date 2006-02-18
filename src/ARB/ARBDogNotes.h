@@ -57,7 +57,10 @@ public:
 	ARBDogNotes& operator=(ARBDogNotes const& rhs);
 
 	bool operator==(ARBDogNotes const& rhs) const;
-	bool operator!=(ARBDogNotes const& rhs) const;
+	bool operator!=(ARBDogNotes const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -92,14 +95,38 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBDogFaultList const& GetFaults() const;
-	ARBDogFaultList& GetFaults();
-	ARBString const& GetCRCD() const;
-	void SetCRCD(ARBString const& inCRCD);
-	ARBString const& GetCRCDMetaFile() const; ///< Returns Base64-encoded Enhanced Metafile.
-	void SetCRCDMetaFile(ARBString const& inCRCDMeta);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
+	ARBDogFaultList const& GetFaults() const
+	{
+		return m_Faults;
+	}
+	ARBDogFaultList& GetFaults()
+	{
+		return m_Faults;
+	}
+	ARBString const& GetCRCD() const
+	{
+		return m_CRCD;
+	}
+	void SetCRCD(ARBString const& inCRCD)
+	{
+		m_CRCD = inCRCD;
+	}
+	ARBString const& GetCRCDMetaFile() const ///< Returns Base64-encoded Enhanced Metafile.
+	{
+		return m_CRCDMeta;
+	}
+	void SetCRCDMetaFile(ARBString const& inCRCDMeta)
+	{
+		m_CRCDMeta = inCRCDMeta;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
 
 private:
 	ARBDogFaultList m_Faults;

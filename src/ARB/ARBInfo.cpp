@@ -90,11 +90,6 @@ bool ARBInfo::operator==(ARBInfo const& rhs) const
 		&& m_LocationInfo == rhs.m_LocationInfo;
 }
 
-bool ARBInfo::operator!=(ARBInfo const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 void ARBInfo::clear()
 {
 	m_ClubInfo.clear();
@@ -140,32 +135,4 @@ bool ARBInfo::Save(Element& ioTree) const
 	if (!m_LocationInfo.Save(info))
 		return false;
 	return true;
-}
-
-ARBInfoItemList const& ARBInfo::GetInfo(ARBInfo::eInfoType inType) const
-{
-	switch (inType)
-	{
-	default:
-	case ARBInfo::eClubInfo:
-		return m_ClubInfo;
-	case ARBInfo::eJudgeInfo:
-		return m_JudgeInfo;
-	case ARBInfo::eLocationInfo:
-		return m_LocationInfo;
-	}
-}
-
-ARBInfoItemList& ARBInfo::GetInfo(ARBInfo::eInfoType inType)
-{
-	switch (inType)
-	{
-	default:
-	case ARBInfo::eClubInfo:
-		return m_ClubInfo;
-	case ARBInfo::eJudgeInfo:
-		return m_JudgeInfo;
-	case ARBInfo::eLocationInfo:
-		return m_LocationInfo;
-	}
 }

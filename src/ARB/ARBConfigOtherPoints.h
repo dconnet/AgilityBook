@@ -65,13 +65,22 @@ protected:
 
 public:
 	~ARBConfigOtherPoints();
-	static ARBConfigOtherPointsPtr New();
-	ARBConfigOtherPointsPtr Clone() const;
+	static ARBConfigOtherPointsPtr New()
+	{
+		return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
+	}
+	ARBConfigOtherPointsPtr Clone() const
+	{
+		return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
+	}
 
 	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
 
 	bool operator==(ARBConfigOtherPoints const& rhs) const;
-	bool operator!=(ARBConfigOtherPoints const& rhs) const;
+	bool operator!=(ARBConfigOtherPoints const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -82,14 +91,20 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return GetName();
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load an otherpoint configuration.
@@ -115,12 +130,30 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetDescription() const;
-	void SetDescription(ARBString const& inDesc);
-	eOtherPointsTally GetTally() const;
-	void SetTally(eOtherPointsTally inTally);
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetDescription() const
+	{
+		return m_Desc;
+	}
+	void SetDescription(ARBString const& inDesc)
+	{
+		m_Desc = inDesc;
+	}
+	eOtherPointsTally GetTally() const
+	{
+		return m_Tally;
+	}
+	void SetTally(eOtherPointsTally inTally)
+	{
+		m_Tally = inTally;
+	}
 
 private:
 	ARBString m_Name;

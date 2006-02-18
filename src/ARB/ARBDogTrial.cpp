@@ -96,23 +96,6 @@ ARBDogTrial::~ARBDogTrial()
 {
 }
 
-//static
-ARBDogTrialPtr ARBDogTrial::New()
-{
-	return ARBDogTrialPtr(new ARBDogTrial());
-}
-
-//static
-ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
-{
-	return ARBDogTrialPtr(new ARBDogTrial(inCal));
-}
-
-ARBDogTrialPtr ARBDogTrial::Clone() const
-{
-	return ARBDogTrialPtr(new ARBDogTrial(*this));
-}
-
 ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 {
 	if (this != &rhs)
@@ -133,17 +116,6 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 		&& m_Verified == rhs.m_Verified
 		&& m_Clubs == rhs.m_Clubs
 		&& m_Runs == rhs.m_Runs;
-}
-
-bool ARBDogTrial::operator!=(ARBDogTrial const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDogTrial::GetGenericName() const
-{
-	ARBString name = m_Location;
-	return name;
 }
 
 size_t ARBDogTrial::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -330,56 +302,6 @@ bool ARBDogTrial::HasVenue(ARBString const& inVenue) const
 			return true;
 	}
 	return false;
-}
-
-ARBString const& ARBDogTrial::GetLocation() const
-{
-	return m_Location;
-}
-
-void ARBDogTrial::SetLocation(ARBString const& inLoc)
-{
-	m_Location = inLoc;
-}
-
-ARBString const& ARBDogTrial::GetNote() const
-{
-	return m_Note;
-}
-
-void ARBDogTrial::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
-
-bool ARBDogTrial::IsVerified() const
-{
-	return m_Verified;
-}
-
-void ARBDogTrial::SetVerified(bool inVerified)
-{
-	m_Verified = inVerified;
-}
-
-ARBDogClubList const& ARBDogTrial::GetClubs() const
-{
-	return m_Clubs;
-}
-
-ARBDogClubList& ARBDogTrial::GetClubs()
-{
-	return m_Clubs;
-}
-
-ARBDogRunList const& ARBDogTrial::GetRuns() const
-{
-	return m_Runs;
-}
-
-ARBDogRunList& ARBDogTrial::GetRuns()
-{
-	return m_Runs;
 }
 
 /////////////////////////////////////////////////////////////////////////////

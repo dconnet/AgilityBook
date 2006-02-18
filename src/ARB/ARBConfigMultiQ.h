@@ -52,26 +52,41 @@ protected:
 
 public:
 	~ARBConfigMultiQ();
-	static ARBConfigMultiQPtr New();
-	ARBConfigMultiQPtr Clone() const;
+	static ARBConfigMultiQPtr New()
+	{
+		return ARBConfigMultiQPtr(new ARBConfigMultiQ());
+	}
+	ARBConfigMultiQPtr Clone() const
+	{
+		return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
+	}
 
 	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
 
 	bool operator==(ARBConfigMultiQ const& rhs) const;
-	bool operator!=(ARBConfigMultiQ const& rhs) const;
+	bool operator!=(ARBConfigMultiQ const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_ShortName;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a multiQ configuration.
@@ -191,15 +206,42 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString GetShortName() const;
-	void SetShortName(ARBString const& inName);
-	ARBDate GetValidFrom() const;
-	void SetValidFrom(ARBDate const& inDate);
-	ARBDate GetValidTo() const;
-	void SetValidTo(ARBDate const& inDate);
-	size_t GetNumItems() const;
+	ARBString GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString GetShortName() const
+	{
+		return m_ShortName;
+	}
+	void SetShortName(ARBString const& inName)
+	{
+		m_ShortName = inName;
+	}
+	ARBDate GetValidFrom() const
+	{
+		return m_ValidFrom;
+	}
+	void SetValidFrom(ARBDate const& inDate)
+	{
+		m_ValidFrom = inDate;
+	}
+	ARBDate GetValidTo() const
+	{
+		return m_ValidTo;
+	}
+	void SetValidTo(ARBDate const& inDate)
+	{
+		m_ValidTo = inDate;
+	}
+	size_t GetNumItems() const
+	{
+		return m_Items.size();
+	}
 	bool GetItem(
 			size_t inIndex,
 			ARBString& outDivision,

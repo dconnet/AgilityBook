@@ -62,13 +62,22 @@ protected:
 
 public:
 	~ARBDogRun();
-	static ARBDogRunPtr New();
-	ARBDogRunPtr Clone() const;
+	static ARBDogRunPtr New()
+	{
+		return ARBDogRunPtr(new ARBDogRun());
+	}
+	ARBDogRunPtr Clone() const
+	{
+		return ARBDogRunPtr(new ARBDogRun(*this));
+	}
 
 	ARBDogRun& operator=(ARBDogRun const& rhs);
 
 	bool operator==(ARBDogRun const& rhs) const;
-	bool operator!=(ARBDogRun const& rhs) const;
+	bool operator!=(ARBDogRun const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
@@ -162,51 +171,186 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBConfigMultiQPtr GetMultiQ() const;
-	void SetMultiQ(ARBConfigMultiQPtr inMultiQ);
-	ARBDate const& GetDate() const;
-	void SetDate(ARBDate const& inDate);
-	ARBString const& GetDivision() const;
-	void SetDivision(ARBString const& inDiv);
-	ARBString const& GetLevel() const;
-	void SetLevel(ARBString const& inLevel);
-	ARBString const& GetEvent() const;
-	void SetEvent(ARBString const& inEvent);
-	ARBString const& GetSubName() const;
-	void SetSubName(ARBString const& inSubName);
-	ARBString const& GetHeight() const;
-	void SetHeight(ARBString const& inHeight);
-	ARBString const& GetConditions() const;
-	void SetConditions(ARBString const& inConditions);
-	ARBString const& GetJudge() const;
-	void SetJudge(ARBString const& inJudge);
-	ARBString const& GetHandler() const;
-	void SetHandler(ARBString const& inHandler);
-	ARBDogRunPartnerList const& GetPartners() const;
-	ARBDogRunPartnerList& GetPartners();
-	ARBDogRunScoring const& GetScoring() const;
-	ARBDogRunScoring& GetScoring();
-	ARB_Q GetQ() const;
-	void SetQ(ARB_Q inQ);
-	short GetPlace() const;
-	void SetPlace(short inPlace);
-	short GetInClass() const;
-	void SetInClass(short inInClass);
-	short GetDogsQd() const;
-	void SetDogsQd(short inDogsQd);
-	ARBDogRunOtherPointsList const& GetOtherPoints() const;
-	ARBDogRunOtherPointsList& GetOtherPoints();
-	ARBDogFaultList const& GetFaults() const;
-	ARBDogFaultList& GetFaults();
-	ARBString const& GetCRCD() const;
-	void SetCRCD(ARBString const& inCRCD);
-	ARBString const& GetCRCDMetaFile() const;
-	void SetCRCDMetaFile(ARBString const& inCRCDMeta);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
-	ARBDogReferenceRunList const& GetReferenceRuns() const;
-	ARBDogReferenceRunList& GetReferenceRuns();
-	size_t NumLinks() const;
+	ARBConfigMultiQPtr GetMultiQ() const
+	{
+		return m_pMultiQ.lock();
+	}
+	void SetMultiQ(ARBConfigMultiQPtr inMultiQ)
+	{
+		m_pMultiQ = inMultiQ;
+	}
+	ARBDate const& GetDate() const
+	{
+		return m_Date;
+	}
+	void SetDate(ARBDate const& inDate)
+	{
+		m_Date = inDate;
+	}
+	ARBString const& GetDivision() const
+	{
+		return m_Division;
+	}
+	void SetDivision(ARBString const& inDiv)
+	{
+		m_Division = inDiv;
+	}
+	ARBString const& GetLevel() const
+	{
+		return m_Level;
+	}
+	void SetLevel(ARBString const& inLevel)
+	{
+		m_Level = inLevel;
+	}
+	ARBString const& GetEvent() const
+	{
+		return m_Event;
+	}
+	void SetEvent(ARBString const& inEvent)
+	{
+		m_Event = inEvent;
+	}
+	ARBString const& GetSubName() const
+	{
+		return m_SubName;
+	}
+	void SetSubName(ARBString const& inSubName)
+	{
+		m_SubName = inSubName;
+	}
+	ARBString const& GetHeight() const
+	{
+		return m_Height;
+	}
+	void SetHeight(ARBString const& inHeight)
+	{
+		m_Height = inHeight;
+	}
+	ARBString const& GetConditions() const
+	{
+		return m_Conditions;
+	}
+	void SetConditions(ARBString const& inConditions)
+	{
+		m_Conditions = inConditions;
+	}
+	ARBString const& GetJudge() const
+	{
+		return m_Judge;
+	}
+	void SetJudge(ARBString const& inJudge)
+	{
+		m_Judge = inJudge;
+	}
+	ARBString const& GetHandler() const
+	{
+		return m_Handler;
+	}
+	void SetHandler(ARBString const& inHandler)
+	{
+		m_Handler = inHandler;
+	}
+	ARBDogRunPartnerList const& GetPartners() const
+	{
+		return m_Partners;
+	}
+	ARBDogRunPartnerList& GetPartners()
+	{
+		return m_Partners;
+	}
+	ARBDogRunScoring const& GetScoring() const
+	{
+		return m_Scoring;
+	}
+	ARBDogRunScoring& GetScoring()
+	{
+		return m_Scoring;
+	}
+	ARB_Q GetQ() const
+	{
+		return m_Q;
+	}
+	void SetQ(ARB_Q inQ)
+	{
+		m_Q = inQ;
+	}
+	short GetPlace() const
+	{
+		return m_Place;
+	}
+	void SetPlace(short inPlace)
+	{
+		m_Place = inPlace;
+	}
+	short GetInClass() const
+	{
+		return m_InClass;
+	}
+	void SetInClass(short inInClass)
+	{
+		m_InClass = inInClass;
+	}
+	short GetDogsQd() const
+	{
+		return m_DogsQd;
+	}
+	void SetDogsQd(short inDogsQd)
+	{
+		m_DogsQd = inDogsQd;
+	}
+	ARBDogFaultList const& GetFaults() const
+	{
+		return m_Notes.GetFaults();
+	}
+	ARBDogFaultList& GetFaults()
+	{
+		return m_Notes.GetFaults();
+	}
+	ARBString const& GetCRCD() const
+	{
+		return m_Notes.GetCRCD();
+	}
+	void SetCRCD(ARBString const& inCRCD)
+	{
+		m_Notes.SetCRCD(inCRCD);
+	}
+	ARBString const& GetCRCDMetaFile() const
+	{
+		return m_Notes.GetCRCDMetaFile();
+	}
+	void SetCRCDMetaFile(ARBString const& inCRCDMeta)
+	{
+		m_Notes.SetCRCDMetaFile(inCRCDMeta);
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Notes.GetNote();
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Notes.SetNote(inNote);
+	}
+	ARBDogReferenceRunList const& GetReferenceRuns() const
+	{
+		return m_RefRuns;
+	}
+	ARBDogReferenceRunList& GetReferenceRuns()
+	{
+		return m_RefRuns;
+	}
+	ARBDogRunOtherPointsList const& GetOtherPoints() const
+	{
+		return m_OtherPoints;
+	}
+	ARBDogRunOtherPointsList& GetOtherPoints()
+	{
+		return m_OtherPoints;
+	}
+	size_t NumLinks() const
+	{
+		return m_Links.size();
+	}
 	size_t GetLinks(std::set<ARBString>& outLinks) const;
 	bool HasLink(ARBString const& inLink) const;
 	void AddLink(ARBString const& inLink);
