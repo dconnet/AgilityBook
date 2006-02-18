@@ -58,13 +58,22 @@ protected:
 
 public:
 	~ARBDogTitle();
-	static ARBDogTitlePtr New();
-	ARBDogTitlePtr Clone() const;
+	static ARBDogTitlePtr New()
+	{
+		return ARBDogTitlePtr(new ARBDogTitle());
+	}
+	ARBDogTitlePtr Clone() const
+	{
+		return ARBDogTitlePtr(new ARBDogTitle(*this));
+	}
 
 	ARBDogTitle& operator=(ARBDogTitle const& rhs);
 
 	bool operator==(ARBDogTitle const& rhs) const;
-	bool operator!=(ARBDogTitle const& rhs) const;
+	bool operator!=(ARBDogTitle const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
@@ -105,23 +114,62 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetDate() const;
+	ARBDate const& GetDate() const
+	{
+		return m_Date;
+	}
 	/**
 	 * @post Setting the date also affects the hidden value. An invalid date
 	 *       will hide the entry, a valid date will unhide.
 	 */
-	void SetDate(ARBDate const& inDate);
-	ARBString const& GetVenue() const;
-	void SetVenue(ARBString const& inVenue);
-	ARBString const& GetRawName() const;
-	short GetInstance() const;
+	void SetDate(ARBDate const& inDate)
+	{
+		m_Date = inDate;
+		if (!m_Date.IsValid())
+			m_bHidden = true;
+	}
+	ARBString const& GetVenue() const
+	{
+		return m_Venue;
+	}
+	void SetVenue(ARBString const& inVenue)
+	{
+		m_Venue = inVenue;
+	}
+	ARBString const& GetRawName() const
+	{
+		return m_Name;
+	}
+	short GetInstance() const
+	{
+		return m_Instance;
+	}
 	void SetName(
 			ARBString const& inName,
-			short inInstance);
-	bool GetReceived() const;
-	void SetReceived(bool inReceived);
-	bool IsHidden() const;
-	void SetHidden(bool bHidden);
+			short inInstance)
+	{
+		m_Name = inName;
+		m_Instance = inInstance;
+	}
+	bool GetReceived() const
+	{
+		return m_bReceived;
+	}
+	void SetReceived(bool inReceived)
+	{
+		m_bReceived = inReceived;
+	}
+	bool IsHidden() const
+	{
+		return m_bHidden;
+	}
+	void SetHidden(bool bHidden)
+	{
+		if (m_Date.IsValid())
+			m_bHidden = bHidden;
+		else
+			m_bHidden = true;
+	}
 
 private:
 	ARBDate m_Date;

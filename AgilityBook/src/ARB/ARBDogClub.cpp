@@ -71,17 +71,6 @@ ARBDogClub::~ARBDogClub()
 {
 }
 
-//static
-ARBDogClubPtr ARBDogClub::New()
-{
-	return ARBDogClubPtr(new ARBDogClub());
-}
-
-ARBDogClubPtr ARBDogClub::Clone() const
-{
-	return ARBDogClubPtr(new ARBDogClub(*this));
-}
-
 ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 {
 	if (this != &rhs)
@@ -96,16 +85,6 @@ bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
-}
-
-bool ARBDogClub::operator!=(ARBDogClub const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDogClub::GetGenericName() const
-{
-	return m_Name;
 }
 
 size_t ARBDogClub::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -169,26 +148,6 @@ bool ARBDogClub::Save(Element& ioTree) const
 	club.AddAttrib(ATTRIB_CLUB_VENUE, m_Venue);
 	club.SetValue(m_Name);
 	return true;
-}
-
-ARBString const& ARBDogClub::GetName() const
-{
-	return m_Name;
-}
-
-void ARBDogClub::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBString const& ARBDogClub::GetVenue() const
-{
-	return m_Venue;
-}
-
-void ARBDogClub::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
 }
 
 /////////////////////////////////////////////////////////////////////////////

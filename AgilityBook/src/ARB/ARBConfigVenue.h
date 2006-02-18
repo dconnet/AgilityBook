@@ -61,13 +61,22 @@ protected:
 
 public:
 	~ARBConfigVenue();
-	static ARBConfigVenuePtr New();
-	ARBConfigVenuePtr Clone() const;
+	static ARBConfigVenuePtr New()
+	{
+		return ARBConfigVenuePtr(new ARBConfigVenue());
+	}
+	ARBConfigVenuePtr Clone() const
+	{
+		return ARBConfigVenuePtr(new ARBConfigVenue(*this));
+	}
 
 	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
 
 	bool operator==(ARBConfigVenue const& rhs) const;
-	bool operator!=(ARBConfigVenue const& rhs) const;
+	bool operator!=(ARBConfigVenue const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Reset the contents of this object and all sub-objects.
@@ -78,14 +87,20 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a venue configuration.
@@ -125,20 +140,62 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetLongName() const;
-	void SetLongName(ARBString const& inName);
-	ARBString const& GetDesc() const;
-	void SetDesc(ARBString const& inDesc);
-	ARBConfigTitleList const& GetTitles() const;
-	ARBConfigTitleList& GetTitles();
-	ARBConfigDivisionList const& GetDivisions() const;
-	ARBConfigDivisionList& GetDivisions();
-	ARBConfigEventList const& GetEvents() const;
-	ARBConfigEventList& GetEvents();
-	ARBConfigMultiQList const& GetMultiQs() const;
-	ARBConfigMultiQList& GetMultiQs();
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetLongName() const
+	{
+		return m_LongName;
+	}
+	void SetLongName(ARBString const& inName)
+	{
+		m_LongName = inName;
+	}
+	ARBString const& GetDesc() const
+	{
+		return m_Desc;
+	}
+	void SetDesc(ARBString const& inDesc)
+	{
+		m_Desc = inDesc;
+	}
+	ARBConfigTitleList const& GetTitles() const
+	{
+		return m_Titles;
+	}
+	ARBConfigTitleList& GetTitles()
+	{
+		return m_Titles;
+	}
+	ARBConfigDivisionList const& GetDivisions() const
+	{
+		return m_Divisions;
+	}
+	ARBConfigDivisionList& GetDivisions()
+	{
+		return m_Divisions;
+	}
+	ARBConfigEventList const& GetEvents() const
+	{
+		return m_Events;
+	}
+	ARBConfigEventList& GetEvents()
+	{
+		return m_Events;
+	}
+	ARBConfigMultiQList const& GetMultiQs() const
+	{
+		return m_MultiQs;
+	}
+	ARBConfigMultiQList& GetMultiQs()
+	{
+		return m_MultiQs;
+	}
 
 private:
 	ARBString m_Name;
@@ -183,7 +240,10 @@ public:
 	 * @param inVenue Venue to verify.
 	 * @return Venue exists.
 	 */
-	bool VerifyVenue(ARBString const& inVenue) const;
+	bool VerifyVenue(ARBString const& inVenue) const
+	{
+		return FindVenue(inVenue);
+	}
 
 	/**
 	 * Verify a multiQ exists.

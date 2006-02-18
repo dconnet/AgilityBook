@@ -92,17 +92,6 @@ ARBConfigVenue::~ARBConfigVenue()
 {
 }
 
-//static
-ARBConfigVenuePtr ARBConfigVenue::New()
-{
-	return ARBConfigVenuePtr(new ARBConfigVenue());
-}
-
-ARBConfigVenuePtr ARBConfigVenue::Clone() const
-{
-	return ARBConfigVenuePtr(new ARBConfigVenue(*this));
-}
-
 ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 {
 	if (this != &rhs)
@@ -129,11 +118,6 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_MultiQs == rhs.m_MultiQs;
 }
 
-bool ARBConfigVenue::operator!=(ARBConfigVenue const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 void ARBConfigVenue::clear()
 {
 	m_Name.erase();
@@ -143,17 +127,6 @@ void ARBConfigVenue::clear()
 	m_Divisions.clear();
 	m_Events.clear();
 	m_MultiQs.clear();
-}
-
-ARBString ARBConfigVenue::GetGenericName() const
-{
-	return m_Name;
-}
-
-size_t ARBConfigVenue::GetSearchStrings(std::set<ARBString>& ioStrings) const
-{
-	size_t nItems = 0;
-	return nItems;
 }
 
 bool ARBConfigVenue::Load(
@@ -480,76 +453,6 @@ bool ARBConfigVenue::Update(
 	return bChanges;
 }
 
-ARBString const& ARBConfigVenue::GetName() const
-{
-	return m_Name;
-}
-
-void ARBConfigVenue::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBString const& ARBConfigVenue::GetLongName() const
-{
-	return m_LongName;
-}
-
-void ARBConfigVenue::SetLongName(ARBString const& inName)
-{
-	m_LongName = inName;
-}
-
-ARBString const& ARBConfigVenue::GetDesc() const
-{
-	return m_Desc;
-}
-
-void ARBConfigVenue::SetDesc(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
-}
-
-ARBConfigTitleList const& ARBConfigVenue::GetTitles() const
-{
-	return m_Titles;
-}
-
-ARBConfigTitleList& ARBConfigVenue::GetTitles()
-{
-	return m_Titles;
-}
-
-ARBConfigDivisionList const& ARBConfigVenue::GetDivisions() const
-{
-	return m_Divisions;
-}
-
-ARBConfigDivisionList& ARBConfigVenue::GetDivisions()
-{
-	return m_Divisions;
-}
-
-ARBConfigEventList const& ARBConfigVenue::GetEvents() const
-{
-	return m_Events;
-}
-
-ARBConfigEventList& ARBConfigVenue::GetEvents()
-{
-	return m_Events;
-}
-
-ARBConfigMultiQList const& ARBConfigVenue::GetMultiQs() const
-{
-	return m_MultiQs;
-}
-
-ARBConfigMultiQList& ARBConfigVenue::GetMultiQs()
-{
-	return m_MultiQs;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigVenueList::Load(
@@ -580,11 +483,6 @@ void ARBConfigVenueList::sort()
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigVenue());
-}
-
-bool ARBConfigVenueList::VerifyVenue(ARBString const& inVenue) const
-{
-	return FindVenue(inVenue);
 }
 
 bool ARBConfigVenueList::VerifyMultiQ(

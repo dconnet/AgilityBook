@@ -65,17 +65,6 @@ ARBConfigFault::~ARBConfigFault()
 {
 }
 
-//static
-ARBConfigFaultPtr ARBConfigFault::New()
-{
-	return ARBConfigFaultPtr(new ARBConfigFault());
-}
-
-ARBConfigFaultPtr ARBConfigFault::Clone() const
-{
-	return ARBConfigFaultPtr(new ARBConfigFault(*this));
-}
-
 ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 {
 	if (this != &rhs)
@@ -86,22 +75,6 @@ ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 {
 	return m_Name == rhs.m_Name;
-}
-
-bool ARBConfigFault::operator!=(ARBConfigFault const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBConfigFault::GetGenericName() const
-{
-	return m_Name;
-}
-
-size_t ARBConfigFault::GetSearchStrings(std::set<ARBString>& ioStrings) const
-{
-	size_t nItems = 0;
-	return nItems;
 }
 
 bool ARBConfigFault::Load(
@@ -128,16 +101,6 @@ bool ARBConfigFault::Save(Element& ioTree) const
 	Element& element = ioTree.AddElement(TREE_FAULTTYPE);
 	element.SetValue(m_Name);
 	return true;
-}
-
-ARBString const& ARBConfigFault::GetName() const
-{
-	return m_Name;
-}
-
-void ARBConfigFault::SetName(ARBString const& inName)
-{
-	m_Name = inName;
 }
 
 /////////////////////////////////////////////////////////////////////////////

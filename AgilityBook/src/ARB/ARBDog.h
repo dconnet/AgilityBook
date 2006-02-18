@@ -62,19 +62,31 @@ protected:
 
 public:
 	~ARBDog();
-	static ARBDogPtr New();
-	ARBDogPtr Clone() const;
+	static ARBDogPtr New()
+	{
+		return ARBDogPtr(new ARBDog());
+	}
+	ARBDogPtr Clone() const
+	{
+		return ARBDogPtr(new ARBDog(*this));
+	}
 
 	ARBDog& operator=(ARBDog const& rhs);
 
 	bool operator==(ARBDog const& rhs) const;
-	bool operator!=(ARBDog const& rhs) const;
+	bool operator!=(ARBDog const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_CallName;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -150,26 +162,86 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetCallName() const;
-	void SetCallName(ARBString const& inName);
-	ARBDate const& GetDOB() const;
-	void SetDOB(ARBDate const& inDOB);
-	ARBDate const& GetDeceased() const;
-	void SetDeceased(ARBDate const& inDeceased);
-	ARBString const& GetRegisteredName() const;
-	void SetRegisteredName(ARBString const& inName);
-	ARBString const& GetBreed() const;
-	void SetBreed(ARBString const& inBreed);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
-	ARBDogExistingPointsList const& GetExistingPoints() const;
-	ARBDogExistingPointsList& GetExistingPoints();
-	ARBDogRegNumList const& GetRegNums() const;
-	ARBDogRegNumList& GetRegNums();
-	ARBDogTitleList const& GetTitles() const;
-	ARBDogTitleList& GetTitles();
-	ARBDogTrialList const& GetTrials() const;
-	ARBDogTrialList& GetTrials();
+	ARBString const& GetCallName() const
+	{
+		return m_CallName;
+	}
+	void SetCallName(ARBString const& inName)
+	{
+		m_CallName = inName;
+	}
+	ARBDate const& GetDOB() const
+	{
+		return m_DOB;
+	}
+	void SetDOB(ARBDate const& inDOB)
+	{
+		m_DOB = inDOB;
+	}
+	ARBDate const& GetDeceased() const
+	{
+		return m_Deceased;
+	}
+	void SetDeceased(ARBDate const& inDeceased)
+	{
+		m_Deceased = inDeceased;
+	}
+	ARBString const& GetRegisteredName() const
+	{
+		return m_RegName;
+	}
+	void SetRegisteredName(ARBString const& inName)
+	{
+		m_RegName = inName;
+	}
+	ARBString const& GetBreed() const
+	{
+		return m_Breed;
+	}
+	void SetBreed(ARBString const& inBreed)
+	{
+		m_Breed = inBreed;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
+	ARBDogExistingPointsList const& GetExistingPoints() const
+	{
+		return m_ExistingPoints;
+	}
+	ARBDogExistingPointsList& GetExistingPoints()
+	{
+		return m_ExistingPoints;
+	}
+	ARBDogRegNumList const& GetRegNums() const
+	{
+		return m_RegNums;
+	}
+	ARBDogRegNumList& GetRegNums()
+	{
+		return m_RegNums;
+	}
+	ARBDogTitleList const& GetTitles() const
+	{
+		return m_Titles;
+	}
+	ARBDogTitleList& GetTitles()
+	{
+		return m_Titles;
+	}
+	ARBDogTrialList const& GetTrials() const
+	{
+		return m_Trials;
+	}
+	ARBDogTrialList& GetTrials()
+	{
+		return m_Trials;
+	}
 
 private:
 	ARBString m_CallName;

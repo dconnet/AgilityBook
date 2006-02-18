@@ -77,17 +77,6 @@ ARBDogRegNum::~ARBDogRegNum()
 {
 }
 
-//static
-ARBDogRegNumPtr ARBDogRegNum::New()
-{
-	return ARBDogRegNumPtr(new ARBDogRegNum());
-}
-
-ARBDogRegNumPtr ARBDogRegNum::Clone() const
-{
-	return ARBDogRegNumPtr(new ARBDogRegNum(*this));
-}
-
 ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)
 {
 	if (this != &rhs)
@@ -108,16 +97,6 @@ bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 		&& m_Height == rhs.m_Height
 		&& m_bReceived == rhs.m_bReceived
 		&& m_Note == rhs.m_Note;
-}
-
-bool ARBDogRegNum::operator!=(ARBDogRegNum const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDogRegNum::GetGenericName() const
-{
-	return GetVenue() + _T(" ") + GetNumber();
 }
 
 size_t ARBDogRegNum::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -193,56 +172,6 @@ bool ARBDogRegNum::Save(Element& ioTree) const
 		title.AddAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived);
 	title.SetValue(m_Note);
 	return true;
-}
-
-ARBString const& ARBDogRegNum::GetVenue() const
-{
-	return m_Venue;
-}
-
-void ARBDogRegNum::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-ARBString const& ARBDogRegNum::GetNumber() const
-{
-	return m_Number;
-}
-
-void ARBDogRegNum::SetNumber(ARBString const& inNumber)
-{
-	m_Number = inNumber;
-}
-
-ARBString const& ARBDogRegNum::GetHeight() const
-{
-	return m_Height;
-}
-
-void ARBDogRegNum::SetHeight(ARBString const& inHeight)
-{
-	m_Height = inHeight;
-}
-
-bool ARBDogRegNum::GetReceived() const
-{
-	return m_bReceived;
-}
-
-void ARBDogRegNum::SetReceived(bool inReceived)
-{
-	m_bReceived = inReceived;
-}
-
-ARBString const& ARBDogRegNum::GetNote() const
-{
-	return m_Note;
-}
-
-void ARBDogRegNum::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////

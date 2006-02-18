@@ -46,14 +46,13 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 
+// Forward references
 class ARBConfig;
 class Element;
-
 #define ARB_TYPEDEF(name) \
 	class name;\
 	class name##List;\
 	typedef boost::shared_ptr<name> name##Ptr;
-
 ARB_TYPEDEF(ARBCalendar)
 ARB_TYPEDEF(ARBConfigAction)
 ARB_TYPEDEF(ARBConfigDivision)
@@ -104,7 +103,7 @@ public:
 	}
 
 	/**
-	 * Equality test.
+	 * Equality test (by value, not pointer).
 	 */
 	bool operator==(ARBVector<T> const& rhs) const
 	{

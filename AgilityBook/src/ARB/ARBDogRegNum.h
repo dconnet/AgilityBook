@@ -54,19 +54,31 @@ protected:
 
 public:
 	~ARBDogRegNum();
-	static ARBDogRegNumPtr New();
-	ARBDogRegNumPtr Clone() const;
+	static ARBDogRegNumPtr New()
+	{
+		return ARBDogRegNumPtr(new ARBDogRegNum());
+	}
+	ARBDogRegNumPtr Clone() const
+	{
+		return ARBDogRegNumPtr(new ARBDogRegNum(*this));
+	}
 
 	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
 
 	bool operator==(ARBDogRegNum const& rhs) const;
-	bool operator!=(ARBDogRegNum const& rhs) const;
+	bool operator!=(ARBDogRegNum const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return GetVenue() + _T(" ") + GetNumber();
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -101,16 +113,46 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetVenue() const;
-	void SetVenue(ARBString const& inVenue);
-	ARBString const& GetNumber() const;
-	void SetNumber(ARBString const& inNumber);
-	ARBString const& GetHeight() const;
-	void SetHeight(ARBString const& inHeight);
-	bool GetReceived() const;
-	void SetReceived(bool inReceived);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
+	ARBString const& GetVenue() const
+	{
+		return m_Venue;
+	}
+	void SetVenue(ARBString const& inVenue)
+	{
+		m_Venue = inVenue;
+	}
+	ARBString const& GetNumber() const
+	{
+		return m_Number;
+	}
+	void SetNumber(ARBString const& inNumber)
+	{
+		m_Number = inNumber;
+	}
+	ARBString const& GetHeight() const
+	{
+		return m_Height;
+	}
+	void SetHeight(ARBString const& inHeight)
+	{
+		m_Height = inHeight;
+	}
+	bool GetReceived() const
+	{
+		return m_bReceived;
+	}
+	void SetReceived(bool inReceived)
+	{
+		m_bReceived = inReceived;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
 
 private:
 	ARBString m_Venue;

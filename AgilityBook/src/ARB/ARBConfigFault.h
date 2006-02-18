@@ -53,26 +53,41 @@ protected:
 
 public:
 	~ARBConfigFault();
-	static ARBConfigFaultPtr New();
-	ARBConfigFaultPtr Clone() const;
+	static ARBConfigFaultPtr New()
+	{
+		return ARBConfigFaultPtr(new ARBConfigFault());
+	}
+	ARBConfigFaultPtr Clone() const
+	{
+		return ARBConfigFaultPtr(new ARBConfigFault(*this));
+	}
 
 	ARBConfigFault& operator=(ARBConfigFault const& rhs);
 
 	bool operator==(ARBConfigFault const& rhs) const;
-	bool operator!=(ARBConfigFault const& rhs) const;
+	bool operator!=(ARBConfigFault const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Name;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a fault.
@@ -98,8 +113,14 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
 
 private:
 	ARBString m_Name;

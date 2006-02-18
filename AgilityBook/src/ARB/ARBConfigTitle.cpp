@@ -80,17 +80,6 @@ ARBConfigTitle::~ARBConfigTitle()
 {
 }
 
-//static
-ARBConfigTitlePtr ARBConfigTitle::New()
-{
-	return ARBConfigTitlePtr(new ARBConfigTitle());
-}
-
-ARBConfigTitlePtr ARBConfigTitle::Clone() const
-{
-	return ARBConfigTitlePtr(new ARBConfigTitle(*this));
-}
-
 ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 {
 	if (this != &rhs)
@@ -117,11 +106,6 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 		&& m_Desc == rhs.m_Desc;
 }
 
-bool ARBConfigTitle::operator!=(ARBConfigTitle const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 void ARBConfigTitle::clear()
 {
 	m_Name.erase();
@@ -131,17 +115,6 @@ void ARBConfigTitle::clear()
 	m_ValidFrom.clear();
 	m_ValidTo.clear();
 	m_Desc.erase();
-}
-
-ARBString ARBConfigTitle::GetGenericName() const
-{
-	return GetNiceName();
-}
-
-size_t ARBConfigTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
-{
-	size_t nItems = 0;
-	return nItems;
 }
 
 bool ARBConfigTitle::Load(
@@ -206,25 +179,6 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 	return true;
 }
 
-bool ARBConfigTitle::IsValidOn(ARBDate inDate) const
-{
-	if (inDate.IsValid()
-	&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
-	|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
-	{
-		return false;
-	}
-	return true;
-}
-
-ARBString const& ARBConfigTitle::GetNiceName() const
-{
-	if (0 == m_LongName.length())
-		return m_Name;
-	else
-		return m_LongName;
-}
-
 ARBString ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bAbbrevFirst,
@@ -277,76 +231,6 @@ ARBString ARBConfigTitle::GetCompleteName(
 			name << _T(" ") << dates;
 	}
 	return name.str();
-}
-
-ARBString const& ARBConfigTitle::GetName() const
-{
-	return m_Name;
-}
-
-void ARBConfigTitle::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBString const& ARBConfigTitle::GetLongName() const
-{
-	return m_LongName;
-}
-
-void ARBConfigTitle::SetLongName(ARBString const& inName)
-{
-	m_LongName = inName;
-}
-
-short ARBConfigTitle::GetMultiple() const
-{
-	return m_Multiple;
-}
-
-void ARBConfigTitle::SetMultiple(short inMultiple)
-{
-	m_Multiple = inMultiple;
-}
-
-bool ARBConfigTitle::GetPrefix() const
-{
-	return m_Prefix;
-}
-
-void ARBConfigTitle::SetPrefix(bool inPrefix)
-{
-	m_Prefix = inPrefix;
-}
-
-ARBDate const& ARBConfigTitle::GetValidFrom() const
-{
-	return m_ValidFrom;
-}
-
-void ARBConfigTitle::SetValidFrom(ARBDate const& inDate)
-{
-	m_ValidFrom = inDate;
-}
-
-ARBDate const& ARBConfigTitle::GetValidTo() const
-{
-	return m_ValidTo;
-}
-
-void ARBConfigTitle::SetValidTo(ARBDate const& inDate)
-{
-	m_ValidTo = inDate;
-}
-
-ARBString const& ARBConfigTitle::GetDescription() const
-{
-	return m_Desc;
-}
-
-void ARBConfigTitle::SetDescription(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
 }
 
 /////////////////////////////////////////////////////////////////////////////

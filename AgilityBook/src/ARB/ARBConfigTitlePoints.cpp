@@ -79,23 +79,6 @@ ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
 
-//static
-ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
-{
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
-}
-
-//static
-ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(double inPoints, double inFaults)
-{
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
-}
-
-ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
-{
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
-}
-
 ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const& rhs)
 {
 	if (this != &rhs)
@@ -112,20 +95,9 @@ bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 		&& m_Faults == rhs.m_Faults;
 }
 
-bool ARBConfigTitlePoints::operator!=(ARBConfigTitlePoints const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 ARBString ARBConfigTitlePoints::GetGenericName() const
 {
 	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
-}
-
-size_t ARBConfigTitlePoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
-{
-	size_t nItems = 0;
-	return nItems;
 }
 
 bool ARBConfigTitlePoints::Load(
@@ -164,26 +136,6 @@ bool ARBConfigTitlePoints::Save(Element& ioTree) const
 	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
 	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
 	return true;
-}
-
-double ARBConfigTitlePoints::GetPoints() const
-{
-	return m_Points;
-}
-
-void ARBConfigTitlePoints::SetPoints(double inPoints)
-{
-	m_Points = inPoints;
-}
-
-double ARBConfigTitlePoints::GetFaults() const
-{
-	return m_Faults;
-}
-
-void ARBConfigTitlePoints::SetFaults(double inFaults)
-{
-	m_Faults = inFaults;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -69,17 +69,6 @@ ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
 
-//static
-ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
-{
-	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
-}
-
-ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
-{
-	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
-}
-
 ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const& rhs)
 {
 	if (this != &rhs)
@@ -98,27 +87,11 @@ bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 		&& m_Desc == rhs.m_Desc;
 }
 
-bool ARBConfigOtherPoints::operator!=(ARBConfigOtherPoints const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 void ARBConfigOtherPoints::clear()
 {
 	m_Name.erase();
 	m_Tally = ARBConfigOtherPoints::eTallyAll;
 	m_Desc.erase();
-}
-
-ARBString ARBConfigOtherPoints::GetGenericName() const
-{
-	return GetName();
-}
-
-size_t ARBConfigOtherPoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
-{
-	size_t nItems = 0;
-	return nItems;
 }
 
 bool ARBConfigOtherPoints::Load(
@@ -183,36 +156,6 @@ bool ARBConfigOtherPoints::Save(Element& ioTree) const
 	if (0 < m_Desc.length())
 		other.SetValue(m_Desc);
 	return true;
-}
-
-ARBString const& ARBConfigOtherPoints::GetName() const
-{
-	return m_Name;
-}
-
-void ARBConfigOtherPoints::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-ARBString const& ARBConfigOtherPoints::GetDescription() const
-{
-	return m_Desc;
-}
-
-void ARBConfigOtherPoints::SetDescription(ARBString const& inDesc)
-{
-	m_Desc = inDesc;
-}
-
-ARBConfigOtherPoints::eOtherPointsTally ARBConfigOtherPoints::GetTally() const
-{
-	return m_Tally;
-}
-
-void ARBConfigOtherPoints::SetTally(ARBConfigOtherPoints::eOtherPointsTally inTally)
-{
-	m_Tally = inTally;
 }
 
 /////////////////////////////////////////////////////////////////////////////

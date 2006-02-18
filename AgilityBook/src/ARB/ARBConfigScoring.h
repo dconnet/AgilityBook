@@ -83,26 +83,41 @@ protected:
 
 public:
 	~ARBConfigScoring();
-	static ARBConfigScoringPtr New();
-	ARBConfigScoringPtr Clone() const;
+	static ARBConfigScoringPtr New()
+	{
+		return ARBConfigScoringPtr(new ARBConfigScoring());
+	}
+	ARBConfigScoringPtr Clone() const
+	{
+		return ARBConfigScoringPtr(new ARBConfigScoring(*this));
+	}
 
 	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
 
 	bool operator==(ARBConfigScoring const& rhs) const;
-	bool operator!=(ARBConfigScoring const& rhs) const;
+	bool operator!=(ARBConfigScoring const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Division + _T(" ") + m_Level;
+	}
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a scoring configuration.
@@ -131,54 +146,181 @@ public:
 	 * Determine if this method is valid on the given date.
 	 * @param inDate Date to check, if not valid, this method is valid.
 	 */
-	bool IsValidOn(ARBDate inDate) const;
+	bool IsValidOn(ARBDate inDate) const
+	{
+		if (inDate.IsValid()
+		&& ((m_ValidFrom.IsValid() && inDate < m_ValidFrom)
+		|| (m_ValidTo.IsValid() && inDate > m_ValidTo)))
+		{
+			return false;
+		}
+		return true;
+	}
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetValidFrom() const;
-	void SetValidFrom(ARBDate const& inDate);
-	ARBDate const& GetValidTo() const;
-	void SetValidTo(ARBDate const& inDate);
-	ARBString const& GetDivision() const;
-	void SetDivision(ARBString const& inDiv);
-	ARBString const& GetLevel() const;
-	void SetLevel(ARBString const& inLevel);
-	ScoringStyle GetScoringStyle() const;
-	ARBString GetScoringStyleStr() const;
-	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle);
-	bool DropFractions() const; ///< Only valid for F/T, T+F
-	void SetDropFractions(bool inBool); ///< Only valid for F/T, T+F
-	bool QsMustBeClean() const; ///< Only valid for T+F
-	void SetQsMustBeClean(bool inBool); ///< Only valid for T+F
-	bool ComputeTimeFaultsUnder() const;
-	void SetComputeTimeFaultsUnder(bool inBool);
-	bool ComputeTimeFaultsOver() const;
-	void SetComputeTimeFaultsOver(bool inBool);
-	short TimeFaultMultiplier() const;
-	void SetTimeFaultMultiplier(short inMultiplier);
-	short GetRequiredOpeningPoints() const; ///< Only valid for point-based
-	void SetRequiredOpeningPoints(short inPoints); ///< Only valid for point-based
-	short GetRequiredClosingPoints() const; ///< Only valid for point-based
-	void SetRequiredClosingPoints(short inPoints); ///< Only valid for point-based
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
-	bool HasSuperQ() const;
-	void SetHasSuperQ(bool inBool);
-	bool HasSpeedPts() const;
-	void SetHasSpeedPts(bool inBool);
-	bool HasBonusPts() const;
-	void SetHasBonusPts(bool inBool);
-	ARBConfigTitlePointsList const& GetTitlePoints() const;
-	ARBConfigTitlePointsList& GetTitlePoints();
-	ARBConfigLifetimePointsList const& GetLifetimePoints() const;
-	ARBConfigLifetimePointsList& GetLifetimePoints();
+	ARBDate const& GetValidFrom() const
+	{
+		return m_ValidFrom;
+	}
+	void SetValidFrom(ARBDate const& inDate)
+	{
+		m_ValidFrom = inDate;
+	}
+	ARBDate const& GetValidTo() const
+	{
+		return m_ValidTo;
+	}
+	void SetValidTo(ARBDate const& inDate)
+	{
+		m_ValidTo = inDate;
+	}
+	ARBString const& GetDivision() const
+	{
+		return m_Division;
+	}
+	void SetDivision(ARBString const& inDiv)
+	{
+		m_Division = inDiv;
+	}
+	ARBString const& GetLevel() const
+	{
+		return m_Level;
+	}
+	void SetLevel(ARBString const& inLevel)
+	{
+		m_Level = inLevel;
+	}
+	ScoringStyle GetScoringStyle() const
+	{
+		return m_Style;
+	}
+	ARBString GetScoringStyleStr() const
+	{
+		return GetScoringStyleStr(m_Style);
+	}
+	void SetScoringStyle(ARBConfigScoring::ScoringStyle inStyle)
+	{
+		m_Style = inStyle;
+		if (eOCScoreThenTime != m_Style && eScoreThenTime != m_Style)
+			m_OpeningPts = m_ClosingPts = 0;
+	}
+	bool DropFractions() const ///< Only valid for F/T, T+F
+	{
+		return m_bDropFractions;
+	}
+	void SetDropFractions(bool inBool) ///< Only valid for F/T, T+F
+	{
+		m_bDropFractions = inBool;
+	}
+	bool QsMustBeClean() const ///< Only valid for T+F
+	{
+		return m_bCleanQ;
+	}
+	void SetQsMustBeClean(bool inBool) ///< Only valid for T+F
+	{
+		m_bCleanQ = inBool;
+	}
+	bool ComputeTimeFaultsUnder() const
+	{
+		return m_bTimeFaultsUnder;
+	}
+	void SetComputeTimeFaultsUnder(bool inBool)
+	{
+		m_bTimeFaultsUnder = inBool;
+	}
+	bool ComputeTimeFaultsOver() const
+	{
+		return m_bTimeFaultsOver;
+	}
+	void SetComputeTimeFaultsOver(bool inBool)
+	{
+		m_bTimeFaultsOver = inBool;
+	}
+	short TimeFaultMultiplier() const
+	{
+		return m_TimeFaultMultiplier;
+	}
+	void SetTimeFaultMultiplier(short inMultiplier)
+	{
+		m_TimeFaultMultiplier = inMultiplier;
+		if (0 >= m_TimeFaultMultiplier)
+			m_TimeFaultMultiplier = 1;
+	}
+	short GetRequiredOpeningPoints() const ///< Only valid for point-based
+	{
+		return m_OpeningPts;
+	}
+	void SetRequiredOpeningPoints(short inPoints) ///< Only valid for point-based
+	{
+		m_OpeningPts = inPoints;
+	}
+	short GetRequiredClosingPoints() const ///< Only valid for point-based
+	{
+		return m_ClosingPts;
+	}
+	void SetRequiredClosingPoints(short inPoints) ///< Only valid for point-based
+	{
+		m_ClosingPts = inPoints;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
+	bool HasSuperQ() const
+	{
+		return m_bSuperQ;
+	}
+	void SetHasSuperQ(bool inBool)
+	{
+		m_bSuperQ = inBool;
+	}
+	bool HasSpeedPts() const
+	{
+		return m_bSpeedPts;
+	}
+	void SetHasSpeedPts(bool inBool)
+	{
+		m_bSpeedPts = inBool;
+	}
+	bool HasBonusPts() const
+	{
+		return m_bBonusPts;
+	}
+	void SetHasBonusPts(bool inBool)
+	{
+		m_bBonusPts = inBool;
+	}
+	ARBConfigTitlePointsList const& GetTitlePoints() const
+	{
+		return m_TitlePoints;
+	}
+	ARBConfigTitlePointsList& GetTitlePoints()
+	{
+		return m_TitlePoints;
+	}
+	ARBConfigLifetimePointsList const& GetLifetimePoints() const
+	{
+		return m_LifePoints;
+	}
+	ARBConfigLifetimePointsList& GetLifetimePoints()
+	{
+		return m_LifePoints;
+	}
 
 	/**
 	 * Obsolete, used only for converting old files.
 	 * This information is now contained in the venue (see ARBConfigMultiQ).
 	 */
-	bool ConvertDoubleQ() const;
+	bool ConvertDoubleQ() const
+	{
+		return m_bDoubleQ;
+	}
 
 private:
 	ARBDate m_ValidFrom;

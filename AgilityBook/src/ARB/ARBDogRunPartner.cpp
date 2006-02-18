@@ -72,17 +72,6 @@ ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
 
-//static
-ARBDogRunPartnerPtr ARBDogRunPartner::New()
-{
-	return ARBDogRunPartnerPtr(new ARBDogRunPartner());
-}
-
-ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
-{
-	return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
-}
-
 ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 {
 	if (this != &rhs)
@@ -99,16 +88,6 @@ bool ARBDogRunPartner::operator==(ARBDogRunPartner const& rhs) const
 	return m_Handler == rhs.m_Handler
 		&& m_Dog == rhs.m_Dog
 		&& m_RegNum == rhs.m_RegNum;
-}
-
-bool ARBDogRunPartner::operator!=(ARBDogRunPartner const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDogRunPartner::GetGenericName() const
-{
-	return m_Dog;
 }
 
 size_t ARBDogRunPartner::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -169,36 +148,6 @@ bool ARBDogRunPartner::Save(Element& ioTree) const
 	if (0 < m_RegNum.length())
 		partner.AddAttrib(ATTRIB_PARTNER_REGNUM, m_RegNum);
 	return true;
-}
-
-ARBString const& ARBDogRunPartner::GetHandler() const
-{
-	return m_Handler;
-}
-
-void ARBDogRunPartner::SetHandler(ARBString const& inHandler)
-{
-	m_Handler = inHandler;
-}
-
-ARBString const& ARBDogRunPartner::GetDog() const
-{
-	return m_Dog;
-}
-
-void ARBDogRunPartner::SetDog(ARBString const& inDog)
-{
-	m_Dog = inDog;
-}
-
-ARBString const& ARBDogRunPartner::GetRegNum() const
-{
-	return m_RegNum;
-}
-
-void ARBDogRunPartner::SetRegNum(ARBString const& inRegNum)
-{
-	m_RegNum = inRegNum;
 }
 
 /////////////////////////////////////////////////////////////////////////////

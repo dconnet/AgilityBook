@@ -71,28 +71,87 @@ public:
 	ARBiCal(
 			std::ostream& ioStream,
 			int inVersion);
-	virtual ~ARBiCal();
+	virtual ~ARBiCal()
+	{
+		m_ioStream << "END:VCALENDAR\r\n";
+	}
 
-	virtual void Release();
+	virtual void Release()
+	{
+		delete this;
+	}
 
-	void BeginEvent();
+	void BeginEvent()
+	{
+		m_ioStream << "BEGIN:VEVENT\r\n";
+	}
 #ifdef UNICODE
-	void DoUID(std::wstring const& inUID);
+	void DoUID(std::wstring const& inUID)
+	{
+		CStringA convert(inUID.c_str());
+		DoUID(std::string(convert));
+	}
 #endif
-	void DoUID(std::string const& inUID);
+	void DoUID(std::string const& inUID)
+	{
+		WriteText("UID", inUID, false);
+	}
 	void DoDTSTAMP();
-	void DoDTSTART(ARBDate inDate);
-	void DoDTEND(ARBDate inDate);
+	void DoDTSTART(ARBDate inDate)
+	{
+		Write("DTSTART", inDate, true);
+	}
+	void DoDTEND(ARBDate inDate)
+	{
+		// Note, DTEND is the non-inclusive end
+		if (1 < m_Version)
+			inDate += 1;
+		Write("DTEND", inDate, false);
+	}
 #ifdef UNICODE
-	void DoSUMMARY(std::wstring const& inStr);
-	void DoLOCATION(std::wstring const& inStr);
-	void DoDESCRIPTION(std::wstring const& inStr);
+	void DoSUMMARY(std::wstring const& inStr)
+	{
+		CStringA convert(inStr.c_str());
+		DoSUMMARY(std::string(convert));
+	}
+	void DoLOCATION(std::wstring const& inStr)
+	{
+		CStringA convert(inStr.c_str());
+		DoLOCATION(std::string(convert));
+	}
+	void DoDESCRIPTION(std::wstring const& inStr)
+	{
+		CStringA convert(inStr.c_str());
+		DoDESCRIPTION(std::string(convert));
+	}
 #endif
-	void DoSUMMARY(std::string const& inStr);
-	void DoLOCATION(std::string const& inStr);
-	void DoDESCRIPTION(std::string const& inStr);
-	void DoAlarm(int inDaysBefore);
-	void EndEvent();
+	void DoSUMMARY(std::string const& inStr)
+	{
+		WriteText("SUMMARY", inStr, true);
+	}
+	void DoLOCATION(std::string const& inStr)
+	{
+		WriteText("LOCATION", inStr, true);
+	}
+	void DoDESCRIPTION(std::string const& inStr)
+	{
+		WriteText("DESCRIPTION", inStr, true);
+	}
+	void DoAlarm(int inDaysBefore)
+	{
+		if (1 < m_Version)
+		{
+			m_ioStream << "BEGIN:VALARM\r\n";
+			m_ioStream << "ACTION:DISPLAY\r\n";
+			m_ioStream << "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n";
+			m_ioStream << "DESCRIPTION:Reminder\r\n";
+			m_ioStream << "END:VALARM\r\n";
+		}
+	}
+	void EndEvent()
+	{
+		m_ioStream << "END:VEVENT" << "\r\n";
+	}
 
 private:
 	void Write(
@@ -129,16 +188,6 @@ ARBiCal::ARBiCal(
 		m_ioStream << "METHOD:PUBLISH\r\n";
 		break;
 	}
-}
-
-ARBiCal::~ARBiCal()
-{
-	m_ioStream << "END:VCALENDAR\r\n";
-}
-
-void ARBiCal::Release()
-{
-	delete this;
 }
 
 void ARBiCal::Write(
@@ -236,24 +285,6 @@ void ARBiCal::WriteText(
 	}
 }
 
-void ARBiCal::BeginEvent()
-{
-	m_ioStream << "BEGIN:VEVENT\r\n";
-}
-
-#ifdef UNICODE
-void ARBiCal::DoUID(std::wstring const& inUID)
-{
-	CStringA convert(inUID.c_str());
-	DoUID(std::string(convert));
-}
-#endif
-
-void ARBiCal::DoUID(std::string const& inUID)
-{
-	WriteText("UID", inUID, false);
-}
-
 void ARBiCal::DoDTSTAMP()
 {
 	if (1 < m_Version)
@@ -283,69 +314,6 @@ void ARBiCal::DoDTSTAMP()
 		str << pTime->tm_sec;
 		m_ioStream << "DTSTAMP:" << str.str() << "\r\n";
 	}
-}
-
-void ARBiCal::DoDTSTART(ARBDate inDate)
-{
-	Write("DTSTART", inDate, true);
-}
-
-void ARBiCal::DoDTEND(ARBDate inDate)
-{
-	// Note, DTEND is the non-inclusive end
-	if (1 < m_Version)
-		inDate += 1;
-	Write("DTEND", inDate, false);
-}
-
-#ifdef UNICODE
-void ARBiCal::DoSUMMARY(std::wstring const& inStr)
-{
-	CStringA convert(inStr.c_str());
-	DoSUMMARY(std::string(convert));
-}
-void ARBiCal::DoLOCATION(std::wstring const& inStr)
-{
-	CStringA convert(inStr.c_str());
-	DoLOCATION(std::string(convert));
-}
-void ARBiCal::DoDESCRIPTION(std::wstring const& inStr)
-{
-	CStringA convert(inStr.c_str());
-	DoDESCRIPTION(std::string(convert));
-}
-#endif
-
-void ARBiCal::DoSUMMARY(std::string const& inStr)
-{
-	WriteText("SUMMARY", inStr, true);
-}
-
-void ARBiCal::DoLOCATION(std::string const& inStr)
-{
-	WriteText("LOCATION", inStr, true);
-}
-
-void ARBiCal::DoDESCRIPTION(std::string const& inStr)
-{
-	WriteText("DESCRIPTION", inStr, true);
-}
-
-void ARBiCal::DoAlarm(int inDaysBefore)
-{
-	if (1 < m_Version)
-	{
-		m_ioStream << "BEGIN:VALARM\r\n";
-		m_ioStream << "ACTION:DISPLAY\r\n";
-		m_ioStream << "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n";
-		m_ioStream << "DESCRIPTION:Reminder\r\n";
-		m_ioStream << "END:VALARM\r\n";
-	}
-}
-
-void ARBiCal::EndEvent()
-{
-	m_ioStream << "END:VEVENT" << "\r\n";
 }
 
 ICalendar::ICalendar()
@@ -400,17 +368,6 @@ ARBCalendar::~ARBCalendar()
 {
 }
 
-//static
-ARBCalendarPtr ARBCalendar::New()
-{
-	return ARBCalendarPtr(new ARBCalendar());
-}
-
-ARBCalendarPtr ARBCalendar::Clone() const
-{
-	return ARBCalendarPtr(new ARBCalendar(*this));
-}
-
 ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 {
 	if (this != &rhs)
@@ -443,31 +400,6 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 		&& m_Note == rhs.m_Note;
 }
 
-bool ARBCalendar::operator!=(ARBCalendar const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-bool ARBCalendar::operator<(ARBCalendar const& rhs) const
-{
-	return m_DateStart < rhs.GetStartDate();
-}
-
-bool ARBCalendar::operator>(ARBCalendar const& rhs) const
-{
-	return m_DateEnd > rhs.GetEndDate();
-}
-
-bool ARBCalendar::operator<(ARBDate const& rhs) const
-{
-	return m_DateStart < rhs;
-}
-
-bool ARBCalendar::operator>(ARBDate const& rhs) const
-{
-	return m_DateEnd > rhs;
-}
-
 ARBString ARBCalendar::GetUID(eUidType inType) const
 {
 	ARBostringstream str;
@@ -489,16 +421,6 @@ ARBString ARBCalendar::GetUID(eUidType inType) const
 	str << m_DateOpening.GetString(ARBDate::eYYYYMMDD, true);
 	str << m_DateClosing.GetString(ARBDate::eYYYYMMDD, true);
 	return str.str();
-}
-
-ARBString ARBCalendar::GetGenericName() const
-{
-	ARBString name = m_Venue;
-	name += _T(" ");
-	name += m_Club;
-	name += _T(" ");
-	name += m_Location;
-	return name;
 }
 
 size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -728,127 +650,6 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	if (ePlanning == m_eEntered || eEntered == m_eEntered)
 		ioStream->DoAlarm(inAlarm);
 	ioStream->EndEvent();
-}
-
-bool ARBCalendar::IsBefore(ARBDate const& inDate) const
-{
-	return (m_DateStart < inDate && m_DateEnd < inDate);
-}
-
-bool ARBCalendar::InRange(ARBDate const& inDate) const
-{
-	return inDate.isBetween(m_DateStart, m_DateEnd);
-}
-
-bool ARBCalendar::IsRangeOverlapped(
-		ARBDate const& inDate1,
-		ARBDate const& inDate2) const
-{
-	if (m_DateStart.isBetween(inDate1, inDate2)
-	|| m_DateEnd.isBetween(inDate1, inDate2))
-		return true;
-	else
-		return false;
-}
-
-ARBDate const& ARBCalendar::GetStartDate() const
-{
-	return m_DateStart;
-}
-
-void ARBCalendar::SetStartDate(ARBDate const& inDate)
-{
-	m_DateStart = inDate;
-}
-
-ARBDate const& ARBCalendar::GetEndDate() const
-{
-	return m_DateEnd;
-}
-
-void ARBCalendar::SetEndDate(ARBDate const& inDate)
-{
-	m_DateEnd = inDate;
-}
-
-ARBDate const& ARBCalendar::GetOpeningDate() const
-{
-	return m_DateOpening;
-}
-
-void ARBCalendar::SetOpeningDate(ARBDate const& inDate)
-{
-	m_DateOpening = inDate;
-}
-
-ARBDate const& ARBCalendar::GetClosingDate() const
-{
-	return m_DateClosing;
-}
-
-void ARBCalendar::SetClosingDate(ARBDate const& inDate)
-{
-	m_DateClosing = inDate;
-}
-
-bool ARBCalendar::IsTentative() const
-{
-	return m_bTentative;
-}
-
-void ARBCalendar::SetIsTentative(bool inTentative)
-{
-	m_bTentative = inTentative;
-}
-
-ARBString const& ARBCalendar::GetLocation() const
-{
-	return m_Location;
-}
-
-void ARBCalendar::SetLocation(ARBString const& inLocation)
-{
-	m_Location = inLocation;
-}
-
-ARBString const& ARBCalendar::GetClub() const
-{
-	return m_Club;
-}
-
-void ARBCalendar::SetClub(ARBString const& inClub)
-{
-	m_Club = inClub;
-}
-
-ARBString const& ARBCalendar::GetVenue() const
-{
-	return m_Venue;
-}
-
-void ARBCalendar::SetVenue(ARBString const& inVenue)
-{
-	m_Venue = inVenue;
-}
-
-ARBCalendar::eEntry ARBCalendar::GetEntered() const
-{
-	return m_eEntered;
-}
-
-void ARBCalendar::SetEntered(ARBCalendar::eEntry inEnter)
-{
-	m_eEntered = inEnter;
-}
-
-ARBString const& ARBCalendar::GetNote() const
-{
-	return m_Note;
-}
-
-void ARBCalendar::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -69,7 +69,10 @@ public:
 	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
 
 	bool operator==(ARBDogRunScoring const& rhs) const;
-	bool operator!=(ARBDogRunScoring const& rhs) const;
+	bool operator!=(ARBDogRunScoring const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Load the scoring.
@@ -103,38 +106,119 @@ public:
 	bool GetYPS(
 			bool inTableInYPS,
 			double& outYPS) const;
+	/**
+	 * Compute the number of time faults based on the scoring configuration.
+	 * @param inScoring Configuration to use.
+	 */
+	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
 
 	/**
 	 * Getters/setters.
 	 */
-	ScoringType GetType() const;
+	ScoringType GetType() const
+	{
+		return m_type;
+	}
 	void SetType(
 			ScoringType inType,
-			bool inRound);
-	double GetSCT() const;
-	void SetSCT(double inSCT);
-	double GetSCT2() const;
-	void SetSCT2(double inSCT);
-	double GetYards() const;
-	void SetYards(double inYards);
-	double GetTime() const;
-	void SetTime(double inTime);
-	bool HasTable() const;
-	void SetHasTable(bool inInc);
-	bool TableNeedsConverting() const;
-	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
-	short GetCourseFaults() const;
-	void SetCourseFaults(short inFaults);
-	short GetNeedOpenPts() const;
-	void SetNeedOpenPts(short inOpenPts);
-	short GetNeedClosePts() const;
-	void SetNeedClosePts(short inClosePts);
-	short GetOpenPts() const;
-	void SetOpenPts(short inOpenPts);
-	short GetClosePts() const;
-	void SetClosePts(short inClosePts);
-	short GetBonusPts() const;
-	void SetBonusPts(short inBonusPts);
+			bool inRound)
+	{
+		m_type = inType;
+		m_bRoundTimeFaults = inRound;
+	}
+	double GetSCT() const
+	{
+		return m_SCT;
+	}
+	void SetSCT(double inSCT)
+	{
+		m_SCT = inSCT;
+	}
+	double GetSCT2() const
+	{
+		return m_SCT2;
+	}
+	void SetSCT2(double inSCT)
+	{
+		m_SCT2 = inSCT;
+	}
+	double GetYards() const
+	{
+		return m_Yards;
+	}
+	void SetYards(double inYards)
+	{
+		m_Yards = inYards;
+	}
+	double GetTime() const
+	{
+		return m_Time;
+	}
+	void SetTime(double inTime)
+	{
+		m_Time = inTime;
+	}
+	bool HasTable() const
+	{
+		return m_Table;
+	}
+	void SetHasTable(bool inInc)
+	{
+		m_Table = inInc;
+		m_ConvertTable = false;
+	}
+	bool TableNeedsConverting() const
+	{
+		return m_ConvertTable;
+	}
+	short GetCourseFaults() const
+	{
+		return m_CourseFaults;
+	}
+	void SetCourseFaults(short inFaults)
+	{
+		m_CourseFaults = inFaults;
+	}
+	short GetNeedOpenPts() const
+	{
+		return m_NeedOpenPts;
+	}
+	void SetNeedOpenPts(short inOpenPts)
+	{
+		m_NeedOpenPts = inOpenPts;
+	}
+	short GetNeedClosePts() const
+	{
+		return m_NeedClosePts;
+	}
+	void SetNeedClosePts(short inClosePts)
+	{
+		m_NeedClosePts = inClosePts;
+	}
+	short GetOpenPts() const
+	{
+		return m_OpenPts;
+	}
+	void SetOpenPts(short inOpenPts)
+	{
+		m_OpenPts = inOpenPts;
+	}
+	short GetClosePts() const
+	{
+		return m_ClosePts;
+	}
+	void SetClosePts(short inClosePts)
+	{
+		m_ClosePts = inClosePts;
+	}
+	short GetBonusPts() const
+	{
+		return m_BonusPts;
+	}
+	void SetBonusPts(short inBonusPts)
+	{
+		m_BonusPts = inBonusPts;
+	}
 
 private:
 	ScoringType m_type;

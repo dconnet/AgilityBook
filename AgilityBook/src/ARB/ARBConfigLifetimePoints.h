@@ -58,14 +58,26 @@ protected:
 
 public:
 	~ARBConfigLifetimePoints();
-	static ARBConfigLifetimePointsPtr New();
-	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
-	ARBConfigLifetimePointsPtr Clone() const;
+	static ARBConfigLifetimePointsPtr New()
+	{
+		return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints());
+	}
+	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults)
+	{
+		return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
+	}
+	ARBConfigLifetimePointsPtr Clone() const
+	{
+		return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
+	}
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
 
 	bool operator==(ARBConfigLifetimePoints const& rhs) const;
-	bool operator!=(ARBConfigLifetimePoints const& rhs) const;
+	bool operator!=(ARBConfigLifetimePoints const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 
 	/**
 	 * Get the generic name of this object.
@@ -78,7 +90,10 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	{
+		return 0;
+	}
 
 	/**
 	 * Load a lifetime configuration.
@@ -104,13 +119,25 @@ public:
 	/*
 	 * Setters/getters.
 	 */
-	double GetPoints() const;
-	void SetPoints(double inPoints);
-	double GetFaults() const;
+	double GetPoints() const
+	{
+		return m_Points;
+	}
+	void SetPoints(double inPoints)
+	{
+		m_Points = inPoints;
+	}
+	double GetFaults() const
+	{
+		return m_Faults;
+	}
 	/**
 	 * @attention If faults is set via this API, the caller MUST call ARBConfigLifetimePointsList::sort.
 	 */
-	void SetFaults(double inFaults);
+	void SetFaults(double inFaults)
+	{
+		m_Faults = inFaults;
+	}
 
 private:
 	double m_Points;

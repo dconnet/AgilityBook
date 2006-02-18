@@ -68,17 +68,6 @@ ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
 
-//static
-ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
-{
-	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
-}
-
-ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
-{
-	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
-}
-
 ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const& rhs)
 {
 	if (this != &rhs)
@@ -93,16 +82,6 @@ bool ARBDogRunOtherPoints::operator==(ARBDogRunOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Points == rhs.m_Points;
-}
-
-bool ARBDogRunOtherPoints::operator!=(ARBDogRunOtherPoints const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDogRunOtherPoints::GetGenericName() const
-{
-	return m_Name;
 }
 
 size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -137,26 +116,6 @@ bool ARBDogRunOtherPoints::Save(Element& ioTree) const
 	other.AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name);
 	other.AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points);
 	return true;
-}
-
-ARBString const& ARBDogRunOtherPoints::GetName() const
-{
-	return m_Name;
-}
-
-void ARBDogRunOtherPoints::SetName(ARBString const& inName)
-{
-	m_Name = inName;
-}
-
-short ARBDogRunOtherPoints::GetPoints() const
-{
-	return m_Points;
-}
-
-void ARBDogRunOtherPoints::SetPoints(short inPts)
-{
-	m_Points = inPts;
 }
 
 /////////////////////////////////////////////////////////////////////////////

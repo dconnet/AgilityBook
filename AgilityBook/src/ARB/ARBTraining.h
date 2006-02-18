@@ -57,23 +57,47 @@ protected:
 
 public:
 	~ARBTraining();
-	static ARBTrainingPtr New();
-	ARBTrainingPtr Clone() const;
+	static ARBTrainingPtr New()
+	{
+		return ARBTrainingPtr(new ARBTraining());
+	}
+	ARBTrainingPtr Clone() const
+	{
+		return ARBTrainingPtr(new ARBTraining(*this));
+	}
 
 	ARBTraining& operator=(ARBTraining const& rhs);
 
 	bool operator==(ARBTraining const& rhs) const;
-	bool operator!=(ARBTraining const& rhs) const;
-	bool operator<(ARBTraining const& rhs) const;
-	bool operator>(ARBTraining const& rhs) const;
-	bool operator<(ARBDate const& rhs) const;
-	bool operator>(ARBDate const& rhs) const;
+	bool operator!=(ARBTraining const& rhs) const
+	{
+		return !operator==(rhs);
+	}
+	bool operator<(ARBTraining const& rhs) const
+	{
+		return m_Date < rhs.GetDate();
+	}
+	bool operator>(ARBTraining const& rhs) const
+	{
+		return m_Date > rhs.GetDate();
+	}
+	bool operator<(ARBDate const& rhs) const
+	{
+		return m_Date < rhs;
+	}
+	bool operator>(ARBDate const& rhs) const
+	{
+		return m_Date > rhs;
+	}
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual ARBString GetGenericName() const
+	{
+		return m_Date.GetString(ARBDate::eSlashMDY);
+	}
 
 	/**
 	 * Get all the strings to search in this object.
@@ -106,14 +130,38 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBDate const& GetDate() const;
-	void SetDate(ARBDate const& inDate);
-	ARBString const& GetName() const;
-	void SetName(ARBString const& inName);
-	ARBString const& GetSubName() const;
-	void SetSubName(ARBString const& inName);
-	ARBString const& GetNote() const;
-	void SetNote(ARBString const& inNote);
+	ARBDate const& GetDate() const
+	{
+		return m_Date;
+	}
+	void SetDate(ARBDate const& inDate)
+	{
+		m_Date = inDate;
+	}
+	ARBString const& GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(ARBString const& inName)
+	{
+		m_Name = inName;
+	}
+	ARBString const& GetSubName() const
+	{
+		return m_SubName;
+	}
+	void SetSubName(ARBString const& inName)
+	{
+		m_SubName = inName;
+	}
+	ARBString const& GetNote() const
+	{
+		return m_Note;
+	}
+	void SetNote(ARBString const& inNote)
+	{
+		m_Note = inNote;
+	}
 
 private:
 	ARBDate m_Date;

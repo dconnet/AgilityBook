@@ -86,7 +86,10 @@ public:
 	 * @param inFilterType The filtered type to check.
 	 * @return The filtered state.
 	 */
-	virtual bool IsFiltered(FilterType inFilterType) const;
+	virtual bool IsFiltered(FilterType inFilterType) const
+	{
+		return m_bFiltered[inFilterType];
+	}
 
 	/**
 	 * Set the filtered state of this object.
@@ -96,20 +99,30 @@ public:
 	 */
 	virtual void SetFiltered(
 			FilterType inFilterType,
-			bool bFiltered);
+			bool bFiltered)
+	{
+		m_bFiltered[inFilterType] = bFiltered;
+	}
 
 	/**
 	 * Get the filtered state of this object.
 	 * @return The filtered state.
 	 */
-	virtual bool IsFiltered() const;
+	virtual bool IsFiltered() const
+	{
+		return IsFiltered(eFilter);
+	}
 
 	/**
 	 * Set the filtered state of this object.
 	 * This attribute is not persistent. It is up to the UI to manage this.
 	 * @param bFiltered Filtered state of the object, set all types.
 	 */
-	virtual void SetFiltered(bool bFiltered);
+	virtual void SetFiltered(bool bFiltered)
+	{
+		SetFiltered(eFilter, bFiltered);
+		SetFiltered(eIgnoreQ, bFiltered);
+	}
 
 protected:
 	bool m_bFiltered[eNumFilters];

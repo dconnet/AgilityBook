@@ -290,16 +290,6 @@ ARBString ARBDate::GetValidDateString(
 	return str;
 }
 
-ARBDate::ARBDate()
-	: m_Julian(0)
-{
-}
-
-ARBDate::ARBDate(ARBDate const& rhs)
-	: m_Julian(rhs.m_Julian)
-{
-}
-
 ARBDate::ARBDate(time_t inTime)
 	: m_Julian(0)
 {
@@ -334,33 +324,6 @@ ARBDate::ARBDate(__time64_t inTime)
 }
 #endif
 
-ARBDate::ARBDate(
-		int inYr,
-		int inMon,
-		int inDay)
-	: m_Julian(0)
-{
-	SetDate(inYr, inMon, inDay);
-}
-
-void ARBDate::SetJulianDay(long inJulian)
-{
-	if (0 < inJulian)
-		m_Julian = inJulian;
-}
-
-void ARBDate::SetDate(
-		int inYr,
-		int inMon,
-		int inDay)
-{
-	m_Julian = GregorianToSdn(inYr, inMon, inDay);
-	int yr, mon, day;
-	SdnToGregorian(m_Julian, &yr, &mon, &day);
-	if (yr != inYr || mon != inMon || day != inDay)
-		m_Julian = 0;
-}
-
 void ARBDate::SetToday()
 {
 	time_t t;
@@ -376,6 +339,18 @@ void ARBDate::SetToday()
 		pTime->tm_year + 1900,
 		pTime->tm_mon + 1,
 		pTime->tm_mday);
+}
+
+void ARBDate::SetDate(
+		int inYr,
+		int inMon,
+		int inDay)
+{
+	m_Julian = GregorianToSdn(inYr, inMon, inDay);
+	int yr, mon, day;
+	SdnToGregorian(m_Julian, &yr, &mon, &day);
+	if (yr != inYr || mon != inMon || day != inDay)
+		m_Julian = 0;
 }
 
 ARBString ARBDate::GetString(
@@ -529,13 +504,4 @@ int ARBDate::GetYear() const
 	int yr, mon, day;
 	SdnToGregorian(m_Julian, &yr, &mon, &day);
 	return yr;
-}
-
-int ARBDate::GetDayOfWeek(DayOfWeek inFirstDay) const
-{
-	// This was copied from another source, but I don't remember where...
-	// I suspect it won't work properly on dates before 1752 (start of
-	// Gregorian calendar).
-    //return int((((m_Julian+1)%7)+6)%7); // Mon = 0
-    return static_cast<int>((((m_Julian+1)%7)+(7-static_cast<int>(inFirstDay)))%7);
 }

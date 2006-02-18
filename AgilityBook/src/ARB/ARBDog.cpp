@@ -100,17 +100,6 @@ ARBDog::~ARBDog()
 {
 }
 
-//static
-ARBDogPtr ARBDog::New()
-{
-	return ARBDogPtr(new ARBDog());
-}
-
-ARBDogPtr ARBDog::Clone() const
-{
-	return ARBDogPtr(new ARBDog(*this));
-}
-
 ARBDog& ARBDog::operator=(ARBDog const& rhs)
 {
 	if (this != &rhs)
@@ -141,16 +130,6 @@ bool ARBDog::operator==(ARBDog const& rhs) const
 		&& m_RegNums == rhs.m_RegNums
 		&& m_Titles == rhs.m_Titles
 		&& m_Trials == rhs.m_Trials;
-}
-
-bool ARBDog::operator!=(ARBDog const& rhs) const
-{
-	return !operator==(rhs);
-}
-
-ARBString ARBDog::GetGenericName() const
-{
-	return m_CallName;
 }
 
 size_t ARBDog::GetSearchStrings(std::set<ARBString>& ioStrings) const
@@ -346,106 +325,6 @@ int ARBDog::DeleteDivision(
 	int count = m_ExistingPoints.DeleteDivision(inVenue, inDiv);
 	count += m_Trials.DeleteDivision(inConfig, inVenue, inDiv);
 	return count;
-}
-
-ARBString const& ARBDog::GetCallName() const
-{
-	return m_CallName;
-}
-
-void ARBDog::SetCallName(ARBString const& inName)
-{
-	m_CallName = inName;
-}
-
-ARBDate const& ARBDog::GetDOB() const
-{
-	return m_DOB;
-}
-
-void ARBDog::SetDOB(ARBDate const& inDOB)
-{
-	m_DOB = inDOB;
-}
-
-ARBDate const& ARBDog::GetDeceased() const
-{
-	return m_Deceased;
-}
-
-void ARBDog::SetDeceased(ARBDate const& inDeceased)
-{
-	m_Deceased = inDeceased;
-}
-
-ARBString const& ARBDog::GetRegisteredName() const
-{
-	return m_RegName;
-}
-
-void ARBDog::SetRegisteredName(ARBString const& inName)
-{
-	m_RegName = inName;
-}
-
-ARBString const& ARBDog::GetBreed() const
-{
-	return m_Breed;
-}
-
-void ARBDog::SetBreed(ARBString const& inBreed)
-{
-	m_Breed = inBreed;
-}
-
-ARBString const& ARBDog::GetNote() const
-{
-	return m_Note;
-}
-
-void ARBDog::SetNote(ARBString const& inNote)
-{
-	m_Note = inNote;
-}
-
-ARBDogExistingPointsList const& ARBDog::GetExistingPoints() const
-{
-	return m_ExistingPoints;
-}
-
-ARBDogExistingPointsList& ARBDog::GetExistingPoints()
-{
-	return m_ExistingPoints;
-}
-
-ARBDogRegNumList const& ARBDog::GetRegNums() const
-{
-	return m_RegNums;
-}
-
-ARBDogRegNumList& ARBDog::GetRegNums()
-{
-	return m_RegNums;
-}
-
-ARBDogTitleList const& ARBDog::GetTitles() const
-{
-	return m_Titles;
-}
-
-ARBDogTitleList& ARBDog::GetTitles()
-{
-	return m_Titles;
-}
-
-ARBDogTrialList const& ARBDog::GetTrials() const
-{
-	return m_Trials;
-}
-
-ARBDogTrialList& ARBDog::GetTrials()
-{
-	return m_Trials;
 }
 
 /////////////////////////////////////////////////////////////////////////////

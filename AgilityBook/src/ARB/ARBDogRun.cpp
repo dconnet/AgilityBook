@@ -123,17 +123,6 @@ ARBDogRun::~ARBDogRun()
 {
 }
 
-//static
-ARBDogRunPtr ARBDogRun::New()
-{
-	return ARBDogRunPtr(new ARBDogRun());
-}
-
-ARBDogRunPtr ARBDogRun::Clone() const
-{
-	return ARBDogRunPtr(new ARBDogRun(*this));
-}
-
 ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 {
 	if (this != &rhs)
@@ -184,24 +173,13 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 		&& m_Links == rhs.m_Links;
 }
 
-bool ARBDogRun::operator!=(ARBDogRun const& rhs) const
-{
-	return !operator==(rhs);
-}
-
 ARBString ARBDogRun::GetGenericName() const
 {
-	ARBString name = m_Date.GetString(ARBDate::eDashYMD);
-	name += ' ';
-	name += m_Division;
-	name += ' ';
-	name += m_Level;
-	name += ' ';
-	name += m_Event;
+	ARBString name = m_Date.GetString(ARBDate::eDashYMD) + ' ';
+	name += m_Division + ' ' + m_Level + ' ' + m_Event;
 	if (0 < m_SubName.length())
 	{
-		name += ' ';
-		name += m_SubName;
+		name += ' ' + m_SubName;
 	}
 	return name;
 }
@@ -449,11 +427,6 @@ bool ARBDogRun::Save(Element& ioTree) const
 	return true;
 }
 
-void ARBDogRun::SetMultiQ(ARBConfigMultiQPtr inMultiQ)
-{
-	m_pMultiQ = inMultiQ;
-}
-
 int ARBDogRun::NumOtherPointsInUse(ARBString const& inOther) const
 {
 	int count = 0;
@@ -652,226 +625,6 @@ void ARBDogRun::RemoveLink(ARBString const& inLink)
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())
 			m_Links.erase(iter);
-}
-
-ARBConfigMultiQPtr ARBDogRun::GetMultiQ() const
-{
-	return m_pMultiQ.lock();
-}
-
-ARBDate const& ARBDogRun::GetDate() const
-{
-	return m_Date;
-}
-
-void ARBDogRun::SetDate(ARBDate const& inDate)
-{
-	m_Date = inDate;
-}
-
-ARBString const& ARBDogRun::GetDivision() const
-{
-	return m_Division;
-}
-
-void ARBDogRun::SetDivision(ARBString const& inDiv)
-{
-	m_Division = inDiv;
-}
-
-ARBString const& ARBDogRun::GetLevel() const
-{
-	return m_Level;
-}
-
-void ARBDogRun::SetLevel(ARBString const& inLevel)
-{
-	m_Level = inLevel;
-}
-
-ARBString const& ARBDogRun::GetEvent() const
-{
-	return m_Event;
-}
-
-void ARBDogRun::SetEvent(ARBString const& inEvent)
-{
-	m_Event = inEvent;
-}
-
-ARBString const& ARBDogRun::GetSubName() const
-{
-	return m_SubName;
-}
-
-void ARBDogRun::SetSubName(ARBString const& inSubName)
-{
-	m_SubName = inSubName;
-}
-
-ARBString const& ARBDogRun::GetHeight() const
-{
-	return m_Height;
-}
-
-void ARBDogRun::SetHeight(ARBString const& inHeight)
-{
-	m_Height = inHeight;
-}
-
-ARBString const& ARBDogRun::GetConditions() const
-{
-	return m_Conditions;
-}
-
-void ARBDogRun::SetConditions(ARBString const& inConditions)
-{
-	m_Conditions = inConditions;
-}
-
-ARBString const& ARBDogRun::GetJudge() const
-{
-	return m_Judge;
-}
-
-void ARBDogRun::SetJudge(ARBString const& inJudge)
-{
-	m_Judge = inJudge;
-}
-
-ARBString const& ARBDogRun::GetHandler() const
-{
-	return m_Handler;
-}
-
-void ARBDogRun::SetHandler(ARBString const& inHandler)
-{
-	m_Handler = inHandler;
-}
-
-ARBDogRunPartnerList const& ARBDogRun::GetPartners() const
-{
-	return m_Partners;
-}
-
-ARBDogRunPartnerList& ARBDogRun::GetPartners()
-{
-	return m_Partners;
-}
-
-ARBDogRunScoring const& ARBDogRun::GetScoring() const
-{
-	return m_Scoring;
-}
-
-ARBDogRunScoring& ARBDogRun::GetScoring()
-{
-	return m_Scoring;
-}
-
-ARB_Q ARBDogRun::GetQ() const
-{
-	return m_Q;
-}
-
-void ARBDogRun::SetQ(ARB_Q inQ)
-{
-	m_Q = inQ;
-}
-
-short ARBDogRun::GetPlace() const
-{
-	return m_Place;
-}
-
-void ARBDogRun::SetPlace(short inPlace)
-{
-	m_Place = inPlace;
-}
-
-short ARBDogRun::GetInClass() const
-{
-	return m_InClass;
-}
-
-void ARBDogRun::SetInClass(short inInClass)
-{
-	m_InClass = inInClass;
-}
-
-short ARBDogRun::GetDogsQd() const
-{
-	return m_DogsQd;
-}
-
-void ARBDogRun::SetDogsQd(short inDogsQd)
-{
-	m_DogsQd = inDogsQd;
-}
-
-ARBDogFaultList const& ARBDogRun::GetFaults() const
-{
-	return m_Notes.GetFaults();
-}
-
-ARBDogFaultList& ARBDogRun::GetFaults()
-{
-	return m_Notes.GetFaults();
-}
-
-ARBString const& ARBDogRun::GetCRCD() const
-{
-	return m_Notes.GetCRCD();
-}
-
-void ARBDogRun::SetCRCD(ARBString const& inCRCD)
-{
-	m_Notes.SetCRCD(inCRCD);
-}
-
-ARBString const& ARBDogRun::GetCRCDMetaFile() const
-{
-	return m_Notes.GetCRCDMetaFile();
-}
-
-void ARBDogRun::SetCRCDMetaFile(ARBString const& inCRCDMeta)
-{
-	m_Notes.SetCRCDMetaFile(inCRCDMeta);
-}
-
-ARBString const& ARBDogRun::GetNote() const
-{
-	return m_Notes.GetNote();
-}
-
-void ARBDogRun::SetNote(ARBString const& inNote)
-{
-	m_Notes.SetNote(inNote);
-}
-
-ARBDogReferenceRunList const& ARBDogRun::GetReferenceRuns() const
-{
-	return m_RefRuns;
-}
-
-ARBDogReferenceRunList& ARBDogRun::GetReferenceRuns()
-{
-	return m_RefRuns;
-}
-
-ARBDogRunOtherPointsList const& ARBDogRun::GetOtherPoints() const
-{
-	return m_OtherPoints;
-}
-
-ARBDogRunOtherPointsList& ARBDogRun::GetOtherPoints()
-{
-	return m_OtherPoints;
-}
-
-size_t ARBDogRun::NumLinks() const
-{
-	return m_Links.size();
 }
 
 /////////////////////////////////////////////////////////////////////////////
