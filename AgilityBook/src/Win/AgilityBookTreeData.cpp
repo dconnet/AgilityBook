@@ -303,7 +303,7 @@ static bool ReOrderDogs(
 		dogs.clear();
 		for (std::vector<ARBBasePtr>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
 		{
-			ARBDogPtr pDog(dynamic_cast<ARBDog*>(iter2->get()));
+			ARBDogPtr pDog = boost::shared_dynamic_cast<ARBDog, ARBBase>(*iter2);
 			dogs.AddDog(pDog);
 		}
 		CAgilityBookDoc* pDoc = pTree->GetDocument();
@@ -320,10 +320,13 @@ static bool ReOrderTrial(
 	bool bOk = false;
 	if (pTrial)
 	{
+		ARBDogRunPtr pTmpRun;
 		std::vector<ARBBasePtr> items;
 		for (ARBDogRunList::iterator iter = pTrial->GetRuns().begin(); iter != pTrial->GetRuns().end(); ++iter)
 		{
 			ARBDogRunPtr pRun = *iter;
+			if (!pTmpRun)
+				pTmpRun = pRun;
 			items.push_back(pRun);
 		}
 		CDlgReorder dlg(items);
@@ -333,7 +336,7 @@ static bool ReOrderTrial(
 			pTrial->GetRuns().clear();
 			for (std::vector<ARBBasePtr>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
 			{
-				ARBDogRunPtr pRun(dynamic_cast<ARBDogRun*>(iter2->get()));
+				ARBDogRunPtr pRun = boost::shared_dynamic_cast<ARBDogRun, ARBBase>(*iter2);
 				pTrial->GetRuns().AddRun(pRun);
 			}
 			pTrial->GetRuns().sort();
