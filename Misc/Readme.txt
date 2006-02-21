@@ -7,6 +7,10 @@ arb.gif                     'Agility Record Book' image
 arb.jpg                     'Agility Record Book' image
 arb.tif                     'Agility Record Book' image
 
+Readme.txt                  This file
+Readme - YahooALT.txt       File copied into Yahoo alternate area as Readme.txt
+Instructions.txt            Readme file for SourceForge
+
 File Types
 .doc   Microsoft Word 2002
 .std   SureThing CD Labeler Deluxe 3.1

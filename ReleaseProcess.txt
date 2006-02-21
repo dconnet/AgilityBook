@@ -43,6 +43,7 @@ In SourceForge, enter the File Releases section in Admin.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
   - AgilityBook_n_n_n_nsrc.zip, AgilityBook_n_n_n_n.zip
+  - Instructions.txt [in ./Misc]
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
@@ -56,7 +57,7 @@ In Yahoo
   - [files/release/alternate] AgilityBook_n_n_n_nALT.zip
   - [files/release/alternate] [VC8] vcredist_x86.exe, already there, shouldn't need changing
   - [files/release/alternate] [VC8] xerces-c_2_7.zip, already there
-  - [files/release/alternate] Readme.txt, already there
+  - [files/release/alternate] Readme.txt [in ./Misc]
   - [files/release] AgilityBook_n_n_n_n.msi/cab [Desc: Installation program]
     DO NOT Announce this file (option on file upload) since it is now multiple.
 - Send an email announcing it - send as a 'Special Notice' from Yahoo.
