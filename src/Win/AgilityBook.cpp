@@ -222,10 +222,18 @@ void ExpandAll(
 // For some reason the timestamp on files can be totally messed up.
 // It happens in the FILETIME to CTime conversion (throws a COleException)
 // This has occurred with files on a NAS and CD.
+// VC8 has changed, but still has problems - VC8 code has been merged below
 BOOL GetLocalStatus(
 		LPCTSTR lpszFileName,
 		CFileStatus& rStatus)
 {
+	// Defined in "Microsoft Visual Studio 8\VC\atlmfc\src\mfc\afximpl.h"
+	BOOL AFXAPI AfxFullPath(__out_z LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
+
+#if _MSC_VER >= 1400
+	ASSERT( lpszFileName != NULL );
+#endif
+
 	if ( lpszFileName == NULL )
 	{
 		return FALSE;
@@ -237,13 +245,12 @@ BOOL GetLocalStatus(
 		return FALSE;
 	}
 
-// CHANGE: No idea where AfxFullPath is...
 	// attempt to fully qualify path first
-	//if (!AfxFullPath(rStatus.m_szFullName, lpszFileName))
-	//{
-	//	rStatus.m_szFullName[0] = '\0';
-	//	return FALSE;
-	//}
+	if (!AfxFullPath(rStatus.m_szFullName, lpszFileName))
+	{
+		rStatus.m_szFullName[0] = '\0';
+		return FALSE;
+	}
 
 	WIN32_FIND_DATA findFileData;
 	HANDLE hFind = FindFirstFile((LPTSTR)lpszFileName, &findFileData);
@@ -262,6 +269,59 @@ BOOL GetLocalStatus(
 
 	// convert times as appropriate
 // CHANGE: handle COleException
+#if _MSC_VER >= 1400
+	if (CTime::IsValidFILETIME(findFileData.ftCreationTime))
+	{
+		try
+		{
+			rStatus.m_ctime = CTime(findFileData.ftCreationTime);
+		}
+		catch (COleException* pe)
+		{
+			pe->Delete();
+			rStatus.m_ctime = CTime();
+		}
+	}
+	else
+	{
+		rStatus.m_ctime = CTime();
+	}
+
+	if (CTime::IsValidFILETIME(findFileData.ftLastAccessTime))
+	{
+		try
+		{
+			rStatus.m_atime = CTime(findFileData.ftLastAccessTime);
+		}
+		catch (COleException* pe)
+		{
+			pe->Delete();
+			rStatus.m_atime = CTime();
+		}
+	}
+	else
+	{
+		rStatus.m_atime = CTime();
+	}
+
+	if (CTime::IsValidFILETIME(findFileData.ftLastWriteTime))
+	{
+		try
+		{
+			rStatus.m_mtime = CTime(findFileData.ftLastWriteTime);
+		}
+		catch (COleException* pe)
+		{
+			pe->Delete();
+			rStatus.m_mtime = CTime();
+		}
+	}
+	else
+	{
+		rStatus.m_mtime = CTime();
+	}
+
+#else
 	//rStatus.m_ctime = CTime(findFileData.ftCreationTime);
 	//rStatus.m_atime = CTime(findFileData.ftLastAccessTime);
 	//rStatus.m_mtime = CTime(findFileData.ftLastWriteTime);
@@ -279,6 +339,7 @@ BOOL GetLocalStatus(
 			*(times[i]) = 0;
 		}
 	}
+#endif
 
 	if (rStatus.m_ctime.GetTime() == 0)
 		rStatus.m_ctime = rStatus.m_mtime;
