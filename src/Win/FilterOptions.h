@@ -51,6 +51,7 @@ struct CVenueFilter
 class CCalendarViewFilter
 {
 	friend class CFilterOptions;
+	friend class CFilterOptionData;
 public:
 	typedef enum
 	{
@@ -190,4 +191,35 @@ public:
 	static void SetTrainingViewAllNames(bool bViewAll);
 	static void GetTrainingFilterNames(std::set<ARBString>& outNames);
 	static void SetTrainingFilterNames(std::set<ARBString> const& inNames);
+
+	static ARBString GetCurrentFilter();
+	static size_t GetAllNamedFilters(std::set<ARBString>& outNames);
+	static void DeleteNamedFilter(ARBString const& inName);
+};
+
+/**
+ * Used only for getting/setting options in the options dialog.
+ * The current named set of options is always written into the current
+ * registry settings.
+ */
+class CFilterOptionData
+{
+public:
+	CFilterOptionData();
+	CFilterOptionData(ARBString const& inName);
+	bool SaveName();
+	void SaveDefault();
+
+	ARBString filterName;
+	CCalendarViewFilter calView;
+	bool bAllDates;
+	bool bStartDate;
+	ARBDate dateStartDate;
+	bool bEndDate;
+	ARBDate dateEndDate;
+	bool bViewAllVenues;
+	std::vector<CVenueFilter> venueFilter;
+	CFilterOptions::eViewRuns eRuns;
+	bool bViewAllNames;
+	std::set<ARBString> nameFilter;
 };
