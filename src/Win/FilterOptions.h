@@ -176,10 +176,14 @@ public:
 	static void SetViewAllVenues(bool bViewAll);
 	static void GetFilterVenue(std::vector<CVenueFilter>& venues);
 	static void SetFilterVenue(std::vector<CVenueFilter> const& venues);
-	static bool GetViewAllRuns();
-	static void SetViewAllRuns(bool bViewAll);
-	static bool GetViewQRuns(); // Subset of AllRuns
-	static void SetViewQRuns(bool bViewQs);
+	typedef enum
+	{
+		eViewRunsAll = 0,
+		eViewRunsQs = 1,
+		eViewRunsNQs = 2,
+	} eViewRuns;
+	static eViewRuns GetViewRuns();
+	static void SetViewRuns(eViewRuns eViewAll);
 
 	// Filtering: Training Log
 	static bool GetTrainingViewAllNames();

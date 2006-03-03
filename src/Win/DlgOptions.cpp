@@ -88,8 +88,19 @@ CDlgOptions::CDlgOptions(
 	m_pageFilter.m_bEntered = filter.ViewEntered();
 	m_pageFilter.m_ViewVenues = CFilterOptions::GetViewAllVenues() ? 0 : 1;
 	CFilterOptions::GetFilterVenue(m_pageFilter.m_VenueFilter);
-	m_pageFilter.m_ViewQs = CFilterOptions::GetViewAllRuns() ? 0
-		: CFilterOptions::GetViewQRuns() ? 1 : 2;
+	switch (CFilterOptions::GetViewRuns())
+	{
+	default:
+	case CFilterOptions::eViewRunsAll:
+		m_pageFilter.m_ViewQs = 0;
+		break;
+	case CFilterOptions::eViewRunsQs:
+		m_pageFilter.m_ViewQs = 1;
+		break;
+	case CFilterOptions::eViewRunsNQs:
+		m_pageFilter.m_ViewQs = 2;
+		break;
+	}
 
 	// Views
 	m_pageView.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
@@ -197,16 +208,13 @@ void CDlgOptions::OnOK()
 		{
 		default:
 		case 0:
-			CFilterOptions::SetViewAllRuns(true);
-			CFilterOptions::SetViewQRuns(true);
+			CFilterOptions::SetViewRuns(CFilterOptions::eViewRunsAll);
 			break;
 		case 1:
-			CFilterOptions::SetViewAllRuns(false);
-			CFilterOptions::SetViewQRuns(true);
+			CFilterOptions::SetViewRuns(CFilterOptions::eViewRunsQs);
 			break;
 		case 2:
-			CFilterOptions::SetViewAllRuns(false);
-			CFilterOptions::SetViewQRuns(false);
+			CFilterOptions::SetViewRuns(CFilterOptions::eViewRunsNQs);
 			break;
 		}
 		if (bOldNewest != CAgilityBookOptions::GetNewestDatesFirst())
