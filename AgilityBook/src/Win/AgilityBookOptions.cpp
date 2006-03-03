@@ -144,6 +144,18 @@ ExportCalTask
 	ST col[n]
 ExportLog
 	ST col[n]
+Filter[name]
+	DW Cal
+	DW AllDates
+	DW Start
+	DW StartJDay
+	DW End
+	DW EndJDay
+	DW AllVenues
+	ST FilterVenues
+	DW ViewRuns
+	DW AllNames
+	ST FilterNames
 Import
 	DW row
 	DW delim
@@ -176,6 +188,8 @@ Settings:
 			eCalendar	= 4,
 			eTraining	= 5,
 		}
+	ST Filter
+	ST Filters
 Unknown
 	ST col[n]
 */

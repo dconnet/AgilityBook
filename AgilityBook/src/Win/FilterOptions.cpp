@@ -308,6 +308,97 @@ bool CFilterOptions::IsTrainingLogVisible(
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+static void FilterVenue(
+		CString inVenue,
+		std::vector<CVenueFilter>& venues)
+{
+	if (!inVenue.IsEmpty())
+	{
+		CStringArray raw;
+		int pos;
+		while (0 <= (pos = inVenue.Find(':')))
+		{
+			raw.Add(inVenue.Left(pos));
+			inVenue = inVenue.Mid(pos+1);
+		}
+		raw.Add(inVenue);
+		for (int i = 0; i < raw.GetSize(); ++i)
+		{
+			inVenue = raw[i];
+			CStringArray rawFilter;
+			while (0 <= (pos = inVenue.Find('/')))
+			{
+				rawFilter.Add(inVenue.Left(pos));
+				inVenue = inVenue.Mid(pos+1);
+			}
+			rawFilter.Add(inVenue);
+			if (0 < rawFilter.GetSize())
+			{
+				CVenueFilter filter;
+				switch (rawFilter.GetSize())
+				{
+				default:
+				case 3:
+					filter.level = (LPCTSTR)rawFilter[2];
+					// fallthru
+				case 2:
+					filter.division = (LPCTSTR)rawFilter[1];
+					// fallthru
+				case 1:
+					filter.venue = (LPCTSTR)rawFilter[0];
+				}
+				venues.push_back(filter);
+			}
+		}
+	}
+}
+
+static CString FilterVenue(std::vector<CVenueFilter> const& venues)
+{
+	CString venue;
+	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+		iter != venues.end();
+		++iter)
+	{
+		if (!venue.IsEmpty())
+			venue += ':';
+		venue += (*iter).venue.c_str();
+		venue += _T("/");
+		venue += (*iter).division.c_str();
+		venue += _T("/");
+		venue += (*iter).level.c_str();
+	}
+	return venue;
+}
+
+static void TrainingNames(CString inNames, std::set<ARBString>& outNames)
+{
+	if (!inNames.IsEmpty())
+	{
+		int pos;
+		while (0 <= (pos = inNames.Find(':')))
+		{
+			outNames.insert((LPCTSTR)inNames.Left(pos));
+			inNames = inNames.Mid(pos+1);
+		}
+		outNames.insert((LPCTSTR)inNames);
+	}
+}
+
+static CString TrainingNames(std::set<ARBString> const& inNames)
+{
+	CString names;
+	for (std::set<ARBString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	{
+		if (!names.IsEmpty())
+			names += ':';
+		names += (*iter).c_str();
+	}
+	return names;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // Filtering: Calendar
 
 CCalendarViewFilter CFilterOptions::FilterCalendarView()
@@ -407,47 +498,8 @@ void CFilterOptions::GetFilterVenue(std::vector<CVenueFilter>& venues)
 	}
 	else
 	{
-		CString venue;
-		venue = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
-		if (!venue.IsEmpty())
-		{
-			CStringArray raw;
-			int pos;
-			while (0 <= (pos = venue.Find(':')))
-			{
-				raw.Add(venue.Left(pos));
-				venue = venue.Mid(pos+1);
-			}
-			raw.Add(venue);
-			for (int i = 0; i < raw.GetSize(); ++i)
-			{
-				venue = raw[i];
-				CStringArray rawFilter;
-				while (0 <= (pos = venue.Find('/')))
-				{
-					rawFilter.Add(venue.Left(pos));
-					venue = venue.Mid(pos+1);
-				}
-				rawFilter.Add(venue);
-				if (0 < rawFilter.GetSize())
-				{
-					CVenueFilter filter;
-					switch (rawFilter.GetSize())
-					{
-					default:
-					case 3:
-						filter.level = (LPCTSTR)rawFilter[2];
-						// fallthru
-					case 2:
-						filter.division = (LPCTSTR)rawFilter[1];
-						// fallthru
-					case 1:
-						filter.venue = (LPCTSTR)rawFilter[0];
-					}
-					venues.push_back(filter);
-				}
-			}
-		}
+		CString venue = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
+		FilterVenue(venue, venues);
 		s_venueCacheInit = true;
 		s_venueCache = venues;
 	}
@@ -455,19 +507,7 @@ void CFilterOptions::GetFilterVenue(std::vector<CVenueFilter>& venues)
 
 void CFilterOptions::SetFilterVenue(std::vector<CVenueFilter> const& venues)
 {
-	CString venue;
-	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-		iter != venues.end();
-		++iter)
-	{
-		if (!venue.IsEmpty())
-			venue += ':';
-		venue += (*iter).venue.c_str();
-		venue += _T("/");
-		venue += (*iter).division.c_str();
-		venue += _T("/");
-		venue += (*iter).level.c_str();
-	}
+	CString venue = FilterVenue(venues);
 	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterVenue"), venue);
 	s_venueCacheInit = true;
 	s_venueCache = venues;
@@ -500,8 +540,28 @@ void CFilterOptions::SetTrainingViewAllNames(bool bViewAll)
 void CFilterOptions::GetTrainingFilterNames(std::set<ARBString>& outNames)
 {
 	outNames.clear();
-	CString names;
-	names = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
+	CString names = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
+	outNames.clear();
+	TrainingNames(names, outNames);
+}
+
+void CFilterOptions::SetTrainingFilterNames(std::set<ARBString> const& inNames)
+{
+	CString names = TrainingNames(inNames);
+	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterTrainingNames"), names);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+ARBString CFilterOptions::GetCurrentFilter()
+{
+	return (LPCTSTR)AfxGetApp()->GetProfileString(_T("Settings"), _T("Filter"), "");
+}
+
+size_t CFilterOptions::GetAllNamedFilters(std::set<ARBString>& outNames)
+{
+	outNames.clear();
+	CString names = AfxGetApp()->GetProfileString(_T("Settings"), _T("Filters"), "");
 	if (!names.IsEmpty())
 	{
 		int pos;
@@ -512,16 +572,139 @@ void CFilterOptions::GetTrainingFilterNames(std::set<ARBString>& outNames)
 		}
 		outNames.insert((LPCTSTR)names);
 	}
+	return outNames.size();
 }
 
-void CFilterOptions::SetTrainingFilterNames(std::set<ARBString> const& inNames)
+static void SetAllNamedFilters(std::set<ARBString> const& inNames)
 {
 	CString names;
-	for (std::set<ARBString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	for (std::set<ARBString>::const_iterator i = inNames.begin();
+		i != inNames.end();
+		++i)
 	{
 		if (!names.IsEmpty())
 			names += ':';
-		names += (*iter).c_str();
+		names += (*i).c_str();
 	}
-	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterTrainingNames"), names);
+	AfxGetApp()->WriteProfileString(_T("Settings"), _T("Filters"), names);
+}
+
+void CFilterOptions::DeleteNamedFilter(ARBString const& inName)
+{
+	if (inName.empty())
+		return;
+	std::set<ARBString> names;
+	if (0 < GetAllNamedFilters(names))
+	{
+		std::set<ARBString>::iterator i = names.find(inName);
+		if (names.end() != i)
+		{
+			names.erase(i);
+			SetAllNamedFilters(names);
+			CString section(_T("Filter"));
+			section += inName.c_str();
+			AfxGetApp()->WriteProfileString(section, NULL, NULL);
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CFilterOptionData::CFilterOptionData()
+	: filterName(_T(""))
+{
+	filterName = CFilterOptions::GetCurrentFilter();
+	calView = CFilterOptions::FilterCalendarView();
+	bAllDates = CFilterOptions::GetViewAllDates();
+	bStartDate = CFilterOptions::GetStartFilterDateSet();
+	dateStartDate = CFilterOptions::GetStartFilterDate();
+	bEndDate = CFilterOptions::GetEndFilterDateSet();
+	dateEndDate = CFilterOptions::GetEndFilterDate();
+	bViewAllVenues = CFilterOptions::GetViewAllVenues();
+	CFilterOptions::GetFilterVenue(venueFilter);
+	eRuns = CFilterOptions::GetViewRuns();
+	bViewAllNames = CFilterOptions::GetTrainingViewAllNames();
+	CFilterOptions::GetTrainingFilterNames(nameFilter);
+}
+
+CFilterOptionData::CFilterOptionData(ARBString const& inName)
+	: filterName(inName)
+{
+	if (filterName.empty())
+	{
+		calView = CFilterOptions::FilterCalendarView();
+		bAllDates = CFilterOptions::GetViewAllDates();
+		bStartDate = CFilterOptions::GetStartFilterDateSet();
+		dateStartDate = CFilterOptions::GetStartFilterDate();
+		bEndDate = CFilterOptions::GetEndFilterDateSet();
+		dateEndDate = CFilterOptions::GetEndFilterDate();
+		bViewAllVenues = CFilterOptions::GetViewAllVenues();
+		CFilterOptions::GetFilterVenue(venueFilter);
+		eRuns = CFilterOptions::GetViewRuns();
+		bViewAllNames = CFilterOptions::GetTrainingViewAllNames();
+		CFilterOptions::GetTrainingFilterNames(nameFilter);
+	}
+	else
+	{
+		CString section(_T("Filter"));
+		section += inName.c_str();
+		calView.m_Filter = static_cast<unsigned short>(AfxGetApp()->GetProfileInt(section, _T("Cal"), CCalendarViewFilter::eViewNormal));
+		bAllDates = AfxGetApp()->GetProfileInt(section, _T("AllDates"), 1) == 1;
+		bStartDate = AfxGetApp()->GetProfileInt(section, _T("Start"), 0) == 1;
+		AfxGetApp()->GetProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay());
+		bEndDate = AfxGetApp()->GetProfileInt(section, _T("End"), 0) == 1;
+		AfxGetApp()->GetProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay());
+		bViewAllVenues = AfxGetApp()->GetProfileInt(section, _T("AllVenues"), 1) == 1;
+		CString names = AfxGetApp()->GetProfileString(section, _T("FilterVenue"), _T(""));
+		venueFilter.clear();
+		FilterVenue(names, venueFilter);
+		eRuns = static_cast<CFilterOptions::eViewRuns>(AfxGetApp()->GetProfileInt(section, _T("ViewRuns"), 0));
+		bViewAllNames = AfxGetApp()->GetProfileInt(section, _T("AllNames"), 1) == 1;
+		names = AfxGetApp()->GetProfileString(section, _T("FilterNames"), _T(""));
+		nameFilter.clear();
+		TrainingNames(names, nameFilter);
+	}
+}
+
+bool CFilterOptionData::SaveName()
+{
+	if (filterName.empty())
+		return false;
+
+	std::set<ARBString> names;
+	CFilterOptions::GetAllNamedFilters(names);
+	names.insert(filterName);
+	SetAllNamedFilters(names);
+
+	CString section(_T("Filter"));
+	section += filterName.c_str();
+	AfxGetApp()->WriteProfileInt(section, _T("Cal"), calView.m_Filter);
+	AfxGetApp()->WriteProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(section, _T("Start"), bStartDate ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay());
+	AfxGetApp()->WriteProfileInt(section, _T("End"), bEndDate ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay());
+	AfxGetApp()->WriteProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0);
+	CString name = FilterVenue(venueFilter);
+	AfxGetApp()->WriteProfileString(section, _T("FilterVenue"), name);
+	AfxGetApp()->WriteProfileInt(section, _T("ViewRuns"), static_cast<int>(eRuns));
+	AfxGetApp()->WriteProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0);
+	name = TrainingNames(nameFilter);
+	AfxGetApp()->WriteProfileString(section, _T("FilterNames"), name);
+	return true;
+}
+
+void CFilterOptionData::SaveDefault()
+{
+	CFilterOptions::SetFilterCalendarView(calView);
+	CFilterOptions::SetViewAllDates(bAllDates);
+	CFilterOptions::SetStartFilterDateSet(bStartDate);
+	CFilterOptions::SetStartFilterDate(dateStartDate);
+	CFilterOptions::SetEndFilterDateSet(bEndDate);
+	CFilterOptions::SetEndFilterDate(dateEndDate);
+	CFilterOptions::SetViewAllVenues(bViewAllVenues);
+	CFilterOptions::SetFilterVenue(venueFilter);
+	CFilterOptions::SetViewRuns(eRuns);
+	CFilterOptions::SetTrainingViewAllNames(bViewAllNames);
+	CFilterOptions::SetTrainingFilterNames(nameFilter);
 }

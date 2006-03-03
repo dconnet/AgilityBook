@@ -228,7 +228,11 @@ BOOL GetLocalStatus(
 		CFileStatus& rStatus)
 {
 	// Defined in "Microsoft Visual Studio 8\VC\atlmfc\src\mfc\afximpl.h"
+#if _MSC_VER >= 1400
 	BOOL AFXAPI AfxFullPath(__out_z LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
+#else
+	BOOL AFXAPI AfxFullPath(LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
+#endif
 
 #if _MSC_VER >= 1400
 	ASSERT( lpszFileName != NULL );
