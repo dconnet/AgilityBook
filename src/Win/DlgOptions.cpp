@@ -76,30 +76,18 @@ CDlgOptions::CDlgOptions(
 	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
 
 	// Filters
-	m_pageFilter.m_ViewDates = CFilterOptions::GetViewAllDates() ? 0 : 1;
-	m_pageFilter.m_timeStart = CFilterOptions::GetStartFilterDate().GetDate();
-	m_pageFilter.m_bDateStart = CFilterOptions::GetStartFilterDateSet();
-	m_pageFilter.m_timeEnd = CFilterOptions::GetEndFilterDate().GetDate();
-	m_pageFilter.m_bDateEnd = CFilterOptions::GetEndFilterDateSet();
-	m_pageFilter.m_ViewNames = CFilterOptions::GetTrainingViewAllNames() ? 0 : 1;
-	CFilterOptions::GetTrainingFilterNames(m_pageFilter.m_NameFilter);
-	m_pageFilter.m_bNotEntered = filter.ViewNotEntered();
-	m_pageFilter.m_bPlanning = filter.ViewPlanning();
-	m_pageFilter.m_bEntered = filter.ViewEntered();
-	m_pageFilter.m_ViewVenues = CFilterOptions::GetViewAllVenues() ? 0 : 1;
-	CFilterOptions::GetFilterVenue(m_pageFilter.m_VenueFilter);
-	switch (CFilterOptions::GetViewRuns())
+	m_pageFilter.m_CurFilterName = CFilterOptions::GetCurrentFilter();
+	std::set<ARBString> names;
+	CFilterOptions::GetAllNamedFilters(names);
+	for (std::set<ARBString>::iterator iter = names.begin();
+		iter != names.end();
+		++iter)
 	{
-	default:
-	case CFilterOptions::eViewRunsAll:
-		m_pageFilter.m_ViewQs = 0;
-		break;
-	case CFilterOptions::eViewRunsQs:
-		m_pageFilter.m_ViewQs = 1;
-		break;
-	case CFilterOptions::eViewRunsNQs:
-		m_pageFilter.m_ViewQs = 2;
-		break;
+		if (!iter->empty())
+		{
+			CFilterOptionData data(*iter);
+			m_pageFilter.m_Filters.push_back(data);
+		}
 	}
 
 	// Views
@@ -162,7 +150,6 @@ void CDlgOptions::OnOK()
 	if (GetActivePage()->UpdateData(TRUE))
 	{
 		CWaitCursor wait;
-		bool bOldNewest = CAgilityBookOptions::GetNewestDatesFirst();
 		CCalendarViewFilter filter;
 
 		// Program options
@@ -173,52 +160,19 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
 
 		// Filters
-		CFilterOptions::SetViewAllDates(m_pageFilter.m_ViewDates == 0);
-		CFilterOptions::SetStartFilterDate(m_pageFilter.m_timeStart.GetTime());
-		CFilterOptions::SetStartFilterDateSet(m_pageFilter.m_bDateStart ? true : false);
-		CFilterOptions::SetEndFilterDate(m_pageFilter.m_timeEnd.GetTime());
-		CFilterOptions::SetEndFilterDateSet(m_pageFilter.m_bDateEnd ? true : false);
-		if (m_pageFilter.m_ViewDates != 0
-		&& !m_pageFilter.m_bDateStart 
-		&& !m_pageFilter.m_bDateEnd)
+		for (std::set<ARBString>::iterator i = m_pageFilter.m_DeleteFilters.begin();
+			i != m_pageFilter.m_DeleteFilters.end();
+			++i)
 		{
-			CFilterOptions::SetViewAllDates(true);
+			CFilterOptions::DeleteNamedFilter(*i);
 		}
-		CFilterOptions::SetTrainingViewAllNames(m_pageFilter.m_ViewNames == 0);
-		CFilterOptions::SetTrainingFilterNames(m_pageFilter.m_NameFilter);
-		if (m_pageFilter.m_ViewNames != 0
-		&& 0 == m_pageFilter.m_NameFilter.size())
+		for (std::vector<CFilterOptionData>::iterator i = m_pageFilter.m_Filters.begin();
+			i != m_pageFilter.m_Filters.end();
+			++i)
 		{
-			CFilterOptions::SetTrainingViewAllNames(true);
+			(*i).SaveName();
 		}
-		if (m_pageFilter.m_bNotEntered)
-			filter.AddNotEntered();
-		if (m_pageFilter.m_bPlanning)
-			filter.AddPlanning();
-		if (m_pageFilter.m_bEntered)
-			filter.AddEntered();
-		CFilterOptions::SetViewAllVenues(m_pageFilter.m_ViewVenues == 0);
-		CFilterOptions::SetFilterVenue(m_pageFilter.m_VenueFilter);
-		if (m_pageFilter.m_ViewVenues != 0
-		&& 0 == m_pageFilter.m_VenueFilter.size())
-		{
-			CFilterOptions::SetViewAllVenues(true);
-		}
-		switch (m_pageFilter.m_ViewQs)
-		{
-		default:
-		case 0:
-			CFilterOptions::SetViewRuns(CFilterOptions::eViewRunsAll);
-			break;
-		case 1:
-			CFilterOptions::SetViewRuns(CFilterOptions::eViewRunsQs);
-			break;
-		case 2:
-			CFilterOptions::SetViewRuns(CFilterOptions::eViewRunsNQs);
-			break;
-		}
-		if (bOldNewest != CAgilityBookOptions::GetNewestDatesFirst())
-			m_pDoc->SortDates();
+		m_pageFilter.m_CurFilter.SaveDefault();
 
 		// Views
 		if (!m_pageView.m_bOpeningNear)

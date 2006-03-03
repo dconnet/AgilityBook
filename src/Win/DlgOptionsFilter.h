@@ -39,9 +39,10 @@
  */
 
 #include <set>
-#include "FilterOptions.h"
 #include "CheckTreeCtrl.h"
+#include "ComboBox.h"
 #include "DlgBasePropertyPage.h"
+#include "FilterOptions.h"
 
 class CDlgOptionsFilter : public CDlgBasePropertyPage
 {
@@ -72,10 +73,16 @@ private:
 	int		m_ViewVenues;
 	CCheckTreeCtrl	m_ctrlVenue;
 	int		m_ViewQs;
+	CComboBox2	m_ctrlFilters;
+	CString	m_FilterName;
+	CButton	m_ctrlSaveName;
+	CButton	m_ctrlDelName;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	std::set<ARBString> m_NameFilter;
-	std::vector<CVenueFilter> m_VenueFilter;
+	CFilterOptionData m_CurFilter;
+	ARBString m_CurFilterName;
+	std::vector<CFilterOptionData> m_Filters;
+	std::set<ARBString> m_DeleteFilters;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgOptionsFilter)
@@ -85,6 +92,7 @@ private:
 
 // Implementation
 protected:
+	void FillControls(bool bSave);
 	bool Find(ARBString const& venue,
 			ARBString const& div,
 			ARBString const& level) const;
@@ -98,6 +106,9 @@ protected:
 	afx_msg void OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnUpdateFilters();
+	afx_msg void OnSelchangeFilterNames();
+	afx_msg void OnBnClickedOptFilterNamesSave();
+	afx_msg void OnBnClickedOptFilterNamesDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
