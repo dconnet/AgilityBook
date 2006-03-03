@@ -39,7 +39,7 @@
  */
 
 #include <set>
-#include "AgilityBookOptions.h"
+#include "FilterOptions.h"
 #include "CheckTreeCtrl.h"
 #include "DlgBasePropertyPage.h"
 

@@ -382,6 +382,10 @@ SOURCE=..\..\Win\DlgTrial.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\FilterOptions.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\HyperLink.cpp
 # End Source File
 # Begin Source File
@@ -748,6 +752,10 @@ SOURCE=..\..\Win\DlgTraining.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgTrial.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\FilterOptions.h
 # End Source File
 # Begin Source File
 

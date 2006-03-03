@@ -51,7 +51,6 @@
 				SmallerTypeCheck="true"
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="true"
-				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
 				WarnAsError="true"
@@ -73,8 +72,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				LinkIncremental="2"
-				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="../../../lib/VC8"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -139,7 +136,6 @@
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="2"
-				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
 				WarnAsError="true"
@@ -161,7 +157,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="../../../lib/VC8"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -488,6 +483,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgTrial.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\FilterOptions.h"
 				>
 			</File>
 			<File
@@ -1286,6 +1285,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgTrial.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\FilterOptions.cpp"
 				>
 			</File>
 			<File

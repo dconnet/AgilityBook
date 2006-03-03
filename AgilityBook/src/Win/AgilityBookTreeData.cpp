@@ -78,6 +78,7 @@
 #include "DlgTitle.h"
 #include "DlgTrial.h"
 #include "Element.h"
+#include "FilterOptions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -155,7 +156,7 @@ static bool EditTrial(
 	{
 		bOk = true;
 		std::vector<CVenueFilter> venues;
-		CAgilityBookOptions::GetFilterVenue(venues);
+		CFilterOptions::GetFilterVenue(venues);
 		if (bAdd)
 		{
 			if (!pDogData->GetDog()->GetTrials().AddTrial(pTrial))
@@ -241,7 +242,7 @@ static bool EditRun(
 	{
 		bOk = true;
 		std::vector<CVenueFilter> venues;
-		CAgilityBookOptions::GetFilterVenue(venues);
+		CFilterOptions::GetFilterVenue(venues);
 		if (bAdd)
 		{
 			if (!pTrialData->GetTrial()->GetRuns().AddRun(pRun))
@@ -260,7 +261,7 @@ static bool EditRun(
 				HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pRun, pTrialData->GetHTreeItem());
 				if (NULL == hItem)
 				{
-					if (CAgilityBookOptions::IsFilterEnabled())
+					if (CFilterOptions::IsFilterEnabled())
 						AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
 				}
 				else
@@ -413,7 +414,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				size_t nFailed = 0;
 				bLoaded = true;
 				std::vector<CVenueFilter> venues;
-				CAgilityBookOptions::GetFilterVenue(venues);
+				CFilterOptions::GetFilterVenue(venues);
 				for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 				{
 					ARBDogRunPtr pRun = *iter;
@@ -444,7 +445,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					if (NULL == hItem)
 					{
 						bOk = false;
-						if (CAgilityBookOptions::IsFilterEnabled())
+						if (CFilterOptions::IsFilterEnabled())
 							AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
 					}
 					else
@@ -477,7 +478,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				{
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
-					CAgilityBookOptions::GetFilterVenue(venues);
+					CFilterOptions::GetFilterVenue(venues);
 					if (!pDog->GetTrials().AddTrial(pTrial))
 					{
 						bLoaded = false;

@@ -54,6 +54,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "DlgConfigure.h"
+#include "FilterOptions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1417,7 +1418,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		{
 			ARBDogTrialPtr pTrial = iter->first;
 			ARBDogRunPtr pRun = iter->second;
-			if (CAgilityBookOptions::IsFilterEnabled())
+			if (CFilterOptions::IsFilterEnabled())
 			{
 				if (pRun->IsFiltered())
 					continue;

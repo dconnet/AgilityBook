@@ -95,6 +95,7 @@
 #include "DlgTraining.h"
 #include "DlgTrial.h"
 #include "Element.h"
+#include "FilterOptions.h"
 #include "MainFrm.h"
 #include "Splash.h"
 #include "TabView.h"
@@ -520,9 +521,9 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 void CAgilityBookDoc::ResetVisibility()
 {
 	std::vector<CVenueFilter> venues;
-	CAgilityBookOptions::GetFilterVenue(venues);
+	CFilterOptions::GetFilterVenue(venues);
 	std::set<ARBString> names;
-	CAgilityBookOptions::GetTrainingFilterNames(names);
+	CFilterOptions::GetTrainingFilterNames(names);
 
 	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
 	{
@@ -537,7 +538,7 @@ void CAgilityBookDoc::ResetVisibility()
 	for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
 	{
 		ARBCalendarPtr pCal = *iterCal;
-		bool bVis = CAgilityBookOptions::IsCalendarVisible(pCal);
+		bool bVis = CFilterOptions::IsCalendarVisible(pCal);
 		pCal->SetFiltered(!bVis);
 	}
 
@@ -560,7 +561,7 @@ void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
 		ARBDogTrialPtr pTrial)
 {
-	bool bVisTrial = CAgilityBookOptions::IsTrialVisible(venues, pTrial);
+	bool bVisTrial = CFilterOptions::IsTrialVisible(venues, pTrial);
 	pTrial->SetFiltered(!bVisTrial);
 	int nVisible = 0;
 	for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin(); iterRun != pTrial->GetRuns().end(); ++iterRun)
@@ -578,7 +579,7 @@ void CAgilityBookDoc::ResetVisibility(
 		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun)
 {
-	unsigned short nVisRun = CAgilityBookOptions::IsRunVisible(venues, pTrial, pRun);
+	unsigned short nVisRun = CFilterOptions::IsRunVisible(venues, pTrial, pRun);
 	pRun->SetFiltered(ARBBase::eFilter, (nVisRun & (0x1 << ARBBase::eFilter)) ? false : true);
 	pRun->SetFiltered(ARBBase::eIgnoreQ, (nVisRun & (0x1 << ARBBase::eIgnoreQ)) ? false : true);
 }
@@ -587,7 +588,7 @@ void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
 		ARBDogTitlePtr pTitle)
 {
-	bool bVisTitle = CAgilityBookOptions::IsTitleVisible(venues, pTitle);
+	bool bVisTitle = CFilterOptions::IsTitleVisible(venues, pTitle);
 	pTitle->SetFiltered(!bVisTitle);
 }
 
@@ -595,7 +596,7 @@ void CAgilityBookDoc::ResetVisibility(
 		std::set<ARBString>& names,
 		ARBTrainingPtr pTraining)
 {
-	bool bVisTraining = CAgilityBookOptions::IsTrainingLogVisible(names, pTraining);
+	bool bVisTraining = CFilterOptions::IsTrainingLogVisible(names, pTraining);
 	pTraining->SetFiltered(!bVisTraining);
 }
 

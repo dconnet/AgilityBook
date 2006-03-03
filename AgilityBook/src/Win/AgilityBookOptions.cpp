@@ -66,16 +66,118 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// Obsolete registry entries
-// bool GetProfileInt("Common", "TrainingViewAllDates", 1)
-// ARBDate(julian) GetProfileInt("Common", "TrainingStartFilterJDay", date.GetJulianDay()))
-// bool GetProfileInt("Common", "TrainingStartFilter", 0);
-// ARBDate(julian) GetProfileInt("Common", "TrainingEndFilterJDay", date.GetJulianDay()));
-// bool GetProfileInt("Common", "TrainingEndFilter", 0);
-//
-// Calendar/FontDate+Name/Size/Italic/Bold (str,int,int,int)
-// Calendar/PrintFontDate+Name/Size/Italic/Bold
-// Calendar/PrintFontText+Name/Size/Italic/Bold
+
+/* Registry entries
+Calendar
+	DW AutoDelete
+	DW ViewAll
+	DW PastEntry
+	DW HideOverlapping
+	DW EntrySize.cx
+	DW EntrySize.cy
+	DW Filter
+	DW NotEnteredColor
+	DW PlanningColor
+	DW OpenColor
+	DW CloseColor
+	DW EnteredColor
+	DW OpenNear
+	DW CloseNear
+	DW OpenNearColor
+	DW CloseNearColor
+	ST FontTextName
+	DW FontTextSize
+	DW FontTextItalic
+	DW FontTextBold
+	Obsolete ST FontDateName
+	Obsolete DW FontDateSize
+	Obsolete DW FontDateItalic
+	Obsolete DW FontDateBold
+	Obsolete ST PrintFontDateName
+	Obsolete DW PrintFontDateSize
+	Obsolete DW PrintFontDateItalic
+	Obsolete DW PrintFontDateBold
+	Obsolete ST PrintFontTextName
+	Obsolete DW PrintFontTextSize
+	Obsolete DW PrintFontTextItalic
+	Obsolete DW PrintFontTextBold
+Columns
+	ST col[n]
+Common
+	DW FirstDayOfWeek
+	DW ViewAllDates
+	DW StartFilterJDay
+	DW StartFilter
+	DW EndFilterJDay
+	DW EndFilter
+	DW ViewAllVenues
+	ST FilterVenue
+	DW ViewAllRuns
+	DW ViewQRuns
+	DW ViewAllNames
+	ST FilterTrainingNames
+	DW ViewRunsByTrial
+	DW ViewNewestFirst
+	DW ViewHiddenTitles
+	DW TableInYPS
+	DW CRCDImage
+	ST PrintFontListName
+	DW PrintFontListSize
+	DW PrintFontListItalic
+	DW PrintFontListBold
+	Obsolete DW TrainingViewAllDates
+	Obsolete DW TrainingStartFilterJDay
+	Obsolete DW TrainingStartFilter
+	Obsolete DW TrainingEndFilterJDay
+	Obsolete DW TrainingEndFilter
+Export
+	DW delim
+	ST delimiter
+	DW dateformat
+	ST col[n]
+ExportCal
+	ST col[n]
+ExportCalAppt
+	ST col[n]
+ExportCalTask
+	ST col[n]
+ExportLog
+	ST col[n]
+Import
+	DW row
+	DW delim
+	ST delimiter
+	DW dateformat
+	ST col[n]
+ImportCal
+	ST col[n]
+ImportLog
+	ST col[n]
+Last
+	ST Division
+	ST Level
+	ST Height
+	ST RefHeight
+	ST Judge
+	ST Handler
+Settings:
+	DW autoCheck
+	DW BackupFiles
+	DW ShowSplash
+	ST Splash
+	DW autoShowTitle
+	DW dateFormat[n]
+		{
+			eRunTree	= 0,
+			eRunList	= 1,
+			ePoints		= 2,
+			eCalList	= 3,
+			eCalendar	= 4,
+			eTraining	= 5,
+		}
+Unknown
+	ST col[n]
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -118,261 +220,6 @@ void CFontInfo::CreateFont(
 	italic = dlg.IsItalic() ? true : false;
 	bold = dlg.IsBold() ? true : false;
 	CreateFont(font, pDC);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Helper functions
-
-bool CAgilityBookOptions::IsFilterEnabled()
-{
-	if (CAgilityBookOptions::GetViewAllDates()
-	&& CAgilityBookOptions::GetViewAllVenues()
-	&& CAgilityBookOptions::GetViewAllRuns())
-		return false;
-	else
-		return true;
-}
-
-bool CAgilityBookOptions::IsDateVisible(
-		ARBDate const& startDate,
-		ARBDate const& endDate)
-{
-	if (!CAgilityBookOptions::GetViewAllDates())
-	{
-		if (CAgilityBookOptions::GetStartFilterDateSet())
-		{
-			ARBDate date = CAgilityBookOptions::GetStartFilterDate();
-			if (startDate < date)
-				return false;
-		}
-		if (CAgilityBookOptions::GetEndFilterDateSet())
-		{
-			ARBDate date = CAgilityBookOptions::GetEndFilterDate();
-			if (endDate > date)
-				return false;
-		}
-	}
-	return true;
-}
-
-bool CAgilityBookOptions::IsTitleVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTitlePtr pTitle)
-{
-	if (!GetViewHiddenTitles() && pTitle->IsHidden())
-		return false;
-	if (!pTitle->GetDate().IsValid()
-	|| !IsDateVisible(pTitle->GetDate(), pTitle->GetDate()))
-		return false;
-	return IsVenueVisible(venues, pTitle->GetVenue());
-}
-
-bool CAgilityBookOptions::IsVenueVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBString const& venue)
-{
-	if (!CAgilityBookOptions::GetViewAllVenues())
-	{
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
-		{
-			if ((*iter).venue == venue)
-				return true;
-		}
-		return false;
-	}
-	return true;
-}
-
-bool CAgilityBookOptions::IsVenueDivisionVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBString const& venue,
-		ARBString const& div)
-{
-	if (!CAgilityBookOptions::GetViewAllVenues())
-	{
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
-		{
-			if ((*iter).venue == venue
-			&& (*iter).division == div)
-				return true;
-		}
-		return false;
-	}
-	return true;
-}
-
-bool CAgilityBookOptions::IsTrialVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr pTrial)
-{
-	// Yes, it seems backwards, but it is correct.
-	if (!IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
-		return false;
-	if (!CAgilityBookOptions::GetViewAllVenues())
-	{
-		for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
-			iterClub != pTrial->GetClubs().end();
-			++iterClub)
-		{
-			if (IsVenueVisible(venues, (*iterClub)->GetVenue()))
-				return true;
-		}
-		return false;
-	}
-	return true;
-}
-
-// Return type should be the same as ARBBase::m_nFiltered
-unsigned short CAgilityBookOptions::IsRunVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun)
-{
-	unsigned short nVisible = 0;
-	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
-		return nVisible;
-	nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
-	if (!CAgilityBookOptions::GetViewAllVenues())
-	{
-		nVisible = 0;
-		// Don't call IsTrialVisible. We need more control over the club/venue
-		// check. Otherwise (for instance), if AKC/NoviceB is disabled and
-		// ASCA/NoviceB is enabled, since the division/level names match, the
-		// AKC run will actually show up. So we need to make sure the venue
-		// of the filter matches too.
-		if (IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
-		{
-			for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-				iter != venues.end();
-				++iter)
-			{
-				bool bCheck = false;
-				for (ARBDogClubList::const_iterator iterClub = pTrial->GetClubs().begin();
-					iterClub != pTrial->GetClubs().end();
-					++iterClub)
-				{
-					if ((*iter).venue == (*iterClub)->GetVenue())
-					{
-						bCheck = true;
-						break;
-					}
-				}
-				if (bCheck
-				&& pRun->GetDivision() == (*iter).division
-				&& pRun->GetLevel() == (*iter).level)
-				{
-					nVisible = (0x1 << ARBBase::eFilter) | (0x1 << ARBBase::eIgnoreQ);
-					break;
-				}
-			}
-		}
-	}
-	if ((nVisible & (0x1 << ARBBase::eFilter))
-	&& !CAgilityBookOptions::GetViewAllRuns())
-	{
-		// Only set the full filter, not the IgnoreQ filter.
-		nVisible &= ~(0x1 << ARBBase::eFilter);
-		bool bQualifying = CAgilityBookOptions::GetViewQRuns();
-		if ((pRun->GetQ().Qualified() && bQualifying)
-		|| (!pRun->GetQ().Qualified() && !bQualifying))
-			nVisible |= (0x1 << ARBBase::eFilter);
-	}
-	return nVisible;
-}
-
-// This function is used in conjunction with the above. We only need to be
-// concerned with trials with more than 1 club. This is used to filter a
-// run in the points view - for instance, if you have an ASCA/NADAC trial and
-// set the filtering to hide NADAC novice runs, the asca visibility caused
-// the novice run to appear in the nadac points listing when it shouldn't.
-bool CAgilityBookOptions::IsRunVisible(
-		std::vector<CVenueFilter> const& venues,
-		ARBConfigVenuePtr pVenue,
-		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun)
-{
-	if (1 >= pTrial->GetClubs().size())
-		return true;
-	bool bVisible = true;
-	if (!CAgilityBookOptions::GetViewAllVenues())
-	{
-		bVisible = false;
-		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-			iter != venues.end();
-			++iter)
-		{
-			if (pTrial->HasVenue(pVenue->GetName())
-			&& pVenue->GetName() == (*iter).venue
-			&& pRun->GetDivision() == (*iter).division
-			&& pRun->GetLevel() == (*iter).level)
-			{
-				bVisible = true;
-				break;
-			}
-		}
-	}
-	return bVisible;
-}
-
-bool CAgilityBookOptions::IsCalendarVisible(ARBCalendarPtr pCal)
-{
-	if (!CAgilityBookOptions::GetViewAllDates())
-	{
-		if (CAgilityBookOptions::GetStartFilterDateSet())
-		{
-			ARBDate date = CAgilityBookOptions::GetStartFilterDate();
-			if (pCal->GetEndDate() < date)
-				return false;
-		}
-		if (CAgilityBookOptions::GetEndFilterDateSet())
-		{
-			ARBDate date = CAgilityBookOptions::GetEndFilterDate();
-			if (pCal->GetStartDate() > date)
-				return false;
-		}
-	}
-	return true;
-}
-
-bool CAgilityBookOptions::IsTrainingLogVisible(
-		std::set<ARBString> const& names,
-		ARBTrainingPtr pTraining)
-{
-	if (!CAgilityBookOptions::GetViewAllDates())
-	{
-		if (CAgilityBookOptions::GetStartFilterDateSet())
-		{
-			ARBDate date = CAgilityBookOptions::GetStartFilterDate();
-			if (pTraining->GetDate() < date)
-				return false;
-		}
-		if (CAgilityBookOptions::GetEndFilterDateSet())
-		{
-			ARBDate date = CAgilityBookOptions::GetEndFilterDate();
-			if (pTraining->GetDate() > date)
-				return false;
-		}
-	}
-	bool bVisible = true;
-	if (!CAgilityBookOptions::GetTrainingViewAllNames())
-	{
-		bVisible = false;
-		for (std::set<ARBString>::const_iterator iter = names.begin();
-			iter != names.end();
-			++iter)
-		{
-			if (pTraining->GetName() == *iter)
-			{
-				bVisible = true;
-				break;
-			}
-		}
-	}
-	return bVisible;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -437,17 +284,6 @@ void CAgilityBookOptions::SetCalendarEntrySize(CSize const& sz)
 {
 	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("EntrySize.cx"), sz.cx);
 	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("EntrySize.cy"), sz.cy);
-}
-
-CCalendarViewFilter CAgilityBookOptions::FilterCalendarView()
-{
-	unsigned short uVal = static_cast<unsigned short>(AfxGetApp()->GetProfileInt(_T("Calendar"), _T("Filter"), CCalendarViewFilter::eViewNormal));
-	return uVal;
-}
-
-void CAgilityBookOptions::SetFilterCalendarView(CCalendarViewFilter inFilter)
-{
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("Filter"), inFilter.m_Filter);
 }
 
 static LPCTSTR CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
@@ -552,224 +388,6 @@ ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 {
 	AfxGetApp()->WriteProfileInt(_T("Common"), _T("FirstDayOfWeek"), static_cast<int>(day));
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Filtering: Date
-
-bool CAgilityBookOptions::GetViewAllDates()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllDates"), 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetViewAllDates(bool bViewAll)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllDates"), bViewAll ? 1 : 0);
-}
-
-ARBDate CAgilityBookOptions::GetStartFilterDate()
-{
-	ARBDate date(ARBDate::Today());
-	date.SetJulianDay(AfxGetApp()->GetProfileInt(_T("Common"), _T("StartFilterJDay"), date.GetJulianDay()));
-	return date;
-}
-
-void CAgilityBookOptions::SetStartFilterDate(ARBDate const& date)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("StartFilterJDay"), date.GetJulianDay());
-}
-
-bool CAgilityBookOptions::GetStartFilterDateSet()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("StartFilter"), 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetStartFilterDateSet(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("StartFilter"), bSet ? 1 : 0);
-}
-
-ARBDate CAgilityBookOptions::GetEndFilterDate()
-{
-	ARBDate date(ARBDate::Today());
-	date.SetJulianDay(AfxGetApp()->GetProfileInt(_T("Common"), _T("EndFilterJDay"), date.GetJulianDay()));
-	return date;
-}
-
-void CAgilityBookOptions::SetEndFilterDate(ARBDate const& date)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("EndFilterJDay"), date.GetJulianDay());
-}
-
-bool CAgilityBookOptions::GetEndFilterDateSet()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("EndFilter"), 0);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetEndFilterDateSet(bool bSet)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("EndFilter"), bSet ? 1 : 0);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Filtering: Runs
-
-bool CAgilityBookOptions::GetViewAllVenues()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllVenues"), 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetViewAllVenues(bool bViewAll)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllVenues"), bViewAll ? 1 : 0);
-}
-
-static bool s_venueCacheInit = false;
-static std::vector<CVenueFilter> s_venueCache;
-
-void CAgilityBookOptions::GetFilterVenue(std::vector<CVenueFilter>& venues)
-{
-	venues.clear();
-	if (s_venueCacheInit)
-	{
-		venues = s_venueCache;
-	}
-	else
-	{
-		CString venue;
-		venue = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
-		if (!venue.IsEmpty())
-		{
-			CStringArray raw;
-			int pos;
-			while (0 <= (pos = venue.Find(':')))
-			{
-				raw.Add(venue.Left(pos));
-				venue = venue.Mid(pos+1);
-			}
-			raw.Add(venue);
-			for (int i = 0; i < raw.GetSize(); ++i)
-			{
-				venue = raw[i];
-				CStringArray rawFilter;
-				while (0 <= (pos = venue.Find('/')))
-				{
-					rawFilter.Add(venue.Left(pos));
-					venue = venue.Mid(pos+1);
-				}
-				rawFilter.Add(venue);
-				if (0 < rawFilter.GetSize())
-				{
-					CVenueFilter filter;
-					switch (rawFilter.GetSize())
-					{
-					default:
-					case 3:
-						filter.level = (LPCTSTR)rawFilter[2];
-						// fallthru
-					case 2:
-						filter.division = (LPCTSTR)rawFilter[1];
-						// fallthru
-					case 1:
-						filter.venue = (LPCTSTR)rawFilter[0];
-					}
-					venues.push_back(filter);
-				}
-			}
-		}
-		s_venueCacheInit = true;
-		s_venueCache = venues;
-	}
-}
-
-void CAgilityBookOptions::SetFilterVenue(std::vector<CVenueFilter> const& venues)
-{
-	CString venue;
-	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
-		iter != venues.end();
-		++iter)
-	{
-		if (!venue.IsEmpty())
-			venue += ':';
-		venue += (*iter).venue.c_str();
-		venue += _T("/");
-		venue += (*iter).division.c_str();
-		venue += _T("/");
-		venue += (*iter).level.c_str();
-	}
-	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterVenue"), venue);
-	s_venueCacheInit = true;
-	s_venueCache = venues;
-}
-
-bool CAgilityBookOptions::GetViewAllRuns()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllRuns"), 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetViewAllRuns(bool bViewAll)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllRuns"), bViewAll ? 1 : 0);
-}
-
-// Subset of AllRuns
-bool CAgilityBookOptions::GetViewQRuns()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewQRuns"), 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetViewQRuns(bool bViewQs)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewQRuns"), bViewQs ? 1 : 0);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Filtering: Training Log
-
-bool CAgilityBookOptions::GetTrainingViewAllNames()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllNames"), 1);
-	return val == 1 ? true : false;
-}
-
-void CAgilityBookOptions::SetTrainingViewAllNames(bool bViewAll)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllNames"), bViewAll ? 1 : 0);
-}
-
-void CAgilityBookOptions::GetTrainingFilterNames(std::set<ARBString>& outNames)
-{
-	outNames.clear();
-	CString names;
-	names = AfxGetApp()->GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
-	if (!names.IsEmpty())
-	{
-		int pos;
-		while (0 <= (pos = names.Find(':')))
-		{
-			outNames.insert((LPCTSTR)names.Left(pos));
-			names = names.Mid(pos+1);
-		}
-		outNames.insert((LPCTSTR)names);
-	}
-}
-
-void CAgilityBookOptions::SetTrainingFilterNames(std::set<ARBString> const& inNames)
-{
-	CString names;
-	for (std::set<ARBString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
-	{
-		if (!names.IsEmpty())
-			names += ':';
-		names += (*iter).c_str();
-	}
-	AfxGetApp()->WriteProfileString(_T("Common"), _T("FilterTrainingNames"), names);
 }
 
 /////////////////////////////////////////////////////////////////////////////

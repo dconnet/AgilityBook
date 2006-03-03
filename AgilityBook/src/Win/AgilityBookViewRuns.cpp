@@ -73,6 +73,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "Element.h"
+#include "FilterOptions.h"
 #include "ListData.h"
 #include "MainFrm.h"
 
@@ -1238,7 +1239,7 @@ void CAgilityBookViewRuns::GetPrintLine(
 
 bool CAgilityBookViewRuns::IsFiltered() const
 {
-	return CAgilityBookOptions::IsFilterEnabled();
+	return CFilterOptions::IsFilterEnabled();
 }
 
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
@@ -1316,7 +1317,7 @@ void CAgilityBookViewRuns::LoadData()
 
 	// Add items.
 	std::vector<CVenueFilter> venues;
-	CAgilityBookOptions::GetFilterVenue(venues);
+	CFilterOptions::GetFilterVenue(venues);
 	list<ARBDogTrialPtr> trials;
 	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	ARBDogTrialPtr pCurTrial = GetDocument()->GetCurrentTrial();
