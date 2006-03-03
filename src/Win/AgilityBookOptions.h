@@ -66,119 +66,9 @@ struct CFontInfo
 			CDC* pDC = NULL);
 };
 
-struct CVenueFilter
-{
-	ARBString venue;
-	ARBString division;
-	ARBString level;
-};
-
-class CCalendarViewFilter
-{
-	friend class CAgilityBookOptions;
-public:
-	typedef enum
-	{
-		eReserved =			0x01, // No longer used - implies not+plan+enter
-		eViewOpening =		0x02,
-		eViewClosing =		0x04,
-		eViewNotEntered =	0x08,
-		eViewPlanning =		0x10,
-		eViewEntered =		0x20,
-		eViewNormal =		eViewNotEntered | eViewPlanning | eViewEntered
-	} eViewFilter;
-	CCalendarViewFilter() : m_Filter(0) {}
-	CCalendarViewFilter(unsigned short inFilter) : m_Filter(inFilter)
-	{
-		if (m_Filter & 0x01)
-		{
-			// Transition existing registry entries.
-			m_Filter &= ~0x01;
-			m_Filter |= eViewNormal;
-		}
-	}
-	bool IsFiltered() const
-	{
-		return eViewNormal != (m_Filter & eViewNormal);
-	}
-	bool ViewNotEntered() const
-	{
-		return 0 == m_Filter || eViewNotEntered == (m_Filter & eViewNotEntered);
-	}
-	bool ViewPlanning() const
-	{
-		return 0 == m_Filter || eViewPlanning == (m_Filter & eViewPlanning);
-	}
-	bool ViewEntered() const
-	{
-		return 0 == m_Filter || eViewEntered == (m_Filter & eViewEntered);
-	}
-	bool ViewOpening() const
-	{
-		return eViewOpening == (m_Filter & eViewOpening);
-	}
-	bool ViewClosing() const
-	{
-		return eViewClosing == (m_Filter & eViewClosing);
-	}
-	void AddNotEntered()
-	{
-		m_Filter |= eViewNotEntered;
-	}
-	void AddPlanning()
-	{
-		m_Filter |= eViewPlanning;
-	}
-	void AddEntered()
-	{
-		m_Filter |= eViewEntered;
-	}
-	void AddOpening()
-	{
-		m_Filter |= eViewOpening;
-	}
-	void AddClosing()
-	{
-		m_Filter |= eViewClosing;
-	}
-private:
-	unsigned short m_Filter;
-};
-
 class CAgilityBookOptions
 {
 public:
-	// Helper functions
-	static bool IsFilterEnabled();
-	static bool IsDateVisible(
-			ARBDate const& startDate,
-			ARBDate const& endDate);
-	static bool IsTitleVisible(
-			std::vector<CVenueFilter> const& venues,
-			ARBDogTitlePtr pTitle);
-	static bool IsVenueVisible(
-			std::vector<CVenueFilter> const& venues,
-			ARBString const& venue);
-	static bool IsVenueDivisionVisible(
-			std::vector<CVenueFilter> const& venues,
-			ARBString const& venue,
-			ARBString const& div);
-	static bool IsTrialVisible(
-			std::vector<CVenueFilter> const& venues,
-			ARBDogTrialPtr pTrial);
-	static unsigned short IsRunVisible(
-			std::vector<CVenueFilter> const& venues,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun);
-	static bool IsRunVisible(
-			std::vector<CVenueFilter> const& venues,
-			ARBConfigVenuePtr pVenue,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun);
-	static bool IsCalendarVisible(ARBCalendarPtr pCal);
-	static bool IsTrainingLogVisible(
-			std::set<ARBString> const& names,
-			ARBTrainingPtr pTraining);
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
 	static void SetAutoDeleteCalendarEntries(bool bAuto);
@@ -188,11 +78,8 @@ public:
 	static void SetDaysTillEntryIsPast(int nDays);
 	static bool HideOverlappingCalendarEntries();
 	static void SetHideOverlappingCalendarEntries(bool bHide);
-	static bool ViewCalendarAsList();
 	static CSize GetCalendarEntrySize();
 	static void SetCalendarEntrySize(CSize const& sz);
-	static CCalendarViewFilter FilterCalendarView();
-	static void SetFilterCalendarView(CCalendarViewFilter inFilter);
 	typedef enum
 	{
 		eCalColorNotEntered,
@@ -218,31 +105,6 @@ public:
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
-	// Filtering: Date
-	static bool GetViewAllDates();
-	static void SetViewAllDates(bool bViewAll);
-	static ARBDate GetStartFilterDate();
-	static void SetStartFilterDate(ARBDate const& date);
-	static bool GetStartFilterDateSet();
-	static void SetStartFilterDateSet(bool bSet);
-	static ARBDate GetEndFilterDate();
-	static void SetEndFilterDate(ARBDate const& date);
-	static bool GetEndFilterDateSet();
-	static void SetEndFilterDateSet(bool bSet);
-	// Filtering: Runs
-	static bool GetViewAllVenues();
-	static void SetViewAllVenues(bool bViewAll);
-	static void GetFilterVenue(std::vector<CVenueFilter>& venues);
-	static void SetFilterVenue(std::vector<CVenueFilter> const& venues);
-	static bool GetViewAllRuns();
-	static void SetViewAllRuns(bool bViewAll);
-	static bool GetViewQRuns(); // Subset of AllRuns
-	static void SetViewQRuns(bool bViewQs);
-	// Filtering: Training Log
-	static bool GetTrainingViewAllNames();
-	static void SetTrainingViewAllNames(bool bViewAll);
-	static void GetTrainingFilterNames(std::set<ARBString>& outNames);
-	static void SetTrainingFilterNames(std::set<ARBString> const& inNames);
 	// Runs/points options
 	static bool GetViewRunsByTrial();
 	static void SetViewRunsByTrial(bool bView);

@@ -70,6 +70,7 @@
 #include "DlgSelectDog.h"
 #include "DlgTrial.h"
 #include "Element.h"
+#include "FilterOptions.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "TabView.h"
@@ -777,9 +778,9 @@ void CAgilityBookViewCalendarList::GetPrintLine(
 
 bool CAgilityBookViewCalendarList::IsFiltered() const
 {
-	if (!CAgilityBookOptions::GetViewAllDates())
+	if (!CFilterOptions::GetViewAllDates())
 		return true;
-	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
 	return filter.IsFiltered();
 }
 
@@ -848,7 +849,7 @@ void CAgilityBookViewCalendarList::LoadData()
 	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
-	CCalendarViewFilter filter = CAgilityBookOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
 	iter != GetDocument()->GetCalendar().end();
 	++iter)

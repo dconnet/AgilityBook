@@ -54,6 +54,7 @@
 #include "DlgDog.h"
 #include "DlgListViewer.h"
 #include "DlgTitle.h"
+#include "FilterOptions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -318,7 +319,7 @@ void PointsDataTitle::Details() const
 	{
 		pDoc->SetModifiedFlag();
 		std::vector<CVenueFilter> venues;
-		CAgilityBookOptions::GetFilterVenue(venues);
+		CFilterOptions::GetFilterVenue(venues);
 		pDoc->ResetVisibility(venues, m_pTitle);
 		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
 	}

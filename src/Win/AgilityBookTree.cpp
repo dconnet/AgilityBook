@@ -66,6 +66,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgFind.h"
+#include "FilterOptions.h"
 #include "MainFrm.h"
 #include "Splash.h"
 
@@ -689,7 +690,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 					bLoaded = true;
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					std::vector<CVenueFilter> venues;
-					CAgilityBookOptions::GetFilterVenue(venues);
+					CFilterOptions::GetFilterVenue(venues);
 					if (!GetDocument()->GetDogs().AddDog(pDog))
 					{
 						bLoaded = false;
@@ -717,7 +718,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 
 bool CAgilityBookTree::IsFiltered() const
 {
-	return CAgilityBookOptions::IsFilterEnabled();
+	return CFilterOptions::IsFilterEnabled();
 }
 
 bool CAgilityBookTree::GetMessage(CString& msg) const

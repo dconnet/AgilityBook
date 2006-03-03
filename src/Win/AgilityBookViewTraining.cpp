@@ -62,6 +62,7 @@
 #include "DlgFind.h"
 #include "DlgTraining.h"
 #include "Element.h"
+#include "FilterOptions.h"
 #include "ListData.h"
 #include "MainFrm.h"
 #include "TabView.h"
@@ -446,8 +447,8 @@ void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 
 bool CAgilityBookViewTraining::IsFiltered() const
 {
-	if (CAgilityBookOptions::GetViewAllDates()
-	&& CAgilityBookOptions::GetTrainingViewAllNames())
+	if (CFilterOptions::GetViewAllDates()
+	&& CFilterOptions::GetTrainingViewAllNames())
 		return false;
 	else
 		return true;

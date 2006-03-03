@@ -51,6 +51,7 @@
 #include "DlgDogTitles.h"
 #include "DlgRegNum.h"
 #include "DlgTitle.h"
+#include "FilterOptions.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -93,7 +94,7 @@ CDlgDog::~CDlgDog()
 	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
 	{
 		std::vector<CVenueFilter> venues;
-		CAgilityBookOptions::GetFilterVenue(venues);
+		CFilterOptions::GetFilterVenue(venues);
 		for (ARBDogList::iterator iterDogs = m_pDoc->GetDogs().begin(); iterDogs != m_pDoc->GetDogs().end(); ++iterDogs)
 			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
 				m_pDoc->ResetVisibility(venues, *iterTitle);
