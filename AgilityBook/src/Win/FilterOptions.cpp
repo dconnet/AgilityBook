@@ -555,7 +555,12 @@ void CFilterOptions::SetTrainingFilterNames(std::set<ARBString> const& inNames)
 
 ARBString CFilterOptions::GetCurrentFilter()
 {
-	return (LPCTSTR)AfxGetApp()->GetProfileString(_T("Settings"), _T("Filter"), "");
+	return (LPCTSTR)AfxGetApp()->GetProfileString(_T("Settings"), _T("Filter"), _T(""));
+}
+
+void CFilterOptions::SetCurrentFilter(ARBString const& inName)
+{
+	AfxGetApp()->WriteProfileString(_T("Settings"), _T("Filter"), inName.c_str());
 }
 
 size_t CFilterOptions::GetAllNamedFilters(std::set<ARBString>& outNames)
@@ -605,6 +610,8 @@ void CFilterOptions::DeleteNamedFilter(ARBString const& inName)
 			section += inName.c_str();
 			AfxGetApp()->WriteProfileString(section, NULL, NULL);
 		}
+		if (GetCurrentFilter() == inName)
+			SetCurrentFilter("");
 	}
 }
 
@@ -651,9 +658,9 @@ CFilterOptionData::CFilterOptionData(ARBString const& inName)
 		calView.m_Filter = static_cast<unsigned short>(AfxGetApp()->GetProfileInt(section, _T("Cal"), CCalendarViewFilter::eViewNormal));
 		bAllDates = AfxGetApp()->GetProfileInt(section, _T("AllDates"), 1) == 1;
 		bStartDate = AfxGetApp()->GetProfileInt(section, _T("Start"), 0) == 1;
-		AfxGetApp()->GetProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay());
+		dateStartDate.SetJulianDay(AfxGetApp()->GetProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay()));
 		bEndDate = AfxGetApp()->GetProfileInt(section, _T("End"), 0) == 1;
-		AfxGetApp()->GetProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay());
+		dateEndDate.SetJulianDay(AfxGetApp()->GetProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay()));
 		bViewAllVenues = AfxGetApp()->GetProfileInt(section, _T("AllVenues"), 1) == 1;
 		CString names = AfxGetApp()->GetProfileString(section, _T("FilterVenue"), _T(""));
 		venueFilter.clear();
@@ -664,6 +671,42 @@ CFilterOptionData::CFilterOptionData(ARBString const& inName)
 		nameFilter.clear();
 		TrainingNames(names, nameFilter);
 	}
+}
+
+CFilterOptionData::CFilterOptionData(CFilterOptionData const& rhs)
+	: filterName(rhs.filterName)
+	, calView(rhs.calView)
+	, bAllDates(rhs.bAllDates)
+	, bStartDate(rhs.bStartDate)
+	, dateStartDate(rhs.dateStartDate)
+	, bEndDate(rhs.bEndDate)
+	, dateEndDate(rhs.dateEndDate)
+	, bViewAllVenues(rhs.bViewAllVenues)
+	, venueFilter(rhs.venueFilter)
+	, eRuns(rhs.eRuns)
+	, bViewAllNames(rhs.bViewAllNames)
+	, nameFilter(rhs.nameFilter)
+{
+}
+
+CFilterOptionData& CFilterOptionData::operator=(CFilterOptionData const& rhs)
+{
+	if (this != &rhs)
+	{
+		filterName = rhs.filterName;
+		calView = rhs.calView;
+		bAllDates = rhs.bAllDates;
+		bStartDate = rhs.bStartDate;
+		dateStartDate = rhs.dateStartDate;
+		bEndDate = rhs.bEndDate;
+		dateEndDate = rhs.dateEndDate;
+		bViewAllVenues = rhs.bViewAllVenues;
+		venueFilter = rhs.venueFilter;
+		eRuns = rhs.eRuns;
+		bViewAllNames = rhs.bViewAllNames;
+		nameFilter = rhs.nameFilter;
+	}
+	return *this;
 }
 
 bool CFilterOptionData::SaveName()
@@ -696,6 +739,7 @@ bool CFilterOptionData::SaveName()
 
 void CFilterOptionData::SaveDefault()
 {
+	CFilterOptions::SetCurrentFilter(filterName);
 	CFilterOptions::SetFilterCalendarView(calView);
 	CFilterOptions::SetViewAllDates(bAllDates);
 	CFilterOptions::SetStartFilterDateSet(bStartDate);

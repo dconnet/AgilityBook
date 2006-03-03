@@ -117,6 +117,10 @@ public:
 	{
 		m_Filter |= eViewClosing;
 	}
+	void clear()
+	{
+		m_Filter = 0;
+	}
 private:
 	unsigned short m_Filter;
 };
@@ -193,6 +197,7 @@ public:
 	static void SetTrainingFilterNames(std::set<ARBString> const& inNames);
 
 	static ARBString GetCurrentFilter();
+	static void SetCurrentFilter(ARBString const& inName);
 	static size_t GetAllNamedFilters(std::set<ARBString>& outNames);
 	static void DeleteNamedFilter(ARBString const& inName);
 };
@@ -207,6 +212,8 @@ class CFilterOptionData
 public:
 	CFilterOptionData();
 	CFilterOptionData(ARBString const& inName);
+	CFilterOptionData(CFilterOptionData const& rhs);
+	CFilterOptionData& operator=(CFilterOptionData const& rhs);
 	bool SaveName();
 	void SaveDefault();
 
