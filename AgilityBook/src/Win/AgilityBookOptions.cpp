@@ -112,8 +112,9 @@ Common
 	DW EndFilter
 	DW ViewAllVenues
 	ST FilterVenue
-	DW ViewAllRuns
-	DW ViewQRuns
+	DW ViewRuns
+	Obsolete DW ViewAllRuns
+	Obsolete DW ViewQRuns
 	DW ViewAllNames
 	ST FilterTrainingNames
 	DW ViewRunsByTrial

@@ -59,7 +59,7 @@ bool CFilterOptions::IsFilterEnabled()
 {
 	if (CFilterOptions::GetViewAllDates()
 	&& CFilterOptions::GetViewAllVenues()
-	&& CFilterOptions::GetViewAllRuns())
+	&& eViewRunsAll == CFilterOptions::GetViewRuns())
 		return false;
 	else
 		return true;
@@ -204,11 +204,11 @@ unsigned short CFilterOptions::IsRunVisible(
 		}
 	}
 	if ((nVisible & (0x1 << ARBBase::eFilter))
-	&& !CFilterOptions::GetViewAllRuns())
+	&& eViewRunsAll != CFilterOptions::GetViewRuns())
 	{
 		// Only set the full filter, not the IgnoreQ filter.
 		nVisible &= ~(0x1 << ARBBase::eFilter);
-		bool bQualifying = CFilterOptions::GetViewQRuns();
+		bool bQualifying = eViewRunsQs == CFilterOptions::GetViewRuns();
 		if ((pRun->GetQ().Qualified() && bQualifying)
 		|| (!pRun->GetQ().Qualified() && !bQualifying))
 			nVisible |= (0x1 << ARBBase::eFilter);
@@ -473,27 +473,14 @@ void CFilterOptions::SetFilterVenue(std::vector<CVenueFilter> const& venues)
 	s_venueCache = venues;
 }
 
-bool CFilterOptions::GetViewAllRuns()
+CFilterOptions::eViewRuns CFilterOptions::GetViewRuns()
 {
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewAllRuns"), 1);
-	return val == 1 ? true : false;
+	return static_cast<eViewRuns>(AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewRuns"), 0));
 }
 
-void CFilterOptions::SetViewAllRuns(bool bViewAll)
+void CFilterOptions::SetViewRuns(eViewRuns eViewAll)
 {
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewAllRuns"), bViewAll ? 1 : 0);
-}
-
-// Subset of AllRuns
-bool CFilterOptions::GetViewQRuns()
-{
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("ViewQRuns"), 1);
-	return val == 1 ? true : false;
-}
-
-void CFilterOptions::SetViewQRuns(bool bViewQs)
-{
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewQRuns"), bViewQs ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewRuns"), static_cast<int>(eViewAll));
 }
 
 /////////////////////////////////////////////////////////////////////////////
