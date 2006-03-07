@@ -89,13 +89,11 @@ private:
 
 // Implementation
 protected:
-	void FillControls(bool bSave);
-	bool Find(ARBString const& venue,
-			ARBString const& div,
-			ARBString const& level) const;
+	void FillControls();
 	void FillFilter(
 			HTREEITEM hItem,
-			CString path);
+			CString path,
+			std::vector<CVenueFilter>& outVenues);
 	void UpdateControls();
 	//{{AFX_MSG(CDlgOptionsFilter)
 	virtual BOOL OnInitDialog();
