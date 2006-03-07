@@ -350,7 +350,7 @@ void CAgilityBookViewPoints::GetPrintLine(
 
 bool CAgilityBookViewPoints::IsFiltered() const
 {
-	return CFilterOptions::IsFilterEnabled();
+	return CFilterOptions::Options().IsFilterEnabled();
 }
 
 bool CAgilityBookViewPoints::GetMessage(CString& msg) const
@@ -459,7 +459,7 @@ void CAgilityBookViewPoints::LoadData()
 	if (pDog)
 	{
 		std::vector<CVenueFilter> venues;
-		CFilterOptions::GetFilterVenue(venues);
+		CFilterOptions::Options().GetFilterVenue(venues);
 		int idxInsertItem = 0;
 
 		// Put general info about the dog in...
@@ -471,7 +471,7 @@ void CAgilityBookViewPoints::LoadData()
 			++iterVenue)
 		{
 			ARBConfigVenuePtr pVenue = (*iterVenue);
-			if (!CFilterOptions::IsVenueVisible(venues, pVenue->GetName()))
+			if (!CFilterOptions::Options().IsVenueVisible(venues, pVenue->GetName()))
 				continue;
 
 			// First, titles.
@@ -584,7 +584,7 @@ void CAgilityBookViewPoints::LoadData()
 										if (*pScoring != *pScoringMethod)
 											continue;
 										bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
-										&& CFilterOptions::IsRunVisible(venues, pVenue, pTrial, pRun));
+										&& CFilterOptions::Options().IsRunVisible(venues, pVenue, pTrial, pRun));
 										if (bRunVisible)
 										{
 											// Don't tally NA runs for titling events.
@@ -751,7 +751,7 @@ void CAgilityBookViewPoints::LoadData()
 							ARBDogRunPtr pRun = *iterR;
 							if (pRun->GetMultiQ()
 							&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
-							&& CFilterOptions::IsRunVisible(venues, pVenue, pTrial, pRun))
+							&& CFilterOptions::Options().IsRunVisible(venues, pVenue, pTrial, pRun))
 							{
 								MQs[pRun->GetMultiQ()].insert(MultiQdata(pRun->GetDate(), pTrial));
 							}
@@ -1050,7 +1050,7 @@ void CAgilityBookViewPoints::OnViewHiddenTitles()
 {
 	CAgilityBookOptions::SetViewHiddenTitles(!CAgilityBookOptions::GetViewHiddenTitles());
 	std::vector<CVenueFilter> venues;
-	CFilterOptions::GetFilterVenue(venues);
+	CFilterOptions::Options().GetFilterVenue(venues);
 	for (ARBDogList::iterator iterDogs = GetDocument()->GetDogs().begin(); iterDogs != GetDocument()->GetDogs().end(); ++iterDogs)
 		for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
 			GetDocument()->ResetVisibility(venues, *iterTitle);
@@ -1084,14 +1084,14 @@ void CAgilityBookViewPoints::OnCopyTitles()
 	if (pDog && 0 < pDog->GetTitles().size())
 	{
 		std::vector<CVenueFilter> venues;
-		CFilterOptions::GetFilterVenue(venues);
+		CFilterOptions::Options().GetFilterVenue(venues);
 
 		ARBString preTitles, postTitles;
 		for (ARBConfigVenueList::const_iterator iVenue = GetDocument()->GetConfig().GetVenues().begin();
 			iVenue != GetDocument()->GetConfig().GetVenues().end();
 			++iVenue)
 		{
-			if (!CFilterOptions::IsVenueVisible(venues, (*iVenue)->GetName()))
+			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
 				continue;
 			ARBString preTitles2, postTitles2;
 			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();

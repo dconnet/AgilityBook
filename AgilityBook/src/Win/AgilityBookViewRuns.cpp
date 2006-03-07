@@ -1239,7 +1239,7 @@ void CAgilityBookViewRuns::GetPrintLine(
 
 bool CAgilityBookViewRuns::IsFiltered() const
 {
-	return CFilterOptions::IsFilterEnabled();
+	return CFilterOptions::Options().IsFilterEnabled();
 }
 
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
@@ -1317,7 +1317,7 @@ void CAgilityBookViewRuns::LoadData()
 
 	// Add items.
 	std::vector<CVenueFilter> venues;
-	CFilterOptions::GetFilterVenue(venues);
+	CFilterOptions::Options().GetFilterVenue(venues);
 	list<ARBDogTrialPtr> trials;
 	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
 	ARBDogTrialPtr pCurTrial = GetDocument()->GetCurrentTrial();

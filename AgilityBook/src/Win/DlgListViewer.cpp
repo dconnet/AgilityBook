@@ -1418,7 +1418,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		{
 			ARBDogTrialPtr pTrial = iter->first;
 			ARBDogRunPtr pRun = iter->second;
-			if (CFilterOptions::IsFilterEnabled())
+			if (CFilterOptions::Options().IsFilterEnabled())
 			{
 				if (pRun->IsFiltered())
 					continue;
