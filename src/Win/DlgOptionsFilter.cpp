@@ -114,18 +114,45 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 		CString tmp(m_FilterName);
 		m_FilterName.TrimRight();
 		m_FilterName.TrimLeft();
-
-		static LPCTSTR sc_Allow(_T("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"));
-		if (m_FilterName != m_FilterName.SpanIncluding(sc_Allow))
-		{
-			pDX->PrepareCtrl(IDC_OPT_FILTER_NAMES);
-			AfxMessageBox(_T("A filter name may contain only letters, numbers and imbedded spaces."), MB_ICONWARNING);
-			pDX->Fail();
-		}
-
 		if (m_FilterName != tmp)
 			UpdateData(FALSE);
-		FillControls(true);
+
+		if (0 == m_ViewDates
+		|| (0 != m_ViewDates && !m_bDateStart && !m_bDateEnd))
+		{
+			m_FilterOptions.SetViewAllDates(true);
+		}
+		else
+			m_FilterOptions.SetViewAllDates(false);
+		m_FilterOptions.SetStartFilterDate(ARBDate(m_timeStart.GetTime()));
+		m_FilterOptions.SetEndFilterDateSet(m_bDateStart ? true : false);
+		m_FilterOptions.SetEndFilterDate(ARBDate(m_timeEnd.GetTime()));
+		m_FilterOptions.SetEndFilterDateSet(m_bDateEnd ? true : false);
+		// Names are kept in sync via setdispinfo
+		m_FilterOptions.SetTrainingViewAllNames(0 == m_ViewNames ? true : false);
+		CCalendarViewFilter calView;
+		if (m_bNotEntered)
+			calView.AddNotEntered();
+		if (m_bPlanning)
+			calView.AddPlanning();
+		if (m_bEntered)
+			calView.AddEntered();
+		m_FilterOptions.SetFilterCalendarView(calView);
+		// Venues are kept in sync via setdispinfo
+		m_FilterOptions.SetViewAllVenues(0 == m_ViewVenues ? true : false);
+		switch (m_ViewQs)
+		{
+		default:
+		case 0:
+			m_FilterOptions.SetViewRuns(CFilterOptions::eViewRunsAll);
+			break;
+		case 1:
+			m_FilterOptions.SetViewRuns(CFilterOptions::eViewRunsQs);
+			break;
+		case 2:
+			m_FilterOptions.SetViewRuns(CFilterOptions::eViewRunsNQs);
+			break;
+		}
 	}
 }
 
@@ -149,107 +176,70 @@ BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CDlgBasePropertyPage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-void CDlgOptionsFilter::FillControls(bool bSave)
+void CDlgOptionsFilter::FillControls()
 {
-	if (bSave)
+	std::set<ARBString> allLogNames;
+	m_pDoc->GetAllTrainingLogNames(allLogNames);
+
+	m_ViewDates = m_FilterOptions.GetViewAllDates() ? 0 : 1;
+	if (m_FilterOptions.GetStartFilterDate().IsValid())
+		m_timeStart = m_FilterOptions.GetStartFilterDate().GetDate();
+	else if (!m_FilterOptions.GetViewAllDates())
+		m_timeStart = CTime::GetCurrentTime();
+	m_bDateStart = m_FilterOptions.GetStartFilterDateSet() ? TRUE : FALSE;
+	if (m_FilterOptions.GetEndFilterDate().IsValid())
+		m_timeEnd = m_FilterOptions.GetEndFilterDate().GetDate();
+	else if (!m_FilterOptions.GetViewAllDates())
+		m_timeEnd = CTime::GetCurrentTime();
+	m_bDateEnd = m_FilterOptions.GetEndFilterDateSet() ? TRUE : FALSE;
+
+	m_ViewNames = m_FilterOptions.GetTrainingViewAllNames() ? 0 : 1;
+	m_ctrlNames.DeleteAllItems();
+	std::set<ARBString> names;
+	m_FilterOptions.GetTrainingFilterNames(names);
+	bool bFix = false;
+	for (std::set<ARBString>::iterator iter = names.begin();
+		iter != names.end(); )
 	{
-		m_CurFilter.bAllDates = false;
-		if (0 == m_ViewDates
-		|| (0 != m_ViewDates && !m_bDateStart && !m_bDateEnd))
+		if (allLogNames.end() == allLogNames.find((*iter)))
 		{
-			m_CurFilter.bAllDates = true;
+			bFix = true;
+			iter = names.erase(iter);
 		}
-		m_CurFilter.dateStartDate = ARBDate(m_timeStart.GetTime());
-		m_CurFilter.bStartDate = m_bDateStart ? true : false;
-		m_CurFilter.dateEndDate = ARBDate(m_timeEnd.GetTime());
-		m_CurFilter.bEndDate = m_bDateEnd ? true : false;
-		// Names are kept in sync via setdispinfo
-		m_CurFilter.bViewAllNames = false;
-		if (0 == m_ViewNames
-		|| (0 != m_ViewNames && m_CurFilter.nameFilter.size()))
-		{
-			m_CurFilter.bViewAllNames = true;
-		}
-		m_CurFilter.calView.clear();
-		if (m_bNotEntered)
-			m_CurFilter.calView.AddNotEntered();
-		if (m_bPlanning)
-			m_CurFilter.calView.AddPlanning();
-		if (m_bEntered)
-			m_CurFilter.calView.AddEntered();
-		// Venues are kept in sync via setdispinfo
-		m_CurFilter.bViewAllVenues = false;
-		if (0 == m_ViewVenues
-		|| (0 != m_ViewVenues && 0 == m_CurFilter.venueFilter.size()))
-		{
-			m_CurFilter.bViewAllVenues = true;
-		}
-		switch (m_ViewQs)
-		{
-		default:
-		case 0:
-			m_CurFilter.eRuns = CFilterOptions::eViewRunsAll;
-			break;
-		case 1:
-			m_CurFilter.eRuns = CFilterOptions::eViewRunsQs;
-			break;
-		case 2:
-			m_CurFilter.eRuns = CFilterOptions::eViewRunsNQs;
-			break;
-		}
+		else
+			++iter;
+	}
+	if (bFix)
+		m_FilterOptions.SetTrainingFilterNames(names);
+	if (0 == allLogNames.size())
+	{
+		m_ViewNames = 0;
+		GetDlgItem(IDC_OPT_FILTER_LOG_NAME_SELECTED)->EnableWindow(FALSE);
 	}
 	else
 	{
-		std::set<ARBString> names;
-		m_pDoc->GetAllTrainingLogNames(names);
-
-		m_ViewDates = m_CurFilter.bAllDates ? 0 : 1;
-		if (m_CurFilter.dateStartDate.IsValid())
-			m_timeStart = m_CurFilter.dateStartDate.GetDate();
-		else if (!m_CurFilter.bAllDates)
-			m_timeStart = CTime::GetCurrentTime();
-		m_bDateStart = m_CurFilter.bStartDate ? TRUE : FALSE;
-		if (m_CurFilter.dateEndDate.IsValid())
-			m_timeEnd = m_CurFilter.dateEndDate.GetDate();
-		else if (!m_CurFilter.bAllDates)
-			m_timeEnd = CTime::GetCurrentTime();
-		m_bDateEnd = m_CurFilter.bEndDate ? TRUE : FALSE;
-
-		m_ViewNames = m_CurFilter.bViewAllNames ? 0 : 1;
-		m_ctrlNames.DeleteAllItems();
-		std::set<ARBString>::iterator iter;
-		for (iter = m_CurFilter.nameFilter.begin(); iter != m_CurFilter.nameFilter.end(); )
+		for (std::set<ARBString>::iterator iter = allLogNames.begin();
+			iter != allLogNames.end();
+			++iter)
 		{
-			if (names.end() == names.find((*iter)))
-				iter = m_CurFilter.nameFilter.erase(iter);
-			else
-				++iter;
+			HTREEITEM hItem = m_ctrlNames.InsertItem(
+				(*iter).c_str(),
+				TVI_ROOT,
+				TVI_LAST);
+			m_ctrlNames.ShowCheckbox(hItem, true);
+			if (names.end() != names.find((*iter)))
+				m_ctrlNames.SetChecked(hItem, true);
 		}
-		if (0 == names.size())
-		{
-			m_ViewNames = 0;
-			GetDlgItem(IDC_OPT_FILTER_LOG_NAME_SELECTED)->EnableWindow(FALSE);
-		}
-		else
-		{
-			for (iter = names.begin(); iter != names.end(); ++iter)
-			{
-				HTREEITEM hItem = m_ctrlNames.InsertItem(
-					(*iter).c_str(),
-					TVI_ROOT,
-					TVI_LAST);
-				m_ctrlNames.ShowCheckbox(hItem, true);
-				if (m_CurFilter.nameFilter.end() != m_CurFilter.nameFilter.find((*iter)))
-					m_ctrlNames.SetChecked(hItem, true);
-			}
-		}
+	}
 
-		m_bNotEntered = m_CurFilter.calView.ViewNotEntered();
-		m_bPlanning = m_CurFilter.calView.ViewPlanning();
-		m_bEntered = m_CurFilter.calView.ViewEntered();
+	m_bNotEntered = m_FilterOptions.FilterCalendarView().ViewNotEntered();
+	m_bPlanning = m_FilterOptions.FilterCalendarView().ViewPlanning();
+	m_bEntered = m_FilterOptions.FilterCalendarView().ViewEntered();
 
-		m_ViewVenues = m_CurFilter.bViewAllVenues ? 0 : 1;
-		m_ctrlVenue.DeleteAllItems();
+	m_ViewVenues = m_FilterOptions.GetViewAllVenues() ? 0 : 1;
+	m_ctrlVenue.DeleteAllItems();
+	if (0 < m_pDoc->GetConfig().GetVenues().size())
+	{
 		for (ARBConfigVenueList::const_iterator iVenue = m_pDoc->GetConfig().GetVenues().begin();
 			iVenue != m_pDoc->GetConfig().GetVenues().end();
 			++iVenue)
@@ -260,11 +250,8 @@ void CDlgOptionsFilter::FillControls(bool bSave)
 				TVI_ROOT,
 				TVI_LAST);
 			m_ctrlVenue.ShowCheckbox(hVenue, true);
-			if (Find(pVenue->GetName(), _T(""), _T("")))
+			if (m_FilterOptions.FilterExists(pVenue->GetName(), _T(""), _T("")))
 				m_ctrlVenue.SetChecked(hVenue, true);
-			//m_ctrlVenue.SetItemData(hVenue,
-			//	reinterpret_cast<LPARAM>(
-			//		new CListPtrData<ARBConfigVenuePtr>(pVenue)));
 			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 				iterDiv != pVenue->GetDivisions().end();
 				++iterDiv)
@@ -275,7 +262,7 @@ void CDlgOptionsFilter::FillControls(bool bSave)
 					hVenue,
 					TVI_LAST);
 				m_ctrlVenue.ShowCheckbox(hDiv, true);
-				if (Find(pVenue->GetName(), pDiv->GetName(), _T("")))
+				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), _T("")))
 				{
 					m_ctrlVenue.SetChecked(hDiv, true);
 					m_ctrlVenue.EnsureVisible(hDiv);
@@ -302,7 +289,7 @@ void CDlgOptionsFilter::FillControls(bool bSave)
 								hLevel,
 								TVI_LAST);
 							m_ctrlVenue.ShowCheckbox(hSubLevel, true);
-							if (Find(pVenue->GetName(), pDiv->GetName(), pSubLevel->GetName()))
+							if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), pSubLevel->GetName()))
 							{
 								m_ctrlVenue.SetChecked(hSubLevel, true);
 								m_ctrlVenue.EnsureVisible(hSubLevel);
@@ -312,7 +299,7 @@ void CDlgOptionsFilter::FillControls(bool bSave)
 					else
 					{
 						m_ctrlVenue.ShowCheckbox(hLevel, true);
-						if (Find(pVenue->GetName(), pDiv->GetName(), pLevel->GetName()))
+						if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), pLevel->GetName()))
 						{
 							m_ctrlVenue.SetChecked(hLevel, true);
 							m_ctrlVenue.EnsureVisible(hLevel);
@@ -321,59 +308,49 @@ void CDlgOptionsFilter::FillControls(bool bSave)
 				}
 			}
 		}
-
-		switch (m_CurFilter.eRuns)
-		{
-		default:
-		case CFilterOptions::eViewRunsAll:
-			m_ViewQs = 0;
-			break;
-		case CFilterOptions::eViewRunsQs:
-			m_ViewQs = 1;
-			break;
-		case CFilterOptions::eViewRunsNQs:
-			m_ViewQs = 2;
-			break;
-		}
-
-		m_ctrlFilters.ResetContent();
-		for (std::vector<CFilterOptionData>::iterator iter = m_Filters.begin();
-			iter != m_Filters.end();
-			++iter)
-		{
-			CFilterOptionData const& data = *iter;
-			int idx = m_ctrlFilters.AddString(data.filterName.c_str());
-			if (data.filterName == m_CurFilterName)
-			{
-				m_FilterName = m_CurFilterName.c_str();
-				m_ctrlFilters.SetCurSel(idx);
-			}
-		}
-		UpdateData(FALSE);
-		UpdateControls();
 	}
-}
+	else
+	{
+		m_ViewVenues = 0;
+		GetDlgItem(IDC_OPT_FILTER_RUN_VENUES_SELECTED)->EnableWindow(FALSE);
+	}
 
-bool CDlgOptionsFilter::Find(
-		ARBString const& venue,
-		ARBString const& div,
-		ARBString const& level) const
-{
-	for (std::vector<CVenueFilter>::const_iterator iter = m_CurFilter.venueFilter.begin();
-		iter != m_CurFilter.venueFilter.end();
+	switch (m_FilterOptions.GetViewRuns())
+	{
+	default:
+	case CFilterOptions::eViewRunsAll:
+		m_ViewQs = 0;
+		break;
+	case CFilterOptions::eViewRunsQs:
+		m_ViewQs = 1;
+		break;
+	case CFilterOptions::eViewRunsNQs:
+		m_ViewQs = 2;
+		break;
+	}
+
+	m_ctrlFilters.ResetContent();
+	std::vector<ARBString> filterNames;
+	m_FilterOptions.GetAllFilterNames(filterNames);
+	for (std::vector<ARBString>::iterator iter = filterNames.begin();
+		iter != filterNames.end();
 		++iter)
 	{
-		if ((*iter).venue == venue
-		&& (0 == div.length() || (0 < div.length() && (*iter).division == div))
-		&& (0 == level.length() || (0 < level.length() && (*iter).level == level)))
-			return true;
+		int idx = m_ctrlFilters.AddString((*iter).c_str());
+		if ((*iter) == m_FilterOptions.GetCurrentFilter())
+		{
+			m_FilterName = m_FilterOptions.GetCurrentFilter().c_str();
+			m_ctrlFilters.SetCurSel(idx);
+		}
 	}
-	return false;
+	UpdateData(FALSE);
+	UpdateControls();
 }
 
 void CDlgOptionsFilter::FillFilter(
 		HTREEITEM hItem,
-		CString path)
+		CString path,
+		std::vector<CVenueFilter>& outVenues)
 {
 	if (TVI_ROOT != hItem)
 	{
@@ -416,14 +393,14 @@ void CDlgOptionsFilter::FillFilter(
 			case 1:
 				filter.venue = (LPCTSTR)rawFilter[0];
 			}
-			m_CurFilter.venueFilter.push_back(filter);
+			outVenues.push_back(filter);
 		}
 	}
 	else
 	{
 		while (NULL != hChildItem)
 		{
-			FillFilter(hChildItem, path);
+			FillFilter(hChildItem, path, outVenues);
 			hChildItem = m_ctrlVenue.GetNextItem(hChildItem, TVGN_NEXT);
 		}
 	}
@@ -446,21 +423,13 @@ void CDlgOptionsFilter::UpdateControls()
 		m_ctrlDateEnd.EnableWindow(TRUE);
 	}
 	if (0 == m_ViewNames)
-	{
 		m_ctrlNames.EnableWindow(FALSE);
-	}
 	else
-	{
 		m_ctrlNames.EnableWindow(TRUE);
-	}
 	if (0 == m_ViewVenues)
-	{
 		m_ctrlVenue.EnableWindow(FALSE);
-	}
 	else
-	{
 		m_ctrlVenue.EnableWindow(TRUE);
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -469,7 +438,7 @@ void CDlgOptionsFilter::UpdateControls()
 BOOL CDlgOptionsFilter::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	FillControls(false);
+	FillControls();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -484,7 +453,7 @@ void CDlgOptionsFilter::OnSetdispinfoNames(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
 {
-	m_CurFilter.nameFilter.clear();
+	std::set<ARBString> names;
 	HTREEITEM hItem = m_ctrlNames.GetRootItem();
 	while (NULL != hItem)
 	{
@@ -495,10 +464,11 @@ void CDlgOptionsFilter::OnSetdispinfoNames(
 			str.TrimRight();
 			str.TrimLeft();
 			if (!str.IsEmpty())
-				m_CurFilter.nameFilter.insert((LPCTSTR)str);
+				names.insert((LPCTSTR)str);
 		}
 		hItem = m_ctrlNames.GetNextItem(hItem, TVGN_NEXT);
 	}
+	m_FilterOptions.SetTrainingFilterNames(names);
 	*pResult = 0;
 }
 
@@ -509,8 +479,9 @@ void CDlgOptionsFilter::OnSetdispinfoVenues(
 	//TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	// We could probably do this by just watching what changed. but this
 	// is way easier - no state to keep track of!
-	m_CurFilter.venueFilter.clear();
-	FillFilter(TVI_ROOT, _T(""));
+	std::vector<CVenueFilter> venues;
+	FillFilter(TVI_ROOT, _T(""), venues);
+	m_FilterOptions.SetFilterVenue(venues);
 	*pResult = 0;
 }
 
@@ -527,20 +498,8 @@ void CDlgOptionsFilter::OnSelchangeFilterNames()
 	{
 		CString str;
 		m_ctrlFilters.GetLBText(idx, str);
-		str.TrimRight();
-		str.TrimLeft();
-		m_CurFilterName = (LPCSTR)str;
-		for (std::vector<CFilterOptionData>::iterator iFilter = m_Filters.begin();
-			iFilter != m_Filters.end();
-			++iFilter)
-		{
-			if ((*iFilter).filterName == m_CurFilterName)
-			{
-				m_CurFilter = (*iFilter);
-				FillControls(false);
-				break;
-			}
-		}
+		m_FilterOptions.SetCurrentFilter((LPCTSTR)str);
+		FillControls();
 	}
 	else
 		MessageBeep(0);
@@ -551,24 +510,7 @@ void CDlgOptionsFilter::OnBnClickedOptFilterNamesSave()
 	if (!UpdateData(TRUE))
 		return;
 	if (!m_FilterName.IsEmpty())
-	{
-		m_CurFilterName = (LPCTSTR)m_FilterName;
-		m_CurFilter.filterName = m_CurFilterName;
-		std::set<ARBString>::iterator iter = m_DeleteFilters.find(m_CurFilterName);
-		if (iter != m_DeleteFilters.end())
-			m_DeleteFilters.erase(iter);
-		std::vector<CFilterOptionData>::iterator iFilter;
-		for (iFilter = m_Filters.begin(); iFilter != m_Filters.end(); ++iFilter)
-		{
-			if ((*iFilter).filterName == m_CurFilterName)
-			{
-				(*iFilter) = m_CurFilter;
-				break;
-			}
-		}
-		if (iFilter == m_Filters.end())
-			m_Filters.push_back(m_CurFilter);
-	}
+		m_FilterOptions.AddFilter((LPCTSTR)m_FilterName);
 	else
 		MessageBeep(0);
 }
@@ -582,20 +524,11 @@ void CDlgOptionsFilter::OnBnClickedOptFilterNamesDelete()
 		int idx = m_ctrlFilters.FindStringExact(-1, m_FilterName);
 		if (0 <= idx)
 		{
-			m_CurFilterName = (LPCTSTR)m_FilterName;
-			std::vector<CFilterOptionData>::iterator iFilter;
-			for (iFilter = m_Filters.begin(); iFilter != m_Filters.end(); ++iFilter)
-			{
-				if ((*iFilter).filterName == m_CurFilterName)
-				{
-					m_Filters.erase(iFilter);
-					break;
-				}
-			}
-			m_DeleteFilters.insert((LPCTSTR)m_FilterName);
+			ARBString name = (LPCTSTR)m_FilterName;
+			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters.DeleteString(idx);
-			m_CurFilterName.clear();
 			m_FilterName.Empty();
+			UpdateData(FALSE);
 		}
 	}
 }

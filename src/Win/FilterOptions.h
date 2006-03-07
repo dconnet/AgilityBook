@@ -136,6 +136,7 @@ public:
 	class CFilterOptionData
 	{
 	public:
+		CFilterOptionData();
 		CFilterOptionData(int index);
 		CFilterOptionData(CFilterOptionData const& rhs);
 		CFilterOptionData& operator=(CFilterOptionData const& rhs);
@@ -156,26 +157,37 @@ public:
 	};
 
 private:
-	unsigned short m_uCalFilter;
-	bool m_bViewAllDates;
-	ARBDate m_dateStart;
-	bool m_bDateStart;
-	ARBDate m_dateEnd;
-	bool m_bDateEnd;
+	CCalendarViewFilter m_calView;
+	bool m_bAllDates;
+	bool m_bStartDate;
+	ARBDate m_dateStartDate;
+	bool m_bEndDate;
+	ARBDate m_dateEndDate;
 	bool m_bViewAllVenues;
-	std::vector<CVenueFilter> m_venueFilters;
+	std::vector<CVenueFilter> m_venueFilter;
 	eViewRuns m_eRuns;
 	bool m_bViewAllNames;
-	std::set<ARBString> m_nameFilters;
+	std::set<ARBString> m_nameFilter;
+
 	ARBString m_curFilter;
 	int m_nFilters;
-	std::vector<CFilterOptionData> m_filters;
+	std::vector<CFilterOptions::CFilterOptionData> m_filters;
+
+	std::vector<CFilterOptions::CFilterOptionData>::iterator FindFilter(ARBString const& inName);
 
 public:
 	static CFilterOptions& Options();
 	CFilterOptions(); ///< Should only be used in options dialog
 	void Load();
 	void Save();
+	ARBString GetCurrentFilter() const
+	{
+		return m_curFilter;
+	}
+	size_t GetAllFilterNames(std::vector<ARBString>& outNames) const;
+	bool SetCurrentFilter(ARBString const& inName);
+	void AddFilter(ARBString const& inName);
+	bool DeleteFilter(ARBString const& inName);
 
 	// Helper functions
 	bool IsFilterEnabled();
@@ -212,53 +224,53 @@ public:
 	// Filtering: Calendar
 	CCalendarViewFilter FilterCalendarView() const
 	{
-		return m_uCalFilter;
+		return m_calView;
 	}
 	void SetFilterCalendarView(CCalendarViewFilter inFilter)
 	{
-		m_uCalFilter = inFilter.m_Filter;
+		m_calView = inFilter;
 	}
 
 	// Filtering: Date
 	bool GetViewAllDates() const
 	{
-		return m_bViewAllDates;
+		return m_bAllDates;
 	}
 	void SetViewAllDates(bool bViewAll)
 	{
-		m_bViewAllDates = bViewAll;
+		m_bAllDates = bViewAll;
 	}
 	ARBDate GetStartFilterDate() const
 	{
-		return m_dateStart;
+		return m_dateStartDate;
 	}
 	void SetStartFilterDate(ARBDate const& date)
 	{
-		m_dateStart = date;
+		m_dateStartDate = date;
 	}
 	bool GetStartFilterDateSet() const
 	{
-		return m_bDateStart;
+		return m_bStartDate;
 	}
 	void SetStartFilterDateSet(bool bSet)
 	{
-		m_bDateStart = bSet;
+		m_bStartDate = bSet;
 	}
 	ARBDate GetEndFilterDate() const
 	{
-		return m_dateEnd;
+		return m_dateEndDate;
 	}
 	void SetEndFilterDate(ARBDate const& date)
 	{
-		m_dateEnd = date;
+		m_dateEndDate = date;
 	}
 	bool GetEndFilterDateSet() const
 	{
-		return m_bDateEnd;
+		return m_bEndDate;
 	}
 	void SetEndFilterDateSet(bool bSet)
 	{
-		m_bDateEnd = bSet;
+		m_bEndDate = bSet;
 	}
 
 	// Filtering: Runs
@@ -272,12 +284,16 @@ public:
 	}
 	void GetFilterVenue(std::vector<CVenueFilter>& venues) const
 	{
-		venues = m_venueFilters;
+		venues = m_venueFilter;
 	}
 	void SetFilterVenue(std::vector<CVenueFilter> const& venues)
 	{
-		m_venueFilters = venues;
+		m_venueFilter = venues;
 	}
+	bool FilterExists(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel) const;
 
 	eViewRuns GetViewRuns() const
 	{
@@ -299,19 +315,10 @@ public:
 	}
 	void GetTrainingFilterNames(std::set<ARBString>& outNames) const
 	{
-		outNames = m_nameFilters;
+		outNames = m_nameFilter;
 	}
 	void SetTrainingFilterNames(std::set<ARBString> const& inNames)
 	{
-		m_nameFilters = inNames;
-	}
-
-	ARBString GetCurrentFilter() const
-	{
-		return m_curFilter;
-	}
-	void SetCurrentFilter(ARBString const& inName)
-	{
-		m_curFilter = inName;
+		m_nameFilter = inNames;
 	}
 };
