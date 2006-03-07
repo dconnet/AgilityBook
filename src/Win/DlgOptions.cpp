@@ -66,7 +66,6 @@ CDlgOptions::CDlgOptions(
 	, m_pageFilter(pDoc)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
-	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
 
 	// Program options
 	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
@@ -76,19 +75,7 @@ CDlgOptions::CDlgOptions(
 	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
 
 	// Filters
-	m_pageFilter.m_CurFilterName = CFilterOptions::GetCurrentFilter();
-	std::set<ARBString> names;
-	CFilterOptions::GetAllNamedFilters(names);
-	for (std::set<ARBString>::iterator iter = names.begin();
-		iter != names.end();
-		++iter)
-	{
-		if (!iter->empty())
-		{
-			CFilterOptionData data(*iter);
-			m_pageFilter.m_Filters.push_back(data);
-		}
-	}
+	// -handled thru CFilterOptions
 
 	// Views
 	m_pageView.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
@@ -114,6 +101,7 @@ CDlgOptions::CDlgOptions(
 	m_pageView.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
 	m_pageView.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
 	m_pageView.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
+	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	m_pageView.m_bOpening = filter.ViewOpening();
 	m_pageView.m_bClosing = filter.ViewClosing();
 	CAgilityBookOptions::GetPrinterFontInfo(m_pageView.m_fontPrintInfo);
@@ -159,21 +147,6 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
 
-		// Filters
-		for (std::set<ARBString>::iterator i = m_pageFilter.m_DeleteFilters.begin();
-			i != m_pageFilter.m_DeleteFilters.end();
-			++i)
-		{
-			CFilterOptions::DeleteNamedFilter(*i);
-		}
-		for (std::vector<CFilterOptionData>::iterator i = m_pageFilter.m_Filters.begin();
-			i != m_pageFilter.m_Filters.end();
-			++i)
-		{
-			(*i).SaveName();
-		}
-		m_pageFilter.m_CurFilter.SaveDefault();
-
 		// Views
 		if (!m_pageView.m_bOpeningNear)
 			m_pageView.m_nOpeningNear = -1;
@@ -194,7 +167,11 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetPrinterFontInfo(m_pageView.m_fontPrintInfo);
 		CAgilityBookOptions::SetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
 
-		CFilterOptions::SetFilterCalendarView(filter);
+		m_pageFilter.m_FilterOptions.SetFilterCalendarView(filter);
+
+		// Filters
+		m_pageFilter.m_FilterOptions.Save();
+		CFilterOptions::Options().Load();
 
 		// Update
 		m_pDoc->ResetVisibility();

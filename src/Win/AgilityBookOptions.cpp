@@ -126,6 +126,8 @@ Common
 	DW PrintFontListSize
 	DW PrintFontListItalic
 	DW PrintFontListBold
+	DW numFilters
+	ST CurrentFilter
 	Obsolete DW TrainingViewAllDates
 	Obsolete DW TrainingStartFilterJDay
 	Obsolete DW TrainingStartFilter
@@ -144,7 +146,7 @@ ExportCalTask
 	ST col[n]
 ExportLog
 	ST col[n]
-Filter[name]
+Filter[number]
 	DW Cal
 	DW AllDates
 	DW Start
@@ -188,8 +190,6 @@ Settings:
 			eCalendar	= 4,
 			eTraining	= 5,
 		}
-	ST Filter
-	ST Filters
 Unknown
 	ST col[n]
 */

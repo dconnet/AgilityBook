@@ -447,8 +447,8 @@ void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 
 bool CAgilityBookViewTraining::IsFiltered() const
 {
-	if (CFilterOptions::GetViewAllDates()
-	&& CFilterOptions::GetTrainingViewAllNames())
+	if (CFilterOptions::Options().GetViewAllDates()
+	&& CFilterOptions::Options().GetTrainingViewAllNames())
 		return false;
 	else
 		return true;

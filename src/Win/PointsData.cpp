@@ -319,7 +319,7 @@ void PointsDataTitle::Details() const
 	{
 		pDoc->SetModifiedFlag();
 		std::vector<CVenueFilter> venues;
-		CFilterOptions::GetFilterVenue(venues);
+		CFilterOptions::Options().GetFilterVenue(venues);
 		pDoc->ResetVisibility(venues, m_pTitle);
 		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
 	}

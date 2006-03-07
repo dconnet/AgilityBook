@@ -156,7 +156,7 @@ static bool EditTrial(
 	{
 		bOk = true;
 		std::vector<CVenueFilter> venues;
-		CFilterOptions::GetFilterVenue(venues);
+		CFilterOptions::Options().GetFilterVenue(venues);
 		if (bAdd)
 		{
 			if (!pDogData->GetDog()->GetTrials().AddTrial(pTrial))
@@ -242,7 +242,7 @@ static bool EditRun(
 	{
 		bOk = true;
 		std::vector<CVenueFilter> venues;
-		CFilterOptions::GetFilterVenue(venues);
+		CFilterOptions::Options().GetFilterVenue(venues);
 		if (bAdd)
 		{
 			if (!pTrialData->GetTrial()->GetRuns().AddRun(pRun))
@@ -261,7 +261,7 @@ static bool EditRun(
 				HTREEITEM hItem = pTree->InsertRun(pTrialData->GetTrial(), pRun, pTrialData->GetHTreeItem());
 				if (NULL == hItem)
 				{
-					if (CFilterOptions::IsFilterEnabled())
+					if (CFilterOptions::Options().IsFilterEnabled())
 						AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
 				}
 				else
@@ -414,7 +414,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				size_t nFailed = 0;
 				bLoaded = true;
 				std::vector<CVenueFilter> venues;
-				CFilterOptions::GetFilterVenue(venues);
+				CFilterOptions::Options().GetFilterVenue(venues);
 				for (std::vector<ARBDogRunPtr>::iterator iter = runs.begin(); iter != runs.end(); ++iter)
 				{
 					ARBDogRunPtr pRun = *iter;
@@ -445,7 +445,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					if (NULL == hItem)
 					{
 						bOk = false;
-						if (CFilterOptions::IsFilterEnabled())
+						if (CFilterOptions::Options().IsFilterEnabled())
 							AfxMessageBox(IDS_CREATERUN_FILTERED, MB_ICONSTOP);
 					}
 					else
@@ -478,7 +478,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				{
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
-					CFilterOptions::GetFilterVenue(venues);
+					CFilterOptions::Options().GetFilterVenue(venues);
 					if (!pDog->GetTrials().AddTrial(pTrial))
 					{
 						bLoaded = false;

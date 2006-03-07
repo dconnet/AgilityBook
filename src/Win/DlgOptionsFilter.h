@@ -79,10 +79,7 @@ private:
 	CButton	m_ctrlDelName;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	CFilterOptionData m_CurFilter;
-	ARBString m_CurFilterName;
-	std::vector<CFilterOptionData> m_Filters;
-	std::set<ARBString> m_DeleteFilters;
+	CFilterOptions m_FilterOptions;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgOptionsFilter)

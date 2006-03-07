@@ -690,7 +690,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 					bLoaded = true;
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					std::vector<CVenueFilter> venues;
-					CFilterOptions::GetFilterVenue(venues);
+					CFilterOptions::Options().GetFilterVenue(venues);
 					if (!GetDocument()->GetDogs().AddDog(pDog))
 					{
 						bLoaded = false;
@@ -718,7 +718,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 
 bool CAgilityBookTree::IsFiltered() const
 {
-	return CFilterOptions::IsFilterEnabled();
+	return CFilterOptions::Options().IsFilterEnabled();
 }
 
 bool CAgilityBookTree::GetMessage(CString& msg) const

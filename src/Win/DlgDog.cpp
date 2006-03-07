@@ -94,7 +94,7 @@ CDlgDog::~CDlgDog()
 	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
 	{
 		std::vector<CVenueFilter> venues;
-		CFilterOptions::GetFilterVenue(venues);
+		CFilterOptions::Options().GetFilterVenue(venues);
 		for (ARBDogList::iterator iterDogs = m_pDoc->GetDogs().begin(); iterDogs != m_pDoc->GetDogs().end(); ++iterDogs)
 			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
 				m_pDoc->ResetVisibility(venues, *iterTitle);

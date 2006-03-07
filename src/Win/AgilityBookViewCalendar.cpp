@@ -177,9 +177,9 @@ bool CAgilityBookViewCalendar::SetCurrentDate(
 
 bool CAgilityBookViewCalendar::IsFiltered() const
 {
-	if (!CFilterOptions::GetViewAllDates())
+	if (!CFilterOptions::Options().GetViewAllDates())
 		return true;
-	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	return filter.IsFiltered();
 }
 
@@ -201,7 +201,7 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 		bool bGetHidden) const
 {
 	entries.clear();
-	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	for (vector<ARBCalendarPtr>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr pCal = *iter;
@@ -248,7 +248,7 @@ void CAgilityBookViewCalendar::LoadData()
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
 	bool bViewAll = CAgilityBookOptions::ViewAllCalendarEntries();
 	bool bHide = CAgilityBookOptions::HideOverlappingCalendarEntries();
-	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 
 	// Add items.
 	std::vector<ARBCalendarPtr> entered;
@@ -444,7 +444,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		CFont* pOldFont = pDC->SelectObject(&font);
 		CPen* pOldPen = pDC->SelectObject(&pen);
 
-		CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
+		CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 		COLORREF clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
 		COLORREF clrPlanning = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning);
 		COLORREF clrOpening = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening);

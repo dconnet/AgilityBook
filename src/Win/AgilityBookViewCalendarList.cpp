@@ -778,9 +778,9 @@ void CAgilityBookViewCalendarList::GetPrintLine(
 
 bool CAgilityBookViewCalendarList::IsFiltered() const
 {
-	if (!CFilterOptions::GetViewAllDates())
+	if (!CFilterOptions::Options().GetViewAllDates())
 		return true;
-	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	return filter.IsFiltered();
 }
 
@@ -849,7 +849,7 @@ void CAgilityBookViewCalendarList::LoadData()
 	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
 		GetDocument()->GetCalendar().GetAllEntered(entered);
-	CCalendarViewFilter filter = CFilterOptions::FilterCalendarView();
+	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
 	iter != GetDocument()->GetCalendar().end();
 	++iter)
