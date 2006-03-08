@@ -71,6 +71,8 @@ static char THIS_FILE[] = __FILE__;
 Calendar
 	DW AutoDelete
 	DW ViewAll
+	DW ViewOpen
+	DW ViewClose
 	DW PastEntry
 	DW HideOverlapping
 	DW EntrySize.cx
@@ -251,6 +253,7 @@ void CAgilityBookOptions::SetAutoDeleteCalendarEntries(bool bAuto)
 	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("AutoDelete"), bAuto ? 1 : 0);
 }
 
+// View all or hide old entries
 bool CAgilityBookOptions::ViewAllCalendarEntries()
 {
 	int val = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("ViewAll"), 1);
@@ -260,6 +263,28 @@ bool CAgilityBookOptions::ViewAllCalendarEntries()
 void CAgilityBookOptions::SetViewAllCalendarEntries(bool bView)
 {
 	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("ViewAll"), bView ? 1 : 0);
+}
+
+bool CAgilityBookOptions::ViewAllCalendarOpening()
+{
+	int val = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("ViewOpen"), 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewAllCalendarOpening(bool bView)
+{
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("ViewOpen"), bView ? 1 : 0);
+}
+
+bool CAgilityBookOptions::ViewAllCalendarClosing()
+{
+	int val = AfxGetApp()->GetProfileInt(_T("Calendar"), _T("ViewClose"), 1);
+	return val == 1 ? true : false;
+}
+
+void CAgilityBookOptions::SetViewAllCalendarClosing(bool bView)
+{
+	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("ViewClose"), bView ? 1 : 0);
 }
 
 int CAgilityBookOptions::DaysTillEntryIsPast()

@@ -74,6 +74,10 @@ public:
 	static void SetAutoDeleteCalendarEntries(bool bAuto);
 	static bool ViewAllCalendarEntries();
 	static void SetViewAllCalendarEntries(bool bView);
+	static bool ViewAllCalendarOpening();
+	static void SetViewAllCalendarOpening(bool bView);
+	static bool ViewAllCalendarClosing();
+	static void SetViewAllCalendarClosing(bool bView);
 	static int DaysTillEntryIsPast();
 	static void SetDaysTillEntryIsPast(int nDays);
 	static bool HideOverlappingCalendarEntries();
