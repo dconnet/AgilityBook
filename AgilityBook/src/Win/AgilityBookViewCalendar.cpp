@@ -202,7 +202,9 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 {
 	entries.clear();
 	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
-	for (vector<ARBCalendarPtr>::const_iterator iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
+	for (vector<ARBCalendarPtr>::const_iterator iter = m_Calendar.begin();
+		iter != m_Calendar.end();
+		++iter)
 	{
 		ARBCalendarPtr pCal = *iter;
 		if (pCal->InRange(date)
@@ -216,14 +218,18 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 		else if (ARBCalendar::ePlanning == pCal->GetEntered()
 		&& filter.ViewPlanning())
 		{
-			if ((filter.ViewOpening() && pCal->GetOpeningDate() == date)
-			|| (filter.ViewClosing() && pCal->GetClosingDate() == date))
+			if ((CAgilityBookOptions::ViewAllCalendarOpening()
+			&& pCal->GetOpeningDate() == date)
+			|| (CAgilityBookOptions::ViewAllCalendarClosing()
+			&& pCal->GetClosingDate() == date))
 				entries.push_back((*iter));
 		}
 	}
 	if (bGetHidden)
 	{
-		for (vector<ARBCalendarPtr>::const_iterator iter = m_CalendarHidden.begin(); iter != m_CalendarHidden.end(); ++iter)
+		for (vector<ARBCalendarPtr>::const_iterator iter = m_CalendarHidden.begin();
+			iter != m_CalendarHidden.end();
+			++iter)
 		{
 			if ((*iter)->InRange(date))
 				entries.push_back((*iter));
@@ -298,7 +304,8 @@ void CAgilityBookViewCalendar::LoadData()
 			if (ARBCalendar::ePlanning == pCal->GetEntered()
 			&& filter.ViewPlanning())
 			{
-				if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
+				if (CAgilityBookOptions::ViewAllCalendarOpening()
+				&& pCal->GetOpeningDate().IsValid())
 				{
 					bAdd = true;
 					if (!f.IsValid() || pCal->GetOpeningDate() < f)
@@ -306,7 +313,8 @@ void CAgilityBookViewCalendar::LoadData()
 					if (!l.IsValid() || pCal->GetOpeningDate() > l)
 						l = pCal->GetOpeningDate();
 				}
-				if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
+				if (CAgilityBookOptions::ViewAllCalendarClosing()
+				&& pCal->GetClosingDate().IsValid())
 				{
 					bAdd = true;
 					if (!f.IsValid() || pCal->GetClosingDate() < f)
@@ -519,9 +527,11 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			}
 			// No additional Planning checks needed as that's already been
 			// filtered in the m_Calendar list.
-			if (filter.ViewOpening() && pCal->GetOpeningDate().IsValid())
+			if (CAgilityBookOptions::ViewAllCalendarOpening()
+			&& pCal->GetOpeningDate().IsValid())
 				dates.insert(pCal->GetOpeningDate());
-			if (filter.ViewClosing() && pCal->GetClosingDate().IsValid())
+			if (CAgilityBookOptions::ViewAllCalendarClosing()
+			&& pCal->GetClosingDate().IsValid())
 				dates.insert(pCal->GetClosingDate());
 		}
 		for (set<ARBDate>::iterator iterDate = dates.begin(); iterDate != dates.end(); ++iterDate)
@@ -566,12 +576,14 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 					// (That whole foreground/background thing)
 					if (m_Current != date)
 					{
-						if (filter.ViewOpening() && pCal->GetOpeningDate() == date)
+						if (CAgilityBookOptions::ViewAllCalendarOpening()
+						&& pCal->GetOpeningDate() == date)
 						{
 							bReset = true;
 							oldText = pDC->SetTextColor(clrOpening);
 						}
-						else if (filter.ViewClosing() && pCal->GetClosingDate() == date)
+						else if (CAgilityBookOptions::ViewAllCalendarClosing()
+						&& pCal->GetClosingDate() == date)
 						{
 							bReset = true;
 							oldText = pDC->SetTextColor(clrClosing);

@@ -53,12 +53,12 @@ class CCalendarViewFilter
 public:
 	typedef enum
 	{
-		eReserved =			0x01, // No longer used - implies not+plan+enter
-		eViewOpening =		0x02,
-		eViewClosing =		0x04,
-		eViewNotEntered =	0x08,
-		eViewPlanning =		0x10,
-		eViewEntered =		0x20,
+		eReserved1 =		0x01,	///< Obsolete, implies not+plan+enter
+		eReserved2 =		0x02,	///< Obsolete, changed to ViewAllCalendarOpening()
+		eReserved3 =		0x04,	///< Obsolete, changed to ViewAllCalendarClosing()
+		eViewNotEntered =	0x08,	///< Type of entry to view
+		eViewPlanning =		0x10,	///< Type of entry to view
+		eViewEntered =		0x20,	///< Type of entry to view
 		eViewNormal =		eViewNotEntered | eViewPlanning | eViewEntered
 	} eViewFilter;
 	CCalendarViewFilter() : m_Filter(0) {}
@@ -87,14 +87,6 @@ public:
 	{
 		return 0 == m_Filter || eViewEntered == (m_Filter & eViewEntered);
 	}
-	bool ViewOpening() const
-	{
-		return eViewOpening == (m_Filter & eViewOpening);
-	}
-	bool ViewClosing() const
-	{
-		return eViewClosing == (m_Filter & eViewClosing);
-	}
 	void AddNotEntered()
 	{
 		m_Filter |= eViewNotEntered;
@@ -107,15 +99,7 @@ public:
 	{
 		m_Filter |= eViewEntered;
 	}
-	void AddOpening()
-	{
-		m_Filter |= eViewOpening;
-	}
-	void AddClosing()
-	{
-		m_Filter |= eViewClosing;
-	}
-	void clear()
+	void Clear()
 	{
 		m_Filter = 0;
 	}

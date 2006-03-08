@@ -130,7 +130,8 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 		m_FilterOptions.SetEndFilterDateSet(m_bDateEnd ? true : false);
 		// Names are kept in sync via setdispinfo
 		m_FilterOptions.SetTrainingViewAllNames(0 == m_ViewNames ? true : false);
-		CCalendarViewFilter calView;
+		CCalendarViewFilter calView = m_FilterOptions.FilterCalendarView();
+		calView.Clear();
 		if (m_bNotEntered)
 			calView.AddNotEntered();
 		if (m_bPlanning)

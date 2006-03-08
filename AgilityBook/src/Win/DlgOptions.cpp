@@ -101,9 +101,8 @@ CDlgOptions::CDlgOptions(
 	m_pageView.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
 	m_pageView.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
 	m_pageView.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
-	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
-	m_pageView.m_bOpening = filter.ViewOpening();
-	m_pageView.m_bClosing = filter.ViewClosing();
+	m_pageView.m_bOpening = CAgilityBookOptions::ViewAllCalendarOpening() ? TRUE : FALSE;
+	m_pageView.m_bClosing = CAgilityBookOptions::ViewAllCalendarClosing() ? TRUE : FALSE;
 	CAgilityBookOptions::GetPrinterFontInfo(m_pageView.m_fontPrintInfo);
 	CAgilityBookOptions::GetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
 
@@ -138,7 +137,6 @@ void CDlgOptions::OnOK()
 	if (GetActivePage()->UpdateData(TRUE))
 	{
 		CWaitCursor wait;
-		CCalendarViewFilter filter;
 
 		// Program options
 		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
@@ -160,14 +158,10 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageView.m_bHideOld ? false : true);
 		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageView.m_Days);
 		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageView.m_bHideOverlapping ? true : false);
-		if (m_pageView.m_bOpening)
-			filter.AddOpening();
-		if (m_pageView.m_bClosing)
-			filter.AddClosing();
+		CAgilityBookOptions::SetViewAllCalendarOpening(m_pageView.m_bOpening ? true : false);
+		CAgilityBookOptions::SetViewAllCalendarClosing(m_pageView.m_bClosing ? true : false);
 		CAgilityBookOptions::SetPrinterFontInfo(m_pageView.m_fontPrintInfo);
 		CAgilityBookOptions::SetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
-
-		m_pageFilter.m_FilterOptions.SetFilterCalendarView(filter);
 
 		// Filters
 		if (!m_pageFilter.m_FilterName.IsEmpty())
