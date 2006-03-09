@@ -135,7 +135,7 @@ public:
 		ARBDate dateEndDate;
 		bool bViewAllVenues;
 		std::vector<CVenueFilter> venueFilter;
-		CFilterOptions::eViewRuns eRuns;
+		eViewRuns eRuns;
 		bool bViewAllNames;
 		std::set<ARBString> nameFilter;
 	};
@@ -155,9 +155,9 @@ private:
 
 	ARBString m_curFilter;
 	int m_nFilters;
-	std::vector<CFilterOptions::CFilterOptionData> m_filters;
+	std::vector<CFilterOptionData> m_filters;
 
-	std::vector<CFilterOptions::CFilterOptionData>::iterator FindFilter(ARBString const& inName);
+	std::vector<CFilterOptionData>::iterator FindFilter(ARBString const& inName);
 
 public:
 	static CFilterOptions& Options();

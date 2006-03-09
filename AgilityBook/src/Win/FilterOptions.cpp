@@ -320,7 +320,7 @@ bool CFilterOptions::DeleteFilter(ARBString const& inName)
 	{
 		m_filters.erase(iter);
 		if (inName == m_curFilter)
-			m_curFilter.clear();
+			m_curFilter.erase();
 		return true;
 	}
 	else
