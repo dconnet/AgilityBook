@@ -333,12 +333,12 @@ void CDlgOptionsFilter::FillControls()
 	m_ctrlFilters.ResetContent();
 	std::vector<ARBString> filterNames;
 	m_FilterOptions.GetAllFilterNames(filterNames);
-	for (std::vector<ARBString>::iterator iter = filterNames.begin();
-		iter != filterNames.end();
-		++iter)
+	for (std::vector<ARBString>::iterator iterName = filterNames.begin();
+		iterName != filterNames.end();
+		++iterName)
 	{
-		int idx = m_ctrlFilters.AddString((*iter).c_str());
-		if ((*iter) == m_FilterOptions.GetCurrentFilter())
+		int idx = m_ctrlFilters.AddString((*iterName).c_str());
+		if ((*iterName) == m_FilterOptions.GetCurrentFilter())
 		{
 			m_FilterName = m_FilterOptions.GetCurrentFilter().c_str();
 			m_ctrlFilters.SetCurSel(idx);
