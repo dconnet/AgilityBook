@@ -582,9 +582,17 @@ PointsDataMultiQs::PointsDataMultiQs(
 	, m_MQs(inMQs)
 	, m_ExistingDblQs(0)
 {
+	ARBDate dateFrom, dateTo;
+	if (!CFilterOptions::Options().GetViewAllDates())
+	{
+		if (CFilterOptions::Options().GetStartFilterDateSet())
+			dateFrom = CFilterOptions::Options().GetStartFilterDate();
+		if (CFilterOptions::Options().GetEndFilterDateSet())
+			dateTo = CFilterOptions::Options().GetEndFilterDate();
+	}
 	m_ExistingDblQs = m_Dog->GetExistingPoints().ExistingPoints(
 		ARBDogExistingPoints::eMQ, m_Venue, m_MultiQ,
-		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr());
+		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr(), dateFrom, dateTo);
 }
 
 PointsDataMultiQs::~PointsDataMultiQs()

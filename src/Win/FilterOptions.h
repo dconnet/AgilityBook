@@ -188,6 +188,11 @@ public:
 			std::vector<CVenueFilter> const& venues,
 			ARBString const& venue,
 			ARBString const& div);
+	bool IsVenueLevelVisible(
+			std::vector<CVenueFilter> const& venues,
+			ARBString const& venue,
+			ARBString const& div,
+			ARBString const& level);
 	bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBDogTrialPtr pTrial);

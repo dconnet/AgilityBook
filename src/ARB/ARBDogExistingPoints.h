@@ -283,6 +283,8 @@ public:
 	 * @param inDiv Division to search for.
 	 * @param inLevel Level to search for.
 	 * @param inEvent Event to search for.
+	 * @param inDateFrom Date to throttle points.
+	 * @param inDateTo Date to throttle points.
 	 * @param inHasLifetime Are there any lifetime points?
 	 * @return Whether any existing points exist.
 	 */
@@ -291,6 +293,8 @@ public:
 			ARBConfigDivisionPtr inDiv,
 			ARBConfigLevelPtr inLevel,
 			ARBConfigEventPtr inEvent,
+			ARBDate inDateFrom,
+			ARBDate inDateTo,
 			bool inHasLifetime) const;
 
 	/**
@@ -301,6 +305,8 @@ public:
 	 * @param inDiv Division to search for.
 	 * @param inLevel Level to search for.
 	 * @param inEvent Event to search for.
+	 * @param inDateFrom Date to throttle points.
+	 * @param inDateTo Date to throttle points.
 	 * @return The number of existing points.
 	 */
 	double ExistingPoints(
@@ -309,7 +315,9 @@ public:
 			ARBConfigMultiQPtr inMultiQ,
 			ARBConfigDivisionPtr inDiv,
 			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent) const;
+			ARBConfigEventPtr inEvent,
+			ARBDate inDateFrom,
+			ARBDate inDateTo) const;
 
 	/**
 	 * Get the number of existing point items in a venue.

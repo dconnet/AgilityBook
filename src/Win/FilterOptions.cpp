@@ -404,6 +404,28 @@ bool CFilterOptions::IsVenueDivisionVisible(
 	return true;
 }
 
+bool CFilterOptions::IsVenueLevelVisible(
+		std::vector<CVenueFilter> const& venues,
+		ARBString const& venue,
+		ARBString const& div,
+		ARBString const& level)
+{
+	if (!m_bViewAllVenues)
+	{
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+			iter != venues.end();
+			++iter)
+		{
+			if ((*iter).venue == venue
+			&& (*iter).division == div
+			&& (*iter).level == level)
+				return true;
+		}
+		return false;
+	}
+	return true;
+}
+
 bool CFilterOptions::IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrialPtr pTrial)
