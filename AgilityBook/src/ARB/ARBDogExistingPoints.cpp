@@ -491,6 +491,8 @@ bool ARBDogExistingPointsList::HasPoints(
 		ARBConfigDivisionPtr inDiv,
 		ARBConfigLevelPtr inLevel,
 		ARBConfigEventPtr inEvent,
+		ARBDate inDateFrom,
+		ARBDate inDateTo,
 		bool inHasLifetime) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -502,6 +504,9 @@ bool ARBDogExistingPointsList::HasPoints(
 		&& ((*iter)->GetLevel() == inLevel->GetName()
 		|| inLevel->GetSubLevels().FindSubLevel((*iter)->GetLevel())))
 		{
+			if ((inDateFrom.IsValid() && (*iter)->GetDate() < inDateFrom)
+			|| (inDateTo.IsValid() && (*iter)->GetDate() > inDateTo))
+				return false;
 			if (ARBDogExistingPoints::eRuns == type
 			|| ARBDogExistingPoints::eSQ == type)
 			{
@@ -533,7 +538,9 @@ double ARBDogExistingPointsList::ExistingPoints(
 		ARBConfigMultiQPtr inMultiQ,
 		ARBConfigDivisionPtr inDiv,
 		ARBConfigLevelPtr inLevel,
-		ARBConfigEventPtr inEvent) const
+		ARBConfigEventPtr inEvent,
+		ARBDate inDateFrom,
+		ARBDate inDateTo) const
 {
 	double pts = 0.0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -550,6 +557,10 @@ double ARBDogExistingPointsList::ExistingPoints(
 			&& !inLevel->GetSubLevels().FindSubLevel((*iter)->GetLevel()))
 				continue;
 			if (inEvent && (*iter)->GetEvent() != inEvent->GetName())
+				continue;
+			// If we made it this far, we now need to check against the scoring method for dates.
+			if ((inDateFrom.IsValid() && (*iter)->GetDate() < inDateFrom)
+			|| (inDateTo.IsValid() && (*iter)->GetDate() > inDateTo))
 				continue;
 			pts += (*iter)->GetPoints();
 		}

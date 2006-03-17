@@ -531,6 +531,14 @@ void CAgilityBookViewPoints::LoadData()
 						++iterLevel)
 					{
 						ARBConfigLevelPtr pLevel = (*iterLevel);
+						ARBDate dateFrom, dateTo;
+						if (!CFilterOptions::Options().GetViewAllDates())
+						{
+							if (CFilterOptions::Options().GetStartFilterDateSet())
+								dateFrom = CFilterOptions::Options().GetStartFilterDate();
+							if (CFilterOptions::Options().GetEndFilterDateSet())
+								dateTo = CFilterOptions::Options().GetEndFilterDate();
+						}
 						LifeTimePoints pts;
 						pts.pDiv = pDiv;
 						pts.pLevel = pLevel;
@@ -541,8 +549,6 @@ void CAgilityBookViewPoints::LoadData()
 							++iterEvent)
 						{
 							ARBConfigEventPtr pEvent = (*iterEvent);
-							bool bHasExistingPoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, false);
-							bool bHasExistingLifetimePoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, true);
 
 							// Don't tally runs that have no titling points.
 							ARBVector<ARBConfigScoringPtr> scoringItems;
@@ -556,6 +562,19 @@ void CAgilityBookViewPoints::LoadData()
 								++iterScoring)
 							{
 								ARBConfigScoringPtr pScoringMethod = *iterScoring;
+								ARBDate dateFrom2 = pScoringMethod->GetValidFrom();
+								ARBDate dateTo2 = pScoringMethod->GetValidTo();
+								if (!dateFrom2.IsValid() || dateFrom > dateFrom2)
+									dateFrom2 = dateFrom;
+								if (!dateTo2.IsValid() || dateTo > dateTo2)
+									dateTo2 = dateTo;
+								bool bHasExistingPoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, false);
+								bool bHasExistingLifetimePoints = pDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, true);
+								if (!CFilterOptions::Options().IsVenueLevelVisible(venues, pVenue->GetName(), pDiv->GetName(), pLevel->GetName()))
+								{
+									bHasExistingPoints = false;
+									bHasExistingLifetimePoints = false;
+								}
 								int SQs = 0;
 								int speedPtsEvent = 0;
 								list<RunInfo> matching;
@@ -639,11 +658,11 @@ void CAgilityBookViewPoints::LoadData()
 								{
 									nExistingPts = pDog->GetExistingPoints().ExistingPoints(
 										ARBDogExistingPoints::eRuns,
-										pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent);
+										pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2);
 									if (pScoringMethod->HasSuperQ())
 										nExistingSQ += static_cast<int>(pDog->GetExistingPoints().ExistingPoints(
 											ARBDogExistingPoints::eSQ,
-											pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent));
+											pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
 								}
 								// Now add the existing lifetime points
 								if (bHasExistingLifetimePoints && 0.0 < nExistingPts + nExistingSQ)
@@ -666,7 +685,9 @@ void CAgilityBookViewPoints::LoadData()
 										str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
 										strRunCount += str2;
 									}
-									double percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
+									double percentQs = 0.0;
+									if (0 < matching.size())
+										percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
 									CString strQcount;
 									strQcount.FormatMessage(IDS_POINTS_QS,
 										nCleanQ + nNotCleanQ,
@@ -722,7 +743,7 @@ void CAgilityBookViewPoints::LoadData()
 						{
 							speedPts += static_cast<int>(pDog->GetExistingPoints().ExistingPoints(
 								ARBDogExistingPoints::eSpeed,
-								pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr()));
+								pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr(), dateFrom, dateTo));
 						}
 						if (0 < pts.ptList.size())
 							lifetime.push_back(pts);
