@@ -497,9 +497,9 @@ void CDlgConfigEvent::FillLevelList()
 	}
 	else if (0 < idxDiv)
 	{
-		ARBConfigDivision* pDiv = reinterpret_cast<ARBConfigDivision*>(m_ctrlDivision.GetItemDataPtr(idxDiv));
-		for (ARBConfigLevelList::iterator iterLevel = pDiv->GetLevels().begin();
-			iterLevel != pDiv->GetLevels().end();
+		CListPtrData<ARBConfigDivisionPtr>* pDiv = reinterpret_cast<CListPtrData<ARBConfigDivisionPtr>*>(m_ctrlDivision.GetItemDataPtr(idxDiv));
+		for (ARBConfigLevelList::iterator iterLevel = pDiv->GetData()->GetLevels().begin();
+			iterLevel != pDiv->GetData()->GetLevels().end();
 			++iterLevel)
 		{
 			index = m_ctrlLevel.AddString((*iterLevel)->GetName().c_str());
