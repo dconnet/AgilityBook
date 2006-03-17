@@ -55,7 +55,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgPointsDataLevel
+class CDlgPointsDataLevel : public CListData
 {
 public:
 	CDlgPointsDataLevel(ARBConfigLevelPtr pLevel)
