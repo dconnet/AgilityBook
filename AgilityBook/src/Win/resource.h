@@ -723,6 +723,7 @@
 #define IDS_FILEEXT_FNAME_ICS           5189
 #define IDS_FILEEXT_FILTER_ICS          5190
 #define IDS_DELETE_MULTIQ               5191
+#define IDS_NAME_FILTER                 5192
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780
