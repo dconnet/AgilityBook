@@ -1394,6 +1394,8 @@ void CAgilityBookViewRuns::LoadData()
 	else
 		HeaderSort(abs(m_SortColumn.GetColumn()),
 			info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
+	// Now make sure the selected item is visible.
+	GetListCtrl().EnsureVisible(GetSelection(), FALSE);
 
 	// Cleanup.
 	GetListCtrl().SetRedraw(TRUE);

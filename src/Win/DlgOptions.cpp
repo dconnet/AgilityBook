@@ -164,11 +164,6 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::SetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
 
 		// Filters
-		if (!m_pageFilter.m_FilterName.IsEmpty())
-		{
-			// Do a filter 'save' also.
-			m_pageFilter.m_FilterOptions.AddFilter((LPCTSTR)m_pageFilter.m_FilterName);
-		}
 		// Commit to the registry
 		m_pageFilter.m_FilterOptions.Save();
 		// Now load into the default object

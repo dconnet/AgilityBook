@@ -876,6 +876,16 @@ View only qualifying runs.
 .topic HIDC_OPT_FILTER_RUN_RUNS_NON_Q
 View only non-qualifying runs.
 
+.topic HIDC_OPT_FILTER_NAMES
+List of pre-defined filters.
+
+.topic HIDC_OPT_FILTER_NAMES_SAVE
+Save the current filter settings as the specified name. Note, you must press
+the save button to save a filter settings.
+
+.topic HIDC_OPT_FILTER_NAMES_DELETE
+Delete the selected filter.
+
 .topic HIDC_OPT_FONT_PRINT
 Set the font to be used when printing the dates in the calendar.
 

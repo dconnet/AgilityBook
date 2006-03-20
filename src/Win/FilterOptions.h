@@ -46,6 +46,16 @@ struct CVenueFilter
 	ARBString venue;
 	ARBString division;
 	ARBString level;
+	bool operator==(CVenueFilter const& rhs) const
+	{
+		return venue == rhs.venue
+			&& division == rhs.division
+			&& level == rhs.level;
+	}
+	bool operator!=(CVenueFilter const& rhs) const
+	{
+		return !operator==(rhs);
+	}
 };
 
 class CCalendarViewFilter

@@ -511,9 +511,12 @@ void CDlgOptionsFilter::OnBnClickedOptFilterNamesSave()
 	if (!UpdateData(TRUE))
 		return;
 	if (!m_FilterName.IsEmpty())
+	{
 		m_FilterOptions.AddFilter((LPCTSTR)m_FilterName);
+		m_ctrlFilters.AddString(m_FilterName);
+	}
 	else
-		MessageBeep(0);
+		AfxMessageBox(IDS_NAME_FILTER, MB_ICONEXCLAMATION);
 }
 
 void CDlgOptionsFilter::OnBnClickedOptFilterNamesDelete()

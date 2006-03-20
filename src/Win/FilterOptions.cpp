@@ -198,6 +198,29 @@ void CFilterOptions::Save()
 	CString val;
 	CWinApp* pApp = AfxGetApp();
 
+	if (!m_curFilter.empty())
+	{
+		std::vector<CFilterOptionData>::iterator iFilter = FindFilter(m_curFilter);
+		if (iFilter != m_filters.end())
+		{
+			CFilterOptionData const& filter = *iFilter;
+			if (filter.calView.m_Filter != m_calView.m_Filter
+			|| filter.bAllDates != m_bAllDates
+			|| filter.bStartDate != m_bStartDate
+			|| filter.dateStartDate != m_dateStartDate
+			|| filter.bEndDate != m_bEndDate
+			|| filter.dateEndDate != m_dateEndDate
+			|| filter.bViewAllVenues != m_bViewAllVenues
+			|| filter.venueFilter != m_venueFilter
+			|| filter.eRuns != m_eRuns
+			|| filter.bViewAllNames != m_bViewAllNames
+			|| filter.nameFilter != m_nameFilter)
+			{
+				m_curFilter.erase();
+			}
+		}
+	}
+
 	pApp->WriteProfileInt(_T("Calendar"), _T("Filter"), m_calView.m_Filter);
 
 	pApp->WriteProfileInt(_T("Common"), _T("ViewAllDates"), m_bAllDates ? 1 : 0);
