@@ -487,6 +487,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	{
 		CDlgMessage dlg(msg.str().c_str(), 0);
 		dlg.DoModal();
+		GetDogs().SetMultiQs(GetConfig());
 		SetModifiedFlag();
 		UpdateAllViews(NULL, UPDATE_CONFIG);
 	}

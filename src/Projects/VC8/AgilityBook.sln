@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParseResourceHeader", "Pars
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8} = {ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}
 	EndProjectSection
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup98", "AgilityBookSetup98.vdproj", "{E1264972-F1C8-4DD7-A0E4-A689350BE570}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -29,6 +31,10 @@ Global
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|Win32.Build.0 = Debug|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release|Win32.ActiveCfg = Release|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release|Win32.Build.0 = Release|Win32
+		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Debug|Win32.ActiveCfg = Debug
+		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Debug|Win32.Build.0 = Debug
+		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Release|Win32.ActiveCfg = Release
+		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Release|Win32.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
