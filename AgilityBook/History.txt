@@ -1,4 +1,9 @@
-3/18/2006: v1.7.2.12 <development>
+3/20/2006: v1.7.3.12
+- Bug fixes
+  - After upgrading the configuration, double Qs disappeared temporarily.
+  - Created a separate Win98 install to deal with WinInstaller issues.
+
+3/18/2006: v1.7.2.12
 - Bumped file version to 12.1, Configuration v12:
   - Allow fractional faults in title points.
   - Updated NADAC Gamblers to end on 1/1/06 instead of 12/31/05.
