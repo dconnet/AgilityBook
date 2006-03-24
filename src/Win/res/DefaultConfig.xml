@@ -5,6 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-03-24 DRC Configuration version 13. Restricted NADAC Chances divisions.
 2006-02-08 DRC Configuration version 12. NADAC Wildcard is now Chances.
                Extended Gamblers to 1/1 (long weekend).
 2006-01-04 DRC Configuration version 11. Updated CKC.
@@ -42,7 +43,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="12">
+	<Configuration version="13">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -1935,7 +1936,12 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 			<Event Name="Chances">
 				<Desc>Transition Gamblers class
 Was called Wild Card briefly.</Desc>
-				<Scoring Division="*" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
+					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
 					<Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
