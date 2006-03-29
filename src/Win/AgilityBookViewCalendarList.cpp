@@ -933,6 +933,8 @@ void CAgilityBookViewCalendarList::LoadData()
 	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
+	// Now make sure the selected item is visible.
+	GetListCtrl().EnsureVisible(GetSelection(), FALSE);
 
 	GetListCtrl().SetRedraw(TRUE);
 	GetListCtrl().Invalidate();
