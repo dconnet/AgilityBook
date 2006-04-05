@@ -474,6 +474,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
+				m_pView->GetListCtrl().EnsureVisible(index, FALSE);
 				bFound = true;
 			}
 		}
@@ -1420,6 +1421,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 			if (index >= GetListCtrl().GetItemCount())
 				index = GetListCtrl().GetItemCount() - 1;
 			SetSelection(index);
+			GetListCtrl().EnsureVisible(index, FALSE);
 			GetDocument()->SetModifiedFlag();
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 		}

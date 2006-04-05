@@ -1078,6 +1078,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
+				m_pView->GetListCtrl().EnsureVisible(index, FALSE);
 				bFound = true;
 			}
 		}
