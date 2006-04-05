@@ -425,10 +425,11 @@
 #define IDC_REORDER_MOVE_UP             1531
 #define IDC_REORDER_MOVE_DOWN           1532
 #define IDC_WIZARD_START_EXCEL          1540
-#define IDC_WIZARD_START_SPREADSHEET    1541
-#define IDC_WIZARD_START_ARB            1542
-#define IDC_WIZARD_START_LIST           1543
-#define IDC_WIZARD_START_DESCRIPTION    1544
+#define IDC_WIZARD_START_OPENOFFICE     1541
+#define IDC_WIZARD_START_SPREADSHEET    1542
+#define IDC_WIZARD_START_ARB            1543
+#define IDC_WIZARD_START_LIST           1544
+#define IDC_WIZARD_START_DESCRIPTION    1545
 #define IDC_WIZARD_IMPORT_ROW           1550
 #define IDC_WIZARD_IMPORT_ROW_SPIN      1551
 #define IDC_WIZARD_IMPORT_DELIM_GROUP   1552
@@ -710,7 +711,6 @@
 #define IDS_ADDED_TITLES                5176
 #define IDS_ADDED_TRIALS                5177
 #define IDS_ADDED_JUDGES                5178
-#define IDS_FILEEXT_FILTER_XLS          5179
 #define IDS_ADDED_CLUBS                 5180
 #define IDS_ADDED_LOCATIONS             5181
 #define IDS_INFO_CLUB                   5182
@@ -724,6 +724,8 @@
 #define IDS_FILEEXT_FILTER_ICS          5190
 #define IDS_DELETE_MULTIQ               5191
 #define IDS_NAME_FILTER                 5192
+#define IDS_FILEEXT_FILTER_MSEXCEL      5193
+#define IDS_FILEEXT_FILTER_OOCALC       5194
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780

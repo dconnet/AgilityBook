@@ -68,11 +68,14 @@ CWizard::CWizard(
 	, m_pageImport(NULL)
 	, m_pageExport(NULL)
 	, m_Excel()
+	, m_OpenOffice()
 	, m_ImportExportItem(-1)
 	, m_ImportExportStyle(-1)
 {
 	m_psh.dwFlags |= PSH_WIZARDCONTEXTHELP;
 	SetWizardMode();
+	m_Excel = IWizardSpreadSheet::Create(IWizardSpreadSheet::eMicrosoftExcel);
+	m_OpenOffice = IWizardSpreadSheet::Create(IWizardSpreadSheet::eOpenOffice);
 	// Have to delay these as their ctor will use m_Excel.
 	m_pageStart = new CWizardStart(this, m_pDoc);
 	m_pageImport = new CWizardImport(this, m_pDoc);

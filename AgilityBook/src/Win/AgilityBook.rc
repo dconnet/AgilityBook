@@ -2349,6 +2349,8 @@ BEGIN
     IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
     IDS_DELETE_MULTIQ       "Warning: Multiple Q '%1' is currently in use. Deleting this item will delete points from %2!d! existing points.\n\nAre you sure you want to do this?"
     IDS_NAME_FILTER         "You must name a filter in order to save it."
+    IDS_FILEEXT_FILTER_MSEXCEL "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_OOCALC ""
 END
 
 STRINGTABLE 
@@ -2364,7 +2366,6 @@ BEGIN
     IDS_ADDED_TITLES        "%1!d! titles"
     IDS_ADDED_TRIALS        "%1!d! trials"
     IDS_ADDED_JUDGES        "%1!d! judges"
-    IDS_FILEEXT_FILTER_XLS  "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
     IDS_ADDED_CLUBS         "%1!d! clubs"
     IDS_ADDED_LOCATIONS     "%1!d! locations"
     IDS_INFO_CLUB           "Club's Information"

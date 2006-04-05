@@ -1022,7 +1022,7 @@ Start the import at the specified row. This allows skipping of header data.
 Use this to scroll the starting row.
 
 .topic HIDC_WIZARD_START_EXCEL
-Import data directly from or export data directly to Excel.
+Import data directly from or export data directly to Microsoft Excel.
 
 .topic HIDC_WIZARD_START_ARB
 Import data from or export data to another Agility Record Book file.
