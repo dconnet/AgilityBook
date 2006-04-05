@@ -179,7 +179,8 @@
 #define IO_CAL_TASK_SCH_PRIORITY	108
 #define IO_CAL_TASK_SENSITIVITY		109
 #define IO_CAL_TASK_STATUS			110
-#define IO_MAX						111
+#define IO_RUNS_MIN_YPS				111
+#define IO_MAX						112
 
 class CDlgAssignColumns : public CDlgBaseDialog
 {

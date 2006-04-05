@@ -111,6 +111,8 @@ private:
 	CStatic	m_ctrlOpenText;
 	CEdit	m_ctrlOpen;
 	short	m_Open;
+	CStatic	m_ctrlMinYPSText;
+	CStatic	m_ctrlMinYPS;
 	CStatic	m_ctrlYPSText;
 	CStatic	m_ctrlYPS;
 	CStatic	m_ctrlFaultsText;
@@ -168,6 +170,7 @@ private:
 	void FillSubNames();
 	void SetEventDesc(ARBConfigEventPtr inEvent);
 	void SetPartnerText();
+	void SetMinYPS();
 	void SetYPS();
 	void SetTotalFaults();
 	void FillQ(ARBConfigScoringPtr inScoring);

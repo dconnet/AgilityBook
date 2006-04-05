@@ -538,6 +538,15 @@ void CWizardExport::UpdatePreview()
 									case IO_RUNS_YARDS:
 										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetYards(), 3).c_str());
 										break;
+									case IO_RUNS_MIN_YPS:
+										{
+											double yps;
+											if (pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+											{
+												data += AddPreviewData(iLine, idx, ARBDouble::str(yps, 3).c_str());
+											}
+										}
+										break;
 									case IO_RUNS_YPS:
 										{
 											double yps;

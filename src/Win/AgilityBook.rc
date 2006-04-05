@@ -980,6 +980,8 @@ BEGIN
     EDITTEXT        IDC_RUNSCORE_OPENING_PTS,88,140,25,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_RUNSCORE_OPENING_PTS
     RTEXT           "Yards",IDC_RUNSCORE_YARDS_TEXT,3,142,80,8
     EDITTEXT        IDC_RUNSCORE_YARDS,88,140,30,12,ES_AUTOHSCROLL,0,HIDC_RUNSCORE_YARDS
+    RTEXT           "Min YPS",IDC_RUNSCORE_MIN_YPS_TEXT,3,158,80,8
+    CTEXT           "",IDC_RUNSCORE_MIN_YPS,88,159,30,10,SS_SUNKEN
     RTEXT           "Closing Time",IDC_RUNSCORE_SCT2_TEXT,3,158,80,8
     EDITTEXT        IDC_RUNSCORE_SCT2,88,156,30,12,ES_AUTOHSCROLL,0,HIDC_RUNSCORE_SCT2
     RTEXT           "Required Closing Points",IDC_RUNSCORE_CLOSING_PTS_TEXT,3,175,80,8
@@ -2215,6 +2217,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_COL_MULTIQ          "MultiQ"
+    IDS_COL_MIN_YPS         "MinYPS"
 END
 
 STRINGTABLE 
@@ -2349,8 +2352,8 @@ BEGIN
     IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
     IDS_DELETE_MULTIQ       "Warning: Multiple Q '%1' is currently in use. Deleting this item will delete points from %2!d! existing points.\n\nAre you sure you want to do this?"
     IDS_NAME_FILTER         "You must name a filter in order to save it."
-    IDS_FILEEXT_FILTER_MSEXCEL "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
-    IDS_FILEEXT_FILTER_OOCALC ""
+    IDS_FILEEXT_FILTER_MSEXCEL 
+                            "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
 END
 
 STRINGTABLE 

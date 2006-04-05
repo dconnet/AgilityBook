@@ -206,6 +206,15 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				str << ARBDouble::str(m_pRun->GetScoring().GetYards(), 0);
 			}
 			break;
+		case IO_RUNS_MIN_YPS:
+			{
+				double yps;
+				if (m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+				{
+					str << ARBDouble::str(yps, 3);
+				}
+			}
+			break;
 		case IO_RUNS_YPS:
 			{
 				double yps;
@@ -653,6 +662,24 @@ int CALLBACK CompareRuns(
 			else if (bRun1)
 				nRet = 1;
 			else if (bRun2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_MIN_YPS:
+		{
+			double yps1, yps2;
+			bool bOk1 = pRun1->m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps1);
+			bool bOk2 = pRun2->m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps2);
+			if (bOk1 && bOk2)
+			{
+				if (yps1 < yps2)
+					nRet = -1;
+				else if (yps1 > yps2)
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
 				nRet = -1;
 		}
 		break;
