@@ -1,9 +1,13 @@
-3/24/2006: v1.7.3.12 <in development>
+4/4/2006: v1.7.3.12 <in development>
+- New features / Enhancements:
+  - Add internal support for OpenOffice Calc during import/export (however,
+    I haven't actually figured out how to talk to Calc yet).
 - Bug fixes
   - After upgrading the configuration, double Qs disappeared temporarily.
   - Created a separate Win98 install to deal with WinInstaller issues.
   - Restricted NADAC Chances divisions to Proficient/Skilled. It was allowing
     Standard/Veterans/Junior.
+  - Add a warning when a date format isn't specified during export.
 
 3/18/2006: v1.7.2.12
 - Bumped file version to 12.1, Configuration v12:

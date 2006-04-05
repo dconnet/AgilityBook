@@ -62,9 +62,9 @@ class CWizardStart;
 #define WIZ_EXPORT_DTD				12
 #define WIZ_EXPORT_XML				13
 
-// These must agree with the radio button ordering in WizardStart.cpp
 // Note: These number should not be changed - they are stored in the registry
 #define WIZARD_RADIO_EXCEL			0
+#define WIZARD_RADIO_OPENOFFICE		3
 #define WIZARD_RADIO_SPREADSHEET	1
 #define WIZARD_RADIO_ARB			2
 
@@ -86,7 +86,8 @@ private:
 	CWizardStart* m_pageStart;
 	CWizardImport* m_pageImport;
 	CWizardExport* m_pageExport;
-	CWizardExcel m_Excel;
+	IWizardSpreadSheetPtr m_Excel;
+	IWizardSpreadSheetPtr m_OpenOffice;
 	int m_ImportExportItem;
 	int m_ImportExportStyle;
 
@@ -102,12 +103,16 @@ public:
 	/**
 	 * Get the Excel wrapper.
 	 */
-	CWizardExcel& ExcelHelper()			{return m_Excel;}
+	IWizardSpreadSheetPtr ExcelHelper()			{return m_Excel;}
+	/**
+	 * Get the Excel wrapper.
+	 */
+	IWizardSpreadSheetPtr OpenOfficeHelper()	{return m_OpenOffice;}
 	/**
 	 * This lets CWizardImport/Export know what data is being processed.
 	 */
-	int GetImportExportItem() const		{return m_ImportExportItem;}
-	int GetImportExportStyle() const	{return m_ImportExportStyle;}
+	int GetImportExportItem() const				{return m_ImportExportItem;}
+	int GetImportExportStyle() const			{return m_ImportExportStyle;}
 	/**
 	 * Only CWizardStart should call this.
 	 */

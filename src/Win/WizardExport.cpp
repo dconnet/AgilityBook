@@ -155,7 +155,8 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 
 CString CWizardExport::GetDelim() const
 {
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 		return _T("");
 	CString delim;
 	switch (m_Delim)
@@ -195,7 +196,8 @@ void CWizardExport::UpdateButtons()
 	DWORD dwWiz = PSWIZB_BACK;
 	// Some tests to make sure things are ready
 	bool bOk = false;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 		bOk = true;
 	else if (1 == GetDelim().GetLength())
 		bOk = true;
@@ -238,7 +240,8 @@ void CWizardExport::UpdateButtons()
 		}
 	}
 	int nCmdShow = SW_SHOW;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 		nCmdShow = SW_HIDE;
     GetDlgItem(IDC_WIZARD_EXPORT_DELIM_GROUP)->ShowWindow(nCmdShow);
     GetDlgItem(IDC_WIZARD_EXPORT_DELIM_TAB)->ShowWindow(nCmdShow);
@@ -261,7 +264,8 @@ CString CWizardExport::AddPreviewData(
 	// TODO: Add option to allow CRs?
 	inData.Replace(_T("\n"), _T(" "));
 	CString data;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 	{
 		if (0 == inCol)
 			m_ctrlPreview.InsertItem(inLine, inData);
@@ -297,6 +301,7 @@ void CWizardExport::UpdatePreview()
 		format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(idxDateFormat));
 	CString delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+	&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle()
 	&& delim.IsEmpty())
 	{
 		m_ctrlPreview.InsertColumn(0, _T(""));
@@ -318,7 +323,8 @@ void CWizardExport::UpdatePreview()
 
 	// Now generate the header information.
 	CString hdrSep(_T("/"));
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 		hdrSep = _T("\n");
 	CStringArray cols;
 	switch (m_pSheet->GetImportExportItem())
@@ -375,7 +381,8 @@ void CWizardExport::UpdatePreview()
 
 	// Now start writing the data.
 	int iLine = 0;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 	{
 		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
 			m_ctrlPreview.InsertColumn(iCol, _T(""));
@@ -394,8 +401,7 @@ void CWizardExport::UpdatePreview()
 				data += delim;
 			data += PrepFieldOutput(cols[iCol]);
 		}
-		if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
-			m_ctrlPreview.InsertItem(iLine, data);
+		m_ctrlPreview.InsertItem(iLine, data);
 		++iLine;
 	}
 
@@ -689,7 +695,8 @@ void CWizardExport::UpdatePreview()
 										break;
 									}
 								}
-								if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+								if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+								&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
 									m_ctrlPreview.InsertItem(iLine, data);
 								++iLine;
 							}
@@ -759,7 +766,8 @@ void CWizardExport::UpdatePreview()
 						break;
 					}
 				}
-				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+				&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
 					m_ctrlPreview.InsertItem(iLine, data);
 				++iLine;
 			}
@@ -889,7 +897,8 @@ void CWizardExport::UpdatePreview()
 						break;
 					}
 				}
-				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+				&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
 					m_ctrlPreview.InsertItem(iLine, data);
 				++iLine;
 			}
@@ -1022,7 +1031,8 @@ void CWizardExport::UpdatePreview()
 						break;
 					}
 				}
-				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+				&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
 					m_ctrlPreview.InsertItem(iLine, data);
 				++iLine;
 			}
@@ -1053,7 +1063,8 @@ void CWizardExport::UpdatePreview()
 						break;
 					}
 				}
-				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+				&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
 					m_ctrlPreview.InsertItem(iLine, data);
 				++iLine;
 			}
@@ -1116,9 +1127,14 @@ BOOL CWizardExport::OnWizardFinish()
 	UpdateData(TRUE);
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR == index)
+	{
+		AfxMessageBox("Please specify a date format.", MB_ICONWARNING);
+		GotoDlgCtrl(&m_ctrlDateFormat);
 		return FALSE;
+	}
 	UpdatePreview();
-	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+	&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
 	{
 		int delim;
 		switch (m_Delim)
@@ -1136,9 +1152,16 @@ BOOL CWizardExport::OnWizardFinish()
 	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
 	CAgilityBookOptions::SetImportExportDateFormat(true, format);
 
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
 	{
-		CWizardExcelExport* pExporter = m_pSheet->ExcelHelper().GetExporter();
+		IWizardExporterPtr pExporter;
+		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+		&& m_pSheet->ExcelHelper())
+			pExporter = m_pSheet->ExcelHelper()->GetExporter();
+		else if (WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle()
+		&& m_pSheet->OpenOfficeHelper())
+			pExporter = m_pSheet->OpenOfficeHelper()->GetExporter();
 		if (pExporter)
 		{
 			int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
@@ -1154,12 +1177,11 @@ BOOL CWizardExport::OnWizardFinish()
 				}
 				pExporter->ExportDataArray();
 			}
-			delete pExporter;
 			return CDlgBasePropertyPage::OnWizardFinish();
 		}
 		else
 		{
-			AfxMessageBox(_T("Failed to write data to Excel"));
+			AfxMessageBox(_T("Failed to write data"));
 			return FALSE;
 		}
 	}

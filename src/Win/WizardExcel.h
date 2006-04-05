@@ -36,13 +36,26 @@
  * @li 2004-09-30 DRC Created
  */
 
-class IDlgProgress;
+#include <boost/shared_ptr.hpp>
 
-class CWizardExcelExport
+/**
+ * Forward references and typedefs.
+ */
+class IDlgProgress;
+class IWizardExporter;
+typedef boost::shared_ptr<IWizardExporter> IWizardExporterPtr;
+class IWizardImporter;
+typedef boost::shared_ptr<IWizardImporter> IWizardImporterPtr;
+class IWizardSpreadSheet;
+typedef boost::shared_ptr<IWizardSpreadSheet> IWizardSpreadSheetPtr;
+
+/**
+ * Interface for exporting to a spreadsheet.
+ */
+class IWizardExporter
 {
 public:
-	CWizardExcelExport();
-	virtual ~CWizardExcelExport();
+	virtual ~IWizardExporter() = 0;
 
 	virtual bool ArrayOkay() const = 0;
 	virtual bool CreateArray(
@@ -69,22 +82,34 @@ public:
 			CString const& inFormula) = 0;
 };
 
-class CWizardExcelImport
+/**
+ * Interface for importing from a spreadsheet.
+ */
+class IWizardImporter
 {
 public:
-	CWizardExcelImport();
-	virtual ~CWizardExcelImport();
-
+	virtual ~IWizardImporter() = 0;
 	virtual bool OpenFile(CString const& inFilename) = 0;
 	virtual bool GetData(
 			std::vector< std::vector<CString> >& outData,
 			IDlgProgress* ioProgress = NULL) = 0;
 };
 
-class CWizardExcelImpl;
-class CWizardExcel
+/////////////////////////////////////////////////////////////////////////////
+
+class IWizardSpreadSheet
 {
 public:
+	typedef enum
+	{
+		eMicrosoftExcel,
+		eOpenOffice
+	} eType;
+	/**
+	 * Create a new spreadsheet manager, must 'delete' the returned pointer.
+	 */
+	static IWizardSpreadSheetPtr Create(eType inType);
+
 	/// Get the maximum number of rows Excel can handle.
 	static long GetMaxRows();
 	/// Get the maximum number of columns Excel can handle.
@@ -95,13 +120,7 @@ public:
 			long inCol,
 			CString& outCell);
 
-	CWizardExcel();
-	~CWizardExcel();
-
-	bool IsAvailable() const;
-	CWizardExcelExport* GetExporter();
-	CWizardExcelImport* GetImporter();
-
-private:
-	CWizardExcelImpl* m_Excel;
+	virtual ~IWizardSpreadSheet() = 0;
+	virtual IWizardExporterPtr GetExporter() const = 0;
+	virtual IWizardImporterPtr GetImporter() const = 0;
 };

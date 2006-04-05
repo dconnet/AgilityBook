@@ -68,6 +68,51 @@ static char THIS_FILE[] = __FILE__;
 #define LAST_STYLE			_T("WizStyle")
 #define LAST_STYLEITEM		_T("WizSubStyle") // A number will be appended
 
+// Note: For this to work, the IDC_WIZARD_START_* radio buttons should be in
+// sequential order. If not, then the logic below must be fudged. The WIZARD_
+// codes are written to the registry, so we can't change them. But as items
+// are added/removed from the radio list, the radio button dlg data must be
+// adjusted. The structures below that control the wizard are setup in radio
+// button order (the value of m_Style). So these 2 functions translate windows
+// radio codes to registry codes and back.
+// (In the past, we kept the wizard codes the same as the radio buttons - that
+// was fine until the open office button was added right after the excel one)
+static int TransWizardToDlg(int wizCode)
+{
+	switch (wizCode)
+	{
+	default:
+		ASSERT(0);
+		// fall thru
+	case WIZARD_RADIO_EXCEL:
+		return IDC_WIZARD_START_EXCEL - IDC_WIZARD_START_EXCEL;
+	case WIZARD_RADIO_OPENOFFICE:
+		return IDC_WIZARD_START_OPENOFFICE - IDC_WIZARD_START_EXCEL;
+	case WIZARD_RADIO_SPREADSHEET:
+		return IDC_WIZARD_START_SPREADSHEET - IDC_WIZARD_START_EXCEL;
+	case WIZARD_RADIO_ARB:
+		return IDC_WIZARD_START_ARB - IDC_WIZARD_START_EXCEL;
+	}
+}
+
+static int TransDlgToWizard(int radioBtn)
+{
+	switch (radioBtn + IDC_WIZARD_START_EXCEL)
+	{
+	default:
+		ASSERT(0);
+		// fall thru
+	case IDC_WIZARD_START_EXCEL:
+		return WIZARD_RADIO_EXCEL;
+	case IDC_WIZARD_START_OPENOFFICE:
+		return WIZARD_RADIO_OPENOFFICE;
+	case IDC_WIZARD_START_SPREADSHEET:
+		return WIZARD_RADIO_SPREADSHEET;
+	case IDC_WIZARD_START_ARB:
+		return WIZARD_RADIO_ARB;
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
 
@@ -82,11 +127,14 @@ CWizardStart::CWizardStart(
 	, m_pDoc(pDoc)
 {
 	//{{AFX_DATA_INIT(CWizardStart)
-	m_Style = WIZARD_RADIO_EXCEL;
+	m_Style = TransWizardToDlg(WIZARD_RADIO_EXCEL);
 	//}}AFX_DATA_INIT
-	if (!m_pSheet->ExcelHelper().IsAvailable())
-		m_Style = WIZARD_RADIO_SPREADSHEET;
-	m_Style = AfxGetApp()->GetProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
+	int wiz = AfxGetApp()->GetProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
+	m_Style = TransWizardToDlg(wiz);
+	if (WIZARD_RADIO_EXCEL == wiz && !m_pSheet->ExcelHelper())
+		m_Style = TransWizardToDlg(WIZARD_RADIO_SPREADSHEET);
+	if (WIZARD_RADIO_OPENOFFICE == wiz && !m_pSheet->OpenOfficeHelper())
+		m_Style = TransWizardToDlg(WIZARD_RADIO_SPREADSHEET);
 }
 
 CWizardStart::~CWizardStart()
@@ -108,6 +156,7 @@ BEGIN_MESSAGE_MAP(CWizardStart, CDlgBasePropertyPage)
 	ON_LBN_SELCHANGE(IDC_WIZARD_START_LIST, OnSelchangeExportList)
 	ON_LBN_DBLCLK(IDC_WIZARD_START_LIST, OnDblclkExportList)
 	ON_BN_CLICKED(IDC_WIZARD_START_EXCEL, OnWizardStyle)
+	ON_BN_CLICKED(IDC_WIZARD_START_OPENOFFICE, OnWizardStyle)
 	ON_BN_CLICKED(IDC_WIZARD_START_SPREADSHEET, OnWizardStyle)
 	ON_BN_CLICKED(IDC_WIZARD_START_ARB, OnWizardStyle)
 	//}}AFX_MSG_MAP
@@ -133,14 +182,18 @@ static struct
 		TCHAR const* item;
 		// Description shown when listing is selected.
 		TCHAR const* desc;
-	} data[3]; // Data must agree with WIZARD_RADIO_* defines.
+	} data[4]; // Data must agree with radio buttons.
 } const sc_Items[] =
 {
 	{WIZ_IMPORT_RUNS,
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			_T("Import Trials and Runs"),
-			_T("Import trial and run information from Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
+			_T("Import trial and run information from Microsoft Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			_T("Import Trials and Runs"),
+			_T("Import trial and run information from OpenOffice Calc.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			_T("Import Trials and Runs"),
@@ -155,7 +208,11 @@ static struct
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Runs"),
-			_T("Export trial and run information to Excel.")
+			_T("Export trial and run information to Microsoft Excel.")
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			_T("Export Runs"),
+			_T("Export trial and run information to OpenOffice Calc.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Runs"),
@@ -167,7 +224,11 @@ static struct
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			_T("Import Calendar"),
-			_T("Import a calendar listing from Excel.")
+			_T("Import a calendar listing from Microsoft Excel.")
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			_T("Import Calendar"),
+			_T("Import a calendar listing from OpenOffice Calc.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			_T("Import Calendar"),
@@ -182,7 +243,11 @@ static struct
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Calendar"),
-			_T("Export your calendar listing to Excel.")
+			_T("Export your calendar listing to Microsoft Excel.")
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			_T("Export Calendar"),
+			_T("Export your calendar listing to OpenOffice Calc.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Calendar"),
@@ -196,6 +261,7 @@ static struct
 	{WIZ_EXPORT_CALENDAR_VCAL,
 	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			_T("Export Calendar (vCalendar)"),
 			_T("Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs.")
@@ -204,6 +270,7 @@ static struct
 	} },
 	{WIZ_EXPORT_CALENDAR_ICAL,
 	{
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			_T("Export Calendar (iCalendar)"),
@@ -217,6 +284,7 @@ static struct
 			_T("Export Calendar (MS Outlook Appointment)"),
 			_T("Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments.")
 		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Calendar (MS Outlook Appointment)"),
 			_T("Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments.")
@@ -229,6 +297,7 @@ static struct
 			_T("Export Calendar (MS Outlook Task)"),
 			_T("Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported.")
 		},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Calendar (MS Outlook Task)"),
 			_T("Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported.")
@@ -239,7 +308,11 @@ static struct
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			_T("Import Training Log"),
-			_T("Import a Training Log from Excel.")
+			_T("Import a Training Log from Microsoft Excel.")
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
+			_T("Import Training Log"),
+			_T("Import a Training Log from OpenOffice Calc.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
 			_T("Import Training Log"),
@@ -254,7 +327,11 @@ static struct
 	{
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Training Log"),
-			_T("Export your Training Log to Excel.")
+			_T("Export your Training Log to Microsoft Excel.")
+		},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
+			_T("Export Training Log"),
+			_T("Export your Training Log to OpenOffice Calc.")
 		},
 		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
 			_T("Export Training Log"),
@@ -269,6 +346,7 @@ static struct
 	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			_T("Import Configuration"),
 			_T("Update your configuration to support new and/or updated venues.")
@@ -276,6 +354,7 @@ static struct
 	} },
 	{WIZ_EXPORT_CONFIGURATION,
 	{
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
@@ -287,6 +366,7 @@ static struct
 	{
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
 			_T("Export DTD"),
 			_T("Export the Document Type Definition. This data describes the XML format of the data file.")
@@ -294,6 +374,7 @@ static struct
 	} },
 	{WIZ_EXPORT_XML,
 	{
+		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
 		{PSWIZB_FINISH, -1,
@@ -352,8 +433,12 @@ void CWizardStart::UpdateButtons()
 BOOL CWizardStart::OnInitDialog() 
 {
 	CDlgBasePropertyPage::OnInitDialog();
-	if (!m_pSheet->ExcelHelper().IsAvailable())
+	if (!m_pSheet->ExcelHelper())
 		GetDlgItem(IDC_WIZARD_START_EXCEL)->EnableWindow(FALSE);
+#if 0
+	if (!m_pSheet->OpenOfficeHelper())
+		GetDlgItem(IDC_WIZARD_START_OPENOFFICE)->EnableWindow(FALSE);
+#endif
 	UpdateList();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -373,7 +458,7 @@ LRESULT CWizardStart::OnWizardNext()
 	{
 		int data = static_cast<int>(m_ctrlList.GetItemData(index));
 		nextPage = sc_Items[data].data[m_Style].nextPage;
-		m_pSheet->SetImportExportItem(data, m_Style);
+		m_pSheet->SetImportExportItem(data, TransDlgToWizard(m_Style));
 	}
 	return nextPage;
 }
@@ -1058,7 +1143,7 @@ BOOL CWizardStart::OnWizardFinish()
 void CWizardStart::OnWizardStyle() 
 {
 	UpdateData(TRUE);
-	AfxGetApp()->WriteProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
+	AfxGetApp()->WriteProfileInt(LAST_SECTION, LAST_STYLE, TransDlgToWizard(m_Style));
 	m_pSheet->ResetData();
 	UpdateList();
 }

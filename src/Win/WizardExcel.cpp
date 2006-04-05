@@ -41,7 +41,6 @@
 #include "DlgProgress.h"
 
 #include "excel8.h"
-using namespace Excel8;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -51,31 +50,45 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardExcelExport::CWizardExcelExport()
-{
-}
-CWizardExcelExport::~CWizardExcelExport()
+IWizardExporter::~IWizardExporter()
 {
 }
 
-CWizardExcelImport::CWizardExcelImport()
+IWizardImporter::~IWizardImporter()
 {
 }
-CWizardExcelImport::~CWizardExcelImport()
+
+IWizardSpreadSheet::~IWizardSpreadSheet()
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CWizardExcelExportImpl : public CWizardExcelExport
+class CWizardExcel : public IWizardSpreadSheet
 {
+protected:
+	CWizardExcel();
 public:
-	CWizardExcelExportImpl(_Application& ioApp);
-	virtual ~CWizardExcelExportImpl();
-	bool IsOkay() const		{return NULL != m_Worksheet.m_lpDispatch;}
+	static CWizardExcel* Create();
+	virtual ~CWizardExcel();
+
+	virtual IWizardExporterPtr GetExporter() const;
+	virtual IWizardImporterPtr GetImporter() const;
+
+private:
+	mutable Excel8::_Application m_App;
+};
+
+class CWizardExcelExport : public IWizardExporter
+{
+protected:
+	CWizardExcelExport(Excel8::_Application& ioApp);
+public:
+	static CWizardExcelExport* Create(Excel8::_Application& ioApp);
+	virtual ~CWizardExcelExport();
 
 	// Safe array is ready for use
-	virtual bool ArrayOkay() const	{return 0 < m_Rows && 0 < m_Cols;}
+	virtual bool ArrayOkay() const;
 	// Create the safe array.
 	virtual bool CreateArray(
 			long inRows,
@@ -102,8 +115,8 @@ public:
 			CString const& inFormula);
 
 private:
-	_Application& m_App;
-	_Worksheet m_Worksheet;
+	Excel8::_Application& m_App;
+	Excel8::_Worksheet m_Worksheet;
 	long m_Rows;
 	long m_Cols;
 	COleSafeArray m_Array;
@@ -113,7 +126,169 @@ private:
 	COleVariant covOptional;
 };
 
-CWizardExcelExportImpl::CWizardExcelExportImpl(_Application& ioApp)
+class CWizardExcelImport : public IWizardImporter
+{
+protected:
+	CWizardExcelImport(Excel8::_Application& ioApp);
+public:
+	static CWizardExcelImport* Create(Excel8::_Application& ioApp);
+	virtual ~CWizardExcelImport();
+
+	virtual bool OpenFile(CString const& inFilename);
+	virtual bool GetData(
+			std::vector< std::vector<CString> >& outData,
+			IDlgProgress* ioProgress);
+
+private:
+	Excel8::_Application& m_App;
+	Excel8::_Worksheet m_Worksheet;
+	CString m_FileName;
+	// Commonly used OLE variants.
+	COleVariant covTrue;
+	COleVariant covFalse;
+	COleVariant covOptional;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CWizardOpenOffice : public IWizardSpreadSheet
+{
+protected:
+	CWizardOpenOffice();
+public:
+	static CWizardOpenOffice* Create();
+	virtual ~CWizardOpenOffice();
+
+	virtual IWizardExporterPtr GetExporter() const;
+	virtual IWizardImporterPtr GetImporter() const;
+
+private:
+};
+
+class CWizardOpenOfficeExport : public IWizardExporter
+{
+protected:
+	CWizardOpenOfficeExport();
+public:
+	static CWizardOpenOfficeExport* Create();
+	virtual ~CWizardOpenOfficeExport();
+
+	// Safe array is ready for use
+	virtual bool ArrayOkay() const;
+	// Create the safe array.
+	virtual bool CreateArray(
+			long inRows,
+			long inCols);
+	// Insert data into the safe array.
+	virtual bool InsertArrayData(
+			long inRow,
+			long inCol,
+			CString const& inData);
+	// Copy the safe array to excel (safe array is reset)
+	virtual bool ExportDataArray(
+			long inRowTop = 0,
+			long inColLeft = 0);
+	virtual bool AllowAccess(bool bAllow);
+	virtual bool InsertData(
+			long nRow,
+			long nCol,
+			COleVariant const& inData);
+	virtual bool InsertFormula(
+			long inRowFrom,
+			long inColFrom,
+			long inRowTo,
+			long inColTo,
+			CString const& inFormula);
+};
+
+class CWizardOpenOfficeImport : public IWizardImporter
+{
+protected:
+	CWizardOpenOfficeImport();
+public:
+	static CWizardOpenOfficeImport* Create();
+	virtual ~CWizardOpenOfficeImport();
+
+	virtual bool OpenFile(CString const& inFilename);
+	virtual bool GetData(
+			std::vector< std::vector<CString> >& outData,
+			IDlgProgress* ioProgress);
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+CWizardExcel* CWizardExcel::Create()
+{
+	CWizardExcel* pExcel = new CWizardExcel();
+	if (pExcel)
+	{
+		bool bKill = false;
+		if (NULL == pExcel->m_App.m_lpDispatch)
+			bKill = true;
+		else
+		{
+			if (!pExcel->GetExporter() || !pExcel->GetImporter())
+				bKill = true;
+		}
+		if (bKill)
+		{
+			delete pExcel;
+			pExcel = NULL;
+		}
+	}
+	return pExcel;
+}
+
+CWizardExcel::CWizardExcel()
+{
+	// Get the ClassID from the ProgID.
+	CLSID clsid;
+	if (NOERROR != CLSIDFromProgID(L"Excel.Application", &clsid))
+	{
+		return;
+	}
+
+	// Get an interface to the running instance.
+	//LPUNKNOWN lpUnk;
+	//LPDISPATCH lpDispatch;
+	//if (NOERROR == GetActiveObject(clsid, NULL, &lpUnk))
+	//{
+	//	HRESULT hr = lpUnk->QueryInterface(IID_IDispatch, (LPVOID*)&lpDispatch);
+	//	lpUnk->Release();
+	//	if (hr == NOERROR)
+	//		m_App.AttachDispatch(lpDispatch, TRUE);
+	//}
+
+	// If dispatch ptr not attached yet, need to create one
+	COleException e;
+	if (m_App.m_lpDispatch == NULL && !m_App.CreateDispatch(clsid, &e))
+	{
+		return;
+	}
+}
+
+CWizardExcel::~CWizardExcel()
+{
+}
+
+IWizardExporterPtr CWizardExcel::GetExporter() const
+{
+	return IWizardExporterPtr(CWizardExcelExport::Create(m_App));
+}
+
+IWizardImporterPtr CWizardExcel::GetImporter() const
+{
+	return IWizardImporterPtr(CWizardExcelImport::Create(m_App));
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CWizardExcelExport* CWizardExcelExport::Create(Excel8::_Application& ioApp)
+{
+	return new CWizardExcelExport(ioApp);
+}
+
+CWizardExcelExport::CWizardExcelExport(Excel8::_Application& ioApp)
 	: m_App(ioApp)
 	, m_Rows(0)
 	, m_Cols(0)
@@ -122,20 +297,25 @@ CWizardExcelExportImpl::CWizardExcelExportImpl(_Application& ioApp)
 	, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
 {
 	// Create a new workbook.
-	Workbooks books = m_App.get_Workbooks();
-	_Workbook book = books.Add(covOptional);
+	Excel8::Workbooks books = m_App.get_Workbooks();
+	Excel8::_Workbook book = books.Add(covOptional);
 	// Get the first sheet.
-	Worksheets sheets = book.get_Sheets();
+	Excel8::Worksheets sheets = book.get_Sheets();
 	m_Worksheet = sheets.get_Item(COleVariant((short)1));
 }
 
-CWizardExcelExportImpl::~CWizardExcelExportImpl()
+CWizardExcelExport::~CWizardExcelExport()
 {
-	if (IsOkay() && !m_App.get_Visible())
+	if (NULL != m_Worksheet.m_lpDispatch && !m_App.get_Visible())
 		m_App.Quit();
 }
 
-bool CWizardExcelExportImpl::CreateArray(
+bool CWizardExcelExport::ArrayOkay() const
+{
+	return 0 < m_Rows && 0 < m_Cols;
+}
+
+bool CWizardExcelExport::CreateArray(
 		long inRows,
 		long inCols)
 {
@@ -143,10 +323,10 @@ bool CWizardExcelExportImpl::CreateArray(
 		return false;
 	if (0 >= inRows || 0 >= inCols)
 		return false;
-	if (inRows >= CWizardExcel::GetMaxRows())
-		inRows = CWizardExcel::GetMaxRows() - 1;
-	if (inCols >= CWizardExcel::GetMaxCols())
-		inCols = CWizardExcel::GetMaxCols() - 1;
+	if (inRows >= IWizardSpreadSheet::GetMaxRows())
+		inRows = IWizardSpreadSheet::GetMaxRows() - 1;
+	if (inCols >= IWizardSpreadSheet::GetMaxCols())
+		inCols = IWizardSpreadSheet::GetMaxCols() - 1;
 	DWORD numElements[2];
 	numElements[0] = m_Rows = inRows;
 	numElements[1] = m_Cols = inCols;
@@ -154,7 +334,7 @@ bool CWizardExcelExportImpl::CreateArray(
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertArrayData(
+bool CWizardExcelExport::InsertArrayData(
 		long inRow,
 		long inCol,
 		CString const& inData)
@@ -177,7 +357,7 @@ bool CWizardExcelExportImpl::InsertArrayData(
 	return true;
 }
 
-bool CWizardExcelExportImpl::ExportDataArray(
+bool CWizardExcelExport::ExportDataArray(
 		long inRowTop,
 		long inColLeft)
 {
@@ -185,20 +365,20 @@ bool CWizardExcelExportImpl::ExportDataArray(
 		return false;
 
 	CString cell1, cell2;
-	if (!CWizardExcel::GetRowCol(inRowTop, inColLeft, cell1))
+	if (!IWizardSpreadSheet::GetRowCol(inRowTop, inColLeft, cell1))
 		return false;
-	if (!CWizardExcel::GetRowCol(inRowTop + m_Rows - 1, inColLeft + m_Cols - 1, cell2))
+	if (!IWizardSpreadSheet::GetRowCol(inRowTop + m_Rows - 1, inColLeft + m_Cols - 1, cell2))
 		return false;
 
 	m_App.put_UserControl(FALSE);
 
-	Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
+	Excel8::Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
 	range.put_Value2(COleVariant(m_Array));
 	m_Array.Detach();
 
-	CWizardExcel::GetRowCol(inRowTop, inColLeft + m_Cols - 1, cell2);
+	IWizardSpreadSheet::GetRowCol(inRowTop, inColLeft + m_Cols - 1, cell2);
 	range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
-	Range cols = range.get_EntireColumn();
+	Excel8::Range cols = range.get_EntireColumn();
 	cols.AutoFit();
 
 	m_Rows = m_Cols = 0;
@@ -208,7 +388,7 @@ bool CWizardExcelExportImpl::ExportDataArray(
 	return true;
 }
 
-bool CWizardExcelExportImpl::AllowAccess(bool bAllow)
+bool CWizardExcelExport::AllowAccess(bool bAllow)
 {
 	if (bAllow)
 	{
@@ -222,20 +402,20 @@ bool CWizardExcelExportImpl::AllowAccess(bool bAllow)
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertData(
+bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
 		COleVariant const& inData)
 {
 	CString cell1;
-	if (!CWizardExcel::GetRowCol(inRow, inCol, cell1))
+	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell1));
+	Excel8::Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell1));
 	range.put_Value2(inData);
 	return true;
 }
 
-bool CWizardExcelExportImpl::InsertFormula(
+bool CWizardExcelExport::InsertFormula(
 		long inRowFrom,
 		long inColFrom,
 		long inRowTo,
@@ -243,40 +423,23 @@ bool CWizardExcelExportImpl::InsertFormula(
 		CString const& inFormula)
 {
 	CString cell1, cell2;
-	if (!CWizardExcel::GetRowCol(inRowFrom, inColFrom, cell1))
+	if (!IWizardSpreadSheet::GetRowCol(inRowFrom, inColFrom, cell1))
 		return false;
-	if (!CWizardExcel::GetRowCol(inRowTo, inColTo, cell2))
+	if (!IWizardSpreadSheet::GetRowCol(inRowTo, inColTo, cell2))
 		return false;
-	Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
+	Excel8::Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
 	range.put_Formula(COleVariant(inFormula));
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CWizardExcelImportImpl : public CWizardExcelImport
+CWizardExcelImport* CWizardExcelImport::Create(Excel8::_Application& ioApp)
 {
-public:
-	CWizardExcelImportImpl(_Application& ioApp);
-	virtual ~CWizardExcelImportImpl();
-	bool IsOkay() const		{return NULL != m_Worksheet.m_lpDispatch;}
+	return new CWizardExcelImport(ioApp);
+}
 
-	virtual bool OpenFile(CString const& inFilename);
-	virtual bool GetData(
-			std::vector< std::vector<CString> >& outData,
-			IDlgProgress* ioProgress);
-
-private:
-	_Application& m_App;
-	_Worksheet m_Worksheet;
-	CString m_FileName;
-	// Commonly used OLE variants.
-	COleVariant covTrue;
-	COleVariant covFalse;
-	COleVariant covOptional;
-};
-
-CWizardExcelImportImpl::CWizardExcelImportImpl(_Application& ioApp)
+CWizardExcelImport::CWizardExcelImport(Excel8::_Application& ioApp)
 	: m_App(ioApp)
 	, covTrue(static_cast<short>(TRUE))
 	, covFalse(static_cast<short>(FALSE))
@@ -284,17 +447,17 @@ CWizardExcelImportImpl::CWizardExcelImportImpl(_Application& ioApp)
 {
 }
 
-CWizardExcelImportImpl::~CWizardExcelImportImpl()
+CWizardExcelImport::~CWizardExcelImport()
 {
-	if (IsOkay())
+	if (NULL != m_Worksheet.m_lpDispatch)
 		m_App.Quit();
 }
 
-bool CWizardExcelImportImpl::OpenFile(CString const& inFilename)
+bool CWizardExcelImport::OpenFile(CString const& inFilename)
 {
 	// Create a new workbook.
-	Workbooks books = m_App.get_Workbooks();
-	_Workbook book = books.Open(inFilename, covOptional, covTrue, covOptional,
+	Excel8::Workbooks books = m_App.get_Workbooks();
+	Excel8::_Workbook book = books.Open(inFilename, covOptional, covTrue, covOptional,
 		covOptional, covOptional, covOptional, covOptional,
 		covOptional, covOptional, covOptional, covOptional,
 		covOptional);
@@ -302,23 +465,23 @@ bool CWizardExcelImportImpl::OpenFile(CString const& inFilename)
 		return false;
 	m_FileName = inFilename;
 	// Get the first sheet.
-	Worksheets sheets = book.get_Sheets();
+	Excel8::Worksheets sheets = book.get_Sheets();
 	m_Worksheet = sheets.get_Item(COleVariant((short)1));
-	return IsOkay();
+	return NULL != m_Worksheet.m_lpDispatch;
 }
 
-bool CWizardExcelImportImpl::GetData(
+bool CWizardExcelImport::GetData(
 		std::vector< std::vector<CString> >& outData,
 		IDlgProgress* ioProgress)
 {
 	outData.clear();
-	if (!IsOkay())
+	if (NULL != m_Worksheet.m_lpDispatch)
 		return false;
-	Range range = m_Worksheet.get_UsedRange();
+	Excel8::Range range = m_Worksheet.get_UsedRange();
 	long iRow = range.get_Row();
 	long iCol = range.get_Column();
-	long nRows = Range(range.get_Rows()).get_Count();
-	long nCols = Range(range.get_Columns()).get_Count();
+	long nRows = Excel8::Range(range.get_Rows()).get_Count();
+	long nCols = Excel8::Range(range.get_Columns()).get_Count();
 	if (0 < nRows && 0 < nCols)
 	{
 		if (ioProgress)
@@ -348,7 +511,7 @@ bool CWizardExcelImportImpl::GetData(
 			for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
 			{
 				CString cell1;
-				if (!CWizardExcel::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
+				if (!IWizardSpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
 				{
 					bAbort = true;
 					break;
@@ -356,11 +519,11 @@ bool CWizardExcelImportImpl::GetData(
 				CString str;
 #if _MSC_VER < 1300
 				// VC6 can't translate a variant to cstring directly. sigh.
-				COleVariant var = Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+				COleVariant var = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
 				if (var.vt == VT_BSTR)
 					str = var.bstrVal;
 #else
-				str = Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+				str = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
 #endif
 				row.push_back(str);
 			}
@@ -371,73 +534,153 @@ bool CWizardExcelImportImpl::GetData(
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CWizardExcelImpl
 
-/**
- * Hide all OLE implmentation details.
- */
-class CWizardExcelImpl
+CWizardOpenOffice* CWizardOpenOffice::Create()
 {
-public:
-	CWizardExcelImpl();
-	bool IsOkay() const		{return NULL != m_App.m_lpDispatch;}
-	CWizardExcelExport* GetExporter();
-	CWizardExcelImport* GetImporter();
-
-	_Application m_App;
-};
-
-CWizardExcelImpl::CWizardExcelImpl()
-{
-	// Get the ClassID from the ProgID.
-	CLSID clsid;
-	if (NOERROR != CLSIDFromProgID(L"Excel.Application", &clsid))
-	{
-		return;
-	}
-
-	// Get an interface to the running instance.
-	//LPUNKNOWN lpUnk;
-	//LPDISPATCH lpDispatch;
-	//if (NOERROR == GetActiveObject(clsid, NULL, &lpUnk))
-	//{
-	//	HRESULT hr = lpUnk->QueryInterface(IID_IDispatch, (LPVOID*)&lpDispatch);
-	//	lpUnk->Release();
-	//	if (hr == NOERROR)
-	//		m_App.AttachDispatch(lpDispatch, TRUE);
-	//}
-
-	// If dispatch ptr not attached yet, need to create one
-	COleException e;
-	if (m_App.m_lpDispatch == NULL && !m_App.CreateDispatch(clsid, &e))
-	{
-		return;
-	}
+	return NULL;
 }
 
-CWizardExcelExport* CWizardExcelImpl::GetExporter()
+CWizardOpenOffice::CWizardOpenOffice()
 {
-	return new CWizardExcelExportImpl(m_App);
 }
 
-CWizardExcelImport* CWizardExcelImpl::GetImporter()
+CWizardOpenOffice::~CWizardOpenOffice()
 {
-	return new CWizardExcelImportImpl(m_App);
+}
+
+IWizardExporterPtr CWizardOpenOffice::GetExporter() const
+{
+	return IWizardExporterPtr();
+}
+
+IWizardImporterPtr CWizardOpenOffice::GetImporter() const
+{
+	return IWizardImporterPtr();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CWizardExcel
+
+CWizardOpenOfficeExport* CWizardOpenOfficeExport::Create()
+{
+	//return new CWizardOpenOfficeExport();
+	return NULL;
+}
+
+CWizardOpenOfficeExport::CWizardOpenOfficeExport()
+{
+}
+
+CWizardOpenOfficeExport::~CWizardOpenOfficeExport()
+{
+}
+
+bool CWizardOpenOfficeExport::ArrayOkay() const
+{
+	return false;
+}
+
+bool CWizardOpenOfficeExport::CreateArray(
+		long inRows,
+		long inCols)
+{
+	return false;
+}
+
+bool CWizardOpenOfficeExport::InsertArrayData(
+		long inRow,
+		long inCol,
+		CString const& inData)
+{
+	return false;
+}
+
+bool CWizardOpenOfficeExport::ExportDataArray(
+		long inRowTop,
+		long inColLeft)
+{
+	return false;
+}
+
+bool CWizardOpenOfficeExport::AllowAccess(bool bAllow)
+{
+	return false;
+}
+
+bool CWizardOpenOfficeExport::InsertData(
+		long nRow,
+		long nCol,
+		COleVariant const& inData)
+{
+	return false;
+}
+
+bool CWizardOpenOfficeExport::InsertFormula(
+		long inRowFrom,
+		long inColFrom,
+		long inRowTo,
+		long inColTo,
+		CString const& inFormula)
+{
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CWizardOpenOfficeImport* CWizardOpenOfficeImport::Create()
+{
+	//return new CWizardOpenOfficeImport();
+	return NULL;
+}
+
+CWizardOpenOfficeImport::CWizardOpenOfficeImport()
+{
+}
+
+CWizardOpenOfficeImport::~CWizardOpenOfficeImport()
+{
+}
+
+bool CWizardOpenOfficeImport::OpenFile(CString const& inFilename)
+{
+	return false;
+}
+
+bool CWizardOpenOfficeImport::GetData(
+		std::vector< std::vector<CString> >& outData,
+		IDlgProgress* ioProgress)
+{
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
+{
+	IWizardSpreadSheetPtr pInterface;
+	switch (inType)
+	{
+	default:
+		break;
+	case eMicrosoftExcel:
+		pInterface = IWizardSpreadSheetPtr(CWizardExcel::Create());
+		break;
+	case eOpenOffice:
+		pInterface = IWizardSpreadSheetPtr(CWizardOpenOffice::Create());
+		break;
+	}
+	return pInterface;
+}
 
 // static helper functions
-long CWizardExcel::GetMaxRows()
+long IWizardSpreadSheet::GetMaxRows()
 {
 	return 65536;
 }
-long CWizardExcel::GetMaxCols()
+long IWizardSpreadSheet::GetMaxCols()
 {
 	return 256;
 }
-bool CWizardExcel::GetRowCol(
+bool IWizardSpreadSheet::GetRowCol(
 		long inRow,
 		long inCol,
 		CString& outCell)
@@ -490,39 +733,4 @@ bool CWizardExcel::GetRowCol(
 		outCell.Empty();
 		return false;
 	}
-}
-
-CWizardExcel::CWizardExcel()
-	: m_Excel(NULL)
-{
-	m_Excel = new CWizardExcelImpl();
-	if (m_Excel && !m_Excel->IsOkay())
-	{
-		delete m_Excel;
-		m_Excel = NULL;
-	}
-}
-
-CWizardExcel::~CWizardExcel()
-{
-	delete m_Excel;
-}
-
-bool CWizardExcel::IsAvailable() const
-{
-	return (m_Excel && m_Excel->IsOkay());
-}
-
-CWizardExcelExport* CWizardExcel::GetExporter()
-{
-	if (m_Excel)
-		return m_Excel->GetExporter();
-	return NULL;
-}
-
-CWizardExcelImport* CWizardExcel::GetImporter()
-{
-	if (m_Excel)
-		return m_Excel->GetImporter();
-	return NULL;
 }
