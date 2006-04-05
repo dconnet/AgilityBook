@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-04-04 DRC Added GetMinYPS.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -96,6 +97,16 @@ public:
 	 * @post The ARBDogRunScoring element will be created in ioTree.
 	 */
 	bool Save(Element& ioTree) const;
+
+	/**
+	 * Get the minimum YPS for the run (yards/sct).
+	 * @param inTableInYPS Include table in YPS computation.
+	 * @param outYPS YPS for the run.
+	 * @return Indicates whether outYPS is valid, not all runs have YPS.
+	 */
+	bool GetMinYPS(
+			bool inTableInYPS,
+			double& outYPS) const;
 
 	/**
 	 * Get the YPS for the run.

@@ -1,7 +1,8 @@
 4/4/2006: v1.7.3.12 <in development>
 - New features / Enhancements:
-  - Add internal support for OpenOffice Calc during import/export (however,
+  - Added internal support for OpenOffice Calc during import/export (however,
     I haven't actually figured out how to talk to Calc yet).
+  - Added MinYPS (Yards/SCT) to Runs dialog and available in Runs View.
 - Bug fixes
   - After upgrading the configuration, double Qs disappeared temporarily.
   - Created a separate Win98 install to deal with WinInstaller issues.

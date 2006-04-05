@@ -294,6 +294,23 @@ bool ARBDogRunScoring::Save(Element& ioTree) const
 	return false;
 }
 
+bool ARBDogRunScoring::GetMinYPS(
+		bool inTableInYPS,
+		double& outYPS) const
+{
+	bool bOk = false;
+	if (eTypeByTime == GetType()
+	&& 0 < GetYards() && 0.0 < GetSCT())
+	{
+		bOk = true;
+		double t = GetSCT();
+		if (HasTable() && 5.0 < t && !inTableInYPS)
+			t -= 5;
+		outYPS = GetYards() / t;
+	}
+	return bOk;
+}
+
 bool ARBDogRunScoring::GetYPS(
 		bool inTableInYPS,
 		double& outYPS) const

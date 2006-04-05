@@ -215,6 +215,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_OPEN_PTS_TEXT, m_ctrlOpenText);
 	DDX_Control(pDX, IDC_RUNSCORE_OPEN_PTS, m_ctrlOpen);
 	DDX_Text(pDX, IDC_RUNSCORE_OPEN_PTS, m_Open);
+	DDX_Control(pDX, IDC_RUNSCORE_MIN_YPS_TEXT, m_ctrlMinYPSText);
+	DDX_Control(pDX, IDC_RUNSCORE_MIN_YPS, m_ctrlMinYPS);
 	DDX_Control(pDX, IDC_RUNSCORE_YPS_TEXT, m_ctrlYPSText);
 	DDX_Control(pDX, IDC_RUNSCORE_YPS, m_ctrlYPS);
 	DDX_Control(pDX, IDC_RUNSCORE_FAULTS_TEXT, m_ctrlFaultsText);
@@ -690,6 +692,17 @@ void CDlgRunScore::SetPartnerText()
 	m_ctrlPartner.SetWindowText(partners);
 }
 
+void CDlgRunScore::SetMinYPS()
+{
+	CString str;
+	double yps;
+	if (m_Run->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+	{
+		str = ARBDouble::str(yps, 3).c_str();
+	}
+	m_ctrlMinYPS.SetWindowText(str);
+}
+
 void CDlgRunScore::SetYPS()
 {
 	CString str;
@@ -811,6 +824,8 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	m_ctrlTime.ShowWindow(SW_HIDE);
 	m_ctrlOpenText.ShowWindow(SW_HIDE);
 	m_ctrlOpen.ShowWindow(SW_HIDE);
+	m_ctrlMinYPSText.ShowWindow(SW_HIDE);
+	m_ctrlMinYPS.ShowWindow(SW_HIDE);
 	m_ctrlYPSText.ShowWindow(SW_HIDE);
 	m_ctrlYPS.ShowWindow(SW_HIDE);
 	m_ctrlFaultsText.ShowWindow(SW_HIDE);
@@ -901,6 +916,8 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlYards.ShowWindow(SW_SHOW);
 		m_ctrlTimeText.ShowWindow(SW_SHOW);
 		m_ctrlTime.ShowWindow(SW_SHOW);
+		m_ctrlMinYPSText.ShowWindow(SW_SHOW);
+		m_ctrlMinYPS.ShowWindow(SW_SHOW);
 		m_ctrlYPSText.ShowWindow(SW_SHOW);
 		m_ctrlYPS.ShowWindow(SW_SHOW);
 		m_ctrlFaultsText.ShowWindow(SW_SHOW);
@@ -1073,6 +1090,7 @@ BOOL CDlgRunScore::OnInitDialog()
 		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
 		m_Yards = m_Run->GetScoring().GetYards();
 		m_SCT = m_Run->GetScoring().GetSCT();
+		SetMinYPS();
 		SetYPS();
 		SetTotalFaults();
 		break;
@@ -1192,6 +1210,7 @@ void CDlgRunScore::OnKillfocusYards()
 {
 	GetText(&m_ctrlYards, m_Yards);
 	m_Run->GetScoring().SetYards(m_Yards);
+	SetMinYPS();
 	SetYPS();
 	SetTotalFaults();
 }
@@ -1200,6 +1219,7 @@ void CDlgRunScore::OnKillfocusSct()
 {
 	GetText(&m_ctrlSCT, m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
+	SetMinYPS();
 	SetTotalFaults();
 	SetTitlePoints();
 }
@@ -1255,6 +1275,7 @@ void CDlgRunScore::OnKillfocusBonus()
 void CDlgRunScore::OnBnClickedTableYps()
 {
 	m_Run->GetScoring().SetHasTable(m_ctrlTable.GetCheck() ? true : false);
+	SetMinYPS();
 	SetYPS();
 }
 
