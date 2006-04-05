@@ -281,6 +281,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
+				m_pView->GetListCtrl().EnsureVisible(index, FALSE);
 				bFound = true;
 			}
 		}
@@ -443,6 +444,7 @@ void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 		}
 	}
 	SetSelection(index, true);
+	GetListCtrl().EnsureVisible(index, FALSE);
 }
 
 bool CAgilityBookViewTraining::IsFiltered() const
