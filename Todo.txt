@@ -1,6 +1,6 @@
 Last Updated: 4/4/2006
 
-- Add MaxYPS to runs (Yards/SCT). Make available in runs list.
+- Add MinYPS (Yards/SCT) to Runs dialog. Make available in Runs View.
 
 - Remember printer page orientation. (See KB166130: "How To Overriding
   Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
