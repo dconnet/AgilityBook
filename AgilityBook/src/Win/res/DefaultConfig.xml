@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
 2006-03-24 DRC Configuration version 13. Restricted NADAC Chances divisions.
+               Corrected USDAA RM to have 5 partners.
 2006-02-08 DRC Configuration version 12. NADAC Wildcard is now Chances.
                Extended Gamblers to 1/1 (long weekend).
 2006-01-04 DRC Configuration version 11. Updated CKC.
@@ -2160,7 +2161,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			<Titles LongName="Jumpers Master" Name="JM">5 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Gamblers Master" Name="GM">5 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Snooker Master" Name="SM">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
-			<Titles LongName="Relay Master" Name="RM">5 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
+			<Titles LongName="Relay Master" Name="RM">5 qualifying scores with 5 different partners under at least 2 different judges.</Titles>
 			<Titles LongName="Agility Dog Champion®" Name="ADCH" Prefix="y">SAM, JM, GM, SM, RM, plus 5 qualifying scores in tournament competition with at least 1 qualifying score in each tournament
 [Earned MAD before 1/1/2005] MAD, JM, GM, SM, RM, plus 4 Standard Qs
 [Earned MAD before 1/1/2000] MAD, JM, GM, SM, RM</Titles>
