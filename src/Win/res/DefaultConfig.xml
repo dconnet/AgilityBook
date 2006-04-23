@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
 2006-03-24 DRC Configuration version 13. Restricted NADAC Chances divisions.
+               Cleaned up NADAC titles.
                Corrected USDAA RM to have 5 partners.
 2006-02-08 DRC Configuration version 12. NADAC Wildcard is now Chances.
                Extended Gamblers to 1/1 (long weekend).
@@ -76,6 +77,45 @@ Revision History:
 		<Action NewName="O-Vers-NATCH" OldName="Outstanding Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="S-Vers-NATCH" OldName="Superior Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
+		<Action OldName="NAS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="NJS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="NGS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-NAS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-NJS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-NGS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-NAS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-NJS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-NGS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="OAS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="OJS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="OGS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-OAS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-OJS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-OGS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="O-WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-OAS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-OJS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-OGS" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="S-WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="Outstanding Novice Versatility" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="Outstanding Open Versatility" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action OldName="Outstanding Elite Versatility" Venue="NADAC" Verb="DeleteTitle"/>
 		<Venue LongName="Agility Association of Canada" Name="AAC">
 			<Desc>http://www.aac.ca/
 
@@ -1659,67 +1699,8 @@ Note: As of 12/13/2005, NADAC no longer tracks points in different divisions. Al
 			<Titles LongName="Elite Tunnelers Certificate Superior Performance" Name="S-TN-E">200 points</Titles>
 			<Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
-			<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts.</Titles>
-			<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH" Prefix="y" ValidTo="2005-12-31">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts.</Titles>
-			<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH" Prefix="y" ValidTo="2005-12-31">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts.</Titles>
-			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">EAC plus 200 pts, EGC plus 100 pts, EJC plus 100 pts, TG-E plus 100 pts, TN-E plus 100 pts, WV-E plus 100 pts.</Titles>
-			<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="O-Vers-NATCH" ValidTo="2005-12-31">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts, TG-E plus 200 pts, TN-E plus 200 pts, WV-E plus 200 pts.</Titles>
-			<Titles LongName="NADAC Versatility Champion Superior Performance" Name="S-Vers-NATCH" ValidTo="2005-12-31">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts, TG-E plus 300 pts, TN-E plus 300 pts, WV-E plus 300 pts.</Titles>
-			<Titles LongName="Novice Triple Superior Performance Dog" Name="Triple Superior-Novice">Superior Performance in Regular, Jumpers and Gamblers.</Titles>
-			<Titles LongName="Open Triple Superior Performance Dog" Name="Triple Superior-Open">Superior Performance in Regular, Jumpers and Gamblers.</Titles>
-			<Titles LongName="Elite Triple Superior Performance Dog" Name="Triple Superior-Elite">Superior Performance in Regular, Jumpers and Gamblers.</Titles>
-			<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple">Triple Superior Performance in all 3 levels.</Titles>
-			<Titles LongName="Novice Versatility Certificate" Name="Novice Versatility">NAC, NGC, NJC, TN-N, TG-N, WV-N</Titles>
-			<Titles LongName="Novice Versatility Certificate Outstanding Performance" Name="Outstanding Novice Versatility">O-NAC, O-NGC, O-NJC, O-TN-N, O-TG-N, O-WV-N</Titles>
-			<Titles LongName="Novice Versatility Certificate Superior Performance" Name="Superior Novice Versatility">S-NAC, S-NGC, S-NJC, S-TN-N, S-TG-N, S-WV-N</Titles>
-			<Titles LongName="Open Versatility Certificate" Name="Open Versatility">OAC, OGC, OJC, TN-O, TG-O, WV-O</Titles>
-			<Titles LongName="Open Versatility Certificate Outstanding Performance" Name="Outstanding Open Versatility">O-OAC, O-OGC, O-OJC, O-TN-O, O-TG-O, O-WV-O</Titles>
-			<Titles LongName="Open Versatility Certificate Superior Performance" Name="Superior Open Versatility">E-OAC, E-OGC, E-OJC, E-TN-O, E-TG-O, E-WV-O</Titles>
-			<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility">EAC, EGC, EJC, TN-E, TG-E, WV-E</Titles>
-			<Titles LongName="Elite Versatility Certificate Outstanding Performance" Name="Outstanding Elite Versatility">O-EAC, O-EGC, O-EJC, O-TN-E, O-TG-E, O-WV-E</Titles>
-			<Titles LongName="Elite Versatility Certificate Superior Performance" Name="Superior Elite Versatility">S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
-			<Titles LongName="Triple Superior Versatility" Name="Triple Superior Versatility">S-NAC, S-NGC, S-NJC, S-TN-N, S-TG-N, S-WV-N,
-S-OAC, S-OGC, S-OJC, S-TN-O, S-TG-O, S-WV-O,
-S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
-			<Titles LongName="Point Award" Multiple="2" Name="Point Award">Special certificate earned at 1000, 2500, 5000, etc pts.</Titles>
-			<Titles LongName="Proficient Championship" Name="CHC">50 points</Titles>
-			<Titles LongName="Skilled Championship" Name="CHS">50 points</Titles>
-			<Titles LongName="Novice Agility Skilled" Name="NAS">30 points</Titles>
-			<Titles LongName="Novice Jumpers Skilled" Name="NJS">30 points</Titles>
-			<Titles LongName="Novice Gamblers Skilled" Name="NGS">30 points</Titles>
-			<Titles LongName="Novice Tunnelers Skilled" Name="TNS-N">30 points</Titles>
-			<Titles LongName="Novice Touch N Go Skilled" Name="TGS-N">30 points</Titles>
-			<Titles LongName="Novice Weavers Skilled" Name="WVS-N">30 points</Titles>
-			<Titles LongName="Novice Agility Skilled Outstanding Performance" Name="O-NAS">100 points</Titles>
-			<Titles LongName="Novice Jumpers Skilled Outstanding Performance" Name="O-NJS">60 points</Titles>
-			<Titles LongName="Novice Gamblers Skilled Outstanding Performance" Name="O-NGS">60 points</Titles>
-			<Titles LongName="Novice Tunnelers Skilled Outstanding Performance" Name="O-TNS-N">60 points</Titles>
-			<Titles LongName="Novice Touch N Go Skilled Outstanding Performance" Name="O-TGS-N">60 points</Titles>
-			<Titles LongName="Novice Weavers Skilled Outstanding Performance" Name="O-WVS-N">60 points</Titles>
-			<Titles LongName="Novice Agility Skilled Superior Performance" Name="S-NAS">200 points</Titles>
-			<Titles LongName="Novice Jumpers Skilled Superior Performance" Name="S-NJS">100 points</Titles>
-			<Titles LongName="Novice Gamblers Skilled Superior Performance" Name="S-NGS">100 points</Titles>
-			<Titles LongName="Novice Tunnelers Skilled Superior Performance" Name="S-TNS-N">100 points</Titles>
-			<Titles LongName="Novice Touch N Go Skilled Superior Performance" Name="S-TGS-N">100 points</Titles>
-			<Titles LongName="Novice Weavers Skilled Superior Performance" Name="S-WVS-N">100 points</Titles>
-			<Titles LongName="Open Agility Skilled" Name="OAS">30 points</Titles>
-			<Titles LongName="Open Jumpers Skilled" Name="OJS">30 points</Titles>
-			<Titles LongName="Open Gamblers Skilled" Name="OGS">30 points</Titles>
-			<Titles LongName="Open Tunnelers Skilled" Name="TNS-O">30 points</Titles>
-			<Titles LongName="Open Touch N Go Skilled" Name="TGS-O">30 points</Titles>
-			<Titles LongName="Open Weavers Skilled" Name="WVS-O">30 points</Titles>
-			<Titles LongName="Open Agility Skilled Outstanding Performance" Name="O-OAS">100 points</Titles>
-			<Titles LongName="Open Jumpers Skilled Outstanding Performance" Name="O-OJS">60 points</Titles>
-			<Titles LongName="Open Gamblers Skilled Outstanding Performance" Name="O-OGS">60 points</Titles>
-			<Titles LongName="Open Tunnelers Skilled Outstanding Performance" Name="O-TNS-O">60 points</Titles>
-			<Titles LongName="Open Touch N Go Skilled Outstanding Performance" Name="O-TGS-O">60 points</Titles>
-			<Titles LongName="Open Weavers Skilled Outstanding Performance" Name="O-WVS-O">60 points</Titles>
-			<Titles LongName="Open Agility Skilled Superior Performance" Name="S-OAS">200 points</Titles>
-			<Titles LongName="Open Jumpers Skilled Superior Performance" Name="S-OJS">100 points</Titles>
-			<Titles LongName="Open Gamblers Skilled Superior Performance" Name="S-OGS">100 points</Titles>
-			<Titles LongName="Open Tunnelers Skilled Superior Performance" Name="S-TNS-O">100 points</Titles>
-			<Titles LongName="Open Touch N Go Skilled Superior Performance" Name="S-TGS-O">100 points</Titles>
-			<Titles LongName="Open Weavers Skilled Superior Performance" Name="S-WVS-O">100 points</Titles>
+			<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">Proficient Elite points: 230 Regular, 130 Gambler, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Gambler, 100 Jumpers points.</Titles>
+			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
 			<Titles LongName="Elite Agility Skilled" Name="EAS">30 points</Titles>
 			<Titles LongName="Elite Jumpers Skilled" Name="EJS">30 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled" Name="EGS">30 points</Titles>
@@ -1738,11 +1719,29 @@ S-EAC, S-EGC, S-EJC, S-TN-E, S-TG-E, S-WV-E</Titles>
 			<Titles LongName="Elite Tunnelers Skilled Superior Performance" Name="S-TNS-E">200 points</Titles>
 			<Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
-			<Titles LongName="Bronze Medal" Name="Bronze Medal">In Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in either Gamblers, TouchNGo or Weavers.</Titles>
-			<Titles LongName="Silver Medal" Name="Silver Medal">In Elite: 230 Regular pts, 130 Jumpers pts, 130 pts Gamblers, and 130 pts in two of the other classes.</Titles>
-			<Titles LongName="Gold Medal" Name="Gold Medal">In Elite: 430 Regular pts, 230 in each of Jumpers, Gamblers, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Platinum Medal" Name="Platinum Medal">In Elite: 630 Regular pts, 330 in each of Jumpers, Gamblers, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Purple Medal" Name="Purple Medal">In Elite: 830 Regular pts, 430 in each of Jumpers, Gamblers, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Bronze Medal" Name="Bronze Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in one of the other classes.</Titles>
+			<Titles LongName="Silver Medal" Name="Silver Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in two of the other classes.</Titles>
+			<Titles LongName="Gold Medal" Name="Gold Medal">Skilled Elite: 430 Regular pts, 230 in each of Jumpers, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Platinum Medal" Name="Platinum Medal">Skilled Elite: 630 Regular pts, 330 in each of Jumpers, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Purple Medal" Name="Purple Medal">Skilled Elite: 830 Regular pts, 430 in each of Jumpers, Tunnelers, TouchNGo and Weavers.</Titles>
+			<Titles LongName="Proficient Championship" Name="CHC">50 points</Titles>
+			<Titles LongName="Skilled Championship" Name="CHS">50 points</Titles>
+			<Titles LongName="Novice Triple Superior Performance Dog" Name="Triple Superior-Novice">Superior Performance titles in Novice Regular, Jumpers, Gamblers.</Titles>
+			<Titles LongName="Open Triple Superior Performance Dog" Name="Triple Superior-Open">Superior Performance titles in Open Regular, Jumpers, Gamblers.</Titles>
+			<Titles LongName="Elite Triple Superior Performance Dog" Name="Triple Superior-Elite">Superior Performance titles in Elite Regular, Jumpers, Gamblers.</Titles>
+			<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple">Triple Superior Performance in all three levels.</Titles>
+			<Titles LongName="Novice Versatility Certificate" Name="Novice Versatility">Titled in all six classes at Novice</Titles>
+			<Titles LongName="Open Versatility Certificate" Name="Open Versatility">Titled in all six classes at Open</Titles>
+			<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility">Titled in all six classes at Elite</Titles>
+			<Titles LongName="Novice Versatility Certificate Superior Performance" Name="Superior Novice Versatility">Superior Performance award in all six classes at Novice level</Titles>
+			<Titles LongName="Open Versatility Certificate Superior Performance" Name="Superior Open Versatility">Superior Performance award in all six classes at Open level</Titles>
+			<Titles LongName="Elite Versatility Certificate Superior Performance" Name="Superior Elite Versatility">Superior Performance award in all six classes at Elite level</Titles>
+			<Titles LongName="Triple Superior Versatility" Name="Triple Superior Versatility">Superior Performance award in all six classes at all three levels</Titles>
+			<Titles LongName="Point Award" Multiple="2" Name="Point Award">Special certificate earned at 1000. Also at 2500, 5000, etc career pts.</Titles>
+			<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH" Prefix="y" ValidTo="2005-12-31">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts.</Titles>
+			<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH" Prefix="y" ValidTo="2005-12-31">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts.</Titles>
+			<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="O-Vers-NATCH" ValidTo="2005-12-31">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts, TG-E plus 200 pts, TN-E plus 200 pts, WV-E plus 200 pts.</Titles>
+			<Titles LongName="NADAC Versatility Champion Superior Performance" Name="S-Vers-NATCH" ValidTo="2005-12-31">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts, TG-E plus 300 pts, TN-E plus 300 pts, WV-E plus 300 pts.</Titles>
 			<Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V" ValidTo="2005-12-31">30 points</Titles>
 			<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V" ValidTo="2005-12-31">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V" ValidTo="2005-12-31">30 points (20 pts before 8/1/2005)</Titles>
