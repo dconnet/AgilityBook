@@ -5,9 +5,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2006-03-24 DRC Configuration version 13. Restricted NADAC Chances divisions.
-               Cleaned up NADAC titles.
-               Corrected USDAA RM to have 5 partners.
+2006-05-01 DRC Configuration version 13. Restricted NADAC Chances divisions.
+               Cleaned up NADAC titles. Corrected USDAA RM to have 5 partners.
+               Fixed DOCNA Trigility and Challenge scoring rules.
 2006-02-08 DRC Configuration version 12. NADAC Wildcard is now Chances.
                Extended Gamblers to 1/1 (long weekend).
 2006-01-04 DRC Configuration version 11. Updated CKC.
@@ -1615,13 +1615,13 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			</Event>
 			<Event Name="Gamblers">
 				<Desc>Traditional: Opening: 25 seconds, 19 points</Desc>
-				<Scoring Division="*" Level="*" cleanQ="y" type="OCScoreThenTime">
+				<Scoring Division="*" Level="*" OpeningPts="19" cleanQ="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Time Gamble">
-				<Desc>Strategic Time: Opening: 30 seconds, 20 points</Desc>
-				<Scoring Division="*" Level="*" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+				<Desc>Strategic Time: Opening: 30 seconds, 20 points. 30 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Desc>
+				<Scoring Division="*" Level="*" OpeningPts="20" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
 					<TitlePoints Faults="2.5" Points="1"/>
 				</Scoring>
 			</Event>
@@ -1631,14 +1631,16 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Trigility" hasPartner="y">
-				<Scoring Division="*" Level="*" cleanQ="y" type="TimePlusFaults">
+				<Scoring Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Challenge">
-				<Scoring Division="*" Level="Intern" cleanQ="y" type="FaultsThenTime"/>
-				<Scoring Division="*" Level="Specialist" cleanQ="y" type="TimePlusFaults">
-					<TitlePoints Faults="15" Points="1"/>
+				<Scoring Division="*" Level="Intern" type="TimePlusFaults">
+					<TitlePoints Faults="12" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Specialist" type="TimePlusFaults">
+					<TitlePoints Faults="12" Points="1"/>
 				</Scoring>
 			</Event>
 		</Venue>
