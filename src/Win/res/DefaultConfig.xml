@@ -1631,6 +1631,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Trigility" hasPartner="y">
+				<Desc>Team event with 3 parts: Standard, Jumpers, Gamble. Time+Faults, plus successful gamble</Desc>
 				<Scoring Division="*" Level="*" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
