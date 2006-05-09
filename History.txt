@@ -1,4 +1,4 @@
-5/1/2006: v1.7.3.12 <in development>
+5/8/2006: v1.7.3.12 <in development>
 - New features / Enhancements:
   - Added internal support for OpenOffice Calc during import/export (however,
     I haven't actually figured out how to talk to Calc yet).
@@ -13,6 +13,8 @@
   - Add a warning when a date format isn't specified during export.
   - Updated comment in USDAA RM title (5 different partners are required)
   - Fixed some minor errors in DOCNA Trigility and Challenge scoring rules.
+  - Changing the date when adding/modifying a title caused the selected title
+    to be unselected.
 
 3/18/2006: v1.7.2.12
 - Bumped file version to 12.1, Configuration v12:

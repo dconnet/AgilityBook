@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-05-08 DRC Changing the date unselected a title.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
@@ -123,8 +124,12 @@ ARBDate CDlgTitle::GetDate()
 
 void CDlgTitle::FillTitles()
 {
+	ARBConfigTitlePtr pSelTitle;
+	int index = m_ctrlTitles.GetCurSel();
+	if (CB_ERR != index)
+		pSelTitle = GetTitleData(index);
 	m_ctrlTitles.ResetContent();
-	int index = m_ctrlVenues.GetCurSel();
+	index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != index)
 	{
 		ARBDate date = GetDate();
@@ -145,7 +150,8 @@ void CDlgTitle::FillTitles()
 					int idx = m_ctrlTitles.AddString(pTitle->GetCompleteName().c_str());
 					m_ctrlTitles.SetData(idx,
 						new CListPtrData<ARBConfigTitlePtr>(pTitle));
-					if (m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
+					if ((m_bInit && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
+					|| (!m_bInit && pSelTitle && pSelTitle->GetName() == pTitle->GetName()))
 					{
 						m_ctrlTitles.SetCurSel(idx);
 						FillTitleInfo();
