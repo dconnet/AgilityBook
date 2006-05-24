@@ -133,11 +133,11 @@ CDlgRunScore::CDlgRunScore(
 	, m_pRealRun(pRealRun)
 	, m_Run(pRun)
 {
-	ASSERT(NULL != m_pVenue);
-	ASSERT(NULL != m_pTrial);
+	ASSERT(NULL != m_pVenue.get());
+	ASSERT(NULL != m_pTrial.get());
 	ARBDogClubPtr pClub;
 	m_pTrial->GetClubs().GetPrimaryClub(&pClub);
-	ASSERT(NULL != pClub);
+	ASSERT(NULL != pClub.get());
 	//{{AFX_DATA_INIT(CDlgRunScore)
 	m_Venue = m_pVenue->GetName().c_str();
 	m_Club = pClub->GetName().c_str();
@@ -791,7 +791,7 @@ void CDlgRunScore::SetTitlePoints()
 		// 11/13/04: Also compute score for NA runs that have no titling pts.
 		if (q.Qualified()
 		|| ARB_Q::eQ_NQ == q
-		|| (ARB_Q::eQ_NA == q && ARBDouble::equal(0.0, pScoring->GetTitlePoints().size())))
+		|| (ARB_Q::eQ_NA == q && ARBDouble::equal(0.0, static_cast<double>(pScoring->GetTitlePoints().size()))))
 			strScore = ARBDouble::str(m_Run->GetScore(pScoring)).c_str();
 	}
 	// Doesn't matter if they're hidden,..

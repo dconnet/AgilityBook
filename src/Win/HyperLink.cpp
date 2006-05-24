@@ -355,7 +355,7 @@ void CHyperLink::OnMouseMove(
 	CStatic::OnMouseMove(nFlags, point);
 }
 
-void CHyperLink::OnTimer(UINT nIDEvent)
+void CHyperLink::OnTimer(UINT_PTR nIDEvent)
 {
 	CPoint p(GetMessagePos());
 	ScreenToClient(&p);
