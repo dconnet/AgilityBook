@@ -13,6 +13,8 @@ goto usage
 :doit
 if ("%2")==("VC7") goto doit2
 if ("%2")==("VC8") goto doit2
+REM Warning: If cross-compiling on win32, running parse will fail!
+if ("%2")==("VC8x64") goto doit2
 goto usage
 
 :doit2
@@ -39,12 +41,14 @@ xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC7\Release\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC7\Debug\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8\Release\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8\Debug\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8x64\Release\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8x64\Debug\"
 
 set PATH=%OLDPATH%
 set OLDPATH=
 goto done
 
 :usage
-echo Usage: BuildHelp.bat [Release or Debug] [VC7 or VC8]
+echo Usage: BuildHelp.bat [Release or Debug] [VC7 or VC8 or VC8x64]
 
 :done
