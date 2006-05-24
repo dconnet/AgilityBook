@@ -166,8 +166,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="..\..\..\bin\$(PlatformName)\VC8\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\$(PlatformName)\VC8\$(ConfigurationName)\ParseResourceHeader"
+			OutputDirectory="..\..\..\bin\$(PlatformName)\VC8x64\$(ConfigurationName)"
+			IntermediateDirectory="..\..\..\bin\$(PlatformName)\VC8x64\$(ConfigurationName)\ParseResourceHeader"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			CharacterSet="2"
@@ -237,13 +237,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8x64&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="..\..\..\bin\$(PlatformName)\VC8\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\$(PlatformName)\VC8\$(ConfigurationName)\ParseResourceHeader"
+			OutputDirectory="..\..\..\bin\$(PlatformName)\VC8x64\$(ConfigurationName)"
+			IntermediateDirectory="..\..\..\bin\$(PlatformName)\VC8x64\$(ConfigurationName)\ParseResourceHeader"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			CharacterSet="2"
@@ -311,7 +311,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.bat $(ConfigurationName) VC8x64&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
