@@ -33,6 +33,7 @@
  * See Bugslayer by John Robbins in MSJ Aug 1998.
  *
  * Revision History
+ * @li 2006-05-24 DRC Updated for 64 bit, dropped VC6 support
  * @li 2004-10-22 DRC Created
  */
 
@@ -47,17 +48,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// As long as sizeof(void*) == sizeof(DWORD), we're ok...
-// VC7's default warns about 64bit compatibility issues.
-// All of the Sym* routines take/return a DWORD which is a handle
-// (which in vc7, may be larger)
-// warning C4311: 'type cast' : pointer truncation from 'PVOID' to 'DWORD'
-// warning C4312: 'type cast' : conversion from 'DWORD' to 'HINSTANCE' of greater size
-#pragma warning ( disable : 4311 4312 )
-
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef UNICODE
+#if !defined(UNICODE) && _MSC_VER >= 1300
 
 static HKEY g_hAppKey = NULL;
 
@@ -70,18 +63,18 @@ static TCHAR g_szBuff2[BUFF_SIZE];
 #define SYM_BUFF_SIZE 512
 static BYTE g_stSymbol[SYM_BUFF_SIZE];
 // The static source and line structure.
-static IMAGEHLP_LINE g_stLine;
+static IMAGEHLP_LINE64 g_stLine64;
 // The stack frame used in walking the stack.
-static STACKFRAME g_stFrame;
+static STACKFRAME64 g_stFrame64;
 
 static bool g_bSymEngInit = false;
 // From ImageHlp.dll
-typedef BOOL (__stdcall *PFNSYMGETLINEFROMADDR)(
+typedef BOOL (__stdcall *PFNSYMGETLINEFROMADDR64)(
 		IN HANDLE hProcess,
-		IN DWORD dwAddr,
+		IN DWORD64 dwAddr,
 		OUT PDWORD pdwDisplacement,
-		OUT PIMAGEHLP_LINE Line);
-static PFNSYMGETLINEFROMADDR g_pfnSymGetLineFromAddr = NULL;
+		OUT PIMAGEHLP_LINE64 Line);
+static PFNSYMGETLINEFROMADDR64 g_pfnSymGetLineFromAddr = NULL;
 // From DbgHelp.dll
 typedef DWORD (__stdcall *PFNSYMGETOPTIONS)(VOID);
 static PFNSYMGETOPTIONS g_SymGetOptions = NULL;
@@ -92,32 +85,29 @@ typedef BOOL (__stdcall *PFNSYMINITIALIZE)(
 		IN PSTR UserSearchPath,
 		IN BOOL fInvadeProcess);
 static PFNSYMINITIALIZE g_SymInitialize = NULL;
-typedef DWORD (__stdcall *PFNSYMGETMODULEBASE)(
+static PGET_MODULE_BASE_ROUTINE64 g_SymGetModuleBase = NULL;
+typedef BOOL (__stdcall *PFNSYMGETSYMFROMADDR64)(
 		IN HANDLE hProcess,
-		IN DWORD dwAddr);
-static PFNSYMGETMODULEBASE g_SymGetModuleBase = NULL;
-typedef BOOL (__stdcall *PFNSYMGETSYMFROMADDR)(
-		IN HANDLE hProcess,
-		IN DWORD dwAddr,
-		OUT PDWORD pdwDisplacement,
-		OUT PIMAGEHLP_SYMBOL Symbol);
-static PFNSYMGETSYMFROMADDR g_SymGetSymFromAddr = NULL;
-typedef PVOID (__stdcall *PFNSYMFUNCTIONTABLEACCESS)(
+		IN DWORD64 dwAddr,
+		OUT PDWORD64 pdwDisplacement,
+		OUT PIMAGEHLP_SYMBOL64 Symbol);
+static PFNSYMGETSYMFROMADDR64 g_SymGetSymFromAddr = NULL;
+typedef PVOID (__stdcall *PFNSYMFUNCTIONTABLEACCESS64)(
 		HANDLE hProcess,
-		DWORD AddrBase);
-static PFNSYMFUNCTIONTABLEACCESS g_SymFunctionTableAccess = NULL;
-typedef BOOL (__stdcall *PFNSTACKWALK)(
+		DWORD64 AddrBase);
+static PFNSYMFUNCTIONTABLEACCESS64 g_SymFunctionTableAccess = NULL;
+typedef BOOL (__stdcall *PFNSTACKWALK64)(
 		DWORD                             MachineType,
 		HANDLE                            hProcess,
 		HANDLE                            hThread,
-		LPSTACKFRAME                      StackFrame,
+		LPSTACKFRAME64                    StackFrame,
 		PVOID                             ContextRecord,
-		PREAD_PROCESS_MEMORY_ROUTINE      ReadMemoryRoutine,
-		PFUNCTION_TABLE_ACCESS_ROUTINE    FunctionTableAccessRoutine,
-		PGET_MODULE_BASE_ROUTINE          GetModuleBaseRoutine,
-		PTRANSLATE_ADDRESS_ROUTINE        TranslateAddress
+		PREAD_PROCESS_MEMORY_ROUTINE64    ReadMemoryRoutine,
+		PFUNCTION_TABLE_ACCESS_ROUTINE64  FunctionTableAccessRoutine,
+		PGET_MODULE_BASE_ROUTINE64        GetModuleBaseRoutine,
+		PTRANSLATE_ADDRESS_ROUTINE64      TranslateAddress
 		);
-static PFNSTACKWALK g_StackWalk = NULL;
+static PFNSTACKWALK64 g_StackWalk = NULL;
 
 
 static DWORD GetModuleBaseNameA(
@@ -294,9 +284,9 @@ static LPCTSTR ConvertSimpleException(DWORD dwExcept)
 
 static BOOL InternalSymGetLineFromAddr(
 		HANDLE hProcess,
-		DWORD dwAddr,
+		DWORD64 dwAddr,
 		PDWORD pdwDisplacement,
-		PIMAGEHLP_LINE Line)
+		PIMAGEHLP_LINE64 Line)
 {
 	if (NULL != g_pfnSymGetLineFromAddr)
 	{
@@ -341,11 +331,11 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		int iCurr = 0;
 		// A temp value holder. This is to keep the stack usage to a
 		// minimum.
-		DWORD dwTemp;
+		DWORD64 dwTemp;
 		iCurr += BSUGetModuleBaseName(GetCurrentProcess(), NULL, g_szBuff, BUFF_SIZE);
 		iCurr += wsprintf(g_szBuff + iCurr , _T(" caused a "));
 
-		dwTemp = reinterpret_cast<DWORD>(ConvertSimpleException(pExPtrs->ExceptionRecord->ExceptionCode));
+		dwTemp = reinterpret_cast<DWORD64>(ConvertSimpleException(pExPtrs->ExceptionRecord->ExceptionCode));
 
 		if (NULL != dwTemp)
 		{
@@ -368,7 +358,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		iCurr += wsprintf(g_szBuff + iCurr, _T(" in module "));
 
 		dwTemp = g_SymGetModuleBase(GetCurrentProcess(),
-			reinterpret_cast<DWORD>(pExPtrs->ExceptionRecord->ExceptionAddress));
+			reinterpret_cast<DWORD64>(pExPtrs->ExceptionRecord->ExceptionAddress));
 
 		ASSERT(NULL != dwTemp);
 
@@ -382,30 +372,37 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 				reinterpret_cast<HINSTANCE>(dwTemp), g_szBuff + iCurr, BUFF_SIZE - iCurr);
 		}
 
-#ifdef _ALPHA_
-		iCurr += wsprintf(g_szBuff + iCurr,
-			_T(" at %08X"),
-			pExPtrs->ExceptionRecord->ExceptionAddress);
-#else
+#if defined(_M_IX86)
 		iCurr += wsprintf(g_szBuff + iCurr,
 			_T(" at %04X:%08X"),
 			pExPtrs->ContextRecord->SegCs,
 			pExPtrs->ExceptionRecord->ExceptionAddress);
+#elif defined(_M_AMD64)
+		iCurr += wsprintf(g_szBuff + iCurr,
+			_T(" at %04X:%08X"),
+			pExPtrs->ContextRecord->SegCs,
+			pExPtrs->ExceptionRecord->ExceptionAddress);
+#elif defined(_ALPHA_)
+		iCurr += wsprintf(g_szBuff + iCurr,
+			_T(" at %08X"),
+			pExPtrs->ExceptionRecord->ExceptionAddress);
+#else
+#error Undefined architecture
 #endif
 		ASSERT(iCurr < BUFF_SIZE);
 
 		// Start looking up the exception address.
 		//lint -e545
-		PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol;
+		PIMAGEHLP_SYMBOL64 pSym = (PIMAGEHLP_SYMBOL64)&g_stSymbol;
 		//lint +e545
 		ZeroMemory(pSym, SYM_BUFF_SIZE);
-		pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
-		pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL);
+		pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL64);
+		pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL64);
 
-		DWORD dwDisp;
+		DWORD64 dwDisp64;
 		if (g_SymGetSymFromAddr(GetCurrentProcess(),
-			reinterpret_cast<DWORD>(pExPtrs->ExceptionRecord->ExceptionAddress),
-			&dwDisp, pSym))
+			reinterpret_cast<DWORD64>(pExPtrs->ExceptionRecord->ExceptionAddress),
+			&dwDisp64, pSym))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
 
@@ -420,10 +417,10 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 			}
 			else
 			{
-				if (dwDisp > 0)
+				if (dwDisp64 > 0)
 				{
 					iCurr += wsprintf(g_szBuff + iCurr,
-						_T("%s()+%d byte(s)"), pSym->Name, dwDisp);
+						_T("%s()+%d byte(s)"), pSym->Name, (int)dwDisp64);
 				}
 				else
 				{
@@ -443,21 +440,22 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 		ASSERT(iCurr < BUFF_SIZE);
 
 		// Do the source and line lookup.
-		ZeroMemory(&g_stLine, sizeof(IMAGEHLP_LINE));
-		g_stLine.SizeOfStruct = sizeof(IMAGEHLP_LINE);
+		ZeroMemory(&g_stLine64, sizeof(IMAGEHLP_LINE64));
+		g_stLine64.SizeOfStruct = sizeof(IMAGEHLP_LINE64);
 
+		DWORD dwDisp;
 		if (InternalSymGetLineFromAddr(GetCurrentProcess(),
-			reinterpret_cast<DWORD>(pExPtrs->ExceptionRecord->ExceptionAddress),
-			&dwDisp, &g_stLine))
+			reinterpret_cast<DWORD64>(pExPtrs->ExceptionRecord->ExceptionAddress),
+			&dwDisp, &g_stLine64))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
 
 			// Copy no more than there is room for.
-			dwTemp = lstrlen(g_stLine.FileName);
+			dwTemp = lstrlen(g_stLine64.FileName);
 			if (static_cast<int>(dwTemp) > (BUFF_SIZE - iCurr - 25))
 			{
 				lstrcpyn(g_szBuff + iCurr,
-					g_stLine.FileName,
+					g_stLine64.FileName,
 					BUFF_SIZE - iCurr - 1);
 				// Gotta leave now.
 				szRet = g_szBuff;
@@ -469,16 +467,16 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 				{
 					iCurr += wsprintf(g_szBuff + iCurr,
 						_T("%s, line %d+%d byte(s)"),
-						g_stLine.FileName,
-						g_stLine.LineNumber,
+						g_stLine64.FileName,
+						g_stLine64.LineNumber,
 						dwDisp);
 				}
 				else
 				{
 					iCurr += wsprintf(g_szBuff + iCurr,
 						_T("%s, line %d"),
-						g_stLine.FileName,
-						g_stLine.LineNumber);
+						g_stLine64.FileName,
+						g_stLine64.LineNumber);
 				}
 			}
 		}
@@ -504,27 +502,31 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 	// The value that is returned.
 	LPCTSTR szRet = NULL;
 	// A temporary for all to use. This saves stack space.
-	DWORD dwTemp = 0;
+	DWORD64 dwTemp = 0;
 
 	__try
 	{
-#ifdef _ALPHA_
+#if defined(_M_IX86)
+#define CH_MACHINE IMAGE_FILE_MACHINE_I386
+#elif defined(_M_AMD64)
+#define CH_MACHINE IMAGE_FILE_MACHINE_AMD64
+#elif defined(_ALPHA_)
 #define CH_MACHINE IMAGE_FILE_MACHINE_ALPHA
 #else
-#define CH_MACHINE IMAGE_FILE_MACHINE_I386
+#error Undefined architecture
 #endif
 		// Note: If the source and line functions are used, then
 		// StackWalk can access violate.
 		BOOL bSWRet = g_StackWalk(CH_MACHINE,
 			GetCurrentProcess(),
 			GetCurrentThread(),
-			&g_stFrame,
+			&g_stFrame64,
 			pExPtrs->ContextRecord,
 			NULL,
 			g_SymFunctionTableAccess,
 			g_SymGetModuleBase,
 			NULL) ;
-		if (!bSWRet || 0 == g_stFrame.AddrFrame.Offset)
+		if (!bSWRet || 0 == g_stFrame64.AddrFrame.Offset)
 		{
 			szRet = NULL;
 			__leave;
@@ -532,30 +534,35 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 
 		int iCurr = 0;
 		// At a minimum, put the address in.
-#ifdef _ALPHA_
-		iCurr += wsprintf(g_szBuff + iCurr, _T("0x%08X"),
-			g_stFrame.AddrPC.Offset);
-#else
+#if defined(_M_IX86)
 		iCurr += wsprintf(g_szBuff + iCurr, _T("%04X:%08X"),
 			pExPtrs->ContextRecord->SegCs,
-			g_stFrame.AddrPC.Offset);
+			g_stFrame64.AddrPC.Offset);
+#elif defined(_M_AMD64)
+		iCurr += wsprintf(g_szBuff + iCurr, _T("%04X:%08X"),
+			pExPtrs->ContextRecord->SegCs,
+			g_stFrame64.AddrPC.Offset);
+#elif defined(_ALPHA_)
+		iCurr += wsprintf(g_szBuff + iCurr, _T("0x%08X"),
+			g_stFrame64.AddrPC.Offset);
+#else
+#error Undefined architecture
 #endif
-
 		// Do the parameters?
 		//if (GSTSO_PARAMS == (dwOpts & GSTSO_PARAMS))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr,
 				_T(" (0x%08X 0x%08X 0x%08X 0x%08X)"),
-				g_stFrame.Params[0],
-				g_stFrame.Params[1],
-				g_stFrame.Params[2],
-				g_stFrame.Params[3]);
+				g_stFrame64.Params[0],
+				g_stFrame64.Params[1],
+				g_stFrame64.Params[2],
+				g_stFrame64.Params[3]);
 		}
 
 		//if (GSTSO_MODULE == (dwOpts & GSTSO_MODULE))
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(" "));
-			dwTemp = g_SymGetModuleBase(GetCurrentProcess(), g_stFrame.AddrPC.Offset);
+			dwTemp = g_SymGetModuleBase(GetCurrentProcess(), g_stFrame64.AddrPC.Offset);
 			ASSERT(NULL != dwTemp);
 			if (NULL == dwTemp)
 			{
@@ -571,20 +578,20 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 		}
 
 		ASSERT (iCurr < BUFF_SIZE);
-		DWORD dwDisp;
+		DWORD64 dwDisp64;
 
 		//if (GSTSO_SYMBOL == (dwOpts & GSTSO_SYMBOL))
 		{
 			// Start looking up the exception address.
 			//lint -e545
-			PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol;
+			PIMAGEHLP_SYMBOL64 pSym = (PIMAGEHLP_SYMBOL64)&g_stSymbol;
 			//lint +e545
 			ZeroMemory(pSym, SYM_BUFF_SIZE);
-			pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL);
-			pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL);
+			pSym->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL64);
+			pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof(IMAGEHLP_SYMBOL64);
 
 			if (g_SymGetSymFromAddr(GetCurrentProcess(),
-				g_stFrame.AddrPC.Offset, &dwDisp, pSym))
+				g_stFrame64.AddrPC.Offset, &dwDisp64, pSym))
 			{
 				iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
 
@@ -599,11 +606,11 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 				}
 				else
 				{
-					if (dwDisp > 0)
+					if (dwDisp64 > 0)
 					{
 						iCurr += wsprintf(g_szBuff + iCurr,
 							_T("%s()+%d byte(s)"),
-							pSym->Name, dwDisp);
+							pSym->Name, (int)dwDisp64);
 					}
 					else
 					{
@@ -624,19 +631,20 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 
 		//if (GSTSO_SRCLINE == (dwOpts & GSTSO_SRCLINE))
 		{
-			ZeroMemory(&g_stLine, sizeof(IMAGEHLP_LINE));
-			g_stLine.SizeOfStruct = sizeof(IMAGEHLP_LINE);
+			ZeroMemory(&g_stLine64, sizeof(IMAGEHLP_LINE64));
+			g_stLine64.SizeOfStruct = sizeof(IMAGEHLP_LINE64);
 
+			DWORD dwDisp;
 			if (InternalSymGetLineFromAddr(GetCurrentProcess(),
-				g_stFrame.AddrPC.Offset, &dwDisp, &g_stLine))
+				g_stFrame64.AddrPC.Offset, &dwDisp, &g_stLine64))
 			{
 				iCurr += wsprintf(g_szBuff + iCurr, _T(", "));
 
 				// Copy no more than there is room for.
-				dwTemp = lstrlen(g_stLine.FileName);
+				dwTemp = lstrlen(g_stLine64.FileName);
 				if (dwTemp > (DWORD)(BUFF_SIZE - iCurr - 25))
 				{
-					lstrcpyn(g_szBuff + iCurr, g_stLine.FileName, BUFF_SIZE - iCurr - 1);
+					lstrcpyn(g_szBuff + iCurr, g_stLine64.FileName, BUFF_SIZE - iCurr - 1);
 					// Gotta leave now.
 					szRet = g_szBuff;
 					__leave;
@@ -647,16 +655,16 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 					{
 						iCurr += wsprintf(g_szBuff + iCurr,
 							_T ("%s, line %d+%d byte(s)"),
-							g_stLine.FileName,
-							g_stLine.LineNumber,
-							dwDisp);
+							g_stLine64.FileName,
+							g_stLine64.LineNumber,
+							(int)dwDisp);
 					}
 					else
 					{
 						iCurr += wsprintf(g_szBuff + iCurr,
 							_T("%s, line %d"),
-							g_stLine.FileName,
-							g_stLine.LineNumber);
+							g_stLine64.FileName,
+							g_stLine64.LineNumber);
 					}
 				}
 			}
@@ -678,23 +686,32 @@ static LPCTSTR GetFirstStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 	// function.
 
 	// Initialize the STACKFRAME structure.
-	ZeroMemory(&g_stFrame, sizeof(STACKFRAME));
-#ifdef _X86_
-	g_stFrame.AddrPC.Offset = pExPtrs->ContextRecord->Eip;
-	g_stFrame.AddrPC.Mode = AddrModeFlat;
-	g_stFrame.AddrStack.Offset = pExPtrs->ContextRecord->Esp;
-	g_stFrame.AddrStack.Mode = AddrModeFlat;
-	g_stFrame.AddrFrame.Offset = pExPtrs->ContextRecord->Ebp;
-	g_stFrame.AddrFrame.Mode = AddrModeFlat;
+	ZeroMemory(&g_stFrame64, sizeof(STACKFRAME64));
+#if defined(_M_IX86)
+	g_stFrame64.AddrPC.Offset = pExPtrs->ContextRecord->Eip;
+	g_stFrame64.AddrPC.Mode = AddrModeFlat;
+	g_stFrame64.AddrStack.Offset = pExPtrs->ContextRecord->Esp;
+	g_stFrame64.AddrStack.Mode = AddrModeFlat;
+	g_stFrame64.AddrFrame.Offset = pExPtrs->ContextRecord->Ebp;
+	g_stFrame64.AddrFrame.Mode = AddrModeFlat;
+#elif defined(_M_AMD64)
+	g_stFrame64.AddrPC.Offset = pExPtrs->ContextRecord->Rip;
+	g_stFrame64.AddrPC.Mode = AddrModeFlat;
+	g_stFrame64.AddrStack.Offset = pExPtrs->ContextRecord->Rsp;
+	g_stFrame64.AddrStack.Mode = AddrModeFlat;
+	g_stFrame64.AddrFrame.Offset = pExPtrs->ContextRecord->Rbp;
+	g_stFrame64.AddrFrame.Mode = AddrModeFlat;
+#elif defined(_ALPHA_)
+	g_stFrame64.AddrPC.Offset = (DWORD)pExPtrs->ContextRecord->Fir;
+	g_stFrame64.AddrPC.Mode = AddrModeFlat;
+	g_stFrame64.AddrReturn.Offset = (DWORD)pExPtrs->ContextRecord->IntRa;
+	g_stFrame64.AddrReturn.Mode = AddrModeFlat;
+	g_stFrame64.AddrStack.Offset = (DWORD)pExPtrs->ContextRecord->IntSp;
+	g_stFrame64.AddrStack.Mode = AddrModeFlat;
+	g_stFrame64.AddrFrame.Offset = (DWORD)pExPtrs->ContextRecord->IntFp;
+	g_stFrame64.AddrFrame.Mode = AddrModeFlat;
 #else
-	g_stFrame.AddrPC.Offset = (DWORD)pExPtrs->ContextRecord->Fir;
-	g_stFrame.AddrPC.Mode = AddrModeFlat;
-	g_stFrame.AddrReturn.Offset = (DWORD)pExPtrs->ContextRecord->IntRa;
-	g_stFrame.AddrReturn.Mode = AddrModeFlat;
-	g_stFrame.AddrStack.Offset = (DWORD)pExPtrs->ContextRecord->IntSp;
-	g_stFrame.AddrStack.Mode = AddrModeFlat;
-	g_stFrame.AddrFrame.Offset = (DWORD)pExPtrs->ContextRecord->IntFp;
-	g_stFrame.AddrFrame.Mode = AddrModeFlat;
+#error Undefined architecture
 #endif
 
 	return InternalGetStackTraceString(pExPtrs);
@@ -931,15 +948,15 @@ bool InitCrashHandler(HKEY hAppKey)
 			SetLastErrorEx(ERROR_DLL_INIT_FAILED, SLE_ERROR);
 			return false;
 		}
-		g_pfnSymGetLineFromAddr = reinterpret_cast<PFNSYMGETLINEFROMADDR>(GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr"));
+		g_pfnSymGetLineFromAddr = reinterpret_cast<PFNSYMGETLINEFROMADDR64>(GetProcAddress(GetModuleHandle(_T("IMAGEHLP.DLL")), "SymGetLineFromAddr64"));
 		// Now do the GetProcAddress stuff.
 		g_SymGetOptions = reinterpret_cast<PFNSYMGETOPTIONS>(GetProcAddress(hInst, "SymGetOptions"));
 		g_SymSetOptions = reinterpret_cast<PFNSYMSETOPTIONS>(GetProcAddress(hInst, "SymSetOptions"));
 		g_SymInitialize = reinterpret_cast<PFNSYMINITIALIZE>(GetProcAddress(hInst, "SymInitialize"));
-		g_SymGetModuleBase = reinterpret_cast<PFNSYMGETMODULEBASE>(GetProcAddress(hInst, "SymGetModuleBase"));
-		g_SymGetSymFromAddr = reinterpret_cast<PFNSYMGETSYMFROMADDR>(GetProcAddress(hInst, "SymGetSymFromAddr"));
-		g_SymFunctionTableAccess = reinterpret_cast<PFNSYMFUNCTIONTABLEACCESS>(GetProcAddress(hInst, "SymFunctionTableAccess"));
-		g_StackWalk = reinterpret_cast<PFNSTACKWALK>(GetProcAddress(hInst, "StackWalk"));
+		g_SymGetModuleBase = reinterpret_cast<PGET_MODULE_BASE_ROUTINE64>(GetProcAddress(hInst, "SymGetModuleBase64"));
+		g_SymGetSymFromAddr = reinterpret_cast<PFNSYMGETSYMFROMADDR64>(GetProcAddress(hInst, "SymGetSymFromAddr64"));
+		g_SymFunctionTableAccess = reinterpret_cast<PFNSYMFUNCTIONTABLEACCESS64>(GetProcAddress(hInst, "SymFunctionTableAccess64"));
+		g_StackWalk = reinterpret_cast<PFNSTACKWALK64>(GetProcAddress(hInst, "StackWalk64"));
 
 		// Set up the symbol engine.
 		DWORD dwOpts = g_SymGetOptions();

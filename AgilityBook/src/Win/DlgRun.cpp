@@ -81,10 +81,10 @@ CDlgRun::CDlgRun(
 
 	ARBDogClubPtr pClub;
 	pTrial->GetClubs().GetPrimaryClub(&pClub);
-	ASSERT(NULL != pClub);
+	ASSERT(NULL != pClub.get());
 	ARBConfigVenuePtr pVenue;
 	pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-	ASSERT(NULL != pVenue);
+	ASSERT(NULL != pVenue.get());
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
 	m_pageComments = new CDlgRunComments(pDoc, m_Run);

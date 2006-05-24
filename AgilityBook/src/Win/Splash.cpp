@@ -334,7 +334,7 @@ void CSplashWnd::OnPaint()
 	}
 }
 
-void CSplashWnd::OnTimer(UINT nIDEvent)
+void CSplashWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	// Destroy the splash screen window.
 	CSingleLock singleLock(&s_Crit);
