@@ -21,11 +21,27 @@ Once unpacked, the directory structure should look like:
 This program has been tested with 2.2 and 2.7.
   - AgilityBook.cpp issues some warnings/comments about the version that
     is currently in use.
-If you need to compile Xerces yourself, then the .dll files with are in
-(Xerces)/Build/Win32/<Compiler>/Release/ should be copied to to
-(arb)/bin/<compiler>/Release/. The project files will access
-"../../../../xml-xerces/c/Build/Win32/<vc>/Release", so there's no need to
-copy the .lib files.
+If you need to compile Xerces yourself, then the .dll files are in
+(Xerces)/Build/Win32/<Compiler>/Release/ and should be copied to
+(arb)/bin/<compiler>/Release/. The lib files need to be copied into
+(arb)/lib/...
+
+Note: To compile for x64, (Xerces)/src/xercesc/util/AutoSense.hpp needs
+to be modified. In the '_WIN32 || WIN32' section, after:
+    #ifndef WIN32
+      #define WIN32
+    #endif
+add
+	#if defined(_WIN64) && !defined(WIN64)
+      #define WIN64
+    #endif
+Also, the Win32/VC8/... project files should be copied to x64/VC8/...
+About the only changes were to modify the output paths, change the
+DebugInformationFormat to '3' (VCCLCompilerTool), set the TargetMachine to 17
+(VCLinkerTool) and set TargetEnvironment to 3 (VCMIDLTool). That was it.
+ARB deviates from xerces structure here - instead of creating an x64 directory,
+ARB uses VC8x64. I just didn't feel like creating another directory layer.
+[This assumes you've installed the x64 libraries with VC8]
 
 Finally, the Boost libraries are needed: http://www.boost.org.
 ARB has been built and tested using Boost version 1.33.1. There is no need
