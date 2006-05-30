@@ -1,4 +1,4 @@
-5/8/2006: v1.7.3.12 <in development>
+5/29/2006: v1.7.3.12 <in development>
 - New features / Enhancements:
   - Added internal support for OpenOffice Calc during import/export (however,
     I haven't actually figured out how to talk to Calc yet).
@@ -15,6 +15,7 @@
   - Fixed some minor errors in DOCNA Trigility and Challenge scoring rules.
   - Changing the date when adding/modifying a title caused the selected title
     to be unselected.
+  - Sync the calendar view when a calendar entry is changed in the list.
 
 3/18/2006: v1.7.2.12
 - Bumped file version to 12.1, Configuration v12:

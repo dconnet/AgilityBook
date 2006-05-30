@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-05-29 DRC Sync cal view when item date changes.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-27 DRC Add color coding to calendar for entries that need attention.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
@@ -1169,6 +1170,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 	{
 		if (pData->CanEdit())
 		{
+			ARBDate oldDate = pData->GetCalendar()->GetStartDate();
 			CDlgCalendar dlg(pData->GetCalendar(), GetDocument());
 			if (IDOK == dlg.DoModal())
 			{
@@ -1179,6 +1181,13 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 					GetDocument()->GetCalendar().TrimEntries(today);
 				}
 				GetDocument()->GetCalendar().sort();
+				if (oldDate != pData->GetCalendar()->GetStartDate())
+				{
+					CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
+					pCalView->SuppressSelect(true);
+					pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
+					pCalView->SuppressSelect(false);
+				}
 				LoadData();
 				GetDocument()->SetModifiedFlag();
 				GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
