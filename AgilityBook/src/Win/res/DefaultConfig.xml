@@ -2310,6 +2310,9 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				<Scoring Division="Performance" Level="PI" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
+				<Scoring Division="Junior" Level="*" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
