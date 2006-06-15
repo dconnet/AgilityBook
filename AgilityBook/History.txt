@@ -1,18 +1,20 @@
-5/29/2006: v1.7.3.12 <in development>
+6/14/2006: v1.7.3.12
+- Bumped to Configuration v13:
+  - Restricted NADAC Chances divisions to Proficient/Skilled. It was allowing
+    Standard/Veterans/Junior.
+  - Removed all NADAC Skilled titles for Novice/Open. Skilled
+    and Proficient titles are the same at Novice and Open.
+  - Updated comment in USDAA RM title (5 different partners are required)
+  - Fixed some minor errors in DOCNA Trigility and Challenge scoring rules.
+  - Configured USDAA Standard to support Junior Handlers.
 - New features / Enhancements:
   - Added internal support for OpenOffice Calc during import/export (however,
     I haven't actually figured out how to talk to Calc yet).
   - Added MinYPS (Yards/SCT) to Runs dialog and available in Runs View.
-  - Removed all NADAC Skilled titles for Novice/Open. Skilled
-    and Proficient titles are the same at Novice and Open.
 - Bug fixes
   - After upgrading the configuration, double Qs disappeared temporarily.
   - Created a separate Win98 install to deal with WinInstaller issues.
-  - Restricted NADAC Chances divisions to Proficient/Skilled. It was allowing
-    Standard/Veterans/Junior.
   - Add a warning when a date format isn't specified during export.
-  - Updated comment in USDAA RM title (5 different partners are required)
-  - Fixed some minor errors in DOCNA Trigility and Challenge scoring rules.
   - Changing the date when adding/modifying a title caused the selected title
     to be unselected.
   - Sync the calendar view when a calendar entry is changed in the list.
