@@ -15,8 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_273DA8CC2ED243589B697FCB4BE88CD4"
+        "MsmKey" = "8:_155A6A22682E4C9EAA00822AE589E761"
+        "OwnerKey" = "8:_FFA1CED5A21548C0A8E77CA36C75B72C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_182BE53922DE46938560E8D99613C69F"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2DE9C82393334DC19E4DB55E3720669A"
+        "OwnerKey" = "8:_182BE53922DE46938560E8D99613C69F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,25 +63,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9D1CBE8F4FC648998A258CE9373D7021"
-        "OwnerKey" = "8:_273DA8CC2ED243589B697FCB4BE88CD4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C046A634FBD54F3885093D5F6A4C6C93"
-        "OwnerKey" = "8:_D982C5B6F6F94853BF7597A6C1AC9C93"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D982C5B6F6F94853BF7597A6C1AC9C93"
+        "MsmKey" = "8:_FFA1CED5A21548C0A8E77CA36C75B72C"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -364,14 +364,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
-        "ProductCode" = "8:{E1CF1AC1-0D35-4940-A75F-35994F5C4E20}"
-        "PackageCode" = "8:{445A14D9-CE19-442C-ABB5-0438D902B61A}"
+        "ProductCode" = "8:{BB731669-E1A2-4505-AB18-942CF6AD447C}"
+        "PackageCode" = "8:{384D9AD2-7D65-4073-888A-5A4FDC6F0C0B}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.7.3"
+        "ProductVersion" = "8:1.7.4"
         "Manufacturer" = "8:dcon Software"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.agilityrecordbook.com"
@@ -964,21 +964,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_273DA8CC2ED243589B697FCB4BE88CD4"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_9D1CBE8F4FC648998A258CE9373D7021"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_155A6A22682E4C9EAA00822AE589E761"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -992,7 +978,21 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C046A634FBD54F3885093D5F6A4C6C93"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_182BE53922DE46938560E8D99613C69F"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2DE9C82393334DC19E4DB55E3720669A"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1006,11 +1006,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D982C5B6F6F94853BF7597A6C1AC9C93"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_FFA1CED5A21548C0A8E77CA36C75B72C"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
                 "Properties"
                 {
                 }
@@ -1051,9 +1051,6 @@
                 {
                 }
             }
-        }
-        "VJSharpPlugin"
-        {
         }
     }
 }
