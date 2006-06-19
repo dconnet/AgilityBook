@@ -517,6 +517,9 @@ Select one of the configured Other Point items.
 .topic HIDC_OTHER_POINTS
 Number of Other Points earned.
 
+.topic HIDC_OTHER_NEW
+Create a new Other Points item.
+
 .topic HIDC_PARTNER_CALLNAME
 Name of dog you partnered with.
 

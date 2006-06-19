@@ -41,6 +41,7 @@
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBDogRunOtherPoints.h"
+#include "DlgConfigOtherPoints.h"
 #include "ListData.h"
 
 #ifdef _DEBUG
@@ -53,16 +54,16 @@ static char THIS_FILE[] = __FILE__;
 // CDlgOtherPoint dialog
 
 CDlgOtherPoint::CDlgOtherPoint(
-		ARBConfig const& config,
-		ARBDogRunOtherPointsPtr pOther,
+		ARBConfig& config,
+		ARBDogRunOtherPointsPtr pRunOther,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgOtherPoint::IDD, pParent)
 	, m_ctrlOtherPoints(true)
 	, m_Config(config)
-	, m_pOther(pOther)
+	, m_pRunOther(pRunOther)
 {
 	//{{AFX_DATA_INIT(CDlgOtherPoint)
-	m_Points = m_pOther->GetPoints();
+	m_Points = m_pRunOther->GetPoints();
 	//}}AFX_DATA_INIT
 }
 
@@ -80,25 +81,25 @@ BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgOtherPoint)
 	ON_CBN_SELCHANGE(IDC_OTHER_OTHERPOINTS, OnSelchangeOtherpoints)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_OTHER_NEW, &CDlgOtherPoint::OnBnClickedOtherNew)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOtherPoint message handlers
 
-BOOL CDlgOtherPoint::OnInitDialog() 
+void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 {
-	CDlgBaseDialog::OnInitDialog();
-
+	m_ctrlOtherPoints.ResetContent();
 	m_ctrlDesc.SetWindowText(_T(""));
 	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
-	iterOther != m_Config.GetOtherPoints().end();
-	++iterOther)
+		iterOther != m_Config.GetOtherPoints().end();
+		++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther = (*iterOther);
 		int index = m_ctrlOtherPoints.AddString(pOther->GetName().c_str());
 		m_ctrlOtherPoints.SetData(index,
 			new CListPtrData<ARBConfigOtherPointsPtr>(pOther));
-		if (pOther->GetName() == m_pOther->GetName())
+		if ((!inOther && pOther->GetName() == m_pRunOther->GetName())
+		|| (inOther && *inOther == *pOther))
 		{
 			m_ctrlOtherPoints.SetCurSel(index);
 			CString str(pOther->GetDescription().c_str());
@@ -106,6 +107,15 @@ BOOL CDlgOtherPoint::OnInitDialog()
 			m_ctrlDesc.SetWindowText(str);
 		}
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CDlgOtherPoint message handlers
+
+BOOL CDlgOtherPoint::OnInitDialog() 
+{
+	CDlgBaseDialog::OnInitDialog();
+	LoadPoints(ARBConfigOtherPointsPtr());
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -123,6 +133,19 @@ void CDlgOtherPoint::OnSelchangeOtherpoints()
 	}
 }
 
+void CDlgOtherPoint::OnBnClickedOtherNew()
+{
+	ARBConfigOtherPointsPtr pOther(ARBConfigOtherPoints::New());
+	CDlgConfigOtherPoints dlg(m_Config, pOther, this);
+	if (IDOK == dlg.DoModal())
+	{
+		if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
+		{
+			LoadPoints(pOther);
+		}
+	}
+}
+
 void CDlgOtherPoint::OnOK() 
 {
 	if (!UpdateData(TRUE))
@@ -135,7 +158,7 @@ void CDlgOtherPoint::OnOK()
 	}
 	CListData* pData = m_ctrlOtherPoints.GetData(index);
 	ARBConfigOtherPointsPtr pOther = dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData)->GetData();
-	m_pOther->SetName(pOther->GetName());
-	m_pOther->SetPoints(m_Points);
+	m_pRunOther->SetName(pOther->GetName());
+	m_pRunOther->SetPoints(m_Points);
 	CDlgBaseDialog::OnOK();
 }

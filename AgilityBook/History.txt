@@ -1,4 +1,6 @@
 6/18/2006: v1.7.4.12 <in development>
+- New features / Enhancements:
+  - Add ability to add a new Other Point item from the Run dialog.
 
 6/14/2006: v1.7.3.12
 - Bumped to Configuration v13:

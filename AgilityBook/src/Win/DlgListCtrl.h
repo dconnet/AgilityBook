@@ -61,7 +61,7 @@ public:
 			CWnd* pParent = NULL);
 	// OtherPoints
 	CDlgListCtrl(
-			ARBConfig const& pConfig,
+			ARBConfig& pConfig,
 			ARBDogRunPtr run,
 			CWnd* pParent = NULL);
 	// Partners
@@ -93,7 +93,7 @@ private:
 	ARBDate m_Date;
 	std::vector<ARBCalendarPtr> const* m_CalEntries;
 	CTabView* m_pTabView;
-	ARBConfig const* m_pConfig;
+	ARBConfig* m_pConfig;
 	ARBDogRunPtr m_pRun;
 	CImageList m_ImageList;
 	int m_imgEmpty;
