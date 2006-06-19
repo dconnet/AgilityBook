@@ -246,7 +246,7 @@ class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 public:
 	CDlgListCtrlDataOtherPoints(
 			CListCtrl& list,
-			ARBConfig const& config,
+			ARBConfig& config,
 			ARBDogRunPtr pRun,
 			ARBDogRunOtherPointsPtr pOther)
 		: CDlgListCtrlData(list)
@@ -263,7 +263,7 @@ protected:
 	{
 	}
 private:
-	ARBConfig const& m_pConfig;
+	ARBConfig& m_pConfig;
 	ARBDogRunPtr m_pRun;
 	ARBDogRunOtherPointsPtr m_Other;
 };
@@ -404,7 +404,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 // OtherPoints
 CDlgListCtrl::CDlgListCtrl(
-		ARBConfig const& pConfig,
+		ARBConfig& pConfig,
 		ARBDogRunPtr run,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)

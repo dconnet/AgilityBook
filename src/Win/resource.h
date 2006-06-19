@@ -365,6 +365,7 @@
 #define IDC_OTHER_OTHERPOINTS           1410
 #define IDC_OTHER_DESC                  1411
 #define IDC_OTHER_POINTS                1412
+#define IDC_OTHER_NEW                   1413
 #define IDC_FAULTS                      1420
 #define IDC_CONFIG_TITLEPTS_FAULTS      1430
 #define IDC_CONFIG_TITLEPTS_POINTS      1431

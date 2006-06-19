@@ -44,8 +44,8 @@ class CDlgOtherPoint : public CDlgBaseDialog
 {
 public:
 	CDlgOtherPoint(
-			ARBConfig const& config,
-			ARBDogRunOtherPointsPtr pOther,
+			ARBConfig& config,
+			ARBDogRunOtherPointsPtr pRunOther,
 			CWnd* pParent = NULL);
 
 private:
@@ -56,8 +56,8 @@ private:
 	CRichEditCtrl2	m_ctrlDesc;
 	short	m_Points;
 	//}}AFX_DATA
-	ARBConfig const& m_Config;
-	ARBDogRunOtherPointsPtr m_pOther;
+	ARBConfig& m_Config;
+	ARBDogRunOtherPointsPtr m_pRunOther;
 
 	//{{AFX_VIRTUAL(CDlgOtherPoint)
 protected:
@@ -66,9 +66,11 @@ protected:
 
 // Implementation
 protected:
+	void LoadPoints(ARBConfigOtherPointsPtr inOther);
 	//{{AFX_MSG(CDlgOtherPoint)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeOtherpoints();
+	afx_msg void OnBnClickedOtherNew();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
