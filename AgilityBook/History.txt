@@ -1,6 +1,10 @@
-6/18/2006: v1.7.4.12 <in development>
+6/24/2006: v1.7.4.12 <in development>
 - New features / Enhancements:
   - Add ability to add a new Other Point item from the Run dialog.
+- Bug fixes
+  - Filling in the last-remembered height/judge/handler in the Run dialog
+    was a little flakey. Now the last value is filled in when the dialog
+    is initially displayed.
 
 6/14/2006: v1.7.3.12
 - Bumped to Configuration v13:
