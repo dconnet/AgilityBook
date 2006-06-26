@@ -856,43 +856,9 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	if (!GetEvent(&pEvent))
 		return;
 
-	CString str;
-	m_ctrlHeight.GetWindowText(str);
-	if (str.IsEmpty())
-	{
-		CString last = CAgilityBookOptions::GetLastEnteredHeight();
-		if (!last.IsEmpty())
-		{
-			m_ctrlHeight.SetWindowText(last);
-			m_Height = last;
-		}
-	}
 	m_ctrlHeight.EnableWindow(TRUE);
-
-	m_ctrlJudge.GetWindowText(str);
-	if (str.IsEmpty())
-	{
-		CString last = CAgilityBookOptions::GetLastEnteredJudge();
-		if (!last.IsEmpty())
-		{
-			m_ctrlJudge.SetWindowText(last);
-			m_Judge = last;
-		}
-	}
 	m_ctrlJudge.EnableWindow(TRUE);
-
-	m_ctrlHandler.GetWindowText(str);
-	if (str.IsEmpty())
-	{
-		CString last = CAgilityBookOptions::GetLastEnteredHandler();
-		if (!last.IsEmpty())
-		{
-			m_ctrlHandler.SetWindowText(last);
-			m_Handler = last;
-		}
-	}
 	m_ctrlHandler.EnableWindow(TRUE);
-
 	m_ctrlConditions.EnableWindow(TRUE);
 
 	if (pEvent->HasPartner())
@@ -1062,6 +1028,7 @@ BOOL CDlgRunScore::OnInitDialog()
 				m_ctrlDivisions.SetCurSel(index);
 		}
 	}
+	FillLevels(); // This will call	UpdateControls();
 
 	set<ARBString> names;
 	m_pDoc->GetAllHeights(names);
@@ -1070,7 +1037,13 @@ BOOL CDlgRunScore::OnInitDialog()
 	{
 		m_ctrlHeight.AddString((*iter).c_str());
 	}
-	m_Judge = m_Run->GetJudge().c_str();
+	m_Height = m_Run->GetHeight().c_str();
+	if (m_Height.IsEmpty())
+	{
+		CString last = CAgilityBookOptions::GetLastEnteredHeight();
+		if (!last.IsEmpty())
+			m_Height = last;
+	}
 
 	m_pDoc->GetAllJudges(names);
 	for (iter = names.begin(); iter != names.end(); ++iter)
@@ -1078,6 +1051,12 @@ BOOL CDlgRunScore::OnInitDialog()
 		m_ctrlJudge.AddString((*iter).c_str());
 	}
 	m_Judge = m_Run->GetJudge().c_str();
+	if (m_Judge.IsEmpty())
+	{
+		CString last = CAgilityBookOptions::GetLastEnteredJudge();
+		if (!last.IsEmpty())
+			m_Judge = last;
+	}
 
 	m_pDoc->GetAllHandlers(names);
 	for (iter = names.begin(); iter != names.end(); ++iter)
@@ -1085,10 +1064,12 @@ BOOL CDlgRunScore::OnInitDialog()
 		m_ctrlHandler.AddString((*iter).c_str());
 	}
 	m_Handler = m_Run->GetHandler().c_str();
-
-	// Do this after filling the height/judge/handler lists
-	// (because UpdateControls sets the items text)
-	FillLevels(); // This will call	UpdateControls();
+	if (m_Handler.IsEmpty())
+	{
+		CString last = CAgilityBookOptions::GetLastEnteredHandler();
+		if (!last.IsEmpty())
+			m_Handler = last;
+	}
 
 	SetPartnerText();
 	switch (m_Run->GetScoring().GetType())
