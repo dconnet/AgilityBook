@@ -1,10 +1,14 @@
-6/24/2006: v1.7.4.12 <in development>
+7/1/2006: v1.7.4.12 <in development>
+- Bumped to Configuration v14:
+  - AKC FAST time faults were not being rounded.
 - New features / Enhancements:
   - Add ability to add a new Other Point item from the Run dialog.
+  - Change pairs dialog to list all existing partners.
 - Bug fixes
   - Filling in the last-remembered height/judge/handler in the Run dialog
     was a little flakey. Now the last value is filled in when the dialog
     is initially displayed.
+  - Time faults were not being properly computed on ScoreThenTime type runs.
 
 6/14/2006: v1.7.3.12
 - Bumped to Configuration v13:

@@ -5,6 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-07-01 DRC Configuration version 14. AKC FAST drops time fractions.
 2006-06-14 DRC Configuration version 13. Restricted NADAC Chances divisions.
                Cleaned up NADAC titles. Corrected USDAA RM to have 5 partners.
                Fixed DOCNA Trigility and Challenge scoring rules.
@@ -337,36 +338,36 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 			</Event>
 			<Event Name="FAST">
 				<Desc>Fifteen and Send Time</Desc>
-				<Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" overTF="y" type="ScoreThenTime"/>
-				<Scoring Division="Standard" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" dropFractions="y" overTF="y" type="ScoreThenTime"/>
+				<Scoring Division="Standard" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>

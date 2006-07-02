@@ -144,6 +144,12 @@ public:
 	{
 		return m_Records.GetAllHandlers(outHandlers);
 	}
+	void GetAllPartners(
+			std::set<ARBString>& outPartners,
+			std::set<ARBString>& outDogs) const
+	{
+		m_Records.GetAllPartners(outPartners, outDogs);
+	}
 	size_t GetAllFaultTypes(std::set<ARBString>& outFaults) const
 	{
 		return m_Records.GetAllFaultTypes(outFaults);

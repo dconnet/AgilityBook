@@ -120,7 +120,7 @@ BOOL CDlgRunComments::OnInitDialog()
 
 void CDlgRunComments::OnCommentsFaults()
 {
-	CDlgListCtrl dlg(m_pDoc, m_Run, this);
+	CDlgListCtrl dlg(CDlgListCtrl::eFaults, m_pDoc, m_Run, this);
 	if (IDOK == dlg.DoModal())
 		SetFaultsText();
 }

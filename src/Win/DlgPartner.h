@@ -36,6 +36,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 
 class CDlgPartner : public CDlgBaseDialog
@@ -43,17 +44,23 @@ class CDlgPartner : public CDlgBaseDialog
 public:
 	CDlgPartner(
 			ARBDogRunPartnerPtr partner,
+			std::set<ARBString> const& inHandlers,
+			std::set<ARBString> const& inDogs,
 			CWnd* pParent = NULL);
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgPartner)
 	enum { IDD = IDD_PARTNER };
+	CComboBox2	m_ctrlHandler;
 	CString	m_Handler;
+	CComboBox2	m_ctrlDog;
 	CString	m_Dog;
 	CString m_RegNum;
 	//}}AFX_DATA
 	ARBDogRunPartnerPtr m_Partner;
+	std::set<ARBString> const& m_Handlers;
+	std::set<ARBString> const& m_Dogs;
 
 	//{{AFX_VIRTUAL(CDlgPartner)
 protected:

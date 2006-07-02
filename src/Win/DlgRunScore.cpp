@@ -1166,7 +1166,7 @@ void CDlgRunScore::OnJudgeNotes()
 
 void CDlgRunScore::OnPartnersEdit() 
 {
-	CDlgListCtrl dlg(m_Run, this);
+	CDlgListCtrl dlg(CDlgListCtrl::ePartners, m_pDoc, m_Run, this);
 	if (IDOK == dlg.DoModal())
 		SetPartnerText();
 }

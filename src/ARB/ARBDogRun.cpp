@@ -594,10 +594,10 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 		}
 		break;
 	case ARBDogRunScoring::eTypeByOpenClose:
-		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts() - m_Scoring.GetCourseFaults();
+		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts() - m_Scoring.GetCourseFaults() - m_Scoring.GetTimeFaults(inScoring);
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
-		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults();
+		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults() - m_Scoring.GetTimeFaults(inScoring);
 		break;
 	}
 	return pts;

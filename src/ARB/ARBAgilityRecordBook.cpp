@@ -700,6 +700,42 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<ARBString>& outHandlers) co
 	return outHandlers.size();
 }
 
+void ARBAgilityRecordBook::GetAllPartners(
+		std::set<ARBString>& outPartners,
+		std::set<ARBString>& outDogs) const
+{
+	outPartners.clear();
+	outDogs.clear();
+	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
+		iterDog != m_Dogs.end();
+		++iterDog)
+	{
+		ARBDogPtr pDog = (*iterDog);
+		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrialPtr pTrial = (*iterTrial);
+			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				++iterRun)
+			{
+				ARBDogRunPtr pRun = (*iterRun);
+				for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
+					iterPartner != pRun->GetPartners().end();
+					++iterPartner)
+				{
+					ARBDogRunPartnerPtr pPartner = *iterPartner;
+					if (0 < pPartner->GetHandler().length())
+						outPartners.insert(pPartner->GetHandler());
+					if (0 < pPartner->GetDog().length())
+						outDogs.insert(pPartner->GetDog());
+				}
+			}
+		}
+	}
+}
+
 size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<ARBString>& outFaults) const
 {
 	outFaults.clear();
