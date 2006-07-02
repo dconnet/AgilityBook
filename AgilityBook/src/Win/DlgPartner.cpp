@@ -51,9 +51,15 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgPartner::CDlgPartner(
 		ARBDogRunPartnerPtr partner,
+		std::set<ARBString> const& inHandlers,
+		std::set<ARBString> const& inDogs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgPartner::IDD, pParent)
+	, m_ctrlHandler(false)
+	, m_ctrlDog(false)
 	, m_Partner(partner)
+	, m_Handlers(inHandlers)
+	, m_Dogs(inDogs)
 {
 	ASSERT(m_Partner);
 	//{{AFX_DATA_INIT(CDlgPartner)
@@ -67,8 +73,10 @@ void CDlgPartner::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgPartner)
-	DDX_Text(pDX, IDC_PARTNER_NAME, m_Handler);
-	DDX_Text(pDX, IDC_PARTNER_CALLNAME, m_Dog);
+	DDX_Control(pDX, IDC_PARTNER_NAME, m_ctrlHandler);
+	DDX_CBString(pDX, IDC_PARTNER_NAME, m_Handler);
+	DDX_Control(pDX, IDC_PARTNER_CALLNAME, m_ctrlDog);
+	DDX_CBString(pDX, IDC_PARTNER_CALLNAME, m_Dog);
 	DDX_Text(pDX, IDC_PARTNER_REG_NUM, m_RegNum);
 	//}}AFX_DATA_MAP
 }
@@ -84,6 +92,17 @@ END_MESSAGE_MAP()
 BOOL CDlgPartner::OnInitDialog() 
 {
 	CDlgBaseDialog::OnInitDialog();
+
+	std::set<ARBString>::const_iterator iter;
+	for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
+	{
+		m_ctrlHandler.AddString((*iter).c_str());
+	}
+	for (iter = m_Dogs.begin(); iter != m_Dogs.end(); ++iter)
+	{
+		m_ctrlDog.AddString((*iter).c_str());
+	}
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }

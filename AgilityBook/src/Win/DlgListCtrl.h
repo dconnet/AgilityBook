@@ -47,6 +47,14 @@ class CTabView;
 class CDlgListCtrl : public CDlgBaseDialog
 {
 public:
+	typedef enum
+	{
+		eCalendar,
+		eFaults,
+		eOtherPoints,
+		ePartners
+	} WhatToList;
+
 	// Calendar
 	CDlgListCtrl(
 			CAgilityBookDoc* pDoc,
@@ -54,18 +62,15 @@ public:
 			std::vector<ARBCalendarPtr> const* entries,
 			CTabView* pTabView,
 			CWnd* pParent = NULL);
-	// Faults
+	// Faults, Partners
 	CDlgListCtrl(
+			WhatToList inType,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr run,
 			CWnd* pParent = NULL);
 	// OtherPoints
 	CDlgListCtrl(
 			ARBConfig& pConfig,
-			ARBDogRunPtr run,
-			CWnd* pParent = NULL);
-	// Partners
-	CDlgListCtrl(
 			ARBDogRunPtr run,
 			CWnd* pParent = NULL);
 
@@ -81,13 +86,6 @@ private:
 	CButton	m_ctrlDown;
 	CButton m_ctrlCreateTrial;
 	//}}AFX_DATA
-	typedef enum
-	{
-		eCalendar,
-		eFaults,
-		eOtherPoints,
-		ePartners
-	} WhatToList;
 	WhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
 	ARBDate m_Date;
@@ -113,6 +111,10 @@ protected:
 	void SwapEntries(
 			int oldIndex,
 			int newIndex);
+public:
+	void GetAllPartners(
+			std::set<ARBString>& ioPartners,
+			std::set<ARBString>& ioDogs) const;
 
 // Implementation
 protected:

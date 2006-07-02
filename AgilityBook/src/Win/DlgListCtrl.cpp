@@ -308,10 +308,12 @@ class CDlgListCtrlDataPartners : public CDlgListCtrlData
 {
 public:
 	CDlgListCtrlDataPartners(
+			CDlgListCtrl* pDlg,
 			CListCtrl& list,
 			ARBDogRunPtr pRun,
 			ARBDogRunPartnerPtr pPartner)
 		: CDlgListCtrlData(list)
+		, m_pDlg(pDlg)
 		, m_pRun(pRun)
 		, m_Partner(pPartner)
 	{
@@ -324,6 +326,7 @@ protected:
 	{
 	}
 private:
+	CDlgListCtrl* m_pDlg;
 	ARBDogRunPtr m_pRun;
 	ARBDogRunPartnerPtr m_Partner;
 };
@@ -349,7 +352,9 @@ ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
 
 bool CDlgListCtrlDataPartners::OnEdit()
 {
-	CDlgPartner dlg(m_Partner);
+	std::set<ARBString> handlers, dogs;
+	m_pDlg->GetAllPartners(handlers, dogs);
+	CDlgPartner dlg(m_Partner, handlers, dogs);
 	if (IDOK == dlg.DoModal())
 		return true;
 	else
@@ -386,20 +391,22 @@ CDlgListCtrl::CDlgListCtrl(
 	//}}AFX_DATA_INIT
 }
 
-// Faults
+// Faults/Partners
 CDlgListCtrl::CDlgListCtrl(
+		CDlgListCtrl::WhatToList inType,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr run,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_ctrlList(true)
-	, m_What(eFaults)
+	, m_What(inType)
 	, m_pDoc(pDoc)
 	, m_CalEntries(NULL)
 	, m_pTabView(NULL)
 	, m_pConfig(NULL)
 	, m_pRun(run)
 {
+	ASSERT(m_What == eFaults || m_What == ePartners);
 }
 
 // OtherPoints
@@ -414,21 +421,6 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_CalEntries(NULL)
 	, m_pTabView(NULL)
 	, m_pConfig(&pConfig)
-	, m_pRun(run)
-{
-}
-
-// Partners
-CDlgListCtrl::CDlgListCtrl(
-		ARBDogRunPtr run,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
-	, m_ctrlList(true)
-	, m_What(ePartners)
-	, m_pDoc(NULL)
-	, m_CalEntries(NULL)
-	, m_pTabView(NULL)
-	, m_pConfig(NULL)
 	, m_pRun(run)
 {
 }
@@ -516,6 +508,26 @@ void CDlgListCtrl::SwapEntries(
 	UpdateControls();
 }
 
+void CDlgListCtrl::GetAllPartners(
+		std::set<ARBString>& ioPartners,
+		std::set<ARBString>& ioDogs) const
+{
+	if (m_pDoc)
+	{
+		m_pDoc->GetAllPartners(ioPartners, ioDogs);
+		for (int index = 0; index < m_ctrlList.GetItemCount(); ++index)
+		{
+			CListData* pRawData = m_ctrlList.GetData(index);
+			CDlgListCtrlDataPartners* pData = dynamic_cast<CDlgListCtrlDataPartners*>(pRawData);
+			if (pData)
+			{
+				ioPartners.insert(pData->OnNeedText(2));
+				ioDogs.insert(pData->OnNeedText(0));
+			}
+		}
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListCtrl message handlers
 
@@ -601,7 +613,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (ARBDogRunPartnerList::const_iterator iter = m_pRun->GetPartners().begin(); iter != m_pRun->GetPartners().end(); ++iter)
 			{
-				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, *iter);
+				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(this, m_ctrlList, m_pRun, *iter);
 				items.push_back(pData);
 			}
 		}
@@ -799,11 +811,13 @@ void CDlgListCtrl::OnNew()
 	case ePartners:
 		{
 			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
-			CDlgPartner dlg(partner, this);
+			std::set<ARBString> handlers, dogs;
+			GetAllPartners(handlers, dogs);
+			CDlgPartner dlg(partner, handlers, dogs);
 			if (IDOK == dlg.DoModal())
 			{
 				bUpdate = true;
-				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(m_ctrlList, m_pRun, partner);
+				CDlgListCtrlDataPartners* pData = new CDlgListCtrlDataPartners(this, m_ctrlList, m_pRun, partner);
 				LV_ITEM item;
 				item.mask = LVIF_TEXT | LVIF_PARAM;
 				if (pData->HasIcon())

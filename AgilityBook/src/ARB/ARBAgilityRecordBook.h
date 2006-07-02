@@ -521,6 +521,15 @@ public:
 	size_t GetAllHandlers(std::set<ARBString>& outHandlers) const;
 
 	/**
+	 * Get all pairs partners in use from existing runs.
+	 * @param outPartners List of handlers.
+	 * @param outDogs List of dogs.
+	 */
+	void GetAllPartners(
+			std::set<ARBString>& outPartners,
+			std::set<ARBString>& outDogs) const;
+
+	/**
 	 * Get all fault types in use from existing runs and configuration.
 	 * @param outFaults List of faults.
 	 * @return Number of faults.

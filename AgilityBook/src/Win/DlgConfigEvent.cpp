@@ -574,13 +574,17 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsOpening.ShowWindow(SW_SHOW);
 			m_ctrlPointsClosingText.ShowWindow(SW_SHOW);
 			m_ctrlPointsClosing.ShowWindow(SW_SHOW);
-			m_ctrlDropFractions.ShowWindow(SW_HIDE);
+			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
 			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[0]);
+			if (pScoring->DropFractions())
+				m_ctrlDropFractions.SetCheck(1);
+			else
+				m_ctrlDropFractions.SetCheck(0);
 			if (pScoring->ComputeTimeFaultsUnder())
 				m_ctrlTimeFaultsUnder.SetCheck(1);
 			else
@@ -598,13 +602,17 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsOpening.ShowWindow(SW_SHOW);
 			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
-			m_ctrlDropFractions.ShowWindow(SW_HIDE);
+			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
 			m_ctrlMultiply.ShowWindow(SW_HIDE);
 			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[1]);
+			if (pScoring->DropFractions())
+				m_ctrlDropFractions.SetCheck(1);
+			else
+				m_ctrlDropFractions.SetCheck(0);
 			if (pScoring->ComputeTimeFaultsUnder())
 				m_ctrlTimeFaultsUnder.SetCheck(1);
 			else
@@ -759,6 +767,10 @@ bool CDlgConfigEvent::SaveControls()
 		case ARBConfigScoring::eOCScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
 			pScoring->SetRequiredClosingPoints(m_ClosingPts);
+			if (m_ctrlDropFractions.GetCheck())
+				pScoring->SetDropFractions(true);
+			else
+				pScoring->SetDropFractions(false);
 			if (m_ctrlTimeFaultsUnder.GetCheck())
 				pScoring->SetComputeTimeFaultsUnder(true);
 			else
@@ -770,6 +782,10 @@ bool CDlgConfigEvent::SaveControls()
 			break;
 		case ARBConfigScoring::eScoreThenTime:
 			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
+			if (m_ctrlDropFractions.GetCheck())
+				pScoring->SetDropFractions(true);
+			else
+				pScoring->SetDropFractions(false);
 			if (m_ctrlTimeFaultsUnder.GetCheck())
 				pScoring->SetComputeTimeFaultsUnder(true);
 			else

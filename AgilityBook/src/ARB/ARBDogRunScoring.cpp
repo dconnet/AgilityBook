@@ -344,6 +344,7 @@ double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr inScoring) const
 		{
 			// Compute time faults on gamble-style events now.
 			// This currently applies only to DOCNA strategic time gamble
+			// And AKC FAST.
 			if (ARBDogRunScoring::eTypeByTime != m_type)
 			{
 				timeSCT += m_SCT2;
