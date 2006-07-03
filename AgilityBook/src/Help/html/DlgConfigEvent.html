@@ -53,16 +53,38 @@ scoring styles are:</p>
   combined, wins. Note, this style does not compute time faults, unless
   specifically enabled.</li>
 </ul>
-<p>In some venues, fractional seconds are rounded off when computing faults. The
-<b>Drop time fractions for faults</b> option enables this.
-Also, the <b>Time Fault Multiplier</b> enables time faults to generate
-additional faults, for instance in AKC.</p>
-<p>For the &quot;Opening/Closing Points Then Time&quot; style, there will be two fields
-visible. These are for designating the number of points that must be earned
-during the open and closing periods in order to qualify. When you create a run,
-you must have at least that number of points in order to earn title points. As
-you can see above, there is only one field for the &quot;Points Then Time&quot; option.
-All other options hide these fields.</p>
+<p>For each of the scoring styles, there are a number of options that can be set:</P>
+<ul>
+  <li><b>Time Fault Multiplier</b> - Generate additional faults for any time
+  faults (AKC uses this).
+  [Faults Then Time,
+  100 Minus Faults Then Time,
+  200 Minus Faults Then Time,
+  Time Plus Faults]</li>
+  <li><b>Drop time fractions for faults</b> - When computing time faults, drop
+  any fractions.
+  [all]</li>
+  <li><b>Time+Fault runs must be clean to Q</b> - Time+Fault runs are normally
+  scored by adding the time and faults. In some venues, this is used for
+  placing, however the run must be clean to actually qualify.
+  [Time Plus Faults]</li>
+  <li><b>Subtract time faults from score</b> - When computing how many points
+  were earned, subtract any time faults from the score. For example, this is
+  used in AKC FAST and CPE FullHouse.
+  [Opening/Closing Points Then Time,
+  Points Then Time]</li>
+  <li><b>Compute time faults under SCT</b> - Compute time faults if you are
+  actually under the course time. This is used in Time Gamble type runs.
+  [Opening/Closing Points Then Time,
+  Points Then Time,
+  Time Plus Faults]</li>
+  <li><b>Compute time faults over SCT</b> - Compute time faults if you are
+  over the course time. This is used in some Gamble type runs, AKC FAST and
+  CPE FullHouse.
+  [Opening/Closing Points Then Time,
+  Points Then Time,
+  Time Plus Faults]</li>
+</ul>
 <p>The <b>Super Q?</b> option is for USDAA Snooker. It means you qualified in
 the top 15% of the class. Agility Record Book will not compute this for you.
 This is so this option could be used in other venues for similar purposes, even

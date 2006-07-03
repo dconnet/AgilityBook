@@ -95,6 +95,7 @@ private:
 	short	m_ClosingPts;
 	CButton	m_ctrlDropFractions;
 	CButton	m_ctrlTimeFaultsCleanQ;
+	CButton	m_ctrlSubtractTimeFaults;
 	CButton	m_ctrlTimeFaultsUnder;
 	CButton	m_ctrlTimeFaultsOver;
 	CEdit	m_ctrlNote;

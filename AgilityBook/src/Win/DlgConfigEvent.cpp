@@ -161,6 +161,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ClosingPts);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DROP_FRACTIONS, m_ctrlDropFractions);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ, m_ctrlTimeFaultsCleanQ);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS, m_ctrlSubtractTimeFaults);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_UNDER, m_ctrlTimeFaultsUnder);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_OVER, m_ctrlTimeFaultsOver);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
@@ -330,6 +331,7 @@ void CDlgConfigEvent::FillControls()
 		m_ctrlType.SetCurSel(-1);
 		m_ctrlDropFractions.SetCheck(0);
 		m_ctrlTimeFaultsCleanQ.SetCheck(0);
+		m_ctrlSubtractTimeFaults.SetCheck(0);
 		m_ctrlTimeFaultsUnder.SetCheck(0);
 		m_ctrlTimeFaultsOver.SetCheck(0);
 		m_ctrlPointsList.ResetContent();
@@ -349,6 +351,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlType.EnableWindow(bEnable);
 	m_ctrlDropFractions.EnableWindow(bEnable);
 	m_ctrlTimeFaultsCleanQ.EnableWindow(bEnable);
+	m_ctrlSubtractTimeFaults.EnableWindow(bEnable);
 	m_ctrlTimeFaultsUnder.EnableWindow(bEnable);
 	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
 	m_ctrlSpeedPts.EnableWindow(bEnable);
@@ -520,6 +523,7 @@ void CDlgConfigEvent::FillRequiredPoints()
 		m_ctrlPointsClosing.ShowWindow(SW_HIDE);
 		m_ctrlDropFractions.ShowWindow(SW_HIDE);
 		m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
+		m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
 		m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 		m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
 		m_ctrlMultiplyText.ShowWindow(SW_HIDE);
@@ -544,6 +548,7 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
 			m_ctrlDropFractions.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
+			m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
@@ -558,6 +563,7 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
 			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
+			m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
 			m_ctrlMultiplyText.ShowWindow(SW_SHOW);
@@ -576,6 +582,7 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_SHOW);
 			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
+			m_ctrlSubtractTimeFaults.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
@@ -585,6 +592,10 @@ void CDlgConfigEvent::FillRequiredPoints()
 				m_ctrlDropFractions.SetCheck(1);
 			else
 				m_ctrlDropFractions.SetCheck(0);
+			if (pScoring->SubtractTimeFaultsFromScore())
+				m_ctrlSubtractTimeFaults.SetCheck(1);
+			else
+				m_ctrlSubtractTimeFaults.SetCheck(0);
 			if (pScoring->ComputeTimeFaultsUnder())
 				m_ctrlTimeFaultsUnder.SetCheck(1);
 			else
@@ -604,6 +615,7 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
 			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
+			m_ctrlSubtractTimeFaults.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
@@ -613,6 +625,10 @@ void CDlgConfigEvent::FillRequiredPoints()
 				m_ctrlDropFractions.SetCheck(1);
 			else
 				m_ctrlDropFractions.SetCheck(0);
+			if (pScoring->SubtractTimeFaultsFromScore())
+				m_ctrlSubtractTimeFaults.SetCheck(1);
+			else
+				m_ctrlSubtractTimeFaults.SetCheck(0);
 			if (pScoring->ComputeTimeFaultsUnder())
 				m_ctrlTimeFaultsUnder.SetCheck(1);
 			else
@@ -631,6 +647,7 @@ void CDlgConfigEvent::FillRequiredPoints()
 			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
 			m_ctrlDropFractions.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_SHOW);
+			m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
 			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
 			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
 			m_ctrlMultiplyText.ShowWindow(SW_SHOW);
@@ -771,6 +788,10 @@ bool CDlgConfigEvent::SaveControls()
 				pScoring->SetDropFractions(true);
 			else
 				pScoring->SetDropFractions(false);
+			if (m_ctrlSubtractTimeFaults.GetCheck())
+				pScoring->SetSubtractTimeFaultsFromScore(true);
+			else
+				pScoring->SetSubtractTimeFaultsFromScore(false);
 			if (m_ctrlTimeFaultsUnder.GetCheck())
 				pScoring->SetComputeTimeFaultsUnder(true);
 			else
@@ -786,6 +807,10 @@ bool CDlgConfigEvent::SaveControls()
 				pScoring->SetDropFractions(true);
 			else
 				pScoring->SetDropFractions(false);
+			if (m_ctrlSubtractTimeFaults.GetCheck())
+				pScoring->SetSubtractTimeFaultsFromScore(true);
+			else
+				pScoring->SetSubtractTimeFaultsFromScore(false);
 			if (m_ctrlTimeFaultsUnder.GetCheck())
 				pScoring->SetComputeTimeFaultsUnder(true);
 			else
