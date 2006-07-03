@@ -39,7 +39,6 @@
 
 #include "StdAfx.h"
 #include "ARBTypes.h"
-#include <float.h>
 #include <math.h>
 #include <time.h>
 
@@ -210,7 +209,19 @@ ARBString ARBDouble::str(
 	return retVal;
 }
 
-bool ARBDouble::equal(double const& inVal1, double const& inVal2)
+// http://groups.google.com/group/comp.lang.c++.moderated/msg/518274ddc6fb8541?hl=en&
+bool ARBDouble::equal(
+		double const& inVal1,
+		double const& inVal2,
+		double inPrec)
 {
-	return abs(inVal1 - inVal2) <= DBL_EPSILON;
+	int mag1, mag2;
+	frexp(inVal1, &mag1);
+	frexp(inVal2, &mag2);
+	if (mag1 != mag2)
+		return false;
+
+	double epsilon = ldexp(inPrec, mag1);
+	double diff = abs(inVal1 - inVal2);
+	return diff <= epsilon;
 }
