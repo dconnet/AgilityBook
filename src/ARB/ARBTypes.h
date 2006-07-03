@@ -467,7 +467,10 @@ public:
 			int inPrec = 2);
 
 	/**
-	 * Compare two doubles, allowing for DBL_EPSILON error.
+	 * Compare two doubles, allowing for 'prec' error.
 	 */
-	static bool equal(double const& inVal1, double const& inVal2);
+	static bool equal(
+			double const& inVal1,
+			double const& inVal2,
+			double inPrec = 1e-9);
 };
