@@ -189,6 +189,9 @@ Could there be a table in this event?
 .topic HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ
 For TimePlusFault runs, the run must be clean to earn titling points.
 
+.topic HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS
+Subtract any time faults from the points earned.
+
 .topic HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
 Add time faults for the number of seconds under course time.
 
