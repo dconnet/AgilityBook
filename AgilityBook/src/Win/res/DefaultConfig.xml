@@ -338,36 +338,36 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 			</Event>
 			<Event Name="FAST">
 				<Desc>Fifteen and Send Time</Desc>
-				<Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" dropFractions="y" overTF="y" type="ScoreThenTime"/>
-				<Scoring Division="Standard" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime"/>
+				<Scoring Division="Standard" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 38/35/32</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Preferred" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" type="ScoreThenTime">
+				<Scoring Division="Preferred" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<Note>SCT: 41/38/35</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
@@ -1111,31 +1111,31 @@ Faults allowed:
 3 of a kind: 3 jumps (1 pt each)
 2 of a kind: 2 "circles" (3 pts each)
 joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
-				<Scoring Division="Specialist" Level="Level 3" OpeningPts="23" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Specialist" Level="Level 3" OpeningPts="23" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="20"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Level C" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="20"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 5" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Level 5" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 4" OpeningPts="25" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Level 4" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 3" OpeningPts="23" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Level 3" OpeningPts="23" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 2" OpeningPts="21" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Level 2" OpeningPts="21" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 1" OpeningPts="19" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Standard" Level="Level 1" OpeningPts="19" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>

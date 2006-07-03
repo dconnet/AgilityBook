@@ -238,6 +238,14 @@ public:
 	{
 		m_bTimeFaultsOver = inBool;
 	}
+	bool SubtractTimeFaultsFromScore() const
+	{
+		return m_bSubtractTimeFaults;
+	}
+	void SetSubtractTimeFaultsFromScore(bool inBool)
+	{
+		m_bSubtractTimeFaults = inBool;
+	}
 	short TimeFaultMultiplier() const
 	{
 		return m_TimeFaultMultiplier;
@@ -332,6 +340,7 @@ private:
 	bool m_bCleanQ;
 	bool m_bTimeFaultsUnder;
 	bool m_bTimeFaultsOver;
+	bool m_bSubtractTimeFaults;
 	short m_TimeFaultMultiplier;
 	ARBString m_Note;
 	short m_OpeningPts;
