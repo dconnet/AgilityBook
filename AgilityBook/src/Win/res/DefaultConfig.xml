@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="12.1">
+<DefaultConfig Book="12.2">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
 2006-07-01 DRC Configuration version 14. AKC FAST drops time fractions.
+               Update CPE/FullHouse to auto-adjust time faults.
 2006-06-14 DRC Configuration version 13. Restricted NADAC Chances divisions.
                Cleaned up NADAC titles. Corrected USDAA RM to have 5 partners.
                Fixed DOCNA Trigility and Challenge scoring rules.
