@@ -550,7 +550,17 @@ double ARBDogRun::GetTitlePoints(
 			double timeFaults = 0.0;
 			if (inScoring->ComputeTimeFaultsUnder()
 			|| inScoring->ComputeTimeFaultsOver())
+			{
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
+				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
+				{
+					// If time faults are being subtracted from the score,
+					// recompute if we have enough points. If so, just pretend
+					// there are no time faults.
+					if (static_cast<double>(m_Scoring.GetNeedOpenPts() + m_Scoring.GetNeedClosePts()) <= GetScore(inScoring))
+						timeFaults = 0.0;
+				}
+			}
 			if (outClean)
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults) + bonusPts;
@@ -564,7 +574,17 @@ double ARBDogRun::GetTitlePoints(
 			double timeFaults = 0.0;
 			if (inScoring->ComputeTimeFaultsUnder()
 			|| inScoring->ComputeTimeFaultsOver())
+			{
 				timeFaults = m_Scoring.GetTimeFaults(inScoring);
+				if (0.0 < timeFaults && inScoring->SubtractTimeFaultsFromScore())
+				{
+					// If time faults are being subtracted from the score,
+					// recompute if we have enough points. If so, just pretend
+					// there are no time faults.
+					if (static_cast<double>(m_Scoring.GetNeedOpenPts()) <= GetScore(inScoring))
+						timeFaults = 0.0;
+				}
+			}
 			if (outClean)
 				*outClean = true;
 			pts = inScoring->GetTitlePoints().GetTitlePoints(timeFaults) + bonusPts;
@@ -594,10 +614,14 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 		}
 		break;
 	case ARBDogRunScoring::eTypeByOpenClose:
-		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts() - m_Scoring.GetCourseFaults() - m_Scoring.GetTimeFaults(inScoring);
+		pts = m_Scoring.GetOpenPts() + m_Scoring.GetClosePts() - m_Scoring.GetCourseFaults();
+		if (inScoring->SubtractTimeFaultsFromScore())
+			pts -= m_Scoring.GetTimeFaults(inScoring);
 		break;
 	case ARBDogRunScoring::eTypeByPoints:
-		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults() - m_Scoring.GetTimeFaults(inScoring);
+		pts = m_Scoring.GetOpenPts() - m_Scoring.GetCourseFaults();
+		if (inScoring->SubtractTimeFaultsFromScore())
+			pts -= m_Scoring.GetTimeFaults(inScoring);
 		break;
 	}
 	return pts;

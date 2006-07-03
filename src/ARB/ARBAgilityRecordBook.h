@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2006-07-02 DRC Added 'subtractTF'.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent'.
  * @li 2005-12-04 DRC Added 'bonusPts' to 'Scoring','Run'(scoring)
@@ -188,6 +189,7 @@
 #define ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q	_T("cleanQ")
 #define ATTRIB_SCORING_TIMEFAULTS_UNDER		_T("underTF")
 #define ATTRIB_SCORING_TIMEFAULTS_OVER		_T("overTF")
+#define ATTRIB_SCORING_SUBTRACT_TIMEFAULTS	_T("subtractTF")
 #define ATTRIB_SCORING_OPENINGPTS			_T("OpeningPts")
 #define ATTRIB_SCORING_CLOSINGPTS			_T("ClosingPts")
 #define ATTRIB_SCORING_SUPERQ				_T("superQ")

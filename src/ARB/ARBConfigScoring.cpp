@@ -106,6 +106,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bCleanQ(false)
 	, m_bTimeFaultsUnder(false)
 	, m_bTimeFaultsOver(false)
+	, m_bSubtractTimeFaults(false)
 	, m_TimeFaultMultiplier(1)
 	, m_Note()
 	, m_OpeningPts(0)
@@ -129,6 +130,7 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bCleanQ(rhs.m_bCleanQ)
 	, m_bTimeFaultsUnder(rhs.m_bTimeFaultsUnder)
 	, m_bTimeFaultsOver(rhs.m_bTimeFaultsOver)
+	, m_bSubtractTimeFaults(rhs.m_bSubtractTimeFaults)
 	, m_TimeFaultMultiplier(rhs.m_TimeFaultMultiplier)
 	, m_Note(rhs.m_Note)
 	, m_OpeningPts(rhs.m_OpeningPts)
@@ -161,6 +163,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bCleanQ = rhs.m_bCleanQ;
 		m_bTimeFaultsUnder = rhs.m_bTimeFaultsUnder;
 		m_bTimeFaultsOver = rhs.m_bTimeFaultsOver;
+		m_bSubtractTimeFaults = rhs.m_bSubtractTimeFaults;
 		m_TimeFaultMultiplier = rhs.m_TimeFaultMultiplier;
 		m_Note = rhs.m_Note;
 		m_OpeningPts = rhs.m_OpeningPts;
@@ -186,6 +189,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bCleanQ == rhs.m_bCleanQ
 		&& m_bTimeFaultsUnder == rhs.m_bTimeFaultsUnder
 		&& m_bTimeFaultsOver == rhs.m_bTimeFaultsOver
+		&& m_bSubtractTimeFaults == rhs.m_bSubtractTimeFaults
 		&& m_TimeFaultMultiplier == rhs.m_TimeFaultMultiplier
 		&& m_Note == rhs.m_Note
 		&& m_OpeningPts == rhs.m_OpeningPts
@@ -299,6 +303,11 @@ bool ARBConfigScoring::Load(
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, VALID_VALUES_BOOL));
+		return false;
+	}
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, VALID_VALUES_BOOL));
 		return false;
 	}
 	inTree.GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
@@ -440,6 +449,8 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
 	if (m_bTimeFaultsOver)
 		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
+	if (m_bSubtractTimeFaults)
+		scoring.AddAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults);
 	if (1 < m_TimeFaultMultiplier)
 		scoring.AddAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 	if (0 < m_Note.length())
