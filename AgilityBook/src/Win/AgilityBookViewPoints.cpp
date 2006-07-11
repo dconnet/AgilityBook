@@ -665,7 +665,7 @@ void CAgilityBookViewPoints::LoadData()
 											pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
 								}
 								// Now add the existing lifetime points
-								if (bHasExistingLifetimePoints && 0.0 < nExistingPts + nExistingSQ)
+								if (bHasExistingLifetimePoints && !ARBDouble::equal(0.0, nExistingPts + nExistingSQ))
 								{
 									pts.ptList.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
 								}
@@ -728,7 +728,7 @@ void CAgilityBookViewPoints::LoadData()
 										}
 									}
 									InsertData(idxInsertItem, new PointsDataEvent(this,
-										0 < nExistingPts + nExistingSQ ? pDog : ARBDogPtr(),
+										!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? pDog : ARBDogPtr(),
 										matching,
 										pVenue, pDiv, pLevel, pEvent,
 										(LPCTSTR)strRunCount,
