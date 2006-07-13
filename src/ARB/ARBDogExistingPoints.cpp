@@ -450,15 +450,20 @@ public:
 		{
 			if (one->GetVenue() == two->GetVenue())
 			{
-				if (one->GetDivision() == two->GetDivision())
+				if (one->GetEvent() == two->GetEvent())
 				{
-					if (one->GetLevel() == two->GetLevel())
-						return one->GetEvent() < two->GetEvent();
+					if (one->GetDate() == two->GetDate())
+					{
+						if (one->GetDivision() == two->GetDivision())
+							return one->GetLevel() < two->GetLevel();
+						else
+							return one->GetDivision() < two->GetDivision();
+					}
 					else
-						return one->GetLevel() < two->GetLevel();
+						return one->GetDate() < two->GetDate();
 				}
 				else
-					return one->GetDivision() < two->GetDivision();
+					return one->GetEvent() < two->GetEvent();
 			}
 			else
 				return one->GetVenue() < two->GetVenue();
