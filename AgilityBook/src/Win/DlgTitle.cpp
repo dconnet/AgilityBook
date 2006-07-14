@@ -315,7 +315,14 @@ void CDlgTitle::OnOK()
 	title->SetName(pTitle->GetName(), instance);
 	title->SetReceived(bReceived);
 	if (m_pTitle)
+	{
+		bool bSort = false;
+		if (m_pTitle->GetDate() != title->GetDate())
+			bSort = true;
 		*m_pTitle = *title;
+		if (bSort)
+			m_Titles.sort();
+	}
 	else
 		m_Titles.AddTitle(title);
 	CDlgBaseDialog::OnOK();

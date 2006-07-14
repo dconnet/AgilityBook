@@ -405,6 +405,7 @@ bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
 	{
 		bAdded = true;
 		push_back(inTitle);
+		sort();
 	}
 	return bAdded;
 }
