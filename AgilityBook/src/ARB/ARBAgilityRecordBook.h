@@ -151,6 +151,7 @@
 #define ATTRIB_ACTION_VERB					_T("Verb")
 	#define ACTION_VERB_DELETE_TITLE			_T("DeleteTitle")
 	#define ACTION_VERB_RENAME_TITLE			_T("RenameTitle")
+	#define ACTION_VERB_DELETE_EVENT			_T("DeleteEvent")
 	#define ACTION_VERB_RENAME_EVENT			_T("RenameEvent")
 #define ATTRIB_ACTION_VENUE					_T("Venue")
 #define ATTRIB_ACTION_DIVISION				_T("Div")

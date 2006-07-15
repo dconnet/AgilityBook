@@ -13,6 +13,7 @@ see notes in src/ARB/ARBAgilityRecordBook.cpp.
 Revision History:
 2006-07-02 DRC File version 12.2
                Added 'subtractTF'.
+               Added Action for DeleteEvent.
 2006-02-08 DRC File version 12.1
                Added 'RenameEvent'.
 2005-12-14 DRC File version 12.0
@@ -137,6 +138,11 @@ for renaming titles.
 	Div: If set, limit delete to this division (I created dup names in NADAC)
     OldName: Title to be removed.
 	NewName: If set, rename any existing titles, otherwise titles are deleted.
+  'DeleteEvent': NADAC doesn't have a 'Championship' class (Double Shot)
+    Venue: Venue that contains event
+	Div: Unused
+    OldName: Event to be delete.
+	NewName: Unused
   'RenameEvent': NADAC changed 'Wildcard' to 'Chance'
     Venue: Venue that contains event
 	Div: Unused

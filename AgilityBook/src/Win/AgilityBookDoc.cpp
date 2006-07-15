@@ -371,6 +371,32 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 				}
 			}
 		}
+		else if (action->GetVerb() == ACTION_VERB_DELETE_EVENT)
+		{
+			ARBConfigVenuePtr venue;
+			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
+			{
+				ARBConfigEventPtr oldEvent;
+				if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
+				{
+					int nEvents = GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
+					// If any events are in use, create a fixup action.
+					if (0 < nEvents)
+					{
+						msg << _T("Action: DELETING existing ")
+							<< nEvents
+							<< _T(" event(s) [")
+							<< action->GetOldName()
+							<< _T("]\n");
+						GetDogs().DeleteEvent(action->GetVenue(), action->GetOldName());
+					}
+					msg << _T("Action: Deleting event [")
+						<< action->GetOldName()
+						<< _T("]\n");
+					venue->GetEvents().DeleteEvent(action->GetOldName());
+				}
+			}
+		}
 		else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 		{
 			// Find the venue.
@@ -438,11 +464,11 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						}
 						else
 						{
-							msg << _T("Action: Deleting existing ")
+							msg << _T("Action: DELETING existing ")
 								<< nTitles
-								<< _T(" [")
+								<< _T(" title(s) [")
 								<< action->GetOldName()
-								<< _T("] title(s)\n");
+								<< _T("]\n");
 							GetDogs().DeleteTitle(action->GetVenue(), action->GetOldName());
 						}
 					}

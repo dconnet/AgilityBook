@@ -1018,6 +1018,34 @@ void CDlgConfigure::OnUpdate()
 					}
 				}
 			}
+			else if (action->GetVerb() == ACTION_VERB_DELETE_EVENT)
+			{
+				ARBConfigVenuePtr venue;
+				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
+				{
+					ARBConfigEventPtr oldEvent;
+					if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
+					{
+						ARBostringstream tmp;
+						int nEvents = m_Book.GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
+						// If any events are in use, create a fixup action.
+						if (0 < nEvents)
+						{
+							tmp << _T("Action: DELETING existing ")
+								<< nEvents
+								<< _T(" event(s) [")
+								<< action->GetOldName()
+								<< _T("]\n");
+							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(action->GetVenue(), action->GetOldName()));
+						}
+						tmp << _T("Action: Deleting event [")
+							<< action->GetOldName()
+							<< _T("]\n");
+						msg += tmp.str().c_str();
+						venue->GetEvents().DeleteEvent(action->GetOldName());
+					}
+				}
+			}
 			else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
 			{
 				// Find the venue.
@@ -1090,11 +1118,11 @@ void CDlgConfigure::OnUpdate()
 							}
 							else
 							{
-								tmp << _T("Action: Deleting existing ")
+								tmp << _T("Action: DELETING existing ")
 									<< nTitles
-									<< _T(" [")
+									<< _T(" title(s) [")
 									<< action->GetOldName()
-									<< _T("] title(s)\n");
+									<< _T("]\n");
 								m_DlgFixup.push_back(new CDlgFixupDeleteTitle(action->GetVenue(), action->GetOldName()));
 							}
 						}
