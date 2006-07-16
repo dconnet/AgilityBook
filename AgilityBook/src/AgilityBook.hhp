@@ -47,6 +47,7 @@ Help\html\DlgOptionsPgm.html
 Help\html\DlgOptionsView.html
 Help\html\DlgOtherPoints.html
 Help\html\DlgPartner.html
+Help\html\DlgPointsViewSort.html
 Help\html\DlgRefRun.html
 Help\html\DlgRegNum.html
 Help\html\DlgReorder.html
@@ -113,6 +114,7 @@ HIDD_MESSAGE=Help\html\DlgMessages.html
 HIDD_NAME=Help\html\DlgName.html
 HIDD_OTHER_POINT=Help\html\DlgOtherPoints.html
 HIDD_PARTNER=Help\html\DlgPartner.html
+HIDD_POINTS_VIEW_SORT=Help\html\DlgPointsViewSort.html
 HIDD_PROGRESS_DLG=Help\html\DlgWizardImport.html
 HIDD_REF_RUN=Help\html\DlgRefRun.html
 HIDD_REG_NUM=Help\html\DlgRegNum.html

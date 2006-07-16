@@ -397,6 +397,11 @@
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Points View Sorting">
+					<param name="Local" value="Help\html\DlgPointsViewSort.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Reference Run">
 					<param name="Local" value="Help\html\DlgRefRun.html">
 					<param name="ImageNumber" value="11">

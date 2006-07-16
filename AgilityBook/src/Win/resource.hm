@@ -254,6 +254,9 @@
 #define HIDC_PARTNER_NAME               0x80e70578    // IDD_PARTNER
 #define HIDC_PARTNER_REG_NUM            0x80e7057a    // IDD_PARTNER
 #define HIDC_PICK_NAME                  0x80d704b0    // IDD_DOG_PICKER
+#define HIDC_POINTS_VIEW_SORT_C1        0x80fe067c    // IDD_POINTS_VIEW_SORT
+#define HIDC_POINTS_VIEW_SORT_C2        0x80fe067d    // IDD_POINTS_VIEW_SORT
+#define HIDC_POINTS_VIEW_SORT_C3        0x80fe067e    // IDD_POINTS_VIEW_SORT
 #define HIDC_REFRUN_BREED               0x80e60573    // IDD_REF_RUN
 #define HIDC_REFRUN_HEIGHT              0x80e60570    // IDD_REF_RUN
 #define HIDC_REFRUN_NAME                0x80e60572    // IDD_REF_RUN
