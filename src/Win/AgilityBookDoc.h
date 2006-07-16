@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-07-15 DRC Add option to sort by event instead of division.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -243,6 +244,7 @@ protected:
 	afx_msg void OnViewOptions();
 	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateViewSortByDivision(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewHiddenTitles(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewTableInYPS(CCmdUI* pCmdUI);
 	//}}AFX_MSG

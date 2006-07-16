@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2006-07-15 DRC Add option to sort by event instead of division.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent' action.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -164,6 +165,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_SORT_BY_DIVISION, OnUpdateViewSortByDivision)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TABLE_IN_YPS, OnUpdateViewTableInYPS)
 	//}}AFX_MSG_MAP
@@ -1252,6 +1254,11 @@ void CAgilityBookDoc::OnUpdateViewSortruns(CCmdUI* pCmdUI)
 void CAgilityBookDoc::OnUpdateViewRunsByTrial(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
+}
+
+void CAgilityBookDoc::OnUpdateViewSortByDivision(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(CAgilityBookOptions::GetSortByDivision() ? 1 : 0);
 }
 
 void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)

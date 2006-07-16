@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-07-15 DRC Only adjust column widths the first time.
+ *                    Add a selected-item total.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-03 DRC Created.
@@ -202,6 +204,7 @@ void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DOGPTS_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_DOGPTS_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_DOGPTS_POINTS, m_ctrlPoints);
+	DDX_Control(pDX, IDC_DOGPTS_SELECTED_PTS, m_ctrlSelectedPts);
 	//}}AFX_DATA_MAP
 }
 
@@ -247,6 +250,7 @@ void CDlgDogPoints::SetColumnHeaders()
 
 void CDlgDogPoints::ListExistingPoints()
 {
+	bool bSetWidth = m_ctrlPoints.GetItemCount() == 0;
 	ARBDogExistingPointsPtr pSelected;
 	int i = m_ctrlPoints.GetSelection();
 	if (0 <= i)
@@ -268,8 +272,9 @@ void CDlgDogPoints::ListExistingPoints()
 				static_cast<CListData*>(
 					new CListPtrData<ARBDogExistingPointsPtr>(pExistingPoints))));
 	}
-	for (i = 0; i < nColExistingPointsInfo; ++i)
-		m_ctrlPoints.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+	if (bSetWidth)
+		for (i = 0; i < nColExistingPointsInfo; ++i)
+			m_ctrlPoints.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	SORTINFO si;
 	si.pThis = this;
 	si.pCols = &m_sortPoints;
@@ -294,17 +299,38 @@ void CDlgDogPoints::ListExistingPoints()
 void CDlgDogPoints::UpdateButtons()
 {
 	UINT selected = m_ctrlPoints.GetSelectedCount();
-	ASSERT(1 >= selected);
 	if (0 == selected)
 	{
 		m_ctrlEdit.EnableWindow(FALSE);
 		m_ctrlDelete.EnableWindow(FALSE);
 	}
-	else
+	else if (1 == selected)
 	{
 		m_ctrlEdit.EnableWindow(TRUE);
 		m_ctrlDelete.EnableWindow(TRUE);
 	}
+	else
+	{
+		m_ctrlEdit.EnableWindow(FALSE);
+		m_ctrlDelete.EnableWindow(TRUE);
+	}
+	CString str;
+	if (0 < selected)
+	{
+		double total = 0;
+		std::vector<int> indices;
+		m_ctrlPoints.GetSelection(indices);
+		for (std::vector<int>::iterator i = indices.begin(); i != indices.end(); ++i)
+		{
+			CListPtrData<ARBDogExistingPointsPtr>* pData = GetPointData(*i);
+			if (pData)
+				total += pData->GetData()->GetPoints();
+		}
+		ARBostringstream tmp;
+		tmp << total;
+		str = tmp.str().c_str();
+	}
+	m_ctrlSelectedPts.SetWindowText(str);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -450,7 +476,7 @@ void CDlgDogPoints::OnNew()
 
 void CDlgDogPoints::OnEdit()
 {
-	int i = m_ctrlPoints.GetSelection();
+	int i = m_ctrlPoints.GetSelection(true);
 	if (0 <= i)
 	{
 		CListPtrData<ARBDogExistingPointsPtr>* pData = GetPointData(i);
@@ -465,14 +491,18 @@ void CDlgDogPoints::OnEdit()
 
 void CDlgDogPoints::OnDelete()
 {
-	int i = m_ctrlPoints.GetSelection();
-	if (0 <= i)
+	std::vector<int> indices;
+	if (0 < m_ctrlPoints.GetSelection(indices))
 	{
-		CListPtrData<ARBDogExistingPointsPtr>* pData = GetPointData(i);
-		ARBDogExistingPointsPtr pExistingPoints;
-		if (pData)
-			pExistingPoints = pData->GetData();
-		m_ExistingPoints.DeleteExistingPoints(pExistingPoints);
-		m_ctrlPoints.DeleteItem(i);
+		for (std::vector<int>::reverse_iterator i = indices.rbegin(); i != indices.rend(); ++i)
+		{
+			CListPtrData<ARBDogExistingPointsPtr>* pData = GetPointData(*i);
+			ARBDogExistingPointsPtr pExistingPoints;
+			if (pData)
+				pExistingPoints = pData->GetData();
+			m_ExistingPoints.DeleteExistingPoints(pExistingPoints);
+			m_ctrlPoints.DeleteItem(*i);
+		}
+		UpdateButtons();
 	}
 }

@@ -1655,63 +1655,63 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Desc>http://www.nadac.com/
 Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
 			<Titles LongName="Novice Agility Certificate" Name="NAC">30 points</Titles>
-			<Titles LongName="Novice Chances Certificate" Name="NCC" ValidFrom="2006-1-1">30 points</Titles>
+			<Titles LongName="Novice Chances Certificate" Name="NCC" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Novice Gamblers Certificate" Name="NGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Jumpers Certificate" Name="NJC">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Tunnelers Certificate" Name="TN-N">30 points</Titles>
 			<Titles LongName="Novice Touch N Go Certificate" Name="TG-N">30 points</Titles>
 			<Titles LongName="Novice Weavers Certificate" Name="WV-N">30 points</Titles>
 			<Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
-			<Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2006-1-1">60 points</Titles>
+			<Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2004-1-1">60 points</Titles>
 			<Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Jumpers Certificate Outstanding Performance" Name="O-NJC">60 points (50 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Tunnelers Certificate Outstanding Performance" Name="O-TN-N">60 points</Titles>
 			<Titles LongName="Novice Touch N Go Certificate Outstanding Performance" Name="O-TG-N">60 points</Titles>
 			<Titles LongName="Novice Weavers Certificate Outstanding Performance" Name="O-WV-N">60 points</Titles>
 			<Titles LongName="Novice Agility Certificate Superior Performance" Name="S-NAC">200 points</Titles>
-			<Titles LongName="Novice Chances Certificate Superior Performance" Name="S-NCC" ValidFrom="2006-1-1">100 points</Titles>
+			<Titles LongName="Novice Chances Certificate Superior Performance" Name="S-NCC" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC" ValidTo="2006-1-1">100 points</Titles>
 			<Titles LongName="Novice Jumpers Certificate Superior Performance" Name="S-NJC">100 points</Titles>
 			<Titles LongName="Novice Tunnelers Certificate Superior Performance" Name="S-TN-N">100 points</Titles>
 			<Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
 			<Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
 			<Titles LongName="Open Agility Certificate" Name="OAC">30 points</Titles>
-			<Titles LongName="Open Chances Certificate" Name="OCC" ValidFrom="2006-1-1">30 points</Titles>
+			<Titles LongName="Open Chances Certificate" Name="OCC" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Open Gamblers Certificate" Name="OGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Open Jumpers Certificate" Name="OJC">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Open Tunnelers Certificate" Name="TN-O">30 points</Titles>
 			<Titles LongName="Open Touch N Go Certificate" Name="TG-O">30 points</Titles>
 			<Titles LongName="Open Weavers Certificate" Name="WV-O">30 points</Titles>
 			<Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
-			<Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2006-1-1">60 points</Titles>
+			<Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2004-1-1">60 points</Titles>
 			<Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
 			<Titles LongName="Open Jumpers Certificate Outstanding Performance" Name="O-OJC">60 points (50 pts before 8/1/2005)</Titles>
 			<Titles LongName="Open Tunnelers Certificate Outstanding Performance" Name="O-TN-O">60 points</Titles>
 			<Titles LongName="Open Touch N Go Certificate Outstanding Performance" Name="O-TG-O">60 points</Titles>
 			<Titles LongName="Open Weavers Certificate Outstanding Performance" Name="O-WV-O">60 points</Titles>
 			<Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
-			<Titles LongName="Open Chances Certificate Superior Performance" Name="S-OCC" ValidFrom="2006-1-1">100 points</Titles>
+			<Titles LongName="Open Chances Certificate Superior Performance" Name="S-OCC" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC" ValidTo="2006-1-1">100 points</Titles>
 			<Titles LongName="Open Jumpers Certificate Superior Performance" Name="S-OJC">100 points</Titles>
 			<Titles LongName="Open Tunnelers Certificate Superior Performance" Name="S-TN-O">100 points</Titles>
 			<Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
 			<Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
 			<Titles LongName="Elite Agility Certificate" Name="EAC">30 points</Titles>
-			<Titles LongName="Elite Chances Certificate" Name="ECC" ValidFrom="2006-1-1">30 points</Titles>
+			<Titles LongName="Elite Chances Certificate" Name="ECC" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Elite Gamblers Certificate" Name="EGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Elite Jumpers Certificate" Name="EJC">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Elite Tunnelers Certificate" Name="TN-E">30 points</Titles>
 			<Titles LongName="Elite Touch N Go Certificate" Name="TG-E">30 points</Titles>
 			<Titles LongName="Elite Weavers Certificate" Name="WV-E">30 points</Titles>
 			<Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
-			<Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2006-1-1">100 points</Titles>
+			<Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC" ValidTo="2006-1-1">100 points</Titles>
 			<Titles LongName="Elite Jumpers Certificate Outstanding Performance" Name="O-EJC">100 points</Titles>
 			<Titles LongName="Elite Tunnelers Certificate Outstanding Performance" Name="O-TN-E">100 points</Titles>
 			<Titles LongName="Elite Touch N Go Certificate Outstanding Performance" Name="O-TG-E">100 points</Titles>
 			<Titles LongName="Elite Weavers Certificate Outstanding Performance" Name="O-WV-E">100 points</Titles>
 			<Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
-			<Titles LongName="Elite Chances Certificate Superior Performance" Name="S-ECC" ValidFrom="2006-1-1">200 points</Titles>
+			<Titles LongName="Elite Chances Certificate Superior Performance" Name="S-ECC" ValidFrom="2004-1-1">200 points</Titles>
 			<Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC" ValidTo="2006-1-1">200 points</Titles>
 			<Titles LongName="Elite Jumpers Certificate Superior Performance" Name="S-EJC">200 points</Titles>
 			<Titles LongName="Elite Tunnelers Certificate Superior Performance" Name="S-TN-E">200 points</Titles>
@@ -1720,21 +1720,21 @@ Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. Al
 			<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
 			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
 			<Titles LongName="Elite Agility Skilled" Name="EAS">30 points</Titles>
-			<Titles LongName="Elite Chances Skilled" Name="ECS" ValidFrom="2006-1-1">30 points</Titles>
+			<Titles LongName="Elite Chances Skilled" Name="ECS" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled" Name="EGS" ValidTo="2006-1-1">30 points</Titles>
 			<Titles LongName="Elite Jumpers Skilled" Name="EJS">30 points</Titles>
 			<Titles LongName="Elite Tunnelers Skilled" Name="TNS-E">30 points</Titles>
 			<Titles LongName="Elite Touch N Go Skilled" Name="TGS-E">30 points</Titles>
 			<Titles LongName="Elite Weavers Skilled" Name="WVS-E">30 points</Titles>
 			<Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
-			<Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2006-1-1">100 points</Titles>
+			<Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled Outstanding Performance" Name="O-EGS" ValidTo="2006-1-1">100 points</Titles>
 			<Titles LongName="Elite Jumpers Skilled Outstanding Performance" Name="O-EJS">100 points</Titles>
 			<Titles LongName="Elite Tunnelers Skilled Outstanding Performance" Name="O-TNS-E">100 points</Titles>
 			<Titles LongName="Elite Touch N Go Skilled Outstanding Performance" Name="O-TGS-E">100 points</Titles>
 			<Titles LongName="Elite Weavers Skilled Outstanding Performance" Name="O-WVS-E">100 points</Titles>
 			<Titles LongName="Elite Agility Skilled Superior Performance" Name="S-EAS">400 points</Titles>
-			<Titles LongName="Elite Chances Skilled Superior Performance" Name="S-ECS" ValidFrom="2006-1-1">200 points</Titles>
+			<Titles LongName="Elite Chances Skilled Superior Performance" Name="S-ECS" ValidFrom="2004-1-1">200 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled Superior Performance" Name="S-EGS" ValidTo="2006-1-1">200 points</Titles>
 			<Titles LongName="Elite Jumpers Skilled Superior Performance" Name="S-EJS">200 points</Titles>
 			<Titles LongName="Elite Tunnelers Skilled Superior Performance" Name="S-TNS-E">200 points</Titles>
@@ -2504,6 +2504,10 @@ Known as "Performance Grand Prix" (2004) and "Performance National Standard" (20
 		<FaultType>Refusal</FaultType>
 		<FaultType>Run out</FaultType>
 		<OtherPts Count="LevelByEvent" Name="ASCA Merit">ASCA Merit Points</OtherPts>
+		<OtherPts Count="LevelByEvent" Name="NADAC Top10">NADAC Top-10 Points
+Runs with a DRI over 100 are worth 15 points instead of 10.</OtherPts>
+		<OtherPts Count="LevelByEvent" Name="NADAC DRI Runs">NADAC DRI Runs
+Use this to accumulate titling points of runs with 100+ DRIs.</OtherPts>
 		<OtherPts Count="LevelByEvent" Name="USDAA Top10">USDAA Top-10 Points
 Dogs/Placements/Points
 2-3/1/1

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-07-15 DRC Added SortByDivision
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-05-04 DRC Added IncludeCRCDImage
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
@@ -114,6 +115,8 @@ public:
 	static void SetViewRunsByTrial(bool bView);
 	static bool GetNewestDatesFirst();
 	static void SetNewestDatesFirst(bool bNewest);
+	static bool GetSortByDivision();
+	static void SetSortByDivision(bool bSet);
 	static bool GetViewHiddenTitles();
 	static void SetViewHiddenTitles(bool bSet);
 	static bool GetTableInYPS();

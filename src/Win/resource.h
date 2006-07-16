@@ -219,6 +219,7 @@
 #define IDC_DOGPTS_NEW                  1211
 #define IDC_DOGPTS_EDIT                 1212
 #define IDC_DOGPTS_DELETE               1213
+#define IDC_DOGPTS_SELECTED_PTS         1214
 #define IDC_DOG_CALLNAME                1220
 #define IDC_DOG_BREED                   1221
 #define IDC_DOG_REG_NAME                1222
@@ -767,6 +768,7 @@
 #define ID_VIEW_RUNS_BY_TRIAL           32823
 #define ID_VIEW_HIDDEN                  32824
 #define ID_VIEW_TABLE_IN_YPS            32825
+#define ID_VIEW_SORT_BY_DIVISION        32826
 #define ID_HELP_CONTENTS                32830
 #define ID_HELP_UPDATE                  32831
 #define ID_HELP_SPLASH                  32832

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-07-15 DRC Add a selected-item total.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-02-03 DRC Created.
  */
@@ -42,6 +43,7 @@
 #include "DlgBasePropertyPage.h"
 #include "ListCtrl.h"
 #include "ListData.h"
+
 class CAgilityBookDoc;
 
 class CDlgDogPoints : public CDlgBasePropertyPage
@@ -59,6 +61,7 @@ private:
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
 	CListCtrl2	m_ctrlPoints;
+	CStatic m_ctrlSelectedPts;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	CColumnOrder m_sortPoints;
