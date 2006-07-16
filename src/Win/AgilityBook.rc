@@ -233,7 +233,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Show &Newest Trials First",   ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
-        MENUITEM "Sort by &Division",           ID_VIEW_SORT_BY_DIVISION
+        MENUITEM "Sort &Points View...",        ID_VIEW_POINTS_VIEW_SORT
         MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
         MENUITEM "Include Table in &YPS",       ID_VIEW_TABLE_IN_YPS
         MENUITEM SEPARATOR
@@ -1466,6 +1466,21 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,187,24,50,14
 END
 
+IDD_POINTS_VIEW_SORT DIALOGEX 0, 0, 195, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Points View Sort Order"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "&Primary",IDC_STATIC,7,9,24,8
+    COMBOBOX        IDC_POINTS_VIEW_SORT_C1,45,7,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Secondary",IDC_STATIC,7,24,35,8
+    COMBOBOX        IDC_POINTS_VIEW_SORT_C2,45,22,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Tertiary",IDC_STATIC,8,39,24,8
+    COMBOBOX        IDC_POINTS_VIEW_SORT_C3,45,36,80,131,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,138,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,138,24,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1909,6 +1924,14 @@ BEGIN
         RIGHTMARGIN, 243
         TOPMARGIN, 7
         BOTTOMMARGIN, 38
+    END
+
+    IDD_POINTS_VIEW_SORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 188
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2433,7 +2456,8 @@ BEGIN
     ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
     ID_VIEW_HIDDEN          "Show Titles that have been hidden\nHidden Titles"
     ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"
-    ID_VIEW_SORT_BY_DIVISION "Sort points by division/level/event or level/event/division\nSort by division"
+    ID_VIEW_POINTS_VIEW_SORT 
+                            "Sort the Points View by the specified order\nSort Points View"
     ID_HELP_CONTENTS        "Display the Contents tab of the help file\nContents"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
 END

@@ -33,7 +33,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2006-07-15 DRC Add option to sort by event instead of division.
+ * @li 2006-07-16 DRC Let user specify how to sort events within a venue.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-14 DRC Added a context menu.
  * @li 2004-12-31 DRC Make F1 invoke context help.
@@ -151,7 +151,7 @@ protected:
 	afx_msg void OnDetails();
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityNewTitle();
-	afx_msg void OnViewSortByDivision();
+	afx_msg void OnViewPointsViewSort();
 	afx_msg void OnViewHiddenTitles();
 	afx_msg void OnUpdateCopyTitles(CCmdUI* pCmdUI);
 	afx_msg void OnCopyTitles();

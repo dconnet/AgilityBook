@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2006-07-15 DRC Added SortByDivision
+ * @li 2006-07-16 DRC Added PointsViewSort
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-18 DRC Changed how filter options are done.
  * @li 2005-05-04 DRC Added IncludeCRCDImage
@@ -131,6 +131,9 @@ Common
 	DW PrintFontListBold
 	DW numFilters
 	ST CurrentFilter
+	DW sortPtVw1
+	DW sortPtVw2
+	DW sortPtVw3
 	Obsolete DW TrainingViewAllDates
 	Obsolete DW TrainingStartFilterJDay
 	Obsolete DW TrainingStartFilter
@@ -456,15 +459,24 @@ void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
 	AfxGetApp()->WriteProfileInt(_T("Common"), _T("ViewNewestFirst"), bNewest ? 1 : 0);
 }
 
-bool CAgilityBookOptions::GetSortByDivision()
+void CAgilityBookOptions::GetPointsViewSort(
+		PointsViewSort& outPrimary,
+		PointsViewSort& outSecondary,
+		PointsViewSort& outTertiary)
 {
-	int val = AfxGetApp()->GetProfileInt(_T("Common"), _T("SortByDiv"), 0);
-	return val == 1 ? true : false;
+	outPrimary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw1"), (int)ePointsViewSortEvent);
+	outSecondary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw2"), (int)ePointsViewSortLevel);
+	outTertiary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw3"), (int)ePointsViewSortDivision);
 }
 
-void CAgilityBookOptions::SetSortByDivision(bool bSet)
+void CAgilityBookOptions::SetPointsViewSort(
+		PointsViewSort inPrimary,
+		PointsViewSort inSecondary,
+		PointsViewSort inTertiary)
 {
-	AfxGetApp()->WriteProfileInt(_T("Common"), _T("SortByDiv"), bSet ? 1 : 0);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("sortPtVw1"), (int)inPrimary);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("sortPtVw2"), (int)inSecondary);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("sortPtVw3"), (int)inTertiary);
 }
 
 bool CAgilityBookOptions::GetViewHiddenTitles()

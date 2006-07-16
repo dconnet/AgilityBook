@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2006-07-15 DRC Add option to sort by event instead of division.
+ * @li 2006-07-16 DRC Let user specify how to sort events within a venue.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
@@ -94,6 +94,7 @@
 #include "ARBDogClub.h"
 #include "ARBDogTrial.h"
 #include "ARBTypes.h"
+#include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
@@ -145,7 +146,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_COMMAND(ID_DETAILS, OnDetails)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
 	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
-	ON_COMMAND(ID_VIEW_SORT_BY_DIVISION, OnViewSortByDivision)
+	ON_COMMAND(ID_VIEW_POINTS_VIEW_SORT, OnViewPointsViewSort)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
 	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
@@ -445,39 +446,40 @@ void CAgilityBookViewPoints::InsertData(int& ioIndex, CListData* inData)
 class SortPointItems
 {
 public:
-	SortPointItems(bool bByDiv)
-		: m_bByDiv(bByDiv)
+	SortPointItems()
 	{
+		CAgilityBookOptions::GetPointsViewSort(m_Order[0], m_Order[1], m_Order[2]);
 	}
 	bool operator()(PointsDataEvent* one, PointsDataEvent* two) const
 	{
-		if (m_bByDiv)
+		for (int i = 0; i < 3; ++i)
 		{
-			if (one->m_DivIdx == two->m_DivIdx)
+			switch (m_Order[i])
 			{
-				if (one->m_LevelIdx == two->m_LevelIdx)
-					return one->m_EventIdx < two->m_EventIdx;
-				else
-					return one->m_LevelIdx < two->m_LevelIdx;
-			}
-			else
-				return one->m_DivIdx < two->m_DivIdx;
-		}
-		else
-		{
-			if (one->m_LevelIdx == two->m_LevelIdx)
-			{
-				if (one->m_EventIdx == two->m_EventIdx)
+			default:
+				ASSERT(0);
+				return false;
+
+ 			case CAgilityBookOptions::ePointsViewSortDivision:
+				if (one->m_DivIdx != two->m_DivIdx)
 					return one->m_DivIdx < two->m_DivIdx;
-				else
+				break;
+
+			case CAgilityBookOptions::ePointsViewSortLevel:
+				if (one->m_LevelIdx != two->m_LevelIdx)
+					return one->m_LevelIdx < two->m_LevelIdx;
+				break;
+
+			case CAgilityBookOptions::ePointsViewSortEvent:
+				if (one->m_EventIdx != two->m_EventIdx)
 					return one->m_EventIdx < two->m_EventIdx;
+				break;
 			}
-			else
-				return one->m_LevelIdx < two->m_LevelIdx;
 		}
+		return false;
 	}
 private:
-	bool m_bByDiv;
+	CAgilityBookOptions::PointsViewSort m_Order[3];
 };
 
 void CAgilityBookViewPoints::LoadData()
@@ -798,7 +800,7 @@ void CAgilityBookViewPoints::LoadData()
 					}
 				}
 				if (1 < items.size())
-					std::stable_sort(items.begin(), items.end(), SortPointItems(CAgilityBookOptions::GetSortByDivision()));
+					std::stable_sort(items.begin(), items.end(), SortPointItems());
 				for (std::vector<PointsDataEvent*>::iterator i = items.begin();
 					i != items.end();
 					++i)
@@ -1123,10 +1125,11 @@ void CAgilityBookViewPoints::OnAgilityNewTitle()
 	}
 }
 
-void CAgilityBookViewPoints::OnViewSortByDivision()
+void CAgilityBookViewPoints::OnViewPointsViewSort()
 {
-	CAgilityBookOptions::SetSortByDivision(!CAgilityBookOptions::GetSortByDivision());
-	LoadData();
+	CDlgPointsViewSort dlg(this);
+	if (IDOK == dlg.DoModal())
+		LoadData();
 }
 
 void CAgilityBookViewPoints::OnViewHiddenTitles()
