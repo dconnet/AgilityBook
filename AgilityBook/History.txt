@@ -1,4 +1,4 @@
-7/15/2006: v1.7.4.12 <in development>
+7/16/2006: v1.7.4.12 <in development>
 - Bumped to Configuration v14:
   - AKC FAST time faults were not being rounded.
   - Fixed NADAC titles (Gamblers->Chances)
@@ -9,8 +9,7 @@
   - Made the title dialogs wider.
   - Added a selected item sub-total in existing points dialog.
     Reduce column auto-sizing to just one time.
-  - Added an option to order the Points view by division/level/event or
-    level/event/division.
+  - Let the user specify how to sort events within a venue in the Points view.
 - Bug fixes
   - Filling in the last-remembered height/judge/handler in the Run dialog
     was a little flakey. Now the last value is filled in when the dialog

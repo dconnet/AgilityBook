@@ -310,6 +310,9 @@
 				RelativePath="..\..\Win\DlgPartner.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgPointsViewSort.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgProgress.cpp">
 			</File>
 			<File
@@ -603,6 +606,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgPartner.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgPointsViewSort.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgReferenceRun.h">
