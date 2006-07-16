@@ -1086,3 +1086,12 @@ This link is also available in the About box.
 .topic HIDC_DOWNLOAD_SOURCEFORGE
 Download the new version from SourceForge.
 This link is also available in the About box.
+
+.topic HIDC_POINTS_VIEW_SORT_C1
+Set the primary sort key for viewing events in the Points view.
+
+.topic HIDC_POINTS_VIEW_SORT_C2
+Set the secondary sort key for viewing events in the Points view.
+
+.topic HIDC_POINTS_VIEW_SORT_C3
+Set the tertiary sort key for viewing events in the Points view.

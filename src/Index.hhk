@@ -459,6 +459,11 @@
 		<param name="Local" value="Help\html\TabPoints.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Points View Sorting">
+		<param name="Name" value="Points View Sorting">
+		<param name="Local" value="Help\html\DlgPointsViewSort.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Program overview">
 		<param name="Name" value="Program overview">
 		<param name="Local" value="Help\html\ProgramOverview.html">
