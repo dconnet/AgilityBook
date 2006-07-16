@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-07-15 DRC Add option to sort by event instead of division.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
@@ -76,6 +77,7 @@
  */
 
 #include "stdafx.h"
+#include <algorithm>
 #include <map>
 #include <set>
 #include <vector>
@@ -143,6 +145,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_COMMAND(ID_DETAILS, OnDetails)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
 	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
+	ON_COMMAND(ID_VIEW_SORT_BY_DIVISION, OnViewSortByDivision)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
 	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
@@ -439,6 +442,44 @@ void CAgilityBookViewPoints::InsertData(int& ioIndex, CListData* inData)
 	}
 }
 
+class SortPointItems
+{
+public:
+	SortPointItems(bool bByDiv)
+		: m_bByDiv(bByDiv)
+	{
+	}
+	bool operator()(PointsDataEvent* one, PointsDataEvent* two) const
+	{
+		if (m_bByDiv)
+		{
+			if (one->m_DivIdx == two->m_DivIdx)
+			{
+				if (one->m_LevelIdx == two->m_LevelIdx)
+					return one->m_EventIdx < two->m_EventIdx;
+				else
+					return one->m_LevelIdx < two->m_LevelIdx;
+			}
+			else
+				return one->m_DivIdx < two->m_DivIdx;
+		}
+		else
+		{
+			if (one->m_LevelIdx == two->m_LevelIdx)
+			{
+				if (one->m_EventIdx == two->m_EventIdx)
+					return one->m_DivIdx < two->m_DivIdx;
+				else
+					return one->m_EventIdx < two->m_EventIdx;
+			}
+			else
+				return one->m_LevelIdx < two->m_LevelIdx;
+		}
+	}
+private:
+	bool m_bByDiv;
+};
+
 void CAgilityBookViewPoints::LoadData()
 {
 	CWaitCursor wait;
@@ -521,14 +562,17 @@ void CAgilityBookViewPoints::LoadData()
 				int speedPts = 0;
 				bool bHasSpeedPts = false;
 				// Show events sorted out by division/level.
+				std::vector<PointsDataEvent*> items;
+				int idxDiv = 0;
 				for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 					iterDiv != pVenue->GetDivisions().end();
-					++iterDiv)
+					++idxDiv, ++iterDiv)
 				{
 					ARBConfigDivisionPtr pDiv = (*iterDiv);
+					int idxLevel = 0;
 					for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
 						iterLevel != pDiv->GetLevels().end();
-						++iterLevel)
+						++idxLevel, ++iterLevel)
 					{
 						ARBConfigLevelPtr pLevel = (*iterLevel);
 						ARBDate dateFrom, dateTo;
@@ -544,9 +588,10 @@ void CAgilityBookViewPoints::LoadData()
 						pts.pLevel = pLevel;
 						// We know the venue is visible,
 						// we don't know if the trial or individual runs are.
+						int idxEvent = 0;
 						for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
 							iterEvent != pVenue->GetEvents().end();
-							++iterEvent)
+							++idxEvent, ++iterEvent)
 						{
 							ARBConfigEventPtr pEvent = (*iterEvent);
 
@@ -727,10 +772,13 @@ void CAgilityBookViewPoints::LoadData()
 											strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
 										}
 									}
-									InsertData(idxInsertItem, new PointsDataEvent(this,
+									items.push_back(new PointsDataEvent(this,
 										!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? pDog : ARBDogPtr(),
 										matching,
-										pVenue, pDiv, pLevel, pEvent,
+										pVenue,
+										pDiv, idxDiv,
+										pLevel, idxLevel,
+										pEvent, idxEvent,
 										(LPCTSTR)strRunCount,
 										(LPCTSTR)strQcount,
 										strPts.str().c_str(),
@@ -748,6 +796,14 @@ void CAgilityBookViewPoints::LoadData()
 						if (0 < pts.ptList.size())
 							lifetime.push_back(pts);
 					}
+				}
+				if (1 < items.size())
+					std::stable_sort(items.begin(), items.end(), SortPointItems(CAgilityBookOptions::GetSortByDivision()));
+				for (std::vector<PointsDataEvent*>::iterator i = items.begin();
+					i != items.end();
+					++i)
+				{
+					InsertData(idxInsertItem, *i);
 				}
 
 				// Information that is tallied after all a venue's events.
@@ -783,11 +839,11 @@ void CAgilityBookViewPoints::LoadData()
 						++iter)
 					{
 						InsertData(idxInsertItem,
-							new PointsDataMultiQs(this,
-								pDog, pVenue, (*iter).first, (*iter).second));
+								new PointsDataMultiQs(this, pDog, pVenue, (*iter).first, (*iter).second));
 					}
 				}
 			}
+
 			// Next comes lifetime points.
 			if (0 < lifetime.size())
 			{
@@ -1065,6 +1121,12 @@ void CAgilityBookViewPoints::OnAgilityNewTitle()
 		if (data.OnCmd(ID_AGILITY_NEW_TITLE, NULL))
 			GetDocument()->SetModifiedFlag();
 	}
+}
+
+void CAgilityBookViewPoints::OnViewSortByDivision()
+{
+	CAgilityBookOptions::SetSortByDivision(!CAgilityBookOptions::GetSortByDivision());
+	LoadData();
 }
 
 void CAgilityBookViewPoints::OnViewHiddenTitles()

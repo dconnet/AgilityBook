@@ -80,8 +80,8 @@ void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgOtherPoint)
 	ON_CBN_SELCHANGE(IDC_OTHER_OTHERPOINTS, OnSelchangeOtherpoints)
+	ON_BN_CLICKED(IDC_OTHER_NEW, OnBnClickedOtherNew)
 	//}}AFX_MSG_MAP
-	ON_BN_CLICKED(IDC_OTHER_NEW, &CDlgOtherPoint::OnBnClickedOtherNew)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

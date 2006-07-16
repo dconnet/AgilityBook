@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-07-15 DRC Add option to sort by event instead of division.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
  * @li 2005-10-14 DRC Added a context menu.
@@ -200,6 +201,7 @@ protected:
  */
 class PointsDataEvent : public PointsDataBase
 {
+	friend class SortPointItems;
 public:
 	PointsDataEvent(
 			CAgilityBookViewPoints* pView,
@@ -207,8 +209,11 @@ public:
 			std::list<RunInfo>& inMatching,
 			ARBConfigVenuePtr inVenue,
 			ARBConfigDivisionPtr inDiv,
+			int inDivIdx,
 			ARBConfigLevelPtr inLevel,
+			int inLevelIdx,
 			ARBConfigEventPtr inEvent,
+			int inEventIdx,
 			ARBString const& inRunCount,
 			ARBString const& inQcount,
 			ARBString const& inPts,
@@ -227,8 +232,11 @@ protected:
 	std::list<RunInfo> m_Matching;
 	ARBConfigVenuePtr m_Venue;
 	ARBConfigDivisionPtr m_Div;
+	int m_DivIdx;
 	ARBConfigLevelPtr m_Level;
+	int m_LevelIdx;
 	ARBConfigEventPtr m_Event;
+	int m_EventIdx;
 	ARBString m_RunCount;
 	ARBString m_Qcount;
 	ARBString m_Pts;
