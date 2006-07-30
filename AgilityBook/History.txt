@@ -1,7 +1,7 @@
-7/16/2006: v1.7.4.12 <in development>
+7/30/2006: v1.7.4.12
 - Bumped to Configuration v14:
   - AKC FAST time faults were not being rounded.
-  - Fixed NADAC titles (Gamblers->Chances)
+  - Renamed Gamblers titles to Changes in 2006.
   - Removed NADAC Championship event. Double Shot is handled differently.
 - New features / Enhancements:
   - Add ability to add a new Other Point item from the Run dialog.

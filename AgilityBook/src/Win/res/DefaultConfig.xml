@@ -48,7 +48,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="13">
+	<Configuration version="14">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
