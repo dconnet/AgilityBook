@@ -1,8 +1,14 @@
+7/30/2006: v1.7.5.12 <in development>
+- New features / Enhancements:
+  - Added x64 installation.
+
 7/30/2006: v1.7.4.12
 - Bumped to Configuration v14:
   - AKC FAST time faults were not being rounded.
-  - Renamed Gamblers titles to Changes in 2006.
+  - Renamed Gamblers titles to Chances in 2006.
   - Removed NADAC Championship event. Double Shot is handled differently.
+  - Removed NADAC 'Championship' event (not a valid event). 'Double Shot'
+    (Regular, Tunnelers, TouchNGo) is handled by entering the run twice.
 - New features / Enhancements:
   - Add ability to add a new Other Point item from the Run dialog.
   - Change pairs dialog to list all existing partners.
