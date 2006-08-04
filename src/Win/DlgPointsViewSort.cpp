@@ -86,15 +86,15 @@ static int AddItem(CComboBox2& ctrl, CAgilityBookOptions::PointsViewSort item, C
 	switch (item)
 	{
 	case CAgilityBookOptions::ePointsViewSortDivision:
-		idx = ctrl.AddString("Division");
+		idx = ctrl.AddString(_T("Division"));
 		ctrl.SetItemData(idx, item);
 		break;
 	case CAgilityBookOptions::ePointsViewSortLevel:
-		idx = ctrl.AddString("Level");
+		idx = ctrl.AddString(_T("Level"));
 		ctrl.SetItemData(idx, item);
 		break;
 	case CAgilityBookOptions::ePointsViewSortEvent:
-		idx = ctrl.AddString("Event");
+		idx = ctrl.AddString(_T("Event"));
 		ctrl.SetItemData(idx, item);
 		break;
 	}

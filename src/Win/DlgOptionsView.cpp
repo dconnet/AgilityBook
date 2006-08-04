@@ -56,11 +56,11 @@ static const struct
 	LPCTSTR text;
 } sc_CalItems[] =
 {
-	{CAgilityBookOptions::eCalColorNotEntered, "Not Entered"},
-	{CAgilityBookOptions::eCalColorPlanning,   "Planning"},
-	{CAgilityBookOptions::eCalColorOpening,    "  Opening"},
-	{CAgilityBookOptions::eCalColorClosing,    "  Closing"},
-	{CAgilityBookOptions::eCalColorEntered,    "Entered"},
+	{CAgilityBookOptions::eCalColorNotEntered, _T("Not Entered")},
+	{CAgilityBookOptions::eCalColorPlanning,   _T("Planning")},
+	{CAgilityBookOptions::eCalColorOpening,    _T("  Opening")},
+	{CAgilityBookOptions::eCalColorClosing,    _T("  Closing")},
+	{CAgilityBookOptions::eCalColorEntered,    _T("Entered")},
 };
 static const int sc_CalItemsCount = sizeof(sc_CalItems) / sizeof(sc_CalItems[0]);
 
