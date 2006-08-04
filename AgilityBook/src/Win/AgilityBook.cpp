@@ -721,7 +721,7 @@ void CAgilityBookApp::OnHelpSysinfo()
 	}
 
 	// Internet Explorer.
-	HINSTANCE hShellDocObj = LoadLibrary("shdocvw.dll");
+	HINSTANCE hShellDocObj = LoadLibrary(_T("shdocvw.dll"));
 	if (hShellDocObj)
 	{
 		CVersionNum ver(hShellDocObj);

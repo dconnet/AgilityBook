@@ -346,7 +346,7 @@ static LPCTSTR CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 		return _T("EnteredColor");
 	}
 	ASSERT(0);
-	return "";
+	return _T("");
 }
 
 static COLORREF CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)

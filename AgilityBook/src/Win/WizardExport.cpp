@@ -1137,7 +1137,7 @@ BOOL CWizardExport::OnWizardFinish()
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR == index)
 	{
-		AfxMessageBox("Please specify a date format.", MB_ICONWARNING);
+		AfxMessageBox(_T("Please specify a date format."), MB_ICONWARNING);
 		GotoDlgCtrl(&m_ctrlDateFormat);
 		return FALSE;
 	}
