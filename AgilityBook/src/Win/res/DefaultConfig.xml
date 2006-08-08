@@ -5,6 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-08-08 DRC Configuration version 15. Added USDAA Performance Tournaments.
 2006-07-01 DRC Configuration version 14. AKC FAST drops time fractions.
                Update CPE/FullHouse to auto-adjust time faults.
 2006-06-14 DRC Configuration version 13. Restricted NADAC Chances divisions.
@@ -48,7 +49,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="14">
+	<Configuration version="15">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -2416,12 +2417,21 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			</Event>
 			<Event Name="Pairs" hasPartner="y">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+				<Scoring Division="Performance" Level="Nationals" type="TimePlusFaults">
+					<Note>Performance Versatility Pairs</Note>
+				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying here means the team has qualified.</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" type="TimePlusFaults">
+					<Note>Performance Versatility Pairs
+DAM Team: Qualifying here means the team has qualified.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
@@ -2448,33 +2458,55 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			</Event>
 			<Event Name="Grand Prix">
 				<Scoring Division="Championship" Level="Nationals" type="FaultsThenTime"/>
-				<Scoring Division="Championship" Level="Tournament" type="FaultsThenTime">
+				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime">
+					<Note>Performance National Standard
+For tracking purposes, you can use this to record Veterans GP also.</Note>
+				</Scoring>
+				<Scoring Division="Championship" Level="Tournament" ValidTo="2006-9-22" type="FaultsThenTime">
 					<Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
 					<TitlePoints Faults="7" Points="1"/>
 					<LifeTime Faults="7" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="Nationals" type="FaultsThenTime">
-					<Note>For tracking purposes, you can use this to record Veterans GP also. (More notes in the Tournament scoring method)</Note>
+				<Scoring Division="Championship" Level="Tournament" ValidFrom="2006-9-23" type="FaultsThenTime">
+					<Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
+					<TitlePoints Faults="5" Points="1"/>
+					<LifeTime Faults="5" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" type="FaultsThenTime">
-					<Note>Effective starting in 2004
-Known as "Performance Grand Prix" (2004) and "Performance National Standard" (2005)</Note>
+				<Scoring Division="Performance" Level="Tournament" ValidFrom="2004-1-1" ValidTo="2006-9-22" type="FaultsThenTime">
+					<Note>2004: Performance Grand Prix
+2005: Performance National Standard
+In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
 					<TitlePoints Faults="7" Points="1"/>
 					<LifeTime Faults="7" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" type="FaultsThenTime">
+					<Note>Performance National Standard
+In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
+					<TitlePoints Faults="5" Points="1"/>
+					<LifeTime Faults="5" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Steeplechase">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+				<Scoring Division="Performance" Level="Nationals" type="TimePlusFaults">
+					<Note>Performance Speed Jumping</Note>
+				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
-					<Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
+					<Note>Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
+				<Scoring Division="Performance" Level="Tournament" ValidTo="2006-9-22" type="TimePlusFaults">
 					<Note>Non-titling event - known as Leap N Chase, Fast &amp; Furious, etc.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" type="TimePlusFaults">
+					<Note>Performance Speed Jumping
+Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Jokers Wild">
