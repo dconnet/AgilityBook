@@ -1,6 +1,10 @@
-8/8/2006: v1.7.5.12 <in development>
+8/12/2006: v1.7.5.12 <in development>
 - New features / Enhancements:
   - Added x64 installation.
+
+8/12/2006: Web configuration release
+- Bumped to Configuration v16:
+  - Updated DOCNA Gamblers.
 
 8/8/2006: Web configuration release
 - Bumped to Configuration v15:
