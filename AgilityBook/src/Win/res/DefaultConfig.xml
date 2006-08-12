@@ -5,6 +5,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-08-12 DRC Configuration version 16. Removed AMBOR.
+               Updated DOCNA gamble events.
 2006-08-08 DRC Configuration version 15. Added USDAA Performance Tournaments.
 2006-07-01 DRC Configuration version 14. AKC FAST drops time fractions.
                Update CPE/FullHouse to auto-adjust time faults.
@@ -49,7 +51,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="15">
+	<Configuration version="16">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -62,10 +64,6 @@ Revision History:
 		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Superior Novice" OldName="A-NTS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Superior Open" OldName="A-OTS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Superior Elite" OldName="A-ETS" Venue="AMBOR" Verb="RenameTitle"/>
-		<Action NewName="AMBOR Triple Triple Superior" OldName="A-TTS" Venue="AMBOR" Verb="RenameTitle"/>
 		<Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
 		<Action NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
 		<Action NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
@@ -385,204 +383,6 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
 				<MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
 			</MultiQ>
-		</Venue>
-		<Venue LongName="American Mixed Breed Obedience Registration" Name="AMBOR">
-			<Desc>http://www.amborusa.org/
-Events and titles are based on NADAC</Desc>
-			<Titles LongName="AMBOR Novice Regular" Name="A-NR"/>
-			<Titles LongName="AMBOR Novice Jumper" Name="A-NJ"/>
-			<Titles LongName="AMBOR Novice Gambler" Name="A-NG"/>
-			<Titles LongName="AMBOR Tunnelers Novice" Name="A-TN-N"/>
-			<Titles LongName="AMBOR Touch N Go Novice" Name="A-TG-N"/>
-			<Titles LongName="AMBOR Weavers Novice" Name="A-WV-N"/>
-			<Titles LongName="AMBOR Novice Versatility" Name="A-NV"/>
-			<Titles LongName="AMBOR Open Regular" Name="A-OR"/>
-			<Titles LongName="AMBOR Open Jumper" Name="A-OJ"/>
-			<Titles LongName="AMBOR Open Gambler" Name="A-OG"/>
-			<Titles LongName="AMBOR Tunnelers Open" Name="A-TN-O"/>
-			<Titles LongName="AMBOR Touch N Go Open" Name="A-TG-O"/>
-			<Titles LongName="AMBOR Weavers Open" Name="A-WV-O"/>
-			<Titles LongName="AMBOR Open Versatility" Name="A-OV"/>
-			<Titles LongName="AMBOR Elite Regular" Name="A-ER"/>
-			<Titles LongName="AMBOR Elite Jumper" Name="A-EJ"/>
-			<Titles LongName="AMBOR Elite Gambler" Name="A-EG"/>
-			<Titles LongName="AMBOR Tunnelers Elite" Name="A-TN-E"/>
-			<Titles LongName="AMBOR Touch N Go Elite" Name="A-TG-E"/>
-			<Titles LongName="AMBOR Weavers Elite" Name="A-WV-E"/>
-			<Titles LongName="AMBOR Elite Versatility" Name="A-EV"/>
-			<Titles LongName="AMBOR Outstanding Novice Regular" Name="A-ONR"/>
-			<Titles LongName="AMBOR Outstanding Novice Jumper" Name="A-ONJ"/>
-			<Titles LongName="AMBOR Outstanding Novice Gambler" Name="A-ONG"/>
-			<Titles LongName="AMBOR Outstanding Tunnelers Novice" Name="A-OTN-N"/>
-			<Titles LongName="AMBOR Outstanding Touch N Go Novice" Name="A-OTG-N"/>
-			<Titles LongName="AMBOR Outstanding Weavers Novice" Name="A-OWV-N"/>
-			<Titles LongName="AMBOR Novice Versatility Outstanding" Name="A-NVO"/>
-			<Titles LongName="AMBOR Outstanding Open Regular" Name="A-OOR"/>
-			<Titles LongName="AMBOR Outstanding Open Jumper" Name="A-OOJ"/>
-			<Titles LongName="AMBOR Outstanding Open Gambler" Name="A-OOG"/>
-			<Titles LongName="AMBOR Outstanding Tunnelers Open" Name="A-OTN-O"/>
-			<Titles LongName="AMBOR Outstanding Touch N Go Open" Name="A-OTG-O"/>
-			<Titles LongName="AMBOR Outstanding Weavers Open" Name="A-OWV-O"/>
-			<Titles LongName="AMBOR Open Versatility Outstanding" Name="A-OVO"/>
-			<Titles LongName="AMBOR Outstanding Elite Regular" Name="A-OER"/>
-			<Titles LongName="AMBOR Outstanding Elite Jumper" Name="A-OEJ"/>
-			<Titles LongName="AMBOR Outstanding Elite Gambler" Name="A-OEG"/>
-			<Titles LongName="AMBOR Outstanding Tunnelers Elite" Name="A-OTN-E"/>
-			<Titles LongName="AMBOR Outstanding Touch N Go Elite" Name="A-OTG-E"/>
-			<Titles LongName="AMBOR Outstanding Weavers Elite" Name="A-OWV-E"/>
-			<Titles LongName="AMBOR Elite Versatility Outstanding" Name="A-EVO"/>
-			<Titles LongName="AMBOR Superior Novice Regular" Name="A-SNR"/>
-			<Titles LongName="AMBOR Superior Novice Jumper" Name="A-SNJ"/>
-			<Titles LongName="AMBOR Superior Novice Gambler" Name="A-SNG"/>
-			<Titles LongName="AMBOR Superior Tunnelers Novice" Name="A-STN-N"/>
-			<Titles LongName="AMBOR Superior Touch N Go Novice" Name="A-STG-N"/>
-			<Titles LongName="AMBOR Superior Weavers Novice" Name="A-SWV-N"/>
-			<Titles LongName="AMBOR Novice Versatility Superior" Name="A-NVS"/>
-			<Titles LongName="AMBOR Superior Open Regular" Name="A-SOR"/>
-			<Titles LongName="AMBOR Superior Open Jumper" Name="A-SOJ"/>
-			<Titles LongName="AMBOR Superior Open Gambler" Name="A-SOG"/>
-			<Titles LongName="AMBOR Superior Tunnelers Open" Name="A-STN-O"/>
-			<Titles LongName="AMBOR Superior Touch N Go Open" Name="A-STG-O"/>
-			<Titles LongName="AMBOR Superior Weavers Open" Name="A-SWV-O"/>
-			<Titles LongName="AMBOR Open Versatility Superior" Name="A-OVS"/>
-			<Titles LongName="AMBOR Superior Elite Regular" Name="A-SER"/>
-			<Titles LongName="AMBOR Superior Elite Jumper" Name="A-SEJ"/>
-			<Titles LongName="AMBOR Superior Elite Gambler" Name="A-SEG"/>
-			<Titles LongName="AMBOR Superior Tunnelers Elite" Name="A-STN-E"/>
-			<Titles LongName="AMBOR Superior Touch N Go Elite" Name="A-STG-E"/>
-			<Titles LongName="AMBOR Superior Weavers Elite" Name="A-SWV-E"/>
-			<Titles LongName="AMBOR Elite Versatility Superior" Name="A-EVS"/>
-			<Titles Name="AMBOR Triple Superior Novice"/>
-			<Titles Name="AMBOR Triple Superior Open"/>
-			<Titles Name="AMBOR Triple Superior Elite"/>
-			<Titles Name="AMBOR Triple Triple Superior"/>
-			<Titles LongName="AMBOR Agility Trial Champion" Name="A-ATCH" Prefix="y"/>
-			<Titles LongName="AMBOR Versatile Agility Trial Champion" Name="A-VATCH" Prefix="y"/>
-			<Titles LongName="AMBOR Outstanding Agility Trial Champion" Name="A-OATCH" Prefix="y"/>
-			<Titles LongName="AMBOR Outstanding Versatile Agility Trial Champion" Name="A-OVATCH" Prefix="y"/>
-			<Titles LongName="AMBOR Superior Agility Trial Champion" Name="A-SATCH" Prefix="y"/>
-			<Titles LongName="AMBOR Superior Versatile Agility Trial Champion" Name="A-SVATCH" Prefix="y"/>
-			<Titles LongName="AMBOR Novice Regular Veterans" Name="A-NR-V"/>
-			<Titles LongName="AMBOR Novice Jumper Veteran" Name="A-NJ-V"/>
-			<Titles LongName="AMBOR Novice Gambler Veteran" Name="A-NG-V"/>
-			<Titles LongName="AMBOR Open Regular Veterans" Name="A-OR-V"/>
-			<Titles LongName="AMBOR Open Jumper Veteran" Name="A-OJ-V"/>
-			<Titles LongName="AMBOR Open Gambler Veteran" Name="A-OG-V"/>
-			<Titles LongName="AMBOR Elite Regular Veterans" Name="A-ER-V"/>
-			<Titles LongName="AMBOR Elite Jumper Veteran" Name="A-EJ-V"/>
-			<Titles LongName="AMBOR Elite Gambler Veteran" Name="A-EG-V"/>
-			<Titles LongName="AMBOR Outstanding Novice Regular Veterans" Name="A-ONR-V"/>
-			<Titles LongName="AMBOR Outstanding Novice Jumper Veteran" Name="A-ONJ-V"/>
-			<Titles LongName="AMBOR Outstanding Novice Gambler Veteran" Name="A-ONG-V"/>
-			<Titles LongName="AMBOR Outstanding Open Regular Veterans" Name="A-OOR-V"/>
-			<Titles LongName="AMBOR Outstanding Open Jumper Veteran" Name="A-OOJ-V"/>
-			<Titles LongName="AMBOR Outstanding Open Gambler Veteran" Name="A-OOG-V"/>
-			<Titles LongName="AMBOR Outstanding Elite Regular Veterans" Name="A-OER-V"/>
-			<Titles LongName="AMBOR Outstanding Elite Jumper Veteran" Name="A-OEJ-V"/>
-			<Titles LongName="AMBOR Outstanding Elite Gambler Veteran" Name="A-OEG-V"/>
-			<Titles LongName="AMBOR Superior Novice Regular Veterans" Name="A-SNR-V"/>
-			<Titles LongName="AMBOR Superior Novice Jumper Veteran" Name="A-SNJ-V"/>
-			<Titles LongName="AMBOR Superior Novice Gambler Veteran" Name="A-SNG-V"/>
-			<Titles LongName="AMBOR Superior Open Regular Veterans" Name="A-SOR-V"/>
-			<Titles LongName="AMBOR Superior Open Jumper Veteran" Name="A-SOJ-V"/>
-			<Titles LongName="AMBOR Superior Open Gambler Veteran" Name="A-SOG-V"/>
-			<Titles LongName="AMBOR Superior Elite Regular Veterans" Name="A-SER-V"/>
-			<Titles LongName="AMBOR Superior Elite Jumper Veteran" Name="A-SEJ-V"/>
-			<Titles LongName="AMBOR Superior Elite Gambler Veteran" Name="A-SEG-V"/>
-			<Titles LongName="AMBOR Agility Trial Champion Veteran" Name="A-ATCH-V" Prefix="y"/>
-			<Titles LongName="AMBOR Agility Trial Champion Outstanding Performance Veteran" Name="A-OATCH-V" Prefix="y"/>
-			<Titles LongName="AMBOR Agility Trial Champion Superior Performance Veteran" Name="A-SATCH-V" Prefix="y"/>
-			<Titles LongName="AMBOR Novice Regular Jr. Handler" Name="A-NR-JH"/>
-			<Titles LongName="AMBOR Novice Jumper Jr. Handler" Name="A-NJ-JH"/>
-			<Titles LongName="AMBOR Open Regular Jr. Handler" Name="A-OR-JH"/>
-			<Titles LongName="AMBOR Open Jumper Jr. Handler" Name="A-OJ-JH"/>
-			<Titles LongName="AMBOR Elite Regular Jr. Handler" Name="A-ER-JH"/>
-			<Titles LongName="AMBOR Elite Jumper Jr. Handler" Name="A-EJ-JH"/>
-			<Titles LongName="AMBOR Outstanding Novice Regular Jr. Handler" Name="A-ONR-JH"/>
-			<Titles LongName="AMBOR Outstanding Novice Jumper Jr. Handler" Name="A-ONJ-JH"/>
-			<Titles LongName="AMBOR Outstanding Open Regular Jr. Handler" Name="A-OOR-JH"/>
-			<Titles LongName="AMBOR Outstanding Open Jumper Jr. Handler" Name="A-OOJ-JH"/>
-			<Titles LongName="AMBOR Outstanding Elite Regular Jr. Handler" Name="A-OER-JH"/>
-			<Titles LongName="AMBOR Outstanding Elite Jumper Jr. Handler" Name="A-OEJ-JH"/>
-			<Titles LongName="AMBOR Superior Novice Regular Jr. Handler" Name="A-SNR-JH"/>
-			<Titles LongName="AMBOR Superior Novice Jumper Jr. Handler" Name="A-SNJ-JH"/>
-			<Titles LongName="AMBOR Superior Open Regular Jr. Handler" Name="A-SOR-JH"/>
-			<Titles LongName="AMBOR Superior Open Jumper Jr. Handler" Name="A-SOJ-JH"/>
-			<Titles LongName="AMBOR Superior Elite Regular Jr. Handler" Name="A-SER-JH"/>
-			<Titles LongName="AMBOR Superior Elite Jumper Jr. Handler" Name="A-SEJ-JH"/>
-			<Titles LongName="AMBOR Agility Trial Champion Jr. Handler" Name="A-ATCH-JH" Prefix="y"/>
-			<Titles LongName="AMBOR Agility Trial Champion Outstanding Performance Jr. Handler" Name="A-OATCH-JH" Prefix="y"/>
-			<Titles LongName="AMBOR Agility Trial Champion Superior Performance Jr. Handler" Name="A-SATCH-JH" Prefix="y"/>
-			<Division Name="Standard">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-			</Division>
-			<Division Name="Veterans">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-			</Division>
-			<Division Name="Junior">
-				<Level Name="Novice">
-					<SubLevel Name="Novice A"/>
-					<SubLevel Name="Novice B"/>
-				</Level>
-				<Level Name="Open"/>
-				<Level Name="Elite"/>
-			</Division>
-			<Event Name="Regular">
-				<Scoring Division="*" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
-				</Scoring>
-			</Event>
-			<Event Name="Jumpers">
-				<Scoring Division="*" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="Gamblers">
-				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="Tunnelers">
-				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="TouchNGo">
-				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
-			<Event Name="Weavers">
-				<Scoring Division="Standard" Level="*" type="FaultsThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-				</Scoring>
-			</Event>
 		</Venue>
 		<Venue LongName="Australian Shepherd Club of America" Name="ASCA">
 			<Desc>http://www.asca.org/
@@ -1621,14 +1421,40 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
-				<Desc>Traditional: Opening: 25 seconds, 19 points</Desc>
-				<Scoring Division="*" Level="*" OpeningPts="19" cleanQ="y" type="OCScoreThenTime">
+				<Desc>Traditional</Desc>
+				<Scoring Division="*" Level="*" OpeningPts="19" ValidTo="2006-8-10" cleanQ="y" type="OCScoreThenTime">
+					<Note>Opening: 25 seconds</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Specialist" OpeningPts="19" ValidFrom="2006-8-11" cleanQ="y" type="OCScoreThenTime">
+					<Note>Opening: 30 seconds</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Intern" OpeningPts="17" ValidFrom="2006-8-11" cleanQ="y" type="OCScoreThenTime">
+					<Note>Opening: 30 seconds</Note>
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Beginner" OpeningPts="15" ValidFrom="2006-8-11" cleanQ="y" type="OCScoreThenTime">
+					<Note>Opening: 30 seconds</Note>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Time Gamble">
-				<Desc>Strategic Time: Opening: 30 seconds, 20 points. 30 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Desc>
-				<Scoring Division="*" Level="*" OpeningPts="20" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+				<Desc>Strategic Time</Desc>
+				<Scoring Division="*" Level="Specialist" OpeningPts="19" ValidFrom="2006-8-11" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+					<Note>Opening: 30 seconds. 25 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Note>
+					<TitlePoints Faults="2.5" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Intern" OpeningPts="17" ValidFrom="2006-8-11" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+					<Note>Opening: 30 seconds. 25 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Note>
+					<TitlePoints Faults="2.5" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="Beginner" OpeningPts="15" ValidFrom="2006-8-11" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+					<Note>Opening: 30 seconds. 25 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Note>
+					<TitlePoints Faults="2.5" Points="1"/>
+				</Scoring>
+				<Scoring Division="*" Level="*" OpeningPts="20" ValidTo="2006-8-10" cleanQ="y" overTF="y" type="OCScoreThenTime" underTF="y">
+					<Note>Opening: 30 seconds. 30 pts earns a time bonus that adds or subtracts 1 second to the advantage of the team</Note>
 					<TitlePoints Faults="2.5" Points="1"/>
 				</Scoring>
 			</Event>
