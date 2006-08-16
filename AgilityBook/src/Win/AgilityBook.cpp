@@ -393,13 +393,8 @@ BOOL CAgilityBookApp::InitInstance()
 	// Calling AfxInitRichEdit() is not sufficient for older systems.
 	// All that will do is load RICHED32.DLL. On newer systems, RICHED32
 	// automatically loads RICHED20 also. But not on Win98. So specifically
-	// load that too.
-	if (!AfxInitRichEdit())
-	{
-		AfxMessageBox(_T("ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."), MB_ICONSTOP);
-		return FALSE;
-	}
-	if (NULL == LoadLibrary(_T("RICHED20.DLL")))
+	// load that too [with AfxInitRichEdit2].
+	if (!AfxInitRichEdit2())
 	{
 		AfxMessageBox(_T("ERROR: Unable to initialize RICHED20.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."), MB_ICONSTOP);
 		return FALSE;
