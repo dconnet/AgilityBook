@@ -24,11 +24,12 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 
-Tag CVS repository "vn_n_n_n"
+Tag SubVersion repository "vn_n_n_n"
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup vc6/7/8 .exe/chm images to \AgilityBook\test\vc[678]
+  [Currently, I only build vc8]
 - Create AgilityBook_n_n_n_n.zip from msi/cab files in bin\VC8\Release.
   Copy this to distrib\vN.N.N.N\
 - Create AgilityBook_n_n_n_nALT.zip (VC8 AgilityBook.exe/.chm)
@@ -42,8 +43,11 @@ In SourceForge, enter the File Releases section in Admin.
 - Enter all necessary information.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
-  - AgilityBook_n_n_n_nsrc.zip, AgilityBook_n_n_n_n.zip
-  - Instructions.txt [in ./Misc]
+  - AgilityBook_n_n_n_nsrc.zip
+  - AgilityBook_n_n_n_n-win.zip
+  - AgilityBook_n_n_n_n-win98.zip
+  - AgilityBook_n_n_n_n-x64.zip
+  - Instructions.txt [in ./Misc] [Copy to Readme1st.vn.n.n.n.txt and modify]
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
@@ -58,7 +62,8 @@ In Yahoo
   - [files/release/alternate] [VC8] vcredist_x86.exe, already there, shouldn't need changing
   - [files/release/alternate] [VC8] xerces-c_2_7.zip, already there
   - [files/release/alternate] Readme.txt [in ./Misc]
-  - [files/release] AgilityBook_n_n_n_n.msi/cab [Desc: Installation program]
+  - [files/release/windows] AgilityBook_n_n_n_n.msi/cab/etc
+  - [files/release/win98] AgilityBook_n_n_n_n.msi/cab/etc
     DO NOT Announce this file (option on file upload) since it is now multiple.
 - Send an email announcing it - send as a 'Special Notice' from Yahoo.
 
@@ -73,7 +78,7 @@ Web Site:
 
 Backup:
 - Backup development directory onto CD.
-  - Remove unnecessary files (build relics, CVS)
+  - Remove unnecessary files (build relics, .svn)
 
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO
