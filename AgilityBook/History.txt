@@ -1,6 +1,7 @@
-8/12/2006: v1.7.5.12 <in development>
+9/1/2006: v1.7.5.12 <in development>
 - New features / Enhancements:
   - Added x64 installation.
+  - Added multi-monitor support.
 
 8/12/2006: Web configuration release
 - Bumped to Configuration v16:
