@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-09-01 DRC Fix setting of 'After' (start) date filter.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2003-08-09 DRC Moved fonts to new page.
@@ -125,7 +126,7 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 		else
 			m_FilterOptions.SetViewAllDates(false);
 		m_FilterOptions.SetStartFilterDate(ARBDate(m_timeStart.GetTime()));
-		m_FilterOptions.SetEndFilterDateSet(m_bDateStart ? true : false);
+		m_FilterOptions.SetStartFilterDateSet(m_bDateStart ? true : false);
 		m_FilterOptions.SetEndFilterDate(ARBDate(m_timeEnd.GetTime()));
 		m_FilterOptions.SetEndFilterDateSet(m_bDateEnd ? true : false);
 		// Names are kept in sync via setdispinfo
