@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-09-01 DRC Added multi-monitor support.
  * @li 2003-05-18 DRC Obsoleted registry settings "Calendar"/"List" (bool)
  *                    "Settings"/"View" (int) changed (see TabView.cpp)
  */
@@ -128,28 +129,80 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	CRect rWorkArea;
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &rWorkArea, 0);
 	int x = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastXpos"), cs.x);
 	int y = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastYpos"), cs.y);
 	int cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastCX"), cs.cx);
 	int cy = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastCY"), cs.cy);
-	if (CW_USEDEFAULT != x && rWorkArea.left <= x && x <= rWorkArea.right)
-		cs.x = x;
-	else
-		cs.x = CW_USEDEFAULT;
-	if (CW_USEDEFAULT != y && rWorkArea.top <= y && y <= rWorkArea.bottom)
-		cs.y = y;
-	else
-		cs.x = cs.y = CW_USEDEFAULT;
-	if (CW_USEDEFAULT != cx && rWorkArea.Width() > cx)
-		cs.cx = cx;
-	else
-		cs.cx = CW_USEDEFAULT;
-	if (CW_USEDEFAULT != cy && rWorkArea.Height() > cy)
-		cs.cy = cy;
-	else
-		cs.cx = cs.cy = CW_USEDEFAULT;
+
+	bool bCompute = false;
+	CPoint curPt;
+	GetCursorPos(&curPt);
+	if (CW_USEDEFAULT != x)
+	{
+		bCompute = true;
+		curPt.x = x;
+	}
+	if (CW_USEDEFAULT != y)
+	{
+		bCompute = true;
+		curPt.y = y;
+	}
+	CSize curSize(0, 0);
+	if (CW_USEDEFAULT != cx)
+	{
+		bCompute = true;
+		curSize.cx = cx;
+	}
+	if (CW_USEDEFAULT != cy)
+	{
+		bCompute = true;
+		curSize.cy = cy;
+	}
+
+	if (bCompute)
+	{
+		CRect rWorkSpace;
+#if _WIN32_WINNT > 0x0400
+		HMONITOR hMon = MonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
+		MONITORINFO mi;
+		mi.cbSize = sizeof(mi);
+		GetMonitorInfo(hMon, &mi);
+		rWorkSpace = mi.rcWork;
+#else
+		SystemParametersInfo(SPI_GETWORKAREA, 0, &rWorkSpace, 0);
+#endif
+		CRect rect(curPt, curSize);
+		// Make sure window is not bigger.
+		if (rect.Width() > rWorkSpace.Width())
+			rect.right = rect.left + rWorkSpace.Width();
+		if (rect.Height() > rWorkSpace.Height())
+			rect.bottom = rect.top + rWorkSpace.Height();
+		// Make sure the window is fully visible in the screen.
+		if (!rWorkSpace.PtInRect(rect.TopLeft()))
+		{
+			if (rect.left < rWorkSpace.left)
+				rect.OffsetRect(rWorkSpace.left - rect.left, 0);
+			if (rect.top < rWorkSpace.top)
+				rect.OffsetRect(0, rWorkSpace.top - rect.top);
+		}
+		// Only check the bottom-right if the rect has size.
+		if (!rect.IsRectEmpty() && !rWorkSpace.PtInRect(rect.BottomRight()))
+		{
+			if (rect.right > rWorkSpace.right)
+				rect.OffsetRect(rWorkSpace.right - rect.right, 0);
+			if (rect.bottom > rWorkSpace.bottom)
+				rect.OffsetRect(0, rWorkSpace.bottom - rect.bottom);
+		}
+		if (CW_USEDEFAULT != x)
+			cs.x = rect.left;
+		if (CW_USEDEFAULT != y)
+			cs.y = rect.top;
+		if (CW_USEDEFAULT != cx)
+			cs.cx = rect.Width();
+		if (CW_USEDEFAULT != cy)
+			cs.cy = rect.Height();
+	}
+
 	return CFrameWnd::PreCreateWindow(cs);
 }
 
