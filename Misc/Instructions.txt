@@ -1,9 +1,13 @@
-There are two files here:
+Use this to determine which files to download:
 
-    AgilityBook_<version>.zip
+    AgilityBook_<version><tag>.zip
         This is what you want! Download load this file onto your computer
         and unzip the files. Once unzipped, run the setup.exe program.
         Once installed, you can delete the setup/msi/cab files.
+		To determine with <tag> you want:
+		- "-win"   Windows NT/2000/XP
+		- "-win98" Windows 98
+		- "-x64"   64 bit Windows
 
     AgilityBook_<version>src.zip
         Source code to create the program. Usually, only developers are
