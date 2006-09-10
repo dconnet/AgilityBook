@@ -47,17 +47,17 @@
 	#error In order to compile with UNICODE in VC6, the code needs a lot of work!
 #endif
 // Turn off some warnings in vc6.
+#pragma warning ( disable : 4503 )	// 'identifier' : decorated name length exceeded, name was truncated
 #pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
-//#pragma warning( disable : 4503 )
 
 // VC7
 #elif _MSC_VER >= 1300 && _MSC_VER < 1400
-// warning C4702: unreachable code (generated during link from STL code)
-#pragma warning ( disable : 4100 4702 )
+#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
+#pragma warning ( disable : 4702 )	// unreachable code (generated during link from STL code)
 
 // VC8
 #elif _MSC_VER >= 1400
-#pragma warning ( disable : 4100 )
+#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
 #endif
 
 // Assume that if we're using the static MFC library,
