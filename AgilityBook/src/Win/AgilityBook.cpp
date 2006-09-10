@@ -102,6 +102,19 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // Some global functions.
 
+void InitMenuPopup(CCmdTarget* pTarget, CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CCmdUI cmdUI;
+	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
+	{
+		cmdUI.m_nIndex = n;
+		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
+		cmdUI.m_pMenu = pPopupMenu;
+		cmdUI.DoUpdate(pTarget, FALSE);
+	}
+}
+
 bool ShowContextHelp(HELPINFO* pHelpInfo)
 {
 	bool bOk = false;
