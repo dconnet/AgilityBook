@@ -749,7 +749,7 @@ void CListView2::OnBeginPrinting(
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
 	pData->nPages = (GetListCtrl().GetItemCount() + 1) / pData->nLinesPerPage + 1;
-	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
+	//ATLTRACE2(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
 	//	pData->nPages);

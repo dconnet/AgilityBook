@@ -105,7 +105,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	{
-		TRACE0(_T("Failed to create toolbar\n"));
+		ATLTRACE2(_T("Failed to create toolbar\n"));
 		return -1;      // fail to create
 	}
 
@@ -113,7 +113,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		!m_wndStatusBar.SetIndicators(indicators,
 		  sizeof(indicators)/sizeof(UINT)))
 	{
-		TRACE0(_T("Failed to create status bar\n"));
+		ATLTRACE2(_T("Failed to create status bar\n"));
 		return -1;      // fail to create
 	}
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);

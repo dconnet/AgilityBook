@@ -947,7 +947,7 @@ void Element::Dump(int inLevel) const
 #ifdef ERRORS_TO_CERR
 	cerr << msg << endl;
 #else
-	TRACE1(_T("%s\n"), (LPCTSTR)msg);
+	ATLTRACE2(_T("%s\n"), (LPCTSTR)msg);
 #endif
 	for (i = 0; i < GetElementCount(); ++i)
 	{
