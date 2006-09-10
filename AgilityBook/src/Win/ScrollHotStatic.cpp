@@ -101,7 +101,7 @@ void CScrollHotStatic::OnClicked()
 	else
 	{
 		MessageBeep(0);
-		TRACE(_T("*** WARNING: CScrollHotStatic: unable to execute file %s\n"),(LPCTSTR)m_ItemVector[0].m_strLink);
+		ATLTRACE2(_T("*** WARNING: CScrollHotStatic: unable to execute file %s\n"), (LPCTSTR)m_ItemVector[0].m_strLink);
 	}
 }
 

@@ -593,7 +593,7 @@ bool ARBConfigScoringList::FindEvent(
 		{
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
-			TRACE0(_T("Warning: Overlapping date ranges\n"));
+			ATLTRACE2(_T("Warning: Overlapping date ranges\n"));
 			pEvent = *(items.begin());
 		}
 	}
