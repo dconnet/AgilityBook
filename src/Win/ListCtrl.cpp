@@ -47,6 +47,7 @@
 #include "resource.h"
 #include "ListCtrl.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "ListData.h"
 
@@ -666,17 +667,7 @@ void CListView2::OnDestroy()
 void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CListView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
-	// Make popup menus use the ON_UPDATE_COMMAND_UI handlers
-	CCmdUI cmdUI;
-	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
-	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
-	{
-		cmdUI.m_nIndex = n;
-		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
-		cmdUI.m_pMenu = pPopupMenu;
-		CCmdTarget* pTarget = this;
-		cmdUI.DoUpdate(pTarget, FALSE);
-	}
+	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
 
 void CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)

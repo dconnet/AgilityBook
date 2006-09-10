@@ -716,16 +716,7 @@ CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug vers
 void CAgilityBookViewCalendar::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CScrollView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
-	CCmdUI cmdUI;
-	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
-	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
-	{
-		cmdUI.m_nIndex = n;
-		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
-		cmdUI.m_pMenu = pPopupMenu;
-		CCmdTarget* pTarget = this;
-		cmdUI.DoUpdate(pTarget, FALSE);
-	}
+	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
 
 void CAgilityBookViewCalendar::OnRButtonDown(

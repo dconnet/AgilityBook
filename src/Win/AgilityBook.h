@@ -93,12 +93,48 @@ extern CAgilityBookApp theApp;
 
 // Some global functions.
 class CAgilityBookDoc;
+
+/**
+ * Make popup menus use the ON_UPDATE_COMMAND_UI handlers
+ * @param pTarget Window messages should be propagated to
+ * @param pPopupMenu OnInitMenuPopup parameter
+ * @param nIndex OnInitMenuPopup parameter
+ * @param bSysMenu OnInitMenuPopup parameter
+ */
+extern void InitMenuPopup(
+		CCmdTarget* pTarget,
+		CMenu* pPopupMenu,
+		UINT nIndex,
+		BOOL bSysMenu);
+
+/**
+ * Show context help.
+ * @param pHelpInfo OnHelpInfo parameter.
+ */
 extern bool ShowContextHelp(HELPINFO* pHelpInfo);
+
+/**
+ * Use ShellExecute to start a program.
+ * @param pCmd Command to run.
+ */
 extern void RunCommand(TCHAR const* const pCmd);
+
+/**
+ * Expand all items in a tree control.
+ * @param ctrl Tree control
+ * @param hItem Item from which to expand all items
+ * @param code Expand/Collapse code
+ */
 extern void ExpandAll(
 		CTreeCtrl& ctrl,
 		HTREEITEM hItem,
 		UINT code);
+
+/**
+ * Get the file status of a file. This works around a bug in MFC with CTime.
+ * @param lpszFileName File to check.
+ * @param rStatus Status structure.
+ */
 extern BOOL GetLocalStatus(
 		LPCTSTR lpszFileName,
 		CFileStatus& rStatus);
