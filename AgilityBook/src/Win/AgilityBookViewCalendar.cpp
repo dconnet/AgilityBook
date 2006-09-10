@@ -85,6 +85,7 @@ IMPLEMENT_DYNCREATE(CAgilityBookViewCalendar, CScrollView)
 BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
 	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewCalendar)
+	ON_WM_INITMENUPOPUP()
 	ON_WM_RBUTTONDOWN()
 	ON_WM_CONTEXTMENU()
 	ON_WM_ERASEBKGND()
@@ -711,6 +712,21 @@ CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug vers
 #endif //_DEBUG
 
 // CAgilityBookViewCalendar message handlers
+
+void CAgilityBookViewCalendar::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CScrollView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	CCmdUI cmdUI;
+	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
+	{
+		cmdUI.m_nIndex = n;
+		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
+		cmdUI.m_pMenu = pPopupMenu;
+		CCmdTarget* pTarget = this;
+		cmdUI.DoUpdate(pTarget, FALSE);
+	}
+}
 
 void CAgilityBookViewCalendar::OnRButtonDown(
 		UINT nFlags,
