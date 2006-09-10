@@ -260,6 +260,7 @@ protected:
 protected:
 	//{{AFX_MSG(CListView2)
 	afx_msg void OnDestroy();
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
 	afx_msg void OnEditCopy();

@@ -196,6 +196,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookTree)
 	ON_WM_DESTROY()
+	ON_WM_INITMENUPOPUP()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(TVN_DELETEITEM, OnDeleteitem)
@@ -288,6 +289,21 @@ LRESULT CAgilityBookTree::OnCommandHelp(WPARAM, LPARAM)
 void CAgilityBookTree::OnDestroy()
 {
 	CTreeView::OnDestroy();
+}
+
+void CAgilityBookTree::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CTreeView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	CCmdUI cmdUI;
+	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
+	{
+		cmdUI.m_nIndex = n;
+		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
+		cmdUI.m_pMenu = pPopupMenu;
+		CCmdTarget* pTarget = this;
+		cmdUI.DoUpdate(pTarget, FALSE);
+	}
 }
 
 BOOL CAgilityBookTree::PreCreateWindow(CREATESTRUCT& cs)

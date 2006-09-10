@@ -490,6 +490,7 @@ IMPLEMENT_DYNCREATE(CListView2, CListView)
 BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
 	ON_WM_DESTROY()
+	ON_WM_INITMENUPOPUP()
 	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
@@ -660,6 +661,22 @@ void CListView2::OnDestroy()
 {
 	GetListCtrl().DeleteAllItems();
 	CListView::OnDestroy();
+}
+
+void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CListView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	// Make popup menus use the ON_UPDATE_COMMAND_UI handlers
+	CCmdUI cmdUI;
+	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
+	{
+		cmdUI.m_nIndex = n;
+		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
+		cmdUI.m_pMenu = pPopupMenu;
+		CCmdTarget* pTarget = this;
+		cmdUI.DoUpdate(pTarget, FALSE);
+	}
 }
 
 void CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
