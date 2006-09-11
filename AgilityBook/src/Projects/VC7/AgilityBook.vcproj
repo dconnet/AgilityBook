@@ -166,6 +166,9 @@
 				RelativePath="..\..\Win\AgilityBookViewCalendarList.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\AgilityBookViewHtml.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\AgilityBookViewPoints.cpp">
 			</File>
 			<File
@@ -459,6 +462,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewCalendarList.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookViewHtml.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewPoints.h">

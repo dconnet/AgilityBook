@@ -54,6 +54,7 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
 #include "AgilityBookViewCalendar.h"
+#include "AgilityBookViewHtml.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
@@ -388,6 +389,12 @@ END_MESSAGE_MAP()
 // CAgilityBookApp construction
 
 CAgilityBookApp::CAgilityBookApp()
+	: m_pDocTemplateTree(NULL)
+	, m_pDocTemplateRuns(NULL)
+	, m_pDocTemplatePoints(NULL)
+	, m_pDocTemplateHtml(NULL)
+	, m_pDocTemplateCal(NULL)
+	, m_pDocTemplateTraining(NULL)
 {
 }
 
@@ -510,6 +517,11 @@ BOOL CAgilityBookApp::InitInstance()
 		RUNTIME_CLASS(CAgilityBookDoc),
 		RUNTIME_CLASS(CMainFrame),
 		RUNTIME_CLASS(CAgilityBookViewPoints));
+	m_pDocTemplateHtml = new CSingleDocTemplate(
+		IDR_MAINFRAME,
+		RUNTIME_CLASS(CAgilityBookDoc),
+		RUNTIME_CLASS(CMainFrame),
+		RUNTIME_CLASS(CAgilityBookViewHtml));
 	m_pDocTemplateCal = new CSingleDocTemplate(
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CAgilityBookDoc),
@@ -610,6 +622,7 @@ int CAgilityBookApp::ExitInstance()
 	delete m_pDocTemplateTree;
 	delete m_pDocTemplateRuns;
 	delete m_pDocTemplatePoints;
+	delete m_pDocTemplateHtml;
 	delete m_pDocTemplateCal;
 	delete m_pDocTemplateTraining;
 	XMLPlatformUtils::Terminate();

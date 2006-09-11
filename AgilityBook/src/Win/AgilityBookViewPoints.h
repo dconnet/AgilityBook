@@ -47,8 +47,8 @@
 #include "ARBTypes.h"
 #include "CommonView.h"
 #include "ListCtrl.h"
-#include "PointsData.h"
 class CAgilityBookDoc;
+class PointsData;
 struct CVenueFilter;
 
 class CAgilityBookViewPoints : public CListView2, public ICommonView
@@ -66,49 +66,7 @@ public:
 	virtual bool GetMessage2(CString& msg) const;
 
 private:
-	struct LifeTimePoint
-	{
-		ARBString eventName;
-		double points;
-		bool bFiltered;
-		LifeTimePoint()
-			: eventName()
-			, points(0.0)
-			, bFiltered(false)
-		{
-		}
-		LifeTimePoint(
-				const ARBString inEvent,
-				double inPoints,
-				bool inFiltered)
-			: eventName(inEvent)
-			, points(inPoints)
-			, bFiltered(inFiltered)
-		{
-		}
-	};
-	typedef std::list<LifeTimePoint> LifeTimePointList;
-	struct LifeTimePoints
-	{
-		ARBConfigDivisionPtr pDiv;
-		ARBConfigLevelPtr pLevel;
-		LifeTimePointList ptList;
-	};
-	typedef std::list<LifeTimePoints> LifeTimePointsList;
-
-	PointsDataBase* GetItemData(int index) const;
-	size_t FindMatchingRuns(
-			std::list<RunInfo> const& inRuns,
-			ARBString const& inDiv,
-			ARBString const& inLevel,
-			ARBString const& inEvent,
-			std::list<RunInfo>& inMatching);
-	double TallyPoints(
-			std::list<RunInfo> const& runs,
-			ARBConfigScoringPtr pScoringMethod,
-			int& nCleanQ,
-			int& nNotCleanQ);
-	void InsertData(int& ioIndex, CListData* inData);
+	PointsData* GetItemData(int index) const;
 	void LoadData();
 
 protected:

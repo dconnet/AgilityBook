@@ -24,7 +24,7 @@
 			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -201,7 +201,7 @@
 			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -408,6 +408,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewCalendarList.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookViewHtml.h"
 				>
 			</File>
 			<File
@@ -1218,6 +1222,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewCalendarList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookViewHtml.cpp"
 				>
 			</File>
 			<File
