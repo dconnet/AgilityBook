@@ -44,6 +44,7 @@
 #include "AgilityBookTree.h"
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewCalendarList.h"
+#include "AgilityBookViewHtml.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
 #include "AgilityBookViewTraining.h"
@@ -144,13 +145,27 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_Panes.push_back(&m_splitterRuns);
 
-	CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
-	m_Panes.push_back(points);
-	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
-	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-	points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
-		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
-		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+	bool isIeOk = false;
+	if (isIeOk)
+	{
+		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
+		m_Panes.push_back(html);
+		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
+		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+		html->Create(NULL, NULL,
+			dwStyle,
+			CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+	}
+	else
+	{
+		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
+		m_Panes.push_back(points);
+		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
+		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+		points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
+			dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
+			CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+	}
 
 	if (!m_splitterCal.CreateStatic(this, 1, 2))
 		return;
@@ -168,7 +183,7 @@ void CTabView::OnInitialUpdate()
 	CAgilityBookViewTraining* training = reinterpret_cast<CAgilityBookViewTraining*>(RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject());
 	m_Panes.push_back(training);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
-	dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
 		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
 		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);

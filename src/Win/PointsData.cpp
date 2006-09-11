@@ -47,6 +47,7 @@
 #include "stdafx.h"
 #include "PointsData.h"
 
+#include <map>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookViewPoints.h"
@@ -118,35 +119,63 @@ OtherPtInfo::~OtherPtInfo()
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataBase::PointsDataBase(CAgilityBookViewPoints* pView)
-	: m_pView(pView)
+CPointsDataBase::CPointsDataBase(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc)
+	: m_pParent(pParent)
+	, m_pDoc(pDoc)
 {
 }
 
-PointsDataBase::~PointsDataBase()
+CPointsDataBase::~CPointsDataBase()
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataDog::PointsDataDog(
-		CAgilityBookViewPoints* pView,
+CPointsDataText::CPointsDataText(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
+		LPCTSTR inCol1,
+		LPCTSTR inCol2)
+	: CPointsDataBase(pParent, pDoc)
+	, m_Col1(inCol1)
+	, m_Col2(inCol2)
+{
+	ASSERT(NULL != inCol1);
+	ASSERT(NULL != inCol2);
+}
+
+ARBString CPointsDataText::OnNeedText(size_t index) const
+{
+	switch (index)
+	{
+	default:
+		return _T("");
+	case 0:
+		return m_Col1;
+	case 1:
+		return m_Col2;
+	}
+}
+
+bool CPointsDataText::IsEqual(CPointsDataBasePtr /*inData*/)
+{
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CPointsDataDog::CPointsDataDog(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_pDog(pDog)
 {
 }
 
-PointsDataDog::~PointsDataDog()
-{
-}
-
-PointsDataBase* PointsDataDog::Clone() const
-{
-	return new PointsDataDog(*this);
-}
-
-ARBString PointsDataDog::OnNeedText(size_t index) const
+ARBString CPointsDataDog::OnNeedText(size_t index) const
 {
 	ARBString str;
 	if (m_pDog)
@@ -170,22 +199,21 @@ ARBString PointsDataDog::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataDog::Details() const
+void CPointsDataDog::Details() const
 {
 	// CDlgDog will cause an update msg to occur which will delete us.
 	// So we need to cache the document in a stack variable.
-	CAgilityBookDoc* pDoc = m_pView->GetDocument();
-	CDlgDog dlg(pDoc, m_pDog, m_pView, 0);
+	CDlgDog dlg(m_pDoc, m_pDog, m_pParent, 0);
 	if (IDOK == dlg.DoModal())
 	{
-		pDoc->SetModifiedFlag();
-		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+		m_pDoc->SetModifiedFlag();
+		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 	}
 }
 
-bool PointsDataDog::IsEqual(PointsDataBase const* inData)
+bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataDog const* inDog = dynamic_cast<PointsDataDog const*>(inData);
+	CPointsDataDogPtr inDog = boost::shared_dynamic_cast<CPointsDataDog, CPointsDataBase>(inData);
 	if (inDog)
 		return m_pDog->GetCallName() == inDog->m_pDog->GetCallName();
 	else
@@ -194,26 +222,18 @@ bool PointsDataDog::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataVenue::PointsDataVenue(
-		CAgilityBookViewPoints* pView,
+CPointsDataVenue::CPointsDataVenue(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog,
 		ARBConfigVenuePtr pVenue)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_pDog(pDog)
 	, m_pVenue(pVenue)
 {
 }
 
-PointsDataVenue::~PointsDataVenue()
-{
-}
-
-PointsDataBase* PointsDataVenue::Clone() const
-{
-	return new PointsDataVenue(*this);
-}
-
-ARBString PointsDataVenue::OnNeedText(size_t index) const
+ARBString CPointsDataVenue::OnNeedText(size_t index) const
 {
 	ARBString str;
 	if (m_pVenue)
@@ -238,7 +258,7 @@ ARBString PointsDataVenue::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataVenue::Details() const
+void CPointsDataVenue::Details() const
 {
 	if (m_pDog && m_pVenue)
 	{
@@ -247,12 +267,11 @@ void PointsDataVenue::Details() const
 		{
 			// CDlgDog will cause an update msg to occur which will delete us.
 			// So we need to cache the document in a stack variable.
-			CAgilityBookDoc* pDoc = m_pView->GetDocument();
-			CDlgDog dlg(pDoc, m_pDog, m_pView, 2);
+			CDlgDog dlg(m_pDoc, m_pDog, m_pParent, 2);
 			if (IDOK == dlg.DoModal())
 			{
-				pDoc->SetModifiedFlag();
-				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+				m_pDoc->SetModifiedFlag();
+				m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
 		else
@@ -262,9 +281,9 @@ void PointsDataVenue::Details() const
 		MessageBeep(0);
 }
 
-bool PointsDataVenue::IsEqual(PointsDataBase const* inData)
+bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataVenue const* inVenue = dynamic_cast<PointsDataVenue const*>(inData);
+	CPointsDataVenuePtr inVenue = boost::shared_dynamic_cast<CPointsDataVenue, CPointsDataBase>(inData);
 	if (inVenue)
 		return m_pVenue->GetName() == inVenue->m_pVenue->GetName();
 	else
@@ -273,26 +292,18 @@ bool PointsDataVenue::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataTitle::PointsDataTitle(
-		CAgilityBookViewPoints* pView,
+CPointsDataTitle::CPointsDataTitle(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog,
 		ARBDogTitlePtr pTitle)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_pDog(pDog)
 	, m_pTitle(pTitle)
 {
 }
 
-PointsDataTitle::~PointsDataTitle()
-{
-}
-
-PointsDataBase* PointsDataTitle::Clone() const
-{
-	return new PointsDataTitle(*this);
-}
-
-ARBString PointsDataTitle::OnNeedText(size_t index) const
+ARBString CPointsDataTitle::OnNeedText(size_t index) const
 {
 	ARBString str;
 	if (m_pTitle)
@@ -303,7 +314,7 @@ ARBString PointsDataTitle::OnNeedText(size_t index) const
 			str = m_pTitle->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
 			break;
 		case 2:
-			str = m_pView->GetDocument()->GetConfig().GetTitleCompleteName(m_pTitle, false);
+			str = m_pDoc->GetConfig().GetTitleCompleteName(m_pTitle, false);
 			if (m_pTitle->GetReceived())
 				str += _T("*");
 			break;
@@ -312,23 +323,22 @@ ARBString PointsDataTitle::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataTitle::Details() const
+void CPointsDataTitle::Details() const
 {
-	CAgilityBookDoc* pDoc = m_pView->GetDocument();
-	CDlgTitle dlg(pDoc->GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pView);
+	CDlgTitle dlg(m_pDoc->GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pParent);
 	if (IDOK == dlg.DoModal())
 	{
-		pDoc->SetModifiedFlag();
+		m_pDoc->SetModifiedFlag();
 		std::vector<CVenueFilter> venues;
 		CFilterOptions::Options().GetFilterVenue(venues);
-		pDoc->ResetVisibility(venues, m_pTitle);
-		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
+		m_pDoc->ResetVisibility(venues, m_pTitle);
+		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
 	}
 }
 
-bool PointsDataTitle::IsEqual(PointsDataBase const* inData)
+bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataTitle const* inTitle = dynamic_cast<PointsDataTitle const*>(inData);
+	CPointsDataTitlePtr inTitle = boost::shared_dynamic_cast<CPointsDataTitle, CPointsDataBase>(inData);
 	if (inTitle)
 		return m_pTitle->GetVenue() == inTitle->m_pTitle->GetVenue()
 			&& m_pTitle->GetRawName() == inTitle->m_pTitle->GetRawName();
@@ -338,8 +348,9 @@ bool PointsDataTitle::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataEvent::PointsDataEvent(
-		CAgilityBookViewPoints* pView,
+CPointsDataEvent::CPointsDataEvent(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		std::list<RunInfo>& inMatching,
 		ARBConfigVenuePtr inVenue,
@@ -354,7 +365,7 @@ PointsDataEvent::PointsDataEvent(
 		ARBString const& inPts,
 		ARBString const& inSuperQ,
 		ARBString const& inSpeed)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
 	, m_Venue(inVenue)
@@ -372,16 +383,7 @@ PointsDataEvent::PointsDataEvent(
 {
 }
 
-PointsDataEvent::~PointsDataEvent()
-{
-}
-
-PointsDataBase* PointsDataEvent::Clone() const
-{
-	return new PointsDataEvent(*this);
-}
-
-ARBString PointsDataEvent::OnNeedText(size_t index) const
+ARBString CPointsDataEvent::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -417,7 +419,7 @@ ARBString PointsDataEvent::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataEvent::Details() const
+void CPointsDataEvent::Details() const
 {
 	ARBString str(_T("Runs: "));
 	str += m_Div->GetName();
@@ -426,13 +428,13 @@ void PointsDataEvent::Details() const
 	str += _T("/");
 	str += m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
-	CDlgListViewer dlg(m_pView->GetDocument(), str.c_str(), m_Dog ? &data : NULL, m_Matching, m_pView);
+	CDlgListViewer dlg(m_pDoc, str.c_str(), m_Dog ? &data : NULL, m_Matching, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataEvent::IsEqual(PointsDataBase const* inData)
+bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataEvent const* inEvent = dynamic_cast<PointsDataEvent const*>(inData);
+	CPointsDataEventPtr inEvent = boost::shared_dynamic_cast<CPointsDataEvent, CPointsDataBase>(inData);
 	if (inEvent)
 		return m_Venue->GetName() == inEvent->m_Venue->GetName()
 			&& m_Div->GetName() == inEvent->m_Div->GetName()
@@ -444,17 +446,18 @@ bool PointsDataEvent::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataLifetime::PointsDataLifetime(
-		CAgilityBookViewPoints* pView,
+CPointsDataLifetime::CPointsDataLifetime(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBString const& inVenue)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_Venue(inVenue.c_str())
 	, m_Lifetime(0.0)
 	, m_Filtered(0.0)
 {
 }
 
-void PointsDataLifetime::AddLifetimeInfo(
+void CPointsDataLifetime::AddLifetimeInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
 		double inLifetime,
@@ -465,12 +468,7 @@ void PointsDataLifetime::AddLifetimeInfo(
 	m_Filtered += inFiltered;
 }
 
-PointsDataBase* PointsDataLifetime::Clone() const
-{
-	return new PointsDataLifetime(*this);
-}
-
-ARBString PointsDataLifetime::OnNeedText(size_t index) const
+ARBString CPointsDataLifetime::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -497,17 +495,17 @@ ARBString PointsDataLifetime::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataLifetime::Details() const
+void CPointsDataLifetime::Details() const
 {
 	CString caption(m_Venue);
 	caption += _T(" Lifetime Points");
-	CDlgListViewer dlg(m_pView->GetDocument(), caption, m_Data, m_pView);
+	CDlgListViewer dlg(m_pDoc, caption, m_Data, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataLifetime::IsEqual(PointsDataBase const* inData)
+bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataLifetime const* inLife = dynamic_cast<PointsDataLifetime const*>(inData);
+	CPointsDataLifetimePtr inLife = boost::shared_dynamic_cast<CPointsDataLifetime, CPointsDataBase>(inData);
 	if (inLife)
 		return m_Venue == inLife->m_Venue;
 	else
@@ -516,16 +514,17 @@ bool PointsDataLifetime::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataLifetimeDiv::PointsDataLifetimeDiv(
-		CAgilityBookViewPoints* pView,
+CPointsDataLifetimeDiv::CPointsDataLifetimeDiv(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBString const& inVenue,
 		ARBString const& inDiv)
-	: PointsDataLifetime(pView, inVenue)
+	: CPointsDataLifetime(pParent, pDoc, inVenue)
 	, m_Div(inDiv)
 {
 }
 
-void PointsDataLifetimeDiv::AddLifetimeInfo(
+void CPointsDataLifetimeDiv::AddLifetimeInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
 		double inLifetime,
@@ -539,12 +538,7 @@ void PointsDataLifetimeDiv::AddLifetimeInfo(
 	}
 }
 
-PointsDataBase* PointsDataLifetimeDiv::Clone() const
-{
-	return new PointsDataLifetimeDiv(*this);
-}
-
-ARBString PointsDataLifetimeDiv::OnNeedText(size_t index) const
+ARBString CPointsDataLifetimeDiv::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -564,11 +558,11 @@ ARBString PointsDataLifetimeDiv::OnNeedText(size_t index) const
 	return str;
 }
 
-bool PointsDataLifetimeDiv::IsEqual(PointsDataBase const* inData)
+bool CPointsDataLifetimeDiv::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataLifetimeDiv const* inLife = dynamic_cast<PointsDataLifetimeDiv const*>(inData);
+	CPointsDataLifetimeDivPtr inLife = boost::shared_dynamic_cast<CPointsDataLifetimeDiv, CPointsDataBase>(inData);
 	if (inLife)
-		return PointsDataLifetimeDiv::IsEqual(inData)
+		return CPointsDataLifetimeDiv::IsEqual(inData)
 			&& m_Div == inLife->m_Div;
 	else
 		return false;
@@ -576,13 +570,14 @@ bool PointsDataLifetimeDiv::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataMultiQs::PointsDataMultiQs(
-		CAgilityBookViewPoints* pView,
+CPointsDataMultiQs::CPointsDataMultiQs(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr inVenue,
 		ARBConfigMultiQPtr inMultiQ,
 		std::set<MultiQdata> const& inMQs)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_Dog(inDog)
 	, m_Venue(inVenue)
 	, m_MultiQ(inMultiQ)
@@ -602,16 +597,7 @@ PointsDataMultiQs::PointsDataMultiQs(
 		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr(), dateFrom, dateTo);
 }
 
-PointsDataMultiQs::~PointsDataMultiQs()
-{
-}
-
-PointsDataBase* PointsDataMultiQs::Clone() const
-{
-	return new PointsDataMultiQs(*this);
-}
-
-ARBString PointsDataMultiQs::OnNeedText(size_t index) const
+ARBString CPointsDataMultiQs::OnNeedText(size_t index) const
 {
 	ARBString str;
 	if (7 == index)
@@ -623,16 +609,16 @@ ARBString PointsDataMultiQs::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataMultiQs::Details() const
+void CPointsDataMultiQs::Details() const
 {
 	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
-	CDlgListViewer dlg(m_pView->GetDocument(), m_MultiQ->GetName().c_str(), &data, m_MQs, m_pView);
+	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName().c_str(), &data, m_MQs, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataMultiQs::IsEqual(PointsDataBase const* inData)
+bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataMultiQs const* inMulti = dynamic_cast<PointsDataMultiQs const*>(inData);
+	CPointsDataMultiQsPtr inMulti = boost::shared_dynamic_cast<CPointsDataMultiQs, CPointsDataBase>(inData);
 	if (inMulti)
 		return m_Venue->GetName() == inMulti->m_Venue->GetName()
 			&& m_MultiQ->GetName() == inMulti->m_MultiQ->GetName();
@@ -642,26 +628,18 @@ bool PointsDataMultiQs::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataSpeedPts::PointsDataSpeedPts(
-		CAgilityBookViewPoints* pView,
+CPointsDataSpeedPts::CPointsDataSpeedPts(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBConfigVenuePtr inVenue,
 		int inPts)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_Venue(inVenue)
 	, m_Pts(inPts)
 {
 }
 
-PointsDataSpeedPts::~PointsDataSpeedPts()
-{
-}
-
-PointsDataBase* PointsDataSpeedPts::Clone() const
-{
-	return new PointsDataSpeedPts(*this);
-}
-
-ARBString PointsDataSpeedPts::OnNeedText(size_t index) const
+ARBString CPointsDataSpeedPts::OnNeedText(size_t index) const
 {
 	ARBString str;
 	if (7 == index)
@@ -673,9 +651,9 @@ ARBString PointsDataSpeedPts::OnNeedText(size_t index) const
 	return str;
 }
 
-bool PointsDataSpeedPts::IsEqual(PointsDataBase const* inData)
+bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataSpeedPts const* inPts = dynamic_cast<PointsDataSpeedPts const*>(inData);
+	CPointsDataSpeedPtsPtr inPts = boost::shared_dynamic_cast<CPointsDataSpeedPts, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Venue->GetName() == inPts->m_Venue->GetName();
 	else
@@ -684,10 +662,11 @@ bool PointsDataSpeedPts::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPoints::PointsDataOtherPoints(
-		CAgilityBookViewPoints* pView,
+CPointsDataOtherPoints::CPointsDataOtherPoints(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		std::list<OtherPtInfo> const& inRunList)
-	: PointsDataBase(pView)
+	: CPointsDataBase(pParent, pDoc)
 	, m_Score(0.0)
 	, m_RunList(inRunList)
 {
@@ -701,21 +680,17 @@ PointsDataOtherPoints::PointsDataOtherPoints(
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyAll::PointsDataOtherPointsTallyAll(
-		CAgilityBookViewPoints* pView,
+CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBString const& inName,
 		std::list<OtherPtInfo> const& inRunList)
-	: PointsDataOtherPoints(pView, inRunList)
+	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Name(inName)
 {
 }
 
-PointsDataBase* PointsDataOtherPointsTallyAll::Clone() const
-{
-	return new PointsDataOtherPointsTallyAll(*this);
-}
-
-ARBString PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
+ARBString CPointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -734,15 +709,15 @@ ARBString PointsDataOtherPointsTallyAll::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyAll::Details() const
+void CPointsDataOtherPointsTallyAll::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
+	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataOtherPointsTallyAll::IsEqual(PointsDataBase const* inData)
+bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataOtherPointsTallyAll const* inPts = dynamic_cast<PointsDataOtherPointsTallyAll const*>(inData);
+	CPointsDataOtherPointsTallyAllPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyAll, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Name == inPts->m_Name;
 	else
@@ -751,21 +726,17 @@ bool PointsDataOtherPointsTallyAll::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyAllByEvent::PointsDataOtherPointsTallyAllByEvent(
-		CAgilityBookViewPoints* pView,
+CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
-	: PointsDataOtherPoints(pView, inRunList)
+	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Event(inEvent)
 {
 }
 
-PointsDataBase* PointsDataOtherPointsTallyAllByEvent::Clone() const
-{
-	return new PointsDataOtherPointsTallyAllByEvent(*this);
-}
-
-ARBString PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
+ARBString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -784,15 +755,15 @@ ARBString PointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyAllByEvent::Details() const
+void CPointsDataOtherPointsTallyAllByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
+	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataOtherPointsTallyAllByEvent::IsEqual(PointsDataBase const* inData)
+bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataOtherPointsTallyAllByEvent const* inPts = dynamic_cast<PointsDataOtherPointsTallyAllByEvent const*>(inData);
+	CPointsDataOtherPointsTallyAllByEventPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyAllByEvent, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Event == inPts->m_Event;
 	else
@@ -801,21 +772,17 @@ bool PointsDataOtherPointsTallyAllByEvent::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyLevel::PointsDataOtherPointsTallyLevel(
-		CAgilityBookViewPoints* pView,
+CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBString const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
-	: PointsDataOtherPoints(pView, inRunList)
+	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Level(inLevel)
 {
 }
 
-PointsDataBase* PointsDataOtherPointsTallyLevel::Clone() const
-{
-	return new PointsDataOtherPointsTallyLevel(*this);
-}
-
-ARBString PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
+ARBString CPointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -834,15 +801,15 @@ ARBString PointsDataOtherPointsTallyLevel::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyLevel::Details() const
+void CPointsDataOtherPointsTallyLevel::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
+	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataOtherPointsTallyLevel::IsEqual(PointsDataBase const* inData)
+bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataOtherPointsTallyLevel const* inPts = dynamic_cast<PointsDataOtherPointsTallyLevel const*>(inData);
+	CPointsDataOtherPointsTallyLevelPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyLevel, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Level == inPts->m_Level;
 	else
@@ -851,23 +818,19 @@ bool PointsDataOtherPointsTallyLevel::IsEqual(PointsDataBase const* inData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-PointsDataOtherPointsTallyLevelByEvent::PointsDataOtherPointsTallyLevelByEvent(
-		CAgilityBookViewPoints* pView,
+CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
 		ARBString const& inLevel,
 		ARBString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
-	: PointsDataOtherPoints(pView, inRunList)
+	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Level(inLevel)
 	, m_Event(inEvent)
 {
 }
 
-PointsDataBase* PointsDataOtherPointsTallyLevelByEvent::Clone() const
-{
-	return new PointsDataOtherPointsTallyLevelByEvent(*this);
-}
-
-ARBString PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const
+ARBString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const
 {
 	ARBString str;
 	switch (index)
@@ -889,18 +852,649 @@ ARBString PointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t index) const
 	return str;
 }
 
-void PointsDataOtherPointsTallyLevelByEvent::Details() const
+void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pView->GetDocument(), _T("Other Points"), m_RunList, m_pView);
+	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
-bool PointsDataOtherPointsTallyLevelByEvent::IsEqual(PointsDataBase const* inData)
+bool CPointsDataOtherPointsTallyLevelByEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	PointsDataOtherPointsTallyLevelByEvent const* inPts = dynamic_cast<PointsDataOtherPointsTallyLevelByEvent const*>(inData);
+	CPointsDataOtherPointsTallyLevelByEventPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyLevelByEvent, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Level == inPts->m_Level
 			&& m_Event == inPts->m_Event;
 	else
 		return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CPointsDataItems::CPointsDataItems()
+{
+}
+
+CPointsDataItems::~CPointsDataItems()
+{
+}
+
+class SortPointItems
+{
+public:
+	SortPointItems()
+	{
+		CAgilityBookOptions::GetPointsViewSort(m_Order[0], m_Order[1], m_Order[2]);
+	}
+	bool operator()(CPointsDataEvent* one, CPointsDataEvent* two) const
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			switch (m_Order[i])
+			{
+			default:
+				ASSERT(0);
+				return false;
+
+ 			case CAgilityBookOptions::ePointsViewSortDivision:
+				if (one->m_DivIdx != two->m_DivIdx)
+					return one->m_DivIdx < two->m_DivIdx;
+				break;
+
+			case CAgilityBookOptions::ePointsViewSortLevel:
+				if (one->m_LevelIdx != two->m_LevelIdx)
+					return one->m_LevelIdx < two->m_LevelIdx;
+				break;
+
+			case CAgilityBookOptions::ePointsViewSortEvent:
+				if (one->m_EventIdx != two->m_EventIdx)
+					return one->m_EventIdx < two->m_EventIdx;
+				break;
+			}
+		}
+		return false;
+	}
+private:
+	CAgilityBookOptions::PointsViewSort m_Order[3];
+};
+
+
+void CPointsDataItems::LoadData(
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
+		ARBDogPtr inDog)
+{
+	// Find all visible items and sort them out by venue.
+
+	std::vector<CVenueFilter> venues;
+	CFilterOptions::Options().GetFilterVenue(venues);
+
+	// Put general info about the dog in...
+	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataDog(pParent, pDoc, inDog)));
+
+	// For each venue...
+	for (ARBConfigVenueList::const_iterator iterVenue = pDoc->GetConfig().GetVenues().begin();
+		iterVenue != pDoc->GetConfig().GetVenues().end();
+		++iterVenue)
+	{
+		ARBConfigVenuePtr pVenue = (*iterVenue);
+		if (!CFilterOptions::Options().IsVenueVisible(venues, pVenue->GetName()))
+			continue;
+
+		// First, titles.
+		bool bHeaderInserted = false;
+		for (ARBDogTitleList::const_iterator iterTitle = inDog->GetTitles().begin();
+			iterTitle != inDog->GetTitles().end();
+			++iterTitle)
+		{
+			ARBDogTitlePtr pTitle = (*iterTitle);
+			if (pTitle->GetVenue() == pVenue->GetName()
+			&& !pTitle->IsFiltered())
+			{
+				if (!bHeaderInserted)
+				{
+					bHeaderInserted = true;
+					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc)));
+					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataVenue(pParent, pDoc, inDog, pVenue)));
+				}
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataTitle(pParent, pDoc, inDog, pTitle)));
+			}
+		}
+
+		LifeTimePointsList lifetime;
+
+		// Then the runs.
+		std::list<ARBDogTrialPtr> trialsInVenue;
+		for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin();
+			iterTrial != inDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrialPtr pTrial = (*iterTrial);
+			// Don't bother subtracting "hidden" trials. Doing so
+			// will skew the qualifying percentage.
+			if (pTrial->HasVenue(pVenue->GetName()))
+				trialsInVenue.push_back(pTrial);
+		}
+		if (inDog->GetExistingPoints().HasPoints(pVenue->GetName())
+		|| 0 < trialsInVenue.size())
+		{
+			// Ok, we have some trials in the venue to process...
+			if (!bHeaderInserted)
+			{
+				bHeaderInserted = true;
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc)));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataVenue(pParent, pDoc, inDog, pVenue)));
+			}
+			int speedPts = 0;
+			bool bHasSpeedPts = false;
+			// Show events sorted out by division/level.
+			std::vector<CPointsDataEvent*> items;
+			int idxDiv = 0;
+			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
+				iterDiv != pVenue->GetDivisions().end();
+				++idxDiv, ++iterDiv)
+			{
+				ARBConfigDivisionPtr pDiv = (*iterDiv);
+				int idxLevel = 0;
+				for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
+					iterLevel != pDiv->GetLevels().end();
+					++idxLevel, ++iterLevel)
+				{
+					ARBConfigLevelPtr pLevel = (*iterLevel);
+					ARBDate dateFrom, dateTo;
+					if (!CFilterOptions::Options().GetViewAllDates())
+					{
+						if (CFilterOptions::Options().GetStartFilterDateSet())
+							dateFrom = CFilterOptions::Options().GetStartFilterDate();
+						if (CFilterOptions::Options().GetEndFilterDateSet())
+							dateTo = CFilterOptions::Options().GetEndFilterDate();
+					}
+					LifeTimePoints pts;
+					pts.pDiv = pDiv;
+					pts.pLevel = pLevel;
+					// We know the venue is visible,
+					// we don't know if the trial or individual runs are.
+					int idxEvent = 0;
+					for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
+						iterEvent != pVenue->GetEvents().end();
+						++idxEvent, ++iterEvent)
+					{
+						ARBConfigEventPtr pEvent = (*iterEvent);
+
+						// Don't tally runs that have no titling points.
+						ARBVector<ARBConfigScoringPtr> scoringItems;
+						if (0 == pEvent->FindAllEvents(pDiv->GetName(), pLevel->GetName(), ARBDate(), true, scoringItems))
+							continue;
+						// Iterate across each scoring method separately. This means it is
+						// possible to have multiple lines show up for a given event. But if
+						// that happens, it means the events were scored differently.
+						for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
+							iterScoring != scoringItems.end();
+							++iterScoring)
+						{
+							ARBConfigScoringPtr pScoringMethod = *iterScoring;
+							ARBDate dateFrom2 = pScoringMethod->GetValidFrom();
+							ARBDate dateTo2 = pScoringMethod->GetValidTo();
+							if (!dateFrom2.IsValid() || dateFrom > dateFrom2)
+								dateFrom2 = dateFrom;
+							if (!dateTo2.IsValid() || dateTo > dateTo2)
+								dateTo2 = dateTo;
+							bool bHasExistingPoints = inDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, false);
+							bool bHasExistingLifetimePoints = inDog->GetExistingPoints().HasPoints(pVenue, pDiv, pLevel, pEvent, dateFrom2, dateTo2, true);
+							if (!CFilterOptions::Options().IsVenueLevelVisible(venues, pVenue->GetName(), pDiv->GetName(), pLevel->GetName()))
+							{
+								bHasExistingPoints = false;
+								bHasExistingLifetimePoints = false;
+							}
+							int SQs = 0;
+							int speedPtsEvent = 0;
+							std::list<RunInfo> matching;
+							std::set<ARBString> judges;
+							std::set<ARBString> judgesQ;
+							std::set<ARBString> partners;
+							std::set<ARBString> partnersQ;
+							for (std::list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
+								iterTrial != trialsInVenue.end();
+								++iterTrial)
+							{
+								ARBDogTrialPtr pTrial = (*iterTrial);
+								for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+									iterRun != pTrial->GetRuns().end();
+									++iterRun)
+								{
+									ARBDogRunPtr pRun = (*iterRun);
+									if (pRun->GetDivision() != pDiv->GetName()
+									|| (pRun->GetLevel() != pLevel->GetName() && !pLevel->GetSubLevels().FindSubLevel(pRun->GetLevel()))
+									|| pRun->GetEvent() != pEvent->GetName())
+										continue;
+									ARBConfigScoringPtr pScoring;
+									pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
+									ASSERT(pScoring);
+									if (!pScoring) continue; // Shouldn't need it...
+									if (*pScoring != *pScoringMethod)
+										continue;
+									bool bRunVisible = (!pRun->IsFiltered(ARBBase::eIgnoreQ)
+									&& CFilterOptions::Options().IsRunVisible(venues, pVenue, pTrial, pRun));
+									if (bRunVisible)
+									{
+										// Don't tally NA runs for titling events.
+										if (pRun->GetQ() == ARB_Q::eQ_NA)
+											continue;
+										matching.push_back(RunInfo(pTrial, pRun));
+										judges.insert(pRun->GetJudge());
+										if (pRun->GetQ().Qualified())
+											judgesQ.insert(pRun->GetJudge());
+										if (pScoringMethod->HasSuperQ() && ARB_Q::eQ_SuperQ == pRun->GetQ())
+											++SQs;
+										if (pScoringMethod->HasSpeedPts())
+										{
+											int pts = pRun->GetSpeedPoints(pScoringMethod);
+											speedPts += pts;
+											speedPtsEvent += pts;
+										}
+										// Only tally partners for pairs. In USDAA DAM, pairs is
+										// actually a 3-dog relay.
+										if (pEvent->HasPartner() && 1 == pRun->GetPartners().size())
+										{
+											for (ARBDogRunPartnerList::const_iterator iterPartner = pRun->GetPartners().begin();
+												iterPartner != pRun->GetPartners().end();
+												++iterPartner)
+											{
+												ARBString p = (*iterPartner)->GetDog();
+												p += (*iterPartner)->GetRegNum();
+												partners.insert(p);
+												if (pRun->GetQ().Qualified())
+													partnersQ.insert(p);
+											}
+										}
+									}
+									// Tally lifetime points, regardless of visibility.
+									if (0 < pScoringMethod->GetLifetimePoints().size()
+									&& pRun->GetQ().Qualified())
+									{
+										double nLifetime;
+										pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime);
+										if (0 < nLifetime)
+										{
+											pts.ptList.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+										}
+									}
+								}
+							}
+							double nExistingPts = 0;
+							int nExistingSQ = 0;
+							// Accumulate existing points - used for both lifetime and
+							// normal runs.
+							if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
+							{
+								nExistingPts = inDog->GetExistingPoints().ExistingPoints(
+									ARBDogExistingPoints::eRuns,
+									pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2);
+								if (pScoringMethod->HasSuperQ())
+									nExistingSQ += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
+										ARBDogExistingPoints::eSQ,
+										pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, pEvent, dateFrom2, dateTo2));
+							}
+							// Now add the existing lifetime points
+							if (bHasExistingLifetimePoints && !ARBDouble::equal(0.0, nExistingPts + nExistingSQ))
+							{
+								pts.ptList.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
+							}
+							// Now we deal with the visible runs.
+							if (bHasExistingPoints || 0 < matching.size())
+							{
+								int nCleanQ = 0;
+								int nNotCleanQ = 0;
+								double pts = 0.0;
+								for (std::list<RunInfo>::const_iterator iterRun = matching.begin();
+									iterRun != matching.end();
+									++iterRun)
+								{
+									ARBDogRunPtr pRun = iterRun->second;
+									if (pRun->GetQ().Qualified())
+									{
+										bool bClean = false;
+										pts += pRun->GetTitlePoints(pScoringMethod, &bClean);
+										if (bClean)
+											++nCleanQ;
+										else
+											++nNotCleanQ;
+									}
+								}
+								pts += nExistingPts;
+								CString strRunCount;
+								strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
+									matching.size(),
+									judges.size());
+								if (pEvent->HasPartner() && 0 < partners.size())
+								{
+									CString str2;
+									str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
+									strRunCount += str2;
+								}
+								double percentQs = 0.0;
+								if (0 < matching.size())
+									percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
+								CString strQcount;
+								strQcount.FormatMessage(IDS_POINTS_QS,
+									nCleanQ + nNotCleanQ,
+									static_cast<int>(percentQs));
+								if (0 < nCleanQ)
+								{
+									CString str2;
+									str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
+									strQcount += str2;
+								}
+								if (0 < judgesQ.size())
+								{
+									CString str2;
+									str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
+									strQcount += str2;
+								}
+								if (pEvent->HasPartner() && 0 < partnersQ.size())
+								{
+									CString str2;
+									str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
+									strQcount += str2;
+								}
+								ARBostringstream strPts;
+								CString strSuperQ;
+								strPts << pts + nExistingSQ;
+								if (pScoringMethod->HasSuperQ())
+								{
+									SQs += nExistingSQ;
+									strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
+								}
+								CString strSpeed;
+								if (pScoringMethod->HasSpeedPts())
+								{
+									bHasSpeedPts = true;
+									if (0 < speedPtsEvent)
+									{
+										strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
+									}
+								}
+								items.push_back(new CPointsDataEvent(pParent, pDoc,
+									!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
+									matching,
+									pVenue,
+									pDiv, idxDiv,
+									pLevel, idxLevel,
+									pEvent, idxEvent,
+									(LPCTSTR)strRunCount,
+									(LPCTSTR)strQcount,
+									strPts.str().c_str(),
+									(LPCTSTR)strSuperQ,
+									(LPCTSTR)strSpeed));
+							}
+						}
+					}
+					if (bHasSpeedPts)
+					{
+						speedPts += static_cast<int>(inDog->GetExistingPoints().ExistingPoints(
+							ARBDogExistingPoints::eSpeed,
+							pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr(), dateFrom, dateTo));
+					}
+					if (0 < pts.ptList.size())
+						lifetime.push_back(pts);
+				}
+			}
+			if (1 < items.size())
+				std::stable_sort(items.begin(), items.end(), SortPointItems());
+			for (std::vector<CPointsDataEvent*>::iterator i = items.begin();
+				i != items.end();
+				++i)
+			{
+				m_Lines.push_back(CPointsDataBasePtr(*i));
+			}
+			items.clear();
+
+			// Information that is tallied after all a venue's events.
+			if (bHasSpeedPts)
+			{
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSpeedPts(pParent, pDoc, pVenue, speedPts)));
+			}
+
+			// If the venue has multiQs, tally them now.
+			if (0 < pVenue->GetMultiQs().size())
+			{
+				std::map<ARBConfigMultiQPtr, std::set<MultiQdata> > MQs;
+				for (std::list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
+					iterTrial != trialsInVenue.end();
+					++iterTrial)
+				{
+					ARBDogTrialPtr pTrial = (*iterTrial);
+					for (ARBDogRunList::const_iterator iterR = pTrial->GetRuns().begin();
+						iterR != pTrial->GetRuns().end();
+						++iterR)
+					{
+						ARBDogRunPtr pRun = *iterR;
+						if (pRun->GetMultiQ()
+						&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
+						&& CFilterOptions::Options().IsRunVisible(venues, pVenue, pTrial, pRun))
+						{
+							MQs[pRun->GetMultiQ()].insert(MultiQdata(pRun->GetDate(), pTrial));
+						}
+					}
+				}
+				for (std::map<ARBConfigMultiQPtr, std::set<MultiQdata> >::iterator iter = MQs.begin();
+					iter != MQs.end();
+					++iter)
+				{
+					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataMultiQs(pParent, pDoc, inDog, pVenue, (*iter).first, (*iter).second)));
+				}
+			}
+		}
+
+		// Next comes lifetime points.
+		if (0 < lifetime.size())
+		{
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, pVenue->GetName());
+			double pts = 0;
+			double ptFiltered = 0;
+			typedef std::map<ARBString, CPointsDataLifetimeDiv*> DivLifetime;
+			DivLifetime divs;
+			for (LifeTimePointsList::iterator iter = lifetime.begin();
+				iter != lifetime.end();
+				++iter)
+			{
+				CPointsDataLifetimeDiv* pDivData = NULL;
+				DivLifetime::iterator it = divs.find(iter->pDiv->GetName());
+				if (divs.end() != it)
+				{
+					pDivData = it->second;
+				}
+				else
+				{
+					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, pVenue->GetName(), iter->pDiv->GetName());
+					divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
+				}
+
+				double pts2 = 0.0;
+				double ptFiltered2 = 0;
+				for (LifeTimePointList::iterator iter2 = (*iter).ptList.begin();
+					iter2 != (*iter).ptList.end();
+					++iter2)
+				{
+					pts2 += (*iter2).points;
+					if ((*iter2).bFiltered)
+						ptFiltered2 += (*iter2).points;
+				}
+
+				pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+				pDivData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+				pts += pts2;
+				ptFiltered += ptFiltered2;
+			}
+			m_Lines.push_back(CPointsDataBasePtr(pData));
+			if (1 < divs.size())
+			{
+				for (DivLifetime::iterator it = divs.begin();
+					it != divs.end();
+					++it)
+				{
+					m_Lines.push_back(CPointsDataBasePtr(it->second));
+				}
+			}
+			else if (1 == divs.size())
+			{
+				delete divs.begin()->second;
+			}
+		}
+	}
+
+	// After all the venues, we do 'other points'.
+	ARBConfigOtherPointsList const& other = pDoc->GetConfig().GetOtherPoints();
+	if (0 < other.size())
+	{
+		CString str;
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc)));
+		str.LoadString(IDS_OTHERPOINTS);
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, str)));
+		for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin();
+			iterOther != other.end();
+			++iterOther)
+		{
+			// First, just generate a list of runs with the needed info.
+			std::list<OtherPtInfo> runs;
+
+			ARBConfigOtherPointsPtr pOther = (*iterOther);
+			for (ARBDogTrialList::const_iterator iterTrial = inDog->GetTrials().begin();
+				iterTrial != inDog->GetTrials().end();
+				++iterTrial)
+			{
+				ARBDogTrialPtr pTrial = (*iterTrial);
+				if (!pTrial->IsFiltered())
+				{
+					for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
+						iterRun != pTrial->GetRuns().end();
+						++iterRun)
+					{
+						ARBDogRunPtr pRun = (*iterRun);
+						if (!pRun->IsFiltered(ARBBase::eIgnoreQ))
+						{
+							for (ARBDogRunOtherPointsList::const_iterator iterOtherPts = pRun->GetOtherPoints().begin();
+								iterOtherPts != pRun->GetOtherPoints().end();
+								++iterOtherPts)
+							{
+								ARBDogRunOtherPointsPtr pOtherPts = (*iterOtherPts);
+								if (pOtherPts->GetName() == pOther->GetName())
+								{
+									runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+								}
+							}
+						}
+					}
+				}
+			}
+
+			for (ARBDogExistingPointsList::const_iterator iterExisting = inDog->GetExistingPoints().begin();
+				iterExisting != inDog->GetExistingPoints().end();
+				++iterExisting)
+			{
+				if (ARBDogExistingPoints::eOtherPoints == (*iterExisting)->GetType()
+				&& (*iterExisting)->GetOtherPoints() == pOther->GetName())
+				{
+					runs.push_back(OtherPtInfo(*iterExisting));
+				}
+			}
+
+			if (0 == runs.size())
+				continue;
+
+			switch (pOther->GetTally())
+			{
+			default:
+			case ARBConfigOtherPoints::eTallyAll:
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyAll(pParent, pDoc, pOther->GetName(), runs)));
+				break;
+
+			case ARBConfigOtherPoints::eTallyAllByEvent:
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, _T(""), pOther->GetName().c_str())));
+				{
+					std::set<ARBString> tally;
+					std::list<OtherPtInfo>::iterator iter;
+					for (iter = runs.begin(); iter != runs.end(); ++iter)
+					{
+						tally.insert((*iter).m_Event);
+					}
+					for (std::set<ARBString>::iterator iterTally = tally.begin();
+						iterTally != tally.end();
+						++iterTally)
+					{
+						std::list<OtherPtInfo> validRuns;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							if ((*iter).m_Event == (*iterTally))
+								validRuns.push_back(*iter);
+						}
+						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyAllByEvent(pParent, pDoc, (*iterTally), validRuns)));
+					}
+				}
+				break;
+
+			case ARBConfigOtherPoints::eTallyLevel:
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, _T(""), pOther->GetName().c_str())));
+				{
+					std::set<ARBString> tally;
+					std::list<OtherPtInfo>::iterator iter;
+					for (iter = runs.begin(); iter != runs.end(); ++iter)
+					{
+						tally.insert((*iter).m_Level);
+					}
+					for (std::set<ARBString>::iterator iterTally = tally.begin();
+						iterTally != tally.end();
+						++iterTally)
+					{
+						std::list<OtherPtInfo> validRuns;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							if ((*iter).m_Level == (*iterTally))
+								validRuns.push_back(*iter);
+						}
+						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyLevel(pParent, pDoc, (*iterTally), validRuns)));
+					}
+				}
+				break;
+
+			case ARBConfigOtherPoints::eTallyLevelByEvent:
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, _T(""), pOther->GetName().c_str())));
+				{
+					typedef std::pair<ARBString, ARBString> LevelEvent;
+					std::set<LevelEvent> tally;
+					std::list<OtherPtInfo>::iterator iter;
+					for (iter = runs.begin(); iter != runs.end(); ++iter)
+					{
+						tally.insert(LevelEvent((*iter).m_Level, (*iter).m_Event));
+					}
+					for (std::set<LevelEvent>::iterator iterTally = tally.begin();
+						iterTally != tally.end();
+						++iterTally)
+					{
+						std::list<OtherPtInfo> validRuns;
+						for (iter = runs.begin(); iter != runs.end(); ++iter)
+						{
+							if ((*iter).m_Level == (*iterTally).first
+							&& (*iter).m_Event == (*iterTally).second)
+								validRuns.push_back(*iter);
+						}
+						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyLevelByEvent(pParent, pDoc, (*iterTally).first, (*iterTally).second, validRuns)));
+					}
+				}
+				break;
+			}
+		}
+	}
+}
+
+size_t CPointsDataItems::NumLines() const
+{
+	return m_Lines.size();
+}
+
+CPointsDataBasePtr CPointsDataItems::GetLine(size_t nLine) const
+{
+	if (nLine < m_Lines.size())
+		return m_Lines[nLine];
+	else
+		return CPointsDataBasePtr();
 }

@@ -783,7 +783,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Do standard CDocument stuff.
 	if (IsModified())
 	{
-		ATLTRACE2(_T("Warning: OnOpenDocument replaces an unsaved document.\n"));
+		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
 	}
 	DeleteContents();
 

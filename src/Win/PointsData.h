@@ -51,7 +51,7 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ListData.h"
-class CAgilityBookViewPoints;
+class CAgilityBookDoc;
 
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
@@ -105,106 +105,131 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class PointsDataBase : public CListData
+class CPointsDataBase;
+typedef boost::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
+class CPointsDataBase
 {
 public:
-	PointsDataBase(CAgilityBookViewPoints* pView);
-	virtual ~PointsDataBase();
+	CPointsDataBase(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc);
+	virtual ~CPointsDataBase();
 
-	virtual PointsDataBase* Clone() const = 0;
 	virtual ARBString OnNeedText(size_t index) const = 0;
 	virtual bool HasDetails() const {return false;}
 	virtual void Details() const {}
-	virtual bool IsEqual(PointsDataBase const* inData) = 0;
+	virtual bool IsEqual(CPointsDataBasePtr inData) = 0;
 
 protected:
-	CAgilityBookViewPoints* m_pView;
+	CWnd* m_pParent;
+	CAgilityBookDoc* m_pDoc;
 };
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CPointsDataText : public CPointsDataBase
+{
+public:
+	CPointsDataText(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
+			LPCTSTR inCol1 = _T(""),
+			LPCTSTR inCol2 = _T(""));
+
+	virtual ARBString OnNeedText(size_t index) const;
+	virtual bool IsEqual(CPointsDataBasePtr inData);
+
+private:
+	ARBString m_Col1;
+	ARBString m_Col2;
+};
+typedef boost::shared_ptr<CPointsDataText> CPointsDataTextPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * This is the data for the "header".
  */
-class PointsDataDog : public PointsDataBase
+class CPointsDataDog : public CPointsDataBase
 {
 public:
-	PointsDataDog(
-			CAgilityBookViewPoints* pView,
+	CPointsDataDog(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog);
-	~PointsDataDog();
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBDogPtr m_pDog;
 };
+typedef boost::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * This is the venue "header"
  */
-class PointsDataVenue : public PointsDataBase
+class CPointsDataVenue : public CPointsDataBase
 {
 public:
-	PointsDataVenue(
-			CAgilityBookViewPoints* pView,
+	CPointsDataVenue(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog,
 			ARBConfigVenuePtr pVenue);
-	~PointsDataVenue();
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBDogPtr m_pDog;
 	ARBConfigVenuePtr m_pVenue;
 };
+typedef boost::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * This is a title item
  */
-class PointsDataTitle : public PointsDataBase
+class CPointsDataTitle : public CPointsDataBase
 {
 public:
-	PointsDataTitle(
-			CAgilityBookViewPoints* pView,
+	CPointsDataTitle(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog,
 			ARBDogTitlePtr pTitle);
-	~PointsDataTitle();
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBDogPtr m_pDog;
 	ARBDogTitlePtr m_pTitle;
 };
+typedef boost::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Keeps track of all runs summarized in an event line.
  */
-class PointsDataEvent : public PointsDataBase
+class CPointsDataEvent : public CPointsDataBase
 {
 	friend class SortPointItems;
 public:
-	PointsDataEvent(
-			CAgilityBookViewPoints* pView,
+	CPointsDataEvent(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog,
 			std::list<RunInfo>& inMatching,
 			ARBConfigVenuePtr inVenue,
@@ -219,13 +244,11 @@ public:
 			ARBString const& inPts,
 			ARBString const& inSuperQ,
 			ARBString const& inSpeed);
-	~PointsDataEvent();
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBDogPtr m_Dog;
@@ -243,17 +266,19 @@ protected:
 	ARBString m_SuperQ;
 	ARBString m_Speed;
 };
+typedef boost::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Keeps track of all lifetime points
  */
-class PointsDataLifetime : public PointsDataBase
+class CPointsDataLifetime : public CPointsDataBase
 {
 public:
-	PointsDataLifetime(
-			CAgilityBookViewPoints* pView,
+	CPointsDataLifetime(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBString const& inVenue);
 	void AddLifetimeInfo(
 			ARBString const& inDiv,
@@ -261,11 +286,10 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	CString m_Venue;
@@ -273,15 +297,17 @@ protected:
 	double m_Lifetime; //< Total lifetime points.
 	double m_Filtered; //< Points that are filtered out.
 };
+typedef boost::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 
 /**
  * Subtotal lifetime points by division.
  */
-class PointsDataLifetimeDiv : public PointsDataLifetime
+class CPointsDataLifetimeDiv : public CPointsDataLifetime
 {
 public:
-	PointsDataLifetimeDiv(
-			CAgilityBookViewPoints* pView,
+	CPointsDataLifetimeDiv(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBString const& inVenue,
 			ARBString const& inDiv);
 
@@ -291,35 +317,34 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBString m_Div;
 };
+typedef boost::shared_ptr<CPointsDataLifetimeDiv> CPointsDataLifetimeDivPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Keeps track of all double Qs
  */
-class PointsDataMultiQs : public PointsDataBase
+class CPointsDataMultiQs : public CPointsDataBase
 {
 public:
-	PointsDataMultiQs(
-			CAgilityBookViewPoints* pView,
+	CPointsDataMultiQs(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog,
 			ARBConfigVenuePtr inVenue,
 			ARBConfigMultiQPtr inMultiQ,
 			std::set<MultiQdata> const& inMQs);
-	~PointsDataMultiQs();
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBDogPtr m_Dog;
@@ -328,117 +353,174 @@ protected:
 	std::set<MultiQdata> m_MQs;
 	double m_ExistingDblQs;
 };
+typedef boost::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Keeps track of all Speed points
  */
-class PointsDataSpeedPts : public PointsDataBase
+class CPointsDataSpeedPts : public CPointsDataBase
 {
 public:
-	PointsDataSpeedPts(
-			CAgilityBookViewPoints* pView,
+	CPointsDataSpeedPts(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBConfigVenuePtr inVenue,
 			int inPts);
-	~PointsDataSpeedPts();
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBConfigVenuePtr m_Venue;
 	int m_Pts;
 };
+typedef boost::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * Other points data base class.
  */
-class PointsDataOtherPoints : public PointsDataBase
+class CPointsDataOtherPoints : public CPointsDataBase
 {
 public:
-	PointsDataOtherPoints(
-			CAgilityBookViewPoints* pView,
+	CPointsDataOtherPoints(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			std::list<OtherPtInfo> const& inRunList);
 
 protected:
 	double m_Score;
 	std::list<OtherPtInfo> m_RunList;
 };
+typedef boost::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
 
-class PointsDataOtherPointsTallyAll : public PointsDataOtherPoints
+class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyAll(
-			CAgilityBookViewPoints* pView,
+	CPointsDataOtherPointsTallyAll(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBString const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBString m_Name;
 };
+typedef boost::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
 
-class PointsDataOtherPointsTallyAllByEvent : public PointsDataOtherPoints
+class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyAllByEvent(
-			CAgilityBookViewPoints* pView,
+	CPointsDataOtherPointsTallyAllByEvent(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBString m_Event;
 };
+typedef boost::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
 
-class PointsDataOtherPointsTallyLevel : public PointsDataOtherPoints
+class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyLevel(
-			CAgilityBookViewPoints* pView,
+	CPointsDataOtherPointsTallyLevel(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBString const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBString m_Level;
 };
+typedef boost::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
 
-class PointsDataOtherPointsTallyLevelByEvent : public PointsDataOtherPoints
+class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 {
 public:
-	PointsDataOtherPointsTallyLevelByEvent(
-			CAgilityBookViewPoints* pView,
+	CPointsDataOtherPointsTallyLevelByEvent(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
 			ARBString const& inLevel,
 			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual PointsDataBase* Clone() const;
 	virtual ARBString OnNeedText(size_t index) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
-	virtual bool IsEqual(PointsDataBase const* inData);
+	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
 	ARBString m_Level;
 	ARBString m_Event;
+};
+typedef boost::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CPointsDataItems
+{
+public:
+	CPointsDataItems();
+	~CPointsDataItems();
+
+	void LoadData(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
+			ARBDogPtr inDog);
+
+	size_t NumLines() const;
+	CPointsDataBasePtr GetLine(size_t nLine) const;
+
+private:
+	struct LifeTimePoint
+	{
+		ARBString eventName;
+		double points;
+		bool bFiltered;
+		LifeTimePoint()
+			: eventName()
+			, points(0.0)
+			, bFiltered(false)
+		{
+		}
+		LifeTimePoint(
+				const ARBString inEvent,
+				double inPoints,
+				bool inFiltered)
+			: eventName(inEvent)
+			, points(inPoints)
+			, bFiltered(inFiltered)
+		{
+		}
+	};
+	typedef std::list<LifeTimePoint> LifeTimePointList;
+	struct LifeTimePoints
+	{
+		ARBConfigDivisionPtr pDiv;
+		ARBConfigLevelPtr pLevel;
+		LifeTimePointList ptList;
+	};
+	typedef std::list<LifeTimePoints> LifeTimePointsList;
+
+	std::vector<CPointsDataBasePtr> m_Lines;
 };

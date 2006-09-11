@@ -130,6 +130,10 @@ SOURCE=..\..\Win\AgilityBookViewCalendarList.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\AgilityBookViewHtml.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\AgilityBookViewPoints.cpp
 # End Source File
 # Begin Source File
@@ -500,6 +504,10 @@ SOURCE=..\..\Win\AgilityBookViewCalendar.h
 # Begin Source File
 
 SOURCE=..\..\Win\AgilityBookViewCalendarList.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookViewHtml.h
 # End Source File
 # Begin Source File
 
