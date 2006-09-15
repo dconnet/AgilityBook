@@ -470,8 +470,8 @@ BOOL CAgilityBookApp::InitInstance()
 #endif
 
 	// We need at least 800x600 (the event(run) dialog is big!)
-	if (800 > GetSystemMetrics(SM_CXFULLSCREEN)
-	|| 600 > GetSystemMetrics(SM_CYFULLSCREEN))
+	if (800 > GetSystemMetrics(SM_CXSCREEN)
+	|| 600 > GetSystemMetrics(SM_CYSCREEN))
 	{
 		if (IDNO == AfxMessageBox(IDS_MIN_RESOLUTION, MB_ICONSTOP | MB_YESNO))
 			return FALSE;
