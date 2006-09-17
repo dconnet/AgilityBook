@@ -73,6 +73,7 @@ CDlgOptions::CDlgOptions(
 	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
 	m_pageProgram.m_bShowSplash = CAgilityBookOptions::AutoShowSplashScreen() ? TRUE : FALSE;
 	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
+	m_pageProgram.m_bShowHtml = CAgilityBookOptions::ShowHtmlPoints(&m_pageProgram.m_IEInstalled);
 
 	// Filters
 	// -handled thru CFilterOptions
@@ -144,6 +145,8 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
 		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
+		if (m_pageProgram.m_IEInstalled)
+			CAgilityBookOptions::SetShowHtmlPoints(m_pageProgram.m_bShowHtml ? true : false);
 
 		// Views
 		if (!m_pageView.m_bOpeningNear)

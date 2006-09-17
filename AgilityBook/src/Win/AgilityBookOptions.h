@@ -221,6 +221,8 @@ public:
 	static void SetDateFormat(
 			FormattedDate inItem,
 			ARBDate::DateFormat inFormat);
+	static bool ShowHtmlPoints(bool* outIEInstalled = NULL);
+	static void SetShowHtmlPoints(bool bSet);
 
 protected:
 	friend class CDlgAssignColumns;

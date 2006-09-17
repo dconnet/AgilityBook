@@ -53,14 +53,14 @@ IMPLEMENT_DYNCREATE(CDlgOptionsProgram, CDlgBasePropertyPage)
 
 CDlgOptionsProgram::CDlgOptionsProgram()
 	: CDlgBasePropertyPage(CDlgOptionsProgram::IDD)
+	, m_bAutoCheck(TRUE)
+	, m_Backups(0)
+	, m_bAutoShow(TRUE)
+	, m_bShowSplash(TRUE)
+	, m_Splash(_T(""))
+	, m_bShowHtml(FALSE)
+	, m_IEInstalled(FALSE)
 {
-	//{{AFX_DATA_INIT(CDlgOptionsProgram)
-	m_bAutoCheck = TRUE;
-	m_Backups = 0;
-	m_bAutoShow = TRUE;
-	m_bShowSplash = TRUE;
-	m_Splash = _T("");
-	//}}AFX_DATA_INIT
 }
 
 CDlgOptionsProgram::~CDlgOptionsProgram()
@@ -76,6 +76,7 @@ void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_OPT_PGM_AUTOSHOW, m_bAutoShow);
 	DDX_Check(pDX, IDC_OPT_PGM_SHOW_SPLASH, m_bShowSplash);
 	DDX_Text(pDX, IDC_OPT_PGM_FILENAME, m_Splash);
+	DDX_Check(pDX, IDC_OPT_PGM_SHOWHTML, m_bShowHtml);
 	//}}AFX_DATA_MAP
 }
 
@@ -92,6 +93,8 @@ void CDlgOptionsProgram::UpdateButtons()
 {
 	GetDlgItem(IDC_OPT_PGM_FILENAME)->EnableWindow(m_bShowSplash);
 	GetDlgItem(IDC_OPT_PGM_BROWSE)->EnableWindow(m_bShowSplash);
+	if (!m_IEInstalled)
+		GetDlgItem(IDC_OPT_PGM_SHOWHTML)->EnableWindow(FALSE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
