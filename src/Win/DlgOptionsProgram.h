@@ -57,7 +57,9 @@ private:
 	BOOL	m_bAutoShow;
 	BOOL	m_bShowSplash;
 	CString	m_Splash;
+	BOOL	m_bShowHtml;
 	//}}AFX_DATA
+	bool m_IEInstalled;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgOptionsProgram)

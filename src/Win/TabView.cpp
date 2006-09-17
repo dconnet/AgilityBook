@@ -41,6 +41,7 @@
 #include "AgilityBookDoc.h"
 #include "TabView.h"
 
+#include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewCalendarList.h"
@@ -145,8 +146,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_Panes.push_back(&m_splitterRuns);
 
-	bool isIeOk = false;
-	if (isIeOk)
+	if (CAgilityBookOptions::ShowHtmlPoints())
 	{
 		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
 		m_Panes.push_back(html);

@@ -1,8 +1,9 @@
-9/15/2006: v1.7.6.12 <in development>
+9/17/2006: v1.7.6.12 <in development>
 - New features / Enhancements:
   - Add an HTML view for points (still in process)
 - Bug fixes
   - Properly test the size of the screen so 800x600 doesn't complain.
+  - Modify links in the help file so they open in an external browser.
 
 9/2/2006: v1.7.5.12
 - New features / Enhancements:

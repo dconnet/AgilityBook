@@ -187,6 +187,7 @@ Settings:
 	DW ShowSplash
 	ST Splash
 	DW autoShowTitle
+	DW showHtml
 	DW dateFormat[n]
 		{
 			eRunTree	= 0,
@@ -1094,6 +1095,46 @@ void CAgilityBookOptions::SetDateFormat(
 	ARBostringstream section;
 	section << _T("dateFormat") << static_cast<int>(inItem);
 	AfxGetApp()->WriteProfileInt(_T("Settings"), section.str().c_str(), static_cast<int>(inFormat));
+}
+
+bool CAgilityBookOptions::ShowHtmlPoints(bool* outIEInstalled)
+{
+	static bool s_bChecked = false;
+	static bool s_bIEInstalled = false;
+
+	if (!s_bChecked)
+	{
+		s_bChecked = true;
+		HINSTANCE hShellDoc = LoadLibrary(_T("shdocvw.dll"));
+		if (hShellDoc)
+		{
+			CVersionNum ver(hShellDoc);
+			CVersionNum::VERSION_NUMBER verno;
+			ver.GetVersion(verno);
+			// See MSDN q164539: "How to Determine Which Version of Internet Explorer Is Installed"
+			// Version 5.0.3314.2100: ie5.01sp2 (win95/98/nt4)
+			// Version 5.0.3315.2879: ie5.01sp2 (w2k)
+			if (5 < verno.part1
+			|| (5 == verno.part1 && 0 < verno.part2)
+			|| (5 == verno.part1 && 0 == verno.part2 && 3314 <= verno.part3))
+				s_bIEInstalled = true;
+			// No need to unload, we'll use it shortly.
+		}
+	}
+	if (outIEInstalled)
+		*outIEInstalled = s_bIEInstalled;
+	if (s_bIEInstalled)
+	{
+		int val = AfxGetApp()->GetProfileInt(_T("Settings"), _T("showHtml"), 1);
+		return val == 1 ? true : false;
+	}
+	else
+		return false;
+}
+
+void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
+{
+	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("showHtml"), bSet ? 1 : 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////

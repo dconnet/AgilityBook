@@ -382,6 +382,7 @@
 #define IDC_OPT_PGM_SHOW_SPLASH         1453
 #define IDC_OPT_PGM_FILENAME            1454
 #define IDC_OPT_PGM_BROWSE              1455
+#define IDC_OPT_PGM_SHOWHTML            1456
 #define IDC_OPT_FILTER_DATE_ALL         1460
 #define IDC_OPT_FILTER_DATE_RANGE       1461
 #define IDC_OPT_FILTER_DATE_START_CHECK 1462

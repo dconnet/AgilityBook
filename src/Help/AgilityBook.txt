@@ -828,6 +828,9 @@ is empty, the default splash screen will be used.
 .topic HIDC_OPT_PGM_BROWSE
 Browse for a Windows .bmp file to use as the splash screen.
 
+.topic HIDC_OPT_PGM_SHOWHTML
+Use HTML in the Points View. This allows a 'Prettier' view and better printing.
+
 .topic HIDC_OPT_FILTER_DATE_ALL
 View all dates.
 
