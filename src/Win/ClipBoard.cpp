@@ -48,62 +48,197 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+// Special clipboard formats
 
-CClipboardDataWriter::CClipboardDataWriter()
-	: m_bOkay(false)
+static UINT GetClipboardFormat(eClipFormat fmt)
 {
-	if (AfxGetMainWnd()->OpenClipboard())
+	static bool bInitialized = false;
+	static UINT uDog = 0;
+	static UINT uTrial = 0;
+	static UINT uRun = 0;
+	static UINT uCal = 0;
+	static UINT uiCal = 0;
+	static UINT uLog = 0;
+	if (!bInitialized)
 	{
-		if (EmptyClipboard())
-			m_bOkay = true;
-		else
-			CloseClipboard();
+		bInitialized = true;
+		uDog = RegisterClipboardFormat(_T("ARB-Dog"));
+		uTrial = RegisterClipboardFormat(_T("ARB-Trial"));
+		uRun = RegisterClipboardFormat(_T("ARB-Run"));
+		uCal = RegisterClipboardFormat(_T("ARB-Cal"));
+		uiCal = RegisterClipboardFormat(_T("+//ISBN 1-887687-00-9::versit::PDI//vCalendar"));
+		uLog = RegisterClipboardFormat(_T("ARB-Log"));
+	}
+	switch (fmt)
+	{
+	default:				return 0;
+	case eFormatDog:		return uDog;
+	case eFormatTrial:		return uTrial;
+	case eFormatRun:		return uRun;
+	case eFormatCalendar:	return uCal;
+	case eFormatiCalendar:	return uiCal;
+	case eFormatLog:		return uLog;
 	}
 }
 
-CClipboardDataWriter::~CClipboardDataWriter()
+////////////////////////////////////////////////////////////////////////////
+
+CClipboardData::CClipboardData(bool bAutoOpen)
+	: m_bOkay(false)
 {
-	if (m_bOkay)
-		CloseClipboard();
+	if (bAutoOpen)
+		Open();
 }
 
-bool CClipboardDataWriter::SetData(
-		UINT clpFmt,
-		Element const& inTree)
+CClipboardData::~CClipboardData()
 {
-	bool bOk = false;
-	std::ostringstream out;
-	inTree.SaveXML(out);
-#ifdef UNICODE
-	CStringW tmp(out.str().c_str());
-	ARBString data = tmp;
-#else
-	ARBString data = out.str();
-#endif
-	// alloc mem block & copy text in
-	HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
-	if (NULL != temp)
+	Close();
+}
+
+bool CClipboardData::Open()
+{
+	if (!m_bOkay)
 	{
-		bOk = true;
-		LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-		lstrcpy(str, data.c_str());
-		GlobalUnlock(reinterpret_cast<void*>(temp));
-		// send data to clipbard
-		SetClipboardData(clpFmt, temp);
+		if (AfxGetMainWnd()->OpenClipboard())
+			m_bOkay = true;
+	}
+	return m_bOkay;
+}
+
+void CClipboardData::Close()
+{
+	if (m_bOkay)
+	{
+		m_bOkay = false;
+		CloseClipboard();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+CClipboardDataReader::CClipboardDataReader()
+	: CClipboardData(false)
+{
+}
+
+BOOL CClipboardDataReader::IsFormatAvailable(eClipFormat clpFmt)
+{
+	return ::IsClipboardFormatAvailable(GetClipboardFormat(clpFmt));
+}
+
+bool CClipboardDataReader::GetData(
+		eClipFormat clpFmt,
+		Element& outTree)
+{
+	outTree.clear();
+	bool bOk = false;
+	CStringA data;
+	if (GetData(GetClipboardFormat(clpFmt), data))
+	{
+		ARBString err;
+		bOk = outTree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
+		if (!bOk && 0 < err.length())
+		{
+			AfxMessageBox(err.c_str(), MB_ICONEXCLAMATION);
+		}
 	}
 	return bOk;
 }
 
+bool CClipboardDataReader::GetData(
+		UINT clpFmt,
+		CStringA& outData)
+{
+	if (!m_bOkay)
+	{
+		if (!Open())
+			return false;
+	}
+	bool bOk = false;
+	if (IsClipboardFormatAvailable(clpFmt))
+	{
+		HANDLE hData = GetClipboardData(clpFmt);
+		CStringA data(reinterpret_cast<LPCSTR>(GlobalLock(hData)));
+		GlobalUnlock(hData);
+	}
+	return bOk;
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+CClipboardDataWriter::CClipboardDataWriter()
+	: CClipboardData(true)
+{
+	if (m_bOkay)
+	{
+		if (!EmptyClipboard())
+			Close();
+	}
+}
+
+bool CClipboardDataWriter::SetData(
+		eClipFormat clpFmt,
+		Element const& inTree)
+{
+	if (!m_bOkay)
+		return false;
+
+	std::ostringstream out;
+	inTree.SaveXML(out);
+	return SetData(clpFmt, out.str());
+}
+
+bool CClipboardDataWriter::SetData(
+		eClipFormat clpFmt,
+		std::string const& inData)
+{
+	return SetData(clpFmt, inData.c_str(), inData.length()+1);
+}
+
+bool CClipboardDataWriter::SetData(
+		eClipFormat clpFmt,
+		CStringA const& inData)
+{
+	return SetData(clpFmt, (LPCSTR)inData, inData.GetLength()+1);
+}
+
+bool CClipboardDataWriter::SetData(ARBString const& inData)
+{
+#ifdef UNICODE
+	CStringA inData2(inData.c_str());
+	bool bOk = SetData(CF_UNICODETEXT, inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
+	bOk |= SetData(CF_TEXT, (LPCSTR)inData2, inData2.GetLength()+1);
+	return bOk;
+#else
+	return SetData(CF_TEXT, inData.c_str(), inData.length()+1);
+#endif
+}
+
+bool CClipboardDataWriter::SetData(CString const& inData)
+{
+#ifdef UNICODE
+	CStringA inData2(inData);
+	bool bOk = SetData(CF_UNICODETEXT, (LPCTSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
+	bOk |= SetData(CF_TEXT, (LPCSTR)inData2, inData2.GetLength()+1);
+	return bOk;
+#else
+	return SetData(CF_TEXT, (LPCSTR)inData, inData.GetLength()+1);
+#endif
+}
+
 bool CClipboardDataWriter::SetData(
 		UINT clpFmt,
-		TCHAR const* const inData,
+		void const* inData,
 		size_t inLen)
 {
+	if (!m_bOkay)
+		return false;
+
 	bool bOk = false;
-	if (0 < inLen && inData)
+	if (inData && 0 < inLen)
 	{
-		HGLOBAL temp = GlobalAlloc(GHND, inLen+1);
+		HGLOBAL temp = GlobalAlloc(GHND, inLen);
 		if (NULL != temp)
 		{
 			bOk = true;
@@ -111,50 +246,7 @@ bool CClipboardDataWriter::SetData(
 			memcpy(pData, inData, inLen);
 			GlobalUnlock(temp);
 			// send data to clipbard
-			SetClipboardData(clpFmt, temp);
-		}
-	}
-	return bOk;
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-bool CopyDataToClipboard(
-		UINT clpFmt,
-		Element const& tree,
-		CString const& txtForm)
-{
-	CClipboardDataWriter data;
-	if (!data.isOkay())
-		return false;
-
-	bool bOk = data.SetData(clpFmt, tree);
-	if (!txtForm.IsEmpty())
-		if (data.SetData(CF_TEXT, (LPCTSTR)txtForm, txtForm.GetLength()))
-			bOk = true;
-
-	return bOk;
-}
-
-bool GetDataFromClipboard(
-		UINT clpFmt,
-		Element& tree)
-{
-	bool bOk = false;
-	if (IsClipboardFormatAvailable(clpFmt))
-	{
-		if (!AfxGetMainWnd()->OpenClipboard())
-			return false;
-		tree.clear();
-		HANDLE hData = GetClipboardData(clpFmt);
-		CStringA data(reinterpret_cast<LPCSTR>(GlobalLock(hData)));
-		GlobalUnlock(hData);
-		CloseClipboard();
-		ARBString err;
-		bOk = tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
-		if (!bOk && 0 < err.length())
-		{
-			AfxMessageBox(err.c_str(), MB_ICONEXCLAMATION);
+			SetClipboardData(CF_TEXT, temp);
 		}
 	}
 	return bOk;

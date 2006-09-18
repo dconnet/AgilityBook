@@ -1308,9 +1308,8 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		std::ostringstream iCal;
-		Element tree;
-		tree.SetName(CLIPDATA);
+		ARBostringstream iCal;
+		Element tree(CLIPDATA);
 
 		// Now all the data.
 		int nWarning = CAgilityBookOptions::CalendarOpeningNear();
@@ -1335,22 +1334,16 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 		}
 		iCalendar->Release();
 
-		clpData.SetData(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar), tree);
-		clpData.SetData(CF_TEXT, (LPCTSTR)data, data.GetLength());
-#ifdef UNICODE
-		CStringW tmp(iCal.str().c_str());
-		ARBString str_iCal = tmp;
-#else
-		ARBString str_iCal = iCal.str();
-#endif
-		clpData.SetData(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatiCalendar), str_iCal.c_str(), str_iCal.length());
+		clpData.SetData(eFormatCalendar, tree);
+		clpData.SetData(data);
+		clpData.SetData(eFormatiCalendar, iCal.str());
 	}
 }
 
 void CAgilityBookViewCalendarList::OnUpdateEditPaste(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar)))
+	if (CClipboardDataReader::IsFormatAvailable(eFormatCalendar))
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1359,7 +1352,8 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 {
 	bool bLoaded = false;
 	Element tree;
-	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatCalendar), tree))
+	CClipboardDataReader clpData;
+	if (clpData.GetData(eFormatCalendar, tree))
 	{
 		if (CLIPDATA == tree.GetName())
 		{
@@ -1379,6 +1373,7 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 			}
 		}
 	}
+	clpData.Close();
 	if (bLoaded)
 	{
 		GetDocument()->GetCalendar().sort();

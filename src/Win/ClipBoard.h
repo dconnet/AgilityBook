@@ -39,44 +39,84 @@
 
 class Element;
 
+// Name of root element when writing Elements.
 #define CLIPDATA	_T("ClipData")
 
+// Special clipboard formats
+typedef enum
+{
+	eFormatDog,
+	eFormatTrial,
+	eFormatRun,
+	eFormatCalendar,
+	eFormatiCalendar,
+	eFormatLog,
+} eClipFormat;
+
 /**
- * Copy the given tree to the clipboard, along with a text form if given.
- * @param clpFmt Special registered clipboard format
- * @param tree Tree to save to clipboard
- * @param txtForm Text form to include on clipboard
+ * Clipboard reader/writer base class.
  */
-extern bool CopyDataToClipboard(
-		UINT clpFmt,
-		Element const& tree,
-		CString const& txtForm);
-//TODO: Remove the above call and use only class
-class CClipboardDataWriter
+class CClipboardData
 {
 public:
-	CClipboardDataWriter();
-	~CClipboardDataWriter();
+	CClipboardData(bool bAutoOpen);
+	virtual ~CClipboardData();
 
+	bool Open();
+	void Close();
+
+	/**
+	 * Check if clipboard is ready for use.
+	 */
 	bool isOkay() const	{return m_bOkay;}
 
-	bool SetData(
-			UINT clpFmt,
-			Element const& inTree);
-	bool SetData(
-			UINT clpFmt,
-			TCHAR const* const inData,
-			size_t inLen);
-
-private:
+protected:
 	bool m_bOkay;
 };
 
+class CClipboardDataReader : public CClipboardData
+{
+public:
+	CClipboardDataReader();
+
+	static BOOL IsFormatAvailable(eClipFormat clpFmt);
+
+	bool GetData(
+			eClipFormat clpFmt,
+			Element& outTree);
+
+	bool GetData(
+			UINT clpFmt,
+			CStringA& outData);
+};
+
 /**
- * Get the data from the clipboard.
- * @param clpFmt Special registered clipboard format
- * @param tree Tree to return.
+ * Copy data to the clipboard. SetData can be called on different formats.
  */
-extern bool GetDataFromClipboard(
-		UINT clpFmt,
-		Element& tree);
+class CClipboardDataWriter : public CClipboardData
+{
+public:
+	CClipboardDataWriter();
+
+	bool SetData(
+			eClipFormat clpFmt,
+			Element const& inTree);
+
+	// Used to write special data.
+	bool SetData(
+			eClipFormat clpFmt,
+			std::string const& inData);
+	bool SetData(
+			eClipFormat clpFmt,
+			CStringA const& inData);
+
+	// Write data as CF_TEXT (in Unicode builds, CF_UNICODETEXT also)
+	bool SetData(ARBString const& inData);
+	bool SetData(CString const& inData);
+
+	// Raw form.
+	bool SetData(
+			UINT clpFmt,
+			void const* inData,
+			size_t inLen);
+};

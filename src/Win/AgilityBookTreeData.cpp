@@ -371,13 +371,13 @@ static bool AddTitle(
 bool CAgilityBookTreeData::CanPaste() const
 {
 	bool bEnable = false;
-	if (IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog)))
+	if (CClipboardDataReader::IsFormatAvailable(eFormatDog))
 		bEnable = true;
 	else if (GetTrial()
-	&& IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun)))
+	&& CClipboardDataReader::IsFormatAvailable(eFormatRun))
 		bEnable = true;
 	else if (GetDog()
-	&& IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial)))
+	&& CClipboardDataReader::IsFormatAvailable(eFormatTrial))
 		bEnable = true;
 	return bEnable;
 }
@@ -387,6 +387,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	CWaitCursor wait;
 	bool bLoaded = false;
 	Element tree;
+	CClipboardDataReader clpData;
 	ARBDogTrialPtr pTrial = GetTrial();
 	ARBDogPtr pDog = GetDog();
 	if (m_pTree->PasteDog(bLoaded))
@@ -394,7 +395,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		// Done.
 	}
 	else if (pTrial
-	&& GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree))
+	&& clpData.GetData(eFormatRun, tree))
 	{
 		if (CLIPDATA == tree.GetName())
 		{
@@ -466,7 +467,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 		}
 	}
 	else if (pDog
-	&& GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree))
+	&& clpData.GetData(eFormatTrial, tree))
 	{
 		if (CLIPDATA == tree.GetName())
 		{
@@ -631,11 +632,15 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		break;
 	case ID_EDIT_COPY:
 		{
-			CWaitCursor wait;
-			Element tree;
-			tree.SetName(CLIPDATA);
-			GetDog()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog), tree, m_pTree->GetPrintLine(GetHTreeItem()));
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
+			{
+				CWaitCursor wait;
+				Element tree(CLIPDATA);
+				GetDog()->Save(tree);
+				clpData.SetData(eFormatDog, tree);
+				clpData.SetData(m_pTree->GetPrintLine(GetHTreeItem()));
+			}
 		}
 		break;
 	case ID_EDIT_PASTE:
@@ -884,11 +889,15 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		break;
 	case ID_EDIT_COPY:
 		{
-			CWaitCursor wait;
-			Element tree;
-			tree.SetName(CLIPDATA);
-			GetTrial()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatTrial), tree, m_pTree->GetPrintLine(GetHTreeItem()));
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
+			{
+				CWaitCursor wait;
+				Element tree(CLIPDATA);
+				GetTrial()->Save(tree);
+				clpData.SetData(eFormatTrial, tree);
+				clpData.SetData(m_pTree->GetPrintLine(GetHTreeItem()));
+			}
 		}
 		break;
 	case ID_EDIT_PASTE:
@@ -1173,11 +1182,15 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		break;
 	case ID_EDIT_COPY:
 		{
-			CWaitCursor wait;
-			Element tree;
-			tree.SetName(CLIPDATA);
-			GetRun()->Save(tree);
-			CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, m_pTree->GetPrintLine(GetHTreeItem()));
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
+			{
+				CWaitCursor wait;
+				Element tree(CLIPDATA);
+				GetRun()->Save(tree);
+				clpData.SetData(eFormatRun, tree);
+				clpData.SetData(m_pTree->GetPrintLine(GetHTreeItem()));
+			}
 		}
 		break;
 	case ID_EDIT_PASTE:

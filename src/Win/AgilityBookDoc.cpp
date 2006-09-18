@@ -902,11 +902,8 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	{
 		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
-#ifdef UNICODE
-		std::ofstream output(CStringA(lpszPathName), std::ios::out | std::ios::binary);
-#else
-		std::ofstream output(lpszPathName, std::ios::out | std::ios::binary);
-#endif
+		CStringA filename(lpszPathName);
+		std::ofstream output(filename, std::ios::out | std::ios::binary);
 		output.exceptions(std::ios_base::badbit);
 		if (output.is_open())
 		{

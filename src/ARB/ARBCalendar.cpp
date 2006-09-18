@@ -69,7 +69,7 @@ class ARBiCal : public ICalendar
 {
 public:
 	ARBiCal(
-			std::ostream& ioStream,
+			ARBostream& ioStream,
 			int inVersion);
 	virtual ~ARBiCal()
 	{
@@ -164,12 +164,12 @@ private:
 			std::string const& inText,
 			bool bQuotedPrint);
 
-	std::ostream& m_ioStream;
+	ARBostream& m_ioStream;
 	int m_Version;
 };
 
 ARBiCal::ARBiCal(
-		std::ostream& ioStream,
+		ARBostream& ioStream,
 		int inVersion)
 	: m_ioStream(ioStream)
 	, m_Version(inVersion)
@@ -298,21 +298,21 @@ void ARBiCal::DoDTSTAMP()
 		_localtime64_s(&l, &t);
 		struct tm* pTime = &l;
 #endif
-		std::ostringstream str;
-		str.fill('0');
+		ARBostringstream str;
+		str.fill(_T('0'));
 		str.width(4);
 		str << pTime->tm_year + 1900;
 		str.width(2);
 		str << pTime->tm_mon + 1;
 		str.width(2);
-		str << pTime->tm_mday << 'T';
+		str << pTime->tm_mday << _T('T');
 		str.width(2);
 		str << pTime->tm_hour;
 		str.width(2);
 		str << pTime->tm_min;
 		str.width(2);
 		str << pTime->tm_sec;
-		m_ioStream << "DTSTAMP:" << str.str() << "\r\n";
+		m_ioStream << _T("DTSTAMP:") << str.str() << _T("\r\n");
 	}
 }
 
@@ -325,7 +325,7 @@ ICalendar::~ICalendar()
 }
 
 ICalendar* ICalendar::iCalendarBegin(
-		std::ostream& ioStream,
+		ARBostream& ioStream,
 		int inVersion)
 {
 	ICalendar* pCal = NULL;

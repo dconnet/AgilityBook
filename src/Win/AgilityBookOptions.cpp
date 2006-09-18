@@ -1136,37 +1136,3 @@ void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
 {
 	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("showHtml"), bSet ? 1 : 0);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Special clipboard formats
-
-UINT CAgilityBookOptions::GetClipboardFormat(eClipFormat fmt)
-{
-	static bool bInitialized = false;
-	static UINT uDog = 0;
-	static UINT uTrial = 0;
-	static UINT uRun = 0;
-	static UINT uCal = 0;
-	static UINT uiCal = 0;
-	static UINT uLog = 0;
-	if (!bInitialized)
-	{
-		bInitialized = true;
-		uDog = RegisterClipboardFormat(_T("ARB-Dog"));
-		uTrial = RegisterClipboardFormat(_T("ARB-Trial"));
-		uRun = RegisterClipboardFormat(_T("ARB-Run"));
-		uCal = RegisterClipboardFormat(_T("ARB-Cal"));
-		uiCal = RegisterClipboardFormat(_T("+//ISBN 1-887687-00-9::versit::PDI//vCalendar"));
-		uLog = RegisterClipboardFormat(_T("ARB-Log"));
-	}
-	switch (fmt)
-	{
-	default:				return 0;
-	case eFormatDog:		return uDog;
-	case eFormatTrial:		return uTrial;
-	case eFormatRun:		return uRun;
-	case eFormatCalendar:	return uCal;
-	case eFormatiCalendar:	return uiCal;
-	case eFormatLog:		return uLog;
-	}
-}

@@ -43,6 +43,7 @@
 #include "AgilityBookOptions.h"
 #include "ARBDogRun.h"
 #include "Base64.h"
+#include "ClipBoard.h"
 #include "DlgCRCDViewer.h"
 
 #ifdef _DEBUG
@@ -276,16 +277,22 @@ void CDlgRunCRCD::OnCopy()
 			bMeta = FALSE;
 		if (bText || bMeta)
 		{
-			if (AfxGetMainWnd()->OpenClipboard())
+			CClipboardDataReader clpData;
+			if (clpData.Open())
 			{
 				m_ctrlText.SetWindowText(_T(""));
 				DeleteMetaFile();
 				if (bText)
 				{
 					m_ViewText = true;
-					HANDLE hData = GetClipboardData(CF_TEXT);
-					CString str(reinterpret_cast<LPCTSTR>(GlobalLock(hData)));
-					GlobalUnlock(hData);
+#ifdef UNICODE
+					CStringA raw;
+					clpData.GetData(CF_TEXT, raw);
+					CString str(raw);
+#else
+					CStringA str;
+					clpData.GetData(CF_TEXT, str);
+#endif
 					str.TrimRight();
 					str.TrimLeft();
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
@@ -316,7 +323,6 @@ void CDlgRunCRCD::OnCopy()
 						}
 					}
 				}
-				CloseClipboard();
 				SetView();
 			}
 		}

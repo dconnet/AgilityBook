@@ -44,6 +44,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "CheckLink.h"
+#include "ClipBoard.h"
 #include "DlgSelectURL.h"
 
 #ifdef _DEBUG
@@ -391,13 +392,9 @@ void CDlgFindLinks::OnCopy()
 {
 	if (0 < m_Data.size())
 	{
-		if (!AfxGetMainWnd()->OpenClipboard())
+		CClipboardDataWriter clpData;
+		if (!clpData.isOkay())
 			return;
-		if (!EmptyClipboard())
-		{
-			CloseClipboard();
-			return;
-		}
 
 		ARBString data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
@@ -406,18 +403,7 @@ void CDlgFindLinks::OnCopy()
 			data += _T("\r\n");
 		}
 
-		// alloc mem block & copy text in
-		HGLOBAL temp = GlobalAlloc(GHND, data.length()+1);
-		if (NULL != temp)
-		{
-			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-			lstrcpy(str, data.c_str());
-			GlobalUnlock(reinterpret_cast<void*>(temp));
-			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
-		}
-
-		CloseClipboard();
+		clpData.SetData(data);
 	}
 }
 

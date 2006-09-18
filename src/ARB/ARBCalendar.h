@@ -61,7 +61,7 @@ public:
 	 * @param inVersion Either 1 (vCal) or 2 (iCal).
 	 */
 	static ICalendar* iCalendarBegin(
-			std::ostream& ioStream,
+			ARBostream& ioStream,
 			int inVersion);
 
 	/**

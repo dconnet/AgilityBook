@@ -803,6 +803,10 @@ void CAgilityBookViewTraining::OnEditCopy()
 	std::vector<int> indices;
 	if (0 < GetSelection(indices))
 	{
+		CClipboardDataWriter clpData;
+		if (!clpData.isOkay())
+			return;
+
 		CString data;
 		CStringArray line;
 
@@ -820,8 +824,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		Element tree;
-		tree.SetName(CLIPDATA);
+		Element tree(CLIPDATA);
 
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
@@ -840,14 +843,15 @@ void CAgilityBookViewTraining::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog), tree, data);
+		clpData.SetData(eFormatLog, tree);
+		clpData.SetData(data);
 	}
 }
 
 void CAgilityBookViewTraining::OnUpdateEditPaste(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog)))
+	if (CClipboardDataReader::IsFormatAvailable(eFormatLog))
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -856,7 +860,8 @@ void CAgilityBookViewTraining::OnEditPaste()
 {
 	bool bLoaded = false;
 	Element tree;
-	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatLog), tree))
+	CClipboardDataReader clpData;
+	if (clpData.GetData(eFormatLog, tree))
 	{
 		if (CLIPDATA == tree.GetName())
 		{
@@ -876,6 +881,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 			}
 		}
 	}
+	clpData.Close();
 	if (bLoaded)
 	{
 		GetDocument()->GetCalendar().sort();

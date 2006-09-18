@@ -60,6 +60,7 @@
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
 #include "ARBCalendar.h"
+#include "ClipBoard.h"
 #include "DlgCalendar.h"
 #include "DlgListCtrl.h"
 #include "FilterOptions.h"
@@ -893,22 +894,22 @@ void CAgilityBookViewCalendar::OnUpdateEditCopy(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendar::OnEditCopy()
 {
-	if (AfxGetMainWnd()->OpenClipboard())
-	{
-		EmptyClipboard();
+	CClipboardDataWriter clpData;
+	if (!clpData.isOkay())
+		return;
 
-		static UINT const scColumns[] =
-		{
-			IDS_COL_START_DATE,
-			IDS_COL_END_DATE,
-			IDS_COL_VENUE,
-			IDS_COL_LOCATION,
-			IDS_COL_CLUB,
-			IDS_COL_OPENS,
-			IDS_COL_CLOSES,
-			IDS_COL_NOTES,
-		};
-		static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
+	static UINT const scColumns[] =
+	{
+		IDS_COL_START_DATE,
+		IDS_COL_END_DATE,
+		IDS_COL_VENUE,
+		IDS_COL_LOCATION,
+		IDS_COL_CLUB,
+		IDS_COL_OPENS,
+		IDS_COL_CLOSES,
+		IDS_COL_NOTES,
+	};
+	static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
 #define COL_START_DATE	0
 #define COL_END_DATE	1
 #define COL_VENUE		2
@@ -918,106 +919,94 @@ void CAgilityBookViewCalendar::OnEditCopy()
 #define COL_CLOSES		6
 #define COL_NOTES		7
 
-		int index;
-		size_t maxLen[scNumColumns];
-		CString columns[scNumColumns];
-		for (index = 0; index < scNumColumns; ++index)
-		{
-			CString str;
-			str.LoadString(scColumns[index]);
-			maxLen[index] = str.GetLength();
-			columns[index] = str;
-		}
-		vector<ARBCalendarPtr>::const_iterator iter;
-		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
-		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
-		{
-			ARBCalendarPtr cal = *iter;
-			size_t len = cal->GetStartDate().GetString(dFmt).length();
-			if (len > maxLen[COL_START_DATE])
-				maxLen[COL_START_DATE] = len;
-			len = cal->GetEndDate().GetString(dFmt).length();
-			if (len > maxLen[COL_END_DATE])
-				maxLen[COL_END_DATE] = len;
-			len = cal->GetLocation().length();
-			if (len > maxLen[COL_LOCATION])
-				maxLen[COL_LOCATION] = len;
-			len = cal->GetClub().length();
-			if (len > maxLen[COL_CLUB])
-				maxLen[COL_CLUB] = len;
-			len = cal->GetVenue().length();
-			if (len > maxLen[COL_VENUE])
-				maxLen[COL_VENUE] = len;
-			len = cal->GetOpeningDate().GetString(dFmt).length();
-			if (len > maxLen[COL_OPENS])
-				maxLen[COL_OPENS] = len;
-			len = cal->GetClosingDate().GetString(dFmt).length();
-			if (len > maxLen[COL_CLOSES])
-				maxLen[COL_CLOSES] = len;
-			len = cal->GetNote().length();
-			if (len > maxLen[COL_NOTES])
-				maxLen[COL_NOTES] = len;
-		}
-		// The header
-		CString data;
-		data.Format(_T(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s"),
-			maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
-			maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
-			maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
-			maxLen[COL_LOCATION], (LPCTSTR)columns[COL_LOCATION],
-			maxLen[COL_CLUB], (LPCTSTR)columns[COL_CLUB],
-			maxLen[COL_OPENS], (LPCTSTR)columns[COL_OPENS],
-			maxLen[COL_CLOSES], (LPCTSTR)columns[COL_CLOSES],
-			maxLen[COL_NOTES], (LPCTSTR)columns[COL_NOTES]);
-		data.TrimRight();
-		data += _T("\r\n");
-
-		// The data
-		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
-		{
-			ARBCalendarPtr cal = *iter;
-			ARBString items[scNumColumns];
-			items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
-			items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
-			items[COL_LOCATION] = cal->GetLocation();
-			items[COL_CLUB] = cal->GetClub();
-			items[COL_VENUE] = cal->GetVenue();
-			items[COL_OPENS] = cal->GetOpeningDate().GetString(dFmt);
-			items[COL_CLOSES] = cal->GetClosingDate().GetString(dFmt);
-			CString tmp = cal->GetNote().c_str();
-			tmp.Replace(_T("\n"), _T(" "));
-			items[COL_NOTES] = (LPCTSTR)tmp;
-			CString tentative(_T(" "));
-			if (cal->IsTentative())
-				tentative = _T("?");
-			CString str;
-			str.Format(_T("%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s"),
-				(LPCTSTR)tentative,
-				maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
-				maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
-				maxLen[COL_VENUE], items[COL_VENUE].c_str(),
-				maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
-				maxLen[COL_CLUB], items[COL_CLUB].c_str(),
-				maxLen[COL_OPENS], items[COL_OPENS].c_str(),
-				(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? _T(" - ") : _T("   "),
-				maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
-				maxLen[COL_NOTES], items[COL_NOTES].c_str());
-			str.TrimRight();
-			data += str + _T("\r\n");
-		}
-		// alloc mem block & copy text in
-		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
-		if (NULL != temp)
-		{
-			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock(reinterpret_cast<void*>(temp));
-			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
-		}
-
-		CloseClipboard();
+	int index;
+	size_t maxLen[scNumColumns];
+	CString columns[scNumColumns];
+	for (index = 0; index < scNumColumns; ++index)
+	{
+		CString str;
+		str.LoadString(scColumns[index]);
+		maxLen[index] = str.GetLength();
+		columns[index] = str;
 	}
+	vector<ARBCalendarPtr>::const_iterator iter;
+	ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
+	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
+	{
+		ARBCalendarPtr cal = *iter;
+		size_t len = cal->GetStartDate().GetString(dFmt).length();
+		if (len > maxLen[COL_START_DATE])
+			maxLen[COL_START_DATE] = len;
+		len = cal->GetEndDate().GetString(dFmt).length();
+		if (len > maxLen[COL_END_DATE])
+			maxLen[COL_END_DATE] = len;
+		len = cal->GetLocation().length();
+		if (len > maxLen[COL_LOCATION])
+			maxLen[COL_LOCATION] = len;
+		len = cal->GetClub().length();
+		if (len > maxLen[COL_CLUB])
+			maxLen[COL_CLUB] = len;
+		len = cal->GetVenue().length();
+		if (len > maxLen[COL_VENUE])
+			maxLen[COL_VENUE] = len;
+		len = cal->GetOpeningDate().GetString(dFmt).length();
+		if (len > maxLen[COL_OPENS])
+			maxLen[COL_OPENS] = len;
+		len = cal->GetClosingDate().GetString(dFmt).length();
+		if (len > maxLen[COL_CLOSES])
+			maxLen[COL_CLOSES] = len;
+		len = cal->GetNote().length();
+		if (len > maxLen[COL_NOTES])
+			maxLen[COL_NOTES] = len;
+	}
+	// The header
+	CString data;
+	data.Format(_T(" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s"),
+		maxLen[COL_START_DATE], (LPCTSTR)columns[COL_START_DATE],
+		maxLen[COL_END_DATE], (LPCTSTR)columns[COL_END_DATE],
+		maxLen[COL_VENUE], (LPCTSTR)columns[COL_VENUE],
+		maxLen[COL_LOCATION], (LPCTSTR)columns[COL_LOCATION],
+		maxLen[COL_CLUB], (LPCTSTR)columns[COL_CLUB],
+		maxLen[COL_OPENS], (LPCTSTR)columns[COL_OPENS],
+		maxLen[COL_CLOSES], (LPCTSTR)columns[COL_CLOSES],
+		maxLen[COL_NOTES], (LPCTSTR)columns[COL_NOTES]);
+	data.TrimRight();
+	data += _T("\r\n");
+
+	// The data
+	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
+	{
+		ARBCalendarPtr cal = *iter;
+		ARBString items[scNumColumns];
+		items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
+		items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
+		items[COL_LOCATION] = cal->GetLocation();
+		items[COL_CLUB] = cal->GetClub();
+		items[COL_VENUE] = cal->GetVenue();
+		items[COL_OPENS] = cal->GetOpeningDate().GetString(dFmt);
+		items[COL_CLOSES] = cal->GetClosingDate().GetString(dFmt);
+		CString tmp = cal->GetNote().c_str();
+		tmp.Replace(_T("\n"), _T(" "));
+		items[COL_NOTES] = (LPCTSTR)tmp;
+		CString tentative(_T(" "));
+		if (cal->IsTentative())
+			tentative = _T("?");
+		CString str;
+		str.Format(_T("%s%*s - %-*s %-*s %-*s %-*s %*s%s%-*s %-*s"),
+			(LPCTSTR)tentative,
+			maxLen[COL_START_DATE], items[COL_START_DATE].c_str(),
+			maxLen[COL_END_DATE], items[COL_END_DATE].c_str(),
+			maxLen[COL_VENUE], items[COL_VENUE].c_str(),
+			maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
+			maxLen[COL_CLUB], items[COL_CLUB].c_str(),
+			maxLen[COL_OPENS], items[COL_OPENS].c_str(),
+			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? _T(" - ") : _T("   "),
+			maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
+			maxLen[COL_NOTES], items[COL_NOTES].c_str());
+		str.TrimRight();
+		data += str + _T("\r\n");
+	}
+	clpData.SetData(data);
 }
 
 void CAgilityBookViewCalendar::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
