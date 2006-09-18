@@ -85,6 +85,14 @@ public:
 			eClipFormat clpFmt,
 			Element& outTree);
 
+#if _MSC_VER < 1300
+	bool GetData(CString& outData);
+#else
+	bool GetData(CStringA& outData);
+	bool GetData(CStringW& outData);
+#endif
+
+private:
 	bool GetData(
 			UINT clpFmt,
 			CStringA& outData);

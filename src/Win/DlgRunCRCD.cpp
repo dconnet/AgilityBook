@@ -285,14 +285,8 @@ void CDlgRunCRCD::OnCopy()
 				if (bText)
 				{
 					m_ViewText = true;
-#ifdef UNICODE
-					CStringA raw;
-					clpData.GetData(CF_TEXT, raw);
-					CString str(raw);
-#else
-					CStringA str;
-					clpData.GetData(CF_TEXT, str);
-#endif
+					CString str;
+					clpData.GetData(str);
 					str.TrimRight();
 					str.TrimLeft();
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"

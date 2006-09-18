@@ -131,9 +131,9 @@ bool CClipboardDataReader::GetData(
 		eClipFormat clpFmt,
 		Element& outTree)
 {
-	outTree.clear();
 	bool bOk = false;
-	CStringA data;
+	outTree.clear();
+	CStringA data; // Our internal formats are always written as ascii text
 	if (GetData(GetClipboardFormat(clpFmt), data))
 	{
 		ARBString err;
@@ -146,10 +146,46 @@ bool CClipboardDataReader::GetData(
 	return bOk;
 }
 
+#if _MSC_VER < 1300
+bool CClipboardDataReader::GetData(CString& outData)
+{
+	return GetData(CF_TEXT, outData);
+}
+
+#else
+bool CClipboardDataReader::GetData(CStringA& outData)
+{
+	return GetData(CF_TEXT, outData);
+}
+
+bool CClipboardDataReader::GetData(CStringW& outData)
+{
+	outData.Empty();
+	if (!m_bOkay)
+	{
+		if (!Open())
+			return false;
+	}
+	bool bOk = false;
+	if (IsClipboardFormatAvailable(CF_UNICODETEXT))
+	{
+		HANDLE hData = GetClipboardData(CF_UNICODETEXT);
+		outData = CStringW(reinterpret_cast<wchar_t const*>(GlobalLock(hData)));
+		GlobalUnlock(hData);
+	}
+	return bOk;
+}
+#endif
+
+/**
+ * Internal function for reading ascii text.
+ * This will either be CF_TEXT or one of our internal formats.
+ */
 bool CClipboardDataReader::GetData(
 		UINT clpFmt,
 		CStringA& outData)
 {
+	outData.Empty();
 	if (!m_bOkay)
 	{
 		if (!Open())
@@ -159,7 +195,7 @@ bool CClipboardDataReader::GetData(
 	if (IsClipboardFormatAvailable(clpFmt))
 	{
 		HANDLE hData = GetClipboardData(clpFmt);
-		CStringA data(reinterpret_cast<LPCSTR>(GlobalLock(hData)));
+		outData = CStringA(reinterpret_cast<char const*>(GlobalLock(hData)));
 		GlobalUnlock(hData);
 	}
 	return bOk;
@@ -205,11 +241,9 @@ bool CClipboardDataWriter::SetData(
 
 bool CClipboardDataWriter::SetData(ARBString const& inData)
 {
+	// Note, when setting text, the OS will auto-populate the other formats too.
 #ifdef UNICODE
-	CStringA inData2(inData.c_str());
-	bool bOk = SetData(CF_UNICODETEXT, inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
-	bOk |= SetData(CF_TEXT, (LPCSTR)inData2, inData2.GetLength()+1);
-	return bOk;
+	return SetData(CF_UNICODETEXT, inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
 #else
 	return SetData(CF_TEXT, inData.c_str(), inData.length()+1);
 #endif
@@ -218,10 +252,7 @@ bool CClipboardDataWriter::SetData(ARBString const& inData)
 bool CClipboardDataWriter::SetData(CString const& inData)
 {
 #ifdef UNICODE
-	CStringA inData2(inData);
-	bool bOk = SetData(CF_UNICODETEXT, (LPCTSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
-	bOk |= SetData(CF_TEXT, (LPCSTR)inData2, inData2.GetLength()+1);
-	return bOk;
+	return SetData(CF_UNICODETEXT, (LPCTSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
 #else
 	return SetData(CF_TEXT, (LPCSTR)inData, inData.GetLength()+1);
 #endif
@@ -246,7 +277,7 @@ bool CClipboardDataWriter::SetData(
 			memcpy(pData, inData, inLen);
 			GlobalUnlock(temp);
 			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
+			SetClipboardData(clpFmt, temp);
 		}
 	}
 	return bOk;
