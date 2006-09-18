@@ -235,16 +235,4 @@ protected:
 			ColumnOrder eOrder,
 			size_t idxColumn,
 			std::vector<int> const& inValues);
-public:
-	// Special clipboard formats
-	typedef enum
-	{
-		eFormatDog,
-		eFormatTrial,
-		eFormatRun,
-		eFormatCalendar,
-		eFormatiCalendar,
-		eFormatLog,
-	} eClipFormat;
-	static UINT GetClipboardFormat(eClipFormat fmt);
 };

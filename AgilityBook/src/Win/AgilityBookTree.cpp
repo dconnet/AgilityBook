@@ -684,7 +684,8 @@ HTREEITEM CAgilityBookTree::InsertRun(
 bool CAgilityBookTree::PasteDog(bool& bLoaded)
 {
 	Element tree;
-	if (GetDataFromClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog), tree))
+	CClipboardDataReader clpData;
+	if (clpData.GetData(eFormatDog, tree))
 	{
 		if (CLIPDATA == tree.GetName())
 		{
@@ -990,7 +991,7 @@ void CAgilityBookTree::OnUpdateDogCmd(CCmdUI* pCmdUI)
 	{
 		if (ID_AGILITY_NEW_DOG == pCmdUI->m_nID
 		|| (ID_EDIT_PASTE == pCmdUI->m_nID
-			&& IsClipboardFormatAvailable(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatDog))))
+		&& CClipboardDataReader::IsFormatAvailable(eFormatDog)))
 		{
 			bEnable = TRUE;
 		}

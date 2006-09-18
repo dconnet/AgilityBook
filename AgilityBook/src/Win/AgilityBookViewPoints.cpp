@@ -94,6 +94,7 @@
 #include "ARBDogClub.h"
 #include "ARBDogTrial.h"
 #include "ARBTypes.h"
+#include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
@@ -620,29 +621,16 @@ void CAgilityBookViewPoints::OnCopyTitles()
 		}
 		if (!preTitles.empty() || !postTitles.empty())
 		{
-			CString data(preTitles.c_str());
-			data += ' ';
-			data += pDog->GetCallName().c_str();
-			data += _T(": ");
-			data += postTitles.c_str();
-
-			// Now, copy to the clipboard
-			if (AfxGetMainWnd()->OpenClipboard())
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
 			{
-				EmptyClipboard();
+				CString data(preTitles.c_str());
+				data += ' ';
+				data += pDog->GetCallName().c_str();
+				data += _T(": ");
+				data += postTitles.c_str();
 
-				// alloc mem block & copy text in
-				HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
-				if (NULL != temp)
-				{
-					LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-					lstrcpy(str, (LPCTSTR)data);
-					GlobalUnlock(temp);
-					// send data to clipbard
-					SetClipboardData(CF_TEXT, temp);
-				}
-
-				CloseClipboard();
+				clpData.SetData(data);
 			}
 		}
 		else

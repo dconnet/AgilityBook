@@ -933,8 +933,7 @@ BOOL CWizardStart::OnWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					CStringA filename(file.GetFileName());
-					std::ofstream output(filename, std::ios::out | std::ios::binary);
+					ARBofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
 					{

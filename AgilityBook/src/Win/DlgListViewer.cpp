@@ -53,6 +53,7 @@
 #include "ARBDogExistingPoints.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "ClipBoard.h"
 #include "DlgConfigure.h"
 #include "FilterOptions.h"
 
@@ -1691,15 +1692,12 @@ void CDlgListViewer::OnSize(
 
 void CDlgListViewer::OnBnClickedListCopy()
 {
-	if (!AfxGetMainWnd()->OpenClipboard())
-		return;
-	if (!EmptyClipboard())
-	{
-		CloseClipboard();
-		return;
-	}
 	if (0 < m_ctrlList.GetItemCount())
 	{
+		CClipboardDataWriter clpData;
+		if (!clpData.isOkay())
+			return;
+
 		CString data;
 		CStringArray line;
 
@@ -1725,16 +1723,6 @@ void CDlgListViewer::OnBnClickedListCopy()
 			data += _T("\r\n");
 		}
 
-		// alloc mem block & copy text in
-		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
-		if (NULL != temp)
-		{
-			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock(reinterpret_cast<void*>(temp));
-			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
-		}
+		clpData.SetData(data);
 	}
-	CloseClipboard();
 }

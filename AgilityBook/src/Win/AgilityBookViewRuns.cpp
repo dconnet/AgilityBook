@@ -1698,6 +1698,10 @@ void CAgilityBookViewRuns::OnEditCopy()
 	std::vector<int> indices;
 	if (0 < GetSelection(indices))
 	{
+		CClipboardDataWriter clpData;
+		if (!clpData.isOkay())
+			return;
+
 		CString data;
 		CStringArray line;
 
@@ -1715,8 +1719,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		Element tree;
-		tree.SetName(CLIPDATA);
+		Element tree(CLIPDATA);
 
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
@@ -1735,7 +1738,8 @@ void CAgilityBookViewRuns::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		CopyDataToClipboard(CAgilityBookOptions::GetClipboardFormat(CAgilityBookOptions::eFormatRun), tree, data);
+		clpData.SetData(eFormatRun, tree);
+		clpData.SetData(data);
 	}
 }
 

@@ -49,6 +49,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
+#include "ClipBoard.h"
 #include "ListData.h"
 
 #ifdef _DEBUG
@@ -807,9 +808,11 @@ void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
 void CListView2::OnEditCopy()
 {
 	std::vector<int> indices;
-	if (0 < GetSelection(indices) && AfxGetMainWnd()->OpenClipboard())
+	if (0 < GetSelection(indices))
 	{
-		EmptyClipboard();
+		CClipboardDataWriter clpData;
+		if (!clpData.isOkay())
+			return;
 
 		CString data;
 		CStringArray line;
@@ -842,18 +845,7 @@ void CListView2::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		// alloc mem block & copy text in
-		HGLOBAL temp = GlobalAlloc(GHND, data.GetLength()+1);
-		if (NULL != temp)
-		{
-			LPTSTR str = reinterpret_cast<LPTSTR>(GlobalLock(temp));
-			lstrcpy(str, (LPCTSTR)data);
-			GlobalUnlock(temp);
-			// send data to clipbard
-			SetClipboardData(CF_TEXT, temp);
-		}
-
-		CloseClipboard();
+		clpData.SetData(data);
 	}
 }
 
