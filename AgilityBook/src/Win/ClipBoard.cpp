@@ -169,6 +169,7 @@ bool CClipboardDataReader::GetData(CStringW& outData)
 	bool bOk = false;
 	if (IsClipboardFormatAvailable(CF_UNICODETEXT))
 	{
+		bOk = true;
 		HANDLE hData = GetClipboardData(CF_UNICODETEXT);
 		outData = CStringW(reinterpret_cast<wchar_t const*>(GlobalLock(hData)));
 		GlobalUnlock(hData);
@@ -182,7 +183,7 @@ bool CClipboardDataReader::GetData(CStringW& outData)
  * This will either be CF_TEXT or one of our internal formats.
  */
 bool CClipboardDataReader::GetData(
-		UINT clpFmt,
+		UINT uFormat,
 		CStringA& outData)
 {
 	outData.Empty();
@@ -192,9 +193,10 @@ bool CClipboardDataReader::GetData(
 			return false;
 	}
 	bool bOk = false;
-	if (IsClipboardFormatAvailable(clpFmt))
+	if (IsClipboardFormatAvailable(uFormat))
 	{
-		HANDLE hData = GetClipboardData(clpFmt);
+		bOk = true;
+		HANDLE hData = GetClipboardData(uFormat);
 		outData = CStringA(reinterpret_cast<char const*>(GlobalLock(hData)));
 		GlobalUnlock(hData);
 	}
@@ -229,14 +231,14 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		std::string const& inData)
 {
-	return SetData(clpFmt, inData.c_str(), inData.length()+1);
+	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), inData.length()+1);
 }
 
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringA const& inData)
 {
-	return SetData(clpFmt, (LPCSTR)inData, inData.GetLength()+1);
+	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, inData.GetLength()+1);
 }
 
 bool CClipboardDataWriter::SetData(ARBString const& inData)
@@ -259,7 +261,7 @@ bool CClipboardDataWriter::SetData(CString const& inData)
 }
 
 bool CClipboardDataWriter::SetData(
-		UINT clpFmt,
+		UINT uFormat,
 		void const* inData,
 		size_t inLen)
 {
@@ -277,7 +279,7 @@ bool CClipboardDataWriter::SetData(
 			memcpy(pData, inData, inLen);
 			GlobalUnlock(temp);
 			// send data to clipbard
-			SetClipboardData(clpFmt, temp);
+			SetClipboardData(uFormat, temp);
 		}
 	}
 	return bOk;

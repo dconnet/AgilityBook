@@ -94,7 +94,7 @@ public:
 
 private:
 	bool GetData(
-			UINT clpFmt,
+			UINT uFormat,
 			CStringA& outData);
 };
 
@@ -124,7 +124,7 @@ public:
 
 	// Raw form.
 	bool SetData(
-			UINT clpFmt,
+			UINT uFormat,
 			void const* inData,
 			size_t inLen);
 };
