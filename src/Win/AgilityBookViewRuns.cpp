@@ -148,7 +148,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << '/';
+						str << _T('/');
 					str << (*iter)->GetVenue();
 				}
 			}
@@ -161,7 +161,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << '/';
+						str << _T('/');
 					str << (*iter)->GetName();
 				}
 			}
@@ -286,46 +286,56 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 		case IO_RUNS_PLACE:
 			val = m_pRun->GetPlace();
 			if (0 > val)
-				str << '?';
+				str << _T('?');
 			else if (0 == val)
-				str << '-';
+				str << _T('-');
 			else
 				str << val;
 			break;
 		case IO_RUNS_IN_CLASS:
 			val = m_pRun->GetInClass();
 			if (0 >= val)
-				str << '?';
+				str << _T('?');
 			else
 				str << val;
 			break;
 		case IO_RUNS_DOGSQD:
 			val = m_pRun->GetDogsQd();
 			if (0 > val)
-				str << '?';
+				str << _T('?');
 			else
 				str << m_pRun->GetDogsQd();
 			break;
 		case IO_RUNS_Q:
 			{
-				CString q;
+				bool bSet = false;
 				if (m_pRun->GetQ().Qualified())
 				{
+					ARBString q;
 					if (m_pRun->GetMultiQ())
-						q = m_pRun->GetMultiQ()->GetShortName().c_str();
+					{
+						q = m_pRun->GetMultiQ()->GetShortName();
+					}
 					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					{
+						bSet = true;
 						CString tmp;
 						tmp.LoadString(IDS_SQ);
-						if (!q.IsEmpty())
-							q = tmp + _T("/") + q;
-						else
-							q = tmp;
+						str << (LPCTSTR)tmp;
+						if (!q.empty())
+							str << _T('/') << q;
+					}
+					else
+					{
+						if (!q.empty())
+						{
+							bSet = true;
+							str << q;
+						}
 					}
 				}
-				if (q.IsEmpty())
-					q = m_pRun->GetQ().str().c_str();
-				str << q;
+				if (!bSet)
+					str << m_pRun->GetQ().str();
 			}
 			break;
 		case IO_RUNS_SCORE:
