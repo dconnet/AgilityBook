@@ -1,9 +1,9 @@
 # Update the history files in the help and web.
 # The file Help/html/HistoryData.html is used with:
-#   \AgilityBook\www\templateHistory.html
+#   \AgilityBook\www\templateHistory.php
 #  Help/html/HistoryTemplate.html
 # to produce:
-#   \AgilityBook\www\history.html
+#   \AgilityBook\www\history.php
 #   Help\html\History.html
 #
 # Revision History
@@ -11,7 +11,7 @@
 
 """UpdateHistory -h -w -p path
 -h      Generate Help file History.html (Help\html\History.html)
--w      Generate history file for web (\AgilityBook\www\history.html)
+-w      Generate history file for web (\AgilityBook\www\history.php)
 -p path Path to where web files are (default "\AgilityBook\www")
 This program should be run from the ...\AgilityBook\src directory.
 """
@@ -92,6 +92,6 @@ def main():
 		GenerateFile(data, "Help\\html\\HistoryTemplate.html", "Help\\html\\History.html")
 
 	if bWebfile:
-		GenerateFile(data, webPath + "\\template\\templateHistory.html", webPath + "\\history.html")
+		GenerateFile(data, webPath + "\\template\\templateHistory.php", webPath + "\\history.php")
 
 main()
