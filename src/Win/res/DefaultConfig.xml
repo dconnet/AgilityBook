@@ -5,6 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2006-10-02 DRC Configuration version 17. Updated USDAA Pairs (Relay).
 2006-08-12 DRC Configuration version 16. Removed AMBOR.
                Updated DOCNA gamble events.
 2006-08-08 DRC Configuration version 15. Added USDAA Performance Tournaments.
@@ -51,7 +52,7 @@ Revision History:
                Added new Config/Action: DeleteTitle
 -->
 
-	<Configuration version="16">
+	<Configuration version="17">
 		<Action NewName="ADCH" OldName="V-ADCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-OP" OldName="V-ADCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ADCH-SP" OldName="V-ADCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -2272,14 +2273,24 @@ DAM Team: Qualifying here means the team has qualified.</Note>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="TimePlusFaults">
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
-				<Scoring Division="Performance" Level="PIII" type="TimePlusFaults">
+				<Scoring Division="Performance" Level="PIII" ValidTo="2006-12-31" type="TimePlusFaults">
 					<Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
 				</Scoring>
-				<Scoring Division="Performance" Level="PII" type="TimePlusFaults">
+				<Scoring Division="Performance" Level="PIII" ValidFrom="2007-1-1" type="TimePlusFaults">
+					<TitlePoints Faults="0" Points="1"/>
+					<LifeTime Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PII" ValidTo="2006-12-31" type="TimePlusFaults">
 					<Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
 				</Scoring>
-				<Scoring Division="Performance" Level="PI" type="TimePlusFaults">
+				<Scoring Division="Performance" Level="PII" ValidFrom="2007-1-1" type="TimePlusFaults">
+					<TitlePoints Faults="0" Points="1"/>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" ValidTo="2006-12-31" type="TimePlusFaults">
 					<Note>Non-titling event - known as Babar's, Oscar's, etc.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="PI" ValidFrom="2007-1-1" type="TimePlusFaults">
+					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 			</Event>
 			<Event Name="Grand Prix">
