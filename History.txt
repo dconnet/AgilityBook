@@ -1,4 +1,6 @@
-9/17/2006: v1.7.6.12 <in development>
+10/2/2006: v1.7.6.12 <in development>
+- Bumped to Configuration v17:
+  - Updated USDAA Performance Pairs for titling in 2007.
 - New features / Enhancements:
   - Add an HTML view for points (still in process)
 - Bug fixes
