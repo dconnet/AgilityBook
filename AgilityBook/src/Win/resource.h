@@ -737,6 +737,7 @@
 #define IDS_NAME_FILTER                 5192
 #define IDS_FILEEXT_FILTER_MSEXCEL      5193
 #define IDS_FILEEXT_FILTER_OOCALC       5194
+#define IDS_WARNING_RESTART             5195
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780
