@@ -2386,6 +2386,9 @@ BEGIN
     IDS_NAME_FILTER         "You must name a filter in order to save it."
     IDS_FILEEXT_FILTER_MSEXCEL 
                             "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_OOCALC
+                            "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
+    IDS_WARNING_RESTART     "The application must be restarted in order to change between HTML and List in the Points View."
 END
 
 STRINGTABLE 

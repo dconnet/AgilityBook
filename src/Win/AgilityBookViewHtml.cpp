@@ -52,6 +52,7 @@
 #endif
 
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
@@ -76,16 +77,20 @@ END_MESSAGE_MAP()
 
 CAgilityBookViewHtml::CAgilityBookViewHtml()
 	: m_DocAsControl(NULL)
+	, m_Items(new CPointsDataItems())
 {
 }
 
 CAgilityBookViewHtml::CAgilityBookViewHtml(CAgilityBookDoc* inDocAsControl)
 	: m_DocAsControl(inDocAsControl)
+	, m_Items(new CPointsDataItems())
 {
 }
 
 CAgilityBookViewHtml::~CAgilityBookViewHtml()
 {
+	m_Items->clear();
+	delete m_Items;
 }
 
 CAgilityBookDoc* CAgilityBookViewHtml::GetDocument() const
@@ -225,21 +230,32 @@ void CAgilityBookViewHtml::LoadData()
 {
 	CWaitCursor wait;
 
-	CPointsDataItems items;
-	items.LoadData(this, GetDocument(), GetDocument()->GetCurrentDog());
+	m_Items->LoadData(this, GetDocument(), GetDocument()->GetCurrentDog());
 
+	ARBDate today(ARBDate::Today());
 	ARBostringstream data;
 
-	size_t nItems = items.NumLines();
-	for (size_t nItem = 0; nItem < nItems; ++nItem)
+	data << _T("<html>")
+		<< std::endl
+		<< _T("<head><title>Titling Points "
+		<< today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
+		<< "</title></head>")
+		<< std::endl
+		<< _T("<body>")
+		<< std::endl;
+
+	size_t nItems = m_Items->NumLines();
+	if (0 < nItems)
 	{
-		CPointsDataBasePtr item = items.GetLine(nItem);
-		for (size_t iCol = 0; iCol < 9; ++iCol)
-		{
-			data << item->OnNeedText(iCol) << _T(' ');
-		}
-		data << _T("<br/>");
+		CPointsDataBasePtr item = m_Items->GetLine(0);
+		data << item->GetHtml(0);
 	}
+	for (size_t nItem = 1; nItem < nItems; ++nItem)
+	{
+		CPointsDataBasePtr item = m_Items->GetLine(nItem);
+		data << item->GetHtml(nItem);
+	}
+	data << _T("</body></html>") << std::endl;
 	SetHTML(data.str());
 }
 
@@ -403,6 +419,7 @@ void CAgilityBookViewHtml::OnUpdate(
 
 void CAgilityBookViewHtml::PostNcDestroy()
 {
+	//m_Items->clear();
 	if (!m_DocAsControl)
 		CHtmlView::PostNcDestroy();
 	else
@@ -422,22 +439,37 @@ void CAgilityBookViewHtml::OnBeforeNavigate2(
 		LPCTSTR lpszHeaders,
 		BOOL* pbCancel)
 {
-	static const TCHAR APP_PROTOCOL[] = _T("app:");
-	static size_t lenApp = _tcslen(APP_PROTOCOL);
 	static const TCHAR ABOUT_PROTOCOL[] = _T("about:");
 	static size_t lenAbout = _tcslen(ABOUT_PROTOCOL);
+	static size_t lenApp = _tcslen(ARB_PROTOCOL);
 
 	if (_tcsnicmp(lpszURL, ABOUT_PROTOCOL, lenAbout) == 0)
 	{
-		// Let About thru.
+		// Let About thru (for "about:blank")
 	}
-	else if (_tcsnicmp(lpszURL, APP_PROTOCOL, lenApp) == 0)
+	else if (_tcsnicmp(lpszURL, ARB_PROTOCOL, lenApp) == 0)
 	{
 		// Our special internal link
 		// Remember, spaces are now %20. Other special chars may
 		// need fixing too. Just don't use those in our links.
-		//OnAppCmd(lpszURL + len);
-		TRACE("Special navigation '%s'\n", lpszURL);
+		bool bDidIt = false;
+		ARBString url(lpszURL+lenApp);
+		if (!url.empty())
+		{
+			size_t nItem = _ttol(url.c_str());
+
+			if (nItem < m_Items->NumLines())
+			{
+				bDidIt = true;
+
+				CPointsDataBasePtr item = m_Items->GetLine(nItem);
+				item->Details();
+			}
+		}
+		if (!bDidIt)
+		{
+			MessageBeep(MB_ICONEXCLAMATION);
+		}
 		*pbCancel = TRUE;
 	}
 	else

@@ -434,13 +434,17 @@ void CAgilityBookViewPoints::LoadData()
 	size_t nItems = items.NumLines();
 	for (size_t nItem = 0; nItem < nItems; ++nItem)
 	{
-		LVITEM item;
-		item.iItem = GetListCtrl().GetItemCount();
-		item.iSubItem = 0;
-		item.mask = LVIF_TEXT | LVIF_PARAM;
-		item.pszText = LPSTR_TEXTCALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(new PointsData(items.GetLine(nItem)));
-		GetListCtrl().InsertItem(&item);
+		CPointsDataBasePtr data = items.GetLine(nItem);
+		if (data->IsVisible())
+		{
+			LVITEM item;
+			item.iItem = GetListCtrl().GetItemCount();
+			item.iSubItem = 0;
+			item.mask = LVIF_TEXT | LVIF_PARAM;
+			item.pszText = LPSTR_TEXTCALLBACK;
+			item.lParam = reinterpret_cast<LPARAM>(new PointsData(data));
+			GetListCtrl().InsertItem(&item);
+		}
 	}
 
 	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();

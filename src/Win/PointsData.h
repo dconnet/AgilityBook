@@ -56,6 +56,9 @@ class CAgilityBookDoc;
 typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 
+// Special HTML tag for href's
+#define ARB_PROTOCOL	_T("arb:")
+
 /**
  * Used to accumulate lifetime info.
  */
@@ -115,14 +118,40 @@ public:
 			CAgilityBookDoc* pDoc);
 	virtual ~CPointsDataBase();
 
-	virtual ARBString OnNeedText(size_t index) const = 0;
+	/// Get a particular column of text (used for listctrl)
+	virtual ARBString OnNeedText(size_t inCol) const = 0;
+	/// Get html for a line
+	virtual ARBString GetHtml(size_t nCurLine) const = 0;
+	/// Is this entry visible? (used for special html processing)
+	virtual bool IsVisible() const	{return true;}
+	/// This entry has details (dbl-click works)
 	virtual bool HasDetails() const {return false;}
-	virtual void Details() const {}
+	virtual void Details() const	{}
+	/// Equality testing (to locate previous entries)
 	virtual bool IsEqual(CPointsDataBasePtr inData) = 0;
 
 protected:
 	CWnd* m_pParent;
 	CAgilityBookDoc* m_pDoc;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CPointsDataSeparator : public CPointsDataBase
+{
+public:
+	CPointsDataSeparator(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
+			ARBString const& inHtml);
+
+	virtual ARBString OnNeedText(size_t inCol) const	{return _T("");}
+	virtual ARBString GetHtml(size_t nCurLine) const		{return m_Html;}
+	virtual bool IsVisible() const						{return false;}
+	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
+
+protected:
+	ARBString m_Html;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -136,7 +165,8 @@ public:
 			LPCTSTR inCol1 = _T(""),
 			LPCTSTR inCol2 = _T(""));
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 private:
@@ -158,7 +188,8 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -182,7 +213,8 @@ public:
 			ARBDogPtr pDog,
 			ARBConfigVenuePtr pVenue);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -207,7 +239,8 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTitlePtr pTitle);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -245,7 +278,8 @@ public:
 			ARBString const& inSuperQ,
 			ARBString const& inSpeed);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -286,7 +320,8 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -317,7 +352,8 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
@@ -341,7 +377,8 @@ public:
 			ARBConfigMultiQPtr inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -369,7 +406,8 @@ public:
 			ARBConfigVenuePtr inVenue,
 			int inPts);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
@@ -406,7 +444,8 @@ public:
 			ARBString const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -425,7 +464,8 @@ public:
 			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -444,7 +484,8 @@ public:
 			ARBString const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -464,7 +505,8 @@ public:
 			ARBString const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t index) const;
+	virtual ARBString OnNeedText(size_t inCol) const;
+	virtual ARBString GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -487,6 +529,7 @@ public:
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog);
+	void clear();
 
 	size_t NumLines() const;
 	CPointsDataBasePtr GetLine(size_t nLine) const;
@@ -521,6 +564,15 @@ private:
 		LifeTimePointList ptList;
 	};
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
+
+	void InsertVenueHeader(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc,
+			ARBDogPtr inDog,
+			ARBConfigVenuePtr pVenue);
+	void InsertVenueFooter(
+			CWnd* pParent,
+			CAgilityBookDoc* pDoc);
 
 	std::vector<CPointsDataBasePtr> m_Lines;
 };

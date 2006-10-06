@@ -40,6 +40,7 @@
 #include "CommonView.h"
 
 class CAgilityBookDoc;
+class CPointsDataItems;
 
 class CAgilityBookViewHtml : public CHtmlView, public ICommonView
 {
@@ -67,6 +68,7 @@ private:
 	void LoadData();
 
 	CAgilityBookDoc* m_DocAsControl; ///< If this is set, the view is really a control.
+	CPointsDataItems* m_Items;
 
 // Operations
 public:

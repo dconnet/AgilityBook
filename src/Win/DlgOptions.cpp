@@ -146,7 +146,14 @@ void CDlgOptions::OnOK()
 		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
 		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
 		if (m_pageProgram.m_IEInstalled)
-			CAgilityBookOptions::SetShowHtmlPoints(m_pageProgram.m_bShowHtml ? true : false);
+		{
+			bool bShow = m_pageProgram.m_bShowHtml ? true : false;
+			if (CAgilityBookOptions::ShowHtmlPoints() != bShow)
+			{
+				CAgilityBookOptions::SetShowHtmlPoints(bShow);
+				AfxMessageBox(IDS_WARNING_RESTART, MB_ICONWARNING);
+			}
+		}
 
 		// Views
 		if (!m_pageView.m_bOpeningNear)
