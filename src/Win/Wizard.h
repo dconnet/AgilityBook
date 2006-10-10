@@ -64,7 +64,7 @@ class CWizardStart;
 
 // Note: These number should not be changed - they are stored in the registry
 #define WIZARD_RADIO_EXCEL			0
-#define WIZARD_RADIO_OPENOFFICE		3
+#define WIZARD_RADIO_CALC			3
 #define WIZARD_RADIO_SPREADSHEET	1
 #define WIZARD_RADIO_ARB			2
 
@@ -87,7 +87,7 @@ private:
 	CWizardImport* m_pageImport;
 	CWizardExport* m_pageExport;
 	IWizardSpreadSheetPtr m_Excel;
-	IWizardSpreadSheetPtr m_OpenOffice;
+	IWizardSpreadSheetPtr m_Calc;
 	int m_ImportExportItem;
 	int m_ImportExportStyle;
 
@@ -107,7 +107,7 @@ public:
 	/**
 	 * Get the Excel wrapper.
 	 */
-	IWizardSpreadSheetPtr OpenOfficeHelper()	{return m_OpenOffice;}
+	IWizardSpreadSheetPtr CalcHelper()			{return m_Calc;}
 	/**
 	 * This lets CWizardImport/Export know what data is being processed.
 	 */

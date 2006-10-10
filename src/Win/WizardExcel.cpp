@@ -151,27 +151,25 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CWizardOpenOffice : public IWizardSpreadSheet
+class CWizardCalc : public IWizardSpreadSheet
 {
 protected:
-	CWizardOpenOffice();
+	CWizardCalc();
 public:
-	static CWizardOpenOffice* Create();
-	virtual ~CWizardOpenOffice();
+	static CWizardCalc* Create();
+	virtual ~CWizardCalc();
 
 	virtual IWizardExporterPtr GetExporter() const;
 	virtual IWizardImporterPtr GetImporter() const;
-
-private:
 };
 
-class CWizardOpenOfficeExport : public IWizardExporter
+class CWizardCalcExport : public IWizardExporter
 {
 protected:
-	CWizardOpenOfficeExport();
+	CWizardCalcExport();
 public:
-	static CWizardOpenOfficeExport* Create();
-	virtual ~CWizardOpenOfficeExport();
+	static CWizardCalcExport* Create();
+	virtual ~CWizardCalcExport();
 
 	// Safe array is ready for use
 	virtual bool ArrayOkay() const;
@@ -201,13 +199,13 @@ public:
 			CString const& inFormula);
 };
 
-class CWizardOpenOfficeImport : public IWizardImporter
+class CWizardCalcImport : public IWizardImporter
 {
 protected:
-	CWizardOpenOfficeImport();
+	CWizardCalcImport();
 public:
-	static CWizardOpenOfficeImport* Create();
-	virtual ~CWizardOpenOfficeImport();
+	static CWizardCalcImport* Create();
+	virtual ~CWizardCalcImport();
 
 	virtual bool OpenFile(CString const& inFilename);
 	virtual bool GetData(
@@ -535,58 +533,75 @@ bool CWizardExcelImport::GetData(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardOpenOffice* CWizardOpenOffice::Create()
+CWizardCalc* CWizardCalc::Create()
 {
-	return NULL;
+	CWizardCalc* pCalc = new CWizardCalc();
+	if (pCalc)
+	{
+		bool bKill = false;
+		//if (NULL == pCalc->m_App.m_lpDispatch)
+			bKill = true;
+		//else
+		{
+			if (!pCalc->GetExporter() || !pCalc->GetImporter())
+				bKill = true;
+		}
+		if (bKill)
+		{
+			delete pCalc;
+			pCalc = NULL;
+		}
+	}
+	return pCalc;
 }
 
-CWizardOpenOffice::CWizardOpenOffice()
+CWizardCalc::CWizardCalc()
 {
 }
 
-CWizardOpenOffice::~CWizardOpenOffice()
+CWizardCalc::~CWizardCalc()
 {
 }
 
-IWizardExporterPtr CWizardOpenOffice::GetExporter() const
+IWizardExporterPtr CWizardCalc::GetExporter() const
 {
-	return IWizardExporterPtr();
+	return IWizardExporterPtr(CWizardCalcExport::Create());
 }
 
-IWizardImporterPtr CWizardOpenOffice::GetImporter() const
+IWizardImporterPtr CWizardCalc::GetImporter() const
 {
-	return IWizardImporterPtr();
+	return IWizardImporterPtr(CWizardCalcImport::Create());
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardOpenOfficeExport* CWizardOpenOfficeExport::Create()
+CWizardCalcExport* CWizardCalcExport::Create()
 {
-	//return new CWizardOpenOfficeExport();
+	//return new CWizardCalcExport();
 	return NULL;
 }
 
-CWizardOpenOfficeExport::CWizardOpenOfficeExport()
+CWizardCalcExport::CWizardCalcExport()
 {
 }
 
-CWizardOpenOfficeExport::~CWizardOpenOfficeExport()
+CWizardCalcExport::~CWizardCalcExport()
 {
 }
 
-bool CWizardOpenOfficeExport::ArrayOkay() const
+bool CWizardCalcExport::ArrayOkay() const
 {
 	return false;
 }
 
-bool CWizardOpenOfficeExport::CreateArray(
+bool CWizardCalcExport::CreateArray(
 		long inRows,
 		long inCols)
 {
 	return false;
 }
 
-bool CWizardOpenOfficeExport::InsertArrayData(
+bool CWizardCalcExport::InsertArrayData(
 		long inRow,
 		long inCol,
 		CString const& inData)
@@ -594,19 +609,19 @@ bool CWizardOpenOfficeExport::InsertArrayData(
 	return false;
 }
 
-bool CWizardOpenOfficeExport::ExportDataArray(
+bool CWizardCalcExport::ExportDataArray(
 		long inRowTop,
 		long inColLeft)
 {
 	return false;
 }
 
-bool CWizardOpenOfficeExport::AllowAccess(bool bAllow)
+bool CWizardCalcExport::AllowAccess(bool bAllow)
 {
 	return false;
 }
 
-bool CWizardOpenOfficeExport::InsertData(
+bool CWizardCalcExport::InsertData(
 		long nRow,
 		long nCol,
 		COleVariant const& inData)
@@ -614,7 +629,7 @@ bool CWizardOpenOfficeExport::InsertData(
 	return false;
 }
 
-bool CWizardOpenOfficeExport::InsertFormula(
+bool CWizardCalcExport::InsertFormula(
 		long inRowFrom,
 		long inColFrom,
 		long inRowTo,
@@ -626,26 +641,26 @@ bool CWizardOpenOfficeExport::InsertFormula(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardOpenOfficeImport* CWizardOpenOfficeImport::Create()
+CWizardCalcImport* CWizardCalcImport::Create()
 {
-	//return new CWizardOpenOfficeImport();
+	//return new CWizardCalcImport();
 	return NULL;
 }
 
-CWizardOpenOfficeImport::CWizardOpenOfficeImport()
+CWizardCalcImport::CWizardCalcImport()
 {
 }
 
-CWizardOpenOfficeImport::~CWizardOpenOfficeImport()
+CWizardCalcImport::~CWizardCalcImport()
 {
 }
 
-bool CWizardOpenOfficeImport::OpenFile(CString const& inFilename)
+bool CWizardCalcImport::OpenFile(CString const& inFilename)
 {
 	return false;
 }
 
-bool CWizardOpenOfficeImport::GetData(
+bool CWizardCalcImport::GetData(
 		std::vector< std::vector<CString> >& outData,
 		IDlgProgress* ioProgress)
 {
@@ -664,8 +679,8 @@ IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
 	case eMicrosoftExcel:
 		pInterface = IWizardSpreadSheetPtr(CWizardExcel::Create());
 		break;
-	case eOpenOffice:
-		pInterface = IWizardSpreadSheetPtr(CWizardOpenOffice::Create());
+	case eOpenOfficeCalc:
+		pInterface = IWizardSpreadSheetPtr(CWizardCalc::Create());
 		break;
 	}
 	return pInterface;
