@@ -103,7 +103,7 @@ public:
 	typedef enum
 	{
 		eMicrosoftExcel,
-		eOpenOffice
+		eOpenOfficeCalc
 	} eType;
 	/**
 	 * Create a new spreadsheet manager, must 'delete' the returned pointer.

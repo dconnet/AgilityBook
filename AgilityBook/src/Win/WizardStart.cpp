@@ -86,8 +86,8 @@ static int TransWizardToDlg(int wizCode)
 		// fall thru
 	case WIZARD_RADIO_EXCEL:
 		return IDC_WIZARD_START_EXCEL - IDC_WIZARD_START_EXCEL;
-	case WIZARD_RADIO_OPENOFFICE:
-		return IDC_WIZARD_START_OPENOFFICE - IDC_WIZARD_START_EXCEL;
+	case WIZARD_RADIO_CALC:
+		return IDC_WIZARD_START_CALC - IDC_WIZARD_START_EXCEL;
 	case WIZARD_RADIO_SPREADSHEET:
 		return IDC_WIZARD_START_SPREADSHEET - IDC_WIZARD_START_EXCEL;
 	case WIZARD_RADIO_ARB:
@@ -104,8 +104,8 @@ static int TransDlgToWizard(int radioBtn)
 		// fall thru
 	case IDC_WIZARD_START_EXCEL:
 		return WIZARD_RADIO_EXCEL;
-	case IDC_WIZARD_START_OPENOFFICE:
-		return WIZARD_RADIO_OPENOFFICE;
+	case IDC_WIZARD_START_CALC:
+		return WIZARD_RADIO_CALC;
 	case IDC_WIZARD_START_SPREADSHEET:
 		return WIZARD_RADIO_SPREADSHEET;
 	case IDC_WIZARD_START_ARB:
@@ -133,7 +133,7 @@ CWizardStart::CWizardStart(
 	m_Style = TransWizardToDlg(wiz);
 	if (WIZARD_RADIO_EXCEL == wiz && !m_pSheet->ExcelHelper())
 		m_Style = TransWizardToDlg(WIZARD_RADIO_SPREADSHEET);
-	if (WIZARD_RADIO_OPENOFFICE == wiz && !m_pSheet->OpenOfficeHelper())
+	if (WIZARD_RADIO_CALC == wiz && !m_pSheet->CalcHelper())
 		m_Style = TransWizardToDlg(WIZARD_RADIO_SPREADSHEET);
 }
 
@@ -156,7 +156,7 @@ BEGIN_MESSAGE_MAP(CWizardStart, CDlgBasePropertyPage)
 	ON_LBN_SELCHANGE(IDC_WIZARD_START_LIST, OnSelchangeExportList)
 	ON_LBN_DBLCLK(IDC_WIZARD_START_LIST, OnDblclkExportList)
 	ON_BN_CLICKED(IDC_WIZARD_START_EXCEL, OnWizardStyle)
-	ON_BN_CLICKED(IDC_WIZARD_START_OPENOFFICE, OnWizardStyle)
+	ON_BN_CLICKED(IDC_WIZARD_START_CALC, OnWizardStyle)
 	ON_BN_CLICKED(IDC_WIZARD_START_SPREADSHEET, OnWizardStyle)
 	ON_BN_CLICKED(IDC_WIZARD_START_ARB, OnWizardStyle)
 	//}}AFX_MSG_MAP
@@ -436,8 +436,8 @@ BOOL CWizardStart::OnInitDialog()
 	if (!m_pSheet->ExcelHelper())
 		GetDlgItem(IDC_WIZARD_START_EXCEL)->EnableWindow(FALSE);
 #if 0
-	if (!m_pSheet->OpenOfficeHelper())
-		GetDlgItem(IDC_WIZARD_START_OPENOFFICE)->EnableWindow(FALSE);
+	if (!m_pSheet->CalcHelper())
+		GetDlgItem(IDC_WIZARD_START_CALC)->EnableWindow(FALSE);
 #endif
 	UpdateList();
 	return TRUE;  // return TRUE unless you set the focus to a control

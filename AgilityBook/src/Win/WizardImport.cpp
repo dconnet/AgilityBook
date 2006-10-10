@@ -178,7 +178,7 @@ void CWizardImport::UpdateButtons()
 	// Some test to make sure things are ready
 	bool bOk = false;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		bOk = true;
 	else if (1 == GetDelim().GetLength())
 		bOk = true;
@@ -202,7 +202,7 @@ void CWizardImport::UpdateButtons()
 	}
 	int nCmdShow = SW_SHOW;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		nCmdShow = SW_HIDE;
     GetDlgItem(IDC_WIZARD_IMPORT_DELIM_GROUP)->ShowWindow(nCmdShow);
     GetDlgItem(IDC_WIZARD_IMPORT_DELIM_TAB)->ShowWindow(nCmdShow);
@@ -288,7 +288,7 @@ void CWizardImport::UpdatePreview()
 
 	CString delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 	}
 	else if (1 != delim.GetLength())
@@ -355,7 +355,7 @@ void CWizardImport::UpdatePreview()
 	}
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 		int iLine = 0;
 		for (std::vector< std::vector<CString> >::const_iterator iter = m_ExcelData.begin();
@@ -525,7 +525,7 @@ BOOL CWizardImport::OnWizardFinish()
 	}
 	CAgilityBookOptions::SetImportStartRow(m_Row);
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
-	&& WIZARD_RADIO_OPENOFFICE != m_pSheet->GetImportExportStyle())
+	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
 	{
 		int delim;
 		switch (m_Delim)
@@ -1302,7 +1302,7 @@ void CWizardImport::OnImportFile()
 		return;
 	CString filter;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		filter.LoadString(IDS_FILEEXT_FILTER_MSEXCEL);
 	else
 		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
@@ -1317,15 +1317,15 @@ void CWizardImport::OnImportFile()
 		m_FileData.RemoveAll();
 		m_ExcelData.clear();
 		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-		|| WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle())
+		|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		{
 			IWizardImporterPtr pImporter;
 			if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 			&& m_pSheet->ExcelHelper())
 				pImporter = m_pSheet->ExcelHelper()->GetImporter();
-			else if (WIZARD_RADIO_OPENOFFICE == m_pSheet->GetImportExportStyle()
-			&& m_pSheet->OpenOfficeHelper())
-				pImporter = m_pSheet->OpenOfficeHelper()->GetImporter();
+			else if (WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle()
+			&& m_pSheet->CalcHelper())
+				pImporter = m_pSheet->CalcHelper()->GetImporter();
 			if (pImporter)
 			{
 				IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
