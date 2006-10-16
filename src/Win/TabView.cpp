@@ -57,6 +57,10 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+// Default splitter widths
+#define DEFAULT_RUN_WIDTH	200
+#define DEFAULT_CAL_WIDTH	200
+
 /////////////////////////////////////////////////////////////////////////////
 // CTabView
 
@@ -137,7 +141,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_splitterRuns.ShowWindow(SW_HIDE);
 	m_splitterRuns.EnableWindow(FALSE);
-	int cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("splitCX"), 100);
+	int cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("splitCX"), DEFAULT_RUN_WIDTH);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookTree);
 	if (!m_splitterRuns.CreateView(0, 0, RUNTIME_CLASS(CAgilityBookTree), CSize(cx, 100), &context))
 		return;
@@ -171,7 +175,7 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_splitterCal.ShowWindow(SW_HIDE);
 	m_splitterCal.EnableWindow(FALSE);
-	cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("splitCX2"), 100);
+	cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("splitCX2"), DEFAULT_CAL_WIDTH);
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewCalendarList);
 	if (!m_splitterCal.CreateView(0, 0, RUNTIME_CLASS(CAgilityBookViewCalendarList), CSize(cx, 100), &context))
 		return;
