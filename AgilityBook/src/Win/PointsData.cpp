@@ -1127,6 +1127,9 @@ void CPointsDataItems::LoadData(
 {
 	clear();
 
+	if (!inDog)
+		return;
+
 	// Find all visible items and sort them out by venue.
 	std::vector<CVenueFilter> venues;
 	CFilterOptions::Options().GetFilterVenue(venues);
