@@ -146,7 +146,7 @@ public:
 			ARBString const& inHtml);
 
 	virtual ARBString OnNeedText(size_t inCol) const	{return _T("");}
-	virtual ARBString GetHtml(size_t nCurLine) const		{return m_Html;}
+	virtual ARBString GetHtml(size_t nCurLine) const	{return m_Html;}
 	virtual bool IsVisible() const						{return false;}
 	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
 

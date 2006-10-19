@@ -225,13 +225,17 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	if (m_pDog)
 	{
-		data << _T("<h1><a href=\"")
+		data << _T("<h1 align=\"center\">Titling Points ")
+			<< ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
+			<< _T("</h1>")
+			<< _T("<h1><a href=\"")
 			<< ARB_PROTOCOL << nCurLine << _T("\">")
 			<< m_pDog->GetCallName()
 			<< _T("</a> [")
 			<< m_pDog->GetRegisteredName()
-			<< _T(']')
+			<< _T("] ")
 			<< _T("</h1>") << std::endl;
+
 	}
 	return data.str();
 }
@@ -491,18 +495,18 @@ ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
-		<< _T("<td/>") << std::endl;
-	data << _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl;
-	data << _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl;
-	data << _T("<td>") << OnNeedText(3) << _T("</td>") << std::endl;
-	data << _T("<td><a href=\"")
+		<< _T("<td/>") << std::endl
+		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
+		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
+		<< _T("<td>") << OnNeedText(3) << _T("</td>") << std::endl
+		<< _T("<td><a href=\"")
 		<< ARB_PROTOCOL << nCurLine << _T("\">")
-		<< OnNeedText(4) << _T("</a></td>") << std::endl;
-	data << _T("<td>") << OnNeedText(5) << _T("</td>") << std::endl;
-	data << _T("<td>") << OnNeedText(6) << _T("</td>") << std::endl;
-	data << _T("<td>") << OnNeedText(7) << _T("</td>") << std::endl;
-	data << _T("<td>") << OnNeedText(8) << _T("</td>") << std::endl;
-	data << _T("</tr>") << std::endl;
+		<< OnNeedText(4) << _T("</a></td>") << std::endl
+		<< _T("<td>") << OnNeedText(5) << _T("</td>") << std::endl
+		<< _T("<td>") << OnNeedText(6) << _T("</td>") << std::endl
+		<< _T("<td>") << OnNeedText(7) << _T("</td>") << std::endl
+		<< _T("<td>") << OnNeedText(8) << _T("</td>") << std::endl
+		<< _T("</tr>") << std::endl;
 	return data.str();
 }
 
@@ -1109,6 +1113,7 @@ void CPointsDataItems::InsertVenueHeader(
 		ARBConfigVenuePtr pVenue)
 {
 	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, _T("<p><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">"))));
+	// This entry is needed for the list view (as a spacer)
 	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc)));
 	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataVenue(pParent, pDoc, inDog, pVenue)));
 }
