@@ -150,17 +150,23 @@ void CTabView::OnInitialUpdate()
 		return;
 	m_Panes.push_back(&m_splitterRuns);
 
-	if (CAgilityBookOptions::ShowHtmlPoints())
+	bool bCreateList = !CAgilityBookOptions::ShowHtmlPoints();
+	if (!bCreateList)
 	{
 		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
-		m_Panes.push_back(html);
-		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
-		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-		html->Create(NULL, NULL,
-			dwStyle,
-			CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+		if (!html)
+			bCreateList = true;
+		else
+		{
+			m_Panes.push_back(html);
+			context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
+			DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+			html->Create(NULL, NULL,
+				dwStyle,
+				CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+		}
 	}
-	else
+	if (bCreateList)
 	{
 		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
 		m_Panes.push_back(points);

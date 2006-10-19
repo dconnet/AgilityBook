@@ -237,9 +237,9 @@ void CAgilityBookViewHtml::LoadData()
 
 	data << _T("<html>")
 		<< std::endl
-		<< _T("<head><title>Titling Points "
+		<< _T("<head><title>Titling Points ")
 		<< today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
-		<< "</title></head>")
+		<< _T("</title></head>")
 		<< std::endl
 		<< _T("<body>")
 		<< std::endl;
