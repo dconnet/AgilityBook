@@ -124,5 +124,11 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpcs);
 	afx_msg void OnDestroy();
 	afx_msg int OnMouseActivate(CWnd* pDesktopWnd,UINT nHitTest,UINT message);
+	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityNewTitle();
+	afx_msg void OnViewPointsViewSort();
+	afx_msg void OnViewHiddenTitles();
+	afx_msg void OnUpdateCopyTitles(CCmdUI* pCmdUI);
+	afx_msg void OnCopyTitles();
 	DECLARE_MESSAGE_MAP()
 };
