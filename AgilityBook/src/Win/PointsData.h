@@ -162,6 +162,7 @@ public:
 	CPointsDataText(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
+			bool bUseInHtml,
 			LPCTSTR inCol1 = _T(""),
 			LPCTSTR inCol2 = _T(""));
 
@@ -170,6 +171,7 @@ public:
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 private:
+	bool m_UseInHtml;
 	ARBString m_Col1;
 	ARBString m_Col2;
 };
@@ -570,9 +572,6 @@ private:
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog,
 			ARBConfigVenuePtr pVenue);
-	void InsertVenueFooter(
-			CWnd* pParent,
-			CAgilityBookDoc* pDoc);
 
 	std::vector<CPointsDataBasePtr> m_Lines;
 };

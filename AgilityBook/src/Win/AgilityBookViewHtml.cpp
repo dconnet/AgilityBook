@@ -53,6 +53,9 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "AgilityBookTreeData.h"
+#include "ClipBoard.h"
+#include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
@@ -71,6 +74,12 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewHtml, CHtmlView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_MOUSEACTIVATE()
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
+	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
+	ON_COMMAND(ID_VIEW_POINTS_VIEW_SORT, OnViewPointsViewSort)
+	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
+	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
+	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
 END_MESSAGE_MAP()
 
 // CAgilityBookViewHtml construction/destruction
@@ -513,4 +522,145 @@ int CAgilityBookViewHtml::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT
 		return CHtmlView::OnMouseActivate(pDesktopWnd, nHitTest, msg);
 	else
 		return CWnd::OnMouseActivate(pDesktopWnd, nHitTest, msg);
+}
+
+void CAgilityBookViewHtml::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
+	if (pDog)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewHtml::OnAgilityNewTitle()
+{
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
+	if (pDog)
+	{
+		// Convenience! No duplicated code!
+		CAgilityBookTreeDataDog data(GetDocument()->GetTreeView(), pDog);
+		if (data.OnCmd(ID_AGILITY_NEW_TITLE, NULL))
+			GetDocument()->SetModifiedFlag();
+	}
+}
+
+void CAgilityBookViewHtml::OnViewPointsViewSort()
+{
+	CDlgPointsViewSort dlg(this);
+	if (IDOK == dlg.DoModal())
+		LoadData();
+}
+
+void CAgilityBookViewHtml::OnViewHiddenTitles()
+{
+	CAgilityBookOptions::SetViewHiddenTitles(!CAgilityBookOptions::GetViewHiddenTitles());
+	std::vector<CVenueFilter> venues;
+	CFilterOptions::Options().GetFilterVenue(venues);
+	for (ARBDogList::iterator iterDogs = GetDocument()->GetDogs().begin();
+			iterDogs != GetDocument()->GetDogs().end();
+			++iterDogs)
+	{
+		for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin();
+				iterTitle != (*iterDogs)->GetTitles().end();
+				++iterTitle)
+		{
+			GetDocument()->ResetVisibility(venues, *iterTitle);
+		}
+	}
+	LoadData();
+}
+
+void CAgilityBookViewHtml::OnUpdateCopyTitles(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
+	if (pDog && 0 < pDog->GetTitles().size())
+	{
+		int count = 0;
+		for (ARBDogTitleList::const_iterator iter = pDog->GetTitles().begin();
+			iter != pDog->GetTitles().end();
+			++iter)
+		{
+			if ((*iter)->GetDate().IsValid()
+			&& !(*iter)->IsHidden())
+				++count;
+		}
+		if (0 < count)
+			bEnable = TRUE;
+	}
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewHtml::OnCopyTitles()
+{
+	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
+	if (pDog && 0 < pDog->GetTitles().size())
+	{
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+
+		ARBString preTitles, postTitles;
+		for (ARBConfigVenueList::const_iterator iVenue = GetDocument()->GetConfig().GetVenues().begin();
+			iVenue != GetDocument()->GetConfig().GetVenues().end();
+			++iVenue)
+		{
+			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
+				continue;
+			ARBString preTitles2, postTitles2;
+			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
+				iTitle != (*iVenue)->GetTitles().end();
+				++iTitle)
+			{
+				ARBDogTitlePtr pTitle;
+				if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
+				{
+					if (pTitle->GetDate().IsValid()
+					&& !pTitle->IsHidden())
+					{
+						if ((*iTitle)->GetPrefix())
+						{
+							if (!preTitles2.empty())
+								preTitles2 += ' ';
+							preTitles2 += (*iTitle)->GetName();
+						}
+						else
+						{
+							if (!postTitles2.empty())
+								postTitles2 += ' ';
+							postTitles2 += (*iTitle)->GetName();
+						}
+					}
+				}
+			}
+			if (!preTitles2.empty())
+			{
+				if (!preTitles.empty())
+					preTitles += ' ';
+				preTitles += preTitles2;
+			}
+			if (!postTitles2.empty())
+			{
+				if (!postTitles.empty())
+					postTitles += _T("; ");
+				postTitles += postTitles2;
+			}
+		}
+		if (!preTitles.empty() || !postTitles.empty())
+		{
+			CClipboardDataWriter clpData;
+			if (clpData.isOkay())
+			{
+				CString data(preTitles.c_str());
+				data += ' ';
+				data += pDog->GetCallName().c_str();
+				data += _T(": ");
+				data += postTitles.c_str();
+
+				clpData.SetData(data);
+			}
+		}
+		else
+			AfxMessageBox(_T("No titles to copy."), MB_ICONINFORMATION);
+	}
 }
