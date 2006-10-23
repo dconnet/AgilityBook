@@ -5,7 +5,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2006-10-02 DRC Configuration version 17. Updated USDAA Performance Pairs for titling in 2007.
+2006-10-02 DRC Configuration version 17. Updated USDAA Performance Pairs for
+               titling in 2007. Changed TDAA website.
 2006-08-12 DRC Configuration version 16. Removed AMBOR.
                Updated DOCNA gamble events.
 2006-08-08 DRC Configuration version 15. Added USDAA Performance Tournaments.
@@ -1847,7 +1848,7 @@ Was called Wild Card briefly.</Desc>
 			</Event>
 		</Venue>
 		<Venue LongName="Teacup Dogs Agility Association" Name="TDAA">
-			<Desc>http://www.dogagility.org/</Desc>
+			<Desc>http://www.k9tdaa.com/</Desc>
 			<Titles LongName="Teacup Beginner Agility Dog" Name="TBAD">3 Qs in standard courses under 2 different judges</Titles>
 			<Titles LongName="Teacup Intermediate Agility Dog" Name="TIAD">3 Qs in standard courses under 2 different judges</Titles>
 			<Titles LongName="Teacup Superior Agility Dog" Name="TSAD">5 Qs in standard courses under 3 different judges</Titles>
