@@ -161,14 +161,22 @@ public:
 
 	virtual IWizardExporterPtr GetExporter() const;
 	virtual IWizardImporterPtr GetImporter() const;
+
+private:
+	mutable CComDispatchDriver m_Manager;
+	mutable CComDispatchDriver m_Desktop;
 };
 
 class CWizardCalcExport : public IWizardExporter
 {
 protected:
-	CWizardCalcExport();
+	CWizardCalcExport(
+			CComDispatchDriver& ioManager,
+			CComDispatchDriver& ioDesktop);
 public:
-	static CWizardCalcExport* Create();
+	static CWizardCalcExport* Create(
+			CComDispatchDriver& ioManager,
+			CComDispatchDriver& ioDesktop);
 	virtual ~CWizardCalcExport();
 
 	// Safe array is ready for use
@@ -197,20 +205,46 @@ public:
 			long inRowTo,
 			long inColTo,
 			CString const& inFormula);
+
+private:
+	CComDispatchDriver& m_Manager;
+	CComDispatchDriver& m_Desktop;
+	CComDispatchDriver m_Worksheet;
+	long m_Rows;
+	long m_Cols;
+	COleSafeArray m_Array;
+	// Commonly used OLE variants.
+	COleVariant covTrue;
+	COleVariant covFalse;
+	COleVariant covOptional;
 };
 
 class CWizardCalcImport : public IWizardImporter
 {
 protected:
-	CWizardCalcImport();
+	CWizardCalcImport(
+			CComDispatchDriver& ioManager,
+			CComDispatchDriver& ioDesktop);
 public:
-	static CWizardCalcImport* Create();
+	static CWizardCalcImport* Create(
+			CComDispatchDriver& ioManager,
+			CComDispatchDriver& ioDesktop);
 	virtual ~CWizardCalcImport();
 
 	virtual bool OpenFile(CString const& inFilename);
 	virtual bool GetData(
 			std::vector< std::vector<CString> >& outData,
 			IDlgProgress* ioProgress);
+
+private:
+	CComDispatchDriver& m_Manager;
+	CComDispatchDriver& m_Desktop;
+	CComDispatchDriver m_Worksheet;
+	CString m_FileName;
+	// Commonly used OLE variants.
+	COleVariant covTrue;
+	COleVariant covFalse;
+	COleVariant covOptional;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -539,9 +573,9 @@ CWizardCalc* CWizardCalc::Create()
 	if (pCalc)
 	{
 		bool bKill = false;
-		//if (NULL == pCalc->m_App.m_lpDispatch)
+		if (!pCalc->m_Manager)
 			bKill = true;
-		//else
+		else
 		{
 			if (!pCalc->GetExporter() || !pCalc->GetImporter())
 				bKill = true;
@@ -557,6 +591,21 @@ CWizardCalc* CWizardCalc::Create()
 
 CWizardCalc::CWizardCalc()
 {
+	if (SUCCEEDED(m_Manager.CoCreateInstance(L"com.sun.star.ServiceManager")))
+	{
+		CComVariant param1(L"com.sun.star.frame.Desktop");
+		CComVariant result;
+		if (SUCCEEDED(m_Manager.Invoke1(L"createInstance", &param1, &result)))
+		{
+			m_Desktop = result.pdispVal;
+		}
+		if (!m_Desktop)
+		{
+			m_Manager.Release();
+		}
+	}
+	else
+		m_Manager.Release();
 }
 
 CWizardCalc::~CWizardCalc()
@@ -565,24 +614,49 @@ CWizardCalc::~CWizardCalc()
 
 IWizardExporterPtr CWizardCalc::GetExporter() const
 {
-	return IWizardExporterPtr(CWizardCalcExport::Create());
+	return IWizardExporterPtr(CWizardCalcExport::Create(m_Manager, m_Desktop));
 }
 
 IWizardImporterPtr CWizardCalc::GetImporter() const
 {
-	return IWizardImporterPtr(CWizardCalcImport::Create());
+	return IWizardImporterPtr(CWizardCalcImport::Create(m_Manager, m_Desktop));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalcExport* CWizardCalcExport::Create()
+CWizardCalcExport* CWizardCalcExport::Create(
+		CComDispatchDriver& ioManager,
+		CComDispatchDriver& ioDesktop)
 {
-	//return new CWizardCalcExport();
-	return NULL;
+	return new CWizardCalcExport(ioManager, ioDesktop);
 }
 
-CWizardCalcExport::CWizardCalcExport()
+CWizardCalcExport::CWizardCalcExport(
+		CComDispatchDriver& ioManager,
+		CComDispatchDriver& ioDesktop)
+	: m_Manager(ioManager)
+	, m_Desktop(ioDesktop)
 {
+	CComVariant param1(L"private:factory/scalc");
+	CComVariant param2(L"_blank");
+	CComVariant param3(0);
+	COleSafeArray param4;
+	VARIANT params[4];
+	params[0] = param1; params[1] = param2; params[2] = param3; params[3] = param4;
+	CComVariant result;
+	HRESULT hr = m_Desktop.InvokeN(L"loadComponentFromURL", params, 4, &result);
+	if (SUCCEEDED(hr))
+	{
+		TRACE0("ok\n");
+	}
+	else
+		TRACE0("ouch\n");
+	//args = []
+	//doc = m_Desktop.loadComponentFromURL("private:factory/scalc", "_blank", 0, args)
+	//sheets = doc.getSheets()
+	//print sheets.getCount()
+	//sheet = sheets.getByIndex(0)
+	//print sheet.getName()
 }
 
 CWizardCalcExport::~CWizardCalcExport()
@@ -591,14 +665,26 @@ CWizardCalcExport::~CWizardCalcExport()
 
 bool CWizardCalcExport::ArrayOkay() const
 {
-	return false;
+	return 0 < m_Rows && 0 < m_Cols;
 }
 
 bool CWizardCalcExport::CreateArray(
 		long inRows,
 		long inCols)
 {
-	return false;
+	if (ArrayOkay())
+		return false;
+	if (0 >= m_Rows || 0 >= m_Cols)
+		return false;
+	if (inRows >= IWizardSpreadSheet::GetMaxRows())
+		inRows = IWizardSpreadSheet::GetMaxRows() - 1;
+	if (inCols >= IWizardSpreadSheet::GetMaxCols())
+		inCols = IWizardSpreadSheet::GetMaxCols() - 1;
+	DWORD numElements[2];
+	numElements[0] = m_Rows = inRows;
+	numElements[1] = m_Cols = inCols;
+	m_Array.Create(VT_BSTR, 2, numElements);
+	return true;
 }
 
 bool CWizardCalcExport::InsertArrayData(
@@ -606,13 +692,30 @@ bool CWizardCalcExport::InsertArrayData(
 		long inCol,
 		CString const& inData)
 {
-	return false;
+	if (!ArrayOkay())
+		return false;
+	if (0 > inRow || inRow >= m_Rows
+	|| 0 > inCol || inCol >= m_Cols)
+		return false;
+	long index[2];
+	index[0] = inRow;
+	index[1] = inCol;
+	VARIANT v;
+	VariantInit(&v);
+	v.vt = VT_BSTR;
+	v.bstrVal = inData.AllocSysString();
+	m_Array.PutElement(index, v.bstrVal);
+	SysFreeString(v.bstrVal);
+	VariantClear(&v);
+	return true;
 }
 
 bool CWizardCalcExport::ExportDataArray(
 		long inRowTop,
 		long inColLeft)
 {
+	if (!ArrayOkay())
+		return false;
 	return false;
 }
 
@@ -641,13 +744,19 @@ bool CWizardCalcExport::InsertFormula(
 
 /////////////////////////////////////////////////////////////////////////////
 
-CWizardCalcImport* CWizardCalcImport::Create()
+CWizardCalcImport* CWizardCalcImport::Create(
+		CComDispatchDriver& ioManager,
+		CComDispatchDriver& ioDesktop)
 {
-	//return new CWizardCalcImport();
+	//return new CWizardCalcImport(ioManager, ioDesktop);
 	return NULL;
 }
 
-CWizardCalcImport::CWizardCalcImport()
+CWizardCalcImport::CWizardCalcImport(
+		CComDispatchDriver& ioManager,
+		CComDispatchDriver& ioDesktop)
+	: m_Manager(ioManager)
+	, m_Desktop(ioDesktop)
 {
 }
 

@@ -435,10 +435,8 @@ BOOL CWizardStart::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	if (!m_pSheet->ExcelHelper())
 		GetDlgItem(IDC_WIZARD_START_EXCEL)->EnableWindow(FALSE);
-#if 0
 	if (!m_pSheet->CalcHelper())
 		GetDlgItem(IDC_WIZARD_START_CALC)->EnableWindow(FALSE);
-#endif
 	UpdateList();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
