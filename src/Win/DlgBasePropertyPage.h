@@ -40,14 +40,6 @@ class CDlgBasePropertyPage : public CPropertyPage
 {
 	DECLARE_DYNAMIC(CDlgBasePropertyPage)
 public:
-#if _MSC_VER < 1300
-	CDlgBasePropertyPage(
-			UINT nIDTemplate,
-			UINT nIDCaption = 0);
-	CDlgBasePropertyPage(
-			LPCTSTR lpszTemplateName,
-			UINT nIDCaption = 0);
-#else
 	explicit CDlgBasePropertyPage(
 			UINT nIDTemplate,
 			UINT nIDCaption = 0,
@@ -72,7 +64,6 @@ public:
 			UINT nIDHeaderSubTitle = 0,
 			DWORD dwSize = sizeof(PROPSHEETPAGE)
 	);
-#endif
 	~CDlgBasePropertyPage();
 
 private:

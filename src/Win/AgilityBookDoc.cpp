@@ -101,12 +101,6 @@
 #include "TabView.h"
 #include "Wizard.h"
 
-#if _MSC_VER < 1300
-#ifndef INVALID_FILE_ATTRIBUTES
-#define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
-#endif
-#endif
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

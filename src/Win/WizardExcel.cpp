@@ -64,6 +64,119 @@ IWizardSpreadSheet::~IWizardSpreadSheet()
 
 /////////////////////////////////////////////////////////////////////////////
 
+class CWizardBaseExport : public IWizardExporter
+{
+protected:
+	CWizardBaseExport(bool bInvert)
+		: m_bInvert(bInvert)
+		, m_Rows(0)
+		, m_Cols(0)
+		, covTrue(static_cast<short>(TRUE))
+		, covFalse(static_cast<short>(FALSE))
+		, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
+	{
+	}
+
+public:
+	// Safe array is ready for use
+	virtual bool ArrayOkay() const
+	{
+		return 0 < m_Rows && 0 < m_Cols;
+	}
+	// Create the safe array.
+	virtual bool CreateArray(
+			long inRows,
+			long inCols);
+	// Insert data into the safe array.
+	virtual bool InsertArrayData(
+			long inRow,
+			long inCol,
+			CString const& inData);
+
+protected:
+	bool m_bInvert; // OOCalc needs the array inverted in order to insert it
+	long m_Rows;
+	long m_Cols;
+	COleSafeArray m_Array;
+	// Commonly used OLE variants.
+	CComVariant covTrue;
+	CComVariant covFalse;
+	CComVariant covOptional;
+};
+
+bool CWizardBaseExport::CreateArray(
+		long inRows,
+		long inCols)
+{
+	if (ArrayOkay())
+		return false;
+	if (0 >= inRows || 0 >= inCols)
+		return false;
+	if (inRows >= IWizardSpreadSheet::GetMaxRows())
+		inRows = IWizardSpreadSheet::GetMaxRows() - 1;
+	if (inCols >= IWizardSpreadSheet::GetMaxCols())
+		inCols = IWizardSpreadSheet::GetMaxCols() - 1;
+	DWORD numElements[2];
+	int nRow = 0;
+	int nCol = 1;
+	if (m_bInvert)
+	{
+		nRow = 1;
+		nCol = 0;
+	}
+	numElements[nRow] = m_Rows = inRows;
+	numElements[nCol] = m_Cols = inCols;
+	m_Array.Create(VT_BSTR, 2, numElements);
+	return true;
+}
+
+bool CWizardBaseExport::InsertArrayData(
+		long inRow,
+		long inCol,
+		CString const& inData)
+{
+	if (!ArrayOkay())
+		return false;
+	if (0 > inRow || inRow >= m_Rows
+	|| 0 > inCol || inCol >= m_Cols)
+		return false;
+	long index[2];
+	int nRow = 0;
+	int nCol = 1;
+	if (m_bInvert)
+	{
+		nRow = 1;
+		nCol = 0;
+	}
+	index[nRow] = inRow;
+	index[nCol] = inCol;
+	CComVariant v(inData);
+	m_Array.PutElement(index, v.bstrVal);
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CWizardBaseImport : public IWizardImporter
+{
+public:
+	CWizardBaseImport()
+		: covTrue(static_cast<short>(TRUE))
+		, covFalse(static_cast<short>(FALSE))
+		, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
+	{
+	}
+
+protected:
+	CString m_FileName;
+	// Commonly used OLE variants.
+	CComVariant covTrue;
+	CComVariant covFalse;
+	CComVariant covOptional;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
 class CWizardExcel : public IWizardSpreadSheet
 {
 protected:
@@ -79,7 +192,7 @@ private:
 	mutable Excel8::_Application m_App;
 };
 
-class CWizardExcelExport : public IWizardExporter
+class CWizardExcelExport : public CWizardBaseExport
 {
 protected:
 	CWizardExcelExport(Excel8::_Application& ioApp);
@@ -87,17 +200,6 @@ public:
 	static CWizardExcelExport* Create(Excel8::_Application& ioApp);
 	virtual ~CWizardExcelExport();
 
-	// Safe array is ready for use
-	virtual bool ArrayOkay() const;
-	// Create the safe array.
-	virtual bool CreateArray(
-			long inRows,
-			long inCols);
-	// Insert data into the safe array.
-	virtual bool InsertArrayData(
-			long inRow,
-			long inCol,
-			CString const& inData);
 	// Copy the safe array to excel (safe array is reset)
 	virtual bool ExportDataArray(
 			long inRowTop = 0,
@@ -106,27 +208,18 @@ public:
 	virtual bool InsertData(
 			long nRow,
 			long nCol,
-			COleVariant const& inData);
-	virtual bool InsertFormula(
-			long inRowFrom,
-			long inColFrom,
-			long inRowTo,
-			long inColTo,
-			CString const& inFormula);
+			double inData);
+	virtual bool InsertData(
+			long nRow,
+			long nCol,
+			CString const& inData);
 
 private:
 	Excel8::_Application& m_App;
 	Excel8::_Worksheet m_Worksheet;
-	long m_Rows;
-	long m_Cols;
-	COleSafeArray m_Array;
-	// Commonly used OLE variants.
-	COleVariant covTrue;
-	COleVariant covFalse;
-	COleVariant covOptional;
 };
 
-class CWizardExcelImport : public IWizardImporter
+class CWizardExcelImport : public CWizardBaseImport
 {
 protected:
 	CWizardExcelImport(Excel8::_Application& ioApp);
@@ -142,11 +235,272 @@ public:
 private:
 	Excel8::_Application& m_App;
 	Excel8::_Worksheet m_Worksheet;
-	CString m_FileName;
-	// Commonly used OLE variants.
-	COleVariant covTrue;
-	COleVariant covFalse;
-	COleVariant covOptional;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+// Wrappers for OOCalc IDispatch
+
+class CComRangeDriver : public CComDispatchDriver
+{
+public:
+	CComRangeDriver& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	bool setValue(double val)
+	{
+		if (!*this)
+			return false;
+		CComVariant var(val);
+		CComVariant result;
+		return SUCCEEDED(Invoke1(L"setValue", &var, &result));
+	}
+
+	bool setFormula(CString const& val)
+	{
+		if (!*this)
+			return false;
+		CComVariant var(val);
+		CComVariant result;
+		return SUCCEEDED(Invoke1(L"setFormula", &var, &result));
+	}
+
+	CComDispatchDriver getColumns()
+	{
+		CComDispatchDriver columns;
+		if (*this)
+		{
+			// XTableColumns
+			CComVariant result;
+			if (SUCCEEDED(Invoke0(L"getColumns", &result)))
+				columns = result.pdispVal;
+		}
+		return columns;
+	}
+
+
+	bool setDataArray(COleSafeArray& arr)
+	{
+		if (!*this)
+			return false;
+		CComVariant values(arr);
+		arr.Detach();
+		CComVariant result;
+		return SUCCEEDED(Invoke1(L"setDataArray", &values, &result));
+	}
+};
+
+class CComCursorDriver : public CComDispatchDriver
+{
+public:
+	CComCursorDriver& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	bool gotoStartOfUsedArea(bool b)
+	{
+		CComVariant param(b);
+		CComVariant result;
+		if (!SUCCEEDED(Invoke1(L"gotoStartOfUsedArea", &param, &result)))
+			return false;
+		return true;
+	}
+
+	bool gotoEndOfUsedArea(bool b)
+	{
+		CComVariant param(b);
+		CComVariant result;
+		if (!SUCCEEDED(Invoke1(L"gotoEndOfUsedArea", &param, &result)))
+			return false;
+		return true;
+	}
+
+	COleSafeArray getDataArray()
+	{
+		COleSafeArray data;
+		VARIANT var;
+		if (SUCCEEDED(Invoke0(L"getDataArray", &var)))
+			data.Attach(var);
+		return data;
+	}
+};
+
+class CComWorksheetDriver : public CComDispatchDriver
+{
+public:
+	CComWorksheetDriver& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	CComCursorDriver createCursor()
+	{
+		CComCursorDriver cursor;
+		if (*this)
+		{
+			CComVariant result;
+			if (SUCCEEDED(Invoke0(L"createCursor", &result)))
+				cursor = result.pdispVal;
+		}
+		return cursor;
+	}
+
+	CComRangeDriver getCellByPosition(long nCol, long nRow)
+	{
+		CComRangeDriver range;
+		if (*this)
+		{
+			CComVariant col(nCol);
+			CComVariant row(nRow);
+			CComVariant result;
+			if (SUCCEEDED(Invoke2(L"getCellByPosition", &col, &row, &result)))
+				range = result.pdispVal;
+		}
+		return range;
+	}
+
+	CComRangeDriver getCellRangeByPosition(long left, long top, long right, long bottom)
+	{
+		CComRangeDriver range;
+		if (*this)
+		{
+			VARIANT params[4];
+			for (int i = 0; i < 4; ++i)
+				VariantInit(&params[i]);
+			params[3].vt = VT_I4; //left
+			params[3].lVal = left;
+			params[2].vt = VT_I4; //top
+			params[2].lVal = top;
+			params[1].vt = VT_I4; //right
+			params[1].lVal = right;
+			params[0].vt = VT_I4; //bottom
+			params[0].lVal = bottom;
+
+			CComVariant result;
+			if (SUCCEEDED(InvokeN(L"getCellRangeByPosition", params, 4, &result)))
+				range = result.pdispVal;
+		}
+		return range;
+	}
+};
+
+class CComDocumentDriver : public CComDispatchDriver
+{
+public:
+	CComDocumentDriver& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	CComWorksheetDriver getSheet(int index)
+	{
+		CComWorksheetDriver worksheet;
+		if (*this)
+		{
+			CComVariant result;
+			HRESULT hr = Invoke0(L"getSheets", &result);
+			if (SUCCEEDED(hr))
+			{
+				// XSpreadsheets
+				CComDispatchDriver sheets = result.pdispVal;
+				CComVariant sheet(index);
+				hr = sheets.Invoke1(L"getByIndex", &sheet, &result);
+				if (SUCCEEDED(hr))
+				{
+					// XSpreadsheet
+					worksheet = result.pdispVal;
+				}
+			}
+		}
+		return worksheet;
+	}
+
+	void dispose()
+	{
+		if (*this)
+		{
+			CComVariant result;
+			Invoke0(L"dispose", &result);
+		}
+	}
+};
+
+class CComDesktopDriver : public CComDispatchDriver
+{
+public:
+	CComDesktopDriver& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	CComDocumentDriver loadComponentFromURL(CComVariant param1)
+	{
+		CComDocumentDriver document;
+		if (*this)
+		{
+			CComVariant param2(L"_blank");
+			VARIANT params[4];
+			int i;
+			for (i = 0; i < 4; ++i)
+				VariantInit(&params[i]);
+			params[3].vt = param1.vt;
+			params[3].bstrVal = param1.bstrVal;
+			params[2].vt = param1.vt;
+			params[2].bstrVal = param2.bstrVal;
+			params[1].vt = VT_I4;
+			params[1].lVal = 0;
+			params[0].vt = VT_ARRAY | VT_VARIANT;
+			params[0].parray = NULL;
+			CComVariant result;
+			HRESULT hr = InvokeN(L"loadComponentFromURL", params, 4, &result);
+			if (SUCCEEDED(hr))
+			{
+				// ::com::sun::star::sheet::
+				// XSpreadsheetDocument
+				document = result.pdispVal;
+			}
+			for (i = 0; i < 4; ++i)
+				VariantClear(&params[i]);
+		}
+		return document;
+	}
+};
+
+class CComManagerDriver : public CComDispatchDriver
+{
+public:
+	CComManagerDriver()
+	{
+	}
+
+	CComManagerDriver& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	CComDesktopDriver createDesktop()
+	{
+		CComDesktopDriver desktop;
+		CComVariant param1(L"com.sun.star.frame.Desktop");
+		CComVariant result;
+		if (SUCCEEDED(Invoke1(L"createInstance", &param1, &result)))
+		{
+			desktop = result.pdispVal;
+		}
+		if (!desktop)
+		{
+			Release();
+		}
+		return desktop;
+	}
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -163,33 +517,22 @@ public:
 	virtual IWizardImporterPtr GetImporter() const;
 
 private:
-	mutable CComDispatchDriver m_Manager;
-	mutable CComDispatchDriver m_Desktop;
+	mutable CComManagerDriver m_Manager;
+	mutable CComDesktopDriver m_Desktop;
 };
 
-class CWizardCalcExport : public IWizardExporter
+class CWizardCalcExport : public CWizardBaseExport
 {
 protected:
 	CWizardCalcExport(
-			CComDispatchDriver& ioManager,
-			CComDispatchDriver& ioDesktop);
+			CComManagerDriver& ioManager,
+			CComDesktopDriver& ioDesktop);
 public:
 	static CWizardCalcExport* Create(
-			CComDispatchDriver& ioManager,
-			CComDispatchDriver& ioDesktop);
+			CComManagerDriver& ioManager,
+			CComDesktopDriver& ioDesktop);
 	virtual ~CWizardCalcExport();
 
-	// Safe array is ready for use
-	virtual bool ArrayOkay() const;
-	// Create the safe array.
-	virtual bool CreateArray(
-			long inRows,
-			long inCols);
-	// Insert data into the safe array.
-	virtual bool InsertArrayData(
-			long inRow,
-			long inCol,
-			CString const& inData);
 	// Copy the safe array to excel (safe array is reset)
 	virtual bool ExportDataArray(
 			long inRowTop = 0,
@@ -198,37 +541,31 @@ public:
 	virtual bool InsertData(
 			long nRow,
 			long nCol,
-			COleVariant const& inData);
-	virtual bool InsertFormula(
-			long inRowFrom,
-			long inColFrom,
-			long inRowTo,
-			long inColTo,
-			CString const& inFormula);
+			double inData);
+	virtual bool InsertData(
+			long nRow,
+			long nCol,
+			CString const& inData);
 
 private:
-	CComDispatchDriver& m_Manager;
-	CComDispatchDriver& m_Desktop;
-	CComDispatchDriver m_Worksheet;
-	long m_Rows;
-	long m_Cols;
-	COleSafeArray m_Array;
-	// Commonly used OLE variants.
-	COleVariant covTrue;
-	COleVariant covFalse;
-	COleVariant covOptional;
+	CComWorksheetDriver GetWorksheet();
+
+	CComManagerDriver& m_Manager;
+	CComDesktopDriver& m_Desktop;
+	CComDocumentDriver m_Document;
+	CComWorksheetDriver m_Worksheet;
 };
 
-class CWizardCalcImport : public IWizardImporter
+class CWizardCalcImport : public CWizardBaseImport
 {
 protected:
 	CWizardCalcImport(
-			CComDispatchDriver& ioManager,
-			CComDispatchDriver& ioDesktop);
+			CComManagerDriver& ioManager,
+			CComDesktopDriver& ioDesktop);
 public:
 	static CWizardCalcImport* Create(
-			CComDispatchDriver& ioManager,
-			CComDispatchDriver& ioDesktop);
+			CComManagerDriver& ioManager,
+			CComDesktopDriver& ioDesktop);
 	virtual ~CWizardCalcImport();
 
 	virtual bool OpenFile(CString const& inFilename);
@@ -237,20 +574,17 @@ public:
 			IDlgProgress* ioProgress);
 
 private:
-	CComDispatchDriver& m_Manager;
-	CComDispatchDriver& m_Desktop;
-	CComDispatchDriver m_Worksheet;
-	CString m_FileName;
-	// Commonly used OLE variants.
-	COleVariant covTrue;
-	COleVariant covFalse;
-	COleVariant covOptional;
+	CComManagerDriver& m_Manager;
+	CComDesktopDriver& m_Desktop;
+	CComDocumentDriver m_Document;
+	CComWorksheetDriver m_Worksheet;
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardExcel* CWizardExcel::Create()
 {
+	CWaitCursor wait;
 	CWizardExcel* pExcel = new CWizardExcel();
 	if (pExcel)
 	{
@@ -321,72 +655,21 @@ CWizardExcelExport* CWizardExcelExport::Create(Excel8::_Application& ioApp)
 }
 
 CWizardExcelExport::CWizardExcelExport(Excel8::_Application& ioApp)
-	: m_App(ioApp)
-	, m_Rows(0)
-	, m_Cols(0)
-	, covTrue(static_cast<short>(TRUE))
-	, covFalse(static_cast<short>(FALSE))
-	, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
+	: CWizardBaseExport(false)
+	, m_App(ioApp)
 {
 	// Create a new workbook.
 	Excel8::Workbooks books = m_App.get_Workbooks();
 	Excel8::_Workbook book = books.Add(covOptional);
 	// Get the first sheet.
 	Excel8::Worksheets sheets = book.get_Sheets();
-	m_Worksheet = sheets.get_Item(COleVariant((short)1));
+	m_Worksheet = sheets.get_Item(CComVariant((short)1));
 }
 
 CWizardExcelExport::~CWizardExcelExport()
 {
 	if (NULL != m_Worksheet.m_lpDispatch && !m_App.get_Visible())
 		m_App.Quit();
-}
-
-bool CWizardExcelExport::ArrayOkay() const
-{
-	return 0 < m_Rows && 0 < m_Cols;
-}
-
-bool CWizardExcelExport::CreateArray(
-		long inRows,
-		long inCols)
-{
-	if (ArrayOkay())
-		return false;
-	if (0 >= inRows || 0 >= inCols)
-		return false;
-	if (inRows >= IWizardSpreadSheet::GetMaxRows())
-		inRows = IWizardSpreadSheet::GetMaxRows() - 1;
-	if (inCols >= IWizardSpreadSheet::GetMaxCols())
-		inCols = IWizardSpreadSheet::GetMaxCols() - 1;
-	DWORD numElements[2];
-	numElements[0] = m_Rows = inRows;
-	numElements[1] = m_Cols = inCols;
-	m_Array.Create(VT_BSTR, 2, numElements);
-	return true;
-}
-
-bool CWizardExcelExport::InsertArrayData(
-		long inRow,
-		long inCol,
-		CString const& inData)
-{
-	if (!ArrayOkay())
-		return false;
-	if (0 > inRow || inRow >= m_Rows
-	|| 0 > inCol || inCol >= m_Cols)
-		return false;
-	long index[2];
-	index[0] = inRow;
-	index[1] = inCol;
-	VARIANT v;
-	VariantInit(&v);
-	v.vt = VT_BSTR;
-	v.bstrVal = inData.AllocSysString();
-	m_Array.PutElement(index, v.bstrVal);
-	SysFreeString(v.bstrVal);
-	VariantClear(&v);
-	return true;
 }
 
 bool CWizardExcelExport::ExportDataArray(
@@ -402,20 +685,19 @@ bool CWizardExcelExport::ExportDataArray(
 	if (!IWizardSpreadSheet::GetRowCol(inRowTop + m_Rows - 1, inColLeft + m_Cols - 1, cell2))
 		return false;
 
-	m_App.put_UserControl(FALSE);
+	AllowAccess(false);
 
-	Excel8::Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
-	range.put_Value2(COleVariant(m_Array));
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
+	range.put_Value2(CComVariant(m_Array));
 	m_Array.Detach();
 
 	IWizardSpreadSheet::GetRowCol(inRowTop, inColLeft + m_Cols - 1, cell2);
-	range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
+	range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
 	Excel8::Range cols = range.get_EntireColumn();
 	cols.AutoFit();
 
 	m_Rows = m_Cols = 0;
-	m_App.put_Visible(TRUE);
-	m_App.put_UserControl(TRUE);
+	AllowAccess(true);
 
 	return true;
 }
@@ -437,30 +719,26 @@ bool CWizardExcelExport::AllowAccess(bool bAllow)
 bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
-		COleVariant const& inData)
+		double inData)
 {
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell1));
-	range.put_Value2(inData);
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+	range.put_Value2(CComVariant(inData));
 	return true;
 }
 
-bool CWizardExcelExport::InsertFormula(
-		long inRowFrom,
-		long inColFrom,
-		long inRowTo,
-		long inColTo,
-		CString const& inFormula)
+bool CWizardExcelExport::InsertData(
+		long inRow,
+		long inCol,
+		CString const& inData)
 {
-	CString cell1, cell2;
-	if (!IWizardSpreadSheet::GetRowCol(inRowFrom, inColFrom, cell1))
+	CString cell1;
+	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	if (!IWizardSpreadSheet::GetRowCol(inRowTo, inColTo, cell2))
-		return false;
-	Excel8::Range range = m_Worksheet.get_Range(COleVariant(cell1), COleVariant(cell2));
-	range.put_Formula(COleVariant(inFormula));
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+	range.put_Value2(CComVariant(inData));
 	return true;
 }
 
@@ -473,9 +751,6 @@ CWizardExcelImport* CWizardExcelImport::Create(Excel8::_Application& ioApp)
 
 CWizardExcelImport::CWizardExcelImport(Excel8::_Application& ioApp)
 	: m_App(ioApp)
-	, covTrue(static_cast<short>(TRUE))
-	, covFalse(static_cast<short>(FALSE))
-	, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
 {
 }
 
@@ -498,7 +773,7 @@ bool CWizardExcelImport::OpenFile(CString const& inFilename)
 	m_FileName = inFilename;
 	// Get the first sheet.
 	Excel8::Worksheets sheets = book.get_Sheets();
-	m_Worksheet = sheets.get_Item(COleVariant((short)1));
+	m_Worksheet = sheets.get_Item(CComVariant((short)1));
 	return NULL != m_Worksheet.m_lpDispatch;
 }
 
@@ -549,14 +824,7 @@ bool CWizardExcelImport::GetData(
 					break;
 				}
 				CString str;
-#if _MSC_VER < 1300
-				// VC6 can't translate a variant to cstring directly. sigh.
-				COleVariant var = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
-				if (var.vt == VT_BSTR)
-					str = var.bstrVal;
-#else
-				str = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
-#endif
+				str = Excel8::Range(range.get_Range(CComVariant(cell1), CComVariant(cell1))).get_Value();
 				row.push_back(str);
 			}
 			outData.push_back(row);
@@ -569,6 +837,7 @@ bool CWizardExcelImport::GetData(
 
 CWizardCalc* CWizardCalc::Create()
 {
+	CWaitCursor wait;
 	CWizardCalc* pCalc = new CWizardCalc();
 	if (pCalc)
 	{
@@ -592,18 +861,7 @@ CWizardCalc* CWizardCalc::Create()
 CWizardCalc::CWizardCalc()
 {
 	if (SUCCEEDED(m_Manager.CoCreateInstance(L"com.sun.star.ServiceManager")))
-	{
-		CComVariant param1(L"com.sun.star.frame.Desktop");
-		CComVariant result;
-		if (SUCCEEDED(m_Manager.Invoke1(L"createInstance", &param1, &result)))
-		{
-			m_Desktop = result.pdispVal;
-		}
-		if (!m_Desktop)
-		{
-			m_Manager.Release();
-		}
-	}
+		m_Desktop = m_Manager.createDesktop();
 	else
 		m_Manager.Release();
 }
@@ -625,89 +883,37 @@ IWizardImporterPtr CWizardCalc::GetImporter() const
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcExport* CWizardCalcExport::Create(
-		CComDispatchDriver& ioManager,
-		CComDispatchDriver& ioDesktop)
+		CComManagerDriver& ioManager,
+		CComDesktopDriver& ioDesktop)
 {
 	return new CWizardCalcExport(ioManager, ioDesktop);
 }
 
 CWizardCalcExport::CWizardCalcExport(
-		CComDispatchDriver& ioManager,
-		CComDispatchDriver& ioDesktop)
-	: m_Manager(ioManager)
+		CComManagerDriver& ioManager,
+		CComDesktopDriver& ioDesktop)
+	: CWizardBaseExport(true)
+	, m_Manager(ioManager)
 	, m_Desktop(ioDesktop)
 {
-	CComVariant param1(L"private:factory/scalc");
-	CComVariant param2(L"_blank");
-	CComVariant param3(0);
-	COleSafeArray param4;
-	VARIANT params[4];
-	params[0] = param1; params[1] = param2; params[2] = param3; params[3] = param4;
-	CComVariant result;
-	HRESULT hr = m_Desktop.InvokeN(L"loadComponentFromURL", params, 4, &result);
-	if (SUCCEEDED(hr))
-	{
-		TRACE0("ok\n");
-	}
-	else
-		TRACE0("ouch\n");
-	//args = []
-	//doc = m_Desktop.loadComponentFromURL("private:factory/scalc", "_blank", 0, args)
-	//sheets = doc.getSheets()
-	//print sheets.getCount()
-	//sheet = sheets.getByIndex(0)
-	//print sheet.getName()
 }
 
 CWizardCalcExport::~CWizardCalcExport()
 {
 }
 
-bool CWizardCalcExport::ArrayOkay() const
+CComWorksheetDriver CWizardCalcExport::GetWorksheet()
 {
-	return 0 < m_Rows && 0 < m_Cols;
-}
-
-bool CWizardCalcExport::CreateArray(
-		long inRows,
-		long inCols)
-{
-	if (ArrayOkay())
-		return false;
-	if (0 >= m_Rows || 0 >= m_Cols)
-		return false;
-	if (inRows >= IWizardSpreadSheet::GetMaxRows())
-		inRows = IWizardSpreadSheet::GetMaxRows() - 1;
-	if (inCols >= IWizardSpreadSheet::GetMaxCols())
-		inCols = IWizardSpreadSheet::GetMaxCols() - 1;
-	DWORD numElements[2];
-	numElements[0] = m_Rows = inRows;
-	numElements[1] = m_Cols = inCols;
-	m_Array.Create(VT_BSTR, 2, numElements);
-	return true;
-}
-
-bool CWizardCalcExport::InsertArrayData(
-		long inRow,
-		long inCol,
-		CString const& inData)
-{
-	if (!ArrayOkay())
-		return false;
-	if (0 > inRow || inRow >= m_Rows
-	|| 0 > inCol || inCol >= m_Cols)
-		return false;
-	long index[2];
-	index[0] = inRow;
-	index[1] = inCol;
-	VARIANT v;
-	VariantInit(&v);
-	v.vt = VT_BSTR;
-	v.bstrVal = inData.AllocSysString();
-	m_Array.PutElement(index, v.bstrVal);
-	SysFreeString(v.bstrVal);
-	VariantClear(&v);
-	return true;
+	if (!m_Document)
+	{
+		CComVariant param1(L"private:factory/scalc");
+		m_Document = m_Desktop.loadComponentFromURL(param1);
+	}
+	if (!m_Worksheet)
+	{
+		m_Worksheet = m_Document.getSheet(0);
+	}
+	return m_Worksheet;
 }
 
 bool CWizardCalcExport::ExportDataArray(
@@ -716,7 +922,31 @@ bool CWizardCalcExport::ExportDataArray(
 {
 	if (!ArrayOkay())
 		return false;
-	return false;
+
+	CComWorksheetDriver worksheet = GetWorksheet();
+	if (!worksheet)
+		return false;
+
+	AllowAccess(false);
+
+	CComRangeDriver range = worksheet.getCellRangeByPosition(
+			inColLeft, inRowTop,
+			inColLeft + m_Cols - 1, inRowTop + m_Rows - 1);
+	if (!range)
+		return false;
+
+	if (!range.setDataArray(m_Array))
+		return false;
+
+	CComDispatchDriver columns = range.getColumns();
+	if (!columns)
+		return false;
+	columns.PutPropertyByName(L"OptimalWidth", &covTrue);
+
+	m_Rows = m_Cols = 0;
+	AllowAccess(true);
+
+	return true;
 }
 
 bool CWizardCalcExport::AllowAccess(bool bAllow)
@@ -727,34 +957,45 @@ bool CWizardCalcExport::AllowAccess(bool bAllow)
 bool CWizardCalcExport::InsertData(
 		long nRow,
 		long nCol,
-		COleVariant const& inData)
+		double inData)
 {
-	return false;
+	CComWorksheetDriver worksheet = GetWorksheet();
+	if (!worksheet)
+		return false;
+
+	CComRangeDriver range = worksheet.getCellByPosition(nCol, nRow);
+	if (!range)
+		return false;
+	return range.setValue(inData);
 }
 
-bool CWizardCalcExport::InsertFormula(
-		long inRowFrom,
-		long inColFrom,
-		long inRowTo,
-		long inColTo,
-		CString const& inFormula)
+bool CWizardCalcExport::InsertData(
+		long nRow,
+		long nCol,
+		CString const& inData)
 {
-	return false;
+	CComWorksheetDriver worksheet = GetWorksheet();
+	if (!worksheet)
+		return false;
+
+	CComRangeDriver range = worksheet.getCellByPosition(nCol, nRow);
+	if (!range)
+		return false;
+	return range.setFormula(inData);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcImport* CWizardCalcImport::Create(
-		CComDispatchDriver& ioManager,
-		CComDispatchDriver& ioDesktop)
+		CComManagerDriver& ioManager,
+		CComDesktopDriver& ioDesktop)
 {
-	//return new CWizardCalcImport(ioManager, ioDesktop);
-	return NULL;
+	return new CWizardCalcImport(ioManager, ioDesktop);
 }
 
 CWizardCalcImport::CWizardCalcImport(
-		CComDispatchDriver& ioManager,
-		CComDispatchDriver& ioDesktop)
+		CComManagerDriver& ioManager,
+		CComDesktopDriver& ioDesktop)
 	: m_Manager(ioManager)
 	, m_Desktop(ioDesktop)
 {
@@ -762,18 +1003,114 @@ CWizardCalcImport::CWizardCalcImport(
 
 CWizardCalcImport::~CWizardCalcImport()
 {
+	m_Document.dispose();
 }
 
 bool CWizardCalcImport::OpenFile(CString const& inFilename)
 {
-	return false;
+	if (!m_Document)
+	{
+		CString fileName(inFilename);
+		fileName.Replace(_T("\\"), _T("/"));
+		fileName = _T("file:///") + fileName;
+		CComVariant param1(fileName);
+		m_Document = m_Desktop.loadComponentFromURL(param1);
+	}
+	if (!m_Worksheet)
+		m_Worksheet = m_Document.getSheet(0);
+	if (!m_Worksheet)
+		return false;
+	m_FileName = inFilename;
+	return true;
 }
 
 bool CWizardCalcImport::GetData(
 		std::vector< std::vector<CString> >& outData,
 		IDlgProgress* ioProgress)
 {
-	return false;
+	outData.clear();
+	if (!m_Worksheet)
+		return false;
+
+	// XSheetCellCursor
+	CComCursorDriver cursor = m_Worksheet.createCursor();
+	if (cursor)
+	{
+		// Set up the data area
+		if (!cursor.gotoStartOfUsedArea(false))
+			return false;
+		if (!cursor.gotoEndOfUsedArea(true))
+			return false;
+	}
+	COleSafeArray dataAll = cursor.getDataArray();
+
+	DWORD dim = dataAll.GetDim();
+	// Should be only 1 dimension
+	// Open office sets the data as an array of arrays.
+	if (1 == dim)
+	{
+		bool bAbort = false;
+
+		long lbound, ubound;
+		dataAll.GetLBound(1, &lbound);
+		dataAll.GetUBound(1, &ubound);
+		long nRows = ubound - lbound + 1;
+		outData.reserve(nRows);
+
+		if (ioProgress)
+		{
+			CString msg;
+			int nPath = m_FileName.ReverseFind('\\');
+			if (0 < nPath)
+				msg = m_FileName.Mid(nPath+1);
+			else
+				msg = m_FileName;
+			ioProgress->SetCaption(msg);
+			ARBostringstream str;
+			str << _T("Reading ") << nRows << _T(" rows");
+			ioProgress->SetMessage(str.str().c_str());
+			ioProgress->SetNumProgressBars(1);
+			ioProgress->SetRange(1, 0, nRows);
+			ioProgress->Show();
+		}
+
+		for (long r = lbound; !bAbort && r <= ubound; ++r)
+		{
+			if (ioProgress)
+				ioProgress->StepIt(1);
+
+			long index[2];
+			index[0] = r;
+			index[1] = 0;
+			VARIANT v;
+			dataAll.GetElement(index, &v);
+			COleSafeArray dataRow(v);
+			dim = dataRow.GetDim();
+
+			// Again, should only be one.
+			if (1 == dim)
+			{
+				long lbound2, ubound2;
+				dataRow.GetLBound(1, &lbound2);
+				dataRow.GetUBound(1, &ubound2);
+				long nCols = ubound2 - lbound2 + 1;
+				std::vector<CString> row;
+				row.reserve(nCols);
+				for (long r2 = lbound2; r2 <= ubound2; ++r2)
+				{
+					index[0] = r2;
+					index[1] = 0;
+					VARIANT v2;
+					dataRow.GetElement(index, &v2);
+					CComVariant col(v2);
+					CString str(col);
+					row.push_back(str);
+				}
+				outData.push_back(row);
+			}
+		}
+	}
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////

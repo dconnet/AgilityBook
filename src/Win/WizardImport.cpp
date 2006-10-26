@@ -681,7 +681,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -997,7 +997,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1024,7 +1024,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1063,7 +1063,7 @@ BOOL CWizardImport::OnWizardFinish()
 							errLog << _T("ERROR: Line ")
 								<< nItem + 1
 								<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 								<< static_cast<UINT>(iCol + 1)
 #else
 								<< iCol + 1
@@ -1101,7 +1101,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1128,7 +1128,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1186,7 +1186,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1301,9 +1301,10 @@ void CWizardImport::OnImportFile()
 	if (!UpdateData(TRUE))
 		return;
 	CString filter;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle())
 		filter.LoadString(IDS_FILEEXT_FILTER_MSEXCEL);
+	else if (WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
+		filter.LoadString(IDS_FILEEXT_FILTER_OOCALC);
 	else
 		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
 	CFileDialog file(TRUE, _T(""), _T(""), OFN_FILEMUSTEXIST, filter, this);

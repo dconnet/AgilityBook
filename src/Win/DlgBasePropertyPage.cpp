@@ -49,23 +49,6 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgBasePropertyPage, CPropertyPage)
 
-#if _MSC_VER < 1300
-CDlgBasePropertyPage::CDlgBasePropertyPage(
-		UINT nIDTemplate,
-		UINT nIDCaption)
-	: CPropertyPage(nIDTemplate, nIDCaption)
-{
-	m_psp.dwFlags |= PSP_HASHELP;
-}
-CDlgBasePropertyPage::CDlgBasePropertyPage(
-		LPCTSTR lpszTemplateName,
-		UINT nIDCaption)
-	: CPropertyPage(lpszTemplateName, nIDCaption)
-{
-	m_psp.dwFlags |= PSP_HASHELP;
-}
-
-#else
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		UINT nIDTemplate,
 		UINT nIDCaption,
@@ -104,7 +87,6 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
-#endif
 
 CDlgBasePropertyPage::~CDlgBasePropertyPage()
 {

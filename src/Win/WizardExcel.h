@@ -73,13 +73,11 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			COleVariant const& inData) = 0;
-	virtual bool InsertFormula(
-			long inRowFrom,
-			long inColFrom,
-			long inRowTo,
-			long inColTo,
-			CString const& inFormula) = 0;
+			double inData) = 0;
+	virtual bool InsertData(
+			long inRow,
+			long inCol,
+			CString const& inData) = 0;
 };
 
 /**

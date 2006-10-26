@@ -37,19 +37,11 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "AgilityBookViewHtml.h"
-#if _MSC_VER < 1300
-#include "htmlhelp.h"
-#endif
 
 #include <sstream>
 #include <afxpriv.h> // wm_commandhelp
 #include "comdef.h" // for IHTMLDocument2Ptr
-#if _MSC_VER >= 1300
 #include <atlsafe.h>
-#else
-#include <atlbase.h>
-#include "MSHTML.H"
-#endif
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
@@ -155,29 +147,12 @@ bool CAgilityBookViewHtml::SetHTML(ARBString const& csHTML)
 		if (SUCCEEDED(lpDispatch->QueryInterface(IID_IHTMLDocument2, (LPVOID*)&pDoc2)))
 		{
 			CComBSTR content(csHTML.c_str());
-#if _MSC_VER >= 1300
 			CComSafeArray<VARIANT> sar;
 			if (SUCCEEDED(sar.Create(1, 0)))
 			{
 				bOk = true;
 				sar[0] = content;
 			}
-#else
-			SAFEARRAY* sar = ::SafeArrayCreateVector(VT_VARIANT, 0, 1);
-			VARIANT *pElement = NULL;
-			if (sar)
-			{
-				if (SUCCEEDED(::SafeArrayAccessData(sar, (LPVOID*)&pElement)))
-				{
-					pElement->vt = VT_BSTR;
-					pElement->bstrVal = content;
-					if (SUCCEEDED(SafeArrayUnaccessData(sar)))
-					{
-						bOk = true;
-					}
-				}
-			}
-#endif
 			if (bOk)
 			{
 				bOk = false;
@@ -198,11 +173,6 @@ bool CAgilityBookViewHtml::SetHTML(ARBString const& csHTML)
 				if (lpdRet)
 					lpdRet->Release();
 			}
-#if _MSC_VER >= 1300
-#else
-			if (sar)
-				SafeArrayDestroy(sar);
-#endif
 		}
 		lpDispatch->Release();
 	}
@@ -281,114 +251,6 @@ void CAgilityBookViewHtml::Dump(CDumpContext& dc) const
 	CHtmlView::Dump(dc);
 }
 #endif //_DEBUG
-
-/////////////////////////////////////////////////////////////////////////////
-
-#if _MSC_VER < 1300
-// <q241750>
-
-CString CAgilityBookViewHtml::GetFullName() const
-{
-	ASSERT(m_pBrowserApp != NULL);
-	BSTR bstr;
-	m_pBrowserApp->get_FullName(&bstr);
-	CString retVal(bstr);
-	SysFreeString(bstr); // Added this line to prevent leak.
-	return retVal;
-}
-
-CString CAgilityBookViewHtml::GetType() const
-{
-	ASSERT(m_pBrowserApp != NULL);
-	BSTR bstr;
-	m_pBrowserApp->get_Type(&bstr);
-	CString retVal(bstr);
-	SysFreeString(bstr); // Added this line to prevent leak.
-	return retVal;
-}
-
-CString CAgilityBookViewHtml::GetLocationName() const
-{
-	ASSERT(m_pBrowserApp != NULL);
-	BSTR bstr;
-	m_pBrowserApp->get_LocationName(&bstr);
-	CString retVal(bstr);
-	SysFreeString(bstr); // Added this line to prevent leak.
-	return retVal;
-}
-
-CString CAgilityBookViewHtml::GetLocationURL() const
-{
-	ASSERT(m_pBrowserApp != NULL);
-	BSTR bstr;
-	m_pBrowserApp->get_LocationURL(&bstr);
-	CString retVal(bstr);
-	SysFreeString(bstr); // Added this line to prevent leak.
-	return retVal;
-}
-
-void CAgilityBookViewHtml::Navigate(
-		LPCTSTR lpszURL,
-		DWORD dwFlags,
-		LPCTSTR lpszTargetFrameName,
-		LPCTSTR lpszHeaders,
-		LPVOID lpvPostData,
-		DWORD dwPostDataLen)
-{
-	CString strURL(lpszURL);
-	BSTR bstrURL = strURL.AllocSysString();
-	COleSafeArray vPostData;
-	if (lpvPostData != NULL)
-	{
-		if (dwPostDataLen == 0)
-			dwPostDataLen = lstrlen((LPCTSTR)lpvPostData);
-		vPostData.CreateOneDim(VT_UI1, dwPostDataLen, lpvPostData);
-	}
-	m_pBrowserApp->Navigate(bstrURL,
-			COleVariant((long) dwFlags, VT_I4),
-			COleVariant(lpszTargetFrameName, VT_BSTR),
-			vPostData,
-			COleVariant(lpszHeaders, VT_BSTR));
-	SysFreeString(bstrURL); // Added this line to prevent leak.
-}
-
-BOOL CAgilityBookViewHtml::LoadFromResource(LPCTSTR lpszResource)
-{
-	HINSTANCE hInstance = AfxGetResourceHandle();
-	ASSERT(hInstance != NULL);
-	CString strResourceURL;
-	BOOL bRetVal = TRUE;
-	LPTSTR lpszModule = new TCHAR[_MAX_PATH];
-	if (GetModuleFileName(hInstance, lpszModule, _MAX_PATH))
-	{
-		strResourceURL.Format(_T("res://%s/%s"), lpszModule, lpszResource);
-		Navigate(strResourceURL, 0, 0, 0);
-	}
-	else
-		bRetVal = FALSE;
-	delete [] lpszModule;
-	return bRetVal;
-}
-
-BOOL CAgilityBookViewHtml::LoadFromResource(UINT nRes)
-{
-	HINSTANCE hInstance = AfxGetResourceHandle();
-	ASSERT(hInstance != NULL);
-	CString strResourceURL;
-	BOOL bRetVal = TRUE;
-	LPTSTR lpszModule = new TCHAR[_MAX_PATH];
-	if (GetModuleFileName(hInstance, lpszModule, _MAX_PATH))
-	{
-		strResourceURL.Format(_T("res://%s/%d"), lpszModule, nRes);
-		Navigate(strResourceURL, 0, 0, 0);
-	}
-	else
-		bRetVal = FALSE;
-	delete [] lpszModule;
-	return bRetVal;
-}
-
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 

@@ -52,9 +52,6 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookTree.h"
-#if _MSC_VER < 1300
-#include "htmlhelp.h"
-#endif
 
 #include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookOptions.h"

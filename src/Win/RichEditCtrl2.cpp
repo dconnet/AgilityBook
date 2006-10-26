@@ -68,7 +68,6 @@ BOOL CRichEditCtrl2::Create(
 	return TRUE;
 }
 
-#if _MSC_VER >= 1300
 BOOL CRichEditCtrl2::CreateEx(
 		DWORD dwExStyle,
 		DWORD dwStyle,
@@ -81,7 +80,6 @@ BOOL CRichEditCtrl2::CreateEx(
 	Setup();
 	return TRUE;
 }
-#endif
 
 void CRichEditCtrl2::PreSubclassWindow()
 {
@@ -95,12 +93,7 @@ void CRichEditCtrl2::Setup()
 	if (GetStyle() & ES_READONLY)
 		SetBackgroundColor(FALSE, ::GetSysColor(COLOR_3DFACE));
 	SetEventMask(GetEventMask() | ENM_LINK);
-#if _MSC_VER < 1300
-	ASSERT(::IsWindow(m_hWnd));
-	::SendMessage(m_hWnd, EM_AUTOURLDETECT, static_cast<WPARAM>(TRUE), 0);
-#else
 	SetAutoURLDetect(TRUE);
-#endif
 }
 
 void CRichEditCtrl2::OnEnLink(
