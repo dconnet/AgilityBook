@@ -659,6 +659,9 @@
 				RelativePath="..\..\Win\DlgTrial.h">
 			</File>
 			<File
+				RelativePath="..\..\Win\excel8.h">
+			</File>
+			<File
 				RelativePath="..\..\Win\FilterOptions.h">
 			</File>
 			<File
@@ -678,6 +681,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\NoteButton.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\ooCalc.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\PointsData.h">

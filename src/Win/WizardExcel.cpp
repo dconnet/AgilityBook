@@ -41,6 +41,7 @@
 #include "DlgProgress.h"
 
 #include "excel8.h"
+#include "ooCalc.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -238,272 +239,6 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// Wrappers for OOCalc IDispatch
-
-class CComRangeDriver : public CComDispatchDriver
-{
-public:
-	CComRangeDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	bool setValue(double val)
-	{
-		if (!*this)
-			return false;
-		CComVariant var(val);
-		CComVariant result;
-		return SUCCEEDED(Invoke1(L"setValue", &var, &result));
-	}
-
-	bool setFormula(CString const& val)
-	{
-		if (!*this)
-			return false;
-		CComVariant var(val);
-		CComVariant result;
-		return SUCCEEDED(Invoke1(L"setFormula", &var, &result));
-	}
-
-	CComDispatchDriver getColumns()
-	{
-		CComDispatchDriver columns;
-		if (*this)
-		{
-			// XTableColumns
-			CComVariant result;
-			if (SUCCEEDED(Invoke0(L"getColumns", &result)))
-				columns = result.pdispVal;
-		}
-		return columns;
-	}
-
-
-	bool setDataArray(COleSafeArray& arr)
-	{
-		if (!*this)
-			return false;
-		CComVariant values(arr);
-		arr.Detach();
-		CComVariant result;
-		return SUCCEEDED(Invoke1(L"setDataArray", &values, &result));
-	}
-};
-
-class CComCursorDriver : public CComDispatchDriver
-{
-public:
-	CComCursorDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	bool gotoStartOfUsedArea(bool b)
-	{
-		CComVariant param(b);
-		CComVariant result;
-		if (!SUCCEEDED(Invoke1(L"gotoStartOfUsedArea", &param, &result)))
-			return false;
-		return true;
-	}
-
-	bool gotoEndOfUsedArea(bool b)
-	{
-		CComVariant param(b);
-		CComVariant result;
-		if (!SUCCEEDED(Invoke1(L"gotoEndOfUsedArea", &param, &result)))
-			return false;
-		return true;
-	}
-
-	COleSafeArray getDataArray()
-	{
-		COleSafeArray data;
-		VARIANT var;
-		if (SUCCEEDED(Invoke0(L"getDataArray", &var)))
-			data.Attach(var);
-		return data;
-	}
-};
-
-class CComWorksheetDriver : public CComDispatchDriver
-{
-public:
-	CComWorksheetDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	CComCursorDriver createCursor()
-	{
-		CComCursorDriver cursor;
-		if (*this)
-		{
-			CComVariant result;
-			if (SUCCEEDED(Invoke0(L"createCursor", &result)))
-				cursor = result.pdispVal;
-		}
-		return cursor;
-	}
-
-	CComRangeDriver getCellByPosition(long nCol, long nRow)
-	{
-		CComRangeDriver range;
-		if (*this)
-		{
-			CComVariant col(nCol);
-			CComVariant row(nRow);
-			CComVariant result;
-			if (SUCCEEDED(Invoke2(L"getCellByPosition", &col, &row, &result)))
-				range = result.pdispVal;
-		}
-		return range;
-	}
-
-	CComRangeDriver getCellRangeByPosition(long left, long top, long right, long bottom)
-	{
-		CComRangeDriver range;
-		if (*this)
-		{
-			VARIANT params[4];
-			for (int i = 0; i < 4; ++i)
-				VariantInit(&params[i]);
-			params[3].vt = VT_I4; //left
-			params[3].lVal = left;
-			params[2].vt = VT_I4; //top
-			params[2].lVal = top;
-			params[1].vt = VT_I4; //right
-			params[1].lVal = right;
-			params[0].vt = VT_I4; //bottom
-			params[0].lVal = bottom;
-
-			CComVariant result;
-			if (SUCCEEDED(InvokeN(L"getCellRangeByPosition", params, 4, &result)))
-				range = result.pdispVal;
-		}
-		return range;
-	}
-};
-
-class CComDocumentDriver : public CComDispatchDriver
-{
-public:
-	CComDocumentDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	CComWorksheetDriver getSheet(int index)
-	{
-		CComWorksheetDriver worksheet;
-		if (*this)
-		{
-			CComVariant result;
-			HRESULT hr = Invoke0(L"getSheets", &result);
-			if (SUCCEEDED(hr))
-			{
-				// XSpreadsheets
-				CComDispatchDriver sheets = result.pdispVal;
-				CComVariant sheet(index);
-				hr = sheets.Invoke1(L"getByIndex", &sheet, &result);
-				if (SUCCEEDED(hr))
-				{
-					// XSpreadsheet
-					worksheet = result.pdispVal;
-				}
-			}
-		}
-		return worksheet;
-	}
-
-	void dispose()
-	{
-		if (*this)
-		{
-			CComVariant result;
-			Invoke0(L"dispose", &result);
-		}
-	}
-};
-
-class CComDesktopDriver : public CComDispatchDriver
-{
-public:
-	CComDesktopDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	CComDocumentDriver loadComponentFromURL(CComVariant param1)
-	{
-		CComDocumentDriver document;
-		if (*this)
-		{
-			CComVariant param2(L"_blank");
-			VARIANT params[4];
-			int i;
-			for (i = 0; i < 4; ++i)
-				VariantInit(&params[i]);
-			params[3].vt = param1.vt;
-			params[3].bstrVal = param1.bstrVal;
-			params[2].vt = param1.vt;
-			params[2].bstrVal = param2.bstrVal;
-			params[1].vt = VT_I4;
-			params[1].lVal = 0;
-			params[0].vt = VT_ARRAY | VT_VARIANT;
-			params[0].parray = NULL;
-			CComVariant result;
-			HRESULT hr = InvokeN(L"loadComponentFromURL", params, 4, &result);
-			if (SUCCEEDED(hr))
-			{
-				// ::com::sun::star::sheet::
-				// XSpreadsheetDocument
-				document = result.pdispVal;
-			}
-			for (i = 0; i < 4; ++i)
-				VariantClear(&params[i]);
-		}
-		return document;
-	}
-};
-
-class CComManagerDriver : public CComDispatchDriver
-{
-public:
-	CComManagerDriver()
-	{
-	}
-
-	CComManagerDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	CComDesktopDriver createDesktop()
-	{
-		CComDesktopDriver desktop;
-		CComVariant param1(L"com.sun.star.frame.Desktop");
-		CComVariant result;
-		if (SUCCEEDED(Invoke1(L"createInstance", &param1, &result)))
-		{
-			desktop = result.pdispVal;
-		}
-		if (!desktop)
-		{
-			Release();
-		}
-		return desktop;
-	}
-};
-
-/////////////////////////////////////////////////////////////////////////////
 
 class CWizardCalc : public IWizardSpreadSheet
 {
@@ -517,20 +252,20 @@ public:
 	virtual IWizardImporterPtr GetImporter() const;
 
 private:
-	mutable CComManagerDriver m_Manager;
-	mutable CComDesktopDriver m_Desktop;
+	mutable ooCalc::CComManagerDriver m_Manager;
+	mutable ooCalc::CComDesktopDriver m_Desktop;
 };
 
 class CWizardCalcExport : public CWizardBaseExport
 {
 protected:
 	CWizardCalcExport(
-			CComManagerDriver& ioManager,
-			CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager,
+			ooCalc::CComDesktopDriver& ioDesktop);
 public:
 	static CWizardCalcExport* Create(
-			CComManagerDriver& ioManager,
-			CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager,
+			ooCalc::CComDesktopDriver& ioDesktop);
 	virtual ~CWizardCalcExport();
 
 	// Copy the safe array to excel (safe array is reset)
@@ -548,24 +283,24 @@ public:
 			CString const& inData);
 
 private:
-	CComWorksheetDriver GetWorksheet();
+	ooCalc::CComWorksheetDriver GetWorksheet();
 
-	CComManagerDriver& m_Manager;
-	CComDesktopDriver& m_Desktop;
-	CComDocumentDriver m_Document;
-	CComWorksheetDriver m_Worksheet;
+	ooCalc::CComManagerDriver& m_Manager;
+	ooCalc::CComDesktopDriver& m_Desktop;
+	ooCalc::CComDocumentDriver m_Document;
+	ooCalc::CComWorksheetDriver m_Worksheet;
 };
 
 class CWizardCalcImport : public CWizardBaseImport
 {
 protected:
 	CWizardCalcImport(
-			CComManagerDriver& ioManager,
-			CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager,
+			ooCalc::CComDesktopDriver& ioDesktop);
 public:
 	static CWizardCalcImport* Create(
-			CComManagerDriver& ioManager,
-			CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager,
+			ooCalc::CComDesktopDriver& ioDesktop);
 	virtual ~CWizardCalcImport();
 
 	virtual bool OpenFile(CString const& inFilename);
@@ -574,10 +309,10 @@ public:
 			IDlgProgress* ioProgress);
 
 private:
-	CComManagerDriver& m_Manager;
-	CComDesktopDriver& m_Desktop;
-	CComDocumentDriver m_Document;
-	CComWorksheetDriver m_Worksheet;
+	ooCalc::CComManagerDriver& m_Manager;
+	ooCalc::CComDesktopDriver& m_Desktop;
+	ooCalc::CComDocumentDriver m_Document;
+	ooCalc::CComWorksheetDriver m_Worksheet;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -883,15 +618,15 @@ IWizardImporterPtr CWizardCalc::GetImporter() const
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcExport* CWizardCalcExport::Create(
-		CComManagerDriver& ioManager,
-		CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager,
+		ooCalc::CComDesktopDriver& ioDesktop)
 {
 	return new CWizardCalcExport(ioManager, ioDesktop);
 }
 
 CWizardCalcExport::CWizardCalcExport(
-		CComManagerDriver& ioManager,
-		CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager,
+		ooCalc::CComDesktopDriver& ioDesktop)
 	: CWizardBaseExport(true)
 	, m_Manager(ioManager)
 	, m_Desktop(ioDesktop)
@@ -902,7 +637,7 @@ CWizardCalcExport::~CWizardCalcExport()
 {
 }
 
-CComWorksheetDriver CWizardCalcExport::GetWorksheet()
+ooCalc::CComWorksheetDriver CWizardCalcExport::GetWorksheet()
 {
 	if (!m_Document)
 	{
@@ -923,13 +658,13 @@ bool CWizardCalcExport::ExportDataArray(
 	if (!ArrayOkay())
 		return false;
 
-	CComWorksheetDriver worksheet = GetWorksheet();
+	ooCalc::CComWorksheetDriver worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
 
 	AllowAccess(false);
 
-	CComRangeDriver range = worksheet.getCellRangeByPosition(
+	ooCalc::ooXCellRange range = worksheet.getCellRangeByPosition(
 			inColLeft, inRowTop,
 			inColLeft + m_Cols - 1, inRowTop + m_Rows - 1);
 	if (!range)
@@ -959,11 +694,11 @@ bool CWizardCalcExport::InsertData(
 		long nCol,
 		double inData)
 {
-	CComWorksheetDriver worksheet = GetWorksheet();
+	ooCalc::CComWorksheetDriver worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
 
-	CComRangeDriver range = worksheet.getCellByPosition(nCol, nRow);
+	ooCalc::ooXCellRange range = worksheet.getCellByPosition(nCol, nRow);
 	if (!range)
 		return false;
 	return range.setValue(inData);
@@ -974,11 +709,11 @@ bool CWizardCalcExport::InsertData(
 		long nCol,
 		CString const& inData)
 {
-	CComWorksheetDriver worksheet = GetWorksheet();
+	ooCalc::CComWorksheetDriver worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
 
-	CComRangeDriver range = worksheet.getCellByPosition(nCol, nRow);
+	ooCalc::ooXCellRange range = worksheet.getCellByPosition(nCol, nRow);
 	if (!range)
 		return false;
 	return range.setFormula(inData);
@@ -987,15 +722,15 @@ bool CWizardCalcExport::InsertData(
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcImport* CWizardCalcImport::Create(
-		CComManagerDriver& ioManager,
-		CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager,
+		ooCalc::CComDesktopDriver& ioDesktop)
 {
 	return new CWizardCalcImport(ioManager, ioDesktop);
 }
 
 CWizardCalcImport::CWizardCalcImport(
-		CComManagerDriver& ioManager,
-		CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager,
+		ooCalc::CComDesktopDriver& ioDesktop)
 	: m_Manager(ioManager)
 	, m_Desktop(ioDesktop)
 {
@@ -1032,8 +767,7 @@ bool CWizardCalcImport::GetData(
 	if (!m_Worksheet)
 		return false;
 
-	// XSheetCellCursor
-	CComCursorDriver cursor = m_Worksheet.createCursor();
+	ooCalc::ooXSheetCellCursor cursor = m_Worksheet.createCursor();
 	if (cursor)
 	{
 		// Set up the data area
