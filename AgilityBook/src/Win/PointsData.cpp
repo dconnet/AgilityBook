@@ -232,9 +232,13 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 		data << _T("<h1 align=\"center\">Titling Points ")
 			<< ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
 			<< _T("</h1>")
-			<< _T("<h1><a href=\"")
-			<< ARB_PROTOCOL << nCurLine << _T("\">")
-			<< m_pDog->GetCallName()
+			<< _T("<h1><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+			<< static_cast<UINT>(nCurLine)
+#else
+			<< nCurLine
+#endif
+			<< _T("\">") << m_pDog->GetCallName()
 			<< _T("</a> [")
 			<< m_pDog->GetRegisteredName()
 			<< _T("] ")
@@ -309,9 +313,13 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 	if (m_pVenue)
 	{
 		data << _T("<h2>") << OnNeedText(0)
-			<< _T(" <a href=\"")
-			<< ARB_PROTOCOL << nCurLine << _T("\">")
-			<< OnNeedText(1) << _T("</a>") << std::endl
+			<< _T(" <a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+			<< static_cast<UINT>(nCurLine)
+#else
+			<< nCurLine
+#endif
+			<< _T("\">") << OnNeedText(1) << _T("</a>") << std::endl
 			<< _T("</h2>") << std::endl;
 	}
 	return data.str();
@@ -389,9 +397,13 @@ ARBString CPointsDataTitle::GetHtml(size_t nCurLine) const
 	{
 		data << _T("<tr>") << std::endl
 			<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
-			<< _T("<td><a href=\"")
-			<< ARB_PROTOCOL << nCurLine << _T("\">")
-			<< OnNeedText(2) << _T("</a></td>") << std::endl
+			<< _T("<td><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+			<< static_cast<UINT>(nCurLine)
+#else
+			<< nCurLine
+#endif
+			<< _T("\">") << OnNeedText(2) << _T("</a></td>") << std::endl
 			<< _T("</tr>") << std::endl;
 	}
 	return data.str();
@@ -500,9 +512,13 @@ ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
 		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
 		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
 		<< _T("<td>") << OnNeedText(3) << _T("</td>") << std::endl
-		<< _T("<td><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
-		<< OnNeedText(4) << _T("</a></td>") << std::endl
+		<< _T("<td><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">") << OnNeedText(4) << _T("</a></td>") << std::endl
 		<< _T("<td>") << OnNeedText(5) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\">") << OnNeedText(6) << _T("</td>") << std::endl
 		<< _T("<td>") << OnNeedText(7) << _T("</td>") << std::endl
@@ -593,9 +609,13 @@ ARBString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 	data << _T("<tr><td>&nbsp;</td</tr>") << std::endl
 		<< _T("<tr>") << std::endl
 		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
-		<< OnNeedText(2) << _T("</a></td>") << std::endl
+		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">") << OnNeedText(2) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -729,8 +749,13 @@ ARBString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td colspan=\"6\"/>") << std::endl
-		<< _T("<td><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
+		<< _T("<td><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">")
 		<< OnNeedText(7) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
@@ -851,8 +876,13 @@ ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
+		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">")
 		<< OnNeedText(2) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
@@ -910,8 +940,13 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
 		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
+		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">")
 		<< OnNeedText(3) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
@@ -969,8 +1004,13 @@ ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
 		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
+		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">")
 		<< OnNeedText(3) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
@@ -1034,8 +1074,13 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) cons
 		<< _T("<td/>") << std::endl
 		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
 		<< _T("<td>") << OnNeedText(3) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"")
-		<< ARB_PROTOCOL << nCurLine << _T("\">")
+		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+#if _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<UINT>(nCurLine)
+#else
+		<< nCurLine
+#endif
+		<< _T("\">")
 		<< OnNeedText(4) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();

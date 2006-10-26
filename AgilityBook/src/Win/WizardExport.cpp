@@ -1184,13 +1184,20 @@ BOOL CWizardExport::OnWizardFinish()
 						pExporter->InsertArrayData(i, iCol, line);
 					}
 				}
-				pExporter->ExportDataArray();
+				if (!pExporter->ExportDataArray())
+				{
+					AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
+				}
+			}
+			else
+			{
+				AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
 			}
 			return CDlgBasePropertyPage::OnWizardFinish();
 		}
 		else
 		{
-			AfxMessageBox(_T("Failed to write data"));
+			AfxMessageBox(_T("Failed to export data"));
 			return FALSE;
 		}
 	}

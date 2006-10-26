@@ -100,12 +100,7 @@ void CDlgSelectURL::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
-#if _MSC_VER >= 1300
 	m_Name.Trim();
-#else
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-#endif
 	UpdateData(FALSE);
 	CDlgBaseDialog::OnOK();
 }

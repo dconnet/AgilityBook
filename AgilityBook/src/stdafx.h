@@ -43,12 +43,7 @@
 
 // VC6
 #if _MSC_VER < 1300
-#if defined(UNICODE) || defined(_UNICODE)
-	#error In order to compile with UNICODE in VC6, the code needs a lot of work!
-#endif
-// Turn off some warnings in vc6.
-#pragma warning ( disable : 4503 )	// 'identifier' : decorated name length exceeded, name was truncated
-#pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
+	#error VC6 is no longer supported due to differences in ATL.
 
 // VC7
 #elif _MSC_VER >= 1300 && _MSC_VER < 1400
@@ -117,13 +112,6 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
-
-// Some minor tweaks to allow VC6 support while using new features.
-#if _MSC_VER < 1300
-#define CStringA CString
-typedef DWORD DWORD_PTR;
-#define _tstol _ttol
-#endif
 
 #else
 
