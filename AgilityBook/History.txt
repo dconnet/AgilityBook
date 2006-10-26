@@ -1,9 +1,11 @@
-10/23/2006: v1.7.6.12 <in development>
+10/25/2006: v1.7.6.12 <in development>
 - Bumped to Configuration v17:
   - Updated USDAA Performance Pairs for titling in 2007.
   - Updated TDAA website link.
 - New features / Enhancements:
   - Add an HTML view for points (still in process)
+  - Added support for OpenOffice Calc in the same manner as MS Excel.
+  - Removed Visual Studio 6 support. (Ran into too many ATL differences)
 - Bug fixes
   - Properly test the size of the screen so 800x600 doesn't complain.
   - Modify links in the help file so they open in an external browser.
