@@ -253,19 +253,16 @@ public:
 
 private:
 	mutable ooCalc::CComManagerDriver m_Manager;
-	mutable ooCalc::CComDesktopDriver m_Desktop;
 };
 
 class CWizardCalcExport : public CWizardBaseExport
 {
 protected:
 	CWizardCalcExport(
-			ooCalc::CComManagerDriver& ioManager,
-			ooCalc::CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager);
 public:
 	static CWizardCalcExport* Create(
-			ooCalc::CComManagerDriver& ioManager,
-			ooCalc::CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager);
 	virtual ~CWizardCalcExport();
 
 	// Copy the safe array to excel (safe array is reset)
@@ -283,24 +280,21 @@ public:
 			CString const& inData);
 
 private:
-	ooCalc::CComWorksheetDriver GetWorksheet();
+	ooCalc::ooXSpreadsheet GetWorksheet();
 
 	ooCalc::CComManagerDriver& m_Manager;
-	ooCalc::CComDesktopDriver& m_Desktop;
-	ooCalc::CComDocumentDriver m_Document;
-	ooCalc::CComWorksheetDriver m_Worksheet;
+	ooCalc::ooXSpreadsheetDocument m_Document;
+	ooCalc::ooXSpreadsheet m_Worksheet;
 };
 
 class CWizardCalcImport : public CWizardBaseImport
 {
 protected:
 	CWizardCalcImport(
-			ooCalc::CComManagerDriver& ioManager,
-			ooCalc::CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager);
 public:
 	static CWizardCalcImport* Create(
-			ooCalc::CComManagerDriver& ioManager,
-			ooCalc::CComDesktopDriver& ioDesktop);
+			ooCalc::CComManagerDriver& ioManager);
 	virtual ~CWizardCalcImport();
 
 	virtual bool OpenFile(CString const& inFilename);
@@ -310,9 +304,8 @@ public:
 
 private:
 	ooCalc::CComManagerDriver& m_Manager;
-	ooCalc::CComDesktopDriver& m_Desktop;
-	ooCalc::CComDocumentDriver m_Document;
-	ooCalc::CComWorksheetDriver m_Worksheet;
+	ooCalc::ooXSpreadsheetDocument m_Document;
+	ooCalc::ooXSpreadsheet m_Worksheet;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -595,9 +588,7 @@ CWizardCalc* CWizardCalc::Create()
 
 CWizardCalc::CWizardCalc()
 {
-	if (SUCCEEDED(m_Manager.CoCreateInstance(L"com.sun.star.ServiceManager")))
-		m_Desktop = m_Manager.createDesktop();
-	else
+	if (!SUCCEEDED(m_Manager.CoCreateInstance(L"com.sun.star.ServiceManager")))
 		m_Manager.Release();
 }
 
@@ -607,29 +598,26 @@ CWizardCalc::~CWizardCalc()
 
 IWizardExporterPtr CWizardCalc::GetExporter() const
 {
-	return IWizardExporterPtr(CWizardCalcExport::Create(m_Manager, m_Desktop));
+	return IWizardExporterPtr(CWizardCalcExport::Create(m_Manager));
 }
 
 IWizardImporterPtr CWizardCalc::GetImporter() const
 {
-	return IWizardImporterPtr(CWizardCalcImport::Create(m_Manager, m_Desktop));
+	return IWizardImporterPtr(CWizardCalcImport::Create(m_Manager));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcExport* CWizardCalcExport::Create(
-		ooCalc::CComManagerDriver& ioManager,
-		ooCalc::CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager)
 {
-	return new CWizardCalcExport(ioManager, ioDesktop);
+	return new CWizardCalcExport(ioManager);
 }
 
 CWizardCalcExport::CWizardCalcExport(
-		ooCalc::CComManagerDriver& ioManager,
-		ooCalc::CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager)
 	: CWizardBaseExport(true)
 	, m_Manager(ioManager)
-	, m_Desktop(ioDesktop)
 {
 }
 
@@ -637,12 +625,12 @@ CWizardCalcExport::~CWizardCalcExport()
 {
 }
 
-ooCalc::CComWorksheetDriver CWizardCalcExport::GetWorksheet()
+ooCalc::ooXSpreadsheet CWizardCalcExport::GetWorksheet()
 {
 	if (!m_Document)
 	{
 		CComVariant param1(L"private:factory/scalc");
-		m_Document = m_Desktop.loadComponentFromURL(param1);
+		m_Document = m_Manager.loadComponentFromURL(param1);
 	}
 	if (!m_Worksheet)
 	{
@@ -658,7 +646,7 @@ bool CWizardCalcExport::ExportDataArray(
 	if (!ArrayOkay())
 		return false;
 
-	ooCalc::CComWorksheetDriver worksheet = GetWorksheet();
+	ooCalc::ooXSpreadsheet worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
 
@@ -694,14 +682,14 @@ bool CWizardCalcExport::InsertData(
 		long nCol,
 		double inData)
 {
-	ooCalc::CComWorksheetDriver worksheet = GetWorksheet();
+	ooCalc::ooXSpreadsheet worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
 
-	ooCalc::ooXCellRange range = worksheet.getCellByPosition(nCol, nRow);
-	if (!range)
+	ooCalc::ooXCell cell = worksheet.getCellByPosition(nCol, nRow);
+	if (!cell)
 		return false;
-	return range.setValue(inData);
+	return cell.setValue(inData);
 }
 
 bool CWizardCalcExport::InsertData(
@@ -709,30 +697,27 @@ bool CWizardCalcExport::InsertData(
 		long nCol,
 		CString const& inData)
 {
-	ooCalc::CComWorksheetDriver worksheet = GetWorksheet();
+	ooCalc::ooXSpreadsheet worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
 
-	ooCalc::ooXCellRange range = worksheet.getCellByPosition(nCol, nRow);
-	if (!range)
+	ooCalc::ooXCell cell = worksheet.getCellByPosition(nCol, nRow);
+	if (!cell)
 		return false;
-	return range.setFormula(inData);
+	return cell.setFormula(inData);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CWizardCalcImport* CWizardCalcImport::Create(
-		ooCalc::CComManagerDriver& ioManager,
-		ooCalc::CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager)
 {
-	return new CWizardCalcImport(ioManager, ioDesktop);
+	return new CWizardCalcImport(ioManager);
 }
 
 CWizardCalcImport::CWizardCalcImport(
-		ooCalc::CComManagerDriver& ioManager,
-		ooCalc::CComDesktopDriver& ioDesktop)
+		ooCalc::CComManagerDriver& ioManager)
 	: m_Manager(ioManager)
-	, m_Desktop(ioDesktop)
 {
 }
 
@@ -749,7 +734,7 @@ bool CWizardCalcImport::OpenFile(CString const& inFilename)
 		fileName.Replace(_T("\\"), _T("/"));
 		fileName = _T("file:///") + fileName;
 		CComVariant param1(fileName);
-		m_Document = m_Desktop.loadComponentFromURL(param1);
+		m_Document = m_Manager.loadComponentFromURL(param1);
 	}
 	if (!m_Worksheet)
 		m_Worksheet = m_Document.getSheet(0);
