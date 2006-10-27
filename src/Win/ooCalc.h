@@ -34,6 +34,11 @@
  * @li 2006-10-26 DRC Created
  */
 
+//XComponent
+//	void				dispose()
+//	void				addEventListener([in]XEventListener xListener)
+//	void				removeEventListener([in]XEventListener xListener)
+//
 //XIndexAccess : XElementAccess
 //	long				getCount()
 //	any					getByIndex([in]long nIndex)
@@ -122,6 +127,38 @@
 namespace ooCalc
 {
 
+// XCell
+class ooXCell : public CComDispatchDriver
+{
+public:
+	ooXCell& operator=(IDispatch* rhs)
+	{
+		CComDispatchDriver::operator=(rhs);
+		return *this;
+	}
+
+	//string				getFormula()
+	bool setFormula(CString const& val)
+	{
+		if (!*this)
+			return false;
+		CComVariant var(val);
+		CComVariant result;
+		return SUCCEEDED(Invoke1(L"setFormula", &var, &result));
+	}
+	//double				getValue()
+	bool setValue(double val)
+	{
+		if (!*this)
+			return false;
+		CComVariant var(val);
+		CComVariant result;
+		return SUCCEEDED(Invoke1(L"setValue", &var, &result));
+	}
+	//CellContentType		getType()
+	//long				getError()
+};
+
 // XCellRange
 class ooXCellRange : public CComDispatchDriver
 {
@@ -132,37 +169,20 @@ public:
 		return *this;
 	}
 
+	//part of XColumnRowRange
 	CComDispatchDriver getColumns()
 	{
+		// XTableColumns
 		CComDispatchDriver columns;
 		if (*this)
 		{
-			// XTableColumns
 			CComVariant result;
 			if (SUCCEEDED(Invoke0(L"getColumns", &result)))
 				columns = result.pdispVal;
 		}
 		return columns;
 	}
-
-	bool setValue(double val)
-	{
-		if (!*this)
-			return false;
-		CComVariant var(val);
-		CComVariant result;
-		return SUCCEEDED(Invoke1(L"setValue", &var, &result));
-	}
-
-	bool setFormula(CString const& val)
-	{
-		if (!*this)
-			return false;
-		CComVariant var(val);
-		CComVariant result;
-		return SUCCEEDED(Invoke1(L"setFormula", &var, &result));
-	}
-
+	//part of XCellRangeData
 	bool setDataArray(COleSafeArray& arr)
 	{
 		if (!*this)
@@ -184,6 +204,7 @@ public:
 		return *this;
 	}
 
+	//part of XUsedAreaCursor
 	bool gotoStartOfUsedArea(bool b)
 	{
 		CComVariant param(b);
@@ -192,7 +213,7 @@ public:
 			return false;
 		return true;
 	}
-
+	//part of XUsedAreaCursor
 	bool gotoEndOfUsedArea(bool b)
 	{
 		CComVariant param(b);
@@ -201,7 +222,7 @@ public:
 			return false;
 		return true;
 	}
-
+	//part of XCellRangeData
 	COleSafeArray getDataArray()
 	{
 		COleSafeArray data;
@@ -212,15 +233,17 @@ public:
 	}
 };
 
-class CComWorksheetDriver : public CComDispatchDriver
+// XSpreadsheet
+class ooXSpreadsheet : public CComDispatchDriver
 {
 public:
-	CComWorksheetDriver& operator=(IDispatch* rhs)
+	ooXSpreadsheet& operator=(IDispatch* rhs)
 	{
 		CComDispatchDriver::operator=(rhs);
 		return *this;
 	}
 
+	//part of XSpreadsheet
 	ooXSheetCellCursor createCursor()
 	{
 		ooXSheetCellCursor cursor;
@@ -232,21 +255,21 @@ public:
 		}
 		return cursor;
 	}
-
-	ooXCellRange getCellByPosition(long nCol, long nRow)
+	//part of XCellRange
+	ooXCell getCellByPosition(long nCol, long nRow)
 	{
-		ooXCellRange range;
+		ooXCell cell;
 		if (*this)
 		{
 			CComVariant col(nCol);
 			CComVariant row(nRow);
 			CComVariant result;
 			if (SUCCEEDED(Invoke2(L"getCellByPosition", &col, &row, &result)))
-				range = result.pdispVal;
+				cell = result.pdispVal;
 		}
-		return range;
+		return cell;
 	}
-
+	//part of XCellRange
 	ooXCellRange getCellRangeByPosition(long left, long top, long right, long bottom)
 	{
 		ooXCellRange range;
@@ -263,7 +286,6 @@ public:
 			params[1].lVal = right;
 			params[0].vt = VT_I4; //bottom
 			params[0].lVal = bottom;
-
 			CComVariant result;
 			if (SUCCEEDED(InvokeN(L"getCellRangeByPosition", params, 4, &result)))
 				range = result.pdispVal;
@@ -272,20 +294,22 @@ public:
 	}
 };
 
-class CComDocumentDriver : public CComDispatchDriver
+// XSpreadsheetDocument
+class ooXSpreadsheetDocument : public CComDispatchDriver
 {
 public:
-	CComDocumentDriver& operator=(IDispatch* rhs)
+	ooXSpreadsheetDocument& operator=(IDispatch* rhs)
 	{
 		CComDispatchDriver::operator=(rhs);
 		return *this;
 	}
 
-	CComWorksheetDriver getSheet(int index)
+	ooXSpreadsheet getSheet(int index)
 	{
-		CComWorksheetDriver worksheet;
+		ooXSpreadsheet worksheet;
 		if (*this)
 		{
+			//part of XSpreadsheetDocument
 			CComVariant result;
 			HRESULT hr = Invoke0(L"getSheets", &result);
 			if (SUCCEEDED(hr))
@@ -293,17 +317,17 @@ public:
 				// XSpreadsheets
 				CComDispatchDriver sheets = result.pdispVal;
 				CComVariant sheet(index);
+				//part of XIndexAccess
 				hr = sheets.Invoke1(L"getByIndex", &sheet, &result);
 				if (SUCCEEDED(hr))
 				{
-					// XSpreadsheet
 					worksheet = result.pdispVal;
 				}
 			}
 		}
 		return worksheet;
 	}
-
+	//part of XComponent
 	void dispose()
 	{
 		if (*this)
@@ -314,19 +338,39 @@ public:
 	}
 };
 
-class CComDesktopDriver : public CComDispatchDriver
+// This class is actually wrapping 2 things
+// "com.sun.star.ServiceManager"
+// "com.sun.star.frame.Desktop"
+class CComManagerDriver : public CComDispatchDriver
 {
 public:
-	CComDesktopDriver& operator=(IDispatch* rhs)
+	CComManagerDriver& operator=(IDispatch* rhs)
 	{
 		CComDispatchDriver::operator=(rhs);
 		return *this;
 	}
 
-	CComDocumentDriver loadComponentFromURL(CComVariant param1)
+	HRESULT CoCreateInstance(LPCOLESTR manager)
 	{
-		CComDocumentDriver document;
-		if (*this)
+		HRESULT hr = CComDispatchDriver::CoCreateInstance(manager);
+		if (SUCCEEDED(hr))
+		{
+			CComVariant param1(L"com.sun.star.frame.Desktop");
+			CComVariant result;
+			hr = Invoke1(L"createInstance", &param1, &result);
+			if (SUCCEEDED(hr))
+			{
+				m_Desktop = result.pdispVal;
+			}
+		}
+		return hr;
+	}
+
+	//part of XComponentLoader
+	ooXSpreadsheetDocument loadComponentFromURL(CComVariant param1)
+	{
+		ooXSpreadsheetDocument document;
+		if (*this && m_Desktop)
 		{
 			CComVariant param2(L"_blank");
 			VARIANT params[4];
@@ -342,9 +386,10 @@ public:
 			params[0].vt = VT_ARRAY | VT_VARIANT;
 			params[0].parray = NULL;
 			CComVariant result;
-			HRESULT hr = InvokeN(L"loadComponentFromURL", params, 4, &result);
+			HRESULT hr = m_Desktop.InvokeN(L"loadComponentFromURL", params, 4, &result);
 			if (SUCCEEDED(hr))
 			{
+				// technically, it returns an XComponent
 				// ::com::sun::star::sheet::
 				// XSpreadsheetDocument
 				document = result.pdispVal;
@@ -354,36 +399,9 @@ public:
 		}
 		return document;
 	}
-};
 
-class CComManagerDriver : public CComDispatchDriver
-{
-public:
-	CComManagerDriver()
-	{
-	}
-
-	CComManagerDriver& operator=(IDispatch* rhs)
-	{
-		CComDispatchDriver::operator=(rhs);
-		return *this;
-	}
-
-	CComDesktopDriver createDesktop()
-	{
-		CComDesktopDriver desktop;
-		CComVariant param1(L"com.sun.star.frame.Desktop");
-		CComVariant result;
-		if (SUCCEEDED(Invoke1(L"createInstance", &param1, &result)))
-		{
-			desktop = result.pdispVal;
-		}
-		if (!desktop)
-		{
-			Release();
-		}
-		return desktop;
-	}
+private:
+	CComDispatchDriver m_Desktop;
 };
 
 };
