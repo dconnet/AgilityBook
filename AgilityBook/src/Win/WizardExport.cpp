@@ -55,6 +55,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "DlgAssignColumns.h"
+#include "DlgProgress.h"
 #include "Wizard.h"
 
 #ifdef _DEBUG
@@ -62,6 +63,9 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+// Exporting by array is much faster, but formatting is better by cell.
+//#define EXPORT_BY_ARRAY
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardExport property page
@@ -1173,17 +1177,37 @@ BOOL CWizardExport::OnWizardFinish()
 			pExporter = m_pSheet->CalcHelper()->GetExporter();
 		if (pExporter)
 		{
+			CWaitCursor wait;
+			pExporter->AllowAccess(false);
 			int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
+#ifdef EXPORT_BY_ARRAY
 			if (pExporter->CreateArray(m_ctrlPreview.GetItemCount(), nColumnCount))
 			{
+#else
+			IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
+			pProgress->SetMessage(_T("Exporting..."));
+			pProgress->SetNumProgressBars(1);
+			pProgress->SetRange(1, 0, m_ctrlPreview.GetItemCount() * nColumnCount);
+			pProgress->Show();
+
+#endif
 				for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
 				{
 					for (int iCol = 0; iCol < nColumnCount; ++iCol)
 					{
 						CString line = m_ctrlPreview.GetItemText(i, iCol);
+#ifdef EXPORT_BY_ARRAY
 						pExporter->InsertArrayData(i, iCol, line);
+#else
+						pProgress->StepIt(1);
+						pExporter->InsertData(i, iCol, line);
+						// Calc is started visibly, so steal focus back.
+						if (0 == i && 0 == iCol)
+							pProgress->SetForegroundWindow();
+#endif
 					}
 				}
+#ifdef EXPORT_BY_ARRAY
 				if (!pExporter->ExportDataArray())
 				{
 					AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
@@ -1193,6 +1217,10 @@ BOOL CWizardExport::OnWizardFinish()
 			{
 				AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
 			}
+#else
+			pProgress->Dismiss();
+#endif
+			pExporter->AllowAccess(true);
 			return CDlgBasePropertyPage::OnWizardFinish();
 		}
 		else
@@ -1208,6 +1236,7 @@ BOOL CWizardExport::OnWizardFinish()
 		CFileDialog file(FALSE, _T(""), _T(""), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 		if (IDOK == file.DoModal())
 		{
+			CWaitCursor wait;
 			CStringA filename(file.GetFileName());
 			std::ofstream output(filename, std::ios::out);
 			output.exceptions(std::ios_base::badbit);

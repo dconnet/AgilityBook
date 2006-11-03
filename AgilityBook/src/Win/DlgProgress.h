@@ -74,6 +74,8 @@ public:
 
 	/// Show/hide the dialog.
 	virtual void Show(bool bShow = true) = 0;
+	/// Force dialog to have focus
+	virtual void SetForegroundWindow() = 0;
 	/// Shut down (delete) the dialog.
 	virtual void Dismiss() = 0;
 
