@@ -70,6 +70,24 @@ public:
 			long inColLeft = 0) = 0;
 
 	virtual bool AllowAccess(bool bAllow) = 0;
+
+	virtual bool SetTextColor(
+			long inRow,
+			long inCol,
+			COLORREF inColor) = 0;
+	virtual bool SetBackColor(
+			long inRow,
+			long inCol,
+			COLORREF inColor) = 0;
+	virtual bool SetItalic(
+			long inRow,
+			long inCol,
+			bool bItalic) = 0;
+	virtual bool SetBold(
+			long inRow,
+			long inCol,
+			bool bBold) = 0;
+
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
@@ -78,6 +96,10 @@ public:
 			long inRow,
 			long inCol,
 			CString const& inData) = 0;
+
+	virtual bool AutoFit(
+			long inColFrom,
+			long inColTo) = 0;
 };
 
 /**
