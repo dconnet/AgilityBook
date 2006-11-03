@@ -49,6 +49,10 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+// General note about data and formulas - in both Excel and Calc writing
+// individual cells auto-formats (formulas work) and writing of arrays
+// acts like raw data - even if you call the put_Formula method.
+
 /////////////////////////////////////////////////////////////////////////////
 
 IWizardExporter::~IWizardExporter()
@@ -73,7 +77,6 @@ protected:
 		, m_Rows(0)
 		, m_Cols(0)
 		, covTrue(static_cast<short>(TRUE))
-		, covFalse(static_cast<short>(FALSE))
 		, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
 	{
 	}
@@ -101,7 +104,6 @@ protected:
 	COleSafeArray m_Array;
 	// Commonly used OLE variants.
 	CComVariant covTrue;
-	CComVariant covFalse;
 	CComVariant covOptional;
 };
 
@@ -163,7 +165,6 @@ class CWizardBaseImport : public IWizardImporter
 public:
 	CWizardBaseImport()
 		: covTrue(static_cast<short>(TRUE))
-		, covFalse(static_cast<short>(FALSE))
 		, covOptional(static_cast<long>(DISP_E_PARAMNOTFOUND), VT_ERROR)
 	{
 	}
@@ -172,7 +173,6 @@ protected:
 	CString m_FileName;
 	// Commonly used OLE variants.
 	CComVariant covTrue;
-	CComVariant covFalse;
 	CComVariant covOptional;
 };
 
@@ -207,12 +207,12 @@ public:
 			long inColLeft = 0);
 	virtual bool AllowAccess(bool bAllow);
 	virtual bool InsertData(
-			long nRow,
-			long nCol,
+			long inRow,
+			long inCol,
 			double inData);
 	virtual bool InsertData(
-			long nRow,
-			long nCol,
+			long inRow,
+			long inCol,
 			CString const& inData);
 
 private:
@@ -271,12 +271,12 @@ public:
 			long inColLeft = 0);
 	virtual bool AllowAccess(bool bAllow);
 	virtual bool InsertData(
-			long nRow,
-			long nCol,
+			long inRow,
+			long inCol,
 			double inData);
 	virtual bool InsertData(
-			long nRow,
-			long nCol,
+			long inRow,
+			long inCol,
 			CString const& inData);
 
 private:
@@ -413,8 +413,6 @@ bool CWizardExcelExport::ExportDataArray(
 	if (!IWizardSpreadSheet::GetRowCol(inRowTop + m_Rows - 1, inColLeft + m_Cols - 1, cell2))
 		return false;
 
-	AllowAccess(false);
-
 	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
 	range.put_Value2(CComVariant(m_Array));
 	m_Array.Detach();
@@ -425,7 +423,6 @@ bool CWizardExcelExport::ExportDataArray(
 	cols.AutoFit();
 
 	m_Rows = m_Cols = 0;
-	AllowAccess(true);
 
 	return true;
 }
@@ -434,13 +431,11 @@ bool CWizardExcelExport::AllowAccess(bool bAllow)
 {
 	if (bAllow)
 	{
-		m_App.put_Visible(TRUE);
 		m_App.put_UserControl(TRUE);
+		m_App.put_Visible(TRUE);
 	}
 	else
-	{
 		m_App.put_UserControl(FALSE);
-	}
 	return true;
 }
 
@@ -650,8 +645,6 @@ bool CWizardCalcExport::ExportDataArray(
 	if (!worksheet)
 		return false;
 
-	AllowAccess(false);
-
 	ooCalc::ooXCellRange range = worksheet.getCellRangeByPosition(
 			inColLeft, inRowTop,
 			inColLeft + m_Cols - 1, inRowTop + m_Rows - 1);
@@ -667,7 +660,6 @@ bool CWizardCalcExport::ExportDataArray(
 	columns.PutPropertyByName(L"OptimalWidth", &covTrue);
 
 	m_Rows = m_Cols = 0;
-	AllowAccess(true);
 
 	return true;
 }
@@ -678,30 +670,28 @@ bool CWizardCalcExport::AllowAccess(bool bAllow)
 }
 
 bool CWizardCalcExport::InsertData(
-		long nRow,
-		long nCol,
+		long inRow,
+		long inCol,
 		double inData)
 {
 	ooCalc::ooXSpreadsheet worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
-
-	ooCalc::ooXCell cell = worksheet.getCellByPosition(nCol, nRow);
+	ooCalc::ooXCell cell = worksheet.getCellByPosition(inCol, inRow);
 	if (!cell)
 		return false;
 	return cell.setValue(inData);
 }
 
 bool CWizardCalcExport::InsertData(
-		long nRow,
-		long nCol,
+		long inRow,
+		long inCol,
 		CString const& inData)
 {
 	ooCalc::ooXSpreadsheet worksheet = GetWorksheet();
 	if (!worksheet)
 		return false;
-
-	ooCalc::ooXCell cell = worksheet.getCellByPosition(nCol, nRow);
+	ooCalc::ooXCell cell = worksheet.getCellByPosition(inCol, inRow);
 	if (!cell)
 		return false;
 	return cell.setFormula(inData);

@@ -81,6 +81,8 @@ public:
 
 	/// Show/hide the dialog.
 	virtual void Show(bool bShow = true);
+	/// Force dialog to have focus
+	virtual void SetForegroundWindow();
 	/// Shut down (delete) the dialog.
 	virtual void Dismiss();
 
@@ -263,6 +265,11 @@ bool CDlgProgress::GetPos(
 void CDlgProgress::Show(bool bShow)
 {
 	ShowWindow(bShow ? SW_SHOW : SW_HIDE);
+}
+
+void CDlgProgress::SetForegroundWindow()
+{
+	CDialog::SetForegroundWindow();
 }
 
 void CDlgProgress::Dismiss()
