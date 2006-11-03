@@ -1186,7 +1186,6 @@ BOOL CWizardExport::OnWizardFinish()
 #else
 			IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
 			pProgress->SetMessage(_T("Exporting..."));
-			pProgress->SetNumProgressBars(1);
 			pProgress->SetRange(1, 0, m_ctrlPreview.GetItemCount() * nColumnCount);
 			pProgress->Show();
 
@@ -1199,11 +1198,11 @@ BOOL CWizardExport::OnWizardFinish()
 #ifdef EXPORT_BY_ARRAY
 						pExporter->InsertArrayData(i, iCol, line);
 #else
-						pProgress->StepIt(1);
 						pExporter->InsertData(i, iCol, line);
 						// Calc is started visibly, so steal focus back.
 						if (0 == i && 0 == iCol)
 							pProgress->SetForegroundWindow();
+						pProgress->StepIt(1);
 #endif
 					}
 				}
@@ -1218,9 +1217,15 @@ BOOL CWizardExport::OnWizardFinish()
 				AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
 			}
 #else
+			pExporter->AutoFit(0, nColumnCount-1);
 			pProgress->Dismiss();
 #endif
 			pExporter->AllowAccess(true);
+			// For testing
+			//pExporter->SetBackColor(2,3,RGB(255,0,0));
+			//pExporter->SetTextColor(2,3,RGB(0,255,0));
+			//pExporter->SetItalic(1,1,true);
+			//pExporter->SetBold(1,2,true);
 			return CDlgBasePropertyPage::OnWizardFinish();
 		}
 		else

@@ -205,7 +205,26 @@ public:
 	virtual bool ExportDataArray(
 			long inRowTop = 0,
 			long inColLeft = 0);
+
 	virtual bool AllowAccess(bool bAllow);
+
+	virtual bool SetTextColor(
+			long inRow,
+			long inCol,
+			COLORREF inColor);
+	virtual bool SetBackColor(
+			long inRow,
+			long inCol,
+			COLORREF inColor);
+	virtual bool SetItalic(
+			long inRow,
+			long inCol,
+			bool bItalic);
+	virtual bool SetBold(
+			long inRow,
+			long inCol,
+			bool bBold);
+
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
@@ -214,6 +233,10 @@ public:
 			long inRow,
 			long inCol,
 			CString const& inData);
+
+	virtual bool AutoFit(
+			long inColFrom,
+			long inColTo);
 
 private:
 	Excel8::_Application& m_App;
@@ -269,7 +292,26 @@ public:
 	virtual bool ExportDataArray(
 			long inRowTop = 0,
 			long inColLeft = 0);
+
 	virtual bool AllowAccess(bool bAllow);
+
+	virtual bool SetTextColor(
+			long inRow,
+			long inCol,
+			COLORREF inColor);
+	virtual bool SetBackColor(
+			long inRow,
+			long inCol,
+			COLORREF inColor);
+	virtual bool SetItalic(
+			long inRow,
+			long inCol,
+			bool bItalic);
+	virtual bool SetBold(
+			long inRow,
+			long inCol,
+			bool bBold);
+
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
@@ -278,6 +320,10 @@ public:
 			long inRow,
 			long inCol,
 			CString const& inData);
+
+	virtual bool AutoFit(
+			long inColFrom,
+			long inColTo);
 
 private:
 	ooCalc::ooXSpreadsheet GetWorksheet();
@@ -439,6 +485,62 @@ bool CWizardExcelExport::AllowAccess(bool bAllow)
 	return true;
 }
 
+bool CWizardExcelExport::SetTextColor(
+		long inRow,
+		long inCol,
+		COLORREF inColor)
+{
+	CString cell1;
+	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+		return false;
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+	Excel8::Font font = range.get_Font();
+	font.put_Color(COleVariant((LONG)inColor));
+	return true;
+}
+
+bool CWizardExcelExport::SetBackColor(
+		long inRow,
+		long inCol,
+		COLORREF inColor)
+{
+	CString cell1;
+	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+		return false;
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+	Excel8::Interior interior = range.get_Interior();
+	interior.put_Color(COleVariant((long)inColor));
+	return true;
+}
+
+bool CWizardExcelExport::SetItalic(
+		long inRow,
+		long inCol,
+		bool bItalic)
+{
+	CString cell1;
+	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+		return false;
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+	Excel8::Font font = range.get_Font();
+	font.put_Italic(COleVariant(static_cast<short>(bItalic)));
+	return true;
+}
+
+bool CWizardExcelExport::SetBold(
+		long inRow,
+		long inCol,
+		bool bBold)
+{
+	CString cell1;
+	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+		return false;
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+	Excel8::Font font = range.get_Font();
+	font.put_Bold(COleVariant(static_cast<short>(bBold)));
+	return true;
+}
+
 bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
@@ -462,6 +564,21 @@ bool CWizardExcelExport::InsertData(
 		return false;
 	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
 	range.put_Value2(CComVariant(inData));
+	return true;
+}
+
+bool CWizardExcelExport::AutoFit(
+		long inColFrom,
+		long inColTo)
+{
+	CString cell1, cell2;
+	if (!IWizardSpreadSheet::GetRowCol(0, inColFrom, cell1))
+		return false;
+	if (!IWizardSpreadSheet::GetRowCol(0, inColTo, cell2))
+		return false;
+	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
+	Excel8::Range cols = range.get_EntireColumn();
+	cols.AutoFit();
 	return true;
 }
 
@@ -666,6 +783,43 @@ bool CWizardCalcExport::ExportDataArray(
 
 bool CWizardCalcExport::AllowAccess(bool bAllow)
 {
+	// TODO
+	return false;
+}
+
+bool CWizardCalcExport::SetTextColor(
+		long inRow,
+		long inCol,
+		COLORREF inColor)
+{
+	// TODO
+	return false;
+}
+
+bool CWizardCalcExport::SetBackColor(
+		long inRow,
+		long inCol,
+		COLORREF inColor)
+{
+	// TODO
+	return false;
+}
+
+bool CWizardCalcExport::SetItalic(
+		long inRow,
+		long inCol,
+		bool bItalic)
+{
+	// TODO
+	return false;
+}
+
+bool CWizardCalcExport::SetBold(
+		long inRow,
+		long inCol,
+		bool bBold)
+{
+	// TODO
 	return false;
 }
 
@@ -695,6 +849,25 @@ bool CWizardCalcExport::InsertData(
 	if (!cell)
 		return false;
 	return cell.setFormula(inData);
+}
+
+bool CWizardCalcExport::AutoFit(
+		long inColFrom,
+		long inColTo)
+{
+	ooCalc::ooXSpreadsheet worksheet = GetWorksheet();
+	if (!worksheet)
+		return false;
+	ooCalc::ooXCellRange range = worksheet.getCellRangeByPosition(
+			inColFrom, 0,
+			inColTo, 0);
+	if (!range)
+		return false;
+	CComDispatchDriver columns = range.getColumns();
+	if (!columns)
+		return false;
+	columns.PutPropertyByName(L"OptimalWidth", &covTrue);
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -270,6 +270,7 @@ void CDlgProgress::Show(bool bShow)
 void CDlgProgress::SetForegroundWindow()
 {
 	CDialog::SetForegroundWindow();
+	UpdateWindow();
 }
 
 void CDlgProgress::Dismiss()
