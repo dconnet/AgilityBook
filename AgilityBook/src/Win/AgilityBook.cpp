@@ -386,12 +386,6 @@ END_MESSAGE_MAP()
 // CAgilityBookApp construction
 
 CAgilityBookApp::CAgilityBookApp()
-	: m_pDocTemplateTree(NULL)
-	, m_pDocTemplateRuns(NULL)
-	, m_pDocTemplatePoints(NULL)
-	, m_pDocTemplateHtml(NULL)
-	, m_pDocTemplateCal(NULL)
-	, m_pDocTemplateTraining(NULL)
 {
 }
 
@@ -406,7 +400,21 @@ BOOL CAgilityBookApp::InitInstance()
 		AfxMessageBox(_T("ERROR: Cannot initialize COM"), MB_ICONSTOP);
 		return FALSE;
 	}
+
+	INITCOMMONCONTROLSEX icc;
+	icc.dwSize = sizeof(icc);
+	// Note: ICC_WIN95_CLASSES == ICC_LISTVIEW_CLASSES ICC_TREEVIEW_CLASSES
+	//  ICC_BAR_CLASSES ICC_TAB_CLASSES ICC_UPDOWN_CLASS ICC_PROGRESS_CLASS
+	//  ICC_HOTKEY_CLASS ICC_ANIMATE_CLASS
+	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
+	if (!InitCommonControlsEx(&icc))
+	{
+		AfxMessageBox(_T("ERROR: Unable to initialize the common controls."), MB_ICONSTOP);
+		return FALSE;
+	}
+
 	CWinApp::InitInstance();
+
 	// Calling AfxInitRichEdit() is not sufficient for older systems.
 	// All that will do is load RICHED32.DLL. On newer systems, RICHED32
 	// automatically loads RICHED20 also. But not on Win98. So specifically
@@ -433,18 +441,6 @@ BOOL CAgilityBookApp::InitInstance()
 		delete [] pStr;
 #endif
 		AfxMessageBox(msg, MB_ICONSTOP);
-		return FALSE;
-	}
-
-	INITCOMMONCONTROLSEX icc;
-	icc.dwSize = sizeof(icc);
-	// Note: ICC_WIN95_CLASSES == ICC_LISTVIEW_CLASSES ICC_TREEVIEW_CLASSES
-	//  ICC_BAR_CLASSES ICC_TAB_CLASSES ICC_UPDOWN_CLASS ICC_PROGRESS_CLASS
-	//  ICC_HOTKEY_CLASS ICC_ANIMATE_CLASS
-	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
-	if (!InitCommonControlsEx(&icc))
-	{
-		AfxMessageBox(_T("ERROR: Unable to initialize the common controls."), MB_ICONSTOP);
 		return FALSE;
 	}
 
@@ -480,37 +476,6 @@ BOOL CAgilityBookApp::InitInstance()
 		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
 		RUNTIME_CLASS(CTabView));
 	AddDocTemplate(pDocTemplate);
-
-	m_pDocTemplateTree = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CAgilityBookTree));
-	m_pDocTemplateRuns = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CAgilityBookViewRuns));
-	m_pDocTemplatePoints = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CAgilityBookViewPoints));
-	m_pDocTemplateHtml = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CAgilityBookViewHtml));
-	m_pDocTemplateCal = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CAgilityBookViewCalendar));
-	m_pDocTemplateTraining = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),
-		RUNTIME_CLASS(CAgilityBookViewTraining));
 
 	// Enable DDE Execute open
 	EnableShellOpen();
@@ -595,13 +560,6 @@ int CAgilityBookApp::ExitInstance()
 {
 	// Close any open HTML Help windows
 	::HtmlHelp(NULL, NULL, HH_CLOSE_ALL, 0);
-
-	delete m_pDocTemplateTree;
-	delete m_pDocTemplateRuns;
-	delete m_pDocTemplatePoints;
-	delete m_pDocTemplateHtml;
-	delete m_pDocTemplateCal;
-	delete m_pDocTemplateTraining;
 	XMLPlatformUtils::Terminate();
 	CleanupCrashHandler();
 	return CWinApp::ExitInstance();

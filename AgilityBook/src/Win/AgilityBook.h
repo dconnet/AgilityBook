@@ -64,12 +64,6 @@ public:
 			UINT nCmd = HELP_CONTEXT);
 
 private:
-	CSingleDocTemplate* m_pDocTemplateTree;
-	CSingleDocTemplate* m_pDocTemplateRuns;
-	CSingleDocTemplate* m_pDocTemplatePoints;
-	CSingleDocTemplate* m_pDocTemplateHtml;
-	CSingleDocTemplate* m_pDocTemplateCal;
-	CSingleDocTemplate* m_pDocTemplateTraining;
 	CUpdateInfo m_UpdateInfo;
 
 // Overrides
