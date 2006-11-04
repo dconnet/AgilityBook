@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2006-11-03 DRC File version 12.3
+               Added 'SpdMult'.
 2006-07-02 DRC File version 12.2
                Added 'subtractTF'.
                Added Action for DeleteEvent.
@@ -185,6 +187,7 @@ top-ten points. The 'Count' value is how they are accumulated
 	<!ATTLIST Venue
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
+		URL CDATA #IMPLIED
 		>
 <!ELEMENT Desc (#PCDATA) >
 
@@ -272,6 +275,9 @@ default when creating a run.
 
 'timeFault' is a multiplier when a run has time faults.
 
+If a scoring method has speed points, the PlaceInfo entries define the
+multipliers for placements. If SpeedPts='n', PlaceInfo entries are ignored.
+
 Entries in 'TitlePoints' determines if a Q should/not be awarded. When
 data is entered in the program, the program will perform certain tests.
 If it thinks you should/not Q and you enter data differently,
@@ -289,7 +295,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		hasSubNames (y|n) 'n'
 		>
 <!ELEMENT SubName (#PCDATA) >
-<!ELEMENT Scoring (Note?, TitlePoints*, LifeTime*) >
+<!ELEMENT Scoring (Note?, PlaceInfo?, TitlePoints*, LifeTime*) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
@@ -307,6 +313,11 @@ If there are no 'TitlePoints', then the class is non-titling.
 		timeFault CDATA #IMPLIED
 		OpeningPts CDATA #IMPLIED
 		ClosingPts CDATA #IMPLIED
+		>
+<!ELEMENT PlaceInfo EMPTY >
+	<!ATTLIST PlaceInfo
+		Place CDATA #REQUIRED
+		Value CDATA #REQUIRED
 		>
 <!ELEMENT TitlePoints EMPTY >
 	<!ATTLIST TitlePoints

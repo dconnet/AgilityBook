@@ -312,8 +312,20 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	if (m_pVenue)
 	{
-		data << _T("<h2>") << OnNeedText(0)
-			<< _T(" <a href=\"") << ARB_PROTOCOL
+		data << _T("<h2>");
+		if (m_pVenue->GetURL().empty())
+		{
+			data << m_pVenue->GetName();
+		}
+		else
+		{
+			data << _T("<a target=\"new\" href=\"")
+				<< m_pVenue->GetURL()
+				<< _T("\">")
+				<< m_pVenue->GetName()
+				<< _T("</a>");
+		}
+		data << _T(" <a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 			<< static_cast<UINT>(nCurLine)
 #else

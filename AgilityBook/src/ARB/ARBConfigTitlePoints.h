@@ -186,7 +186,6 @@ public:
 	 * @param inFaults Number of faults to find.
 	 * @param outPoints Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
 	 */
 	bool FindTitlePoints(
 			double inFaults,

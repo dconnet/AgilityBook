@@ -214,8 +214,6 @@ public:
 	 * Add a division.
 	 * @param inDiv Division to add.
 	 * @return Pointer to object, NULL if name already exists or is empty.
-	 * @post Returned pointer is not ref counted, do <b><i>not</i></b> release.
-	 *       The pointer is added to the list and its ref count is incremented.
 	 */
 	bool AddDivision(ARBConfigDivisionPtr inDiv);
 

@@ -48,6 +48,7 @@
 
 #include "ARBBase.h"
 #include "ARBConfigLifetimePoints.h"
+#include "ARBConfigPlaceInfo.h"
 #include "ARBConfigTitlePoints.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
@@ -304,6 +305,14 @@ public:
 	{
 		m_bBonusPts = inBool;
 	}
+	ARBConfigPlaceInfoList const& GetPlaceInfo() const
+	{
+		return m_PlaceInfo;
+	}
+	ARBConfigPlaceInfoList& GetPlaceInfo()
+	{
+		return m_PlaceInfo;
+	}
 	ARBConfigTitlePointsList const& GetTitlePoints() const
 	{
 		return m_TitlePoints;
@@ -349,6 +358,7 @@ private:
 	bool m_bDoubleQ;
 	bool m_bSpeedPts;
 	bool m_bBonusPts;
+	ARBConfigPlaceInfoList m_PlaceInfo;
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;
 };

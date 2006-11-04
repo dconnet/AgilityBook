@@ -895,6 +895,12 @@
 				RelativePath="..\..\ARB\ARBConfigOtherPoints.h">
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBConfigPlaceInfo.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBConfigPlaceInfo.h">
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBConfigScoring.cpp">
 			</File>
 			<File

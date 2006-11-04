@@ -65,6 +65,7 @@ static char THIS_FILE[] = __FILE__;
 ARBConfigVenue::ARBConfigVenue()
 	: m_Name()
 	, m_LongName()
+	, m_URL()
 	, m_Desc()
 	, m_Titles()
 	, m_Divisions()
@@ -76,6 +77,7 @@ ARBConfigVenue::ARBConfigVenue()
 ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
+	, m_URL(rhs.m_URL)
 	, m_Desc(rhs.m_Desc)
 	, m_Titles()
 	, m_Divisions()
@@ -98,6 +100,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
+		m_URL = rhs.m_URL;
 		m_Desc = rhs.m_Desc;
 		rhs.m_Titles.Clone(m_Titles);
 		rhs.m_Divisions.Clone(m_Divisions);
@@ -111,6 +114,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
+		&& m_URL == rhs.m_URL
 		&& m_Desc == rhs.m_Desc
 		&& m_Titles == rhs.m_Titles
 		&& m_Divisions == rhs.m_Divisions
@@ -122,6 +126,7 @@ void ARBConfigVenue::clear()
 {
 	m_Name.erase();
 	m_LongName.erase();
+	m_URL.erase();
 	m_Desc.erase();
 	m_Titles.clear();
 	m_Divisions.clear();
@@ -144,6 +149,8 @@ bool ARBConfigVenue::Load(
 	}
 	// Long name added in v10.1
 	inTree.GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
+	// URL added in v12.3
+	inTree.GetAttrib(ATTRIB_VENUE_URL, m_URL);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
@@ -235,6 +242,8 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 	venue.AddAttrib(ATTRIB_VENUE_NAME, m_Name);
 	if (0 < m_LongName.length())
 		venue.AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
+	if (0 < m_URL.length())
+		venue.AddAttrib(ATTRIB_VENUE_URL, m_URL);
 	if (0 < m_Desc.length())
 	{
 		Element& desc = venue.AddElement(TREE_VENUE_DESC);
@@ -271,6 +280,12 @@ bool ARBConfigVenue::Update(
 	{
 		bChanges = true;
 		SetLongName(inVenueNew->GetLongName());
+	}
+
+	if (GetURL() != inVenueNew->GetURL())
+	{
+		bChanges = true;
+		SetURL(inVenueNew->GetURL());
 	}
 
 	if (GetDesc() != inVenueNew->GetDesc())

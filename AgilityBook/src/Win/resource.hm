@@ -133,6 +133,7 @@
 #define HIDC_CONFIG_VENUE_MULTIQ        0x80cf043c    // IDD_CONFIG_VENUE
 #define HIDC_CONFIG_VENUE_NEW           0x80cf0432    // IDD_CONFIG_VENUE
 #define HIDC_CONFIG_VENUE_TITLES        0x80cf043a    // IDD_CONFIG_VENUE
+#define HIDC_CONFIG_VENUE_URL           0x80cf043d    // IDD_CONFIG_VENUE
 #define HIDC_DOGNUM_DELETE              0x80db04db    // IDD_DOG_NUMBERS
 #define HIDC_DOGNUM_EDIT                0x80db04da    // IDD_DOG_NUMBERS
 #define HIDC_DOGNUM_NEW                 0x80db04d9    // IDD_DOG_NUMBERS

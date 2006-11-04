@@ -115,6 +115,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_bDoubleQ(false)
 	, m_bSpeedPts(false)
 	, m_bBonusPts(false)
+	, m_PlaceInfo()
 	, m_TitlePoints()
 	, m_LifePoints()
 {
@@ -139,9 +140,11 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_bDoubleQ(rhs.m_bDoubleQ)
 	, m_bSpeedPts(rhs.m_bSpeedPts)
 	, m_bBonusPts(rhs.m_bBonusPts)
+	, m_PlaceInfo()
 	, m_TitlePoints()
 	, m_LifePoints()
 {
+	rhs.m_PlaceInfo.Clone(m_PlaceInfo);
 	rhs.m_TitlePoints.Clone(m_TitlePoints);
 	rhs.m_LifePoints.Clone(m_LifePoints);
 }
@@ -172,6 +175,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		m_bDoubleQ = rhs.m_bDoubleQ;
 		m_bSpeedPts = rhs.m_bSpeedPts;
 		m_bBonusPts = rhs.m_bBonusPts;
+		rhs.m_PlaceInfo.Clone(m_PlaceInfo);
 		rhs.m_TitlePoints.Clone(m_TitlePoints);
 		rhs.m_LifePoints.Clone(m_LifePoints);
 	}
@@ -198,6 +202,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bDoubleQ == rhs.m_bDoubleQ
 		&& m_bSpeedPts == rhs.m_bSpeedPts
 		&& m_bBonusPts == rhs.m_bBonusPts
+		&& m_PlaceInfo == rhs.m_PlaceInfo
 		&& m_TitlePoints == rhs.m_TitlePoints
 		&& m_LifePoints == rhs.m_LifePoints;
 }
@@ -350,6 +355,11 @@ bool ARBConfigScoring::Load(
 				return false;
 			}
 		}
+		if (m_bSpeedPts && inVersion < ARBVersion(12, 3))
+		{
+			m_PlaceInfo.AddPlaceInfo(1, 2.0);
+			m_PlaceInfo.AddPlaceInfo(2, 1.5);
+		}
 		inTree.GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
 		inTree.GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 		for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -357,6 +367,11 @@ bool ARBConfigScoring::Load(
 			Element const& element = inTree.GetElement(i);
 			if (element.GetName() == TREE_NOTE)
 				m_Note = element.GetValue();
+			else if (element.GetName() == TREE_PLACE_INFO)
+			{
+				if (!m_PlaceInfo.Load(element, inVersion, ioCallback))
+					return false;
+			}
 			else if (element.GetName() == TREE_TITLE_POINTS)
 			{
 				if (!m_TitlePoints.Load(element, inVersion, ioCallback, m_LifePoints))
@@ -468,6 +483,11 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		scoring.AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
 	if (m_bBonusPts)
 		scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts);
+	if (m_bSpeedPts)
+	{
+		if (!m_PlaceInfo.Save(scoring))
+			return false;
+	}
 	if (!m_TitlePoints.Save(scoring))
 		return false;
 	if (!m_LifePoints.Save(scoring))
