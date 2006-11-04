@@ -222,7 +222,6 @@ public:
 	 * Add a training object to the list.
 	 * @param inTraining Object to add.
 	 * @return Whether the object was added.
-	 * @post The pointer is added to the list and its ref count is incremented.
 	 */
 	bool AddTraining(ARBTrainingPtr inTraining);
 

@@ -87,6 +87,9 @@ CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 		str = m_Venue->GetName().c_str();
 		break;
 	case 1:
+		str = m_Venue->GetURL().c_str();
+		break;
+	case 2:
 		str = m_Venue->GetDesc().c_str();
 		str.Replace(_T("\n"), _T(" "));
 		break;

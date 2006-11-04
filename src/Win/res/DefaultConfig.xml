@@ -123,10 +123,8 @@ Revision History:
 		<Action OldName="Outstanding Novice Versatility" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="Outstanding Open Versatility" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="Outstanding Elite Versatility" Venue="NADAC" Verb="DeleteTitle"/>
-		<Venue LongName="Agility Association of Canada" Name="AAC">
-			<Desc>http://www.aac.ca/
-
-Post-ATChC titles are listed under the Regular division.</Desc>
+		<Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/">
+			<Desc>Post-ATChC titles are listed under the Regular division.</Desc>
 			<Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
 			<Titles LongName="Starters Games Dog of Canada" Name="SGDC">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
 			<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
@@ -251,8 +249,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="American Kennel Club" Name="AKC">
-			<Desc>http://www.akc.org/</Desc>
+		<Venue LongName="American Kennel Club" Name="AKC" URL="http://www.akc.org/">
 			<Titles LongName="Novice Agility" Name="NA">3 Qs</Titles>
 			<Titles LongName="Open Agility" Name="OA">3 Qs</Titles>
 			<Titles LongName="Agility Excellent" Name="AX">3 Qs</Titles>
@@ -386,9 +383,7 @@ Post-ATChC titles are listed under the Regular division.</Desc>
 				<MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
 			</MultiQ>
 		</Venue>
-		<Venue LongName="Australian Shepherd Club of America" Name="ASCA">
-			<Desc>http://www.asca.org/
-Events and titles are based on NADAC</Desc>
+		<Venue LongName="Australian Shepherd Club of America" Name="ASCA" URL="http://www.asca.org/">
 			<Titles LongName="Novice Regular" Name="RS-N"/>
 			<Titles LongName="Novice Jumpers" Name="JS-N"/>
 			<Titles LongName="Novice Gamblers" Name="GS-N"/>
@@ -521,8 +516,7 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="Canadian Kennel Club" Name="CKC">
-			<Desc>http://www.ckc.ca/</Desc>
+		<Venue LongName="Canadian Kennel Club" Name="CKC" URL="http://www.ckc.ca/">
 			<Titles LongName="Agility Novice" Name="AG.N.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
 			<Titles LongName="Agility Intermediate" Name="AG.I.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
 			<Titles LongName="Agility Excellent" Name="AG.X.">Receive 3 qualifying scores from at least 2 different judges.</Titles>
@@ -586,8 +580,7 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="Canine Performance Events" Name="CPE">
-			<Desc>http://www.k9cpe.com/</Desc>
+		<Venue LongName="Canine Performance Events" Name="CPE" URL="http://www.k9cpe.com/">
 			<Titles LongName="Level 1 Standard" Name="CL1-R">2 Qualifying Legs</Titles>
 			<Titles LongName="Level 1 Handler Games" Name="CL1-H">1 Qualifying Leg each of Colors and Wildcard</Titles>
 			<Titles LongName="Level 1 Strategy Games" Name="CL1-S">1 Qualifying Leg each of Snooker and Jackpot</Titles>
@@ -1015,8 +1008,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="Dogs On Course in North America" Name="DOCNA">
-			<Desc>http://www.docna.com/</Desc>
+		<Venue LongName="Dogs On Course in North America" Name="DOCNA" URL="http://www.docna.com/">
 			<Titles LongName="Competition - Beginner Standard Agility Award" Name="C-BSA">3 Qs</Titles>
 			<Titles LongName="Competition - Beginner Gamblers Award" Name="C-BGA">3 Qs, any combination of Gambles</Titles>
 			<Titles LongName="Competition - Beginner Jumpers Award" Name="C-BJA">3 Qs</Titles>
@@ -1480,9 +1472,8 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="North American Dog Agility Council" Name="NADAC">
-			<Desc>http://www.nadac.com/
-Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
+		<Venue LongName="North American Dog Agility Council" Name="NADAC" URL="http://www.nadac.com/">
+			<Desc>Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
 			<Titles LongName="Novice Agility Certificate" Name="NAC">30 points</Titles>
 			<Titles LongName="Novice Chances Certificate" Name="NCC" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Novice Gamblers Certificate" Name="NGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
@@ -1847,8 +1838,7 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="Teacup Dogs Agility Association" Name="TDAA">
-			<Desc>http://www.k9tdaa.com/</Desc>
+		<Venue LongName="Teacup Dogs Agility Association" Name="TDAA" URL="http://www.k9tdaa.com/">
 			<Titles LongName="Teacup Beginner Agility Dog" Name="TBAD">3 Qs in standard courses under 2 different judges</Titles>
 			<Titles LongName="Teacup Intermediate Agility Dog" Name="TIAD">3 Qs in standard courses under 2 different judges</Titles>
 			<Titles LongName="Teacup Superior Agility Dog" Name="TSAD">5 Qs in standard courses under 3 different judges</Titles>
@@ -1912,8 +1902,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="United Kennel Club" Name="UKC">
-			<Desc>http://www.ukcdogs.com/</Desc>
+		<Venue LongName="United Kennel Club" Name="UKC" URL="http://www.ukcdogs.com/">
 			<Titles LongName="United Agility I" Name="UAGI">3 Qs in either A or B.</Titles>
 			<Titles LongName="United Agility II" Name="UAGII">3 Qs in either A or B.</Titles>
 			<Titles LongName="United Agility Champion" Name="UACH">100 pts from B, 40 must be from AgI, 40 must be from AgII</Titles>
@@ -1978,8 +1967,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				<MultiQItem Div="Standard" Event="Agility III" Level="Agility III"/>
 			</MultiQ>
 		</Venue>
-		<Venue LongName="United States Dog Agility Association" Name="USDAA">
-			<Desc>http://www.usdaa.com/</Desc>
+		<Venue LongName="United States Dog Agility Association" Name="USDAA" URL="http://www.usdaa.com/">
 			<Titles LongName="Agility Dog®" Name="AD">Starters Standard Agility title plus 1 qualifying score in each of the 4 Starters nonstandard classes.
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 			<Titles LongName="Starters Standard Agility" Name="SSA">3 qualifying scores earned under at least 2 different judges.</Titles>

@@ -156,6 +156,14 @@ public:
 	{
 		m_LongName = inName;
 	}
+	ARBString const& GetURL() const
+	{
+		return m_URL;
+	}
+	void SetURL(ARBString const& inURL)
+	{
+		m_URL = inURL;
+	}
 	ARBString const& GetDesc() const
 	{
 		return m_Desc;
@@ -200,6 +208,7 @@ public:
 private:
 	ARBString m_Name;
 	ARBString m_LongName;
+	ARBString m_URL;
 	ARBString m_Desc;
 	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;

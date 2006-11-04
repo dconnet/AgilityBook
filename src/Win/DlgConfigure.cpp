@@ -458,6 +458,7 @@ void CDlgConfigure::LoadData()
 	m_ctrlVenues.SortItems(CompareItems, 0);
 	m_ctrlVenues.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	m_ctrlVenues.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlVenues.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
 
 	for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
 	{
@@ -561,7 +562,8 @@ BOOL CDlgConfigure::OnInitDialog()
 	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlVenues.InsertColumn(0, _T("Venues"));
-	m_ctrlVenues.InsertColumn(1, _T("Description"));
+	m_ctrlVenues.InsertColumn(1, _T("URL"));
+	m_ctrlVenues.InsertColumn(2, _T("Description"));
 	m_ctrlFaults.InsertColumn(0, _T("Faults"));
 	m_ctrlOthers.InsertColumn(0, _T("Other Points"));
 

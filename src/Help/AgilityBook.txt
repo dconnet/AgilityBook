@@ -308,6 +308,9 @@ List of currently configured titles for the selected division.
 .topic HIDC_CONFIG_VENUE_MULTIQ
 Configure Multi-Q events (i.e.: AKC QQs and UKC QQQs).
 
+.topic HIDC_CONFIG_VENUE_URL
+URL for the venue.
+
 .topic HIDC_CONFIG_COPY
 Copy the selected item.
 

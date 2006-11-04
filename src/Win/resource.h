@@ -131,6 +131,7 @@
 #define IDC_CONFIG_VENUE_TITLES         1082
 #define IDC_CONFIG_VENUE_LONGNAME       1083
 #define IDC_CONFIG_VENUE_MULTIQ         1084
+#define IDC_CONFIG_VENUE_URL            1085
 #define IDC_CONFIG_EVENT                1090
 #define IDC_CONFIG_EVENT_TABLE          1091
 #define IDC_CONFIG_EVENT_PARTNER        1092
