@@ -129,6 +129,9 @@ BEGIN_MESSAGE_MAP(CHeaderCtrl2, CHeaderCtrl)
 	//{{AFX_MSG_MAP(CHeaderCtrl2)
 	ON_WM_SIZE()
 	ON_NOTIFY_REFLECT(HDN_ITEMCHANGED, OnHdnItemChanged)
+#ifdef UNICODE
+	ON_NOTIFY_REFLECT(HDN_ENDTRACK, OnHdnEndTrack)
+#endif
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -186,6 +189,16 @@ void CHeaderCtrl2::OnHdnItemChanged(
 	// Over-optimizing to only do exactly what work is required is not worth it.
 	if (phdr->pitem->mask & HDI_WIDTH)
 		FixTooltips();
+	*pResult = 0;
+}
+
+// Note: For some reason, listcontrols are not properly redrawing in UNICODE.
+// I am unable to reproduce a standalone instance of this - I've only seen
+// it in my program so far...
+// So, simply invalidate the parent when tracking ends.
+void CHeaderCtrl2::OnHdnEndTrack(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	GetParent()->Invalidate();
 	*pResult = 0;
 }
 
