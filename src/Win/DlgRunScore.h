@@ -165,6 +165,7 @@ private:
 			double& val) const;
 	bool GetEvent(ARBConfigEventPtr* outEvent) const;
 	bool GetScoring(ARBConfigScoringPtr* outScoring) const;
+	void FillDivisions();
 	void FillLevels();
 	void FillEvents();
 	void FillSubNames();

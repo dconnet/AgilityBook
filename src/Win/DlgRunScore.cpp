@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-11-05 DRC Trim Divisions/Levels if no events are available on date.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -520,6 +521,54 @@ bool CDlgRunScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 	return bFound;
 }
 
+void CDlgRunScore::FillDivisions()
+{
+	CString str;
+	ARBString div;
+	int index = m_ctrlDivisions.GetCurSel();
+	if (CB_ERR != index)
+	{
+		m_ctrlDivisions.GetLBText(index, str);
+		div = (LPCTSTR)str;
+	}
+	if (str.IsEmpty())
+		div = m_Run->GetDivision();
+	m_ctrlDivisions.ResetContent();
+
+	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
+		iterDiv != m_pVenue->GetDivisions().end();
+		++iterDiv)
+	{
+		ARBConfigDivisionPtr pDiv = (*iterDiv);
+		// Does this division have any events possible on this date?
+		for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
+			iterEvent != m_pVenue->GetEvents().end();
+			++iterEvent)
+		{
+			if ((*iterEvent)->VerifyEvent(pDiv->GetName(), WILDCARD_LEVEL, m_Run->GetDate()))
+			{
+				index = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
+				m_ctrlDivisions.SetData(index,
+					new CListPtrData<ARBConfigDivisionPtr>(pDiv));
+				if (m_Run->GetDivision() == div)
+					m_ctrlDivisions.SetCurSel(index);
+				break;
+			}
+		}
+	}
+	if (CB_ERR == m_ctrlDivisions.GetCurSel())
+	{
+		CString last = CAgilityBookOptions::GetLastEnteredDivision();
+		if (0 < last.GetLength())
+		{
+			index = m_ctrlDivisions.FindStringExact(-1, last);
+			if (0 <= index)
+				m_ctrlDivisions.SetCurSel(index);
+		}
+	}
+	FillLevels();
+}
+
 void CDlgRunScore::FillLevels()
 {
 	CString str;
@@ -542,27 +591,37 @@ void CDlgRunScore::FillLevels()
 			++iter)
 		{
 			ARBConfigLevelPtr pLevel = (*iter);
-			if (0 < pLevel->GetSubLevels().size())
+			// Does this level have any events possible on this date?
+			for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
+				iterEvent != m_pVenue->GetEvents().end();
+				++iterEvent)
 			{
-				for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
-					iterSub != pLevel->GetSubLevels().end();
-					++iterSub)
+				if ((*iterEvent)->VerifyEvent(pDiv->GetName(), pLevel->GetName(), m_Run->GetDate()))
 				{
-					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					int idx = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
-					m_ctrlLevels.SetData(idx,
-						new CDlgRunDataLevel(pLevel, pSubLevel));
-					if (level == pSubLevel->GetName())
-						m_ctrlLevels.SetCurSel(idx);
+					if (0 < pLevel->GetSubLevels().size())
+					{
+						for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
+							iterSub != pLevel->GetSubLevels().end();
+							++iterSub)
+						{
+							ARBConfigSubLevelPtr pSubLevel = (*iterSub);
+							int idx = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
+							m_ctrlLevels.SetData(idx,
+								new CDlgRunDataLevel(pLevel, pSubLevel));
+							if (level == pSubLevel->GetName())
+								m_ctrlLevels.SetCurSel(idx);
+						}
+					}
+					else
+					{
+						int idx = m_ctrlLevels.AddString(pLevel->GetName().c_str());
+						m_ctrlLevels.SetData(idx,
+							new CDlgRunDataLevel(pLevel));
+						if (level == pLevel->GetName())
+							m_ctrlLevels.SetCurSel(idx);
+					}
+					break;
 				}
-			}
-			else
-			{
-				int idx = m_ctrlLevels.AddString(pLevel->GetName().c_str());
-				m_ctrlLevels.SetData(idx,
-					new CDlgRunDataLevel(pLevel));
-				if (level == pLevel->GetName())
-					m_ctrlLevels.SetCurSel(idx);
 			}
 		}
 		if (CB_ERR == m_ctrlLevels.GetCurSel())
@@ -1006,29 +1065,7 @@ BOOL CDlgRunScore::OnInitDialog()
 		m_Run->SetDate(ARBDate::Today());
 	m_ctrlDate.SetTime(&date);
 
-	int index;
-	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
-		iterDiv != m_pVenue->GetDivisions().end();
-		++iterDiv)
-	{
-		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		index = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
-		m_ctrlDivisions.SetData(index,
-			new CListPtrData<ARBConfigDivisionPtr>(pDiv));
-		if (m_Run->GetDivision() == pDiv->GetName())
-			m_ctrlDivisions.SetCurSel(index);
-	}
-	if (CB_ERR == m_ctrlDivisions.GetCurSel())
-	{
-		CString last = CAgilityBookOptions::GetLastEnteredDivision();
-		if (0 < last.GetLength())
-		{
-			index = m_ctrlDivisions.FindStringExact(-1, last);
-			if (0 <= index)
-				m_ctrlDivisions.SetCurSel(index);
-		}
-	}
-	FillLevels(); // This will call	UpdateControls();
+	FillDivisions(); // This will call UpdateControls();
 
 	set<ARBString> names;
 	m_pDoc->GetAllHeights(names);
@@ -1131,8 +1168,7 @@ void CDlgRunScore::OnDatetimechangeDate(
 	CTime time;
 	m_ctrlDate.GetTime(time);
 	m_Run->SetDate(ARBDate(time.GetYear(), time.GetMonth(), time.GetDay()));
-	FillEvents();
-	UpdateControls();
+	FillDivisions();
 	*pResult = 0;
 }
 
