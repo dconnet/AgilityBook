@@ -12,6 +12,7 @@
   - Removed Visual Studio 6 support. (Ran into too many ATL differences)
   - Added ability to compute speed points for only the specified places.
     (Place 0 is a wildcard that applies to any place that isn't listed)
+  - Run dialog: Trim Divisions/Levels if no events are available on date.
 - Bug fixes
   - Properly test the size of the screen so 800x600 doesn't complain.
   - Modify links in the help file so they open in an external browser.
