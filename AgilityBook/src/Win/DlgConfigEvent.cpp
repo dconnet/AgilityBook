@@ -167,7 +167,7 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_UP, OnBnClickedUp)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_DOWN, OnBnClickedDown)
-	ON_STN_CLICKED(IDC_CONFIG_EVENT_INFO, OnClickedInfo)
+	ON_STN_DBLCLK(IDC_CONFIG_EVENT_INFO, OnDblclickConfigInfo)
 	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_POINTS, OnSelchangePoints)
 	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_POINTS, OnDblclkPoints)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_NEW, OnPointsNew)
@@ -729,7 +729,7 @@ void CDlgConfigEvent::OnBnClickedDown()
 	}
 }
 
-void CDlgConfigEvent::OnClickedInfo()
+void CDlgConfigEvent::OnDblclickConfigInfo()
 {
 	OnBnClickedEdit();
 }

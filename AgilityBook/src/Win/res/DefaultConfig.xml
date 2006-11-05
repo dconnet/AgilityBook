@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="12.2">
+<DefaultConfig Book="12.3">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
@@ -299,6 +299,8 @@ Revision History:
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+					<PlaceInfo Place="1" Value="2"/>
+					<PlaceInfo Place="2" Value="1.5"/>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -319,6 +321,8 @@ Revision History:
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+					<PlaceInfo Place="1" Value="2"/>
+					<PlaceInfo Place="2" Value="1.5"/>
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -1838,6 +1842,30 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
+		<Venue LongName="Sweepstakes Agility" Name="Sweepstakes" URL="http://www.sweepstakesagility.com/">
+			<Titles LongName="Starter Sweepstakes" Name="SSw">50 points</Titles>
+			<Titles LongName="Novice Sweepstakes" Name="NSw">100 points</Titles>
+			<Titles LongName="Open Sweepstakes" Name="OSw">200 points</Titles>
+			<Titles LongName="Advanced Sweepstakes" Name="ASw">400 points</Titles>
+			<Titles LongName="Master Sweepstakes" Name="MSw">600 points</Titles>
+			<Titles LongName="Master Excellent Sweepstakes" Name="MESw">800 points</Titles>
+			<Titles LongName="Superior Agility Sweepstakes Star" Name="SASS" Prefix="y">1000 points</Titles>
+			<Division Name="Standard">
+				<Level Name="Standard"/>
+			</Division>
+			<Event Name="Standard">
+				<Scoring Division="*" Level="*" cleanQ="y" overTF="y" type="TimePlusFaults">
+					<Note>Note, time faults are computed</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+			<Event Name="Jumpers">
+				<Scoring Division="*" Level="*" cleanQ="y" overTF="y" type="TimePlusFaults">
+					<Note>Note, time faults are computed</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
+		</Venue>
 		<Venue LongName="Teacup Dogs Agility Association" Name="TDAA" URL="http://www.k9tdaa.com/">
 			<Titles LongName="Teacup Beginner Agility Dog" Name="TBAD">3 Qs in standard courses under 2 different judges</Titles>
 			<Titles LongName="Teacup Intermediate Agility Dog" Name="TIAD">3 Qs in standard courses under 2 different judges</Titles>
@@ -2108,8 +2136,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			</Division>
 			<Event Name="Standard" hasTable="y">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+				<Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
+					<Note>PVP Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2120,9 +2152,6 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				</Scoring>
 				<Scoring Division="Championship" Level="Novice" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
-					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2140,8 +2169,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			</Event>
 			<Event Name="Jumpers">
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+				<Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
 				<Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
 					<Note>DAM Team: Qualifying is marked under Relay. If this run is also a titling run, enter it under your normal level.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
+					<Note>PVP Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2153,9 +2186,6 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
-					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2171,8 +2201,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			</Event>
 			<Event Name="Gamblers">
 				<Scoring Division="Championship" Level="Nationals" type="OCScoreThenTime"/>
+				<Scoring Division="Performance" Level="Nationals" type="OCScoreThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" type="OCScoreThenTime">
 					<Note>DAM Team: Qualifying is marked under Relay.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="OCScoreThenTime">
+					<Note>PVP Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2184,9 +2218,6 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				<Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
 				<Scoring Division="Championship" Level="Novice" ValidFrom="2004-1-1" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" type="OCScoreThenTime">
-					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2202,8 +2233,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			</Event>
 			<Event Name="Snooker">
 				<Scoring Division="Championship" Level="Nationals" OpeningPts="37" type="ScoreThenTime"/>
+				<Scoring Division="Performance" Level="Nationals" OpeningPts="37" type="ScoreThenTime"/>
 				<Scoring Division="Championship" Level="Tournament" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<Note>DAM Team: Qualifying is marked under Relay. If this run is also a titling run, enter it under your normal level.</Note>
+				</Scoring>
+				<Scoring Division="Performance" Level="Tournament" type="ScoreThenTime">
+					<Note>PVP Team: Qualifying is marked under Relay.</Note>
 				</Scoring>
 				<Scoring Division="Championship" Level="Masters" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2215,9 +2250,6 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				<Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
 				<Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidFrom="2004-1-1" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
-				</Scoring>
-				<Scoring Division="Performance" Level="Tournament" type="ScoreThenTime">
-					<Note>Non-titling team event</Note>
 				</Scoring>
 				<Scoring Division="Performance" Level="PIII" OpeningPts="37" superQ="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
@@ -2338,14 +2370,17 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
 			<Event Name="Jokers Wild">
 				<Desc>Nationals Event</Desc>
 				<Scoring Division="Championship" Level="Nationals" type="ScoreThenTime"/>
+				<Scoring Division="Performance" Level="Nationals" type="ScoreThenTime"/>
 			</Event>
 			<Event Name="Power &amp; Speed">
 				<Desc>Nationals Event</Desc>
 				<Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+				<Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
 			</Event>
 			<Event Name="Time Gamble">
 				<Desc>Nationals Events</Desc>
 				<Scoring Division="Championship" Level="Nationals" overTF="y" type="TimePlusFaults" underTF="y"/>
+				<Scoring Division="Performance" Level="Nationals" overTF="y" type="TimePlusFaults" underTF="y"/>
 			</Event>
 		</Venue>
 		<FaultType>Elimination</FaultType>
