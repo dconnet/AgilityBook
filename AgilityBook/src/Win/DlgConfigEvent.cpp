@@ -59,6 +59,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
+#include "DlgConfigEventMethod.h"
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
 #include "DlgFixup.h"
@@ -84,9 +85,6 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_ctrlSubNames(false)
 	, m_ctrlMethods(true)
 	, m_ctrlUnused(false)
-	, m_ctrlDivision(true)
-	, m_ctrlLevel(false)
-	, m_ctrlType(false)
 	, m_ctrlPointsList(true)
 	, m_pDoc(pDoc)
 	, m_Book(book)
@@ -109,9 +107,6 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_bHasPartners = m_pEvent->HasPartner() ? TRUE : FALSE;
 	m_bHasSubNames = m_pEvent->HasSubNames() ? TRUE : FALSE;
 	//{{AFX_DATA_INIT(CDlgConfigEvent)
-	m_OpeningPts = 0;
-	m_ClosingPts = 0;
-	m_Multiply = 1;
 	//}}AFX_DATA_INIT
 }
 
@@ -137,44 +132,23 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CONFIG_EVENT_HAS_SUBNAMES, m_bHasSubNames);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES, m_ctrlSubNames);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_NEW, m_ctrlSubNamesNew);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_EDIT, m_ctrlSubNamesEdit);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_DELETE, m_ctrlSubNamesDelete);
 	DDX_Text(pDX, IDC_CONFIG_EVENT_DESC, m_Desc);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NEW, m_ctrlNew);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_DELETE, m_ctrlDelete);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_MOVE_UP, m_ctrlUp);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_MOVE_DOWN, m_ctrlDown);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_METHODS, m_ctrlMethods);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_UNUSED, m_ctrlUnused);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_VALID_FROM, m_ctrlValidFrom);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_START, m_ctrlDateFrom);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_VALID_TO, m_ctrlValidTo);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DATE_END, m_ctrlDateTo);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DIVISION, m_ctrlDivision);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_LEVEL, m_ctrlLevel);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_OPENING_PTS_TEXT, m_ctrlPointsOpeningText);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_OPENING_PTS, m_ctrlPointsOpening);
-	DDX_Text(pDX, IDC_CONFIG_EVENT_OPENING_PTS, m_OpeningPts);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_CLOSING_PTS_TEXT, m_ctrlPointsClosingText);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ctrlPointsClosing);
-	DDX_Text(pDX, IDC_CONFIG_EVENT_CLOSING_PTS, m_ClosingPts);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DROP_FRACTIONS, m_ctrlDropFractions);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ, m_ctrlTimeFaultsCleanQ);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS, m_ctrlSubtractTimeFaults);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_UNDER, m_ctrlTimeFaultsUnder);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TIME_FAULTS_OVER, m_ctrlTimeFaultsOver);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SPEED, m_ctrlSpeedPts);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUPERQ, m_ctrlSuperQ);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_BONUS, m_ctrlBonus);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT, m_ctrlMultiplyText);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_ctrlMultiply);
-	DDX_Text(pDX, IDC_CONFIG_EVENT_TF_MULTIPLY, m_Multiply);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_INFO, m_ctrlInfo);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS, m_ctrlPointsList);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_NEW, m_ctrlPointsNew);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_EDIT, m_ctrlPointsEdit);
 	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_DELETE, m_ctrlPointsDelete);
+	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
 	//}}AFX_DATA_MAP
 }
 
@@ -183,20 +157,17 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_HAS_SUBNAMES, OnBnClickedSubNames)
 	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_SUBNAMES, OnLbnSelchangeSubnames)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_NEW, OnBnClickedSubNamesNew)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_EDIT, OnBnClickedSubNamesEdit)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_DELETE, OnBnClickedSubNamesDelete)
+	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_METHODS, OnLbnDblclkMethods)
+	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_METHODS, OnLbnSelchangeMethods)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_EDIT, OnBnClickedEdit)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_DELETE, OnBnClickedDelete)
+	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_UP, OnBnClickedUp)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_DOWN, OnBnClickedDown)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_DATE_VALID_FROM, OnValidFrom)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_DATE_VALID_TO, OnValidTo)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CONFIG_EVENT_DATE_START, OnDatetimechangeDate)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CONFIG_EVENT_DATE_END, OnDatetimechangeDate)
-	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_METHODS, OnLbnSelchangeMethods)
-	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_DIVISION, OnCbnSelchangeDivision)
-	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_LEVEL, OnCbnSelchangeLevel)
-	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_TYPE, OnSelchangeType)
+	ON_STN_CLICKED(IDC_CONFIG_EVENT_INFO, OnClickedInfo)
 	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_POINTS, OnSelchangePoints)
 	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_POINTS, OnDblclkPoints)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_NEW, OnPointsNew)
@@ -206,6 +177,43 @@ BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
+
+void CDlgConfigEvent::ClearFixups()
+{
+	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
+		delete (*iter);
+	m_DlgFixup.clear();
+}
+
+void CDlgConfigEvent::FillSubNames(bool bInit)
+{
+	if (m_bHasSubNames)
+	{
+		m_ctrlSubNames.ShowWindow(SW_SHOW);
+		m_ctrlSubNamesNew.ShowWindow(SW_SHOW);
+		m_ctrlSubNamesEdit.ShowWindow(SW_SHOW);
+		m_ctrlSubNamesDelete.ShowWindow(SW_SHOW);
+		if (bInit)
+		{
+			m_ctrlSubNames.ResetContent();
+			std::set<ARBString> subNames;
+			m_pEvent->GetSubNames(subNames);
+			for (std::set<ARBString>::const_iterator iter = subNames.begin();
+				iter != subNames.end();
+				++iter)
+			{
+				m_ctrlSubNames.AddString(iter->c_str());
+			}
+		}
+	}
+	else
+	{
+		m_ctrlSubNames.ShowWindow(SW_HIDE);
+		m_ctrlSubNamesNew.ShowWindow(SW_HIDE);
+		m_ctrlSubNamesEdit.ShowWindow(SW_HIDE);
+		m_ctrlSubNamesDelete.ShowWindow(SW_HIDE);
+	}
+}
 
 CListPtrData<ARBConfigScoringPtr>* CDlgConfigEvent::GetScoringData(int index) const
 {
@@ -223,13 +231,6 @@ CListPtrData<ARBConfigLifetimePointsPtr>* CDlgConfigEvent::GetLifetimeData(int i
 {
 	CListData* pData = m_ctrlPointsList.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigLifetimePointsPtr>*>(pData);
-}
-
-void CDlgConfigEvent::ClearFixups()
-{
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-		delete (*iter);
-	m_DlgFixup.clear();
 }
 
 CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
@@ -257,109 +258,155 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 
 void CDlgConfigEvent::FillControls()
 {
-	int idxMethod = m_ctrlMethods.GetCurSel();
 	BOOL bEnable = FALSE;
+	int idxMethod = m_ctrlMethods.GetCurSel();
+	m_ctrlInfo.SetWindowText(_T(""));
+	m_ctrlPointsList.ResetContent();
+	m_ctrlNote.SetWindowText(_T(""));
 	if (LB_ERR != idxMethod)
 	{
-		CString str;
 		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		bEnable = TRUE;
-		CTime t;
-		if (pScoring->GetValidFrom().IsValid())
+		if (pScoringData)
 		{
-			m_ctrlValidFrom.SetCheck(1);
-			t = pScoring->GetValidFrom().GetDate();
-		}
-		else
-		{
-			m_ctrlValidFrom.SetCheck(0);
-			t = CTime::GetCurrentTime();
-		}
-		m_ctrlDateFrom.SetTime(&t);
-		if (pScoring->GetValidTo().IsValid())
-		{
-			m_ctrlValidTo.SetCheck(1);
-			t = pScoring->GetValidTo().GetDate();
-		}
-		else
-		{
-			m_ctrlValidTo.SetCheck(0);
-			t = CTime::GetCurrentTime();
-		}
-		m_ctrlDateTo.SetTime(&t);
-
-		FillDivisionList();
-		FillLevelList();
-		m_ctrlType.SetCurSel(-1);
-		for (int idxType = 0; idxType < m_ctrlType.GetCount(); ++idxType)
-		{
-			ARBConfigScoring::ScoringStyle style = static_cast<ARBConfigScoring::ScoringStyle>(m_ctrlType.GetItemData(idxType));
-			if (pScoring->GetScoringStyle() == style)
+			bEnable = TRUE;
+			ARBConfigScoringPtr pScoring = pScoringData->GetData();
+			// Get info
 			{
-				m_ctrlType.SetCurSel(idxType);
-				break;
+				CString str1, str2;
+				ARBostringstream info;
+				ARBConfigScoring::ScoringStyle style = pScoring->GetScoringStyle();
+				str1.LoadString(IDS_CONFIGEVENT_STYLE);
+				info << (LPCTSTR)str1 << _T(": ")
+					<< ARBConfigScoring::GetScoringStyleStr(style)
+					<< _T("\r\n");
+				// The following strings should be the same as they are in
+				// the Method Configuration dialog.
+				switch (style)
+				{
+				default:
+					break;
+				case ARBConfigScoring::eFaultsThenTime:
+				case ARBConfigScoring::eFaults100ThenTime:
+				case ARBConfigScoring::eFaults200ThenTime:
+					str1.LoadString(IDS_CONFIGEVENT_TIMEFAULTMULT);
+					info << (LPCTSTR)str1 << _T(": ")
+						<< pScoring->TimeFaultMultiplier();
+					break;
+				case ARBConfigScoring::eOCScoreThenTime:
+    				str1.LoadString(IDS_CONFIGEVENT_REQOPEN);
+    				str2.LoadString(IDS_CONFIGEVENT_REQCLOSE);
+					info << (LPCTSTR)str1 << _T(": ")
+						<< pScoring->GetRequiredOpeningPoints()
+						<< _T("; ") << (LPCTSTR)str2 << _T(": ")
+						<< pScoring->GetRequiredClosingPoints();
+					if (pScoring->SubtractTimeFaultsFromScore())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_FROMSCORE);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					if (pScoring->ComputeTimeFaultsUnder())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_UNDER);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					if (pScoring->ComputeTimeFaultsOver())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_OVER);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					break;
+				case ARBConfigScoring::eScoreThenTime:
+					str1.LoadString(IDS_CONFIGEVENT_POINTS);
+					info << (LPCTSTR)str1 << _T(": ")
+						<< pScoring->GetRequiredOpeningPoints();
+					if (pScoring->SubtractTimeFaultsFromScore())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_FROMSCORE);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					if (pScoring->ComputeTimeFaultsUnder())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_UNDER);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					if (pScoring->ComputeTimeFaultsOver())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_OVER);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					break;
+				case ARBConfigScoring::eTimePlusFaults:
+					str1.LoadString(IDS_CONFIGEVENT_TIMEFAULTMULT);
+					info << (LPCTSTR)str1 << _T(": ")
+						<< pScoring->TimeFaultMultiplier();
+					if (pScoring->QsMustBeClean())
+					{
+						// This string is slightly different: Just dropped
+						// the 'Time+Fault' at start.
+						str1.LoadString(IDS_CONFIGEVENT_CLEANQ);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					if (pScoring->ComputeTimeFaultsUnder())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_UNDER);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					if (pScoring->ComputeTimeFaultsOver())
+					{
+						str1.LoadString(IDS_CONFIGEVENT_TF_OVER);
+						info << _T("; ") << (LPCTSTR)str1;
+					}
+					break;
+				}
+				if (pScoring->DropFractions())
+				{
+					str1.LoadString(IDS_CONFIGEVENT_DROPFRAC);
+					info << _T("; ") << (LPCTSTR)str1;
+				}
+				if (pScoring->HasBonusPts())
+				{
+					str1.LoadString(IDS_CONFIGEVENT_BONUS);
+					info << _T("; ") << (LPCTSTR)str1;
+				}
+				if (pScoring->HasSuperQ())
+				{
+					str1.LoadString(IDS_CONFIGEVENT_SUPERQ);
+					info << _T("; ") << (LPCTSTR)str1;
+				}
+				if (pScoring->HasSpeedPts())
+				{
+					str1.LoadString(IDS_CONFIGEVENT_SPEEDPTS);
+					info << _T("; ") << (LPCTSTR)str1;
+					if (0 < pScoring->GetPlaceInfo().size())
+					{
+						info << _T(" [");
+						int idx = 0;
+						for (ARBConfigPlaceInfoList::iterator iter = pScoring->GetPlaceInfo().begin();
+							iter != pScoring->GetPlaceInfo().end();
+							++idx, ++iter)
+						{
+							if (0 < idx)
+								info << _T(", ");
+							info << (*iter)->GetPlace()
+								<< _T("=")
+								<< (*iter)->GetValue();
+						}
+						info << _T("]");
+					}
+				}
+				m_ctrlInfo.SetWindowText(info.str().c_str());
 			}
+			// Take care of title points
+			FillTitlePoints(pScoring);
+			// And the note.
+			CString str = pScoring->GetNote().c_str();
+			str.Replace(_T("\n"), _T("\r\n"));
+			m_ctrlNote.SetWindowText(str);
 		}
-		FillRequiredPoints();
-		FillTitlePoints(pScoring);
-		if (pScoring->HasSuperQ())
-			m_ctrlSuperQ.SetCheck(1);
-		else
-			m_ctrlSuperQ.SetCheck(0);
-		if (pScoring->HasSpeedPts())
-			m_ctrlSpeedPts.SetCheck(1);
-		else
-			m_ctrlSpeedPts.SetCheck(0);
-		if (pScoring->HasBonusPts())
-			m_ctrlBonus.SetCheck(1);
-		else
-			m_ctrlBonus.SetCheck(0);
-		str = pScoring->GetNote().c_str();
-		str.Replace(_T("\n"), _T("\r\n"));
-		m_ctrlNote.SetWindowText(str);
 	}
-	else
-	{
-		CTime t = CTime::GetCurrentTime();
-		m_ctrlValidFrom.SetCheck(0);
-		m_ctrlDateFrom.SetTime(&t);
-		m_ctrlValidTo.SetCheck(0);
-		m_ctrlDateTo.SetTime(&t);
-		m_ctrlDivision.SetCurSel(-1);
-		m_ctrlLevel.SetCurSel(-1);
-		m_ctrlType.SetCurSel(-1);
-		m_ctrlDropFractions.SetCheck(0);
-		m_ctrlTimeFaultsCleanQ.SetCheck(0);
-		m_ctrlSubtractTimeFaults.SetCheck(0);
-		m_ctrlTimeFaultsUnder.SetCheck(0);
-		m_ctrlTimeFaultsOver.SetCheck(0);
-		m_ctrlPointsList.ResetContent();
-		m_ctrlSpeedPts.SetCheck(0);
-		m_ctrlSuperQ.SetCheck(0);
-		m_ctrlBonus.SetCheck(0);
-		m_ctrlMultiply.SetWindowText(_T("1"));
-		m_ctrlNote.SetWindowText(_T(""));
-		FillRequiredPoints();
-	}
-	m_ctrlValidFrom.EnableWindow(bEnable);
-	m_ctrlDateFrom.EnableWindow(bEnable && m_ctrlValidFrom.GetCheck());
-	m_ctrlValidTo.EnableWindow(bEnable);
-	m_ctrlDateTo.EnableWindow(bEnable && m_ctrlValidTo.GetCheck());
-	m_ctrlDivision.EnableWindow(bEnable);
-	m_ctrlLevel.EnableWindow(bEnable);
-	m_ctrlType.EnableWindow(bEnable);
-	m_ctrlDropFractions.EnableWindow(bEnable);
-	m_ctrlTimeFaultsCleanQ.EnableWindow(bEnable);
-	m_ctrlSubtractTimeFaults.EnableWindow(bEnable);
-	m_ctrlTimeFaultsUnder.EnableWindow(bEnable);
-	m_ctrlTimeFaultsOver.EnableWindow(bEnable);
-	m_ctrlSpeedPts.EnableWindow(bEnable);
-	m_ctrlSuperQ.EnableWindow(bEnable);
-	m_ctrlBonus.EnableWindow(bEnable);
-	m_ctrlMultiply.EnableWindow(bEnable);
-	m_ctrlCopy.EnableWindow(bEnable);
+	m_ctrlEdit.EnableWindow(bEnable);
 	m_ctrlDelete.EnableWindow(bEnable);
+	m_ctrlCopy.EnableWindow(bEnable);
 	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
 	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
 	int idxTitle = m_ctrlPointsList.GetCurSel();
@@ -367,34 +414,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlPointsNew.EnableWindow(bEnable);
 	m_ctrlPointsEdit.EnableWindow(bEnable && 0 <= idxTitle);
 	m_ctrlPointsDelete.EnableWindow(bEnable && 0 <= idxTitle);
-}
-
-void CDlgConfigEvent::FillSubNames(bool bInit)
-{
-	if (m_bHasSubNames)
-	{
-		m_ctrlSubNames.ShowWindow(SW_SHOW);
-		m_ctrlSubNamesNew.ShowWindow(SW_SHOW);
-		m_ctrlSubNamesDelete.ShowWindow(SW_SHOW);
-		if (bInit)
-		{
-			m_ctrlSubNames.ResetContent();
-			std::set<ARBString> subNames;
-			m_pEvent->GetSubNames(subNames);
-			for (std::set<ARBString>::const_iterator iter = subNames.begin();
-				iter != subNames.end();
-				++iter)
-			{
-				m_ctrlSubNames.AddString(iter->c_str());
-			}
-		}
-	}
-	else
-	{
-		m_ctrlSubNames.ShowWindow(SW_HIDE);
-		m_ctrlSubNamesNew.ShowWindow(SW_HIDE);
-		m_ctrlSubNamesDelete.ShowWindow(SW_HIDE);
-	}
+	m_ctrlNote.EnableWindow(bEnable);
 }
 
 void CDlgConfigEvent::FillMethodList()
@@ -430,247 +450,6 @@ void CDlgConfigEvent::FillMethodList()
 				m_ctrlUnused.AddString(str);
 			}
 			// Remember, configuration doesn't do sublevels.
-		}
-	}
-}
-
-void CDlgConfigEvent::FillDivisionList()
-{
-	ARBConfigScoringPtr pScoring;
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		pScoring = pScoringData->GetData();
-	}
-	m_ctrlDivision.ResetContent();
-	CString all;
-	all.LoadString(IDS_ALL);
-	int index = m_ctrlDivision.AddString(all);
-	if (pScoring && pScoring->GetDivision() == WILDCARD_DIVISION)
-		m_ctrlDivision.SetCurSel(index);
-	for (ARBConfigDivisionList::iterator iter = m_pVenue->GetDivisions().begin();
-		iter != m_pVenue->GetDivisions().end();
-		++iter)
-	{
-		ARBConfigDivisionPtr pDiv = (*iter);
-		index = m_ctrlDivision.AddString(pDiv->GetName().c_str());
-		m_ctrlDivision.SetData(index,
-			new CListPtrData<ARBConfigDivisionPtr>(pDiv));
-		if (pScoring && pScoring->GetDivision() == pDiv->GetName())
-			m_ctrlDivision.SetCurSel(index);
-	}
-}
-
-void CDlgConfigEvent::FillLevelList()
-{
-	ARBConfigScoringPtr pScoring;
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		pScoring = pScoringData->GetData();
-	}
-	m_ctrlLevel.ResetContent();
-	CString all;
-	all.LoadString(IDS_ALL);
-	int index = m_ctrlLevel.AddString(all);
-	if (pScoring->GetLevel() == WILDCARD_LEVEL)
-		m_ctrlLevel.SetCurSel(index);
-	int idxDiv = m_ctrlDivision.GetCurSel();
-	if (0 == idxDiv) // All
-	{
-		for (ARBConfigDivisionList::iterator iter = m_pVenue->GetDivisions().begin();
-			iter != m_pVenue->GetDivisions().end();
-			++iter)
-		{
-			ARBConfigDivisionPtr pDiv = (*iter);
-			for (ARBConfigLevelList::iterator iterLevel = pDiv->GetLevels().begin();
-				iterLevel != pDiv->GetLevels().end();
-				++iterLevel)
-			{
-				if (CB_ERR == m_ctrlLevel.FindStringExact(0, (*iterLevel)->GetName().c_str()))
-				{
-					index = m_ctrlLevel.AddString((*iterLevel)->GetName().c_str());
-					if (pScoring->GetLevel() == (*iterLevel)->GetName())
-						m_ctrlLevel.SetCurSel(index);
-				}
-			}
-		}
-	}
-	else if (0 < idxDiv)
-	{
-		CListPtrData<ARBConfigDivisionPtr>* pDiv = reinterpret_cast<CListPtrData<ARBConfigDivisionPtr>*>(m_ctrlDivision.GetItemDataPtr(idxDiv));
-		for (ARBConfigLevelList::iterator iterLevel = pDiv->GetData()->GetLevels().begin();
-			iterLevel != pDiv->GetData()->GetLevels().end();
-			++iterLevel)
-		{
-			index = m_ctrlLevel.AddString((*iterLevel)->GetName().c_str());
-			if (pScoring->GetLevel() == (*iterLevel)->GetName())
-				m_ctrlLevel.SetCurSel(index);
-		}
-	}
-}
-
-void CDlgConfigEvent::FillRequiredPoints()
-{
-	int idxType = m_ctrlType.GetCurSel();
-	if (CB_ERR == idxType)
-	{
-		m_ctrlPointsOpeningText.ShowWindow(SW_HIDE);
-		m_ctrlPointsOpening.ShowWindow(SW_HIDE);
-		m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
-		m_ctrlPointsClosing.ShowWindow(SW_HIDE);
-		m_ctrlDropFractions.ShowWindow(SW_HIDE);
-		m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-		m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
-		m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
-		m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
-		m_ctrlMultiplyText.ShowWindow(SW_HIDE);
-		m_ctrlMultiply.ShowWindow(SW_HIDE);
-	}
-	else
-	{
-		ARBConfigScoringPtr pScoring;
-		int idxMethod = m_ctrlMethods.GetCurSel();
-		// If this isn't set, we've got serious problems!
-		if (LB_ERR != idxMethod)
-		{
-			CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-			pScoring = pScoringData->GetData();
-		}
-		switch (static_cast<ARBConfigScoring::ScoringStyle>(m_ctrlType.GetItemData(idxType)))
-		{
-		default:
-			m_ctrlPointsOpeningText.ShowWindow(SW_HIDE);
-			m_ctrlPointsOpening.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
-			m_ctrlDropFractions.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-			m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
-			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
-			m_ctrlMultiply.ShowWindow(SW_HIDE);
-			break;
-		case ARBConfigScoring::eFaultsThenTime:
-		case ARBConfigScoring::eFaults100ThenTime:
-		case ARBConfigScoring::eFaults200ThenTime:
-			m_ctrlPointsOpeningText.ShowWindow(SW_HIDE);
-			m_ctrlPointsOpening.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
-			m_ctrlDropFractions.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-			m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_HIDE);
-			m_ctrlMultiplyText.ShowWindow(SW_SHOW);
-			m_ctrlMultiply.ShowWindow(SW_SHOW);
-			if (pScoring->DropFractions())
-				m_ctrlDropFractions.SetCheck(1);
-			else
-				m_ctrlDropFractions.SetCheck(0);
-			m_Multiply = pScoring->TimeFaultMultiplier();
-			UpdateData(FALSE);
-			break;
-		case ARBConfigScoring::eOCScoreThenTime:
-			m_ctrlPointsOpeningText.ShowWindow(SW_SHOW);
-			m_ctrlPointsOpening.ShowWindow(SW_SHOW);
-			m_ctrlPointsClosingText.ShowWindow(SW_SHOW);
-			m_ctrlPointsClosing.ShowWindow(SW_SHOW);
-			m_ctrlDropFractions.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-			m_ctrlSubtractTimeFaults.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
-			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
-			m_ctrlMultiply.ShowWindow(SW_HIDE);
-			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[0]);
-			if (pScoring->DropFractions())
-				m_ctrlDropFractions.SetCheck(1);
-			else
-				m_ctrlDropFractions.SetCheck(0);
-			if (pScoring->SubtractTimeFaultsFromScore())
-				m_ctrlSubtractTimeFaults.SetCheck(1);
-			else
-				m_ctrlSubtractTimeFaults.SetCheck(0);
-			if (pScoring->ComputeTimeFaultsUnder())
-				m_ctrlTimeFaultsUnder.SetCheck(1);
-			else
-				m_ctrlTimeFaultsUnder.SetCheck(0);
-			if (pScoring->ComputeTimeFaultsOver())
-				m_ctrlTimeFaultsOver.SetCheck(1);
-			else
-				m_ctrlTimeFaultsOver.SetCheck(0);
-			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
-			m_ClosingPts = pScoring->GetRequiredClosingPoints();
-			UpdateData(FALSE);
-			break;
-		case ARBConfigScoring::eScoreThenTime:
-			m_ctrlPointsOpeningText.ShowWindow(SW_SHOW);
-			m_ctrlPointsOpening.ShowWindow(SW_SHOW);
-			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
-			m_ctrlDropFractions.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_HIDE);
-			m_ctrlSubtractTimeFaults.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
-			m_ctrlMultiplyText.ShowWindow(SW_HIDE);
-			m_ctrlMultiply.ShowWindow(SW_HIDE);
-			m_ctrlPointsOpeningText.SetWindowText(m_strOpening[1]);
-			if (pScoring->DropFractions())
-				m_ctrlDropFractions.SetCheck(1);
-			else
-				m_ctrlDropFractions.SetCheck(0);
-			if (pScoring->SubtractTimeFaultsFromScore())
-				m_ctrlSubtractTimeFaults.SetCheck(1);
-			else
-				m_ctrlSubtractTimeFaults.SetCheck(0);
-			if (pScoring->ComputeTimeFaultsUnder())
-				m_ctrlTimeFaultsUnder.SetCheck(1);
-			else
-				m_ctrlTimeFaultsUnder.SetCheck(0);
-			if (pScoring->ComputeTimeFaultsOver())
-				m_ctrlTimeFaultsOver.SetCheck(1);
-			else
-				m_ctrlTimeFaultsOver.SetCheck(0);
-			m_OpeningPts = pScoring->GetRequiredOpeningPoints();
-			UpdateData(FALSE);
-			break;
-		case ARBConfigScoring::eTimePlusFaults:
-			m_ctrlPointsOpeningText.ShowWindow(SW_HIDE);
-			m_ctrlPointsOpening.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosingText.ShowWindow(SW_HIDE);
-			m_ctrlPointsClosing.ShowWindow(SW_HIDE);
-			m_ctrlDropFractions.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsCleanQ.ShowWindow(SW_SHOW);
-			m_ctrlSubtractTimeFaults.ShowWindow(SW_HIDE);
-			m_ctrlTimeFaultsUnder.ShowWindow(SW_SHOW);
-			m_ctrlTimeFaultsOver.ShowWindow(SW_SHOW);
-			m_ctrlMultiplyText.ShowWindow(SW_SHOW);
-			m_ctrlMultiply.ShowWindow(SW_SHOW);
-			if (pScoring->DropFractions())
-				m_ctrlDropFractions.SetCheck(1);
-			else
-				m_ctrlDropFractions.SetCheck(0);
-			if (pScoring->QsMustBeClean())
-				m_ctrlTimeFaultsCleanQ.SetCheck(1);
-			else
-				m_ctrlTimeFaultsCleanQ.SetCheck(0);
-			if (pScoring->ComputeTimeFaultsUnder())
-				m_ctrlTimeFaultsUnder.SetCheck(1);
-			else
-				m_ctrlTimeFaultsUnder.SetCheck(0);
-			if (pScoring->ComputeTimeFaultsOver())
-				m_ctrlTimeFaultsOver.SetCheck(1);
-			else
-				m_ctrlTimeFaultsOver.SetCheck(0);
-			m_Multiply = pScoring->TimeFaultMultiplier();
-			UpdateData(FALSE);
-			break;
 		}
 	}
 }
@@ -729,134 +508,16 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 bool CDlgConfigEvent::SaveControls()
 {
 	// Save the last selected method.
-	int idxDiv = m_ctrlDivision.GetCurSel();
-	int idxLevel = m_ctrlLevel.GetCurSel();
-	int idxType = m_ctrlType.GetCurSel();
-	if (0 <= m_idxMethod
-	&& LB_ERR != idxDiv
-	&& LB_ERR != idxLevel
-	&& LB_ERR != idxType)
+	if (0 <= m_idxMethod)
 	{
-		CString str;
 		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(m_idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		ARBDate valid;
-		if (m_ctrlValidFrom.GetCheck())
-		{
-			CTime time;
-			if (GDT_VALID == m_ctrlDateFrom.GetTime(time))
-				valid = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
-		}
-		pScoring->SetValidFrom(valid);
-		valid.clear();
-		if (m_ctrlValidTo.GetCheck())
-		{
-			CTime time;
-			if (GDT_VALID == m_ctrlDateTo.GetTime(time))
-				valid = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
-		}
-		pScoring->SetValidTo(valid);
-		if (0 == idxDiv)
-			str = WILDCARD_DIVISION;
-		else
-			m_ctrlDivision.GetLBText(idxDiv, str);
-		pScoring->SetDivision((LPCTSTR)str);
-		if (0 == idxLevel)
-			str = WILDCARD_LEVEL;
-		else
-			m_ctrlLevel.GetLBText(idxLevel, str);
-		pScoring->SetLevel((LPCTSTR)str);
-		ARBConfigScoring::ScoringStyle style = static_cast<ARBConfigScoring::ScoringStyle>(m_ctrlType.GetItemData(idxType));
-		pScoring->SetScoringStyle(style);
-		switch (style)
-		{
-		default:
-			break;
-		case ARBConfigScoring::eFaultsThenTime:
-		case ARBConfigScoring::eFaults100ThenTime:
-		case ARBConfigScoring::eFaults200ThenTime:
-			if (m_ctrlDropFractions.GetCheck())
-				pScoring->SetDropFractions(true);
-			else
-				pScoring->SetDropFractions(false);
-			pScoring->SetTimeFaultMultiplier(m_Multiply);
-			break;
-		case ARBConfigScoring::eOCScoreThenTime:
-			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
-			pScoring->SetRequiredClosingPoints(m_ClosingPts);
-			if (m_ctrlDropFractions.GetCheck())
-				pScoring->SetDropFractions(true);
-			else
-				pScoring->SetDropFractions(false);
-			if (m_ctrlSubtractTimeFaults.GetCheck())
-				pScoring->SetSubtractTimeFaultsFromScore(true);
-			else
-				pScoring->SetSubtractTimeFaultsFromScore(false);
-			if (m_ctrlTimeFaultsUnder.GetCheck())
-				pScoring->SetComputeTimeFaultsUnder(true);
-			else
-				pScoring->SetComputeTimeFaultsUnder(false);
-			if (m_ctrlTimeFaultsOver.GetCheck())
-				pScoring->SetComputeTimeFaultsOver(true);
-			else
-				pScoring->SetComputeTimeFaultsOver(false);
-			break;
-		case ARBConfigScoring::eScoreThenTime:
-			pScoring->SetRequiredOpeningPoints(m_OpeningPts);
-			if (m_ctrlDropFractions.GetCheck())
-				pScoring->SetDropFractions(true);
-			else
-				pScoring->SetDropFractions(false);
-			if (m_ctrlSubtractTimeFaults.GetCheck())
-				pScoring->SetSubtractTimeFaultsFromScore(true);
-			else
-				pScoring->SetSubtractTimeFaultsFromScore(false);
-			if (m_ctrlTimeFaultsUnder.GetCheck())
-				pScoring->SetComputeTimeFaultsUnder(true);
-			else
-				pScoring->SetComputeTimeFaultsUnder(false);
-			if (m_ctrlTimeFaultsOver.GetCheck())
-				pScoring->SetComputeTimeFaultsOver(true);
-			else
-				pScoring->SetComputeTimeFaultsOver(false);
-			break;
-		case ARBConfigScoring::eTimePlusFaults:
-			if (m_ctrlDropFractions.GetCheck())
-				pScoring->SetDropFractions(true);
-			else
-				pScoring->SetDropFractions(false);
-			if (m_ctrlTimeFaultsCleanQ.GetCheck())
-				pScoring->SetQsMustBeClean(true);
-			else
-				pScoring->SetQsMustBeClean(false);
-			if (m_ctrlTimeFaultsUnder.GetCheck())
-				pScoring->SetComputeTimeFaultsUnder(true);
-			else
-				pScoring->SetComputeTimeFaultsUnder(false);
-			if (m_ctrlTimeFaultsOver.GetCheck())
-				pScoring->SetComputeTimeFaultsOver(true);
-			else
-				pScoring->SetComputeTimeFaultsOver(false);
-			pScoring->SetTimeFaultMultiplier(m_Multiply);
-			break;
-		}
+		// Point/faults are already up-to-date.
+		CString str;
 		m_ctrlNote.GetWindowText(str);
 		str.Replace(_T("\r\n"), _T("\n"));
 		str.TrimRight();
 		pScoring->SetNote((LPCTSTR)str);
-		if (m_ctrlSuperQ.GetCheck())
-			pScoring->SetHasSuperQ(true);
-		else
-			pScoring->SetHasSuperQ(false);
-		if (m_ctrlSpeedPts.GetCheck())
-			pScoring->SetHasSpeedPts(true);
-		else
-			pScoring->SetHasSpeedPts(false);
-		if (m_ctrlBonus.GetCheck())
-			pScoring->SetHasBonusPts(true);
-		else
-			pScoring->SetHasBonusPts(false);
-		// Point/faults are already up-to-date.
 	}
 	return true;
 }
@@ -868,58 +529,12 @@ BOOL CDlgConfigEvent::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	m_ctrlPointsOpeningText.GetWindowText(m_strOpening[0]);
-	m_strOpening[1].LoadString(IDS_SCORING_REQUIRED_POINTS);
-
-	// If any additional types are added in ARBConfigScoring,
-	// they'll have to be manually added here...
-	static ARBConfigScoring::ScoringStyle const Styles[] =
-	{
-		ARBConfigScoring::eFaultsThenTime,
-		ARBConfigScoring::eFaults100ThenTime,
-		ARBConfigScoring::eFaults200ThenTime,
-		ARBConfigScoring::eOCScoreThenTime,
-		ARBConfigScoring::eScoreThenTime,
-		ARBConfigScoring::eTimePlusFaults
-	};
-	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
-	for (int index = 0; index < nStyles; ++index)
-	{
-		ARBString str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
-		int idx = m_ctrlType.AddString(str.c_str());
-		m_ctrlType.SetItemData(idx, Styles[index]);
-	}
-
 	FillSubNames(true);
 	FillMethodList();
 	FillControls();
-	FillRequiredPoints();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-void CDlgConfigEvent::OnLbnSelchangeMethods()
-{
-	UpdateData(TRUE);
-	SaveControls();
-	m_idxMethod = m_ctrlMethods.GetCurSel();
-	FillControls();
-}
-
-void CDlgConfigEvent::OnCbnSelchangeDivision()
-{
-	UpdateData(TRUE);
-	SaveControls();
-	FillLevelList();
-	FillMethodList();
-}
-
-void CDlgConfigEvent::OnCbnSelchangeLevel()
-{
-	UpdateData(TRUE);
-	SaveControls();
-	FillMethodList();
 }
 
 void CDlgConfigEvent::OnBnClickedSubNames()
@@ -934,6 +549,7 @@ void CDlgConfigEvent::OnLbnSelchangeSubnames()
 	BOOL bEnable = FALSE;
 	if (LB_ERR != m_ctrlSubNames.GetCurSel())
 		bEnable = TRUE;
+	m_ctrlSubNamesEdit.EnableWindow(bEnable);
 	m_ctrlSubNamesDelete.EnableWindow(bEnable);
 }
 
@@ -948,14 +564,46 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew()
 	}
 }
 
+void CDlgConfigEvent::OnBnClickedSubNamesEdit()
+{
+	int idx = m_ctrlSubNames.GetCurSel();
+	if (LB_ERR != idx)
+	{
+		CString name;
+		m_ctrlSubNames.GetText(idx, name);
+		CDlgName dlg(name, static_cast<UINT>(0), this);
+		if (IDOK == dlg.DoModal())
+		{
+			m_ctrlSubNames.DeleteString(idx);
+			m_ctrlSubNames.InsertString(idx, dlg.GetName());
+			m_ctrlSubNames.SetCurSel(idx);
+			OnLbnSelchangeSubnames();
+		}
+	}
+}
+
 void CDlgConfigEvent::OnBnClickedSubNamesDelete()
 {
 	int idx = m_ctrlSubNames.GetCurSel();
 	if (LB_ERR != idx)
 	{
 		m_ctrlSubNames.DeleteString(idx);
+		m_ctrlSubNamesEdit.EnableWindow(FALSE);
 		m_ctrlSubNamesDelete.EnableWindow(FALSE);
 	}
+}
+
+void CDlgConfigEvent::OnLbnDblclkMethods()
+{
+	OnBnClickedEdit();
+}
+
+void CDlgConfigEvent::OnLbnSelchangeMethods()
+{
+	UpdateData(TRUE);
+	SaveControls();
+	m_idxMethod = m_ctrlMethods.GetCurSel();
+	FillControls();
 }
 
 void CDlgConfigEvent::OnBnClickedNew()
@@ -971,22 +619,19 @@ void CDlgConfigEvent::OnBnClickedNew()
 	FillControls();
 }
 
-void CDlgConfigEvent::OnBnClickedCopy()
+void CDlgConfigEvent::OnBnClickedEdit()
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
 	{
 		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		ARBConfigScoringPtr pNewScoring = m_Scorings.AddScoring();
-		*pNewScoring = *pScoring;
-		CString str = GetListName(pNewScoring);
-		m_idxMethod = m_ctrlMethods.AddString(str);
-		m_ctrlMethods.SetData(m_idxMethod, new CListPtrData<ARBConfigScoringPtr>(pNewScoring));
-		m_ctrlMethods.SetCurSel(m_idxMethod);
-		FillMethodList();
-		FillControls();
+		CDlgConfigEventMethod dlg(m_pVenue, pScoringData->GetData(), this);
+		if (IDOK == dlg.DoModal())
+		{
+			FillMethodList();
+			FillControls();
+		}
 	}
 }
 
@@ -1008,6 +653,25 @@ void CDlgConfigEvent::OnBnClickedDelete()
 				break;
 			}
 		}
+		FillMethodList();
+		FillControls();
+	}
+}
+
+void CDlgConfigEvent::OnBnClickedCopy()
+{
+	UpdateData(TRUE);
+	int idxMethod = m_ctrlMethods.GetCurSel();
+	if (LB_ERR != idxMethod)
+	{
+		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		ARBConfigScoringPtr pNewScoring = m_Scorings.AddScoring();
+		*pNewScoring = *pScoring;
+		CString str = GetListName(pNewScoring);
+		m_idxMethod = m_ctrlMethods.AddString(str);
+		m_ctrlMethods.SetData(m_idxMethod, new CListPtrData<ARBConfigScoringPtr>(pNewScoring));
+		m_ctrlMethods.SetCurSel(m_idxMethod);
 		FillMethodList();
 		FillControls();
 	}
@@ -1065,41 +729,9 @@ void CDlgConfigEvent::OnBnClickedDown()
 	}
 }
 
-void CDlgConfigEvent::OnValidFrom() 
+void CDlgConfigEvent::OnClickedInfo()
 {
-	UpdateData(TRUE);
-	BOOL bEnable = FALSE;
-	if (m_ctrlValidFrom.GetCheck())
-		bEnable = TRUE;
-	m_ctrlDateFrom.EnableWindow(bEnable);
-	SaveControls();
-	FillMethodList();
-}
-
-void CDlgConfigEvent::OnDatetimechangeDate(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	SaveControls();
-	FillMethodList();
-	*pResult = 0;
-}
-
-void CDlgConfigEvent::OnValidTo() 
-{
-	UpdateData(TRUE);
-	BOOL bEnable = FALSE;
-	if (m_ctrlValidTo.GetCheck())
-		bEnable = TRUE;
-	m_ctrlDateTo.EnableWindow(bEnable);
-	SaveControls();
-	FillMethodList();
-}
-
-void CDlgConfigEvent::OnSelchangeType() 
-{
-	UpdateData(TRUE);
-	FillRequiredPoints();
+	OnBnClickedEdit();
 }
 
 void CDlgConfigEvent::OnSelchangePoints() 
@@ -1264,26 +896,6 @@ void CDlgConfigEvent::OnOK()
 		return;
 	}
 
-	// Validate that from-to dates are okay.
-	int index;
-	for (index = 0; index < m_ctrlMethods.GetCount(); ++index)
-	{
-		CString str;
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(index);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		ARBDate validFrom = pScoring->GetValidFrom();
-		ARBDate validTo = pScoring->GetValidTo();
-		if (validFrom.IsValid() && validTo.IsValid()
-		&& validFrom > validTo)
-		{
-			m_ctrlMethods.SetCurSel(index);
-			m_idxMethod = index;
-			FillControls();
-			AfxMessageBox(_T("Valid From date is before the Valid To date"));
-			GotoDlgCtrl(&m_ctrlDateTo);
-			return;
-		}
-	}
 	// Check if there is any overlap.
 	bool bOverlap = false;
 	{
@@ -1335,7 +947,7 @@ void CDlgConfigEvent::OnOK()
 	}
 	if (bOverlap)
 	{
-		if (IDYES != AfxMessageBox(_T("Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?"), MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+		if (IDYES != AfxMessageBox(IDS_CONFIGEVENT_OVERLAPDATES, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
 			return;
 	}
 

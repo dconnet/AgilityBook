@@ -483,11 +483,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgConfigEventMethod.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgConfigMultiQ.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgConfigOtherPoints.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigPlaceInfo.h"
 				>
 			</File>
 			<File
@@ -1309,11 +1317,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgConfigEventMethod.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgConfigMultiQ.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgConfigOtherPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigPlaceInfo.cpp"
 				>
 			</File>
 			<File

@@ -486,9 +486,18 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 				pts = static_cast<short>(diff);
 				if (0 > pts)
 					pts = 0;
-				double mult = inScoring->GetPlaceInfo().GetPlaceInfo(GetPlace());
-				if (0.0 < mult)
+				double mult;
+				if (inScoring->GetPlaceInfo().GetPlaceInfo(GetPlace(), mult))
+				{
+					// Compute the multiplier for the given place.
 					pts = static_cast<short>(pts * mult);
+				}
+				else if (inScoring->GetPlaceInfo().GetPlaceInfo(0, mult))
+				{
+					// If the specified place wasn't found, see if there is
+					// a special '0' place. This acts as an 'everything else'
+					pts = static_cast<short>(pts * mult);
+				}
 			}
 		}
 	}

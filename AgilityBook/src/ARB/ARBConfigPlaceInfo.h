@@ -159,9 +159,10 @@ public:
 	/**
 	 * Get the value based on place.
 	 * @param inPlace Placement.
-	 * @return Value
+	 * @param outValue Value of placement.
+	 * @return inPlace has a value.`
 	 */
-	double GetPlaceInfo(short inPlace) const;
+	bool GetPlaceInfo(short inPlace, double &outValue) const;
 
 	/**
 	 * Find a points object.

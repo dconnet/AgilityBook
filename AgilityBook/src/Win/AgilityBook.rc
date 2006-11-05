@@ -568,7 +568,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,343,24,50,14
 END
 
-IDD_CONFIG_EVENT DIALOGEX 0, 0, 394, 337
+IDD_CONFIG_EVENT DIALOGEX 0, 0, 394, 295
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Event Configuration"
@@ -576,65 +576,83 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Name",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_CONFIG_EVENT,30,7,80,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_EVENT
-    CONTROL         "Has Ta&ble?",IDC_CONFIG_EVENT_TABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,8,49,10,0,HIDC_CONFIG_EVENT_TABLE
+    CONTROL         "Has &Table?",IDC_CONFIG_EVENT_TABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,8,49,10,0,HIDC_CONFIG_EVENT_TABLE
     CONTROL         "&Has Partners?",IDC_CONFIG_EVENT_PARTNER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,175,8,61,10,0,HIDC_CONFIG_EVENT_PARTNER
-    CONTROL         "Has Sub-Names?",IDC_CONFIG_EVENT_HAS_SUBNAMES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,240,8,71,10,0,HIDC_CONFIG_EVENT_HAS_SUBNAMES
-    LISTBOX         IDC_CONFIG_EVENT_SUBNAMES,240,22,59,36,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_SUBNAMES
+    CONTROL         "Has &Sub-Names?",IDC_CONFIG_EVENT_HAS_SUBNAMES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,240,8,71,10,0,HIDC_CONFIG_EVENT_HAS_SUBNAMES
+    LISTBOX         IDC_CONFIG_EVENT_SUBNAMES,240,22,59,40,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_SUBNAMES
     PUSHBUTTON      "New...",IDC_CONFIG_EVENT_SUBNAMES_NEW,303,22,30,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_NEW
-    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_SUBNAMES_DELETE,303,37,30,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_DELETE
+    PUSHBUTTON      "Edit",IDC_CONFIG_EVENT_SUBNAMES_EDIT,303,36,30,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_EDIT
+    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_SUBNAMES_DELETE,303,50,30,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_DELETE
     LTEXT           "&Event Note",IDC_STATIC,7,22,22,16
-    EDITTEXT        IDC_CONFIG_EVENT_DESC,30,22,205,36,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_DESC
-    GROUPBOX        "Scoring Methods",IDC_STATIC,7,62,380,268
-    LTEXT           "Division/Levels defined",IDC_STATIC,15,72,74,8
-    LISTBOX         IDC_CONFIG_EVENT_METHODS,15,82,150,78,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_METHODS
-    LTEXT           "Division/Levels not defined",IDC_STATIC,229,72,86,8
-    LISTBOX         IDC_CONFIG_EVENT_UNUSED,229,82,150,78,LBS_NOINTEGRALHEIGHT | WS_DISABLED | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_UNUSED
-    PUSHBUTTON      "New",IDC_CONFIG_EVENT_NEW,175,82,45,14,0,0,HIDC_CONFIG_EVENT_NEW
-    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_DELETE,175,98,45,14,0,0,HIDC_CONFIG_EVENT_DELETE
-    PUSHBUTTON      "Copy",IDC_CONFIG_EVENT_COPY,175,114,45,14,0,0,HIDC_CONFIG_EVENT_COPY
-    PUSHBUTTON      "Move Up",IDC_CONFIG_EVENT_MOVE_UP,175,130,45,14,0,0,HIDC_CONFIG_EVENT_MOVE_UP
-    PUSHBUTTON      "Move Down",IDC_CONFIG_EVENT_MOVE_DOWN,175,146,45,14,0,0,HIDC_CONFIG_EVENT_MOVE_DOWN
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,166,380,1
-    LTEXT           "&Division",IDC_STATIC,15,170,25,8
-    COMBOBOX        IDC_CONFIG_EVENT_DIVISION,15,180,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_DIVISION
-    LTEXT           "&Level",IDC_STATIC,100,170,18,8
-    COMBOBOX        IDC_CONFIG_EVENT_LEVEL,100,180,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_LEVEL
-    CONTROL         "Valid &From",IDC_CONFIG_EVENT_DATE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,199,49,10,0,HIDC_CONFIG_EVENT_DATE_VALID_FROM
-    CONTROL         "DateTimePicker1",IDC_CONFIG_EVENT_DATE_START,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,65,198,60,12,0,HIDC_CONFIG_EVENT_DATE_START
-    CONTROL         "Valid &To",IDC_CONFIG_EVENT_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,214,49,10,0,HIDC_CONFIG_EVENT_DATE_VALID_TO
-    CONTROL         "DateTimePicker1",IDC_CONFIG_EVENT_DATE_END,
-                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,65,213,60,12,0,HIDC_CONFIG_EVENT_DATE_END
-    LTEXT           "Title &Points",IDC_STATIC,15,270,22,16
-    LISTBOX         IDC_CONFIG_EVENT_POINTS,37,270,116,52,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_POINTS
-    PUSHBUTTON      "New...",IDC_CONFIG_EVENT_POINTS_NEW,158,270,30,12,0,0,HIDC_CONFIG_EVENT_POINTS_NEW
-    PUSHBUTTON      "Edit...",IDC_CONFIG_EVENT_POINTS_EDIT,158,285,30,12,0,0,HIDC_CONFIG_EVENT_POINTS_EDIT
-    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_POINTS_DELETE,158,301,30,12,0,0,HIDC_CONFIG_EVENT_POINTS_DELETE
-    LTEXT           "&Scoring style",IDC_STATIC,190,170,41,8
-    COMBOBOX        IDC_CONFIG_EVENT_TYPE,190,180,125,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_TYPE
-    LTEXT           "Required &Opening",IDC_CONFIG_EVENT_OPENING_PTS_TEXT,190,194,29,16
-    EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,223,194,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_OPENING_PTS
-    LTEXT           "Required &Closing",IDC_CONFIG_EVENT_CLOSING_PTS_TEXT,250,194,29,16
-    EDITTEXT        IDC_CONFIG_EVENT_CLOSING_PTS,283,194,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_CLOSING_PTS
-    CONTROL         "Drop time fractions for faults",IDC_CONFIG_EVENT_DROP_FRACTIONS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,214,103,10,0,HIDC_CONFIG_EVENT_DROP_FRACTIONS
-    CONTROL         "Time+Fault runs must be clean to Q",IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,224,127,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ
-    CONTROL         "Subtract time faults from score",IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,234,111,10,0,HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS
-    CONTROL         "Compute time faults under SCT",IDC_CONFIG_EVENT_TIME_FAULTS_UNDER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,244,113,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
-    CONTROL         "Compute time faults over SCT",IDC_CONFIG_EVENT_TIME_FAULTS_OVER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,254,109,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
-    CONTROL         "Speed Points?",IDC_CONFIG_EVENT_SPEED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,322,180,62,10,0,HIDC_CONFIG_EVENT_SPEED
-    CONTROL         "Super Q?",IDC_CONFIG_EVENT_SUPERQ,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,322,190,45,10,0,HIDC_CONFIG_EVENT_SUPERQ
-    CONTROL         "Bonus Points?",IDC_CONFIG_EVENT_BONUS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,322,200,61,10,0,HIDC_CONFIG_EVENT_BONUS
-    LTEXT           "Time Fault Multiplier",IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT,317,213,34,16
-    EDITTEXT        IDC_CONFIG_EVENT_TF_MULTIPLY,354,213,25,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_TF_MULTIPLY
-    LTEXT           "&Method Note",IDC_STATIC,195,270,27,16
-    EDITTEXT        IDC_CONFIG_EVENT_NOTES,223,270,156,52,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_NOTES
+    EDITTEXT        IDC_CONFIG_EVENT_DESC,30,22,205,40,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_DESC
+    GROUPBOX        "Scoring Methods",IDC_STATIC,7,66,380,222
+    LTEXT           "&Division/Levels defined",IDC_STATIC,15,76,74,8
+    LISTBOX         IDC_CONFIG_EVENT_METHODS,15,86,150,94,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_METHODS
+    LTEXT           "Division/Levels not defined",IDC_STATIC,229,76,86,8
+    LISTBOX         IDC_CONFIG_EVENT_UNUSED,229,86,150,94,LBS_NOINTEGRALHEIGHT | WS_DISABLED | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_UNUSED
+    PUSHBUTTON      "New",IDC_CONFIG_EVENT_NEW,174,86,45,14,0,0,HIDC_CONFIG_EVENT_NEW
+    PUSHBUTTON      "Edit",IDC_CONFIG_EVENT_EDIT,174,102,45,14,0,0,HIDC_CONFIG_EVENT_EDIT
+    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_DELETE,174,118,45,14,0,0,HIDC_CONFIG_EVENT_DELETE
+    PUSHBUTTON      "Copy",IDC_CONFIG_EVENT_COPY,174,134,45,14,0,0,HIDC_CONFIG_EVENT_COPY
+    PUSHBUTTON      "Move Up",IDC_CONFIG_EVENT_MOVE_UP,174,150,45,14,0,0,HIDC_CONFIG_EVENT_MOVE_UP
+    PUSHBUTTON      "Move Down",IDC_CONFIG_EVENT_MOVE_DOWN,174,166,45,14,0,0,HIDC_CONFIG_EVENT_MOVE_DOWN
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,186,380,1
+    LTEXT           "",IDC_CONFIG_EVENT_INFO,15,192,364,26,SS_NOTIFY | SS_SUNKEN,0,HIDC_CONFIG_EVENT_INFO
+    LTEXT           "Title &Points",IDC_STATIC,15,228,22,16
+    LISTBOX         IDC_CONFIG_EVENT_POINTS,37,228,116,52,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_POINTS
+    PUSHBUTTON      "New...",IDC_CONFIG_EVENT_POINTS_NEW,158,228,30,12,0,0,HIDC_CONFIG_EVENT_POINTS_NEW
+    PUSHBUTTON      "Edit...",IDC_CONFIG_EVENT_POINTS_EDIT,158,242,30,12,0,0,HIDC_CONFIG_EVENT_POINTS_EDIT
+    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_POINTS_DELETE,158,256,30,12,0,0,HIDC_CONFIG_EVENT_POINTS_DELETE
+    LTEXT           "&Method Note",IDC_STATIC,195,228,27,16
+    EDITTEXT        IDC_CONFIG_EVENT_NOTES,223,228,156,52,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_NOTES
     DEFPUSHBUTTON   "OK",IDOK,337,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,337,24,50,14
+END
+
+IDD_CONFIG_EVENT_METHOD DIALOGEX 0, 0, 330, 199
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Method Configuration"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Division",IDC_STATIC,7,9,25,8
+    COMBOBOX        IDC_CONFIG_EVENT_DIVISION,37,7,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_DIVISION
+    LTEXT           "&Level",IDC_STATIC,7,24,18,8
+    COMBOBOX        IDC_CONFIG_EVENT_LEVEL,37,22,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_LEVEL
+    CONTROL         "Valid &From",IDC_CONFIG_EVENT_DATE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,130,7,49,10,0,HIDC_CONFIG_EVENT_DATE_VALID_FROM
+    CONTROL         "DateTimePicker1",IDC_CONFIG_EVENT_DATE_START,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,180,7,60,12,0,HIDC_CONFIG_EVENT_DATE_START
+    CONTROL         "Valid &To",IDC_CONFIG_EVENT_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,130,23,49,10,0,HIDC_CONFIG_EVENT_DATE_VALID_TO
+    CONTROL         "DateTimePicker1",IDC_CONFIG_EVENT_DATE_END,
+                    "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,180,22,60,12,0,HIDC_CONFIG_EVENT_DATE_END
+    LTEXT           "&Scoring Style",IDC_STATIC,7,47,42,8
+    COMBOBOX        IDC_CONFIG_EVENT_TYPE,53,45,125,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_TYPE
+    CONTROL         "Drop time fractions for faults",IDC_CONFIG_EVENT_DROP_FRACTIONS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,65,103,10,0,HIDC_CONFIG_EVENT_DROP_FRACTIONS
+    CONTROL         "Has Bonus Points",IDC_CONFIG_EVENT_BONUS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,77,72,10,0,HIDC_CONFIG_EVENT_BONUS
+    CONTROL         "Has Super Qs",IDC_CONFIG_EVENT_SUPERQ,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,89,60,10,0,HIDC_CONFIG_EVENT_SUPERQ
+    CONTROL         "Has Speed Points",IDC_CONFIG_EVENT_SPEED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,101,73,10,0,HIDC_CONFIG_EVENT_SPEED
+    RTEXT           "Time Fault &Multiplier",IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT,7,116,65,8
+    EDITTEXT        IDC_CONFIG_EVENT_TF_MULTIPLY,75,114,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_TF_MULTIPLY
+    LTEXT           "Speed Point &Placement Multipliers",IDC_CONFIG_EVENT_PLACEMENT_TEXT,7,130,108,8
+    CONTROL         "List2",IDC_CONFIG_EVENT_PLACEMENT,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,140,106,52,0,HIDC_CONFIG_EVENT_PLACEMENT
+    PUSHBUTTON      "New...",IDC_CONFIG_EVENT_PLACEMENT_NEW,118,140,30,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_NEW
+    PUSHBUTTON      "Edit...",IDC_CONFIG_EVENT_PLACEMENT_EDIT,118,154,30,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_EDIT
+    PUSHBUTTON      "Delete",IDC_CONFIG_EVENT_PLACEMENT_DELETE,118,168,30,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_DELETE
+    CONTROL         "Time+Fault runs must be clean to Q",IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,165,65,127,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ
+    CONTROL         "Compute time faults under SCT",IDC_CONFIG_EVENT_TIME_FAULTS_UNDER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,165,77,113,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
+    CONTROL         "Compute time faults over SCT",IDC_CONFIG_EVENT_TIME_FAULTS_OVER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,165,89,109,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
+    CONTROL         "Subtract time faults from score",IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,165,101,111,10,0,HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS
+    RTEXT           "Required &Opening",IDC_CONFIG_EVENT_OPENING_PTS_TEXT,165,117,60,8
+    EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,228,115,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_OPENING_PTS
+    RTEXT           "Required &Closing",IDC_CONFIG_EVENT_CLOSING_PTS_TEXT,165,132,60,8
+    EDITTEXT        IDC_CONFIG_EVENT_CLOSING_PTS,228,130,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_CLOSING_PTS
+    DEFPUSHBUTTON   "OK",IDOK,273,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,273,24,50,14
 END
 
 IDD_CONFIG_OTHERPOINTS DIALOGEX 0, 0, 211, 127
@@ -1161,6 +1179,21 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
 END
 
+IDD_CONFIG_PLACEINFO DIALOGEX 0, 0, 190, 74
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Placement Multipliers"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "Note: Entering a place of zero will assign the specified multiplier to all placements not explicitly listed.",IDC_STATIC,7,7,115,24
+    LTEXT           "&Place",IDC_STATIC,7,40,19,8
+    EDITTEXT        IDC_CONFIG_PLACEINFO_PLACE,35,38,40,12,ES_AUTOHSCROLL
+    LTEXT           "&Value",IDC_STATIC,7,56,19,8
+    EDITTEXT        IDC_CONFIG_PLACEINFO_VALUE,35,54,40,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,133,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
+END
+
 IDD_CRCD_VIEWER DIALOGEX 0, 0, 272, 190
 STYLE DS_SETFONT | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "CRCD Viewer"
@@ -1620,7 +1653,15 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 387
         TOPMARGIN, 7
-        BOTTOMMARGIN, 330
+        BOTTOMMARGIN, 288
+    END
+
+    IDD_CONFIG_EVENT_METHOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 323
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
     END
 
     IDD_CONFIG_OTHERPOINTS, DIALOG
@@ -1828,6 +1869,14 @@ BEGIN
         RIGHTMARGIN, 183
         TOPMARGIN, 7
         BOTTOMMARGIN, 53
+    END
+
+    IDD_CONFIG_PLACEINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 183
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 67
     END
 
     IDD_CRCD_VIEWER, DIALOG
@@ -2120,14 +2169,14 @@ BEGIN
     IDS_POINTS              "Points"
     IDS_CALENDAR            "Calendar"
     IDS_TRAINING            "Training Log"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_PARTNERS            "Partners"
     IDS_VENUES              "Venues"
     IDS_VENUE_NAME          "Venue"
     IDS_FAULT_TYPES         "Fault Types"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_FAULT_TYPE_NAME     "Fault Name"
     IDS_OTHERPOINTS         "Other Points"
     IDS_OTHERPOINTS_NAME    "Other Points Name"
@@ -2137,10 +2186,6 @@ BEGIN
     IDS_LEVELS              "Levels"
     IDS_LEVEL_NAME          "Level"
     IDS_SUBLEVEL_NAME       "SubLevel"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_EVENTS              "Events"
     IDS_EVENT_NAME          "Event Name"
     IDS_SCORING             "Scoring Methods"
@@ -2148,7 +2193,29 @@ BEGIN
     IDS_SQ                  "SQ"
     IDS_SUPER_Q             "SuperQ"
     IDS_SPEEDPTS            "SpeedPts"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_EXISTING_POINTS     "Existing Points"
+    IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
+    IDS_ABOUT_VERSION       "Version %1"
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
+    IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
+    IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
+    IDS_ABOUT_LINK_EMAILHELP 
+                            "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
+    IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
+    IDS_ABOUT_LINK_SOURCEFORGE 
+                            "Source Forge (downloads and source code)\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
+    IDS_UPDATE_CURRENT      "No updates are available at this time."
+    IDS_UPDATE_UNKNOWN      "Unable to determine current released version."
+    IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
+    IDS_DELETE_EVENT_SCORING 
+                            "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."
+    IDS_NEW                 "<New>"
+    IDS_CONFIGURE           "Configure"
+    IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
 END
 
 STRINGTABLE 
@@ -2255,32 +2322,11 @@ STRINGTABLE
 BEGIN
     IDS_COL_MULTIQ          "MultiQ"
     IDS_COL_MIN_YPS         "MinYPS"
+    IDS_COL_MULTIPLIER      "Multiplier"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
-    IDS_ABOUT_VERSION       "Version %1"
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
-    IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
-    IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
-    IDS_ABOUT_LINK_EMAILHELP 
-                            "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
-    IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
-    IDS_ABOUT_LINK_SOURCEFORGE 
-                            "Source Forge (downloads and source code)\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
-    IDS_UPDATE_CURRENT      "No updates are available at this time."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_UPDATE_UNKNOWN      "Unable to determine current released version."
-    IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
-    IDS_DELETE_EVENT_SCORING 
-                            "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."
-    IDS_NEW                 "<New>"
-    IDS_CONFIGURE           "Configure"
-    IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
     IDS_DELETE_VENUE        "Warning: The venue '%1' is currently in use. Deleting this venue will also delete %2!d! existing points, %3!d! registration number(s), %4!d! title(s) and may delete %5!d! trial(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_OTHERPOINTS  "Warning: Other Points '%1' is currently in use. Deleting this item will delete points from %2!d! run(s) and existing points.\n\nAre you sure you want to do this?"
     IDS_DELETE_DIVISION     "Warning: The division '%1' is currently in use. Deleting this division will also delete %2!d! existing points and may delete %3!d! run(s).\n\nAre you sure you want to do this?"
@@ -2292,16 +2338,16 @@ BEGIN
                             "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_NAME_IN_USE         "Name is already in use."
-END
-
-STRINGTABLE 
-BEGIN
     IDS_ALL                 "<All>"
     IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
     IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
     IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
     IDS_VIEWING_FILTERS     "Filters"
     IDS_VIEWING_OPTIONS     "Options"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_RUN_PROPERTIES      "Run Properties"
     IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_SELECT_DIVISION     "Please select a division."
@@ -2313,16 +2359,16 @@ BEGIN
     IDS_SELECT_Q            "Please select a 'Q'."
     IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
     IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
-END
-
-STRINGTABLE 
-BEGIN
     IDS_SCORING_REQUIRED_POINTS "Required Points"
     IDS_SCORING_POINTS      "Points"
     IDS_NUM_EVENTS          "%1!d! events"
     IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
     IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
     IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_VENUE_CONFIG_MISSING 
                             "Unable to locate configuration information for the venue '%1'."
@@ -2335,16 +2381,16 @@ BEGIN
     IDS_CHANGESUBLEVEL_ISSUES 
                             "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
     IDS_NOCONFIGDATA_FOUND  "No configuration data found."
-END
-
-STRINGTABLE 
-BEGIN
     IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
     IDS_OTHERPTS_ALL        "All Events"
     IDS_OTHERPTS_EVENT      "Tally by Event"
     IDS_OTHERPTS_LEVEL      "Tally by Level"
     IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
     IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
     IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
     IDS_POINTS_PARTNERS     ", %1!d! partners"
@@ -2355,10 +2401,6 @@ BEGIN
     IDS_POINTS_SPEED_SUBTOTAL "[%1!d! speed]"
     IDS_POINTS_SPEED        "%1!d! Speed"
     IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_FILEEXT_DEF_ARB     "arb"
     IDS_FILEEXT_FNAME_ARB   "*.arb"
     IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
@@ -2366,6 +2408,10 @@ BEGIN
     IDS_CREATETRIAL_FILTERED 
                             "Warning: The trial you have just created cannot be shown due to filter options."
     IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_NUM_TRAINING        "%1!d! entries"
     IDS_FILEEXT_DEF_DTD     "dtd"
     IDS_FILEEXT_FNAME_DTD   "*.dtd"
@@ -2376,33 +2422,16 @@ BEGIN
     IDS_ADDED_CAL_ITEMS     "Added %1!d! new calendar items."
     IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
     IDS_FILE_PREVIEW        "Preview of %1."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_INFO_LOCATION       "Location Information"
-    IDS_FILEEXT_DEF_VCS     "vcs"
-    IDS_FILEEXT_FNAME_VCS   "*.vcs"
-    IDS_FILEEXT_FILTER_VCS  "vCalendar (*.vcs)|*.vcs|All Files (*.*)|*.*||"
-    IDS_FILEEXT_DEF_ICS     "ics"
-    IDS_FILEEXT_FNAME_ICS   "*.ics"
-    IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
-    IDS_DELETE_MULTIQ       "Warning: Multiple Q '%1' is currently in use. Deleting this item will delete points from %2!d! existing points.\n\nAre you sure you want to do this?"
-    IDS_NAME_FILTER         "You must name a filter in order to save it."
-    IDS_FILEEXT_FILTER_MSEXCEL 
-                            "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
-    IDS_FILEEXT_FILTER_OOCALC "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
-    IDS_WARNING_RESTART     "The application must be restarted in order to change between HTML and List in the Points View."
-END
-
-STRINGTABLE 
-BEGIN
     IDS_BLANK_COLUMN        "<Blank Column>"
     IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
     IDS_LIFETIME_POINTS     "LifeTime Points"
     IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
     IDS_INDICATOR_BLANK     "          "
     IDS_ADDED_DOGS          "%1!d! dogs"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_ADDED_REGNUMS       "%1!d! registration numbers"
     IDS_ADDED_EXISTINGPTS   "%1!d! existing points"
     IDS_ADDED_TITLES        "%1!d! titles"
@@ -2412,6 +2441,47 @@ BEGIN
     IDS_ADDED_LOCATIONS     "%1!d! locations"
     IDS_INFO_CLUB           "Club's Information"
     IDS_INFO_JUDGE          "Judge's Information"
+    IDS_INFO_LOCATION       "Location Information"
+    IDS_FILEEXT_DEF_VCS     "vcs"
+    IDS_FILEEXT_FNAME_VCS   "*.vcs"
+    IDS_FILEEXT_FILTER_VCS  "vCalendar (*.vcs)|*.vcs|All Files (*.*)|*.*||"
+    IDS_FILEEXT_DEF_ICS     "ics"
+    IDS_FILEEXT_FNAME_ICS   "*.ics"
+    IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DELETE_MULTIQ       "Warning: Multiple Q '%1' is currently in use. Deleting this item will delete points from %2!d! existing points.\n\nAre you sure you want to do this?"
+    IDS_NAME_FILTER         "You must name a filter in order to save it."
+    IDS_FILEEXT_FILTER_MSEXCEL 
+                            "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_OOCALC "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
+    IDS_WARNING_RESTART     "The application must be restarted in order to change between HTML and List in the Points View."
+    IDS_CONFIGEVENT_STYLE   "Scoring Style"
+    IDS_CONFIGEVENT_TIMEFAULTMULT "Time Fault Multiplier"
+    IDS_CONFIGEVENT_REQOPEN "Required Opening"
+    IDS_CONFIGEVENT_REQCLOSE "Required Closing"
+    IDS_CONFIGEVENT_POINTS  "Points"
+    IDS_CONFIGEVENT_TF_FROMSCORE "Subtract time faults from score"
+    IDS_CONFIGEVENT_TF_UNDER "Compute time faults under SCT"
+    IDS_CONFIGEVENT_TF_OVER "Compute time faults over SCT"
+    IDS_CONFIGEVENT_CLEANQ  "Runs must be clean to Q"
+    IDS_CONFIGEVENT_DROPFRAC "Drop time fractions for faults"
+    IDS_CONFIGEVENT_BONUS   "Has Bonus Points"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CONFIGEVENT_SUPERQ  "Has Super Qs"
+    IDS_CONFIGEVENT_SPEEDPTS "Has Speed Points"
+    IDS_CONFIGEVENT_OVERLAPDATES 
+                            "Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?"
+    IDS_CONFIGEVENT_DATEORDER "Valid From date is before the Valid To date"
+    IDS_CONFIGEVENT_PLACEMENT0 "In order to use a placement of 0, you must specify places that have values. OTherwise, turn off Speed Points."
+    IDS_CONFIG_PLACE_UNIQUE "Place must be unique."
+    IDS_CONFIG_PLACE_TOOSMALL "Place must be greater than zero."
+    IDS_CONFIG_CHECK_VALUE  "Value is too small. Please enter a value greater than or equal to zero. (Note, entering zero will erase any speed points for the run.)"
 END
 
 STRINGTABLE 
