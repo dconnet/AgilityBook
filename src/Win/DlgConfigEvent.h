@@ -129,7 +129,7 @@ protected:
 	afx_msg void OnBnClickedCopy();
 	afx_msg void OnBnClickedUp();
 	afx_msg void OnBnClickedDown();
-	afx_msg void OnClickedInfo();
+	afx_msg void OnDblclickConfigInfo();
 	afx_msg void OnSelchangePoints();
 	afx_msg void OnDblclkPoints();
 	afx_msg void OnPointsNew();

@@ -16,7 +16,8 @@ is a description that applies to the event as a whole.</p>
 certain aspects of this event. Enabling the table option will allow this run
 adjust the Yards Per Second in the <a href="PropRun.html">Run Properties</a>.</p>
 <p>The <b>Has Sub-Names?</b> checkbox is used when a particular event may
-actually be composed of several variations. See below for more details.</p>
+actually be composed of several variations. See <a href="#subnames">below</a>
+for more details.</p>
 <p>The order of scoring methods is very important. When attempting to find a
 scoring method for a division/level, the first item that is matched will be
 used. So if the &quot;&lt;All&gt; / &lt;All&gt;&quot; method were first, no other method would ever be
@@ -24,16 +25,27 @@ used.</p>
 <p>When this dialog is brought up for a new event, the first thing you must do
 (after setting the above information), is to create a new scoring method with
 the <b>New</b> button. This will create a method for all divisions and levels.
-If you need to refine that (as with the example above), use the <b>Division</b>
-and <b>Level</b> controls to select what this method is for. You can use the <b>
-Copy</b> button to copy an existing scoring method - this is convenient when
-different method vary only a little.</p>
+If you need to refine that (as with the example above), edit the entry by doing
+one of the following actions:
+<ul>
+<li>Clicking the <b>Edit</b> button.</li>
+<li>Double clicking the Scoring Method.</li>
+<li>Double clicking in the box containing the description of the scoring method.</li>
+</ul>
+This will bring up the following dialog.</p>
+<p><img border="0" src="images/DlgConfigEventMethod.gif"></p>
+
+<p>Use the <b>Division</b> and <b>Level</b> controls to select what this
+method is for.
+You can use the <b>Copy</b> button (previous dialog) to copy an existing scoring
+method - this is convenient when different methods vary only a little.</p>
 <p>The <b>Valid From</b> and <b>Valid To</b> fields enable scoring methods to
 change. For instance, in 2004 USDAA introduced titling programs for the Novice
 and Advanced levels. In the dialog below, you can see how the number of methods
 increases! (This is also where the <b>Copy</b> button was very convenient!)</p>
 <p>
-<img border="0" src="images/DlgConfigEventSnooker.gif"></p>
+<img border="0" src="images/DlgConfigEventSnooker.gif">
+<img border="0" src="images/DlgConfigEventSnookerMethod.gif"></p>
 <p>The <b>Scoring Style</b> affects what other controls will be visible. As you
 can see, this dialog differs slightly from the first example. The available
 scoring styles are:</p>
@@ -61,9 +73,6 @@ scoring styles are:</p>
   100 Minus Faults Then Time,
   200 Minus Faults Then Time,
   Time Plus Faults]</li>
-  <li><b>Drop time fractions for faults</b> - When computing time faults, drop
-  any fractions.
-  [all]</li>
   <li><b>Time+Fault runs must be clean to Q</b> - Time+Fault runs are normally
   scored by adding the time and faults. In some venues, this is used for
   placing, however the run must be clean to actually qualify.
@@ -85,16 +94,32 @@ scoring styles are:</p>
   Points Then Time,
   Time Plus Faults]</li>
 </ul>
-<p>The <b>Super Q?</b> option is for USDAA Snooker. It means you qualified in
-the top 15% of the class. Agility Record Book will not compute this for you.
-This is so this option could be used in other venues for similar purposes, even
-though the percentage may be different.</p>
-<p>The <b>Speed Points?</b> option applies only to AKC runs (at the present).
+<p>The <b>Drop time fractions for faults</b> option is used when computing
+time faults - any fractions are dropped.</p>
+<p>The <b>Has Bonus Points</b> option applies only to NADAC runs (at the
+present).
+This is used to identify runs where a Bonus Box may be available allowing
+the dog to earn 15 title points if done successfully.</p>
+<p>The <b>Has Super Qs</b> option is for USDAA Snooker.
+It means you qualified in the top 15% of the class.
+Agility Record Book will not compute this for you.
+This is so this option could be used in other venues for similar purposes,
+even though the percentage may be different.</p>
+<p>The <b>Has Speed Points</b> option applies only to AKC runs (at the present).
 Speed Points (in AKC, they are known as Mach Points) are computed as the
 number of whole seconds below Standard Course Time.</p>
-<p>The <b>Bonus Points?</b> option applies only to NADAC runs (at the present).
-This is used to identify runs where a Bonus Box may be available allowing
-the dog to earn 15 title points if done successfully.
+<p>Associated with Speed Points are the <b>Speed Point Placement Multipliers</b>.
+When a dog finishes a run with one of the listed placements, the number of
+Speed Points earned is multiplied by the listed Multiplier.
+If an entry is created with a place of <b>0</b>, then that multiplier will
+be applied to all entries not specifically listed. (Note, when entering
+a Place in the Runs dialog, the zero entered there is not the same has the 0
+entered here. Entering 0 there will not cause the 0-Multiplier to be applied.)
+This special entry could allow you to configure an entry so that only the
+listed places generated Speed Points (by setting the Multipler value to 0.0).
+Speed Point Multipliers are modified in the following dialog:
+<br/><img border="0" src="images/DlgConfigEventPlacement.gif"></p>
+
 <p>The <b>Title Points</b> section shows how many title points you can earn,
 based on the number of faults incurred. In both examples above, you must run
 clean. In NADAC (and others), you can still qualify if you, for instance, drop a
@@ -121,7 +146,7 @@ If you do not have a titling point entry, the <b>Q?</b> control in dialog
 to create a run will be disabled since the assumption is made that if there
 are no titling points available, then you cannot Qualify in that event.
 This is useful when you want to create an event for tracking fun-runs.</p>
-<h1>Sub Names</h1>
+<h1><a name="subnames">Sub Names</a></h1>
 <p>An event is configured for sub-names when multiple variations of the event
 exist. An example of these are NADAC's Gamblers class and the game classes in
 TDAA. In the NADAC example, we know all the sub-names to start with, so we can
@@ -130,6 +155,7 @@ we can list some initial ones, however the user must be able to enter names
 of new events without the need to modify this configuration. In TDAA, we will
 create a generic events that the user can add to.</p>
 <p>
-<img border="0" src="images/DlgConfigEventGamblers.gif"></p>
+<img border="0" src="images/DlgConfigEventGamblers.gif">
+<img border="0" src="images/DlgConfigEventGamblersMethod.gif"></p>
 </BODY>
 </HTML>
