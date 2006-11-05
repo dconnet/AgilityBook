@@ -119,10 +119,17 @@ Division this scoring method applies to.
 .topic HIDC_CONFIG_EVENT_DROP_FRACTIONS
 When computing time faults, should the fractions be dropped?
 
+.topic HIDC_CONFIG_EVENT_EDIT
+Edit the selected scoring method. You can also double click on the entry.
+
 .topic HIDC_CONFIG_EVENT_HAS_SUBNAMES
 Allow sub-names for this event. This allows the user to 'create' an event
 without modifying the configuration. An example of this is different types
 of Gambles in NADAC.
+
+.topic HIDC_CONFIG_EVENT_INFO
+Displays information about the selected scoring method. This information is
+available for editing via the 'Edit' button.
 
 .topic HIDC_CONFIG_EVENT_LEVEL
 Level this scoring method applies to.
@@ -150,6 +157,19 @@ closing points, this is the total number of points required.
 .topic HIDC_CONFIG_EVENT_PARTNER
 Does this event have partners?
 
+.topic HIDC_CONFIG_EVENT_PLACEMENT
+List of placement multipliers used when computing speed points.
+If there are no entries, then placements will not affect speed points.
+
+.topic HIDC_CONFIG_EVENT_PLACEMENT_DELETE
+Delete the currently selected Speed Point Multiplier.
+
+.topic HIDC_CONFIG_EVENT_PLACEMENT_EDIT
+Edit the currently selected Speed Point Multiplier.
+
+.topic HIDC_CONFIG_EVENT_PLACEMENT_NEW
+Add a new Speed Point Multiplier. Placements must be unique.
+
 .topic HIDC_CONFIG_EVENT_POINTS
 List of titling and/or lifetime points, based on the number of faults.
 
@@ -176,6 +196,9 @@ Pre-configured event sub-names.
 
 .topic HIDC_CONFIG_EVENT_SUBNAMES_DELETE
 Remove an event sub-name.
+
+.topic HIDC_CONFIG_EVENT_SUBNAMES_EDIT
+Edit the selected event sub-name.
 
 .topic HIDC_CONFIG_EVENT_SUBNAMES_NEW
 Add an event sub-name.

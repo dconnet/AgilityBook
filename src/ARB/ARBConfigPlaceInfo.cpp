@@ -136,14 +136,15 @@ bool ARBConfigPlaceInfoList::Load(
 	return true;
 }
 
-double ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace) const
+bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double &outValue) const
 {
-	for (const_iterator iter = begin(); iter != end(); ++iter)
+	ARBConfigPlaceInfoPtr place;
+	bool bOk = FindPlaceInfo(inPlace, &place);
+	if (bOk)
 	{
-		if (inPlace == (*iter)->GetPlace())
-			return (*iter)->GetValue();
+		outValue = place->GetValue();
 	}
-	return 0;
+	return bOk;
 }
 
 bool ARBConfigPlaceInfoList::FindPlaceInfo(
