@@ -1,5 +1,6 @@
 11/5/2006: v1.7.6.12 <in development>
 - Bumped file version to 12.3, Configuration v17:
+  - Updated ASCA title descriptions.
   - Updated USDAA Performance Pairs for titling in 2007.
   - Updated USDAA Performance Tournament comments.
   - Updated TDAA website link.
