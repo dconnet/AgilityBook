@@ -252,11 +252,12 @@ void CPointsDataDog::Details() const
 {
 	// CDlgDog will cause an update msg to occur which will delete us.
 	// So we need to cache the document in a stack variable.
-	CDlgDog dlg(m_pDoc, m_pDog, m_pParent, 0);
+	CAgilityBookDoc* pDoc = m_pDoc;
+	CDlgDog dlg(pDoc, m_pDog, m_pParent, 0);
 	if (IDOK == dlg.DoModal())
 	{
-		m_pDoc->SetModifiedFlag();
-		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+		pDoc->SetModifiedFlag();
+		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 	}
 }
 
@@ -346,11 +347,12 @@ void CPointsDataVenue::Details() const
 		{
 			// CDlgDog will cause an update msg to occur which will delete us.
 			// So we need to cache the document in a stack variable.
-			CDlgDog dlg(m_pDoc, m_pDog, m_pParent, 2);
+			CAgilityBookDoc* pDoc = m_pDoc;
+			CDlgDog dlg(pDoc, m_pDog, m_pParent, 2);
 			if (IDOK == dlg.DoModal())
 			{
-				m_pDoc->SetModifiedFlag();
-				m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+				pDoc->SetModifiedFlag();
+				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 			}
 		}
 		else
