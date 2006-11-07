@@ -1866,12 +1866,22 @@ Was called Wild Card briefly.</Desc>
 				<Scoring Division="*" Level="*" cleanQ="y" overTF="y" type="TimePlusFaults">
 					<Note>Note, time faults are computed</Note>
 					<TitlePoints Faults="0" Points="10"/>
+					<Placements>
+						<PlaceInfo Place="1" Value="10"/>
+						<PlaceInfo Place="2" Value="5"/>
+						<PlaceInfo Place="3" Value="3"/>
+					</Placements>
 				</Scoring>
 			</Event>
 			<Event Name="Jumpers">
 				<Scoring Division="*" Level="*" cleanQ="y" overTF="y" type="TimePlusFaults">
 					<Note>Note, time faults are computed</Note>
 					<TitlePoints Faults="0" Points="10"/>
+					<Placements>
+						<PlaceInfo Place="1" Value="10"/>
+						<PlaceInfo Place="2" Value="5"/>
+						<PlaceInfo Place="3" Value="3"/>
+					</Placements>
 				</Scoring>
 			</Event>
 		</Venue>
