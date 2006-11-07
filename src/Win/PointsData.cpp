@@ -326,14 +326,22 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 				<< m_pVenue->GetName()
 				<< _T("</a>");
 		}
-		data << _T(" <a href=\"") << ARB_PROTOCOL
+		if (m_pDog)
+		{
+			ARBDogRegNumPtr pRegNum;
+			if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
+			{
+				data << _T(" [<a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
-			<< static_cast<UINT>(nCurLine)
+					<< static_cast<UINT>(nCurLine)
 #else
-			<< nCurLine
+					<< nCurLine
 #endif
-			<< _T("\">") << OnNeedText(1) << _T("</a>") << std::endl
-			<< _T("</h2>") << std::endl;
+					<< _T("\">") << pRegNum->GetNumber()
+					<< _T("</a>]") << std::endl;
+			}
+		}
+		data << _T("</h2>") << std::endl;
 	}
 	return data.str();
 }
