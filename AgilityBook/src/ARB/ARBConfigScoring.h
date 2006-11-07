@@ -329,6 +329,14 @@ public:
 	{
 		return m_LifePoints;
 	}
+	ARBConfigPlaceInfoList const& GetPlacements() const
+	{
+		return m_Placements;
+	}
+	ARBConfigPlaceInfoList& GetPlacements()
+	{
+		return m_Placements;
+	}
 
 	/**
 	 * Obsolete, used only for converting old files.
@@ -361,6 +369,7 @@ private:
 	ARBConfigPlaceInfoList m_PlaceInfo;
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;
+	ARBConfigPlaceInfoList m_Placements;
 };
 
 /////////////////////////////////////////////////////////////////////////////

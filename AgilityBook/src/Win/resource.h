@@ -771,6 +771,7 @@
 #define IDS_CONFIG_PLACE_UNIQUE         5157
 #define IDS_CONFIG_PLACE_TOOSMALL       5158
 #define IDS_CONFIG_CHECK_VALUE          5159
+#define IDS_PLACEMENT_POINTS            5160
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_EDIT_FIND_NEXT               32780

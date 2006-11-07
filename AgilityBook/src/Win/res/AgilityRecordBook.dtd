@@ -295,7 +295,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		hasSubNames (y|n) 'n'
 		>
 <!ELEMENT SubName (#PCDATA) >
-<!ELEMENT Scoring (Note?, PlaceInfo?, TitlePoints*, LifeTime*) >
+<!ELEMENT Scoring (Note?, PlaceInfo*, TitlePoints*, LifeTime*, Placements?) >
 	<!ATTLIST Scoring
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
@@ -329,6 +329,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		Points CDATA #REQUIRED
 		Faults CDATA #REQUIRED
 		>
+<!ELEMENT Placements (PlaceInfo+) >
 
 <!-- End of Configuration -->
 
