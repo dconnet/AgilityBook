@@ -550,12 +550,20 @@ void CDlgRunScore::FillDivisions()
 				index = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
 				m_ctrlDivisions.SetData(index,
 					new CListPtrData<ARBConfigDivisionPtr>(pDiv));
-				if (m_Run->GetDivision() == div)
+				if (pDiv->GetName() == div)
 					m_ctrlDivisions.SetCurSel(index);
 				break;
 			}
 		}
 	}
+	// First try to find 'div' (in case the divisions changed)
+	if (CB_ERR == m_ctrlDivisions.GetCurSel() && !div.empty())
+	{
+		index = m_ctrlDivisions.FindStringExact(-1, div.c_str());
+		if (0 <= index)
+			m_ctrlDivisions.SetCurSel(index);
+	}
+	// Then try to find the last entered
 	if (CB_ERR == m_ctrlDivisions.GetCurSel())
 	{
 		CString last = CAgilityBookOptions::GetLastEnteredDivision();
