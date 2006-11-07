@@ -404,6 +404,7 @@ bool ARBConfigScoring::Load(
 		}
 		m_TitlePoints.sort();
 		m_LifePoints.sort();
+		m_Placements.sort();
 	}
 
 	// Migrate pre-5 files.
@@ -510,7 +511,7 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		return false;
 	if (0 < m_Placements.size())
 	{
-		Element& place = ioTree.AddElement(TREE_PLACEMENTS);
+		Element& place = scoring.AddElement(TREE_PLACEMENTS);
 		if (!m_Placements.Save(place))
 			return false;
 	}
