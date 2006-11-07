@@ -169,7 +169,7 @@ public:
 	/**
 	 * Find a points object.
 	 * @param inPlace Placement to find.
-	 * @param outPoints Pointer to found object, NULL if not found.
+	 * @param outPlace Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
 	bool FindPlaceInfo(
