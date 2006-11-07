@@ -131,13 +131,7 @@ public:
 	{
 		return m_Faults;
 	}
-	/**
-	 * @attention If faults is set via this API, the caller MUST call ARBConfigLifetimePointsList::sort.
-	 */
-	void SetFaults(double inFaults)
-	{
-		m_Faults = inFaults;
-	}
+	// There is no SetFaults since this needs to be a unique key in the list.
 
 private:
 	double m_Points;

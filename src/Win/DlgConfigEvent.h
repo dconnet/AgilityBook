@@ -102,6 +102,7 @@ private:
 	CListPtrData<ARBConfigScoringPtr>* GetScoringData(int index) const;
 	CListPtrData<ARBConfigTitlePointsPtr>* GetTitleData(int index) const;
 	CListPtrData<ARBConfigLifetimePointsPtr>* GetLifetimeData(int index) const;
+	CListPtrData<ARBConfigPlaceInfoPtr>* GetPlacementData(int index) const;
 	CString GetListName(ARBConfigScoringPtr pScoring) const;
 	void FillControls();
 	void FillMethodList();

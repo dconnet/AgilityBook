@@ -49,14 +49,14 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigTitlePoints dialog
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
+		double inValue, // Faults or Place
 		double inPoints,
-		double inFaults,
-		BOOL bLifetime,
+		ETitlePointType inType,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)
+	, m_Value(inValue)
 	, m_Points(inPoints)
-	, m_Faults(inFaults)
-	, m_LifeTime(bLifetime)
+	, m_Type(inType)
 {
 	//{{AFX_DATA_INIT(CDlgConfigTitlePoints)
 	//}}AFX_DATA_INIT
@@ -66,16 +66,74 @@ void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigTitlePoints)
+	DDX_Control(pDX, IDC_CONFIG_TITLEPTS_VALUE_TEXT, m_ctrlValueText);
+	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_VALUE, m_Value);
 	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_POINTS, m_Points);
-	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_FAULTS, m_Faults);
-	DDX_Check(pDX, IDC_CONFIG_TITLEPTS_TITLE_POINTS, m_LifeTime);
+	DDX_Control(pDX, IDC_CONFIG_TITLEPTS_TITLE_POINTS, m_ctrlType);
 	//}}AFX_DATA_MAP
+	if (pDX->m_bSaveAndValidate)
+	{
+		int idx = m_ctrlType.GetCurSel();
+		ASSERT(0 <= idx);
+		m_Type = (ETitlePointType)m_ctrlType.GetItemData(idx);
+	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigTitlePoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitlePoints)
+	ON_CBN_SELCHANGE(IDC_CONFIG_TITLEPTS_TITLE_POINTS, OnCbnSelchangeTitlePoints)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
+
+void CDlgConfigTitlePoints::UpdateText()
+{
+	if (eTitlePlacement == m_Type)
+		m_ctrlValueText.SetWindowText(m_PlaceText);
+	else
+		m_ctrlValueText.SetWindowText(m_FaultText);
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitlePoints message handlers
+
+BOOL CDlgConfigTitlePoints::OnInitDialog()
+{
+	CDlgBaseDialog::OnInitDialog();
+
+	static struct
+	{
+		LPCTSTR pText;
+		ETitlePointType eType;
+	} sc_Types[] = {
+		{ _T("Normal"), eTitleNormal},
+		{ _T("Lifetime"), eTitleLifetime},
+		{ _T("Placement"), eTitlePlacement}
+	};
+	for (int index = 0; index < 3; ++index)
+	{
+		int idx = m_ctrlType.AddString(sc_Types[index].pText);
+		m_ctrlType.SetItemData(idx, sc_Types[index].eType);
+		if (m_Type == sc_Types[index].eType)
+			m_ctrlType.SetCurSel(index);
+	}
+
+	CString str;
+	m_ctrlValueText.GetWindowText(str);
+	int idx = str.Find('\n');
+	ASSERT(0 < idx);
+	m_FaultText = str.Left(idx);
+	m_PlaceText = str.Mid(idx+1);
+
+	UpdateText();
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgConfigTitlePoints::OnCbnSelchangeTitlePoints()
+{
+	UpdateData(TRUE);
+	UpdateText();
+}

@@ -233,6 +233,12 @@ CListPtrData<ARBConfigLifetimePointsPtr>* CDlgConfigEvent::GetLifetimeData(int i
 	return dynamic_cast<CListPtrData<ARBConfigLifetimePointsPtr>*>(pData);
 }
 
+CListPtrData<ARBConfigPlaceInfoPtr>* CDlgConfigEvent::GetPlacementData(int index) const
+{
+	CListData* pData = m_ctrlPointsList.GetData(index);
+	return dynamic_cast<CListPtrData<ARBConfigPlaceInfoPtr>*>(pData);
+}
+
 CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 {
 	CString all;
@@ -458,6 +464,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 {
 	ARBConfigTitlePointsPtr pOldTitle;
 	ARBConfigLifetimePointsPtr pOldLifetime;
+	ARBConfigPlaceInfoPtr pOldPlacement;
 	int idxTitle = m_ctrlPointsList.GetCurSel();
 	if (LB_ERR != idxTitle)
 	{
@@ -470,6 +477,11 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		if (pLifeData)
 		{
 			pOldLifetime = pLifeData->GetData();
+		}
+		CListPtrData<ARBConfigPlaceInfoPtr>* pPlacement = GetPlacementData(idxTitle);
+		if (pPlacement)
+		{
+			pOldPlacement = pPlacement->GetData();
 		}
 	}
 	m_ctrlPointsList.ResetContent();
@@ -498,6 +510,20 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 			m_ctrlPointsList.SetData(idx,
 				new CListPtrData<ARBConfigLifetimePointsPtr>(pLife));
 			if (pOldLifetime == pLife)
+				m_ctrlPointsList.SetCurSel(idx);
+		}
+	}
+	for (ARBConfigPlaceInfoList::const_iterator iter3 = pScoring->GetPlacements().begin();
+		iter3 != pScoring->GetPlacements().end();
+		++iter3)
+	{
+		ARBConfigPlaceInfoPtr pPlace = (*iter3);
+		int idx = m_ctrlPointsList.AddString(pPlace->GetGenericName().c_str());
+		if (LB_ERR != idx)
+		{
+			m_ctrlPointsList.SetData(idx,
+				new CListPtrData<ARBConfigPlaceInfoPtr>(pPlace));
+			if (pOldPlacement == pPlace)
 				m_ctrlPointsList.SetCurSel(idx);
 		}
 	}
@@ -734,7 +760,7 @@ void CDlgConfigEvent::OnDblclickConfigInfo()
 	OnBnClickedEdit();
 }
 
-void CDlgConfigEvent::OnSelchangePoints() 
+void CDlgConfigEvent::OnSelchangePoints()
 {
 	UpdateData(TRUE);
 	BOOL bEnable = FALSE;
@@ -744,13 +770,12 @@ void CDlgConfigEvent::OnSelchangePoints()
 	m_ctrlPointsDelete.EnableWindow(bEnable);
 }
 
-void CDlgConfigEvent::OnDblclkPoints() 
+void CDlgConfigEvent::OnDblclkPoints()
 {
-	UpdateData(TRUE);
 	OnPointsEdit();
 }
 
-void CDlgConfigEvent::OnPointsNew() 
+void CDlgConfigEvent::OnPointsNew()
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
@@ -760,27 +785,35 @@ void CDlgConfigEvent::OnPointsNew()
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(0.0, 0.0, false, this);
+			CDlgConfigTitlePoints dlg(0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, this);
 			if (IDOK == dlg.DoModal())
 			{
 				// The only reason this fails is if the faults entry exists.
-				if (dlg.IsLifetime())
+				switch (dlg.Type())
 				{
-					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.GetPoints(), dlg.GetFaults()))
+				default:
+					ASSERT(0);
+				case CDlgConfigTitlePoints::eTitleNormal:
+					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
 						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
-				}
-				else
-				{
-					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.GetPoints(), dlg.GetFaults()))
+					break;
+				case CDlgConfigTitlePoints::eTitleLifetime:
+					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults()))
 						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+					break;
+				case CDlgConfigTitlePoints::eTitlePlacement:
+					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points()))
+						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+					break;
 				}
 				FillTitlePoints(pScoring);
+				OnSelchangePoints(); // To update buttons
 			}
 		}
 	}
 }
 
-void CDlgConfigEvent::OnPointsEdit() 
+void CDlgConfigEvent::OnPointsEdit()
 {
 	UpdateData(TRUE);
 	int idxMethod = m_ctrlMethods.GetCurSel();
@@ -791,62 +824,99 @@ void CDlgConfigEvent::OnPointsEdit()
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		CListPtrData<ARBConfigTitlePointsPtr>* pData1 = GetTitleData(idx);
 		CListPtrData<ARBConfigLifetimePointsPtr>* pData2 = GetLifetimeData(idx);
+		CListPtrData<ARBConfigPlaceInfoPtr>* pData3 = GetPlacementData(idx);
 		ARBConfigTitlePointsPtr pTitle;
 		ARBConfigLifetimePointsPtr pLife;
+		ARBConfigPlaceInfoPtr pPlace;
 		if (pData1)
 			pTitle = pData1->GetData();
 		if (pData2)
 			pLife = pData2->GetData();
-		if (pScoring && (pTitle || pLife))
+		if (pData3)
+			pPlace = pData3->GetData();
+		if (pScoring && (pTitle || pLife || pPlace))
 		{
-			double pts;
-			double faults;
-			BOOL bLifetime;
+			double value;
+			double points;
+			CDlgConfigTitlePoints::ETitlePointType type;
 			if (pTitle)
 			{
-				pts = pTitle->GetPoints();
-				faults = pTitle->GetFaults();
-				bLifetime = FALSE;
+				value = pTitle->GetFaults();
+				points = pTitle->GetPoints();
+				type = CDlgConfigTitlePoints::eTitleNormal;
+			}
+			else if (pLife)
+			{
+				value = pLife->GetFaults();
+				points = pLife->GetPoints();
+				type = CDlgConfigTitlePoints::eTitleLifetime;
 			}
 			else
 			{
-				pts = pLife->GetPoints();
-				faults = pLife->GetFaults();
-				bLifetime = TRUE;
+				value = pPlace->GetPlace();
+				points = pPlace->GetValue();
+				type = CDlgConfigTitlePoints::eTitlePlacement;
 			}
-			CDlgConfigTitlePoints dlg(pts, faults, bLifetime);
+			CDlgConfigTitlePoints dlg(value, points, type);
 			if (IDOK == dlg.DoModal())
 			{
-				if (bLifetime != dlg.IsLifetime())
+				if (type != dlg.Type()
+				|| (pTitle && pTitle->GetFaults() != dlg.Faults())
+				|| (pLife && pLife->GetFaults() != dlg.Faults())
+				|| (pPlace && pPlace->GetPlace() != dlg.Place()))
 				{
 					// Clean up.
-					if (pTitle)
-						pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
-					else
-						pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
-					if (dlg.IsLifetime())
-						pScoring->GetLifetimePoints().AddLifetimePoints(dlg.GetPoints(), dlg.GetFaults());
-					else
-						pScoring->GetTitlePoints().AddTitlePoints(dlg.GetPoints(), dlg.GetFaults());
+					if (type == dlg.Type())
+					{
+						if (pTitle)
+							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+						else if (pLife)
+							pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+						else
+							pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
+					}
+					bool bOk = false;
+					switch (dlg.Type())
+					{
+					default:
+						ASSERT(0);
+					case CDlgConfigTitlePoints::eTitleNormal:
+						bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
+						if (!bOk)
+							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+						break;
+					case CDlgConfigTitlePoints::eTitleLifetime:
+						bOk = pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults());
+						if (!bOk)
+							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+						break;
+					case CDlgConfigTitlePoints::eTitlePlacement:
+						bOk = pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points());
+						if (!bOk)
+							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+						break;
+					}
+					if (bOk && type != dlg.Type())
+					{
+						if (pTitle)
+							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+						else if (pLife)
+							pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+						else
+							pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
+					}
 				}
 				else
 				{
 					if (pTitle)
-					{
-						pTitle->SetPoints(dlg.GetPoints());
-						pTitle->SetFaults(dlg.GetFaults());
-					}
+						pTitle->SetPoints(dlg.Points());
+					else if (pLife)
+						pLife->SetPoints(dlg.Points());
 					else
-					{
-						pLife->SetPoints(dlg.GetPoints());
-						pLife->SetFaults(dlg.GetFaults());
-					}
+						pPlace->SetValue(dlg.Points());
 				}
-				if (pTitle)
-					pScoring->GetTitlePoints().sort();
-				else
-					pScoring->GetLifetimePoints().sort();
 				FillTitlePoints(pScoring);
+				OnSelchangePoints(); // To update buttons
 			}
 		}
 	}
@@ -863,21 +933,26 @@ void CDlgConfigEvent::OnPointsDelete()
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		CListPtrData<ARBConfigTitlePointsPtr>* pData1 = GetTitleData(idx);
 		CListPtrData<ARBConfigLifetimePointsPtr>* pData2 = GetLifetimeData(idx);
+		CListPtrData<ARBConfigPlaceInfoPtr>* pData3 = GetPlacementData(idx);
 		ARBConfigTitlePointsPtr pTitle;
 		ARBConfigLifetimePointsPtr pLife;
+		ARBConfigPlaceInfoPtr pPlace;
 		if (pData1)
 			pTitle = pData1->GetData();
 		if (pData2)
 			pLife = pData2->GetData();
-		if (pScoring && (pTitle || pLife))
+		if (pData3)
+			pPlace = pData3->GetData();
+		if (pScoring && (pTitle || pLife || pPlace))
 		{
 			if (pTitle)
 				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
-			else
+			else if (pLife)
 				pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
+			else
+				pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 			m_ctrlPointsList.DeleteString(idx);
-			m_ctrlPointsEdit.EnableWindow(FALSE);
-			m_ctrlPointsDelete.EnableWindow(FALSE);
+			OnSelchangePoints(); // To update buttons
 		}
 	}
 }

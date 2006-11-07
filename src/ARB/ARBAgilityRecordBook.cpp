@@ -179,6 +179,12 @@ ARBString LIFETIME_POINTS_NAME_FORMAT(double points, double faults)
 	buffer << LIFETIME_POINTS_NAME_FORMAT_DEF(points, faults);
 	return buffer.str();
 }
+ARBString PLACEMENT_POINTS_NAME_FORMAT(double points, short place)
+{
+	ARBostringstream buffer;
+	buffer << PLACEMENT_POINTS_NAME_FORMAT_DEF(points, place);
+	return buffer.str();
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
