@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief Base class for reference counting.
+ * @brief Base class for common functionality.
  * @author David Connet
  *
  * Revision History
