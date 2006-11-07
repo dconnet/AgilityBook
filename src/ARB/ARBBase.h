@@ -43,14 +43,7 @@
 #include "ARBTypes.h"
 
 /**
- * @brief Base class for reference counting and other common functionality.
- *
- * The idea is to remove some of the efforts of memory management.
- * Note, there are a number of APIs that return a non-reference counted pointer.
- * Ideally, everything would, but that gets things rather messy for coding.
- * I have actually played around with creating a smart pointer class to work
- * around this. In time I might complete that work - though I may just toss it
- * in favor of migrating to C#.
+ * @brief Base class for common functionality.
  */
 class ARBBase
 {
