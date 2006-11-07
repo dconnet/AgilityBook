@@ -38,36 +38,54 @@
  */
 
 #include "DlgBaseDialog.h"
+#include "afxwin.h"
 
 class CDlgConfigTitlePoints : public CDlgBaseDialog
 {
 public:
+	enum ETitlePointType
+	{
+		eTitleNormal,
+		eTitleLifetime,
+		eTitlePlacement
+	};
+
 	CDlgConfigTitlePoints(
+			double inValue, // Faults or Place
 			double inPoints,
-			double inFaults,
-			BOOL bLifetime,
+			ETitlePointType inType,
 			CWnd* pParent = NULL);
-	double GetPoints() const	{return m_Points;}
-	double GetFaults() const	{return m_Faults;}
-	BOOL IsLifetime() const		{return m_LifeTime;}
+
+	double Faults() const			{return m_Value;}
+	short Place() const				{return static_cast<short>(m_Value);}
+	double Points() const			{return m_Points;}
+	ETitlePointType Type() const	{return m_Type;}
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgConfigTitlePoints)
 	enum { IDD = IDD_CONFIG_TITLE_POINTS };
+	CStatic	m_ctrlValueText;
+	double	m_Value;
 	double	m_Points;
-	double	m_Faults;
-	BOOL	m_LifeTime;
+	CComboBox m_ctrlType;
 	//}}AFX_DATA
+	ETitlePointType m_Type;
+	CString m_FaultText;
+	CString m_PlaceText;
 
 	//{{AFX_VIRTUAL(CDlgConfigTitlePoints)
 protected:
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
+	void UpdateText();
+
 	//{{AFX_MSG(CDlgConfigTitlePoints)
+	afx_msg void OnCbnSelchangeTitlePoints();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

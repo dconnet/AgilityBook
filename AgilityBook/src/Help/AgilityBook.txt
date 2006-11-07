@@ -268,14 +268,17 @@ Date this title is valid until.
 .topic HIDC_CONFIG_TITLE_NAME
 Title abbreviation.
 
-.topic HIDC_CONFIG_TITLEPTS_FAULTS
-Number of faults allowed for these title points.
+.topic HIDC_CONFIG_TITLEPTS_VALUE
+Number of faults allowed for Normal and Lifetime points.
+Place that earns the points for Placement points.
 
 .topic HIDC_CONFIG_TITLEPTS_POINTS
 Number of points that will be earned.
 
 .topic HIDC_CONFIG_TITLEPTS_TITLE_POINTS
-These points are accumulated as Lifetime points, not Titling points.
+Select the type of titling points: Normal (points awarded per run),
+Lifetime (points accumulated towards lifetime, normally the same as Normal),
+Placement (points accumulated based on placement, treated like lifetime)
 
 .topic HIDC_CONFIG_UPDATE_DEFAULT
 Merge in the configuration defined in this program.

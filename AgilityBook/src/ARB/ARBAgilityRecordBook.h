@@ -349,6 +349,9 @@ extern ARBString TITLE_POINTS_NAME_FORMAT(double points, double faults);
 extern ARBString LIFETIME_POINTS_NAME_FORMAT(double points, double faults);
 #define LIFETIME_POINTS_NAME_FORMAT_DEF(points, faults) \
 	points << _T(" lifetime points with ") << faults << _T(" faults")
+extern ARBString PLACEMENT_POINTS_NAME_FORMAT(double points, short place);
+#define PLACEMENT_POINTS_NAME_FORMAT_DEF(points, faults) \
+	points << _T(" points with place of ") << place
 
 // Used in ARBConfigScoring.cpp
 #define SCORE_STYLE_UNKNOWN			_T("Unknown")

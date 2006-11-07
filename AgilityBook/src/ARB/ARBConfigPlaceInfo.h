@@ -117,10 +117,6 @@ public:
 	{
 		return m_Place;
 	}
-	void SetPlace(short inPlace)
-	{
-		m_Place = inPlace;
-	}
 	double GetValue() const
 	{
 		return m_Value;
@@ -129,6 +125,7 @@ public:
 	{
 		m_Value = inValue;
 	}
+	// There is no SetPlace since this needs to be a unique key in the list.
 
 private:
 	short m_Place;
@@ -155,6 +152,11 @@ public:
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
+
+	/**
+	 * Sort the point objects by place.
+	 */
+	void sort();
 
 	/**
 	 * Get the value based on place.

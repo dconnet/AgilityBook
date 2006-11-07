@@ -91,9 +91,7 @@ bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 
 ARBString ARBConfigPlaceInfo::GetGenericName() const
 {
-	ARBostringstream buffer;
-	buffer << m_Place << _T('/') << m_Value;
-	return buffer.str();
+	return PLACEMENT_POINTS_NAME_FORMAT(m_Value, m_Place);
 }
 
 bool ARBConfigPlaceInfo::Load(
@@ -136,6 +134,23 @@ bool ARBConfigPlaceInfoList::Load(
 	return true;
 }
 
+class SortConfigPlaceInfo
+{
+public:
+	SortConfigPlaceInfo() {}
+	bool operator()(ARBConfigPlaceInfoPtr one, ARBConfigPlaceInfoPtr two) const
+	{
+		return one->GetPlace() < two->GetPlace();
+	}
+};
+
+void ARBConfigPlaceInfoList::sort()
+{
+	if (2 > size())
+		return;
+	std::stable_sort(begin(), end(), SortConfigPlaceInfo());
+}
+
 bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double &outValue) const
 {
 	ARBConfigPlaceInfoPtr place;
@@ -176,6 +191,7 @@ bool ARBConfigPlaceInfoList::AddPlaceInfo(
 		return false;
 	ARBConfigPlaceInfoPtr pPlace(ARBConfigPlaceInfo::New(inPlace, inValue));
 	push_back(pPlace);
+	sort();
 	if (outPlace)
 		*outPlace = pPlace;
 	return true;
