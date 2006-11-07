@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-11-05 DRC Fix FindAllEvents to allow searching with wildcards.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-01-03 DRC FindAllEvents was not working right (see below)
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -521,7 +522,8 @@ size_t ARBConfigScoringList::FindAllEvents(
 	const_iterator iter;
 	for (iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetDivision() == inDivision && (*iter)->GetLevel() == inLevel)
+		if (((*iter)->GetDivision() == inDivision || inDivision == WILDCARD_DIVISION)
+		&& ((*iter)->GetLevel() == inLevel || inLevel == WILDCARD_LEVEL))
 		{
 			if ((*iter)->IsValidOn(inDate))
 				outList.push_back(*iter);
