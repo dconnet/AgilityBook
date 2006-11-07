@@ -574,6 +574,11 @@ void CDlgRunScore::FillDivisions()
 				m_ctrlDivisions.SetCurSel(index);
 		}
 	}
+	if (CB_ERR == m_ctrlDivisions.GetCurSel())
+	{
+		if (1 == m_ctrlDivisions.GetCount())
+			m_ctrlDivisions.SetCurSel(0);
+	}
 	FillLevels();
 }
 
@@ -642,6 +647,11 @@ void CDlgRunScore::FillLevels()
 					m_ctrlLevels.SetCurSel(idx);
 			}
 		}
+	}
+	if (CB_ERR == m_ctrlLevels.GetCurSel())
+	{
+		if (1 == m_ctrlLevels.GetCount())
+			m_ctrlLevels.SetCurSel(0);
 	}
 	FillEvents();
 	SetTitlePoints();
