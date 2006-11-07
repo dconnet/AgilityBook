@@ -95,6 +95,7 @@
 #define TREE_PLACE_INFO						_T("PlaceInfo")
 #define TREE_TITLE_POINTS					_T("TitlePoints")
 #define TREE_LIFETIME_POINTS				_T("LifeTime")
+#define TREE_PLACEMENTS						_T("Placements")
 #define TREE_FAULTTYPE						_T("FaultType")
 #define TREE_OTHERPTS						_T("OtherPts")
 #define TREE_INFO							_T("Info")

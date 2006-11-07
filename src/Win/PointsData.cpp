@@ -579,8 +579,10 @@ bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 CPointsDataLifetime::CPointsDataLifetime(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
+		bool bLifetime,
 		ARBString const& inVenue)
 	: CPointsDataBase(pParent, pDoc)
+	, m_bLifetime(bLifetime)
 	, m_Venue(inVenue.c_str())
 	, m_Lifetime(0.0)
 	, m_Filtered(0.0)
@@ -606,7 +608,10 @@ ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
 	case 1:
 		{
 			CString str2;
-			str2.LoadString(IDS_LIFETIME_POINTS);
+			if (m_bLifetime)
+				str2.LoadString(IDS_LIFETIME_POINTS);
+			else
+				str2.LoadString(IDS_PLACEMENT_POINTS);
 			str = (LPCTSTR)str2;
 		}
 		break;
@@ -645,7 +650,12 @@ ARBString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 void CPointsDataLifetime::Details() const
 {
 	CString caption(m_Venue);
-	caption += _T(" Lifetime Points");
+	CString str;
+	if (m_bLifetime)
+		str.LoadString(IDS_LIFETIME_POINTS);
+	else
+		str.LoadString(IDS_PLACEMENT_POINTS);
+	caption += _T(" ") + str;
 	CDlgListViewer dlg(m_pDoc, caption, m_Data, m_pParent);
 	dlg.DoModal();
 }
@@ -664,9 +674,10 @@ bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 CPointsDataLifetimeDiv::CPointsDataLifetimeDiv(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
+		bool bLifetime,
 		ARBString const& inVenue,
 		ARBString const& inDiv)
-	: CPointsDataLifetime(pParent, pDoc, inVenue)
+	: CPointsDataLifetime(pParent, pDoc, bLifetime, inVenue)
 	, m_Div(inDiv)
 {
 }
@@ -1233,6 +1244,7 @@ void CPointsDataItems::LoadData(
 
 		bool bRunsInserted = false;
 		LifeTimePointsList lifetime;
+		LifeTimePointsList placement;
 
 		// Then the runs.
 		std::list<ARBDogTrialPtr> trialsInVenue;
@@ -1381,14 +1393,19 @@ void CPointsDataItems::LoadData(
 										}
 									}
 									// Tally lifetime points, regardless of visibility.
-									if (0 < pScoringMethod->GetLifetimePoints().size()
+									if ((0 < pScoringMethod->GetLifetimePoints().size()
+									|| 0 < pScoringMethod->GetPlacements().size())
 									&& pRun->GetQ().Qualified())
 									{
-										double nLifetime;
-										pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime);
+										double nLifetime, nPlacement;
+										pRun->GetTitlePoints(pScoringMethod, NULL, &nLifetime, &nPlacement);
 										if (0 < nLifetime)
 										{
-											pts.ptList.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+											pts.ptLifetime.push_back(LifeTimePoint(pRun->GetEvent(), nLifetime, !bRunVisible));
+										}
+										if (0 < nPlacement)
+										{
+											pts.ptPlacement.push_back(LifeTimePoint(pRun->GetEvent(), nPlacement, !bRunVisible));
 										}
 									}
 								}
@@ -1410,8 +1427,9 @@ void CPointsDataItems::LoadData(
 							// Now add the existing lifetime points
 							if (bHasExistingLifetimePoints && !ARBDouble::equal(0.0, nExistingPts + nExistingSQ))
 							{
-								pts.ptList.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
+								pts.ptLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
 							}
+							//TODO: Add ability to accumulate existing placement points
 							// Now we deal with the visible runs.
 							if (bHasExistingPoints || 0 < matching.size())
 							{
@@ -1507,8 +1525,10 @@ void CPointsDataItems::LoadData(
 							ARBDogExistingPoints::eSpeed,
 							pVenue, ARBConfigMultiQPtr(), pDiv, pLevel, ARBConfigEventPtr(), dateFrom, dateTo));
 					}
-					if (0 < pts.ptList.size())
+					if (0 < pts.ptLifetime.size())
 						lifetime.push_back(pts);
+					if (0 < pts.ptPlacement.size())
+						placement.push_back(pts);
 				}
 			}
 			if (1 < items.size())
@@ -1561,7 +1581,7 @@ void CPointsDataItems::LoadData(
 		// Next comes lifetime points.
 		if (0 < lifetime.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, pVenue->GetName());
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, true, pVenue->GetName());
 			double pts = 0;
 			double ptFiltered = 0;
 			typedef std::map<ARBString, CPointsDataLifetimeDiv*> DivLifetime;
@@ -1578,14 +1598,68 @@ void CPointsDataItems::LoadData(
 				}
 				else
 				{
-					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, pVenue->GetName(), iter->pDiv->GetName());
+					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, true, pVenue->GetName(), iter->pDiv->GetName());
 					divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
 				}
 
 				double pts2 = 0.0;
 				double ptFiltered2 = 0;
-				for (LifeTimePointList::iterator iter2 = (*iter).ptList.begin();
-					iter2 != (*iter).ptList.end();
+				for (LifeTimePointList::iterator iter2 = (*iter).ptLifetime.begin();
+					iter2 != (*iter).ptLifetime.end();
+					++iter2)
+				{
+					pts2 += (*iter2).points;
+					if ((*iter2).bFiltered)
+						ptFiltered2 += (*iter2).points;
+				}
+
+				pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+				pDivData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
+				pts += pts2;
+				ptFiltered += ptFiltered2;
+			}
+			m_Lines.push_back(CPointsDataBasePtr(pData));
+			if (1 < divs.size())
+			{
+				for (DivLifetime::iterator it = divs.begin();
+					it != divs.end();
+					++it)
+				{
+					m_Lines.push_back(CPointsDataBasePtr(it->second));
+				}
+			}
+			else if (1 == divs.size())
+			{
+				delete divs.begin()->second;
+			}
+		}
+		if (0 < placement.size())
+		{
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, false, pVenue->GetName());
+			double pts = 0;
+			double ptFiltered = 0;
+			typedef std::map<ARBString, CPointsDataLifetimeDiv*> DivLifetime;
+			DivLifetime divs;
+			for (LifeTimePointsList::iterator iter = placement.begin();
+				iter != placement.end();
+				++iter)
+			{
+				CPointsDataLifetimeDiv* pDivData = NULL;
+				DivLifetime::iterator it = divs.find(iter->pDiv->GetName());
+				if (divs.end() != it)
+				{
+					pDivData = it->second;
+				}
+				else
+				{
+					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, false, pVenue->GetName(), iter->pDiv->GetName());
+					divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
+				}
+
+				double pts2 = 0.0;
+				double ptFiltered2 = 0;
+				for (LifeTimePointList::iterator iter2 = (*iter).ptPlacement.begin();
+					iter2 != (*iter).ptPlacement.end();
 					++iter2)
 				{
 					pts2 += (*iter2).points;

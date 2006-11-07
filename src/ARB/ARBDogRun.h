@@ -154,12 +154,14 @@ public:
 	 * @param inScoring Scoring method used.
 	 * @param outClean Was this a clean run?
 	 * @param outLifeTime Lifetime points earned in this run.
+	 * @param outPlacement Placement titling points earned in this run.
 	 * @return Number of title points earned.
 	 */
 	double GetTitlePoints(
 			ARBConfigScoringPtr inScoring,
 			bool* outClean = NULL,
-			double* outLifeTime = NULL) const;
+			double* outLifeTime = NULL,
+			double* outPlacement = NULL) const;
 
 	/**
 	 * Get the score for this run.

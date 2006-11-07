@@ -119,6 +119,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_PlaceInfo()
 	, m_TitlePoints()
 	, m_LifePoints()
+	, m_Placements()
 {
 }
 
@@ -144,10 +145,12 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	, m_PlaceInfo()
 	, m_TitlePoints()
 	, m_LifePoints()
+	, m_Placements()
 {
 	rhs.m_PlaceInfo.Clone(m_PlaceInfo);
 	rhs.m_TitlePoints.Clone(m_TitlePoints);
 	rhs.m_LifePoints.Clone(m_LifePoints);
+	rhs.m_Placements.Clone(m_Placements);
 }
 
 ARBConfigScoring::~ARBConfigScoring()
@@ -179,6 +182,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 		rhs.m_PlaceInfo.Clone(m_PlaceInfo);
 		rhs.m_TitlePoints.Clone(m_TitlePoints);
 		rhs.m_LifePoints.Clone(m_LifePoints);
+		rhs.m_Placements.Clone(m_Placements);
 	}
 	return *this;
 }
@@ -205,7 +209,8 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_bBonusPts == rhs.m_bBonusPts
 		&& m_PlaceInfo == rhs.m_PlaceInfo
 		&& m_TitlePoints == rhs.m_TitlePoints
-		&& m_LifePoints == rhs.m_LifePoints;
+		&& m_LifePoints == rhs.m_LifePoints
+		&& m_Placements == rhs.m_Placements;
 }
 
 bool ARBConfigScoring::Load(
@@ -386,6 +391,16 @@ bool ARBConfigScoring::Load(
 						return false;
 				}
 			}
+			else if (element.GetName() == TREE_PLACEMENTS)
+			{
+				for (int iPlace = 0; iPlace < element.GetElementCount(); ++iPlace)
+				{
+					Element const& place = element.GetElement(iPlace);
+					if (place.GetName() == TREE_PLACE_INFO)
+						if (!m_Placements.Load(place, inVersion, ioCallback))
+							return false;
+				}
+			}
 		}
 		m_TitlePoints.sort();
 		m_LifePoints.sort();
@@ -493,6 +508,12 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		return false;
 	if (!m_LifePoints.Save(scoring))
 		return false;
+	if (0 < m_Placements.size())
+	{
+		Element& place = ioTree.AddElement(TREE_PLACEMENTS);
+		if (!m_Placements.Save(place))
+			return false;
+	}
 	return true;
 }
 

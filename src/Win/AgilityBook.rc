@@ -2482,6 +2482,7 @@ BEGIN
     IDS_CONFIG_PLACE_UNIQUE "Place must be unique."
     IDS_CONFIG_PLACE_TOOSMALL "Place must be greater than zero."
     IDS_CONFIG_CHECK_VALUE  "Value is too small. Please enter a value greater than or equal to zero. (Note, entering zero will erase any speed points for the run.)"
+    IDS_PLACEMENT_POINTS    "Placement Points"
 END
 
 STRINGTABLE 

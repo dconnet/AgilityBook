@@ -510,13 +510,20 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 double ARBDogRun::GetTitlePoints(
 		ARBConfigScoringPtr inScoring,
 		bool* outClean,
-		double* outLifeTime) const
+		double* outLifeTime,
+		double* outPlacement) const
 {
 	double pts = 0.0;
 	if (outClean)
 		*outClean = false;
 	if (outLifeTime)
 		*outLifeTime = 0.0;
+	if (outPlacement)
+	{
+		double pts;
+		if (inScoring->GetPlacements().GetPlaceInfo(GetPlace(), pts))
+			*outPlacement = pts;
+	}
 	short bonusPts = inScoring->HasBonusPts() ? m_Scoring.GetBonusPts() : 0;
 	switch (m_Scoring.GetType())
 	{

@@ -60,7 +60,7 @@ typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 #define ARB_PROTOCOL	_T("arb:")
 
 /**
- * Used to accumulate lifetime info.
+ * Used to accumulate lifetime info. Also for Placement totals.
  */
 class LifeTimePointInfo
 {
@@ -315,6 +315,7 @@ public:
 	CPointsDataLifetime(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
+			bool bLifetime, ///< Lifetime or Placement?
 			ARBString const& inVenue);
 	void AddLifetimeInfo(
 			ARBString const& inDiv,
@@ -329,10 +330,11 @@ public:
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
+	bool m_bLifetime;	///< Lifetime or Placement?
 	CString m_Venue;
 	std::list<LifeTimePointInfo> m_Data;
-	double m_Lifetime; //< Total lifetime points.
-	double m_Filtered; //< Points that are filtered out.
+	double m_Lifetime;	//< Total lifetime points.
+	double m_Filtered;	//< Points that are filtered out.
 };
 typedef boost::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 
@@ -345,6 +347,7 @@ public:
 	CPointsDataLifetimeDiv(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
+			bool bLifetime,
 			ARBString const& inVenue,
 			ARBString const& inDiv);
 
@@ -563,7 +566,8 @@ private:
 	{
 		ARBConfigDivisionPtr pDiv;
 		ARBConfigLevelPtr pLevel;
-		LifeTimePointList ptList;
+		LifeTimePointList ptLifetime;
+		LifeTimePointList ptPlacement;
 	};
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
 
