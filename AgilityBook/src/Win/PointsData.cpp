@@ -214,10 +214,7 @@ ARBString CPointsDataDog::OnNeedText(size_t inCol) const
 			str = m_pDog->GetRegisteredName();
 			break;
 		case 7: // Current date
-			{
-				ARBDate today(ARBDate::Today());
-				str = today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
-			}
+			str = ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
 			break;
 		}
 	}
@@ -238,11 +235,14 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 #else
 			<< nCurLine
 #endif
-			<< _T("\">") << m_pDog->GetCallName()
-			<< _T("</a> [")
-			<< m_pDog->GetRegisteredName()
-			<< _T("] ")
-			<< _T("</h1>") << std::endl;
+			<< _T("\">") << m_pDog->GetCallName();
+		if (!m_pDog->GetRegisteredName().empty())
+		{
+			data << _T("</a> [")
+				<< m_pDog->GetRegisteredName()
+				<< _T("]");
+		}
+		data << _T("</h1>") << std::endl;
 
 	}
 	return data.str();
