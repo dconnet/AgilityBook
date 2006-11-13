@@ -138,6 +138,7 @@ for renaming titles.
   'DeleteTitle': (I added ASCA titles that shouldn't be there)
     Venue: Venue that contains title
 	Div: If set, limit delete to this division (I created dup names in NADAC)
+	     Note: As of v1.7, this is obsolete - titles are not grouped by division
     OldName: Title to be removed.
 	NewName: If set, rename any existing titles, otherwise titles are deleted.
   'DeleteEvent': NADAC doesn't have a 'Championship' class (Double Shot)
