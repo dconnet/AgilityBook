@@ -7,6 +7,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2006-10-02 DRC Configuration version 17. Updated USDAA Performance Pairs for
                titling in 2007. Changed TDAA website. Updates ASCA titles desc.
+               More NADAC updates.
 2006-08-12 DRC Configuration version 16. Removed AMBOR.
                Updated DOCNA gamble events.
 2006-08-08 DRC Configuration version 15. Added USDAA Performance Tournaments.
@@ -57,6 +58,9 @@ Revision History:
 		<Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ATCH-SP" OldName="V-ATCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
+		<Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
+		<Action NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
+		<Action NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
 		<Action NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
@@ -66,22 +70,20 @@ Revision History:
 		<Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
 		<Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-		<Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
-		<Action NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
-		<Action NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
-		<Action Div="Veterans" OldName="Novice Triple Superior Performance Dog" Venue="NADAC" Verb="DeleteTitle"/>
-		<Action Div="Veterans" OldName="Open Triple Superior Performance Dog" Venue="NADAC" Verb="DeleteTitle"/>
-		<Action Div="Veterans" OldName="Elite Triple Superior Performance Dog" Venue="NADAC" Verb="DeleteTitle"/>
-		<Action Div="Veterans" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="DeleteTitle"/>
-		<Action NewName="Triple Triple" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="Triple Superior-Novice" OldName="Novice Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="Triple Superior-Open" OldName="Open Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="Triple Superior-Elite" OldName="Elite Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Triple Triple" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="Vers-NATCH" OldName="Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="O-Vers-NATCH" OldName="Outstanding Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Vers-NATCH" OldName="O-Vers-NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="S-Vers-NATCH" OldName="Superior Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
-		<Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
-		<Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
+		<Action NewName="Vers-NATCH" OldName="S-Vers-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="NADAC Medal" OldName="Bronze Medal" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="NADAC Medal" OldName="Silver Medal" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="NADAC Medal" OldName="Gold Medal" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="NATCH" OldName="O-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="NATCH" OldName="S-NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action OldName="NAS" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="NJS" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="NGS" Venue="NADAC" Verb="DeleteTitle"/>
@@ -123,6 +125,8 @@ Revision History:
 		<Action OldName="Outstanding Novice Versatility" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="Outstanding Open Versatility" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="Outstanding Elite Versatility" Venue="NADAC" Verb="DeleteTitle"/>
+		<Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
+		<Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
 		<Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/">
 			<Desc>Post-ATChC titles are listed under the Regular division.</Desc>
 			<Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
@@ -1550,8 +1554,6 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Tunnelers Certificate Superior Performance" Name="S-TN-E">200 points</Titles>
 			<Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
-			<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
-			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
 			<Titles LongName="Elite Agility Skilled" Name="EAS">30 points</Titles>
 			<Titles LongName="Elite Chances Skilled" Name="ECS" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled" Name="EGS" ValidTo="2006-1-1">30 points</Titles>
@@ -1573,27 +1575,35 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Tunnelers Skilled Superior Performance" Name="S-TNS-E">200 points</Titles>
 			<Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
-			<Titles LongName="Bronze Medal" Name="Bronze Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in one of the other classes.</Titles>
-			<Titles LongName="Silver Medal" Name="Silver Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts in two of the other classes.</Titles>
-			<Titles LongName="Gold Medal" Name="Gold Medal">Skilled Elite: 430 Regular pts, 230 in each of Jumpers, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Platinum Medal" Name="Platinum Medal">Skilled Elite: 630 Regular pts, 330 in each of Jumpers, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Purple Medal" Name="Purple Medal">Skilled Elite: 830 Regular pts, 430 in each of Jumpers, Tunnelers, TouchNGo and Weavers.</Titles>
-			<Titles LongName="Novice Triple Superior Performance Dog" Name="Triple Superior-Novice">Superior Performance titles in Novice Regular, Jumpers, Chances.</Titles>
-			<Titles LongName="Open Triple Superior Performance Dog" Name="Triple Superior-Open">Superior Performance titles in Open Regular, Jumpers, Chances.</Titles>
-			<Titles LongName="Elite Triple Superior Performance Dog" Name="Triple Superior-Elite">Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
-			<Titles LongName="Triple Triple Superior Performance" Name="Triple Triple">Triple Superior Performance in all three levels.</Titles>
-			<Titles LongName="Novice Versatility Certificate" Name="Novice Versatility">Titled in all six classes at Novice</Titles>
-			<Titles LongName="Open Versatility Certificate" Name="Open Versatility">Titled in all six classes at Open</Titles>
-			<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility">Titled in all six classes at Elite</Titles>
-			<Titles LongName="Novice Versatility Certificate Superior Performance" Name="Superior Novice Versatility">Superior Performance award in all six classes at Novice level</Titles>
-			<Titles LongName="Open Versatility Certificate Superior Performance" Name="Superior Open Versatility">Superior Performance award in all six classes at Open level</Titles>
-			<Titles LongName="Elite Versatility Certificate Superior Performance" Name="Superior Elite Versatility">Superior Performance award in all six classes at Elite level</Titles>
-			<Titles LongName="Triple Superior Versatility" Name="Triple Superior Versatility">Superior Performance award in all six classes at all three levels</Titles>
-			<Titles LongName="Point Award" Multiple="2" Name="Point Award">Special certificate earned at 1000. Also at 2500, 5000, etc career pts.</Titles>
-			<Titles LongName="NADAC Agility Trial Champion Outstanding Performance" Name="O-NATCH" Prefix="y" ValidTo="2005-12-31">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts.</Titles>
-			<Titles LongName="NADAC Agility Trial Champion Superior Performance" Name="S-NATCH" Prefix="y" ValidTo="2005-12-31">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts.</Titles>
-			<Titles LongName="NADAC Versatility Champion Outstanding Performance" Name="O-Vers-NATCH" ValidTo="2005-12-9">EAC plus 400 pts, EGC plus 200 pts, EJC plus 200 pts, TG-E plus 200 pts, TN-E plus 200 pts, WV-E plus 200 pts.</Titles>
-			<Titles LongName="NADAC Versatility Champion Superior Performance" Name="S-Vers-NATCH" ValidTo="2005-12-9">EAC plus 600 pts, EGC plus 300 pts, EJC plus 300 pts, TG-E plus 300 pts, TN-E plus 300 pts, WV-E plus 300 pts.</Titles>
+			<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
+			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
+			<Titles LongName="Platinum NATCH" Name="Platinum NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
+			<Titles LongName="Platinum Versatility NADAC" Name="Platinum Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
+			<Titles LongName="Purple NATCH" Name="Purple NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Purple Versatility NADAC" Name="Purple Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="NADAC Medal" Multiple="2" Name="NADAC Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts Chances</Titles>
+			<Titles LongName="Versatility Medal" Multiple="2" Name="Vers-Medal">Skilled Elite: 230 Regular, 130 of each other class. Each subsequent Vers-Medal requires an additional 200 Regular, 100 of each other class.</Titles>
+			<Titles LongName="Platinum Medal" Name="Platinum Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
+			<Titles LongName="Platinum Versatility Medal" Name="Platinum Versatility Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
+			<Titles LongName="Purple Medal" Name="Purple Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Purple Versatility Medal" Name="Purple Versatility Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Novice Triple Superior Award" Name="Triple Superior-Novice">Proficient/Skilled: Superior Performance titles in Novice Regular, Jumpers, Chances.</Titles>
+			<Titles LongName="Open Triple Superior Award" Name="Triple Superior-Open">Proficient/Skilled: Superior Performance titles in Open Regular, Jumpers, Chances.</Titles>
+			<Titles LongName="Elite Triple Superior Award" Name="Triple Superior-Elite">Proficient: Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
+			<Titles LongName="Elite Triple Superior Certificate" Name="Triple Superior-Elite Skilled">Skilled: Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
+			<Titles LongName="Triple Triple Superior Award" Name="Triple Triple">Triple Superior Award in all three levels.</Titles>
+			<Titles LongName="Triple Triple Superior Certificate" Name="Triple Triple Skilled">Novice and Open Triple Superior Award and an Elite Triple Superior Certificate.</Titles>
+			<Titles LongName="Novice Versatility Award" Name="Novice Versatility">Titled in all six classes at Novice</Titles>
+			<Titles LongName="Open Versatility Award" Name="Open Versatility">Titled in all six classes at Open</Titles>
+			<Titles LongName="Elite Versatility Award" Name="Elite Versatility">Titled in all six classes at Elite</Titles>
+			<Titles LongName="Elite Versatility Certificate" Name="Elite Versatility Skilled">Titled in all six classes at Elite Skilled</Titles>
+			<Titles LongName="Novice Superior Versatility Award" Name="Superior Novice Versatility">Superior Performance award in all six classes at Novice level</Titles>
+			<Titles LongName="Open Superior Versatility Award" Name="Superior Open Versatility">Superior Performance award in all six classes at Open level</Titles>
+			<Titles LongName="Elite Superior Versatility Award" Name="Superior Elite Versatility">Superior Performance award in all six classes at Elite level</Titles>
+			<Titles LongName="Elite Superior Versatility Certificate" Name="Superior Elite Versatility Skilled">Superior Performance award in all six classes at Elite Skilled level</Titles>
+			<Titles LongName="Triple Superior Versatility Award" Name="Triple Superior Versatility">Superior Versatility Award in all three levels</Titles>
+			<Titles LongName="Triple Superior Versatility Certificate" Name="Triple Superior Versatility Skilled">Novice and Open Superior Versatility Award and an Elite Superior Versatility Certificate.</Titles>
+			<Titles LongName="Lifetime Point Award" Multiple="2" Name="Point Award">Special certificate earned at 1000. Also at 2500, 5000, etc career pts.</Titles>
 			<Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V" ValidTo="2005-12-9">30 points</Titles>
 			<Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V" ValidTo="2005-12-9">30 points (20 pts before 8/1/2005)</Titles>
 			<Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V" ValidTo="2005-12-9">30 points (20 pts before 8/1/2005)</Titles>
@@ -2416,10 +2426,12 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
 		<FaultType>Refusal</FaultType>
 		<FaultType>Run out</FaultType>
 		<OtherPts Count="LevelByEvent" Name="ASCA Merit">ASCA Merit Points</OtherPts>
+		<OtherPts Count="All" Name="NADAC Bonus Runs">NADAC Bonus Point Runs
+Use this to accumulate runs with bonus points. This is a count of runs, not points.</OtherPts>
+		<OtherPts Count="LevelByEvent" Name="NADAC DRI Runs">NADAC DRI Runs
+Use this to accumulate runs with 100+ DRIs. This is a count of runs, not points.</OtherPts>
 		<OtherPts Count="LevelByEvent" Name="NADAC Top10">NADAC Top-10 Points
 Runs with a DRI over 100 are worth 15 points instead of 10.</OtherPts>
-		<OtherPts Count="LevelByEvent" Name="NADAC DRI Runs">NADAC DRI Runs
-Use this to accumulate titling points of runs with 100+ DRIs.</OtherPts>
 		<OtherPts Count="LevelByEvent" Name="USDAA Top10">USDAA Top-10 Points
 Dogs/Placements/Points
 2-3/1/1
