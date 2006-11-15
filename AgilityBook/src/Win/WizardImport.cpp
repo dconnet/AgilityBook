@@ -681,7 +681,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -997,7 +997,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1024,7 +1024,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1063,7 +1063,7 @@ BOOL CWizardImport::OnWizardFinish()
 							errLog << _T("ERROR: Line ")
 								<< nItem + 1
 								<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 								<< static_cast<UINT>(iCol + 1)
 #else
 								<< iCol + 1
@@ -1101,7 +1101,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1128,7 +1128,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1
@@ -1186,7 +1186,7 @@ BOOL CWizardImport::OnWizardFinish()
 								errLog << _T("ERROR: Line ")
 									<< nItem + 1
 									<< _T(", Column ")
-#if _MSC_VER < 1400 // VC7 casting warning
+#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 									<< static_cast<UINT>(iCol + 1)
 #else
 									<< iCol + 1

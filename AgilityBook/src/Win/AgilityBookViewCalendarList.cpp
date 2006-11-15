@@ -54,6 +54,9 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "AgilityBookViewCalendarList.h"
+#if _MSC_VER < 1300
+#include "htmlhelp.h"
+#endif
 
 #include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"
@@ -662,7 +665,13 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		int idxImage = (LVIS_STATEIMAGEMASK & state) >> 12;
 		if (0 < idxImage)
 		{
+#if _MSC_VER < 1300
+			ImageList_DrawEx(pImageStateList->m_hImageList, idxImage,
+				dc.GetSafeHdc(), rIconPos.left, rIconPos.top, szIcon.cx, szIcon.cy,
+				CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#else
 			pImageStateList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#endif
 		}
 	}
 	CImageList* pImageList = GetListCtrl().GetImageList(LVSIL_SMALL);
@@ -671,7 +680,13 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		int idxImage = pData->GetIcon();
 		if (0 <= idxImage)
 		{
+#if _MSC_VER < 1300
+			ImageList_DrawEx(pImageList->m_hImageList, idxImage,
+				dc.GetSafeHdc(), rIconPos.left, rIconPos.top, szIcon.cx, szIcon.cy,
+				CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#else
 			pImageList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+#endif
 			idxImage = (LVIS_OVERLAYMASK & state) >> 8;
 			if (0 < idxImage)
 				pImageList->Draw(&dc, 0, rIconPos.TopLeft(), (LVIS_OVERLAYMASK & state));

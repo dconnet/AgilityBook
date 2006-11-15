@@ -58,6 +58,9 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "AgilityBookViewRuns.h"
+#if _MSC_VER < 1300
+#include "htmlhelp.h"
+#endif
 
 #include <algorithm>
 #include <afxpriv.h> // wm_commandhelp

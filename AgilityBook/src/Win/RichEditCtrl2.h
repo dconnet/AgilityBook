@@ -49,12 +49,14 @@ public:
 			const RECT& rect,
 			CWnd* pParentWnd,
 			UINT nID);
+#if _MSC_VER >= 1300
 	virtual BOOL CreateEx(
 			DWORD dwExStyle,
 			DWORD dwStyle,
 			const RECT& rect,
 			CWnd* pParentWnd,
 			UINT nID);
+#endif
 protected:
 	virtual void PreSubclassWindow();
 	//}}AFX_VIRTUAL

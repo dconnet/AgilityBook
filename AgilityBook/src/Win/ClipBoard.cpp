@@ -151,6 +151,7 @@ bool CClipboardDataReader::GetData(CStringA& outData)
 	return GetData(CF_TEXT, outData);
 }
 
+#if _MSC_VER >= 1300
 bool CClipboardDataReader::GetData(CStringW& outData)
 {
 	outData.Empty();
@@ -169,6 +170,7 @@ bool CClipboardDataReader::GetData(CStringW& outData)
 	}
 	return bOk;
 }
+#endif
 
 /**
  * Internal function for reading ascii text.

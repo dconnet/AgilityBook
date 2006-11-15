@@ -41,6 +41,12 @@
 #include "ListBox.h"
 class CAgilityBookDoc;
 
+#if _MSC_VER >= 1300
+#define DOMODAL_RETVAL	INT_PTR
+#else
+#define DOMODAL_RETVAL	int
+#endif
+
 class CDlgSelectDog : public CDlgBaseDialog
 {
 // Construction
@@ -62,7 +68,7 @@ private:
 // Overrides
 	//{{AFX_VIRTUAL(CDlgSelectDog)
 	public:
-	virtual INT_PTR DoModal();
+	virtual DOMODAL_RETVAL DoModal();
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL

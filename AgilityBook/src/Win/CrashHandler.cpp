@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-#if !defined(UNICODE)
+#if !defined(UNICODE) && _MSC_VER >= 1300
 
 static HKEY g_hAppKey = NULL;
 
@@ -793,10 +793,12 @@ static void QueryKey(
 		case REG_NONE:
 			pType = "NONE";
 			break;
+#if _MSC_VER >= 1300
 		case REG_QWORD:
 		//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
 			pType = "QWORD";
 			break;
+#endif
 		case REG_DWORD:
 			pType = "DWORD";
 			{
