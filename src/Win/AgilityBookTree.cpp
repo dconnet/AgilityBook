@@ -52,6 +52,9 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookTree.h"
+#if _MSC_VER < 1300
+#include "htmlhelp.h"
+#endif
 
 #include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookOptions.h"
@@ -435,7 +438,7 @@ void CAgilityBookTree::OnBeginPrinting(
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
 	pData->nPages = (static_cast<int>(pData->lines.GetSize()) + 1) / pData->nLinesPerPage + 1;
-	//ATLTRACE2(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
+	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
 	//	pData->nPages);

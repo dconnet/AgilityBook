@@ -1865,7 +1865,12 @@ void CDlgConfigVenue::OnOK()
 
 	m_ctrlURL.GetWindowText(str);
 	str.Replace(_T("\""), _T(""));
+#if _MSC_VER >= 1300
 	str.Trim();
+#else
+	str.TrimRight();
+	str.TrimLeft();
+#endif
 	m_pVenue->SetURL((LPCTSTR)str);
 
 	m_ctrlDesc.GetWindowText(str);

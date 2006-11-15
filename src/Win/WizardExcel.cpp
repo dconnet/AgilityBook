@@ -41,7 +41,11 @@
 #include "DlgProgress.h"
 
 #include "excel8.h"
+#if _MSC_VER < 1300
+#define CComVariant COleVariant
+#else
 #include "ooCalc.h"
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -263,6 +267,16 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
+#if _MSC_VER < 1300
+
+class CWizardCalc : public IWizardSpreadSheet
+{
+public:
+	static CWizardCalc* Create();
+};
+
+#else
+
 class CWizardCalc : public IWizardSpreadSheet
 {
 protected:
@@ -353,6 +367,8 @@ private:
 	ooCalc::ooXSpreadsheetDocument m_Document;
 	ooCalc::ooXSpreadsheet m_Worksheet;
 };
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -664,7 +680,14 @@ bool CWizardExcelImport::GetData(
 					break;
 				}
 				CString str;
+#if _MSC_VER < 1300
+				// VC6 can't translate a variant to cstring directly. sigh.
+				COleVariant var = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+				if (var.vt == VT_BSTR)
+					str = var.bstrVal;
+#else
 				str = Excel8::Range(range.get_Range(CComVariant(cell1), CComVariant(cell1))).get_Value();
+#endif
 				row.push_back(str);
 			}
 			outData.push_back(row);
@@ -677,6 +700,9 @@ bool CWizardExcelImport::GetData(
 
 CWizardCalc* CWizardCalc::Create()
 {
+#if _MSC_VER < 1300
+	return NULL;
+#else
 	CWaitCursor wait;
 	CWizardCalc* pCalc = new CWizardCalc();
 	if (pCalc)
@@ -696,7 +722,10 @@ CWizardCalc* CWizardCalc::Create()
 		}
 	}
 	return pCalc;
+#endif
 }
+
+#if _MSC_VER >= 1300
 
 CWizardCalc::CWizardCalc()
 {
@@ -718,7 +747,11 @@ IWizardImporterPtr CWizardCalc::GetImporter() const
 	return IWizardImporterPtr(CWizardCalcImport::Create(m_Manager));
 }
 
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
+
+#if _MSC_VER >= 1300
 
 CWizardCalcExport* CWizardCalcExport::Create(
 		ooCalc::CComManagerDriver& ioManager)
@@ -994,6 +1027,8 @@ bool CWizardCalcImport::GetData(
 	}
 	return true;
 }
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 

@@ -154,7 +154,13 @@ void CNoteButton::DrawItem(LPDRAWITEMSTRUCT lpDIS)
 		crFg = CLR_NONE;
 		style = ILD_BLEND25;
 	}
+#if _MSC_VER < 1300
+	ImageList_DrawEx(m_ImageList.m_hImageList, m_idxNormal,
+		lpDIS->hDC, pt.x, pt.y, szIcon.cx, szIcon.cy,
+		CLR_NONE, crFg, style);
+#else
 	m_ImageList.DrawEx(pDC, m_idxNormal, pt, szIcon, CLR_NONE, crFg, style);
+#endif
 
 	// Draw the button frame
 	CPen black(PS_SOLID, 1, GetSysColor(COLOR_3DDKSHADOW));

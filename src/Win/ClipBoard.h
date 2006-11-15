@@ -86,7 +86,9 @@ public:
 			Element& outTree);
 
 	bool GetData(CStringA& outData);
+#if _MSC_VER >= 1300
 	bool GetData(CStringW& outData);
+#endif
 
 private:
 	bool GetData(

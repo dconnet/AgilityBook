@@ -83,6 +83,9 @@
 #include <vector>
 #include "AgilityBook.h"
 #include "AgilityBookViewPoints.h"
+#if _MSC_VER < 1300
+#include "htmlhelp.h"
+#endif
 
 #include <afxpriv.h> // wm_commandhelp
 #include "AgilityBookDoc.h"

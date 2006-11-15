@@ -70,6 +70,29 @@ private:
 	CAgilityBookDoc* m_DocAsControl; ///< If this is set, the view is really a control.
 	CPointsDataItems* m_Items;
 
+// Operations
+public:
+	// <q241750>
+#if _MSC_VER < 1300
+	CString GetFullName() const;
+	CString GetType() const;
+	CString GetLocationName() const;
+	CString GetLocationURL() const;
+	void Navigate(
+			LPCTSTR lpszURL,
+			DWORD dwFlags = 0,
+			LPCTSTR lpszTargetFrameName = NULL,
+			LPCTSTR lpszHeaders = NULL,
+			LPVOID lpvPostData = NULL,
+			DWORD dwPostDataLen = 0);
+	//Add the following functions. This action prevents the leak because the
+	//CHtmlView versions of LoadFromResource() call CHtmlView::Navigate().
+	//These need to be defined because CHtmlView::Navigate() is not virtual.
+	BOOL LoadFromResource(LPCTSTR lpszResource);
+	BOOL LoadFromResource(UINT nRes);
+#endif
+	// </q241750>
+
 // Overrides
 	// ClassWizard generated virtual function overrides
 protected:

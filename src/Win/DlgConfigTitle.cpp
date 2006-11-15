@@ -154,9 +154,18 @@ void CDlgConfigTitle::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
+#if _MSC_VER >= 1300
 	m_Name.Trim();
 	m_LongName.Trim();
 	m_Desc.Trim();
+#else
+	m_Name.TrimRight();
+	m_Name.TrimLeft();
+	m_LongName.TrimRight();
+	m_LongName.TrimLeft();
+	m_Desc.TrimRight();
+	m_Desc.TrimLeft();
+#endif
 	if (m_Name.IsEmpty())
 	{
 		UpdateData(FALSE); // Stuff what we did back.

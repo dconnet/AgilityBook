@@ -155,7 +155,9 @@ void CHeaderCtrl2::PreSubclassWindow()
 {
 	CHeaderCtrl::PreSubclassWindow();
 	SetImageList(&m_ImageList);
+#if _MSC_VER >= 1300
 	SetBitmapMargin(0);
+#endif
 	m_ToolTip.Create(this);
 	CRect rMargin(0,0,0,0);
 	m_ToolTip.SetMargin(&rMargin);
@@ -243,7 +245,9 @@ void CHeaderCtrl2::FixTooltips()
 				CRect rColumn;
 				GetItemRect(iCol, rColumn);
 				CRect rAdjusted(rColumn);
+#if _MSC_VER >= 1300
 				rAdjusted.right -= GetBitmapMargin();
+#endif
 				rAdjusted.right -= 12; // Deflate to allow for the padding. 6 is just an observed number on each side
 				if (item.fmt & HDF_IMAGE)
 					rAdjusted.right -= 16; // Subtract icon.
@@ -759,7 +763,7 @@ void CListView2::OnBeginPrinting(
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
 	pData->nPages = (GetListCtrl().GetItemCount() + 1) / pData->nLinesPerPage + 1;
-	//ATLTRACE2(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
+	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
 	//	pData->nPages);

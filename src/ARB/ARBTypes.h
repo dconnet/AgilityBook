@@ -83,17 +83,10 @@ ARB_TYPEDEF(ARBInfoItem)
 ARB_TYPEDEF(ARBTraining)
 
 // Note, for non-Windows systems, see stdafx.h for additional requirements.
-#ifdef UNICODE
-typedef std::wstring ARBString;
-typedef std::wofstream ARBofstream;
-typedef std::wostream ARBostream;
-typedef std::wostringstream ARBostringstream;
-#else
-typedef std::string ARBString;
-typedef std::ofstream ARBofstream;
-typedef std::ostream ARBostream;
-typedef std::ostringstream ARBostringstream;
-#endif
+typedef std::basic_ostringstream<TCHAR> ARBostringstream;
+typedef std::basic_string<TCHAR> ARBString;
+typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > ARBostream;
+typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > ARBofstream;
 
 /////////////////////////////////////////////////////////////////////////////
 /**

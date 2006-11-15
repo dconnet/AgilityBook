@@ -963,8 +963,15 @@ void CDlgConfigEvent::OnOK()
 		return;
 	if (!SaveControls())
 		return;
+#if _MSC_VER >= 1300
 	m_Name.Trim();
 	m_Desc.Trim();
+#else
+	m_Name.TrimRight();
+	m_Name.TrimLeft();
+	m_Desc.TrimRight();
+	m_Desc.TrimLeft();
+#endif
 	if (m_Name.IsEmpty())
 	{
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));

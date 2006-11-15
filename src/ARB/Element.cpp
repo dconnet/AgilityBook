@@ -50,12 +50,14 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 
+#if _MSC_VER >= 1300
 #pragma warning ( push )
 // Since we treat warnings as errors, turn off some xerces warnings.
 // warning C4244: 'return' : conversion from '__w64 int' to 'unsigned long', possible loss of data
 // warning C4267: 'argument' : conversion from 'size_t' to 'const unsigned int', possible loss of data
 #pragma warning ( disable : 4127 ) // for xerces2.2, 2.7 doesn't require it
 #pragma warning ( disable : 4244 4267 )
+#endif
 #include <xercesc/dom/DOMException.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
@@ -69,8 +71,14 @@
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
+#if _MSC_VER >= 1300
 #pragma warning ( pop )
+#endif
 XERCES_CPP_NAMESPACE_USE
+
+#if _MSC_VER < 1300
+using namespace std;
+#endif
 
 // Write the dump and errors to cerr
 #define ERRORS_TO_CERR
@@ -242,47 +250,79 @@ public:
 	XMLstring& operator=(XMLstring const& str)
 	{
 		if (this != &str)
+#if _MSC_VER < 1300
+			basic_string<XMLCh>::operator=(str);
+#else
 			std::basic_string<XMLCh>::operator=(str);
+#endif
 		return *this;
 	}
 	XMLstring& operator=(XMLCh const* str)
 	{
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator=(str);
+#else
 		std::basic_string<XMLCh>::operator=(str);
+#endif
 		return *this;
 	}
 	XMLstring& operator=(std::string const& str)
 	{
 		XMLstring data(str);
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator=(data);
+#else
 		std::basic_string<XMLCh>::operator=(data);
+#endif
 		return *this;
 	}
 	XMLstring& operator=(char const* str)
 	{
 		XMLstring data(str);
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator=(data);
+#else
 		std::basic_string<XMLCh>::operator=(data);
+#endif
 		return *this;
 	}
 	XMLstring& operator+=(XMLstring const& str)
 	{
 		if (this != &str)
+#if _MSC_VER < 1300
+			basic_string<XMLCh>::operator+=(str);
+#else
 			std::basic_string<XMLCh>::operator+=(str);
+#endif
 		return *this;
 	}
 	XMLstring& operator+=(XMLCh const* str)
 	{
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator+=(str);
+#else
 		std::basic_string<XMLCh>::operator+=(str);
+#endif
 		return *this;
 	}
 	XMLstring& operator+=(std::string const& str)
 	{
 		XMLstring data(str);
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator+=(data);
+#else
 		std::basic_string<XMLCh>::operator+=(data);
+#endif
 		return *this;
 	}
 	XMLstring& operator+=(char const* str)
 	{
 		XMLstring data(str);
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator+=(data);
+#else
 		std::basic_string<XMLCh>::operator+=(data);
+#endif
 		return *this;
 	}
 };
@@ -296,22 +336,38 @@ class StringDOM : public std::string
 public:
 	/// Default constructor
 	StringDOM()
+#if _MSC_VER < 1300
+		: string()
+#else
 		: std::string()
+#endif
 	{
 	}
 	/// Copy constructor
 	StringDOM(StringDOM const& str)
+#if _MSC_VER < 1300
+		: string(str)
+#else
 		: std::string(str)
+#endif
 	{
 	}
 	/// Copy constructor
 	StringDOM(std::string const& str)
+#if _MSC_VER < 1300
+		: string(str)
+#else
 		: std::string(str)
+#endif
 	{
 	}
 	/// char string constructor
 	StringDOM(char const* str)
+#if _MSC_VER < 1300
+		: string(str)
+#else
 		: std::string(str)
+#endif
 	{
 	}
 	/// XMLCh->string translation constuctor
@@ -320,45 +376,77 @@ public:
 		if (str && XMLString::stringLen(str))
 		{
 			char* pStr = XMLString::transcode(str);
+#if _MSC_VER < 1300
+			string::operator=(pStr);
+#else
 			std::string::operator=(pStr);
+#endif
 			delete [] pStr;
 		}
 	}
 	StringDOM& operator=(StringDOM const& str)
 	{
 		if (this != &str)
+#if _MSC_VER < 1300
+			string::operator=(str);
+#else
 			std::string::operator=(str);
+#endif
 		return *this;
 	}
 	StringDOM& operator=(std::string const& str)
 	{
+#if _MSC_VER < 1300
+		string::operator=(str);
+#else
 		std::string::operator=(str);
+#endif
 		return *this;
 	}
 	StringDOM& operator=(char const* str)
 	{
+#if _MSC_VER < 1300
+		string::operator=(str);
+#else
 		std::string::operator=(str);
+#endif
 		return *this;
 	}
 	StringDOM& operator=(XMLCh const* str)
 	{
 		StringDOM data(str);
+#if _MSC_VER < 1300
+		string::operator=(data);
+#else
 		std::string::operator=(data);
+#endif
 		return *this;
 	}
 	StringDOM& operator+=(StringDOM const& str)
 	{
+#if _MSC_VER < 1300
+		string::operator+=(str);
+#else
 		std::string::operator+=(str);
+#endif
 		return *this;
 	}
 	StringDOM& operator+=(std::string const& str)
 	{
+#if _MSC_VER < 1300
+		string::operator+=(str);
+#else
 		std::string::operator+=(str);
+#endif
 		return *this;
 	}
 	StringDOM& operator+=(char const* str)
 	{
+#if _MSC_VER < 1300
+		string::operator+=(str);
+#else
 		std::string::operator+=(str);
+#endif
 		return *this;
 	}
 	StringDOM& operator+=(XMLCh const* str)
@@ -366,7 +454,11 @@ public:
 		if (str && XMLString::stringLen(str))
 		{
 			char* pStr = XMLString::transcode(str);
+#if _MSC_VER < 1300
+			string::operator+=(pStr);
+#else
 			std::string::operator+=(pStr);
+#endif
 			delete [] pStr;
 		}
 		return *this;

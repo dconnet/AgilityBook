@@ -68,7 +68,7 @@ CDlgSelectDog::CDlgSelectDog(
 	//}}AFX_DATA_INIT
 }
 
-INT_PTR CDlgSelectDog::DoModal() 
+DOMODAL_RETVAL CDlgSelectDog::DoModal() 
 {
 	m_Dogs.clear();
 	if (1 == m_pDoc->GetDogs().size())
