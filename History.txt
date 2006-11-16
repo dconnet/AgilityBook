@@ -1,4 +1,4 @@
-11/5/2006: v1.7.6.12 <in development>
+11/15/2006: v1.7.6.12 <in development>
 - Bumped file version to 12.3, Configuration v17:
   - Updated ASCA title descriptions.
   - Updated USDAA Performance Pairs for titling in 2007.
@@ -8,7 +8,7 @@
   - Changed how speed point multipliers are stored (now configurable).
   - Added a URL field in the venue configuration.
 - New features / Enhancements:
-  - Add an HTML view for points (still in process)
+  - Add an HTML view for points
   - Added support for OpenOffice Calc in the same manner as MS Excel.
   - Removed Visual Studio 6 support. (Ran into too many ATL differences)
   - Added ability to compute speed points for only the specified places.
@@ -17,6 +17,8 @@
 - Bug fixes
   - Properly test the size of the screen so 800x600 doesn't complain.
   - Modify links in the help file so they open in an external browser.
+  - 'Copy Titles' copied all titles that are not hidden, regardless of
+    the current filter.
 
 9/2/2006: v1.7.5.12
 - New features / Enhancements:

@@ -94,7 +94,6 @@
 #include "ARBDogClub.h"
 #include "ARBDogTrial.h"
 #include "ARBTypes.h"
-#include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
@@ -178,8 +177,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
 	ON_COMMAND(ID_VIEW_POINTS_VIEW_SORT, OnViewPointsViewSort)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
-	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
-	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -546,98 +543,4 @@ void CAgilityBookViewPoints::OnViewHiddenTitles()
 		}
 	}
 	LoadData();
-}
-
-void CAgilityBookViewPoints::OnUpdateCopyTitles(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
-	if (pDog && 0 < pDog->GetTitles().size())
-	{
-		int count = 0;
-		for (ARBDogTitleList::const_iterator iter = pDog->GetTitles().begin();
-			iter != pDog->GetTitles().end();
-			++iter)
-		{
-			if ((*iter)->GetDate().IsValid()
-			&& !(*iter)->IsHidden())
-				++count;
-		}
-		if (0 < count)
-			bEnable = TRUE;
-	}
-	pCmdUI->Enable(bEnable);
-}
-
-void CAgilityBookViewPoints::OnCopyTitles()
-{
-	ARBDogPtr pDog = GetDocument()->GetCurrentDog();
-	if (pDog && 0 < pDog->GetTitles().size())
-	{
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-
-		ARBString preTitles, postTitles;
-		for (ARBConfigVenueList::const_iterator iVenue = GetDocument()->GetConfig().GetVenues().begin();
-			iVenue != GetDocument()->GetConfig().GetVenues().end();
-			++iVenue)
-		{
-			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
-				continue;
-			ARBString preTitles2, postTitles2;
-			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
-				iTitle != (*iVenue)->GetTitles().end();
-				++iTitle)
-			{
-				ARBDogTitlePtr pTitle;
-				if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
-				{
-					if (pTitle->GetDate().IsValid()
-					&& !pTitle->IsHidden())
-					{
-						if ((*iTitle)->GetPrefix())
-						{
-							if (!preTitles2.empty())
-								preTitles2 += ' ';
-							preTitles2 += (*iTitle)->GetName();
-						}
-						else
-						{
-							if (!postTitles2.empty())
-								postTitles2 += ' ';
-							postTitles2 += (*iTitle)->GetName();
-						}
-					}
-				}
-			}
-			if (!preTitles2.empty())
-			{
-				if (!preTitles.empty())
-					preTitles += ' ';
-				preTitles += preTitles2;
-			}
-			if (!postTitles2.empty())
-			{
-				if (!postTitles.empty())
-					postTitles += _T("; ");
-				postTitles += postTitles2;
-			}
-		}
-		if (!preTitles.empty() || !postTitles.empty())
-		{
-			CClipboardDataWriter clpData;
-			if (clpData.isOkay())
-			{
-				CString data(preTitles.c_str());
-				data += ' ';
-				data += pDog->GetCallName().c_str();
-				data += _T(": ");
-				data += postTitles.c_str();
-
-				clpData.SetData(data);
-			}
-		}
-		else
-			AfxMessageBox(_T("No titles to copy."), MB_ICONINFORMATION);
-	}
 }

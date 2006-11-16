@@ -128,7 +128,5 @@ protected:
 	afx_msg void OnAgilityNewTitle();
 	afx_msg void OnViewPointsViewSort();
 	afx_msg void OnViewHiddenTitles();
-	afx_msg void OnUpdateCopyTitles(CCmdUI* pCmdUI);
-	afx_msg void OnCopyTitles();
 	DECLARE_MESSAGE_MAP()
 };

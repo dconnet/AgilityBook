@@ -232,6 +232,8 @@ protected:
 	afx_msg void OnHelpUpdate();
 	afx_msg void OnFileExportWizard();
 	afx_msg void OnFileLinked();
+	afx_msg void OnUpdateCopyTitles(CCmdUI* pCmdUI);
+	afx_msg void OnCopyTitles();
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
