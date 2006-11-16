@@ -81,6 +81,7 @@
 #include "AgilityBookViewCalendar.h"
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewTraining.h"
+#include "ClipBoard.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -153,6 +154,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
 	ON_COMMAND(ID_FILE_EXPORT_WIZARD, OnFileExportWizard)
 	ON_COMMAND(ID_FILE_LINKED, OnFileLinked)
+	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
+	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
@@ -974,6 +977,89 @@ void CAgilityBookDoc::OnFileLinked()
 	else
 		dlg.DoModal();
 
+}
+
+void CAgilityBookDoc::OnUpdateCopyTitles(CCmdUI* pCmdUI)
+{
+	// As long as a dog is current, enable. This means the copy may have
+	// only the dog's name.
+	BOOL bEnable = FALSE;
+	ARBDogPtr pDog = GetCurrentDog();
+	if (pDog)
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookDoc::OnCopyTitles()
+{
+	ARBDogPtr pDog = GetCurrentDog();
+	if (pDog)
+	{
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+
+		ARBString preTitles, postTitles;
+		for (ARBConfigVenueList::const_iterator iVenue = GetConfig().GetVenues().begin();
+			iVenue != GetConfig().GetVenues().end();
+			++iVenue)
+		{
+			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
+				continue;
+			ARBString preTitles2, postTitles2;
+			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
+				iTitle != (*iVenue)->GetTitles().end();
+				++iTitle)
+			{
+				ARBDogTitlePtr pTitle;
+				if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
+				{
+					if (pTitle->GetDate().IsValid()
+					&& !pTitle->IsFiltered())
+					{
+						if ((*iTitle)->GetPrefix())
+						{
+							if (!preTitles2.empty())
+								preTitles2 += ' ';
+							preTitles2 += (*iTitle)->GetName();
+						}
+						else
+						{
+							if (!postTitles2.empty())
+								postTitles2 += ' ';
+							postTitles2 += (*iTitle)->GetName();
+						}
+					}
+				}
+			}
+			if (!preTitles2.empty())
+			{
+				if (!preTitles.empty())
+					preTitles += ' ';
+				preTitles += preTitles2;
+			}
+			if (!postTitles2.empty())
+			{
+				if (!postTitles.empty())
+					postTitles += _T("; ");
+				postTitles += postTitles2;
+			}
+		}
+
+		CString data(preTitles.c_str());
+		if (!data.IsEmpty())
+			data += ' ';
+		data += pDog->GetCallName().c_str();
+		if (!postTitles.empty())
+		{
+			data += _T(": ");
+			data += postTitles.c_str();
+		}
+		CClipboardDataWriter clpData;
+		if (clpData.isOkay())
+		{
+			clpData.SetData(data);
+		}
+	}
 }
 
 void CAgilityBookDoc::OnEditConfiguration()
