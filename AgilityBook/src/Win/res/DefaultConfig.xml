@@ -311,7 +311,8 @@ Revision History:
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-					<TitlePoints Faults="0" Points="1"/>
+					<Note>Time Faults only</Note>
+					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
 					<TitlePoints Faults="15" Points="1"/>
@@ -333,7 +334,8 @@ Revision History:
 					<TitlePoints Faults="0" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
-					<TitlePoints Faults="0" Points="1"/>
+					<Note>Time Faults only</Note>
+					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Open" dropFractions="y" timeFault="2" type="Faults100ThenTime">
 					<TitlePoints Faults="15" Points="1"/>
