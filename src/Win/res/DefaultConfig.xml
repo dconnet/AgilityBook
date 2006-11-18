@@ -318,6 +318,7 @@ Revision History:
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+					<Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
@@ -341,6 +342,7 @@ Revision History:
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 				<Scoring Division="*" Level="Novice" dropFractions="y" type="Faults100ThenTime">
+					<Note>No more than 2R, 1W (before 9/1/2006, 2Ws were allowed)</Note>
 					<TitlePoints Faults="15" Points="1"/>
 				</Scoring>
 			</Event>
