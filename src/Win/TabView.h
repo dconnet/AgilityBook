@@ -53,6 +53,8 @@ public:
 	int GetCurSel() const				{return GetTabCtrl().GetCurSel();}
 	void SetCurSel(int index);
 
+	bool ShowPointsAs(bool bHtml);
+
 // Overrides
 	//{{AFX_VIRTUAL(CTabView)
 public:
@@ -70,6 +72,7 @@ public:
 #endif
 
 protected:
+	bool CreatePointView(bool bHtml, CCreateContext& context);
 	void SetActiveView();
 
 	CSplitter m_splitterRuns;

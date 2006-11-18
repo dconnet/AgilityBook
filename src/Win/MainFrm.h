@@ -60,6 +60,7 @@ public:
 	void SetStatusText2(CString const& msg);
 	int GetCurTab() const;
 	void SetCurTab(int tab);
+	bool ShowPointsAs(bool bHtml);
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;

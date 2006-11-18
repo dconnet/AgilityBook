@@ -1241,8 +1241,7 @@ BEGIN
     LTEXT           "Splash screen image (clear to use default)",IDC_STATIC,15,96,132,8
     EDITTEXT        IDC_OPT_PGM_FILENAME,15,106,180,12,ES_AUTOHSCROLL,0,HIDC_OPT_PGM_FILENAME
     PUSHBUTTON      "Browse...",IDC_OPT_PGM_BROWSE,200,106,40,12,0,0,HIDC_OPT_PGM_BROWSE
-    CONTROL         "Use HTML in Points View. (Option will not be applied until the next time the program is run.)",IDC_OPT_PGM_SHOWHTML,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,130,300,10,0,HIDC_OPT_PGM_SHOWHTML
+    CONTROL         "Use HTML in Points View.",IDC_OPT_PGM_SHOWHTML,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,130,99,10,0,HIDC_OPT_PGM_SHOWHTML
 END
 
 IDD_VIEW_OPTIONS_FILTER DIALOGEX 0, 0, 350, 289
@@ -2464,7 +2463,6 @@ BEGIN
     IDS_FILEEXT_FILTER_MSEXCEL 
                             "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
     IDS_FILEEXT_FILTER_OOCALC "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
-    IDS_WARNING_RESTART     "The application must be restarted in order to change between HTML and List in the Points View."
     IDS_CONFIGEVENT_STYLE   "Scoring Style"
     IDS_CONFIGEVENT_TIMEFAULTMULT "Time Fault Multiplier"
     IDS_CONFIGEVENT_REQOPEN "Required Opening"

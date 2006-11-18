@@ -266,6 +266,11 @@ int CMainFrame::GetCurTab() const
 	return m_pView->GetCurSel();
 }
 
+bool CMainFrame::ShowPointsAs(bool bHtml)
+{
+	return m_pView->ShowPointsAs(bHtml);
+}
+
 // CMainFrame message handlers
 
 void CMainFrame::OnClose() 

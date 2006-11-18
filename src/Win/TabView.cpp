@@ -40,6 +40,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "TabView.h"
+#include <afxpriv.h>
 
 #include "AgilityBookOptions.h"
 #include "AgilityBookTree.h"
@@ -60,6 +61,23 @@ static char THIS_FILE[] = __FILE__;
 // Default splitter widths
 #define DEFAULT_RUN_WIDTH	200
 #define DEFAULT_CAL_WIDTH	200
+
+#define PANEIDX_RUN	0
+#define PANEIDX_PTS	1
+#define PANEIDX_CAL	2
+#define PANEIDX_LOG	3
+static const struct
+{
+	int idxPane;
+	UINT idPane;
+} sc_Panes[] =
+{
+	{PANEIDX_RUN, IDS_RUNS},
+	{PANEIDX_PTS, IDS_POINTS},
+	{PANEIDX_CAL, IDS_CALENDAR},
+	{PANEIDX_LOG, IDS_TRAINING},
+};
+static const int sc_nPanes = sizeof(sc_Panes) / sizeof(sc_Panes[0]);
 
 /////////////////////////////////////////////////////////////////////////////
 // CTabView
@@ -112,6 +130,105 @@ BOOL CTabView::PreCreateWindow(CREATESTRUCT& cs)
 	return CCtrlView::PreCreateWindow(cs);
 }
 
+// This should only be called when the view already exists.
+bool CTabView::ShowPointsAs(bool bHtml)
+{
+	CAgilityBookViewHtml* html = dynamic_cast<CAgilityBookViewHtml*>(m_Panes[PANEIDX_PTS]);
+	if (html && bHtml)
+		return true;
+	CAgilityBookViewPoints* points = dynamic_cast<CAgilityBookViewPoints*>(m_Panes[PANEIDX_PTS]);
+	if (points && !bHtml)
+		return true;
+
+	if (!m_Panes[PANEIDX_PTS])
+	{
+		ASSERT(0);
+		return false;
+	}
+
+	CWaitCursor wait;
+	SetRedraw(FALSE);
+
+	// Setup needed information.
+	CView* pView = dynamic_cast<CView*>(m_Panes[PANEIDX_PTS]);
+	ASSERT(pView);
+	CDocument* pDoc = pView->GetDocument();
+	CFrameWnd* pFrame = pView->GetParentFrame();
+	bool bSetView = false;
+	if (pFrame->GetActiveView() == pView)
+	{
+		// If we're deleting the active view, first fix the frame.
+		bSetView = true;
+		pFrame->SetActiveView(NULL, FALSE);
+	}
+	CRect r;
+	GetTabCtrl().GetClientRect(r);
+	GetTabCtrl().AdjustRect(FALSE, r);
+
+	// Set flag so that document will not be deleted when view is destroyed
+	BOOL bAutoDelete = pDoc->m_bAutoDelete;
+	pDoc->m_bAutoDelete = FALSE;
+	// Delete existing view
+	pView->DestroyWindow();
+	m_Panes[PANEIDX_PTS] = NULL;
+	// Restore flag
+	pDoc->m_bAutoDelete = bAutoDelete;
+
+	CCreateContext context;
+	context.m_pNewViewClass = NULL;
+	context.m_pCurrentDoc = pDoc;
+	context.m_pNewDocTemplate = NULL;
+	context.m_pLastView = NULL;
+	context.m_pCurrentFrame = pFrame;
+
+	bool bCreatedAsAsked = CreatePointView(bHtml, context);
+	pView = dynamic_cast<CView*>(m_Panes[PANEIDX_PTS]);
+
+	pView->SendMessage(WM_INITIALUPDATE, 0, 0);
+	pView->MoveWindow(r.left, r.top, r.Width(), r.Height());
+	// If we were viewing this tab, activate it again.
+	if (bSetView)
+		SetCurSel(PANEIDX_PTS);
+
+	SetRedraw(TRUE);
+
+	pView->Invalidate();
+	pView->UpdateWindow();
+	return bCreatedAsAsked;
+}
+
+bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
+{
+	bool bCreateList = !bHtml;
+	if (bHtml)
+	{
+		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
+		if (!html)
+			bCreateList = true;
+		else
+		{
+			m_Panes[PANEIDX_PTS] = html;
+			context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
+			DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+			html->Create(NULL, NULL,
+				dwStyle,
+				CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+		}
+	}
+	if (bCreateList)
+	{
+		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
+		m_Panes[PANEIDX_PTS] = points;
+		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
+		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
+		points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
+			dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
+			CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+	}
+	// Returns whether we created the view we asked for.
+	return bCreateList == !bHtml;
+}
+
 void CTabView::OnInitialUpdate()
 {
 	CCtrlView::OnInitialUpdate();
@@ -122,14 +239,14 @@ void CTabView::OnInitialUpdate()
 	reinterpret_cast<CMainFrame*>(GetParentFrame())->m_pView = this;
 
 	CString str;
-	str.LoadString(IDS_RUNS);
-	GetTabCtrl().InsertItem(0, str);
-	str.LoadString(IDS_POINTS);
-	GetTabCtrl().InsertItem(1, str);
-	str.LoadString(IDS_CALENDAR);
-	GetTabCtrl().InsertItem(2, str);
-	str.LoadString(IDS_TRAINING);
-	GetTabCtrl().InsertItem(3, str);
+	for (int nPane = 0; nPane < sc_nPanes; ++nPane)
+	{
+		ASSERT(sc_Panes[nPane].idxPane == nPane);
+		str.LoadString(sc_Panes[nPane].idPane);
+		GetTabCtrl().InsertItem(nPane, str);
+	}
+	ASSERT(0 == m_Panes.size());
+	m_Panes.insert(m_Panes.begin(), sc_nPanes, static_cast<CWnd*>(NULL));
 
 	CCreateContext context;
 	context.m_pCurrentDoc = GetDocument();
@@ -148,34 +265,9 @@ void CTabView::OnInitialUpdate()
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewRuns);
 	if (!m_splitterRuns.CreateView(0, 1, RUNTIME_CLASS(CAgilityBookViewRuns), CSize(200, 100), &context))
 		return;
-	m_Panes.push_back(&m_splitterRuns);
+	m_Panes[PANEIDX_RUN] = &m_splitterRuns;
 
-	bool bCreateList = !CAgilityBookOptions::ShowHtmlPoints();
-	if (!bCreateList)
-	{
-		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
-		if (!html)
-			bCreateList = true;
-		else
-		{
-			m_Panes.push_back(html);
-			context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
-			DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-			html->Create(NULL, NULL,
-				dwStyle,
-				CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
-		}
-	}
-	if (bCreateList)
-	{
-		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
-		m_Panes.push_back(points);
-		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
-		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-		points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
-			dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
-			CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
-	}
+	CreatePointView(CAgilityBookOptions::ShowHtmlPoints(), context);
 
 	if (!m_splitterCal.CreateStatic(this, 1, 2))
 		return;
@@ -188,10 +280,10 @@ void CTabView::OnInitialUpdate()
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewCalendar);
 	if (!m_splitterCal.CreateView(0, 1, RUNTIME_CLASS(CAgilityBookViewCalendar), CSize(200, 100), &context))
 		return;
-	m_Panes.push_back(&m_splitterCal);
+	m_Panes[PANEIDX_CAL] = &m_splitterCal;
 
 	CAgilityBookViewTraining* training = reinterpret_cast<CAgilityBookViewTraining*>(RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject());
-	m_Panes.push_back(training);
+	m_Panes[PANEIDX_LOG] = training;
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
 	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
@@ -251,24 +343,24 @@ void CTabView::SetActiveView()
 	int nIndex = GetTabCtrl().GetCurSel();
 	switch (nIndex)
 	{
-	case 0:
+	case PANEIDX_RUN:
 		// We may need to kick start the view the 1st time.
 		if (!m_pLastFocusRuns)
 			m_pLastFocusRuns = reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,0));
 		pView = m_pLastFocusRuns;
 		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,1)));
 		break;
-	case 1:
+	case PANEIDX_PTS:
 		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
 		pCommon = dynamic_cast<ICommonView*>(pView);
 		break;
-	case 2:
+	case PANEIDX_CAL:
 		if (!m_pLastFocusCal)
 			m_pLastFocusCal = reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0));
 		pView = m_pLastFocusCal;
 		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0)));
 		break;
-	case 3:
+	case PANEIDX_LOG:
 		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
 		pCommon = dynamic_cast<ICommonView*>(pView);
 		break;
@@ -304,7 +396,8 @@ void CTabView::OnSize(
 		GetTabCtrl().AdjustRect(FALSE, r);
 		for (std::vector<CWnd*>::iterator iter = m_Panes.begin(); iter != m_Panes.end(); ++iter)
 		{
-			(*iter)->MoveWindow(r.left, r.top, r.Width(), r.Height());
+			if (*iter)
+				(*iter)->MoveWindow(r.left, r.top, r.Width(), r.Height());
 		}
 	}
 }
@@ -316,10 +409,10 @@ void CTabView::OnSetFocus(CWnd* pOldWnd)
 	{
 		switch (nIndex)
 		{
-		case 0:
+		case PANEIDX_RUN:
 			m_pLastFocusRuns = reinterpret_cast<CView*>(pOldWnd);
 			break;
-		case 2:
+		case PANEIDX_CAL:
 			m_pLastFocusCal = reinterpret_cast<CView*>(pOldWnd);
 			break;
 		}
@@ -335,7 +428,7 @@ void CTabView::OnSelChanging(
 	int nIndex = GetTabCtrl().GetCurSel();
 	if (0 > nIndex || nIndex >= GetTabCtrl().GetItemCount())
 		return;
-	if (0 == nIndex)
+	if (PANEIDX_RUN == nIndex)
 	{
 		int r, c;
 		m_splitterRuns.GetActivePane(&r, &c);
@@ -344,7 +437,7 @@ void CTabView::OnSelChanging(
 		// No else. If there is no active, we want to inherit what was set
 		// in the OnSetFocus handler.
 	}
-	else if (2 == nIndex)
+	else if (PANEIDX_CAL == nIndex)
 	{
 		int r, c;
 		m_splitterCal.GetActivePane(&r, &c);
