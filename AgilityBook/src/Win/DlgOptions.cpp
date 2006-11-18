@@ -42,6 +42,7 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 #include "DlgOptions.h"
+#include "MainFrm.h"
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
@@ -138,6 +139,7 @@ void CDlgOptions::OnOK()
 	if (GetActivePage()->UpdateData(TRUE))
 	{
 		CWaitCursor wait;
+		bool bResetHtmlView = false;
 
 		// Program options
 		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
@@ -150,8 +152,8 @@ void CDlgOptions::OnOK()
 			bool bShow = m_pageProgram.m_bShowHtml ? true : false;
 			if (CAgilityBookOptions::ShowHtmlPoints() != bShow)
 			{
+				bResetHtmlView = true;
 				CAgilityBookOptions::SetShowHtmlPoints(bShow);
-				AfxMessageBox(IDS_WARNING_RESTART, MB_ICONWARNING);
 			}
 		}
 
@@ -181,6 +183,12 @@ void CDlgOptions::OnOK()
 
 		// Update
 		m_pDoc->ResetVisibility();
+
+		if (bResetHtmlView)
+		{
+			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
+			pFrame->ShowPointsAs(CAgilityBookOptions::ShowHtmlPoints());
+		}
 
 		EndDialog(IDOK);
 	}

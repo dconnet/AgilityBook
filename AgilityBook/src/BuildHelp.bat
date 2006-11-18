@@ -2,7 +2,6 @@
 REM Generate the help file.
 REM
 REM Revision History
-REM 2006-10-25 DRC Removed VC6 support
 REM 2005-06-24 DRC Add better support for multiple compilers
 REM 2005-01-23 DRC Added History.html creation from a template.
 REM 2004-05-20 DRC Created
@@ -36,6 +35,8 @@ hhc AgilityBook.hhp
 REM Finally, copy the chm file into various locations.
 REM /r:overwrite readonly, /q: don't show copied filename, /y:no prompt
 echo Copying chm file to build output directories
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC6\Release\"
+xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC6\Debug\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC7\Release\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC7\Debug\"
 xcopy /r/q/y Help\AgilityBook.chm "..\bin\VC8\Release\"
