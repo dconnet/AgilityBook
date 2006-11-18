@@ -568,7 +568,7 @@ void CAgilityBookDoc::ResetVisibility()
 	for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
 	{
 		ARBCalendarPtr pCal = *iterCal;
-		bool bVis = CFilterOptions::Options().IsCalendarVisible(pCal);
+		bool bVis = CFilterOptions::Options().IsCalendarVisible(venues, pCal);
 		pCal->SetFiltered(!bVis);
 	}
 

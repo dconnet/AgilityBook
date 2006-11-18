@@ -215,7 +215,9 @@ public:
 			ARBConfigVenuePtr pVenue,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun);
-	bool IsCalendarVisible(ARBCalendarPtr pCal);
+	bool IsCalendarVisible(
+			std::vector<CVenueFilter> const& venues,
+			ARBCalendarPtr pCal);
 	bool IsTrainingLogVisible(
 			std::set<ARBString> const& names,
 			ARBTrainingPtr pTraining);

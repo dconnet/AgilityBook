@@ -562,7 +562,9 @@ bool CFilterOptions::IsRunVisible(
 	return bVisible;
 }
 
-bool CFilterOptions::IsCalendarVisible(ARBCalendarPtr pCal)
+bool CFilterOptions::IsCalendarVisible(
+		std::vector<CVenueFilter> const& venues,
+		ARBCalendarPtr pCal)
 {
 	if (!m_bAllDates)
 	{
@@ -577,7 +579,22 @@ bool CFilterOptions::IsCalendarVisible(ARBCalendarPtr pCal)
 				return false;
 		}
 	}
-	return true;
+	bool bVisible = true;
+	if (!m_bViewAllVenues)
+	{
+		bVisible = false;
+		for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
+			iter != venues.end();
+			++iter)
+		{
+			if (pCal->GetVenue() == (*iter).venue)
+			{
+				bVisible = true;
+				break;
+			}
+		}
+	}
+	return bVisible;
 }
 
 bool CFilterOptions::IsTrainingLogVisible(
