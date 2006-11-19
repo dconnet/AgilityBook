@@ -178,8 +178,10 @@ bool CAgilityBookViewCalendar::SetCurrentDate(
 }
 
 bool CAgilityBookViewCalendar::IsFiltered() const
-{
+{{
 	if (!CFilterOptions::Options().GetViewAllDates())
+		return true;
+	if (!CFilterOptions::Options().GetViewAllVenues())
 		return true;
 	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 	return filter.IsFiltered();
