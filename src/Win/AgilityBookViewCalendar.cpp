@@ -178,7 +178,7 @@ bool CAgilityBookViewCalendar::SetCurrentDate(
 }
 
 bool CAgilityBookViewCalendar::IsFiltered() const
-{{
+{
 	if (!CFilterOptions::Options().GetViewAllDates())
 		return true;
 	if (!CFilterOptions::Options().GetViewAllVenues())
