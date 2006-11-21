@@ -178,7 +178,7 @@ ARBString CPointsDataText::GetHtml(size_t /*nCurLine*/) const
 	if (m_UseInHtml)
 	{
 		data << _T("<tr>") << std::endl
-			<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
+			<< _T("<td>") << SanitizeStringForHTML(m_Col2) << _T("</td>") << std::endl
 			<< _T("</tr>") << std::endl;
 	}
 	return data.str();
@@ -227,7 +227,7 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 	if (m_pDog)
 	{
 		data << _T("<h1 align=\"center\">Titling Points ")
-			<< ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
+			<< SanitizeStringForHTML(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
 			<< _T("</h1>")
 			<< _T("<h1><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
@@ -235,11 +235,11 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 #else
 			<< nCurLine
 #endif
-			<< _T("\">") << m_pDog->GetCallName();
+			<< _T("\">") << SanitizeStringForHTML(m_pDog->GetCallName());
 		if (!m_pDog->GetRegisteredName().empty())
 		{
 			data << _T("</a> [")
-				<< m_pDog->GetRegisteredName()
+				<< SanitizeStringForHTML(m_pDog->GetRegisteredName())
 				<< _T("]");
 		}
 		data << _T("</h1>") << std::endl;
@@ -316,14 +316,14 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 		data << _T("<h2>");
 		if (m_pVenue->GetURL().empty())
 		{
-			data << m_pVenue->GetName();
+			data << SanitizeStringForHTML(m_pVenue->GetName());
 		}
 		else
 		{
 			data << _T("<a target=\"new\" href=\"")
 				<< m_pVenue->GetURL()
 				<< _T("\">")
-				<< m_pVenue->GetName()
+				<< SanitizeStringForHTML(m_pVenue->GetName())
 				<< _T("</a>");
 		}
 		if (m_pDog)
@@ -337,7 +337,7 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 #else
 					<< nCurLine
 #endif
-					<< _T("\">") << pRegNum->GetNumber()
+					<< _T("\">") << SanitizeStringForHTML(pRegNum->GetNumber())
 					<< _T("</a>]") << std::endl;
 			}
 		}
@@ -418,14 +418,14 @@ ARBString CPointsDataTitle::GetHtml(size_t nCurLine) const
 	if (m_pTitle)
 	{
 		data << _T("<tr>") << std::endl
-			<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
+			<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
 			<< _T("<td><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 			<< static_cast<UINT>(nCurLine)
 #else
 			<< nCurLine
 #endif
-			<< _T("\">") << OnNeedText(2) << _T("</a></td>") << std::endl
+			<< _T("\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</a></td>") << std::endl
 			<< _T("</tr>") << std::endl;
 	}
 	return data.str();
@@ -531,20 +531,20 @@ ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
-		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
-		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
-		<< _T("<td>") << OnNeedText(3) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(3)) << _T("</td>") << std::endl
 		<< _T("<td><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">") << OnNeedText(4) << _T("</a></td>") << std::endl
-		<< _T("<td>") << OnNeedText(5) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\">") << OnNeedText(6) << _T("</td>") << std::endl
-		<< _T("<td>") << OnNeedText(7) << _T("</td>") << std::endl
-		<< _T("<td>") << OnNeedText(8) << _T("</td>") << std::endl
+		<< _T("\">") << SanitizeStringForHTML(OnNeedText(4)) << _T("</a></td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(5)) << _T("</td>") << std::endl
+		<< _T("<td align=\"right\">") << SanitizeStringForHTML(OnNeedText(6)) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(7)) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(8)) << _T("</td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -635,14 +635,14 @@ ARBString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr><td>&nbsp;</td</tr>") << std::endl
 		<< _T("<tr>") << std::endl
-		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">") << OnNeedText(2) << _T("</a></td>") << std::endl
+		<< _T("\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -721,7 +721,7 @@ ARBString CPointsDataLifetimeDiv::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
-		<< _T("<td align=\"right\">") << OnNeedText(2) << _T("</td>") << std::endl
+		<< _T("<td align=\"right\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -789,7 +789,7 @@ ARBString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< _T("\">")
-		<< OnNeedText(7) << _T("</a></td>") << std::endl
+		<< SanitizeStringForHTML(OnNeedText(7)) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -841,7 +841,7 @@ ARBString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td colspan=\"6\"/>") << std::endl
-		<< _T("<td>") << OnNeedText(7) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(7)) << _T("</td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -908,7 +908,7 @@ ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
-		<< _T("<td>") << OnNeedText(1) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
@@ -916,7 +916,7 @@ ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< _T("\">")
-		<< OnNeedText(2) << _T("</a></td>") << std::endl
+		<< SanitizeStringForHTML(OnNeedText(2)) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -972,7 +972,7 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
-		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
@@ -980,7 +980,7 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< _T("\">")
-		<< OnNeedText(3) << _T("</a></td>") << std::endl
+		<< SanitizeStringForHTML(OnNeedText(3)) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -1036,7 +1036,7 @@ ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
-		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
@@ -1044,7 +1044,7 @@ ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< _T("\">")
-		<< OnNeedText(3) << _T("</a></td>") << std::endl
+		<< SanitizeStringForHTML(OnNeedText(3)) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
@@ -1105,8 +1105,8 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) cons
 	ARBostringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
-		<< _T("<td>") << OnNeedText(2) << _T("</td>") << std::endl
-		<< _T("<td>") << OnNeedText(3) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
+		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(3)) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
@@ -1114,7 +1114,7 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) cons
 		<< nCurLine
 #endif
 		<< _T("\">")
-		<< OnNeedText(4) << _T("</a></td>") << std::endl
+		<< SanitizeStringForHTML(OnNeedText(4)) << _T("</a></td>") << std::endl
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
