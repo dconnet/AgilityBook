@@ -1043,9 +1043,7 @@ void CAgilityBookViewCalendarList::OnItemChanged(
 			if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
 			{
 				CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
-				pCalView->SuppressSelect(true);
 				pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
-				pCalView->SuppressSelect(false);
 			}
 		}
 	}
@@ -1186,9 +1184,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 				if (oldDate != pData->GetCalendar()->GetStartDate())
 				{
 					CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
-					pCalView->SuppressSelect(true);
 					pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
-					pCalView->SuppressSelect(false);
 				}
 				LoadData();
 				GetDocument()->SetModifiedFlag();
