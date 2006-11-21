@@ -116,7 +116,6 @@ END_MESSAGE_MAP()
 
 CAgilityBookViewCalendar::CAgilityBookViewCalendar()
 	: m_nWeeks(0)
-	, m_bSuppressSelect(false)
 {
 }
 
@@ -244,8 +243,6 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 
 void CAgilityBookViewCalendar::LoadData()
 {
-	m_bSuppressSelect = true;
-
 	// Clear everything.
 	m_Calendar.clear();
 	m_CalendarHidden.clear();
@@ -358,7 +355,6 @@ void CAgilityBookViewCalendar::LoadData()
 	}
 
 	Invalidate();
-	m_bSuppressSelect = false;
 }
 
 /**

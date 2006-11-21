@@ -59,8 +59,6 @@ public:
 			ARBDate const& date,
 			bool bEnsureVisible);
 
-	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
-
 	// ICommonView interface
 	virtual bool IsFiltered() const;
 	virtual bool GetMessage(CString& msg) const;
@@ -119,9 +117,6 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
-private:
-	bool m_bSuppressSelect;
 
 // Generated message map functions
 protected:
