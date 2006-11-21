@@ -53,6 +53,56 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBString SanitizeStringForHTML(
+		ARBString const& inRawData,
+		bool bConvertCR)
+{
+	ARBString::size_type pos = inRawData.find_first_of(_T("&<>"));
+	if (ARBString::npos == pos && bConvertCR)
+		pos = inRawData.find_first_of(_T("\r\n"));
+	if (ARBString::npos == pos)
+		return inRawData;
+	ARBostringstream data;
+	for (size_t nChar = 0; nChar < inRawData.length(); ++nChar)
+	{
+		switch (inRawData[nChar])
+		{
+		case _T('&'):
+			data << _T("&amp;");
+			break;
+		case _T('<'):
+			data << _T("&lt;");
+			break;
+		case _T('>'):
+			data << _T("&gt;");
+			break;
+		case _T('\r'):
+			if (bConvertCR)
+			{
+				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar+1])
+					continue;
+				else
+					data << _T("<br/>");
+			}
+			else
+				data << inRawData[nChar];
+			break;
+		case '\n':
+			if (bConvertCR)
+				data << _T("<br/>");
+			else
+				data << inRawData[nChar];
+			break;
+		default:
+			data << inRawData[nChar];
+			break;
+		}
+	}
+	return data.str();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 ARBString ARBVersion::str() const
 {
 	ARBostringstream buffer;

@@ -88,6 +88,16 @@ typedef std::basic_string<TCHAR> ARBString;
 typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > ARBostream;
 typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > ARBofstream;
 
+/**
+ * Make a string safe for HTML viewing.
+ * @param inRawData String to sanitize
+ * @param bConvertCR Convert \n to <br/>
+ */
+ARBString SanitizeStringForHTML(
+		ARBString const& inRawData,
+		bool bConvertCR = true);
+
+
 /////////////////////////////////////////////////////////////////////////////
 /**
  * Extend some common functionality.
