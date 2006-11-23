@@ -1,4 +1,4 @@
-11/18/2006: v1.7.6.12 <in development>
+11/22/2006: v1.7.6.12 <in development>
 - Bumped file version to 12.3, Configuration v17:
   - Updated ASCA title descriptions.
   - Updated USDAA Performance Pairs for titling in 2007.
@@ -15,6 +15,7 @@
     (Place 0 is a wildcard that applies to any place that isn't listed)
   - Run dialog: Trim Divisions/Levels if no events are available on date.
   - Allow venue filtering on Calendar view.
+  - Change calendar listing to show one month at a time.
 - Bug fixes
   - Properly test the size of the screen so 800x600 doesn't complain.
   - Modify links in the help file so they open in an external browser.
