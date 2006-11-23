@@ -83,8 +83,6 @@ public:
 	static void SetDaysTillEntryIsPast(int nDays);
 	static bool HideOverlappingCalendarEntries();
 	static void SetHideOverlappingCalendarEntries(bool bHide);
-	static CSize GetCalendarEntrySize();
-	static void SetCalendarEntrySize(CSize const& sz);
 	typedef enum
 	{
 		eCalColorNotEntered,
@@ -140,6 +138,8 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
+	static void GetPrinterMargins(CRect& outMargins); // In .01 inches
+	static void SetPrinterMargins(CRect const& inMargins);
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options

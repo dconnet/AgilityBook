@@ -725,16 +725,25 @@ void CListView2::OnBeginPrinting(
 	CListPrintData* pData = new CListPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
+	pDC->SetMapMode(MM_LOENGLISH);
+
 	// Set the font
 	CFontInfo fontInfo;
 	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
 	CFont font;
-	fontInfo.CreateFont(font, pDC);
+	fontInfo.CreateFont(font);
 	pDC->SelectObject(&font);
 
 	CSize szDevice(pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
 	pData->r = CRect(CPoint(0,0), szDevice);
 	pDC->DPtoLP(pData->r);
+	CRect margins;
+	CAgilityBookOptions::GetPrinterMargins(margins);
+	pDC->DPtoLP(margins);
+	pData->r.left += margins.left;
+	pData->r.top += margins.top;
+	pData->r.right -= margins.right;
+	pData->r.bottom -= margins.bottom;
 
 	int nMaxItem = GetListCtrl().GetItemCount();
 	for (int i = -1; i < nMaxItem; ++i)
@@ -756,10 +765,10 @@ void CListView2::OnBeginPrinting(
 	CRect rTest(0,0,0,0);
 	CString strTextForHeight(_T("Testing for height"));
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
-	pData->nHeight = 4 * rTest.Height() / 3;
+	pData->nHeight = 4 * abs(rTest.Height()) / 3;
 	if (1 > pData->nHeight)
 		pData->nHeight = 1;
-	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
+	pData->nLinesPerPage = abs(pData->r.Height()) / pData->nHeight;
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
 	pData->nPages = (GetListCtrl().GetItemCount() + 1) / pData->nLinesPerPage + 1;
@@ -783,10 +792,12 @@ void CListView2::OnPrint(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
+	pDC->SetMapMode(MM_LOENGLISH);
+
 	CFontInfo fontInfo;
 	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
 	CFont font;
-	fontInfo.CreateFont(font, pDC);
+	fontInfo.CreateFont(font);
 	pDC->SelectObject(&font);
 
 	CListPrintData* pData = reinterpret_cast<CListPrintData*>(pInfo->m_lpUserData);
@@ -800,7 +811,7 @@ void CListView2::OnPrint(
 		CStringArray line;
 		GetPrintLine(nItem, line);
 		CRect r = pData->r;
-		r.top += (nItem - nStartItem) * pData->nHeight;
+		r.top -= (nItem - nStartItem) * pData->nHeight;
 		for (int i = 0; i < line.GetSize(); ++i)
 		{
 			r.right = r.left + pData->nMaxWidth[i];

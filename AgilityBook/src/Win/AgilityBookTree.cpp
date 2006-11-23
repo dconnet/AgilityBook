@@ -358,10 +358,12 @@ CString CAgilityBookTree::GetPrintLine(HTREEITEM hItem) const
 	return GetTreeCtrl().GetItemText(hItem);
 }
 
+typedef std::pair<int, CString> Items;
 struct CTreePrintData
 {
-	CStringArray lines;
+	std::vector<Items> lines;
 	CRect r;
+	int nIndent;
 	int nMaxWidth;
 	int nHeight;
 	int nLinesPerPage;
@@ -389,11 +391,8 @@ void CAgilityBookTree::PrintLine(
 {
 	if (TVI_ROOT != hItem)
 	{
-		CString str;
-		for (int i = 0; i < indent; ++i)
-			str += _T("   ");
-		str += GetPrintLine(hItem);
-		pData->lines.Add(str);
+		CString str = GetPrintLine(hItem);
+		pData->lines.push_back(Items(indent, str));
 		CRect r(0,0,0,0);
 		pDC->DrawText(str, &r, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 		if (r.Width() > pData->nMaxWidth)
@@ -415,29 +414,41 @@ void CAgilityBookTree::OnBeginPrinting(
 	CTreePrintData* pData = new CTreePrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
+	pDC->SetMapMode(MM_LOENGLISH);
+
 	// Set the font
 	CFontInfo fontInfo;
 	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
 	CFont font;
-	fontInfo.CreateFont(font, pDC);
+	fontInfo.CreateFont(font);
 	pDC->SelectObject(&font);
+	TEXTMETRIC tm;
+	pDC->GetTextMetrics(&tm);
+	pData->nIndent = tm.tmAveCharWidth * 8;
 
 	CSize szDevice(pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
 	pData->r = CRect(CPoint(0,0), szDevice);
 	pDC->DPtoLP(pData->r);
+	CRect margins;
+	CAgilityBookOptions::GetPrinterMargins(margins);
+	pDC->DPtoLP(margins);
+	pData->r.left += margins.left;
+	pData->r.top += margins.top;
+	pData->r.right -= margins.right;
+	pData->r.bottom -= margins.bottom;
 
 	PrintLine(pDC, pData, TVI_ROOT, 0);
 
 	CRect rTest(0,0,0,0);
 	CString strTextForHeight(_T("Testing for height"));
 	pDC->DrawText(strTextForHeight, &rTest, DT_CALCRECT|DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
-	pData->nHeight = 4 * rTest.Height() / 3;
+	pData->nHeight = 4 * abs(rTest.Height()) / 3;
 	if (1 > pData->nHeight)
 		pData->nHeight = 1;
-	pData->nLinesPerPage = pData->r.Height() / pData->nHeight;
+	pData->nLinesPerPage = abs(pData->r.Height()) / pData->nHeight;
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
-	pData->nPages = (static_cast<int>(pData->lines.GetSize()) + 1) / pData->nLinesPerPage + 1;
+	pData->nPages = (static_cast<int>(pData->lines.size()) + 1) / pData->nLinesPerPage + 1;
 	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
 	//	GetListCtrl().GetItemCount(),
@@ -458,22 +469,25 @@ void CAgilityBookTree::OnPrint(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
+	pDC->SetMapMode(MM_LOENGLISH);
+
 	CFontInfo fontInfo;
 	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
 	CFont font;
-	fontInfo.CreateFont(font, pDC);
+	fontInfo.CreateFont(font);
 	pDC->SelectObject(&font);
 
 	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
 
 	int nStartItem = pData->nLinesPerPage * (pInfo->m_nCurPage - 1);
-	int nMaxItem = static_cast<int>(pData->lines.GetSize());
+	int nMaxItem = static_cast<int>(pData->lines.size());
 	for (int nItem = nStartItem; nItem < nMaxItem && nItem - nStartItem < pData->nLinesPerPage; ++nItem)
 	{
 		CRect r = pData->r;
-		r.top += (nItem - nStartItem) * pData->nHeight;
+		r.top -= (nItem - nStartItem) * pData->nHeight;
 		r.right = r.left + pData->nMaxWidth;
-		pDC->DrawText(pData->lines[nItem], r, DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
+		r.OffsetRect((pData->lines[nItem].first - 1) * pData->nIndent, 0);
+		pDC->DrawText(pData->lines[nItem].second, r, DT_NOPREFIX|DT_SINGLELINE|DT_LEFT|DT_TOP);
 	}
 }
 

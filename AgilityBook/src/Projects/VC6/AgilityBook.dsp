@@ -314,15 +314,19 @@ SOURCE=..\..\Win\DlgOptions.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgOptionsCalendar.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgOptionsFilter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgOptionsProgram.cpp
+SOURCE=..\..\Win\DlgOptionsPrint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgOptionsView.cpp
+SOURCE=..\..\Win\DlgOptionsProgram.cpp
 # End Source File
 # Begin Source File
 
@@ -703,15 +707,19 @@ SOURCE=..\..\Win\DlgOptions.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgOptionsCalendar.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgOptionsFilter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgOptionsProgram.h
+SOURCE=..\..\Win\DlgOptionsPrint.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgOptionsView.h
+SOURCE=..\..\Win\DlgOptionsProgram.h
 # End Source File
 # Begin Source File
 

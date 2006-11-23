@@ -952,28 +952,43 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 	// We can actually be called for text BEFORE we call SetHTreeItem.
 	if (m_hItem)
 	{
+		bool bNeedSpace = false;
 		for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
 		{
-			if (0 < idx)
-			{
-				if ((IO_TREE_TRIAL_START == GetTrialColumns()[idx]
-				&& IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
-				|| (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1]
-				&& IO_TREE_TRIAL_END == GetTrialColumns()[idx]))
-					str += '-';
-				else
-					str += ' ';
-			}
 			switch (GetTrialColumns()[idx])
 			{
 			case IO_TREE_TRIAL_START:
-				str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+				if (m_pTrial->GetRuns().GetStartDate().IsValid())
+				{
+					if (bNeedSpace)
+					{
+						if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
+							str += '-';
+						else
+							str += ' ';
+					}
+					str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+					bNeedSpace = true;
+				}
 				break;
 			case IO_TREE_TRIAL_END:
-				str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+				if (m_pTrial->GetRuns().GetEndDate().IsValid())
+				{
+					if (bNeedSpace)
+					{
+						if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
+							str += '-';
+						else
+							str += ' ';
+					}
+					str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+					bNeedSpace = true;
+				}
 				break;
 			case IO_TREE_TRIAL_CLUB:
 				{
+					if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
+						str += ' ';
 					int i = 0;
 					for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 						iter != m_pTrial->GetClubs().end();
@@ -982,11 +997,14 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 						if (0 < i)
 							str += _T("/");
 						str += (*iter)->GetName().c_str();
+						bNeedSpace = true;
 					}
 				}
 				break;
 			case IO_TREE_TRIAL_VENUE:
 				{
+					if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
+						str += ' ';
 					int i = 0;
 					for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 						iter != m_pTrial->GetClubs().end();
@@ -995,15 +1013,28 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 						if (0 < i)
 							str += _T("/");
 						str += (*iter)->GetVenue().c_str();
+						bNeedSpace = true;
 					}
 				}
 				break;
 			case IO_TREE_TRIAL_LOCATION:
-				str += m_pTrial->GetLocation().c_str();
+				if (!m_pTrial->GetLocation().empty())
+				{
+					if (bNeedSpace)
+						str += ' ';
+					str += m_pTrial->GetLocation().c_str();
+					bNeedSpace = true;
+				}
 				break;
 			case IO_TREE_TRIAL_NOTES:
-				str += m_pTrial->GetNote().c_str();
-				str.Replace(_T("\n"), _T(" "));
+				if (!m_pTrial->GetNote().empty())
+				{
+					if (bNeedSpace)
+						str += ' ';
+					str += m_pTrial->GetNote().c_str();
+					str.Replace(_T("\n"), _T(" "));
+					bNeedSpace = true;
+				}
 				break;
 			case IO_TREE_TRIAL_VERIFIED:
 				if (m_pTrial->IsVerified())

@@ -79,41 +79,49 @@ CDlgOptions::CDlgOptions(
 	// Filters
 	// -handled thru CFilterOptions
 
-	// Views
-	m_pageView.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
-	if (0 > m_pageView.m_nOpeningNear)
+	// Calendar
+	m_pageCal.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
+	if (0 > m_pageCal.m_nOpeningNear)
 	{
-		m_pageView.m_bOpeningNear = FALSE;
-		m_pageView.m_nOpeningNear = 0;
+		m_pageCal.m_bOpeningNear = FALSE;
+		m_pageCal.m_nOpeningNear = 0;
 	}
 	else
-		m_pageView.m_bOpeningNear = TRUE;
-	m_pageView.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
-	if (0 > m_pageView.m_nClosingNear)
+		m_pageCal.m_bOpeningNear = TRUE;
+	m_pageCal.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
+	if (0 > m_pageCal.m_nClosingNear)
 	{
-		m_pageView.m_bClosingNear = FALSE;
-		m_pageView.m_nClosingNear = 0;
+		m_pageCal.m_bClosingNear = FALSE;
+		m_pageCal.m_nClosingNear = 0;
 	}
 	else
-		m_pageView.m_bClosingNear = TRUE;
-	m_pageView.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
-	m_pageView.m_sizeX = CAgilityBookOptions::GetCalendarEntrySize().cx;
-	m_pageView.m_sizeY = CAgilityBookOptions::GetCalendarEntrySize().cy;
-	m_pageView.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
-	m_pageView.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
-	m_pageView.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
-	m_pageView.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
-	m_pageView.m_bOpening = CAgilityBookOptions::ViewAllCalendarOpening() ? TRUE : FALSE;
-	m_pageView.m_bClosing = CAgilityBookOptions::ViewAllCalendarClosing() ? TRUE : FALSE;
-	CAgilityBookOptions::GetPrinterFontInfo(m_pageView.m_fontPrintInfo);
-	CAgilityBookOptions::GetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
+		m_pageCal.m_bClosingNear = TRUE;
+	m_pageCal.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
+	m_pageCal.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
+	m_pageCal.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
+	m_pageCal.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
+	m_pageCal.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
+	m_pageCal.m_bOpening = CAgilityBookOptions::ViewAllCalendarOpening() ? TRUE : FALSE;
+	m_pageCal.m_bClosing = CAgilityBookOptions::ViewAllCalendarClosing() ? TRUE : FALSE;
+	CAgilityBookOptions::GetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
+
+	// Printing
+	CAgilityBookOptions::GetPrinterFontInfo(m_pagePrint.m_fontPrintInfo);
+	CRect margins;
+	CAgilityBookOptions::GetPrinterMargins(margins);
+	m_pagePrint.m_Left = margins.left / 100.0;
+	m_pagePrint.m_Right = margins.right / 100.0;
+	m_pagePrint.m_Top = margins.top / 100.0;
+	m_pagePrint.m_Bottom = margins.bottom / 100.0;
 
 	AddPage(&m_pageProgram);
 	ASSERT(0 == GetProgramPage());
 	AddPage(&m_pageFilter);
 	ASSERT(1 == GetFilterPage());
-	AddPage(&m_pageView);
-	ASSERT(2 == GetViewPage());
+	AddPage(&m_pageCal);
+	ASSERT(2 == GetCalendarPage());
+	AddPage(&m_pagePrint);
+	ASSERT(3 == GetPrintPage());
 }
 
 CDlgOptions::~CDlgOptions()
@@ -157,23 +165,30 @@ void CDlgOptions::OnOK()
 			}
 		}
 
-		// Views
-		if (!m_pageView.m_bOpeningNear)
-			m_pageView.m_nOpeningNear = -1;
-		CAgilityBookOptions::SetCalendarOpeningNear(m_pageView.m_nOpeningNear);
-		if (!m_pageView.m_bClosingNear)
-			m_pageView.m_nClosingNear = -1;
-		CAgilityBookOptions::SetCalendarClosingNear(m_pageView.m_nClosingNear);
-		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageView.m_DayOfWeek));
-		CAgilityBookOptions::SetCalendarEntrySize(CSize(m_pageView.m_sizeX, m_pageView.m_sizeY));
-		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageView.m_bAutoDelete ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageView.m_bHideOld ? false : true);
-		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageView.m_Days);
-		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageView.m_bHideOverlapping ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarOpening(m_pageView.m_bOpening ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarClosing(m_pageView.m_bClosing ? true : false);
-		CAgilityBookOptions::SetPrinterFontInfo(m_pageView.m_fontPrintInfo);
-		CAgilityBookOptions::SetCalendarFontInfo(m_pageView.m_fontCalViewInfo);
+		// Calendar
+		if (!m_pageCal.m_bOpeningNear)
+			m_pageCal.m_nOpeningNear = -1;
+		CAgilityBookOptions::SetCalendarOpeningNear(m_pageCal.m_nOpeningNear);
+		if (!m_pageCal.m_bClosingNear)
+			m_pageCal.m_nClosingNear = -1;
+		CAgilityBookOptions::SetCalendarClosingNear(m_pageCal.m_nClosingNear);
+		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCal.m_DayOfWeek));
+		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCal.m_bAutoDelete ? true : false);
+		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCal.m_bHideOld ? false : true);
+		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCal.m_Days);
+		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCal.m_bHideOverlapping ? true : false);
+		CAgilityBookOptions::SetViewAllCalendarOpening(m_pageCal.m_bOpening ? true : false);
+		CAgilityBookOptions::SetViewAllCalendarClosing(m_pageCal.m_bClosing ? true : false);
+		CAgilityBookOptions::SetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
+
+		// Printing
+		CAgilityBookOptions::SetPrinterFontInfo(m_pagePrint.m_fontPrintInfo);
+		CRect margins;
+		margins.left = static_cast<int>(m_pagePrint.m_Left * 100);
+		margins.right = static_cast<int>(m_pagePrint.m_Right * 100);
+		margins.top = static_cast<int>(m_pagePrint.m_Top * 100);
+		margins.bottom = static_cast<int>(m_pagePrint.m_Bottom * 100);
+		CAgilityBookOptions::SetPrinterMargins(margins);
 
 		// Filters
 		// Commit to the registry
