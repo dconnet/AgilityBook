@@ -1312,14 +1312,14 @@ void CAgilityBookDoc::OnViewOptions()
 	default:
 		nPage = CDlgOptions::GetProgramPage();
 		break;
-	case 0: // Runs
-	case 1: // Points
+	case IDX_PANE_RUNS:
+	case IDX_PANE_POINTS:
 		nPage = CDlgOptions::GetFilterPage();
 		break;
-	case 2: // Calendar
-		nPage = CDlgOptions::GetFilterPage();
+	case IDX_PANE_CALENDAR:
+		nPage = CDlgOptions::GetCalendarPage();
 		break;
-	case 3: // Training
+	case IDX_PANE_LOG:
 		nPage = CDlgOptions::GetFilterPage();
 		break;
 	}

@@ -39,8 +39,9 @@
 
 #include "DlgBaseSheet.h"
 #include "DlgOptionsFilter.h"
+#include "DlgOptionsPrint.h"
 #include "DlgOptionsProgram.h"
-#include "DlgOptionsView.h"
+#include "DlgOptionsCalendar.h"
 class CAgilityBookDoc;
 
 class CDlgOptions : public CDlgBaseSheet
@@ -49,7 +50,8 @@ class CDlgOptions : public CDlgBaseSheet
 public:
 	static int GetProgramPage()		{return 0;}
 	static int GetFilterPage()		{return 1;}
-	static int GetViewPage()		{return 2;}
+	static int GetCalendarPage()	{return 2;}
+	static int GetPrintPage()		{return 3;}
 
 	CDlgOptions(
 			CAgilityBookDoc* pDoc,
@@ -62,7 +64,8 @@ public:
 	CAgilityBookDoc* m_pDoc;
 	CDlgOptionsProgram m_pageProgram;
 	CDlgOptionsFilter m_pageFilter;
-	CDlgOptionsView m_pageView;
+	CDlgOptionsCalendar m_pageCal;
+	CDlgOptionsPrint m_pagePrint;
 
 // Operations
 public:

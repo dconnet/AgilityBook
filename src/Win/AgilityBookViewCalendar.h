@@ -46,7 +46,7 @@
 #include "CommonView.h"
 class CAgilityBookDoc;
 
-class CAgilityBookViewCalendar : public CScrollView, public ICommonView
+class CAgilityBookViewCalendar : public CView, public ICommonView
 {
 	friend class CAgilityBookViewCalendarData;
 protected: // create from serialization only
@@ -70,19 +70,24 @@ private:
 			std::vector<ARBCalendarPtr>& entries,
 			bool bGetHidden) const;
 	void LoadData();
-	CRect GetDateRect(
-			ARBDate const& date,
-			bool bLogical) const;
+	CRect GetDateRect(ARBDate const& date);
 	void GetDateFromPoint(
 			CPoint pt,
 			ARBDate& date);
+	ARBDate FirstDayOfWeek(ARBDate const& inDate) const;
+	ARBDate LastDayOfWeek(ARBDate const& inDate) const;
+	ARBDate FirstDayOfMonth(int inOffsetMonth) const;
 	std::vector<ARBCalendarPtr> m_Calendar;
 	std::vector<ARBCalendarPtr> m_CalendarHidden;
 	ARBDate m_First;	///< First date, adjusted to Mon of that week.
 	ARBDate m_Last;		///< Last trial date.
-	int m_nWeeks;		///< Number of visible weeks (range of first/last)
-	CSize m_szEntry;
+	int m_nMonths;
+	int m_nCurOffset;	// Used during printing.
 	ARBDate m_Current;	///< Currently selected date.
+	CFont m_fontMonthPrint;
+	CFont m_fontTextPrint;
+	CFont m_fontMonth;
+	CFont m_fontText;
 
 // Overrides
 	//{{AFX_VIRTUAL(CAgilityBookViewCalendar)
@@ -129,6 +134,7 @@ protected:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
 	afx_msg void OnEditCopy();

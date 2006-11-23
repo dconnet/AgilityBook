@@ -924,9 +924,6 @@ the save button to save a filter settings.
 .topic HIDC_OPT_FILTER_NAMES_DELETE
 Delete the selected filter.
 
-.topic HIDC_OPT_FONT_PRINT
-Set the font to be used when printing the dates in the calendar.
-
 .topic HIDC_OPT_CAL_WARN_OPENNEAR
 Highlight an entry when the current date is near the opening date and you
 have indicated that you are planning on entering the trial.
@@ -950,12 +947,6 @@ Number of dates before the closing (or trial) date that is considered 'near'.
 .topic HIDC_OPT_CAL_DAY_OF_WEEK
 Define with day of the week will be displayed as the first day in the calendar
 view.
-
-.topic HIDC_OPT_CAL_SIZE_X
-Width of a day in the calendar view.
-
-.topic HIDC_OPT_CAL_SIZE_Y
-Height of a day in the calendar view.
 
 .topic HIDC_OPT_CAL_AUTO_DELETE
 Automatically delete calendar entries that have passed.
@@ -985,6 +976,21 @@ Use this to change the color used for drawing the selected calendar entry.
 
 .topic HIDC_OPT_CAL_FONT
 Set the font to be used when viewing the dates in the calendar.
+
+.topic HIDC_OPT_PRINT_FONT
+Set the font to be used when printing the dates in the calendar.
+
+.topic HIDC_OPT_PRINT_MARGIN_L
+Set the left margin for printing in inches.
+
+.topic HIDC_OPT_PRINT_MARGIN_R
+Set the right margin for printing in inches.
+
+.topic HIDC_OPT_PRINT_MARGIN_T
+Set the top margin for printing in inches.
+
+.topic HIDC_OPT_PRINT_MARGIN_B
+Set the bottom margin for printing in inches.
 
 .topic HIDC_WIZARD_EXPORT_ASSIGN
 Configure how the exported data is aligned. When the fields/columns are

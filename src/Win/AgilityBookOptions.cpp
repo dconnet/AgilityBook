@@ -76,8 +76,6 @@ Calendar
 	DW ViewClose
 	DW PastEntry
 	DW HideOverlapping
-	DW EntrySize.cx
-	DW EntrySize.cy
 	DW Filter
 	DW NotEnteredColor
 	DW PlanningColor
@@ -104,6 +102,8 @@ Calendar
 	Obsolete DW PrintFontTextSize
 	Obsolete DW PrintFontTextItalic
 	Obsolete DW PrintFontTextBold
+	Obsolete(1.7.6.12) DW EntrySize.cx
+	Obsolete(1.7.6.12) DW EntrySize.cy
 Columns
 	ST col[n]
 Common
@@ -129,6 +129,10 @@ Common
 	DW PrintFontListSize
 	DW PrintFontListItalic
 	DW PrintFontListBold
+	DW Margins.L
+	DW Margins.R
+	DW Margins.T
+	DW Margins.B
 	DW numFilters
 	ST CurrentFilter
 	DW sortPtVw1
@@ -313,22 +317,6 @@ bool CAgilityBookOptions::HideOverlappingCalendarEntries()
 void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 {
 	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("HideOverlapping"), bHide ? 1 : 0);
-}
-
-CSize CAgilityBookOptions::GetCalendarEntrySize()
-{
-	CSize szInches(100, 70);
-	if (10 > (szInches.cx = abs(static_cast<LONG>(AfxGetApp()->GetProfileInt(_T("Calendar"), _T("EntrySize.cx"), szInches.cx)))))
-		szInches.cx = 10;
-	if (10 > (szInches.cy = abs(static_cast<LONG>(AfxGetApp()->GetProfileInt(_T("Calendar"), _T("EntrySize.cy"), szInches.cy)))))
-		szInches.cy = 10;
-	return szInches;
-}
-
-void CAgilityBookOptions::SetCalendarEntrySize(CSize const& sz)
-{
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("EntrySize.cx"), sz.cx);
-	AfxGetApp()->WriteProfileInt(_T("Calendar"), _T("EntrySize.cy"), sz.cy);
 }
 
 static LPCTSTR CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
@@ -536,6 +524,22 @@ void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Size"), info.size);
 	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Italic"), info.italic ? 1 : 0);
 	AfxGetApp()->WriteProfileInt(_T("Common"), item + _T("Bold"), info.bold ? 1 : 0);
+}
+
+void CAgilityBookOptions::GetPrinterMargins(CRect& outMargins)
+{
+	outMargins.left = AfxGetApp()->GetProfileInt(_T("Common"), _T("Margins.L"), 50);
+	outMargins.top = AfxGetApp()->GetProfileInt(_T("Common"), _T("Margins.T"), 50);
+	outMargins.right = AfxGetApp()->GetProfileInt(_T("Common"), _T("Margins.R"), 50);
+	outMargins.bottom = AfxGetApp()->GetProfileInt(_T("Common"), _T("Margins.B"), 50);
+}
+
+void CAgilityBookOptions::SetPrinterMargins(CRect const& inMargins)
+{
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("Margins.L"), inMargins.left);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("Margins.T"), inMargins.top);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("Margins.R"), inMargins.right);
+	AfxGetApp()->WriteProfileInt(_T("Common"), _T("Margins.B"), inMargins.bottom);
 }
 
 void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)

@@ -69,8 +69,9 @@
 
 using namespace std;
 
-#define DAY_BORDER		1
-#define DAY_TEXT_INSET	2
+#define WEEKS_PER_PAGE		6
+#define DAY_TEXT_INSET		2
+#define INC_FULL_RECT		1 // Used to include right/bottom of rect when drawing
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -81,9 +82,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendar
 
-IMPLEMENT_DYNCREATE(CAgilityBookViewCalendar, CScrollView)
+IMPLEMENT_DYNCREATE(CAgilityBookViewCalendar, CView)
 
-BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
+BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CView)
 	ON_MESSAGE(WM_COMMANDHELP, OnCommandHelp)
 	//{{AFX_MSG_MAP(CAgilityBookViewCalendar)
 	ON_WM_INITMENUPOPUP()
@@ -93,6 +94,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CScrollView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONDBLCLK()
 	ON_WM_MOUSEWHEEL()
+	ON_WM_VSCROLL()
 	ON_WM_KEYDOWN()
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
@@ -115,7 +117,11 @@ END_MESSAGE_MAP()
 // CAgilityBookViewCalendar construction/destruction
 
 CAgilityBookViewCalendar::CAgilityBookViewCalendar()
-	: m_nWeeks(0)
+	: m_First()
+	, m_Last()
+	, m_nMonths(0)
+	, m_nCurOffset(-1)
+	, m_Current()
 {
 }
 
@@ -125,7 +131,7 @@ CAgilityBookViewCalendar::~CAgilityBookViewCalendar()
 
 BOOL CAgilityBookViewCalendar::PreCreateWindow(CREATESTRUCT& cs)
 {
-	return CScrollView::PreCreateWindow(cs);
+	return CView::PreCreateWindow(cs);
 }
 
 LRESULT CAgilityBookViewCalendar::OnCommandHelp(WPARAM, LPARAM)
@@ -141,35 +147,41 @@ bool CAgilityBookViewCalendar::SetCurrentDate(
 		bool bEnsureVisible)
 {
 	bool bSet = false;
-	if (date != m_Current && date >= m_First && date <= m_Last)
+	ARBDate dateFirstVisible = FirstDayOfWeek(m_First);
+	ARBDate dateLastVisible(m_Last.GetYear(), m_Last.GetMonth(), 1);
+	dateLastVisible = FirstDayOfWeek(dateLastVisible);
+	dateLastVisible += WEEKS_PER_PAGE * 7 - 1;
+	if (date != m_Current
+	&& dateFirstVisible <= date && date <= dateLastVisible)
 	{
 		bSet = true;
+		// Invalidate the current date.
 		if (m_Current.IsValid())
 		{
-			CRect r = GetDateRect(m_Current, false);
-			r.InflateRect(2, 2);
+			CRect r = GetDateRect(m_Current);
 			InvalidateRect(r);
 		}
+		// Now handle the new date.
 		m_Current = date;
 		if (m_Current.IsValid())
 		{
-			CRect r = GetDateRect(m_Current, false);
-			CRect rCurrent = GetDateRect(m_Current, true);
-			r.InflateRect(2, 2);
-			InvalidateRect(r);
-			// Take it back before checking if date is visible.
-			r.InflateRect(-2, -2);
+			bool bInvalidate = true;
 			if (bEnsureVisible)
 			{
-				CRect rClient;
-				GetClientRect(rClient);
-				CRect r2;
-				if (!r2.IntersectRect(rClient, r) || r2 != r)
+				ARBDate dateTop = FirstDayOfMonth(GetScrollPos(SB_VERT));
+				ARBDate dateBottom = dateTop + WEEKS_PER_PAGE * 7 - 1;
+				if (!m_Current.isBetween(dateTop, dateBottom))
 				{
-					CPoint pt = GetScrollPosition();
-					pt.y = rCurrent.top;
-					ScrollToPosition(pt);
+					int offset = (m_Current.GetYear() - m_First.GetYear()) * 12 + m_Current.GetMonth() - m_First.GetMonth();
+					SetScrollPos(SB_VERT, offset);
+					Invalidate();
+					bInvalidate = false;
 				}
+			}
+			if (bInvalidate)
+			{
+				CRect r = GetDateRect(m_Current);
+				InvalidateRect(r);
 			}
 		}
 	}
@@ -243,13 +255,13 @@ size_t CAgilityBookViewCalendar::GetEntriesOn(
 
 void CAgilityBookViewCalendar::LoadData()
 {
+	SetRedraw(FALSE);
+
 	// Clear everything.
 	m_Calendar.clear();
 	m_CalendarHidden.clear();
 	m_Last = ARBDate::Today();
 	m_First = ARBDate::Today();
-	m_nWeeks = 0;
-	m_szEntry = CAgilityBookOptions::GetCalendarEntrySize();
 
 	ARBDate today(ARBDate::Today());
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
@@ -265,10 +277,10 @@ void CAgilityBookViewCalendar::LoadData()
 		iter != GetDocument()->GetCalendar().end();
 		++iter)
 	{
-		bool bSuppress = false;
 		ARBCalendarPtr pCal = (*iter);
 		if (pCal->IsFiltered())
 			continue;
+		bool bSuppress = false;
 		if (!bViewAll)
 		{
 			if (pCal->IsBefore(today))
@@ -332,18 +344,45 @@ void CAgilityBookViewCalendar::LoadData()
 				m_Calendar.push_back(pCal);
 		}
 	}
-	if (!m_Current.IsValid())
+	if (!m_Current.IsValid()
+	|| m_Current < m_First)
 		m_Current = ARBDate::Today();
-	// Set the first day to the start of the week.
-	m_First -= m_First.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
-	m_Last += 6 - m_Last.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
-	m_nWeeks = ((m_Last - m_First) / 7) + 1;
-	// Set the scrolling page size to 4 weeks.
-	SetScrollSizes(MM_LOENGLISH,
-		CSize(8 * DAY_BORDER + 7 * m_szEntry.cx,
-			(m_nWeeks + 1) * DAY_BORDER + m_nWeeks * m_szEntry.cy),
-		CSize(0, 
-			5 * DAY_BORDER + 4 * m_szEntry.cy));
+	// Set to first day of month
+	m_First.SetDate(m_First.GetYear(), m_First.GetMonth(), 1);
+	// Set of last day of month
+	if (12 == m_Last.GetMonth())
+		m_Last.SetDate(m_Last.GetYear() + 1, 1, 1);
+	else
+		m_Last.SetDate(m_Last.GetYear(), m_Last.GetMonth() + 1, 1);
+	--m_Last;
+	m_nMonths = (m_Last.GetYear() - m_First.GetYear()) * 12 + m_Last.GetMonth() - m_First.GetMonth() + 1;
+	SCROLLINFO info;
+	info.cbSize = sizeof(info);
+	info.fMask = SIF_DISABLENOSCROLL | SIF_PAGE | SIF_POS | SIF_RANGE;
+	info.nMin = 0;
+	info.nMax = m_nMonths - 1;
+	info.nPos = 0;
+	info.nPage = 1;
+	SetScrollInfo(SB_VERT, &info, FALSE);
+
+	// Now initialize all our drawing stuff.
+	if (m_fontMonthPrint.GetSafeHandle())
+		m_fontMonthPrint.DeleteObject();
+	if (m_fontTextPrint.GetSafeHandle())
+		m_fontTextPrint.DeleteObject();
+	if (m_fontMonth.GetSafeHandle())
+		m_fontMonth.DeleteObject();
+	if (m_fontText.GetSafeHandle())
+		m_fontText.DeleteObject();
+	CFontInfo fontInfo;
+	CAgilityBookOptions::GetPrinterFontInfo(fontInfo);
+	fontInfo.CreateFont(m_fontTextPrint);
+	fontInfo.size *= 3;
+	fontInfo.CreateFont(m_fontMonthPrint);
+	CAgilityBookOptions::GetCalendarFontInfo(fontInfo);
+	fontInfo.CreateFont(m_fontText);
+	fontInfo.size *= 3;
+	fontInfo.CreateFont(m_fontMonth);
 
 	CString msg;
 	if (IsWindowVisible())
@@ -354,30 +393,94 @@ void CAgilityBookViewCalendar::LoadData()
 			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 
+	// Make sure the current date is visible.
+	ARBDate date(m_Current);
+	m_Current.clear();
+	SetCurrentDate(date, true);
+
+	SetRedraw(TRUE);
 	Invalidate();
 }
 
 /**
  * Returns the working rect for a date. Borders are handled entirely separately.
+ * Note, this is used ONLY on the UI side, not while printing.
  */
-CRect CAgilityBookViewCalendar::GetDateRect(
-		ARBDate const& date,
-		bool bLogical) const
+CRect CAgilityBookViewCalendar::GetDateRect(ARBDate const& date)
 {
-	CRect r(0, 0, m_szEntry.cx, -m_szEntry.cy);
-	int nWeek = (date - m_First) / 7;
-	int nday = date.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
-	r.OffsetRect(
-		(nday + 1) * DAY_BORDER + nday * m_szEntry.cx,
-		-((nWeek + 1) * DAY_BORDER + nWeek * m_szEntry.cy));
-	if (!bLogical)
-	{
-		CClientDC dc(const_cast<CAgilityBookViewCalendar*>(this));
-		dc.SetMapMode(MM_LOENGLISH);
-		r.OffsetRect(-GetScrollPosition());
-		dc.LPtoDP(r);
-	}
+	ARBDate visible1 = FirstDayOfMonth(GetScrollPos(SB_VERT));
+	ARBDate visible2(visible1);
+	visible2 += WEEKS_PER_PAGE * 7 - 1;
+	
+	if (!date.isBetween(visible1, visible2))
+		return CRect(0,0,0,0);
+
+	int span = date - visible1;
+	int x = span % 7;
+	int y = span / 7;
+
+	CClientDC dc(this);
+
+	CRect rClient;
+	GetClientRect(rClient);
+
+	CFont* pOldFont = dc.SelectObject(&m_fontMonth);
+	TEXTMETRIC tm;
+	dc.GetTextMetrics(&tm);
+	rClient.top += tm.tmHeight;
+	dc.SelectObject(&m_fontText);
+	dc.GetTextMetrics(&tm);
+	rClient.top += tm.tmHeight + 1;
+	dc.SelectObject(pOldFont);
+
+	int width = (rClient.Width() - 1) / 7;
+	rClient.right = rClient.left + width * 7 + 1;
+	int height = (rClient.Height() - 1) / WEEKS_PER_PAGE;
+	rClient.bottom = rClient.top + height * WEEKS_PER_PAGE + 1;
+
+	CRect r(rClient.TopLeft(), CSize(width + INC_FULL_RECT, height + INC_FULL_RECT));
+	r.InflateRect(-1, -1); // Internal working area
+	r.OffsetRect(x * width, y * height);
 	return r;
+}
+
+ARBDate CAgilityBookViewCalendar::FirstDayOfWeek(ARBDate const& inDate) const
+{
+	ARBDate date(inDate);
+	date -= date.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
+	return date;
+}
+
+ARBDate CAgilityBookViewCalendar::LastDayOfWeek(ARBDate const& inDate) const
+{
+	ARBDate date(inDate);
+	date += 6 - date.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
+	return date;
+}
+
+// Get the first day on the visible month.
+ARBDate CAgilityBookViewCalendar::FirstDayOfMonth(int inOffsetMonth) const
+{
+	ARBDate date = FirstDayOfWeek(m_First);
+	if (0 < inOffsetMonth)
+	{
+		date = LastDayOfWeek(date); // Go to end-of-week (make sure month is correct)
+		// Push forward offset months
+		int y = date.GetYear();
+		int m = date.GetMonth();
+		y += inOffsetMonth / 12;
+		m += inOffsetMonth  % 12;
+		if (m > 12)
+		{
+			++y;
+			m -= 12;
+		}
+		// Set to first day of month
+		date.SetDate(y, m, 1);
+		// Then fix 1st day of week.
+		date = FirstDayOfWeek(date);
+	}
+	return date;
 }
 
 void CAgilityBookViewCalendar::GetDateFromPoint(
@@ -385,15 +488,34 @@ void CAgilityBookViewCalendar::GetDateFromPoint(
 		ARBDate& date)
 {
 	date.clear();
-	CSize sz = GetTotalSize();
-	if (pt.x >= sz.cx)
-		return;
-	if (pt.y >= sz.cy)
-		return;
-	int x = abs(pt.x / (DAY_BORDER + m_szEntry.cx));
-	int y = abs(pt.y / (DAY_BORDER + m_szEntry.cy));
-	date = m_First;
-	date += x + y * 7;
+
+	CClientDC dc(this);
+
+	CRect rClient;
+	GetClientRect(rClient);
+
+	CFont* pOldFont = dc.SelectObject(&m_fontMonth);
+	TEXTMETRIC tm;
+	dc.GetTextMetrics(&tm);
+	rClient.top += tm.tmHeight;
+	dc.SelectObject(&m_fontText);
+	dc.GetTextMetrics(&tm);
+	rClient.top += tm.tmHeight + 1;
+	dc.SelectObject(pOldFont);
+
+	int width = (rClient.Width() - 1) / 7;
+	rClient.right = rClient.left + width * 7 + 1;
+	int height = (rClient.Height() - 1) / WEEKS_PER_PAGE;
+	rClient.bottom = rClient.top + height * WEEKS_PER_PAGE + 1;
+
+	if (rClient.PtInRect(pt))
+	{
+		int x = (pt.x - rClient.left) / width;
+		int y = (pt.y - rClient.top) / height;
+
+		date = FirstDayOfMonth(GetScrollPos(SB_VERT));
+		date += x + y * 7;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -403,7 +525,7 @@ void CAgilityBookViewCalendar::OnActivateView(
 		CView* pActivateView,
 		CView* pDeactiveView) 
 {
-	CScrollView::OnActivateView(bActivate, pActivateView, pDeactiveView);
+	CView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
 		CString msg;
@@ -414,7 +536,7 @@ void CAgilityBookViewCalendar::OnActivateView(
 	}
 	if (m_Current.IsValid())
 	{
-		CRect r = GetDateRect(m_Current, false);
+		CRect r = GetDateRect(m_Current);
 		InvalidateRect(r);
 	}
 }
@@ -435,22 +557,25 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 {
 	if (m_First.IsValid() && m_Last.IsValid())
 	{
-		TEXTMETRIC tm;
-		pDC->GetTextMetrics(&tm);
+		int yInc = 1;
+		if (pDC->IsPrinting())
+		{
+			yInc = -1;
+			pDC->SetMapMode(MM_LOENGLISH);
+		}
+
+		CPen penFrame, penHilite, penShadow;
+		penFrame.CreatePen(PS_SOLID, 1, GetSysColor(COLOR_WINDOWTEXT));
+		penShadow.CreatePen(PS_SOLID, 1, GetSysColor(COLOR_BTNSHADOW));
+		penHilite.CreatePen(PS_SOLID, 1, GetSysColor(COLOR_BTNHILIGHT));
+		CPen* pOldPen = pDC->SelectObject(&penFrame); // Init for later cleanup
+
 		pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
 		pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
 		pDC->SetBkMode(TRANSPARENT);
+
+		// Colors for current selected date
 		bool bActive = (reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->GetActiveView() == this);
-		CBrush brCurrentActive(GetSysColor(COLOR_HIGHLIGHT));
-		CBrush brCurrentInActive(GetSysColor(COLOR_MENU));
-		CFontInfo fontInfo;
-		CAgilityBookOptions::GetCalendarFontInfo(fontInfo);
-		CFont font;
-		fontInfo.CreateFont(font, NULL);
-		CPen pen;
-		pen.CreatePen(PS_SOLID, DAY_BORDER, GetSysColor(COLOR_WINDOWTEXT));
-		CFont* pOldFont = pDC->SelectObject(&font);
-		CPen* pOldPen = pDC->SelectObject(&pen);
 
 		CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 		COLORREF clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
@@ -459,92 +584,128 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		COLORREF clrClosing = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing);
 		COLORREF clrEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered);
 
-		// Draw the calendar framework.
-		int i;
-		ARBDate date = m_First;
-		for (i = 0; i < m_nWeeks; ++i)
+		// Figure out which month we're on.
+		int pos = m_nCurOffset;
+		if (!pDC->IsPrinting())
+			pos = GetScrollPos(SB_VERT);
+		ARBDate curMonth = FirstDayOfMonth(pos);
+		curMonth = LastDayOfWeek(curMonth);
+		CTime t(curMonth.GetDate());
+		CString str = t.Format(_T("%B %Y"));
+
+		// Total working space.
+		CRect rClient(0, 0, pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
+		if (!pDC->IsPrinting())
+			GetClientRect(rClient);
+		pDC->DPtoLP(rClient);
+		if (pDC->IsPrinting())
 		{
-			int y = -i * (DAY_BORDER + m_szEntry.cy);
-			pDC->MoveTo(0, y);
-			pDC->LineTo(8 * DAY_BORDER + 7 * m_szEntry.cx, y);
-			for (int d = 0; d < 7; ++d, ++date)
-			{
-				CRect r = GetDateRect(date, true);
-				CRect rFull(r);
-				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
-				CString str(date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)).c_str());
-				pDC->SetTextColor(::GetSysColor(COLOR_WINDOWTEXT));
-				if (!pDC->IsPrinting())
-				{
-					// Change the colors for the currently selected date.
-					if (m_Current == date)
-					{
-						CBrush* oldBrush = NULL;
-						if (bActive)
-						{
-							oldBrush = pDC->SelectObject(&brCurrentActive);
-							pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
-						}
-						else
-						{
-							oldBrush = pDC->SelectObject(&brCurrentInActive);
-							pDC->SetTextColor(GetSysColor(COLOR_MENUTEXT));
-						}
-						pDC->PatBlt(rFull.left, rFull.top, rFull.Width(), rFull.Height(), PATCOPY);
-						pDC->SelectObject(oldBrush);
-					}
-				}
-				pDC->DrawText(str, r, DT_NOPREFIX|DT_SINGLELINE|DT_BOTTOM|DT_CENTER);
-			}
-		}
-		// Finish off the last line.
-		int y = -i * (m_szEntry.cy + DAY_BORDER);
-		pDC->MoveTo(0, y);
-		pDC->LineTo(8 * DAY_BORDER + 7 * m_szEntry.cx, y);
-		// Now the day dividers.
-		for (i = 0; i < 8; ++i)
-		{
-			int x = i * (DAY_BORDER + m_szEntry.cx);
-			pDC->MoveTo(x, 0);
-			pDC->LineTo(x, y);
+			CRect margins;
+			CAgilityBookOptions::GetPrinterMargins(margins);
+			pDC->DPtoLP(margins);
+			rClient.left += margins.left;
+			rClient.top += margins.top;
+			rClient.right -= margins.right;
+			rClient.bottom -= margins.bottom;
 		}
 
-		// Add the calendar entries.
-		// First, get all the dates with an event.
-		set<ARBDate> dates;
-		vector<ARBCalendarPtr>::const_iterator iter;
-		for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
+		// Print month text
+		CFont* pOldFont = pDC->SelectObject(&m_fontMonth);
+		if (pDC->IsPrinting())
+			pDC->SelectObject(&m_fontMonthPrint);
+		pDC->DrawText(str, rClient, DT_NOPREFIX|DT_SINGLELINE|DT_TOP|DT_CENTER);
+
+		// Figure out working areas (weekdays, days).
+		TEXTMETRIC tm;
+		pDC->GetTextMetrics(&tm);
+		rClient.top += yInc * tm.tmHeight; // Offset for Month text
+		if (pDC->IsPrinting())
+			pDC->SelectObject(&m_fontTextPrint);
+		else
+			pDC->SelectObject(&m_fontText);
+		pDC->GetTextMetrics(&tm); // We'll use 'tm' below also.
+		CRect rWeekDays(rClient); // Working rect for printing day-of-week
+		rWeekDays.bottom = rWeekDays.top + yInc * (tm.tmHeight + 2);
+		rClient.top += yInc * (tm.tmHeight + 1); // Offset for where days start (note: +1, not +2 so we overlap)
+
+		// Compute how big a day is.
+		int width = (rClient.Width() - 1) / 7;
+		rWeekDays.right = rClient.right = rClient.left + width * 7 + 1;
+		int height = (rClient.Height() - 1) / WEEKS_PER_PAGE;
+		rClient.bottom = rClient.top + height * WEEKS_PER_PAGE + 1;
+
+		// Fill the weekday area.
+		pDC->FillSolidRect(rWeekDays, GetSysColor(COLOR_BTNFACE));
+
+		// Draw the days-of-week boxes and text (but not frame - we delay
+		// drawing frame till end because when printing, the off-month fill
+		// can bleed onto lines)
+		rWeekDays.right = rWeekDays.left + width + INC_FULL_RECT;
+		CRect rect(rWeekDays);
+		rect.InflateRect(-1, -yInc); // Internal working area
+		ARBDate weekStart = FirstDayOfWeek(m_First);
+		int iDay;
+		for (iDay = 0; iDay < 7; ++iDay)
 		{
-			ARBCalendarPtr pCal = (*iter);
-			if (filter.ViewNotEntered()
-			|| filter.ViewPlanning()
-			|| filter.ViewEntered())
-			{
-				for (ARBDate date = pCal->GetStartDate(); date <= pCal->GetEndDate(); ++date)
-				{
-					dates.insert(date);
-				}
-			}
-			// No additional Planning checks needed as that's already been
-			// filtered in the m_Calendar list.
-			if (CAgilityBookOptions::ViewAllCalendarOpening()
-			&& pCal->GetOpeningDate().IsValid())
-				dates.insert(pCal->GetOpeningDate());
-			if (CAgilityBookOptions::ViewAllCalendarClosing()
-			&& pCal->GetClosingDate().IsValid())
-				dates.insert(pCal->GetClosingDate());
+			CTime t((weekStart + iDay).GetDate());
+			str = t.Format(_T("%A"));
+			pDC->DrawText(str, rect, DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER|DT_CENTER);
+
+			pDC->SelectObject(&penShadow);
+			pDC->MoveTo(rect.left, rect.bottom - yInc);
+			pDC->LineTo(rect.right-1, rect.bottom - yInc);
+			pDC->LineTo(rect.right-1, rect.top);
+			pDC->SelectObject(&penHilite);
+			pDC->MoveTo(rect.right-1, rect.top);
+			pDC->LineTo(rect.left, rect.top);
+			pDC->LineTo(rect.left, rect.bottom);
+
+			// Offset to next day.
+			rect.OffsetRect(width, 0);
 		}
-		for (set<ARBDate>::iterator iterDate = dates.begin(); iterDate != dates.end(); ++iterDate)
+		rect.OffsetRect(-width, 0); // Undo last shift
+		rect.InflateRect(1, yInc); // Restore from internal area
+		rect.left = rClient.left; // Full weekday area
+		// Now draw the weekday frame, vertical bars will be done last
+		pDC->SelectObject(&penFrame);
+		pDC->SelectStockObject(NULL_BRUSH);
+		pDC->Rectangle(rect);
+
+		// Draw the days
+		ARBDate day = FirstDayOfWeek(curMonth);
+		int iWeek;
+		for (iWeek = 0; iWeek < WEEKS_PER_PAGE; ++iWeek)
 		{
-			ARBDate date = (*iterDate);
-			vector<ARBCalendarPtr> entries;
-			// Then for each date, get all the events on that date to print.
-			if (0 < GetEntriesOn(date, entries, false))
+			rect.left = rClient.left;
+			rect.right = rect.left + width + INC_FULL_RECT;
+			rect.top = rClient.top;
+			rect.bottom = rect.top + height + yInc * INC_FULL_RECT;
+			rect.OffsetRect(0, iWeek * height);
+			rect.InflateRect(-1, -yInc); // Internal working area
+			rect.InflateRect(-DAY_TEXT_INSET, -yInc * DAY_TEXT_INSET);
+			for (int iDay = 0; iDay < 7; ++iDay)
 			{
+				// Change background of non-current month days
+				if (!pDC->IsPrinting() && m_Current == day)
+				{
+					CRect r(rect);
+					r.InflateRect(DAY_TEXT_INSET, yInc * DAY_TEXT_INSET);
+					if (bActive)
+						pDC->FillSolidRect(r, GetSysColor(COLOR_HIGHLIGHT));
+					else
+						pDC->FillSolidRect(r, GetSysColor(COLOR_MENU));
+				}
+				else if (day.GetMonth() != curMonth.GetMonth())
+				{
+					CRect r(rect);
+					r.InflateRect(DAY_TEXT_INSET, yInc * DAY_TEXT_INSET);
+					pDC->FillSolidRect(r, GetSysColor(COLOR_APPWORKSPACE));
+				}
+
 				pDC->SetTextColor(::GetSysColor(COLOR_WINDOWTEXT));
 				if (!pDC->IsPrinting())
 				{
-					if (m_Current == date)
+					if (m_Current == day)
 					{
 						if (bActive)
 							pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
@@ -552,62 +713,96 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 							pDC->SetTextColor(GetSysColor(COLOR_MENUTEXT));
 					}
 				}
-				CRect r = GetDateRect(date, true);
-				r.InflateRect(-DAY_TEXT_INSET, DAY_TEXT_INSET);
-				for (iter = entries.begin(); iter != entries.end(); ++iter)
+
+				// Display date (only day now, not full date)
+				//CString str(day.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)).c_str());
+				CString str;
+				str.Format(_T("%d"), day.GetDay());
+				pDC->DrawText(str, rect, DT_NOPREFIX|DT_SINGLELINE|DT_TOP|DT_RIGHT);
+
+				// Display entries
+				vector<ARBCalendarPtr> entries;
+				if (0 < GetEntriesOn(day, entries, false))
 				{
-					ARBCalendarPtr pCal = (*iter);
-					// @todo: Make data in calendar entries user selectable
-					ARBString const& venue = pCal->GetVenue();
-					ARBString const& loc = pCal->GetLocation();
-					CString str;
-					if (0 == venue.length())
-						str += _T("?");
-					else
-						str += venue.c_str();
-					str += _T(" ");
-					if (0 == loc.length())
-						str += _T("?");
-					else
-						str += loc.c_str();
-					bool bReset = false;
-					COLORREF oldText = 0;
-					// Don't change the color on the selected day.
-					// (That whole foreground/background thing)
-					if (m_Current != date)
+					CRect r(rect);
+					for (vector<ARBCalendarPtr>::iterator iter = entries.begin(); iter != entries.end(); ++iter)
 					{
-						if (CAgilityBookOptions::ViewAllCalendarOpening()
-						&& pCal->GetOpeningDate() == date)
+						r.top += yInc * tm.tmAscent;
+
+						ARBCalendarPtr pCal = (*iter);
+						// @todo: Make data in calendar entries user selectable
+						ARBString const& venue = pCal->GetVenue();
+						ARBString const& loc = pCal->GetLocation();
+						CString str;
+						if (0 == venue.length())
+							str += _T("?");
+						else
+							str += venue.c_str();
+						str += _T(" ");
+						if (0 == loc.length())
+							str += _T("?");
+						else
+							str += loc.c_str();
+						bool bReset = false;
+						COLORREF oldText = 0;
+						// Don't change the color on the selected day.
+						// (That whole foreground/background thing)
+						if (m_Current != day)
 						{
-							bReset = true;
-							oldText = pDC->SetTextColor(clrOpening);
+							if (CAgilityBookOptions::ViewAllCalendarOpening()
+							&& pCal->GetOpeningDate() == day)
+							{
+								bReset = true;
+								oldText = pDC->SetTextColor(clrOpening);
+							}
+							else if (CAgilityBookOptions::ViewAllCalendarClosing()
+							&& pCal->GetClosingDate() == day)
+							{
+								bReset = true;
+								oldText = pDC->SetTextColor(clrClosing);
+							}
+							else switch (pCal->GetEntered())
+							{
+							case ARBCalendar::eNot:
+								oldText = pDC->SetTextColor(clrNotEntered);
+								break;
+							case ARBCalendar::ePlanning:
+								oldText = pDC->SetTextColor(clrPlanning);
+								break;
+							case ARBCalendar::eEntered:
+								oldText = pDC->SetTextColor(clrEntered);
+								break;
+							}
 						}
-						else if (CAgilityBookOptions::ViewAllCalendarClosing()
-						&& pCal->GetClosingDate() == date)
-						{
-							bReset = true;
-							oldText = pDC->SetTextColor(clrClosing);
-						}
-						else switch (pCal->GetEntered())
-						{
-						case ARBCalendar::eNot:
-							oldText = pDC->SetTextColor(clrNotEntered);
-							break;
-						case ARBCalendar::ePlanning:
-							oldText = pDC->SetTextColor(clrPlanning);
-							break;
-						case ARBCalendar::eEntered:
-							oldText = pDC->SetTextColor(clrEntered);
-							break;
-						}
+						pDC->DrawText(str, r, DT_NOPREFIX|DT_SINGLELINE|DT_LEFT);
+						if (bReset)
+							pDC->SetTextColor(oldText);
 					}
-					pDC->DrawText(str, r, DT_NOPREFIX);
-					if (bReset)
-						pDC->SetTextColor(oldText);
-					r.top -= tm.tmAscent;
 				}
+
+				// Get ready for next round
+				rect.OffsetRect(width, 0);
+				++day;
 			}
 		}
+
+		// Now draw all frames (do this last so the print preview looks ok)
+		pDC->SelectObject(&penFrame);
+		pDC->SelectStockObject(NULL_BRUSH);
+		pDC->Rectangle(rClient);
+		// Vertical lines
+		for (iDay = 1; iDay < 7; ++iDay)
+		{
+			pDC->MoveTo(rClient.left + iDay * width, rWeekDays.top);
+			pDC->LineTo(rClient.left + iDay * width, rClient.bottom);
+		}
+		// Horizontal lines
+		for (iWeek = 1; iWeek < WEEKS_PER_PAGE; ++iWeek)
+		{
+			pDC->MoveTo(rClient.left, rClient.top + iWeek * height);
+			pDC->LineTo(rClient.right, rClient.top + iWeek * height);
+		}
+
 		pDC->SelectObject(pOldFont);
 		pDC->SelectObject(pOldPen);
 	}
@@ -618,75 +813,35 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 
 BOOL CAgilityBookViewCalendar::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// We can't set the number of pages here cause we need the DC to determine
-	// how much we can fit, so the computation is defered until BeginPrint.
-	// However, that has the side effect of not populating the print dialog
-	// with the page range correctly. For that to show up, it must be set here.
-	// So, you must first answer the chicken and egg question...
-	// Which is - disable the page selection stuff!
-	// We allow the page numbers, but as noted, the max page is not set.
+	// In order to enable selection, we must explicitly do it "&= ~..."
+	// (default is NOSELECTION). But it doesn't seem to work - it always
+	// prints all the pages. So, we'll just turn that off for now.
 	pInfo->m_pPD->m_pd.Flags |= PD_NOSELECTION;
+	pInfo->SetMaxPage(m_nMonths);
 	return DoPreparePrinting(pInfo);
 }
-
-struct CPrintData
-{
-	int nEntriesPerPage;
-	CSize sz;
-};
 
 void CAgilityBookViewCalendar::OnBeginPrinting(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
-	pDC->SetMapMode(MM_LOENGLISH);
-	CSize szDevice(pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
-	CRect r(CPoint(0,0), szDevice);
-	pDC->DPtoLP(r);
-
-	CPrintData* pData = new CPrintData();
-	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
-	pData->nEntriesPerPage = abs(r.Height()) / (2 * DAY_BORDER + m_szEntry.cy);
-	if (1 > pData->nEntriesPerPage)
-		pData->nEntriesPerPage = 1;
-	pData->sz = CSize(r.Width(), abs(r.Height()));
-
-	int nMax = m_nWeeks / pData->nEntriesPerPage;
-	if (nMax * pData->nEntriesPerPage != m_nWeeks)
-		++nMax;
 	pInfo->SetMinPage(1);
-	pInfo->SetMaxPage(nMax);
+	pInfo->SetMaxPage(m_nMonths);
 }
 
 void CAgilityBookViewCalendar::OnEndPrinting(
 		CDC* /*pDC*/,
-		CPrintInfo* pInfo)
+		CPrintInfo* /*pInfo*/)
 {
-	CPrintData* pData = reinterpret_cast<CPrintData*>(pInfo->m_lpUserData);
-	delete pData;
+	m_nCurOffset = -1;
 }
 
 void CAgilityBookViewCalendar::OnPrint(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
-	pDC->SetMapMode(MM_LOENGLISH);
-
-	CPrintData* pData = reinterpret_cast<CPrintData*>(pInfo->m_lpUserData);
-	int nMarginX = (pData->sz.cx - (8 * DAY_BORDER + 7 * m_szEntry.cx)) / 2;
-	if (0 > nMarginX)
-		nMarginX = 0;
-	int nMarginY = (pData->sz.cy - ((pData->nEntriesPerPage + 1) * DAY_BORDER + pData->nEntriesPerPage * m_szEntry.cy)) / 2;
-	if (0 > nMarginY)
-		nMarginY = 0;
-	int top = (pInfo->m_nCurPage - 1) * (pData->nEntriesPerPage * (DAY_BORDER + m_szEntry.cy));
-	CRect r(0, -top,
-		8 * DAY_BORDER + 7 * m_szEntry.cx,
-		-(top + (pData->nEntriesPerPage + 1) * DAY_BORDER + pData->nEntriesPerPage * m_szEntry.cy));
-	pDC->SetWindowOrg(-nMarginX + r.left, nMarginY + r.top);
-	pDC->IntersectClipRect(r);
+	m_nCurOffset = pInfo->m_nCurPage - 1;
 	OnDraw(pDC);
-	pDC->SelectClipRgn(NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -695,12 +850,12 @@ void CAgilityBookViewCalendar::OnPrint(
 #ifdef _DEBUG
 void CAgilityBookViewCalendar::AssertValid() const
 {
-	CScrollView::AssertValid();
+	CView::AssertValid();
 }
 
 void CAgilityBookViewCalendar::Dump(CDumpContext& dc) const
 {
-	CScrollView::Dump(dc);
+	CView::Dump(dc);
 }
 
 CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug version is inline
@@ -714,7 +869,7 @@ CAgilityBookDoc* CAgilityBookViewCalendar::GetDocument() const // non-debug vers
 
 void CAgilityBookViewCalendar::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
-	CScrollView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	CView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
 
@@ -722,15 +877,10 @@ void CAgilityBookViewCalendar::OnRButtonDown(
 		UINT nFlags,
 		CPoint point) 
 {
-	CClientDC dc(this);
-	dc.SetMapMode(MM_LOENGLISH);
-	CPoint pt(point);
-	dc.DPtoLP(&pt);
-	pt += GetScrollPosition();
 	ARBDate date;
-	GetDateFromPoint(pt, date);
+	GetDateFromPoint(point, date);
 	SetCurrentDate(date, false);
-	CScrollView::OnRButtonDown(nFlags, point);
+	CView::OnRButtonDown(nFlags, point);
 }
 
 void CAgilityBookViewCalendar::OnContextMenu(
@@ -742,7 +892,7 @@ void CAgilityBookViewCalendar::OnContextMenu(
 	// Point is (-1,-1) on the context menu button.
 	if (0 > point.x || 0 > point.y)
 	{
-		CRect rect = GetDateRect(m_Current, false);
+		CRect rect = GetDateRect(m_Current);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -760,18 +910,11 @@ void CAgilityBookViewCalendar::OnContextMenu(
 
 BOOL CAgilityBookViewCalendar::OnEraseBkgnd(CDC* pDC) 
 {
-	COLORREF crOld = pDC->SetBkColor(GetSysColor(COLOR_APPWORKSPACE));
+	COLORREF crOld = pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
 	CRect r;
 	GetClientRect(r);
-	int nOldMode = pDC->SetMapMode(MM_LOENGLISH);
-	pDC->DPtoLP(r);
-	pDC->ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
-	pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
-	r = CRect(CPoint(0,0), GetTotalSize());
-	r.bottom = -r.bottom;
 	pDC->ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
 	pDC->SetBkColor(crOld);
-	pDC->SetMapMode(nOldMode);
 	return TRUE;
 }
 
@@ -779,15 +922,10 @@ void CAgilityBookViewCalendar::OnLButtonDown(
 		UINT nFlags,
 		CPoint point) 
 {
-	CClientDC dc(this);
-	dc.SetMapMode(MM_LOENGLISH);
-	CPoint pt(point);
-	dc.DPtoLP(&pt);
-	pt += GetScrollPosition();
 	ARBDate date;
-	GetDateFromPoint(pt, date);
+	GetDateFromPoint(point, date);
 	SetCurrentDate(date, false);
-	CScrollView::OnLButtonDown(nFlags, point);
+	CView::OnLButtonDown(nFlags, point);
 }
 
 void CAgilityBookViewCalendar::OnLButtonDblClk(
@@ -795,7 +933,7 @@ void CAgilityBookViewCalendar::OnLButtonDblClk(
 		CPoint point) 
 {
 	OnCalendarEdit();
-	CScrollView::OnLButtonDblClk(nFlags, point);
+	CView::OnLButtonDblClk(nFlags, point);
 }
 
 BOOL CAgilityBookViewCalendar::OnMouseWheel(
@@ -803,16 +941,46 @@ BOOL CAgilityBookViewCalendar::OnMouseWheel(
 		short zDelta,
 		CPoint pt) 
 {
-	int nLines = zDelta / WHEEL_DELTA;
-	if (0 == nLines)
-		nLines = 1;
-	CClientDC dc(this);
-	dc.SetMapMode(MM_LOENGLISH);
-	CPoint p(0, GetScrollPos(SB_VERT));
-	dc.DPtoLP(&p);
-	p.y += nLines * (2 * DAY_BORDER + m_szEntry.cy);
-	ScrollToPosition(p);
+	int nPos = GetScrollPos(SB_VERT);
+	if (0 > zDelta)
+		--nPos;
+	else
+		++nPos;
+	SetScrollPos(SB_VERT, nPos);
+	Invalidate();
 	return TRUE;
+}
+
+void CAgilityBookViewCalendar::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	switch (nSBCode)
+	{
+	case SB_BOTTOM:
+		SetScrollPos(SB_VERT, m_nMonths - 1);
+		Invalidate();
+		break;
+	case SB_ENDSCROLL:
+		break;
+	case SB_LINEDOWN:
+	case SB_PAGEDOWN:
+		SetScrollPos(SB_VERT, GetScrollPos(SB_VERT) + 1);
+		Invalidate();
+		break;
+	case SB_LINEUP:			// Scroll one line up.
+	case SB_PAGEUP:			// Scroll one page up.
+		SetScrollPos(SB_VERT, GetScrollPos(SB_VERT) - 1);
+		Invalidate();
+		break;
+	case SB_THUMBPOSITION:	// Scroll to the absolute position. The current position is provided in nPos.
+	case SB_THUMBTRACK:		// Drag scroll box to specified position. The current position is provided in nPos.
+		SetScrollPos(SB_VERT, nPos);
+		Invalidate();
+		break;
+	case SB_TOP:			// Scroll to top.
+		SetScrollPos(SB_VERT, 0);
+		Invalidate();
+		break;
+	}
 }
 
 void CAgilityBookViewCalendar::OnKeyDown(
@@ -830,35 +998,39 @@ void CAgilityBookViewCalendar::OnKeyDown(
 			break;
 		case VK_SPACE:
 		case VK_RETURN:
+			bHandled = true;
 			OnCalendarEdit();
 			break;
 		case VK_LEFT:
+			bHandled = true;
 			--date;
 			break;
 		case VK_RIGHT:
+			bHandled = true;
 			++date;
 			break;
 		case VK_UP:
+			bHandled = true;
 			date -= 7;
 			break;
 		case VK_DOWN:
+			bHandled = true;
 			date += 7;
 			break;
 
 		case VK_PRIOR:
+			bHandled = true;
+			if (1 == date.GetMonth())
+				date.SetDate(date.GetYear() - 1, 12, date.GetDay());
+			else
+				date.SetDate(date.GetYear(), date.GetMonth() - 1, date.GetDay());
+			break;
 		case VK_NEXT:
-			{
-				CClientDC dc(this);
-				dc.SetMapMode(MM_LOENGLISH);
-				CRect rClient;
-				GetClientRect(rClient);
-				dc.DPtoLP(rClient);
-				int nEntriesPerPage = abs(rClient.Height()) / (2 * DAY_BORDER + m_szEntry.cy);
-				if (VK_PRIOR == nChar)
-					date -= nEntriesPerPage * 7;
-				else
-					date += nEntriesPerPage * 7;
-			}
+			bHandled = true;
+			if (12 == date.GetMonth())
+				date.SetDate(date.GetYear() + 1, 1, date.GetDay());
+			else
+				date.SetDate(date.GetYear(), date.GetMonth() + 1, date.GetDay());
 			break;
 
 		case VK_HOME:
@@ -866,20 +1038,23 @@ void CAgilityBookViewCalendar::OnKeyDown(
 			if (0 > GetKeyState(VK_CONTROL))
 				date = m_First;
 			else
-				date -= date.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
+				date = FirstDayOfWeek(date);
 			break;
 		case VK_END:
 			bHandled = true;
 			if (0 > GetKeyState(VK_CONTROL))
 				date = m_Last;
 			else
-				date += 6 - date.GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
+				date = LastDayOfWeek(date);
 		}
 		if (date != m_Current)
-			SetCurrentDate(date, true);
+		{
+			if (!SetCurrentDate(date, true))
+				MessageBeep(MB_ICONEXCLAMATION);
+		}
 	}
 	if (!bHandled)
-		CScrollView::OnKeyDown(nChar, nRepCnt, nFlags);
+		CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
 void CAgilityBookViewCalendar::OnUpdateEditCopy(CCmdUI* pCmdUI)
@@ -1047,11 +1222,12 @@ void CAgilityBookViewCalendar::OnCalendarNew()
 	{
 		if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 		{
+			SetCurrentDate(cal->GetStartDate(), false);
 			GetDocument()->GetCalendar().AddCalendar(cal);
 			GetDocument()->GetCalendar().sort();
 			LoadData();
 			GetDocument()->SetModifiedFlag();
-			GetDocument()->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
+			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 		}
 	}
 }

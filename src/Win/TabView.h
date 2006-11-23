@@ -38,6 +38,11 @@
 #include <vector>
 #include "Splitter.h"
 
+#define IDX_PANE_RUNS		0
+#define IDX_PANE_POINTS		1
+#define IDX_PANE_CALENDAR	2
+#define IDX_PANE_LOG		3
+
 class CTabView : public CCtrlView
 {
 	DECLARE_DYNCREATE(CTabView)

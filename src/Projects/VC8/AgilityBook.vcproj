@@ -599,15 +599,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgOptionsCalendar.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgOptionsFilter.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgOptionsProgram.h"
+				RelativePath="..\..\Win\DlgOptionsPrint.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgOptionsView.h"
+				RelativePath="..\..\Win\DlgOptionsProgram.h"
 				>
 			</File>
 			<File
@@ -1433,15 +1437,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgOptionsCalendar.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgOptionsFilter.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgOptionsProgram.cpp"
+				RelativePath="..\..\Win\DlgOptionsPrint.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgOptionsView.cpp"
+				RelativePath="..\..\Win\DlgOptionsProgram.cpp"
 				>
 			</File>
 			<File

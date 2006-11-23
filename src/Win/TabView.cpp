@@ -62,20 +62,16 @@ static char THIS_FILE[] = __FILE__;
 #define DEFAULT_RUN_WIDTH	200
 #define DEFAULT_CAL_WIDTH	200
 
-#define PANEIDX_RUN	0
-#define PANEIDX_PTS	1
-#define PANEIDX_CAL	2
-#define PANEIDX_LOG	3
 static const struct
 {
 	int idxPane;
 	UINT idPane;
 } sc_Panes[] =
 {
-	{PANEIDX_RUN, IDS_RUNS},
-	{PANEIDX_PTS, IDS_POINTS},
-	{PANEIDX_CAL, IDS_CALENDAR},
-	{PANEIDX_LOG, IDS_TRAINING},
+	{IDX_PANE_RUNS,     IDS_RUNS},
+	{IDX_PANE_POINTS,   IDS_POINTS},
+	{IDX_PANE_CALENDAR, IDS_CALENDAR},
+	{IDX_PANE_LOG,      IDS_TRAINING},
 };
 static const int sc_nPanes = sizeof(sc_Panes) / sizeof(sc_Panes[0]);
 
@@ -133,14 +129,14 @@ BOOL CTabView::PreCreateWindow(CREATESTRUCT& cs)
 // This should only be called when the view already exists.
 bool CTabView::ShowPointsAs(bool bHtml)
 {
-	CAgilityBookViewHtml* html = dynamic_cast<CAgilityBookViewHtml*>(m_Panes[PANEIDX_PTS]);
+	CAgilityBookViewHtml* html = dynamic_cast<CAgilityBookViewHtml*>(m_Panes[IDX_PANE_POINTS]);
 	if (html && bHtml)
 		return true;
-	CAgilityBookViewPoints* points = dynamic_cast<CAgilityBookViewPoints*>(m_Panes[PANEIDX_PTS]);
+	CAgilityBookViewPoints* points = dynamic_cast<CAgilityBookViewPoints*>(m_Panes[IDX_PANE_POINTS]);
 	if (points && !bHtml)
 		return true;
 
-	if (!m_Panes[PANEIDX_PTS])
+	if (!m_Panes[IDX_PANE_POINTS])
 	{
 		ASSERT(0);
 		return false;
@@ -150,7 +146,7 @@ bool CTabView::ShowPointsAs(bool bHtml)
 	SetRedraw(FALSE);
 
 	// Setup needed information.
-	CView* pView = dynamic_cast<CView*>(m_Panes[PANEIDX_PTS]);
+	CView* pView = dynamic_cast<CView*>(m_Panes[IDX_PANE_POINTS]);
 	ASSERT(pView);
 	CDocument* pDoc = pView->GetDocument();
 	CFrameWnd* pFrame = pView->GetParentFrame();
@@ -170,7 +166,7 @@ bool CTabView::ShowPointsAs(bool bHtml)
 	pDoc->m_bAutoDelete = FALSE;
 	// Delete existing view
 	pView->DestroyWindow();
-	m_Panes[PANEIDX_PTS] = NULL;
+	m_Panes[IDX_PANE_POINTS] = NULL;
 	// Restore flag
 	pDoc->m_bAutoDelete = bAutoDelete;
 
@@ -182,13 +178,13 @@ bool CTabView::ShowPointsAs(bool bHtml)
 	context.m_pCurrentFrame = pFrame;
 
 	bool bCreatedAsAsked = CreatePointView(bHtml, context);
-	pView = dynamic_cast<CView*>(m_Panes[PANEIDX_PTS]);
+	pView = dynamic_cast<CView*>(m_Panes[IDX_PANE_POINTS]);
 
 	pView->SendMessage(WM_INITIALUPDATE, 0, 0);
 	pView->MoveWindow(r.left, r.top, r.Width(), r.Height());
 	// If we were viewing this tab, activate it again.
 	if (bSetView)
-		SetCurSel(PANEIDX_PTS);
+		SetCurSel(IDX_PANE_POINTS);
 
 	SetRedraw(TRUE);
 
@@ -207,7 +203,7 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 			bCreateList = true;
 		else
 		{
-			m_Panes[PANEIDX_PTS] = html;
+			m_Panes[IDX_PANE_POINTS] = html;
 			context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
 			DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 			html->Create(NULL, NULL,
@@ -218,7 +214,7 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 	if (bCreateList)
 	{
 		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
-		m_Panes[PANEIDX_PTS] = points;
+		m_Panes[IDX_PANE_POINTS] = points;
 		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
 		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 		points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
@@ -265,7 +261,7 @@ void CTabView::OnInitialUpdate()
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewRuns);
 	if (!m_splitterRuns.CreateView(0, 1, RUNTIME_CLASS(CAgilityBookViewRuns), CSize(200, 100), &context))
 		return;
-	m_Panes[PANEIDX_RUN] = &m_splitterRuns;
+	m_Panes[IDX_PANE_RUNS] = &m_splitterRuns;
 
 	CreatePointView(CAgilityBookOptions::ShowHtmlPoints(), context);
 
@@ -280,10 +276,10 @@ void CTabView::OnInitialUpdate()
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewCalendar);
 	if (!m_splitterCal.CreateView(0, 1, RUNTIME_CLASS(CAgilityBookViewCalendar), CSize(200, 100), &context))
 		return;
-	m_Panes[PANEIDX_CAL] = &m_splitterCal;
+	m_Panes[IDX_PANE_CALENDAR] = &m_splitterCal;
 
 	CAgilityBookViewTraining* training = reinterpret_cast<CAgilityBookViewTraining*>(RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject());
-	m_Panes[PANEIDX_LOG] = training;
+	m_Panes[IDX_PANE_LOG] = training;
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
 	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
@@ -343,24 +339,24 @@ void CTabView::SetActiveView()
 	int nIndex = GetTabCtrl().GetCurSel();
 	switch (nIndex)
 	{
-	case PANEIDX_RUN:
+	case IDX_PANE_RUNS:
 		// We may need to kick start the view the 1st time.
 		if (!m_pLastFocusRuns)
 			m_pLastFocusRuns = reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,0));
 		pView = m_pLastFocusRuns;
 		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,1)));
 		break;
-	case PANEIDX_PTS:
+	case IDX_PANE_POINTS:
 		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
 		pCommon = dynamic_cast<ICommonView*>(pView);
 		break;
-	case PANEIDX_CAL:
+	case IDX_PANE_CALENDAR:
 		if (!m_pLastFocusCal)
 			m_pLastFocusCal = reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0));
 		pView = m_pLastFocusCal;
 		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0)));
 		break;
-	case PANEIDX_LOG:
+	case IDX_PANE_LOG:
 		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
 		pCommon = dynamic_cast<ICommonView*>(pView);
 		break;
@@ -409,10 +405,10 @@ void CTabView::OnSetFocus(CWnd* pOldWnd)
 	{
 		switch (nIndex)
 		{
-		case PANEIDX_RUN:
+		case IDX_PANE_RUNS:
 			m_pLastFocusRuns = reinterpret_cast<CView*>(pOldWnd);
 			break;
-		case PANEIDX_CAL:
+		case IDX_PANE_CALENDAR:
 			m_pLastFocusCal = reinterpret_cast<CView*>(pOldWnd);
 			break;
 		}
@@ -428,7 +424,7 @@ void CTabView::OnSelChanging(
 	int nIndex = GetTabCtrl().GetCurSel();
 	if (0 > nIndex || nIndex >= GetTabCtrl().GetItemCount())
 		return;
-	if (PANEIDX_RUN == nIndex)
+	if (IDX_PANE_RUNS == nIndex)
 	{
 		int r, c;
 		m_splitterRuns.GetActivePane(&r, &c);
@@ -437,7 +433,7 @@ void CTabView::OnSelChanging(
 		// No else. If there is no active, we want to inherit what was set
 		// in the OnSetFocus handler.
 	}
-	else if (PANEIDX_CAL == nIndex)
+	else if (IDX_PANE_CALENDAR == nIndex)
 	{
 		int r, c;
 		m_splitterCal.GetActivePane(&r, &c);
