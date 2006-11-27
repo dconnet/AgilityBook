@@ -662,6 +662,9 @@ Jumpers: 400 pts (20 legs)</Titles>
 				<Level Name="Level 5"/>
 				<Level Name="Level C"/>
 			</Division>
+			<Division Name="Specialist">
+				<Level Name="Level 3"/>
+			</Division>
 			<Division Name="Junior">
 				<Level Name="Level 1"/>
 				<Level Name="Level 2"/>
@@ -669,9 +672,6 @@ Jumpers: 400 pts (20 legs)</Titles>
 				<Level Name="Level 4"/>
 				<Level Name="Level 5"/>
 				<Level Name="Level C"/>
-			</Division>
-			<Division Name="Specialist">
-				<Level Name="Level 3"/>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
