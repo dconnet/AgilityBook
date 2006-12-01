@@ -11,8 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2006-11-03 DRC File version 12.3
-               Added 'SpdMult'.
+2006-12-01 DRC File version 12.3
+               Added 'SpdMult'. Added Action for RenameDivision.
 2006-07-02 DRC File version 12.2
                Added 'subtractTF'.
                Added Action for DeleteEvent.
@@ -150,6 +150,11 @@ for renaming titles.
     Venue: Venue that contains event
 	Div: Unused
     OldName: Event to be renamed.
+	NewName: New name.
+  'RenameDivision': CPE Standard->Regular, shouldn't have had Junior
+    Venue: Venue that contains division
+	Div: Unused
+    OldName: Division to be renamed.
 	NewName: New name.
  pcdata: currently unused, defined to allow future expansion.
 -->

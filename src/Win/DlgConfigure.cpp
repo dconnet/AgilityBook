@@ -1005,11 +1005,10 @@ void CDlgConfigure::OnUpdate()
 						int nEvents = m_Book.GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
 						if (0 < nEvents)
 						{
-							tmp << _T(", updating ") << nEvents << _T("titles\n");
+							tmp << _T(", updating ") << nEvents << _T(" titles");
 							m_DlgFixup.push_back(new CDlgFixupRenameEvent(action->GetVenue(), action->GetOldName(), action->GetNewName()));
 						}
-						else
-							tmp << _T("\n");
+						tmp << _T("\n");
 						msg += tmp.str().c_str();
 						// If the new event exists, just delete the old.
 						// Otherwise, rename the old to new.
@@ -1072,9 +1071,7 @@ void CDlgConfigure::OnUpdate()
 						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
 						if (0 < nTitles)
 						{
-							tmp << _T(", updating ")
-								<< nTitles
-								<< _T("titles");
+							tmp << _T(", updating ") << nTitles << _T(" titles");
 							m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
 						}
 						tmp << _T("\n");
@@ -1133,6 +1130,41 @@ void CDlgConfigure::OnUpdate()
 							<< _T("]\n");
 						msg += tmp.str().c_str();
 						venue->GetTitles().DeleteTitle(action->GetOldName());
+					}
+				}
+			}
+			else if (action->GetVerb() == ACTION_VERB_RENAME_DIV)
+			{
+				// Find the venue.
+				ARBConfigVenuePtr venue;
+				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
+				{
+					ARBConfigDivisionPtr oldDiv;
+					if (venue->GetDivisions().FindDivision(action->GetOldName(), &oldDiv))
+					{
+						ARBostringstream tmp;
+						tmp << _T("Action: Renaming ")
+							<< action->GetVenue()
+							<< _T(" division [")
+							<< action->GetOldName()
+							<< _T("] to [")
+							<< action->GetNewName()
+							<< _T("]");
+						// If the division is in use, create a fixup action.
+						int nRuns = m_Book.GetDogs().NumRunsInDivision(venue, action->GetOldName());
+						if (0 < nRuns)
+						{
+							tmp << _T(", updating ") << nRuns << _T(" runs");
+							m_DlgFixup.push_back(new CDlgFixupRenameDivision(action->GetVenue(), action->GetOldName(), action->GetNewName()));
+						}
+						tmp << _T("\n");
+						msg += tmp.str().c_str();
+						// If the new division exists, just delete the old.
+						// Otherwise, rename the old to new.
+						if (venue->GetDivisions().FindDivision(action->GetNewName()))
+							venue->GetDivisions().DeleteDivision(action->GetOldName(), venue->GetEvents());
+						else
+							oldDiv->SetName(action->GetNewName());
 					}
 				}
 			}

@@ -361,7 +361,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 					int nEvents = GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
 					if (0 < nEvents)
 					{
-						msg << _T(", updating ") << nEvents << _T("titles");
+						msg << _T(", updating ") << nEvents << _T(" titles");
 						GetDogs().RenameEvent(action->GetVenue(), action->GetOldName(), action->GetNewName());
 					}
 					msg << _T("\n");
@@ -479,6 +479,39 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 						<< action->GetOldName()
 						<< _T("]\n");
 					venue->GetTitles().DeleteTitle(action->GetOldName());
+				}
+			}
+		}
+		else if (action->GetVerb() == ACTION_VERB_RENAME_DIV)
+		{
+			// Find the venue.
+			ARBConfigVenuePtr venue;
+			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
+			{
+				ARBConfigDivisionPtr oldDiv;
+				if (venue->GetDivisions().FindDivision(action->GetOldName(), &oldDiv))
+				{
+					msg << _T("Action: Renaming ")
+						<< action->GetVenue()
+						<< _T(" division [")
+						<< action->GetOldName()
+						<< _T("] to [")
+						<< action->GetNewName()
+						<< _T("]");
+					// If the division is in use, create a fixup action.
+					int nRuns = GetDogs().NumRunsInDivision(venue, action->GetOldName());
+					if (0 < nRuns)
+					{
+						msg << _T(", updating ") << nRuns << _T(" runs");
+						GetDogs().RenameDivision(venue, action->GetOldName(), action->GetNewName());
+					}
+					msg << _T("\n");
+					// If the new division exists, just delete the old.
+					// Otherwise, rename the old to new.
+					if (venue->GetDivisions().FindDivision(action->GetNewName()))
+						venue->GetDivisions().DeleteDivision(action->GetOldName(), venue->GetEvents());
+					else
+						oldDiv->SetName(action->GetNewName());
 				}
 			}
 		}
