@@ -544,8 +544,12 @@ size_t ARBConfigScoringList::FindAllEvents(
 	const_iterator iter;
 	for (iter = begin(); iter != end(); ++iter)
 	{
-		if (((*iter)->GetDivision() == inDivision || inDivision == WILDCARD_DIVISION)
-		&& ((*iter)->GetLevel() == inLevel || inLevel == WILDCARD_LEVEL))
+		if (((*iter)->GetDivision() == inDivision
+			|| (*iter)->GetDivision() == WILDCARD_DIVISION
+			|| inDivision == WILDCARD_DIVISION)
+		&& ((*iter)->GetLevel() == inLevel
+			|| (*iter)->GetLevel() == WILDCARD_LEVEL
+			|| inLevel == WILDCARD_LEVEL))
 		{
 			if ((*iter)->IsValidOn(inDate))
 				outList.push_back(*iter);
