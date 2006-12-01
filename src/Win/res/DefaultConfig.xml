@@ -656,7 +656,15 @@ Jumpers: 400 pts (20 legs)</Titles>
 			<Titles Name="Jr Handling Champion">8 clean or 10 qualifying legs in Level 5.</Titles>
 			<Titles LongName="Specialist Champion" Name="SpCh" Prefix="y">Will need to obtain a total of 750 points, which must include at least 4 legs in 4 of the 7 classes offered by CPE, handler choice.</Titles>
 			<Titles LongName="Specialist Extraordinaire" Name="SpEx" Prefix="y">Will need to obtain a total of 2500 points. All points and legs from the Specialist Champion count towards the Specialist Extraordinaire totals. </Titles>
-			<Division Name="Standard">
+			<Division Name="Regular">
+				<Level Name="Level 1"/>
+				<Level Name="Level 2"/>
+				<Level Name="Level 3"/>
+				<Level Name="Level 4"/>
+				<Level Name="Level 5"/>
+				<Level Name="Level C"/>
+			</Division>
+			<Division Name="Enthusiast">
 				<Level Name="Level 1"/>
 				<Level Name="Level 2"/>
 				<Level Name="Level 3"/>
@@ -665,7 +673,12 @@ Jumpers: 400 pts (20 legs)</Titles>
 				<Level Name="Level C"/>
 			</Division>
 			<Division Name="Specialist">
+				<Level Name="Level 1"/>
+				<Level Name="Level 2"/>
 				<Level Name="Level 3"/>
+				<Level Name="Level 4"/>
+				<Level Name="Level 5"/>
+				<Level Name="Level C"/>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">
@@ -680,7 +693,7 @@ Jumpers: 400 pts (20 legs)</Titles>
 					<LifeTime Faults="5" Points="20"/>
 					<LifeTime Faults="10" Points="15"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="25"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
@@ -743,32 +756,32 @@ Jumpers: 400 pts (20 legs)</Titles>
 					<LifeTime Faults="0" Points="15"/>
 					<LifeTime Faults="4" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="15"/>
 					<LifeTime Faults="0" Points="15"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 3 time faults</Note>
 					<TitlePoints Faults="3" Points="1"/>
 					<LifeTime Faults="0" Points="15"/>
 					<LifeTime Faults="3" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 3 time faults</Note>
 					<TitlePoints Faults="3" Points="1"/>
 					<LifeTime Faults="0" Points="15"/>
 					<LifeTime Faults="3" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 4 time faults</Note>
 					<TitlePoints Faults="4" Points="1"/>
 					<LifeTime Faults="0" Points="15"/>
 					<LifeTime Faults="4" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 4 time faults</Note>
@@ -777,7 +790,7 @@ Jumpers: 400 pts (20 legs)</Titles>
 					<LifeTime Faults="5" Points="10"/>
 					<LifeTime Faults="9" Points="5"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 5 time faults</Note>
@@ -801,12 +814,12 @@ Faults allowed:
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="9" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt</Note>
 					<TitlePoints Faults="0" Points="20"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
 Faults allowed:
 1 bar down
@@ -816,7 +829,7 @@ Faults allowed:
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="8" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
 Faults allowed:
 1 bar down
@@ -826,7 +839,7 @@ Faults allowed:
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="8" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 1 1pt, 2 2pt
 Faults allowed:
 1 bar down
@@ -836,7 +849,7 @@ Faults allowed:
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="9" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 2" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 2 1pt, 1 2pt
 Faults allowed:
 1 off course
@@ -847,7 +860,7 @@ Faults allowed:
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>WildCard: 2 1pt, 1 2pt
 Faults allowed:
 1 off course
@@ -865,27 +878,27 @@ Faults allowed:
 					<TitlePoints Faults="0" Points="25"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level C" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="25"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 5" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 5" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 4" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 4" OpeningPts="32" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 3" OpeningPts="30" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 3" OpeningPts="30" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 2" OpeningPts="28" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 2" OpeningPts="28" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 1" OpeningPts="26" dropFractions="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 1" OpeningPts="26" dropFractions="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
@@ -896,27 +909,27 @@ Faults allowed:
 					<TitlePoints Faults="0" Points="25"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Level C" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Regular" Level="Level C" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="25"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Level 5" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Regular" Level="Level 5" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Level 4" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Regular" Level="Level 4" OpeningPts="28" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Level 3" OpeningPts="24" dropFractions="y" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Regular" Level="Level 3" OpeningPts="24" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Level 2" OpeningPts="20" dropFractions="y" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Regular" Level="Level 2" OpeningPts="20" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Level 1" OpeningPts="16" dropFractions="y" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Regular" Level="Level 1" OpeningPts="16" dropFractions="y" type="OCScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="25"/>
 				</Scoring>
@@ -930,27 +943,27 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 					<TitlePoints Faults="0" Points="20"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level C" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="20"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 5" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 5" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 4" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 4" OpeningPts="25" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 3" OpeningPts="23" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 3" OpeningPts="23" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 2" OpeningPts="21" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 2" OpeningPts="21" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 1" OpeningPts="19" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+				<Scoring Division="Regular" Level="Level 1" OpeningPts="19" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
 					<TitlePoints Faults="0" Points="1"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
@@ -969,11 +982,11 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level C" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level C" dropFractions="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="20"/>
 					<LifeTime Faults="0" Points="20"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 5" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 5" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 bar down
 5 time faults</Note>
@@ -982,7 +995,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 4" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 4" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 bar down
 5 time faults</Note>
@@ -991,17 +1004,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 3" dropFractions="y" type="FaultsThenTime">
-					<Note>Faults allowed:
-1 off course
-1 bar down
-5 time faults</Note>
-					<TitlePoints Faults="10" Points="1"/>
-					<LifeTime Faults="0" Points="20"/>
-					<LifeTime Faults="5" Points="15"/>
-					<LifeTime Faults="10" Points="10"/>
-				</Scoring>
-				<Scoring Division="Standard" Level="Level 2" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 3" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 1 bar down
@@ -1011,7 +1014,17 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 					<LifeTime Faults="5" Points="15"/>
 					<LifeTime Faults="10" Points="10"/>
 				</Scoring>
-				<Scoring Division="Standard" Level="Level 1" dropFractions="y" type="FaultsThenTime">
+				<Scoring Division="Regular" Level="Level 2" dropFractions="y" type="FaultsThenTime">
+					<Note>Faults allowed:
+1 off course
+1 bar down
+5 time faults</Note>
+					<TitlePoints Faults="10" Points="1"/>
+					<LifeTime Faults="0" Points="20"/>
+					<LifeTime Faults="5" Points="15"/>
+					<LifeTime Faults="10" Points="10"/>
+				</Scoring>
+				<Scoring Division="Regular" Level="Level 1" dropFractions="y" type="FaultsThenTime">
 					<Note>Faults allowed:
 1 off course
 1 bar down
