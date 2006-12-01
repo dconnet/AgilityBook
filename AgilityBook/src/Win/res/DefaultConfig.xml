@@ -58,6 +58,8 @@ Revision History:
 		<Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ATCH-SP" OldName="V-ATCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
+		<Action NewName="Regular" OldName="Standard" Venue="CPE" Verb="RenameDivision"/>
+		<Action NewName="Regular" OldName="Junior" Venue="CPE" Verb="RenameDivision"/>
 		<Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
 		<Action NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
 		<Action NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
@@ -664,14 +666,6 @@ Jumpers: 400 pts (20 legs)</Titles>
 			</Division>
 			<Division Name="Specialist">
 				<Level Name="Level 3"/>
-			</Division>
-			<Division Name="Junior">
-				<Level Name="Level 1"/>
-				<Level Name="Level 2"/>
-				<Level Name="Level 3"/>
-				<Level Name="Level 4"/>
-				<Level Name="Level 5"/>
-				<Level Name="Level C"/>
 			</Division>
 			<Event Name="Standard">
 				<Scoring Division="Specialist" Level="Level 3" dropFractions="y" type="FaultsThenTime">

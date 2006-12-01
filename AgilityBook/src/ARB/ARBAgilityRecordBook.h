@@ -155,6 +155,7 @@
 	#define ACTION_VERB_RENAME_TITLE			_T("RenameTitle")
 	#define ACTION_VERB_DELETE_EVENT			_T("DeleteEvent")
 	#define ACTION_VERB_RENAME_EVENT			_T("RenameEvent")
+	#define ACTION_VERB_RENAME_DIV				_T("RenameDivision")
 #define ATTRIB_ACTION_VENUE					_T("Venue")
 #define ATTRIB_ACTION_DIVISION				_T("Div")
 #define ATTRIB_ACTION_OLDNAME				_T("OldName")
