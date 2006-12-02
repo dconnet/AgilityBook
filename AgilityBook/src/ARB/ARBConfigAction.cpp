@@ -62,6 +62,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigActionPtr ARBConfigAction::New()
+{
+	return ARBConfigActionPtr(new ARBConfigAction());
+}
+
 ARBConfigAction::ARBConfigAction()
 	: m_Verb()
 	, m_Venue()
@@ -82,6 +87,11 @@ ARBConfigAction::ARBConfigAction(ARBConfigAction const& rhs)
 
 ARBConfigAction::~ARBConfigAction()
 {
+}
+
+ARBConfigActionPtr ARBConfigAction::Clone() const
+{
+	return ARBConfigActionPtr(new ARBConfigAction(*this));
 }
 
 ARBConfigAction& ARBConfigAction::operator=(ARBConfigAction const& rhs)

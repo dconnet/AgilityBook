@@ -53,14 +53,8 @@ protected:
 
 public:
 	~ARBConfigFault();
-	static ARBConfigFaultPtr New()
-	{
-		return ARBConfigFaultPtr(new ARBConfigFault());
-	}
-	ARBConfigFaultPtr Clone() const
-	{
-		return ARBConfigFaultPtr(new ARBConfigFault(*this));
-	}
+	static ARBConfigFaultPtr New();
+	ARBConfigFaultPtr Clone() const;
 
 	ARBConfigFault& operator=(ARBConfigFault const& rhs);
 

@@ -55,14 +55,8 @@ protected:
 
 public:
 	~ARBDogClub();
-	static ARBDogClubPtr New()
-	{
-		return ARBDogClubPtr(new ARBDogClub());
-	}
-	ARBDogClubPtr Clone() const
-	{
-		return ARBDogClubPtr(new ARBDogClub(*this));
-	}
+	static ARBDogClubPtr New();
+	ARBDogClubPtr Clone() const;
 
 	ARBDogClub& operator=(ARBDogClub const& rhs);
 

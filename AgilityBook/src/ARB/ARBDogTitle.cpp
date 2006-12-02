@@ -59,6 +59,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogTitlePtr ARBDogTitle::New()
+{
+	return ARBDogTitlePtr(new ARBDogTitle());
+}
+
 ARBDogTitle::ARBDogTitle()
 	: m_Date()
 	, m_Venue()
@@ -81,6 +86,11 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 
 ARBDogTitle::~ARBDogTitle()
 {
+}
+
+ARBDogTitlePtr ARBDogTitle::Clone() const
+{
+	return ARBDogTitlePtr(new ARBDogTitle(*this));
 }
 
 ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)

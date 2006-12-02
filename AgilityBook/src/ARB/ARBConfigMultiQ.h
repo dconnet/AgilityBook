@@ -52,14 +52,8 @@ protected:
 
 public:
 	~ARBConfigMultiQ();
-	static ARBConfigMultiQPtr New()
-	{
-		return ARBConfigMultiQPtr(new ARBConfigMultiQ());
-	}
-	ARBConfigMultiQPtr Clone() const
-	{
-		return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
-	}
+	static ARBConfigMultiQPtr New();
+	ARBConfigMultiQPtr Clone() const;
 
 	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
 

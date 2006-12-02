@@ -50,6 +50,18 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
+{
+	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints());
+}
+
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
+		double inPoints,
+		double inFaults)
+{
+	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
+}
+
 ARBConfigLifetimePoints::ARBConfigLifetimePoints()
 	: m_Points(0.0)
 	, m_Faults(0.0)
@@ -72,6 +84,11 @@ ARBConfigLifetimePoints::ARBConfigLifetimePoints(ARBConfigLifetimePoints const& 
 
 ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 {
+}
+
+ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::Clone() const
+{
+	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
 }
 
 ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoints const& rhs)

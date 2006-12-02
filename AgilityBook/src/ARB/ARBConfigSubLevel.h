@@ -53,14 +53,8 @@ protected:
 
 public:
 	~ARBConfigSubLevel();
-	static ARBConfigSubLevelPtr New()
-	{
-		return ARBConfigSubLevelPtr(new ARBConfigSubLevel());
-	}
-	ARBConfigSubLevelPtr Clone() const
-	{
-		return ARBConfigSubLevelPtr(new ARBConfigSubLevel(*this));
-	}
+	static ARBConfigSubLevelPtr New();
+	ARBConfigSubLevelPtr Clone() const;
 
 	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
 

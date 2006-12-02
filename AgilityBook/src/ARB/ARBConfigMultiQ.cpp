@@ -50,6 +50,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigMultiQPtr ARBConfigMultiQ::New()
+{
+	return ARBConfigMultiQPtr(new ARBConfigMultiQ());
+}
+
 ARBConfigMultiQ::ARBConfigMultiQ()
 	: m_Name()
 	, m_ShortName()
@@ -70,6 +75,11 @@ ARBConfigMultiQ::ARBConfigMultiQ(ARBConfigMultiQ const& rhs)
 
 ARBConfigMultiQ::~ARBConfigMultiQ()
 {
+}
+
+ARBConfigMultiQPtr ARBConfigMultiQ::Clone() const
+{
+	return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
 }
 
 ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)

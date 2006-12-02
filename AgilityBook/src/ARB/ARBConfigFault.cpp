@@ -51,6 +51,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigFaultPtr ARBConfigFault::New()
+{
+	return ARBConfigFaultPtr(new ARBConfigFault());
+}
+
 ARBConfigFault::ARBConfigFault()
 	: m_Name()
 {
@@ -63,6 +68,11 @@ ARBConfigFault::ARBConfigFault(ARBConfigFault const& rhs)
 
 ARBConfigFault::~ARBConfigFault()
 {
+}
+
+ARBConfigFaultPtr ARBConfigFault::Clone() const
+{
+	return ARBConfigFaultPtr(new ARBConfigFault(*this));
 }
 
 ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)

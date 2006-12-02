@@ -55,14 +55,8 @@ protected:
 
 public:
 	~ARBInfoItem();
-	static ARBInfoItemPtr New()
-	{
-		return ARBInfoItemPtr(new ARBInfoItem());
-	}
-	ARBInfoItemPtr Clone() const
-	{
-		return ARBInfoItemPtr(new ARBInfoItem(*this));
-	}
+	static ARBInfoItemPtr New();
+	ARBInfoItemPtr Clone() const;
 
 	ARBInfoItem& operator=(ARBInfoItem const& rhs);
 

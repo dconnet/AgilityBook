@@ -64,6 +64,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogPtr ARBDog::New()
+{
+	return ARBDogPtr(new ARBDog());
+}
+
 ARBDog::ARBDog()
 	: m_CallName()
 	, m_DOB()
@@ -98,6 +103,11 @@ ARBDog::ARBDog(ARBDog const& rhs)
 
 ARBDog::~ARBDog()
 {
+}
+
+ARBDogPtr ARBDog::Clone() const
+{
+	return ARBDogPtr(new ARBDog(*this));
 }
 
 ARBDog& ARBDog::operator=(ARBDog const& rhs)

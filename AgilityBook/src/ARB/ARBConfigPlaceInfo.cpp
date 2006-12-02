@@ -49,6 +49,16 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
+{
+	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo());
+}
+
+ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(short inPlace, double inValue)
+{
+	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(inPlace, inValue));
+}
+
 ARBConfigPlaceInfo::ARBConfigPlaceInfo()
 	: m_Place(0)
 	, m_Value(0.0)
@@ -71,6 +81,11 @@ ARBConfigPlaceInfo::ARBConfigPlaceInfo(ARBConfigPlaceInfo const& rhs)
 
 ARBConfigPlaceInfo::~ARBConfigPlaceInfo()
 {
+}
+
+ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::Clone() const
+{
+	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(*this));
 }
 
 ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo const& rhs)

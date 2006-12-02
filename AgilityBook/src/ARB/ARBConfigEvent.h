@@ -61,14 +61,8 @@ protected:
 
 public:
 	~ARBConfigEvent();
-	static ARBConfigEventPtr New()
-	{
-		return ARBConfigEventPtr(new ARBConfigEvent());
-	}
-	ARBConfigEventPtr Clone() const
-	{
-		return ARBConfigEventPtr(new ARBConfigEvent(*this));
-	}
+	static ARBConfigEventPtr New();
+	ARBConfigEventPtr Clone() const;
 
 	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
 

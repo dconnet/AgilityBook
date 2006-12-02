@@ -56,18 +56,9 @@ protected:
 
 public:
 	~ARBDogTrial();
-	static ARBDogTrialPtr New()
-	{
-		return ARBDogTrialPtr(new ARBDogTrial());
-	}
-	static ARBDogTrialPtr New(ARBCalendar const& inCal)
-	{
-		return ARBDogTrialPtr(new ARBDogTrial(inCal));
-	}
-	ARBDogTrialPtr Clone() const
-	{
-		return ARBDogTrialPtr(new ARBDogTrial(*this));
-	}
+	static ARBDogTrialPtr New();
+	static ARBDogTrialPtr New(ARBCalendar const& inCal);
+	ARBDogTrialPtr Clone() const;
 
 	ARBDogTrial& operator=(ARBDogTrial const& rhs);
 

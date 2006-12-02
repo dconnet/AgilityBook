@@ -54,6 +54,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigLevelPtr ARBConfigLevel::New()
+{
+	return ARBConfigLevelPtr(new ARBConfigLevel());
+}
+
 ARBConfigLevel::ARBConfigLevel()
 	: m_Name()
 	, m_SubLevels()
@@ -69,6 +74,11 @@ ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 
 ARBConfigLevel::~ARBConfigLevel()
 {
+}
+
+ARBConfigLevelPtr ARBConfigLevel::Clone() const
+{
+	return ARBConfigLevelPtr(new ARBConfigLevel(*this));
 }
 
 ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)

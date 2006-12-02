@@ -84,14 +84,8 @@ protected:
 
 public:
 	~ARBConfigScoring();
-	static ARBConfigScoringPtr New()
-	{
-		return ARBConfigScoringPtr(new ARBConfigScoring());
-	}
-	ARBConfigScoringPtr Clone() const
-	{
-		return ARBConfigScoringPtr(new ARBConfigScoring(*this));
-	}
+	static ARBConfigScoringPtr New();
+	ARBConfigScoringPtr Clone() const;
 
 	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
 

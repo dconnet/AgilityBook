@@ -56,14 +56,8 @@ protected:
 
 public:
 	~ARBConfigDivision();
-	static ARBConfigDivisionPtr New()
-	{
-		return ARBConfigDivisionPtr(new ARBConfigDivision());
-	}
-	ARBConfigDivisionPtr Clone() const
-	{
-		return ARBConfigDivisionPtr(new ARBConfigDivision(*this));
-	}
+	static ARBConfigDivisionPtr New();
+	ARBConfigDivisionPtr Clone() const;
 
 	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
 

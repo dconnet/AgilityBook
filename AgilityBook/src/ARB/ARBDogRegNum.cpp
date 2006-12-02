@@ -55,6 +55,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogRegNumPtr ARBDogRegNum::New()
+{
+	return ARBDogRegNumPtr(new ARBDogRegNum());
+}
+
 ARBDogRegNum::ARBDogRegNum()
 	: m_Venue()
 	, m_Number()
@@ -75,6 +80,11 @@ ARBDogRegNum::ARBDogRegNum(ARBDogRegNum const& rhs)
 
 ARBDogRegNum::~ARBDogRegNum()
 {
+}
+
+ARBDogRegNumPtr ARBDogRegNum::Clone() const
+{
+	return ARBDogRegNumPtr(new ARBDogRegNum(*this));
 }
 
 ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)

@@ -107,14 +107,8 @@ protected:
 
 public:
 	~ARBCalendar();
-	static ARBCalendarPtr New()
-	{
-		return ARBCalendarPtr(new ARBCalendar());
-	}
-	ARBCalendarPtr Clone() const
-	{
-		return ARBCalendarPtr(new ARBCalendar(*this));
-	}
+	static ARBCalendarPtr New();
+	ARBCalendarPtr Clone() const;
 
 	ARBCalendar& operator=(ARBCalendar const& rhs);
 

@@ -55,6 +55,18 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
+{
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
+}
+
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
+		double inPoints,
+		double inFaults)
+{
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
+}
+
 ARBConfigTitlePoints::ARBConfigTitlePoints()
 	: m_Points(0.0)
 	, m_Faults(0.0)
@@ -77,6 +89,11 @@ ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 
 ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
+}
+
+ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
+{
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
 }
 
 ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const& rhs)

@@ -54,14 +54,8 @@ protected:
 
 public:
 	~ARBDogRunPartner();
-	static ARBDogRunPartnerPtr New()
-	{
-		return ARBDogRunPartnerPtr(new ARBDogRunPartner());
-	}
-	ARBDogRunPartnerPtr Clone() const
-	{
-		return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
-	}
+	static ARBDogRunPartnerPtr New();
+	ARBDogRunPartnerPtr Clone() const;
 
 	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
 

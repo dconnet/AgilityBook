@@ -97,6 +97,11 @@ ARBString ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 	return style;
 }
 
+ARBConfigScoringPtr ARBConfigScoring::New()
+{
+	return ARBConfigScoringPtr(new ARBConfigScoring());
+}
+
 ARBConfigScoring::ARBConfigScoring()
 	: m_ValidFrom()
 	, m_ValidTo()
@@ -155,6 +160,11 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 
 ARBConfigScoring::~ARBConfigScoring()
 {
+}
+
+ARBConfigScoringPtr ARBConfigScoring::Clone() const
+{
+	return ARBConfigScoringPtr(new ARBConfigScoring(*this));
 }
 
 ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)

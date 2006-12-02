@@ -63,14 +63,8 @@ protected:
 
 public:
 	~ARBConfigAction();
-	static ARBConfigActionPtr New()
-	{
-		return ARBConfigActionPtr(new ARBConfigAction());
-	}
-	ARBConfigActionPtr Clone() const
-	{
-		return ARBConfigActionPtr(new ARBConfigAction(*this));
-	}
+	static ARBConfigActionPtr New();
+	ARBConfigActionPtr Clone() const;
 
 	ARBConfigAction& operator=(ARBConfigAction const& rhs);
 

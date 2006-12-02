@@ -53,6 +53,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogReferenceRunPtr ARBDogReferenceRun::New()
+{
+	return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
+}
+
 ARBDogReferenceRun::ARBDogReferenceRun()
 	: m_Q()
 	, m_Place(0)
@@ -79,6 +84,11 @@ ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun const& rhs)
 
 ARBDogReferenceRun::~ARBDogReferenceRun()
 {
+}
+
+ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
+{
+	return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
 }
 
 ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)

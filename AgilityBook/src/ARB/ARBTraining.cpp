@@ -57,6 +57,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBTrainingPtr ARBTraining::New()
+{
+	return ARBTrainingPtr(new ARBTraining());
+}
+
 ARBTraining::ARBTraining()
 	: m_Date()
 	, m_Name()
@@ -75,6 +80,11 @@ ARBTraining::ARBTraining(ARBTraining const& rhs)
 
 ARBTraining::~ARBTraining()
 {
+}
+
+ARBTrainingPtr ARBTraining::Clone() const
+{
+	return ARBTrainingPtr(new ARBTraining(*this));
 }
 
 ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)

@@ -51,6 +51,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
+{
+	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
+}
+
 ARBConfigOtherPoints::ARBConfigOtherPoints()
 	: m_Name()
 	, m_Tally(ARBConfigOtherPoints::eTallyAll)
@@ -67,6 +72,11 @@ ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 
 ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
+}
+
+ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
+{
+	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
 }
 
 ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const& rhs)
