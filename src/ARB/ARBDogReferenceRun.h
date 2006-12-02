@@ -53,14 +53,8 @@ protected:
 
 public:
 	~ARBDogReferenceRun();
-	static ARBDogReferenceRunPtr New()
-	{
-		return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
-	}
-	ARBDogReferenceRunPtr Clone() const
-	{
-		return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
-	}
+	static ARBDogReferenceRunPtr New();
+	ARBDogReferenceRunPtr Clone() const;
 
 	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
 

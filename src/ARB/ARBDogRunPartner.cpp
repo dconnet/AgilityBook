@@ -54,6 +54,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogRunPartnerPtr ARBDogRunPartner::New()
+{
+	return ARBDogRunPartnerPtr(new ARBDogRunPartner());
+}
+
 ARBDogRunPartner::ARBDogRunPartner()
 	: m_Handler()
 	, m_Dog()
@@ -70,6 +75,11 @@ ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner const& rhs)
 
 ARBDogRunPartner::~ARBDogRunPartner()
 {
+}
+
+ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
+{
+	return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
 }
 
 ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)

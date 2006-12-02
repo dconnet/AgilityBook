@@ -58,18 +58,9 @@ protected:
 
 public:
 	~ARBConfigTitlePoints();
-	static ARBConfigTitlePointsPtr New()
-	{
-		return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
-	}
-	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults)
-	{
-		return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
-	}
-	ARBConfigTitlePointsPtr Clone() const
-	{
-		return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
-	}
+	static ARBConfigTitlePointsPtr New();
+	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
+	ARBConfigTitlePointsPtr Clone() const;
 
 	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
 

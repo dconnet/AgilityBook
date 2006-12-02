@@ -81,6 +81,11 @@ ARBString ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogExistingPointsPtr ARBDogExistingPoints::New()
+{
+	return ARBDogExistingPointsPtr(new ARBDogExistingPoints());
+}
+
 ARBDogExistingPoints::ARBDogExistingPoints()
 	: m_Date()
 	, m_Comment()
@@ -113,6 +118,11 @@ ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 
 ARBDogExistingPoints::~ARBDogExistingPoints()
 {
+}
+
+ARBDogExistingPointsPtr ARBDogExistingPoints::Clone() const
+{
+	return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
 }
 
 ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const& rhs)

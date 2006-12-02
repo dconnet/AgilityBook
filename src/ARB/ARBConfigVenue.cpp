@@ -62,6 +62,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigVenuePtr ARBConfigVenue::New()
+{
+	return ARBConfigVenuePtr(new ARBConfigVenue());
+}
+
 ARBConfigVenue::ARBConfigVenue()
 	: m_Name()
 	, m_LongName()
@@ -92,6 +97,11 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 
 ARBConfigVenue::~ARBConfigVenue()
 {
+}
+
+ARBConfigVenuePtr ARBConfigVenue::Clone() const
+{
+	return ARBConfigVenuePtr(new ARBConfigVenue(*this));
 }
 
 ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)

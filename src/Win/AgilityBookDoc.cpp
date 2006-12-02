@@ -518,11 +518,18 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		else
 			ASSERT(0);
 	}
-	ARBString info;
+
+	// Starting at config v3, table info was added.
 	bool bUpdateRuns = false;
 	if (GetConfig().GetVersion() <= 2 && update.GetVersion() == 3)
 		bUpdateRuns = true;
+
+	// Update the config
+	ARBString info;
 	GetConfig().Update(0, update, info);
+	msg << info;
+
+	// Now update existing runs (scoring info on existing events)
 	std::vector<CDlgFixup*> fixups;
 	CDlgConfigure::CheckExistingRuns(this, m_Records.GetDogs(), GetConfig(), fixups, true);
 	for (std::vector<CDlgFixup*>::iterator iter = fixups.begin(); iter != fixups.end(); ++iter)
@@ -531,7 +538,6 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		delete (*iter);
 	}
 	fixups.clear();
-	msg << info;
 	if (bUpdateRuns)
 	{
 		CDlgFixupTableInRuns fix;

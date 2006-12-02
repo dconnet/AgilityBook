@@ -54,6 +54,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigTitlePtr ARBConfigTitle::New()
+{
+	return ARBConfigTitlePtr(new ARBConfigTitle());
+}
+
 ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
@@ -78,6 +83,11 @@ ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 
 ARBConfigTitle::~ARBConfigTitle()
 {
+}
+
+ARBConfigTitlePtr ARBConfigTitle::Clone() const
+{
+	return ARBConfigTitlePtr(new ARBConfigTitle(*this));
 }
 
 ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)

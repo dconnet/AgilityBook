@@ -336,6 +336,11 @@ ICalendar* ICalendar::iCalendarBegin(
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBCalendarPtr ARBCalendar::New()
+{
+	return ARBCalendarPtr(new ARBCalendar());
+}
+
 ARBCalendar::ARBCalendar()
 	: m_DateStart()
 	, m_DateEnd()
@@ -366,6 +371,11 @@ ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 
 ARBCalendar::~ARBCalendar()
 {
+}
+
+ARBCalendarPtr ARBCalendar::Clone() const
+{
+	return ARBCalendarPtr(new ARBCalendar(*this));
 }
 
 ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)

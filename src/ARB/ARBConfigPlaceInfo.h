@@ -52,18 +52,9 @@ protected:
 
 public:
 	~ARBConfigPlaceInfo();
-	static ARBConfigPlaceInfoPtr New()
-	{
-		return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo());
-	}
-	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue)
-	{
-		return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(inPlace, inValue));
-	}
-	ARBConfigPlaceInfoPtr Clone() const
-	{
-		return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(*this));
-	}
+	static ARBConfigPlaceInfoPtr New();
+	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue);
+	ARBConfigPlaceInfoPtr Clone() const;
 
 	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
 

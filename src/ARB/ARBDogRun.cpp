@@ -68,6 +68,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogRunPtr ARBDogRun::New()
+{
+	return ARBDogRunPtr(new ARBDogRun());
+}
+
 ARBDogRun::ARBDogRun()
 	: m_pMultiQ()
 	, m_Date()
@@ -121,6 +126,11 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 
 ARBDogRun::~ARBDogRun()
 {
+}
+
+ARBDogRunPtr ARBDogRun::Clone() const
+{
+	return ARBDogRunPtr(new ARBDogRun(*this));
 }
 
 ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)

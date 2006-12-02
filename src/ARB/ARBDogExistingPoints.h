@@ -54,14 +54,8 @@ protected:
 
 public:
 	~ARBDogExistingPoints();
-	static ARBDogExistingPointsPtr New()
-	{
-		return ARBDogExistingPointsPtr(new ARBDogExistingPoints());
-	}
-	ARBDogExistingPointsPtr Clone() const
-	{
-		return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
-	}
+	static ARBDogExistingPointsPtr New();
+	ARBDogExistingPointsPtr Clone() const;
 
 	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
 

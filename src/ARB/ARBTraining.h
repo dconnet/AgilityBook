@@ -57,14 +57,8 @@ protected:
 
 public:
 	~ARBTraining();
-	static ARBTrainingPtr New()
-	{
-		return ARBTrainingPtr(new ARBTraining());
-	}
-	ARBTrainingPtr Clone() const
-	{
-		return ARBTrainingPtr(new ARBTraining(*this));
-	}
+	static ARBTrainingPtr New();
+	ARBTrainingPtr Clone() const;
 
 	ARBTraining& operator=(ARBTraining const& rhs);
 

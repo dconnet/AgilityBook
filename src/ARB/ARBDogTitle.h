@@ -58,14 +58,8 @@ protected:
 
 public:
 	~ARBDogTitle();
-	static ARBDogTitlePtr New()
-	{
-		return ARBDogTitlePtr(new ARBDogTitle());
-	}
-	ARBDogTitlePtr Clone() const
-	{
-		return ARBDogTitlePtr(new ARBDogTitle(*this));
-	}
+	static ARBDogTitlePtr New();
+	ARBDogTitlePtr Clone() const;
 
 	ARBDogTitle& operator=(ARBDogTitle const& rhs);
 

@@ -58,14 +58,8 @@ protected:
 
 public:
 	~ARBConfigTitle();
-	static ARBConfigTitlePtr New()
-	{
-		return ARBConfigTitlePtr(new ARBConfigTitle());
-	}
-	ARBConfigTitlePtr Clone() const
-	{
-		return ARBConfigTitlePtr(new ARBConfigTitle(*this));
-	}
+	static ARBConfigTitlePtr New();
+	ARBConfigTitlePtr Clone() const;
 
 	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
 

@@ -65,14 +65,8 @@ protected:
 
 public:
 	~ARBConfigOtherPoints();
-	static ARBConfigOtherPointsPtr New()
-	{
-		return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
-	}
-	ARBConfigOtherPointsPtr Clone() const
-	{
-		return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
-	}
+	static ARBConfigOtherPointsPtr New();
+	ARBConfigOtherPointsPtr Clone() const;
 
 	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
 

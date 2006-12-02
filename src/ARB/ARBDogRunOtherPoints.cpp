@@ -52,6 +52,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
+{
+	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
+}
+
 ARBDogRunOtherPoints::ARBDogRunOtherPoints()
 	: m_Name()
 	, m_Points(0)
@@ -66,6 +71,11 @@ ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs)
 
 ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
+}
+
+ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
+{
+	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
 }
 
 ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const& rhs)

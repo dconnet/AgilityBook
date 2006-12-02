@@ -60,6 +60,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigEventPtr ARBConfigEvent::New()
+{
+	return ARBConfigEventPtr(new ARBConfigEvent());
+}
+
 ARBConfigEvent::ARBConfigEvent()
 	: m_Name()
 	, m_Desc()
@@ -85,6 +90,11 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 
 ARBConfigEvent::~ARBConfigEvent()
 {
+}
+
+ARBConfigEventPtr ARBConfigEvent::Clone() const
+{
+	return ARBConfigEventPtr(new ARBConfigEvent(*this));
 }
 
 ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)

@@ -62,14 +62,8 @@ protected:
 
 public:
 	~ARBDog();
-	static ARBDogPtr New()
-	{
-		return ARBDogPtr(new ARBDog());
-	}
-	ARBDogPtr Clone() const
-	{
-		return ARBDogPtr(new ARBDog(*this));
-	}
+	static ARBDogPtr New();
+	ARBDogPtr Clone() const;
 
 	ARBDog& operator=(ARBDog const& rhs);
 

@@ -54,14 +54,8 @@ protected:
 
 public:
 	~ARBDogRegNum();
-	static ARBDogRegNumPtr New()
-	{
-		return ARBDogRegNumPtr(new ARBDogRegNum());
-	}
-	ARBDogRegNumPtr Clone() const
-	{
-		return ARBDogRegNumPtr(new ARBDogRegNum(*this));
-	}
+	static ARBDogRegNumPtr New();
+	ARBDogRegNumPtr Clone() const;
 
 	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
 

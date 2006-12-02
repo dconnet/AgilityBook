@@ -58,18 +58,9 @@ protected:
 
 public:
 	~ARBConfigLifetimePoints();
-	static ARBConfigLifetimePointsPtr New()
-	{
-		return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints());
-	}
-	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults)
-	{
-		return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
-	}
-	ARBConfigLifetimePointsPtr Clone() const
-	{
-		return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
-	}
+	static ARBConfigLifetimePointsPtr New();
+	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+	ARBConfigLifetimePointsPtr Clone() const;
 
 	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
 

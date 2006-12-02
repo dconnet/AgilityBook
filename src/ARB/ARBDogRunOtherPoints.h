@@ -53,14 +53,8 @@ protected:
 
 public:
 	~ARBDogRunOtherPoints();
-	static ARBDogRunOtherPointsPtr New()
-	{
-		return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
-	}
-	ARBDogRunOtherPointsPtr Clone() const
-	{
-		return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
-	}
+	static ARBDogRunOtherPointsPtr New();
+	ARBDogRunOtherPointsPtr Clone() const;
 
 	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
 

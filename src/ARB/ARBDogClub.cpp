@@ -55,6 +55,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogClubPtr ARBDogClub::New()
+{
+	return ARBDogClubPtr(new ARBDogClub());
+}
+
 ARBDogClub::ARBDogClub()
 	: m_Name()
 	, m_Venue()
@@ -69,6 +74,11 @@ ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 
 ARBDogClub::~ARBDogClub()
 {
+}
+
+ARBDogClubPtr ARBDogClub::Clone() const
+{
+	return ARBDogClubPtr(new ARBDogClub(*this));
 }
 
 ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)

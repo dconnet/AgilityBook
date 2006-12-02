@@ -62,6 +62,16 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBDogTrialPtr ARBDogTrial::New()
+{
+	return ARBDogTrialPtr(new ARBDogTrial());
+}
+
+ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
+{
+	return ARBDogTrialPtr(new ARBDogTrial(inCal));
+}
+
 ARBDogTrial::ARBDogTrial()
 	: m_Location()
 	, m_Note()
@@ -94,6 +104,11 @@ ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 
 ARBDogTrial::~ARBDogTrial()
 {
+}
+
+ARBDogTrialPtr ARBDogTrial::Clone() const
+{
+	return ARBDogTrialPtr(new ARBDogTrial(*this));
 }
 
 ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)

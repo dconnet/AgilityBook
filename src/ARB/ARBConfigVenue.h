@@ -61,14 +61,8 @@ protected:
 
 public:
 	~ARBConfigVenue();
-	static ARBConfigVenuePtr New()
-	{
-		return ARBConfigVenuePtr(new ARBConfigVenue());
-	}
-	ARBConfigVenuePtr Clone() const
-	{
-		return ARBConfigVenuePtr(new ARBConfigVenue(*this));
-	}
+	static ARBConfigVenuePtr New();
+	ARBConfigVenuePtr Clone() const;
 
 	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
 

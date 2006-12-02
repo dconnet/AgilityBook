@@ -54,6 +54,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBInfoItemPtr ARBInfoItem::New()
+{
+	return ARBInfoItemPtr(new ARBInfoItem());
+}
+
 ARBInfoItem::ARBInfoItem()
 	: m_Name()
 	, m_Comment()
@@ -68,6 +73,11 @@ ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 
 ARBInfoItem::~ARBInfoItem()
 {
+}
+
+ARBInfoItemPtr ARBInfoItem::Clone() const
+{
+	return ARBInfoItemPtr(new ARBInfoItem(*this));
 }
 
 ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)

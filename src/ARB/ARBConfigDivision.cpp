@@ -58,6 +58,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigDivisionPtr ARBConfigDivision::New()
+{
+	return ARBConfigDivisionPtr(new ARBConfigDivision());
+}
+
 ARBConfigDivision::ARBConfigDivision()
 	: m_Name()
 	, m_Levels()
@@ -73,6 +78,11 @@ ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 
 ARBConfigDivision::~ARBConfigDivision()
 {
+}
+
+ARBConfigDivisionPtr ARBConfigDivision::Clone() const
+{
+	return ARBConfigDivisionPtr(new ARBConfigDivision(*this));
 }
 
 ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
