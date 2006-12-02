@@ -52,6 +52,16 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+CDlgFixup::CDlgFixup()
+{
+}
+
+CDlgFixup::~CDlgFixup()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 void CDlgFixupRenameVenue::Commit(ARBAgilityRecordBook& book)
 {
 	book.GetDogs().RenameVenue(m_oldName, m_newName);

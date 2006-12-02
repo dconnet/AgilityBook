@@ -48,8 +48,8 @@ class ARBAgilityRecordBook;
 class CDlgFixup
 {
 public:
-	CDlgFixup() {}
-	~CDlgFixup() {}
+	CDlgFixup();
+	virtual ~CDlgFixup();
 	virtual void Commit(ARBAgilityRecordBook& book) = 0;
 };
 
