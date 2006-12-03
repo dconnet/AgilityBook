@@ -54,7 +54,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgEventSelectData
+class CDlgEventSelectData : public CListData
 {
 public:
 	CDlgEventSelectData(ARBConfigLevelPtr pLevel)
