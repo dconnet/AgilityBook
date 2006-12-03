@@ -282,10 +282,6 @@ SOURCE=..\..\Win\DlgFindLinks.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgFixup.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\DlgInfoJudge.cpp
 # End Source File
 # Begin Source File
@@ -672,10 +668,6 @@ SOURCE=..\..\Win\DlgFind.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgFindLinks.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgFixup.h
 # End Source File
 # Begin Source File
 

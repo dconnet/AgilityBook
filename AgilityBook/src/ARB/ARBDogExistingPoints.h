@@ -491,7 +491,7 @@ public:
 			ARBString const& inNewMultiQ);
 
 	/**
-	 * Delete an MultiQ, remove any dependent objects.
+	 * Delete any MultiQs no longer in venue.
 	 * @param inConfig Configuration for looking up information.
 	 * @param inVenue Venue in which MultiQ was deleted.
 	 * @return Number of items removed.

@@ -46,20 +46,17 @@
 #include "DlgBaseDialog.h"
 #include "ListBox.h"
 #include "ListData.h"
-class ARBAgilityRecordBook;
-class CDlgFixup;
 
 class CDlgConfigEvent : public CDlgBaseDialog
 {
 public:
 	CDlgConfigEvent(
-			CAgilityBookDoc* pDoc,
-			ARBAgilityRecordBook const* book,
+			bool bNewEntry,
 			ARBConfigVenuePtr pVenue,
 			ARBConfigEventPtr pEvent,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigEvent();
-	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
+	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups);
 
 private:
 // Dialog Data
@@ -89,11 +86,10 @@ private:
 	CButton	m_ctrlPointsDelete;
 	CEdit	m_ctrlNote;
 	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-	ARBAgilityRecordBook const* m_Book;
+	bool m_bNewEntry;
 	ARBConfigVenuePtr m_pVenue;
 	ARBConfigEventPtr m_pEvent;
-	std::vector<CDlgFixup*> m_DlgFixup;
+	std::vector<ARBConfigActionPtr> m_DlgFixup;
 	ARBConfigScoringList m_Scorings;
 	int m_idxMethod;
 

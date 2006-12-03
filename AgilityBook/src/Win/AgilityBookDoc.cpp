@@ -87,7 +87,6 @@
 #include "DlgConfigure.h"
 #include "DlgDog.h"
 #include "DlgFindLinks.h"
-#include "DlgFixup.h"
 #include "DlgInfoJudge.h"
 #include "DlgListViewer.h"
 #include "DlgMessage.h"
@@ -336,226 +335,37 @@ void CAgilityBookDoc::SortDates()
 	}
 }
 
+class CConfigActionCallback : public IConfigActionCallback
+{
+public:
+	CConfigActionCallback() {}
+	virtual void PreDelete(ARBString const& inMsg);
+	virtual void PostDelete(ARBString const& inMsg) const;
+};
+
+void CConfigActionCallback::PreDelete(ARBString const& inMsg)
+{
+	CString msg(inMsg.c_str());
+	msg += _T("\n\nAre you sure you want to continue?");
+	if (IDNO == AfxMessageBox(msg, MB_ICONWARNING | MB_YESNO))
+	{
+		m_bContinue = false;
+	}
+}
+
+void CConfigActionCallback::PostDelete(ARBString const& msg) const
+{
+	AfxMessageBox(msg.c_str(), MB_ICONWARNING);
+}
+
 void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
-	ARBostringstream msg;
-	for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
+	ARBostringstream info;
+	CConfigActionCallback callback;
+	if (m_Records.Update(0, update, info, callback))
 	{
-		ARBConfigActionPtr action = *iterAction;
-		if (action->GetVerb() == ACTION_VERB_RENAME_EVENT)
-		{
-			ARBConfigVenuePtr venue;
-			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
-			{
-				ARBConfigEventPtr oldEvent;
-				if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
-				{
-					msg << _T("Action: Renaming ")
-						<< action->GetVenue()
-						<< _T(" event [")
-						<< action->GetOldName()
-						<< _T("] to [")
-						<< action->GetNewName()
-						<< _T("]");
-					// If any events are in use, create a fixup action.
-					int nEvents = GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
-					if (0 < nEvents)
-					{
-						msg << _T(", updating ") << nEvents << _T(" titles");
-						GetDogs().RenameEvent(action->GetVenue(), action->GetOldName(), action->GetNewName());
-					}
-					msg << _T("\n");
-					// If the new event exists, just delete the old.
-					// Otherwise, rename the old to new.
-					if (venue->GetEvents().FindEvent(action->GetNewName()))
-						venue->GetEvents().DeleteEvent(action->GetOldName());
-					else
-						oldEvent->SetName(action->GetNewName());
-				}
-			}
-		}
-		else if (action->GetVerb() == ACTION_VERB_DELETE_EVENT)
-		{
-			ARBConfigVenuePtr venue;
-			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
-			{
-				ARBConfigEventPtr oldEvent;
-				if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
-				{
-					int nEvents = GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
-					// If any events are in use, create a fixup action.
-					if (0 < nEvents)
-					{
-						msg << _T("Action: DELETING existing ")
-							<< nEvents
-							<< _T(" event(s) [")
-							<< action->GetOldName()
-							<< _T("]\n");
-						GetDogs().DeleteEvent(action->GetVenue(), action->GetOldName());
-					}
-					msg << _T("Action: Deleting event [")
-						<< action->GetOldName()
-						<< _T("]\n");
-					venue->GetEvents().DeleteEvent(action->GetOldName());
-				}
-			}
-		}
-		else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
-		{
-			// Find the venue.
-			ARBConfigVenuePtr venue;
-			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
-			{
-				// Find the title we're renaming.
-				ARBConfigTitlePtr oldTitle;
-				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
-				{
-					// Note: If we are deleting/renaming a title due
-					// to an error in the config (same title in multiple
-					// divisions), all we can do is rename ALL of them.
-					// There's no way to differentiate existing titles.
-					msg << _T("Action: Renaming title [")
-						<< action->GetOldName()
-						<< _T("] to [")
-						<< action->GetNewName()
-						<< _T("]");
-					// If any titles are in use, create a fixup action.
-					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
-					if (0 < nTitles)
-					{
-						msg << _T(", updating ") << nTitles << _T(" titles");
-						GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
-					}
-					msg << _T("\n");
-					// If the new title exists, just delete the old.
-					// Otherwise, rename the old to new.
-					if (venue->GetTitles().FindTitle(action->GetNewName()))
-						venue->GetTitles().DeleteTitle(action->GetOldName());
-					else
-						oldTitle->SetName(action->GetNewName());
-				}
-			}
-		}
-		else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
-		{
-			// Find the venue.
-			ARBConfigVenuePtr venue;
-			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
-			{
-				// Find the title we're deleting.
-				ARBConfigTitlePtr oldTitle;
-				if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
-				{
-					int nTitles = GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
-					// If any titles are in use, create a fixup action.
-					if (0 < nTitles)
-					{
-						// Note: If we are deleting/renaming a title due
-						// to an error in the config (same title in multiple
-						// divisions), all we can do is rename ALL of them.
-						// There's no way to differentiate existing titles.
-						if (0 < action->GetNewName().length())
-						{
-							msg << _T("Action: Renaming existing ")
-								<< nTitles
-								<< _T(" title(s) [")
-								<< action->GetOldName()
-								<< _T("] to [")
-								<< action->GetNewName()
-								<< _T("]\n");
-							GetDogs().RenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName());
-						}
-						else
-						{
-							msg << _T("Action: DELETING existing ")
-								<< nTitles
-								<< _T(" title(s) [")
-								<< action->GetOldName()
-								<< _T("]\n");
-							GetDogs().DeleteTitle(action->GetVenue(), action->GetOldName());
-						}
-					}
-					msg << _T("Action: Deleting title [")
-						<< action->GetOldName()
-						<< _T("]\n");
-					venue->GetTitles().DeleteTitle(action->GetOldName());
-				}
-			}
-		}
-		else if (action->GetVerb() == ACTION_VERB_RENAME_DIV)
-		{
-			// Find the venue.
-			ARBConfigVenuePtr venue;
-			if (GetConfig().GetVenues().FindVenue(action->GetVenue(), &venue))
-			{
-				ARBConfigDivisionPtr oldDiv;
-				if (venue->GetDivisions().FindDivision(action->GetOldName(), &oldDiv))
-				{
-					msg << _T("Action: Renaming ")
-						<< action->GetVenue()
-						<< _T(" division [")
-						<< action->GetOldName()
-						<< _T("] to [")
-						<< action->GetNewName()
-						<< _T("]");
-					// If the division is in use, create a fixup action.
-					int nRuns = GetDogs().NumRunsInDivision(venue, action->GetOldName());
-					if (0 < nRuns)
-					{
-						msg << _T(", updating ") << nRuns << _T(" runs");
-						GetDogs().RenameDivision(venue, action->GetOldName(), action->GetNewName());
-					}
-					msg << _T("\n");
-					// If the new division exists, just delete the old.
-					// Otherwise, rename the old to new.
-					if (venue->GetDivisions().FindDivision(action->GetNewName()))
-						venue->GetDivisions().DeleteDivision(action->GetOldName(), venue->GetEvents());
-					else
-						oldDiv->SetName(action->GetNewName());
-				}
-			}
-		}
-		else
-			ASSERT(0);
-	}
-
-	// Starting at config v3, table info was added.
-	bool bUpdateRuns = false;
-	if (GetConfig().GetVersion() <= 2 && update.GetVersion() == 3)
-		bUpdateRuns = true;
-
-	// Update the config
-	ARBString info;
-	GetConfig().Update(0, update, info);
-	msg << info;
-
-	// Now update existing runs (scoring info on existing events)
-	std::vector<CDlgFixup*> fixups;
-	CDlgConfigure::CheckExistingRuns(this, m_Records.GetDogs(), GetConfig(), fixups, true);
-	for (std::vector<CDlgFixup*>::iterator iter = fixups.begin(); iter != fixups.end(); ++iter)
-	{
-		(*iter)->Commit(m_Records);
-		delete (*iter);
-	}
-	fixups.clear();
-	if (bUpdateRuns)
-	{
-		CDlgFixupTableInRuns fix;
-		fix.Commit(m_Records);
-		if (0 < fix.RunsUpdated())
-		{
-			if (0 < info.length())
-				msg << _T("\n\n");
-			msg << _T("Table setting updated in ")
-				<< fix.RunsUpdated()
-				<< _T(" runs.");
-		}
-	}
-	if (0 < msg.tellp())
-	{
-		CDlgMessage dlg(msg.str().c_str(), 0);
+		CDlgMessage dlg(info.str().c_str(), 0);
 		dlg.DoModal();
-		GetDogs().SetMultiQs(GetConfig());
 		SetModifiedFlag();
 		UpdateAllViews(NULL, UPDATE_CONFIG);
 	}

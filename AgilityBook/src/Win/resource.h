@@ -657,12 +657,6 @@
 #define IDS_NEW                         5037
 #define IDS_CONFIGURE                   5038
 #define IDS_SCORING_NAME                5039
-#define IDS_DELETE_VENUE                5040
-#define IDS_DELETE_OTHERPOINTS          5041
-#define IDS_DELETE_DIVISION             5042
-#define IDS_DELETE_LEVEL                5043
-#define IDS_DELETE_TITLE                5044
-#define IDS_DELETE_EVENT                5045
 #define IDS_DELETE_ALL                  5046
 #define IDS_DELETE_ALL_OTHERPOINTS      5047
 #define IDS_DELETE_ALL_TITLES           5048
@@ -753,7 +747,6 @@
 #define IDS_FILEEXT_DEF_ICS             5133
 #define IDS_FILEEXT_FNAME_ICS           5134
 #define IDS_FILEEXT_FILTER_ICS          5135
-#define IDS_DELETE_MULTIQ               5136
 #define IDS_NAME_FILTER                 5137
 #define IDS_FILEEXT_FILTER_MSEXCEL      5138
 #define IDS_FILEEXT_FILTER_OOCALC       5139

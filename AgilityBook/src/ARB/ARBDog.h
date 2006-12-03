@@ -378,7 +378,7 @@ public:
 			ARBString const& inNewMultiQ);
 
 	/**
-	 * Delete an MultiQ, remove any dependent objects.
+	 * Delete any MultiQs no longer in venue.
 	 * @param inConfig Configuration for looking up information.
 	 * @param inVenue Venue in which MultiQ was deleted.
 	 * @return Number of items removed.
@@ -451,7 +451,7 @@ public:
 	 * Used to warning about impending configuration changes.
 	 * @param inVenue Venue level is in.
 	 * @param inDiv Division level is in.
-	 * @param inLevel Level to tally.
+	 * @param inLevel Level (leaf node) to tally.
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
@@ -477,7 +477,7 @@ public:
 	 * Delete a level, remove any dependent objects.
 	 * @param inVenue Venue level is in.
 	 * @param inDiv Division level is in.
-	 * @param inLevel Level name being deleted.
+	 * @param inLevel Level name (leaf node) being deleted.
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(

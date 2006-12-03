@@ -458,6 +458,22 @@ public:
 	 */
 	void Default();
 
+	/**
+	 * Update this configuration from inConfigNew.
+	 * @param indent Indentation level for generating messages.
+	 * @param inConfigNew Configuration to merge.
+	 * @param ioInfo Accumulated messages about changes that have happened.
+	 * @param ioCallBack Callback object for informing about deleted objects.
+	 * @return Whether or not changes have occurred.
+	 * @post Sometimes there are side affects from a configuration update.
+	 *       Existing runs may be modified or deleted.
+	 */
+	bool Update(
+			int indent,
+			ARBConfig const& inConfigNew,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack);
+
 	//
 	// Convenience functions that do some data accumulation.
 	//

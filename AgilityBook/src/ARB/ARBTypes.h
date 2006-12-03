@@ -55,6 +55,20 @@ class Element;
 	typedef boost::shared_ptr<name> name##Ptr;
 ARB_TYPEDEF(ARBCalendar)
 ARB_TYPEDEF(ARBConfigAction)
+ARB_TYPEDEF(ARBConfigActionDeleteDivision)
+ARB_TYPEDEF(ARBConfigActionDeleteEvent)
+ARB_TYPEDEF(ARBConfigActionDeleteLevel)
+ARB_TYPEDEF(ARBConfigActionDeleteMultiQ)
+ARB_TYPEDEF(ARBConfigActionDeleteOtherPoints)
+ARB_TYPEDEF(ARBConfigActionDeleteTitle)
+ARB_TYPEDEF(ARBConfigActionDeleteVenue)
+ARB_TYPEDEF(ARBConfigActionRenameDivision)
+ARB_TYPEDEF(ARBConfigActionRenameEvent)
+ARB_TYPEDEF(ARBConfigActionRenameLevel)
+ARB_TYPEDEF(ARBConfigActionRenameMultiQ)
+ARB_TYPEDEF(ARBConfigActionRenameOtherPoints)
+ARB_TYPEDEF(ARBConfigActionRenameTitle)
+ARB_TYPEDEF(ARBConfigActionRenameVenue)
 ARB_TYPEDEF(ARBConfigDivision)
 ARB_TYPEDEF(ARBConfigEvent)
 ARB_TYPEDEF(ARBConfigFault)
@@ -91,7 +105,7 @@ typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > ARBofstream;
 /**
  * Make a string safe for HTML viewing.
  * @param inRawData String to sanitize
- * @param bConvertCR Convert \n to <br/>
+ * @param bConvertCR Convert \n to html-breaks.
  */
 ARBString SanitizeStringForHTML(
 		ARBString const& inRawData,
