@@ -324,7 +324,7 @@ int ARBConfigMultiQ::RenameDivision(
 int ARBConfigMultiQ::DeleteDivision(ARBString const& inDiv)
 {
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); ++iter)
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
 	{
 		if ((*iter).m_Div == inDiv)
 		{
@@ -364,7 +364,7 @@ int ARBConfigMultiQ::RenameLevel(
 int ARBConfigMultiQ::DeleteLevel(ARBString const& inLevel)
 {
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); ++iter)
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
 	{
 		if ((*iter).m_Level == inLevel)
 		{
@@ -402,7 +402,7 @@ int ARBConfigMultiQ::RenameEvent(
 int ARBConfigMultiQ::DeleteEvent(ARBString const& inEvent)
 {
 	int count = 0;
-	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); ++iter)
+	for (std::set<MultiQItem>::iterator iter = m_Items.begin(); iter != m_Items.end(); )
 	{
 		if ((*iter).m_Event == inEvent)
 		{
