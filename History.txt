@@ -1,6 +1,7 @@
-11/22/2006: v1.7.6.12 <in development>
+12/3/2006: v1.8.0.12 <in development>
 - Bumped file version to 12.3, Configuration v17:
   - Updated ASCA title descriptions.
+  - Updated CPE rules.
   - Updated USDAA Performance Pairs for titling in 2007.
   - Updated USDAA Performance Tournament comments.
   - Updated TDAA website link.
@@ -10,7 +11,6 @@
 - New features / Enhancements:
   - Add an HTML view for points
   - Added support for OpenOffice Calc in the same manner as MS Excel.
-  - Removed Visual Studio 6 support. (Ran into too many ATL differences)
   - Added ability to compute speed points for only the specified places.
     (Place 0 is a wildcard that applies to any place that isn't listed)
   - Run dialog: Trim Divisions/Levels if no events are available on date.
@@ -21,6 +21,11 @@
   - Modify links in the help file so they open in an external browser.
   - 'Copy Titles' copied all titles that are not hidden, regardless of
     the current filter.
+  - Modifying the configuration can cause existing runs to be deleted when
+    they shouldn't.
+  - Deleting the name of a sub-level can cause the program to crash under the
+    right circumstances. (Most people should never get into this situation)
+  - Editing MultiQs in the configuration can crash the program.
 
 9/2/2006: v1.7.5.12
 - New features / Enhancements:

@@ -443,6 +443,171 @@ void ARBAgilityRecordBook::Default()
 	m_Config.Default();
 }
 
+bool ARBAgilityRecordBook::Update(
+		int indent,
+		ARBConfig const& inConfigNew,
+		ARBostringstream& ioInfo,
+		IConfigActionCallback& ioCallBack)
+{
+	int curConfigVersion = m_Config.GetVersion();
+	int nChanges = 0;
+	if (0 < inConfigNew.GetActions().size())
+		nChanges += inConfigNew.GetActions().Apply(m_Config, &m_Dogs, ioInfo, ioCallBack);
+
+	bool bChanges = false;
+	if (ioCallBack.CanContinue())
+	{
+		bChanges = m_Config.Update(indent, inConfigNew, ioInfo);
+	}
+
+	// Fix existing runs. Note, we need to do this regardless of whether the user
+	// cancelled the update since some changes may have occurred that will cause
+	// additional runs to be lost.
+	for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin();
+		iterVenue != m_Config.GetVenues().end();
+		++iterVenue)
+	{
+		// This actually just synchronizes multiQs.
+		m_Dogs.DeleteMultiQs(m_Config, (*iterVenue)->GetName());
+	}
+	ARBostringstream msgDelRuns;
+	int nDeletedRuns = 0;
+	for (ARBDogList::iterator iterDog = m_Dogs.begin();
+		iterDog != m_Dogs.end();
+		++iterDog)
+	{
+		ARBDogPtr pDog = *iterDog;
+		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+			iterTrial != pDog->GetTrials().end();
+			++iterTrial)
+		{
+			ARBDogTrialPtr pTrial = *iterTrial;
+			if (!pTrial->GetClubs().GetPrimaryClub())
+				continue;
+			ARBString venue = pTrial->GetClubs().GetPrimaryClubVenue();
+			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+				iterRun != pTrial->GetRuns().end();
+				)
+			{
+				ARBDogRunPtr pRun = *iterRun;
+				ARBConfigScoringPtr pScoring;
+				if (m_Config.GetVenues().FindEvent(
+					venue,
+					pRun->GetEvent(),
+					pRun->GetDivision(),
+					pRun->GetLevel(),
+					pRun->GetDate(),
+					&pScoring))
+				{
+					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
+						!= pRun->GetScoring().GetType())
+					{
+						pRun->GetScoring().SetType(ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle()), pScoring->DropFractions());
+					}
+					++iterRun;
+				}
+				else
+				{
+					msgDelRuns << _T("   ")
+						<< pRun->GetDate().GetString(ARBDate::eDashYYYYMMDD)
+						<< _T(" ")
+						<< venue
+						<< _T(" ")
+						<< pRun->GetEvent()
+						<< _T(" ")
+						<< pRun->GetDivision()
+						<< _T("/")
+						<< pRun->GetLevel()
+						<< _T("\n");
+					++nDeletedRuns;
+					iterRun = pTrial->GetRuns().erase(iterRun);
+				}
+			}
+		}
+	}
+	if (0 < nDeletedRuns)
+	{
+		nChanges += nDeletedRuns;
+		ARBostringstream tmp;
+		tmp << _T("WARNING: ")
+			<< nDeletedRuns
+			<< _T(" run(s) deleted due to configuration changes.");
+		ARBString msg = tmp.str();
+		ioCallBack.PostDelete(msg);
+		ioInfo << _T("\n")
+			<< msg
+			<< _T("\n")
+			<< msgDelRuns.str()
+			<< _T("\n");
+	}
+
+	// This fixup is only done when upgrading from Config version 2 to 3.
+	if (ioCallBack.CanContinue()
+	&& curConfigVersion <= 2 && inConfigNew.GetVersion() == 3)
+	{
+		int nUpdated = 0;
+		for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin();
+			iterVenue != m_Config.GetVenues().end();
+			++iterVenue)
+		{
+			ARBConfigVenuePtr pVenue = *iterVenue;
+			for (ARBConfigEventList::iterator iterEvent = pVenue->GetEvents().begin();
+				iterEvent != pVenue->GetEvents().end();
+				++iterEvent)
+			{
+				ARBConfigEventPtr pEvent = *iterEvent;
+				// For every event that has a table listed, fix all those runs.
+				if (pEvent->HasTable())
+				{
+					for (ARBDogList::iterator iterDog = m_Dogs.begin();
+						iterDog != m_Dogs.end();
+						++iterDog)
+					{
+						ARBDogPtr pDog = *iterDog;
+						for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+							iterTrial != pDog->GetTrials().end();
+							++iterTrial)
+						{
+							ARBDogTrialPtr pTrial = *iterTrial;
+							if (pTrial->GetClubs().FindVenue(pVenue->GetName()))
+							{
+								for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+									iterRun != pTrial->GetRuns().end();
+									++iterRun)
+								{
+									ARBDogRunPtr pRun = *iterRun;
+									if (pRun->GetEvent() == pEvent->GetName()
+									&& pRun->GetScoring().TableNeedsConverting())
+									{
+										++nUpdated;
+										pRun->GetScoring().SetHasTable(true);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if (0 < nUpdated)
+		{
+			nChanges += nUpdated;
+			ARBostringstream msg;
+			ioInfo << _T("Table setting updated in ")
+				<< nUpdated
+				<< _T(" runs.\n");
+		}
+	}
+
+	if (0 < nChanges || bChanges)
+	{
+		bChanges = true;
+		m_Dogs.SetMultiQs(m_Config);
+	}
+
+	return bChanges;
+}
+
 size_t ARBAgilityRecordBook::GetAllClubNames(
 		std::set<ARBString>& outClubs,
 		bool bInfo) const

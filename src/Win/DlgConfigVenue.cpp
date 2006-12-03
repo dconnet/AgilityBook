@@ -78,7 +78,6 @@
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigTitle.h"
 #include "DlgConfigureData.h"
-#include "DlgFixup.h"
 #include "DlgName.h"
 
 #ifdef _DEBUG
@@ -91,7 +90,6 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigVenue dialog
 
 CDlgConfigVenue::CDlgConfigVenue(
-		CAgilityBookDoc* pDoc,
 		ARBAgilityRecordBook const& book,
 		ARBConfig const& config,
 		ARBConfigVenuePtr pVenue,
@@ -101,7 +99,6 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_ctrlEvents(true)
 	, m_ctrlMultiQ(true)
 	, m_ctrlTitles(true)
-	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(config)
 	, m_pVenueOrig(pVenue)
@@ -116,15 +113,12 @@ CDlgConfigVenue::CDlgConfigVenue(
 
 CDlgConfigVenue::~CDlgConfigVenue()
 {
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-		delete (*iter);
 	m_DlgFixup.clear();
 }
 
-void CDlgConfigVenue::GetFixups(std::vector<CDlgFixup*>& ioFixups)
+void CDlgConfigVenue::GetFixups(ARBConfigActionList& ioFixups)
 {
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-		ioFixups.push_back(*iter);
+	ioFixups.insert(ioFixups.end(), m_DlgFixup.begin(), m_DlgFixup.end());
 	m_DlgFixup.clear();
 }
 
@@ -1035,7 +1029,7 @@ void CDlgConfigVenue::OnNew()
 		{
 			// The dialog will ensure uniqueness.
 			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
-			CDlgConfigEvent dlg(m_pDoc, NULL, m_pVenue, pEvent, this);
+			CDlgConfigEvent dlg(true, m_pVenue, pEvent, this);
 			if (IDOK == dlg.DoModal())
 			{
 				if (m_pVenue->GetEvents().AddEvent(pEvent))
@@ -1067,7 +1061,6 @@ void CDlgConfigVenue::OnNew()
 
 void CDlgConfigVenue::OnDelete() 
 {
-	bool bDelete = true;
 	switch (m_Action)
 	{
 	case eDivisions:
@@ -1078,30 +1071,12 @@ void CDlgConfigVenue::OnDelete()
 				CDlgConfigureDataDivision* pDivData = dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
 				ASSERT(NULL != pDivData);
 				ARBString div = pDivData->GetDivision()->GetName();
-				int nPoints = m_Book.GetDogs().NumExistingPointsInDivision(m_pVenue, div);
-				int nTrials = m_Book.GetDogs().NumRunsInDivision(m_pVenue, div);
-				if (0 < nTrials)
+				// If we were able to delete it...
+				if (m_pVenue->GetDivisions().DeleteDivision(div, m_pVenue->GetEvents()))
 				{
-					CString msg;
-					msg.FormatMessage(IDS_DELETE_DIVISION,
-						div.c_str(),
-						nPoints,
-						nTrials);
-					if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-						bDelete = false;
-				}
-				if (bDelete)
-				{
-					// If we were able to delete it...
-					if (m_pVenue->GetDivisions().DeleteDivision(div, m_pVenue->GetEvents()))
-					{
-						if (m_pVenue->GetMultiQs().DeleteDivision(div))
-							m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
-						// Then we commit to fixing the real data.
-						if (0 < nTrials)
-							m_DlgFixup.push_back(new CDlgFixupDeleteDivision(m_pVenue->GetName(), div));
-						m_ctrlDivisions.DeleteItem(index);
-					}
+					m_pVenue->GetMultiQs().DeleteDivision(div);
+					m_DlgFixup.push_back(ARBConfigActionDeleteDivision::New(m_pVenue->GetName(), div));
+					m_ctrlDivisions.DeleteItem(index);
 				}
 			}
 		}
@@ -1118,80 +1093,32 @@ void CDlgConfigVenue::OnDelete()
 				if (pLevelData)
 				{
 					ARBString level = pLevelData->GetLevel()->GetName();
-					int nLevels = m_Book.GetDogs().NumLevelsInUse(
-						m_pVenue->GetName(),
-						pLevelData->GetDivision()->GetName(),
-						level);
-					if (0 < nLevels)
+					if (pLevelData->GetDivision()->GetLevels().DeleteLevel(level, m_pVenue->GetEvents()))
 					{
-						CString msg;
-						msg.FormatMessage(IDS_DELETE_LEVEL,
-							level.c_str(),
-							nLevels);
-						if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-							bDelete = false;
-					}
-					if (bDelete)
-					{
-						if (pLevelData->GetDivision()->GetLevels().DeleteLevel(level, m_pVenue->GetEvents()))
-						{
-							if (m_pVenue->GetMultiQs().DeleteLevel(level))
-								m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
-							// Then we commit to fixing the real data.
-							if (0 < nLevels)
-								m_DlgFixup.push_back(new CDlgFixupDeleteLevel(
-									m_pVenue->GetName(),
-									pLevelData->GetDivision()->GetName(),
-									level));
-							m_ctrlLevels.DeleteItem(hItem);
-						}
+						m_pVenue->GetMultiQs().DeleteLevel(level);
+						m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(
+							m_pVenue->GetName(),
+							pLevelData->GetDivision()->GetName(),
+							level));
+						m_ctrlLevels.DeleteItem(hItem);
 					}
 				}
 				else if (pSubLevelData)
 				{
 					ARBString level = pSubLevelData->GetLevel()->GetName();
-					bool bDelete = true;
 					ARBString subLevel = pSubLevelData->GetSubLevel()->GetName();
-					int nLevels = m_Book.GetDogs().NumLevelsInUse(
-						m_pVenue->GetName(),
-						pSubLevelData->GetDivision()->GetName(),
-						subLevel);
-					if (0 < nLevels)
+					bool bLevelModified = false;
+					if (pSubLevelData->GetDivision()->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
 					{
-						CString msg;
-						msg.FormatMessage(IDS_DELETE_LEVEL,
-							subLevel.c_str(),
-							nLevels);
-						if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-							bDelete = false;
-					}
-					if (bDelete)
-					{
-						bool bLevelModified = false;
-						if (pSubLevelData->GetDivision()->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
-						{
-							if (m_pVenue->GetMultiQs().DeleteLevel(subLevel))
-								m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
-							// Then we commit to fixing the real data.
-							if (bLevelModified)
-							{
-								m_pVenue->GetEvents().RenameLevel(level, pSubLevelData->GetLevel()->GetName());
-								m_pVenue->GetMultiQs().RenameLevel(
-									pSubLevelData->GetDivision()->GetName(),
-									level, pSubLevelData->GetLevel()->GetName());
-								m_DlgFixup.push_back(new CDlgFixupRenameLevel(
-									m_pVenue->GetName(),
-									pSubLevelData->GetDivision()->GetName(),
-									level, pSubLevelData->GetLevel()->GetName()));
-								m_ctrlLevels.Invalidate();
-							}
-							if (0 < nLevels)
-								m_DlgFixup.push_back(new CDlgFixupDeleteLevel(
-									m_pVenue->GetName(),
-									pSubLevelData->GetDivision()->GetName(),
-									subLevel));
-							m_ctrlLevels.DeleteItem(hItem);
-						}
+						m_pVenue->GetMultiQs().DeleteLevel(subLevel);
+						// Note, if deleting the sublevel caused the level's name
+						// to change, just leave it. It causes more trouble to
+						// try modifing the name to the old sublevel name.
+						m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(
+							m_pVenue->GetName(),
+							pSubLevelData->GetDivision()->GetName(),
+							level, subLevel));
+						m_ctrlLevels.DeleteItem(hItem);
 					}
 				}
 			}
@@ -1206,25 +1133,10 @@ void CDlgConfigVenue::OnDelete()
 				CDlgConfigureDataTitle* pTitleData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
 				ASSERT(NULL != pTitleData);
 				ARBString title = pTitleData->GetTitle()->GetName();
-				int nTitles = m_Book.GetDogs().NumTitlesInUse(m_pVenue->GetName(), title);
-				if (0 < nTitles)
+				if (m_pVenue->GetTitles().DeleteTitle(title))
 				{
-					CString msg;
-					msg.FormatMessage(IDS_DELETE_TITLE,
-						title.c_str(),
-						nTitles);
-					if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-						bDelete = false;
-				}
-				if (bDelete)
-				{
-					if (m_pVenue->GetTitles().DeleteTitle(title))
-					{
-						// Then we commit to fixing the real data.
-						if (0 < nTitles)
-							m_DlgFixup.push_back(new CDlgFixupDeleteTitle(m_pVenue->GetName(), title));
-						m_ctrlTitles.DeleteItem(index);
-					}
+					m_DlgFixup.push_back(ARBConfigActionDeleteTitle::New(m_pVenue->GetName(), ARBString(), title, ARBString()));
+					m_ctrlTitles.DeleteItem(index);
 				}
 			}
 		}
@@ -1238,27 +1150,11 @@ void CDlgConfigVenue::OnDelete()
 				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
 				ASSERT(NULL != pEventData);
 				ARBString evt = pEventData->GetEvent()->GetName();
-				int nEvents = m_Book.GetDogs().NumEventsInUse(m_pVenue->GetName(), evt);
-				if (0 < nEvents)
+				if (m_pVenue->GetEvents().DeleteEvent(evt))
 				{
-					CString msg;
-					msg.FormatMessage(IDS_DELETE_EVENT,
-						evt.c_str(),
-						nEvents);
-					if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-						bDelete = false;
-				}
-				if (bDelete)
-				{
-					if (m_pVenue->GetEvents().DeleteEvent(evt))
-					{
-						if (m_pVenue->GetMultiQs().DeleteEvent(evt))
-							m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
-						// Then we commit to fixing the real data.
-						if (0 < nEvents)
-							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(m_pVenue->GetName(), evt));
-						m_ctrlEvents.DeleteItem(index);
-					}
+					m_pVenue->GetMultiQs().DeleteEvent(evt);
+					m_DlgFixup.push_back(ARBConfigActionDeleteEvent::New(m_pVenue->GetName(), evt));
+					m_ctrlEvents.DeleteItem(index);
 				}
 			}
 		}
@@ -1272,23 +1168,10 @@ void CDlgConfigVenue::OnDelete()
 				CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
 				ASSERT(NULL != pData);
 				ARBString multiQ = pData->GetMultiQ()->GetName();
-				int nMultiQs = m_Book.GetDogs().NumMultiQsInUse(m_pVenue->GetName(), multiQ);
-				if (0 < nMultiQs)
+				if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
 				{
-					CString msg;
-					msg.FormatMessage(IDS_DELETE_MULTIQ,
-						multiQ.c_str(),
-						nMultiQs);
-					if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-						bDelete = false;
-				}
-				if (bDelete)
-				{
-					if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
-					{
-						m_DlgFixup.push_back(new CDlgFixupDeleteMultiQ(m_pVenue->GetName()));
-						m_ctrlMultiQ.DeleteItem(index);
-					}
+					m_DlgFixup.push_back(ARBConfigActionDeleteMultiQ::New(m_pVenue->GetName(), multiQ));
+					m_ctrlMultiQ.DeleteItem(index);
 				}
 			}
 		}
@@ -1331,7 +1214,7 @@ void CDlgConfigVenue::OnEdit()
 						pDivData->GetDivision()->SetName(name);
 						m_pVenue->GetEvents().RenameDivision(oldName, name);
 						m_pVenue->GetMultiQs().RenameDivision(oldName, name);
-						m_DlgFixup.push_back(new CDlgFixupRenameDivision(m_pVenue->GetName(), oldName, name));
+						m_DlgFixup.push_back(ARBConfigActionRenameDivision::New(m_pVenue->GetName(), oldName, name));
 						m_ctrlDivisions.Invalidate();
 					}
 				}
@@ -1393,7 +1276,7 @@ void CDlgConfigVenue::OnEdit()
 									pLevelData->GetDivision()->GetName(),
 									oldName, name);
 							}
-							m_DlgFixup.push_back(new CDlgFixupRenameLevel(
+							m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(
 								m_pVenue->GetName(),
 								pLevelData->GetDivision()->GetName(),
 								oldName, pLevelData->GetLevel()->GetName()));
@@ -1432,9 +1315,10 @@ void CDlgConfigVenue::OnEdit()
 							m_pVenue->GetMultiQs().RenameLevel(
 								pSubLevelData->GetDivision()->GetName(),
 								oldName, pSubLevelData->GetSubLevel()->GetName());
-							m_DlgFixup.push_back(new CDlgFixupRenameLevel(
+							m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(
 								m_pVenue->GetName(),
 								pSubLevelData->GetDivision()->GetName(),
+								pSubLevelData->GetLevel()->GetName(),
 								oldName, pSubLevelData->GetSubLevel()->GetName()));
 							m_ctrlLevels.Invalidate();
 						}
@@ -1474,7 +1358,7 @@ void CDlgConfigVenue::OnEdit()
 								if (IDYES == AfxMessageBox(_T("This name is currently in use. Do you want to merge your data into this existing name?"), MB_YESNO | MB_ICONQUESTION))
 								{
 									bInUse = false;
-									m_DlgFixup.push_back(new CDlgFixupRenameTitle(m_pVenue->GetName(), oldName, name));
+									m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pVenue->GetName(), oldName, name));
 									if (m_pVenue->GetTitles().DeleteTitle(oldName))
 									{
 										m_ctrlTitles.DeleteItem(m_ctrlTitles.GetSelection());
@@ -1497,7 +1381,7 @@ void CDlgConfigVenue::OnEdit()
 					if (name != oldName || longname != oldLongName)
 					{
 						if (name != oldName)
-							m_DlgFixup.push_back(new CDlgFixupRenameTitle(m_pVenue->GetName(), oldName, name));
+							m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pVenue->GetName(), oldName, name));
 						m_ctrlTitles.Invalidate();
 					}
 				}
@@ -1512,7 +1396,7 @@ void CDlgConfigVenue::OnEdit()
 				return;
 			ARBConfigEventPtr pEvent = pEventData->GetEvent();
 			ARBString oldName = pEvent->GetName();
-			CDlgConfigEvent dlg(m_pDoc, &m_Book, m_pVenue, pEvent, this);
+			CDlgConfigEvent dlg(false, m_pVenue, pEvent, this);
 			if (IDOK == dlg.DoModal())
 			{
 				m_pVenue->GetMultiQs().RenameEvent(oldName, pEvent->GetName());
@@ -1539,7 +1423,7 @@ void CDlgConfigVenue::OnEdit()
 				{
 					ARBString name = pMultiQ->GetName();
 					if (name != oldName)
-						m_DlgFixup.push_back(new CDlgFixupRenameMultiQ(m_pVenue->GetName(), oldName, name));
+						m_DlgFixup.push_back(ARBConfigActionRenameMultiQ::New(m_pVenue->GetName(), oldName, name));
 					LoadMultiQData();
 					FindCurrentMultiQ(pMultiQ, true);
 				}
@@ -1878,7 +1762,7 @@ void CDlgConfigVenue::OnOK()
 	str.Replace(_T("\r\n"), _T("\n"));
 	m_pVenue->SetDesc((LPCTSTR)str);
 	if (oldName != name)
-		m_DlgFixup.push_back(new CDlgFixupRenameVenue(oldName, name));
+		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(oldName, name));
 
 	// Push the copy back.
 	*m_pVenueOrig = *m_pVenue;

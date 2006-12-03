@@ -45,7 +45,6 @@
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
 #include "DlgConfigureData.h"
-#include "DlgFixup.h"
 #include "DlgName.h"
 #include "ListData.h"
 

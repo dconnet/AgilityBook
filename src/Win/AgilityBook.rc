@@ -1548,8 +1548,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,7,6,12
- PRODUCTVERSION 1,7,6,12
+ FILEVERSION 1,8,0,12
+ PRODUCTVERSION 1,8,0,12
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1566,12 +1566,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "dcon Software"
             VALUE "FileDescription", "Agility Record Book"
-            VALUE "FileVersion", "1.7.6.12"
+            VALUE "FileVersion", "1.8.0.12"
             VALUE "InternalName", "AgilityBook.exe"
             VALUE "LegalCopyright", "Copyright © 2002-2006 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
-            VALUE "ProductVersion", "1.7.6.12"
+            VALUE "ProductVersion", "1.8.0.12"
         END
     END
     BLOCK "VarFileInfo"
@@ -2354,12 +2354,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_DELETE_VENUE        "Warning: The venue '%1' is currently in use. Deleting this venue will also delete %2!d! existing points, %3!d! registration number(s), %4!d! title(s) and may delete %5!d! trial(s).\n\nAre you sure you want to do this?"
-    IDS_DELETE_OTHERPOINTS  "Warning: Other Points '%1' is currently in use. Deleting this item will delete points from %2!d! run(s) and existing points.\n\nAre you sure you want to do this?"
-    IDS_DELETE_DIVISION     "Warning: The division '%1' is currently in use. Deleting this division will also delete %2!d! existing points and may delete %3!d! run(s).\n\nAre you sure you want to do this?"
-    IDS_DELETE_LEVEL        "Warning: The level '%1' is currently in use. Deleting this level may also delete %2!d! run(s).\n\nAre you sure you want to do this?"
-    IDS_DELETE_TITLE        "Warning: The title '%1' is currently in use. Deleting this title will also delete %2!d! title(s).\n\nAre you sure you want to do this?"
-    IDS_DELETE_EVENT        "Warning: The event '%1' is currently in use. Deleting this event will also delete %2!d! event(s).\n\nAre you sure you want to do this?"
     IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
     IDS_DELETE_ALL_OTHERPOINTS 
                             "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
@@ -2479,7 +2473,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_DELETE_MULTIQ       "Warning: Multiple Q '%1' is currently in use. Deleting this item will delete points from %2!d! existing points.\n\nAre you sure you want to do this?"
     IDS_NAME_FILTER         "You must name a filter in order to save it."
     IDS_FILEEXT_FILTER_MSEXCEL 
                             "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"

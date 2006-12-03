@@ -49,19 +49,17 @@ class CDlgConfigureDataLevel;
 class CDlgConfigureDataMultiQ;
 class CDlgConfigureDataSubLevel;
 class CDlgConfigureDataTitle;
-class CDlgFixup;
 
 class CDlgConfigVenue : public CDlgBaseDialog
 {
 public:
 	CDlgConfigVenue(
-			CAgilityBookDoc* pDoc,
 			ARBAgilityRecordBook const& book,
 			ARBConfig const& config,
 			ARBConfigVenuePtr pVenue,
 			CWnd* pParent = NULL);
 	virtual ~CDlgConfigVenue();
-	void GetFixups(std::vector<CDlgFixup*>& ioFixups);
+	void GetFixups(ARBConfigActionList& ioFixups);
 
 private:
 // Dialog Data
@@ -84,12 +82,11 @@ private:
 	CButton	m_ctrlMoveDown;
 	CStatic	m_ctrlComments;
 	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook const& m_Book;
 	ARBConfig const& m_Config;
 	ARBConfigVenuePtr m_pVenueOrig;
 	ARBConfigVenuePtr m_pVenue;
-	std::vector<CDlgFixup*> m_DlgFixup;
+	std::vector<ARBConfigActionPtr> m_DlgFixup;
 	typedef enum
 	{
 		eNone,

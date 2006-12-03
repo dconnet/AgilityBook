@@ -55,7 +55,6 @@
 #include "DlgConfigUpdate.h"
 #include "DlgConfigVenue.h"
 #include "DlgConfigureData.h"
-#include "DlgFixup.h"
 #include "DlgListViewer.h"
 #include "DlgMessage.h"
 #include "DlgMessageBox.h"
@@ -91,196 +90,6 @@ void CDetails::OnDetails(CWnd* pParent)
 	dlg.DoModal();
 }
 
-CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(
-		CAgilityBookDoc* inDoc,
-		ARBDogList const& inDogs,
-		ARBConfig const& inConfig,
-		std::vector<CDlgFixup*>& ioDlgFixup,
-		bool bCommitChanges)
-{
-	CWaitCursor wait;
-	std::vector<CDlgFixup*> dlgFixup;
-	int nRunsDeleted = 0, nRunsChanged = 0;
-	std::list<ScoringRunInfo> scoringRuns;
-	CString eventinfo;
-	for (ARBConfigVenueList::const_iterator iterVenue = inConfig.GetVenues().begin();
-		iterVenue != inConfig.GetVenues().end();
-		++iterVenue)
-	{
-		ARBConfigVenuePtr pVenue = *iterVenue;
-		for (ARBConfigEventList::const_iterator iterEvent = pVenue->GetEvents().begin();
-			iterEvent != pVenue->GetEvents().end();
-			++iterEvent)
-		{
-			ARBConfigEventPtr pEvent = *iterEvent;
-			if (CDlgConfigure::eDoIt == CDlgConfigure::CheckExistingRuns(
-				inDoc, inDogs,
-				pVenue, pEvent->GetName(), pEvent->GetScorings(),
-				dlgFixup, &nRunsDeleted, &nRunsChanged, &scoringRuns))
-			{
-				CString str;
-				str.FormatMessage(IDS_DELETE_EVENT_SCORING_INFO,
-					pEvent->GetName().c_str(),
-					pVenue->GetName().c_str());
-				eventinfo += str;
-			}
-		}
-	}
-	if (0 < nRunsDeleted || 0 < nRunsChanged)
-	{
-		CString msg;
-		msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
-			(LPCTSTR)eventinfo,
-			nRunsDeleted, nRunsChanged);
-		UINT flags = MB_ICONEXCLAMATION;
-		if (bCommitChanges)
-		{
-			// When running this in commit mode, we cannot cancel.
-			flags |= MB_OK;
-		}
-		else
-		{
-			flags |= MB_OKCANCEL | MB_DEFBUTTON2;
-			CString str;
-			str.LoadString(IDS_ARE_YOU_SURE);
-			msg += _T("\n\n") + str;
-		}
-		CDetails details(inDoc, scoringRuns);
-		switch (AfxMessageBox2(msg, flags, &details))
-		{
-		case IDOK:
-			break;
-		case IDCANCEL:
-			return CDlgConfigure::eCancelChanges;
-		}
-		for (std::vector<CDlgFixup*>::iterator iter = dlgFixup.begin();
-			iter != dlgFixup.end();
-			++iter)
-		{
-			ioDlgFixup.push_back(*iter);
-		}
-		return CDlgConfigure::eDoIt;
-	}
-	else
-		return CDlgConfigure::eNoChange;
-}
-
-CDlgConfigure::eCheck CDlgConfigure::CheckExistingRuns(
-		CAgilityBookDoc* inDoc,
-		ARBDogList const& inDogs,
-		ARBConfigVenuePtr inVenue,
-		ARBString const& inEvent,
-		ARBConfigScoringList const& inScorings,
-		std::vector<CDlgFixup*>& ioDlgFixup,
-		int* inRunsDeleted,
-		int* inRunsChanged,
-		std::list<ScoringRunInfo>* inScoringRuns)
-{
-	bool bQuiet = (NULL != inScoringRuns);
-	CWaitCursor wait;
-	std::list<ScoringRunInfo> scoringRuns;
-	int nRunsDeleted = 0, nRunsChanged = 0;
-	for (ARBDogList::const_iterator iterDog = inDogs.begin();
-		iterDog != inDogs.end();
-		++iterDog)
-	{
-		ARBDogPtr pDog = *iterDog;
-		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
-			iterTrial != pDog->GetTrials().end();
-			++iterTrial)
-		{
-			ARBDogTrialPtr pTrial = *iterTrial;
-			if (0 == pTrial->GetRuns().size())
-				continue;
-			if (!pTrial->GetClubs().GetPrimaryClub())
-				continue;
-			if (pTrial->GetClubs().GetPrimaryClubVenue() != inVenue->GetName())
-				continue;
-			for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
-				iterRun != pTrial->GetRuns().end();
-				++iterRun)
-			{
-				ARBDogRunPtr pRun = *iterRun;
-				if (pRun->GetEvent() != inEvent)
-					continue;
-				// Translate a sub-level to level
-				ARBConfigScoringPtr pScoring;
-				ARBConfigDivisionPtr pDiv;
-				// Should never be null...
-				if (inVenue->GetDivisions().FindDivision(pRun->GetDivision(), &pDiv))
-				{
-					ARBConfigLevelPtr pLevel;
-					// Again, should never be null...
-					if (pDiv->GetLevels().FindSubLevel(pRun->GetLevel(), &pLevel))
-					{
-						inVenue->GetEvents().FindEvent(inEvent,
-							pRun->GetDivision(),
-							pLevel->GetName(),
-							pRun->GetDate(),
-							&pScoring);
-					}
-				}
-				if (!pScoring)
-				{
-					if (inRunsDeleted)
-						++(*inRunsDeleted);
-					++nRunsDeleted;
-					ScoringRunInfo info(pDog, pTrial, pRun,
-						ScoringRunInfo::eScoringDeleted);
-					if (inScoringRuns)
-						inScoringRuns->push_back(info);
-					scoringRuns.push_back(info);
-				}
-				else
-				{
-					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())
-						!= pRun->GetScoring().GetType())
-					{
-						if (inRunsChanged)
-							++(*inRunsChanged);
-						++nRunsChanged;
-						ScoringRunInfo info(pDog, pTrial, pRun,
-							ScoringRunInfo::eScoringChanged);
-						if (inScoringRuns)
-							inScoringRuns->push_back(info);
-						scoringRuns.push_back(info);
-					}
-				}
-			}
-		}
-	}
-	if (0 < nRunsDeleted || 0 < nRunsChanged)
-	{
-		UINT rc = IDYES;
-		if (!bQuiet)
-		{
-			CString eventinfo;
-			eventinfo.FormatMessage(IDS_DELETE_EVENT_SCORING_INFO,
-				inEvent.c_str(), inVenue->GetName().c_str());
-			CString msg;
-			msg.FormatMessage(IDS_DELETE_EVENT_SCORING,
-				(LPCTSTR)eventinfo,
-				nRunsDeleted, nRunsChanged);
-			CDetails details(inDoc, scoringRuns);
-			rc = AfxMessageBox2(msg, MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2, &details);
-		}
-		switch (rc)
-		{
-		default:
-			return CDlgConfigure::eDoNotDoIt;
-		case IDYES:
-			break;
-		case IDCANCEL:
-			return CDlgConfigure::eCancelChanges;
-		}
-		CDlgFixupEventScoring* pFixup = new CDlgFixupEventScoring(inVenue->GetName(), inEvent);
-		ioDlgFixup.push_back(pFixup);
-		return CDlgConfigure::eDoIt;
-	}
-	else
-		return CDlgConfigure::eNoChange;
-}
-
 int CALLBACK CompareItems(
 		LPARAM lParam1,
 		LPARAM lParam2,
@@ -314,11 +123,6 @@ CDlgConfigure::CDlgConfigure(
 
 CDlgConfigure::~CDlgConfigure()
 {
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-	{
-		delete (*iter);
-	}
-	m_DlgFixup.clear();
 }
 
 void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
@@ -561,11 +365,19 @@ BOOL CDlgConfigure::OnInitDialog()
 	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlVenues.InsertColumn(0, _T("Venues"));
+
+	CString col;
+	col.LoadString(IDS_VENUES);
+	m_ctrlVenues.InsertColumn(0, col);
 	m_ctrlVenues.InsertColumn(1, _T("URL"));
-	m_ctrlVenues.InsertColumn(2, _T("Description"));
-	m_ctrlFaults.InsertColumn(0, _T("Faults"));
-	m_ctrlOthers.InsertColumn(0, _T("Other Points"));
+	col.LoadString(IDS_COL_DESCRIPTION);
+	m_ctrlVenues.InsertColumn(2, col);
+
+	col.LoadString(IDS_COL_FAULTS);
+	m_ctrlFaults.InsertColumn(0, col);
+
+	col.LoadString(IDS_OTHERPOINTS);
+	m_ctrlOthers.InsertColumn(0, col);
 
 	LoadData();
 	SetAction(eVenues);
@@ -656,12 +468,12 @@ void CDlgConfigure::OnNew()
 	case eVenues:
 		{
 			ARBConfigVenuePtr pVenue(ARBConfigVenue::New());
-			CDlgConfigVenue dlg(m_pDoc, m_Book, m_Config, pVenue, this);
+			CDlgConfigVenue dlg(m_Book, m_Config, pVenue, this);
 			if (IDOK == dlg.DoModal())
 			{
 				if (m_Config.GetVenues().AddVenue(pVenue))
 				{
-					dlg.GetFixups(m_DlgFixup);
+					dlg.GetFixups(m_Config.GetActions());
 					m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
 						LPSTR_TEXTCALLBACK, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
@@ -732,39 +544,17 @@ void CDlgConfigure::OnDelete()
 	if (!GetActionData(pCtrl, index, pData) || !pData)
 		return;
 
-	bool bDelete = true;
 	switch (m_Action)
 	{
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
 			ARBString venue = pVenueData->GetVenue()->GetName();
-			int nPoints = m_Book.GetDogs().NumExistingPointsInVenue(venue);
-			int nRegNums = m_Book.GetDogs().NumRegNumsInVenue(venue);
-			int nTitles = m_Book.GetDogs().NumTitlesInVenue(venue);
-			int nTrials = m_Book.GetDogs().NumTrialsInVenue(venue);
-			if (0 < nPoints || 0 < nRegNums || 0 < nTitles || 0 < nTrials)
+			// If we were able to delete it...
+			if (m_Config.GetVenues().DeleteVenue(venue))
 			{
-				CString msg;
-				msg.FormatMessage(IDS_DELETE_VENUE,
-					venue.c_str(),
-					nPoints,
-					nRegNums,
-					nTitles,
-					nTrials);
-				if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-					bDelete = false;
-			}
-			if (bDelete)
-			{
-				// If we were able to delete it...
-				if (m_Config.GetVenues().DeleteVenue(venue))
-				{
-					// Then we commit to fixing the real data.
-					if (0 < nPoints || 0 < nRegNums || 0 < nTitles || 0 < nTrials)
-						m_DlgFixup.push_back(new CDlgFixupDeleteVenue(venue));
-					pCtrl->DeleteItem(index);
-				}
+				m_Config.GetActions().push_back(ARBConfigActionDeleteVenue::New(venue));
+				pCtrl->DeleteItem(index);
 			}
 		}
 		break;
@@ -774,7 +564,6 @@ void CDlgConfigure::OnDelete()
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			if (m_Config.GetFaults().DeleteFault(pFaultData->GetFault()->GetName()))
 			{
-				// Then we commit to fixing the real data.
 				pCtrl->DeleteItem(index);
 				// No fixup necessary for faults.
 			}
@@ -785,31 +574,15 @@ void CDlgConfigure::OnDelete()
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
 			ARBString otherPoints = pOtherData->GetOtherPoints()->GetName();
-			int nOther = m_Book.GetDogs().NumOtherPointsInUse(otherPoints);
-			if (0 < nOther)
+			if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 			{
-				CString msg;
-				msg.FormatMessage(IDS_DELETE_OTHERPOINTS,
-					otherPoints.c_str(),
-					nOther);
-				if (IDYES != AfxMessageBox(msg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2))
-					bDelete = false;
-			}
-			if (bDelete)
-			{
-				if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
-				{
-					// Then we commit to fixing the real data.
-					if (0 < nOther)
-						m_DlgFixup.push_back(new CDlgFixupDeleteOtherPoints(otherPoints));
-					pCtrl->DeleteItem(index);
-				}
+				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(otherPoints));
+				pCtrl->DeleteItem(index);
 			}
 		}
 		break;
 	}
-	if (bDelete)
-		pCtrl->SortItems(CompareItems, 0);
+	pCtrl->SortItems(CompareItems, 0);
 }
 
 void CDlgConfigure::OnEdit() 
@@ -826,10 +599,10 @@ void CDlgConfigure::OnEdit()
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			CDlgConfigVenue dlg(m_pDoc, m_Book, m_Config, pVenueData->GetVenue(), this);
+			CDlgConfigVenue dlg(m_Book, m_Config, pVenueData->GetVenue(), this);
 			if (IDOK == dlg.DoModal())
 			{
-				dlg.GetFixups(m_DlgFixup);
+				dlg.GetFixups(m_Config.GetActions());
 				m_ctrlVenues.Invalidate();
 				m_ctrlVenues.SortItems(CompareItems, 0);
 			}
@@ -877,7 +650,7 @@ void CDlgConfigure::OnEdit()
 				if (pOtherData->GetOtherPoints()->GetName() != oldName)
 				{
 					// Other things may have changed, but we only care about the name for fixup.
-					m_DlgFixup.push_back(new CDlgFixupRenameOtherPoints(oldName, pOtherData->GetOtherPoints()->GetName()));
+					m_Config.GetActions().push_back(ARBConfigActionRenameOtherPoints::New(oldName, pOtherData->GetOtherPoints()->GetName()));
 					m_ctrlOthers.Invalidate();
 					m_ctrlOthers.SortItems(CompareItems, 0);
 				}
@@ -974,6 +747,15 @@ void CDlgConfigure::OnCopy()
 		pCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 }
 
+// During import here, we do nothing.
+class CDlgConfigCallback : public IConfigActionCallback
+{
+public:
+	CDlgConfigCallback() {}
+	virtual void PreDelete(ARBString const& inMsg) {}
+	void PostDelete(ARBString const& inMsg) const {}
+};
+
 // Updating a configuration is mainly an additive procedure.
 void CDlgConfigure::OnUpdate() 
 {
@@ -981,219 +763,20 @@ void CDlgConfigure::OnUpdate()
 	if (IDOK == dlg.DoModal())
 	{
 		ARBConfig& update = dlg.GetConfig();
-		CString msg;
-		for (ARBConfigActionList::const_iterator iterAction = update.GetActions().begin(); iterAction != update.GetActions().end(); ++iterAction)
+		// Update our current config (not runs, later)
+		ARBostringstream info;
+		CDlgConfigCallback callback;
+		if (0 < update.GetActions().Apply(m_Config, NULL, info, callback))
 		{
-			ARBConfigActionPtr action = *iterAction;
-			if (action->GetVerb() == ACTION_VERB_RENAME_EVENT)
-			{
-				ARBConfigVenuePtr venue;
-				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
-				{
-					ARBConfigEventPtr oldEvent;
-					if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
-					{
-						ARBostringstream tmp;
-						tmp << _T("Action: Renaming ")
-							<< action->GetVenue()
-							<< _T(" event [")
-							<< action->GetOldName()
-							<< _T("] to [")
-							<< action->GetNewName()
-							<< _T("]");
-						// If any events are in use, create a fixup action.
-						int nEvents = m_Book.GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
-						if (0 < nEvents)
-						{
-							tmp << _T(", updating ") << nEvents << _T(" titles");
-							m_DlgFixup.push_back(new CDlgFixupRenameEvent(action->GetVenue(), action->GetOldName(), action->GetNewName()));
-						}
-						tmp << _T("\n");
-						msg += tmp.str().c_str();
-						// If the new event exists, just delete the old.
-						// Otherwise, rename the old to new.
-						if (venue->GetEvents().FindEvent(action->GetNewName()))
-							venue->GetEvents().DeleteEvent(action->GetOldName());
-						else
-							oldEvent->SetName(action->GetNewName());
-					}
-				}
-			}
-			else if (action->GetVerb() == ACTION_VERB_DELETE_EVENT)
-			{
-				ARBConfigVenuePtr venue;
-				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
-				{
-					ARBConfigEventPtr oldEvent;
-					if (venue->GetEvents().FindEvent(action->GetOldName(), &oldEvent))
-					{
-						ARBostringstream tmp;
-						int nEvents = m_Book.GetDogs().NumEventsInUse(action->GetVenue(), action->GetOldName());
-						// If any events are in use, create a fixup action.
-						if (0 < nEvents)
-						{
-							tmp << _T("Action: DELETING existing ")
-								<< nEvents
-								<< _T(" event(s) [")
-								<< action->GetOldName()
-								<< _T("]\n");
-							m_DlgFixup.push_back(new CDlgFixupDeleteEvent(action->GetVenue(), action->GetOldName()));
-						}
-						tmp << _T("Action: Deleting event [")
-							<< action->GetOldName()
-							<< _T("]\n");
-						msg += tmp.str().c_str();
-						venue->GetEvents().DeleteEvent(action->GetOldName());
-					}
-				}
-			}
-			else if (action->GetVerb() == ACTION_VERB_RENAME_TITLE)
-			{
-				// Find the venue.
-				ARBConfigVenuePtr venue;
-				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
-				{
-					// Find the title we're renaming.
-					ARBConfigTitlePtr oldTitle;
-					if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
-					{
-						// Note: If we are deleting/renaming a title due
-						// to an error in the config (same title in multiple
-						// divisions), all we can do is rename ALL of them.
-						// There's no way to differentiate existing titles.
-						ARBostringstream tmp;
-						tmp << _T("Action: Renaming title [")
-							<< action->GetOldName()
-							<< _T("] to [")
-							<< action->GetNewName()
-							<< _T("]");
-						// If any titles are in use, create a fixup action.
-						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
-						if (0 < nTitles)
-						{
-							tmp << _T(", updating ") << nTitles << _T(" titles");
-							m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
-						}
-						tmp << _T("\n");
-						msg += tmp.str().c_str();
-						// If the new title exists, just delete the old.
-						// Otherwise, rename the old to new.
-						if (venue->GetTitles().FindTitle(action->GetNewName()))
-							venue->GetTitles().DeleteTitle(action->GetOldName());
-						else
-							oldTitle->SetName(action->GetNewName());
-					}
-				}
-			}
-			else if (action->GetVerb() == ACTION_VERB_DELETE_TITLE)
-			{
-				// Find the venue.
-				ARBConfigVenuePtr venue;
-				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
-				{
-					// Find the title we're deleting.
-					ARBConfigTitlePtr oldTitle;
-					if (venue->GetTitles().FindTitle(action->GetOldName(), &oldTitle))
-					{
-						ARBostringstream tmp;
-						int nTitles = m_Book.GetDogs().NumTitlesInUse(action->GetVenue(), action->GetOldName());
-						// If any titles are in use, create a fixup action.
-						if (0 < nTitles)
-						{
-							// Note: If we are deleting/renaming a title due
-							// to an error in the config (same title in multiple
-							// divisions), all we can do is rename ALL of them.
-							// There's no way to differentiate existing titles.
-							if (0 < action->GetNewName().length())
-							{
-								tmp << _T("Action: Renaming existing ")
-									<< nTitles
-									<< _T(" title(s) [")
-									<< action->GetOldName()
-									<< _T("] to [")
-									<< action->GetNewName()
-									<< _T("]\n");
-								m_DlgFixup.push_back(new CDlgFixupRenameTitle(action->GetVenue(), action->GetOldName(), action->GetNewName()));
-							}
-							else
-							{
-								tmp << _T("Action: DELETING existing ")
-									<< nTitles
-									<< _T(" title(s) [")
-									<< action->GetOldName()
-									<< _T("]\n");
-								m_DlgFixup.push_back(new CDlgFixupDeleteTitle(action->GetVenue(), action->GetOldName()));
-							}
-						}
-						tmp << _T("Action: Deleting title [")
-							<< action->GetOldName()
-							<< _T("]\n");
-						msg += tmp.str().c_str();
-						venue->GetTitles().DeleteTitle(action->GetOldName());
-					}
-				}
-			}
-			else if (action->GetVerb() == ACTION_VERB_RENAME_DIV)
-			{
-				// Find the venue.
-				ARBConfigVenuePtr venue;
-				if (m_Config.GetVenues().FindVenue(action->GetVenue(), &venue))
-				{
-					ARBConfigDivisionPtr oldDiv;
-					if (venue->GetDivisions().FindDivision(action->GetOldName(), &oldDiv))
-					{
-						ARBostringstream tmp;
-						tmp << _T("Action: Renaming ")
-							<< action->GetVenue()
-							<< _T(" division [")
-							<< action->GetOldName()
-							<< _T("] to [")
-							<< action->GetNewName()
-							<< _T("]");
-						// If the division is in use, create a fixup action.
-						int nRuns = m_Book.GetDogs().NumRunsInDivision(venue, action->GetOldName());
-						if (0 < nRuns)
-						{
-							tmp << _T(", updating ") << nRuns << _T(" runs");
-							m_DlgFixup.push_back(new CDlgFixupRenameDivision(action->GetVenue(), action->GetOldName(), action->GetNewName()));
-						}
-						tmp << _T("\n");
-						msg += tmp.str().c_str();
-						// If the new division exists, just delete the old.
-						// Otherwise, rename the old to new.
-						if (venue->GetDivisions().FindDivision(action->GetNewName()))
-							venue->GetDivisions().DeleteDivision(action->GetOldName(), venue->GetEvents());
-						else
-							oldDiv->SetName(action->GetNewName());
-					}
-				}
-			}
-			else
-				ASSERT(0);
+			// Now move the actions into our config so we can fully apply them.
+			m_Config.GetActions().insert(m_Config.GetActions().end(), update.GetActions().begin(), update.GetActions().end());
+			update.GetActions().clear();
 		}
-		update.GetActions().clear();
-		ARBString info;
-		bool bUpdateRuns = false;
-		if (m_Config.GetVersion() <= 2 && update.GetVersion() == 3)
-			bUpdateRuns = true;
-		m_Config.Update(0, update, info);
 
-		switch (CDlgConfigure::CheckExistingRuns(m_pDoc, m_Book.GetDogs(), m_Config, m_DlgFixup, false))
+		// Update the config.
+		if (m_Config.Update(0, update, info))
 		{
-		default:
-		case CDlgConfigure::eCancelChanges:
-			EndDialog(IDCANCEL);
-			return;
-		case CDlgConfigure::eNoChange:
-		case CDlgConfigure::eDoIt:
-			break;
-		}
-		if (bUpdateRuns)
-			m_DlgFixup.push_back(new CDlgFixupTableInRuns());
-		msg += info.c_str();
-		if (0 < msg.GetLength())
-		{
-			CDlgMessage dlg(msg, 0, this);
+			CDlgMessage dlg(info.str().c_str(), 0, this);
 			dlg.DoModal();
 			LoadData();
 		}
@@ -1207,26 +790,7 @@ void CDlgConfigure::OnOK()
 	CWaitCursor wait;
 	if (m_Book.GetConfig() != m_Config)
 	{
-		// Fixup must be done before assigning the config.
-		// Some of the fixup stuff needs to traverse existing config info to
-		// determine what needs deleting (for instance, when deleting a
-		// division, we have to iterate over the config info for the division
-		// to get all the titles that also need deleting.
-		// Note: there may be multiple action items on a single entry - that's
-		// ok. For instance, if we rename an item twice, there will be two
-		// entries. I suppose we could get clever and collapse them - but why?!
-		// The end result is the same.
-		for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-		{
-			(*iter)->Commit(m_Book);
-			delete (*iter);
-		}
-		m_DlgFixup.clear();
-		// Fixup is done, now assign the new config info.
-		m_Book.GetConfig() = m_Config;
-		m_pDoc->GetDogs().SetMultiQs(m_pDoc->GetConfig());
-		m_pDoc->SetModifiedFlag();
-		m_pDoc->UpdateAllViews(NULL, UPDATE_CONFIG);
+		m_pDoc->ImportConfiguration(m_Config);
 	}
 	CDlgBaseDialog::OnOK();
 }

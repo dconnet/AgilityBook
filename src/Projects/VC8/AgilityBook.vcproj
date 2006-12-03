@@ -567,10 +567,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgFixup.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\DlgInfoJudge.h"
 				>
 			</File>
@@ -1402,10 +1398,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgFindLinks.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgFixup.cpp"
 				>
 			</File>
 			<File

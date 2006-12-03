@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-12-03 DRC Complete re-write of action class.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added optional 'Div' to DeleteTitle.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -41,38 +42,54 @@
 #include "ARBBase.h"
 #include "ARBTypes.h"
 
+class IConfigActionCallback
+{
+public:
+	IConfigActionCallback();
+	virtual ~IConfigActionCallback();
+
+	/**
+	 * Callback made during Apply() before data loss occurs.
+	 * Gives the user a chance to abort by setting m_bContinue to false.
+	 * @param inMsg Message generated in Apply about what is being deleted.
+	 */
+	virtual void PreDelete(ARBString const& inMsg) = 0;
+
+	/**
+	 * Callback made during Update after data loss. This can occur when
+	 * a scoring method changes that invalidates an existing run. This
+	 * will occur after all PreDelete/Apply processing and after the new
+	 * config has been merged.
+	 * @param inMsg Message generated in Apply about what is being deleted.
+	 */
+	virtual void PostDelete(ARBString const& inMsg) const = 0;
+
+	/**
+	 * Should we continue processing?
+	 */
+	virtual bool CanContinue() const
+	{
+		return m_bContinue;
+	}
+
+protected:
+	bool m_bContinue;
+};
+
 /**
  * Special class that performs actions during ARBConfig::Update.
  *
- * This class is not created anywhere (hence, there are only getters, no
- * setters). During document revisions, it is sometimes necessary to do
- * additional work - hence when we create the default configuration, we
- * must create these entries in that by hand. As of file version 8.2, the
- * default configuration now has some entries.
- *
- * During the update process, all actions are run in order. The configuration
- * is then updated.
- *
- * Currently, the only action supported is renaming an existing title.
+ * During the update process, all actions are run in order, operating on the
+ * existing configuration and data. The existing configuration is then updated.
  */
 class ARBConfigAction : public ARBBase
 {
 protected:
 	ARBConfigAction();
-	ARBConfigAction(ARBConfigAction const& rhs);
 
 public:
-	~ARBConfigAction();
-	static ARBConfigActionPtr New();
-	ARBConfigActionPtr Clone() const;
-
-	ARBConfigAction& operator=(ARBConfigAction const& rhs);
-
-	bool operator==(ARBConfigAction const& rhs) const;
-	bool operator!=(ARBConfigAction const& rhs) const
-	{
-		return !operator==(rhs);
-	}
+	virtual ~ARBConfigAction();
+	virtual ARBConfigActionPtr Clone() const = 0;
 
 	/**
 	 * Get the generic name of this object.
@@ -80,7 +97,7 @@ public:
 	 */
 	virtual ARBString GetGenericName() const
 	{
-		return m_Verb;
+		return _T("Action");
 	}
 
 	/**
@@ -95,56 +112,434 @@ public:
 	}
 
 	/**
-	 * Load a calendar entry
-	 * @pre inTree is the actual ARBConfigAction element.
-	 * @param inTree XML structure to convert into ARB.
-	 * @param inVersion Version of the document being read.
-	 * @param ioCallback Error processing callback.
-	 * @return Success
+	 * Apply the action.
+	 * @param ioConfig Existing Configuration.
+	 * @param ioDogs Existing Dogs.
+	 * @param ioInfo Accumulated messages about changes that have happened.
+	 * @param ioCallBack Callback object to allow cancelling.
+	 * @return Changes occurred.
 	 */
-	bool Load(
-			Element const& inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const = 0;
+};
 
-	/**
-	 * Save a document.
-	 * @param ioTree Parent element.
-	 * @return Success
-	 * @post The ARBConfigAction element will be created in ioTree.
-	 */
-	bool Save(Element& ioTree) const;
+/////////////////////////////////////////////////////////////////////////////
 
-	/*
-	 * Getters.
-	 */
-	ARBString const& GetVerb() const
-	{
-		return m_Verb;
-	}
-	ARBString const& GetVenue() const
-	{
-		return m_Venue;
-	}
-	ARBString const& GetDivision() const
-	{
-		return m_Div;
-	}
-	ARBString const& GetOldName() const
-	{
-		return m_OldName;
-	}
-	ARBString const& GetNewName() const
-	{
-		return m_NewName;
-	}
+class ARBConfigActionRenameOtherPoints : public ARBConfigAction
+{ 
+protected:
+	ARBConfigActionRenameOtherPoints(
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
+{ 
+protected:
+	ARBConfigActionDeleteOtherPoints(
+			ARBString const& inName);
+	ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			ARBString const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameVenue : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameVenue(
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
 
 private:
-	ARBString m_Verb;
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteVenue : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteVenue(
+			ARBString const& inName);
+	ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			ARBString const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+private:
+	ARBString m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameMultiQ : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameMultiQ(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteMultiQ : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteMultiQ(
+			ARBString const& inVenue,
+			ARBString const& inName);
+	ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameDivision : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameDivision(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteDivision : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteDivision(
+			ARBString const& inVenue,
+			ARBString const& inName);
+	ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameLevel : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameLevel(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr NewLevel(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	static ARBConfigActionPtr NewSubLevel(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_Div;
+	ARBString m_Level; ///< Only used on sublevels.
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteLevel : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteLevel(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inName);
+	ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr NewLevel(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inName);
+
+	static ARBConfigActionPtr NewSubLevel(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inLevel,
+			ARBString const& inName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_Div;
+	ARBString m_Level; ///< Only used on sublevels.
+	ARBString m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameTitle : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameTitle(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteTitle : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteTitle(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inDiv,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
 	ARBString m_Venue;
 	ARBString m_Div;
 	ARBString m_OldName;
 	ARBString m_NewName;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class ARBConfigActionRenameEvent : public ARBConfigAction
+{
+protected:
+	ARBConfigActionRenameEvent(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+	ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inOldName,
+			ARBString const& inNewName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_OldName;
+	ARBString m_NewName;
+};
+
+class ARBConfigActionDeleteEvent : public ARBConfigAction
+{
+protected:
+	ARBConfigActionDeleteEvent(
+			ARBString const& inVenue,
+			ARBString const& inName);
+	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
+
+public:
+	virtual ARBConfigActionPtr Clone() const;
+
+	static ARBConfigActionPtr New(
+			ARBString const& inVenue,
+			ARBString const& inName);
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	ARBString m_Venue;
+	ARBString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -167,4 +562,10 @@ public:
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
+
+	int Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			ARBostringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
 };

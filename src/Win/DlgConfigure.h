@@ -46,57 +46,10 @@
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureData;
-class CDlgFixup;
 
 class CDlgConfigure : public CDlgBaseDialog
 {
 public:
-	typedef enum
-	{
-		eNoChange,		// No runs to update
-		eCancelChanges,	// IDCANCEL
-		eDoNotDoIt,		// IDNO
-		eDoIt			// IDYES
-	} eCheck;
-	/**
-	 * Update existing runs in case event scoring methods have changed.
-	 * @param inDoc MFC Document
-	 * @param inDogs List of existing runs.
-	 * @param inConfig New configuration to verify against.
-	 * @param ioDlgFixup Fixup commands to update existing runs.
-	 * @param bCommitChanges Changes cannot be cancelled.
-	 */
-	static eCheck CheckExistingRuns(
-			CAgilityBookDoc* inDoc,
-			ARBDogList const& inDogs,
-			ARBConfig const& inConfig,
-			std::vector<CDlgFixup*>& ioDlgFixup,
-			bool bCommitChanges);
-
-	/**
-	 * Update existing runs in case event scoring methods have changed.
-	 * @param inDoc MFC Document
-	 * @param inDogs List of existing runs.
-	 * @param inVenue Name of venue to verify against.
-	 * @param inEvent Name of event to verify against.
-	 * @param inScorings New scoring methods to verify against.
-	 * @param ioDlgFixup Fixup commands to update existing runs.
-	 * @param inRunsDeleted Used only when checking all venues.
-	 * @param inRunsChanged Used only when checking all venues.
-	 * @param inScoringRuns Used only when checking all venues.
-	 */
-	static eCheck CheckExistingRuns(
-			CAgilityBookDoc* inDoc,
-			ARBDogList const& inDogs,
-			ARBConfigVenuePtr inVenue,
-			ARBString const& inEvent,
-			ARBConfigScoringList const& inScorings,
-			std::vector<CDlgFixup*>& ioDlgFixup,
-			// These settings are only used from the preceeding api.
-			int* inRunsDeleted = NULL,
-			int* inRunsChanged = NULL,
-			std::list<ScoringRunInfo>* inScoringRuns = NULL);
-
 	CDlgConfigure(
 			CAgilityBookDoc* pDoc,
 			ARBAgilityRecordBook& book);
@@ -118,7 +71,6 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook& m_Book;
 	ARBConfig m_Config;
-	std::vector<CDlgFixup*> m_DlgFixup;
 	typedef enum
 	{
 		eNone,

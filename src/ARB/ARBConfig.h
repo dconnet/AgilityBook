@@ -52,11 +52,13 @@
  */
 class ARBConfig
 {
+	// We allow copying, but not assignment. Updating a config object is
+	// accomplished via the Update() method.
+	ARBConfig& operator=(ARBConfig const& rhs); // not implemented
 public:
 	ARBConfig();
 	~ARBConfig();
 	ARBConfig(ARBConfig const& rhs);
-	ARBConfig& operator=(ARBConfig const& rhs);
 	bool operator==(ARBConfig const& rhs) const;
 	bool operator!=(ARBConfig const& rhs) const
 	{
@@ -159,7 +161,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			ARBString& ioInfo);
+			ARBostringstream& ioInfo);
 
 	/*
 	 * Getters.

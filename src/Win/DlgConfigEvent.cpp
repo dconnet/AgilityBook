@@ -62,7 +62,6 @@
 #include "DlgConfigEventMethod.h"
 #include "DlgConfigTitlePoints.h"
 #include "DlgConfigure.h"
-#include "DlgFixup.h"
 #include "DlgName.h"
 #include "ListData.h"
 
@@ -76,8 +75,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigEvent dialog
 
 CDlgConfigEvent::CDlgConfigEvent(
-		CAgilityBookDoc* pDoc,
-		ARBAgilityRecordBook const* book,
+		bool bNewEntry,
 		ARBConfigVenuePtr pVenue,
 		ARBConfigEventPtr pEvent,
 		CWnd* pParent)
@@ -86,8 +84,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_ctrlMethods(true)
 	, m_ctrlUnused(false)
 	, m_ctrlPointsList(true)
-	, m_pDoc(pDoc)
-	, m_Book(book)
+	, m_bNewEntry(bNewEntry)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
 	, m_Scorings()
@@ -115,10 +112,9 @@ CDlgConfigEvent::~CDlgConfigEvent()
 	ClearFixups();
 }
 
-void CDlgConfigEvent::GetFixups(std::vector<CDlgFixup*>& ioFixups)
+void CDlgConfigEvent::GetFixups(std::vector<ARBConfigActionPtr>& ioFixups)
 {
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-		ioFixups.push_back(*iter);
+	ioFixups.insert(ioFixups.end(), m_DlgFixup.begin(), m_DlgFixup.end());
 	m_DlgFixup.clear();
 }
 
@@ -180,8 +176,6 @@ END_MESSAGE_MAP()
 
 void CDlgConfigEvent::ClearFixups()
 {
-	for (std::vector<CDlgFixup*>::iterator iter = m_DlgFixup.begin(); iter != m_DlgFixup.end(); ++iter)
-		delete (*iter);
 	m_DlgFixup.clear();
 }
 
@@ -1042,12 +1036,13 @@ void CDlgConfigEvent::OnOK()
 			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
 			return;
 		}
-		if (m_Book)
-			m_DlgFixup.push_back(new CDlgFixupRenameEvent(m_pVenue->GetName(), (LPCTSTR)m_Name, m_pEvent->GetName()));
+		if (!m_bNewEntry)
+			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(m_pVenue->GetName(), (LPCTSTR)m_Name, m_pEvent->GetName()));
 		m_pEvent->SetName((LPCTSTR)m_Name);
 	}
 	// m_Book is only valid when editing an existing entry.
-	if (m_Book)
+	/*
+	if (!m_bNewEntry)
 	{
 		switch (CDlgConfigure::CheckExistingRuns(m_pDoc, m_Book->GetDogs(),
 			m_pVenue, m_pEvent->GetName(), m_Scorings, m_DlgFixup))
@@ -1063,6 +1058,7 @@ void CDlgConfigEvent::OnOK()
 			break;
 		}
 	}
+	*/
 
 	m_Desc.Replace(_T("\r\n"), _T("\n"));
 	m_pEvent->SetDesc((LPCTSTR)m_Desc);

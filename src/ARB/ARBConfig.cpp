@@ -89,6 +89,7 @@ ARBConfig::~ARBConfig()
 	clear();
 }
 
+/*
 ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 {
 	if (this != &rhs)
@@ -102,12 +103,12 @@ ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 	}
 	return *this;
 }
+*/
 
 bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
-	return m_bUpdate == rhs.m_bUpdate
-		&& m_Version == rhs.m_Version
-		&& m_Actions == rhs.m_Actions
+	// Equality does not include actions or the update flag
+	return m_Version == rhs.m_Version
 		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
@@ -203,8 +204,8 @@ bool ARBConfig::Save(Element& ioTree) const
 	if (!m_bUpdate)
 		config.AddAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate);
 	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
-	if (!m_Actions.Save(config))
-		return false;
+	// Do not save actions - Actions are done only when loading/merging a
+	// configuration. Keeping them around could cause possible future problems.
 	if (!m_Venues.Save(config))
 		return false;
 	if (!m_FaultTypes.Save(config))
@@ -317,11 +318,9 @@ ARBString ARBConfig::GetTitleCompleteName(
 bool ARBConfig::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		ARBString& ioInfo)
+		ARBostringstream& ioInfo)
 {
-	ARBString info;
-
-	int nChanges = 0;
+	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update Faults.
 	// Simply merge new ones.
 	int nNew = 0;
@@ -342,7 +341,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		info += UPDATE_FORMAT_FAULTS(nNew, nSkipped);
+		ioInfo << UPDATE_FORMAT_FAULTS(nNew, nSkipped);
 	}
 
 	// Update OtherPoints.
@@ -376,7 +375,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		info += UPDATE_FORMAT_OTHERPTS(nNew, nUpdated, nSkipped);
+		ioInfo << UPDATE_FORMAT_OTHERPTS(nNew, nUpdated, nSkipped);
 	}
 
 	// Update Venues.
@@ -414,12 +413,12 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		info += UPDATE_FORMAT_VENUES(nNew, nUpdated, nSkipped);
+		ioInfo << UPDATE_FORMAT_VENUES(nNew, nUpdated, nSkipped);
 	}
 	if (0 < venueInfo.length())
 	{
-		info += _T("\n");
-		info += venueInfo;
+		ioInfo << _T("\n");
+		ioInfo << venueInfo;
 	}
 	// Even if there are no changes, update the version number so we don't
 	// prompt anymore.
@@ -429,12 +428,10 @@ bool ARBConfig::Update(
 	if (0 == nChanges)
 	{
 		bChanges = false;
-		info.erase();
 	}
 	else
 	{
 		m_bUpdate = true;
-		ioInfo += info;
 	}
 	return bChanges;
 }
