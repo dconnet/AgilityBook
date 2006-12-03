@@ -1175,14 +1175,14 @@ void CDlgConfigVenue::OnDelete()
 							// Then we commit to fixing the real data.
 							if (bLevelModified)
 							{
-								m_pVenue->GetEvents().RenameLevel(level, pLevelData->GetLevel()->GetName());
+								m_pVenue->GetEvents().RenameLevel(level, pSubLevelData->GetLevel()->GetName());
 								m_pVenue->GetMultiQs().RenameLevel(
 									pSubLevelData->GetDivision()->GetName(),
-									level, pLevelData->GetLevel()->GetName());
+									level, pSubLevelData->GetLevel()->GetName());
 								m_DlgFixup.push_back(new CDlgFixupRenameLevel(
 									m_pVenue->GetName(),
 									pSubLevelData->GetDivision()->GetName(),
-									level, pLevelData->GetLevel()->GetName()));
+									level, pSubLevelData->GetLevel()->GetName()));
 								m_ctrlLevels.Invalidate();
 							}
 							if (0 < nLevels)
