@@ -41,6 +41,11 @@
 // Extra space around the icon
 #define BUTTON_MARGIN	2
 
+// Don't use GetSystemMetrics(SM_CXSMICON)-large font systems have bigger
+// small icons - but our image list IS 16x16.
+#define SMICON_CX	16
+#define SMICON_CY	16
+
 IMPLEMENT_DYNAMIC(CNoteButton, CButton)
 
 CNoteButton::CNoteButton()
@@ -79,8 +84,8 @@ void CNoteButton::PreSubclassWindow()
 	ASSERT(GetStyle() & BS_OWNERDRAW);
 	CButton::PreSubclassWindow();
 	VERIFY(SetWindowPos(NULL, -1, -1,
-		GetSystemMetrics(SM_CXSMICON) + 2*BUTTON_MARGIN,
-		GetSystemMetrics(SM_CYSMICON) + 2*BUTTON_MARGIN,
+		SMICON_CX + 2*BUTTON_MARGIN,
+		SMICON_CY + 2*BUTTON_MARGIN,
 		SWP_NOMOVE|SWP_NOZORDER|SWP_NOREDRAW|SWP_NOACTIVATE));
 }
 
@@ -90,8 +95,8 @@ int CNoteButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	ASSERT(GetStyle() & BS_OWNERDRAW);
 	VERIFY(SetWindowPos(NULL, -1, -1,
-		GetSystemMetrics(SM_CXSMICON) + 2*BUTTON_MARGIN,
-		GetSystemMetrics(SM_CYSMICON) + 2*BUTTON_MARGIN,
+		SMICON_CX + 2*BUTTON_MARGIN,
+		SMICON_CY + 2*BUTTON_MARGIN,
 		SWP_NOMOVE|SWP_NOZORDER|SWP_NOREDRAW|SWP_NOACTIVATE));
 	return 0;
 }
@@ -132,7 +137,7 @@ void CNoteButton::DrawItem(LPDRAWITEMSTRUCT lpDIS)
 	CRect rect;
 	rect.CopyRect(&lpDIS->rcItem);
 
-	CSize szIcon(GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON));
+	CSize szIcon(SMICON_CX, SMICON_CY);
 	CPoint pt = rect.TopLeft();
 	pt.Offset(BUTTON_MARGIN, BUTTON_MARGIN);
 	if (state & ODS_SELECTED)
