@@ -656,7 +656,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		dc.ExtTextOut(0, 0, ETO_OPAQUE, rLineLabel, NULL, 0, NULL);
 
 	// Now the icons.
-	CSize szIcon(GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON));
+	CSize szIcon(16, 16);
 	CRect rIconPos(rLineIcon);
 	rIconPos.OffsetRect(0, (rLineIcon.Height() - szIcon.cy) / 2);
 	CImageList* pImageStateList = GetListCtrl().GetImageList(LVSIL_STATE);
