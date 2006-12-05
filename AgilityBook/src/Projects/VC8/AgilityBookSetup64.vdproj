@@ -15,19 +15,25 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_29D8008D36E14F9B923AAFBB77F7A675"
-        "OwnerKey" = "8:_5A900F1FF8294ACBBB348BAA22E2C5FF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3F9B02AEC1B345E3891715812893FB9C"
+        "MsmKey" = "8:_315FD3BFFD6A4A758C3A6615328D1D65"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_32D32D804FFC41C8A5B75A8A2A1E791D"
+        "OwnerKey" = "8:_315FD3BFFD6A4A758C3A6615328D1D65"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_382F37684742EEE9B9C70833B6F34C73"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,14 +45,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5A900F1FF8294ACBBB348BAA22E2C5FF"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmKey" = "8:_5E446DC8AA924BA6B5BCC12DD868C8B9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5E446DC8AA924BA6B5BCC12DD868C8B9"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_6814C5C83C594A7F9A490932EA04AFB2"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -57,20 +63,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_953B748B0C343B206B8F13DA147BB762"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F1965DCF355C41D8828A4E627EDDFB76"
-        "OwnerKey" = "8:_3F9B02AEC1B345E3891715812893FB9C"
+        "MsmKey" = "8:_D6554716C7E04C7C8C76C08AB0671494"
+        "OwnerKey" = "8:_6814C5C83C594A7F9A490932EA04AFB2"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -81,7 +81,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\..\\..\\bin\\VC8x64\\Debug\\AgilityBookSetup.msi"
+        "OutputFilename" = "8:..\\..\\..\\bin\\VC8x64\\Debug\\Setup\\AgilityBook.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -114,9 +114,9 @@
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
         "OutputFilename" = "8:..\\..\\..\\bin\\VC8x64\\Release\\Setup\\AgilityBook.msi"
-        "PackageFilesAs" = "3:3"
-        "PackageFileSize" = "3:1536000"
-        "CabType" = "3:2"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:0"
+        "CabType" = "3:1"
         "Compression" = "3:3"
         "SignOutput" = "11:FALSE"
         "CertificateFile" = "8:"
@@ -180,6 +180,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_382F37684742EEE9B9C70833B6F34C73"
+            {
+            "SourcePath" = "8:xerces-c_2_7D.dll"
+            "TargetName" = "8:xerces-c_2_7D.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_47D6F293FF6E487D896449C14341855A"
             {
             "SourcePath" = "8:..\\..\\Yahoo Discussion Group.url"
@@ -218,26 +238,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_953B748B0C343B206B8F13DA147BB762"
-            {
-            "SourcePath" = "8:xerces-c_2_7.dll"
-            "TargetName" = "8:xerces-c_2_7.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A765D78B34674811B1D173537F93A4AA"
@@ -949,11 +949,11 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_29D8008D36E14F9B923AAFBB77F7A675"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_315FD3BFFD6A4A758C3A6615328D1D65"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_DebugMFC_x86.msm"
                 "Properties"
                 {
                 }
@@ -963,11 +963,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_3F9B02AEC1B345E3891715812893FB9C"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_32D32D804FFC41C8A5B75A8A2A1E791D"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_debugmfc_x86.msm"
                 "Properties"
                 {
                 }
@@ -977,11 +977,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_5A900F1FF8294ACBBB348BAA22E2C5FF"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_6814C5C83C594A7F9A490932EA04AFB2"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_DebugCRT_x86.msm"
                 "Properties"
                 {
                 }
@@ -991,11 +991,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F1965DCF355C41D8828A4E627EDDFB76"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D6554716C7E04C7C8C76C08AB0671494"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_mfc_x86.msm"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_debugcrt_x86.msm"
                 "Properties"
                 {
                 }
