@@ -23,6 +23,18 @@ Run Doxygen and fix any warnings/errors it reports.
   - doxygen AgilityBook.dox
 
 Do a full rebuild and verify it.
+- Release/Win32
+  - AgilityBookSetup
+    - Create AgilityBook_n_n_n_n-win.zip files in bin\VC8\Release\Setup.
+	- Delete Setup\*.*
+    - Modify properties: Package files: In setup file
+	- Run setup again (to create single msi)
+	- Revert changes to .vdproj file
+  - AgilityBookSetup98
+    - Create AgilityBook_n_n_n_n-win98.zip files in bin\VC8\Release\Setup98.
+- Release/x64
+  - AgilityBookSetup64
+    - Create AgilityBook_n_n_n_n-x64.zip files in bin\VC8x64\Release\Setup.
 
 Tag SubVersion repository "vn_n_n_n"
 
@@ -30,8 +42,7 @@ Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup vc6/7/8 .exe/chm images to \AgilityBook\test\vc[678]
   [Currently, I only build vc8]
-- Create AgilityBook_n_n_n_n.zip from msi/cab files in bin\VC8\Release.
-  Copy this to distrib\vN.N.N.N\
+- Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
 - Create AgilityBook_n_n_n_nALT.zip (VC8 AgilityBook.exe/.chm)
   Copy this to distrib\vN.N.N.N\
 - Clean out all build artifacts.
@@ -95,3 +106,5 @@ Prepare for next release:
     - Start program again and open project (now shown as included).
     - Mark as excluded.
     Things should remain okay now.
+- Update src/Projects/Win32/VC8/AgilityBookSetup98/64.vdproj
+  - Manually copy the GUIDs from AgilityBookSetup.vdproj
