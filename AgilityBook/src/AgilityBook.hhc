@@ -291,7 +291,12 @@
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Views">
-					<param name="Local" value="Help\html\DlgOptionsView.html">
+					<param name="Local" value="Help\html\DlgOptionsCal.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Views">
+					<param name="Local" value="Help\html\DlgOptionsPrint.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 			</UL>

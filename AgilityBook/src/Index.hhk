@@ -413,7 +413,12 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Option: Views">
 			<param name="Name" value="Option: Views">
-			<param name="Local" value="Help\html\DlgOptionsView.html">
+			<param name="Local" value="Help\html\DlgOptionsCal.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Option: Views">
+			<param name="Name" value="Option: Views">
+			<param name="Local" value="Help\html\DlgOptionsPrint.html">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
