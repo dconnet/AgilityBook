@@ -42,9 +42,10 @@ Help\html\DlgListctrl.html
 Help\html\DlgListViewer.html
 Help\html\DlgMessages.html
 Help\html\DlgName.html
+Help\html\DlgOptionsCal.html
 Help\html\DlgOptionsFilter.html
 Help\html\DlgOptionsPgm.html
-Help\html\DlgOptionsView.html
+Help\html\DlgOptionsPrint.html
 Help\html\DlgOtherPoints.html
 Help\html\DlgPartner.html
 Help\html\DlgPointsViewSort.html
@@ -128,9 +129,10 @@ HIDD_SELECT_URL=Help\html\DlgSelectUrl.html
 HIDD_TITLE=Help\html\DlgTitle.html
 HIDD_TRAINING=Help\html\PropLog.html
 HIDD_TRIAL=Help\html\PropTrial.html
+HIDD_VIEW_OPTIONS_CALENDAR=Help\html\DlgOptionsCal.html
 HIDD_VIEW_OPTIONS_FILTER=Help\html\DlgOptionsFilter.html
 HIDD_VIEW_OPTIONS_PROGRAM=Help\html\DlgOptionsPgm.html
-HIDD_VIEW_OPTIONS_VIEWING=Help\html\DlgOptionsView.html
+HIDD_VIEW_OPTIONS_PRINTING=Help\html\DlgOptionsPrint.html
 HIDD_WIZARD_EXPORT=Help\html\DlgWizardExport.html
 HIDD_WIZARD_IMPORT=Help\html\DlgWizardImport.html
 HIDD_WIZARD_START=Help\html\DlgWizardStart.html
