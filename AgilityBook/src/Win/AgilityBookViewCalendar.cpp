@@ -1019,18 +1019,86 @@ void CAgilityBookViewCalendar::OnKeyDown(
 			break;
 
 		case VK_PRIOR:
-			bHandled = true;
-			if (1 == date.GetMonth())
-				date.SetDate(date.GetYear() - 1, 12, date.GetDay());
-			else
-				date.SetDate(date.GetYear(), date.GetMonth() - 1, date.GetDay());
+			{
+				bHandled = true;
+				bool bScroll = false;
+				int pos = GetScrollPos(SB_VERT);
+				ARBDate curMonth = FirstDayOfMonth(pos);
+				curMonth = LastDayOfWeek(curMonth);
+				// There are 3 possible months: before, current, after:
+				//  before: no date change, scroll
+				//  current: date change, scroll
+				//  after: date change, no scroll
+				if (date.GetMonth() >= curMonth.GetMonth())
+				{
+					bool bPossibleScroll = (date.GetMonth() == curMonth.GetMonth());
+					if (1 == date.GetMonth())
+					{
+						date.SetDate(date.GetYear() - 1, 12, date.GetDay());
+					}
+					else
+					{
+						// If we failed, it's probably because of end-of-month differences (28/30/31)
+						// (Jan & Dec = 31, so no need to deal with above)
+						if (!date.SetDate(date.GetYear(), date.GetMonth() - 1, date.GetDay(), false))
+						{
+							date.SetDate(date.GetYear(), date.GetMonth(), 1);
+							--date;
+						}
+					}
+					if (SetCurrentDate(date, true))
+						bScroll = bPossibleScroll;
+				}
+				else
+					bScroll = true;
+				if (bScroll && pos == GetScrollPos(SB_VERT))
+				{
+					SetScrollPos(SB_VERT, pos - 1);
+					Invalidate();
+					date = m_Current; // To prevent multiple setting
+				}
+			}
 			break;
 		case VK_NEXT:
-			bHandled = true;
-			if (12 == date.GetMonth())
-				date.SetDate(date.GetYear() + 1, 1, date.GetDay());
-			else
-				date.SetDate(date.GetYear(), date.GetMonth() + 1, date.GetDay());
+			{
+				bHandled = true;
+				bool bScroll = false;
+				int pos = GetScrollPos(SB_VERT);
+				ARBDate curMonth = FirstDayOfMonth(pos);
+				curMonth = LastDayOfWeek(curMonth);
+				// There are 3 possible months: before, current, after:
+				//  before: date change, no scroll
+				//  current: date change, scroll
+				//  after: no date change, scroll
+				if (date.GetMonth() <= curMonth.GetMonth())
+				{
+					bool bPossibleScroll = (date.GetMonth() == curMonth.GetMonth());
+					if (12 == date.GetMonth())
+					{
+						date.SetDate(date.GetYear() + 1, 1, date.GetDay());
+					}
+					else
+					{
+						// If we failed, it's probably because of end-of-month differences (28/30/31)
+						// (Jan & Dec = 31, so no need to deal with above)
+						if (!date.SetDate(date.GetYear(), date.GetMonth() + 1, date.GetDay(), false))
+						{
+							date.SetDate(date.GetYear(), date.GetMonth() + 2, 1);
+							--date;
+						}
+					}
+					if (SetCurrentDate(date, true))
+						bScroll = bPossibleScroll;
+				}
+				else
+					bScroll = true;
+				if (bScroll && pos == GetScrollPos(SB_VERT))
+				{
+					SetScrollPos(SB_VERT, pos + 1);
+					Invalidate();
+					date = m_Current; // To prevent multiple setting
+				}
+			}
 			break;
 
 		case VK_HOME:

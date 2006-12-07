@@ -341,16 +341,25 @@ void ARBDate::SetToday()
 		pTime->tm_mday);
 }
 
-void ARBDate::SetDate(
+bool ARBDate::SetDate(
 		int inYr,
 		int inMon,
-		int inDay)
+		int inDay,
+		bool bClearOnError)
 {
-	m_Julian = GregorianToSdn(inYr, inMon, inDay);
+	bool bOk = true;
+	long julian = GregorianToSdn(inYr, inMon, inDay);
 	int yr, mon, day;
-	SdnToGregorian(m_Julian, &yr, &mon, &day);
+	SdnToGregorian(julian, &yr, &mon, &day);
 	if (yr != inYr || mon != inMon || day != inDay)
-		m_Julian = 0;
+	{
+		bOk = false;
+		if (bClearOnError)
+			m_Julian = 0;
+	}
+	else
+		m_Julian = julian;
+	return bOk;
 }
 
 ARBString ARBDate::GetString(
