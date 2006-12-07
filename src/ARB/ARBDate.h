@@ -173,11 +173,14 @@ public:
 	 * @param inYr Current year.
 	 * @param inMon Current month.
 	 * @param inDay Current day.
+	 * @param bClearOnError If the input date is bad, clear the existing date.
+	 * @return Whether date was set (invalid date fails)
 	 */
-	void SetDate(
+	bool SetDate(
 			int inYr,
 			int inMon,
-			int inDay);
+			int inDay,
+			bool bClearOnError = true);
 
 	ARBDate& operator=(ARBDate const& rhs)
 	{
