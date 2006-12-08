@@ -51,6 +51,10 @@ CDlgMessage::CDlgMessage(
 		UINT caption,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgMessage::IDD, pParent)
+	, m_rWin(0,0,0,0)
+	, m_rDlg(0,0,0,0)
+	, m_rMsg(0,0,0,0)
+	, m_rClose(0,0,0,0)
 {
 	if (0 != caption)
 		m_Caption.LoadString(caption);
@@ -64,12 +68,16 @@ void CDlgMessage::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgMessage)
+	DDX_Control(pDX, IDC_MESSAGE, m_ctrlMessage);
 	DDX_Text(pDX, IDC_MESSAGE, m_Message);
+	DDX_Control(pDX, IDOK, m_ctrlClose);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgMessage, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgMessage)
+	ON_WM_GETMINMAXINFO()
+	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -79,10 +87,44 @@ BOOL CDlgMessage::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
+	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
+
 	if (!m_Caption.IsEmpty())
 		SetWindowText(m_Caption);
 
-	GetDlgItem(IDOK)->SetFocus();
+	GetWindowRect(m_rWin);
+	GetClientRect(m_rDlg);
+	m_ctrlMessage.GetWindowRect(m_rMsg);
+	ScreenToClient(m_rMsg);
+	m_ctrlClose.GetWindowRect(m_rClose);
+	ScreenToClient(m_rClose);
+
+	m_ctrlClose.SetFocus();
 	return FALSE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgMessage::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
+{
+	lpMMI->ptMinTrackSize.x = m_rWin.Width();
+	lpMMI->ptMinTrackSize.y = m_rWin.Height();
+	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
+}
+
+void CDlgMessage::OnSize(UINT nType, int cx, int cy)
+{
+	CDlgBaseDialog::OnSize(nType, cx, cy);
+	if (::IsWindow(m_ctrlMessage.GetSafeHwnd()))
+	{
+		m_ctrlClose.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rClose.left), cy - (m_rDlg.Height() - m_rClose.bottom) - m_rClose.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlMessage.SetWindowPos(NULL,
+			0, 0,
+			cx - (m_rDlg.Width() - m_rMsg.Width()), cy - (m_rDlg.Height() - m_rMsg.Height()),
+			SWP_NOZORDER | SWP_NOMOVE);
+	}
 }

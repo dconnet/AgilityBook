@@ -49,9 +49,15 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgMessage)
 	enum { IDD = IDD_MESSAGE };
+	CEdit	m_ctrlMessage;
 	CString m_Message;
+	CButton	m_ctrlClose;
 	//}}AFX_DATA
 	CString m_Caption;
+	CRect m_rWin;
+	CRect m_rDlg;
+	CRect m_rMsg;
+	CRect m_rClose;
 
 	//{{AFX_VIRTUAL(CDlgMessage)
 protected:
@@ -61,6 +67,8 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgMessage)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
