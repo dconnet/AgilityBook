@@ -531,14 +531,12 @@ bool ARBAgilityRecordBook::Update(
 		ARBostringstream tmp;
 		tmp << _T("WARNING: ")
 			<< nDeletedRuns
-			<< _T(" run(s) deleted due to configuration changes.");
+			<< _T(" run(s) deleted due to configuration changes.")
+			<< _T("\n")
+			<< msgDelRuns.str();
 		ARBString msg = tmp.str();
 		ioCallBack.PostDelete(msg);
-		ioInfo << _T("\n")
-			<< msg
-			<< _T("\n")
-			<< msgDelRuns.str()
-			<< _T("\n");
+		ioInfo << _T("\n") << msg << _T("\n");
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.

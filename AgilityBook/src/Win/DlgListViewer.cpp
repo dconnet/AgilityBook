@@ -1114,6 +1114,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
+	, m_rCopy(0,0,0,0)
 	, m_rOK(0,0,0,0)
 	, m_SortColumn(1)
 {
@@ -1142,6 +1143,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
+	, m_rCopy(0,0,0,0)
 	, m_rOK(0,0,0,0)
 	, m_SortColumn(1)
 {
@@ -1169,6 +1171,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
+	, m_rCopy(0,0,0,0)
 	, m_rOK(0,0,0,0)
 	, m_SortColumn(1)
 {
@@ -1195,6 +1198,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
+	, m_rCopy(0,0,0,0)
 	, m_rOK(0,0,0,0)
 	, m_SortColumn(1)
 {
@@ -1221,6 +1225,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
+	, m_rCopy(0,0,0,0)
 	, m_rOK(0,0,0,0)
 	, m_SortColumn(1)
 {
@@ -1246,6 +1251,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_rWin(0,0,0,0)
 	, m_rDlg(0,0,0,0)
 	, m_rList(0,0,0,0)
+	, m_rCopy(0,0,0,0)
 	, m_rOK(0,0,0,0)
 	, m_SortColumn(1)
 {
