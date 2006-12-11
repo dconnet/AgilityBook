@@ -226,7 +226,9 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 	ARBostringstream data;
 	if (m_pDog)
 	{
-		data << _T("<h1 align=\"center\">Titling Points ")
+		CString title;
+		title.LoadString(IDS_TITLING_POINTS);
+		data << _T("<h1 align=\"center\">") << title <<_T(" ")
 			<< SanitizeStringForHTML(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
 			<< _T("</h1>")
 			<< _T("<h1><a href=\"") << ARB_PROTOCOL
@@ -551,14 +553,17 @@ ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
 
 void CPointsDataEvent::Details() const
 {
-	ARBString str(_T("Runs: "));
-	str += m_Div->GetName();
-	str += _T("/");
-	str += m_Level->GetName();
-	str += _T("/");
-	str += m_Event->GetName();
+	CString runs;
+	runs.LoadString(IDS_RUNS);
+	ARBostringstream str;
+	str << (LPCTSTR)runs << _T(": ")
+		<< m_Div->GetName()
+		<< _T("/")
+		<< m_Level->GetName()
+		<< _T("/")
+		<< m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
-	CDlgListViewer dlg(m_pDoc, str.c_str(), m_Dog ? &data : NULL, m_Matching, m_pParent);
+	CDlgListViewer dlg(m_pDoc, str.str().c_str(), m_Dog ? &data : NULL, m_Matching, m_pParent);
 	dlg.DoModal();
 }
 
@@ -617,8 +622,10 @@ ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
 		break;
 	case 2:
 		{
+			CString total;
+			total.LoadString(IDS_TOTAL);
 			ARBostringstream str2;
-			str2 << _T("Total: ");
+			str2 << (LPCTSTR)total << _T(": ");
 			if (0 < m_Filtered)
 				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
 			else
@@ -923,7 +930,9 @@ ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyAll::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
+	CString str;
+	str.LoadString(IDS_OTHERPOINTS);
+	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
@@ -987,7 +996,9 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyAllByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
+	CString str;
+	str.LoadString(IDS_OTHERPOINTS);
+	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
@@ -1051,7 +1062,9 @@ ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyLevel::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
+	CString str;
+	str.LoadString(IDS_OTHERPOINTS);
+	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
@@ -1121,7 +1134,9 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) cons
 
 void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _T("Other Points"), m_RunList, m_pParent);
+	CString str;
+	str.LoadString(IDS_OTHERPOINTS);
+	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
 
@@ -1234,7 +1249,12 @@ void CPointsDataItems::LoadData(
 				{
 					bHeaderInserted = true;
 					InsertVenueHeader(pParent, pDoc, inDog, pVenue);
-					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, _T("<h3>Titles</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">"))));
+					CString str;
+					str.LoadString(IDS_TITLES);
+					ARBString data(_T("<h3>"));
+					data += (LPCTSTR)str;
+					data += _T("</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
+					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
 				}
 				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataTitle(pParent, pDoc, inDog, pTitle)));
 			}
@@ -1268,7 +1288,12 @@ void CPointsDataItems::LoadData(
 				InsertVenueHeader(pParent, pDoc, inDog, pVenue);
 			}
 			bRunsInserted = true;
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, _T("<h3>Runs</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">"))));
+			CString str;
+			str.LoadString(IDS_RUNS);
+			ARBString data(_T("<h3>"));
+			data += (LPCTSTR)str;
+			data += _T("</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
 			int speedPts = 0;
 			bool bHasSpeedPts = false;
 			// Show events sorted out by division/level.

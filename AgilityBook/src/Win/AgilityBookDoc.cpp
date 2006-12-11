@@ -346,7 +346,9 @@ public:
 void CConfigActionCallback::PreDelete(ARBString const& inMsg)
 {
 	CString msg(inMsg.c_str());
-	msg += _T("\n\nAre you sure you want to continue?");
+	CString check;
+	check.LoadString(IDS_ARE_YOU_SURE_CONTINUE);
+	msg += _T("\n\n") + check;
 	if (IDNO == AfxMessageBox(msg, MB_ICONWARNING | MB_YESNO))
 	{
 		m_bContinue = false;
@@ -675,7 +677,8 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 	else if (0 < callback.m_ErrMsg.length())
 	{
-		CString msg(_T("Warning: Some non-fatal messages were generated while loading the file:\n\n"));
+		CString msg;
+		msg.LoadString(IDS_NONFATAL_MSGS);
 		msg += callback.m_ErrMsg.c_str();
 		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONINFORMATION);
@@ -777,7 +780,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	}
 	if (!bOk && !bAlreadyWarned)
 	{
-		AfxMessageBox(_T("Internal error: File not saved."), MB_ICONSTOP);
+		AfxMessageBox(IDS_INTERNAL_ERROR, MB_ICONSTOP);
 	}
 	return bOk;
 }
@@ -821,7 +824,7 @@ void CAgilityBookDoc::OnFileLinked()
 	CDlgFindLinks dlg(GetDogs());
 	if (0 == dlg.GetNumLinks())
 	{
-		AfxMessageBox(_T("No linked files found."), MB_ICONINFORMATION);
+		AfxMessageBox(IDS_NO_LINKED_FILES, MB_ICONINFORMATION);
 	}
 	else
 		dlg.DoModal();
@@ -1034,7 +1037,7 @@ public:
 	CFindInfo(CAgilityBookDoc* pDoc)
 		: m_pDoc(pDoc)
 	{
-		m_strCaption = _T("Search Notes");
+		m_strCaption.LoadString(IDS_SEARCH_NOTES);
 		m_bEnableSearch = false;
 		m_bSearchAll = true;
 		m_bEnableDirection = false;
@@ -1071,11 +1074,9 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	}
 	else
 	{
-		ARBostringstream msg;
-		msg << _T("Cannot find \"")
-			<< (LPCTSTR)m_strSearch
-			<< _T("\"");
-		AfxMessageBox(msg.str().c_str(), MB_ICONINFORMATION);
+		CString msg;
+		msg.FormatMessage(IDS_CANNOT_FIND, (LPCTSTR)m_strSearch);
+		AfxMessageBox(msg, MB_ICONINFORMATION);
 		return false;
 	}
 }

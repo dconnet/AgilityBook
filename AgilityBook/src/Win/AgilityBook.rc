@@ -440,21 +440,20 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 290, 113
+IDD_ABOUTBOX DIALOGEX 0, 0, 290, 105
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "About"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,233,7,50,14,WS_GROUP
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,3,20,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,3,21,20
     LTEXT           "Version",IDC_ABOUT_TEXT,40,7,185,34,SS_NOPREFIX
     LTEXT           "Link1",IDC_ABOUT_LINK1,55,43,170,8,SS_NOPREFIX | WS_TABSTOP
     LTEXT           "Link2",IDC_ABOUT_LINK2,55,52,170,8,SS_NOPREFIX | WS_TABSTOP
     LTEXT           "Useful links:",IDC_ABOUT_TEXT2,40,70,185,8
     LTEXT           "Link3",IDC_ABOUT_LINK3,55,80,170,8,SS_NOPREFIX | WS_TABSTOP
     LTEXT           "Link4",IDC_ABOUT_LINK4,55,89,170,8,SS_NOPREFIX | WS_TABSTOP
-    LTEXT           "Link5",IDC_ABOUT_LINK5,55,98,170,8,SS_NOPREFIX | WS_TABSTOP
     PUSHBUTTON      "Check for Updates...",IDC_ABOUT_UPDATE,208,64,75,14,0,0,HIDC_ABOUT_UPDATE
 END
 
@@ -1513,17 +1512,6 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,133,24,50,14
 END
 
-IDD_DOWNLOAD DIALOGEX 0, 0, 250, 45
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Update Download"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    CTEXT           "Version %1 is available. Would you like to download it?",IDC_DOWNLOAD_TEXT,7,7,236,8,SS_NOPREFIX
-    DEFPUSHBUTTON   "From Yahoo...",IDC_DOWNLOAD_YAHOO,13,24,75,14,0,0,HIDC_DOWNLOAD_YAHOO
-    PUSHBUTTON      "From SourceForge...",IDC_DOWNLOAD_SOURCEFORGE,100,24,75,14,0,0,HIDC_DOWNLOAD_SOURCEFORGE
-    PUSHBUTTON      "Cancel",IDCANCEL,187,24,50,14
-END
-
 IDD_POINTS_VIEW_SORT DIALOGEX 0, 0, 195, 55
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
@@ -1607,7 +1595,7 @@ BEGIN
         LEFTMARGIN, 5
         RIGHTMARGIN, 283
         TOPMARGIN, 7
-        BOTTOMMARGIN, 106
+        BOTTOMMARGIN, 98
     END
 
     IDD_NAME, DIALOG
@@ -2001,14 +1989,6 @@ BEGIN
         BOTTOMMARGIN, 49
     END
 
-    IDD_DOWNLOAD, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 243
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 38
-    END
-
     IDD_POINTS_VIEW_SORT, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -2181,86 +2161,91 @@ BEGIN
     IDS_BUTTON_ABORT        "Abort"
     IDS_BUTTON_IGNORE       "Ignore"
     IDS_BUTTON_RETRY        "Retry"
+    IDS_COL_ACTUAL_WORK     "Actual Work"
+    IDS_COL_AGE             "Age"
+    IDS_COL_ALL_DAY_EVENT   "All day event"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COL_BILLING         "Billing Information"
     IDS_COL_BREED           "Breed"
+    IDS_COL_CALLNAME        "Call Name"
+    IDS_COL_CATEGORIES      "Categories"
     IDS_COL_CLOSES          "Closes"
+    IDS_COL_CLOSING         "Closing"
     IDS_COL_CLUB            "Club"
+    IDS_COL_COMMENTS        "Comments"
+    IDS_COL_COMPANIES       "Companies"
+    IDS_COL_COMPLETE        "% Complete"
+    IDS_COL_COMPLETED_DATE  "Date Completed"
+    IDS_COL_CONDITIONS      "Conditions"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COL_CONTACTS        "Contacts"
+    IDS_COL_COURSEFAULTS    "Course Faults"
     IDS_COL_DATE            "Date"
+    IDS_COL_DESCRIPTION     "Description"
     IDS_COL_DIVISION        "Division"
+    IDS_COL_DIVISIONS       "Divisions"
+    IDS_COL_DOB             "Birthday"
     IDS_COL_DOG             "Dog"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_RUNS                "Runs"
-    IDS_POINTS              "Points"
-    IDS_CALENDAR            "Calendar"
-    IDS_TRAINING            "Training Log"
-    IDS_PARTNERS            "Partners"
-    IDS_VENUES              "Venues"
-    IDS_VENUE_NAME          "Venue"
-    IDS_FAULT_TYPES         "Fault Types"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_FAULT_TYPE_NAME     "Fault Name"
-    IDS_OTHERPOINTS         "Other Points"
-    IDS_OTHERPOINTS_NAME    "Other Points Name"
-    IDS_DIVISIONS           "Divisions"
-    IDS_DIVISION_NAME       "Division Name"
-    IDS_TITLES              "Titles"
-    IDS_LEVELS              "Levels"
-    IDS_LEVEL_NAME          "Level"
-    IDS_SUBLEVEL_NAME       "SubLevel"
-    IDS_EVENTS              "Events"
-    IDS_EVENT_NAME          "Event Name"
-    IDS_SCORING             "Scoring Methods"
-    IDS_Q                   "Q"
-    IDS_SQ                  "SQ"
-    IDS_SUPER_Q             "SuperQ"
-    IDS_SPEEDPTS            "SpeedPts"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_EXISTING_POINTS     "Existing Points"
-    IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
-    IDS_ABOUT_VERSION       "Version %1"
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
-    IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
-    IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
-    IDS_ABOUT_LINK_EMAILHELP 
-                            "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
-    IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
-    IDS_ABOUT_LINK_SOURCEFORGE 
-                            "Source Forge (downloads and source code)\thttp://sourceforge.net/project/showfiles.php?group_id=86294"
-    IDS_UPDATE_CURRENT      "No updates are available at this time."
-    IDS_UPDATE_UNKNOWN      "Unable to determine current released version."
-    IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
-    IDS_DELETE_EVENT_SCORING 
-                            "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."
-    IDS_NEW                 "<New>"
-    IDS_CONFIGURE           "Configure"
-    IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
+    IDS_COL_DUE_DATE        "Due Date"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_COL_END_DATE        "End Date"
+    IDS_COL_END_TIME        "End Time"
+    IDS_COL_ENTERED         "Entered"
     IDS_COL_EVENT           "Event"
+    IDS_COL_EVENTS          "Events"
     IDS_COL_FAULT           "Fault"
+    IDS_COL_FAULTS          "Faults"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_HANDLER         "Handler"
+    IDS_COL_HEIGHT          "Height"
     IDS_COL_IN_CLASS        "In Class"
     IDS_COL_JUDGE           "Judge"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_LEVEL           "Level"
     IDS_COL_LOCATION        "Location"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COL_MILEAGE         "Mileage"
+    IDS_COL_MIN_YPS         "MinYPS"
+    IDS_COL_MULTIPLIER      "Multiplier"
+    IDS_COL_MULTIQ          "MultiQ"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_NAME            "Name"
     IDS_COL_NOTE            "Note"
     IDS_COL_NOTES           "Notes"
     IDS_COL_NUMBER          "Number"
+    IDS_COL_OPENING         "Opening"
     IDS_COL_OPENS           "Opens"
+    IDS_COL_OPT_ATTENDEES   "Optional Attendees"
+    IDS_COL_ORGANIZER       "Meeting Organizer"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_COL_PLACE           "Place"
     IDS_COL_POINTS          "Points"
+    IDS_COL_PRIORITY        "Priority"
+    IDS_COL_PRIVATE         "Private"
     IDS_COL_PTS             "Pts"
 END
 
@@ -2269,239 +2254,510 @@ BEGIN
     IDS_COL_Q               "Q"
     IDS_COL_Q_D             "Q'd"
     IDS_COL_RECEIVED        "Received"
-    IDS_COL_SCORE           "Score"
-    IDS_COL_START_DATE      "Start Date"
-    IDS_COL_TIME            "Time"
-    IDS_COL_VENUE           "Venue"
-    IDS_COL_HEIGHT          "Height"
     IDS_COL_REG_NAME        "Registered Name"
-    IDS_COL_CALLNAME        "Call Name"
-    IDS_COL_TRIALNOTES      "Trial Notes"
-    IDS_COL_CONDITIONS      "Conditions"
-    IDS_COL_COURSEFAULTS    "Course Faults"
-    IDS_COL_YARDS           "Yards"
-    IDS_COL_YPS             "YPS"
-    IDS_COL_SCT             "SCT"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_COL_TOTAL_FAULTS    "Total Faults"
-    IDS_COL_REQ_OPENING     "Required Opening"
-    IDS_COL_REQ_CLOSING     "Required Closing"
-    IDS_COL_OPENING         "Opening"
-    IDS_COL_CLOSING         "Closing"
-    IDS_COL_REQ_POINTS      "Required Points"
-    IDS_COL_TITLE_PTS       "Title Points"
-    IDS_COL_COMMENTS        "Comments"
-    IDS_COL_FAULTS          "Faults"
-    IDS_COL_TENTATIVE       "Tentative"
-    IDS_COL_ENTERED         "Entered"
-    IDS_COL_DOB             "Birthday"
-    IDS_COL_AGE             "Age"
-    IDS_COL_TYPE            "Type"
-    IDS_COL_TITLE           "Title"
-    IDS_COL_TRIAL           "Trial"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_COL_SUBNAME         "SubName"
-    IDS_COL_VERIFIED        "Verified"
-    IDS_COL_SPEED           "Speed"
-    IDS_COL_SUBJECT         "Subject"
-    IDS_COL_START_TIME      "Start Time"
-    IDS_COL_END_TIME        "End Time"
-    IDS_COL_ALL_DAY_EVENT   "All day event"
     IDS_COL_REMINDER        "Reminder on/off"
     IDS_COL_REMINDER_DATE   "Reminder Date"
     IDS_COL_REMINDER_TIME   "Reminder Time"
-    IDS_COL_ORGANIZER       "Meeting Organizer"
     IDS_COL_REQ_ATTENDEES   "Required Attendees"
-    IDS_COL_OPT_ATTENDEES   "Optional Attendees"
+    IDS_COL_REQ_CLOSING     "Required Closing"
+    IDS_COL_REQ_OPENING     "Required Opening"
+    IDS_COL_REQ_POINTS      "Required Points"
     IDS_COL_RESOURCES       "Meeting Resources"
-    IDS_COL_BILLING         "Billing Information"
-    IDS_COL_CATEGORIES      "Categories"
+    IDS_COL_ROLE            "Role"
+    IDS_COL_RUNTYPE         "Run Type"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_DESCRIPTION     "Description"
-    IDS_COL_MILEAGE         "Mileage"
-    IDS_COL_PRIORITY        "Priority"
-    IDS_COL_PRIVATE         "Private"
+    IDS_COL_SCH_PRIORITY    "Schedule+ Priority"
+    IDS_COL_SCORE           "Score"
+    IDS_COL_SCT             "SCT"
     IDS_COL_SENSITIVITY     "Sensitivity"
     IDS_COL_SHOW_TIME_AS    "Show time as"
-    IDS_COL_DUE_DATE        "Due Date"
-    IDS_COL_COMPLETED_DATE  "Date Completed"
-    IDS_COL_COMPLETE        "% Complete"
-    IDS_COL_TOTAL_WORK      "Total Work"
-    IDS_COL_ACTUAL_WORK     "Actual Work"
-    IDS_COL_COMPANIES       "Companies"
-    IDS_COL_CONTACTS        "Contacts"
-    IDS_COL_ROLE            "Role"
-    IDS_COL_SCH_PRIORITY    "Schedule+ Priority"
+    IDS_COL_SPEED           "Speed"
+    IDS_COL_START_DATE      "Start Date"
+    IDS_COL_START_TIME      "Start Time"
     IDS_COL_STATUS          "Status"
+    IDS_COL_SUBJECT         "Subject"
+    IDS_COL_SUBNAME         "SubName"
+    IDS_COL_TENTATIVE       "Tentative"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_MULTIQ          "MultiQ"
-    IDS_COL_MIN_YPS         "MinYPS"
-    IDS_COL_MULTIPLIER      "Multiplier"
+    IDS_COL_TIME            "Time"
+    IDS_COL_TITLE           "Title"
+    IDS_COL_TITLE_PTS       "Title Points"
+    IDS_COL_TITLES          "Titles"
+    IDS_COL_TOTAL_FAULTS    "Total Faults"
+    IDS_COL_TOTAL_WORK      "Total Work"
+    IDS_COL_TRIAL           "Trial"
+    IDS_COL_TRIAL_EXISTPTS  "Trial / Existing Pts"
+    IDS_COL_TRIALNOTES      "Trial Notes"
+    IDS_COL_TYPE            "Type"
+    IDS_COL_URL             "URL"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
-    IDS_DELETE_ALL_OTHERPOINTS 
-                            "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
-    IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
-    IDS_NAME_IN_USE         "Name is already in use."
-    IDS_ALL                 "<All>"
-    IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
-    IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
-    IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
-    IDS_VIEWING_FILTERS     "Filters"
-    IDS_VIEWING_OPTIONS     "Options"
+    IDS_COL_VENUE           "Venue"
+    IDS_COL_VENUES          "Venues"
+    IDS_COL_VERIFIED        "Verified"
+    IDS_COL_YARDS           "Yards"
+    IDS_COL_YPS             "YPS"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_RUN_PROPERTIES      "Run Properties"
-    IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_SELECT_DIVISION     "Please select a division."
-    IDS_SELECT_LEVEL        "Please select a level."
-    IDS_SELECT_EVENT        "Please select an event."
-    IDS_ABOUT_LINK_YAHOO_FILES 
-                            "Yahoo Group (downloads)\thttp://groups.yahoo.com/group/AgilityRecordBook/files/"
-    IDS_SELECT_JUDGE        "Please select a judge."
-    IDS_SELECT_Q            "Please select a 'Q'."
-    IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
-    IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
-    IDS_SCORING_REQUIRED_POINTS "Required Points"
-    IDS_SCORING_POINTS      "Points"
-    IDS_NUM_EVENTS          "%1!d! events"
-    IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
-    IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
-    IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
+    IDS_SYSERR_MEMORY       "The operating system is out of memory or resources."
+    IDS_SYSERR_SE_ERR_PNF   "The specified path was not found."
+    IDS_SYSERR_SE_ERR_FNF   "The specified file was not found."
+    IDS_SYSERR_ERROR_BAD_FORMAT 
+                            "The .EXE file is invalid (non-Win32 .EXE or error in .EXE image)."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_NEED_CLUB           "You must create a hosting club before creating any events."
-    IDS_VENUE_CONFIG_MISSING 
-                            "Unable to locate configuration information for the venue '%1'."
-    IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_COPYOF              "Copy of "
-    IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
-    IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
-    IDS_CHANGESUBLEVEL_ISSUES 
-                            "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
-    IDS_NOCONFIGDATA_FOUND  "No configuration data found."
-    IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
-    IDS_OTHERPTS_ALL        "All Events"
-    IDS_OTHERPTS_EVENT      "Tally by Event"
-    IDS_OTHERPTS_LEVEL      "Tally by Level"
-    IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
-    IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
+    IDS_SYSERR_SE_ERR_ACCESSDENIED 
+                            "The operating system denied access to the specified file."
+    IDS_SYSERR_SE_ERR_ASSOCINCOMPLETE 
+                            "The filename association is incomplete or invalid."
+    IDS_SYSERR_SE_ERR_DDEBUSY 
+                            "The DDE transaction could not be completed because other DDE transactions were being processed."
+    IDS_SYSERR_SE_ERR_DDEFAIL "The DDE transaction failed."
+    IDS_SYSERR_SE_ERR_DDETIMEOUT 
+                            "The DDE transaction could not be completed because the request timed out."
+    IDS_SYSERR_SE_ERR_DLLNOTFOUND 
+                            "The specified dynamic-link library was not found."
+    IDS_SYSERR_SE_ERR_NOASSOC 
+                            "There is no application associated with the given filename extension."
+    IDS_SYSERR_SE_ERR_OOM   "There was not enough memory to complete the operation."
+    IDS_SYSERR_SE_ERR_SHARE "A sharing violation occurred. "
+    IDS_SYSERR_UNKNOWN      "Unknown Error (%1!ld!) occurred."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
-    IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
-    IDS_POINTS_PARTNERS     ", %1!d! partners"
-    IDS_POINTS_QS           "%1!d! Qs (%2!d!%%)"
-    IDS_POINTS_CLEAN        ", (%1!d! clean)"
-    IDS_POINTS_JUDGES       ", %1!d! judges"
-    IDS_POINTS_SQS          "[%1!d! SQ]"
-    IDS_POINTS_SPEED_SUBTOTAL "[%1!d! speed]"
-    IDS_POINTS_SPEED        "%1!d! Speed"
-    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
     IDS_FILEEXT_DEF_ARB     "arb"
     IDS_FILEEXT_FNAME_ARB   "*.arb"
     IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
-    IDS_CREATERUN_FAILED    "Error: Failed to create run."
-    IDS_CREATETRIAL_FILTERED 
-                            "Warning: The trial you have just created cannot be shown due to filter options."
-    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_NUM_TRAINING        "%1!d! entries"
     IDS_FILEEXT_DEF_DTD     "dtd"
     IDS_FILEEXT_FNAME_DTD   "*.dtd"
     IDS_FILEEXT_FILTER_DTD  "DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||"
     IDS_FILEEXT_DEF_XML     "xml"
     IDS_FILEEXT_FNAME_XML   "*.xml"
     IDS_FILEEXT_FILTER_XML  "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
-    IDS_ADDED_CAL_ITEMS     "Added %1!d! new calendar items."
-    IDS_FILEEXT_FILTER_TXT  "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
-    IDS_FILE_PREVIEW        "Preview of %1."
-    IDS_BLANK_COLUMN        "<Blank Column>"
-    IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
-    IDS_LIFETIME_POINTS     "LifeTime Points"
-    IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
-    IDS_INDICATOR_BLANK     "          "
-    IDS_ADDED_DOGS          "%1!d! dogs"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ADDED_REGNUMS       "%1!d! registration numbers"
-    IDS_ADDED_EXISTINGPTS   "%1!d! existing points"
-    IDS_ADDED_TITLES        "%1!d! titles"
-    IDS_ADDED_TRIALS        "%1!d! trials"
-    IDS_ADDED_JUDGES        "%1!d! judges"
-    IDS_ADDED_CLUBS         "%1!d! clubs"
-    IDS_ADDED_LOCATIONS     "%1!d! locations"
-    IDS_INFO_CLUB           "Club's Information"
-    IDS_INFO_JUDGE          "Judge's Information"
-    IDS_INFO_LOCATION       "Location Information"
     IDS_FILEEXT_DEF_VCS     "vcs"
     IDS_FILEEXT_FNAME_VCS   "*.vcs"
     IDS_FILEEXT_FILTER_VCS  "vCalendar (*.vcs)|*.vcs|All Files (*.*)|*.*||"
     IDS_FILEEXT_DEF_ICS     "ics"
     IDS_FILEEXT_FNAME_ICS   "*.ics"
     IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_ALL  "All Files (*.*)|*.*||"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_NAME_FILTER         "You must name a filter in order to save it."
+    IDS_FILEEXT_FILTER_BMP  "Bitmap Files (*.bmp)|*.bmp||"
+    IDS_FILEEXT_FILTER_TXTCSV 
+                            "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
     IDS_FILEEXT_FILTER_MSEXCEL 
                             "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
     IDS_FILEEXT_FILTER_OOCALC "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
-    IDS_CONFIGEVENT_STYLE   "Scoring Style"
-    IDS_CONFIGEVENT_TIMEFAULTMULT "Time Fault Multiplier"
-    IDS_CONFIGEVENT_REQOPEN "Required Opening"
-    IDS_CONFIGEVENT_REQCLOSE "Required Closing"
-    IDS_CONFIGEVENT_POINTS  "Points"
-    IDS_CONFIGEVENT_TF_FROMSCORE "Subtract time faults from score"
-    IDS_CONFIGEVENT_TF_UNDER "Compute time faults under SCT"
-    IDS_CONFIGEVENT_TF_OVER "Compute time faults over SCT"
-    IDS_CONFIGEVENT_CLEANQ  "Runs must be clean to Q"
-    IDS_CONFIGEVENT_DROPFRAC "Drop time fractions for faults"
-    IDS_CONFIGEVENT_BONUS   "Has Bonus Points"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_CONFIGEVENT_SUPERQ  "Has Super Qs"
-    IDS_CONFIGEVENT_SPEEDPTS "Has Speed Points"
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
+    IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
+    IDS_ABOUT_LINK_EMAILHELP 
+                            "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
+    IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
+    IDS_ABOUT_LINK_ARB_DOWNLOAD 
+                            "Agility Record Book Downloads\thttp://www.agilityrecordbook.com/download.php"
+    IDS_UPDATED_CONFIG      "The configuration has been updated. Would you like to merge the new one with your data?"
+    IDS_INTERNET_EXCEPTION  "Error: Is your internet connection active?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUT_VERSION       "Version %1"
+    IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
+    IDS_UPDATE_CURRENT      "No updates are available at this time."
+    IDS_UPDATE_UNKNOWN      "Unable to determine current released version."
+    IDS_VERSION_AVAILABLE   "Version %1 is available. Would you like to download it?"
+    IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ASSCOL_RUNS_FAULTS_TIME "Faults Then Time"
+    IDS_ASSCOL_RUNS_FAULTS_TIME_DESC "Runs like Standard and Jumpers"
+    IDS_ASSCOL_RUNS_TIME_FAULTS "Time Plus Faults"
+    IDS_ASSCOL_RUNS_TIME_FAULTS_DESC "Runs like Steeplechase"
+    IDS_ASSCOL_RUNS_OPEN_CLOSE "Opening/Closing Points Then Time"
+    IDS_ASSCOL_RUNS_OPEN_CLOSE_DESC "Runs like Gamblers and Jackpot"
+    IDS_ASSCOL_RUNS_POINTS  "Points Then Time"
+    IDS_ASSCOL_RUNS_POINTS_DESC "Runs like Snooker"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ASSCOL_CALENDAR     "Calendar"
+    IDS_ASSCOL_CALENDAR_DESC "Importing ndf exporting Calendar entries"
+    IDS_ASSCOL_TRAINING     "Training Log"
+    IDS_ASSCOL_TRAINING_DESC "Importing and exporting Training entries"
+    IDS_ASSCOL_VIEW_TREE_DOG "Tree - Dog"
+    IDS_ASSCOL_VIEW_TREE_DOG_DESC "Display of dogs in the Runs tree"
+    IDS_ASSCOL_VIEW_TREE_TRIAL "Tree - Trial"
+    IDS_ASSCOL_VIEW_TREE_TRIAL_DESC "Display of trials in the Runs tree"
+    IDS_ASSCOL_VIEW_TREE_RUN "Tree - Run"
+    IDS_ASSCOL_VIEW_TREE_RUN_DESC "Display of runs in the Runs tree"
+    IDS_ASSCOL_VIEW_RUNS_LIST "Runs"
+    IDS_ASSCOL_VIEW_RUNS_LIST_DESC "Display of runs in the Runs view"
+    IDS_ASSCOL_VIEW_CALENDAR_LIST "Calendar"
+    IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC 
+                            "Display of entries in the Calendar view"
+    IDS_ASSCOL_VIEW_TRAINING_LIST "Training Log"
+    IDS_ASSCOL_VIEW_TRAINING_LIST_DESC 
+                            "Display of entries in the Training Log"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ASSCOL_CALENDAR_APPT "Calendar (MS Outlook Appointment)"
+    IDS_ASSCOL_CALENDAR_APPT_DESC 
+                            "Exporting Calendar entries for importing into MS Outlook as Appointments"
+    IDS_ASSCOL_CALENDAR_TASK "Calendar (MS Outlook Task)"
+    IDS_ASSCOL_CALENDAR_TASK_DESC 
+                            "Exporting Calendar entries for importing into MS Outlook as Tasks"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZ_IMPORT_RUNS     "Import Trials and Runs"
+    IDS_WIZ_IMPORT_RUNS_EXCEL 
+                            "Import trial and run information from Microsoft Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+    IDS_WIZ_IMPORT_RUNS_CALC 
+                            "Import trial and run information from OpenOffice Calc.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+    IDS_WIZ_IMPORT_RUNS_SPREAD 
+                            "Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZ_IMPORT_RUNS_PLUS "Import Dogs, Trials, Runs and Judges"
+    IDS_WIZ_IMPORT_RUNS_ARB "Import dog, trial, run and judge information from Agility Record Book."
+    IDS_WIZ_EXPORT_RUNS     "Export Runs"
+    IDS_WIZ_EXPORT_RUNS_EXCEL 
+                            "Export trial and run information to Microsoft Excel."
+    IDS_WIZ_EXPORT_RUNS_CALC 
+                            "Export trial and run information to OpenOffice Calc."
+    IDS_WIZ_EXPORT_RUNS_SPREAD 
+                            "Export trial and run information so it can be imported into a spreadsheet."
+    IDS_WIZ_IMPORT_CAL      "Import Calendar"
+    IDS_WIZ_IMPORT_CAL_EXCEL "Import a calendar listing from Microsoft Excel."
+    IDS_WIZ_IMPORT_CAL_CALC "Import a calendar listing from OpenOffice Calc."
+    IDS_WIZ_IMPORT_CAL_SPREAD "Import a calendar listing from a spreadsheet."
+    IDS_WIZ_IMPORT_CAL_ARB  "Import a calendar listing that was exported from Agility Record Book."
+    IDS_WIZ_EXPORT_CAL      "Export Calendar"
+    IDS_WIZ_EXPORT_CAL_EXCEL 
+                            "Export your calendar listing to Microsoft Excel."
+    IDS_WIZ_EXPORT_CAL_CALC "Export your calendar listing to OpenOffice Calc."
+    IDS_WIZ_EXPORT_CAL_SPREAD "Export your calendar listing to a spreadsheet."
+    IDS_WIZ_EXPORT_CAL_ARB  "Export your calendar listing so it can be imported into Agility Record Book."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZ_EXPORT_CAL_VCAL "Export Calendar (vCalendar)"
+    IDS_WIZ_EXPORT_CAL_VCAL_SPREAD 
+                            "Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs."
+    IDS_WIZ_EXPORT_CAL_ICAL "Export Calendar (iCalendar)"
+    IDS_WIZ_EXPORT_CAL_ICAL_SPREAD 
+                            "Export calendar entries in iCalendar (.ics) format so they can be imported into other programs."
+    IDS_WIZ_EXPORT_CAL_APPT "Export Calendar (MS Outlook Appointment)"
+    IDS_WIZ_EXPORT_CAL_APPT_EXCEL 
+                            "Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments."
+    IDS_WIZ_EXPORT_CAL_APPT_SPREAD 
+                            "Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments."
+    IDS_WIZ_EXPORT_CAL_TASK "Export Calendar (MS Outlook Task)"
+    IDS_WIZ_EXPORT_CAL_TASK_EXCEL 
+                            "Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+    IDS_WIZ_EXPORT_CAL_TASK_SPREAD 
+                            "Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+    IDS_WIZ_IMPORT_LOG      "Import Training Log"
+    IDS_WIZ_IMPORT_LOG_EXCEL "Import a Training Log from Microsoft Excel."
+    IDS_WIZ_IMPORT_LOG_CALC "Import a Training Log from OpenOffice Calc."
+    IDS_WIZ_IMPORT_LOG_SPREAD "Import a Training Log from a spreadsheet."
+    IDS_WIZ_IMPORT_LOG_ARB  "Import a Training Log that was exported from Agility Record Book."
+    IDS_WIZ_EXPORT_LOG      "Export Training Log"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZ_EXPORT_LOG_EXCEL "Export your Training Log to Microsoft Excel."
+    IDS_WIZ_EXPORT_LOG_CALC "Export your Training Log to OpenOffice Calc."
+    IDS_WIZ_EXPORT_LOG_SPREAD "Export your Training Log to a spreadsheet."
+    IDS_WIZ_EXPORT_LOG_ARB  "Export your Training Log so it can be imported into Agility Record Book."
+    IDS_WIZ_IMPORT_CONFIG   "Import Configuration"
+    IDS_WIZ_IMPORT_CONFIG_ARB 
+                            "Update your configuration to support new and/or updated venues."
+    IDS_WIZ_EXPORT_CONFIG   "Export Configuration"
+    IDS_WIZ_EXPORT_CONFIG_ARB 
+                            "Export your configuration so it can be imported into Agility Record Book."
+    IDS_WIZ_EXPORT_DTD      "Export DTD"
+    IDS_WIZ_EXPORT_DTD_ARB  "Export the Document Type Definition. This data describes the XML format of the data file."
+    IDS_WIZ_EXPORT_XML      "Export File as XML"
+    IDS_WIZ_EXPORT_XML_ARB  "Export your data file as an XML file. The DTD will be contained within this file."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RUNS                "Runs"
+    IDS_POINTS              "Points"
+    IDS_CALENDAR            "Calendar"
+    IDS_TRAINING            "Training Log"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED               "Added "
+    IDS_ALL                 "<All>"
+    IDS_BLANK_COLUMN        "<Blank Column>"
+    IDS_BUTTONS_DIVISIONS   "Buttons: Divisions"
+    IDS_BUTTONS_EVENTS      "Buttons: Events"
+    IDS_BUTTONS_FAULTS      "Buttons: Faults"
+    IDS_BUTTONS_LEVELS      "Buttons: Levels"
+    IDS_BUTTONS_MULTIQS     "Buttons: MultiQs"
+    IDS_BUTTONS_OTHERPOINTS "Buttons: Other Points"
+    IDS_BUTTONS_TITLES      "Buttons: Titles"
+    IDS_BUTTONS_VENUES      "Buttons: Venues"
+    IDS_CHANGED             "Changed"
+    IDS_CONFIGURE           "Configure"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CRCD_BTN_CLEARCOURSE "Clear Course"
+    IDS_CRCD_BTN_INSERTCOURSE "Insert Course"
+    IDS_CRCD_BTN_VIEWIMAGE  "View Image"
+    IDS_CRCD_BTN_VIEWTEXT   "View Text"
+    IDS_DELETED             "Deleted"
+    IDS_DIVISION_NAME       "Division Name"
+    IDS_EVENT_NAME          "Event Name"
+    IDS_EXISTING_POINTS     "Existing Points"
+    IDS_FAULT_TYPE_NAME     "Fault Name"
+    IDS_FAULT_TYPES         "Fault Types"
+    IDS_INDICATOR_BLANK     "          "
+    IDS_INFO_CLUB           "Club's Information"
+    IDS_INFO_JUDGE          "Judge's Information"
+    IDS_INFO_LOCATION       "Location Information"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_INVALID_NAME        "Invalid name"
+    IDS_LEVEL_NAME          "Level"
+    IDS_LIFETIME_POINTS     "LifeTime Points"
+    IDS_NEW                 "<New>"
+    IDS_OTHERPOINTS         "Other Points"
+    IDS_OTHERPOINTS_NAME    "Other Points Name"
+    IDS_OTHERPTS_ALL        "All Events"
+    IDS_OTHERPTS_EVENT      "Tally by Event"
+    IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
+    IDS_OTHERPTS_LEVEL      "Tally by Level"
+    IDS_PARTNERS            "Partners"
+    IDS_PLACEMENT_POINTS    "Placement Points"
+    IDS_Q                   "Q"
+    IDS_RUN_PROPERTIES      "Run Properties"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SCORING             "Scoring Methods"
+    IDS_SCORING_REQUIRED_POINTS "Required Points"
+    IDS_SEARCH_NOTES        "Search Notes"
+    IDS_SPEEDPTS            "SpeedPts"
+    IDS_SQ                  "SQ"
+    IDS_SUBLEVEL_NAME       "SubLevel"
+    IDS_SUPER_Q             "SuperQ"
+    IDS_TITLEPOINT_LIFETIME "Lifetime"
+    IDS_TITLEPOINT_NORMAL   "Normal"
+    IDS_TITLEPOINT_PLACEMENT "Placement"
+    IDS_TITLES              "Titles"
+    IDS_TITLING_POINTS      "Titling Points"
+    IDS_TOTAL               "Total"
+    IDS_UNEARNED            "<Unearned>"
+    IDS_UPDATED             "Updated "
+    IDS_VIEWING_FILTERS     "Filters"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VIEWING_OPTIONS     "Options"
+    IDS_EXPORTING           "Exporting..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_AFFECTED_RUNS       "Runs affected by configuration changes"
+    IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
+    IDS_ARE_YOU_SURE_CONTINUE "Are you sure you want to continue?"
+    IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
+    IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
+    IDS_BLANK_CALLNAME      "Callname may not be left blank."
+    IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_CHANGESUBLEVEL_ISSUES 
+                            "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_CONFIG_CHECK_VALUE  "Value is too small. Please enter a value greater than or equal to zero. (Note, entering zero will erase any speed points for the run.)"
+    IDS_CONFIG_PLACE_TOOSMALL "Place must be greater than zero."
+    IDS_CONFIG_PLACE_UNIQUE "Place must be unique."
+    IDS_CONFIGEVENT_BONUS   "Has Bonus Points"
+    IDS_CONFIGEVENT_CLEANQ  "Runs must be clean to Q"
+    IDS_CONFIGEVENT_DATEORDER "Valid From date is before the Valid To date"
+    IDS_CONFIGEVENT_DROPFRAC "Drop time fractions for faults"
     IDS_CONFIGEVENT_OVERLAPDATES 
                             "Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?"
-    IDS_CONFIGEVENT_DATEORDER "Valid From date is before the Valid To date"
     IDS_CONFIGEVENT_PLACEMENT0 
                             "In order to use a placement of 0, you must specify places that have values. OTherwise, turn off Speed Points."
-    IDS_CONFIG_PLACE_UNIQUE "Place must be unique."
-    IDS_CONFIG_PLACE_TOOSMALL "Place must be greater than zero."
-    IDS_CONFIG_CHECK_VALUE  "Value is too small. Please enter a value greater than or equal to zero. (Note, entering zero will erase any speed points for the run.)"
-    IDS_PLACEMENT_POINTS    "Placement Points"
+    IDS_CONFIGEVENT_REQCLOSE "Required Closing"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CONFIGEVENT_REQOPEN "Required Opening"
+    IDS_CONFIGEVENT_SPEEDPTS "Has Speed Points"
+    IDS_CONFIGEVENT_STYLE   "Scoring Style"
+    IDS_CONFIGEVENT_SUPERQ  "Has Super Qs"
+    IDS_CONFIGEVENT_TF_FROMSCORE "Subtract time faults from score"
+    IDS_CONFIGEVENT_TF_OVER "Compute time faults over SCT"
+    IDS_CONFIGEVENT_TF_UNDER "Compute time faults under SCT"
+    IDS_CONFIGEVENT_TIMEFAULTMULT "Time Fault Multiplier"
+    IDS_COPYOF              "Copy of "
+    IDS_CREATE_LEVEL        "Would you like to create a Level? (Answer 'No' to create a sub-level)"
+    IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
+    IDS_CREATERUN_FAILED    "Error: Failed to create run."
+    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
+    IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
+    IDS_CREATETRIAL_FILTERED 
+                            "Warning: The trial you have just created cannot be shown due to filter options."
+    IDS_DELETE_ALL_OTHERPOINTS 
+                            "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
+    IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_ENTER_NAME          "Please enter a name."
+    IDS_ENTER_SHORTNAME     "Please enter a short name."
+    IDS_INTERNAL_ERROR      "Internal error: File not saved."
+    IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
+    IDS_NAME_FILTER         "You must name a filter in order to save it."
+    IDS_NAME_IN_USE         "Name is already in use."
+    IDS_NAME_IN_USE_MERGE   "This name is currently in use. Do you want to merge your data into this existing name?"
+    IDS_NEED_CLUB           "You must create a hosting club before creating any events."
+    IDS_NEW_DOG             "Would you like to create a dog now?"
+    IDS_NO_LINKED_FILES     "No linked files found."
+    IDS_NOCONFIGDATA_FOUND  "No configuration data found."
+    IDS_NONFATAL_MSGS       "Warning: Some non-fatal messages were generated while loading the file:\n\n"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SELECT_DIVISION     "Please select a Division."
+    IDS_SELECT_EVENT        "Please select an Event."
+    IDS_SELECT_JUDGE        "Please select a Judge."
+    IDS_SELECT_LEVEL        "Please select a Level."
+    IDS_SELECT_Q            "Please select a 'Q'."
+    IDS_SELECT_STYLE        "Please select a Style."
+    IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
+    IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
+    IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
+    IDS_UNABLE_TO_OPEN      "Unable to open "
+    IDS_BAD_VERSION         "Unable to determine version information"
+    IDS_NO_DELIM_SPECIFIED  "No delimiter specified. Unable to preview data."
+    IDS_SPECIFY_DATEFORMAT  "Please specify a date format."
+    IDS_ERRORS_DURING_EXPORT 
+                            "Errors were encountered during export. Data may not be complete."
+    IDS_EXPORT_FAILED       "Failed to export data."
+    IDS_IMPORT_FAILED       "Failed to read data."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADDED_CAL_ITEMS     "Added %1!d! new calendar items."
+    IDS_ADDED_CLUBS         "%1!d! clubs"
+    IDS_ADDED_DOGS          "%1!d! dogs"
+    IDS_ADDED_EXISTINGPTS   "%1!d! existing points"
+    IDS_ADDED_JUDGES        "%1!d! judges"
+    IDS_ADDED_LOCATIONS     "%1!d! locations"
+    IDS_ADDED_REGNUMS       "%1!d! registration numbers"
+    IDS_ADDED_TITLES        "%1!d! titles"
+    IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
+    IDS_ADDED_TRIALS        "%1!d! trials"
+    IDS_CANNOT_FIND         "Cannot find ""%1"""
+    IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
+    IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
+    IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
+    IDS_DELETE_EVENT_SCORING 
+                            "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
+    IDS_FILE_PREVIEW        "Preview of %1."
+    IDS_LOAD_FAILED         "Failed to load '%1'."
+    IDS_NOT_VISIBLE         "Warning: %1!d! new entries are not visible due to your viewing options."
+    IDS_NUM_EVENTS          "%1!d! events"
+    IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
+    IDS_NUM_TRAINING        "%1!d! entries"
+    IDS_POINTS_CLEAN        ", (%1!d! clean)"
+    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_POINTS_PARTNERS     ", %1!d! partners"
+    IDS_POINTS_QS           "%1!d! Qs (%2!d!%%)"
+    IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
+    IDS_POINTS_SPEED        "%1!d! Speed"
+    IDS_POINTS_SPEED_SUBTOTAL "[%1!d! speed]"
+    IDS_POINTS_SQS          "[%1!d! SQ]"
+    IDS_READING_ROWS        "Reading %1!d! rows"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_READING_ROWSCOLS    "Reading %1!d! rows and %2!d! columns"
+    IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
+    IDS_TRIAL_DATES         "Trial dates: %1 to %2"
+    IDS_VENUE_CONFIG_MISSING 
+                            "Unable to locate configuration information for the venue '%1'."
+    IDS_YEARS               "%1 yrs"
+    IDS_IMPORT_SKIP_NOCONFIG 
+                            "Warning: Line %1!d!: Skipped entry, unable to find a valid configuration entry\n"
+    IDS_IMPORT_BAD_DATE_RUN "ERROR: Line %1!d!, Column %2!d!: Invalid run date: %3\n"
+    IDS_IMPORT_BAD_VENUE    "Warning: Line %1!d!: Skipped entry, invalid venue name: %2\n"
+    IDS_IMPORT_BAD_DATE_CALSTART 
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar start date: %3\n"
+    IDS_IMPORT_BAD_DATE_CALEND 
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar end date: %3\n"
+    IDS_IMPORT_BAD_DATE_CALOPEN 
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar opening date: %3\n"
+    IDS_IMPORT_BAD_DATE_CALCLOSE 
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar closing date: %3\n"
+    IDS_IMPORT_BAD_CAL_VALUE 
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar Entered value: %3 (valid: N, P or E)\n"
+    IDS_IMPORT_BAD_DATE_LOG "ERROR: Line %1!d!, Column %2!d!: Invalid training log date: %3\n"
+    IDS_IMPORT_STATS        "%1!d! entries added\n%2!d! duplicates (not added)\n%3!d! entries skipped"
 END
 
 STRINGTABLE 

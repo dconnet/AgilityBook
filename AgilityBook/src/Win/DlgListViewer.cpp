@@ -302,10 +302,18 @@ ARBString CDlgListViewerDataRun::OnNeedText(int iCol) const
 		default:
 			break;
 		case ScoringRunInfo::eScoringDeleted:
-			str << _T("Deleted");
+			{
+				CString tmp;
+				tmp.LoadString(IDS_DELETED);
+				str << (LPCTSTR)tmp;
+			}
 			break;
 		case ScoringRunInfo::eScoringChanged:
-			str << _T("Changed");
+			{
+				CString tmp;
+				tmp.LoadString(IDS_CHANGED);
+				str << (LPCTSTR)tmp;
+			}
 			break;
 		}
 		break;
@@ -1440,7 +1448,7 @@ BOOL CDlgListViewer::OnInitDialog()
 	else if (m_ScoringRuns)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(12);
-		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_STATUS, _T("Status"));
+		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_STATUS, IDS_COL_STATUS);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DOG, IDS_COL_DOG);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
@@ -1563,7 +1571,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(8);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_NAME, _T("Trial / Existing Pts"));
+		pColData->InsertColumn(m_ctrlList, COL_OTHER_NAME, IDS_COL_TRIAL_EXISTPTS);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_CLUB, IDS_COL_CLUB);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_VENUE, IDS_COL_VENUE);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, IDS_COL_DIVISION);

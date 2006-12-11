@@ -59,6 +59,7 @@
 
 #include "stdafx.h"
 #include "HyperLink.h"
+#include "resource.h"
 
 #include "atlconv.h"	// for Unicode conversion - requires #include <afxdisp.h> // MFC OLE automation classes
 #include "ARBTypes.h"
@@ -133,54 +134,72 @@ bool CHyperLink::GotoURL(CString const& url)
 
 	if (result <= HINSTANCE_ERROR)
 	{
-		ARBostringstream str;
-		str << _T("Unable to open hyperlink:\n\n");
+		CString str;
+		str.LoadString(IDS_UNABLE_TO_OPEN);
+		ARBostringstream msg;
+			msg << (LPCTSTR)str
+				<< (LPCTSTR)url
+				<< _T("\n");
 		switch (result)
 		{
 		case 0:
-			str << _T("The operating system is out\nof memory or resources.");
+			str.LoadString(IDS_SYSERR_MEMORY);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_PNF:
-			str << _T("The specified path was not found.");
+			str.LoadString(IDS_SYSERR_SE_ERR_PNF);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_FNF:
-			str << _T("The specified file was not found.");
+			str.LoadString(IDS_SYSERR_SE_ERR_FNF);
+			msg << (LPCTSTR)str;
 			break;
 		case ERROR_BAD_FORMAT:
-			str << _T("The .EXE file is invalid\n(non-Win32 .EXE or error in .EXE image).");
+			str.LoadString(IDS_SYSERR_ERROR_BAD_FORMAT);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_ACCESSDENIED:
-			str << _T("The operating system denied\naccess to the specified file.");
+			str.LoadString(IDS_SYSERR_SE_ERR_ACCESSDENIED);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_ASSOCINCOMPLETE:
-			str << _T("The filename association is\nincomplete or invalid.");
+			str.LoadString(IDS_SYSERR_SE_ERR_ASSOCINCOMPLETE);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_DDEBUSY:
-			str << _T("The DDE transaction could not\nbe completed because other DDE transactions\nwere being processed.");
+			str.LoadString(IDS_SYSERR_SE_ERR_DDEBUSY);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_DDEFAIL:
-			str << _T("The DDE transaction failed.");
+			str.LoadString(IDS_SYSERR_SE_ERR_DDEFAIL);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_DDETIMEOUT:
-			str << _T("The DDE transaction could not\nbe completed because the request timed out.");
+			str.LoadString(IDS_SYSERR_SE_ERR_DDETIMEOUT);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_DLLNOTFOUND:
-			str << _T("The specified dynamic-link library was not found.");
+			str.LoadString(IDS_SYSERR_SE_ERR_DLLNOTFOUND);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_NOASSOC:
-			str << _T("There is no application associated\nwith the given filename extension.");
+			str.LoadString(IDS_SYSERR_SE_ERR_NOASSOC);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_OOM:
-			str << _T("There was not enough memory to complete the operation.");
+			str.LoadString(IDS_SYSERR_SE_ERR_OOM);
+			msg << (LPCTSTR)str;
 			break;
 		case SE_ERR_SHARE:
-			str << _T("A sharing violation occurred. ");
+			str.LoadString(IDS_SYSERR_SE_ERR_SHARE);
+			msg << (LPCTSTR)str;
 			break;
 		default:
-			str << _T("Unknown Error (") << (int)result << _T(") occurred.");
+			str.FormatMessage(IDS_SYSERR_UNKNOWN, (long)result);
+			msg << (LPCTSTR)str;
 			break;
 		}
-		AfxMessageBox(str.str().c_str(), MB_ICONEXCLAMATION | MB_OK);
+		AfxMessageBox(msg.str().c_str(), MB_ICONEXCLAMATION | MB_OK);
 		return false;
 	}
 	else

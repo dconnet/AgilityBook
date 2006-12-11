@@ -190,27 +190,26 @@ void CDlgConfigVenue::SetAction(eAction inAction)
 	if (m_Action != inAction)
 	{
 		m_Action = inAction;
+		CString str(_T(""));
 		switch (m_Action)
 		{
-		default:
-			m_ctrlComments.SetWindowText(_T(""));
-			break;
 		case eDivisions:
-			m_ctrlComments.SetWindowText(_T("Buttons: Divisions"));
+			str.LoadString(IDS_BUTTONS_DIVISIONS);
 			break;
 		case eLevels:
-			m_ctrlComments.SetWindowText(_T("Buttons: Levels"));
+			str.LoadString(IDS_BUTTONS_LEVELS);
 			break;
 		case eTitles:
-			m_ctrlComments.SetWindowText(_T("Buttons: Titles"));
+			str.LoadString(IDS_BUTTONS_TITLES);
 			break;
 		case eEvents:
-			m_ctrlComments.SetWindowText(_T("Buttons: Events"));
+			str.LoadString(IDS_BUTTONS_EVENTS);
 			break;
 		case eMultiQ:
-			m_ctrlComments.SetWindowText(_T("Buttons: MultiQs"));
+			str.LoadString(IDS_BUTTONS_MULTIQS);
 			break;
 		}
+		m_ctrlComments.SetWindowText(str);
 	}
 	UpdateButtons();
 }
@@ -705,10 +704,15 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	m_ctrlEvents.SetExtendedStyle(m_ctrlEvents.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlMultiQ.SetExtendedStyle(m_ctrlMultiQ.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlDivisions.InsertColumn(0, _T("Divisions"));
-	m_ctrlTitles.InsertColumn(0, _T("Titles"));
-	m_ctrlEvents.InsertColumn(0, _T("Events"));
-	m_ctrlMultiQ.InsertColumn(0, _T("MultiQ"));
+	CString col;
+	col.LoadString(IDS_COL_DIVISIONS);
+	m_ctrlDivisions.InsertColumn(0, col);
+	col.LoadString(IDS_COL_TITLES);
+	m_ctrlTitles.InsertColumn(0, col);
+	col.LoadString(IDS_COL_EVENTS);
+	m_ctrlEvents.InsertColumn(0, col);
+	col.LoadString(IDS_COL_MULTIQ);
+	m_ctrlMultiQ.InsertColumn(0, col);
 
 	m_ctrlName.SetWindowText(m_pVenue->GetName().c_str());
 	m_ctrlLongName.SetWindowText(m_pVenue->GetLongName().c_str());
@@ -923,7 +927,7 @@ void CDlgConfigVenue::OnNew()
 			HTREEITEM hParentItem = TVI_ROOT;
 			ARBConfigLevelPtr pLevel;
 			if (pLevelData
-			&& IDNO == AfxMessageBox(_T("Would you like to create a Level? (Answer 'No' to create a sub-level)"), MB_YESNO | MB_ICONQUESTION))
+			&& IDNO == AfxMessageBox(IDS_CREATE_LEVEL, MB_YESNO | MB_ICONQUESTION))
 			{
 				id = IDS_SUBLEVEL_NAME;
 				hParentItem = hItem;
@@ -1355,7 +1359,7 @@ void CDlgConfigVenue::OnEdit()
 							bool bInUse = true;
 							if (0 < nTitles)
 							{
-								if (IDYES == AfxMessageBox(_T("This name is currently in use. Do you want to merge your data into this existing name?"), MB_YESNO | MB_ICONQUESTION))
+								if (IDYES == AfxMessageBox(IDS_NAME_IN_USE_MERGE, MB_YESNO | MB_ICONQUESTION))
 								{
 									bInUse = false;
 									m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pVenue->GetName(), oldName, name));
@@ -1728,7 +1732,7 @@ void CDlgConfigVenue::OnOK()
 	str.TrimLeft();
 	if (0 == str.GetLength())
 	{
-		AfxMessageBox(_T("Invalid name"));
+		AfxMessageBox(IDS_INVALID_NAME);
 		GotoDlgCtrl(&m_ctrlName);
 		return;
 	}

@@ -280,6 +280,9 @@
  * Localization stuff
  *  There is some stuff in:
  *    Element.cpp (errors due to XML parsing failures)
+ *    ARBConfigAction.cpp (action items)
+ *  Windows notes:
+ *    DlgOptionsCalendar.cpp (text items for planning/etc)
  */
 
 // Used when loading data.
@@ -309,6 +312,15 @@
 #define VALID_VALUES_ENTRY		_T("Valid values: 'E', 'P', 'N'")
 #define VALID_VALUES_OTHERPT	_T("Valid values: 'All', 'AllByEvent', 'Level', 'LevelByEvent'")
 #define VALID_VALUES_SCORE		_T("Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'")
+#define CALENDAR_TENTATIVE		_T("Information is tentative.")
+#define CALENDAR_NOTENTERED		_T("Not entered")
+#define CALENDAR_ENTERED		_T("Entered")
+#define CALENDAR_PLANNING		_T("Planning")
+#define CALENDAR_STATUS_N		_T("Status: ") CALENDAR_NOTENTERED
+#define CALENDAR_STATUS_E		_T("Status: ") CALENDAR_ENTERED
+#define CALENDAR_STATUS_P		_T("Status: ") CALENDAR_PLANNING
+#define CALENDAR_OPENS			_T("Trial opens: ")
+#define CALENDAR_CLOSES			_T("Trial closes: ")
 
 // Strings for formatting the information returned when updating configurations.
 // - Changed to functions in order to remove sprintf style formatting.
@@ -342,6 +354,12 @@ extern ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded);
 extern ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped);
 #define UPDATE_FORMAT_RULES_DEF(nAdded, nDeleted, nChanged, nSkipped) \
 	_T(" rules: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical")
+extern ARBString WARN_DELETED_RUNS(int nRuns, ARBString const& inRunsMsg);
+#define WARN_DELETED_RUNS_DEF(nRuns, inRunsMsg) \
+	_T("WARNING: ") << nRuns << _T(" run(s) deleted due to configuration changes.\n") << inRunsMsg
+extern ARBString UPDATE_TABLE_RUNS(int nRuns);
+#define UPDATE_TABLE_RUNS_DEF(nRuns) \
+	_T("Table setting updated in ") << nRuns << _T(" runs.");
 
 // Used in ARBConfigTitlePoints.cpp
 extern ARBString TITLE_POINTS_NAME_FORMAT(double points, double faults);

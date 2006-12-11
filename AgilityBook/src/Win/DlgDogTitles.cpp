@@ -279,7 +279,11 @@ void CDlgDogTitles::ListTitles()
 		if (pTitle->GetDate().IsValid())
 			m_ctrlTitles.SetItemText(nItem, 1, pTitle->GetDate().GetString(ARBDate::eDashYYYYMMDD).c_str());
 		else
-			m_ctrlTitles.SetItemText(nItem, 1, _T("<Unearned>"));
+		{
+			CString str;
+			str.LoadString(IDS_UNEARNED);
+			m_ctrlTitles.SetItemText(nItem, 1, str);
+		}
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());
 		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetGenericName().c_str());
 		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetRawName()).c_str());

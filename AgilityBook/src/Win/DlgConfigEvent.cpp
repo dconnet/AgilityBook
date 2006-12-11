@@ -316,7 +316,7 @@ void CDlgConfigEvent::FillControls()
 					}
 					break;
 				case ARBConfigScoring::eScoreThenTime:
-					str1.LoadString(IDS_CONFIGEVENT_POINTS);
+					str1.LoadString(IDS_POINTS);
 					info << (LPCTSTR)str1 << _T(": ")
 						<< pScoring->GetRequiredOpeningPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())

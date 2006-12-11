@@ -308,8 +308,10 @@ void CWizardExport::UpdatePreview()
 	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle()
 	&& delim.IsEmpty())
 	{
+		CString nodelim;
+		nodelim.LoadString(IDS_NO_DELIM_SPECIFIED);
 		m_ctrlPreview.InsertColumn(0, _T(""));
-		m_ctrlPreview.InsertItem(0, _T("No delimiter specified. Unable to preview data."));
+		m_ctrlPreview.InsertItem(0, nodelim);
 		m_ctrlPreview.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 		m_ctrlPreview.SetRedraw(TRUE);
 		m_ctrlPreview.Invalidate();
@@ -748,10 +750,10 @@ void CWizardExport::UpdatePreview()
 						case ARBCalendar::eNot:
 							break;
 						case ARBCalendar::eEntered:
-							data += AddPreviewData(iLine, idx, _T("Entered"));
+							data += AddPreviewData(iLine, idx, CALENDAR_ENTERED);
 							break;
 						case ARBCalendar::ePlanning:
-							data += AddPreviewData(iLine, idx, _T("Planning"));
+							data += AddPreviewData(iLine, idx, CALENDAR_PLANNING);
 							break;
 						}
 						break;
@@ -858,31 +860,39 @@ void CWizardExport::UpdatePreview()
 						{
 							CString tmp;
 							if (pCal->IsTentative())
-								tmp += _T("Information is tentative. ");
+							{
+								tmp += CALENDAR_TENTATIVE;
+								tmp += _T(" ");
+							}
 							switch (pCal->GetEntered())
 							{
 							default:
 							case ARBCalendar::eNot:
-								tmp += _T("Status: Not entered. ");
+								tmp += CALENDAR_STATUS_N;
+								tmp += _T(" ");
 								break;
 							case ARBCalendar::eEntered:
-								tmp += _T("Status: Entered. ");
+								tmp += CALENDAR_STATUS_E;
+								tmp += _T(" ");
 								break;
 							case ARBCalendar::ePlanning:
-								tmp += _T("Status: Planning. ");
+								tmp += CALENDAR_STATUS_P;
+								tmp += _T(" ");
 								break;
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += _T("Trial opens: ");
+								tmp += CALENDAR_OPENS;
+								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += _T("Trial closes: ");
+								tmp += CALENDAR_CLOSES;
+								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
 							}
@@ -1000,25 +1010,31 @@ void CWizardExport::UpdatePreview()
 						{
 							CString tmp;
 							if (pCal->IsTentative())
-								tmp += _T("Information is tentative. ");
+							{
+								tmp += CALENDAR_TENTATIVE;
+								tmp += _T(" ");
+							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += _T("Trial opens: ");
+								tmp += CALENDAR_OPENS;
+								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += _T("Trial closes: ");
+								tmp += CALENDAR_CLOSES;
+								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
 							}
-							tmp += _T("Trial dates: ");
-							tmp += pCal->GetStartDate().GetString(format).c_str();
-							tmp += _T(" to ");
-							tmp += pCal->GetEndDate().GetString(format).c_str();
+							CString tmp2;
+							tmp2.FormatMessage(IDS_TRIAL_DATES,
+								pCal->GetStartDate().GetString(format).c_str(),
+								pCal->GetEndDate().GetString(format).c_str());
+							tmp += tmp2;
 							tmp += _T(" ");
 							tmp += pCal->GetNote().c_str();
 							data += AddPreviewData(iLine, idx, tmp);
@@ -1141,7 +1157,7 @@ BOOL CWizardExport::OnWizardFinish()
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR == index)
 	{
-		AfxMessageBox(_T("Please specify a date format."), MB_ICONWARNING);
+		AfxMessageBox(IDS_SPECIFY_DATEFORMAT, MB_ICONWARNING);
 		GotoDlgCtrl(&m_ctrlDateFormat);
 		return FALSE;
 	}
@@ -1185,7 +1201,9 @@ BOOL CWizardExport::OnWizardFinish()
 			{
 #else
 			IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
-			pProgress->SetMessage(_T("Exporting..."));
+			CString exporting;
+			exporting.LoadString(IDS_EXPORTING);
+			pProgress->SetMessage(exporting);
 			pProgress->SetRange(1, 0, m_ctrlPreview.GetItemCount() * nColumnCount);
 			pProgress->Show();
 
@@ -1209,12 +1227,12 @@ BOOL CWizardExport::OnWizardFinish()
 #ifdef EXPORT_BY_ARRAY
 				if (!pExporter->ExportDataArray())
 				{
-					AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
+					AfxMessageBox(IDS_ERRORS_DURING_EXPORT, MB_ICONEXCLAMATION);
 				}
 			}
 			else
 			{
-				AfxMessageBox(_T("Errors were encountered during export. Data may not be complete."), MB_ICONEXCLAMATION);
+				AfxMessageBox(IDS_ERRORS_DURING_EXPORT, MB_ICONEXCLAMATION);
 			}
 #else
 			pExporter->AutoFit(0, nColumnCount-1);
@@ -1230,14 +1248,14 @@ BOOL CWizardExport::OnWizardFinish()
 		}
 		else
 		{
-			AfxMessageBox(_T("Failed to export data"));
+			AfxMessageBox(IDS_EXPORT_FAILED, MB_ICONSTOP);
 			return FALSE;
 		}
 	}
 	else
 	{
 		CString filter;
-		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
+		filter.LoadString(IDS_FILEEXT_FILTER_TXTCSV);
 		CFileDialog file(FALSE, _T(""), _T(""), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 		if (IDOK == file.DoModal())
 		{

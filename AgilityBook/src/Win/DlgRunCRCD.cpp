@@ -139,22 +139,31 @@ void CDlgRunCRCD::AdjustCRCD()
 
 void CDlgRunCRCD::SetView()
 {
+	CString str;
 	if (m_ViewText)
 	{
-		m_ctrlView.SetWindowText(_T("View Image"));
+		str.LoadString(IDS_CRCD_BTN_VIEWIMAGE);
+		m_ctrlView.SetWindowText(str);
 		m_ctrlText.ShowWindow(SW_SHOW);
 		m_ctrlCRCD.ShowWindow(SW_HIDE);
 	}
 	else
 	{
-		m_ctrlView.SetWindowText(_T("View Text"));
+		str.LoadString(IDS_CRCD_BTN_VIEWTEXT);
+		m_ctrlView.SetWindowText(str);
 		m_ctrlText.ShowWindow(SW_HIDE);
 		m_ctrlCRCD.ShowWindow(SW_SHOW);
 	}
 	if (m_Insert)
-		m_ctrlInsert.SetWindowText(_T("Insert Course"));
+	{
+		str.LoadString(IDS_CRCD_BTN_INSERTCOURSE);
+		m_ctrlInsert.SetWindowText(str);
+	}
 	else
-		m_ctrlInsert.SetWindowText(_T("Clear Course"));
+	{
+		str.LoadString(IDS_CRCD_BTN_CLEARCOURSE);
+		m_ctrlInsert.SetWindowText(str);
+	}
 	if (m_metaFile)
 	{
 		m_ctrlEdit.EnableWindow(TRUE);

@@ -261,7 +261,7 @@ void ARBConfig::Default()
 ARBString ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
 	ARBString dtd;
-#ifdef WIN32
+#ifdef _WINDOWS
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
 	{
@@ -283,7 +283,7 @@ ARBString ARBConfig::GetDTD(bool bNormalizeCRNL)
 	}
 #else
 	// @todo: Porting issues: Not currently implemented
-	dtd = _T("<!-- Not implemented on non-win32 platforms -->\n");
+	dtd = _T("<!-- Not implemented on non-windows platforms -->\n");
 #endif
 	return dtd;
 }

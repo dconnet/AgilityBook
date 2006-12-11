@@ -116,7 +116,9 @@ void CDlgOptionsProgram::OnShowSplash()
 void CDlgOptionsProgram::OnBrowse()
 {
 	UpdateData(TRUE);
-	CFileDialog dlg(TRUE, NULL, m_Splash, OFN_FILEMUSTEXIST, _T("Bitmap Files (*.bmp)|*.bmp||"), this);
+	CString bmpFilter;
+	bmpFilter.LoadString(IDS_FILEEXT_FILTER_BMP);
+	CFileDialog dlg(TRUE, NULL, m_Splash, OFN_FILEMUSTEXIST, bmpFilter, this);
 	if (IDOK == dlg.DoModal())
 	{
 		m_Splash = dlg.GetPathName();

@@ -618,21 +618,21 @@ void CDlgConfigEventMethod::OnOK()
 	int idxDiv = m_ctrlDivision.GetCurSel();
 	if (LB_ERR == idxDiv)
 	{
-		AfxMessageBox(_T("Please select a Division"), MB_ICONWARNING);
+		AfxMessageBox(IDS_SELECT_DIVISION, MB_ICONWARNING);
 		GotoDlgCtrl(&m_ctrlDivision);
 		return;
 	}
 	int idxLevel = m_ctrlLevel.GetCurSel();
 	if (LB_ERR == idxLevel)
 	{
-		AfxMessageBox(_T("Please select a Level"), MB_ICONWARNING);
+		AfxMessageBox(IDS_SELECT_LEVEL, MB_ICONWARNING);
 		GotoDlgCtrl(&m_ctrlLevel);
 		return;
 	}
 	int idxType = m_ctrlType.GetCurSel();
 	if (LB_ERR == idxType)
 	{
-		AfxMessageBox(_T("Please select a Style"), MB_ICONWARNING);
+		AfxMessageBox(IDS_SELECT_STYLE, MB_ICONWARNING);
 		GotoDlgCtrl(&m_ctrlType);
 		return;
 	}

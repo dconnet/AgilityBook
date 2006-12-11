@@ -626,31 +626,31 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	{
 		ARBostringstream str;
 		if (IsTentative())
-			str << _T("Information is tentative. ");
+			str << CALENDAR_TENTATIVE << _T(" ");
 		switch (GetEntered())
 		{
 		default:
 		case ARBCalendar::eNot:
-			str << _T("Status: Not entered. ");
+			str << CALENDAR_STATUS_N << _T(" ");
 			break;
 		case ARBCalendar::eEntered:
-			str << _T("Status: Entered. ");
+			str << CALENDAR_STATUS_E << _T(" ");
 			break;
 		case ARBCalendar::ePlanning:
-			str << _T("Status: Planning. ");
+			str << CALENDAR_STATUS_P << _T(" ");
 			break;
 		}
 		if (m_DateOpening.IsValid())
 		{
-			str << _T("Trial opens: ");
-			str << m_DateOpening.GetString(ARBDate::eDefault);
-			str << _T(" ");
+			str << CALENDAR_OPENS
+				<< m_DateOpening.GetString(ARBDate::eDefault)
+				<< _T(" ");
 		}
 		if (m_DateClosing.IsValid())
 		{
-			str << _T("Trial closes: ");
-			str << m_DateClosing.GetString(ARBDate::eDefault);
-			str << _T(" ");
+			str << CALENDAR_CLOSES
+				<< m_DateClosing.GetString(ARBDate::eDefault)
+				<< _T(" ");
 		}
 		str << GetNote();
 		ioStream->DoDESCRIPTION(str.str());
