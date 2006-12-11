@@ -150,9 +150,13 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 		t = m_DateTo.GetDate();
 	m_ctrlDateTo.SetTime(&t);
 
-	m_ctrlItems.InsertColumn(0, _T("Division"));
-	m_ctrlItems.InsertColumn(1, _T("Level"));
-	m_ctrlItems.InsertColumn(2, _T("Event"));
+	CString col;
+	col.LoadString(IDS_COL_DIVISION);
+	m_ctrlItems.InsertColumn(0, col);
+	col.LoadString(IDS_COL_LEVEL);
+	m_ctrlItems.InsertColumn(1, col);
+	col.LoadString(IDS_COL_EVENT);
+	m_ctrlItems.InsertColumn(2, col);
 
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
@@ -298,7 +302,7 @@ void CDlgConfigMultiQ::OnOK()
 	m_Name.TrimLeft();
 	if (m_Name.IsEmpty())
 	{
-		AfxMessageBox(_T("Please enter a name."), MB_ICONINFORMATION);
+		AfxMessageBox(IDS_ENTER_NAME, MB_ICONINFORMATION);
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_NAME));
 		return;
 	}
@@ -306,7 +310,7 @@ void CDlgConfigMultiQ::OnOK()
 	m_ShortName.TrimLeft();
 	if (m_ShortName.IsEmpty())
 	{
-		AfxMessageBox(_T("Please enter a short name."), MB_ICONINFORMATION);
+		AfxMessageBox(IDS_ENTER_SHORTNAME, MB_ICONINFORMATION);
 		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_SHORTNAME));
 		return;
 	}

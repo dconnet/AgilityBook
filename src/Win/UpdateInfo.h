@@ -96,4 +96,5 @@ private:
 	short m_VerConfig;
 	ARBString m_FileName;
 	ARBString m_InfoMsg;
+	CString m_UpdateDownload;
 };

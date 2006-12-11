@@ -656,9 +656,9 @@ bool CWizardExcelImport::GetData(
 			else
 				msg = m_FileName;
 			ioProgress->SetCaption(msg);
-			ARBostringstream str;
-			str << _T("Reading ") << nRows << _T(" rows and ") << nCols << _T(" columns");
-			ioProgress->SetMessage(str.str().c_str());
+			CString str;
+			str.FormatMessage(IDS_READING_ROWSCOLS, nRows, nCols);
+			ioProgress->SetMessage(str);
 			ioProgress->SetNumProgressBars(1);
 			ioProgress->SetRange(1, 0, nRows);
 			ioProgress->Show();
@@ -981,9 +981,9 @@ bool CWizardCalcImport::GetData(
 			else
 				msg = m_FileName;
 			ioProgress->SetCaption(msg);
-			ARBostringstream str;
-			str << _T("Reading ") << nRows << _T(" rows");
-			ioProgress->SetMessage(str.str().c_str());
+			CString str;
+			str.FormatMessage(IDS_READING_ROWS, nRows);
+			ioProgress->SetMessage(str);
 			ioProgress->SetNumProgressBars(1);
 			ioProgress->SetRange(1, 0, nRows);
 			ioProgress->Show();

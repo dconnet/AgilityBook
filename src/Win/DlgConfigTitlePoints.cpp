@@ -104,16 +104,18 @@ BOOL CDlgConfigTitlePoints::OnInitDialog()
 
 	static struct
 	{
-		LPCTSTR pText;
+		UINT iText;
 		ETitlePointType eType;
 	} sc_Types[] = {
-		{ _T("Normal"), eTitleNormal},
-		{ _T("Lifetime"), eTitleLifetime},
-		{ _T("Placement"), eTitlePlacement}
+		{ IDS_TITLEPOINT_NORMAL, eTitleNormal},
+		{ IDS_TITLEPOINT_LIFETIME, eTitleLifetime},
+		{ IDS_TITLEPOINT_PLACEMENT, eTitlePlacement}
 	};
 	for (int index = 0; index < 3; ++index)
 	{
-		int idx = m_ctrlType.AddString(sc_Types[index].pText);
+		CString str;
+		str.LoadString(sc_Types[index].iText);
+		int idx = m_ctrlType.AddString(str);
 		m_ctrlType.SetItemData(idx, sc_Types[index].eType);
 		if (m_Type == sc_Types[index].eType)
 			m_ctrlType.SetCurSel(index);

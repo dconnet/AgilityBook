@@ -185,6 +185,18 @@ ARBString PLACEMENT_POINTS_NAME_FORMAT(double points, short place)
 	buffer << PLACEMENT_POINTS_NAME_FORMAT_DEF(points, place);
 	return buffer.str();
 }
+ARBString WARN_DELETED_RUNS(int nRuns, ARBString const& inRunsMsg)
+{
+	ARBostringstream buffer;
+	buffer << WARN_DELETED_RUNS_DEF(nRuns, inRunsMsg);
+	return buffer.str();
+}
+ARBString UPDATE_TABLE_RUNS(int nRuns)
+{
+	ARBostringstream buffer;
+	buffer << UPDATE_TABLE_RUNS_DEF(nRuns);
+	return buffer.str();
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -528,13 +540,7 @@ bool ARBAgilityRecordBook::Update(
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
-		ARBostringstream tmp;
-		tmp << _T("WARNING: ")
-			<< nDeletedRuns
-			<< _T(" run(s) deleted due to configuration changes.")
-			<< _T("\n")
-			<< msgDelRuns.str();
-		ARBString msg = tmp.str();
+		ARBString msg = WARN_DELETED_RUNS(nDeletedRuns, msgDelRuns.str());
 		ioCallBack.PostDelete(msg);
 		ioInfo << _T("\n") << msg << _T("\n");
 	}
@@ -590,10 +596,8 @@ bool ARBAgilityRecordBook::Update(
 		if (0 < nUpdated)
 		{
 			nChanges += nUpdated;
-			ARBostringstream msg;
-			ioInfo << _T("Table setting updated in ")
-				<< nUpdated
-				<< _T(" runs.\n");
+			ioInfo << UPDATE_TABLE_RUNS(nUpdated)
+				<< _T("\n");
 		}
 	}
 

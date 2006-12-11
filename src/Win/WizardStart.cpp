@@ -178,209 +178,110 @@ static struct
 		// 0: Automatic next page
 		// other: ID of dialog
 		LRESULT nextPage;
-		// Listing (NULL denotes no entry)
-		TCHAR const* item;
+		// Listing (0 denotes no entry)
+		UINT item;
 		// Description shown when listing is selected.
-		TCHAR const* desc;
+		UINT desc;
 	} data[4]; // Data must agree with radio buttons.
 } const sc_Items[] =
 {
 	{WIZ_IMPORT_RUNS,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Trials and Runs"),
-			_T("Import trial and run information from Microsoft Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Trials and Runs"),
-			_T("Import trial and run information from OpenOffice Calc.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Trials and Runs"),
-			_T("Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names.")
-		},
-		{PSWIZB_FINISH, -1,
-			_T("Import Dogs, Trials, Runs and Judges"),
-			_T("Import dog, trial, run and judge information from Agility Record Book.")
-		}
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_RUNS, IDS_WIZ_IMPORT_RUNS_EXCEL},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_RUNS, IDS_WIZ_IMPORT_RUNS_CALC},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_RUNS, IDS_WIZ_IMPORT_RUNS_SPREAD},
+		{PSWIZB_FINISH, -1, IDS_WIZ_IMPORT_RUNS_PLUS, IDS_WIZ_IMPORT_RUNS_ARB}
 	} },
 	{WIZ_EXPORT_RUNS,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Runs"),
-			_T("Export trial and run information to Microsoft Excel.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Runs"),
-			_T("Export trial and run information to OpenOffice Calc.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Runs"),
-			_T("Export trial and run information so it can be imported into a spreadsheet.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_RUNS, IDS_WIZ_EXPORT_RUNS_EXCEL},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_RUNS, IDS_WIZ_EXPORT_RUNS_CALC},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_RUNS, IDS_WIZ_EXPORT_RUNS_SPREAD},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0}
 	} },
 	{WIZ_IMPORT_CALENDAR,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Calendar"),
-			_T("Import a calendar listing from Microsoft Excel.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Calendar"),
-			_T("Import a calendar listing from OpenOffice Calc.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Calendar"),
-			_T("Import a calendar listing from a spreadsheet.")
-		},
-		{PSWIZB_FINISH, -1,
-			_T("Import Calendar"),
-			_T("Import a calendar listing that was exported from Agility Record Book.")
-		}
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_CAL, IDS_WIZ_IMPORT_CAL_EXCEL},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_CAL, IDS_WIZ_IMPORT_CAL_CALC},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_CAL, IDS_WIZ_IMPORT_CAL_SPREAD},
+		{PSWIZB_FINISH, -1, IDS_WIZ_IMPORT_CAL, IDS_WIZ_IMPORT_CAL_ARB},
 	} },
 	{WIZ_EXPORT_CALENDAR,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar"),
-			_T("Export your calendar listing to Microsoft Excel.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar"),
-			_T("Export your calendar listing to OpenOffice Calc.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar"),
-			_T("Export your calendar listing to a spreadsheet.")
-		},
-		{PSWIZB_FINISH, -1,
-			_T("Export Calendar"),
-			_T("Export your calendar listing so it can be imported into Agility Record Book.")
-		}
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL, IDS_WIZ_EXPORT_CAL_EXCEL},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL, IDS_WIZ_EXPORT_CAL_CALC},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL, IDS_WIZ_EXPORT_CAL_SPREAD},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_CAL, IDS_WIZ_EXPORT_CAL_ARB}
 	} },
 	{WIZ_EXPORT_CALENDAR_VCAL,
 	{
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_FINISH, -1,
-			_T("Export Calendar (vCalendar)"),
-			_T("Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_CAL_VCAL, IDS_WIZ_EXPORT_CAL_VCAL_SPREAD},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0}
 	} },
 	{WIZ_EXPORT_CALENDAR_ICAL,
 	{
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_FINISH, -1,
-			_T("Export Calendar (iCalendar)"),
-			_T("Export calendar entries in iCalendar (.ics) format so they can be imported into other programs.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_CAL_ICAL, IDS_WIZ_EXPORT_CAL_ICAL_SPREAD},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0}
 	} },
 	{WIZ_EXPORT_CALENDAR_APPT,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar (MS Outlook Appointment)"),
-			_T("Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar (MS Outlook Appointment)"),
-			_T("Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL_APPT, IDS_WIZ_EXPORT_CAL_APPT_EXCEL},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL_APPT, IDS_WIZ_EXPORT_CAL_APPT_SPREAD},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0}
 	} },
 	{WIZ_EXPORT_CALENDAR_TASK,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar (MS Outlook Task)"),
-			_T("Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Calendar (MS Outlook Task)"),
-			_T("Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported.")
-		},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL}
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL_TASK, IDS_WIZ_EXPORT_CAL_TASK_EXCEL},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_CAL_TASK, IDS_WIZ_EXPORT_CAL_TASK_SPREAD},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0}
 	} },
 	{WIZ_IMPORT_LOG,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Training Log"),
-			_T("Import a Training Log from Microsoft Excel.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Training Log"),
-			_T("Import a Training Log from OpenOffice Calc.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_IMPORT,
-			_T("Import Training Log"),
-			_T("Import a Training Log from a spreadsheet.")
-		},
-		{PSWIZB_FINISH, -1,
-			_T("Import Training Log"),
-			_T("Import a Training Log that was exported from Agility Record Book.")
-		}
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_LOG, IDS_WIZ_IMPORT_LOG_EXCEL},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_LOG, IDS_WIZ_IMPORT_LOG_CALC},
+		{PSWIZB_NEXT, IDD_WIZARD_IMPORT, IDS_WIZ_IMPORT_LOG, IDS_WIZ_IMPORT_LOG_SPREAD},
+		{PSWIZB_FINISH, -1, IDS_WIZ_IMPORT_LOG, IDS_WIZ_IMPORT_LOG_ARB}
 	} },
 	{WIZ_EXPORT_LOG,
 	{
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Training Log"),
-			_T("Export your Training Log to Microsoft Excel.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Training Log"),
-			_T("Export your Training Log to OpenOffice Calc.")
-		},
-		{PSWIZB_NEXT, IDD_WIZARD_EXPORT,
-			_T("Export Training Log"),
-			_T("Export your Training Log to a spreadsheet.")
-		},
-		{PSWIZB_FINISH, -1,
-			_T("Export Training Log"),
-			_T("Export your Training Log so it can be imported into Agility Record Book.")
-		}
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_LOG, IDS_WIZ_EXPORT_LOG_EXCEL},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_LOG, IDS_WIZ_EXPORT_LOG_CALC},
+		{PSWIZB_NEXT, IDD_WIZARD_EXPORT, IDS_WIZ_EXPORT_LOG, IDS_WIZ_EXPORT_LOG_SPREAD},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_LOG, IDS_WIZ_EXPORT_LOG_ARB}
 	} },
 	{WIZ_IMPORT_CONFIGURATION,
 	{
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_FINISH, -1,
-			_T("Import Configuration"),
-			_T("Update your configuration to support new and/or updated venues.")
-		}
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_FINISH, -1, IDS_WIZ_IMPORT_CONFIG, IDS_WIZ_IMPORT_CONFIG_ARB}
 	} },
 	{WIZ_EXPORT_CONFIGURATION,
 	{
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_FINISH, -1,
-			_T("Export Configuration"),
-			_T("Export your configuration so it can be imported into Agility Record Book.")
-		}
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_CONFIG, IDS_WIZ_EXPORT_CONFIG_ARB}
 	} },
 	{WIZ_EXPORT_DTD,
 	{
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_FINISH, -1,
-			_T("Export DTD"),
-			_T("Export the Document Type Definition. This data describes the XML format of the data file.")
-		}
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_DTD, IDS_WIZ_EXPORT_DTD_ARB}
 	} },
 	{WIZ_EXPORT_XML,
 	{
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_DISABLEDFINISH, -1, NULL, NULL},
-		{PSWIZB_FINISH, -1,
-			_T("Export File as XML"),
-			_T("Export your data file as an XML file. The DTD will be contained within this file.")
-		}
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_DISABLEDFINISH, -1, 0, 0},
+		{PSWIZB_FINISH, -1, IDS_WIZ_EXPORT_XML, IDS_WIZ_EXPORT_XML_ARB}
 	} },
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
@@ -399,11 +300,15 @@ void CWizardStart::UpdateList()
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_APPT
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_TASK)
 			bAdd = false;
-		if (bAdd && NULL == sc_Items[i].data[m_Style].item)
+		if (bAdd && 0 == sc_Items[i].data[m_Style].item)
 			bAdd = false;
 		int index = LB_ERR;
 		if (bAdd)
-			index = m_ctrlList.AddString(sc_Items[i].data[m_Style].item);
+		{
+			CString str;
+			str.LoadString(sc_Items[i].data[m_Style].item);
+			index = m_ctrlList.AddString(str);
+		}
 		if (LB_ERR != index)
 			m_ctrlList.SetItemData(index, i);
 	}
@@ -698,8 +603,8 @@ BOOL CWizardStart::OnWizardFinish()
 								m_pDoc->GetAllTrialLocations(namesInUse, false);
 								m_pDoc->GetARB().GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 							}
-							//"Added %1!d! new dogs, updated %2!d! dogs and added %3!d! judges."
-							CString str(_T("Added "));
+							CString str;
+							str.LoadString(IDS_ADDED);
 							bool bAdded = false;
 							if (0 < countDog)
 							{
@@ -779,7 +684,12 @@ BOOL CWizardStart::OnWizardFinish()
 								if (bAdded)
 									str += _T(", ");
 								else
-									str += _T("\nUpdated ");
+								{
+									CString tmp;
+									tmp.LoadString(IDS_UPDATED);
+									str += _T("\n");
+									str += tmp;
+								}
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsUpdated);
@@ -790,7 +700,12 @@ BOOL CWizardStart::OnWizardFinish()
 								if (bAdded)
 									str += _T(", ");
 								else
-									str += _T("\nUpdated ");
+								{
+									CString tmp;
+									tmp.LoadString(IDS_UPDATED);
+									str += _T("\n");
+									str += tmp;
+								}
 								bAdded = true;
 								CString str2;
 								str2.FormatMessage(IDS_ADDED_TITLES, countTitlesUpdated);
@@ -1151,7 +1066,7 @@ void CWizardStart::OnSelchangeExportList()
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
 	{
-		msg = sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc;
+		msg.LoadString(sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc);
 	}
 	m_ctrlDesc.SetWindowText(msg);
 	ARBostringstream str;

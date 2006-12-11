@@ -214,13 +214,14 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
 	for (int i = 0; i < MAX_COLUMNS; ++i)
 	{
+		CString title("");
 		col.fmt = LVCFMT_LEFT;
 		if (1 == i)
-			col.pszText = _T("Titling Points");
-		else
-			col.pszText = _T("");
+			title.LoadString(IDS_TITLING_POINTS);
+		col.pszText = title.GetBuffer();
 		col.iSubItem = i;
 		InsertColumn(i, &col);
+		title.ReleaseBuffer();
 	}
 
 	return 0;

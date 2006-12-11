@@ -104,7 +104,7 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 		pDX->PrepareCtrl(IDC_DOG_CALLNAME);
 		if (m_CallName.IsEmpty())
 		{
-			AfxMessageBox(_T("Callname may not be blank."));
+			AfxMessageBox(IDS_BLANK_CALLNAME);
 			pDX->Fail();
 			return;
 		}

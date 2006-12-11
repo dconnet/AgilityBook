@@ -178,11 +178,9 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 	}
 	if (!bFound)
 	{
-		ARBostringstream msg;
-		msg << _T("Cannot find \"")
-			<< (LPCTSTR)m_strSearch
-			<< _T("\"");
-		AfxMessageBox(msg.str().c_str(), MB_ICONINFORMATION);
+		CString msg;
+		msg.FormatMessage(IDS_CANNOT_FIND, (LPCTSTR)m_strSearch);
+		AfxMessageBox(msg, MB_ICONINFORMATION);
 	}
 	return bFound;
 }
@@ -844,7 +842,7 @@ LRESULT CAgilityBookTree::OnDelayedMessage(
 	{
 		CSplashWnd::HideSplashScreen();
 		UpdateWindow();
-		if (IDYES == AfxMessageBox(_T("Would you like to create a dog now?"), MB_YESNO | MB_ICONINFORMATION))
+		if (IDYES == AfxMessageBox(IDS_NEW_DOG, MB_YESNO | MB_ICONINFORMATION))
 		{
 			PostMessage(WM_COMMAND, ID_AGILITY_NEW_DOG);
 		}

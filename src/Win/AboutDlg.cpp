@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-12-10 DRC Simplified download links.
  * @li 2005-02-08 DRC Added another link.
  * @li 2004-07-20 DRC This now takes a Doc ptr so the update feature works.
  * @li 2004-03-05 DRC Moved versioninfo into new class, added new links/buttons.
@@ -76,7 +77,6 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ABOUT_LINK2, m_ctrlLink2);
 	DDX_Control(pDX, IDC_ABOUT_LINK3, m_ctrlLink3);
 	DDX_Control(pDX, IDC_ABOUT_LINK4, m_ctrlLink4);
-	DDX_Control(pDX, IDC_ABOUT_LINK5, m_ctrlLink5);
 	//}}AFX_DATA_MAP
 }
 
@@ -105,8 +105,7 @@ BOOL CAboutDlg::OnInitDialog()
 		{IDS_ABOUT_LINK_YAHOO, &m_ctrlLink1, true},
 		{IDS_ABOUT_LINK_EMAILHELP, &m_ctrlLink2, true},
 		{IDS_ABOUT_LINK_ARB, &m_ctrlLink3, true},
-		{IDS_ABOUT_LINK_YAHOO_FILES, &m_ctrlLink4, true},
-		{IDS_ABOUT_LINK_SOURCEFORGE, &m_ctrlLink5, true}
+		{IDS_ABOUT_LINK_ARB_DOWNLOAD, &m_ctrlLink4, true},
 	};
 	int nLinkControls = sizeof(idLinkControls) / sizeof(idLinkControls[0]);
 	struct

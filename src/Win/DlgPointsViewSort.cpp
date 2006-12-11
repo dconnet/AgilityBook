@@ -83,18 +83,22 @@ END_MESSAGE_MAP()
 static int AddItem(CComboBox2& ctrl, CAgilityBookOptions::PointsViewSort item, CAgilityBookOptions::PointsViewSort inSelect)
 {
 	int idx = CB_ERR;
+	CString str;
 	switch (item)
 	{
 	case CAgilityBookOptions::ePointsViewSortDivision:
-		idx = ctrl.AddString(_T("Division"));
+		str.LoadString(IDS_COL_DIVISION);
+		idx = ctrl.AddString(str);
 		ctrl.SetItemData(idx, item);
 		break;
 	case CAgilityBookOptions::ePointsViewSortLevel:
-		idx = ctrl.AddString(_T("Level"));
+		str.LoadString(IDS_COL_LEVEL);
+		idx = ctrl.AddString(str);
 		ctrl.SetItemData(idx, item);
 		break;
 	case CAgilityBookOptions::ePointsViewSortEvent:
-		idx = ctrl.AddString(_T("Event"));
+		str.LoadString(IDS_COL_EVENT);
+		idx = ctrl.AddString(str);
 		ctrl.SetItemData(idx, item);
 		break;
 	}

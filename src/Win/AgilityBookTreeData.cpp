@@ -749,8 +749,9 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 					if (m_pDog->GetDeceased().IsValid())
 						current = m_pDog->GetDeceased().GetDate();
 					CTimeSpan age = current - dob;
-					str += ARBDouble::str(age.GetDays()/365.0, 1).c_str();
-					str += _T(" yrs");
+					CString yrs;
+					yrs.FormatMessage(IDS_YEARS, ARBDouble::str(age.GetDays()/365.0, 1).c_str());
+					str += yrs;
 				}
 				break;
 			}

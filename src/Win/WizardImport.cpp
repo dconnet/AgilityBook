@@ -519,7 +519,7 @@ BOOL CWizardImport::OnWizardFinish()
 	int index = m_ctrlDateFormat.GetCurSel();
 	if (CB_ERR == index)
 	{
-		AfxMessageBox(_T("Please select a date format"));
+		AfxMessageBox(IDS_SPECIFY_DATEFORMAT);
 		GotoDlgCtrl(GetDlgItem(IDC_WIZARD_IMPORT_DATE));
 		return FALSE;
 	}
@@ -551,6 +551,7 @@ BOOL CWizardImport::OnWizardFinish()
 	{
 		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
 	}
+	CString loadstr;
 	ARBostringstream errLog;
 	int nAdded = 0;
 	int nDuplicate = 0;
@@ -627,9 +628,8 @@ BOOL CWizardImport::OnWizardFinish()
 				// rows/cols has that much overlap, it's just not worth it.
 				if (!pScoring)
 				{
-					errLog << _T("Warning: Line ")
-						<< nItem + 1
-						<< _T(": Skipped entry, unable to find a valid configuration entry\n");
+					loadstr.FormatMessage(IDS_IMPORT_SKIP_NOCONFIG, nItem + 1);
+					errLog << (LPCTSTR)loadstr;
 					++nSkipped;
 					continue;
 				}
@@ -678,17 +678,11 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								errLog << _T("ERROR: Line ")
-									<< nItem + 1
-									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-									<< static_cast<UINT>(iCol + 1)
-#else
-									<< iCol + 1
-#endif
-									<< _T(": Invalid run date: ")
-									<< entry[iCol]
-									<< _T("\n");
+								loadstr.FormatMessage(IDS_IMPORT_BAD_DATE_RUN,
+									nItem + 1,
+									static_cast<int>(iCol + 1),
+									entry[iCol].c_str());
+								errLog << (LPCTSTR)loadstr;
 								if (pRun)
 									pRun.reset();
 								iCol = columns[i].size();
@@ -835,11 +829,10 @@ BOOL CWizardImport::OnWizardFinish()
 				{
 					if (!m_pDoc->GetConfig().GetVenues().FindVenue(trialVenue))
 					{
-						errLog << _T("Warning: Line ")
-							<< nItem + 1
-							<< _T(": Skipped entry, invalid venue name: ")
-							<< trialVenue
-							<< _T("\n");
+						loadstr.FormatMessage(IDS_IMPORT_BAD_VENUE,
+							nItem + 1,
+							trialVenue.c_str());
+						errLog << (LPCTSTR)loadstr;
 						pRun.reset();
 					}
 					else if (!m_pDoc->GetConfig().GetVenues().FindEvent(
@@ -849,9 +842,8 @@ BOOL CWizardImport::OnWizardFinish()
 						pRun->GetLevel(),
 						pRun->GetDate()))
 					{
-						errLog << _T("Warning: Line ")
-							<< nItem + 1
-							<< _T(": Skipped entry, unable to find a valid configuration entry\n");
+						loadstr.FormatMessage(IDS_IMPORT_SKIP_NOCONFIG, nItem + 1);
+						errLog << (LPCTSTR)loadstr;
 						pRun.reset();
 					}
 				}
@@ -994,17 +986,11 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								errLog << _T("ERROR: Line ")
-									<< nItem + 1
-									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-									<< static_cast<UINT>(iCol + 1)
-#else
-									<< iCol + 1
-#endif
-									<< _T(": Invalid calendar start date: ")
-									<< entry[iCol]
-									<< _T("\n");
+								loadstr.FormatMessage(IDS_IMPORT_BAD_DATE_CALSTART,
+									nItem + 1,
+									static_cast<int>(iCol + 1),
+									entry[iCol].c_str());
+								errLog << (LPCTSTR)loadstr;
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1021,17 +1007,11 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								errLog << _T("ERROR: Line ")
-									<< nItem + 1
-									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-									<< static_cast<UINT>(iCol + 1)
-#else
-									<< iCol + 1
-#endif
-									<< _T(": Invalid calendar end date: ")
-									<< entry[iCol]
-									<< _T("\n");
+								loadstr.FormatMessage(IDS_IMPORT_BAD_DATE_CALEND,
+									nItem + 1,
+									static_cast<int>(iCol + 1),
+									entry[iCol].c_str());
+								errLog << (LPCTSTR)loadstr;
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1060,17 +1040,11 @@ BOOL CWizardImport::OnWizardFinish()
 						}
 						else
 						{
-							errLog << _T("ERROR: Line ")
-								<< nItem + 1
-								<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-								<< static_cast<UINT>(iCol + 1)
-#else
-								<< iCol + 1
-#endif
-								<< _T(": Invalid calendar entered value: ")
-								<< entry[iCol]
-								<< _T(" [N, P or E]\n");
+							loadstr.FormatMessage(IDS_IMPORT_BAD_CAL_VALUE,
+								nItem + 1,
+								static_cast<int>(iCol + 1),
+								entry[iCol].c_str());
+							errLog << (LPCTSTR)loadstr;
 							if (pCal)
 								pCal.reset();
 							iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1098,17 +1072,11 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								errLog << _T("ERROR: Line ")
-									<< nItem + 1
-									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-									<< static_cast<UINT>(iCol + 1)
-#else
-									<< iCol + 1
-#endif
-									<< _T(": Invalid calendar opening date: ")
-									<< entry[iCol]
-									<< _T("\n");
+								loadstr.FormatMessage(IDS_IMPORT_BAD_DATE_CALOPEN,
+									nItem + 1,
+									static_cast<int>(iCol + 1),
+									entry[iCol].c_str());
+								errLog << (LPCTSTR)loadstr;
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1125,17 +1093,11 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								errLog << _T("ERROR: Line ")
-									<< nItem + 1
-									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-									<< static_cast<UINT>(iCol + 1)
-#else
-									<< iCol + 1
-#endif
-									<< _T(": Invalid calendar closing date: ")
-									<< entry[iCol]
-									<< _T("\n");
+								loadstr.FormatMessage(IDS_IMPORT_BAD_DATE_CALCLOSE,
+									nItem + 1,
+									static_cast<int>(iCol + 1),
+									entry[iCol].c_str());
+								errLog << (LPCTSTR)loadstr;
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1183,17 +1145,11 @@ BOOL CWizardImport::OnWizardFinish()
 							}
 							else
 							{
-								errLog << _T("ERROR: Line ")
-									<< nItem + 1
-									<< _T(", Column ")
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-									<< static_cast<UINT>(iCol + 1)
-#else
-									<< iCol + 1
-#endif
-									<< _T(": Invalid training log date: ")
-									<< entry[iCol]
-									<< _T("\n");
+								loadstr.FormatMessage(IDS_IMPORT_BAD_DATE_LOG,
+									nItem + 1,
+									static_cast<int>(iCol + 1),
+									entry[iCol].c_str());
+								errLog << (LPCTSTR)loadstr;
 								if (pLog)
 									pLog.reset();
 								iCol = columns[IO_TYPE_TRAINING].size();
@@ -1233,9 +1189,8 @@ BOOL CWizardImport::OnWizardFinish()
 	}
 	if (0 < errLog.tellp())
 		errLog << _T("\n");
-	errLog << nAdded << _T(" entries added\n")
-		<< nDuplicate << _T(" duplicates (not added)\n")
-		<< nSkipped << _T(" entries skipped");
+	loadstr.FormatMessage(IDS_IMPORT_STATS, nAdded, nDuplicate, nSkipped);
+	errLog << (LPCTSTR)loadstr;
 	CDlgMessage dlg(errLog.str().c_str(), 0, this);
 	dlg.DoModal();
 	if (0 < nAdded)
@@ -1306,7 +1261,7 @@ void CWizardImport::OnImportFile()
 	else if (WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		filter.LoadString(IDS_FILEEXT_FILTER_OOCALC);
 	else
-		filter.LoadString(IDS_FILEEXT_FILTER_TXT);
+		filter.LoadString(IDS_FILEEXT_FILTER_TXTCSV);
 	CFileDialog file(TRUE, _T(""), _T(""), OFN_FILEMUSTEXIST, filter, this);
 	if (IDOK == file.DoModal())
 	{
@@ -1337,7 +1292,7 @@ void CWizardImport::OnImportFile()
 				pProgress->Dismiss();
 			}
 			else
-				AfxMessageBox(_T("Failed to read data"));
+				AfxMessageBox(IDS_IMPORT_FAILED, MB_ICONSTOP);
 		}
 		else
 		{

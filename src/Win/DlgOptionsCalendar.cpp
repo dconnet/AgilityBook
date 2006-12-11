@@ -43,6 +43,8 @@
 #include "AgilityBook.h"
 #include "DlgOptionsCalendar.h"
 
+#include "ARBAgilityRecordBook.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -57,11 +59,11 @@ static const struct
 	LPCTSTR text;
 } sc_CalItems[] =
 {
-	{CAgilityBookOptions::eCalColorNotEntered, _T("Not Entered")},
-	{CAgilityBookOptions::eCalColorPlanning,   _T("Planning")},
+	{CAgilityBookOptions::eCalColorNotEntered, CALENDAR_NOTENTERED},
+	{CAgilityBookOptions::eCalColorPlanning,   CALENDAR_PLANNING},
 	{CAgilityBookOptions::eCalColorOpening,    _T("  Opening")},
 	{CAgilityBookOptions::eCalColorClosing,    _T("  Closing")},
-	{CAgilityBookOptions::eCalColorEntered,    _T("Entered")},
+	{CAgilityBookOptions::eCalColorEntered,    CALENDAR_ENTERED},
 };
 static const int sc_CalItemsCount = sizeof(sc_CalItems) / sizeof(sc_CalItems[0]);
 
@@ -220,11 +222,11 @@ void CDlgOptionsCalendar::OnDrawItem(
 			pDC->GetTextMetrics(&tm);
 
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered));
-			pDC->DrawText(_T("Not Entered Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(CALENDAR_NOTENTERED _T(" Text"), r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning));
-			pDC->DrawText(_T("Planning Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(CALENDAR_PLANNING _T(" Text"), r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening));
@@ -236,7 +238,7 @@ void CDlgOptionsCalendar::OnDrawItem(
 
 			r.top += tm.tmHeight;
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered));
-			pDC->DrawText(_T("Entered Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(CALENDAR_ENTERED _T(" Text"), r, DT_NOPREFIX|DT_TOP);
 
 			pDC->SelectObject(pOldFont);
 		}

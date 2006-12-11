@@ -97,7 +97,7 @@ public:
 	 */
 	virtual ARBString GetGenericName() const
 	{
-		return _T("Action");
+		return _T("");
 	}
 
 	/**

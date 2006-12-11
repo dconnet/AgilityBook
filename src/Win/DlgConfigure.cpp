@@ -86,7 +86,9 @@ protected:
 
 void CDetails::OnDetails(CWnd* pParent)
 {
-	CDlgListViewer dlg(m_pDoc, _T("Runs affected by configuration changes"), m_ScoringRuns, pParent);
+	CString str;
+	str.LoadString(IDS_AFFECTED_RUNS);
+	CDlgListViewer dlg(m_pDoc, str, m_ScoringRuns, pParent);
 	dlg.DoModal();
 }
 
@@ -172,21 +174,22 @@ void CDlgConfigure::SetAction(eAction inAction)
 	if (m_Action != inAction)
 	{
 		m_Action = inAction;
+		CString str("");
 		switch (m_Action)
 		{
 		default:
-			m_ctrlComments.SetWindowText(_T(""));
 			break;
 		case eVenues:
-			m_ctrlComments.SetWindowText(_T("Buttons: Venues"));
+			str.LoadString(IDS_BUTTONS_VENUES);
 			break;
 		case eFaults:
-			m_ctrlComments.SetWindowText(_T("Buttons: Faults"));
+			str.LoadString(IDS_BUTTONS_FAULTS);
 			break;
 		case eOtherPoints:
-			m_ctrlComments.SetWindowText(_T("Buttons: Other Points"));
+			str.LoadString(IDS_BUTTONS_OTHERPOINTS);
 			break;
 		}
+		m_ctrlComments.SetWindowText(str);
 	}
 	UpdateButtons();
 }
@@ -367,9 +370,10 @@ BOOL CDlgConfigure::OnInitDialog()
 	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	CString col;
-	col.LoadString(IDS_VENUES);
+	col.LoadString(IDS_COL_VENUES);
 	m_ctrlVenues.InsertColumn(0, col);
-	m_ctrlVenues.InsertColumn(1, _T("URL"));
+	col.LoadString(IDS_COL_URL);
+	m_ctrlVenues.InsertColumn(1, col);
 	col.LoadString(IDS_COL_DESCRIPTION);
 	m_ctrlVenues.InsertColumn(2, col);
 

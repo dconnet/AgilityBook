@@ -242,9 +242,12 @@ void CAgilityBookViewHtml::LoadData()
 	ARBDate today(ARBDate::Today());
 	ARBostringstream data;
 
+	CString title;
+	title.LoadString(IDS_TITLING_POINTS);
+
 	data << _T("<html>")
 		<< std::endl
-		<< _T("<head><title>Titling Points ")
+		<< _T("<head><title>") << title << _T(" ")
 		<< today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
 		<< _T("</title></head>")
 		<< std::endl

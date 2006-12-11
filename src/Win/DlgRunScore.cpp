@@ -1074,7 +1074,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	m_ctrlOpeningText.GetWindowText(m_strOpening[0]);
 	m_ctrlOpenText.GetWindowText(m_strOpen[0]);
 	m_strOpening[1].LoadString(IDS_SCORING_REQUIRED_POINTS);
-	m_strOpen[1].LoadString(IDS_SCORING_POINTS);
+	m_strOpen[1].LoadString(IDS_POINTS);
 
 	CTime date = CTime::GetCurrentTime();
 	if (m_Run->GetDate().IsValid())

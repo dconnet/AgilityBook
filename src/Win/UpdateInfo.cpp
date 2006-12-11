@@ -69,7 +69,8 @@ bool CUpdateInfo::UpdateConfig(
 {
 	CSplashWnd::HideSplashScreen();
 
-	CString msg(_T("The configuration has been updated. Would you like to merge the new one with your data?"));
+	CString msg;
+	msg.LoadString(IDS_UPDATED_CONFIG);
 	if (inMsg && *inMsg)
 	{
 		msg += _T("\n\n");
@@ -198,7 +199,7 @@ static bool ReadHttpFile(
 			}
 			if (pFile)
 			{
-				TCHAR buffer[1025];
+				char buffer[1025];
 				UINT nChars;
 				while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)/sizeof(buffer[1])-1)))
 				{
@@ -224,84 +225,12 @@ static bool ReadHttpFile(
 	{
 		ex->Delete();
 		outData.Empty();
-		outErrMsg += _T("\nError: Is your internet connection active?");
+		outErrMsg += _T("\n");
+		CString err;
+		err.LoadString(IDS_INTERNET_EXCEPTION);
+		outErrMsg += err;
 	}
 	return (outData.GetLength() > 0);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CDownloadDialog : public CDlgBaseDialog
-{
-public:
-	CDownloadDialog(CVersionNum inVersionNum, CWnd* pParent = NULL)
-		: CDlgBaseDialog(CDownloadDialog::IDD, pParent)
-		, m_VersionNum(inVersionNum)
-	{
-	}
-
-private:
-// Dialog Data
-	enum { IDD = IDD_DOWNLOAD };
-	CStatic m_ctrlText;
-	CVersionNum m_VersionNum;
-
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedYahoo();
-	afx_msg void OnBnClickedSourceForge();
-	DECLARE_MESSAGE_MAP()
-};
-
-void CDownloadDialog::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgName)
-	DDX_Control(pDX, IDC_DOWNLOAD_TEXT, m_ctrlText);
-	//}}AFX_DATA_MAP
-}
-
-BEGIN_MESSAGE_MAP(CDownloadDialog, CDlgBaseDialog)
-	ON_BN_CLICKED(IDC_DOWNLOAD_YAHOO, OnBnClickedYahoo)
-	ON_BN_CLICKED(IDC_DOWNLOAD_SOURCEFORGE, OnBnClickedSourceForge)
-END_MESSAGE_MAP()
-
-BOOL CDownloadDialog::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	CString msg;
-	m_ctrlText.GetWindowText(msg);
-	CString ver;
-	ver.FormatMessage(msg, (LPCTSTR)m_VersionNum.GetVersionString());
-	m_ctrlText.SetWindowText(ver);
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-void CDownloadDialog::OnBnClickedYahoo()
-{
-	CString url;
-	url.LoadString(IDS_ABOUT_LINK_YAHOO_FILES);
-	int nTab = url.Find('\t');
-	if (0 < nTab)
-		url = url.Mid(nTab+1);
-	CHyperLink::GotoURL(url);
-	CDlgBaseDialog::OnOK();
-}
-
-void CDownloadDialog::OnBnClickedSourceForge()
-{
-	CString url;
-	url.LoadString(IDS_ABOUT_LINK_SOURCEFORGE);
-	int nTab = url.Find('\t');
-	if (0 < nTab)
-		url = url.Mid(nTab+1);
-	CHyperLink::GotoURL(url);
-	CDlgBaseDialog::OnOK();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -311,6 +240,7 @@ CUpdateInfo::CUpdateInfo()
 	, m_VerConfig(0)
 	, m_FileName()
 	, m_InfoMsg()
+	, m_UpdateDownload()
 {
 }
 
@@ -326,6 +256,12 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_VerConfig = 0;
 	m_FileName.erase();
 	m_InfoMsg.erase();
+
+	// Set the default values.
+	m_UpdateDownload.LoadString(IDS_ABOUT_LINK_ARB_DOWNLOAD);
+	int nTab = m_UpdateDownload.Find('\t');
+	if (0 < nTab)
+		m_UpdateDownload = m_UpdateDownload.Mid(nTab+1);
 
 	// Read the file.
 	CString url;
@@ -378,6 +314,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		// The rest of the file is xml:
 		// <Data>
 		//   <Config ver="1" file="file">data</Config>
+		//   <Download>url</Download>
+		//     (if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD)
 		// </Data>
 		ARBString errMsg;
 		Element tree;
@@ -385,7 +323,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		{
 			if (bVerbose)
 			{
-				CString msg(_T("Failed to load 'version.txt'."));
+				CString msg;
+				msg.FormatMessage(IDS_LOAD_FAILED, _T("version.txt"));
 				if (0 < errMsg.length())
 				{
 					msg += _T("\n\n");
@@ -399,13 +338,19 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		}
 		else if (tree.GetName() == _T("Data"))
 		{
-			int nConfig = tree.FindElement(_T("Config"));
-			if (0 <= nConfig)
+			int nIndex = tree.FindElement(_T("Config"));
+			if (0 <= nIndex)
 			{
-				Element& config = tree.GetElement(nConfig);
+				Element& config = tree.GetElement(nIndex);
 				config.GetAttrib(_T("ver"), m_VerConfig);
 				config.GetAttrib(_T("file"), m_FileName);
 				m_InfoMsg = config.GetValue();
+			}
+			nIndex = tree.FindElement(_T("Download"));
+			if (0 <= nIndex)
+			{
+				Element& download = tree.GetElement(nIndex);
+				m_UpdateDownload = download.GetValue().c_str();
 			}
 		}
 	}
@@ -425,8 +370,38 @@ bool CUpdateInfo::CheckProgram()
 		bNeedsUpdating = true;
 		CSplashWnd::HideSplashScreen();
 		AfxGetApp()->WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
-		CDownloadDialog dlg(m_VersionNum);
-		dlg.DoModal();
+		CString msg;
+		msg.FormatMessage(IDS_VERSION_AVAILABLE, (LPCTSTR)m_VersionNum.GetVersionString());
+		if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
+		{
+			CString url(m_UpdateDownload);
+			CString suffix = url.Right(4);
+			suffix.MakeUpper();
+			if (suffix == ".PHP")
+			{
+				OSVERSIONINFO os;
+				os.dwOSVersionInfoSize = sizeof(os);
+				GetVersionEx(&os);
+				switch (os.dwPlatformId)
+				{
+				default:
+				case VER_PLATFORM_WIN32_NT: // NT/Win2000/XP/Vista
+					{
+						SYSTEM_INFO info;
+						GetSystemInfo(&info);
+						if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
+							url += "?os=x64";
+						else
+							url += "?os=win";
+					}
+					break;
+				case VER_PLATFORM_WIN32_WINDOWS: // Win95/98/Me
+					url += "?os=win98";
+					break;
+				}
+			}
+			CHyperLink::GotoURL(url);
+		}
 	}
 	else
 		AfxGetApp()->WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
@@ -484,9 +459,7 @@ void CUpdateInfo::CheckConfig(
 				ARBString errMsg;
 				if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg))
 				{
-					CString msg(_T("Failed to load '"));
-					msg += url;
-					msg += _T("'.");
+					msg.FormatMessage(IDS_LOAD_FAILED, (LPCTSTR)url);
 					if (0 < errMsg.length())
 					{
 						msg += _T("\n\n");

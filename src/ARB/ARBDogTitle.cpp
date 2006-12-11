@@ -161,7 +161,7 @@ bool ARBDogTitle::Load(
 	}
 	if (!inConfig.GetVenues().FindVenue(m_Venue))
 	{
-		ARBString msg(_T("Unknown venue name: '"));
+		ARBString msg(INVALID_VENUE_NAME);
 		msg += m_Venue;
 		msg += _T("'");
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
