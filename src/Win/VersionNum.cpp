@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-12-10 DRC Fixed operator< and operator>.
  * @li 2004-03-04 DRC Created
  */
 
@@ -197,20 +198,36 @@ bool CVersionNum::operator==(CVersionNum const& rhs) const
 bool CVersionNum::operator<(CVersionNum const& rhs) const
 {
 	if (m_Version.part1 < rhs.m_Version.part1
-	|| m_Version.part2 < rhs.m_Version.part2
-	|| m_Version.part3 < rhs.m_Version.part3
-	|| m_Version.part4 < rhs.m_Version.part4)
+	|| (m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 < rhs.m_Version.part2)
+	|| (m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 == rhs.m_Version.part2
+		&& m_Version.part3 < rhs.m_Version.part3)
+	|| (m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 == rhs.m_Version.part2
+		&& m_Version.part3 == rhs.m_Version.part3
+		&& m_Version.part4 < rhs.m_Version.part4))
+	{
 		return true;
+	}
 	return false;
 }
 
 bool CVersionNum::operator>(CVersionNum const& rhs) const
 {
 	if (m_Version.part1 > rhs.m_Version.part1
-	|| m_Version.part2 > rhs.m_Version.part2
-	|| m_Version.part3 > rhs.m_Version.part3
-	|| m_Version.part4 > rhs.m_Version.part4)
+	|| (m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 > rhs.m_Version.part2)
+	|| (m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 == rhs.m_Version.part2
+		&& m_Version.part3 > rhs.m_Version.part3)
+	|| (m_Version.part1 == rhs.m_Version.part1
+		&& m_Version.part2 == rhs.m_Version.part2
+		&& m_Version.part3 == rhs.m_Version.part3
+		&& m_Version.part4 > rhs.m_Version.part4))
+	{
 		return true;
+	}
 	return false;
 }
 
