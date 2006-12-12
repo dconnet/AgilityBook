@@ -228,7 +228,7 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 	{
 		CString title;
 		title.LoadString(IDS_TITLING_POINTS);
-		data << _T("<h1 align=\"center\">") << title <<_T(" ")
+		data << _T("<h1 align=\"center\">") << (LPCTSTR)title <<_T(" ")
 			<< SanitizeStringForHTML(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
 			<< _T("</h1>")
 			<< _T("<h1><a href=\"") << ARB_PROTOCOL
