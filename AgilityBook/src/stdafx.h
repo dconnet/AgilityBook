@@ -39,7 +39,7 @@
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
-#ifdef WIN32
+#ifdef _WINDOWS
 
 // VC6
 #if _MSC_VER < 1300
@@ -74,33 +74,47 @@
 // Refer to MSDN for the latest info on corresponding values for different platforms.
 
 // Minimum system
+// Vista              _WIN32_WINNT >= 0x0600  WINVER >= 0x0600
 // Server 2003 family _WIN32_WINNT >= 0x0502  WINVER >= 0x0502
 // WinXP              _WIN32_WINNT >= 0x0501  WINVER >= 0x0501
 // Win2K              _WIN32_WINNT >= 0x0500  WINVER >= 0x0500
-// WinNT4             _WIN32_WINNT >= 0x0400  WINVER >= 0x0400
+// WinNT4.0           _WIN32_WINNT >= 0x0400  WINVER >= 0x0400
 // WinMe            _WIN32_WINDOWS >= 0x0500  WINVER >= 0x0500
 // Win98            _WIN32_WINDOWS >= 0x0410  WINVER >= 0x0410
+// Win95            _WIN32_WINDOWS >= 0x0400  WINVER >= 0x0400
+// IE7.0             _WIN32_IE >= 0x0700
+// IE6.0 SP2         _WIN32_IE >= 0x0603
+// IE6.0 SP1         _WIN32_IE >= 0x0601
 // IE6.0             _WIN32_IE >= 0x0600
-// IE5.01, 5.5       _WIN32_IE >= 0x0501
+// IE5.5             _WIN32_IE >= 0x0550
+// IE5.01            _WIN32_IE >= 0x0501
 // IE5.0, 5.0a, 5.0b _WIN32_IE >= 0x0500
 // IE4.01            _WIN32_IE >= 0x0401
 // IE4.0             _WIN32_IE >= 0x0400
 // IE3.0, 3.01, 3.02 _WIN32_IE >= 0x0300
 
 #ifndef WINVER				/// Allow use of features specific to Windows 95 and Windows NT 4 or later.
-#define WINVER 0x0400		/// Change this to the appropriate value to target Windows 98 and Windows 2000 or later.
+#ifdef WIN64
+#define WINVER 0x0501
+#else
+#define WINVER 0x0400
+#endif
 #endif
 
 #ifndef _WIN32_WINNT		/// Allow use of features specific to Windows NT 4 or later.
+#ifdef WIN64
+#define _WIN32_WINNT 0x0501	/// Minimum system, XP
+#else
 #define _WIN32_WINNT 0x0400	/// Minimum system, NT4.0
+#endif
 #endif
 
 // Note VC6 hard-codes this define to ME. So we'll follow suit...
-#ifndef _WIN32_WINDOWS		/// Allow use of features specific to Windows 98 or later.
-#define _WIN32_WINDOWS 0x0500 /// Minimum system, WinME
+#ifndef _WIN32_WINDOWS
+#define _WIN32_WINDOWS 0x0500
 #endif
 
-#ifndef _WIN32_IE			/// Allow use of features specific to IE 4.0 or later.
+#ifndef _WIN32_IE
 #define _WIN32_IE 0x0500	/// Minimum IE, 5.0
 #endif
 
@@ -147,4 +161,4 @@ typedef char	TCHAR;
 #define _tcstod	strtod
 #endif // UNICODE
 
-#endif // WIN32
+#endif // _WINDOWS

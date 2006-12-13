@@ -82,7 +82,7 @@ using namespace std;
 
 // Write the dump and errors to cerr
 #define ERRORS_TO_CERR
-#if defined(WIN32) && !defined(_CONSOLE)
+#if defined(_WINDOWS) && !defined(_CONSOLE)
 // On windows, we'll write the dump to TRACE and errors to AfxMessageBox.
 #undef ERRORS_TO_CERR
 #endif

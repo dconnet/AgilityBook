@@ -43,7 +43,7 @@
  */
 
 #include "StdAfx.h"
-#ifdef WIN32
+#ifdef _WINDOWS
 #include "resource.h"
 #endif
 #include "ARBConfig.h"
@@ -226,7 +226,7 @@ void ARBConfig::Default()
 	ARBString errMsg;
 	ARBErrorCallback err(errMsg);
 	Element tree;
-#ifdef WIN32
+#ifdef _WINDOWS
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
 	{
