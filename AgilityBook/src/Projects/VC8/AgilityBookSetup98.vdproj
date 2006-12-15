@@ -15,20 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_09985F92FFEA400593D98BDF88BEF582"
+        "MsmKey" = "8:_26A49F383E5F4BD28AB4424267924CAE"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_150688BD5D1B402A960B770678D314A3"
-        "OwnerKey" = "8:_7A0ADB2178924F0B8569595432B8C62C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_2E625F001E6FEE0346B41032CE679764"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_435DAD5FC9DC4D00ACDAFF0E9937D3E1"
+        "OwnerKey" = "8:_D976B574A10849949108C9DDA8C55C6D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,12 +51,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7A0ADB2178924F0B8569595432B8C62C"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_953B748B0C343B206B8F13DA147BB762"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
@@ -69,8 +63,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CAD77BC8C5B94C9DAE70DC6D31A7B931"
-        "OwnerKey" = "8:_09985F92FFEA400593D98BDF88BEF582"
+        "MsmKey" = "8:_D06F31966DA8471A9C7AF41C7602A7A3"
+        "OwnerKey" = "8:_26A49F383E5F4BD28AB4424267924CAE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D976B574A10849949108C9DDA8C55C6D"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -114,6 +114,70 @@
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
         "OutputFilename" = "8:..\\..\\..\\bin\\VC8\\Release\\Setup98\\AgilityBook.msi"
+        "PackageFilesAs" = "3:3"
+        "PackageFileSize" = "3:1536000"
+        "CabType" = "3:2"
+        "Compression" = "3:3"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:1"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.2.0"
+                    {
+                    "Name" = "8:Windows Installer 2.0"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.2.0"
+                    }
+                }
+            }
+        }
+        "Unicode Debug"
+        {
+        "DisplayName" = "8:Unicode Debug"
+        "IsDebugOnly" = "11:FALSE"
+        "IsReleaseOnly" = "11:FALSE"
+        "OutputFilename" = "8:Unicode Debug\\AgilityBookSetup98.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:3"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:1"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:FALSE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.2.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 2.0"
+                    "ProductCode" = "8:Microsoft.Net.Framework.2.0"
+                    }
+                }
+            }
+        }
+        "Unicode Release"
+        {
+        "DisplayName" = "8:Unicode Release"
+        "IsDebugOnly" = "11:FALSE"
+        "IsReleaseOnly" = "11:FALSE"
+        "OutputFilename" = "8:Unicode Release\\AgilityBookSetup98.msi"
         "PackageFilesAs" = "3:3"
         "PackageFileSize" = "3:1536000"
         "CabType" = "3:2"
@@ -949,7 +1013,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_09985F92FFEA400593D98BDF88BEF582"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_26A49F383E5F4BD28AB4424267924CAE"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -963,7 +1027,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_150688BD5D1B402A960B770678D314A3"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_435DAD5FC9DC4D00ACDAFF0E9937D3E1"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -977,11 +1041,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_7A0ADB2178924F0B8569595432B8C62C"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D06F31966DA8471A9C7AF41C7602A7A3"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_mfc_x86.msm"
                 "Properties"
                 {
                 }
@@ -991,11 +1055,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_CAD77BC8C5B94C9DAE70DC6D31A7B931"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D976B574A10849949108C9DDA8C55C6D"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_mfc_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
                 "Properties"
                 {
                 }
@@ -1010,7 +1074,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6ECEE00896D64C0EB4B463E926655387"
             {
-            "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Release\\AgilityBook.exe"
+            "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Unicode Release\\AgilityBook.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
@@ -1036,6 +1100,9 @@
                 {
                 }
             }
+        }
+        "VJSharpPlugin"
+        {
         }
     }
 }
