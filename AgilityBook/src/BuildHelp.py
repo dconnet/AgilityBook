@@ -89,8 +89,6 @@ def main():
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8\\Debug\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8\\Unicode Release\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8\\Unicode Debug\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8x64\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8x64\\Debug\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8x64\\Unicode Release\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8x64\\Unicode Debug\\\"")
 

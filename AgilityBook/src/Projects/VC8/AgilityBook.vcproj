@@ -147,7 +147,7 @@
 				WarningLevel="4"
 				WarnAsError="true"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -285,11 +285,11 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)"
+			IntermediateDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -636,11 +636,11 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)"
+			IntermediateDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)\obj"
 			ConfigurationType="1"
 			UseOfMFC="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -1932,22 +1932,6 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Unicode Debug|Win32"
 					>
 					<Tool
@@ -1957,6 +1941,22 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Unicode Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
