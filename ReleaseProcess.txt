@@ -23,30 +23,27 @@ Run Doxygen and fix any warnings/errors it reports.
   - doxygen AgilityBook.dox
 
 Do a full rebuild and verify it.
-- Release/Win32
-  - AgilityBookSetup
-    - Create AgilityBook_n_n_n_n-win.zip files in bin\VC8\Release\Setup.
-	- Delete Setup\*.*
-    - Modify properties: Package files: In setup file
-	- Run setup again (to create single msi)
-	- Revert changes to .vdproj file
-  - AgilityBookSetup98
-    - Create AgilityBook_n_n_n_n-win98.zip files in bin\VC8\Release\Setup98.
-- Release/x64
-  - AgilityBookSetup64
-    - Create AgilityBook_n_n_n_n-x64.zip files in bin\VC8x64\Release\Setup.
+- cd src\Projects\VC8
+- BuildAll.bat
+  - Note: Ignore errors from ParseResourceHeader during x64 build. It
+    obviously won't run on a 32bit system.
+  - Create AgilityBook_n_n_n_n-win.zip files in bin\VC8\Unicode Release\Setup.
+  - Create AgilityBook_n_n_n_n-win98.zip files in bin\VC8\Release\Setup98.
+  - Create AgilityBook_n_n_n_n-x64.zip files in bin\VC8x64\Unicode Release\Setup.
+- The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository "vn_n_n_n"
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup vc6/7/8 .exe/chm images to \AgilityBook\test\vc[678]
-  [Currently, I only build vc8]
+- Copy a backup of .exe/chm images to \AgilityBook\test\[vc6/vc7/vc8/vc8x64]
+  [Currently, I only build vc8/x64]
 - Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
 - Create AgilityBook_n_n_n_nALT.zip (VC8 AgilityBook.exe/.chm)
   Copy this to distrib\vN.N.N.N\
+  - Note, as of v1.8, I no longer do this.
 - Clean out all build artifacts.
-- AgilityBook_n_n_n_nsrc.zip
+- AgilityBook_n_n_n_n-src.zip
   Copy this to distrib\vN.N.N.N\
 
 In SourceForge, enter the File Releases section in Admin.
@@ -54,7 +51,7 @@ In SourceForge, enter the File Releases section in Admin.
 - Enter all necessary information.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
-  - AgilityBook_n_n_n_nsrc.zip
+  - AgilityBook_n_n_n_n-src.zip
   - AgilityBook_n_n_n_n-win.zip
   - AgilityBook_n_n_n_n-win98.zip
   - AgilityBook_n_n_n_n-x64.zip
@@ -64,21 +61,10 @@ In SourceForge, enter the File Releases section in Admin.
 - Update all the fields in Step 3.
 - Done.
 
-In Yahoo
-- Remove all old files.
-- Upload all new files.
-  - [files/release] History.txt
-  - [files/release] Todo.txt
-  - [files/release/alternate] AgilityBook_n_n_n_nALT.zip
-  - [files/release/alternate] [VC8] vcredist_x86.exe, already there, shouldn't need changing
-  - [files/release/alternate] [VC8] xerces-c_2_7.zip, already there
-  - [files/release/alternate] Readme.txt [in ./Misc]
-  - [files/release/windows] AgilityBook_n_n_n_n.msi/cab/etc
-  - [files/release/win98] AgilityBook_n_n_n_n.msi/cab/etc
-    DO NOT Announce this file (option on file upload) since it is now multiple.
-- Send an email announcing it - send as a 'Special Notice' from Yahoo.
-
 Web Site:
+- Upload zip files (not src) to files/
+- Update "$fileversion" in download2.php (push php to server)
+- Delete old zip files.
 - Update version.txt
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
@@ -86,6 +72,11 @@ Web Site:
   - Update AgilityBook.chm
   - Run "src\UpdateHistory.py -w" (updates history.html)
   - Update bugs.html
+
+In Yahoo
+- Note: Files are no longer released on Yahoo (as of v1.8)
+- Send an email announcing new release - send as a 'Special Notice' from Yahoo.
+
 
 Backup:
 - Backup development directory onto CD.
