@@ -74,3 +74,4 @@ Microsoft Visual Studio .NET 2003 (VC7.1)
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
+   Note - xerces is checked in using VC8+SP1
