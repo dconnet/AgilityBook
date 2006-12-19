@@ -322,7 +322,7 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 		}
 		else
 		{
-			data << _T("<a target=\"new\" href=\"")
+			data << _T("<a href=\"")
 				<< m_pVenue->GetURL()
 				<< _T("\">")
 				<< SanitizeStringForHTML(m_pVenue->GetName())
