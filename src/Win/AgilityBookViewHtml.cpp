@@ -450,7 +450,11 @@ void CAgilityBookViewHtml::OnBeforeNavigate2(
 		BOOL* pbCancel)
 {
 	static const TCHAR ABOUT_PROTOCOL[] = _T("about:");
+	static const TCHAR HTTP_PROTOCOL[] = _T("http:");
+	static const TCHAR HTTPS_PROTOCOL[] = _T("https:");
 	static size_t lenAbout = _tcslen(ABOUT_PROTOCOL);
+	static size_t lenHttp = _tcslen(HTTP_PROTOCOL);
+	static size_t lenHttps = _tcslen(HTTPS_PROTOCOL);
 	static size_t lenApp = _tcslen(ARB_PROTOCOL);
 
 	if (_tcsnicmp(lpszURL, ABOUT_PROTOCOL, lenAbout) == 0)
@@ -482,10 +486,18 @@ void CAgilityBookViewHtml::OnBeforeNavigate2(
 		}
 		*pbCancel = TRUE;
 	}
-	else
+	else if (_tcsnicmp(lpszURL, HTTP_PROTOCOL, lenHttp) == 0
+	|| _tcsnicmp(lpszURL, HTTPS_PROTOCOL, lenHttps) == 0)
 	{
 		// Don't allow links to replace us.
-		// They should have used target="new" in the html href tag.
+		RunCommand(lpszURL);
+		// Note, using 'target="new"' in the html href tag will cause the new
+		// window to open in IE, which is not necessarily the default browser.
+		*pbCancel = TRUE;
+	}
+	else
+	{
+		// Don't allow any other types of links.
 		TRACE("Preventing navigation to '%s'\n", lpszURL);
 		MessageBeep(MB_ICONEXCLAMATION);
 		*pbCancel = TRUE;
