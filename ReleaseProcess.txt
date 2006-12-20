@@ -63,7 +63,7 @@ In SourceForge, enter the File Releases section in Admin.
 
 Web Site:
 - Upload zip files (not src) to files/
-- Update "$fileversion" in download2.php (push php to server)
+- Update "$fileversion" in func.php (push php to server)
 - Delete old zip files.
 - Update version.txt
   - Update config file (ConfigN.txt)
