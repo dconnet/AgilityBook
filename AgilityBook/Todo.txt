@@ -1,4 +1,4 @@
-Last Updated: 4/4/2006
+Last Updated: 12/24/2006
 
 - Remember printer page orientation. (See KB166130: "How To Overriding
   Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
