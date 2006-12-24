@@ -63,15 +63,16 @@ In SourceForge, enter the File Releases section in Admin.
 
 Web Site:
 - Upload zip files (not src) to files/
-- Update "$fileversion" in func.php (push php to server)
 - Delete old zip files.
+- Update "$fileversion" and "$fileVerNo" in func.php
 - Update version.txt
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
   - Update DTD
   - Update AgilityBook.chm
-  - Run "src\UpdateHistory.py -w" (updates history.html)
-  - Update bugs.html
+  - Run "src\UpdateHistory.py -w" (updates history.php)
+  - Update bugs.php
+- Push all updated php files to server.
 
 In Yahoo
 - Note: Files are no longer released on Yahoo (as of v1.8)
