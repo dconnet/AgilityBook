@@ -1,11 +1,11 @@
-12/3/2006: v1.8.0.12 <in development>
+12/24/2006: v1.8.0.12
 - Bumped file version to 12.3, Configuration v17:
   - Updated ASCA title descriptions.
   - Updated CPE rules.
   - Updated USDAA Performance Pairs for titling in 2007.
   - Updated USDAA Performance Tournament comments.
   - Updated TDAA website link.
-  - Add Sweepstakes venue.
+  - Added Sweepstakes venue.
   - Changed how speed point multipliers are stored (now configurable).
   - Added a URL field in the venue configuration.
 - New features / Enhancements:
