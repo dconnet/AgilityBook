@@ -387,11 +387,13 @@ bool CUpdateInfo::CheckProgram()
 				default:
 				case VER_PLATFORM_WIN32_NT: // NT/Win2000/XP/Vista
 					{
+#if _MSC_VER >= 1300
 						SYSTEM_INFO info;
 						GetSystemInfo(&info);
 						if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
 							url += "?os=x64";
 						else
+#endif
 							url += "?os=win";
 					}
 					break;
