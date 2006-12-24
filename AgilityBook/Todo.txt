@@ -5,10 +5,6 @@ Last Updated: 4/4/2006
 
 - Add drag-drop support in the runs view to move/copy runs.
 
-- Possibly change calendar view to display by separate months. Maybe bolder
-  lines between the months? See email from Kelly on 12/22/05 that has some
-  really good ideas.
-
 - Create named import/export settings.
 
 - Add display name to configuration items.
