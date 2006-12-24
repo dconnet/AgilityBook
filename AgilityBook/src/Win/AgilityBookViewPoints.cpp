@@ -218,7 +218,7 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		col.fmt = LVCFMT_LEFT;
 		if (1 == i)
 			title.LoadString(IDS_TITLING_POINTS);
-		col.pszText = title.GetBuffer();
+		col.pszText = title.GetBuffer(0);
 		col.iSubItem = i;
 		InsertColumn(i, &col);
 		title.ReleaseBuffer();
