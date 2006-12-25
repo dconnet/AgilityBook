@@ -15,7 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2BA631BFA57C400F8375EDE3FD4C7413"
+        "MsmKey" = "8:_1E9C5C5ACFDA4EC9820469822E08E801"
+        "OwnerKey" = "8:_2708F9CBEA45477FA9A2D8B8E0FDA123"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2708F9CBEA45477FA9A2D8B8E0FDA123"
         "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -27,8 +33,26 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2ECF6402CDFD4B8F8E316D6AE39BE4C1"
+        "OwnerKey" = "8:_4BD7BD59B3164C82AAA57EC3A4C5B534"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_47D6F293FF6E487D896449C14341855A"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4BD7BD59B3164C82AAA57EC3A4C5B534"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_50E431DBF55FC49698934901945153CB"
+        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -45,32 +69,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_953B748B0C343B206B8F13DA147BB762"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A765D78B34674811B1D173537F93A4AA"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CA77DB129A68457AA801D731AD5F76A3"
-        "OwnerKey" = "8:_F14FBF1478BD404ABE481C95C00B7D21"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CF7A29EE37584FAEBEE46F4C666CAC7C"
-        "OwnerKey" = "8:_2BA631BFA57C400F8375EDE3FD4C7413"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F14FBF1478BD404ABE481C95C00B7D21"
-        "OwnerKey" = "8:_6ECEE00896D64C0EB4B463E926655387"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -264,6 +264,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_50E431DBF55FC49698934901945153CB"
+            {
+            "SourcePath" = "8:xerces-c_2_7.dll"
+            "TargetName" = "8:xerces-c_2_7.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5E446DC8AA924BA6B5BCC12DD868C8B9"
             {
             "SourcePath" = "8:..\\..\\Help\\AgilityBook.chm"
@@ -282,26 +302,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_953B748B0C343B206B8F13DA147BB762"
-            {
-            "SourcePath" = "8:xerces-c_2_7.dll"
-            "TargetName" = "8:xerces-c_2_7.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A765D78B34674811B1D173537F93A4AA"
@@ -413,14 +413,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Agility Record Book"
-        "ProductCode" = "8:{429E35AE-C92B-4097-83FD-685BD5211DB0}"
+        "ProductCode" = "8:{F9E32F7D-FD8B-4DF8-8899-8C9B4055D15F}"
         "PackageCode" = "8:{00593D26-D774-4129-896C-EE80A8EA677C}"
         "UpgradeCode" = "8:{DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.8.0"
+        "ProductVersion" = "8:1.8.1"
         "Manufacturer" = "8:dcon Software"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.agilityrecordbook.com"
@@ -1013,21 +1013,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2BA631BFA57C400F8375EDE3FD4C7413"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_CA77DB129A68457AA801D731AD5F76A3"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1E9C5C5ACFDA4EC9820469822E08E801"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1041,7 +1027,21 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_CF7A29EE37584FAEBEE46F4C666CAC7C"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2708F9CBEA45477FA9A2D8B8E0FDA123"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2ECF6402CDFD4B8F8E316D6AE39BE4C1"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1055,11 +1055,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F14FBF1478BD404ABE481C95C00B7D21"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4BD7BD59B3164C82AAA57EC3A4C5B534"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_MFC_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
                 "Properties"
                 {
                 }
@@ -1074,7 +1074,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6ECEE00896D64C0EB4B463E926655387"
             {
-            "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Release\\AgilityBook.exe"
+            "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Unicode Release\\AgilityBook.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F729B3A8627441008E7C4A17F498D67F"
