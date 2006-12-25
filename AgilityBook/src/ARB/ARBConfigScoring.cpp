@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-12-24 DRC When finding events, only insert it once.
  * @li 2006-11-05 DRC Fix FindAllEvents to allow searching with wildcards.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-01-03 DRC FindAllEvents was not working right (see below)
@@ -577,7 +578,10 @@ size_t ARBConfigScoringList::FindAllEvents(
 		{
 			if ((*iter)->IsValidOn(inDate))
 			{
-				outList.push_back(*iter);
+				// Make sure the entry isn't already there.
+				// (We were double-listing points in the Points view)
+				if (outList.end() == std::find(outList.begin(), outList.end(), *iter))
+					outList.push_back(*iter);
 				break;
 			}
 		}
@@ -588,7 +592,8 @@ size_t ARBConfigScoringList::FindAllEvents(
 		{
 			if ((*iter)->IsValidOn(inDate))
 			{
-				outList.push_back(*iter);
+				if (outList.end() == std::find(outList.begin(), outList.end(), *iter))
+					outList.push_back(*iter);
 				break;
 			}
 		}
@@ -599,7 +604,8 @@ size_t ARBConfigScoringList::FindAllEvents(
 		{
 			if ((*iter)->IsValidOn(inDate))
 			{
-				outList.push_back(*iter);
+				if (outList.end() == std::find(outList.begin(), outList.end(), *iter))
+					outList.push_back(*iter);
 				break;
 			}
 		}
