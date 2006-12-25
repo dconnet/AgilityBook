@@ -1,4 +1,6 @@
-12/24/2006: v1.8.1.12 <in development>
+12/24/2006: v1.8.1.12
+- Bug fixes
+  - Several venues were double-counting points in the Points view.
 
 12/24/2006: v1.8.0.12
 - Bumped file version to 12.3, Configuration v17:
