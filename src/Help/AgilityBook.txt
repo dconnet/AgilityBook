@@ -39,6 +39,12 @@ Date the trial closes.
 .topic HIDC_CAL_DATE_CLOSES_UNKNOWN
 The date the trial closes is not known or does not apply.
 
+.topic HIDC_CAL_DATE_DRAWS
+Date entries for the trial are drawn.
+
+.topic HIDC_CAL_DATE_DRAWS_UNKNOWN
+The draw date for the trial is not known or does not apply.
+
 .topic HIDC_CAL_DATE_END
 Date the trial ends.
 

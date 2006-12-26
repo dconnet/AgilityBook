@@ -721,8 +721,9 @@ static TCHAR const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 		return _T("ExportLog");
 	case CAgilityBookOptions::eViewTree:
 	case CAgilityBookOptions::eViewRuns:
-	case CAgilityBookOptions::eViewCal:
+	case CAgilityBookOptions::eViewCalList:
 	case CAgilityBookOptions::eViewLog:
+	case CAgilityBookOptions::eViewCal:
 		return _T("Columns");
 	}
 }
@@ -971,7 +972,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_COMMENTS);
 			}
 			break;
-		case eViewCal:
+		case eViewCalList:
 			if (IO_TYPE_VIEW_CALENDAR_LIST == idxColumn)
 			{
 				outValues.push_back(IO_CAL_START_DATE);
@@ -991,6 +992,13 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_LOG_NAME);
 				outValues.push_back(IO_LOG_SUBNAME);
 				outValues.push_back(IO_LOG_NOTES);
+			}
+			break;
+		case eViewCal:
+			if (IO_TYPE_VIEW_CALENDAR == idxColumn)
+			{
+				outValues.push_back(IO_CAL_VENUE);
+				outValues.push_back(IO_CAL_LOCATION);
 			}
 			break;
 		}

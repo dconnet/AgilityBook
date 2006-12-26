@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2006-12-25 DRC File version 12.4
+               Added 'DrawDate' to Calendar.
 2006-12-01 DRC File version 12.3
                Added 'SpdMult'. Added Action for RenameDivision.
 2006-07-02 DRC File version 12.2
@@ -89,6 +91,7 @@ This section defines the rules for the calendar cribsheet.
 		DateStart CDATA #REQUIRED
 		DateEnd CDATA #REQUIRED
 		DateOpening CDATA #IMPLIED
+		DateDraw CDATA #IMPLIED
 		DateClosing CDATA #IMPLIED
 		isTentative (y|n) 'n'
 		Location CDATA #REQUIRED

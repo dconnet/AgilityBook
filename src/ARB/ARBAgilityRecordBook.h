@@ -140,6 +140,7 @@
 #define ATTRIB_CAL_START					_T("DateStart")
 #define ATTRIB_CAL_END						_T("DateEnd")
 #define ATTRIB_CAL_OPENING					_T("DateOpening")
+#define ATTRIB_CAL_DRAW						_T("DateDraw")
 #define ATTRIB_CAL_CLOSING					_T("DateClosing")
 #define ATTRIB_CAL_MAYBE					_T("isTentative")
 #define ATTRIB_CAL_LOCATION					_T("Location")
@@ -320,6 +321,7 @@
 #define CALENDAR_STATUS_E		_T("Status: ") CALENDAR_ENTERED
 #define CALENDAR_STATUS_P		_T("Status: ") CALENDAR_PLANNING
 #define CALENDAR_OPENS			_T("Trial opens: ")
+#define CALENDAR_DRAW			_T("Trial draws: ")
 #define CALENDAR_CLOSES			_T("Trial closes: ")
 
 // Strings for formatting the information returned when updating configurations.

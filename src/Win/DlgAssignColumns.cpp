@@ -73,17 +73,17 @@ Runs Available fields:
   CRCD
   Speed (MACH)
 
-Calendar
-  Start Date
-  End Date
-  Tentative?
-  Not Entered,Planning,Entered
-  Location
-  Club
-  Venue
-  Opens
-  Closes
-  Notes
+Calendar [L/V]
+  Start Date [L]
+  End Date [L]
+  Tentative? [L]
+  Not Entered,Planning,Entered [L]
+  Location [LV]
+  Club [LV]
+  Venue [LV]
+  Opens [L]
+  Closes [L]
+  Notes [LV]
 Training Log:
   Date
   Name
@@ -150,7 +150,7 @@ static struct
 	{CAgilityBookOptions::eViewRuns,
 		IO_TYPE_VIEW_RUNS_LIST,
 		IDS_ASSCOL_VIEW_RUNS_LIST, IDS_ASSCOL_VIEW_RUNS_LIST_DESC},
-	{CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eViewCalList,
 		IO_TYPE_VIEW_CALENDAR_LIST,
 		IDS_ASSCOL_VIEW_CALENDAR_LIST, IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC},
 	{CAgilityBookOptions::eViewLog,
@@ -162,6 +162,9 @@ static struct
 	{CAgilityBookOptions::eCalExportTask,
 		IO_TYPE_CALENDAR_TASK,
 		IDS_ASSCOL_CALENDAR_TASK, IDS_ASSCOL_CALENDAR_TASK_DESC},
+	{CAgilityBookOptions::eViewCal,
+		IO_TYPE_VIEW_CALENDAR,
+		IDS_ASSCOL_VIEW_CALENDAR, IDS_ASSCOL_VIEW_CALENDAR_DESC},
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
@@ -282,10 +285,10 @@ static struct
 		IO_RUNS_FAULTS,
 		true, LVCFMT_LEFT, IDS_COL_FAULTS},
 
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
 		IO_CAL_START_DATE,
 		true, LVCFMT_LEFT, IDS_COL_START_DATE},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
 		IO_CAL_END_DATE,
 		true, LVCFMT_LEFT, IDS_COL_END_DATE},
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
@@ -294,22 +297,22 @@ static struct
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
 		IO_CAL_ENTERED,
 		true, 0, IDS_COL_ENTERED},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
 		IO_CAL_LOCATION,
 		true, LVCFMT_LEFT, IDS_COL_LOCATION},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
 		IO_CAL_CLUB,
 		true, LVCFMT_LEFT, IDS_COL_CLUB},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
 		IO_CAL_VENUE,
 		true, LVCFMT_LEFT, IDS_COL_VENUE},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
 		IO_CAL_OPENS,
 		true, LVCFMT_LEFT, IDS_COL_OPENS},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
 		IO_CAL_CLOSES,
 		true, LVCFMT_LEFT, IDS_COL_CLOSES},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
 		IO_CAL_NOTES,
 		true, LVCFMT_LEFT, IDS_COL_NOTES},
 
@@ -524,6 +527,10 @@ static struct
 	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
 		IO_RUNS_MIN_YPS,
 		false, LVCFMT_RIGHT, IDS_COL_MIN_YPS},
+
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
+		IO_CAL_DRAWS,
+		true, LVCFMT_LEFT, IDS_COL_DRAWS},
 };
 
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
@@ -628,8 +635,8 @@ static int const idxRunsPoints[] = {
 static int const idxCalendar[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_TENTATIVE,
 	IO_CAL_ENTERED,			IO_CAL_LOCATION,		IO_CAL_CLUB,
-	IO_CAL_VENUE,			IO_CAL_OPENS,			IO_CAL_CLOSES,
-	IO_CAL_NOTES,
+	IO_CAL_VENUE,			IO_CAL_OPENS,			IO_CAL_DRAWS,
+	IO_CAL_CLOSES,			IO_CAL_NOTES,
 -1};
 static int const idxTraining[] = {
 	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_SUBNAME,
@@ -666,7 +673,7 @@ static int const idxViewRunsList[] = {
 static int const idxViewCalendarList[] = {
 	IO_CAL_START_DATE,		IO_CAL_END_DATE,		IO_CAL_LOCATION,
 	IO_CAL_CLUB,			IO_CAL_VENUE,			IO_CAL_OPENS,
-	IO_CAL_CLOSES,			IO_CAL_NOTES,
+	IO_CAL_DRAWS,			IO_CAL_CLOSES,			IO_CAL_NOTES,
 -1};
 static int const idxViewTrainingList[] = {
 	IO_LOG_DATE,			IO_LOG_NAME,			IO_LOG_SUBNAME,
@@ -692,6 +699,9 @@ static int const idxCalendarTask[] = {
 	IO_CAL_TASK_ROLE,		IO_CAL_TASK_SCH_PRIORITY,	IO_CAL_TASK_SENSITIVITY,
 	IO_CAL_TASK_STATUS,
 -1};
+static int const idxViewCalendar[] = {
+	IO_CAL_LOCATION,	IO_CAL_CLUB,	IO_CAL_VENUE,	IO_CAL_NOTES,
+-1};
 
 static int const* sc_Fields[IO_TYPE_MAX] =
 {
@@ -708,7 +718,8 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 	idxViewCalendarList,
 	idxViewTrainingList,
 	idxCalendarAppt,
-	idxCalendarTask
+	idxCalendarTask,
+	idxViewCalendar,
 };
 
 /////////////////////////////////////////////////////////////////////////////

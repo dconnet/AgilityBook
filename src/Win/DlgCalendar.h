@@ -72,6 +72,8 @@ private:
 	CRichEditCtrl2	m_ctrlClubInfo;
 	CTime	m_dateOpens;
 	BOOL	m_bOpeningUnknown;
+	CTime	m_dateDraws;
+	BOOL	m_bDrawingUnknown;
 	CTime	m_dateCloses;
 	BOOL	m_bClosingUnknown;
 	CString	m_Notes;
@@ -99,6 +101,7 @@ protected:
 	afx_msg void OnLocationNotes();
 	afx_msg void OnClubNotes();
 	afx_msg void OnDateOpensUnknown();
+	afx_msg void OnDateDrawsUnknown();
 	afx_msg void OnDateClosesUnknown();
 	virtual void OnOK();
 	//}}AFX_MSG

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-12-26 DRC Made dialog resizable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
@@ -79,13 +80,26 @@ private:
 	//{{AFX_DATA(CDlgListCtrl)
 	enum { IDD = IDD_LISTCTRL };
 	CListCtrl2	m_ctrlList;
+	CButton	m_ctrlNew;
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlDelete;
-	CButton	m_ctrlTrial;
 	CButton	m_ctrlUp;
 	CButton	m_ctrlDown;
 	CButton m_ctrlCreateTrial;
+	CButton	m_ctrlOk;
+	CButton	m_ctrlCancel;
 	//}}AFX_DATA
+	CRect m_rWin;
+	CRect m_rDlg;
+	CRect m_rList;
+	CRect m_rNew;
+	CRect m_rEdit;
+	CRect m_rDelete;
+	CRect m_rUp;
+	CRect m_rDown;
+	CRect m_rTrial;
+	CRect m_rOK;
+	CRect m_rCancel;
 	WhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
 	ARBDate m_Date;
@@ -120,6 +134,8 @@ public:
 protected:
 	//{{AFX_MSG(CDlgListCtrl)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);

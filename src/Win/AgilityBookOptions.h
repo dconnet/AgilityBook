@@ -194,8 +194,9 @@ public:
 		eLogExport		= 0x0080,
 		eViewTree		= 0x0100,
 		eViewRuns		= 0x0200,
-		eViewCal		= 0x0400,
+		eViewCalList	= 0x0400,
 		eViewLog		= 0x0800,
+		eViewCal		= 0x1000,
 	} ColumnOrder;
 	// General program options
 	static bool GetAutoUpdateCheck();

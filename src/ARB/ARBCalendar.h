@@ -254,6 +254,14 @@ public:
 	{
 		m_DateOpening = inDate;
 	}
+	ARBDate const& GetDrawDate() const
+	{
+		return m_DateDraw;
+	}
+	void SetDrawDate(ARBDate const& inDate)
+	{
+		m_DateDraw = inDate;
+	}
 	ARBDate const& GetClosingDate() const
 	{
 		return m_DateClosing;
@@ -315,6 +323,7 @@ private:
 	ARBDate m_DateStart;
 	ARBDate m_DateEnd;
 	ARBDate m_DateOpening;
+	ARBDate m_DateDraw;
 	ARBDate m_DateClosing;
 	bool m_bTentative;
 	ARBString m_Location;

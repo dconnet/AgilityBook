@@ -37,26 +37,29 @@ Tag SubVersion repository
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of .exe/chm images to \AgilityBook\test\[vc6/vc7/vc8/vc8x64]
-  [Currently, I only build vc8/x64]
+- Copy a backup of AgilityBook.exe to \AgilityBook\test\[vc6/vc7/vc8/vc8x64]
+  Currently, I only archive vc8/x64 - the exe's that are released to the wild.
 - Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
-- Create AgilityBook_n_n_n_nALT.zip (VC8 AgilityBook.exe/.chm)
+- Create AgilityBook_n_n_n_n-ALT.zip (VC8 AgilityBook.exe/.chm)
   Copy this to distrib\vN.N.N.N\
   - Note, as of v1.8, I no longer do this.
 - Clean out all build artifacts.
 - AgilityBook_n_n_n_n-src.zip
-  Copy this to distrib\vN.N.N.N\
+  - Remove all source control files from zip (just being clean)
+  - Copy this to distrib\vN.N.N.N\
+- Readme1st.vn.n.n.n.txt
+  - Copy Misc/Instructions.txt to Readme1st.vn.n.n.n.txt and modify [if needed]
 
 In SourceForge, enter the File Releases section in Admin.
 - At the bottom of the page, 'Add Release' to 'agilitybook' package.
 - Enter all necessary information.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
+  - Readme1st.vn.n.n.n.txt
   - AgilityBook_n_n_n_n-src.zip
   - AgilityBook_n_n_n_n-win.zip
   - AgilityBook_n_n_n_n-win98.zip
   - AgilityBook_n_n_n_n-x64.zip
-  - Instructions.txt [in ./Misc] [Copy to Readme1st.vn.n.n.n.txt and modify]
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
@@ -73,16 +76,15 @@ Web Site:
   - Update AgilityBook.chm
   - Run "src\UpdateHistory.py -w" (updates history.php)
   - Update bugs.php
-- Push all updated php files to server.
+- Push all updated files to server.
 
 In Yahoo
 - Note: Files are no longer released on Yahoo (as of v1.8)
 - Send an email announcing new release - send as a 'Special Notice' from Yahoo.
 
-
 Backup:
 - Backup development directory onto CD.
-  - Remove unnecessary files (build relics, .svn)
+  - Remove unnecessary files (build relics, svn)
 
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO
@@ -91,13 +93,13 @@ Prepare for next release:
   - Open in VS8, select the setup project on the solutions tab, switch
     to the properties tab and update 'Version'. Say Yes to changing the
     ProductCode/etc GUIDs. (Note, if you decide to change the version
-    number later, do not change the ProductCode again) Note: Often
-    VERSION.DLL gets unmarked for exclusion - to prevent, do the following
-    after changing the version:
+    number later, do not change the ProductCode again)
+  - Update src/Projects/Win32/VC8/AgilityBookSetup98/64.vdproj
+    - Manually copy the GUIDs from AgilityBookSetup.vdproj
+  - Note: Often VERSION.DLL gets unmarked for exclusion - to prevent, do the
+    following after changing the version:
     - Rebuild everything (will show version.dll as excluded).
     - Save all changes and exit the program.
     - Start program again and open project (now shown as included).
     - Mark as excluded.
     Things should remain okay now.
-- Update src/Projects/Win32/VC8/AgilityBookSetup98/64.vdproj
-  - Manually copy the GUIDs from AgilityBookSetup.vdproj

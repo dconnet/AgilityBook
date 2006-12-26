@@ -1,10 +1,4 @@
-Last Updated: 12/24/2006
-
-- Add Customization to Calendar View.
-
-- Make List-selection dialog resizable (used in several places).
-
-- Add a 'Draw Date' to calendar entries.
+Last Updated: 12/25/2006
 
 - Remember printer page orientation. (See KB166130: "How To Overriding
   Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
