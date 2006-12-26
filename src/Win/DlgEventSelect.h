@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2005-2006 David Connet. All Rights Reserved.
+ * Copyright © 2005-2007 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided

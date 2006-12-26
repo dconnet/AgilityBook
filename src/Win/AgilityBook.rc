@@ -1558,7 +1558,7 @@ BEGIN
             VALUE "FileDescription", "Agility Record Book"
             VALUE "FileVersion", "1.8.2.12"
             VALUE "InternalName", "AgilityBook.exe"
-            VALUE "LegalCopyright", "Copyright © 2002-2006 David Connet. All Rights Reserved."
+            VALUE "LegalCopyright", "Copyright © 2002-2007 David Connet. All Rights Reserved."
             VALUE "OriginalFilename", "AgilityBook.exe"
             VALUE "ProductName", "Agility Record Book"
             VALUE "ProductVersion", "1.8.2.12"
