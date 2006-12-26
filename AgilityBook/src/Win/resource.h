@@ -219,6 +219,8 @@
 #define IDC_CAL_CLUB_NOTE               1175
 #define IDC_CAL_LOCATION_NOTES          1176
 #define IDC_CAL_CLUB_NOTES              1177
+#define IDC_CAL_DATE_DRAWS              1178
+#define IDC_CAL_DATE_DRAWS_UNKNOWN      1179
 #define IDC_TRAINING_DATE               1180
 #define IDC_TRAINING_NAME               1181
 #define IDC_TRAINING_NOTES              1182
@@ -547,6 +549,7 @@
 #define IDS_COL_DOB                     4044
 #define IDS_COL_DOG                     4045
 #define IDS_COL_DUE_DATE                4046
+#define IDS_COL_DRAWS                   4047
 #define IDS_COL_END_DATE                4050
 #define IDS_COL_END_TIME                4051
 #define IDS_COL_ENTERED                 4052
@@ -694,6 +697,8 @@
 #define IDS_ASSCOL_CALENDAR_APPT_DESC   4625
 #define IDS_ASSCOL_CALENDAR_TASK        4626
 #define IDS_ASSCOL_CALENDAR_TASK_DESC   4627
+#define IDS_ASSCOL_VIEW_CALENDAR        4628
+#define IDS_ASSCOL_VIEW_CALENDAR_DESC   4629
 #define IDS_WIZ_IMPORT_RUNS             4700
 #define IDS_WIZ_IMPORT_RUNS_EXCEL       4701
 #define IDS_WIZ_IMPORT_RUNS_CALC        4702
@@ -873,6 +878,7 @@
 #define IDS_ERRORS_DURING_EXPORT        5165
 #define IDS_EXPORT_FAILED               5166
 #define IDS_IMPORT_FAILED               5167
+#define IDS_BAD_DRAWDATE                5168
 #define IDS_ADDED_CAL_ITEMS             5200
 #define IDS_ADDED_CLUBS                 5201
 #define IDS_ADDED_DOGS                  5202

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2006-12-26 DRC Made dialog resizable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -379,6 +380,17 @@ CDlgListCtrl::CDlgListCtrl(
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_ctrlList(true)
+	, m_rWin(0,0,0,0)
+	, m_rDlg(0,0,0,0)
+	, m_rList(0,0,0,0)
+	, m_rNew(0,0,0,0)
+	, m_rEdit(0,0,0,0)
+	, m_rDelete(0,0,0,0)
+	, m_rUp(0,0,0,0)
+	, m_rDown(0,0,0,0)
+	, m_rTrial(0,0,0,0)
+	, m_rOK(0,0,0,0)
+	, m_rCancel(0,0,0,0)
 	, m_What(eCalendar)
 	, m_pDoc(pDoc)
 	, m_Date(date)
@@ -399,6 +411,17 @@ CDlgListCtrl::CDlgListCtrl(
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_ctrlList(true)
+	, m_rWin(0,0,0,0)
+	, m_rDlg(0,0,0,0)
+	, m_rList(0,0,0,0)
+	, m_rNew(0,0,0,0)
+	, m_rEdit(0,0,0,0)
+	, m_rDelete(0,0,0,0)
+	, m_rUp(0,0,0,0)
+	, m_rDown(0,0,0,0)
+	, m_rTrial(0,0,0,0)
+	, m_rOK(0,0,0,0)
+	, m_rCancel(0,0,0,0)
 	, m_What(inType)
 	, m_pDoc(pDoc)
 	, m_CalEntries(NULL)
@@ -416,6 +439,17 @@ CDlgListCtrl::CDlgListCtrl(
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgListCtrl::IDD, pParent)
 	, m_ctrlList(true)
+	, m_rWin(0,0,0,0)
+	, m_rDlg(0,0,0,0)
+	, m_rList(0,0,0,0)
+	, m_rNew(0,0,0,0)
+	, m_rEdit(0,0,0,0)
+	, m_rDelete(0,0,0,0)
+	, m_rUp(0,0,0,0)
+	, m_rDown(0,0,0,0)
+	, m_rTrial(0,0,0,0)
+	, m_rOK(0,0,0,0)
+	, m_rCancel(0,0,0,0)
 	, m_What(eOtherPoints)
 	, m_pDoc(NULL)
 	, m_CalEntries(NULL)
@@ -430,16 +464,21 @@ void CDlgListCtrl::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgListCtrl)
 	DDX_Control(pDX, IDC_LIST, m_ctrlList);
+	DDX_Control(pDX, IDC_LIST_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_LIST_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_LIST_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_LIST_MOVE_UP, m_ctrlUp);
 	DDX_Control(pDX, IDC_LIST_MOVE_DOWN, m_ctrlDown);
 	DDX_Control(pDX, IDC_LIST_TRIAL, m_ctrlCreateTrial);
+	DDX_Control(pDX, IDOK, m_ctrlOk);
+	DDX_Control(pDX, IDCANCEL, m_ctrlCancel);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgListCtrl, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListCtrl)
+	ON_WM_GETMINMAXINFO()
+	ON_WM_SIZE()
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST, OnGetdispinfoList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
@@ -546,6 +585,32 @@ BOOL CDlgListCtrl::OnInitDialog()
 	m_imgEntered = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED));
 	m_imgEnteredTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
 
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
+	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
+
+	GetWindowRect(m_rWin);
+	GetClientRect(m_rDlg);
+	m_ctrlList.GetWindowRect(m_rList);
+	ScreenToClient(m_rList);
+	m_ctrlNew.GetWindowRect(m_rNew);
+	ScreenToClient(m_rNew);
+	m_ctrlEdit.GetWindowRect(m_rEdit);
+	ScreenToClient(m_rEdit);
+	m_ctrlDelete.GetWindowRect(m_rDelete);
+	ScreenToClient(m_rDelete);
+	m_ctrlUp.GetWindowRect(m_rUp);
+	ScreenToClient(m_rUp);
+	m_ctrlDown.GetWindowRect(m_rDown);
+	ScreenToClient(m_rDown);
+	m_ctrlCreateTrial.GetWindowRect(m_rTrial);
+	ScreenToClient(m_rTrial);
+	m_ctrlOk.GetWindowRect(m_rOK);
+	ScreenToClient(m_rOK);
+	m_ctrlCancel.GetWindowRect(m_rCancel);
+	ScreenToClient(m_rCancel);
+
 	int nCols = 0;
 	std::vector<CDlgListCtrlData*> items;
 
@@ -646,6 +711,49 @@ BOOL CDlgListCtrl::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgListCtrl::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
+{
+	lpMMI->ptMinTrackSize.x = m_rWin.Width();
+	lpMMI->ptMinTrackSize.y = m_rWin.Height();
+	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
+}
+
+void CDlgListCtrl::OnSize(UINT nType, int cx, int cy)
+{
+	CDlgBaseDialog::OnSize(nType, cx, cy);
+	if (::IsWindow(m_ctrlList.GetSafeHwnd()))
+	{
+		m_ctrlList.SetWindowPos(NULL,
+			0, 0,
+			cx - (m_rDlg.Width() - m_rList.Width()), cy - (m_rDlg.Height() - m_rList.Height()),
+			SWP_NOZORDER | SWP_NOMOVE);
+		m_ctrlNew.SetWindowPos(NULL,
+			m_rNew.left, cy - (m_rDlg.Height() - m_rNew.bottom) - m_rNew.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlEdit.SetWindowPos(NULL,
+			m_rEdit.left, cy - (m_rDlg.Height() - m_rEdit.bottom) - m_rEdit.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlDelete.SetWindowPos(NULL,
+			m_rDelete.left, cy - (m_rDlg.Height() - m_rDelete.bottom) - m_rDelete.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlUp.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rUp.left), cy - (m_rDlg.Height() - m_rUp.bottom) - m_rUp.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlDown.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rDown.left), cy - (m_rDlg.Height() - m_rDown.bottom) - m_rDown.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlCreateTrial.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rTrial.left), cy - (m_rDlg.Height() - m_rTrial.bottom) - m_rTrial.Height(),
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlOk.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rOK.left), m_rOK.top,
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+		m_ctrlCancel.SetWindowPos(NULL,
+			cx - (m_rDlg.Width() - m_rCancel.left), m_rCancel.top,
+			0, 0, SWP_NOZORDER | SWP_NOSIZE);
+	}
 }
 
 void CDlgListCtrl::OnGetdispinfoList(

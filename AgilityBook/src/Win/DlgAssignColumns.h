@@ -66,7 +66,8 @@
 #define IO_TYPE_VIEW_TRAINING_LIST	11
 #define IO_TYPE_CALENDAR_APPT		12
 #define IO_TYPE_CALENDAR_TASK		13
-#define IO_TYPE_MAX					14
+#define IO_TYPE_VIEW_CALENDAR		14
+#define IO_TYPE_MAX					15
 
 #define IO_RUNS_REG_NAME			0
 #define IO_RUNS_CALL_NAME			1
@@ -180,7 +181,8 @@
 #define IO_CAL_TASK_SENSITIVITY		109
 #define IO_CAL_TASK_STATUS			110
 #define IO_RUNS_MIN_YPS				111
-#define IO_MAX						112
+#define IO_CAL_DRAWS				112
+#define IO_MAX						113
 
 class CDlgAssignColumns : public CDlgBaseDialog
 {

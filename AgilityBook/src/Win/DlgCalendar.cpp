@@ -80,6 +80,8 @@ CDlgCalendar::CDlgCalendar(
 	m_Club = m_pCal->GetClub().c_str();
 	m_dateOpens = CTime::GetCurrentTime();
 	m_bOpeningUnknown = TRUE;
+	m_dateDraws = CTime::GetCurrentTime();
+	m_bDrawingUnknown = TRUE;
 	m_dateCloses = CTime::GetCurrentTime();
 	m_bClosingUnknown = TRUE;
 	m_Notes = m_pCal->GetNote().c_str();
@@ -96,6 +98,11 @@ CDlgCalendar::CDlgCalendar(
 	{
 		m_dateOpens = CTime(m_pCal->GetOpeningDate().GetDate());
 		m_bOpeningUnknown = FALSE;
+	}
+	if (m_pCal->GetDrawDate().IsValid())
+	{
+		m_dateDraws = CTime(m_pCal->GetDrawDate().GetDate());
+		m_bDrawingUnknown = FALSE;
 	}
 	if (m_pCal->GetClosingDate().IsValid())
 	{
@@ -136,6 +143,8 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CAL_CLUB_NOTE, m_ctrlClubInfo);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_OPENS, m_dateOpens);
 	DDX_Check(pDX, IDC_CAL_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
+	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_DRAWS, m_dateDraws);
+	DDX_Check(pDX, IDC_CAL_DATE_DRAWS_UNKNOWN, m_bDrawingUnknown);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_CLOSES, m_dateCloses);
 	DDX_Check(pDX, IDC_CAL_DATE_CLOSES_UNKNOWN, m_bClosingUnknown);
 	DDX_Text(pDX, IDC_CAL_NOTES, m_Notes);
@@ -152,6 +161,7 @@ BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CAL_LOCATION_NOTES, OnLocationNotes)
 	ON_BN_CLICKED(IDC_CAL_CLUB_NOTES, OnClubNotes)
 	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
+	ON_BN_CLICKED(IDC_CAL_DATE_DRAWS_UNKNOWN, OnDateDrawsUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -232,6 +242,10 @@ BOOL CDlgCalendar::OnInitDialog()
 		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(FALSE);
 	else
 		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
+	if (m_bDrawingUnknown)
+		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(FALSE);
+	else
+		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(TRUE);
 	if (m_bClosingUnknown)
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
 	else
@@ -318,6 +332,15 @@ void CDlgCalendar::OnDateOpensUnknown()
 		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
 }
 
+void CDlgCalendar::OnDateDrawsUnknown() 
+{
+	UpdateData(TRUE);
+	if (m_bDrawingUnknown)
+		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(FALSE);
+	else
+		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(TRUE);
+}
+
 void CDlgCalendar::OnDateClosesUnknown() 
 {
 	UpdateData(TRUE);
@@ -349,12 +372,28 @@ void CDlgCalendar::OnOK()
 		endDate = temp;
 	}
 	ARBDate openingDate(m_dateOpens.GetYear(), m_dateOpens.GetMonth(), m_dateOpens.GetDay());
+	ARBDate drawingDate(m_dateDraws.GetYear(), m_dateDraws.GetMonth(), m_dateDraws.GetDay());
 	ARBDate closingDate(m_dateCloses.GetYear(), m_dateCloses.GetMonth(), m_dateCloses.GetDay());
 	if (!m_bOpeningUnknown && !m_bClosingUnknown && openingDate > closingDate)
 	{
 		ARBDate temp = openingDate;
 		openingDate = closingDate;
 		closingDate = temp;
+	}
+	if (!m_bDrawingUnknown)
+	{
+		if (!m_bOpeningUnknown && openingDate > drawingDate)
+		{
+			AfxMessageBox(IDS_BAD_DRAWDATE);
+			GotoDlgCtrl(GetDlgItem(IDC_CAL_DATE_DRAWS));
+			return;
+		}
+		if (!m_bClosingUnknown && drawingDate > closingDate)
+		{
+			AfxMessageBox(IDS_BAD_DRAWDATE);
+			GotoDlgCtrl(GetDlgItem(IDC_CAL_DATE_DRAWS));
+			return;
+		}
 	}
 	ARBDate today(ARBDate::Today());
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
@@ -384,9 +423,12 @@ void CDlgCalendar::OnOK()
 	m_pCal->SetClub((LPCTSTR)m_Club);
 	if (m_bOpeningUnknown)
 		openingDate.clear();
+	if (m_bDrawingUnknown)
+		drawingDate.clear();
 	if (m_bClosingUnknown)
 		closingDate.clear();
 	m_pCal->SetOpeningDate(openingDate);
+	m_pCal->SetDrawDate(drawingDate);
 	m_pCal->SetClosingDate(closingDate);
 	m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pCal->SetNote((LPCTSTR)m_Notes);

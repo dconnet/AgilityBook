@@ -157,6 +157,10 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 			if (m_pCal->GetOpeningDate().IsValid())
 				str = m_pCal->GetOpeningDate().GetString(dFmt).c_str();
 			break;
+		case IO_CAL_DRAWS:
+			if (m_pCal->GetDrawDate().IsValid())
+				str = m_pCal->GetDrawDate().GetString(dFmt).c_str();
+			break;
 		case IO_CAL_CLOSES:
 			if (m_pCal->GetClosingDate().IsValid())
 				str = m_pCal->GetClosingDate().GetString(dFmt).c_str();
@@ -808,7 +812,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
-	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCalList, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
 	{
 		LV_COLUMN col;
 		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
@@ -1428,7 +1432,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 
 void CAgilityBookViewCalendarList::OnViewCustomize()
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eViewCal);
+	CDlgAssignColumns dlg(CAgilityBookOptions::eViewCalList);
 	if (IDOK == dlg.DoModal())
 	{
 		SetupColumns();

@@ -61,6 +61,7 @@
 #include "AgilityBookTreeData.h"
 #include "ARBCalendar.h"
 #include "ClipBoard.h"
+#include "DlgAssignColumns.h"
 #include "DlgCalendar.h"
 #include "DlgListCtrl.h"
 #include "FilterOptions.h"
@@ -105,6 +106,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendar, CView)
 	ON_COMMAND(ID_AGILITY_DELETE_CALENDAR, OnAgilityCalendarDelete)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_CREATEENTRY_CALENDAR, OnUpdateAgilityCreateentryCalendar)
 	ON_COMMAND(ID_AGILITY_CREATEENTRY_CALENDAR, OnAgilityCreateentryCalendar)
+	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(ID_EDIT_DUPLICATE, OnUpdateNotHandled)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateNotHandled)
@@ -262,6 +264,8 @@ void CAgilityBookViewCalendar::LoadData()
 	m_CalendarHidden.clear();
 	m_Last = ARBDate::Today();
 	m_First = ARBDate::Today();
+
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR, m_Columns);
 
 	ARBDate today(ARBDate::Today());
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
@@ -730,19 +734,39 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						r.top += yInc * tm.tmAscent;
 
 						ARBCalendarPtr pCal = (*iter);
-						// @todo: Make data in calendar entries user selectable
-						ARBString const& venue = pCal->GetVenue();
-						ARBString const& loc = pCal->GetLocation();
 						CString str;
-						if (0 == venue.length())
-							str += _T("?");
-						else
-							str += venue.c_str();
-						str += _T(" ");
-						if (0 == loc.length())
-							str += _T("?");
-						else
-							str += loc.c_str();
+						for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
+						{
+							if (0 < iCol)
+								str += ' ';
+							switch (m_Columns[iCol])
+							{
+							case IO_CAL_LOCATION:
+								if (pCal->GetLocation().empty())
+									str += '?';
+								else
+									str += pCal->GetLocation().c_str();
+								break;
+							case IO_CAL_CLUB:
+								if (pCal->GetClub().empty())
+									str += '?';
+								else
+									str += pCal->GetClub().c_str();
+								break;
+							case IO_CAL_VENUE:
+								if (pCal->GetVenue().empty())
+									str += '?';
+								else
+									str += pCal->GetVenue().c_str();
+								break;
+							case IO_CAL_NOTES:
+								if (pCal->GetNote().empty())
+									str += '?';
+								else
+									str += pCal->GetNote().c_str();
+								break;
+							}
+						}
 						bool bReset = false;
 						COLORREF oldText = 0;
 						// Don't change the color on the selected day.
@@ -1355,4 +1379,14 @@ void CAgilityBookViewCalendar::OnAgilityCreateentryCalendar()
 void CAgilityBookViewCalendar::OnUpdateNotHandled(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(FALSE);
+}
+
+void CAgilityBookViewCalendar::OnViewCustomize()
+{
+	CDlgAssignColumns dlg(CAgilityBookOptions::eViewCal);
+	if (IDOK == dlg.DoModal())
+	{
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR, m_Columns);
+		Invalidate();
+	}
 }

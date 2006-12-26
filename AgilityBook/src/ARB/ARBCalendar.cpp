@@ -345,6 +345,7 @@ ARBCalendar::ARBCalendar()
 	: m_DateStart()
 	, m_DateEnd()
 	, m_DateOpening()
+	, m_DateDraw()
 	, m_DateClosing()
 	, m_bTentative(false)
 	, m_Location()
@@ -359,6 +360,7 @@ ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 	: m_DateStart(rhs.m_DateStart)
 	, m_DateEnd(rhs.m_DateEnd)
 	, m_DateOpening(rhs.m_DateOpening)
+	, m_DateDraw(rhs.m_DateDraw)
 	, m_DateClosing(rhs.m_DateClosing)
 	, m_bTentative(rhs.m_bTentative)
 	, m_Location(rhs.m_Location)
@@ -385,6 +387,7 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 		m_DateStart = rhs.m_DateStart;
 		m_DateEnd = rhs.m_DateEnd;
 		m_DateOpening = rhs.m_DateOpening;
+		m_DateDraw = rhs.m_DateDraw;
 		m_DateClosing = rhs.m_DateClosing;
 		m_bTentative = rhs.m_bTentative;
 		m_Location = rhs.m_Location;
@@ -401,6 +404,7 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 	return m_DateStart == rhs.m_DateStart
 		&& m_DateEnd == rhs.m_DateEnd
 		&& m_DateOpening == rhs.m_DateOpening
+		&& m_DateDraw == rhs.m_DateDraw
 		&& m_DateClosing == rhs.m_DateClosing
 		&& m_bTentative == rhs.m_bTentative
 		&& m_Location == rhs.m_Location
@@ -429,6 +433,7 @@ ARBString ARBCalendar::GetUID(eUidType inType) const
 	str << m_DateStart.GetString(ARBDate::eYYYYMMDD);
 	str << m_DateEnd.GetString(ARBDate::eYYYYMMDD);
 	str << m_DateOpening.GetString(ARBDate::eYYYYMMDD, true);
+	str << m_DateDraw.GetString(ARBDate::eYYYYMMDD, true);
 	str << m_DateClosing.GetString(ARBDate::eYYYYMMDD, true);
 	return str.str();
 }
@@ -446,6 +451,12 @@ size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 	if (m_DateOpening.IsValid())
 	{
 		ioStrings.insert(m_DateOpening.GetString(ARBDate::eDashYMD));
+		++nItems;
+	}
+
+	if (m_DateDraw.IsValid())
+	{
+		ioStrings.insert(m_DateDraw.GetString(ARBDate::eDashYMD));
 		++nItems;
 	}
 
@@ -529,6 +540,16 @@ bool ARBCalendar::Load(
 		return false;
 	}
 
+	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_DRAW, m_DateDraw))
+	{
+		ARBString attrib;
+		inTree.GetAttrib(ATTRIB_CAL_DRAW, attrib);
+		ARBString msg(INVALID_DATE);
+		msg += attrib;
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg.c_str()));
+		return false;
+	}
+
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
 	{
 		ARBString attrib;
@@ -589,6 +610,7 @@ bool ARBCalendar::Save(Element& ioTree) const
 	cal.AddAttrib(ATTRIB_CAL_START, m_DateStart);
 	cal.AddAttrib(ATTRIB_CAL_END, m_DateEnd);
 	cal.AddAttrib(ATTRIB_CAL_OPENING, m_DateOpening);
+	cal.AddAttrib(ATTRIB_CAL_DRAW, m_DateDraw);
 	cal.AddAttrib(ATTRIB_CAL_CLOSING, m_DateClosing);
 	if (m_bTentative) // Default is no
 		cal.AddAttrib(ATTRIB_CAL_MAYBE, m_bTentative);
@@ -644,6 +666,12 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 		{
 			str << CALENDAR_OPENS
 				<< m_DateOpening.GetString(ARBDate::eDefault)
+				<< _T(" ");
+		}
+		if (m_DateDraw.IsValid())
+		{
+			str << CALENDAR_DRAW
+				<< m_DateDraw.GetString(ARBDate::eDefault)
 				<< _T(" ");
 		}
 		if (m_DateClosing.IsValid())

@@ -77,6 +77,7 @@ private:
 	ARBDate FirstDayOfWeek(ARBDate const& inDate) const;
 	ARBDate LastDayOfWeek(ARBDate const& inDate) const;
 	ARBDate FirstDayOfMonth(int inOffsetMonth) const;
+	std::vector<int> m_Columns;
 	std::vector<ARBCalendarPtr> m_Calendar;
 	std::vector<ARBCalendarPtr> m_CalendarHidden;
 	ARBDate m_First;	///< First date, adjusted to Mon of that week.
@@ -145,6 +146,7 @@ protected:
 	afx_msg void OnAgilityCalendarDelete();
 	afx_msg void OnUpdateAgilityCreateentryCalendar(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityCreateentryCalendar();
+	afx_msg void OnViewCustomize();
 	//}}AFX_MSG
 	afx_msg void OnUpdateNotHandled(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()

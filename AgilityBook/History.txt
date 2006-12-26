@@ -1,4 +1,9 @@
-12/24/2006: v1.8.2.12 <in development>
+12/25/2006: v1.8.2.12 <in development>
+- Bumped file version to 12.4
+  - Added a 'Draw Date' to calendar entries.
+- New features / Enhancements:
+  - Added Customization to Calendar View.
+  - Make List-selection dialog resizable (Calendar, Faults, Partners, OtherPts).
 
 12/24/2006: v1.8.1.12
 - Bug fixes
