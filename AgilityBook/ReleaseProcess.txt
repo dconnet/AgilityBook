@@ -42,7 +42,6 @@ Create the files to be distributed (make sure you archive them too)
 - Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
 - Create AgilityBook_n_n_n_n-ALT.zip (VC8 AgilityBook.exe/.chm)
   Copy this to distrib\vN.N.N.N\
-  - Note, as of v1.8, I no longer do this.
 - Clean out all build artifacts.
 - AgilityBook_n_n_n_n-src.zip
   - Remove all source control files from zip (just being clean)
