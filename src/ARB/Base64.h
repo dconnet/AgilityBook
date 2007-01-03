@@ -43,35 +43,35 @@
 
 class Base64
 {
+	Base64();
 public:
-	Base64(bool bDeleteDecodeBuffer = true);
-	~Base64();
-
 	/**
 	 * Decode a base64 string.
-	 * @param inBuffer Encoded buffer
-	 * @param outBuffer Decoded buffer
-	 * @param outLength Length of decoded data
+	 * @param inBase64 Encoded buffer
+	 * @param outBinData Decoded buffer
+	 * @param outBytes Length of decoded data
 	 * @return Success
-	 * @note User must call "delete[]" on outBuffer if bDeleteDecodeBuffer is false.
+	 * @note User must call Release() on outBinData
 	 */
-	bool Decode(
-			std::string const& inBuffer,
-			char*& outBuffer,
-			size_t& outLength);
+	static bool Decode(
+			std::string const& inBase64,
+			char*& outBinData,
+			size_t& outBytes);
+
+	/**
+	 * Deallocate memory allocated in Decode()
+	 * @param inBinData Binary data allocated in Decode()
+	 */
+	static void Release(char*& inBinData);
 
 	/**
 	 * Encode data
-	 * @param inBuffer Buffer to encode
-	 * @param inLength Length of inBuffer
+	 * @param inBinData Buffer to encode
+	 * @param inBytes Length of inBinData
 	 * @return Encoded data
 	 */
-	std::string Encode(
-			char const* inBuffer,
-			size_t inLength);
-
-private:
-	void SetBuffer(char* inBuffer);
-	bool m_DeleteDecodeBuffer;
-	char* m_DecodeBuffer;
+	static bool Encode(
+			char const* inBinData,
+			size_t inBytes,
+			std::string& outData);
 };
