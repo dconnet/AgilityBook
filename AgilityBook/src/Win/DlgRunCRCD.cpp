@@ -185,13 +185,17 @@ void CDlgRunCRCD::SetCRCDData()
 		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
 		LPBYTE bits = new BYTE[nSize+1];
 		GetEnhMetaFileBits(m_metaFile, nSize, bits);
-		Base64 encode;
 		ASSERT(sizeof(BYTE) == sizeof(char));
+		ARBString moreBits;
 #ifdef UNICODE
-		CString tmp(encode.Encode(reinterpret_cast<char const*>(bits), nSize).c_str());
-		ARBString moreBits = tmp;
+		std::string data;
+		if (Base64::Encode(reinterpret_cast<char*>(bits), nSize, data))
+		{
+			CString tmp(data.c_str());
+			moreBits = tmp;
+		}
 #else
-		ARBString moreBits = encode.Encode(reinterpret_cast<char const*>(bits), nSize);
+		Base64::Encode(reinterpret_cast<char*>(bits), nSize, moreBits);
 #endif
 		m_Run->SetCRCDMetaFile(moreBits);
 		delete [] bits;
@@ -219,14 +223,13 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	m_ViewText = true;
 	if (0 < m_Run->GetCRCDMetaFile().length())
 	{
-		Base64 decode;
 		char* pOutput;
 		size_t len;
 #ifdef UNICODE
 		std::string data = CStringA(m_Run->GetCRCDMetaFile().c_str());
-		if (decode.Decode(data, pOutput, len))
+		if (Base64::Decode(data, pOutput, len))
 #else
-		if (decode.Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
+		if (Base64::Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
 #endif
 		{
 			m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(len), reinterpret_cast<LPBYTE>(pOutput));
@@ -238,6 +241,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 				m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
 			}
 		}
+		Base64::Release(pOutput);
 	}
 	int nSetCheck = CAgilityBookOptions::GetIncludeCRCDImage() ? 1 : 0;
 	if (m_metaFile)

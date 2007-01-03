@@ -106,56 +106,38 @@ static char const base64map[] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-Base64::Base64(bool bDeleteDecodeBuffer)
-	: m_DeleteDecodeBuffer(bDeleteDecodeBuffer)
-	, m_DecodeBuffer(NULL)
+Base64::Base64()
 {
-}
-
-Base64::~Base64()
-{
-	SetBuffer(NULL);
-}
-
-void Base64::SetBuffer(char* inBuffer)
-{
-	if (m_DeleteDecodeBuffer)
-	{
-		delete [] m_DecodeBuffer;
-		m_DecodeBuffer = inBuffer;
-	}
 }
 
 bool Base64::Decode(
-		std::string const& inBuffer,
-		char*& outBuffer,
-		size_t& outLength)
+		std::string const& inBase64,
+		char*& outBinData,
+		size_t& outBytes)
 {
-	outBuffer = NULL;
-	outLength = 0;
-	if (0 == inBuffer.length())
+	outBinData = NULL;
+	outBytes = 0;
+	if (0 == inBase64.length())
 		return false;
 
-	size_t bufsize = inBuffer.length();
-	outBuffer = new char[bufsize];
-	SetBuffer(outBuffer);
-	char* result = outBuffer;
+	size_t bufsize = inBase64.length();
+	outBinData = new char[bufsize];
+	char* result = outBinData;
 
 	int std = 0;
 	size_t count = 1;
 	size_t nChar = 0;
 
-	while (inBuffer[nChar] != '=' && count <= bufsize)
+	while (inBase64[nChar] != '=' && count <= bufsize)
 	{
 		//check to see if it's a legal base64 char...
-		while (SKIP == base64map[inBuffer[nChar]])
+		while (SKIP == base64map[inBase64[nChar]])
 		{
-			if (inBuffer[nChar] != '\r' && inBuffer[nChar] != '\n')
+			if (inBase64[nChar] != '\r' && inBase64[nChar] != '\n')
 			{
 				// error in the encoded data.
-				delete [] outBuffer;
-				outBuffer = NULL;
-				m_DecodeBuffer = NULL;
+				delete [] outBinData;
+				outBinData = NULL;
 				return false;
 			}
 			++nChar;
@@ -165,7 +147,7 @@ bool Base64::Decode(
 		}
 
 		//add the base64 char to std...
-		std |= base64map[inBuffer[nChar++] & 0xFF];
+		std |= base64map[inBase64[nChar++] & 0xFF];
 		std <<= 6;
 		if (count % 4 == 0) //we have 3 more real chars...
 		{
@@ -184,7 +166,7 @@ bool Base64::Decode(
 			tmp &= 0xFF;
 			*(result++) = static_cast<char>(tmp);
 			std = 0; //empty std
-			outLength += 3;
+			outBytes += 3;
 		}
 		++count;
 	}
@@ -197,7 +179,7 @@ bool Base64::Decode(
 		for (size_t i = 0; i < 4 - (count % 4); ++i)
 			std <<= 6;
 		size_t nBits = (count % 4) * 6;
-		outLength += nBits / 8;
+		outBytes += nBits / 8;
 		int tmp;
 		std >>= 6;
 		tmp = std;
@@ -215,24 +197,31 @@ bool Base64::Decode(
 	return true;
 }
 
-std::string Base64::Encode(
-		char const* inBuffer,
-		size_t inLength)
+void Base64::Release(char*& inBinData)
+{
+	delete [] inBinData;
+	inBinData = NULL;
+}
+
+bool Base64::Encode(
+		char const* inBinData,
+		size_t inBytes,
+		std::string& outData)
 {
 	char* encoded = NULL;
-	if (inBuffer != NULL && 0 < inLength)
+	if (inBinData != NULL && 0 < inBytes)
 	{
-		size_t alsize = (inLength * 4) / 3;
+		size_t alsize = (inBytes * 4) / 3;
 		encoded = new char[alsize + ((alsize / 76) * 2) + 10];
 		size_t count = 0;
 		size_t LineLen = 0;
 		char* fresult = encoded;
-		char const* s = inBuffer;
+		char const* s = inBinData;
 		int tmp = 0;
 		//let's step through the buffer and encode it...
-		if (inLength > 2) // A really small buffer causes problems with the logic below
+		if (inBytes > 2) // A really small buffer causes problems with the logic below
 		{
-			while (count <= inLength)
+			while (count <= inBytes)
 			{
 				if (count % 3 == 0 && count != 0)
 				{
@@ -266,7 +255,7 @@ std::string Base64::Encode(
 						*(fresult++) = '\n';
 						LineLen = 0;
 					}
-					if (inLength - count < 3)
+					if (inBytes - count < 3)
 						break;
 				}
 				unsigned char mid = (256 - (0 - *s)) & 0xff;
@@ -277,7 +266,7 @@ std::string Base64::Encode(
 			}
 		}
 		//do we have some chars left...
-		size_t rest = (inLength - count) % 3;
+		size_t rest = (inBytes - count) % 3;
 		if (rest != 0)
 		{
 			tmp = 0;
@@ -331,11 +320,12 @@ std::string Base64::Encode(
 		}
 		*(fresult++) = 0;
 	}
-	std::string result;
+	bool bOk = false;
 	if (encoded)
 	{
-		result = encoded;
+		bOk = true;
+		outData = encoded;
 		delete [] encoded;
 	}
-	return result;
+	return bOk;
 }
