@@ -429,7 +429,7 @@ int CAgilityBookViewRunsData::OnNeedIcon() const
 	int iImage = -1;
 	if (m_pRun)
 	{
-		if (0 < m_pRun->GetCRCDMetaFile().length())
+		if (0 < m_pRun->GetCRCDRawMetaData().length())
 			iImage = m_pView->m_imgMap;
 		else if (0 < m_pRun->GetCRCD().length())
 			iImage = m_pView->m_imgCourse;

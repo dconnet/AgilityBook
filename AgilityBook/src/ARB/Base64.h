@@ -35,11 +35,14 @@
  *  http://www.codeproject.com/string/ammimeutils.asp
  *  AMMimeUtils, posted 3/23/2001 by Anders Molin
  *
+ * Note, we are using ARBString's mainly for consistency.
+ * The actual contained data is still 8bit chars.
+ *
  * Revision History
  * @li 2004-03-06 DRC Created
  */
 
-#include <string>
+#include "ARBTypes.h"
 
 class Base64
 {
@@ -54,7 +57,7 @@ public:
 	 * @note User must call Release() on outBinData
 	 */
 	static bool Decode(
-			std::string const& inBase64,
+			ARBString const& inBase64,
 			char*& outBinData,
 			size_t& outBytes);
 
@@ -73,5 +76,5 @@ public:
 	static bool Encode(
 			char const* inBinData,
 			size_t inBytes,
-			std::string& outData);
+			ARBString& outData);
 };

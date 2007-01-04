@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
  * @li 2006-07-02 DRC Added 'subtractTF'.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent'.
@@ -126,6 +127,7 @@
 #define TREE_FAULTS							_T("Faults")
 #define TREE_CRCD							_T("CRCD")
 #define TREE_CRCD_META						_T("CRCDMeta")
+#define TREE_CRCD_META2						_T("CRCDMeta2")
 #define TREE_OTHER							_T("Other")
 #define TREE_RUN_LINK						_T("Link")
 #define TREE_REF_RUN						_T("ReferenceRun")

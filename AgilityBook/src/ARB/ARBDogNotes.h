@@ -45,6 +45,23 @@
 
 typedef std::vector<ARBString> ARBDogFaultList;
 
+class ARBMetaData;
+typedef boost::shared_ptr<ARBMetaData> ARBMetaDataPtr;
+class ARBMetaData
+{
+	friend class ARBDogNotes;
+	ARBMetaData();
+public:
+	static ARBMetaDataPtr MetaData();
+	~ARBMetaData();
+
+	size_t length() const		{return m_Bytes;}
+	char const* data() const	{return m_Data;}
+private:
+	size_t m_Bytes;
+	char* m_Data;
+};
+
 /**
  * Various notes about a run.
  */
@@ -111,14 +128,12 @@ public:
 	{
 		m_CRCD = inCRCD;
 	}
-	ARBString const& GetCRCDMetaFile() const ///< Returns Base64-encoded Enhanced Metafile.
+	ARBString const& GetCRCDRawMetaData() const
 	{
 		return m_CRCDMeta;
 	}
-	void SetCRCDMetaFile(ARBString const& inCRCDMeta)
-	{
-		m_CRCDMeta = inCRCDMeta;
-	}
+	ARBMetaDataPtr GetCRCDMetaData() const;
+	void SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes);
 	ARBString const& GetNote() const
 	{
 		return m_Note;
