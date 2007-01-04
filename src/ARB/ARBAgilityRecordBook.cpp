@@ -37,7 +37,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2006-12-25 DRC File version 12.4. Added 'DateDraw' to Calendar.
+ * @li 2007-01-03 DRC File version 12.4. Added 'DateDraw' to Calendar.
+ *                    Changed 'CRCDMeta' to 'CRCDMeta2'.
  * @li 2006-11-03 DRC File version 12.3. Added 'SpdMult'.
  * @li 2006-07-02 DRC File version 12.2. Added 'subtractTF'.
  * @li 2006-02-16 DRC File version 12.1. Added 'RenameEvent'.

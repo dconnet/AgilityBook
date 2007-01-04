@@ -111,7 +111,7 @@ Base64::Base64()
 }
 
 bool Base64::Decode(
-		std::string const& inBase64,
+		ARBString const& inBase64,
 		char*& outBinData,
 		size_t& outBytes)
 {
@@ -206,7 +206,7 @@ void Base64::Release(char*& inBinData)
 bool Base64::Encode(
 		char const* inBinData,
 		size_t inBytes,
-		std::string& outData)
+		ARBString& outData)
 {
 	char* encoded = NULL;
 	if (inBinData != NULL && 0 < inBytes)
@@ -324,7 +324,12 @@ bool Base64::Encode(
 	if (encoded)
 	{
 		bOk = true;
+#ifdef UNICODE
+		CString tmp(encoded);
+		outData = (LPCTSTR)tmp;
+#else
 		outData = encoded;
+#endif
 		delete [] encoded;
 	}
 	return bOk;

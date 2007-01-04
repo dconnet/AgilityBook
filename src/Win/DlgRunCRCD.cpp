@@ -186,22 +186,11 @@ void CDlgRunCRCD::SetCRCDData()
 		LPBYTE bits = new BYTE[nSize+1];
 		GetEnhMetaFileBits(m_metaFile, nSize, bits);
 		ASSERT(sizeof(BYTE) == sizeof(char));
-		ARBString moreBits;
-#ifdef UNICODE
-		std::string data;
-		if (Base64::Encode(reinterpret_cast<char*>(bits), nSize, data))
-		{
-			CString tmp(data.c_str());
-			moreBits = tmp;
-		}
-#else
-		Base64::Encode(reinterpret_cast<char*>(bits), nSize, moreBits);
-#endif
-		m_Run->SetCRCDMetaFile(moreBits);
+		m_Run->SetCRCDMetaData(reinterpret_cast<char*>(bits), nSize);
 		delete [] bits;
 	}
 	else
-		m_Run->SetCRCDMetaFile(_T(""));
+		m_Run->SetCRCDMetaData(NULL, 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -221,27 +210,17 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	else
 		m_Insert = true;
 	m_ViewText = true;
-	if (0 < m_Run->GetCRCDMetaFile().length())
+	if (0 < m_Run->GetCRCDRawMetaData().length())
 	{
-		char* pOutput;
-		size_t len;
-#ifdef UNICODE
-		std::string data = CStringA(m_Run->GetCRCDMetaFile().c_str());
-		if (Base64::Decode(data, pOutput, len))
-#else
-		if (Base64::Decode(m_Run->GetCRCDMetaFile(), pOutput, len))
-#endif
+		ARBMetaDataPtr metaData = m_Run->GetCRCDMetaData();
+		m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(metaData->length()), reinterpret_cast<BYTE const*>(metaData->data()));
+		m_metaFileBack = m_metaFile;
+		if (m_metaFile)
 		{
-			m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(len), reinterpret_cast<LPBYTE>(pOutput));
-			m_metaFileBack = m_metaFile;
-			if (m_metaFile)
-			{
-				m_ViewText = false;
-				AdjustCRCD();
-				m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
-			}
+			m_ViewText = false;
+			AdjustCRCD();
+			m_ctrlCRCD.SetEnhMetaFile(m_metaFile);
 		}
-		Base64::Release(pOutput);
 	}
 	int nSetCheck = CAgilityBookOptions::GetIncludeCRCDImage() ? 1 : 0;
 	if (m_metaFile)
@@ -341,7 +320,7 @@ void CDlgRunCRCD::OnCopy()
 		m_ctrlText.SetWindowText(_T(""));
 		DeleteMetaFile();
 		m_Run->SetCRCD(_T(""));
-		m_Run->SetCRCDMetaFile(_T(""));
+		m_Run->SetCRCDMetaData(NULL, 0);
 		SetView();
 	}
 }

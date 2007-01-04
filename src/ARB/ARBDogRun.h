@@ -311,13 +311,17 @@ public:
 	{
 		m_Notes.SetCRCD(inCRCD);
 	}
-	ARBString const& GetCRCDMetaFile() const
+	ARBString const& GetCRCDRawMetaData() const
 	{
-		return m_Notes.GetCRCDMetaFile();
+		return m_Notes.GetCRCDRawMetaData();
 	}
-	void SetCRCDMetaFile(ARBString const& inCRCDMeta)
+	ARBMetaDataPtr GetCRCDMetaData() const
 	{
-		m_Notes.SetCRCDMetaFile(inCRCDMeta);
+		return m_Notes.GetCRCDMetaData();
+	}
+	void SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes)
+	{
+		m_Notes.SetCRCDMetaData(inCRCDMeta, inBytes);
 	}
 	ARBString const& GetNote() const
 	{

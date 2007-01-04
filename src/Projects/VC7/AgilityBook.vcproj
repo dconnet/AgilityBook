@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -85,7 +85,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -1049,6 +1049,12 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\Base64.h">
+			</File>
+			<File
+				RelativePath="..\..\ARB\BinaryData.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\BinaryData.h">
 			</File>
 			<File
 				RelativePath="..\..\ARB\Element.cpp">

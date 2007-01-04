@@ -44,6 +44,8 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
+#include "Base64.h"
+#include "BinaryData.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -51,6 +53,24 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+ARBMetaDataPtr ARBMetaData::MetaData()
+{
+	return ARBMetaDataPtr(new ARBMetaData());
+}
+
+ARBMetaData::ARBMetaData()
+	: m_Bytes(0)
+	, m_Data(NULL)
+{
+}
+
+ARBMetaData::~ARBMetaData()
+{
+	BinaryData::Release(m_Data);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -127,9 +147,18 @@ bool ARBDogNotes::Load(
 		{
 			m_CRCD = element.GetValue();
 		}
-		else if (element.GetName() == TREE_CRCD_META)
+		else if (element.GetName() == TREE_CRCD_META2)
 		{
 			m_CRCDMeta = element.GetValue();
+		}
+		else if (element.GetName() == TREE_CRCD_META)
+		{
+			ARBString tmp = element.GetValue();
+			char* data;
+			size_t bytes;
+			Base64::Decode(tmp, data, bytes);
+			BinaryData::Encode(data, bytes, m_CRCDMeta);
+			Base64::Release(data);
 		}
 		else if (element.GetName() == TREE_OTHER)
 		{
@@ -159,7 +188,7 @@ bool ARBDogNotes::Save(Element& ioTree) const
 		}
 		if (0 < m_CRCDMeta.length())
 		{
-			Element& element = notes.AddElement(TREE_CRCD_META);
+			Element& element = notes.AddElement(TREE_CRCD_META2);
 			element.SetValue(m_CRCDMeta);
 		}
 		if (0 < m_Note.length())
@@ -169,4 +198,16 @@ bool ARBDogNotes::Save(Element& ioTree) const
 		}
 	}
 	return true;
+}
+
+ARBMetaDataPtr ARBDogNotes::GetCRCDMetaData() const
+{
+	ARBMetaDataPtr data = ARBMetaData::MetaData();
+	BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes);
+	return data;
+}
+
+void ARBDogNotes::SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes)
+{
+	BinaryData::Encode(inCRCDMeta, inBytes, m_CRCDMeta);
 }

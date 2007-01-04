@@ -46,7 +46,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -135,7 +135,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -223,7 +223,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -312,7 +312,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -402,7 +402,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -490,7 +490,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -577,7 +577,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -665,7 +665,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -1553,6 +1553,14 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\Base64.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\BinaryData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\BinaryData.h"
 				>
 			</File>
 			<File
