@@ -37,11 +37,8 @@ If you need to compile Xerces yourself, then the .dll files are in
 zlib: http://www.zlib.net/
 I'm currently using v1.2.3, with some makefile changes.
 (Note, also fixed zlib1.rc so version really is 1.2.3)
-- Copy win32\Makefile.msc to win32\Makefile.vs8.
-  - Add '-del *.manifest' to 'clean' section.
-  - Add 'mt -manifest $(SHAREDLIB).manifest -outputresource:$(SHAREDLIB);2'
-    to the $(SHAREDLIB) section.
-- Copy win32\Makefile.vs8 to win64\Makefile.vs8
+- Change CFLAGS option '-MD' to '-MT'
+- Copy win32\Makefile.msc to win64\Makefile.msc
   - Change '/dWIN32' to '/dWIN64'
 -VS6:
  - Start a command shell and invoke VCVARS32.BAT.
@@ -55,13 +52,13 @@ I'm currently using v1.2.3, with some makefile changes.
  - Run 'nmake -f win32\Makefile.msc clean'.
 -VS8
  - Start a VS2005 command shell
- - Run 'nmake -f win32\Makefile.vs8'.
+ - Run 'nmake -f win32\Makefile.msc'.
  - Copy zdll.lib/zlib1.dll
- - Run 'nmake -f win32\Makefile.vs8 clean'.
+ - Run 'nmake -f win32\Makefile.msc clean'.
  - Start a VS2005x64 Tools command shell
- - Run 'nmake -f win64\Makefile.vs8'.
+ - Run 'nmake -f win64\Makefile.msc'.
  - Copy zdll.lib/zlib1.dll
- - Run 'nmake -f win64\Makefile.vs8 clean'.
+ - Run 'nmake -f win64\Makefile.msc clean'.
 
 ----------
 
