@@ -38,6 +38,11 @@ zlib: http://www.zlib.net/
 I'm currently using v1.2.3, with some makefile changes.
 (Note, also fixed zlib1.rc so version really is 1.2.3)
 - Change CFLAGS option '-MD' to '-MT'
+- Change STATICLIB to zlib_s.lib
+         SHAREDLIB to arbzlib.dll
+         IMPLIB    to arbzlib.lib
+  (since we're compiling our own version, this deals with the zlib request
+  to keep zlib1.dll a pure product adhering to certain requirements)
 - Copy win32\Makefile.msc to win64\Makefile.msc
   - Change '/dWIN32' to '/dWIN64'
 -VS6:
