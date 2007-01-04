@@ -93,7 +93,7 @@ XERCES_CPP_NAMESPACE_USE
 #endif
 #pragma message ( "Linking with " XERCES_LIB )
 #pragma comment(lib, XERCES_LIB)
-#pragma comment(lib, "zdll.lib")
+#pragma comment(lib, "arbzlib.lib")
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
