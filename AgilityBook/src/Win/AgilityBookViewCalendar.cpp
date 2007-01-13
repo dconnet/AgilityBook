@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-01-13 DRC Fixed a problem with scroll bar not appearing.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2004-10-04 DRC Added div-by-0 tests.
@@ -367,6 +368,15 @@ void CAgilityBookViewCalendar::LoadData()
 	info.nMax = m_nMonths - 1;
 	info.nPos = 0;
 	info.nPage = 1;
+	if (info.nMin == info.nMax)
+	{
+		// There seems to be a bug where the first time the scroll bar is set,
+		// if the range is 0, then the scroll bar is not presented even though
+		// we asked for it (SIF_DISABLENOSCROLL).
+		info.nMax = info.nMin + 1;
+		SetScrollInfo(SB_VERT, &info, FALSE);
+		info.nMax = info.nMin;
+	}
 	SetScrollInfo(SB_VERT, &info, FALSE);
 
 	// Now initialize all our drawing stuff.
