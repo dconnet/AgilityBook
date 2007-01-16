@@ -72,6 +72,9 @@ public:
 			char const* inBinData,
 			size_t inBytes,
 			ARBString& outBase64);
+	static bool Encode(
+			FILE* inData,
+			ARBString& outBase64);
 
 	static bool DecodeString(
 			ARBString const& inBase64,

@@ -171,6 +171,67 @@ bool BinaryData::Encode(
 	return bOk;
 }
 
+bool BinaryData::Encode(
+		FILE* inData,
+		ARBString& outBase64)
+{
+	outBase64.empty();
+
+	char in[CHUNK];
+	char out[CHUNK];
+    z_stream strm;
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    if (Z_OK != deflateInit(&strm, Z_DEFAULT_COMPRESSION))
+        return false;
+
+	int flush;
+	size_t nData = 0;
+	char* pData = NULL;
+	do
+	{
+		strm.avail_in = (uInt)fread(in, 1, CHUNK, inData);
+		if (ferror(inData))
+		{
+			deflateEnd(&strm);
+			return false;
+		}
+		flush = feof(inData) ? Z_FINISH : Z_NO_FLUSH;
+		strm.next_in = (Bytef*)in;
+
+		do
+		{
+			strm.avail_out = CHUNK;
+			strm.next_out = (Bytef*)out;
+			/*int ret =*/ deflate(&strm, flush);    /* no bad return value */
+			//ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
+			size_t have = CHUNK - strm.avail_out;
+			if (pData)
+			{
+				char* tmp = new char[have + nData];
+				memcpy(tmp, pData, nData);
+				memcpy(tmp + nData, out, have);
+				nData += have;
+				delete [] pData;
+				pData = tmp;
+			}
+			else
+			{
+				pData = new char[have];
+				nData = have;
+				memcpy(pData, out, have);
+			}
+		} while (strm.avail_out == 0);
+	} while (flush != Z_FINISH);
+    deflateEnd(&strm);
+
+	bool bOk = Base64::Encode(pData, nData, outBase64);
+	delete [] pData;
+
+	return bOk;
+}
+
 bool BinaryData::DecodeString(
 		ARBString const& inBase64,
 		ARBString outData)
