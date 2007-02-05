@@ -363,6 +363,7 @@ public:
 	 * @param inDivision Division name
 	 * @param inLevel True Level name (sublevel)
 	 * @param inDate Date for requested scoring.
+	 * @param outEvent Pointer to object, NULL if not found.
 	 * @param outScoring Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
@@ -372,5 +373,6 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
+			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;
 };

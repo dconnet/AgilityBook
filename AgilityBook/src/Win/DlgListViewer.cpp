@@ -1306,6 +1306,7 @@ static void InsertRun(
 			pRun->GetDivision(),
 			pRun->GetLevel(),
 			pRun->GetDate(),
+			NULL,
 			&pScoring);
 	if (pScoring)
 	{

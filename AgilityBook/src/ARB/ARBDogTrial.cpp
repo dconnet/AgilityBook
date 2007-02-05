@@ -300,6 +300,7 @@ short ARBDogTrial::GetSpeedPoints(
 				pRun->GetDivision(),
 				pRun->GetLevel(),
 				pRun->GetDate(),
+				NULL,
 				&pScoring))
 			{
 				speed = speed + pRun->GetSpeedPoints(pScoring);

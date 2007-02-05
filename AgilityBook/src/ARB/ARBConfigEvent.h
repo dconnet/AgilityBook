@@ -165,16 +165,16 @@ public:
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level (NOT sublevel) event exists in.
 	 * @param inDate Date for requested scoring.
-	 * @param outEvent Pointer to object, NULL if not found.
+	 * @param outScoring Pointer to object, NULL if not found.
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
-			ARBConfigScoringPtr* outEvent = NULL) const
+			ARBConfigScoringPtr* outScoring = NULL) const
 	{
-		return m_Scoring.FindEvent(inDivision, inLevel, inDate, outEvent);
+		return m_Scoring.FindEvent(inDivision, inLevel, inDate, outScoring);
 	}
 
 	/*
@@ -284,6 +284,7 @@ public:
 	 * @param inDivision Division event exists in.
 	 * @param inLevel Level event exists in.
 	 * @param inDate Date for requested scoring.
+	 * @param outEvent Pointer to object, NULL if not found.
 	 * @param outScoring Pointer to object, NULL if not found.
 	 * @return Whether the event was found.
 	 */
@@ -292,6 +293,7 @@ public:
 			ARBString const& inDivision,
 			ARBString const& inLevel,
 			ARBDate const& inDate,
+			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;
 
 	/**

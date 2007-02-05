@@ -219,21 +219,27 @@ bool ARBDogClubList::FindEvent(
 		ARBString const& inLevel,
 		ARBDate const& inDate,
 		ARBErrorCallback& ioCallback,
+		ARBConfigEventPtr* outEvent,
 		ARBConfigScoringPtr* outScoring) const
 {
+	if (outEvent)
+		outEvent->reset();
 	if (outScoring)
 		outScoring->reset();
-	ARBConfigScoringPtr pEvent;
-	for (const_iterator iter = begin(); !pEvent && iter != end(); ++iter)
+	ARBConfigEventPtr pEvent;
+	ARBConfigScoringPtr pScoring;
+	for (const_iterator iter = begin(); !pScoring && iter != end(); ++iter)
 	{
-		inConfig.GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent);
+		inConfig.GetVenues().FindEvent((*iter)->GetVenue(), inEvent, inDivision, inLevel, inDate, &pEvent, &pScoring);
 	}
 	bool bFound = false;
-	if (pEvent)
+	if (pScoring)
 	{
 		bFound = true;
+		if (outEvent)
+			*outEvent = pEvent;
 		if (outScoring)
-			*outScoring = pEvent;
+			*outScoring = pScoring;
 	}
 	else
 	{
@@ -244,7 +250,7 @@ bool ARBDogClubList::FindEvent(
 		msg += _T("/");
 		msg += inLevel;
 		msg += _T(")");
-		for (const_iterator iter = begin(); !pEvent && iter != end(); ++iter)
+		for (const_iterator iter = begin(); !pScoring && iter != end(); ++iter)
 		{
 			msg += _T("\n");
 			msg += (*iter)->GetName();

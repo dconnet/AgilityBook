@@ -79,13 +79,15 @@ public:
 	 * Load the scoring.
 	 * @pre inTree is the actual ARBDogRunScoring element.
 	 * @param inEvent Configuration for looking up information.
+	 * @param inEventScoring Configuration for looking up information.
 	 * @param inTree XML structure to convert into ARB.
 	 * @param inVersion Version of the document being read.
 	 * @param ioCallback Error processing callback.
 	 * @return Success
 	 */
 	bool Load(
-			ARBConfigScoringPtr inEvent,
+			ARBConfigEventPtr inEvent,
+			ARBConfigScoringPtr inEventScoring,
 			Element const& inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);

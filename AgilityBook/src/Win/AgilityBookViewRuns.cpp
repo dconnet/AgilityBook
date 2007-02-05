@@ -242,6 +242,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
+						NULL,
 						&pScoring);
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
 				str << ARBDouble::str(faults, 0);
@@ -350,6 +351,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
+						NULL,
 						&pScoring);
 				if (pScoring)
 				{
@@ -370,6 +372,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 							m_pRun->GetDivision(),
 							m_pRun->GetLevel(),
 							m_pRun->GetDate(),
+							NULL,
 							&pScoring);
 					if (pScoring)
 					{
@@ -409,6 +412,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 						m_pRun->GetDivision(),
 						m_pRun->GetLevel(),
 						m_pRun->GetDate(),
+						NULL,
 						&pScoring);
 				if (pScoring)
 				{
@@ -744,6 +748,7 @@ int CALLBACK CompareRuns(
 						pRun1->m_pRun->GetDivision(),
 						pRun1->m_pRun->GetLevel(),
 						pRun1->m_pRun->GetDate(),
+						NULL,
 						&pScoring1);
 				ARBConfigScoringPtr pScoring2;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
@@ -753,6 +758,7 @@ int CALLBACK CompareRuns(
 						pRun2->m_pRun->GetDivision(),
 						pRun2->m_pRun->GetLevel(),
 						pRun2->m_pRun->GetDate(),
+						NULL,
 						&pScoring2);
 				double faults1 = pRun1->m_pRun->GetScoring().GetCourseFaults() + pRun1->m_pRun->GetScoring().GetTimeFaults(pScoring1);
 				double faults2 = pRun2->m_pRun->GetScoring().GetCourseFaults() + pRun2->m_pRun->GetScoring().GetTimeFaults(pScoring2);
@@ -929,6 +935,7 @@ int CALLBACK CompareRuns(
 						pRun1->m_pRun->GetDivision(),
 						pRun1->m_pRun->GetLevel(),
 						pRun1->m_pRun->GetDate(),
+						NULL,
 						&pScoring1);
 				ARBConfigScoringPtr pScoring2;
 				if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
@@ -938,6 +945,7 @@ int CALLBACK CompareRuns(
 						pRun2->m_pRun->GetDivision(),
 						pRun2->m_pRun->GetLevel(),
 						pRun2->m_pRun->GetDate(),
+						NULL,
 						&pScoring2);
 				if (pScoring1 && pScoring2)
 				{
@@ -971,6 +979,7 @@ int CALLBACK CompareRuns(
 						pRun1->m_pRun->GetDivision(),
 						pRun1->m_pRun->GetLevel(),
 						pRun1->m_pRun->GetDate(),
+						NULL,
 						&pScoring);
 				if (pScoring)
 					pts1 = pRun1->m_pRun->GetTitlePoints(pScoring);
@@ -985,6 +994,7 @@ int CALLBACK CompareRuns(
 						pRun2->m_pRun->GetDivision(),
 						pRun2->m_pRun->GetLevel(),
 						pRun2->m_pRun->GetDate(),
+						NULL,
 						&pScoring);
 				if (pScoring)
 					pts2 = pRun2->m_pRun->GetTitlePoints(pScoring);
@@ -1038,6 +1048,7 @@ int CALLBACK CompareRuns(
 					pRun1->m_pRun->GetDivision(),
 					pRun1->m_pRun->GetLevel(),
 					pRun1->m_pRun->GetDate(),
+					NULL,
 					&pScoring1);
 			ARBConfigScoringPtr pScoring2;
 			if (pRun2->m_pTrial->GetClubs().GetPrimaryClub())
@@ -1047,6 +1058,7 @@ int CALLBACK CompareRuns(
 					pRun2->m_pRun->GetDivision(),
 					pRun2->m_pRun->GetLevel(),
 					pRun2->m_pRun->GetDate(),
+					NULL,
 					&pScoring2);
 			int pts1 = -1;
 			int pts2 = -1;

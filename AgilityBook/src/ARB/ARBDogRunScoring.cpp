@@ -159,19 +159,20 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 }
 
 bool ARBDogRunScoring::Load(
-		ARBConfigScoringPtr inEvent,
+		ARBConfigEventPtr inEvent,
+		ARBConfigScoringPtr inEventScoring,
 		Element const& inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
 	ARBString attrib;
 
-	m_bRoundTimeFaults = inEvent->DropFractions();
+	m_bRoundTimeFaults = inEventScoring->DropFractions();
 	ARBString const& name = inTree.GetName();
 	inTree.GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	inTree.GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
-	m_type = ARBDogRunScoring::TranslateConfigScoring(inEvent->GetScoringStyle());
+	m_type = ARBDogRunScoring::TranslateConfigScoring(inEventScoring->GetScoringStyle());
 	switch (m_type)
 	{
 	default:
@@ -209,6 +210,13 @@ bool ARBDogRunScoring::Load(
 					// Report the error, but keep going.
 					m_Table = false;
 				}
+			}
+			// There was a problem where the table was being set in pre 12.4
+			// files. Note: This fixes the symptom, not the cause.
+			if (m_Table && inVersion < ARBVersion(12,4))
+			{
+				if (!inEvent->HasTable())
+					m_Table = false;
 			}
 			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			inTree.GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);

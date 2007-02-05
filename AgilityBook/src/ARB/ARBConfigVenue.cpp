@@ -678,8 +678,11 @@ bool ARBConfigVenueList::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
+		ARBConfigEventPtr* outEvent,
 		ARBConfigScoringPtr* outScoring) const
 {
+	if (outEvent)
+		outEvent->reset();
 	if (outScoring)
 		outScoring->reset();
 	bool bFound = false;
@@ -693,7 +696,7 @@ bool ARBConfigVenueList::FindEvent(
 			ARBConfigLevelPtr pLevel;
 			if (pDiv->GetLevels().FindSubLevel(inLevel, &pLevel))
 			{
-				bFound = pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outScoring);
+				bFound = pVenue->GetEvents().FindEvent(inEvent, inDivision, pLevel->GetName(), inDate, outEvent, outScoring);
 			}
 			// Note, some users have changed NADAC to remove Novice A/B and only
 			// have Novice (no sublevels). This means during a config update,

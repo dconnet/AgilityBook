@@ -311,8 +311,9 @@ bool ARBDogRun::Load(
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
-	ARBConfigScoringPtr pEvent;
-	if (!inClubs.FindEvent(inConfig, m_Event, m_Division, m_Level, m_Date, ioCallback, &pEvent))
+	ARBConfigEventPtr pEvent;
+	ARBConfigScoringPtr pScoring;
+	if (!inClubs.FindEvent(inConfig, m_Event, m_Division, m_Level, m_Date, ioCallback, &pEvent, &pScoring))
 		return false;
 
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
@@ -341,7 +342,7 @@ bool ARBDogRun::Load(
 		|| name == TREE_BY_POINTS)
 		{
 			// Ignore any errors...
-			m_Scoring.Load(pEvent, element, inVersion, ioCallback);
+			m_Scoring.Load(pEvent, pScoring, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_PLACEMENT)
 		{
