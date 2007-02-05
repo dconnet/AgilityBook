@@ -620,6 +620,7 @@ BOOL CWizardImport::OnWizardFinish()
 							entry[idxDiv[i]],
 							entry[idxLevel[i]],
 							ARBDate::FromString(entry[idxDate[i]], format),
+							NULL,
 							&pScoring);
 					}
 				}

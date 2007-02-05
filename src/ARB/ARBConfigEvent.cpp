@@ -354,15 +354,21 @@ bool ARBConfigEventList::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
 		ARBDate const& inDate,
+		ARBConfigEventPtr* outEvent,
 		ARBConfigScoringPtr* outScoring) const
 {
 	if (outScoring)
 		outScoring->reset();
+	if (outEvent)
+		outEvent->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inEvent)
 		{
-			return (*iter)->FindEvent(inDivision, inLevel, inDate, outScoring);
+			bool bFound = (*iter)->FindEvent(inDivision, inLevel, inDate, outScoring);
+			if (bFound && outEvent)
+				*outEvent = *iter;
+			return bFound;
 		}
 	}
 	return false;

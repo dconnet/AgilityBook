@@ -435,6 +435,7 @@ void CWizardExport::UpdatePreview()
 								pRun->GetDivision(),
 								pRun->GetLevel(),
 								pRun->GetDate(),
+								NULL,
 								&pScoring);
 						ASSERT(pScoring);
 						if (pScoring)

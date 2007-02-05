@@ -511,6 +511,7 @@ bool ARBAgilityRecordBook::Update(
 					pRun->GetDivision(),
 					pRun->GetLevel(),
 					pRun->GetDate(),
+					NULL,
 					&pScoring))
 				{
 					if (ARBDogRunScoring::TranslateConfigScoring(pScoring->GetScoringStyle())

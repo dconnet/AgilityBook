@@ -249,6 +249,7 @@ void CDlgRunReference::CreateRefRunMe()
 		m_Run->GetDivision(),
 		m_Run->GetLevel(),
 		m_Run->GetDate(),
+		NULL,
 		&pScoring))
 	{
 		m_pRefRunMe->SetScore(ARBDouble::str(m_Run->GetScore(pScoring)));
@@ -570,6 +571,7 @@ void CDlgRunReference::OnRefRunNew()
 			m_Run->GetDivision(),
 			m_Run->GetLevel(),
 			m_Run->GetDate(),
+			NULL,
 			&pScoring))
 		{
 			ARBString nScore;

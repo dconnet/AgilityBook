@@ -184,6 +184,7 @@ public:
 	 * @param inLevel Level to search for.
 	 * @param inDate Date of event.
 	 * @param ioCallback Error processing callback.
+	 * @param outEvent Pointer to object, NULL if not found.
 	 * @param outScoring Pointer to object, NULL if not found.
 	 * @return Whether an event was found.
 	 */
@@ -194,6 +195,7 @@ public:
 			ARBString const& inLevel,
 			ARBDate const& inDate,
 			ARBErrorCallback& ioCallback,
+			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;
 
 	/**
