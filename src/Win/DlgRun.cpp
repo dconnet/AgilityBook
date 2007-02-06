@@ -120,6 +120,24 @@ void CDlgRun::OnOK()
 {
 	if (GetActivePage()->UpdateData(TRUE))
 	{
+		//TODO: Remove debugging code
+#ifdef _DEBUG
+		{
+			ARBDogClubPtr pClub;
+			m_pTrial->GetClubs().GetPrimaryClub(&pClub);
+			ASSERT(NULL != pClub.get());
+			ARBConfigVenuePtr pVenue;
+			m_pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
+			ASSERT(NULL != pVenue.get());
+			ARBConfigEventPtr pEvent;
+			pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
+			ASSERT(NULL != pEvent.get());
+			if (!pEvent->HasTable())
+				if (m_Run->GetScoring().HasTable())
+					AfxMessageBox(_T("Poof!"));
+		}
+#endif
+		//End TODO
 		*m_pRealRun = *m_Run;
 		m_pTrial->SetMultiQs(m_pDoc->GetConfig());
 		CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision().c_str());

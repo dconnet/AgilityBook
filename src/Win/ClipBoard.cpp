@@ -136,6 +136,10 @@ bool CClipboardDataReader::GetData(
 	CStringA data; // Our internal formats are always written as ascii text
 	if (GetData(GetClipboardFormat(clpFmt), data))
 	{
+#ifdef _DEBUG
+		OutputDebugStringA((LPCSTR)data);
+		OutputDebugStringA("\n");
+#endif
 		ARBString err;
 		bOk = outTree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
 		if (!bOk && 0 < err.length())
