@@ -78,7 +78,7 @@ public:
 
 	static bool DecodeString(
 			ARBString const& inBase64,
-			ARBString outData);
+			ARBString& outData);
 	static bool EncodeString(
 			ARBString const& inData,
 			ARBString& outBase64);

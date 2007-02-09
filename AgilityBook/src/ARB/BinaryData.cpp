@@ -234,7 +234,7 @@ bool BinaryData::Encode(
 
 bool BinaryData::DecodeString(
 		ARBString const& inBase64,
-		ARBString outData)
+		ARBString& outData)
 {
 	char* data;
 	size_t len;
@@ -247,6 +247,7 @@ bool BinaryData::DecodeString(
 #else
 	outData = ARBString(data, len);
 #endif
+	Release(data);
 	return true;
 }
 
