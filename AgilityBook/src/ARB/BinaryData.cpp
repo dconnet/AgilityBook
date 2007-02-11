@@ -258,7 +258,10 @@ bool BinaryData::EncodeString(
 	outBase64.empty();
 	if (inData.empty())
 		return false;
-	size_t len = inData.length() + 1;
+	// Do not include the null terminator. Otherwise decoding includes it into
+	// the output string - which when streamed, then includes the null. Which
+	// in an ostringstream, terminates the string on output of the stream.
+	size_t len = inData.length();
 	// TODO: Better conversion
 #ifdef UNICODE
 	CStringA tmp(inData.c_str());
