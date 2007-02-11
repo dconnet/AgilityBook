@@ -1,0 +1,235 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""afxres.rc""     // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_HELP_PAGE1 DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Agility Record Book Helper"
+FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "",IDC_TEXT,3,3,314,183
+    LTEXT           "",IDC_TEXT2,3,189,314,8
+END
+
+IDD_HELP_PAGE2 DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Agility Record Book Helper"
+FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "Check the files you would like to be sent (%1!d! currently selected)",IDC_TEXT,3,3,216,8
+    LISTBOX         IDC_LIST,3,12,314,185,LBS_SORT | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | LBS_EXTENDEDSEL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+IDD_HELP_PAGE3 DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Agility Record Book Helper"
+FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "Now that the information is gathered, press Finish to copy the information to the clipboard and start an email.\n\nOnce the email is started, paste the copied data into the message and send it. This will help diagnose the problem.",IDC_STATIC,3,3,314,194
+END
+
+IDD_HELP_PAGE4 DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Agility Record Book Decoder"
+FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_EDIT,3,3,314,194,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "dcon Software"
+            VALUE "FileDescription", "Agility Record Book Helper"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "ARBHelp.exe"
+            VALUE "LegalCopyright", "Copyright © 2007 David Connet. All Rights Reserved."
+            VALUE "OriginalFilename", "ARBHelp.exe"
+            VALUE "ProductName", "Agility Record Book Helper"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_HELP_PAGE1, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 317
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 197
+    END
+
+    IDD_HELP_PAGE2, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 317
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 197
+    END
+
+    IDD_HELP_PAGE3, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 317
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 197
+    END
+
+    IDD_HELP_PAGE4, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 317
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 197
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_INTRODUCTION        "When Agility Record Book has a problem, this program helps by gathering information that may be useful in determining what went wrong."
+    IDS_GATHER              "The following information will be gathered:\n\tRegistry data\n\tFile information based on registry settings\n\tAgility Record Book files"
+    IDS_WHATNEXT            "Once gathered, the data will be compressed and prepared for sending via email."
+    IDS_TASK_REGISTRY       "Reading registry and processing data..."
+    IDS_TASK_FILES          "Searching for ARB files..."
+    IDS_SEARCHINGDRIVE      "\r\n\tSearching on %1!c!:..."
+    IDS_FILES_FOUND         "\r\n\t\t%1!d! files found"
+    IDS_MAIL_ADDRESS        "mailto:help@agilityrecordbook.com?subject=Help&body=Please paste the data on the clipboard into this message%0d%0a"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DECODE              "In order to decode the gathered information, first select all the text from '%1' to '%2' and copy it to the clipboard. Make sure to include those strings! Then press 'Next'."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "afxres.rc"     // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
