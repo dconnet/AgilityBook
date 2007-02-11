@@ -16,6 +16,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup98", "Agili
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup64", "AgilityBookSetup64.vdproj", "{698DA42C-C4F3-4137-9E6B-FD633DC852F4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ARBHelp", "ARBHelp.vcproj", "{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -83,6 +85,18 @@ Global
 		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Release|Win32.ActiveCfg = Unicode Release
 		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Release|x64.ActiveCfg = Unicode Release
 		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Release|x64.Build.0 = Unicode Release
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|Win32.Build.0 = Debug|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|x64.ActiveCfg = Debug|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Release|Win32.ActiveCfg = Release|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Release|Win32.Build.0 = Release|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Release|x64.ActiveCfg = Release|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Unicode Debug|Win32.ActiveCfg = Debug|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Unicode Debug|Win32.Build.0 = Debug|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Unicode Debug|x64.ActiveCfg = Debug|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Unicode Release|Win32.ActiveCfg = Release|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Unicode Release|Win32.Build.0 = Release|Win32
+		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Unicode Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
