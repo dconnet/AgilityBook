@@ -342,7 +342,7 @@ bool ARBDogRun::Load(
 		|| name == TREE_BY_POINTS)
 		{
 			// Ignore any errors...
-			m_Scoring.Load(pEvent, pScoring, element, inVersion, ioCallback);
+			m_Scoring.Load(inConfig.GetVersion(), pEvent, pScoring, element, inVersion, ioCallback);
 		}
 		else if (name == TREE_PLACEMENT)
 		{
