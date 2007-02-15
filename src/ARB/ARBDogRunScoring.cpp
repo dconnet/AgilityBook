@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-02-14 DRC Fixed a problem in YPS table file conversion.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2004-11-15 DRC Changed time fault computation on T+F events.
@@ -106,7 +107,7 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	, m_Yards(rhs.m_Yards)
 	, m_Time(rhs.m_Time)
 	, m_Table(rhs.m_Table)
-	, m_ConvertTable(rhs.m_Table)
+	, m_ConvertTable(rhs.m_ConvertTable)
 	, m_CourseFaults(rhs.m_CourseFaults)
 	, m_NeedOpenPts(rhs.m_NeedOpenPts)
 	, m_NeedClosePts(rhs.m_NeedClosePts)
@@ -159,6 +160,7 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 }
 
 bool ARBDogRunScoring::Load(
+		short inConfigVersion,
 		ARBConfigEventPtr inEvent,
 		ARBConfigScoringPtr inEventScoring,
 		Element const& inTree,
@@ -190,7 +192,7 @@ bool ARBDogRunScoring::Load(
 				// conversion. This is used when merging the new configuration.
 				// If the existing config is <=2 and the new one is 3 (only),
 				// then we invoke the conversion. This is handled from the UI
-				// level.
+				// level. [note, changed to handle conversion on newone == 3+]
 				m_ConvertTable = true;
 				bool bTableInYPS = true;
 				if (Element::eFound == inTree.GetAttrib(_T("TableInYPS"), bTableInYPS))
@@ -212,9 +214,17 @@ bool ARBDogRunScoring::Load(
 				}
 			}
 			// There was a problem where the table was being set in pre 12.4
-			// files. Note: This fixes the symptom, not the cause.
-			if (m_Table && inVersion < ARBVersion(12,4))
+			// files. I suspect this was due to having the table flag set on
+			// non-table runs in 8.4 files - then when converted above, the
+			// table flag was set - but never fixed in the cleanup code in
+			// ARBAgilityRecordBook::Update (that code has been updated too)
+			// Besides, the Update code only ran for v2->3 configurations.
+			// If we convert directly from v2 to v4+, we'd still need to do it.
+			if (m_Table && inVersion < ARBVersion(12,4) && inConfigVersion >= 3)
 			{
+				// Only do this if the config is higher than 2. Otherwise, when
+				// we read the v2 config, the table bit is cleared before we
+				// get around to merging the new configuration.
 				if (!inEvent->HasTable())
 					m_Table = false;
 			}

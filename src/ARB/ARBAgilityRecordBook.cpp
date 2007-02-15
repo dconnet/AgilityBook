@@ -549,8 +549,10 @@ bool ARBAgilityRecordBook::Update(
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.
+	// Later note: I don't know why it was restricted to 2->3. If we're going
+	// 2->4, we still need to do the conversion.
 	if (ioCallBack.CanContinue()
-	&& curConfigVersion <= 2 && inConfigNew.GetVersion() == 3)
+	&& curConfigVersion <= 2 && inConfigNew.GetVersion() >= 3)
 	{
 		int nUpdated = 0;
 		for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin();
@@ -564,30 +566,36 @@ bool ARBAgilityRecordBook::Update(
 			{
 				ARBConfigEventPtr pEvent = *iterEvent;
 				// For every event that has a table listed, fix all those runs.
-				if (pEvent->HasTable())
+				// - Note, this must actually be done for ALL runs in order to
+				// clear the table flag on non-table events.
+				for (ARBDogList::iterator iterDog = m_Dogs.begin();
+					iterDog != m_Dogs.end();
+					++iterDog)
 				{
-					for (ARBDogList::iterator iterDog = m_Dogs.begin();
-						iterDog != m_Dogs.end();
-						++iterDog)
+					ARBDogPtr pDog = *iterDog;
+					for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+						iterTrial != pDog->GetTrials().end();
+						++iterTrial)
 					{
-						ARBDogPtr pDog = *iterDog;
-						for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
-							iterTrial != pDog->GetTrials().end();
-							++iterTrial)
+						ARBDogTrialPtr pTrial = *iterTrial;
+						if (pTrial->GetClubs().FindVenue(pVenue->GetName()))
 						{
-							ARBDogTrialPtr pTrial = *iterTrial;
-							if (pTrial->GetClubs().FindVenue(pVenue->GetName()))
+							for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
+								iterRun != pTrial->GetRuns().end();
+								++iterRun)
 							{
-								for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
-									iterRun != pTrial->GetRuns().end();
-									++iterRun)
+								ARBDogRunPtr pRun = *iterRun;
+								if (pRun->GetEvent() == pEvent->GetName()
+								&& pRun->GetScoring().TableNeedsConverting())
 								{
-									ARBDogRunPtr pRun = *iterRun;
-									if (pRun->GetEvent() == pEvent->GetName()
-									&& pRun->GetScoring().TableNeedsConverting())
+									// Specifically set whether the run has a
+									// table based on the configuration. This
+									// makes sure that old runs marked as having
+									// a table get properly cleaned up.
+									if (pRun->GetScoring().HasTable() != pEvent->HasTable())
 									{
 										++nUpdated;
-										pRun->GetScoring().SetHasTable(true);
+										pRun->GetScoring().SetHasTable(pEvent->HasTable());
 									}
 								}
 							}
