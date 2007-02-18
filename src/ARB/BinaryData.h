@@ -48,7 +48,7 @@ public:
 	 * Decode base64 and decompress data.
 	 * @param inBase64 Base64 encoded data
 	 * @param outBinData Decoded/decompressed data
-	 * @param outSize Number of bytes in outBinData
+	 * @param outBytes Number of bytes in outBinData
 	 * @post outBinData must be deallocated using Release()
 	 */
 	static bool Decode(
@@ -65,7 +65,7 @@ public:
 	/**
 	 * Compress and base64 encode a chunk of data.
 	 * @param inBinData Data to encode.
-	 * @param inSize Number of bytes in inBinData
+	 * @param inBytes Number of bytes in inBinData
 	 * @param outBase64 Base64 encoded string of compressed (zlib) data.
 	 */
 	static bool Encode(

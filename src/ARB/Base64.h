@@ -71,7 +71,8 @@ public:
 	 * Encode data
 	 * @param inBinData Buffer to encode
 	 * @param inBytes Length of inBinData
-	 * @return Encoded data
+	 * @param outData Encoded data
+	 * @return Success
 	 */
 	static bool Encode(
 			char const* inBinData,
