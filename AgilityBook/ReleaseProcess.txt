@@ -33,7 +33,7 @@ Do a full rebuild and verify it.
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository
- - https://svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
+ - https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
