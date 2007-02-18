@@ -78,7 +78,7 @@ public:
 	/**
 	 * Load the scoring.
 	 * @pre inTree is the actual ARBDogRunScoring element.
-	 * @param inConfig Configuration Version
+	 * @param inConfigVersion Configuration Version
 	 * @param inEvent Configuration for looking up information.
 	 * @param inEventScoring Configuration for looking up information.
 	 * @param inTree XML structure to convert into ARB.
