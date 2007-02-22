@@ -60,11 +60,9 @@
 #pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
 #endif
 
-// Assume that if we're using the static MFC library,
-// we're also using the static xerces lib.
-#if !defined(_AFXDLL) && !defined(XML_LIBRARY)
-#define XML_LIBRARY
-#endif
+// Define this if xerces is a static library.
+// This is a define that xerces uses.
+//#define XML_LIBRARY
 
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN		/// Exclude rarely-used stuff from Windows headers
