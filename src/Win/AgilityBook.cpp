@@ -78,17 +78,17 @@ XERCES_CPP_NAMESPACE_USE
 // Currently, we've used versions 2.2 and 2.7. There were no source code
 // changes needed between the two, hence we haven't needed to do any
 // funny stuff!
-#ifdef _AFXDLL
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_2.lib"
-	#endif
-#else
+#ifdef XML_LIBRARY
 	#ifdef _DEBUG
 		#define XERCES_LIB	"xerces-c_static_2D.lib"
 	#else
 		#define XERCES_LIB	"xerces-c_static_2.lib"
+	#endif
+#else
+	#ifdef _DEBUG
+		#define XERCES_LIB	"xerces-c_2D.lib"
+	#else
+		#define XERCES_LIB	"xerces-c_2.lib"
 	#endif
 #endif
 #pragma message ( "Linking with " XERCES_LIB )
