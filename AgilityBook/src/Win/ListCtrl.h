@@ -88,8 +88,7 @@ protected:
 	//{{AFX_MSG(CHeaderCtrl2)
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnHdnItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnHdnEndTrack(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg BOOL OnHdnItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -169,7 +168,7 @@ protected:
 protected:
 	//{{AFX_MSG(CListCtrl2)
 	afx_msg void OnDestroy();
-	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg BOOL OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -262,7 +261,7 @@ protected:
 	//{{AFX_MSG(CListView2)
 	afx_msg void OnDestroy();
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
-	afx_msg void OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg BOOL OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
 	afx_msg void OnEditCopy();
 	afx_msg void OnUpdateEditSelectAll(CCmdUI* pCmdUI);

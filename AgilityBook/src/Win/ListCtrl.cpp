@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-02-26 DRC Fix a problem redrawing list columns.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
  * @li 2004-10-04 DRC Added div-by-0 tests.
@@ -128,10 +129,7 @@ static void GetPrintLineImp(
 BEGIN_MESSAGE_MAP(CHeaderCtrl2, CHeaderCtrl)
 	//{{AFX_MSG_MAP(CHeaderCtrl2)
 	ON_WM_SIZE()
-	ON_NOTIFY_REFLECT(HDN_ITEMCHANGED, OnHdnItemChanged)
-#ifdef UNICODE
-	ON_NOTIFY_REFLECT(HDN_ENDTRACK, OnHdnEndTrack)
-#endif
+	ON_NOTIFY_REFLECT_EX(HDN_ITEMCHANGED, OnHdnItemChanged)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -181,7 +179,7 @@ void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 	FixTooltips();
 }
 
-void CHeaderCtrl2::OnHdnItemChanged(
+BOOL CHeaderCtrl2::OnHdnItemChanged(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
 {
@@ -192,16 +190,7 @@ void CHeaderCtrl2::OnHdnItemChanged(
 	if (phdr->pitem->mask & HDI_WIDTH)
 		FixTooltips();
 	*pResult = 0;
-}
-
-// Note: For some reason, listcontrols are not properly redrawing in UNICODE.
-// I am unable to reproduce a standalone instance of this - I've only seen
-// it in my program so far...
-// So, simply invalidate the parent when tracking ends.
-void CHeaderCtrl2::OnHdnEndTrack(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	GetParent()->Invalidate();
-	*pResult = 0;
+	return FALSE; // Allow parent to handle also
 }
 
 void CHeaderCtrl2::FixTooltips()
@@ -322,7 +311,7 @@ void CHeaderCtrl2::Sort(
 BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 	//{{AFX_MSG_MAP(CListCtrl2)
 	ON_WM_DESTROY()
-	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
+	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -484,7 +473,7 @@ void CListCtrl2::OnDestroy()
 	CListCtrl::OnDestroy();
 }
 
-void CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
+BOOL CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if (pNMListView && m_bAutoDelete)
@@ -494,6 +483,7 @@ void CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 		pNMListView->lParam = 0;
 	}
 	*pResult = 0;
+	return FALSE; // Allow parent to handle also
 }
 
 
@@ -506,7 +496,7 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
 	ON_WM_DESTROY()
 	ON_WM_INITMENUPOPUP()
-	ON_NOTIFY_REFLECT(LVN_DELETEITEM, OnDeleteitem)
+	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECT_ALL, OnUpdateEditSelectAll)
@@ -684,7 +674,7 @@ void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
 
-void CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
+BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if (pNMListView && m_bAutoDelete)
@@ -693,7 +683,7 @@ void CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 		delete pData;
 		pNMListView->lParam = 0;
 	}
-	*pResult = 0;
+	return FALSE; // Allow parent to handle also
 }
 
 struct CListPrintData
