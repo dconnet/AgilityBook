@@ -60,6 +60,7 @@ ARBConfigOtherPoints::ARBConfigOtherPoints()
 	: m_Name()
 	, m_Tally(ARBConfigOtherPoints::eTallyAll)
 	, m_Desc()
+	, m_Default(0)
 {
 }
 
@@ -67,6 +68,7 @@ ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Tally(rhs.m_Tally)
 	, m_Desc(rhs.m_Desc)
+	, m_Default(rhs.m_Default)
 {
 }
 
@@ -86,6 +88,7 @@ ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const
 		m_Name = rhs.m_Name;
 		m_Tally = rhs.m_Tally;
 		m_Desc = rhs.m_Desc;
+		m_Default = rhs.m_Default;
 	}
 	return *this;
 }
@@ -94,7 +97,8 @@ bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Tally == rhs.m_Tally
-		&& m_Desc == rhs.m_Desc;
+		&& m_Desc == rhs.m_Desc
+		&& m_Default == rhs.m_Default;
 }
 
 void ARBConfigOtherPoints::clear()
@@ -102,6 +106,7 @@ void ARBConfigOtherPoints::clear()
 	m_Name.erase();
 	m_Tally = ARBConfigOtherPoints::eTallyAll;
 	m_Desc.erase();
+	m_Default = 0;
 }
 
 bool ARBConfigOtherPoints::Load(
@@ -115,6 +120,7 @@ bool ARBConfigOtherPoints::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
 		return false;
 	}
+	inTree.GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	ARBString attrib;
 	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
@@ -147,6 +153,7 @@ bool ARBConfigOtherPoints::Save(Element& ioTree) const
 {
 	Element& other = ioTree.AddElement(TREE_OTHERPTS);
 	other.AddAttrib(ATTRIB_OTHERPTS_NAME, m_Name);
+	other.AddAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	switch (m_Tally)
 	{
 	default:

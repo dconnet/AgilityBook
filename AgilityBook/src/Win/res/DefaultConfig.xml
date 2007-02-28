@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DefaultConfig Book="12.4">
+<DefaultConfig Book="12.5">
 
 <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2007-02-27 DRC Configuration version 18.
+               Added 'defValue' to 'OtherPts'.
 2006-10-02 DRC Configuration version 17. Updated USDAA Performance Pairs for
                titling in 2007. Changed TDAA website. Updates ASCA titles desc.
                More NADAC updates. CPE Updates.
@@ -3029,14 +3031,14 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
 		<FaultType>Off Course</FaultType>
 		<FaultType>Refusal</FaultType>
 		<FaultType>Run out</FaultType>
-		<OtherPts Count="LevelByEvent" Name="ASCA Merit">ASCA Merit Points</OtherPts>
-		<OtherPts Count="All" Name="NADAC Bonus Runs">NADAC Bonus Point Runs
+		<OtherPts defValue="1" Count="LevelByEvent" Name="ASCA Merit">ASCA Merit Points</OtherPts>
+		<OtherPts defValue="1" Count="All" Name="NADAC Bonus Runs">NADAC Bonus Point Runs
 Use this to accumulate runs with bonus points. This is a count of runs, not points.</OtherPts>
-		<OtherPts Count="LevelByEvent" Name="NADAC DRI Runs">NADAC DRI Runs
+		<OtherPts defValue="1" Count="LevelByEvent" Name="NADAC DRI Runs">NADAC DRI Runs
 Use this to accumulate runs with 100+ DRIs. This is a count of runs, not points.</OtherPts>
-		<OtherPts Count="LevelByEvent" Name="NADAC Top10">NADAC Top-10 Points
+		<OtherPts defValue="10" Count="LevelByEvent" Name="NADAC Top10">NADAC Top-10 Points
 Runs with a DRI over 100 are worth 15 points instead of 10.</OtherPts>
-		<OtherPts Count="LevelByEvent" Name="USDAA Top10">USDAA Top-10 Points
+		<OtherPts defValue="1" Count="LevelByEvent" Name="USDAA Top10">USDAA Top-10 Points
 Dogs/Placements/Points
 2-3/1/1
 4-5/2/3,1

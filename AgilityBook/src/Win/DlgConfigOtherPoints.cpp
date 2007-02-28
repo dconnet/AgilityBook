@@ -71,13 +71,14 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		ARBConfigOtherPointsPtr pOther,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigOtherPoints::IDD, pParent)
+	, m_Name(pOther->GetName().c_str())
 	, m_ctrlTally(false)
+	, m_Default(pOther->GetDefault())
+	, m_Desc(pOther->GetDescription().c_str())
 	, m_Config(config)
 	, m_pOther(pOther)
 {
 	ASSERT(m_pOther);
-	m_Name = m_pOther->GetName().c_str();
-	m_Desc = m_pOther->GetDescription().c_str();
 	m_Desc.Replace(_T("\n"), _T("\r\n"));
 	//{{AFX_DATA_INIT(CDlgConfigOtherPoints)
 	//}}AFX_DATA_INIT
@@ -93,6 +94,7 @@ void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CDlgConfigOtherPoints)
 	DDX_Text(pDX, IDC_CONFIG_OTHER_NAME, m_Name);
 	DDX_Control(pDX, IDC_CONFIG_OTHER_TALLY, m_ctrlTally);
+	DDX_Text(pDX, IDC_CONFIG_OTHER_DEFAULT, m_Default);
 	DDX_Text(pDX, IDC_CONFIG_OTHER_DESC, m_Desc);
 	//}}AFX_DATA_MAP
 }
@@ -146,6 +148,7 @@ void CDlgConfigOtherPoints::OnOK()
 		}
 		m_pOther->SetName((LPCTSTR)m_Name);
 	}
+	m_pOther->SetDefault(m_Default);
 	int index = m_ctrlTally.GetCurSel();
 	if (index != CB_ERR)
 	{

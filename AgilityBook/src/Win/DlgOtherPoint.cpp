@@ -105,6 +105,8 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 			CString str(pOther->GetDescription().c_str());
 			str.Replace(_T("\n"), _T("\r\n"));
 			m_ctrlDesc.SetWindowText(str);
+			m_Points = pOther->GetDefault();
+			UpdateData(FALSE);
 		}
 	}
 }
@@ -130,6 +132,8 @@ void CDlgOtherPoint::OnSelchangeOtherpoints()
 		CString str(pOther->GetDescription().c_str());
 		str.Replace(_T("\n"), _T("\r\n"));
 		m_ctrlDesc.SetWindowText(str);
+		m_Points = pOther->GetDefault();
+		UpdateData(FALSE);
 	}
 }
 

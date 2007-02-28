@@ -148,11 +148,20 @@ public:
 	{
 		m_Tally = inTally;
 	}
+	short GetDefault() const
+	{
+		return m_Default;
+	}
+	void SetDefault(short inDef)
+	{
+		m_Default = inDef;
+	}
 
 private:
 	ARBString m_Name;
 	eOtherPointsTally m_Tally;
 	ARBString m_Desc;
+	short m_Default;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -187,6 +187,7 @@
 #define IDC_CONFIG_OTHER_NAME           1130
 #define IDC_CONFIG_OTHER_TALLY          1131
 #define IDC_CONFIG_OTHER_DESC           1132
+#define IDC_CONFIG_OTHER_DEFAULT        1133
 #define IDC_CONFIG_TITLE_NAME           1140
 #define IDC_CONFIG_TITLE_LONG_NAME      1141
 #define IDC_CONFIG_TITLE_DESC           1142
