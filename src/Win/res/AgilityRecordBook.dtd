@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2007-02-27 DRC File version 12.5
+               Added 'defValue' to 'OtherPts'.
 2006-12-25 DRC File version 12.4
                Added 'DrawDate' to Calendar.
 2006-12-01 DRC File version 12.3
@@ -190,6 +192,7 @@ top-ten points. The 'Count' value is how they are accumulated
 	<!ATTLIST OtherPts
 		Name CDATA #REQUIRED
 		Count (All|AllByEvent|Level|LevelByEvent) #REQUIRED
+		defValue CDATA #IMPLIED
 		>
 
 <!ELEMENT Venue (Desc?, Titles*, Division+, Event+, MultiQ*) >

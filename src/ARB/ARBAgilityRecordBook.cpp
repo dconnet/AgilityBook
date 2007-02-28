@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2007-02-27 DRC File version 12.5. Added 'defValue' to 'OtherPts'.
  * @li 2007-01-03 DRC File version 12.4. Added 'DateDraw' to Calendar.
  *                    Changed 'CRCDMeta' to 'CRCDMeta2'.
  * @li 2006-11-03 DRC File version 12.3. Added 'SpdMult'.
@@ -103,7 +104,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 4);
+	static ARBVersion const curVersion(12, 5);
 	return curVersion;
 }
 

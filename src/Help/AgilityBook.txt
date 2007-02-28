@@ -236,6 +236,9 @@ Scoring style of this scoring method.
 .topic HIDC_CONFIG_EVENT_UNUSED
 Divisions/levels that are not currently defined.
 
+.topic HIDC_CONFIG_OTHER_DEFAULT
+Default number of points when Other Points dialog is initially displayed.
+
 .topic HIDC_CONFIG_OTHER_DESC
 Description of this Other Point item. This is normally the "rules" on how to
 accumulate the points.

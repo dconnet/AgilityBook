@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2007-02-27 DRC Added 'defValue'.
  * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
  * @li 2006-07-02 DRC Added 'subtractTF'.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -175,6 +176,7 @@
 #define ATTRIB_MULTIQ_ITEM_EVENT			_T("Event")
 #define ATTRIB_OTHERPTS_NAME				_T("Name")
 #define ATTRIB_OTHERPTS_COUNT				_T("Count")
+#define ATTRIB_OTHERPTS_DEFAULT				_T("defValue")
 #define ATTRIB_DIVISION_NAME				_T("Name")
 #define ATTRIB_LEVEL_NAME					_T("Name")
 #define ATTRIB_TITLES_NAME					_T("Name")

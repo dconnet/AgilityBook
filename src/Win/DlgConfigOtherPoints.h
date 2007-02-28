@@ -54,6 +54,7 @@ private:
 	enum { IDD = IDD_CONFIG_OTHERPOINTS };
 	CString m_Name;
 	CComboBox2 m_ctrlTally;
+	short m_Default;
 	CString m_Desc;
 	//}}AFX_DATA
 	ARBConfig& m_Config;
