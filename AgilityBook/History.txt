@@ -1,6 +1,8 @@
-2/27/2007: v1.8.3.12 <in development>
+2/27/2007: v1.9.0.12 <in development>
 - Bumped file version to 12.5
   - Added 'defValue' to 'OtherPts'.
+- New features / Enhancements:
+  - Changed to static runtime libraries.
 - Bug fixes
   - Fixed a problem redrawing list contents when column size changed.
 
