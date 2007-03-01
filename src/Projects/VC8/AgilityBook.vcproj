@@ -23,7 +23,7 @@
 			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\obj"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="1"
 			CharacterSet="2"
 			>
 			<Tool
@@ -52,7 +52,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
@@ -200,7 +200,7 @@
 			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\obj"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -229,7 +229,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
@@ -377,7 +377,7 @@
 			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\obj"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="1"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -405,7 +405,7 @@
 				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
 				WarnAsError="true"
@@ -552,7 +552,7 @@
 			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\obj"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -580,7 +580,7 @@
 				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
 				WarnAsError="true"
