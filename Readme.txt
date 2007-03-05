@@ -3,8 +3,24 @@ Setting up the build environment
 Additional software packages required:
 - HTML Help Workshop
 - Boost libraries
+- Windows Installer XML toolset
 - Xerces-C
 - zlib
+
+Once the above software is unpacked, the directory structure should look like:
+  - AgilityBook/
+    - src/
+    - Readme.txt
+    - ...
+  - boost/
+      - ...(Boost structure)
+  - wix/
+      - ...(WiX structure)
+  - xml-xerces/
+    - c/
+      - ...(Xerces structure)
+  - zlib/
+      - ...(zlib structure)
 
 HTML Help Workshop: This is a free download from Microsoft.
 I'm currently using version 4.74.8702, as reported while compiling
@@ -18,21 +34,54 @@ Boost: http://www.boost.org.
 ARB has been built and tested using Boost version 1.33.1. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
-When the library is unpacked, it should be located in the same location
-as xerces (above). The default directory when unpacked in boost_1_33_1
-(of course, this will vary based on boost version). This should be renamed
-to 'boost' (the project files will access this in the same way as xerces).
+When the library is unpacked, it should be located according to the map
+above. The default directory when unpacked in boost_1_33_1 (of course,
+this will vary based on boost version). This should be renamed to 'boost'
+to avoid problem in the project files.
 - Note: use of Boost may change in the future. Smart Ptrs are part of the
   TR1 spec. When compilers actually implemement TR1, I will change to that.
+
+Windows Installer XML toolset: http://wix.sourceforge.net/
+Currently using Version 2.0 (as of ARB v1.8.3.12).
+- wix-2.0.4820.0-binaries.zip
+- wix-2.0.4820.0-sources.zip
+Unzip both of these into the 'wix' directory. In order to have the installer
+work the way we want (don't display a license agreement), there are some
+modifications needed.
+- Add ...\wix to your PATH, cd to wix
+- "cd src\ui\wixui\installdir"
+- "copy WixUI_InstallDir.wxs WixUI_InstallDir.wxs.orig"
+- Edit WixUI_InstallDir.wxs
+  - Delete the lines:
+      <DialogRef Id="LicenseAgreementDlg" />
+      <Property Id="WixUI_LicenseAgreementDlg_Back" Value="WelcomeDlg" />
+      <Property Id="WixUI_LicenseAgreementDlg_Next" Value="InstallDirDlg" />
+  - Change:
+      <Property Id="WixUI_WelcomeDlg_Next" Value="LicenseAgreementDlg" />
+	to:
+      <Property Id="WixUI_WelcomeDlg_Next" Value="InstallDirDlg" />
+  - Change:
+      <Property Id="WixUI_InstallDirDlg_Back" Value="LicenseAgreementDlg" />
+	to:
+      <Property Id="WixUI_InstallDirDlg_Back" Value="WelcomeDlg" />
+- "cd .."
+- "candle installdir\WixUI_InstallDir.wxs *.wxs"
+- "lit -out ..\..\..\arbwixui.wixlib *.wixobj"
+Now, we can compile the installation with (this is assuming the root directory
+for all the AgilityBook tools is "\AgilityBook\src"):
+- "candle AgilityBook.wxs"
+- "light -b \AgilityBook\src\wix -out AgilityBook.msi AgilityBook.wixobj \AgilityBook\src\wix\arbwixui.wixlib -loc \AgilityBook\src\wix\WixUI_en-us.wxl"
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
 This program has been tested with 2.2 and 2.7.
   - AgilityBook.cpp issues some warnings/comments about the version that
     is currently in use.
-If you need to compile Xerces yourself, then the .dll files are in
+If you need to compile Xerces yourself, then the .dll/.lib files are in
 (Xerces)/Build/Win32/<Compiler>/Release/ and should be copied to
-(arb)/bin/<compiler>/Release/. The lib files need to be copied into
 (arb)/lib/... This works with both UNICODE and MBCS compiles.
+- Changes to project files: xerceslib (only one we build)
+  - On C/C++ Code Generation options:
+    Change runtime library to multi-threaded NOT DLL
 
 zlib: http://www.zlib.net/
 I'm currently using v1.2.3, with some makefile changes.
@@ -64,21 +113,6 @@ I'm currently using v1.2.3, with some makefile changes.
  - Run 'nmake -f win64\Makefile.msc'.
  - Copy zdll.lib/zlib1.dll
  - Run 'nmake -f win64\Makefile.msc clean'.
-
-----------
-
-Once the above software is unpacked, the directory structure should look like:
-  - AgilityBook/
-    - src/
-    - Readme.txt
-    - ...
-  - boost/
-      - ...(boost structure)
-  - xml-xerces/
-    - c/
-      - ...(xerces structure)
-  - zlib/
-      - ...(zlib structure)
 
 ----------
 
