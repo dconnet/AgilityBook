@@ -30,9 +30,10 @@
  * @brief Tree structure to store XML.
  * @author David Connet
  *
- * Actual reading and writing of XML is done using Xerces 2.2.0.
+ * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
+ * @li 2007-03-37 DRC Fixed a problem releasing transcoded data.
  * @li 2005-06-09 DRC Numbers were being stored/shown in scientific notation.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-01-04 DRC Moved date parsing code to ARBDate::FromString.
@@ -229,7 +230,7 @@ public:
 		{
 			XMLCh* data = XMLString::transcode(str.c_str());
 			operator=(data);
-			delete [] data;
+			XMLString::release(&data);
 		}
 	}
 	/// char->XMLCh translation constuctor
@@ -239,7 +240,7 @@ public:
 		{
 			XMLCh* data = XMLString::transcode(str);
 			operator=(data);
-			delete [] data;
+			XMLString::release(&data);
 		}
 	}
 	// From here down, we handle:
@@ -381,7 +382,7 @@ public:
 #else
 			std::string::operator=(pStr);
 #endif
-			delete [] pStr;
+			XMLString::release(&pStr);
 		}
 	}
 	StringDOM& operator=(StringDOM const& str)
@@ -459,7 +460,7 @@ public:
 #else
 			std::string::operator+=(pStr);
 #endif
-			delete [] pStr;
+			XMLString::release(&pStr);
 		}
 		return *this;
 	}
@@ -488,7 +489,7 @@ public:
 	{
 		for (iterator iter = begin(); iter != end(); ++iter)
 		{
-			delete [] (*iter).second;
+			XMLString::release(&(*iter).second);
 		}
 	}
 
@@ -927,27 +928,28 @@ Element::~Element()
 void Element::Dump(int inLevel) const
 {
 	int i;
-	CString msg;
-	msg.Format(_T("%*s%s"), inLevel, _T(" "), m_Name.c_str());
+	ARBostringstream msg;
+	msg.width(inLevel);
+	msg << _T(" ") << m_Name;
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		ARBString name, value;
 		GetNthAttrib(i, name, value);
-		msg += _T(" ");
-		msg += name.c_str();
-		msg += _T("=\"");
-		msg += value.c_str();
-		msg += _T("\"");
+		msg << _T(" ")
+			<< name
+			<< _T("=\"")
+			<< value
+			<< _T("\"");
 	}
 	if (0 < m_Value.length())
 	{
-		msg += _T(": ");
-		msg += m_Value.c_str();
+		msg << _T(": ")
+			<< m_Value;
 	}
 #ifdef ERRORS_TO_CERR
-	cerr << msg << endl;
+	cerr << msg.str() << endl;
 #else
-	TRACE(_T("%s\n"), (LPCTSTR)msg);
+	TRACE(_T("%s\n"), msg.str().c_str());
 #endif
 	for (i = 0; i < GetElementCount(); ++i)
 	{
