@@ -2,19 +2,10 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgilityBook", "AgilityBook.vcproj", "{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup", "AgilityBookSetup.vdproj", "{EA2C7DC7-6660-4913-A9C0-59981B35968E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E608D05A-7F1D-4C1C-867D-EA699DCAB177} = {E608D05A-7F1D-4C1C-867D-EA699DCAB177}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParseResourceHeader", "ParseResourceHeader.vcproj", "{E608D05A-7F1D-4C1C-867D-EA699DCAB177}"
 	ProjectSection(ProjectDependencies) = postProject
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8} = {ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}
 	EndProjectSection
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup98", "AgilityBookSetup98.vdproj", "{E1264972-F1C8-4DD7-A0E4-A689350BE570}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityBookSetup64", "AgilityBookSetup64.vdproj", "{698DA42C-C4F3-4137-9E6B-FD633DC852F4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ARBHelp", "ARBHelp.vcproj", "{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}"
 EndProject
@@ -44,15 +35,6 @@ Global
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}.Unicode Release|x64.ActiveCfg = Unicode Release|x64
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}.Unicode Release|x64.Build.0 = Unicode Release|x64
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Debug|Win32.ActiveCfg = Unicode Debug
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Debug|x64.ActiveCfg = Unicode Debug
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Release|Win32.ActiveCfg = Unicode Release
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Release|x64.ActiveCfg = Unicode Release
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Unicode Debug|Win32.ActiveCfg = Unicode Debug
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Unicode Debug|x64.ActiveCfg = Unicode Debug
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Unicode Release|Win32.ActiveCfg = Unicode Release
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Unicode Release|Win32.Build.0 = Unicode Release
-		{EA2C7DC7-6660-4913-A9C0-59981B35968E}.Unicode Release|x64.ActiveCfg = Unicode Release
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|Win32.Build.0 = Debug|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|x64.ActiveCfg = Debug|x64
@@ -67,24 +49,6 @@ Global
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Unicode Release|x64.ActiveCfg = Unicode Release|x64
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Unicode Release|x64.Build.0 = Unicode Release|x64
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Debug|Win32.ActiveCfg = Debug
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Debug|x64.ActiveCfg = Debug
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Release|Win32.ActiveCfg = Release
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Release|Win32.Build.0 = Release
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Release|x64.ActiveCfg = Release
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Unicode Debug|Win32.ActiveCfg = Debug
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Unicode Debug|x64.ActiveCfg = Debug
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Unicode Release|Win32.ActiveCfg = Release
-		{E1264972-F1C8-4DD7-A0E4-A689350BE570}.Unicode Release|x64.ActiveCfg = Release
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Debug|Win32.ActiveCfg = Unicode Debug
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Debug|x64.ActiveCfg = Unicode Debug
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Release|Win32.ActiveCfg = Unicode Release
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Release|x64.ActiveCfg = Unicode Release
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Debug|Win32.ActiveCfg = Unicode Debug
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Debug|x64.ActiveCfg = Unicode Debug
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Release|Win32.ActiveCfg = Unicode Release
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Release|x64.ActiveCfg = Unicode Release
-		{698DA42C-C4F3-4137-9E6B-FD633DC852F4}.Unicode Release|x64.Build.0 = Unicode Release
 		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|Win32.Build.0 = Debug|Win32
 		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|x64.ActiveCfg = Debug|Win32
