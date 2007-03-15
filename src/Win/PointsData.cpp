@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-03-14 DRC Change accumulation to work by event, not method.
+ *                    This removes the multiple listings in the view.
  * @li 2006-07-15 DRC Add option to sort by event instead of division.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
@@ -1334,9 +1336,19 @@ void CPointsDataItems::LoadData(
 						ARBVector<ARBConfigScoringPtr> scoringItems;
 						if (0 == pEvent->FindAllEvents(pDiv->GetName(), pLevel->GetName(), ARBDate(), true, scoringItems))
 							continue;
-						// Iterate across each scoring method separately. This means it is
-						// possible to have multiple lines show up for a given event. But if
-						// that happens, it means the events were scored differently.
+						bool hasSQs = false;
+						int SQs = 0;
+						int speedPtsEvent = 0;
+						int nCleanQ = 0;
+						int nNotCleanQ = 0;
+						double points = 0.0;
+						double nExistingPts = 0;
+						int nExistingSQ = 0;
+						std::list<RunInfo> allmatching;
+						std::set<ARBString> judges;
+						std::set<ARBString> judgesQ;
+						std::set<ARBString> partners;
+						std::set<ARBString> partnersQ;
 						for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
 							iterScoring != scoringItems.end();
 							++iterScoring)
@@ -1355,13 +1367,7 @@ void CPointsDataItems::LoadData(
 								bHasExistingPoints = false;
 								bHasExistingLifetimePoints = false;
 							}
-							int SQs = 0;
-							int speedPtsEvent = 0;
 							std::list<RunInfo> matching;
-							std::set<ARBString> judges;
-							std::set<ARBString> judgesQ;
-							std::set<ARBString> partners;
-							std::set<ARBString> partnersQ;
 							for (std::list<ARBDogTrialPtr>::const_iterator iterTrial = trialsInVenue.begin();
 								iterTrial != trialsInVenue.end();
 								++iterTrial)
@@ -1435,8 +1441,6 @@ void CPointsDataItems::LoadData(
 									}
 								}
 							}
-							double nExistingPts = 0;
-							int nExistingSQ = 0;
 							// Accumulate existing points - used for both lifetime and
 							// normal runs.
 							if (bHasExistingPoints || bHasExistingLifetimePoints || 0 < matching.size())
@@ -1454,13 +1458,8 @@ void CPointsDataItems::LoadData(
 							{
 								pts.ptLifetime.push_back(LifeTimePoint(pEvent->GetName(), nExistingPts + nExistingSQ, false));
 							}
-							//TODO: Add ability to accumulate existing placement points
-							// Now we deal with the visible runs.
 							if (bHasExistingPoints || 0 < matching.size())
 							{
-								int nCleanQ = 0;
-								int nNotCleanQ = 0;
-								double pts = 0.0;
 								for (std::list<RunInfo>::const_iterator iterRun = matching.begin();
 									iterRun != matching.end();
 									++iterRun)
@@ -1469,79 +1468,85 @@ void CPointsDataItems::LoadData(
 									if (pRun->GetQ().Qualified())
 									{
 										bool bClean = false;
-										pts += pRun->GetTitlePoints(pScoringMethod, &bClean);
+										points += pRun->GetTitlePoints(pScoringMethod, &bClean);
 										if (bClean)
 											++nCleanQ;
 										else
 											++nNotCleanQ;
 									}
 								}
-								pts += nExistingPts;
-								CString strRunCount;
-								strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
-									matching.size(),
-									judges.size());
-								if (pEvent->HasPartner() && 0 < partners.size())
-								{
-									CString str2;
-									str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
-									strRunCount += str2;
-								}
-								double percentQs = 0.0;
-								if (0 < matching.size())
-									percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(matching.size())) * 100;
-								CString strQcount;
-								strQcount.FormatMessage(IDS_POINTS_QS,
-									nCleanQ + nNotCleanQ,
-									static_cast<int>(percentQs));
-								if (0 < nCleanQ)
-								{
-									CString str2;
-									str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
-									strQcount += str2;
-								}
-								if (0 < judgesQ.size())
-								{
-									CString str2;
-									str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
-									strQcount += str2;
-								}
-								if (pEvent->HasPartner() && 0 < partnersQ.size())
-								{
-									CString str2;
-									str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
-									strQcount += str2;
-								}
-								ARBostringstream strPts;
-								CString strSuperQ;
-								strPts << pts + nExistingSQ;
+								points += nExistingPts;
 								if (pScoringMethod->HasSuperQ())
-								{
-									SQs += nExistingSQ;
-									strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
-								}
-								CString strSpeed;
+									hasSQs = true;
 								if (pScoringMethod->HasSpeedPts())
-								{
 									bHasSpeedPts = true;
-									if (0 < speedPtsEvent)
-									{
-										strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
-									}
-								}
-								items.push_back(new CPointsDataEvent(pParent, pDoc,
-									!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
-									matching,
-									pVenue,
-									pDiv, idxDiv,
-									pLevel, idxLevel,
-									pEvent, idxEvent,
-									(LPCTSTR)strRunCount,
-									(LPCTSTR)strQcount,
-									strPts.str().c_str(),
-									(LPCTSTR)strSuperQ,
-									(LPCTSTR)strSpeed));
+								allmatching.insert(allmatching.end(), matching.begin(), matching.end());
 							}
+						}
+						//TODO: Add ability to accumulate existing placement points
+						// Now we deal with the visible runs.
+						if (0 < allmatching.size())
+						{
+							CString strRunCount;
+							strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
+								allmatching.size(),
+								judges.size());
+							if (pEvent->HasPartner() && 0 < partners.size())
+							{
+								CString str2;
+								str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
+								strRunCount += str2;
+							}
+							double percentQs = 0.0;
+							if (0 < allmatching.size())
+								percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size())) * 100;
+							CString strQcount;
+							strQcount.FormatMessage(IDS_POINTS_QS,
+								nCleanQ + nNotCleanQ,
+								static_cast<int>(percentQs));
+							if (0 < nCleanQ)
+							{
+								CString str2;
+								str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
+								strQcount += str2;
+							}
+							if (0 < judgesQ.size())
+							{
+								CString str2;
+								str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
+								strQcount += str2;
+							}
+							if (pEvent->HasPartner() && 0 < partnersQ.size())
+							{
+								CString str2;
+								str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
+								strQcount += str2;
+							}
+							ARBostringstream strPts;
+							CString strSuperQ;
+							strPts << points + nExistingSQ;
+							if (hasSQs)
+							{
+								SQs += nExistingSQ;
+								strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
+							}
+							CString strSpeed;
+							if (bHasSpeedPts && 0 < speedPtsEvent)
+							{
+								strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
+							}
+							items.push_back(new CPointsDataEvent(pParent, pDoc,
+								!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
+								allmatching,
+								pVenue,
+								pDiv, idxDiv,
+								pLevel, idxLevel,
+								pEvent, idxEvent,
+								(LPCTSTR)strRunCount,
+								(LPCTSTR)strQcount,
+								strPts.str().c_str(),
+								(LPCTSTR)strSuperQ,
+								(LPCTSTR)strSpeed));
 						}
 					}
 					if (bHasSpeedPts)
