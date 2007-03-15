@@ -1,8 +1,10 @@
-2/27/2007: v1.9.0.12 <in development>
+3/14/2007: v1.9.0.12 <in development>
 - Bumped file version to 12.5
   - Added 'defValue' to 'OtherPts'.
 - New features / Enhancements:
   - Changed to static runtime libraries.
+  - Changed Points view to accumulate runs by event type, not by scoring
+    method. This removes the multiple lines per event that currently exist.
 - Bug fixes
   - Fixed a problem redrawing list contents when column size changed.
 

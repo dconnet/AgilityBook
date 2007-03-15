@@ -1,7 +1,4 @@
-Last Updated: 2/27/2006
-
-- Change how points are summarized. Instead of doing it by event scoring
-  method, do it simply by event.
+Last Updated: 3/14/2006
 
 - Remember printer page orientation. (See KB166130: "How To Overriding
   Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
