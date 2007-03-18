@@ -11,18 +11,38 @@ all: Create all of them (default)
 notidy: Do not clean up .wxs and .wixobj files
 """
 
+import datetime
 import os
 import string
 import sys
 
 AgilityBookDir = "..\\..\\.."
 WiXdir = AgilityBookDir + "\\..\\wix"
+WinSrcDir = AgilityBookDir + "\\src\\Win"
+Compiler = "VC8"
+ResString = "FILEVERSION "
 code32 = 1
 code64 = 3
 code98 = 2
+UpgradeCode = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
 
 def getversion():
-	return "1.9.0"
+	ver = "0.0.0"
+	res = open(WinSrcDir + "\\AgilityBook.rc", "r")
+	while (1):
+		line = res.readline()
+		if line:
+			line = string.strip(line)
+			pos = line.find(ResString)
+			#FILEVERSION 1,9,0,12
+			if 0 == pos:
+				line = line.split(' ')
+				line = line[1].split(',')
+				ver = line[0] + "." + line[1] + "." + line[2]
+				break
+		else:
+			break
+	return ver
 
 def genuuid():
 	(childin, childout) = os.popen4("uuidgen -c")
@@ -51,18 +71,18 @@ def genmsi(productId, version, code, tidy):
 	baseDir = ""
 	if code32 == code:
 		outputFile = "AgilityBook"
-		baseDir = AgilityBookDir + "\\bin\\VC8\\Unicode Release\\"
+		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "\\Unicode Release\\"
 	elif code98 == code:
 		outputFile = "AgilityBook-w98"
-		baseDir = AgilityBookDir + "\\bin\\VC8\\Release\\"
+		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "\\Release\\"
 	elif code64 == code:
 		outputFile = "AgilityBook-x64"
-		baseDir = AgilityBookDir + "\\bin\\VC8x64\\Unicode Release\\"
+		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "x64\\Unicode Release\\"
 	else:
 		raise Exception, "Invalid code"
 	if tidy and not os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
-		return ""
+		return 0
 	setup = open(outputFile + ".wxs", "w")
 	print >>setup, "<?xml version='1.0'?>"
 	#Generate guids: "uuidgen -c"
@@ -73,7 +93,7 @@ def genmsi(productId, version, code, tidy):
 	#	(uses custom wixui)
 	print >>setup, "<Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>"
 	print >>setup, "\t<Product Id='" + productId + "'"
-	print >>setup, "\t\t\tUpgradeCode='DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB'"
+	print >>setup, "\t\t\tUpgradeCode='" + UpgradeCode + "'"
 	print >>setup, "\t\t\tName='Agility Record Book'"
 	print >>setup, "\t\t\tManufacturer='dcon Software'"
 	print >>setup, "\t\t\tLanguage='1033' Version='" + version + "' >"
@@ -102,7 +122,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t\t<Custom Action='NewVersionError' After='FindRelatedProducts'>NEWERVERSIONFOUND</Custom>"
 	print >>setup, "\t\t</InstallExecuteSequence>"
 	print >>setup, ""
-	print >>setup, "\t\t<Upgrade Id='DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB'>"
+	print >>setup, "\t\t<Upgrade Id='" + UpgradeCode + "'>"
 	print >>setup, "\t\t\t<UpgradeVersion Property='OLDVERSIONFOUND'"
 	print >>setup, "\t\t\t\t\tOnlyDetect='no' Minimum='0.0.0.0' IncludeMinimum='yes' />"
 	print >>setup, "\t\t\t<UpgradeVersion Property='NEWERVERSIONFOUND'"
@@ -229,6 +249,7 @@ def genmsi(productId, version, code, tidy):
 				os.remove(outputFile + ".wxs")
 			if os.access(outputFile + ".wixobj", os.F_OK):
 				os.remove(outputFile + ".wixobj")
+	return 1
 
 def main():
 	tidy = 1
@@ -258,11 +279,30 @@ def main():
 	version = getversion()
 	os.environ['PATH'] += ";" + WiXdir
 
+	b32ok = 0
+	b64ok = 0
+	b98ok = 0
+
 	if b32:
-		genmsi(productId, version, code32, tidy)
+		if genmsi(productId, version, code32, tidy):
+			b32ok = 1
 	if b64:
-		genmsi(productId, version, code64, tidy)
+		if genmsi(productId, version, code64, tidy):
+			b64ok = 1
 	if b98:
-		genmsi(productId, version, code98, tidy)
+		if genmsi(productId, version, code98, tidy):
+			b98ok = 1
+
+	if b32ok or b64ok or b98ok:
+		d = datetime.datetime.now().isoformat(' ')
+		codes = open(AgilityBookDir + "\\Misc\\Installation\\InstallGUIDs.csv", "a")
+		installs = ""
+		if b32ok:
+			installs = installs + ",win32"
+		if b64ok:
+			installs = installs + ",win64"
+		if b98ok:
+			installs = installs + ",win98"
+		print >>codes, version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
 
 main()

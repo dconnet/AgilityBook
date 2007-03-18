@@ -48,29 +48,18 @@ Currently using Version 2.0 (as of ARB v1.8.3.12).
 Unzip both of these into the 'wix' directory. In order to have the installer
 work the way we want (don't display a license agreement), there are some
 modifications needed.
+- Open ...\AgilityBook\Misc\Installation\Readme.txt for instructions on
+  what files to update.
 - Add ...\wix to your PATH, cd to wix
-- "cd src\ui\wixui\installdir"
-- "copy WixUI_InstallDir.wxs WixUI_InstallDir.wxs.orig"
-- Edit WixUI_InstallDir.wxs
-  - Delete the lines:
-      <DialogRef Id="LicenseAgreementDlg" />
-      <Property Id="WixUI_LicenseAgreementDlg_Back" Value="WelcomeDlg" />
-      <Property Id="WixUI_LicenseAgreementDlg_Next" Value="InstallDirDlg" />
-  - Change:
-      <Property Id="WixUI_WelcomeDlg_Next" Value="LicenseAgreementDlg" />
-	to:
-      <Property Id="WixUI_WelcomeDlg_Next" Value="InstallDirDlg" />
-  - Change:
-      <Property Id="WixUI_InstallDirDlg_Back" Value="LicenseAgreementDlg" />
-	to:
-      <Property Id="WixUI_InstallDirDlg_Back" Value="WelcomeDlg" />
-- "cd .."
+- "cd src\ui\wixui"
 - "candle installdir\WixUI_InstallDir.wxs *.wxs"
 - "lit -out ..\..\..\arbwixui.wixlib *.wixobj"
 Now, we can compile the installation with (this is assuming the root directory
 for all the AgilityBook tools is "\AgilityBook\src"):
 - "candle AgilityBook.wxs"
 - "light -b \AgilityBook\src\wix -out AgilityBook.msi AgilityBook.wixobj \AgilityBook\src\wix\arbwixui.wixlib -loc \AgilityBook\src\wix\WixUI_en-us.wxl"
+[Note, this is automatically done when GenMSI.py is run from the Projects
+directory]
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
 This program has been tested with 2.2 and 2.7.
