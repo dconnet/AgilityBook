@@ -303,6 +303,6 @@ def main():
 			installs = installs + ",win64"
 		if b98ok:
 			installs = installs + ",win98"
-		print >>codes, version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
+		print >>codes, "pre " + version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
 
 main()
