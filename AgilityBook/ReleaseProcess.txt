@@ -30,7 +30,7 @@ Do a full rebuild and verify it.
   - Create AgilityBook_n_n_n_n-win.zip from msi in bin\VC8\Unicode Release
   - Create AgilityBook_n_n_n_n-win98.zip from msi in bin\VC8\Release
   - Create AgilityBook_n_n_n_n-x64.zip from msi in bin\VC8x64\Unicode Release
-  - Check Misc\Installations\InstallGUIDs.csv (updated from BuildAll/GenMSI.py
+  - Edit Misc\Installations\InstallGUIDs.csv to note actual release
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository
