@@ -448,18 +448,32 @@ CWizardExcelExport::CWizardExcelExport(Excel8::_Application& ioApp)
 	: CWizardBaseExport(false)
 	, m_App(ioApp)
 {
-	// Create a new workbook.
-	Excel8::Workbooks books = m_App.get_Workbooks();
-	Excel8::_Workbook book = books.Add(covOptional);
-	// Get the first sheet.
-	Excel8::Worksheets sheets = book.get_Sheets();
-	m_Worksheet = sheets.get_Item(CComVariant((short)1));
+	try
+	{
+		// Create a new workbook.
+		Excel8::Workbooks books = m_App.get_Workbooks();
+		Excel8::_Workbook book = books.Add(covOptional);
+		// Get the first sheet.
+		Excel8::Worksheets sheets = book.get_Sheets();
+		m_Worksheet = sheets.get_Item(CComVariant((short)1));
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
 }
 
 CWizardExcelExport::~CWizardExcelExport()
 {
-	if (NULL != m_Worksheet.m_lpDispatch && !m_App.get_Visible())
-		m_App.Quit();
+	try
+	{
+		if (NULL != m_Worksheet.m_lpDispatch && !m_App.get_Visible())
+			m_App.Quit();
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
 }
 
 bool CWizardExcelExport::ExportDataArray(
@@ -475,30 +489,46 @@ bool CWizardExcelExport::ExportDataArray(
 	if (!IWizardSpreadSheet::GetRowCol(inRowTop + m_Rows - 1, inColLeft + m_Cols - 1, cell2))
 		return false;
 
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
-	range.put_Value2(CComVariant(m_Array));
-	m_Array.Detach();
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
+		range.put_Value2(CComVariant(m_Array));
+		m_Array.Detach();
 
-	IWizardSpreadSheet::GetRowCol(inRowTop, inColLeft + m_Cols - 1, cell2);
-	range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
-	Excel8::Range cols = range.get_EntireColumn();
-	cols.AutoFit();
+		IWizardSpreadSheet::GetRowCol(inRowTop, inColLeft + m_Cols - 1, cell2);
+		range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
+		Excel8::Range cols = range.get_EntireColumn();
+		cols.AutoFit();
 
-	m_Rows = m_Cols = 0;
+		m_Rows = m_Cols = 0;
 
-	return true;
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::AllowAccess(bool bAllow)
 {
-	if (bAllow)
+	try
 	{
-		m_App.put_UserControl(TRUE);
-		m_App.put_Visible(TRUE);
+		if (bAllow)
+		{
+			m_App.put_UserControl(TRUE);
+			m_App.put_Visible(TRUE);
+		}
+		else
+			m_App.put_UserControl(FALSE);
+		return true;
 	}
-	else
-		m_App.put_UserControl(FALSE);
-	return true;
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::SetTextColor(
@@ -509,10 +539,18 @@ bool CWizardExcelExport::SetTextColor(
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
-	Excel8::Font font = range.get_Font();
-	font.put_Color(COleVariant((LONG)inColor));
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+		Excel8::Font font = range.get_Font();
+		font.put_Color(COleVariant((LONG)inColor));
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::SetBackColor(
@@ -523,10 +561,18 @@ bool CWizardExcelExport::SetBackColor(
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
-	Excel8::Interior interior = range.get_Interior();
-	interior.put_Color(COleVariant((long)inColor));
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+		Excel8::Interior interior = range.get_Interior();
+		interior.put_Color(COleVariant((long)inColor));
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::SetItalic(
@@ -537,10 +583,18 @@ bool CWizardExcelExport::SetItalic(
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
-	Excel8::Font font = range.get_Font();
-	font.put_Italic(COleVariant(static_cast<short>(bItalic)));
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+		Excel8::Font font = range.get_Font();
+		font.put_Italic(COleVariant(static_cast<short>(bItalic)));
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::SetBold(
@@ -551,10 +605,18 @@ bool CWizardExcelExport::SetBold(
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
-	Excel8::Font font = range.get_Font();
-	font.put_Bold(COleVariant(static_cast<short>(bBold)));
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+		Excel8::Font font = range.get_Font();
+		font.put_Bold(COleVariant(static_cast<short>(bBold)));
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::InsertData(
@@ -565,9 +627,17 @@ bool CWizardExcelExport::InsertData(
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
-	range.put_Value2(CComVariant(inData));
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+		range.put_Value2(CComVariant(inData));
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::InsertData(
@@ -578,9 +648,23 @@ bool CWizardExcelExport::InsertData(
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
-	range.put_Value2(CComVariant(inData));
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell1));
+		if (0 < inData.GetLength() && '=' == inData[0])
+		{
+			CString data = CString('\'') + inData;
+			range.put_Value2(CComVariant(data));
+		}
+		else
+			range.put_Value2(CComVariant(inData));
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 bool CWizardExcelExport::AutoFit(
@@ -592,10 +676,18 @@ bool CWizardExcelExport::AutoFit(
 		return false;
 	if (!IWizardSpreadSheet::GetRowCol(0, inColTo, cell2))
 		return false;
-	Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
-	Excel8::Range cols = range.get_EntireColumn();
-	cols.AutoFit();
-	return true;
+	try
+	{
+		Excel8::Range range = m_Worksheet.get_Range(CComVariant(cell1), CComVariant(cell2));
+		Excel8::Range cols = range.get_EntireColumn();
+		cols.AutoFit();
+		return true;
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -612,24 +704,38 @@ CWizardExcelImport::CWizardExcelImport(Excel8::_Application& ioApp)
 
 CWizardExcelImport::~CWizardExcelImport()
 {
-	if (NULL != m_Worksheet.m_lpDispatch)
-		m_App.Quit();
+	try
+	{
+		if (NULL != m_Worksheet.m_lpDispatch)
+			m_App.Quit();
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
 }
 
 bool CWizardExcelImport::OpenFile(CString const& inFilename)
 {
-	// Create a new workbook.
-	Excel8::Workbooks books = m_App.get_Workbooks();
-	Excel8::_Workbook book = books.Open(inFilename, covOptional, covTrue, covOptional,
-		covOptional, covOptional, covOptional, covOptional,
-		covOptional, covOptional, covOptional, covOptional,
-		covOptional);
-	if (NULL == book.m_lpDispatch)
-		return false;
-	m_FileName = inFilename;
-	// Get the first sheet.
-	Excel8::Worksheets sheets = book.get_Sheets();
-	m_Worksheet = sheets.get_Item(CComVariant((short)1));
+	try
+	{
+		// Create a new workbook.
+		Excel8::Workbooks books = m_App.get_Workbooks();
+		Excel8::_Workbook book = books.Open(inFilename, covOptional, covTrue, covOptional,
+			covOptional, covOptional, covOptional, covOptional,
+			covOptional, covOptional, covOptional, covOptional,
+			covOptional);
+		if (NULL == book.m_lpDispatch)
+			return false;
+		m_FileName = inFilename;
+		// Get the first sheet.
+		Excel8::Worksheets sheets = book.get_Sheets();
+		m_Worksheet = sheets.get_Item(CComVariant((short)1));
+	}
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
 	return NULL != m_Worksheet.m_lpDispatch;
 }
 
@@ -640,60 +746,68 @@ bool CWizardExcelImport::GetData(
 	outData.clear();
 	if (NULL != m_Worksheet.m_lpDispatch)
 		return false;
-	Excel8::Range range = m_Worksheet.get_UsedRange();
-	long iRow = range.get_Row();
-	long iCol = range.get_Column();
-	long nRows = Excel8::Range(range.get_Rows()).get_Count();
-	long nCols = Excel8::Range(range.get_Columns()).get_Count();
-	if (0 < nRows && 0 < nCols)
+	try
 	{
-		if (ioProgress)
-		{
-			CString msg;
-			int nPath = m_FileName.ReverseFind('\\');
-			if (0 < nPath)
-				msg = m_FileName.Mid(nPath+1);
-			else
-				msg = m_FileName;
-			ioProgress->SetCaption(msg);
-			CString str;
-			str.FormatMessage(IDS_READING_ROWSCOLS, nRows, nCols);
-			ioProgress->SetMessage(str);
-			ioProgress->SetNumProgressBars(1);
-			ioProgress->SetRange(1, 0, nRows);
-			ioProgress->Show();
-		}
-		bool bAbort = false;
-		outData.reserve(nRows);
-		for (int iCellRow = 0; !bAbort && iCellRow < nRows; ++iCellRow)
+		Excel8::Range range = m_Worksheet.get_UsedRange();
+		long iRow = range.get_Row();
+		long iCol = range.get_Column();
+		long nRows = Excel8::Range(range.get_Rows()).get_Count();
+		long nCols = Excel8::Range(range.get_Columns()).get_Count();
+		if (0 < nRows && 0 < nCols)
 		{
 			if (ioProgress)
-				ioProgress->StepIt(1);
-			std::vector<CString> row;
-			row.reserve(nCols);
-			for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
 			{
-				CString cell1;
-				if (!IWizardSpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
-				{
-					bAbort = true;
-					break;
-				}
+				CString msg;
+				int nPath = m_FileName.ReverseFind('\\');
+				if (0 < nPath)
+					msg = m_FileName.Mid(nPath+1);
+				else
+					msg = m_FileName;
+				ioProgress->SetCaption(msg);
 				CString str;
-#if _MSC_VER < 1300
-				// VC6 can't translate a variant to cstring directly. sigh.
-				COleVariant var = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
-				if (var.vt == VT_BSTR)
-					str = var.bstrVal;
-#else
-				str = Excel8::Range(range.get_Range(CComVariant(cell1), CComVariant(cell1))).get_Value();
-#endif
-				row.push_back(str);
+				str.FormatMessage(IDS_READING_ROWSCOLS, nRows, nCols);
+				ioProgress->SetMessage(str);
+				ioProgress->SetNumProgressBars(1);
+				ioProgress->SetRange(1, 0, nRows);
+				ioProgress->Show();
 			}
-			outData.push_back(row);
+			bool bAbort = false;
+			outData.reserve(nRows);
+			for (int iCellRow = 0; !bAbort && iCellRow < nRows; ++iCellRow)
+			{
+				if (ioProgress)
+					ioProgress->StepIt(1);
+				std::vector<CString> row;
+				row.reserve(nCols);
+				for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
+				{
+					CString cell1;
+					if (!IWizardSpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
+					{
+						bAbort = true;
+						break;
+					}
+					CString str;
+#if _MSC_VER < 1300
+					// VC6 can't translate a variant to cstring directly. sigh.
+					COleVariant var = Excel8::Range(range.get_Range(COleVariant(cell1), COleVariant(cell1))).get_Value();
+					if (var.vt == VT_BSTR)
+						str = var.bstrVal;
+#else
+					str = Excel8::Range(range.get_Range(CComVariant(cell1), CComVariant(cell1))).get_Value();
+#endif
+					row.push_back(str);
+				}
+				outData.push_back(row);
+			}
 		}
+		return true;
 	}
-	return true;
+	catch (COleDispatchException* ex)
+	{
+		ex->Delete();
+	}
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
