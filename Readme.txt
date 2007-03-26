@@ -1,6 +1,6 @@
 Setting up the build environment
 ================================
-Additional software packages required:
+Additional software packages required (all free):
 - HTML Help Workshop
 - Boost libraries
 - Windows Installer XML toolset
@@ -22,6 +22,8 @@ Once the above software is unpacked, the directory structure should look like:
   - zlib/
       - ...(zlib structure)
 
+--------------------
+
 HTML Help Workshop: This is a free download from Microsoft.
 I'm currently using version 4.74.8702, as reported while compiling
 the help file. Add the following directories to the include paths in
@@ -30,6 +32,8 @@ the compiler options (Tools->Options, Directories tab):
     Library files: "C:\Program Files\HTML Help WorkShop\lib"
 (The above is the default location, your's may vary...)
 
+--------------------
+
 Boost: http://www.boost.org.
 ARB has been built and tested using Boost version 1.33.1. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
@@ -37,9 +41,11 @@ weak_ptr templates are used.)
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked in boost_1_33_1 (of course,
 this will vary based on boost version). This should be renamed to 'boost'
-to avoid problem in the project files.
+to avoid problems in the project files.
 - Note: use of Boost may change in the future. Smart Ptrs are part of the
   TR1 spec. When compilers actually implemement TR1, I will change to that.
+
+--------------------
 
 Windows Installer XML toolset: http://wix.sourceforge.net/
 Currently using Version 2.0 (as of ARB v1.8.3.12).
@@ -48,62 +54,30 @@ Currently using Version 2.0 (as of ARB v1.8.3.12).
 Unzip both of these into the 'wix' directory. In order to have the installer
 work the way we want (don't display a license agreement), there are some
 modifications needed.
-- Open ...\AgilityBook\Misc\Installation\Readme.txt for instructions on
-  what files to update.
+- Copy ...\AgilityBook\Misc\Installation\*.bmp to ...\wix\Bitmaps\
+- Copy ...\AgilityBook\Misc\Installation\WixUI_InstallDir.wxs to
+  ...\wix\src\ui\wixui\installdir\
 - Add ...\wix to your PATH, cd to wix
 - "cd src\ui\wixui"
 - "candle installdir\WixUI_InstallDir.wxs *.wxs"
 - "lit -out ..\..\..\arbwixui.wixlib *.wixobj"
-Now, we can compile the installation with (this is assuming the root directory
-for all the AgilityBook tools is "\AgilityBook\src"):
-- "candle AgilityBook.wxs"
-- "light -b \AgilityBook\src\wix -out AgilityBook.msi AgilityBook.wixobj \AgilityBook\src\wix\arbwixui.wixlib -loc \AgilityBook\src\wix\WixUI_en-us.wxl"
-[Note, this is automatically done when GenMSI.py is run from the Projects
-directory]
+- "del *.wixobj"
+Now, during our release process of running BuildAll.bat, GenMSI.py will
+be called which uses WiX to generate the .msi install files.
+(In ...\AgilityBook\src\Projects\VC8)
+
+--------------------
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
 This program has been tested with 2.2 and 2.7.
   - AgilityBook.cpp issues some warnings/comments about the version that
-    is currently in use.
+    is currently in use during compilation.
 If you need to compile Xerces yourself, then the .dll/.lib files are in
 (Xerces)/Build/Win32/<Compiler>/Release/ and should be copied to
 (arb)/lib/... This works with both UNICODE and MBCS compiles.
 - Changes to project files: xerceslib (only one we build)
   - On C/C++ Code Generation options:
     Change runtime library to multi-threaded NOT DLL
-
-zlib: http://www.zlib.net/
-I'm currently using v1.2.3, with some makefile changes.
-(Note, also fixed zlib1.rc so version really is 1.2.3)
-- Change CFLAGS option '-MD' to '-MT'
-- Change STATICLIB to zlib_s.lib
-         SHAREDLIB to arbzlib.dll
-         IMPLIB    to arbzlib.lib
-  (since we're compiling our own version, this deals with the zlib request
-  to keep zlib1.dll a pure product adhering to certain requirements)
-- Copy win32\Makefile.msc to win64\Makefile.msc
-  - Change '/dWIN32' to '/dWIN64'
--VS6:
- - Start a command shell and invoke VCVARS32.BAT.
- - Run 'nmake -f win32\Makefile.msc'.
- - Copy zdll.lib/zlib1.dll
- - Run 'nmake -f win32\Makefile.msc clean'.
--VS7
- - Start a VS2003 command shell
- - Run 'nmake -f win32\Makefile.msc'.
- - Copy zdll.lib/zlib1.dll
- - Run 'nmake -f win32\Makefile.msc clean'.
--VS8
- - Start a VS2005 command shell
- - Run 'nmake -f win32\Makefile.msc'.
- - Copy zdll.lib/zlib1.dll
- - Run 'nmake -f win32\Makefile.msc clean'.
- - Start a VS2005x64 Tools command shell
- - Run 'nmake -f win64\Makefile.msc'.
- - Copy zdll.lib/zlib1.dll
- - Run 'nmake -f win64\Makefile.msc clean'.
-
-----------
 
 Note: To compile for x64, (Xerces)/src/xercesc/util/AutoSense.hpp needs
 to be modified. In the '_WIN32 || WIN32' section, after:
@@ -121,6 +95,40 @@ DebugInformationFormat to '3' (VCCLCompilerTool), set the TargetMachine to 17
 ARB deviates from xerces structure here - instead of creating an x64 directory,
 ARB uses VC8x64. I just didn't feel like creating another directory layer.
 [This assumes you've installed the x64 libraries with VC8]
+
+--------------------
+
+zlib: http://www.zlib.net/
+I'm currently using v1.2.3, with some makefile changes.
+(Note, also fixed zlib1.rc so version really is 1.2.3)
+- Change CFLAGS option '-MD' to '-MT'
+- Change STATICLIB to zlib_s.lib
+         SHAREDLIB to arbzlib.dll
+         IMPLIB    to arbzlib.lib
+  (Since we're compiling our own version, this deals with the zlib request
+  to keep zlib1.dll a pure product adhering to certain requirements. Since
+  we're changing to staticly linking the runtime, we're outside of those.)
+- Copy win32\Makefile.msc to win64\Makefile.msc
+  - Change '/dWIN32' to '/dWIN64'
+-VS6:
+ - Start a command shell and invoke VCVARS32.BAT. (part of VS6)
+ - Run 'nmake -f win32\Makefile.msc'.
+ - Copy arbzdll.lib/arbzlib.dll
+ - Run 'nmake -f win32\Makefile.msc clean'.
+-VS7
+ - Start a VS2003 command shell
+ - Run 'nmake -f win32\Makefile.msc'.
+ - Copy arbzdll.lib/arbzlib.dll
+ - Run 'nmake -f win32\Makefile.msc clean'.
+-VS8
+ - Start a VS2005 command shell
+ - Run 'nmake -f win32\Makefile.msc'.
+ - Copy arbzdll.lib/arbzlib.dll
+ - Run 'nmake -f win32\Makefile.msc clean'.
+ - Start a VS2005x64 Tools command shell
+ - Run 'nmake -f win64\Makefile.msc'.
+ - Copy arbzdll.lib/arbzlib.dll
+ - Run 'nmake -f win64\Makefile.msc clean'.
 
 
 Compiler notes
@@ -142,4 +150,4 @@ Microsoft Visual Studio .NET 2003 (VC7.1)
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
-   Note - xerces is checked in using VC8+SP1
+   Note - zlib/xerces are checked in using VC8+SP1

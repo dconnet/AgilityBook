@@ -5,6 +5,7 @@
   - Changed to static runtime libraries.
   - Changed Points view to accumulate runs by event type, not by scoring
     method. This removes the multiple lines per event that currently exist.
+  - Changed install program to WiX.
 - Bug fixes
   - Fixed a problem redrawing list contents when column size changed.
 

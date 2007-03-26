@@ -9,7 +9,10 @@ arb.tif                     'Agility Record Book' image
 
 Readme.txt                  This file
 Readme - YahooALT.txt       File copied into Yahoo alternate area as Readme.txt
-Instructions.txt            Readme file for SourceForge
+Instructions.txt            Readme file for SourceForge releases
+
+Installation/               Directory containing files to modify a standard
+                            WiX installation. See Readme.txt there.
 
 File Types
 .doc   Microsoft Word 2002

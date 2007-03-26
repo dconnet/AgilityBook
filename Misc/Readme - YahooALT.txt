@@ -3,14 +3,10 @@ To install this:
 First time:
 ===========
 Create a directory on your system, for instance "C:\AgilityBook" and download
-the files 'xerces-c_2_7.zip' and 'AgilityBook_N_N_N_NALT.zip' (where N will be the
-current version).
+the files 'xerces-c_2_7.zip' and 'AgilityBook_N_N_N_NALT.zip' (where N will be
+the current version).
 
 Unzip those files into the directory you created.
-
-Attempt to run. If the system complains about a DLL, then download and install
-vcredist_x86.exe (this contains VC8 runtime files). The program should run
-properly now.
 
 
 Updating to a new version:
@@ -24,8 +20,9 @@ Reporting a bug
 If something goes wrong, please post all the steps necessary to recreate
 the problem on http://groups.yahoo.com/group/AgilityRecordBook/.
 
-Also, check the files 'History.txt' and 'Todo.txt' for any known problems
-or resolutions.
+Also, check the files 'History.txt' and 'Todo.txt' for any known
+problems or resolutions. Issues are also regularly updated at
+http://www.agilityrecordbook.com.
 
 Comments or requests
 ====================
