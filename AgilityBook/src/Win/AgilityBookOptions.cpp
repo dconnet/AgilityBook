@@ -944,8 +944,8 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_TREE_DOG_CALLNAME);
 				break;
 			case IO_TYPE_VIEW_TREE_TRIAL:
+				outValues.push_back(IO_TREE_TRIAL_VERIFIED);
 				outValues.push_back(IO_TREE_TRIAL_START);
-				outValues.push_back(IO_TREE_TRIAL_END);
 				outValues.push_back(IO_TREE_TRIAL_VENUE);
 				outValues.push_back(IO_TREE_TRIAL_LOCATION);
 				break;
@@ -960,12 +960,16 @@ void CAgilityBookOptions::GetColumnOrder(
 			{
 				outValues.push_back(IO_RUNS_Q);
 				outValues.push_back(IO_RUNS_TITLE_POINTS);
+				outValues.push_back(IO_RUNS_SCORE);
 				outValues.push_back(IO_RUNS_DATE);
 				outValues.push_back(IO_RUNS_VENUE);
 				outValues.push_back(IO_RUNS_EVENT);
 				outValues.push_back(IO_RUNS_DIVISION);
 				outValues.push_back(IO_RUNS_LEVEL);
+				outValues.push_back(IO_RUNS_HEIGHT);
 				outValues.push_back(IO_RUNS_JUDGE);
+				outValues.push_back(IO_RUNS_TIME);
+				outValues.push_back(IO_RUNS_YPS);
 				outValues.push_back(IO_RUNS_PLACE);
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
@@ -976,12 +980,12 @@ void CAgilityBookOptions::GetColumnOrder(
 			if (IO_TYPE_VIEW_CALENDAR_LIST == idxColumn)
 			{
 				outValues.push_back(IO_CAL_START_DATE);
-				outValues.push_back(IO_CAL_END_DATE);
 				outValues.push_back(IO_CAL_VENUE);
 				outValues.push_back(IO_CAL_LOCATION);
+				outValues.push_back(IO_CAL_CLOSES);
 				outValues.push_back(IO_CAL_CLUB);
 				outValues.push_back(IO_CAL_OPENS);
-				outValues.push_back(IO_CAL_CLOSES);
+				outValues.push_back(IO_CAL_DRAWS);
 				outValues.push_back(IO_CAL_NOTES);
 			}
 			break;
