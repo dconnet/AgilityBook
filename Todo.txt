@@ -1,4 +1,7 @@
-Last Updated: 3/14/2006
+Last Updated: 4/18/2006
+
+- Add hotel/campground information, including whether an overnight stay is
+  needed. Plus, whether a reservation has been made.
 
 - Remember printer page orientation. (See KB166130: "How To Overriding
   Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
