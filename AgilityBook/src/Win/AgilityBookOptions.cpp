@@ -455,7 +455,7 @@ void CAgilityBookOptions::GetPointsViewSort(
 {
 	outPrimary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw1"), (int)ePointsViewSortDivision);
 	outSecondary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw2"), (int)ePointsViewSortLevel);
-	outTertiary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw3"), (int))ePointsViewSortEvent;
+	outTertiary = (PointsViewSort)AfxGetApp()->GetProfileInt(_T("Common"), _T("sortPtVw3"), (int)ePointsViewSortEvent);
 }
 
 void CAgilityBookOptions::SetPointsViewSort(
