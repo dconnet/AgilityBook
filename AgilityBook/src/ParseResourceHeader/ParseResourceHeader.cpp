@@ -64,6 +64,7 @@
 #include <atlstr.h>
 #include <iostream>
 #include <fstream>
+#include <locale>
 #include <map>
 #include <set>
 #include <string>
@@ -124,19 +125,20 @@ static bool parse_define(string line, string& outDefine, unsigned long& outValue
 		{
 			if (0 == line.find("#define"))
 			{
+				locale loc;
 				bParsed = true;
 				pos = line.length() - 1;
-				while (pos >= 0 && isspace(line[pos]))
+				while (pos >= 0 && use_facet< ctype<char> >(loc).is(ctype_base::space, line[pos]))
 					--pos;
 				if (pos != line.length() - 1)
 					line = line.substr(0, pos + 1);
 				pos = line.find_first_of(" \t");
-				while (isspace(line[pos]))
+				while (use_facet< ctype<char> >(loc).is(ctype_base::space, line[pos]))
 					++pos;
 				line = line.substr(pos); // skip define and whitespace
 				pos = line.find_first_of(" \t");
 				outDefine = line.substr(0, pos); // macro
-				while (isspace(line[pos]))
+				while (use_facet< ctype<char> >(loc).is(ctype_base::space, line[pos]))
 					++pos;
 				line = line.substr(pos); // skip macro and whitespace
 				if (0 == line.find("0x"))
