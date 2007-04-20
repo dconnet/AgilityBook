@@ -471,16 +471,16 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	{
 		if (CLIPDATA == tree.GetName())
 		{
-			ARBDogTrialPtr pTrial(ARBDogTrial::New());
-			if (pTrial)
+			ARBDogTrialPtr pNewTrial(ARBDogTrial::New());
+			if (pNewTrial)
 			{
 				CErrorCallback err;
-				if (pTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pNewTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
 					CFilterOptions::Options().GetFilterVenue(venues);
-					if (!pDog->GetTrials().AddTrial(pTrial))
+					if (!pDog->GetTrials().AddTrial(pNewTrial))
 					{
 						bLoaded = false;
 						AfxMessageBox(IDS_CREATETRIAL_FAILED, MB_ICONSTOP);
@@ -488,9 +488,9 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					else
 					{
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
-						m_pTree->GetDocument()->ResetVisibility(venues, pTrial);
+						m_pTree->GetDocument()->ResetVisibility(venues, pNewTrial);
 						m_pTree->SetRedraw(FALSE);
-						HTREEITEM hItem = m_pTree->InsertTrial(pTrial, GetDataDog()->GetHTreeItem());
+						HTREEITEM hItem = m_pTree->InsertTrial(pNewTrial, GetDataDog()->GetHTreeItem());
 						m_pTree->SetRedraw(TRUE);
 						m_pTree->Invalidate();
 						bool bOk = true;

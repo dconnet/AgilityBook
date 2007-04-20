@@ -1403,9 +1403,9 @@ void CPointsDataItems::LoadData(
 											++SQs;
 										if (pScoringMethod->HasSpeedPts())
 										{
-											int pts = pRun->GetSpeedPoints(pScoringMethod);
-											speedPts += pts;
-											speedPtsEvent += pts;
+											int pts2 = pRun->GetSpeedPoints(pScoringMethod);
+											speedPts += pts2;
+											speedPtsEvent += pts2;
 										}
 										// Only tally partners for pairs. In USDAA DAM, pairs is
 										// actually a 3-dog relay.

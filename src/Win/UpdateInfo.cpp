@@ -317,18 +317,18 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		//   <Download>url</Download>
 		//     (if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD)
 		// </Data>
-		ARBString errMsg;
+		ARBString errMsg2;
 		Element tree;
-		if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg))
+		if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg2))
 		{
 			if (bVerbose)
 			{
 				CString msg;
 				msg.FormatMessage(IDS_LOAD_FAILED, _T("version.txt"));
-				if (0 < errMsg.length())
+				if (0 < errMsg2.length())
 				{
 					msg += _T("\n\n");
-					msg += errMsg.c_str();
+					msg += errMsg2.c_str();
 				}
 				CSplashWnd::HideSplashScreen();
 				AfxMessageBox(msg, MB_ICONEXCLAMATION);
@@ -458,14 +458,14 @@ void CUpdateInfo::CheckConfig(
 			if (ReadHttpFile(url, strConfig, errMsg))
 			{
 				Element tree;
-				ARBString errMsg;
-				if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg))
+				ARBString errMsg2;
+				if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg2))
 				{
 					msg.FormatMessage(IDS_LOAD_FAILED, (LPCTSTR)url);
-					if (0 < errMsg.length())
+					if (0 < errMsg2.length())
 					{
 						msg += _T("\n\n");
-						msg += errMsg.c_str();
+						msg += errMsg2.c_str();
 					}
 					AfxMessageBox(msg, MB_ICONEXCLAMATION);
 				}

@@ -426,13 +426,13 @@ BOOL CWizardStart::OnWizardFinish()
 							{
 								ARBDogPtr pDog = *iterDog;
 								ARBDogPtr pExisting;
-								for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin();
-									iterDog != m_pDoc->GetDogs().end();
-									++iterDog)
+								for (ARBDogList::iterator iterDog2 = m_pDoc->GetDogs().begin();
+									iterDog2 != m_pDoc->GetDogs().end();
+									++iterDog2)
 								{
-									if ((*iterDog)->GetCallName() == pDog->GetCallName())
+									if ((*iterDog2)->GetCallName() == pDog->GetCallName())
 									{
-										pExisting = *iterDog;
+										pExisting = *iterDog2;
 										break;
 									}
 								}

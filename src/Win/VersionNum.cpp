@@ -169,12 +169,12 @@ CVersionNum::CVersionNum(CString inVer)
 		{
 			m_Version.part1 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 			inVer = inVer.Mid(pos+1);
-			int pos = inVer.Find('.');
+			pos = inVer.Find('.');
 			if (0 <= pos)
 			{
 				m_Version.part2 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 				inVer = inVer.Mid(pos+1);
-				int pos = inVer.Find('.');
+				pos = inVer.Find('.');
 				if (0 <= pos)
 				{
 					m_Version.part3 = static_cast<WORD>(_tstol((LPCTSTR)inVer));

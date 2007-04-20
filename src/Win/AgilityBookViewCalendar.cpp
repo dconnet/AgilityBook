@@ -658,10 +658,9 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		CRect rect(rWeekDays);
 		rect.InflateRect(-1, -yInc); // Internal working area
 		ARBDate weekStart = FirstDayOfWeek(m_First);
-		int iDay;
-		for (iDay = 0; iDay < 7; ++iDay)
+		for (int iDay = 0; iDay < 7; ++iDay)
 		{
-			CTime t((weekStart + iDay).GetDate());
+			t = CTime((weekStart + iDay).GetDate());
 			str = t.Format(_T("%A"));
 			pDC->DrawText(str, rect, DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER|DT_CENTER);
 
@@ -730,7 +729,6 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 
 				// Display date (only day now, not full date)
 				//CString str(day.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)).c_str());
-				CString str;
 				str.Format(_T("%d"), day.GetDay());
 				pDC->DrawText(str, rect, DT_NOPREFIX|DT_SINGLELINE|DT_TOP|DT_RIGHT);
 
@@ -744,7 +742,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 						r.top += yInc * tm.tmAscent;
 
 						ARBCalendarPtr pCal = (*iter);
-						CString str;
+						str.Empty();
 						for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
 						{
 							if (0 < iCol)
@@ -825,7 +823,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		pDC->SelectStockObject(NULL_BRUSH);
 		pDC->Rectangle(rClient);
 		// Vertical lines
-		for (iDay = 1; iDay < 7; ++iDay)
+		for (int iDay = 1; iDay < 7; ++iDay)
 		{
 			pDC->MoveTo(rClient.left + iDay * width, rWeekDays.top);
 			pDC->LineTo(rClient.left + iDay * width, rClient.bottom);

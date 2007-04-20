@@ -780,8 +780,8 @@ void CDlgConfigure::OnUpdate()
 		// Update the config.
 		if (m_Config.Update(0, update, info))
 		{
-			CDlgMessage dlg(info.str().c_str(), 0, this);
-			dlg.DoModal();
+			CDlgMessage dlgMsg(info.str().c_str(), 0, this);
+			dlgMsg.DoModal();
 			LoadData();
 		}
 		else

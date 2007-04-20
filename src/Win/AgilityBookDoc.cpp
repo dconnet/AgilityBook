@@ -300,8 +300,8 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 	if (IDOK == dlg.DoModal())
 	{
 		std::vector<ARBDogPtr> dogs;
-		CDlgSelectDog dlg(this, dogs);
-		if (IDOK == dlg.DoModal() && 0 < dogs.size())
+		CDlgSelectDog dlgDogs(this, dogs);
+		if (IDOK == dlgDogs.DoModal() && 0 < dogs.size())
 		{
 			for (std::vector<ARBDogPtr>::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 			{
@@ -1148,8 +1148,8 @@ void CAgilityBookDoc::OnNotesSearch()
 	{
 		CString caption;
 		caption.LoadString(IDS_COL_NOTES);
-		CDlgListViewer dlg(this, caption, callback.m_Items);
-		dlg.DoModal();
+		CDlgListViewer dlgList(this, caption, callback.m_Items);
+		dlgList.DoModal();
 	}
 }
 
