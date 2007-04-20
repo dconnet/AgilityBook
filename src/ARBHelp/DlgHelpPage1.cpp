@@ -577,9 +577,9 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 					if (g_szBuff[1] == ':')
 					{
 						g_szBuff[1] = NULL;
-						CString tmp(g_szBuff);
-						tmp.MakeUpper();
-						drives.insert(tmp);
+						CString tmpBuff(g_szBuff);
+						tmpBuff.MakeUpper();
+						drives.insert(tmpBuff);
 					}
 					RegCloseKey(hSubKey);
 				}
