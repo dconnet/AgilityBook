@@ -531,9 +531,9 @@ double ARBDogRun::GetTitlePoints(
 		*outLifeTime = 0.0;
 	if (outPlacement)
 	{
-		double pts;
-		if (inScoring->GetPlacements().GetPlaceInfo(GetPlace(), pts))
-			*outPlacement = pts;
+		double pts2;
+		if (inScoring->GetPlacements().GetPlaceInfo(GetPlace(), pts2))
+			*outPlacement = pts2;
 		else
 			*outPlacement = 0.0;
 	}

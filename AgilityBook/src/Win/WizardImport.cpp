@@ -365,7 +365,7 @@ void CWizardImport::UpdatePreview()
 			if (iLine >= m_Row - 1)
 			{
 				std::vector<CString> const& rowData = *iter;
-				int iCol = 0;
+				iCol = 0;
 				int iCurLine = -1;
 				for (std::vector<CString>::const_iterator iter2 = rowData.begin();
 					iter2 != rowData.end() && iCol < cols.GetSize();
@@ -921,18 +921,18 @@ BOOL CWizardImport::OnWizardFinish()
 						&& pRun->GetDate().isBetween(pTrialTmp->GetRuns().GetStartDate(), pTrialTmp->GetRuns().GetEndDate()))
 						{
 							bool bOk = true;
-							size_t i = 0;
+							size_t idx = 0;
 							for (ARBDogClubList::iterator iterClub = pTrialTmp->GetClubs().begin(); iterClub != pTrialTmp->GetClubs().end(); ++iterClub)
 							{
 								ARBDogClubPtr pClub(ARBDogClub::New());
-								pClub->SetName(clubs[i]);
-								pClub->SetVenue(venues[i]);
+								pClub->SetName(clubs[idx]);
+								pClub->SetVenue(venues[idx]);
 								if (*pClub != *(*(iterClub)))
 								{
 									bOk = false;
 									break;
 								}
-								++i;
+								++idx;
 							}
 							if (bOk)
 							{
@@ -947,9 +947,9 @@ BOOL CWizardImport::OnWizardFinish()
 						pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 						pDog->GetTrials().AddTrial(pTrial);
 						pDog->GetTrials().sort(true);
-						for (size_t i = 0; i < venues.size(); ++i)
+						for (size_t idx = 0; idx < venues.size(); ++idx)
 						{
-							pTrial->GetClubs().AddClub(clubs[i], venues[i]);
+							pTrial->GetClubs().AddClub(clubs[idx], venues[idx]);
 						}
 						if (0 < trialLocation.length())
 							pTrial->SetLocation(trialLocation);
@@ -1263,10 +1263,10 @@ void CWizardImport::OnImportFile()
 		filter.LoadString(IDS_FILEEXT_FILTER_OOCALC);
 	else
 		filter.LoadString(IDS_FILEEXT_FILTER_TXTCSV);
-	CFileDialog file(TRUE, _T(""), _T(""), OFN_FILEMUSTEXIST, filter, this);
-	if (IDOK == file.DoModal())
+	CFileDialog dlg(TRUE, _T(""), _T(""), OFN_FILEMUSTEXIST, filter, this);
+	if (IDOK == dlg.DoModal())
 	{
-		m_FileName = file.GetPathName();
+		m_FileName = dlg.GetPathName();
 		CString str;
 		str.FormatMessage(IDS_FILE_PREVIEW, (LPCTSTR)m_FileName);
 		m_ctrlPreviewFile.SetWindowText(str);
@@ -1300,7 +1300,6 @@ void CWizardImport::OnImportFile()
 			CStdioFile file;
 			if (file.Open(m_FileName, CFile::modeRead | CFile::typeText))
 			{
-				CString str;
 				while (file.ReadString(str))
 				{
 					str.TrimRight();

@@ -613,13 +613,13 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 	if (inTitlePoints)
 	{
-		ARBVector<ARBConfigScoringPtr>::iterator iter;
-		for (iter = outList.begin(); iter != outList.end(); )
+		ARBVector<ARBConfigScoringPtr>::iterator iter2;
+		for (iter2 = outList.begin(); iter2 != outList.end(); )
 		{
-			if (0 < (*iter)->GetTitlePoints().size())
-				++iter;
+			if (0 < (*iter2)->GetTitlePoints().size())
+				++iter2;
 			else
-				iter = outList.erase(iter);
+				iter2 = outList.erase(iter2);
 		}
 	}
 	return outList.size();

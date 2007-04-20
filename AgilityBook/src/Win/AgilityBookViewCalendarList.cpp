@@ -1320,13 +1320,13 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 				pData->GetCalendar()->Save(tree);
 				pData->GetCalendar()->iCalendar(iCalendar, nWarning);
 			}
-			CStringArray line;
-			GetPrintLine((*iter), line);
-			for (int i = 0; i < line.GetSize(); ++i)
+			CStringArray line2;
+			GetPrintLine((*iter), line2);
+			for (int i = 0; i < line2.GetSize(); ++i)
 			{
 				if (0 < i)
 					data += '\t';
-				data += line[i];
+				data += line2[i];
 			}
 			data += _T("\r\n");
 		}

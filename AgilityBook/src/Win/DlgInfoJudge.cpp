@@ -240,7 +240,7 @@ void CDlgInfoJudge::OnDrawItem(
 	// If this item is selected, set the background color 
 	// and the text color to appropriate values. Erase
 	// the rect by filling it with the background color.
-	if ((lpDrawItemStruct->itemAction | ODA_SELECT)
+	if ((lpDrawItemStruct->itemAction & ODA_SELECT)
 	&& (lpDrawItemStruct->itemState & ODS_SELECTED))
 	{
 		dc.SetTextColor(::GetSysColor(COLOR_HIGHLIGHTTEXT));

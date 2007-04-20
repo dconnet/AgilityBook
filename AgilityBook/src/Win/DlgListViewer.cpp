@@ -1482,7 +1482,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	else if (m_MultiQdata)
 	{
-		std::vector<ARBDogExistingPointsPtr> existingRuns;
+		std::vector<ARBDogExistingPointsPtr> existingRuns2;
 		if (m_DataMultiQ)
 		{
 			for (ARBDogExistingPointsList::const_iterator iter = m_DataMultiQ->m_Dog->GetExistingPoints().begin();
@@ -1494,7 +1494,7 @@ BOOL CDlgListViewer::OnInitDialog()
 				&& pExisting->GetVenue() == m_DataMultiQ->m_Venue->GetName()
 				&& pExisting->GetMultiQ() == m_DataMultiQ->m_MultiQ->GetName())
 				{
-					existingRuns.push_back(pExisting);
+					existingRuns2.push_back(pExisting);
 				}
 			}
 		}
@@ -1508,8 +1508,8 @@ BOOL CDlgListViewer::OnInitDialog()
 		int iItem = 0;
 		if (m_DataMultiQ)
 		{
-			for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns.begin();
-				iter != existingRuns.end();
+			for (std::vector<ARBDogExistingPointsPtr>::iterator iter = existingRuns2.begin();
+				iter != existingRuns2.end();
 				++iter)
 			{
 				LVITEM item;

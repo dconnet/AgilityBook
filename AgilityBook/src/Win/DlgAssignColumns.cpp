@@ -915,7 +915,7 @@ BOOL CDlgAssignColumns::OnInitDialog()
 void CDlgAssignColumns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	FillColumns();
-	*pResult;
+	*pResult = 0;
 }
 
 void CDlgAssignColumns::OnSelchangeAvailable() 

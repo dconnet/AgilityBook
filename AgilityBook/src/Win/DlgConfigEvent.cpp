@@ -1002,19 +1002,19 @@ void CDlgConfigEvent::OnOK()
 			while (!bOverlap && 1 < items.size())
 			{
 				iter = items.begin();
-				ARBConfigScoringPtr pScoring = *iter;
+				ARBConfigScoringPtr pScore = *iter;
 				for (++iter; !bOverlap && iter != items.end(); ++iter)
 				{
 					ARBConfigScoringPtr pScoring2 = *iter;
-					if ((!pScoring->GetValidFrom().IsValid()
+					if ((!pScore->GetValidFrom().IsValid()
 					&& !pScoring2->GetValidFrom().IsValid())
-					|| (!pScoring->GetValidTo().IsValid()
+					|| (!pScore->GetValidTo().IsValid()
 					&& !pScoring2->GetValidTo().IsValid()))
 						bOverlap = true;
-					if ((pScoring->GetValidTo().IsValid() && pScoring2->GetValidFrom().IsValid()
-					&& pScoring->GetValidTo() >= pScoring2->GetValidFrom())
-					|| (pScoring2->GetValidTo().IsValid() && pScoring->GetValidFrom().IsValid()
-					&& pScoring2->GetValidTo() >= pScoring->GetValidFrom()))
+					if ((pScore->GetValidTo().IsValid() && pScoring2->GetValidFrom().IsValid()
+					&& pScore->GetValidTo() >= pScoring2->GetValidFrom())
+					|| (pScoring2->GetValidTo().IsValid() && pScore->GetValidFrom().IsValid()
+					&& pScoring2->GetValidTo() >= pScore->GetValidFrom()))
 						bOverlap = true;
 				}
 				items.erase(items.begin());
