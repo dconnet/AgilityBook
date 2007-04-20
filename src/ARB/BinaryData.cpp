@@ -38,6 +38,7 @@
 
 #include "Base64.h"
 #include "zlib.h"
+#include <boost/scoped_ptr.hpp>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -74,13 +75,13 @@ bool BinaryData::Decode(
         return false;
 	}
 
-	char out[CHUNK];
+	boost::scoped_ptr<char> out(new char[CHUNK]);
 	strm.avail_in = static_cast<uInt>(len);
 	strm.next_in = reinterpret_cast<Bytef*>(pData);
 	do
 	{
         strm.avail_out = CHUNK;
-        strm.next_out = (Bytef*)out;
+        strm.next_out = (Bytef*)out.get();
         int ret = inflate(&strm, Z_NO_FLUSH);
         ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
         switch (ret)
@@ -98,7 +99,7 @@ bool BinaryData::Decode(
 		{
 			char* tmp = new char[have + outBytes];
 			memcpy(tmp, outBinData, outBytes);
-			memcpy(tmp + outBytes, out, have);
+			memcpy(tmp + outBytes, out.get(), have);
 			outBytes += have;
 			Release(outBinData);
 			outBinData = tmp;
@@ -107,7 +108,7 @@ bool BinaryData::Decode(
 		{
 			outBinData = new char[have];
 			outBytes = have;
-			memcpy(outBinData, out, have);
+			memcpy(outBinData, out.get(), have);
 		}
 	} while (strm.avail_out == 0);
     inflateEnd(&strm);
@@ -128,7 +129,7 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
-	char out[CHUNK];
+	boost::scoped_ptr<char> out(new char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -143,7 +144,7 @@ bool BinaryData::Encode(
     do
 	{
         strm.avail_out = CHUNK;
-        strm.next_out = (Bytef*)out;
+        strm.next_out = (Bytef*)out.get();
         /*int ret =*/ deflate(&strm, Z_FINISH);    /* no bad return value */
         //ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
         size_t have = CHUNK - strm.avail_out;
@@ -151,7 +152,7 @@ bool BinaryData::Encode(
 		{
 			char* tmp = new char[have + nData];
 			memcpy(tmp, pData, nData);
-			memcpy(tmp + nData, out, have);
+			memcpy(tmp + nData, out.get(), have);
 			nData += have;
 			delete [] pData;
 			pData = tmp;
@@ -160,7 +161,7 @@ bool BinaryData::Encode(
 		{
 			pData = new char[have];
 			nData = have;
-			memcpy(pData, out, have);
+			memcpy(pData, out.get(), have);
 		}
     } while (strm.avail_out == 0);
     deflateEnd(&strm);
@@ -177,8 +178,8 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
-	char in[CHUNK];
-	char out[CHUNK];
+	boost::scoped_ptr<char> in(new char[CHUNK]);
+	boost::scoped_ptr<char> out(new char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -191,19 +192,19 @@ bool BinaryData::Encode(
 	char* pData = NULL;
 	do
 	{
-		strm.avail_in = (uInt)fread(in, 1, CHUNK, inData);
+		strm.avail_in = (uInt)fread(in.get(), 1, CHUNK, inData);
 		if (ferror(inData))
 		{
 			deflateEnd(&strm);
 			return false;
 		}
 		flush = feof(inData) ? Z_FINISH : Z_NO_FLUSH;
-		strm.next_in = (Bytef*)in;
+		strm.next_in = (Bytef*)in.get();
 
 		do
 		{
 			strm.avail_out = CHUNK;
-			strm.next_out = (Bytef*)out;
+			strm.next_out = (Bytef*)out.get();
 			/*int ret =*/ deflate(&strm, flush);    /* no bad return value */
 			//ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
 			size_t have = CHUNK - strm.avail_out;
@@ -211,7 +212,7 @@ bool BinaryData::Encode(
 			{
 				char* tmp = new char[have + nData];
 				memcpy(tmp, pData, nData);
-				memcpy(tmp + nData, out, have);
+				memcpy(tmp + nData, out.get(), have);
 				nData += have;
 				delete [] pData;
 				pData = tmp;
@@ -220,7 +221,7 @@ bool BinaryData::Encode(
 			{
 				pData = new char[have];
 				nData = have;
-				memcpy(pData, out, have);
+				memcpy(pData, out.get(), have);
 			}
 		} while (strm.avail_out == 0);
 	} while (flush != Z_FINISH);
