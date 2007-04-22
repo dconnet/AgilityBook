@@ -86,6 +86,18 @@ Trial venue. You may select an existing venue or type anything you want. If
 the text in this field does not exactly match an existing venue, you will not
 be able to automatically create a trial from this calendar entry.
 
+.topic HIDC_CAL_ACCOM_NONE
+No accommodations are needed.
+
+.topic HIDC_CAL_ACCOM_NEEDED
+Accommodations (hotel or camping) are needed.
+
+.topic HIDC_CAL_ACCOM_MADE
+Reservations have been made.
+
+.topic HIDC_CAL_ACCOM_CONFIRMATION
+Confirmation number of reservation.
+
 .topic HIDC_CLUB_CLUBS
 Enter the name of the club. All previously entered clubs are listed here.
 

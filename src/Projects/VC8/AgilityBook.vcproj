@@ -1204,6 +1204,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\res\dog.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\res\HdrDown.ico"
 				>
 			</File>
@@ -1244,6 +1248,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\res\run.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\res\Splash.bmp"
 				>
 			</File>
@@ -1260,7 +1268,55 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\res\trial.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\res\unchecked.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-aac.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-akc.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-asca.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-ckc.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-cpe.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-docna.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-nadac.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-sweep.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-tdaa.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-ukc.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-usdaa.ico"
 				>
 			</File>
 		</Filter>

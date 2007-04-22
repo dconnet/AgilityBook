@@ -1195,6 +1195,18 @@ SOURCE=..\..\ARB\Element.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=..\..\Win\res\AccConfirm.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\res\AccNone.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\res\AccTodo.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\res\AgilityBook.ico
 # End Source File
 # Begin Source File
@@ -1271,6 +1283,10 @@ SOURCE=..\..\Win\res\DefaultConfig.xml
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\res\dog.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\res\HdrDown.ico
 # End Source File
 # Begin Source File
@@ -1287,7 +1303,15 @@ SOURCE=..\..\Win\res\hidden.ico
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\res\Note.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\res\Question.ico
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\res\run.ico
 # End Source File
 # Begin Source File
 
@@ -1307,7 +1331,55 @@ SOURCE=..\..\Win\res\Toolbar.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\res\trial.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\res\unchecked.ico
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-aac.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-akc.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-asca.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-ckc.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-cpe.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-docna.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-nadac.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-sweep.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-tdaa.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-ukc.ico"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\Win\res\venue-usdaa.ico"
 # End Source File
 # End Group
 # End Target

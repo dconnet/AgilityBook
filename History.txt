@@ -1,6 +1,7 @@
-3/14/2007: v1.9.0.12 <in development>
+4/22/2007: v1.9.0.12 <in development>
 - Bumped file version to 12.5
   - Added 'defValue' to 'OtherPts'.
+  - Added 'Accom', 'Confirm' to 'Calendar'.
 - New features / Enhancements:
   - Changed to static runtime libraries.
   - Changed Points view to accumulate runs by event type, not by scoring

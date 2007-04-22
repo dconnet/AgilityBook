@@ -88,12 +88,17 @@ private:
 	void SetupColumns();
 	void LoadData();
 	CImageList m_ImageList;
+	CImageList m_ImageStateList;
 	int m_imgEmpty;
 	int m_imgTentative;
 	int m_imgPlan;
 	int m_imgPlanTentative;
 	int m_imgEntered;
 	int m_imgEnteredTentative;
+	int m_imgStateEmpty;
+	int m_imgStateNone;
+	int m_imgStateTodo;
+	int m_imgStateConfirm;
 	class CSortColumn
 	{
 	public:

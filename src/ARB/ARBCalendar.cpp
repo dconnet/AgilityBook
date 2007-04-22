@@ -352,6 +352,8 @@ ARBCalendar::ARBCalendar()
 	, m_Club()
 	, m_Venue()
 	, m_eEntered(eNot)
+	, m_eAccommodations(eAccomNone)
+	, m_Confirmation()
 	, m_Note()
 {
 }
@@ -367,6 +369,8 @@ ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 	, m_Club(rhs.m_Club)
 	, m_Venue(rhs.m_Venue)
 	, m_eEntered(rhs.m_eEntered)
+	, m_eAccommodations(rhs.m_eAccommodations)
+	, m_Confirmation(rhs.m_Confirmation)
 	, m_Note(rhs.m_Note)
 {
 }
@@ -394,6 +398,8 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 		m_Club = rhs.m_Club;
 		m_Venue = rhs.m_Venue;
 		m_eEntered = rhs.m_eEntered;
+		m_eAccommodations = rhs.m_eAccommodations;
+		m_Confirmation = rhs.m_Confirmation;
 		m_Note = rhs.m_Note;
 	}
 	return *this;
@@ -411,6 +417,8 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 		&& m_Club == rhs.m_Club
 		&& m_Venue == rhs.m_Venue
 		&& m_eEntered == rhs.m_eEntered
+		&& m_eAccommodations == rhs.m_eAccommodations
+		&& m_Confirmation == rhs.m_Confirmation
 		&& m_Note == rhs.m_Note;
 }
 
@@ -481,6 +489,12 @@ size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 	if (0 < m_Venue.length())
 	{
 		ioStrings.insert(m_Venue);
+		++nItems;
+	}
+
+	if (0 < m_Confirmation.length())
+	{
+		ioStrings.insert(m_Confirmation);
 		++nItems;
 	}
 
@@ -598,6 +612,22 @@ bool ARBCalendar::Load(
 				return false;
 			}
 		}
+
+		if (Element::eFound == inTree.GetAttrib(ATTRIB_CAL_ACCOMMODATION, attrib))
+		{
+			if (attrib == _T("N"))
+				m_eAccommodations = eAccomNone;
+			else if (attrib == _T("T"))
+				m_eAccommodations = eAccomTodo;
+			else if (attrib == _T("C"))
+				m_eAccommodations = eAccomConfirmed;
+			else
+			{
+				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, VALID_VALUES_ACCOM));
+				return false;
+			}
+		}
+		inTree.GetAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
 	}
 
 	m_Note = inTree.GetValue();
@@ -617,19 +647,32 @@ bool ARBCalendar::Save(Element& ioTree) const
 	cal.AddAttrib(ATTRIB_CAL_LOCATION, m_Location);
 	cal.AddAttrib(ATTRIB_CAL_CLUB, m_Club);
 	cal.AddAttrib(ATTRIB_CAL_VENUE, m_Venue);
-	ARBString entered(_T("N"));
 	switch (m_eEntered)
 	{
 	default:
+		cal.AddAttrib(ATTRIB_CAL_ENTERED, _T("N"));
 		break;
 	case eEntered:
-		entered = _T("E");
+		cal.AddAttrib(ATTRIB_CAL_ENTERED, _T("E"));
 		break;
 	case ePlanning:
-		entered = _T("P");
+		cal.AddAttrib(ATTRIB_CAL_ENTERED, _T("P"));
 		break;
 	}
-	cal.AddAttrib(ATTRIB_CAL_ENTERED, entered);
+	switch (m_eAccommodations)
+	{
+	default:
+		cal.AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("N"));
+		break;
+	case eAccomTodo:
+		cal.AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("T"));
+		break;
+	case eAccomConfirmed:
+		cal.AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("C"));
+		break;
+	}
+	if (0 < m_Confirmation.length())
+		cal.AddAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
 	if (0 < m_Note.length())
 		cal.SetValue(m_Note);
 	return true;

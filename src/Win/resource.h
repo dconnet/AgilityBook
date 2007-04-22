@@ -44,6 +44,9 @@
 #define IDI_VENUE_TDAA                  178
 #define IDI_VENUE_UKC                   179
 #define IDI_VENUE_USDAA                 180
+#define IDI_ACCOMMODATION_NONE          181
+#define IDI_ACCOMMODATION_TODO          182
+#define IDI_ACCOMMODATION_CONFIRMED     183
 #define IDD_ABOUTBOX                    200
 #define IDD_NAME                        201
 #define IDD_LIST_VIEWER                 202
@@ -240,6 +243,10 @@
 #define IDC_TRAINING_NAME               1181
 #define IDC_TRAINING_NOTES              1182
 #define IDC_TRAINING_SUBNAME            1183
+#define IDC_CAL_ACCOM_NONE              1184
+#define IDC_CAL_ACCOM_NEEDED            1185
+#define IDC_CAL_ACCOM_MADE              1186
+#define IDC_CAL_ACCOM_CONFIRMATION      1187
 #define IDC_JUDGE                       1190
 #define IDC_JUDGE_NEW                   1191
 #define IDC_JUDGE_DELETE                1192
