@@ -37,7 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar'. (12.5)
+ * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC File version 12.5. Added 'defValue' to 'OtherPts'.
  * @li 2007-01-03 DRC File version 12.4. Added 'DateDraw' to Calendar.
  *                    Changed 'CRCDMeta' to 'CRCDMeta2'.

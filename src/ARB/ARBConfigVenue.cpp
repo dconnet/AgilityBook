@@ -72,6 +72,7 @@ ARBConfigVenue::ARBConfigVenue()
 	, m_LongName()
 	, m_URL()
 	, m_Desc()
+	, m_idxIcon(-1)
 	, m_Titles()
 	, m_Divisions()
 	, m_Events()
@@ -84,6 +85,7 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	, m_LongName(rhs.m_LongName)
 	, m_URL(rhs.m_URL)
 	, m_Desc(rhs.m_Desc)
+	, m_idxIcon(rhs.m_idxIcon)
 	, m_Titles()
 	, m_Divisions()
 	, m_Events()
@@ -112,6 +114,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		m_LongName = rhs.m_LongName;
 		m_URL = rhs.m_URL;
 		m_Desc = rhs.m_Desc;
+		m_idxIcon = rhs.m_idxIcon;
 		rhs.m_Titles.Clone(m_Titles);
 		rhs.m_Divisions.Clone(m_Divisions);
 		rhs.m_Events.Clone(m_Events);
@@ -126,6 +129,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_LongName == rhs.m_LongName
 		&& m_URL == rhs.m_URL
 		&& m_Desc == rhs.m_Desc
+		&& m_idxIcon == rhs.m_idxIcon
 		&& m_Titles == rhs.m_Titles
 		&& m_Divisions == rhs.m_Divisions
 		&& m_Events == rhs.m_Events
@@ -138,6 +142,7 @@ void ARBConfigVenue::clear()
 	m_LongName.erase();
 	m_URL.erase();
 	m_Desc.erase();
+	m_idxIcon = -1;
 	m_Titles.clear();
 	m_Divisions.clear();
 	m_Events.clear();
@@ -161,6 +166,8 @@ bool ARBConfigVenue::Load(
 	inTree.GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	// URL added in v12.3
 	inTree.GetAttrib(ATTRIB_VENUE_URL, m_URL);
+	// Icon index added in 12.5
+	inTree.GetAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
@@ -254,6 +261,7 @@ bool ARBConfigVenue::Save(Element& ioTree) const
 		venue.AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	if (0 < m_URL.length())
 		venue.AddAttrib(ATTRIB_VENUE_URL, m_URL);
+	venue.AddAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	if (0 < m_Desc.length())
 	{
 		Element& desc = venue.AddElement(TREE_VENUE_DESC);
@@ -302,6 +310,12 @@ bool ARBConfigVenue::Update(
 	{
 		bChanges = true;
 		SetDesc(inVenueNew->GetDesc());
+	}
+
+	if (GetIcon() != inVenueNew->GetIcon())
+	{
+		bChanges = true;
+		SetIcon(inVenueNew->GetIcon());
 	}
 
 	// If the order is different, we will fall into this...

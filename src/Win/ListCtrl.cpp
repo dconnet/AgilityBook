@@ -137,7 +137,7 @@ CHeaderCtrl2::CHeaderCtrl2()
 	: fBufferSize(300)
 	, fpBuffer(NULL)
 {
-	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
+	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
 	CWinApp* app = AfxGetApp();
 	m_sortAscending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_UP));
 	m_sortDescending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_DOWN));

@@ -376,6 +376,9 @@
 				RelativePath="..\..\Win\HyperLink.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\IconList.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\ListBox.cpp">
 			</File>
 			<File
@@ -678,6 +681,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\HyperLink.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\IconList.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\ListBox.h">

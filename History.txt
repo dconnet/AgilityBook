@@ -1,7 +1,8 @@
 4/22/2007: v1.9.0.12 <in development>
-- Bumped file version to 12.5
-  - Added 'defValue' to 'OtherPts'.
+- Bumped file version to 12.5, Configuration v18:
   - Added 'Accom', 'Confirm' to 'Calendar'.
+  - Added 'defValue' to 'OtherPts'.
+  - Added 'icon' to 'Venue'
 - New features / Enhancements:
   - Changed to static runtime libraries.
   - Changed Points view to accumulate runs by event type, not by scoring

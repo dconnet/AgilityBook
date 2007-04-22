@@ -1191,7 +1191,7 @@ CAgilityBookViewRuns::CAgilityBookViewRuns()
 	, m_SortColumn(m_Columns)
 {
 	SetAutoDelete(true);
-	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
+	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
 	CWinApp* app = AfxGetApp();
 	m_imgCourse = m_ImageList.Add(app->LoadIcon(IDI_AGILITYBOOKDOC));
 	m_imgMap = m_ImageList.Add(app->LoadIcon(IDI_CRCD));

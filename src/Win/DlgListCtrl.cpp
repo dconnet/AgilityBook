@@ -576,7 +576,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 	m_ctrlList.SetExtendedStyle(m_ctrlList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlCreateTrial.ShowWindow(SW_HIDE);
 
-	m_ImageList.Create(16, 16, ILC_MASK, 6, 0);
+	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 6, 0);
 	CWinApp* app = AfxGetApp();
 	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
 	m_imgTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_TENTATIVE));

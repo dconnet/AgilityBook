@@ -1047,6 +1047,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\IconList.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\ListBox.h"
 				>
 			</File>
@@ -1139,6 +1143,18 @@
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest"
 			>
+			<File
+				RelativePath="..\..\Win\res\AccConfirm.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\AccNone.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\AccTodo.ico"
+				>
+			</File>
 			<File
 				RelativePath="..\..\Win\res\AgilityBook.ico"
 				>
@@ -1938,6 +1954,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\HyperLink.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\IconList.cpp"
 				>
 			</File>
 			<File

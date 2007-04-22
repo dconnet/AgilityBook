@@ -166,6 +166,14 @@ public:
 	{
 		m_Desc = inDesc;
 	}
+	short GetIcon() const
+	{
+		return m_idxIcon;
+	}
+	void SetIcon(short icon)
+	{
+		m_idxIcon = icon;
+	}
 	ARBConfigTitleList const& GetTitles() const
 	{
 		return m_Titles;
@@ -204,6 +212,7 @@ private:
 	ARBString m_LongName;
 	ARBString m_URL;
 	ARBString m_Desc;
+	short m_idxIcon;
 	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;
 	ARBConfigEventList m_Events;

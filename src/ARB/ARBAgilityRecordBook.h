@@ -36,7 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
- * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar'.
+ * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC Added 'defValue'.
  * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
  * @li 2006-07-02 DRC Added 'subtractTF'.
@@ -170,6 +170,7 @@
 #define ATTRIB_VENUE_NAME					_T("Name")
 #define ATTRIB_VENUE_LONGNAME				_T("LongName")
 #define ATTRIB_VENUE_URL					_T("URL")
+#define ATTRIB_VENUE_ICON					_T("icon")
 #define ATTRIB_MULTIQ_NAME					_T("Name")
 #define ATTRIB_MULTIQ_SHORTNAME				_T("SName")
 #define ATTRIB_MULTIQ_VALID_FROM			_T("ValidFrom")
