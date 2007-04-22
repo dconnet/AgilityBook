@@ -113,6 +113,7 @@ public:
 	ARBCalendarPtr GetCalendar()	{return m_pCal;}
 	CString OnNeedText(int iCol) const;
 	int GetIcon() const;
+	int GetStateIcon() const;
 
 	COLORREF GetTextColor(
 			int iCol,
@@ -196,6 +197,27 @@ int CAgilityBookViewCalendarData::GetIcon() const
 			idxImage = m_pView->m_imgEnteredTentative;
 		else
 			idxImage = m_pView->m_imgEntered;
+		break;
+	}
+	return idxImage;
+}
+
+int CAgilityBookViewCalendarData::GetStateIcon() const
+{
+	int idxImage = -1;
+	if (ARBCalendar::eNot == m_pCal->GetEntered())
+		idxImage = m_pView->m_imgStateEmpty;
+	else switch (m_pCal->GetAccommodation())
+	{
+	default:
+	case ARBCalendar::eAccomNone:
+		idxImage = m_pView->m_imgStateNone;
+		break;
+	case ARBCalendar::eAccomTodo:
+		idxImage = m_pView->m_imgStateTodo;
+		break;
+	case ARBCalendar::eAccomConfirmed:
+		idxImage = m_pView->m_imgStateConfirm;
 		break;
 	}
 	return idxImage;
@@ -551,6 +573,11 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	m_imgPlanTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN_TENTATIVE));
 	m_imgEntered = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED));
 	m_imgEnteredTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
+	m_ImageStateList.Create(16, 16, ILC_MASK, 4, 0);
+	m_imgStateEmpty = m_ImageStateList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
+	m_imgStateNone = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_NONE));
+	m_imgStateTodo = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_TODO));
+	m_imgStateConfirm = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_CONFIRMED));
 }
 #pragma warning (pop)
 
@@ -575,6 +602,7 @@ int CAgilityBookViewCalendarList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	GetListCtrl().SetImageList(&m_ImageStateList, LVSIL_STATE);
 	GetListCtrl().SetImageList(&m_ImageList, LVSIL_SMALL);
 	return 0;
 }
@@ -636,7 +664,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	CRect rLineFull; // Entire line (of data)
 	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineFull, LVIR_BOUNDS);
-	CRect rLineIcon; // Icon area
+	CRect rLineIcon; // Icon area - only normal icon, NOT state area also
 	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineIcon, LVIR_ICON);
 	CRect rLineLabel; // Area of first column
 	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineLabel, LVIR_LABEL);
@@ -664,15 +692,17 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CImageList* pImageStateList = GetListCtrl().GetImageList(LVSIL_STATE);
 	if (pImageStateList)
 	{
+		CRect rIconPos2(rIconPos);
+		rIconPos2.OffsetRect(-16, 0); // The state icon is beside the normal
 		int idxImage = (LVIS_STATEIMAGEMASK & state) >> 12;
 		if (0 < idxImage)
 		{
 #if _MSC_VER < 1300
 			ImageList_DrawEx(pImageStateList->m_hImageList, idxImage,
-				dc.GetSafeHdc(), rIconPos.left, rIconPos.top, szIcon.cx, szIcon.cy,
+				dc.GetSafeHdc(), rIconPos2.left, rIconPos2.top, szIcon.cx, szIcon.cy,
 				CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
 #else
-			pImageStateList->DrawEx(&dc, idxImage, rIconPos.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
+			pImageStateList->DrawEx(&dc, idxImage, rIconPos2.TopLeft(), szIcon, CLR_NONE, CLR_DEFAULT, ILD_NORMAL);
 #endif
 		}
 	}
@@ -890,15 +920,15 @@ void CAgilityBookViewCalendarList::LoadData()
 			if (bSuppress)
 				continue;
 		}
+		CAgilityBookViewCalendarData* pData = new CAgilityBookViewCalendarData(this, pCal);
 		LV_ITEM item;
-		item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+		item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM | LVIF_STATE;
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.iItem = i;
 		item.iSubItem = 0;
 		item.iImage = I_IMAGECALLBACK;
-		item.lParam = reinterpret_cast<LPARAM>(
-			static_cast<CListData*>(
-				new CAgilityBookViewCalendarData(this, pCal)));
+		item.state = INDEXTOSTATEIMAGEMASK(pData->GetStateIcon());
+		item.lParam = reinterpret_cast<LPARAM>(static_cast<CListData*>(pData));
 		int index = GetListCtrl().InsertItem(&item);
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows

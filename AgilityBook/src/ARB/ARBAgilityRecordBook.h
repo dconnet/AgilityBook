@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar'.
  * @li 2007-02-27 DRC Added 'defValue'.
  * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
  * @li 2006-07-02 DRC Added 'subtractTF'.
@@ -150,6 +151,8 @@
 #define ATTRIB_CAL_CLUB						_T("Club")
 #define ATTRIB_CAL_VENUE					_T("Venue")
 #define ATTRIB_CAL_ENTERED					_T("Entered")
+#define ATTRIB_CAL_ACCOMMODATION			_T("Acc")
+#define ATTRIB_CAL_CONFIRMATION				_T("Confirm")
 #define ATTRIB_CAL_NOTE						_T("Note")
 #define ATTRIB_TRAINING_DATE				_T("Date")
 #define ATTRIB_TRAINING_NAME				_T("Name")
@@ -315,6 +318,7 @@
 #define VALID_VALUES			_T("Valid values: ")
 #define VALID_VALUES_BOOL		_T("Valid values: 'y', 'n'")
 #define VALID_VALUES_ENTRY		_T("Valid values: 'E', 'P', 'N'")
+#define VALID_VALUES_ACCOM		_T("Valid values: 'N', 'T', 'C'")
 #define VALID_VALUES_OTHERPT	_T("Valid values: 'All', 'AllByEvent', 'Level', 'LevelByEvent'")
 #define VALID_VALUES_SCORE		_T("Valid values: 'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'")
 #define CALENDAR_TENTATIVE		_T("Information is tentative.")

@@ -92,6 +92,13 @@ public:
 		ePlanning	///< Not entered, but planning on it soon
 	} eEntry;
 
+	typedef enum
+	{
+		eAccomNone,		///< No accommodations
+		eAccomTodo,		///< Need a place to stay
+		eAccomConfirmed	///< Reservations have been made
+	} eAccommodations;
+
 	/**
 	 *
 	 */
@@ -310,6 +317,22 @@ public:
 	{
 		m_eEntered = inEnter;
 	}
+	eAccommodations GetAccommodation()
+	{
+		return m_eAccommodations;
+	}
+	void SetAccommodation(eAccommodations inAccom)
+	{
+		m_eAccommodations = inAccom;
+	}
+	ARBString const& GetConfirmation() const
+	{
+		return m_Confirmation;
+	}
+	void SetConfirmation(ARBString const& inConfirmation)
+	{
+		m_Confirmation = inConfirmation;
+	}
 	ARBString const& GetNote() const
 	{
 		return m_Note;
@@ -330,6 +353,8 @@ private:
 	ARBString m_Club;
 	ARBString m_Venue;
 	eEntry m_eEntered;
+	eAccommodations m_eAccommodations;
+	ARBString m_Confirmation;
 	ARBString m_Note;
 };
 

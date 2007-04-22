@@ -76,6 +76,9 @@ private:
 	BOOL	m_bDrawingUnknown;
 	CTime	m_dateCloses;
 	BOOL	m_bClosingUnknown;
+	int		m_Accommodation;
+	CString	m_Confirmation;
+	CEdit	m_ctrlConfirmation;
 	CString	m_Notes;
 	//}}AFX_DATA
 	ARBCalendarPtr m_pCal;
@@ -103,6 +106,7 @@ protected:
 	afx_msg void OnDateOpensUnknown();
 	afx_msg void OnDateDrawsUnknown();
 	afx_msg void OnDateClosesUnknown();
+	afx_msg void OnAccommodation();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

@@ -84,6 +84,7 @@ CDlgCalendar::CDlgCalendar(
 	m_bDrawingUnknown = TRUE;
 	m_dateCloses = CTime::GetCurrentTime();
 	m_bClosingUnknown = TRUE;
+	m_Accommodation = 0;
 	m_Notes = m_pCal->GetNote().c_str();
 	//}}AFX_DATA_INIT
 	if (m_pCal->GetStartDate().IsValid())
@@ -120,6 +121,18 @@ CDlgCalendar::CDlgCalendar(
 		m_Entered = 2;
 		break;
 	}
+	switch (m_pCal->GetAccommodation())
+	{
+	default:
+		break;
+	case ARBCalendar::eAccomTodo:
+		m_Accommodation = 1;
+		break;
+	case ARBCalendar::eAccomConfirmed:
+		m_Accommodation = 2;
+		m_Confirmation = m_pCal->GetConfirmation().c_str();
+		break;
+	}
 	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
@@ -147,6 +160,9 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CAL_DATE_DRAWS_UNKNOWN, m_bDrawingUnknown);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_CLOSES, m_dateCloses);
 	DDX_Check(pDX, IDC_CAL_DATE_CLOSES_UNKNOWN, m_bClosingUnknown);
+	DDX_Radio(pDX, IDC_CAL_ACCOM_NONE, m_Accommodation);
+	DDX_Text(pDX, IDC_CAL_ACCOM_CONFIRMATION, m_Confirmation);
+	DDX_Control(pDX, IDC_CAL_ACCOM_CONFIRMATION, m_ctrlConfirmation);
 	DDX_Text(pDX, IDC_CAL_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
@@ -163,6 +179,9 @@ BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_DRAWS_UNKNOWN, OnDateDrawsUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
+	ON_BN_CLICKED(IDC_CAL_ACCOM_NONE, OnAccommodation)
+	ON_BN_CLICKED(IDC_CAL_ACCOM_NEEDED, OnAccommodation)
+	ON_BN_CLICKED(IDC_CAL_ACCOM_MADE, OnAccommodation)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -250,6 +269,9 @@ BOOL CDlgCalendar::OnInitDialog()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
 	else
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
+
+	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -350,6 +372,12 @@ void CDlgCalendar::OnDateClosesUnknown()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 }
 
+void CDlgCalendar::OnAccommodation()
+{
+	UpdateData(TRUE);
+	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
+}
+
 void CDlgCalendar::OnOK()
 {
 	if (!UpdateData(TRUE))
@@ -430,6 +458,19 @@ void CDlgCalendar::OnOK()
 	m_pCal->SetOpeningDate(openingDate);
 	m_pCal->SetDrawDate(drawingDate);
 	m_pCal->SetClosingDate(closingDate);
+	switch (m_Accommodation)
+	{
+	default:
+		m_pCal->SetAccommodation(ARBCalendar::eAccomNone);
+		break;
+	case 1:
+		m_pCal->SetAccommodation(ARBCalendar::eAccomTodo);
+		break;
+	case 2:
+		m_pCal->SetAccommodation(ARBCalendar::eAccomConfirmed);
+		m_pCal->SetConfirmation((LPCTSTR)m_Confirmation);
+		break;
+	}
 	m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pCal->SetNote((LPCTSTR)m_Notes);
 

@@ -658,7 +658,8 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		CRect rect(rWeekDays);
 		rect.InflateRect(-1, -yInc); // Internal working area
 		ARBDate weekStart = FirstDayOfWeek(m_First);
-		for (int iDay = 0; iDay < 7; ++iDay)
+		int iDay;
+		for (iDay = 0; iDay < 7; ++iDay)
 		{
 			t = CTime((weekStart + iDay).GetDate());
 			str = t.Format(_T("%A"));
@@ -696,7 +697,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			rect.OffsetRect(0, iWeek * height);
 			rect.InflateRect(-1, -yInc); // Internal working area
 			rect.InflateRect(-DAY_TEXT_INSET, -yInc * DAY_TEXT_INSET);
-			for (int iDay = 0; iDay < 7; ++iDay)
+			for (iDay = 0; iDay < 7; ++iDay)
 			{
 				// Change background of non-current month days
 				if (!pDC->IsPrinting() && m_Current == day)
@@ -823,7 +824,7 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		pDC->SelectStockObject(NULL_BRUSH);
 		pDC->Rectangle(rClient);
 		// Vertical lines
-		for (int iDay = 1; iDay < 7; ++iDay)
+		for (iDay = 1; iDay < 7; ++iDay)
 		{
 			pDC->MoveTo(rClient.left + iDay * width, rWeekDays.top);
 			pDC->LineTo(rClient.left + iDay * width, rClient.bottom);
