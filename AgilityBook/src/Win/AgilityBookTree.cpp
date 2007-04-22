@@ -305,6 +305,7 @@ void CAgilityBookTree::OnInitialUpdate()
 {
 	m_bSuppressSelect = true;
 	CTreeView::OnInitialUpdate();
+	GetTreeCtrl().SetImageList(&m_ImageList, TVSIL_NORMAL);
 	m_bSuppressSelect = false;
 	if (0 == GetDocument()->GetDogs().size())
 		PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
@@ -623,9 +624,9 @@ HTREEITEM CAgilityBookTree::InsertDog(
 		return NULL;
 
 	CAgilityBookTreeDataDog* pDataDog = new CAgilityBookTreeDataDog(this, pDog);
-	HTREEITEM hItem = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_PARAM,
+	HTREEITEM hItem = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM,
 		LPSTR_TEXTCALLBACK,
-		0, 0, //image, selectedimage
+		I_IMAGECALLBACK, I_IMAGECALLBACK, //image, selectedimage
 		0, 0, //state, statemask
 		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataDog)),
 		TVI_ROOT,
@@ -654,9 +655,9 @@ HTREEITEM CAgilityBookTree::InsertTrial(
 		return NULL;
 
 	CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, pTrial);
-	HTREEITEM hTrial = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_PARAM,
+	HTREEITEM hTrial = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM,
 		LPSTR_TEXTCALLBACK,
-		0, 0, //image, selectedimage
+		I_IMAGECALLBACK, I_IMAGECALLBACK, //image, selectedimage
 		0, 0, //state, statemask
 		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataTrial)),
 		hParent,
@@ -681,9 +682,9 @@ HTREEITEM CAgilityBookTree::InsertRun(
 		return NULL;
 
 	CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, pRun);
-	HTREEITEM hRun = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_PARAM,
+	HTREEITEM hRun = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM,
 		LPSTR_TEXTCALLBACK,
-		0, 0, //image, selectedimage
+		I_IMAGECALLBACK, I_IMAGECALLBACK, //image, selectedimage
 		0, 0, //state, statemask
 		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataRun)),
 		hParent,
@@ -926,12 +927,25 @@ void CAgilityBookTree::OnGetdispinfo(
 		LRESULT* pResult)
 {
 	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
+	CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(pDispInfo->item.lParam);
 	if (pDispInfo->item.mask & TVIF_TEXT)
 	{
-		CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(pDispInfo->item.lParam);
-		CString str = pData->OnNeedText();
-		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
-		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+		if (pData)
+		{
+			CString str = pData->OnNeedText();
+			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+		}
+	}
+	if (pDispInfo->item.mask & TVIF_IMAGE)
+	{
+		if (pData)
+			pDispInfo->item.iImage = pData->GetIcon();
+	}
+	if (pDispInfo->item.mask & TVIF_SELECTEDIMAGE)
+	{
+		if (pData)
+			pDispInfo->item.iSelectedImage = pData->GetIcon();
 	}
 	*pResult = 0;
 }

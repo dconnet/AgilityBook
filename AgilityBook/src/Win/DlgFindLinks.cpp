@@ -153,7 +153,7 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_Session(_T("findLink"))
 {
 	m_sortLinks.Initialize(nColLinkInfo);
-	m_ImageList.Create(16, 16, ILC_MASK, 2, 0);
+	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
 	CWinApp* app = AfxGetApp();
 	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
 	m_imgOk = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN));

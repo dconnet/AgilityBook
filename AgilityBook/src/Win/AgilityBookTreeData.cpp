@@ -760,6 +760,11 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 	return str;
 }
 
+int CAgilityBookTreeDataDog::GetIcon() const
+{
+	return m_pTree->GetImageList().Dog();
+}
+
 void CAgilityBookTreeDataDog::Properties()
 {
 	CAgilityBookDoc* pDoc = m_pTree->GetDocument();
@@ -775,7 +780,23 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 		ARBDogTrialPtr pTrial)
 	: CAgilityBookTreeData(pTree)
 	, m_pTrial(pTrial)
+	, m_idxIcon(-1)
 {
+	m_idxIcon = m_pTree->GetImageList().Trial();
+	if (m_pTrial)
+	{
+		ARBDogClubPtr pClub;
+		if (m_pTrial->GetClubs().GetPrimaryClub(&pClub))
+		{
+			ARBConfigVenuePtr pVenue;
+			if (pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
+			{
+				short idx = pVenue->GetIcon();
+				if (0 <= idx)
+					m_idxIcon = idx;
+			}
+		}
+	}
 }
 
 CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
@@ -1047,6 +1068,11 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 		}
 	}
 	return str;
+}
+
+int CAgilityBookTreeDataTrial::GetIcon() const
+{
+	return m_idxIcon;
 }
 
 void CAgilityBookTreeDataTrial::Properties()
@@ -1324,6 +1350,11 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 		}
 	}
 	return str;
+}
+
+int CAgilityBookTreeDataRun::GetIcon() const
+{
+	return m_pTree->GetImageList().Run();
 }
 
 void CAgilityBookTreeDataRun::Properties()

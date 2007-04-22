@@ -123,6 +123,7 @@ public:
 			UINT id,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
 	virtual CString OnNeedText() const = 0;
+	virtual int GetIcon() const = 0;
 
 	virtual void Properties() = 0;
 
@@ -181,6 +182,7 @@ public:
 			UINT id,
 			bool* bTreeSelectionSet);
 	virtual CString OnNeedText() const;
+	virtual int GetIcon() const;
 
 	virtual void Properties();
 
@@ -236,11 +238,13 @@ public:
 			UINT id,
 			bool* bTreeSelectionSet);
 	virtual CString OnNeedText() const;
+	virtual int GetIcon() const;
 
 	virtual void Properties();
 
 private:
 	ARBDogTrialPtr m_pTrial;
+	int m_idxIcon;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -295,6 +299,7 @@ public:
 			UINT id,
 			bool* bTreeSelectionSet);
 	virtual CString OnNeedText() const;
+	virtual int GetIcon() const;
 
 	virtual void Properties();
 

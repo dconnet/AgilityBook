@@ -49,6 +49,7 @@
 #include "ARBBase.h"
 #include "CommonView.h"
 #include "DlgFind.h"
+#include "IconList.h"
 class CAgilityBookDoc;
 class CAgilityBookTree;
 class CAgilityBookTreeData;
@@ -82,6 +83,7 @@ protected: // create from serialization only
 // Attributes
 public:
 	CAgilityBookDoc* GetDocument() const;
+	CIconList const& GetImageList() const	{return m_ImageList;}
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
 	CAgilityBookTreeData* FindData(
 			HTREEITEM hItem,
@@ -158,6 +160,7 @@ private:
 			CTreePrintData *pData,
 			HTREEITEM hItem,
 			int indent) const;
+	CIconList m_ImageList;
 	std::vector<int> m_Columns[3];
 	bool m_bReset;
 	bool m_bSuppressSelect;

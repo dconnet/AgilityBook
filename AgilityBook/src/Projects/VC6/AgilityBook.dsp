@@ -406,6 +406,10 @@ SOURCE=..\..\Win\HyperLink.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\IconList.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\ListBox.cpp
 # End Source File
 # Begin Source File
@@ -796,6 +800,10 @@ SOURCE=..\..\Win\FilterOptions.h
 # Begin Source File
 
 SOURCE=..\..\Win\HyperLink.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\IconList.h
 # End Source File
 # Begin Source File
 
