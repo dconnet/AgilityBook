@@ -1,6 +1,10 @@
-devenv AgilityBook.sln /clean "Unicode Release|Win32"
-devenv AgilityBook.sln /clean "Release|Win32"
-devenv AgilityBook.sln /clean "Unicode Release|x64"
+cd ..\..\..\bin
+rd /q/s VC6
+rd /q/s VC7
+rd /q/s VC8
+rd /q/s VC8x64
+call CopyDLLs.bat
+cd ..\src\Projects\VC8
 
 devenv AgilityBook.sln /out bldWin32.txt /build "Unicode Release|Win32"
 devenv AgilityBook.sln /out bldWin98.txt /build "Release|Win32"

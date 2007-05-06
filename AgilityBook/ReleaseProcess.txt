@@ -23,8 +23,6 @@ Run Doxygen and fix any warnings/errors it reports.
   - doxygen AgilityBook.dox
 
 Do a full rebuild and verify it.
-- Delete all directories under 'bin' (except svn)
-- Run 'CopyDLLs.bat'
 - cd src\Projects\VC8
 - BuildAll.bat
   - Note: Ignore errors from ParseResourceHeader during x64 build. It
@@ -35,7 +33,7 @@ Do a full rebuild and verify it.
   - Edit Misc\Installations\InstallGUIDs.csv to note actual release
     (GenMSI.py will auto-update it)
     - Note: WiX isn't generating shortcuts properly yet. So the guid needs
-      to be copied from the vdproj files.
+      to be copied from the vdproj files [no auto-update]
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository
