@@ -23,15 +23,19 @@ Run Doxygen and fix any warnings/errors it reports.
   - doxygen AgilityBook.dox
 
 Do a full rebuild and verify it.
+- Delete all directories under 'bin' (except svn)
+- Run 'CopyDLLs.bat'
 - cd src\Projects\VC8
 - BuildAll.bat
   - Note: Ignore errors from ParseResourceHeader during x64 build. It
     obviously won't run on a 32bit system.
-  - Create AgilityBook_n_n_n_n-win.zip from msi in bin\VC8\Unicode Release
-  - Create AgilityBook_n_n_n_n-win98.zip from msi in bin\VC8\Release
-  - Create AgilityBook_n_n_n_n-x64.zip from msi in bin\VC8x64\Unicode Release
+  - Create AgilityBook_n_n_n_n-win.zip from files in bin\VC8\Unicode Release\Setup
+  - Create AgilityBook_n_n_n_n-win98.zip from files in bin\VC8\Release\Setup
+  - Create AgilityBook_n_n_n_n-x64.zip from files in bin\VC8x64\Unicode Release\Setup
   - Edit Misc\Installations\InstallGUIDs.csv to note actual release
-    (BuildAll.bat/GenMSI.py will auto-update it)
+    (GenMSI.py will auto-update it)
+    - Note: WiX isn't generating shortcuts properly yet. So the guid needs
+      to be copied from the vdproj files.
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository
@@ -45,6 +49,9 @@ Create the files to be distributed (make sure you archive them too)
 - Create AgilityBook_n_n_n_n-ALT.zip (VC8 AgilityBook.exe/.chm/arbzlib.dll)
   Copy this to distrib\vN.N.N.N\
 - Clean out all build artifacts.
+  - Everything under bin/...
+  - Output files in Project/...
+  - .aps/etc in src
 - AgilityBook_n_n_n_n-src.zip
   - Remove all source control files from zip (just being clean)
   - Copy this to distrib\vN.N.N.N\
@@ -90,6 +97,7 @@ Backup:
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO
 - Update History.txt
+[Note: Once WiX is working, this section goes away]
 - Update src/Projects/Win32/VC8/AgilityBookSetup.vdproj
   - Open in VS8, select the setup project on the solutions tab, switch
     to the properties tab and update 'Version'. Say Yes to changing the
@@ -97,6 +105,8 @@ Prepare for next release:
     number later, do not change the ProductCode again)
   - Update src/Projects/Win32/VC8/AgilityBookSetup98/64.vdproj
     - Manually copy the GUIDs from AgilityBookSetup.vdproj
+  [Note: need to verify, but I don't think this is a problem anymore since
+  runtime is statically linked, and setup projects are separated]
   - Note: Often VERSION.DLL gets unmarked for exclusion - to prevent, do the
     following after changing the version:
     - Rebuild everything (will show version.dll as excluded).

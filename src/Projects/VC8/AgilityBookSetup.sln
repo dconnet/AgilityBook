@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityRecordBook", "AgilityRecordBook.vdproj", "{BDCA52A4-5478-4403-B1DF-CA8C40695A28}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityRecordBook", "AgilityRecordBook98.vdproj", "{BA902D02-73BB-45BF-B5FE-11FA61BDD189}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AgilityRecordBook", "AgilityRecordBook64.vdproj", "{527E0942-C669-4416-A84E-3345680F9671}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDCA52A4-5478-4403-B1DF-CA8C40695A28}.Release|Default.ActiveCfg = Release
+		{BDCA52A4-5478-4403-B1DF-CA8C40695A28}.Release|Default.Build.0 = Release
+		{BA902D02-73BB-45BF-B5FE-11FA61BDD189}.Release|Default.ActiveCfg = Release
+		{BA902D02-73BB-45BF-B5FE-11FA61BDD189}.Release|Default.Build.0 = Release
+		{527E0942-C669-4416-A84E-3345680F9671}.Release|Default.ActiveCfg = Release
+		{527E0942-C669-4416-A84E-3345680F9671}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
