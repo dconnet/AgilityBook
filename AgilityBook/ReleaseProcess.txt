@@ -43,6 +43,7 @@ Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup of AgilityBook.exe to \AgilityBook\test\[vc6/vc7/vc8/vc8x64]
   Currently, I only archive vc8/x64 - the exe's that are released to the wild.
+  [if support DLLs change, see readme.txt in 'test' directory]
 - Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
 - Create AgilityBook_n_n_n_n-ALT.zip (VC8 AgilityBook.exe/.chm/arbzlib.dll)
   Copy this to distrib\vN.N.N.N\
