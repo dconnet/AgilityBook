@@ -5,7 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2007-04-22 DRC Added 'icon' to 'Venue'.
+2007-04-22 DRC Added 'icon' to 'Venue'. (v18)
 2007-02-27 DRC Configuration version 18.
                Added 'defValue' to 'OtherPts'. Minor wording change in AAC/AGDC
 2006-10-02 DRC Configuration version 17. Updated USDAA Performance Pairs for

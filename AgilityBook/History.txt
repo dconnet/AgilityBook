@@ -1,4 +1,4 @@
-4/22/2007: v1.9.0.12 <in development>
+5/5/2007: v1.9.0.12
 - Bumped file version to 12.5, Configuration v18:
   - Added 'Accom', 'Confirm' to 'Calendar'.
   - Added 'defValue' to 'OtherPts'.

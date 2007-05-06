@@ -108,7 +108,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t<Property Id='ARPCOMMENTS'>Track all your agility records in one convenient place.</Property>"
 	print >>setup, "\t\t<Property Id='ARPURLINFOABOUT'>http://www.agilityrecordbook.com</Property>"
 	print >>setup, "\t\t<Property Id='ALLUSERS'>2</Property>"
-	print >>setup, "\t\t<Property Id='ARPPRODUCTICON'>AgilityBook.ico</Property>"
+	print >>setup, "\t\t<Property Id='ARPPRODUCTICON'>AgilBook.ico</Property>"
 	print >>setup, ""
 	if code32 == code:
 		print >>setup, "\t\t<Condition Message='This application only runs on Windows NT and above'>VersionNT</Condition>"
@@ -142,7 +142,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, ""
 	print >>setup, "\t\t\t\t\t<Component Id='FilesMain'"
 	print >>setup, "\t\t\t\t\t\t\tGuid='C65F9350-B7D5-4A1B-8C28-333D8928D8AA'>"
-	print >>setup, "\t\t\t\t\t\t<File DiskId='1' Id='AgilityBook'"
+	print >>setup, "\t\t\t\t\t\t<File DiskId='1' Id='AgilityBookEXE'"
 	print >>setup, "\t\t\t\t\t\t\t\tVital='yes'"
 	print >>setup, "\t\t\t\t\t\t\t\tName='AgilBook.exe'"
 	print >>setup, "\t\t\t\t\t\t\t\tLongName='AgilityBook.exe'"
@@ -152,7 +152,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t\t\t\t\t\t\t\tName='AgilBook'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tLongName='Agility Record Book'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tWorkingDirectory='INSTALLDIR'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilityBook.ico'"
+	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilBook.exe'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tIconIndex='0'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tAdvertise='yes'/>"
 	print >>setup, "\t\t\t\t\t\t\t<Shortcut Id='DesktopShortcut'"
@@ -160,7 +160,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t\t\t\t\t\t\t\tName='AgilBook'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tLongName='Agility Record Book'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tWorkingDirectory='INSTALLDIR'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilityBook.ico'"
+	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilBook.exe'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tIconIndex='0'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tAdvertise='yes'/>"
 	print >>setup, "\t\t\t\t\t\t</File>"
@@ -173,7 +173,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t\t\t\t\t\t\t\tName='Help'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tLongName='Agility Record Book Help'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tWorkingDirectory='INSTALLDIR'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilityBook.ico'"
+	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilBook.chm'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tIconIndex='0'"
 	print >>setup, "\t\t\t\t\t\t\t\t\tAdvertise='yes'/>"
 	print >>setup, "\t\t\t\t\t\t</File>"
@@ -216,7 +216,7 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t\t\t</Directory>"
 	print >>setup, "\t\t\t</Directory>"
 	print >>setup, ""
-	print >>setup, "\t\t\t<Directory Id='ProgramMenuFolder' Name='PMFolder'>"
+	print >>setup, "\t\t\t<Directory Id='ProgramMenuFolder' Name='PMenu'>"
 	print >>setup, "\t\t\t\t<Directory Id='ProgramMenuDir' Name='ARB' LongName='Agility Record Book' />"
 	print >>setup, "\t\t\t</Directory>"
 	print >>setup, ""
@@ -236,7 +236,9 @@ def genmsi(productId, version, code, tidy):
 	print >>setup, "\t\t<UIRef Id='WixUI_InstallDir' />"
 	print >>setup, "\t\t<UIRef Id='WixUI_ErrorProgressText' />"
 	print >>setup, ""
-	print >>setup, "\t\t<Icon Id='AgilityBook.ico' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
+	print >>setup, "\t\t<Icon Id='AgilBook.exe' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
+	print >>setup, "\t\t<Icon Id='AgilBook.ico' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
+	print >>setup, "\t\t<Icon Id='AgilBook.chm' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
 	print >>setup, "\t</Product>"
 	print >>setup, "</Wix>"
 	setup.close()
@@ -303,6 +305,6 @@ def main():
 			installs = installs + ",win64"
 		if b98ok:
 			installs = installs + ",win98"
-		print >>codes, "pre " + version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
+		print >>codes, "v" + version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
 
 main()
