@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2007-05-08 DRC Fixed bug when deleting a method.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -661,6 +662,11 @@ void CDlgConfigEvent::OnBnClickedDelete()
 	int idxMethod = m_ctrlMethods.GetCurSel();
 	if (LB_ERR != idxMethod)
 	{
+		if (m_idxMethod == idxMethod)
+		{
+			m_idxMethod = -1;
+			m_ctrlMethods.SetCurSel(-1);
+		}
 		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
