@@ -2342,9 +2342,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
@@ -2427,9 +2425,7 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
@@ -2444,9 +2440,7 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
@@ -2460,9 +2454,7 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 				<Scoring Division="Standard" Level="*" ValidTo="2006-1-1" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
@@ -2477,9 +2469,7 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 			</Event>
 			<Event Name="Gaters">
@@ -2490,9 +2480,7 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="5" Points="5"/>
 					<LifeTime Faults="0" Points="10"/>
-					<LifeTime Faults="5" Points="5"/>
 				</Scoring>
 			</Event>
 		</Venue>
