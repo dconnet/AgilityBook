@@ -55,6 +55,7 @@ BEGIN
     "#pragma code_page(1252)\r\n"
     "#include ""res\\AgilityBook.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""         // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -2884,6 +2885,7 @@ LANGUAGE 9, 1
 #pragma code_page(1252)
 #include "res\AgilityBook.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
+#include "afxprint.rc"         // Standard components
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
