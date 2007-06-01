@@ -5,7 +5,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2007-05-08 DRC Configuration version 19.
+2007-06-01 DRC Configuration version 19.
                Added Hoopers/Gaters to NADAC
 2007-04-22 DRC Added 'icon' to 'Venue'. (v18)
 2007-02-27 DRC Configuration version 18.
@@ -91,6 +91,10 @@ Revision History:
 		<Action NewName="NADAC Medal" OldName="Gold Medal" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="NATCH" OldName="O-NATCH" Venue="NADAC" Verb="RenameTitle"/>
 		<Action NewName="NATCH" OldName="S-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Platinum Speed Star" OldName="Platinum Medal" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Platinum Versatility Speed Star" OldName="Platinum Versatility Medal" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Purple Achievement Cup" OldName="Purple Medal" Venue="NADAC" Verb="RenameTitle"/>
+		<Action NewName="Purple Versatility Achievement Cup" OldName="Purple Versatility Medal" Venue="NADAC" Verb="RenameTitle"/>
 		<Action OldName="NAS" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="NJS" Venue="NADAC" Verb="DeleteTitle"/>
 		<Action OldName="NGS" Venue="NADAC" Verb="DeleteTitle"/>
@@ -2108,6 +2112,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Novice Touch N Go Certificate" Name="TG-N">30 points</Titles>
 			<Titles LongName="Novice Weavers Certificate" Name="WV-N">30 points</Titles>
 			<Titles LongName="Novice Hoopers Certificate" Name="HP-N">30 points</Titles>
+			<Titles LongName="Novice Gaters Certificate" Name="GT-N">30 points</Titles>
 			<Titles LongName="Novice Agility Certificate Outstanding Performance" Name="O-NAC">100 points</Titles>
 			<Titles LongName="Novice Chances Certificate Outstanding Performance" Name="O-NCC" ValidFrom="2004-1-1">60 points</Titles>
 			<Titles LongName="Novice Gamblers Certificate Outstanding Performance" Name="O-NGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
@@ -2116,6 +2121,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Novice Touch N Go Certificate Outstanding Performance" Name="O-TG-N">60 points</Titles>
 			<Titles LongName="Novice Weavers Certificate Outstanding Performance" Name="O-WV-N">60 points</Titles>
 			<Titles LongName="Novice Hoopers Certificate Outstanding Performance" Name="O-HP-N">60 points</Titles>
+			<Titles LongName="Novice Gaters Certificate Outstanding Performance" Name="O-GT-N">60 points</Titles>
 			<Titles LongName="Novice Agility Certificate Superior Performance" Name="S-NAC">200 points</Titles>
 			<Titles LongName="Novice Chances Certificate Superior Performance" Name="S-NCC" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Novice Gamblers Certificate Superior Performance" Name="S-NGC" ValidTo="2006-1-1">100 points</Titles>
@@ -2124,6 +2130,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Novice Touch N Go Certificate Superior Performance" Name="S-TG-N">100 points</Titles>
 			<Titles LongName="Novice Weavers Certificate Superior Performance" Name="S-WV-N">100 points</Titles>
 			<Titles LongName="Novice Hoopers Certificate Superior Performance" Name="S-HP-N">100 points</Titles>
+			<Titles LongName="Novice Gaters Certificate Superior Performance" Name="S-GT-N">100 points</Titles>
 			<Titles LongName="Open Agility Certificate" Name="OAC">30 points</Titles>
 			<Titles LongName="Open Chances Certificate" Name="OCC" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Open Gamblers Certificate" Name="OGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
@@ -2132,6 +2139,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Open Touch N Go Certificate" Name="TG-O">30 points</Titles>
 			<Titles LongName="Open Weavers Certificate" Name="WV-O">30 points</Titles>
 			<Titles LongName="Open Hoopers Certificate" Name="HP-O">30 points</Titles>
+			<Titles LongName="Open Gaters Certificate" Name="GT-O">30 points</Titles>
 			<Titles LongName="Open Agility Certificate Outstanding Performance" Name="O-OAC">100 points</Titles>
 			<Titles LongName="Open Chances Certificate Outstanding Performance" Name="O-OCC" ValidFrom="2004-1-1">60 points</Titles>
 			<Titles LongName="Open Gamblers Certificate Outstanding Performance" Name="O-OGC" ValidTo="2006-1-1">60 points (50 pts before 8/1/2005)</Titles>
@@ -2140,6 +2148,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Open Touch N Go Certificate Outstanding Performance" Name="O-TG-O">60 points</Titles>
 			<Titles LongName="Open Weavers Certificate Outstanding Performance" Name="O-WV-O">60 points</Titles>
 			<Titles LongName="Open Hoopers Certificate Outstanding Performance" Name="O-HP-O">60 points</Titles>
+			<Titles LongName="Open Gaters Certificate Outstanding Performance" Name="O-GT-O">60 points</Titles>
 			<Titles LongName="Open Agility Certificate Superior Performance" Name="S-OAC">200 points</Titles>
 			<Titles LongName="Open Chances Certificate Superior Performance" Name="S-OCC" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Open Gamblers Certificate Superior Performance" Name="S-OGC" ValidTo="2006-1-1">100 points</Titles>
@@ -2148,6 +2157,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Open Touch N Go Certificate Superior Performance" Name="S-TG-O">100 points</Titles>
 			<Titles LongName="Open Weavers Certificate Superior Performance" Name="S-WV-O">100 points</Titles>
 			<Titles LongName="Open Hoopers Certificate Superior Performance" Name="S-HP-O">100 points</Titles>
+			<Titles LongName="Open Gaters Certificate Superior Performance" Name="S-GT-O">100 points</Titles>
 			<Titles LongName="Elite Agility Certificate" Name="EAC">30 points</Titles>
 			<Titles LongName="Elite Chances Certificate" Name="ECC" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Elite Gamblers Certificate" Name="EGC" ValidTo="2006-1-1">30 points (20 pts before 8/1/2005)</Titles>
@@ -2156,6 +2166,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Touch N Go Certificate" Name="TG-E">30 points</Titles>
 			<Titles LongName="Elite Weavers Certificate" Name="WV-E">30 points</Titles>
 			<Titles LongName="Elite Hoopers Certificate" Name="HP-E">30 points</Titles>
+			<Titles LongName="Elite Gaters Certificate" Name="GT-E">30 points</Titles>
 			<Titles LongName="Elite Agility Certificate Outstanding Performance" Name="O-EAC">200 points</Titles>
 			<Titles LongName="Elite Chances Certificate Outstanding Performance" Name="O-ECC" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Elite Gamblers Certificate Outstanding Performance" Name="O-EGC" ValidTo="2006-1-1">100 points</Titles>
@@ -2164,6 +2175,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Touch N Go Certificate Outstanding Performance" Name="O-TG-E">100 points</Titles>
 			<Titles LongName="Elite Weavers Certificate Outstanding Performance" Name="O-WV-E">100 points</Titles>
 			<Titles LongName="Elite Hoopers Certificate Outstanding Performance" Name="O-HP-E">100 points</Titles>
+			<Titles LongName="Elite Gaters Certificate Outstanding Performance" Name="O-GT-E">100 points</Titles>
 			<Titles LongName="Elite Agility Certificate Superior Performance" Name="S-EAC">400 points</Titles>
 			<Titles LongName="Elite Chances Certificate Superior Performance" Name="S-ECC" ValidFrom="2004-1-1">200 points</Titles>
 			<Titles LongName="Elite Gamblers Certificate Superior Performance" Name="S-EGC" ValidTo="2006-1-1">200 points</Titles>
@@ -2172,6 +2184,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Touch N Go Certificate Superior Performance" Name="S-TG-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Certificate Superior Performance" Name="S-WV-E">200 points</Titles>
 			<Titles LongName="Elite Hoopers Certificate Superior Performance" Name="S-HP-E">200 points</Titles>
+			<Titles LongName="Elite Gaters Certificate Superior Performance" Name="S-GT-E">200 points</Titles>
 			<Titles LongName="Elite Agility Skilled" Name="EAS">30 points</Titles>
 			<Titles LongName="Elite Chances Skilled" Name="ECS" ValidFrom="2004-1-1">30 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled" Name="EGS" ValidTo="2006-1-1">30 points</Titles>
@@ -2180,6 +2193,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Touch N Go Skilled" Name="TGS-E">30 points</Titles>
 			<Titles LongName="Elite Weavers Skilled" Name="WVS-E">30 points</Titles>
 			<Titles LongName="Elite Hoopers Skilled" Name="HPS-E">30 points</Titles>
+			<Titles LongName="Elite Gaters Skilled" Name="GTS-E">30 points</Titles>
 			<Titles LongName="Elite Agility Skilled Outstanding Performance" Name="O-EAS">200 points</Titles>
 			<Titles LongName="Elite Chances Skilled Outstanding Performance" Name="O-ECS" ValidFrom="2004-1-1">100 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled Outstanding Performance" Name="O-EGS" ValidTo="2006-1-1">100 points</Titles>
@@ -2188,6 +2202,7 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Touch N Go Skilled Outstanding Performance" Name="O-TGS-E">100 points</Titles>
 			<Titles LongName="Elite Weavers Skilled Outstanding Performance" Name="O-WVS-E">100 points</Titles>
 			<Titles LongName="Elite Hoopers Skilled Outstanding Performance" Name="O-HPS-E">100 points</Titles>
+			<Titles LongName="Elite Gaters Skilled Outstanding Performance" Name="O-GTS-E">100 points</Titles>
 			<Titles LongName="Elite Agility Skilled Superior Performance" Name="S-EAS">400 points</Titles>
 			<Titles LongName="Elite Chances Skilled Superior Performance" Name="S-ECS" ValidFrom="2004-1-1">200 points</Titles>
 			<Titles LongName="Elite Gamblers Skilled Superior Performance" Name="S-EGS" ValidTo="2006-1-1">200 points</Titles>
@@ -2196,18 +2211,20 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 			<Titles LongName="Elite Touch N Go Skilled Superior Performance" Name="S-TGS-E">200 points</Titles>
 			<Titles LongName="Elite Weavers Skilled Superior Performance" Name="S-WVS-E">200 points</Titles>
 			<Titles LongName="Elite Hoopers Skilled Superior Performance" Name="S-HPS-E">200 points</Titles>
+			<Titles LongName="Elite Gaters Skilled Superior Performance" Name="S-GTS-E">200 points</Titles>
 			<Titles LongName="NADAC Agility Trial Champion" Multiple="2" Name="NATCH" Prefix="y">Proficient Elite points: 230 Regular, 130 Chances, 130 Jumpers. Each subsequent NATCH requires an additional 200 Regular, 100 Chances, 100 Jumpers points.</Titles>
 			<Titles LongName="NADAC Versatility Champion" Multiple="2" Name="Vers-NATCH">Proficient Elite points: 230 Regular, 130 of each other class. Each subsequent Vers-NATCH requires an additional 200 Regular, 100 of each other class.</Titles>
 			<Titles LongName="Platinum NATCH" Name="Platinum NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
-			<Titles LongName="Platinum Versatility NADAC" Name="Platinum Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
+			<Titles LongName="Platinum Versatility NATCH" Name="Platinum Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
 			<Titles LongName="Purple NATCH" Name="Purple NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
-			<Titles LongName="Purple Versatility NADAC" Name="Purple Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Purple Versatility NATCH" Name="Purple Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
 			<Titles LongName="NADAC Medal" Multiple="2" Name="NADAC Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts Chances</Titles>
 			<Titles LongName="Versatility Medal" Multiple="2" Name="Vers-Medal">Skilled Elite: 230 Regular, 130 of each other class. Each subsequent Vers-Medal requires an additional 200 Regular, 100 of each other class.</Titles>
-			<Titles LongName="Platinum Medal" Name="Platinum Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
-			<Titles LongName="Platinum Versatility Medal" Name="Platinum Versatility Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
-			<Titles LongName="Purple Medal" Name="Purple Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
-			<Titles LongName="Purple Versatility Medal" Name="Purple Versatility Medal">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Platinum Speed Star" Name="Platinum Speed Star">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
+			<Titles LongName="Platinum Versatility Speed Star" Name="Platinum Versatility Speed Star">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
+			<Titles LongName="Purple Achievement Cup" Name="Purple Achievement Cup">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Purple Versatility Achievement Cup" Name="Purple Versatility Achievement Cup">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+			<Titles LongName="Master Of Distance, Speed, QUality And Directionals" Name="MOD SQUAD">3 qualifying rounds in Elite Regular, Elite Jumpers, Elite Chances, Elite Tunnelers, Elite Touch N Go, and Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
 			<Titles LongName="Novice Triple Superior Award" Name="Triple Superior-Novice">Proficient/Skilled: Superior Performance titles in Novice Regular, Jumpers, Chances.</Titles>
 			<Titles LongName="Open Triple Superior Award" Name="Triple Superior-Open">Proficient/Skilled: Superior Performance titles in Open Regular, Jumpers, Chances.</Titles>
 			<Titles LongName="Elite Triple Superior Award" Name="Triple Superior-Elite">Proficient: Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
@@ -2474,7 +2491,6 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Hoopers">
-				<Desc>Double Shot: Enter as 2 separate runs.</Desc>
 				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
@@ -2485,7 +2501,6 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Gaters">
-				<Desc>Double Shot: Enter as 2 separate runs.</Desc>
 				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
 					<TitlePoints Faults="0" Points="10"/>
 					<LifeTime Faults="0" Points="10"/>
