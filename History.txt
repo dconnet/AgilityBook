@@ -1,6 +1,7 @@
-5/16/2007: v1.9.1.12 <in development>
+6/1/2007: v1.9.1.12 <in development>
 - Bumped Configuration v19:
-  - Added Hoopers/Gaters to NADAC.
+  - Added Hoopers/Gaters to NADAC. Updated Platinum/Purple title names.
+    (Still need to update titles properly)
 - Bug fixes
   - Fixed bug when deleting a method in the scoring configuration.
   - Fixed a problem when attempting to print any view other than Points.
