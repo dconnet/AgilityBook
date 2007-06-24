@@ -1058,12 +1058,6 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 					bNeedSpace = true;
 				}
 				break;
-			case IO_TREE_TRIAL_VERIFIED:
-				if (m_pTrial->IsVerified())
-					str += _T("*");
-				else
-					str += _T(" ");
-				break;
 			}
 		}
 	}

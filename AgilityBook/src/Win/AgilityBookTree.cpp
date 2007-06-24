@@ -268,6 +268,11 @@ CAgilityBookTree::CAgilityBookTree()
 	, m_Callback(this)
 	, m_pDog()
 {
+	m_ImageListStates.Create(16, 16, ILC_MASK | ILC_COLOR32, 3, 1);
+	// Note: Position 0 cannot be used.
+	m_ImageListStates.Add(AfxGetApp()->LoadIcon(IDI_EMPTY));
+	m_idxEmpty = m_ImageListStates.Add(AfxGetApp()->LoadIcon(IDI_EMPTY));
+	m_idxChecked = m_ImageListStates.Add(AfxGetApp()->LoadIcon(IDI_CHECKMARK));
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
@@ -306,6 +311,7 @@ void CAgilityBookTree::OnInitialUpdate()
 	m_bSuppressSelect = true;
 	CTreeView::OnInitialUpdate();
 	GetTreeCtrl().SetImageList(&m_ImageList, TVSIL_NORMAL);
+	GetTreeCtrl().SetImageList(&m_ImageListStates, TVSIL_STATE);
 	m_bSuppressSelect = false;
 	if (0 == GetDocument()->GetDogs().size())
 		PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
@@ -624,9 +630,12 @@ HTREEITEM CAgilityBookTree::InsertDog(
 		return NULL;
 
 	CAgilityBookTreeDataDog* pDataDog = new CAgilityBookTreeDataDog(this, pDog);
-	HTREEITEM hItem = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM,
+	int mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	int idxImage = pDataDog->GetIcon();
+
+	HTREEITEM hItem = GetTreeCtrl().InsertItem(mask,
 		LPSTR_TEXTCALLBACK,
-		I_IMAGECALLBACK, I_IMAGECALLBACK, //image, selectedimage
+		idxImage, idxImage, //image, selectedimage
 		0, 0, //state, statemask
 		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataDog)),
 		TVI_ROOT,
@@ -655,10 +664,15 @@ HTREEITEM CAgilityBookTree::InsertTrial(
 		return NULL;
 
 	CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, pTrial);
-	HTREEITEM hTrial = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM,
+	int mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM | TVIF_STATE;
+	int idxImage = pDataTrial->GetIcon();
+	int state = pDataTrial->GetTrial()->IsVerified() ?
+		INDEXTOSTATEIMAGEMASK(m_idxChecked) : INDEXTOSTATEIMAGEMASK(m_idxEmpty);
+
+	HTREEITEM hTrial = GetTreeCtrl().InsertItem(mask,
 		LPSTR_TEXTCALLBACK,
-		I_IMAGECALLBACK, I_IMAGECALLBACK, //image, selectedimage
-		0, 0, //state, statemask
+		idxImage, idxImage, //image, selectedimage
+		state, TVIS_STATEIMAGEMASK, //state, statemask
 		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataTrial)),
 		hParent,
 		TVI_LAST);
@@ -682,9 +696,12 @@ HTREEITEM CAgilityBookTree::InsertRun(
 		return NULL;
 
 	CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, pRun);
-	HTREEITEM hRun = GetTreeCtrl().InsertItem(TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM,
+	int mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	int idxImage = pDataRun->GetIcon();
+
+	HTREEITEM hRun = GetTreeCtrl().InsertItem(mask,
 		LPSTR_TEXTCALLBACK,
-		I_IMAGECALLBACK, I_IMAGECALLBACK, //image, selectedimage
+		idxImage, idxImage, //image, selectedimage
 		0, 0, //state, statemask
 		reinterpret_cast<LPARAM>(static_cast<CListData*>(pDataRun)),
 		hParent,
@@ -936,16 +953,6 @@ void CAgilityBookTree::OnGetdispinfo(
 			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}
-	}
-	if (pDispInfo->item.mask & TVIF_IMAGE)
-	{
-		if (pData)
-			pDispInfo->item.iImage = pData->GetIcon();
-	}
-	if (pDispInfo->item.mask & TVIF_SELECTEDIMAGE)
-	{
-		if (pData)
-			pDispInfo->item.iSelectedImage = pData->GetIcon();
 	}
 	*pResult = 0;
 }

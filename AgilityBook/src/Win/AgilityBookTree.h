@@ -161,6 +161,9 @@ private:
 			HTREEITEM hItem,
 			int indent) const;
 	CIconList m_ImageList;
+	CImageList m_ImageListStates;
+	int m_idxEmpty;
+	int m_idxChecked;
 	std::vector<int> m_Columns[3];
 	bool m_bReset;
 	bool m_bSuppressSelect;

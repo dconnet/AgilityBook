@@ -383,9 +383,6 @@ static struct
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
 		IO_LOG_SUBNAME,
 		true, LVCFMT_LEFT, IDS_COL_SUBNAME},
-	{CAgilityBookOptions::eViewTree,
-		IO_TREE_TRIAL_VERIFIED,
-		false, 0, IDS_COL_VERIFIED},
 	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
 		IO_RUNS_SPEED,
 		false, LVCFMT_LEFT, IDS_COL_SPEED},
@@ -649,7 +646,6 @@ static int const idxViewTreeDog[] = {
 static int const idxViewTreeTrial[] = {
 	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,		IO_TREE_TRIAL_CLUB,
 	IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,	IO_TREE_TRIAL_NOTES,
-	IO_TREE_TRIAL_VERIFIED,
 -1};
 static int const idxViewTreeRun[] = {
 	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,

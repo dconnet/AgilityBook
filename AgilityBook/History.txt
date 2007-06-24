@@ -1,7 +1,14 @@
-6/1/2007: v1.9.1.12 <in development>
-- Bumped Configuration v19:
+unknown: v1.9.2.12 <in development>
+- Bumped Configuration v20:
   - Added Hoopers/Gaters to NADAC. Updated Platinum/Purple title names.
     (Still need to update titles properly)
+
+6/24/2007: v1.9.1.12 <in development>
+- Bumped Configuration v19:
+  - Updated NADAC to correct points in Skilled categories.
+    Corrected Long name on 2 NATCH titles.
+- New features / Enhancements:
+  - Moved the trial verified '*' symbol from the text into an icon.
 - Bug fixes
   - Fixed bug when deleting a method in the scoring configuration.
   - Fixed a problem when attempting to print any view other than Points.
