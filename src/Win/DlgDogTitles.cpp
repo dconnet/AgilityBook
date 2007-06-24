@@ -168,7 +168,7 @@ CDlgDogTitles::CDlgDogTitles(
 	m_sortTitles.Initialize(nColTitleInfo);
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 3, 0);
 	CWinApp* app = AfxGetApp();
-	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
+	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_EMPTY));
 	m_imgTitled = m_ImageList.Add(app->LoadIcon(IDI_TITLE));
 	m_imgTitledReceived = m_ImageList.Add(app->LoadIcon(IDI_TITLE2));
 	int imgHidden = m_ImageList.Add(app->LoadIcon(IDI_HIDDEN));

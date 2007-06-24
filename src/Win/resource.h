@@ -14,9 +14,9 @@
 #define IDR_CALENDAR                    136
 #define IDR_TRAINING                    137
 #define IDI_AGILITYBOOKDOC              150
-#define IDI_CALENDAR_EMPTY              151
-#define IDI_CALENDAR_TENTATIVE          152
-#define IDI_CALENDAR_PLAN               153
+#define IDI_EMPTY                       151
+#define IDI_QUESTIONMARK                152
+#define IDI_CHECKMARK                   153
 #define IDI_CALENDAR_PLAN_TENTATIVE     154
 #define IDI_CALENDAR_ENTERED            155
 #define IDI_CALENDAR_ENTERED_TENTATIVE  156
@@ -641,7 +641,6 @@
 #define IDS_COL_URL                     4202
 #define IDS_COL_VENUE                   4210
 #define IDS_COL_VENUES                  4211
-#define IDS_COL_VERIFIED                4212
 #define IDS_COL_YARDS                   4220
 #define IDS_COL_YPS                     4221
 #define IDS_SYSERR_MEMORY               4300

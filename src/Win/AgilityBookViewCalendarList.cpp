@@ -567,14 +567,14 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	SetAutoDelete(true);
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 6, 0);
 	CWinApp* app = AfxGetApp();
-	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
-	m_imgTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_TENTATIVE));
-	m_imgPlan = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN));
+	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_EMPTY));
+	m_imgTentative = m_ImageList.Add(app->LoadIcon(IDI_QUESTIONMARK));
+	m_imgPlan = m_ImageList.Add(app->LoadIcon(IDI_CHECKMARK));
 	m_imgPlanTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN_TENTATIVE));
 	m_imgEntered = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED));
 	m_imgEnteredTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
 	m_ImageStateList.Create(16, 16, ILC_MASK | ILC_COLOR32, 4, 0);
-	m_imgStateEmpty = m_ImageStateList.Add(app->LoadIcon(IDI_CALENDAR_EMPTY));
+	m_imgStateEmpty = m_ImageStateList.Add(app->LoadIcon(IDI_EMPTY));
 	m_imgStateNone = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_NONE));
 	m_imgStateTodo = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_TODO));
 	m_imgStateConfirm = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_CONFIRMED));

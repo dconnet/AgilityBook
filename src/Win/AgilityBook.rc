@@ -72,9 +72,9 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\AgilityBook.ico"
 IDI_AGILITYBOOKDOC      ICON                    "res\\AgilityBook.ico"
-IDI_CALENDAR_EMPTY      ICON                    "res\\CalEmpty.ico"
-IDI_CALENDAR_TENTATIVE  ICON                    "res\\CalTentative.ico"
-IDI_CALENDAR_PLAN       ICON                    "res\\CalPlan.ico"
+IDI_EMPTY               ICON                    "res\\CalEmpty.ico"
+IDI_QUESTIONMARK        ICON                    "res\\CalTentative.ico"
+IDI_CHECKMARK           ICON                    "res\\CalPlan.ico"
 IDI_CALENDAR_PLAN_TENTATIVE ICON                    "res\\CalPlanTentative.ico"
 IDI_CALENDAR_ENTERED    ICON                    "res\\CalEntered.ico"
 IDI_CALENDAR_ENTERED_TENTATIVE ICON                    "res\\CalEnteredTentative.ico"
@@ -1448,7 +1448,7 @@ END
 IDD_ASSIGN_COLUMNS DIALOGEX 0, 0, 350, 300
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Import/Export Columns"
+CAPTION "Assign Columns"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "List2",IDC_ASSIGN_TYPE,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,270,50,0,HIDC_ASSIGN_TYPE
@@ -2329,7 +2329,6 @@ STRINGTABLE
 BEGIN
     IDS_COL_VENUE           "Venue"
     IDS_COL_VENUES          "Venues"
-    IDS_COL_VERIFIED        "Verified"
     IDS_COL_YARDS           "Yards"
     IDS_COL_YPS             "YPS"
 END
