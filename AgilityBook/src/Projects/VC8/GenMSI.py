@@ -302,7 +302,7 @@ def main():
 		if b32ok:
 			installs = installs + ",win32"
 		if b64ok:
-			installs = installs + ",win64"
+			installs = installs + ",x64"
 		if b98ok:
 			installs = installs + ",win98"
 		print >>codes, "v" + version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
