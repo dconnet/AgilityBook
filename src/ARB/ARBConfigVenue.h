@@ -302,6 +302,7 @@ public:
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inVenue Venue title is in.
 	 * @param inName Complete name of title to find.
+	 * @param bShowInstance Show '1' in title name for 1st title.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @param outTitle Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
@@ -309,6 +310,7 @@ public:
 	bool FindTitleCompleteName(
 			ARBString const& inVenue,
 			ARBString const& inName,
+			bool bShowInstance,
 			bool bAbbrevFirst = true,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
  * @li 2006-05-08 DRC Changing the date unselected a title.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -141,7 +142,7 @@ void CDlgTitle::FillTitles()
 		{
 			ARBConfigTitlePtr pTitle = (*iterTitle);
 			// Suppress any titles we already have.
-			if (1 < pTitle->GetMultiple()
+			if (0 < pTitle->GetMultiple()
 			|| 0 == m_Titles.NumTitlesInUse(pVenue->GetName(), pTitle->GetName())
 			|| (m_pTitle && m_pTitle->GetRawName() == pTitle->GetName()))
 			{
@@ -312,7 +313,7 @@ void CDlgTitle::OnOK()
 	title->SetDate(date);
 	title->SetHidden(bHidden);
 	title->SetVenue(pVenue->GetName());
-	title->SetName(pTitle->GetName(), instance);
+	title->SetName(pTitle->GetName(), instance, pTitle->GetMultiple() == 1);
 	title->SetReceived(bReceived);
 	if (m_pTitle)
 	{

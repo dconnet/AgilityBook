@@ -310,7 +310,7 @@ ARBString ARBConfig::GetTitleCompleteName(
 		return _T("");
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
-		return pTitle->GetCompleteName(inTitle->GetInstance(), bAbbrevFirst);
+		return pTitle->GetCompleteName(inTitle->GetInstance(), inTitle->ShowInstanceOne(), bAbbrevFirst);
 	else
 		return inTitle->GetGenericName();
 }

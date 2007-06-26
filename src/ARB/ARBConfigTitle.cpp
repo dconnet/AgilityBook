@@ -191,15 +191,16 @@ bool ARBConfigTitle::Save(Element& ioTree) const
 
 ARBString ARBConfigTitle::GetCompleteName(
 		short inInstance,
+		bool bShowInstance,
 		bool bAbbrevFirst,
 		bool bAddDates) const
 {
 	ARBString buffer;
-	if (1 < inInstance)
+	if (bShowInstance || 1 < inInstance)
 	{
 		// Keep sync'd with ARBDogTitle
 		ARBostringstream str;
-		str << _T(" ") << inInstance;
+		str << inInstance;
 		buffer = str.str();
 	}
 	// Special formatting used in configuration dialogs.
@@ -264,6 +265,7 @@ bool ARBConfigTitleList::Load(
 bool ARBConfigTitleList::FindTitleCompleteName(
 		ARBString const& inName,
 		short inInstance,
+		bool bShowInstance,
 		bool bAbbrevFirst,
 		ARBConfigTitlePtr* outTitle) const
 {
@@ -271,7 +273,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 		outTitle->reset();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
-		if ((*iter)->GetCompleteName(inInstance, bAbbrevFirst) == inName)
+		if ((*iter)->GetCompleteName(inInstance, bShowInstance, bAbbrevFirst) == inName)
 		{
 			if (outTitle)
 				*outTitle = *iter;

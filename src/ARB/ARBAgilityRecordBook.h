@@ -36,6 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
+ * @li 2007-06-25 DRC Added 'show' to 'Title'.
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC Added 'defValue'.
  * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
@@ -241,6 +242,7 @@
 #define ATTRIB_TITLE_VENUE					_T("Venue")
 #define ATTRIB_TITLE_NAME					_T("Name")
 #define ATTRIB_TITLE_DATE					_T("Date")
+#define ATTRIB_TITLE_INSTANCE_SHOW			_T("show")
 #define ATTRIB_TITLE_INSTANCE				_T("instance")
 #define ATTRIB_TITLE_RECEIVED				_T("isReceived")
 #define ATTRIB_TITLE_HIDDEN					_T("isHidden")

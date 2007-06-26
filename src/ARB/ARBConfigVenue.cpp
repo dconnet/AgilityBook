@@ -574,6 +574,7 @@ bool ARBConfigVenueList::VerifyEvent(
 bool ARBConfigVenueList::FindTitleCompleteName(
 		ARBString const& inVenue,
 		ARBString const& inName,
+		bool bShowInstance,
 		bool bAbbrevFirst,
 		ARBConfigTitlePtr* outTitle) const
 {
@@ -584,7 +585,7 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 	if (FindVenue(inVenue, &pVenue))
 	{
 		ARBConfigTitlePtr pTitle;
-		if (pVenue->GetTitles().FindTitleCompleteName(inName, bAbbrevFirst, true, &pTitle))
+		if (pVenue->GetTitles().FindTitleCompleteName(inName, bShowInstance, bAbbrevFirst, true, &pTitle))
 		{
 			if (outTitle)
 				*outTitle = pTitle;

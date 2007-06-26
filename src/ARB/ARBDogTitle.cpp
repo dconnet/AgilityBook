@@ -68,6 +68,7 @@ ARBDogTitle::ARBDogTitle()
 	: m_Date()
 	, m_Venue()
 	, m_Name()
+	, m_bShowInstanceOne(false)
 	, m_Instance(1)
 	, m_bReceived(false)
 	, m_bHidden(false)
@@ -78,6 +79,7 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 	: m_Date(rhs.m_Date)
 	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
+	, m_bShowInstanceOne(rhs.m_bShowInstanceOne)
 	, m_Instance(rhs.m_Instance)
 	, m_bReceived(rhs.m_bReceived)
 	, m_bHidden(rhs.m_bHidden)
@@ -100,6 +102,7 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 		m_Date = rhs.m_Date;
 		m_Venue = rhs.m_Venue;
 		m_Name = rhs.m_Name;
+		m_bShowInstanceOne = rhs.m_bShowInstanceOne;
 		m_Instance = rhs.m_Instance;
 		m_bReceived = rhs.m_bReceived;
 		m_bHidden = rhs.m_bHidden;
@@ -112,6 +115,7 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 	return m_Date == rhs.m_Date
 		&& m_Venue == rhs.m_Venue
 		&& m_Name == rhs.m_Name
+		&& m_bShowInstanceOne == rhs.m_bShowInstanceOne
 		&& m_Instance == rhs.m_Instance
 		&& m_bReceived == rhs.m_bReceived
 		&& m_bHidden == rhs.m_bHidden;
@@ -121,11 +125,11 @@ ARBString ARBDogTitle::GetGenericName() const
 {
 	ARBString name;
 	name = m_Name;
-	if (1 < m_Instance)
+	if (m_bShowInstanceOne || 1 < m_Instance)
 	{
 		ARBostringstream buffer;
 		// Keep sync'd with ARBConfigTitle
-		buffer << _T(" ") << m_Instance;
+		buffer << m_Instance;
 		name += buffer.str();
 	}
 	return name;
@@ -201,7 +205,10 @@ bool ARBDogTitle::Load(
 		}
 	}
 
+	inTree.GetAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
 	inTree.GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
+	if (1 < m_Instance)
+		m_bShowInstanceOne = true;
 
 	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
@@ -214,8 +221,8 @@ bool ARBDogTitle::Load(
 		// This fixes a bug in v1.0.0.8 where the 'nice' name was being written
 		// as the title name.
 		ARBConfigTitlePtr pTitle;
-		if (!inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, true, &pTitle))
-			inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, false, &pTitle);
+		if (!inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, m_bShowInstanceOne, true, &pTitle))
+			inConfig.GetVenues().FindTitleCompleteName(m_Venue, m_Name, m_bShowInstanceOne, false, &pTitle);
 		if (pTitle)
 		{
 			m_Name = pTitle->GetName();
@@ -250,6 +257,8 @@ bool ARBDogTitle::Save(Element& ioTree) const
 	}
 	title.AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
 	title.AddAttrib(ATTRIB_TITLE_NAME, m_Name);
+	if (1 == m_Instance && m_bShowInstanceOne)
+		title.AddAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
 	if (1 < m_Instance)
 		title.AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
 	if (m_bReceived) // Default is no.
@@ -315,17 +324,23 @@ bool ARBDogTitleList::FindTitle(
 {
 	if (outTitle)
 		outTitle->reset();
+	ARBDogTitlePtr pTitle;
+	int maxInstance = -1;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetVenue() == inVenue
 		&& (*iter)->GetRawName() == inTitle)
 		{
-			if (outTitle)
-				*outTitle = *iter;
-			return true;
+			if (maxInstance < (*iter)->GetInstance())
+			{
+				maxInstance = (*iter)->GetInstance();
+				pTitle = *iter;
+			}
 		}
 	}
-	return false;
+	if (outTitle)
+		*outTitle = pTitle;
+	return -1 < maxInstance;
 }
 
 short ARBDogTitleList::FindMaxInstance(
@@ -402,7 +417,7 @@ int ARBDogTitleList::RenameTitle(
 		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inOldTitle)
 		{
 			++count;
-			(*iter)->SetName(inNewTitle, (*iter)->GetInstance());
+			(*iter)->SetName(inNewTitle, (*iter)->GetInstance(), (*iter)->ShowInstanceOne());
 		}
 	}
 	return count;

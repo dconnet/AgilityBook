@@ -204,7 +204,7 @@ CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 
 CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
-	return m_Title->GetCompleteName(-1, true, true).c_str();
+	return m_Title->GetCompleteName(-1, false, true, true).c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////

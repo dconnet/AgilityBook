@@ -144,12 +144,14 @@ public:
 	/**
 	 * Get the complete name (name + nicename).
 	 * @param inInstance Instance of the title to allow for multiple.
+	 * @param bShowInstance Show '1' in title name for 1st title.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
 	ARBString GetCompleteName(
 			short inInstance = 0,
+			bool bShowInstance = false,
 			bool bAbbrevFirst = true,
 			bool bAddDates = false) const;
 
@@ -251,6 +253,7 @@ public:
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inName Complete name of title to find.
 	 * @param inInstance Instance of the title to allow for multiple.
+	 * @param bShowInstance Show '1' in title name for 1st title.
 	 * @param bAbbrevFirst Name is before or after Longname.
 	 * @param outTitle Pointer to found object, NULL if not found.
 	 * @return Whether the object was found.
@@ -258,6 +261,7 @@ public:
 	bool FindTitleCompleteName(
 			ARBString const& inName,
 			short inInstance,
+			bool bShowInstance,
 			bool bAbbrevFirst = true,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 

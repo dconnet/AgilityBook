@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-05 DRC Created.
@@ -60,7 +61,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	, m_LongName(inTitle->GetLongName().c_str())
 	, m_Desc(inTitle->GetDescription().c_str())
 	, m_Prefix(inTitle->GetPrefix() ? TRUE : FALSE)
-	, m_AllowMany(1 < inTitle->GetMultiple() ? TRUE : FALSE)
+	, m_AllowMany(0 < inTitle->GetMultiple() ? TRUE : FALSE)
 	, m_Multiple(inTitle->GetMultiple())
 	, m_DateFrom(inTitle->GetValidFrom().IsValid() ? TRUE : FALSE)
 	, m_DateTo(inTitle->GetValidTo().IsValid() ? TRUE : FALSE)
