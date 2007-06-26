@@ -872,13 +872,13 @@ void CAgilityBookDoc::OnCopyTitles()
 						{
 							if (!preTitles2.empty())
 								preTitles2 += ' ';
-							preTitles2 += (*iTitle)->GetName();
+							preTitles2 += pTitle->GetGenericName();
 						}
 						else
 						{
 							if (!postTitles2.empty())
 								postTitles2 += ' ';
-							postTitles2 += (*iTitle)->GetName();
+							postTitles2 += pTitle->GetGenericName();
 						}
 					}
 				}

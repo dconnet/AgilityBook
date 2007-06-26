@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2007-06-25 DRC File version 12.6. Added 'show' to 'Title'.
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC File version 12.5. Added 'defValue' to 'OtherPts'.
  * @li 2007-01-03 DRC File version 12.4. Added 'DateDraw' to Calendar.
@@ -105,7 +106,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 5);
+	static ARBVersion const curVersion(12, 6);
 	return curVersion;
 }
 
@@ -493,6 +494,16 @@ bool ARBAgilityRecordBook::Update(
 		++iterDog)
 	{
 		ARBDogPtr pDog = *iterDog;
+		// Fix titles to deal with showing '1' on a recurring title.
+		for (ARBDogTitleList::iterator iterTitle = pDog->GetTitles().begin();
+			iterTitle != pDog->GetTitles().end();
+			++iterTitle)
+		{
+			ARBDogTitlePtr pTitle = *iterTitle;
+			ARBConfigTitlePtr pConfigTitle;
+			if (m_Config.GetVenues().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pConfigTitle))
+				pTitle->SetName(pTitle->GetRawName(), pTitle->GetInstance(), pConfigTitle->GetMultiple() == 1);
+		}
 		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();
 			++iterTrial)

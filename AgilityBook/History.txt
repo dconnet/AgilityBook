@@ -1,7 +1,10 @@
-6/24/2007: v1.9.2.12 <in development>
+6/25/2007: v1.9.2.12 <in development>
 - Bumped Configuration v20:
+  - Fixed AKC FAST titles for ExB, FTC. Added Preferred versions.
   - Added Hoopers/Gaters to NADAC. Updated Platinum/Purple title names.
     (Still need to update titles properly)
+- New features / Enhancements:
+  - Add support for repeating titles starting from '1'.
 
 6/24/2007: v1.9.1.12
 - Bumped Configuration v19:

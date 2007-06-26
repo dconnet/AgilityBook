@@ -134,16 +134,24 @@ public:
 	{
 		return m_Name;
 	}
+	bool ShowInstanceOne() const
+	{
+		return m_bShowInstanceOne;
+	}
 	short GetInstance() const
 	{
 		return m_Instance;
 	}
 	void SetName(
 			ARBString const& inName,
-			short inInstance)
+			short inInstance,
+			bool bShowInstance)
 	{
 		m_Name = inName;
 		m_Instance = inInstance;
+		m_bShowInstanceOne = false;
+		if (1 == m_Instance && bShowInstance)
+			m_bShowInstanceOne = true;
 	}
 	bool GetReceived() const
 	{
@@ -169,6 +177,7 @@ private:
 	ARBDate m_Date;
 	ARBString m_Venue;
 	ARBString m_Name;
+	bool m_bShowInstanceOne;
 	short m_Instance;
 	bool m_bReceived;
 	bool m_bHidden;

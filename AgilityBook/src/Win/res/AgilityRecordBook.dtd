@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2007-06-25 DRC File version 12.6
+               Added 'show' to 'Title'.
 2007-04-22 DRC File version 12.5
                Added 'defValue' to 'OtherPts'.
                Added reservations to calendar.
@@ -422,6 +424,7 @@ depends on how a venue has been defined above.
 		Date CDATA #IMPLIED
 		Venue CDATA #REQUIRED
 		Name CDATA #REQUIRED
+		show (y|n) 'n'
 		instance CDATA #IMPLIED
 		isReceived (y|n) 'n'
 		isHidden (y|n) 'n'
