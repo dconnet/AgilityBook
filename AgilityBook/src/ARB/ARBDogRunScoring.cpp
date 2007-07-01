@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
  * @li 2007-02-14 DRC Fixed a problem in YPS table file conversion.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -220,7 +221,12 @@ bool ARBDogRunScoring::Load(
 			// ARBAgilityRecordBook::Update (that code has been updated too)
 			// Besides, the Update code only ran for v2->3 configurations.
 			// If we convert directly from v2 to v4+, we'd still need to do it.
-			if (m_Table && inVersion < ARBVersion(12,4) && inConfigVersion >= 3)
+			//
+			// Note 7/1/07: Discovered another way table flag can be set wrong.
+			// If you take an existing run with a table and change it to a non
+			// table run, the table flag was retained (thru v1.9.1.12).
+			// v1.9.2 == 12.6file
+			if (m_Table && inVersion < ARBVersion(12,6) && inConfigVersion >= 3)
 			{
 				// Only do this if the config is higher than 2. Otherwise, when
 				// we read the v2 config, the table bit is cleared before we

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
  * @li 2006-11-05 DRC Trim Divisions/Levels if no events are available on date.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
@@ -944,10 +945,20 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 		m_ctrlPartner.ShowWindow(SW_SHOW);
 	}
 
+	// 7/1/07: Resetting the table status must always be done - not just when
+	// the new event has a table. (which is what was done before)
+	if (bOnEventChange)
+	{
+		if (m_Run->GetScoring().HasTable() != pEvent->HasTable())
+		{
+			m_Run->GetScoring().SetHasTable(pEvent->HasTable());
+			// Plus, we need to recompute the YPS.
+			SetMinYPS();
+			SetYPS();
+		}
+	}
 	if (pEvent->HasTable())
 	{
-		if (bOnEventChange)
-			m_Run->GetScoring().SetHasTable(pEvent->HasTable());
 		m_ctrlTable.ShowWindow(SW_SHOW);
 		m_ctrlTable.SetCheck(m_Run->GetScoring().HasTable() ? 1 : 0);
 	}
@@ -1320,7 +1331,10 @@ void CDlgRunScore::OnKillfocusBonus()
 
 void CDlgRunScore::OnBnClickedTableYps()
 {
-	m_Run->GetScoring().SetHasTable(m_ctrlTable.GetCheck() ? true : false);
+	bool bSetTable = false;
+	if (m_ctrlTable.IsWindowVisible())
+		bSetTable  = m_ctrlTable.GetCheck() ? true : false;
+	m_Run->GetScoring().SetHasTable(bSetTable);
 	SetMinYPS();
 	SetYPS();
 }
