@@ -419,6 +419,7 @@ depends on how a venue has been defined above.
 		Height CDATA #IMPLIED
 		isReceived (y|n) 'n'
 	>
+<!-- 'show' is used to show instance 1: "FTC1" -->
 <!ELEMENT Title EMPTY >
 	<!ATTLIST Title
 		Date CDATA #IMPLIED
