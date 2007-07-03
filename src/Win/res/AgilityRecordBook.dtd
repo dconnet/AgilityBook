@@ -11,8 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2007-06-25 DRC File version 12.6
-               Added 'show' to 'Title'.
+2007-07-03 DRC File version 12.6
+               Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
 2007-04-22 DRC File version 12.5
                Added 'defValue' to 'OtherPts'.
                Added reservations to calendar.
@@ -81,11 +81,13 @@ Revision History:
  Book is a simple integer in versions 1 thru 7.
  It then changes to a more complex value ("major.minor"), starting with "8.0"
  ver: Version of program that created file. Used for debugging purposes.
+ timestamp: time stamp when file was written. For tracking purposes.
 -->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
 	<!ATTLIST AgilityBook
 		Book CDATA #REQUIRED
 		ver CDATA #IMPLIED
+		timestamp CDATA #IMPLIED
 		>
 
 <!--

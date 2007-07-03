@@ -36,7 +36,7 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
- * @li 2007-06-25 DRC Added 'show' to 'Title'.
+ * @li 2007-07-03 DRC Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC Added 'defValue'.
  * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
@@ -140,6 +140,7 @@
 #define TREE_REF_NOTE						_T("Note")
 #define ATTRIB_BOOK_VERSION					_T("Book")
 #define ATTRIB_BOOK_PGM_VERSION				_T("ver")
+#define ATTRIB_BOOK_TIMESTAMP				_T("timestamp")
 #define ATTRIB_CONFIG_VERSION				_T("version")
 #define ATTRIB_CONFIG_UPDATE				_T("update")
 #define ATTRIB_CAL_START					_T("DateStart")
