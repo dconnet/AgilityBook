@@ -1,5 +1,6 @@
-7/1/2007: v1.9.2.12 <in development>
+7/3/2007: v1.9.2.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
+  - Added 'timestamp' to 'AgilityBook'.
   - Fixed AKC FAST titles for ExB, FTC. Added Preferred versions.
   - Added Hoopers/Gaters to NADAC. Updated Platinum/Purple title names.
     (Still need to update titles properly)

@@ -37,7 +37,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2007-06-25 DRC File version 12.6. Added 'show' to 'Title'.
+ * @li 2007-07-03 DRC File version 12.6. Added 'show' to 'Title',
+ *                    'timestamp' to 'AgilityBook'
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC File version 12.5. Added 'defValue' to 'OtherPts'.
  * @li 2007-01-03 DRC File version 12.4. Added 'DateDraw' to Calendar.
@@ -405,6 +406,19 @@ bool ARBAgilityRecordBook::Load(
 	return bLoaded;
 }
 
+static ARBString GetTimeStamp()
+{
+#ifdef _WINDOWS
+	CString s = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
+	return ARBString((LPCTSTR)s);
+#else
+	// TODO: Porting: I'm being lazy for now...
+	//time_t t;
+	//time(&t);
+	return ARBDate::Today().GetString(ARBDate::eDashYYYYMMDD);
+#endif
+}
+
 bool ARBAgilityRecordBook::Save(Element& outTree,
 		ARBString const& inPgmVer,
 		bool inCalendar,
@@ -417,6 +431,7 @@ bool ARBAgilityRecordBook::Save(Element& outTree,
 	outTree.SetName(TREE_BOOK);
 	outTree.AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	outTree.AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
+	outTree.AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
 	if (inCalendar)
 	{
 		if (!m_Calendar.Save(outTree))
