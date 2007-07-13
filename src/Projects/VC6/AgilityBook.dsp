@@ -434,6 +434,10 @@ SOURCE=..\..\Win\PointsData.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\Print.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\RichEditCtrl2.cpp
 # End Source File
 # Begin Source File

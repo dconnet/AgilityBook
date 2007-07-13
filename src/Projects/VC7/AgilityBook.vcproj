@@ -397,6 +397,9 @@
 				RelativePath="..\..\Win\PointsData.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\Print.cpp"
+			</File>
+			<File
 				RelativePath="..\..\Win\RichEditCtrl2.cpp">
 			</File>
 			<File

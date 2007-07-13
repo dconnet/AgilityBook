@@ -107,7 +107,9 @@ public:
 	{
 	}
 
-	ARBDogRunPtr GetRun()			{return m_pRun;}
+	ARBDogPtr GetDog() const		{return m_pDog;}
+	ARBDogTrialPtr GetTrial() const	{return m_pTrial;}
+	ARBDogRunPtr GetRun() const		{return m_pRun;}
 	ARBString OnNeedText(int iCol) const;
 	int OnNeedIcon() const;
 
@@ -1168,6 +1170,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_COMMAND(ID_AGILITY_NEW_TRIAL, OnAgilityNewTrial)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_RUN, OnUpdateAgilityNewRun)
 	ON_COMMAND(ID_AGILITY_NEW_RUN, OnAgilityNewRun)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_PRINT_RUNS, OnUpdateAgilityPrintRuns)
+	ON_COMMAND(ID_AGILITY_PRINT_RUNS, OnAgilityPrintRuns)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
 	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
@@ -1684,6 +1688,34 @@ void CAgilityBookViewRuns::OnAgilityNewRun()
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddRun(pData->GetRun());
+}
+
+void CAgilityBookViewRuns::OnUpdateAgilityPrintRuns(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (0 < GetListCtrl().GetSelectedCount())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookViewRuns::OnAgilityPrintRuns()
+{
+	std::vector<int> indices;
+	if (0 < GetSelection(indices))
+	{
+		ARBDogPtr dog;
+		std::vector<RunInfo> runs;
+		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+		{
+			CAgilityBookViewRunsData* pData = GetItemData(*iter);
+			if (pData)
+			{
+				dog = pData->GetDog();
+				runs.push_back(RunInfo(pData->GetTrial(), pData->GetRun()));
+			}
+		}
+		PrintRuns(dog, runs);
+	}
 }
 
 void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)

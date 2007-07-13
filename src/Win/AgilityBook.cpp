@@ -394,6 +394,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
 	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
 	ON_COMMAND(ID_HELP_SYSINFO, OnHelpSysinfo)
+	ON_COMMAND(ID_FILE_PRINT_BLANK_RUNS, OnPrintBlankRuns)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 	// Standard file based document commands
@@ -748,4 +749,10 @@ void CAgilityBookApp::OnHelpSysinfo()
 	CString msg(info.str().c_str());
 	CDlgMessage dlg(msg);
 	dlg.DoModal();
+}
+
+void CAgilityBookApp::OnPrintBlankRuns()
+{
+	std::vector<RunInfo> runs;
+	PrintRuns(ARBDogPtr(), runs);
 }

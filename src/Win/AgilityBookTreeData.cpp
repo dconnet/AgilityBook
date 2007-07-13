@@ -871,6 +871,10 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
 			bEnable = true;
 		break;
+	case ID_AGILITY_PRINT_TRIAL:
+		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
+			bEnable = true;
+		break;
 	}
 	return bEnable;
 }
@@ -963,6 +967,17 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		break;
 	case ID_REORDER:
 		ReOrderTrial(GetTrial(), m_pTree);
+		break;
+	case ID_AGILITY_PRINT_TRIAL:
+		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
+		{
+			std::vector<RunInfo> runs;
+			for (ARBDogRunList::iterator iRun = GetTrial()->GetRuns().begin(); iRun != GetTrial()->GetRuns().end(); ++iRun)
+			{
+				runs.push_back(RunInfo(GetTrial(), *iRun));
+			}
+			PrintRuns(GetDog(), runs);
+		}
 		break;
 	}
 	return bModified;
@@ -1195,6 +1210,9 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 		if (GetTrial() && 1 < GetTrial()->GetRuns().size())
 			bEnable = true;
 		break;
+	case ID_AGILITY_PRINT_RUNS:
+		bEnable = true;
+		break;
 	}
 	return bEnable;
 }
@@ -1286,6 +1304,13 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		break;
 	case ID_REORDER:
 		ReOrderTrial(GetTrial(), m_pTree);
+		break;
+	case ID_AGILITY_PRINT_RUNS:
+		{
+			std::vector<RunInfo> runs;
+			runs.push_back(RunInfo(GetTrial(), m_pRun));
+			PrintRuns(GetDog(), runs);
+		}
 		break;
 	}
 	return bModified;
