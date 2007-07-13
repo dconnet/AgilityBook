@@ -949,6 +949,7 @@
 #define IDS_IMPORT_STATS                5246
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
+#define ID_FILE_PRINT_BLANK_RUNS        32775
 #define ID_EDIT_FIND_NEXT               32780
 #define ID_EDIT_FIND_PREVIOUS           32781
 #define ID_EDIT_CONFIGURATION           32782
@@ -977,6 +978,8 @@
 #define ID_NOTES_JUDGES                 32811
 #define ID_NOTES_LOCATIONS              32812
 #define ID_NOTES_SEARCH                 32813
+#define ID_AGILITY_PRINT_TRIAL          32814
+#define ID_AGILITY_PRINT_RUNS           32815
 #define ID_VIEW_OPTIONS                 32820
 #define ID_VIEW_CUSTOMIZE               32821
 #define ID_VIEW_SORTRUNS                32822

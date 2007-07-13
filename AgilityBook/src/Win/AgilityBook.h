@@ -80,6 +80,7 @@ private:
 	afx_msg void OnHelpIndex();
 	afx_msg void OnHelpSplash();
 	afx_msg void OnHelpSysinfo();
+	afx_msg void OnPrintBlankRuns();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -133,3 +134,12 @@ extern void ExpandAll(
 extern BOOL GetLocalStatus(
 		LPCTSTR lpszFileName,
 		CFileStatus& rStatus);
+
+/**
+ * Print blank pages to enter runs on.
+ * @param inDog Dog's runs to print.
+ * @param inRuns Runs to print, if empty, print blank pages.
+ * @return Printed?
+ */
+#include "PointsData.h"
+extern bool PrintRuns(ARBDogPtr inDog, std::vector<RunInfo> const& inRuns);

@@ -157,6 +157,8 @@ protected:
 	afx_msg void OnAgilityNewTrial();
 	afx_msg void OnUpdateAgilityNewRun(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityNewRun();
+	afx_msg void OnUpdateAgilityPrintRuns(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityPrintRuns();
 	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
 	afx_msg void OnEditCut();
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);

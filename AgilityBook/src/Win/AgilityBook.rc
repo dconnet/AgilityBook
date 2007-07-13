@@ -162,6 +162,7 @@ BEGIN
         MENUITEM "&Find all linked files...",   ID_FILE_LINKED
         MENUITEM SEPARATOR
         MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print &Blank Runs...",        ID_FILE_PRINT_BLANK_RUNS
         MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
@@ -211,6 +212,8 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "&New...",                     ID_AGILITY_NEW_TRIAL
             MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+            MENUITEM SEPARATOR
+            MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_TRIAL
         END
         POPUP "&Run"
         BEGIN
@@ -218,6 +221,8 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "&New...\tCtrl+R",             ID_AGILITY_NEW_RUN
             MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+            MENUITEM SEPARATOR
+            MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_RUNS
         END
         MENUITEM SEPARATOR
         POPUP "&Calendar"
@@ -334,10 +339,12 @@ BEGIN
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
         MENUITEM SEPARATOR
-        MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM "Reorder...",                  ID_REORDER
         MENUITEM SEPARATOR
         MENUITEM "Expand",                      ID_EXPAND
         MENUITEM "Collapse",                    ID_COLLAPSE
+        MENUITEM SEPARATOR
+        MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_TRIAL
     END
 END
 
@@ -363,6 +370,8 @@ BEGIN
         MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM SEPARATOR
+        MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_RUNS
     END
 END
 
@@ -2792,6 +2801,7 @@ STRINGTABLE
 BEGIN
     ID_FILE_EXPORT_WIZARD   "Import and Export Wizard\nImport/Export"
     ID_FILE_LINKED          "Find all linked files\nFind Links"
+    ID_FILE_PRINT_BLANK_RUNS "Print blank sheets for recording runs\nPrint Blank"
     ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
     ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
@@ -2830,6 +2840,8 @@ BEGIN
     ID_NOTES_JUDGES         "Edit judge information\nJudges"
     ID_NOTES_LOCATIONS      "Edit location information\nLocations"
     ID_NOTES_SEARCH         "Search Note Information\nSearch"
+    ID_AGILITY_PRINT_TRIAL  "Print all the runs for the selected trial\nPrint Runs"
+    ID_AGILITY_PRINT_RUNS   "Print all the selected runs\nPrint Runs"
 END
 
 STRINGTABLE 
