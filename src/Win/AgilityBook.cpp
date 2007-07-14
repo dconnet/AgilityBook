@@ -754,5 +754,5 @@ void CAgilityBookApp::OnHelpSysinfo()
 void CAgilityBookApp::OnPrintBlankRuns()
 {
 	std::vector<RunInfo> runs;
-	PrintRuns(ARBDogPtr(), runs);
+	PrintRuns(NULL, ARBDogPtr(), runs);
 }

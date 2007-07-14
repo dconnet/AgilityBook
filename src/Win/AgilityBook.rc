@@ -2340,6 +2340,10 @@ BEGIN
     IDS_COL_VENUES          "Venues"
     IDS_COL_YARDS           "Yards"
     IDS_COL_YPS             "YPS"
+    IDS_COL_OTHERPOINTS     "Other Points"
+    IDS_COL_DIV_LVL_EVT     "Division/Level/Event"
+    IDS_COL_NAME_BREED_NOTE "Name/Breed/Notes"
+    IDS_COL_OPEN_CLOSE      "Open/Close"
 END
 
 STRINGTABLE 

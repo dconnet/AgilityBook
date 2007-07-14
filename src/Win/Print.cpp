@@ -37,8 +37,10 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 
+#include "ARBConfig.h"
 #include "ARBDog.h"
 #include "ARBDogRun.h"
+#include "ARBDogRunOtherPoints.h"
 #include "ARBDogTrial.h"
 
 #ifdef _DEBUG
@@ -101,9 +103,11 @@ class CPrintRuns
 {
 public:
 	CPrintRuns(
+			ARBConfig const* inConfig,
 			ARBDogPtr inDog,
 			std::vector<RunInfo> const& inRuns)
-		: m_dog(inDog)
+		: m_config(inConfig)
+		, m_dog(inDog)
 		, m_runs(inRuns)
 		, m_cur(0)
 	{
@@ -119,6 +123,7 @@ public:
 private:
 	void PrintPage(UINT nCurPage, CDC* pDC, CRect inRect);
 
+	ARBConfig const* m_config;
 	ARBDogPtr m_dog;
 	std::vector<RunInfo> const& m_runs;
 	size_t m_cur;
@@ -186,155 +191,220 @@ void CPrintRuns::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
 }
 
-#define CODE_Dog		0
-#define CODE_Date		1
-#define CODE_Venue		2
-#define CODE_Club		3
-#define CODE_Div		4
-#define CODE_Location	5
-#define CODE_Height		6
-#define CODE_Judge		7
-#define CODE_Handler	8
-#define CODE_Conditions	9
+#define CODE_DOG		0
+#define CODE_DATE		1
+#define CODE_VENUE		2
+#define CODE_CLUB		3
+#define CODE_DIV		4
+#define CODE_LOCATION	5
+#define CODE_HEIGHT		6
+#define CODE_JUDGE		7
+#define CODE_HANDLER	8
+#define CODE_CONDITIONS	9
 #define CODE_Q			10
 #define CODE_SCT		11
-#define CODE_Yards		12
-#define CODE_Open		13
-#define CODE_Time		14
-#define CODE_Faults		15
-#define CODE_Score		16
-#define CODE_Place		17
-#define CODE_InClass	18
-#define CODE_Qd			19
-#define CODE_Comments	20
-#define CODE_Other		21
-#define CODE_RefPlace1	22
-#define CODE_RefQ1		23
-#define CODE_RefTime1	24
-#define CODE_RefScore1	25
-#define CODE_RefHt1		26
-#define CODE_Ref1		27
-#define CODE_RefPlace2	28
-#define CODE_RefQ2		29
-#define CODE_RefTime2	30
-#define CODE_RefScore2	31
-#define CODE_RefHt2		32
-#define CODE_Ref2		33
-#define CODE_RefPlace3	34
-#define CODE_RefQ3		35
-#define CODE_RefTime3	36
-#define CODE_RefScore3	37
-#define CODE_RefHt3		38
-#define CODE_Ref3		39
-#define CODE_RefPlace4	40
-#define CODE_RefQ4		41
-#define CODE_RefTime4	42
-#define CODE_RefScore4	43
-#define CODE_RefHt4		44
-#define CODE_Ref4		45
+#define CODE_YARDS		12
+#define CODE_OPEN		13
+#define CODE_TIME		14
+#define CODE_FAULTS		15
+#define CODE_SCORE		16
+#define CODE_PLACE		17
+#define CODE_INCLASS	18
+#define CODE_QD			19
+#define CODE_COMMENTS	20
+#define CODE_OTHER		21
+#define CODE_REFPLACE1	22
+#define CODE_REFQ1		23
+#define CODE_REFTIME1	24
+#define CODE_REFSCORE1	25
+#define CODE_REFHT1		26
+#define CODE_REF1		27
+#define CODE_REFPLACE2	28
+#define CODE_REFQ2		29
+#define CODE_REFTIME2	30
+#define CODE_REFSCORE2	31
+#define CODE_REFHT2		32
+#define CODE_REF2		33
+#define CODE_REFPLACE3	34
+#define CODE_REFQ3		35
+#define CODE_REFTIME3	36
+#define CODE_REFSCORE3	37
+#define CODE_REFHT3		38
+#define CODE_REF3		39
+#define CODE_REFPLACE4	40
+#define CODE_REFQ4		41
+#define CODE_REFTIME4	42
+#define CODE_REFSCORE4	43
+#define CODE_REFHT4		44
+#define CODE_REF4		45
 
 // Make sure these are ordered by the aboves codes
-static const struct { LPCTSTR caption; } codes[] = {
-	_T("Dog"),
-	_T("Date"),
-	_T("Venue"),
-	_T("Club"),
-	_T("Div/level/event"),
-	_T("Location"),
-	_T("Height"),
-	_T("Judge"),
-	_T("Handler"),
-	_T("Conditions"),
-	_T("Q"),
-	_T("SCT"),
-	_T("Yards"),
-	_T("Open/Close"),
-	_T("Time"),
-	_T("Faults"),
-	_T("Score"),
-	_T("Place"),
-	_T("In Class"),
-	_T("Qd"),
-	_T("Comments"),
-	_T("Other Points"),
-	_T("Place"),
-	_T("Q"),
-	_T("Time"),
-	_T("Score"),
-	_T("Ht"),
-	_T("Name/Breed/Notes"),
-	_T("Place"),
-	_T("Q"),
-	_T("Time"),
-	_T("Score"),
-	_T("Ht"),
-	_T("Name/Breed/Notes"),
-	_T("Place"),
-	_T("Q"),
-	_T("Time"),
-	_T("Score"),
-	_T("Ht"),
-	_T("Name/Breed/Notes"),
-	_T("Place"),
-	_T("Q"),
-	_T("Time"),
-	_T("Score"),
-	_T("Ht"),
-	_T("Name/Breed/Notes"),
+static const UINT sc_codes[] =
+{
+	IDS_COL_DOG,
+	IDS_COL_DATE,
+	IDS_COL_VENUE,
+	IDS_COL_CLUB,
+	IDS_COL_DIV_LVL_EVT,
+	IDS_COL_LOCATION,
+	IDS_COL_HEIGHT,
+	IDS_COL_JUDGE,
+	IDS_COL_HANDLER,
+	IDS_COL_CONDITIONS,
+	IDS_COL_Q,
+	IDS_COL_SCT,
+	IDS_COL_YARDS,
+	IDS_COL_OPEN_CLOSE,
+	IDS_COL_TIME,
+	IDS_COL_FAULTS,
+	IDS_COL_SCORE,
+	IDS_COL_PLACE,
+	IDS_COL_IN_CLASS,
+	IDS_COL_Q_D,
+	IDS_COL_COMMENTS,
+	IDS_COL_OTHERPOINTS,
+	IDS_COL_PLACE,
+	IDS_COL_Q,
+	IDS_COL_TIME,
+	IDS_COL_SCORE,
+	IDS_COL_HEIGHT,
+	IDS_COL_NAME_BREED_NOTE,
+	IDS_COL_PLACE,
+	IDS_COL_Q,
+	IDS_COL_TIME,
+	IDS_COL_SCORE,
+	IDS_COL_HEIGHT,
+	IDS_COL_NAME_BREED_NOTE,
+	IDS_COL_PLACE,
+	IDS_COL_Q,
+	IDS_COL_TIME,
+	IDS_COL_SCORE,
+	IDS_COL_HEIGHT,
+	IDS_COL_NAME_BREED_NOTE,
+	IDS_COL_PLACE,
+	IDS_COL_Q,
+	IDS_COL_TIME,
+	IDS_COL_SCORE,
+	IDS_COL_HEIGHT,
+	IDS_COL_NAME_BREED_NOTE,
 };
+#define FOR_TIME	0x1
+#define FOR_PTS		0x2
+#define FOR_BOTH	0x3
+static const struct
+{
+	unsigned char type;
+	int line;
+	int box;
+	int colspan; // number of boxes to span
+	int rowspan;
+	int code;
+	UINT fmt;
+} sc_lines[] =
+{
+	{FOR_BOTH, 0, 0, 2, 1, CODE_DOG,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 0, 2, 2, 1, CODE_DATE,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 0, 4, 2, 1, CODE_VENUE,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 0, 6, 2, 1, CODE_LOCATION,	DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 1, 0, 3, 1, CODE_DIV,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 1, 3, 1, 1, CODE_HEIGHT,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 1, 4, 4, 2, CODE_CLUB,		DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 2, 4, 4, 1, -1, 0},
+	{FOR_BOTH, 2, 0, 2, 1, CODE_JUDGE,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 2, 2, 2, 1, CODE_HANDLER,	DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 3, 0, 8, 1, CODE_CONDITIONS,	DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 4, 0, 1, 1, CODE_Q,			DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 4, 1, 1, 1, CODE_SCT,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_TIME, 4, 2, 1, 1, CODE_YARDS,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_PTS,  4, 2, 1, 1, CODE_OPEN,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 4, 3, 1, 1, CODE_TIME,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_TIME, 4, 4, 1, 1, CODE_FAULTS,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_PTS,  4, 4, 1, 1, CODE_SCORE,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 4, 5, 1, 1, CODE_PLACE,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 4, 6, 1, 1, CODE_INCLASS,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 4, 7, 1, 1, CODE_QD,			DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 5, 0, 8, 5, CODE_COMMENTS,	DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 6, 0, 8, 4, -1, 0},
+	{FOR_BOTH, 7, 0, 8, 3, -1, 0},
+	{FOR_BOTH, 8, 0, 8, 2, -1, 0},
+	{FOR_BOTH, 9, 0, 6, 1, -1, 0},
+	{FOR_BOTH, 9, 6, 2, 1, CODE_OTHER,		DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 10, 0, 1, 1, CODE_REFPLACE1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 10, 1, 1, 1, CODE_REFQ1,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 10, 2, 1, 1, CODE_REFTIME1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 10, 3, 1, 1, CODE_REFSCORE1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 10, 4, 1, 1, CODE_REFHT1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 10, 5, 3, 1, CODE_REF1,		DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 11, 0, 1, 1, CODE_REFPLACE2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 11, 1, 1, 1, CODE_REFQ2,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 11, 2, 1, 1, CODE_REFTIME2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 11, 3, 1, 1, CODE_REFSCORE2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 11, 4, 1, 1, CODE_REFHT2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 11, 5, 3, 1, CODE_REF2,		DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 12, 0, 1, 1, CODE_REFPLACE3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 12, 1, 1, 1, CODE_REFQ3,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 12, 2, 1, 1, CODE_REFTIME3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 12, 3, 1, 1, CODE_REFSCORE3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 12, 4, 1, 1, CODE_REFHT3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 12, 5, 3, 1, CODE_REF3,		DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH, 13, 0, 1, 1, CODE_REFPLACE4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 13, 1, 1, 1, CODE_REFQ4,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 13, 2, 1, 1, CODE_REFTIME4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 13, 3, 1, 1, CODE_REFSCORE4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 13, 4, 1, 1, CODE_REFHT4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 13, 5, 3, 1, CODE_REF4,		DT_LEFT | DT_WORDBREAK},
+};
+static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
-static void RefRunHelper(ARBostringstream& text, ARBDogReferenceRunPtr ref, int code, bool& multiline)
+static void RefRunHelper(ARBostringstream& text, ARBDogReferenceRunPtr ref, int code)
 {
 	switch (code)
 	{
-	case CODE_RefPlace1:
-	case CODE_RefPlace2:
-	case CODE_RefPlace3:
-	case CODE_RefPlace4:
+	case CODE_REFPLACE1:
+	case CODE_REFPLACE2:
+	case CODE_REFPLACE3:
+	case CODE_REFPLACE4:
 		if (0 < ref->GetPlace())
 			text << ref->GetPlace();
 		break;
-	case CODE_RefQ1:
-	case CODE_RefQ2:
-	case CODE_RefQ3:
-	case CODE_RefQ4:
+	case CODE_REFQ1:
+	case CODE_REFQ2:
+	case CODE_REFQ3:
+	case CODE_REFQ4:
 		if ((ARB_Q::eQ)ref->GetQ() != ARB_Q::eQ_NA)
 			text << ref->GetQ().str();
 		break;
-	case CODE_RefTime1:
-	case CODE_RefTime2:
-	case CODE_RefTime3:
-	case CODE_RefTime4:
+	case CODE_REFTIME1:
+	case CODE_REFTIME2:
+	case CODE_REFTIME3:
+	case CODE_REFTIME4:
 		{
 			double val = ref->GetTime();
 			if (0.0 < val)
 				text << ARBDouble::str(val);
 		}
 		break;
-	case CODE_RefScore1:
-	case CODE_RefScore2:
-	case CODE_RefScore3:
-	case CODE_RefScore4:
+	case CODE_REFSCORE1:
+	case CODE_REFSCORE2:
+	case CODE_REFSCORE3:
+	case CODE_REFSCORE4:
 		text << ref->GetScore();
 		break;
-	case CODE_RefHt1:
-	case CODE_RefHt2:
-	case CODE_RefHt3:
-	case CODE_RefHt4:
+	case CODE_REFHT1:
+	case CODE_REFHT2:
+	case CODE_REFHT3:
+	case CODE_REFHT4:
 		text << ref->GetHeight();
 		break;
-	case CODE_Ref1:
-	case CODE_Ref2:
-	case CODE_Ref3:
-	case CODE_Ref4:
+	case CODE_REF1:
+	case CODE_REF2:
+	case CODE_REF3:
+	case CODE_REF4:
 		text << ref->GetName();
 		if (!ref->GetBreed().empty())
 			text << "/" << ref->GetBreed();
 		if (!ref->GetNote().empty())
-		{
-			multiline = true;
 			text << "/" << ref->GetNote();
-		}
 		break;
 	}
 }
@@ -345,8 +415,20 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 	pDC->SetBkMode(TRANSPARENT);
 	CFont fontText, fontData;
 	fontText.CreatePointFont(70, _T("MS Sans Serif"), pDC);
-	fontData.CreatePointFont(100, _T("Arial"), pDC);
-	CFont* pOld = pDC->SelectObject(&fontText);
+	LOGFONT lf;
+	memset(&lf, 0, sizeof(LOGFONT));
+	lf.lfHeight = 90;
+	lf.lfWeight = FW_BOLD;
+#if _MSC_VER >= 1400
+	_tcsncpy_s(lf.lfFaceName, LF_FACESIZE, _T("Arial"), 5);
+#else
+	_tcsncpy(lf.lfFaceName, _T("Arial"), 5);
+#endif
+	fontData.CreatePointFontIndirect(&lf, pDC);
+	CFont* pOldFont = pDC->SelectObject(&fontText);
+	CPen pen;
+	pen.CreatePen(PS_SOLID, 1, RGB(0,0,0));
+	CPen* pOldPen = pDC->SelectObject(&pen);
 
 	int h = inRect.Height() / 29;
 	int w = inRect.Width() / 8;
@@ -388,137 +470,106 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 		}
 		// Frame the whole thing
 		pDC->Rectangle(r[i]);
-		// Individual lines
-		for (int j = 1; j < 14; ++j)
+		// Now go thru each box.
+		for (int j = 0; j < sc_nLines; ++j)
 		{
-			pDC->MoveTo(r[i].left, r[i].top + h * j);
-			pDC->LineTo(r[i].right, r[i].top + h * j);
-		}
-#define FOR_TIME	0x1
-#define FOR_PTS		0x2
-#define FOR_BOTH	0x3
-		static const struct
-		{
-			unsigned char type;
-			int line;
-			int box;
-			int span; // number of boxes to span
-			int code;
-		} lines[] =
-		{
-			{FOR_BOTH, 0, 0, 2, CODE_Dog},
-			{FOR_BOTH, 0, 2, 2, CODE_Date},
-			{FOR_BOTH, 0, 4, 2, CODE_Venue},
-			{FOR_BOTH, 0, 6, 2, CODE_Club},
-			{FOR_BOTH, 1, 0, 4, CODE_Div},
-			{FOR_BOTH, 1, 4, 4, CODE_Location},
-			{FOR_BOTH, 2, 0, 1, CODE_Height},
-			{FOR_BOTH, 2, 1, 4, CODE_Judge},
-			{FOR_BOTH, 2, 5, 3, CODE_Handler},
-			{FOR_BOTH, 3, 0, 8, CODE_Conditions},
-			{FOR_BOTH, 4, 0, 1, CODE_Q},
-			{FOR_BOTH, 4, 1, 1, CODE_SCT},
-			{FOR_TIME, 4, 2, 1, CODE_Yards},
-			{FOR_PTS, 4, 2, 1, CODE_Open},
-			{FOR_BOTH, 4, 3, 1, CODE_Time},
-			{FOR_TIME, 4, 4, 1, CODE_Faults},
-			{FOR_PTS, 4, 4, 1, CODE_Score},
-			{FOR_BOTH, 4, 5, 1, CODE_Place},
-			{FOR_BOTH, 4, 6, 1, CODE_InClass},
-			{FOR_BOTH, 4, 7, 1, CODE_Qd},
-			{FOR_BOTH, 5, 0, 6, CODE_Comments},
-			{FOR_BOTH, 9, 6, 2, CODE_Other},
-			{FOR_BOTH, 10, 0, 1, CODE_RefPlace1},
-			{FOR_BOTH, 10, 1, 1, CODE_RefQ1},
-			{FOR_BOTH, 10, 2, 1, CODE_RefTime1},
-			{FOR_BOTH, 10, 3, 1, CODE_RefScore1},
-			{FOR_BOTH, 10, 4, 1, CODE_RefHt1},
-			{FOR_BOTH, 10, 5, 3, CODE_Ref1},
-			{FOR_BOTH, 11, 0, 1, CODE_RefPlace2},
-			{FOR_BOTH, 11, 1, 1, CODE_RefQ2},
-			{FOR_BOTH, 11, 2, 1, CODE_RefTime2},
-			{FOR_BOTH, 11, 3, 1, CODE_RefScore2},
-			{FOR_BOTH, 11, 4, 1, CODE_RefHt2},
-			{FOR_BOTH, 11, 5, 3, CODE_Ref2},
-			{FOR_BOTH, 12, 0, 1, CODE_RefPlace3},
-			{FOR_BOTH, 12, 1, 1, CODE_RefQ3},
-			{FOR_BOTH, 12, 2, 1, CODE_RefTime3},
-			{FOR_BOTH, 12, 3, 1, CODE_RefScore3},
-			{FOR_BOTH, 12, 4, 1, CODE_RefHt3},
-			{FOR_BOTH, 12, 5, 3, CODE_Ref3},
-			{FOR_BOTH, 13, 0, 1, CODE_RefPlace4},
-			{FOR_BOTH, 13, 1, 1, CODE_RefQ4},
-			{FOR_BOTH, 13, 2, 1, CODE_RefTime4},
-			{FOR_BOTH, 13, 3, 1, CODE_RefScore4},
-			{FOR_BOTH, 13, 4, 1, CODE_RefHt4},
-			{FOR_BOTH, 13, 5, 3, CODE_Ref4},
-		};
-		static const int nLines = sizeof(lines) / sizeof(lines[0]);
-		for (int j = 0; j < nLines; ++j)
-		{
-			if ((bPoints && (lines[j].type & FOR_PTS))
-			|| (!bPoints && (lines[j].type & FOR_TIME)))
+			if ((bPoints && (sc_lines[j].type & FOR_PTS))
+			|| (!bPoints && (sc_lines[j].type & FOR_TIME)))
 			{
 				CRect rect;
-				rect.left = r[i].left + w * lines[j].box;
-				rect.right = rect.left + w * lines[j].span;
-				rect.top = r[i].top + h * lines[j].line;
+				rect.left = r[i].left + w * sc_lines[j].box;
+				rect.right = rect.left + w * sc_lines[j].colspan + 1;
+				if (8 == sc_lines[j].box + sc_lines[j].colspan)
+					rect.right = r[i].right;
+				rect.top = r[i].top + h * sc_lines[j].line;
 				rect.bottom = rect.top + h;
-				if (0 < lines[j].box)
+				// Draw vertical separator lines (on left)
+				if (0 < sc_lines[j].box)
 				{
 					pDC->MoveTo(rect.left, rect.top);
 					pDC->LineTo(rect.left, rect.bottom);
 				}
-				rect.InflateRect(-1, -1);
+				// Draw horizontal separator lines (on top)
+				if (0 < sc_lines[j].line && (!run || 0 <= sc_lines[j].code))
+				{
+					CPen penGray;
+					CPen* oldPen = NULL;
+					if (0 > sc_lines[j].code)
+					{
+						penGray.CreatePen(PS_SOLID, 1, RGB(192,192,192));
+						oldPen = pDC->SelectObject(&penGray);
+					}
+					pDC->MoveTo(rect.left, rect.top);
+					pDC->LineTo(rect.right, rect.top);
+					if (oldPen)
+						pDC->SelectObject(oldPen);
+				}
+				rect.InflateRect(-1, 1);
 				CRect rText(rect);
-				pDC->DrawText(codes[lines[j].code].caption, -1, rect, DT_LEFT | DT_NOPREFIX);
-				pDC->DrawText(codes[lines[j].code].caption, -1, rText, DT_LEFT | DT_NOPREFIX | DT_CALCRECT);
+				if (0 <= sc_lines[j].code)
+				{
+					CString caption;
+					caption.LoadString(sc_codes[sc_lines[j].code]);
+					pDC->DrawText(caption, rect, DT_LEFT | DT_TOP| DT_NOPREFIX);
+					pDC->DrawText(caption, rText, DT_LEFT | DT_TOP | DT_NOPREFIX | DT_CALCRECT);
+				}
 				if (run)
 				{
-					bool multiline = false;
 					ARBostringstream text;
-					switch (lines[j].code)
+					switch (sc_lines[j].code)
 					{
-					case CODE_Dog:
+					default:
+						break;
+					case CODE_DOG:
 						text << m_dog->GetCallName();
 						break;
-					case CODE_Date:
+					case CODE_DATE:
 						text << run->GetDate().GetString(ARBDate::eDashYYYYMMDD);
 						break;
-					case CODE_Venue:
+					case CODE_VENUE:
 						{
-							ARBDogClubPtr club;
-							if (trial->GetClubs().GetPrimaryClub(&club))
-								text << club->GetVenue();
+							int i = 0;
+							for (ARBDogClubList::iterator iter = trial->GetClubs().begin();
+								iter != trial->GetClubs().end();
+								++iter, ++i)
+							{
+								if (0 < i)
+									text << "/";
+								text << (*iter)->GetVenue();
+							}
 							break;
 						}
-					case CODE_Club:
+					case CODE_CLUB:
 						{
-							ARBDogClubPtr club;
-							if (trial->GetClubs().GetPrimaryClub(&club))
-								text << club->GetName();
+							int i = 0;
+							for (ARBDogClubList::iterator iter = trial->GetClubs().begin();
+								iter != trial->GetClubs().end();
+								++iter, ++i)
+							{
+								if (0 < i)
+									text << "/";
+								text << (*iter)->GetName();
+							}
 							break;
 						}
-					case CODE_Div:
+					case CODE_DIV:
 						text << run->GetDivision()
 							<< "/" << run->GetLevel()
 							<< "/" << run->GetEvent();
 						break;
-					case CODE_Location:
+					case CODE_LOCATION:
 						text << trial->GetLocation();
 						break;
-					case CODE_Height:
+					case CODE_HEIGHT:
 						text << run->GetHeight();
 						break;
-					case CODE_Judge:
+					case CODE_JUDGE:
 						text << run->GetJudge();
 						break;
-					case CODE_Handler:
+					case CODE_HANDLER:
 						text << run->GetHandler();
 						break;
-					case CODE_Conditions:
-						multiline = true;
-						rect.left = rText.right;
+					case CODE_CONDITIONS:
 						text << run->GetConditions();
 						break;
 					case CODE_Q:
@@ -532,20 +583,22 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 								text << ARBDouble::str(val);
 						}
 						break;
-					case CODE_Yards:
+					case CODE_YARDS:
 						{
 							double val = run->GetScoring().GetYards();
 							if (0.0 < val)
 								text << ARBDouble::str(val, 0);
 						}
 						break;
-					case CODE_Open:
+					case CODE_OPEN:
 						switch (run->GetScoring().GetType())
 						{
 						case ARBDogRunScoring::eTypeByOpenClose:
-							if (0 < run->GetScoring().GetNeedOpenPts() || 0 < run->GetScoring().GetNeedClosePts())
-								text << run->GetScoring().GetNeedOpenPts()
-									<< "/" << run->GetScoring().GetNeedClosePts();
+							if (0 < run->GetScoring().GetNeedOpenPts())
+								text << run->GetScoring().GetNeedOpenPts();
+							text << " / ";
+							if (0 < run->GetScoring().GetNeedClosePts())
+								text << run->GetScoring().GetNeedClosePts();
 							break;
 						case ARBDogRunScoring::eTypeByPoints:
 							if (0 < run->GetScoring().GetNeedOpenPts())
@@ -553,21 +606,18 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 							break;
 						}
 						break;
-					case CODE_Time:
+					case CODE_TIME:
 						{
 							double val = run->GetScoring().GetTime();
 							if (0.0 < val)
 								text << ARBDouble::str(val);
 						}
 						break;
-					case CODE_Faults:
+					case CODE_FAULTS:
 						{
-							if (0 < run->GetScoring().GetCourseFaults())
-								text << run->GetScoring().GetCourseFaults();
-							/*
 							ARBConfigScoringPtr pScoring;
-							if (trial->GetClubs().GetPrimaryClub())
-								m_pView->GetDocument()->GetConfig().GetVenues().FindEvent(
+							if (m_config && trial->GetClubs().GetPrimaryClub())
+								m_config->GetVenues().FindEvent(
 									trial->GetClubs().GetPrimaryClubVenue(),
 									run->GetEvent(),
 									run->GetDivision(),
@@ -575,91 +625,107 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 									run->GetDate(),
 									NULL,
 									&pScoring);
-							double faults = run->GetScoring().GetCourseFaults() + run->GetScoring().GetTimeFaults(pScoring);
-							text << ARBDouble::str(faults, 0);
-							*/
+							double timeFaults = run->GetScoring().GetTimeFaults(pScoring);
+							if ((ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_NA
+							|| (0 < run->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
+							{
+								text << run->GetScoring().GetCourseFaults();
+								if (0.0 < timeFaults)
+									text << " + " << ARBDouble::str(timeFaults, 0);
+							}
 						}
 						break;
-					case CODE_Score:
+					case CODE_SCORE:
 						switch (run->GetScoring().GetType())
 						{
 						case ARBDogRunScoring::eTypeByOpenClose:
-							if (0 < run->GetScoring().GetOpenPts() || 0 < run->GetScoring().GetClosePts())
-								text << run->GetScoring().GetOpenPts()
-									<< "/" << run->GetScoring().GetClosePts();
+							if (0 < run->GetScoring().GetOpenPts())
+								text << run->GetScoring().GetOpenPts();
+							text << " / ";
+							if (0 < run->GetScoring().GetClosePts())
+								text << run->GetScoring().GetClosePts();
+							break;
 						case ARBDogRunScoring::eTypeByPoints:
 							if (0 < run->GetScoring().GetOpenPts())
 								text << run->GetScoring().GetOpenPts();
+							break;
 						}
 						break;
-					case CODE_Place:
+					case CODE_PLACE:
 						if (0 < run->GetPlace())
 							text << run->GetPlace();
 						break;
-					case CODE_InClass:
+					case CODE_INCLASS:
 						if (0 < run->GetInClass())
 							text << run->GetInClass();
 						break;
-					case CODE_Qd:
+					case CODE_QD:
 						if (0 <= run->GetDogsQd())
 							text << run->GetDogsQd();
 						break;
-					case CODE_Comments:
-						multiline = true;
-						rect.top = rText.bottom + 1;
+					case CODE_COMMENTS:
 						text << run->GetNote();
 						break;
-					case CODE_Other:
+					case CODE_OTHER:
 						if (0 < run->GetOtherPoints().size())
 						{
+							int i = 0;
+							for (ARBDogRunOtherPointsList::iterator iter = run->GetOtherPoints().begin();
+								iter != run->GetOtherPoints().end();
+								++iter, ++i)
+							{
+								if (0 < i)
+									text << " ";
+								text << (*iter)->GetName() << ":" << (*iter)->GetPoints();
+							}
 						}
 						break;
-					case CODE_RefPlace1:
-					case CODE_RefQ1:
-					case CODE_RefTime1:
-					case CODE_RefScore1:
-					case CODE_RefHt1:
-					case CODE_Ref1:
+					case CODE_REFPLACE1:
+					case CODE_REFQ1:
+					case CODE_REFTIME1:
+					case CODE_REFSCORE1:
+					case CODE_REFHT1:
+					case CODE_REF1:
 						if (0 < run->GetReferenceRuns().size())
-							RefRunHelper(text, run->GetReferenceRuns()[0], lines[j].code, multiline);
+							RefRunHelper(text, run->GetReferenceRuns()[0], sc_lines[j].code);
 						break;
-					case CODE_RefPlace2:
-					case CODE_RefQ2:
-					case CODE_RefTime2:
-					case CODE_RefScore2:
-					case CODE_RefHt2:
-					case CODE_Ref2:
+					case CODE_REFPLACE2:
+					case CODE_REFQ2:
+					case CODE_REFTIME2:
+					case CODE_REFSCORE2:
+					case CODE_REFHT2:
+					case CODE_REF2:
 						if (1 < run->GetReferenceRuns().size())
-							RefRunHelper(text, run->GetReferenceRuns()[1], lines[j].code, multiline);
+							RefRunHelper(text, run->GetReferenceRuns()[1], sc_lines[j].code);
 						break;
-					case CODE_RefPlace3:
-					case CODE_RefQ3:
-					case CODE_RefTime3:
-					case CODE_RefScore3:
-					case CODE_RefHt3:
-					case CODE_Ref3:
+					case CODE_REFPLACE3:
+					case CODE_REFQ3:
+					case CODE_REFTIME3:
+					case CODE_REFSCORE3:
+					case CODE_REFHT3:
+					case CODE_REF3:
 						if (2 < run->GetReferenceRuns().size())
-							RefRunHelper(text, run->GetReferenceRuns()[2], lines[j].code, multiline);
+							RefRunHelper(text, run->GetReferenceRuns()[2], sc_lines[j].code);
 						break;
-					case CODE_RefPlace4:
-					case CODE_RefQ4:
-					case CODE_RefTime4:
-					case CODE_RefScore4:
-					case CODE_RefHt4:
-					case CODE_Ref4:
+					case CODE_REFPLACE4:
+					case CODE_REFQ4:
+					case CODE_REFTIME4:
+					case CODE_REFSCORE4:
+					case CODE_REFHT4:
+					case CODE_REF4:
 						if (3 < run->GetReferenceRuns().size())
-							RefRunHelper(text, run->GetReferenceRuns()[3], lines[j].code, multiline);
+							RefRunHelper(text, run->GetReferenceRuns()[3], sc_lines[j].code);
 						break;
 					}
 					ARBString str = text.str();
 					if (!str.empty())
 					{
+						if (1 < sc_lines[j].rowspan)
+							rect.bottom -= rect.Width() * sc_lines[j].rowspan;
 						pDC->SelectObject(&fontData);
-						UINT flags = DT_LEFT | DT_NOPREFIX;
-						if (multiline)
-							flags |= DT_WORDBREAK;
-						else
-							flags |= DT_SINGLELINE | DT_VCENTER;
+						UINT flags = DT_NOPREFIX | sc_lines[j].fmt;
+						if (!(flags & DT_VCENTER))
+							rect.top = rText.bottom + 1;
 						pDC->DrawText(str.c_str(), -1, rect, flags);
 						pDC->SelectObject(&fontText);
 					}
@@ -668,7 +734,8 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 		}
 	}
 
-	pDC->SelectObject(pOld);
+	pDC->SelectObject(pOldFont);
+	pDC->SelectObject(pOldPen);
 }
 
 void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
@@ -678,7 +745,6 @@ void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 
 	// Drawing area. Note, located at 0,0.
 	CRect r(pInfo->m_rectDraw);
-	TRACE("rectDraw: %d,%d %d,%d (%dx%d)\n", pInfo->m_rectDraw.left, pInfo->m_rectDraw.top, pInfo->m_rectDraw.right, pInfo->m_rectDraw.bottom, pInfo->m_rectDraw.Width(), pInfo->m_rectDraw.Height());
 	pDC->DPtoLP(r);
 	// Physical size of page, larger than printing area.
 	CSize szPhysical(pDC->GetDeviceCaps(PHYSICALWIDTH), pDC->GetDeviceCaps(PHYSICALHEIGHT));
@@ -727,9 +793,9 @@ void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool PrintRuns(ARBDogPtr inDog, std::vector<RunInfo> const& inRuns)
+bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> const& inRuns)
 {
-	CPrintRuns runs(inDog, inRuns);
+	CPrintRuns runs(inConfig, inDog, inRuns);
 
 	// Style the printing after CView (code is based on CView::OnFilePrint)
 

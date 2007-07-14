@@ -643,6 +643,10 @@
 #define IDS_COL_VENUES                  4211
 #define IDS_COL_YARDS                   4220
 #define IDS_COL_YPS                     4221
+#define IDS_COL_OTHERPOINTS             4222
+#define IDS_COL_DIV_LVL_EVT             4223
+#define IDS_COL_OPEN_CLOSE              4224
+#define IDS_COL_NAME_BREED_NOTE         4225
 #define IDS_SYSERR_MEMORY               4300
 #define IDS_SYSERR_SE_ERR_PNF           4301
 #define IDS_SYSERR_SE_ERR_FNF           4302

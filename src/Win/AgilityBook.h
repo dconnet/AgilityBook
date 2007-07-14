@@ -137,9 +137,13 @@ extern BOOL GetLocalStatus(
 
 /**
  * Print blank pages to enter runs on.
+ * @param inConfig Configuration
  * @param inDog Dog's runs to print.
  * @param inRuns Runs to print, if empty, print blank pages.
  * @return Printed?
  */
 #include "PointsData.h"
-extern bool PrintRuns(ARBDogPtr inDog, std::vector<RunInfo> const& inRuns);
+extern bool PrintRuns(
+		ARBConfig const* inConfig,
+		ARBDogPtr inDog,
+		std::vector<RunInfo> const& inRuns);
