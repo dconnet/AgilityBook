@@ -1714,7 +1714,7 @@ void CAgilityBookViewRuns::OnAgilityPrintRuns()
 				runs.push_back(RunInfo(pData->GetTrial(), pData->GetRun()));
 			}
 		}
-		PrintRuns(dog, runs);
+		PrintRuns(&(GetDocument()->GetConfig()), dog, runs);
 	}
 }
 

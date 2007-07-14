@@ -976,7 +976,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			{
 				runs.push_back(RunInfo(GetTrial(), *iRun));
 			}
-			PrintRuns(GetDog(), runs);
+			PrintRuns(&(m_pTree->GetDocument()->GetConfig()), GetDog(), runs);
 		}
 		break;
 	}
@@ -1309,7 +1309,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		{
 			std::vector<RunInfo> runs;
 			runs.push_back(RunInfo(GetTrial(), m_pRun));
-			PrintRuns(GetDog(), runs);
+			PrintRuns(&(m_pTree->GetDocument()->GetConfig()), GetDog(), runs);
 		}
 		break;
 	}
