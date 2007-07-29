@@ -52,8 +52,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 // Added '2' to avoid dependencies on class defined (locally) in viewprnt.cpp.
-// In fact, I suspect if I compiled using MFC DLLs, it wouldn't work otherwise
+// In fact, I suspect if I compiled using MFC DLLs, it wouldn't work otherwise.
 // Since I'm statically linking, the OnCancel/... actually resolve when linking
+
+static bool s_bUserAbort = false;
+
 class CPrintingDialog2 : public CDialog
 {
 public:
@@ -63,7 +66,7 @@ public:
 	CPrintingDialog2::CPrintingDialog2(CWnd* pParent)
 	{
 		Create(CPrintingDialog2::IDD, pParent);      // modeless !
-		_afxWinState->m_bUserAbort = FALSE;
+		s_bUserAbort = false;
 	}
 	virtual ~CPrintingDialog2() { }
 
@@ -80,21 +83,23 @@ BOOL CPrintingDialog2::OnInitDialog()
 
 void CPrintingDialog2::OnCancel()
 {
-	_afxWinState->m_bUserAbort = TRUE;  // flag that user aborted print
+	s_bUserAbort = true;  // flag that user aborted print
 	CDialog::OnCancel();
 }
 
 BOOL CALLBACK AbortProc(HDC, int)
 {
-	_AFX_WIN_STATE* pWinState = _afxWinState;
 	MSG msg;
-	while (!pWinState->m_bUserAbort &&
-		::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+	while (!s_bUserAbort && ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
 	{
+#if _MSC_VER >= 1300
 		if (!AfxPumpMessage())
+#else
+		if (!AfxGetApp()->PumpMessage())
+#endif
 			return FALSE;   // terminate if WM_QUIT received
 	}
-	return !pWinState->m_bUserAbort;
+	return !s_bUserAbort;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -143,7 +148,7 @@ BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
 	if (pInfo->m_pPD->m_pd.hDC == NULL)
 		return FALSE;
 	pInfo->m_nNumPreviewPages = pApp->m_nNumPreviewPages;
-	ENSURE(pInfo->m_strPageDesc.LoadString(AFX_IDS_PREVIEWPAGEDESC));
+	pInfo->m_strPageDesc.LoadString(AFX_IDS_PREVIEWPAGEDESC);
 	return TRUE;
 }
 
@@ -837,8 +842,11 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 
 	// Initialise print document details
 	// Begin a new print job
-	printInfo.m_nJobNumber = dcPrint.StartDoc(&docInfo);
-	if (printInfo.m_nJobNumber == SP_ERROR)
+	int jobNumber = dcPrint.StartDoc(&docInfo);
+#if _MSC_VER >= 1300
+	printInfo.m_nJobNumber = jobNumber;
+#endif
+	if (jobNumber == SP_ERROR)
 	{
 		// enable main window before proceeding
 		hwndTemp->EnableWindow(TRUE);
@@ -881,7 +889,11 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 			break;
 		// write current page
 		TCHAR szBuf[80];
+#if _MSC_VER >= 1400
 		ATL_CRT_ERRORCHECK_SPRINTF(_sntprintf_s(szBuf, _countof(szBuf), _countof(szBuf) - 1, strTemp, printInfo.m_nCurPage));
+#else
+		sprintf(szBuf, strTemp, printInfo.m_nCurPage);
+#endif
 		dlgPrintStatus.SetDlgItemText(AFX_IDC_PRINT_PAGENUM, szBuf);
 
 		// set up drawing rect to entire page (in logical coordinates)
