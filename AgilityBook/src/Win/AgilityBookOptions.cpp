@@ -942,6 +942,7 @@ void CAgilityBookOptions::GetColumnOrder(
 			{
 			case IO_TYPE_VIEW_TREE_DOG:
 				outValues.push_back(IO_TREE_DOG_CALLNAME);
+				outValues.push_back(IO_TREE_DOG_AGE);
 				break;
 			case IO_TYPE_VIEW_TREE_TRIAL:
 				outValues.push_back(IO_TREE_TRIAL_START);
