@@ -1,12 +1,14 @@
-7/13/2007: v1.9.2.12 <in development>
+8/2/2007: v1.9.2.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
+  - Added 'CalSite' to config.
   - Fixed AKC FAST titles for ExB, FTC. Added Preferred versions.
   - Added Hoopers to NADAC. Updated Platinum/Purple title names.
-    (Still need to update titles properly)
+    (Still need to update Hoopers titles properly)
 - New features / Enhancements:
   - Add support for repeating titles starting from '1'.
   - Add "book" pages from printing, allow printing runs using same.
+  - Added feature to import calendar entries automatically.
 - Bug fixes
   - Fixed a problem where the Table flag on a run didn't get cleared when
     modifying the run into an event without a table (eg: Standard->JWW).

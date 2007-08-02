@@ -333,6 +333,30 @@ public:
 	{
 		m_Confirmation = inConfirmation;
 	}
+	ARBString const& GetSecEmail() const
+	{
+		return m_SecEmail;
+	}
+	void SetSecEmail(ARBString const& inAddr)
+	{
+		m_SecEmail = inAddr;
+	}
+	ARBString const& GetPremiumURL() const
+	{
+		return m_PremiumURL;
+	}
+	void SetPremiumURL(ARBString const& inURL)
+	{
+		m_PremiumURL = inURL;
+	}
+	ARBString const& GetOnlineURL() const
+	{
+		return m_OnlineURL;
+	}
+	void SetOnlineURL(ARBString const& inURL)
+	{
+		m_OnlineURL = inURL;
+	}
 	ARBString const& GetNote() const
 	{
 		return m_Note;
@@ -355,6 +379,9 @@ private:
 	eEntry m_eEntered;
 	eAccommodations m_eAccommodations;
 	ARBString m_Confirmation;
+	ARBString m_SecEmail;
+	ARBString m_PremiumURL;
+	ARBString m_OnlineURL;
 	ARBString m_Note;
 };
 

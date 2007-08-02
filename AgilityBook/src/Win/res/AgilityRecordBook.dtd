@@ -11,8 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2007-07-03 DRC File version 12.6
+2007-08-02 DRC File version 12.6
                Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
+               Added 'CalSite' to config, 'SecEmail'/etc to 'Calendar'
 2007-04-22 DRC File version 12.5
                Added 'defValue' to 'OtherPts'.
                Added reservations to calendar.
@@ -108,6 +109,9 @@ This section defines the rules for the calendar cribsheet.
 		Entered (E|P|N) 'N'
 		Accom (N|T|C) 'N'
 		Confirm CDATA #REQUIRED
+		SecEmail CDATA #IMPLIED
+		PremiumURL CDATA #IMPLIED
+		OnlineURL CDATA #IMPLIED
 		>
 
 <!-- End of Calendar -->
@@ -132,7 +136,7 @@ This section defines the rules of each venue (the Configuration).
  to upgrade. The user can merge the configuration any number of times.
  If 'update' is set to 'n', this file will no longer prompt to update the config
 -->
-<!ELEMENT Configuration (Action*, Venue*, FaultType*, OtherPts*) >
+<!ELEMENT Configuration (Action*, Venue*, CalSite*, FaultType*, OtherPts*) >
 	<!ATTLIST Configuration
 		version CDATA #IMPLIED
 		update (y|n) 'y'
@@ -145,30 +149,30 @@ for renaming titles.
  Verb: Supported actions (determines usage of other attributes):
   'RenameTitle':
     Venue: Venue that contains title
-	Div: Unused
+    Div: Unused
     OldName: Title to be renamed.
     NewName: New name.
   'DeleteTitle': (I added ASCA titles that shouldn't be there)
     Venue: Venue that contains title
-	Div: If set, limit delete to this division (I created dup names in NADAC)
-	     Note: As of v1.7, this is obsolete - titles are not grouped by division
+    Div: If set, limit delete to this division (I created dup names in NADAC)
+         Note: As of v1.7, this is obsolete - titles are not grouped by division
     OldName: Title to be removed.
-	NewName: If set, rename any existing titles, otherwise titles are deleted.
+    NewName: If set, rename any existing titles, otherwise titles are deleted.
   'DeleteEvent': NADAC doesn't have a 'Championship' class (Double Shot)
     Venue: Venue that contains event
-	Div: Unused
+    Div: Unused
     OldName: Event to be delete.
-	NewName: Unused
+    NewName: Unused
   'RenameEvent': NADAC changed 'Wildcard' to 'Chance'
     Venue: Venue that contains event
-	Div: Unused
+    Div: Unused
     OldName: Event to be renamed.
-	NewName: New name.
+    NewName: New name.
   'RenameDivision': CPE Standard->Regular, shouldn't have had Junior
     Venue: Venue that contains division
-	Div: Unused
+    Div: Unused
     OldName: Division to be renamed.
-	NewName: New name.
+    NewName: New name.
  pcdata: currently unused, defined to allow future expansion.
 -->
 <!ELEMENT Action (#PCDATA) >
@@ -178,6 +182,42 @@ for renaming titles.
 		Div CDATA #IMPLIED
 		OldName CDATA #IMPLIED
 		NewName CDATA #IMPLIED
+		>
+
+<!--
+Define a calendar source site.
+ url: Url to request data from with special formatting
+      "!L!": Add selected LocCodes (code1+code2...)
+      "!V!": Add selected venues (v1+v2...)
+Note: The requested data will be returned using with the venue code. We'll
+run a 'fixup' routine before actually importing the Calendar data.
+This means that the URL query can be specified with no locations or venues.
+Depending on the server, this could mean 'return all'. When processing returned
+data, no assumptions are made based on the query we started with.
+-->
+<!ELEMENT CalSite (LocCode*, VenueCode*) >
+	<!ATTLIST CalSite
+		url CDATA #REQUIRED
+		>
+<!--
+List of locations we can select from.
+ code: Transmitted to url
+ name: Displayed name
+-->
+<!ELEMENT LocCode EMPTY >
+	<!ATTLIST LocCode
+		code CDATA #REQUIRED
+		name CDATA #REQUIRED
+		>
+<!--
+List of venues we can select from.
+ code: Transmitted to url
+ venue: mapping to our names, if not set, code is same as ours
+-->
+<!ELEMENT VenueCode EMPTY >
+	<!ATTLIST VenueCode
+		code CDATA #REQUIRED
+		venue CDATA #IMPLIED
 		>
 
 <!--

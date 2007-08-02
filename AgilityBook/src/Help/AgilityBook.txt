@@ -98,6 +98,24 @@ Reservations have been made.
 .topic HIDC_CAL_ACCOM_CONFIRMATION
 Confirmation number of reservation.
 
+.topic HIDC_CAL_ONLINE_ENTRY
+Enter online using the following specified URL.
+
+.topic HIDC_CAL_ONLINE_URL
+URL to enter online.
+
+.topic HIDC_CAL_EMAIL_SEC_ADDR
+Email address for Trial Secretary.
+
+.topic HIDC_CAL_EMAIL_SEC
+Email the trial secretary using the specified address.
+
+.topic HIDC_CAL_PREMIUM_URL
+URL for the trial premium.
+
+.topic HIDC_CAL_PREMIUM_ENTRY
+View the trial premium using the specified URL.
+
 .topic HIDC_CLUB_CLUBS
 Enter the name of the club. All previously entered clubs are listed here.
 

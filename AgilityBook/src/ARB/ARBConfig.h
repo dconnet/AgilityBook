@@ -42,6 +42,7 @@
  */
 
 #include "ARBConfigAction.h"
+#include "ARBConfigCalSite.h"
 #include "ARBConfigFault.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBConfigVenue.h"
@@ -214,6 +215,7 @@ public:
 private:
 	bool m_bUpdate;
 	short m_Version;
+	std::vector<ARBConfigCalSite> m_CalSites;
 	ARBConfigActionList m_Actions;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
