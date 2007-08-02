@@ -354,6 +354,9 @@ ARBCalendar::ARBCalendar()
 	, m_eEntered(eNot)
 	, m_eAccommodations(eAccomNone)
 	, m_Confirmation()
+	, m_SecEmail()
+	, m_PremiumURL()
+	, m_OnlineURL()
 	, m_Note()
 {
 }
@@ -371,6 +374,9 @@ ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 	, m_eEntered(rhs.m_eEntered)
 	, m_eAccommodations(rhs.m_eAccommodations)
 	, m_Confirmation(rhs.m_Confirmation)
+	, m_SecEmail(rhs.m_SecEmail)
+	, m_PremiumURL(rhs.m_PremiumURL)
+	, m_OnlineURL(rhs.m_OnlineURL)
 	, m_Note(rhs.m_Note)
 {
 }
@@ -400,6 +406,9 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 		m_eEntered = rhs.m_eEntered;
 		m_eAccommodations = rhs.m_eAccommodations;
 		m_Confirmation = rhs.m_Confirmation;
+		m_SecEmail = rhs.m_SecEmail;
+		m_PremiumURL = rhs.m_PremiumURL;
+		m_OnlineURL = rhs.m_OnlineURL;
 		m_Note = rhs.m_Note;
 	}
 	return *this;
@@ -419,6 +428,9 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 		&& m_eEntered == rhs.m_eEntered
 		&& m_eAccommodations == rhs.m_eAccommodations
 		&& m_Confirmation == rhs.m_Confirmation
+		&& m_SecEmail == rhs.m_SecEmail
+		&& m_PremiumURL == rhs.m_PremiumURL
+		&& m_OnlineURL == rhs.m_OnlineURL
 		&& m_Note == rhs.m_Note;
 }
 
@@ -495,6 +507,24 @@ size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 	if (0 < m_Confirmation.length())
 	{
 		ioStrings.insert(m_Confirmation);
+		++nItems;
+	}
+
+	if (0 < m_SecEmail.length())
+	{
+		ioStrings.insert(m_SecEmail);
+		++nItems;
+	}
+
+	if (0 < m_PremiumURL.length())
+	{
+		ioStrings.insert(m_PremiumURL);
+		++nItems;
+	}
+
+	if (0 < m_OnlineURL.length())
+	{
+		ioStrings.insert(m_OnlineURL);
 		++nItems;
 	}
 
@@ -630,6 +660,10 @@ bool ARBCalendar::Load(
 		inTree.GetAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
 	}
 
+	inTree.GetAttrib(ATTRIB_CAL_SECEMAIL, m_SecEmail);
+	inTree.GetAttrib(ATTRIB_CAL_PREMIUMURL, m_PremiumURL);
+	inTree.GetAttrib(ATTRIB_CAL_ONLINEURL, m_OnlineURL);
+
 	m_Note = inTree.GetValue();
 	return true;
 }
@@ -673,6 +707,12 @@ bool ARBCalendar::Save(Element& ioTree) const
 	}
 	if (0 < m_Confirmation.length())
 		cal.AddAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
+	if (0 < m_SecEmail.length())
+		cal.AddAttrib(ATTRIB_CAL_SECEMAIL, m_SecEmail);
+	if (0 < m_PremiumURL.length())
+		cal.AddAttrib(ATTRIB_CAL_PREMIUMURL, m_PremiumURL);
+	if (0 < m_OnlineURL.length())
+		cal.AddAttrib(ATTRIB_CAL_ONLINEURL, m_OnlineURL);
 	if (0 < m_Note.length())
 		cal.SetValue(m_Note);
 	return true;

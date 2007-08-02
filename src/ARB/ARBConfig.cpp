@@ -63,6 +63,7 @@ static char THIS_FILE[] = __FILE__;
 ARBConfig::ARBConfig()
 	: m_bUpdate(true)
 	, m_Version(0)
+	, m_CalSites()
 	, m_Actions()
 	, m_Venues()
 	, m_FaultTypes()
@@ -73,6 +74,7 @@ ARBConfig::ARBConfig()
 ARBConfig::ARBConfig(ARBConfig const& rhs)
 	: m_bUpdate(rhs.m_bUpdate)
 	, m_Version(rhs.m_Version)
+	, m_CalSites(rhs.m_CalSites)
 	, m_Actions()
 	, m_Venues()
 	, m_FaultTypes()
@@ -109,6 +111,7 @@ bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
 	// Equality does not include actions or the update flag
 	return m_Version == rhs.m_Version
+		&& m_CalSites == rhs.m_CalSites
 		&& m_Venues == rhs.m_Venues
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
@@ -118,6 +121,7 @@ void ARBConfig::clear()
 {
 	m_bUpdate = true;
 	m_Version = 0;
+	m_CalSites.clear();
 	m_Actions.clear();
 	m_Venues.clear();
 	m_FaultTypes.clear();
@@ -176,6 +180,12 @@ bool ARBConfig::Load(
 			// Ignore any errors...
 			m_Actions.Load(element, inVersion, ioCallback);
 		}
+		else if (name == TREE_CALSITE)
+		{
+			ARBConfigCalSite site;
+			if (site.Load(element, inVersion, ioCallback))
+				m_CalSites.push_back(site);
+		}
 		else if (name == TREE_VENUE)
 		{
 			// Ignore any errors...
@@ -204,6 +214,13 @@ bool ARBConfig::Save(Element& ioTree) const
 	if (!m_bUpdate)
 		config.AddAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate);
 	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
+	for (std::vector<ARBConfigCalSite>::const_iterator i = m_CalSites.begin();
+		i != m_CalSites.end();
+		++i)
+	{
+		if (!(*i).Save(config))
+			return false;
+	}
 	// Do not save actions - Actions are done only when loading/merging a
 	// configuration. Keeping them around could cause possible future problems.
 	if (!m_Venues.Save(config))

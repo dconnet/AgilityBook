@@ -1380,6 +1380,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBConfigCalSite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBConfigCalSite.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBConfigDivision.cpp"
 				>
 			</File>

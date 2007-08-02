@@ -36,7 +36,8 @@
  * list all the elements and attributes from the DTD.
  *
  * Revision History
- * @li 2007-07-03 DRC Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
+ * @li 2007-08-02 DRC Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
+ *                    Added 'CalSite' to config. 'SecEmail'/etc to 'Calendar'
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
  * @li 2007-02-27 DRC Added 'defValue'.
  * @li 2007-01-03 DRC Changed 'CRCDMeta' to 'CRCDMeta2'.
@@ -100,6 +101,9 @@
 #define TREE_TITLE_POINTS					_T("TitlePoints")
 #define TREE_LIFETIME_POINTS				_T("LifeTime")
 #define TREE_PLACEMENTS						_T("Placements")
+#define TREE_CALSITE						_T("CalSite")
+#define TREE_LOCCODE						_T("LocCode")
+#define TREE_VENUECODE						_T("VenueCode")
 #define TREE_FAULTTYPE						_T("FaultType")
 #define TREE_OTHERPTS						_T("OtherPts")
 #define TREE_INFO							_T("Info")
@@ -155,6 +159,9 @@
 #define ATTRIB_CAL_ENTERED					_T("Entered")
 #define ATTRIB_CAL_ACCOMMODATION			_T("Acc")
 #define ATTRIB_CAL_CONFIRMATION				_T("Confirm")
+#define ATTRIB_CAL_SECEMAIL					_T("SecEmail")
+#define ATTRIB_CAL_PREMIUMURL				_T("PremiumURL")
+#define ATTRIB_CAL_ONLINEURL				_T("OnlineURL")
 #define ATTRIB_CAL_NOTE						_T("Note")
 #define ATTRIB_TRAINING_DATE				_T("Date")
 #define ATTRIB_TRAINING_NAME				_T("Name")
@@ -180,6 +187,11 @@
 #define ATTRIB_MULTIQ_ITEM_DIV				_T("Div")
 #define ATTRIB_MULTIQ_ITEM_LEVEL			_T("Level")
 #define ATTRIB_MULTIQ_ITEM_EVENT			_T("Event")
+#define ATTRIB_CALSITE_URL					_T("url")
+#define ATTRIB_LOCCODE_CODE					_T("code")
+#define ATTRIB_LOCCODE_NAME					_T("name")
+#define ATTRIB_VENUECODE_CODE				_T("code")
+#define ATTRIB_VENUECODE_VENUE				_T("venue")
 #define ATTRIB_OTHERPTS_NAME				_T("Name")
 #define ATTRIB_OTHERPTS_COUNT				_T("Count")
 #define ATTRIB_OTHERPTS_DEFAULT				_T("defValue")
