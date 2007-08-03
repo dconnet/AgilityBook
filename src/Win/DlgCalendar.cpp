@@ -74,17 +74,20 @@ CDlgCalendar::CDlgCalendar(
 	m_dateStart = CTime::GetCurrentTime();
 	m_dateEnd = CTime::GetCurrentTime() + CTimeSpan(1, 0, 0, 0);
 	m_bTentative = m_pCal->IsTentative() ? TRUE : FALSE;
-	m_Entered = 0;
-	m_Location = m_pCal->GetLocation().c_str();
-	m_Venue = m_pCal->GetVenue().c_str();
-	m_Club = m_pCal->GetClub().c_str();
 	m_dateOpens = CTime::GetCurrentTime();
 	m_bOpeningUnknown = TRUE;
 	m_dateDraws = CTime::GetCurrentTime();
 	m_bDrawingUnknown = TRUE;
 	m_dateCloses = CTime::GetCurrentTime();
 	m_bClosingUnknown = TRUE;
+	m_Entered = 0;
+	m_OnlineUrl = m_pCal->GetOnlineURL().c_str();
 	m_Accommodation = 0;
+	m_PremiumUrl = m_pCal->GetPremiumURL().c_str();
+	m_EMailSecAddr = m_pCal->GetSecEmail().c_str();
+	m_Venue = m_pCal->GetVenue().c_str();
+	m_Club = m_pCal->GetClub().c_str();
+	m_Location = m_pCal->GetLocation().c_str();
 	m_Notes = m_pCal->GetNote().c_str();
 	//}}AFX_DATA_INIT
 	if (m_pCal->GetStartDate().IsValid())
@@ -143,26 +146,35 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_START, m_dateStart);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_END, m_dateEnd);
 	DDX_Check(pDX, IDC_CAL_TENTATIVE, m_bTentative);
-	DDX_Radio(pDX, IDC_CAL_ENTER_NOT, m_Entered);
-	DDX_Control(pDX, IDC_CAL_LOCATION, m_ctrlLocation);
-	DDX_CBString(pDX, IDC_CAL_LOCATION, m_Location);
-	DDX_Control(pDX, IDC_CAL_LOCATION_NOTES, m_ctrlLocationNotes);
-	DDX_Control(pDX, IDC_CAL_LOCATION_NOTE, m_ctrlLocationInfo);
-	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
-	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
-	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
-	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
-	DDX_Control(pDX, IDC_CAL_CLUB_NOTES, m_ctrlClubNotes);
-	DDX_Control(pDX, IDC_CAL_CLUB_NOTE, m_ctrlClubInfo);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_OPENS, m_dateOpens);
 	DDX_Check(pDX, IDC_CAL_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_DRAWS, m_dateDraws);
 	DDX_Check(pDX, IDC_CAL_DATE_DRAWS_UNKNOWN, m_bDrawingUnknown);
 	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_CLOSES, m_dateCloses);
 	DDX_Check(pDX, IDC_CAL_DATE_CLOSES_UNKNOWN, m_bClosingUnknown);
+	DDX_Radio(pDX, IDC_CAL_ENTER_NOT, m_Entered);
+	DDX_Control(pDX, IDC_CAL_ONLINE_ENTRY, m_ctrlOnlineUrlEntry);
+	DDX_Text(pDX, IDC_CAL_ONLINE_URL, m_OnlineUrl);
+	DDX_Control(pDX, IDC_CAL_ONLINE_URL, m_ctrlOnlineUrl);
 	DDX_Radio(pDX, IDC_CAL_ACCOM_NONE, m_Accommodation);
 	DDX_Text(pDX, IDC_CAL_ACCOM_CONFIRMATION, m_Confirmation);
 	DDX_Control(pDX, IDC_CAL_ACCOM_CONFIRMATION, m_ctrlConfirmation);
+	DDX_Control(pDX, IDC_CAL_PREMIUM_ENTRY, m_ctrlPremiumEntry);
+	DDX_Text(pDX, IDC_CAL_PREMIUM_URL, m_PremiumUrl);
+	DDX_Control(pDX, IDC_CAL_PREMIUM_URL, m_ctrlPremiumUrl);
+	DDX_Control(pDX, IDC_CAL_EMAIL_SEC, m_ctrlEMailSec);
+	DDX_Text(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_EMailSecAddr);
+	DDX_Control(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_ctrlEMailSecAddr);
+	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
+	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
+	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
+	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
+	DDX_Control(pDX, IDC_CAL_CLUB_NOTES, m_ctrlClubNotes);
+	DDX_Control(pDX, IDC_CAL_CLUB_NOTE, m_ctrlClubInfo);
+	DDX_Control(pDX, IDC_CAL_LOCATION, m_ctrlLocation);
+	DDX_CBString(pDX, IDC_CAL_LOCATION, m_Location);
+	DDX_Control(pDX, IDC_CAL_LOCATION_NOTES, m_ctrlLocationNotes);
+	DDX_Control(pDX, IDC_CAL_LOCATION_NOTE, m_ctrlLocationInfo);
 	DDX_Text(pDX, IDC_CAL_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
@@ -182,6 +194,9 @@ BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CAL_ACCOM_NONE, OnAccommodation)
 	ON_BN_CLICKED(IDC_CAL_ACCOM_NEEDED, OnAccommodation)
 	ON_BN_CLICKED(IDC_CAL_ACCOM_MADE, OnAccommodation)
+	ON_BN_CLICKED(IDC_CAL_ONLINE_ENTRY, OnBnClickedCalOnlineEntry)
+	ON_BN_CLICKED(IDC_CAL_PREMIUM_ENTRY, OnBnClickedCalPremiumEntry)
+	ON_BN_CLICKED(IDC_CAL_EMAIL_SEC, OnBnClickedCalEmailSec)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -378,16 +393,31 @@ void CDlgCalendar::OnAccommodation()
 	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
 }
 
+void CDlgCalendar::OnBnClickedCalOnlineEntry()
+{
+	UpdateData(TRUE);
+}
+
+void CDlgCalendar::OnBnClickedCalPremiumEntry()
+{
+	UpdateData(TRUE);
+}
+
+void CDlgCalendar::OnBnClickedCalEmailSec()
+{
+	UpdateData(TRUE);
+}
+
 void CDlgCalendar::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
-	m_Location.TrimRight();
-	m_Location.TrimLeft();
 	m_Venue.TrimRight();
 	m_Venue.TrimLeft();
 	m_Club.TrimRight();
 	m_Club.TrimLeft();
+	m_Location.TrimRight();
+	m_Location.TrimLeft();
 	m_Notes.TrimRight();
 	m_Notes.TrimLeft();
 
@@ -458,6 +488,9 @@ void CDlgCalendar::OnOK()
 	m_pCal->SetOpeningDate(openingDate);
 	m_pCal->SetDrawDate(drawingDate);
 	m_pCal->SetClosingDate(closingDate);
+	m_pCal->SetOnlineURL((LPCTSTR)m_OnlineUrl);
+	m_pCal->SetPremiumURL((LPCTSTR)m_PremiumUrl);
+	m_pCal->SetSecEmail((LPCTSTR)m_EMailSecAddr);
 	switch (m_Accommodation)
 	{
 	default:

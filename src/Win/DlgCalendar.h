@@ -59,26 +59,35 @@ private:
 	CTime	m_dateStart;
 	CTime	m_dateEnd;
 	BOOL	m_bTentative;
-	int		m_Entered;
-	CComboBox2	m_ctrlLocation;
-	CString	m_Location;
-	CNoteButton	m_ctrlLocationNotes;
-	CRichEditCtrl2	m_ctrlLocationInfo;
-	CComboBox2	m_ctrlVenue;
-	CString	m_Venue;
-	CComboBox2	m_ctrlClub;
-	CString	m_Club;
-	CNoteButton	m_ctrlClubNotes;
-	CRichEditCtrl2	m_ctrlClubInfo;
 	CTime	m_dateOpens;
 	BOOL	m_bOpeningUnknown;
 	CTime	m_dateDraws;
 	BOOL	m_bDrawingUnknown;
 	CTime	m_dateCloses;
 	BOOL	m_bClosingUnknown;
+	int		m_Entered;
+	CButton	m_ctrlOnlineUrlEntry;
+	CString	m_OnlineUrl;
+	CEdit	m_ctrlOnlineUrl;
 	int		m_Accommodation;
 	CString	m_Confirmation;
 	CEdit	m_ctrlConfirmation;
+	CButton	m_ctrlPremiumEntry;
+	CString	m_PremiumUrl;
+	CEdit	m_ctrlPremiumUrl;
+	CButton	m_ctrlEMailSec;
+	CString	m_EMailSecAddr;
+	CEdit	m_ctrlEMailSecAddr;
+	CComboBox2	m_ctrlVenue;
+	CString	m_Venue;
+	CComboBox2	m_ctrlClub;
+	CString	m_Club;
+	CNoteButton	m_ctrlClubNotes;
+	CRichEditCtrl2	m_ctrlClubInfo;
+	CComboBox2	m_ctrlLocation;
+	CString	m_Location;
+	CNoteButton	m_ctrlLocationNotes;
+	CRichEditCtrl2	m_ctrlLocationInfo;
 	CString	m_Notes;
 	//}}AFX_DATA
 	ARBCalendarPtr m_pCal;
@@ -107,6 +116,9 @@ protected:
 	afx_msg void OnDateDrawsUnknown();
 	afx_msg void OnDateClosesUnknown();
 	afx_msg void OnAccommodation();
+	afx_msg void OnBnClickedCalOnlineEntry();
+	afx_msg void OnBnClickedCalPremiumEntry();
+	afx_msg void OnBnClickedCalEmailSec();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
