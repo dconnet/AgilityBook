@@ -100,6 +100,7 @@
 #define IDD_PROGRESS_DLG                250
 #define IDD_CONFIG_MULTI_Q              251
 #define IDD_EVENT_SELECT                252
+#define IDD_AUTHENTICATE                253
 #define IDD_POINTS_VIEW_SORT            254
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
@@ -547,6 +548,8 @@
 #define IDC_POINTS_VIEW_SORT_C1         1660
 #define IDC_POINTS_VIEW_SORT_C2         1661
 #define IDC_POINTS_VIEW_SORT_C3         1662
+#define IDC_AUTH_USERNAME               1670
+#define IDC_AUTH_PASSWORD               1671
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -1021,7 +1024,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        255
 #define _APS_NEXT_COMMAND_VALUE         32860
-#define _APS_NEXT_CONTROL_VALUE         1670
+#define _APS_NEXT_CONTROL_VALUE         1680
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

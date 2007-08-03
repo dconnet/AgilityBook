@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-03 DRC Added UserNames
  * @li 2006-07-16 DRC Added PointsViewSort
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-18 DRC Changed how filter options are done.
@@ -1151,4 +1152,16 @@ bool CAgilityBookOptions::ShowHtmlPoints(bool* outIEInstalled)
 void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
 {
 	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("showHtml"), bSet ? 1 : 0);
+}
+
+CString CAgilityBookOptions::GetUserName(CString const& hint)
+{
+	return AfxGetApp()->GetProfileString(_T("UserNames"), hint, _T(""));
+}
+
+void CAgilityBookOptions::SetUserName(
+		CString const& hint,
+		CString const& userName)
+{
+	AfxGetApp()->WriteProfileString(_T("UserNames"), hint, userName);
 }

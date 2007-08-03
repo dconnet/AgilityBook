@@ -36,6 +36,7 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
  *                    I can now advertise the url as "www.agilityrecordbook.com"
@@ -44,15 +45,14 @@
  */
 
 #include "stdafx.h"
-#include <afxinet.h>
 #include "AgilityBook.h"
+#include "UpdateInfo.h"
 
 #include "AgilityBookDoc.h"
-#include "DlgBaseDialog.h"
 #include "Element.h"
 #include "HyperLink.h"
+#include "ReadHttp.h"
 #include "Splash.h"
-#include "UpdateInfo.h"
 #include "VersionNum.h"
 
 #ifdef _DEBUG
@@ -90,157 +90,13 @@ bool CUpdateInfo::UpdateConfig(
 
 /////////////////////////////////////////////////////////////////////////////
 
-static DWORD dwHttpRequestFlags = INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
-static const TCHAR szHeaders[] = _T("Accept: text\r\n");
-
-/**
- * Read a file from the internet and return the data.
- */
-static bool ReadHttpFile(
-		CString const& inURL,
-		CStringA& outData,
-		CStringA& outErrMsg)
-{
-	CWaitCursor wait;
-	outData.Empty();
-	outErrMsg.Empty();
-	try
-	{
-		// Code is based on the MSDN 'TEAR' sample.
-		// Simply using OpenURL() is easier, but it doesn't handle redirection.
-		DWORD dwRet;
-		CString strServerName;
-		CString strObject;
-		INTERNET_PORT nPort;
-		DWORD dwServiceType;
-
-		if (AfxParseURL(inURL, dwServiceType, strServerName, strObject, nPort)
-		&& dwServiceType == INTERNET_SERVICE_HTTP)
-		{
-			CInternetSession session(_T("my version"));
-
-			CHttpConnection* pServer = session.GetHttpConnection(strServerName, nPort);
-			CHttpFile* pFile = pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-				strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
-			pFile->AddRequestHeaders(szHeaders);
-			pFile->SendRequest();
-			pFile->QueryInfoStatusCode(dwRet);
-			// If we've been redirected, re-parse. In theory SendRequest()
-			// should do this if NO_AUTO_REDIRECT is not specified. I haven't
-			// figured out how yet...
-			if (dwRet == HTTP_STATUS_MOVED
-			|| dwRet == HTTP_STATUS_REDIRECT
-			|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
-			{
-				CString strNewLocation;
-				pFile->QueryInfo(HTTP_QUERY_RAW_HEADERS_CRLF, strNewLocation);
-				int nPlace = strNewLocation.Find(_T("Location: "));
-				if (-1 == nPlace)
-				{
-					outErrMsg += _T("\nInvalid Header query: ") + strNewLocation;
-					strNewLocation.Empty();
-				}
-				else
-				{
-					strNewLocation = strNewLocation.Mid(nPlace + 10);
-					nPlace = strNewLocation.Find('\n');
-					if (nPlace > 0)
-						strNewLocation = strNewLocation.Left(nPlace);
-					// Put what we're accessing back into the url.
-					strNewLocation += strObject;
-				}
-				// Now close the existing connections...
-				pFile->Close();
-				delete pFile;
-				pFile = NULL;
-				pServer->Close();
-				delete pServer;
-				pServer = NULL;
-				// And reopen them.
-				if (!strNewLocation.IsEmpty()
-				&& AfxParseURL(strNewLocation, dwServiceType, strServerName, strObject, nPort))
-				{
-					// try again at the new location
-					pServer = session.GetHttpConnection(strServerName, nPort);
-					pFile = pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-						strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
-					pFile->AddRequestHeaders(szHeaders);
-					pFile->SendRequest();
-					pFile->QueryInfoStatusCode(dwRet);
-					if (dwRet == HTTP_STATUS_MOVED
-					|| dwRet == HTTP_STATUS_REDIRECT
-					|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
-					{
-						outErrMsg += _T("\nURL Redirection: ") + inURL;
-						outErrMsg += _T("\nInvalid URL (2nd redirection): ") + strNewLocation;
-						pFile->Close();
-						delete pFile;
-						pFile = NULL;
-					}
-					else if (dwRet != HTTP_STATUS_OK)
-					{
-						outErrMsg += _T("\nInvalid URL: ") + strNewLocation;
-						pFile->Close();
-						delete pFile;
-						pFile = NULL;
-					}
-				}
-				else
-				{
-					outErrMsg += _T("\nInvalid URL: ") + strNewLocation;
-				}
-			}
-			else if (dwRet != HTTP_STATUS_OK)
-			{
-				outErrMsg += _T("\nInvalid URL: ") + inURL;
-				pFile->Close();
-				delete pFile;
-				pFile = NULL;
-			}
-			if (pFile)
-			{
-				char buffer[1025];
-				UINT nChars;
-				while (0 < (nChars = pFile->Read(buffer, sizeof(buffer)/sizeof(buffer[1])-1)))
-				{
-					buffer[nChars] = 0;
-					outData += buffer;
-				}
-				pFile->Close();
-				delete pFile;
-			}
-			if (pServer)
-			{
-				pServer->Close();
-				delete pServer;
-			}
-			session.Close();
-		}
-		else
-		{
-			outErrMsg += _T("\nInvalid URL: ") + inURL;
-		}
-	}
-	catch (CInternetException* ex)
-	{
-		ex->Delete();
-		outData.Empty();
-		outErrMsg += _T("\n");
-		CString err;
-		err.LoadString(IDS_INTERNET_EXCEPTION);
-		outErrMsg += err;
-	}
-	return (outData.GetLength() > 0);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 CUpdateInfo::CUpdateInfo()
 	: m_VersionNum(_T(""))
 	, m_VerConfig(0)
 	, m_FileName()
 	, m_InfoMsg()
 	, m_UpdateDownload()
+	, m_usernameHint(_T("default"))
 {
 }
 
@@ -267,24 +123,30 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	CString url;
 	url.LoadString(IDS_HELP_UPDATE);
 	url += _T("/version.txt");
-	CStringA data, errMsg;
-	if (!ReadHttpFile(url, data, errMsg))
+	CStringA data;
+	CString errMsg;
+
+	CReadHttp file(url, data);
+	if (!file.ReadHttpFile(m_usernameHint, errMsg))
 	{
 		if (bVerbose)
 		{
 			CSplashWnd::HideSplashScreen();
 			data.LoadString(IDS_UPDATE_UNKNOWN);
-			if (!errMsg.IsEmpty())
-				data += errMsg;
 #ifdef UNICODE
 			CString tmp(data);
+			if (!errMsg.IsEmpty())
+				tmp += errMsg;
 			AfxMessageBox(tmp, MB_ICONEXCLAMATION);
 #else
+			if (!errMsg.IsEmpty())
+				data += errMsg;
 			AfxMessageBox(data, MB_ICONEXCLAMATION);
 #endif
 		}
 		return false;
 	}
+	file.Close();
 
 	// Now parse it into the object.
 #ifdef UNICODE
@@ -454,9 +316,12 @@ void CUpdateInfo::CheckConfig(
 			url.LoadString(IDS_HELP_UPDATE);
 			url += _T("/");
 			url += m_FileName.c_str();
-			CStringA strConfig, errMsg;
-			if (ReadHttpFile(url, strConfig, errMsg))
+			CStringA strConfig;
+			CString errMsg;
+			CReadHttp file(url, strConfig);
+			if (file.ReadHttpFile(m_usernameHint, errMsg))
 			{
+				file.Close();
 				Element tree;
 				ARBString errMsg2;
 				if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg2))

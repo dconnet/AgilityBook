@@ -199,6 +199,9 @@
 				RelativePath="..\..\Win\DlgAssignColumns.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgAuthenticate.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgBaseDialog.cpp">
 			</File>
 			<File
@@ -397,6 +400,9 @@
 				RelativePath="..\..\Win\PointsData.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\ReadHttp.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\Print.cpp">
 			</File>
 			<File
@@ -510,6 +516,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgAssignColumns.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAuthenticate.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgBaseDialog.h">
@@ -708,6 +717,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\PointsData.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\ReadHttp.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\Resource.h">
