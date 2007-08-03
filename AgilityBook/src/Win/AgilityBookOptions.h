@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-03 DRC Added UserNames
  * @li 2006-07-16 DRC Added PointsViewSort
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-05-04 DRC Added IncludeCRCDImage
@@ -224,6 +225,8 @@ public:
 			ARBDate::DateFormat inFormat);
 	static bool ShowHtmlPoints(bool* outIEInstalled = NULL);
 	static void SetShowHtmlPoints(bool bSet);
+	static CString GetUserName(CString const& hint);
+	static void SetUserName(CString const& hint, CString const& userName);
 
 protected:
 	friend class CDlgAssignColumns;

@@ -97,4 +97,5 @@ private:
 	ARBString m_FileName;
 	ARBString m_InfoMsg;
 	CString m_UpdateDownload;
+	CString m_usernameHint;
 };

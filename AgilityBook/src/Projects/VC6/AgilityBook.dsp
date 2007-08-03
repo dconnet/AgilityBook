@@ -174,6 +174,10 @@ SOURCE=..\..\Win\DlgAssignColumns.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgAuthenticate.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgBaseDialog.cpp
 # End Source File
 # Begin Source File
@@ -434,6 +438,10 @@ SOURCE=..\..\Win\PointsData.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\ReadHttp.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\Print.cpp
 # End Source File
 # Begin Source File
@@ -568,6 +576,10 @@ SOURCE=..\..\Win\CrashHandler.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgAssignColumns.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\DlgAuthenticate.h
 # End Source File
 # Begin Source File
 
@@ -836,6 +848,10 @@ SOURCE=..\..\Win\ooCalc.h
 # Begin Source File
 
 SOURCE=..\..\Win\PointsData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\ReadHttp.h
 # End Source File
 # Begin Source File
 
