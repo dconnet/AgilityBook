@@ -85,14 +85,23 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString GetURL() const
+	ARBString GetSearchURL() const
 	{
-		return m_URL;
+		return m_urlSearch;
 	}
-	void SetURL(ARBString const& inURL)
+	void SetSearchURL(ARBString const& inURL)
 	{
-		m_URL = inURL;
+		m_urlSearch = inURL;
 	}
+	ARBString GetHelpURL() const
+	{
+		return m_urlHelp;
+	}
+	void SetHelpURL(ARBString const& inURL)
+	{
+		m_urlHelp = inURL;
+	}
+
 	bool HasLocationCode(ARBString const& inCode) const;
 	bool AddLocationCode(ARBString const& inCode, ARBString const& inName);
 	bool RemoveLocationCode(ARBString const& inCode);
@@ -103,7 +112,8 @@ public:
 	bool RemoveAllVenueCodes();
 
 private:
-	ARBString m_URL;
+	ARBString m_urlSearch;
+	ARBString m_urlHelp;
 	std::map<ARBString, ARBString> m_Locations;
 	std::map<ARBString, ARBString> m_Venues;
 };
