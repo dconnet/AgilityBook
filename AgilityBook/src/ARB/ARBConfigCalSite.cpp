@@ -49,14 +49,16 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigCalSite::ARBConfigCalSite()
-	: m_URL()
+	: m_urlSearch()
+	, m_urlHelp()
 	, m_Locations()
 	, m_Venues()
 {
 }
 
 ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite const& rhs)
-	: m_URL(rhs.m_URL)
+	: m_urlSearch(rhs.m_urlSearch)
+	, m_urlHelp(rhs.m_urlHelp)
 	, m_Locations(rhs.m_Locations)
 	, m_Venues(rhs.m_Venues)
 {
@@ -70,7 +72,8 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 {
 	if (this != &rhs)
 	{
-		m_URL = rhs.m_URL;
+		m_urlSearch = rhs.m_urlSearch;
+		m_urlHelp = rhs.m_urlHelp;
 		m_Locations = rhs.m_Locations;
 		m_Venues = rhs.m_Venues;
 	}
@@ -79,7 +82,8 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 
 bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 {
-	return m_URL == rhs.m_URL
+	return m_urlSearch == rhs.m_urlSearch
+		&& m_urlHelp == rhs.m_urlHelp
 		&& m_Locations == rhs.m_Locations
 		&& m_Venues == rhs.m_Venues;
 }
@@ -89,11 +93,13 @@ bool ARBConfigCalSite::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_CALSITE_URL, m_URL))
+	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_URL));
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_SEARCH));
 		return false;
 	}
+	inTree.GetAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
+
 	for (int i = 0; i < inTree.GetElementCount(); ++i)
 	{
 		Element const& element = inTree.GetElement(i);
@@ -133,7 +139,9 @@ bool ARBConfigCalSite::Load(
 bool ARBConfigCalSite::Save(Element& ioTree) const
 {
 	Element& calsite = ioTree.AddElement(TREE_CALSITE);
-	calsite.AddAttrib(ATTRIB_CALSITE_URL, m_URL);
+	calsite.AddAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch);
+	if (!m_urlHelp.empty())
+		calsite.AddAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
 	std::map<ARBString, ARBString>::const_iterator i;
 	for (i = m_Locations.begin(); i != m_Locations.end(); ++i)
 	{
@@ -155,7 +163,7 @@ ARBString ARBConfigCalSite::GetFormattedURL(
 		std::vector<ARBString> const& inLocCodes,
 		std::vector<ARBString> const& inVenueCodes) const
 {
-	ARBString url(m_URL);
+	ARBString url(m_urlSearch);
 	ARBString::size_type pos = url.find(_T("!L!"));
 	if (pos != ARBString::npos)
 	{
