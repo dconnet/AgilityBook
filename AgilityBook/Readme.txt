@@ -5,7 +5,7 @@ Additional software packages required (all free):
 - Boost libraries
 - Windows Installer XML toolset
 - Xerces-C
-- zlib
+- zlib (included in src tree)
 
 Once the above software is unpacked, the directory structure should look like:
   - AgilityBook/
@@ -19,8 +19,6 @@ Once the above software is unpacked, the directory structure should look like:
   - xml-xerces/
     - c/
       - ...(Xerces structure)
-  - zlib/
-      - ...(zlib structure)
 
 --------------------
 
@@ -99,36 +97,9 @@ ARB uses VC8x64. I just didn't feel like creating another directory layer.
 --------------------
 
 zlib: http://www.zlib.net/
-I'm currently using v1.2.3, with some makefile changes.
-(Note, also fixed zlib1.rc so version really is 1.2.3)
-- Change CFLAGS option '-MD' to '-MT'
-- Change STATICLIB to zlib_s.lib
-         SHAREDLIB to arbzlib.dll
-         IMPLIB    to arbzlib.lib
-  (Since we're compiling our own version, this deals with the zlib request
-  to keep zlib1.dll a pure product adhering to certain requirements. Since
-  we're changing to staticly linking the runtime, we're outside of those.)
-- Copy win32\Makefile.msc to win64\Makefile.msc
-  - Change '/dWIN32' to '/dWIN64'
--VS6:
- - Start a command shell and invoke VCVARS32.BAT. (part of VS6)
- - Run 'nmake -f win32\Makefile.msc'.
- - Copy arbzdll.lib/arbzlib.dll
- - Run 'nmake -f win32\Makefile.msc clean'.
--VS7
- - Start a VS2003 command shell
- - Run 'nmake -f win32\Makefile.msc'.
- - Copy arbzdll.lib/arbzlib.dll
- - Run 'nmake -f win32\Makefile.msc clean'.
--VS8
- - Start a VS2005 command shell
- - Run 'nmake -f win32\Makefile.msc'.
- - Copy arbzdll.lib/arbzlib.dll
- - Run 'nmake -f win32\Makefile.msc clean'.
- - Start a VS2005x64 Tools command shell
- - Run 'nmake -f win64\Makefile.msc'.
- - Copy arbzdll.lib/arbzlib.dll
- - Run 'nmake -f win64\Makefile.msc clean'.
+I'm currently using v1.2.3. This used to be an external package, but has now
+been moved into ARBs codeline as of v1.9.2.12. The zlib source package has
+been pruned to just what is required.
 
 
 Compiler notes
