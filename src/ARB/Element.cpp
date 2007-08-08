@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
+ * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
  * @li 2007-03-37 DRC Fixed a problem releasing transcoded data.
  * @li 2005-06-09 DRC Numbers were being stored/shown in scientific notation.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -43,6 +44,7 @@
 
 #include "stdafx.h"
 #include "Element.h"
+#include <fstream>
 #include <iostream>
 #include <list>
 #include <map>
@@ -86,6 +88,22 @@
 #pragma message ( "Warning: Untested version of Xerces" )
 #endif
 #pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
+
+#ifdef XML_LIBRARY
+	#ifdef _DEBUG
+		#define XERCES_LIB	"xerces-c_static_2D.lib"
+	#else
+		#define XERCES_LIB	"xerces-c_static_2.lib"
+	#endif
+#else
+	#ifdef _DEBUG
+		#define XERCES_LIB	"xerces-c_2D.lib"
+	#else
+		#define XERCES_LIB	"xerces-c_2.lib"
+	#endif
+#endif
+#pragma message ( "Linking with " XERCES_LIB )
+#pragma comment(lib, XERCES_LIB)
 #endif
 
 #if _MSC_VER >= 1300
@@ -102,24 +120,6 @@ using namespace std;
 #if defined(_WINDOWS) && !defined(_CONSOLE)
 // On windows, we'll write the dump to TRACE and errors to AfxMessageBox.
 #undef ERRORS_TO_CERR
-#endif
-
-#if defined(_MSC_VER)
-#ifdef XML_LIBRARY
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_static_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_static_2.lib"
-	#endif
-#else
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_2.lib"
-	#endif
-#endif
-#pragma message ( "Linking with " XERCES_LIB )
-#pragma comment(lib, XERCES_LIB)
 #endif
 
 #ifdef _DEBUG
@@ -262,8 +262,6 @@ static XMLCh const gNotation[] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef UNICODE
-
 /**
  * Provides an easy interface to translate from narrow characters (char)
  * to wide characters (XMLCh).
@@ -283,6 +281,11 @@ public:
 	}
 	/// XMLCh string constructor
 	XMLstring(XMLCh const* str)
+		: std::basic_string<XMLCh>(str)
+	{
+	}
+	/// wstring->XMLCh translation constructor
+	XMLstring(std::wstring const& str)
 		: std::basic_string<XMLCh>(str)
 	{
 	}
@@ -330,6 +333,15 @@ public:
 #endif
 		return *this;
 	}
+	XMLstring& operator=(std::wstring const& str)
+	{
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator=(str);
+#else
+		std::basic_string<XMLCh>::operator=(str);
+#endif
+		return *this;
+	}
 	XMLstring& operator=(std::string const& str)
 	{
 		XMLstring data(str);
@@ -369,6 +381,15 @@ public:
 #endif
 		return *this;
 	}
+	XMLstring& operator+=(std::wstring const& str)
+	{
+#if _MSC_VER < 1300
+		basic_string<XMLCh>::operator+=(str);
+#else
+		std::basic_string<XMLCh>::operator+=(str);
+#endif
+		return *this;
+	}
 	XMLstring& operator+=(std::string const& str)
 	{
 		XMLstring data(str);
@@ -390,6 +411,8 @@ public:
 		return *this;
 	}
 };
+
+#ifndef UNICODE
 
 /**
  * Provides an easy interface to translate from wide characters (XMLCh)
@@ -576,7 +599,6 @@ char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 }
 
 #else
-typedef std::basic_string<XMLCh> XMLstring;
 typedef std::wstring StringDOM;
 
 #endif
@@ -1453,10 +1475,10 @@ bool Element::LoadXMLBuffer(
 }
 
 bool Element::LoadXMLFile(
-		ARBString const& inFileName,
+		char const* inFileName,
 		ARBString& ioErrMsg)
 {
-	XMLstring fileName(inFileName.c_str());
+	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
 	return LoadXML(source, ioErrMsg);
 }
@@ -1482,4 +1504,21 @@ bool Element::SaveXML(
 	delete gFormatter;
 	gFormatter = NULL;
 	return true;
+}
+
+bool Element::SaveXML(
+		char const* outFile,
+		ARBString const* inDTD) const
+{
+	bool bOk = false;
+	if (!outFile)
+		return bOk;
+	std::ofstream output(outFile, std::ios::out | std::ios::binary);
+	output.exceptions(std::ios_base::badbit);
+	if (output.is_open())
+	{
+		bOk = SaveXML(output, inDTD);
+		output.close();
+	}
+	return bOk;
 }
