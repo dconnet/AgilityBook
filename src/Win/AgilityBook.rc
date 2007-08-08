@@ -2755,7 +2755,6 @@ BEGIN
     IDS_SELECT_STYLE        "Please select a Style."
     IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
     IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
-    IDS_XERCES_ERROR        "Error during Xerces Initialization.\n\n"
     IDS_UNABLE_TO_OPEN      "Unable to open "
     IDS_BAD_VERSION         "Unable to determine version information"
     IDS_NO_DELIM_SPECIFIED  "No delimiter specified. Unable to preview data."

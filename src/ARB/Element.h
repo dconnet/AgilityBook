@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
  */
@@ -61,6 +62,18 @@ class ARBDate;
 class Element
 {
 public:
+	/**
+	 * Call once (at program startup) to initialize XML subsystem.
+	 * @param outMsg In case of failure, error message.
+	 * @return Initialization success.
+	 */
+	static bool Initialize(ARBString& outMsg);
+
+	/**
+	 * Call once (at program termination) to cleanup XML subsystem.
+	 */
+	static void Terminate();
+
 	/**
 	 * Result of getting an attribute.
 	 */
@@ -315,8 +328,7 @@ public:
 			ARBString const* inDTD = NULL) const;
 
 private:
-	bool LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
-		ARBString& ioErrMsg);
+	bool LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource, ARBString& ioErrMsg);
 	typedef std::map<ARBString, ARBString> MyAttributes;
 	ARBString m_Name;
 	ARBString m_Value;
