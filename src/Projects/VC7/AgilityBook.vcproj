@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -85,7 +85,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost;../../../../zlib"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;&quot;../../../../xml-xerces/c/src&quot;;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -400,10 +400,10 @@
 				RelativePath="..\..\Win\PointsData.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\ReadHttp.cpp">
+				RelativePath="..\..\Win\Print.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\Print.cpp">
+				RelativePath="..\..\Win\ReadHttp.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\RichEditCtrl2.cpp">
@@ -1142,6 +1142,247 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\Element.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="zlib"
+			Filter="">
+			<File
+				RelativePath="..\..\zlib\adler32.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\compress.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\crc32.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\crc32.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\deflate.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\deflate.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\gzio.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\infback.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\inffast.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\inffast.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\inffixed.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\inflate.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\inflate.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\inftrees.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\inftrees.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\trees.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\trees.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\uncompr.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\zconf.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\zconf.in.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\zlib.h">
+			</File>
+			<File
+				RelativePath="..\..\zlib\zutil.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4127;4131;4244;4267"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\zlib\zutil.h">
 			</File>
 		</Filter>
 		<File
