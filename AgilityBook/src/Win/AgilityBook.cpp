@@ -63,37 +63,6 @@
 #include "Splash.h"
 #include "TabView.h"
 
-#include <xercesc/util/XercesVersion.hpp>
-#if _XERCES_VERSION < 20200
-#error Minimum version of Xerces is 2.2.
-#elif _XERCES_VERSION > 20700
-#pragma message ( "Warning: Untested version of Xerces" )
-#endif
-#pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
-#include <xercesc/util/PlatformUtils.hpp>
-#include <xercesc/util/XMLException.hpp>
-#include <xercesc/util/XMLString.hpp>
-XERCES_CPP_NAMESPACE_USE
-// Note, see XercesVersion.hpp for how to use the version macros.
-// Currently, we've used versions 2.2 and 2.7. There were no source code
-// changes needed between the two, hence we haven't needed to do any
-// funny stuff!
-#ifdef XML_LIBRARY
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_static_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_static_2.lib"
-	#endif
-#else
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_2.lib"
-	#endif
-#endif
-#pragma message ( "Linking with " XERCES_LIB )
-#pragma comment(lib, XERCES_LIB)
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -455,22 +424,10 @@ BOOL CAgilityBookApp::InitInstance()
 		return FALSE;
 	}
 
-	try
+	ARBString errMsg;
+	if (!Element::Initialize(errMsg))
 	{
-		XMLPlatformUtils::Initialize();
-	}
-	catch (XMLException const& toCatch)
-	{
-		CString msg;
-		msg.LoadString(IDS_XERCES_ERROR);
-#ifdef UNICODE
-		msg += toCatch.getMessage();
-#else
-		char* pStr = XMLString::transcode(toCatch.getMessage());
-		msg += pStr;
-		delete [] pStr;
-#endif
-		AfxMessageBox(msg, MB_ICONSTOP);
+		AfxMessageBox(errMsg.c_str(), MB_ICONSTOP);
 		return FALSE;
 	}
 
@@ -600,7 +557,7 @@ int CAgilityBookApp::ExitInstance()
 {
 	// Close any open HTML Help windows
 	::HtmlHelp(NULL, NULL, HH_CLOSE_ALL, 0);
-	XMLPlatformUtils::Terminate();
+	Element::Terminate();
 	CleanupCrashHandler();
 	return CWinApp::ExitInstance();
 }

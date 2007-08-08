@@ -905,7 +905,6 @@
 #define IDS_SELECT_STYLE                5157
 #define IDS_TITLEPTS_EXISTS             5158
 #define IDS_UNKNOWN_DOCUMENT_VERSION    5159
-#define IDS_XERCES_ERROR                5160
 #define IDS_UNABLE_TO_OPEN              5161
 #define IDS_BAD_VERSION                 5162
 #define IDS_NO_DELIM_SPECIFIED          5163
