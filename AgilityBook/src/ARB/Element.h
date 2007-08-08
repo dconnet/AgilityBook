@@ -313,7 +313,7 @@ public:
 	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXMLFile(
-			ARBString const& inFileName,
+			char const* inFileName,
 			ARBString& ioErrMsg);
 
 	/**
@@ -325,6 +325,17 @@ public:
 	 */
 	bool SaveXML(
 			std::ostream& outStream,
+			ARBString const* inDTD = NULL) const;
+
+	/**
+	 * Save this element to the given file.
+	 * @param outFile File to write tree to.
+	 * @param inDTD DTD to include in generation of XML file.
+	 * @retval true Tree successfully written.
+	 * @retval false Tree failed to save.
+	 */
+	bool SaveXML(
+			char const* outFile,
 			ARBString const* inDTD = NULL) const;
 
 private:

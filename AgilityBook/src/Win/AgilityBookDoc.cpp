@@ -641,11 +641,11 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 	DeleteContents();
 
-	CString source(lpszPathName);
+	CStringA source(lpszPathName);
 	ARBString err;
 	Element tree;
 	// Translate the XML to a tree form.
-	if (!tree.LoadXMLFile((LPCTSTR)source, err))
+	if (!tree.LoadXMLFile(source, err))
 	{
 		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
@@ -758,17 +758,11 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
 		CStringA filename(lpszPathName);
-		std::ofstream output(filename, std::ios::out | std::ios::binary);
-		output.exceptions(std::ios_base::badbit);
-		if (output.is_open())
+		if (tree.SaveXML(filename))
 		{
-			if (tree.SaveXML(output))
-			{
-				AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
-				bOk = TRUE;
-				SetModifiedFlag(FALSE);
-			}
-			output.close();
+			AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
+			bOk = TRUE;
+			SetModifiedFlag(FALSE);
 		}
 		else
 		{

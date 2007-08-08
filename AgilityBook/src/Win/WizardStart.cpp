@@ -391,7 +391,8 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					ARBString errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile((LPCTSTR)file.GetPathName(), errMsg))
+					CStringA fileName(file.GetPathName());
+					if (!tree.LoadXMLFile(fileName, errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -734,7 +735,8 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					ARBString errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile((LPCTSTR)file.GetPathName(), errMsg))
+					CStringA fileName(file.GetPathName());
+					if (!tree.LoadXMLFile(fileName, errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -801,13 +803,7 @@ BOOL CWizardStart::OnWizardFinish()
 					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
 					{
 						CStringA filename(file.GetFileName());
-						std::ofstream output(filename, std::ios::out | std::ios::binary);
-						output.exceptions(std::ios_base::badbit);
-						if (output.is_open())
-						{
-							tree.SaveXML(output);
-							output.close();
-						}
+						tree.SaveXML(filename);
 					}
 					bOk = true;
 				}
@@ -878,7 +874,8 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					ARBString errMsg;
 					Element tree;
-					if (!tree.LoadXMLFile((LPCTSTR)file.GetPathName(), errMsg))
+					CStringA fileName(file.GetPathName());
+					if (!tree.LoadXMLFile(fileName, errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -942,13 +939,7 @@ BOOL CWizardStart::OnWizardFinish()
 					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
 					{
 						CStringA filename(file.GetFileName());
-						std::ofstream output(filename, std::ios::out | std::ios::binary);
-						output.exceptions(std::ios_base::badbit);
-						if (output.is_open())
-						{
-							tree.SaveXML(output);
-							output.close();
-						}
+						tree.SaveXML(filename);
 					}
 					bOk = true;
 				}
@@ -978,13 +969,7 @@ BOOL CWizardStart::OnWizardFinish()
 					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
 					{
 						CStringA filename(file.GetFileName());
-						std::ofstream output(filename, std::ios::out | std::ios::binary);
-						output.exceptions(std::ios_base::badbit);
-						if (output.is_open())
-						{
-							tree.SaveXML(output);
-							output.close();
-						}
+						tree.SaveXML(filename);
 					}
 					bOk = true;
 				}
@@ -1031,14 +1016,8 @@ BOOL CWizardStart::OnWizardFinish()
 					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))
 					{
 						CStringA filename(file.GetFileName());
-						std::ofstream output(filename, std::ios::out | std::ios::binary);
-						output.exceptions(std::ios_base::badbit);
-						if (output.is_open())
-						{
-							ARBString dtd = ARBConfig::GetDTD();
-							tree.SaveXML(output, &dtd);
-							output.close();
-						}
+						ARBString dtd = ARBConfig::GetDTD();
+						tree.SaveXML(filename, &dtd);
 					}
 					bOk = true;
 				}
