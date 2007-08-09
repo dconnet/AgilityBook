@@ -42,7 +42,6 @@
 
 #include "AgilityBookOptions.h"
 #include "ARBDogRun.h"
-#include "Base64.h"
 #include "ClipBoard.h"
 #include "DlgCRCDViewer.h"
 
