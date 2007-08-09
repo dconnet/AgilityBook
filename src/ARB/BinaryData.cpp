@@ -36,7 +36,7 @@
 #include "stdafx.h"
 #include "BinaryData.h"
 
-#include "Base64.h"
+#include "ARBBase64.h"
 #include "zlib.h"
 #include <boost/scoped_ptr.hpp>
 
@@ -60,7 +60,7 @@ bool BinaryData::Decode(
 
 	char* pData;
 	size_t len;
-	if (!Base64::Decode(inBase64, pData, len))
+	if (!ARBBase64::Decode(inBase64, pData, len))
 		return false;
 
 	z_stream strm;
@@ -71,7 +71,7 @@ bool BinaryData::Decode(
     strm.next_in = Z_NULL;
     if (Z_OK != inflateInit(&strm))
 	{
-		Base64::Release(pData);
+		ARBBase64::Release(pData);
         return false;
 	}
 
@@ -91,7 +91,7 @@ bool BinaryData::Decode(
         case Z_DATA_ERROR:
         case Z_MEM_ERROR:
             inflateEnd(&strm);
-			Base64::Release(pData);
+			ARBBase64::Release(pData);
             return false;
         }
         size_t have = CHUNK - strm.avail_out;
@@ -112,7 +112,7 @@ bool BinaryData::Decode(
 		}
 	} while (strm.avail_out == 0);
     inflateEnd(&strm);
-	Base64::Release(pData);
+	ARBBase64::Release(pData);
 
 	return true;
 }
@@ -166,7 +166,7 @@ bool BinaryData::Encode(
     } while (strm.avail_out == 0);
     deflateEnd(&strm);
 
-	bool bOk = Base64::Encode(pData, nData, outBase64);
+	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
 	delete [] pData;
 
 	return bOk;
@@ -227,7 +227,7 @@ bool BinaryData::Encode(
 	} while (flush != Z_FINISH);
     deflateEnd(&strm);
 
-	bool bOk = Base64::Encode(pData, nData, outBase64);
+	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
 	delete [] pData;
 
 	return bOk;
