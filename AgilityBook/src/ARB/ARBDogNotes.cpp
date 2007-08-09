@@ -44,7 +44,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
-#include "Base64.h"
+#include "ARBBase64.h"
 #include "BinaryData.h"
 #include "Element.h"
 
@@ -156,9 +156,9 @@ bool ARBDogNotes::Load(
 			ARBString tmp = element.GetValue();
 			char* data;
 			size_t bytes;
-			Base64::Decode(tmp, data, bytes);
+			ARBBase64::Decode(tmp, data, bytes);
 			BinaryData::Encode(data, bytes, m_CRCDMeta);
-			Base64::Release(data);
+			ARBBase64::Release(data);
 		}
 		else if (element.GetName() == TREE_OTHER)
 		{

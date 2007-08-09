@@ -72,10 +72,10 @@
 #include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/XercesVersion.hpp>
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
-#include <xercesc/util/XercesVersion.hpp>
 
 // Note, see XercesVersion.hpp for how to use the version macros.
 // Currently, we've used versions 2.2 and 2.7. There were no source code
@@ -89,6 +89,7 @@
 #endif
 #pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
 
+/*
 #ifdef XML_LIBRARY
 	#ifdef _DEBUG
 		#define XERCES_LIB	"xerces-c_static_2D.lib"
@@ -104,6 +105,7 @@
 #endif
 #pragma message ( "Linking with " XERCES_LIB )
 #pragma comment(lib, XERCES_LIB)
+*/
 #endif
 
 #if _MSC_VER >= 1300

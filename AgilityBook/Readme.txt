@@ -4,7 +4,7 @@ Additional software packages required (all free):
 - HTML Help Workshop
 - Boost libraries
 - Windows Installer XML toolset
-- Xerces-C
+- Xerces-C (included in src tree)
 - zlib (included in src tree)
 
 Once the above software is unpacked, the directory structure should look like:
@@ -16,9 +16,6 @@ Once the above software is unpacked, the directory structure should look like:
       - ...(Boost structure)
   - wix/
       - ...(WiX structure)
-  - xml-xerces/
-    - c/
-      - ...(Xerces structure)
 
 --------------------
 
@@ -67,18 +64,14 @@ be called which uses WiX to generate the .msi install files.
 --------------------
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
+This used to be an external package, but has now been moved into ARBs
+codeline as of v1.9.2.12.
 This program has been tested with 2.2 and 2.7.
   - AgilityBook.cpp issues some warnings/comments about the version that
     is currently in use during compilation.
-If you need to compile Xerces yourself, then the .dll/.lib files are in
-(Xerces)/Build/Win32/<Compiler>/Release/ and should be copied to
-(arb)/lib/... This works with both UNICODE and MBCS compiles.
-- Changes to project files: xerceslib (only one we build)
-  - On C/C++ Code Generation options:
-    Change runtime library to multi-threaded NOT DLL
-
 Note: To compile for x64, (Xerces)/src/xercesc/util/AutoSense.hpp needs
 to be modified. In the '_WIN32 || WIN32' section, after:
+[Note: this is currently checked in - if using xerces separately, do this]
     #ifndef WIN32
       #define WIN32
     #endif
@@ -97,9 +90,10 @@ ARB uses VC8x64. I just didn't feel like creating another directory layer.
 --------------------
 
 zlib: http://www.zlib.net/
-I'm currently using v1.2.3. This used to be an external package, but has now
-been moved into ARBs codeline as of v1.9.2.12. The zlib source package has
-been pruned to just what is required.
+This used to be an external package, but has now been moved into ARBs
+codeline as of v1.9.2.12.
+I'm currently using v1.2.3.
+The zlib source package has been pruned to just what is required.
 
 
 Compiler notes
