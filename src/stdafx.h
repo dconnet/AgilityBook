@@ -60,13 +60,6 @@
 #pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
 #endif
 
-// Define this if xerces is a static library.
-// This is a define that xerces uses.
-// Note- Now that xerces code is directly included in the project, this define
-// must be set in the compiler options - while here is good for our code,
-// xerces doesn't use stdafx.h, so it must be set in the compiler
-//#define XML_LIBRARY
-
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN		/// Exclude rarely-used stuff from Windows headers
 #endif
