@@ -3,8 +3,9 @@ rd /q/s VC6
 rd /q/s VC7
 rd /q/s VC8
 rd /q/s VC8x64
-call CopyDLLs.bat
 cd ..\src\Projects\VC8
+
+del bldWin32.txt bldWin98.txt bldWin64.txt bldWinsetup.txt
 
 devenv AgilityBook.sln /out bldWin32.txt /build "Unicode Release|Win32"
 devenv AgilityBook.sln /out bldWin98.txt /build "Release|Win32"

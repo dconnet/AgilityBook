@@ -8,7 +8,6 @@
 #define new DEBUG_NEW
 #endif
 
-#pragma comment(lib, "arbzlib.lib")
 
 class CARBHelpCommandLine : public CCommandLineInfo
 {
