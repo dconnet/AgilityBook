@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../.." /I "../../ARB" /I "../../Win" /I "../../zlib" /I "../../xml" /I "../../../../boost" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /FR /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../.." /I "../../ARB" /I "../../Win" /I "../../zlib" /I "../../xml" /I "../../../../boost" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "XML_LIBRARY" /FR /Yu"stdafx.h" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib htmlhelp.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../lib/VC6"
+# ADD LINK32 version.lib htmlhelp.lib ws2_32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../lib/VC6"
 
 !ELSEIF  "$(CFG)" == "AgilityBook - Win32 Release"
 
@@ -65,11 +65,11 @@ LINK32=link.exe
 # PROP Use_MFC 2
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "../../../bin/VC6/Release"
-# PROP Intermediate_Dir "../../../bin/VC6/Release/obj"
+# PROP Intermediate_Dir "../../../bin/VC6/Release/AgilityBook"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../.." /I "../../ARB" /I "../../Win" /I "../../zlib" /I "../../xml" /I "../../../../boost" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../.." /I "../../ARB" /I "../../Win" /I "../../zlib" /I "../../xml" /I "../../../../boost" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_AFXDLL" /D "XML_LIBRARY" /Yu"stdafx.h" /FD /c
 # SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -80,8 +80,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib htmlhelp.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../lib/VC6"
-# SUBTRACT LINK32 /debug
+# ADD LINK32 version.lib htmlhelp.lib ws2_32.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libc.lib" /libpath:"../../../lib/VC6"
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
@@ -1416,114 +1416,6 @@ SOURCE="..\..\Win\res\venue-ukc.ico"
 # Begin Source File
 
 SOURCE="..\..\Win\res\venue-usdaa.ico"
-# End Source File
-# End Group
-# Begin Group "zlib"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\..\zlib\adler32.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\compress.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\crc32.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\crc32.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\deflate.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\deflate.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\gzio.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\infback.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inffast.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inffast.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inffixed.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inflate.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inflate.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inftrees.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\inftrees.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\trees.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\trees.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\uncompr.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\zconf.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\zconf.in.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\zlib.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\zutil.c
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\zlib\zutil.h
 # End Source File
 # End Group
 # End Target
