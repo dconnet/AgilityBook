@@ -2,7 +2,7 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
+# TARGTYPE "Win32 (x86) Static Library" 0x0104
 
 CFG=LibTidy - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
@@ -17,8 +17,8 @@ CFG=LibTidy - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "LibTidy - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "LibTidy - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "LibTidy - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "LibTidy - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -26,7 +26,6 @@ CFG=LibTidy - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
-MTL=midl.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "LibTidy - Win32 Debug"
@@ -40,20 +39,19 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "../../../bin/VC6/Debug"
 # PROP Intermediate_Dir "../../../bin/VC6/Debug/LibTidy"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /YX /FD /c
-# ADD CPP /G6 /MDd /Za /W3 /Gm /GX /Zi /Od /I "..\..\tidy\include" /I "..\..\tidy\src" /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "SUPPORT_UTF16_ENCODINGS" /D "SUPPORT_ASIAN_ENCODINGS" /D "SUPPORT_ACCESSIBILITY_CHECKS" /FD /c
-# SUBTRACT CPP /Fr
-# ADD BASE MTL /D "_DEBUG" /mktyplib203 /o "NUL" /win32
-# ADD MTL /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+LINK32=link.exe -lib
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\tidy\include" /I "..\..\tidy\src" /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "SUPPORT_UTF16_ENCODINGS" /D "SUPPORT_ASIAN_ENCODINGS" /D "SUPPORT_ACCESSIBILITY_CHECKS" /FD /GZ /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /lib /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib advapi32.lib ws2_32.lib /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# SUBTRACT LINK32 /pdb:none
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo
+# ADD LIB32 /nologo
 
 !ELSEIF  "$(CFG)" == "LibTidy - Win32 Release"
 
@@ -66,20 +64,19 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "../../../bin/VC6/Release"
 # PROP Intermediate_Dir "../../../bin/VC6/Release/LibTidy"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /MT /W3 /GX /O2 /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /YX /FD /c
-# ADD CPP /G6 /MD /Za /W3 /GX /O2 /Ob2 /I "..\..\tidy\include" /I "..\..\tidy\src" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "SUPPORT_UTF16_ENCODINGS" /D "SUPPORT_ASIAN_ENCODINGS" /D "SUPPORT_ACCESSIBILITY_CHECKS" /FD /c
-# SUBTRACT CPP /Fr
-# ADD BASE MTL /D "NDEBUG" /mktyplib203 /o "NUL" /win32
-# ADD MTL /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+LINK32=link.exe -lib
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\tidy\include" /I "..\..\tidy\src" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "SUPPORT_UTF16_ENCODINGS" /D "SUPPORT_ASIAN_ENCODINGS" /D "SUPPORT_ACCESSIBILITY_CHECKS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /subsystem:windows /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib advapi32.lib ws2_32.lib /subsystem:windows /lib /machine:I386
-# SUBTRACT LINK32 /pdb:none
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo
+# ADD LIB32 /nologo
 
 !ENDIF 
 
