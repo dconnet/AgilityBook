@@ -182,21 +182,27 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendar)
 	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CAL_DATE_START, OnDatetimechangeStart)
-	ON_CBN_SELCHANGE(IDC_CAL_LOCATION, OnSelchangeLocation)
-	ON_CBN_KILLFOCUS(IDC_CAL_LOCATION, OnKillfocusLocation)
-	ON_CBN_SELCHANGE(IDC_CAL_CLUB, OnSelchangeClub)
-	ON_CBN_KILLFOCUS(IDC_CAL_CLUB, OnKillfocusClub)
-	ON_BN_CLICKED(IDC_CAL_LOCATION_NOTES, OnLocationNotes)
-	ON_BN_CLICKED(IDC_CAL_CLUB_NOTES, OnClubNotes)
 	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_DRAWS_UNKNOWN, OnDateDrawsUnknown)
 	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
+	ON_BN_CLICKED(IDC_CAL_ENTER_NOT, OnCalEntry)
+	ON_BN_CLICKED(IDC_CAL_ENTER_PLANNING, OnCalEntry)
+	ON_BN_CLICKED(IDC_CAL_ENTER_ENTERED, OnCalEntry)
+	ON_EN_CHANGE(IDC_CAL_ONLINE_URL, OnEnChangeCalOnlineUrl)
+	ON_BN_CLICKED(IDC_CAL_ONLINE_ENTRY, OnOnlineEntry)
+	ON_EN_CHANGE(IDC_CAL_PREMIUM_URL, OnEnChangeCalPremiumUrl)
+	ON_BN_CLICKED(IDC_CAL_PREMIUM_ENTRY, OnPremiumEntry)
+	ON_EN_CHANGE(IDC_CAL_EMAIL_SEC_ADDR, OnEnChangeCalEmailSecAddr)
+	ON_BN_CLICKED(IDC_CAL_EMAIL_SEC, OnEmailSec)
 	ON_BN_CLICKED(IDC_CAL_ACCOM_NONE, OnAccommodation)
 	ON_BN_CLICKED(IDC_CAL_ACCOM_NEEDED, OnAccommodation)
 	ON_BN_CLICKED(IDC_CAL_ACCOM_MADE, OnAccommodation)
-	ON_BN_CLICKED(IDC_CAL_ONLINE_ENTRY, OnBnClickedCalOnlineEntry)
-	ON_BN_CLICKED(IDC_CAL_PREMIUM_ENTRY, OnBnClickedCalPremiumEntry)
-	ON_BN_CLICKED(IDC_CAL_EMAIL_SEC, OnBnClickedCalEmailSec)
+	ON_CBN_SELCHANGE(IDC_CAL_CLUB, OnSelchangeClub)
+	ON_CBN_KILLFOCUS(IDC_CAL_CLUB, OnKillfocusClub)
+	ON_BN_CLICKED(IDC_CAL_CLUB_NOTES, OnClubNotes)
+	ON_CBN_SELCHANGE(IDC_CAL_LOCATION, OnSelchangeLocation)
+	ON_CBN_KILLFOCUS(IDC_CAL_LOCATION, OnKillfocusLocation)
+	ON_BN_CLICKED(IDC_CAL_LOCATION_NOTES, OnLocationNotes)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -284,6 +290,12 @@ BOOL CDlgCalendar::OnInitDialog()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
 	else
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
+	if (1 != m_Entered || m_OnlineUrl.IsEmpty())
+		m_ctrlOnlineUrlEntry.EnableWindow(FALSE);
+	if (m_PremiumUrl.IsEmpty())
+		m_ctrlPremiumEntry.EnableWindow(FALSE);
+	if (m_EMailSecAddr.IsEmpty())
+		m_ctrlEMailSec.EnableWindow(FALSE);
 
 	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
 
@@ -304,60 +316,6 @@ void CDlgCalendar::OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult)
 		}
 	}
 	*pResult = 0;
-}
-
-void CDlgCalendar::OnSelchangeLocation()
-{
-	int idx = m_ctrlLocation.GetCurSel();
-	CString str;
-	if (CB_ERR != idx)
-		m_ctrlLocation.GetLBText(idx, str);
-	UpdateLocationInfo((LPCTSTR)str);
-}
-
-void CDlgCalendar::OnKillfocusLocation()
-{
-	UpdateData(TRUE);
-	UpdateLocationInfo((LPCTSTR)m_Location);
-}
-
-void CDlgCalendar::OnSelchangeClub()
-{
-	int idx = m_ctrlClub.GetCurSel();
-	CString str;
-	if (CB_ERR != idx)
-		m_ctrlClub.GetLBText(idx, str);
-	UpdateClubInfo((LPCTSTR)str);
-}
-
-void CDlgCalendar::OnKillfocusClub()
-{
-	UpdateData(TRUE);
-	UpdateClubInfo((LPCTSTR)m_Club);
-}
-
-void CDlgCalendar::OnLocationNotes()
-{
-	UpdateData(TRUE);
-	m_Location.TrimRight();
-	m_Location.TrimLeft();
-	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
-	if (IDOK == dlg.DoModal())
-	{
-		UpdateLocationInfo((LPCTSTR)m_Location);
-	}
-}
-
-void CDlgCalendar::OnClubNotes()
-{
-	UpdateData(TRUE);
-	m_Club.TrimRight();
-	m_Club.TrimLeft();
-	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
-	if (IDOK == dlg.DoModal())
-	{
-		UpdateClubInfo((LPCTSTR)m_Club);
-	}
 }
 
 void CDlgCalendar::OnDateOpensUnknown() 
@@ -387,25 +345,124 @@ void CDlgCalendar::OnDateClosesUnknown()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 }
 
+void CDlgCalendar::OnCalEntry()
+{
+	UpdateData(TRUE);
+	if (1 != m_Entered || m_OnlineUrl.IsEmpty())
+		m_ctrlOnlineUrlEntry.EnableWindow(FALSE);
+	else
+		m_ctrlOnlineUrlEntry.EnableWindow(TRUE);
+}
+
+void CDlgCalendar::OnEnChangeCalOnlineUrl()
+{
+	CString s;
+	m_ctrlOnlineUrl.GetWindowText(s);
+	if (1 != m_Entered || s.IsEmpty())
+		m_ctrlOnlineUrlEntry.EnableWindow(FALSE);
+	else
+		m_ctrlOnlineUrlEntry.EnableWindow(TRUE);
+}
+
+void CDlgCalendar::OnOnlineEntry()
+{
+	UpdateData(TRUE);
+	RunCommand(m_OnlineUrl);
+}
+
+void CDlgCalendar::OnEnChangeCalPremiumUrl()
+{
+	CString s;
+	m_ctrlPremiumUrl.GetWindowText(s);
+	if (s.IsEmpty())
+		m_ctrlPremiumEntry.EnableWindow(FALSE);
+	else
+		m_ctrlPremiumEntry.EnableWindow(TRUE);
+}
+
+void CDlgCalendar::OnPremiumEntry()
+{
+	UpdateData(TRUE);
+	RunCommand(m_PremiumUrl);
+}
+
+void CDlgCalendar::OnEnChangeCalEmailSecAddr()
+{
+	CString s;
+	m_ctrlEMailSecAddr.GetWindowText(s);
+	if (s.IsEmpty())
+		m_ctrlEMailSec.EnableWindow(FALSE);
+	else
+		m_ctrlEMailSec.EnableWindow(TRUE);
+}
+
+void CDlgCalendar::OnEmailSec()
+{
+	UpdateData(TRUE);
+	CString s(m_EMailSecAddr);
+	if (0 != m_EMailSecAddr.Find(_T("mailto:")))
+		s = _T("mailto:") + m_EMailSecAddr;
+	RunCommand(s);
+}
+
 void CDlgCalendar::OnAccommodation()
 {
 	UpdateData(TRUE);
 	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
 }
 
-void CDlgCalendar::OnBnClickedCalOnlineEntry()
+void CDlgCalendar::OnSelchangeClub()
 {
-	UpdateData(TRUE);
+	int idx = m_ctrlClub.GetCurSel();
+	CString str;
+	if (CB_ERR != idx)
+		m_ctrlClub.GetLBText(idx, str);
+	UpdateClubInfo((LPCTSTR)str);
 }
 
-void CDlgCalendar::OnBnClickedCalPremiumEntry()
+void CDlgCalendar::OnKillfocusClub()
 {
 	UpdateData(TRUE);
+	UpdateClubInfo((LPCTSTR)m_Club);
 }
 
-void CDlgCalendar::OnBnClickedCalEmailSec()
+void CDlgCalendar::OnClubNotes()
 {
 	UpdateData(TRUE);
+	m_Club.TrimRight();
+	m_Club.TrimLeft();
+	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
+	if (IDOK == dlg.DoModal())
+	{
+		UpdateClubInfo((LPCTSTR)m_Club);
+	}
+}
+
+void CDlgCalendar::OnSelchangeLocation()
+{
+	int idx = m_ctrlLocation.GetCurSel();
+	CString str;
+	if (CB_ERR != idx)
+		m_ctrlLocation.GetLBText(idx, str);
+	UpdateLocationInfo((LPCTSTR)str);
+}
+
+void CDlgCalendar::OnKillfocusLocation()
+{
+	UpdateData(TRUE);
+	UpdateLocationInfo((LPCTSTR)m_Location);
+}
+
+void CDlgCalendar::OnLocationNotes()
+{
+	UpdateData(TRUE);
+	m_Location.TrimRight();
+	m_Location.TrimLeft();
+	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
+	if (IDOK == dlg.DoModal())
+	{
+		UpdateLocationInfo((LPCTSTR)m_Location);
+	}
 }
 
 void CDlgCalendar::OnOK()
