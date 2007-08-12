@@ -771,6 +771,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\CalendarSites.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\CheckLink.h"
 				>
 			</File>
@@ -1040,6 +1044,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\HyperLink.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ICalendarSite.h"
 				>
 			</File>
 			<File
@@ -1702,6 +1710,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookViewTraining.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CalendarSites.cpp"
 				>
 			</File>
 			<File

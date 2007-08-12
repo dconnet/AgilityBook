@@ -195,6 +195,21 @@ public:
 			int inAlarm) const;
 
 	/**
+	 * Test for equality.
+	 * @param inCal Object to test for equality.
+	 * @param inMatchExact Match the entire entry, or just start end dates, venue, clubname.
+	 */
+	bool IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const;
+
+	/**
+	 * Update the existing entry.
+	 * @param inCal Entry to update from.
+	 * @return Entry was updated
+	 * @note This will not update the entry or confirmation status.
+	 */
+	bool Update(ARBCalendarPtr inCal);
+
+	/**
 	 * Is this calendar entry (start and end dates) before a given date?
 	 * @param inDate Date to check entry against.
 	 * @retval true inDate is before both entry start and end dates.
@@ -429,12 +444,14 @@ public:
 	/**
 	 * Find a calendar entry.
 	 * @param inCal Object to search for.
+	 * @param inMatchExact Match the entire entry, or just start end dates, venue, clubname.
 	 * @param outCal The object that was found.
 	 * @return Whether the object was found.
 	 * @note Equality is tested by value, not pointer.
 	 */
 	bool FindCalendar(
 			ARBCalendarPtr inCal,
+			bool inMatchExact,
 			ARBCalendarPtr* outCal = NULL) const;
 
 	/**

@@ -51,6 +51,7 @@
 #include <set>
 #include "ARBAgilityRecordBook.h"
 #include "ARBTypes.h"
+#include "CalendarSites.h"
 class CAgilityBookTree;
 class CAgilityBookViewCalendar;
 class CAgilityBookViewCalendarList;
@@ -172,6 +173,9 @@ public:
 	void SortDates();
 	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
+	bool ImportARBRunData(Element const& inTree, CWnd* pParent);
+	bool ImportARBCalData(Element const& inTree, CWnd* pParent);
+	bool ImportARBLogData(Element const& inTree, CWnd* pParent);
 
 	/**
 	 * Reset the visibility of all objects.
@@ -224,6 +228,7 @@ public:
 private:
 	bool m_SuppressUpdates;
 	ARBAgilityRecordBook m_Records; ///< The real records.
+	CCalendarSites m_CalSites;
 
 // Generated message map functions
 protected:
@@ -237,6 +242,8 @@ protected:
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
+	afx_msg void OnUpdateAgilityUpdateCalendar(CCmdUI* pCmdUI);
+	afx_msg void OnAgilityUpdateCalendar();
 	afx_msg void OnAgilityNewTraining();
 	afx_msg void OnNotesClubs();
 	afx_msg void OnNotesJudges();

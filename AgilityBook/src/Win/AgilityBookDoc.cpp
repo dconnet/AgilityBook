@@ -158,6 +158,8 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
+	ON_UPDATE_COMMAND_UI(ID_AGILITY_UPDATE_CALENDAR, OnUpdateAgilityUpdateCalendar)
+	ON_COMMAND(ID_AGILITY_UPDATE_CALENDAR, OnAgilityUpdateCalendar)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
 	ON_COMMAND(ID_NOTES_CLUBS, OnNotesClubs)
 	ON_COMMAND(ID_NOTES_JUDGES, OnNotesJudges)
@@ -173,6 +175,7 @@ END_MESSAGE_MAP()
 
 CAgilityBookDoc::CAgilityBookDoc()
 	: m_SuppressUpdates(false)
+	, m_CalSites()
 {
 }
 
@@ -366,6 +369,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
+		m_CalSites.Update(m_Records.GetConfig());
 		CDlgMessage dlg(info.str().c_str(), 0);
 		dlg.DoModal();
 		SetModifiedFlag();
@@ -396,6 +400,404 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 		ImportConfiguration(update);
 		bOk = true;
 	}
+	return bOk;
+}
+
+bool CAgilityBookDoc::ImportARBRunData(Element const& inTree, CWnd* pParent)
+{
+	bool bOk = false;
+	CErrorCallback err;
+	ARBAgilityRecordBook book;
+	if (book.Load(inTree, false, false, true, true, true, err))
+	{
+		if (0 < err.m_ErrMsg.length())
+			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+		int countDog = 0;
+		int countRegNumsAdded = 0;
+		int countRegNumsUpdated = 0;
+		int countExistingPts = 0;
+		int countTitlesAdded = 0;
+		int countTitlesUpdated = 0;
+		int countTrials = 0;
+		int countClubs = 0;
+		int countJudges = 0;
+		int countLocations = 0;
+		for (ARBDogList::iterator iterDog = book.GetDogs().begin();
+			iterDog != book.GetDogs().end();
+			++iterDog)
+		{
+			ARBDogPtr pDog = *iterDog;
+			ARBDogPtr pExisting;
+			for (ARBDogList::iterator iterDog2 = m_Records.GetDogs().begin();
+				iterDog2 != m_Records.GetDogs().end();
+				++iterDog2)
+			{
+				if ((*iterDog2)->GetCallName() == pDog->GetCallName())
+				{
+					pExisting = *iterDog2;
+					break;
+				}
+			}
+			if (!pExisting)
+			{
+				++countDog;
+				m_Records.GetDogs().AddDog(pDog);
+			}
+			else if (*pExisting != *pDog)
+			{
+				// If the dog exists, only update the
+				// existing points, registration numbers,
+				// titles and trials.
+				if (pExisting->GetRegNums() != pDog->GetRegNums())
+				{
+					for (ARBDogRegNumList::iterator iter = pDog->GetRegNums().begin();
+						iter != pDog->GetRegNums().end();
+						++iter)
+					{
+						ARBDogRegNumPtr pRegNum = *iter;
+						ARBDogRegNumPtr pRegExist;
+						if (pExisting->GetRegNums().FindRegNum(pRegNum->GetVenue(), &pRegExist))
+						{
+							if (*pRegExist != *pRegNum)
+							{
+								++countRegNumsUpdated;
+								*pRegExist = *pRegNum;
+							}
+						}
+						else
+						{
+							++countRegNumsAdded;
+							pExisting->GetRegNums().AddRegNum(pRegNum);
+						}
+					}
+				}
+				if (pExisting->GetExistingPoints() != pDog->GetExistingPoints())
+				{
+					for (ARBDogExistingPointsList::iterator iter = pDog->GetExistingPoints().begin();
+						iter != pDog->GetExistingPoints().end();
+						++iter)
+					{
+						bool bFound = false;
+						for (ARBDogExistingPointsList::iterator iter2 = pExisting->GetExistingPoints().begin();
+							iter2 != pExisting->GetExistingPoints().end();
+							++iter2)
+						{
+							if (*(*iter) == *(*iter2))
+							{
+								bFound = true;
+								break;
+							}
+						}
+						if (!bFound)
+						{
+							++countExistingPts;
+							pExisting->GetExistingPoints().AddExistingPoints((*iter));
+						}
+					}
+				}
+				if (pExisting->GetTitles() != pDog->GetTitles())
+				{
+					for (ARBDogTitleList::iterator iter = pDog->GetTitles().begin();
+						iter != pDog->GetTitles().end();
+						++iter)
+					{
+						ARBDogTitlePtr pTitle = *iter;
+						ARBDogTitlePtr pTitleExist;
+						if (pExisting->GetTitles().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pTitleExist))
+						{
+							if (*pTitle != *pTitleExist)
+							{
+								++countTitlesUpdated;
+								*pTitleExist = *pTitle;
+							}
+						}
+						else
+						{
+							++countTitlesAdded;
+							ARBDogTitlePtr pNewTitle = pTitle->Clone();
+							pExisting->GetTitles().AddTitle(pNewTitle);
+						}
+					}
+				}
+				if (pExisting->GetTrials() != pDog->GetTrials())
+				{
+					for (ARBDogTrialList::iterator iter = pDog->GetTrials().begin();
+						iter != pDog->GetTrials().end();
+						++iter)
+					{
+						bool bFound = false;
+						for (ARBDogTrialList::iterator iter2 = pExisting->GetTrials().begin();
+							iter2 != pExisting->GetTrials().end();
+							++iter2)
+						{
+							if (*(*iter) == *(*iter2))
+							{
+								bFound = true;
+								break;
+							}
+						}
+						if (!bFound)
+						{
+							++countTrials;
+							pExisting->GetTrials().AddTrial((*iter));
+						}
+					}
+				}
+			}
+		}
+		for (ARBInfoItemList::const_iterator iterClub = book.GetInfo().GetInfo(ARBInfo::eClubInfo).begin();
+			iterClub != book.GetInfo().GetInfo(ARBInfo::eClubInfo).end();
+			++iterClub)
+		{
+			ARBInfoItemPtr pClub = *iterClub;
+			// If this fails, it already exists.
+			if (m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).AddItem(pClub))
+			{
+				++countClubs;
+			}
+		}
+		for (ARBInfoItemList::const_iterator iterJudge = book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).begin();
+			iterJudge != book.GetInfo().GetInfo(ARBInfo::eJudgeInfo).end();
+			++iterJudge)
+		{
+			ARBInfoItemPtr pJudge = *iterJudge;
+			// If this fails, it already exists.
+			if (m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).AddItem(pJudge))
+			{
+				++countJudges;
+			}
+		}
+		for (ARBInfoItemList::const_iterator iterLocation = book.GetInfo().GetInfo(ARBInfo::eLocationInfo).begin();
+			iterLocation != book.GetInfo().GetInfo(ARBInfo::eLocationInfo).end();
+			++iterLocation)
+		{
+			ARBInfoItemPtr pLocation = *iterLocation;
+			// If this fails, it already exists.
+			if (m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).AddItem(pLocation))
+			{
+				++countLocations;
+			}
+		}
+		if (0 < countDog
+		|| 0 < countRegNumsAdded || 0 < countRegNumsUpdated
+		|| 0 < countExistingPts
+		|| 0 < countTitlesAdded || 0 < countTitlesUpdated
+		|| 0 < countTrials)
+		{
+			UpdateAllViews(NULL, UPDATE_ALL_VIEW);
+			SetModifiedFlag();
+		}
+		if (0 < countClubs)
+		{
+			std::set<ARBString> namesInUse;
+			GetAllClubNames(namesInUse, false);
+			m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
+		}
+		if (0 < countJudges)
+		{
+			std::set<ARBString> namesInUse;
+			GetAllJudges(namesInUse, false);
+			m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
+		}
+		if (0 < countLocations)
+		{
+			std::set<ARBString> namesInUse;
+			GetAllTrialLocations(namesInUse, false);
+			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
+		}
+		CString str;
+		str.LoadString(IDS_ADDED);
+		bool bAdded = false;
+		if (0 < countDog)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_DOGS, countDog);
+			str += str2;
+		}
+		if (0 < countRegNumsAdded)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsAdded);
+			str += str2;
+		}
+		if (0 < countExistingPts)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_EXISTINGPTS, countExistingPts);
+			str += str2;
+		}
+		if (0 < countTitlesAdded)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_TITLES, countTitlesAdded);
+			str += str2;
+		}
+		if (0 < countTrials)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_TRIALS, countTrials);
+			str += str2;
+		}
+		if (0 < countClubs)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_CLUBS, countClubs);
+			str += str2;
+		}
+		if (0 < countJudges)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_JUDGES, countJudges);
+			str += str2;
+		}
+		if (0 < countLocations)
+		{
+			if (bAdded)
+				str += _T(", ");
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_LOCATIONS, countLocations);
+			str += str2;
+		}
+		bAdded = false;
+		if (0 < countRegNumsUpdated)
+		{
+			if (bAdded)
+				str += _T(", ");
+			else
+			{
+				CString tmp;
+				tmp.LoadString(IDS_UPDATED);
+				str += _T("\n");
+				str += tmp;
+			}
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsUpdated);
+			str += str2;
+		}
+		if (0 < countTitlesUpdated)
+		{
+			if (bAdded)
+				str += _T(", ");
+			else
+			{
+				CString tmp;
+				tmp.LoadString(IDS_UPDATED);
+				str += _T("\n");
+				str += tmp;
+			}
+			bAdded = true;
+			CString str2;
+			str2.FormatMessage(IDS_ADDED_TITLES, countTitlesUpdated);
+			str += str2;
+		}
+		AfxMessageBox(str, MB_ICONINFORMATION);
+		bOk = true;
+	}
+	else if (0 < err.m_ErrMsg.length())
+		AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+	return bOk;
+}
+
+bool CAgilityBookDoc::ImportARBCalData(Element const& inTree, CWnd* pParent)
+{
+	bool bOk = false;
+	CErrorCallback err;
+	ARBAgilityRecordBook book;
+	if (book.Load(inTree, true, false, false, false, false, err))
+	{
+		if (0 < err.m_ErrMsg.length())
+			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+		int nAdded = 0;
+		int nUpdated = 0;
+		for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
+		{
+			ARBCalendarPtr cal = *iter;
+			ARBCalendarPtr calFound;
+			if (!m_Records.GetCalendar().FindCalendar(cal, false, &calFound))
+			{
+				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+				{
+					m_Records.GetCalendar().AddCalendar(cal);
+					++nAdded;
+				}
+			}
+			else
+			{
+				if (calFound->Update(cal))
+					++nUpdated;
+			}
+		}
+		if (0 < nAdded + nUpdated)
+		{
+			m_Records.GetCalendar().sort();
+			UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
+			SetModifiedFlag();
+		}
+		CString str;
+		str.FormatMessage(IDS_UPDATED_CAL_ITEMS, nAdded, nUpdated);
+		AfxMessageBox(str, MB_ICONINFORMATION);
+		bOk = true;
+	}
+	else if (0 < err.m_ErrMsg.length())
+		AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+	return bOk;
+}
+
+bool CAgilityBookDoc::ImportARBLogData(Element const& inTree, CWnd* pParent)
+{
+	bool bOk = false;
+	CErrorCallback err;
+	ARBAgilityRecordBook book;
+	if (book.Load(inTree, false, true, false, false, false, err))
+	{
+		if (0 < err.m_ErrMsg.length())
+			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+		int count = 0;
+		for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
+		{
+			ARBTrainingPtr item = *iter;
+			if (!m_Records.GetTraining().FindTraining(item))
+			{
+				m_Records.GetTraining().AddTraining(item);
+				++count;
+			}
+		}
+		if (0 < count)
+		{
+			m_Records.GetTraining().sort();
+			UpdateAllViews(NULL, UPDATE_TRAINING_VIEW);
+			SetModifiedFlag();
+		}
+		CString str;
+		str.FormatMessage(IDS_ADDED_TRAINING_ITEMS, count);
+		AfxMessageBox(str, MB_ICONINFORMATION);
+		bOk = true;
+	}
+	else if (0 < err.m_ErrMsg.length())
+		AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
 	return bOk;
 }
 
@@ -593,6 +995,7 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 void CAgilityBookDoc::DeleteContents()
 {
 	m_Records.clear();
+	m_CalSites.clear();
 	CDocument::DeleteContents();
 	SetModifiedFlag(FALSE);
 }
@@ -607,6 +1010,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 	AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 	m_Records.Default();
 	m_Records.GetConfig().GetActions().clear();
+	m_CalSites.clear();
 
 	if (0 == GetDogs().size())
 	{
@@ -718,6 +1122,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		ASSERT(pApp);
 		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
+	m_CalSites.Update(m_Records.GetConfig());
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
@@ -912,6 +1317,7 @@ void CAgilityBookDoc::OnEditConfiguration()
 {
 	CDlgConfigure config(this, m_Records);
 	config.DoModal();
+	m_CalSites.Update(m_Records.GetConfig());
 }
 
 void CAgilityBookDoc::OnAgilityNewDog()
@@ -968,6 +1374,19 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 			}
 		}
 	}
+}
+
+void CAgilityBookDoc::OnUpdateAgilityUpdateCalendar(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (m_CalSites.hasActiveSites())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+void CAgilityBookDoc::OnAgilityUpdateCalendar()
+{
+	m_CalSites.FindEntries(this, m_Records.GetCalendar());
 }
 
 void CAgilityBookDoc::OnAgilityNewTraining()

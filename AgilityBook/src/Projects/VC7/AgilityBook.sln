@@ -18,6 +18,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTidy", "LibTidy.vcproj",
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cal_usdaa", "cal_usdaa.vcproj", "{1FB92846-A297-4773-BC46-90733251A689}"
+	ProjectSection(ProjectDependencies) = postProject
+		{05967875-9726-4F06-8EC8-DB6170C00BF3} = {05967875-9726-4F06-8EC8-DB6170C00BF3}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -42,6 +47,10 @@ Global
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug.Build.0 = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release.ActiveCfg = Release|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release.Build.0 = Release|Win32
+		{1FB92846-A297-4773-BC46-90733251A689}.Debug.ActiveCfg = Debug|Win32
+		{1FB92846-A297-4773-BC46-90733251A689}.Debug.Build.0 = Debug|Win32
+		{1FB92846-A297-4773-BC46-90733251A689}.Release.ActiveCfg = Release|Win32
+		{1FB92846-A297-4773-BC46-90733251A689}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
