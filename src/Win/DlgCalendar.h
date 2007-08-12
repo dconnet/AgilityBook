@@ -106,19 +106,24 @@ protected:
 	//{{AFX_MSG(CDlgCalendar)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSelchangeLocation();
-	afx_msg void OnKillfocusLocation();
-	afx_msg void OnSelchangeClub();
-	afx_msg void OnKillfocusClub();
-	afx_msg void OnLocationNotes();
-	afx_msg void OnClubNotes();
 	afx_msg void OnDateOpensUnknown();
 	afx_msg void OnDateDrawsUnknown();
 	afx_msg void OnDateClosesUnknown();
+	afx_msg void OnCalEntry();
+	afx_msg void OnEnChangeCalOnlineUrl();
+	afx_msg void OnOnlineEntry();
+	afx_msg void OnEnChangeCalPremiumUrl();
+	afx_msg void OnPremiumEntry();
+	afx_msg void OnEnChangeCalEmailSecAddr();
+	afx_msg void OnEmailSec();
 	afx_msg void OnAccommodation();
-	afx_msg void OnBnClickedCalOnlineEntry();
-	afx_msg void OnBnClickedCalPremiumEntry();
-	afx_msg void OnBnClickedCalEmailSec();
+	afx_msg void OnSelchangeClub();
+	afx_msg void OnKillfocusClub();
+	afx_msg void OnClubNotes();
+	afx_msg void OnSelchangeLocation();
+	afx_msg void OnKillfocusLocation();
+	afx_msg void OnLocationNotes();
+
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
