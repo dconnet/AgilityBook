@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-11 DRC Changed usage of FindCalendar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added vCalendar support, finished iCalendar.
  * @li 2005-07-05 DRC Added iCalendar support.
@@ -773,6 +774,94 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	ioStream->EndEvent();
 }
 
+bool ARBCalendar::IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const
+{
+	if (!inCal)
+		return false;
+	if (inMatchExact)
+		return *inCal == *this;
+	else
+	{
+		return m_DateStart == inCal->GetStartDate()
+			&& m_DateEnd == inCal->GetEndDate()
+			&& m_Venue == inCal->GetVenue()
+			&& m_Club == inCal->GetClub();
+	}
+}
+
+bool ARBCalendar::Update(ARBCalendarPtr inCal)
+{
+	if (!inCal)
+		return false;
+	bool bChanged = false;
+	if (inCal->GetStartDate().IsValid() && m_DateStart != inCal->GetStartDate())
+	{
+		bChanged = true;
+		m_DateStart = inCal->GetStartDate();
+	}
+	if (inCal->GetEndDate().IsValid() && m_DateEnd != inCal->GetEndDate())
+	{
+		bChanged = true;
+		m_DateEnd = inCal->GetEndDate();
+	}
+	if (inCal->GetOpeningDate().IsValid() && m_DateOpening != inCal->GetOpeningDate())
+	{
+		bChanged = true;
+		m_DateOpening = inCal->GetOpeningDate();
+	}
+	if (inCal->GetDrawDate().IsValid() && m_DateDraw != inCal->GetDrawDate())
+	{
+		bChanged = true;
+		m_DateDraw = inCal->GetDrawDate();
+	}
+	if (inCal->GetClosingDate().IsValid() && m_DateClosing != inCal->GetClosingDate())
+	{
+		bChanged = true;
+		m_DateClosing = inCal->GetClosingDate();
+	}
+	if (m_bTentative != inCal->IsTentative())
+	{
+		bChanged = true;
+		m_bTentative = inCal->IsTentative();
+	}
+	if (!inCal->GetLocation().empty() && m_Location != inCal->GetLocation())
+	{
+		bChanged = true;
+		m_Location = inCal->GetLocation();
+	}
+	if (!inCal->GetClub().empty() && m_Club != inCal->GetClub())
+	{
+		bChanged = true;
+		m_Club = inCal->GetClub();
+	}
+	if (!inCal->GetVenue().empty() && m_Venue != inCal->GetVenue())
+	{
+		bChanged = true;
+		m_Venue = inCal->GetVenue();
+	}
+	if  (!inCal->GetSecEmail().empty() && m_SecEmail != inCal->GetSecEmail())
+	{
+		bChanged = true;
+		m_SecEmail = inCal->GetSecEmail();
+	}
+	if (!inCal->GetPremiumURL().empty() && m_PremiumURL != inCal->GetPremiumURL())
+	{
+		bChanged = true;
+		m_PremiumURL = inCal->GetPremiumURL();
+	}
+	if (!inCal->GetOnlineURL().empty() && m_OnlineURL != inCal->GetOnlineURL())
+	{
+		bChanged = true;
+		m_OnlineURL = inCal->GetOnlineURL();
+	}
+	if (!inCal->GetNote().empty() && m_Note != inCal->GetNote())
+	{
+		bChanged = true;
+		m_Note = inCal->GetNote();
+	}
+	return bChanged;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBCalendarList::Load(
@@ -838,6 +927,7 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 
 bool ARBCalendarList::FindCalendar(
 		ARBCalendarPtr inCal,
+		bool inMatchExact,
 		ARBCalendarPtr* outCal) const
 {
 	if (outCal)
@@ -846,7 +936,7 @@ bool ARBCalendarList::FindCalendar(
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
-			if (*(*iter) == *inCal)
+			if ((*iter)->IsMatch(inCal, inMatchExact))
 			{
 				if (outCal)
 					*outCal = *iter;

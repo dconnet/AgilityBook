@@ -554,6 +554,7 @@ BOOL CWizardImport::OnWizardFinish()
 	CString loadstr;
 	ARBostringstream errLog;
 	int nAdded = 0;
+	int nUpdated = 0;
 	int nDuplicate = 0;
 	int nSkipped = 0;
 	int nColumns = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
@@ -1113,14 +1114,20 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				if (pCal)
 				{
-					if (!m_pDoc->GetCalendar().FindCalendar(pCal))
+					ARBCalendarPtr cal;
+					if (!m_pDoc->GetCalendar().FindCalendar(pCal, false, &cal))
 					{
 						m_pDoc->GetCalendar().AddCalendar(pCal);
 						m_pDoc->GetCalendar().sort();
 						++nAdded;
 					}
 					else
-						++nDuplicate;
+					{
+						if (pCal->Update(cal))
+							++nUpdated;
+						else
+							++nDuplicate;
+					}
 				}
 				else
 					++nSkipped;
@@ -1190,7 +1197,7 @@ BOOL CWizardImport::OnWizardFinish()
 	}
 	if (0 < errLog.tellp())
 		errLog << _T("\n");
-	loadstr.FormatMessage(IDS_IMPORT_STATS, nAdded, nDuplicate, nSkipped);
+	loadstr.FormatMessage(IDS_IMPORT_STATS, nAdded, nUpdated, nDuplicate, nSkipped);
 	errLog << (LPCTSTR)loadstr;
 	CDlgMessage dlg(errLog.str().c_str(), 0, this);
 	dlg.DoModal();
