@@ -36,6 +36,7 @@
 
 #include "stdafx.h"
 #include "cal_usdaa.h"
+#include "../ARB/Element.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -85,4 +86,9 @@ BOOL CcalusdaaApp::InitInstance()
 {
 	CWinApp::InitInstance();
 	return TRUE;
+}
+
+int CcalusdaaApp::ExitInstance()
+{
+	return CWinApp::ExitInstance();
 }

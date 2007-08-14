@@ -38,8 +38,6 @@
 #include "resource.h"
 #include "DlgAuthenticate.h"
 
-#include "AgilityBookOptions.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -49,29 +47,28 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAuthenticate dialog
 
-IMPLEMENT_DYNAMIC(CDlgAuthenticate, CDialog)
+IMPLEMENT_DYNAMIC(CDlgAuthenticate, CDlgBaseDialog)
 
 CString CDlgAuthenticate::m_Password; // So we remember the password for the life of the program
 
-CDlgAuthenticate::CDlgAuthenticate(CString const& userNameHint, CWnd* pParent)
+CDlgAuthenticate::CDlgAuthenticate(CString& userName, CWnd* pParent)
 	: CDlgBaseDialog(CDlgAuthenticate::IDD, pParent)
-	, m_userNameHint(userNameHint)
+	, m_userName(userName)
 {
 	//{{AFX_DATA_INIT(CDlgAuthenticate)
-	m_UserName = CAgilityBookOptions::GetUserName(m_userNameHint);
 	//}}AFX_DATA_INIT
 }
 
 void CDlgAuthenticate::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgAuthenticate)
-	DDX_Text(pDX, IDC_AUTH_USERNAME, m_UserName);
+	DDX_Text(pDX, IDC_AUTH_USERNAME, m_Name);
 	DDX_Text(pDX, IDC_AUTH_PASSWORD, m_Password);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgAuthenticate, CDialog)
+BEGIN_MESSAGE_MAP(CDlgAuthenticate, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgAuthenticate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -79,5 +76,5 @@ END_MESSAGE_MAP()
 void CDlgAuthenticate::OnOK()
 {
 	CDlgBaseDialog::OnOK();
-	CAgilityBookOptions::SetUserName(m_userNameHint, m_UserName);
+	m_userName = m_Name;
 }

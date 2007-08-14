@@ -96,7 +96,7 @@ void CReadHttp::Close()
 static DWORD dwHttpRequestFlags = INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
 static const TCHAR szHeaders[] = _T("Accept: text\r\n");
 
-DWORD CReadHttp::Connect(CString const& userNameHint, CString& outErrMsg, CWnd* pParent)
+DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
 {
 	if (!m_session)
 		m_session = new CInternetSession(_T("my version"));
@@ -110,7 +110,7 @@ DWORD CReadHttp::Connect(CString const& userNameHint, CString& outErrMsg, CWnd* 
 	while (dwRet == HTTP_STATUS_DENIED && m_pServer && m_pFile)
 	{
 		CloseFiles();
-		CDlgAuthenticate dlg(userNameHint, pParent);
+		CDlgAuthenticate dlg(userName, pParent);
 		if (IDOK == dlg.DoModal())
 		{
 			m_pServer = m_session->GetHttpConnection(m_strServerName, m_nPort, dlg.GetUserName(), dlg.GetPassword());
@@ -128,7 +128,7 @@ DWORD CReadHttp::Connect(CString const& userNameHint, CString& outErrMsg, CWnd* 
 	return dwRet;
 }
 
-bool CReadHttp::ReadHttpFile(CString const& userNameHint, CString& outErrMsg, CWnd* pParent)
+bool CReadHttp::ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParent)
 {
 	bool bOk = false;
 	outErrMsg.Empty();
@@ -142,7 +142,7 @@ bool CReadHttp::ReadHttpFile(CString const& userNameHint, CString& outErrMsg, CW
 		if (AfxParseURL(m_URL, dwServiceType, m_strServerName, m_strObject, m_nPort)
 		&& dwServiceType == INTERNET_SERVICE_HTTP)
 		{
-			DWORD dwRet = Connect(userNameHint, outErrMsg, pParent);
+			DWORD dwRet = Connect(userName, outErrMsg, pParent);
 
 			// If we've been redirected, re-parse. In theory SendRequest()
 			// should do this if NO_AUTO_REDIRECT is not specified. I haven't
@@ -175,7 +175,7 @@ bool CReadHttp::ReadHttpFile(CString const& userNameHint, CString& outErrMsg, CW
 				&& AfxParseURL(strNewLocation, dwServiceType, m_strServerName, m_strObject, m_nPort))
 				{
 					// try again at the new location
-					dwRet = Connect(userNameHint, outErrMsg, pParent);
+					dwRet = Connect(userName, outErrMsg, pParent);
 
 					if (dwRet == HTTP_STATUS_MOVED
 					|| dwRet == HTTP_STATUS_REDIRECT

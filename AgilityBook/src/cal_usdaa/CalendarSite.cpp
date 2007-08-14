@@ -37,6 +37,9 @@
 #include "stdafx.h"
 
 #include "ICalendarSite.h"
+#include "../ARB/Element.h"
+#include "../Win/ReadHttp.h"
+#include "../tidy/include/tidy.h"
 #include <sstream>
 
 #ifdef _DEBUG
@@ -73,10 +76,13 @@ public:
 
 CCalendarSite::CCalendarSite()
 {
+	ARBString err;
+	Element::Initialize(err);
 }
 
 CCalendarSite::~CCalendarSite()
 {
+	Element::Terminate();
 }
 
 void CCalendarSite::Release()
@@ -96,8 +102,42 @@ char* CCalendarSite::GetDescription() const
 
 char* CCalendarSite::Process() const
 {
-	//TODO
+	CStringA data;
+	CReadHttp http(_T("http://www.usdaa.com/events.cfm"), data);
+
+	CString username, errMsg;
 	std::ostringstream s;
+	if (http.ReadHttpFile(username, errMsg))
+	{
+	    TidyDoc tdoc = tidyCreate();
+		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
+		if (0 > tidyParseString(tdoc, (LPCSTR)data))
+			return NULL;
+		if (0 > tidyCleanAndRepair(tdoc))
+			return NULL;
+		uint len = 0;
+		tidySaveString(tdoc, NULL, &len);
+		char* pData = data.GetBuffer(len+1);
+		if (0 > tidySaveString(tdoc, pData, &len))
+		{
+			data.ReleaseBuffer();
+			return NULL;
+		}
+		data.ReleaseBuffer();
+
+		ARBString err;
+		Element tree;
+		if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err))
+		{
+			AfxMessageBox(err.c_str());
+			tree.SaveXML(s);
+			return NULL;
+		}
+
+		/*
+		CString tmp(data);
+		AfxMessageBox(tmp);
+	//TODO
 	s << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 		<< "<AgilityBook Book=\"12.6\">\n"
 
@@ -111,6 +151,8 @@ char* CCalendarSite::Process() const
 		<< " Venue=\"USDAA\"/>"
 
 		<< "</AgilityBook>\n";
+		*/
+	}
 	return Allocate(s.str());
 }
 

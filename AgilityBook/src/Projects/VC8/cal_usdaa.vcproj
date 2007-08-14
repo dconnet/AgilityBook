@@ -46,8 +46,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="true"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -221,8 +221,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="true"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -398,8 +398,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -571,8 +571,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -736,6 +736,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\cal_usdaa\DlgAuthenticate.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -814,6 +818,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\cal_usdaa\DlgAuthenticate.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\cal_usdaa\resource.h"
 				>
 			</File>
@@ -833,6 +841,42 @@
 			</File>
 			<File
 				RelativePath="..\..\cal_usdaa\res\cal_usdaa.rc2"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="ARB Files"
+			>
+			<File
+				RelativePath="..\..\ARB\ARBDate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBDate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBTypes.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBTypes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\Element.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\Element.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ReadHttp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ReadHttp.h"
 				>
 			</File>
 		</Filter>

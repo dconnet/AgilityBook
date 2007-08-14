@@ -62,12 +62,12 @@ public:
 
 	/**
 	 * Read the HTTP via a 'GET'
-	 * @param userNameHint Used to allow different logins to be remembered
+	 * @param userName Default username, if required. May be modified.
 	 * @param outErrMsg Generated error messages
 	 * @param pParent Owner of any dialogs that may be displayed
 	 * @return Success
 	 */
-	bool ReadHttpFile(CString const& userNameHint, CString& outErrMsg, CWnd* pParent = NULL);
+	bool ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParent = NULL);
 
 private:
 	/**
@@ -77,13 +77,13 @@ private:
 
 	/**
 	 * Create the session, connection and file.
-	 * @param userNameHint Used to allow different logins to be remembered
+	 * @param userName Default username, if required. May be modified.
 	 * @param outErrMsg Generated error messages
 	 * @param pParent Owner of any dialogs that may be displayed
 	 */
-	DWORD Connect(CString const& userNameHint, CString& outErrMsg, CWnd* pParent);
+	DWORD Connect(CString& userName, CString& outErrMsg, CWnd* pParent);
 
-	CString const& m_URL;
+	CString m_URL; // Note, this cannot be a reference - otherwise CReadHttp("http://www", data) fails as the reference goes away.
 	CStringA& m_Data;
 	CInternetSession* m_session;
 	CHttpConnection* m_pServer;
