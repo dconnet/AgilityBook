@@ -1427,8 +1427,9 @@ bool Element::LoadXML(
 	SAX2XMLReader* parser = XMLReaderFactory::createXMLReader();
 	// On Win32, an XMLCh is a UNICODE character.
 	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://xml.org/sax/features/namespaces"), false);
-	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://xml.org/sax/features/validation"), true);
-	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://apache.org/xml/features/validation/dynamic"), true);
+	//parser->setFeature(reinterpret_cast<XMLCh*>(L"http://xml.org/sax/features/validation"), true);
+	//parser->setFeature(reinterpret_cast<XMLCh*>(L"http://apache.org/xml/features/validation/dynamic"), true);
+	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://apache.org/xml/features/disable-default-entity-resolution"), true);
 	StringDOM eMsg;
 	SAXImportHandlers handler(*this, eMsg);
 	parser->setContentHandler(&handler);

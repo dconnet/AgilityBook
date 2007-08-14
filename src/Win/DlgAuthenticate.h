@@ -43,18 +43,18 @@ class CDlgAuthenticate : public CDlgBaseDialog
 	DECLARE_DYNAMIC(CDlgAuthenticate)
 
 public:
-	CDlgAuthenticate(CString const& userNameHint, CWnd* pParent = NULL);
-	LPCTSTR GetUserName() const		{return (LPCTSTR)m_UserName;}
+	CDlgAuthenticate(CString& userName, CWnd* pParent = NULL);
+	LPCTSTR GetUserName() const		{return (LPCTSTR)m_Name;}
 	LPCTSTR GetPassword() const		{return (LPCTSTR)m_Password;}
 
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgAuthenticate)
 	enum { IDD = IDD_AUTHENTICATE };
-	CString m_UserName;
+	CString m_Name;
 	static CString m_Password;
 	//}}AFX_DATA
-	CString const& m_userNameHint; // Used to allow different logins to be remembered
+	CString& m_userName;
 
 	//{{AFX_VIRTUAL(CDlgAuthenticate)
 protected:

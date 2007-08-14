@@ -49,6 +49,7 @@
 #include "UpdateInfo.h"
 
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "Element.h"
 #include "HyperLink.h"
 #include "ReadHttp.h"
@@ -127,7 +128,10 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	CString errMsg;
 
 	CReadHttp file(url, data);
-	if (!file.ReadHttpFile(m_usernameHint, errMsg))
+	CString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+	if (file.ReadHttpFile(userName, errMsg))
+		CAgilityBookOptions::SetUserName(m_usernameHint, userName);
+	else
 	{
 		if (bVerbose)
 		{
@@ -319,8 +323,10 @@ void CUpdateInfo::CheckConfig(
 			CStringA strConfig;
 			CString errMsg;
 			CReadHttp file(url, strConfig);
+			CString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 			if (file.ReadHttpFile(m_usernameHint, errMsg))
 			{
+				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				file.Close();
 				Element tree;
 				ARBString errMsg2;
