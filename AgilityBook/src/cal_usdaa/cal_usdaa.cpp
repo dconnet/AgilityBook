@@ -85,10 +85,13 @@ CcalusdaaApp theApp;
 BOOL CcalusdaaApp::InitInstance()
 {
 	CWinApp::InitInstance();
+	ARBString err;
+	Element::Initialize(err);
 	return TRUE;
 }
 
 int CcalusdaaApp::ExitInstance()
 {
+	Element::Terminate();
 	return CWinApp::ExitInstance();
 }

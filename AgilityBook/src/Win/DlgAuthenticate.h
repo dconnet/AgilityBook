@@ -36,9 +36,7 @@
  * @li 2007-08-03 DRC Created
  */
 
-#include "DlgBaseDialog.h"
-
-class CDlgAuthenticate : public CDlgBaseDialog
+class CDlgAuthenticate : public CDialog
 {
 	DECLARE_DYNAMIC(CDlgAuthenticate)
 
