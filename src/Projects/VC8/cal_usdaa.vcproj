@@ -736,10 +736,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\cal_usdaa\DlgAuthenticate.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -818,10 +814,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\cal_usdaa\DlgAuthenticate.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\cal_usdaa\resource.h"
 				>
 			</File>
@@ -861,6 +853,86 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\ARBTypes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAuthenticate.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAuthenticate.h"
 				>
 			</File>
 			<File

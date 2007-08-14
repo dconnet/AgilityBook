@@ -1628,6 +1628,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBStructure.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBTraining.cpp"
 				>
 			</File>

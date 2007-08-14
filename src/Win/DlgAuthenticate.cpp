@@ -47,12 +47,12 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAuthenticate dialog
 
-IMPLEMENT_DYNAMIC(CDlgAuthenticate, CDlgBaseDialog)
+IMPLEMENT_DYNAMIC(CDlgAuthenticate, CDialog)
 
 CString CDlgAuthenticate::m_Password; // So we remember the password for the life of the program
 
 CDlgAuthenticate::CDlgAuthenticate(CString& userName, CWnd* pParent)
-	: CDlgBaseDialog(CDlgAuthenticate::IDD, pParent)
+	: CDialog(CDlgAuthenticate::IDD, pParent)
 	, m_userName(userName)
 {
 	//{{AFX_DATA_INIT(CDlgAuthenticate)
@@ -61,20 +61,20 @@ CDlgAuthenticate::CDlgAuthenticate(CString& userName, CWnd* pParent)
 
 void CDlgAuthenticate::DoDataExchange(CDataExchange* pDX)
 {
-	CDlgBaseDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgAuthenticate)
 	DDX_Text(pDX, IDC_AUTH_USERNAME, m_Name);
 	DDX_Text(pDX, IDC_AUTH_PASSWORD, m_Password);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgAuthenticate, CDlgBaseDialog)
+BEGIN_MESSAGE_MAP(CDlgAuthenticate, CDialog)
 	//{{AFX_MSG_MAP(CDlgAuthenticate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 void CDlgAuthenticate::OnOK()
 {
-	CDlgBaseDialog::OnOK();
+	CDialog::OnOK();
 	m_userName = m_Name;
 }
