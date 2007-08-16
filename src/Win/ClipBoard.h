@@ -37,7 +37,7 @@
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
  */
 
-class Element;
+#include "ARBTypes.h"
 
 // Name of root element when writing Elements.
 #define CLIPDATA	_T("ClipData")
@@ -83,7 +83,7 @@ public:
 
 	bool GetData(
 			eClipFormat clpFmt,
-			Element& outTree);
+			ElementNodePtr outTree);
 
 	bool GetData(CStringA& outData);
 #if _MSC_VER >= 1300
@@ -106,7 +106,7 @@ public:
 
 	bool SetData(
 			eClipFormat clpFmt,
-			Element const& inTree);
+			ElementNodePtr inTree);
 
 	// Used to write special data.
 	bool SetData(
@@ -115,10 +115,22 @@ public:
 	bool SetData(
 			eClipFormat clpFmt,
 			CStringA const& inData);
+	bool SetData(
+			eClipFormat clpFmt,
+			std::wstring const& inData);
+#if _MSC_VER >= 1300
+	bool SetData(
+			eClipFormat clpFmt,
+			CStringW const& inData);
+#endif
 
 	// Write data as CF_TEXT (in Unicode builds, CF_UNICODETEXT also)
-	bool SetData(ARBString const& inData);
-	bool SetData(CString const& inData);
+	bool SetData(std::string const& inData);
+	bool SetData(std::wstring const& inData);
+	bool SetData(CStringA const& inData);
+#if _MSC_VER >= 1300
+	bool SetData(CStringW const& inData);
+#endif
 
 	// Raw form.
 	bool SetData(

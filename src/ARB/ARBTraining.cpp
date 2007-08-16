@@ -136,19 +136,22 @@ size_t ARBTraining::GetSearchStrings(std::set<ARBString>& ioStrings) const
 }
 
 bool ARBTraining::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	switch (inTree.GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	switch (inTree->GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
-	case Element::eNotFound:
+	case ElementNode::eNotFound:
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
 		return false;
-	case Element::eInvalidValue:
+	case ElementNode::eInvalidValue:
 		{
 			ARBString attrib;
-			inTree.GetAttrib(ATTRIB_TRAINING_DATE, attrib);
+			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
 			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
@@ -156,30 +159,33 @@ bool ARBTraining::Load(
 		return false;
 	}
 
-	inTree.GetAttrib(ATTRIB_TRAINING_NAME, m_Name);
-	inTree.GetAttrib(ATTRIB_TRAINING_SUBNAME, m_SubName);
+	inTree->GetAttrib(ATTRIB_TRAINING_NAME, m_Name);
+	inTree->GetAttrib(ATTRIB_TRAINING_SUBNAME, m_SubName);
 
-	m_Note = inTree.GetValue();
+	m_Note = inTree->GetValue();
 	return true;
 }
 
-bool ARBTraining::Save(Element& ioTree) const
+bool ARBTraining::Save(ElementNodePtr ioTree) const
 {
-	Element& training = ioTree.AddElement(TREE_TRAINING);
-	training.AddAttrib(ATTRIB_TRAINING_DATE, m_Date);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr training = ioTree->AddElementNode(TREE_TRAINING);
+	training->AddAttrib(ATTRIB_TRAINING_DATE, m_Date);
 	if (0 < m_Name.length())
-		training.AddAttrib(ATTRIB_TRAINING_NAME, m_Name);
+		training->AddAttrib(ATTRIB_TRAINING_NAME, m_Name);
 	if (0 < m_SubName.length())
-		training.AddAttrib(ATTRIB_TRAINING_SUBNAME, m_SubName);
+		training->AddAttrib(ATTRIB_TRAINING_SUBNAME, m_SubName);
 	if (0 < m_Note.length())
-		training.SetValue(m_Note);
+		training->SetValue(m_Note);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBTrainingList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

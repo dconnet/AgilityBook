@@ -110,19 +110,22 @@ void ARBConfigOtherPoints::clear()
 }
 
 bool ARBConfigOtherPoints::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
 		return false;
 	}
-	inTree.GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
+	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	ARBString attrib;
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
@@ -145,40 +148,43 @@ bool ARBConfigOtherPoints::Load(
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;
 	}
-	m_Desc = inTree.GetValue();
+	m_Desc = inTree->GetValue();
 	return true;
 }
 
-bool ARBConfigOtherPoints::Save(Element& ioTree) const
+bool ARBConfigOtherPoints::Save(ElementNodePtr ioTree) const
 {
-	Element& other = ioTree.AddElement(TREE_OTHERPTS);
-	other.AddAttrib(ATTRIB_OTHERPTS_NAME, m_Name);
-	other.AddAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr other = ioTree->AddElementNode(TREE_OTHERPTS);
+	other->AddAttrib(ATTRIB_OTHERPTS_NAME, m_Name);
+	other->AddAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
 	switch (m_Tally)
 	{
 	default:
 	case eTallyAll:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
 		break;
 	case eTallyAllByEvent:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("AllByEvent"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("AllByEvent"));
 		break;
 	case eTallyLevel:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("Level"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("Level"));
 		break;
 	case eTallyLevelByEvent:
-		other.AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("LevelByEvent"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("LevelByEvent"));
 		break;
 	}
 	if (0 < m_Desc.length())
-		other.SetValue(m_Desc);
+		other->SetValue(m_Desc);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigOtherPointsList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

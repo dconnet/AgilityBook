@@ -184,8 +184,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		//     (if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD)
 		// </Data>
 		ARBString errMsg2;
-		Element tree;
-		if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg2))
+		ElementNodePtr tree(ElementNode::New());
+		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg2))
 		{
 			if (bVerbose)
 			{
@@ -202,21 +202,21 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				// The return code is really whether we loaded the pgm verno.
 			}
 		}
-		else if (tree.GetName() == _T("Data"))
+		else if (tree->GetName() == _T("Data"))
 		{
-			int nIndex = tree.FindElement(_T("Config"));
+			int nIndex = tree->FindElement(_T("Config"));
 			if (0 <= nIndex)
 			{
-				Element& config = tree.GetElement(nIndex);
-				config.GetAttrib(_T("ver"), m_VerConfig);
-				config.GetAttrib(_T("file"), m_FileName);
-				m_InfoMsg = config.GetValue();
+				ElementNodePtr config = tree->GetElementNode(nIndex);
+				config->GetAttrib(_T("ver"), m_VerConfig);
+				config->GetAttrib(_T("file"), m_FileName);
+				m_InfoMsg = config->GetValue();
 			}
-			nIndex = tree.FindElement(_T("Download"));
+			nIndex = tree->FindElement(_T("Download"));
 			if (0 <= nIndex)
 			{
-				Element& download = tree.GetElement(nIndex);
-				m_UpdateDownload = download.GetValue().c_str();
+				ElementNodePtr download = tree->GetElementNode(nIndex);
+				m_UpdateDownload = download->GetValue().c_str();
 			}
 		}
 	}
@@ -328,9 +328,9 @@ void CUpdateInfo::CheckConfig(
 			{
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				file.Close();
-				Element tree;
+				ElementNodePtr tree(ElementNode::New());
 				ARBString errMsg2;
-				if (!tree.LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg2))
+				if (!tree->LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg2))
 				{
 					msg.FormatMessage(IDS_LOAD_FAILED, (LPCTSTR)url);
 					if (0 < errMsg2.length())
@@ -340,17 +340,17 @@ void CUpdateInfo::CheckConfig(
 					}
 					AfxMessageBox(msg, MB_ICONEXCLAMATION);
 				}
-				else if (tree.GetName() == _T("DefaultConfig"))
+				else if (tree->GetName() == _T("DefaultConfig"))
 				{
 					strConfig.Empty();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-					tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
-					int nConfig = tree.FindElement(TREE_CONFIG);
+					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+					int nConfig = tree->FindElement(TREE_CONFIG);
 					if (0 <= nConfig)
 					{
 						CErrorCallback err;
 						ARBAgilityRecordBook book;
-						if (!book.GetConfig().Load(tree.GetElement(nConfig), version, err))
+						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
 							if (0 < err.m_ErrMsg.length())
 								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);

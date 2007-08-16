@@ -89,31 +89,36 @@ bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 }
 
 bool ARBConfigCalSite::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_SEARCH));
 		return false;
 	}
-	inTree.GetAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
+	inTree->GetAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
 
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		ARBString const& name = element.GetName();
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		ARBString const& name = element->GetName();
 		if (name == TREE_LOCCODE)
 		{
 			// Ignore any errors...
 			ARBString code;
-			if (Element::eNotFound != element.GetAttrib(ATTRIB_LOCCODE_CODE, code))
+			if (ElementNode::eNotFound != element->GetAttrib(ATTRIB_LOCCODE_CODE, code))
 			{
 				if (!code.empty())
 				{
 					ARBString name;
-					element.GetAttrib(ATTRIB_LOCCODE_NAME, name);
+					element->GetAttrib(ATTRIB_LOCCODE_NAME, name);
 					m_Locations[code] = name;
 				}
 			}
@@ -122,12 +127,12 @@ bool ARBConfigCalSite::Load(
 		{
 			// Ignore any errors...
 			ARBString code;
-			if (Element::eNotFound != element.GetAttrib(ATTRIB_VENUECODE_CODE, code))
+			if (ElementNode::eNotFound != element->GetAttrib(ATTRIB_VENUECODE_CODE, code))
 			{
 				if (!code.empty())
 				{
 					ARBString venue;
-					element.GetAttrib(ATTRIB_VENUECODE_VENUE, venue);
+					element->GetAttrib(ATTRIB_VENUECODE_VENUE, venue);
 					m_Locations[code] = venue;
 				}
 			}
@@ -136,25 +141,28 @@ bool ARBConfigCalSite::Load(
 	return true;
 }
 
-bool ARBConfigCalSite::Save(Element& ioTree) const
+bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 {
-	Element& calsite = ioTree.AddElement(TREE_CALSITE);
-	calsite.AddAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr calsite = ioTree->AddElementNode(TREE_CALSITE);
+	calsite->AddAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch);
 	if (!m_urlHelp.empty())
-		calsite.AddAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
+		calsite->AddAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
 	std::map<ARBString, ARBString>::const_iterator i;
 	for (i = m_Locations.begin(); i != m_Locations.end(); ++i)
 	{
-		Element& loc = calsite.AddElement(TREE_LOCCODE);
-		loc.AddAttrib(ATTRIB_LOCCODE_CODE, i->first);
-		loc.AddAttrib(ATTRIB_LOCCODE_NAME, i->second);
+		ElementNodePtr loc = calsite->AddElementNode(TREE_LOCCODE);
+		loc->AddAttrib(ATTRIB_LOCCODE_CODE, i->first);
+		loc->AddAttrib(ATTRIB_LOCCODE_NAME, i->second);
 	}
 	for (i = m_Venues.begin(); i != m_Venues.end(); ++i)
 	{
-		Element& loc = calsite.AddElement(TREE_VENUECODE);
-		loc.AddAttrib(ATTRIB_VENUECODE_CODE, i->first);
+		ElementNodePtr loc = calsite->AddElementNode(TREE_VENUECODE);
+		loc->AddAttrib(ATTRIB_VENUECODE_CODE, i->first);
 		if (!i->second.empty())
-			loc.AddAttrib(ATTRIB_VENUECODE_VENUE, i->second);
+			loc->AddAttrib(ATTRIB_VENUECODE_VENUE, i->second);
 	}
 	return true;
 }

@@ -190,68 +190,73 @@ size_t ARBDog::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 bool ARBDog::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DOB, m_DOB))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_DOG_DOB, m_DOB))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_DOG_DOB, attrib);
+		inTree->GetAttrib(ATTRIB_DOG_DOB, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str()));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_DOG_DECEASED, m_Deceased))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_DOG_DECEASED, attrib);
+		inTree->GetAttrib(ATTRIB_DOG_DECEASED, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str()));
 		return false;
 	}
 
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_REGNAME)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_REGNAME)
 		{
-			m_RegName = element.GetValue();
+			m_RegName = element->GetValue();
 		}
-		else if (element.GetName() == TREE_BREED)
+		else if (element->GetName() == TREE_BREED)
 		{
-			m_Breed = element.GetValue();
+			m_Breed = element->GetValue();
 		}
-		else if (element.GetName() == TREE_NOTE)
+		else if (element->GetName() == TREE_NOTE)
 		{
-			m_Note = element.GetValue();
+			m_Note = element->GetValue();
 		}
-		else if (element.GetName() == TREE_EXISTING_PTS)
+		else if (element->GetName() == TREE_EXISTING_PTS)
 		{
 			// Ignore any errors...
 			m_ExistingPoints.Load(inConfig, element, inVersion, ioCallback);
 		}
-		else if (element.GetName() == TREE_REG_NUM)
+		else if (element->GetName() == TREE_REG_NUM)
 		{
 			// Ignore any errors...
 			m_RegNums.Load(inConfig, element, inVersion, ioCallback);
 		}
-		else if (element.GetName() == TREE_TITLE)
+		else if (element->GetName() == TREE_TITLE)
 		{
 			// Ignore any errors...
 			m_Titles.Load(inConfig, element, inVersion, ioCallback);
 		}
-		else if (element.GetName() == TREE_TRIAL)
+		else if (element->GetName() == TREE_TRIAL)
 		{
 			// Ignore any errors...
 			m_Trials.Load(inConfig, element, inVersion, ioCallback);
@@ -264,27 +269,30 @@ bool ARBDog::Load(
 	return true;
 }
 
-bool ARBDog::Save(Element& ioTree) const
+bool ARBDog::Save(ElementNodePtr ioTree) const
 {
-	Element& dog = ioTree.AddElement(TREE_DOG);
-	dog.AddAttrib(ATTRIB_DOG_CALLNAME, m_CallName);
-	dog.AddAttrib(ATTRIB_DOG_DOB, m_DOB);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr dog = ioTree->AddElementNode(TREE_DOG);
+	dog->AddAttrib(ATTRIB_DOG_CALLNAME, m_CallName);
+	dog->AddAttrib(ATTRIB_DOG_DOB, m_DOB);
 	if (m_Deceased.IsValid())
-		dog.AddAttrib(ATTRIB_DOG_DECEASED, m_Deceased);
+		dog->AddAttrib(ATTRIB_DOG_DECEASED, m_Deceased);
 	if (0 < m_RegName.length())
 	{
-		Element& element = dog.AddElement(TREE_REGNAME);
-		element.SetValue(m_RegName);
+		ElementNodePtr element = dog->AddElementNode(TREE_REGNAME);
+		element->SetValue(m_RegName);
 	}
 	if (0 < m_Breed.length())
 	{
-		Element& element = dog.AddElement(TREE_BREED);
-		element.SetValue(m_Breed);
+		ElementNodePtr element = dog->AddElementNode(TREE_BREED);
+		element->SetValue(m_Breed);
 	}
 	if (0 < m_Note.length())
 	{
-		Element& element = dog.AddElement(TREE_NOTE);
-		element.SetValue(m_Note);
+		ElementNodePtr element = dog->AddElementNode(TREE_NOTE);
+		element->SetValue(m_Note);
 	}
 	if (!m_ExistingPoints.Save(dog))
 		return false;
@@ -341,7 +349,7 @@ int ARBDog::DeleteDivision(
 
 bool ARBDogList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

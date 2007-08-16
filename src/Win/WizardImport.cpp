@@ -55,7 +55,6 @@
 #include "DlgAssignColumns.h"
 #include "DlgMessage.h"
 #include "DlgProgress.h"
-#include "Element.h"
 #include "Wizard.h"
 
 #ifdef _DEBUG

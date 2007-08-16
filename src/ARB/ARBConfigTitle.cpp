@@ -128,64 +128,70 @@ void ARBConfigTitle::clear()
 }
 
 bool ARBConfigTitle::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLES_NAME, m_Name)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME));
 		return false;
 	}
 
-	inTree.GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
-	inTree.GetAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
+	inTree->GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
+	inTree->GetAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, VALID_VALUES_BOOL));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
+		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
+		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
 		return false;
 	}
 
-	m_Desc = inTree.GetValue();
+	m_Desc = inTree->GetValue();
 	return true;
 }
 
-bool ARBConfigTitle::Save(Element& ioTree) const
+bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 {
-	Element& title = ioTree.AddElement(TREE_TITLES);
-	title.AddAttrib(ATTRIB_TITLES_NAME, m_Name);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr title = ioTree->AddElementNode(TREE_TITLES);
+	title->AddAttrib(ATTRIB_TITLES_NAME, m_Name);
 	if (0 < m_Multiple)
-		title.AddAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
+		title->AddAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
 	if (m_Prefix)
-		title.AddAttrib(ATTRIB_TITLES_PREFIX, m_Prefix);
+		title->AddAttrib(ATTRIB_TITLES_PREFIX, m_Prefix);
 	if (0 < m_LongName.length())
-		title.AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
+		title->AddAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	if (m_ValidFrom.IsValid())
-		title.AddAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom);
+		title->AddAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom);
 	if (m_ValidTo.IsValid())
-		title.AddAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo);
+		title->AddAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo);
 	if (0 < m_Desc.length())
-		title.SetValue(m_Desc);
+		title->SetValue(m_Desc);
 	return true;
 }
 
@@ -247,7 +253,7 @@ ARBString ARBConfigTitle::GetCompleteName(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitleList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		bool inCheckDups)

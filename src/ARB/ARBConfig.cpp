@@ -133,11 +133,14 @@ void ARBConfig::clear()
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadFault(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (inTree.GetName() == TREE_FAULTTYPE
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (inTree->GetName() == TREE_FAULTTYPE
 	&& m_FaultTypes.Load(inTree, inVersion, ioCallback))
 		return true;
 	else
@@ -149,11 +152,14 @@ bool ARBConfig::LoadFault(
  * This function allows the venue to migrate old file formats.
  */
 bool ARBConfig::LoadOtherPoints(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (inTree.GetName() == TREE_OTHERPTS
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (inTree->GetName() == TREE_OTHERPTS
 	&& m_OtherPoints.Load(inTree, inVersion, ioCallback))
 		return true;
 	else
@@ -161,20 +167,25 @@ bool ARBConfig::LoadOtherPoints(
 }
 
 bool ARBConfig::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, VALID_VALUES_BOOL));
 		return false;
 	}
-	inTree.GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		ARBString const& name = element.GetName();
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		ARBString const& name = element->GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -208,12 +219,15 @@ bool ARBConfig::Load(
 	return true;
 }
 
-bool ARBConfig::Save(Element& ioTree) const
+bool ARBConfig::Save(ElementNodePtr ioTree) const
 {
-	Element& config = ioTree.AddElement(TREE_CONFIG);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr config = ioTree->AddElementNode(TREE_CONFIG);
 	if (!m_bUpdate)
-		config.AddAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate);
-	config.AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
+		config->AddAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate);
+	config->AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
 	for (std::vector<ARBConfigCalSite>::const_iterator i = m_CalSites.begin();
 		i != m_CalSites.end();
 		++i)
@@ -242,7 +256,7 @@ void ARBConfig::Default()
 	bool bOk = false;
 	ARBString errMsg;
 	ARBErrorCallback err(errMsg);
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 #ifdef _WINDOWS
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
@@ -252,7 +266,7 @@ void ARBConfig::Default()
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
 			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			bOk = tree.LoadXMLBuffer(pData, size, errMsg);
+			bOk = tree->LoadXMLBuffer(pData, size, errMsg);
 			FreeResource(hRes);
 		}
 	}
@@ -260,24 +274,24 @@ void ARBConfig::Default()
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	bOk = tree.LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
+	bOk = tree->LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
 #endif
-	if (bOk && tree.GetName() == _T("DefaultConfig"))
+	if (bOk && tree->GetName() == _T("DefaultConfig"))
 	{
 		ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-		tree.GetAttrib(ATTRIB_BOOK_VERSION, version);
-		int config = tree.FindElement(TREE_CONFIG);
+		tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+		int config = tree->FindElement(TREE_CONFIG);
 		if (0 <= config)
 		{
-			bOk = Load(tree.GetElement(config), version, err);
+			bOk = Load(tree->GetElementNode(config), version, err);
 		}
 	}
 }
 
 /* static */
-ARBString ARBConfig::GetDTD(bool bNormalizeCRNL)
+std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
-	ARBString dtd;
+	std::string dtd;
 #ifdef _WINDOWS
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
@@ -290,17 +304,13 @@ ARBString ARBConfig::GetDTD(bool bNormalizeCRNL)
 			CStringA data(pData, size);
 			if (bNormalizeCRNL)
 				data.Replace("\r\n", "\n");
-#ifdef UNICODE
-			dtd = CString(data);
-#else
-			dtd = ARBString(data, data.GetLength());
-#endif
+			dtd = std::string(data, data.GetLength());
 			FreeResource(hRes);
 		}
 	}
 #else
 	// @todo: Porting issues: Not currently implemented
-	dtd = _T("<!-- Not implemented on non-windows platforms -->\n");
+	dtd = "<!-- Not implemented on non-windows platforms -->\n";
 #endif
 	return dtd;
 }

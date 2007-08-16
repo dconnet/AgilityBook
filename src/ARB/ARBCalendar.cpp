@@ -539,19 +539,22 @@ size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 }
 
 bool ARBCalendar::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	switch (inTree.GetAttrib(ATTRIB_CAL_START, m_DateStart))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	switch (inTree->GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
-	case Element::eNotFound:
+	case ElementNode::eNotFound:
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START));
 		return false;
-	case Element::eInvalidValue:
+	case ElementNode::eInvalidValue:
 		{
 			ARBString attrib;
-			inTree.GetAttrib(ATTRIB_CAL_START, attrib);
+			inTree->GetAttrib(ATTRIB_CAL_START, attrib);
 			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
@@ -559,15 +562,15 @@ bool ARBCalendar::Load(
 		return false;
 	}
 
-	switch (inTree.GetAttrib(ATTRIB_CAL_END, m_DateEnd))
+	switch (inTree->GetAttrib(ATTRIB_CAL_END, m_DateEnd))
 	{
-	case Element::eNotFound:
+	case ElementNode::eNotFound:
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END));
 		return false;
-	case Element::eInvalidValue:
+	case ElementNode::eInvalidValue:
 		{
 			ARBString attrib;
-			inTree.GetAttrib(ATTRIB_CAL_END, attrib);
+			inTree->GetAttrib(ATTRIB_CAL_END, attrib);
 			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
@@ -575,50 +578,50 @@ bool ARBCalendar::Load(
 		}
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_CAL_OPENING, attrib);
+		inTree->GetAttrib(ATTRIB_CAL_OPENING, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_DRAW, m_DateDraw))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_DRAW, m_DateDraw))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_CAL_DRAW, attrib);
+		inTree->GetAttrib(ATTRIB_CAL_DRAW, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg.c_str()));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_CAL_CLOSING, attrib);
+		inTree->GetAttrib(ATTRIB_CAL_CLOSING, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, VALID_VALUES_BOOL));
 		return false;
 	}
 
-	inTree.GetAttrib(ATTRIB_CAL_LOCATION, m_Location);
-	inTree.GetAttrib(ATTRIB_CAL_CLUB, m_Club);
-	inTree.GetAttrib(ATTRIB_CAL_VENUE, m_Venue);
+	inTree->GetAttrib(ATTRIB_CAL_LOCATION, m_Location);
+	inTree->GetAttrib(ATTRIB_CAL_CLUB, m_Club);
+	inTree->GetAttrib(ATTRIB_CAL_VENUE, m_Venue);
 
 	if (inVersion == ARBVersion(1,0))
 	{
 		ARBString attrib;
-		if (Element::eFound == inTree.GetAttrib(_T("PlanOn"), attrib))
+		if (ElementNode::eFound == inTree->GetAttrib(_T("PlanOn"), attrib))
 		{
 			if (attrib == _T("y"))
 				m_eEntered = ePlanning;
@@ -629,7 +632,7 @@ bool ARBCalendar::Load(
 	else if (inVersion >= ARBVersion(2,0))
 	{
 		ARBString attrib;
-		if (Element::eFound == inTree.GetAttrib(ATTRIB_CAL_ENTERED, attrib))
+		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_CAL_ENTERED, attrib))
 		{
 			if (attrib == _T("E"))
 				m_eEntered = eEntered;
@@ -644,7 +647,7 @@ bool ARBCalendar::Load(
 			}
 		}
 
-		if (Element::eFound == inTree.GetAttrib(ATTRIB_CAL_ACCOMMODATION, attrib))
+		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_CAL_ACCOMMODATION, attrib))
 		{
 			if (attrib == _T("N"))
 				m_eAccommodations = eAccomNone;
@@ -658,64 +661,67 @@ bool ARBCalendar::Load(
 				return false;
 			}
 		}
-		inTree.GetAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
+		inTree->GetAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
 	}
 
-	inTree.GetAttrib(ATTRIB_CAL_SECEMAIL, m_SecEmail);
-	inTree.GetAttrib(ATTRIB_CAL_PREMIUMURL, m_PremiumURL);
-	inTree.GetAttrib(ATTRIB_CAL_ONLINEURL, m_OnlineURL);
+	inTree->GetAttrib(ATTRIB_CAL_SECEMAIL, m_SecEmail);
+	inTree->GetAttrib(ATTRIB_CAL_PREMIUMURL, m_PremiumURL);
+	inTree->GetAttrib(ATTRIB_CAL_ONLINEURL, m_OnlineURL);
 
-	m_Note = inTree.GetValue();
+	m_Note = inTree->GetValue();
 	return true;
 }
 
-bool ARBCalendar::Save(Element& ioTree) const
+bool ARBCalendar::Save(ElementNodePtr ioTree) const
 {
-	Element& cal = ioTree.AddElement(TREE_CALENDAR);
-	cal.AddAttrib(ATTRIB_CAL_START, m_DateStart);
-	cal.AddAttrib(ATTRIB_CAL_END, m_DateEnd);
-	cal.AddAttrib(ATTRIB_CAL_OPENING, m_DateOpening);
-	cal.AddAttrib(ATTRIB_CAL_DRAW, m_DateDraw);
-	cal.AddAttrib(ATTRIB_CAL_CLOSING, m_DateClosing);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr cal = ioTree->AddElementNode(TREE_CALENDAR);
+	cal->AddAttrib(ATTRIB_CAL_START, m_DateStart);
+	cal->AddAttrib(ATTRIB_CAL_END, m_DateEnd);
+	cal->AddAttrib(ATTRIB_CAL_OPENING, m_DateOpening);
+	cal->AddAttrib(ATTRIB_CAL_DRAW, m_DateDraw);
+	cal->AddAttrib(ATTRIB_CAL_CLOSING, m_DateClosing);
 	if (m_bTentative) // Default is no
-		cal.AddAttrib(ATTRIB_CAL_MAYBE, m_bTentative);
-	cal.AddAttrib(ATTRIB_CAL_LOCATION, m_Location);
-	cal.AddAttrib(ATTRIB_CAL_CLUB, m_Club);
-	cal.AddAttrib(ATTRIB_CAL_VENUE, m_Venue);
+		cal->AddAttrib(ATTRIB_CAL_MAYBE, m_bTentative);
+	cal->AddAttrib(ATTRIB_CAL_LOCATION, m_Location);
+	cal->AddAttrib(ATTRIB_CAL_CLUB, m_Club);
+	cal->AddAttrib(ATTRIB_CAL_VENUE, m_Venue);
 	switch (m_eEntered)
 	{
 	default:
-		cal.AddAttrib(ATTRIB_CAL_ENTERED, _T("N"));
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, _T("N"));
 		break;
 	case eEntered:
-		cal.AddAttrib(ATTRIB_CAL_ENTERED, _T("E"));
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, _T("E"));
 		break;
 	case ePlanning:
-		cal.AddAttrib(ATTRIB_CAL_ENTERED, _T("P"));
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, _T("P"));
 		break;
 	}
 	switch (m_eAccommodations)
 	{
 	default:
-		cal.AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("N"));
+		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("N"));
 		break;
 	case eAccomTodo:
-		cal.AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("T"));
+		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("T"));
 		break;
 	case eAccomConfirmed:
-		cal.AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("C"));
+		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("C"));
 		break;
 	}
 	if (0 < m_Confirmation.length())
-		cal.AddAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
+		cal->AddAttrib(ATTRIB_CAL_CONFIRMATION, m_Confirmation);
 	if (0 < m_SecEmail.length())
-		cal.AddAttrib(ATTRIB_CAL_SECEMAIL, m_SecEmail);
+		cal->AddAttrib(ATTRIB_CAL_SECEMAIL, m_SecEmail);
 	if (0 < m_PremiumURL.length())
-		cal.AddAttrib(ATTRIB_CAL_PREMIUMURL, m_PremiumURL);
+		cal->AddAttrib(ATTRIB_CAL_PREMIUMURL, m_PremiumURL);
 	if (0 < m_OnlineURL.length())
-		cal.AddAttrib(ATTRIB_CAL_ONLINEURL, m_OnlineURL);
+		cal->AddAttrib(ATTRIB_CAL_ONLINEURL, m_OnlineURL);
 	if (0 < m_Note.length())
-		cal.SetValue(m_Note);
+		cal->SetValue(m_Note);
 	return true;
 }
 
@@ -865,7 +871,7 @@ bool ARBCalendar::Update(ARBCalendarPtr inCal)
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBCalendarList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

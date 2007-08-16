@@ -42,6 +42,7 @@
 #include "../Win/ReadHttp.h"
 #include "../tidy/include/tidy.h"
 #include <sstream>
+#include <fstream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -101,32 +102,33 @@ char* CCalendarSite::GetDescription() const
 static bool FindEventCalendarTag(
 		ARBString const& tag,
 		ARBString const& name,
-		Element const& inTree,
-		Element const*& outParentElement,
+		ElementNodePtr inTree,
+		ElementNodePtr& outParentElement,
 		int& outH4tag)
 {
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	if (!inTree)
+		return false;
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& ele = inTree.GetElement(i);
-		if (ele.GetName() == tag && ele.GetValue() == name)
+		ElementPtr ele = inTree->GetElement(i);
+		if (ele->GetName() == tag && ele->GetValue() == name)
 		{
-			outParentElement = &inTree;
+			outParentElement = inTree;
 			outH4tag = i;
 			return true;
 		}
-		else if (FindEventCalendarTag(tag, name, ele, outParentElement, outH4tag))
+		else if (FindEventCalendarTag(tag, name, boost::dynamic_pointer_cast<ElementNode, Element>(ele), outParentElement, outH4tag))
 			return true;
 	}
 	return false;
 }
 
-#include <fstream>
 char* CCalendarSite::Process() const
 {
 	CStringA data;
 	//CReadHttp http(_T("http://www.usdaa.com/events.cfm"), data);
 //	CReadHttp http(_T("http://www.usdaa.com/events_detail.cfm?event_no=103312"), data);
-	FILE* fp = fopen("c:\\events-raw.xml", "r");
+	FILE* fp = fopen("c:\\detail-raw.xml", "r");
 	char buffer[1001];
 	size_t sz;
 	while (0 < (sz = fread(buffer, 1, 1000, fp)))
@@ -176,33 +178,33 @@ char* CCalendarSite::Process() const
 		// truncate the buffer when releasing. CString may have allocated
 		// more memory then we asked for.
 		data.ReleaseBuffer(len);
-//{
-//std::ofstream raw("c:\\detail-rawout.xml", std::ios::out);
-//raw << (LPCSTR)data;
-//raw.close();
-//}
+{
+std::ofstream raw("c:\\detail-rawout.xml", std::ios::out);
+raw << (LPCSTR)data;
+raw.close();
+}
 
 		ARBString err;
-		Element tree;
-		if (!tree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err))
+		ElementNodePtr tree(ElementNode::New());
+		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), err))
 		{
 			AfxMessageBox(err.c_str());
 			return NULL;
 		}
-//{
-//std::ofstream raw("c:\\detail-tree.xml", std::ios::out);
-//tree.SaveXML(raw);
-//raw.close();
-//}
+{
+std::ofstream raw("c:\\detail-tree.xml", std::ios::out);
+tree->SaveXML(raw);
+raw.close();
+}
 
 		bool bOk = false;
-		Element calTree(TREE_BOOK);
-		calTree.AddAttrib(ATTRIB_BOOK_VERSION, "12.6");
+		ElementNodePtr calTree(ElementNode::New(TREE_BOOK));
+		calTree->AddAttrib(ATTRIB_BOOK_VERSION, "12.6");
 
 		// Ok, now we get to parse the raw html from USDAA. As of Aug 2007,
 		// we want to look for a Level4 Header containing "Event Calendar"
 		// The data we want is then contained in the 'table' tag that follows.
-		Element const* parentElement = NULL;
+		ElementNodePtr parentElement;
 		int idxEventCalH4tag = -1;
 		static const ARBString tag(_T("h4"));
 		static const ARBString name(_T("Event Calendar"));
@@ -211,11 +213,13 @@ char* CCalendarSite::Process() const
 			int idxTable = parentElement->FindElement(_T("table"), idxEventCalH4tag);
 			if (0 > idxTable)
 			{
-				Element const& table = parentElement->GetElement(idxTable);
+				ElementNodePtr table = parentElement->GetElementNode(idxTable);
+				if (!table)
+					return NULL;
 				// Start with the 2nd 'tr'
-				for (int i = 1; i < table.GetElementCount(); ++i)
+				for (int i = 1; i < table->GetElementCount(); ++i)
 				{
-					Element const& tr = table.GetElement(i);
+					ElementPtr tr = table->GetElement(i);
 					// Structure is:
 					// <td>mm/dd/yyyy - mm/dd/yyyy</td>
 					// <td><a href="events_detail.cfm?event_no=103312">Club</a></td>
@@ -274,7 +278,7 @@ char* CCalendarSite::Process() const
 		if (bOk)
 		{
 			std::ostringstream s;
-			calTree.SaveXML(s);
+			calTree->SaveXML(s);
 			return Allocate(s.str());
 		}
 	}

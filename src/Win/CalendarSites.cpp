@@ -109,7 +109,7 @@ void CCalendarSitesImpl::clear()
 
 bool CCalendarSitesImpl::Update(ARBConfig const& inConfig)
 {
-	// Load auxilary DLLs
+	// Load auxilary DLLs from the path where the EXE lives.
 	if (!m_PathName.IsEmpty())
 	{
 		WIN32_FIND_DATA data;
@@ -119,16 +119,26 @@ bool CCalendarSitesImpl::Update(ARBConfig const& inConfig)
 			do
 			{
 				CString filename(data.cFileName);
-				HINSTANCE hInst = LoadLibrary(filename);
-				if (hInst)
+				// Only load the library if we haven't already loaded it.
+				// (Otherwise we get a memory leak because we overwrite the
+				// api pointer)
+				if (m_DirectAccess.end() == m_DirectAccess.find(filename))
 				{
-					GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(hInst, "GetCalendarInterface"));
-					if (pApi)
+					// Load the library.
+					HINSTANCE hInst = LoadLibrary(filename);
+					if (hInst)
 					{
-						ICalendarSite* pSite = pApi();
-						if (pSite)
+						// Now get the exported interface
+						GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(hInst, "GetCalendarInterface"));
+						if (pApi)
 						{
-							m_DirectAccess[filename] = AccessData(hInst, pSite);
+							// And call it.
+							ICalendarSite* pSite = pApi();
+							if (pSite)
+							{
+								// We now have an object that must be released later.
+								m_DirectAccess[filename] = AccessData(hInst, pSite);
+							}
 						}
 					}
 				}
@@ -153,9 +163,9 @@ AfxMessageBox(_T("TODO"));
 		char* data = pSite->Process();
 		if (data)
 		{
-			Element tree;
+			ElementNodePtr tree(ElementNode::New());
 			ARBString errMsg;
-			if (!tree.LoadXMLBuffer(data, static_cast<unsigned int>(strlen(data)), errMsg))
+			if (!tree->LoadXMLBuffer(data, static_cast<unsigned int>(strlen(data)), errMsg))
 			{
 				if (0 < errMsg.length())
 					AfxMessageBox(errMsg.c_str(), MB_ICONWARNING);

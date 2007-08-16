@@ -153,11 +153,14 @@ size_t ARBDogTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 bool ARBDogTitle::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE));
@@ -172,7 +175,7 @@ bool ARBDogTitle::Load(
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_NAME, m_Name)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME));
@@ -180,11 +183,11 @@ bool ARBDogTitle::Load(
 	}
 
 	// Must get Hidden before getting date.
-	inTree.GetAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
+	inTree->GetAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
 
-	switch (inTree.GetAttrib(ATTRIB_TITLE_DATE, m_Date))
+	switch (inTree->GetAttrib(ATTRIB_TITLE_DATE, m_Date))
 	{
-	case Element::eNotFound:
+	case ElementNode::eNotFound:
 		// As of version 8.5, no date infers this is an unearned title
 		// that we're hiding.
 		if (inVersion < ARBVersion(8, 5))
@@ -194,10 +197,10 @@ bool ARBDogTitle::Load(
 		}
 		m_bHidden = true;
 		break;
-	case Element::eInvalidValue:
+	case ElementNode::eInvalidValue:
 		{
 			ARBString attrib;
-			inTree.GetAttrib(ATTRIB_TITLE_DATE, attrib);
+			inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
 			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
@@ -205,12 +208,12 @@ bool ARBDogTitle::Load(
 		}
 	}
 
-	inTree.GetAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
-	inTree.GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
+	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
+	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
 	if (1 < m_Instance)
 		m_bShowInstanceOne = true;
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL));
 		return false;
@@ -241,28 +244,31 @@ bool ARBDogTitle::Load(
 	return true;
 }
 
-bool ARBDogTitle::Save(Element& ioTree) const
+bool ARBDogTitle::Save(ElementNodePtr ioTree) const
 {
-	Element& title = ioTree.AddElement(TREE_TITLE);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr title = ioTree->AddElementNode(TREE_TITLE);
 	if (m_Date.IsValid())
 	{
-		title.AddAttrib(ATTRIB_TITLE_DATE, m_Date);
+		title->AddAttrib(ATTRIB_TITLE_DATE, m_Date);
 		if (m_bHidden) // Default is no
-			title.AddAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
+			title->AddAttrib(ATTRIB_TITLE_HIDDEN, m_bHidden);
 	}
 	else
 	{
 		bool bTemp = true;
-		title.AddAttrib(ATTRIB_TITLE_HIDDEN, bTemp);
+		title->AddAttrib(ATTRIB_TITLE_HIDDEN, bTemp);
 	}
-	title.AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
-	title.AddAttrib(ATTRIB_TITLE_NAME, m_Name);
+	title->AddAttrib(ATTRIB_TITLE_VENUE, m_Venue);
+	title->AddAttrib(ATTRIB_TITLE_NAME, m_Name);
 	if (1 == m_Instance && m_bShowInstanceOne)
-		title.AddAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
+		title->AddAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
 	if (1 < m_Instance)
-		title.AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
+		title->AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
 	if (m_bReceived) // Default is no.
-		title.AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
+		title->AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
 	return true;
 }
 
@@ -270,7 +276,7 @@ bool ARBDogTitle::Save(Element& ioTree) const
 
 bool ARBDogTitleList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

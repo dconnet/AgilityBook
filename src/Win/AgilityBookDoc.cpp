@@ -403,7 +403,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 	return bOk;
 }
 
-bool CAgilityBookDoc::ImportARBRunData(Element const& inTree, CWnd* pParent)
+bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 {
 	bool bOk = false;
 	CErrorCallback err;
@@ -721,7 +721,7 @@ bool CAgilityBookDoc::ImportARBRunData(Element const& inTree, CWnd* pParent)
 	return bOk;
 }
 
-bool CAgilityBookDoc::ImportARBCalData(Element const& inTree, CWnd* pParent)
+bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, CWnd* pParent)
 {
 	bool bOk = false;
 	CErrorCallback err;
@@ -766,7 +766,7 @@ bool CAgilityBookDoc::ImportARBCalData(Element const& inTree, CWnd* pParent)
 	return bOk;
 }
 
-bool CAgilityBookDoc::ImportARBLogData(Element const& inTree, CWnd* pParent)
+bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, CWnd* pParent)
 {
 	bool bOk = false;
 	CErrorCallback err;
@@ -1047,9 +1047,9 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 	CStringA source(lpszPathName);
 	ARBString err;
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 	// Translate the XML to a tree form.
-	if (!tree.LoadXMLFile(source, err))
+	if (!tree->LoadXMLFile(source, err))
 	{
 		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
@@ -1156,14 +1156,14 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	ARBString verstr = (LPCTSTR)ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	BOOL bOk = FALSE;
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 	// First, we have to push all the class data into a tree.
 	if (m_Records.Save(tree, verstr, true, true, true, true, true))
 	{
 		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
 		CStringA filename(lpszPathName);
-		if (tree.SaveXML(filename))
+		if (tree->SaveXML(filename))
 		{
 			AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 			bOk = TRUE;

@@ -98,14 +98,19 @@ void ARBInfo::clear()
 }
 
 bool ARBInfo::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		ARBString const& name = element.GetName();
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		ARBString const& name = element->GetName();
 		if (name == TREE_CLUBINFO)
 		{
 			// Ignore any errors.
@@ -125,9 +130,12 @@ bool ARBInfo::Load(
 	return true;
 }
 
-bool ARBInfo::Save(Element& ioTree) const
+bool ARBInfo::Save(ElementNodePtr ioTree) const
 {
-	Element& info = ioTree.AddElement(TREE_INFO);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr info = ioTree->AddElementNode(TREE_INFO);
 	if (!m_ClubInfo.Save(info))
 		return false;
 	if (!m_JudgeInfo.Save(info))

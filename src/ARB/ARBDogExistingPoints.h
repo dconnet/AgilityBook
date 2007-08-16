@@ -100,7 +100,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -110,7 +110,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogExistingPoints element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Type of points.
@@ -255,7 +255,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 

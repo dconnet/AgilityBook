@@ -559,7 +559,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 

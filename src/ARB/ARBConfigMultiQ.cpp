@@ -106,59 +106,64 @@ bool ARBConfigMultiQ::operator==(ARBConfigMultiQ const& rhs) const
 
 bool ARBConfigMultiQ::Load(
 		ARBConfigVenue const& inVenue,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_NAME));
 		return false;
 	}
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_SHORTNAME));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_MULTIQ_VALID_FROM, attrib);
+		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_FROM, msg.c_str()));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_MULTIQ_VALID_TO, attrib);
+		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_TO, msg.c_str()));
 		return false;
 	}
 
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_MULTIQ_ITEM)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_MULTIQ_ITEM)
 		{
 			MultiQItem item;
 			// Read the data.
-			if (Element::eFound != element.GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
+			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
 			|| 0 == item.m_Div.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV));
 				return false;
 			}
-			if (Element::eFound != element.GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
+			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
 			|| 0 == item.m_Level.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
 				return false;
 			}
-			if (Element::eFound != element.GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
+			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
 			|| 0 == item.m_Event.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));
@@ -210,21 +215,24 @@ bool ARBConfigMultiQ::Load(
 	return true;
 }
 
-bool ARBConfigMultiQ::Save(Element& ioTree) const
+bool ARBConfigMultiQ::Save(ElementNodePtr ioTree) const
 {
-	Element& multiQ = ioTree.AddElement(TREE_MULTIQ);
-	multiQ.AddAttrib(ATTRIB_MULTIQ_NAME, m_Name);
-	multiQ.AddAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr multiQ = ioTree->AddElementNode(TREE_MULTIQ);
+	multiQ->AddAttrib(ATTRIB_MULTIQ_NAME, m_Name);
+	multiQ->AddAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName);
 	if (m_ValidFrom.IsValid())
-		multiQ.AddAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom);
+		multiQ->AddAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom);
 	if (m_ValidTo.IsValid())
-		multiQ.AddAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo);
+		multiQ->AddAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo);
 	for (std::set<MultiQItem>::const_iterator iter = m_Items.begin(); iter != m_Items.end(); ++iter)
 	{
-		Element& item = multiQ.AddElement(TREE_MULTIQ_ITEM);
-		item.AddAttrib(ATTRIB_MULTIQ_ITEM_DIV, (*iter).m_Div);
-		item.AddAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, (*iter).m_Level);
-		item.AddAttrib(ATTRIB_MULTIQ_ITEM_EVENT, (*iter).m_Event);
+		ElementNodePtr item = multiQ->AddElementNode(TREE_MULTIQ_ITEM);
+		item->AddAttrib(ATTRIB_MULTIQ_ITEM_DIV, (*iter).m_Div);
+		item->AddAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, (*iter).m_Level);
+		item->AddAttrib(ATTRIB_MULTIQ_ITEM_EVENT, (*iter).m_Event);
 	}
 	return true;
 }
@@ -489,7 +497,7 @@ bool ARBConfigMultiQ::GetItem(
 
 bool ARBConfigMultiQList::Load(
 		ARBConfigVenue const& inVenue,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

@@ -100,7 +100,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
 			ARBString const& inItemName);
@@ -111,7 +111,7 @@ public:
 	 * @param inItemName Name of collection being saved.
 	 */
 	bool ARBInfoItem::Save(
-			Element& ioTree,
+			ElementNodePtr ioTree,
 			ARBString const& inItemName) const;
 
 	/**
@@ -120,7 +120,7 @@ public:
 	 * @return Success
 	 * @post The ARBInfoItem element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/*
 	 * Getters/setters.
@@ -177,7 +177,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -185,7 +185,7 @@ public:
 	 * Save a items entry
 	 * @param ioTree Parent element.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Sort the list by name.

@@ -102,7 +102,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigVenue& ioVenue,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -112,7 +112,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigDivision element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Update this configuration from inDivNew.
@@ -170,7 +170,7 @@ public:
 	 */
 	bool Load(
 			ARBConfigVenue& ioVenue,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 

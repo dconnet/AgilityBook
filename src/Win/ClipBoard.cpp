@@ -129,10 +129,10 @@ BOOL CClipboardDataReader::IsFormatAvailable(eClipFormat clpFmt)
 
 bool CClipboardDataReader::GetData(
 		eClipFormat clpFmt,
-		Element& outTree)
+		ElementNodePtr outTree)
 {
 	bool bOk = false;
-	outTree.clear();
+	outTree->clear();
 	CStringA data; // Our internal formats are always written as ascii text
 	if (GetData(GetClipboardFormat(clpFmt), data))
 	{
@@ -141,7 +141,7 @@ bool CClipboardDataReader::GetData(
 		OutputDebugStringA("\n");
 #endif
 		ARBString err;
-		bOk = outTree.LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
+		bOk = outTree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
 		if (!bOk && 0 < err.length())
 		{
 			AfxMessageBox(err.c_str(), MB_ICONEXCLAMATION);
@@ -215,13 +215,13 @@ CClipboardDataWriter::CClipboardDataWriter()
 
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
-		Element const& inTree)
+		ElementNodePtr inTree)
 {
 	if (!m_bOkay)
 		return false;
 
 	std::ostringstream out;
-	inTree.SaveXML(out);
+	inTree->SaveXML(out);
 	return SetData(clpFmt, out.str());
 }
 
@@ -229,34 +229,54 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		std::string const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), inData.length()+1);
+	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
+}
+
+bool CClipboardDataWriter::SetData(
+		eClipFormat clpFmt,
+		std::wstring const& inData)
+{
+	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
 }
 
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringA const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, inData.GetLength()+1);
+	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
 }
 
-bool CClipboardDataWriter::SetData(ARBString const& inData)
+#if _MSC_VER >= 1300
+bool CClipboardDataWriter::SetData(
+		eClipFormat clpFmt,
+		CStringW const& inData)
 {
-	// Note, when setting text, the OS will auto-populate the other formats too.
-#ifdef UNICODE
+	return SetData(GetClipboardFormat(clpFmt), (LPCWSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
+}
+#endif
+
+// Note, when setting text, the OS will auto-populate the other formats too.
+bool CClipboardDataWriter::SetData(std::string const& inData)
+{
+	return SetData(CF_TEXT, inData.c_str(), inData.length());
+}
+
+bool CClipboardDataWriter::SetData(std::wstring const& inData)
+{
 	return SetData(CF_UNICODETEXT, inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
-#else
-	return SetData(CF_TEXT, inData.c_str(), inData.length()+1);
-#endif
 }
 
-bool CClipboardDataWriter::SetData(CString const& inData)
+bool CClipboardDataWriter::SetData(CStringA const& inData)
 {
-#ifdef UNICODE
-	return SetData(CF_UNICODETEXT, (LPCTSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
-#else
-	return SetData(CF_TEXT, (LPCSTR)inData, inData.GetLength()+1);
-#endif
+	return SetData(CF_TEXT, (LPCSTR)inData, inData.GetLength());
 }
+
+#if _MSC_VER >= 1300
+bool CClipboardDataWriter::SetData(CStringW const& inData)
+{
+	return SetData(CF_UNICODETEXT, (LPCWSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
+}
+#endif
 
 bool CClipboardDataWriter::SetData(
 		UINT uFormat,

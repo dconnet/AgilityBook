@@ -386,7 +386,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
 	CWaitCursor wait;
 	bool bLoaded = false;
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 	CClipboardDataReader clpData;
 	ARBDogTrialPtr pTrial = GetTrial();
 	ARBDogPtr pDog = GetDog();
@@ -397,16 +397,16 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	else if (pTrial
 	&& clpData.GetData(eFormatRun, tree))
 	{
-		if (CLIPDATA == tree.GetName())
+		if (CLIPDATA == tree->GetName())
 		{
 			CErrorCallback err;
 			std::vector<ARBDogRunPtr> runs;
-			for (int iRun = 0; iRun < tree.GetElementCount(); ++iRun)
+			for (int iRun = 0; iRun < tree->GetElementCount(); ++iRun)
 			{
 				ARBDogRunPtr pRun(ARBDogRun::New());
 				if (pRun)
 				{
-					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree.GetElement(iRun), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree->GetElementNode(iRun), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 						runs.push_back(pRun);
 				}
 			}
@@ -469,13 +469,13 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	else if (pDog
 	&& clpData.GetData(eFormatTrial, tree))
 	{
-		if (CLIPDATA == tree.GetName())
+		if (CLIPDATA == tree->GetName())
 		{
 			ARBDogTrialPtr pNewTrial(ARBDogTrial::New());
 			if (pNewTrial)
 			{
 				CErrorCallback err;
-				if (pNewTrial->Load(m_pTree->GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pNewTrial->Load(m_pTree->GetDocument()->GetConfig(), tree->GetElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
@@ -636,7 +636,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			if (clpData.isOkay())
 			{
 				CWaitCursor wait;
-				Element tree(CLIPDATA);
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
 				GetDog()->Save(tree);
 				clpData.SetData(eFormatDog, tree);
 				clpData.SetData(m_pTree->GetPrintLine(GetHTreeItem()));
@@ -919,7 +919,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			if (clpData.isOkay())
 			{
 				CWaitCursor wait;
-				Element tree(CLIPDATA);
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
 				GetTrial()->Save(tree);
 				clpData.SetData(eFormatTrial, tree);
 				clpData.SetData(m_pTree->GetPrintLine(GetHTreeItem()));
@@ -1256,7 +1256,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			if (clpData.isOkay())
 			{
 				CWaitCursor wait;
-				Element tree(CLIPDATA);
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
 				GetRun()->Save(tree);
 				clpData.SetData(eFormatRun, tree);
 				clpData.SetData(m_pTree->GetPrintLine(GetHTreeItem()));

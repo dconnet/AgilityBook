@@ -88,13 +88,16 @@ bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 }
 
 bool ARBConfigFault::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (Element::eFound != inTree.GetAttrib(_T("Name"), m_Name)
+		if (ElementNode::eFound != inTree->GetAttrib(_T("Name"), m_Name)
 		|| 0 == m_Name.length())
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_FAULTTYPE, _T("Name")));
@@ -102,21 +105,25 @@ bool ARBConfigFault::Load(
 		}
 	}
 	else
-		m_Name = inTree.GetValue();
+		m_Name = inTree->GetValue();
 	return true;
 }
 
-bool ARBConfigFault::Save(Element& ioTree) const
+bool ARBConfigFault::Save(ElementNodePtr ioTree) const
 {
-	Element& element = ioTree.AddElement(TREE_FAULTTYPE);
-	element.SetValue(m_Name);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr element = ioTree->AddElementNode(TREE_FAULTTYPE);
+	if (0 < m_Name.length())
+		element->SetValue(m_Name);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigFaultList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

@@ -164,17 +164,21 @@ bool ARBDogRunScoring::Load(
 		short inConfigVersion,
 		ARBConfigEventPtr inEvent,
 		ARBConfigScoringPtr inEventScoring,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+
 	ARBString attrib;
 
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
-	ARBString const& name = inTree.GetName();
-	inTree.GetAttrib(ATTRIB_SCORING_TIME, m_Time);
-	inTree.GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-	inTree.GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+	ARBString const& name = inTree->GetName();
+	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
+	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+	inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEventScoring->GetScoringStyle());
 	switch (m_type)
 	{
@@ -196,7 +200,7 @@ bool ARBDogRunScoring::Load(
 				// level. [note, changed to handle conversion on newone == 3+]
 				m_ConvertTable = true;
 				bool bTableInYPS = true;
-				if (Element::eFound == inTree.GetAttrib(_T("TableInYPS"), bTableInYPS))
+				if (ElementNode::eFound == inTree->GetAttrib(_T("TableInYPS"), bTableInYPS))
 				{
 					if (!bTableInYPS)
 					{
@@ -207,7 +211,7 @@ bool ARBDogRunScoring::Load(
 			}
 			else
 			{
-				if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
+				if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
 				{
 					ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, VALID_VALUES_BOOL));
 					// Report the error, but keep going.
@@ -234,8 +238,8 @@ bool ARBDogRunScoring::Load(
 				if (!inEvent->HasTable())
 					m_Table = false;
 			}
-			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
-			inTree.GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
+			inTree->GetAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 			return true;
 		}
 		break;
@@ -243,12 +247,12 @@ bool ARBDogRunScoring::Load(
 	case eTypeByOpenClose:
 		if (name == TREE_BY_OPENCLOSE)
 		{
-			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
-			inTree.GetAttrib(ATTRIB_SCORING_SCT2, m_SCT2);
-			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
-			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
-			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
-			inTree.GetAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
+			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
+			inTree->GetAttrib(ATTRIB_SCORING_SCT2, m_SCT2);
+			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
+			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
+			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
+			inTree->GetAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
 			return true;
 		}
 		break;
@@ -256,9 +260,9 @@ bool ARBDogRunScoring::Load(
 	case eTypeByPoints:
 		if (name == TREE_BY_POINTS)
 		{
-			inTree.GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
-			inTree.GetAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
-			inTree.GetAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
+			inTree->GetAttrib(ATTRIB_SCORING_SCT, m_SCT);
+			inTree->GetAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
+			inTree->GetAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
 			return true;
 		}
 		break;
@@ -266,52 +270,55 @@ bool ARBDogRunScoring::Load(
 	return false;
 }
 
-bool ARBDogRunScoring::Save(Element& ioTree) const
+bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 {
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
 	switch (m_type)
 	{
 	default:
 		break;
 	case eTypeByTime:
 		{
-			Element& scoring = ioTree.AddElement(TREE_BY_TIME);
+			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_TIME);
 			if (m_Table) // Default is no
-				scoring.AddAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table);
-			scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
-			scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
-			scoring.AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
-			scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+				scoring->AddAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table);
+			scoring->AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			scoring->AddAttrib(ATTRIB_SCORING_TIME, m_Time);
+			scoring->AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
+			scoring->AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 		}
 		return true;
 	case eTypeByOpenClose:
 		{
-			Element& scoring = ioTree.AddElement(TREE_BY_OPENCLOSE);
+			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_OPENCLOSE);
 			if (0 < m_CourseFaults)
-				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
+				scoring->AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			scoring->AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			if (0 < m_SCT)
-				scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
+				scoring->AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			if (0 < m_SCT2)
-				scoring.AddAttrib(ATTRIB_SCORING_SCT2, m_SCT2);
-			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
-			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
-			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
-			scoring.AddAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
-			scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+				scoring->AddAttrib(ATTRIB_SCORING_SCT2, m_SCT2);
+			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDOPEN, m_NeedOpenPts);
+			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_NEEDCLOSE, m_NeedClosePts);
+			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
+			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 		}
 		return true;
 	case eTypeByPoints:
 		{
-			Element& scoring = ioTree.AddElement(TREE_BY_POINTS);
+			ElementNodePtr scoring = ioTree->AddElementNode(TREE_BY_POINTS);
 			if (0 < m_CourseFaults)
-				scoring.AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
-			scoring.AddAttrib(ATTRIB_SCORING_TIME, m_Time);
+				scoring->AddAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
+			scoring->AddAttrib(ATTRIB_SCORING_TIME, m_Time);
 			if (0 < m_SCT)
-				scoring.AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
-			scoring.AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
-			scoring.AddAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
-			scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+				scoring->AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
+			scoring->AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
+			scoring->AddAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
+			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
 		}
 		return true;
 	}

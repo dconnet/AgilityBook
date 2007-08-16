@@ -99,7 +99,7 @@ public:
 	bool Load(
 			ARBConfig const& inConfig,
 			ARBDogClubList const& inClubs,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -109,7 +109,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRun element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -401,7 +401,7 @@ public:
 	bool Load(
 			ARBConfig const& inConfig,
 			ARBDogClubList const& inClubs,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 

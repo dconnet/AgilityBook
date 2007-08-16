@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "PROJ_SAX2" /D "PROJ_XMLPARSER" /D "PROJ_XMLUTIL" /D "PROJ_PARSERS" /D "PROJ_SAX4C" /D "PROJ_DOM" /D "PROJ_VALIDATORS" /D "XML_SINGLEDLL" /D "XML_USE_WIN32_TRANSCODER" /D "XML_USE_WIN32_MSGLOADER" /D "XML_USE_NETACCESSOR_WINSOCK" /D "XML_LIBRARY" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "PROJ_SAX2" /D "PROJ_XMLPARSER" /D "PROJ_XMLUTIL" /D "PROJ_PARSERS" /D "PROJ_SAX4C" /D "PROJ_DOM" /D "PROJ_VALIDATORS" /D "XML_USE_WIN32_TRANSCODER" /D "XML_USE_INMEM_MESSAGELOADER" /D "XML_USE_NETACCESSOR_WINSOCK" /D "XML_LIBRARY" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -67,7 +67,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "PLATFORM_WIN32" /D "_CRTDBG_MAP_ALLOC" /D "PROJ_XMLPARSER" /D "PROJ_XMLUTIL" /D "PROJ_PARSERS" /D "PROJ_SAX4C" /D "PROJ_SAX2" /D "PROJ_DOM" /D "PROJ_VALIDATORS" /D "XML_SINGLEDLL" /D "XML_USE_WIN32_TRANSCODER" /D "XML_USE_WIN32_MSGLOADER" /D "XML_USE_NETACCESSOR_WINSOCK" /D "XML_LIBRARY" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "PROJ_SAX2" /D "PROJ_XMLPARSER" /D "PROJ_XMLUTIL" /D "PROJ_PARSERS" /D "PROJ_SAX4C" /D "PROJ_DOM" /D "PROJ_VALIDATORS" /D "XML_USE_WIN32_TRANSCODER" /D "XML_USE_INMEM_MESSAGELOADER" /D "XML_USE_NETACCESSOR_WINSOCK" /D "XML_LIBRARY" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -113,12 +113,15 @@ SOURCE=..\..\xml\xercesc\util\Platforms\Win32\Win32PlatformUtils.cpp
 # PROP Default_Filter ".cpp,.hpp"
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\MsgLoaders\Win32\Win32MsgLoader.cpp
-# ADD CPP /Ze
+SOURCE=..\..\xml\xercesc\util\MsgLoaders\InMemory\InMemMsgLoader.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\MsgLoaders\Win32\Win32MsgLoader.hpp
+SOURCE=..\..\xml\xercesc\util\MsgLoaders\InMemory\InMemMsgLoader.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\MsgLoaders\InMemory\XercesMessages_en_US.hpp
 # End Source File
 # End Group
 # Begin Group "Transcoders"

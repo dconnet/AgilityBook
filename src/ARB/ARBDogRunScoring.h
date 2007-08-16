@@ -90,7 +90,7 @@ public:
 			short inConfigVersion,
 			ARBConfigEventPtr inEvent,
 			ARBConfigScoringPtr inEventScoring,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -100,7 +100,7 @@ public:
 	 * @return Success
 	 * @post The ARBDogRunScoring element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Get the minimum YPS for the run (yards/sct).
